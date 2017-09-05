@@ -21,7 +21,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 5.4.0
-Release: alt1%ubt
+Release: alt2%ubt
 License: Apache
 Group: System/Servers
 Url: https://opennebula.org
@@ -63,10 +63,10 @@ OpenNebula is free software released under the Apache License.
 
 
 ################################################################################
-# Package opennebula-client
+# Package opennebula-tools
 ################################################################################
 
-%package client
+%package tools
 Summary: Cloud computing solution for Data Center Virtualization
 Group: Emulators
 BuildArch: noarch
@@ -83,7 +83,7 @@ Requires: openssh-clients
 Requires: %name-common = %EVR
 Requires: %name-ruby = %EVR
 
-%description client
+%description tools
 OpenNebula.org is an open-source project aimed at building the industry
 standard open source cloud computing tool to manage the complexity and
 heterogeneity of distributed data center infrastructures.
@@ -104,7 +104,7 @@ This package provides the CLI interface.
 %package server
 Summary: Provides the OpenNebula servers
 Group: System/Servers
-Requires: %name-client = %EVR
+Requires: %name-tools = %EVR
 Requires: openssh-server
 Requires: genisoimage
 Requires: qemu-img
@@ -343,8 +343,9 @@ install -p -D -m 644 share/etc/sysctl.d/bridge-nf-call.conf %buildroot%_sysconfd
 
 %pre common
 %_sbindir/groupadd -r -f oneadmin 2>/dev/null ||:
-%_sbindir/useradd -r -g oneadmin -G vmusers  -c 'Opennebula Daemon User' \
-        -s /sbin/nologin  -d %oneadmin_home oneadmin 2>/dev/null ||:
+%_sbindir/useradd -r -m -g oneadmin -G disk -c 'Opennebula Daemon User' \
+        -s /bin/bash -d %oneadmin_home oneadmin 2>/dev/null ||:
+
 
 ################################################################################
 # server - scripts
@@ -352,6 +353,21 @@ install -p -D -m 644 share/etc/sysctl.d/bridge-nf-call.conf %buildroot%_sysconfd
 
 %post server
 %post_service %name
+
+if [ $1 = 1 ]; then
+    if [ ! -e %oneadmin_home/.one/one_auth ]; then
+        PASSWORD=$(echo $RANDOM$(date '+%s')|md5sum|cut -d' ' -f1)
+        mkdir -p %oneadmin_home/.one
+        echo oneadmin:$PASSWORD > %oneadmin_home/.one/one_auth
+        chown -R oneadmin:oneadmin %oneadmin_home/.one
+    fi
+
+    if [ ! -d %oneadmin_home/.ssh ]; then
+        su oneadmin -c "ssh-keygen -N '' -t rsa -f %oneadmin_home/.ssh/id_rsa"
+        cp -p %oneadmin_home/.ssh/id_rsa.pub %oneadmin_home/.ssh/authorized_keys
+        /bin/chmod 600 %oneadmin_home/.ssh/authorized_keys
+    fi
+fi
 
 %preun server
 %preun_service %name
@@ -377,6 +393,12 @@ install -p -D -m 644 share/etc/sysctl.d/bridge-nf-call.conf %buildroot%_sysconfd
 %preun sunstone
 %preun_service %name-sunstone
 %preun_service %name-novnc
+
+################################################################################
+# node-kvm - scripts
+################################################################################
+%pre node-kvm
+%_sbindir/usermod -a -G vmusers oneadmin  2>/dev/null ||:
 
 ################################################################################
 # ruby - scripts
@@ -588,10 +610,10 @@ install -p -D -m 644 share/etc/sysctl.d/bridge-nf-call.conf %buildroot%_sysconfd
 %config(noreplace) %_sysconfdir/one/auth/x509_auth.conf
 
 ################################################################################
-# client package - files
+# tools package - files
 ################################################################################
 
-%files client
+%files tools
 %dir %_sysconfdir/one/cli
 %config(noreplace) %_sysconfdir/one/cli/*
 
@@ -628,5 +650,10 @@ install -p -D -m 644 share/etc/sysctl.d/bridge-nf-call.conf %buildroot%_sysconfd
 ################################################################################
 
 %changelog
+* Tue Sep 05 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.0-alt2%ubt
+- update to one-5.4 branch
+- fix post scripts
+- rename package client to tools
+
 * Wed Aug 30 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.0-alt1%ubt
 - Initial build (based on upstream spec)
