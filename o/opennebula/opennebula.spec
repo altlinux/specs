@@ -21,7 +21,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 5.4.0
-Release: alt2%ubt
+Release: alt3%ubt
 License: Apache
 Group: System/Servers
 Url: https://opennebula.org
@@ -44,6 +44,7 @@ BuildRequires: ruby
 BuildRequires: scons
 BuildRequires: java-1.8.0-openjdk-devel rpm-build-java
 BuildRequires: zlib-devel
+BuildRequires: npm
 
 ################################################################################
 # Main Package
@@ -183,6 +184,7 @@ Provides: ruby(econe/EC2QueryClient)
 
 Requires: %name-common = %EVR
 Requires: %name-ruby = %EVR
+Requires: ruby-rack-handler-webrick
 
 %description sunstone
 Browser based UI for administrating a OpenNebula cloud. Also includes
@@ -241,7 +243,7 @@ Group: System/Servers
 BuildArch: noarch
 
 Conflicts: %name-node-xen
-Requires: ruby
+Requires: ruby ruby-stdlibs
 Requires: openssh-server
 Requires: openssh-clients
 Requires: libvirt-qemu
@@ -285,9 +287,14 @@ Configures an OpenNebula node providing kvm.
 %setup
 
 %build
+export PATH="$PATH:$PWD/src/sunstone/public/node_modules/grunt/bin"
+
+pushd src/sunstone/public
+npm rebuild
+popd
 
 # Compile OpenNebula
-scons -j2 mysql=yes new_xmlrpc=yes
+scons -j2 mysql=yes new_xmlrpc=yes sunstone=yes
 
 #../build_opennebula.sh
 cd src/oca/java
@@ -295,7 +302,7 @@ cd src/oca/java
 
 %install
 export DESTDIR=%buildroot
-./install.sh
+./install.sh -p
 
 # systemd units
 install -p -D -m 644 share/pkgs/ALTLinux/opennebula.service %buildroot%_unitdir/opennebula.service
@@ -399,6 +406,27 @@ fi
 ################################################################################
 %pre node-kvm
 %_sbindir/usermod -a -G vmusers oneadmin  2>/dev/null ||:
+# allow run sudo for oneadmin user
+%_sbindir/usermod -a -G wheel oneadmin  2>/dev/null ||:
+
+#Modify /etc/libvirt/qemu.conf to set oneadmin user as running user for libvirt daemon
+#Otherwise, you might get some errors like :
+#   could not open disk image /var/lib/one/datastores/0/0/disk.0: Permission denied
+%post node-kvm
+if [ $1 = 1 ]; then
+    # Install
+    if [ -e /etc/libvirt/qemu.conf ]; then
+        cp /etc/libvirt/qemu.conf /etc/libvirt/qemu.conf.orig
+
+        echo 'user  = "oneadmin"'    >  /etc/libvirt/qemu.conf
+        echo 'group = "oneadmin"'    >> /etc/libvirt/qemu.conf
+        echo 'dynamic_ownership = 0' >> /etc/libvirt/qemu.conf
+    fi
+elif [ $1 = 2 ]; then
+    # Upgrade
+    PID=$(cat /tmp/one-collectd-client.pid 2> /dev/null)
+    [ -n "$PID" ] && kill $PID 2> /dev/null || :
+fi
 
 ################################################################################
 # ruby - scripts
@@ -650,6 +678,9 @@ fi
 ################################################################################
 
 %changelog
+* Tue Sep 05 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.0-alt3%ubt
+- fix run sunstone (add nodejs and bower modules to source)
+
 * Tue Sep 05 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.0-alt2%ubt
 - update to one-5.4 branch
 - fix post scripts
