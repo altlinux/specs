@@ -1,11 +1,9 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-
 %def_disable check
 
 %define pkgname net-ssh
 
 Name: ruby-%pkgname
-Version: 3.0.0
+Version: 4.2.0
 Release: alt1
 
 Summary: Pure-Ruby implementation of the SSH2 client protocol
@@ -15,10 +13,10 @@ Url:     https://github.com/net-ssh/net-ssh
 BuildArch: noarch
 
 Source: %pkgname-%version.tar
-Patch: %pkgname-%version-%release.patch
 
-# Automatically added by buildreq on Thu Nov 19 2009 (-bi)
-BuildRequires: rpm-build-ruby ruby-test-unit ruby-tool-rdoc ruby-tool-setup ruby-mocha
+BuildRequires: rpm-build-ruby ruby-tool-setup ruby-mocha
+
+%filter_from_requires /^ruby(dl/d
 
 %description
 Net::SSH is a pure-Ruby implementation of the SSH2 client protocol. It
@@ -34,7 +32,6 @@ Documentation files for %name
 
 %prep
 %setup -n %pkgname-%version
-%patch -p1
 %update_setup_rb
 
 %build
@@ -57,6 +54,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Net/SSH
 
 %changelog
+* Mon Sep 11 2017 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt1
+- New version
+
 * Mon Sep 21 2015 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1
 - New version
 

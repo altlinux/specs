@@ -1,7 +1,7 @@
 %def_enable shared
 %def_without valgrind
 %def_enable rubygems
-%define ruby_version 2.3.1
+%define ruby_version 2.4.1
 %define libdir %_prefix/lib/%name
 %define includedir %_includedir
 %define ridir %_datadir/ri
@@ -9,17 +9,18 @@
 
 Name: ruby
 %define lname lib%name
-%define branch 2.3
+%define branch 2.4
 %define ver_teeny 1
 #define _pl
 Version: %branch.%ver_teeny
-Release: alt2.qa1
+Release: alt1
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
 URL: http://www.%name-lang.org/
 Source0: %name-%version.tar
 Source1: update-ri-cache.rb
+Source2: gems.tar
 Patch: %name-%version-%release.patch
 Requires: %lname = %version-%release
 
@@ -34,7 +35,7 @@ done)
 
 BuildRequires: doxygen groff-base libdb4-devel libffi-devel
 BuildRequires: libgdbm-devel libncursesw-devel libreadline-devel libssl-devel
-BuildRequires: tk-devel zlib-devel libyaml-devel
+BuildRequires: zlib-devel libyaml-devel
 BuildRequires: ruby ruby-stdlibs gcc-c++
 BuildRequires: rpm-build-ruby >= 1:0.1.3
 %{?_with_valgrind:BuildRequires: valgrind-devel}
@@ -101,11 +102,12 @@ Obsoletes: %name-minitest
 #Obsoletes: %name-module-test-unit
 Provides: %name-racc-runtime = 1.4.6
 #Obsoletes: %name-racc-runtime
-Provides: %{name}gems = 2.0.14
+Provides: %{name}gems = 2.6.13
 %mobsolete English bigdecimal cgi curses date-time dbm debug digest dl drb e2mmap
 %mobsolete erb etc fcntl fileutils gdbm iconv math misc net nkf open3 openssl
 %mobsolete optparse patterns pty readline rexml rss sdbm shell socket stringio
-%mobsolete strscan syslog thread tracer uri wait webrick xmlrpc yaml zlib
+%mobsolete strscan syslog tracer uri wait webrick xmlrpc yaml zlib
+Provides: ruby(thread)
 Requires: libyaml2 libgdbm libssl10 libcrypto10
 
 %description -n %name-stdlibs
@@ -114,22 +116,6 @@ programming. It has many features for processing text files and performing syste
 management tasks (as in Perl). It is simple, straight-forward, and extensible.
 
 This package contains standard Ruby runtime libraries.
-
-
-%package -n %name-tk
-Summary: Standard Ruby libraries
-Group: Development/Ruby
-Requires: %lname = %version-%release
-Requires: %name-stdlibs = %version-%release
-Provides: %name-libs-tk = %version-%release
-%obsolete %name-stdlibs-tk
-
-%description -n %name-tk
-Ruby is an interpreted scripting language for quick and easy object-oriented
-programming. It has many features for processing text files and performing system
-management tasks (as in Perl). It is simple, straight-forward, and extensible.
-
-This package contains standard Ruby Tk bindings libraries.
 
 
 %package -n ri
@@ -152,22 +138,21 @@ Summary: Ruby tools
 Group: Development/Ruby
 BuildArch: noarch
 Requires: %name-stdlibs = %version
-Provides: gem = 2.0.14
+Provides: gem = 2.6.13
 #Provides: testrb
-Provides: %name-rake = 0.9.6
-Provides: rake = 0.9.6
+Provides: %name-rake = 12.0.0
+Provides: rake = 12.0.0
 Obsoletes: %name-rake
 Provides: rdoc = %version-%release
 Obsoletes: rdoc < %version-%release
 %obsolete %name-tool-rdoc
 #Provides: %name-test-unit = 2.2.0
 #Obsoletes: %name-test-unit
-Provides: %{name}gems = 2.0.14
+Provides: %{name}gems = 2.6.13
 Obsoletes: %{name}gems
 
 %description tools
 Ruby tools: rake, rdoc, gem.
-
 
 %package -n irb
 Summary: Interactive Ruby Shell
@@ -214,6 +199,7 @@ This package contains Ruby documentation in ri format.
 %prep
 %setup -q %{?_pl:-n %name-%version-%_pl}
 %patch -p1
+tar xf %SOURCE2
 #sed -i -r '/^#[[:blank:]]*define[[:blank:]]+RUBY_API_VERSION_TEENY[[:blank:]]/s/(RUBY_API_VERSION_TEENY[[:blank:]]+).*$/\1%ver_teeny/' include/%name/version.h
 #chmod a-x sample/{optparse,rss}/*
 # Broken 'require'
@@ -223,7 +209,7 @@ This package contains Ruby documentation in ri format.
 # Remove unneeded shebang
 #sed -i '/^#!/d' lib/minitest/spec.rb
 # More strict shebang
-sed -i '1s|^#!/usr/bin/env ruby|#!%_bindir/%name|' {lib/{abbrev,set},ext/tk/lib/tkextlib/pkg_checker}.rb bin/*
+sed -i '1s|^#!/usr/bin/env ruby|#!%_bindir/%name|' bin/*
 # Remove $ruby_version from libs path
 sed -i 's|/\$(ruby_version)||g;s|\(/%name/\)#{version}/|\1|g' tool/mkconfig.rb
 sed -i 's|/\${ruby_version}||' template/%name.pc.in configure.in
@@ -232,7 +218,8 @@ sed -i -r "/ridatadir[[:blank:]]*=/s/[[:blank:]]+CONFIG\['ruby_version'\],//" to
 sed -i 's|[[:blank:]]*"/"RUBY_LIB_VERSION$||' version.c
 # capi-docs
 sed -i -e '/doc\/capi/s|"/capi|"/html/capi|' -e '/doc\/capi/s|doc/capi|&/html|' tool/rbinstall.rb
-
+# put config.guess and config.sub from /usr/share/gnu-config
+cp -a /usr/share/gnu-config/config.* tool
 
 %build
 %define ruby_arch %_target%([ -z "%_gnueabi" ] || echo "-eabi")
@@ -256,6 +243,7 @@ sed -i -e '/doc\/capi/s|"/capi|"/html/capi|' -e '/doc\/capi/s|doc/capi|&/html|' 
 %makeinstall_std
 echo "VENDOR_SPECIFIC=true" > %buildroot%vendordir/vendor-specific.rb
 install -p -m 0755 %{S:1} %buildroot%_bindir/update-ri-cache
+install -Dm 0755 %lname-static.a %buildroot%_libdir/%lname-static.a
 ln -s %lname-static.a %buildroot%_libdir/%lname.a
 mv %buildroot%_pkgconfigdir/%name{*,}.pc
 install -d -m 0755 %buildroot%_docdir/%name-%version
@@ -289,7 +277,6 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/site_ruby/%version%
 %doc %_docdir/%name-%version/LEGAL
 %doc %_docdir/%name-%version/NEWS
 %doc %_docdir/%name-%version/README.*
-%doc %_docdir/%name-%version/README.EXT
 %lang(ja) %doc %_docdir/%name-%version/*.ja
 %_bindir/%name
 #%_bindir/testrb
@@ -312,13 +299,6 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/site_ruby/%version%
 
 %files stdlibs
 %libdir
-%exclude %libdir/*/*tk*.so
-%exclude %libdir/*tk*
-
-
-%files tk
-%libdir/*/*tk*.so
-%libdir/*tk*
 
 
 %files -n ri
@@ -354,6 +334,15 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/site_ruby/%version%
 
 
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 2.4.1-alt1
+- New version 2.4.1 with gems 2.6.13
+- Security fixes:
+  + CVE-2017-0902 a DNS request hijacking vulnerability
+  + CVE-2017-0899 an ANSI escape sequence vulnerability
+  + CVE-2017-0900 a DoS vulnerability in the query command
+  + CVE-2017-0901 a vulnerability in the gem installer that allowed a malicious gem to overwrite arbitrary files
+- ext/tk: Tk is removed from stdlib. [Feature #8539]
+
 * Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3.1-alt2.qa1
 - Rebuilt against Tcl/Tk 8.6
 

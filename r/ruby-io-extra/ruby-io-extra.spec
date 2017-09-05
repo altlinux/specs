@@ -2,7 +2,7 @@
 
 Name: ruby-%pkgname
 Version: 1.2.7
-Release: alt1.2
+Release: alt1.3
 
 Summary: Adds IO.fdwalk, IO.closefrom and IO.directio
 Group: Development/Ruby
@@ -49,6 +49,9 @@ Documentation files for %name.
 %ruby_ri_sitedir/IO*
 
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.7-alt1.3
+- Rebuild with Ruby 2.4.1
+
 * Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.7-alt1.2
 - Rebuild with new %%ruby_sitearchdir location
 

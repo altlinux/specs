@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 0.9.4
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby bindings for libcurl
 License: MIT/ruby
@@ -55,5 +55,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.4-alt1.1
+- Rebuild with Ruby 2.4.1
+
 * Fri Sep 01 2017 Leonid Krivoshein <klark@altlinux.org> 0.9.4-alt1
 - Initial build for Sisyphus

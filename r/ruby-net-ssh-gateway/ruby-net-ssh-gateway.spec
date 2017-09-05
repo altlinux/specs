@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.0.1
-Release: alt2.1
+Release: alt2.2
 
 Summary: A simple library to assist in establishing tunneled Net::SSH connections
 Group: Development/Ruby
@@ -48,6 +48,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Net/SSH/Gateway
 
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt2.2
+- Rebuild with Ruby 2.4.1
+
 * Wed Dec 05 2012 Led <led@altlinux.ru> 1.0.1-alt2.1
 - Rebuilt with ruby-1.9.3-alt1
 

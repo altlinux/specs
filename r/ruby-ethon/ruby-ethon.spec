@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 0.9.1 
-Release: alt1
+Release: alt1.1
  
 Summary: Very simple libcurl wrapper
 License: MIT/Ruby
@@ -54,5 +54,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.1-alt1.1
+- Rebuild with Ruby 2.4.1
+
 * Wed Mar 29 2017 Denis Medvedev <nbr@altlinux.org> 0.9.1-alt1
 - Initial sisyphus release

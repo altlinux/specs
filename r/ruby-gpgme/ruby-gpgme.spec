@@ -4,7 +4,7 @@
 
 Name: %pkgname
 Version: 2.0.13
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby interface to GnuPG Made Easy
 Group: Development/Ruby
@@ -50,6 +50,9 @@ ruby -rvendor-specific ext/gpgme/extconf.rb
 %ruby_ri_sitedir/GPGME*
 
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.13-alt1.1
+- Rebuild with Ruby 2.4.1
+
 * Wed Jul 05 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.13-alt1
 - New version
 

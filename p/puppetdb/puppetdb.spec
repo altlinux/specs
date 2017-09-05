@@ -5,7 +5,7 @@
 
 Name:           puppetdb
 Version:        4.4.0
-Release:        alt1
+Release:        alt1.1
 Summary:        Centralized Puppet Storage
 
 Group:          System/Servers
@@ -13,7 +13,6 @@ License:        Apache-2.0
 URL:            https://github.com/puppetlabs/puppetdb
 Source0:        %name-%version.tar
 Source1:        README.ALT
-
 
 %filter_from_requires \!^/etc/default/puppetdb$!d
 
@@ -109,5 +108,8 @@ chmod 0755 %rundir
 %rundir
 
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 4.4.0-alt1.1
+- Rebuild with Ruby 2.4.1
+
 * Mon May 22 2017 Gordeev Mikhail <obirvalger@altlinux.org> 4.4.0-alt1
 - Initial build in Sisyphus

@@ -2,7 +2,7 @@
 
 Name:    puppet3
 Version: 3.8.7
-Release: alt3
+Release: alt3.1
 
 Summary: A network tool for managing many disparate systems
 Group:   System/Servers
@@ -46,7 +46,7 @@ Requires: shadow-change
 Requires: /bin/systemctl
 Conflicts: ruby-semantic
 
-%filter_from_requires /^ruby(.*\(win32\|windows\|wmi-lite\|semantic\|spec_helper\).*)/d
+%filter_from_requires /^ruby(.*\(win32\|windows\|wmi-lite\|semantic\|spec_helper\|puppet\/network\/client\).*)/d
 
 %description
 Puppet lets you centrally manage every important aspect of your
@@ -209,6 +209,9 @@ install -d %buildroot%_localstatedir/puppet/ssl/private_keys
 %config(noreplace) %_sysconfdir/sysconfig/puppetmaster
 
 %changelog
+* Sun Sep 10 2017 Andrey Cherepanov <cas@altlinux.org> 3.8.7-alt3.1
+- Rebuild with Ruby 2.4.1
+
 * Thu Apr 13 2017 Ivan Zakharyaschev <imz@altlinux.org> 3.8.7-alt3
 - provider/service/systemd.rb hardcoded as defaultfor ALT.
   (This might be not quite correct, but covers most practical uses.)

@@ -1,6 +1,6 @@
 
 Name:          taskjuggler
-Version:       3.5.0
+Version:       3.6.0
 Release:       alt1
 Summary:       Project management tool
 
@@ -17,6 +17,8 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
 BuildRequires: ruby-term-ansicolor
 BuildRequires: ruby-mail
+
+%filter_from_requires /^ruby(prawn)/d
 
 %description
 TaskJuggler is a modern and powerful project management tool. Its new
@@ -55,6 +57,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %_datadir/%name/*
 
 %changelog
+* Mon Sep 11 2017 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt1
+- New version
+
 * Wed Apr 23 2014 Andrey Cherepanov <cas@altlinux.org> 3.5.0-alt1
 - New version
 

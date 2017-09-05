@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 1.2.0 
-Release: alt1
+Release: alt1.1
  
 Summary: SSH connection multiplexing: execute commands simultaneously on multiple hosts via SSH
 License: MIT/Ruby
@@ -63,5 +63,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1.1
+- Rebuild with Ruby 2.4.1
+
 * Mon Feb 16 2015 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
 - Initial build for ALT Linux

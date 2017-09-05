@@ -3,7 +3,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 1.4.8
-Release: alt1
+Release: alt1.1
 Epoch:   1
 
 Summary: Classy web-development dressed in a DSL
@@ -144,6 +144,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Rack/cdesc-Rack.ri,Rack/Builder/cdesc-Builder.
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 1:1.4.8-alt1.1
+- Rebuild with Ruby 2.4.1
+
 * Tue Jun 20 2017 Andrey Cherepanov <cas@altlinux.org> 1:1.4.8-alt1
 - Downgrade version to work with old ruby-rack
 

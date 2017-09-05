@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 0.10.4 
-Release: alt3
+Release: alt3.2
 
 Summary: An IRB alternative and runtime developer console
 License: MIT
@@ -48,6 +48,12 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %_bindir/%pkgname
 
 %changelog
+* Sun Sep 10 2017 Andrey Cherepanov <cas@altlinux.org> 0.10.4-alt3.2
+- Rebuild with Ruby 2.4.1
+
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 0.10.4-alt3.1
+- Rebuild with Ruby 2.4.1
+
 * Mon May 29 2017 Gordeev Mikhail <obirvalger@altlinux.org> 0.10.4-alt3
 - Remove doc package because exists pry-doc -- documentation plugin for pry
 

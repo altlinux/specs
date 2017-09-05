@@ -7,6 +7,7 @@
 %filter_from_requires /^ruby(fastercsv)/d
 %filter_from_requires /^ruby(ibm_db)/d
 %filter_from_requires /^ruby(java)/d
+%filter_from_requires /^ruby(mysql)/d
 %filter_from_requires /^ruby(mysqlplus)/d
 %filter_from_requires /^ruby(oci8)/d
 %filter_from_requires /^ruby(postgres-pr\/postgres-compat)/d
@@ -20,7 +21,7 @@
 
 Name: ruby-%pkgname
 Version: 4.49.0
-Release: alt2
+Release: alt2.1
 
 Summary: Sequel is a simple, flexible, and powerful SQL database access toolkit for Ruby
 License: MIT
@@ -81,6 +82,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Sun Sep 10 2017 Andrey Cherepanov <cas@altlinux.org> 4.49.0-alt2.1
+- Rebuild with Ruby 2.4.1
+
 * Fri Sep 01 2017 Alexey Shabalin <shaba@altlinux.ru> 4.49.0-alt2
 -  Revert "do not require rubygems"
 

@@ -1,7 +1,7 @@
 
 Name:    ruby-rgen
 Version: 0.7.0
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby Modelling and Generator Framework
 Group:   Development/Ruby
@@ -79,6 +79,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Sat Sep 09 2017 Andrey Cherepanov <cas@altlinux.org> 0.7.0-alt1.1
+- Rebuild with Ruby 2.4.1
+
 * Tue Apr 22 2014 Andrey Cherepanov <cas@altlinux.org> 0.7.0-alt1
 - Initial build for ALT Linux
 

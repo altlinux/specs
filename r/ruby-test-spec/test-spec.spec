@@ -4,7 +4,7 @@
 
 Name: ruby-%plugname
 Version: 0.10
-Release: alt1.1
+Release: alt1.2
 
 Summary: an RSpec-inspired interface on top of Test::Unit
 License: Ruby/MIT
@@ -45,7 +45,7 @@ Documentation files for %name
 %rdoc lib/
 
 %check
-ruby bin/specrb -Ilib:test -w -a
+%ruby_test_unit -Ilib:test test
 
 %files
 %doc README ROADMAP TODO
@@ -58,6 +58,10 @@ ruby bin/specrb -Ilib:test -w -a
 %ruby_ri_sitedir/Test/Unit/UI/RDox
 
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 0.10-alt1.2
+- Rebuild with Ruby 2.4.1
+- Use stadard macros for tests
+
 * Sat Dec 08 2012 Led <led@altlinux.ru> 0.10-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 
