@@ -1,6 +1,6 @@
 Name: libopus
-Version: 1.1.2
-Release: alt1
+Version: 1.2.1
+Release: alt1.1
 
 Summary: Opus Audio Codec library
 License: BSD-style
@@ -40,11 +40,20 @@ statically linked libopus-based software.
 
 %build
 %configure \
-	--enable-intrinsics %{subst_enable static}
+	--enable-intrinsics \
+	--enable-ambisonics \
+	--enable-check-asm \
+%ifarch x86_64
+	--disable-rtcd \
+%endif
+	%{subst_enable static}
 %make_build
 
 %install
 %makeinstall_std
+
+%check
+%make check
 
 %files
 %_libdir/*.so.*
@@ -65,6 +74,15 @@ statically linked libopus-based software.
 %endif
 
 %changelog
+* Tue Sep 05 2017 L.A. Kostis <lakostis@altlinux.ru> 1.2.1-alt1.1
+- disable run-time cpu detection only on x86_64.
+
+* Tue Sep 05 2017 L.A. Kostis <lakostis@altlinux.ru> 1.2.1-alt1
+- 1.2.1.
+- enable checks.
+- enable check-asm (to test correctness for asm optimisation).
+- enable experimental Ambisonics support.
+
 * Mon Jun 06 2016 L.A. Kostis <lakostis@altlinux.ru> 1.1.2-alt1
 - 1.1.2 (closes #31585).
 - enabled intrinsics asm optimizations.
