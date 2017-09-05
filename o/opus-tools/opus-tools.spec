@@ -1,6 +1,6 @@
 Name: opus-tools
-Version: 0.1.9
-Release: alt0.1
+Version: 0.1.10
+Release: alt1
 
 Summary: Opus Audio Codec utilities
 License: BSD-style
@@ -33,9 +33,12 @@ decode .opus files.
 %files
 %_bindir/*
 %_man1dir/*
-%doc AUTHORS COPYING ChangeLog
+%doc AUTHORS COPYING
 
 %changelog
+* Tue Sep 05 2017 L.A. Kostis <lakostis@altlinux.ru> 0.1.10-alt1
+- 0.1.10.
+
 * Mon Jun 06 2016 L.A. Kostis <lakostis@altlinux.ru> 0.1.9-alt0.1
 - 0.1.9.
 
