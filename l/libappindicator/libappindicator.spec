@@ -5,7 +5,7 @@
 
 Name: libappindicator
 Version: %ver_major.0
-Release: alt5
+Release: alt6
 Summary: Application indicators library
 
 Group: System/Libraries
@@ -14,7 +14,7 @@ Url: https://launchpad.net/%name
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version.tar.gz
-BuildRequires(pre): rpm-build-mono4 gcc
+BuildRequires(pre): gcc
 BuildRequires: gtk-doc vala-tools
 BuildRequires: libdbus-glib-devel libdbusmenu-devel
 BuildRequires: libdbusmenu-gtk2-devel libdbusmenu-gtk3-devel
@@ -24,8 +24,9 @@ BuildRequires: libgtk+3-devel libgtk+3-gir-devel
 BuildRequires: libindicator-devel libindicator-gtk3-devel
 BuildRequires: python-devel python-module-pygtk-devel
 %if_with mono
-BuildRequires: libgtk-sharp2-mono4-devel libgtk-sharp2-mono4-gapi
-BuildRequires: mono4-devel
+BuildRequires(pre): rpm-build-mono
+BuildRequires: libgtk-sharp2-devel libgtk-sharp2-gapi
+BuildRequires: mono-devel
 %endif
 
 %description
@@ -236,6 +237,9 @@ popd
 %endif
 
 %changelog
+* Wed Sep 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 12.10.0-alt6
+- Updated build dependencies.
+
 * Tue Jul 18 2017 Anton Midyukov <antohami@altlinux.org> 12.10.0-alt5
 - Disable build with mono.
 
