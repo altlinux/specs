@@ -1,6 +1,6 @@
 Name: autogen
-Version: 5.18.4
-Release: alt1.1
+Version: 5.18.12
+Release: alt1
 
 Summary: AutoGen - The Automated Program Generator
 License: %gpl3plus
@@ -12,9 +12,11 @@ Patch1: autogen-5.18.4-masquerade-deps.patch
 
 BuildPreReq: rpm-build-licenses rpm-build-compat
 
-BuildPreReq: texi2html guile18-devel libxml2-devel
+BuildPreReq: texi2html guile22-devel libxml2-devel
 # explicitly added texinfo for info files
 BuildRequires: texinfo
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 AutoGen is a tool designed to simplify the creation and maintenance
@@ -69,16 +71,11 @@ This package is needed to write programs that use AutoOpts API.
 %build
 %autoreconf
 %configure \
-	--disable-static \
-	--with-libguile
+	--disable-static
 %make_build
 
 %install
 %makeinstall_std
-
-# Move pkgconfig file to the proper place
-mkdir -p %buildroot%_pkgconfigdir/
-mv %buildroot%_datadir/pkgconfig/*.pc %buildroot%_pkgconfigdir/
 
 %files
 %doc AUTHORS TODO COPYING NEWS THANKS README VERSION
@@ -86,6 +83,7 @@ mv %buildroot%_datadir/pkgconfig/*.pc %buildroot%_pkgconfigdir/
 %_bindir/columns
 %_bindir/getdefs
 %_bindir/xml2ag
+%_libdir/%name/
 %dir %_datadir/%name
 %_datadir/%name/*
 %_infodir/%{name}*
@@ -108,6 +106,9 @@ mv %buildroot%_datadir/pkgconfig/*.pc %buildroot%_pkgconfigdir/
 %_man3dir/*.3.*
 
 %changelog
+* Mon Sep 04 2017 Mikhail Efremov <sem@altlinux.org> 5.18.12-alt1
+- Updated to 5.18.12.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 5.18.4-alt1.1
 - NMU: added BR: texinfo
 
