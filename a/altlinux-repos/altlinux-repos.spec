@@ -1,5 +1,5 @@
 Name: altlinux-repos
-Version: 0.7.1
+Version: 0.8
 Release: alt1
 
 Summary: A set of ALT repos desktop files
@@ -27,6 +27,9 @@ cp -a mirrors repositories %buildroot%_sysconfdir/apt/
 %_sysconfdir/apt/repositories
 
 %changelog
+* Fri Aug 25 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8-alt1
+- Added mirror.cs.msu.ru mirror (ALT#33802).
+
 * Mon Dec 05 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.1-alt1
 - Removed accidentally added vendors.list.d/alt.list file.
 
