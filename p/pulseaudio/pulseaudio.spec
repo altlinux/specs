@@ -1,5 +1,5 @@
 Name: pulseaudio
-Version: 10.0
+Version: 11.0
 Release: alt1
 
 Summary: PulseAudio is a networked sound server
@@ -11,13 +11,13 @@ Source: %name-%version-%release.tar
 
 BuildRequires: gcc-c++
 BuildRequires: doxygen intltool jackit-devel libalsa-devel libasyncns-devel
-BuildRequires: libavahi-devel libbluez-devel libwebrtc-devel
+BuildRequires: libavahi-devel libbluez-devel
 BuildRequires: libcap-devel libdbus-devel libgdbm-devel libudev-devel
 BuildRequires: liblirc-devel libltdl7-devel libsoxr-devel
 BuildRequires: libsndfile-devel libspeex-devel libspeexdsp-devel
 BuildRequires: libssl-devel libwrap-devel
 BuildRequires: libSM-devel libX11-devel libXtst-devel libxcbutil-devel
-BuildRequires: libgtk+2-devel libGConf-devel
+BuildRequires: libGConf-devel
 BuildRequires: libfftw3-devel libsbc-devel liborc-devel orc xmltoman
 BuildRequires: libsystemd-devel
 
@@ -195,6 +195,7 @@ touch config.rpath
     --localstatedir=/var \
     --with-access-group=audio \
     --enable-per-user-esound-socket \
+    --enable-adrian-aec \
     --disable-bluez4 \
     --disable-static \
     #
@@ -211,7 +212,7 @@ find %buildroot%_libdir -name \*.la -delete
 
 %find_lang %name
 
-%define pulselibdir %_libdir/pulse-10.0
+%define pulselibdir %_libdir/pulse-11.0
 %define pulsemoduledir %pulselibdir/modules
 
 %pre system
@@ -240,7 +241,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/zsh/site-functions/_pulseaudio
 %_datadir/bash-completion/completions/*
 
-%_libdir/pulseaudio/libpulsecore-10.0.so
+%_libdir/pulseaudio/libpulsecore-11.0.so
 
 %_libexecdir/systemd/user/pulseaudio.service
 %_libexecdir/systemd/user/pulseaudio.socket
@@ -312,7 +313,7 @@ find %buildroot%_libdir -name \*.la -delete
 %pulsemoduledir/module-jack-source.so
 
 %files -n lib%name -f %name.lang
-%doc LICENSE README todo
+%doc LICENSE README todo src/modules/echo-cancel/adrian-license.txt
 
 %dir %_sysconfdir/pulse
 %config(noreplace) %_sysconfdir/pulse/client.conf
@@ -322,7 +323,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/libpulse-mainloop-glib.so.*
 
 %dir %_libdir/pulseaudio
-%_libdir/pulseaudio/libpulsecommon-10.0.so
+%_libdir/pulseaudio/libpulsecommon-11.0.so
 %_man5dir/pulse-client.conf.5*
 
 %files -n lib%name-devel
@@ -336,6 +337,9 @@ find %buildroot%_libdir -name \*.la -delete
 %doc doxygen/html
 
 %changelog
+* Wed Sep 06 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 11.0-alt1
+- 11.0 released
+
 * Thu Jan 19 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 10.0-alt1
 - 10.0 released
 
