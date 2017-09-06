@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.54
-Release: alt5%ubt
+Release: alt6%ubt
 
 Summary: Launcher for the Steam software distribution service
 License: Proprietary
@@ -28,6 +28,7 @@ Requires: libnss
 Requires: xz
 
 BuildRequires: bash4
+BuildRequires: ca-certificates
 
 %description
 Steam is a software distribution service with an online store, automated
@@ -46,8 +47,14 @@ savegame and screenshot functionality, and many social features.
 %__rm -rf %buildroot%_bindir/%{name}deps
 %__install -Dp -m0644 lib/udev/rules.d/99-%name-controller-perms.rules %buildroot%_udevrulesdir/99-%name-controller-perms.rules
 %__install -Dp -m0644 lib/udev/rules.d/60-HTC-Vive-perms.rules %buildroot%_udevrulesdir/60-HTC-Vive-perms.rules
+
+# Fix use bash4
 %__mkdir_p %buildroot%_libexecdir/%name/bin
 %__ln_s /bin/bash4 %buildroot%_libexecdir/%name/bin/bash
+
+# Fix connection via SSL
+%__mkdir_p %buildroot%_sysconfdir/ssl/certs
+%__ln_s %_sysconfdir/pki/tls/certs/ca-bundle.crt %buildroot%_sysconfdir/ssl/certs/ca-certificates.crt
 
 %files
 %_bindir/%name
@@ -68,8 +75,12 @@ savegame and screenshot functionality, and many social features.
 %_pixmapsdir/*
 %config %_udevrulesdir/99-%name-controller-perms.rules
 %config %_udevrulesdir/60-HTC-Vive-perms.rules
+%_sysconfdir/ssl/certs/ca-certificates.crt
 
 %changelog 
+* Wed Sep 06 2017 Nazarov Denis <nenderus@altlinux.org> 1.0.0.54-alt6%ubt
+- Fix connection via SSL (ALT #33849)
+
 * Fri Sep 01 2017 Nazarov Denis <nenderus@altlinux.org> 1.0.0.54-alt5%ubt
 - Fix use bash4
 
