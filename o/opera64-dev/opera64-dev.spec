@@ -1,5 +1,5 @@
 %define		softver 49.0
-%define		buildver 2695.0
+%define		buildver 2705.0
 
 Name:		opera64-dev
 Version:	%softver.%buildver
@@ -17,7 +17,7 @@ ExclusiveArch:	x86_64
 Provides:	opera-dev
 Obsoletes:	opera-dev
 
-%add_verify_elf_skiplist %_libdir/*-linux-gnu/opera-developer/*.so
+%add_verify_elf_skiplist %_libdir/opera-developer/*.so
 %set_verify_elf_method textrel=relaxed
 
 BuildRequires: libGConf libXScrnSaver libXtst libalsa libcurl libnotify libnss libgtk+3 libgtk+2
@@ -32,26 +32,24 @@ client, web developer tools (Opera Dragonfly), and a personal web server
 %setup -q -n opera-%softver.%buildver.x86_64.linux
 
 %install
-mkdir -p %buildroot{%_bindir,%_libdir,%_datadir}
-cp -a ./lib/* %buildroot%_libdir/
-cp -a ./share/* %buildroot%_datadir
-ln -s %_libdir/x86_64-linux-gnu/opera-developer/opera-developer %buildroot%_bindir/opera-developer
-subst 's|usr/lib/|%_libdir/|g' %buildroot%_datadir/lintian/overrides/opera-developer
-subst 's|PepperFlash/libpepflashplayer.so|pepper-plugins/libpepflashplayer.so|g' %buildroot%_libdir/*-linux-gnu/opera-developer/resources/pepper_flash_config.json
+mkdir -p %buildroot/usr
+cp -a * %buildroot/usr/
+subst 's|PepperFlash/libpepflashplayer.so|pepper-plugins/libpepflashplayer.so|g' %buildroot%_libdir/opera-developer/resources/pepper_flash_config.json
 
 %post
-chmod 4755 %_libdir/x86_64-linux-gnu/opera-developer/opera_sandbox
+chmod 4755 %_libdir/opera-developer/opera_sandbox
 
 %files
-%_docdir/opera-developer
 %_bindir/*
-%_libdir/*-linux-gnu
+%_libdir/opera-developer
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*
-%_datadir/lintian
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Wed Sep 06 2017 Motsyo Gennadi <drool@altlinux.ru> 49.0.2705.0-alt1
+- packaged 49.0.2705.0 snapshot
+
 * Fri Sep 01 2017 Motsyo Gennadi <drool@altlinux.ru> 49.0.2695.0-alt1
 - packaged 49.0.2695.0 snapshot
 
