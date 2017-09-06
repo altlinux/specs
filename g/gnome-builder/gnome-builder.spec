@@ -11,7 +11,7 @@
 
 Name: gnome-builder
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Builder - Develop software for GNOME
 License: LGPLv2+
@@ -54,7 +54,7 @@ Requires: indent xmllint
 
 BuildRequires: /proc gcc-c++ flex mm-common yelp-tools gtk-doc
 BuildRequires: libappstream-glib-devel desktop-file-utils
-BuildRequires: clang-devel libgtk+3-devel >= %gtk_ver
+BuildRequires: clang4.0-devel libgtk+3-devel >= %gtk_ver
 BuildRequires: libgtksourceview3-devel >= %gtksourceview_ver
 BuildRequires: libgit2-glib-devel >= %git2_ver libdevhelp-devel >= %devhelp_ver
 BuildRequires: libpcre-devel libgjs-devel >= %gjs_ver libwebkit2gtk-devel
@@ -228,6 +228,9 @@ This package provides noarch data needed for Gnome Builder to work.
 
 
 %changelog
+* Thu Sep 07 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt2
+- rebuilt against libclang.so.4
+
 * Tue May 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
 - 3.24.2
 
