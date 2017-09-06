@@ -11,7 +11,7 @@
 
 Name: lib%_name
 Version: 0.23.8
-Release: alt1
+Release: alt2
 
 Summary: Library for loading and sharing PKCS#11 modules
 Group: System/Libraries
@@ -28,6 +28,7 @@ Source: https://github.com/p11-glue/%_name/releases/download/%version/%_name-%ve
 
 Source1: p11-kit-extract-trust
 Patch: %name-0.23.8-alt-lfs.patch
+Patch1: %name-0.23.8-proxy-refresh-slots.patch
 
 Requires: ca-certificates
 Requires: pkcs11-trust-module = %version-%release
@@ -77,7 +78,7 @@ BuildArch: noarch
 %description devel-doc
 %_name provides a way to load and enumerate PKCS#11 modules, as well
 as a standard configuration setup for installing PKCS#11 modules in
-such a way that they're discoverable.
+such a way that they\'re discoverable.
 
 This package contains development documentation for %_name library.
 
@@ -85,6 +86,7 @@ This package contains development documentation for %_name library.
 %setup -n %_name-%version
 %{?_enable_snapshot:NOCONFIGURE=1 ./autogen.sh}
 %patch
+%patch1 -p1
 
 %build
 %autoreconf
@@ -159,6 +161,9 @@ EOF
 %endif
 
 %changelog
+* Wed Sep 06 2017 Paul Wolneykien <manowar@altlinux.org> 0.23.8-alt2
+- Refresh the slot list each time C_GetSlotList() is called (patch).
+
 * Thu Aug 24 2017 Yuri N. Sedunov <aris@altlinux.org> 0.23.8-alt1
 - 0.23.8 (0.23.7-24-g26312a8)
 

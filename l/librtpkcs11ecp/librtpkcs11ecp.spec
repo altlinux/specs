@@ -6,12 +6,14 @@
 Summary: Rutoken PKCS#11 Library
 Name: librtpkcs11ecp
 Version: 1.5.3.0
-Release: alt3
+Release: alt4
 License: Proprietary
 Url: https://www.rutoken.ru/support/download/pkcs/
 Group: System/Configuration/Hardware
 Source0: %name-%version.tar
 ExclusiveArch: %ix86 x86_64
+
+Requires: pcsc-lite-ccid
 
 BuildRequires: libpcsclite-devel
 
@@ -34,12 +36,20 @@ cp %name-x86_64.so %buildroot%_libdir/pkcs11/librtpkcs11ecp.so
 %endif
 ln -s pkcs11/librtpkcs11ecp.so %buildroot%_libdir/
 
+install -D -m0644 rutokenecp.module \
+        %buildroot%_sysconfdir/pkcs11/modules/rutokenecp.module
+
 %files
 %doc license.ru.html
 %_libdir/*.so
 %_libdir/pkcs11/*.so
+%config(noreplace) %_sysconfdir/pkcs11/modules/rutokenecp.module
 
 %changelog
+* Wed Sep 06 2017 Paul Wolneykien <manowar@altlinux.org> 1.5.3.0-alt4
+- Add the module description for p11-kit.
+- Require pcsc-lite-ccid.
+
 * Thu Apr 06 2017 Andrey Cherepanov <cas@altlinux.org> 1.5.3.0-alt3
 - Correct sources (separate .so files as vendor recommends)
 

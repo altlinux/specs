@@ -2,7 +2,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.9
-Release: alt16
+Release: alt17
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -27,6 +27,7 @@ Patch13: pam_pkcs11-0.6.9-oid-mapper-profiles.patch
 Patch14: pam_pkcs11-0.6.9-setpin.patch
 Patch15: pam_pkcs11-0.6.9-setpin-config.patch
 Patch16: pam_pkcs11-0.6.9-sslconf.patch
+Patch17: pam_pkcs11-0.6.9-blacklist.patch
 
 %add_findreq_skiplist %_sysconfdir/pam.d/*
 Requires: pam-config PAM(pam_mkhomedir.so) PAM(pam_pkcs11.so) PAM(pam_succeed_if.so)
@@ -95,6 +96,7 @@ as a separate package.
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 
 # fixup configs
 sed -i -e '
@@ -193,6 +195,10 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ldap_mapper.so
 
 %changelog
+* Wed Sep 06 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt17
+- Skip soft slots by default. Also mask slots by manufacturer
+  and description.
+
 * Mon Sep 04 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt16
 - Fix: Pass the OpenSSL config name directly.
 

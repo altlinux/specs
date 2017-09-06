@@ -1,6 +1,6 @@
 Name: pkcs11-profiles
 Version: 0.1.0
-Release: alt4
+Release: alt5
 
 Summary: Set of profiles for PAM PKCS11 configuration
 License: GPLv3+
@@ -16,30 +16,41 @@ Summary: RuToken ECP PAM PKCS11 module configuration
 License: GPLv3+
 Group: System/Configuration/Other
 Requires: pam_pkcs11 >= 0.6.9-alt9
-Requires: librtpkcs11ecp
-Requires: pcsc-lite-ccid
+Requires: librtpkcs11ecp >= 1.5.3.0-alt4
 
 %description rutokenecp
 RuToken ECP PAM PKCS11 module configuration
+
+%package p11-kit-proxy
+Summary: PKCS#11 Kit Proxy module configuration
+License: GPLv3+
+Group: System/Configuration/Other
+Requires: pam_pkcs11 >= 0.6.9-alt17
+Requires: libp11-kit >= 0.23.8-alt2
+
+%description p11-kit-proxy
+PKCS#11 Kit Proxy module configuration
 
 %prep
 %setup
 
 %install
-
-%ifarch x86_64
-install -pDm644 modules.avail/rutokenecp-x86_64 %buildroot%_sysconfdir/security/pam_pkcs11/modules.avail/rutokenecp
-%else
-install -pDm644 modules.avail/rutokenecp %buildroot%_sysconfdir/security/pam_pkcs11/modules.avail/rutokenecp
-%endif
-
-install -pDm644 profiles/rutokenecp %buildroot%_sysconfdir/security/pam_pkcs11/profiles/rutokenecp
+%makeinstall_std libdir=%_libdir sysconfdir=%_sysconfdir
 
 %files rutokenecp
 %_sysconfdir/security/pam_pkcs11/modules.avail/rutokenecp
 %_sysconfdir/security/pam_pkcs11/profiles/rutokenecp
 
+%files p11-kit-proxy
+%_sysconfdir/security/pam_pkcs11/modules.avail/p11_kit_proxy
+%_sysconfdir/security/pam_pkcs11/profiles/p11_kit_proxy
+
 %changelog
+* Wed Sep 06 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt5
+- Add 'p11-kit-proxy' subpackage with 'p11_kit_proxy' profile and module.
+- Rely on librtpkcs11ecp >= 1.5.3.0-alt4 for pcsc-lite-ccid.
+- Fixed the description of the RuTokenECP module.
+
 * Mon Aug 14 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt4
 - Require pcsc-lite-ccid for RuTokenECP.
 
