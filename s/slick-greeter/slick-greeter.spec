@@ -3,7 +3,7 @@
 
 Name: slick-greeter
 Version: 1.0.8
-Release: alt1
+Release: alt2
 Summary: A slick-looking LightDM greeter
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -15,6 +15,7 @@ Source2: %name.gschema.override
 Requires: lightdm
 Requires: gnome-icon-theme gnome-icon-theme-symbolic gnome-themes-standard
 Requires: /usr/share/design/current
+Requires: onboard
 
 Provides: lightdm-greeter
 
@@ -75,6 +76,10 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %{_mandir}/man1/slick-greeter-check-hidpi.1.*
 
 %changelog
+* Mon Sep 4 2017 Vladimir Didenko <cow@altlinux.org> 1.0.8-alt2
+- 1.0.8-14-g690df6a
+- add onboard to requires
+
 * Mon Jul 3 2017 Vladimir Didenko <cow@altlinux.org> 1.0.8-alt1
 - 1.0.8-2-g4613ca9
 

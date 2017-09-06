@@ -2,7 +2,7 @@
 
 Name: cinnamon
 Version: 3.4.6
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -202,6 +202,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Mon Sep 4 2017 Vladimir Didenko <cow@altlinux.org> 3.4.6-alt2
+- Show lightdm-settings module in cinnamon-settings
+
 * Thu Aug 24 2017 Vladimir Didenko <cow@altlinux.org> 3.4.6-alt1
 - 3.4.6
 
