@@ -1,5 +1,5 @@
 Name: crtools
-Version: 3.3
+Version: 3.4
 #define pre 
 %define ver %version%{?pre:%pre}
 Release: alt1
@@ -100,6 +100,9 @@ export CFLAGS="%optflags"
 
 
 %changelog
+* Thu Sep 07 2017 Denis Pynkin <dans@altlinux.org> 3.4-alt1
+- updated
+
 * Sat Jul 29 2017 Denis Pynkin <dans@altlinux.org> 3.3-alt1
 - updated
 

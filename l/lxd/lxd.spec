@@ -11,7 +11,7 @@
 %define lxduser lxd
 
 Name:		lxd
-Version:	2.16
+Version:	2.17
 Release:	alt1
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
@@ -55,6 +55,7 @@ BuildRequires:	golang(gopkg.in/yaml.v2)
 
 # lxd
 BuildRequires:	lxc-devel
+BuildRequires:	libacl-devel
 BuildRequires:	golang(github.com/coreos/go-systemd/activation)
 BuildRequires:	golang(github.com/dustinkirkland/golang-petname)
 BuildRequires:	golang(github.com/golang/protobuf/proto)
@@ -172,6 +173,9 @@ cp -av scripts/lx* %buildroot/%_bindir/
 %go_path/src/*
 
 %changelog
+* Wed Sep 06 2017 Denis Pynkin <dans@altlinux.org> 2.17-alt1
+- new version 2.17
+
 * Sat Jul 29 2017 Denis Pynkin <dans@altlinux.org> 2.16-alt1
 - new version 2.16
 

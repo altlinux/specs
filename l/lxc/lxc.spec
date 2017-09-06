@@ -2,9 +2,11 @@
 # lxc: linux Container library
 #
 # (C) Copyright IBM Corp. 2007, 2008
+# (C) ALT Linux Team 2009-2017
 #
 # Authors:
 # Daniel Lezcano <dlezcano at fr.ibm.com>
+# Denis Pynkin <dans at altlinux.org>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -26,8 +28,8 @@
 %define init_script systemd,sysvinit
 
 Name: lxc
-Version: 2.0.8
-Release: alt4
+Version: 2.1.0
+Release: alt1
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -76,6 +78,7 @@ manage and debug your containers.
 Summary:	%{name} init scripts for SysVinit
 Group:		System/Configuration/Other
 Requires:	%{name}
+BuildArch:	noarch
 %description	sysvinit
 The %{name}-sysvinit package contains init scripts for SysVinit
 # Skip automatic dependency to optional lsb scripts
@@ -93,6 +96,7 @@ Group:		System/Configuration/Other
 Obsoletes: %name-python3
 Requires: python3
 BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
 BuildRequires: rpm-build-python3
 %description	-n python3-module-%name
 The %{name}-python package contains %{name} bindings for Python 3.
@@ -171,6 +175,7 @@ mkdir -p %buildroot%_cachedir/%name
 %defattr(-,root,root)
 %{python3_sitelibdir}/_lxc*
 %{python3_sitelibdir}/lxc/*
+%{python3_sitelibdir}/*.egg-*
 
 %files devel
 %defattr(-,root,root)
@@ -180,6 +185,12 @@ mkdir -p %buildroot%_cachedir/%name
 
 
 %changelog
+* Wed Sep 06 2017 Denis Pynkin <dans@altlinux.org> 2.1.0-alt1
+- Version updated
+- New script 'lxc-update-config' can be used to upgrade existing
+  legacy LXC configurations to valid LXC 2.1
+- Updated copyright info in spec file due a lot of local changes
+
 * Tue Aug 29 2017 Denis Pynkin <dans@altlinux.org> 2.0.8-alt4
 - Based on patch by Michael Shigorin: introduced systemd knob (on by default)
 - Removed dependency to lsb scripts for lxc-sysvinit package
