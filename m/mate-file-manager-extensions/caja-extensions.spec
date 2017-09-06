@@ -1,17 +1,19 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel pkgconfig(dbus-1) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel pkgconfig(dbus-1) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define oldname caja-extensions
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name caja-extensions
-%define version 1.16.0
+%define version 1.18.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.16
+%global branch 1.18
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 298c7255b82986eeba72fff06f59479deae0b9d0}
@@ -23,11 +25,11 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel pkgconfi
 
 Name:           mate-file-manager-extensions
 Summary:        Set of extensions for caja file manager
-Version:        %{branch}.0
+Version:        %{branch}.1
 %if 0%{?rel_build}
-Release:        alt1_1
+Release:        alt1_4
 %else
-Release:        alt1_1
+Release:        alt1_4
 %endif
 License:        GPLv2+
 URL:            http://mate-desktop.org
@@ -47,80 +49,102 @@ BuildRequires:  mate-common
 BuildRequires:  mate-file-manager-devel
 BuildRequires:  mate-desktop-devel
 BuildRequires:  libdbus-glib-devel
-BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
-BuildRequires: libgupnp libgupnp-devel libgupnp-gir-devel
+BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:  libgupnp libgupnp-devel libgupnp-gir-devel
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  gajim
 Source44: import.info
-
 
 %description
 Extensions for the caja file-browser, open-terminal,
 image-converter, sendto and share
 
+
 %package common
 Group: Graphical desktop/MATE
 Summary:    Common files for %{oldname}
 BuildArch:  noarch
+
 %description common
 %{summary}.
 
 %package -n mate-file-manager-image-converter
 Group: Graphical desktop/MATE
 Summary:    MATE file manager image converter extension
-Requires:   %{name}-common = %{version}
+Requires:   %{name}-common = %{version}-%{release}
 Requires:   /usr/bin/convert
+
 %description -n mate-file-manager-image-converter
 The caja-image-converter extension allows you to
 re-size/rotate images from Caja.
 
+
 %package -n mate-file-manager-open-terminal
 Group: Graphical desktop/MATE
 Summary:    Mate-file-manager extension for an open terminal shortcut
-Requires:   %{name}-common = %{version}
+Requires:   %{name}-common = %{version}-%{release}
+
 %description -n mate-file-manager-open-terminal
 The caja-open-terminal extension provides a right-click "Open
 Terminal" option for mate-file-manager users who prefer that option.
 
+
 %package -n mate-file-manager-sendto
 Group: Graphical desktop/MATE
 Summary:    MATE file manager sendto
-Requires:   %{name}-common = %{version}
+Requires:   %{name}-common = %{version}-%{release}
+
 %description -n mate-file-manager-sendto
 The caja-sendto extension provides 'send to' functionality
 to the MATE Desktop file-manager, Caja.
 
+
 %package -n mate-file-manager-sendto-devel
 Group: Graphical desktop/MATE
 Summary:    Development libraries and headers for caja-sendto
-Requires:   %{name}-common = %{version}
-Requires:   mate-file-manager-sendto = %{version}
+Requires:   %{name}-common = %{version}-%{release}
+
 %description -n mate-file-manager-sendto-devel
 Development libraries and headers for caja-sendto
+
 
 %package -n mate-file-manager-share
 Group: Graphical desktop/MATE
 Summary:    Easy sharing folder via Samba (CIFS protocol)
-Requires:   %{name}-common = %{version}
+Requires:   %{name}-common = %{version}-%{release}
 Requires:   samba
+
 %description -n mate-file-manager-share
 Caja extension designed for easier folders 
 sharing via Samba (CIFS protocol) in *NIX systems.
 
+
 %package -n mate-file-manager-beesu
 Group: Graphical desktop/MATE
 Summary:    MATE file manager beesu
-Requires:   %{name}-common = %{version}
+Requires:   %{name}-common = %{version}-%{release}
 Requires:   beesu
+
 %description -n mate-file-manager-beesu
 Caja beesu extension for open files as superuser
+
 
 %package -n mate-file-manager-wallpaper
 Group: Graphical desktop/MATE
 Summary:    MATE file manager wallpaper
-Requires:   %{name}-common = %{version}
+Requires:   %{name}-common = %{version}-%{release}
+
 %description -n mate-file-manager-wallpaper
 Caja wallpaper extension, allows to quickly set wallpaper.
+
+
+%package -n caja-xattr-tags
+Group: Graphical desktop/MATE
+Summary:    MATE file manager xattr-tags
+Requires:   %{name}-common = %{version}-%{release}
+
+%description -n caja-xattr-tags
+Caja xattr-tags extension, allows to quickly set xattr-tags.
 
 
 %prep
@@ -140,7 +164,6 @@ NOCONFIGURE=1 ./autogen.sh
 %build
 %configure \
      --disable-schemas-compile \
-     --with-gtk=3.0            \
      --enable-image-converter  \
      --enable-open-terminal    \
      --enable-sendto           \
@@ -150,7 +173,7 @@ NOCONFIGURE=1 ./autogen.sh
      --enable-wallpaper        \
      --disable-static
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 %install
 %{makeinstall_std}
@@ -215,8 +238,15 @@ cp %{SOURCE2} %{buildroot}/%{_sysconfdir}/samba/
 %{_libdir}/caja/extensions-2.0/libcaja-wallpaper.so
 %{_datadir}/caja/extensions/libcaja-wallpaper.caja-extension
 
+%files -n caja-xattr-tags
+%{_libdir}/caja/extensions-2.0/libcaja-xattr-tags.so
+%{_datadir}/caja/extensions/libcaja-xattr-tags.caja-extension
+
 
 %changelog
+* Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.1-alt1_4
+- new fc release
+
 * Wed Oct 12 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
 - update to mate 1.16
 

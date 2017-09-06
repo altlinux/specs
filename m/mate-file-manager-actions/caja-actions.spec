@@ -4,30 +4,32 @@ BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/
 BuildRequires: /usr/bin/db2html
 %define _libexecdir %_prefix/libexec
 %define oldname caja-actions
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary:	Caja extension for customizing the context menu
 Name:		mate-file-manager-actions
-Version:	1.8.1
+Version:	1.8.3
 Release:	alt1_3
 Group:		Graphical desktop/MATE
 License:	GPLv2+ and LGPLv2+
 
-# upstream is located at github, but links from tag releases doesn't match copied link in
-# web-browser, in result fedora-rewiew-tool will fail.
-# so i decided to release on fedorapeople to have a valid download link
-URL:		https://github.com/NiceandGently/caja-actions
-Source0:	http://raveit65.fedorapeople.org/Mate/SOURCE/%{oldname}-%{version}.tar.xz
+URL:		https://github.com/raveit65/%{oldname}
+Source0:	https://github.com/raveit65/%{oldname}/releases/download/v%{version}/%{oldname}-%{version}.tar.xz
+
+# only for rhel
+Patch1:     caja-actions_0001-Revert-No-version-in-documentation-install-path.patch
 
 BuildRequires:	mate-file-manager-devel
 BuildRequires:	libuuid-devel
 BuildRequires:	libSM-devel
-BuildRequires:	libunique3-devel
 BuildRequires:	mate-common
 BuildRequires:	libxml2-devel
 BuildRequires:	yelp-tools
-BuildRequires: libgtop-devel libgtop-gir-devel
+BuildRequires:	libgtop-devel libgtop-gir-devel
 BuildRequires:	dblatex
 
-Requires:       mate-file-manager-actions-doc = %{version}
+Requires:       mate-file-manager-actions-doc = %{version}-%{release}
 Source44: import.info
 
 
@@ -46,8 +48,8 @@ This package contains the documentation for %{oldname}
 
 %package	devel
 Summary:	Development tools for the caja-actions
-Group:		Development/C
-Requires:	mate-file-manager-actions = %{version}
+Group:		Development/Other
+Requires:	%{name} = %{version}-%{release}
 
 %description	devel
 This package contains headers and shared libraries needed for development
@@ -55,17 +57,21 @@ with caja-actions.
 
 %prep
 %setup -n %{oldname}-%{version} -q
-#NOCONFIGURE=1 ./autogen.sh
+
+# move doc dir for rhel
+%if 0%{?rhel}
+%patch1 -p1 -b .0001
+NOCONFIGURE=1 ./autogen.sh
+%endif
 
 %build
 %configure \
-	--with-gtk=3 \
     --enable-gtk-doc \
     --enable-html-manuals \
     --enable-pdf-manuals \
-    --enable-deprecated
+    --enable-deprecate
 
-make %{?_smp_mflags} 
+%make_build 
 
 %install
 %{makeinstall_std}
@@ -74,16 +80,23 @@ find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
 find $RPM_BUILD_ROOT -type f -name "*.a" -exec rm -f {} ';'
 
 # clean docs dirs
-rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version}/INSTALL
-rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version}/ChangeLog-2008
-rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version}/ChangeLog-2009
-rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version}/ChangeLog-2010
-rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version}/ChangeLog-2011
-rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version}/ChangeLog-2012
-rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version}/MAINTAINERS
-
-# move doc dir for > f19
-mv $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version} $RPM_BUILD_ROOT%{_docdir}/%{oldname}
+%if 0%{?rhel}
+rm -f $RPM_BUILD_ROOT%{_docdir}/%{%{oldname}-%{version}}/INSTALL
+rm -f $RPM_BUILD_ROOT%{_docdir}/%{%{oldname}-%{version}}/ChangeLog-2008
+rm -f $RPM_BUILD_ROOT%{_docdir}/%{%{oldname}-%{version}}/ChangeLog-2009
+rm -f $RPM_BUILD_ROOT%{_docdir}/%{%{oldname}-%{version}}/ChangeLog-2010
+rm -f $RPM_BUILD_ROOT%{_docdir}/%{%{oldname}-%{version}}/ChangeLog-2011
+rm -f $RPM_BUILD_ROOT%{_docdir}/%{%{oldname}-%{version}}/ChangeLog-2012
+rm -f $RPM_BUILD_ROOT%{_docdir}/%{%{oldname}-%{version}}/MAINTAINERS
+%else
+rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}/INSTALL
+rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}/ChangeLog-2008
+rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}/ChangeLog-2009
+rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}/ChangeLog-2010
+rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}/ChangeLog-2011
+rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}/ChangeLog-2012
+rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}/MAINTAINERS
+%endif
 
 %find_lang %{oldname} --with-gnome --all-name
 
@@ -107,9 +120,15 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/cact.desktop
 %{_datadir}/applications/cact.desktop
 
 %files doc -f %{oldname}.lang
+%if 0%{?fedora} > 19 || 0%{?rhel} > 7
 %{_docdir}/caja-actions/html/
 %{_docdir}/caja-actions/pdf/
 %{_docdir}/caja-actions/objects-hierarchy.odg
+%else
+%{_docdir}/caja-actions-%{version}/html/
+%{_docdir}/caja-actions-%{version}/pdf/
+%{_docdir}/caja-actions-%{version}/objects-hierarchy.odg
+%endif
 
 %files devel
 %{_includedir}/caja-actions/
@@ -117,6 +136,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/cact.desktop
 
 
 %changelog
+* Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.3-alt1_3
+- new fc release
+
 * Fri Oct 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_3
 - update to 1.16
 

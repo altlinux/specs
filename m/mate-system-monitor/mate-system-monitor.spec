@@ -3,13 +3,15 @@ Group: Graphical desktop/MATE
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ libgio-devel pkgconfig(giomm-2.4) pkgconfig(glib-2.0) pkgconfig(glibmm-2.4) pkgconfig(gmodule-2.0)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           mate-system-monitor
-Version:        1.16.0
-Release:        alt1_1
+Version:        1.18.0
+Release:        alt1_4
 Summary:        Process and resource monitor
 License:        GPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.16/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.18/%{name}-%{version}.tar.xz
 
 BuildRequires: libdbus-glib-devel
 BuildRequires: desktop-file-utils
@@ -42,7 +44,7 @@ sed -i 's/OnlyShowIn=MATE;/OnlyShowIn=MATE;X-Cinnamon;/g' mate-system-monitor.de
         --disable-schemas-compile \
         --enable-systemd
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 
 %install
@@ -57,6 +59,9 @@ desktop-file-install --delete-original             \
 %files -f %{name}.lang
 %doc AUTHORS NEWS COPYING README
 %{_bindir}/mate-system-monitor
+%{_libexecdir}/mate-system-monitor/msm-kill
+%{_libexecdir}/mate-system-monitor/msm-renice
+%{_datadir}/polkit-1/actions/org.mate.mate-system-monitor.policy
 %{_datadir}/appdata/mate-system-monitor.appdata.xml
 %{_datadir}/applications/mate-system-monitor.desktop
 %{_datadir}/pixmaps/mate-system-monitor/
@@ -65,6 +70,9 @@ desktop-file-install --delete-original             \
 
 
 %changelog
+* Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.0-alt1_4
+- new fc release
+
 * Wed Oct 12 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
 - update to mate 1.16
 

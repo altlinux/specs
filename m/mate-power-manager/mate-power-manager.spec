@@ -1,17 +1,19 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/docbook2man pkgconfig(dbus-1) pkgconfig(gdk-2.0) pkgconfig(gdk-x11-2.0) pkgconfig(gtk+-2.0) pkgconfig(unique-1.0) pkgconfig(x11) pkgconfig(xext) pkgconfig(xproto) pkgconfig(xrandr) pkgconfig(xrender)
+BuildRequires: /usr/bin/desktop-file-install pkgconfig(dbus-1) pkgconfig(x11) pkgconfig(xext) pkgconfig(xproto) pkgconfig(xrandr)
 # END SourceDeps(oneline)
 %filter_from_requires /^hal$/d
 %define _libexecdir %_prefix/libexec
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-power-manager
-%define version 1.16.0
+%define version 1.18.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.16
+%global branch 1.18
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 3a68372f379644cc50d4cd9bb6f012653eddb683}
@@ -24,9 +26,9 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/docbook2man pkgconfig(dbus
 Name:          mate-power-manager
 Version:       %{branch}.0
 %if 0%{?rel_build}
-Release:       alt1_1
+Release:       alt1_5
 %else
-Release:       alt1_1
+Release:       alt1_5
 %endif
 Summary:       MATE power management service
 License:       GPLv2+
@@ -37,6 +39,9 @@ URL:           http://pub.mate-desktop.org
 %{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
+
+# https://github.com/mate-desktop/mate-power-manager/commit/7facec4
+Patch1:        mate-power-manager_0001-don-t-abort-on-unknown-DBus-signal-name.patch
 
 BuildRequires: libcairo-devel
 BuildRequires: libdbus-glib-devel
@@ -51,9 +56,7 @@ BuildRequires: mate-panel-devel
 BuildRequires: libGL-devel
 BuildRequires: libpangox-compat-devel
 BuildRequires: libpopt-devel
-BuildRequires: libunique3-devel
 BuildRequires: libupower-devel libupower-gir-devel
-BuildRequires: xmlto
 Source44: import.info
 Requires: upower
 
@@ -66,6 +69,8 @@ displaying icons and handling user callbacks in an interactive MATE session.
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
+%patch1 -p1 -b .0001
+
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
 %else # 0%{?rel_build}
@@ -75,11 +80,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 %build
 %configure --disable-static --enable-applets \
-     --enable-docbook-docs \
-     --with-gtk=3.0 \
      --disable-schemas-compile
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 %install
 %{makeinstall_std}
@@ -88,9 +91,6 @@ desktop-file-install                               \
      --delete-original                             \
      --dir=%{buildroot}%{_datadir}/applications    \
 %{buildroot}%{_datadir}/applications/*.desktop
-
-# remove needless gsettings convert file
-rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-power-manager.convert
 
 %find_lang %{name} --with-gnome --all-name
 
@@ -116,6 +116,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-power-manager.convert
 
 
 %changelog
+* Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.0-alt1_5
+- new fc release
+
 * Thu Oct 13 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_1
 - update to 1.16
 

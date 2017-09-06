@@ -3,14 +3,16 @@ Group: Graphical desktop/MATE
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-user-guide
-%define version 1.16.0
+%define version 1.18.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.16
+%global branch 1.18
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 61aec06d978154fea42f1f42d845fdb710c924f7}
@@ -24,9 +26,9 @@ Name:        mate-user-guide
 Summary:     User Guide for MATE desktop
 Version:     %{branch}.0
 %if 0%{?rel_build}
-Release:     alt1_1
+Release:     alt1_2
 %else
-Release:     alt1_1
+Release:     alt1_2
 %endif
 License:     GPLv2+
 URL:         http://mate-desktop.org
@@ -61,7 +63,7 @@ NOCONFIGURE=1 ./autogen.sh
 %build
 %configure
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 %install
 %{makeinstall_std}
@@ -80,6 +82,9 @@ $RPM_BUILD_ROOT%{_datadir}/applications/mate-user-guide.desktop
 
 
 %changelog
+* Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.0-alt1_2
+- new fc release
+
 * Wed Oct 12 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
 - update to mate 1.16
 

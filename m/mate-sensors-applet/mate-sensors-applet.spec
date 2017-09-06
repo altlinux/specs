@@ -1,23 +1,25 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/xsltproc libX11-devel libgio-devel pkgconfig(cairo) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/xsltproc libX11-devel libgio-devel pkgconfig(cairo) pkgconfig(glib-2.0)
 # END SourceDeps(oneline)
 # dlopen plugins with plugin_name ?
 %set_verify_elf_method unresolved=relaxed
 BuildRequires: libXext-devel
 %define _libexecdir %_prefix/libexec
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           mate-sensors-applet
-Version:        1.16.0
-Release:        alt1_1
+Version:        1.19.0
+Release:        alt1_3
 Summary:        MATE panel applet for hardware sensors
 Group:          Graphical desktop/MATE
 License:        GPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.16/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.19/%{name}-%{version}.tar.xz
 
 BuildRequires:  libdbus-glib-devel
-BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:  libatasmart-devel
-BuildRequires: libnotify-devel libnotify-gir-devel
+BuildRequires:  libnotify-devel libnotify-gir-devel
 BuildRequires:  libXNVCtrl-devel
 BuildRequires:  libsensors3-devel
 BuildRequires:  mate-common
@@ -38,8 +40,8 @@ repeated intervals.
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The mate-sensors-applet-devel package contains libraries and header files for
@@ -50,7 +52,6 @@ developing applications that use mate-sensors-applet.
 
 %build
 %configure \
-    --with-gtk=3.0 \
     --disable-static \
     --disable-schemas-compile \
     --enable-libnotify \
@@ -59,7 +60,7 @@ developing applications that use mate-sensors-applet.
 # remove unused-direct-shlib-dependency
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -89,6 +90,9 @@ find $RPM_BUILD_ROOT -name "*.la" -exec rm -rf {} ';'
 
 
 %changelog
+* Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_3
+- new fc release
+
 * Wed Oct 12 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
 - update to mate 1.16
 

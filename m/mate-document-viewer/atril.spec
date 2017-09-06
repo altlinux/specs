@@ -1,21 +1,23 @@
 Group: Publishing
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libgio-devel pkgconfig(cairo) pkgconfig(cairo-pdf) pkgconfig(cairo-ps) pkgconfig(gail) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-unix-print-2.0) pkgconfig(gtk+-x11-2.0) pkgconfig(sm) pkgconfig(webkit-1.0) pkgconfig(x11) t1lib-devel zlib-devel
+BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libgio-devel pkgconfig(cairo) pkgconfig(cairo-pdf) pkgconfig(cairo-ps) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(sm) pkgconfig(x11) t1lib-devel zlib-devel
 # END SourceDeps(oneline)
 BuildRequires: pkgconfig(libxml-2.0)
 ## important!!! # https://bugzilla.altlinux.org/show_bug.cgi?id=28634
 Requires: mate-desktop
 %define _libexecdir %_prefix/libexec
 %define oldname atril
-%define fedora 24
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name atril
-%define version 1.16.0
+%define version 1.19.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.16
+%global branch 1.19
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 5bba3723566489763aafaad3669c77f60a23d2e0}
@@ -26,7 +28,7 @@ Requires: mate-desktop
 %{!?rel_build:%global git_tar %{oldname}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-document-viewer
-Version:       %{branch}.0
+Version:       %{branch}.1
 %if 0%{?rel_build}
 Release:       alt1_1
 %else
@@ -42,12 +44,12 @@ URL:           http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
 
-BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
-BuildRequires: libpoppler-gir-devel libpoppler-glib-devel
+BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:  libpoppler-gir-devel libpoppler-glib-devel
 BuildRequires:  libXt-devel
-BuildRequires: libsecret-devel libsecret-gir-devel
+BuildRequires:  libsecret-devel libsecret-gir-devel
 BuildRequires:  libglade-devel
-BuildRequires: libtiff-devel libtiffxx-devel
+BuildRequires:  libtiff-devel libtiffxx-devel
 BuildRequires:  libjpeg-devel
 BuildRequires:  libspectre-devel
 BuildRequires:  desktop-file-utils
@@ -57,11 +59,10 @@ BuildRequires:  libcairo-gobject-devel
 BuildRequires:  yelp-tools
 
 # for the xps back-end
-BuildRequires: libgxps-devel libgxps-gir-devel
+BuildRequires:  libgxps-devel libgxps-gir-devel
 # for the caja properties page
 BuildRequires:  mate-file-manager-devel
 # for the dvi back-end
-#BuildRequires:  kpathsea-devel
 %if 0%{?fedora} >= 24
 BuildRequires:  libkpathsea-devel
 %else
@@ -71,22 +72,16 @@ BuildRequires:  libkpathsea-devel
 BuildRequires:  libdjvu-devel
 # for epub back-end
 %if 0%{?fedora}
-BuildRequires: libwebkit2gtk-devel libwebkit2gtk-gir-devel
+BuildRequires:  libwebkit2gtk-devel libwebkit2gtk-gir-devel
 %endif
 %if 0%{?rhel}
-BuildRequires: libjavascriptcoregtk3-devel libjavascriptcoregtk3-gir-devel libwebkitgtk3-devel libwebkitgtk3-gir-devel libwebkitgtk3-jsc
+BuildRequires:  libjavascriptcoregtk3-devel libjavascriptcoregtk3-gir-devel libwebkitgtk3-devel libwebkitgtk3-gir-devel libwebkitgtk3-jsc
 %endif
 
-Requires:       mate-document-viewer-libs = %{version}
+Requires:       mate-document-viewer-libs = %{version}-%{release}
 #  fix (#974791)
 Requires:       libmate-desktop
 Requires:       mathjax
-
-%if 0%{?fedora} && 0%{?fedora} <= 24
-Provides: mate-document-viewe%{?_isa} = %{version}-%{release}
-Provides: mate-document-viewer = %{version}-%{release}
-Obsoletes: mate-document-viewer < %{version}-%{release}
-%endif
 Source44: import.info
 Patch33: mate-document-viewer-1.4.0-alt-link.patch
 Patch34: evince-2.32.0-alt.patch
@@ -103,11 +98,6 @@ hypertext navigation, table-of-contents bookmarks and editing of forms.
 %package -n mate-document-viewer-libs
 Group: System/Libraries
 Summary: Libraries for the mate-document-viewer
-%if 0%{?fedora} && 0%{?fedora} <= 24
-Provides: mate-document-viewer-libs%{?_isa} = %{version}-%{release}
-Provides: mate-document-viewer-libs = %{version}-%{release}
-Obsoletes: mate-document-viewer-libs < %{version}-%{release}
-%endif
 
 %description -n mate-document-viewer-libs
 This package contains shared libraries needed for mate-document-viewer.
@@ -116,12 +106,7 @@ This package contains shared libraries needed for mate-document-viewer.
 %package devel
 Group: Development/C
 Summary: Support for developing back-ends for the mate-document-viewer
-Requires: mate-document-viewer-libs = %{version}
-%if 0%{?fedora} && 0%{?fedora} <= 24
-Provides: mate-document-viewer-devel%{?_isa} = %{version}-%{release}
-Provides: mate-document-viewer-devel = %{version}-%{release}
-Obsoletes: mate-document-viewer-devel < %{version}-%{release}
-%endif
+Requires: mate-document-viewer-libs = %{version}-%{release}
 
 %description devel
 This package contains libraries and header files needed for
@@ -162,13 +147,8 @@ This package contains a backend to let atril display xps files.
 %package caja
 Group: Graphical desktop/MATE
 Summary: Mate-document-viewer extension for caja
-Requires: mate-document-viewer = %{version}
+Requires: %{name} = %{version}-%{release}
 Requires: mate-file-manager
-%if 0%{?fedora} && 0%{?fedora} <= 24
-Provides: mate-document-viewer-caja%{?_isa} = %{version}-%{release}
-Provides: mate-document-viewer-caja = %{version}-%{release}
-Obsoletes: mate-document-viewer-caja < %{version}-%{release}
-%endif
 
 %description caja
 This package contains the mate-document-viewer extension for the
@@ -178,7 +158,7 @@ It adds an additional tab called "Document" to the file properties dialog.
 %package thumbnailer
 Group: Publishing
 Summary: Atril thumbnailer extension for caja
-Requires: mate-document-viewer = %{version}
+Requires: %{name} = %{version}-%{release}
 Requires: mate-file-manager
 BuildArch: noarch
 
@@ -200,7 +180,7 @@ NOCONFIGURE=1 ./autogen.sh
 %patch34 -p1
 
 %build
-autoreconf -fisv
+%autoreconf
 %configure \
         --disable-static \
         --disable-schemas-compile \
@@ -211,13 +191,12 @@ autoreconf -fisv
         --enable-t1lib=no \
         --enable-pixbuf \
         --enable-xps \
-        --with-gtk=3.0 \
         --enable-epub
 
 # remove unused-direct-shlib-dependency
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 
 %install
@@ -252,7 +231,6 @@ fi
 %{_datadir}/atril/*
 %{_datadir}/applications/atril.desktop
 %{_datadir}/icons/hicolor/*/apps/atril.*
-%{_libexecdir}/atril-convert-metadata
 %{_libexecdir}/atrild
 %{_datadir}/dbus-1/services/org.mate.atril.Daemon.service
 %{_datadir}/glib-2.0/schemas/org.mate.Atril.gschema.xml
@@ -314,6 +292,9 @@ fi
 
 
 %changelog
+* Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.1-alt1_1
+- new fc release
+
 * Fri Oct 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_1
 - update to 1.16
 

@@ -3,14 +3,16 @@ Group: Graphical desktop/Other
 BuildRequires: /usr/bin/desktop-file-install libICE-devel pkgconfig(x11)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-terminal
-%define version 1.16.1
+%define version 1.18.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.16
+%global branch 1.18
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit ac33ed09bb41ba717df3722cc71e25c1aa5134c5}
@@ -24,9 +26,9 @@ Summary:        Terminal emulator for MATE
 Name:           mate-terminal
 Version:        %{branch}.1
 %if 0%{?rel_build}
-Release:        alt1_1
+Release:        alt1_3
 %else
-Release:        alt1_1
+Release:        alt1_3
 %endif
 License:        GPLv3+
 URL:            http://mate-desktop.org
@@ -38,7 +40,7 @@ URL:            http://mate-desktop.org
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
 #Default to black bg white fg, unlimited scrollback, turn off use theme default
-Patch0:        mate-terminal_better_defaults-1.15.1.patch
+Patch1:        mate-terminal_better_defaults-1.15.1.patch
 
 BuildRequires: libdconf-devel
 BuildRequires: desktop-file-utils
@@ -62,7 +64,7 @@ clickable URLs.
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
-%patch0 -p1 -b .better_defaults
+%patch1 -p1 -b .better_defaults
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -75,7 +77,7 @@ NOCONFIGURE=1 ./autogen.sh
 %configure --disable-static                \
            --disable-schemas-compile       
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 
 %install
@@ -107,6 +109,9 @@ EOF
 
 
 %changelog
+* Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.1-alt1_3
+- new fc release
+
 * Tue Oct 25 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.1-alt1_1
 - new fc release
 

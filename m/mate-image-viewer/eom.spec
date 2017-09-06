@@ -1,18 +1,20 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize imake libXt-devel libgio-devel libgtk+2-gir-devel pkgconfig(gmodule-2.0) pkgconfig(pygtk-2.0) pkgconfig(x11) python-devel python-module-pygobject-devel xorg-cf-files
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize imake libXt-devel libgio-devel pkgconfig(gmodule-2.0) pkgconfig(x11) xorg-cf-files
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define oldname eom
-%define fedora 24
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name eom
-%define version 1.16.0
+%define version 1.19.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.16
+%global branch 1.19
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 7ba7e03f4d5e2ecd3c77f9d9394521b7608ca05f}
@@ -25,9 +27,9 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 Name:          mate-image-viewer
 Version:       %{branch}.0
 %if 0%{?rel_build}
-Release:       alt1_1
+Release:       alt1_4
 %else
-Release:       alt1_1
+Release:       alt1_4
 %endif
 Summary:       Eye of MATE image viewer
 License:       GPLv2+ and LGPLv2+ 
@@ -43,6 +45,7 @@ BuildRequires: mate-common
 BuildRequires: zlib-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: libjpeg-devel
+BuildRequires: libpeas-demo libpeas-devel libpeas-gir-devel
 BuildRequires: libxml2-devel
 BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires: mate-desktop-devel
@@ -55,8 +58,9 @@ BuildRequires: desktop-file-utils
 
 #fix rhbz (#1008249)
 Requires:      libmate-desktop
-
-%if 0%{?fedora} && 0%{?fedora} > 19
+# libpeas isn't splited in rhel7
+%if 0%{?fedora}
+Requires:      libpeas-python-loader
 %endif
 Source44: import.info
 
@@ -66,15 +70,11 @@ MATE desktop. It can view single image files in a variety of formats, as
 well as large image collections.
 Eye of Mate is extensible through a plugin system.
 
+
 %package devel
 Summary:  Support for developing plugins for the eom image viewer
-Group:    Development/C
-Requires: mate-image-viewer = %{version}
-%if 0%{?fedora} && 0%{?fedora} > 19
-Provides: mate-image-viewer-devel%{?_isa} = %{version}-%{release}
-Provides: mate-image-viewer-devel = %{version}-%{release}
-Obsoletes: mate-image-viewer-devel < %{version}-%{release}
-%endif
+Group:    Development/Other
+Requires: %{name} = %{version}-%{release}
 
 %description devel
 Development files for eom
@@ -92,13 +92,11 @@ NOCONFIGURE=1 ./autogen.sh
 
 %build
 %configure \
-   --with-gtk=3.0 \
-   --disable-python \
    --with-x \
    --disable-schemas-compile \
    --enable-introspection=yes
            
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 %install
 %{makeinstall_std}
@@ -138,6 +136,9 @@ find ${RPM_BUILD_ROOT} -type f -name "*.la" -exec rm -f {} ';'
 
 
 %changelog
+* Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_4
+- new fc release
+
 * Wed Oct 12 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
 - update to mate 1.16
 

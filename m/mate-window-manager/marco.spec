@@ -1,18 +1,20 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize imake libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXt-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(pangoxft) pkgconfig(xcomposite) pkgconfig(xcursor) pkgconfig(xrender) xorg-cf-files
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize imake libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXt-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(pangoxft) pkgconfig(xcomposite) pkgconfig(xcursor) pkgconfig(xrender) xorg-cf-files
 # END SourceDeps(oneline)
 BuildRequires: libcanberra-gtk2-devel
 %define _libexecdir %_prefix/libexec
 %define oldname marco
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name marco
-%define version 1.16.0
+%define version 1.19.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.16
+%global branch 1.19
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 62a708d461e08275d6b85985f5fa13fa8fbc85f7}
@@ -25,9 +27,9 @@ BuildRequires: libcanberra-gtk2-devel
 Name:          mate-window-manager
 Version:       %{branch}.0
 %if 0%{?rel_build}
-Release:       alt1_1
+Release:       alt1_5
 %else
-Release:       alt1_1
+Release:       alt1_5
 %endif
 Summary:       MATE Desktop window manager
 License:       LGPLv2+ and GPLv2+
@@ -38,16 +40,6 @@ URL:           http://mate-desktop.org
 %{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{oldname}-%{version}.tar.xz}
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
-
-# needed for fixing initial-setup issue, rhbz (#962009)
-Source1:       mini-window.png
-Source2:       stock_delete.png
-Source3:       stock_maximize.png
-Source4:       stock_minimize.png
-Source5:       window.png
-
-# needed for fixing initial-setup issue, rhbz (#962009)
-Patch0:        marco_add-pixbuf-inline-icons_1.9.x.patch
 
 BuildRequires: desktop-file-utils
 BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
@@ -63,15 +55,12 @@ BuildRequires: libstartup-notification-devel
 BuildRequires: yelp-tools
 
 Requires:      libmate-desktop
-Requires:      libmarco-private = %{version}
+Requires:      libmarco-private = %{version}-%{release}
 
 # http://bugzilla.redhat.com/873342
 # https://bugzilla.redhat.com/962009
 Provides: firstboot(windowmanager) = marco
 
-Provides: mate-window-manager%{?_isa} = %{version}-%{release}
-Provides: mate-window-manager = %{version}-%{release}
-Obsoletes: mate-window-manager < %{version}-%{release}
 # rhbz (#1297958)
 Obsoletes:     %{oldname} < 1.12.1-2
 Source44: import.info
@@ -79,11 +68,10 @@ Source44: import.info
 Patch33: stop-spamming-xsession-errors.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=598995
 Patch34: Dont-focus-ancestor-window-on-a-different-workspac.patch
-# https://bugzilla.gnome.org/show_bug.cgi?id=604319
-Patch35: metacity-2.28-xioerror-unknown-display.patch
 
 %description
 MATE Desktop window manager
+
 
 # to avoid that marco will install in other DE's by compiz-0.8.10
 %package -n libmarco-private
@@ -91,22 +79,21 @@ Group: System/Libraries
 Summary:       Libraries for marco
 License:       LGPLv2+
 # rhbz (#1297958)
-Conflicts:     mate-window-manager < 1.12.1-2
+Conflicts:     %{oldname} < 1.12.1-2
 
 %description -n libmarco-private
 This package provides Libraries for marco.
 
+
 %package devel
 Group: Development/C
 Summary:       Development files for marco
-Requires:      mate-window-manager = %{version}
-Requires:      libmarco-private = %{version}
-Provides:      mate-window-manager-devel%{?_isa} = %{version}-%{release}
-Provides:      mate-window-manager-devel = %{version}-%{release}
-Obsoletes:     mate-window-manager-devel < %{version}-%{release}
+Requires:      %{name} = %{version}-%{release}
+Requires:      libmarco-private = %{version}-%{release}
 
 %description devel
 Development files for marco
+
 
 %prep
 %setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
@@ -119,32 +106,17 @@ NOCONFIGURE=1 ./autogen.sh
 %endif # 0%{?rel_build}
 %patch33 -p1
 %patch34 -p1
-%patch35 -p1
-
-# needed for missing `po/Makefile.in.in'
-#cp %{SOURCE1} src/mini-window.png
-#cp %{SOURCE2} src/stock_delete.png
-#cp %{SOURCE3} src/stock_maximize.png
-#cp %{SOURCE4} src/stock_minimize.png
-#cp %{SOURCE5} src/window.png
-
-#%patch0 -p1 -b .inline-icons
-
-# needed for the patch and for git snapshot builds
-#autoreconf -if
-#NOCONFIGURE=1 ./autogen.sh
 
 %build
 %autoreconf -fisv
 %configure --disable-static           \
            --disable-schemas-compile  \
-           --with-gtk=3.0             \
            --with-x
 
 # fix rpmlint unused-direct-shlib-dependency warning
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 
 %install
@@ -164,6 +136,7 @@ desktop-file-install                                \
 %doc AUTHORS COPYING README ChangeLog
 %{_bindir}/marco
 %{_bindir}/marco-message
+%{_bindir}/marco-theme-viewer
 %{_datadir}/applications/marco.desktop
 %{_datadir}/themes/ClearlooksRe
 %{_datadir}/themes/Dopple-Left
@@ -196,6 +169,9 @@ desktop-file-install                                \
 
 
 %changelog
+* Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_5
+- new fc release
+
 * Thu Oct 06 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
 - update to mate 1.16
 

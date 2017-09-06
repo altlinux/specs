@@ -1,24 +1,26 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/glib-gettextize pkgconfig(gio-2.0) pkgconfig(glib-2.0) python-devel
+BuildRequires: /usr/bin/glib-gettextize pkgconfig(gio-2.0) pkgconfig(glib-2.0)
 # END SourceDeps(oneline)
 Requires: altlinux-freedesktop-menu-mate
 %define _libexecdir %_prefix/libexec
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           mate-menus
-Version:        1.16.0
-Release:        alt1_1
+Version:        1.18.0
+Release:        alt1_4
 Summary:        Displays menus for MATE Desktop
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.16/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.18/%{name}-%{version}.tar.xz
 
 BuildRequires:  chrpath
 BuildRequires:  gobject-introspection-devel
 BuildRequires:  mate-common
-BuildRequires: python-base python-dev
+BuildRequires:  python-devel
 
-Requires:		libmate-menus = %{version}
+Requires:		libmate-menus = %{version}-%{release}
 
 # we don't want to provide private python extension libs
 %{echo 
@@ -36,6 +38,7 @@ Displays menus for MATE Desktop
 %package -n libmate-menus
 Group: System/Libraries
 Summary: Shared libraries for mate-menus
+Requires:	%{name} = %{version}-%{release}
 
 %description -n libmate-menus
 Shared libraries for mate-menus
@@ -43,7 +46,7 @@ Shared libraries for mate-menus
 %package preferences-category-menu
 Group: System/Libraries
 Summary: Categories for the preferences menu
-Requires:	libmate-menus = %{version}
+Requires:	libmate-menus = %{version}-%{release}
 
 %description preferences-category-menu
 Categories for the preferences menu
@@ -51,7 +54,7 @@ Categories for the preferences menu
 %package devel
 Group: Development/C
 Summary: Development files for mate-menus
-Requires:	libmate-menus = %{version}
+Requires:	libmate-menus = %{version}-%{release}
 
 %description devel
 Development files for mate-menus
@@ -73,7 +76,7 @@ sed -i -e '/<MergeFile>applications-merged\/games-categories.menu<\/MergeFile>/ 
  --enable-python \
  --enable-introspection=yes
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 
 %install
@@ -106,6 +109,9 @@ chrpath --delete $RPM_BUILD_ROOT%{python_sitelibdir}/matemenu.so
 
 
 %changelog
+* Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.0-alt1_4
+- new fc release
+
 * Thu Oct 06 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
 - update to mate 1.16
 

@@ -1,16 +1,18 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize imake libXt-devel libgio-devel libgtk+2-gir-devel pkgconfig(gdk-2.0) pkgconfig(gdk-x11-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) xorg-cf-files
+BuildRequires: /usr/bin/glib-gettextize imake libXt-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) xorg-cf-files
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name libmatekbd
-%define version 1.16.0
+%define version 1.18.2
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.16
+%global branch 1.18
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 5e8b69cf7c6d031cbb0b0f01a7518e72146c0af1}
@@ -21,11 +23,11 @@ BuildRequires: /usr/bin/glib-gettextize imake libXt-devel libgio-devel libgtk+2-
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           libmatekbd
-Version:        %{branch}.0
+Version:        %{branch}.2
 %if 0%{?rel_build}
-Release:        alt1_1
+Release:        alt1_3
 %else
-Release:        alt1_1
+Release:        alt1_3
 %endif
 Summary:        Libraries for mate kbd
 License:        LGPLv2+
@@ -38,10 +40,10 @@ URL:            http://mate-desktop.org
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
 BuildRequires:  desktop-file-utils
-BuildRequires: gsettings-desktop-schemas-devel gsettings-desktop-schemas-gir-devel
-BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:  gsettings-desktop-schemas-devel gsettings-desktop-schemas-gir-devel
+BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:  libICE-devel
-BuildRequires: libxklavier-devel libxklavier-gir-devel
+BuildRequires:  libxklavier-devel libxklavier-gir-devel
 BuildRequires:  mate-common
 BuildRequires:  gobject-introspection-devel
 Source44: import.info
@@ -53,7 +55,7 @@ Libraries for matekbd
 %package devel
 Group: Development/C
 Summary:  Development libraries for libmatekbd
-Requires: libmatekbd
+Requires: %{name} = %{version}-%{release}
 
 %description devel
 Development libraries for libmatekbd
@@ -74,12 +76,11 @@ autoreconf -fisv
 
 %configure                   \
    --disable-static          \
-   --with-gtk=3.0            \
    --disable-schemas-compile \
    --with-x                  \
    --enable-introspection=yes
   
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 
 %install
@@ -106,7 +107,11 @@ find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 %{_libdir}/libmatekbd.so
 %{_datadir}/gir-1.0/Matekbd-1.0.gir
 
+
 %changelog
+* Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.2-alt1_3
+- new fc release
+
 * Wed Oct 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_1
 - new fc release
 

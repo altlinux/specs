@@ -1,18 +1,20 @@
 Group: Toys
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize imake libXt-devel libgio-devel pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) xorg-cf-files
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize imake libXt-devel libgio-devel pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) xorg-cf-files
 # END SourceDeps(oneline)
 BuildRequires: libsystemd-login-devel
 %define _libexecdir %_prefix/libexec
-%define fedora 24
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-screensaver
-%define version 1.16.0
+%define version 1.18.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.16
+%global branch 1.18
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit d5b35083e4de1d7457ebd937172bb0054e1fa089}
@@ -23,11 +25,11 @@ BuildRequires: libsystemd-login-devel
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-screensaver
-Version:        %{branch}.0
+Version:        %{branch}.1
 %if 0%{?rel_build}
-Release:        alt1_1
+Release:        alt1_3
 %else
-Release:        alt1_1
+Release:        alt1_3
 %endif
 Summary:        MATE Screensaver
 License:        GPLv2+ and LGPLv2+
@@ -44,7 +46,7 @@ Requires:       pam_gnome-keyring
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
-BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:  libX11-devel
 BuildRequires:  libXScrnSaver-devel
 BuildRequires:  libXinerama-devel
@@ -53,14 +55,14 @@ BuildRequires:  libXtst-devel
 BuildRequires:  libXxf86misc-devel
 BuildRequires:  libXxf86vm-devel
 BuildRequires:  libmatekbd-devel
-BuildRequires: libnotify-devel libnotify-gir-devel
+BuildRequires:  libnotify-devel libnotify-gir-devel
 BuildRequires:  mate-common
 BuildRequires:  mate-desktop-devel
 BuildRequires:  mate-menus-devel
 BuildRequires:  libGL-devel
 BuildRequires:  libpam0-devel
-BuildRequires: libsystemd-devel libudev-devel
-BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
+BuildRequires:  libsystemd-devel libudev-devel
+BuildRequires:  xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
 BuildRequires:  xmlto
 Source44: import.info
 Patch33: mate-screensaver-1.8.0-alt-pam.patch
@@ -74,7 +76,7 @@ simple, sane, secure defaults and be well integrated with the desktop.
 %package devel
 Group: Toys
 Summary: Development files for mate-screensaver
-Requires: %{name}%{?_isa} = %{version}
+Requires: %{name} = %{version}-%{release}
 
 %description devel
 Development files for mate-screensaver
@@ -95,7 +97,6 @@ NOCONFIGURE=1 ./autogen.sh
 %build
 %configure                          \
             --with-x                \
-            --with-gtk=3.0          \
             --disable-schemas-compile \
             --enable-docbook-docs   \
             --with-mit-ext          \
@@ -109,7 +110,7 @@ NOCONFIGURE=1 ./autogen.sh
                         \
             --without-console-kit
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 gcc -o %name-chkpwd-helper $RPM_OPT_FLAGS %SOURCE45 -lpam
 
 
@@ -163,6 +164,9 @@ install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 
 
 %changelog
+* Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.1-alt1_3
+- new fc release
+
 * Mon Oct 10 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
 - update to mate 1.16
 
