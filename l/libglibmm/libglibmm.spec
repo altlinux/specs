@@ -6,7 +6,7 @@
 %define api_ver 2.4
 
 Name: libglibmm
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: C++ wrapper for GLib
@@ -97,6 +97,9 @@ mm-common-prepare --force --copy
 %_datadir/devhelp/books/%rname-%api_ver
 
 %changelog
+* Mon Sep 04 2017 Yuri N. Sedunov <aris@altlinux.org> 2.52.1-alt1
+- 2.52.1
+
 * Fri Jun 23 2017 Yuri N. Sedunov <aris@altlinux.org> 2.52.0-alt1
 - 2.52.0
 
