@@ -1,13 +1,13 @@
 Name: ffmpegthumbnailer
-Summary: Lightweight video thumbnailer that can be used by file managers
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
+Summary: Lightweight video thumbnailer that can be used by file managers
 License: GPLv2
 Group: Graphics
-Url: http://code.google.com/p/ffmpegthumbnailer/
 
-Source0: http://ffmpegthumbnailer.googlecode.com/files/%name-%version.tar.gz
+Url: http://code.google.com/p/ffmpegthumbnailer/
+Source: http://ffmpegthumbnailer.googlecode.com/files/%name-%version.tar.gz
 
 BuildRequires: gcc-c++ libavformat-devel libjpeg-devel libpng-devel libswscale-devel cmake libswresample-devel libavfilter-devel libavresample-devel libpostproc-devel
 
@@ -51,7 +51,7 @@ developers to generate thumbnails in their projects
 %cmake_build
 
 %install
-%make -C BUILD install DESTDIR=%buildroot
+%makeinstall_std -C BUILD
 
 %files
 %doc AUTHORS ChangeLog README
@@ -68,6 +68,10 @@ developers to generate thumbnails in their projects
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Sep 07 2017 Michael Shigorin <mike@altlinux.org> 2.2.0-alt2
+- removed utf8 dirt from videothumbnailertest.cpp (lcc cringes at that)
+- minor spec cleanup
+
 * Tue Jun 13 2017 Anton Farygin <rider@altlinux.ru> 2.2.0-alt1
 - new version
 
