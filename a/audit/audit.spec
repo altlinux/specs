@@ -1,10 +1,15 @@
+%def_disable static
+%def_without bootstrap
+%def_with ldap
+%def_with prelude
+
 Name: audit
 Version: 2.7.7
-Release: alt1%ubt
+Release: alt2%ubt
 
 Packager: Anton Farygin <rider@altlinux.com>
 
-Summary: User space tools for 2.6 kernel auditing
+Summary: User space tools for Linux kernel 2.6+ auditing
 
 License: GPL
 Group: Monitoring
@@ -15,13 +20,20 @@ Patch0: %name-%version-alt.patch
 Requires: lib%{name}1 = %version-%release
 Requires: service >= 0.5.26-alt1
 BuildRequires(pre):rpm-build-ubt
+
+%if_without bootstrap
 # Automatically added by buildreq on Wed Mar 04 2009
-BuildRequires: glibc-devel-static libkrb5-devel libldap-devel perl-XML-Parser python-devel swig libprelude-devel intltool
+BuildRequires: libkrb5-devel perl-XML-Parser python-devel swig intltool
+%endif
+
+%{?_enable_static:BuildRequires: glibc-devel-static}
+%{?_with_prelude:BuildRequires: libprelude-devel}
+%{?_with_ldap:BuildRequires: libldap-devel}
 
 %description
 The audit package contains the user space utilities for
 storing and searching the audit records generate by
-the audit subsystem in the Linux 2.6 kernel.
+the audit subsystem in the Linux 2.6+ kernel.
 
 %package -n lib%{name}1
 Summary: Dynamic library for audit framework
@@ -68,18 +80,27 @@ The python-module-%name package contains the bindings so that libaudit
 and libauparse can be used by python.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup
+%patch -p1
 
 %build
 %autoreconf
 
-%configure --sbindir=/sbin --libdir=%_libdir --disable-static --with-prelude
+%configure \
+	--sbindir=/sbin \
+	--libdir=%_libdir \
+%if_with bootstrap
+	--without-python \
+	--without-python3 \
+%endif
+	%{?!_with_ldap:--disable-zos-remote} \
+	%{subst_enable static} \
+	%{subst_with prelude}
 
 %make_build CFLAGS=-D_GNU_SOURCE
 
 %install
-make DESTDIR=%buildroot install
+%makeinstall_std
 
 install -d %buildroot%_logdir/%name
 install -d %buildroot%_sysconfdir/audispd/plugins.d
@@ -130,8 +151,12 @@ install -pD -m644 rules/10-base-config.rules %buildroot%_sysconfdir/%name/rules.
 %attr(750,root,root) /sbin/autrace
 %attr(750,root,root) /sbin/audispd
 %attr(750,root,root) /sbin/audisp-remote
+%if_with prelude
 %attr(750,root,root) /sbin/audisp-prelude
+%endif
+%if_with ldap
 %attr(750,root,root) /sbin/audispd-zos-remote
+%endif
 %attr(750,root,root) %_bindir/aulastlog
 %attr(750,root,root) %_bindir/aulast
 %attr(750,root,root) %_bindir/ausyscall
@@ -170,10 +195,18 @@ install -pD -m644 rules/10-base-config.rules %buildroot%_sysconfdir/%name/rules.
 %_pkgconfigdir/*
 %_man3dir/*
 
+%if_without bootstrap
 %files -n python-module-%name
 %python_sitelibdir/*
+%endif
 
 %changelog
+* Thu Sep 07 2017 Michael Shigorin <mike@altlinux.org> 2.7.7-alt2%ubt
+- BOOTSTRAP:
+  + make krb5/ldap/prelude/python support conditional
+  + make zos-remote plugin build depend on ldap support explicitly
+- minor spec cleanup
+
 * Thu Jun 22 2017 Anton Farygin <rider@altlinux.ru> 2.7.7-alt1%ubt
 - new version
 
