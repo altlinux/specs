@@ -1,6 +1,6 @@
 Name: lxde
 Version: 1.0
-Release: alt13
+Release: alt14
 Summary: Virtual package for install all parts of LXDE
 Group: Graphical desktop/Other
 License: GPL
@@ -31,7 +31,7 @@ License: GPL
 BuildArch: noarch
 Requires: lxde-common lxde-lxpanel lxde-lxsession pcmanfm2 lxde-freedesktop-menu menu-cache lxde-lxappearance lxde-lxsession-edit
 Requires: lxde-lxrandr lxde-lxshortcut lxde-lxinput lxde-lxtask lxde-icon-theme gpicview leafpad lxde-lxhotkey
-Requires: ConsoleKit2 polkit-sysvinit
+Requires: ConsoleKit2 polkit-sysvinit nm-sysvinit
 Conflicts: lxde lxde-lxpolkit
 
 %description sysvinit
@@ -42,6 +42,9 @@ Conflicts: lxde lxde-lxpolkit
 %files sysvinit
 
 %changelog
+* Thu Sep 07 2017 Anton Midyukov <antohami@altlinux.org> 1.0-alt14
+- Added requires nm-sysvinit for lxde-sysvinit
+
 * Thu Feb 16 2017 Anton Midyukov <antohami@altlinux.org> 1.0-alt13
 - Added subpackage lxde-sysvinit
 - Added requires lxde-lxhotkey
