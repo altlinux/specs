@@ -1,19 +1,21 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xsltproc libXext-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(ice) pkgconfig(upower-glib) pkgconfig(x11) pkgconfig(xau) pkgconfig(xrender)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xsltproc libXext-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(ice) pkgconfig(x11) pkgconfig(xau) pkgconfig(xrender)
 # END SourceDeps(oneline)
 BuildRequires(pre): browser-plugins-npapi-devel
 %define _libexecdir %_prefix/libexec
 %define oldname mate-session-manager
-%define fedora 24
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-session-manager
-%define version 1.16.0
+%define version 1.19.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.16
+%global branch 1.19
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit af58c2ecd98fe68360635f0e566b81e4b8c7be4d}
@@ -28,9 +30,9 @@ Summary:        MATE Desktop session manager
 License:        GPLv2+
 Version:        %{branch}.0
 %if 0%{?rel_build}
-Release:        alt2_1
+Release:        alt1_3
 %else
-Release:        alt2_0.2%{?git_rel}
+Release:        alt1_3
 %endif
 URL:            http://mate-desktop.org
 
@@ -42,11 +44,11 @@ URL:            http://mate-desktop.org
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
-BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:  libSM-devel
 BuildRequires:  mate-common
 BuildRequires:  libpangox-compat-devel
-BuildRequires: libsystemd-devel libudev-devel
+BuildRequires:  libsystemd-devel libudev-devel
 BuildRequires:  xmlto
 BuildRequires:  libXtst-devel
 BuildRequires:  xorg-xtrans-devel
@@ -60,6 +62,8 @@ Requires: mate-polkit
 Requires: polkit
 # for gsettings shemas
 Requires: libmate-desktop
+# for /bin/dbus-launch
+Requires: dbus-tools-gui
 Source44: import.info
 Patch33: mate-session-manager-cflags.patch
 Provides: mate-session-manager = %version-%release
@@ -73,7 +77,13 @@ manager such as MDM. It will load all necessary applications for a
 full-featured user session.
 
 %prep
-%setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
+%if 0%{?rel_build}
+%setup -n %{oldname}-%{version} -q
+
+%else
+%setup -q -n %{oldname}-%{commit}
+
+%endif
 
 %if 0%{?rel_build}
 # for releases
@@ -95,7 +105,7 @@ NOCONFIGURE=1 ./autogen.sh
     --disable-schemas-compile \
     --with-x
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 %install
 %{makeinstall_std}
@@ -178,6 +188,9 @@ sed -i -e s,Exec=mate-session,Exec=%_bindir/startmate, %buildroot%_datadir/xsess
 
 
 %changelog
+* Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_3
+- new fc release
+
 * Tue Oct 25 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt2_1
 - fix the value of 'Exec' field in mate.desktop (closes: #32656)
 

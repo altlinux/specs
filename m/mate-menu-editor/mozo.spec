@@ -5,12 +5,13 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/g
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define oldname mozo
-%define fedora 24
-%global branch 1.16
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global branch 1.18
 
 Name:           mate-menu-editor
 Version:        %{branch}.0
-Release:        alt1_1
+Release:        alt1_3
 Summary:        MATE Desktop menu editor
 License:        LGPLv2+
 URL:            http://mate-desktop.org
@@ -23,9 +24,6 @@ BuildRequires:  python-module-pygobject3-common-devel
 BuildRequires:  python-devel
 
 Requires:       mate-menus
-
-%if 0%{?fedora} && 0%{?fedora} > 20
-%endif
 
 BuildArch:  noarch
 #alt32083
@@ -45,7 +43,7 @@ MATE Desktop menu editor
 %build
 %configure
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 %install
 %{makeinstall_std}
@@ -68,6 +66,9 @@ desktop-file-install                                  \
 
 
 %changelog
+* Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.0-alt1_3
+- new fc release
+
 * Thu Oct 13 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_1
 - new fc release
 

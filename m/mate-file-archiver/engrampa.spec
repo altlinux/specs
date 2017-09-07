@@ -5,14 +5,16 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-compile-resources /us
 BuildRequires: libmagic-devel libSM-devel
 %define _libexecdir %_prefix/libexec
 %define oldname engrampa
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name engrampa
-%define version 1.16.0
+%define version 1.19.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.16
+%global branch 1.19
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit f4611c3411c44e792f729a0780c31b0aa55fe004}
@@ -25,9 +27,9 @@ BuildRequires: libmagic-devel libSM-devel
 Name:          mate-file-archiver
 Version:       %{branch}.0
 %if 0%{?rel_build}
-Release:       alt2_1
+Release:       alt1_4
 %else
-Release:       alt2_0.3%{?git_rel}
+Release:       alt1_4
 %endif
 Summary:       MATE Desktop file archiver
 License:       GPLv2+ and LGPLv2+
@@ -42,18 +44,27 @@ URL:           http://mate-desktop.org
 BuildRequires:  mate-common
 BuildRequires:  desktop-file-utils
 BuildRequires:  libmagic-devel
-BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
-BuildRequires: libjson-glib libjson-glib-devel libjson-glib-gir-devel
+BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:  libjson-glib libjson-glib-devel libjson-glib-gir-devel
 BuildRequires:  mate-file-manager-devel
 BuildRequires:  libSM-devel
 Source44: import.info
 Patch33: file-roller-2.28.2-alt-7z.patch
 
-
 %description
 Mate File Archiver is an application for creating and viewing archives files,
 such as zip, xv, bzip2, cab, rar and other compress formats.
 
+
+
+%package -n mate-file-manager-archiver
+Summary: Mate-file-manager extension for mount archiver
+Group: Graphical desktop/MATE
+Requires: %name = %EVR
+
+
+%description -n mate-file-manager-archiver
+Mate-file-manager extension for mount archiver
 
 %prep
 %setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
@@ -75,7 +86,7 @@ NOCONFIGURE=1 ./autogen.sh
    --enable-magic          \
    --disable-packagekit
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 
 %install
@@ -96,18 +107,25 @@ find %{buildroot} -name "*.la" -exec rm -f {} ';'
 %{_bindir}/engrampa
 %{_libexecdir}/engrampa
 %{_libexecdir}/engrampa-server
-%{_libdir}/caja/extensions-2.0/libcaja-engrampa.so
 %{_datadir}/engrampa
 %{_datadir}/appdata/engrampa.appdata.xml
 %{_datadir}/applications/engrampa.desktop
-%{_datadir}/caja/extensions/libcaja-engrampa.caja-extension
 %{_datadir}/dbus-1/services/org.mate.Engrampa.service
 %{_datadir}/icons/hicolor/*/apps/*.png
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 %{_datadir}/glib-2.0/schemas/org.mate.engrampa.gschema.xml
 
+%files -n mate-file-manager-archiver
+%{_libdir}/caja/extensions-2.0/libcaja-engrampa.so
+%{_datadir}/caja/extensions/libcaja-engrampa.caja-extension
+
+
 
 %changelog
+* Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_4
+- new fc release
+- split mate-file-manager-archiver subpackage (ALT#33641)
+
 * Mon Oct 31 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt2_1
 - fixed zip archive encoding (closes: #32689)
 

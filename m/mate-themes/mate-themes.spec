@@ -3,16 +3,18 @@ Group: Graphical desktop/Other
 BuildRequires: /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-themes
-%define version 3.22.4
+%define version 3.22.13
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
 %global branch 3.22
 
-%global rel_ver 3.22.4
+%global rel_ver 3.22.13
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 59b3286ac467f19e9bce39783e71836ced239b7b}
@@ -25,9 +27,9 @@ BuildRequires: /usr/bin/glib-gettextize
 Name:           mate-themes
 Version:        %{rel_ver}
 %if 0%{?rel_build}
-Release:        alt1_1
+Release:        alt1_2
 %else
-Release:        alt1_1
+Release:        alt1_2
 %endif
 Summary:        MATE Desktop themes
 License:        GPLv2+
@@ -41,8 +43,8 @@ BuildArch:      noarch
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
 BuildRequires:  mate-common
-BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
-BuildRequires: libgdk-pixbuf-devel libgdk-pixbuf-gir-devel
+BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:  libgdk-pixbuf-devel libgdk-pixbuf-gir-devel
 
 Requires:       mate-icon-theme
 Requires:       libgtk-engines-default
@@ -66,7 +68,7 @@ NOCONFIGURE=1 ./autogen.sh
 %build
 %configure --enable-icon-mapping
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 %install
 %{makeinstall_std}
@@ -96,6 +98,7 @@ fi
 %{_datadir}/themes/BlackMATE/
 %{_datadir}/themes/BlueMenta/
 %{_datadir}/themes/Blue-Submarine/
+%{_datadir}/themes/ContrastHigh/
 %{_datadir}/themes/ContrastHighInverse/
 %{_datadir}/themes/GreenLaguna/
 %{_datadir}/themes/Green-Submarine/
@@ -109,6 +112,9 @@ fi
 
 
 %changelog
+* Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.22.13-alt1_2
+- new fc release
+
 * Tue Nov 01 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.22.4-alt1_1
 - new fc release
 

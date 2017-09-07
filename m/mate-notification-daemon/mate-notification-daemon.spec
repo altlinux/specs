@@ -3,14 +3,16 @@ Group: System/Libraries
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache libgio-devel pkgconfig(dbus-1) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-3.0)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-notification-daemon
-%define version 1.16.0
+%define version 1.18.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.16
+%global branch 1.18
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit f9aedafffba0ecc55072a933f28500c0e24c9bf1}
@@ -20,16 +22,12 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/g
 %{!?rel_build:%global git_rel .git%{commit_date}.%{shortcommit}}
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
-# http://git.mate-desktop.org/mate-notification-daemon/commit/?h=1.16&id=d9ed22c
-# rhbz (#1384691)
-Patch1:         mate-notification-daemon_0001-Fix-bold-formatting-111.patch
-
 Name:           mate-notification-daemon
 Version:        %{branch}.0
 %if 0%{?rel_build}
-Release:        alt1_2
+Release:        alt1_3
 %else
-Release:        alt2_0.6%{?git_rel}
+Release:        alt1_3
 %endif
 Summary:        Notification daemon for MATE Desktop
 License:        GPLv2+
@@ -43,9 +41,9 @@ URL:            http://mate-desktop.org
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
-BuildRequires: libcanberra-devel libcanberra-gtk-common-devel libcanberra-gtk2-devel libcanberra-gtk3-devel
-BuildRequires: libnotify-devel libnotify-gir-devel
-BuildRequires: libwnck libwnck3-devel libwnck3-gir-devel
+BuildRequires:  libcanberra-devel libcanberra-gtk-common-devel libcanberra-gtk2-devel libcanberra-gtk3-devel
+BuildRequires:  libnotify-devel libnotify-gir-devel
+BuildRequires:  libwnck libwnck3-devel libwnck3-gir-devel
 BuildRequires:  mate-common
 BuildRequires:  mate-desktop-devel
 
@@ -58,8 +56,6 @@ Notification daemon for MATE Desktop
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
-%patch1 -p1 -b .bold
-
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
 %else # 0%{?rel_build}
@@ -68,10 +64,9 @@ NOCONFIGURE=1 ./autogen.sh
 %endif # 0%{?rel_build}
 
 %build
-%configure --disable-schemas-compile   \
-           --with-gtk=3.0
+%configure --disable-schemas-compile
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 %install
 %{makeinstall_std}
@@ -103,6 +98,9 @@ rm -f  %{buildroot}%{_datadir}/applications/mate-notification-daemon.desktop
 
 
 %changelog
+* Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.0-alt1_3
+- new fc release
+
 * Tue Oct 25 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_2
 - new fc release
 

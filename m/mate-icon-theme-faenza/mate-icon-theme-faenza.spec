@@ -1,10 +1,12 @@
 Group: Graphical desktop/MATE
 %define _libexecdir %_prefix/libexec
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 #%%global _internal_version  c147867
 
 Name:           mate-icon-theme-faenza
-Version:        1.16.0
-Release:        alt1_1
+Version:        1.18.1
+Release:        alt1_2
 #Release:        0.1.git%{_internal_version}%{?dist}
 Summary:        Extra set of icon themes for MATE Desktop
 License:        GPLv2+
@@ -14,7 +16,7 @@ URL:            http://mate-desktop.org
 # wget http://git.mate-desktop.org/%%{name}/snapshot/%%{name}-{_internal_version}.tar.xz -O %%{name}-%%{version}.git%%{_internal_version}.tar.xz
 #Source0: http://raveit65.fedorapeople.org/Mate/git-upstream/%{name}-%{version}.git%{_internal_version}.tar.xz
 
-Source0:        http://pub.mate-desktop.org/releases/1.14/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.18/%{name}-%{version}.tar.xz
 
 BuildRequires: hardlink
 BuildRequires: mate-common
@@ -35,7 +37,7 @@ NOCONFIGURE=1 ./autogen.sh
 
 %build
 %configure
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 %install
 %{makeinstall_std}
@@ -61,6 +63,9 @@ fi
 
 
 %changelog
+* Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.1-alt1_2
+- new fc release
+
 * Wed Oct 12 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
 - update to mate 1.16
 

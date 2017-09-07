@@ -4,14 +4,16 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(gio-2.0) pk
 # END SourceDeps(oneline)
 BuildRequires: libgtk+2-gir-devel libgtk+3-gir-devel libpolkit-gir-devel
 %define _libexecdir %_prefix/libexec
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-polkit
-%define version 1.16.0
+%define version 1.18.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.16
+%global branch 1.18
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 8e0c8e17e0138afa7757a1bdf8edd6f2c7b47a14}
@@ -22,11 +24,11 @@ BuildRequires: libgtk+2-gir-devel libgtk+3-gir-devel libpolkit-gir-devel
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:		mate-polkit
-Version:    %{branch}.0
+Version:    %{branch}.1
 %if 0%{?rel_build}
-Release:	alt1_1
+Release:	alt1_3
 %else
-Release:    alt1_1
+Release:    alt1_3
 %endif
 Summary:	Integrates polkit authentication for MATE desktop
 License:	LGPLv2+
@@ -38,9 +40,9 @@ URL:		http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
-BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:	gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:	mate-common
-BuildRequires: libpolkit-devel libpolkit-gir-devel
+BuildRequires:	libpolkit-devel libpolkit-gir-devel
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	libdbus-glib-devel
 # needed for gobject-introspection support somehow,
@@ -57,7 +59,7 @@ Integrates polkit with the MATE Desktop environment
 
 %package devel
 Group: Development/C
-Requires: %{name}%{?_isa} = %{version}
+Requires: %{name} = %{version}-%{release}
 Summary:	Integrates polkit with the MATE Desktop environment
 
 %description devel
@@ -78,12 +80,11 @@ NOCONFIGURE=1 ./autogen.sh
 %build
 %configure  \
         --disable-static       \
-        --with-gtk=3.0         \
         --enable-introspection \
         --enable-accountsservice \
         --enable-gtk-doc-html
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 %install
 %{makeinstall_std}
@@ -111,6 +112,9 @@ find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 
 
 %changelog
+* Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.1-alt1_3
+- new fc release
+
 * Thu Oct 06 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
 - update to mate 1.16
 

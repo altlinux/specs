@@ -1,13 +1,15 @@
 Group: Graphical desktop/Other
 %define _libexecdir %_prefix/libexec
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-icon-theme
-%define version 1.16.0
+%define version 1.18.2
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.16
+%global branch 1.18
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit cdb0d70862035cd1b65c4deb495ea1016ea2d206}
@@ -18,8 +20,12 @@ Group: Graphical desktop/Other
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-icon-theme
-Version:        %{branch}.0
-Release:        alt2_1
+Version:        %{branch}.2
+%if 0%{?rel_build}
+Release:        alt1_2
+%else
+Release:        alt1_2
+%endif
 Summary:        Icon theme for MATE Desktop
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
@@ -56,12 +62,11 @@ NOCONFIGURE=1 ./autogen.sh
 %build
 %configure  --enable-icon-mapping
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 
 %install
 %{makeinstall_std}
-find %buildroot -name package.png -delete
 
 %files
 %doc AUTHORS COPYING README
@@ -70,6 +75,9 @@ find %buildroot -name package.png -delete
 
 
 %changelog
+* Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.2-alt1_2
+- new fc release
+
 * Wed Nov 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt2_1
 - temporarily removed package.png util synaptic will be fixed
 

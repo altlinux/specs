@@ -1,19 +1,21 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/glib-gettextize imake libX11-devel libXt-devel libapm-devel libgio-devel pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtksourceview-2.0) pkgconfig(gucharmap-2) pkgconfig(libwnck-1.0) python-devel xorg-cf-files xorg-kbproto-devel
+BuildRequires: /usr/bin/glib-gettextize imake libX11-devel libXt-devel libapm-devel libgio-devel pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-3.0) python-devel xorg-cf-files xorg-kbproto-devel
 # END SourceDeps(oneline)
 BuildRequires: libcpupower-devel
 BuildRequires: xvfb-run
 %define _libexecdir %_prefix/libexec
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-applets
-%define version 1.16.0
+%define version 1.19.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.16
+%global branch 1.19
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit c3b48ea39ab358b45048e300deafaa3f569748ad}
@@ -26,9 +28,9 @@ BuildRequires: xvfb-run
 Name:           mate-applets
 Version:        %{branch}.0
 %if 0%{?rel_build}
-Release:        alt1_1
+Release:        alt1_3
 %else
-Release:        alt1_1
+Release:        alt1_3
 %endif
 Summary:        MATE Desktop panel applets
 License:        GPLv2+ and LGPLv2+
@@ -53,7 +55,6 @@ BuildRequires: mate-settings-daemon-devel
 BuildRequires: mate-notification-daemon
 BuildRequires: mate-panel-devel
 BuildRequires: libpolkit-devel libpolkit-gir-devel
-BuildRequires: libunique3-devel
 BuildRequires: python-module-pygobject3-common-devel
 BuildRequires: libstartup-notification-devel
 Buildrequires: libupower-devel libupower-gir-devel
@@ -63,7 +64,7 @@ BuildRequires: libwireless-devel
 BuildRequires: libcpupower-devel
 %endif
 
-Provides:   mate-netspeed%{?_isa} = %{version}-%{release}
+Provides:   mate-netspeed = %{version}-%{release}
 Provides:   mate-netspeed = %{version}-%{release}
 Obsoletes:  mate-netspeed < %{version}-%{release}
 Source44: import.info
@@ -90,7 +91,6 @@ NOCONFIGURE=1 ./autogen.sh
 %build
 %configure   \
     --disable-schemas-compile                \
-    --with-gtk=3.0                           \
     --disable-static                         \
     --with-x                                 \
     --enable-polkit                          \
@@ -99,7 +99,7 @@ NOCONFIGURE=1 ./autogen.sh
     --libexecdir=%{_libexecdir}/mate-applets \
     --with-cpufreq-lib=cpupower
 
-xvfb-run -a make %{?_smp_mflags} V=1
+%make_build V=1
 
 %install
 %{makeinstall_std}
@@ -172,6 +172,9 @@ install -pD -m 644 %{SOURCE45} %buildroot%_sysconfdir/polkit-1/localauthority/50
 
 
 %changelog
+* Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_3
+- new fc release
+
 * Fri Oct 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_1
 - update to 1.16
 

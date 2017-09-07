@@ -2,13 +2,16 @@
 BuildRequires(pre): rpm-build-python
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global debug_package %{nil}
 %global _name   mate_menu
-%global _internal_version e4a6065685d3
+%global _internal_version 7af4f232dc12
 %global _internal_name ubuntu-mate-mate-menu
+%global _internal_sitelib_version 17.10.1
 
 Name:           mate-menu
-Version:        16.10.1
+Version:        17.10.1
 Release:        alt1_2
 Summary:        Advanced Menu for the MATE Desktop
 Group:          Shells
@@ -16,7 +19,9 @@ Group:          Shells
 License:        GPLv2+ and MIT
 BuildArch:      noarch
 Url:            https://bitbucket.org/ubuntu-mate/mate-menu
-Source:         https://bitbucket.org/ubuntu-mate/%{name}/get/%{version}.tar.bz2
+# download link
+#Source:         https://bitbucket.org/ubuntu-mate/%{name}/get/%{version}.tar.bz2
+Source:          %{_internal_name}-%{_internal_version}.tar.bz2
 
 Patch1:         mate-menu_adjust-package-manager.patch
 Patch2:         mate-menu_default-applications.patch
@@ -101,6 +106,9 @@ fi
 
 
 %changelog
+* Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 17.10.1-alt1_2
+- new fc release
+
 * Wed Oct 26 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 16.10.1-alt1_2
 - import to Sisyphus
 

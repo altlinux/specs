@@ -1,18 +1,21 @@
-Serial: 1
+Epoch: 1
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize libX11-devel libXau-devel libgio-devel libgtk+2-gir-devel pkgconfig(cairo) pkgconfig(dconf) pkgconfig(gdk-pixbuf-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(ice) pkgconfig(libwnck-1.0) pkgconfig(pango) pkgconfig(xrandr)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize libX11-devel libXau-devel libgio-devel pkgconfig(cairo) pkgconfig(dconf) pkgconfig(gdk-pixbuf-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(ice) pkgconfig(pango) pkgconfig(xrandr)
 # END SourceDeps(oneline)
 BuildRequires: libXi-devel
 %define _libexecdir %_prefix/libexec
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-panel
-%define version 1.16.0
+%define version 1.19.3
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.16
+%global branch 1.19
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 838555a41dc08a870b408628f529b66e2c8c4054}
@@ -23,11 +26,11 @@ BuildRequires: libXi-devel
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-panel
-Version:        %{branch}.0
+Version:        %{branch}.3
 %if 0%{?rel_build}
-Release:        alt1_3
+Release:        alt1_1
 %else
-Release:        alt2_0.3%{?git_rel}
+Release:        alt1_1
 %endif
 Summary:        MATE Desktop panel and applets
 #libs are LGPLv2+ applications GPLv2+
@@ -41,17 +44,12 @@ URL:            http://mate-desktop.org
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
 Source1:        mate-panel_fedora.layout
+Source2:        mate-panel_rhel.layout
 
-# fixes https://github.com/mate-desktop/mate-panel/issues/305
-Patch1:         mate-panel_0023-panel-Remove-popup-menu-for-items-in-applications-me.patch
-# https://github.com/mate-desktop/mate-panel/pull/492
-# https://github.com/mate-desktop/mate-panel/issues/491
-Patch2:         mate-panel_0025-Calendar-Window-force-minimum-size-1.16.patch
-Patch3:		mate-panel-prevent-stacked-panels.patch
+# https://github.com/mate-desktop/mate-panel/pull/600
+Patch1:         mate-panel_0001-Add-a-gsettings-key-to-enable-disable-SNI-Support.patch
 
-Requires:       %{name}-libs%{?_isa} = %{version}
-# needed as nothing else requires it
-Requires:       mate-session
+Requires:       %{name}-libs = %{?epoch:%epoch:}%{version}-%{release}
 #for fish
 Requires:       fortune
 # rhbz (#1007219)
@@ -60,17 +58,18 @@ Requires:       mate-file-manager-schemas
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  gobject-introspection-devel
-BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
-BuildRequires: libcanberra-devel libcanberra-gtk-common-devel libcanberra-gtk2-devel libcanberra-gtk3-devel
+BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:  libcanberra-devel libcanberra-gtk-common-devel libcanberra-gtk2-devel libcanberra-gtk3-devel
 BuildRequires:  libmateweather-devel
-BuildRequires: libwnck libwnck3-devel libwnck3-gir-devel
-BuildRequires: librsvg-devel librsvg-gir-devel
+BuildRequires:  libwnck libwnck3-devel libwnck3-gir-devel
+BuildRequires:  librsvg-devel librsvg-gir-devel
 BuildRequires:  libSM-devel
 BuildRequires:  mate-common
 BuildRequires:  mate-desktop-devel
 BuildRequires:  mate-menus-devel
 BuildRequires:  yelp-tools
 Source44: import.info
+Patch33: mate-panel-prevent-stacked-panels.patch
 Requires: tzdata
 # let us keep it just in case
 Requires:       gsettings-desktop-schemas
@@ -78,12 +77,11 @@ Requires:       gsettings-desktop-schemas
 %description
 MATE Desktop panel applets
 
-
 %package libs
 Group: Development/C
 Summary:     Shared libraries for mate-panel
 License:     LGPLv2+
-Requires:    %{name}%{?_isa} = %{version}
+Requires:    %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description libs
 Shared libraries for libmate-desktop
@@ -91,7 +89,7 @@ Shared libraries for libmate-desktop
 %package devel
 Group: Development/C
 Summary:     Development files for mate-panel
-Requires:    %{name}-libs%{?_isa} = %{version}
+Requires:    %{name}-libs = %{?epoch:%epoch:}%{version}-%{release}
 
 %description devel
 Development files for mate-panel
@@ -99,9 +97,7 @@ Development files for mate-panel
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
-%patch1 -p1 -b .0023
-%patch2 -p1 -b .0025
-%patch3 -p2
+%patch1 -p1 -b .0001
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -109,6 +105,7 @@ Development files for mate-panel
 # needed for git snapshots
 NOCONFIGURE=1 ./autogen.sh
 %endif # 0%{?rel_build}
+%patch33 -p2
 
 %build
 autoreconf -fisv
@@ -119,14 +116,14 @@ autoreconf -fisv
            --disable-schemas-compile              \
            --with-x                               \
            --libexecdir=%{_libexecdir}/mate-panel \
-           --with-gtk=3.0                         \
            --enable-introspection                 \
-           --enable-gtk-doc
+           --disable-gtk-doc                       \
+           --with-in-process-applets=none
 
 # remove unused-direct-shlib-dependency
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 
-make  %{?_smp_mflags} V=1
+%make_build V=1
 
 
 %install
@@ -139,7 +136,12 @@ desktop-file-install \
         --dir=%{buildroot}%{_datadir}/applications \
 %{buildroot}%{_datadir}/applications/mate-panel.desktop
 
+%if 0%{?fedora}
 install -D -m 0644 %{SOURCE1} %{buildroot}%{_datadir}/mate-panel/layouts/fedora.layout
+%endif
+%if 0%{?rhel}
+install -D -m 0644 %{SOURCE2} %{buildroot}%{_datadir}/mate-panel/layouts/rhel.layout
+%endif
 
 %find_lang %{name} --with-gnome --all-name
 
@@ -174,6 +176,9 @@ install -D -m 0644 %{SOURCE1} %{buildroot}%{_datadir}/mate-panel/layouts/fedora.
 
 
 %changelog
+* Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.19.3-alt1_1
+- new fc release
+
 * Thu Aug 31 2017 Andrey Cherepanov <cas@altlinux.org> 1:1.16.0-alt1_3
 - Prevent stacked panels in one direction (ALT #33751)
 

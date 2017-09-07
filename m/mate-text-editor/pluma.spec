@@ -1,18 +1,20 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize libICE-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtksourceview-2.0) pkgconfig(libxml-2.0) pkgconfig(pygtk-2.0) pkgconfig(x11) python-module-pygobject-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize libICE-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(libxml-2.0) pkgconfig(x11)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define oldname pluma
-%define fedora 24
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name pluma
-%define version 1.16.0
+%define version 1.19.1
 %add_python_req_skip pluma
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.16
+%global branch 1.19
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit c1ca209172a8b3a0751ac0a1e2dbec33c1894290}
@@ -24,11 +26,11 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 
 Summary:  Text editor for the MATE desktop
 Name:     mate-text-editor
-Version:  %{branch}.0
+Version:  %{branch}.1
 %if 0%{?rel_build}
-Release:  alt1_1
+Release:  alt1_4
 %else
-Release:  alt1_1
+Release:  alt1_4
 %endif
 License:  GPLv2+ and LGPLv2+
 Group:    Editors
@@ -40,11 +42,9 @@ URL:      http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
 
-# disable non working python plugins for gtk3
-Patch0:        pluma_diasable-python-plugins-1.5.patch
-
 BuildRequires: desktop-file-utils
 BuildRequires: libenchant-devel
+BuildRequires: libpeas-demo libpeas-devel libpeas-gir-devel
 BuildRequires: libsoup-devel libsoup-gir-devel libsoup-gnome-devel libsoup-gnome-gir-devel
 BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires: libgtksourceview3-devel libgtksourceview3-gir-devel
@@ -57,7 +57,7 @@ BuildRequires: python-devel
 BuildRequires: librarian
 BuildRequires: yelp-tools
 
-Requires: %{name}-data = %{version}
+Requires: %{name}-data = %{version}-%{release}
 Requires: python-module-pygtk python-module-pygtk-demo
 Requires: python-module-pygobject
 Requires: python-module-pygtksourceview
@@ -67,8 +67,9 @@ Requires: libmate-desktop
 Requires: mate-file-manager-schemas
 # the run-command plugin uses zenity
 Requires: zenity
-
-%if 0%{?fedora} && 0%{?fedora} > 19
+# libpeas isn't splited in rhel7
+%if 0%{?fedora}
+Requires:      libpeas-python-loader
 %endif
 Source44: import.info
 
@@ -83,24 +84,21 @@ mate-text-editor is extensible through a plugin system, which currently includes
 support for spell checking, comparing files, viewing CVS ChangeLogs, and
 adjusting indentation levels.
 
+
 %package data
 Summary:   Data files for pluma
 Group:     Editors
 BuildArch: noarch
-Requires:  mate-text-editor = %{version}
+Requires:  %{name} = %{version}-%{release}
 
 %description data
 This package contains shared data needed for pluma.
 
+
 %package devel
 Summary:   Support for developing plugins for the mate-text-editor text editor
-Group:     Development/C
-Requires:  mate-text-editor = %{version}
-%if 0%{?fedora} && 0%{?fedora} > 19
-Provides:  mate-text-editor-devel%{?_isa} = %{version}-%{release}
-Provides:  mate-text-editor-devel = %{version}-%{release}
-Obsoletes: mate-text-editor-devel < %{version}-%{release}
-%endif
+Group:     Development/Other
+Requires:  %{name} = %{version}-%{release}
 
 %description devel
 Development files for mate-text-editor
@@ -108,10 +106,6 @@ Development files for mate-text-editor
 
 %prep
 %setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
-
-%patch0 -p1 -b .diasable-python-plugins
-
-NOCONFIGURE=1 ./autogen.sh
 
 %if 0%{?rel_build}
 # for releases
@@ -130,11 +124,9 @@ find ./*/*/* -type f -exec chmod 644 {} \;
         --disable-static          \
         --enable-gtk-doc-html     \
         --enable-gvfs-metadata    \
-        --disable-python           \
-        --disable-schemas-compile \
-        --with-gtk=3.0
+        --disable-schemas-compile
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 %install
 %{makeinstall_std}
@@ -147,9 +139,6 @@ desktop-file-install                                \
 # clean up all the static libs for plugins
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 find %{buildroot} -name '*.a' -exec rm -f {} ';'
-
-# remove needless gsettings convert file
-rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/pluma.convert
 
 %find_lang %{oldname} --with-gnome --all-name
 
@@ -167,6 +156,7 @@ fi
 %{_bindir}/pluma
 %{_libdir}/pluma/
 %{_libexecdir}/pluma/
+%{_libdir}/girepository-1.0/Pluma-1.0.typelib
 %{_datadir}/applications/pluma.desktop
 %{_datadir}/appdata/pluma.appdata.xml
 %{_datadir}/glib-2.0/schemas/org.mate.pluma.gschema.xml
@@ -183,9 +173,13 @@ fi
 %{_includedir}/pluma/
 %{_libdir}/pkgconfig/pluma.pc
 %{_datadir}/gtk-doc/html/pluma/
+%{_datadir}/gir-1.0/Pluma-1.0.gir
 
 
 %changelog
+* Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.1-alt1_4
+- new fc release
+
 * Thu Oct 13 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_1
 - update to 1.16
 
