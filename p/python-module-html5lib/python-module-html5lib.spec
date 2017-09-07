@@ -6,7 +6,7 @@
 Name: python-module-%module_name
 Epoch: 1
 Version: 0.999999999
-Release: alt1
+Release: alt2
 
 Summary: Library for working with HTML5 documents
 
@@ -110,6 +110,8 @@ ln -s ../objects.inv doc/
 %if_with python3
 pushd ../python3
 find -type f -name '*.py' -exec 2to3 -w '{}' +
+# restore unichr after 2to3 (ALT bug 33854), python3 tests still are broken
+%__subst "s|from six import chr as chr|from six import unichr as chr|g" html5lib/_tokenizer.py
 %python3_build
 popd
 %endif
@@ -160,6 +162,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%module_name/
 %endif
 
 %changelog
+* Thu Sep 07 2017 Vitaly Lipatov <lav@altlinux.ru> 1:0.999999999-alt2
+- restore unichr after 2to3 (ALT bug 33854)
+
 * Wed Jun 14 2017 Vitaly Lipatov <lav@altlinux.ru> 1:0.999999999-alt1
 - new version (0.999999999) with rpmgs script
 
