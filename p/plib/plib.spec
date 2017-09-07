@@ -1,20 +1,22 @@
+%def_with nas
+
 Name: plib
 Version: 1.8.5
-Release: alt3.qa1
+Release: alt4
 
 Summary: Steve's Portable Game Library
 License: LGPL
 Group: Development/C++
-Url: http://plib.sourceforge.net/
 
-Source0: http://plib.sourceforge.net/dist/%name-%version.tar.gz
-
+Url: http://plib.sourceforge.net
+Source: %url/dist/%name-%version.tar.gz
 Patch1: plib-1.8.4-alt-shared.patch
 Patch2: plib-1.8.4-alt-fix-unresolved.patch
 Patch5: plib-1.8.4-alt-makefile.patch
 
 # Automatically added by buildreq on Thu May 15 2008
-BuildRequires: gcc-c++ libaudio-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXi-devel libXmu-devel
+BuildRequires: gcc-c++ libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXi-devel libXmu-devel
+%{?_with_nas:BuildRequires: libaudio-devel}
 
 %description
 Write games and other realtime interactive applications that are 100 percent
@@ -29,19 +31,18 @@ Requires: %name = %version-%release
 Development libraries and header files for %name.
 
 %prep
-%setup -q
+%setup
 %patch1 -p1
 %patch2 -p1
 %patch5 -p1
 
 %build
 %autoreconf
-%configure \
-	--disable-static
+%configure --disable-static
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %doc AUTHORS ChangeLog KNOWN_BUGS NOTICE README TODO-1.6 TODO-2.0 TODO_AFTER135
@@ -52,6 +53,10 @@ Development libraries and header files for %name.
 %_includedir/%name
 
 %changelog
+* Thu Sep 07 2017 Michael Shigorin <mike@altlinux.org> 1.8.5-alt4
+- introduced nas knob (on by default)
+- minor spec cleanup
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.8.5-alt3.qa1
 - NMU: rebuilt for updated dependencies.
 
