@@ -6,14 +6,16 @@
 %define _pseudouser_home     %_localstatedir/teeworlds
 
 Name: teeworlds
-Version: 0.6.1
-Release: alt1.qa1
+Version: 0.6.4
+Release: alt1
 
 Summary: Cute little buggers with guns
 License: distributable
 Group: Games/Arcade
 
 Url: http://www.teeworlds.com/
+
+# https://github.com/teeworlds/teeworlds.git
 Source: %name-%version.tar
 
 Requires: %name-gamedata = %version-%release
@@ -71,6 +73,9 @@ Requires: %name-server = %version-%release
 bam release
 
 %install
+mkdir -p %buildroot%_unitdir/
+install -m 0644 altlinux/teeworlds-server@.service %buildroot%_unitdir/teeworlds-server@.service
+
 install -d %buildroot{%_bindir,%_datadir/teeworlds}
 install -pm755 teeworlds teeworlds_srv altlinux/teeworlds_srv_wrapper %buildroot%_bindir
 cp -a data %buildroot%_datadir/teeworlds/
@@ -152,6 +157,7 @@ install -pDm644 altlinux/server-ictf.cfg %buildroot%_sysconfdir/%origname/server
 %_liconsdir/*
 
 %files server
+%_unitdir/teeworlds-server@.service
 %_bindir/teeworlds_srv*
 %_initdir/%origname-dm
 %_initdir/%origname-tdm
@@ -178,6 +184,9 @@ install -pDm644 altlinux/server-ictf.cfg %buildroot%_sysconfdir/%origname/server
 %_datadir/teeworlds
 
 %changelog
+* Wed Sep 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.4-alt1
+- Updated to upstream version 0.6.4.
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.1-alt1.qa1
 - NMU: rebuilt for updated dependencies.
 
