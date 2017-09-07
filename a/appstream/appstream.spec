@@ -1,5 +1,5 @@
 Name:    appstream
-Version: 0.11.4
+Version: 0.11.5
 Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
@@ -70,9 +70,9 @@ Group:	  Development/Documentation
 %setup
 
 %build
-%meson  -Dqt=true \
-	-Ddocumentation=true \
-	-Dstemming=true
+%meson  -Denable-qt=true \
+	-Denable-documentation=true \
+	-Denable-stemming=true
 %meson_build
 
 %install
@@ -128,6 +128,9 @@ mv %{buildroot}%{_datadir}/metainfo/*.xml \
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Thu Sep 07 2017 Andrey Cherepanov <cas@altlinux.org> 0.11.5-alt1
+- New version
+
 * Fri Sep 01 2017 Andrey Cherepanov <cas@altlinux.org> 0.11.4-alt1
 - New version
 - Use meson and ninja-build for build
