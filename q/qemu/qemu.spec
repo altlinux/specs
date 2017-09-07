@@ -25,7 +25,6 @@
 
 %def_disable werror
 %def_enable sdl
-%def_disable sdl2
 %def_enable curses
 %def_enable bluez
 %def_enable vnc
@@ -61,18 +60,19 @@
 %def_enable virglrenderer
 %def_enable tpm
 %def_enable libssh2
-%def_enable vhdx
+%def_enable live_block_migration
 %def_enable numa
 %def_enable tcmalloc
 %def_disable jemalloc
 %def_enable replication
+%def_disable vxhs
 %def_enable rdma
 %def_enable lzo
 %def_enable snappy
 %def_enable bzip2
 %def_disable xen
 
-%define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_sdl2:sdl} %{?_enable_pulseaudio:pa}
+%define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_pulseaudio:pa}
 
 %define _group vmusers
 %define rulenum 90
@@ -169,8 +169,8 @@
 # }}}
 
 Name: qemu
-Version: 2.9.0
-Release: alt1.1
+Version: 2.10.0
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -188,9 +188,11 @@ Source8: qemu-guest-agent.rules
 Source9: qemu-guest-agent.service
 Source10: qemu-guest-agent.init
 
-Patch0: qemu-alt.patch
+Patch: qemu-alt.patch
 
 %set_verify_elf_method fhs=relaxed
+%add_verify_elf_skiplist %_datadir/%name/*
+%add_findreq_skiplist %_datadir/%name/*
 
 BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static
 BuildRequires: texinfo perl-podlators libattr-devel libcap-devel libcap-ng-devel
@@ -200,8 +202,7 @@ BuildRequires: ipxe-roms-qemu >= 1:20161208-alt1.git26050fd seavgabios seabios >
 BuildRequires: libpixman-devel >= 0.21.8
 BuildRequires: iasl
 BuildRequires: libpcre-devel-static
-%{?_enable_sdl:BuildRequires: libSDL-devel libX11-devel}
-%{?_enable_sdl2:BuildRequires: libSDL2-devel}
+%{?_enable_sdl:BuildRequires: libSDL2-devel}
 %{?_enable_curses:BuildRequires: libncurses-devel}
 %{?_enable_bluez:BuildRequires: libbluez-devel}
 %{?_enable_alsa:BuildRequires: libalsa-devel}
@@ -238,6 +239,7 @@ BuildRequires: libtasn1-devel
 %{?_enable_snappy:BuildRequires: libsnappy-devel}
 %{?_enable_bzip2:BuildRequires: bzlib-devel}
 %{?_enable_xen:BuildRequires: libxen-devel}
+%{?_enable_vxhs:BuildRequires: libvxhs-devel}
 
 %description
 QEMU is a fast processor emulator using dynamic translation to achieve
@@ -458,8 +460,7 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 %endif
 	--with-pkgversion=%name-%version-%release \
 	%{subst_enable werror} \
-	%{?_enable_sdl:--enable-sdl --with-sdlabi=1.2} \
-	%{?_enable_sdl2:--enable-sdl --with-sdlabi=2.0} \
+	%{?_enable_sdl:--enable-sdl --with-sdlabi=2.0} \
 	%{?_disable_curses:--disable-curses} \
 	%{subst_enable bluez} \
 	%{subst_enable vnc} \
@@ -498,7 +499,7 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	%{subst_enable libnfs} \
 	%{subst_enable glusterfs} \
 	%{subst_enable libssh2} \
-	%{subst_enable vhdx} \
+	%{?_enable_live_block_migration:--enable-live-block-migration} \
 	%{subst_enable rdma} \
 	%{subst_enable gnutls} \
 	%{subst_enable nettle} \
@@ -507,6 +508,7 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	%{subst_enable tcmalloc} \
 	%{subst_enable jemalloc} \
 	%{subst_enable replication} \
+	%{subst_enable vxhs} \
 	%{subst_enable lzo} \
 	%{subst_enable snappy} \
 	%{subst_enable bzip2} \
@@ -716,6 +718,10 @@ fi
 %_bindir/ivshmem-server
 
 %changelog
+* Fri Sep 01 2017 Alexey Shabalin <shaba@altlinux.ru> 2.10.0-alt1
+- 2.10.0
+- build with SDL2
+
 * Wed Jun 28 2017 Yuri N. Sedunov <aris@altlinux.org> 2.9.0-alt1.1
 - rebuild against libnfs.so.11
 

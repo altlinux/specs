@@ -1,12 +1,12 @@
 %define TOOL_CHAIN_TAG GCC49
-%define openssl_ver 1.0.2j
+%define openssl_ver 1.1.0e
 %def_enable aarch64
 %def_disable arm
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
-Version: 20161227
-Release: alt1
+Version: 20170720
+Release: alt1%ubt
 Summary: EFI Development Kit II
 
 #Vcs-Git: https://github.com/tianocore/edk2.git
@@ -15,13 +15,14 @@ Source: %name-%version.tar
 Source2: https://www.openssl.org/source/openssl-%openssl_ver.tar.gz
 Source3: Logo.bmp
 
-Patch1: %name-%version-%release.patch
+Patch1: %name-%version.patch
 
 License: BSD
 Group: Emulators
 Url: http://www.tianocore.org
 ExclusiveArch:  %{ix86} x86_64 %{arm} aarch64
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++-x86_64-linux-gnu gcc-c++
 %{?_enable_aarch64:BuildRequires: gcc-c++-aarch64-linux-gnu}
 %{?_enable_arm:BuildRequires: gcc-c++-arm-linux-gnu}
@@ -110,13 +111,16 @@ rm -rf BaseTools/Bin \
 	BaseTools/Source/Python/UPT/Dll/sqlite3.dll \
 	Vlv2TbltDevicePkg/GenBiosId \
 	Vlv2TbltDevicePkg/*.exe \
-	edk2-$(ver)/ArmPkg/Library/GccLto/liblto-*.a
+	ArmPkg/Library/GccLto/liblto-*.a
 
 # add openssl
 tar -C CryptoPkg/Library/OpensslLib -xf %SOURCE2
-(cd CryptoPkg/Library/OpensslLib/openssl-%openssl_ver;
- patch -p1 < ../EDKII_openssl-%openssl_ver.patch)
-(cd CryptoPkg/Library/OpensslLib; ./Install.sh)
+#(cd CryptoPkg/Library/OpensslLib/openssl-%openssl_ver;
+# patch -p1 < ../EDKII_openssl-%openssl_ver.patch)
+#(cd CryptoPkg/Library/OpensslLib; ./Install.sh)
+pushd CryptoPkg/Library/OpensslLib
+ ln -s openssl-%openssl_ver openssl
+popd
 
 # fix build target.txt
 sed -i \
@@ -342,6 +346,9 @@ ln -r -s %buildroot%_datadir/AVMF %buildroot%_datadir/%name/arm
 %endif
 
 %changelog
+* Fri Sep 01 2017 Alexey Shabalin <shaba@altlinux.ru> 20170720-alt1%ubt
+- snapshot of UDK2017 branch
+
 * Thu Jan 12 2017 Alexey Shabalin <shaba@altlinux.ru> 20161227-alt1
 - UDK2017 branch
 
