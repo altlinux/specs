@@ -1,6 +1,6 @@
 %global llvm_svnrel %nil
 %global clang_svnrel %nil
-%global rel alt1
+%global rel alt2
 %global llvm_name llvm4.0
 %global clang_name clang4.0
 
@@ -20,6 +20,7 @@ Patch1: alt-triple.patch
 Patch2: alt-i586-fallback.patch
 Patch3: alt-llvm-no-proc-fix.patch
 Patch4: alt-cmake-path.patch
+Patch5: llvm-alt-fix-linking.patch
 
 BuildPreReq: /proc
 
@@ -139,6 +140,7 @@ mv clang-%version tools/clang
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 # force off shared libs as cmake macros turns it on.
@@ -199,10 +201,6 @@ for f in LICENSE.TXT NOTES.txt README.txt; do
 done
 rm -rf tools/clang/docs/{doxygen*,Makefile*,*.graffle,tools}
 
-# Get rid of erroneously installed example files.
-rm -f %buildroot%_libdir/*LLVMHello.*
-rm -f %buildroot%_libdir/*BugpointPasses.*
-
 file %buildroot%_bindir/* | awk -F: '$2~/ELF/{print $1}' | xargs -r chrpath -d
 file %buildroot%_libdir/*.so | awk -F: '$2~/ELF/{print $1}' | xargs -r chrpath -d
 
@@ -238,6 +236,8 @@ make check-all -C BUILD || :
 %_includedir/llvm-c
 %_libdir/libLLVM.so
 %_libdir/libLTO.so
+%_libdir/LLVMHello.so
+%_libdir/BugpointPasses.so
 %exclude %_libdir/libclang.so
 %_datadir/CMake/Modules/llvm
 
@@ -277,6 +277,9 @@ make check-all -C BUILD || :
 %doc %_docdir/clang
 
 %changelog
+* Thu Sep 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0-alt2.rel
+- Installed example llvm plugins required by cmake modules.
+
 * Sun Mar 19 2017 L.A. Kostis <lakostis@altlinux.ru> 4.0.0-alt1.rel
 - Define cmake modules dir correctly (closes #33250).
 
