@@ -1,5 +1,5 @@
 %define _name blockdev
-%define ver_major 2.11
+%define ver_major 2.12
 %define rev 1
 
 Name: lib%_name
@@ -533,6 +533,9 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 
 
 %changelog
+* Thu Sep 07 2017 Yuri N. Sedunov <aris@altlinux.org> 2.12.1-alt1
+- 2.12.1
+
 * Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 2.11.1-alt1
 - 2.11-1
 
