@@ -1,6 +1,6 @@
 Name: installer-distro-token-desktop
 Version: 0.1.1
-Release: alt1
+Release: alt2
 
 Summary: Installer configuration (desktop, h/w token authentication)
 License: GPL
@@ -59,6 +59,16 @@ Requires: pkcs11-profiles-rutokenecp
 
 %description -n installer-feature-token-rutokenecp
 Auth-token installer step with RuTokenECPprofile preselected
+
+%package -n installer-feature-token-p11-kit-proxy
+Summary: Auth-token installer step with p11-kit-proxy profile preselected
+License: GPL
+Group: System/Configuration/Other
+Provides: installer-feature-token-profile = 40
+Requires: pkcs11-profiles-p11-kit-proxy
+
+%description -n installer-feature-token-p11-kit-proxy
+Auth-token installer step with p11-kit-proxy profile preselected
 
 %package stage3
 Summary: Installer configuration and scripts (desktop, h/w token authentication, stage3 part)
@@ -127,6 +137,10 @@ install -m0644 -D installer-feature-token-default \
 install -m0644 -D installer-feature-token-rutokenecp \
         %buildroot%_altdir/installer-feature-token-rutokenecp
 
+# PKCS#11 Kit Proxy
+install -m0644 -D installer-feature-token-p11-kit-proxy \
+        %buildroot%_altdir/installer-feature-token-p11-kit-proxy
+
 %files stage2
 %install2dir/alterator-menu
 %install2dir/installer-steps
@@ -147,12 +161,18 @@ install -m0644 -D installer-feature-token-rutokenecp \
 %_altdir/installer-feature-token-rutokenecp
 %_datadir/alterator/steps/*.rutokenecp.desktop
 
+%files -n installer-feature-token-p11-kit-proxy
+%_altdir/installer-feature-token-p11-kit-proxy
+%_datadir/alterator/steps/*.p11-kit-proxy.desktop
+
 %changelog
+* Wed Sep 06 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.1-alt2
+- Add 'p11-kit-proxy' profile.
+
 * Thu Aug 17 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.1-alt1
 - Use /etc/alternatives to configure the installer steps.
 - Provide installer-feature-token-* packages with various
   pre-configurations for the auth-token installer step.
-
 
 * Tue Aug 15 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt3
 - Make special '-live' subpackage which requires 'livecd-install'.
