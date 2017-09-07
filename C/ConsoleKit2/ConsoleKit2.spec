@@ -3,7 +3,7 @@
 %define oname ConsoleKit
 Name: ConsoleKit2
 Version: 1.2.0
-Release: alt1
+Release: alt2
 Summary: System daemon for tracking users, sessions and seats
 License: GPL
 Group: System/Libraries
@@ -13,8 +13,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Requires: lib%name = %version-%release
 Requires: pam-ck-connector2 = %version-%release
 Provides: ConsoleKit = %version-%release
-Conflicts: ConsoleKit < 1.0.0
-Obsoletes: ConsoleKit < 1.0.0
+Obsoletes: ConsoleKit < %version-%release
 PreReq: dbus polkit >= 0.93
 
 Source: %name-%version.tar
@@ -34,9 +33,7 @@ Summary: X11-requiring add-ons for ConsoleKit
 Group: System/X11
 Requires: %name = %version-%release
 Provides: ConsoleKit-x11 = %version-%release
-Conflicts: ConsoleKit-x11 < 1.0.0
-Obsoletes: ConsoleKit-x11 < 1.0.0
-Conflicts: ConsoleKit < 1.0.0
+Obsoletes: ConsoleKit-x11 < %version-%release
 
 %description x11
 ConsoleKit contains some tools that require Xlib to be installed,
@@ -49,8 +46,7 @@ have a requires for this package.
 Summary: ConsoleKit libraries
 Group: System/Libraries
 Provides: libConsoleKit = %version-%release
-Conflicts: libConsoleKit < 1.0.0
-Obsoletes: libConsoleKit < 1.0.0
+Obsoletes: libConsoleKit < %version-%release
 
 %description -n lib%name
 Libraries and a PAM module for interacting with ConsoleKit
@@ -60,8 +56,7 @@ Summary: Development libraries and headers for ConsoleKit
 Group: Development/C++
 Requires: lib%name = %version-%release
 Provides: libConsoleKit-devel = %version-%release
-Conflicts: libConsoleKit-devel < 1.0.0
-Obsoletes: libConsoleKit-devel < 1.0.0
+Obsoletes: libConsoleKit-devel < %version-%release
 
 %description -n lib%name-devel
 Headers, libraries and API docs for ConsoleKit
@@ -70,8 +65,7 @@ Headers, libraries and API docs for ConsoleKit
 Summary: Register sessin with ConsoleKit
 Group: System/Base
 Provides: pam-ck-connector = %version-%release
-Conflicts: pam-ck-connector < 1.0.0
-Obsoletes: pam-ck-connector < 1.0.0
+Obsoletes: pam-ck-connector < %version-%release
 
 %description -n pam-ck-connector2
 The pam_ck_connector PAM module registers a login session with the system-wide ConsoleKit daemon. This
@@ -157,6 +151,9 @@ done
 %_man1dir/*.1*
 
 %changelog
+* Thu Sep 07 2017 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt2
+- Fix obsoletes (Closes: 33859)
+
 * Fri Jul 21 2017 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1
 - New version 1.2.0
 - Obsoletes ConsoleKit
