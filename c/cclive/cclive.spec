@@ -3,13 +3,14 @@ BuildRequires: /usr/bin/pod2man gcc-c++ pkgconfig(libpcre) pkgconfig(libpcrecpp)
 # END SourceDeps(oneline)
 Name:           cclive
 Version:        0.7.16
-Release:        alt1.1
+Release:        alt2
 Summary:        Command line video extraction utility
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group:          Video
 License:        GPLv3+
 URL:            http://cclive.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.xz
+Patch1:         %name-0.9.3-gentoo-boost-ver-check.patch
 
 BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel libquvi-devel libcurl-devel pcre-devel chrpath
 Source44: import.info
@@ -21,6 +22,7 @@ Googlevideo, Break, Liveleak, Sevenload, Evisortv and Dailymotion.
 
 %prep
 %setup -q
+%patch1 -p1
 
 %build
 %configure
@@ -40,6 +42,9 @@ chrpath --delete $RPM_BUILD_ROOT%{_bindir}/%{name}
 
 
 %changelog
+* Fri Sep 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.16-alt2
+- Rebuilt with boost 1.65.0.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.7.16-alt1.1
 - rebuild with boost 1.57.0
 
