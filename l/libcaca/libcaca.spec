@@ -1,25 +1,37 @@
+%def_disable static
+%def_disable doc
+%def_enable ruby
+
 Name: libcaca
 Version: 0.99
-Release: alt16.beta19.1
+Release: alt18.beta19.1
 
 Summary: Text mode graphics library
 Group: System/Libraries
 License: DWTFYWTPL
-Url: http://sam.zoy.org/projects/libcaca/
 
+Url: http://sam.zoy.org/projects/libcaca/
 # http://caca.zoy.org/files/libcaca/%name-%version.beta17.tar.gz
 Source: %name-%version.tar
 
-BuildPreReq: rpm-build-ruby
-
-%def_disable static
-
 # Automatically added by buildreq on Wed Jun 15 2016
 # optimized out: imlib2 libX11-devel libstdc++-devel libtinfo-devel perl pkg-config python-base python-modules ruby ruby-stdlibs tex-common texlive-base texlive-base-bin texlive-common texlive-fonts-recommended texlive-generic-recommended texlive-latex-base texlive-latex-recommended texlive-publishers texlive-xetex texmf-latex-xcolor xorg-kbproto-devel xorg-xproto-devel
-BuildRequires: doxygen gcc-c++ imake imlib2-devel libncurses-devel libruby-devel libslang2-devel xorg-cf-files zlib-devel
+BuildRequires: gcc-c++ imake imlib2-devel libncurses-devel libslang2-devel xorg-cf-files zlib-devel
 
+%if_enabled ruby
+BuildRequires: libruby-devel
+BuildPreReq: rpm-build-ruby
+%endif
+
+%if_enabled doc
 # buildreqs drowns in loops and misses all latex stuff
-BuildPreReq: texlive-generic-recommended texlive-publishers texlive-xetex
+BuildRequires: doxygen
+BuildRequires: texmf-latex-tabu
+BuildRequires: tex-common texlive-base texlive-base-bin texlive-common
+BuildRequires: texlive-fonts-recommended texlive-generic-recommended
+BuildRequires: texlive-latex-base texlive-latex-recommended
+BuildRequires: texlive-publishers texlive-xetex texmf-latex-xcolor
+%endif
 
 %description
 libcaca is the Colour AsCii Art library. It provides high level functions
@@ -85,9 +97,9 @@ This package contains Ruby bindings for libcaca.
 	--enable-ncurses \
 	--enable-x11 \
 	--enable-imlib2 \
-	--enable-doc \
 	--x-libraries=%_x11libdir \
 	--disable-debug \
+	%{subst_enable doc} \
 	%{subst_enable static}
 
 %make_build
@@ -95,9 +107,11 @@ This package contains Ruby bindings for libcaca.
 %install
 %makeinstall_std
 rm %buildroot%_libdir/*.la
+%if_enabled doc
 rm -r %buildroot%_man3dir
 rm -f %buildroot%_docdir/libcucul-dev
 mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
+%endif
 
 %files
 %_libdir/*.so.*
@@ -106,9 +120,11 @@ mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
 %_libdir/*.so
 %_bindir/caca-config
 %_includedir/*
-%_docdir/%name-%version
-%_man1dir/caca-config.1*
 %_pkgconfigdir/*
+%if_enabled doc
+%_docdir/%name-%version
+%endif
+%_man1dir/caca-config.1*
 
 %files -n caca-utils
 %_bindir/cacademo
@@ -126,11 +142,19 @@ mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
 %_man1dir/cacaview.1*
 %_man1dir/img2txt.1*
 
+%if_enabled ruby
 %files -n ruby-libcaca
 %ruby_sitelibdir/caca.rb
 %ruby_sitearchdir/caca.*
+%endif
 
 %changelog
+* Fri Sep 08 2017 Michael Shigorin <mike@altlinux.org> 0.99-alt18.beta19.1
+- Introduced doc knob (off by default: FTBFS).
+
+* Fri Sep 08 2017 Michael Shigorin <mike@altlinux.org> 0.99-alt17.beta19.1
+- Introduced ruby knob (on by default).
+
 * Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 0.99-alt16.beta19.1
 - Rebuild with new %%ruby_sitearchdir location
 
