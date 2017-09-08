@@ -1,5 +1,5 @@
 Name: bootloader-utils
-Version: 0.4.24
+Version: 0.4.25
 Release: alt1
 
 Summary: Bootloader utilities
@@ -9,7 +9,9 @@ BuildArch: noarch
 
 Source: %name-%version-%release.tar
 
-PreReq: getopt, make-initrd >= 0.4.3-alt2
+PreReq: getopt
+PreReq: /usr/sbin/make-initrd
+Conflicts: make-initrd < 0.4.3-alt2
 Conflicts: grub2 < 1.98-alt13
 Conflicts: lilo < 22.7.3-alt7
 
@@ -83,6 +85,12 @@ mv $f.install $f
 %_rpmlibdir/*.filetrigger
 
 %changelog
+* Fri Sep 08 2017 L.A. Kostis <lakostis@altlinux.ru> 0.4.25-alt1
+- kernel.trigger: added ucode support (tnx ldv@ for code review).
+
+* Thu May 05 2016 Michael Shigorin <mike@altlinux.org> 0.4.24-alt2
+- allow both make-initrd and make-initrd2
+
 * Wed Mar 25 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.4.24-alt1
 - support for ANY numeral kernel version added
 
