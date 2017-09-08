@@ -63,7 +63,6 @@
 %def_enable virglrenderer
 %def_enable tpm
 %def_enable libssh2
-%def_enable vhdx
 %def_enable numa
 %def_enable jemalloc
 %def_enable rdma
@@ -71,8 +70,6 @@
 %def_enable snappy
 %def_enable bzip2
 %def_disable xen
-
-%define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_sdl2:sdl} %{?_enable_pulseaudio:pa}
 
 %define _group vmusers
 %define rulenum 90
@@ -170,8 +167,8 @@
 # }}}
 
 Name: pve-%rname
-Version: 2.9.0
-Release: alt3
+Version: 2.9.1
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -180,7 +177,7 @@ Requires: %name-system = %version-%release, %name-user = %version-%release
 Conflicts: %rname
 
 URL: http://www.nongnu.org/qemu/
-Source0: qemu-%version.tar
+Source0: qemu-%version.tar.xz
 Source1: qemu.binfmt
 Source2: qemu-kvm.control.in
 Source4: qemu-kvm.rules
@@ -225,28 +222,18 @@ Patch35: 0026-backup-modify-job-api.patch
 Patch36: 0027-backup-introduce-vma-archive-format.patch
 Patch37: 0028-adding-old-vma-files.patch
 Patch38: 0001-Revert-target-i386-disable-LINT0-after-reset.patch
-Patch39: 0002-qemu-img-wait-for-convert-coroutines-to-complete.patch
-Patch40: 0003-block-Do-not-unref-bs-file-on-error-in-BD-s-open.patch
-Patch41: 0004-9pfs-local-fix-unlink-of-alien-files-in-mapped-file-.patch
-Patch42: 0005-blockdev-use-drained_begin-end-for-qmp_block_resize.patch
-Patch43: 0006-aio-add-missing-aio_notify-to-aio_enable_external.patch
-Patch44: 0007-virtio-serial-bus-Unset-hotplug-handler-when-unreali.patch
-Patch45: 0008-virtio-serial-fix-segfault-on-disconnect.patch
-Patch46: 0009-e1000e-Fix-ICR-Other-causes-clear-logic.patch
-Patch47: 0010-mirror-Drop-permissions-on-s-target-on-completion.patch
-Patch48: 0011-vmw_pvscsi-check-message-ring-page-count-at-initiali.patch
-Patch49: 0012-audio-release-capture-buffers.patch
-Patch50: 0013-input-limit-kbd-queue-depth.patch
-Patch51: 0014-scsi-avoid-an-off-by-one-error-in-megasas_mmio_write.patch
-Patch52: 0015-9pfs-local-forbid-client-access-to-metadata-CVE-2017.patch
-Patch53: 0016-megasas-do-not-read-DCMD-opcode-more-than-once-from-.patch
-Patch54: 0017-megasas-always-store-SCSIRequest-into-MegasasCmd.patch
-Patch55: 0018-nbd-Fully-initialize-client-in-case-of-failed-negoti.patch
-Patch56: 0019-nbd-Fix-regression-on-resiliency-to-port-scan.patch
-Patch57: 0020-qemu-nbd-Ignore-SIGPIPE.patch
-Patch58: 0021-usb-redir-fix-stack-overflow-in-usbredir_log_data.patch
-Patch59: 0022-exec-use-qemu_ram_ptr_length-to-access-guest-ram.patch
-Patch60: 0023-slirp-check-len-against-dhcp-options-array-end.patch
+Patch39: 0002-virtio-serial-fix-segfault-on-disconnect.patch
+Patch40: 0003-megasas-always-store-SCSIRequest-into-MegasasCmd.patch
+Patch41: 0004-slirp-check-len-against-dhcp-options-array-end.patch
+Patch42: 0005-IDE-Do-not-flush-empty-CDROM-drives.patch
+Patch43: 0006-bitmap-add-bitmap_copy_and_clear_atomic.patch
+Patch44: 0007-memory-add-support-getting-and-using-a-dirty-bitmap-.patch
+Patch45: 0008-vga-add-vga_scanline_invalidated-helper.patch
+Patch46: 0009-vga-make-display-updates-thread-safe.patch
+Patch47: 0010-vga-fix-display-update-region-calculation.patch
+Patch48: 0011-vga-fix-display-update-region-calculation-split-scre.patch
+Patch49: 0012-vga-stop-passing-pointers-to-vga_draw_line-functions.patch
+Patch50: 0013-multiboot-validate-multiboot-header-address-values.patch
 
 %set_verify_elf_method fhs=relaxed
 
@@ -466,16 +453,6 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch48 -p1
 %patch49 -p1
 %patch50 -p1
-%patch51 -p1
-%patch52 -p1
-%patch53 -p1
-%patch54 -p1
-%patch55 -p1
-%patch56 -p1
-%patch57 -p1
-%patch58 -p1
-%patch59 -p1
-%patch60 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -510,7 +487,7 @@ export CFLAGS="%optflags"
 	--disable-debug-tcg \
 	--disable-sparse \
 	--disable-strip \
-	--audio-drv-list="%audio_drv_list" \
+	--audio-drv-list="alsa" \
 	--disable-xen \
 	--disable-brlapi \
 	--enable-curl \
@@ -532,7 +509,6 @@ export CFLAGS="%optflags"
 	%{subst_enable libnfs} \
 	%{subst_enable glusterfs} \
 	%{subst_enable libssh2} \
-	%{subst_enable vhdx} \
 	%{subst_enable rdma} \
 	%{subst_enable gnutls} \
 	%{subst_enable nettle} \
@@ -545,7 +521,8 @@ export CFLAGS="%optflags"
 	%{?_disable_guest_agent:--disable-guest-agent} \
 	%{subst_enable tools} \
 	--enable-pie \
-	--enable-xfsctl
+	--enable-xfsctl \
+	--enable-virtfs
 
 %make_build
 
@@ -712,6 +689,12 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Fri Sep 08 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt1
+- 2.9.1-1
+
+* Mon Aug 07 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.9.0-alt0.M80P.3
+- backport to p8 branch
+
 * Mon Aug 07 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.9.0-alt3
 - fix CVE-2017-7539, CVE-2017-11434, CVE-2017-11334, CVE-2017-10806, CVE-2017-10664, CVE-2017-9524, CVE-2017-9503
 
