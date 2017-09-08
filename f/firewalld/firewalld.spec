@@ -1,5 +1,5 @@
 Name: firewalld
-Version: 0.3.13
+Version: 0.4.4.5
 Release: alt1
 
 Summary: A firewall daemon with D-BUS interface providing a dynamic firewall
@@ -14,11 +14,20 @@ Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-licenses rpm-build-xdg
-BuildRequires: intltool xsltproc docbook-style-xsl docbook-dtds glib2-devel python-devel libgio-devel
+BuildRequires(pre): rpm-build-licenses rpm-build-xdg python3-devel
+BuildRequires: intltool xsltproc docbook-style-xsl docbook-dtds glib2-devel libgio-devel
 
 Requires: gobject-introspection
-Requires: python-module-slip-dbus iptables ebtables iptables-ipv6
+Requires: python3-module-slip-dbus iptables ebtables iptables-ipv6
+
+%allow_python3_import_path %_datadir/firewalld
+%add_python3_path %_datadir/firewalld
+
+# Workaround for dbus.mainloop.pyqt5:
+# it is in the python3-module-PyQt5,
+# but there is no provides
+# https://bugzilla.altlinux.org/33873
+%filter_from_requires /^python3(dbus\.mainloop\.pyqt5)/d
 
 %description
 firewalld is a firewall service daemon that provides a dynamic
@@ -28,9 +37,10 @@ customizable firewall with a D-BUS interface.
 Summary: Firewall panel applet
 Group: System/Configuration/Networking
 Requires: %name = %version-%release
-Requires: python-module-pygtk-libglade
 Requires: NetworkManager-glib-gir
 Requires: libnotify-gir
+Requires: python3-module-sip
+Requires: python3-module-PyQt5
 
 %description -n firewall-applet
 The firewall panel applet provides a status information of firewalld and
@@ -40,21 +50,36 @@ also the firewall settings.
 %setup
 %patch -p1
 
+sed -i -e 's|/usr/bin/python -Es|/usr/bin/python3 -Es|' fix_python_shebang.sh
+sed -i 's|/usr/bin/python|/usr/bin/python3|' config/lockdown-whitelist.xml
 # create po/POTFILES.in
 #for i in $(cat po/POTFILES.in.in); do echo $i>>po/POTFILES.in; done
 
 # create po/LINGUAS
-ls po/*.po | sed -e 's/.po//' | sed -e 's/po\///' > po/LINGUAS
+#ls po/*.po | sed -e 's/.po//' | sed -e 's/po\///' > po/LINGUAS
 
 %build
 %autoreconf
+export PYTHON=/usr/bin/python3
 %configure \
+	--enable-sysconfig \
 	--enable-systemd \
-	--with-systemd-unitdir=%systemd_unitdir
+	--with-systemd-unitdir=%systemd_unitdir \
+	--with-iptables=/sbin/iptables \
+	--with-iptables-restore=/sbin/iptables-restore \
+	--with-ip6tables=/sbin/ip6tables \
+	--with-ip6tables-restore=/sbin/ip6tables-restore \
+	--with-ebtables=/sbin/ebtables \
+	--with-ebtables-restore=/sbin/ebtables-restore \
+	--with-ipset=/sbin/ipset
 %make
+make update-po
 
 %install
-%makeinstall_std
+%makeinstall_std PYTHON=/usr/bin/python3
+pushd po
+make install DESTDIR=%buildroot
+popd
 %find_lang %name
 install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 
@@ -68,6 +93,7 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %_sbindir/*
 %_bindir/firewall-cmd
 %_bindir/firewall-offline-cmd
+%_bindir/firewallctl
 %attr(0750,root,root) %config(noreplace) %_sysconfdir/firewalld
 %attr(0640,root,root) %config(noreplace) %_sysconfdir/firewalld/firewalld.conf
 %config(noreplace) %_sysconfdir/sysconfig/firewalld
@@ -76,14 +102,15 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %systemd_unitdir/firewalld.service
 %config(noreplace) %_sysconfdir/dbus-1/system.d/FirewallD.conf
 %_datadir/polkit-1/actions/org.fedoraproject.FirewallD1.policy
-%_datadir/polkit-1/actions/org.fedoraproject.FirewallD1.desktop.policy
-%_datadir/polkit-1/actions/org.fedoraproject.FirewallD1.server.policy
+%_datadir/polkit-1/actions/org.fedoraproject.FirewallD1.desktop.policy.choice
+%_datadir/polkit-1/actions/org.fedoraproject.FirewallD1.server.policy.choice
 %_datadir/bash-completion/completions/*
-%python_sitelibdir_noarch/firewall
+%python3_sitelibdir_noarch/firewall
 %_man1dir/*
 %_man5dir/*
 
 %files -n firewall-applet
+%config(noreplace) %_sysconfdir/firewall/applet.conf
 %_bindir/firewall-applet
 %_bindir/firewall-config
 %_desktopdir/firewall-*.desktop
@@ -94,6 +121,34 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %_datadir/firewalld/
 
 %changelog
+* Wed Aug 16 2017 Mikhail Efremov <sem@altlinux.org> 0.4.4.5-alt1
+- Build with python 3.x.
+- Updated to 0.4.4.5 (closes: #32042).
+
+* Mon Nov 21 2016 Terechkov Evgenii <evg@altlinux.org> 0.4.4.1-alt1
+- 0.4.4.1
+
+* Sat Aug 20 2016 Terechkov Evgenii <evg@altlinux.org> 0.4.3.3-alt1
+- 0.4.3.3
+
+* Wed Jul  6 2016 Terechkov Evgenii <evg@altlinux.org> 0.4.3.2-alt1
+- 0.4.3.2
+
+* Wed Jun 29 2016 Terechkov Evgenii <evg@altlinux.org> 0.4.3.1-alt1
+- 0.4.3.1
+
+* Tue Jun 28 2016 Terechkov Evgenii <evg@altlinux.org> 0.4.3-alt1
+- 0.4.3
+
+* Sun May  1 2016 Terechkov Evgenii <evg@altlinux.org> 0.4.1.2-alt1
+- Updated to 0.4.1.2 (ALT #32042)
+
+* Fri Feb 05 2016 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
+- Updated to 0.4.0.
+
+* Wed Jun 17 2015 Mikhail Efremov <sem@altlinux.org> 0.3.14.2-alt1
+- Updated to 0.3.14.2.
+
 * Fri Dec 05 2014 Mikhail Efremov <sem@altlinux.org> 0.3.13-alt1
 - Updated to 0.3.13.
 
