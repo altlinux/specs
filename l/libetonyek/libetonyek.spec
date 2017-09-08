@@ -1,6 +1,6 @@
 Name: libetonyek
 Version: 0.1.6
-Release: alt3
+Release: alt4
 Summary: A library for import of Apple Keynote presentations
 
 Group: System/Libraries
@@ -51,8 +51,12 @@ Currently supported: XHTML, raw, text.
 %setup
 %patch1 -p1
 %patch2 -p1
-# XXX hack out mdds=1.0 (too lower)
+# XXX hack out mdds=1.0 (too low)
 sed -i 's/mdds-1.0/mdds/' configure.ac
+%ifarch e2k
+# FTBFS against boost 1.65 with lcc 1.21.20
+%add_optflags -fno-error-always-inline
+%endif
 
 %build
 %autoreconf
@@ -64,7 +68,7 @@ sed -i \
 %make_build
 
 %install
-make install DESTDIR=%buildroot
+%makeinstall_std
 rm -f %buildroot/%_libdir/*.la
 # we install API docs directly from build
 rm -rf %buildroot/%_docdir/%name
@@ -91,6 +95,9 @@ make check
 %_bindir/*
 
 %changelog
+* Fri Sep 08 2017 Michael Shigorin <mike@altlinux.org> 0.1.6-alt4
+- E2K: work around FTBFS against boost 1.65 with lcc 1.21.20
+
 * Mon Jul 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.6-alt3
 - Fix build
 
