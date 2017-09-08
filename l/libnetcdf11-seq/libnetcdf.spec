@@ -7,7 +7,7 @@
 
 Name: %sname%sover-seq
 Version: %major.4.1.1
-Release: alt2
+Release: alt3
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF)
 
@@ -21,7 +21,7 @@ Conflicts: %sname-mpi < 4.0.1-alt6 %oname%sover-mpi-tools < 4.0.1-alt6
 Conflicts: %sname-mpi-devel-doc
 Provides: %sname = %version-%release
 Provides: %sname%sover = %version-%release
-Conflicts: %sname%sover < %version-%release
+Conflicts: %sname < %version-%release
 Obsoletes: %sname%sover < %version-%release
 %ifarch x86_64
 Provides: %sname.so.%sover()(64bit)
@@ -196,9 +196,9 @@ for i in $(ls |egrep -v 'nc\-config'); do
 done
 popd
 
-# There is a file in the package with a name starting with <tt>._</tt>, 
-# the file name pattern used by Mac OS X to store resource forks in non-native 
-# file systems. Such files are generally useless in packages and were usually 
+# There is a file in the package with a name starting with <tt>._</tt>,
+# the file name pattern used by Mac OS X to store resource forks in non-native
+# file systems. Such files are generally useless in packages and were usually
 # accidentally included by copying complete directories from the source tarball.
 find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
 # for ones installed as %%doc
@@ -237,6 +237,9 @@ rm -fR %_includedir/netcdf-3 %_includedir/netcdf \
 #exclude %_man3dir/index.3*
 
 %changelog
+* Fri Sep 08 2017 Mikhail Gordeev <obirvalger@altlinux.org> 4.4.1.1-alt3
+- (ALT#33843) Fix broken update
+
 * Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.1.1-alt2
 - Split into separate package named libnetcdf11-seq.
 
