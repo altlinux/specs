@@ -21,7 +21,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 5.4.0
-Release: alt3%ubt
+Release: alt4%ubt
 License: Apache
 Group: System/Servers
 Url: https://opennebula.org
@@ -350,7 +350,7 @@ install -p -D -m 644 share/etc/sysctl.d/bridge-nf-call.conf %buildroot%_sysconfd
 
 %pre common
 %_sbindir/groupadd -r -f oneadmin 2>/dev/null ||:
-%_sbindir/useradd -r -m -g oneadmin -G disk -c 'Opennebula Daemon User' \
+%_sbindir/useradd -r -m -g oneadmin -G disk,wheel -c 'Opennebula Daemon User' \
         -s /bin/bash -d %oneadmin_home oneadmin 2>/dev/null ||:
 
 
@@ -406,8 +406,6 @@ fi
 ################################################################################
 %pre node-kvm
 %_sbindir/usermod -a -G vmusers oneadmin  2>/dev/null ||:
-# allow run sudo for oneadmin user
-%_sbindir/usermod -a -G wheel oneadmin  2>/dev/null ||:
 
 #Modify /etc/libvirt/qemu.conf to set oneadmin user as running user for libvirt daemon
 #Otherwise, you might get some errors like :
@@ -678,6 +676,9 @@ fi
 ################################################################################
 
 %changelog
+* Fri Sep 08 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.0-alt4%ubt
+- add user oneadmin to wheel group for allow run sudo
+
 * Tue Sep 05 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.0-alt3%ubt
 - fix run sunstone (add nodejs and bower modules to source)
 
