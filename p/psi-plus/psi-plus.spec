@@ -1,9 +1,11 @@
+%def_enable webkit
+
 Name: psi-plus
 Version: 1.2.40
-Release: alt1
+Release: alt2
 
 Summary: Psi+ Jabber client
-Summary(ru_RU.UTF-8): Jabber клиент Psi+
+Summary(ru_RU.UTF-8): Jabber-клиент Psi+
 License: GPLv2
 Group: Networking/Instant messaging
 
@@ -29,7 +31,9 @@ BuildRequires: libidn-devel
 BuildRequires: libqca-qt5-devel
 BuildRequires: qt5-multimedia-devel
 BuildRequires: qt5-phonon-devel
+%if_enabled webkit
 BuildRequires: libqt5-webkit qt5-webkit-devel
+%endif
 BuildRequires: qt5-x11extras-devel
 BuildRequires: zlib-devel
 
@@ -638,7 +642,7 @@ Each element can contain a regular expression to check for matches with JID, fro
 	--libdir=%_libdir \
 	--datadir=%_datadir \
 	--enable-plugins \
-	--enable-webkit \
+	%{subst_enable webkit} \
 	--release \
 	--qtselect=5
 
@@ -838,16 +842,16 @@ popd
 
 %install
 %makeinstall INSTALL_ROOT=%buildroot
-%__mkdir_p %buildroot%_datadir/%name/themes
-cp -f -r themes %buildroot%_datadir/%name/themes/
+mkdir -p %buildroot%_datadir/%name/themes
+cp -fr themes %buildroot%_datadir/%name/themes/
 
-%__mkdir_p %buildroot%_libdir/%name/plugins
+mkdir -p %buildroot%_libdir/%name/plugins
 
 # Pstop plugin
-%__install -Dp -m 0644 src/plugins/dev/pstoplugin/libpstoplugin.so %buildroot%_libdir/%name/plugins
+install -pDm644 src/plugins/dev/pstoplugin/libpstoplugin.so %buildroot%_libdir/%name/plugins
 
 # Redirector plugin
-%__install -Dp -m 0644 src/plugins/dev/redirectorplugin/libredirectplugin.so %buildroot%_libdir/%name/plugins
+install -pDm644 src/plugins/dev/redirectorplugin/libredirectplugin.so %buildroot%_libdir/%name/plugins
 
 # Generic plugins
 pushd src/plugins/generic
@@ -880,12 +884,12 @@ for i in attentionplugin/libattentionplugin.so \
 	 translateplugin/libtranslateplugin.so \
 	 videostatusplugin/libvideostatusplugin.so \
 	 watcherplugin/libwatcherplugin.so; do
-	%__install -Dp -m 0644 $i %buildroot%_libdir/%name/plugins
+	install -pDm644 $i %buildroot%_libdir/%name/plugins
 done
 popd
 
-%__rm %buildroot%_datadir/%name/{COPYING,README}
-%__rm %buildroot%_bindir/%name.debug
+rm %buildroot%_datadir/%name/{COPYING,README}
+rm %buildroot%_bindir/%name.debug
 
 %files
 %doc COPYING ChangeLog INSTALL README TODO
@@ -1032,6 +1036,10 @@ popd
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Fri Sep 08 2017 Michael Shigorin <mike@altlinux.org> 1.2.40-alt2
+- introduced webkit knob (on by default)
+- minor spec cleanup
+
 * Tue Aug 29 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.40-alt1
 - Version 1.2.40
 
