@@ -1,18 +1,18 @@
-%define version 0.18
-%define release alt1.6
-
 Summary: Gearman provides a generic application framework to farm out work to other machines.
 Name: gearmand
-Version: %version
-Release: alt1.6.qa1.1
-Source0: %name.tar
-Patch0:  %name-0.18-alt-fix_headers.patch
+Version: 1.1.17
+Release: alt1
 License: BSD
 Group: Development/C
-Packager: Sergey Alembekov <rt@altlinux.ru>
 URL: http://gearman.org
 
-BuildRequires: perl gcc-c++ boost-devel boost-program_options-devel libevent-devel libuuid-devel
+# https://github.com/gearman/gearmand.git
+Source: %name-%version.tar
+
+BuildRequires: perl gcc-c++ boost-devel boost-program_options-devel libevent-devel libuuid-devel gperf
+BuildRequires: libsqlite3-devel libtokyocabinet-devel libmemcached-devel memcached libhiredis-devel
+BuildRequires: mysql-devel postgresql-devel zlib-devel
+BuildRequires: python-module-sphinx python-module-sphinx_rtd_theme
 
 %description
 %summary
@@ -26,33 +26,49 @@ Requires:       %name = %version
 This package contains necessary header files for Gearman development.
 
 %prep
-%setup -q -n %name
-%patch0
+%setup
+# provide information about version needed for bootstrap
+sed -i -e 's:git describe --always:echo %version:' \
+	version.m4 \
+	configure.ac
 
 %build
-%configure
+%autoreconf
+%configure --enable-ssl
+
+# first build docs
+pushd docs
+%make_build
+popd
+
 %make_build
 
 %install
 mkdir %buildroot
-make install DESTDIR=%buildroot
+%make install DESTDIR=%buildroot
+
+rm -f %buildroot%_libdir/libgearman.a
 
 %files
-%doc ChangeLog README COPYING
-%doc %_mandir/man?/*
+%doc ChangeLog README.md COPYING
 %_bindir/gearman
 %_bindir/gearadmin
-%_libdir/libgearman.so.4
-%_libdir/libgearman.so.4.0.0
+%_libdir/libgearman.so.*
 %_sbindir/gearmand
+%_man1dir/*
+%_man8dir/*
 
 %files devel
 %_includedir/libgearman/*
+%_includedir/libgearman-1.0/*
 %_libdir/libgearman.so
 %_pkgconfigdir/gearmand.pc
-
+%_man3dir/*
 
 %changelog
+* Fri Sep 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.17-alt1
+- Updated to upstream release version 1.1.17.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.18-alt1.6.qa1.1
 - rebuild with boost 1.57.0
 
