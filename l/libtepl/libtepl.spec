@@ -1,12 +1,12 @@
 %define _name tepl
-%define ver_major 2.99
+%define ver_major 3.0
 %define api_ver 3
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: GTK+ Text Editor Framework
@@ -212,6 +212,9 @@ rm -rf missing aclocal.m4 /m4/libtool.m4 m4/lt*.m4
 
 
 %changelog
+* Sat Sep 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
+- 3.0.0
+
 * Sun Aug 20 2017 Yuri N. Sedunov <aris@altlinux.org> 2.99.4-alt1
 - 2.99.4
 
