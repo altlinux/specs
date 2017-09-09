@@ -1,7 +1,7 @@
-%define ver_major 3.16
+%define ver_major 3.18
 
 Name: meld
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Meld Diff Viewer
@@ -13,7 +13,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 BuildArch: noarch
 
-BuildRequires: rpm-build-licenses rpm-build-gir intltool yelp-tools python-devel
+BuildRequires: rpm-build-licenses rpm-build-gir intltool yelp-tools python3-devel
 
 %description
 Meld is a visual diff and merge tool. It lets you compare two or three
@@ -27,19 +27,20 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%__python setup.py \
+%__python3 setup.py \
 	--no-update-icon-cache \
 	--no-compile-schemas \
-	install --root=%buildroot
+	install \
+	--root=%buildroot
 
 %find_lang %name --with-gnome
 
 %files -f %name.lang
 %_bindir/%name
-%python_sitelibdir_noarch/*
+%python3_sitelibdir_noarch/*
 %_datadir/%name/
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/*/*
@@ -51,6 +52,9 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %doc NEWS README
 
 %changelog
+* Sat Sep 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
+- 3.18.0
+
 * Sun Dec 18 2016 Yuri N. Sedunov <aris@altlinux.org> 3.16.4-alt1
 - 3.16.4
 
