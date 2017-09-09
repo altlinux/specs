@@ -18,7 +18,7 @@
 
 Name: gnome-software
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Software manager for GNOME
 License: GPLv2+
@@ -58,6 +58,26 @@ BuildRequires: librpm-devel valgrind-tool-devel
 
 %description
 GNOME Software is for installing, removing and updating software.
+
+%package devel
+Summary: Development files for GNOME Software
+Group: Development/GNOME and GTK+
+Requires: %name = %version-%release
+
+%description devel
+This package contains files necessary to develop plugins for GNOME
+Software.
+
+%package devel-doc
+Summary: Development documentation for GNOME Software
+Group: Development/GNOME and GTK+
+BuildArch: noarch
+Conflicts: %name-devel < %version
+
+%description devel-doc
+This package contains documentation necessary to develop plugins for
+GNOME Software.
+
 
 %prep
 %setup
@@ -106,12 +126,17 @@ GNOME Software is for installing, removing and updating software.
 %_man1dir/%name.1.*
 %doc AUTHORS README NEWS
 
-#devel
+%files devel
 %_includedir/%name/
 %_pkgconfigdir/%name.pc
+
+%files devel-doc
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Sat Sep 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.3-alt2
+- new -devel, -devel-doc subpackages
+
 * Mon May 15 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.3-alt1
 - 3.24.3
 
