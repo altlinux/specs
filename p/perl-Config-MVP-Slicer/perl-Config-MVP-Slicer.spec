@@ -3,8 +3,8 @@
 %define real_name Config-MVP-Slicer
 
 Name: perl-Config-MVP-Slicer
-Version: 0.302
-Release: alt3
+Version: 0.303
+Release: alt1
 
 Summary: Perl module to extract embedded plugin config from parent config
 
@@ -44,5 +44,8 @@ configurations.
 %perl_vendor_privlib/Config/MVP/Slicer*
 
 %changelog
+* Sun Sep 10 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.303-alt1
+- New version
+
 * Thu May 04 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.302-alt3
 - Initial build for ALT Linux Sisyphus
