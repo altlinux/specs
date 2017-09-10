@@ -1,5 +1,5 @@
 Name: flacon
-Version: 3.0.0
+Version: 3.1.1
 Release: alt1%ubt
 
 Summary: Audio File Encoder
@@ -62,6 +62,9 @@ popd
 %_man1dir/%name.1.*
 
 %changelog
+* Sun Sep 10 2017 Nazarov Denis <nenderus@altlinux.org> 3.1.1-alt1%ubt
+- Version 3.1.1
+
 * Sun Jul 30 2017 Nazarov Denis <nenderus@altlinux.org> 3.0.0-alt1%ubt
 - Version 3.0.0
 
