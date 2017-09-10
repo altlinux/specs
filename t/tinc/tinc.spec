@@ -1,6 +1,6 @@
 Name: tinc
-Version: 1.0.31
-Release: alt2
+Version: 1.0.32
+Release: alt1
 
 Summary: Virtual Private Network (VPN) daemon that uses tunnelling and encryption to create a secure private network between hosts on the Internet.
 Summary(ru_RU.UTF-8): Небольшой демон для создания шифрованных туннелей и частных виртуальных сетей между хостами в сети Интернет
@@ -123,6 +123,13 @@ install -pD -m755 -- %SOURCE3 %buildroot%_controldir/%name
 %_unitdir/%{name}*.service
 
 %changelog
+* Sun Sep 10 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.0.32-alt1
+- New version
+ * Fix segmentation fault when using Cipher = none.
+ * Fix Proxy = exec.
+ * Support PriorityInheritance for IPv6 packets.
+ * Bind outgoing TCP sockets when ListenAddress is used.
+
 * Thu Mar 23 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.0.31-alt2
 - Fix BuildRequires according to TeX policy
 - Cleanup spec file
