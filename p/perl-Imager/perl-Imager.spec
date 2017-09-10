@@ -1,8 +1,8 @@
 # SPEC file for Perl module Imager
 
 Name: perl-Imager
-Version: 1.005
-Release: alt1.1
+Version: 1.006
+Release: alt1
 
 Summary: Perl module for generating 24 bit Images
 Summary(ru_RU.UTF-8): Модуль Perl для создания 24-x битных изображений
@@ -15,9 +15,9 @@ Source: Imager-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sun Sep 14 2014
-# optimized out: libcloog-isl4 perl-Class-Inspector perl-Class-Tiny perl-Data-OptList perl-Devel-Symdump perl-Encode perl-File-HomeDir perl-File-ShareDir perl-File-ShareDir-ProjectDistDir perl-File-Which perl-Lingua-EN-Inflect perl-Module-Runtime perl-Params-Util perl-Path-FindDev perl-Path-IsDev perl-Path-Tiny perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Role-Tiny perl-Sub-Exporter perl-Sub-Install perl-Text-Balanced perl-devel perl-threads pkg-config t1lib
-BuildRequires: git-core libfreetype-devel libgif-devel libjpeg-devel libpng-devel libtiff-devel perl-Affix-Infix2Postfix perl-Image-Math-Constrain perl-Parse-RecDescent perl-Pod-Spell perl-Test-Pod-Coverage t1lib-devel xorg-rgb
+# Automatically added by buildreq on Sun Sep 10 2017
+# optimized out: perl perl-Class-Inspector perl-Class-Tiny perl-Devel-Symdump perl-Encode perl-File-ShareDir perl-Lingua-EN-Inflect perl-Path-Tiny perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Text-Balanced perl-devel perl-parent perl-threads pkg-config python-base python-modules python3 python3-base ruby ruby-stdlibs t1lib
+BuildRequires: git-core libfreetype-devel libgif-devel libjpeg-devel libpng-devel libtiff-devel perl-Affix-Infix2Postfix perl-Image-Math-Constrain perl-Parse-RecDescent perl-PerlIO-utf8_strict perl-Pod-Spell perl-Test-Pod-Coverage t1lib-devel xorg-rgb
 
 %description
 Imager is a module for creating and altering images. It can
@@ -48,6 +48,9 @@ IM_SUPPRESS_PROM=1 %perl_vendor_build
 %exclude /.perl.req
 
 %changelog
+* Sun Sep 10 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.006-alt1
+- New version
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.005-alt1.1
 - rebuild with new perl 5.24.1
 
