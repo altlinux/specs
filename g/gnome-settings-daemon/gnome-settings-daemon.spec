@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define ver_major 3.24
@@ -15,7 +15,7 @@
 
 Name: gnome-settings-daemon
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: A program that manages general GNOME settings
 License: GPLv2+
@@ -193,6 +193,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Sun Sep 10 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.3-alt2
+- updated to 3_24_3-8-g6e719ad (fixed BGO ##786164, 766067)
+
 * Thu Jul 27 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.3-alt1
 - 3.24.3
 
