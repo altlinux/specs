@@ -1,7 +1,7 @@
 Summary:        Utility for computing hash sums and creating magnet links.
 Name:           rhash
 Version:        1.3.5
-Release:        alt1
+Release:        alt2
 License:        MIT
 Group:          File tools
 URL:            http://rhash.sourceforge.net/
@@ -53,7 +53,7 @@ for a long-term storing or transferring.
 %package -n lib%name-devel-static
 Summary:        Static library for LibRHash
 Group:          Development/C
-Requires:       lib%name = %version-%release
+Requires:       lib%name-devel = %version-%release
 
 %description -n lib%name-devel-static
 LibRHash is a professional, portable, thread-safe C library for computing
@@ -94,6 +94,9 @@ make PREFIX=%_prefix DESTDIR="%buildroot" MANDIR="%_mandir" LIBDIR="%_libdir" -C
 %_libdir/librhash.so.*
 
 %changelog
+* Mon Sep 11 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt2
+- fix requires for static package
+
 * Mon Sep 11 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt1
 - 1.3.5
 - add static library package
