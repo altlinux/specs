@@ -1,7 +1,7 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.7.1
-%define major 2.15
+%define major 2.16
 
 Name: wine
 Version: %major.0
@@ -472,6 +472,11 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Mon Sep 11 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.16.0-alt1
+- new version (2.16.0) with rpmgs script
+- update winetricks up to 20170823-next
+- add dotnet47 support in winetricks
+
 * Sun Aug 27 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.15.0-alt1
 - new version (2.15.0) with rpmgs script
 
