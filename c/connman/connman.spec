@@ -3,7 +3,7 @@
 
 Name: connman
 Version: 1.35
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: ConnMan is a daemon for managing internet connections.
 License: %gpl2only
@@ -85,7 +85,7 @@ This package contains include files required for development %name-based softwar
 	--enable-l2tp \
 	--enable-pptp \
 #
-%make_build
+%make_build runstatedir=/run
 
 %install
 %makeinstall_std
@@ -161,6 +161,9 @@ ln -s ../connman-openresolv.path %buildroot%_unitdir/multi-user.target.wants
 %_includedir/*
 
 %changelog
+* Mon Sep 11 2017 Paul Wolneykien <manowar@altlinux.org> 1.35-alt2%ubt
+- Fix: Explicitly set runstatedir=/run (closes: #33848).
+
 * Wed Aug 30 2017 Alexey Shabalin <shaba@altlinux.ru> 1.35-alt1%ubt
 - 1.35
 
