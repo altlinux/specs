@@ -1,8 +1,8 @@
 %def_enable webkit
 
 Name: psi-plus
-Version: 1.2.40
-Release: alt2
+Version: 1.2.71
+Release: alt1
 
 Summary: Psi+ Jabber client
 Summary(ru_RU.UTF-8): Jabber-клиент Psi+
@@ -1036,6 +1036,9 @@ rm %buildroot%_bindir/%name.debug
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Mon Sep 11 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.71-alt1
+- Version 1.2.71
+
 * Fri Sep 08 2017 Michael Shigorin <mike@altlinux.org> 1.2.40-alt2
 - introduced webkit knob (on by default)
 - minor spec cleanup
