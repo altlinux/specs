@@ -6,7 +6,7 @@
 %def_enable zeitgeist
 
 Name: bijiben
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Note editor for GNOME
@@ -69,6 +69,9 @@ desktop integration.
 %doc README AUTHORS NEWS
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
+- 3.24.2
+
 * Tue Aug 15 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
 - 3.24.1
 
