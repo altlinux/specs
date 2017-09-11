@@ -1,12 +1,13 @@
 Summary:        Utility for computing hash sums and creating magnet links.
 Name:           rhash
-Version:        1.2.10
+Version:        1.3.5
 Release:        alt1
-Copyright:      MIT
+License:        MIT
 Group:          File tools
 URL:            http://rhash.sourceforge.net/
-Source:         %name-%version-src.tar
-BuildRequires:  gcc, libssl-devel
+Source:         %name-%version.tar
+Patch:          %name-%version.patch
+BuildRequires:  gcc libssl-devel
 
 %description
 RHash is a console utility for calculation and verification of magnet links
@@ -37,7 +38,7 @@ Hash sums are used to ensure and verify integrity of large volumes of data
 for a long-term storing or transferring.
 
 %package -n lib%name-devel
-Summary:        Headers and static library for LibRHash
+Summary:        Headers and shared library for LibRHash
 Group:          Development/C
 Requires:       lib%name = %version-%release
 
@@ -49,17 +50,32 @@ HAS-160, EDON-R, Whirlpool and Snefru.
 Hash sums are used to ensure and verify integrity of large volumes of data
 for a long-term storing or transferring.
 
+%package -n lib%name-devel-static
+Summary:        Static library for LibRHash
+Group:          Development/C
+Requires:       lib%name = %version-%release
+
+%description -n lib%name-devel-static
+LibRHash is a professional, portable, thread-safe C library for computing
+a wide variety of hash sums, such as CRC32, MD4, MD5, SHA1, SHA256, SHA512,
+AICH, ED2K, Tiger, DC++ TTH, BitTorrent BTIH, GOST R 34.11-94, RIPEMD-160
+HAS-160, EDON-R, Whirlpool and Snefru.
+Hash sums are used to ensure and verify integrity of large volumes of data
+for a long-term storing or transferring.
+
 %prep
 %setup
+%patch -p1
 
 %build
 make CFLAGS="$RPM_OPT_FLAGS -DNDEBUG -DUSE_OPENSSL -DOPENSSL_RUNTIME -rdynamic" LDFLAGS=-ldl lib-shared build-shared all
 
 %check
-make CFLAGS="$RPM_OPT_FLAGS -DNDEBUG -DUSE_OPENSSL -DOPENSSL_RUNTIME -rdynamic" LDFLAGS=-ldl test-shared
+make test-shared
 
 %install
 make PREFIX=%_prefix DESTDIR="%buildroot" MANDIR="%_mandir" LIBDIR="%_libdir" install install-lib-static install-lib-shared install-shared-binary
+make PREFIX=%_prefix DESTDIR="%buildroot" MANDIR="%_mandir" LIBDIR="%_libdir" -C librhash install-so-link install-headers
 
 %files
 %_bindir/*
@@ -67,15 +83,21 @@ make PREFIX=%_prefix DESTDIR="%buildroot" MANDIR="%_mandir" LIBDIR="%_libdir" in
 %_man1dir/*
 
 %files -n lib%name-devel
-%_libdir/librhash.a
 %_libdir/librhash.so
 %_includedir/*.h
+
+%files -n lib%name-devel-static
+%_libdir/librhash.a
 
 %files -n lib%name
 %doc COPYING README ChangeLog
 %_libdir/librhash.so.*
 
 %changelog
+* Mon Sep 11 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt1
+- 1.3.5
+- add static library package
+
 * Wed Jul 31 2013 Evgeny Sinelnikov <sin@altlinux.ru> 1.2.10-alt1
 - Initial Sisyphus release based on original specfile by Aleksey Kravchenko
   from Novosibirsk, Animegorodok last build for mdk in 14 September 2011
