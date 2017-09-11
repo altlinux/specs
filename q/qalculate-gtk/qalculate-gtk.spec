@@ -1,22 +1,22 @@
 %define shortname qalculate
 
 Name: qalculate-gtk
-Version: 0.9.7
-Release: alt3.qa2
+Version: 2.0.0
+Release: alt1
 
 Summary: A very versatile desktop calculator - GTK+ version.
 Group: Office
 License: GPL
-Url: http://qalculate.sourceforge.net
-Packager: Alexey Morsov <swi@altlinux.ru>
-Requires: %shortname-common
+Url: https://qalculate.github.io/
 
+# https://github.com/Qalculate/qalculate-gtk.git
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++ libcln-devel libdbus-glib libglade-devel libgmp-devel libgnome-devel 
 BuildRequires: libqalculate-devel = %version
 BuildRequires: perl-XML-Parser scrollkeeper yelp intltool
 BuildRequires: desktop-file-utils
+BuildRequires: pkgconfig(libxml-2.0) pkgconfig(gtk+-3.0)
 
 %description
 A GTK+ graphical interface for Qalculate!
@@ -32,10 +32,10 @@ A GTK+ graphical interface for Qalculate!
 %install
 %make_install DESTDIR=%buildroot install
 
-rm -f %buildroot%_bindir/qalculate
-rm -rf %buildroot%_datadir/locale
+#rm -f %buildroot%_bindir/qalculate
+#rm -rf %buildroot%_datadir/locale
 
-%find_lang --with-gnome %shortname
+%find_lang %name
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Application \
 	--add-category=Calculator \
@@ -45,15 +45,17 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=GTK \
 	%buildroot%_desktopdir/qalculate-gtk.desktop
 
-%files -f %shortname.lang
+%files -f %name.lang
 %_bindir/%name
-%_datadir/applications/*
-%_datadir/gnome/help/
-%_datadir/%name/glade/
+%_datadir/appdata/%name.appdata.xml
+%_defaultdocdir/%name
+%_desktopdir/*
 %_pixmapsdir/%shortname.png
 
-
 %changelog
+* Mon Sep 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt1
+- Updated to upstream version 2.0.0.
+
 * Tue Jun 07 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.9.7-alt3.qa2
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
