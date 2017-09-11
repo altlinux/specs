@@ -17,8 +17,8 @@
 %def_enable ntlm
 
 Name: openldap
-Version: %_sover.42
-Release: alt4.1
+Version: %_sover.45
+Release: alt1
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -96,7 +96,6 @@ Patch22: %_bname-2.4.31-rh-cve-nss-cipher-suite-ignored.patch
 Patch23: %_bname-2.4.31-rh-nss-default-cipher-suite-always-selected.patch
 Patch24: %_bname-2.4.31-rh-nss-multiple-tls-contexts.patch
 Patch25: openldap-2.4.32-alt-gcc5.1.patch
-Patch26: openldap-2.4.42-CVE-2015-6908.patch
 Patch27: openldap-2.4.42-CVE-2015-3276.patch
 
 ### REQUIRE Section
@@ -270,8 +269,6 @@ HTML and TXT versions
 %patch13 -p1
 %patch14 -p1
 
-#%patch25 -p2
-%patch26 -p1
 %patch27 -p1
 
 ### Extract AACLS patch
@@ -705,6 +702,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Mon Sep 11 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.4.45-alt1
+- updated to 2.4.45 (Fixes: CVE-2017-9287)
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.42-alt4.1
 - rebuild with new perl 5.24.1
 
