@@ -1,9 +1,10 @@
 %def_with python
+%def_with python3
 
 Name: libselinux
 Epoch: 1
 Version: 2.5
-Release: alt2
+Release: alt3
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
@@ -15,7 +16,8 @@ Patch2: alt-linking.patch
 
 %{?_with_python:BuildPreReq: rpm-build-python}
 BuildRequires: libpcre-devel libsepol-devel >= 2.5
-%{?_with_python:BuildRequires: python-dev swig libsepol-devel-static >= 2.5}
+%{?_with_python:BuildRequires: python-devel swig libsepol-devel-static >= 2.5}
+%{?_with_python3:BuildRequires: python3-devel swig libsepol-devel-static >= 2.5}
 
 %description
 libselinux provides an API for SELinux applications to get and set
@@ -64,6 +66,15 @@ Requires: %name = %version-%release
 This package contains SELinux python bindings.
 %endif
 
+%if_with python3
+%package -n python3-module-selinux
+Summary: Python 3.x module for %name
+Group: System/Configuration/Other
+Requires: %name = %version-%release
+
+%description -n python3-module-selinux
+This package contains SELinux python 3.x bindings.
+%endif
 
 %prep
 %setup -q
@@ -73,10 +84,23 @@ This package contains SELinux python bindings.
 
 %build
 %make_build CFLAGS="%optflags $(pkg-config libpcre --cflags)" LIBDIR=%_libdir all
-%{?_with_python:%make_build CFLAGS="%optflags" LIBDIR=%_libdir pywrap}
-
+%if_with python3
+rm -rf ../python3
+cp -a . ../python3
+%endif
+%{?_with_python:%make_build CFLAGS="%optflags" LIBDIR=%_libdir PYTHON=/usr/bin/python pywrap}
+%if_with python3
+pushd ../python3
+%make_build CFLAGS="%optflags" LIBDIR=%_libdir PYTHON=/usr/bin/python3 pywrap
+popd
+%endif
 
 %install
+%if_with python3
+pushd ../python3
+%makeinstall_std LIBDIR=%buildroot%_libdir SHLIBDIR=%buildroot/%_lib PYTHON=/usr/bin/python3 install-pywrap
+popd
+%endif
 %makeinstall_std LIBDIR=%buildroot%_libdir SHLIBDIR=%buildroot/%_lib %{?_with_python:install-pywrap}
 install -d -m 0755 %buildroot/var/run/setrans
 
@@ -119,8 +143,15 @@ fi
 %python_sitelibdir/*
 %endif
 
+%if_with python3
+%files -n python3-module-selinux
+%python3_sitelibdir/*
+%endif
 
 %changelog
+* Fri Sep 08 2017 Mikhail Efremov <sem@altlinux.org> 1:2.5-alt3
+- Build Python 3.x module.
+
 * Tue Nov 22 2016 Anton Farygin <rider@altlinux.ru> 1:2.5-alt2
 - upstream fixes for /proc mounting (closes: #32778)
 
