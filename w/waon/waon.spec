@@ -1,6 +1,6 @@
 Name: waon
 Version: 0.10
-Release: alt2
+Release: alt3
 License: GPLv2
 Group: Sound
 URL: http://sourceforge.net/projects/waon/
@@ -37,11 +37,14 @@ install -D -m0644 gwaon.1 %buildroot%_man1dir/gwaon.1
 %_bindir/waon
 %_bindir/waon-pv
 %_bindir/gwaon
-%_man1dir/waon.1.gz
-%_man1dir/waon-pv.1.gz
-%_man1dir/gwaon.1.gz
+%_man1dir/waon.1.*
+%_man1dir/waon-pv.1.*
+%_man1dir/gwaon.1.*
 
 %changelog
+* Mon Sep 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10-alt3
+- Updated spec to allow any man pages compression.
+
 * Mon Sep  1 2014 Evgenii Terechkov <evg@altlinux.org> 0.10-alt2
 - pv -> waon-pv (ALT bug #30175)
 
