@@ -2,12 +2,12 @@
 
 Name: rtorrent
 Version: 0.9.6
-Release: alt1
+Release: alt2
 
 Summary: rTorrent - rakshasa's ncurses BitTorrent client using librTorrent
 Group: Networking/File transfer
 License: GPL2
-Url: http://libtorrent.rakshasa.no/
+Url: https://github.com/rakshasa/rtorrent/wiki
 
 Source0: %name-%version.tar
 Patch0: %name-man-alt.patch
@@ -53,6 +53,9 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 #%_man1dir/*
 
 %changelog
+* Mon Sep 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.6-alt2
+- Fixed build with new cppunit.
+
 * Sat Nov 07 2015 Afanasov Dmitry <ender@altlinux.org> 0.9.6-alt1
 - 0.9.6
 
