@@ -1,9 +1,12 @@
-Name: qbittorrent
-Version: 3.3.15
-Epoch: 1
-Release: alt1
+%define ltr libtorrent-rasterbar-devel
+%define rel alt1
 
-Summary: qBittorrent is a bittorrent client written in C++ / Qt5 using the good libtorrent library.
+Name: qbittorrent
+Version: 3.3.16
+Epoch: 1
+Release: %rel
+
+Summary: qBittorrent is a bittorrent client written in C++ / Qt5 using the good libtorrent library
 Summary(ru_RU.UTF-8): qBittorrent - bittorrent клиент написанный на C++ / Qt5, использующий библиотеку libtorrent.
 Summary(uk_UA.UTF-8): qBittorrent - bittorrent-клієнт, написаний на C++ / Qt5, використовує бібліотеку libtorrent.
 License: GPLv2
@@ -18,27 +21,31 @@ BuildPreReq: desktop-file-utils
 
 BuildRequires: boost-devel boost-filesystem boost-filesystem-devel boost-datetime boost-program-options-devel boost-asio-devel
 BuildRequires: gcc-c++ qt5-base-devel qt5-tools
-BuildRequires: libtorrent-rasterbar-devel >= %libtorrent_version 
 BuildRequires: GeoIP-Lite-Country
 BuildRequires: libnotify-devel
 BuildRequires: zlib-devel
+
+%if "%rel" == "alt0.M80P"
+%define ltr libtorrent-rasterbar9-devel
+%endif
+BuildRequires: %ltr >= %libtorrent_version
 
 Requires: python-modules-ctypes
 Requires: GeoIP-Lite-Country
 
 %description
-qBittorrent is a bittorrent client written in C++ / Qt5 using the good 
-libtorrent-rasterbar library (By Arvid Nordberg). qBittorrent is 
-free / open-source software released under the GNU GPL license. 
-qBittorrent aims to be a good alternative to all other bittorrent 
-clients. The Author is Christophe Dumez, French Student in 
+qBittorrent is a bittorrent client written in C++ / Qt5 using the good
+libtorrent-rasterbar library (By Arvid Nordberg). qBittorrent is
+free / open-source software released under the GNU GPL license.
+qBittorrent aims to be a good alternative to all other bittorrent
+clients. The Author is Christophe Dumez, French Student in
 computer science (IT).
 
 %description -l ru_RU.UTF8
-qBittorrent - клиент bittorrent написанный на C++ / Qt5, использующий 
-библиотеку libtorrent-rasterbar (Arvid Nordberg). qBittorrent свободное 
-ПО с открытым исходным кодом, распространяющийся под лицензией GNU GPL. 
-qBittorrent стремится быть хорошей альтернативой всем другим bittorrent 
+qBittorrent - клиент bittorrent написанный на C++ / Qt5, использующий
+библиотеку libtorrent-rasterbar (Arvid Nordberg). qBittorrent свободное
+ПО с открытым исходным кодом, распространяющийся под лицензией GNU GPL.
+qBittorrent стремится быть хорошей альтернативой всем другим bittorrent
 клиентам. Автор Christophe Dumez, французский студент в области IT.
 
 %description -l uk_UA.UTF8
@@ -95,6 +102,9 @@ make clean
 %_datadir/icons/hicolor/*/*/*
 
 %changelog
+* Mon Sep 11 2017 Motsyo Gennadi <drool@altlinux.ru> 1:3.3.16-alt1
+- 3.3.16
+
 * Wed Aug 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.3.15-alt1
 - Updated to upstream release 3.3.15.
 
@@ -303,7 +313,7 @@ make clean
 - new devel version
 
 * Tue Aug 19 2008 Alexey Morsov <swi@altlinux.ru> 1:1.2.0-alt0.beta4
-- new devel version 
+- new devel version
 - update russian translation
 
 * Sat Aug 09 2008 Alexey Morsov <swi@altlinux.ru> 1:1.2.0-alt0.beta2
@@ -403,8 +413,8 @@ make clean
 * Tue Apr 10 2007 Alexey Morsov <swi@altlinux.ru> 0.9.1-alt1
 - New version (lot of new features such as Peer Exchange (PeX) support,
   autocompletion, new system tray popups, better internationalization,
-  a lot of code rewriting (optimized and cleaned). 
-- based on latest libtorrent library by Arvid Norberg (v0.12) 
+  a lot of code rewriting (optimized and cleaned).
+- based on latest libtorrent library by Arvid Norberg (v0.12)
 - spec cleanup
 
 * Fri Dec 22 2006 Alexey Morsov <swi@altlinux.ru> 0.8.0-alt1
