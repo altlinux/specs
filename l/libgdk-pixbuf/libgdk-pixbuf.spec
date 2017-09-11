@@ -13,7 +13,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -171,7 +171,7 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 %check
 # due to version script
 echo : >>%_name/abicheck.sh
-##%make check
+%make check
 
 %files
 %_bindir/gdk-pixbuf-query-loaders
@@ -241,6 +241,9 @@ echo : >>%_name/abicheck.sh
 
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 2.36.10-alt1
+- 2.36.10
+
 * Sat Aug 19 2017 Yuri N. Sedunov <aris@altlinux.org> 2.36.9-alt1
 - 2.36.9
 
