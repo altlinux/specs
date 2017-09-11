@@ -4,7 +4,7 @@
 
 Name: qtiplot
 Version: 0.9.8.9
-Release: alt4.svn20120124
+Release: alt5.svn20120124
 
 Summary: WYSIWYG tool to make two- and three-dimensional plots of scientific data
 Group: Sciences/Other
@@ -33,11 +33,12 @@ Patch7: %name-0.9.8.9-alt-sipFTBFS.patch
 # based on Debian 11_ftbfs-gcc-6.cpp
 Patch8: %name-0.9.8.9-alt-gcc6.patch
 Patch9: %name-0.9.8.9-alt-gcc6_indents.patch
+Patch10: %name-0.9.8.9-debian-gsl2.patch
 
 BuildPreReq: texlive-latex-extra
 
 # Automatically added by buildreq on Sun Feb 03 2008
-BuildRequires: gcc-c++ libgsl90-devel libmuparser-devel libqt4-devel
+BuildRequires: gcc-c++ libgsl-devel libmuparser-devel libqt4-devel
 BuildRequires: python-module-PyQt4-devel python-module-sip-devel
 BuildRequires: docbook-utils docbook-style-dsssl dblatex boost-devel
 BuildRequires: doxygen boost-datetime-devel libpng-devel
@@ -110,6 +111,7 @@ Conflicts: %name-manual
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 subst "s/lupdate/lupdate-qt4/;s/lrelease/lrelease-qt4/;\
 s/#system(lupdate/system(lupdate/;s/#system(lrelease/system(lrelease/" \
@@ -202,6 +204,9 @@ mv %buildroot%_libexecdir/%name/plugins/* \
 %pkgdocdir/manual/*.pdf
 
 %changelog
+* Tue Aug 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.8.9-alt5.svn20120124
+- Rebuilt with new libgsl.
+
 * Mon Jan 30 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.8.9-alt4.svn20120124
 - Fixed build with gcc6
 
