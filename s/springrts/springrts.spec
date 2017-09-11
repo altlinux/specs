@@ -1,35 +1,39 @@
 %define _unpackaged_files_terminate_build 1
-%def_disable debug
+%def_enable debug
 
 Name: springrts
-Version: 91.0
-Release: alt1.git20120830.qa1.1
+Version: 103.0
+Release: alt1
 
 Summary: Real time strategy game engine with many mods
 License: GPL2+ or Artistic
 Group: Games/Strategy 
-Url: http://springrts.com/
+Url: https://springrts.com/
 
 BuildRequires(pre): rpm-build-xdg rpm-macros-cmake
-
 BuildRequires: cmake cmake-modules java-devel /proc libGL-devel libGLU-devel gcc-c++
-BuildRequires: boost-devel boost-program_options-devel boost-asio-devel boost-signals-devel
+BuildRequires: boost-devel boost-program_options-devel boost-asio-devel boost-signals-devel boost-filesystem-devel
 BuildRequires: libICE-devel libSM-devel libX11-devel libXdamage-devel libXfixes-devel libXrender-devel 
 BuildRequires: libXt-devel libfreetype-devel libogg-devel libstdc++-devel 
 BuildRequires: xorg-inputproto-devel xorg-kbproto-devel xorg-xextproto-devel xorg-xf86miscproto-devel 
 BuildRequires: xorg-xineramaproto-devel xorg-xproto-devel zlib-devel p7zip libXcursor-devel
 BuildRequires: libdevil-devel libfreeglut-devel libglew-devel libopenal1-devel 
-BuildRequires: libvorbis-devel  python-devel libSDL-devel
-BuildPreReq: docbook5-style-xsl asciidoc libminizip-devel
-BuildPreReq: libXres-devel libXtst-devel libXau-devel libXcomposite-devel
-BuildPreReq: libXdmcp-devel libXext-devel libXft-devel libXi-devel
-BuildPreReq: libXinerama-devel libxkbfile-devel libXmu-devel libXpm-devel
-BuildPreReq: libXrandr-devel libXScrnSaver-devel libXv-devel
-BuildPreReq: libXxf86misc-devel libXxf86vm-devel
+BuildRequires: libvorbis-devel  python-devel libSDL2-devel
+BuildRequires: docbook5-style-xsl asciidoc libminizip-devel
+BuildRequires: libXres-devel libXtst-devel libXau-devel libXcomposite-devel
+BuildRequires: libXdmcp-devel libXext-devel libXft-devel libXi-devel
+BuildRequires: libXinerama-devel libxkbfile-devel libXmu-devel libXpm-devel
+BuildRequires: libXrandr-devel libXScrnSaver-devel libXv-devel
+BuildRequires: libXxf86misc-devel libXxf86vm-devel
+BuildRequires: libcurl-devel jsoncpp-devel libunwind-devel
 
-Requires: %name-data = %version-%release
-# git://springrts.git.sourceforge.net/gitroot/springrts/springrts
-Source0: %name-%version.tar
+Requires: %name-data = %EVR
+Conflicts: %name-dedicated < %EVR
+Provides: %name-dedicated = %EVR
+Obsoletes: %name-dedicated
+
+Source: %name-%version.tar
+Patch1: %name-%version-alt-linking.patch
 
 %description
 Spring is an open source RTS (Real time Strategy) engine originally
@@ -48,21 +52,15 @@ BuildArch: noarch
 %description data
 data files for Spring RTS engine
 
-%package dedicated
-Summary: springrts dedicated server
-Group: Games/Strategy
-Requires: %name-data = %version-%release
-
-%description dedicated
-springrts dedicated server
-
 %prep
-%setup 
+%setup
+%patch1 -p2
 
 %build
+%add_optflags -fPIC -DPIC -D_FILE_OFFSET_BITS=64
 %cmake \
 %if_enabled debug
-        -DCMAKE_BUILD_TYPE=Debug \
+        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
 %else
         -DCMAKE_BUILD_TYPE=Release \
 %endif
@@ -70,53 +68,50 @@ springrts dedicated server
         -DBINDIR=%_gamesbindir \
         -DAI_LIBS_DIR=%_libdir/spring \
         -DAI_DATA_DIR=%_gamesdatadir/spring \
-				-DDOCDIR=share/doc/%name-%version \
-				-DDOCBOOK_XSL=%_datadir/sgml/docbook/xsl-ns-stylesheets/manpages/docbook.xsl
+        -DDOCDIR=share/doc/%name-%version \
+        -DDOCBOOK_XSL=%_datadir/sgml/docbook/xsl-ns-stylesheets/manpages/docbook.xsl \
+        -DAI_TYPES=NATIVE
+
 %make_build -C BUILD VERBOSE=1
 
 %install
 %makeinstall_std -C BUILD VERBOSE=1
-mkdir %buildroot%_gamesdatadir/spring/{mods,maps}
 
-%if_enabled debug
-%add_strip_skiplist %_bindir/*
-%add_strip_skiplist %_libdir/*
-%endif
+# Move icons into proper Freedesktop hicolor theme
+mkdir -p %buildroot%_liconsdir
+
+mv %buildroot%_pixmapsdir/spring.png \
+    %buildroot%_liconsdir/
+
+mkdir -p %buildroot%_iconsdir/hicolor/48x48/mimetypes/
+
+mv %buildroot%_pixmapsdir/application-x-spring-demo.png \
+    %buildroot%_iconsdir/hicolor/48x48/mimetypes/
+
+# Make it visible
+sed -i -e '/NoDisplay=true/d' \
+    %buildroot%_desktopdir/spring.desktop
 
 %files 
+%_bindir/pr-downloader
 %_gamesbindir/spring
 %_gamesbindir/spring-headless
-%_gamesbindir/spring-multithreaded
+%_gamesbindir/spring-dedicated
 %_libdir/spring
-%doc %_docdir/%name-%version
-%_man6dir/*
-%exclude %_man6dir/spring-dedicated.6*
+%_libdir/*.so
 
 %files data
 %_gamesdatadir/*
-%_pixmapsdir/*
 %_xdgmimedir/packages/*
 %_desktopdir/*
-
-%files dedicated
-%_gamesbindir/spring-dedicated
-%_libdir/*.so
-%_man6dir/spring-dedicated.6*
-
-%post data
-  [ -f %_gamesdatadir/spring/base/otacontent.sdz ] && \
-  [ -f %_gamesdatadir/spring/base/tacontent_v2.sdz ] && \
-  [ -f %_gamesdatadir/spring/base/tatextures_v062.sdz ] && exit 0
-
-  echo " ================= Non-free content not included  ==================="
-  echo "  Please download and install additional non-free content which      "
-  echo "  could not be included in this package.                             "
-  echo ""
-  echo "   1. download http://files.simhost.org/Spring/base-ota-content.zip  "
-  echo "   2. extract it to %_gamesdatadir/spring/base                       "
-  echo " ===================================================================="
+%_liconsdir/*
+%_iconsdir/hicolor/48x48/mimetypes/*.png
 
 %changelog
+* Thu Sep 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 103.0-alt1
+- Updated to upstream release 103.0.
+- Moved dedicated server back to main package.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 91.0-alt1.git20120830.qa1.1
 - rebuild with boost 1.57.0
 - fix build
