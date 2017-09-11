@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 1.9.16
+Version: 1.9.18
 Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
@@ -111,6 +111,12 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Mon Sep 11 2017 Vitaly Lipatov <lav@altlinux.ru> 1.9.18-alt1
+- introduce _ln_sr
+
+* Fri Aug 04 2017 Vitaly Lipatov <lav@altlinux.ru> 1.9.17-alt1
+- fix macros, add logrotatedir for deb systems
+
 * Fri Apr 07 2017 Vitaly Lipatov <lav@altlinux.ru> 1.9.16-alt1
 - distr_vendor: fix for ALT 8.x, drop obsoleted versions
 
