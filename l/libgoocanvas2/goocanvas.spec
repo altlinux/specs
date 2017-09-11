@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: lib%{_name}2
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A canvas widget for GTK+3 that uses cairo for drawing
@@ -126,6 +126,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Mon Oct 16 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt1
+- 2.0.4
+
 * Thu Aug 31 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
 - 2.0.3
 

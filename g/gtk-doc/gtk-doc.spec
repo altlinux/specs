@@ -1,6 +1,11 @@
+%def_enable snapshot
+%def_with mkpdf
+# our dblatex can't be --quiet
+%def_disable check
+
 Name: gtk-doc
-Version: 1.25
-Release: alt1
+Version: 1.26.1
+Release: alt0.1
 
 Summary: API documentation generation tool for GTK+ and GNOME
 Group: Development/Other
@@ -8,39 +13,46 @@ License: %gpl2plus
 Url: http://www.gtk.org/gtk-doc/
 
 %define pkgdocdir %_docdir/%name-%version
+%define python_ver 2.7
 
+Requires: python >= %python_ver
+Requires: pkgconfig(glib-2.0)
 Requires: sgml-common >= 0.6.3-alt11
 Requires: docbook-dtds >= 4.3-alt1
 Requires: docbook-style-xsl
 Requires: libxml2 >= 2.3.6
 Requires: xsltproc
-Requires: perl-base >= 1:5.6.0
-Requires: highlight
+%{?_with_mkpdf:Requires: highlight}
 # for SGML
 Requires: openjade >= 1.3.1
 Requires: docbook-style-dsssl
 
-# hack for broken perl autoreq
-Provides: perl(gtkdoc-common.pl)
-
-#Source: %name-%version.tar
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%version/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 BuildArch: noarch
 
+Provides: python%__python_version(gtkdoc)
+
+%add_python_lib_path %_datadir/%name/python/gtkdoc
+
+BuildRequires: rpm-build-python python-devel >= %python_ver
+BuildRequires: python-module-six
 BuildRequires: docbook-dtds xml-common xml-utils
-BuildRequires: common-licenses rpm-build-licenses rpm-build-gnome
-BuildRequires: yelp-tools
+BuildRequires: common-licenses rpm-build-licenses
 BuildRequires: docbook-dtds >= 1.0-alt7
-BuildRequires: docbook-style-xsl
-BuildRequires: perl-base >= 1:5.6.0 bc highlight
+BuildRequires: docbook-style-xsl bc
+%{?_with_mkpdf:BuildRequires: rpm-build-gnome yelp-tools highlight}
 # for SGML
 BuildRequires: docbook-style-dsssl
 BuildRequires: openjade >= 1.3.1
 # for check
 BuildRequires: glib2-devel
 # since 1.25
-BuildRequires: perl(diagnostics.pm) dblatex
+%{?_with_mkpdf:BuildRequires: dblatex}
 
 %description
 %name is a tool for generating API reference documentation.
@@ -82,16 +94,12 @@ rm -f examples/*~
 %undefine _configure_target
 export ac_cv_path_JADE=%_bindir/openjade
 export ac_cv_path_XSLTPROC=%_bindir/xsltproc
-# dblatex or fop (xmlgraphics-fop) required for pdf output
-export ac_cv_path_DBLATEX=%_bindir/dblatex
+%{?_with_mkpdf:export ac_cv_path_DBLATEX=%_bindir/dblatex}
 %configure \
     --with-xml-catalog=%_sysconfdir/xml/catalog \
     --docdir=%pkgdocdir \
-    --with-highlight=highlight
+    %{?_with_mkpdf:--with-highlight=highlight}
 %make_build
-
-%check
-%make check
 
 %install
 %make_install DESTDIR=%buildroot pkgconfigdir=%_datadir/pkgconfig install
@@ -111,12 +119,13 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 ln -s %_licensedir/FDL-1.1 %buildroot%pkgdocdir/COPYING-DOCS
 cp -a examples %buildroot%pkgdocdir/
 
+%check
+%make check
 
 %files
 %_bindir/*
-%exclude %_bindir/gtkdoc-mkpdf
+%{?_with_mkpdf:%exclude %_bindir/gtkdoc-mkpdf}
 %_datadir/%name/
-%_datadir/sgml/%name/
 %_datadir/pkgconfig/%name.pc
 %_datadir/aclocal/%name.m4
 %dir %_datadir/cmake/GtkDoc
@@ -132,15 +141,24 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/TODO
 %pkgdocdir/*.txt
 %pkgdocdir/examples
+%pkgdocdir/gtkdoc.dot
 
+%if_with mkpdf
 %files mkpdf
 %_bindir/gtkdoc-mkpdf
+%endif
 
 %files manual -f gtk-doc-manual.lang
 %dir %pkgdocdir
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 1.26.1-alt0.1
+- updated to GTK_DOC_1_26-14-g95a9312
+
+* Tue Aug 15 2017 Yuri N. Sedunov <aris@altlinux.org> 1.26-alt1
+- 1.26
+
 * Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1.25-alt1
 - 1.25
 
