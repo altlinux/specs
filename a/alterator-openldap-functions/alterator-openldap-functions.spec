@@ -1,7 +1,7 @@
 %define _altdata_dir %_sysconfdir/alterator
 
 Name: alterator-openldap-functions
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 BuildArch: noarch
@@ -27,14 +27,17 @@ helper functions for alterator openldap based backends
 %build
 
 %install
-	install -Dpm644 %name %buildroot/%_bindir/%name
-    mkdir -p %buildroot/%_altdata_dir/openldap
+install -Dpm644 %name %buildroot/%_bindir/%name
+mkdir -p %buildroot/%_altdata_dir/openldap
 
 %files
 %_bindir/*
 %dir %_altdata_dir/openldap
 
 %changelog
+* Mon Sep 11 2017 Andrey Cherepanov <cas@altlinux.org> 0.3.4-alt1
+- Increase uid and gid limits
+
 * Wed Jul 16 2014 Mikhail Efremov <sem@altlinux.org> 0.3.3-alt1
 - Use alterator-service-functions.
 
