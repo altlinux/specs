@@ -8,7 +8,7 @@
 
 Name: gnome-color-manager
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: Color profile manager for the GNOME desktop
 License: %gpl2plus
@@ -18,7 +18,7 @@ Url: http://www.gnome.org/projects/gnome-color-manager/
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 Obsoletes: libcolor-glib
-Requires: common-licenses gnome-session gnome-filesystem
+Requires: common-licenses
 
 BuildPreReq: gnome-common rpm-build-gnome
 BuildPreReq: rpm-build-licenses
@@ -113,6 +113,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %doc README NEWS AUTHORS
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt3
+- dropped obsolete gnome-session dependency
+
 * Sun May 07 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt2
 - rebuilt against libexiv2.so.26
 
