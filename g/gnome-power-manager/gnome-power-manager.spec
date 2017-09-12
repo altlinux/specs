@@ -3,7 +3,7 @@
 
 Name: gnome-power-manager
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME Power management tools
 License: %gpl2plus
@@ -12,7 +12,7 @@ Url: http://www.gnome.org/projects/gnome-power-manager/
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-Requires: common-licenses gnome-session gnome-filesystem
+Requires: common-licenses
 Requires: upower >= 0.9.7
 
 BuildPreReq: rpm-build-gnome >= 0.5
@@ -71,6 +71,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt2
+- dropped obsolete gnome-session dependence
+
 * Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 
