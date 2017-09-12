@@ -1,8 +1,10 @@
 %set_verify_elf_method unresolved=strict
 %def_without check
+# enable cmake-server(7)
+%def_enable server
 Name: cmake
-Version: 3.6.3
-Release: alt0.2
+Version: 3.9.2
+Release: alt0.1
 
 Summary: Cross-platform, open-source make system
 
@@ -10,7 +12,7 @@ License: BSD
 Group: Development/Tools
 Url: http://cmake.org/
 
-Packager: Slava Dubrovskiy <dubrsl@altlinux.org>
+Packager: L.A. Kostis <lakostis@altlinux.org>
 
 Source: %name-%version.tar
 Source1: %name.macros
@@ -20,7 +22,7 @@ Patch: %name-%version-%release.patch
 BuildRequires: bzlib-devel gcc-c++ libarchive-devel >= 2.8.4
 BuildRequires: libcurl-devel libexpat-devel libncurses-devel qt5-base-devel libxml2-devel
 BuildRequires: liblzma-devel jsoncpp-devel doxygen graphviz zlib-devel
-BuildRequires: python-module-sphinx-devel
+BuildRequires: python-module-sphinx-devel librhash-devel libuv-devel
 BuildRequires: shared-mime-info rpm-build-vim
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc gcc-fortran java-devel cvs subversion mercurial git-core}}
 
@@ -147,6 +149,11 @@ CFLAGS="%optflags" CXXFLAGS="%optflags" ../bootstrap \
 	--prefix=%prefix \
 	--datadir=/share/CMake \
 	--mandir=/share/man \
+	%if_enabled server
+	--server \
+	%else
+	--no-server \
+	%endif
 	--docdir=/share/doc/%name-%version
 
 
@@ -166,14 +173,18 @@ for i in 32 128; do
     install -pD -m644 Source/QtDialog/CMakeSetup$i.png %buildroot%_iconsdir/hicolor/${i}x$i/apps/CMakeSetup.png
 done
 mkdir -p %buildroot{%vim_indent_dir,%vim_syntax_dir,%_sysconfdir/bash_completion.d}
-install -m644 Auxiliary/cmake-indent.vim %buildroot%vim_indent_dir/%name.vim
-install -m644 Auxiliary/cmake-syntax.vim %buildroot%vim_syntax_dir/%name.vim
+install -m644 Auxiliary/vim/indent/%name.vim %buildroot%vim_indent_dir/%name.vim
+install -m644 Auxiliary/vim/syntax/%name.vim %buildroot%vim_syntax_dir/%name.vim
+rm -rf %buildroot%_datadir/CMake/editors/vim
 install -pD -m644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 
 mv -f %buildroot%_datadir/CMake/completions %buildroot%_sysconfdir/bash_completion.d
 
 install -p  build/Source/kwsys/libcmsys.so  %buildroot%_libdir/libcmsys.so
 install -p  build/Source/kwsys/libcmsys_c.so  %buildroot%_libdir/libcmsys_c.so
+%if_enabled server
+install -p  build/Source/libCMakeServerLib.so %buildroot%_libdir/
+%endif
 
 %check
 %if_with check
@@ -193,6 +204,9 @@ popd
 %_bindir/cpack
 %_libdir/libCMakeLib.so
 %_libdir/libCPackLib.so
+%if_enabled server
+%_libdir/libCMakeServerLib.so
+%endif
 %_libdir/libcmcompress.so
 %_libdir/libcmsys.so
 %_libdir/libcmsys_c.so
@@ -227,7 +241,7 @@ popd
 
 %files gui
 %_bindir/cmake-gui
-%_desktopdir/CMake.desktop
+%_desktopdir/cmake-gui.desktop
 %_xdgmimedir/packages/cmakecache.xml
 %_iconsdir/*/*/*/CMakeSetup.png
 #_pixmapsdir/*
@@ -255,6 +269,11 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Tue Sep 12 2017 L.A. Kostis <lakostis@altlinux.ru> 3.9.2-alt0.1
+- 3.9.2:
+  + enable server mode by default.
+  + update buildreq (added librhash and libuv).
+
 * Fri Jan 20 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.6.3-alt0.2
 - FindBoost.cmake: added support of boost 1.62 and 1.63.
 
