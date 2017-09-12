@@ -1,6 +1,6 @@
 Name: sqlite3
 Version: 3.20.1
-Release: alt1
+Release: alt2
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
 Group: Development/Databases
@@ -118,7 +118,8 @@ autoreconf -i
 %configure \
 	--enable-threadsafe \
 	--disable-amalgamation \
-	--enable-load-extension
+	--enable-load-extension \
+	--enable-fts5
 
 %make_build all
 
@@ -175,6 +176,9 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Wed Sep 13 2017 Mikhail Efremov <sem@altlinux.org> 3.20.1-alt2
+- Enable FTS5 support (closes: #33885).
+
 * Mon Aug 28 2017 Mikhail Efremov <sem@altlinux.org> 3.20.1-alt1
 - 3.20.1.
 
