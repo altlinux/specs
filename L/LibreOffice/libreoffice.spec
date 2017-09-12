@@ -1,4 +1,4 @@
-# 5.4.0.3
+# 5.4.1.2
 %def_without forky
 %def_without python
 %def_with parallelism
@@ -7,7 +7,7 @@
 
 Name: LibreOffice
 %define hversion 5.4
-%define urelease 0.3
+%define urelease 1.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -493,6 +493,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Tue Sep 12 2017 Fr. Br. George <george@altlinux.ru> 5.4.1.2-alt1
+- Update to 5.4.1.2
+
 * Mon Jul 31 2017 Fr. Br. George <george@altlinux.ru> 5.4.0.3-alt1
 - Update to 5.4.0.3
 
