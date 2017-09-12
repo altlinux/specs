@@ -2,7 +2,7 @@
 
 Name: rpm-build-altlinux-compat
 Version: 1.9.18
-Release: alt1
+Release: alt2
 
 Summary: ALT Linux compatibility and extensions in rpm build
 
@@ -111,6 +111,9 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Tue Sep 12 2017 Vitaly Lipatov <lav@altlinux.ru> 1.9.18-alt2
+- ln_sr: add nonrelative workaround if ln --relative not yet supported
+
 * Mon Sep 11 2017 Vitaly Lipatov <lav@altlinux.ru> 1.9.18-alt1
 - introduce _ln_sr
 
