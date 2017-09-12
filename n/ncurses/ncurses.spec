@@ -1,6 +1,6 @@
 Name: ncurses
 Version: 5.9
-Release: alt8
+Release: alt9
 
 %define rootdatadir /lib
 
@@ -22,7 +22,7 @@ Obsoletes: ncurses3
 Requires: termutils-devel = %version-%release
 
 # Automatically added by buildreq on Thu Nov 12 2009
-BuildRequires: libgpm-devel libncurses-devel gcc-c++
+BuildRequires: libgpm-devel gcc-c++
 
 #build parameters
 %def_with utf8
@@ -411,7 +411,7 @@ ln -s libncurses++.so.5 libncurses++.so
 popd # lib
 # Rebuild c++ demo.
 rm -f c++/demo
-make -C c++
+%make_build -C c++
 %endif # with_cxx
 popd # build-classic
 
@@ -426,13 +426,13 @@ pushd build-utf8
 pushd lib
 g++ -shared -Wl,-soname,libncurses++w.so.5 -o libncurses++w.so.%version \
 	-Wl,-whole-archive libncurses++w.a -Wl,-no-whole-archive \
-	-L. -lform -lmenu -lpanel -lncurses -ltinfo
+	-L. -lformw -lmenuw -lpanelw -lncursesw -ltinfo
 ln -s libncurses++w.so.%version libncurses++w.so.5
 ln -s libncurses++w.so.5 libncurses++w.so
 popd # lib
 # Rebuild c++ demo.
 rm -f c++/demo
-make -C c++
+%make_build -C c++
 %endif # with_cxx
 popd # build-utf8
 %endif # with_utf8
@@ -673,6 +673,9 @@ done
 %endif # with_utf8
 
 %changelog
+* Tue Sep 12 2017 Fr. Br. George <george@altlinux.ru> 5.9-alt9
+- Remove circular buildreqs
+
 * Mon Feb 29 2016 Fr. Br. George <george@altlinux.ru> 5.9-alt8
 - Rebuild with new GCC
 
@@ -916,7 +919,7 @@ Make terminfo noarch
 * Tue Jan 11 2000 Frederic Lepied <flepied@mandrakesoft.com> 5.0-7mdk
 - fix xterm entry for 3.3.6
 
-* Sun Dec 25 1999 - David BAUDENS <baudens@mandrakesoft.com>
+* Sat Dec 25 1999 - David BAUDENS <baudens@mandrakesoft.com>
 - Fix build for K6 (another, AMD K6 is not an i686)
 
 * Fri Nov 19 1999 Chmouel Boudjnah <chmouel@mandrakesoft.com>
