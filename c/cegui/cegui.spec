@@ -1,7 +1,7 @@
 %def_without python
 Name: cegui
 Version: 0.8.4
-Release: alt3
+Release: alt4%ubt
 Summary: Free library providing windowing and widgets for graphics APIs / engines
 Group: System/Libraries
 License: MIT
@@ -12,6 +12,7 @@ Source1: http://downloads.sourceforge.net/crayzedsgui/CEGUI-DOCS-%version.tar.gz
 
 Patch1: %name-%version-alt-build.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: SILLY-devel gcc-c++ libGLU-devel libSM-devel libexpat-devel libfreetype-devel libpcre-devel libxerces-c-devel libxml2-devel tinyxml-devel tolua++-devel tzdata libogre-devel libdirectfb-devel
 
 BuildRequires: cmake libminizip-devel libfribidi-devel libGLEW-devel
@@ -120,6 +121,10 @@ find %buildroot -name '*.la' -exec rm -f {} ';'
 %endif
 
 %changelog
+* Tue Sep 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.4-alt4%ubt
+- Rebuilt with boost 1.65.0.
+- Added %%ubt to release.
+
 * Fri Jul 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.4-alt3
 - Fixed build with new toolchain
 
