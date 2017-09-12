@@ -24,7 +24,7 @@
 %def_enable user_display_server
 
 Name: gdm
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -301,6 +301,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.3-alt1
+- 3.24.3 (fixed CVE-2017-12164)
+
 * Wed May 10 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
 - 3.24.2
 
