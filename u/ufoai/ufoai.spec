@@ -1,6 +1,6 @@
 Name: ufoai
 Version: 2.5
-Release: alt2
+Release: alt3
 Source: %name-%version.tar
 Summary: UFO: Alien Invasion - build your team and stop the aliens
 License: GPL
@@ -70,13 +70,14 @@ scripts for modelling.
 
 %prep
 %setup -q -n %srcname
-
 %patch1 -p1
 
 %build
+%add_optflags -Wno-narrowing
+export CFLAGS="${CFLAGS:-%optflags}"
+export CXXFLAGS="${CXXFLAGS:-%optflags}"
 #autoreconf
 ./configure --prefix=%{_prefix} --enable-uforadiant
-#CFLAGS="-O2" CXXFLAGS="-O2"
 %make
 %make uforadiant
 %make lang
@@ -259,6 +260,9 @@ install -m 644 -pD debian/uforadiant.6 %buildroot/%_man6dir
 #/usr/share/games/ufoai/base/maps
 
 %changelog
+* Mon Sep 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5-alt3
+- Fixed build with new toolchain.
+
 * Sat Dec 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.5-alt2
 - (non-user-visible) verify-elf enabled.
 
