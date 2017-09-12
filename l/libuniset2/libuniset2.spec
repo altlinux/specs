@@ -16,7 +16,7 @@
 
 Name: libuniset2
 Version: 2.6
-Release: alt19
+Release: alt19.1
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -508,6 +508,9 @@ rm -f %buildroot%_libdir/*.la
 # history of current unpublished changes
 
 %changelog
+* Tue Sep 12 2017 Alexei Takaseev <taf@altlinux.org> 2.6-alt19.1
+- Rebuild with poco 1.7.9
+
 * Thu May 25 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt19
 - MBSlave: Now does not terminate when socket is not open
 - Configuration: Now does not terminate when endPoint is not available
