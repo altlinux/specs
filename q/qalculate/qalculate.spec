@@ -2,7 +2,7 @@
 
 Name: qalculate
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: A very versatile desktop calculator
 Group: Office
@@ -13,7 +13,7 @@ Url: https://qalculate.github.io/
 Source: lib%name-%version.tar
 Patch1: %name-%version-alt-build.patch
 
-BuildRequires: libcln-devel gcc-c++ glib2-devel libg2c-devel libgmp-devel libstdc++-devel perl-XML-Parser pkgconfig zlib-devel intltool libtool libxml2-devel
+BuildRequires: libcln-devel gcc-c++ glib2-devel libgmp-devel libstdc++-devel perl-XML-Parser pkgconfig zlib-devel intltool libtool libxml2-devel
 BuildRequires: libcurl-devel libicu-devel libmpfr-devel doxygen
 
 %description
@@ -108,6 +108,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Tue Sep 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt2
+- Updated build dependencies.
+
 * Mon Sep 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt1
 - Updated to upstream version 2.0.0.
 
