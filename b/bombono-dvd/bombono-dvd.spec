@@ -1,6 +1,6 @@
 Name: bombono-dvd
 Version: 1.2.4
-Release: alt2
+Release: alt3
 
 Summary: DVD authoring program with nice and clean GUI
 Group: Video
@@ -85,6 +85,9 @@ ln -s %_datadir/fonts/ttf/freefont/FreeSans.ttf %buildroot%_datadir/bombono/reso
 %_datadir/mime/packages/*
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt3
+- rebuilt with boost-65
+
 * Mon Jun 05 2017 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt2
 - rebuilt against ffmpeg-3.3.1 libraries
 
