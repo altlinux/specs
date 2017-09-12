@@ -2,7 +2,7 @@
 %def_without tests
 
 Name: meson
-Version: 0.42.0
+Version: 0.42.1
 Release: alt1
 
 Summary: High productivity build system
@@ -76,6 +76,9 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 0.42.1-alt1
+- 0.42.1
+
 * Tue Aug 15 2017 Yuri N. Sedunov <aris@altlinux.org> 0.42.0-alt1
 - 0.42.0
 
