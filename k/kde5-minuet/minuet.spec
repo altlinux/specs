@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 16.04.1
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Education
@@ -46,5 +46,8 @@ Minuet is an application for music education. It features a set of ear training 
 %_K5xdgapp/org.kde.minuet.desktop
 
 %changelog
+* Tue Sep 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 16.04.1-alt2
+- Fixed build with new toolchain.
+
 * Thu May 26 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - initial build
