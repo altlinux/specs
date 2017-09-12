@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: opensc
-Version: 0.16.0
-Release: alt3
+Version: 0.17.0
+Release: alt1
 
 Group: System/Configuration/Hardware
 Summary: OpenSC library - for accessing SmartCard devices using PC/SC Lite
@@ -95,29 +95,31 @@ install -p -m644 etc/opensc.conf %buildroot/%_sysconfdir/opensc.conf
 %files -n lib%name
 %config(noreplace) %_sysconfdir/opensc.conf
 %_libdir/lib*.so.*
-%_libdir/opensc-pkcs11.so*
-%_libdir/pkcs11-spy.so*
-%_libdir/onepin-opensc-pkcs11.so*
+%exclude %_libdir/lib*.so
+%_libdir/*.so
 %dir %_libdir/pkcs11
-%_libdir/pkcs11/pkcs11-spy.so
-%_libdir/pkcs11/opensc-pkcs11.so
-%_libdir/pkcs11/onepin-opensc-pkcs11.so
+%_libdir/pkcs11/*.so
 %dir %_datadir/opensc
 %_datadir/opensc/*.profile
 
 %files -n lib%name-devel
-%_libdir/libopensc.so
-%_libdir/libsmm-local.so
+%_libdir/lib*.so
+%_libdir/*.la
+%_pkgconfigdir/*.pc
 
 %if_enabled static
 %files -n lib%name-devel-static
-%_libdir/libopensc.a
-%_libdir/libpkcs15init.a
-%_libdir/libscconf.a
-%_libdir/libscldap.a
+%_libdir/*.a
 %endif
 
 %changelog
+* Tue Sep 12 2017 Paul Wolneykien <manowar@altlinux.org> 0.17.0-alt1
+- Fresh up to v0.17.0.
+
+* Mon Jun 26 2017 Paul Wolneykien <manowar@altlinux.org> 0.17.0-alt0.rc1
+- Remove the usused patches.
+- Fresh up to v0.17.0-rc1.
+
 * Wed Nov 09 2016 Dmitry Derjavin <dd@altlinux.org> 0.16.0-alt3
 - opensc.conf moved to library package
 - (closes: 32735)
