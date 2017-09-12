@@ -1,6 +1,6 @@
 Name: source-highlight
 Version: 3.1.8
-Release: alt2
+Release: alt3%ubt
 
 Summary: syntax highlighting for source documents
 License: GPL
@@ -10,8 +10,9 @@ Url: http://www.gnu.org/software/src-highlite/
 # git://git.savannah.gnu.org/src-highlite.git
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: boost-devel gcc-c++ ctags help2man doxygen tetex-core texinfo
-BuildPreReq: flex
+BuildRequires: flex
 
 %description
 This program, given a source file, produces a document
@@ -90,6 +91,10 @@ BuildArch: noarch
 %_sysconfdir/bash_completion.d/*
 
 %changelog
+* Tue Sep 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.8-alt3%ubt
+- Rebuilt with boost 1.65.0.
+- Added %%ubt to release.
+
 * Fri Jul 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.8-alt2
 - Updated to upstream release version 3.1.8
 
