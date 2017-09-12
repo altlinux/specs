@@ -1,6 +1,6 @@
 Name: cgal
 Version: 4.10
-Release: alt1
+Release: alt2%ubt
 Summary: Easy access to efficient and reliable geometric algorithms
 License: Free for non-commertial using
 Group: Sciences/Mathematics
@@ -19,11 +19,12 @@ Patch1: %name-%version-alt-build.patch
 
 Requires: lib%name = %version-%release
 
-BuildPreReq: gcc-c++ gcc-fortran cmake qt5-base-devel qt5-svg-devel
-BuildPreReq: boost-devel libgmp-devel libgmpxx-devel eigen3
-BuildPreReq: libGLU-devel libGL-devel libmpfr-devel libtbb-devel
-BuildPreReq: zlib-devel libX11 phonon-devel
-BuildPreReq: liblapack-devel libtaucs-devel
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: gcc-c++ gcc-fortran cmake qt5-base-devel qt5-svg-devel
+BuildRequires: boost-devel libgmp-devel libgmpxx-devel eigen3
+BuildRequires: libGLU-devel libGL-devel libmpfr-devel libtbb-devel
+BuildRequires: zlib-devel libX11 phonon-devel
+BuildRequires: liblapack-devel libtaucs-devel
 
 %description
 The goal of the CGAL Open Source Project is to provide easy access to
@@ -148,6 +149,10 @@ install -p -m644 %name.pc %buildroot%_pkgconfigdir
 %doc %_docdir/%{name}*
 
 %changelog
+* Tue Sep 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.10-alt2%ubt
+- Rebuilt with boost 1.65.0.
+- Added %%ubt to release.
+
 * Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.10-alt1
 - Updated to upstream version 4.10
 - Qt3 and Qt4 libraries are no longer provided by upstream
