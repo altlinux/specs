@@ -1,6 +1,6 @@
 Name: sqlite3-ruby
 Version: 1.3.13
-Release: alt2
+Release: alt2.1
 
 Summary: A Ruby interface for the SQLite database engine
 Group: Development/Ruby
@@ -50,6 +50,9 @@ rm -f test/test_integration_pending.rb
 %ruby_ri_sitedir/SQLite3*
 
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.13-alt2.1
+- Rebuild with Ruby 2.4.1
+
 * Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.13-alt2
 - Rebuild with new %%ruby_sitearchdir location
 

@@ -3,8 +3,8 @@
 %define pkgname flexmock
 
 Name: ruby-%pkgname
-Version: 0.9.0
-Release: alt1.1
+Version: 2.3.5
+Release: alt1
 
 Summary: Simple mock object library for Ruby unit testing
 Group: Development/Ruby
@@ -14,11 +14,10 @@ Url: http://rubyforge.org/projects/flexmock/
 Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
-#Patch: %pkgname-%version-%release.patch
+Patch: ruby-flexmock-disable-nonworking-tests.patch
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Tue Aug 26 2008 (-bi)
 BuildRequires: rpm-build-ruby ruby-test-unit ruby-tool-rdoc ruby-tool-setup
 
 %description
@@ -34,7 +33,9 @@ Documentation files for %pkgname
 
 %prep
 %setup -n %pkgname-%version
-#patch -p1
+%patch -p1
+# Remove experimental mocking by rails
+rm -f lib/flexmock/rails.rb
 %update_setup_rb
 
 %build
@@ -47,13 +48,20 @@ Documentation files for %pkgname
 %rdoc lib/
 
 %files
-%doc CHANGES README.rdoc
+%doc CHANGES README.md
 %ruby_sitelibdir/*
 
 %files doc
 %ruby_ri_sitedir/FlexMock*
 
 %changelog
+* Wed Sep 06 2017 Andrey Cherepanov <cas@altlinux.org> 2.3.5-alt1
+- New version
+- Remove experimental mocking by rails
+
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.0-alt1.2
+- Rebuild with Ruby 2.4.1
+
 * Tue Dec 04 2012 Led <led@altlinux.ru> 0.9.0-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 

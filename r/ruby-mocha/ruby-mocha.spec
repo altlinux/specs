@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 0.9.12
-Release: alt1.1
+Release: alt1.2
 
 Summary: Library for mocking and stubbing in Ruby
 Group: Development/Ruby
@@ -55,6 +55,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Mocha*
 
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.12-alt1.2
+- Rebuild with Ruby 2.4.1
+
 * Tue Dec 04 2012 Led <led@altlinux.ru> 0.9.12-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 

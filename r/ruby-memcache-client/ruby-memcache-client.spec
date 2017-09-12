@@ -2,7 +2,7 @@
 
 Name: ruby-%pkgname
 Version: 1.7.4
-Release: alt1.1
+Release: alt1.2
 Summary: Ruby client for Danga Interactive's memcached
 License: MIT
 Group: Development/Ruby
@@ -53,6 +53,9 @@ rm -f lib/continuum_native.rb
 %ruby_ri_sitedir/MemCache*
 
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.7.4-alt1.2
+- Rebuild with Ruby 2.4.1
+
 * Sat Dec 08 2012 Led <led@altlinux.ru> 1.7.4-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 - fixed BuildRequires

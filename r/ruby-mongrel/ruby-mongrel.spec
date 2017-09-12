@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.1.5
-Release: alt8
+Release: alt8.1
 
 Summary: Simple Fast Mostly Ruby Web Server
 Group: Development/Ruby
@@ -71,6 +71,9 @@ Documentation files for %name.
 
 
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.5-alt8.1
+- Rebuild with Ruby 2.4.1
+
 * Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.5-alt8
 - Rebuild with new %%ruby_sitearchdir location
 

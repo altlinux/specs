@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 3.4.0
-Release: alt1
+Release: alt1.1
  
 Summary: A simple pluggable Hierarchical Database
 License: MIT/Ruby
@@ -19,7 +19,7 @@ Source:  %pkgname-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
  
-%filter_from_requires \,^ruby(win32/dir),d
+%filter_from_requires \,^ruby(\(puppet\|win32/dir\),d
 
 %description
 A simple pluggable Hierarchical Database.
@@ -59,6 +59,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Sat Sep 09 2017 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt1.1
+- Rebuild with Ruby 2.4.1
+
 * Sat Jul 01 2017 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt1
 - New version
 

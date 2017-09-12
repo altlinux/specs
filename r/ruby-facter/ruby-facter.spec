@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 2.0.1
-Release: alt2
+Release: alt2.1
 
 Summary: Ruby library for retrieving facts from operating systems
 Group:   Development/Ruby
@@ -45,10 +45,6 @@ Documentation files for %{name}.
 %prep
 %setup -n %pkgname-%version
 %patch1 -p1
-# Remove unmets
-#rm -f lib/facter/util/windows_root.rb \
-#      lib/facter/util/macosx.rb
-
 %update_setup_rb
 
 %build
@@ -75,6 +71,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt2.1
+- Rebuild with Ruby 2.4.1
+
 * Wed Jan 18 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt2
 - Add ALT Linux operating system support
 - Add bind-utils for IP address get

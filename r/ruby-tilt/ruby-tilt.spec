@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 2.0.7 
-Release: alt1
+Release: alt1.2
 
 Summary: Generic interface to multiple Ruby template engines
 License: MIT
@@ -75,5 +75,11 @@ rm -f %buildroot%_mandir/index.txt
 %ruby_ri_sitedir/*
 
 %changelog
+* Sun Sep 10 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.7-alt1.2
+- Rebuild with Ruby 2.4.1
+
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.7-alt1.1
+- Rebuild with Ruby 2.4.1
+
 * Wed Jun 14 2017 Andrey Cherepanov <cas@altlinux.org> 2.0.7-alt1
 - Initial build for Sisyphus

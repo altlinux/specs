@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 1.2.2 
-Release: alt1.gitbc66d5e
+Release: alt1.gitbc66d5e.1
 
 Summary: PAM auth for Ruby - 1.9 compat version
 License: GPLv2
@@ -64,5 +64,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt1.gitbc66d5e.1
+- Rebuild with Ruby 2.4.1
+
 * Tue Jun 13 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt1.gitbc66d5e
 - Initial build in Sisyphus

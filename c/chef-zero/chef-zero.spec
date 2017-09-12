@@ -1,6 +1,6 @@
 Name: 	 chef-zero
 Version: 13.1.0
-Release: alt1
+Release: alt1.1
  
 Summary: Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes
 License: Apache 2.0
@@ -60,6 +60,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 13.1.0-alt1.1
+- Rebuild with Ruby 2.4.1
+
 * Tue Jul 18 2017 Andrey Cherepanov <cas@altlinux.org> 13.1.0-alt1
 - New version
 

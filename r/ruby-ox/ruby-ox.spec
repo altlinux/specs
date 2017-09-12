@@ -2,7 +2,7 @@
 
 Name: 	 ruby-%pkgname
 Version: 2.6.0 
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby Optimized XML Parser
 License: MIT/Ruby
@@ -58,5 +58,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 2.6.0-alt1.1
+- Rebuild with Ruby 2.4.1
+
 * Fri Sep 01 2017 Andrey Cherepanov <cas@altlinux.org> 2.6.0-alt1
 - Initial build for ALT Linux

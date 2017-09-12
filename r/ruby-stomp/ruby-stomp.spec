@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.1.9
-Release: alt1.1
+Release: alt1.2
 
 Summary: Ruby client for the Stomp messaging protocol
 Group: Development/Ruby
@@ -38,6 +38,9 @@ FILL ME.
 %ruby_sitelibdir/*
 
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.9-alt1.2
+- Rebuild with Ruby 2.4.1
+
 * Tue Dec 04 2012 Led <led@altlinux.ru> 1.1.9-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 

@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.6.8
-Release: alt1
+Release: alt1.1
 Epoch:   1
 
 Summary: Modular Ruby webserver interface
@@ -83,6 +83,9 @@ install -Dm 0644 %pkgname.gemspec %buildroot%ruby_libdir/gems/$rbVersion/specifi
 %ruby_ri_sitedir/Rack*
 
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 1:1.6.8-alt1.1
+- Rebuild with Ruby 2.4.1
+
 * Fri Jun 16 2017 Andrey Cherepanov <cas@altlinux.org> 1:1.6.8-alt1
 - Decrease version for pcs-pcsd
 - Package gemspec

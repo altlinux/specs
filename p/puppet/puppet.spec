@@ -2,7 +2,7 @@
 
 Name:    puppet
 Version: 5.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: A network tool for managing many disparate systems
 Group:   System/Servers
@@ -177,6 +177,9 @@ install -d %buildroot%_localstatedir/puppet/ssl/private_keys
 %config(noreplace) %_sysconfdir/sysconfig/puppetmaster
 
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 5.1.0-alt1.1
+- Rebuild with Ruby 2.4.1
+
 * Thu Aug 17 2017 Andrey Cherepanov <cas@altlinux.org> 5.1.0-alt1
 - New version
 

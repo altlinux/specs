@@ -3,8 +3,8 @@
 %define pkgname uuidtools
 
 Name: ruby-%pkgname
-Version: 2.1.0
-Release: alt1.1
+Version: 2.1.5
+Release: alt1
 
 Summary: A simple universally unique ID generation library
 Group: Development/Ruby
@@ -45,13 +45,20 @@ Documentation files for %name
 %rdoc lib/
 
 %files
-%doc README
+%doc README*
 %ruby_sitelibdir/*
 
 %files doc
 %ruby_ri_sitedir/UUIDTools*
 
 %changelog
+* Fri Sep 08 2017 Andrey Cherepanov <cas@altlinux.org> 2.1.5-alt1
+- New version
+- Disable use deprecated thread module
+
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1.2
+- Rebuild with Ruby 2.4.1
+
 * Tue Dec 04 2012 Led <led@altlinux.ru> 2.1.0-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 

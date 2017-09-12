@@ -53,7 +53,7 @@
 Name: vim
 %define branch 8.0
 Version: %branch.711
-Release: alt1
+Release: alt1.1
 Epoch: 4
 
 Summary: VIsual editor iMproved
@@ -1064,6 +1064,9 @@ fi
 
 # {{{ changelog
 %changelog
+* Wed Sep 06 2017 Andrey Cherepanov <cas@altlinux.org> 4:8.0.711-alt1.1
+- Rebuild with Ruby 2.4.1
+
 * Fri Jul 14 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.0.711-alt1
 - Updated to v8.0.0711.
 

@@ -1,6 +1,6 @@
 Name: weechat
 Version: 1.9
-Release: alt1
+Release: alt1.1
 
 Summary: fast, light & extensible IRC client
 License: GPLv3
@@ -149,6 +149,9 @@ find ./src/plugins -name "Makefile*" -print0 | xargs -r0 subst 's,\(\-module\),\
 %_libdir/%name/plugins/tcl.so
 
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.9-alt1.1
+- Rebuild with Ruby 2.4.1
+
 * Sun Jun 25 2017 Alexey Gladkov <legion@altlinux.ru> 1.9-alt1
 - New version (1.9)
 

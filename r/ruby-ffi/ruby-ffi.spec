@@ -2,7 +2,7 @@
 
 Name: ruby-%pkgname
 Version: 1.9.18
-Release: alt2
+Release: alt2.1
 
 Summary: Ruby foreign function interface
 Group: Development/Ruby
@@ -12,6 +12,7 @@ Url: https://github.com/ffi/ffi
 Source: %pkgname-%version.tar
 Patch1: %name-alt-fix-requires.patch
 
+BuildRequires(pre): rpm-build-ruby
 BuildRequires: libffi-devel libruby-devel ruby-tool-setup
 
 %filter_from_requires \,^ruby(lib/ffi/.*generator),d
@@ -57,6 +58,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.9.18-alt2.1
+- Rebuild with Ruby 2.4.1
+
 * Sat Mar 11 2017 Andrey Cherepanov <cas@altlinux.org> 1.9.18-alt2
 - Rebuild with new %%ruby_sitearchdir location
 
