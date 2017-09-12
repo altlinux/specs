@@ -3,7 +3,7 @@
 %define oname audacious
 Name: audacious-plugins
 Version: 3.9
-Release: alt1
+Release: alt2
 
 Summary: Plugins for Audacious
 
@@ -65,6 +65,9 @@ This package contains the base I/O plugins:
 %_libdir/%oname/*
 
 %changelog
+* Mon Oct 02 2017 Vitaly Lipatov <lav@altlinux.ru> 3.9-alt2
+- rebuild with libsidplayfp 1.8.7
+
 * Sun Aug 27 2017 Vitaly Lipatov <lav@altlinux.ru> 3.9-alt1
 - new version 3.9 (with rpmrb script)
 
