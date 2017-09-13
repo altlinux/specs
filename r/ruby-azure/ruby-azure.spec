@@ -1,7 +1,7 @@
 %define  pkgname azure
 
 Name: 	 ruby-%pkgname
-Version: 0.7.9
+Version: 0.7.10
 Release: alt1
 
 Summary: Microsoft Azure Client Library for Ruby
@@ -55,5 +55,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Sep 13 2017 Andrey Cherepanov <cas@altlinux.org> 0.7.10-alt1
+- New version
+
 * Fri Sep 01 2017 Andrey Cherepanov <cas@altlinux.org> 0.7.9-alt1
 - Initial build for ALT Linux
