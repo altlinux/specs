@@ -1,5 +1,5 @@
 Name: iucode_tool
-Version: 2.1.2
+Version: 2.2
 Release: alt1
 Summary: Intel(r) 64 and IA-32 processor microcode tool 
 
@@ -16,6 +16,7 @@ Tool to manipulate Intel IA32/X86_64 microcode bundles.
 
 %build
 %autoreconf
+export CFLAGS=$RPM_OPT_FLAGS
 %configure
 %make_build
 
@@ -28,6 +29,9 @@ make install DESTDIR=%buildroot INSTALL="install -p"
 %_sbindir/%name
 
 %changelog
+* Wed Sep 13 2017 L.A. Kostis <lakostis@altlinux.ru> 2.2-alt1
+- 2.2.
+
 * Thu May 25 2017 L.A. Kostis <lakostis@altlinux.ru> 2.1.2-alt1
 - Updated to 2.1.2.
 
