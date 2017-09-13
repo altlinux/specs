@@ -1,21 +1,18 @@
-%def_with python
-# dane_ta_usage requires openssl >= 1.1.0
-%def_without dane_ta_usage
-
-Name: ldns
-Version: 1.7.0
-Release: alt1%ubt
+Name: ldns1
+Version: 1.6.17
+Release: alt2
 License: BSD
 Url: http://www.nlnetlabs.nl/%name/
-Group: System/Libraries
+Group: System/Legacy libraries
 Summary: Lowlevel DNS(SEC) library with API
 
-# https://github.com/NLnetLabs/ldns.git
 Source: %name-%version.tar
+Patch1: ldns-%version-upstream-doxyparse.patch
 
-BuildRequires(pre): rpm-build-ubt
+%define with_python 1
+
 BuildRequires: gcc-c++ libssl-devel doxygen perl libpcap-devel
-%if_with python
+%if %with_python
 BuildRequires:  python-devel, swig
 %endif
 
@@ -38,7 +35,7 @@ more information than with dig.
 
 %package -n lib%name
 Summary: Lowlevel DNS(SEC) library with API
-Group: System/Libraries
+Group: System/Legacy libraries
 Provides: %name = %version-%release
 
 %description -n lib%name
@@ -49,7 +46,7 @@ packets.
 
 %package -n lib%name-devel-static
 Summary: Lowlevel DNS(SEC) static library with API
-Group: System/Libraries
+Group: System/Legacy libraries
 
 %description -n lib%name-devel-static
 libldns is a static library with the aim to simplify DNS programing in C. 
@@ -72,7 +69,7 @@ Group: Development/C
 %description -n lib%name-examples
 Examples for library
 
-%if_with python
+%if %with_python
 %package -n python-module-%name
 Summary: Python extensions for ldns
 Group: Development/Python
@@ -83,16 +80,14 @@ Python extensions for ldns
 
 %prep
 %setup
+%patch1 -p0
 
 %build
 %autoreconf
 %configure --disable-rpath --with-drill --with-examples \
 	--enable-rrtype-ninfo --enable-rrtype-rkey --enable-rrtype-cds --enable-rrtype-uri --enable-rrtype-ta \
-%if_with python
-	--with-pyldns \
-%endif
-%if_without dane_ta_usage
-	--disable-dane-ta-usage \
+%if %with_python
+	--with-pyldns
 %endif
 
 %make_build
@@ -118,14 +113,17 @@ install -pD -m644 libdns.vim %buildroot%_sysconfdir/vim/libldns
 %check
 #make test
 
+%if 0
 %files -n drill
 %_bindir/drill
 %_mandir/man1/drill*
+%endif
 
 %files -n lib%name
 %_libdir/libldns*.so.*
 %doc README LICENSE
 
+%if 0
 %files -n lib%name-devel-static
 %_libdir/libldns.a
 
@@ -148,15 +146,15 @@ install -pD -m644 libdns.vim %buildroot%_sysconfdir/vim/libldns
 %exclude %_bindir/ldns-config
 %exclude %_man1dir/ldns-config*
 
-%if_with python
+%if %with_python
 %files -n python-module-%name
 %python_sitelibdir/*
 %endif
+%endif
 
 %changelog
-* Wed Sep 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.0-alt1%ubt
-- Updated to upstream release version 1.7.0.
-- Added %%ubt macro to release.
+* Wed Sep 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.17-alt2
+- Moved this version into System/Legacy libraries.
 
 * Sat Jan 11 2014 Slava Dubrovskiy <dubrsl@altlinux.org> 1.6.17-alt1
 - 1.6.17
