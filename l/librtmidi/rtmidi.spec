@@ -6,7 +6,7 @@ Group: Development/C
 %define oldname rtmidi
 Name:       librtmidi
 Version:    1.0.15
-Release:    alt1_9
+Release:    alt2_9
 Summary:    Library for realtime MIDI input/output (ALSA support)
 # Request to send in changes is considered optional.
 License:    MIT
@@ -111,6 +111,9 @@ rm -f %{buildroot}%{_docdir}/%{oldname}-devel/readme
 %{_libdir}/lib%{oldname}-jack.so.*
 
 %changelog
+* Wed Sep 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.15-alt2_9
+- Rebuilt for new gcc abi.
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.15-alt1_9
 - update to new release by fcimport
 

@@ -1,28 +1,28 @@
 Name: marsyas
 Version: 0.6.0
-Release: alt1.alpha.git20150301
+Release: alt1.alpha.git20150301.1
 Summary: Music Analysis, Retrieval and Synthesis for Audio Signals
 License: GPLv2
 Group: Sound
 Url: http://marsyas.info/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/marsyas/marsyas.git
 Source: %name-%version.tar
 
-BuildPreReq: gcc-c++ cmake doxygen graphviz libjack-devel clang-devel
-BuildPreReq: qt5-base-devel libalsa-devel qt5-declarative-devel
-BuildPreReq: libann-devel libmad-devel liblame-devel libvorbis-devel
-BuildPreReq: swig libvamp-devel libGLUT-devel python-devel
-BuildPreReq: libfreetype-devel libXi-devel libXmu-devel zlib-devel
-BuildPreReq: libann-devel liblinear-devel
-BuildPreReq: libsvm-devel librtmidi-devel libpng12-devel
-BUildPreReq: libXres-devel libXtst-devel libXcomposite-devel
-BuildPreReq: libXcursor-devel libXdamage-devel libXdmcp-devel
-BuildPreReq: libXft-devel libXinerama-devel libxkbfile-devel
-BuildPreReq: libXpm-devel libXrandr-devel libXScrnSaver-devel
-BuildPreReq: libXv-devel libXxf86misc-devel libXxf86vm-devel
-BuildPreReq: %_bindir/latex %_bindir/gs
+BuildRequires: gcc-c++ cmake doxygen graphviz libjack-devel clang-devel
+BuildRequires: qt5-base-devel libalsa-devel qt5-declarative-devel
+BuildRequires: libann-devel libmad-devel liblame-devel libvorbis-devel
+BuildRequires: swig libvamp-devel libGLUT-devel python-devel
+BuildRequires: libfreetype-devel libXi-devel libXmu-devel zlib-devel
+BuildRequires: libann-devel liblinear-devel
+BuildRequires: libsvm-devel librtmidi-devel libpng12-devel
+BuildRequires: libXres-devel libXtst-devel libXcomposite-devel
+BuildRequires: libXcursor-devel libXdamage-devel libXdmcp-devel
+BuildRequires: libXft-devel libXinerama-devel libxkbfile-devel
+BuildRequires: libXpm-devel libXrandr-devel libXScrnSaver-devel
+BuildRequires: libXv-devel libXxf86misc-devel libXxf86vm-devel
+BuildRequires: %_bindir/latex %_bindir/gs
+BuildRequires: texi2dvi texi2html makeinfo
 
 %description
 Marsyas (Music Analysis, Retrieval and Synthesis for Audio Signals) is
@@ -165,6 +165,10 @@ rm -f doc/CMakeLists.txt
 %doc MIREX doc/*.txt doc/examples doc/out-www
 
 %changelog
+* Wed Sep 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.0-alt1.alpha.git20150301.1
+- Updated build dependencies.
+- Rebuilt for new gcc abi.
+
 * Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.alpha.git20150301
 - New snapshot
 
