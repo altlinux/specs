@@ -4,7 +4,7 @@
 %def_enable server
 Name: cmake
 Version: 3.9.2
-Release: alt0.1
+Release: alt0.2
 
 Summary: Cross-platform, open-source make system
 
@@ -269,6 +269,12 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Wed Sep 13 2017 Alexey Shabalin <shaba@altlinux.org> 3.9.2-alt0.2
+- Set optimization for RELEASE to ALTLinux default.
+- FindBoost: Add version 1.65.1 (thx Roger Leigh).
+- FindBoost: Add Boost 1.65 dependencies (thx Roger Leigh).
+- FindBoost: Add option to prevent finding DEBUG/RELEASE Boost-libs (thx Deniz Bahadir).
+
 * Tue Sep 12 2017 L.A. Kostis <lakostis@altlinux.ru> 3.9.2-alt0.1
 - 3.9.2:
   + enable server mode by default.
