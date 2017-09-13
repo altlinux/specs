@@ -1,7 +1,7 @@
 %define  pkgname azure-core
 
 Name: 	 ruby-%pkgname
-Version: 0.1.11 
+Version: 0.1.12
 Release: alt1
 
 Summary: Azure Ruby SDK Service Management Core HTTP
@@ -56,5 +56,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Sep 13 2017 Andrey Cherepanov <cas@altlinux.org> 0.1.12-alt1
+- New version
+
 * Fri Sep 01 2017 Andrey Cherepanov <cas@altlinux.org> 0.1.11-alt1
 - Initial build for Sisyphus
