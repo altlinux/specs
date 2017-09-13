@@ -3,14 +3,16 @@ BuildRequires: libjansson-devel libnuma-devel libpfring-devel perl(DBI.pm) perl(
 # END SourceDeps(oneline)
 Name: passivedns
 Version: 1.2.0
-Release: alt1
+Release: alt2%ubt
 Summary: A network sniffer that logs all DNS server replies for use in a passive DNS setup
 License: GPLv2
 Group: Monitoring
 URL: https://github.com/gamelinux/passivedns
 Source: %name-%version.tar
 Source2: %name.init
+Source3: %{name}@.service
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: libpcap-devel libldns-devel perl-DateTime perl-DBI perl-Date-Simple
 
 %description
@@ -55,6 +57,9 @@ install -pD -m755 src/%name %buildroot%_sbindir/%name
 install -pD -m755 tools/pdns2db.pl %buildroot%_bindir/pdns2db.pl
 install -pD -m755 tools/search-pdns.pl %buildroot%_bindir/search-pdns.pl
 install -pD -m755 %SOURCE2 %buildroot%_initdir/%name
+
+mkdir -p %buildroot%_unitdir
+install -pD -m755 %SOURCE3 %buildroot%_unitdir/%{name}@.service
 
 mkdir -p %buildroot%_logdir/%name
 mkdir -p %buildroot%_sharedstatedir/%name
@@ -111,11 +116,17 @@ EOF
 %dir %attr(775,root,_%name) %_runtimedir/%name
 %_sysconfdir/sysconfig/%name
 %_initdir/*
+%_unitdir/%{name}@.service
 
 %files tools 
 %_bindir/*.pl
 
 %changelog
+* Wed Sep 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt2%ubt
+- Rebuilt with ldns-1.7.0.
+- Added %%ubt macro to release.
+- Added systemd service.
+
 * Tue Dec 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1
 - NMU: new version (fixes build)
 
