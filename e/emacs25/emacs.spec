@@ -2,7 +2,7 @@
 
 %set_compress_method skip
 
-%define emacs_version 25.2
+%define emacs_version 25.3
 %define erc_version %emacs_version
 
 %define gnus_version 5.13
@@ -12,7 +12,7 @@
 %define nxml_version 0.2.20041004
 %define cedet_version 2.0
 
-%define cedet_release alt8
+%define cedet_release alt9
 
 # subpackages to build;
 %def_enable nox
@@ -22,8 +22,8 @@
 %def_enable motif
 
 Name: emacs25
-Version: 25.2
-Release: alt6
+Version: 25.3
+Release: alt7
 
 Group: Editors
 Summary: GNU Emacs text editor
@@ -1550,6 +1550,9 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 
 
 %changelog
+* Wed Sep 13 2017 Terechkov Evgenii <evg@altlinux.org> 25.3-alt7
+- 25.3 (emergency release to fix a security vulnerability)
+
 * Fri Aug 18 2017 Anton Farygin <rider@altlinux.ru> 25.2-alt6
 - Rebuilt for new libImageMagick.
 
