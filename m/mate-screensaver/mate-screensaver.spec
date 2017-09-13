@@ -9,12 +9,12 @@ BuildRequires: libsystemd-login-devel
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-screensaver
-%define version 1.18.1
+%define version 1.19.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.18
+%global branch 1.19
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit d5b35083e4de1d7457ebd937172bb0054e1fa089}
@@ -25,11 +25,11 @@ BuildRequires: libsystemd-login-devel
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-screensaver
-Version:        %{branch}.1
+Version:        %{branch}.0
 %if 0%{?rel_build}
-Release:        alt1_3
+Release:        alt1_1
 %else
-Release:        alt1_3
+Release:        alt1_1
 %endif
 Summary:        MATE Screensaver
 License:        GPLv2+ and LGPLv2+
@@ -164,6 +164,9 @@ install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 
 
 %changelog
+* Wed Sep 13 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
+- new fc release
+
 * Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.1-alt1_3
 - new fc release
 

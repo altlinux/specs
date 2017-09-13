@@ -9,7 +9,7 @@ BuildRequires: libcanberra-gtk2-devel
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name marco
-%define version 1.19.0
+%define version 1.19.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
@@ -25,11 +25,11 @@ BuildRequires: libcanberra-gtk2-devel
 %{!?rel_build:%global git_tar %{oldname}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-window-manager
-Version:       %{branch}.0
+Version:       %{branch}.1
 %if 0%{?rel_build}
-Release:       alt1_5
+Release:       alt1_1
 %else
-Release:       alt1_5
+Release:       alt1_1
 %endif
 Summary:       MATE Desktop window manager
 License:       LGPLv2+ and GPLv2+
@@ -72,7 +72,6 @@ Patch34: Dont-focus-ancestor-window-on-a-different-workspac.patch
 %description
 MATE Desktop window manager
 
-
 # to avoid that marco will install in other DE's by compiz-0.8.10
 %package -n libmarco-private
 Group: System/Libraries
@@ -83,7 +82,6 @@ Conflicts:     %{oldname} < 1.12.1-2
 
 %description -n libmarco-private
 This package provides Libraries for marco.
-
 
 %package devel
 Group: Development/C
@@ -169,6 +167,9 @@ desktop-file-install                                \
 
 
 %changelog
+* Wed Sep 13 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.1-alt1_1
+- new fc release
+
 * Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_5
 - new fc release
 

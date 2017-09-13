@@ -10,7 +10,7 @@ BuildRequires: xvfb-run
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-applets
-%define version 1.19.0
+%define version 1.19.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
@@ -26,11 +26,11 @@ BuildRequires: xvfb-run
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-applets
-Version:        %{branch}.0
+Version:        %{branch}.1
 %if 0%{?rel_build}
-Release:        alt1_3
+Release:        alt1_1
 %else
-Release:        alt1_3
+Release:        alt1_1
 %endif
 Summary:        MATE Desktop panel applets
 License:        GPLv2+ and LGPLv2+
@@ -142,6 +142,7 @@ install -pD -m 644 %{SOURCE45} %buildroot%_sysconfdir/polkit-1/localauthority/50
 %{_datadir}/dbus-1/system-services/org.mate.CPUFreqSelector.service
 %{_datadir}/glib-2.0/schemas/org.mate.panel.applet.battstat.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.mate.panel.applet.charpick.gschema.xml
+%{_datadir}/glib-2.0/schemas/org.mate.drivemount.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.mate.panel.applet.geyes.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.mate.panel.applet.multiload.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.mate.stickynotes.gschema.xml
@@ -172,6 +173,9 @@ install -pD -m 644 %{SOURCE45} %buildroot%_sysconfdir/polkit-1/localauthority/50
 
 
 %changelog
+* Wed Sep 13 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.1-alt1_1
+- new fc release
+
 * Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_3
 - new fc release
 

@@ -7,12 +7,12 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/g
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-notification-daemon
-%define version 1.18.0
+%define version 1.19.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.18
+%global branch 1.19
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit f9aedafffba0ecc55072a933f28500c0e24c9bf1}
@@ -25,9 +25,9 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/g
 Name:           mate-notification-daemon
 Version:        %{branch}.0
 %if 0%{?rel_build}
-Release:        alt1_3
+Release:        alt1_1
 %else
-Release:        alt1_3
+Release:        alt1_1
 %endif
 Summary:        Notification daemon for MATE Desktop
 License:        GPLv2+
@@ -98,6 +98,9 @@ rm -f  %{buildroot}%{_datadir}/applications/mate-notification-daemon.desktop
 
 
 %changelog
+* Wed Sep 13 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
+- new fc release
+
 * Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.0-alt1_3
 - new fc release
 

@@ -28,9 +28,9 @@ Name:           mate-desktop
 License:        GPLv2+ and LGPLv2+ and MIT
 Version:        %{branch}.0
 %if 0%{?rel_build}
-Release:        alt1_1
+Release:        alt1_2
 %else
-Release:        alt1_1
+Release:        alt2_0.5%{?git_rel}
 %endif
 URL:            http://mate-desktop.org
 
@@ -40,10 +40,17 @@ URL:            http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
+# https://github.com/mate-desktop/mate-desktop/pull/282
+Patch1:         mate-desktop_0001-mate-about-switch-to-GtkAboutDialog.patch
+Patch2:         mate-desktop_0002-mate-about-remove-remains-of-libunique-references.patch
+Patch3:         mate-desktop_0003-drop-MateAboutDialog.patch
+# https://github.com/mate-desktop/mate-desktop/pull/283
+Patch4:         mate-desktop_0001-gtk-3.22-avoid-deprecated-gdk_screen_get_monitor.-fu.patch
+
 # fedora specific settings
-Source2:        mate-fedora-f24.gschema.override
-Source3:        mate-fedora-f25.gschema.override
-Source4:        mate-fedora-f26.gschema.override
+Source2:        mate-fedora-f25.gschema.override
+Source3:        mate-fedora-f26.gschema.override
+Source4:        mate-fedora-f27.gschema.override
 Source5:        mate-rhel.gschema.override
 Source6:        mate-mimeapps.list
 
@@ -145,10 +152,18 @@ libmatedesktop.
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
-%if 0%{?rel_build}
-# for releases
+%patch1 -p1 -b .0001
+%patch2 -p1 -b .0002
+%patch3 -p1 -b .0003
+%patch4 -p1 -b .0001
+
+# for the last 3 patches
 %patch33 -p0
 %patch34 -p0
+NOCONFIGURE=1 ./autogen.sh
+
+%if 0%{?rel_build}
+# for releases
 NOCONFIGURE=1 ./autogen.sh
 %else
 # needed for git snapshots
@@ -184,15 +199,15 @@ desktop-file-install                                         \
         --dir=%{buildroot}%{_datadir}/applications           \
 %{buildroot}%{_datadir}/applications/mate-color-select.desktop
 
-%if 0%{?fedora} >= 24
+%if 0%{?fedora} >= 25
 #install -D -m 0644 %SOURCE2 %{buildroot}%{_datadir}/glib-2.0/schemas/10_mate-fedora.gschema.override
 %endif
 
-%if 0%{?fedora} >= 25
+%if 0%{?fedora} >= 26
 #install -D -m 0644 %SOURCE3 %{buildroot}%{_datadir}/glib-2.0/schemas/10_mate-fedora.gschema.override
 %endif
 
-%if 0%{?fedora} >= 26
+%if 0%{?fedora} >= 27
 #install -D -m 0644 %SOURCE4 %{buildroot}%{_datadir}/glib-2.0/schemas/10_mate-fedora.gschema.override
 %endif
 
@@ -240,6 +255,9 @@ mkdir -p %buildroot%{_datadir}/mate-about
 
 
 %changelog
+* Wed Sep 13 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_2
+- new fc release
+
 * Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
 - new fc release (ALT#33817)
 
