@@ -21,7 +21,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 5.4.0
-Release: alt4%ubt
+Release: alt5%ubt
 License: Apache
 Group: System/Servers
 Url: https://opennebula.org
@@ -676,6 +676,9 @@ fi
 ################################################################################
 
 %changelog
+* Wed Sep 13 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.0-alt5%ubt
+- update to one-5.4 branch
+
 * Fri Sep 08 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.0-alt4%ubt
 - add user oneadmin to wheel group for allow run sudo
 
