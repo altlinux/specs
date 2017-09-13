@@ -1,36 +1,44 @@
-Summary: powerful file manager for the console
+Summary: Powerful file manager for the console
 Name: lfm
-Version: 2.0
-Release: alt1.1.1
-Source0: %name-%version.tar.gz
-Patch:	%name.alt.patch
+Version: 3.1
+Release: alt1%ubt
 License: GPL
 Group: Development/Python
 URL: https://inigo.katxi.org/devel/lfm/
-Packager: Mikhail Pokidko <pma@altlinux.org>
 BuildArch: noarch
 
-# Automatically added by buildreq on Mon Mar 31 2008
-BuildRequires: python-devel
+Source: %name-%version.tar
+Patch1: %name-%version-alt-prefs.patch
+
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: python3-devel
 
 %description
 Last File Manager is a simple but powerful file manager for the UNIX console.
 
 %prep
-%setup  -q
-%patch -p1
+%setup -q
+%patch1 -p2
 
 %build
-%python_build
+export LC_ALL=en_US.UTF-8
+%python3_build
 
 %install
-%python_install --optimize=2 --record=INSTALLED_FILES
-sed -e "s/\.1/\.1.gz/" -i INSTALLED_FILES
-#sed -e "s/\.1/\.1.gz/" -i INSTALLED_FILES
+export LC_ALL=en_US.UTF-8
+%python3_install
 
-%files -f INSTALLED_FILES
+%files
+%_bindir/%name
+%python3_sitelibdir/%name-%version-*.egg-info
+%python3_sitelibdir/%name
+%_man1dir/%name.1*
 
 %changelog
+* Wed Sep 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1-alt1%ubt
+- Updated to upstream version 3.1.
+- Added %%ubt macro to release.
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.0-alt1.1.1
 - Rebuild with Python-2.7
 
