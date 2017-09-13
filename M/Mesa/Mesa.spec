@@ -5,7 +5,7 @@
 
 Name: Mesa
 Version: 17.2.0
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -222,13 +222,13 @@ framerate information to stdout
 %endif
 %ifarch %ix86 x86_64
 	--with-gallium-drivers=swrast,r300,r600,nouveau,radeonsi,virgl \
-	--enable-llvm-shared-libs=no \
+	--disable-llvm-shared-libs \
 	--enable-vdpau \
 	--enable-xvmc \
 	--enable-dri3 \
 %endif
 %ifarch x86_64
-	--with-vulkan-drivers=intel \
+	--with-vulkan-drivers=intel,radeon \
 %endif
 	--enable-texture-float \
 	--enable-shared-glapi \
@@ -400,6 +400,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_libdir/dri/r*_drv_video.so
 %_libdir/libXvMCr*.so.*
 %_libdir/libXvMCgallium.so.*
+%ifarch x86_64
+%_libdir/libvulkan_radeon.so
+%endif
 %endif
 %endif
 
@@ -415,6 +418,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Wed Sep 13 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:17.2.0-alt2
+- build with static llvm libs
+
 * Tue Sep 05 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:17.2.0-alt1
 - 17.2.0
 
