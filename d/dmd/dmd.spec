@@ -5,7 +5,7 @@
 %endif
 
 Name: dmd
-Version: 2.063.2
+Version: 2.068.0
 Release: alt1
 Summary: The D Programming Language
 Group: Development/Other
@@ -13,15 +13,20 @@ License: GPL
 Url: http://dlang.org/
 
 Source: %name-%version.tar
-Patch0: dmd-lphobos2-alt.patch
-Patch1: druntime-shared-alt.patch
-Patch2: phobos-shared-alt.patch
+Source2: druntime-%version.tar
+Source3: phobos-%version.tar
+Source4: tools-%version.tar
+
+Patch1: %name-%version-alt-build.patch
+Patch2: druntime-%version-alt-build.patch
+
 BuildRequires: gcc-c++ curl-devel
+# DMD now requires D compiler to build
+BuildRequires: dmd
 
 Provides: libdruntime = %version libdruntime-devel = %version
 Provides: libphobos = %version libphobos-devel = %version
 Conflicts: ldc
-
 
 %description
 The D programming language is an object-oriented, imperative, multi-paradigm 
@@ -53,40 +58,43 @@ Java, Python, Ruby, C#, and Eiffel.
 #Phobos is the standard runtime library that comes with the D language compiler.
 
 %prep
-%setup -q
-#%patch0
-#%patch1
-#%patch2
+%setup -b2 -b3 -b4 -n %name
+%patch1 -p2
 
-
+pushd ../druntime
+%patch2 -p2
+popd
 
 %build
-cd dmd/src
+pushd src
 %make_build -f posix.mak MODEL=%MODEL
+popd
 
 export CFLAGS=-fPIC
 export CXXFLAGS=-fPIC
-cd ../../druntime
+pushd ../druntime
 #sed -i 's|-m$(MODEL) -O|-m$(MODEL) -fPIC -O|g' posix.mak
 %make_build -f posix.mak DMD=../dmd/src/dmd MODEL=%MODEL DRUNTIME_BASE=druntime PIC=1
 #gcc lib/libdruntime.o obj/64/errno_c.o obj/64/complex.o -shared -o lib/libdruntime.so -m64 -lpthread -lm -lrt
+popd
 
-cd ../phobos
+pushd ../phobos
 #sed -i 's|DFLAGS += -O -release|DFLAGS += -fPIC -O -release|g' posix.mak
 %make_build -f posix.mak DMD=../dmd/src/dmd MODEL=%MODEL ROOT=out PIC=1
+popd
 
-
-cd ../tools
+pushd ../tools
 %make_build -f posix.mak DMD=../dmd/src/dmd MODEL=%MODEL ROOT=out PIC=1 DFLAGS='-I../druntime/import -I../phobos -L-L../phobos/out'
 #../dmd/src/dmd -c -O -w -d -fPIC -m%MODEL -property -release -I../druntime/import -I../phobos rdmd.d
 #gcc rdmd.o -o rdmd -m%MODEL -L../druntime/lib -L../phobos/out -ldruntime -lphobos2 -lpthread -lm -lrt
 #../dmd/src/dmd -c -O -w -d -m%MODEL -property -release -I../druntime/import -I../phobos catdoc.d
 #gcc catdoc.o -o catdoc -m%MODEL -L../phobos/out -lphobos2 -lpthread -lm -lrt
+popd
 
 %install
-mkdir -p %buildroot{%_bindir,%_sysconfdir,%_libdir,%_includedir/d/etc/c,%_mandir/man1}
+mkdir -p %buildroot{%_bindir,%_sysconfdir,%_libdir,%_includedir/d/etc/c,%_man1dir,%_man5dir}
 
-cp dmd/src/dmd %buildroot%_bindir/
+cp src/dmd %buildroot%_bindir/
 
 echo '; dmd.conf file for dmd' > %buildroot%_sysconfdir/dmd.conf
 echo '; Names enclosed by %%%% are searched for in the existing environment' >> %buildroot%_sysconfdir/dmd.conf
@@ -96,37 +104,41 @@ echo '[Environment]' >> %buildroot%_sysconfdir/dmd.conf
 echo 'DFLAGS=-I%_includedir/d' >> %buildroot%_sysconfdir/dmd.conf -L-lrt
 
 #druntime
-cp -r druntime/import/* %buildroot%_includedir/d/
-cp druntime/lib/libdruntime.a %buildroot%_libdir/
+cp -r ../druntime/import/* %buildroot%_includedir/d/
+cp ../druntime/lib/libdruntime.a %buildroot%_libdir/
+cp ../druntime/lib/libdruntime.so* %buildroot%_libdir/
 
 #phobos
-cp phobos/out/libphobos2.a %buildroot%_libdir/
-#cp phobos/out/libphobos2.so* %buildroot%_libdir/
-cp -r phobos/std %buildroot%_includedir/d/
+cp ../phobos/out/libphobos2.a %buildroot%_libdir/
+rm -f ../phobos/out/libphobos2.so.*.o
+cp -a ../phobos/out/libphobos2.so* %buildroot%_libdir/
+cp -r ../phobos/std %buildroot%_includedir/d/
 
-cp phobos/etc/c/*.d %buildroot%_includedir/d/etc/c/
+cp ../phobos/etc/c/*.d %buildroot%_includedir/d/etc/c/
 
 #tools
 
 #cp tools/catdoc %buildroot%_bindir/
-cp tools/rdmd %buildroot%_bindir/
-cp -r dmd/docs/man/man1 %buildroot%_mandir/
+cp ../tools/out/rdmd %buildroot%_bindir/
+cp -r docs/man/man1/* %buildroot%_man1dir/
+cp -r docs/man/man5/* %buildroot%_man5dir/
 
 %files
-%doc druntime/doc
 %_bindir/*
 %_sysconfdir/*
-%_mandir/man1/*
+%_man1dir/*
+%_man5dir/*
 %dir %_includedir/d
 %_includedir/d/core
-%_includedir/d/*.di
+%_includedir/d/*.d
 %_libdir/libdruntime.a
+%_libdir/libdruntime.so
 
 #%files -n libphobos2
-#%_libdir/libphobos2.so.*
+%_libdir/libphobos2.so.*
 
 #%files -n libphobos2-devel
-#%_libdir/libphobos2.so
+%_libdir/libphobos2.so
 %_includedir/d/std
 %_includedir/d/etc
 
@@ -134,6 +146,9 @@ cp -r dmd/docs/man/man1 %buildroot%_mandir/
 %_libdir/libphobos2.a
 
 %changelog
+* Wed Sep 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.068.0-alt1
+- Updated to upstream version 2.068.0.
+
 * Fri Aug 16 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.063.2-alt1
 - new bersion
 
