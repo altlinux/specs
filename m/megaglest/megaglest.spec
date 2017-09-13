@@ -1,25 +1,24 @@
-%define rev 7bf6fe75
 Name: megaglest
-Version: 3.9.2
-Release: alt1.%rev
+Version: 3.13.0
+Release: alt1
 Summary: Glest is a project for making a free 3d real-time customizable strategy game
 License: GPLv3
 Group: Games/Strategy
 Url: http://megaglest.sourceforge.net
-Packager: Andrew Clark <andyc@altlinux.org>
 
-Source: http://sourceforge.net/projects/%name/files/megaglest_3.2.3/%name-source-%version.tar.bz2
+# https://github.com/MegaGlest/megaglest-source.git
+Source: %name-%version.tar
 Source2: %name.sh
 Source3: %name.png
 Source4: %name.desktop
 
-Patch2: megaglest-3.6.0.3-alt-gcc4.7.patch
+Patch1: %name-%version-alt-fixes.patch
 
-# Automatically added by buildreq on Sat Jan 11 2014
-# optimized out: cmake-modules fontconfig libGL-devel libGLU-devel libX11-devel libfreetype-devel libgdk-pixbuf libogg-devel libstdc++-devel libwayland-client libwayland-server libxerces-c pkg-config xorg-kbproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: cmake fontconfig-devel gcc-c++ libSDL-devel libXau-devel libXdmcp-devel libcurl-devel libftgl-devel libglew-devel libjpeg-devel liblua5-devel libopenal-devel libpng-devel libvorbis-devel libwxGTK-devel libxerces-c-devel libxml2-devel
+BuildRequires: cmake fontconfig-devel gcc-c++ libSDL2-devel libXau-devel libXdmcp-devel libcurl-devel libftgl-devel libglew-devel libjpeg-devel
+BuildRequires: liblua5-devel libopenal-devel libpng-devel libvorbis-devel libwxGTK-devel libxerces-c-devel libxml2-devel
+BuildRequires: openssl-devel libvlc-devel libfribidi-devel glib2-devel libminiupnpc-devel libircclient-devel
 
-Requires: %name-data = %version 
+Requires: %name-data = %version
 
 %description
 Glest is a project for making a free 3d real-time customizable
@@ -28,31 +27,41 @@ single player game against CPU controlled players, two factions
 with their corresponding tech trees, units, buildings and some maps.
 
 %prep
-%setup  -n %name-source-%version
-%patch2 -p2
+%setup
+%patch1 -p1
 sed -in '/^#include <curl\/types\.h>/d' source/shared_lib/sources/platform/posix/miniftpclient.cpp
-sed -i 's#DataPath=$APPLICATIONDATAPATH#DataPath=/usr/share/games/megaglest/#g' %_builddir/%name-source-%version/mk/linux/glest.ini
+sed -i 's#DataPath=$APPLICATIONDATAPATH#DataPath=/usr/share/games/megaglest/#g' mk/linux/glest.ini
+
+# fix font paths
+sed -i \
+	-e 's:/usr/share/fonts/truetype/:/usr/share/fonts/ttf/:g' \
+	source/shared_lib/sources/graphics/font.cpp
 
 %build
 %add_optflags -fpermissive
-cmake --debug-output -D CMAKE_CXX_FLAGS="%optflags" -D CMAKE_C_FLAGS="%optflags" -D WANT_SVN_STAMP="NO" -D CUSTOM_DATA_INSTALL_PATH="%_datadir/games/megaglest/" -D WANT_STATIC_LIBS="no" CMakeLists.txt
+%cmake_insource \
+	-DWANT_GIT_STAMP:BOOL=OFF \
+	-DCUSTOM_DATA_INSTALL_PATH="%_datadir/games/megaglest/" \
+	-DWANT_STATIC_LIBS:BOOL=OFF \
+	.
+
 %make_build VERBOSE=1
 
-
 %install
+%make_install install DESTDIR=%buildroot
+
 # let's create directory structure...
 mkdir -p %buildroot{%_bindir,%_niconsdir,%_desktopdir,%_datadir/%name}
 
+mv %buildroot%_bindir/%name %buildroot%_bindir/%name-bin
+
 # and install what we need where we need it to be...
-install -pm755 source/glest_game/%name %buildroot%_bindir/%name-bin
-install -pm755 %SOURCE2 %buildroot%_bindir/%name
+install -pm 755 %SOURCE2 %buildroot%_bindir/%name
 
 install -pm 644 %SOURCE3 %buildroot%_niconsdir/%name.png
 install -pm 644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 
-install -pm 644 %_builddir/%name-source-%version/mk/linux/glest.ini %buildroot%_datadir/%name
-install -pm 644 %_builddir/%name-source-%version/mk/linux/glestkeys.ini %buildroot%_datadir/%name
-
+rm -f %buildroot%_datadir/%name/start_megaglest_gameserver
 
 %files
 %doc docs/
@@ -60,8 +69,12 @@ install -pm 644 %_builddir/%name-source-%version/mk/linux/glestkeys.ini %buildro
 %_niconsdir/%name.png
 %_desktopdir/%name.desktop
 %_datadir/%name/*.ini
+%_datadir/%name/*.ico
 
 %changelog
+* Wed Sep 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.13.0-alt1
+- Updated to upstream release version 3.13.0.
+
 * Tue Nov 25 2014 Andrew Clark <andyc@altlinux.org> 3.9.2-alt1.7bf6fe75
 - version update to 3.9.2-alt1.7bf6fe75
 
