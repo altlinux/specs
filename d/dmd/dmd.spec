@@ -5,8 +5,8 @@
 %endif
 
 Name: dmd
-Version: 2.068.0
-Release: alt1
+Version: 2.076.0
+Release: alt1%ubt
 Summary: The D Programming Language
 Group: Development/Other
 License: GPL
@@ -17,9 +17,9 @@ Source2: druntime-%version.tar
 Source3: phobos-%version.tar
 Source4: tools-%version.tar
 
-Patch1: %name-%version-alt-build.patch
-Patch2: druntime-%version-alt-build.patch
+Patch1: druntime-%version-alt-build.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ curl-devel
 # DMD now requires D compiler to build
 BuildRequires: dmd
@@ -59,10 +59,9 @@ Java, Python, Ruby, C#, and Eiffel.
 
 %prep
 %setup -b2 -b3 -b4 -n %name
-%patch1 -p2
 
 pushd ../druntime
-%patch2 -p2
+%patch1 -p2
 popd
 
 %build
@@ -101,16 +100,18 @@ echo '; Names enclosed by %%%% are searched for in the existing environment' >> 
 echo '; and inserted. The special name %%@P%% is replaced with the path' >> %buildroot%_sysconfdir/dmd.conf
 echo '; to this file.' >> %buildroot%_sysconfdir/dmd.conf
 echo '[Environment]' >> %buildroot%_sysconfdir/dmd.conf
-echo 'DFLAGS=-I%_includedir/d' >> %buildroot%_sysconfdir/dmd.conf -L-lrt
+echo 'DFLAGS=-I%_includedir/d -L-lrt' >> %buildroot%_sysconfdir/dmd.conf
 
 #druntime
 cp -r ../druntime/import/* %buildroot%_includedir/d/
-cp ../druntime/lib/libdruntime.a %buildroot%_libdir/
-cp ../druntime/lib/libdruntime.so* %buildroot%_libdir/
+cp ../druntime/out/libdruntime.a %buildroot%_libdir/
+rm -f ../druntime/out/libdruntime.so*.a
+rm -f ../druntime/out/libdruntime.so*.o
+cp ../druntime/out/libdruntime.so* %buildroot%_libdir/
 
 #phobos
 cp ../phobos/out/libphobos2.a %buildroot%_libdir/
-rm -f ../phobos/out/libphobos2.so.*.o
+rm -f ../phobos/out/libphobos2.so*.o
 cp -a ../phobos/out/libphobos2.so* %buildroot%_libdir/
 cp -r ../phobos/std %buildroot%_includedir/d/
 
@@ -146,6 +147,10 @@ cp -r docs/man/man5/* %buildroot%_man5dir/
 %_libdir/libphobos2.a
 
 %changelog
+* Wed Sep 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.076.0-alt1%ubt
+- Updated to upstream version 2.076.0.
+- Added %%ubt macro to release.
+
 * Wed Sep 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.068.0-alt1
 - Updated to upstream version 2.068.0.
 
