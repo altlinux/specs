@@ -1,7 +1,7 @@
 %define freetypemajorversion 6
 
 Name: libfreetype-infinality
-Version: 2.6.3
+Version: 2.8.0
 Release: alt2
 
 Summary: A free and portable font rendering engine with patches from http://www.infinality.net
@@ -16,10 +16,15 @@ Source91: infinality-settings.sh
 Source92: xft-settings.sh
 Source93: CHANGELOG
 
-Patch1: freetype-2.4.10-rh-enable-valid.patch
-# Infinality patches. Now we use bohoomil upstream:
-# https://github.com/bohoomil/fontconfig-ultimate/
-Patch91: freetype-2.6.3-bohoomil-infinality-20160326.patch
+Patch1: freetype-2.7.0-alt-enable-valid.patch
+# Infinality patches. Now it is based on archfan upstream (looks like bohoomil
+# has dropped infinality patches support)
+# https://github.com/archfan/infinality_bundle
+Patch91: freetype-2.8.0-archfan-infinality-20170614.patch
+# Set default byte code interpreter to infinality version. Default "minimal"
+# version still can be selected using FREETYPE_PROPERTIES environment variable
+# in /etc/X11/profile.d/infinality-settings.sh config file.
+Patch92: freetype-2.7.0-alt-default-interpreter.patch
 
 Provides: freetype2-infinality = %version
 Obsoletes: freetype2-infinality < %version
@@ -44,9 +49,10 @@ overrides the system library using ld.so.conf.d mechanism.
 
 %patch1 -p1
 %patch91 -p1
+%patch92 -p2
 
 %build
-%add_optflags -fno-strict-aliasing
+%add_optflags -fno-strict-aliasing %(getconf LFS_CFLAGS)
 %define libdir %{_libdir}/%name
 %configure %{subst_enable static} \
     --libdir=%libdir --with-optimization=no
@@ -98,6 +104,24 @@ rm -f %buildroot%_datadir/aclocal/*.m4
 %config %ld_so_conf
 
 %changelog
+* Wed Sep 13 2017 Vladimir Didenko <cow@altlinux.ru> 2.8.0-alt2
+- Built with LFS support enabled
+
+* Wed Jun 14 2017 Vladimir Didenko <cow@altlinux.ru> 2.8.0-alt1
+- 2.8.0
+
+* Tue Jan 17 2017 Vladimir Didenko <cow@altlinux.ru> 2.7.1-alt1
+- 2.7.1
+
+* Thu Sep 22 2016 Vladimir Didenko <cow@altlinux.ru> 2.7.0-alt3
+- Set infinality as default hinting interpreter
+
+* Wed Sep 21 2016 Vladimir Didenko <cow@altlinux.ru> 2.7.0-alt2
+- Fix infinality patch
+
+* Tue Sep 20 2016 Vladimir Didenko <cow@altlinux.ru> 2.7.0-alt1
+- 2.7.0
+
 * Wed Apr 13 2016 Vladimir Didenko <cow@altlinux.ru> 2.6.3-alt2
 - update infinality patch
 
