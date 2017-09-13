@@ -7,12 +7,12 @@ BuildRequires: /usr/bin/glib-gettextize imake libXt-devel libgio-devel pkgconfig
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name libmatekbd
-%define version 1.18.2
+%define version 1.19.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.18
+%global branch 1.19
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 5e8b69cf7c6d031cbb0b0f01a7518e72146c0af1}
@@ -23,11 +23,11 @@ BuildRequires: /usr/bin/glib-gettextize imake libXt-devel libgio-devel pkgconfig
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           libmatekbd
-Version:        %{branch}.2
+Version:        %{branch}.0
 %if 0%{?rel_build}
-Release:        alt1_3
+Release:        alt1_1
 %else
-Release:        alt1_3
+Release:        alt1_1
 %endif
 Summary:        Libraries for mate kbd
 License:        LGPLv2+
@@ -109,6 +109,9 @@ find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 
 
 %changelog
+* Wed Sep 13 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
+- new fc release
+
 * Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.2-alt1_3
 - new fc release
 

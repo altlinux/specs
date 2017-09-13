@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name caja
-%define version 1.19.0
+%define version 1.19.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
@@ -24,11 +24,11 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 
 Name:        mate-file-manager
 Summary:     File manager for MATE
-Version:     %{branch}.0
+Version:     %{branch}.1
 %if 0%{?rel_build}
-Release:     alt1_4
+Release:     alt1_2
 %else
-Release:     alt1_4
+Release:     alt1_2
 %endif
 License:     GPLv2+ and LGPLv2+
 Group:       Graphical desktop/MATE
@@ -43,6 +43,11 @@ URL:         http://mate-desktop.org
 Patch1:      caja_add-xfce-to-desktop-file.patch
 # drop backgrounds
 Patch2:      caja_0001-do-not-show-property-browser-in-menu.patch
+# https://github.com/mate-desktop/caja/pull/837
+Patch3:      caja_0001-make-sure-scaling-the-desktop-wallpaper-works-in-all.patch
+# https://github.com/mate-desktop/caja/pull/838
+Patch4:      caja_0001-Revert-Adds-columns-autosizing.patch
+Patch5:      caja_0002-list-view-fix-large-icon-margins-on-zooming-out.patch
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
@@ -118,6 +123,9 @@ sed -i s/StartupNotify=true/StartupNotify=false/g data/caja-home.desktop.in.in
 
 %patch1 -p1 -b .add-xfce-to-desktop-file
 #%patch2 -p1 -b .0001
+%patch3 -p1 -b .0001
+%patch4 -p1 -b .0001
+%patch5 -p1 -b .0002
 
 %if 0%{?rel_build}
 %patch33 -p1
@@ -203,6 +211,9 @@ EOF
 
 
 %changelog
+* Wed Sep 13 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.1-alt1_2
+- new fc release
+
 * Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_4
 - new fc release
 

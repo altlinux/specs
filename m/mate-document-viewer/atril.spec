@@ -12,7 +12,7 @@ Requires: mate-desktop
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name atril
-%define version 1.19.1
+%define version 1.19.3
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
@@ -28,7 +28,7 @@ Requires: mate-desktop
 %{!?rel_build:%global git_tar %{oldname}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-document-viewer
-Version:       %{branch}.1
+Version:       %{branch}.3
 %if 0%{?rel_build}
 Release:       alt1_1
 %else
@@ -292,6 +292,9 @@ fi
 
 
 %changelog
+* Wed Sep 13 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.3-alt1_1
+- new fc release
+
 * Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.1-alt1_1
 - new fc release
 
