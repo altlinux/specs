@@ -3,10 +3,12 @@
 
 Name: lua%major_version
 Version: %major_version.4
-Release: alt1
+Release: alt2
+
 Summary: Powerful light-weight programming language
-Group: Development/Other
 License: MIT
+Group: Development/Other
+
 Url: http://www.lua.org/
 # repackaged tarball http://www.lua.org/ftp/lua-%version.tar.gz
 Source0: lua-%version.tar
@@ -18,6 +20,7 @@ Source3: lua.source1.watch
 Source4: luaconf.h
 # copied from readme.html
 Source5: COPYRIGHT
+Source44: import.info
 Patch0: %oname-5.3.0-autotoolize.patch
 Patch1: %oname-5.3.0-idsize.patch
 #Patch2:         %%{oname}-5.3.0-luac-shared-link-fix.patch
@@ -27,7 +30,6 @@ Patch4: %oname-5.3.0-configure-compat-module.patch
 BuildRequires: automake-common autoconf-common libtool-common readline-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 Provides: lua(abi) = %major_version
 Requires: liblua = %version
-Source44: import.info
 Provides: lua = %EVR
 Provides: lua5 = %EVR
 
@@ -54,12 +56,12 @@ BuildArch: noarch
 
 This package contains documantaion for %oname
 
-%package -n lib%{name}-devel
+%package -n lib%name-devel
 Summary: Development files for %oname
 Group: Development/C
 Requires: %name = %version
 Provides: lua-devel = %EVR
-Provides: lua%{major_version}-devel = %EVR
+Provides: lua%major_version-devel = %EVR
 Provides: liblua-devel = %EVR
 Provides: liblua5-devel = %EVR
 Obsoletes: liblua5-devel < %EVR
@@ -67,23 +69,23 @@ Conflicts: liblua5-devel < %EVR
 Conflicts: liblua4-devel < %version
 Conflicts: liblua-devel < %version
 
-%description -n lib%{name}-devel
+%description -n lib%name-devel
 %common_descr
 
 This package contains development files for %oname.
 
-%package -n lib%{name}
+%package -n lib%name
 Group: Development/Other
 Summary: Libraries for %oname
 Provides: liblua = %EVR
 Provides: liblua5 = %EVR
 
-%description -n lib%{name}
+%description -n lib%name
 %common_descr
 
 This package contains the shared libraries for %oname.
 
-%package -n lib%{name}-devel-static
+%package -n lib%name-devel-static
 Summary: Static library for %oname
 Group: Development/C
 Requires: %name%{?_isa} = %version-%release
@@ -94,14 +96,14 @@ Obsoletes: liblua5-devel-static < %EVR
 Conflicts: liblua5-devel-static < %EVR
 Conflicts: liblua4-devel-static < %version
 
-%description -n lib%{name}-devel-static
+%description -n lib%name-devel-static
 %common_descr
 
 This package contains the static version of liblua for %oname.
 
 %prep
 %setup -n %oname-%version -a 1
-cp %SOURCE5 .
+cp -a %SOURCE5 .
 mv src/luaconf.h src/luaconf.h.template.in
 %patch0 -p1 -E -z .autoxxx
 %patch1 -p1 -z .idsize
@@ -119,11 +121,11 @@ sed -i 's|@pkgdatadir@|%_datadir|g' src/luaconf.h.template
 
 # hack so that only /usr/bin/lua gets linked with readline as it is the
 # only one which needs this and otherwise we get License troubles
-make %{?_smp_mflags} LIBS="-lm -ldl"
+%make_build LIBS="-lm -ldl"
 # only /usr/bin/lua links with readline now #luac_LDADD="liblua.la -lm -ldl"
 
 %check
-cd ./lua-%version-tests/
+cd lua-%version-tests
 
 # Removing tests that fail under mock/koji
 sed -i.orig -e '
@@ -133,7 +135,7 @@ sed -i.orig -e '
 LD_LIBRARY_PATH=%buildroot/%_libdir %buildroot/%_bindir/lua -e"_U=true" all.lua
 
 %install
-make install DESTDIR=%buildroot
+%makeinstall_std
 rm %buildroot%_libdir/*.la
 mkdir -p %buildroot%_libdir/lua/%major_version
 mkdir -p %buildroot%_datadir/lua/%major_version
@@ -146,15 +148,15 @@ ln -s lua-%major_version %buildroot%_bindir/lua%major_version
 ln -s luac-%major_version %buildroot%_bindir/luac%major_version
 mv %buildroot%_man1dir/lua{,-%major_version}.1
 mv %buildroot%_man1dir/luac{,-%major_version}.1
-ln -s lua-%{major_version}.1 %buildroot%_man1dir/lua.1
-ln -s lua-%{major_version}.1 %buildroot%_man1dir/luac.1
-ln -s lua-%{major_version}.1 %buildroot%_man1dir/lua%{major_version}.1
-ln -s lua-%{major_version}.1 %buildroot%_man1dir/luac%{major_version}.1
+ln -s lua-%major_version.1 %buildroot%_man1dir/lua.1
+ln -s lua-%major_version.1 %buildroot%_man1dir/luac.1
+ln -s lua-%major_version.1 %buildroot%_man1dir/lua%major_version.1
+ln -s lua-%major_version.1 %buildroot%_man1dir/luac%major_version.1
 
 # Rename luaconf.h to luaconf-<arch>.h to avoid file conflicts on
 # multilib systems and install luaconf.h wrapper
 mv %buildroot%_includedir/luaconf.h %buildroot%_includedir/luaconf-%_arch.h
-install -p -m 644 %SOURCE4 %buildroot%_includedir/luaconf.h
+install -pm644 %SOURCE4 %buildroot%_includedir/luaconf.h
 
 %ifarch %ix86
 if ! [ -e %buildroot/%_includedir/luaconf-i386.h ]; then
@@ -165,37 +167,39 @@ fi
 %endif
 
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
-echo lua-devel >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/lib%{name}-devel
-echo lua-devel-static >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/lib%{name}-devel-static
-
+echo lua-devel >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/lib%name-devel
+echo lua-devel-static >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/lib%name-devel-static
 
 %files
 %_bindir/lua*
 %_bindir/luac*
-%_mandir/man1/lua*.1*
+%_man1dir/lua*.1*
 
 %files doc
 %doc doc/*.html doc/*.css doc/*.gif doc/*.png
 
-%files -n lib%{name}
-%doc COPYRIGHT
-%doc README
+%files -n lib%name
+%doc COPYRIGHT README
 %_libdir/liblua-%major_version.so
 %dir %_libdir/lua/%major_version
 %dir %_datadir/lua/%major_version
 
-%files -n lib%{name}-devel
+%files -n lib%name-devel
 %_includedir/l*.h
 %_includedir/l*.hpp
 %_libdir/liblua.so
 %_libdir/pkgconfig/*.pc
-%config %_sysconfdir/buildreqs/packages/substitute.d/lib%{name}-devel
+%config %_sysconfdir/buildreqs/packages/substitute.d/lib%name-devel
 
-%files -n lib%{name}-devel-static
+%files -n lib%name-devel-static
 %_libdir/*.a
-%config %_sysconfdir/buildreqs/packages/substitute.d/lib%{name}-devel-static
+%config %_sysconfdir/buildreqs/packages/substitute.d/lib%name-devel-static
 
 %changelog
+* Tue Sep 12 2017 Michael Shigorin <mike@altlinux.org> 5.3.4-alt2
+- e2k support
+- spec cleanup
+
 * Thu May 04 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.3.4-alt1
 - 5.3.4
 
