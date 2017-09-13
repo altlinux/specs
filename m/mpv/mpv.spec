@@ -1,6 +1,6 @@
 Name: mpv
-Version: 0.25.0
-Release: alt2
+Version: 0.27.0
+Release: alt1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 Summary(ru_RU.UTF8): MPV - это медиапроигрыватель с открытыми исходниками, основанный на проектах MPlayer и mplayer2.
@@ -16,7 +16,7 @@ Packager: %packager
 # Automatically added by buildreq on Fri Feb 14 2014
 BuildRequires: libGL-devel libXext-devel libalsa-devel libass-devel libavformat-devel libavresample-devel libjpeg-devel libswscale-devel patool perl-Encode perl-Math-BigRat python-module-docutils time zlib-devel libva-devel
 
-BuildRequires: libpulseaudio-devel libenca-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel liblua5-devel libluajit-devel libdvdnav-devel libbluray-devel libavfilter-devel libsmbclient-devel libswresample-devel libwayland-client-devel libwayland-cursor-devel libxkbcommon-devel libEGL-devel libwayland-egl-devel libdrm-devel libv4l-devel libarchive-devel liblcms2-devel
+BuildRequires: libpulseaudio-devel libenca-devel libXScrnSaver-devel libXv-devel libXinerama-devel libXrandr-devel liblua5.3-devel libluajit-devel libdvdnav-devel libbluray-devel libavfilter-devel libsmbclient-devel libswresample-devel libwayland-client-devel libwayland-cursor-devel libxkbcommon-devel libEGL-devel libwayland-egl-devel libdrm-devel libv4l-devel libarchive-devel liblcms2-devel
 
 %description
 mpv is a movie player based on MPlayer and mplayer2.
@@ -101,6 +101,9 @@ chmod ugo+rx waf
 %_libdir/libmpv.so.*
 
 %changelog
+* Wed Sep 13 2017 Terechkov Evgenii <evg@altlinux.org> 0.27.0-alt1
+- 0.27.0
+
 * Sat Jun 03 2017 Anton Farygin <rider@altlinux.ru> 0.25.0-alt2
 - rebuild with debuginfo-enabled ffmpeg
 
