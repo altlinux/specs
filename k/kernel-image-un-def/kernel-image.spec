@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	4.12
-%define kernel_sublevel .12
+%define kernel_base_version	4.13
+%define kernel_sublevel .0
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -80,7 +80,7 @@ Provides:  kernel-modules-alsa = %version-%release
 
 
 %if_enabled docs
-BuildRequires: xmlto transfig ghostscript
+BuildRequires: python-module-sphinx perl-Pod-Usage 
 %endif
 
 %if_enabled ccache
@@ -484,8 +484,6 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %if_enabled docs
 install -d %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
-find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
-	-maxdepth 1 -type f -not -name '*.html' -delete
 %endif # if_enabled docs
 
 
@@ -577,11 +575,11 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Thu Sep 14 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.0-alt1
+- v4.13.0
+
 * Tue Sep 12 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.12.12-alt1
 - v4.12.12
-
-* Thu Sep 07 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.12.11-alt1
-- v4.12.11
 
 * Wed Aug 30 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.12.10-alt1
 - v4.12.10
