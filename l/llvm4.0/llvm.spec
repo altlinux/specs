@@ -1,13 +1,13 @@
 %global llvm_svnrel %nil
 %global clang_svnrel %nil
-%global rel alt2
+%global rel alt1.1
 %global llvm_name llvm4.0
 %global clang_name clang4.0
 
 %def_disable tests
 
 Name: %llvm_name
-Version: 4.0.0
+Version: 4.0.1
 Release: %rel.rel
 Summary: The Low Level Virtual Machine
 
@@ -59,7 +59,6 @@ native programs that use the LLVM infrastructure.
 %package libs
 Group: Development/C
 Summary: LLVM shared libraries
-Conflicts: llvm <= 3.8.0
 
 %description libs
 Shared libraries for the LLVM compiler infrastructure.
@@ -149,6 +148,7 @@ mv clang-%version tools/clang
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
         -DCMAKE_SHARED_LINKER_FLAGS="-Wl,-Bsymbolic" \
 	-DLLVM_TARGETS_TO_BUILD="X86;AMDGPU;BPF;" \
+	-DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD='AVR' \
 	-DLLVM_ENABLE_LIBCXX:BOOL=OFF \
 	-DLLVM_ENABLE_ZLIB:BOOL=ON \
 	-DLLVM_ENABLE_FFI:BOOL=ON \
@@ -277,6 +277,13 @@ make check-all -C BUILD || :
 %doc %_docdir/clang
 
 %changelog
+* Thu Sep 14 2017 L.A. Kostis <lakostis@altlinux.ru> 4.0.1-alt1.1.rel
+- remove conflicts: llvm from -libs pkg (closes #33879).
+
+* Sun Sep 10 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.0.1-alt1.rel
+- Updated 4.0.0 release and build configuration:
+  + Enabled AVR experimental target.
+
 * Thu Sep 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0-alt2.rel
 - Installed example llvm plugins required by cmake modules.
 
