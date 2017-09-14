@@ -34,8 +34,8 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.1.25
-Release: alt2%ubt
+Version: 10.1.26
+Release: alt1%ubt
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -91,10 +91,10 @@ Patch7: mariadb-10.1.8-alt-config-libs.patch
 
 # Patches specific for this mysql package
 Patch30: mariadb-errno.patch
-Patch31: mariadb-string-overflow.patch
+#Patch31: mariadb-string-overflow.patch
 Patch32: mariadb-basedir.patch
 Patch33: mariadb-covscan-signexpr.patch
-Patch34: mariadb-covscan-stroverflow.patch
+#Patch34: mariadb-covscan-stroverflow.patch
 
 Requires: %name-server = %EVR
 Requires: %name-client = %EVR
@@ -313,7 +313,7 @@ version.
 #%patch31 -p1
 %patch32 -p1
 #%patch33 -p1
-%patch34 -p1
+#%patch34 -p1
 
 # Replace that horror.
 sed 's,@datadir@,%_datadir,g' <%SOURCE15 >scripts/mysql_install_db.sh
@@ -787,6 +787,13 @@ fi
 %endif
 
 %changelog
+* Thu Sep 14 2017 Alexey Shabalin <shaba@altlinux.ru> 10.1.26-alt1%ubt
+- 10.1.26
+- Fixes for the following security vulnerabilities:
+  + CVE-2017-3636
+  + CVE-2017-3641
+  + CVE-2017-3653
+
 * Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 10.1.25-alt2%ubt
 - BOOTSTRAP: introduced systemd, krb5, galera, cassandra, oqgraph knobs
   (on by default)
