@@ -2,7 +2,7 @@
 
 Name: libfreetype
 Version: 2.8
-Release: alt1
+Release: alt3
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
 Group: System/Libraries
@@ -18,7 +18,7 @@ Source2: http://download.savannah.gnu.org/releases/freetype/freetype-doc-%versio
 Source1: http://download.savannah.gnu.org/releases/freetype/ft2demos-%version.tar.bz2
 Source3: ftconfig.h
 
-Patch1: freetype-2.8-alt-export-symbols.patch
+Patch1: freetype-2.8-alt-export-compat-symbols.patch
 Patch2: freetype-2.6.2-alt-freetype-config.patch
 Patch3: freetype-2.4.10-alt-fttrigon.patch
 Patch6: ft2demos-2.6.2-alt-snprintf.patch
@@ -151,6 +151,16 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Wed Sep 13 2017 Dmitry V. Levin <ldv@altlinux.org> 2.8-alt3
+- Added export of FT_Done_GlyphSlot symbol for libInventor.
+
+* Wed Sep 13 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.8-alt2
+- Reenabled upstream list of global symbols exported by the library.
+- Added export of FT_Stream_Pos and FT_Stream_Seek symbols for NX.
+
+* Tue Sep 12 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.8-alt0.M80P.1
+- backport to p8 branch
+
 * Wed May 31 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.8-alt1
 - 2.8
 
