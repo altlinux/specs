@@ -1,18 +1,18 @@
 Name: merkaartor
-Version: 0.16.1
-Release: alt1.1
-Packager: Egor Glukhov <kaman@altlinux.org>
+Version: 0.18.3
+Release: alt1
 
 Summary: an OpenStreetMap editor
 License: LGPL
 Group: Sciences/Geosciences
-Url: http://www.merkaartor.org/
+Url: https://github.com/openstreetmap/merkaartor
 
 Source: %name-%version.tar
-Patch: merkaartor-0.16.1-alt-glib-2.16.patch
+Patch1: %name-%version-fedora-no-git-version.patch
 
-BuildRequires: boost-devel gcc-c++ git-core glibc-devel-static
-BuildRequires: libgdal-devel libqt4-devel
+BuildRequires: boost-devel gcc-c++ glibc-devel-static
+BuildRequires: libgdal-devel libproj-devel libexiv2-devel zlib-devel libsqlite3-devel
+BuildRequires: qt5-base-devel qt5-webkit-devel qt5-svg-devel qt5-tools-devel
 
 %description
 Merkaartor is an openstreetmap mapping program.
@@ -21,13 +21,14 @@ editing environment for free geographical data.
 
 %prep
 %setup
-%patch -p1
+%patch1 -p1
 
 %build
+# TODO: use packaged version of singleapplication-qt5 instead of bundled one
 %add_optflags -fpermissive
-lupdate-qt4 Merkaartor.pro
-lrelease-qt4 Merkaartor.pro
-qmake-qt4 \
+#lupdate-qt5 Merkaartor.pro
+lrelease-qt5 Merkaartor.pro
+qmake-qt5 \
 	PREFIX=%_prefix \
 	NODEBUG=1 \
 	TRANSDIR_MERKAARTOR=%_datadir/%name/translations/ \
@@ -48,9 +49,12 @@ LIB_SUFFIX=64
 %_datadir/%name/
 %_libdir/%name/
 %_desktopdir/%name.desktop
-%_liconsdir/%name.png
+%_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Thu Sep 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.18.3-alt1
+- Updated to upstream version 0.18.3.
+
 * Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.16.1-alt1.1
 - Fixed build with glibc 2.16 & gcc 4.7
 
