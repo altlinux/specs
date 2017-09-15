@@ -6,11 +6,10 @@
 Summary: MPI Benchmarks and tests
 Name: mpitests
 Version: 3.2
-Release: alt4
+Release: alt5
 License: BSD
 Group: Networking/Other
 Source: %name-%version.tar.gz
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 URL: http://www.openfabrics.org/
 
 BuildPreReq: %mpiimpl-devel chrpath
@@ -44,6 +43,9 @@ done
 %_libdir/%name
 
 %changelog
+* Fri Sep 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2-alt5
+- Fixed build.
+
 * Thu Jul 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt4
 - Rebuilt with OpenMPI 1.6
 
