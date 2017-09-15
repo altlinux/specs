@@ -2,17 +2,17 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mp3blaster
-Version: 3.2.5
-Release: alt1.qa1
+Version: 3.2.6
+Release: alt1
 
 Group: Sound
 Summary: An interactive text-console based mp3 player
 
 License: GPLv2
 Url: http://mp3blaster.sourceforge.net
-Packager: Slava Semushin <php-coder@altlinux.ru>
 
-Source: http://easynews.dl.sourceforge.net/sourceforge/mp3blaster/mp3blaster-%version.tar.gz
+# https://github.com/stragulus/mp3blaster.git
+Source: %name-%version.tar
 
 Patch1: mp3blaster-3.2.0-alt-id3cyr.patch
 Patch2: mp3blaster-3.2.0-alt-id3show.patch
@@ -36,6 +36,7 @@ streaming mp3 over HTTP.
 rm -fv -- src/getopt*
 
 %build
+%add_optflags -Wno-narrowing
 %autoreconf
 %configure
 %make_build --silent --no-print-directory
@@ -55,6 +56,9 @@ rm -fv -- src/getopt*
 %_man1dir/splay.1.*
 
 %changelog
+* Fri Sep 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.6-alt1
+- Updated to upstream version 3.2.6.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.2.5-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
