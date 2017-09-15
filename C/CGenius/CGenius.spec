@@ -1,69 +1,91 @@
-#TODO: HQP and shareware games pack
 Name: CGenius
-Version: 1.8.3
-Release: alt2.git.120.g91d6de9
+Version: 1.9.9.6beta
+Release: alt1
 
-Summary: CGenius is the clone of Commander Keen
+Summary: the clone of Commander Keen
 License: GPL
 Group: Games/Arcade
 Url: http://clonekeenplus.sourceforge.net
 
 # git://github.com/gerstrong/Commander-Genius.git
 # GIT commit 91d6de9
-Source: %name-%version.tar
+#Source: %name-%version.tar
+# https://github.com/gerstrong/Commander-Genius/archive/v1996beta.tar.gz
+Source: Commander-Genius-1996beta.tar.gz
 
-# Automatically added by buildreq on Thu Feb 11 2016
-# optimized out: cmake-modules libSDL2-devel libX11-devel libogg-devel libstdc++-devel pkg-config xorg-xproto-devel
-BuildRequires: boost-devel-headers cmake gcc-c++ libGL-devel libSDL2_image-devel libvorbis-devel
+# Automatically added by buildreq on Fri Sep 15 2017
+# optimized out: cmake-modules libSDL2-devel libX11-devel libogg-devel libstdc++-devel pkg-config python-base python-modules xorg-xproto-devel
+BuildRequires: boost-devel-headers cmake gcc-c++ libGL-devel libSDL2_image-devel libcurl-devel libvorbis-devel zlib-devel
 
 %description
-Commander Genius is an open-source clone of Commander Keen which allows you to
-play the games, and a majority of the mods made for it.  All of the original
-data files are required to do so, however, we convienently include Episode 1, 4
-and Dreams for your enjoyment in case you have downloaded a bundle. We also
-include the unofficial mod Keen 7, so more is to enjoy!
+Commander Genius is an open-source clone of Commander Keen (1-6, Dreams) which
+allows you to play these episodes and some of the mods made for them. All of
+the original data files are required to do so, however, we convienently provde
+a store where you can get some of the games including Episode 1, 4 and Dreams
+for your enjoyment. There are also mods that can be downloaded direclty.
 
-So far Commander Keen 1-6 are fully supported. Keen Dreams is starting to work
-but still might have most of the issues. So far you can play all the games
-through. Also the menu lacks of a lot of features. Please configure input and 
-sounds using the other games.
+
+- About -
+=========
+So far Commander Keen 1-6 are fully supported. There are some smaller missing
+features like PaddleWar, but the whole gameplay is there.
+
+Keen Dreams is starting to work but still might have most of the issues.
+So far you can play it to the end. Also the menu lacks of a lot of features.
+Please configure input and sounds using the other games.
 
 There is an alternative called Reflection Keen which supports Keen Dreams on
-which the code is based. The merge of that code into CG is what we have been
-working on.
+which the code is based.
 
-Commander Genius runs on Linux/X11, Windows, Android, with plans to release on
-other platforms in the future. If you think you would like to port it, please
-send us a message and we will do our best to help you.
+Commander Genius runs on Linux/X11, Windows, Android, with plans to release
+on other platforms in the future. If you think you would like to port it,
+please send us a message and we will do our best to help you.
 
+- Features -
+============
 The main goal of Commander Genius is to copy the original gameplay feeling as
-much as possible, and extend it further so you get a native implementation
-with even more features like:
+much as possible,Level No. 15 and extend it further so you get a native
+implementation with even more features like:
 
 - Mod Support with nice extras
 - OpenGL Acceleration
 - SDL 2.0 Support
-- New graphical Effects
-- Multiplayer Support (Up to four players helping in the quest)
-- High Quality Packs which make the game look better, 
-  provide better sounds and even music you might that never existed in the original games
-- Ingame Menu for vorticons Keen as well as a new HUD for those
+- New graphical effects
+- Multiplayer Support (Up to four players)
+- High Quality Packs which make the game look better,
+  provide better sounds and even music you might that never existed in the
+  original games
+- Ingame Menu for vorticons Keen as well as a new HUD
 - Named save slots
 - Unrestricted Joystick Support
-- and a lot more
+- and much more
+
+%package hqp
+Group: Games/Arcade
+Summary: High Quality Pack for CGenius, the clone of Commander Keen
+BuildArch: noarch
+Requires: %name
+
+%description hqp
+The High Quality Pack provides extra resources for Commander Genius like music
+and extra sound effects and svga graphics. When installed, you can hear music
+in the first three episodes of the game. High quality SVGA tilesets have been
+added to Episode 1, 2, 3 and 4 so far. More is about to come!
 
 %prep
-%setup
-rm -rf Build dlls hpq/[a-z]*
+%setup -n Commander-Genius-1996beta
+rm -rf Build dlls
 
 %build
 %cmake \
+	-DGAMES_SHAREDIR=/usr/share/games \
 
 %make_build -C BUILD
 
 %install
 %makeinstall_std -C BUILD
 install -m644 -D src/CGLogo.png %buildroot%_iconsdir/hicolor/512x512/apps/CGLogo.png
+cp -a hqp/{games,global} %buildroot%_gamesdatadir/commandergenius/
 
 %files
 %doc BUILD/README* hqp/Readme* COPYRIGHT changelog.txt
@@ -71,10 +93,20 @@ install -m644 -D src/CGLogo.png %buildroot%_iconsdir/hicolor/512x512/apps/CGLogo
 %_desktopdir/*.desktop
 %_gamesdatadir/commandergenius
 %_iconsdir/hicolor/512x512/apps/CGLogo.png
-# Do not pack games
-%exclude %_gamesdatadir/commandergenius/games/*/*
+%exclude %_gamesdatadir/commandergenius/games
+%exclude %_gamesdatadir/commandergenius/global/music
+%exclude %_gamesdatadir/commandergenius/global/snd
+
+%files hqp
+%_gamesdatadir/commandergenius/games
+%_gamesdatadir/commandergenius/global/music
+%_gamesdatadir/commandergenius/global/snd
 
 %changelog
+* Fri Sep 15 2017 Ildar Mulyukov <ildar@altlinux.ru> 1.9.9.6beta-alt1
+- new version
+- add hqp subpackage
+
 * Thu Feb 11 2016 Ildar Mulyukov <ildar@altlinux.ru> 1.8.3-alt2.git.120.g91d6de9
 - new git snapshot
 
