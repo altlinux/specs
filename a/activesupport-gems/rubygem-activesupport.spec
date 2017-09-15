@@ -1,12 +1,13 @@
 %global gem_name activesupport
-%global gem_dir /usr/lib/ruby/gems/2.3.1/
+    
+%global gem_dir /usr/lib/ruby/gems/%(%ruby_rubyconf RUBY_LIB_VERSION)
 %global gem_instdir %gem_dir/gems
 %global gem_docdir %gem_dir/doc
 %global gem_cache %gem_dir/cache
 
 Name: activesupport-gems
 Version: 5.0.2
-Release: alt1
+Release: alt2
 Summary: ActiveSupport 
 Group: Development/Ruby
 License: MIT,Apache2.0
@@ -56,7 +57,7 @@ gem install --user --local active*.gem
 #gem install --user railties*.gem
 #gem install --user sprockets-3*.gem
 #gem install --user *.gem
-cd ~/.gem/ruby/2.3.1/
+cd ~/.gem/ruby/%(%ruby_rubyconf RUBY_LIB_VERSION)
 tar czvf ~/ar.tgz *
 
 mkdir -p %buildroot/%gem_dir 
@@ -76,5 +77,8 @@ rm -f gems/thread_safe-0.3.6/examples/bench_cache.rb
 %doc %gem_docdir
 
 %changelog
+* Thu Sep 14 2017 Denis Medvedev <nbr@altlinux.org> 5.0.2-alt2
+- Switched to macro for gem path.
+
 * Sun Mar 19 2017 Denis Medvedev <nbr@altlinux.org> 5.0.2-alt1
 - initial build for ALT Linux Sisyphus. Based on gems.
