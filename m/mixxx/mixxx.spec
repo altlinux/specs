@@ -1,6 +1,6 @@
 Name: mixxx
-Version: 1.11.0
-Release: alt1.bzr20130612.2
+Version: 2.0.0
+Release: alt1
 
 Summary: Free digital DJ software
 Summary(ru_RU.UTF-8): Свободная программа для цифрового диджеинга
@@ -8,18 +8,29 @@ License: GPLv2+
 Group: Sound
 Url: http://mixxx.org
 
-Source0: %name-%version.tar
+# https://github.com/mixxxdj/mixxx.git
+Source: %name-%version.tar
 
-BuildPreReq: rpm-macros-qt4
-BuildRequires: cvs flex gcc-c++ libflac-devel libid3tag-devel libmad-devel
+Patch1: %name-%version-upstream-gcc6.patch
+Patch2: %name-%version-alt-find-shout2.patch
+Patch3: %name-%version-gentoo-sqlite3.patch
+Patch4: %name-%version-gentoo-chromaprint-1.4.patch
+Patch5: %name-%version-alt-rpath.patch
+
+BuildPreReq: rpm-macros-qt5
+BuildRequires: flex gcc-c++ libflac-devel libid3tag-devel libmad-devel
 BuildRequires: libportaudio2-devel libportmidi libportmidi-devel
 BuildRequires: libshout2-devel libsndfile-devel libtag-devel python-devel
 BuildRequires: python-module-Reportlab python-module-bzr-fastimport scons
-BuildRequires: swig time libqt4-devel libvamp-devel libprotobuf-devel
-BuildPreReq: libchromaprint-devel libusb-devel libfftw3-devel
-BuildPreReq: protobuf-compiler
+BuildRequires: swig libvamp-devel libprotobuf-devel
+BuildRequires: libchromaprint-devel libusb-devel libfftw3-devel
+BuildRequires: protobuf-compiler
+BuildRequires: libGLU-devel librubberband-devel libshout2-devel libopus-devel libopusfile-devel libsqlite3-devel
+BuildRequires: libwavpack-devel libfaad-devel libmp4v2-devel
+BuildRequires: qt5-base-devel qt5-script-devel qt5-svg-devel qt5-xmlpatterns-devel qt5-tools-devel
+
 Requires: %name-data = %version-%release
-Requires: libqt4-sql-sqlite
+Requires: qt5-sql-sqlite3
 
 %description
 Mixxx is free, open source DJ software that gives you everything
@@ -49,12 +60,29 @@ This package contains %name plugin for Vamp.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
-scons qtdir=%_qt4dir prefix=%_prefix
+scons \
+	prefix=%_prefix \
+	qtdir=%_qt5_prefix \
+	qt5=1 \
+	faad=1 \
+	wv=1
 
 %install
-scons prefix=%_prefix install_root=%buildroot%_prefix install
+scons \
+	prefix=%_prefix \
+	qtdir=%_qt5_prefix \
+	qt5=1 \
+	faad=1 \
+	wv=1 \
+	install_root=%buildroot%_prefix \
+	install
 
 install -d %buildroot%_libdir
 mv %buildroot%_libexecdir/mixxx/plugins/vamp \
@@ -65,7 +93,7 @@ mv %buildroot%_libexecdir/mixxx/plugins/vamp \
 
 %files data
 %exclude %_datadir/doc
-%doc README README.macro COPYING LICENSE Mixxx-Manual.pdf
+%doc README README.md COPYING LICENSE Mixxx-Manual.pdf
 %_datadir/%name
 %_desktopdir/%name.desktop
 %_pixmapsdir/%name-icon.png
@@ -74,6 +102,9 @@ mv %buildroot%_libexecdir/mixxx/plugins/vamp \
 %_libdir/vamp
 
 %changelog
+* Thu Sep 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt1
+- Updated to upstream release version 2.0.0.
+
 * Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 1.11.0-alt1.bzr20130612.2
 - rebuild with fix libportmidi
 
