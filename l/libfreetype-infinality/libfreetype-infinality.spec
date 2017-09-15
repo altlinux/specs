@@ -1,8 +1,6 @@
-%define freetypemajorversion 6
-
 Name: libfreetype-infinality
 Version: 2.8.0
-Release: alt2
+Release: alt3
 
 Summary: A free and portable font rendering engine with patches from http://www.infinality.net
 License: FTL or GPLv2+
@@ -17,6 +15,7 @@ Source92: xft-settings.sh
 Source93: CHANGELOG
 
 Patch1: freetype-2.7.0-alt-enable-valid.patch
+Patch2: freetype-2.8-alt-export-compat-symbols.patch
 # Infinality patches. Now it is based on archfan upstream (looks like bohoomil
 # has dropped infinality patches support)
 # https://github.com/archfan/infinality_bundle
@@ -48,6 +47,7 @@ overrides the system library using ld.so.conf.d mechanism.
 %setup -n %name-%version
 
 %patch1 -p1
+%patch2 -p1
 %patch91 -p1
 %patch92 -p2
 
@@ -104,6 +104,9 @@ rm -f %buildroot%_datadir/aclocal/*.m4
 %config %ld_so_conf
 
 %changelog
+* Fri Sep 15 2017 Vladimir Didenko <cow@altlinux.ru> 2.8.0-alt3
+- Added export of FT_Done_GlyphSlot symbol for libInventor.
+
 * Wed Sep 13 2017 Vladimir Didenko <cow@altlinux.ru> 2.8.0-alt2
 - Built with LFS support enabled
 
