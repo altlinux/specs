@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python-module-%modname
-Version: 6.2.4
+Version: 6.2.5
 Release: alt1
 
 Summary: Python bindings for BerkleyDB
@@ -74,6 +74,9 @@ popd
 %exclude %_includedir/python*/%modname/bsddb.h
 
 %changelog
+* Fri Sep 15 2017 Yuri N. Sedunov <aris@altlinux.org> 6.2.5-alt1
+- 6.2.5
+
 * Sat Jan 28 2017 Yuri N. Sedunov <aris@altlinux.org> 6.2.4-alt1
 - 6.2.4
 
