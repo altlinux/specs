@@ -1,7 +1,6 @@
 Name: netherearth
 Version: 0.52
-Release: alt2.qa1
-Packager: Grigory Batalov <bga@altlinux.ru>
+Release: alt3
 
 Summary: NetherEarth is a first RTS initially wrote for ZX-Spectrum
 Summary(ru_RU.UTF-8): NetherEarth - это первая стратегия для ZX-Spectrum
@@ -65,7 +64,7 @@ Exec=%name.run
 Terminal=false
 Type=Application
 Icon=%name
-Categories=Game
+Categories=Game;
 EOF
 
 mkdir -p %buildroot%_datadir/%name
@@ -86,6 +85,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 
 %changelog
+* Fri Sep 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.52-alt3
+- Fixed build.
+
 * Tue May 24 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.52-alt2.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
