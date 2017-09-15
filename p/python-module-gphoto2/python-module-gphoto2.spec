@@ -1,7 +1,7 @@
 %define modname gphoto2
 
 Name: python-module-%modname
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 
 Summary: Python bindings to GPhoto libraries
@@ -67,6 +67,9 @@ popd
 
 
 %changelog
+* Fri Sep 15 2017 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
 * Thu Jul 06 2017 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
 - first build for Sisyphus
 
