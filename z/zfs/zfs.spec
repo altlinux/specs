@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: zfs
-Version: 0.6.5.11
+Version: 0.7.1
 Release: alt1
 Summary: ZFS on Linux
 License: GPLv2+
@@ -11,10 +11,10 @@ Conflicts: fuse-zfs
 Requires: spl-utils
 
 Source0: %name-%version.tar.gz
-Patch0: zfs-0.6.5.8-conf-alt.patch
+Patch0: zfs-0.7.0-conf-alt.patch
 Patch1: zfs-0.6.5.8-import-by-disk-id.patch
 
-BuildRequires: libblkid-devel libuuid-devel zlib-devel rpm-build-kernel
+BuildRequires: libattr-devel libblkid-devel libuuid-devel zlib-devel rpm-build-kernel
 
 %description
 This package contains the ZFS command line utilities
@@ -111,6 +111,8 @@ cat << __EOF__ > %buildroot%_sysconfdir/modprobe.d/zfs.conf
 #options zfs zfs_autoimport_disable=0
 __EOF__
 
+rm -fr %buildroot%_datadir/zfs
+
 %post utils
 if [ $1 -eq 1 ] ; then
 	/sbin/systemctl preset \
@@ -188,6 +190,15 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Thu Sep 14 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.7.1-alt1
+- 0.7.1
+
+* Mon Aug 07 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.7.0-alt1
+- 0.7.0
+
+* Thu Jul 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.6.5.11-alt0.M80P.1
+- backport to p8 branch
+
 * Thu Jul 13 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.6.5.11-alt1
 - 0.6.5.11
 
