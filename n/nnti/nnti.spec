@@ -3,12 +3,11 @@
 
 Name: nnti
 Version: 2.0
-Release: alt1.git20150304
+Release: alt1.git20150304.1
 Summary: NNTI 2.0 downstream from private Trilinos repository
 License: BSD
 Group: Development/Other
 Url: https://github.com/eisenhauer/nnti
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/eisenhauer/nnti.git
 Source: %name-%version.tar
@@ -73,6 +72,9 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %_libdir/*.so
 
 %changelog
+* Fri Sep 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0-alt1.git20150304.1
+- Fixed build.
+
 * Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.git20150304
 - Initial build for Sisyphus
 
