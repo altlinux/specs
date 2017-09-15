@@ -2,7 +2,7 @@
 
 Name: zfs
 Version: 0.7.1
-Release: alt1
+Release: alt2
 Summary: ZFS on Linux
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -11,7 +11,7 @@ Conflicts: fuse-zfs
 Requires: spl-utils
 
 Source0: %name-%version.tar.gz
-Patch0: zfs-0.7.0-conf-alt.patch
+Patch0: zfs-0.7.1-conf-alt.patch
 Patch1: zfs-0.6.5.8-import-by-disk-id.patch
 
 BuildRequires: libattr-devel libblkid-devel libuuid-devel zlib-devel rpm-build-kernel
@@ -190,6 +190,9 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Fri Sep 15 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.7.1-alt2
+- fixed build kernel modules
+
 * Thu Sep 14 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.7.1-alt1
 - 0.7.1
 
