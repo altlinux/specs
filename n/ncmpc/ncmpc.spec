@@ -1,15 +1,14 @@
 Name: ncmpc
-Version: 0.19
+Version: 0.27
 Release: alt1
 
 Summary: curses client for mpd
 License: GPL
 Group: Sound
-Url: http://mpd.wikia.com/wiki/Client:Ncmpc
+Url: https://www.musicpd.org/
 
-Source: http://downloads.sourceforge.net/musicpd/ncmpc-%version.tar.bz2
+Source: %name-%version.tar
 Source1: %name.desktop
-Packager: Damir Shayhutdinov <damir@altlinux.ru>
 
 BuildRequires: glib2-devel libncursesw-devel libtinfo-devel pkg-config
 BuildRequires: libmpdclient-devel
@@ -51,6 +50,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/doc/ncmpc
 
 %changelog
+* Fri Sep 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.27-alt1
+- Updated to upstream version 0.27.
+
 * Sat Sep 17 2011 Slava Semushin <php-coder@altlinux.ru> 0.19-alt1
 - NMU
 - Updated to 0.19

@@ -2,18 +2,19 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libmpdclient
-Version: 2.10
-Release: alt1.git20140711
+Version: 2.13
+Release: alt1
 
 Summary: MPD client library
 License: BSD-like
 Group: System/Libraries
-Url: http://mpd.wikia.com/wiki/ClientLib:libmpdclient
+Url: https://www.musicpd.org/
 
-# git://repo.or.cz/libmpdclient.git
-Source: %name-%version.tar.gz
+# https://github.com/MusicPlayerDaemon/libmpdclient.git
+Source: %name-%version.tar
 
-BuildPreReq: doxygen graphviz libvala-devel
+BuildRequires(pre): meson libvala-devel
+BuildRequires: doxygen graphviz
 
 %description
 Library for Music Player Daemon client development.
@@ -47,22 +48,18 @@ This package provides Vala language bindings for %name.
 %setup
 
 %build
-%autoreconf
-%configure \
-	--disable-werror \
-	--enable-static=no \
-	--enable-debug
-%make_build --no-print-directory
+%meson -D documentation=true
+%meson_build
 
 %check
-%make_build --no-print-directory check
+%meson_test
 
 %install
-%makeinstall_std --no-print-directory
+%meson_install
 
 %files
-%doc README COPYING AUTHORS NEWS
-%_libdir/%name.so.*.*.*
+%doc README.rst COPYING AUTHORS NEWS
+%_libdir/%name.so.*.*
 %ghost %_libdir/%name.so.?
 
 %files devel
@@ -77,6 +74,9 @@ This package provides Vala language bindings for %name.
 %_vapidir/*
 
 %changelog
+* Fri Sep 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.13-alt1
+- Updated to upstream version 2.13.
+
 * Thu Sep 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.10-alt1.git20140711
 - Version 2.10
 
