@@ -6,8 +6,8 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize libgio-dev
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           mate-media
-Version:        1.19.0
-Release:        alt1_3
+Version:        1.19.1
+Release:        alt1_1
 Summary:        MATE media programs
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
@@ -35,8 +35,7 @@ including a volume control.
 %build
 %configure \
         --disable-static \
-        --disable-schemas-compile \
-        --enable-pulseaudio
+        --disable-schemas-compile
 
 %make_build V=1
 
@@ -65,6 +64,9 @@ desktop-file-install                                                    \
 
 
 %changelog
+* Fri Sep 15 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.1-alt1_1
+- new fc release
+
 * Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_3
 - new fc release
 

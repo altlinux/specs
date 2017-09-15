@@ -4,13 +4,16 @@ BuildRequires: /usr/bin/python pkgconfig(glib-2.0)
 BuildRequires: xvfb-run
 %define _libexecdir %_prefix/libexec
 %define oldname caja-dropbox
+%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # This is needed, because src-url contains branched part of versioning-scheme.
 %global branch 1.16
 
 Summary: 		Dropbox extension for caja
 Name: 			mate-file-manager-dropbox
-Version: 		1.16.0
-Release: 		alt1_1
+Version: 		1.18.0
+Release: 		alt1_2
 License: 		GPLv2+
 Group: 			Graphical desktop/MATE
 URL: 			http://git.mate-desktop.org/%{oldname}
@@ -19,7 +22,11 @@ Source0: 		http://pub.mate-desktop.org/releases/%{branch}/%{oldname}-%{version}.
 ExclusiveArch:  i686 x86_64
 
 BuildRequires:  mate-file-manager-devel
-BuildRequires: python-module-docutils python-module-docutils-compat
+%if 0%{?fedora} >= 26
+BuildRequires:  python-module-docutils python-module-docutils-compat
+%else
+BuildRequires:  python-module-docutils python-module-docutils-compat
+%endif
 BuildRequires:  autoconf-common
 BuildRequires:  automake-common
 BuildRequires:  libtool-common
@@ -28,7 +35,7 @@ BuildRequires:  python-module-pygtk-devel
 
 Requires:       dropbox-uploader
 Requires:       mate-file-manager-extensions
-Requires: python-module-pygtk python-module-pygtk-demo
+Requires:       python-module-pygtk python-module-pygtk-demo
 Source44: import.info
 
 %description
@@ -48,7 +55,7 @@ chmod 755 ./cnf
 xvfb-run ./cnf
 
 
-make %{?_smp_mflags}
+%make_build
 
 %install
 %{makeinstall_std}
@@ -65,6 +72,9 @@ rm -rf ${RPM_BUILD_ROOT}%{_datadir}
 
 
 %changelog
+* Fri Sep 15 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.0-alt1_2
+- new fc release
+
 * Wed Nov 02 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
 - new fc release
 
