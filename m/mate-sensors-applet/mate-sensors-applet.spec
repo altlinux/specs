@@ -9,7 +9,7 @@ BuildRequires: libXext-devel
 %define _localstatedir %{_var}
 Name:           mate-sensors-applet
 Version:        1.19.0
-Release:        alt1_3
+Release:        alt1_4
 Summary:        MATE panel applet for hardware sensors
 Group:          Graphical desktop/MATE
 License:        GPLv2+
@@ -24,6 +24,9 @@ BuildRequires:  libXNVCtrl-devel
 BuildRequires:  libsensors3-devel
 BuildRequires:  mate-common
 BuildRequires:  mate-panel-devel
+
+# # https://github.com/mate-desktop/mate-sensors-applet/commit/f28be942
+Patch1:         mate-sensors-applet_0001-i45-fix-graphs-invisible.patch
 Source44: import.info
 
 %description
@@ -49,6 +52,8 @@ developing applications that use mate-sensors-applet.
 
 %prep
 %setup -q
+
+%patch1 -p1 -b .0001
 
 %build
 %configure \
@@ -90,6 +95,9 @@ find $RPM_BUILD_ROOT -name "*.la" -exec rm -rf {} ';'
 
 
 %changelog
+* Fri Sep 15 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_4
+- new fc release
+
 * Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_3
 - new fc release
 

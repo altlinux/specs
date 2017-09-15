@@ -28,9 +28,9 @@ BuildRequires: xvfb-run
 Name:           mate-applets
 Version:        %{branch}.1
 %if 0%{?rel_build}
-Release:        alt1_1
+Release:        alt1_2
 %else
-Release:        alt1_1
+Release:        alt2_0.7%{?git_rel}
 %endif
 Summary:        MATE Desktop panel applets
 License:        GPLv2+ and LGPLv2+
@@ -41,6 +41,9 @@ URL:            http://mate-desktop.org
 %{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
+
+# https://github.com/mate-desktop/mate-applets/commit/29c3ce44
+Patch1:       mate-applets_0001-GSettings-change-recognized-dynamically.patch
 
 BuildRequires: libgucharmap-devel libgucharmap-gir-devel
 BuildRequires: libgtop-devel libgtop-gir-devel
@@ -78,6 +81,8 @@ MATE Desktop panel applets
 
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
+
+%patch1 -p1 -b .0001
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -173,6 +178,9 @@ install -pD -m 644 %{SOURCE45} %buildroot%_sysconfdir/polkit-1/localauthority/50
 
 
 %changelog
+* Fri Sep 15 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.1-alt1_2
+- new fc release
+
 * Wed Sep 13 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.1-alt1_1
 - new fc release
 
