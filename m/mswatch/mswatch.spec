@@ -1,6 +1,6 @@
 Name: mswatch
 Version: 1.2.0
-Release: alt1.svn20120312
+Release: alt1.svn20120312.1
 
 Summary: Watch mailstores for changes and initiate mailbox syncs
 License: GPLv2+
@@ -8,6 +8,8 @@ Group: Networking/Mail
 Url: http://mswatch.sourceforge.net/
 
 Source: %name-%version.tar
+
+Patch1: %name-%version-debian-gcc6.patch
 
 BuildPreReq: flex gcc-c++ glib2-devel
 
@@ -27,6 +29,7 @@ is planned.
 
 %prep
 %setup
+%patch1 -p1
 %autoreconf
 
 %build
@@ -43,6 +46,9 @@ is planned.
 %doc AUTHORS ChangeLog INTERFACES NEWS README THANKS TODO generalized mswatchrc.sample
 
 %changelog
+* Fri Sep 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt1.svn20120312.1
+- Fixed build with gcc-6.
+
 * Tue Sep 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.svn20120312
 - Version 1.2.0
 
