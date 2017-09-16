@@ -1,6 +1,6 @@
 Name: runawfe4-server
 Version: 4.3.0
-Release: alt21
+Release: alt22
 
 Summary: Runawfe server
 
@@ -194,6 +194,9 @@ useradd -d %runadir -r -s %_sbindir/%name %runauser >/dev/null 2>&1 || :
 %attr(644,root,root) /lib/systemd/system/%name.service
 
 %changelog
+* Sat Sep 16 2017 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt22
+- Updated to 4.3.0 code 
+
 * Mon May 08 2017 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt21
 - Updated to 4.3.0 code 
 
