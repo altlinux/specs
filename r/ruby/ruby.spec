@@ -1,7 +1,7 @@
 %def_enable shared
 %def_without valgrind
 %def_enable rubygems
-%define ruby_version 2.4.1
+%define ruby_version 2.4.2
 %define libdir %_prefix/lib/%name
 %define includedir %_includedir
 %define ridir %_datadir/ri
@@ -10,7 +10,7 @@
 Name: ruby
 %define lname lib%name
 %define branch 2.4
-%define ver_teeny 1
+%define ver_teeny 2
 #define _pl
 Version: %branch.%ver_teeny
 Release: alt1
@@ -334,6 +334,14 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/site_ruby/%version%
 
 
 %changelog
+* Sat Sep 16 2017 Andrey Cherepanov <cas@altlinux.org> 2.4.2-alt1
+- New version 2.4.2
+- Security fixes:
+  + CVE-2017-0898: Buffer underrun vulnerability in Kernel.sprintf
+  + CVE-2017-10784: Escape sequence injection vulnerability in the Basic authentication of WEBrick
+  + CVE-2017-14033: Buffer underrun vulnerability in OpenSSL ASN1 decode
+  + CVE-2017-14064: Heap exposure in generating JSON
+
 * Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 2.4.1-alt1
 - New version 2.4.1 with gems 2.6.13
 - Security fixes:
