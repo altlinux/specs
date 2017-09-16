@@ -1,6 +1,6 @@
 Name: runawfe4-gpd
 Version: 4.3.0
-Release: alt1
+Release: alt22
 
 Summary: Runawfe Graphic Process Designer
 
@@ -112,6 +112,9 @@ EOF
 #%attr(755,root,root) %runadir/workspace/
 
 %changelog
+* Sat Sep 16 2017 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt22
+- Updated to 4.3.0 code
+
 * Tue May 09 2017 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt1
 - Updated to 4.3.0 code
 
