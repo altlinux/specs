@@ -1,6 +1,6 @@
 Name: runawfe4-notifier
 Version: 4.3.0
-Release: alt1
+Release: alt22
 
 Summary: Runawfe notifier client
 
@@ -93,6 +93,9 @@ cp target/classes/*.wav %buildroot/%runadir/
 %attr(766,root,root) /var/log/runawfe4-notifier/rtn.log
 %attr(755,root,root) %_bindir/runawfe4-notifier
 %changelog
+* Sat Sep 16 2017 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt22
+- Updated to 3.4.0 code
+
 * Tue May 09 2017 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt1
 - Updated to 3.4.0 code
 
