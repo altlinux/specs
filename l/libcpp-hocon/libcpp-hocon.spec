@@ -1,5 +1,5 @@
 Name:    libcpp-hocon
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 Summary: A C++ port of the Typesafe Config library
  
@@ -54,6 +54,9 @@ Development libraries for cpp-hocon.
 %_includedir/hocon
 
 %changelog
+* Sat Sep 16 2017 Andrey Cherepanov <cas@altlinux.org> 0.1.6-alt1
+- New version
+
 * Sat Feb 18 2017 Andrey Cherepanov <cas@altlinux.org> 0.1.5-alt1
 - new version 0.1.5
 
