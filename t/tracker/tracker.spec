@@ -4,7 +4,7 @@
 # since 1.0.3 (see https://bugzilla.gnome.org/show_bug.cgi?id=733857)
 %set_verify_elf_method unresolved=relaxed
 
-%def_with bootstrap
+%def_without bootstrap
 %def_enable introspection
 %def_disable hal
 %def_enable upower
@@ -18,7 +18,7 @@
 
 Name: tracker
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -234,6 +234,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 
 
 %changelog
+* Sun Sep 17 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt2
+- requires tracker-miners
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - 2.0.0
 
