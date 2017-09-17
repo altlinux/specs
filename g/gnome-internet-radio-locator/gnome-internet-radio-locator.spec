@@ -1,4 +1,4 @@
-%define ver_major 0.8
+%define ver_major 1.0
 %define gst_api_ver 1.0
 %def_with recording
 
@@ -53,6 +53,9 @@ with the help of a map.
 
 
 %changelog
+* Sat Sep 16 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
