@@ -1,5 +1,5 @@
 Name:     github2spec
-Version:  1.3.12
+Version:  1.4.0
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from github using genspec
@@ -33,6 +33,9 @@ install -Dm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sun Sep 17 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.0-alt1
+- Rewrite github2spec without octokit
+
 * Fri Sep 01 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.12-alt1
 - Fix some issues
 
