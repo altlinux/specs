@@ -1,6 +1,6 @@
 Name: bitcoin
-Version: 0.9.3
-Release: alt1.rc1.1.1
+Version: 0.15.0
+Release: alt1
 
 Summary: peer-to-peer network based anonymous digital currency
 License: MIT
@@ -9,14 +9,11 @@ Group: Networking/Other
 Url: http://www.bitcoin.org/
 Source: %name-%version.tar
 
-Patch1: bitcoin-0.9.3-boost-1.58-fix.patch
-
-BuildRequires: zlib-devel boost-devel libssl-devel gcc-c++ libdb4.8-devel libdb4.8_cxx-devel
-BuildRequires: boost-filesystem-devel boost-interprocess-devel boost-program_options-devel
-BuildRequires: libgtk+2-devel libwxGTK3.1-devel boost-asio-devel
-BuildRequires: libqt4-devel lcov libminiupnpc-devel
-BuildPreReq: libprotobuf-devel protobuf-compiler gcc-objc clang-devel
-BuildPreReq: libqrencode-devel boost-signals-devel
+# Automatically added by buildreq on Thu Sep 14 2017
+# optimized out: boost-devel boost-devel-headers gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libcom_err-devel libdb4-devel libgpg-error libkrb5-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-test libqt5-widgets libqt5-xml libstdc++-devel llvm perl pkg-config python-base python-modules qt5-base-common
+BuildRequires: boost-filesystem-devel boost-interprocess-devel boost-program_options-devel boost-signals-devel
+BuildRequires: clang lcov libevent-devel libminiupnpc-devel libprotobuf-devel libqrencode-devel
+BuildRequires: libssl-devel protobuf-compiler python-module-mpl_toolkits qt5-base-devel qt5-tools libdb4.8_cxx-devel
 
 %description
 Q. What is Bitcoin?
@@ -36,15 +33,13 @@ Before each transaction the coin's validity will be checked.
 %prep
 %setup
 
-%patch1 -p1
-
 %build
 ./autogen.sh
 export OBJC=clang
 export OBJCXX=clang++
 %configure \
 	--enable-upnp-default \
-	--with-gui=qt4
+	--with-gui=qt5
 %make_build V=1
 
 %install
@@ -59,6 +54,9 @@ rm -f %_bindir/%name
 %doc doc/*
 
 %changelog
+* Thu Sep 14 2017 Alexei Takaseev <taf@altlinux.org> 0.15.0-alt1
+- Version 0.15.0
+
 * Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.3-alt1.rc1.1.1
 - Rebuilt with:
  + gcc5 C++11 ABI.
