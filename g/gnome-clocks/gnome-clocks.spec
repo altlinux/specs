@@ -1,5 +1,5 @@
 %define xdg_name org.gnome.clocks
-%define ver_major 3.24
+%define ver_major 3.26
 
 Name: gnome-clocks
 Version: %ver_major.0
@@ -14,15 +14,15 @@ Source: http://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define gweather_ver 3.20.0
 %define geocode_ver 3.18.0
-%define geoclue_ver 2.3.1
+%define geoclue_ver 2.4
 %define gtk_ver 3.20.0
 
 Requires: geoclue2
 
-BuildRequires: yelp-tools
+BuildRequires: meson yelp-tools
 BuildRequires: libgio-devel libgtk+3-devel >= %gtk_ver libnotify-devel
 BuildRequires: libgsound-devel libgnome-desktop3-devel
-BuildRequires: vala-tools gobject-introspection-devel libgtk+3-gir-devel
+BuildRequires: vala-tools gobject-introspection-devel libgtk+3-gir-devel libgweather-vala
 BuildRequires: libgweather-devel >= %gweather_ver libgeocode-glib-devel >= %geocode_ver
 BuildRequires: libgeoclue2-devel >= %geoclue_ver
 
@@ -33,13 +33,11 @@ Clock application designed for GNOME 3
 %setup
 
 %build
-%autoreconf
-%configure \
-	--disable-schemas-compile
-%make_build
+%meson -Ddisable-schemas-compile=true
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang --with-gnome %name
 
 %files -f %name.lang
@@ -55,6 +53,9 @@ Clock application designed for GNOME 3
 %doc README NEWS
 
 %changelog
+* Sun Sep 10 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Sat Mar 18 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 

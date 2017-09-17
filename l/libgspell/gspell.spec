@@ -1,9 +1,13 @@
+%def_disable snapshot
+%def_enable installed_tests
+%def_enable check
+
 %define _name gspell
-%define ver_major 1.4
+%define ver_major 1.6
 %define api_ver 1
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A spell-checking library for GTK+ applications
@@ -11,9 +15,11 @@ Group: System/Libraries
 License: LGPLv2.1+
 Url: https://wiki.gnome.org/Projects/gspell
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
-#Source: %name-%version.tar
-#Patch: %name-%version-%release.patch
+%else
+Source: %name-%version.tar
+%endif
 
 %define gtk_ver 3.20.0
 %define enchant_ver 1.6.0
@@ -22,6 +28,7 @@ Requires: iso-codes
 
 BuildRequires: libgtk+3-devel >= %gtk_ver libenchant-devel >= %enchant_ver iso-codes-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel vala-tools gtk-doc
+%{?_enable_check:BuildRequires: xvfb-run hunspell-en valgrind}
 
 %description
 gspell library provides a flexible API to add spell checking to a GTK+
@@ -63,25 +70,36 @@ BuildArch: noarch
 %description devel-doc
 This package contains development documentation for Gspell library.
 
+%package tests
+Summary: Tests for Gspell library
+Group: Development/Other
+Requires: %name = %version-%release
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed Gspell library.
+
 
 %prep
 %setup -n %_name-%version
-#%patch -p1
 
 %build
 # pkg-config >= 0.27 required
 #%%autoreconf
-%configure
+%configure \
+    %{?_enable_installed_tests:--enable-installed-tests}
 
 %install
 %makeinstall_std
-
-%check
-#%make check
-
 %find_lang --output=%name.lang %_name-%api_ver
 
+%if_enabled check
+%check
+xvfb-run %make check
+%endif
+
 %files -f %name.lang
+%_bindir/%_name-app1
 %_libdir/%name-%api_ver.so.*
 %doc AUTHORS NEWS README
 
@@ -100,7 +118,17 @@ This package contains development documentation for Gspell library.
 %files devel-doc
 %_datadir/gtk-doc/html/%_name-*/
 
+%if_enabled installed_tests
+%files tests
+%_libexecdir/installed-tests/%_name-%api_ver/
+%_datadir/installed-tests/%_name-%api_ver/
+%endif
+
+
 %changelog
+* Sun Sep 10 2017 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Sat Aug 19 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
 - 1.4.2
 

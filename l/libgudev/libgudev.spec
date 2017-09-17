@@ -1,5 +1,5 @@
 %define _name gudev
-%define ver_major 231
+%define ver_major 232
 %define api_ver 1.0
 
 %def_enable umockdev
@@ -25,7 +25,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 BuildRequires: libudev-devel >= %udev_ver
 BuildRequires: libgio-devel >= %glib_ver
 %{?_enable_umockdev:BuildRequires: libumockdev-devel}
-BuildRequires: gtk-doc intltool
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+BuildRequires: intltool
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 
 %description
@@ -102,8 +103,10 @@ GObject introspection devel data for %name.
 %_libdir/%name-%api_ver.so
 %_pkgconfigdir/%_name-%api_ver.pc
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_enabled introspection
 %files gir
@@ -115,6 +118,9 @@ GObject introspection devel data for %name.
 
 
 %changelog
+* Fri Sep 01 2017 Yuri N. Sedunov <aris@altlinux.org> 1:232-alt1
+- 232
+
 * Mon Feb 13 2017 Yuri N. Sedunov <aris@altlinux.org> 1:231-alt1
 - 231
 

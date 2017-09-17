@@ -1,5 +1,5 @@
 %define _name appstream-glib
-%define ver_major 0.6
+%define ver_major 0.7
 %define api_ver 1.0
 %define asb_ver 5
 
@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.13
+Version: %ver_major.2
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -29,7 +29,7 @@ Obsoletes: appdata-tools < 0.1.9
 Provides: appdata-tools = %version-%release
 Provides: %_bindir/appstream-util
 
-BuildRequires: autoconf-archive glib2-devel >= %glib_ver libgtk+3-devel
+BuildRequires: meson glib2-devel >= %glib_ver libgtk+3-devel
 BuildRequires: libarchive-devel libsoup-devel >= %soup_ver libgdk-pixbuf-devel
 BuildRequires: libpango-devel libsqlite3-devel
 BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel
@@ -133,17 +133,13 @@ the functionality of the installed %_name library.
 %setup -n %_name-%version
 
 %build
-%autoreconf
-%configure \
-        --enable-gtk-doc \
-        --disable-static \
-        %{subst_enable rpm} \
-        %{subst_enable stemmer} \
-        %{subst_enable installed_tests}
-%make_build
+%meson -Denable-gtk-doc=true \
+        %{?_enable_rpm:-Denable-rpm=true} \
+        %{?_enable_stemmer:-Denable_stemmer=true}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang %_name
 
@@ -182,7 +178,6 @@ the functionality of the installed %_name library.
 %_man1dir/appstream-builder.1.*
 %_datadir/bash-completion/completions/appstream-builder
 
-%exclude %_libdir/asb-plugins-%asb_ver/*.la
 
 %files -n libappstream-builder-devel
 %_libdir/libappstream-builder.so
@@ -204,6 +199,15 @@ the functionality of the installed %_name library.
 #%_datadir/gtk-doc/html/appstream-builder/
 
 %changelog
+* Tue Aug 22 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
+- 0.7.2
+
+* Thu Aug 03 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
+- 0.7.1
+
+* Sun Jun 25 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Tue May 09 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.13-alt1
 - 0.6.13
 

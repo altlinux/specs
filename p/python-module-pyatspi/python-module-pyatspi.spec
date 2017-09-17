@@ -1,5 +1,5 @@
 %define _name pyatspi
-%define ver_major 2.24
+%define ver_major 2.26
 
 Name: python-module-%_name
 Version: %ver_major.0
@@ -80,6 +80,9 @@ popd
 %doc AUTHORS README NEWS
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 2.26.0-alt1
+- 2.26.0
+
 * Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 2.24.0-alt1
 - 2.24.0
 

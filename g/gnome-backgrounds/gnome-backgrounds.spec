@@ -1,7 +1,7 @@
-%define ver_major 3.24
+%define ver_major 3.26
 
 Name: gnome-backgrounds
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: A collection of GNOME backgrounds
@@ -12,7 +12,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 BuildArch: noarch
 
-BuildPreReq: intltool >= 0.35.0
+BuildRequires: meson
 
 %description
 The gnome-backgrounds package contains images and tiles
@@ -23,11 +23,11 @@ with the GNOME desktop.
 %setup
 
 %build
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %name
 
@@ -37,6 +37,9 @@ with the GNOME desktop.
 %doc NEWS README
 
 %changelog
+* Fri Sep 15 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
+- 3.26.2
+
 * Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 

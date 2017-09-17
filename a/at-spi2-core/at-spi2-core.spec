@@ -1,4 +1,4 @@
-%define ver_major 2.24
+%define ver_major 2.26
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
@@ -6,7 +6,7 @@
 %def_disable xevie
 
 Name: at-spi2-core
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -21,7 +21,7 @@ Requires: dbus-tools-gui
 
 BuildRequires: libgio-devel >= 2.36.0 libdbus-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
-%{?_enable_x11:BuildRequires: libXtst-devel libXext-devel libXi-devel libICE-devel libSM-devel}
+%{?_enable_x11:BuildRequires: libXtst-devel libXext-devel libXi-devel libICE-devel libSM-devel libxkbcommon-x11-devel}
 %{?_enable_xevie:BuildRequires: libXevie-devel}
 BuildRequires: intltool gtk-doc
 
@@ -129,6 +129,9 @@ This package contains documentation for developing applications that use
 %_datadir/gtk-doc/html/libatspi
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 2.26.0-alt1
+- 2.26.0
+
 * Tue May 09 2017 Yuri N. Sedunov <aris@altlinux.org> 2.24.1-alt1
 - 2.24.1
 

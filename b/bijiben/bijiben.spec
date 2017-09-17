@@ -1,12 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 3.24
+%define ver_major 3.26
 %define xdg_name org.gnome.bijiben
 %define _libexecdir %_prefix/libexec
 %def_enable zeitgeist
 
 Name: bijiben
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Note editor for GNOME
@@ -40,6 +40,8 @@ desktop integration.
 
 %prep
 %setup
+# try to build against tracker 2.0
+subst 's/\(tracker-sparql-\)1.0/\12.0/g' configure.ac
 
 %build
 %autoreconf
@@ -69,6 +71,9 @@ desktop integration.
 %doc README AUTHORS NEWS
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
 - 3.24.2
 

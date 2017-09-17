@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.24
+%define ver_major 3.26
 %define api_ver 3.0
 %define xdg_name org.gnome.Cheese
 %define gst_api_ver 1.0
@@ -140,11 +140,9 @@ GObject introspection devel data for the Cheese library.
 
 %files -f %name.lang
 %_bindir/%name
-%_libexecdir/gnome-camera-service
 %_desktopdir/%xdg_name.desktop
 %_datadir/icons/hicolor/*/*/*.*
 %_datadir/appdata/%xdg_name.appdata.xml
-%_datadir/dbus-1/services/org.gnome.Camera.service
 %_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/*
 %_man1dir/%name.1.*
@@ -170,6 +168,9 @@ GObject introspection devel data for the Cheese library.
 %endif
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 

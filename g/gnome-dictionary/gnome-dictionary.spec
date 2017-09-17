@@ -1,5 +1,5 @@
-%define ver_major 3.24
-%define _name org.gnome.Dictionary
+%define ver_major 3.26
+%define xdg_name org.gnome.Dictionary
 %define api_ver 1.0
 
 Name: gnome-dictionary
@@ -8,117 +8,52 @@ Release: alt1
 
 Summary: Gnome client for MIT dictionary server
 Group: Graphical desktop/GNOME
-License: GPLv2+
-Url: http://www.gnome.org
+License: LGPLv2.1
+Url: https://wiki.gnome.org/Apps/Dictionary
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-Requires: libgdict = %version-%release
+Obsoletes: libgdict < %version
 
-%define glib_ver 2.40.0
+%define glib_ver 2.42.0
 %define gtk_ver 3.22.7
 
-BuildPreReq: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: rpm-build-gnome intltool gtk-doc yelp-tools
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+BuildPreReq: meson rpm-build-gnome yelp-tools
+BuildRequires: libappstream-glib-devel desktop-file-utils
+BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+# for man
+BuildRequires: xsltproc docbook-dtds docbook-style-xsl
 
 %description
 GNOME Dictionary - look up an online dictionary for definitions and
 correct spelling of words.
 
-%package -n libgdict
-Summary: GNOME Dictionary Library.
-Group: System/Libraries
-
-%description -n libgdict
-This package provides a shared GNOME Dictionary Library.
-
-%package -n libgdict-devel
-Summary: Development files for GNOME Dictionary Library.
-Group: Development/C
-Provides: gnome-dictionary-devel = %version-%release
-Requires: libgdict = %version-%release
-
-%description -n libgdict-devel
-Files necessary to develop applications that use GNOME Dictionary.
-
-%package -n libgdict-gir
-Summary: GObject introspection data for the GNOME Dictionary
-Group: System/Libraries
-Requires: libgdict = %version-%release
-
-%description -n libgdict-gir
-GObject introspection data for the GNOME Dictionary library.
-
-%package -n libgdict-gir-devel
-Summary: GObject introspection devel data for the GNOME Dictionary
-Group: Development/Other
-BuildArch: noarch
-Requires: libgdict-gir = %version-%release
-Requires: libgdict-devel = %version-%release
-
-%description -n libgdict-gir-devel
-GObject introspection devel data for the GNOME Dictionary library.
-
-%package -n libgdict-devel-doc
-Summary: Development documentation for GNOME Dictionary.
-Group: Development/C
-BuildArch: noarch
-Provides: gnome-dictionary-devel-doc = %version-%release
-Conflicts: libgdict < %version
-
-%description -n libgdict-devel-doc
-Documentation necessary to develop applications that use GNOME
-Dictionary Library.
-
-
 %prep
 %setup
-[ ! -d m4 ] && mkdir m4
 
 %build
-%autoreconf
-%configure \
-	--enable-gtk-doc \
-	--enable-ipv6
-
-%make_build
+%meson -Denable-ipv6=true
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %name
 
 %files -f %name.lang
 %_bindir/%name
-%_desktopdir/%_name.desktop
-%_man1dir/%name.*
-%_datadir/dbus-1/services/%_name.service
+%_desktopdir/%xdg_name.desktop
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/org.gnome.dictionary.gschema.xml
-%_datadir/appdata/%_name.appdata.xml
-%doc NEWS
-
-%files -n libgdict
-%_libdir/libgdict-1.0.so.*
-%dir %_datadir/gdict-1.0
-%_datadir/gdict-1.0/sources/
-
-%files -n libgdict-devel
-%dir %_includedir/gdict-1.0
-%_includedir/gdict-1.0/gdict/
-%_libdir/libgdict-1.0.so
-%_libdir/pkgconfig/gdict-1.0.pc
-
-%files -n libgdict-gir
-%_typelibdir/Gdict-%api_ver.typelib
-
-%files -n libgdict-gir-devel
-%_girdir/Gdict-%api_ver.gir
-
-%files -n libgdict-devel-doc
-%_datadir/gtk-doc/html/*
+%_datadir/gdict-%api_ver/
+%_datadir/appdata/%xdg_name.appdata.xml
+%_man1dir/%name.*
+%doc NEWS README*
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 

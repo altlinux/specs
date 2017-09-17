@@ -1,9 +1,10 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.24
+%define _name gnome-tweak
+%define ver_major 3.26
 
-Name: gnome-tweak-tool
-Version: %ver_major.1
+Name: %_name-tool
+Version: %ver_major.0
 Release: alt1
 
 Summary: A tool to customize advanced GNOME 3 options
@@ -16,14 +17,14 @@ Source: %name-%version.tar
 %else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
-Patch: gnome-tweak-tool-3.8.0-alt-desktop.patch
+Patch: gnome-tweak-tool-3.25.4-alt-desktop.patch
 
 BuildArch: noarch
 Requires: gnome-shell >= %ver_major
 
-BuildRequires: gnome-common intltool libgio-devel libgtk+3-devel >= 3.12.0
+BuildRequires: meson rpm-build-gir
 BuildRequires: gsettings-desktop-schemas-devel >= 3.24.0
-BuildRequires: python-module-pygobject3-devel >= 3.10.0
+BuildRequires: rpm-build-python3 python3-module-pygobject3-devel >= 3.10.0
 
 %description
 GNOME Tweak Tool is an application for changing the advanced settings
@@ -49,27 +50,29 @@ Features:
 %patch -b .desktop
 
 %build
-%{?_enable_snapshot:NOCONFIGURE=1 ./autogen.sh}
-%configure --disable-schemas-compile
-%make_build
+%meson -Denable-schemas-compile=false
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/%name
 %_libexecdir/%name-lid-inhibitor
-%python_sitelibdir/gtweak
-%_datadir/applications/%name.desktop
-%_datadir/%name
+%python3_sitelibdir_noarch/gtweak/
+%_desktopdir/%name.desktop
+%_datadir/%name/
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Mon Jun 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
 - 3.24.1
 

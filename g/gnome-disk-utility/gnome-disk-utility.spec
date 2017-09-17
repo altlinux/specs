@@ -1,22 +1,22 @@
-%define ver_major 3.24
+%define ver_major 3.26
 %define xdg_name org.gnome.DiskUtility
 %define _libexecdir %_prefix/libexec
 %def_enable gsd_plugin
+%def_enable libsystemd
 
 Name: gnome-disk-utility
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Disk management application
 License: LGPLv2+
 Group: System/Libraries
-URL: http://git.gnome.org/%name
+Url: https://wiki.gnome.org/Apps/Disks
 
 Requires: udisks2 cryptsetup
 Requires: gnome-icon-theme-symbolic
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Patch: %name-3.16.0-alt-lfs.patch
 
 %define udisks_ver 2.1.1
 %define glib_ver 2.31.0
@@ -26,7 +26,7 @@ Patch: %name-3.16.0-alt-lfs.patch
 %define dvdread_ver 4.2.0
 %define lzma_ver 5.0.5
 
-BuildRequires: autoconf-archive xsltproc libappstream-glib-devel
+BuildRequires: meson xsltproc libappstream-glib-devel
 BuildPreReq: libudisks2-devel >= %udisks_ver
 BuildPreReq: libgio-devel  >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -35,7 +35,7 @@ BuildPreReq: libpwquality-devel >= %pwquality_ver
 BuildPreReq: libdvdread-devel >= %dvdread_ver
 BuildPreReq: liblzma-devel >= %lzma_ver
 BuildRequires: libnotify-devel libcanberra-gtk3-devel
-BuildRequires: systemd-devel libsystemd-devel
+%{?_enable_libsystemd:BuildRequires: systemd-devel libsystemd-devel}
 BuildRequires: xsltproc docbook-style-xsl
 
 %description
@@ -45,17 +45,15 @@ RAID, SMART monitoring, etc
 
 %prep
 %setup
-%patch -p1
 
 %build
-%autoreconf
-%configure \
-	--disable-static \
-	%{?_disable_gsd_plugin:--disable-gsd-plugin}
-%make_build
+%meson \
+	%{?_enable_gsd_plugin:-Denable-gsd-plugin=true} \
+	%{?_enable_libsystemd:-Denable-libsystemd=true}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome --output=global.lang %name palimpsest
 
@@ -74,11 +72,14 @@ RAID, SMART monitoring, etc
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/org.gnome.Disks.gschema.xml
 %_iconsdir/hicolor/*/apps/*
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %_man1dir/*.1.*
 
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Fri May 05 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
 - 3.24.1
 

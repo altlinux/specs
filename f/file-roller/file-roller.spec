@@ -1,5 +1,5 @@
-%define _name org.gnome.FileRoller
-%define ver_major 3.24
+%define xdg_name org.gnome.FileRoller
+%define ver_major 3.26
 %def_disable packagekit
 %def_disable magic
 %def_enable libarchive
@@ -7,7 +7,7 @@
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: An archive manager for GNOME
@@ -117,14 +117,14 @@ rm -f data/%name.desktop{,.in}
 %_libexecdir/%name/rpm2cpio
 %dir %_datadir/%name
 %_datadir/%name/*
-%_datadir/dbus-1/services/%_name.service
-%_datadir/dbus-1/services/%_name.ArchiveManager1.service
-%_desktopdir/%_name.desktop
+%_datadir/dbus-1/services/%xdg_name.service
+%_datadir/dbus-1/services/%xdg_name.ArchiveManager1.service
+%_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name-symbolic.svg
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/GConf/gsettings/%name.convert
-%_datadir/appdata/%_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %if_enabled nautilus_actions
 %_libdir/nautilus/extensions-%nau_api_ver/*.so
@@ -135,6 +135,12 @@ rm -f data/%name.desktop{,.in}
 
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
+* Mon Sep 04 2017 Yuri N. Sedunov <aris@altlinux.org> 3.25.91-alt1
+- 3.25.91
+
 * Thu Apr 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
 - 3.24.1
 

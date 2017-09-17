@@ -2,12 +2,12 @@
 
 %define xdg_name org.gnome.Documents
 %define xdg_name1 org.gnome.Books
-%define ver_major 3.24
+%define ver_major 3.26
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-documents
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document manager application for GNOME
@@ -45,7 +45,7 @@ Requires: typelib(GObject)
 Requires: typelib(Gtk)
 Requires: typelib(LOKDocView)
 Requires: typelib(Pango)
-Requires: typelib(Tracker)
+Requires: typelib(Tracker) = 2.0
 Requires: typelib(TrackerControl)
 Requires: typelib(WebKit2)
 Requires: typelib(Zpj)
@@ -58,24 +58,25 @@ Requires: typelib(Zpj)
 %define glib_ver 2.40.0
 %define gtk_ver 3.20.0
 %define evince_ver 3.13.3
-%define tracker_ver 0.17.2
+%define tracker_ver 1.99
 %define goa_ver 3.2.0
 %define gdata_ver 0.17.2
 %define soup_ver 2.41.3
 %define gi_ver 1.31.6
-%define gepub_ver 0.4
+%define gepub_ver 0.5
 
-BuildRequires: autoconf-archive intltool yelp-tools desktop-file-utils docbook-style-xsl
+BuildRequires: autoconf-archive yelp-tools desktop-file-utils docbook-style-xsl
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgnome-desktop3-devel libgdata-devel >= %gdata_ver
 BuildRequires: liboauth-devel libgnome-online-accounts-devel >= %goa_ver
-BuildRequires: tracker-devel >= %tracker_ver libevince-devel >= %evince_ver
+BuildRequires: pkgconfig(tracker-control-2.0) pkgconfig(tracker-sparql-2.0)
+BuildRequires: libevince-devel >= %evince_ver
 BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: libwebkit2gtk-devel
 BuildRequires: libzapojit-devel
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libgtk+3-gir-devel libgjs-devel libevince-gir-devel libgnome-desktop3-gir-devel
-BuildRequires: libgdata-gir-devel libgnome-online-accounts-gir-devel libtracker-gir-devel
+BuildRequires: libgdata-gir-devel libgnome-online-accounts-gir-devel libtracker-gir-devel >= %tracker_ver
 BuildRequires: libzapojit-gir-devel libgepub-gir-devel >= %gepub_ver
 BuildRequires: librsvg
 
@@ -123,8 +124,6 @@ GObject introspection devel data for the %name library.
 
 %prep
 %setup
-# fix for new libgepub
-subst 's/\[0\.4\]/[0.5]/' configure.ac
 
 %build
 %autoreconf
@@ -169,6 +168,9 @@ subst 's/\[0\.4\]/[0.5]/' configure.ac
 %_datadir/appdata/%xdg_name1.appdata.xml
 
 %changelog
+* Thu Sep 14 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Fri Jul 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.3-alt1
 - 3.24.3
 

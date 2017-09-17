@@ -1,15 +1,15 @@
 %def_disable snapshot
-%define ver_major 3.24
+%define ver_major 3.26
 %define api_ver 3.10
 %define ua_ver 3.24
 %define xdg_name org.gnome.Epiphany
 
 %define _libexecdir %_prefix/libexec
 
-%def_without libhttpseverywhere
+%def_enable libhttpseverywhere
 
 Name: epiphany
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
@@ -23,12 +23,11 @@ Source: %name-%version.tar
 %else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
-Patch: %name-3.17.2-alt-lfs.patch
 
 Provides: webclient
 Obsoletes: %name-extensions
 
-%define webkit_ver 2.15.91
+%define webkit_ver 2.17.92
 %define gtk_ver 3.22.13
 %define libxml2_ver 2.6.12
 %define xslt_ver 1.1.7
@@ -38,7 +37,7 @@ Obsoletes: %name-extensions
 
 Requires: %name-data = %version-%release indexhtml iso-codes
 
-BuildRequires: gnome-common yelp-tools libappstream-glib-devel
+BuildRequires: meson yelp-tools libappstream-glib-devel
 BuildPreReq: intltool >= 0.50.0
 BuildPreReq: libgio-devel
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -50,12 +49,13 @@ BuildPreReq: libsoup-devel >= %soup_ver
 BuildPreReq: libsecret-devel >= %secret_ver
 BuildPreReq: gcr-libs-devel >= %gcr_ver
 BuildRequires: libwnck3-devel libgnome-desktop3-devel libnotify-devel libnss-devel libsqlite3-devel
+BuildRequires: libnettle-devel
 BuildPreReq: iso-codes-devel >= 0.35
 BuildRequires: gcc-c++ gsettings-desktop-schemas-devel
 # Zeroconf support
 BuildPreReq: libavahi-devel libavahi-gobject-devel
 # since 3.23.x
-%{?_with_libhttpseverywhere:BuildPreReq: libhttpseverywhere-devel >= 0.2.2}
+%{?_enable_libhttpseverywhere:BuildPreReq: libhttpseverywhere-devel >= 0.4}
 BuildRequires: libicu-devel libjson-glib-devel
 
 %description
@@ -76,21 +76,16 @@ This package contains common noarch files needed for Epiphany.
 
 %prep
 %setup
-%patch -p1
-# libtool-2.4.6 required
-rm -rf build-aux aclocal.m4 /m4/libtool.m4 m4/lt*.m4
 
 %build
-%autoreconf
-%configure \
-	--disable-schemas-compile \
-	--disable-dependency-tracking \
-	--with-distributor-name="ALTLinux" \
-	%{subst_with libhttpseverywhere}
-%make_build
+%meson \
+	-Denable-schemas-compile=false \
+	-Ddistributor_name="ALTLinux" \
+	%{?_enable_libhttpseverywhere:-Denable_https_everywhere=true}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome --output=%name.lang %name %name-2.0
 
@@ -103,8 +98,6 @@ rm -rf build-aux aclocal.m4 /m4/libtool.m4 m4/lt*.m4
 %_libdir/%name/*.so
 %dir %_libdir/%name/web-extensions
 %_libdir/%name/web-extensions/libephywebextension.so
-%exclude %_libdir/%name/*.la
-%exclude %_libdir/%name/web-extensions/libephywebextension.la
 %doc AUTHORS NEWS README TODO
 
 %files data -f %name.lang
@@ -120,6 +113,9 @@ rm -rf build-aux aclocal.m4 /m4/libtool.m4 m4/lt*.m4
 %_datadir/appdata/%xdg_name.appdata.xml
 
 %changelog
+* Sat Sep 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Sun Sep 03 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.4-alt1
 - 3.24.4
 

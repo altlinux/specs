@@ -1,11 +1,11 @@
 %def_disable snapshot
 
 %define _name vte
-%define ver_major 0.48
+%define ver_major 0.50
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 %def_disable static
@@ -186,6 +186,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 0.50.0-alt1
+- 0.50.0
+
 * Wed May 10 2017 Yuri N. Sedunov <aris@altlinux.org> 0.48.3-alt1
 - 0.48.3
 

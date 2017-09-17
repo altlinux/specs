@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.32
+%define ver_major 1.34
 
 %def_disable gdu
 %def_disable gtk_doc
@@ -16,7 +16,6 @@
 %def_enable gcr
 %def_enable goa
 %def_enable gphoto2
-%def_enable gtk
 %def_enable http
 %def_enable installed_tests
 %def_enable keyring
@@ -27,10 +26,11 @@
 %def_enable udisks2
 %def_enable google
 %def_enable admin
+%def_enable libusb
 
 Name: gvfs
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -72,6 +72,7 @@ Obsoletes: bash-completion-gvfs < 1.31
 %define imobiledevice_ver 1.1.5
 %define nfs_ver 1.9.7
 %define gdata_ver 0.17.3
+%define libusb_ver 1.0.21
 
 Requires: dconf
 %{?_enable_gdu:Requires: gnome-disk-utility >= %gdu_ver}
@@ -99,7 +100,6 @@ BuildRequires: libgcrypt-devel
 %{?_enable_gdu:BuildPreReq: libgdu-devel >= %gdu_ver libgudev-devel}
 %{?_enable_goa:BuildPreReq: libgnome-online-accounts-devel >= %goa_ver}
 %{?_enable_gphoto2:BuildPreReq: libgphoto2-devel}
-%{?_enable_gtk:BuildPreReq: libgtk+3-devel}
 %{?_enable_http:BuildPreReq: libsoup-devel >= %libsoup_ver libxml2-devel}
 %{?_enable_keyring:BuildPreReq: libsecret-devel}
 %{?_enable_libmtp:BuildPreReq: libmtp-devel >= %mtp_ver}
@@ -110,6 +110,7 @@ BuildRequires: libgcrypt-devel
 %{?_enable_udisks2:BuildPreReq: libudisks2-devel >= %udisks_ver}
 %{?_enable_google:BuildPreReq: libgdata-devel >= %gdata_ver}
 %{?_enable_admin:BuildRequires: libpolkit-devel libcap-devel}
+%{?_enable_libusb:BuildRequires: libusb-devel >= %libusb_ver}
 
 BuildPreReq: desktop-file-utils
 BuildRequires: gcc-c++ perl-XML-Parser
@@ -201,17 +202,16 @@ Summary: All backends for gvfs
 Group: System/Libraries
 BuildArch: noarch
 Requires: gvfs gvfs-backend-smb gvfs-backend-dnssd
+Requires: gvfs-backend-recent-files
 %{?_enable_cdda:Requires: gvfs-backend-cdda}
 %{?_enable_obexftp:Requires: gvfs-backend-obexftp}
 %{?_enable_afc:Requires: gvfs-backend-afc}
 %{?_enable_afp:Requires: gvfs-backend-afp}
-%{?_enable_gtk:Requires: gvfs-backend-recent-files}
 %{?_enable_goa:Requires: gvfs-backend-goa}
 %{?_enable_libmtp:Requires: gvfs-backend-mtp}
 %{?_enable_nfs:Requires: gvfs-backend-nfs}
 %{?_enable_google:Requires: gvfs-backend-google}
 %{?_enable_admin:Requires: gvfs-backend-admin}
-
 
 %description
 gvfs is a userspace virtual filesystem where mount runs as a separate
@@ -317,8 +317,8 @@ export ac_cv_path_SSH_PROGRAM=%_bindir/ssh
         %{subst_enable libmtp} \
         %{subst_enable bluray} \
         %{subst_enable nfs} \
-        %{subst_enable gtk} \
         %{subst_enable google} \
+        %{subst_enable libusb} \
         %{?_enable_systemd_login:--enable-libsystemd-login} \
         %{?_enable_gtk_doc:--enable-gtk-doc} \
         %{?_enable_installed_tests:--enable-installed-tests}
@@ -374,6 +374,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %_man7dir/gvfs.7.*
 
 # in another packages
+%exclude %_libexecdir/gvfsd-recent
+%exclude %_datadir/%name/mounts/recent.mount
+
 %if_enabled samba
     %exclude %_libexecdir/gvfsd-smb
     %exclude %_libexecdir/gvfsd-smb-browse
@@ -410,10 +413,6 @@ killall -USR1 gvfsd >&/dev/null || :
     %exclude %_datadir/dbus-1/services/org.gtk.vfs.MTPVolumeMonitor.service
 %endif
 
-%if_enabled gtk
-    %exclude %_libexecdir/gvfsd-recent
-    %exclude %_datadir/%name/mounts/recent.mount
-%endif
 
 %if_enabled nfs
     %exclude %_libexecdir/gvfsd-nfs
@@ -480,11 +479,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %_datadir/%name/mounts/afp-browse.mount
 %endif
 
-%if_enabled gtk
 %files backend-recent-files
 %_libexecdir/gvfsd-recent
 %_datadir/%name/mounts/recent.mount
-%endif
 
 %if_enabled goa
 %files backend-goa
@@ -535,6 +532,9 @@ killall -USR1 gvfsd >&/dev/null || :
 
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 1.34.0-alt1
+- 1.34.0
+
 * Sun Jun 25 2017 Yuri N. Sedunov <aris@altlinux.org> 1.32.1-alt2
 - rebuilt against libnfs.so.11
 

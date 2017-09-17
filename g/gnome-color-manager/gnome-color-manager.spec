@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.24
-%def_enable clutter
+%define ver_major 3.26
 # tests require colord running and g-c-m installed
 %def_disable check
+%def_disable packagekit
 
 Name: gnome-color-manager
 Version: %ver_major.0
-Release: alt3
+Release: alt1
 
 Summary: Color profile manager for the GNOME desktop
 License: %gpl2plus
@@ -18,31 +18,29 @@ Url: http://www.gnome.org/projects/gnome-color-manager/
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 Obsoletes: libcolor-glib
-Requires: common-licenses
+Requires: common-licenses gnome-session gnome-filesystem
 
 BuildPreReq: gnome-common rpm-build-gnome
 BuildPreReq: rpm-build-licenses
 
-# From configure.ac
 %define gio_ver 2.31.10
-%define clutter_ver 1.12
 %define gtk_ver 3.0
 %define vte_ver 0.37.1
 %define notify_ver 0.7.3
-%define colord_ver 0.1.24
+%define colord_ver 1.3.1
+%define colord_gtk_ver 0.1.20
 %define lcms_ver 2.2
 
-BuildRequires: gcc-c++ intltool gtk-doc yelp-tools itstool libappstream-glib-devel
+BuildRequires: meson gcc-c++ yelp-tools libappstream-glib-devel
 BuildRequires: docbook-utils xsltproc
 BuildPreReq: libgio-devel >= %gio_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libvte3-devel >= %vte_ver
 BuildPreReq: libnotify-devel >= %notify_ver
 BuildPreReq: colord-devel >= %colord_ver
-BuildPreReq: libcolord-gtk-devel >= %colord_ver
+BuildPreReq: libcolord-gtk-devel >= %colord_gtk_ver
 BuildRequires: libgnome-desktop3-devel libexif-devel libexiv2-devel libcanberra-gtk3-devel
 BuildRequires: libtiff-devel liblcms2-devel >= %lcms_ver libXrandr-devel
-%{?_enable_clutter:BuildRequires: libclutter-devel >= %clutter_ver libclutter-gtk3-devel}
 %{?_enable_check:BuildRequires: /proc xvfb-run}
 
 %description
@@ -75,16 +73,13 @@ This project has the following features:
 %setup
 
 %build
-%configure \
-    --disable-static \
-    --enable-tests \
-    --disable-schemas-compile \
-    %{subst_enable clutter}
-
-%make_build
+%meson \
+    -Denable-tests=true \
+    %{?_disable_packagekit:-Denable-packagekit=false}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 # The license
 ln -sf %_licensedir/GPL-2 COPYING
@@ -92,7 +87,7 @@ ln -sf %_licensedir/GPL-2 COPYING
 %find_lang --with-gnome %name
 
 %check
-%{?_enable_check:xvfb-run %make check}
+%{?_enable_check:xvfb-run %meson_test}
 
 %files -f %name.lang
 %_bindir/gcm-calibrate
@@ -105,14 +100,17 @@ ln -sf %_licensedir/GPL-2 COPYING
 %_datadir/applications/*.desktop
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
-%_iconsdir/hicolor/*x*/mimetypes/*.png
-%_iconsdir/hicolor/scalable/mimetypes/*.svg
+#%_iconsdir/hicolor/*x*/mimetypes/*.png
+#%_iconsdir/hicolor/scalable/mimetypes/*.svg
 %_man1dir/*
-%_datadir/appdata/org.gnome.ColorProfileViewer.appdata.xml
+%_datadir/metainfo/org.gnome.ColorProfileViewer.appdata.xml
 %doc --no-dereference COPYING
-%doc README NEWS AUTHORS
+%doc README AUTHORS
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt3
 - dropped obsolete gnome-session dependency
 

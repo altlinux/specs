@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk+
-%define ver_major 3.90
+%define ver_major 3.91
 %define api_ver 4.0
 %define binary_ver 4.0.0
 %define _libexecdir %_prefix/libexec
@@ -21,8 +21,8 @@
 %def_enable installed_tests
 
 Name: libgtk+4
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -36,7 +36,7 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 Patch: gtk+-2.16.5-alt-stop-spam.patch
 
-%define glib_ver 2.50.2
+%define glib_ver 2.53.0
 %define gi_ver 1.41.0
 %define cairo_ver 1.14.0
 %define pango_ver 1.38.0
@@ -84,7 +84,7 @@ BuildRequires: libXrender-devel libXt-devel
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel wayland-protocols >= %wayland_protocols_ver}
 %{?_enable_cloudprint:BuildRequires: librest-devel libjson-glib-devel}
-%{?_enable_vulkan:BuildRequires: libvulkan-devel}
+%{?_enable_vulkan:BuildRequires: vulkan-devel}
 # for examples
 BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel
 # for check
@@ -352,6 +352,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Fri Aug 25 2017 Yuri N. Sedunov <aris@altlinux.org> 3.91.2-alt1
+- 3.91.2
+
 * Thu Jun 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.90.0-alt2
 - rebuilt for new vulkan release (ALT #33536)
 

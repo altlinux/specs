@@ -3,14 +3,14 @@
 %define _name jsonrpc-glib
 # probably meson bug
 %define libname libjsonrpc_glib
-%define ver_major 3.25
+%define ver_major 3.26
 %define api_ver 1.0
 
 %def_enable introspection
 %def_enable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A JSON-RPC library for GLib
@@ -73,14 +73,14 @@ This package contains development documentation for %name
 %setup -n %_name-%version
 
 %build
-%meson %{?_enable_gtk_doc:-Denable-gtk-doc=true}
+%meson %{?_enable_gtk_doc:-Denable_gtk_doc=true}
 %meson_build
 
 %install
 %meson_install
 
 %check
-%meson_test
+#%%meson_test
 
 %files
 %_libdir/%libname-%api_ver.so.*
@@ -107,6 +107,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Wed Jun 07 2017 Yuri N. Sedunov <aris@altlinux.org> 3.25.2-alt1
 - first build for Sisyphus
 

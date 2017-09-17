@@ -1,18 +1,17 @@
 %define _name eog
-%define ver_major 3.16
+%define ver_major 3.26
 %define api_ver 3.0
 %def_enable map
 %def_enable postasa
 
 Name: %_name-plugins
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: EOG plugins
 License: %gpl2plus
 Group: Graphics
 Url: https://wiki.gnome.org/Apps/EyeOfGnome
-
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 Requires: eog >= %ver_major libpeas-python3-loader
@@ -27,7 +26,7 @@ Requires: libpeas-python3-loader
 %define libchamplain_ver 0.12
 %define gdata_ver 0.6.0
 
-BuildPreReq: rpm-build-licenses rpm-build-gnome intltool
+BuildPreReq: rpm-build-licenses rpm-build-gnome
 BuildPreReq: eog-devel >= %ver_major
 BuildRequires: libpeas-devel libgnome-desktop3-devel
 %{?_enable_map:BuildRequires: libchamplain-gtk3-devel >= %libchamplain_ver}
@@ -103,6 +102,12 @@ export ac_cv_path_POSTR=%_bindir/postr
 %exclude %_libdir/%_name/plugins/*.la
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
+* Tue Sep 05 2017 Yuri N. Sedunov <aris@altlinux.org> 3.25.92-alt1
+- 3.25.92
+
 * Tue Apr 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.16.6-alt1
 - 3.16.6
 

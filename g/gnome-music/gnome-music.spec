@@ -1,9 +1,9 @@
-%define ver_major 3.24
+%define ver_major 3.26
 %define xdg_name org.gnome.Music
 
 Name: gnome-music
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Music playing application for GNOME3
 Group: Sound
@@ -18,13 +18,14 @@ AutoReqProv: nopython
 
 %add_typelib_req_skiplist typelib(Gd)
 
-Requires: tracker
+%define tracker_ver 1.99.2
+
+Requires: tracker >= %tracker_ver
 
 %define gtk_ver 3.20.0
 %define grilo_ver 0.3.1
 %define python_ver 3.3
 %define mediaart_ver 1.9
-%define tracker_ver 1.11.1
 %define pygobject_ver 3.21.1
 
 # gir-python.req doesn't recognize multiline expressions (see gnomemusic/albumartcache.py)
@@ -36,7 +37,7 @@ BuildRequires: autoconf-archive intltool yelp-tools libgtk+3-devel >= %gtk_ver
 BuildRequires: libgrilo-devel >= %grilo_ver libmediaart2.0-devel >= %mediaart_ver
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: rpm-build-python3 python3-devel >= %python_ver
-BuildRequires: tracker-devel >= %tracker_ver
+BuildRequires: pkgconfig(tracker-sparql-2.0)
 BuildRequires: python3-module-pygobject3-devel >= %pygobject_ver
 
 %description
@@ -58,19 +59,22 @@ Music playing application for GNOME3.
 %files -f %name.lang
 %_bindir/%name
 %_datadir/%name/
-%_desktopdir/%name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/org.gnome.Music.gschema.xml
 %_iconsdir/hicolor/*/apps/%name.png
 %_iconsdir/hicolor/symbolic/apps/%{name}*.svg
 %_libdir/%name/
 %python3_sitelibdir_noarch/gnomemusic/
-%_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/%xdg_name.appdata.xml
 #%_man1dir/%name.1.*
 %doc AUTHORS README
 
 %exclude %_libdir/%name/libgd.la
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Fri Jun 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt2
 - fixed reqs (ALT #32594)
 

@@ -1,5 +1,5 @@
 Name: libgit2
-Version: 0.25.1
+Version: 0.26.0
 Release: alt1
 
 Summary: linkable library for Git
@@ -38,7 +38,8 @@ sed -i 's/LIB_INSTALL_DIR lib/LIB_INSTALL_DIR lib${LIB_SUFFIX}/' CMakeLists.txt
 sed -i 's/@CMAKE_INSTALL_PREFIX@\///' %name.pc.in
 
 %build
-%cmake -DTHREADSAFE:BOOL=ON
+%cmake -DTHREADSAFE:BOOL=ON \
+       -DUSE_SHA1DC:BOOL=ON
 %cmake_build
 
 %install
@@ -58,6 +59,9 @@ sed -i 's/@CMAKE_INSTALL_PREFIX@\///' %name.pc.in
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Jul 11 2017 Yuri N. Sedunov <aris@altlinux.org> 0.26.0-alt1
+- 0.26.0
+
 * Thu Feb 16 2017 Yuri N. Sedunov <aris@altlinux.org> 0.25.1-alt1
 - 0.25.1
 

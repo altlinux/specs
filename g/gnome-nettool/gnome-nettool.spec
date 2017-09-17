@@ -2,7 +2,7 @@
 
 Name: gnome-nettool
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: GNOME interface for various networking tools
 License: %gpl2only
@@ -71,6 +71,9 @@ subst '/install-data-hook: update-icon-cache/d' pixmaps/icons/Makefile.in
 %doc README NEWS TODO ChangeLog
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt3
+- rebuilt against libgtop-2.0.so.11
+
 * Tue Jun 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt2
 - rebuilt against libgtop-2.0.so.10
 

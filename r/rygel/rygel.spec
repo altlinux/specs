@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 0.34
+%define ver_major 0.36
 %def_enable external_plugin
 %def_enable mpris_plugin
 %def_enable tracker_plugin
@@ -51,7 +51,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define gtk_ver 3.0
 %define libsqlite3_ver 3.5
 %define mediaart_ver 1.9
-%define tracker_ver 1.4.0
+%define tracker_ver 1.99.0
 
 Requires: gstreamer%gst_api_ver >= %gst_ver
 Requires: gst-plugins-base%gst_api_ver
@@ -233,6 +233,9 @@ gettextize -q -f
 %_girdir/*.gir
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 0.36.0-alt1
+- 0.36.0
+
 * Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.34.0-alt1
 - 0.34.0
 

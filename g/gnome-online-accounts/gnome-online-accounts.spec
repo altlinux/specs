@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.24
+%define ver_major 3.26
 %define _libexecdir %_prefix/libexec
 %def_enable kerberos
 %def_enable owncloud
@@ -15,12 +15,13 @@
 %def_enable media_server
 %def_enable foursquare
 %def_enable lastfm
+%def_enable todoist
 
 %def_enable gtk_doc
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Provide online accounts information
@@ -128,6 +129,7 @@ NOCONFIGURE=1 ./autogen.sh
 	%{?_enable_media_server:--enable-media-server} \
 	%{subst_enable foursquare} \
 	%{subst_enable lastfm} \
+	%{subst_enable todoist} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
 
 %make_build
@@ -178,6 +180,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/goa/
 
 %changelog
+* Wed Sep 13 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Tue Sep 05 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.3-alt1
 - 3.24.3
 

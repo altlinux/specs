@@ -1,26 +1,29 @@
+%define _libexecdir %_prefix/libexec
+
 %define _name json-glib
-%define ver_major 1.2
+%define ver_major 1.4
 %define api_ver 1.0
-%def_disable gtk_doc
-%def_disable static
+%def_disable docs
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.8
+Version: %ver_major.2
 Release: alt1
 
 Summary: GLib-based JSON manipulation library
 Group: System/Libraries
-License: LGPLv2+
+License: LGPLv2.1
 Url: https://wiki.gnome.org/Projects/JsonGlib
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 %define glib_ver 2.46.0
 %define gi_ver 0.10.5
+
+BuildRequires: meson glib2-devel >= %glib_ver
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
-BuildRequires: glib2-devel >= %glib_ver gtk-doc
+%{?_enable_docs:BuildRequires: gtk-doc xsltproc docbook-dtds docbook-style-xsl}
 
 %description
 JSON-GLib implements a full JSON parser using GLib and GObject. Use
@@ -55,37 +58,50 @@ Requires: %name-gir = %version-%release
 %description gir-devel
 GObject introspection devel data for the JSON-GLib library
 
+%package tests
+Summary: Tests for the %_name package
+Group: Development/Other
+Requires: %name = %version-%release
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed %_name library.
+
+
 %prep
 %setup -n %_name-%version
 
 %build
-%configure \
-    %{subst_enable static} \
-    %{?_enable_gtk_doc:--enable-gtk-doc}
+%meson %{?_disable introspection:-Ddisable-introspection=true} \
+	%{?_enable_docs:-Denable-docs=true}
 
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --output=%_name.lang %_name-%api_ver
 
 %check
-%make check
+#%%meson_test
 
 %files -f %_name.lang
 %_bindir/%_name-format
 %_bindir/%_name-validate
 %_libdir/*.so.*
-%_man1dir/%_name-format.1.*
-%_man1dir/%_name-validate.1.*
-%doc NEWS ChangeLog
+%if_enabled man
+%{?_enable_docs:%_man1dir/%_name-format.1.*}
+%{?_enable_docs:%_man1dir/%_name-validate.1.*}
+%endif
+%doc NEWS README.md
 
 %files devel
 %_libdir/*.so
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*
 %_includedir/*
+%if_enabled docs
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_enabled introspection
 %files gir
@@ -95,7 +111,14 @@ GObject introspection devel data for the JSON-GLib library
 %_girdir/Json-%api_ver.gir
 %endif
 
+%files tests
+%_libexecdir/installed-tests/%_name-%api_ver/
+%_datadir/installed-tests/%_name-%api_ver/
+
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
+- 1.4.2
+
 * Sat Mar 18 2017 Yuri N. Sedunov <aris@altlinux.org> 1.2.8-alt1
 - 1.2.8
 

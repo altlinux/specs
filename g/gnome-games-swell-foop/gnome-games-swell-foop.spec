@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name swell-foop
-%define ver_major 3.24
+%define ver_major 3.26
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -51,6 +51,9 @@ area in as few moves as possible.
 %_datadir/appdata/%_name.appdata.xml
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 

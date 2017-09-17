@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.24
+%define ver_major 3.26
 %define api_ver 3.0
 %define xdg_name org.gnome.SettingsDaemon
 
@@ -14,8 +14,8 @@
 %def_disable tests
 
 Name: gnome-settings-daemon
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A program that manages general GNOME settings
 License: GPLv2+
@@ -29,7 +29,7 @@ Source: %name-%version.tar
 %endif
 
 # From configure.ac
-%define glib_ver 2.44
+%define glib_ver 2.53.0
 %define gtk_ver 3.16
 %define gnome_desktop_ver 3.11.1
 %define notify_ver 0.7.3
@@ -70,7 +70,7 @@ BuildRequires: xkeyboard-config-devel
 %{?_enable_wayland:BuildRequires: libwayland-client-devel}
 BuildRequires: libxkbfile-devel
 BuildRequires: rpm-build-gnome intltool docbook-style-xsl xsltproc
-BuildRequires: gcc-c++ libcups-devel libgudev-devel libXi-devel libXext-devel libXfixes-devel
+BuildRequires: gcc-c++ libcups-devel libgudev-devel libX11-devel libXi-devel libXext-devel libXfixes-devel
 BuildRequires: libXrandr-devel xorg-inputproto-devel libICE-devel libSM-devel
 BuildRequires: libupower-devel >= %upower_ver
 BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel >= %lcms_ver librsvg-devel
@@ -138,7 +138,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libexecdir/gsd-locate-pointer
 %_libexecdir/gsd-media-keys
 %_libexecdir/gsd-mouse
-%_libexecdir/gsd-orientation
 %_libexecdir/gsd-power
 %_libexecdir/gsd-print-notifications
 %_libexecdir/gsd-printer
@@ -151,11 +150,8 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libexecdir/gsd-wacom
 %_libexecdir/gsd-wacom-led-helper
 %_libexecdir/gsd-wacom-oled-helper
-%_libexecdir/gsd-xrandr
 %_libexecdir/gsd-xsettings
 %_datadir/%name/
-%_iconsdir/hicolor/*/*/*.png
-%_iconsdir/hicolor/*/*/*.svg
 %_sysconfdir/xdg/autostart/*.desktop
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/GConf/gsettings/%name.convert
@@ -193,6 +189,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Sun Sep 10 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.3-alt2
 - updated to 3_24_3-8-g6e719ad (fixed BGO ##786164, 766067)
 

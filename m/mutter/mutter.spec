@@ -3,14 +3,14 @@
 
 %def_disable snapshot
 
-%define ver_major 3.24
+%define ver_major 3.26
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
 %def_enable privatelib
-%define api_ver 0
+%define api_ver 1
 
 Name: mutter
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -39,7 +39,7 @@ Requires: zenity
 
 %define gtk_ver 3.20.0
 %define gi_ver 0.9.5
-%define glib_ver 2.26
+%define glib_ver 2.53.2
 %define pango_ver 1.2.0
 %define cairo_ver 1.10.0
 %define Xi_ver 1.6.0
@@ -48,6 +48,7 @@ Requires: zenity
 %define upower_ver 0.99.0
 %define libinput_ver 0.99.0
 %define gsds_ver 3.21.4
+%define gudev_ver 232
 
 BuildPreReq: rpm-build-gnome gnome-common
 BuildRequires: gobject-introspection-devel >= %gi_ver
@@ -68,7 +69,7 @@ BuildRequires: libgnome-desktop3-devel libupower-devel >= %upower_ver
 BuildRequires: libxkbcommon-x11-devel libinput-devel >= %libinput_ver libxkbfile-devel xkeyboard-config-devel
 BuildRequires: libwacom-devel
 # for mutter native backend
-BuildRequires: libdrm-devel libsystemd-devel libgudev-devel
+BuildRequires: libdrm-devel libsystemd-devel libgudev-devel >= %gudev_ver
 
 %description
 mutter is a minimal X window manager aimed at nontechnical users and is
@@ -178,6 +179,9 @@ DATADIRNAME=share %configure \
 %_datadir/gnome-control-center/keybindings/*.xml
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 1:3.26.0-alt1
+- 3.26.0
+
 * Thu Jul 20 2017 Yuri N. Sedunov <aris@altlinux.org> 1:3.24.4-alt1
 - 3.24.4
 

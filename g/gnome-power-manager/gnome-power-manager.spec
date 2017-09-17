@@ -1,9 +1,9 @@
-%define ver_major 3.24
+%define ver_major 3.25
 %define xdg_name org.gnome.PowerStats
 
 Name: gnome-power-manager
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.90
+Release: alt1
 
 Summary: GNOME Power management tools
 License: %gpl2plus
@@ -18,7 +18,7 @@ Requires: upower >= 0.9.7
 BuildPreReq: rpm-build-gnome >= 0.5
 BuildPreReq: rpm-build-licenses
 
-# From configure.ac
+BuildPreReq: meson
 BuildPreReq: glib2-devel >= 2.46.0
 BuildPreReq: libgtk+3-devel >= 3.3.8
 BuildPreReq: libupower-devel >= 0.99.0
@@ -39,18 +39,17 @@ GNOME Power Manager comes in three parts:
 %setup
 
 %build
-%autoreconf
-%configure \
-    --enable-tests \
-    --disable-schemas-compile
+%meson \
+    -Denable-tests=true \
+    -Denable-schemas-compile=false
 
-%make_build
+%meson_build
 
 %check
-%make check
+%meson_test
 
 %install
-%makeinstall_std
+%meson_install
 
 # The license
 ln -sf %_licensedir/GPL-2 COPYING
@@ -67,10 +66,13 @@ ln -sf %_licensedir/GPL-2 COPYING
 %_datadir/appdata/%xdg_name.appdata.xml
 
 %doc --no-dereference COPYING
-%doc README NEWS AUTHORS
+%doc README AUTHORS
 
 
 %changelog
+* Sun Sep 17 2017 Yuri N. Sedunov <aris@altlinux.org> 3.25.90-alt1
+- 3.25.90
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt2
 - dropped obsolete gnome-session dependence
 
@@ -274,9 +276,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 - updated the license tag
 - use more macros
 - updated buildreqs
-- added --enable-keyring configure switch to lock GNOME keyring on suspend
+- added -Denable-keyring=true configure switch to lock GNOME keyring on suspend
   and hibernate
-- also added --enable-xevents and --enable-applets switches
+- also added -Denable-xevents=true and -Denable-applets=true switches
 
 * Wed Jan 31 2007 Alexey Rusakov <ktirf@altlinux.org> 2.16.3-alt1
 - new version (2.16.3)

@@ -7,13 +7,13 @@
 %def_enable introspection
 %def_enable vala
 %def_disable libsocialweb
-%def_enable tracker
+%def_disable tracker
 %def_enable bluez
 %def_enable zeitgeist
 
 Name: lib%_name
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: GObject contact aggregation library
 Group: System/Libraries
@@ -40,7 +40,7 @@ BuildRequires: evolution-data-server-devel >= %eds_ver
 BuildRequires: vala-tools valadoc
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel >= %zeitgeist_ver}
 %{?_enable_tracker:BuildRequires: tracker-devel >= %tracker_ver}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgee0.8-gir-devel libtelepathy-glib-gir-devel evolution-data-server-gir-devel libgee0.8-gir-devel libtracker-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgee0.8-gir-devel libtelepathy-glib-gir-devel evolution-data-server-gir-devel libgee0.8-gir-devel %{?_enable_tracker:libtracker-gir-devel}}
 %{?_enable_vala:BuildRequires:  libvala-devel >= %vala_ver vala >= %vala_ver vala-tools >= %vala_ver libtelepathy-glib-vala evolution-data-server-vala}
 %{?_enable_libsocialweb:BuildRequires: libsocialweb-devel libsocialweb-gir-devel %{?_enable_vala:libsocialweb-vala}}
 
@@ -180,6 +180,9 @@ the functionality of the Folks library.
 
 
 %changelog
+* Wed Aug 16 2017 Yuri N. Sedunov <aris@altlinux.org> 0.11.4-alt2
+- rebuilt for GNOME-2.6 without tracker support
+
 * Mon Jul 03 2017 Yuri N. Sedunov <aris@altlinux.org> 0.11.4-alt1
 - 0.11.4
 

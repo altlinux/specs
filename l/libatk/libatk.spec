@@ -1,5 +1,5 @@
 %define _name atk
-%define ver_major 2.24
+%define ver_major 2.26
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
@@ -16,7 +16,7 @@ Url: http://developer.gnome.org/atk
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 Source1: atk-compat.map
 Source2: atk-compat.lds
-Patch: atk-1.33.6-alt-compat-version-script.patch
+Patch: atk-2.25.90-alt-compat-version-script.patch
 
 Requires: %name-locales = %version
 
@@ -151,6 +151,9 @@ install -p -m644 %_sourcedir/atk-compat.lds atk/compat.lds
 %endif
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 2.26.0-alt1
+- 2.26.0
+
 * Sat Mar 18 2017 Yuri N. Sedunov <aris@altlinux.org> 2.24.0-alt1
 - 2.24.0
 

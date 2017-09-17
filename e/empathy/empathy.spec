@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.21
+%define ver_major 3.25
 %def_disable static
 %def_enable map
 %def_enable goa
@@ -16,8 +16,8 @@
 %define gst_api_ver 1.0
 
 Name: empathy
-Version: %ver_major.1
-Release: alt0.2
+Version: %ver_major.90
+Release: alt1
 
 Summary: Instant Messaging Client for GNOME
 License: GPL/LGPL
@@ -34,7 +34,7 @@ Conflicts: telepathy-haze-aim
 Obsoletes: libempathy libempathy-gtk python-module-empathy
 
 %define intltool_ver 0.35.0
-%define glib_ver 2.37.6
+%define glib_ver 2.46
 %define gtk_ver 3.9.4
 %define clutter_ver 1.1.2
 %define clutter_gst_ver 3.0.18
@@ -49,7 +49,7 @@ Obsoletes: libempathy libempathy-gtk python-module-empathy
 %define iso_codes_ver 0.35
 %define notify_ver 0.7.3
 %define canberra_ver 0.26
-%define webkit_ver 2.4
+%define webkit_ver 2.10.1
 %define geoclue2_ver 1.99.3
 %define gcr_ver 3.3.90
 %define champlain_ver 0.12.0
@@ -61,6 +61,7 @@ Obsoletes: libempathy libempathy-gtk python-module-empathy
 %define secret_ver 0.5
 %define farstream_ver 0.2
 %define geocode_ver 0.99.3
+%define soup_ver 2.42
 
 Requires: %name-data = %version-%release
 
@@ -84,7 +85,7 @@ BuildPreReq: libcheck-devel >= %check_ver
 BuildPreReq: iso-codes-devel >= %iso_codes_ver
 BuildPreReq: libnotify-devel >= %notify_ver
 BuildPreReq: libcanberra-gtk3-devel >= %canberra_ver
-BuildPreReq: libwebkitgtk3-devel >= %webkit_ver
+BuildPreReq: libwebkit2gtk-devel >= %webkit_ver
 BuildPreReq: libsecret-devel >= %secret_ver
 BuildPreReq: gcr-libs-devel >= %gcr_ver
 BuildPreReq: libtelepathy-logger-devel >= %tp_logger_ver
@@ -104,6 +105,7 @@ BuildRequires: yelp-tools itstool
 BuildRequires: libpulseaudio-devel gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
 BuildRequires: db2latex-xsl evolution-data-server-devel gtk-doc
 BuildRequires: xorg-cf-files libICE-devel libSM-devel
+BuildRequires: libsoup-devel >= %soup_ver
 # for check
 BuildRequires: xvfb-run
 
@@ -151,7 +153,6 @@ NOCONFIGURE=1 ./autogen.sh
 %_bindir/*
 %_libexecdir/empathy-auth-client
 %_libexecdir/empathy-call
-%_libexecdir/empathy-chat
 %dir %_libdir/%name
 %_libdir/%name/lib%name-%{version}*.so
 %_libdir/%name/lib%name.so
@@ -186,11 +187,14 @@ NOCONFIGURE=1 ./autogen.sh
 %_man1dir/*
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/GConf/gsettings/%name.convert
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %doc AUTHORS CONTRIBUTORS NEWS README TODO
 
 
 %changelog
+* Thu Aug 17 2017 Yuri N. Sedunov <aris@altlinux.org> 3.25.90-alt1
+- 3.25.90
+
 * Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.21.1-alt0.2
 - rebuilt for gnome-3.24
 

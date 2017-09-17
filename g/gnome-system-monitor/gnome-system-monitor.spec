@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.24
+%define ver_major 3.26
 %def_enable systemd
 %def_enable wnck
 
@@ -22,7 +22,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define glibmm_ver 2.28.0
 %define libgtkmm3_ver 3.0.0
 %define libwnck_ver 3.0.0
-%define libgtop_ver 2.28.2
+%define libgtop_ver 2.38.0
 %define libxml_ver 2.0
 %define rsvg_ver 2.35
 %define gnome_icon_theme_ver 3.0.0
@@ -68,6 +68,7 @@ Gnome-system-monitor is a simple process and system monitor.
 %_libexecdir/%name/gsm-kill
 %_libexecdir/%name/gsm-renice
 %_desktopdir/*
+%_datadir/%name/
 %_datadir/polkit-1/actions/org.gnome.%name.policy
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.enums.xml
@@ -75,6 +76,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 

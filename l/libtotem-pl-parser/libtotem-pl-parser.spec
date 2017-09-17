@@ -1,5 +1,5 @@
 %define _name totem-pl-parser
-%define ver_major 3.10
+%define ver_major 3.26
 %define _libexecdir %_prefix/libexec
 %def_enable gtk_doc
 %def_enable introspection
@@ -7,7 +7,7 @@
 %def_enable quvi
 
 Name: lib%_name
-Version: %ver_major.8
+Version: %ver_major.0
 Release: alt1
 
 Summary: Shared libraries of the Totem media player play list parser
@@ -23,7 +23,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %define quvi_ver 0.9.1
 %define archive_ver 3.0
 
-BuildPreReq: gnome-common gtk-doc intltool libgio-devel >= %glib_ver
+BuildPreReq: meson gtk-doc intltool libgio-devel >= %glib_ver
 BuildPreReq: libarchive-devel >= %archive_ver libsoup-gnome-devel >= %soup_ver
 BuildRequires: libgmime3.0-devel libxml2-devel
 %{?_enable_libgcrypt:BuildRequires: libgcrypt-devel}
@@ -77,17 +77,16 @@ GObject introspection devel data for the Totem playlist parser library
 [ ! -d m4 ] && mkdir m4
 
 %build
-%autoreconf
-%configure \
-	--disable-static \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{subst_enable introspection} \
-	%{subst_enable libgcrypt} \
-	%{subst_enable quvi}
-%make_build
+%meson \
+	-Denable-static=false \
+	%{?_enable_gtk_doc:-Denable-gtk-doc=true} \
+	%{?_enable_introspection:-Denable-introspection=true} \
+	-Denable-libgcrypt=auto \
+	-Denable-quvi=auto
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome --output=%name.lang %_name %_name-2.0
 
@@ -116,6 +115,9 @@ GObject introspection devel data for the Totem playlist parser library
 %endif
 
 %changelog
+* Thu Sep 14 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Wed Jun 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.10.8-alt1
 - 3.10.8
 

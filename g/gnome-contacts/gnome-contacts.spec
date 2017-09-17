@@ -1,11 +1,11 @@
-%define ver_major 3.22
+%define ver_major 3.26
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
 %define _name org.gnome.Contacts
 %def_with cheese
 
 Name: gnome-contacts
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Summary: Contacts manager for GNOME
@@ -25,12 +25,13 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define cheese_ver 3.5.90
 %define geocode_ver 3.15.3
 
+BuildRequires: yelp-tools docbook-dtds docbook-style-xsl
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libtelepathy-glib-devel >= %tp_glib_ver
 BuildRequires: libfolks-devel >= %folks_ver libvala-devel >= %vala_ver libgnome-desktop3-devel
 BuildRequires: libgnome-online-accounts-devel libgee0.8-devel evolution-data-server-devel >= %eds_ver
 BuildRequires: libgeocode-glib-devel >= %geocode_ver libchamplain-gtk3-devel libclutter-gtk3-devel
 %{?_with_cheese:BuildRequires: gstreamer%gst_api_ver-devel libcheese-devel >= %cheese_ver}
-BuildRequires: gobject-introspection-devel vala-tools libgtk+3-gir-devel intltool
+BuildRequires: gobject-introspection-devel vala-tools libgtk+3-gir-devel
 # for build from git
 BuildRequires: libfolks-vala
 
@@ -55,14 +56,18 @@ BuildRequires: libfolks-vala
 %_libexecdir/gnome-contacts-search-provider
 %_datadir/applications/%_name.desktop
 %_datadir/glib-2.0/schemas/%_name.gschema.xml
-%_datadir/glib-2.0/schemas/%_name.enums.xml
 %_datadir/dbus-1/services/%_name.service
 %_datadir/dbus-1/services/%_name.SearchProvider.service
 %_datadir/gnome-shell/search-providers/%_name.search-provider.ini
+%_iconsdir/hicolor/*/*/*
+%_man1dir/%name.1.*
 %_datadir/appdata/%_name.appdata.xml
-%doc AUTHORS README NEWS
+%doc AUTHORS NEWS
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26-alt1
+- 3.26
+
 * Wed Sep 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 

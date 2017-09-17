@@ -1,17 +1,19 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Builder
-%define ver_major 3.24
+%define ver_major 3.26
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
 
-%def_enable sysprof_plugin
-%def_disable idemm
-%def_disable gtk_doc
+%def_with sysprof
+%def_with flatpak
+%def_with docs
+%def_without autotools
+%def_without autotools_templates
 
 Name: gnome-builder
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Builder - Develop software for GNOME
 License: LGPLv2+
@@ -26,48 +28,57 @@ Source: %name-%version.tar
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
-%define gtk_ver 3.20.0
+%define glib_ver 2.53.2
+%define gtk_ver 3.22.1
 %define gtksourceview_ver 3.20.0
 %define git2_ver 0.25.0
 %define devhelp_ver 3.20.0
 %define gjs_ver 1.42
 %define xml_ver 2.9.0
-%define vala_ver 0.30
+%define vala_ver 0.37
 %define sysprof_ver 3.22.3
 %define vte_ver 0.46
 %define gtkmm_ver 3.20
 %define gspell_ver 1.2.0
+%define peas_ver 1.21.0
+%define json_glib_ver 1.2.0
 
 # use python3
 AutoReqProv: nopython
 %define __python %nil
 %add_python3_path %_libdir/%name/plugins
 
-%add_findreq_skiplist %_datadir/%name/plugins/autotools_templates/resources/*/*.py
+%add_findreq_skiplist %_datadir/%name/plugins/*_templates/resources/*/*.py
 
 PreReq: %name-data = %version-%release
-Requires: automake autoconf libtool
+Requires: meson
+%{?_with_autotools:Requires: automake autoconf libtool}
 Requires: devhelp uncrustify ctags
 Requires: libpeas-python3-loader
 Requires: git
 Requires: indent xmllint
 
-BuildRequires: /proc gcc-c++ flex mm-common yelp-tools gtk-doc
+BuildRequires: /proc meson gcc-c++ flex mm-common yelp-tools gtk-doc
+BuildRequires: ctags
 BuildRequires: libappstream-glib-devel desktop-file-utils
 BuildRequires: clang4.0-devel libgtk+3-devel >= %gtk_ver
 BuildRequires: libgtksourceview3-devel >= %gtksourceview_ver
 BuildRequires: libgit2-glib-devel >= %git2_ver libdevhelp-devel >= %devhelp_ver
 BuildRequires: libpcre-devel libgjs-devel >= %gjs_ver libwebkit2gtk-devel
-BuildRequires: libxml2-devel >= %xml_ver libpeas-devel libvte3-devel >= %vte_ver
-BuildRequires: libjson-glib-devel
+BuildRequires: libxml2-devel >= %xml_ver libpeas-devel >= %peas_ver libvte3-devel >= %vte_ver
+BuildRequires: libjson-glib-devel >= %json_glib_ver
 BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libgtksourceview3-gir-devel libgit2-glib-gir-devel libpeas-gir-devel
 BuildRequires: libjson-glib-gir-devel
 BuildRequires: libvala-devel >= %vala_ver vala-tools
 BuildRequires: libgspell-devel >= %gspell_ver libenchant-devel
-%{?_enable_sysprof_plugin:BuildRequires: sysprof-devel >= %sysprof_ver}
-%{?_enable_idemm:BuildRequires: libgtkmm3-devel >= %gtkmm_ver}
+BuildRequires: libdazzle-devel libtemplate-glib-devel libjsonrpc-glib-devel
+BuildRequires: libdazzle-gir-devel libtemplate-glib-gir-devel  libjsonrpc-glib-gir-devel
+BuildRequires: python-module-sphinx python-module-sphinx_rtd_theme
+%{?_with_flatpak:BuildRequires: libflatpak-devel libostree-devel}
+%{?_with_sysprof:BuildRequires: sysprof-devel >= %sysprof_ver}
+%{?_with_idemm:BuildRequires: libgtkmm3-devel >= %gtkmm_ver}
 
 %description
 Builder attempts to be an IDE for writing software for GNOME. It does not
@@ -87,15 +98,16 @@ This package provides noarch data needed for Gnome Builder to work.
 %setup
 
 %build
-#NOCONFIGURE=1 ./autogen.sh
-%configure --disable-static \
-	%{?_disable_sysprof_plugin:--disable-sysprof-plugin} \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{subst_enable idemm}
-%make_build
+%meson -Denable-static=false \
+	%{?_with_sysprof:-Dwith-sysprof=true} \
+	%{?_with_docs:-Dwith-docs=true} \
+	%{?_without_flatpak:-Dwith-flatpak=false} \
+	%{?_with_autotools:-Dwith-autotools=true} \
+	%{?_with_autotools_templates:-Dwith-autotools_templates=true}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %name
 
@@ -103,99 +115,82 @@ This package provides noarch data needed for Gnome Builder to work.
 %_bindir/%name
 %_bindir/%name-cli
 %_libexecdir/%name-worker
-%dir %_libexecdir/%name
-%_libexecdir/%name/ide-list-counters
 %dir %_libdir/%name
 %_libdir/%name/libide-%api_ver.so
 %{?_enable_idemm:%_libdir/%name/libidemm-%api_ver.so.*}
-%_libdir/%name/libtemplate-glib-%api_ver.so.*
-%_libdir/%name/libegg-private.so.*
-%_libdir/%name/librg.so.*
-%_libdir/%name/libpanel-gtk.so.*
-%_libdir/%name/libsearch.so.*
 %_libdir/%name/libgstyle-private.so.*
-%_libdir/%name/libxml-private.so.*
-%_libdir/%name/libgd-private.so.*
-%_libdir/%name/libjsonrpc-glib.so.*
+%_libdir/%name/libgd.so
 
-%exclude %_libdir/%name/*.la
-%exclude %_libdir/%name/libegg-private.so
-%exclude %_libdir/%name/libpanel-gtk.so
-%exclude %_libdir/%name/librg.so
-%exclude %_libdir/%name/libsearch.so
 %exclude %_libdir/%name/libgstyle-private.so
-%exclude %_libdir/%name/libxml-private.so
-%exclude %_libdir/%name/libgd-private.so
-%exclude %_libdir/%name/libjsonrpc-glib.so
 
 %{?_enable_idemm:%exclude %_libdir/%name/libidemm-%api_ver.so}
 
 %dir %_libdir/%name/girepository-1.0
-%_libdir/%name/girepository-1.0/Egg-%api_ver.typelib
 %_libdir/%name/girepository-1.0/Gstyle-%api_ver.typelib
 %_libdir/%name/girepository-1.0/Ide-%api_ver.typelib
-%_libdir/%name/girepository-1.0/Jsonrpc-1.0.typelib
-%_libdir/%name/girepository-1.0/Pnl-%api_ver.typelib
-%_libdir/%name/girepository-1.0/Template-%api_ver.typelib
 
 %dir %_libdir/%name/plugins
-%_libdir/%name/plugins/*.plugin
-%_libdir/%name/plugins/__pycache__/
-%_libdir/%name/plugins/autotools_templates/
+%_libdir/%name/plugins/cargo_plugin.py*
 %_libdir/%name/plugins/cmake_plugin/
+%_libdir/%name/plugins/eslint_plugin/
+%_libdir/%name/plugins/find_other_file.py
 %_libdir/%name/plugins/fpaste_plugin/
 %_libdir/%name/plugins/html_preview_plugin/
 %_libdir/%name/plugins/jedi_plugin.py
 %_libdir/%name/plugins/jhbuild_plugin.py
 %_libdir/%name/plugins/libautotools-plugin.so
-%_libdir/%name/plugins/libc-pack-plugin.so
+%_libdir/%name/plugins/libbeautifier_plugin.so
 %_libdir/%name/plugins/libclang-plugin.so
+%_libdir/%name/plugins/libcode-index-plugin.so
 %_libdir/%name/plugins/libcolor-picker-plugin.so
 %_libdir/%name/plugins/libcommand-bar.so
 %_libdir/%name/plugins/libcomment-code-plugin.so
+%_libdir/%name/plugins/libc-pack-plugin.so
 %_libdir/%name/plugins/libcreate-project-plugin.so
 %_libdir/%name/plugins/libctags-plugin.so
 %_libdir/%name/plugins/libdevhelp-plugin.so
-%_libdir/%name/plugins/libbeautifier_plugin.so
+%_libdir/%name/plugins/libdocumentation-card-plugin.so
 %_libdir/%name/plugins/libfile-search.so
+%_libdir/%name/plugins/libflatpak-plugin.so
 %_libdir/%name/plugins/libgcc-plugin.so
+%_libdir/%name/plugins/libgdb-plugin.so
 %_libdir/%name/plugins/libgettext-plugin.so
 %_libdir/%name/plugins/libgit-plugin.so
 %_libdir/%name/plugins/libgnome-code-assistance-plugin.so
+%_libdir/%name/plugins/libhistory-plugin.so
 %_libdir/%name/plugins/libhtml-completion-plugin.so
 %_libdir/%name/plugins/libmingw-plugin.so
+%_libdir/%name/plugins/libnotification-plugin.so
 %_libdir/%name/plugins/libproject-tree-plugin.so
 %_libdir/%name/plugins/libpython-pack-plugin.so
 %_libdir/%name/plugins/libquick-highlight-plugin.so
+%_libdir/%name/plugins/libretab-plugin.so
+%_libdir/%name/plugins/libspellcheck-plugin.so
 %_libdir/%name/plugins/libsupport-plugin.so
-%_libdir/%name/plugins/libsymbol-tree.so
+%_libdir/%name/plugins/libsymbol-tree-plugin.so
 %_libdir/%name/plugins/libsysmon.so
-%{?_enable_sysprof_plugin:%_libdir/%name/plugins/libsysprof-plugin.so}
 %_libdir/%name/plugins/libterminal.so*
+%_libdir/%name/plugins/libtodo-plugin.so
 %_libdir/%name/plugins/libvala-pack-plugin.so
 %_libdir/%name/plugins/libxml-pack-plugin.so
-%_libdir/%name/plugins/python_gi_imports_completion.py
-%_libdir/%name/plugins/meson_plugin/
-%_libdir/%name/plugins/mono_plugin*
 %_libdir/%name/plugins/make_plugin/
-%_libdir/%name/plugins/eslint_plugin/
+%_libdir/%name/plugins/meson_plugin/
+%_libdir/%name/plugins/meson_templates/
+%_libdir/%name/plugins/mono_plugin*
+%_libdir/%name/plugins/npm_plugin.py
 %_libdir/%name/plugins/phpize_plugin.py
-%_libdir/%name/plugins/todo_plugin/
-%_libdir/%name/plugins/rustup_plugin/
-%_libdir/%name/plugins/valgrind_plugin/
-%_libdir/%name/plugins/cargo_plugin.py*
+%_libdir/%name/plugins/*.plugin
+%_libdir/%name/plugins/__pycache__/
+%_libdir/%name/plugins/python_gi_imports_completion.py
 %_libdir/%name/plugins/rust_langserv_plugin.py*
+%_libdir/%name/plugins/rustup_plugin/
+%_libdir/%name/plugins/valgrind*
+%{?_with_autotools_templates:%_libdir/%name/plugins/autotools_templates/}
+%{?_with_sysprof:%_libdir/%name/plugins/libsysprof-plugin.so}
 
-%exclude %_libdir/%name/plugins/*.la
-
-%_includedir/%name-%version/
-%{?_enable_idemm:%_includedir/idemm/}
-%_libdir/%name/libtemplate-glib-%api_ver.so
-%{?_enable_idemm:%_libdir/%name/idemm-%api_ver/}
+%_includedir/%name/
 %dir %_libdir/%name/pkgconfig
 %_libdir/%name/pkgconfig/libide-%api_ver.pc
-#%{?_enable_idemm:%_libdir/%name/pkgconfig/libidemm-%api_ver.pc}
-%_libdir/%name/pkgconfig/template-glib-%api_ver.pc
 %python3_sitelibdir/gi/overrides/Ide.py
 %python3_sitelibdir/gi/overrides/__pycache__/
 %doc README AUTHORS NEWS
@@ -223,11 +218,14 @@ This package provides noarch data needed for Gnome Builder to work.
 %_datadir/appdata/%xdg_name.appdata.xml
 
 #%files -n libide-devel-doc
-%{?_enable_gtk_doc:%_datadir/gtk-doc/html/libide/}
-%doc %_defaultdocdir/%name/html/
+#%{?_with_docs:%_datadir/gtk-doc/html/libide/}
+%doc %_defaultdocdir/%name/
 
 
 %changelog
+* Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Thu Sep 07 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt2
 - rebuilt against libclang.so.4
 

@@ -1,5 +1,5 @@
 %define xdg_name org.gnome.Weather
-%define ver_major 3.24
+%define ver_major 3.26
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-weather
@@ -22,7 +22,7 @@ Provides:  %name-data = %version-%release
 %define gtk_ver 3.12
 %define gi_ver 1.36.0
 %define gjs_ver 1.40.0
-%define gweather_ver 3.20.2
+%define gweather_ver 3.26.0
 
 Requires: libgweather-gir >= %gweather_ver
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
@@ -78,6 +78,9 @@ subst 's@\$(LN_S)@ln -s@' src/Makefile.am
 %doc NEWS
 
 %changelog
+* Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Mon Mar 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 
