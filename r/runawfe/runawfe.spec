@@ -1,6 +1,6 @@
 Name: runawfe
 Version: 4.3.0
-Release: alt1
+Release: alt2
 
 Summary: Runawfe
 
@@ -321,8 +321,8 @@ useradd -d %runadir -r -s %_sbindir/%name %runauser >/dev/null 2>&1 || :
 
 %files server
 /etc/jboss-as/jboss-as-runawfe-server.conf
-%_pixmapsdir/*
-%_desktopdir/*
+%_pixmapsdir/*server*.*
+%_desktopdir/*server*.*
 %attr(755,%jbossuser,root) %jbossdir/configuration/*
 %attr(755,%jbossuser,root) %jbossdir/deployments/*
 %attr(755,root,root) %_sbindir/%name
@@ -332,22 +332,23 @@ useradd -d %runadir -r -s %_sbindir/%name %runauser >/dev/null 2>&1 || :
 %files gpd
 %attr(755,root,root) %dir %runagpddir/
 %runagpddir/*
-%_pixmapsdir/*
-%_desktopdir/*
+%_pixmapsdir/*gpd.*
+%_desktopdir/*gpd.*
 %attr(755,root,root) %_bindir/runawfe-gpd
 #%attr(755,root,root) %runagpddir/workspace/
 
 %files notifier
 %attr(755,%runauser,root) %dir %runartndir/
-%_pixmapsdir/*
-%_desktopdir/*
+%_pixmapsdir/*notifier.*
+%_desktopdir/*notifier.*
 /var/log/runawfe-notifier/*
 %runartndir/*
 %attr(766,root,root) /var/log/runawfe-notifier/rtn.log
 %attr(755,root,root) %_bindir/runawfe-notifier
 
 %changelog
-* Sat Sep 16 2017 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt1
+* Sun Sep 17 2017 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt2
 - Updated to 4.3.0 code 
 
-
+* Sat Sep 16 2017 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt1
+- Updated to 4.3.0 code 
