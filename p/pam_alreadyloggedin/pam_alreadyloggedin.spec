@@ -1,6 +1,6 @@
 Name: pam_alreadyloggedin
 Version: 0.3.2
-Release: alt1.qa2
+Release: alt2
 
 %def_without libpam
 %def_with    libpam0
@@ -63,7 +63,7 @@ install -pD -m644 login.sso %buildroot%examples_dir/login
 %pamlibdir/%name.so
 %examples_dir/login
 %exclude %pamconfdir/login.sso
-%_man8dir/%name.8.gz
+%_man8dir/%name.8*
 # The package does not own its own docdir subdirectory.
 # The line below is added by repocop to fix this bug in a straightforward way. 
 # Another way is to rewrite the spec to use relative doc paths.
@@ -71,6 +71,9 @@ install -pD -m644 login.sso %buildroot%examples_dir/login
 %dir %examples_dir
 
 %changelog
+* Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt2
+- Fixed spec to allow any man page compression
+
 * Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0.3.2-alt1.qa2
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
