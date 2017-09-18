@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.37.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch1: alt-return-statement.patch
 
 # Automatically added by buildreq on Thu Mar 05 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-concurrent libqt5-core libqt5-gui libqt5-test libqt5-widgets libstdc++-devel libwayland-client libwayland-server pkg-config python-base ruby ruby-stdlibs wayland-devel
@@ -60,6 +61,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -88,6 +90,9 @@ KF5 library
 %_K5lib/libKF5WaylandServer.so.*
 
 %changelog
+* Mon Sep 18 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt2%ubt
+- fix missing return statement (ALT#33822)
+
 * Wed Aug 16 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt1%ubt
 - new version
 
