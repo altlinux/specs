@@ -4,8 +4,8 @@
 %def_enable xa
 
 Name: Mesa
-Version: 17.2.0
-Release: alt2
+Version: 17.2.1
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -418,6 +418,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Mon Sep 18 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:17.2.1-alt1
+- 17.2.1
+
 * Wed Sep 13 2017 Valery Inozemtsev <shrek@altlinux.ru> 4:17.2.0-alt2
 - build with static llvm libs
 
