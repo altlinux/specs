@@ -5,12 +5,11 @@
 %define sover %somver.2.0
 Name: parms
 Version: 3.2
-Release: alt8
+Release: alt9
 Summary: parallel Algebraic Recursive Multilevel Solvers 
 License: MIT
 Group: Sciences/Mathematics
 Url: http://www-users.cs.umn.edu/~saad/software/pARMS/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: pARMS_%version.tar.gz
 
@@ -170,6 +169,9 @@ popd
 %_docdir/lib%name-devel
 
 %changelog
+* Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2-alt9
+- Fixed build.
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt8
 - Built with OpenBLAS instead of GotoBLAS2
 
