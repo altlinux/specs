@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: libksba
-Version: 1.3.3
-Release: alt2
+Version: 1.3.5
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: X.509 library
@@ -17,6 +17,7 @@ Patch10: libksba-1.0.2-alt-dont-req-new-tools.patch
 
 # Automatically added by buildreq on Tue Apr 06 2004 (-bi)
 #BuildRequires: gcc-c++ gcc-g77 libgcrypt-devel libgpg-error-devel libstdc++-devel
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libgcrypt-devel libstdc++-devel
 BuildRequires: libgpg-error-devel >= 0.6
 BuildRequires: texinfo
@@ -82,6 +83,9 @@ Static libraries for the %name-devel package
 %endif
 
 %changelog
+* Mon Sep 18 2017 Sergey V Turchin <zerg@altlinux.org> 1.3.5-alt1%ubt
+- new version
+
 * Tue Dec 08 2015 Sergey V Turchin <zerg@altlinux.org> 1.3.3-alt2
 - fix build requires
 
