@@ -1,14 +1,14 @@
 Summary: OpenPGP Public Key Server
 Name: pks
 Version: 0.9.6
-Release: alt1.qa1
+Release: alt2
 License: BSD-like (with advertising clause)
+Url: http://pks.sourceforge.net/
 Group: System/Servers
-Packager: Boris Savelev <boris@altlinux.org>
 
 Source: http://dl.sf.net/sourceforge/pks/%name-%version.tar.bz2
 Source1: %name.init
-Patch0: mkpksdconf.in.patch
+Patch: mkpksdconf.in.patch
 Requires: %name-db = %version
 BuildPreReq: rpm-build-compat
 
@@ -90,8 +90,8 @@ mkdir -p  %buildroot%_var/run/pks %buildroot%_var/lib/pks/incoming %buildroot%_v
 %_bindir/pgpsplit
 %_bindir/pks-mail.sh
 %_bindir/pks-queue-run.sh
-%_man5dir/*.5.gz
-%_man8dir/*.8.gz
+%_man5dir/*.5*
+%_man8dir/*.8*
 %_var/lib/pks/index.html
 %attr(2770,root,_pks) %dir %_var/run/pks
 %attr(2770,root,_pks) %dir %_var/lib/pks
@@ -123,6 +123,9 @@ mkdir -p  %buildroot%_var/run/pks %buildroot%_var/lib/pks/incoming %buildroot%_v
 %_includedir/db2/db_cxx.h
 
 %changelog
+* Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.6-alt2
+- Fixed spec to allow any man pages compression.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.6-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
