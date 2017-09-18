@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1%ubt
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -286,6 +286,13 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Mon Sep 18 2017 Anton Farygin <rider@altlinux.ru> 2.4.1-alt1%ubt
+- 2.4.1 with following fixes:
+     * wnpa-sec-2017-38 MSDP dissector infinite loop CVE-2017-13767
+     * wnpa-sec-2017-39 Profinet I/O buffer overrun CVE-2017-13766
+     * wnpa-sec-2017-40 Modbus dissector crash CVE-2017-13764
+     * wnpa-sec-2017-41 IrCOMM dissector buffer overrun CVE-2017-13765
+
 * Sun Jul 30 2017 Anton Farygin <rider@altlinux.ru> 2.4.0-alt1%ubt
 - 2.4.0
 
