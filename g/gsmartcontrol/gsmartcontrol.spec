@@ -1,18 +1,18 @@
 Name: gsmartcontrol
-Version: 1.0.2
+Version: 1.1.0
 Release: alt1
 
-Summary: GSmartControl is a graphical user interface for smartctl
+Summary: GSmartControl - Hard disk drive and SSD health inspection tool
 Group: Graphical desktop/Other
 License: GPL
-Url: http://gsmartcontrol.sourceforge.net/home/
+Url: https://gsmartcontrol.sourceforge.io/home/
 
 Source: http://download.sourceforge.net/%name/%name-%version.tar.bz2
 Patch1: gsmartcontrol-0.8.7-alt-lfs.patch
 
-Requires: smartmontools gksu
+Requires: smartmontools >= 5.43 gksu polkit
 
-BuildRequires: libgtkmm3-devel >= 3.4.0 gcc-c++ libpcre-devel gksu libappstream-glib-devel
+BuildRequires: gcc-c++ libgtkmm3-devel >= 3.4.0 libpcrecpp-devel gksu libappstream-glib-devel
 
 %description
 GSmartControl is a graphical user interface for smartctl (from
@@ -36,9 +36,10 @@ to determine its health, as well as run various tests on it.
 %make check
 
 %files
-%_bindir/%name
+%_sbindir/%name
 %_bindir/%name-root
 %_datadir/%name/
+%_datadir/polkit-1/actions/org.%name.policy
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_man1dir/*.1*
 %_desktopdir/%name.desktop
@@ -48,6 +49,9 @@ to determine its health, as well as run various tests on it.
 %exclude %_defaultdocdir/%name/LICENSE*
 
 %changelog
+* Mon Sep 18 2017 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Thu Jul 27 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - 1.0.2
 
