@@ -9,7 +9,7 @@
 
 Name: %sname%sover-mpi
 Version: %major.4.1.1
-Release: alt1
+Release: alt2
 
 Summary: Parallel libraries to use the Unidata network Common Data Form (netCDF)
 
@@ -289,6 +289,9 @@ rm -fR %mpidir/include/netcdf-3 %mpidir/include/netcdf
 %_altdir/%oname-mpi-tools.alternatives
 
 %changelog
+* Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.1.1-alt2
+- Rebuilt with new libpnetcdf.
+
 * Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.1.1-alt1
 - Updated to stable upstream version 4.4.1.1.
 - Changed sover to 11.
