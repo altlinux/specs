@@ -1,6 +1,6 @@
 Name: mediainfo
-Version: 0.7.98
-Release: alt2
+Version: 0.7.99
+Release: alt1
 
 Group: File tools
 Summary: MediaInfo supplies information about a video or audio file
@@ -144,6 +144,9 @@ grep -v '^Encoding=' Project/GNU/GUI/mediainfo-gui.kde4.desktop >%buildroot%_K4s
 %_K4srv/ServiceMenus/%name-gui.desktop
 
 %changelog
+* Mon Sep 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.99-alt1
+- 0.7.99
+
 * Fri Sep 01 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.98-alt2
 - fixed dependencies (ALT #33839)
 
