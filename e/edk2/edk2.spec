@@ -6,7 +6,7 @@
 # More subpackages to come once licensing issues are fixed
 Name: edk2
 Version: 20170720
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: EFI Development Kit II
 
 #Vcs-Git: https://github.com/tianocore/edk2.git
@@ -91,6 +91,14 @@ BuildArch:      noarch
 EFI Development Kit II
 armv7 UEFI Firmware
 
+%package efi-shell
+Summary: EFI Development Kit II
+Group: System/Kernel and hardware
+Provides: efi-shell = 2.2
+Obsoletes: efi-shell
+
+%description efi-shell
+EFI Development Kit II implementation of UEFI Shell 2.0+
 
 %prep
 %setup -q
@@ -199,6 +207,11 @@ rm -rf Build/OvmfX64
 build ${OVMF_SB_FLAGS} -a IA32 -a X64 -p OvmfPkg/OvmfPkgIa32X64.dsc
 cp Build/Ovmf3264/*/FV/OVMF_CODE.fd OVMF/OVMF_CODE.secboot.fd
 
+# build shell
+%ifarch x86_64
+build ${OVMF_FLAGS} -a X64 -p ShellPkg/ShellPkg.dsc
+%endif
+
 unset %{TOOL_CHAIN_TAG}_IA32_PREFIX
 unset %{TOOL_CHAIN_TAG}_X64_PREFIX
 unset %{TOOL_CHAIN_TAG}_BIN
@@ -275,6 +288,12 @@ done
 
 popd
 
+# shell
+%ifarch x86_64
+install -pm0644 -D Build/Shell/RELEASE_%TOOL_CHAIN_TAG/X64/Shell.efi \
+	%buildroot%_libdir/efi/shell.efi
+%endif
+
 #install OVMF
 mkdir -p %buildroot%_datadir/%name
 cp -a OVMF %buildroot%_datadir/
@@ -345,7 +364,15 @@ ln -r -s %buildroot%_datadir/AVMF %buildroot%_datadir/%name/arm
 %_datadir/%name/arm
 %endif
 
+%ifarch x86_64
+%files efi-shell
+%_libdir/efi/shell.efi
+%endif
+
 %changelog
+* Mon Sep 18 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 20170720-alt2%ubt
+- added efi-shell subpackage
+
 * Fri Sep 01 2017 Alexey Shabalin <shaba@altlinux.ru> 20170720-alt1%ubt
 - snapshot of UDK2017 branch
 
