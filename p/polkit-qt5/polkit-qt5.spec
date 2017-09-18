@@ -2,7 +2,7 @@
 
 Name: polkit-qt5
 Version: 0.112.0
-Release: alt1
+Release: alt2
 
 Summary: Qt 5 bindings for PolicyKit
 License: GPLv2+
@@ -97,6 +97,9 @@ Provides: polkitqt5-devel  = %version-%release
 %setup -n polkit-qt-1-%version
 
 %build
+%ifarch e2k
+%add_optflags -std=c++11
+%endif
 %cmake_insource \
 	-DBUILD_EXAMPLES:BOOL=OFF \
 	-DLIB_DESTINATION=%_libdir \
@@ -111,6 +114,9 @@ rm -fv html/installdox
 %makeinstall_std
 
 %changelog
+* Mon Sep 18 2017 Michael Shigorin <mike@altlinux.org> 0.112.0-alt2
+- E2K: explicit -std=c++11
+
 * Mon Feb 09 2015 Michael Shigorin <mike@altlinux.org> 0.112.0-alt1
 - built for ALT Linux
   + based on mageia spec for 0.112.0-4.mga5
