@@ -1,5 +1,5 @@
 Name: abi-dumper
-Version: 1.0
+Version: 1.1
 Release: alt1
 Group: Development/Other
 License: GPLv2
@@ -26,6 +26,9 @@ perl Makefile.pl -install --prefix=%buildroot%prefix
 %_bindir/*
 
 %changelog
+* Mon Sep 18 2017 Fr. Br. George <george@altlinux.ru> 1.1-alt1
+- Autobuild version bump to 1.1
+
 * Fri Aug 25 2017 Fr. Br. George <george@altlinux.ru> 1.0-alt1
 - Autobuild version bump to 1.0
 
