@@ -6,7 +6,7 @@
 %define soversion 20
 
 Name: libgcrypt
-Version: 1.7.8
+Version: 1.7.9
 Release: alt1%ubt
 
 %define soname %{name}%{soversion}
@@ -169,6 +169,10 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 %endif
 
 %changelog
+* Mon Sep 18 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.9-alt1%ubt
+- new version
+- security fixes: CVE-2017-0379
+
 * Thu Jul 13 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.8-alt1%ubt
 - new version
 
