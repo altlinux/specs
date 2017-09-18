@@ -4,7 +4,7 @@
 
 Name: mono
 Version: 5.0.1.1
-Release: alt6%ubt
+Release: alt7%ubt
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -19,6 +19,7 @@ Source1: external.tar.gz
 Source2: mono.snk
 Source3: monolite.tar.gz
 # ALT: for packaging, manually pack all external/* subpackage stuff into external.tar.gz because those are submodules and cannot be added normally to git tree without losing history.
+Source4: mono-cert-sync.filetrigger
 Patch1: %name-%version-alt-linking1.patch
 Patch2: %name-%version-alt-linking2.patch
 
@@ -68,6 +69,7 @@ Summary: The Mono CIL runtime, suitable for running .NET code
 Group: Development/Other
 Requires: libgdiplus
 Requires: /proc
+Requires: ca-certificates
 Conflicts: mono4-core < %version-%release
 Conflicts: mono < 3.0
 Conflicts: mono-mscorlib  < 3.0
@@ -538,11 +540,16 @@ mkdir -p  %buildroot%_monodir/3.5-api/
 mkdir -p  %buildroot%_monodir/2.0-api/
 mkdir -p  %buildroot%_monodir/4.0-api/
 mkdir -p  %buildroot%_monodir/4.5-api/
+
+# install file trigger
+install -pD -m755 %SOURCE4 %buildroot%_rpmlibdir/mono-cert-sync.filetrigger
+
 %find_lang mcs
 
 
 %files core -f mcs.lang
 %doc  CONTRIBUTING.md LICENSE COPYING.LIB  NEWS README.md PATENTS.TXT
+%_rpmlibdir/mono-cert-sync.filetrigger
 %_sysconfdir/mono-4.5/
 %_sysconfdir/mono-4.0/
 %dir %_sysconfdir/mono/4.5/
@@ -561,6 +568,7 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 %_bindir/mono-sgen-gdb.py
 %mono_bin csharp
 %mono_bin cert-sync
+%mono_bin certmgr
 %mono_bin chktrust
 %mono_bin gacutil
 %mono_bin ikdasm
@@ -742,7 +750,6 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_bindir/al2
 %mono_bin caspol
 %mono_bin cert2spc
-%mono_bin certmgr
 %mono_bin dtd2rng
 %mono_bin dtd2xsd
 %mono_bin ilasm
@@ -1043,6 +1050,9 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt7%ubt
+- Added file trigger to run cert-sync tool on certificates update.
+
 * Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt6%ubt
 - Rebuilt with support of %%ubt macro.
 
