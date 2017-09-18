@@ -1,7 +1,7 @@
 %define _name hicolor
 
 Name: icon-theme-%_name
-Version: 0.15
+Version: 0.17
 Release: alt1
 
 Summary: hicolor-icon-theme is the default fallback theme used by implementations of the icon theme specification.
@@ -25,7 +25,7 @@ implementations of the icon theme specification.
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
 touch %buildroot%_datadir/icons/hicolor/icon-theme.cache
 
@@ -67,6 +67,9 @@ touch %buildroot%_datadir/icons/hicolor/icon-theme.cache
 %_datadir/icons/hicolor/icon-theme.cache
 
 %changelog
+* Mon Sep 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.17-alt1
+- 0.17
+
 * Sun Mar 29 2015 Yuri N. Sedunov <aris@altlinux.org> 0.15-alt1
 - 0.15
 
