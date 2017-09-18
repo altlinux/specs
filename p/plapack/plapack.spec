@@ -5,12 +5,11 @@
 %define sover %somver.3.2
 Name: plapack
 Version: 3.2
-Release: alt13
+Release: alt14
 Summary: Parallel Linear Algebra Package (PLAPACK)
 License: LGPL
 Group: Sciences/Mathematics
 Url: http://www.cs.utexas.edu/users/plapack/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: http://www.cs.utexas.edu/users/plapack/Downloads/PLAPACKR32.tar.gz
 Source1: http://www.cs.utexas.edu/users/plapack/tutorial/tutorial_C.ps
@@ -171,6 +170,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2-alt14
+- Fixed build.
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt13
 - Built with OpenBLAS instead of GotoBLAS2
 
