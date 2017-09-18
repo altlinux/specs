@@ -6,7 +6,6 @@
 %define subst_enable_with() %{expand:%%{?_enable_%{1}:--enable-%{2}} } %{expand:%%{?_disable_%{1}:--disable-%{2}} }
 
 # Enable/Disable stuff
-%def_enable doc
 %def_enable gpl
 %def_enable version3
 %def_enable ffplay
@@ -57,8 +56,8 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	3.3.3
-Release:	alt2
+Version:	3.3.4
+Release:	alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -70,9 +69,7 @@ Source:		%name-%version.tar
 BuildRequires:	libX11-devel libXext-devel libXvMC-devel libXfixes-devel
 BuildRequires:	libalsa-devel
 BuildRequires:	libbluray-devel libass-devel
-%if_with doc
 BuildRequires:	perl-podlators texi2html
-%endif
 %ifarch %ix86 x86_64
 BuildRequires:	yasm
 %endif
@@ -505,11 +502,10 @@ xz Changelog
 %doc Changelog*
 %doc LICENSE.md
 %_bindir/ffmpeg
-%{?_with_doc:%_man1dir/ffmpeg*}
+%_man1dir/ffmpeg*
 %_datadir/ffmpeg
 %exclude %_datadir/ffmpeg/examples
 
-%if_with doc
 %files doc
 %doc doc/ffmpeg*.html
 %doc doc/faq.html
@@ -520,39 +516,32 @@ xz Changelog
 %doc doc/nut.html
 %doc doc/platform.html
 %_man3dir/*
-%endif
 
 %if_enabled ffplay
 %files -n ffplay
 %_bindir/ffplay
-%{?_with_doc:%_man1dir/ffplay*}
+%_man1dir/ffplay*
 
-%if_with doc
 %files -n ffplay-doc
 %doc doc/ffplay*.html
-%endif
 %endif
 
 %if_enabled ffprobe
 %files -n ffprobe
 %_bindir/ffprobe
-%{?_with_doc:%_man1dir/ffprobe*}
+%_man1dir/ffprobe*
 
-%if_with doc
 %files -n ffprobe-doc
 %doc doc/ffprobe*.html
-%endif
 %endif
 
 %if_enabled ffserver
 %files -n ffserver
 %_bindir/ffserver
-%{?_with_doc:%_man1dir/ffserver*}
+%_man1dir/ffserver*
 
-%if_with doc
 %files -n ffserver-doc
 %doc doc/ffserver*.html
-%endif
 %endif
 
 %files -n libavcodec57
@@ -659,6 +648,11 @@ xz Changelog
 %endif
 
 %changelog
+* Mon Sep 18 2017 Anton Farygin <rider@altlinux.ru> 2:3.3.4-alt1
+- 3.3.4 with fixes for multiple vilnerabilities (CVE-2017-14054, CVE-2017-14055,
+	CVE-2017-14059, CVE-2017-14058, CVE-2017-14057, CVE-2017-14225, CVE-2017-14170,
+	CVE-2017-14056, CVE-2017-14222, CVE-2017-14169, CVE-2017-14223, CVE-2017-14171)
+
 * Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 2:3.3.3-alt2
 - x86-only BR: yasm
 - fix libpulse knob
