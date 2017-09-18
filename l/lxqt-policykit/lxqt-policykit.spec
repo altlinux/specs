@@ -1,6 +1,6 @@
 Name: lxqt-policykit
 Version: 0.11.0
-Release: alt1
+Release: alt2
 
 Summary: Policykit authentication agent
 License: LGPL
@@ -12,7 +12,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
 BuildRequires: liblxqt-devel libqtxdg-devel qt5-base-devel qt5-tools-devel
-BuildRequires: libpolkit-devel polkit-qt-1-devel libpolkitqt5-qt5-devel
+BuildRequires: libpolkit-devel libpolkitqt5-qt5-devel
 BuildRequires: kf5-kwindowsystem-devel
 
 Provides: razorqt-polkit-agent = %version
@@ -36,6 +36,9 @@ Obsoletes: razorqt-polkit-agent < 0.7.0
 %doc AUTHORS
 
 %changelog
+* Mon Sep 18 2017 Michael Shigorin <mike@altlinux.org> 0.11.0-alt2
+- built against polkit-qt5
+
 * Wed Oct 05 2016 Michael Shigorin <mike@altlinux.org> 0.11.0-alt1
 - 0.11.0
 
