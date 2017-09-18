@@ -3,7 +3,7 @@
 
 Name: indilib
 Version: 1.3.1
-Release: alt1%ubt
+Release: alt2%ubt
 
 %add_verify_elf_skiplist %_libdir/libindidriver.so.%version
 %add_verify_elf_skiplist %_libdir/libindimain.so.%version
@@ -103,6 +103,9 @@ chmod -x drivers/telescope/lx200fs2.{h,cpp}
 %_pkgconfigdir/libindi.pc
 
 %changelog
+* Mon Sep 18 2017 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt2%ubt
+- rebuild with new libgsl
+
 * Fri Apr 07 2017 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt1%ubt
 - new version
 
