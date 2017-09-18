@@ -12,7 +12,7 @@ Name: kde4sdk
 %define minor 12
 %define bugfix 2
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Software Development Kit
@@ -40,6 +40,12 @@ Requires: %name-thumbnailers = %version-%release
 
 Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 Patch1: kdesdk-4.0.2-alt-find-libsvn.patch
+Patch2: %rname-alt-castxml-compat.patch
+Patch3: %rname-alt-gcc6.patch
+
+# Remove 'gccxml' from 'Requires'
+%define __find_provides sh -c '/usr/lib/rpm/find-provides | sort | uniq'
+%define __find_requires sh -c '/usr/lib/rpm/find-requires | sort | uniq | sed "/^gccxml$/d"'
 
 BuildRequires(pre): kde4libs-devel
 %if_enabled kio_svn
@@ -286,6 +292,8 @@ Requires: %name-common = %version-%release
 %prep
 %setup -q -n %rname-%version
 #%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 
 %build
@@ -582,6 +590,9 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 
 
 %changelog
+* Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 15.12.2-alt2
+- Patched struct2osd script to work with castxml.
+
 * Mon Mar 14 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
 - new version
 
