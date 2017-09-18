@@ -1,12 +1,11 @@
 Name: perftest
 Summary: IB Performance tests
 Version: 1.3.0
-Release: alt1.qa1
+Release: alt2
 License: %gpl2only
 Group: Monitoring
 Url: http://www.openfabrics.org
 Source: %name-%version.tar
-Packager: Led <led@altlinux.ru>
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: librdmacm-devel
@@ -20,6 +19,7 @@ gen2 uverbs microbenchmarks.
 chmod 644 *
 
 %build
+%add_optflags -fgnu89-inline
 %make_build CFLAGS="%optflags -D_GNU_SOURCE"
 
 %install
@@ -31,6 +31,9 @@ install -m 0755 ib_{clock_test,{read,send,write}_{bw,lat},write_bw_postlist} rdm
 %_bindir/*
 
 %changelog
+* Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.0-alt2
+- Fixed build with gcc-6.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
