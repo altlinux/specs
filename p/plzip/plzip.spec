@@ -1,6 +1,6 @@
 Name: plzip
-Version: 0.9
-Release: alt1.1
+Version: 1.6
+Release: alt1
 
 Summary: Plzip is a parallel version of the lzip data compressor
 License: GPLv3+
@@ -37,6 +37,9 @@ make check
 %_infodir/*.info*
 
 %changelog
+* Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6-alt1
+- Updated to upstream version 1.6.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1.1
 - NMU: added BR: texinfo
 
