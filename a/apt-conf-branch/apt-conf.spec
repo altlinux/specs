@@ -3,7 +3,7 @@
 %define Distro p8 branch
 
 Name: %base_name-%distro
-Version: 8.1.1
+Version: 8.2
 Release: alt1
 
 Summary: A set of apt configuration files for %distribution %Distro
@@ -47,6 +47,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Mon Sep 18 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.2-alt1
+- Rebuilt with altlinux-repos 0.8 (for msu mirror).
+
 * Sat Dec 10 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.1.1-alt1
 - Resotred vendors.list.d/alt.list file.
 
