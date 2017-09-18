@@ -5,18 +5,18 @@
 
 Name: pacoxx
 Version: 0.2.beta
-Release: alt4
+Release: alt5
 Summary: PaCO++: Portable Parallel CORBA Object
 License: GPLv2+ / LGPLv2+
 Group: Networking/Remote access
 Url: http://www.irisa.fr/myriads/Paco++/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: gcc-c++ %mpiimpl-devel libomniORB-devel python-devel
-BuildPreReq: java-devel-default xerces-j2
-BuildPreReq: doxygen graphviz latex2html texlive-latex-recommended
+BuildRequires(pre): %mpiimpl-devel
+BuildRequires: gcc-c++ libomniORB-devel python-devel
+BuildRequires: java-devel-default xerces-j2
+BuildRequires: doxygen graphviz latex2html texlive-latex-recommended
 
 Requires: lib%name = %version-%release
 Requires: xerces-j2 %mpiimpl
@@ -117,7 +117,7 @@ omniORB_4_0=$(rpm -q --queryformat '%{VERSION}' libomniORB)
 	--with-orb-flags="%optflags" \
 	--with-mpi \
 	--with-mpi-dir=%mpidir \
-	--with-lib-mpi="-lmpi_cxx -lmpi"
+	--with-lib-mpi="-lmpi"
 # --with-extra-libs=""
 %make MPIDIR=%mpidir
 
@@ -181,6 +181,9 @@ chmod +x %buildroot%_bindir/pacoenv.sh
 %ldir/Examples
 
 %changelog
+* Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.beta-alt5
+- Fixed build.
+
 * Wed Apr 10 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.beta-alt4
 - fixed build
 
