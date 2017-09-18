@@ -1,48 +1,32 @@
 Name: iputils
-%define timestamp 20101006
+%define timestamp 20161105
 Version: %timestamp
-Release: alt2
+Release: alt1
 
 Summary: Utilities for IPv4/IPv6 networking
-License: BSD-style
+License: %bsdstyle, %gpl2plus
 Group: Networking/Other
 Url: http://www.skbuff.net/iputils
-Packager: Afanasov Dmitry <ender@altlinux.org>
 
-Source0: %url/%name-s%version.tar.bz2
-Source1: bonding-0.2.tar.bz2
-Source2: bonding-ifenslave.c
-Source3: ping.control
-Source4: ping6.control
-
-Patch1: iputils-ss020927-owl-warnings.patch
-Patch3: iputils-20001007-rh-bug23844.patch
-Patch4: iputils-s20071127-alt-datalen-fix.patch
-Patch5: iputils-s20101006-alt-droppriv.patch
-Patch6: iputils-s20071127-owl-man.patch
-# Parallel build of documentation:
-Patch8: iputils-pmake.patch
-# Disallow lazy binding for setuid binaries:
-Patch9: iputils-bindnow.patch
-
-Patch21: iputils-20020124-fc-countermeasures.patch
-Patch22: iputils-20020927-fc-addrcache.patch
-Patch23: iputils-20020927-fc-ia64_align.patch
-Patch24: iputils-20020927-fc-unaligned.patch
-Patch25: iputils-20020927-fc-ping-subint.patch
-
-Patch30: iputils-fc-ping_cleanup.patch
-# Cosmetic fix, remove \n in perror message:
-Patch31: iputils-perror-newline.patch
+Source0: %name-%version.tar
+Source1: ping.control
+Patch: %name-%version-%release.patch
 
 Conflicts: netkit-base
 
 PreReq: shadow-utils, control
-Requires: ipv6calc, /var/resolv
+Requires: /var/resolv
 
-# Automatically added by buildreq on Mon Sep 15 2008
+BuildRequires(pre): rpm-build-licenses
+
 BuildRequires: OpenSP docbook-style-dsssl libcap-devel perl-SGMLSpm
 BuildRequires: libsysfs-devel libssl-devel
+BuildRequires: libidn-devel
+
+%define _unpackaged_files_terminate_build 1
+
+%define sysctl_conf_file %_sysctldir/70-iputils.conf
+%define ping_real_dir %_usr/libexec/ping
 
 %description
 The iputils package contains basic utilities for monitoring a network:
@@ -53,91 +37,109 @@ The iputils package contains basic utilities for monitoring a network:
 + tracepath/tracepath6 - traces path to destination discovering MTU
 along this path.
 
+%package -n ninfod
+Group: Networking/Other
+Summary: Node Information Query Daemon
+License: %bsd
+
+%description -n ninfod
+Node Information Query (RFC4620) daemon. Responds to IPv6 Node Information
+Queries.
+
 %prep
-%setup -q -n %name-s%version -a1
-
-rm -f bonding-0.2/ifenslave
-mv -f bonding-0.2/README bonding-0.2/README.ifenslave
-cp -a %_sourcedir/bonding-ifenslave.c bonding-0.2/ifenslave.c
-
-%patch1 -p1
-%patch22 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch8 -p1
-%patch9 -p1
-
-%patch21 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
-
-%patch30 -p1
-%patch31 -p1
-
-find -type f -name \*.orig -delete -print
+%setup -n %name-%version
+%patch -p1
 
 %build
+CFLAGS="%optflags -D_GNU_SOURCE -fno-strict-aliasing -Wstrict-prototypes"
+%ifarch s390 s390x
+  CFLAGS="$CFLAGS -fPIE"
+%else
+  CFLAGS="$CFLAGS -fpie"
+%endif
+
 %make_build \
-	CCOPT="%optflags -D_GNU_SOURCE -Wstrict-prototypes" \
-	LDLIBS=
-%make_build CFLAGS="%optflags" ifenslave -C bonding-0.2
+	CFLAGS="$CFLAGS" \
+	CCOPT="$CFLAGS" \
+	arping clockdiff ping rdisc tracepath ninfod
 %make_build man -C doc
 
 %install
-mkdir -p %buildroot{/{,s}bin,%_sbindir,%_man8dir}
+mkdir -p %buildroot{%_bindir,%_sbindir,%_man8dir}
+mkdir -p %buildroot%ping_real_dir
 install -p arping clockdiff %buildroot%_sbindir/
-install -p -m700 ping %buildroot/bin/
-install -p bonding-0.2/ifenslave %buildroot/sbin/
-for n in ping6 tracepath tracepath6; do
-	install -p -m755 "$n" %buildroot/bin/
-done
-install -p rdisc %buildroot%_sbindir/in.rdisc
-ln -s in.rdisc %buildroot%_sbindir/rdisc
+
+install -p -m755 tracepath %buildroot%_bindir/
+ln -s tracepath %buildroot%_bindir/tracepath6
+
+install -p -m700 ping %buildroot%ping_real_dir/ping
+ln -s %ping_real_dir/ping %buildroot%_bindir/ping
+ln -s %ping_real_dir/ping %buildroot%_bindir/ping6
+
+install -p rdisc %buildroot%_sbindir/rdisc
+install -p ninfod/ninfod %buildroot%_sbindir/
 pushd doc
-	install -pm644 arping.8 clockdiff.8 pg3.8 rdisc.8 \
+	install -pm644 arping.8 clockdiff.8 rdisc.8 ninfod.8 \
 		%buildroot%_man8dir/
 	install -pD -m644 ping.1 %buildroot%_man1dir/ping.1
 	install -pD -m644 tracepath.1 %buildroot%_man1dir/tracepath.1
 	ln -s ping.1 %buildroot%_man1dir/ping6.1
 	ln -s tracepath.1 %buildroot%_man1dir/tracepath6.1
 popd
-install -pD -m755 %_sourcedir/ping.control \
-	%buildroot/etc/control.d/facilities/ping
-install -pD -m755 %_sourcedir/ping6.control \
-	%buildroot/etc/control.d/facilities/ping6
+
+install -pD -m755 %SOURCE1 %buildroot%_controldir/ping
+
+mkdir -p %buildroot%_sysctldir/
+touch %buildroot%sysctl_conf_file
 
 %pre
-/usr/sbin/groupadd -r -f iputils
-/usr/sbin/useradd -r -g iputils -d /dev/null -s /dev/null -n iputils >/dev/null 2>&1 ||:
-/usr/sbin/groupadd -r -f netadmin
+groupadd -r -f iputils ||:
+useradd -r -g iputils -d /dev/null -s /dev/null -n iputils >/dev/null 2>&1 ||:
+groupadd -r -f netadmin ||:
 
-if [ $1 -ge 2 ]; then
-	/usr/sbin/control-dump ping ping6
-fi
+%pre_control ping
 
 %post
-if [ $1 -ge 2 ]; then
-	/usr/sbin/control-restore ping ping6
-else
-	/usr/sbin/control ping public
-	/usr/sbin/control ping6 public
+if [ ! -e %sysctl_conf_file ]; then
+	ALLOW_GID="$(getent group iputils | cut -f3 -d:)" ||:
+	if [ -n "$ALLOW_GID" ]; then
+		cat >%_sysctldir/70-iputils.conf <<EOF
+# Allow ping socket creation for group iputils
+net.ipv4.ping_group_range = $ALLOW_GID $ALLOW_GID
+EOF
+		sysctl -p %sysctl_conf_file ||:
+	fi
 fi
 
+%post_control ping
+
 %files
-%config /etc/control.d/facilities/ping
-%config /etc/control.d/facilities/ping6
-%attr(700,root,root) %verify(not mode group) /bin/ping
-%attr(700,root,root) %verify(not mode group) /bin/ping6
-/bin/tracepath*
-/sbin/ifenslave
+%config %_controldir/ping
+%attr(700,root,netadmin) %verify(not mode) %dir %ping_real_dir/
+%attr(2711,root,iputils) %ping_real_dir/ping
+%ghost %config %sysctl_conf_file
+%_bindir/*
 %_sbindir/*
 %_mandir/man?/*
-%doc RELNOTES bonding*/README.*
+%doc RELNOTES
+%exclude %_sbindir/ninfod
+%exclude %_man8dir/ninfod.*
+
+%files -n ninfod
+%doc ninfod/COPYING
+%_sbindir/ninfod
+%_man8dir/ninfod.*
 
 %changelog
+* Mon Sep 18 2017 Mikhail Efremov <sem@altlinux.org> 20161105-alt1
+- Rename in.rdisc -> rdisc.
+- Package ninfod.
+- Drop ifenslave.
+- ping: Drop capabilities in IPv4 mode.
+- Rewrite old ALT droppriv patch.
+- Updated patches descriptors fix.
+- Updated to 20161105 (closes: #27995).
+
 * Mon May 09 2011 Afanasov Dmitry <ender@altlinux.org> 20101006-alt2
 - fix #25282 (thx to led@)
   + updated droppriv patch for support sysfs
