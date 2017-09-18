@@ -1,8 +1,8 @@
 Summary: Command-line tools and library for transforming PDF files
 Name: qpdf
-Version: 6.0.0
+Version: 7.0.0
 Release: alt1
-License: Artistic 2.0
+License: Apache 2.0
 Group: System/Base
 Url: http://qpdf.sourceforge.net/
 Source0: http://downloads.sourceforge.net/sourceforge/qpdf/qpdf-%version.tar
@@ -11,6 +11,7 @@ Patch0: %name-%version-%release.patch
 
 BuildRequires: zlib-devel xml-utils xsltproc docbook-style-xsl
 BuildRequires: pcre-devel
+BuildRequires: libjpeg-devel
 
 BuildRequires: perl-base
 
@@ -80,7 +81,7 @@ QPDF Manual
 %_mandir/man1/*
 
 %files -n lib%name
-%doc README TODO ChangeLog Artistic-2.0
+%doc README.md TODO ChangeLog LICENSE.txt
 %_libdir/libqpdf*.so.*
 
 %files -n lib%name-devel
@@ -93,6 +94,9 @@ QPDF Manual
 %doc doc/qpdf-manual.html doc/stylesheet.css
 
 %changelog
+* Mon Sep 18 2017 Anton Farygin <rider@altlinux.ru> 7.0.0-alt1
+- new version
+
 * Tue May 10 2016 Anton Farygin <rider@altlinux.ru> 6.0.0-alt1
 - new version
 

@@ -2,7 +2,7 @@
 %define _cups_serverbin %_libexecdir/cups
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
-Version: 1.16.3
+Version: 1.17.7
 Release: alt1%ubt
 
 # For a breakdown of the licensing, see COPYING file
@@ -33,6 +33,7 @@ Conflicts: foomatic-filters
 
 BuildRequires: cups-devel
 BuildRequires: libdbus-devel
+BuildRequires: libldap-devel
 # pdftopdf
 BuildRequires: libqpdf-devel
 # pdftops
@@ -122,6 +123,8 @@ serial backend for cups
 %configure --disable-static \
            --disable-silent-rules \
 	   --without-php \
+	   --enable-driverless \
+	   --enable-auto-setup-driverless \
 	   --with-gs-path=/usr/bin/gs \
            --with-pdftops=pdftops
 
@@ -212,6 +215,11 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Mon Sep 18 2017 Anton Farygin <rider@altlinux.ru> 1.17.7-alt1%ubt
+- new version 1.17.7
+- build with ldap
+- enabled auto-setup for driverless printers
+
 * Tue Aug 22 2017 Anton Farygin <rider@altlinux.ru> 1.16.3-alt1%ubt
 - new version 1.16.3
 
