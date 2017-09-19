@@ -7,7 +7,7 @@
 %def_enable gtk_doc
 
 Name: %_name%api_ver
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: GStreamer streaming media framework runtime
@@ -19,6 +19,8 @@ Requires: lib%name = %version-%release libcap-utils
 
 Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
 Patch: %_name-0.11.94-alt-intltool.patch
+# https://bugzilla.gnome.org/show_bug.cgi?id=787587
+Patch1: gstreamer-1.12.3-up-e2k.patch
 
 %define glib_ver 2.40.0
 
@@ -88,8 +90,13 @@ Gstreamer plugins.
 %prep
 %setup -n %_name-%version
 %patch -p1
+%patch1 -p1
 
 %build
+%ifarch e2k
+# till lcc ~1.23
+export LIBS=-lcxa
+%endif
 %autoreconf
 %configure \
 	--with-package-name=GStreamer \
@@ -153,6 +160,13 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_man1dir/*
 
 %changelog
+* Tue Sep 19 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.3-alt1
+- 1.12.3
+- mike@:
+  E2K:
+  initial architecture support
+  force linking against -lcxa
+
 * Fri Jul 14 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1
 - 1.12.2
 
