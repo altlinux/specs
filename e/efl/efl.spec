@@ -25,7 +25,7 @@
 %def_enable lua
 
 Name: efl
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Enlightenment Foundation Libraries
@@ -34,7 +34,7 @@ Group: System/Libraries
 Url: http://www.enlightenment.org/
 
 %if_disabled snapshot
-Source: http://download.enlightenment.org/rel/libs/%name/%name-%version%beta.tar.xz
+Source: https://download.enlightenment.org/rel/libs/%name/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -423,6 +423,9 @@ find %buildroot%_libdir -name "*.la" -delete
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Tue Sep 19 2017 Yuri N. Sedunov <aris@altlinux.org> 1.20.4-alt1
+- 1.20.4
+
 * Sun Sep 03 2017 Yuri N. Sedunov <aris@altlinux.org> 1.20.3-alt1
 - 1.20.3
 
