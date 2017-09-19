@@ -5,18 +5,17 @@
 %define sover %somver.1.1
 Name: primme
 Version: 1.1
-Release: alt12
+Release: alt13
 Summary: PReconditioned Iterative MultiMethod Eigensolver
 License: LGPL v2.1
 Group: Sciences/Mathematics
 Url: http://www.cs.wm.edu/~andreas/software/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: http://www.cs.wm.edu/~andreas/software/primme_v1.1.tar.gz
 Source1: http://www.cs.wm.edu/~andreas/software/doc.pdf
 
-BuildPreReq: liblapack-devel libhypre-devel
-BuildPreReq: %mpiimpl-devel
+BuildRequires(pre): %mpiimpl-devel
+BuildRequires: liblapack-devel libhypre-devel
 
 %description
 PRIMME finds a number of eigenvalues and their corresponding eigenvectors of a 
@@ -99,7 +98,7 @@ install -p -m644 PRIMMESRC/COMMONSRC/*.h \
 pushd %buildroot%_libdir
 for i in libprimme libdprimme libzprimme; do
 	mpicc -shared -Wl,--whole-archive $i.a -Wl,--no-whole-archive \
-		-L. $ADDLIB -llapack -lopenblas -Wl,-rpath,%mpidir/lib \
+		-L. $ADDLIB -llapack -lopenblas -lm -Wl,-rpath,%mpidir/lib \
 		-Wl,-soname,$i.so.%somver -o $i.so.%sover -Wl,-z,defs
 	ln -s $i.so.%sover $i.so.%somver
 	ln -s $i.so.%somver $i.so
@@ -124,6 +123,9 @@ popd
 %doc DTEST ZTEST
 
 %changelog
+* Tue Sep 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1-alt13
+- Fixed build.
+
 * Tue Feb 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt12
 - Fixed build
 
