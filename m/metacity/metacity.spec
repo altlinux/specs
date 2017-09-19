@@ -6,7 +6,7 @@
 
 Name: metacity
 Version: %ver_major.13
-Release: alt3
+Release: alt4
 
 Summary: Metacity window manager
 License: %gpl2plus
@@ -291,6 +291,9 @@ theme.
 %_datadir/themes/Simple/*
 
 %changelog
+* Tue Sep 19 2017 Yuri N. Sedunov <aris@altlinux.org> 2.34.13-alt4
+- rebuilt against libgtop-2.0.so.11
+
 * Tue Jun 10 2014 Yuri N. Sedunov <aris@altlinux.org> 2.34.13-alt3
 - rebuilt against libgtop-2.0.so.10
 
