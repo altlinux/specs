@@ -2,13 +2,13 @@
 %def_enable mpv
 
 %define rname smplayer
-%define svn 8599
+%define svn 8645
 %define xde kde5
 %define XDE KDE5
 %define xapp kf5
 Name: %xde-%rname
-Version: 17.7.0.%svn
-Release: alt2%ubt
+Version: 17.9.0.%svn
+Release: alt1%ubt
 
 %define qt_bin_dir %_qt5_bindir
 %define configure_qmake %qmake_qt5
@@ -169,6 +169,9 @@ done
 
 
 %changelog
+* Tue Sep 19 2017 Sergey V Turchin <zerg@altlinux.org> 17.9.0.8645-alt1%ubt
+- new version
+
 * Fri Jul 28 2017 Sergey V Turchin <zerg@altlinux.org> 17.7.0.8599-alt2%ubt
 - add alternate symlink to main binary
 
