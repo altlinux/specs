@@ -1,14 +1,14 @@
 Name: python-module-libasyncns
-Version: 0.7
-Release: alt1.1.1.1
+Version: 0.7.1
+Release: alt1
 
 Summary: libasyncns bindings for Python
 License: LGPLv2.1
 Group: Development/Python
 Url: http://launchpad.net/libasyncns-python/
-Packager: Alex V. Myltsev <avm@altlinux.ru>
 
 Source: libasyncns-python-%version.tar
+Patch1: %name-%version-alt-glibc.patch
 
 BuildRequires: python-devel libasyncns-devel >= 0.4
 
@@ -17,6 +17,7 @@ Python binding for the libasyncns asynchronous name service query.
 
 %prep
 %setup -n libasyncns-python-%version
+%patch1 -p2
 subst '/CFLAGS.*PYTHON_CONFIG/s,=.*,=-isystem %python_includedir,' Makefile
 subst '/LDFLAGS.*PYTHON_CONFIG/s,=.*,=-lpython%__python_version,' Makefile
 
@@ -32,6 +33,10 @@ install -D libasyncns.so %buildroot%python_sitelibdir/libasyncns.so
 %doc README test doc/libasyncns.html
 
 %changelog
+* Tue Sep 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.1-alt1
+- Updated to upstream version 0.7.1.
+- Fixed build with modern glibc.
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.7-alt1.1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
@@ -46,4 +51,3 @@ install -D libasyncns.so %buildroot%python_sitelibdir/libasyncns.so
 
 * Sun Aug 03 2008 Alexander Myltsev <avm@altlinux.org> 0.1-alt1
 - Initial build for Sisyphus.
-
