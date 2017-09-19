@@ -1,6 +1,6 @@
 Name:    castxml
 Version: 0.0.1.20170823
-Release: alt1
+Release: alt2%ubt
 Summary: C-family abstract syntax tree XML output tool
 Group:   Development/Other
 
@@ -15,6 +15,7 @@ Source:	%name-%version.tar
 # Link against the shared llvm library (one common library).
 Patch1: %name-fedora-shared.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake ctest gcc-c++
 BuildRequires: llvm4.0-devel
 # The llvm cmake files get confused if the static libraries are
@@ -74,6 +75,9 @@ ctest
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Sep 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.1.20170823-alt2%ubt
+- Rebuilt with support of %%ubt macro.
+
 * Thu Sep 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.1.20170823-alt1
 - Initial build for ALT.
 
