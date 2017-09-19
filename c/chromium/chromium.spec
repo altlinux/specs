@@ -25,8 +25,8 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        60.0.3112.90
-Release:        alt2
+Version:        61.0.3163.79
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -69,8 +69,12 @@ Patch017: 0017-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
 Patch018: 0018-ALT-gzip-does-not-support-the-rsyncable-option.patch
 Patch019: 0019-UBUNTU-Specify-max-resolution.patch
 Patch020: 0020-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch021: 0021-ARCHLINUX-Enable-VA-API-on-linux.patch
-Patch022: 0022-ARCHLINUX-Fix-gn-bootstrap.patch
+Patch021: 0021-Remove-third_party-libva.patch
+Patch022: 0022-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
+Patch023: 0023-wip.patch
+Patch024: 0024-GENTOO-disable-safe_math_shared.patch
+Patch025: 0025-GENTOO-fix-atk-state.patch
+Patch026: 0026-replace-struct-ucontext-with-ucontext_t.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -210,6 +214,10 @@ cp -a libchromiumcontent/chromiumcontent .
 %patch020 -p1
 %patch021 -p1
 %patch022 -p1
+%patch023 -p1
+%patch024 -p1
+%patch025 -p1
+%patch026 -p1
 ### Finish apply patches
 
 # Enable support for the Widevine CDM plugin
@@ -239,6 +247,7 @@ export CHROMIUM_RPATH="%_libdir/%name"
 CHROMIUM_GN_DEFINES="\
  is_debug=false \
  is_desktop_linux=true \
+ use_custom_libcxx=false \
  use_sysroot=false \
  use_gio=true \
  use_gconf=false \
@@ -250,6 +259,7 @@ CHROMIUM_GN_DEFINES="\
  use_kerberos=true \
  use_gold=false \
  use_pulseaudio=true \
+ use_vaapi=true \
  use_vulcanize=false \
  use_system_freetype=false \
  use_system_harfbuzz=false \
@@ -414,6 +424,19 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Tue Sep 12 2017 Alexey Gladkov <legion@altlinux.ru> 61.0.3163.79-alt1
+- New version (61.0.3163.79).
+  - CVE-2017-5111: Use after free in PDFium. Reported by Luat Nguyen (@l4wio) of KeenLab, Tencent on 2017-06-27
+  - CVE-2017-5112: Heap buffer overflow in WebGL. Reported by Tobias Klein (www.trapkit.de) on 2017-07-10
+  - CVE-2017-5113: Heap buffer overflow in Skia. Reported by Anonymous on 2017-07-20
+  - CVE-2017-5114: Memory lifecycle issue in PDFium. Reported by Ke Liu of Tencent's Xuanwu LAB on 2017-08-07
+  - CVE-2017-5115: Type confusion in V8. Reported by Marco Giovannini on 2017-07-17
+  - CVE-2017-5116: Type confusion in V8. Reported Guang Gong of Alpha Team, Qihoo 360 on 2017-08-28
+  - CVE-2017-5117: Use of uninitialized value in Skia. Reported by Tobias Klein (www.trapkit.de) on 2017-07-04
+  - CVE-2017-5118: Bypass of Content Security Policy in Blink. Reported by WenXu Wu of Tencent's Xuanwu Lab on 2017-07-24
+  - CVE-2017-5119: Use of uninitialized value in Skia. Reported by Anonymous on 2017-05-22
+  - CVE-2017-5120: Potential HTTPS downgrade during redirect navigation. Reported by Xiaoyin Liu (@general_nfs) on 2017-05-05
+
 * Tue Aug 15 2017 Alexey Gladkov <legion@altlinux.ru> 60.0.3112.90-alt2
 - Add missing libraries (ALT#33750).
 
