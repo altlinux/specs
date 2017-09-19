@@ -5,8 +5,8 @@
 
 %define rname qmmp
 Name: qmmp1
-Version: 1.1.9
-Release: alt1%ubt
+Version: 1.1.10
+Release: alt2%ubt
 
 Group: Sound
 Summary: Qmmp - Qt-based multimedia player
@@ -36,9 +36,10 @@ BuildRequires: cmake doxygen qt5-tools-devel qt5-x11extras-devel
 BuildRequires: libmms-devel libprojectM-devel libtag-devel
 BuildRequires: libalsa-devel libjack-devel libpulseaudio-devel
 BuildRequires: libbs2b-devel libcddb-devel libcdio-paranoia-devel libcurl-devel libenca-devel
-BuildRequires: libavformat-devel libwildmidi-devel libsidplayfp-devel
+BuildRequires: libavformat-devel libwildmidi-devel
 BuildRequires: libfaad-devel libflac-devel libgme-devel libopusfile-devel libsamplerate-devel libsoxr-devel
 BuildRequires: libmad-devel libmodplug-devel libmpcdec-devel libvorbis-devel libwavpack-devel
+#BuildRequires: libsidplayfp-devel
 
 %description
 Qmmp is an audio-player, written with help of Qt library.
@@ -271,6 +272,12 @@ ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/
 %_libdir/lib*.so
 
 %changelog
+* Tue Sep 19 2017 Sergey V Turchin <zerg@altlinux.org> 1.1.10-alt2%ubt
+- build without libsidplayfp
+
+* Mon Sep 18 2017 Sergey V Turchin <zerg@altlinux.org> 1.1.10-alt1%ubt
+- new version
+
 * Tue Jun 06 2017 Sergey V Turchin <zerg@altlinux.org> 1.1.9-alt1%ubt
 - new version
 
