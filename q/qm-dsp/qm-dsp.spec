@@ -2,7 +2,7 @@
 
 Name: qm-dsp
 Version: 1.7
-Release: alt2.hg20140805
+Release: alt3.hg20140805
 Summary: A C++ library for audio analysis
 License: GPLv2+
 Group: Sound
@@ -107,6 +107,9 @@ doxygen
 %doc doc/html/*
 
 %changelog
+* Tue Sep 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7-alt3.hg20140805
+- Rebuilt for new c++ ABI.
+
 * Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt2.hg20140805
 - Built with dataquay-minefeld instead of dataquay
 
