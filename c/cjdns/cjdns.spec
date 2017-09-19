@@ -1,6 +1,6 @@
 Name: cjdns
-Version: 19.1
-Release: alt1
+Version: 20
+Release: alt1%ubt
 
 Summary: Encrypted networking for regular people
 License: GPLv3+
@@ -8,9 +8,11 @@ Group: Networking/Other
 Url: https://github.com/cjdelisle/cjdns/
 
 Source: %name-%version.tar
-#https://github.com/cjdelisle/cjdns.git
-Patch1: %name-%version.patch
 
+#https://github.com/cjdelisle/cjdns.git
+Patch1: %name-%version-alt-build.patch
+
+BuildRequires(pre): rpm-build-ubt
 # don't use libuv-devel since it uses bundled patched libuv to build static library
 BuildRequires: nodejs python-modules gyp node-gyp /dev/shm /proc
 
@@ -75,9 +77,6 @@ install -p publictoip6 privatetopublic mkpasswd makekeys randombytes sybilsim \
         %buildroot%_exec_prefix/libexec/cjdns
 rm -f node_modules/nthen/.npmignore
 cp -pr tools node_modules %buildroot%_exec_prefix/libexec/cjdns
-
-rm -f contrib/nodejs/admin/.gitignore
-cp -pr contrib/nodejs/admin %buildroot%_exec_prefix/libexec/cjdns
 
 install -p -m755 cjdns-up.sh %buildroot%_exec_prefix/libexec/cjdns/cjdns-up
 
@@ -169,7 +168,6 @@ done
 %doc contrib/doc/peerStats.md
 %doc contrib/doc/sessionStats.md
 %doc contrib/doc/cjdnslog.md
-%_exec_prefix/libexec/cjdns/admin
 %_exec_prefix/libexec/cjdns/tools
 %_exec_prefix/libexec/cjdns/node_modules
 %_bindir/peerStats
@@ -221,5 +219,9 @@ done
 %_bindir/graphStats
 
 %changelog
+* Tue Sep 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 20-alt1%ubt
+- Updated to upstream version 20.
+- Built with support of %%ubt macro.
+
 * Tue Jun 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 19.1-alt1
 - First build for ALT
