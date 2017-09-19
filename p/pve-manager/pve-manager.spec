@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 5.0.24
-Release: alt7
+Release: alt8
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -51,6 +51,7 @@ Patch22: extjs-alt.patch
 Patch23: qemu-server-migrate-local-devices.patch
 Patch24: pve-manager-postfix-ntpd.patch
 Patch25: pve-manager-gettext.patch
+Patch26: pve-ha-manager-watchdog.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -63,10 +64,10 @@ This package contains the PVE management tools
 
 %package -n pve-container
 Summary: PVE Container management tool
-Version: 2.0.15
+Version: 2.0.16
 Group: Development/Perl
 PreReq: shadow-submap
-Requires: pve-lxc >= 2.0.7-alt5 dtach perl-Crypt-Eksblowfish >= 0.009-alt5_15
+Requires: pve-lxc >= 2.1.0 dtach perl-Crypt-Eksblowfish >= 0.009-alt5_15
 
 %description -n pve-container
 Tool to manage Linux Containers on PVE
@@ -145,6 +146,7 @@ This is used to implement the PVE REST API
 %patch23 -p0 -b .local-devices
 %patch24 -p0 -b .postfix-3
 %patch25 -p0 -b .gettext
+%patch26 -p0 -b .watchdog
 
 install -m0644 %SOURCE5 pve-manager/po/ru.po
 
@@ -172,6 +174,7 @@ install -m0644 pve-firewall/debian/pve-firewall.logrotate %buildroot%_sysconfdir
 mkdir -p %buildroot%_localstatedir/pve-firewall
 
 install -m0644 pve-ha-manager/debian/*.service %buildroot%systemd_unitdir/
+install -pD -m0644 pve-ha-manager/debian/pve-ha-manager.default %buildroot%_sysconfdir/sysconfig/pve-ha-manager
 
 mkdir -p %buildroot/lib/tmpfiles.d
 cat << __EOF__ > %buildroot/lib/tmpfiles.d/%name.conf
@@ -358,6 +361,7 @@ __EOF__
 %_man8dir/pve-firewall.8*
 
 %files -n pve-ha-manager
+%config(noreplace) %_sysconfdir/sysconfig/pve-ha-manager
 %_sysconfdir/bash_completion.d/ha-manager
 %_sysconfdir/bash_completion.d/pve-ha-crm
 %_sysconfdir/bash_completion.d/pve-ha-lrm
@@ -440,6 +444,12 @@ __EOF__
 %_datadir/libpve-http-server-perl
 
 %changelog
+* Tue Sep 19 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.24-alt8
+- pve-container 2.0-16
+
+* Wed Aug 09 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.24-alt4.M80P.1
+- backport to p8 branch
+
 * Wed Aug 09 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.24-alt7
 - don't uses ssh if install vzdump.cron to localhost (closes: #33746)
 - qemu-server 5.0-15
