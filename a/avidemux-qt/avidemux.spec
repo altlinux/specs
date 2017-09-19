@@ -5,7 +5,7 @@
 
 Name: avidemux-qt
 Version: 2.6.20
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
@@ -34,6 +34,7 @@ Patch2: alt-i18n-qm-path.patch
 Patch3: alt-crash-retranslate.patch
 Patch4: alt-flags.patch
 Patch5: alt-buildfix.patch
+Patch6: alt-fix-find-x264.patch
 #
 Patch100: avidemux-2.5.1-opencore-check.patch
 
@@ -105,6 +106,7 @@ Common files for %name
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 %patch100 -p1
 
 #cp -f %SOURCE4 po/
@@ -117,6 +119,7 @@ grep -rlw 'amd/amdxvba\.h' | xargs sed -i 's|amd/\(amdxvba\.h\)|\1|g'
 
 
 %build
+%add_optflags -std=c++11
 export QTDIR=%_qt5_prefix
 BUILDDIR=$PWD
 sh bootStrap.bash \
@@ -190,6 +193,10 @@ ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 %exclude %_includedir/avidemux
 
 %changelog
+* Tue Sep 19 2017 Sergey V Turchin <zerg@altlinux.org> 2.6.20-alt2%ubt
+- fix compile flags
+- fix find x264
+
 * Wed Aug 09 2017 Sergey V Turchin <zerg@altlinux.org> 2.6.20-alt1%ubt
 - new version
 
