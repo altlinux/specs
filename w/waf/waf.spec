@@ -1,7 +1,7 @@
 %def_with python3
 
 Name: waf
-Version: 1.9.12
+Version: 1.9.14
 Release: alt1
 
 Summary: A Python-based build system
@@ -101,7 +101,7 @@ find %{buildroot}%{_datadir}/ -name '*.py' \
 # fix waf script shebang line
 sed -i "1c#! %{__python}" %{buildroot}%{_bindir}/waf-%{__python_version}
 %if_with python3
-sed -i "1c#! %{__python3}" %{buildroot}%{_bindir}/waf-%{__python3_version}
+sed -i "1c#! /usr/bin/python3" %{buildroot}%{_bindir}/waf-%{__python3_version}
 %endif # with_python3
 
 # remove x-bits from everything going to doc
@@ -111,7 +111,8 @@ find demos utils -type f -exec chmod 0644 {} \;
 rm -f docs/sphinx/build/html/.buildinfo
 
 %files
-%_bindir/*
+%_bindir/waf
+%_bindir/waf-2.7
 %_datadir/waf
 
 %if_with python3
@@ -122,6 +123,10 @@ rm -f docs/sphinx/build/html/.buildinfo
 
 
 %changelog
+* Tue Sep 19 2017 Anton Farygin <rider@altlinux.ru> 1.9.14-alt1
+- new version
+- fixed shebang for waf-3.5
+
 * Sun Jun 04 2017 Anton Farygin <rider@altlinux.ru> 1.9.12-alt1
 - updated to 1.9.12
 
