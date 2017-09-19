@@ -1,23 +1,23 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
-%define gver 4.9
-%set_gcc_version %gver
 
 %define sover 0
 
 Name: pnetcdf
-Version: 1.6.0
+Version: 1.8.1
 Release: alt1
 Summary: Parallel netCDF: A High Performance API for NetCDF File Access
 License: Open source
 Group: File tools
 Url: http://trac.mcs.anl.gov/projects/parallel-netcdf
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: %mpiimpl-devel flex gcc%gver-fortran
-BuildPreReq: ghostscript-utils texlive-latex-base
+Patch1: %name-%version-alt-build.patch
+
+BuildRequires(pre): %mpiimpl-devel
+BuildRequires: flex gcc-fortran
+BuildRequires: ghostscript-utils texlive-latex-base
 
 %description
 Parallel netCDF (PnetCDF) is a library providing high-performance I/O
@@ -83,9 +83,15 @@ Parallel netCDF.
 
 %prep
 %setup
+%patch1 -p2
 rm -fR autom4te.cache
 
 %build
+%ifarch x86_64
+LIB_SUFFIX=64
+%endif
+sed -i -e "s|@LIB_SUFFIX@|$LIB_SUFFIX|g" pnetcdf_pc.in
+
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
@@ -99,9 +105,6 @@ export F90FLAGS="%optflags"
 	--enable-mpi-io-test \
 	--enable-fortran \
 	--enable-strict
-%ifarch x86_64
-LIB_SUFFIX=64
-%endif
 %make SOVER=%sover LIB_SUFFIX=$LIB_SUFFIX
 %make -C doc
 
@@ -113,6 +116,9 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 LIB_SUFFIX=64
 %endif
 %makeinstall SOVER=%sover LIB_SUFFIX=$LIB_SUFFIX
+
+# fix pkg-config file
+sed -i -e "s|%buildroot||" %buildroot%_pkgconfigdir/*.pc
 
 rm -f %buildroot%_libdir/*.so.
 
@@ -128,11 +134,15 @@ rm -f %buildroot%_libdir/*.so.
 %_includedir/*
 %_libdir/*.so
 %_man3dir/*
+%_pkgconfigdir/*.pc
 
 %files -n lib%name-devel-doc
 %doc doc/*.pdf doc/*.txt examples
 
 %changelog
+* Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.1-alt1
+- Updated to upstream version 1.8.1.
+
 * Thu Mar 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1
 - Version 1.6.0
 
