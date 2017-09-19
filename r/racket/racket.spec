@@ -2,20 +2,21 @@
 %define _disable_ld_no_undefined 1
 %define debug_package %nil
 
-%define sover 6.0.1
+%define sover 6.10.1
 Name: racket
-Version: 6.0.1
-Release: alt2
+Version: 6.10.1
+Release: alt1
 
 Summary: Racket programming language
 
 License: LGPL
 Group: Development/Scheme
-Url: http://racket-lang.org/
+Url: https://racket-lang.org/
 
 Source: %name-%version.tar
 Source1: drscheme.png
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+Patch1: %name-%version-alt-debuginfo.patch
 
 # do not scan collects for requires
 %add_findreq_skiplist %_libdir/%name/collects/*/*
@@ -24,12 +25,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Provides: plt = %version-%release
 Obsoletes: plt < %version-%release
 
-BuildPreReq: gcc-c++ zlib-devel libjpeg-devel libpng-devel
-BuildPreReq: libcairo-devel libXaw-devel libXext-devel libXft-devel
-BuildPreReq: gcc-fortran libpango-devel /proc chrpath
-BuildPreReq: desktop-file-utils libffi-devel libgc-devel
-BuildPreReq: libgtk+2-devel libgtkglext-devel libwxGTK2.9-devel
-BuildPreReq: libssl-devel zlib-devel 
+BuildRequires: gcc-c++ zlib-devel libjpeg-devel libpng-devel
+BuildRequires: libcairo-devel libXaw-devel libXext-devel libXft-devel
+BuildRequires: gcc-fortran libpango-devel /proc chrpath
+BuildRequires: desktop-file-utils libffi-devel libgc-devel
+BuildRequires: libgtk+3-devel libgtkglext-devel libwxGTK3.1-devel
+BuildRequires: libssl-devel zlib-devel 
 
 Requires: lib%name = %version-%release
 Requires: %name-data = %version-%release
@@ -117,6 +118,7 @@ This package contains development files of Racket.
 
 %prep
 %setup
+%patch1 -p2
 
 cat << __EOF__ > drscheme.desktop
 [Desktop Entry]
@@ -143,7 +145,8 @@ pushd src
 	--enable-gl \
 	--enable-xrender \
 	--enable-xft \
-	--enable-docs=no
+	--enable-docs=yes \
+	--disable-strip
 %make_build
 popd
 
@@ -188,6 +191,9 @@ sed -i 's|%buildroot||g' %buildroot%_desktopdir/*.desktop
 %_includedir/*
 
 %changelog
+* Tue Sep 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.10.1-alt1
+- Updated to upstream version 6.10.1.
+
 * Wed Jun 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.0.1-alt2
 - Removed %%buildroot from desktop files
 
