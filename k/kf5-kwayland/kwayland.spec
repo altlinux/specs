@@ -1,8 +1,8 @@
 %define rname kwayland
 
 Name: kf5-%rname
-Version: 5.37.0
-Release: alt2%ubt
+Version: 5.38.0
+Release: alt1%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -90,6 +90,9 @@ KF5 library
 %_K5lib/libKF5WaylandServer.so.*
 
 %changelog
+* Tue Sep 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.38.0-alt1%ubt
+- new version
+
 * Mon Sep 18 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt2%ubt
 - fix missing return statement (ALT#33822)
 

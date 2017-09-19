@@ -1,8 +1,8 @@
 %define rname kirigami
 
 Name: kf5-%rname
-Version: 5.37.0
-Release: alt2%ubt
+Version: 5.38.0
+Release: alt1%ubt
 %K5init
 
 Group: System/Libraries
@@ -18,7 +18,7 @@ Source0: %rname-%version.tar
 BuildRequires(pre):	rpm-build-kf5 rpm-build-ubt rpm-build-licenses
 BuildRequires: extra-cmake-modules qt5-quickcontrols2-devel
 BuildRequires: qt5-svg-devel qt5-tools-devel
-BuildRequires: kf5-plasma-framework-devel kf5-kpackage-devel
+BuildRequires: kf5-plasma-framework-devel kf5-kpackage-devel kf5-kservice-devel kf5-kwindowsystem-devel
 
 %description
 Kirigami is a set of QtQuick components at the moment targeted for mobile use
@@ -70,6 +70,9 @@ applications that use %name
 %_K5archdata/mkspecs/modules/qt_Kirigami2.pri
 
 %changelog
+* Tue Sep 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.38.0-alt1%ubt
+- new version
+
 * Thu Aug 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt2%ubt
 - cleanup specfile
 

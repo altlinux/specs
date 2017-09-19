@@ -4,8 +4,8 @@
 %endif
 
 Name: extra-cmake-modules
-Version: 5.37.0
-Release: alt2%ubt
+Version: 5.38.0
+Release: alt1%ubt
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
@@ -34,6 +34,11 @@ Additional modules for CMake build system needed by KDE Frameworks.
 %setup
 %patch1 -p1
 
+%ifarch e2k
+# lcc doesn't support these as of 1.21.20
+sed -i -r 's, (-fno-operator-names|-Wvla),,' kde-modules/KDECompilerSettings.cmake
+%endif
+
 %build
 %cmake \
     -DBUILD_TESTING:BOOL=FALSE \
@@ -51,6 +56,9 @@ Additional modules for CMake build system needed by KDE Frameworks.
 %doc %_man7dir/*
 
 %changelog
+* Tue Sep 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.38.0-alt1%ubt
+- new version
+
 * Thu Aug 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt2%ubt
 - fix requires
 
