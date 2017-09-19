@@ -1,12 +1,13 @@
 %def_with inotify
 %def_with fam
 %def_enable qtgui
+%def_enable webkit
 
 %define pre %nil
 
 Name: recoll
-Version: 1.23.2
-Release: alt1
+Version: 1.23.3
+Release: alt2
 
 Summary: A personal full text search package
 License: %gpl2plus
@@ -19,15 +20,25 @@ Source2: recoll_ru.qm
 Source3: recoll_uk.ts
 Source4: recoll_uk.qm
 Source100: recoll.watch
+Patch0: recoll-qtextbrowser.patch
+Patch1: recoll-1.23.3-alt-webkit.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ libaspell-devel ImageMagick
-%{?_enable_qtgui:BuildRequires: libqt4-devel qt4-settings libXt-devel xorg-cf-files}
 %{?_with_fam:BuildRequires: libfam-devel}
 BuildRequires: libxapian-devel >= 0.9
 BuildRequires: rpm-build-licenses
 BuildRequires: perl-Image-ExifTool
 BuildRequires: python-devel
+BuildRequires: zlib-devel
+
+#{?_enable_qtgui:BuildRequires: libqt4-devel qt4-settings libXt-devel xorg-cf-files}
+%if_enabled qtgui
+BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools-devel libXt-devel xorg-cf-files
+%if_enabled webkit
+BuildRequires: qt5-webkit-devel
+%endif
+%endif
 
 %add_findreq_skiplist %_datadir/%name/filters/*
 %add_findreq_skiplist %_datadir/%name/examples/*
@@ -70,6 +81,11 @@ that might be of use with Recoll.
 
 %prep
 %setup -n %name-%version%pre
+%if_disabled webkit
+# upstream patch for 1.23.3
+%patch0 -p2
+%patch1 -p1
+%endif
 subst 's/openoffice/ooffice/' sampleconf/mimeview
 subst '/^Categories=/s/=/=Qt;/' desktop/*.desktop
 # updated translations
@@ -77,8 +93,14 @@ subst '/^Categories=/s/=/=Qt;/' desktop/*.desktop
 #cp -a %SOURCE3 %SOURCE4 qtgui/i18n/	# uk
 
 %build
-export CXXFLAGS="%optflags" PATH="$PATH:%_libdir/qt4/bin"
-%configure %{subst_with inotify} %{subst_with fam} %{subst_enable qtgui}
+export CXXFLAGS="%optflags" PATH="$PATH:%_libdir/qt5/bin"
+export QMAKE=qmake-qt5
+%configure \
+	%{subst_with inotify} \
+	%{subst_with fam} \
+	%{subst_enable qtgui} \
+	%{subst_enable webkit} \
+	#
 %make_build
 gzip --best --keep --force ChangeLog
 for s in 128 96 72 64 36 32 24 22 16; do
@@ -124,6 +146,12 @@ sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 #  ("small recoll integration and extension hacks")
 
 %changelog
+* Fri Sep 08 2017 Michael Shigorin <mike@altlinux.org> 1.23.3-alt2
+- build against qt5
+
+* Wed Sep 06 2017 Michael Shigorin <mike@altlinux.org> 1.23.3-alt1
+- new version (watch file uupdate)
+
 * Tue May 16 2017 Michael Shigorin <mike@altlinux.org> 1.23.2-alt1
 - new version (watch file uupdate)
 
