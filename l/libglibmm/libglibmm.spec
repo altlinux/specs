@@ -1,8 +1,8 @@
 %def_disable snapshot
 
 %define rname glibmm
-%define major 2.52
-%define ver_base 2.52
+%define major 2.54
+%define ver_base 2.54
 %define api_ver 2.4
 
 Name: libglibmm
@@ -78,7 +78,7 @@ mm-common-prepare --force --copy
 
 %check
 # online tests restricted
-#%make check
+#%%make check
 
 %files
 %doc AUTHORS NEWS
@@ -97,6 +97,12 @@ mm-common-prepare --force --copy
 %_datadir/devhelp/books/%rname-%api_ver
 
 %changelog
+* Tue Sep 19 2017 Yuri N. Sedunov <aris@altlinux.org> 2.54.1-alt1
+- 2.54.1
+
+* Wed Sep 13 2017 Yuri N. Sedunov <aris@altlinux.org> 2.54.0-alt1
+- 2.54.0
+
 * Mon Sep 04 2017 Yuri N. Sedunov <aris@altlinux.org> 2.52.1-alt1
 - 2.52.1
 

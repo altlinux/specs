@@ -1,4 +1,4 @@
-%define ver_major 3.25
+%define ver_major 3.26
 %define _libexecdir /usr/libexec
 %def_without x11_support
 
@@ -81,6 +81,9 @@ desktop-file-install \
 %doc README TODO NEWS AUTHORS
 
 %changelog
+* Tue Sep 19 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Thu Aug 31 2017 Yuri N. Sedunov <aris@altlinux.org> 3.25.0-alt1
 - 3.25.0
 
