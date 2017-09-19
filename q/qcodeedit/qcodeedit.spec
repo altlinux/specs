@@ -2,12 +2,13 @@
 Summary: QCodeEdit is a framework designed to make edition of source code easy for both users and developers.
 Name: qcodeedit
 Version: 2.2.2
-Release: alt2.qa1
+Release: alt3
 License: GPL
 Group: Development/KDE and QT
-Packager: Boris Savelev <boris@altlinux.org>
 Url: http://qcodeedit.edyuk.org
 Source: http://dl.sourceforge.net/sourceforge/edyuk/%name-%version.tar.bz2
+
+Patch1: %name-2.2.3-fedora-cxx11.patch
 
 # Automatically added by buildreq on Sat Mar 14 2009
 BuildRequires: gcc-c++ libqt4-devel
@@ -44,6 +45,7 @@ Group: Development/KDE and QT
 
 %prep
 %setup
+%patch1 -p1
 # dont build examples
 sed -i 's:example::g' %name.pro
 qmake-qt4
@@ -73,6 +75,9 @@ cp -ap example %buildroot%_datadir/%name/
 %_qt4dir/plugins/designer/libqcodeedit-plugin.so
 
 %changelog
+* Tue Sep 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.2-alt3
+- Fixed build with new toolchain.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.2-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
