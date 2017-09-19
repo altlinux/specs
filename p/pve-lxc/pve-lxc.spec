@@ -1,7 +1,7 @@
 %define rname lxc
 
 Name: pve-%rname
-Version: 2.0.8
+Version: 2.1.0
 Release: alt1
 Summary: Linux containers usersapce tools
 Group: System/Configuration/Other
@@ -15,20 +15,16 @@ Conflicts: %rname %rname-libs
 
 Source: %rname.tgz
 
-Patch1: 0002-jessie-systemd-remove-Delegate-flag-to-silence-warni.patch
-Patch2: 0003-pve-run-lxcnetaddbr-when-instantiating-veths.patch
-Patch3: 0004-deny-rw-mounting-of-sys-and-proc.patch
-Patch4: 0005-separate-the-limiting-from-the-namespaced-cgroup-roo.patch
-Patch5: 0006-start-initutils-make-cgroupns-separation-level-confi.patch
-Patch6: 0007-rename-cgroup-namespace-directory-to-ns.patch
-Patch7: 0008-possibility-to-run-lxc-monitord-as-a-regular-daemon.patch
-Patch8: 0009-conf-implement-resource-limits.patch
-Patch9: 0010-doc-add-lxc.limit-to-lxc.container.conf.patch
-Patch10: 0011-test-resource-limit-config-entries.patch
-Patch11: 0012-start-fix-error-handling-when-limits-fail-to-apply.patch
-Patch12: 0013-start-don-t-call-lxc_map_ids-without-id-map.patch
-Patch13: 0014-Fix-the-bug-of-ts-stdoutfd-did-not-fill-with-paramet.patch
-Patch14: 0015-fix-segfault-in-lxc-attach.patch
+Patch1: 0001-lxc.service-start-after-a-potential-syslog.service.patch
+Patch2: 0002-jessie-systemd-remove-Delegate-flag-to-silence-warni.patch
+Patch3: 0003-pve-run-lxcnetaddbr-when-instantiating-veths.patch
+Patch4: 0004-deny-rw-mounting-of-sys-and-proc.patch
+Patch5: 0005-separate-the-limiting-from-the-namespaced-cgroup-roo.patch
+Patch6: 0006-start-initutils-make-cgroupns-separation-level-confi.patch
+Patch7: 0007-rename-cgroup-namespace-directory-to-ns.patch
+Patch8: 0008-possibility-to-run-lxc-monitord-as-a-regular-daemon.patch
+Patch9: 0009-network-add-missing-checks-for-empty-links.patch
+Patch10: 0010-start-unshare-cgroup-after-setting-up-device-limits.patch
 
 Patch20: lxc-alt.patch
 Patch21: lxc-altlinux-lxc.patch
@@ -57,10 +53,6 @@ an applications or a system.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
 
 %patch20 -p1
 %patch21 -p1
@@ -108,6 +100,12 @@ rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 %_man7dir/*.7*
 
 %changelog
+* Tue Sep 19 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.1.0-alt1
+- 2.1.0-2
+
+* Mon Jul 03 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.8-alt0.M80P.1
+- backport to p8 branch
+
 * Mon Jul 03 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.8-alt1
 - 2.0.8-3
 
