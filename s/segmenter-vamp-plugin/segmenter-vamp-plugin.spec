@@ -1,11 +1,10 @@
 Name: segmenter-vamp-plugin
 Version: 1.0
-Release: alt1.hg20140806
+Release: alt2.hg20140806
 Summary: Vamp plugin for automatic music structural segmentation
 License: AGPLv3
 Group: Sound
 Url: https://code.soundsoftware.ac.uk/projects/segmenter-vamp-plugin
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # hg clone https://code.soundsoftware.ac.uk/hg/segmenter-vamp-plugin
 Source: %name-%version.tar
@@ -35,6 +34,9 @@ install -m644 segmentino.* %buildroot%_libdir/vamp/
 %_libdir/vamp
 
 %changelog
+* Tue Sep 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt2.hg20140806
+- Rebuilt for new c++ ABI.
+
 * Mon Sep 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.hg20140806
 - Initial build for Sisyphus
 

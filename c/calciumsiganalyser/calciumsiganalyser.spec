@@ -1,11 +1,10 @@
 Name: calciumsiganalyser
 Version: 2
-Release: alt1.hg20110622
+Release: alt2.hg20110622
 Summary: Calcium Signal Analyser (Vamp plugin)
 License: GPLv2
 Group: Sound
 Url: https://code.soundsoftware.ac.uk/projects/calciumsiganalyser
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # hg clone https://code.soundsoftware.ac.uk/hg/calciumsiganalyser
 Source: %name-%version.tar
@@ -34,6 +33,9 @@ install -m644 vamp-calcium-signal-analyser* %buildroot%_libdir/vamp/
 %_libdir/vamp
 
 %changelog
+* Tue Sep 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2-alt2.hg20110622
+- Rebuilt for new c++ ABI.
+
 * Fri Sep 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2-alt1.hg20110622
 - Initial build for Sisyphus
 

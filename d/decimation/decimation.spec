@@ -1,11 +1,10 @@
 Name: decimation
 Version: 0.0
-Release: alt1.hg20131022
+Release: alt2.hg20131022
 Summary: Compare a few different C++ implementations of audio-rate signal decimation
 License: MIT
 Group: Sound
 Url: https://code.soundsoftware.ac.uk/projects/decimation
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # hg clone https://code.soundsoftware.ac.uk/hg/decimation
 Source: %name-%version.tar
@@ -41,6 +40,9 @@ install -m755 qm-dsp-decimate/decimate qm-dsp-decimate/decimate-b \
 %_bindir/*
 
 %changelog
+* Tue Sep 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0-alt2.hg20131022
+- Rebuilt for new c++ ABI.
+
 * Mon Sep 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0-alt1.hg20131022
 - Initial build for Sisyphus
 

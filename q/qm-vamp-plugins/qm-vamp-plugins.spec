@@ -1,6 +1,6 @@
 Name: qm-vamp-plugins
 Version: 1.7
-Release: alt1.hg20140806
+Release: alt2.hg20140806
 Summary: QM Vamp Plugins
 License: GPLv2
 Group: Sound
@@ -34,6 +34,9 @@ install -m644 qm-vamp-plugins.* %buildroot%_libdir/vamp/
 %_libdir/vamp
 
 %changelog
+* Tue Sep 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7-alt2.hg20140806
+- Rebuilt for new c++ ABI.
+
 * Mon Sep 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt1.hg20140806
 - Initial build for Sisyphus
 
