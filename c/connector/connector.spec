@@ -1,6 +1,6 @@
 Name: connector
-Version: 1.5.1
-Release: alt2
+Version: 1.5.2
+Release: alt1
 
 Summary: Remote desktop chooser
 License: GPL
@@ -44,6 +44,10 @@ install -pDm644 kiosk.access %buildroot%_sysconfdir/%name/kiosk.access
 %config(noreplace) %_sysconfdir/%name/kiosk.access
 
 %changelog
+* Wed Sep 20 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.5.2-alt1
+- OS check updated (ALT #33906)
+- Added notifications for mode 'kiosk'
+
 * Wed Jul 05 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.5.1-alt2
 - Fixed checking config for mode 'kiosk
 
