@@ -1,6 +1,6 @@
 Name: alterator
 Version: 5.1
-Release: alt1
+Release: alt2
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -145,6 +145,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Wed Sep 20 2017 Andrey Cherepanov <cas@altlinux.org> 5.1-alt2
+- Compile module only if guild is available
+
 * Thu Aug 03 2017 Paul Wolneykien <manowar@altlinux.org> 5.1-alt1
 - New functions to work with URI parameters.
 - Fix/improve: Don\'t trim the values read from a *.desktop file.
