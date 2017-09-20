@@ -1,5 +1,5 @@
 Name: rocksndiamonds
-Version: 3.3.1.2
+Version: 4.0.0.2
 Release: alt1
 
 Summary: A boulderdash like game
@@ -60,7 +60,8 @@ install -pD -m644 %name.1 %buildroot%_mandir/man1/%name.1
 install -pD -m644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 mkdir -p %buildroot%_pkgdatadir
-mv graphics levels scores sounds music  %buildroot%_pkgdatadir
+##cp -a graphics levels scores sounds music  %buildroot%_pkgdatadir
+cp -a docs graphics levels sounds music  %buildroot%_pkgdatadir
 
 install -m644 %SOURCE10 -D %buildroot/%_miconsdir/%name.png
 install -m644 %SOURCE11 -D %buildroot/%_niconsdir/%name.png
@@ -70,13 +71,17 @@ install -m644 %SOURCE12 -D %buildroot/%_liconsdir/%name.png
 %_gamesbindir/*
 %_desktopdir/%name.desktop
 %_iconsdir/*/*/*/*.png
-%doc CREDITS README docs/*
+%doc ChangeLog
 %_man1dir/*
 
 %files data
 %_pkgdatadir
 
 %changelog
+* Wed Sep 20 2017 Fr. Br. George <george@altlinux.ru> 4.0.0.2-alt1
+- Autobuild version bump to 4.0.0.2
+- Introduce editor help
+
 * Wed Jan 15 2014 Fr. Br. George <george@altlinux.ru> 3.3.1.2-alt1
 - Autobuild version bump to 3.3.1.2
 
