@@ -7,8 +7,8 @@
 %define ru_lang_res 	%lang_path/lang_RU.resource
 
 Name:    scorched3d
-Version: 43.3d
-Release: alt2.2
+Version: 44
+Release: alt1
 License: GPL
 Group:   Games/Arcade
 
@@ -17,24 +17,24 @@ Summary(ru_RU.UTF8): 3D версия классической DOS игрушки
 
 URL: http://www.scorched3d.co.uk
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 Source1: %name.desktop
 Source2: %name-16.png
 Source3: %name-32.png
 Source4: %name-48.png
-Patch1:  configure.ac.patch
-Patch2: scorched3d-43.3d-alt-gcc4.7.patch
-Patch3: scorched3d-43.3d-alt-libpng15.patch
+Patch1: configure.ac.patch
+Patch2: %name-%version-fedora-help.patch
+Patch3: %name-%version-fedora-system-lua.patch
+Patch4: %name-%version-fedora-syslibs.patch
+Patch5: %name-%version-fedora-returntype.patch
+Patch6: %name-%version-alt-thumbsdb.patch
 
-
-Packager: Evgeny V. Shishkov <shev@altlinux.org>
-
-# Automatically added by buildreq on Wed Feb 25 2009
 BuildRequires: gcc-c++ libGL-devel libSDL-devel libSDL_net-devel
 BuildRequires: libexpat-devel libfftw3-devel libjpeg-devel
 BuildRequires: libopenal-devel libpango-devel libpng-devel
 BuildRequires: libvorbis-devel libwxGTK-devel libogg-devel
-BuildPreReq: libalut-devel hd2u findutils
+BuildRequires: libalut-devel hd2u findutils
+BuildRequires: liblua-devel libGLEW-devel
 
 Requires: %name-data = %version-%release
 
@@ -63,8 +63,16 @@ This package contains data files for Scorched 3D.
 %prep
 %setup -n scorched
 %patch1 -p1
-%patch2 -p3
-%patch3 -p3
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p0
+%patch6 -p3
+
+# ensure we use the system versions of these
+rm -f src/common/common/snprintf.c
+rm -f src/common/lua/l*.{cpp,h}
+rm -f src/common/lua/print.cpp
 
 %build
 /bin/touch {INSTALL,AUTHORS,COPYING,ChangeLog,NEWS}
@@ -76,13 +84,10 @@ find \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
 
 echo RU > %lang_path/language.ini
 dos2unix %ru_tips
-%__mv -f %ru_tips %data_path/tips.txt
 dos2unix %ru_tutor
-%__mv -f %ru_tutor %data_path/tutorial.xml
 dos2unix %ru_lang_res
 
-chmod +x autogen.sh
-./autogen.sh
+%autoreconf
 %configure \
 	--bindir=%_gamesbindir \
 	--datadir=%_gamesdatadir/%name \
@@ -116,6 +121,9 @@ install -pD -m644 %SOURCE4 %buildroot%_liconsdir/%name.png
 %_gamesdatadir/*
 
 %changelog
+* Wed Sep 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 44-alt1
+- Updated to upstream version 44.
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 43.3d-alt2.2
 - Fixed build
 
