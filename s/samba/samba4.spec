@@ -39,7 +39,7 @@
 
 Name: samba
 Version: 4.6.7
-Release: alt2%ubt
+Release: alt3%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -114,11 +114,13 @@ BuildRequires: gawk libgtk+2-devel libcap-devel libuuid-devel
 %{?_without_ldb:BuildRequires: libldb-devel >= 1.1.29 python-module-pyldb-devel}
 #{?_with_clustering_support:BuildRequires: ctdb-devel}
 %{?_with_testsuite:BuildRequires: ldb-tools}
-%if %ubt_id <= "M70P"
-%{?_with_systemd:BuildRequires: systemd-devel}
-%else
+# Avoid trouble with rpm-macros-ubt-0.2-alt1.M80C.2.noarch.rpm
+# where %__ubt_branch_id N.M80C in /usr/lib/rpm/macros.d/ubt
+#if %ubt_id != "M70P"
+#%{?_with_systemd:BuildRequires: systemd-devel}
+#else
 %{?_with_systemd:BuildRequires: libsystemd-devel}
-%endif
+#endif
 %{?_enable_avahi:BuildRequires: libavahi-devel}
 %{?_enable_glusterfs:BuildRequires: glusterfs3-devel >= 3.4.0.16}
 %{?_with_libcephfs:BuildRequires: ceph-devel}
@@ -1395,6 +1397,9 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Wed Sep 20 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.7-alt3%ubt
+- Avoid build trouble with ubt macros id on branch c8
+
 * Fri Aug 18 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.7-alt2%ubt
 - Clean code from old merged chunks
 - Enable parallel build
