@@ -1,7 +1,7 @@
 Summary: Gearman provides a generic application framework to farm out work to other machines.
 Name: gearmand
 Version: 1.1.17
-Release: alt1
+Release: alt1.1
 License: BSD
 Group: Development/C
 URL: http://gearman.org
@@ -66,6 +66,9 @@ rm -f %buildroot%_libdir/libgearman.a
 %_man3dir/*
 
 %changelog
+* Mon Sep 18 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.17-alt1.1
+- Rebuild with libhiredis 1.13.3
+
 * Fri Sep 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.17-alt1
 - Updated to upstream release version 1.1.17.
 

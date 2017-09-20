@@ -1,8 +1,14 @@
-%define sover 0.11
+%define sover 0.13
 
+%def_with devel
+
+%if_with devel
 Name: hiredis
-Version: 0.11.0
-Release: alt1.git20140529
+%else
+Name: hiredis%sover
+%endif
+Version: 0.13.3
+Release: alt1
 Summary: The official C client for Redis
 
 Group: System/Libraries
@@ -10,38 +16,39 @@ License: BSD
 Url: https://github.com/redis/hiredis
 
 # https://github.com/redis/hiredis.git
-Source: %name-%version.tar
+Source: hiredis-%version.tar
+Patch1: hiredis-0.13.3-alt-makefile.patch
 
-BuildRequires: gcc-c++ libevent-devel libev-devel
+BuildRequires: gcc-c++ libevent-devel libev-devel glib2-devel
 
 %description
 Hiredis is a minimalistic C client library for the Redis database.
 
-%package -n lib%name%sover
+%package -n libhiredis%sover
 Summary: The official C client for Redis
 License: BSD
 Group: System/Libraries
 
-Provides: hiredis = %version-%release
-Obsoletes: hiredis
-
-%description -n lib%name%sover
+%description -n libhiredis%sover
 Hiredis is a minimalistic C client library for the Redis database.
 
-%package -n lib%name-devel
+%if_with devel
+%package -n libhiredis-devel
 Summary: Header files and libraries for hiredis C development
 Group: Development/C
-Requires: lib%name%sover = %version-%release
+Requires: libhiredis%sover = %version-%release
 
 Provides: hiredis-devel = %version-%release
 Obsoletes: hiredis-devel
 
-%description -n lib%name-devel
-The %name-devel package contains the header files and
+%description -n libhiredis-devel
+The hiredis-devel package contains the header files and
 ibraries to develop applications using a Redis database.
+%endif
 
 %prep
-%setup
+%setup -n hiredis-%version
+%patch1 -p1
 
 %build
 %make_build
@@ -49,7 +56,7 @@ ibraries to develop applications using a Redis database.
 %make hiredis-test
 
 %install
-%ifarch x86_64
+%if %_lib == lib64
 LIB_SUFFIX=64
 %endif
 %make install PREFIX=%buildroot%_prefix  LIBRARY_PATH=%_lib \
@@ -59,18 +66,24 @@ mkdir -p %buildroot%_bindir/
 cp examples/hiredis-example* %buildroot%_bindir/
 cp hiredis-test %buildroot%_bindir/
 
-%files -n lib%name%sover
+%files -n libhiredis%sover
 %doc COPYING CHANGELOG.md
 %_bindir/hiredis-example*
 %_bindir/hiredis-test
-%_libdir/*.so.*
+%_libdir/*.so.%{sover}*
 
-%files -n lib%name-devel
+%if_with devel
+%files -n libhiredis-devel
 %doc README.md
-%_includedir/%name
+%_includedir/hiredis
 %_libdir/*.so
+%_libdir/pkgconfig/hiredis.pc
+%endif
 
 %changelog
+* Wed Sep 13 2017 Mikhail Gordeev <obirvalger@altlinux.org> 0.13.3-alt1
+- Version 0.13.3
+
 * Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.0-alt1.git20140529
 - Version 0.11.0
 
