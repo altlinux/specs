@@ -1,6 +1,6 @@
 Name: mediainfo
 Version: 0.7.99
-Release: alt1
+Release: alt2
 
 Group: File tools
 Summary: MediaInfo supplies information about a video or audio file
@@ -26,13 +26,6 @@ BuildRequires: sgml-common
 Group: File tools
 Summary: MediaInfo supplies information about a video or audio file
 Requires: lib%name >= %version
-
-%package gui-KDE3
-Group: File tools
-Summary: KDE3 related MediaInfo files
-BuildArch: noarch
-Requires: %name-gui = %version-%release
-Requires: kdebase-konqueror < 4.0
 
 %package gui-KDE4
 Group: File tools
@@ -81,9 +74,6 @@ This package contains the graphical user interface.
 
 To combine with KDE install KDE-related package
 
-%description gui-KDE3
-This package contains KDE3 related MediaInfo files for konqueror
-
 %description gui-KDE4
 This package contains KDE4 related MediaInfo files for konqueror
 
@@ -117,8 +107,6 @@ install -m 644 Source/Resource/Image/MediaInfo.png %buildroot%_pixmapsdir/mediai
 install -dm 755 %buildroot%_liconsdir
 install -m 644 Source/Resource/Image/MediaInfo.png %buildroot%_liconsdir/mediainfo.png
 
-install -dm 755 %buildroot%_K3apps/konqueror/servicemenus/
-grep -v '^Encoding=' Project/GNU/GUI/mediainfo-gui.kde3.desktop >%buildroot%_K3apps/konqueror/servicemenus/mediainfo-gui.desktop
 install -dm 755 %buildroot%_K4srv/ServiceMenus/
 grep -v '^Encoding=' Project/GNU/GUI/mediainfo-gui.kde4.desktop >%buildroot%_K4srv/ServiceMenus/mediainfo-gui.desktop
 
@@ -137,13 +125,13 @@ grep -v '^Encoding=' Project/GNU/GUI/mediainfo-gui.kde4.desktop >%buildroot%_K4s
 %_pixmapsdir/%name.xpm
 %_pixmapsdir/%name.png
 
-%files gui-KDE3
-%_K3apps/konqueror/servicemenus/%name-gui.desktop
-
 %files gui-KDE4
 %_K4srv/ServiceMenus/%name-gui.desktop
 
 %changelog
+* Wed Sep 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.99-alt2
+- removed obsolete gui-KDE3 subpackage
+
 * Mon Sep 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.99-alt1
 - 0.7.99
 
