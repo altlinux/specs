@@ -7,12 +7,11 @@
 %define sover %somver.%over
 Name: scalasca
 Version: %over
-Release: alt1.rc2
+Release: alt2.rc2
 Summary: Scalable performance Analysis of Large-Scale parallel Applications
 License: MIT
 Group: Development/Tools
 Url: http://www.scalasca.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar.gz
 Source1: Makefile.shared
@@ -23,13 +22,14 @@ Provides: kojak = 2.2p1_%over-%release
 Conflicts: kojak < 2.2p1_%over-%release
 Obsoletes: kojak < 2.2p1_%over-%release
 
-BuildPreReq: libgomp-devel libqt4-devel libpapi-devel
-#BuildPreReq: libopenpdt-devel openpdt tau
-BuildPreReq: libopenpdt-devel openpdt
-BuildPreReq: %mpiimpl-devel doxygen binutils-devel
-BuildPreReq: texlive-latex-base ghostscript-utils chrpath
-BuildPreReq: libotf2-devel opari2-devel libcube-devel
-BuildPreReq: graphviz flex libgomp-devel
+BuildRequires(pre): %mpiimpl-devel
+BuildRequires: libgomp-devel libqt4-devel libpapi-devel
+#BuildRequires: libopenpdt-devel openpdt tau
+BuildRequires: libopenpdt-devel openpdt
+BuildRequires: doxygen binutils-devel
+BuildRequires: texlive-latex-base ghostscript-utils chrpath
+BuildRequires: libotf2-devel opari2-devel libcube-devel
+BuildRequires: graphviz flex libgomp-devel
 
 %description
 The KOJAK project (Kit for Objective Judgement And Knowledge-based
@@ -120,12 +120,15 @@ This package contains development files of SCALASCA.
 %setup
 
 %build
+%add_optflags -std=gnu++98
+
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 export PATH=$PATH:%_qt4dir/bin
 export MPIDIR=%mpidir
 
+export MPI_CXXFLAGS="${CXXFLAGS:-%optflags}"
 export CC="mpicc -g"
 export CXX="mpicxx -g"
 %autoreconf
@@ -192,6 +195,9 @@ done
 %_includedir/*
 
 %changelog
+* Wed Sep 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1-alt2.rc2
+- Fixed build with gcc-6.
+
 * Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt1.rc2
 - Version 2.1-rc2
 
