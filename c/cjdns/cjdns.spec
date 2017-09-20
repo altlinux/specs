@@ -1,6 +1,6 @@
 Name: cjdns
 Version: 20
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Encrypted networking for regular people
 License: GPLv3+
@@ -14,7 +14,7 @@ Patch1: %name-%version-alt-build.patch
 
 BuildRequires(pre): rpm-build-ubt
 # don't use libuv-devel since it uses bundled patched libuv to build static library
-BuildRequires: nodejs python-modules gyp node-gyp /dev/shm /proc
+BuildRequires: nodejs python-modules gyp node-gyp /proc
 
 %description
 Cjdns implements an encrypted IPv6 network using public key cryptography
@@ -219,6 +219,9 @@ done
 %_bindir/graphStats
 
 %changelog
+* Wed Sep 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 20-alt2%ubt
+- Updated build dependencies.
+
 * Tue Sep 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 20-alt1%ubt
 - Updated to upstream version 20.
 - Built with support of %%ubt macro.
