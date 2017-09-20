@@ -9,8 +9,8 @@
 %define libvncclient libvncclient%vncclient_sover
 Name: libvncserver
 %define libname %name
-Version: 0.9.10
-Release: alt3
+Version: 0.9.11
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: An easy API to write one's own VNC server
@@ -26,6 +26,7 @@ Patch11: LibVNCServer-0.9.10-no_x11vnc.patch
 Patch12: libvncserver-0.9.1-multilib.patch
 Patch13: LibVNCServer-0.9.9-pkgconfig.patch
 Patch14: LibVNCServer-0.9.10-system_minilzo.patch
+Patch15: libvncserver-0.9.11-soname.patch
 # SuSE
 Patch20: redef-keysym.patch
 Patch21: libvncserver-byteswap.patch
@@ -34,6 +35,7 @@ Patch22: libvncserver-0.9.10-ossl.patch
 # Automatically added by buildreq on Thu Apr 21 2011 (-bi)
 # optimized out: elfutils libX11-devel libgfortran-devel libstdc++-devel xorg-xproto-devel
 #BuildRequires: gcc-c++ gcc-fortran glibc-devel-static imake libICE-devel libSDL-devel libjpeg-devel xorg-cf-files zlib-devel
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libICE-devel libSDL-devel libjpeg-devel zlib-devel
 BuildRequires: libssl-devel liblzo2-devel libgcrypt-devel libgnutls-devel libpng-devel
 %if_enabled vaapi
@@ -105,6 +107,7 @@ Conflicts: libvncserver < %EVR
 %patch12 -p1
 #%patch13 -p1
 #%patch14 -p1
+%patch15 -p1
 %patch20 -p1
 %patch21 -p0
 %patch22 -p0
@@ -157,6 +160,9 @@ mkdir -p x11vnc
 
 
 %changelog
+* Wed Sep 20 2017 Sergey V Turchin <zerg@altlinux.org> 0.9.11-alt1%ubt
+- new version
+
 * Mon Jan 11 2016 Sergey V Turchin <zerg@altlinux.org> 0.9.10-alt3
 - rebuild with new gnutls
 
