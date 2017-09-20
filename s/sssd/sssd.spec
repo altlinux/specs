@@ -4,7 +4,7 @@
 
 Name: sssd
 Version: 1.15.3
-Release: alt1%ubt
+Release: alt2%ubt
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -39,11 +39,13 @@ Requires: %name-client = %version-%release
 Requires: libsss_idmap = %version-%release
 Requires: libldb = %ldb_version
 
-%if %ubt_id == "M70C"
-Requires: libkrb5 > 1.13.7-alt1
-%else
+# Avoid trouble with rpm-macros-ubt-0.2-alt1.M80C.2.noarch.rpm
+# where %__ubt_branch_id N.M80C in /usr/lib/rpm/macros.d/ubt
+#if %ubt_id == "M70C"
+#Requires: libkrb5 > 1.13.7-alt1
+#else
 Requires: libkrb5 >= 1.14.4-alt2
-%endif
+#endif
 
 BuildRequires(pre):rpm-build-ubt
 
@@ -809,6 +811,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 /%_lib/libnfsidmap/sss.so
 
 %changelog
+* Wed Sep 20 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.3-alt2%ubt
+- Avoid build trouble with ubt macros id on branch c8
+
 * Thu Aug 17 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.3-alt1%ubt
 - Update to latest release with:
  + SSSD Kerberos credentials manager (sssd-kcm)
