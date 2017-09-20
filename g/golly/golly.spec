@@ -1,6 +1,6 @@
 Summary: Exploring Conway's Game of Life and other cellular automata
 Name: golly
-Version: 2.8
+Version: 3.0
 Release: alt1
 
 License: GPL
@@ -66,7 +66,7 @@ sed -i '/#include <EXTERN.h>/a\
 ' wxperl.cpp
 cd configure
 %autoreconf
-%configure --with-perl-shlib=%_libdir/perl5/CORE/libperl.so 
+%configure --with-perl-shlib=%_libdir/perl5/CORE/libperl.so
 %make_build
 
 cd ..
@@ -95,6 +95,9 @@ install -D %SOURCE2 %buildroot%_desktopdir/%name.desktop
 %_datadir/%name
 
 %changelog
+* Mon Sep 18 2017 Fr. Br. George <george@altlinux.ru> 3.0-alt1
+- Autobuild version bump to 3.0
+
 * Wed Mar 15 2017 Fr. Br. George <george@altlinux.ru> 2.8-alt1
 - Autobuild version bump to 2.8
 - Separate data package
