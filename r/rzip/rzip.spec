@@ -1,9 +1,9 @@
 Name: rzip
 Version: 2.1
-Release: alt1.qa1
+Release: alt2
 License: GPL
 Summary: A large-file compression program 
-Summary(ru_RU.CP1251): Программа для сжатия очень больших файлов
+Summary(ru_RU.UTF-8): РџСЂРѕРіСЂР°РјРјР° РґР»СЏ СЃР¶Р°С‚РёСЏ РѕС‡РµРЅСЊ Р±РѕР»СЊС€РёС… С„Р°Р№Р»РѕРІ
 Group: Archiving/Compression
 Source0: http://rzip.samba.org/ftp/rzip/%name-%version.tar.gz
 
@@ -13,13 +13,13 @@ URL: http://rzip.samba.org
 BuildRequires: bzlib-devel
 
 %description
-rzip  is a file compression program designed to do particularly well on               
-very large files containing long distance redundency.                                 
+rzip  is a file compression program designed to do particularly well on
+very large files containing long distance redundency.
 
-%description -l ru_RU.CP1251
-rzip - это программа для сжатия, специально предназначенная для работы с
-очень большими файлами, в следствие чего работает только с ними, не
-поддерживая "трубы" (pipes) и прочее.
+%description -l ru_RU.UTF-8
+rzip - СЌС‚Рѕ РїСЂРѕРіСЂР°РјРјР° РґР»СЏ СЃР¶Р°С‚РёСЏ, СЃРїРµС†РёР°Р»СЊРЅРѕ РїСЂРµРґРЅР°Р·РЅР°С‡РµРЅРЅР°СЏ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ
+РѕС‡РµРЅСЊ Р±РѕР»СЊС€РёРјРё С„Р°Р№Р»Р°РјРё, РІ СЃР»РµРґСЃС‚РІРёРµ С‡РµРіРѕ СЂР°Р±РѕС‚Р°РµС‚ С‚РѕР»СЊРєРѕ СЃ РЅРёРјРё, РЅРµ
+РїРѕРґРґРµСЂР¶РёРІР°СЏ "С‚СЂСѓР±С‹" (pipes) Рё РїСЂРѕС‡РµРµ.
 
 %prep
 %setup -q 
@@ -40,9 +40,13 @@ install -m 644 %name.1 %buildroot%_man1dir/
 %files
 %doc COPYING
 %_bindir/rzip
-%_man1dir/rzip.1.gz
+%_man1dir/rzip.1*
 
 %changelog
+* Wed Sep 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1-alt2
+- Updated spec to allow any man page compression.
+- Converted summary and description to UTF-8.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
