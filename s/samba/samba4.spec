@@ -38,8 +38,8 @@
 %def_with libcephfs
 
 Name: samba
-Version: 4.6.7
-Release: alt3%ubt
+Version: 4.6.8
+Release: alt1%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -1397,6 +1397,13 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Wed Sep 20 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.8-alt1%ubt
+- Update for autumn security release:
+  + CVE-2017-12150 (SMB1/2/3 connections may not require signing where they
+   should)
+  + CVE-2017-12151 (SMB3 connections don't keep encryption across DFS redirects)
+  + CVE-2017-12163 (Server memory information leak over SMB1)
+
 * Wed Sep 20 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.7-alt3%ubt
 - Avoid build trouble with ubt macros id on branch c8
 
