@@ -1,14 +1,13 @@
 %define Name Nokogiri
 %define bname nokogiri
 Name: ruby-%bname
-Version: 1.8.0
-Release: alt1.1
+Version: 1.8.1
+Release: alt1
 Summary: Ruby libraries for %Name (HTML, XML, SAX, and Reader parser)
 Group: Development/Ruby
 License: MIT/Ruby
 URL: http://%bname.org
 Source: %bname-%version.tar
-Patch1: ignore-gems.patch
 
 BuildPreReq: rpm-build-ruby
 BuildRequires: ruby ruby-stdlibs libruby-devel ruby-racc ruby-tool-setup %_bindir/rexical
@@ -47,7 +46,6 @@ Documentation for %Name.
 
 %prep
 %setup -q -n %bname-%version
-%patch1 -p1
 
 DisableTest()
 {
@@ -99,6 +97,9 @@ ls -d %buildroot%ruby_ri_sitedir/* | grep -v '/%Name$' | xargs rm -rf
 
 
 %changelog
+* Wed Sep 20 2017 Andrey Cherepanov <cas@altlinux.org> 1.8.1-alt1
+- New version
+
 * Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.8.0-alt1.1
 - Rebuild with Ruby 2.4.1
 
