@@ -7,7 +7,7 @@
 %define PRIO 05
 
 Name: sawfish
-Version: 1.9.90
+Version: 1.12.90
 Release: alt1
 
 Summary: An extensible window manager for the X Window System
@@ -20,6 +20,7 @@ Provides: %_datadir/sawfish/site-lisp
 Provides: %_datadir/sawfish/sounds
 Provides: %_datadir/sawfish/themes
 
+# https://github.com/SawfishWM/sawfish.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -37,6 +38,7 @@ BuildRequires(pre): rep-gtk-devel
 # Automatically added by buildreq on Mon Apr 27 2009
 BuildRequires: libXtst-devel libSM-devel libXext-devel libXinerama-devel libXrandr-devel libgtk+2-devel
 BuildRequires: librep-devel >= 0.92.3-alt2.git20120908
+BuildRequires: /usr/bin/makeinfo
 
 %description
 Sawfish is an extensible window manager which uses a Lisp-based
@@ -91,7 +93,7 @@ RPM macros for sawfish-related packages.
 %setup
 %patch -p1
 #cp -pfv %_datadir/automake/config.{guess,sub} .
-sed -ie 's,^subversion=.*$,subversion="-%release",' configure.in
+sed -ie 's,^subversion=.*$,subversion="-%release",' configure.ac
 
 %build
 %if_enabled debug
@@ -202,6 +204,9 @@ EOF
 %_rpmmacrosdir/sawfish
 
 %changelog
+* Wed Sep 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.90-alt1
+- Updated to upstream version 1.12.90.
+
 * Mon Dec 10 2012 Dmitry Derjavin <dd@altlinux.org> 1.9.90-alt1
 - [1.9.90] (1.10 beta1);
 - Firefox/Thunderbird-17 window size bug fixed.
