@@ -1,17 +1,18 @@
 Name: pspp
-Version: 0.8.5
-Release: alt1.1
+Version: 1.0.1
+Release: alt1
 Summary: A program for statistical analysis of sampled data
 Group: Sciences/Mathematics
 License: GPLv3+
 Url: http://www.gnu.org/software/pspp/
 Source0: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
 
+# Automatically added by buildreq on Mon Sep 18 2017
+# optimized out: at-spi2-atk fontconfig glib2-devel glibc-kernheaders-x86 libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgtk+3-devel libpango-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server perl perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-podlators pkg-config python-base python-modules python-modules-compiler tzdata xml-utils zlib-devel
+BuildRequires: glibc-kernheaders-generic libgsl-devel libgtksourceview3-devel libreadline-devel libxml2-devel makeinfo perl-devel
+
 BuildRequires: fonts-ttf-liberation
 
-# Automatically added by buildreq on Mon May 26 2014
-# optimized out: fontconfig fontconfig-devel glib2-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libncurses-devel libpango-devel libtinfo-devel libwayland-client libwayland-server makeinfo pkg-config tzdata xml-utils zlib-devel
-BuildRequires: libgsl-devel libgtksourceview-devel libreadline-devel libxml2-devel perl-devel perl-podlators
 # explicitly added texinfo for info files
 BuildRequires: texinfo
 
@@ -67,6 +68,9 @@ make check
 %doc %_datadir/doc/pspp
 
 %changelog
+* Mon Sep 18 2017 Fr. Br. George <george@altlinux.ru> 1.0.1-alt1
+- Autobuild version bump to 1.0.1
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.8.5-alt1.1
 - NMU: added BR: texinfo
 
