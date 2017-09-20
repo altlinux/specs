@@ -1,19 +1,22 @@
 Name: rakarrack
 Version: 0.6.2
-Release: alt3.git20140722
+Release: alt4.git20140722
 Summary: Guitar effects for Linux
 License: GPLv2+
 Group: Sound
 Url: http://rakarrack.sourceforge.net/
-Source0: %name-%version.tar
+
+Source: %name-%version.tar
+Patch1: %name-%version-fedora-format-security.patch
+
 Requires: %name-data = %version-%release
 
 BuildRequires: alsa-utils gcc-c++ jackit-devel libXext-devel libXft-devel
 BuildRequires: libXpm-devel libalsa-devel libfltk-devel libjpeg-devel 
 BuildRequires: libpng-devel libsamplerate-devel libsndfile-devel
 
-BuildPreReq: libpixman-devel libcairo-devel libXinerama-devel
-BuildPreReq: libXfixes-devel libfftw3-devel libXcursor-devel
+BuildRequires: libpixman-devel libcairo-devel libXinerama-devel
+BuildRequires: libXfixes-devel libfftw3-devel libXcursor-devel
 BuildRequires: desktop-file-utils
 
 %description
@@ -42,6 +45,7 @@ This package contains data files and documentation for Rakarrack.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %autoreconf
@@ -68,12 +72,15 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 %files data
 %_desktopdir/%name.desktop
-%_man1dir/%name.1.gz
+%_man1dir/%name.1*
 %_pixmapsdir/*
 %_datadir/%name
 %_datadir/doc/%name
 
 %changelog
+* Wed Sep 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.2-alt4.git20140722
+- Fixed build.
+
 * Sun Sep 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt3.git20140722
 - New snapshot
 
