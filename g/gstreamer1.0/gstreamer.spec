@@ -8,14 +8,15 @@
 
 Name: %_name%api_ver
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: GStreamer streaming media framework runtime
 License: LGPL
 Group: System/Libraries
 URL: http://gstreamer.freedesktop.org
 
-Requires: lib%name = %version-%release libcap-utils
+PreReq: libcap-utils
+Requires: lib%name = %version-%release
 
 Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
 Patch: %_name-0.11.94-alt-intltool.patch
@@ -27,7 +28,7 @@ Patch1: gstreamer-1.12.3-up-e2k.patch
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: flex gcc-c++ ghostscript-utils gtk-doc intltool libcheck-devel libxml2-devel
 BuildRequires: python-modules sgml-common transfig xml-utils gobject-introspection-devel
-BuildRequires: libcap-utils
+BuildRequires: libcap-devel libcap-utils
 
 %description
 GStreamer is a streaming-media framework, based on graphs of filters which
@@ -109,7 +110,8 @@ export LIBS=-lcxa
 	--disable-tests \
 	--disable-debug \
 	--disable-static \
-	--with-bash-completion-dir=no
+	--with-bash-completion-dir=no \
+	--with-ptp-helper-permissions=capabilities
 %make_build
 
 %install
@@ -160,6 +162,9 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_man1dir/*
 
 %changelog
+* Wed Sep 20 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.3-alt2
+- rebuilt --with-ptp-helper-permissions=capabilities (ALT #33909)
+
 * Tue Sep 19 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.3-alt1
 - 1.12.3
 - mike@:
