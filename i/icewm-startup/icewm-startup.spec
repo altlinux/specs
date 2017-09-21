@@ -1,8 +1,9 @@
 %def_without p7_backport
 %def_without xtdesktop
 %def_without desklaunch
+%def_without kde3kdesktop
 Name: icewm-startup
-Version: 0.17
+Version: 0.18
 Release: alt1
 
 Summary: simple pluggable IceWM autostart manager
@@ -92,6 +93,7 @@ idesk plug-in for simple pluggable IceWM autostart manager.
 %description -l ru_RU.UTF-8 idesk
 idesk plug-in для менеджера автозапуска программ при старте IceWM.
 
+%if_with kde3kdesktop
 %package kdesktop
 Group: Graphical desktop/Icewm
 Summary: kdesktop autostart at IceWM startup
@@ -104,6 +106,7 @@ AutoReq: no
 kdesktop plug-in for simple pluggable IceWM autostart manager.
 %description -l ru_RU.UTF-8 kdesktop
 kdesktop plug-in для менеджера автозапуска программ при старте IceWM.
+%endif
 
 %package mount-tray
 Group: Graphical desktop/Icewm
@@ -561,8 +564,10 @@ fi
 %files ivman
 %config %icewmconfdir/startup.d/ivman
 
+%if_with kde3kdesktop
 %files kdesktop
 %config %icewmconfdir/startup.d/kdesktop
+%endif
 
 %files mount-tray
 %config %icewmconfdir/startup.d/mount-tray
@@ -598,6 +603,9 @@ fi
 %config %icewmconfdir/shutdown.d/000-simple-sound
 
 %changelog
+* Thu Sep 21 2017 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- removed kdesktop
+
 * Tue Nov 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - added notification-daemon
 
