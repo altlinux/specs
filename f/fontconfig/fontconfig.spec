@@ -1,5 +1,5 @@
 Name: fontconfig
-Version: 2.12.4
+Version: 2.12.6
 Release: alt1%ubt
 
 Summary: Font configuration and customization library and utilities
@@ -142,6 +142,9 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Thu Sep 21 2017 Sergey V Turchin <zerg@altlinux.org> 2.12.6-alt1%ubt
+- new version
+
 * Thu Aug 10 2017 Sergey V Turchin <zerg@altlinux.org> 2.12.4-alt1%ubt
 - new version
 
