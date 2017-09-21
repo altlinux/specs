@@ -1,5 +1,5 @@
 Name: bitcoin
-Version: 0.15.0
+Version: 0.15.0.1
 Release: alt1
 
 Summary: peer-to-peer network based anonymous digital currency
@@ -54,6 +54,9 @@ rm -f %_bindir/%name
 %doc doc/*
 
 %changelog
+* Thu Sep 21 2017 Alexei Takaseev <taf@altlinux.org> 0.15.0.1-alt1
+- Version 0.15.0.1
+
 * Thu Sep 14 2017 Alexei Takaseev <taf@altlinux.org> 0.15.0-alt1
 - Version 0.15.0
 
