@@ -1,6 +1,6 @@
 Name: connector
 Version: 1.5.2
-Release: alt2
+Release: alt3
 
 Summary: Remote desktop chooser
 License: GPL
@@ -42,10 +42,11 @@ install -pDm644 kiosk.access %buildroot%_sysconfdir/%name/kiosk.access
 %basedir/data
 %basedir/*.py
 %_man1dir/*
+%dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/kiosk.access
 
 %changelog
-* Thu Sep 21 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.5.2-alt2
+* Thu Sep 21 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.5.2-alt3
 - Fixed unowned files
 
 * Wed Sep 20 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.5.2-alt1
