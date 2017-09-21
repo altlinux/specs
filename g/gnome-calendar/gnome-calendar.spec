@@ -2,10 +2,10 @@
 %define ver_major 3.26
 %define _libexecdir %_prefix/libexec
 
-%def_disable gtk_doc
+%def_enable gtk_doc
 
 Name: gnome-calendar
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Calendar application for GNOME
@@ -23,12 +23,14 @@ BuildPreReq: rpm-build-licenses rpm-build-gnome
 %define eds_ver 3.18.0
 %define gsds_ver 3.21.2
 
-BuildPreReq: meson intltool yelp-tools libappstream-glib-devel gtk-doc
+BuildPreReq: meson intltool yelp-tools libappstream-glib-devel
 BuildPreReq: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildPreReq: libical-devel >= %ical_ver libicu-devel
 BuildRequires: libgnome-online-accounts-devel vala-tools
+BuildRequires: gobject-introspection-devel
 BuildRequires: evolution-data-server-devel >= %eds_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 
 %description
 Calendar is a calendar application for GNOME.
@@ -76,6 +78,9 @@ This package provides Calendar reference manual.
 %endif
 
 %changelog
+* Thu Sep 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
+- 3.26.1
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 
