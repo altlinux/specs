@@ -36,7 +36,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.8.2
+Version: 1.8.4
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -582,7 +582,6 @@ fi
 %{?_enable_systemd:/lib/systemd/system/%name.service}
 %{?_enable_systemd:/lib/systemd/system/%name-wait-online.service}
 %{?_enable_systemd:/lib/systemd/system/%name-dispatcher.service}
-%{?_enable_systemd:/lib/systemd/system/network-online.target.wants/NetworkManager-wait-online.service}
 
 %exclude %_man1dir/nmtui*
 
@@ -689,6 +688,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Sep 20 2017 Mikhail Efremov <sem@altlinux.org> 1.8.4-alt1
+- Updated to 1.8.4.
+
 * Tue Jul 11 2017 Mikhail Efremov <sem@altlinux.org> 1.8.2-alt1
 - Use --with-dist-version configure option.
 - Fixes from upstream:
