@@ -1,20 +1,21 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
-%define somver 1
-%define sover %somver.3.0
 Name: mpe2
-Version: 1.3.0
-Release: alt5
+Version: 2.4.9
+Release: alt1.b
 Summary: The Multi-Processing Environment
 License: Free
 Group: Development/Tools
 Url: http://www.mcs.anl.gov/research/projects/perfvis/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: ftp://ftp.mcs.anl.gov/pub/mpi/mpe/mpe2.tar.gz
-Source1: http://www.mcs.anl.gov/mpi/mpich1/docs/mpeman.pdf
-Source2: ftp://ftp.mcs.anl.gov/pub/mpi/slog2/js4-usersguide.pdf
+Source: %name-%version.tar
+Source1: mpeman.pdf
+
+Patch1: mpe2-2.4.9-alt-shared-libs.patch
+Patch2: mpe2-2.4.9-alt-dont-strip.patch
+Patch3: mpe2-2.4.9-alt-debuginfo.patch
+Patch4: mpe2-2.4.9-alt-openmpi.patch
 
 Requires: %name-j = %version-%release
 Requires: libTraceInput = %version-%release
@@ -114,6 +115,10 @@ This package contains static libraries of MPE.
 
 %prep
 %setup
+%patch1 -p2
+%patch2 -p2
+%patch3 -p2
+%patch4 -p2
 
 %build
 mpi-selector --set %mpiimpl
@@ -127,17 +132,20 @@ cp src/slog2sdk/src/logformat/trace/trace_API.h include/
 	--enable-collchk \
 	--enable-strict \
 	--with-mpiinc="-I%mpidir/include" \
-	--with-mpilibs="-L%mpidir/lib -lmpi_f77 -lmpi_f90 -lmpi -lm" \
-	--with-f2cmpilibs="-lmpi_f77 -lmpi_f90" \
+	--with-mpilibs="-L%mpidir/lib -lmpi -lm -lmpi_mpifh" \
 	--enable-slog2=build \
 	--with-java2=%_libexecdir/jvm/java \
-	CFLAGS="%optflags %optflags_shared -I$PWD/include" \
-	FFLAGS="%optflags %optflags_shared" LDFLAGS="-L$PWD/lib"
+	CFLAGS="%optflags %optflags_shared" \
+	FFLAGS="%optflags %optflags_shared" LDFLAGS="-lm ${OMPI_LDFLAGS}" \
+	MPI_CFLAGS="%optflags %optflags_shared -I%mpidir/include" \
+	MPI_FFLAGS="%optflags %optflags_shared -I%mpidir/include"
 %make
 
 %install
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+
+install -d %buildroot
 
 %makeinstall_std
 
@@ -164,23 +172,25 @@ mv %buildroot%_libdir/*.jar %buildroot%_javadir/
 #mv %buildroot%prefix/doc/* %buildroot%_docdir/lib%name-devel/
 #mv %buildroot%prefix/www %buildroot%_docdir/lib%name-devel/
 pushd %buildroot%_datadir
-mv example* logfiles %buildroot%_docdir/lib%name-devel/
+mv example* %buildroot%_docdir/lib%name-devel/
 popd
-install %SOURCE1 %SOURCE2 %buildroot%_docdir/lib%name-devel
+install %SOURCE1 %buildroot%_docdir/lib%name-devel
 
 # shared libraries
 
 pushd %buildroot%_libdir
 LIBS="$(ls *.a|egrep -v 'libmpe\.a'|sed 's|\.a||')"
+SOMVER=$(echo %version | cut -d . -f 1)
+SOFULLVER=%version
 mkdir tmp
 pushd tmp
 for i in libmpe $LIBS; do
 	ar x ../$i.a
-	mpicc -shared * -L.. $ADDLIB -lX11 -lpthread \
+	mpicc -shared * -L.. $ADDLIB -lX11 -lpthread -lm \
 		-Wl,-R%mpidir/lib \
-		-Wl,-soname,$i.so.%somver -o ../$i.so.%sover
-	ln -s $i.so.%sover ../$i.so.%somver
-	ln -s $i.so.%somver ../$i.so
+		-Wl,-soname,$i.so.$SOMVER -o ../$i.so.$SOFULLVER
+	ln -s $i.so.$SOFULLVER ../$i.so.$SOMVER
+	ln -s $i.so.$SOMVER ../$i.so
 	rm -f *
 	ADDLIB="-lmpe"
 done
@@ -188,9 +198,11 @@ popd
 rmdir tmp
 popd
 
-sed -i 's|%buildroot||g' %buildroot%_sbindir/mpeuninstall
+# remove not installed files
+rm -fv %buildroot%_sbindir/mpecheckinstall
+rm -fv %buildroot%_sbindir/mpeuninstall
 
-mv %buildroot%_docdir/www4 %buildroot%_docdir/lib%name-devel/
+sed -i -e "s|\$MPE_BINDIR/mpiexec|%mpidir/bin/mpiexec|g" %buildroot%_sbindir/*
 
 %files
 %doc README
@@ -220,9 +232,11 @@ mv %buildroot%_docdir/www4 %buildroot%_docdir/lib%name-devel/
 %files -n lib%name-devel-doc
 %_docdir/lib%name-devel
 %_docdir/jumpshot-4
-%_man4dir/*
 
 %changelog
+* Fri Sep 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.9-alt1.b
+- Updated to upstream version 2.4.9b.
+
 * Mon Jun 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt5
 - Rebuilt with OpenMPI 1.6
 - Disabled devel-static package

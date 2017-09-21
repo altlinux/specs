@@ -6,7 +6,7 @@
 %define priority 40
 Name: lib%{oname}-%sover-mpi
 Version: 1.8.13
-Release: alt2
+Release: alt3
 
 Summary: Hierarchical Data Format 5 library, parallel version
 
@@ -165,6 +165,9 @@ echo "%_pkgconfigdir/%oname.pc %_pkgconfigdir/%oname-mpi.pc %priority" >> \
 %_altdir/%oname-mpi-tools.alternatives
 
 %changelog
+* Wed Sep 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.13-alt3
+- Rebuilt with new libmpe2.
+
 * Tue Sep 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.13-alt2
 - Fixed build with current mpi implementation.
 
