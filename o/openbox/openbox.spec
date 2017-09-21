@@ -1,6 +1,8 @@
+%def_without kde
+
 Name: openbox
 Version: 3.6.1
-Release: alt2
+Release: alt3
 
 Summary: Openbox is a standards compliant, fast, light-weight, extensible window manager
 Summary(ru_RU.UTF-8): Openbox это следующий стандартам, быстрый, лёгкий, расширяемый оконный менеджер
@@ -90,6 +92,7 @@ Group: Graphical desktop/Other
 %description base
 Openbox pure WM.
 
+%if_with kde
 %package kde
 Summary: Run KDE with Openbox as the WM
 Group: Graphical desktop/Other
@@ -98,6 +101,7 @@ Requires: %_bindir/openbox
 
 %description kde
 Run KDE with Openbox as the WM.
+%endif
 
 %package gnome
 Summary: Run GNOME with Openbox as the WM
@@ -293,7 +297,9 @@ install -pD -m 644 %name-16.xpm %buildroot%_miconsdir/%name.xpm
 # for Openbox XML based menu
 install -pD -m 755 %SOURCE4 %buildroot%_sysconfdir/menu-methods/%name
 install -pD -m 644 %SOURCE5 %buildroot%_sysconfdir/X11/wmsession.d/09%name
+%if_with kde
 install -pD -m 644 %SOURCE6 %buildroot%_sysconfdir/X11/wmsession.d/10%name-kde
+%endif
 install -pD -m 644 %SOURCE7 %buildroot%_sysconfdir/X11/wmsession.d/11%name-gnome
 
 mkdir -p %buildroot%_sysconfdir/xdg/openbox/
@@ -336,11 +342,13 @@ install -pD -m 644 %SOURCE13 %buildroot%_sysconfdir/xdg/openbox/
 %_libdir/*.so
 %_includedir/*
 
+%if_with kde
 %files kde
 %config %_sysconfdir/X11/wmsession.d/10openbox-kde
 %_bindir/openbox-kde-session
 %_datadir/xsessions/openbox-kde.desktop
 %_man1dir/openbox-kde-session.*
+%endif
 
 %files gnome
 %config %_sysconfdir/X11/wmsession.d/11openbox-gnome
@@ -397,6 +405,9 @@ install -pD -m 644 %SOURCE13 %buildroot%_sysconfdir/xdg/openbox/
 %_datadir/themes/Syscrash
 
 %changelog
+* Thu Sep 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.1-alt3
+- Rebuilt without kde subpackage.
+
 * Wed Sep 16 2015 Aleksey Avdeev <solo@altlinux.org> 3.6.1-alt2
 - Remove kdetrayproxy.1: kdetrayproxy removed in openbox-3.5.0
 
