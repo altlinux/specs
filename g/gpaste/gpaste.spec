@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.24
+%define ver_major 3.26
 %define api_ver 1.0
 %define _name GPaste
 %define xdg_name org.gnome.GPaste
@@ -9,7 +9,7 @@
 %def_disable applet
 
 Name: gpaste
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GPaste is a clipboard management system
@@ -165,6 +165,9 @@ cp %SOURCE1 m4/
 
 
 %changelog
+* Thu Sep 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Mon May 29 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.2-alt1
 - 3.24.2
 
