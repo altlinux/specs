@@ -1,14 +1,14 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 3.26
 %define api_ver 1.0
 %define xdg_name org.gnome.Todo
 
-%def_enable gtk_doc
+%def_disable gtk_doc
 
 Name: gnome-todo
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Todo manager for GNOME
@@ -70,6 +70,7 @@ GObject introspection devel data for the GNOME Todo.
 
 %prep
 %setup
+##subst 's/\(install_dir: doc_path\)/\1,/' doc/reference/meson.build
 
 %build
 %meson %{?_enable_gtk_doc:-Denable-gtk-doc=true}
@@ -101,7 +102,7 @@ GObject introspection devel data for the GNOME Todo.
 %files devel
 %_includedir/%name/
 %_pkgconfigdir/%name.pc
-%_datadir/gtk-doc/html/%name/
+%{?_enable_gtk_doc:%_datadir/gtk-doc/html/%name/}
 
 %files gir
 %_typelibdir/Gtd-%api_ver.typelib
@@ -110,6 +111,9 @@ GObject introspection devel data for the GNOME Todo.
 %_girdir/Gtd-%api_ver.gir
 
 %changelog
+* Thu Sep 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
+- 3.26.1
+
 * Tue Sep 19 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 
