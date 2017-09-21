@@ -1,15 +1,15 @@
 %def_disable snapshot
 
-%define ver_major 0.98
+%define ver_major 0.99
 %define api_ver 1.0
 %define gst_api_ver 1.0
-
-%define gst_ver 1.10.2
+# gst-transcoder version
+%define gst_ver 1.12.1
 %define gtk_ver 3.20
 %define gi_ver 1.32
 
 Name: pitivi
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Summary: PiTiVi allows users to easily edit audio/video projects
@@ -23,9 +23,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-Conflicts: gst-transcoder
-Obsoletes: gst-transcoder
-Provides: gst-transcoder
+Requires: gst-transcoder = %gst_ver-%release
 
 # use python3
 AutoReqProv: nopython
@@ -45,7 +43,7 @@ Requires: gst-plugins-bad%gst_api_ver >= %gst_ver
 Requires: gst-plugins-ugly%gst_api_ver >= %gst_ver
 Requires: python3-module-canberra
 
-BuildRequires: git meson python3-module-nose2
+BuildRequires: git meson gtk-doc python3-module-nose2
 BuildRequires: intltool yelp-tools rpm-build-gir libappstream-glib-devel libcairo-devel
 BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel
 BuildRequires: python3-module-pycairo-devel
@@ -59,44 +57,76 @@ Pitivi is a video editor built upon the GStreamer Editing Services.
 It aims to be an intuitive and flexible application that can appeal to
 newbies and professionals alike.
 
+%package -n gst-transcoder
+Version: %gst_ver
+Summary: GStreamer Transcoding library
+Group: System/Libraries
+
+%description -n gst-transcoder
+This package provides GStreamer Transcoding library, tool and
+GStreamer plugin.
+
+%package -n gst-transcoder-devel
+Version: %gst_ver
+Summary: Development files for GStreamer Transcoder
+Group: Development/C
+Requires: gst-transcoder = %gst_ver-%release
+
+%description -n gst-transcoder-devel
+This package provides development files for GStreamer Transcoder.
+
+%package -n gst-transcoder-devel-doc
+Version: %gst_ver
+Summary: Development documentation for GStreamer Transcoder
+Group: Development/Documentation
+Conflicts: gst-transcoder-devel < %gst_ver
+
+%description -n gst-transcoder-devel-doc
+This package provides development documentation for GStreamer Transcoder.
+
+
 %prep
 %setup
-##subst 's/\(nosetests\)/\13/' tests/meson.build
 
 %build
-# python script since 0.97
-./configure --prefix=/usr \
-	--libdir=%_lib
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome %name
+
 
 %files -f %name.lang
 %_bindir/%name
 %_libdir/%name/
 %_datadir/%name/
-#%_datadir/mime/packages/%name.xml
+%_datadir/gstreamer-%gst_api_ver/encoding-profiles/
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/*/*
-#%_man1dir/%name.1*
 %_datadir/appdata/%name.appdata.xml
 
-#gst-transcoder-1.12.0 ?!
+%files -n gst-transcoder
 %_bindir/gst-transcoder-%api_ver
 %_libdir/libgsttranscoder-%api_ver.so.0
 %_typelibdir/GstTranscoder-%api_ver.typelib
-%_libdir/gstreamer-%api_ver/libgsttranscode.so
+%_libdir/gstreamer-%gst_api_ver/libgsttranscode.so
 %doc AUTHORS NEWS RELEASE
 
-# devel
-%exclude %_libdir/libgsttranscoder-%api_ver.so
-%exclude %_pkgconfigdir/gst-transcoder-%api_ver.pc
-%exclude %_includedir/gstreamer-%api_ver/gst/transcoder/
-%exclude %_girdir/GstTranscoder-%api_ver.gir
+%files -n gst-transcoder-devel
+%_libdir/libgsttranscoder-%api_ver.so
+%_pkgconfigdir/gst-transcoder-%api_ver.pc
+%_includedir/gstreamer-%api_ver/gst/transcoder/
+%_girdir/GstTranscoder-%api_ver.gir
+
+%files -n gst-transcoder-devel-doc
+%_datadir/gtk-doc/html/gstreamer-transcoder/
 
 %changelog
+* Thu Sep 21 2017 Yuri N. Sedunov <aris@altlinux.org> 0.99-alt1
+- 0.99
+- new gst-transcoder* subpackages
+
 * Sat Jul 01 2017 Yuri N. Sedunov <aris@altlinux.org> 0.98.1-alt1
 - 0.98.1 (ALT #33586)
 
