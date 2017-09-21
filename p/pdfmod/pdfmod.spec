@@ -1,6 +1,6 @@
 Name:           pdfmod
 Version:        0.9.1
-Release:        alt7
+Release:        alt8
 
 Summary:        PDF Modifier
 License:        GPL-2.0+
@@ -44,6 +44,8 @@ echo "</configuration>" >> %_sysconfdir/mono/config
 
 %files -f %name.lang
 %doc AUTHORS NEWS README COPYING
+%dir %_datadir/gnome
+%dir %_datadir/gnome/help
 %_datadir/gnome/help/%name/
 %_bindir/%name
 %_libdir/%name/
@@ -51,6 +53,9 @@ echo "</configuration>" >> %_sysconfdir/mono/config
 %_datadir/applications/%name.desktop
 
 %changelog
+* Thu Sep 21 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 0.9.1-alt8
+- Fixed unowned files
+
 * Tue Sep 12 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 0.9.1-alt7
 - Rebuild with mono5
 
