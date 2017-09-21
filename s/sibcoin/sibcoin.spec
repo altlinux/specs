@@ -1,8 +1,8 @@
 %define		_giconsdir %_iconsdir/hicolor/128x128/apps
 
 Name:		sibcoin
-Version:	0.16.1.1
-Release:	alt2
+Version:	0.16.1.2
+Release:	alt1
 Summary:	Siberian Chervonets Wallet
 Url:		http://sibcoin.org/en/
 Group:		Office
@@ -32,7 +32,7 @@ updating and receiving an acknowledgment from the other participants.
 %build
 NOCONFIGURE=1 ./autogen.sh
 autoreconf -fisv
-%configure
+%configure --libdir=%_libdir/%name --with-gui=qt5
 %make_build
 
 %install
@@ -49,7 +49,7 @@ convert -resize 128x128 %SOURCE1 %buildroot%_giconsdir/%name.png
 %files
 %doc CONTRIBUTING.md COPYING README.md
 %_bindir/*
-%_libdir/libbitcoinconsensus.so*
+%_libdir/%name/libbitcoinconsensus.so*
 %_desktopdir/%name.desktop
 %_miconsdir/%name.png
 %_niconsdir/%name.png
@@ -57,6 +57,9 @@ convert -resize 128x128 %SOURCE1 %buildroot%_giconsdir/%name.png
 %_giconsdir/%name.png
 
 %changelog
+* Thu Sep 21 2017 Motsyo Gennadi <drool@altlinux.ru> 0.16.1.2-alt1
+- 0.16.1.2
+
 * Thu Aug 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.16.1.1-alt2
 - Rebuilt with updated libdb4.8.
 
