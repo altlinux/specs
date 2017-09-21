@@ -1,7 +1,7 @@
 Name: iputils
 %define timestamp 20161105
 Version: %timestamp
-Release: alt1
+Release: alt2
 
 Summary: Utilities for IPv4/IPv6 networking
 License: %bsdstyle, %gpl2plus
@@ -92,6 +92,12 @@ install -pD -m755 %SOURCE1 %buildroot%_controldir/ping
 mkdir -p %buildroot%_sysctldir/
 touch %buildroot%sysctl_conf_file
 
+# for backward compatibility
+mkdir -p %buildroot/bin/
+for p in ping ping6 tracepath tracepath6; do
+	ln -s %_bindir/"$p"  %buildroot/bin/"$p"
+done
+
 %pre
 groupadd -r -f iputils ||:
 useradd -r -g iputils -d /dev/null -s /dev/null -n iputils >/dev/null 2>&1 ||:
@@ -118,6 +124,7 @@ fi
 %attr(700,root,netadmin) %verify(not mode) %dir %ping_real_dir/
 %attr(2711,root,iputils) %ping_real_dir/ping
 %ghost %config %sysctl_conf_file
+/bin/*
 %_bindir/*
 %_sbindir/*
 %_mandir/man?/*
@@ -131,6 +138,9 @@ fi
 %_man8dir/ninfod.*
 
 %changelog
+* Thu Sep 21 2017 Mikhail Efremov <sem@altlinux.org> 20161105-alt2
+- Add /bin/* symlinks.
+
 * Mon Sep 18 2017 Mikhail Efremov <sem@altlinux.org> 20161105-alt1
 - Rename in.rdisc -> rdisc.
 - Package ninfod.
