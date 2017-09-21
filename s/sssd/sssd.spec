@@ -4,7 +4,7 @@
 
 Name: sssd
 Version: 1.15.3
-Release: alt2%ubt
+Release: alt3%ubt
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -84,11 +84,13 @@ BuildRequires: diffstat
 BuildRequires: findutils
 BuildRequires: samba-devel
 BuildRequires: libsmbclient-devel
-%if %ubt_id <= "M70P"
-BuildRequires: systemd-devel libsystemd-daemon-devel libsystemd-journal-devel libsystemd-login-devel
-%else
+# Avoid trouble with rpm-macros-ubt-0.2-alt1.M80C.2.noarch.rpm
+# where %__ubt_branch_id N.M80C in /usr/lib/rpm/macros.d/ubt
+#if %ubt_id <= "M70P"
+#BuildRequires: systemd-devel libsystemd-daemon-devel libsystemd-journal-devel libsystemd-login-devel
+#else
 BuildRequires: libsystemd-devel
-%endif
+#endif
 BuildRequires: selinux-policy-targeted
 BuildRequires: cifs-utils-devel
 BuildRequires: libsasl2-devel
@@ -811,6 +813,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 /%_lib/libnfsidmap/sss.so
 
 %changelog
+* Thu Sep 21 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.3-alt3%ubt
+- Avoid build another trouble with ubt macros id on branch c8
+
 * Wed Sep 20 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.3-alt2%ubt
 - Avoid build trouble with ubt macros id on branch c8
 
