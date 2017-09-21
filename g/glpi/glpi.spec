@@ -2,8 +2,8 @@
 
 
 Name: glpi
-Version: 9.1.2
-Release: alt1
+Version: 9.1.6
+Release: alt2
 
 
 Summary: IT and asset management software
@@ -16,9 +16,8 @@ Packager: Pavel Zilke <zidex at altlinux dot org>
 BuildArch: noarch
 
 Source0: http://www.glpi-project.org/IMG/gz/%name-%version.tar.gz
-Source1: apache.conf
-Source2: apache2.conf
-Source3: README.ALT
+Source1: apache2.conf
+Source2: README.ALT
 Patch: patch0.patch
 
 Requires: webserver-common php-engine composer curl lynx
@@ -34,13 +33,6 @@ like a job-tracking-system with mail-notification and methods to build a
 database with basic information about your network-topology.
 
 
-%package apache
-Summary: Apache 1.x web-server configuration for %name
-Group: Networking/Other
-Requires: %name = %version-%release, apache
-%description apache
-Apache 1.x web-server configuration for %name
-
 
 %package apache2
 Summary: Apache 2.x web-server configuration for %name
@@ -53,7 +45,7 @@ Apache 2.x web-server configuration for %name
 %package php5
 Summary: PHP5 dependencies for %name
 Group: Networking/Other
-Requires: %name = %version-%release, php5-mysql, php5-ldap, php5-imap, php5-curl, php5-gd2, php5-fileinfo
+Requires: %name = %version-%release, php5-mysqli, php5-ldap, php5-imap, php5-curl, php5-gd2, php5-fileinfo, php5-mbstring, php5-apcu, php5-opcache, php5-xmlrpc
 %description php5
 PHP5 dependencies for %name
 
@@ -67,7 +59,6 @@ PHP5 dependencies for %name
 
 %install
 # install apache config
-install -pD -m0644 %_sourcedir/apache.conf %buildroot%_sysconfdir/httpd/conf/addon-modules.d/%name.conf
 install -pD -m0644 %_sourcedir/apache2.conf %buildroot%_sysconfdir/httpd2/conf/sites-available/%name.conf
 
 # install glpi
@@ -89,21 +80,11 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 cd %installdir
 composer install --no-dev
 
-
-%post apache
-%_initdir/httpd condreload
-
-
-%postun apache
-%_initdir/httpd condreload
-
-
 %post apache2
 if [ "$1" = "1" ]; then
   a2ensite %name
   %_initdir/httpd2 condreload
 fi
-
 
 %postun apache2
 if [ "$1" = "1" ]; then
@@ -141,10 +122,6 @@ fi
 %doc README.ALT
 
 
-%files apache
-%config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd/conf/addon-modules.d/%name.conf
-
-
 %files apache2
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
 
@@ -153,6 +130,15 @@ fi
 
 
 %changelog
+* Thu Sep 21 2017 Pavel Zilke <zidex at altlinux dot org> 9.1.6-alt2
+- Delete glpi-apache
+
+* Thu Sep 21 2017 Pavel Zilke <zidex at altlinux dot org> 9.1.6-alt1
+- New version 9.1.6
+
+* Fri Apr 28 2017 Pavel Zilke <zidex at altlinux dot org> 9.1.3-alt1
+- New version 9.1.3
+
 * Fri Apr 14 2017 Pavel Zilke <zidex at altlinux dot org> 9.1.2-alt1
 - New version 9.1.2
 
