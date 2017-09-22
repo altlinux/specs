@@ -4,8 +4,8 @@
 %def_with prelude
 
 Name: audit
-Version: 2.7.7
-Release: alt2%ubt
+Version: 2.7.8
+Release: alt1%ubt
 
 Packager: Anton Farygin <rider@altlinux.com>
 
@@ -173,6 +173,8 @@ install -pD -m644 rules/10-base-config.rules %buildroot%_sysconfdir/%name/rules.
 %config(noreplace) %attr(600,root,root) %_sysconfdir/%name/rules.d/*.rules
 
 %attr(700,root,root) %dir %_sysconfdir/audispd
+%attr(700,root,root) %dir %_sysconfdir/audisp
+%attr(700,root,root) %dir %_sysconfdir/audisp/plugins.d
 %config(noreplace) %attr(640,root,root) /etc/audisp/*.conf
 
 %attr(700,root,root) %dir %_sysconfdir/audispd/plugins.d
@@ -201,11 +203,14 @@ install -pD -m644 rules/10-base-config.rules %buildroot%_sysconfdir/%name/rules.
 %endif
 
 %changelog
+* Fri Sep 22 2017 Anton Farygin <rider@altlinux.ru> 2.7.8-alt1%ubt
+- new version
+
 * Thu Sep 07 2017 Michael Shigorin <mike@altlinux.org> 2.7.7-alt2%ubt
 - BOOTSTRAP:
   + make krb5/ldap/prelude/python support conditional
   + make zos-remote plugin build depend on ldap support explicitly
-- minor spec cleanup
+  - minor spec cleanup
 
 * Thu Jun 22 2017 Anton Farygin <rider@altlinux.ru> 2.7.7-alt1%ubt
 - new version
