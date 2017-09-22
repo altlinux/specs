@@ -1,5 +1,5 @@
 Name: git
-Version: 2.10.4
+Version: 2.10.5
 Release: alt1
 
 Summary: Git core and tools
@@ -499,6 +499,9 @@ popd
 %endif #emacs
 
 %changelog
+* Fri Sep 22 2017 Dmitry V. Levin <ldv@altlinux.org> 2.10.5-alt1
+- 2.10.4 -> 2.10.5 (fixes: CVE-2017-14867).
+
 * Thu Aug 10 2017 Dmitry V. Levin <ldv@altlinux.org> 2.10.4-alt1
 - 2.10.3 -> 2.10.4.
 
