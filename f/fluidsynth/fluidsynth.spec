@@ -1,36 +1,29 @@
-%define cvs_date 20031109
-%undefine cvs_date
+%def_enable snapshot
+
 %def_disable static
 %def_disable ladcca
 %def_enable lash
 %def_enable ladspa
-%def_disable SSE
+%def_enable jack
+%def_enable pulseaudio
+%def_enable dbus
 
 Name: fluidsynth
-Version: 1.1.6
-%define release alt3
-
-%ifdef cvs_date
-Release: %{release}cvs%cvs_date
-%else
-Release: %release
-%endif
+Version: 1.1.7
+Release: alt1
 
 Summary: Software real-time synthesizer
 Summary(ru_RU.UTF-8): Программный синтезатор, работающий в режиме реального времени
 Group: Sound
 URL: http://www.fluidsynth.org
-License: LGPL
+License: LGPL2.1+
 
-%ifdef cvs_date
-Source: %name-%version-%cvs_date.tar.bz2
+%if_disabled snapshot
+Source: http://savannah.nongnu.org/download/fluid/%name-%version.tar.gz
 %else
-Source: http://savannah.nongnu.org/download/fluid/%name-%version.tar.bz2
+# VCS: https://github.com/FluidSynth/fluidsynth.git
+Source: %name-%version.tar
 %endif
-Source1: fluidsynth-autogen.sh
-
-Obsoletes: iiwusynth
-Provides: iiwusynth = %version-%release
 
 Requires: lib%name = %version-%release
 
@@ -38,24 +31,15 @@ Requires: lib%name = %version-%release
 %define ladcca_ver 0.4.0
 %define alsa_ver 0.9.8-alt2
 
-%if_enabled ladcca
-BuildPreReq: libladcca-devel >= %ladcca_ver
-%endif
-
-%if_enabled ladspa
-BuildPreReq: ladspa_sdk
-%endif
-
-%{?_enable_lash:BuildPreReq: liblash-devel}
-
-BuildPreReq: jackit-devel >= %jack_ver
-BuildPreReq: libalsa-devel >= %alsa_ver
-
-# Automatically added by buildreq on Tue Sep 21 2004
-#BuildRequires: doxygen gcc-c++ gcc-g77 glib2 jackit-devel ladspa_sdk libalsa-devel libe2fs-devel libladcca-devel libncurses-devel libreadline-devel libstdc++-devel pkgconfig
-BuildRequires: gcc-c++ doxygen xsltproc docbook-dtds docbook-style-xsl
-BuildRequires: glib2-devel libsndfile-devel jackit-devel libalsa-devel libe2fs-devel
-BuildRequires: libncurses-devel libreadline-devel libpulseaudio-devel
+BuildRequires: cmake gcc-c++ doxygen xsltproc docbook-dtds docbook-style-xsl
+BuildRequires: glib2-devel libsndfile-devel libalsa-devel >= %alsa_ver libe2fs-devel
+BuildRequires: libncurses-devel libreadline-devel
+%{?_enable_ladcca:BuildRequires: libladcca-devel >= %ladcca_ver}
+%{?_enable_lash:BuildRequires: liblash-devel}
+%{?_enable_ladspa:BuildRequires: ladspa_sdk}
+%{?_enable_jack:BuildRequires: libjack-devel >= %jack_ver}
+%{?_enable_pulseaudio:BuildRequires: libpulseaudio-devel}
+%{?_enable_dbus:BuildRequires: libdbus-devel}
 
 %description
 FluidSynth is a software real-time synthesizer based on the
@@ -66,25 +50,18 @@ device. It is the software analogue of a MIDI synthesizer. FluidSynth
 can also play midifiles using a Soundfont.
 
 %description -l ru_RU.UTF-8
-FluidSynth -- это программный синтезатор, работающий в режиме реального 
+FluidSynth -- это программный синтезатор, работающий в режиме реального
 времени и основанный на спецификациях Soundfont 2.
 
-FluidSynth считывает и обрабатывает MIDI-события из входного 
-MIDI-устройства. Иными словами, программа является программным аналогом 
-MIDI-синтезатора. FluidSynth также может воспроизводить MIDI-файлы, 
+FluidSynth считывает и обрабатывает MIDI-события из входного
+MIDI-устройства. Иными словами, программа является программным аналогом
+MIDI-синтезатора. FluidSynth также может воспроизводить MIDI-файлы,
 используя Soundfont.
 
 %package -n lib%name
 Summary: Shared libraries for %name
 Summary(ru_RU.UTF-8): Разделяемые библиотеки для %name
 Group: System/Libraries
-Obsoletes: libiiwusynth
-Provides: libiiwusynth = %version-%release
-Requires: libjack >= %jack_ver
-%if_enabled ladcca
-Requires: libladcca >= %ladcca_ver
-%endif
-Requires: libalsa >= %alsa_ver
 
 %description -n lib%name
 FluidSynth is a software real-time synthesizer based on the
@@ -111,14 +88,6 @@ MIDI-синтезатора. FluidSynth также может воспроизв
 Summary: Development environment for %name
 Summary(ru_RU.UTF-8): Среда разработки для %name
 Group: Development/C
-Obsoletes: libiiwusynth-devel
-Provides: libiiwusynth-devel = %version-%release
-Requires: lib%name = %version-%release
-Requires: libalsa-devel >= %alsa_ver
-Requires: jackit-devel >= %jack_ver
-%if_enabled ladcca
-Requires: libladcca-devel >= %ladcca_ver
-%endif
 
 %description -n lib%name-devel
 FluidSynth is a software real-time synthesizer based on the
@@ -172,56 +141,40 @@ MIDI-синтезатора. FluidSynth также может воспроизв
 Этот пакет содержит статические библиотеки для %name
 
 %prep
-%ifdef cvs_date
-%setup -n %name
-%else
-%setup -n %name-%version
-%endif
-
-install -m755 %SOURCE1 ./autogen.sh
+%setup
 
 %build
-%ifdef cvs_date
-./autogen.sh
-%endif
-libtoolize
-NOCONFIGURE=1 ./autogen.sh
-%configure \
-	%{subst_enable static} \
-	%{subst_enable ladspa} \
-	%{subst_enable ladcca} \
-	%{subst_enable lash} \
-	--enable-oss-support \
-	--enable-alsa-support \
-	--enable-jack-support \
-	--enable-pulse-support
+%cmake -DLIB_INSTALL_DIR:PATH=lib \
+    -DINCLUDE_INSTALL_DIR:PATH=include \
+    -DCMAKE_BUILD_TYPE:STRING="Release" \
+    %{?_enable_lash:-Denable-lash:bool=true} \
+    %{?_enable_ladcca:-Denable-ladcca:bool=true} \
+    %{?_enable_ladspa:-Denable-ladspa:bool=true} \
+    %{?_enable_jack:-Denable-jack:bool=true} \
+    %{?_enable_pulseaudio:-Denable-pulseaudio:bool=true} \
+    %{?_enable_dbus:-Denable-dbus:bool=true}
 
-# Once there was an option for SSE, but buggy configure treats both
-# 'enable-SSE' and 'disable-SSE' as SSE-enabling option, thus resulting
-# binaries fail to work on most non-Intel processors:
-#
-#	%{subst_enable SSE} \
-
-%make_build
-%make -C doc update-docs
+%cmake_build
+%cmake_build doxygen
 
 %install
-%makeinstall
+%cmakeinstall_std
+cp -r BUILD/doc/api/html ./
 
 %files
-%_bindir/*
-%_man1dir/*
+%_bindir/%name
+%_man1dir/%name.1.*
 
 %files -n lib%name
-%_libdir/*.so.*
-%doc AUTHORS README THANKS NEWS
+%_libdir/lib%name.so.*
+%doc AUTHORS README.md THANKS NEWS
 
 %files -n lib%name-devel
 %_includedir/*
-%_libdir/*.so
-%_libdir/pkgconfig/*
-%doc ChangeLog TODO
-%doc doc/{api,html}
+%_libdir/lib%name.so
+%_pkgconfigdir/%name.pc
+%doc html
+%doc TODO
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -229,6 +182,9 @@ NOCONFIGURE=1 ./autogen.sh
 %endif
 
 %changelog
+* Fri Sep 22 2017 Yuri N. Sedunov <aris@altlinux.org> 1.1.7-alt1
+- updated to v1.1.7-26-geba43fa
+
 * Thu Sep 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1.1.6-alt3
 - rebuilt against libreadline.so.6
 - re-encoded spec to UTF-8
