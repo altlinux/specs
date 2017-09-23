@@ -1,14 +1,10 @@
-%def_without backport
 %def_without gnome2
+%def_without kde3
 %define gnome3ver 3.90
 
 Name: altlinux-freedesktop-menu
 Version: 0.65
-%if_without backport
-Release: alt1
-%else
-Release: alt0.M70P.1
-%endif
+Release: alt3
 
 Summary: Implementation of the freedesktop.org menu specification
 License: BSD or GPL
@@ -299,10 +295,11 @@ touch /etc/xdg/menus/lxde-applications.menu
 %verify(not mtime) %config %_sysconfdir/xdg/menus/mate-settings.menu
 %dir %_sysconfdir/xdg/menus/mate-settings-merged
 
-
+%if_with kde3
 %files kde3
 %verify(not mtime) %config %_sysconfdir/xdg/menus/kde3-applications.menu
 %dir %_sysconfdir/xdg/menus/kde3-applications-merged
+%endif
 
 %files generic
 %verify(not mtime) %config %_sysconfdir/xdg/menus/applications.menu
@@ -320,6 +317,12 @@ touch /etc/xdg/menus/lxde-applications.menu
 %_datadir/kde4/desktop-directories/altlinux-*.directory
 
 %changelog
+* Thu Sep 21 2017 Igor Vlasenko <viy@altlinux.ru> 0.65-alt3
+- disabled kde3
+
+* Mon Sep 11 2017 Michael Shigorin <mike@altlinux.org> 0.65-alt2
+- introduced kde3 knob (on by default)
+
 * Mon Jul 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1
 - xfce menu cleanup (closes: #28575)
 
