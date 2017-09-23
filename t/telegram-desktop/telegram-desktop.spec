@@ -4,7 +4,7 @@
 %def_with ffmpeg
 
 Name: telegram-desktop
-Version: 1.1.19
+Version: 1.1.23
 Release: alt1
 
 Summary: Telegram is a messaging app with a focus on speed and security
@@ -25,7 +25,7 @@ Patch4: 0004_API-ID.patch
 Patch5: 0005_Downgrade-Qt-version.patch
 Patch6: 0006_fix-static-qt-functions.patch
 Patch8: 0008_add_locales.patch
-Patch9: 0001-use-correct-executable-path.patch
+#Patch9: 0001-use-correct-executable-path.patch
 Patch14: 0014-get-language-name-and-country-name-from-QLocale.patch
 Patch15: 0015-disable-resource-fonts.patch
 Patch16: 0016-fix-lzma.patch
@@ -36,6 +36,9 @@ BuildRequires(pre): rpm-macros-kde-common-devel
 BuildRequires: gcc-c++ libstdc++-devel gyp cmake
 
 BuildRequires: qt5-base-devel libqt5-network libqt5-gui qt5-imageformats
+# needs for smiles and emojicons
+Requires: qt5-imageformats
+
 # for -lQt5PlatformSupport
 BuildRequires: qt5-base-devel-static
 
@@ -107,7 +110,7 @@ $ XDG_CURRENT_DESKTOP=NONE tdesktop
 %patch5 -p1
 %patch6 -p1
 %patch8 -p1
-%patch9 -p1
+#patch9 -p1
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
@@ -115,6 +118,8 @@ $ XDG_CURRENT_DESKTOP=NONE tdesktop
 cp %SOURCE2 Telegram/
 # MacOS things will conflicts with binary name, so delete Telegram dir
 rm -rf Telegram/Telegram/
+rm -f Telegram/SourceFiles/base/tests_main.cpp
+rm -f Telegram/SourceFiles/base/*_tests.cpp
 
 # set App ID
 subst "s|../../../TelegramPrivate/|../../|" Telegram/SourceFiles/config.h
@@ -161,6 +166,10 @@ ln -s %name %buildroot%_bindir/telegram
 %doc README.md
 
 %changelog
+* Sat Sep 23 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.23-alt1
+- new version 1.1.23 (with rpmrb script)
+- add qt5-imageformats (fixes missed smiles and emojicons)
+
 * Wed Aug 02 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.19-alt1
 - new version 1.1.19 (with rpmrb script)
 
