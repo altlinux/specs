@@ -1,12 +1,12 @@
 Name:           x2goclient
-Version:        4.1.0.0
-Release:        alt2
+Version:        4.1.0.1
+Release:        alt1
 Summary:        X2Go Client application (Qt4)
 
 Group:          Communications
 License:        GPLv2+
 URL:            http://www.x2go.org
-Source0:        http://code.x2go.org/releases/source/%{name}/%{name}-%{version}.tar.gz
+Source0:        %name-%version.tar
 # Drop clumsy attempt at Kerberos delegation
 # http://bugs.x2go.org/cgi-bin/bugreport.cgi?bug=731
 Patch0:         x2goclient-krb5.patch
@@ -142,6 +142,9 @@ ln -s ../../x2go/x2goplugin-apache.conf %buildroot%_sysconfdir/httpd/conf.d/x2go
 %_datadir/x2go/
 
 %changelog
+* Sat Sep 23 2017 Andrey Cherepanov <cas@altlinux.org> 4.1.0.1-alt1
+- New version
+
 * Sat Sep 09 2017 Andrey Cherepanov <cas@altlinux.org> 4.1.0.0-alt2
 - New version
 
