@@ -1,4 +1,4 @@
-%define ver_major 2.2
+%define ver_major 2.3
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
@@ -17,9 +17,11 @@ Url: https://github.com/hadess/%name
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gnome-common intltool gtk-doc
+%define gudev_ver 232
+
+BuildRequires: gnome-common gtk-doc
 BuildRequires: libgio-devel systemd-devel
-BuildRequires: libudev-devel libgudev-devel
+BuildRequires: libudev-devel libgudev-devel >= %gudev_ver
 %{?_enable_gtk_tests:BuildRequires: libgtk+3-devel}
 # for check
 BuildRequires: /proc dbus-tools-gui
@@ -80,6 +82,9 @@ Developer documentation for %name.
 
 
 %changelog
+* Sun Sep 24 2017 Yuri N. Sedunov <aris@altlinux.org> 2.3-alt1
+- 2.3
+
 * Fri Feb 17 2017 Yuri N. Sedunov <aris@altlinux.org> 2.2-alt1
 - 2.2
 
