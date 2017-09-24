@@ -1,4 +1,4 @@
-%define git_commit b2fca2a
+%define git_commit 625fa2c
 		    
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
@@ -9,14 +9,14 @@ Version: 27.5.0
 # %%ifndef git_commit
 # Release: alt2
 # %%else
-Release: alt0.git_7_%git_commit
+Release: alt1
 # %%endif
 
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 
 
-# git commit b2fca2a567fe2b824e2a90a8a522fc62c061d408
+# git commit 625fa2c7d29323f25c43c9af1a51e70aff95d744
 Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
@@ -66,7 +66,7 @@ Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
 Patch21: palemoon-build-el5-nss.patch
 Patch22: palemoon_rpath-27.5.0_v2.patch
 
-Patch23: palemoon_version-27.0.3.patch
+Patch23: palemoon_version-27.5.0.patch
 Patch24: palemoon-27.0.2-ui_picker_false.patch
 #Patch25: palemoon-27.4.0-blocklist.patch
 
@@ -196,7 +196,6 @@ export RPATH_PATH="$rpath"
 %patch20 -p1
 %patch24 -p1
 #patch26 -p1
-%patch23 -p1
 
 %patch21 -p1
 
@@ -213,6 +212,7 @@ tar -xf %SOURCE1
 %patch6  -p1
 %patch16 -p1
 %patch22 -p1
+%patch23 -p1
 
 #patch18 -p1
 
@@ -593,6 +593,9 @@ install -D -m 644 README.md ../
 
 # git commit b2fca2a567fe2b824e2a90a8a522fc62c061d408
 %changelog
+* Sat Sep 23 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.5.0-alt1
+- New Version - Release 27.5.0
+
 * Thu Sep 07 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.5.0-alt0.git_7_b2fca2a
 - Update from github commit b2fca2a567fe2b824e2a90a8a522fc62c061d408
 
