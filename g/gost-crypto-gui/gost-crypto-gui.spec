@@ -1,8 +1,8 @@
 %define gitrev 201ea87
 
-Name: gostcryptogui
+Name: gost-crypto-gui
 Version: 0.3
-Release: alt0.3.a.git%gitrev
+Release: alt0.4.a.git%gitrev
 Summary: A PyQt GUI for performing cryptographic operations over files using GOST algorithms
 
 License: MIT
@@ -20,6 +20,9 @@ Requires: nautilus-python
 BuildArch: noarch
 
 Source0: %name.tar
+
+Provides:  gostcryptogui = %EVR
+Obsoletes: gostcryptogui < %EVR
 
 %description
 A PyQt GUI for performing cryptographic operations over files using GOST
@@ -69,6 +72,9 @@ rm -f %buildroot%_iconsdir/gost-crypto-gui.png
 %_iconsdir/*.png
 
 %changelog
+* Sun Sep 24 2017 Andrey Cherepanov <cas@altlinux.org> 0.3-alt0.4.a.git201ea87
+- Rename to gost-crypto-gui as original upstream name
+
 * Thu Aug 24 2017 Andrey Cherepanov <cas@altlinux.org> 0.3-alt0.3.a.git201ea87
 - (upstream fix) Single quote in certificate fields
 
