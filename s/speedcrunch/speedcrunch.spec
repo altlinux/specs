@@ -1,6 +1,6 @@
 Name: speedcrunch
-Version: 0.11
-Release: alt1.1
+Version: 0.12
+Release: alt1
 Summary: A fast power user calculator
 Group: Office
 License: GPLv2
@@ -8,7 +8,7 @@ Url: http://www.speedcrunch.org/
 Source0: %name-%version.tar.gz
 Source1: %name.desktop
 
-BuildRequires: ImageMagick-tools cmake doxygen fonts-ttf-dejavu fonts-type1-urw gcc-c++ libqt4-devel
+BuildRequires: /usr/bin/convert cmake doxygen qt5-tools-devel
 
 %description
 SpeedCrunch is a fast, high precision and powerful desktop calculator.
@@ -20,8 +20,6 @@ full keyboard-friendly and more than 15 built-in math function.
 %setup -q
 
 %build
-export PATH=$PATH:%_qt4dir/bin
-lrelease src/resources/locale/*.ts
 cd src && \
 cmake \
         -DCMAKE_INSTALL_PREFIX=%_prefix \
@@ -37,16 +35,15 @@ cd src
 
 # icons
 %__mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
-cd ..
-convert -resize 48x48 gfx/%name.svg %buildroot%_liconsdir/%name.png
-convert -resize 32x32 gfx/%name.svg %buildroot%_niconsdir/%name.png
-convert -resize 16x16 gfx/%name.svg %buildroot%_miconsdir/%name.png
+convert -resize 48x48 resources/%name.png %buildroot%_liconsdir/%name.png
+convert -resize 32x32 resources/%name.png %buildroot%_niconsdir/%name.png
+convert -resize 16x16 resources/%name.png %buildroot%_miconsdir/%name.png
 
 # docs
-cd doc && doxygen Doxyfile
+cd ../doc/legacy && doxygen Doxyfile
 
 %files
-%doc doc/*.pdf doc/*.odt doc/*.docbook doc/html
+%doc doc/legacy/*.pdf doc/legacy/*.odt doc/legacy/*.docbook doc/legacy/html
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_miconsdir/%name.png
@@ -54,6 +51,12 @@ cd doc && doxygen Doxyfile
 %_liconsdir/%name.png
 
 %changelog
+* Sun Sep 24 2017 Motsyo Gennadi <drool@altlinux.ru> 0.12-alt1
+- 0.12
+
+* Wed Jun 15 2016 Motsyo Gennadi <drool@altlinux.ru> 0.11.1-alt1
+- 0.11.1
+
 * Fri Aug 07 2015 Motsyo Gennadi <drool@altlinux.ru> 0.11-alt1.1
 - fix BuildRequires
 
