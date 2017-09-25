@@ -1,8 +1,8 @@
 %define rname plasma-integration
 
 Name: kf5-%rname
-Version: 5.10.4
-Release: alt2%ubt
+Version: 5.10.5
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -50,6 +50,9 @@ Qt applications when running on a KDE Plasma workspace.
 %_K5plug/platformthemes/KDEPlasmaPlatformTheme.so
 
 %changelog
+* Mon Sep 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt1%ubt
+- new version
+
 * Fri Jul 28 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt2%ubt
 - fix mouse middle-click on QSystemTrayIcon
 
