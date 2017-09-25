@@ -5,7 +5,7 @@
 
 Name: branding-%brand-schoolmaster
 Version: 6.0.0
-Release: alt46
+Release: alt47
 BuildArch: noarch
 
 %define theme %name
@@ -150,7 +150,6 @@ BuildArch: noarch
 Summary: KDE3 settings for %Brand %version %Theme
 License: Distributable
 Group: Graphical desktop/KDE
-Requires: ksplash-engine-moodin
 PreReq: %name-graphics
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-kde3-settings ";done )
 
@@ -420,6 +419,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Mon Sep 25 2017 Sergey V Turchin <zerg at altlinux dot org> 6.0.0-alt47
+- don't require ksplash-engine-moodin
+
 * Mon Apr 08 2013 Sergey V Turchin <zerg at altlinux dot org> 6.0.0-alt46
 - fix requires
 
