@@ -1,5 +1,5 @@
 Name: upx
-Version: 3.91
+Version: 3.94
 Release: alt1
 
 Summary: The Ultimate Packer for eXecutables
@@ -7,12 +7,11 @@ License: GPLv2+
 Group: Archiving/Compression
 
 Url: http://upx.sourceforge.net
-Source: %name-%version-src.tar.bz2
+Source: v%version.tar.gz
 
 # Automatically added by buildreq on Tue Dec 23 2008
 BuildRequires: gcc-c++ libucl-devel zlib-devel
 BuildRequires: perl-podlators
-# TODO: build with LZMA SDK from http://www.7-zip.org/sdk.html
 
 %description
 UPX is an advanced executable packer for several different executable formats.
@@ -20,11 +19,10 @@ It achieves an excellent compression ratio and offers very fast decompression.
 Your executables suffer no memory overhead or other drawbacks.
 
 %prep
-%setup -n %name-%version-src
+%setup
 
 sed -i 's/-O2/%optflags/' src/Makefile
-sed -i 's/-Werror//' src/Makefile
-sed -i 's/\(char [*]delim\)/const \1/g' src/pefile.cpp
+sed -i 's/CHECK_WHITESPACE =.*/CHECK_WHITESPACE =/' src/Makefile
 
 %build
 %make_build -C src exeext=
@@ -40,6 +38,9 @@ install -pD -m644 doc/upx.1 %buildroot%_man1dir/upx.1
 %_man1dir/upx*
 
 %changelog
+* Mon Sep 25 2017 Fr. Br. George <george@altlinux.ru> 3.94-alt1
+- Autobuild version bump to 3.94
+
 * Tue Oct 01 2013 Fr. Br. George <george@altlinux.ru> 3.91-alt1
 - Autobuild version bump to 3.91
 
