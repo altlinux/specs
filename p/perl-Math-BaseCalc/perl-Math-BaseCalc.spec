@@ -1,20 +1,23 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define upstream_name    Math-BaseCalc
-%define upstream_version 1.017
+%define upstream_version 1.019
+
+%{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    1.019
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    %{upstream_name} perl module
 License:    GPL or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/K/KW/KWILLIAMS/%{upstream_name}-%{version}.tar.gz
+Source0:    ftp://ftp.cpan.org/pub/CPAN/modules/by-module/Math/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Carp.pm)
 BuildRequires: perl(Config.pm)
@@ -33,11 +36,11 @@ number bases.  You may define your own digit sets, or use any of
 several predefined digit sets.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 
-CFLAGS="$RPM_OPT_FLAGS" %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+CFLAGS="$RPM_OPT_FLAGS" %__perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make
 make test
 
@@ -49,6 +52,9 @@ make PREFIX=$RPM_BUILD_ROOT%{_prefix} install DESTDIR=$RPM_BUILD_ROOT
 %{perl_vendor_privlib}/Math/*
 
 %changelog
+* Mon Sep 25 2017 Igor Vlasenko <viy@altlinux.ru> 1.019-alt1_1
+- update by mgaimport
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.019-alt1
 - automated CPAN update
 
