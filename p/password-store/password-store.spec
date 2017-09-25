@@ -2,7 +2,7 @@
 
 Name:    password-store
 Version: 1.7.1
-Release: alt1
+Release: alt2
 
 Summary: a simple password manager using standard Unix tools
 Summary(ru_RU.UTF-8): простой и использующий стандартные средства менеджер паролей
@@ -22,6 +22,7 @@ Patch0:  %name-%version-%release.patch
 
 Patch1:  %name-alt-1.6.5-shebang.patch
 Patch2:  %name-alt-1.7-dirtree.patch
+Patch3:  %name-alt-1.7.1-completion.patch
 
 BuildRequires(pre): rpm-build-licenses rpm-build-vim
 
@@ -66,6 +67,7 @@ Password changes can be tracked using git.
 
 %patch1
 %patch2
+%patch3
 
 mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
@@ -110,6 +112,9 @@ rmdir -- contrib/vim/
 
 
 %changelog
+* Mon Sep 25 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.7.1-alt2
+- Fix Bash completion code
+
 * Sat Jul 15 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.7.1-alt1
 - New version
 
