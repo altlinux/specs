@@ -1,6 +1,6 @@
 Name: tatham-puzzles
-Version: 10286
-Release: alt1.1
+Version: 20170925
+Release: alt1
 License: MIT
 Group: Games/Puzzles
 Url: http://www.chiark.greenend.org.uk/~sgtatham/puzzles/
@@ -21,11 +21,12 @@ BuildRequires: texinfo
 
 %description
 A collection of little puzzle games you can pop up in a window and play for two or three minutes while you take a break from whatever else you were doing.
-Their names: Black Box, Bridges, Cube, Dominosa, Fifteen, Filling, Flip, Galaxies, Guess, Inertia, Keen, Light Up, Loopy, Magnets, Map, Mines, Net, Netslide, Pattern, Pearl, Pegs, Range, Rectangles, Same Game, Signpost, Singles, Sixteen, Slant, Solo, Tents, Towers, Twiddle, Undead, Unequal, Unruly, Untangle. Rules, descriptions and tips can be found in documentation.
+Their names: Black Box, Bridges, Cube, Dominosa, Fifteen, Filling, Flip, Flood, Galaxies, Guess, Inertia, Keen, Light Up, Loopy, Magnets, Map, Mines, Net, Netslide, Palisade, Pattern, Pearl, Pegs, Range, Rectangles, Same Game, Signpost, Singles, Sixteen, Slant, Solo, Tents, Towers, Tracks, Twiddle, Undead, Unequal, Unruly, Untangle. Rules, descriptions and tips can be found in documentation.
 
 %description -l ru_RU.UTF-8
 Коллекция из небольших логических головоломок класса "открой в окошке, потыкай пять минут -- отдохни"; сложность можно настроить.
-Названия головоломок: Black Box, Bridges, Cube, Dominosa, Fifteen, Filling, Flip, Galaxies, Guess, Inertia, Keen, Light Up, Loopy, Magnets, Map, Mines, Net, Netslide, Pattern, Pearl, Pegs, Range, Rectangles, Same Game, Signpost, Singles, Sixteen, Slant, Solo, Tents, Towers, Twiddle, Undead, Unequal, Unruly, Untangle. Описания, правила и подсказки -- в докуметации.
+Названия головоломок: Black Box, Bridges, Cube, Dominosa, Fifteen, Filling, Flip, Flood, Galaxies, Guess, Inertia, Keen, Light Up, Loopy, Magnets, Map, Mines, Net, Netslide, Palisade, Pattern, Pearl, Pegs, Range, Rectangles, Same Game, Signpost, Singles, Sixteen, Slant, Solo, Tents, Towers, Tracks, Twiddle, Undead, Unequal, Unruly, Untangle. Rules, descriptions and tips can be found in documentation.
+Описания, правила и подсказки -- в докуметации.
 %package -n %name-solvers
 Summary: Stand-alone solvers for some of the %name puzzles
 Summary(ru_RU.UTF-8): Набор "решалок" к некоторым головоломкам из %name
@@ -74,7 +75,7 @@ xvfb-run ./mkicons
 sh %SOURCE3 desktop
 
 # hack a little
-sed -i 's/Icon=rectangles/Icon=rect/' rectangles.desktop
+##sed -i 's/Icon=rectangles/Icon=rect/' rectangles.desktop
 
 halibut --info=%name.info puzzles.but
 sed -i '/^$/a\
@@ -101,7 +102,8 @@ install *.info* %buildroot%_infodir/
 %_gamesbindir/*solver
 
 %files
-%doc README *.txt www.chiark.greenend.org.uk/~sgtatham/puzzles/* icons/*-web.png
+%doc README *.txt www.chiark.greenend.org.uk/~sgtatham/puzzles/* 
+#icons/*-web.png
 %exclude %_gamesbindir/*solver
 %_gamesbindir/*
 %_desktopdir/*
@@ -113,6 +115,12 @@ install *.info* %buildroot%_infodir/
 %_infodir/*%{name}*
 
 %changelog
+* Mon Sep 25 2017 Fr. Br. George <george@altlinux.ru> 20170925-alt1
+- Manual update
+
+* Thu Nov 17 2016 Fr. Br. George <george@altlinux.ru> 20161031-alt1
+- Upstream switch to GH
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 10286-alt1.1
 - NMU: added BR: texinfo
 
