@@ -1,32 +1,35 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test/More.pm) perl-Module-Build perl-podlators perl(Module/Build/Tiny.pm)
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define upstream_name    Text-Haml
-%define upstream_version 0.990117
+%define upstream_version 0.990118
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    0.990118
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Haml Perl implementation
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/V/VT/VTI/%{upstream_name}-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Text/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Carp.pm)
 BuildRequires: perl(Data/Section/Simple.pm)
+BuildRequires: perl(Digest/MD5.pm)
 BuildRequires: perl(Encode.pm)
 BuildRequires: perl(File/Basename.pm)
 BuildRequires: perl(File/Spec.pm)
 BuildRequires: perl(IO/File.pm)
-BuildRequires: perl(Module/Build.pm)
+BuildRequires: perl(Module/Build/Tiny.pm)
 BuildRequires: perl(Scalar/Util.pm)
 BuildRequires: perl(URI/Escape.pm)
+BuildRequires: perl(Test/More.pm)
 BuildArch:  noarch
 Source44: import.info
 
@@ -40,7 +43,7 @@ http://github.com/norman/haml-spec and supports only cross-language Haml
 features. Do not expect Ruby specific things to work.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 %{__perl} Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
@@ -54,10 +57,14 @@ features. Do not expect Ruby specific things to work.
 rm -f %{buildroot}/%{perl_vendor_privlib}/Text/README.pod
 
 %files
-%doc Changes LICENSE META.json META.yml README.md
+%doc Changes LICENSE META.json META.yml 
 %{perl_vendor_privlib}/*
 
+
 %changelog
+* Mon Sep 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.990118-alt1_1
+- update by mgaimport
+
 * Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.990118-alt1
 - automated CPAN update
 
