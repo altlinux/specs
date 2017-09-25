@@ -51,7 +51,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             pki-core
 Version:          10.2.6
-Release:          alt5_19jpp8
+Release:          alt6_19jpp8
 Summary:          Certificate System - PKI Core Components
 URL:              http://pki.fedoraproject.org/
 License:          GPLv2
@@ -429,6 +429,8 @@ Provides:         pki-java-tools = %{version}-%{release}
 Obsoletes:        pki-native-tools < %{version}-%{release}
 Obsoletes:        pki-java-tools < %{version}-%{release}
 
+# https://bugzilla.altlinux.org/show_bug.cgi?id=33037
+Conflicts: strongswan
 Requires:         openldap-clients
 Requires:         libnss
 Requires:         nss-utils
@@ -1143,6 +1145,9 @@ echo >> /var/log/pki/pki-server-upgrade-%{version}.log 2>&1
 %endif # %{with server}
 
 %changelog
+* Mon Sep 25 2017 Igor Vlasenko <viy@altlinux.ru> 10.2.6-alt6_19jpp8
+- added Conflicts: strongswan (closes: #33037)
+
 * Wed Feb 15 2017 Igor Vlasenko <viy@altlinux.ru> 10.2.6-alt5_19jpp8
 - thanks to sem@
 - fixed build
