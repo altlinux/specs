@@ -2,7 +2,7 @@
 
 Name: pylint
 Version: 1.5.1
-Release: alt1
+Release: alt1%ubt
 
 Summary: Python code static checker
 License: GPLv2+
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 
 %setup_python_module %name
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: python-module-singledispatch python-module-astroid-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -113,6 +114,9 @@ PYTHONPATH=$(pwd)/build/lib/ py.test ||:
 %endif
 
 %changelog
+* Mon Sep 25 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.5.1-alt1%ubt
+- Rebuild with universal build tag (aka ubt macros)
+
 * Thu Jun 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.1-alt1
 - Updated to upstream release 1.5.1.
 
