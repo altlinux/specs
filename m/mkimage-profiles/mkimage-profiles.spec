@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,9 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Sep 25 2017 Michael Shigorin <mike@altlinux.org> 1.2.3-alt1
+- p8+
+
 * Mon Sep 11 2017 Michael Shigorin <mike@altlinux.org> 1.2.2-alt1
 - regular-engineering
 
