@@ -6,7 +6,7 @@
 %define distro_name Regular
 
 Name: branding-%brand-%theme
-Version: 20170109
+Version: 20170925
 Release: alt1
 
 Url: http://en.altlinux.org
@@ -147,7 +147,6 @@ KDE4 settings for %Brand %version %Theme
 Summary: KDE3 settings for %Brand %version %Theme
 License: Distributable
 Group: Graphical desktop/KDE
-Requires: ksplash-engine-moodin
 PreReq: %name-graphics
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-kde3-settings ";done )
 
@@ -466,6 +465,9 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 
 
 %changelog
+* Mon Sep 25 2017 Michael Shigorin <mike@altlinux.org> 20170925-alt1
+- don't require ksplash-engine-moodin (zerg@)
+
 * Mon Jan 09 2017 Michael Shigorin <mike@altlinux.org> 20170109-alt1
 - os-release: better PRETTY_NAME (thanks snejok@) and VERSION
 - notes: updated/fixed index pages
