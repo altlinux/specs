@@ -1,8 +1,9 @@
 %define _name umockdev
 %define api_ver 1.0
+%def_disable check
 
 Name: lib%_name
-Version: 0.8.13
+Version: 0.9.3
 Release: alt1
 
 Summary: Hardware devices mocking library for creating unit tests and bug reporting
@@ -33,6 +34,7 @@ affected hardware.
 %package devel
 Summary: Development files for %name
 Group: Development/C
+Requires: /proc
 Requires: %name = %version-%release
 
 %description devel
@@ -61,6 +63,7 @@ Summary: GObject introspection devel data for the %name
 Group: Development/Other
 BuildArch: noarch
 Requires: %name-gir = %version-%release
+Requires: %name-devel = %version-%release
 
 %description gir-devel
 GObject introspection devel data for the %_name library.
@@ -84,7 +87,7 @@ GObject introspection devel data for the %_name library.
 install -pD -m644 NEWS %buildroot%pkg_docdir
 
 %check
-#%make check
+%make check
 
 %files
 %_bindir/%_name-record
@@ -110,6 +113,9 @@ install -pD -m644 NEWS %buildroot%pkg_docdir
 %_girdir/UMockdev-%api_ver.gir
 
 %changelog
+* Sun Sep 24 2017 Yuri N. Sedunov <aris@altlinux.org> 0.9.3-alt1
+- 0.9.3
+
 * Mon Feb 13 2017 Yuri N. Sedunov <aris@altlinux.org> 0.8.13-alt1
 - first build for Sisyphus
 
