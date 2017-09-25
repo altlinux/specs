@@ -2,9 +2,12 @@
 %def_disable ibmlibs
 %set_verify_elf_method no
 
+# p8 support uses this macro
+%define qIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
+
 Name: mono
 Version: 5.0.1.1
-Release: alt7%ubt
+Release: alt8%ubt
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -22,6 +25,7 @@ Source3: monolite.tar.gz
 Source4: mono-cert-sync.filetrigger
 Patch1: %name-%version-alt-linking1.patch
 Patch2: %name-%version-alt-linking2.patch
+Patch3: %name-%version-alt-monodoc-sourcesdir.patch
 
 BuildRequires(pre): rpm-build-mono >= 2.0
 BuildRequires(pre): rpm-build-ubt
@@ -170,6 +174,11 @@ Requires: %name-mono2-compat-devel
 Conflicts: mono4-devel-full < %version-%release
 Obsoletes: mono4-devel-full
 Provides: mono4-devel-full = %version-%release
+%qIF_ver_lteq %ubt_id M80P
+Conflicts: %name-nunit-devel < %version-%release
+Obsoletes: %name-nunit-devel
+Provides: %name-nunit-devel = %version-%release
+%endif
 
 %description devel-full
 Virtual package containing all devel packages from mono
@@ -183,6 +192,12 @@ Requires: glib2-devel
 Conflicts: mono4-devel < %version-%release
 Obsoletes: mono4-devel
 Provides: mono4-devel = %version-%release
+%qIF_ver_lteq %ubt_id M80P
+Conflicts: mono-mcs < %version-%release
+Provides: mono-mcs = %version-%release
+Obsoletes: mono-mcs
+Requires: rpm-build-mono
+%endif
 
 %description devel
 This package completes the Mono developer toolchain with the mono profiler,
@@ -352,20 +367,25 @@ Conflicts: mono4-ibm-data-db2 < %version-%release
 Obsoletes: mono4-ibm-data-db2
 Provides: mono4-ibm-data-db2 = %version-%release
 
-%description  ibm-data-db2
+%description ibm-data-db2
 This package contains the ADO.NET Data provider for the IBM DB2
 Universal database.
 %endif
 
-%package  monodoc
+%package monodoc
 Summary: The %name documentation system
 Group: Documentation
 Requires: %name-core = %version-%release
 Conflicts: mono4-monodoc < %version-%release
 Obsoletes: mono4-monodoc
 Provides: mono4-monodoc = %version-%release
+%qIF_ver_lteq %ubt_id M80P
+Conflicts: monodoc < %version-%release
+Provides: monodoc = %version-%release
+Obsoletes: monodoc
+%endif
 
-%description  monodoc
+%description monodoc
 monodoc is the documentation package for the mono .NET environment
 
 %package  monodoc-devel
@@ -376,8 +396,13 @@ Requires: %name-core = %version-%release
 Conflicts: mono4-monodoc-devel < %version-%release
 Obsoletes: mono4-monodoc-devel
 Provides: mono4-monodoc-devel = %version-%release
+%qIF_ver_lteq %ubt_id M80P
+Conflicts: monodoc-devel < %version-%release
+Provides: monodoc-devel = %version-%release
+Obsoletes: monodoc-devel
+%endif
 
-%description  monodoc-devel
+%description monodoc-devel
 Development file for monodoc
 
 %package nunit
@@ -442,6 +467,7 @@ Development files for libmono.
 %setup -n %name-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 tar xzf %SOURCE1
 %if_enabled bootstrap
@@ -544,10 +570,17 @@ mkdir -p  %buildroot%_monodir/4.5-api/
 # install file trigger
 install -pD -m755 %SOURCE4 %buildroot%_rpmlibdir/mono-cert-sync.filetrigger
 
+%qIF_ver_lteq %ubt_id M80P
+ln -s mcs %buildroot%_bindir/gmcs
+%endif
+
 %find_lang mcs
 
 
 %files core -f mcs.lang
+%qIF_ver_lteq %ubt_id M80P
+%_bindir/gmcs
+%endif
 %doc  CONTRIBUTING.md LICENSE COPYING.LIB  NEWS README.md PATENTS.TXT
 %_rpmlibdir/mono-cert-sync.filetrigger
 %_sysconfdir/mono-4.5/
@@ -996,11 +1029,11 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %gac_dll IBM.Data.DB2
 %endif
 
-%files  monodoc
+%files monodoc
 %_monogacdir/monodoc
 %_monodir/monodoc/*
 %ifnarch  ppc
-%_libexecdir/monodoc
+%_datadir/monodoc
 %endif
 %mono_bin mdoc
 %_bindir/mod
@@ -1050,6 +1083,10 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Mon Sep 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt8%ubt
+- Updated provides.
+- Fixed monodoc directory.
+
 * Mon Sep 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt7%ubt
 - Added file trigger to run cert-sync tool on certificates update.
 

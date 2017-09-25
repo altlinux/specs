@@ -3,7 +3,7 @@ Url: http://go-mono.com/
 License: X11/MIT
 Group: System/Servers
 Version: 4.4
-Release: alt3%ubt
+Release: alt4%ubt
 Summary: Small Web Server Hosting ASP.NET
 
 Source: %name-%version.tar.bz2
@@ -69,12 +69,15 @@ install -m 755 tools/mono-asp-apps/mono-asp-apps %buildroot%_bindir/mono-asp-app
 %_monogacdir/fastcgi-mono-server4
 %_monogacdir/mod-mono-server4
 %_monogacdir/xsp4
-%_libexecdir/monodoc/sources/Mono.WebServer.*
-%_libexecdir/monodoc/sources/Mono.FastCGI.*
+%_monodocdir/Mono.WebServer.*
+%_monodocdir/Mono.FastCGI.*
 %_libexecdir/xs*
 %_mandir/*/*
 
 %changelog
+* Mon Sep 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4-alt4%ubt
+- Rebuilt with corrected monodoc directory.
+
 * Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4-alt3%ubt
 - Rebuilt with support of %%ubt macro.
 
