@@ -2,7 +2,7 @@
 
 Name: rawstudio
 Version: %ver_major
-Release: alt0.3
+Release: alt0.4
 
 Summary: Rawstudio is an open source raw-image converter written in GTK+
 License: GPLv2+
@@ -16,9 +16,9 @@ Source: %name-%version.tar
 Patch1: rawstudio-2.0-fc-lensfun.patch
 Patch2: rawstudio-2.1-alt-lfs.patch
 
-BuildRequires: gcc-c++ libGConf-devel libdbus-devel libexiv2-devel libfftw3-devel libflickcurl-devel
-BuildRequires: libgphoto2-devel libgtk+2-devel libjpeg-devel liblcms-devel liblensfun-devel libpng-devel
-BuildRequires: libsqlite3-devel libssl-devel libtiff-devel libosm-gps-map-devel
+BuildRequires: gcc-c++ libappstream-glib-devel libGConf-devel libdbus-devel libexiv2-devel libfftw3-devel libflickcurl-devel
+BuildRequires: libgphoto2-devel libgtk+3-devel libjpeg-devel liblcms-devel liblensfun-devel libpng-devel
+BuildRequires: libsqlite3-devel libssl-devel libtiff-devel libosm-gps-map-devel libxml2-devel
 
 %description
 Rawstudio can read and convert RAW-images from most digital cameras.
@@ -45,18 +45,24 @@ glib-gettextize -c -f
 %_bindir/%name
 %_libdir/%name/
 %_datadir/%name/
-%_libdir/lib%name-%ver_major.so.*
+%_libdir/lib%name-%ver_major.so
+%_libdir/lib%name.so
 %_datadir/rawspeed/
 %_pixmapsdir/*
 %_iconsdir/%name.png
 #%_liconsdir/*
 %_desktopdir/%name.desktop
+%_datadir/appdata/%name.appdata.xml
 
 %exclude %_includedir/%name-%ver_major/
-%exclude %_libdir/*.so
+#%exclude %_libdir/*.so
 %exclude %_pkgconfigdir
 
 %changelog
+* Mon Sep 25 2017 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt0.4
+- updated to v2.0-589-g003dd4f (ported to GTK+3)
+- built against libexiv2.so.26
+
 * Thu Jan 21 2016 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt0.3
 - rebuilt against liblensfun.so.1
 
