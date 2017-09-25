@@ -11,7 +11,7 @@ Name: adobe-flash-player-ppapi
 %define ver_fake   27
 %define ver_ix86   27.0.0.130
 %define ver_x86_64 27.0.0.130
-Release: alt1%ubt
+Release: alt2%ubt
 Epoch: 3
 
 %define ver_real %ver_fake
@@ -127,6 +127,7 @@ echo "At this moment no x86 version of %name"
 %_iconsdir/hicolor/*/apps/flash-player-properties.*
 %endif
 #
+%dir %browser_ppapi_plugins_path2
 %ifarch x86_64
 %if_enabled include_x86_64
 %browser_ppapi_plugins_path/*
@@ -140,6 +141,9 @@ echo "At this moment no x86 version of %name"
 %endif
 
 %changelog
+* Mon Sep 25 2017 Sergey V Turchin <zerg@altlinux.org> 3:27-alt2%ubt
+- package /usr/lib/pepperflashplugin-nonfree directory
+
 * Thu Sep 21 2017 Sergey V Turchin <zerg@altlinux.org> 3:27-alt1%ubt
 - new version
 - security fixes: CVE-2017-11281, CVE-2017-11282
