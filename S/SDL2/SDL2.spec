@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: SDL2
-Version: 2.0.5
-Release: alt2
+Version: 2.0.6
+Release: alt1%ubt
 
 Summary: Simple DirectMedia Layer
 License: zlib
@@ -13,22 +13,20 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source: http://www.libsdl.org/release/%name-%version.tar.gz
 
+BuildPreReq: rpm-build-ubt
+
+BuildRequires: fcitx-devel
 BuildRequires: gcc-c++
-BuildRequires: libGL-devel
+BuildRequires: glibc-kernheaders-generic
 BuildRequires: libGLES-devel
-BuildRequires: libICE-devel
 BuildRequires: libXScrnSaver-devel
-BuildRequires: libXcursor-devel
-BuildRequires: libXi-devel
-BuildRequires: libXinerama-devel
-BuildRequires: libXrandr-devel
 BuildRequires: libXxf86vm-devel
 BuildRequires: libalsa-devel
 BuildRequires: libaudio-devel
-BuildRequires: libdbus-devel
 BuildRequires: libesd-devel
 BuildRequires: libibus-devel
 BuildRequires: libpulseaudio-devel
+BuildRequires: libsamplerate-devel
 BuildRequires: libudev-devel
 
 %description
@@ -48,7 +46,6 @@ multiple platforms.
 %package -n lib%name-devel
 Summary: Libraries, includes and more to develop SDL applications.
 Group: Development/C
-Requires: lib%name = %version-%release
 # Since 2.0.5, `sdl2-config --libs` forces new dtags;
 # the support for RUNPATH (a new tag) has been added in:
 Conflicts: rpm-build < 4.0.4-alt100.96
@@ -65,7 +62,6 @@ to develop SDL applications.
 %package -n lib%name-devel-static
 Summary: Static libraries to develop SDL applications.
 Group: Development/C
-Requires: lib%name-devel = %version-%release
 
 %description -n lib%name-devel-static
 This is the Simple DirectMedia Layer, a generic API that provides low
@@ -107,6 +103,9 @@ This is the static libraries you can use to develop SDL applications.
 %endif
 
 %changelog
+* Mon Sep 25 2017 Nazarov Denis <nenderus@altlinux.org> 2.0.6-alt1%ubt
+- Version 2.0.6
+
 * Wed Nov 30 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.5-alt2
 - Conflicts: rpm-build < 4.0.4-alt100.96 (which adds support for
   RUNPATH) because `sdl2-config --libs` forces new dtags since 2.0.5.
