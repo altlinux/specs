@@ -13,7 +13,7 @@
 
 Name: clamav
 Version: 0.99.2
-Release: alt2
+Release: alt3
 %define abiversion 7
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -51,6 +51,8 @@ Patch1: clamav-config.patch
 Patch2: freshclam-config.patch
 
 Patch20: clamav-0.99-pkgconfig.patch
+Patch6418: cve-2017-6418.patch
+Patch6420: cve-2017-6420.patch
 
 # Package with clamd should require libclamav, not vice versa.
 # Corresponding libclamav version need to be updated before, or clamd restart may fail!
@@ -136,6 +138,8 @@ database automatically. It uses the freshclam(1) utility for this task.
 %patch2 -p1
 
 %patch20 -p1
+%patch6418 -p1
+%patch6420 -p1
 
 %build
 # fixed RPATH issue (0.97.3 tarball built with wrong libtool)
@@ -321,6 +325,11 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Mon Sep 25 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.99.2-alt3
+- Fixes:
+  + CVE-2017-6418 remote attackers can cause a denial of service (out-of-bounds read) via a crafted e-mail message
+  + CVE-2017-6420 remote attackers can cause a denial of service (use-after-free) via a crafted PE file with WWPack compression
+
 * Tue Jun 13 2017 Sergey Novikov <sotor@altlinux.org> 0.99.2-alt2
 - Fix build using -std=gnu++98
 
