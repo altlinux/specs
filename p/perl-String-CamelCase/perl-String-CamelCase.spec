@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist String-CamelCase
 Name: perl-%dist
-Version: 0.02
+Version: 0.03
 Release: alt1
 
 Summary: CamelCase, de-camelcase
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/H/HI/HIO/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -19,7 +20,7 @@ BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
 CamelCase, de-camelcase
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -32,5 +33,8 @@ CamelCase, de-camelcase
 %perl_vendor_privlib/String
 
 %changelog
+* Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
+- automated CPAN update
+
 * Tue Nov 15 2011 Alexey Tourbin <at@altlinux.ru> 0.02-alt1
 - initial revision
