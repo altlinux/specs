@@ -1,22 +1,23 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test/Pod.pm) perl-Module-Build perl-podlators
+BuildRequires: perl(Test/Pod.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define upstream_name    LWP-Protocol-PSGI
-%define upstream_version 0.09
+%define upstream_version 0.10
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    0.10
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Override LWP's HTTP/HTTPS backend with your own PSGI applciation
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/M/MI/MIYAGAWA/%{upstream_name}-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/LWP/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(HTTP/Message/PSGI.pm)
 BuildRequires: perl(LWP.pm)
@@ -41,7 +42,7 @@ without modifying the calling code or its internals.
   use LWP::Protocol::PSGI;
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 %__perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
@@ -55,10 +56,13 @@ without modifying the calling code or its internals.
 ./Build install --destdir=%{buildroot}
 
 %files
-%doc Changes LICENSE META.json META.yml README
+%doc Changes LICENSE META.json META.yml  README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Sep 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_1
+- update by mgaimport
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - automated CPAN update
 
