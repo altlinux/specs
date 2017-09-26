@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist POE-Component-IRC
 Name: perl-%dist
-Version: 6.88
+Version: 6.90
 Release: alt1
 
 Summary: A fully event-driven IRC client dist
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BI/BINGOS/POE-Component-IRC-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BI/BINGOS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -23,7 +23,7 @@ which provides a convenient way for POE applications to create a tiny
 IRC client session and send and receive IRC events through it.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -32,10 +32,13 @@ IRC client session and send and receive IRC events through it.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes docs examples
 %perl_vendor_privlib/POE
 
 %changelog
+* Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 6.90-alt1
+- automated CPAN update
+
 * Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 6.88-alt1
 - automated CPAN update
 
