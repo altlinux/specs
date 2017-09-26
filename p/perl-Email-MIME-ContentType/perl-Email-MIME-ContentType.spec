@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Email-MIME-ContentType
 Name: perl-%dist
-Version: 1.021
+Version: 1.022
 Release: alt1
 
 Summary: Parse a MIME Content-Type Header
@@ -36,6 +36,9 @@ attributes.
 %perl_vendor_privlib/Email
 
 %changelog
+* Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 1.022-alt1
+- automated CPAN update
+
 * Wed Aug 30 2017 Igor Vlasenko <viy@altlinux.ru> 1.021-alt1
 - automated CPAN update
 
