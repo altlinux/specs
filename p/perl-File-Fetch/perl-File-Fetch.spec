@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-Fetch
 Name: perl-%dist
-Version: 0.52
+Version: 0.54
 Release: alt1
 
 Summary: A generic file fetching mechanism
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BI/BINGOS/File-Fetch-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BI/BINGOS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ any file pointed to by a "ftp", "http", "file", or "rsync" uri by a number
 of different means.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 # disable live tests
@@ -37,6 +37,9 @@ export PERL_CORE=1
 %perl_vendor_privlib/File
 
 %changelog
+* Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 0.54-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1
 - automated CPAN update
 
