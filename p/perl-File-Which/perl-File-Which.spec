@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-File-Which
-Version: 1.21
+Version: 1.22
 Release: alt1
 
 Summary: Portable implementation of the `which' utility
@@ -27,7 +27,7 @@ Url: http://search.cpan.org/dist/File-Which/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/P/PL/PLICEASE/File-Which-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PL/PLICEASE/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Sep 13 2008 (-bi)
 BuildRequires: perl-devel perl-Test-Script
@@ -49,7 +49,7 @@ will find the correct file (so for example, you might be searching for "perl",
 it'll try "perl.exe", "perl.bat", etc.)
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -58,12 +58,16 @@ it'll try "perl.exe", "perl.bat", etc.)
 %perl_vendor_install
 
 %files
+%doc author.yml README LICENSE Changes
 #%_bindir/pwhich
 #%_man1dir/pwhich*
 %perl_vendor_privlib/File*
 %doc Changes README
 
 %changelog
+* Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
+- automated CPAN update
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1
 - automated CPAN update
 
