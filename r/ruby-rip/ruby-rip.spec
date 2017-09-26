@@ -1,10 +1,8 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-
 %define pkgname rip
 
 Name: ruby-%pkgname
-Version: 0.0.0.20100616
-Release: alt2.1
+Version: 0.0.5
+Release: alt1
 
 Summary: Installs and manages RubyGems, git repositories, and more.
 Group: Development/Ruby
@@ -15,7 +13,6 @@ BuildArch: noarch
 
 Source: %pkgname-%version.tar
 
-# Automatically added by buildreq on Sun Jun 27 2010 (-bi)
 BuildRequires: rpm-build-ruby ruby-test-unit ruby-tool-setup 
 
 # these buildreqs are required for tests only
@@ -44,13 +41,14 @@ We're currently in a developer-mode rewrite: rip2.
 %ruby_install
 
 %files
-%doc README.md HISTORY.md
+%doc README.markdown
 %ruby_sitelibdir/*
 %_bindir/*
-%_man1dir/*.gz
-%_man5dir/*.gz
 
 %changelog
+* Tue Sep 26 2017 Andrey Cherepanov <cas@altlinux.org> 0.0.5-alt1
+- New version
+
 * Tue Dec 04 2012 Led <led@altlinux.ru> 0.0.0.20100616-alt2.1
 - Rebuilt with ruby-1.9.3-alt1
 
