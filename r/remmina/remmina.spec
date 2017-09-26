@@ -2,7 +2,7 @@
 
 Name: remmina
 Version: 1.2.0
-Release: alt0.rc19
+Release: alt1.rc20%ubt
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -12,6 +12,7 @@ Source: %name-%version.tar
 
 Requires: icon-theme-hicolor
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake
 BuildRequires: desktop-file-utils
 BuildRequires: gettext pkgconfig(libpcre)
@@ -124,6 +125,10 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Tue Sep 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt1.rc20%ubt
+- 1.2.0-rcgit.20
+- increase release number for allow backport to p8
+
 * Wed Jul 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt0.rc19
 - 1.2.0-rcgit.19
 
