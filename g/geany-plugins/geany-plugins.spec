@@ -1,6 +1,6 @@
 Name: geany-plugins
 Version: 1.31
-Release: alt1
+Release: alt2
 %define geany_ver %version
 
 Summary: Plugins for Geany
@@ -69,6 +69,9 @@ Various VCS integration (Git, SVN, ...) for Geany
 %exclude %_libdir/geany/*.la
 
 %changelog
+* Tue Sep 26 2017 Fr. Br. George <george@altlinux.ru> 1.31-alt2
+- Rebuild with new libgit2
+
 * Fri Aug 25 2017 Fr. Br. George <george@altlinux.ru> 1.31-alt1
 - Autobuild version bump to 1.31
 
