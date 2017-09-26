@@ -3,7 +3,7 @@
 %add_findreq_skiplist %perl_vendor_archlib/Devel/Cover/Collection.pm
 %define dist Devel-Cover
 Name: perl-%dist
-Version: 1.24
+Version: 1.27
 Release: alt1
 
 Summary: Code coverage metrics for Perl
@@ -14,7 +14,7 @@ URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/P/PJ/PJCJ/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Oct 12 2011 (-bi)
-BuildRequires: perl-B-Debug perl-JSON-PP perl-PPI-HTML perl-Parallel-Iterator perl-Perl-Tidy perl-Pod-Coverage perl-Template perl-Test-Differences perl-Test-Warn rpm-build-ruby perl(Sereal/Decoder.pm) perl(Sereal/Encoder.pm)
+BuildRequires: perl-B-Debug perl-JSON-PP perl-PPI-HTML perl-Parallel-Iterator perl-Perl-Tidy perl-Pod-Coverage perl-Template perl-Test-Differences perl-Test-Warn rpm-build-ruby perl(Sereal/Decoder.pm) perl(Sereal/Encoder.pm) perl(JSON/MaybeXS.pm)
 
 %description
 This module provides code coverage metrics for Perl. Code coverage
@@ -40,7 +40,7 @@ echo 'sub Devel::Cover::set_first_init_and_end{}1' >%buildroot/hack.pm
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot -mhack'
 
 %files
-%doc README Changes docs
+%doc Changes docs README.md
 %_bindir/cover
 %_bindir/cpancover
 %_bindir/gcov2perl
@@ -50,6 +50,9 @@ echo 'sub Devel::Cover::set_first_init_and_end{}1' >%buildroot/hack.pm
 %exclude /hack.pm
 
 %changelog
+* Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
+- automated CPAN update
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.24-alt1
 - automated CPAN update
 
