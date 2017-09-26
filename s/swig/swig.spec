@@ -2,7 +2,7 @@
 Name: swig
 Epoch: 1
 Version: 3.0.12
-Release: alt3
+Release: alt4%ubt
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
 License: Open Source
@@ -10,8 +10,16 @@ Group: Development/C
 Url: http://www.swig.org/
 
 Source: http://download.sourceforge.net/swig/%name-%version.tar.gz
+Patch0: fix_import_package.patch
+Patch1: swig308-Do-not-use-isystem.patch
+Patch2: disable_gdb_interface.patch
+Patch3: fix-ocaml-int64-type.patch
+Patch4: fix-ocaml-tests.patch
+Patch5: fix-chicken-tests.patch
 
-BuildRequires(pre): rpm-build-python3
+%def_disable testsuite
+
+BuildRequires(pre): rpm-build-python3 rpm-build-ubt
 BuildPreReq: python-devel yodl chicken libracket-devel
 BuildPreReq: racket R-devel libpcre-devel boost-devel
 BuildPreReq: python3-devel python-tools-2to3 zlib-devel
@@ -20,6 +28,10 @@ BuildRequires: ocaml-findlib gcc-c++ guile22-devel imake java-devel
 BuildRequires: libXt-devel liblua5-devel libruby-devel lua5.3
 BuildRequires: perl-devel php5-devel python-devel ruby ruby-module-etc
 BuildRequires: tcl-devel xorg-cf-files tidy htmldoc perl-devel
+
+%if_enabled testsuite
+BuildRequires: perl(Math/BigInt.pm) ocaml-camlp4-devel
+%endif
 
 Provides: %name-devel = %version
 Obsoletes: %name-deve
@@ -126,6 +138,14 @@ This package contains SWIG runtime tcl library.
 
 %prep
 %setup
+%patch0 -p2
+%patch1 -p1
+%patch2 -p1
+%if_enabled testsuite
+%patch3 -p2
+%patch4 -p2
+%patch5 -p2
+%endif
 
 %build
 ./autogen.sh
@@ -134,6 +154,7 @@ subst 's/PY3LIBDIR="lib"/PY3LIBDIR="%_lib"/' configure
 %configure \
 	--with-python=python \
 	--with-python3=python3 \
+	--with-ocamlc=ocamlc \
 	--with-boost \
 	--with-pyinc=%_includedir/python%_python_version \
 	--with-pylib=%_libdir/python%_python_version \
@@ -171,6 +192,11 @@ cp -a Examples Doc %buildroot%docdir/
 #pushd Runtime
 #%make_install install DESTDIR=%buildroot
 #popd
+
+%if_enabled testsuite
+%check
+%__make check
+%endif
 
 %files
 %_bindir/*
@@ -212,6 +238,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Tue Sep 26 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:3.0.12-alt4%ubt
+- Fix import package (https://github.com/swig/swig/issues/769)
+
 * Thu Jul 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.0.12-alt3
 - Removed mono dependencies
 

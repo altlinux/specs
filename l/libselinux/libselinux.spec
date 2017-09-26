@@ -4,7 +4,7 @@
 Name: libselinux
 Epoch: 1
 Version: 2.5
-Release: alt3
+Release: alt4
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
@@ -16,8 +16,8 @@ Patch2: alt-linking.patch
 
 %{?_with_python:BuildPreReq: rpm-build-python}
 BuildRequires: libpcre-devel libsepol-devel >= 2.5
-%{?_with_python:BuildRequires: python-devel swig libsepol-devel-static >= 2.5}
-%{?_with_python3:BuildRequires: python3-devel swig libsepol-devel-static >= 2.5}
+%{?_with_python:BuildRequires: python-devel swig >= 3.0.12-alt4 libsepol-devel-static >= 2.5}
+%{?_with_python3:BuildRequires: python3-devel swig >= 3.0.12-alt4 libsepol-devel-static >= 2.5}
 
 %description
 libselinux provides an API for SELinux applications to get and set
@@ -149,6 +149,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 26 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:2.5-alt4
+- Rebuild with fixed trouble in swig for import python modules
+
 * Fri Sep 08 2017 Mikhail Efremov <sem@altlinux.org> 1:2.5-alt3
 - Build Python 3.x module.
 
