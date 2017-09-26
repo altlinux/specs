@@ -1,5 +1,5 @@
 Name:		etcnet
-Version:	0.9.12
+Version:	0.9.13
 Release:	alt1
 
 Summary:	/etc/net network configuration system
@@ -139,6 +139,9 @@ fi
 %files full
 
 %changelog
+* Tue Sep 26 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.9.13-alt1
+- bridge: add support vlan aware
+
 * Mon Jun 26 2017 Anton Farygin <rider@altlinux.ru> 0.9.12-alt1
 - added network@.service for manage interfaces via systemctl
   (for example - systemctl enable network@eth0) (closes: #33588)
