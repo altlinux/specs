@@ -2,7 +2,7 @@
 
 Name: SDL2
 Version: 2.0.6
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Simple DirectMedia Layer
 License: zlib
@@ -13,7 +13,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source: http://www.libsdl.org/release/%name-%version.tar.gz
 
-BuildPreReq: rpm-build-ubt
+BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: fcitx-devel
 BuildRequires: gcc-c++
@@ -103,6 +103,9 @@ This is the static libraries you can use to develop SDL applications.
 %endif
 
 %changelog
+* Tue Sep 26 2017 Nazarov Denis <nenderus@altlinux.org> 2.0.6-alt2%ubt
+- Change BuildPreReq to BuildRequires(pre) for rpm-build-ubt (ALT #33921)
+
 * Mon Sep 25 2017 Nazarov Denis <nenderus@altlinux.org> 2.0.6-alt1%ubt
 - Version 2.0.6
 
