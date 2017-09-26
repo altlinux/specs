@@ -1,7 +1,7 @@
 %define rname user-manager
 
 Name: kf5-%rname
-Version: 5.10.4
+Version: 5.10.5
 Release: alt1%ubt
 %K5init altplace
 
@@ -47,6 +47,9 @@ Add, remove or edit system users.
 %_K5data/user-manager/
 
 %changelog
+* Mon Sep 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt1%ubt
+- new version
+
 * Wed Jul 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt1%ubt
 - new version
 

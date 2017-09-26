@@ -16,8 +16,8 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.10.4
-Release: alt6%ubt
+Version: 5.10.5
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -311,6 +311,9 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Mon Sep 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt1%ubt
+- new version
+
 * Thu Aug 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt6%ubt
 - fix system tray icon context menu (ALT#33763) (thanks darktemplar@alt)
 

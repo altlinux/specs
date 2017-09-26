@@ -1,8 +1,8 @@
 %define rname plasma-sdk
 
 Name: kf5-%rname
-Version: 5.10.4
-Release: alt2%ubt
+Version: 5.10.5
+Release: alt1%ubt
 %K5init altplace
 
 Group: Development/KDE and QT
@@ -76,6 +76,9 @@ KF5 library
 %_K5srv/*.desktop
 
 %changelog
+* Mon Sep 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt1%ubt
+- new version
+
 * Mon Aug 21 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt2%ubt
 - fix requires
 

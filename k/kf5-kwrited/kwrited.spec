@@ -1,7 +1,7 @@
 %define rname kwrited
 
 Name: kf5-%rname
-Version: 5.10.4
+Version: 5.10.5
 Release: alt1%ubt
 %K5init altplace
 
@@ -67,6 +67,9 @@ KF5 library
 %_K5notif/*writed*
 
 %changelog
+* Mon Sep 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt1%ubt
+- new version
+
 * Wed Jul 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt1%ubt
 - new version
 

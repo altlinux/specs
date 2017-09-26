@@ -14,8 +14,8 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: kf5-%rname
-Version: 5.10.4
-Release: alt2%ubt
+Version: 5.10.5
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -178,6 +178,9 @@ KF5 library
 
 
 %changelog
+* Mon Sep 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt1%ubt
+- new version
+
 * Thu Aug 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt2%ubt
 - enable compositing by default
 

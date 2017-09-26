@@ -6,8 +6,8 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: kf5-%rname
-Version: 5.10.4
-Release: alt3%ubt
+Version: 5.10.5
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -116,6 +116,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Mon Sep 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt1%ubt
+- new version
+
 * Thu Aug 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt3%ubt
 - build without seccomp support
 

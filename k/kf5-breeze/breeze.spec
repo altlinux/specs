@@ -1,8 +1,8 @@
 %define rname breeze
 
 Name: kf5-%rname
-Version: 5.10.4
-Release: alt2%ubt
+Version: 5.10.5
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -89,6 +89,9 @@ KF5 library
 %_libdir/cmake/Breeze/
 
 %changelog
+* Mon Sep 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt1%ubt
+- new version
+
 * Fri Aug 11 2017 Oleg Solovyov <mcpain@altlinux.org> 5.10.4-alt2%ubt
 - implemented tooltips on window decoration buttons
 
