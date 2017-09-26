@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Module-Starter
-Version: 1.72
+Version: 1.73
 Release: alt1
 
 Summary: a simple starter kit for any module
@@ -30,7 +30,7 @@ BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/D/DB/DBOOK/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Jan 03 2009
-BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage perl(Module/Runtime.pm)
 BuildRequires: perl-Pod-Parser perl(Path/Class.pm) perl(parent.pm)
 
 %description
@@ -58,6 +58,9 @@ just one method, "create_distro".
 %_man1dir/*
 
 %changelog
+* Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 1.73-alt1
+- automated CPAN update
+
 * Mon Apr 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.72-alt1
 - automated CPAN update
 
