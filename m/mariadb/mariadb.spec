@@ -34,7 +34,7 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.1.26
+Version: 10.1.27
 Release: alt1%ubt
 
 Summary: A very fast and reliable SQL database engine
@@ -787,6 +787,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 26 2017 Alexey Shabalin <shaba@altlinux.ru> 10.1.27-alt1%ubt
+- 10.1.27
+
 * Thu Sep 14 2017 Alexey Shabalin <shaba@altlinux.ru> 10.1.26-alt1%ubt
 - 10.1.26
 - Fixes for the following security vulnerabilities:
