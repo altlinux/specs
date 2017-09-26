@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 %define module Digest-SHA
 
 Name: perl-%module
-Version: 5.96
-Release: alt1.1
+Version: 5.97
+Release: alt1
 
 Summary: Perl extension for SHA-1/224/256/384/512
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://www.cpan.org/authors/id/M/MS/MSHELOR/Digest-SHA-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MS/MSHELOR/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
@@ -22,7 +23,7 @@ SHA-1, SHA-224, SHA-256, SHA-384, and SHA-512 message digests. The
 module can handle all types of input, including partial-byte data.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -31,13 +32,16 @@ module can handle all types of input, including partial-byte data.
 %perl_vendor_install
 
 %files
-%doc examples/dups
+%doc examples/dups Changes README examples
 %_bindir/*
 %perl_vendor_archlib/Digest/
 %perl_vendor_autolib/Digest/
 %_man1dir/*
 
 %changelog
+* Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 5.97-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 5.96-alt1.1
 - rebuild with new perl 5.24.1
 
