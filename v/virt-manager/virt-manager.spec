@@ -7,8 +7,8 @@
 %define askpass_package "openssh-askpass"
 
 Name: virt-manager
-Version: 1.4.2
-Release: alt1
+Version: 1.4.3
+Release: alt1%ubt
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -46,6 +46,7 @@ Requires: typelib(SpiceClientGLib)
 Requires: typelib(Vte) = 2.91
 Requires: typelib(Libosinfo) = 1.0
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: python-devel python-module-distribute
 BuildRequires: libgio
 BuildRequires: intltool
@@ -154,6 +155,9 @@ done
 %_man1dir/virt-xml.1*
 
 %changelog
+* Tue Sep 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.3-alt1%ubt
+- 1.4.3
+
 * Wed Aug 09 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.2-alt1
 - 1.4.2
 
