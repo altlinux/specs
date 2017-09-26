@@ -2,7 +2,7 @@
 
 Name: custodia
 Version: 0.1.0
-Release: alt3
+Release: alt4
 Summary:  A service to manage, retrieve and store secrets for other processes
 
 Group: System/Configuration/Other
@@ -41,7 +41,7 @@ Group: Development/Python
 
 %prep
 %setup
-#patch -p1
+%patch -p1
 %patch1 -p1
 
 %build
@@ -65,6 +65,9 @@ mv %buildroot%_bindir %buildroot%_sbindir
 %exclude %python_sitelibdir/tests/
 
 %changelog
+* Tue Sep 26 2017 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt4
+- Really fix SimpleCreds authenticator.
+
 * Fri Aug 04 2017 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt3
 - Fix SimpleCreds authenticator.
 
