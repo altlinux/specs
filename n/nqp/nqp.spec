@@ -1,5 +1,5 @@
 Name: nqp
-Version: 2016.10
+Version: 2017.09
 Release: alt1
 Summary: Not Quite Perl
 
@@ -13,8 +13,6 @@ Source: %name-%version.tar
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 BuildRequires: moarvm libmoarvm-devel perl-devel
-
-BuildArch: noarch
 
 %description
 This is "Not Quite Perl" -- a lightweight Perl 6-like environment for virtual
@@ -43,6 +41,7 @@ perl Configure.pl --prefix=%_prefix --backends=moar
 
 %install
 %makeinstall_std
+mkdir -p %buildroot%_libdir/nqp
 
 %files
 %_bindir/nqp
@@ -52,12 +51,16 @@ perl Configure.pl --prefix=%_prefix --backends=moar
 %_datadir/nqp/lib/*.moarvm
 %dir %_datadir/nqp/lib/profiler
 %_datadir/nqp/lib/profiler/template.html
+%_libdir/nqp
 %doc CREDITS LICENSE README.pod
 
 %files doc
 %doc docs examples
 
 %changelog
+* Tue Sep 26 2017 Vladimir Lettiev <crux@altlinux.org> 2017.09-alt1
+- 2017.09
+
 * Mon Oct 24 2016 Vladimir Lettiev <crux@altlinux.ru> 2016.10-alt1
 - 2016.10
 
