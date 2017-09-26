@@ -1,6 +1,6 @@
 Name: 	  pcs
 Version:  0.9.159
-Release:  alt2
+Release:  alt3
 Epoch:    1
 
 Summary:  Pacemaker/Corosync configuration system
@@ -28,6 +28,7 @@ Requires: pcs
 Group: Other
 BuildArch: noarch
 Requires: corosync
+Requires: openssl
 Requires: ruby-rack-handler-webrick < 2.0.0
 
 %description pcsd
@@ -95,6 +96,10 @@ rm -rf %buildroot/%ruby_sitelibdir/pcsd/*{.service,.logrotate,debian,orig}*
 %ruby_sitelibdir/pcsd/test/*
 
 %changelog
+* Tue Sep 26 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.9.159-alt3
+- Completely remove requirement rack as gem
+- pcs-pcsd requires openssl
+
 * Mon Sep 25 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.9.159-alt2
 - Comment out rack as gem load to prevent daemon fail
 

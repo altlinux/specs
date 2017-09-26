@@ -1,6 +1,6 @@
 Name: 	  nokogiri-gemspec
 Version:  1.7.1
-Release:  alt1
+Release:  alt2
 
 Summary:  Gemspec for static Nokogiri
 License:  MIT
@@ -33,5 +33,8 @@ cp *.gemspec %buildroot%ruby_libdir/gems/$rbVersion/specifications
 %ruby_libdir/gems/*
 
 %changelog
+* Tue Sep 26 2017 Andrey Cherepanov <cas@altlinux.org> 1.7.1-alt2
+- Rebuild with Ruby 2.4.2
+
 * Thu Apr 20 2017 Denis Medvedev <nbr@altlinux.org> 1.7.1-alt1
 - Initial sisyphus release
