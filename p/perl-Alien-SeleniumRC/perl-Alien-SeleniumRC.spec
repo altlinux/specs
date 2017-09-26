@@ -2,6 +2,8 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(File/Basename.pm) perl(File/Spec.pm) perl(FileHandle.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Module/Signature.pm) perl(Net/FTP.pm) perl(Socket.pm) perl(YAML.pm) perl(subs.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define upstream_name    Alien-SeleniumRC
 %define upstream_version 2.95
 
@@ -9,7 +11,7 @@ BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Fil
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_3
+Release:    alt1_4
 
 Summary:    Packaging up SeleniumRC java server
 License:    GPL+ or Artistic
@@ -37,12 +39,11 @@ a pure-HTML+JS library that performs automated tasks in JavaScript.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%__perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-
-%{make}
+%__perl -I. Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%make_build CFLAGS="%{optflags}"
 
 %check
-%{make} test
+%make test
 
 %install
 %makeinstall_std
@@ -52,7 +53,11 @@ a pure-HTML+JS library that performs automated tasks in JavaScript.
 %{perl_vendor_privlib}/*
 /usr/bin/selenium-rc
 
+
 %changelog
+* Mon Sep 25 2017 Igor Vlasenko <viy@altlinux.ru> 2.95-alt1_4
+- update by mgaimport
+
 * Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 2.95-alt1_3
 - update by mgaimport
 
