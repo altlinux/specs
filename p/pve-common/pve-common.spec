@@ -1,7 +1,7 @@
 Name: pve-common
 Summary: PVE base library
 Version: 5.0.16
-Release: alt2
+Release: alt3
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -58,6 +58,12 @@ install -pD -m0755 pve-etcnet-to-network %buildroot%_sbindir/pve-etcnet-to-netwo
 %perl_vendor_privlib/PVE
 
 %changelog
+* Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 5.0.16-alt3
+- bridge vids options support
+
+* Mon Sep 25 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.16-alt0.M80C.2
+- backport to c8 branch
+
 * Fri Aug 04 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.16-alt2
 - fixed check OVSPort
 
