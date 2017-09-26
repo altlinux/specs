@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTML-Tree
 Name: perl-%dist
-Version: 5.06
-Release: alt1.1
+Version: 5.07
+Release: alt1
 
 Summary: Perl modules for HTML syntax tree processing
 License: GPL or Artistic
@@ -41,6 +41,9 @@ and extracting information from HTML syntax trees
 %doc	%perl_vendor_privlib/HTML/Tree/*.pod
 
 %changelog
+* Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 5.07-alt1
+- automated CPAN update
+
 * Fri Aug 11 2017 Igor Vlasenko <viy@altlinux.ru> 5.06-alt1.1
 - rebuild with new perl
 
