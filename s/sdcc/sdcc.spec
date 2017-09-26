@@ -1,15 +1,17 @@
 Name: sdcc
-Version: 8378
-Release: alt1.1
+Epoch: 1
+Version: 3.6.0
+Release: alt1
 Group: Development/C
 URL: http://sdcc.sourceforge.net
 License: GPL
 Summary: Small Device C Compiler
 Source: %name-%version.tar
-#Patch: sdcc-5119-alt-glibc-2.11.3.patch
-#Patch1: sdcc-5119-alt-SDCCicode.patch
-#Patch2: sdcc-5119-alt-make-3.82.patch
-BuildPreReq: flex gcc-c++ boost-devel gputils
+
+BuildRequires: flex gcc-c++ boost-devel gputils /usr/bin/makeinfo
+
+Requires: %name-common = %EVR
+
 %description
 SDCC is a free open source, retargettable, optimizing ANSI C compiler
 suite that targets a growing list of processors including the Intel
@@ -51,13 +53,12 @@ microprocessors.
 
 %prep
 %setup -q -n %name-%version
-#%patch -p2
-#%patch1 -p2
-#%patch2 -p2
+
 %build
 %configure --docdir=%_docdir/%name-%version \
 	--enable-werror=no
 %make_build
+
 %install
 %make_install DESTDIR=%buildroot install
 #rm -fr /usr/src/tmp/sdcc-buildroot/usr/share/sdcc/lib/src
@@ -76,8 +77,10 @@ microprocessors.
 # Another way is to rewrite the spec to use relative doc paths.
 %dir %_docdir/%name-%version 
 
-
 %changelog
+* Tue Sep 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.6.0-alt1
+- Updated to upstream version 3.6.0.
+
 * Thu Mar 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8378-alt1.1
 - Removed -Werror flag
 
