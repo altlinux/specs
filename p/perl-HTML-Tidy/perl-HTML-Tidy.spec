@@ -1,14 +1,17 @@
 %define dist HTML-Tidy
 Name: perl-%dist
-Version: 1.58
+Version: 1.60
 Release: alt1
 
 Summary: HTML validation in a Perl object
-License: GPL or Artistic
-Group: Development/Perl
 
+License: %perl_license
+Group: Development/Perl
 URL: %CPAN %dist
+
 Source: http://www.cpan.org/authors/id/P/PE/PETDANCE/HTML-Tidy-%{version}.tar.gz
+
+BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Sun Jun 04 2017
 # optimized out: perl perl-Devel-Symdump perl-Encode perl-Encode-Locale perl-HTTP-Date perl-HTTP-Message perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Sub-Uplevel perl-Try-Tiny perl-URI perl-devel perl-libwww python-base python-modules python3 python3-base
@@ -16,17 +19,13 @@ BuildRequires: libtidyp-devel perl-Test-Exception perl-Test-Pod perl-Test-Pod-Co
 
 BuildRequires: tidyp
 
+
 %description
 HTML::Tidy is an HTML checker in a handy dandy object.  It's meant
 as a replacement for HTML::Lint.
 
 %prep
 %setup -q -n %dist-%version
-
-# Fix tidyp version in tests
-TIDYP_NAME=`/usr/bin/tidyp -v | cut -d" " -f3`
-TIDYP_VER=`/usr/bin/tidyp -v | cut -d" " -f4`
-sed -e "s?tidyp for Linux (v1\.02)?tidyp for ${TIDYP_NAME} (${TIDYP_VER})?" -i t/clean.t
 
 %build
 %perl_vendor_build
@@ -41,6 +40,9 @@ sed -e "s?tidyp for Linux (v1\.02)?tidyp for ${TIDYP_NAME} (${TIDYP_VER})?" -i t
 %perl_vendor_archlib/HTML
 
 %changelog
+* Tue Sep 26 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.60-alt1
+- New version
+
 * Sat Jun 10 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.58-alt1
 - New version
 
