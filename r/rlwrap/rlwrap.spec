@@ -1,7 +1,7 @@
 Name: rlwrap
-Version: 0.42
+Version: 0.43
 Release: alt1
-Serial: 1
+Epoch: 1
 
 Summary: Line editor - readline wrapper
 License: GCL
@@ -11,7 +11,7 @@ Url: http://utopia.knoware.nl/~hlub/uck/rlwrap
 Source0: %name-%version.tar.gz
 Source1: rlwrap_cmucl_completions
 
-BuildRequires: libreadline-devel libncurses-devel
+BuildRequires: libreadline-devel libncurses-devel perl-podlators
 %add_perl_lib_path %_datadir/%name/filters
 
 %description
@@ -23,6 +23,7 @@ command.
 %setup
 
 %build
+%autoreconf
 %configure
 %make
 
@@ -41,6 +42,9 @@ install -D -m644 %SOURCE1 %buildroot/%_datadir/%name/completions/sbcl
 %_datadir/%name
 
 %changelog
+* Tue Sep 26 2017 Fr. Br. George <george@altlinux.ru> 1:0.43-alt1
+- Autobuild version bump to 0.43
+
 * Thu Apr 23 2015 Fr. Br. George <george@altlinux.ru> 1:0.42-alt1
 - Autobuild version bump to 0.42
 
