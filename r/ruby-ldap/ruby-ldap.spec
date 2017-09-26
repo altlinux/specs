@@ -2,7 +2,7 @@
 
 Name: ruby-ldap
 Version: 0.9.17
-Release: alt2.1
+Release: alt2.2
 
 Summary: Ruby LDAP library
 Group: Development/Ruby
@@ -47,6 +47,9 @@ Documentation files for %name
 %ruby_ri_sitedir/LDAP*
 
 %changelog
+* Mon Sep 25 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.17-alt2.2
+- Rebuild with Ruby 2.4.2
+
 * Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.17-alt2.1
 - Rebuild with Ruby 2.4.1
 

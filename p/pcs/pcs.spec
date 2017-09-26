@@ -1,6 +1,6 @@
 Name: 	  pcs
 Version:  0.9.159
-Release:  alt1.1
+Release:  alt2
 Epoch:    1
 
 Summary:  Pacemaker/Corosync configuration system
@@ -95,6 +95,9 @@ rm -rf %buildroot/%ruby_sitelibdir/pcsd/*{.service,.logrotate,debian,orig}*
 %ruby_sitelibdir/pcsd/test/*
 
 %changelog
+* Mon Sep 25 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.9.159-alt2
+- Comment out rack as gem load to prevent daemon fail
+
 * Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.9.159-alt1.1
 - Rebuild with Ruby 2.4.1
 

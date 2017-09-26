@@ -9,7 +9,7 @@
 
 Name:    ruby-%pkgname
 Version: 1.2.5
-Release: alt1.1
+Release: alt1.2
 
 Summary: Fast, simple event-processing library for Ruby programs
 Group:   Development/Ruby
@@ -86,6 +86,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/TestConnection/*
 
 %changelog
+* Mon Sep 25 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.5-alt1.2
+- Rebuild with Ruby 2.4.2
+
 * Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.5-alt1.1
 - Rebuild with Ruby 2.4.1
 

@@ -1,7 +1,7 @@
 %define bname iconv
 Name: ruby-%bname
 Version: 1.0.4
-Release: alt2.1
+Release: alt2.2
 Summary: Ruby iconv module
 License: Ruby
 Group:   Development/Ruby
@@ -34,6 +34,9 @@ This package contains deprecated Ruby iconv module.
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Sep 25 2017 Andrey Cherepanov <cas@altlinux.org> 1.0.4-alt2.2
+- Rebuild with Ruby 2.4.2
+
 * Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.0.4-alt2.1
 - Rebuild with Ruby 2.4.1
 

@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.1.5
-Release: alt8.1
+Release: alt8.2
 
 Summary: Simple Fast Mostly Ruby Web Server
 Group: Development/Ruby
@@ -71,6 +71,9 @@ Documentation files for %name.
 
 
 %changelog
+* Mon Sep 25 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.5-alt8.2
+- Rebuild with Ruby 2.4.2
+
 * Tue Sep 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.5-alt8.1
 - Rebuild with Ruby 2.4.1
 
