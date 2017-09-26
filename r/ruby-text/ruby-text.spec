@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 1.3.1 
-Release: alt1
+Release: alt2
  
 Summary: Collection of text algorithms
 License: MIT/Ruby
@@ -61,5 +61,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Tue Sep 26 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt2
+- Rebuild with Ruby 2.4.2
+
 * Mon May 22 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt1
 - Initial build in Sisyphus

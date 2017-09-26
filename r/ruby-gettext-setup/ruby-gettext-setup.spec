@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 0.28
-Release: alt1
+Release: alt2
  
 Summary: A gem that configures gettext for internationalization
 License: MIT/Ruby
@@ -77,6 +77,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Tue Sep 26 2017 Andrey Cherepanov <cas@altlinux.org> 0.28-alt2
+- Rebuild with Ruby 2.4.2
+
 * Sat Sep 02 2017 Andrey Cherepanov <cas@altlinux.org> 0.28-alt1
 - New version
 
