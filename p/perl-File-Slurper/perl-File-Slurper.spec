@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 0.009
 %define module_name File-Slurper
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Benchmark.pm) perl(Carp.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Slurp.pm) perl(File/Spec/Functions.pm) perl(File/Temp.pm) perl(Test/More.pm) perl(Unicode/UTF8.pm) perl(constant.pm) perl(strict.pm) perl(warnings.pm) perl(Test/Warnings.pm)
@@ -7,21 +6,21 @@ BuildRequires: perl(Benchmark.pm) perl(Carp.pm) perl(Exporter.pm) perl(ExtUtils/
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.009
+Version: 0.010
 Release: alt1
 Summary: A simple, sane and efficient file slurper
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/L/LE/LEONT/File-Slurper-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/L/LE/LEONT/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 From summary: %summary
 
 %prep
-%setup -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +33,9 @@ From summary: %summary
 %perl_vendor_privlib/F*
 
 %changelog
+* Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.009-alt1
 - automated CPAN update
 
