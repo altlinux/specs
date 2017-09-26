@@ -1,9 +1,9 @@
 Name: libgflags
 Summary: A commandline flags library that allows for distributed flags
-Version: 2.1.2
-Release: alt1.qa1
+Version: 2.2.1
+Release: alt1
 Group: System/Libraries
-Url: http://code.google.com/p/gflags
+Url: http://gflags.github.io/gflags/
 License: BSD
 Source: v%version.tar.gz
 
@@ -27,6 +27,7 @@ files for developing applications that use the %name package.
 
 %prep
 %setup -n gflags-%version
+mv BUILD BULD.txt
 
 %build
 %cmake -DBUILD_SHARED_LIBS=True -DBUILD_gflags_nothreads_LIB=False
@@ -41,13 +42,16 @@ files for developing applications that use the %name package.
 %_bindir/gflags_completions.sh
 
 %files devel
-%doc doc/*
+%doc *.md
 %_includedir/gflags
 %_libdir/*.so
 %_libdir/cmake/*
-##_libdir/pkgconfig/*.pc
+%_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Sep 26 2017 Fr. Br. George <george@altlinux.ru> 2.2.1-alt1
+- Autobuild version bump to 2.2.1
+
 * Tue Apr 05 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.1.2-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
@@ -71,16 +75,3 @@ files for developing applications that use the %name package.
 
 * Wed Mar 30 2011 Fr. Br. George <george@altlinux.ru> 1.5-alt1
 - Initial build from native spec
-
-	* Thu Sep 10 2009 <opensource@google.com>
-        - Change from '%configure' to something like it, but without -m32
-
-	* Mon Apr 20 2009 <opensource@google.com>
-	- Change build rule to use '%configure' rather than './configure'
-	- Change install to use DESTDIR instead of prefix for make install.
-	- Use wildcards for doc/ and lib/ directories
-        - Use {_libdir}/{_includedir}/etc instead of {prefix}/lib, etc
-
-	* Tue Dec 13 2006 <opensource@google.com>
-	- First draft
-
