@@ -25,7 +25,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        61.0.3163.79
+Version:        61.0.3163.100
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -424,8 +424,14 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Tue Sep 26 2017 Alexey Gladkov <legion@altlinux.ru> 61.0.3163.100-alt1
+- Security fixes:
+  - CVE-2017-5121: Out-of-bounds access in V8. Reported by Jordan Rabet, Microsoft Offensive Security Research and Microsoft ChakraCore team on 2017-09-14
+  - CVE-2017-5122: Out-of-bounds access in V8. Reported by Choongwoo Han of Naver Corporation on 2017-08-04
+
 * Tue Sep 12 2017 Alexey Gladkov <legion@altlinux.ru> 61.0.3163.79-alt1
 - New version (61.0.3163.79).
+- Security fixes:
   - CVE-2017-5111: Use after free in PDFium. Reported by Luat Nguyen (@l4wio) of KeenLab, Tencent on 2017-06-27
   - CVE-2017-5112: Heap buffer overflow in WebGL. Reported by Tobias Klein (www.trapkit.de) on 2017-07-10
   - CVE-2017-5113: Heap buffer overflow in Skia. Reported by Anonymous on 2017-07-20
