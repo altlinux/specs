@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 BuildRequires: perl(Module/Build.pm) perl(Module/Build/Tiny.pm)
 Name: perl-Protocol-WebSocket
-Version: 0.20
+Version: 0.21
 Release: alt1
 
 Summary: Protocol::WebSocket - WebSocket protocol
@@ -9,7 +9,7 @@ Group: Development/Perl
 License: Perl
 
 Url: %CPAN Protocol-WebSocket
-Source: http://www.cpan.org/authors/id/V/VT/VTI/Protocol-WebSocket-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/V/VT/VTI/Protocol-WebSocket-%{version}.tar.gz
 
 BuildArch: noarch
 BuildRequires: perl-Module-Install perl-Digest-SHA1 perl(Digest/SHA.pm)
@@ -18,7 +18,7 @@ BuildRequires: perl-Module-Install perl-Digest-SHA1 perl(Digest/SHA.pm)
 %summary
 
 %prep
-%setup -q -n Protocol-WebSocket-%version
+%setup -q -n Protocol-WebSocket-%{version}
 
 %build
 %perl_vendor_build
@@ -27,10 +27,14 @@ BuildRequires: perl-Module-Install perl-Digest-SHA1 perl(Digest/SHA.pm)
 %perl_vendor_install
 
 %files
+%doc README.md LICENSE Changes examples
 %perl_vendor_privlib/Protocol/WebSocket*
 %doc Changes
 
 %changelog
+* Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- automated CPAN update
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - automated CPAN update
 
