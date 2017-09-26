@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 #
 #   - Regexp::Parser -
@@ -16,7 +17,7 @@ Packager: Michael Bochkaryov <misha@altlinux.ru>
 %add_findreq_skiplist */Perl6/Rule*
 
 Name: perl-Regexp-Parser
-Version: 0.21
+Version: 0.22
 Release: alt1
 
 Summary: base class for parsing regexes
@@ -26,7 +27,7 @@ Group: Development/Perl
 Url: http://search.cpan.org/dist/Regexp-Parser/
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/T/TO/TODDR/Regexp-Parser-0.21.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TO/TODDR/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Apr 26 2008
 BuildRequires: perl-NEXT perl-devel perl-unicore
@@ -42,7 +43,7 @@ This module is designed as a replacement (though not drop-in) for my old
 YAPE::Regex modules.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -50,11 +51,15 @@ YAPE::Regex modules.
 %perl_vendor_install
 
 %files
+%doc Changes README
 %perl_vendor_privlib/*
 #%perl_vendor_man3dir/*
 %exclude %perl_vendor_archlib
 
 %changelog
+* Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
 - automated CPAN update
 
