@@ -5,7 +5,7 @@
 %define versioning_hack 1
 %define unstable 0
 %define bad_doc 0
-%define arts 1
+%define arts 0
 %define cmake 1
 
 %define qtdir %_qt3dir
@@ -15,14 +15,12 @@
 #set_perl_req_method relaxed
 %add_findreq_skiplist %_K3apps/dcopidlng/*
 %add_findprov_skiplist %_K3apps/dcopidlng/*
-%add_verify_elf_skiplist %_K3libdir/libkscreensaver.so*
-%add_verify_elf_skiplist %_K3libdir/libkscreensaver.so.4.2.0
 %add_findreq_skiplist %_K3bindir/fileshareset
 
 %define major 3
 %define minor 5
 %define bugfix 13.2
-%define rel alt4.3
+%define rel alt5
 Name: kdelibs
 Version: %major.%minor.%bugfix
 Release: %rel
@@ -192,7 +190,7 @@ BuildRequires: qt3-doc xml-utils zlib-devel liblzma-devel libkrb5-devel libidn-d
 BuildRequires: libkrb5-devel libaspell-devel libacl-devel libattr-devel
 BuildRequires: libavahi-qt3-devel pkg-config liblua5-devel libjasper-devel
 BuildRequires: glibc-utils glibc-devel glib2-devel
-BuildRequires: openexr-devel libXdmcp-devel libXcomposite-devel libgamin-devel
+BuildRequires: openexr-devel libXdmcp-devel libXcomposite-devel
 #BuildRequires: libqt3-devel-cxx = %__gcc_version_base
 BuildRequires: libqt3 >= 3.2.0 libqt3-devel >= 3.2.0
 BuildRequires: flex su sudo
@@ -490,6 +488,9 @@ ln -fs ../common %buildroot/%_K3doc/en/kspell/common
 %endif
 # end if cmake
 
+# remove lib with unresoved symbols
+rm -f %buildroot/%_K3libdir/libkscreensaver.*
+
 # move l10n files
 #mkdir -p %buildroot/%_datadir/kde/locale
 # mv %buildroot/%_datadir/locale/* %buildroot/%_datadir/kde/locale ||:
@@ -662,6 +663,11 @@ done
 #%doc %_K3doc/en/%name-*-apidocs
 
 %changelog
+* Tue Sep 26 2017 Sergey V Turchin <zerg@altlinux.org> 3.5.13.2-alt5
+- build without arts
+- remove libkscreensaver
+- fix to compile
+
 * Tue May 31 2016 Michael Shigorin <mike@altlinux.org> 3.5.13.2-alt4.3
 - NMU: rebuilt against current libraries
 
