@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name:           cmospwd
 Version:        5.0
-Release:        alt2_11
+Release:        alt2_13
 Summary:        BIOS password cracker utility
 
 Group:          System/Base
@@ -14,6 +14,7 @@ Source0:        http://www.cgsecurity.org/%{name}-%{version}.tar.bz2
 ExclusiveArch:  %{ix86} x86_64
 
 BuildRequires:  dos2unix
+Source44: import.info
 
 %description
 CmosPwd decrypts password stored in cmos used to access BIOS SETUP.
@@ -63,6 +64,9 @@ install -D -m 755 src/%{name} $RPM_BUILD_ROOT%{_sbindir}/%{name}
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 5.0-alt2_13
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 5.0-alt2_11
 - update to new release by fcimport
 
