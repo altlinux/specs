@@ -6,7 +6,7 @@ Group: Development/Other
 
 Name:           amqp
 Version:        1.0
-Release:        alt1_6.%{date}svn%{revision}
+Release:        alt1_7.%{date}svn%{revision}
 # increase Epoch to 1 cause of modified Release logic
 Epoch:          1
 Summary:        The AMQP specification
@@ -22,6 +22,7 @@ Source0:        %{name}-%{version}-%{revision}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  libxslt xsltproc
+Source44: import.info
 
 %description
 The AMQP (advanced message queuing protocol) specification in XML format.
@@ -58,6 +59,9 @@ install -p -m0644 *.xml *.dtd %{buildroot}%{_datadir}/%{name}
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_7.20150701svn1688630
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_6.20150701svn1688630
 - update to new release by fcimport
 
