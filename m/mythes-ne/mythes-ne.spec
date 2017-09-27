@@ -7,7 +7,7 @@ BuildRequires: unzip
 Name: mythes-ne
 Summary: Nepali thesaurus
 Version: 1.1
-Release: alt1_11
+Release: alt1_12
 Source0: http://hg.services.openoffice.org/hg/DEV300/raw-file/tip/dictionaries/ne_NP/th_ne_NP_v2.zip
 Source1: http://hg.services.openoffice.org/hg/DEV300/raw-file/tip/dictionaries/ne_NP/README_th_ne_NP_v2.txt
 URL: http://data.opentaal.org/opentaalbank/thesaurus
@@ -15,6 +15,7 @@ License: LGPLv2
 BuildArch: noarch
 BuildRequires: libmythes-devel
 Requires: libmythes
+Source44: import.info
 
 %description
 Nepali thesaurus.
@@ -36,6 +37,9 @@ cp -p th_ne_NP_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes/
 %{_datadir}/mythes/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_12
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_11
 - update to new release by fcimport
 
