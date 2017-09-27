@@ -8,12 +8,13 @@ Name: hyphen-pl
 Summary: Polish hyphenation rules
 %global upstreamid 20060726
 Version: 0.%{upstreamid}
-Release: alt1_14
+Release: alt1_15
 Source: http://pl.openoffice.org/pliki/hyph_pl_PL.zip
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
 License: LGPLv2+
 BuildArch: noarch
 Requires: libhyphen
+Source44: import.info
 
 %description
 Polish hyphenation rules.
@@ -44,6 +45,9 @@ cp -p hyph_pl_PL.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20060726-alt1_15
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20060726-alt1_14
 - update to new release by fcimport
 
