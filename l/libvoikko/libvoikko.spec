@@ -3,9 +3,11 @@ BuildRequires(pre): rpm-build-python
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libvoikko
 Version:        3.8
-Release:        alt1_2
+Release:        alt1_6
 Summary:        Voikko is a library for spellcheckers and hyphenators
 
 Group:          System/Libraries
@@ -36,8 +38,8 @@ Hunspell.
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 Requires:       pkg-config
 
 %description    devel
@@ -47,7 +49,7 @@ developing applications that use %{name}.
 %package -n     voikko-tools
 Summary:        Test tools for %{name}
 Group:          Text tools
-Requires:       %{name}%{?_isa} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description -n voikko-tools
 This package contains voikkospell and voikkohyphenate, small command line
@@ -56,10 +58,11 @@ scripts.
 
 %package -n python-module-libvoikko
 Summary:        Python interface to %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 # Note: noarch subpackage, only works in Fedora >= 11
 BuildArch:      noarch
+%{?python_provide:%python_provide python2-libvoikko}
 
 %description -n python-module-libvoikko
 Python interface to libvoikko, library of Finnish language tools.
@@ -78,7 +81,7 @@ tasks on Finnish text.
 # https://fedoraproject.org/wiki/Packaging/Guidelines#Removing_Rpath
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-make %{?_smp_mflags}
+%make_build CXXFLAGS="$CXXFLAGS -Wno-deprecated"
 
 
 %install
@@ -112,6 +115,9 @@ install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/
 %{python_sitelibdir_noarch}/%{name}.py*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 3.8-alt1_6
+- update to new release by fcimport
+
 * Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 3.8-alt1_2
 - update to new release by fcimport
 
