@@ -7,7 +7,7 @@ BuildRequires: perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm)
 Summary:        Blitzed open proxy monitor library
 Name:           libopm
 Version:        0.1
-Release:        alt3_19.20050731cvs
+Release:        alt3_21.20050731cvs
 License:        GPLv2+
 Group:          System/Libraries
 URL:            http://wiki.blitzed.org/BOPM
@@ -18,6 +18,7 @@ URL:            http://wiki.blitzed.org/BOPM
 Source:         %{name}-%{version}.tar.gz
 Patch:          libopm-0.1-multilib.patch
 BuildRequires:  doxygen
+Source44: import.info
 
 %description
 An open proxy detection library, developed by the blitzed
@@ -59,6 +60,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/%{name}.so
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_21.20050731cvs
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_19.20050731cvs
 - update to new release by fcimport
 
