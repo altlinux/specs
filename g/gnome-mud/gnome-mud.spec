@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-gettextize pkgconfig
 %define _localstatedir %{_var}
 Name:		gnome-mud
 Version:	0.11.2
-Release:	alt2_18
+Release:	alt2_20
 Summary:	A MUD client for GNOME
 
 Group:		Games/Other
@@ -32,6 +32,7 @@ BuildRequires: GConf libGConf-devel libGConf-gir-devel
 Requires(pre): GConf libGConf
 Requires(post): GConf libGConf
 Requires(preun): GConf libGConf
+Source44: import.info
 
 %description
 GNOME-MUD is a simple MUD client for GNOME. It supports scripting in
@@ -87,6 +88,9 @@ fi
 %{_mandir}/man6/%{name}.6*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_20
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_18
 - update to new release by fcimport
 
