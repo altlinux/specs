@@ -6,7 +6,7 @@ BuildRequires: perl(CPAN.pm) perl(Clone.pm) perl(JSON.pm) perl(Module/Build.pm) 
 %define _localstatedir %{_var}
 Name:           perl-Data-Clone
 Version:        0.004
-Release:        alt1_9
+Release:        alt1_11
 Summary:        Polymorphic data cloning
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -68,6 +68,9 @@ make test
 %{perl_vendor_archlib}/Data*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1_11
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1_9
 - update to new release by fcimport
 
