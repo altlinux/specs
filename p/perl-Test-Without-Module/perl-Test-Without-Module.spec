@@ -7,7 +7,7 @@ BuildRequires: perl(Pod/Markdown.pm) perl(Pod/Readme.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-Without-Module
 Version:        0.20
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Test fallback behavior in absence of modules
 License:        GPL+ or Artistic
 
@@ -51,6 +51,9 @@ make test
 %{perl_vendor_privlib}/Test*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1_3
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1_2
 - update to new release by fcimport
 
