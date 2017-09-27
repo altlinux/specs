@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools gcc-c++
 %define _localstatedir %{_var}
 Name:           gemdropx
 Version:        0.9
-Release:        alt6_17
+Release:        alt6_19
 Summary:        Falling blocks puzzlegame
 Group:          Games/Other
 License:        GPL+
@@ -14,6 +14,7 @@ Source0:        ftp://ftp.billsgames.com/unix/x/%{name}/src/%{name}-%{version}.t
 Source1:        %{name}.desktop
 BuildRequires:  libSDL_mixer-devel ImageMagick desktop-file-utils
 Requires:       icon-theme-hicolor
+Source44: import.info
 
 %description
 Gem Drop X is a fast-paced puzzle game where it is your job to clear
@@ -56,6 +57,9 @@ convert data/images/%{name}-icon.xpm \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9-alt6_19
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.9-alt6_17
 - update to new release by fcimport
 
