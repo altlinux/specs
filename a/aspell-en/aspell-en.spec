@@ -6,8 +6,8 @@
 Summary: English dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
-Version: 2015.04.24
-Release: alt1_3
+Version: 2017.08.24
+Release: alt1_1
 License: MIT and BSD
 Group: Text tools
 URL: http://aspell.net/
@@ -18,6 +18,7 @@ Obsoletes: aspell-en-gb <= 0.33.7.1
 Obsoletes: aspell-en-ca <= 0.33.7.1
 
 %define debug_package %{nil}
+Source44: import.info
 
 %description
 Provides the word list/dictionaries for the following: English, Canadian
@@ -39,6 +40,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2017.08.24-alt1_1
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2015.04.24-alt1_3
 - update to new release by fcimport
 
