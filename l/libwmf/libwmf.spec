@@ -1,6 +1,6 @@
 Name: libwmf
 Version: 0.2.8.4
-Release: alt12
+Release: alt13
 
 Summary: A library to convert wmf files
 License: GPL
@@ -27,6 +27,8 @@ Patch10: libwmf-0.2.8.4-intoverflow.patch
 Patch11: libwmf-0.2.8.4-pixbufloaderdir.patch
 Patch12: libwmf-0.2.8.4-reducesymbols.patch
 Patch13: libwmf-0.2.8.4-fallbackfont.patch
+Patch14: CVE-2015-0848_CVE-2015-4588_CVE-2015-4695_CVE-2015-4696.patch
+Patch15: CVE-2016-9011.patch
 
 BuildRequires: libICE-devel libexpat-devel libfreetype-devel libgdk-pixbuf-devel libjpeg-devel libpng-devel
 
@@ -88,10 +90,12 @@ support.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
+#%patch10 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
+%patch15 -p1
 
 rm -f configure.in
 
@@ -130,6 +134,10 @@ install -pD -m644 fonts/fontmap %buildroot%_datadir/%name/fontmap
 %_docdir/%name-%version
 
 %changelog
+* Wed Sep 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.2.8.4-alt13
+- Secutity (Fixes: CVE-2015-0848, CVE-2015-4588, CVE-2015-4695,
+  CVE-2015-4696, CVE-2016-9011)
+
 * Tue Feb 04 2014 Valery Inozemtsev <shrek@altlinux.ru> 0.2.8.4-alt12
 - updated CVE patches (closes: #29788)
 - new subpackage libwmflite (closes: #25254)
