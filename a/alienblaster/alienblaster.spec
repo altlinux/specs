@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++
 %define _localstatedir %{_var}
 Name:           alienblaster
 Version:        1.1.0
-Release:        alt2_18
+Release:        alt2_20
 Summary:        Action-loaded 2D arcade shooter game
 Group:          Games/Other
 License:        GPLv2+
@@ -20,6 +20,7 @@ Patch0:         alienblaster-1.1.0-64bit.patch
 Patch1:         alienblaster-1.1.0-fullscreen.patch
 BuildRequires:  libSDL_mixer-devel desktop-file-utils
 Requires:       icon-theme-hicolor
+Source44: import.info
 
 %description
 Alien Blaster is an action-loaded 2D arcade shooter game. Your mission in the 
@@ -67,6 +68,9 @@ install -p -m 644 %{SOURCE5} \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_20
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_18
 - update to new release by fcimport
 
