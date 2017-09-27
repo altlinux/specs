@@ -1,5 +1,5 @@
 Name: moarvm
-Version: 2016.10
+Version: 2017.09.1
 Release: alt1
 Summary: 6model-based VM for NQP and Rakudo Perl 6
 
@@ -13,6 +13,8 @@ Source: %name-%version.tar
 Source2: dynasm.tar
 # Cloned from https://github.com/MoarVM/dyncall
 Source3: dyncall.tar
+# Cloned from https://github.com/MoarVM/libtommath
+Source4: libtommath.tar
 
 Patch: %name-%version-%release.patch
 
@@ -48,11 +50,11 @@ Requires: lib%name = %version-%release
 %summary
 
 %prep
-%setup -a2 -a3
+%setup -a2 -a3 -a4
 %patch -p1
 
-rm -r 3rdparty/{libuv,dynasm,dyncall}
-mv dynasm dyncall 3rdparty
+rm -r 3rdparty/{libuv,dynasm,dyncall,libtommath}
+mv dynasm dyncall libtommath 3rdparty
 
 %build
 perl Configure.pl --prefix=%_prefix --libdir=%_libdir \
@@ -77,6 +79,9 @@ perl Configure.pl --prefix=%_prefix --libdir=%_libdir \
 %_datadir/pkgconfig/moar.pc
 
 %changelog
+* Tue Sep 26 2017 Vladimir Lettiev <crux@altlinux.org> 2017.09.1-alt1
+- 2017.09.1
+
 * Mon Oct 24 2016 Vladimir Lettiev <crux@altlinux.ru> 2016.10-alt1
 - 2016.10
 - build with bundled libtommath (system libtommath is too old)

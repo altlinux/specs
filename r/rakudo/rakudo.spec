@@ -1,5 +1,5 @@
 Name: rakudo
-Version: 2016.10
+Version: 2017.09
 Release: alt1
 Summary: Perl 6 compiler for the MoarVM
 
@@ -11,13 +11,13 @@ URL: http://rakudo.org/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Packager: Vladimir Lettiev <crux@altlinux.ru>
+Packager: Vladimir Lettiev <crux@altlinux.org>
 
 Requires: nqp
 
-BuildRequires: libmoarvm-devel moarvm nqp perl-devel libffi-devel
+BuildRequires: libmoarvm-devel moarvm nqp perl-devel libffi-devel libatomic_ops-devel-static
 # Fake deps, only headers required (libraries already linked in libmoarvm)
-BuildRequires: libuv-devel libatomic_ops-devel-static libtommath-devel
+BuildRequires: libuv-devel libtommath-devel
 
 AutoReq: noperl
 AutoProv: noperl
@@ -35,36 +35,41 @@ perl Configure.pl --prefix=%_prefix --backends=moar
 
 %install
 %makeinstall_std LIBDIR=%_libdir
+mkdir -p %buildroot%_datadir/%name
+cp tools/install-dist.pl %buildroot%_datadir/%name
 
 %files
 %_bindir/perl6*
-%_datadir/nqp/lib/Perl6
-%_libdir/perl6/runtime/dynext
+%exclude %_bindir/perl6-lldb*
+%_libdir/nqp/lib/Perl6
 %dir %_libdir/perl6
 %dir %_libdir/perl6/runtime
-%dir %_datadir/perl6
-%dir %_datadir/perl6/bin
-%dir %_datadir/perl6/dist
-%dir %_datadir/perl6/precomp
-%dir %_datadir/perl6/short
-%dir %_datadir/perl6/site
-%dir %_datadir/perl6/sources
-%dir %_datadir/perl6/resources
-%dir %_datadir/perl6/runtime
-%dir %_datadir/perl6/vendor
-%_datadir/perl6/dist/*
-%_datadir/perl6/runtime/*
-%_datadir/perl6/precomp/*
-%_datadir/perl6/short/*
-%_datadir/perl6/site/*
-%_datadir/perl6/sources/*
-%_datadir/perl6/vendor/*
-%_datadir/perl6/version
+%dir %_libdir/perl6/bin
+%dir %_libdir/perl6/dist
+%dir %_libdir/perl6/precomp
+%dir %_libdir/perl6/short
+%dir %_libdir/perl6/site
+%dir %_libdir/perl6/sources
+%dir %_libdir/perl6/resources
+%dir %_libdir/perl6/runtime
+%dir %_libdir/perl6/vendor
+%_libdir/perl6/dist/*
+%_libdir/perl6/runtime/*
+%_libdir/perl6/precomp/*
+%_libdir/perl6/short/*
+%_libdir/perl6/site/*
+%_libdir/perl6/sources/*
+%_libdir/perl6/vendor/*
+%_libdir/perl6/version
+%_datadir/%name
 %doc LICENSE README.md CREDITS
-%exclude %_datadir/perl6/repo.lock
-%exclude %_datadir/perl6/precomp/.lock
+%exclude %_libdir/perl6/repo.lock
+%exclude %_libdir/perl6/precomp/.lock
 
 %changelog
+* Tue Sep 26 2017 Vladimir Lettiev <crux@altlinux.org> 2017.09-alt1
+- 2017.09
+
 * Mon Oct 24 2016 Vladimir Lettiev <crux@altlinux.ru> 2016.10-alt1
 - 2016.10
 
