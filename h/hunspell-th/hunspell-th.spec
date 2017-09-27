@@ -8,13 +8,14 @@ Name: hunspell-th
 Summary: Thai hunspell dictionaries
 %global upstreamid 20061212
 Version: 0.%{upstreamid}
-Release: alt2_15
+Release: alt2_16
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/th_TH.zip
 URL: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/
 License: LGPLv2+
 BuildArch: noarch
 
 Requires: hunspell
+Source44: import.info
 
 %description
 Thai hunspell dictionaries.
@@ -37,6 +38,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20061212-alt2_16
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20061212-alt2_15
 - update to new release by fcimport
 
