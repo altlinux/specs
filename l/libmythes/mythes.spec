@@ -7,12 +7,13 @@ BuildRequires: gcc-c++
 Name:      libmythes
 Summary:   A thesaurus library
 Version:   1.2.4
-Release:   alt1_6
+Release:   alt1_8
 Source:    http://downloads.sourceforge.net/hunspell/%{oldname}-%{version}.tar.gz
 Group:     System/Libraries
 URL:       http://hunspell.sourceforge.net/
 License:   BSD and MIT
 BuildRequires: libhunspell-devel hunspell-utils
+Source44: import.info
 
 %description
 MyThes is a simple thesaurus that uses a structured text data file and an
@@ -57,6 +58,9 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_bindir}/th_gen_idx.pl
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt1_8
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt1_6
 - update to new release by fcimport
 
