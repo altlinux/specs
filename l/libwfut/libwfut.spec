@@ -13,7 +13,7 @@ BuildRequires: gcc-c++
 
 Name:           libwfut
 Version:        0.2.3
-Release:        alt1_9
+Release:        alt1_13
 Summary:        Software updater tool for WorldForge applications
 
 Group:          Development/Other
@@ -26,6 +26,7 @@ Source0:        http://downloads.sourceforge.net/worldforge/%{name}-%{version}.t
 Patch0:         libwfut-0.2.3-Remove-reference-to-object_slot-h.patch
 
 BuildRequires:  libsigc++2-devel libcurl-devel zlib-devel tinyxml-devel python-devel swig
+Source44: import.info
 
 %description
 libwfut is the WorldForge Update Tool (WFUT) client side implementation in C++
@@ -43,6 +44,11 @@ Development libraries and headers for linking against the libwfut library.
 
 
 %package -n python-module-libwfut
+%{?python_provide:%python_provide python2-libwfut}
+# Remove before F30
+Provides: %{name}-python = %{version}-%{release}
+Provides: %{name}-python = %{version}-%{release}
+Obsoletes: %{name}-python < %{version}-%{release}
 Summary: Python interface for libwfut library
 Group:   Development/Other
 
@@ -102,6 +108,9 @@ make check
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt1_13
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt1_9
 - update to new release by fcimport
 
