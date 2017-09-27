@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           libmercator
 Version:        0.3.3
-Release:        alt1_8
+Release:        alt1_10
 Summary:        Terrain library for WorldForge client/server
 
 Group:          Development/Other
@@ -17,6 +17,7 @@ Source0:        http://downloads.sourceforge.net/worldforge/%{oldname}-%{version
 
 BuildRequires:  libwfmath-devel >= 0.3.2
 BuildRequires:  doxygen
+Source44: import.info
 Provides: mercator = %{version}-%{release}
 
 %description
@@ -75,6 +76,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt1_10
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt1_8
 - update to new release by fcimport
 
