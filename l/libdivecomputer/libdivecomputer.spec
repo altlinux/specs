@@ -9,7 +9,7 @@ Group: Other
 Name:           libdivecomputer
 Version:        0.4.2
 #Release:        2.{snapver}{?dist}
-Release:        alt1_6
+Release:        alt1_8
 Summary:        Library for communication with dive computers
 
 License:        LGPLv2+
@@ -21,6 +21,7 @@ Source0:        http://libdivecomputer.org/releases/%{name}-%{version}.tar.gz
 #Source0:        libdivecomputer-0.1.0-20120717git4bc477b.tar.xz
 
 BuildRequires:  libusb-devel
+Source44: import.info
 #BuildRequires:  autoconf
 
 %description
@@ -131,6 +132,9 @@ rm $RPM_BUILD_ROOT/%{_bindir}/{veo250,vtpro,vyper,vyper2}
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_8
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_6
 - update to new release by fcimport
 
