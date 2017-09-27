@@ -6,7 +6,7 @@ BuildRequires: perl(IO/File.pm) perl(IO/Handle.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-File-Inplace
 Version:        0.20
-Release:        alt2_17
+Release:        alt2_18
 Summary:        Perl module for in-place editing of files
 License:        (GPL+ or Artistic)
 Group:          Development/Other
@@ -52,6 +52,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20-alt2_18
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.20-alt2_17
 - update to new release by fcimport
 
