@@ -4,7 +4,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:		libax25
 Version:        1.0.5
-Release:        alt1_3
+Release:        alt1_5
 Summary:	AX.25 library for hamradio applications
 
 License:	LGPLv2+
@@ -13,6 +13,7 @@ Source0:	http://www.linux-ax25.org/pub/libax25/%{name}-%{version}.tar.gz
 
 BuildRequires:  autoconf-common automake-common libtool-common
 BuildRequires:  zlib-devel
+Source44: import.info
 
 
 %description
@@ -70,6 +71,9 @@ rm -f %{buildroot}%{_includedir}/{netax25/ax25.h,netrom/netrom.h,netrose/rose.h}
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_5
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_3
 - update to new release by fcimport
 
