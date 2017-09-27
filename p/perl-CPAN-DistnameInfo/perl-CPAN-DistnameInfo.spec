@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-CPAN-DistnameInfo
 Version:        0.12
-Release:        alt2_9
+Release:        alt2_10
 Summary:        Extract distribution name and version from a distribution filename
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -53,6 +53,9 @@ make test
 %{perl_vendor_privlib}/CPAN/
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2_10
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2_9
 - update to new release by fcimport
 
