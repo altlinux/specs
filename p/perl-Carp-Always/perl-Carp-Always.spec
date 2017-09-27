@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Carp-Always
 Version:        0.13
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Warn and die in Perl noisily with stack backtraces
 License:        GPL+ or Artistic
 
@@ -62,6 +62,9 @@ make test
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2_11
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2_10
 - update to new release by fcimport
 
