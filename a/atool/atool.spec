@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/perl perl(Encode.pm)
 %define _localstatedir %{_var}
 Name:		atool
 Version:	0.39.0
-Release:	alt1_8
+Release:	alt1_9
 Summary:	A perl script for managing file archives of various types
 
 Group:		Archiving/Other
@@ -15,6 +15,7 @@ Source0:	http://savannah.nongnu.org/download/%{name}/%{name}-%{version}.tar.gz
 
 BuildArch:	noarch
 BuildRequires:	rpm-build-perl
+Source44: import.info
 
 %description
 atool is a script for managing file archives of various types.
@@ -54,6 +55,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_mandir}/man1/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.39.0-alt1_9
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.39.0-alt1_8
 - update to new release by fcimport
 
