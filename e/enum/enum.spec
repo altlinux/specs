@@ -2,13 +2,14 @@
 %define _localstatedir %{_var}
 Name: enum
 Version: 1.1
-Release: alt1_9
+Release: alt1_11
 Summary: Seq- and jot-like enumerator
 
 Group:   System/Base
 License: BSD
 URL:     https://fedorahosted.org/enum
 Source0: https://fedorahosted.org/releases/e/n/enum/%{name}-%{version}.tar.bz2
+Source44: import.info
 
 %description
 Utility enum enumerates values (numbers) between two values, possibly
@@ -39,6 +40,9 @@ make check
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_11
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_9
 - update to new release by fcimport
 
