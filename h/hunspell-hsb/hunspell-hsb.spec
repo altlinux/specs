@@ -7,13 +7,14 @@ BuildRequires: unzip
 Name: hunspell-hsb
 Summary: Upper Sorbian hunspell dictionaries
 Version: 0.20060327.3
-Release: alt2_10
+Release: alt2_11
 Source: https://addons.mozilla.org/firefox/downloads/file/113003/upper_sorbian_spelling_dictionary-0.0.20060327.3-tb+fx+sm.xpi
 URL: http://sorbzilla.de/
 License: GPLv2+
 BuildArch: noarch
 
 Requires: hunspell
+Source44: import.info
 
 %description
 Upper Sorbian hunspell dictionaries.
@@ -34,6 +35,9 @@ cp -p dictionaries/hsb.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/hsb_DE.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20060327.3-alt2_11
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20060327.3-alt2_10
 - update to new release by fcimport
 
