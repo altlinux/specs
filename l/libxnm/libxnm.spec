@@ -4,7 +4,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libxnm
 Version:        0.1.3
-Release:        alt3_16
+Release:        alt3_18
 Summary:        A library for parsing the XNM format
 
 License:        GPLv2+
@@ -12,6 +12,7 @@ URL:            http://xnm.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/xnm/%{name}-%{version}.tar.gz
 
 BuildRequires:  glib2-devel libgio libgio-devel
+Source44: import.info
     
 %description
 XNM is a simple recursively defined serialization syntax for storing
@@ -50,6 +51,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt3_18
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt3_16
 - update to new release by fcimport
 
