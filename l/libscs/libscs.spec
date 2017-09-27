@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           libscs
 Version:        1.4.1
-Release:        alt3_13.2
+Release:        alt3_15.2
 Summary:        Software Carry-Save Multiple-Precision Library
 
 Group:          System/Libraries
@@ -20,6 +20,7 @@ BuildRequires:  autoconf-common, automake-common, libtool-common
 %if 0%{?fedora} > 0 || 0%{?rhel} > 5
 BuildRequires:  libmpfr-devel libgmp-devel libgmpxx-devel
 %endif
+Source44: import.info
 
 %description
 The Software Carry-Save (SCS) Library is a fast and lightweight
@@ -97,6 +98,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt3_15.2
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt3_13.2
 - update to new release by fcimport
 
