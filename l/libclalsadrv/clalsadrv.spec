@@ -9,7 +9,7 @@ BuildRequires: gcc-c++
 Summary:       ALSA driver C++ Library
 Name:          libclalsadrv
 Version:       2.0.0
-Release:       alt1_13
+Release:       alt1_15
 License:       GPLv2+
 Group:         System/Libraries
 URL:           http://kokkinizita.linuxaudio.org/
@@ -18,6 +18,7 @@ Source0:       http://kokkinizita.linuxaudio.org/linuxaudio/downloads/%{oldname}
 Obsoletes:     alsadrv <= 0.0.2
 Provides:      alsadrv > 0.0.2
 BuildRequires: libalsa-devel
+Source44: import.info
 Provides: clalsadrv = %{version}-%{release}
 
 %description
@@ -61,6 +62,9 @@ ln -s lib%{oldname}.so.2.0.0 %{buildroot}%{_libdir}/lib%{oldname}.so.2
 %{_libdir}/lib%{oldname}.so
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_15
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_13
 - update to new release by fcimport
 
