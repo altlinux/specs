@@ -6,7 +6,7 @@ BuildRequires: boost-program_options-devel
 %define _localstatedir %{_var}
 Name:		bastet
 Version:	0.43.1
-Release:	alt1_18
+Release:	alt1_20
 Summary:	An evil falling bricks game
 
 Group:		Games/Other
@@ -88,6 +88,9 @@ mkdir -p %{buildroot}%{_mandir}/man6/
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.43.1-alt1_20
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.43.1-alt1_18
 - update to new release by fcimport
 
