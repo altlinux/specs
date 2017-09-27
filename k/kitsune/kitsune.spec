@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++
 %define _localstatedir %{_var}
 Name:           kitsune
 Version:        2.0
-Release:        alt3_20
+Release:        alt3_22
 Summary:        Program to solve mathematical problems
 
 Group:          Games/Other
@@ -18,6 +18,7 @@ Source2:        http://%{name}.tuxfamily.org/download.php?url=icons/%{name}-icon
 
 BuildRequires:  libqt4-declarative libqt4-devel qt4-designer
 BuildRequires:  desktop-file-utils
+Source44: import.info
 
 %description
 Kitsune is a software aiming at solving digit problems 
@@ -71,6 +72,9 @@ desktop-file-install \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_22
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_20
 - update to new release by fcimport
 
