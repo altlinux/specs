@@ -7,7 +7,7 @@ BuildRequires: liballegro-devel
 %define _localstatedir %{_var}
 Name:           Ants
 Version:        1.4
-Release:        alt2_19
+Release:        alt2_21
 Summary:        Guide the insects safely home before they drop of the cliff
 Group:          Games/Other
 License:        Public Domain
@@ -20,6 +20,7 @@ Source4:        license-info
 Patch0:         ants-1.4-fixes.patch
 BuildRequires:  liballegro-devel desktop-file-utils
 Requires:       icon-theme-hicolor
+Source44: import.info
 
 %description
 You take command in the game of a bunch of small ants and have to guide them
@@ -76,6 +77,9 @@ install -p -m 644 %{SOURCE3} \
 %{_datadir}/applications/%{oldname}-level-editor.desktop
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_21
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_19
 - update to new release by fcimport
 
