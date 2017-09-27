@@ -8,7 +8,7 @@ Name: hunspell-it
 Summary: Italian hunspell dictionaries
 %global upstreamid 20070901
 Version: 2.4
-Release: alt2_0.15.%{upstreamid}
+Release: alt2_0.16.%{upstreamid}
 Source: http://downloads.sourceforge.net/sourceforge/linguistico/italiano_2_4_2007_09_01.zip
 URL: http://linguistico.sourceforge.net
 License: GPLv3+
@@ -17,6 +17,7 @@ Requires: hunspell
 #dic contains free-form text inside the .dic, i.e. "error: line 3: bad flagvector"
 #  https://sourceforge.net/tracker/?func=detail&aid=2994177&group_id=128318&atid=711333
 Patch0: hunspell-it-sf2994177.cleandic.patch
+Source44: import.info
 
 %description
 Italian hunspell dictionaries.
@@ -45,6 +46,9 @@ done
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.4-alt2_0.16.20070901
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.4-alt2_0.15.20070901
 - update to new release by fcimport
 
