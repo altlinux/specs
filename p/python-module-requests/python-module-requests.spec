@@ -4,24 +4,23 @@
 %def_disable check
 
 Name:           python-module-requests
-Version:        2.12.4
-Release:        alt5
+Version:        2.18.4
+Release:        alt1
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python
 
 License:        ASL 2.0
-URL:            http://pypi.python.org/pypi/requests
-# https://github.com/kennethreitz/requests.git
-Source0:        https://pypi.python.org/packages/5b/0b/34be574b1ec997247796e5d516f3a6b6509c4e064f2885a96ed885ce7579/requests-%{version}.tar.gz
+URL:            https://pypi.io/project/requests
+Source0:        %pkgname-%version.tar
 # Explicitly use the system certificates in ca-certificates.
 # https://bugzilla.redhat.com/show_bug.cgi?id=904614
 Patch0:         python-requests-system-cert-bundle.patch
-# Unbundle python-charade (a fork of python-chardet).
-# https://bugzilla.redhat.com/show_bug.cgi?id=904623
-Patch1:         python-requests-system-chardet-not-charade.patch
-# Unbundle python-urllib3 (a fork of python-urllib3).
-# https://bugzilla.redhat.com/show_bug.cgi?id=904623
-Patch2:         python-requests-system-urllib3.patch
+# Remove an unnecessary reference to a bundled compat lib in urllib3
+# Some discussion with upstream:
+# - https://twitter.com/sigmavirus24/status/529816751651819520
+# - https://github.com/kennethreitz/requests/issues/1811
+# - https://github.com/kennethreitz/requests/pull/1812
+Patch1:         dont-import-OrderedDict-from-urllib3.patch
 
 BuildArch:      noarch
 
@@ -70,8 +69,7 @@ designed to make HTTP requests easy for developers.
 %setup -n requests-%{version}
 
 %patch0 -p1
-#patch1 -p1
-#patch2 -p1
+%patch1 -p1
 
 # Unbundle the certificate bundle from mozilla.
 rm -rf requests/cacert.pem
@@ -83,19 +81,9 @@ cp -a . ../python3
 
 %build
 %python_build
-
-# Unbundle chardet.  Patch1 switches usage to system chardet.
-# Unbundle urllib3.  Patch2 switches usage to system urllib3.
-#rm -rf build/lib/requests/packages
-
 %if_with python3
 pushd ../python3
 %python3_build
-
-# Unbundle chardet.  Patch1 switches usage to system chardet.
-# Unbundle urllib3.  Patch2 switches usage to system urllib3.
-#rm -rf build/lib/requests/packages
-
 popd
 %endif
 
@@ -108,28 +96,20 @@ pushd ../python3
 popd
 %endif
 
-
-## The tests succeed if run locally, but fail in koji.
-## They require an active network connection to query httpbin.org
-#%%check
-#%%{__python} test_requests.py
-#%%if 0%%{?_with_python3}
-#pushd %%{py3dir}
-#%%{__python3} test_requests.py
-#popd
-#%%endif
-
 %files
-%doc NOTICE LICENSE README.rst HISTORY.rst
+%doc AUTHORS.rst CODE_OF_CONDUCT.md CONTRIBUTING.md HISTORY.rst README.rst
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%pkgname
-%doc NOTICE LICENSE README.rst HISTORY.rst
+%doc AUTHORS.rst CODE_OF_CONDUCT.md CONTRIBUTING.md HISTORY.rst README.rst
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Wed Sep 27 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.4-alt1
+- New version
+
 * Wed Sep 27 2017 Andrey Cherepanov <cas@altlinux.org> 2.12.4-alt5
 - Do not remove bundled chardet and urllib3 libraries
 
