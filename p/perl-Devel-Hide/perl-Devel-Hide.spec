@@ -6,7 +6,7 @@ BuildRequires: perl(File/Temp.pm) perl(Module/CoreList.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Devel-Hide
 Version:        0.0009
-Release:        alt1_11
+Release:        alt1_12
 Summary:        Forces the unavailability of specified Perl modules (for testing)
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -47,6 +47,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.0009-alt1_12
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.0009-alt1_11
 - update to new release by fcimport
 
