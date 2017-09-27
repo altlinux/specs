@@ -8,13 +8,14 @@ Name: hyphen-id
 Summary: Indonesian hyphenation rules
 %global upstreamid 20040812
 Version: 0.%{upstreamid}
-Release: alt1_13
+Release: alt1_14
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_id_ID.zip
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
 License: GPL+
 BuildArch: noarch
 
 Requires: libhyphen
+Source44: import.info
 
 %description
 Indonesian hyphenation rules.
@@ -35,6 +36,9 @@ cp -p *.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20040812-alt1_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20040812-alt1_13
 - update to new release by fcimport
 
