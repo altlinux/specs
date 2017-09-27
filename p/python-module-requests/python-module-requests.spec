@@ -5,7 +5,7 @@
 
 Name:           python-module-requests
 Version:        2.12.4
-Release:        alt4
+Release:        alt5
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python
 
@@ -70,8 +70,8 @@ designed to make HTTP requests easy for developers.
 %setup -n requests-%{version}
 
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
+#patch1 -p1
+#patch2 -p1
 
 # Unbundle the certificate bundle from mozilla.
 rm -rf requests/cacert.pem
@@ -86,7 +86,7 @@ cp -a . ../python3
 
 # Unbundle chardet.  Patch1 switches usage to system chardet.
 # Unbundle urllib3.  Patch2 switches usage to system urllib3.
-rm -rf build/lib/requests/packages
+#rm -rf build/lib/requests/packages
 
 %if_with python3
 pushd ../python3
@@ -94,7 +94,7 @@ pushd ../python3
 
 # Unbundle chardet.  Patch1 switches usage to system chardet.
 # Unbundle urllib3.  Patch2 switches usage to system urllib3.
-rm -rf build/lib/requests/packages
+#rm -rf build/lib/requests/packages
 
 popd
 %endif
@@ -130,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Wed Sep 27 2017 Andrey Cherepanov <cas@altlinux.org> 2.12.4-alt5
+- Do not remove bundled chardet and urllib3 libraries
+
 * Mon Feb 27 2017 Michael Shigorin <mike@altlinux.org> 2.12.4-alt4
 - BOOTSTRAP: introduce check knob (*off* by default),
   put (unused) BR: python-module-httpbin under it
