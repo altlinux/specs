@@ -3,7 +3,7 @@
 %define _localstatedir %{_var}
 Name:           libacpi
 Version:        0.2
-Release:        alt2_26
+Release:        alt2_28
 Summary:        General purpose library for ACPI 
 
 Group:          System/Libraries
@@ -15,6 +15,7 @@ Patch1:         %{name}-%{version}-sysfs.patch
 ExcludeArch:    ppc ppc64
 
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
+Source44: import.info
 
 %description    
 libacpi is a general purpose shared library for programs gathering 
@@ -69,6 +70,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_28
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_26
 - update to new release by fcimport
 
