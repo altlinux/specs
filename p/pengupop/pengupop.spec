@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           pengupop
 Version:        2.2.2
-Release:        alt4_16
+Release:        alt4_18
 Summary:        Networked Game in the vein of Move/Puzzle Bobble
 
 Group:          Games/Other
@@ -14,6 +14,7 @@ URL:            http://www.junoplay.com/pengupop
 Source0:        http://www.junoplay.com/files/%{name}-%{version}.tar.gz
 
 BuildRequires:  libSDL-devel, zlib-devel, desktop-file-utils
+Source44: import.info
 
 %description
 Finally a networked multiplayer game in the vein of the puzzle classic Bust a
@@ -51,6 +52,9 @@ desktop-file-install \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt4_18
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt4_16
 - update to new release by fcimport
 
