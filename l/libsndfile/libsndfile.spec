@@ -1,5 +1,5 @@
 Name: libsndfile
-Version: 1.0.27
+Version: 1.0.28
 Release: alt1
 
 Summary: A library to handle various audio file formats
@@ -70,6 +70,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man1dir/*
 
 %changelog
+* Wed Sep 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.0.28-alt1
+- 1.0.28 (Fixes: CVE-2017-7585, CVE-2017-7586, CVE-2017-7741, CVE-2017-7742)
+
 * Mon Nov 14 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0.27-alt1
 - 1.0.27 (fixed CVE-2014-9496, CVE-2014-9756, CVE-2015-7805)
 
