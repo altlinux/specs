@@ -8,7 +8,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libnpth
 Version:        1.5
-Release:        alt1_1
+Release:        alt1_3
 Summary:        The New GNU Portable Threads library
 License:        LGPLv2+
 URL:            http://git.gnupg.org/cgi-bin/gitweb.cgi?p=npth.git
@@ -70,6 +70,9 @@ make check
 %{_datadir}/aclocal/%{oldname}.m4
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_3
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_1
 - update to new release by fcimport
 
