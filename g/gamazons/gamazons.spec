@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize
 %define _localstatedir %{_var}
 Name:           gamazons
 Version:        0.83
-Release:        alt4_17
+Release:        alt4_19
 Summary:        GNOME Amazons
 
 Group:          Games/Other
@@ -14,6 +14,7 @@ URL:            http://www.yorgalily.org/gamazons/
 Source0:        http://www.yorgalily.org/gamazons/src/gamazons-%{version}.tar.gz
 
 BuildRequires:  libgnomeui-devel desktop-file-utils
+Source44: import.info
 
 %description
 Amazons is a game played on a 10x10 chess board. Each side has four
@@ -61,6 +62,9 @@ desktop-file-install \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.83-alt4_19
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.83-alt4_17
 - update to new release by fcimport
 
