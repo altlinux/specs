@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/pod2man /usr/bin/pod2html
 %define _localstatedir %{_var}
 Name:		coan
 Version:	6.0.1
-Release:	alt1_11
+Release:	alt1_13
 Summary:	A command line tool for simplifying the pre-processor conditionals in source code
 Group:		Development/Other
 License:	BSD
@@ -75,6 +75,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 %{_mandir}/man1/%{name}.1.*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_13
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_11
 - update to new release by fcimport
 
