@@ -8,13 +8,14 @@ Name: hunspell-ast
 Summary: Asturian hunspell dictionaries
 #Epoch: 1
 Version: 0.02
-Release: alt1_11
+Release: alt1_12
 Source: http://extensions.services.openoffice.org/e-files/3932/1/asturianu.oxt
 URL: http://softastur.org/
 License: GPLv3+
 BuildArch: noarch
 
 Requires: hunspell
+Source44: import.info
 
 %description
 Asturian hunspell dictionaries.
@@ -36,6 +37,9 @@ cp -p dictionaries/ast.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/ast_ES.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_12
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_11
 - update to new release by fcimport
 
