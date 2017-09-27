@@ -7,13 +7,14 @@ BuildRequires: unzip
 Name: hyphen-ro
 Summary: Romanian hyphenation rules
 Version: 3.3.6
-Release: alt1_11
+Release: alt1_12
 Source: http://downloads.sourceforge.net/rospell/hyph_ro_RO.3.3.6.zip
 URL: http://rospell.sourceforge.net/
 License: GPLv2+
 BuildArch: noarch
 
 Requires: libhyphen
+Source44: import.info
 
 %description
 Romanian hyphenation rules.
@@ -33,6 +34,9 @@ cp -p *.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/
 %{_datadir}/hyphen/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 3.3.6-alt1_12
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 3.3.6-alt1_11
 - update to new release by fcimport
 
