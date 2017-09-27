@@ -8,13 +8,14 @@ Name: hunspell-vi
 Summary: Vietnamese hunspell dictionaries
 %global upstreamid 20080604
 Version: 0.%{upstreamid}
-Release: alt2_13
+Release: alt2_14
 Source: http://hunspell-spellcheck-vi.googlecode.com/files/vi_VN.zip
 URL: http://code.google.com/p/hunspell-spellcheck-vi
 License: GPL+
 BuildArch: noarch
 
 Requires: hunspell
+Source44: import.info
 
 %description
 Vietnamese hunspell dictionaries.
@@ -34,6 +35,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20080604-alt2_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20080604-alt2_13
 - update to new release by fcimport
 
