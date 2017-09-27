@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install perl(Proc/Simple.pm) perl(Tk.pm)
 %define _localstatedir %{_var}
 Name: alevt
 Version: 1.6.2
-Release: alt2_27
+Release: alt2_29
 Summary: Teletext decoder/browser
 Group: Video
 License: GPLv2
@@ -21,6 +21,7 @@ BuildRequires: libX11-devel
 BuildRequires: libpng-devel
 BuildRequires: desktop-file-utils
 BuildRequires: ImageMagick
+Source44: import.info
 
 %description
 AleVT is a teletext/videotext decoder and browser for the
@@ -64,6 +65,9 @@ desktop-file-install \
 %doc README CHANGELOG COPYRIGHT
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt2_29
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt2_27
 - update to new release by fcimport
 
