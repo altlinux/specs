@@ -8,7 +8,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libmodman
 Version:        2.0.1
-Release:        alt2_14
+Release:        alt2_16
 Summary:        A simple library for managing C++ modules (plug-ins)
 
 License:        LGPLv2+
@@ -60,6 +60,9 @@ make test
 %{_datadir}/cmake/Modules/Findlibmodman.cmake
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_16
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_14
 - update to new release by fcimport
 
