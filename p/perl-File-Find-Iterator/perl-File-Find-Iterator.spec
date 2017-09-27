@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-File-Find-Iterator
 Version:        0.4
-Release:        alt3_14
+Release:        alt3_15
 Summary:        Iterator interface for search files
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -58,6 +58,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_15
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_14
 - update to new release by fcimport
 
