@@ -6,7 +6,7 @@ BuildRequires: perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Exporter.pm) perl
 %define _localstatedir %{_var}
 Name:           perl-Test-YAML-Valid
 Version:        0.04
-Release:        alt2_21
+Release:        alt2_22
 Summary:        Lets you test the validity of YAML files in unit tests
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -62,6 +62,9 @@ make test
 %{perl_vendor_privlib}/Test/YAML/Valid.pm
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_22
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_21
 - update to new release by fcimport
 
