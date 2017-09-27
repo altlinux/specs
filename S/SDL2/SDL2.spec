@@ -1,8 +1,12 @@
+%def_with ibus
+%def_with fcitx
+%def_with nas
+%def_with pulse
 %def_disable static
 
 Name: SDL2
 Version: 2.0.6
-Release: alt2%ubt
+Release: alt3%ubt
 
 Summary: Simple DirectMedia Layer
 License: zlib
@@ -15,19 +19,21 @@ Source: http://www.libsdl.org/release/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-ubt
 
-BuildRequires: fcitx-devel
 BuildRequires: gcc-c++
 BuildRequires: glibc-kernheaders-generic
 BuildRequires: libGLES-devel
 BuildRequires: libXScrnSaver-devel
 BuildRequires: libXxf86vm-devel
+BuildRequires: libXext-devel
 BuildRequires: libalsa-devel
-BuildRequires: libaudio-devel
+BuildRequires: libdbus-devel
 BuildRequires: libesd-devel
-BuildRequires: libibus-devel
-BuildRequires: libpulseaudio-devel
 BuildRequires: libsamplerate-devel
 BuildRequires: libudev-devel
+%{?_with_ibus:BuildRequires: libibus-devel}
+%{?_with_fcitx:BuildRequires: fcitx-devel}
+%{?_with_nas:BuildRequires: libaudio-devel}
+%{?_with_pulse:BuildRequires: libpulseaudio-devel}
 
 %description
 This is the Simple DirectMedia Layer, a generic API that provides low
@@ -80,7 +86,7 @@ This is the static libraries you can use to develop SDL applications.
 
 %install
 %makeinstall_std
-%__rm -rf %buildroot%_libdir/*.la
+rm -f %buildroot%_libdir/*.la
 
 %files -n lib%name
 %doc BUGS.txt COPYING.txt CREDITS.txt INSTALL.txt README*.txt TODO.txt WhatsNew.txt
@@ -103,6 +109,9 @@ This is the static libraries you can use to develop SDL applications.
 %endif
 
 %changelog
+* Wed Sep 27 2017 Michael Shigorin <mike@altlinux.org> 2.0.6-alt3%ubt
+- introduce ibus, fcitx, nas, pulse knobs (on by default)
+
 * Tue Sep 26 2017 Nazarov Denis <nenderus@altlinux.org> 2.0.6-alt2%ubt
 - Change BuildPreReq to BuildRequires(pre) for rpm-build-ubt (ALT #33921)
 
