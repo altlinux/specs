@@ -6,7 +6,7 @@ BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(Encode.pm) perl(Exporter.pm) perl
 %define _localstatedir %{_var}
 Name:           perl-Crypt-Eksblowfish
 Version:        0.009
-Release:        alt5_17
+Release:        alt5_19
 Summary:        Eksblowfish block cipher
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -54,6 +54,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_archlib}/Crypt*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.009-alt5_19
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.009-alt5_17
 - update to new release by fcimport
 
