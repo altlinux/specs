@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-gettextize gcc-c++ i
 
 Name:		flaw
 Version:	1.3.2a
-Release:	alt2_14
+Release:	alt2_16
 Summary:	Free top-down wizard battle game
 Group:		Games/Other
 License:	GPLv3+
@@ -21,6 +21,7 @@ Patch0:		flaw-aarch64.patch
 BuildRequires:	libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libSDL-devel fonts-ttf-gnu-freefont-serif 
 BuildRequires:	libSDL_gfx-devel desktop-file-utils fonts-ttf-gnu-freefont-sans gettext gettext-tools intltool
 Requires:	fonts-ttf-gnu-freefont-sans fonts-ttf-gnu-freefont-serif
+Source44: import.info
 
 %description
 FLAW is a free top-down wizard battle game.
@@ -107,6 +108,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %doc %{_docdir}/%{name}
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.2a-alt2_16
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.2a-alt2_14
 - update to new release by fcimport
 
