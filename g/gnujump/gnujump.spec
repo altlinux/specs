@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:		gnujump
 Version:	1.0.8
-Release:	alt1_8
+Release:	alt1_10
 Summary:	A jumping game which is a clone of xjump
 
 Group:		Games/Other
@@ -17,6 +17,7 @@ Patch1:		%{name}-Makefile.in.patch
 
 BuildRequires:	libSDL-devel >= 1.2, libSDL_mixer-devel, libSDL_image-devel
 BuildRequires:	desktop-file-utils
+Source44: import.info
 
 %description
 GNUjump is a clone of the simple yet addictive game Xjump, adding new features
@@ -54,6 +55,9 @@ desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE1}
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_10
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_8
 - update to new release by fcimport
 
