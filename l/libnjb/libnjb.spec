@@ -11,7 +11,7 @@
 
 Name:		libnjb
 Version:	2.2.7
-Release:	alt3_13
+Release:	alt3_15
 Summary:	A software library for talking to the Creative Nomad Jukeboxes and Dell DJs
 URL:		http://libnjb.sourceforge.net/
 
@@ -23,6 +23,7 @@ BuildRequires:	zlib-devel
 BuildRequires:	libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 BuildRequires:	doxygen
 BuildRequires:	journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-utils
+Source44: import.info
 
 %description
 This package provides a software library for communicating with the
@@ -95,6 +96,9 @@ touch -r configure.ac \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt3_15
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt3_13
 - update to new release by fcimport
 
