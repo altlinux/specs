@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:           alphabet-soup
 Version:        1.1
-Release:        alt2_17
+Release:        alt2_19
 Summary:        Guide your worm through the soup to spell words
 Group:          Games/Other
 License:        Crystal Stacker
@@ -17,6 +17,7 @@ Patch0:         alphabet-soup-1.1-linux.patch
 Patch1:         alphabet-soup-1.1-rhbz699425.patch
 BuildRequires:  libalfont-devel dumb-devel desktop-file-utils
 Requires:       icon-theme-hicolor
+Source44: import.info
 
 %description
 Guide your worm through the soup to spell words and earn points. Play the way
@@ -51,6 +52,9 @@ install -p -m 644 %{SOURCE2} \
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_19
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_17
 - update to new release by fcimport
 
