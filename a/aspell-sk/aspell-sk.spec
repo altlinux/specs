@@ -7,7 +7,7 @@
 
 Name:           aspell-%{lang}
 Version:        2.01
-Release:        alt2_13
+Release:        alt2_15
 Summary:        Slovak dictionaries for Aspell
 
 Group:          Text tools
@@ -19,6 +19,7 @@ BuildRequires:  aspell >= 0.60
 Requires:       aspell >= 0.60
 
 %define debug_package %{nil}                                                    
+Source44: import.info
 
 %description
 Provides the word list/dictionaries for the following: Slovak
@@ -44,6 +45,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.01-alt2_15
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.01-alt2_13
 - update to new release by fcimport
 
