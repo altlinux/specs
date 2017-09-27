@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           libwfmath
 Version:        1.0.2
-Release:        alt1_10
+Release:        alt1_11
 Summary:        WorldForge client math libraries
 
 Group:          Development/Other
@@ -93,6 +93,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_11
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_10
 - update to new release by fcimport
 
