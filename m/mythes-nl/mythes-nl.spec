@@ -8,12 +8,13 @@ Name: mythes-nl
 Summary: Dutch thesaurus
 %global upstreamid 20130131
 Version: 0.%{upstreamid}
-Release: alt1_7
+Release: alt1_8
 Source: http://data.opentaal.org/opentaalbank/thesaurus/download/thes_nl.oxt
 URL: http://data.opentaal.org/opentaalbank/thesaurus
 License: BSD or CC-BY
 BuildArch: noarch
 Requires: libmythes
+Source44: import.info
 
 %description
 Dutch thesaurus.
@@ -51,6 +52,9 @@ done
 %{_datadir}/mythes/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20130131-alt1_8
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20130131-alt1_7
 - update to new release by fcimport
 
