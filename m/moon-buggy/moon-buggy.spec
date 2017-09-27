@@ -9,7 +9,7 @@ BuildRequires: /usr/bin/desktop-file-install texinfo
 Summary:         Drive and jump with some kind of car across the moon
 Name:            moon-buggy
 Version:         1.0.51
-Release:         alt2_18
+Release:         alt2_20
 License:         GPL+
 Group:           Games/Other
 URL:             http://seehuhn.de/pages/%{name}
@@ -23,6 +23,7 @@ BuildRequires:   libncurses++-devel libncurses-devel libncursesw-devel libtic-de
 %if !%{oldstyle}
 BuildRequires:   libesd-devel, desktop-file-utils, autoconf-common, automake-common
 %endif
+Source44: import.info
 
 %description
 Moon-buggy is a simple character graphics game where you drive some kind
@@ -91,6 +92,9 @@ mv -f TODO.utf8 TODO
 %verify(not md5 size mtime) %config(noreplace) %attr(664,root,games) %{_localstatedir}/games/%{name}/mbscore
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.51-alt2_20
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.51-alt2_18
 - update to new release by fcimport
 
