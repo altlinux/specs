@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:           lure
 Version:        1.1
-Release:        alt2_14
+Release:        alt2_15
 Summary:        Lure of the Temptress - Adventure Game
 Group:          Games/Other
 # For further discussion on distribution rights see:
@@ -17,6 +17,7 @@ Source1:        %{name}.desktop
 BuildRequires:  desktop-file-utils
 BuildArch:      noarch
 Requires:       scummvm >= 0.12.0
+Source44: import.info
 
 %description
 Lure of the Temptress was Revolution's very first adventure game and work began
@@ -58,6 +59,9 @@ desktop-file-install \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_15
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_14
 - update to new release by fcimport
 
