@@ -3,7 +3,7 @@
 %define _localstatedir %{_var}
 Name:           liblzf
 Version:        3.6
-Release:        alt2_12
+Release:        alt2_14
 Summary:        Small data compression library
 
 Group:          System/Libraries
@@ -17,6 +17,7 @@ Patch0:         liblzf-%{version}-autoconf-20140314.patch
 BuildRequires:  autoconf-common
 BuildRequires:  automake-common
 BuildRequires:  libtool-common
+Source44: import.info
 
 %description
 LibLZF is a very small data compression library. It consists 
@@ -75,6 +76,9 @@ rm -f %{buildroot}%{_libdir}/liblzf.la
 %{_libdir}/pkgconfig/liblzf.pc
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 3.6-alt2_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 3.6-alt2_12
 - update to new release by fcimport
 
