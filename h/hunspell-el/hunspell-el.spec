@@ -8,13 +8,14 @@ Name: hunspell-el
 Summary: Greek hunspell dictionaries
 #Epoch: 1
 Version: 0.8
-Release: alt2_12
+Release: alt2_13
 Source: http://ispell.math.upatras.gr/files/ooffice/el_GR-%{version}.zip
 URL: http://ispell.math.upatras.gr/?section=oofficespell&subsection=howto
 License: GPLv2+ or LGPLv2+ or MPLv1.1
 BuildArch: noarch
 
 Requires: hunspell
+Source44: import.info
 
 %description
 Greek hunspell dictionaries.
@@ -42,6 +43,9 @@ done
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_13
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_12
 - update to new release by fcimport
 
