@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           overgod
 Version:        1.0
-Release:        alt2_25
+Release:        alt2_27
 Summary:        Another arcade-style shoot-em-up
 Group:          Games/Other
 License:        GPLv2+
@@ -20,6 +20,7 @@ Patch2:         overgod-1.0-shield_bmp_array_overrun.patch
 Patch3:         overgod-1.0-inline-use-fix.patch
 BuildRequires:  liballegro-devel desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor
+Source44: import.info
 
 %description
 For too long has humanity been ruled by cruel and disputatious gods!
@@ -74,6 +75,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_27
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_25
 - update to new release by fcimport
 
