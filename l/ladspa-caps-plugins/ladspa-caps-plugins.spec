@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           ladspa-caps-plugins
 Version:        0.9.24
-Release:        alt2_2
+Release:        alt2_4
 Summary:        The C* Audio Plugin Suite
 License:        GPLv3+
 Group:          Sound
@@ -17,6 +17,7 @@ BuildRequires:  ladspa_sdk
 Requires:       ladspa_sdk
 Obsoletes:      caps <= 0.3.0-2
 Provides:       caps = %{version}-%{release}
+Source44: import.info
 Conflicts: ladspa-caps < 0.4.3
 Obsoletes: ladspa-caps < 0.4.3
 Provides: ladspa-caps = %version
@@ -52,6 +53,9 @@ rm ladspa.h
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.24-alt2_4
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.24-alt2_2
 - update to new release by fcimport
 
