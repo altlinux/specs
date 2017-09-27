@@ -6,7 +6,7 @@ BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.
 %define _localstatedir %{_var}
 Name:           perl-Parallel-Prefork
 Version:        0.18
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Simple prefork server framework
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_5
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_4
 - update to new release by fcimport
 
