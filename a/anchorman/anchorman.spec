@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           anchorman
 Version:        0.0.1
-Release:        alt2_10
+Release:        alt2_12
 Summary:        The recording-studio-in-a-box
 
 Group:          Sound
@@ -16,6 +16,7 @@ Source0:        https://fedorahosted.org/released/anchorman/%{name}-%{version}.t
 
 BuildRequires:  gstreamer-devel gstreamer-gir-devel glib2-devel libgio libgio-devel libgudev-devel libgudev-gir-devel ctest cmake
 Requires:       gst-plugins-good
+Source44: import.info
 
 %description
 Ever wanted to run your own recording studio? Need to handle multiple streams of
@@ -43,6 +44,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.1-alt2_12
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.1-alt2_10
 - update to new release by fcimport
 
