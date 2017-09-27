@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++
 %define _localstatedir %{_var}
 Name:           boswars
 Version:        2.7
-Release:        alt1_11.svn160110
+Release:        alt1_13.svn160110
 Summary:        Bos Wars is a futuristic real-time strategy game
 Group:          Games/Other
 License:        GPLv2
@@ -27,6 +27,7 @@ BuildRequires:  libtheora-devel libvorbis-devel libSDL-devel libGL-devel
 BuildRequires:  libtolua++-lua5.1-devel libpng-devel scons desktop-file-utils
 BuildRequires:  libappstream-glib
 Requires:       icon-theme-hicolor xorg-utils
+Source44: import.info
 
 %description
 Bos Wars is a futuristic real-time strategy game. It is possible to play
@@ -82,6 +83,9 @@ install -p -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_mandir}/man6
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_13.svn160110
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_11.svn160110
 - update to new release by fcimport
 
