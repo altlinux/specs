@@ -10,7 +10,7 @@ BuildRequires: gcc-c++
 %global namesq3 libsq3
 Name:           libsqlite3x
 Version:        %{veryear}%{vermon}%{verday}
-Release:        alt3_20
+Release:        alt3_22
 Summary:        A C++ Wrapper for the SQLite3 embeddable SQL database engine
 
 Group:          System/Libraries
@@ -23,6 +23,7 @@ Patch1:         libsqlite3x-prep.patch
 Patch2:         libsqlite3x-includes.patch
 
 BuildRequires:  libsqlite3-devel dos2unix automake-common libtool-common doxygen
+Source44: import.info
 
 %description
 sqlite3 is a slick embedded SQL server written in C. It's easy to use,
@@ -105,6 +106,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/libsq3.pc
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 20071018-alt3_22
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 20071018-alt3_20
 - update to new release by fcimport
 
