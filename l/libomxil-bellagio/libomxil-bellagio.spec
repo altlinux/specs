@@ -6,7 +6,7 @@ BuildRequires: gcc-c++ libomxil-bellagio-devel
 %define _localstatedir %{_var}
 Name:           libomxil-bellagio
 Version:        0.9.3
-Release:        alt1_13
+Release:        alt1_15
 Summary:        OpenMAX Integration Layer
 
 Group:          System/Libraries
@@ -24,6 +24,7 @@ Patch5:         http://git.buildroot.net/buildroot/plain/package/multimedia/bell
 Patch6:         omxil_version.patch
 BuildRequires:  doxygen
 BuildRequires:  libtool-common
+Source44: import.info
 
 
 %description
@@ -119,6 +120,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/%{name}
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_15
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_13
 - update to new release by fcimport
 
