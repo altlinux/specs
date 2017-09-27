@@ -1,4 +1,4 @@
-%define git_commit 625fa2c
+%define git_commit 74d4e5e
 		    
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
@@ -9,14 +9,13 @@ Version: 27.5.0
 # %%ifndef git_commit
 # Release: alt2
 # %%else
-Release: alt1
+Release: alt1.git_1_%git_commit
 # %%endif
 
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 
-
-# git commit 625fa2c7d29323f25c43c9af1a51e70aff95d744
+# git commit 74d4e5eac9d69983373a05f8c0aa3d47091d54b5
 Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
@@ -35,11 +34,11 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 %define palemoon_noarch_extensionsdir   %palemoon_datadir/extensions
 
 
-%ifdef git_commit
+#%%ifdef git_commit
 Source: %sname-source-%version-%release.tar
-%else
-Source: %sname-source-%version.tar
-%endif
+#%%else
+#Source: %sname-source-%version.tar
+#%%endif
 
 Source1: rpm-build.tar
 Source2: defaults-newmoon.tar
@@ -85,13 +84,13 @@ Patch113: mozilla-kde-background.patch
 %set_gcc_version 4.9
 %set_autoconf_version 2.13
 
-
 # Automatically added by buildreq on Thu Jun 15 2017
 # optimized out: alternatives ca-certificates fontconfig fontconfig-devel glib2-devel libICE-devel libSM-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcloog-isl4 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstartup-notification libstdc++-devel libxcb-devel perl pkg-config python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-xml python3 xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
 BuildRequires: doxygen gcc-c++ glibc-devel-static imake java-devel libGConf-devel libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel libjpeg-devel libnspr-devel
 BuildRequires: libpixman-devel libproxy-devel libpulseaudio-devel libsocket libsqlite3-devel libstartup-notification-devel libvpx-devel
 BuildRequires: python-module-future python-module-yaml python-modules-wsgiref python3-base 
 BuildRequires: unzip wget xorg-cf-files xsltproc yasm zip
+BuildRequires: libpulseaudio-devel
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
@@ -199,8 +198,6 @@ export RPATH_PATH="$rpath"
 
 %patch21 -p1
 
-
-#patch25 -p1 -b .block
 cd %sname
 
 tar -xf %SOURCE1
@@ -255,6 +252,7 @@ cp -f %SOURCE4 .mozconfig
 
 echo "ac_add_options --enable-rpath"  >> .mozconfig
 
+
 %ifnarch %ix86 x86_64
 echo "ac_add_options --disable-methodjit" >> .mozconfig
 echo "ac_add_options --disable-monoic" >> .mozconfig
@@ -279,7 +277,6 @@ echo "ac_add_options --with-pthreads" >> .mozconfig
 echo "ac_add_options --enable-shared-js"  >> .mozconfig
 echo "ac_add_options --enable-jemalloc --enable-jemalloc-lib" >> .mozconfig
 echo "ac_add_options --x-libraries=%_libexecdir/X11" >> .mozconfig
-
 # echo "ac_add_options --sharedstatedir=%_datadir" >> .mozconfig
 # echo "ac_add_options --datadir=%_datadir" >> .mozconfig
 
@@ -591,8 +588,11 @@ install -D -m 644 README.md ../
 %exclude %_includedir/*
 %exclude %_datadir/idl/*
 
-# git commit b2fca2a567fe2b824e2a90a8a522fc62c061d408
+# git commit 74d4e5eac9d69983373a05f8c0aa3d47091d54b5
 %changelog
+* Wed Sep 27 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.5.0-alt1.git_1_74d4e5e
+- Update from github commit 74d4e5eac9d69983373a05f8c0aa3d47091d54b5
+
 * Sat Sep 23 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.5.0-alt1
 - New Version - Release 27.5.0
 
