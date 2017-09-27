@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name: libfli
 Version: 1.7
-Release: alt2_19
+Release: alt2_21
 Summary: Library for FLI CCD Camera & Filter Wheels
 
 %define majorver 1
@@ -22,6 +22,7 @@ Source0: http://downloads.sourceforge.net/indi/%{name}%{majorver}_%{version}.tar
 Patch0: libfli-suffix.patch
 
 BuildRequires: ctest cmake 
+Source44: import.info
 Patch33: libfli1_1.7-alt-link-libm.patch
 
 %description
@@ -56,6 +57,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/*.so
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_21
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_19
 - update to new release by fcimport
 
