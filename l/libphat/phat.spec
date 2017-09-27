@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/gtkdocize
 Summary: A collection of GTK+ widgets useful for audio applications
 Name:          libphat
 Version:       0.4.1
-Release:       alt1_16
+Release:       alt1_18
 License:       GPLv2+
 Group:         System/Libraries
 URL:           http://phat.berlios.de/
@@ -20,6 +20,7 @@ Patch2:        phat-gdk-unref.patch
 
 BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel 
 BuildRequires: libgnomecanvas-devel
+Source44: import.info
 Provides: phat = %{version}-%{release}
 
 %description
@@ -75,6 +76,9 @@ rm %{buildroot}%{_libdir}/libphat.*a
 %{_datadir}/gtk-doc/html/%{oldname}
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1_18
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1_16
 - update to new release by fcimport
 
