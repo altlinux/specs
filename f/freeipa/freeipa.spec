@@ -12,7 +12,7 @@
 
 Name: freeipa
 Version: 4.3.3
-Release: alt7
+Release: alt8
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -714,6 +714,11 @@ fi
 %_man1dir/ipa-test-task.1.*
 
 %changelog
+* Wed Sep 27 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt8
+- Fix replica creation (closes: #33513):
+    + Don't try to use bundled urllib3 in the python-module-request.
+    + Use ipa CA certificate for https checks.
+
 * Thu Aug 24 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt7
 - httpd2: Update existing ipa.conf for fontawesome path.
 
