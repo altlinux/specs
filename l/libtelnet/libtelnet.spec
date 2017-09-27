@@ -3,7 +3,7 @@
 %define _localstatedir %{_var}
 Name:		libtelnet
 Version:	0.21
-Release:	alt1_10
+Release:	alt1_12
 Summary:	TELNET protocol parsing framework
 
 Group:		System/Libraries
@@ -13,6 +13,7 @@ Source0:	http://cloud.github.com/downloads/seanmiddleditch/libtelnet/libtelnet-%
 
 BuildRequires: zlib-devel
 BuildRequires: doxygen
+Source44: import.info
 
 %description
 Small library for parsing the TELNET protocol, responding to TELNET
@@ -68,6 +69,9 @@ rm "$RPM_BUILD_ROOT%{_libdir}"/*.la
 %{_bindir}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_12
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_10
 - update to new release by fcimport
 
