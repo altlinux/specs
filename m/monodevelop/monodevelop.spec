@@ -4,7 +4,7 @@
 
 Name: monodevelop
 Version: 6.1.2.44
-Release: alt2%ubt
+Release: alt3%ubt
 
 Summary: MonoDevelop is a project to port SharpDevelop to Gtk#
 License: LGPLv2.1
@@ -43,7 +43,7 @@ Requires: mono-core
 Requires: mono-web
 Requires: pkg-config
 Requires: xsp
-Requires: mono-devel
+Requires: mono-devel-full
 Requires: mono-nunit
 Requires: git
 Requires: fsharp
@@ -154,6 +154,9 @@ NOCONFIGURE=yes sh ./autogen.sh
 %_man1dir/*
 
 %changelog
+* Wed Sep 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.2.44-alt3%ubt
+- Updated runtime dependencies.
+
 * Fri Sep 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.2.44-alt2%ubt
 - Rebuilt with support of %%ubt macro.
 
