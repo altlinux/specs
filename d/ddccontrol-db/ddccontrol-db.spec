@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/perl
 Name:             ddccontrol-db
 URL:              http://ddccontrol.sourceforge.net/
 Version:          20170716
-Release:          alt1_1
+Release:          alt1_2
 #.%{git_suffix}%{?dist}
 # Agreed by usptream to be GPLv2+
 # http://sourceforge.net/mailarchive/message.php?msg_id=29762202
@@ -52,6 +52,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/%{name}
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 20170716-alt1_2
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 20170716-alt1_1
 - update to new release by fcimport
 
