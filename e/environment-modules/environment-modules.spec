@@ -7,7 +7,7 @@ BuildRequires: imake libXt-devel xorg-cf-files
 
 Name:           environment-modules
 Version:        3.2.10
-Release:        alt1_21
+Release:        alt1_23
 Summary:        Provides dynamic modification of a user's environment
 
 Group:          System/Base
@@ -44,9 +44,9 @@ Patch7:         environment-modules-3.2.10-unload-from-module.patch
 # Fix build with -Werror=implicit-function-declaration
 Patch8:         environment-modules-implicit.patch
 
-BuildRequires:  tcl-devel, tclx, libX11-devel
+BuildRequires:  tcl-devel, tclx-devel, libX11-devel
 BuildRequires:  dejagnu
-BuildRequires:  man man-whatis
+BuildRequires:  man-db
 #For ps in startup script
 Requires:       procps sysvinit-utils
 Provides:	environment(modules)
@@ -151,6 +151,9 @@ EOF
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_23
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_21
 - update to new release by fcimport
 
