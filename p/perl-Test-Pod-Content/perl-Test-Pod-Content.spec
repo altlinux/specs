@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-Pod-Content
 Version:        0.0.6
-Release:        alt2_15
+Release:        alt2_16
 Summary:        Test a Pod's content
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -53,6 +53,9 @@ RELEASE_TESTING=1 ./Build test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.6-alt2_16
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.6-alt2_15
 - update to new release by fcimport
 
