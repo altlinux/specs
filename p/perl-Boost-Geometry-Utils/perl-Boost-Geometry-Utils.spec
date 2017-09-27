@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           perl-Boost-Geometry-Utils
 Version:        0.15
-Release:        alt1_15
+Release:        alt1_17
 Summary:        Boost::Geometry::Utils Perl module
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -54,6 +54,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Boost*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_17
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_15
 - update to new release by fcimport
 
