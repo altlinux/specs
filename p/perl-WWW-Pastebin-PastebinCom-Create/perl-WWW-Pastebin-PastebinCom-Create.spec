@@ -7,7 +7,7 @@ BuildRequires: perl(overload.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-WWW-Pastebin-PastebinCom-Create
 Version:        1.003
-Release:        alt1_9
+Release:        alt1_10
 Summary:        Paste to http://pastebin.com from Perl
 License:        GPL+ or Artistic
 
@@ -56,6 +56,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.003-alt1_10
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.003-alt1_9
 - update to new release by fcimport
 
