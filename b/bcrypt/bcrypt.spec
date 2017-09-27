@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name:           bcrypt
 Version:        1.1
-Release:        alt2_16
+Release:        alt2_19
 Summary:        File encryption utility
 
 Group:          File tools
@@ -13,6 +13,7 @@ Patch0:         bcrypt-fencepost.patch
 BuildRequires:  zlib-devel
 
 BuildRequires:  %{__perl}
+Source44: import.info
 
 %description
 Bcrypt is a cross platform file encryption utility. Encrypted files are
@@ -33,7 +34,7 @@ Bruce Schneier in 1993.
 
 %patch0 -p1 -b .fencepost
 
-%{__perl} -pi.orig -e 's|\${PREFIX}/man/man1|\${PREFIX}/share/man/man1|g' Makefile
+%{__perl} -pi.orig -e 's|\/man/man1|\/share/man/man1|g' Makefile
 
 
 %build
@@ -51,6 +52,9 @@ Bruce Schneier in 1993.
 %{_bindir}/bcrypt
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_19
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_16
 - update to new release by fcimport
 
