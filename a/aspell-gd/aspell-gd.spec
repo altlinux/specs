@@ -8,7 +8,7 @@ Summary: Gaelic dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 51
 Version: 0.1.1
-Release: alt2_15
+Release: alt2_17
 License: GPLv2+
 Group: Text tools
 URL: http://aspell.net/
@@ -17,6 +17,7 @@ Buildrequires: aspell >= 0.60
 Requires: aspell >= 0.60
 
 %define debug_package %{nil}
+Source44: import.info
 
 %description
 Provides the word list/dictionaries for the following: Gaelic, Scots Gaelic
@@ -37,6 +38,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.1.1-alt2_17
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.1.1-alt2_15
 - update to new release by fcimport
 
