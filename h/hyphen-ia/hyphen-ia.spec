@@ -5,7 +5,7 @@ Name: hyphen-ia
 Summary: Interlingua hyphenation rules
 %global upstreamid 20050628
 Version: 0.%{upstreamid}
-Release: alt1_12
+Release: alt1_13
 Source: http://www.ctan.org/get/language/hyphenation/iahyphen.tex
 URL: http://www.ctan.org/tex-archive/help/Catalogue/entries/iahyphen.html
 License: LPPL
@@ -13,6 +13,7 @@ BuildArch: noarch
 BuildRequires: libhyphen-devel
 Requires: libhyphen
 Patch0: hyphen-ia-cleantex.patch
+Source44: import.info
 
 %description
 Interlingua hyphenation rules.
@@ -38,6 +39,9 @@ cp -p hyph_ia.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20050628-alt1_13
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20050628-alt1_12
 - update to new release by fcimport
 
