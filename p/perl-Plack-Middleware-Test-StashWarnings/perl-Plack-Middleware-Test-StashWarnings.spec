@@ -7,7 +7,7 @@ BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) p
 %define _localstatedir %{_var}
 Name:           perl-Plack-Middleware-Test-StashWarnings
 Version:        0.08
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Test your application's warnings
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Plack-Middleware-Test-StashWarnings/
@@ -55,6 +55,9 @@ rm -r inc/
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt2_12
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt2_11
 - update to new release by fcimport
 
