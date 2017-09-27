@@ -5,7 +5,7 @@
 
 Name:           icon-theme-faience
 Version:        0.5
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Faience icon theme
 Group:          Graphical desktop/Other
 
@@ -19,6 +19,7 @@ Source0:        http://raveit65.fedorapeople.org/Others/Source/%{oldname}_%{vers
 # Invoke this script to generate the faience-icon-theme tarball
 Source1:        faience-icon-theme-generate-tarball.sh
 BuildArch:      noarch
+Source44: import.info
 
 %description
 The faience icon theme include Faience, Faience-Azur,
@@ -79,6 +80,9 @@ fi
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_6
 - update to new release by fcimport
 
