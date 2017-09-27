@@ -6,7 +6,7 @@ BuildRequires: perl(List/Util.pm) perl(base.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Convert-Color
 Version:        0.11
-Release:        alt1_10
+Release:        alt1_11
 Summary:        Color space conversions and named lookups
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -56,6 +56,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_11
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_10
 - update to new release by fcimport
 
