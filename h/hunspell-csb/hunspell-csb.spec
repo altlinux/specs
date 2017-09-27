@@ -8,7 +8,7 @@ Name: hunspell-csb
 Summary: Kashubian hunspell dictionaries
 %global upstreamid 20050311
 Version: 0.%{upstreamid}
-Release: alt2_15
+Release: alt2_16
 Source: http://ftp.gnu.org/gnu/aspell/dict/csb/aspell6-csb-0.02-0.tar.bz2
 URL: http://borel.slu.edu/crubadan/apps.html
 License: GPLv2+
@@ -16,6 +16,7 @@ BuildArch: noarch
 BuildRequires: aspell libhunspell-devel hunspell-utils
 
 Requires: hunspell
+Source44: import.info
 
 %description
 Kashubian hunspell dictionaries.
@@ -48,6 +49,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20050311-alt2_16
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20050311-alt2_15
 - update to new release by fcimport
 
