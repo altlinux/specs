@@ -5,7 +5,7 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 Name:           atasm
 Version:        1.07d
-Release:        alt2_12
+Release:        alt2_14
 Summary:        6502 cross-assembler
 
 Group:          Development/Tools
@@ -15,6 +15,7 @@ Source0:        http://atari.miribilist.com/atasm/%{name}107d.zip
 #Source0:        http://downloads.sourceforge.net/%{name}/%{name}106.zip
 
 BuildRequires:  zlib-devel
+Source44: import.info
 
 
 %description
@@ -58,6 +59,9 @@ popd
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.07d-alt2_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.07d-alt2_12
 - update to new release by fcimport
 
