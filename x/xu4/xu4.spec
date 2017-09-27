@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libSDL-devel
 
 Name:           xu4
 Version:        1.1
-Release:        alt2_0.28.%{svndate}svn%{svnrev}
+Release:        alt2_0.30.%{svndate}svn%{svnrev}
 Summary:        Ultima IV recreated
 Group:          Games/Other
 License:        GPLv2+
@@ -24,6 +24,7 @@ Patch2:         xu4-1.1-format-security.patch
 BuildRequires:  libSDL_mixer-devel libxml2-devel libminizip-devel
 BuildRequires:  libicns-utils libpng-devel desktop-file-utils
 Requires:       icon-theme-hicolor autodownloader
+Source44: import.info
 
 %description
 XU4 is a remake of the computer game Ultima IV. This game requires the
@@ -95,6 +96,9 @@ rm -rf %{buildroot}/%{_datadir}/pixmaps
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_0.30.20150221svn3087
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_0.28.20150221svn3087
 - update to new release by fcimport
 
