@@ -1,7 +1,6 @@
 Name: ntp
-Version: 4.2.8
-#define patchlevel p6
-Release: alt8
+Version: 4.2.8p10
+Release: alt1
 %define srcname %name-%version%{?patchlevel:%patchlevel}
 
 Summary: The Network Time Protocol (NTP)
@@ -36,6 +35,7 @@ Requires: ntpd = %version-%release
 %add_findreq_skiplist %_man8dir/ntpq.*
 
 BuildRequires: rpm-build-licenses
+BuildRequires: zlib-devel 
 
 # due to readline library linked with tinfo.
 BuildPreReq: libreadline-devel >= 4.3-alt5
@@ -337,6 +337,12 @@ fi
 %ghost %ROOT/%_lib/libresolv.so.2
 
 %changelog
+* Wed Sep 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 4.2.8p10-alt1
+- updated to 4.2.8p10 (Fixes: CVE-2017-6451, CVE-2017-6452, CVE-2017-6455,
+  CVE-2017-6458, CVE-2017-6459, CVE-2017-6460, CVE-2017-6462, 
+  CVE-2017-6463, CVE-2017-6464)
+- patch level moved to version to pleasure CVE checkoing tools
+
 * Sun Dec 04 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8-alt8
 - fixed version in changelog in 4.2.8-alt7
 
