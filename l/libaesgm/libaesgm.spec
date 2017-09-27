@@ -6,7 +6,7 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 Name:		libaesgm
 Version:	20090429
-Release:	alt2_13
+Release:	alt2_15
 License:	BSD
 Summary:	Library implementation of AES (Rijndael) cryptographic methods
 URL:		http://gladman.plushost.co.uk/oldsite/AES/index.php
@@ -16,6 +16,7 @@ Source1:	Makefile.aes
 # http://www.gladman.me.uk/cryptography_technology/fileencrypt/
 Patch0:		libaesgm-20090429-fileencrypt.patch
 Group:		System/Libraries
+Source44: import.info
 
 %description
 Library implementation of AES (Rijndael) cryptographic methods.
@@ -49,6 +50,9 @@ make DESTDIR="%{buildroot}" LIBDIR="%{_libdir}" install
 %{_libdir}/libaesgm.so
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 20090429-alt2_15
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 20090429-alt2_13
 - update to new release by fcimport
 
