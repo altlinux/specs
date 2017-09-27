@@ -8,13 +8,14 @@ Name: hunspell-tn
 Summary: Tswana hunspell dictionaries
 %global upstreamid 20091101
 Version: 0.%{upstreamid}
-Release: alt2_11
+Release: alt2_12
 Source: http://releases.mozilla.org/pub/mozilla.org/addons/46617/tswana__south_africa__dictionary-%{upstreamid}-fx+tb.xpi
 URL: http://www.translate.org.za/
 License: GPLv2+
 BuildArch: noarch
 
 Requires: hunspell
+Source44: import.info
 
 %description
 Tswana hunspell dictionaries.
@@ -42,6 +43,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20091101-alt2_12
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20091101-alt2_11
 - update to new release by fcimport
 
