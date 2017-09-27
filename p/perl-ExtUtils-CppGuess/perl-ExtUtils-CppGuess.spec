@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           perl-ExtUtils-CppGuess
 Version:        0.11
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Guess C++ compiler and flags
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/ExtUtils*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_6
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_5
 - update to new release by fcimport
 
