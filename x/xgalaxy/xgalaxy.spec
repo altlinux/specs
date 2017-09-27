@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools imake libX11-deve
 %define _localstatedir %{_var}
 Name:           xgalaxy
 Version:        2.0.34
-Release:        alt2_24
+Release:        alt2_26
 Summary:        Arcade game: shoot down the space ships attacking the planet
 Group:          Games/Other
 License:        GPL+
@@ -25,6 +25,7 @@ BuildRequires:  libalsa-devel desktop-file-utils ImageMagick
 Requires:       icon-theme-hicolor
 Obsoletes:      xgalaga <= %{version}
 Provides:       xgalaga = %{version}-%{release}
+Source44: import.info
 
 %description
 Arcade game for the X Window System where you have to shoot down the space
@@ -103,6 +104,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.34-alt2_26
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.34-alt2_24
 - update to new release by fcimport
 
