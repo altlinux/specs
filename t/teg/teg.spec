@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/gconftool-2 ElectricFence 
 %define _localstatedir %{_var}
 Name:           teg
 Version:        0.11.2
-Release:        alt2_37
+Release:        alt2_39
 Summary:        Turn based strategy game
 Group:          Games/Other
 License:        GPLv2
@@ -26,6 +26,7 @@ BuildRequires:  desktop-file-utils
 Requires(pre):  GConf libGConf
 Requires(post): GConf libGConf
 Requires(preun): GConf libGConf
+Source44: import.info
 
 %description
 Tenes Empanadas Graciela is a clone of Plan TA.ctico y EstratA.gico de la 
@@ -97,6 +98,9 @@ gconftool-2 --makefile-install-rule \
   %{_sysconfdir}/gconf/schemas/teg.schemas > /dev/null || :
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_39
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_37
 - update to new release by fcimport
 
