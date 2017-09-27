@@ -4,13 +4,14 @@ Group: Text tools
 Name: mythes-bg
 Summary: Bulgarian thesaurus
 Version: 4.3
-Release: alt1_11
+Release: alt1_12
 Source: http://downloads.sourceforge.net/sourceforge/bgoffice/OOo-thes-bg-%{version}.zip
 Requires: libmythes
 URL: http://bgoffice.sourceforge.net/
 BuildRequires: unzip
 License: GPLv2+ or LGPLv2+ or MPLv1.1
 BuildArch: noarch
+Source44: import.info
 
 %description
 Bulgarian thesaurus.
@@ -47,6 +48,9 @@ cp -p th_bg_BG.idx $RPM_BUILD_ROOT/%{_datadir}/mythes/th_bg_BG_v2.idx
 %{_datadir}/mythes/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 4.3-alt1_12
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 4.3-alt1_11
 - update to new release by fcimport
 
