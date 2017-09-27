@@ -5,7 +5,7 @@ BuildRequires: texinfo
 %define _localstatedir %{_var}
 Name:		robotfindskitten
 Version:	1.7320508.406
-Release:	alt2_13
+Release:	alt2_15
 Summary:	A game/zen simulation. You are robot. Your job is to find kitten.
 
 Group:		Games/Other
@@ -18,6 +18,7 @@ Patch0:		robotfindskitten-1.7320508.406-info-direntry.patch
 BuildRequires:	libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel glibc-devel makeinfo
 Requires(post):	info info-install
 Requires(preun):info info-install
+Source44: import.info
 
 %description
 In this game, you are robot (#). Your job is to find kitten. This task
@@ -54,6 +55,9 @@ rm -f $RPM_BUILD_ROOT/%{_infodir}/dir
 %{_datadir}/man/man6/robotfindskitten.6*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.7320508.406-alt2_15
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.7320508.406-alt2_13
 - update to new release by fcimport
 
