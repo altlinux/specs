@@ -14,7 +14,7 @@
 %define nv_version 340
 %define nv_release 104
 %define nv_minor %nil
-%define pkg_rel alt150%ubt
+%define pkg_rel alt151%ubt
 %def_enable egl
 %def_enable kernelsource
 
@@ -80,6 +80,8 @@ Source202: ftp://download.nvidia.com/XFree86/Linux-x86_64/%tbver/NVIDIA-Linux-x8
 
 Source2: nvidia.xinf
 Source100: nvidia_create_xinf
+
+Patch1: buildfix_kernel_4.11.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools rpm-macros-alternatives
@@ -156,6 +158,7 @@ sh %SOURCE201 -x
 cd %tbname-%tbver%dirsuffix
 
 pushd kernel/
+%patch1 -p1
 rm -rf precompiled
 popd
 
@@ -298,6 +301,9 @@ fi
 %endif
 
 %changelog
+* Wed Sep 27 2017 Sergey V Turchin <zerg@altlinux.org> 340.104-alt151%ubt
+- fix to build module with recent kernels
+
 * Tue Sep 26 2017 Sergey V Turchin <zerg@altlinux.org> 340.104-alt150%ubt
 - new version
 
