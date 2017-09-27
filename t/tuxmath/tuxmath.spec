@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/makensis gcc-c++ libxml2-d
 %define _localstatedir %{_var}
 Name:           tuxmath
 Version:        2.0.1
-Release:        alt2_12
+Release:        alt2_14
 Summary:        Educational math tutor for children
 
 Group:          Games/Other
@@ -26,6 +26,7 @@ BuildRequires:  libSDL_net-devel
 BuildRequires:  librsvg-devel librsvg-gir-devel
 BuildRequires:	t4k_common-devel
 Requires:       icon-theme-hicolor
+Source44: import.info
 
 %description
 TuxMath is an educational math tutor for children. It features several
@@ -80,6 +81,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_12
 - update to new release by fcimport
 
