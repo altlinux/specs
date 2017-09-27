@@ -6,7 +6,7 @@ Group: Text tools
 
 Name: aspell-%{lang}
 Version: 0.03
-Release: alt2_14
+Release: alt2_16
 Summary: GNU Aspell Malayalam Dictionary Package
 
 License: GPLv3+
@@ -17,6 +17,7 @@ Buildrequires: aspell >= 0.60
 Requires: aspell >= 0.60
 
 %global debug_package %{nil}
+Source44: import.info
 
 %description
 GNU Aspell Malayalam Dictionary Package. Malayalam wordlist for this package is
@@ -51,6 +52,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2_16
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2_14
 - update to new release by fcimport
 
