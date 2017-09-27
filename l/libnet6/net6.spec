@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           libnet6
 Version:        1.3.14
-Release:        alt1_13
+Release:        alt1_15
 Summary:        A TCP protocol abstraction for library C++
 
 Group:          Development/Other
@@ -18,6 +18,7 @@ Patch1:         net6-1.3.14-drop-deprecated-gnutls-call.patch
 
 BuildRequires:  libsigc++2-devel libgnutls-devel libgnutlsxx-devel
 Requires:       libgnutls
+Source44: import.info
 Provides: net6 = %{version}-%{release}
 
 %description
@@ -74,6 +75,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.14-alt1_15
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.14-alt1_13
 - update to new release by fcimport
 
