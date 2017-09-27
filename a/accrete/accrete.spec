@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name:		accrete
 Version:	1.0
-Release:	alt2_15
+Release:	alt2_17
 Summary:	Accrete is a physical simulation of solar system planet formation
 
 License:	Public Domain
@@ -10,6 +10,7 @@ Group:		Engineering
 URL:		http://sourceforge.net/projects/accrete
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Patch0:		accrete-1.0-savetofile.patch
+Source44: import.info
 
 
 %description
@@ -34,6 +35,9 @@ install -Dm 755 accrete $RPM_BUILD_ROOT%{_bindir}/accrete
 %{_bindir}/accrete
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_17
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_15
 - update to new release by fcimport
 
