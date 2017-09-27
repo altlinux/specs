@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           aldo
 Version:        0.7.6
-Release:        alt1_15
+Release:        alt1_17
 Summary:        A morse tutor
 
 Group:          Communications
@@ -14,6 +14,7 @@ URL:            http://aldo.nongnu.org/
 Source0:        http://savannah.nongnu.org/download/aldo/%{name}-%{version}.tar.bz2
 
 BuildRequires:  libao-devel
+Source44: import.info
 
 %description
 Aldo is a morse code learning tool released under GPL, which provides
@@ -47,6 +48,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.6-alt1_17
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.6-alt1_15
 - update to new release by fcimport
 
