@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/desktop-file-install
 
 Name:           wordwarvi
 Version:        1.1
-Release:        alt1_3.git%{shortcommit}
+Release:        alt1_5.git%{shortcommit}
 Summary:        Side-scrolling shoot 'em up '80s style arcade game
 Group:          Games/Other
 License:        GPLv2+ and CC-BY and CC-BY-SA
@@ -21,6 +21,7 @@ Source3:        %{name}.appdata.xml
 BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel libportaudio2-devel libvorbis-devel
 BuildRequires:  desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor
+Source44: import.info
 
 %description
 Word War vi is your basic side-scrolling shoot 'em up '80s style arcade game.
@@ -68,6 +69,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_5.git6beed31
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_3.git6beed31
 - update to new release by fcimport
 
