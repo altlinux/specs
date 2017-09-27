@@ -4,7 +4,7 @@
 Summary: A library for accessing deltacloud
 Name: libdeltacloud
 Version: 0.9
-Release: alt2_15
+Release: alt2_17
 License: LGPLv2+
 Group: System/Libraries
 URL: https://git.fedorahosted.org/git/deltacloud/libdeltacloud.git
@@ -14,6 +14,7 @@ Patch1: libdeltacloud-update-fsf-address.patch
 BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel
 BuildRequires: libtool-common
+Source44: import.info
 
 %description
 Libdeltacloud is a library for accessing deltacloud via a
@@ -85,6 +86,9 @@ rm -f $RPM_BUILD_ROOT/%{_lib}/libdeltacloud.a
 %{_libdir}/pkgconfig/libdeltacloud.pc
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_17
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_15
 - update to new release by fcimport
 
