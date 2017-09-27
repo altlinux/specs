@@ -8,13 +8,14 @@ Name: hunspell-cy
 Summary: Welsh hunspell dictionaries
 %global upstreamid 20040425
 Version: 0.%{upstreamid}
-Release: alt2_15
+Release: alt2_16
 Source: http://www.e-gymraeg.co.uk/myspell/myspell.zip
 URL: http://www.e-gymraeg.co.uk/
 License: GPL+
 BuildArch: noarch
 
 Requires: hunspell
+Source44: import.info
 
 %description
 Welsh hunspell dictionaries.
@@ -47,6 +48,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20040425-alt2_16
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20040425-alt2_15
 - update to new release by fcimport
 
