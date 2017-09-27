@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name:		boswars-addons
 Version:	2.6
-Release:	alt2_13
+Release:	alt2_14
 Summary:	Addon maps for Bos Wars real-time strategy game
 
 Group:		Games/Other
@@ -16,6 +16,7 @@ Source4:	http://www.boswars.org/addons/maps/wetlands03.map.tgz
 BuildArch:	noarch
 
 Requires:	boswars >= 2.6
+Source44: import.info
 
 %description
 A collection of addon maps for Bos Wars real-time strategy game.
@@ -43,6 +44,9 @@ cp -a * $RPM_BUILD_ROOT%{_datadir}/boswars/maps
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_13
 - update to new release by fcimport
 
