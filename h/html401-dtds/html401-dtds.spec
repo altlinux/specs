@@ -11,7 +11,7 @@ Group: Other
 
 Name:           html401-dtds
 Version:        4.01
-Release:        alt1_%{date}.12.8
+Release:        alt1_%{date}.12.9
 Summary:        HTML 4.01 document type definitions
 
 # W3C Software License for DTDs etc:
@@ -27,6 +27,7 @@ BuildArch:      noarch
 Requires:       xml-common sgml-common
 Requires(post): /usr/bin/install-catalog
 Requires(preun): /usr/bin/install-catalog
+Source44: import.info
 
 %description
 This package provides the three HTML 4.01 DTDs (strict, frameset, and
@@ -82,6 +83,9 @@ done
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 4.01-alt1_19991224.12.9
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 4.01-alt1_19991224.12.8
 - update to new release by fcimport
 
