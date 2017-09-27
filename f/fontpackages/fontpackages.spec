@@ -14,7 +14,7 @@ BuildRequires: perl(Font/TTF/Font.pm) perl(Unicode/UCD.pm)
 
 Name:    fontpackages
 Version: 1.44
-Release: alt4_18
+Release: alt4_19
 Summary: Common directory and macro definitions used by font packages
 
 Group:     System/Configuration/Other
@@ -28,6 +28,7 @@ Patch1:    %{name}-drop-fccache.patch
 
 BuildArch: noarch
 BuildRequires: rpm-build-perl
+Source44: import.info
 
 
 %description
@@ -141,6 +142,9 @@ rm -rf %buildroot%{spectemplatedir}
 %{ftcgtemplatedir}/*txt
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.44-alt4_19
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.44-alt4_18
 - update to new release by fcimport
 
