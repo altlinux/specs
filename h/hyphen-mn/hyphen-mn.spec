@@ -5,7 +5,7 @@ Name: hyphen-mn
 Summary: Mongolian hyphenation rules
 %global upstreamid 20100531
 Version: 0.%{upstreamid}
-Release: alt1_11
+Release: alt1_12
 Source: http://tug.org/svn/texhyphen/trunk/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-mn-cyrl.tex?view=co#/hyph-mn-cyrl.tex
 URL: http://www.ctan.org/tex-archive/help/Catalogue/entries/mnhyphn.html
 License: LPPL
@@ -13,6 +13,7 @@ BuildArch: noarch
 BuildRequires: libhyphen-devel
 Requires: libhyphen
 Patch0: hyphen-mn-cleantex.patch
+Source44: import.info
 
 %description
 Mongolian hyphenation rules.
@@ -39,6 +40,9 @@ cp -p hyph_mn_MN.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20100531-alt1_12
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20100531-alt1_11
 - update to new release by fcimport
 
