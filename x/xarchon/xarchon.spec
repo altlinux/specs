@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools gcc-c++ imake lib
 %define _localstatedir %{_var}
 Name:           xarchon
 Version:        0.50
-Release:        alt2_23
+Release:        alt2_25
 Summary:        Arcade board game
 Group:          Games/Other
 License:        GPL+
@@ -20,6 +20,7 @@ Patch3:         xarchon-0.50-gcc43.patch
 BuildRequires:  gtk+-devel libXpm libXpm-devel
 BuildRequires:  desktop-file-utils ImageMagick libappstream-glib
 Requires:       icon-theme-hicolor
+Source44: import.info
 Patch33: xarchon-0.50-alt-DSO.patch
 
 %description
@@ -70,6 +71,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2_25
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2_23
 - update to new release by fcimport
 
