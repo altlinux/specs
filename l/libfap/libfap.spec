@@ -3,13 +3,14 @@
 %define _localstatedir %{_var}
 Name:           libfap
 Version:        1.5
-Release:        alt1_3
+Release:        alt1_5
 Summary:        An APRS parser written in C
 
 Group:          Communications
 License:        GPL+ or Artistic
 URL:            http://pakettiradio.net/libfap/
 Source0:        http://pakettiradio.net/downloads/%{name}/%{version}/%{name}-%{version}.tar.gz
+Source44: import.info
 
 %description
 libfap is an APRS (Amateur Packet Reporting System) parser that can decode
@@ -52,6 +53,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_5
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_3
 - update to new release by fcimport
 
