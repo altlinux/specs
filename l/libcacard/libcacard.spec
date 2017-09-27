@@ -3,7 +3,7 @@
 
 Name: libcacard
 Version: 2.5.2
-Release: alt1
+Release: alt2
 Summary: Common Access Card (CAC) Emulation
 Group: System/Libraries
 License: LGPLv2.1+
@@ -64,6 +64,10 @@ echo "%version" > .tarball-version
 %_bindir/vscclient
 
 %changelog
+* Wed Sep 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.5.2-alt2
+- Fixes:
+  + CVE-2017-6414 Memory leak in the vcard_apdu_new function in card_7816.c
+
 * Thu Dec 17 2015 Alexey Shabalin <shaba@altlinux.ru> 2.5.2-alt1
 - 2.5.2
 
