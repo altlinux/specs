@@ -4,7 +4,7 @@ BuildRequires: chrpath
 %define _localstatedir %{_var}
 Name:           librfid
 Version:        0.2.0 
-Release:        alt3_13
+Release:        alt3_15
 Summary:     The librfid is a Free Software RFID library
 
 Group:          System/Libraries
@@ -13,6 +13,7 @@ URL:               http://www.openmrtd.org/projects/librfid/
 Source0:        http://openmrtd.org/projects/librfid/files/librfid-%{version}.tar.bz2
 
 BuildRequires:  libusb-compat-devel automake-common libtool-common autoconf-common
+Source44: import.info
 
 
 %description
@@ -67,6 +68,9 @@ done
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt3_15
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt3_13
 - update to new release by fcimport
 
