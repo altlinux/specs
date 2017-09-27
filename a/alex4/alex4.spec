@@ -5,20 +5,24 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:           alex4
 Version:        1.0
-Release:        alt2_20
+Release:        alt2_23
 Summary:        Alex the Allegator 4 - Platform game
 Group:          Games/Other
 License:        GPL+
-URL:            http://allegator.sourceforge.net/
+URL:            https://obiot.github.io/Alex4-WE/readme.html
 Source0:        http://downloads.sf.net/allegator/Alex4/source%%20and%%20data/alex4src_data.zip
 Source1:        alex4.desktop
 Source2:        alex4.png
+Source3:        alex4.appdata.xml
 Patch0:         alex4-unix.patch
 Patch1:         alex4-allegro-4.2.patch
 Patch2:         alex4-dot-files-endian-clean.patch
 Patch3:         alex4-fsf-address.patch
-BuildRequires:  liballegro-devel dumb-devel desktop-file-utils ImageMagick
+Patch4:         alex4-ini-comment.patch
+Patch5:         alex4src-warnings.patch
+BuildRequires:  liballegro-devel dumb-devel desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor
+Source44: import.info
 
 %description
 In the latest installment of the series Alex travels through the jungle in
@@ -32,7 +36,9 @@ nice colors guaranteed!
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-sed -i 's/\r//' *.txt
+%patch4 -p1
+%patch5 -p1
+sed -i 's/\r//' *.txt *.ini
 
 # as-needed
 sed -i -e 's,$(CC) $(LDFLAGS) -o $@ $^,$(CC) -o $@ $^ $(LDFLAGS),' src/Makefile
@@ -41,7 +47,7 @@ sed -i -e 's,$(CC) $(LDFLAGS) -o $@ $^,$(CC) -o $@ $^ $(LDFLAGS),' src/Makefile
 %build
 pushd src
 %make_build PREFIX=%{_prefix} \
-  CFLAGS="$RPM_OPT_FLAGS -Wno-deprecated-declarations"
+  CFLAGS="$RPM_OPT_FLAGS -Wno-deprecated-declarations -Wno-unused-result"
 popd
 
 
@@ -54,20 +60,28 @@ popd
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE1}
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
 install -p -m 644 %{SOURCE2} \
-  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
+  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/appdata
+appstream-util validate-relax --nonet \
+  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
 
 %files
-%doc license.txt readme.txt
+%doc license.txt readme.txt alex4.ini
 %{_bindir}/%{name}
 %{_datadir}/%{name}
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
+%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_23
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_20
 - update to new release by fcimport
 
