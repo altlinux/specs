@@ -7,7 +7,7 @@ BuildRequires: unzip
 Name: hunspell-ur
 Summary: Urdu hunspell dictionaries
 Version: 0.64
-Release: alt2_12
+Release: alt2_13
 #http://urdudictionary.codeplex.com/Release/ProjectReleases.aspx?ReleaseId=30004#DownloadId=74761
 #and click yes to agree to LGPLv2+, which stinks as a download-url :-(
 Source: UrduDictionary.xpi
@@ -17,6 +17,7 @@ BuildArch: noarch
 BuildRequires: libredland
 
 Requires: hunspell
+Source44: import.info
 
 %description
 Urdu hunspell dictionaries.
@@ -46,6 +47,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.64-alt2_13
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.64-alt2_12
 - update to new release by fcimport
 
