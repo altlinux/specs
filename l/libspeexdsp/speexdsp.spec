@@ -8,7 +8,7 @@ BuildRequires: pkgconfig(fftw3f)
 Name:           libspeexdsp
 Version:        1.2
 %global rc_ver  rc3
-Release:        alt2_0.10.%{rc_ver}
+Release:        alt2_0.12.%{rc_ver}
 Summary:        A voice compression format (DSP)
 
 Group:          System/Libraries
@@ -24,6 +24,7 @@ BuildRequires: libtool-common autoconf-common automake-common
 # speexdsp was split from speex in 1.2rc2. As speexdsp does not depend on
 # speex, a versioned conflict is required.
 Conflicts: libspeex <= 1.2-0.21.rc1
+Source44: import.info
 Provides: speexdsp = %{version}-%{release}
 Conflicts: libspeex < 1.2-alt0.6
 
@@ -84,6 +85,9 @@ find %{buildroot} -type f -name "*.la" -delete
 %{_libdir}/libspeexdsp.so
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_0.12.rc3
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_0.10.rc3
 - update to new release by fcimport
 
