@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools imake libSDL-deve
 %define _localstatedir %{_var}
 Name:           biloba
 Version:        0.9.3
-Release:        alt2_11
+Release:        alt2_13
 Summary:        A tactical board game
 
 Group:          Games/Other
@@ -16,6 +16,7 @@ Source1:        biloba.desktop
 
 BuildRequires:  desktop-file-utils ImageMagick libSDL_image-devel libSDL_mixer-devel
 Requires:       icon-theme-hicolor
+Source44: import.info
 
 %description
 Biloba is a very innovative tactical board game. It can be played
@@ -93,6 +94,9 @@ desktop-file-install                    \
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt2_13
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt2_11
 - update to new release by fcimport
 
