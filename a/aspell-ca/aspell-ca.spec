@@ -6,7 +6,7 @@ Summary: Catalan dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 51
 Version: 2.1.5
-Release: alt2_12
+Release: alt2_14
 License: GPLv2+
 Group: Text tools
 URL: http://aspell.net/
@@ -15,6 +15,7 @@ Buildrequires: aspell >= 0.60
 Requires: aspell >= 0.60
 
 %define debug_package %{nil}
+Source44: import.info
 
 %description
 Provides the word list/dictionaries for the following: Catalan
@@ -37,6 +38,9 @@ make install DESTDIR="$RPM_BUILD_ROOT"
 %{_datadir}/aspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.5-alt2_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.5-alt2_12
 - update to new release by fcimport
 
