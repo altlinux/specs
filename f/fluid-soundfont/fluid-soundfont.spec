@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name:           fluid-soundfont
 Version:        3.1
-Release:        alt1_16
+Release:        alt1_17
 Summary:        Pro-quality GM/GS soundfont
 Group:          Sound
 License:        MIT
@@ -34,6 +34,7 @@ FluidR3 is the third release of Frank Wen's pro-quality GM/GS soundfont.\
 The soundfont has lots of excellent samples, including all the GM instruments\
 along side with the GS instruments that are recycled and reprogrammed versions\
 of the GM presets.
+Source44: import.info
 
 %description
 %common_description
@@ -157,6 +158,9 @@ install -p -m 644 FluidR3.cfg $RPM_BUILD_ROOT%{_sysconfdir}/timidity.cfg
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_17
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_16
 - update to new release by fcimport
 
