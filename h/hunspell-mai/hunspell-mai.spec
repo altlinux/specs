@@ -7,13 +7,14 @@ BuildRequires: unzip
 Name: hunspell-mai
 Summary: Maithili hunspell dictionaries
 Version: 1.0.1
-Release: alt2_12
+Release: alt2_13
 Source: http://bhashaghar.googlecode.com/files/mai_IN.oxt
 URL: http://bhashaghar.googlecode.com
 License: GPLv2+ or LGPLv2+ or MPLv1.1
 BuildArch: noarch
 
 Requires: hunspell
+Source44: import.info
 
 %description
 Maithili hunspell dictionaries.
@@ -33,6 +34,9 @@ cp -p mai_IN.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_13
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_12
 - update to new release by fcimport
 
