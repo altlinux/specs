@@ -8,13 +8,14 @@ Name: hunspell-st
 Summary: Southern Sotho hunspell dictionaries
 %global upstreamid 20091030
 Version: 0.%{upstreamid}
-Release: alt2_11
+Release: alt2_12
 Source: http://extensions.services.openoffice.org/e-files/3138/0/dict-st_ZA-2009.10.30.oxt
 URL: http://www.translate.org.za/
 License: LGPLv2+
 BuildArch: noarch
 
 Requires: hunspell
+Source44: import.info
 
 %description
 Southern Sotho hunspell dictionaries.
@@ -44,6 +45,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20091030-alt2_12
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20091030-alt2_11
 - update to new release by fcimport
 
