@@ -6,7 +6,7 @@ BuildRequires: boost-python-devel
 %define _localstatedir %{_var}
 Name:           vegastrike
 Version:        0.5.1
-Release:        alt5_28.r1
+Release:        alt5_31.r1
 Summary:        3D OpenGL spaceflight simulator
 Group:          Games/Other
 License:        GPLv2+
@@ -41,6 +41,7 @@ BuildRequires:  libSDL_mixer-devel libopenal-devel libopenal1 libalut-devel
 BuildRequires:  libvorbis-devel libogre-devel cegui cegui-devel desktop-file-utils
 BuildRequires:  libappstream-glib
 Requires:       %{name}-data = %{version}, xdg-utils, opengl-games-utils
+Source44: import.info
 Patch33: vegastrike-0.5.1-alt-SharedPool.patch
 Patch34: vegastrike-0.5.1.r1-alt-perl522.patch
 
@@ -126,6 +127,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt5_31.r1
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt5_28.r1
 - update to new release by fcimport
 
