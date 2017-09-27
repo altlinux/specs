@@ -10,7 +10,7 @@ Name:           libpqxx
 Summary:        C++ client API for PostgreSQL
 Epoch:          1
 Version:        4.0.1
-Release:        alt1_8
+Release:        alt1_10
 
 License:        BSD
 URL:            http://pqxx.org/
@@ -87,6 +87,9 @@ make %{?_smp_mflags} check ||:
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.0.1-alt1_10
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.0.1-alt1_8
 - update to new release by fcimport
 
