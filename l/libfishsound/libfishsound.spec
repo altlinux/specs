@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/valgrind
 %define _localstatedir %{_var}
 Name:           libfishsound
 Version:        1.0.0
-Release:        alt3_12
+Release:        alt3_14
 Summary:        Simple programming interface for Xiph.Org codecs
 
 Group:          System/Libraries
@@ -18,6 +18,7 @@ Source0:        http://downloads.xiph.org/releases/libfishsound/libfishsound-%{v
 BuildRequires:  libflac++-devel libflac-devel
 BuildRequires:  libspeex-devel libvorbis-devel liboggz-devel libsndfile-devel
 BuildRequires:  doxygen
+Source44: import.info
 
 %description
 libfishsound provides a simple programming interface for decoding and
@@ -109,6 +110,9 @@ mv src/examples .
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_12
 - update to new release by fcimport
 
