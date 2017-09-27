@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/gtkdocize pkgconfig(freetype2)
 %define _localstatedir %{_var}
 Name:		libeasyfc
 Version:	0.13.1
-Release:	alt1_2
+Release:	alt1_4
 Summary:	Easy configuration generator interface for fontconfig
 
 Group:		System/Libraries
@@ -17,6 +17,7 @@ Source0:	https://bitbucket.org/tagoh/libeasyfc/downloads/%{name}-%{version}.tar.
 BuildRequires:	glib2-devel libgio libgio-devel gobject-introspection-devel libxml2-devel fontconfig-devel >= 2.10.92 libharfbuzz-devel libharfbuzz-utils
 BuildRequires:	gettext gettext-tools
 Requires:	fontconfig >= 2.10.92
+Source44: import.info
 
 %description
 libeasyfc aims to provide an easy interface to generate
@@ -97,6 +98,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/gir-*/Easyfc-*.gir
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt1_4
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt1_2
 - update to new release by fcimport
 
