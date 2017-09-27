@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-File-Find-Rule-Perl
 Version:        1.15
-Release:        alt1_8
+Release:        alt1_9
 Summary:        Common rules for searching for Perl things
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -52,6 +52,9 @@ make test
 %{perl_vendor_privlib}/File
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1_9
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1_8
 - update to new release by fcimport
 
