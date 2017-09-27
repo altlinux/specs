@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           libQGLViewer
 Version:        2.6.3
-Release:        alt1_3
+Release:        alt1_5
 Summary:        Qt based OpenGL generic 3D viewer library
 
 Group:          System/Libraries
@@ -197,6 +197,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/libQGLViewer-qt5.so.%{version}\\* || true
 %doc examples
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_5
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_3
 - update to new release by fcimport
 
