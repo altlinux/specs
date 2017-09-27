@@ -7,7 +7,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libfplll
 Version:        5.0.3
-Release:        alt1_2
+Release:        alt1_4
 Summary:        LLL-reduces euclidean lattices
 License:        LGPLv2+
 URL:            https://github.com/dstehle/fplll
@@ -113,6 +113,9 @@ make check
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 5.0.3-alt1_4
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 5.0.3-alt1_2
 - update to new release by fcimport
 
