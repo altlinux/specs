@@ -5,7 +5,7 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 Name:           drascula-music
 Version:        1.0
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Background music for Drascula: The Vampire Strikes Back
 Group:          Games/Other
 # For further discussion on distribution rights see:
@@ -15,6 +15,7 @@ URL:            http://wiki.scummvm.org/index.php/Drascula:_The_Vampire_Strikes_
 Source0:        http://downloads.sourceforge.net/scummvm/drascula-audio-%{version}.zip
 Buildarch:      noarch
 Requires:       drascula
+Source44: import.info
 
 %description
 Background music for Drascula: The Vampire Strikes Back.
@@ -39,6 +40,9 @@ install -p -m 644 audio/*.ogg $RPM_BUILD_ROOT%{_datadir}/drascula
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_13
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_12
 - update to new release by fcimport
 
