@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-ExtUtils-Typemaps-Default
 Version:        1.05
-Release:        alt2_9
+Release:        alt2_10
 Summary:        Set of useful typemaps
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -59,6 +59,9 @@ sed -i 's/3.18_03/3.18/' Build.PL
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_10
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_9
 - update to new release by fcimport
 
