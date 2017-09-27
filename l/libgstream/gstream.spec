@@ -7,13 +7,14 @@ BuildRequires: gcc-c++ unzip
 %define _localstatedir %{_var}
 Name:           libgstream
 Version:        1.6
-Release:        alt2_15
+Release:        alt2_17
 Summary:        Simplified stream output/input for Allegro
 Group:          System/Libraries
 License:        Giftware
 URL:            http://allegro.molhanec.net/gstream.html
 Source0:        http://allegro.molhanec.net/gstrm16.zip
 BuildRequires:  liballegro-devel makeinfo
+Source44: import.info
 Provides: gstream = %{version}-%{release}
 
 %description
@@ -80,6 +81,9 @@ done
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt2_17
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt2_15
 - update to new release by fcimport
 
