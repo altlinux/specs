@@ -8,7 +8,7 @@ Name: hunspell-hr
 Summary: Croatian hunspell dictionaries
 %global upstreamid 20040608
 Version: 0.%{upstreamid}
-Release: alt2_15
+Release: alt2_16
 #Epoch: 1
 Source: http://cvs.linux.hr/spell/myspell/hr_HR.zip
 URL: http://cvs.linux.hr/spell/
@@ -16,6 +16,7 @@ License: LGPLv2+ or SISSL
 BuildArch: noarch
 
 Requires: hunspell
+Source44: import.info
 
 %description
 Croatian hunspell dictionaries.
@@ -50,6 +51,9 @@ cp -p hyph_hr.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_hr_HR.dic
 %{_datadir}/hyphen/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20040608-alt2_16
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20040608-alt2_15
 - update to new release by fcimport
 
