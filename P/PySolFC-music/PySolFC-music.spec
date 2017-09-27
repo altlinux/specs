@@ -7,7 +7,7 @@
 
 Name:           PySolFC-music
 Version:        4.40
-Release:        alt2_15
+Release:        alt2_16
 Summary:        Music for PySolFC
 
 Group:          Games/Other
@@ -19,6 +19,7 @@ Requires:       PySolFC python-module-PySolFC
 Requires:       python-module-pygame
 
 BuildArch: noarch
+Source44: import.info
 
 %description
 This package contains the background music for %{name}
@@ -39,6 +40,9 @@ cp -a data/music/* $RPM_BUILD_ROOT%{_datadir}/PySolFC/music
 %{_datadir}/PySolFC/music/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 4.40-alt2_16
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 4.40-alt2_15
 - update to new release by fcimport
 
