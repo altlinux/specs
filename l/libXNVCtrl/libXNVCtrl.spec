@@ -3,7 +3,7 @@
 %define _localstatedir %{_var}
 Name:           libXNVCtrl
 Version:        352.21
-Release:        alt1_4
+Release:        alt1_6
 Summary:        Library providing the NV-CONTROL API
 Group:          System/Libraries
 License:        GPLv2+
@@ -15,6 +15,7 @@ Patch1:         libxnvctrl_optflags.patch
 BuildRequires: libX11-devel
 BuildRequires: libXext-devel
 BuildRequires: coreutils
+Source44: import.info
 
 %description
 This packages contains the libXNVCtrl library from the nvidia-settings
@@ -70,6 +71,9 @@ popd
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 352.21-alt1_6
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 352.21-alt1_4
 - update to new release by fcimport
 
