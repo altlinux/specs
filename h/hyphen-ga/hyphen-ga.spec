@@ -8,12 +8,13 @@ Name: hyphen-ga
 Summary: Irish hyphenation rules
 %global upstreamid 20040220
 Version: 0.%{upstreamid}
-Release: alt1_13
+Release: alt1_14
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_ga_IE.zip
 URL: http://borel.slu.edu/fleiscin/index.html
 License: GPL+
 BuildArch: noarch
 Requires: libhyphen
+Source44: import.info
 
 %description
 Irish hyphenation rules.
@@ -33,6 +34,9 @@ cp -p hyph_ga_IE.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20040220-alt1_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20040220-alt1_13
 - update to new release by fcimport
 
