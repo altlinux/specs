@@ -10,7 +10,7 @@ Name:           libUnihan
 %global         libUnihan_ver_major 0
 %global         libUnihan_ver_minor 5
 Version:        %{libUnihan_ver_major}.%{libUnihan_ver_minor}.3
-Release:        alt4_17
+Release:        alt4_19
 License:        LGPLv2+
 Summary:        C library for Unihan character database in fifth normal form 
 Summary(zh_CN): 用于符合第五正规化之统汉字(Unihan)数据库的 C 库文件
@@ -22,6 +22,7 @@ URL:            http://sourceforge.net/projects/libunihan
 Source0:        http://downloads.sourceforge.net/libunihan/%{name}-%{version}-Source.tar.gz
 
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
+Source44: import.info
 
 %description
 libUnihan provides a C library for Unihan character database in fifth
@@ -87,6 +88,9 @@ make doxygen
 %doc %{_docdir}/%{name}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt4_19
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt4_17
 - update to new release by fcimport
 
