@@ -15,7 +15,7 @@ Group: System/Libraries
 
 Name:		libaccounts-glib
 Version:	1.23
-Release:	alt1_2
+Release:	alt1_4
 Summary:	Accounts framework for Linux and POSIX based platforms
 License:	LGPLv2
 URL:        https://gitlab.com/accounts-sso/libaccounts-glib
@@ -30,6 +30,7 @@ BuildRequires:	gobject-introspection-devel
 # no needed for final release tarball
 BuildRequires:	libtool-common
 BuildRequires:	gtk-doc gtk-doc-mkpdf
+Source44: import.info
 
 %description
 %{summary}.
@@ -123,6 +124,9 @@ make check || cat tests/test-suite.log ||:
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1_4
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1_2
 - update to new release by fcimport
 
