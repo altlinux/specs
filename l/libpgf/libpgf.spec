@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/dot gcc-c++
 %define _localstatedir %{_var}
 Name:           libpgf
 Version:        6.14.12
-Release:        alt1_6
+Release:        alt1_8
 Summary:        PGF (Progressive Graphics File) library
 
 Group:          System/Libraries
@@ -22,6 +22,7 @@ Patch148: libpgf-r148.patch
 
 BuildRequires:  doxygen
 BuildRequires:  libtool-common
+Source44: import.info
 
 %description
 libPGF contains an implementation of the Progressive Graphics File (PGF)
@@ -83,6 +84,9 @@ rm -fv %{buildroot}%{_libdir}/libpgf.la
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 6.14.12-alt1_8
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 6.14.12-alt1_6
 - update to new release by fcimport
 
