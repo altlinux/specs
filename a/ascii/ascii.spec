@@ -1,10 +1,11 @@
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ascii
-Version:        3.16
-Release:        alt1_1
+Version:        3.18
+Release:        alt1_2
 URL:            http://www.catb.org/~esr/ascii/
-Source0:        http://www.catb.org/~esr/ascii/ascii-3.16.tar.gz
+Source0:        http://www.catb.org/~esr/ascii/ascii-3.18.tar.gz
+BuildRequires:  xmlto
 
 License:        GPLv2
 Group:          Text tools
@@ -37,6 +38,9 @@ cp ascii.1 $RPM_BUILD_ROOT%{_mandir}/man1/
 %doc README COPYING
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 3.18-alt1_2
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 3.16-alt1_1
 - update to new release by fcimport
 
