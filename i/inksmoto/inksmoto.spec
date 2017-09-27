@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name: inksmoto
 Version: 0.7.0
-Release: alt2_15
+Release: alt2_16
 Summary: The new xmoto level editor for Inkscape
 
 Group: Games/Other
@@ -13,6 +13,7 @@ Requires: xmoto, inkscape, python-module-lxml python-module-pygtk python-module-
 BuildArch: noarch
 
 Patch0: inksmoto-0.7.0-pypath.patch
+Source44: import.info
 
 %description
 Inksmoto Level Editor is the new xmoto level editor. It uses Inkscape to
@@ -42,6 +43,9 @@ cp -pr inksmoto %{buildroot}%{_datadir}/inkscape/extensions/
 %doc AUTHORS COPYING INSTALL README
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2_16
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2_15
 - update to new release by fcimport
 
