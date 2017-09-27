@@ -17,7 +17,7 @@ BuildRequires: gcc-c++
 Name:           asl
 URL:            http://john.ccac.rwth-aachen.de:8000/as/index.html
 Version:        1.42
-Release:        alt2_0.31.%{patchlevel}
+Release:        alt2_0.33.%{patchlevel}
 Group:          Development/Other
 License:        GPLv2+
 Summary:        Macro Assembler AS
@@ -30,6 +30,7 @@ BuildRequires:  /usr/bin/latex texlive-latex-recommended
 %if 0%{?fedora} > 18 || 0%{?rhel} > 6
 BuildRequires:  texlive-latex-recommended
 %endif
+Source44: import.info
 
 
 %description
@@ -92,6 +93,9 @@ done
 %lang(de) %doc doc/as-DE.html doc/as-DE.txt doc/as-DE.ps doc/as-DE.pdf doc/as-DE.dvi
 
 %changelog -n asl
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.33.bld115
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.31.bld115
 - update to new release by fcimport
 
