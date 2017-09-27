@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate Imag
 %define _localstatedir %{_var}
 Name:           slashem
 Version:        0.0.8
-Release:        alt2_0.21.E0F1
+Release:        alt2_0.23.E0F1
 Summary:        Super Lotsa Added Stuff Hack - Extended Magic
 
 Group:          Games/Other
@@ -41,6 +41,7 @@ Requires:       icon-theme-hicolor
 %global fa_share    %{_datadir}/games/%{name}
 %global fa_unshare  %{_libdir}/games/%{name}
 %global fa_doc      %{_docdir}/%{name}
+Source44: import.info
 
 %description
 From the land before 3DFX, before VGA graphics and DOOM, before the IBM PC, way
@@ -165,6 +166,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/%{name}.ap
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2_0.23.E0F1
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2_0.21.E0F1
 - update to new release by fcimport
 
