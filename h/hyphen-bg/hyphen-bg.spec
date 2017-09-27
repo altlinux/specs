@@ -7,13 +7,14 @@ BuildRequires: unzip
 Name: hyphen-bg
 Summary: Bulgarian hyphenation rules
 Version: 4.3
-Release: alt1_11
+Release: alt1_12
 Source: http://downloads.sourceforge.net/bgoffice/OOo-hyph-bg-%{version}.zip
 URL: http://bgoffice.sourceforge.net/
 License: GPLv2+ or LGPLv2+ or MPLv1.1
 BuildArch: noarch
 
 Requires: libhyphen
+Source44: import.info
 
 %description
 Bulgarian hyphenation rules.
@@ -46,6 +47,9 @@ cp -p *.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 4.3-alt1_12
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 4.3-alt1_11
 - update to new release by fcimport
 
