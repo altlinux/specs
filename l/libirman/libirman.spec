@@ -7,7 +7,7 @@ BuildRequires: libirman-devel
 Name:           libirman
 Epoch:          1
 Version:        0.5.2
-Release:        alt1_4
+Release:        alt1_6
 Summary:        Library for IRMAN hardware
 
 Group:          System/Libraries
@@ -92,6 +92,9 @@ rm  $RPM_BUILD_ROOT%{_docdir}/libirman/TECHNICAL
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.5.2-alt1_6
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.5.2-alt1_4
 - update to new release by fcimport
 
