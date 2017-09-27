@@ -3,7 +3,7 @@ Group: Sound
 %define _localstatedir %{_var}
 Name:           gt
 Version:        0.4
-Release:        alt1_24
+Release:        alt1_26
 Summary:        Modified Timidity which supportes enhanced gus format patches
 License:        GPLv2+
 URL:            http://alsa.opensrc.org/GusSoundfont
@@ -79,6 +79,9 @@ touch -r utils/midifile.c $RPM_BUILD_ROOT%{_mandir}/man1/midi-disasm.1
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_26
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_24
 - update to new release by fcimport
 
