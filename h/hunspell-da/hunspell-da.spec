@@ -4,13 +4,14 @@ Group: Text tools
 Name: hunspell-da
 Summary: Danish hunspell dictionaries
 Version: 1.7.42
-Release: alt1_7
+Release: alt1_8
 Source: http://da.speling.org/filer/myspell-da-%{version}.tar.bz2
 URL: http://da.speling.org/
 License: GPLv2+
 BuildArch: noarch
 
 Requires: hunspell
+Source44: import.info
 
 %description
 Danish hunspell dictionaries.
@@ -30,6 +31,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.42-alt1_8
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.42-alt1_7
 - update to new release by fcimport
 
