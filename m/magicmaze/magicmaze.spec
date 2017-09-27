@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ perl(Archive/Tar.pm) perl(A
 %define _localstatedir %{_var}
 Name:           magicmaze
 Version:        1.0.2
-Release:        alt2_18
+Release:        alt2_20
 Summary:        Board game featuring a maze which the players change each turn
 Group:          Games/Other
 License:        zlib and Redistributable, no modification permitted
@@ -21,6 +21,7 @@ Patch4:         magicmaze-1.0.2-trademarks.patch
 Patch5:         magicmaze-1.0.2-format-security.patch
 BuildRequires:  libgstream-devel dumb-devel desktop-file-utils
 Requires:       icon-theme-hicolor
+Source44: import.info
 
 %description
 The board of the game is a complicated maze. You see reddish squares, which are
@@ -81,6 +82,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_20
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_18
 - update to new release by fcimport
 
