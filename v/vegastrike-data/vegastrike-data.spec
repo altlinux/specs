@@ -12,7 +12,7 @@ BuildRequires: ImageMagick-tools
 %define _localstatedir %{_var}
 Name:           vegastrike-data
 Version:        0.5.1
-Release:        alt2_11.r1
+Release:        alt2_12.r1
 Summary:        Data files for Vega Strike
 Group:          Games/Other
 License:        GPLv2+
@@ -24,6 +24,7 @@ Patch0:         vegastrike-data-0.5.0-playlists.patch
 BuildRequires:  python-devel ImageMagick
 BuildArch:      noarch
 Requires:       icon-theme-hicolor vegastrike >= %{version}
+Source44: import.info
 
 %description
 Data files for Vega Strike, a GPL 3D OpenGL Action RPG space sim that allows
@@ -121,6 +122,9 @@ cat data.pyo >> data.files
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_12.r1
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_11.r1
 - update to new release by fcimport
 
