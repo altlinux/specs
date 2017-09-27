@@ -13,7 +13,7 @@ BuildRequires(pre): kernel-build-tools
 Summary:       Broadcom Crystal HD device interface library
 Name:          libcrystalhd
 Version:       3.10.0
-Release:       alt3_15
+Release:       alt3_17
 License:       LGPLv2
 Group:         System/Libraries
 URL:           http://www.broadcom.com/support/crystal-hd/
@@ -38,6 +38,7 @@ BuildRequires: autoconf-common automake-common libtool-common
 BuildRequires: gstreamer1.0-devel libgstreamer1.0-gir-devel
 BuildRequires: gst-plugins1.0-devel gst-plugins1.0-gir-devel
 Requires:      firmware-crystalhd
+Source44: import.info
 Patch33: libcrystalhd-alt-from-zerg-bug30916.patch
 
 %description
@@ -159,6 +160,9 @@ mv driver kernel-source-crystalhd-%version
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt3_17
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt3_15
 - update to new release by fcimport
 
