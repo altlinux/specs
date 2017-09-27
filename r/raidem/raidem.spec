@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip zlib-devel
 %define _localstatedir %{_var}
 Name:           raidem
 Version:        0.3.1
-Release:        alt2_32
+Release:        alt2_34
 Summary:        2d top-down shoot'em up
 Group:          Games/Other
 License:        zlib
@@ -90,6 +90,9 @@ install -p -m 644 %{SOURCE1} \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_34
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_32
 - update to new release by fcimport
 
