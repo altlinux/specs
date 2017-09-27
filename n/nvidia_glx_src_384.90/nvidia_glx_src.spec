@@ -18,7 +18,7 @@
 %define nv_version 384
 %define nv_release 90
 %define nv_minor %nil
-%define pkg_rel alt173%ubt
+%define pkg_rel alt174%ubt
 %def_enable kernelsource
 %def_disable glvnd
 
@@ -109,7 +109,7 @@ Sources for %{bin_pkg_name}_%{version} package
 PreReq: %{bin_pkg_name}_common >= %version
 Requires(post): x11presetdrv
 Requires: libGLdispatch libGLX
-Requires: %libnvidia_egl_wayland
+Requires: %libnvidia_egl_wayland >= 0
 #
 Group: %myGroup
 Summary: %mySummary
@@ -327,6 +327,9 @@ fi
 %endif
 
 %changelog
+* Wed Sep 27 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt174%ubt
+- fix requires
+
 * Tue Sep 26 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt173%ubt
 - new version
 
