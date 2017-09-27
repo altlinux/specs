@@ -3,7 +3,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           avl
 Version:        3.36
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Aerodynamic and flight-dynamic analysis of rigid aircrafts
 
 # Plotlib is LGPLv2+, the rest is GPLv2+
@@ -18,6 +18,7 @@ Patch0:         avl3.36-makefile.patch
 
 BuildRequires:  gcc-fortran libX11-devel
 Requires:       fonts-bitmap-misc
+Source44: import.info
 
 %description
 AVL is a program for the aerodynamic and flight-dynamic analysis of rigid aircraft
@@ -55,6 +56,9 @@ export CFLAGS="%{optflags}"
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 3.36-alt1_3
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 3.36-alt1_1
 - update to new release by fcimport
 
