@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:		libgtextutils
 Version:	0.7
-Release:	alt1_17
+Release:	alt1_19
 Summary:	Assaf Gordon text utilities    
 
 Group:		System/Libraries
@@ -14,6 +14,7 @@ License:	AGPLv3+
 URL:		http://hannonlab.cshl.edu/fastx_toolkit/
 Source0:	https://github.com/agordon/%{name}/releases/download/%{version}/%{name}-%{version}.tar.gz
 Patch0:		libgtextutils-GCC6-iostream.patch
+Source44: import.info
 
 
 %description
@@ -59,6 +60,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/gtextutils.pc
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_19
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_17
 - update to new release by fcimport
 
