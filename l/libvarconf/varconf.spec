@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           libvarconf
 Version:        1.0.1
-Release:        alt1_9
+Release:        alt1_11
 Summary:        Configuration library used by WorldForge clients
 
 Group:          Development/Other
@@ -16,6 +16,7 @@ URL:            http://worldforge.org/dev/eng/libraries/varconf
 Source0:        http://downloads.sourceforge.net/worldforge/%{oldname}-%{version}.tar.bz2
 
 BuildRequires:  libsigc++2-devel
+Source44: import.info
 Provides: varconf = %{version}-%{release}
 
 %description
@@ -68,6 +69,9 @@ cd tests ; ./conftest < conf.cfg
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_11
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_9
 - update to new release by fcimport
 
