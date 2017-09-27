@@ -5,7 +5,7 @@
 Summary: Arabic dictionary for Aspell
 Name: aspell-%{lang}
 Version: 1.2
-Release: alt2_16
+Release: alt2_18
 License: GPLv2+
 Group: Text tools
 URL: http://aspell.net/
@@ -14,6 +14,7 @@ Buildrequires: aspell >= 0.60
 Requires: aspell >= 0.60
 
 %define debug_package %{nil}
+Source44: import.info
 
 %description
 Provides the word list/dictionaries for Arabic.
@@ -45,6 +46,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/aspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_18
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_16
 - update to new release by fcimport
 
