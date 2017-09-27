@@ -6,7 +6,7 @@
 Summary: Latin dictionaries for Aspell
 Name: aspell-%{lang}
 Version: 20020503
-Release: alt1_6
+Release: alt1_8
 License: GPLv2
 Group: Text tools
 URL: http://aspell.net
@@ -15,6 +15,7 @@ Buildrequires: aspell >= 0.60
 Requires: aspell >= 0.60
 
 %define debug_package %{nil}
+Source44: import.info
 
 %description
 Provides the word list/dictionaries for the following: Latin
@@ -35,6 +36,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 20020503-alt1_8
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 20020503-alt1_6
 - update to new release by fcimport
 
