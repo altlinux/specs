@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ imake libXt-devel xorg-cf-f
 %define _localstatedir %{_var}
 Name:           abe
 Version:        1.1
-Release:        alt5_29
+Release:        alt5_31
 
 Summary:        Scrolling, platform-jumping, ancient pyramid exploring game
 License:        GPL+
@@ -39,6 +39,7 @@ BuildRequires:  libSDL_mixer-devel
 Requires:       icon-theme-hicolor
 
 %global icondir %{_datadir}/icons/hicolor
+Source44: import.info
 
 %description
 A scrolling, platform-jumping, key-collecting, ancient pyramid exploring game,
@@ -105,6 +106,9 @@ touch --no-create %{icondir} >&/dev/null ||:
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_31
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_29
 - update to new release by fcimport
 
