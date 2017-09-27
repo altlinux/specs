@@ -7,13 +7,14 @@ BuildRequires: unzip
 Name: hunspell-qu
 Summary: Quechua Ecuador hunspell dictionaries
 Version: 0.9
-Release: alt2_10
+Release: alt2_11
 Source: http://extensions.services.openoffice.org/e-files/2121/8/qu_EC-0.9.oxt
 URL: http://extensions.services.openoffice.org/project/KichwaSpellchecker
 License: AGPLv3
 BuildArch: noarch
 
 Requires: hunspell
+Source44: import.info
 
 %description
 Quechua Ecuador hunspell dictionaries.
@@ -33,6 +34,9 @@ cp -p qu_EC.aff qu_EC.dic $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_11
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_10
 - update to new release by fcimport
 
