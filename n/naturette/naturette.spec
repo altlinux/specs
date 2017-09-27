@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:		naturette
 Version:	1.3
-Release:	alt4_13
+Release:	alt4_14
 Summary:	An AGI adventure game
 
 Group:		Games/Other
@@ -23,6 +23,7 @@ BuildArch:	noarch
 
 BuildRequires:	desktop-file-utils
 Requires:	nagi, icon-theme-hicolor
+Source44: import.info
 
 %description
 Naturette was made using AgiStudio. Naturette must find eight 
@@ -71,6 +72,9 @@ install -p -m 0644 %{SOURCE3} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%
 %{_bindir}/naturette-wrapper.sh
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt4_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt4_13
 - update to new release by fcimport
 
