@@ -7,7 +7,7 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 Name:           libAllegroOGG
 Version:        1.0.3
-Release:        alt2_17
+Release:        alt2_19
 Summary:        Ogg library for use with the Allegro game library
 Group:          System/Libraries
 License:        BSD
@@ -15,6 +15,7 @@ URL:            http://www.allegro.cc/resource/Libraries/Audio/alogg
 Source0:        http://www.hero6.com/filereviver/alogg.zip
 Source1:        AllegroOGG.pc.in
 BuildRequires:  liballegro-devel libvorbis-devel
+Source44: import.info
 Provides: AllegroOGG = %{version}-%{release}
 
 %description
@@ -70,6 +71,9 @@ install -m 644 include/* $RPM_BUILD_ROOT%{_includedir}/%{oldname}
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_19
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_17
 - update to new release by fcimport
 
