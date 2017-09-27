@@ -3,7 +3,7 @@
 %define _localstatedir %{_var}
 Name:		libgcroots
 Version:	0.2.3
-Release:	alt2_12
+Release:	alt2_14
 License:	MIT
 URL:		http://code.google.com/p/sigscheme/wiki/libgcroots
 
@@ -13,6 +13,7 @@ Patch0:		%{name}-aarch64.patch
 
 Summary:	Roots acquisition library for Garbage Collector
 Group:		Development/Other
+Source44: import.info
 
 %description
 libgcroots abstracts architecture-dependent part of garbage collector
@@ -62,6 +63,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/pkgconfig/gcroots.pc
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt2_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt2_12
 - update to new release by fcimport
 
