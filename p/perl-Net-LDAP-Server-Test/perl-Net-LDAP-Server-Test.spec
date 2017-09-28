@@ -1,19 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Convert/ASN1.pm) perl-podlators
+BuildRequires: perl(Convert/ASN1.pm) perl-podlators perl(Net/LDAP/SID.pm)
 # END SourceDeps(oneline)
 %define upstream_name    Net-LDAP-Server-Test
 %define upstream_version 0.19
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt4_6
+Version:    0.22
+Release:    alt1
 
 Summary:    Test Net::LDAP code
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Net/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/K/KA/KARMAN/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(Data/Dump.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
@@ -30,7 +31,7 @@ Now you can test your Net::LDAP code without having a real LDAP server
 available.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -43,10 +44,13 @@ make test
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml  README
+%doc Changes META.json META.yml README
 %perl_vendor_privlib/*
 
 %changelog
+* Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
+- automated CPAN update
+
 * Tue Jan 31 2017 Igor Vlasenko <viy@altlinux.ru> 0.19-alt4_6
 - to Sisyphus
 
