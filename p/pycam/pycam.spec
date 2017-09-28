@@ -1,6 +1,6 @@
 Name: pycam
-Version: 0.5.1
-Release: alt3
+Version: 0.6.1
+Release: alt1
 Summary: Open Source CAM - Toolpath Generation for 3-Axis CNC machining
 Group: Engineering
 License: GPLv3+
@@ -15,11 +15,19 @@ Buildrequires(pre): rpm-build-python
 BuildRequires: python-devel
 BuildRequires: ccache
 BuildRequires: desktop-file-utils
+BuildRequires: help2man
 %add_python_req_skip ode
+%add_python_req_skip openvoronoi
 Requires: python-module-pygtkglext
+Requires: inkscape
+Requires: pstoedit
+%py_requires guppy
 
 # Needed because it owns the icon directories
 Requires: icon-theme-hicolor
+
+# Segmentation Fault with libfreeglut!!!
+Requires: libGLUT
 
 %description
 PyCAM is a toolpath generator for 3-axis CNC machining. It loads 3D
@@ -41,6 +49,9 @@ done
 
 %build
 %python_build
+pushd man
+make
+popd
 
 %install
 %python_install
@@ -72,7 +83,7 @@ install -pD -m 0644 share/mime/icons/128x128/application-sla.png \
 install -pD -m 0644 man/pycam.1 %buildroot%_man1dir/pycam.1
 
 %files
-%doc Changelog COPYING.TXT LICENSE.TXT PKG-INFO README.TXT
+%doc Changelog COPYING.TXT LICENSE.TXT PKG-INFO README.md technical_details.txt
 %_datadir/%name/
 %_bindir/%name
 %_desktopdir/pycam.desktop
@@ -81,6 +92,9 @@ install -pD -m 0644 man/pycam.1 %buildroot%_man1dir/pycam.1
 %python_sitelibdir/*
 
 %changelog
+* Wed Sep 27 2017 Anton Midyukov <antohami@altlinux.org> 0.6.1-alt1
+- New version 0.6.1
+
 * Sat Jul 29 2017 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt3
 - Fix desktop categories.
 
