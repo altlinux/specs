@@ -9,14 +9,18 @@ BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           log4j
 Version:        2.5
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Java logging package
 BuildArch:      noarch
 License:        ASL 2.0
 URL:            http://logging.apache.org/%{name}
 Source0:        http://www.apache.org/dist/logging/%{name}/%{version}/apache-%{name}-%{version}-src.tar.gz
+
+Patch0:         0001-Backport-fix-for-CVE-2017-5645.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core)
@@ -133,6 +137,8 @@ BuildArch: noarch
 %prep
 %setup -q -n apache-%{name}-%{version}-src
 
+%patch0 -p1
+
 %pom_remove_plugin -r :maven-site-plugin
 %pom_remove_plugin -r :maven-remote-resources-plugin
 
@@ -243,6 +249,9 @@ fi
 
 
 %changelog
+* Thu Sep 28 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt1_5jpp8
+- CVE-2017-5645
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt1_4jpp8
 - new fc release
 
