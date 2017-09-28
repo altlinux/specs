@@ -3,37 +3,28 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.2
-Release: alt1.a1.git20150826.1.1
+Version: 1.0.5
+Release: alt1
 Summary: A lexer and codec to work with LaTeX code in Python
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/latexcodec
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mcmtroffaes/latexcodec.git
-# branch: develop
 Source: %name-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-six
-#BuildPreReq: python-module-nose python-module-coverage
-#BuildPreReq: python-module-sphinx-devel
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-six
-#BuildPreReq: python3-module-nose python3-module-coverage
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-coverage python3-module-nose python3-module-six
 %endif
 
 %py_provides %oname
 %py_requires six
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-pytest python3-module-setuptools xz
-BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-setuptools-tests python3-module-coverage python3-module-nose python3-module-setuptools-tests python3-module-six rpm-build-python3 time
 
 %description
 A lexer and codec to work with LaTeX code in Python.
@@ -118,6 +109,9 @@ popd
 %endif
 
 %changelog
+* Thu Sep 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.5-alt1
+- Updated to upstream version 1.0.5.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.2-alt1.a1.git20150826.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
