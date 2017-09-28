@@ -11,7 +11,7 @@
 Name: kde5-%rname
 %define lname lib%name
 Version: 5.7.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Summary: digiKam is an advanced digital photo management application for linux
@@ -55,6 +55,7 @@ Source1: po.tar
 Source2: doc.tar
 Source3: doc-translated.tar
 Patch1: alt-libraw-aarch64.patch
+Patch2: alt-exiv2-req.patch
 
 %description
 DigiKam is an advanced digital photo management application for KDE.
@@ -133,6 +134,7 @@ Development files for %label.
 %prep
 %setup -n %rname-%version  -a1 -a2 -a3
 %patch1 -p1
+%patch2 -p1
 
 # change double to qreal for casting on arm
 find -type f -name \*.cpp | \
@@ -230,6 +232,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Thu Sep 28 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt2%ubt
+- decrease exiv2 requirement
+
 * Tue Sep 26 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt1%ubt
 - new version
 
