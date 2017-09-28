@@ -16,7 +16,7 @@
 
 Name: colord
 Version: 1.4.1
-Release: alt1
+Release: alt2
 
 Summary: Color daemon
 License: GPLv2+
@@ -130,7 +130,8 @@ This package provides Colord reference manual
 %setup
 
 %build
-%meson -Denable-static=false \
+%meson --localstatedir=%_var \
+	-Denable-static=false \
 	-Denable-rpath=false \
 	%{?_enable_daemon:-Denable-daemon=true} \
 	%{?_enable_session_helper:-Denable-session-helper=true} \
@@ -142,7 +143,7 @@ This package provides Colord reference manual
 	%{?_enable_installed_tests:-Denable-installed-tests=true} \
 	%{?_enable_libcolordcompat:-Denable-libcolordcompat=true} \
 	%{?_disable_systemd:-Denable-systemd=false} \
-	%{?_disable_docs:-Denable-docs=false}
+	%{?_disable_docs:-Denable-docs=false} \
 %meson_build
 
 %install
@@ -308,6 +309,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %endif
 
 %changelog
+* Thu Sep 28 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt2
+- rebuilt with localstatedir=%%_var
+
 * Tue Aug 22 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
 - 1.4.1
 
