@@ -1,15 +1,15 @@
 %define _name bytesize
 
 Name: lib%_name
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: A library for working with sizes in bytes
 Group: System/Libraries
 License: LGPLv2+
-Url: https://github.com/rhinstaller/%name
+Url: https://github.com/storaged-project/%name
 
-Source: %url/archive/%name-%version.tar.gz
+Source: %url/releases/download/%version/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python rpm-build-python3
 
@@ -51,7 +51,7 @@ This package contains Python 3 bindings for %name making the use of
 the library from Python 3 easier and more convenient.
 
 %prep
-%setup -n %name-%name-%version
+%setup -n %name-%version
 
 %build
 %autoreconf
@@ -62,11 +62,16 @@ export CFLAGS="$CFLAGS `pkg-config --cflags libpcre`"
 %install
 %makeinstall_std
 
+%check
+# pocketlint required
+#%%make check
+
 %find_lang %name
 
 %files -f %name.lang
 %_libdir/%name.so.*
 %doc README.md LICENSE
+#%doc NEWS*
 
 %files devel
 %_includedir/%_name/
@@ -82,6 +87,9 @@ export CFLAGS="$CFLAGS `pkg-config --cflags libpcre`"
 
 
 %changelog
+* Thu Sep 28 2017 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt1
+- 1.1
+
 * Mon Sep 18 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
 - 1.0
 
