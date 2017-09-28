@@ -1,9 +1,10 @@
 %define oname urllib3
+%def_without tests
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.15.1
+Version: 1.21.1
 Release: alt1
 
 Epoch: 2
@@ -15,10 +16,10 @@ Group: Development/Python
 Url: https://github.com/shazow/urllib3/
 
 # make all imports of things in packages try system copies first
-Patch0:         python-urllib3-unbundle.patch
+Patch0: %name-%version-%release.patch
 
 # https://github.com/shazow/urllib3.git
-Source: %name-%version.tar
+Source: %oname-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
@@ -27,11 +28,16 @@ BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-six python-module-backports.ssl_match_hostname
 BuildRequires: python-module-ndg-httpsclient
 BuildRequires: python-module-sphinx-devel
+BuildRequires: python-module-mock
+BuildRequires: python-module-nose
+BuildRequires: python-module-socks
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-six
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-nose
 %endif
 
 %setup_python_module %oname
@@ -97,11 +103,9 @@ support, sanity friendly, and more.
 This package contains documentation for urllib3.
 
 %prep
-%setup
-
+%setup -n %oname-%version
 #rm -rf urllib3/packages/
-
-#patch0 -p1
+%patch -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -136,6 +140,16 @@ popd
 
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
+%if_with tests
+%check
+py.test
+%if_with python3
+pushd ../python3
+py.test-3
+popd
+%endif
+%endif
+
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
@@ -162,6 +176,10 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Sep 27 2017 Andrey Cherepanov <cas@altlinux.org> 2:1.21.1-alt1
+- 1.21.1
+- Add optional test check
+
 * Wed Apr 20 2016 Alexey Shabalin <shaba@altlinux.ru> 2:1.15.1-alt1
 - 1.15.1
 
