@@ -1,7 +1,7 @@
 %define _name LibRaw
 
 Name: libraw
-Version: 0.18.4
+Version: 0.18.5
 Release: alt1
 
 Summary: library for reading RAW files obtained from digital photo cameras
@@ -89,6 +89,9 @@ This package contains static library.
 %_libdir/libraw_r.a
 
 %changelog
+* Thu Sep 28 2017 Yuri N. Sedunov <aris@altlinux.org> 0.18.5-alt1
+- 0.18.5
+
 * Mon Sep 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.18.4-alt1
 - 0.18.4
 
