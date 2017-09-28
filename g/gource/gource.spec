@@ -1,5 +1,5 @@
 Name: gource
-Version: 0.46
+Version: 0.47
 Release: alt1
 
 Summary: OpenGL-based 3D visualisation tool for source control repositories
@@ -12,9 +12,6 @@ Url: http://gource.io/
 Source0: %name-main-%version.tar
 Source1: %name-core-%version.tar
 Patch0: %name-0.43-alt-build.patch
-# Patch from upstream git.
-# Should be dropped when new version will be released.
-Patch1: gource-0.46-alt-fix-typo.patch
 
 Requires: fonts-ttf-freefont
 
@@ -46,7 +43,6 @@ files and directories.
 %setup
 tar xf %_sourcedir/%name-core-%version.tar -C src/
 %patch0 -p0
-%patch1 -p1
 
 %build
 %autoreconf
@@ -62,6 +58,9 @@ tar xf %_sourcedir/%name-core-%version.tar -C src/
 %_man1dir/*
 
 %changelog
+* Thu Sep 28 2017 Mikhail Efremov <sem@altlinux.org> 0.47-alt1
+- Updated to 0.47.
+
 * Tue Sep 05 2017 Mikhail Efremov <sem@altlinux.org> 0.46-alt1
 - Fix typo in man page.
 - Drop obsoleted patch.
