@@ -1,7 +1,7 @@
 %def_with docs
 Name: beremiz
 Version: 1.2
-Release: alt1.20170828
+Release: alt1.20170917
 
 Summary: Integrated development environment for machine automation
 Summary(ru_RU.UTF-8): Интегрированная среда разработки для ПЛК
@@ -73,6 +73,7 @@ Integrated development environment for machine automation
 Summary: Tests for python-module-%name
 Group: Development/Python
 Requires: python-module-%name = %version-%release
+%add_python_req_skip Beremiz PLCOpenEditor controls
 
 %description -n python-module-%name-tests
 Tests for python-module-%name
@@ -220,6 +221,9 @@ desktop-file-install --dir=%buildroot%_desktopdir PLCOpenEditor.desktop
 %python_sitelibdir/%name/tests
 
 %changelog
+* Thu Sep 28 2017 Anton Midyukov <antohami@altlinux.org> 1.2-alt1.20170917
+- New snapshot
+
 * Mon Sep 04 2017 Anton Midyukov <antohami@altlinux.org> 1.2-alt1.20170828
 - New snapshot
 
