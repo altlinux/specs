@@ -1,19 +1,19 @@
 %define oname bzr-fastimport
 Name: python-module-bzr-fastimport
 Version: 0.13.0
-Release: alt2
+Release: alt3%ubt
 Summary: Bazaar Fast Import is a plugin for loading of revision control data
 
 Packager: Ildar Mulyukov <ildar@altlinux.ru>
 
 BuildArch: noarch
-Source: %oname.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar
+Patch: %name-%version.patch
 Group: Development/Other
 Url: https://launchpad.net/bzr-fastimport
 License: GPL2
 
-# Automatically added by buildreq on Sun Jul 18 2010
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: python-devel
 
 %description
@@ -34,7 +34,7 @@ Requires: %name = %version-%release
 This package contain tools and test suites for testing bzr-fastimport.
 
 %prep
-%setup -n %oname
+%setup
 %patch -p1
 
 %build
@@ -54,6 +54,10 @@ This package contain tools and test suites for testing bzr-fastimport.
 %python_sitelibdir/bzrlib/plugins/fastimport/tests
 
 %changelog
+* Thu Sep 28 2017 Alexey Shabalin <shaba@altlinux.ru> 0.13.0-alt3%ubt
+- fixed lp bug 1607974
+- fixed lp bug 1295833
+
 * Thu Sep 18 2014 Alexey Shabalin <shaba@altlinux.ru> 0.13.0-alt2
 - upstream snapshot (fixed work with python-module-fastimport-0.9.4)
 
