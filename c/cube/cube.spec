@@ -2,15 +2,17 @@ Name: cube
 License: BSD
 Group: Development/Tools
 Summary: Performance report explorer for Scalasca and Score-P
-Version: 4.2.3
+Version: 4.3.5
 Release: alt1
 Url: http://www.scalasca.org/software/cube-4.x/download.html
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://apps.fz-juelich.de/scalasca/releases/cube/4.2/dist/cube-4.2.3.tar.gz
+Source: %name-%version.tar
+Source2: status.m4
+Patch1: %name-%version-fedora-nocheck.patch
+Patch2: %name-%version-alt-linking.patch
 
-BuildPreReq: gcc-c++ libqt4-devel zlib-devel uncrustify doxygen
-BuildPreReq: libdbus-devel flex graphviz texlive-base-bin menu
+BuildRequires: gcc-c++ libqt4-devel zlib-devel uncrustify doxygen
+BuildRequires: libdbus-devel flex graphviz texlive-base-bin menu chrpath
 
 Requires: lib%name = %EVR
 
@@ -78,6 +80,11 @@ This package contains documentation for Cube.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p2
+
+# configure.ac uses some macros not provided by autoconf, just copy file with them from previous cube version
+cp %SOURCE2 vendor/common/build-config/m4/status.m4
 
 %build
 %add_optflags -I%_includedir/dbus-1.0 -L%buildroot%_libexecdir
@@ -94,20 +101,29 @@ export TOPDIR=$PWD
 %make_build
 
 %install
-install -d %buildroot%_libexecdir
-cp -P $(find ./ -name 'libcube4.so*') %buildroot/%_libexecdir/
-cp -P $(find ./ -name 'libcube4w.so*') %buildroot/%_libexecdir/
+install -d %buildroot%_libdir
+cp -P $(find ./ -name 'libcube4.so*') %buildroot/%_libdir/
+cp -P $(find ./ -name 'libcube4w.so*') %buildroot/%_libdir/
 %makeinstall_std
+
+# remove RPATH
+for i in %buildroot%_bindir/* %buildroot%_libdir/*.so* %buildroot%_libdir/cube-plugins/*.so* ; do
+	chrpath -d $i ||:
+done
+
+# remove unpackaged files
+find %buildroot -name '*.la' -delete
+find %buildroot -name '*.a' -delete
 
 %files
 %_bindir/*
 %exclude %_bindir/cube-config*
 %_datadir/cube
 %_datadir/icons/*
-%_datadir/modulefiles
 
 %files -n lib%name
 %_libdir/*.so.*
+%_libdir/cube-plugins/*.so*
 
 %files -n lib%name-devel
 %_includedir/*
@@ -118,6 +134,9 @@ cp -P $(find ./ -name 'libcube4w.so*') %buildroot/%_libexecdir/
 %_docdir/*
 
 %changelog
+* Thu Sep 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.5-alt1
+- Updated to upstream version 4.3.5.
+
 * Fri Jun 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.3-alt1
 - Version 4.2.3
 

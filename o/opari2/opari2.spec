@@ -2,15 +2,14 @@ Name: opari2
 License: BSD
 Group: Development/Tools
 Summary: OPARI2 is a source-to-source instrumentation tool for OpenMP and hybrid codes
-Version: 1.1.2
+Version: 2.0.2
 Release: alt1
 Url: http://www.vi-hps.org/projects/score-p/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://www.vi-hps.org/upload/packages/opari2/opari2-1.1.2.tar.gz
+Source: %name-%version.tar
 
-BuildPreReq: gcc-c++ uncrustify doxygen gcc-fortran
-BuildPreReq: texlive-base-bin graphviz 
+BuildRequires: gcc-c++ uncrustify doxygen gcc-fortran
+BuildRequires: texlive-base-bin graphviz 
 
 %description
 OPARI2 is a source-to-source instrumentation tool for OpenMP and hybrid
@@ -65,6 +64,9 @@ ln -s %_libexecdir/pomp2-parse-init-regions.awk %buildroot%_bindir/
 %_docdir/%name
 
 %changelog
+* Thu Sep 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt1
+- Updated to upstream version 2.0.2.
+
 * Wed May 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1
 - Version 1.1.2
 

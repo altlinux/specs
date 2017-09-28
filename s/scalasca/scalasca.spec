@@ -1,22 +1,28 @@
+%set_verify_elf_method unresolved=relaxed
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
-%define over 2.1
+%define over 2.3.1
 %define cubever 3.4.2.%over
 %define somver 0
 %define sover %somver.%over
 Name: scalasca
 Version: %over
-Release: alt2.rc2
+Release: alt1
 Summary: Scalable performance Analysis of Large-Scale parallel Applications
 License: MIT
 Group: Development/Tools
 Url: http://www.scalasca.org/
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 Source1: Makefile.shared
+Source2: status.m4
+Patch1: %name-%version-alt-linking.patch
 
 Requires: papi
+Requires: scorep libscorep-devel
+Requires: cube
 Conflicts: linuxtv-dvb-apps
 Provides: kojak = 2.2p1_%over-%release
 Conflicts: kojak < 2.2p1_%over-%release
@@ -118,17 +124,17 @@ This package contains development files of SCALASCA.
 
 %prep
 %setup
+%patch1 -p2
+# configure.ac uses some macros not provided by autoconf, just copy file with them from previous scalasca version
+cp %SOURCE2 vendor/common/build-config/m4/status.m4
 
 %build
-%add_optflags -std=gnu++98
-
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 export PATH=$PATH:%_qt4dir/bin
 export MPIDIR=%mpidir
 
-export MPI_CXXFLAGS="${CXXFLAGS:-%optflags}"
 export CC="mpicc -g"
 export CXX="mpicxx -g"
 %autoreconf
@@ -195,6 +201,9 @@ done
 %_includedir/*
 
 %changelog
+* Fri Sep 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.1-alt1
+- Updated to upstream version 2.3.1.
+
 * Wed Sep 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1-alt2.rc2
 - Fixed build with gcc-6.
 

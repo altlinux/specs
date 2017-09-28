@@ -1,18 +1,19 @@
-%define sover 0
+%define sover 1
 
 Name: otf2
 License: BSD
 Group: Development/Tools
 Summary: Open Trace Format 2 (OTF2)
-Version: 1.4
+Version: 2.1
 Release: alt1
 Url: http://www.vi-hps.org/projects/score-p/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://www.vi-hps.org/upload/packages/otf2/otf2-1.4.tar.gz
+Source: %name-%version.tar
+Patch1: %name-%version-fedora-rpath.patch
+Patch2: %name-%version-alt-build.patch
 
-BuildPreReq: uncrustify doxygen graphviz texlive-base-bin
-BuildPreReq: gcc-c++
+BuildRequires: uncrustify doxygen graphviz texlive-base-bin
+BuildRequires: gcc-c++
 
 Requires: lib%name = %EVR
 
@@ -70,9 +71,11 @@ This package contains documentation for OTF2.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p2
 
 %build
-#autoreconf
+%autoreconf
 %add_optflags %optflags_shared
 %configure
 %make_build V=1
@@ -104,6 +107,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Thu Sep 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1-alt1
+- Updated to upstream version 2.1.
+
 * Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1
 - Version 1.4
 

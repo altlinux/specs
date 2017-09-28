@@ -2,16 +2,16 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: tau
-Version: 2.23
-Release: alt2
+Version: 2.26.3
+Release: alt1
 Summary: TAU Portable Profiling Package
 License: BSD-like
 Group: Development/Tools
 Url: http://www.cs.uoregon.edu/research/tau/home.php
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: http://www.cs.uoregon.edu/research/paracomp/tau/tauprofile/dist/tau_latest.tar.gz
 Source1: http://www.cs.uoregon.edu/research/tau/tau-usersguide.pdf
+Patch1: %name-%version-alt-build.patch
 
 Requires: lib%name = %version-%release
 Requires: %name-j = %version-%release
@@ -146,9 +146,11 @@ This package contains java libraries of TAU Portable Profiling Package.
 
 %prep
 %setup
+%patch1 -p2
 %ifarch x86_64
 sed -i 's|lib/libpdb\.a|lib64/libpdb.a|g' utils/Makefile
 %endif
+sed -i -e "s|@VERSION@|%version|g" -e "s:@VERSIONSHORT@:$(echo %version | sed -e 's|\.| |g' | cut -d ' ' -f 1):g" src/Profile/Makefile.skel
 
 %install
 mpi-selector --set %mpiimpl
@@ -161,7 +163,7 @@ export BUILDROOT=%buildroot
 	-c++=mpic++ \
 	-cc=mpicc \
 	-fortran=gfortran \
-	-prefix=%prefix \
+	-prefix=%buildroot%prefix \
 	-exec-prefix= \
 	-mpi \
 	-mpiinc=%mpidir/include \
@@ -202,21 +204,14 @@ popd
 #mv opari tau_opari
 #popd
 
-%ifarch x86_64
-install -d %buildroot%_libdir
-mv %buildroot%_libexecdir/* %buildroot%_libdir/
-%endif
-
+mkdir -p %buildroot%_sysconfdir
 mv %buildroot%prefix/tools/src/perfdmf/etc/* %buildroot%_sysconfdir/
-rm -f %buildroot%_bindir/*.ini %buildroot%_includedir/Makefile \
-	%buildroot%_sysconfdir/*.py
-rm -fR %buildroot%_includedir/makefiles
 
 install -d %buildroot%_datadir/%name
 sed -i \
 	-e 's/^\(TAU_CONFIG\).*/\1=/g' \
-	%buildroot%_libdir/Makefile*
-mv %buildroot%_libdir/Makefile* %buildroot%_datadir/%name/
+	%buildroot%_libexecdir/Makefile*
+mv %buildroot%_libexecdir/Makefile* %buildroot%_datadir/%name/
 
 # fix TAU shared library
 
@@ -232,7 +227,13 @@ pushd src/Profile
 %make clean
 sed -i -e '278s|\$(TAU_DISABLE)||' Makefile
 %make TOPDIR=$TOPDIR
-cp -f libTAU*so.2.19.2 %buildroot%_libdir/
+
+%ifarch x86_64
+install -d %buildroot%_libdir
+mv %buildroot%_libexecdir/* %buildroot%_libdir/
+%endif
+
+cp -f libTAU*so.* %buildroot%_libdir/
 popd
 
 # fix scripts
@@ -311,6 +312,14 @@ rm -f %buildroot%_libdir/*/*.so %buildroot%_bindir/tau_ebs2otf.pl \
 	%buildroot%_bindir/opari2*
 rm -f %buildroot%_bindir/tau2otf
 ln -s %_bindir/tau2otf2 %buildroot%_bindir/tau2otf
+
+mv %buildroot%_prefix%_sysconfdir/* %buildroot%_sysconfdir/
+
+rm -f %buildroot%_bindir/*.ini %buildroot%_includedir/Makefile* \
+	%buildroot%_sysconfdir/*.py %buildroot%_prefix%_sysconfdir/*.py
+rm -fR %buildroot%_includedir/makefiles
+
+sed -i -e "s: -I/usr/src/RPM/BUILD/tau-%version/include\\\\\\\\\\\\ : :g" %buildroot%_includedir/tau_config.h
 
 %files
 %doc README COPYRIGHT LICENSE CREDITS
@@ -399,6 +408,9 @@ ln -s %_bindir/tau2otf2 %buildroot%_bindir/tau2otf
 %exclude %_javadir/jargs.jar
 
 %changelog
+* Wed Sep 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.26.3-alt1
+- Updated to upstream version 2.26.3.
+
 * Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.23-alt2
 - Rebuilt with new OTF2
 

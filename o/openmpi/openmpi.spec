@@ -40,7 +40,7 @@ Name: openmpi
 #pkgname
 
 Version: 2.0.1
-Release: alt2
+Release: alt3
 
 %define mpi_prefix %_libdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -158,9 +158,9 @@ function buildIt() {
 			--mandir=%mpi_prefix/man \
 			--docdir=%_docdir/%name-%version \
 			--with-gnu-ld \
-			--with-wrapper-ldflags="-Wl,-Rpath=%mpi_prefix/lib"
+			--with-wrapper-ldflags="-Wl,-rpath=%mpi_prefix/lib"
 
-#			--with-wrapper-ldflags="-Wl,--no-as-needed,-Rpath=%mpi_prefix/lib"
+#			--with-wrapper-ldflags="-Wl,--no-as-needed,-rpath=%mpi_prefix/lib"
 
 #TODO: --with-cuda
 
@@ -326,6 +326,9 @@ EOF
 %endif
 
 %changelog
+* Thu Sep 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.1-alt3
+- Updated pkg-config files.
+
 * Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.1-alt2
 - Updated 'requires' for openmpi-devel.
 
