@@ -1,5 +1,5 @@
 Name:     genspec
-Version:  1.2.10
+Version:  1.2.11
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
@@ -32,6 +32,9 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_datadir/spectemplates
 
 %changelog
+* Thu Sep 28 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.11-alt1
+- (ALT #33935) Print created directory
+
 * Fri Sep 01 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.10-alt1
 - Add newline to generating .gear/rules
 - Fail if could not get packager
