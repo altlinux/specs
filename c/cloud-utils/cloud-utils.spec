@@ -1,16 +1,17 @@
 
 Summary: Cloud image management utilities
 Name: cloud-utils
-Version: 0.29
-Release: alt1.20161024
+Version: 0.30
+Release: alt1%ubt
 License: GPLv3
 Group: System/Configuration/Boot and Init
 Url: https://launchpad.net/cloud-utils
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version.patch
 
 BuildArch: noarch
+BuildRequires(pre): rpm-build-ubt
 
 Requires: cloud-utils-growpart
 Requires: gawk
@@ -70,6 +71,9 @@ rm -f %buildroot%_bindir/*ubuntu*
 %_man1dir/growpart.*
 
 %changelog
+* Thu Sep 28 2017 Alexey Shabalin <shaba@altlinux.ru> 0.30-alt1%ubt
+- 0.30
+
 * Tue Nov 22 2016 Alexey Shabalin <shaba@altlinux.ru> 0.29-alt1.20161024
 - bzr snapshot 20161024
 
