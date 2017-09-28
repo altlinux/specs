@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:           beneath-a-steel-sky
 Version:        1.3
-Release:        alt4_10
+Release:        alt4_11
 Summary:        Beneath a Steel Sky - Adventure Game
 Group:          Games/Other
 # For further discussion on distribution rights see:
@@ -19,6 +19,7 @@ BuildArch:      noarch
 Requires:       scummvm >= 0.12.0
 Obsoletes:      bass <= 0-8
 Provides:       bass = 0-8
+Source44: import.info
 
 %description
 After the Dungeons and Dragons fantasy setting of Revolution's first game, Lure
@@ -53,6 +54,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt4_11
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt4_10
 - update to new release by fcimport
 
