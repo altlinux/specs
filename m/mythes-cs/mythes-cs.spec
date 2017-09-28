@@ -8,13 +8,14 @@ Name: mythes-cs
 Summary: Czech thesaurus
 %global upstreamid 20070926
 Version: 0.%{upstreamid}
-Release: alt1_15
+Release: alt1_16
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/thes_cs_CZ_v2.zip
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
-BuildRequires: python, perl
+BuildRequires: python, perl-devel
 License: MIT
 BuildArch: noarch
 Requires: libmythes
+Source44: import.info
 
 %description
 Czech thesaurus.
@@ -34,6 +35,9 @@ cp -p th_cs_CZ_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_datadir}/mythes/*
 
 %changelog
+* Thu Sep 28 2017 Igor Vlasenko <viy@altlinux.ru> 0.20070926-alt1_16
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20070926-alt1_15
 - update to new release by fcimport
 
