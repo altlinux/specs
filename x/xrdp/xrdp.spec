@@ -1,5 +1,5 @@
 Name: 	 xrdp
-Version: 0.9.3.1
+Version: 0.9.4
 Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
@@ -20,7 +20,6 @@ Source5: librfxcodec.tar
 Source6: xorgxrdp.tar
 
 # patches from Debian
-Patch1: asm-librfxcodec.diff
 Patch2: asm-xorgxrdp.diff
 Patch3: make-fixes.diff
 Patch4: config.diff
@@ -85,7 +84,6 @@ operation, most standard X11 fonts and tools need to be installed.
 tar xf %SOURCE4
 tar xf %SOURCE5
 tar xf %SOURCE6
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -238,6 +236,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Thu Sep 28 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.4-alt1
+- New version
+
 * Thu Aug 24 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.3.1-alt1
 - New version
 - Add Rissian keyboard example to /etc/xrdp/xrdp_keyboard.ini
