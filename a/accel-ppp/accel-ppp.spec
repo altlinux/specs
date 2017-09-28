@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.11.2
-Release: alt2
+Release: alt3
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -103,6 +103,12 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Thu Sep 28 2017 Alexei Takaseev <taf@altlinux.org> 1.11.2-alt3
+- update upstream to git:08e048a76d1d566bf280e3c09d4d839ff40f7af7
+    * libnetlink: added function iplink_set_mtu
+    * ipoe: introduced interface option mtu=N
+    * cli: introduced ip6 and ip6-dp fields in "show sessions" command
+
 * Fri Aug 11 2017 Alexei Takaseev <taf@altlinux.org> 1.11.2-alt2
 - Fix build with kernels >= 4.10
 
