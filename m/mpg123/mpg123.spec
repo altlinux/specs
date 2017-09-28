@@ -6,7 +6,7 @@
 %define mods alsa oss %{?_with_nas:nas} %{?_with_pulse:pulse} %{?_with_sdl:sdl}
 
 Name: mpg123
-Version: 1.25.6
+Version: 1.25.7
 Release: alt1
 
 Summary: MPEG audio player
@@ -107,6 +107,9 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Thu Sep 28 2017 Yuri N. Sedunov <aris@altlinux.org> 1.25.7-alt1
+- 1.25.7
+
 * Wed Aug 16 2017 Yuri N. Sedunov <aris@altlinux.org> 1.25.6-alt1
 - 1.25.6
 
