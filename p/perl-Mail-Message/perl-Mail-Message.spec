@@ -1,0 +1,51 @@
+%filter_from_requires /perl.Mail.Transport.Send.pm./d
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Date/Format.pm) perl(Date/Parse.pm) perl(Email/Simple.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.pm) perl(Encode/KR.pm) perl(Encode/TW.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(Font/Metrics/TimesRoman.pm) perl(HTML/FormatPS.pm) perl(HTML/FormatText.pm) perl(HTML/TreeBuilder.pm) perl(IO/Scalar.pm) perl(MIME/Base64.pm) perl(MIME/Entity.pm) perl(MIME/Parser.pm) perl(MIME/Types.pm) perl(Mail/Address.pm) perl(Scalar/Util.pm) perl(Sys/Hostname.pm) perl(Test/More.pm) perl(Text/Autoformat.pm) perl(Time/Zone.pm) perl(URI.pm) perl(User/Identity.pm)
+# END SourceDeps(oneline)
+%define module_name Mail-Message
+%define _unpackaged_files_terminate_build 1
+BuildRequires: rpm-build-perl perl-devel perl-podlators
+
+Name: perl-%module_name
+Version: 3.002
+Release: alt0.1
+Summary: MIME message handling
+Group: Development/Perl
+License: perl
+Url: %CPAN %module_name
+
+Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/M/MA/MARKOV/%{module_name}-%{version}.tar.gz
+BuildArch: noarch
+
+%description
+=== README for Mail-Message version 3.002
+=   Generated on Mon Sep  4 21:30:52 2017 by OODoc 2.02
+
+There are various ways to install this module:
+
+ (1) if you have a command-line, you can do:
+       perl -MCPAN -e 'install <any package from this distribution>'
+
+ (2) if you use Windows, have a look at http://ppm.activestate.com/
+
+ (3) if you have downloaded this module manually (as root/administrator)
+       gzip -d Mail-Message-3.002.tar.gz
+       tar -xf Mail-Message-3.002.tar
+
+%prep
+%setup -q -n %{module_name}-%{version}
+
+%build
+%perl_vendor_build
+
+%install
+%perl_vendor_install
+
+%files
+%doc README ChangeLog
+%perl_vendor_privlib/M*
+
+%changelog
+* Thu Sep 28 2017 Igor Vlasenko <viy@altlinux.ru> 3.002-alt0.1
+- bootstrap build
+

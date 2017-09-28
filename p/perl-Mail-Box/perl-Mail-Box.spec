@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Mail-Box
 Name: perl-%dist
-Version: 2.120
+Version: 3.003
 Release: alt1
 
 Summary: Manage a mailbox, a folder with messages
@@ -9,12 +9,12 @@ License: Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MA/MARKOV/Mail-Box-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MARKOV/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Jan 23 2011 (-bi)
-BuildRequires: perl-Email-Simple perl-File-FcntlLock perl-File-Remove perl-Font-AFM perl-IO-stringy perl-MIME-Types perl-MIME-tools perl-Mail-IMAPClient perl-Mail-Transport-Dbx perl-Object-Realize-Later perl-Storable perl-Test-Pod perl-Text-Autoformat perl-User-Identity perl(Devel/GlobalDestruction.pm) perl(HTML/TreeBuilder.pm)
+BuildRequires: perl-Email-Simple perl-File-FcntlLock perl-File-Remove perl-Font-AFM perl-IO-stringy perl-MIME-Types perl-MIME-tools perl-Mail-IMAPClient perl-Mail-Transport-Dbx perl-Object-Realize-Later perl-Storable perl-Test-Pod perl-Text-Autoformat perl-User-Identity perl(Devel/GlobalDestruction.pm) perl(HTML/TreeBuilder.pm) perl(Mail/Box/Parser/Perl.pm) perl(Mail/Message/Head/Complete.pm)
 
 %description
 The Mail::Box folder is a modern mail-folder manager.  It is written
@@ -22,7 +22,7 @@ to be a replacement of MailTools and Mail::Folder, an alternative to
 the Email::* set of modules.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,10 +34,13 @@ rm %buildroot%perl_vendor_privlib/Mail/Message/Wrapper/SpamAssassin.{pm,pod}
 rm %buildroot%perl_vendor_privlib/Mail/Box/Search/SpamAssassin.{pm,pod}
 
 %files
-%doc ChangeLog README README.FAQ
+%doc ChangeLog README README.FAQ README.todo examples
 %perl_vendor_privlib/Mail/
 
 %changelog
+* Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 3.003-alt1
+- automated CPAN update
+
 * Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.120-alt1
 - automated CPAN update
 
