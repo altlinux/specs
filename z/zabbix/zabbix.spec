@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		71734
+%define svnrev		72885
 
 %def_with pgsql
 
@@ -10,7 +10,7 @@
 %endif
 
 Name: zabbix
-Version: 3.4.1
+Version: 3.4.2
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -499,6 +499,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Thu Sep 28 2017 Alexei Takaseev <taf@altlinux.org> 1:3.4.2-alt1
+- 3.4.2
+
 * Tue Aug 29 2017 Alexei Takaseev <taf@altlinux.org> 1:3.4.1-alt1
 - 3.4.1
 
