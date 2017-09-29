@@ -7,7 +7,7 @@ BuildRequires: imake libGL-devel libX11-devel libXt-devel xorg-cf-files
 %define _localstatedir %{_var}
 Name:           libsage
 Version:        0.2.0
-Release:        alt2_15
+Release:        alt2_17
 Summary:        OpenGL extensions library using SDL
 
 Group:          Development/Other
@@ -17,6 +17,7 @@ Source0:        http://downloads.sourceforge.net/worldforge/%{oldname}-%{version
 Patch0:         sage-0.1.2-noopt.patch
 
 BuildRequires:  libSDL-devel
+Source44: import.info
 Provides: sage = %{version}-%{release}
 
 %description
@@ -75,6 +76,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_17
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_15
 - update to new release by fcimport
 
