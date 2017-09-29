@@ -8,7 +8,7 @@ BuildRequires: gcc-c++
 Summary:        Real-time Audio I/O Library
 Name:           librtaudio
 Version:        4.0.11
-Release:        alt1_11
+Release:        alt1_13
 License:        MIT
 Group:          System/Libraries
 URL:            http://www.music.mcgill.ca/~gary/rtaudio/
@@ -22,6 +22,7 @@ Source0:        %{oldname}-%{version}-fe.tar.gz
 BuildRequires:  libalsa-devel
 BuildRequires:  libjack-devel
 BuildRequires:  libpulseaudio-devel
+Source44: import.info
 Provides: rtaudio = %{version}-%{release}
 
 
@@ -104,6 +105,9 @@ ln -s %{_libdir}/lib%{oldname}.so.%{version} %{buildroot}%{_libdir}/lib%{oldname
 %{_libdir}/lib%{oldname}.so
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.11-alt1_13
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.11-alt1_11
 - update to new release by fcimport
 
