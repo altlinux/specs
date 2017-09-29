@@ -4,13 +4,14 @@ Group: Text tools
 Name: hunspell-ko
 Summary: Korean hunspell dictionaries
 Version: 0.5.6
-Release: alt1_1
+Release: alt1_2
 Source: https://github.com/changwoo/hunspell-dict-ko/archive/%{version}.tar.gz
 URL: https://github.com/changwoo/hunspell-dict-ko
 License: MPLv1.1 or GPLv2 or LGPLv2
 BuildArch: noarch
-BuildRequires: python-module-lxml, hunspell, python, perl
+BuildRequires: python-module-lxml, hunspell, python, perl-devel
 Requires: hunspell
+Source44: import.info
 
 %description
 Korean hunspell dictionaries.
@@ -34,6 +35,9 @@ cp -p ko.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/ko_KR.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Sep 29 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.6-alt1_2
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.6-alt1_1
 - update to new release by fcimport
 
