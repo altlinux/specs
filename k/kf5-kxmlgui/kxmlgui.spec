@@ -1,7 +1,7 @@
 %define rname kxmlgui
 
 Name: kf5-%rname
-Version: 5.37.0
+Version: 5.38.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -83,6 +83,9 @@ KF5 library
 %_K5lib/libKF5XmlGui.so.*
 
 %changelog
+* Tue Sep 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.38.0-alt1%ubt
+- new version
+
 * Wed Aug 16 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt1%ubt
 - new version
 
