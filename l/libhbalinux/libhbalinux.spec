@@ -4,7 +4,7 @@ BuildRequires: pkgconfig(libudev)
 %define _localstatedir %{_var}
 Name:               libhbalinux
 Version:            1.0.17
-Release:            alt1_4
+Release:            alt1_6
 Summary:            FC-HBAAPI implementation using scsi_transport_fc interfaces
 Group:              System/Libraries
 License:            LGPLv2
@@ -17,6 +17,7 @@ BuildRequires:      libpciaccess-devel libtool-common automake-common libsystemd
 Requires:           libhbaapi >= 2.2.9
 Requires(post):     grep
 Requires(postun):   grep
+Source44: import.info
 
 %description
 SNIA HBAAPI vendor library built on top of the scsi_transport_fc interfaces.
@@ -73,6 +74,9 @@ fi
 %{_libdir}/%{name}.so
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.17-alt1_6
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.17-alt1_4
 - update to new release by fcimport
 
