@@ -13,7 +13,7 @@
 Summary: A GObject library for interacting with oVirt REST API
 Name: libgovirt
 Version: 0.3.4
-Release: alt1_2%{?extra_release}
+Release: alt1_4%{?extra_release}
 License: LGPLv2+
 Group: Development/Other
 Source0: http://ftp.gnome.org/pub/GNOME/sources/libgovirt/0.3/%{name}-%{version}.tar.xz
@@ -31,6 +31,7 @@ BuildRequires: glib-networking
 BuildRequires: dconf libdconf
 #needed for GPG signature checek
 BuildRequires: dirmngr gnupg2
+Source44: import.info
 
 %description
 libgovirt is a library that allows applications to use oVirt REST API
@@ -92,6 +93,9 @@ make check
 %endif
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.4-alt1_4
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.4-alt1_2
 - update to new release by fcimport
 
