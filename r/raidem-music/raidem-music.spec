@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name:           raidem-music
 Version:        1.0
-Release:        alt2_13
+Release:        alt2_14
 Summary:        Background music for the game raidem
 Group:          Games/Other
 License:        CC-BY
@@ -15,6 +15,7 @@ Source3:        http://www.dilvie.com/music/dilvie_-_east_of_the_sun.ogg
 Source4:        license.txt
 Buildarch:      noarch
 Requires:       raidem >= 0.3.1
+Source44: import.info
 
 %description
 Music created by Eric Hamilton (dilvie) for the game Raid'em
@@ -46,6 +47,9 @@ install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/raidem/music/level3
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_13
 - update to new release by fcimport
 
