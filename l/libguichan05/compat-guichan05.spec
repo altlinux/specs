@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           libguichan05
 Version:        0.5.0
-Release:        alt1_21
+Release:        alt1_23
 Summary:        Compatibility libraries for older guichan versions
 
 Group:          Development/Other
@@ -18,6 +18,7 @@ Obsoletes:      guichan < 0.6.0
 
 BuildRequires:  liballegro-devel, libSDL-devel, libSDL_image-devel, libGL-devel
 BuildRequires:  libfreeglut-devel
+Source44: import.info
 Provides: guichan05 = %{version}-%{release}
 Patch33: guichan-0.5.0-alt-underlinkage.patch
 %set_verify_elf_method unresolved=relaxed
@@ -89,6 +90,9 @@ done
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1_23
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1_21
 - update to new release by fcimport
 
