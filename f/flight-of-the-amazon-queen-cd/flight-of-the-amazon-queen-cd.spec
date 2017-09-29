@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           flight-of-the-amazon-queen-cd
 Version:        1.0
-Release:        alt4_14
+Release:        alt4_15
 Summary:        Flight of the Amazon Queen - Adventure Game - CD version
 Group:          Games/Other
 # For further discussion on distribution rights see:
@@ -22,6 +22,7 @@ Source2:        readme.txt
 BuildRequires:  desktop-file-utils
 BuildArch:      noarch
 Requires:       scummvm >= 0.9.1
+Source44: import.info
 
 %description
 It is 1949 and you play Joe King, pilot for hire with his small private plane
@@ -68,6 +69,9 @@ desktop-file-install \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_15
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_14
 - update to new release by fcimport
 
