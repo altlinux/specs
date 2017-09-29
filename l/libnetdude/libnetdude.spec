@@ -6,7 +6,7 @@ BuildRequires: libmagic-devel libnetdude-devel
 %define _localstatedir %{_var}
 Name:           libnetdude
 Version:        0.11
-Release:        alt1_14
+Release:        alt1_16
 Summary:        Management framework for pcap packet traces
 
 Group:          System/Libraries
@@ -19,6 +19,7 @@ Patch0:         libnetdude-0.11-format-security.patch
 
 BuildRequires:  glib-devel, libpcapnav-devel gtk-doc gtk-doc-mkpdf, tcpdump, /bin/sed
 BuildRequires:  libpcap-devel
+Source44: import.info
 
 %description
 libnetdude allows to implement trace file manipulations at a much higher level
@@ -81,6 +82,9 @@ rm -rf %{buildroot}%{_datadir}/gtk-doc/html/%{name}/%{name}/
 %{_datadir}/gtk-doc/html/%{name}/
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_16
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_14
 - update to new release by fcimport
 
