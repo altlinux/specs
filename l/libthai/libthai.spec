@@ -4,7 +4,7 @@
 Summary:  Thai language support routines
 Name: libthai
 Version: 0.1.25
-Release: alt1_2
+Release: alt1_4
 License: LGPLv2+
 Group: System/Libraries
 Source: ftp://linux.thai.net/pub/thailinux/software/libthai/libthai-%{version}.tar.xz
@@ -13,6 +13,7 @@ URL: http://linux.thai.net
 
 BuildRequires: pkgconfig(datrie-0.2)
 BuildRequires: doxygen
+Source44: import.info
 
 %description
 LibThai is a set of Thai language support routines aimed to ease
@@ -65,6 +66,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.25-alt1_4
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.25-alt1_2
 - update to new release by fcimport
 
