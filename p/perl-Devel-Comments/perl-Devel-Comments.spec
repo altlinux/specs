@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Devel-Comments
 Version:        1.1.4
-Release:        alt2_15
+Release:        alt2_16
 Summary:        Debug with executable smart comments to logs
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -70,6 +70,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.4-alt2_16
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.4-alt2_15
 - update to new release by fcimport
 
