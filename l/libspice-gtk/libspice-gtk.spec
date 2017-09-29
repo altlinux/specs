@@ -16,7 +16,7 @@
 
 Name: libspice-gtk
 Version: 0.33
-Release: alt1
+Release: alt2
 Summary: A GTK widget for SPICE clients
 
 Group: System/Libraries
@@ -55,7 +55,7 @@ BuildRequires: libgtk+3-devel >= 3.12
 %{?_enable_gstaudio:BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel gstreamer1.0-utils gst-plugins-base1.0 gst-plugins-good1.0}
 %{?_enable_gstvideo:BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav}
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
-BuildRequires: perl-Text-CSV perl-Text-CSV_XS python-module-pygtk-devel python-module-pyparsing
+BuildRequires: perl-Text-CSV perl-Text-CSV_XS python-module-pygtk-devel python-module-pyparsing python-module-six
 BuildRequires: /usr/bin/pod2man
 
 %description
@@ -240,6 +240,10 @@ echo "%version" > .tarball-version
 %endif
 
 %changelog
+* Fri Sep 29 2017 Michael Shigorin <mike@altlinux.org> 0.33-alt2
+- explicitly BR: python-module-six to fix build with
+  --disable introspection
+
 * Mon Nov 28 2016 Alexey Shabalin <shaba@altlinux.ru> 0.33-alt1
 - 0.33
 
