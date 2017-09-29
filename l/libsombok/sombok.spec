@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/doxygen
 %define _localstatedir %{_var}
 Name:           libsombok
 Version:        2.4.0
-Release:        alt1_3
+Release:        alt1_5
 Summary:        Unicode Text Segmentation Package
 
 Group:          System/Libraries
@@ -24,6 +24,7 @@ BuildRequires:  libthai-devel
 BuildRequires:  autoconf-common
 BuildRequires:  automake-common
 BuildRequires:  libtool-common
+Source44: import.info
 Provides: sombok = %{version}-%{release}
 
 
@@ -76,6 +77,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_5
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_3
 - update to new release by fcimport
 
