@@ -6,7 +6,7 @@
 %global debug_package %{nil}
 Name:       libecb
 Version:    0.%{snapshot}
-Release:    alt1_2
+Release:    alt1_4
 Summary:    Compiler built-ins
 Group:      Development/Other
 License:    BSD or GPLv2+
@@ -15,6 +15,7 @@ URL:        http://software.schmorp.de/pkg/libecb.html
 Source0:    %{name}-%{snapshot}.tar.xz
 BuildRequires:  coreutils
 BuildRequires:  perl-podlators
+Source44: import.info
 
 %description
 This project delivers you many GCC built-ins, attributes and a number of
@@ -60,6 +61,9 @@ install -m 0644 -t %{buildroot}%{_mandir}/man3 *.3
 %{_mandir}/man3/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20161208-alt1_4
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20161208-alt1_2
 - update to new release by fcimport
 
