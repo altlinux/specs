@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/perl gcc-c++ imake libXpm-devel libXt-devel xorg-cf-file
 %define _localstatedir %{_var}
 Name:           libAfterImage
 Version:        1.20
-Release:        alt1_15
+Release:        alt1_17
 Summary:        A generic image manipulation library
 
 Group:          System/Libraries
@@ -33,6 +33,7 @@ BuildRequires:  libICE-devel
 BuildRequires:  libSM-devel
 BuildRequires:  libGL-devel
 BuildRequires:  gawk
+Source44: import.info
 Patch33: libAfterImage-1.20-alt-fix-linkage.patch
 
 %description
@@ -101,6 +102,9 @@ touch -r ChangeLog $RPM_BUILD_ROOT%{_bindir}/afterimage-{config,libs}
 %{_libdir}/*.so
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1_17
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1_15
 - update to new release by fcimport
 
