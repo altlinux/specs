@@ -18,7 +18,7 @@ BuildRequires: chrpath
 
 Name:		libhocr
 Version:	0.10.17
-Release:	alt2_24
+Release:	alt2_28
 Summary:	A Hebrew optical character recognition library
 
 Group:		System/Libraries
@@ -41,6 +41,7 @@ BuildRequires:	swig, python-devel gtk-builder-convert gtk-demo libgail-devel lib
 # Upstream use very old autoconf, breaks aarm64 builds
 # So we use autoreconf
 BuildRequires:	autoconf-common, automake-common, libtool-common
+Source44: import.info
 
 %description
 LibHocr is a GNU Hebrew optical character recognition library. It scans
@@ -75,6 +76,11 @@ Requires:	hspell libhspell
 The %{name}-gtk package contains a GUI application that uses %{name}.
 
 %package        -n python-module-libhocr
+%{?python_provide:%python_provide python2-libhocr}
+# Remove before F30
+Provides: %{name}-python = %{version}-%{release}
+Provides: %{name}-python = %{version}-%{release}
+Obsoletes: %{name}-python < %{version}-%{release}
 Summary:	Python bindings for %{name}
 Group:		System/Libraries
 Requires:	%{name} = %{version}-%{release}
@@ -178,6 +184,9 @@ done
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_28
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_24
 - update to new release by fcimport
 
