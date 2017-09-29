@@ -14,7 +14,7 @@ BuildRequires: zlib-devel
 Summary:        Library of Assorted Spiffy Things
 Name:           libast
 Version:        0.7.1
-Release:        alt5_0.19.%{cvs}cvs
+Release:        alt5_0.21.%{cvs}cvs
 Group:          System/Libraries
 License:        BSD
 URL:            http://www.eterm.org/
@@ -26,6 +26,7 @@ Source:        libast-%{cvs}.tar.gz
 Source1:       libast-wrapper.h
 BuildRequires: imlib2-devel libpcre-devel libpcrecpp-devel libXt-devel
 BuildRequires: automake-common autoconf-common libtool-common
+Source44: import.info
 
 %description
 LibAST is the Library of Assorted Spiffy Things.  It contains various
@@ -90,6 +91,9 @@ mv %buildroot%_includedir/libast/types-%{_arch}.h %buildroot%_includedir/libast/
 %exclude %{_libdir}/*.a
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt5_0.21.20080502cvs
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt5_0.19.20080502cvs
 - update to new release by fcimport
 
