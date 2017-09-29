@@ -6,15 +6,17 @@ BuildRequires: /usr/bin/gtkdocize texinfo
 %define _localstatedir %{_var}
 Summary:          Library to support IDNA2008 internationalized domain names
 Name:             libidn2
-Version:          0.16
-Release:          alt1_2
+Version:          2.0.4
+Release:          alt1_1
 License:          (GPLv2+ or LGPLv3+) and GPLv3+
 Group:            System/Libraries
 URL:              https://www.gnu.org/software/libidn/#libidn2
-Source:           https://alpha.gnu.org/gnu/libidn/%{name}-%{version}.tar.gz
-Patch0:           libidn2-0.16-rpath.patch
+Source0:          https://ftp.gnu.org/gnu/libidn/%{name}-%{version}.tar.gz
+Source1:          https://ftp.gnu.org/gnu/libidn/%{name}-%{version}.tar.gz.sig
+Patch0:           libidn2-2.0.0-rpath.patch
 BuildRequires:    libunistring-devel
 Provides:         bundled(gnulib)
+Source44: import.info
 
 %description
 Libidn2 is an implementation of the IDNA2008 specifications in RFC
@@ -24,7 +26,7 @@ Libidn2 is an implementation of the IDNA2008 specifications in RFC
 %package devel
 Summary:          Development files for libidn2
 Group:            Development/Other
-Requires:         %{name} = %{version}-%{release}
+Requires:         %{name} = %{version}-%{release}, pkg-config
 
 %description devel
 The libidn2-devel package contains libraries and header files for
@@ -53,16 +55,13 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 # Some file cleanups
 rm -f $RPM_BUILD_ROOT%{_datadir}/info/dir
 
-# Remove example-only binaries for now
-rm -f $RPM_BUILD_ROOT%{_bindir}/{lookup,register}
-
 %check
 make %{?_smp_mflags} -C tests check
 
 %files
 %{!?_licensedir:%global license %%doc}
-%doc COPYING
-%doc AUTHORS NEWS README
+%doc COPYING COPYING.LESSERv3 COPYING.unicode COPYINGv2
+%doc AUTHORS NEWS README.md
 %{_bindir}/idn2
 %{_mandir}/man1/idn2.1*
 %{_libdir}/%{name}.so.*
@@ -71,11 +70,15 @@ make %{?_smp_mflags} -C tests check
 %files devel
 %doc doc/%{name}.html examples
 %{_libdir}/%{name}.so
+%{_libdir}/pkgconfig/%{name}.pc
 %{_includedir}/*.h
 %{_mandir}/man3/*
 %{_datadir}/gtk-doc/
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.4-alt1_1
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_2
 - update to new release by fcimport
 
