@@ -7,7 +7,7 @@ BuildRequires: perl(Cwd.pm) perl(Data/Dumper.pm) perl(File/Spec/Functions.pm) pe
 %define _localstatedir %{_var}
 Name:           perl-MooseX-Daemonize
 Version:        0.21
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Role for daemonizing your Moose based application
 License:        GPL+ or Artistic
 
@@ -56,6 +56,9 @@ roles as an infrastructure to do that.
 %{perl_vendor_privlib}/Test*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_5
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_4
 - update to new release by fcimport
 
