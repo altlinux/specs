@@ -3,7 +3,7 @@
 %define _localstatedir %{_var}
 Name:           libadime
 Version:        2.2.1
-Release:        alt2_21
+Release:        alt2_23
 Summary:        Allegro Dialogs Made Easy
 Group:          System/Libraries
 License:        zlib
@@ -11,6 +11,7 @@ URL:            http://adime.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{oldname}/%{oldname}-%{version}.tar.gz
 Patch0:         adime-2.2.1-so-fixes.patch
 BuildRequires:  liballegro-devel makeinfo
+Source44: import.info
 
 %description
 Adime is a portable add-on library for Allegro with functions for generating
@@ -68,6 +69,9 @@ ln -s libadime.so.0 $RPM_BUILD_ROOT%{_libdir}/libadime.so
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt2_23
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt2_21
 - update to new release by fcimport
 
