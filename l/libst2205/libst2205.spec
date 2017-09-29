@@ -3,7 +3,7 @@
 %define _localstatedir %{_var}
 Name:           libst2205
 Version:        1.4.3
-Release:        alt3_12
+Release:        alt3_14
 Summary:        Library for accessing the display of hacked st2205 photo frames
 Group:          System/Libraries
 License:        GPLv3+
@@ -16,6 +16,7 @@ Source0:        http://www.neophob.com/files/st2205tool-1.4.3.tar.gz
 Patch0:         st2205tool-1.4.3-no-exit.patch
 Patch1:         st2205tool-1.4.3-width-height-swap.patch
 BuildRequires:  libgd2-devel
+Source44: import.info
 
 %description
 It is possible to flash digital photo frames with the st2205 chip-sets with
@@ -80,6 +81,9 @@ install -p -m 644 libst2205/st2205.h $RPM_BUILD_ROOT%{_includedir}
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt3_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt3_12
 - update to new release by fcimport
 
