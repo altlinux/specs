@@ -6,7 +6,7 @@ BuildRequires: perl(B.pm) perl(Module/Build.pm) perl(Scalar/Util.pm) perl(Symbol
 %define _localstatedir %{_var}
 Name:           perl-Test-Refcount
 Version:        0.08
-Release:        alt1_9
+Release:        alt1_10
 Summary:        Assert reference counts on objects
 
 Group:          Development/Other
@@ -60,6 +60,9 @@ make test
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_10
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_9
 - update to new release by fcimport
 
