@@ -4,7 +4,7 @@ Group: Other
 %define _localstatedir %{_var}
 Name:           libesedb
 Version:        20120102
-Release:        alt2_11
+Release:        alt2_13
 Summary:        Library to access the Extensible Storage Engine (ESE) Database File (EDB) format
 
 License:        GPLv3+
@@ -17,6 +17,7 @@ Source0:        http://libesedb.googlecode.com/files/%{name}-alpha-%{version}.ta
 
 #Patch backpoerted from newer experimental versions on
 Patch0:         %{name}-inline.patch
+Source44: import.info
 
 
 %description
@@ -65,6 +66,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 20120102-alt2_13
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 20120102-alt2_11
 - update to new release by fcimport
 
