@@ -1,29 +1,45 @@
-%def_without python
-Name: cegui
-Version: 0.8.4
-Release: alt4%ubt
-Summary: Free library providing windowing and widgets for graphics APIs / engines
-Group: System/Libraries
-License: MIT
-Url: http://www.cegui.org.uk
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/ccache boost-devel boost-python-devel cmake gcc-c++ glib2-devel libGL-devel libGLES-devel libSDL2-devel libSDL2_image-devel libatk-devel libcairo-devel libgtk+2-devel libminizip-devel libpango-devel pkgconfig(CEGUI-0-IRRLICHT) pkgconfig(tinyxml2) python-devel rpm-build-python
+# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:           cegui
+Version:        0.8.7
+Release:        alt1_7
+Summary:        Free library providing windowing and widgets for graphics APIs / engines
+Group:          System/Libraries
+License:        MIT
+URL:            http://www.cegui.org.uk
+Source0:        http://downloads.sourceforge.net/crayzedsgui/cegui-%{version}.tar.bz2
+Patch0:         cegui-0.8.4-lua53.patch
 
-Source: https://bitbucket.org/cegui/cegui/get/v0-8-4.tar.gz
-Source1: http://downloads.sourceforge.net/crayzedsgui/CEGUI-DOCS-%version.tar.gz
-
-Patch1: %name-%version-alt-build.patch
-
-BuildRequires(pre): rpm-build-ubt
-BuildRequires: SILLY-devel gcc-c++ libGLU-devel libSM-devel libexpat-devel libfreetype-devel libpcre-devel libxerces-c-devel libxml2-devel tinyxml-devel tolua++-devel tzdata libogre-devel libdirectfb-devel
-
-BuildRequires: cmake libminizip-devel libfribidi-devel libGLEW-devel
-BuildRequires: libglm-devel libirrlicht-devel libGLES-devel
-BuildRequires: libdevil-devel libcorona-devel
-BuildRequires: python-devel boost-devel doxygen graphviz libgtk+2-devel
-BuildRequires: libglfw-devel rapidxml boost-python-devel
-
-%if_with python
-Requires: python-module-%name = %version-%release
-%endif
+BuildRequires:  libdevil-devel
+BuildRequires:  libfreeimage-devel
+BuildRequires:  libexpat-devel
+BuildRequires:  libfreetype-devel > 2.0.0
+BuildRequires:  libxml2-devel
+BuildRequires:  libICE-devel
+BuildRequires:  libglm-devel
+BuildRequires:  libGLU-devel
+BuildRequires:  libtool-common
+BuildRequires:  libSM-devel
+BuildRequires:  lua-devel >= 0.5.2
+BuildRequires:  libpcre-devel libpcrecpp-devel
+BuildRequires:  SILLY-devel
+BuildRequires:  libxerces-c-devel
+BuildRequires:  tolua++-devel >= 1.0.93
+BuildRequires:  tinyxml-devel
+BuildRequires:  libGLEW-devel
+BuildRequires:  libogre-devel >= 1.7.0
+BuildRequires:  libois-devel
+BuildRequires:  libirrlicht-devel >= 1.8
+BuildRequires:  doxygen
+BuildRequires:  graphviz libgraphviz
+# We no longer build a python subpackage as the python bindings are
+# broken when building with gcc6 / boost-1.60 and no-one uses them
+Obsoletes:      %{name}-python < %{version}-%{release}
+Source44: import.info
 
 %description
 Crazy Eddie's GUI System is a free library providing windowing and widgets for
@@ -32,96 +48,223 @@ severely lacking. The library is object orientated, written in C++, and
 targeted at games developers who should be spending their time creating great
 games, not building GUI sub-systems!
 
+
 %package devel
-Summary: Development files for cegui
-Group: Development/C++
-Requires: %name = %version-%release
-Requires: libGLU-devel
+Summary:        Development files for cegui
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
+Requires:       cegui = %{version}-%{release}
+Requires:       %{name}-freeimage-imagecodec = %{version}-%{release}
+Requires:       cegui = %{version}-%{release}
+Requires:       cegui = %{version}-%{release}
+Requires:       cegui = %{version}-%{release}
+Requires:       cegui = %{version}-%{release}
+Requires:       cegui = %{version}-%{release}
+Requires:       cegui = %{version}-%{release}
 
 %description devel
 Development files for cegui
 
+
 %package devel-doc
-Summary: API documentation for cegui
-Group: Documentation
-Requires: cegui-devel = %version-%release
-BuildArch: noarch
+Summary:        API documentation for cegui
+Group:          Documentation
+Requires:       cegui = %{version}-%{release}
+BuildArch:      noarch
 
 %description devel-doc
 API and Falagard skinning documentation for cegui
 
-%if_with python
-%package -n python-module-%name
-Group: Development/Python
-Summary: python library for %name
-Requires: %name = %version-%release
 
-%description -n python-module-%name
-%summary
-%endif
+%package samples
+Group: System/Libraries
+Summary:        Executable samples provided with the library
+Requires:       cegui = %{version}-%{release}
+
+%description samples
+Several interactive sample programs demonstrating functionality of
+the CEGUI library.
+
+
+%package DevIL-imagecodec
+Summary:        Alternative imagecodec library for CEGUI using DevIL
+Group:          System/Libraries
+Requires:       cegui = %{version}-%{release}
+
+%description DevIL-imagecodec
+Alternative imagecodec library for CEGUI using DevIL.
+
+
+%package freeimage-imagecodec
+Summary:        Alternative imagecodec library for CEGUI using freeimage
+Group:          System/Libraries
+Requires:       cegui = %{version}-%{release}
+
+%description freeimage-imagecodec
+Alternative imagecodec library for CEGUI using freeimage.
+
+
+%package irrlicht-renderer
+Summary:        Irrlicht renderer for CEGUI
+Group:          System/Libraries
+Requires:       cegui = %{version}-%{release}
+
+%description irrlicht-renderer
+Irrlicht renderer for CEGUI.
+
+
+%package ogre-renderer
+Summary:        OGRE renderer for CEGUI
+Group:          System/Libraries
+Requires:       cegui = %{version}-%{release}
+
+%description ogre-renderer
+OGRE renderer for CEGUI.
+
+
+%package null-renderer
+Summary:        Null renderer for CEGUI
+Group:          System/Libraries
+Requires:       cegui = %{version}-%{release}
+
+%description null-renderer
+Null renderer for CEGUI. Useful for headless deployments or unit testing.
+
+
+%package libxml-xmlparser
+Summary:        Alternative xml parsing library for CEGUI using libxml
+Group:          System/Libraries
+Requires:       cegui = %{version}-%{release}
+
+%description libxml-xmlparser
+Alternative xml parsing library for CEGUI using libxml.
+
+
+%package tinyxml-xmlparser
+Summary:        Alternative xml parsing library for CEGUI using tinyxml
+Group:          System/Libraries
+Requires:       cegui = %{version}-%{release}
+
+%description tinyxml-xmlparser
+Alternative xml parsing library for CEGUI using tinyxml.
+
+
+%package xerces-xmlparser
+Summary:        Alternative xml parsing library for CEGUI using xerces
+Group:          System/Libraries
+Requires:       cegui = %{version}-%{release}
+
+%description xerces-xmlparser
+Alternative xml parsing library for CEGUI using xerces.
+
 
 %prep
-%setup -qb1 -qn CEGUI
-%patch1 -p2
+%setup -q
+%patch0 -p1
+find -name "*.orig" -exec rm -f {} ';'
 
-# Permission fixes for debuginfo RPM
-#chmod -x include/falagard/*.h
-
-# Delete zero length file
-#rm -f documentation/api_reference/keepme
-
-# Encoding fixes
-iconv -f iso8859-1 AUTHORS -t utf8 > AUTHORS.conv && mv -f AUTHORS.conv AUTHORS
-iconv -f iso8859-1 TODO -t utf8 > TODO.conv && mv -f TODO.conv TODO
-iconv -f iso8859-1 README -t utf8 > README.conv && mv -f README.conv README
 
 %build
-%add_optflags -I%_includedir/pcre
-cmake \
-%if %_lib == lib64
-	-DLIB_SUFFIX=64 \
-%endif
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_C_FLAGS:STRING="%optflags" \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	-DCMAKE_Fortran_FLAGS:STRING="%optflags" \
-	-DCEGUI_BUILD_RENDERER_NULL:BOOL=ON \
-	.
+%{fedora_cmake} \
+-D CMAKE_INSTALL_DOCDIR=%{_docdir}/%{name} \
+-D CEGUI_BUILD_RENDERER_DIRECTFB=false \
+-D CEGUI_BUILD_IMAGECODEC_STB=false \
+-D CEGUI_BUILD_IMAGECODEC_TGA=false \
+-D CEGUI_BUILD_PYTHON_MODULES=false \
+-D CEGUI_OPTION_DEFAULT_XMLPARSER=ExpatParser \
+-D CEGUI_OPTION_DEFAULT_IMAGECODEC=SILLYImageCodec \
+-D CEGUI_BUILD_RENDERER_NULL=true \
+-D CEGUI_BUILD_TESTS=true \
+.
 
-%make_build VERBOSE=1
+%make_build
+make html %{?_smp_mflags}
 
-pushd doc/doxygen
-doxygen
-popd
+
+#%check
+# CEGUITests is in $BUILDDIR/bin, datafiles are in $BUILDDIR/datafiles
+#CEGUI_SAMPLE_DATAPATH=../datafiles ctest -V
+
 
 %install
-%makeinstall_std
-find %buildroot -name '*.la' -exec rm -f {} ';'
+make install DESTDIR=%{buildroot} 
+mkdir -p %{buildroot}/%{_docdir}/cegui-0.8.4/
+cp -r doc/doxygen/html %{buildroot}/%{_docdir}/cegui-0.8.4/
+
+# CEGUITests is not very useful to install
+find $RPM_BUILD_ROOT -name "CEGUITests-0.8" -exec rm -f {} ';'
+
 
 %files
-%doc README*
-%_bindir/*
-%_libdir/*.so.*
-%_libdir/cegui-0.8
+%doc README.md
+%doc COPYING
+%{_libdir}/libCEGUIBase-0.so.*
+%{_libdir}/libCEGUICommonDialogs-0.so.*
+%{_libdir}/libCEGUILuaScriptModule-0.so.*
+%{_libdir}/libCEGUIOpenGLRenderer-0.so.*
+%{_libdir}/cegui-0.8/libCEGUICoreWindowRendererSet.so
+# this is the default parser, that's why it's not split off into a subpackage
+%{_libdir}/cegui-0.8/libCEGUIExpatParser.so
+# same with silly image codec
+%{_libdir}/cegui-0.8/libCEGUISILLYImageCodec.so
 
 %files devel
-%_libdir/*.so
-%_pkgconfigdir/*.pc
-%_includedir/*
-%_datadir/cegui-0
-%exclude %_datadir/cegui-0/xml_schemas
+%{_libdir}/libCEGUI*-0.so
 
-%files devel-doc
-%_datadir/cegui-0/xml_schemas
-%doc doc/doxygen/html
+%{_bindir}/toluappcegui-0.8
 
-%if_with python
-%files -n python-module-%name
-%{python_sitelibdir}/*
-%endif
+%{_libdir}/pkgconfig/CEGUI-0.pc
+%{_libdir}/pkgconfig/CEGUI-0-OPENGL.pc
+%{_libdir}/pkgconfig/CEGUI-0-OPENGL3.pc
+%{_libdir}/pkgconfig/CEGUI-0-OGRE.pc
+%{_libdir}/pkgconfig/CEGUI-0-NULL.pc
+%{_libdir}/pkgconfig/CEGUI-0-LUA.pc
+%{_libdir}/pkgconfig/CEGUI-0-IRRLICHT.pc
+
+%{_includedir}/cegui-0
+
+%{_datadir}/cegui-0
+
+#%files devel-doc
+#%doc %{_docdir}/cegui-0.8.4/html
+
+%files samples
+%{_bindir}/CEGUISampleFramework-0.8
+%{_libdir}/cegui-0.8/libCEGUI*Demo.so
+%{_libdir}/cegui-0.8/libCEGUIDemo6.so
+%{_libdir}/cegui-0.8/libCEGUIMinesweeper.so
+
+%files irrlicht-renderer
+%{_libdir}/libCEGUIIrrlichtRenderer-0.so.*
+
+%files ogre-renderer
+%{_libdir}/libCEGUIOgreRenderer-0.so.*
+
+%files null-renderer
+%{_libdir}/libCEGUINullRenderer-0.so.*
+
+%files DevIL-imagecodec
+%{_libdir}/cegui-0.8/libCEGUIDevILImageCodec.so
+
+%files freeimage-imagecodec
+%{_libdir}/cegui-0.8/libCEGUIFreeImageImageCodec.so
+
+%files libxml-xmlparser
+%{_libdir}/cegui-0.8/libCEGUILibXMLParser.so
+
+%files tinyxml-xmlparser
+%{_libdir}/cegui-0.8/libCEGUITinyXMLParser.so
+
+%files xerces-xmlparser
+%{_libdir}/cegui-0.8/libCEGUIXercesParser.so
+
 
 %changelog
-* Tue Sep 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.4-alt4%ubt
+* Fri Sep 29 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.7-alt1_7
+- new version by fcimport
+- disabled devel-doc due to arch dependent png
+
+* Tue Sep 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.4-alt4.S1
 - Rebuilt with boost 1.65.0.
 - Added %%ubt to release.
 
