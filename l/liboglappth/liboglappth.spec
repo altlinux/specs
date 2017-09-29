@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 Name:           liboglappth
 Summary:        An OpenGL wrapper library
 Version:        1.0.0
-Release:        alt1_2
+Release:        alt1_4
 License:        GPLv2+
 Group:          Engineering
 URL:            http://www.bioinformatics.org/ghemical/ghemical/index.html
@@ -15,6 +15,7 @@ Source0:        http://www.bioinformatics.org/ghemical/download/current/%{name}-
 BuildRequires:  libtool-common
 BuildRequires:  libGL-devel
 BuildRequires:  libGLU-devel
+Source44: import.info
 
 %description
 Library for creating portable OpenGL applications with easy-to-code
@@ -55,6 +56,9 @@ find %{buildroot}%{_libdir} -name *.la -exec rm -rf {} \;
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_4
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_2
 - update to new release by fcimport
 
