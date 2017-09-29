@@ -1,11 +1,18 @@
 # other variant: Debug
 %define buildmode Release
-# build with ffmpeg or libav (not yet supported)
-%def_with ffmpeg
+
+# TODO: improve detection
+BuildRequires(pre): rpm-macros-ubt
+%if %__ubt_branch_id == "M80P"
+%def_with ffmpeg_static
+%else
+%def_without ffmpeg_static
+%endif
+
 
 Name: telegram-desktop
 Version: 1.1.23
-Release: alt1
+Release: alt2
 
 Summary: Telegram is a messaging app with a focus on speed and security
 
@@ -70,14 +77,10 @@ BuildRequires: libmicrosoft-gsl-devel libvariant-devel
 Provides: tdesktop = %version-%release
 Obsoletes: tdesktop
 
-%if_with ffmpeg
-BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libswscale-devel libswresample-devel
+%if_with ffmpeg_static
+BuildRequires: libffmpeg-devel-static
 %else
-# QtAV has AVCompat.h header
-BuildRequires: libqtav-devel
-# build with libav, not ffpeg
-%add_optflags -DQTAV_HAVE_AVRESAMPLE=1
-BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libswscale-devel libavresample-devel 
+BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libswscale-devel libswresample-devel
 %endif
 
 Requires: dbus
@@ -131,6 +134,9 @@ static const char *ApiHash = "bb6c3f8fffd8fe6804fc5131a08e1c44";
 EOF
 
 %build
+%if_with ffmpeg_static
+export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
+%endif
 cd Telegram
 %cmake_insource
 %make_build
@@ -166,6 +172,9 @@ ln -s %name %buildroot%_bindir/telegram
 %doc README.md
 
 %changelog
+* Fri Sep 29 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.23-alt2
+- add support for build with static ffmpeg
+
 * Sat Sep 23 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.23-alt1
 - new version 1.1.23 (with rpmrb script)
 - add qt5-imageformats (fixes missed smiles and emojicons)
