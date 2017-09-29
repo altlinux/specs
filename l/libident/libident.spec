@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           libident
 Version:        0.32
-Release:        alt2_14
+Release:        alt2_16
 Summary:        New LibIdent C library
 Group:          System/Libraries
 License:        Public Domain
@@ -13,6 +13,7 @@ URL:            http://www.remlab.net/libident/
 Source0:        http://www.remlab.net/files/libident/libident-%{version}.tar.bz2
 Source1:        xinetd.identtest
 BuildRequires:  /usr/bin/iconv
+Source44: import.info
 
 
 %description
@@ -106,6 +107,9 @@ fi
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.32-alt2_16
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.32-alt2_14
 - update to new release by fcimport
 
