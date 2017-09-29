@@ -11,7 +11,7 @@ BuildRequires: boost-devel boost-filesystem-devel boost-signals-devel libpng-dev
 %define _localstatedir %{_var}
 Name:			springlobby
 Version:		0.195
-Release:		alt1_11
+Release:		alt1_13
 Summary:		A lobby client for the spring RTS game engine
 
 # License clarification: http://springlobby.info/issues/show/810
@@ -107,6 +107,9 @@ EOF
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.195-alt1_13
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.195-alt1_11
 - update to new release by fcimport
 
