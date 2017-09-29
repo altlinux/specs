@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-MooseX-MarkAsMethods
 Version:        0.15
-Release:        alt1_13
+Release:        alt1_14
 Summary:        Mark overload code symbols as methods
 License:        LGPLv2+
 Group:          Development/Other
@@ -57,6 +57,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_14
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_13
 - update to new release by fcimport
 
