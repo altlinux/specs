@@ -13,7 +13,7 @@ BuildRequires: swig waf
 Name:			libslv2
 Summary:		LV2 host library
 Version:		0.6.6
-Release:		alt4_20
+Release:		alt4_22
 License:		GPLv2+
 Group:			System/Libraries
 Source0:		http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
@@ -29,6 +29,7 @@ BuildRequires:		libjack-devel
 # To provide a clean upgrade path from PlanetCCRMA:
 Obsoletes:		%{oldname}-examples < 0.6
 Provides:		%{oldname}-examples = %{version}-%{release}
+Source44: import.info
 Provides: slv2 = %{version}-%{release}
 
 %description
@@ -108,6 +109,9 @@ install -pm 644 AUTHORS ChangeLog COPYING README %{buildroot}%{_docdir}/%{oldnam
 %{_mandir}/man3/%{oldname}*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt4_22
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt4_20
 - update to new release by fcimport
 
