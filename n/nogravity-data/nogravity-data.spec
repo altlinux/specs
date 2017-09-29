@@ -5,7 +5,7 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 Name:           nogravity-data
 Version:        2.00
-Release:        alt2_15
+Release:        alt2_16
 Summary:        Data files for No Gravity
 Group:          Games/Other
 License:        GPLv2+
@@ -14,6 +14,7 @@ Source0:        http://downloads.sourceforge.net/nogravity/rt-%{name}.zip
 BuildArch:      noarch
 # So that we get removed together with nogravity itself
 Requires:       nogravity >= %{version}
+Source44: import.info
 
 %description
 Data files (audio, maps, etc) for No Gravity.
@@ -39,6 +40,9 @@ install -p -m 644 NOGRAVITY.RMX $RPM_BUILD_ROOT%{_datadir}/nogravity
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_16
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_15
 - update to new release by fcimport
 
