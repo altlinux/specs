@@ -6,7 +6,7 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 %define _localstatedir %{_var}
 Name:           perl-Module-Install-AuthorRequires
 Version:        0.02
-Release:        alt2_14
+Release:        alt2_15
 Summary:        Declare author-only dependencies
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -55,6 +55,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2_15
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2_14
 - update to new release by fcimport
 
