@@ -13,7 +13,7 @@ BuildRequires: chrpath
 Summary: C++ wrapper for GtkGlExt
 Name: libgtkglextmm
 Version: 1.2.0
-Release: alt2_25
+Release: alt2_27
 License: LGPLv2+
 Group: System/Libraries
 URL: http://projects.gnome.org/gtkglext/
@@ -26,6 +26,7 @@ Patch3: fix_ftbfs_gtk_2_37.patch
 
 BuildRequires: libgtkglext-devel >= %{gtkglext_major}
 BuildRequires: libgtkmm2-devel >= %{gtkmm_major}
+Source44: import.info
 Provides: gtkglextmm = %{version}-%{release}
 Patch33: gtkglextmm-1.2.0-fix-deprecated.patch
 
@@ -90,6 +91,9 @@ done
 %doc %{_datadir}/doc/%{oldname}-%{gtkglextmm_major}/html/
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_27
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_25
 - update to new release by fcimport
 
