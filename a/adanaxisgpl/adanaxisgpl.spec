@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ imake libGL-devel libGLU-de
 Summary:        Action game in four spatial dimensions
 Name:           adanaxisgpl
 Version:        1.2.5
-Release:        alt4_24
+Release:        alt4_26
 License:        GPLv2
 Group:          Games/Other
 URL:            http://www.mushware.com/
@@ -100,6 +100,9 @@ install -p -m 644 x11/icons/%{name}-48.png %{buildroot}%{_datadir}/icons/hicolor
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.5-alt4_26
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.5-alt4_24
 - update to new release by fcimport
 
