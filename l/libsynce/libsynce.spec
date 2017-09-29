@@ -7,7 +7,7 @@ BuildRequires: pkgconfig(dbus-1)
 %define _localstatedir %{_var}
 Name:           libsynce
 Version:        0.15.1
-Release:        alt2_11
+Release:        alt2_13
 Summary:        Connection library for Pocket PC devices
 
 Group:          System/Libraries
@@ -24,6 +24,7 @@ BuildRequires:  hal-devel
 # Provide an upgrade path from the monilithic synce package
 Provides:       synce = %{version}-%{release}
 Obsoletes:      synce <= 0.9.1-10
+Source44: import.info
 
 %description
 The purpose of the SynCE project is to provide a means of
@@ -74,6 +75,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.15.1-alt2_13
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.15.1-alt2_11
 - update to new release by fcimport
 
