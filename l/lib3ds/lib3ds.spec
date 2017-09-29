@@ -6,7 +6,7 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 Name:           lib3ds
 Version:        1.3.0
-Release:        alt2_23
+Release:        alt2_25
 
 Summary:        3D Studio file format library
 
@@ -22,6 +22,7 @@ Patch1:         lib3ds-1.3.0-lib3ds-mesh.c.diff
 Patch2:         lib3ds-1.2.0-pkgconfig.diff
 
 Patch3:         lib3ds-1.3.0-config.patch
+Source44: import.info
 
 %description
 lib3ds is a free ANSI-C library for working with the popular "3ds" 3D model
@@ -102,6 +103,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/aclocal/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_25
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_23
 - update to new release by fcimport
 
