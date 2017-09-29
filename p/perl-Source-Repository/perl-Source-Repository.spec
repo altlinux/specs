@@ -1,7 +1,7 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.388
+Version: 0.389
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -12,7 +12,7 @@ License: GPL or Artistic
 Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar
 Url: http://search.cpan.org/dist/%module
 
-BuildRequires: perl-devel perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-String-ShellQuote perl-Source-Package perl(JSON/XS.pm)
+BuildRequires: perl-devel perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-String-ShellQuote perl-Source-Package perl-Source-Shared-Utils perl(JSON/XS.pm)
 
 %description
 %summary
@@ -32,6 +32,9 @@ BuildRequires: perl-devel perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-String-Sh
 %perl_vendor_privlib/Source*
 
 %changelog
+* Fri Sep 29 2017 Igor Vlasenko <viy@altlinux.ru> 0.389-alt1
+- use perl-Source-Shared-Utils
+
 * Mon Mar 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.388-alt1
 - updated CPAN lists
 
