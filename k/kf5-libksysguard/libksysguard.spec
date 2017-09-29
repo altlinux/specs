@@ -8,7 +8,7 @@
 
 Name: kf5-%rname
 Version: 5.10.5
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -23,7 +23,8 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kpackage-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-plasma-framework-devel python-module-google qt5-script-devel qt5-webkit-devel qt5-x11extras-devel rpm-build-gir rpm-build-ruby zlib-devel-static
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ zlib-devel
-BuildRequires: qt5-script-devel qt5-webkit-devel qt5-x11extras-devel
+BuildRequires: qt5-script-devel qt5-x11extras-devel
+#BuildRequires: qt5-webkit-devel
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kguiaddons-devel
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kpackage-devel kf5-kservice-devel
@@ -143,6 +144,9 @@ KF5 library
 %_K5lib/liblsofui.so.*
 
 %changelog
+* Fri Sep 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt2%ubt
+- build without qtwebkit
+
 * Mon Sep 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt1%ubt
 - new version
 
