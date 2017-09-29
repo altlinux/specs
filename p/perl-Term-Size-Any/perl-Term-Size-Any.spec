@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Term-Size-Any
 Version:        0.002
-Release:        alt2_21
+Release:        alt2_22
 Summary:        Retrieve terminal size
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.002-alt2_22
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.002-alt2_21
 - update to new release by fcimport
 
