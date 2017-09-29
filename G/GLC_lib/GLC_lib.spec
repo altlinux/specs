@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ unzip
 %define _localstatedir %{_var}
 Name:           GLC_lib
 Version:        2.2.0
-Release:        alt2_15
+Release:        alt2_17
 Summary:        C++ class library for OpenGL application based on Qt 4
 
 Group:          System/Libraries
@@ -18,6 +18,7 @@ Patch1:         GLC_lib_src_2.2.0-gcc46.patch
 BuildRequires:  libqt4-declarative libqt4-devel qt4-designer
 BuildRequires:  lib3ds-devel
 BuildRequires:  libquazip-devel
+Source44: import.info
 
 
 %description
@@ -74,6 +75,9 @@ make install INSTALL_ROOT=$RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt2_17
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt2_15
 - update to new release by fcimport
 
