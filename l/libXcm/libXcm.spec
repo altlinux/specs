@@ -7,7 +7,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libXcm
 Version:        0.5.3
-Release:        alt1_7
+Release:        alt1_9
 Summary:        X Color Management Library
 License:        MIT
 URL:            http://www.oyranos.org
@@ -17,9 +17,10 @@ BuildRequires:  doxygen
 BuildRequires:  graphviz libgraphviz
 BuildRequires:  libXfixes-devel
 BuildRequires:  libXmu-devel
-BuildRequires:  xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
+BuildRequires:  xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-dri2proto-devel xorg-dri3proto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-presentproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86miscproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
 BuildRequires:  xorg-util-macros
 BuildRequires:  xorg-xtrans-devel
+Source44: import.info
 Patch33: libXcm-0.5.3-alt-linkage.patch
 
 %description
@@ -62,6 +63,9 @@ find %{buildroot} -name '*.la' -delete -print
 %{_mandir}/man3/*.3*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1_9
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1_7
 - update to new release by fcimport
 
