@@ -3,7 +3,7 @@
 %define _localstatedir %{_var}
 Name:           libhbaapi
 Version:        2.2.9
-Release:        alt1_9
+Release:        alt1_11
 Summary:        SNIA HBAAPI library
 Group:          System/Libraries
 License:        SNIA
@@ -13,6 +13,7 @@ Source:         %{name}-%{version}.tar.gz
 Patch0:         libhbaapi-2.2.9-dl-linking.patch
 Patch1:         libhbaapi-2.2.9-portspeed.patch
 BuildRequires:  automake-common libtool-common
+Source44: import.info
 
 %description
 The SNIA HBA API library. C-level project to manage
@@ -53,6 +54,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.9-alt1_11
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.9-alt1_9
 - update to new release by fcimport
 
