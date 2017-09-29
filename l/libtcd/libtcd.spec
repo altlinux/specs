@@ -11,13 +11,14 @@
 
 Name:		libtcd
 Version:	%{mainver}
-Release:	alt1_%{rpmrel}.2
+Release:	alt1_%{rpmrel}.4
 Summary:	Tide Constituent Database Library
 
 Group:		System/Libraries
 License:	Public Domain
 URL:		http://www.flaterco.com/xtide/
 Source0:	ftp://ftp.flaterco.com/xtide/%{name}-%{version}%{?postver}.tar.bz2
+Source44: import.info
 
 
 %description
@@ -61,6 +62,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib*.{a,la}
 %{_libdir}/*.so
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt1_2.r2.4
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt1_2.r2.2
 - update to new release by fcimport
 
