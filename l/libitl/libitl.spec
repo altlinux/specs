@@ -6,7 +6,7 @@ BuildRequires: swig
 %define _localstatedir %{_var}
 Name:           libitl
 Version:        0.7.0 
-Release:        alt3_12
+Release:        alt3_14
 Summary:        Libraries for The Islamic Tools and Libraries Project
 
 Group:          System/Libraries
@@ -15,6 +15,7 @@ URL:            http://www.arabeyes.org/project.php?proj=ITL
 Source0:        http://switch.dl.sourceforge.net/sourceforge/arabeyes/%{name}-%{version}.tar.gz
 
 Patch0: %{name}-makefile-ld.patch
+Source44: import.info
 #BuildRequires:  autoconf
 
 %description
@@ -68,6 +69,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt3_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt3_12
 - update to new release by fcimport
 
