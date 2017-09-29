@@ -9,7 +9,7 @@ Group: Development/C
 Name:		libinstpatch
 Summary:	MIDI instrument patch library
 Version:	1.0.0
-Release:	alt3_12.20110806svn386
+Release:	alt3_14.20110806svn386
 URL:		http://www.swamiproject.org/
 License:	LGPLv2+
 # Fetch source via
@@ -23,6 +23,7 @@ Patch0:		libinstpatch-cmake-fixes.patch
 BuildRequires:	ctest cmake
 BuildRequires:	glib2-devel libgio libgio-devel
 BuildRequires:	libsndfile-devel
+Source44: import.info
  
 
 %description
@@ -75,6 +76,9 @@ make install DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_14.20110806svn386
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_12.20110806svn386
 - update to new release by fcimport
 
