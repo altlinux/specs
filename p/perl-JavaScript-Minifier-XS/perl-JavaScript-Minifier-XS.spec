@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-JavaScript-Minifier-XS
 Version:        0.11
-Release:        alt3_7
+Release:        alt3_9
 Summary:        XS based JavaScript minifier
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -59,6 +59,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/JavaScript*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt3_9
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt3_7
 - update to new release by fcimport
 
