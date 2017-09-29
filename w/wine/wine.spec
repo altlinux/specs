@@ -1,10 +1,10 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.7.1
-%define major 2.16
+%define major 2.17
 
 Name: wine
-Version: %major.0
+Version: %major.1
 Release: alt1
 Epoch: 1
 
@@ -33,6 +33,7 @@ Patch3:   0002-libs-wine-Output-unicode-strings-in-UTF-8-encoding.-.patch
 Patch4:   0001-Add-font-smoothing.patch
 Patch101: 0002-add-fast-hack-for-RegQueryValueEx-HKEY_PERFORMANCE_D.patch
 Patch200: t001-oleaut32-Make-OleLoadPicture-load-DIBs-using-WIC-decoder.patch
+Patch201: 0001-kerberos.patch
 
 AutoReq: yes, noperl
 
@@ -80,6 +81,8 @@ BuildRequires: libXres-devel libXScrnSaver-devel libXinerama-devel libXt-devel
 BuildRequires: libXxf86dga-devel libXxf86misc-devel libXcomposite-devel
 BuildRequires: libXxf86vm-devel libfontenc-devel libXdamage-devel
 BuildRequires: libXvMC-devel libXcursor-devel libXevie-devel libXv-devel
+
+BuildRequires: libkrb5-devel
 
 BuildRequires: perl-XML-Simple
 
@@ -260,6 +263,7 @@ wine-staging-%version/patches/patchinstall.sh DESTDIR=$(pwd) --all --backend=pat
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
+%patch201 -p1
 
 %build
 # Workaround for https://bugzilla.altlinux.org/show_bug.cgi?id=31834
@@ -472,6 +476,12 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Fri Sep 29 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.17.1-alt1
+- add Kerberos SSPI (via GSSIAPI support)
+
+* Fri Sep 29 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.17.0-alt1
+- new version (2.17.0) with rpmgs script
+
 * Mon Sep 11 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.16.0-alt1
 - new version (2.16.0) with rpmgs script
 - update winetricks up to 20170823-next
