@@ -10,12 +10,13 @@ BuildRequires: gcc-c++
 
 Name:           libre2
 Version:        %{shortver}
-Release:        alt1_3
+Release:        alt1_5
 Summary:        C++ fast alternative to backtracking RE engines
 Group:          System/Libraries
 License:        BSD
 URL:            http://github.com/google/%{oldname}/
 Source0:        https://github.com/google/re2/archive/%{longver}.tar.gz
+Source44: import.info
 Provides: re2 = %{version}-%{release}
 
 %description
@@ -74,6 +75,9 @@ make %{?_smp_mflags} shared-test
 %{_libdir}/pkgconfig/%{oldname}.pc
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 20160401-alt1_5
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 20160401-alt1_3
 - update to new release by fcimport
 
