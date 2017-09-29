@@ -6,7 +6,7 @@ BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Capture/Tiny.pm) perl(Ext
 %define _localstatedir %{_var}
 Name:           perl-Parallel-Scoreboard
 Version:        0.08
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Scoreboard for monitoring status of many processes
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -67,6 +67,9 @@ sed -i -e '/^inc\/.*$/d' MANIFEST
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_4
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_3
 - update to new release by fcimport
 
