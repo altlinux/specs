@@ -13,7 +13,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        52.3.0
+Version:        52.4.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -325,6 +325,19 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Fri Sep 29 2017 Andrey Cherepanov <cas@altlinux.org> 52.4.0-alt1
+- New ESR version (52.4.0)
+- Fixes:
+  + CVE-2017-7793 Use-after-free with Fetch API
+  + CVE-2017-7818 Use-after-free during ARIA array manipulation
+  + CVE-2017-7819 Use-after-free while resizing images in design mode
+  + CVE-2017-7824 Buffer overflow when drawing and validating elements with ANGLE
+  + CVE-2017-7805 Use-after-free in TLS 1.2 generating handshake hashes
+  + CVE-2017-7814 Blob and data URLs bypass phishing and malware protection warnings
+  + CVE-2017-7825 OS X fonts render some Tibetan and Arabic unicode characters as spaces
+  + CVE-2017-7823 CSP sandbox directive did not create a unique origin
+  + CVE-2017-7810 Memory safety bugs fixed in Firefox 56 and Firefox ESR 52.4
+
 * Tue Aug 08 2017 Andrey Cherepanov <cas@altlinux.org> 52.3.0-alt1
 - New ESR version (52.3.0)
 - Security fixes:
