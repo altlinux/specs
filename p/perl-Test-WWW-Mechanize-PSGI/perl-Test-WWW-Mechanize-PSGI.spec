@@ -1,22 +1,25 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Module/Build.pm) perl(Test/CPAN/Changes.pm) perl-podlators
+BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Pod/Wordlist.pm) perl(Test/CPAN/Changes.pm) perl(Test/Pod/Coverage.pm) perl(Test/Spelling.pm) perl(Test/Synopsis.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Test-WWW-Mechanize-PSGI
 Version:        0.37
-Release:        alt1
+Release:        alt1_2
 Summary:        Test PSGI programs using WWW::Mechanize
 License:        GPL+ or Artistic
-Group:          Development/Other
 URL:            http://search.cpan.org/dist/Test-WWW-Mechanize-PSGI/
 Source0:        http://www.cpan.org/authors/id/O/OA/OALDERS/Test-WWW-Mechanize-PSGI-%{version}.tar.gz
 BuildArch:      noarch
+
+BuildRequires:  %{__perl}
+
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(CGI/Cookie.pm)
+BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(HTTP/Message/PSGI.pm)
 BuildRequires:  perl(Test/More.pm)
@@ -26,6 +29,7 @@ BuildRequires:  perl(Try/Tiny.pm)
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
+Source44: import.info
 
 
 %description
@@ -40,23 +44,26 @@ PSGI applications.
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-%make_build
+%{__make} %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+%{__make} pure_install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
-make test
+%{__make} test
 
 %files
-%doc Changes CONTRIBUTORS README.md
+%doc Changes
 %doc LICENSE
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1_2
+- update to new release by fcimport
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
 - automated CPAN update
 
