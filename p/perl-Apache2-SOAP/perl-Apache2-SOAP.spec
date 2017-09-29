@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(APR/Table.pm) perl(Apache.pm) perl(Apache/Constants.pm) perl(Apache2/Const.pm) perl(Apache2/RequestIO.pm) perl(Apache2/RequestRec.pm) perl(Apache2/RequestUtil.pm) perl(Exporter.pm) perl(FindBin.pm) perl(SOAP/Lite.pm) perl(SOAP/Transport/HTTP.pm) perl(base.pm) perl-podlators
+BuildRequires: perl(Apache2/Const.pm) perl(Apache2/RequestIO.pm) perl(Apache2/RequestRec.pm) perl(Apache2/RequestUtil.pm) perl(Exporter.pm) perl(FindBin.pm) perl(SOAP/Lite.pm) perl(SOAP/Transport/HTTP.pm) perl(base.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -8,24 +8,20 @@ BuildRequires: perl(APR/Table.pm) perl(Apache.pm) perl(Apache/Constants.pm) perl
 
 Name:      perl-Apache2-SOAP
 Version:   0.73
-Release:   alt1_22
+Release:   alt2
 Summary:   A replacement for Apache::SOAP designed to work with mod_perl 2
 
 Group:     Development/Other
 License:   GPL+ or Artistic
 URL:       http://search.cpan.org/dist/Apache2-SOAP/
 Source:    http://search.cpan.org/CPAN/authors/id/R/RK/RKOBES/%{perlname}-%{version}.tar.gz
+Patch0:	   perl-Apache2-SOAP-drop-apache1-requires.patch
 
 BuildArch: noarch
 
 BuildRequires: rpm-build-perl
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: apache2-mod_perl-devel
-# perl(ModPerl::MM) is provided by mod_perl on EL5, by mod_perl-devel on Fedora
-#BuildRequires: perl(ModPerl::MM)
-# BR for test (disabled)
-#BuildRequires: httpd, perl(SOAP::Lite), perl(LWP::UserAgent)
-#BuildRequires: perl(Test::More)
 
 
 
@@ -42,6 +38,7 @@ from SOAP::Transport::HTTP2::Apache component of SOAP::Lite module.
 
 %prep
 %setup -q -n %{perlname}-%{version}
+%patch0 -p2
 
 
 %build
@@ -63,6 +60,9 @@ chmod -R u+rwX,go+rX,go-w %{buildroot}/*
 
 
 %changelog
+* Fri Sep 29 2017 Anton Farygin <rider@altlinux.ru> 0.73-alt2
+- drop Apache1 requires
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.73-alt1_22
 - update to new release by fcimport
 
