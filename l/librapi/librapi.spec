@@ -9,7 +9,7 @@ BuildRequires: gcc-c++ python-devel
 
 Name:           librapi
 Version:        0.15.2
-Release:        alt2_12
+Release:        alt2_14
 Summary:        Library to connect to Pocket PC devices
 
 Group:          System/Libraries
@@ -27,6 +27,7 @@ BuildRequires:  libtool-common
 # Provide an upgrade path from the monilithic synce package
 Provides:       synce = %{version}-%{release}
 Obsoletes:      synce <= 0.9.1-10
+Source44: import.info
 
 %description
 The RAPI library is an open source implementation that works like RAPI.DLL,
@@ -95,6 +96,9 @@ rm -f $RPM_BUILD_ROOT%{python_sitelibdir}/pyrapi2.{la,a}
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.15.2-alt2_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.15.2-alt2_12
 - update to new release by fcimport
 
