@@ -2,14 +2,22 @@ Group: Development/C
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global homepage https://github.com/latchset/libverto
+
 Name:           libverto
-Version:        0.2.6
-Release:        alt1_7
+Version:        0.3.0
+Release:        alt1_1
 Summary:        Main loop abstraction library
 
 License:        MIT
-URL:            https://fedorahosted.org/libverto/
-Source0:        http://fedorahosted.org/releases/l/i/%{name}/%{name}-%{version}.tar.gz
+URL:            %{homepage}
+Source0:        %{homepage}/releases/download/%{version}/%{name}-%{version}.tar.gz
+
+Patch0: Work-around-libev-not-being-c89-compliant.patch
+
+BuildRequires:  autoconf-common
+BuildRequires:  automake-common
+BuildRequires:  libtool-common
 
 BuildRequires:  glib2-devel libgio libgio-devel
 BuildRequires:  libevent-devel
@@ -17,6 +25,9 @@ BuildRequires:  libtevent-devel
 %if !0%{?rhel}
 BuildRequires:  libev-devel
 %endif
+
+BuildRequires:  git
+Source44: import.info
 
 %description
 libverto provides a way for libraries to expose asynchronous interfaces
@@ -127,8 +138,10 @@ and signal.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
+autoreconf -fiv
 %configure --disable-static
 %make_build
 
@@ -183,6 +196,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %endif
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_1
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt1_7
 - update to new release by fcimport
 
