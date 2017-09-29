@@ -1,6 +1,6 @@
 Name: nuxwdog
 Version: 1.0.3
-Release: alt3.1
+Release: alt4
 
 Summary: Watchdog server to start and stop processes, and prompt for passwords
 License: %lgpl2plus, %perl_license
@@ -55,6 +55,7 @@ License: %lgpl2plus
 Group: Development/Java
 Requires: lib%name = %version-%release
 Provides: %name-client-java = %version-%release
+Provides: /usr/lib/java/nuxwdog.jar
 
 %description -n lib%name-java
 This package contains a JNI interface to the nuxwdog
@@ -129,6 +130,9 @@ chrpath -d %buildroot%_libdir/perl5/auto/Nuxwdogclient/Nuxwdogclient.so
 #_man3dir/Nuxwdogclient.3pm*
 
 %changelog
+* Fri Sep 29 2017 Stanislav Levin <slev@altlinux.org> 1.0.3-alt4
+- fix Provides of libnuxwdog-java package
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt3.1
 - rebuild with new perl 5.24.1
 
