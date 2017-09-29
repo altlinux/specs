@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install cppunit-devel gcc-c++ imake libSDL-
 %define _localstatedir %{_var}
 Name:           pinball
 Version:        0.3.2
-Release:        alt1_5
+Release:        alt1_7
 Summary:        Emilia 3D Pinball Game
 # core license is GPL+
 # gnu table licenses are (GFDL or Free Art or CC-BY-SA) and GPLv3 and CC-BY-SA
@@ -20,6 +20,7 @@ BuildRequires:  libpng-devel libvorbis-devel libltdl7-devel
 BuildRequires:  desktop-file-utils libappstream-glib
 BuildRequires:  autoconf-common automake-common libtool-common
 Requires:       icon-theme-hicolor opengl-games-utils timidity-instruments
+Source44: import.info
 
 %description
 The Emilia Pinball project is an open source pinball simulator for linux
@@ -77,6 +78,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_5
 - update to new release by fcimport
 
