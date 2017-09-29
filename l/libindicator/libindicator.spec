@@ -7,7 +7,7 @@ BuildRequires: chrpath
 %define _localstatedir %{_var}
 Name:		libindicator
 Version:	12.10.1
-Release:	alt1_9
+Release:	alt1_11
 Summary:	Shared functions for Ayatana indicators
 
 Group:		System/Libraries
@@ -24,6 +24,7 @@ BuildRequires:	gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+
 BuildRequires:	gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 
 BuildRequires:	gnome-common
+Source44: import.info
 Patch33: libindicator-fix-deprecated.patch
 
 %description
@@ -224,6 +225,9 @@ done
 %{_libexecdir}/indicator-loader3
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 12.10.1-alt1_11
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 12.10.1-alt1_9
 - update to new release by fcimport
 
