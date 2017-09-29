@@ -6,7 +6,7 @@ BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Capture/Tiny.pm) perl(IO/
 %define _localstatedir %{_var}
 Name:           perl-Starlet
 Version:        0.31
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Simple, high-performance PSGI/Plack HTTP server
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -80,6 +80,9 @@ sed -i -e '/^inc\/.*$/d' MANIFEST
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1_4
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1_3
 - update to new release by fcimport
 
