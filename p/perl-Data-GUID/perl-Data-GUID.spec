@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Data-GUID
 Version:        0.049
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Globally unique identifiers
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.049-alt1_4
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.049-alt1_3
 - update to new release by fcimport
 
