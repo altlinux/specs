@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/curl /usr/bin/wget gcc-c++
 %define _localstatedir %{_var}
 Name:           libompl
 Version:        1.0.0
-Release:        alt1_15
+Release:        alt1_17
 Summary:        The Open Motion Planning Library
 
 Group:          System/Libraries
@@ -97,6 +97,9 @@ make -C build test || exit 0
 %{_datadir}/cmake/Modules/FindOMPL.cmake
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_17
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_15
 - update to new release by fcimport
 
