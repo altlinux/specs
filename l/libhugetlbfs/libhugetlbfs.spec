@@ -6,7 +6,7 @@ BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(base.pm) perl(sigtrap.pm)
 %define _localstatedir %{_var}
 Name: libhugetlbfs
 Version: 2.20
-Release: alt1_3
+Release: alt1_5
 Summary: A library which provides easy access to huge pages of memory
 
 Group: System/Libraries
@@ -18,6 +18,7 @@ BuildRequires: glibc-devel
 BuildRequires: glibc-devel-static
 
 %define ldscriptdir %{_datadir}/%{name}/ldscripts
+Source44: import.info
 
 %description
 libhugetlbfs is a library which provides easy access to huge pages of memory.
@@ -111,6 +112,9 @@ done
 %exclude %{_libdir}/perl5/TLBC
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.20-alt1_5
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.20-alt1_3
 - update to new release by fcimport
 
