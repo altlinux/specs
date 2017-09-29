@@ -16,7 +16,7 @@
 
 Name:           libcgi
 Version:        1.0
-Release:        alt3_21
+Release:        alt3_23
 Summary:        CGI easy as C
 
 Group:          System/Libraries
@@ -26,6 +26,7 @@ Source:         http://prdownloads.sourceforge.net/libcgi/libcgi-%{version}.tar.
 Patch0:         libcgi-1.0-Makefile.in.patch
 Patch1:         libcgi-1.0-cgi.c-hextable.patch
 Patch2:         libcgi-1.0-string.c-make_string.patch
+Source44: import.info
 
 %description
 LibCGI is a library written from scratch to easily make CGI applications in C.
@@ -124,6 +125,9 @@ fi
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_23
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_21
 - update to new release by fcimport
 
