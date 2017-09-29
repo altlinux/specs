@@ -6,7 +6,7 @@ BuildRequires(pre): rpm-build-python
 %define _localstatedir %{_var}
 Name:           libpagemap
 Version:        0.0.1 
-Release:        alt1_20
+Release:        alt1_22
 Summary:        Pagemap interface library
 
 Group:          System/Libraries
@@ -14,6 +14,7 @@ License:        GPLv3+
 URL:            https://github.com/pholasek/libpagemap
 Source0:        https://github.com/pholasek/%{name}/archive/v%{version}.tar.gz
 BuildRequires:  python-devel
+Source44: import.info
 
 %description
 Package contains library and headers for using kernel pagemap interface
@@ -52,6 +53,9 @@ install -D -p -m 755 pagemapdata.py $RPM_BUILD_ROOT/%{python_sitelibdir_noarch}/
 %{_libdir}/libpagemap.so
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.1-alt1_22
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.1-alt1_20
 - update to new release by fcimport
 
