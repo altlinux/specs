@@ -10,7 +10,7 @@ BuildRequires(pre): rpm-build-python
 Summary: Tool to extract reports and run plug-ins against those extracted reports
 Name: libsx
 Version: 2.17
-Release: alt1_6
+Release: alt1_7
 URL: http://fedorahosted.org/sx
 Source0: https://git.fedorahosted.org/cgit/sx.git/snapshot/%{oldname}-%{version}.tar.gz
 License: GPLv2
@@ -18,6 +18,7 @@ Group: System/Libraries
 BuildArch: noarch
 BuildRequires: python-devel python-module-setuptools
 Requires: python
+Source44: import.info
 Provides: sx = %{version}-%{release}
 
 %description
@@ -46,6 +47,9 @@ has a class defined.
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.17-alt1_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.17-alt1_6
 - update to new release by fcimport
 
