@@ -8,7 +8,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           libmodelfile
 Version:        0.1.92
-Release:        alt3_17
+Release:        alt3_19
 Summary:        Library for accessing various model file formats
 
 Group:          Development/Other
@@ -17,6 +17,7 @@ URL:            http://www.worldforge.org
 Source0:        http://downloads.sourceforge.net/worldforge/%{name}-%{version}.tar.gz
 
 BuildRequires:  libSDL_image-devel libGL-devel libGLU-devel
+Source44: import.info
 
 %description
 This library is a collection of small clean C libraries for loading 3D
@@ -65,6 +66,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.92-alt3_19
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.92-alt3_17
 - update to new release by fcimport
 
