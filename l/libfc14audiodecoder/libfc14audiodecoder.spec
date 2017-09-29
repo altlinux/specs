@@ -6,13 +6,14 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name: libfc14audiodecoder
 Version: 1.0.3
-Release: alt1_8
+Release: alt1_10
 
 Summary: C wrapper library for Future Composer audio decoding
 Group: System/Libraries
 License: GPLv2+
 URL: http://xmms-fc.sourceforge.net
 Source0: http://downloads.sourceforge.net/xmms-fc/%{name}-%{version}.tar.bz2
+Source44: import.info
 
 %description
 This library provides a C API for a Future Composer audio decoder, which
@@ -53,6 +54,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_10
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_8
 - update to new release by fcimport
 
