@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/zip gcc-c++
 
 Name:           libskstream
 Version:        0.3.9
-Release:        alt1_10
+Release:        alt1_12
 Summary:        C++ I/O library for WorldForge clients/servers
 
 Group:          Development/Other
@@ -22,6 +22,7 @@ Source0:        http://downloads.sourceforge.net/worldforge/%{oldname}-%{version
 Patch1:         skstream-0.3.6-gcc44.patch
 
 BuildRequires:  cppunit-devel doxygen
+Source44: import.info
 Provides: skstream = %{version}-%{release}
 
 %description
@@ -82,6 +83,9 @@ cp -pR AUTHORS ChangeLog COPYING README README.FreeSockets TODO doc/* $RPM_BUILD
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.9-alt1_12
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.9-alt1_10
 - update to new release by fcimport
 
