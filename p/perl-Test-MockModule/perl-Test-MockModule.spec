@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Scalar/Util.pm) perl-podlators
@@ -7,17 +6,18 @@ BuildRequires: perl(Scalar/Util.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-MockModule
 Version:        0.12
-Release:        alt1
+Release:        alt1_2
 Summary:        Override subroutines in a module for unit testing
 Group:          Development/Other
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Test-MockModule/
-Source0:        http://www.cpan.org/authors/id/G/GF/GFRANKS/Test-MockModule-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/S/SI/SIMONFLK/Test-MockModule-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(CGI.pm)
 BuildRequires:  perl(Test/More.pm), perl(Test/Pod.pm), perl(Test/Pod/Coverage.pm)
 BuildRequires:  perl(Module/Build.pm), perl(SUPER.pm)
+Source44: import.info
 
 %description
 %{summary}.
@@ -42,6 +42,9 @@ chmod -R u+w $RPM_BUILD_ROOT/*
 %{perl_vendor_privlib}/Test
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_2
+- update to new release by fcimport
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - automated CPAN update
 
