@@ -1,5 +1,5 @@
 Name: deluge
-Version: 1.3.13
+Version: 1.3.15
 Release: alt1
 
 Summary: full-featured BitTorrent client
@@ -98,13 +98,13 @@ This package contains the web user-interface.
 %python_install
 rm -f %buildroot%_datadir/pixmaps/*
 rm -f %buildroot%python_sitelibdir/%name/ui/webui/scripts/build_webui_tarball.sh
-mkdir -p %buildroot{%_initdir,%_sysconfdir/sysconfig,%_spooldir/deluged}
-cp altlinux/deluged.init %buildroot%_initdir/deluged
-cp altlinux/deluged.sys %buildroot%_sysconfdir/sysconfig/deluged
+mkdir -p %buildroot{%_unitdir,%_spooldir/%{name}d}
+cp altlinux/%{name}d.service %buildroot%_unitdir
+cp altlinux/%name-web.service %buildroot%_unitdir
 
 %pre -n deluged
 %_sbindir/groupadd -r -f _deluge
-%_sbindir/useradd -r -n -g _deluge -d %_spooldir/deluged -s /dev/null -c "deluge bittorrent daemon" _deluge >/dev/null 2>&1 ||:
+%_sbindir/useradd -r -n -g _deluge -d %_spooldir/%{name}d -s /dev/null -c "deluge bittorrent daemon" _deluge >/dev/null 2>&1 ||:
 
 %post -n deluged
 %post_service deluged
@@ -134,11 +134,10 @@ cp altlinux/deluged.sys %buildroot%_sysconfdir/sysconfig/deluged
 %python_sitelibdir/%name/ui/console
 
 %files -n deluged
-%attr(0755,root,root) %_initdir/deluged
-%config(noreplace) %_sysconfdir/sysconfig/deluged
-%_bindir/deluged
-%_man1dir/deluged.1*
-%attr(0775,root,_deluge) %dir %_spooldir/deluged
+%_unitdir/%{name}d.service
+%_bindir/%{name}d
+%_man1dir/%{name}d.1*
+%attr(0775,root,_deluge) %dir %_spooldir/%{name}d
 
 %files gtk
 %_bindir/%name-gtk
@@ -148,11 +147,16 @@ cp altlinux/deluged.sys %buildroot%_sysconfdir/sysconfig/deluged
 %_desktopdir/%name.desktop
 
 %files web
+%_unitdir/%name-web.service
 %_bindir/%name-web
 %_man1dir/%name-web.1*
 %python_sitelibdir/%name/ui/web
 
 %changelog
+* Fri Sep 29 2017 Vladimir Lettiev <crux@altlinux.org> 1.3.15-alt1
+- New version 1.3.13
+- deluged/deluge-web managed by systemd
+
 * Mon Sep 12 2016 Vladimir Lettiev <crux@altlinux.ru> 1.3.13-alt1
 - New version 1.3.13
 
