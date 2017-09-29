@@ -7,7 +7,7 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 Name:           perl-MouseX-Types
 Summary:        Organize your Mouse types in libraries
 Version:        0.06
-Release:        alt2_16
+Release:        alt2_17
 License:        GPL+ or Artistic
 Group:          Development/Other
 Source0:        http://search.cpan.org/CPAN/authors/id/G/GF/GFUJI/MouseX-Types-%{version}.tar.gz
@@ -81,6 +81,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_17
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_16
 - update to new release by fcimport
 
