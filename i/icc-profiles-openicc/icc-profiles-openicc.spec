@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name:           icc-profiles-openicc
 Version:        1.3.1
-Release:        alt2_11
+Release:        alt2_12
 Summary:        The OpenICC profiles
 
 Group:          Graphics
@@ -14,6 +14,7 @@ BuildArch:      noarch
 
 BuildRequires:  color-filesystem rpm-macros-color
 Requires:       color-filesystem rpm-macros-color
+Source44: import.info
 
 
 %description
@@ -79,6 +80,9 @@ install -pm 0644 *.png $RPM_BUILD_ROOT%{_datadir}/pixmaps
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt2_12
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt2_11
 - update to new release by fcimport
 
