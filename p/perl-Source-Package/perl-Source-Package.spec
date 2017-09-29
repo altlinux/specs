@@ -1,7 +1,7 @@
 %define module Source-Package
 
 Name: perl-%module
-Version: 0.14
+Version: 0.15
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -14,7 +14,7 @@ Url: http://search.cpan.org/dist/%module
 
 BuildRequires: perl-devel perl(RPM/Vercmp.pm)
 #Requires: perl-RPM-Source-Editor > 0.801
-Conflicts: perl-Source-Repository < 0.12
+Conflicts: perl-Source-Repository < 0.388
 
 %description
 %summary
@@ -34,6 +34,9 @@ Conflicts: perl-Source-Repository < 0.12
 %perl_vendor_privlib/Source*
 
 %changelog
+* Fri Sep 29 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- do not use old Source:Repository download call
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - development release
 
