@@ -6,7 +6,7 @@ BuildRequires: perl(base.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-Email
 Version:        0.07
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Test Email Contents
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -48,6 +48,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2_11
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2_10
 - update to new release by fcimport
 
