@@ -1,13 +1,14 @@
 %define dist JSON-DWIW
+
 Name: perl-%dist
 Version: 0.47
-Release: alt4.1.1.1
+Release: alt5
 
 Summary: Flexible and fast JSON converter for Perl
 License: GPL or Artistic
 Group: Development/Perl
 
-URL: %CPAN %dist
+Url: %CPAN %dist
 Source: %dist-%version.tar.gz
 Patch: perl-JSON-DWIW-0.40-alt-deps.patch
 
@@ -28,10 +29,11 @@ JSON, while accepted input will be flexible, without having to
 set any options.
 
 %prep
-%setup -q -n %dist-%version
+%setup -n %dist-%version
 %patch -p1
 
 %build
+install -pm755 /usr/share/gnu-config/config.{sub,guess} libjsonevt/
 %perl_vendor_build
 
 %install
@@ -43,6 +45,9 @@ set any options.
 %perl_vendor_autolib/JSON
 
 %changelog
+* Fri Sep 29 2017 Michael Shigorin <mike@altlinux.org> 0.47-alt5
+- E2K: update libjsonevt's config.* to build
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.47-alt4.1.1.1
 - rebuild with new perl 5.24.1
 
