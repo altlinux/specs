@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++
 %define _localstatedir %{_var}
 Name:           amoebax
 Version:        0.2.1
-Release:        alt1_10
+Release:        alt1_12
 Summary:        Action-Puzzle Game
 Group:          Games/Other
 License:        GPLv2+ and Free Art
@@ -16,6 +16,7 @@ Patch0:         amoebax-0.2.0-gcc43.patch
 BuildRequires:  libSDL_mixer-devel libSDL_image-devel zlib-devel libpng-devel
 BuildRequires:  libvorbis-devel doxygen desktop-file-utils
 Requires:       icon-theme-hicolor
+Source44: import.info
 
 %description
 Amoebax is a cute and addictive action-puzzle game. Due an awful mutation,
@@ -111,6 +112,9 @@ mv $RPM_BUILD_ROOT%{_datadir}/pixmaps/%{name}.svg \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_12
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_10
 - update to new release by fcimport
 
