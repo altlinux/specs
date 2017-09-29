@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Meta-Builder
 Version:        0.003
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Tools for creating Meta objects to track custom metrics
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -46,6 +46,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.003-alt2_12
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.003-alt2_11
 - update to new release by fcimport
 
