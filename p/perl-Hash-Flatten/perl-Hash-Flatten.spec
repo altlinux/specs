@@ -7,14 +7,14 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Hash-Flatten
 Version:        1.19
-Release:        alt3_19
+Release:        alt3_20
 Summary:        Flatten/unflatten complex data hashes
 License:        GPLv2
 URL:            http://search.cpan.org/dist/Hash-Flatten/
 Source0:        http://www.cpan.org/authors/id/B/BB/BBC/Hash-Flatten-%{version}.tar.gz
 BuildArch:      noarch
 # Build
-BuildRequires:  glibc-utils
+BuildRequires:  glibc-locales glibc-timezones glibc-utils iconv
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Runtime
@@ -63,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.19-alt3_20
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.19-alt3_19
 - update to new release by fcimport
 
