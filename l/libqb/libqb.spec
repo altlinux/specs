@@ -11,21 +11,24 @@ BuildRequires: /usr/bin/splint gcc-c++ pkgconfig(glib-2.0)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %bcond_without check
-%bcond_without syslog_tests
 
 Name:           libqb
 Version:        1.0.2
-Release:        alt1_1
+Release:        alt1_7
 Summary:        An IPC library for high performance servers
 
 Group:          System/Libraries
 License:        LGPLv2+
 URL:            https://github.com/ClusterLabs/libqb
 Source0:        https://github.com/ClusterLabs/libqb/releases/download/v%{version}/%{name}-%{version}.tar.xz
+Patch0:         0001-build-configure-run-attribute-section-test-through-r.patch
+Patch1:         0002-WIP-5-Experimental-fix-for-libqb-logging-not-working.patch
 
 BuildRequires:  autoconf-common automake-common libtool-common doxygen procps sysvinit-utils libcheck-devel
 # https://fedoraproject.org/wiki/Packaging:C_and_C%2B%2B#BuildRequires_and_Requires
 BuildRequires:  gcc-common
+# git-style patch application
+BuildRequires: git
 Source44: import.info
 
 %description
@@ -35,16 +38,16 @@ and polling.
 
 %prep
 %setup -q
-
+%patch0 -p1
+%patch1 -p1
 
 ## Make sure the timestamps are correct
 #find . -exec touch \{\} \;
 
 %build
 ./autogen.sh
-%configure --disable-static \
-           %{?with_syslog_tests:--enable-syslog-tests}
-%make_build
+%configure --disable-static
+%make_build V=1
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
@@ -75,6 +78,9 @@ developing applications that use %{name}.
 %{_mandir}/man3/qb*3*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_7
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_1
 - update to new release by fcimport
 
