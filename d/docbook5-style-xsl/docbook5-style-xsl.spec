@@ -3,7 +3,7 @@
 %define _localstatedir %{_var}
 Name: docbook5-style-xsl
 Version: 1.79.2
-Release: alt1_3
+Release: alt1_4
 Group: Text tools
 
 Summary: Norman Walsh's XSL stylesheets for DocBook 5.X
@@ -23,6 +23,7 @@ Conflicts: passivetex < 1.21
 
 BuildArch: noarch
 Source0: https://github.com/docbook/xslt10-stylesheets/releases/download/release%2F{%version}/docbook-xsl-%{version}.tar.bz2
+Source44: import.info
 
 %description
 These XSL namespace aware stylesheets allow you to transform any
@@ -114,6 +115,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.79.2-alt1_4
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.79.2-alt1_3
 - update to new release by fcimport
 
