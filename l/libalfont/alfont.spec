@@ -7,7 +7,7 @@ BuildRequires: perl(Archive/Tar.pm) perl(Archive/Zip.pm)
 %define _localstatedir %{_var}
 Name:           libalfont
 Version:        2.0.9
-Release:        alt1_10
+Release:        alt1_12
 Summary:        Font rendering library for the Allegro game library
 Group:          System/Libraries
 License:        FTL
@@ -17,6 +17,7 @@ Source0:        %{oldname}-%{version}.tar.gz
 Patch0:         alfont-2.0.9-linux.patch
 Patch1:         alfont-2.0.9-remove-alfont_get_string.patch
 BuildRequires:  liballegro-devel libfreetype-devel
+Source44: import.info
 Provides: alfont = %{version}-%{release}
 
 %description
@@ -75,6 +76,9 @@ install -m 644 include/%{oldname}*.h $RPM_BUILD_ROOT%{_includedir}
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.9-alt1_12
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.9-alt1_10
 - update to new release by fcimport
 
