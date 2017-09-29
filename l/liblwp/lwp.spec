@@ -1,8 +1,10 @@
 %add_optflags %optflags_shared
 %define oldname lwp
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           liblwp
 Version:        2.6
-Release:        alt1_13
+Release:        alt1_16
 Summary:        C library for user-mode threading
 Group:          System/Libraries
 License:        LGPLv2
@@ -11,7 +13,7 @@ Source0:        ftp://ftp.coda.cs.cmu.edu/pub/lwp/src/%{oldname}-%{version}.tar.
 Source1:        ftp://ftp.coda.cs.cmu.edu/pub/lwp/src/%{oldname}-%{version}.tar.gz.asc
 Patch0:         lwp-2.6-no-longjmp_chk.patch
 Patch1:		lwp-2.6-system-valgrind.h
-BuildRequires:	valgrind-devel
+BuildRequires:	valgrind-devel valgrind-tool-devel
 Source44: import.info
 Provides: lwp = %{version}-%{release}
 
@@ -22,8 +24,8 @@ procedure call library).
 
 %package        devel
 Summary:        Development files for %{oldname}
-Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 Provides: lwp-devel = %{version}-%{release}
 
 %description    devel
@@ -40,7 +42,7 @@ rm -rf src/valgrind.h
 
 %build
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
@@ -59,6 +61,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{oldname}.pc
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_16
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_13
 - update to new release by fcimport
 
