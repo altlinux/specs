@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libSDL-devel perl(FileHandl
 %define _localstatedir %{_var}
 Name:           nazghul
 Version:        0.7.1
-Release:        alt2_17.20120228gitb0a402a
+Release:        alt2_19.20120228gitb0a402a
 Summary:        A computer role-playing game (CRPG) engine
 
 License:        GPLv2+
@@ -29,6 +29,7 @@ Patch2:         nazghul-armbuild.patch
 BuildRequires:  automake-common, autoconf-common
 BuildRequires:  libSDL_image-devel, libSDL_mixer-devel, desktop-file-utils
 BuildRequires:  libpng-devel, xcftools
+Source44: import.info
 
 %description
 Nazghul is an old-school RPG engine modeled after those made in the
@@ -143,6 +144,9 @@ EOF
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_19.20120228gitb0a402a
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_17.20120228gitb0a402a
 - update to new release by fcimport
 
