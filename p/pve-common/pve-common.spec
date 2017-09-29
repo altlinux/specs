@@ -1,7 +1,8 @@
+%def_enable check
 Name: pve-common
 Summary: PVE base library
 Version: 5.0.16
-Release: alt3
+Release: alt4
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -30,9 +31,7 @@ BuildRequires: perl(MIME/Base32.pm)
 BuildRequires: perl(Crypt/OpenSSL/Random.pm)
 BuildRequires: perl(Crypt/OpenSSL/RSA.pm)
 # alt regressive tests
-#BuildRequires: perl(TAP/Harness.pm)
-#BuildRequires: perl(RPM/Source/Tools/SourceBundle.pm)
-#BuildRequires: perl(RPM/Source/Dependency/Analyzer.pm)
+BuildRequires: perl(TAP/Harness.pm)
 
 %description
 This package contains the base library used by other PVE components.
@@ -47,17 +46,22 @@ cd src
 cd ..
 install -pD -m0755 pve-etcnet-to-network %buildroot%_sbindir/pve-etcnet-to-network
 
+%if_enabled check
 %check
 # upstream tests
-#make -C test check
+make -C test check
 # etcnet tests
-#./runtests.pl
+./runtests.pl
+%endif
 
 %files
 %_sbindir/pve-etcnet-to-network
 %perl_vendor_privlib/PVE
 
 %changelog
+* Fri Sep 29 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.16-alt4
+- brivlanport support
+
 * Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 5.0.16-alt3
 - bridge vids options support
 
