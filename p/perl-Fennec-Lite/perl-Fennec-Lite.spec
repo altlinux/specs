@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Fennec-Lite
 Version:        0.004
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Minimalist Fennec, the commonly used bits
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -50,6 +50,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.004-alt2_13
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.004-alt2_12
 - update to new release by fcimport
 
