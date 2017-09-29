@@ -12,7 +12,7 @@ Group: System/Libraries
 
 Name:		libechonest
 Version: 	2.3.0
-Release:	alt1_5
+Release:	alt1_7
 Summary:	C++ wrapper for the Echo Nest API
 
 License:	GPLv2+
@@ -25,6 +25,7 @@ BuildRequires:	pkgconfig(QtNetwork)
 %if 0%{?qt5}
 BuildRequires:  pkgconfig(Qt5Network)
 %endif
+Source44: import.info
 
 
 %description
@@ -123,6 +124,9 @@ time make test -C %{_target_platform} ARGS="--timeout 300 --output-on-failure" |
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_5
 - update to new release by fcimport
 
