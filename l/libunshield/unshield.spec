@@ -8,7 +8,7 @@
 
 Name:           libunshield
 Version:        1.0
-Release:        alt1_6
+Release:        alt1_8
 Summary:        Install InstallShield applications on a Pocket PC
 
 Group:          Communications
@@ -20,6 +20,7 @@ BuildRequires:  zlib-devel
 BuildRequires:  libtool-common
 BuildRequires:  autoconf-common
 BuildRequires:  automake-common
+Source44: import.info
 Provides: unshield = %{version}-%{release}
 
 %description
@@ -64,6 +65,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/libunshield.{,l}a
 %{_libdir}/pkgconfig/libunshield.pc
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_8
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_6
 - update to new release by fcimport
 
