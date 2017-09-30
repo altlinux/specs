@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools gcc-c++ unzip
 %define _localstatedir %{_var}
 Name:           zasx
 Version:        1.30
-Release:        alt2_21
+Release:        alt2_23
 Summary:        Asteroid like game with powerups
 Group:          Games/Other
 License:        GPLv2+ and Freely redistributable without restriction
@@ -17,6 +17,7 @@ Patch1:         zasx-1.30-datadir.patch
 Patch2:         zasx-1.30-format-security.patch
 BuildRequires:  dumb-devel ImageMagick desktop-file-utils
 Requires:       icon-theme-hicolor
+Source44: import.info
 
 %description
 Shoot the asteroids before they hit your ship and collect power ups to restore
@@ -64,6 +65,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.30-alt2_23
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.30-alt2_21
 - update to new release by fcimport
 
