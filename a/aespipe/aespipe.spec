@@ -3,13 +3,14 @@
 Summary:        AES-based encryption tool for tar/cpio and loop-aes images
 Name:           aespipe
 Version:        2.4d
-Release:        alt1_4
+Release:        alt1_6
 License:        GPLv2+
 Group:          System/Base
 URL:            http://loop-aes.sourceforge.net/
 Source:         http://loop-aes.sourceforge.net/aespipe/aespipe-v%{version}.tar.bz2
 BuildRequires:  gnupg
 Requires:       gnupg
+Source44: import.info
 
 %description
 aespipe is an encryption tool that reads from standard input and
@@ -57,6 +58,9 @@ install -Dp -m0755 aespipe %{buildroot}%{_bindir}/aespipe
 %{_bindir}/aespipe
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.4d-alt1_6
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.4d-alt1_4
 - update to new release by fcimport
 
