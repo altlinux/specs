@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++
 %define _localstatedir %{_var}
 Name:           qascade
 Version:        0.1
-Release:        alt2_23
+Release:        alt2_25
 Summary:        Classic puzzle game
 
 Group:          Games/Other
@@ -17,6 +17,7 @@ Patch0:         %{name}-dblsep.patch
 
 BuildRequires:  libqt3-devel
 BuildRequires:  desktop-file-utils
+Source44: import.info
 
 %description
 Qascade is a port of the simple yet addictive and enjoyable puzzle
@@ -57,6 +58,9 @@ install -D -p -m 644 blue.png \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_25
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_23
 - update to new release by fcimport
 
