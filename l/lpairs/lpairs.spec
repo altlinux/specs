@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install
 Name:		lpairs
 Summary:	Classical memory game with cards
 Version:	1.0.4
-Release:	alt3_18
+Release:	alt3_20
 License:	GPLv2+ and CC-BY-SA and Freely redistributable without restriction
 Group: 		Games/Other
 URL:		http://lgames.sourceforge.net/index.php?project=LPairs
@@ -22,6 +22,7 @@ Patch1:		lpairs-1.0.4-desktop.diff
 BuildRequires:	desktop-file-utils
 BuildRequires: 	libSDL-devel
 BuildRequires:  gettext gettext-tools
+Source44: import.info
 #bison?
 
 %description
@@ -65,6 +66,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications \
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt3_20
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt3_18
 - update to new release by fcimport
 
