@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:           lacewing
 Version:        1.10
-Release:        alt2_27
+Release:        alt2_29
 Summary:        Arcade-style shoot-em-up
 Group:          Games/Other
 License:        GPLv2+
@@ -23,6 +23,7 @@ Patch4:         lacewing-format-security.patch
 Patch5:         lacewing-rhbz1045111.patch
 BuildRequires:  liballegro-devel desktop-file-utils
 Requires:       icon-theme-hicolor
+Source44: import.info
 Patch33: lacewing-1.10-alt-as-needed.patch
 
 %description
@@ -83,6 +84,9 @@ install -p -m 644 %{SOURCE3} \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2_29
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2_27
 - update to new release by fcimport
 
