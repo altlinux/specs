@@ -1,26 +1,22 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libqt4-devel
+BuildRequires: /usr/bin/desktop-file-validate gcc-c++ pkgconfig(x11)
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           puzzle-master
-Version:        2.0.0
-Release:        alt3_8
-Summary:        Fun and addictive jigsaw puzzle game
+Version:        2.5.3
+Release:        alt1_3
+Summary:        Fun jigsaw puzzle game
 
 Group:          Games/Other
 License:        GPLv2+
-URL:            http://puzzle-master.colorful.hu/
+URL:            https://github.com/Venemo/puzzle-master
 
-Source0:        %{name}-%{version}.tar.gz
-# This package is generated from upstream's SCM, in the following way;
-# %{name} refers to the package name and %{version} to the release version.
-#
-# git clone git://gitorious.org/colorful-apps/%{name}.git; cd %{name};
-# git archive --format=tar --prefix=%{name}-%{version}/ v%{version} | gzip -n > %{name}-%{version}.tar.gz
+Source0:        https://github.com/Venemo/puzzle-master/archive/v%{version}.tar.gz
 
-BuildRequires: pkgconfig(QtCore) pkgconfig(QtGui) pkgconfig(QtOpenGL) pkgconfig(QtDeclarative)
+BuildRequires: pkgconfig(Qt5Core), pkgconfig(Qt5Gui), pkgconfig(Qt5Quick)
 BuildRequires: desktop-file-utils
 Source44: import.info
-Patch1:     %name-%version-alt-build.patch
 
 %description
 %{name} is a jigsaw puzzle game that lets you use your own
@@ -29,30 +25,34 @@ You can decide the size and the difficulty of the puzzle.
 
 %prep
 %setup -q
-%patch1 -p2
 
 %build
-# This ensures that the files will be placed to the correct location
+# These flags ensure that the files will be placed to the correct location
 QMAKEFLAGS=''
 QMAKEFLAGS+=' -after target.path=%{_bindir}'
 QMAKEFLAGS+=' -after desktopfile.path=%{_datadir}/applications'
 QMAKEFLAGS+=' -after iconfile.path=%{_datadir}/icons/hicolor/scalable/apps'
-# This will find qmake on both Fedora and MeeGo
-qmake-qt4 $QMAKEFLAGS || qmake $QMAKEFLAGS
-make %{?_smp_mflags}
+QMAKEFLAGS+=' -after appdatafile.path=%{_datadir}/appdata'
+
+%{qmake_qt5} $QMAKEFLAGS
+%make_build
 
 %install
-make INSTALL_ROOT=$RPM_BUILD_ROOT install
+%{makeinstall_std} INSTALL_ROOT=$RPM_BUILD_ROOT
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 
 %files
 %{_bindir}/%{name}
 %attr(644,root,root) %{_datadir}/applications/%{name}.desktop
 %attr(644,root,root) %{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
+%attr(644,root,root) %{_datadir}/appdata/%{name}.appdata.xml
 %doc LICENSE
 %doc LICENSE-DOCS
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_3
+- update to new release by fcimport
+
 * Thu Jul 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt3_8
 - Fixed build with new toolchain
 
