@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize
 %define _localstatedir %{_var}
 Name:           lucidlife
 Version:        0.9.2
-Release:        alt3_19
+Release:        alt3_21
 Summary:        A Conway's Life simulator
 
 Group:          Games/Other
@@ -20,6 +20,7 @@ BuildRequires:	gnome-vfs-devel
 BuildRequires:	desktop-file-utils
 BuildRequires:	perl(XML/Parser.pm)
 BuildRequires:	gettext gettext-tools	
+Source44: import.info
 Patch33: lucidlife-0.9.2-alt-DSO.patch
 
 %description
@@ -67,6 +68,9 @@ desktop-file-install \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt3_21
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt3_19
 - update to new release by fcimport
 
