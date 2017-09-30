@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name: slingshot
 Version:  0.9
-Release:  alt1_4
+Release:  alt1_5
 Summary: A Newtonian strategy game
 
 Group: Games/Other
@@ -21,6 +21,7 @@ Source3: slingshot.appdata.xml
 BuildArchitectures: noarch
 BuildRequires: desktop-file-utils, python-module-setuptools, python-devel
 Requires: icon-theme-hicolor, python-module-pygame, fonts-ttf-gnu-freefont-sans
+Source44: import.info
 
 %description
 Slingshot is a two dimensional, turn based simulation-strategy game 
@@ -71,6 +72,9 @@ install -p -m 664 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/appdata
 %{_datadir}/appdata/slingshot.appdata.xml
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_5
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_4
 - update to new release by fcimport
 
