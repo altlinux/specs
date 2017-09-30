@@ -10,7 +10,7 @@ BuildRequires: libncurses-devel
 
 Name:           afpfs-ng
 Version:        0.8.1
-Release:        alt3_21
+Release:        alt3_23
 Summary:        Apple Filing Protocol client
 
 Group:          System/Base
@@ -24,6 +24,7 @@ Patch2:         afpfs-ng-0.8.1-formatsec.patch
 
 %{?!_without_fuse:BuildRequires: libfuse-devel}
 BuildRequires: gcrypt-utils libgcrypt-devel libgmp-devel libgmpxx-devel readline-devel
+Source44: import.info
 
 %description
 A command line client to access files exported from Mac OS system via
@@ -104,6 +105,9 @@ cp -p include/* %{buildroot}%{_includedir}/afpfs-ng
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_23
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_21
 - update to new release by fcimport
 
