@@ -5,7 +5,7 @@ BuildRequires: texinfo
 %define _localstatedir %{_var}
 Name:           malaga
 Version:        7.12 
-Release:        alt2_21
+Release:        alt2_23
 Summary:        A programming language for automatic language analysis
 
 Group:          Development/Other
@@ -24,6 +24,7 @@ Patch2:         malaga-aarch64.patch
 
 BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel readline-devel
 Requires: lib%{name} = %{version}-%{release}
+Source44: import.info
 
 %description
 A software package for the development and application of
@@ -100,6 +101,9 @@ chmod 0755 $RPM_BUILD_ROOT%{_libdir}/libmalaga.so*
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 7.12-alt2_23
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 7.12-alt2_21
 - update to new release by fcimport
 
