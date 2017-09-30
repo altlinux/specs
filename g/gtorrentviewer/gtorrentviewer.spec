@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize
 %define _localstatedir %{_var}
 Name:		gtorrentviewer
 Version:	0.2b
-Release:	alt4_34
+Release:	alt4_36
 Summary:	A GTK2-based viewer and editor for BitTorrent meta files
 Group:		Networking/WWW
 License:	GPL+
@@ -23,6 +23,7 @@ BuildRequires:	libcurl-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2
 
 Requires(post):	  desktop-file-utils
 Requires(postun): desktop-file-utils
+Source44: import.info
 
 %description
 GTorrentViewer gives you the ability to see and modify all the possible
@@ -101,6 +102,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %{_mandir}/man1/gtorrentviewer.1*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.2b-alt4_36
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.2b-alt4_34
 - update to new release by fcimport
 
