@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:		avoision
 Version:	1.1
-Release:	alt1_9
+Release:	alt1_11
 Summary:	Arcade style game of evade and capture
 Group:		Games/Other
 # Code is GPLv2+, music and graphics are CC-BY-SA
@@ -15,6 +15,7 @@ Source0:	http://downloads.sourceforge.net/project/avsn/%{name}-%{version}.tar.gz
 Source1:	%{name}.png
 Source2:	%{name}.desktop
 BuildRequires:	radius-engine-devel >= 1.1, desktop-file-utils, zip
+Source44: import.info
 
 %description
 Avoision is a straightforward, yet captivating distillation of vintage arcade 
@@ -46,6 +47,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications	%{SOURCE2}
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_11
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_9
 - update to new release by fcimport
 
