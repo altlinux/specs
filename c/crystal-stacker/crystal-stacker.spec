@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools unzip
 %define _localstatedir %{_var}
 Name:           crystal-stacker
 Version:        1.5
-Release:        alt2_22
+Release:        alt2_24
 Summary:        Falling blocks, match 3 or more of the same color crystals
 Group:          Games/Other
 License:        Crystal Stacker
@@ -15,6 +15,7 @@ Source1:        %{name}.desktop
 Source2:        %{name}-theme-editor.desktop
 Patch0:         crystal-stacker-1.5-ImplicitDSOLinking.patch
 BuildRequires:  liballegro-devel dumb-devel ImageMagick desktop-file-utils
+Source44: import.info
 
 %description
 If you've played Columns then you know what Crystal Stacker is all about. Match
@@ -84,6 +85,9 @@ install -p -m 644 %{name}.png %{name}-theme-editor.png \
 %{_datadir}/icons/hicolor/32x32/apps/%{name}-theme-editor.png
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_24
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_22
 - update to new release by fcimport
 
