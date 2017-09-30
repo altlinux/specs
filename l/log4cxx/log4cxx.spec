@@ -1,13 +1,12 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/dot /usr/bin/iodbc-config gcc-c++ libesmtp-devel libunixODBC-devel
 # END SourceDeps(oneline)
-Group: System/Libraries
-%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: log4cxx
 Version: 0.10.0
-Release: alt1_23
+Release: alt1_25
 Summary: A port to C++ of the Log4j project
 
 License: ASL 2.0
@@ -24,6 +23,7 @@ Patch2: log4cxx-gcc6-tests.patch
 BuildRequires: libapr1-devel
 BuildRequires: libaprutil1-devel
 BuildRequires: doxygen
+Source44: import.info
 
 %description
 Log4cxx is a popular logging package written in C++. One of its distinctive
@@ -86,6 +86,9 @@ rm $RPM_BUILD_ROOT/%{_libdir}/liblog4cxx.la
 %doc html/
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt1_25
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt1_23
 - update to new release by fcimport
 
