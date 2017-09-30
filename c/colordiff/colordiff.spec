@@ -3,7 +3,7 @@ Group: Text tools
 %define _localstatedir %{_var}
 Name:           colordiff
 Version:        1.0.18
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Color terminal highlighter for diff files
 
 License:        GPLv2+
@@ -53,6 +53,9 @@ sed -i -e 's/banner=yes/banner=no/' colordiffrc-*
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.18-alt1_2
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.18-alt1_1
 - update to new release by fcimport
 
