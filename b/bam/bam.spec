@@ -4,15 +4,16 @@ BuildRequires: gcc-c++
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           bam
-Version:        0.4.0
+Version:        0.5.1
 
-Release:        alt2_11
+Release:        alt1_1
 Summary:        A build-system
 
 Group:          Games/Other
 License:        zlib
 URL:            http://matricks.github.com/bam/
-Source0:        http://github.com/downloads/matricks/bam/%{name}-%{version}.tar.bz2
+Source0:        https://github.com/matricks/bam/archive/v%{version}.tar.gz
+Source44: import.info
 
 
 %description
@@ -39,6 +40,9 @@ install -D -m 0755 %{name} \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_1
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt2_11
 - update to new release by fcimport
 
