@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name:          archivemount
 Version:       0.8.7
-Release:       alt1_3
+Release:       alt1_5
 Summary:       FUSE based filesystem for mounting compressed archives
 
 Group:         System/Libraries
@@ -14,6 +14,7 @@ Patch0:        fix-debuginfo.patch
 Requires:      fuse
 BuildRequires: libfuse-devel
 BuildRequires: libarchive-devel
+Source44: import.info
 
 %description
 Archivemount is a piece of glue code between libarchive and FUSE. It can be
@@ -38,6 +39,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_bindir}/archivemount
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.7-alt1_5
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.7-alt1_3
 - update to new release by fcimport
 
