@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           mirrormagic
 Version:        2.0.2
-Release:        alt5_20
+Release:        alt5_22
 Summary:        Puzzle game where you steer a beam of light using mirrors
 Group:          Games/Other
 License:        GPL+
@@ -24,6 +24,7 @@ Patch6:         %{name}-%{version}-fix-inline-use.patch
 BuildRequires:  libSDL_image-devel libSDL_mixer-devel desktop-file-utils
 BuildRequires:  libappstream-glib
 Requires:       icon-theme-hicolor
+Source44: import.info
 
 %description
 MirrorMagic is a game where you shoot around obstacles to collect energy using
@@ -76,6 +77,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt5_22
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt5_20
 - update to new release by fcimport
 
