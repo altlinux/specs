@@ -6,7 +6,7 @@ Group: System/Libraries
 Summary: Base libraries for GGZ gaming zone
 Name:    ggz-base-libs
 Version: 0.99.5
-Release: alt3_20
+Release: alt3_22
 
 License: LGPLv2+ and GPLv2+
 URL: http://www.ggzgamingzone.org/
@@ -31,6 +31,7 @@ BuildRequires: libexpat-devel
 BuildRequires: gettext gettext-tools
 BuildRequires: gcrypt-utils libgcrypt-devel
 BuildRequires: libnss-devel libnss-devel-static
+Source44: import.info
 
 
 %description
@@ -145,6 +146,9 @@ make check ||:
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.99.5-alt3_22
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.99.5-alt3_20
 - update to new release by fcimport
 
