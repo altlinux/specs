@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/desktop-file-install libGL-devel libGLU-devel libSDL-dev
 
 Name:           atomorun
 Version:        1.1
-Release:        alt5_0.22.%{prever}
+Release:        alt5_0.24.%{prever}
 Summary:        Jump & Run game where you have to flee an exploding nuclear bomb
 Group:          Games/Other
 License:        GPL+
@@ -20,6 +20,7 @@ Patch0:         atomorun-1.1-missing-protos.patch
 BuildRequires:  libSDL_mixer-devel libSDL_image-devel libtiff-devel libtiffxx-devel libvorbis-devel
 BuildRequires:  libalsa-devel desktop-file-utils
 Requires:       icon-theme-hicolor
+Source44: import.info
 
 %description
 Atomorun is a OpenGL Jump&Run game where you have to flee an exploding
@@ -62,6 +63,9 @@ install -p -m 644 pixmaps/%{name}_icon.png \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_0.24.pre2
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_0.22.pre2
 - update to new release by fcimport
 
