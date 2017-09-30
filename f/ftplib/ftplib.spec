@@ -4,13 +4,14 @@
 
 Name:		ftplib
 Version:	4.0
-Release:	alt1_4
+Release:	alt1_6
 Summary:	Library of FTP routines
 Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://nbpfaus.net/~pfau/ftplib-4/
 Source0:	http://nbpfaus.net/~pfau/ftplib-4/%{name}-%{version}-%{minorver}.tar.gz
 Patch0:		ftplib-3.1-1-modernize.patch
+Source44: import.info
 
 %description
 ftplib is a set of routines that implement the FTP protocol. They allow 
@@ -79,6 +80,9 @@ done
 %{_bindir}/qftp
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_6
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_4
 - update to new release by fcimport
 
