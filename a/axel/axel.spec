@@ -1,56 +1,65 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/gettext
+# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global commit0 7993512ca6b259cf04e9011541205db403ea1846
-%global gittag0 2.5
-%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+%global gittag 2.13.1
+%global gitowner eribertomota
 
+Name: axel
+Version: 2.13.1
+Release: alt1_2
+Summary: Light command line download accelerator for Linux and Unix
 
-Name:		axel		
-Version:	2.5
-Release:	alt1_3
-Summary:	Light command line download accelerator for Linux and Unix
-
-Group:		Networking/WWW
-License:	GPLv2+
-URL:		https://github.com/eribertomota/%{name}
-Source0:    https://github.com/eribertomota/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
-BuildRequires:	gettext gettext-tools
-
-
+Group: Networking/WWW
+License: GPLv2+
+URL: https://github.com/eribertomota/%{name}
+Source0: https://github.com/eribertomota/%{name}/archive/%{gittag}/%{name}-%{version}.tar.gz
+BuildRequires: gettext-tools libasprintf-devel
+BuildRequires: pkgconfig(libssl)
+BuildRequires: autoconf-common
+BuildRequires: automake-common
+Source44: import.info
 
 %description
-Axel tries to accelerate HTTP/FTP downloading process by using 
-multiple connections for one file. It can use multiple mirrors for a 
-download. Axel has no dependencies and is lightweight, so it might 
+Axel tries to accelerate HTTP/FTP downloading process by using
+multiple connections for one file. It can use multiple mirrors for a
+download. Axel has no dependencies and is lightweight, so it might
 be useful as a wget clone on byte-critical systems.
 
 %prep
-%setup -q -n %{name}-%{commit0}
+%setup -q -n %{name}-%{version}
+
 
 %build
-export CFLAGS=" %{optflags}"
-export CXXFLAGS=" %{optflags}"
-./configure --prefix=%{_prefix} --strip=0
+./autogen.sh
+%{configure}
 %make_build
 
 
 %install
 make install \
-	DESTDIR=%{buildroot}
+DESTDIR=%{buildroot}
 
-install -m 755 -p %{name} %{buildroot}%{_bindir}
+install -m 755 -p src/%{name} %{buildroot}%{_bindir}
+mkdir -p %{buildroot}%{_sysconfdir}
+install -m 644 -p -T doc/axelrc.example %{buildroot}%{_sysconfdir}/axelrc
 
-%find_lang	%{name}
+%find_lang %{name}
+
 
 %files -f %{name}.lang
 %{_bindir}/%{name}
-%doc CHANGES CREDITS API README
+%doc ChangeLog CREDITS AUTHORS README.md doc/API
 %doc COPYING
 %config(noreplace) %{_sysconfdir}/axelrc
 %{_mandir}/man1/axel.1*
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.13.1-alt1_2
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_3
 - update to new release by fcimport
 
