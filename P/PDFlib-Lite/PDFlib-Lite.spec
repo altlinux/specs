@@ -1,16 +1,18 @@
-%define patchlevel p1
+%define shortver 705
+%define patchlevel p3
 %define pythondir python%_python_version
 
 Name: PDFlib-Lite
-Version: 7.0.4
-Release: alt3.p1.1
+Version: 7.0.5
+Release: alt1.p3.1
 
 Summary: A library for on-the-fly PDF generation
 License: Freely distributable, free for personal/research use and OSS development
 Group: Development/Documentation
 
 Url: http://www.pdflib.com
-Source: PDFlib-Lite-%version%patchlevel.tar.gz
+Source0: http://www.pdflib.com/binaries/PDFlib/%shortver/PDFlib-Lite-%version%patchlevel.tar.gz
+Source1: http://www.pdflib.com/fileadmin/pdflib/pdf/license/PDFlib-Lite-license.pdf
 Patch: PDFlib-image.patch
 Patch1: PDFlib-configure.patch
 Packager: Michael Shigorin <mike@altlinux.org>
@@ -27,7 +29,7 @@ BuildRequires: tcl, tcl-devel
 
 %define libname libpdflib-lite
 
-Summary(ru_RU.KOI8-R): Библиотека для генерации PDF "на лету"
+Summary(ru_RU.UTF-8): п▒п╦п╠п╩п╦п╬я┌п╣п╨п╟ п╢п╩я▐ пЁп╣п╫п╣я─п╟я├п╦п╦ PDF "п╫п╟ п╩п╣я┌я┐"
 
 %description
 Portable C library for dynamically generating PDF ("Adobe
@@ -39,19 +41,24 @@ with support for text, vector graphics, raster image, and
 hypertext. Call PDFlib routines from within your client program
 and voila: dynamic PDF files!
 
-%description -l ru_RU.KOI8-R
-Переносимая C-библиотека для динамической генерации файлов PDF
-("Adobe Acrobat"), с поддержкой многих других языков
-программирования.
+Note that this is NOT free software, check PDFlib-Lite-license.pdf!
 
-PDFlib - бибиотека для генерации файлов PDF. Она предлагает API с
-поддержкой для текста, векторной графики, растровых изображений и
-гипертекста. Вызоваете подпрограммы PDFlib  из ваших приложений и
-готово: динамические PDF файлы!
+%description -l ru_RU.UTF-8
+п÷п╣я─п╣п╫п╬я│п╦п╪п╟я▐ C-п╠п╦п╠п╩п╦п╬я┌п╣п╨п╟ п╢п╩я▐ п╢п╦п╫п╟п╪п╦я┤п╣я│п╨п╬п╧ пЁп╣п╫п╣я─п╟я├п╦п╦ я└п╟п╧п╩п╬п╡ PDF
+("Adobe Acrobat"), я│ п©п╬п╢п╢п╣я─п╤п╨п╬п╧ п╪п╫п╬пЁп╦я┘ п╢я─я┐пЁп╦я┘ я▐п╥я▀п╨п╬п╡
+п©я─п╬пЁя─п╟п╪п╪п╦я─п╬п╡п╟п╫п╦я▐.
+
+PDFlib - п╠п╦п╠п╦п╬я┌п╣п╨п╟ п╢п╩я▐ пЁп╣п╫п╣я─п╟я├п╦п╦ я└п╟п╧п╩п╬п╡ PDF. п·п╫п╟ п©я─п╣п╢п╩п╟пЁп╟п╣я┌ API я│
+п©п╬п╢п╢п╣я─п╤п╨п╬п╧ п╢п╩я▐ я┌п╣п╨я│я┌п╟, п╡п╣п╨я┌п╬я─п╫п╬п╧ пЁя─п╟я└п╦п╨п╦, я─п╟я│я┌я─п╬п╡я▀я┘ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╧ п╦
+пЁп╦п©п╣я─я┌п╣п╨я│я┌п╟. п▓я▀п╥п╬п╡п╟п╣я┌п╣ п©п╬п╢п©я─п╬пЁя─п╟п╪п╪я▀ PDFlib  п╦п╥ п╡п╟я┬п╦я┘ п©я─п╦п╩п╬п╤п╣п╫п╦п╧ п╦
+пЁп╬я┌п╬п╡п╬: п╢п╦п╫п╟п╪п╦я┤п╣я│п╨п╦п╣ PDF я└п╟п╧п╩я▀!
+
+п·п╠я─п╟я┌п╦я┌п╣ п╡п╫п╦п╪п╟п╫п╦п╣: я█я┌п╬ п²п∙ я│п╡п╬п╠п╬п╢п╫п╬п╣ п©я─п╬пЁя─п╟п╪п╪п╫п╬п╣ п╬п╠п╣я│п©п╣я┤п╣п╫п╦п╣,
+я│п╪. PDFlib-Lite-license.pdf!
 
 %package -n %libname
 Summary: PDFLib shared library
-Summary(ru_RU.KOI8-R): разделяемая библиотека PDFLib
+Summary(ru_RU.UTF-8): я─п╟п╥п╢п╣п╩я▐п╣п╪п╟я▐ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╟ PDFLib
 Group: System/Libraries
 Obsoletes: %name < 7.0.0
 Provides: %name = %version-%release
@@ -61,9 +68,12 @@ PDFlib is a library for generating PDF files.
 
 This package contains shared library.
 
+Note that this is NOT free software, check PDFlib-Lite-license.pdf
+in the main package!
+
 %package -n %libname-devel
 Summary: PDFLib for developers
-Summary(ru_RU.KOI8-R):  PDFLib для разработчиков
+Summary(ru_RU.UTF-8):  PDFLib п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌я┤п╦п╨п╬п╡
 Group: Development/C
 Obsoletes: %name-devel < 7.0.0
 Provides: %name-devel = %version-%release
@@ -72,12 +82,18 @@ Requires: %libname = %version-%release
 %description -n %libname-devel
 PDFlib development headers
 
-%description -n %libname-devel -l ru_RU.KOI8-R
-Заголовочные файлы PDFlib для разработчиков
+Note that this is NOT free software, check PDFlib-Lite-license.pdf
+in the main package!
+
+%description -n %libname-devel -l ru_RU.UTF-8
+п≈п╟пЁп╬п╩п╬п╡п╬я┤п╫я▀п╣ я└п╟п╧п╩я▀ PDFlib п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌я┤п╦п╨п╬п╡
+
+п·п╠я─п╟я┌п╦я┌п╣ п╡п╫п╦п╪п╟п╫п╦п╣: я█я┌п╬ п²п∙ я│п╡п╬п╠п╬п╢п╫п╬п╣ п©я─п╬пЁя─п╟п╪п╪п╫п╬п╣ п╬п╠п╣я│п©п╣я┤п╣п╫п╦п╣,
+я│п╪. PDFlib-Lite-license.pdf п╡ п╬я│п╫п╬п╡п╫п╬п╪ п©п╟п╨п╣я┌п╣!
 
 %package utils
 Summary: PDFLib utilities
-Summary(ru_RU.KOI8-R): утилиты PDFLib
+Summary(ru_RU.UTF-8): я┐я┌п╦п╩п╦я┌я▀ PDFLib
 Group: File tools
 
 %description utils
@@ -85,7 +101,7 @@ PDF library utilities
 
 %package docs
 Summary: PDFLib documentation
-Summary(ru_RU.KOI8-R): документация PDFLib
+Summary(ru_RU.UTF-8): п╢п╬п╨я┐п╪п╣п╫я┌п╟я├п╦я▐ PDFLib
 Group: Documentation
 BuildArch: noarch
 Obsoletes: %name <= 7.0.4-alt2.p1
@@ -96,51 +112,51 @@ PDF library documentation
 %if 0
 %package python
 Summary: PDFLib python binding
-Summary(ru_RU.KOI8-R): PDFLib для питон
+Summary(ru_RU.UTF-8): PDFLib п╢п╩я▐ п©п╦я┌п╬п╫
 Group: Development/Python
 
 %description python
 PDF library binding for python
 
-%description python -l ru_RU.KOI8-R
-Модули для языка python, позволяющие получить доступ к библиотеке
+%description python -l ru_RU.UTF-8
+п°п╬п╢я┐п╩п╦ п╢п╩я▐ я▐п╥я▀п╨п╟ python, п©п╬п╥п╡п╬п╩я▐я▌я┴п╦п╣ п©п╬п╩я┐я┤п╦я┌я▄ п╢п╬я│я┌я┐п© п╨ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╣
 
 %package perl
 Summary: PDFLib perl binding
-Summary(ru_RU.KOI8-R):  PDFLib для perl
+Summary(ru_RU.UTF-8):  PDFLib п╢п╩я▐ perl
 Group: Development/Perl
 Requires: perl
 
 %description perl
 PDF library binding for perl
 
-%description perl -l ru_RU.KOI8-R
-Модули для языка perl, позволяющие получить доступ к библиотеке
+%description perl -l ru_RU.UTF-8
+п°п╬п╢я┐п╩п╦ п╢п╩я▐ я▐п╥я▀п╨п╟ perl, п©п╬п╥п╡п╬п╩я▐я▌я┴п╦п╣ п©п╬п╩я┐я┤п╦я┌я▄ п╢п╬я│я┌я┐п© п╨ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╣
 
 %package tcl
 Summary: PDFLib tcl binding
-Summary(ru_RU.KOI8-R):  PDFLib для tcl
+Summary(ru_RU.UTF-8):  PDFLib п╢п╩я▐ tcl
 Group: Development/Tcl
 Requires: tcl
 
 %description tcl
 PDF library binding for tcl
 
-%description tcl -l ru_RU.KOI8-R
-Модули для языка tcl, позволяющие получить доступ к библиотеке
+%description tcl -l ru_RU.UTF-8
+п°п╬п╢я┐п╩п╦ п╢п╩я▐ я▐п╥я▀п╨п╟ tcl, п©п╬п╥п╡п╬п╩я▐я▌я┴п╦п╣ п©п╬п╩я┐я┤п╦я┌я▄ п╢п╬я│я┌я┐п© п╨ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╣
 
 %package php
 Summary: PDFLib php binding
-Summary(ru_RU.KOI8-R):  PDFLib для php
+Summary(ru_RU.UTF-8):  PDFLib п╢п╩я▐ php
 Group: Development/C
 Requires: php-common
 
 %description php
 PDF library binding for php
 
-%description php -l ru_RU.KOI8-R
-Модули для языка php, позволяющие получить доступ к библиотеке,
-требуют наличия некоторых коммерческих библиотек.
+%description php -l ru_RU.UTF-8
+п°п╬п╢я┐п╩п╦ п╢п╩я▐ я▐п╥я▀п╨п╟ php, п©п╬п╥п╡п╬п╩я▐я▌я┴п╦п╣ п©п╬п╩я┐я┤п╦я┌я▄ п╢п╬я│я┌я┐п© п╨ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╣,
+я┌я─п╣п╠я┐я▌я┌ п╫п╟п╩п╦я┤п╦я▐ п╫п╣п╨п╬я┌п╬я─я▀я┘ п╨п╬п╪п╪п╣я─я┤п╣я│п╨п╦я┘ п╠п╦п╠п╩п╦п╬я┌п╣п╨.
 %endif
 
 %prep
@@ -156,6 +172,7 @@ make all
 
 %install
 %makeinstall_std
+cp -a %SOURCE1 .
 
 %if 0
 install -m0755 --directory      %buildroot%_includedir
@@ -205,6 +222,7 @@ install -m0755 --directory %buildroot$RPM_DOC_DIR/PDFLib-Lite-%version/sample/ph
 %endif
 
 %files
+%doc PDFlib-Lite-license.pdf
 
 %files docs
 %doc doc/*
@@ -220,8 +238,6 @@ install -m0755 --directory %buildroot$RPM_DOC_DIR/PDFLib-Lite-%version/sample/ph
 %_libdir/libpdf.so*
 
 %files -n %libname-devel
-#%_libdir/libpdf.la
-#_libdir/libpdf.a
 %_includedir/pdflib.h
 
 %if 0
@@ -248,6 +264,12 @@ install -m0755 --directory %buildroot$RPM_DOC_DIR/PDFLib-Lite-%version/sample/ph
 # - consider http://cvs.pld-linux.org/cgi-bin/cvsweb/packages/pdflib/pdflib.spec
 
 %changelog
+* Sat Sep 30 2017 Michael Shigorin <mike@altlinux.org> 7.0.5-alt1.p3.1
+- 7.0.5p3
+- added license file (non-commercial use only)
+  + warn in description too
+- converted spec to UTF-8
+
 * Wed Mar 30 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.0.4-alt3.p1.1
 - Rebuilt for debuginfo
 
