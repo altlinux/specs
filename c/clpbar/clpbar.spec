@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name:          clpbar
 Version:       1.10.9
-Release:       alt2_14
+Release:       alt2_16
 Summary:       Show information about a data transfer
 
 Group:         System/Base
@@ -17,6 +17,7 @@ Patch2:        bar-1.10.9-Werror=format-security.patch
 
 BuildRequires: automake-common
 BuildRequires: autoconf-common
+Source44: import.info
 
 %description
 Bar is a simple tool to process a stream of data and print a display for the
@@ -51,6 +52,9 @@ make install DESTDIR=%{buildroot}
 %{_mandir}/man1/clpbar.1*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.10.9-alt2_16
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.10.9-alt2_14
 - update to new release by fcimport
 
