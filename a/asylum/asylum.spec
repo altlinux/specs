@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           asylum
 Version:        0.3.2
-Release:        alt1_13
+Release:        alt1_15
 Summary:        Game involving shooting anything that moves & collecting others
 Group:          Games/Other
 # For detailed licensing, see the README
@@ -19,6 +19,7 @@ Patch0:         asylum-0.3.2-paths.patch
 BuildRequires:  desktop-file-utils
 BuildRequires:  libSDL_mixer-devel
 Requires:       icon-theme-hicolor
+Source44: import.info
 
 %description
 SDL Asylum is a C port of the computer game Asylum, which was written by Andy
@@ -131,6 +132,9 @@ done
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_15
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_13
 - update to new release by fcimport
 
