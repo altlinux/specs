@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           seahorse-adventures
 Version:        1.0
-Release:        alt4_17
+Release:        alt4_18
 Summary:        Help barbie the seahorse float on bubbles to the moon
 Group:          Games/Other
 License:        GPL+
@@ -19,6 +19,7 @@ Patch1:         seahorse-adventures-1.0-build.patch
 BuildRequires:  desktop-file-utils
 BuildArch:      noarch
 Requires:       icon-theme-hicolor python-module-pygame fonts-ttf-dejavu
+Source44: import.info
 
 %description
 Help barbie the seahorse float on bubbles to the moon. This is a retro-side
@@ -77,6 +78,9 @@ install -p -m 644 data/images/player/right.png \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_18
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_17
 - update to new release by fcimport
 
