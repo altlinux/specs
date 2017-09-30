@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:		dgae
 Version:	1.1
-Release:	alt4_15
+Release:	alt4_16
 Summary:	DG, a short AGI adventure game
 
 Group:		Games/Other
@@ -23,6 +23,7 @@ BuildArch:	noarch
 
 BuildRequires:	desktop-file-utils
 Requires:	nagi, icon-theme-hicolor
+Source44: import.info
 
 %description
 Help DG to seek out his twin brother's stick.
@@ -60,6 +61,9 @@ install -p -m 0644 %{SOURCE3} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%
 %{_bindir}/dgae-wrapper.sh
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4_16
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4_15
 - update to new release by fcimport
 
