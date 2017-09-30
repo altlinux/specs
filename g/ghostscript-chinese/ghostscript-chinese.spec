@@ -11,7 +11,7 @@ ghostscript font configuration files for Chinese fonts.
 
 Name:           ghostscript-chinese
 Version:        0.4.0
-Release:        alt1_8
+Release:        alt1_9
 Summary:        Ghostscript Chinese fonts configuration files
 Group:          System/Fonts/True type
 License:        GPLv2+
@@ -22,6 +22,7 @@ BuildArch:      noarch
 #BuildRequires:
 Provides:     cjkuni-fonts-ghostscript = %{version}
 Obsoletes:    cjkuni-fonts-ghostscript < 0.2.20080216.1-45
+Source44: import.info
 %description
 %common_desc
 
@@ -85,6 +86,9 @@ done
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_9
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_8
 - update to new release by fcimport
 
