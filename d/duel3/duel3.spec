@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 %global snapshot 20060225
 Name:           duel3
 Version:        0.1
-Release:        alt3_0.22.%{snapshot}
+Release:        alt3_0.24.%{snapshot}
 Summary:        One on one spaceship duel in a 2D arena
 Group:          Games/Other
 License:        BSD
@@ -23,6 +23,7 @@ Patch2:         Duel3_20060225-fix-buf-oflow.patch
 Patch3:         Duel3_20060225-extra-fix-buf-oflow.patch
 BuildRequires:  liballegro-devel dumb-devel libGLU-devel desktop-file-utils
 Requires:       icon-theme-hicolor opengl-games-utils
+Source44: import.info
 Patch33: Duel3_20060225-alt-as-needed.patch
 
 %description
@@ -92,6 +93,9 @@ install -p -m 644 %{SOURCE3} \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_0.24.20060225
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_0.22.20060225
 - update to new release by fcimport
 
