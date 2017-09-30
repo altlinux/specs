@@ -6,7 +6,7 @@ BuildRequires: libXext-devel
 %define _localstatedir %{_var}
 Name:           xteddy
 Version:        2.2
-Release:        alt1_6
+Release:        alt1_8
 Summary:        Tool to sit around silently, look cute, and make you smile
 
 Group:          Games/Other
@@ -19,6 +19,7 @@ Source1:        kacicka.png
 Patch0:         0001-Link-against-Xext.patch
 
 BuildRequires:  imlib2-devel libpng-devel
+Source44: import.info
 Patch33: xteddy-2.2-alt-link-X11.patch
 
 %description
@@ -70,6 +71,9 @@ EOF
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_8
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_6
 - update to new release by fcimport
 
