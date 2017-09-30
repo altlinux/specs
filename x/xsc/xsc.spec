@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ imake libXt-devel xorg-cf-f
 %define _localstatedir %{_var}
 Name: xsc
 Version:  1.6
-Release:  alt1_2
+Release:  alt1_4
 Summary: A clone of the old vector graphics video game Star Castle
 
 Group: Games/Other
@@ -16,6 +16,7 @@ Source1: xsc.desktop
 Source2: xsc.png
 BuildRequires: desktop-file-utils, libX11-devel
 Requires: icon-theme-hicolor
+Source44: import.info
 
 %description
 The object is to blast a hole in the rings and destroy the enemy ship.
@@ -52,6 +53,9 @@ install -p -m 644 %{SOURCE2} \
 %{_datadir}/icons/hicolor/32x32/apps/xsc.png
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_4
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_2
 - update to new release by fcimport
 
