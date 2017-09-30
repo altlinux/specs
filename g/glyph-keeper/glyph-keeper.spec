@@ -5,7 +5,7 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 Name:           glyph-keeper
 Version:        0.32
-Release:        alt3_20
+Release:        alt3_22
 Summary:        Library for text rendering
 Group:          System/Libraries
 License:        zlib
@@ -16,6 +16,7 @@ Patch0:         glyph-keeper-0.29.1-fixes.patch
 Patch1:         glyph-keeper-0.32-so-compat.patch
 BuildRequires:  libfreetype-devel >= 2.1.10
 BuildRequires:  libSDL_gfx-devel liballegro-devel
+Source44: import.info
 
 %description
 Glyph Keeper is a library for text rendering. It is written in C and can be
@@ -120,6 +121,9 @@ install -m 644 include/glyph.h $RPM_BUILD_ROOT%{_includedir}
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.32-alt3_22
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.32-alt3_20
 - update to new release by fcimport
 
