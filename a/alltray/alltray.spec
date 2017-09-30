@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install libX11-devel
 %define _localstatedir %{_var}
 Name:           alltray
 Version:        0.71b
-Release:        alt2_12
+Release:        alt2_14
 Summary:        Dock any application in the tray
 
 Group:          Accessibility
@@ -17,6 +17,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
 BuildRequires:  GConf libGConf-devel libGConf-gir-devel
 BuildRequires:  libgdk-pixbuf-devel
+Source44: import.info
 Patch33: alltray-0.65-message-fix.patch
 
 
@@ -53,6 +54,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications \
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.71b-alt2_14
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.71b-alt2_12
 - update to new release by fcimport
 
