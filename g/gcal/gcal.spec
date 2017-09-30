@@ -6,27 +6,30 @@ BuildRequires: /usr/bin/less /usr/bin/perl /usr/sbin/zdump texinfo
 %global gcalmantag 4
 
 Name:		gcal
-Version:	4
-Release:	alt1_4
+Version:	4.1
+Release:	alt1_1
 Summary:	GNU Gregorian calendar program
 
 Group:		Text tools
 License:	GPLv3+
 URL:		http://www.gnu.org/software/gcal/
 Source0:	ftp://ftp.gnu.org/gnu/gcal/%{name}-%{version}.tar.xz
-# The man pages are not shipped in tarball but reside in the git repository.
-# To fetch the man pages, do:
-# $ gcalmantag=3.6
+# The man pages are not shipped in tarball but reside in the git repository
+# at https://git.savannah.gnu.org/git/gcal.git
+# To fetch the man pages from a clone of that repository, do:
+# $ gcalmantag=4  # n.b. there is no 4.1 tag
 # $ git archive --format=tar v${gcalmantag} -- doc/en/man | \
-#     gzip -c > gcal-man-v${gcalmantag}.tar.gz
-Source1:	gcal-man-v%{gcalmantag}.tar.gz
+#     xz > gcal-man-v${gcalmantag}.tar.xz
+Source1:	gcal-man-v%{gcalmantag}.tar.xz
 BuildRequires:	gettext gettext-tools libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
+BuildRequires:  libunistring-devel
 Requires(post): info info-install
 Requires(preun): info info-install
 
 # Gnulib is granted exception of "no bundled libraries" packaging guideline:
 # https://fedoraproject.org/wiki/Packaging:No_Bundled_Libraries#Packages_granted_exceptions
 Provides: bundled(gnulib)
+Source44: import.info
 
 %description
 Gcal is a program for calculating and printing calendars.  Gcal
@@ -41,7 +44,8 @@ tar xf %{SOURCE1}
 %build
 CFLAGS="%{optflags}"
 export CFLAGS
-%configure
+export LIBS=-lunistring
+%configure --enable-unicode
 %make_build
 
 
@@ -69,6 +73,9 @@ rm -f %{buildroot}%{_infodir}/dir
 %{_mandir}/man1/*.1*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_1
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 4-alt1_4
 - update to new release by fcimport
 
