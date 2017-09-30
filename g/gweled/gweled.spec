@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize pkgconfig(
 %define _localstatedir %{_var}
 Name:           gweled
 Version:        0.9.1
-Release:        alt2_15.20130730git819bed
+Release:        alt2_17.20130730git819bed
 
 Summary:        Swapping gem game
 
@@ -31,6 +31,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:	intltool libtool-common
 BuildRequires:	libSDL_mixer-devel
 Requires:	icon-theme-hicolor
+Source44: import.info
 
 %description
 Gweled is a Gnome version of a popular PalmOS/Windows/Java game called
@@ -123,6 +124,9 @@ EOF
 %{_datadir}/sounds/%{name}/
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_17.20130730git819bed
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_15.20130730git819bed
 - update to new release by fcimport
 
