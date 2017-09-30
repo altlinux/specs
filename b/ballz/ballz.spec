@@ -5,13 +5,14 @@ BuildRequires: /usr/bin/desktop-file-validate gcc-c++
 %define _localstatedir %{_var}
 Name:           ballz
 Version:        1.0.3
-Release:        alt1_3
+Release:        alt1_5
 Summary:        Platform game with some puzzle elements
 Group:          Games/Other
 License:        BSD
 URL:            https://gitlab.com/groups/ballz
 Source0:        %{name}-%{version}.tar.gz
 BuildRequires:  liballegro-devel dumb-devel libguichan-devel desktop-file-utils
+Source44: import.info
 
 %description
 Ballz is a platformer with some puzzle elements. You take control of a ball
@@ -48,6 +49,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_5
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_3
 - update to new release by fcimport
 
