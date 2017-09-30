@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name:           ninvaders
 Version:        0.1.1
-Release:        alt2_14
+Release:        alt2_16
 Summary:        Space Invaders clone written in ncurses for cli gaming
 
 Group:          Games/Other
@@ -13,6 +13,7 @@ Patch0:         ninvaders-0.1.1-fedora.patch
 
 
 BuildRequires:  libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
+Source44: import.info
 
 %description
 Ever wanted to place space invaders when you can't find a GUI? Now you can!
@@ -37,6 +38,9 @@ install -Dp -m0755 nInvaders %{buildroot}%{_bindir}/nInvaders
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_16
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_14
 - update to new release by fcimport
 
