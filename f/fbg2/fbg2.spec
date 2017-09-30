@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-validate
 %define _localstatedir %{_var}
 Name:		fbg2
 Version:	0.4
-Release:	alt3_16
+Release:	alt3_18
 Summary:	A falling block stacking game
 Group:		Games/Other
 # Code is GPLv2+, music and graphics are CC-BY-SA
@@ -31,6 +31,7 @@ BuildRequires:	radius-engine-devel >= 0.7, desktop-file-utils, zip
 Obsoletes:	fbg < 0.9.1-13
 Provides:	fbg = 0.9.1-13
 %endif
+Source44: import.info
 
 %description
 Falling Block Game is a free, open source block stacking game. The object of 
@@ -99,6 +100,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/fbg2.desktop
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_18
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_16
 - update to new release by fcimport
 
