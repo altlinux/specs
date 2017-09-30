@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name: xgrav
 Version:  1.2.0
-Release:  alt2_18
+Release:  alt2_20
 Summary: A simple physics simulation for a large number of particles
 
 Group: Games/Other
@@ -17,6 +17,7 @@ Source1: xgrav.desktop
 Source2: xgrav.png
 BuildRequires: desktop-file-utils, libSDL-devel, flex, zlib-devel
 Requires: icon-theme-hicolor
+Source44: import.info
 
 %description
 X-Grav simulates the effect of gravity, collisions, heat dissipation and
@@ -61,6 +62,9 @@ install -p -m 644 %{SOURCE2} \
 %{_datadir}/icons/hicolor/32x32/apps/xgrav.png
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_20
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_18
 - update to new release by fcimport
 
