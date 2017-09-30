@@ -10,7 +10,7 @@ Name:             xskat
 # Upstream License requires to alter the version number
 # for re-distribution
 Version:          %{upstream_version}.0
-Release:          alt2_16
+Release:          alt2_18
 # https://fedoraproject.org/wiki/Licensing/XSkat_License
 License:          XSkat
 Group:            Games/Other
@@ -23,6 +23,7 @@ BuildRequires:    xorg-cf-files gccmakedep imake
 BuildRequires:    libX11-devel
 BuildRequires:    desktop-file-utils
 BuildRequires:    ImageMagick
+Source44: import.info
 
 
 %description
@@ -115,6 +116,9 @@ EOF
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt2_18
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt2_16
 - update to new release by fcimport
 
