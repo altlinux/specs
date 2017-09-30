@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name:           worminator-data
 Version:        3.0R2.1
-Release:        alt2_15
+Release:        alt2_16
 Summary:        Data for worminator the game
 Group:          Games/Other
 License:        GPLv2+
@@ -12,6 +12,7 @@ Source1:	license.txt
 Source2:        license-change.txt
 BuildArch:      noarch
 Requires:       worminator
+Source44: import.info
 
 %description
 Data for worminator the game where you play as The Worminator and fight your
@@ -41,6 +42,9 @@ rm $RPM_BUILD_ROOT%{_datadir}/worminator/ICON.ICO
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 3.0R2.1-alt2_16
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 3.0R2.1-alt2_15
 - update to new release by fcimport
 
