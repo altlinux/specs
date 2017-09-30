@@ -3,7 +3,7 @@
 Summary:	A text-mode maze game
 Name:		lsnipes
 Version:	0.9.4
-Release:	alt2_17
+Release:	alt2_19
 License:	GPLv2+
 Group:		Games/Other
 Source:		http://www.ugcs.caltech.edu/~boultonj/snipes/%{name}-%{version}.tgz
@@ -13,6 +13,7 @@ Patch1:		lsnipes-adapt-CFLAGS-LIBS.patch
 Patch2:		lsnipes-man-levels-doc.patch
 
 BuildRequires:	libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
+Source44: import.info
 
 %description
 Linux Snipes is a reimplementation of an old text-mode DOS game. You
@@ -46,6 +47,9 @@ sed -i -e 's,${LIBS} ${OBJS},${OBJS} ${LIBS},' Makefile
 %{_mandir}/man6/snipes.6*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt2_19
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt2_17
 - update to new release by fcimport
 
