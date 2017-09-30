@@ -3,7 +3,7 @@ Group: File tools
 %define _localstatedir %{_var}
 Name:		ath_info
 Version:	0
-Release:	alt2_0.13.20130214svn
+Release:	alt2_0.15.20130214svn
 Summary:	Tool to get detailed information from Atheros WLAN cards
 
 License:	GPLv2
@@ -12,6 +12,7 @@ URL:		http://madwifi-project.org/wiki/UserDocs/AthInfo
 # svn export -r 4151 http://madwifi-project.org/svn/ath_info/trunk ath_info-20130214
 # tar -Jcf ath_info-20130214.tar.xz ath_info-20130214/
 Source0:	ath_info-20130214.tar.xz
+Source44: import.info
 
 %description
 ath_info prints some version information of Atheros WLAN modules. It
@@ -35,6 +36,9 @@ make install PREFIX=%{_prefix} DESTDIR=%{buildroot}
 %{_mandir}/man8/ath_info.*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.15.20130214svn
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.13.20130214svn
 - update to new release by fcimport
 
