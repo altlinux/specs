@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/emacs /usr/bin/emacsclient
 %define _localstatedir %{_var}
 Name:       alleyoop
 Version:    0.9.8
-Release:    alt1_7
+Release:    alt1_9
 License:    GPLv2+
 Group:      Development/Tools
 Summary:    Graphical front-end to the Valgrind memory checker for x86
@@ -23,6 +23,7 @@ Requires: GConf libGConf, librarian
 
 # valgrind available only on these
 ExclusiveArch: %{ix86} x86_64 ppc ppc64 ppc64le s390x %{arm} aarch64
+Source44: import.info
 
 %description
 Alleyoop is a graphical front-end to the increasingly popular Valgrind
@@ -67,6 +68,9 @@ gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/%{name}.schem
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.8-alt1_9
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.8-alt1_7
 - update to new release by fcimport
 
