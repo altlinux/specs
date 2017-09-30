@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name:           pmars
 Version:        0.9.2
-Release:        alt2_15
+Release:        alt2_17
 Summary:        Portable corewar system with ICWS'94 extensions
 
 Group:          Games/Other
@@ -16,6 +16,7 @@ Patch1:         pmars-0.9.2-CCat.patch
 Patch2:         pmars-sfprintf-format.patch
 BuildRequires:  libX11-devel
 Requires:       fonts-bitmap-75dpi
+Source44: import.info
 
 %description
 pMARS is a Memory Array Redcode Simulator (MARS) for corewar.
@@ -58,6 +59,9 @@ install -D -p -m 644 doc/pmars.6 %{buildroot}%{_mandir}/man6/pmars.6
 %{_mandir}/man6/pmars.6.*
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt2_17
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt2_15
 - update to new release by fcimport
 
