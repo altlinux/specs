@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:           shippy
 Version:        1.3.3.7
-Release:        alt2_22
+Release:        alt2_24
 Summary:        Space invaders / Galaxians like game with powerups
 Group:          Games/Other
 License:        GPL+
@@ -21,6 +21,7 @@ BuildRequires:  dumb-devel libSDL_mixer-devel
 BuildRequires:  desktop-file-utils libappstream-glib
 Requires:       %{name}-common = %{version}
 Provides:       %{name}-engine = %{version}
+Source44: import.info
 
 %description
 Shippy1984 is a small, portable game designed to bring back nostalgia for the
@@ -116,6 +117,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.3.7-alt2_24
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.3.7-alt2_22
 - update to new release by fcimport
 
