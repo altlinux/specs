@@ -5,7 +5,7 @@ Name: beesu
 Version: 2.7
 # Don't ever decrease this version (unless beesu update) or the subpackages will go backwards.
 # It is easier to do this than to track a separate release field.
-Release: alt2_29
+Release: alt2_31
 Summary: Graphical wrapper for su
 URL: http://www.honeybeenet.altervista.org
 Group: System/Base
@@ -21,6 +21,7 @@ Obsoletes: caja-beesu-manager
 Obsoletes: nemo-beesu-manager
 Obsoletes: gedit-beesu-plugin
 Obsoletes: pluma-beesu-plugin
+Source44: import.info
 
 %description
 Beesu is a wrapper around su and works with consolehelper under
@@ -66,6 +67,9 @@ EOF
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_31
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_29
 - update to new release by fcimport
 
