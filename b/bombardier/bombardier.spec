@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name: bombardier
 Version:  0.8.3
-Release:  alt1_3
+Release:  alt1_5
 Summary: The GNU Bombing utility
 
 Group: Games/Other
@@ -20,6 +20,7 @@ Patch1: bombardier-rpm_opt_flags.patch
 Patch3: bombardier-0.8.2-string-format.patch
 BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel, desktop-file-utils
 Requires: icon-theme-hicolor
+Source44: import.info
 
 
 %description
@@ -64,6 +65,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt1_5
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt1_3
 - update to new release by fcimport
 
