@@ -1,8 +1,8 @@
 %define destname rpm-uscan
-%define debian_ver 2.14.4
+%define debian_ver 2.17.9
 Name: %destname
 Version: 0.17.%debian_ver
-Release: alt2
+Release: alt1
 
 Summary: Utility to check watch files
 Source: %name-%version.tar
@@ -13,7 +13,7 @@ URL: http://www.altlinux.org/Watch
 
 BuildArch: noarch
 
-BuildRequires: rpm-build-licenses perl-devel perl(RPM/Vercmp.pm) perl(LWP/UserAgent.pm) perl(LWP/Protocol/https.pm)
+BuildRequires: rpm-build-licenses perl-devel perl(RPM/Vercmp.pm) perl(LWP/UserAgent.pm) perl(LWP/Protocol/https.pm) /usr/bin/pod2man
 # for spawn function.
 BuildRequires: perl-Dpkg
 Requires: perl(LWP/Protocol/https.pm)
@@ -32,17 +32,21 @@ Requires: gear-uupdate
 %build
 
 %install
-mkdir -p %buildroot%_bindir
+mkdir -p %buildroot{%_bindir,%_man1dir}
 install -Dm755 scripts/uscan.pl %buildroot%_bindir/%destname
 sed -i -e 's,###VERSION###,%version-rpm,' %buildroot%_bindir/%destname
 
-install -Dm644 scripts/uscan.1 %buildroot%_man1dir/%destname.1
+pod2man scripts/uscan.pl > %buildroot%_man1dir/%destname.1
 
 %files
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Sun Oct 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.17.2.17.9-alt1
+- sync with debian uscan 2.17.9
+- watch file format 4 support
+
 * Tue Oct 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.17.2.14.4-alt2
 - indirect dependencies
 
