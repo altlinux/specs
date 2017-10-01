@@ -7,8 +7,8 @@
 %define pname zing_locale_switcher
 
 Name:    palemoon-zing_locale_switcher
-Version: 2.1.3
-Release: alt1.1
+Version: 3.0.0
+Release: alt1
 Summary: The Palemoon locale switcher
 
 License: GPL3
@@ -57,6 +57,9 @@ fi
 %cid_dir
 
 %changelog
+* Thu Sep 28 2017 Hihin Ruslan <ruslandh@altlinux.ru> 3.0.0-alt1
+- Version 3.0
+
 * Fri Jul 31 2015 Hihin Ruslan <ruslandh@altlinux.ru> 2.1.3-alt1.1
 - Add  Requires to palemoon
 
