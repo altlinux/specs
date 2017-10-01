@@ -2,7 +2,7 @@
 
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 2.85.1
+Version: 3.8.0
 Release: alt1
 
 Summary: A e-book library management application
@@ -32,48 +32,83 @@ Requires: python-module-netifaces
 BuildRequires: chrpath
 BuildRequires: /proc
 
-BuildRequires: gcc-c++ libX11-devel libXext-devel libXrender-devel libpng-devel libjpeg-devel libusb-devel libsqlite3-devel
+BuildRequires: cmake gcc-c++ libX11-devel libXext-devel libXrender-devel libpng-devel libjpeg-devel libusb-devel libsqlite3-devel
 
 BuildRequires: python >= 2.7.9
 BuildRequires: python-modules-json python-modules-compiler python-modules-curses python-modules-encodings
-BuildRequires: python-module-sip-devel
+BuildRequires: python-module-sip-devel >= 4.19.1
+BuildRequires: python-module-msgpack >= 0.4.8
+BuildRequires: python-module-html5-parser
 
-# Note: checked with http://calibre-ebook.com/download_linux 23.08.2015
-BuildRequires: python-module-imaging >= 1.1.6
-BuildRequires: libImageMagick-devel >= 6.5.9
+#BuildRequires: python-module-imaging >= 1.1.6
+#BuildRequires: libImageMagick-devel >= 6.5.9
 
 # missed in the official list
 BuildRequires: glib2-devel fontconfig-devel libfreetype-devel libssl-devel libudev-devel
 
-# no more common qt headers package
-#BuildRequires: libqt5-devel >= 5.3.2
-BuildRequires: qt5-base-devel-static >= 5.3.2
-BuildRequires: python-module-PyQt5-devel >= 5.3.1
+# Checked 01.10.2017 with
+# https://github.com/kovidgoyal/build-calibre/blob/master/scripts/sources.json
 
-BuildRequires: python-module-mechanize >= 0.1.11
+BuildRequires: qt5-base-devel-static >= 5.3.2
+BuildRequires: python-module-PyQt5-devel
+# >= 5.8
+
+BuildRequires: python-module-mechanize
+# TODO
+# >= 0.3.5
 BuildRequires: xdg-utils >= 1.0.2
-BuildRequires: python-module-lxml >= 3.2.1
-BuildRequires: python-module-dateutil >= 1.4.1
-BuildRequires: python-module-cssutils >= 0.9.9
-BuildRequires: python-module-dns >= 1.6.0
+BuildRequires: python-module-lxml >= 3.8.0
+BuildRequires: python-module-dateutil >= 2.5.3
+BuildRequires: python-module-cssutils >= 1.0.1
+BuildRequires: python-module-dns >= 1.14.0
 BuildRequires: libpoppler-qt5-devel >= 0.20.2
-BuildRequires: libpodofo-devel >= 0.8.2
+BuildRequires: libpoppler-devel >= 0.52
+BuildRequires: libpodofo-devel >= 0.9.5
 BuildRequires: libwmf-devel >= 0.2.8
 # chmlib
-BuildRequires: libchm-devel >= 0.4
-BuildRequires: libicu-devel >= 4.4
-BuildRequires: libmtp-devel >= 1.1.5
-BuildRequires: python-module-netifaces >= 0.8
-BuildRequires: python-module-psutil >= 0.6.1
-BuildRequires: python-module-apsw >= 3.7.17
-BuildRequires: python-module-dbus >= 1.2.0
-# pygments 2.0.1
-# optipng 0.7.5
+BuildRequires: libchm-devel >= 0.40
+BuildRequires: libicu-devel >= 5.6
+BuildRequires: libmtp-devel >= 1.1.11
+BuildRequires: python-module-netifaces >= 0.10.5
+BuildRequires: python-module-psutil >= 4.3.0
+BuildRequires: python-module-apsw >= 3.13.0
+BuildRequires: python-module-dbus >= 1.2.4
+BuildRequires: libdbus-devel >= 1.10.8
+# pygments 2.1.3
+# optipng 0.7.6
+# mozjpeg 3.1
 # need it really?
 BuildRequires: python-module-BeautifulSoup >= 3.0.5
 BuildRequires: python-module-cssselect >= 0.7.1
 
 BuildRequires: libmtdev-devel libts-devel libinput-devel libxkbcommon-devel
+
+BuildRequires: zlib-devel bzlib-devel
+# TODO? unrarsrc unrardll
+BuildRequires: libexpat >= 2.2.4
+BuildRequires: libffi-devel >= 3.2.1
+BuildRequires: python-module-six >= 1.10.0
+BuildRequires: python-module-regex >= 2017.01.11
+BuildRequires: python-module-dukpy
+# >= 0.3
+BuildRequires: python-module-chardet >= 3.0.3
+BuildRequires: python-module-pycrypto >= 2.6.1
+BuildRequires: nasm
+BuildRequires: libwebp-devel >= 0.5.0
+# TODO jxrlib
+# https://packages.debian.org/ru/source/sid/jxrlib
+# iconv?
+BuildRequires: libxml2-devel
+# >= 2.9.5
+BuildRequires: libxslt-devel
+# >= 1.1.30
+BuildRequires: python-module-webencodings >= 0.5.1
+BuildRequires: python-module-html5lib >= 0.999999999
+BuildRequires: python-module-Pillow >= 3.2.0
+BuildRequires: libgpg-error-devel >= 1.22
+BuildRequires: libgcrypt-devel >= 1.7.1
+BuildRequires: libdbus-glib-devel >= 0.106
+# TODO qtwebkit
 
 %description
 calibre is an e-book library manager. It can view, convert and catalog e-books
@@ -125,9 +160,15 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %_libdir/%name/
 %python_sitelibdir/*
 %_datadir/%name/
-%_datadir/appdata/*.appdata.xml
+# FIXME?
+#_datadir/appdata/*.appdata.xml
+%_datadir/metainfo/*.appdata.xml
+
 
 %changelog
+* Sun Oct 01 2017 Vitaly Lipatov <lav@altlinux.ru> 3.8.0-alt1
+- new version 3.8.0 (with rpmrb script)
+
 * Tue May 23 2017 Vitaly Lipatov <lav@altlinux.ru> 2.85.1-alt1
 - new version 2.85.1 (with rpmrb script)
 
