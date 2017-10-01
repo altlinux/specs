@@ -1,3 +1,4 @@
+Group: Publishing
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
@@ -7,10 +8,8 @@ BuildRequires: /usr/bin/desktop-file-install
 %define my_subversion b7
 Name:           html2ps
 Version:        1.0
-Release:        alt2_0.24.%{my_subversion}
+Release:        alt2_0.27.%{my_subversion}
 Summary:        HTML to PostScript converter
-
-Group:          Publishing
 License:        GPLv2+
 URL:            http://user.it.uu.se/~jan/%{name}.html
 Source0:        http://user.it.uu.se/~jan/%{name}-1.0%{my_subversion}.tar.gz
@@ -25,12 +24,12 @@ Patch2:         %{name}-1.0b5-config.patch
 Patch3:         %{name}-1.0b7-Remove-deprecated-variable.patch
 # Fix Perl 5.22 warnings, bug #1404275
 Patch4:         html2ps-1.0b7-Fix-perl-5.22-warnings.patch
-
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  desktop-file-utils
-BuildRequires:  glibc-utils
+BuildRequires:  glibc-locales glibc-timezones glibc-utils iconv
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  sed
 Requires:       ghostscript-utils ghostscript
 # Depend on paperconf directly (instead of libpaper package) for rpmlint sake
@@ -40,6 +39,7 @@ Requires:       perl(HTTP/Request.pm)
 Requires:       perl(LWP/UserAgent.pm)
 Requires:       /usr/bin/dvips texlive-generic-recommended
 Requires:       /usr/bin/tex texlive-generic-recommended
+Source44: import.info
 
 %description
 An HTML to PostScript converter written in Perl.
@@ -51,8 +51,8 @@ An HTML to PostScript converter written in Perl.
 
 
 %package -n xhtml2ps
+Group: Publishing
 Summary:     GUI front-end for html2ps
-Group:       Publishing
 Requires:    html2ps = %{version}-%{release}
 Requires:    xdg-utils
 
@@ -105,18 +105,23 @@ desktop-file-install \
 
 
 %files
-%doc COPYING README sample html2ps.html
+%doc COPYING
+%doc README sample html2ps.html
 %config(noreplace) %{_sysconfdir}/html2psrc
 %{_bindir}/html2ps
 %{_mandir}/man1/html2ps.1*
 %{_mandir}/man5/html2psrc.5*
 
 %files -n xhtml2ps
-%doc contrib/xhtml2ps/README contrib/xhtml2ps/LICENSE
+%doc contrib/xhtml2ps/LICENSE
+%doc contrib/xhtml2ps/README
 %{_bindir}/xhtml2ps
 %{_datadir}/applications/*xhtml2ps.desktop
 
 %changelog
+* Sun Oct 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.27.b7
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.24.b7
 - update to new release by fcimport
 
