@@ -5,13 +5,12 @@
 %def_with python3
 
 Name: python-module-lxml
-Version: 3.5.0
-Release: alt2.beta1.git20150727
+Version: 4.0.0
+Release: alt1
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.
 
-# http://codespeak.net/lxml/%modulename-%version.tar
-# git://github.com/lxml/lxml.git
+# Source-git: https://github.com/lxml/lxml.git
 Source: %name-%version.tar
 
 License: BSD/GPLv2/ZPL/PSF
@@ -158,6 +157,12 @@ popd
 %doc doc samples
 
 %changelog
+* Sun Oct 01 2017 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
+- build new version
+
+* Sun Oct 01 2017 Vitaly Lipatov <lav@altlinux.ru> 3.8.0-alt1
+- build new version
+
 * Fri Apr 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.0-alt2.beta1.git20150727
 - (.spec) Described the actually necessary simplification for %%if_with bootstrap
   (namely: make it skip some tests employing cssselect which depends on lxml itself).
