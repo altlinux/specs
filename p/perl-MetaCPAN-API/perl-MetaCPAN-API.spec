@@ -1,5 +1,5 @@
 Name: perl-MetaCPAN-API
-Version: 0.50
+Version: 0.51
 Release: alt1
 
 Summary: A comprehensive, DWIM-featured API to MetaCPAN
@@ -31,6 +31,9 @@ rm t/author.t t/autocomplete.t t/distribution.t t/favorite.t t/fetch.t t/file.t 
 %doc Changes LICENSE README
 
 %changelog
+* Sun Oct 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.51-alt1
+- automated CPAN update
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1
 - automated CPAN update
 
