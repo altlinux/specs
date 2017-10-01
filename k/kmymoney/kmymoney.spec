@@ -1,6 +1,6 @@
 Name:    kmymoney
-Version: 4.8.0
-Release: alt2
+Version: 4.8.1
+Release: alt1
 
 Summary: A Personal Finance Manager for KDE4
 Summary(ru_RU.UTF-8): Учёт финансов под KDE4
@@ -13,7 +13,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source0: %name-%version.tar
 Source2: %name.watch
 Patch0:  %name-fix-undeclared-geteuid.patch
-Patch1:  %name-fix-link-with-QTest.patch
 Patch2:  %name-%version-%release.patch
 
 AutoReq: yes, noperl
@@ -24,6 +23,7 @@ BuildRequires: cmake
 BuildRequires: doxygen
 BuildRequires: gcc-c++ 
 BuildRequires: glib2-devel
+BuildRequires: libassuan-devel
 BuildRequires: kde4pimlibs-devel
 BuildRequires: ktoblzcheck-devel
 BuildRequires: libOpenSP-devel
@@ -198,7 +198,6 @@ Internationalization and documentation for KMyMoney
 %setup -q -n %name-%version
 %patch0 -p2
 %ifarch %ix86
-%patch1 -p1
 %endif
 %patch2 -p1
 
@@ -210,7 +209,7 @@ export NPROCS=1
 %install
 %K4install
 mkdir -p %buildroot%_datadir/appdata
-mv %buildroot%_K4apps/appdata/kmymoney.appdata.xml %buildroot%_datadir/appdata
+mv %buildroot%_K4apps/appdata/org.kde.kmymoney.appdata.xml %buildroot%_datadir/appdata
 %K4find_lang --with-kde %name
 
 %files
@@ -220,7 +219,7 @@ mv %buildroot%_K4apps/appdata/kmymoney.appdata.xml %buildroot%_datadir/appdata
 %_K4libdir/libkmm_kdchart.so.*
 %_K4libdir/libkmm_mymoney.so.*
 %_K4libdir/libkmm_plugin.so.*
-%_desktopdir/kde4/%name.desktop
+%_desktopdir/kde4/*%name.desktop
 %doc %_K4doc/en/*
 %_K4cfg/*.kcfg
 %_K4srvtyp/*.desktop
@@ -230,9 +229,9 @@ mv %buildroot%_K4apps/appdata/kmymoney.appdata.xml %buildroot%_datadir/appdata
 %_K4iconsdir/hicolor/*/apps/%name.png
 %_K4iconsdir/locolor/*/apps/%name.png
 %_K4iconsdir/hicolor/*/mimetypes/application-x-kmymoney.png
-%_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/*.appdata.xml
 %_K4conf_update/%name.upd
-#_man1dir/%name.1*
+%_man1dir/%name.1*
 
 %files devel
 %dir %_K4includedir/%name
@@ -285,18 +284,15 @@ mv %buildroot%_K4apps/appdata/kmymoney.appdata.xml %buildroot%_datadir/appdata
 %_K4apps/kmm_csvexport/kmm_csvexport.rc
 
 %files payeeidentifier
-%_libdir/libkmm_payeeidentifier.so
+%_libdir/libkmm_payeeidentifier.so.*
 %_K4lib/payeeidentifier_*
 %_K4lib/devel/libpayeeidentifier_*.so
 %_libdir/libpayeeidentifier_*
-%_K4srv/ibanbicdata
 %_K4srv/kmymoney-ibanbic-*.desktop
 %_K4srv/kmymoney-nationalaccount-*.desktop
 
 %files onlinetasks
-%_K4lib/konlinetasks_*.so
-%_K4srv/kmymoney-nationalorders*.desktop
-%_K4srv/kmymoney-nationalstorageplugin.desktop
+%_K4lib/libkonlinetasks_*.so
 %_K4srv/kmymoney-sepa*.desktop
 
 %files weboob
@@ -311,6 +307,9 @@ mv %buildroot%_K4apps/appdata/kmymoney.appdata.xml %buildroot%_datadir/appdata
 %exclude %_K4doc/en
 
 %changelog
+* Sun Oct 01 2017 Andrey Cherepanov <cas@altlinux.org> 4.8.1-alt1
+- New version
+
 * Mon Apr 10 2017 Andrey Cherepanov <cas@altlinux.org> 4.8.0-alt2
 - Use documentation and localization from released tarball
 
