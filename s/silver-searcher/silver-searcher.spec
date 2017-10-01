@@ -1,11 +1,12 @@
 Name: silver-searcher
-Version: 1.0.2
+Version: 2.1.0
 Release: alt1
 
-Summary: A code searching tool similar to ack, with a focus on speed.
-License: GPL
+Summary: A code searching tool similar to ack, with a focus on speed
+License: Apache-2.0
 Group: Development/Tools
-Url: https://github.com/ggreer/the_silver_searcher/
+# https://github.com/ggreer/the_silver_searcher/
+Url: https://geoff.greer.fm/ag/
 
 Packager: %packager
 Source: %name-%version.tar
@@ -16,42 +17,32 @@ BuildRequires: clang liblzma-devel libpcre-devel zlib-devel
 %description
 Ag (silversearcher) is a code searching tool.
 It is an order of magnitude faster than ack.
-It ignores file patterns from .gitignore and .hgignore,
-also it has it's own .agignore file.
+It ignores file patterns from .gitignore and .hgignore.
+If there are files in your source repo you don't want to search,
+just add their patterns to a .ignore file.
+The command name is 33%% shorter than ack, and all keys are on the home row!
 
 %prep
 %setup -q
 
 %build
-./build.sh
-
-cd doc
-bzip2 -9 ag.1
-cd ..
+%configure
+make
 
 %install
-mkdir -p %buildroot%_bindir
-install -pm755 ag %buildroot/%_bindir/
-
-# Устанавливаем руководство.
-mkdir -p %buildroot%_man1dir
-install -pm644 doc/ag.1.* %buildroot/%_man1dir/
-
-# Добавляем нехитрую документацию.
-%define docdir %_docdir/%name-%version
-
-mkdir -p %buildroot/%docdir
-install -pm644 CONTRIBUTING.md %buildroot%docdir/
-install -pm644 LICENSE %buildroot%docdir/
-install -pm644 README.md %buildroot%docdir/
+%makeinstall_std
 
 %files
 %_bindir/ag
 %_man1dir/ag.1.*
-%dir %docdir
-%docdir/*
+%_datadir/the_silver_searcher/completions/ag.bashcomp.sh
+%_datadir/zsh/site-functions/_the_silver_searcher
+%doc README.md
 
 %changelog
+* Sun Oct 01 2017 Mikhail Gordeev <obirvalger@altlinux.org> 2.1.0-alt1
+- new version 2.1.0
+
 * Sat Dec 17 2016 Andrey Bergman <vkni@altlinux.org> 1.0.2-alt1
 - Version update.
 
