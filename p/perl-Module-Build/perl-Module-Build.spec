@@ -2,7 +2,7 @@
 %define dist Module-Build
 Name: perl-%dist
 Version: 0.4224
-Release: alt1
+Release: alt2
 
 Summary: Build and install Perl modules
 License: GPL or Artistic
@@ -10,6 +10,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/L/LE/LEONT/%{dist}-%{version}.tar.gz
+Patch: Module-Build-0.4224-alt-fix-shabang.patch
 
 BuildArch: noarch
 
@@ -28,6 +29,7 @@ It is meant to be a replacement for ExtUtils::MakeMaker.
 
 %prep
 %setup -q -n %{dist}-%{version}
+%patch -p1
 bzip2 -k Changes
 
 %build
@@ -59,6 +61,9 @@ bzip2 -k Changes
 %exclude %perl_vendor_privlib/Module/Build/Platform/os2.pm
 
 %changelog
+* Sun Oct 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.4224-alt2
+- Module-Build-0.4224-alt-fix-shabang.patch
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.4224-alt1
 - automated CPAN update
 
