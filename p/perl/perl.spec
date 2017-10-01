@@ -1,5 +1,5 @@
 Name: perl
-Version: 5.24.2
+Version: 5.24.3
 Release: alt1
 Epoch: 1
 
@@ -213,9 +213,9 @@ Obsoletes: perl-Digest-MD5 perl-Time-HiRes perl-MIME-Base64
 Summary: Perl header files and development modules
 Group: Development/Perl
 Requires: perl-base = %epoch:%version-%release
-Provides: perl-Test-Tester = 0.2
-Obsoletes: perl-Test-Tester < 0.2
-Conflicts: perl-Test-Tester < 0.2
+Provides: perl-Test-Tester = 0.114
+Obsoletes: perl-Test-Tester < 0.114
+Conflicts: perl-Test-Tester < 0.114
 Provides: perl-Test-use-ok = 0.12
 Obsoletes: perl-Test-use-ok < 0.12
 Conflicts: perl-Test-use-ok < 0.12
@@ -329,21 +329,21 @@ equivalent text will have identical binary representations.
 # BeginPatches(fedora): ------------------------------------
 %patch322 -p1
 %patch326 -p1
-%patch331 -p1
-%patch332 -p1
-%patch333 -p1
+#patch331 -p1
+#patch332 -p1
+#patch333 -p1
 %patch334 -p1
-%patch335 -p1
+#patch335 -p1
 %patch336 -p1
 %patch337 -p1
-%patch338 -p1
+#patch338 -p1
 %patch340 -p1
 %patch341 -p1
-%patch342 -p1
-%patch343 -p1
-%patch345 -p1
-%patch346 -p1
-%patch347 -p1
+#patch342 -p1
+#patch343 -p1
+#patch345 -p1
+#patch346 -p1
+#patch347 -p1
 %patch348 -p1
 %patch349 -p1
 %patch350 -p1
@@ -351,7 +351,7 @@ equivalent text will have identical binary representations.
 %patch352 -p1
 %patch353 -p1
 %patch354 -p1
-%patch355 -p1
+#patch355 -p1
 %patch356 -p1
 %patch357 -p1
 %patch358 -p1
@@ -383,6 +383,11 @@ find -name '*.orig' -delete
 %define site_privlib %site_prefix/share/perl/%ver
 %define site_archlib %site_prefix/%_lib/perl/%ver
 
+%ifarch e2k
+# mcst#2279
+%add_optflags -D_FORTIFY_SOURCE=0
+%endif
+
 sh Configure -ders \
 %ifarch %{ix86}
 	-Duse64bitint \
@@ -399,6 +404,11 @@ sh Configure -ders \
 	-Dman1dir=%_man1dir -Dman3dir=none \
 	-Dcf_by='%vendor' -Dcf_email='%packager' \
 	-Dmyhostname=localhost -Dperladmin=root@localhost
+
+%ifarch e2k
+# till apx. lcc-1.23
+echo '-lcxa' >> ./ext.libs
+%endif
 
 # kill rpath
 sed -i 's@ -Wl,-rpath,%archlib/CORE@@g' config.sh [Mm]akefile myconfig
@@ -947,6 +957,9 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%autolib/Unicode
 
 %changelog
+* Sun Oct 01 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.24.3-alt1
+- 5.24.2 -> 5.24.3
+
 * Wed Aug 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.24.2-alt1
 - 5.24.1 -> 5.24.2 (CVE-2016-1238)
 
