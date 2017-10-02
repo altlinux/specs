@@ -1,26 +1,35 @@
+BuildRequires: perl-podlators
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(Test/More.pm) perl(XSLoader.pm)
 # END SourceDeps(oneline)
-%define module_version 1.00
 %define module_name URI-UTF8-Punycode
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.00
-Release: alt3.1
+Version: 1.05
+Release: alt1
 Summary: Punycode conversion of UTF-8 string.
 Group: Development/Perl
 License: gpl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/T/TW/TWINKLE/%module_name-%module_version.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TW/TWINKLE/%{module_name}-%{version}.tar.gz
 
 %description
 %summary
 
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %name = %{?epoch:%epoch:}%version-%release
+
+%description scripts
+scripts for %name
+
+
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,7 +42,15 @@ Source0: http://cpan.org.ua/authors/id/T/TW/TWINKLE/%module_name-%module_version
 %perl_vendor_archlib/U*
 %perl_vendor_autolib/*
 
+%files scripts
+%_bindir/*
+%_man1dir/*
+
+
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3.1
 - rebuild with new perl 5.24.1
 
