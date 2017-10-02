@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Class-Field
 Version:        0.23
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Class Field Accessor Generator
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -14,7 +14,7 @@ URL:            http://search.cpan.org/dist/Class-Field/
 Source0:        http://www.cpan.org/authors/id/I/IN/INGY/Class-Field-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  findutils
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Data/Dumper.pm)
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_6
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_5
 - update to new release by fcimport
 
