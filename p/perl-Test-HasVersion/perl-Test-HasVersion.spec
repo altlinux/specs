@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-HasVersion
 Version:        0.014
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Check Perl modules have version numbers
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -16,7 +16,7 @@ BuildArch:      noarch
 # Module Build
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 # Module Runtime
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -65,6 +65,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1_6
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1_5
 - update to new release by fcimport
 
