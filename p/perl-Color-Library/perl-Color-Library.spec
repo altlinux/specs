@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Color-Library
 Version:        0.021
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Easy-to-use and comprehensive named-color library
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -16,7 +16,7 @@ Source0:        http://www.cpan.org/authors/id/R/RO/ROKR/Color-Library-%{version
 Patch0:         Color-Library-0.021-pod-fixes.patch
 BuildArch:      noarch
 BuildRequires:  findutils
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
@@ -59,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.021-alt2_12
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.021-alt2_11
 - update to new release by fcimport
 
