@@ -1,61 +1,25 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
-# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-%define fedora 25
+
 Name:     tomcatjss
-Version:  7.1.4
-Release:  alt1_1jpp8
+Version:  7.2.4
+Release:  alt1%ubt
 Summary:  JSSE implementation using JSS for Tomcat
-URL:      http://pki.fedoraproject.org/
 License:  LGPLv2+
 Group:    System/Libraries
-
-BuildArch:      noarch
+URL:      http://pki.fedoraproject.org/
 
 Source0:  http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}.tar.gz
 
-# jpackage-utils requires versioning to meet both build and runtime requirements
-# jss requires versioning to meet both build and runtime requirements
-# tomcat requires versioning to meet both build and runtime requirements
-BuildRequires:    ant
-BuildRequires:    apache-commons-lang
-BuildRequires:    java-devel
-BuildRequires:    jpackage-utils >= 0:1.7.5
-BuildRequires:    jss >= 4.2.6
-%if 0%{?fedora} >= 23
-BuildRequires:    tomcat >= 8.0.18
-%else
-BuildRequires:    tomcat >= 7.0.40
-%endif
+BuildRequires(pre): rpm-macros-java rpm-build-ubt
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+BuildRequires: ant
+BuildRequires: apache-commons-lang
+BuildRequires: jss >= 4.4.2
+BuildRequires: tomcat >= 8.0.18
 
-Requires:         apache-commons-lang
-%if 0%{?fedora} >= 21
-%else
-Requires:         java
-%endif
-Requires:         jpackage-utils >= 0:1.7.5
-Requires:         jss >= 4.2.6
-%if 0%{?fedora} >= 23
-Requires:         tomcat >= 8.0.18
-%else
-Requires:         tomcat >= 7.0.40
-%endif
-
-# The 'tomcatjss' package conflicts with the 'tomcat-native' package
-# because it uses an underlying NSS security model rather than the
-# OpenSSL security model, so these two packages may not co-exist.
-# (see Bugzilla Bug #441974 for details)
-Conflicts:        tomcat-native
-
-%if 0%{?rhel}
-# For EPEL, override the '_sharedstatedir' macro on RHEL
-%define           _sharedstatedir    /var/lib
-%endif
-Source44: import.info
+Conflicts: tomcat-native
+BuildArch: noarch
 
 %description
 A Java Secure Socket Extension (JSSE) implementation
@@ -67,7 +31,7 @@ NOTE:  The 'tomcatjss' package conflicts with the 'tomcat-native' package
 
 %prep
 
-%setup -q
+%setup
 chmod -c -x LICENSE README
 
 %build
@@ -81,18 +45,14 @@ ant -f build.xml -Djnidir=%{_jnidir} dist
 cd dist/binary
 unzip %{name}-%{version}.zip -d %{buildroot}
 
-# Install our files
-cd %{buildroot}%{_javadir}
-%if 0%{?rhel} || 0%{?fedora} < 21
-mv %{name}.jar %{name}-%{version}.jar
-ln -s %{name}-%{version}.jar %{name}.jar
-%endif
-
 %files
 %doc README LICENSE
 %{_javadir}/*
 
 %changelog
+* Fri Sep 22 2017 Stanislav Levin <slev@altlinux.org> 7.2.4-alt1%ubt
+- Update to upstream's 7.2.4 version
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 7.1.4-alt1_1jpp8
 - new version
 

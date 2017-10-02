@@ -1,71 +1,28 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-%define fedora 24
+
 Name:           jss
-Version:        4.2.6
-Release:        alt6_42jpp8
+Version:        4.4.2
+Release:        alt1%ubt
 Summary:        Java Security Services (JSS)
 
-Group:          System/Libraries
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
+Group:          System/Libraries
 URL:            http://www.mozilla.org/projects/security/pki/jss/
-# The source for this package was pulled from upstream's cvs. Use the
-# following commands to generate the tarball:
-# cvs -d :pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot export -r JSS_4_2_6_RTM -d jss-4.2.6 -N mozilla/security/coreconf mozilla/security/jss
-# tar -czvf jss-4.2.6.tar.gz jss-4.2.6
-Source0:        http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}-%{release}/%{name}-%{version}.tar.gz
-Source1:        http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}-%{release}/MPL-1.1.txt
-Source2:        http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}-%{release}/gpl.txt
-Source3:        http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}-%{release}/lgpl.txt
+Source0:        http://pki.fedoraproject.org/pki/sources/%{name}/%{version}/%{name}-%{version}.tar.gz
+Source1:        http://pki.fedoraproject.org/pki/sources/%{name}/%{version}/MPL-1.1.txt
+Source2:        http://pki.fedoraproject.org/pki/sources/%{name}/%{version}/gpl.txt
+Source3:        http://pki.fedoraproject.org/pki/sources/%{name}/%{version}/lgpl.txt
+Patch1:         jss-HMAC-test-for-AES-encrypt-unwrap.patch
+Patch2:         jss-PBE-padded-block-cipher-enhancements.patch
+Patch3:         jss-fix-PK11Store-getEncryptedPrivateKeyInfo-segfault.patch
+Patch4:         jss-link-alt.patch
+Patch5:         jss-alt-sem-as-needed.patch
 
-BuildRequires: libnss-devel libnss-devel-static
-BuildRequires:  libnspr-devel >= 4.11.0
-%if 0%{?fedora} >= 25
-BuildRequires:     perl
-%endif
-Requires:       libnss >= 3.21.0
-
-Patch1:         jss-key_pair_usage_with_op_flags.patch
-Patch2:         jss-javadocs-param.patch
-Patch3:         jss-ipv6.patch
-Patch4:         jss-ECC-pop.patch
-Patch5:         jss-loadlibrary.patch
-Patch6:         jss-ocspSettings.patch
-Patch7:         jss-ECC_keygen_byCurveName.patch
-Patch8:         jss-VerifyCertificate.patch
-Patch9:         jss-bad-error-string-pointer.patch
-Patch10:        jss-VerifyCertificateReturnCU.patch
-#Patch11:        jss-slots-not-freed.patch
-Patch12:        jss-ECC-HSM-FIPS.patch
-Patch13:        jss-eliminate-native-compiler-warnings.patch
-Patch14:        jss-eliminate-java-compiler-warnings.patch
-Patch15:        jss-PKCS12-FIPS.patch
-Patch16:        jss-eliminate-native-coverity-defects.patch
-Patch17:        jss-PBE-PKCS5-V2-secure-P12.patch
-Patch18:        jss-wrapInToken.patch
-Patch19:        jss-HSM-manufacturerID.patch
-Patch20:        jss-ECC-Phase2KeyArchivalRecovery.patch
-Patch21:        jss-undo-JCA-deprecations.patch
-Patch22:        jss-undo-BadPaddingException-deprecation.patch
-Patch23:        jss-fixed-build-issue-on-F17-or-newer.patch
-Patch24:        jss-SHA-OID-fix.patch
-Patch25:        jss-RC4-strengh-verify.patch
-Patch26:        jss-support-TLS1_1-TLS1_2.patch
-Patch27:        jss-WindowsCompileFix.patch
-Patch28:        jss-WindowsLoadLibrary.patch
-Patch29:        jss-Fixed-build-failures.patch
-Patch30:        jss-VerifyCertificate-enhancement.patch
-Patch31:        jss-lunasaUnwrap.patch
-Patch32:        jss-symkey-enhancements.patch
-Patch33:        jss-crmf-envelopedData.patch
-Source44: import.info
-Patch34: jss-link-alt.patch
-Patch35: jss-alt-sem-as-needed.patch
-
+BuildRequires(pre): rpm-macros-java rpm-build-ubt
+BuildRequires:  /proc 
+BuildRequires:  jpackage-generic-compat
+BuildRequires:  libnss-devel >= 3.28.4
+BuildRequires:  libnspr-devel >= 4.13.1
 
 %description
 Java Security Services (JSS) is a java native interface which provides a bridge
@@ -75,54 +32,29 @@ This only works with gcj. Other JREs require that JCE providers be signed.
 %package javadoc
 Summary:        Java Security Services (JSS) Javadocs
 Group:          Development/Java
-Requires:       jss = %{version}
-BuildArch: noarch
+Requires:       %{name} = %{version}-%{release}
+BuildArch: 	noarch
 
 %description javadoc
 This package contains the API documentation for JSS.
 
 %prep
-%setup -q
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-#%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
-%patch26 -p1
-%patch27 -p1
-%patch28 -p1
-%patch29 -p1
-%patch30 -p1
-%patch31 -p1
-%patch32 -p1
-%patch33 -p1
-%patch34 -p1
-%patch35 -p1
+%setup -n %{name}-%{version} 
+%patch1 -d jss -p1
+%patch2 -d jss -p1
+%patch3 -d jss -p1
+%patch4 -d jss -p1
+%patch5 -d jss -p1
 
 %build
 [ -z "$JAVA_HOME" ] && export JAVA_HOME=%{_jvmdir}/java
+[ -z "$USE_INSTALLED_NSPR" ] && export USE_INSTALLED_NSPR=1
+[ -z "$USE_INSTALLED_NSS" ] && export USE_INSTALLED_NSS=1
 
 # Enable compiler optimizations and disable debugging code
+# NOTE: If you ever need to create a debug build with optimizations disabled
+# just comment out this line and change in the %%install section below the
+# line that copies jars xpclass.jar to be xpclass_dbg.jar
 BUILD_OPT=1
 export BUILD_OPT
 
@@ -138,9 +70,11 @@ export PKG_CONFIG_ALLOW_SYSTEM_CFLAGS
 
 NSPR_INCLUDE_DIR=`/usr/bin/pkg-config --cflags-only-I nspr | sed 's/-I//'`
 NSPR_LIB_DIR=`/usr/bin/pkg-config --libs-only-L nspr | sed 's/-L//'`
+[ -z $NSPR_LIB_DIR ] && NSPR_LIB_DIR="%{_libdir}"
 
 NSS_INCLUDE_DIR=`/usr/bin/pkg-config --cflags-only-I nss | sed 's/-I//'`
 NSS_LIB_DIR=`/usr/bin/pkg-config --libs-only-L nss | sed 's/-L//'`
+[ -z $NSS_LIB_DIR ] && NSS_LIB_DIR="%{_libdir}"
 
 export NSPR_INCLUDE_DIR
 export NSPR_LIB_DIR
@@ -152,44 +86,15 @@ USE_64=1
 export USE_64
 %endif
 
-%if 0%{?fedora} >= 16
-cp -p mozilla/security/coreconf/Linux2.6.mk mozilla/security/coreconf/Linux3.1.mk 
-sed -i -e 's;LINUX2_1;LINUX3_1;' mozilla/security/coreconf/Linux3.1.mk
-
-cp -p mozilla/security/coreconf/Linux3.1.mk mozilla/security/coreconf/Linux3.2.mk 
-sed -i -e 's;LINUX3_1;LINUX3_2;' mozilla/security/coreconf/Linux3.2.mk
-
-cp -p mozilla/security/coreconf/Linux3.2.mk mozilla/security/coreconf/Linux3.6.mk
-sed -i -e 's;LINUX3_1;LINUX3_6;' mozilla/security/coreconf/Linux3.6.mk
-%endif
-
-
-# 3.0(t6), 3.5(SIS) kernels support
-for i in 0 `seq 3 20`; do
-cp -p mozilla/security/coreconf/Linux3.1.mk mozilla/security/coreconf/Linux3.$i.mk
-sed -i -e 's;LINUX3_1;LINUX3_'$i';' mozilla/security/coreconf/Linux3.$i.mk
-done
-
-fix_kversion(){
-set -- $(uname -r | cut -d. -f 1-2 --output-delimiter=" ")
-local KMAJ=$1; shift
-local KMIN=$1; shift
-if [ ! -s "mozilla/security/coreconf/Linux$KMAJ.$KMIN.mk" ]; then
-  cp -p mozilla/security/coreconf/Linux3.1.mk mozilla/security/coreconf/Linux"$KMAJ.$KMIN".mk
-  sed -i -e "s;LINUX3_1;LINUX$KMAJ_$KMIN;" mozilla/security/coreconf/Linux"$KMAJ.$KMIN".mk
-fi
-}
-fix_kversion
-
 # The Makefile is not thread-safe
-make -C mozilla/security/coreconf
-make -C mozilla/security/jss
-make -C mozilla/security/jss javadoc
+make -C jss/coreconf
+make -C jss 
+make -C jss javadoc
 
 %install
 rm -rf $RPM_BUILD_ROOT docdir
 
-# Copy the license files here so we can include them in %doc
+# Copy the license files here so we can include them in %%doc
 cp -p %{SOURCE1} .
 cp -p %{SOURCE2} .
 cp -p %{SOURCE3} .
@@ -197,39 +102,29 @@ cp -p %{SOURCE3} .
 # There is no install target so we'll do it by hand
 
 # jars
-%if 0%{?fedora} >= 16
 install -d -m 0755 $RPM_BUILD_ROOT%{_jnidir}
-install -m 644 mozilla/dist/xpclass.jar ${RPM_BUILD_ROOT}%{_jnidir}/jss4.jar
-%else
-install -d -m 0755 $RPM_BUILD_ROOT%{_libdir}/jss
-install -m 644 mozilla/dist/xpclass.jar ${RPM_BUILD_ROOT}%{_libdir}/jss/jss4-%{version}.jar
-ln -fs jss4-%{version}.jar $RPM_BUILD_ROOT%{_libdir}/jss/jss4.jar
-
-install -d -m 0755 $RPM_BUILD_ROOT%{_jnidir}
-ln -fs %{_libdir}/jss/jss4.jar $RPM_BUILD_ROOT%{_jnidir}/jss4.jar
-%endif
+# NOTE: if doing a debug no opt build change xpclass.jar to xpclass_dbg.jar
+install -m 644 dist/xpclass.jar ${RPM_BUILD_ROOT}%{_jnidir}/jss4.jar
 
 # We have to use the name libjss4.so because this is dynamically
 # loaded by the jar file.
 install -d -m 0755 $RPM_BUILD_ROOT%{_libdir}/jss
-install -m 0755 mozilla/dist/Linux*.OBJ/lib/libjss4.so ${RPM_BUILD_ROOT}%{_libdir}/jss/
-%if 0%{?fedora} >= 16
+install -m 0755 dist/Linux*.OBJ/lib/libjss4.so ${RPM_BUILD_ROOT}%{_libdir}/jss/
 pushd  ${RPM_BUILD_ROOT}%{_libdir}/jss
     ln -fs %{_jnidir}/jss4.jar jss4.jar
 popd
-%endif
 
 # javadoc
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -rp mozilla/dist/jssdoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-mkdir -p %buildroot%_javadir/
-ln -s %_jnidir/jss4.jar %buildroot%_javadir/jss4.jar
+cp -rp dist/jssdoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+cp -p jss/jss.html $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+cp -p *.txt $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 
 %files
-%doc mozilla/security/jss/jss.html MPL-1.1.txt gpl.txt lgpl.txt
+%doc jss/jss.html MPL-1.1.txt gpl.txt lgpl.txt
 %{_libdir}/jss/*
 %{_jnidir}/*
-%_javadir/jss4.jar
+%{_libdir}/jss/lib*.so
 
 %files javadoc
 %dir %{_javadocdir}/%{name}-%{version}
@@ -237,6 +132,12 @@ ln -s %_jnidir/jss4.jar %buildroot%_javadir/jss4.jar
 
 
 %changelog
+* Wed Sep 20 2017 Levin Stanislav <slev@altlinux.org> 4.4.2-alt1%ubt
+- Update to upstream 4.4.2 version
+
+* Tue Jan 24 2017 Mikhail Efremov <sem@altlinux.org> 4.2.6-alt6_41jpp8.M80P.1
+- Build for p8.
+
 * Mon Nov 21 2016 Igor Vlasenko <viy@altlinux.ru> 4.2.6-alt6_42jpp8
 - update (closes: #32779)
 
