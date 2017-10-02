@@ -1,5 +1,5 @@
 %define branch 0.11
-%define svn svn7388
+%define svn svn7463
 
 %define rel alt1
 
@@ -954,6 +954,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Tue Sep 12 2017 Motsyo Gennadi <drool@altlinux.ru> 1:0.11.0-alt1.svn7463
+- 0.11.0 svn7463 version
+
 * Fri Aug 25 2017 Motsyo Gennadi <drool@altlinux.ru> 1:0.11.0-alt1.svn7388
 - 0.11.0 svn7388 version
 
