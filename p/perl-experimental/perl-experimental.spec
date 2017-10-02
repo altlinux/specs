@@ -6,7 +6,7 @@ BuildRequires: perl(Module/Build/Tiny.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-experimental
 Version:        0.016
-Release:        alt1_393
+Release:        alt1_394
 Summary:        Experimental features made easy
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -18,7 +18,7 @@ Source1:        Makefile.PL
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time:
@@ -57,6 +57,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1_394
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1_393
 - update to new release by fcimport
 
