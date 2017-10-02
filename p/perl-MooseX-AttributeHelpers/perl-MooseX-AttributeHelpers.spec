@@ -7,7 +7,7 @@ BuildRequires: perl(Data/Dumper.pm) perl(Module/Build.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-MooseX-AttributeHelpers
 Version:        0.25
-Release:        alt1_3
+Release:        alt1_6
 Summary:        Extended Moose attribute interfaces
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/MooseX-AttributeHelpers/
@@ -15,7 +15,6 @@ Source0:        http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/MooseX-Attribu
 
 BuildArch:      noarch
 Requires:       sed
-Requires:       perl
 
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Module/Build/Tiny.pm)
@@ -28,6 +27,7 @@ BuildRequires:  perl(Test/More.pm)
 Requires:  perl(Moose.pm) >= 0.560
 
 
+Source44: import.info
 
 %description
 While Moose attributes provide you with a way to name your accessors,
@@ -55,6 +55,9 @@ sed -i '1s,#!perl,#!%{__perl},' t/*.t
 %{perl_vendor_privlib}/MooseX*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_6
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_3
 - update to new release by fcimport
 
