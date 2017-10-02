@@ -3,7 +3,7 @@
 %define pkgname flexmock
 
 Name: ruby-%pkgname
-Version: 2.3.5
+Version: 2.3.6
 Release: alt1
 
 Summary: Simple mock object library for Ruby unit testing
@@ -55,6 +55,9 @@ rm -f lib/flexmock/rails.rb
 %ruby_ri_sitedir/FlexMock*
 
 %changelog
+* Mon Oct 02 2017 Andrey Cherepanov <cas@altlinux.org> 2.3.6-alt1
+- New version
+
 * Wed Sep 06 2017 Andrey Cherepanov <cas@altlinux.org> 2.3.5-alt1
 - New version
 - Remove experimental mocking by rails
