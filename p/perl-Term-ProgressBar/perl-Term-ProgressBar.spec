@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Term-ProgressBar
 
 Name: perl-%module_name
-Version: 2.18
+Version: 2.21
 Release: alt1
 
 Summary: Provides a progress meter on a standard terminal
@@ -9,7 +10,7 @@ Summary(ru_RU.UTF-8): Индикатор процесса в консоли.
 Group: Development/Perl
 URL: http://ftp.spbu.ru/CPAN/authors/id/F/FL/FLUFFY
 License: GPL or Artistic
-Source: http://www.cpan.org/authors/id/M/MA/MANWAR/Term-ProgressBar-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MANWAR/%{module_name}-%{version}.tar.gz
 Buildarch: noarch
 AutoReqProv: yes, perl
 BuildRequires: perl-Class-MethodMaker perl-Module-Build perl-Term-ReadKey perl-devel perl(Test/Exception.pm) perl(Capture/Tiny.pm)
@@ -26,7 +27,7 @@ has been done, and maybe an estimate at how long remains.
 работа, какая примерно часть сделана, и возможно оценку оставшегося времени.
 
 %prep
-%setup -q -n %module_name-%version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,10 +36,15 @@ has been done, and maybe an estimate at how long remains.
 %perl_vendor_install
 
 %files
+%doc Changes README examples
 #%doc README Changes
 %perl_vendorlib/Term/ProgressBar.pm
+%perl_vendorlib/Term/ProgressBar/IO.pm
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.21-alt1
+- automated CPAN update
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 2.18-alt1
 - automated CPAN update
 
