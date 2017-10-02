@@ -6,7 +6,7 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 %define _localstatedir %{_var}
 Name:           perl-CGI-PSGI
 Version:        0.15
-Release:        alt1_17
+Release:        alt1_18
 Summary:        Enable your CGI.pm aware applications to adapt PSGI protocol
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -14,7 +14,7 @@ URL:            http://search.cpan.org/dist/CGI-PSGI/
 Source0:        http://www.cpan.org/authors/id/M/MI/MIYAGAWA/CGI-PSGI-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  findutils
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(inc/Module/Install.pm)
 BuildRequires:  perl(Module/Install/AuthorTests.pm)
@@ -69,6 +69,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_18
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_17
 - update to new release by fcimport
 
