@@ -1,6 +1,6 @@
 Name: apt-scripts-nvidia
-Version: 0.4.4
-Release: alt1
+Version: 0.4.5
+Release: alt1%ubt
 
 Summary: APT Lua scripts for NVIDIA driver
 License: GPL
@@ -8,6 +8,7 @@ Group: System/Configuration/Packaging
 
 Source: scripts-nvidia-%version.tar
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: apt
 
 %description
@@ -41,6 +42,9 @@ ls *.conf |sed 's:^:^/etc/apt/apt.conf.d/:;s:[.]:[.]:g' >%buildroot/etc/buildreq
 %config /etc/buildreqs/files/ignore.d/%name
 
 %changelog
+* Mon Oct 02 2017 Sergey V Turchin <zerg@altlinux.org> 0.4.5-alt1%ubt
+- fix detect installer environment
+
 * Wed Aug 03 2016 Sergey V Turchin <zerg@altlinux.org> 0.4.4-alt1
 - show kernel name when package not found
 
