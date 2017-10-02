@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.13
-Release:	alt2
+Release:	alt3
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -139,6 +139,9 @@ fi
 %files full
 
 %changelog
+* Mon Oct 02 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.9.13-alt3
+- fixed bridge interfaces up (closes: #33945)
+
 * Thu Sep 28 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.9.13-alt2
 - bridge: added brivlanport iface types
 
