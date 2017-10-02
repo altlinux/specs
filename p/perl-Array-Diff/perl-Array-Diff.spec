@@ -9,7 +9,7 @@ BuildRequires: perl(CPAN.pm) perl(Filter/Util/Call.pm) perl(JSON.pm) perl(LWP/Si
 
 Name:           perl-Array-Diff
 Version:        0.07
-Release:        alt2_24
+Release:        alt2_25
 # Because 0.07 compares newer than 0.05002 in Perl world
 # but not in RPM world :-(
 Epoch:          1
@@ -23,7 +23,7 @@ BuildArch:      noarch
 # Module Build
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Cwd.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -91,6 +91,9 @@ make test
 %{perl_vendor_privlib}/Array/Diff.pm
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.07-alt2_25
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.07-alt2_24
 - update to new release by fcimport
 
