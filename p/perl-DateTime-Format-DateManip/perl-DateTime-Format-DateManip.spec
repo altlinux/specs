@@ -6,7 +6,7 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-DateManip
 Version:        0.04
-Release:        alt2_24
+Release:        alt2_25
 Summary:        Convert Date::Manip to DateTime and vice versa
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -17,7 +17,7 @@ Patch0:         DateTime-Format-DateManip-01conversion.patch
 # Pass test with Date-Manip-6.49, bug #1199969, CPAN RT#102670
 Patch1:         DateTime-Format-DateManip-0.04-Set-system-time-zone-in-test.patch
 BuildArch:      noarch
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Module/Build.pm)
 # Run-time
@@ -59,6 +59,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_25
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_24
 - update to new release by fcimport
 
