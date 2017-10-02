@@ -6,14 +6,14 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Data-Rmap
 Version:        0.65
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Recursive map, apply a block to a data structure
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/Data-Rmap/
 Source0:        http://www.cpan.org/authors/id/B/BO/BOWMANBS/Data-Rmap-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Data/Dumper.pm)
@@ -53,6 +53,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1_4
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1_3
 - update to new release by fcimport
 
