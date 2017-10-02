@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 Summary: 	Calculate business hours in a time period
 Name: 		perl-Business-Hours
 Version: 	0.12
-Release: 	alt2_11
+Release: 	alt2_12
 License: 	GPL+ or Artistic
 Group: 		Development/Other
 URL: 		http://search.cpan.org/dist/Business-Hours/
@@ -19,7 +19,7 @@ Requires:  perl(Set/IntSpan.pm) >= 1.120
 
 BuildRequires:	coreutils
 BuildRequires:	findutils
-BuildRequires:	perl
+BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Run-time:
@@ -64,6 +64,9 @@ make test
 %{perl_vendor_privlib}/Business
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2_12
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2_11
 - update to new release by fcimport
 
