@@ -7,13 +7,13 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:       perl-DateTime-Format-Flexible
 Version:    0.28
-Release:    alt1_2
+Release:    alt1_3
 License:    GPL+ or Artistic
 Summary:    Flexibly parse strings and turn them into DateTime objects
 Source:     http://search.cpan.org/CPAN/authors/id/T/TH/THINC/DateTime-Format-Flexible-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/DateTime-Format-Flexible/
 BuildArch:  noarch
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time:
@@ -65,6 +65,9 @@ TEST_POD=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1_3
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1_2
 - update to new release by fcimport
 
