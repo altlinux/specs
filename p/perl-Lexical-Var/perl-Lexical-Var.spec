@@ -6,7 +6,7 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Lexical-Var
 Version:        0.009
-Release:        alt2_11
+Release:        alt2_13
 Summary:        Static variables without name space pollution
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -14,7 +14,7 @@ URL:            http://search.cpan.org/dist/Lexical-Var/
 Source0:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Lexical-Var-%{version}.tar.gz
 # Update code to work with Perl 5.21.x (CPAN RT#101058)
 Patch0:         Lexical-Var-0.009-Fix-RT-101058.patch
-BuildRequires:  perl
+BuildRequires:  perl-devel >= 0:5.006
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Module/Build.pm)
@@ -60,6 +60,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Lexical*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.009-alt2_13
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.009-alt2_11
 - update to new release by fcimport
 
