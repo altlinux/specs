@@ -1,13 +1,13 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(AnyEvent.pm) perl(AnyEvent/Handle.pm) perl(AnyEvent/Socket.pm) perl(CPAN.pm) perl(Encode.pm) perl(ExtUtils/CBuilder.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(JSON.pm) perl(JSON/XS.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Test/More.pm) perl(YAML/Tiny.pm) perl-podlators
+BuildRequires: perl(AnyEvent.pm) perl(AnyEvent/Handle.pm) perl(AnyEvent/Socket.pm) perl(CPAN.pm) perl(Encode.pm) perl(ExtUtils/CBuilder.pm) perl(JSON.pm) perl(JSON/XS.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-AnyEvent-I3
 Version:        0.17
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Communicate with the i3 window manager
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/anyevent-i3/
@@ -16,7 +16,7 @@ BuildArch:      noarch
 # Build
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(inc/Module/Install.pm)
@@ -68,6 +68,9 @@ find %{buildroot} -type f -name .packlist -delete
 %{perl_vendor_privlib}/AnyEvent/I3.pm
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_3
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_2
 - update to new release by fcimport
 
