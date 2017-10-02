@@ -7,13 +7,13 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:       perl-Time-Warp 
 Version:    0.52
-Release:    alt1_6
+Release:    alt1_8
 License:    GPL+ or Artistic 
 Summary:    Control over the flow of time
 Source:     http://search.cpan.org/CPAN/authors/id/S/SZ/SZABGAB/Time-Warp-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/Time-Warp
 BuildRequires:  findutils
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_archlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1_8
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1_6
 - update to new release by fcimport
 
