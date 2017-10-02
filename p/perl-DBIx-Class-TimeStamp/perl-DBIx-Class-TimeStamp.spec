@@ -7,7 +7,7 @@ BuildRequires: perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/
 %define _localstatedir %{_var}
 Name:           perl-DBIx-Class-TimeStamp
 Version:        0.14
-Release:        alt2_19
+Release:        alt2_20
 Summary:        DBIx::Class extension to update and create date and time based fields
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/DBIx-Class-TimeStamp/
@@ -15,7 +15,7 @@ Source0:        http://search.cpan.org/CPAN/authors/id/R/RI/RIBASUSHI/DBIx-Class
 Patch0:         DBIx-Class-TimeStamp-0.14-Fix-building-on-Perl-without-dot-in-INC.patch
 BuildArch:      noarch
 # Build
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Config.pm)
 BuildRequires:  perl(CPAN.pm)
@@ -89,6 +89,9 @@ TEST_POD=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_20
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_19
 - update to new release by fcimport
 
