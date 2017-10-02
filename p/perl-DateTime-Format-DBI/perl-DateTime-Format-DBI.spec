@@ -6,7 +6,7 @@ BuildRequires: perl(Module/Build.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-DBI
 Version:        0.041
-Release:        alt1_9
+Release:        alt1_10
 Summary:        Find a parser class for a database connection
 License:        GPL+ or Artistic 
 Group:          Development/Other
@@ -14,7 +14,7 @@ URL:            http://search.cpan.org/dist/DateTime-Format-DBI/
 Source0:        http://www.cpan.org/authors/id/C/CF/CFAERBER/DateTime-Format-DBI-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  %{_bindir}/iconv
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(DateTime.pm)
@@ -65,6 +65,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.041-alt1_10
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.041-alt1_9
 - update to new release by fcimport
 
