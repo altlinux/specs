@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Test-Warnings
 Version:	0.026
-Release:	alt1_5
+Release:	alt1_6
 Summary:	Test for warnings and the lack of them
 License:	GPL+ or Artistic
 Group:		Development/Other
@@ -17,7 +17,7 @@ BuildArch:	noarch
 # Build
 BuildRequires:	coreutils
 BuildRequires:	findutils
-BuildRequires:	perl
+BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module
@@ -89,6 +89,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.026-alt1_6
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.026-alt1_5
 - update to new release by fcimport
 
