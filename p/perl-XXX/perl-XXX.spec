@@ -6,14 +6,14 @@ BuildRequires: perl(Test/Pod.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-XXX
 Version:        0.31
-Release:        alt1_3
+Release:        alt1_4
 Summary:        See Your Data in the Nude
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/XXX/
 Source0:        http://search.cpan.org/CPAN/authors/id/I/IN/INGY/XXX-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Carp.pm)
@@ -63,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1_4
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1_3
 - update to new release by fcimport
 
