@@ -1,19 +1,28 @@
 Summary: Synchronizing Key Server
 Name: sks
-Version: 1.1.10
-Release: alt2.qa2
+Epoch: 1
+Version: 1.1.6
+Release: alt1
 License: GPL
 Group: System/Servers
-Source: http://minskyprimus.net/sks/releases/%name-%version.tar.gz
-Source1: %{name}conf
-Source2: %name.init
-Source3: %name.log
-Url: http://www.nongnu.org/%name/
-Packager: Boris Savelev <boris@altlinux.org>
+Url: https://bitbucket.org/skskeyserver/sks-keyserver/wiki/Home
 
-# Automatically added by buildreq on Tue Aug 26 2008
-BuildRequires: camlp4 ocaml-cryptokit libdb4-devel
+Source: %name-%version.tar
+Source1: %{name}conf
+Source2: %{name}-db.init
+Source3: %{name}-recon.init
+Source4: %name.log
+Source5: sks-db.service
+Source6: sks-recon.service
+Source7: cryptokit-1.7-sks-uint32.patch
+
+Patch1: %name-%version-fedora-makefile.patch
+Patch2: %name-%version-alt-libdb.patch
+Patch3: %name-%version-alt-build.patch
+
+BuildRequires: ocaml-camlp4-devel ocaml-cryptokit-devel libdb6-devel zlib-devel
 BuildRequires: perl-podlators
+BuildRequires: chrpath
 
 %description
 SKS (Synchronizing Key Server) is a full-featured replacement
@@ -23,16 +32,23 @@ efficient, gossip-based replication algorithm that ensures that
 the replication is complete.
 
 %prep
-%setup -q
+%setup
+%patch1 -p1
+%patch2 -p2
+%patch3 -p2
+cp %SOURCE7 .
 
 %build
+mv Makefile.local.unused Makefile.local
 %make dep
 %make all
 
 %install
-PREFIX=%_usr \
-MANDIR=%_mandir \
-%makeinstall_std
+%makeinstall_std \
+PREFIX="%{buildroot}%{_prefix}" \
+MANDIR="%{buildroot}%{_mandir}"
+
+chrpath -d %buildroot%_bindir/sks
 
 mkdir -p %buildroot%_sysconfdir/%name
 install %SOURCE1 %buildroot%_sysconfdir/%name
@@ -40,15 +56,20 @@ touch %buildroot%_sysconfdir/%name/membership
 touch %buildroot%_sysconfdir/%name/mailsync
 
 mkdir -p %buildroot%_initdir
-install %SOURCE2 %buildroot%_initdir/%name
+install %SOURCE2 %buildroot%_initdir/%{name}-db
+install %SOURCE3 %buildroot%_initdir/%{name}-recon
 
 mkdir -p %buildroot%_sysconfdir/logrotate.d
-install %SOURCE3 %buildroot%_sysconfdir/logrotate.d/%name
+install %SOURCE4 %buildroot%_sysconfdir/logrotate.d/%name
 
-mkdir -p %buildroot%_var/lib/%name/{DB,PTree,dump,www}
+mkdir -p %buildroot%_var/lib/%name/{KDB,PTree,dump,www}
 mkdir -p %buildroot%_var/run/%name
 mkdir -p %buildroot%_var/log/%name
 mkdir -p %buildroot%_var/spool/%name/{messages,failed_messages}
+
+mkdir -p %buildroot%_unitdir
+install -m 0644 %SOURCE5 %buildroot%_unitdir/%{name}-db.service
+install -m 0644 %SOURCE6 %buildroot%_unitdir/%{name}-recon.service
 
 %pre
 /usr/sbin/groupadd -f -r _%{name} >/dev/null 2>&1 || :
@@ -56,19 +77,19 @@ mkdir -p %buildroot%_var/spool/%name/{messages,failed_messages}
     -c "SKS user" -M -n _%{name} >/dev/null 2>&1 || :
 
 %files
-%doc BUGS CHANGELOG COPYING FILES README TODO VERSION
+%doc BUGS CHANGELOG LICENSE FILES README.md TODO VERSION
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/%{name}conf
 %config(noreplace) %_sysconfdir/%name/membership
 %config(noreplace) %_sysconfdir/%name/mailsync
 %config(noreplace) %_sysconfdir/logrotate.d/%name
-%_initdir/%name
+%_initdir/%{name}-db
+%_initdir/%{name}-recon
+%_unitdir/%{name}-db.service
+%_unitdir/%{name}-recon.service
 %_bindir/*
-%_sbindir/*
-%dir %_datadir/%name
-%_datadir/%name/*
 %attr(2770,root,_%{name}) %dir %_var/lib/%name
-%attr(2770,root,_%{name}) %dir %_var/lib/%name/DB
+%attr(2770,root,_%{name}) %dir %_var/lib/%name/KDB
 %attr(2770,root,_%{name}) %dir %_var/lib/%name/PTree
 %attr(2770,root,_%{name}) %dir %_var/lib/%name/dump
 %attr(2770,root,_%{name}) %dir %_var/lib/%name/www
@@ -80,6 +101,9 @@ mkdir -p %buildroot%_var/spool/%name/{messages,failed_messages}
 %_man8dir/*
 
 %changelog
+* Mon Oct 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.1.6-alt1
+- Updated to upstream release version 1.1.6.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.10-alt2.qa2
 - NMU: rebuilt for debuginfo.
 
