@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-FailWarnings
 Version:        0.008
-Release:        alt1_10
+Release:        alt1_11
 Summary:        Add test failures if warnings are caught
 License:        ASL 2.0 
 
@@ -15,7 +15,7 @@ URL:            http://search.cpan.org/dist/Test-FailWarnings/
 Source0:        http://www.cpan.org/authors/id/D/DA/DAGOLDEN/Test-FailWarnings-%{version}.tar.gz
 
 BuildArch:      noarch
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
@@ -65,6 +65,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_11
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_10
 - update to new release by fcimport
 
