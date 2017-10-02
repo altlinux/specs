@@ -1,21 +1,21 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(parent.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-App-Nopaste
 Version:        1.011
-Release:        alt1
+Release:        alt1_1
 Summary:        Easy access to any pastebin
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/App-Nopaste/
 Source0:        http://www.cpan.org/authors/id/E/ET/ETHER/App-Nopaste-%{version}.tar.gz
 BuildArch:      noarch
 # Build
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
-BuildRequires:  sed
 BuildRequires:  perl(CPAN/Meta/Requirements.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
@@ -67,7 +67,7 @@ Epoch:          1
 License:        GPL+ or Artistic
 Group:          Development/Other
 Summary:        Access pastebins from the command line
-Requires:       %{name} = 0:%{version}
+Requires:       %{name} = 0:%{version}-%{release}
 
 %description -n nopaste
 This application lets you post text to pastebins from the command line.
@@ -79,11 +79,10 @@ normally be too long to give directly in the channel (hence the name nopaste).
 
 %prep
 %setup -q -n App-Nopaste-%{version}
-sed -i 's,^#!.*perl,#!%{__perl},' script/nopaste
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make pure_install DESTDIR=%{buildroot}
@@ -102,6 +101,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.011-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 30 2017 Igor Vlasenko <viy@altlinux.ru> 1.011-alt1
 - automated CPAN update
 
