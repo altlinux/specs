@@ -3,7 +3,7 @@
 
 Name: zoneminder
 Version: 1.30.4
-Release: alt2%ubt
+Release: alt3%ubt
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPL
@@ -44,7 +44,7 @@ Zones and Config.
 %package nginx
 Summary: Zoneminder configuration file and requires for nginx
 Group: Networking/WWW
-Requires: php5-fpm-fcgi spawn-fcgi >= 1.6.3-alt4 fcgiwrap nginx
+Requires: php5-fpm-fcgi fcgiwrap nginx
 BuildArch: noarch
 %description nginx
 Zoneminder configuration file and requires for nginx
@@ -137,6 +137,10 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Mon Oct 02 2017 Anton Farygin <rider@altlinux.ru> 1.30.4-alt3%ubt
+- removed spawn-fcgi requires for nginx 
+	(it does not need on configuration with systemd)
+
 * Wed Jun 21 2017 Anton Farygin <rider@altlinux.ru> 1.30.4-alt2%ubt
 - removed apache subpackage
 
