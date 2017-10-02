@@ -13,13 +13,13 @@ BuildRequires: libGL-devel libGLU-devel
 %define _localstatedir %{_var}
 Name:           perl-Wx-GLCanvas
 Version:        0.09
-Release:        alt1_13
+Release:        alt1_15
 Summary:        Interface to wxWidgets' OpenGL canvas
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Wx-GLCanvas/
 Source0:        http://www.cpan.org/authors/id/M/MB/MBARBON/Wx-GLCanvas-%{version}.tar.gz
 
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Alien/wxWidgets.pm)
@@ -73,6 +73,9 @@ DISPLAY=:0.0 make test
 %{perl_vendor_archlib}/Wx*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_15
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_13
 - update to new release by fcimport
 
