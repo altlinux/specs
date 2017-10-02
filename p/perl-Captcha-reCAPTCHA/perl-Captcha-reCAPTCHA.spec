@@ -6,7 +6,7 @@ BuildRequires: perl(CGI/Simple.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Captcha-reCAPTCHA
 Version:        0.98
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Perl implementation of the reCAPTCHA API
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -16,7 +16,7 @@ Source0:        http://search.cpan.org/CPAN/authors/id/S/SU/SUNNYP/Captcha-reCAP
 Patch0:         Captcha-reCAPTCHA-0.98-Do-not-disable-host-name-verification.patch
 BuildArch:      noarch
 BuildRequires:  findutils
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
@@ -69,6 +69,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1_4
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1_3
 - update to new release by fcimport
 
