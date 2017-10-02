@@ -1,32 +1,33 @@
 Name: FlightCrew
-Version: 0.7.2
-Release: alt2.qa3
+Version: 0.9.2
+Release: alt1
 Summary: EPUB validation tool
 
 Group: File tools
 License: LGPLv3+
-URL: http://code.google.com/p/flightcrew/
-Packager: ALT QA Team <qa@packages.altlinux.org>
+URL: https://github.com/Sigil-Ebook/flightcrew
+
+# https://github.com/Sigil-Ebook/flightcrew.git
 Source: %name-%version.tar
 
-Patch1: %name-0.7.2-fc18-soname.patch
-Patch2: %name-0.7.2-fc18-as_shared.patch
-Patch3: %name-0.7.2-fc18-use_system_zlib.patch
-Patch4: %name-0.7.2-fc18-use_system_boost.patch
-Patch5: %name-0.7.2-fc18-boost_1.48.patch
-Patch6: %name-0.7.2-fc18-use_system_xerces-c.patch
-Patch7: %name-0.7.2-fc18-headers.patch
-Patch8: %name-0.7.2-fc18-without_googlemock.patch
-Patch9: %name-0.7.2-fc18-FindFlightCrew.cmake.patch
-Patch10: %name-0.7.2-fc18-shared_XercesExtensions.patch
-Patch11: %name-0.7.2-fc18-shared_zipios.patch
+Patch1: %name-%version-fedora-system-zlib.patch
+Patch2: %name-%version-fedora-system-boost.patch
+Patch3: %name-%version-fedora-system-xercec-c.patch
+Patch4: %name-%version-fedora-dont-build-gmock.patch
+Patch5: %name-%version-fedora-move-zipextraction.patch
+Patch6: %name-%version-fedora-system-zipios.patch
+Patch7: %name-%version-fedora-fix-installed-plugins.patch
+Patch8: %name-%version-fedora-use-random-tmp-path.patch
+Patch9: %name-%version-alt-build.patch
 
 BuildPreReq: rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 BuildRequires: zlib-devel
 BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel boost-datetime-devel boost-regex-devel boost-thread-devel boost-system-devel
 BuildRequires: xerces-c-devel >= 3.1
-BuildRequires: libqt4-devel
+BuildRequires: python3-dev
+BuildRequires: qt5-base-devel
+
 Requires: lib%name = %version-%release
 
 %description
@@ -47,17 +48,16 @@ Requires: lib%name = %version-%release
 %description gui
 FlightCrew is a C++, cross-platform, native code epub validator.
 
-%package -n lib%name-devel
-Summary: Development files for %name
-Group: Development/C++
-Requires: lib%name = %version-%release
+%package sigil-plugin
+Summary: Sigil FlightCrew epub validator plugin
+Group: File tools
+Requires: sigil
 
-%description -n lib%name-devel
-The %name-devel package contains libraries and header files for
-developing applications that use %name.
+%description sigil-plugin
+Sigil FlightCrew epub validator plugin.
 
 %prep
-%setup -q
+%setup
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -67,8 +67,6 @@ developing applications that use %name.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
-#%patch11 -p1
 
 # Fix EOL encoding for %%doc
 for i in INSTALL.txt README.txt ChangeLog.txt; do
@@ -84,16 +82,21 @@ rm -rf src/googlemock
 # fix permissions
 chmod a-x src/utf8-cpp/utf8/*.h
 
-
 %build
-%cmake -DBUILD_SHARED_LIBS:BOOL=OFF -DBUILD_SHARED_FC=1 -DBUILD_SHARED_XE=1 -DNO_TEST_EXE=1 -DINCLUDE_INSTALL_DIR=%_includedir
-cd BUILD
-%make_build
+%cmake -DBUILD_SHARED_FC:BOOL=ON -DNO_TEST_EXE=1
 
+pushd BUILD
+%make_build
+popd
 
 %install
-cd BUILD
+pushd BUILD
 %makeinstall_std
+popd
+
+mkdir -p %buildroot%_datadir/sigil/plugins/%name
+install -p -m 755 src/FlightCrew-plugin/plugin.py  %buildroot%_datadir/sigil/plugins/%name
+install -p -m 644 src/FlightCrew-plugin/plugin.xml %buildroot%_datadir/sigil/plugins/%name
 
 %files
 %doc INSTALL.txt README.txt ChangeLog.txt
@@ -103,16 +106,16 @@ cd BUILD
 %_bindir/*-gui
 
 %files -n lib%name
-%_libdir/*.so.*
-
-%files -n lib%name-devel
-%_includedir/%name/
-%_includedir/XercesExtensions/
 %_libdir/*.so
-%_libdir/cmake/*
 
+%files sigil-plugin
+%_bindir/*-plugin
+%_datadir/sigil/plugins/%name
 
 %changelog
+* Fri Sep 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.2-alt1
+- Updated to upstream version 0.9.2.
+
 * Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.2-alt2.qa3
 - NMU: rebuilt with boost 1.57.0 -> 1.58.0.
 

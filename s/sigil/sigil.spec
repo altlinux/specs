@@ -1,54 +1,80 @@
 Name: sigil
-Version: 0.6.1
-Release: alt1.qa1
+Version: 0.9.8
+Release: alt1
+
+%set_verify_elf_method unresolved=relaxed
 
 Summary: Sigil is a free, open source, multi-platform WYSIWYG ebook editor
-Summary(ru_RU.UTF-8): Сигиль есть свободный, открытый, многоплатформенный Вицивиговый книгоправщик
+Summary(ru_RU.UTF-8): Sigil это свободный, открытый, многоплатформенный редактор типа WYSIWYG для электронных книг
 License: GPLv3
 Group: Editors
-Url: http://code.google.com/p/sigil/
-Packager: ALT QA Team <qa@packages.altlinux.org>
+Url: https://sigil-ebook.com/
 
-Source: %name-%version.tar.bz2
+# skip dependencies which are actually provided (but files are located at non-standard location)
+%add_python3_req_skip opf_newparser quickparser sigil_bs4 sigil_bs4.builder._lxml
 
-BuildPreReq: rpm-macros-cmake
-BuildRequires: cmake >= 2.8.0 libqt4-devel >= 4.8 gcc-c++ libFlightCrew-devel  zlib-devel libhunspell-devel libpcre-devel
-BuildRequires:  boost-devel boost-filesystem-devel boost-program_options-devel boost-datetime-devel boost-regex-devel boost-thread-devel boost-system-devel
+# https://github.com/Sigil-Ebook/Sigil.git
+Source: %name-%version.tar
+
+Patch1: %name-%version-fedora-pluginrunner.patch
+Patch2: %name-%version-fedora-system-dicts.patch
+Patch3: %name-%version-alt-build.patch
+Patch4: %name-%version-alt-dont-check-for-updates.patch
+Patch5: %name-%version-alt-fix-version.patch
+
+BuildRequires(pre): rpm-macros-cmake rpm-build-python3
+BuildRequires: cmake gcc-c++ zlib-devel libhunspell-devel libpcre-devel
+BuildRequires: qt5-base-devel qt5-webkit-devel qt5-svg-devel qt5-tools-devel qt5-xmlpatterns-devel
+BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel boost-datetime-devel boost-regex-devel boost-thread-devel boost-system-devel
+BuildRequires: python3-dev libminizip-devel
+
 %description
 Sigil is a free, open source, multi-platform WYSIWYG ebook editor.
-It is designed to edit books in ePub format. The version of the package
-can be found in the ChangeLog.txt file.
+It is designed to edit books in ePub format.
 
 %description -l ru_RU.UTF-8
-Сигиль есть свободный, открытый, многоплатформенный Вицивиговый
-книгоправщик. Он разработан для правки книг в формате ePub. Версия же
-набора может быть обретена в файле ChangeLog.txt.
+Sigil это свободный, открытый, многоплатформенный редактор
+типа WYSIWYG для электронных книг.
+Он разработан для правки книг в формате ePub.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
-%cmake
-cd BUILD
+%cmake \
+	-DUSE_SYSTEM_LIBS:BOOL=ON \
+	-DSYSTEM_LIBS_REQUIRED:BOOL=ON
+
+pushd BUILD
 %make_build
+popd
 
 %install
 pushd BUILD
 %makeinstall_std
 popd
-%find_lang %name
+
 mkdir -p %buildroot%_liconsdir
 mv %buildroot%_pixmapsdir/*.png %buildroot%_liconsdir/
 
 %files
-%doc INSTALL.txt README.txt ChangeLog.txt
+%doc README.md ChangeLog.txt
 %_bindir/*
+%_libdir/%name
 %_desktopdir/*.desktop
 %_liconsdir/*.png
 %dir %_datadir/%name
 %_datadir/%name/*
 
 %changelog
+* Fri Sep 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.8-alt1
+- Updated to upstream version 0.9.8.
+
 * Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.1-alt1.qa1
 - NMU: rebuilt with rebuilt libFlightCrew.so.0.7.
 
