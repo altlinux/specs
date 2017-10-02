@@ -4,10 +4,10 @@ Group: Text tools
 Name: hunspell-bn
 Summary: Bengali hunspell dictionaries
 Version: 1.0.0
-Release: alt1_7
+Release: alt1_8
 #Epoch: 1
 Source: http://anishpatil.fedorapeople.org/bn_in.%{version}.tar.gz
-URL: https://gitorious.org/hunspell_dictionaries
+URL: https://gitorious.org/hunspell_dictionaries/hunspell_dictionaries.git
 License: GPLv2+
 BuildArch: noarch
 
@@ -20,7 +20,8 @@ Bengali hunspell dictionaries.
 %prep
 %setup -q -c -n bn_IN
 
-
+# fix file permissions
+chmod 644 bn_IN/*
 
 %build
 
@@ -30,10 +31,14 @@ cp -p bn_IN/*.dic bn_IN/*.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
 
 %files
-%doc bn_IN/README bn_IN/COPYING bn_IN/Copyright
+%doc bn_IN/README
+%doc bn_IN/COPYING bn_IN/Copyright
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_8
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_7
 - update to new release by fcimport
 
