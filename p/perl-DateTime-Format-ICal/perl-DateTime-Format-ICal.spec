@@ -7,14 +7,14 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-ICal
 Version:        0.09
-Release:        alt2_24
+Release:        alt2_25
 Summary:        Parse and format iCal datetime and duration strings
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/DateTime-Format-ICal/
 Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-Format-ICal-%{version}.tar.gz
 BuildArch:      noarch
 # Build
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Module/Build.pm)
 # Runtime
@@ -67,6 +67,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt2_25
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt2_24
 - update to new release by fcimport
 
