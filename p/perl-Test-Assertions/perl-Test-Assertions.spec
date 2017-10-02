@@ -7,14 +7,14 @@ BuildRequires: perl(IO/CaptureOutput.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-Assertions
 Version:        1.054
-Release:        alt2_23
+Release:        alt2_24
 Summary:        Simple set of building blocks for both unit and runtime testing
 License:        GPLv2
 URL:            http://search.cpan.org/dist/Test-Assertions/
 Source0:        http://www.cpan.org/authors/id/B/BB/BBC/Test-Assertions-%{version}.tar.gz
 BuildArch:      noarch
 # Build
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Runtime
@@ -71,6 +71,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.054-alt2_24
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.054-alt2_23
 - update to new release by fcimport
 
