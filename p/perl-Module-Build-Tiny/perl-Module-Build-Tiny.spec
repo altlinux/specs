@@ -7,14 +7,14 @@ BuildRequires: perl-podlators
 Summary:	A tiny replacement for Module::Build
 Name:		perl-Module-Build-Tiny
 Version:	0.039
-Release:	alt1_7
+Release:	alt1_8
 License:	GPL+ or Artistic
 Group:		Development/Other
 URL:		https://github.com/Leont/module-build-tiny
 Source0:	http://cpan.metacpan.org/authors/id/L/LE/LEONT/Module-Build-Tiny-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
-BuildRequires:	perl
+BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
 # Module
 BuildRequires:	perl(CPAN/Meta.pm)
@@ -84,6 +84,9 @@ AUTHOR_TESTING=1 RELEASE_TESTING=1 ./Build test
 %{perl_vendor_privlib}/Module/
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.039-alt1_8
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.039-alt1_7
 - update to new release by fcimport
 
