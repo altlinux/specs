@@ -1,5 +1,5 @@
 %define svn_release svn312
-%define our_release alt1
+%define our_release alt2
 
 Name: structuresynth
 Version: 1.5.0
@@ -10,15 +10,17 @@ License: %gpl3only / %lgpl21only
 Group: Graphics
 
 Url: http://structuresynth.sourceforge.net
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
+Patch1: %name-%version-alt-gcc6.patch
+
 BuildRequires(pre): rpm-macros-branch rpm-build-licenses rpm-build-python3
 BuildRequires: qt5-base-devel gcc-c++ ImageMagick-tools python-tools-2to3
-BuildPreReq: qt5-script-devel libGLU-devel libGLUT-devel
+BuildRequires: qt5-script-devel libGLU-devel libGLUT-devel
 
 %add_python3_path %_datadir/%name/Misc
+%add_python3_req_skip Blender.Mathutils
 
 %description
 Structure Synth is a cross-platform application for generating 3D structures by
@@ -34,6 +36,7 @@ system.
 
 %prep
 %setup
+%patch1 -p1
 rm -rf Examples/DontDeploy
 2to3 -w Misc/Blender_Importer_2.py
 
@@ -71,6 +74,9 @@ install -pDm0644 images/fileicons/StructureSynth-256.png %buildroot%_iconsdir/hi
 %_iconsdir/hicolor/128x128/*
 
 %changelog
+* Mon Oct 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.0-alt2.svn312
+- Fixed build with gcc-6.
+
 * Sat Oct 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.svn312
 - Version 1.5.0
 
