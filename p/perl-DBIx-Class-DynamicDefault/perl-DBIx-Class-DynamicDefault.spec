@@ -7,7 +7,7 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 %define _localstatedir %{_var}
 Name:       perl-DBIx-Class-DynamicDefault 
 Version:    0.04
-Release:    alt2_16
+Release:    alt2_17
 # lib/DBIx/Class/DynamicDefault.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Summary:    Automatically set and update fields 
@@ -15,7 +15,7 @@ Url:        http://search.cpan.org/dist/DBIx-Class-DynamicDefault
 Source:     http://search.cpan.org/CPAN/authors/id/M/MS/MSTROUT/DBIx-Class-DynamicDefault-%{version}.tar.gz
 BuildArch:  noarch
 BuildRequires:  coreutils
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(inc/Module/Install.pm)
 BuildRequires:  perl(Module/Install/ExtraTests.pm)
@@ -69,6 +69,9 @@ make test
 %{perl_vendor_privlib}/DBIx/Class/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_17
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_16
 - update to new release by fcimport
 
