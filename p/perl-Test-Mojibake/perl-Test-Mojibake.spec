@@ -14,7 +14,7 @@ BuildRequires: perl(Encode.pm) perl-podlators
 
 Name:		perl-Test-Mojibake
 Version:	1.3
-Release:	alt1_3
+Release:	alt1_4
 Summary:	Check your source for encoding misbehavior
 Group:		Development/Other
 License:	GPL+ or Artistic
@@ -29,7 +29,7 @@ BuildArch:	noarch
 # ===================================================================
 BuildRequires:	coreutils
 BuildRequires:	findutils
-BuildRequires:	perl
+BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # ===================================================================
@@ -168,6 +168,9 @@ make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1} \
 %{_mandir}/man1/scan_mojibake.1*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_4
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_3
 - update to new release by fcimport
 
