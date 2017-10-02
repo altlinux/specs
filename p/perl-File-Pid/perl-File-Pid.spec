@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-File-Pid
 Version:        1.01
-Release:        alt3_23
+Release:        alt3_24
 Summary:        Pid File Manipulation
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/File-Pid/
@@ -15,7 +15,7 @@ Source0:        http://www.cpan.org/authors/id/C/CW/CWEST/File-Pid-%{version}.ta
 Patch0:         File-Pid-1.01-RT-18960-Fixed-using-of-uninitialized-value.patch
 BuildArch:      noarch
 # Build
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Runtime
@@ -58,6 +58,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_24
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_23
 - update to new release by fcimport
 
