@@ -5,7 +5,7 @@
 %endif
 
 Name: rawtherapee
-Version: 5.2%{?_enable_snapshot:.%git_distance}
+Version: 5.3%{?_enable_snapshot:.%git_distance}
 Release: alt1
 
 Summary: THe Experimental RAw Photo Editor
@@ -28,6 +28,7 @@ BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libtiff-devel libfftw3-
 BuildRequires: libexpat-devel libpixman-devel libcanberra-gtk3-devel
 BuildRequires: libXdmcp-devel libXdamage-devel libXxf86vm-devel
 BuildRequires: libexiv2-devel libharfbuzz-devel
+BuildRequires: liblensfun-devel
 
 %description
 Raw Therapee is a free RAW converter and digital photo processing software.
@@ -66,9 +67,12 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %_datadir/%name/
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/%name.1.*
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 5.3-alt1
+- 5.3
+
 * Thu Jul 27 2017 Yuri N. Sedunov <aris@altlinux.org> 5.2-alt1
 - 5.2
 
