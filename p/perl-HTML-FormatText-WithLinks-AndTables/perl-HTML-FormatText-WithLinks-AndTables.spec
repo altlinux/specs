@@ -6,7 +6,7 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/Pod.pm) perl(Test/Pod/Co
 %define _localstatedir %{_var}
 Name:           perl-HTML-FormatText-WithLinks-AndTables
 Version:        0.07
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Converts HTML to Text with tables in tact
 License:        Artistic 2.0
 Group:          Development/Other
@@ -16,7 +16,7 @@ BuildArch:      noarch
 Source0:        http://www.cpan.org/authors/id/D/DA/DALEEVANS/HTML-FormatText-WithLinks-AndTables-%{version}.tar.gz
 
 BuildRequires:  findutils
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_4
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_3
 - update to new release by fcimport
 
