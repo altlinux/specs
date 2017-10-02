@@ -7,14 +7,14 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-URI-Escape-XS
 Version:        0.14
-Release:        alt1_3
+Release:        alt1_5
 Summary:        Drop-In replacement for URI::Escape
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/URI-Escape-XS/
 Source0:        http://www.cpan.org/authors/id/D/DA/DANKOGAI/URI-Escape-XS-%{version}.tar.gz
 
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(base.pm)
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_archlib}/URI*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_5
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_3
 - update to new release by fcimport
 
