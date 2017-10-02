@@ -13,7 +13,7 @@ BuildRequires: perl(Devel/Size.pm) perl(File/Find/Object.pm) perl(HTML/TokeParse
 %define _localstatedir %{_var}
 Name:           perl-Graph-Easy
 Version:        0.76
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Convert or render graphs as ASCII, HTML, SVG or via Graphviz
 License:        GPLv2+ and ASL 1.1
 Group:          Development/Other
@@ -21,7 +21,7 @@ URL:            http://search.cpan.org/dist/Graph-Easy/
 Source0:        http://www.cpan.org/authors/id/S/SH/SHLOMIF/Graph-Easy-%{version}.tar.gz
 Patch0:         graph-easy-undefined-lc.patch
 BuildArch:      noarch
-BuildRequires:  perl
+BuildRequires:  perl-devel >= 0:5.008002
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Carp.pm)
@@ -93,6 +93,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.76-alt1_4
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.76-alt1_3
 - update to new release by fcimport
 
