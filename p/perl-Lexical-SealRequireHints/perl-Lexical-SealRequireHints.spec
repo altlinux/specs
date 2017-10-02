@@ -1,22 +1,21 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Lexical-SealRequireHints
 Version:        0.011
-Release:        alt1
+Release:        alt1_3
 Summary:        Prevent leakage of lexical hints
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/Lexical-SealRequireHints/
 Source0:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Lexical-SealRequireHints-%{version}.tar.gz
 BuildRequires:  findutils
-BuildRequires:  perl
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
@@ -31,6 +30,7 @@ BuildRequires:  perl(threads/shared.pm)
 Conflicts:      perl(B:Hooks/OP/Check.pm) < 0.190
 
 
+Source44: import.info
 
 %description
 This module works around two historical bugs in Perl's handling of the %^H
@@ -59,11 +59,14 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -delete
 ./Build test
 
 %files
-%doc Changes README
+%doc Changes
 %{perl_vendor_archlib}/auto/*
 %{perl_vendor_archlib}/Lexical*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_3
+- update to new release by fcimport
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1
 - automated CPAN update
 
