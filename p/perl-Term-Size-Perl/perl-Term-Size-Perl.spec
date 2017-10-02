@@ -7,14 +7,14 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Term-Size-Perl
 Version:        0.029
-Release:        alt3_24
+Release:        alt3_26
 Summary:        Perl extension for retrieving terminal size (Perl version)
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Term-Size-Perl/
 Source0:        http://www.cpan.org/authors/id/F/FE/FERREIRA/Term-Size-Perl-%{version}.tar.gz
 # Build
 BuildRequires:  gcc-common
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/CBuilder.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -56,6 +56,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.029-alt3_26
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.029-alt3_24
 - update to new release by fcimport
 
