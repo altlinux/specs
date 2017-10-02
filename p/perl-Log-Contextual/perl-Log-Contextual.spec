@@ -6,7 +6,7 @@ BuildRequires: perl(Test/PerlTidy.pm) perl(Test/Pod.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Log-Contextual
 Version:        0.007001
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Simple logging interface with a contextual log
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -14,7 +14,7 @@ URL:            http://search.cpan.org/dist/Log-Contextual/
 Source0:        http://www.cpan.org/authors/id/F/FR/FREW/Log-Contextual-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  findutils
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
@@ -76,6 +76,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.007001-alt1_3
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.007001-alt1_2
 - update to new release by fcimport
 
