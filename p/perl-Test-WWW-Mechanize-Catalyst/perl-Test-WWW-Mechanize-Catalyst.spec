@@ -8,7 +8,7 @@ BuildRequires: perl(CPAN.pm) perl(Compress/Zlib.pm) perl(JSON.pm) perl(Module/Bu
 Name:           perl-Test-WWW-Mechanize-Catalyst
 Summary:        Test::WWW::Mechanize for Catalyst
 Version:        0.60
-Release:        alt1_11
+Release:        alt1_12
 License:        GPL+ or Artistic
 
 Source0:        http://search.cpan.org/CPAN/authors/id/I/IL/ILMARI/Test-WWW-Mechanize-Catalyst-%{version}.tar.gz
@@ -16,7 +16,7 @@ URL:            http://search.cpan.org/dist/Test-WWW-Mechanize-Catalyst/
 BuildArch:      noarch
 
 BuildRequires:  findutils
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Carp.pm)
@@ -105,6 +105,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1_12
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1_11
 - update to new release by fcimport
 
