@@ -6,14 +6,14 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Exporter-Declare
 Version:        0.114
-Release:        alt2_5
+Release:        alt2_6
 Summary:        Exporting done right
 License:        GPL+ or Artistic
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/Exporter-Declare/
 Source0:        http://www.cpan.org/authors/id/E/EX/EXODIST/Exporter-Declare-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(aliased.pm)
 BuildRequires:  perl(base.pm)
@@ -64,6 +64,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.114-alt2_6
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.114-alt2_5
 - update to new release by fcimport
 
