@@ -6,8 +6,8 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(IO/File.pm) perl(IO/Handle.pm) p
 %define upstream_version 0.64
 
 Name:		perl-%{upstream_name}
-Version:	%{upstream_version}
-Release:	alt3
+Version:	0.65
+Release:	alt1
 
 Summary:	Multiplex output to multiple output handles 
 License:	GPL
@@ -60,6 +60,9 @@ the constructor.
 
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1
+- automated CPAN update
+
 * Mon Dec 28 2015 Lenar Shakirov <snejok@altlinux.ru> 0.64-alt3
 - build for Sisyphus
 
