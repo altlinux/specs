@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-ExtUtils-InstallPaths
 Version:	0.011
-Release:	alt1_10
+Release:	alt1_11
 Summary:	Build.PL install path logic made easy
 Group:		Development/Other
 License:	GPL+ or Artistic
@@ -15,7 +15,7 @@ URL:		https://metacpan.org/release/ExtUtils-InstallPaths
 Source0:	http://cpan.metacpan.org/authors/id/L/LE/LEONT/ExtUtils-InstallPaths-%{version}.tar.gz
 BuildArch:	noarch
 # Build
-BuildRequires:	perl
+BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module
@@ -83,6 +83,9 @@ make test
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_11
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_10
 - update to new release by fcimport
 
