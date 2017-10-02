@@ -6,7 +6,7 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 %define _localstatedir %{_var}
 Name:           perl-Catalyst-Plugin-Session-Store-File
 Version:        0.18
-Release:        alt2_22
+Release:        alt2_23
 Summary:        File storage backend for session data
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -15,7 +15,7 @@ Source0:        http://search.cpan.org/CPAN/authors/id/F/FL/FLORA/Catalyst-Plugi
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  perl
+BuildRequires:  perl-devel >= 1:5.8.0
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Cache/Cache.pm)
@@ -76,6 +76,9 @@ TEST_POD=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2_23
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2_22
 - update to new release by fcimport
 
