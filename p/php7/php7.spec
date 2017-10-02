@@ -3,7 +3,7 @@
 
 Summary: The PHP7 scripting language
 Name:	 php7
-Version: 7.1.9
+Version: 7.1.10
 Release: alt1%ubt
 
 %define php7_name      %name
@@ -33,12 +33,11 @@ Patch12: php-devel-scripts-alternatives.patch
 Patch13: php-7.1.0-dlopen.patch
 
 Patch30: php-4.3.11-libtool.patch
-Patch32: php-5.2.1-umask.patch
 Patch33: php-5.2.5-norpath.patch
 Patch34: php-5.1.0b1-cxx.patch
 Patch38: php-no-static-program.patch
 Patch39: php-set-session-save-path.patch
-Patch40: php5-5.2.13-alt-lsattr_path.patch
+Patch40: php7-7.1.10-alt-lsattr.patch
 Patch41: php5-alt-checklibs.patch
 Patch51: php-5.3.5-alt-build-gcc-version.patch
 Patch61: php5-5.5.9-phar-phppath.patch
@@ -157,7 +156,6 @@ in use by other PHP7-related packages.
 %patch12 -p2 -b .alternatives
 %patch13 -p0
 %patch30 -p0
-#patch32 -p1
 %patch33 -p2
 %patch34 -p2
 %patch38 -p2
@@ -251,8 +249,6 @@ export NPROCS=1
 %php7_make
 
 %install
-# XXX see https://bugzilla.altlinux.org/show_bug.cgi?id=14726
-%add_findreq_skiplist %php7_libdir/build/config.guess
 %php7_make_install
 
 # All things already installed, install differences only
@@ -347,7 +343,7 @@ subst 's,@php7_name@,%php7_name,'           %buildroot/%_sysconfdir/rpm/macros.d
 subst 's,@_php7_version@,%_php7_version,'   %buildroot/%_sysconfdir/rpm/macros.d/%php7_name-ver
 subst 's,@php7_major@,%_php7_major,'   %buildroot/%_sysconfdir/rpm/macros.d/%php7_name-ver
 subst 's,@php7_release@,%php7_release,'     %buildroot/%_sysconfdir/rpm/macros.d/%php7_name-ver
-
+subst 's,sbin/lsattr,bin/lsattr,' %buildroot/%php7_libdir/build/config.guess
 
 %post
 %php7_sapi_postin
@@ -412,6 +408,9 @@ subst 's,@php7_release@,%php7_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %doc tests run-tests.php 
 
 %changelog
+* Mon Oct 02 2017 Anton Farygin <rider@altlinux.ru> 7.1.10-alt1%ubt
+- 7.1.10
+
 * Tue Sep 19 2017 Anton Farygin <rider@altlinux.ru> 7.1.9-alt1%ubt
 - 7.1.9
 
