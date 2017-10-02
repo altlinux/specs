@@ -8,7 +8,7 @@ BuildRequires: perl-podlators
 Summary:	Typical installation tasks for system administrators
 Name:		perl-Sysadm-Install
 Version:	0.48
-Release:	alt1_3
+Release:	alt1_4
 License:	GPL+ or Artistic
 Group:		Development/Other
 URL:		http://search.cpan.org/dist/Sysadm-Install/
@@ -17,7 +17,7 @@ BuildArch:	noarch
 # Module Build
 BuildRequires:	coreutils
 BuildRequires:	findutils
-BuildRequires:	perl
+BuildRequires:	perl-devel
 %if 0%{?fedora} > 20 || 0%{?rhel} > 7
 BuildRequires:	rpm-build-perl
 %endif
@@ -94,6 +94,9 @@ find %{buildroot} -type f -name .packlist -delete
 %{perl_vendor_privlib}/Sysadm/
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1_4
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1_3
 - update to new release by fcimport
 
