@@ -6,14 +6,14 @@ BuildRequires: perl(Attribute/Handlers.pm) perl(B/Utils.pm) perl(Devel/FindRef.p
 %define _localstatedir %{_var}
 Name:           perl-constant-defer
 Version:        6
-Release:        alt2_7
+Release:        alt2_8
 Summary:        Constant subs with deferred value calculation
 License:        GPLv3+
 Group:          Development/Other
 URL:            http://search.cpan.org/dist/constant-defer/
 Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/constant-defer-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 # The inc/my_pod2html is not called
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -62,6 +62,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 6-alt2_8
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 6-alt2_7
 - update to new release by fcimport
 
