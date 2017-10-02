@@ -4,7 +4,7 @@
 %define modulename regex
 Name: python-module-regex
 Version: 2017.09.23
-Release: alt1
+Release: alt2
 
 Summary: Alternative regular expression module, to replace re
 
@@ -64,6 +64,10 @@ pushd ../python3
 popd
 %endif
 
+# remove test modules (with module test requires)
+rm -rf %buildroot/%python_sitelibdir/test_*
+rm -rf %buildroot/%python3_sitelibdir/test_*
+
 %files
 %doc README docs/
 %python_sitelibdir/*
@@ -76,6 +80,9 @@ popd
 
 
 %changelog
+* Mon Oct 02 2017 Vitaly Lipatov <lav@altlinux.ru> 2017.09.23-alt2
+- drop python*(test) requires
+
 * Mon Oct 02 2017 Vitaly Lipatov <lav@altlinux.ru> 2017.09.23-alt1
 - initial build for ALT Sisyphus
 
