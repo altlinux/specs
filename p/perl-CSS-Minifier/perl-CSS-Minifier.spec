@@ -6,7 +6,7 @@ BuildRequires: perl(Exporter.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:       perl-CSS-Minifier 
 Version:    0.01 
-Release:    alt2_23
+Release:    alt2_24
 # lib/CSS/Minifier.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Group:      Development/Other
@@ -59,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_24
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_23
 - update to new release by fcimport
 
