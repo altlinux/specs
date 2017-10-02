@@ -7,14 +7,14 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Set-Infinite
 Version:        0.65
-Release:        alt2_20
+Release:        alt2_21
 Summary:        Sets of intervals
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Set-Infinite/
 Source0:        http://www.cpan.org/authors/id/F/FG/FGLOCK/Set-Infinite-%{version}.tar.gz
 BuildArch:      noarch
 # Build
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Runtime
@@ -56,6 +56,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.65-alt2_21
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.65-alt2_20
 - update to new release by fcimport
 
