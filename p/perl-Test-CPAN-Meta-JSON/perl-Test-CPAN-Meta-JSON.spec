@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Test-CPAN-Meta-JSON
 Version:	0.16
-Release:	alt1_7
+Release:	alt1_8
 Summary:	Validate a META.json file within a CPAN distribution
 Group:		Development/Other
 License:	Artistic 2.0
@@ -15,7 +15,7 @@ Source0:	http://search.cpan.org/CPAN/authors/id/B/BA/BARBIE/Test-CPAN-Meta-JSON-
 Patch0:		Test-CPAN-Meta-JSON-0.16-utf8.patch
 BuildArch:	noarch
 # Module Build
-BuildRequires:	perl
+BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
@@ -71,6 +71,9 @@ make test AUTOMATED_TESTING=1
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_8
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_7
 - update to new release by fcimport
 
