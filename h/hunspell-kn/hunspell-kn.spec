@@ -7,8 +7,8 @@ BuildRequires: unzip
 Name: hunspell-kn
 Summary: Kannada hunspell dictionaries
 Version: 1.0.3
-Release: alt2_13
-Source: http://extensions.services.openoffice.org/files/2628/1/kannada.oxt
+Release: alt2_14
+Source: https://downloads.sourceforge.net/project/aoo-extensions/2628/1/kannada.oxt
 URL: http://extensions.services.openoffice.org/project/kannada
 License: GPLv2+ or LGPLv2+ or MPLv1.1
 BuildArch: noarch
@@ -22,19 +22,22 @@ Kannada hunspell dictionaries.
 %prep
 %setup -q -c -n hunspell-kn
 
+
 %build
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p kn_IN.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 
-
 %files
-%doc README_kn_IN.txt COPYING COPYING.MPL COPYING.GPL COPYING.LGPL
-
+%doc README_kn_IN.txt
+%doc COPYING COPYING.MPL COPYING.GPL COPYING.LGPL
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_14
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_13
 - update to new release by fcimport
 
