@@ -10,7 +10,7 @@ BuildRequires: perl-podlators
 
 Name:		perl-Test-Version
 Version:	2.05
-Release:	alt1_4
+Release:	alt1_5
 Summary:	Check to see that versions in modules are sane
 License:	Artistic 2.0
 URL:		http://search.cpan.org/dist/Test-Version/
@@ -21,7 +21,7 @@ BuildArch:	noarch
 # ===================================================================
 BuildRequires:	coreutils
 BuildRequires:	findutils
-BuildRequires:	perl
+BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # ===================================================================
@@ -101,6 +101,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.05-alt1_5
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.05-alt1_4
 - update to new release by fcimport
 
