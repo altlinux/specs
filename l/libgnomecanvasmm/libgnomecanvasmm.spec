@@ -4,7 +4,7 @@
 
 Name: libgnomecanvasmm
 Version: %major.0
-Release: alt3.1
+Release: alt3.2
 
 Summary: A C++ interface for GNOME 2 canvas library
 License: LGPL
@@ -44,10 +44,6 @@ This package provides API documentation for %name library.
 
 %prep
 %setup
-%ifarch e2k
-# https://stackoverflow.com/questions/37423158/
-sed -i 's,-nostdlib,,g' aclocal.m4 configure*
-%endif
 
 %build
 %add_optflags -std=c++11
@@ -77,6 +73,10 @@ cd docs/reference && %make
 %doc docs/reference/html
 
 %changelog
+* Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 2.26.0-alt3.2
+- mike@:
+  E2K: revert last change (not needed anymore)
+
 * Thu Aug 03 2017 Yuri N. Sedunov <aris@altlinux.org> 2.26.0-alt3.1
 - rebuild
 
