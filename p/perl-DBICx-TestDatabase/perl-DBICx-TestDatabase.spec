@@ -7,7 +7,7 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 Name:           perl-DBICx-TestDatabase 
 Summary:        Create a temporary database from a DBIx::Class::Schema 
 Version:        0.05
-Release:        alt1_8
+Release:        alt1_9
 License:        GPL+ or Artistic 
 Group:          Development/Other
 Source0:        http://search.cpan.org/CPAN/authors/id/J/JR/JROCKWAY/DBICx-TestDatabase-%{version}.tar.gz
@@ -15,7 +15,7 @@ URL:            http://search.cpan.org/dist/DBICx-TestDatabase
 Patch0:         DBICx-TestDatabase-0.05-Fix-building-on-Perl-without-dot-in-INC.patch
 BuildArch:      noarch
 # Build
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Config.pm)
 BuildRequires:  perl(Cwd.pm)
@@ -74,6 +74,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1_9
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1_8
 - update to new release by fcimport
 
