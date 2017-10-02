@@ -7,14 +7,14 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Event-Recurrence
 Version:        0.19
-Release:        alt1_2
+Release:        alt1_3
 Summary:        DateTime::Set extension for create basic recurrence sets
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/DateTime-Event-Recurrence/
 Source0:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Event-Recurrence-%{version}.tar.gz
 BuildArch:      noarch
 # Build
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
@@ -65,6 +65,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_3
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_2
 - update to new release by fcimport
 
