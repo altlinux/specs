@@ -6,12 +6,15 @@ Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libfplll
-Version:        5.0.3
-Release:        alt1_4
+Version:        5.1.0
+Release:        alt1_1
 Summary:        LLL-reduces euclidean lattices
 License:        LGPLv2+
 URL:            https://github.com/dstehle/fplll
 Source0:        https://github.com/fplll/fplll/releases/download/%{version}/fplll-%{version}.tar.gz
+# On i386 only, one test fails due to rounding error
+Patch0:         %{name}-rounding.patch
+
 BuildRequires:  gcc-c++-common
 BuildRequires:  libmpfr-devel
 BuildRequires:  libqd-devel
@@ -60,6 +63,7 @@ the functionality of %{name}.
 
 %prep
 %setup -q -n fplll-%{version}
+%patch0
 
 # Fix broken test for a bool type
 sed -e '/#ifndef bool/,/#endif/d' \
@@ -70,8 +74,9 @@ sed -e '/#ifndef bool/,/#endif/d' \
     -e '/ac_cv_type__Bool/s/\$ac_includes_default/#include <stdbool.h>/' \
     -i configure
 
+
 %build
-%configure LDFLAGS="-Wl,--as-needed $RPM_LD_FLAGS"
+%configure --disable-silent-rules LDFLAGS="-Wl,--as-needed $RPM_LD_FLAGS"
 
 # Eliminate hardcoded rpaths, and workaround libtool moving all -Wl options
 # after the libraries to be linked
@@ -113,6 +118,9 @@ make check
 
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.0-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 5.0.3-alt1_4
 - update to new release by fcimport
 
