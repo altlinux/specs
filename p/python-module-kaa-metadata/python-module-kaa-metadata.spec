@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.7.8
-Release: alt1.git20130624.2
+Release: alt1.git20130624.3
 
 Summary: Module for retrieving information about media files
 
@@ -112,6 +112,9 @@ cp -fR doc/.build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Oct 02 2017 Vitaly Lipatov <lav@altlinux.ru> 0.7.8-alt1.git20130624.3
+- rebuilt against libexiv2-0.26
+
 * Mon Jul 20 2015 Michael Shigorin <mike@altlinux.org> 0.7.8-alt1.git20130624.2
 - rebuilt against current libexiv2
 
