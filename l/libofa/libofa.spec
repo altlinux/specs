@@ -1,6 +1,6 @@
 Name: libofa
 Version: 0.9.3
-Release: alt4.1.qa2
+Release: alt4.1.qa3
 Summary: Open Fingerprint Architecture library
 License: APLv1 or GPLv2
 Group: System/Libraries
@@ -46,10 +46,6 @@ This package contains development header files and library for %name.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
-%ifarch e2k
-# https://stackoverflow.com/questions/37423158/
-sed -i 's,-nostdlib,,g' aclocal.m4 configure*
-%endif
 
 %build
 %configure --disable-static
@@ -68,6 +64,9 @@ sed -i 's,-nostdlib,,g' aclocal.m4 configure*
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Oct 02 2017 Michael Shigorin <mike@altlinux.org> 0.9.3-alt4.1.qa3
+- E2K: revert last change (not needed anymore)
+
 * Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 0.9.3-alt4.1.qa2
 - E2K: fix linking by avoiding -nostdlib
 
