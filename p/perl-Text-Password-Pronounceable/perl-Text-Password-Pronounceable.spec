@@ -7,7 +7,7 @@ BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build
 %define _localstatedir %{_var}
 Name:       perl-Text-Password-Pronounceable 
 Version:    0.30
-Release:    alt1_15
+Release:    alt1_16
 # lib/Text/Password/Pronounceable.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Summary:    Generate pronounceable passwords 
@@ -15,7 +15,7 @@ Source0:    http://search.cpan.org/CPAN/authors/id/T/TS/TSIBLEY/Text-Password-Pr
 Url:        http://search.cpan.org/dist/Text-Password-Pronounceable
 BuildArch:  noarch
 BuildRequires: coreutils
-BuildRequires: perl
+BuildRequires: perl-devel
 BuildRequires: rpm-build-perl
 BuildRequires: perl(inc/Module/Install.pm)
 BuildRequires: perl(Module/Install/Metadata.pm)
@@ -58,6 +58,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1_16
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1_15
 - update to new release by fcimport
 
