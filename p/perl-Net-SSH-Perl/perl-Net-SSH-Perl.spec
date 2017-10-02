@@ -24,18 +24,16 @@
 
 Summary: Perl client interface to SSH
 Name: perl-%dist
-Version: 2.01
+Version: 2.14
 Release: alt1
 License: %perl_license
 Group: Development/Perl
 #URL: %CPAN %dist
 URL: http://github.com/lkinley/%dist
 
-Packager: Mikhail Pokidko <pma@altlinux.ru>
+Source0: http://www.cpan.org/authors/id/S/SC/SCHWIGON/%{module}-%{version}.tar.gz
 
-Source: %dist-%version.tar.gz
-
-BuildArch: noarch
+#BuildArch: noarch
 
 BuildRequires: rpm-build-licenses
 
@@ -47,7 +45,7 @@ Net::SSH::Perl contains implementations of
 both the SSH1 and SSH2 protocols.
 
 %prep
-%setup -n %dist-%version
+%setup -q -n %{module}-%{version}
 perl -pi -e "s|use Socket;|use IO::Socket;\nuse Socket;|g;" lib/Net/SSH/Perl.pm
 
 %build
@@ -58,6 +56,7 @@ echo "3" | perl Makefile.PL INSTALLDIRS="vendor" PREFIX="%buildroot%_prefix"
 %perl_vendor_install
 
 %files
+%doc Changes README ToDo LICENSE
 %defattr(-, root, root, 0755)
 %doc Changes README
 #dir %perl_vendor_privlib/Net/
@@ -65,11 +64,14 @@ echo "3" | perl Makefile.PL INSTALLDIRS="vendor" PREFIX="%buildroot%_prefix"
 #dir %perl_vendor_privlib/Net/SSH/
 #perl_vendorlib/Net/SSH/Perl.pm
 #perl_vendorlib/Net/SSH/Perl/
-%perl_vendor_privlib/*
-%exclude %perl_vendor_archlib
+%perl_vendor_archlib/Net*
+%perl_vendor_autolib/Net*
 
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.14-alt1
+- automated CPAN update
+
 * Mon Feb 22 2016 Sergey Y. Afonin <asy@altlinux.ru> 2.01-alt1
 - NMU
 - new version (Closed #31818; switched to
