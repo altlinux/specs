@@ -15,7 +15,7 @@
 %define maketest 1
 
 Name: perl-Regexp-Common
-Version: 2017040401
+Version: 2017060201
 Release: alt1
 
 Summary: Regexp-Common - Provide commonly requested regular expressions
@@ -49,10 +49,13 @@ There is an alternative, subroutine-based syntax described in
 %perl_vendor_install
 
 %files
-%doc README TODO
+%doc README TODO COPYRIGHT COPYRIGHT.AL COPYRIGHT.AL2 COPYRIGHT.BSD COPYRIGHT.MIT Changes
 %perl_vendor_privlib/Regexp/
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 2017060201-alt1
+- automated CPAN update
+
 * Sat Apr 08 2017 Vitaly Lipatov <lav@altlinux.ru> 2017040401-alt1
 - new version 2017040401 (with rpmrb script)
 
