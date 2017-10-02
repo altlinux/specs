@@ -1,23 +1,25 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test/Aggregate/Nested.pm) perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(Locale/Maketext.pm)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           perl-Catalyst-Controller-HTML-FormFu
-Version:        2.01
-Release:        alt1
+Version:        2.02
+Release:        alt1_2
 Summary:        HTML::FormFu controller for Catalyst
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/Catalyst-Controller-HTML-FormFu/
-Source:        http://www.cpan.org/authors/id/N/NI/NIGELM/Catalyst-Controller-HTML-FormFu-%{version}.tar.gz
-# Do not use Test::Aggregate::Nested for running tests, bug #1231204
-Patch0:         Catalyst-Controller-HTML-FormFu-1.00-Execute-tests-recusively-under-t.patch
+Source0:        http://search.cpan.org/CPAN/authors/id/N/NI/NIGELM/Catalyst-Controller-HTML-FormFu-%{version}.tar.gz
+
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  perl
+BuildRequires:  perl-devel
+BuildRequires:  rpm-build-perl
 BuildRequires:  perl(inc/Module/Install.pm)
 BuildRequires:  perl(Module/Install/Metadata.pm)
 BuildRequires:  sed
@@ -53,7 +55,6 @@ BuildRequires:  perl(Catalyst/Plugin/Session.pm)
 BuildRequires:  perl(Catalyst/Plugin/Session/State/Cookie.pm)
 BuildRequires:  perl(Catalyst/Plugin/Session/Store/File.pm)
 BuildRequires:  perl(Catalyst/View/TT.pm)
-# Test::Aggregate::Nested disabled
 # Config::General not used
 BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(FindBin.pm)
@@ -66,7 +67,7 @@ BuildRequires:  perl(Test/WWW/Mechanize.pm)
 Requires:       perl(Catalyst/Component/InstancePerContext.pm)
 Requires:       perl(Catalyst/Controller.pm)
 Requires:       perl(Catalyst/Runtime.pm) >= 5.710.010
-Requires:       perl(HTML/FormFu.pm) >= 1.00
+Requires:       perl(HTML/FormFu.pm) >= 1.0
 Requires:       perl(MooseX/Attribute/Chained.pm) >= 1.0.1
 # Task::Weaken for Scalar::Util, see Makefile.PL
 Requires:       perl(Task/Weaken.pm)
@@ -81,24 +82,13 @@ This base controller merges the functionality of HTML::FormFu with Catalyst.
 
 %prep
 %setup -q -n Catalyst-Controller-HTML-FormFu-%{version}
-%patch0 -p1
-# Do not use Test::Aggregate::Nested for running tests, bug #1231204
-rm t/aggregate.t
-sed -i -e '/^t\/aggregate\.t/d' MANIFEST
-mv t-aggregate/* t
-find t -type f -exec sed -i -e 's|\<t-aggregate\>|t|' {} +
-sed -i -e 's|^t-aggregate/|t/|' MANIFEST
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+%make_build
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -110,6 +100,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.02-alt1_2
+- update to new release by fcimport
+
 * Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1
 - automated CPAN update
 
