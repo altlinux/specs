@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-HTML-Tiny
 Version:        1.05
-Release:        alt2_24
+Release:        alt2_25
 Summary:        Lightweight, dependency free HTML/XML generation
 License:        GPL+ or Artistic
 
@@ -15,7 +15,7 @@ URL:            http://search.cpan.org/dist/HTML-Tiny/
 Source0:        http://www.cpan.org/authors/id/A/AN/ANDYA/HTML-Tiny-%{version}.tar.gz
 
 BuildArch:      noarch
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/More.pm)
@@ -46,6 +46,9 @@ make test
 %{perl_vendor_privlib}/HTML*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_25
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_24
 - update to new release by fcimport
 
