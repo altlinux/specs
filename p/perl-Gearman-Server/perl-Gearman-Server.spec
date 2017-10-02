@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Gearman-Server
 Version:        1.130.1
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Function call router and load balancer
 License:        GPL+ or Artistic
 Group:          System/Servers
@@ -18,7 +18,7 @@ Patch0:         Gearman-Server-v1.130.0-Do-not-use-usr-bin-env.patch
 Patch1:         Gearman-Server-v1.130.1-Load-IO-Socket-INET.patch
 BuildArch:      noarch
 BuildRequires:  findutils
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time:
@@ -81,6 +81,9 @@ make test
 %{_mandir}/man1/gearmand.*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.130.1-alt1_5
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.130.1-alt1_4
 - update to new release by fcimport
 
