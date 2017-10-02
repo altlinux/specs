@@ -1,20 +1,21 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN/Meta/Requirements.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		perl-Test-Kwalitee
 Version:	1.26
-Release:	alt1
+Release:	alt1_3
 Summary:	Test the Kwalitee of a distribution before you release it
 License:	GPL+ or Artistic
 URL:		http://metacpan.org/module/Test::Kwalitee
-Source0:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-Kwalitee-%{version}.tar.gz
+Source0:	http://cpan.metacpan.org/authors/id/E/ET/ETHER/Test-Kwalitee-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	coreutils
-BuildRequires:	perl
+BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module
@@ -50,7 +51,7 @@ computer science).
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PERLLOCAL=1 NO_PACKLIST=1
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=%{buildroot}
@@ -67,6 +68,9 @@ make test
 %{_mandir}/man1/kwalitee-metrics.1*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1_3
+- update to new release by fcimport
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1
 - automated CPAN update
 
