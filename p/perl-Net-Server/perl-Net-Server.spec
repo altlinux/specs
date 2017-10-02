@@ -1,8 +1,10 @@
+BuildRequires: perl-podlators
+%define _unpackaged_files_terminate_build 1
 %define module  Net-Server
 
 Name: perl-%module
-Version: 2.008
-Release: alt2
+Version: 2.009
+Release: alt1
 
 Summary: Net::Server - Extensible, general Perl server engine
 License: Artistic
@@ -10,9 +12,9 @@ Group: Development/Perl
 Url: http://search.cpan.org/dist/%module/
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RH/RHANDOM/Net-Server-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RH/RHANDOM/%{module}-%{version}.tar.gz
 
-BuildRequires: perl-devel perl-IO-Multiplex perl-Net-SSLeay perl(Log/Log4perl.pm)
+BuildRequires: perl-devel perl-IO-Multiplex perl-Net-SSLeay perl(Log/Log4perl.pm) perl(Pod/Man.pm)
 Requires: perl-IO-Multiplex perl-Net-SSLeay
 # hack around broken requires in perl-ARCv2
 Provides: perl(Net/Server/PreFork.pm) = %version
@@ -21,8 +23,17 @@ Provides: perl(Net/Server/PreFork.pm) = %version
 Net::Server is an extensible, class oriented module written in perl
 and intended to be the back end layer of internet protocol servers.
 
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %name = %{?epoch:%epoch:}%version-%release
+
+%description scripts
+scripts for %name
+
+
 %prep
-%setup -q -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -36,7 +47,15 @@ and intended to be the back end layer of internet protocol servers.
 %perl_vendor_privlib/Net/*.pod
 %perl_vendor_privlib/Net/Server
 
+%files scripts
+%_bindir/*
+%_man1dir/*
+
+
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.009-alt1
+- automated CPAN update
+
 * Mon Mar 28 2016 Igor Vlasenko <viy@altlinux.ru> 2.008-alt2
 - added compat provides
 
