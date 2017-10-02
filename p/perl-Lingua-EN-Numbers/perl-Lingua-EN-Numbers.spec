@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Lingua-EN-Numbers
 Version:        2.03
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Turn "407" into "four hundred and seven", etc
 License:        GPLv2
 Group:          Development/Other
@@ -15,7 +15,7 @@ Source0:        http://www.cpan.org/authors/id/N/NE/NEILB/Lingua-EN-Numbers-%{ve
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -56,6 +56,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1_6
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1_5
 - update to new release by fcimport
 
