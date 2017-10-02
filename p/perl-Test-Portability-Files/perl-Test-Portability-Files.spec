@@ -9,7 +9,7 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/CPAN/Changes.pm) perl(Te
 
 Name:           perl-Test-Portability-Files
 Version:        0.07
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Check file names portability
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -20,7 +20,7 @@ BuildArch:      noarch
 # Build
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
@@ -72,6 +72,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_4
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_3
 - update to new release by fcimport
 
