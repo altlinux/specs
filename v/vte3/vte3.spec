@@ -5,7 +5,7 @@
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 %def_disable static
@@ -111,6 +111,7 @@ Summary: GObject introspection devel data for the %name
 Group: System/Libraries
 BuildArch: noarch
 Requires: lib%name-gir = %version-%release
+Requires: lib%name-devel = %version-%release
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the %name library
@@ -186,6 +187,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 0.50.1-alt1
+- 0.50.1
+
 * Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 0.50.0-alt1
 - 0.50.0
 

@@ -6,10 +6,10 @@
 
 %define _libexecdir %_prefix/libexec
 
-%def_enable libhttpseverywhere
+%def_disable libhttpseverywhere
 
 Name: epiphany
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
@@ -27,7 +27,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Provides: webclient
 Obsoletes: %name-extensions
 
-%define webkit_ver 2.17.92
+%define webkit_ver 2.18.0
 %define gtk_ver 3.22.13
 %define libxml2_ver 2.6.12
 %define xslt_ver 1.1.7
@@ -55,7 +55,7 @@ BuildRequires: gcc-c++ gsettings-desktop-schemas-devel
 # Zeroconf support
 BuildPreReq: libavahi-devel libavahi-gobject-devel
 # since 3.23.x
-%{?_enable_libhttpseverywhere:BuildPreReq: libhttpseverywhere-devel >= 0.4}
+%{?_enable_libhttpseverywhere:BuildRequires: libhttpseverywhere-devel >= 0.4}
 BuildRequires: libicu-devel libjson-glib-devel
 
 %description
@@ -81,7 +81,7 @@ This package contains common noarch files needed for Epiphany.
 %meson \
 	-Denable-schemas-compile=false \
 	-Ddistributor_name="ALTLinux" \
-	%{?_enable_libhttpseverywhere:-Denable_https_everywhere=true}
+	%{?_enable_libhttpseverywhere:-Dhttps_everywhere=true}
 %meson_build
 
 %install
@@ -113,6 +113,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/appdata/%xdg_name.appdata.xml
 
 %changelog
+* Fri Sep 29 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
+- 3.26.1
+
 * Sat Sep 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

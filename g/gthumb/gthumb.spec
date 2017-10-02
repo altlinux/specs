@@ -3,6 +3,8 @@
 %define ver_base 3.5
 %define ver_major 3.5
 %define gst_api_ver 1.0
+%define xdg_name org.gnome.gThumb
+
 %def_enable debug
 %def_enable exiv2
 %def_enable libbrasero
@@ -11,7 +13,7 @@
 %def_enable libraw
 
 Name: gthumb
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -157,16 +159,19 @@ This package contains headers needed to build extensions for gThumb.
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.slideshow.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.webalbums.gschema.xml
 %_datadir/GConf/gsettings/%name.convert
-%_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/%xdg_name.appdata.xml
 %_man1dir/gthumb.1.*
 %doc AUTHORS NEWS README
 
 %files devel
 %_includedir/gthumb-%ver_base/
 %_datadir/aclocal/gthumb.m4
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*
 
 %changelog
+* Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.5.3-alt1
+- 3.5.3
+
 * Sun Aug 27 2017 Yuri N. Sedunov <aris@altlinux.org> 3.5.2-alt1
 - 3.5.2
 

@@ -1,13 +1,13 @@
-%def_enable snapshot
+%def_disable snapshot
 # hardcoded lib/geary path
 #%%define _libexecdir %_prefix/libexec
-%define ver_major 0.11
+%define ver_major 0.12
 %define xdg_name org.gnome.Geary
 %def_enable contractor
 
 Name: geary
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Email client
 License: LGPLv2.1+
@@ -29,6 +29,7 @@ BuildRequires: vala-tools >= %vala_ver libvala-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libsqlite3-devel >= %sqlite_ver
 BuildRequires: cmake intltool desktop-file-utils gnome-doc-utils
+BuildRequires: iso-codes-devel
 BuildRequires: libnotify-devel libcanberra-devel libgee0.8-devel
 BuildRequires: libgmime-devel libgnome-keyring-devel libexpat-devel
 BuildRequires: libpixman-devel libharfbuzz-devel libwebkit2gtk-devel libenchant-devel
@@ -53,18 +54,13 @@ Geary's development.
 %setup
 
 %build
-#%%configure --disable-schemas-compile \
-#	--disable-desktop-update \
-#	--disable-icon-update \
-#	%{subst_enable contractor}
 %cmake -DGSETTINGS_COMPILE:BOOL=OFF \
 	-DICON_UPDATE:BOOL=OFF \
-	-DDESKTOP_UPDATE:BOOL=OFF \
+	-DDESKTOP_UPDATE:BOOL=OFF
 %cmake_build VERBOSE=1
 
 %install
 %cmakeinstall_std
-
 %find_lang --with-gnome %name
 
 %files -f %name.lang
@@ -82,6 +78,9 @@ Geary's development.
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt1
+- 0.12.0
+
 * Wed Mar 08 2017 Yuri N. Sedunov <aris@altlinux.org> 0.11.3-alt2
 - updated to 0.11.0-761-g2f145ac from master branch
 - build against gnome-3.23.x libraries

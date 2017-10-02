@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define _name gnome-desktop
@@ -13,8 +13,8 @@
 %def_enable udev
 
 Name: %{_name}3
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
 License: %gpl2plus, %fdl
@@ -176,6 +176,9 @@ the functionality of the Gnome 3 desktop library.
 
 
 %changelog
+* Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
+- 3.26.1
+
 * Sat Sep 16 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt2
 - updfated to 3.26.0-1-g22b89aa (fixed BGO #787072)
 

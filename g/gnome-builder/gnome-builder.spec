@@ -12,7 +12,7 @@
 %def_without autotools_templates
 
 Name: gnome-builder
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -134,7 +134,7 @@ This package provides noarch data needed for Gnome Builder to work.
 %_libdir/%name/plugins/cmake_plugin/
 %_libdir/%name/plugins/eslint_plugin/
 %_libdir/%name/plugins/find_other_file.py
-%_libdir/%name/plugins/fpaste_plugin/
+#%_libdir/%name/plugins/fpaste_plugin/
 %_libdir/%name/plugins/html_preview_plugin/
 %_libdir/%name/plugins/jedi_plugin.py
 %_libdir/%name/plugins/jhbuild_plugin.py
@@ -223,6 +223,9 @@ This package provides noarch data needed for Gnome Builder to work.
 
 
 %changelog
+* Wed Oct 04 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
+- 3.26.1
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 
