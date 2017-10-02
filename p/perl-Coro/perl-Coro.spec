@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl rpm-macros-fedora-compat
 BuildRequires: perl(AnyEvent/AIO.pm) perl(AnyEvent/BDB.pm) perl(BDB.pm) perl(IO/AIO.pm) perl(LWP/Simple.pm) perl(Net/Config.pm) perl(Net/FTP.pm) perl(Net/HTTP.pm) perl(Net/NNTP.pm) perl(Term/ReadLine.pm) perl-podlators
@@ -5,26 +6,22 @@ BuildRequires: perl(AnyEvent/AIO.pm) perl(AnyEvent/BDB.pm) perl(BDB.pm) perl(IO/
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Coro
-Version:        6.511
-Release:        alt1_2
+Version:        6.514
+Release:        alt1_1
 Summary:        The only real threads in perl
 # Coro/libcoro:    GPLv2 or BSD
 # Rest of package: GPL+ or Artistic
 License:        (GPL+ or Artistic) and (GPLv2 or BSD)
-Group:          Development/Other
 URL:            http://search.cpan.org/dist/Coro/
 Source0:        http://search.cpan.org/CPAN/authors/id/M/ML/MLEHMANN/Coro-%{version}.tar.gz
 Patch0:         %{name}-5.25-ucontext-default.patch
-# Make Coro compatible with Perl 5.24, the argarray was removed before 5.24,
-# code equivalence displayed in e2657e180a66b618ece78ca6b9c1f9e9b361a948
-# Perl5 commit,
-# <http://www.nntp.perl.org/group/perl.perl5.porters/2016/05/msg236178.html>,
-# bug #1338707
-Patch1:         Coro-6.511-Do-not-use-argarray.patch
+# Do not disable hardening
+Patch1:         Coro-6.512-Disable-disabling-FORTIFY_SOURCE.patch
 BuildRequires:  coreutils
 BuildRequires:  findutils
+BuildRequires:  gcc-common
 BuildRequires:  libecb-devel
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(Canary/Stability.pm)
@@ -72,25 +69,8 @@ Requires:       perl(Guard.pm) >= 0.500
 Requires:       perl(Storable.pm) >= 2.150
 Requires:       perl(warnings.pm)
 
-%if 0%{?rhel} && 0%{?rhel} < 7
-# RPM 4.8 style:
-# Filter underspecified dependencies
-%filter_from_requires /^perl.AnyEvent.pm.$/d
-%filter_from_requires /^perl.AnyEvent.pm. >= 4.800001$/d
-%filter_from_requires /^perl.AnyEvent.AIO.pm.$/d
-%filter_from_requires /^perl.AnyEvent.BDB.pm.$/d
-%filter_from_requires /^perl.EV.pm.$/d
-%filter_from_requires /^perl.Event.pm.$/d
-%filter_from_requires /^perl.Guard.pm.$/d
-%filter_from_requires /^perl.Storable.pm.$/d
-# Version unversioned Provides
-%filter_from_provides s/^\(perl.Coro\>[^=]*\.pm.$/\1 = %{version}/
 
 
-%else
-
-
-# RPM 4.9 style:
 # Filter underspecified dependencies
 
 
@@ -101,7 +81,16 @@ Requires:       perl(warnings.pm)
 
 
 
-%endif
+Source44: import.info
+%filter_from_requires /:__requires_exclude|}^perl\\(AnyEvent.pm\\)$/d
+%filter_from_requires /^perl\\(AnyEvent.pm\\) >= 4.800001$/d
+%filter_from_requires /^perl\\(AnyEvent.AIO.pm\\)$/d
+%filter_from_requires /^perl\\(AnyEvent.BDB.pm\\)$/d
+%filter_from_requires /^perl\\(EV.pm\\)$/d
+%filter_from_requires /^perl\\(Event.pm\\)$/d
+%filter_from_requires /^perl\\(Guard.pm\\)$/d
+%filter_from_requires /^perl\\(Storable.pm\\)$/d
+%filter_from_provides /:__provides_exclude|}^perl\\(Coro.pm\\)$/d
 
 
 %description
@@ -122,7 +111,6 @@ programming much safer and easier than using other thread models.
 # use ucontext backend on non-x86 (setjmp didn't work on s390(x))
 %patch0 -p1 -b .ucontext-default
 %endif
-
 %patch1 -p1
 
 # Unbundle libecb
@@ -135,13 +123,7 @@ for F in Coro/jit-*.pl; do
     chmod -x "$F"
 done
 
-%global wrong_shbangs eg/myhttpd
-%if %{defined fix_shbang_line}
-%fix_shbang_line %wrong_shbangs
-%else
-# at least EL6 doesn't have the %%fix_shbang_line macro
-sed -i -e '/^#!/ s|.*|#!%{__perl}|' %wrong_shbangs
-%endif
+%fix_shbang_line eg/myhttpd
 
 
 %build
@@ -151,12 +133,11 @@ RPM_OPT_FLAGS="${RPM_OPT_FLAGS} -Wp,-U_FORTIFY_SOURCE -Wp,-D_FORTIFY_SOURCE=0"
 %endif
 
 # Interractive configuration. Use default values.
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=perl OPTIMIZE="$RPM_OPT_FLAGS" </dev/null
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=perl NO_PACKLIST=1 OPTIMIZE="$RPM_OPT_FLAGS" </dev/null
 %make_build
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -delete
 find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -delete
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
@@ -171,6 +152,9 @@ make test
 %{perl_vendor_archlib}/Coro*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 6.514-alt1_1
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 6.511-alt1_2
 - update to new release by fcimport
 
