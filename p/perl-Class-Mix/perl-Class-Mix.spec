@@ -1,34 +1,36 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Class-Mix
 Summary:        Dynamic class mixing
 Version:        0.006
-Release:        alt1
+Release:        alt1_1
 License:        GPL+ or Artistic
 Group:          Development/Other
-Source0:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Class-Mix-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/Z/ZE/ZEFRAM/Class-Mix-%{version}.tar.gz
 URL:            http://search.cpan.org/dist/Class-Mix/
 BuildArch:      noarch
 
+BuildRequires:  coreutils
+BuildRequires:  findutils
 BuildRequires:  rpm-build-perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(constant.pm)
 BuildRequires:  perl(Exporter.pm)
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(if.pm)
 BuildRequires:  perl(Module/Build.pm)
+BuildRequires:  perl(mro.pm)
 BuildRequires:  perl(Params/Classify.pm)
 BuildRequires:  perl(parent.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 
-Requires:       perl(Exporter.pm)
+Requires:       perl(mro.pm)
 
 # obsolete/provide old tests subpackage
 # can be removed during F19 development cycle
@@ -36,6 +38,7 @@ Obsoletes:      %{name}-tests < 0.005-3
 Provides:       %{name}-tests = %{version}-%{release}
 
 
+Source44: import.info
 
 %description
 The mix_class function provided by this module dynamically generates
@@ -51,7 +54,6 @@ The mix_class function provided by this module dynamically generates
 %install
 ./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -62,6 +64,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1
 - automated CPAN update
 
