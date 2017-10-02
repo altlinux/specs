@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Test-NoTabs
 Version:	2.00
-Release:	alt1_2
+Release:	alt1_3
 Summary:	Check the presence of tabs in your project
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-NoTabs/
@@ -16,7 +16,7 @@ BuildArch:	noarch
 # Module Build
 BuildRequires:	coreutils
 BuildRequires:	findutils
-BuildRequires:	perl
+BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
@@ -65,6 +65,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1_3
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1_2
 - update to new release by fcimport
 
