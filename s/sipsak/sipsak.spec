@@ -1,14 +1,12 @@
 Name: sipsak
 Version: 0.9.6
-Release: alt1.1.qa1
+Release: alt2
 Summary: CLI tool for SIP developers and administrators
 License: GPL
 Group: Communications
 
 URL: http://sipsak.org/
 Source: %name-%version.tar.bz2
-
-Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 # Automatically added by buildreq on Thu Oct 08 2009 (-bi)
 BuildRequires: libssl-devel
@@ -19,9 +17,10 @@ Session Initiation Protocol (SIP) applications. It can be used for some
 simple tests on SIP applications and devices.
 
 %prep
-%setup -n %name-%version
+%setup
 
 %build
+%add_optflags -fgnu89-inline
 %configure
 %make
 
@@ -34,6 +33,9 @@ simple tests on SIP applications and devices.
 %doc AUTHORS INSTALL COPYING README NEWS TODO
 
 %changelog
+* Mon Oct 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.6-alt2
+- Fixed build with gcc-6.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.6-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
