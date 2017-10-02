@@ -6,7 +6,7 @@ BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.
 %define _localstatedir %{_var}
 Name:           perl-Test-utf8
 Version:        1.01
-Release:        alt1_8
+Release:        alt1_9
 Summary:        Handy utf8 tests
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -17,7 +17,7 @@ Patch0:         Test-utf8-1.01-Drop-useless-build-time-dependencies.patch
 BuildArch:      noarch
 # Module Build
 BuildRequires:  coreutils
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(inc/Module/Install.pm)
 BuildRequires:  perl(Module/Install/Metadata.pm)
@@ -67,6 +67,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_9
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_8
 - update to new release by fcimport
 
