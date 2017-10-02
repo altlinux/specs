@@ -9,7 +9,7 @@ BuildRequires: perl-podlators
 
 Name:		perl-Test-Synopsis
 Version:	0.15
-Release:	alt1_6
+Release:	alt1_7
 Summary:	Test your SYNOPSIS code
 Group:		Development/Other
 License:	GPL+ or Artistic
@@ -19,7 +19,7 @@ BuildArch:	noarch
 # Module Build
 BuildRequires:	coreutils
 BuildRequires:	findutils
-BuildRequires:	perl
+BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
@@ -97,6 +97,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_7
+- update to new release by fcimport
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_6
 - update to new release by fcimport
 
