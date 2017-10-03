@@ -1,21 +1,20 @@
 %define version 2.0.2
-%define release alt1
+%define release alt2
 
 %setup_python_module texml
 
 Summary: TeXML: an XML syntax for TeX (LaTeX, ConTeXt)
 Name: texml
 Version: %version
-Release: %release.1
+Release: %release
 Source: %modulename-%version.tar
-Packager: Python Development Team <python@packages.altlinux.org>
 License: MIT
 Group: Publishing
-Url: http://getfo.org/texml/
 BuildArch: noarch
+Url: http://getfo.org/texml/
 
 BuildRequires: python-devel python-modules-compiler
-BuildPreReq: python-modules-encodings python-modules-xml
+BuildRequires: python-modules-encodings python-modules-xml
 
 %description
 TeXML is an XML syntax for TeX. The processor transforms the TeXML
@@ -32,16 +31,19 @@ generate [La]TeX or ConTeXt files.
 %install
 %python_build_install --optimize=2 \
                           --record=INSTALLED_FILES
-# texml.1 somehow becomes texml.1.gz, INSTALLED_FILES becomes incorrect
-cp INSTALLED_FILES INSTALLED_FILES.0 && /bin/sed 's/texml.1/texml.1.gz/' INSTALLED_FILES.0 >INSTALLED_FILES
+# texml.1 may be compressed, INSTALLED_FILES becomes incorrect
+sed -i 's/texml.1/texml.1*/' INSTALLED_FILES
 
 %files -f INSTALLED_FILES
 # The package does not own its own docdir subdirectory.
 # The line below is added by repocop to fix this bug in a straightforward way. 
 # Another way is to rewrite the spec to use relative doc paths.
-%dir %_docdir/texml-%version 
+%dir %_docdir/texml-%version
 
 %changelog
+* Tue Oct 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt2
+- Updated spec to allow any man page compression.
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.0.2-alt1.1
 - Rebuild with Python-2.7
 
