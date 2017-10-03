@@ -2,7 +2,7 @@
 
 Name: python-module-3parclient
 Version: 4.2.2
-Release: alt1
+Release: alt2
 Summary: HPE 3PAR REST Python Client
 
 Group: Development/Python
@@ -53,6 +53,8 @@ The HP 3PAR Rest Client (hp3parclient) is now considered deprecated.
 %prep
 %setup
 
+rm -rfv ./test/
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -85,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Mon Oct 02 2017 Lenar Shakirov <snejok@altlinux.ru> 4.2.2-alt2
+- Remove "test" dir from sources (ALT bug: 33948)
+
 * Tue Nov 29 2016 Lenar Shakirov <snejok@altlinux.ru> 4.2.2-alt1
 - Initial build for ALT
 
