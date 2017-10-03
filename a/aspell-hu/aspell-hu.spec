@@ -1,3 +1,5 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define _enable_debug_packages %{nil}
 %define debug_package          %{nil}
 
@@ -11,8 +13,8 @@
 Summary:       %{languageenglazy} files for aspell
 Name:          aspell-%{languagecode}
 Version:       0.99.4.2.0
-Release:       alt1_14
-Group:         System/Internationalization
+Release:       alt2_14
+Group:         Text tools
 Source:        http://ftp.gnu.org/gnu/aspell/dict/%{languagecode}/%{fname}-%{src_ver}.tar.bz2
 URL:		   http://aspell.sourceforge.net/
 #Source:	       http://prdownloads.sourceforge.net/wordlist-hu/wordlist-hu-%{src_ver}.tar.bz2
@@ -56,6 +58,9 @@ A %{languageenglazy} dictionary for use with aspell, a spelling checker.
 
 
 %changelog
+* Tue Oct 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.99.4.2.0-alt2_14
+- fixed rpm Group:
+
 * Sat Jun 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.99.4.2.0-alt1_14
 - update by mgaimport
 
