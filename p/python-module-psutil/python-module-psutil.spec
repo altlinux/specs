@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 3.1.1
-Release: alt1.1.1
+Version: 5.3.1
+Release: alt1
 
 Summary: A process utilities module for Python
 
@@ -13,8 +13,7 @@ License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/psutil/
 
-# It is new feature etersoft-build-utils since 1.7.6: supports commented real url
-# Source-url: http://psutil.googlecode.com/files/%oname-%version.tar.gz
+# Source-url: https://pypi.io/packages/source/p/%oname/%oname-%version.tar.gz
 Source: %oname-%version.tar
 
 %add_python_req_skip _psutil_bsd _psutil_mswindows _psutil_osx pywintypes win32com
@@ -93,16 +92,19 @@ popd
 %endif
 
 %files
-%doc CREDITS *.rst LICENSE TODO docs/*.rst examples
+%doc CREDITS *.rst LICENSE docs/*.rst
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc CREDITS *.rst LICENSE TODO docs/*.rst examples
+%doc CREDITS *.rst LICENSE docs/*.rst
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Oct 03 2017 Vitaly Lipatov <lav@altlinux.ru> 5.3.1-alt1
+- new version 5.3.1 (with rpmrb script)
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.1.1-alt1.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
