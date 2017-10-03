@@ -3,7 +3,7 @@
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
 Version: 1.1.17
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
 # VCS:   https://github.com/ClusterLabs/pacemaker.git
@@ -24,7 +24,7 @@ BuildRequires: libqb-devel > 0.11.0 libgnutls-devel libltdl-devel libgio-devel
 BuildRequires: libncurses-devel libssl-devel libselinux-devel docbook-style-xsl
 BuildRequires: bison flex help2man xsltproc
 BuildRequires: libesmtp-devel libsensors3-devel libnet-snmp-devel libopenipmi-devel libservicelog-devel
-BuildRequires: libcorosync-devel libcluster-glue-devel
+BuildRequires: libcorosync-devel
 BuildRequires: publican inkscape asciidoc
 
 %define gname haclient
@@ -321,6 +321,9 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Oct 03 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.17-alt2
+- Build without cluster-glue (ALT #33944)
+
 * Thu Jul 13 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.17-alt1
 - New version
 
