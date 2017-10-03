@@ -1,17 +1,27 @@
+%def_with python3
+
 Name: tbb
-Version: 42_20140601
-Release: alt1.qa1
+Version: 2018
+Release: alt1.u1
 Summary: Threading Building Blocks
-License: GPL
+License: Apache 2.0
 Group: Development/Tools
 Url: http://threadingbuildingblocks.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar.gz
+# https://github.com/01org/tbb.git
+Source: %name-%version.tar
 
-Requires: lib%name = %version-%release
+Patch1: %name-%{version}.u1-alt-build.patch
 
-BuildPreReq: gcc-c++
+Requires: lib%name = %EVR
+
+BuildRequires: gcc-c++
+BuildRequires: python-dev
+BuildRequires: swig
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-dev
+%endif
 
 %description
 Threading Building Blocks offers a rich and complete approach to
@@ -31,34 +41,19 @@ having to be a threading expert.
 
 This package contains shared libraries of Threading Building Blocks.
 
-%package headers
-Summary: Headers for Threading Building Blocks
-Group: Development/C++
-BuildArch: noarch
-Conflicts: lib%name-devel < %version-%release
-
-%description headers
-Threading Building Blocks offers a rich and complete approach to
-expressing parallelism in a C++ program. It is a library that helps you
-leverage multi-core processors for performance and scalability without
-having to be a threading expert.
-
-This package contains headers for Threading Building Blocks.
-
-%package -n lib%name-devel
-Summary: Development libraries of Threading Building Blocks
+%package devel
+Summary: Development libraries and headers of Threading Building Blocks
 Group: Development/C++
 Requires: lib%name = %version-%release
 Requires: %name-headers = %version-%release
-%ifarch x86_64
-Provides: libtbb.so()(64bit)
-Provides: libtbbmalloc.so()(64bit)
-%else
-Provides: libtbb.so
-Provides: libtbbmalloc.so
-%endif
+Provides: lib%name-devel = %EVR
+Conflicts: lib%name-devel < %EVR
+Obsoletes: lib%name-devel
+Provides: %name-headers = %EVR
+Conflicts: %name-headers < %EVR
+Obsoletes: %name-headers
 
-%description -n lib%name-devel
+%description devel
 Threading Building Blocks offers a rich and complete approach to
 expressing parallelism in a C++ program. It is a library that helps you
 leverage multi-core processors for performance and scalability without
@@ -94,12 +89,56 @@ having to be a threading expert.
 
 This package contains examples for Threading Building Blocks.
 
+%package -n python-module-%name
+Summary: Python 2 Threading Building Blocks module
+Group: Development/Python
+
+%description -n python-module-%name
+Threading Building Blocks offers a rich and complete approach to
+expressing parallelism in a C++ program. It is a library that helps you
+leverage multi-core processors for performance and scalability without
+having to be a threading expert.
+
+This package contains python module for Threading Building Blocks.
+
+%if_with python3
+%package -n python3-module-%name
+Summary: Python 3 Threading Building Blocks module
+Group: Development/Python3
+
+%description -n python3-module-%name
+Threading Building Blocks offers a rich and complete approach to
+expressing parallelism in a C++ program. It is a library that helps you
+leverage multi-core processors for performance and scalability without
+having to be a threading expert.
+
+This package contains python3 module for Threading Building Blocks.
+%endif
+
 %prep
 %setup
+%patch1 -p1
+
+%if_with python3
+cp -a python python3
+%endif
 
 %build
-%make
-%make_build rml
+export CFLAGS="${CFLAGS:-%optflags}"
+export CXXFLAGS="${CXXFLAGS:-%optflags}"
+
+%make_build stdver=c++14
+
+. build/linux*release/tbbvars.sh
+pushd python
+%python_build_debug
+popd
+
+%if_with python3
+pushd python3
+%python3_build_debug
+popd
+%endif
 
 %install
 install -d %buildroot%_libdir
@@ -113,46 +152,68 @@ do
 	ln -s $i $devlib
 done
 popd
-install -d %buildroot%_bindir
-install -m755 build/linux*release/*.exe \
-	%buildroot%_bindir
-pushd %buildroot%_bindir
-for i in $(ls *.exe|sed 's|\.exe||'); do
-	mv $i.exe $i
-done
-popd
 
 install -d %buildroot%_includedir
 cp -fR include/%name %buildroot%_includedir/
 
-install -d %buildroot%_libdir/%name
-cp -fR examples %buildroot%_libdir/%name/
+install -d %buildroot%_datadir/%name
+cp -fR examples %buildroot%_datadir/%name/
 
 for i in $(find ./ -name '*.html'); do
 	install -Dm644 $i %buildroot%_docdir/%name/$i
 done
 
-install -p -m644 CHANGES COPYING README %buildroot%_docdir/%name
+pushd %buildroot%_docdir/%name
+	rm -fr examples
+	rm -fr python
+%if_with python3
+	rm -fr python3
+%endif
+popd
 
-%files
-%_bindir/*
+install -p -m644 CHANGES LICENSE README* %buildroot%_docdir/%name
 
-%files headers
-%_includedir/*
+. build/linux*release/tbbvars.sh
+pushd python
+%python_install
+popd
+
+%if_with python3
+pushd python3
+%python3_install
+popd
+%endif
 
 %files -n lib%name
 %_libdir/*.so.*
 
-%files -n lib%name-devel
+%files devel
+%_includedir/*
 %_libdir/*.so
 
 %files docs
 %_docdir/%name
 
 %files examples
-%_libdir/%name/
+%_datadir/%name/
+
+%files -n python-module-%name
+%doc python/index.html
+%python_sitelibdir/TBB*
+%python_sitelibdir/_TBB.so
+
+%if_with python3
+%files -n python3-module-%name
+%doc python3/index.html
+%python3_sitelibdir/TBB*
+%python3_sitelibdir/_TBB.*.so
+%python3_sitelibdir/__pycache__/TBB*
+%endif
 
 %changelog
+* Tue Oct 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2018-alt1.u1
+- Updated to upstream version 2018.U1.
+
 * Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 42_20140601-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
