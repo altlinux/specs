@@ -3,7 +3,7 @@
 
 Name: gnuradio
 Version: 3.7.11
-Release: alt1
+Release: alt2
 Summary: Software defined radio framework
 License: GPLv2+
 Group: Engineering
@@ -158,5 +158,8 @@ rm -f %buildroot%_datadir/%name/examples/fcd/fcd_nfm_rx
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Oct 03 2017 Anton Farygin <rider@altlinux.ru> 3.7.11-alt2
+- rebuilt for libcodec2 0.7
+
 * Mon Aug 14 2017 Anton Midyukov <antohami@altlinux.org> 3.7.11-alt1
 - Initial build for ALT Sisyphus.
