@@ -1,13 +1,15 @@
 Name: tcptrack
 Version: 1.4.2
-Release: alt1
+Release: alt2
 
 Summary: A packet sniffer which displays TCP information like the 'top' command
 License: GPLv2+
 Group: Security/Networking
 
 URL: http://www.rhythm.cx/~steve/devel/tcptrack
-Source: http://www.rhythm.cx/~steve/devel/tcptrack/release/%version/source/%name-%version.tar.gz
+
+Source: %name-%version.tar
+Patch1: %name-%version-alt-build.patch
 
 # Automatically added by buildreq on Wed Oct 13 2010
 BuildRequires: gcc-c++ libncurses-devel libpcap-devel
@@ -22,8 +24,10 @@ and bandwidth usage.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -31,10 +35,13 @@ and bandwidth usage.
 %makeinstall_std
 
 %files
-%_bindir/tcptrack
-%_man1dir/tcptrack.*
+%_bindir/%name
+%_man1dir/%name.1.*
 
 %changelog
+* Tue Oct 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.2-alt2
+- Fixed build with new toolchain.
+
 * Sat Aug 13 2011 Victor Forsiuk <force@altlinux.org> 1.4.2-alt1
 - 1.4.2
 
