@@ -1,3 +1,5 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define _enable_debug_packages %{nil}
 %define debug_package          %{nil}
 
@@ -16,8 +18,8 @@
 Summary:       %{languageenglazy} files for aspell
 Name:          aspell-%{languagecode}
 Version:       3.3.2
-Release:       alt1_6
-Group:         System/Internationalization
+Release:       alt2_6
+Group:         Text tools
 Source:        ftp://ftp.gnu.org/gnu/aspell/dict/ro/aspell5-ro-%{src_ver}.tar.bz2
 URL:           http://aspell.net/
 License:	   Free
@@ -59,6 +61,9 @@ chmod 644 README Copyright
 
 
 %changelog
+* Tue Oct 03 2017 Igor Vlasenko <viy@altlinux.ru> 3.3.2-alt2_6
+- fixed rpm Group:
+
 * Sat Jun 04 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.2-alt1_6
 - update by mgaimport
 
