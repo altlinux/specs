@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.10.4
-Release: alt1.1
+Version: 0.10.6
+Release: alt1
 
 %setup_python_module %oname
 
@@ -14,7 +14,9 @@ License: MIT License
 Group: Development/Python
 Url: http://alastairs-place.net/netifaces
 
-Source: http://alastairs-place.net/projects/netifaces/netifaces-%version.tar
+#Source: http://alastairs-place.net/projects/netifaces/netifaces-%version.tar
+# Source-url: https://pypi.io/packages/source/n/%modulename/%modulename-%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires: python-devel python-module-setuptools
 %if_with python3
@@ -56,7 +58,7 @@ either getifaddrs() or support the SIOCGIFxxx socket options, although the
 data provided by the socket options is normally less complete.
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -93,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Tue Oct 03 2017 Vitaly Lipatov <lav@altlinux.ru> 0.10.6-alt1
+- new version (0.10.6) with rpmgs script
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.4-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
