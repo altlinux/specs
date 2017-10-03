@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.6
-Release: alt1.git20150323.1.1
+Version: 0.4.8
+Release: alt1
 
 Summary: A Python MessagePack (de)serializer
 
@@ -13,6 +13,7 @@ License: ASL 2.0
 URL: http://pypi.python.org/pypi/msgpack-python/
 
 # https://github.com/msgpack/msgpack-python.git
+# Source-url: https://pypi.io/packages/source/m/%oname-python/%oname-python-%version.tar.gz
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
@@ -83,6 +84,10 @@ popd
 %endif
 
 %changelog
+* Tue Oct 03 2017 Vitaly Lipatov <lav@altlinux.ru> 0.4.8-alt1
+- move to build from tarball
+- new version 0.4.8 (with rpmrb script)
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.6-alt1.git20150323.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
