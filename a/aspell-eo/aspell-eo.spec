@@ -1,6 +1,8 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define _enable_debug_packages %{nil}
 %define debug_package          %{nil}
 
@@ -20,8 +22,8 @@ BuildRequires: unzip
 Summary:       %{languageenglazy} files for aspell
 Name:          aspell-%{languagecode}
 Version:       2.1.20000225a.2
-Release:       alt1_9
-Group:         System/Internationalization
+Release:       alt2_9
+Group:         Text tools
 Source:        http://ftp.gnu.org/gnu/aspell/dict/%{languagecode}/%{fname}-%{src_ver}.tar.bz2
 URL:	       http://aspell.sourceforge.net/
 License:       GPL
@@ -76,6 +78,9 @@ chmod 644 README
 
 
 %changelog
+* Tue Oct 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.20000225a.2-alt2_9
+- fixed rpm Group:
+
 * Sat Jun 04 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.20000225a.2-alt1_9
 - converted for ALT Linux by srpmconvert tools
 
