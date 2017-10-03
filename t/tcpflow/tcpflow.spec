@@ -1,18 +1,22 @@
 Summary: Network traffic recorder
 Name: tcpflow
-Version: 0.21
-Release: alt1.qa1
-License: GPL
+Version: 1.4.5
+Release: alt1
+License: GPLv3
 Group: Monitoring
-Url: http://www.circlemud.org/~jelson/software/tcpflow/
-Source: ftp://ftp.circlemud.org/pub/jelson/tcpflow/tcpflow-0.21.tar.gz
-Packager: Afanasov Dmitry <ender@altlinux.org>
+Url: https://github.com/simsong/tcpflow
+
+Source: %name-%version.tar
 Source1: control-tcpflow
 
 Requires: %name-control
 
-# Automatically added by buildreq on Tue Sep 02 2008
-BuildRequires: libpcap-devel
+BuildRequires: gcc-c++ boost-devel libcairo-devel libpcap-devel zlib-devel
+BuildRequires: openssl-devel
+
+Provides: tcpflow+ = %EVR
+Conflicts: tcpflow+ < %EVR
+Obsoletes: tcpflow+
 
 %description
 tcpflow is a program that captures data transmitted as part of TCP connections
@@ -35,11 +39,12 @@ See control(8) for details.
 %setup
 
 %build
+%autoreconf
 %configure
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 install -pD -m755 %SOURCE1 %buildroot%_controldir/%name
 sed -i -e 's:__BINARY__:%_bindir/%name:' %buildroot%_controldir/%name
 
@@ -53,12 +58,19 @@ sed -i -e 's:__BINARY__:%_bindir/%name:' %buildroot%_controldir/%name
 %files
 %doc AUTHORS COPYING ChangeLog NEWS README
 %attr(700,root,root) %verify(not mode group) %_bindir/%name
-%_man1dir/*
+%_man1dir/%name.1*
 
 %files control
 %config %_controldir/%name
 
 %changelog
+* Tue Oct 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.5-alt1
+- Updated to upstream version 1.4.5.
+
+* Mon Nov 17 2014 Paul Wolneykien <manowar@altlinux.org> 1.4.4-alt1
+- New/alternative tcpflow version. Initial build for ALT Linux.
+- Freshed up to v1.4.4 with the help of cronbuild and update-source-functions.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.21-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
