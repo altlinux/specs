@@ -2,12 +2,12 @@
 %define Name XviD
 
 Name: lib%bname
-Version: 1.3.3
+Version: 1.3.4
 Release: alt1
 Summary: Shared library of %Name video codec
 Group: System/Libraries
 License: GPLv2+
-URL: http://www.%bname.org
+URL: https://labs.%bname.com
 
 Provides: %bname = %version-%release
 Obsoletes: %bname < %version-%release
@@ -64,6 +64,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Tue Oct 03 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.3.4-alt1
+- 1.3.4
+
 * Fri Oct 24 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.3.3-alt1
 - 1.3.3
 
