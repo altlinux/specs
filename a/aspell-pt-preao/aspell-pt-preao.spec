@@ -1,3 +1,5 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define _enable_debug_packages %{nil}
 %define debug_package          %{nil}
 
@@ -12,8 +14,8 @@
 Summary:	%{languageglazy} files previous to 1990 orthography agreement for aspell
 Name:		aspell-%{languagecode}
 Version:	0.60.0
-Release:	alt1_9
-Group:		System/Internationalization
+Release:	alt2_9
+Group:		Text tools
 License:	GPL
 URL:		http://aspell.sourceforge.net/
 # http://ftp.gnu.org/gnu/aspell/dict/%{languagecode}/aspell-%{languagecode}-%{src_ver}.tar.bz2
@@ -51,6 +53,9 @@ Version %{intver}.
 
 
 %changelog
+* Tue Oct 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.60.0-alt2_9
+- fixed rpm Group:
+
 * Mon Jun 06 2016 Igor Vlasenko <viy@altlinux.ru> 0.60.0-alt1_9
 - converted for ALT Linux by srpmconvert tools
 
