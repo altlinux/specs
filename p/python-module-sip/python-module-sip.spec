@@ -4,18 +4,21 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.16.9
-Release: alt2
+Version: 4.19.3
+Release: alt1
+
 Summary: Python bindings generator for C++ class libraries
+
 License: PSF
 Group: Development/Python
+URL: http://www.riverbankcomputing.com/software/sip/
 
 %setup_python_module sip
 
 # hg clone http://www.riverbankcomputing.com/hg/sip
-Source0: %name-%version.tar
-
-URL: http://www.riverbankcomputing.com/software/sip/
+#Source-url: https://pypi.io/packages/source/s/%oname/%oname-%version.tar.gz
+# Source-url: https://prdownloads.sourceforge.net/pyqt/sip/sip-%version/sip-%version.tar.gz
+Source: %name-%version.tar
 
 Provides: %modulename = %version-%release
 Obsoletes: %modulename <= 4.1-alt2.1
@@ -76,11 +79,11 @@ Header files for sip
 %prep
 %setup
 
-rm -f siplib/libsip.a
+#rm -f siplib/libsip.a
 
 # fix versions sets
-subst 's/version = (0, 1, 0)/version = (%pkg_version)/' build.py
-python build.py prepare
+#subst 's/version = (0, 1, 0)/version = (%pkg_version)/' build.py
+#python build.py prepare
 
 %if_with python3
 rm -rf ../python3
@@ -144,6 +147,9 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %endif
 
 %changelog
+* Tue Oct 03 2017 Vitaly Lipatov <lav@altlinux.ru> 4.19.3-alt1
+- new version (4.19.3) with rpmgs script
+
 * Sat Apr 02 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.16.9-alt2
 - (.spec) use updated correct %%__python3_includedir and %%__libpython3.
 
