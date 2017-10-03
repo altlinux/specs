@@ -1,8 +1,9 @@
 %def_with python3
+%def_with doc
 
 Name: ipython
 Version: 4.0.0
-Release: alt5
+Release: alt6
 
 %setup_python_module IPython
 
@@ -24,14 +25,16 @@ Patch1: 9040.patch
 %add_findreq_skiplist %python3_sitelibdir/IPython/utils/eventful.py
 
 BuildPreReq: python3-module-tornado python-module-setuptools pyjsdoc
-BuildPreReq: python-module-sphinx-devel python-module-zmq
+BuildPreReq: python-module-zmq
 BuildPreReq: python-module-tornado python-modules-sqlite3
-BuildPreReq: python-module-matplotlib-sphinxext python-module-numpydoc
 BuildPreReq: python-module-jsonschema python-module-traitlets
 BuildPreReq: python-module-pexpect python-module-pickleshare
 BuildPreReq: python-module-simplegeneric python-module-ipykernel
 BuildPreReq: python-module-ipyparallel
 BuildPreReq: python-module-pathlib2
+%if_with doc
+BuildPreReq: python-module-sphinx-devel python-module-matplotlib-sphinxext python-module-numpydoc
+%endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -138,8 +141,10 @@ rm -rf ../python3
 cp -a . ../python3
 %endif
 
+%if_with doc
 %prepare_sphinx docs
 ln -s ../objects.inv docs/source/
+%endif
 
 %build
 %python_build
@@ -170,12 +175,14 @@ popd
 %python_install
 rm -r %buildroot%python_sitelibdir/IPython/*/tests
 rm %buildroot%_bindir/iptest
+%if_with doc
 install -d %buildroot%_docdir/%name
 cp docs/source/*.txt %buildroot%_docdir/%name/
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C docs html
 cp -R docs/build/html/* examples %buildroot%_docdir/%name/
+%endif
 
 %files
 %_bindir/*
@@ -183,11 +190,14 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %exclude %_bindir/*3
 %endif
 %_man1dir/*
+%if_with doc
 %dir %_docdir/%name
 %_docdir/%name/*.txt
+%endif
 %python_sitelibdir/IPython/
 %python_sitelibdir/*.egg-info
 
+%if_with doc
 %files doc
 %_docdir/%name
 %exclude %_docdir/%name/*.txt
@@ -197,6 +207,7 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %files examples
 %dir %_docdir/%name
 %_docdir/%name/examples
+%endif
 
 %if_with python3
 %files -n %{name}3
@@ -206,6 +217,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 
 
 %changelog
+* Tue Oct 03 2017 Michael Shigorin <mike@altlinux.org> 4.0.0-alt6
+- introduced doc knob (on by default)
+
 * Fri Aug 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0-alt5
 - Applied upstream patches to fix test failures.
 
