@@ -1,7 +1,7 @@
 %define oname eigen
 Name: %{oname}3
 Version: 3.3.4
-Release: alt1
+Release: alt2
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
 Group: Development/C++
@@ -11,7 +11,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: gcc-c++ cmake doxygen libqt4-devel libsuitesparse-devel
-BuildPreReq: libsuperlu-devel libadolc-devel libmpfr-devel libgmp-devel
+BuildPreReq: libsuperlu-devel libmpfr-devel libgmp-devel
 BuildPreReq: libfftw3-devel libGLU-devel libgsl-devel gcc-fortran
 BuildPreReq: liblapack-devel libglew-devel libGLUT-devel libXi-devel
 BuildPreReq: libXmu-devel libmetis-devel phonon-devel libXres-devel
@@ -60,7 +60,6 @@ cmake \
 	-DCMAKE_C_FLAGS="%optflags" \
 	-DCMAKE_CXX_FLAGS="%optflags" \
 	-DCMAKE_Fortran_FLAGS="%optflags" \
-	-DADOLC_INCLUDES:PATH=%_includedir/adolc \
 	-DCHOLMOD_INCLUDES:PATH=%_includedir/suitesparse \
 	-DUMFPACK_INCLUDES:PATH=%_includedir/suitesparse \
 	-DSUPERLU_LIBRARIES:STRING=-lsuperlu_4.0 \
@@ -101,6 +100,9 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %doc BUILD/doc/html/*
 
 %changelog
+* Tue Oct 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.4-alt2
+- Rebuilt without libadolc.
+
 * Mon Jun 26 2017 Andrey Cherepanov <cas@altlinux.org> 3.3.4-alt1
 - Version 3.3.4
 
