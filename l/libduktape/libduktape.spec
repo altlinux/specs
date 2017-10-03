@@ -1,6 +1,6 @@
 %define oname duktape
 Name: libduktape
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: Embeddable Javascript engine library
@@ -11,7 +11,7 @@ Url: http://duktape.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: http://duktape.org/%oname-%version.tar.gz
+# Source-url: http://duktape.org/%oname-%version.tar.xz
 Source: %name-%version.tar
 Patch: duktape-2.1.0-makefile.patch
 
@@ -50,7 +50,7 @@ This package contains a commandline duk interpreter.
 
 %prep
 %setup
-%patch0 -p1
+%patch -p1
 
 %build
 %make -f Makefile.sharedlibrary
@@ -73,6 +73,9 @@ install -m 755 duk %buildroot%_bindir/duk
 %_bindir/duk
 
 %changelog
+* Tue Oct 03 2017 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt1
+- new version 2.2.0 (with rpmrb script)
+
 * Mon Oct 02 2017 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
 - initial build for ALT Sisyphus
 
