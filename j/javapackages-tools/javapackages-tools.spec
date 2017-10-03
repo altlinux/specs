@@ -31,7 +31,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javapackages-tools
 Version:        4.6.0
-Release:        alt10_14jpp8
+Release:        alt10_14jpp8.1
 
 Summary:        Macros and scripts for Java packaging support
 
@@ -67,6 +67,7 @@ Patch34: javapackages-tools-4.6.0-alt-req-headless-off.patch
 Patch35: javapackages-tools-4.6.0-alt-shade-jar.patch
 Patch36: macros.fjava-to-alt-rpm404.patch
 Patch37: macros.jpackage-alt-script.patch
+Patch38: javapackages-tools-4.6.0-alt-lxml-compat.patch
 
 Conflicts:       jpackage-utils < 0:5.0.1
 Obsoletes:       jpackage-utils < 0:5.0.1
@@ -209,6 +210,7 @@ sed -i '/fedora-review/d' install
 %patch35 -p1
 %patch36 -p1
 %patch37 -p1
+%patch38 -p2
 
 # alt specific shabang
 sed -i -e 1,1s,/bin/bash,/bin/sh, java-utils/java-wrapper bin/*
@@ -309,6 +311,9 @@ popd
 
 
 %changelog
+* Tue Oct 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.6.0-alt10_14jpp8.1
+- Fixed build with new python-module-lxml.
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt10_14jpp8
 - update
 
