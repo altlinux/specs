@@ -14,7 +14,7 @@
 
 Name: ceph
 Version: 12.2.1
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -177,6 +177,7 @@ Summary: Ceph Manager Daemon
 Group: System/Base
 Requires: ceph-base = %EVR
 %add_python_req_skip ceph_state
+Requires: python-module-mako
 
 %description mgr
 ceph-mgr enables python modules that provide services (such as the REST
@@ -622,6 +623,9 @@ mv -f %buildroot/etc/init.d/ceph %buildroot%_initdir/ceph
 install -D %SOURCE1 %buildroot%_initdir/ceph-radosgw
 install -D %SOURCE2 %buildroot%_initdir/rbdmap
 
+mkdir -p %buildroot/sbin
+mv %buildroot%_sbindir/mount.ceph %buildroot/sbin/mount.ceph
+
 # udev rules
 install -m 0644 -D udev/50-rbd.rules %buildroot%_udevrulesdir/50-rbd.rules
 install -m 0644 -D udev/60-ceph-by-parttypeuuid.rules %buildroot%_udevrulesdir/60-ceph-by-parttypeuuid.rules
@@ -937,7 +941,7 @@ fi
 %_bindir/rbd-replay
 %_bindir/rbd-replay-many
 %_bindir/rbdmap
-%_sbindir/mount.ceph
+/sbin/mount.ceph
 %if_with lttng
 %_bindir/rbd-replay-prep
 %endif
@@ -1231,6 +1235,11 @@ fi
 %endif
 
 %changelog
+* Tue Oct 03 2017 Alexey Shabalin <shaba@altlinux.ru> 12.2.1-alt2%ubt
+- backport influx plugin for mgr from upstream master
+- update requires for fix run mgr
+- move mount.ceph to /sbin
+
 * Wed Sep 27 2017 Alexey Shabalin <shaba@altlinux.ru> 12.2.1-alt1%ubt
 - 12.2.1
 
