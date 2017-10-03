@@ -18,7 +18,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt1%ubt
+Release: alt2%ubt
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -123,6 +123,7 @@ Patch1039: alt-def-widget-style.patch
 Patch1040: alt-def-color-scheme.patch
 
 Patch3000: kdelibs-4.4.92-alt-alternate-kconf_update_bin-path.patch
+Patch3001: kdelibs-4.14.34-alt-cmake-compat.patch
 
 # security
 
@@ -229,6 +230,7 @@ applications for KDE 4.
 %patch1040 -p1
 
 %patch3000 -p1
+%patch3001 -p1
 
 # CA certificates bundle
 #pushd kio/kssl/kssl
@@ -361,6 +363,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Tue Oct 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.14.34-alt2%ubt
+- Fixed build with new cmake.
+
 * Wed Jul 19 2017 Sergey V Turchin <zerg@altlinux.org> 4.14.34-alt1%ubt
 - new version
 
