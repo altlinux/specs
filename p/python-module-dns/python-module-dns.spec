@@ -4,19 +4,21 @@
 #def_without check
 
 Name: python-module-%modulename
-Version: 1.12.0
-Release: alt1.git20150714
+Version: 1.15.0
+Release: alt1
 
 Summary: DNS toolkit
+
 License: BSD-like
 Group: Development/Python
 Url: http://www.dnspython.org
+
 Packager: Python Development Team <python at packages.altlinux.org>
 
 BuildArch: noarch
 
-# http://www.dnspython.org/kits/%version/dnspython-%version.tar
 # git://github.com/rthalley/dnspython.git
+# Source-url: http://www.dnspython.org/kits/%version/dnspython-%version.tar.gz
 Source: %name-%version.tar
 
 Provides: python-module-dnspython = %EVR
@@ -24,7 +26,9 @@ Obsoletes: python-module-dnspython <= 1.10.0-alt1
 
 %setup_python_module %modulename
 
-BuildPreReq: python-module-epydoc
+#BuildPreReq: python-module-epydoc
+
+BuildRequires: python-devel python-module-setuptools
 
 %description
 dnspython is a DNS toolkit for Python. It supports almost all
@@ -42,7 +46,7 @@ rm -f examples/._*
 
 %build
 %python_build
-%make_build doc
+#make_build doc
 
 %install
 %python_install
@@ -55,10 +59,14 @@ popd
 %endif
 
 %files
-%doc examples/ html/ ChangeLog LICENSE
+%doc examples/ ChangeLog LICENSE
 %python_sitelibdir/*
 
 %changelog
+* Tue Oct 03 2017 Vitaly Lipatov <lav@altlinux.ru> 1.15.0-alt1
+- back to build from tarball
+- new version (1.15.0) with rpmgs script
+
 * Sun Aug 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.12.0-alt1.git20150714
 - Version 1.12.0
 
