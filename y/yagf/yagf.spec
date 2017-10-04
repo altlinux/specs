@@ -2,7 +2,7 @@
 
 Name:    yagf
 Version: 0.9.5
-Release: alt1
+Release: alt2
 
 Summary: YAGF is a graphical front-end for cuneiform and tesseract OCR tools
 Summary(ru_RU.UTF-8): Оболочка YAGF предоставляет графический интерфейс для систем распознавания текста Cuneiform и Tesseract
@@ -12,6 +12,9 @@ URL:     http://symmetrica.net/cuneiform-linux/yagf-ru.html
 # VCS URL: git://git.code.sf.net/p/yagf-ocr/code
 
 Source:  %{name}-%{version}.tar
+# To revert.
+# (It seems that the changes in mainform.cpp are not quire related and good.)
+Patch1:  yagf-0.9.3-buggy-fixing-english-dictionary-always-required.diff
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++ libqt4-devel
@@ -23,6 +26,9 @@ Requires: aspell-en
 Requires: ImageMagick-tools
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
+
+# For our %%prep:
+BuildPreReq: patchutils
 
 %description
 YAGF is a graphical front-end for cuneiform and tesseract OCR tools.
@@ -45,6 +51,7 @@ the online help for more details).
 
 %prep
 %setup -q
+filterdiff --include '?/trunk/src/spellchecker.cpp' %PATCH1 | patch -p2 --ignore-whitespace -R
 subst "s,/usr/local,%buildroot/usr/,g" ./CMakeLists.txt
 # Substitute missing align.png resource
 cp -a src/images/{A,a}lign.png
@@ -66,6 +73,10 @@ cp -a src/images/{A,a}lign.png
 %_desktopdir/YAGF.desktop
 
 %changelog
+* Wed Oct  4 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.9.5-alt2
+- Do not crash when a specific aspell dictionary is not found
+  (ALT#33958) (https://github.com/sabit/yagf/issues/52)
+
 * Sun Mar 15 2015 Andrey Cherepanov <cas@altlinux.org> 0.9.5-alt1
 - New version
 
