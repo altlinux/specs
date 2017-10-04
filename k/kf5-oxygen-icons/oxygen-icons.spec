@@ -2,7 +2,7 @@
 
 Name: kf5-oxygen-icons
 Version: 5.38.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -70,10 +70,21 @@ while read l ; do
     [ -e $l ] || rm -f $l
 done
 
+# clean "package" icon
+if [ -z "`find %buildroot/%_iconsdir -name package-installed-updated.\*`" ] ; then
+    find %buildroot/%_iconsdir -name package.\* | \
+    while read f ; do
+	rm -f "$f"
+    done
+fi
+
 %files -n icon-theme-oxygen
 %_iconsdir/oxygen*/
 
 %changelog
+* Wed Oct 04 2017 Sergey V Turchin <zerg@altlinux.org> 5.38.0-alt2%ubt
+- remove package.png
+
 * Tue Sep 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.38.0-alt1%ubt
 - new version
 
