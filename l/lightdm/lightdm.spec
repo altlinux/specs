@@ -7,7 +7,7 @@
 
 Name: lightdm
 Version: 1.16.7
-Release: alt9
+Release: alt10
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -129,7 +129,6 @@ manager via D-Bus.
 %setup
 %patch1 -p1
 %ifarch e2k
-%add_optflags -std=c++11
 # until apx. lcc-1.23.01
 sed -i 's,-Werror=pointer-arith,,' configure.ac
 %endif
@@ -275,6 +274,9 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Wed Oct 04 2017 Michael Shigorin <mike@altlinux.org> 1.16.7-alt10
+- reverted last change, not needed anymore
+
 * Tue Oct 03 2017 Michael Shigorin <mike@altlinux.org> 1.16.7-alt9
 - E2K: add -std=c++11 explicitly (for qt5-enabled build with lcc).
 
