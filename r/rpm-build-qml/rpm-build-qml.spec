@@ -1,6 +1,6 @@
 Name: rpm-build-qml
-Version: 0.0.3
-Release: alt3
+Version: 0.0.4
+Release: alt1
 
 Summary: RPM helper macros to rebuild QML packages
 License: GPLv2+
@@ -42,6 +42,9 @@ install -pD -m755 qml.req.files %buildroot%_rpmlibdir/qml.req.files
 %_bindir/qmlinfo
 
 %changelog
+* Wed Oct 04 2017 Oleg Solovyov <mcpain@altlinux.org> 0.0.4-alt1
+- Removed pipe
+
 * Wed Oct 04 2017 Oleg Solovyov <mcpain@altlinux.org> 0.0.3-alt3
 - Fix build in hsh
 
