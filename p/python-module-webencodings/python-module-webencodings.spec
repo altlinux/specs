@@ -3,16 +3,20 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4
-Release: alt1.git20131224.1
+Version: 0.5.1
+Release: alt1
+
 Summary: Character encoding aliases for legacy web content
+
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/webencodings/
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/SimonSapin/python-webencodings.git
+# Source-url: https://pypi.io/packages/source/w/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
+
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
@@ -91,7 +95,7 @@ popd
 %endif
 
 %files
-%doc *.rst docs/*.rst
+%doc *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests.*
 
@@ -100,7 +104,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst docs/*.rst
+%doc *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests.*
 %exclude %python3_sitelibdir/*/*/tests.*
@@ -111,6 +115,10 @@ popd
 %endif
 
 %changelog
+* Wed Oct 04 2017 Vitaly Lipatov <lav@altlinux.ru> 0.5.1-alt1
+- switch to build from tarball
+- new version (0.5.1) with rpmgs script
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4-alt1.git20131224.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
