@@ -5,7 +5,7 @@
 %def_enable gtk_doc
 
 Name: dconf
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A simple configuration system
@@ -83,6 +83,7 @@ Summary: GObject introspection devel data for the dconf library
 Group: System/Libraries
 BuildArch: noarch
 Requires: lib%name-gir = %version-%release
+Requires: lib%name-devel = %version-%release
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the dconf library
@@ -161,6 +162,9 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %exclude %_datadir/bash-completion/completions/dconf
 
 %changelog
+* Tue Oct 03 2017 Yuri N. Sedunov <aris@altlinux.org> 0.26.1-alt1
+- 0.26.1
+
 * Wed Mar 23 2016 Yuri N. Sedunov <aris@altlinux.org> 0.26.0-alt1
 - 0.26.0
 

@@ -1,11 +1,11 @@
 %def_disable snapshot
 %define _name metacity
-%define ver_major 3.25
+%define ver_major 3.26
 %define api_ver 3.0
 %def_disable static
 
 Name: %_name%api_ver
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Metacity window manager
@@ -133,6 +133,9 @@ This package contains the lib%name static library.
 %endif
 
 %changelog
+* Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.25.2-alt1
 - 3.25.2
 

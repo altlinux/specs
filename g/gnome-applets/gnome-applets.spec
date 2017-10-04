@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.24
+%define ver_major 3.26
 %define panel_api_ver 5.0
 %define xdg_name org.gnome.gnome-applets
 
@@ -12,8 +12,8 @@
 %def_enable timer
 
 Name: gnome-applets
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Small applications for the GNOME panel
 License: GPLv2+
@@ -29,6 +29,7 @@ Source: %name-%version.tar
 Source1: 01-cpufreq.pkla
 Patch: %name-3.22.0-alt-modem-lights.patch
 Patch1: %name-3.22.0-alt-cpufreq_libs.patch
+Patch2: %name-3.26.0-up-makefile.patch
 
 # From configure.ac
 %define gtk_ver 3.20.0
@@ -365,8 +366,7 @@ window title.
 %setup
 %patch -p1
 %patch1
-
-subst 's/\(tracker-sparql-\)1.0/\12.0/g' configure.ac
+%patch2 -p1 -R -b .orig
 
 %build
 %autoreconf
@@ -537,7 +537,6 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %files timer
 %gnome_appletsdir/libtimer-applet.so
 %_datadir/gnome-panel/applets/org.gnome.applets.TimerApplet.panel-applet
-#%_datadir/dbus-1/services/org.gnome.panel.applet.TimerAppletFactory.service
 %_datadir/glib-2.0/schemas/%xdg_name.timer.gschema.xml
 %endif
 
@@ -570,6 +569,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %gnome_appletsdir/*.la
 
 %changelog
+* Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt2
 - rebuilt against libgtop-2.0.so.11/tracker-2.0
 

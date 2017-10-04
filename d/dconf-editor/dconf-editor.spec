@@ -1,11 +1,11 @@
 %def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.22
+%define ver_major 3.26
 %define _name ca.desrt.dconf-editor
 
 Name: dconf-editor
-Version: %ver_major.3
+Version: %ver_major.1
 Release: alt1
 
 Summary: dconf confuguration editor
@@ -64,6 +64,9 @@ This package provides graphical dconf configuration editor.
 %doc README
 
 %changelog
+* Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
+- 3.26.1
+
 * Sat Jan 14 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
 - 3.22.3
 

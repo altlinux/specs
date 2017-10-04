@@ -5,7 +5,7 @@
 %def_enable postasa
 
 Name: %_name-plugins
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: EOG plugins
@@ -102,6 +102,9 @@ export ac_cv_path_POSTR=%_bindir/postr
 %exclude %_libdir/%_name/plugins/*.la
 
 %changelog
+* Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
+- 3.26.1
+
 * Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

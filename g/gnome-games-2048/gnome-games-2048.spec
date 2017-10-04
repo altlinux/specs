@@ -2,11 +2,11 @@
 
 %define _name 2048
 %define __name gnome-%_name
-%define ver_major 3.22
+%define ver_major 3.26
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A 2048 clone for GNOME
@@ -57,6 +57,9 @@ Move the tiles until you obtain the 2048 tile.
 %_datadir/appdata/org.gnome.%__name.appdata.xml
 
 %changelog
+* Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
+- 3.26.1
+
 * Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 

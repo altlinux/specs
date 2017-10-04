@@ -20,7 +20,7 @@
 %def_enable installed_tests
 
 Name: libgtk+3
-Version: %ver_major.21
+Version: %ver_major.24
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -170,6 +170,7 @@ Summary: GObject introspection devel data for the GTK+ library
 Group: System/Libraries
 BuildArch: noarch
 Requires: %name-gir = %version-%release
+Requires: %name-devel = %version-%release
 
 %description gir-devel
 GObject introspection devel data for the GTK+ library
@@ -429,6 +430,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Wed Oct 04 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.24-alt1
+- 3.22.24
+
 * Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.21-alt1
 - 3.22.21
 

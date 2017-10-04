@@ -29,7 +29,7 @@
 %def_enable libusb
 
 Name: gvfs
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -532,6 +532,9 @@ killall -USR1 gvfsd >&/dev/null || :
 
 
 %changelog
+* Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 1.34.1-alt1
+- 1.34.1
+
 * Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 1.34.0-alt1
 - 1.34.0
 

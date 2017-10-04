@@ -8,7 +8,7 @@
 %def_enable gspell
 
 Name: lib%{_name}3
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -128,6 +128,9 @@ GObject introspection devel data for the GtkSourceView library
 %endif
 
 %changelog
+* Sun Oct 01 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.5-alt1
+- 3.24.5
+
 * Wed Sep 06 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.4-alt1
 - 3.24.4
 
