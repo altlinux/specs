@@ -1,22 +1,20 @@
-%define origname tora
 Name: tora
-Version: 2.1.4
-Release: alt1.svn4502.2
+Version: 3.2
+Release: alt1%ubt
 Summary: TOra is an open-source multi-platform database management GUI
 License: GPL
 Group: Databases
-Url: http://www.torasql.com
-Packager: Andrew Clark <andyc@altlinux.ru>
-Source: http://sourceforge.net/projects/tora/files/tora/2.1.3/%name-%version.tar.bz2
+Url: https://github.com/tora-tool/tora/wiki
 
-Source3: %name.png
-Source4: %name.desktop
+# https://github.com/tora-tool/tora.git
+Source: %name-%version.tar
+Source2: %name.png
 
-BuildRequires(pre): rpm-macros-cmake
+Patch1: %name-%version-alt-build.patch
 
-# Automatically added by buildreq on Tue Jan 03 2012
-# optimized out: cmake-modules fontconfig libpq-devel libqscintilla2-6-qt4 libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-xml libstdc++-devel
-BuildRequires: cmake gcc-c++ libqscintilla2-qt4-devel phonon-devel postgresql-devel
+BuildRequires(pre): rpm-macros-cmake rpm-build-ubt
+BuildRequires: cmake gcc-c++ postgresql-devel boost-devel libferrisloki-devel
+BuildRequires: qt5-base-devel qt5-tools-devel libqscintilla2-qt5-devel
 
 %description
 TOra is a Toolkit for Oracle which aims to help the DBA or
@@ -25,42 +23,37 @@ SQL worksheet with syntax highlighting, DB browser and a full
 set of DBA tools. TOra also includes support for MySQL and Postgres.
 
 %prep
-%setup -n %name-%version
+%setup
+%patch1 -p1
 
 %build
-%cmake -DCMAKE_INSTALL_PREFIX:PATH="%_prefix" \
-       -DTORA_PLUGIN_DIR=CMAKE_INSTALL_PREFIX/share/tora \
-       -DTORA_DOC_DIR=CMAKE_INSTALL_PREFIX/share/doc/tora \
-       -DTORA_HELP_DIR=CMAKE_INSTALL_PREFIX/share/tora/help \
-       -DENABLE_TERADATA=1 \
-       -DENABLE_ORACLE=0 
+%cmake_insource \
+	-DWANT_INTERNAL_QSCINTILLA=OFF \
+	-DWANT_INTERNAL_LOKI=OFF \
+	-DENABLE_ORACLE=0 \
+	-DLOKI_LIBRARY="$(pkg-config --variable=libdir ferrisloki)/libferrisloki.so" \
+	-DLOKI_INCLUDE_DIR="$(pkg-config --variable=includedir ferrisloki)/FerrisLoki"
 
-%make_build -C BUILD/
+%make_build
 
 %install
-mkdir -p %buildroot/{%_bindir,%_datadir/%name/{i18n,help/images},%_docdir/%name,%_desktopdir,%_liconsdir}
+%makeinstall_std
+mkdir -p %buildroot/{%_liconsdir,%_desktopdir}
 
-install -pD -m 755 %_builddir/%name-%version/BUILD/src/%name %buildroot%_bindir/
-install -pD -m 644 %_builddir/%name-%version/BUILD/src/*.qm %buildroot%_datadir/%name/i18n/ 
-install -pD -m 644 %_builddir/%name-%version/doc/help/*.html %buildroot%_datadir/%name/help 
-install -pD -m 644 %_builddir/%name-%version/doc/help/images/*.png %buildroot%_datadir/%name/help/images
-install -pD -m 644 %_builddir/%name-%version/rpm/%name.desktop %buildroot%_desktopdir/%name.desktop
-
-install -pm 644 %SOURCE3 %buildroot%_liconsdir/%name.png
-install -pm 644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
-
-for i in $(ls | grep '^[A-Z]' | egrep -v "(Make|BUILD)"); do
-	install -pD -m 644 %_builddir/%name-%version/$i %buildroot%_docdir/%name/
-done 
+install -pm 644 %SOURCE2 %buildroot%_liconsdir/%name.png
+install -pm 644 src/tora.desktop %buildroot%_desktopdir/%name.desktop
 
 %files
+%doc AUTHORS ChangeLog COPYING* copyright.txt ISSUES README README.md 
 %_bindir/*
-%_datadir/%name
-%_docdir/%name
+%_datadir/%name-%version
 %_liconsdir/*
 %_desktopdir/*
 
 %changelog
+* Wed Oct 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2-alt1%ubt
+- Updated to upstream version 3.2.
+
 * Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.4-alt1.svn4502.2
 - Rebuilt with qscintilla2 2.9
 
