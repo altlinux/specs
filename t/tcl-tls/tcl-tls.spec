@@ -1,6 +1,6 @@
 Name: tcl-tls
 Version: 1.7.12
-Release: alt1
+Release: alt2
 
 Summary: A tcl extension, wich adds SSL ability to any Tcl channel
 License: BSD
@@ -10,26 +10,14 @@ Url: https://core.tcl.tk/tcltls/
 # git://git.altlinux.org/gears/t/tcl-tls.git
 Source: %name-%version-%release.tar
 
-BuildPreReq:  rpm-build-tcl >= 0.2-alt1
-BuildRequires: libssl-devel tcl-devel >= 8.4.0-alt1
-Requires: tcl >= 8.4.0-alt1
-
-%package devel
-Summary: Header files for %name
-Group: Development/C
-Requires: %name = %EVR
+BuildPreReq:  rpm-build-tcl >= 0.5-alt1
+BuildRequires: libssl-devel tcl-devel >= 8.6.7-alt2
+Requires: tcl >= 8.6.7-alt2
 
 %description
 TLS is a Tcl extension, wich adds SSL ability to any Tcl channel.
 Both client and server-side sockets are possible, and this code should work
 on any platform as it uses a generic mechanism for layering on SSL and Tcl.
-
-%description devel
-TLS is a Tcl extension, wich adds SSL ability to any Tcl channel.
-Both client and server-side sockets are possible, and this code should work
-on any platform as it uses a generic mechanism for layering on SSL and Tcl.
-
-This package contains the development files for %name.
 
 %prep
 %setup -n %name-%version-%release
@@ -52,12 +40,14 @@ install -m0644 tls.h %buildroot%_includedir
 %files
 %doc ChangeLog README.txt license.terms tls.htm
 %_tcllibdir/tcltls.so
+%_tcllibdir/tcltls%version
 %_tcldatadir/tcltls%version
 
-%files devel
-%_includedir/tls.h
-
 %changelog
+* Wed Oct 04 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.7.12-alt2
+- adapted for new tcl/tk extension policy
+- drop devel subpackage
+
 * Mon Aug 21 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.7.12-alt1
 - 1.7.12 released
 - built devel subpackage
