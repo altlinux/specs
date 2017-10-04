@@ -1,5 +1,5 @@
 Name: curl
-Version: 7.55.1
+Version: 7.56.0
 Release: alt1%ubt
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -144,6 +144,11 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Oct 04 2017 Anton Farygin <rider@altlinux.ru> 7.56.0-alt1%ubt
+- new version
+- fixes:
+  * CVE-2017-1000254 libcurl may read outside of a heap allocated buffer when doing FTP.
+  
 * Mon Aug 14 2017 Anton Farygin <rider@altlinux.ru> 7.55.1-alt1%ubt
 - new version
 
