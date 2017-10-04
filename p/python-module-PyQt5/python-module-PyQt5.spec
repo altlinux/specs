@@ -3,14 +3,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 5.5.1
-Release: alt2.1
+Version: 5.9
+Release: alt1
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
 
 %setup_python_module %oname
 
+# Source0-url: https://prdownloads.sourceforge.net/pyqt/%oname/PyQt-%version/PyQt5_gpl-%version.tar.gz
 Source0: PyQt-gpl-%version.tar
 URL: http://www.riverbankcomputing.co.uk/software/pyqt
 
@@ -188,9 +189,9 @@ find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print 
 %dir %_qt5_datadir
 %_qt5_datadir/qsci
 
-%files doc
-%doc doc/*
-%doc NEWS README
+#files doc
+#doc doc/*
+#doc NEWS README
 
 %files examples
 %doc examples
@@ -207,6 +208,9 @@ find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print 
 %endif
 
 %changelog
+* Thu Oct 05 2017 Vitaly Lipatov <lav@altlinux.ru> 5.9-alt1
+- build new version 5.9, rebuild with new sip 4.19.3
+
 * Fri Apr 01 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.5.1-alt2.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
