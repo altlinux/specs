@@ -1,7 +1,7 @@
 %define oname libftgl
 Name: %{oname}2
 Version: 2.2.0
-Release: alt10.svn20110521
+Release: alt11.svn20110521
 Summary: OpenGL frontend to Freetype 2
 
 Group: System/Libraries
@@ -58,9 +58,6 @@ This package contains documentation files for %oname.
 ln -s %_datadir/libtool/libltdl/aclocal.m4 ./
 
 %build
-%ifarch e2k
-%add_optflags -std=c++11
-%endif
 touch msvc/Makefile.in
 %autoreconf
 #./autogen.sh
@@ -101,6 +98,9 @@ rm -rf %buildroot%_datadir/doc
 %doc __doc/*
 
 %changelog
+* Wed Oct 04 2017 Michael Shigorin <mike@altlinux.org> 2.2.0-alt11.svn20110521
+- reverted last change, not needed anymore
+
 * Tue Oct 03 2017 Michael Shigorin <mike@altlinux.org> 2.2.0-alt10.svn20110521
 - E2K: add -std=c++11 explicitly
 
