@@ -1,20 +1,22 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.dev0.git20150806.1.qa1
 %define oname Pillow
 
 %def_with python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 3.0.0
-#Release: alt2.dev0.git20150806
+Version: 4.3.0
+Release: alt1
+
 Summary: Python Imaging Library (Fork)
+
 License: Standard PIL License
 Group: Development/Python
 Url: https://pypi.python.org/pypi/Pillow/
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/python-pillow/Pillow.git
+# Source-url: https://pypi.io/packages/source/P/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 Source1: PIL.pth
 
@@ -42,7 +44,7 @@ BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: libfreetype-devel libjpeg-devel liblcms2-devel libtiff-devel libwebp-devel python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pytest python-modules-tkinter python3-devel python3-module-html5lib python3-module-jinja2-tests python3-module-nose python3-module-pytest python3-module-sphinx python3-module-sphinx-better-theme python3-modules-tkinter rpm-build-python3 time tk-devel zlib-devel
 
 # optimized out: -=FIXES: python3(sphinx_rtd_theme)
-BuildRequires: python3(sphinx_rtd_theme)
+BuildRequires: python2.7(sphinx_rtd_theme)
 
 %description
 Pillow is the "friendly" PIL fork by Alex Clark and Contributors. PIL is
@@ -192,6 +194,10 @@ popd
 %endif
 
 %changelog
+* Wed Oct 04 2017 Vitaly Lipatov <lav@altlinux.ru> 4.3.0-alt1
+- switch to build from tarball
+- new version (4.3.0) with rpmgs script
+
 * Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.0-alt2.dev0.git20150806.1.qa1
 - NMU: rebuilt against Tcl/Tk 8.6.
 
