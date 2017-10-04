@@ -1,8 +1,6 @@
 Name: libibverbs
-Version: 1.1.8
+Version: 1.2.1
 Release: alt1
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Summary: A library for direct userspace use of InfiniBand
 
@@ -11,10 +9,9 @@ License: GPL/BSD
 
 Url: http://openib.org/
 # git://git.kernel.org/pub/scm/libs/infiniband/libibverbs.git
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 
-# Automatically added by buildreq on Mon Aug 20 2007
-BuildRequires: gcc-c++ glibc-devel libsysfs-devel
+BuildRequires: gcc-c++ glibc-devel libsysfs-devel libnl-devel
 
 %description
 libibverbs is a library that allows userspace processes to use
@@ -61,7 +58,7 @@ touch NEWS
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std 
 install -d %buildroot%_sysconfdir/%name.d/
 
 %files
@@ -82,6 +79,9 @@ install -d %buildroot%_sysconfdir/%name.d/
 %_man1dir/*
 
 %changelog
+* Wed Oct 04 2017 Anton Farygin <rider@altlinux.ru> 1.2.1-alt1
+- new version
+
 * Wed Feb 04 2015 Anton Farygin <rider@altlinux.ru> 1.1.8-alt1
 - new version
 
