@@ -1,11 +1,11 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
-%def_without devel
+%def_with devel
 
 %define prog_name            postgresql
 %define postgresql_major     10
 %define postgresql_minor     0
 #%%define postgresql_subminor  5
-%define postgresql_altrel    0.rc1
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -806,6 +806,10 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Thu Oct 05 2017 Alexei Takaseev <taf@altlinux.org> 10.0-alt1
+- 10.0
+- Enable -devel
+
 * Wed Sep 20 2017 Alexei Takaseev <taf@altlinux.org> 10.0-alt0.rc1
 - 10.0 rc1
 
