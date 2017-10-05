@@ -1,6 +1,6 @@
 Name: fbreader
 Version: 0.99.5
-Release: alt3
+Release: alt4%ubt
 Summary: E-Book Reader
 Summary (ru_RU.UTF-8): Программа для чтения электронных книг (E-Book, Ebook)
 License: GPL
@@ -15,7 +15,9 @@ Source5: x-fb2.desktop
 Patch1: %name-%version-alt-gcc6.patch
 Patch2: %name-%version-alt-debuginfo.patch
 Patch3: %name-%version-alt-crash.patch
+Patch4: %name-%version-alt-fix-menu-about.patch
 
+BuildRequires(pre): rpm-build-ubt
 # Automatically added by buildreq on Wed Nov 11 2015
 # optimized out: fontconfig libqt4-core libqt4-gui libqt4-network libstdc++-devel pkg-config
 BuildRequires: bzlib-devel gcc-c++ libexpat-devel libfribidi-devel libqt4-devel libsqlite3-devel libunibreak-devel zlib-devel
@@ -31,6 +33,7 @@ E-Book Reader. Supports several e-book formats: fb2 (fictionbook), html, plucker
 %patch1 -p1
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
 
 %build
 %make ZLSHARED=no TARGET_ARCH=desktop UI_TYPE=qt4 TARGET_STATUS=debug
@@ -60,6 +63,9 @@ ln -s FBReader %buildroot%_bindir/fbreader
 %_liconsdir/%name.png
 
 %changelog
+* Thu Oct 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.99.5-alt4%ubt
+- Fixed 'about program' menu action (closes: #33971).
+
 * Mon Aug 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.99.5-alt3
 - Added debug info.
 - Fixed crash when fbreader started with filename specified without a directory (closes: #33694).
