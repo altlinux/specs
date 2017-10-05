@@ -1,11 +1,11 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
-%def_with devel
+%def_without devel
 
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     6
 %define postgresql_subminor  5
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -51,6 +51,7 @@ Conflicts: %{prog_name}9.2
 Conflicts: %{prog_name}9.3
 Conflicts: %{prog_name}9.4
 Conflicts: %{prog_name}9.5
+Conflicts: %{prog_name}10
 # 1C
 Conflicts: %{prog_name}9.6-1C
 
@@ -801,6 +802,10 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Thu Oct 05 2017 Alexei Takaseev <taf@altlinux.org> 9.6.5-alt2
+- Disable -devel
+- Add conflict to PG 10
+
 * Wed Aug 30 2017 Alexei Takaseev <taf@altlinux.org> 9.6.5-alt1
 - 9.6.5
 

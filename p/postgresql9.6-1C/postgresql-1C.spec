@@ -9,7 +9,7 @@
 %define postgresql_major     9
 %define postgresql_minor     6
 %define postgresql_subminor  5
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -69,6 +69,7 @@ Conflicts: %{prog_name}9.3
 Conflicts: %{prog_name}9.4
 Conflicts: %{prog_name}9.5
 Conflicts: %{prog_name}9.6
+Conflicts: %{prog_name}10
 
 # Automatically added by buildreq on Thu Jul 31 2014
 # optimized out: docbook-dtds gnu-config libcom_err-devel libgpg-error libkrb5-devel libossp-uuid libxml2-devel openjade python-base python-modules setproctitle sgml-common tcl xml-common
@@ -754,6 +755,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Thu Oct 05 2017 Alexei Takaseev <taf@altlinux.org> 9.6.5-alt2
+- Add conflicts to PG 10
+
 * Wed Aug 30 2017 Alexei Takaseev <taf@altlinux.org> 9.6.5-alt1
 - 9.6.5
 
