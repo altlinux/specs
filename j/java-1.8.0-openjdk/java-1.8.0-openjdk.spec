@@ -24,10 +24,10 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 %define power64 ppc64
 # %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define release 1.b15
+%define release 1.b01
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.71
+%define version 1.8.0.144
 # note, parametrised macros are order-senisitve (unlike not-parametrized) even with normal macros
 # also necessary when passing it as parameter other macros. If not macro, then it is considered as switch
 %global debug_suffix_unquoted -debug
@@ -178,8 +178,8 @@ BuildRequires: jpackage-generic-compat
 %global origin          openjdk
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global project         aarch64-port
-%global repo            jdk8u60
-%global revision        aarch64-jdk8u71-b15
+#%global repo            jdk8u60
+%global revision        aarch64-jdk8u144-b01
 # eg # jdk8u60-b27 -> jdk8u60 or # aarch64-jdk8u60-b27 -> aarch64-jdk8u60  (dont forget spec escape % by %%)
 %global whole_update    %(VERSION=%{revision}; echo ${VERSION%%-*})
 # eg  jdk8u60 -> 60 or aarch64-jdk8u60 -> 60
@@ -187,7 +187,7 @@ BuildRequires: jpackage-generic-compat
 # eg jdk8u60-b27 -> b27
 %global buildver        %(VERSION=%{revision}; echo ${VERSION##*-})
 # priority must be 7 digits in total. The expression is workarounding tip
-%global priority        %(TIP=18000%{updatever};  echo ${TIP/tip/99})
+%global priority        %(TIP=1800%{updatever};  echo ${TIP/tip/99})
 
 %global javaver         1.8.0
 
@@ -226,41 +226,12 @@ BuildRequires: jpackage-generic-compat
 %global tapsetdir %{tapsetroot}/tapset/%{_build_cpu}
 %endif
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Prevent brp-java-repack-jars from being run.
 %global __jar_repack 0
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt7_1.b15jpp8
+Release: alt1_1.b01jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -680,21 +651,21 @@ sh %{SOURCE12}
 %endif
 
 # aarch64 build fixes
-%patch106
+#%patch106
 
 # Zero PPC fixes.
-%patch403
+#%patch403
 
 %patch603
 %patch601
 %patch602
 %patch605
 
-%patch501
+#%patch501
 %patch502
 %patch503
 %patch504
-%patch505
+#%patch505
 %patch511
 %patch512
 
@@ -1430,6 +1401,9 @@ fi
 %endif
 
 %changelog
+* Mon Oct 02 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 0:1.8.0.144-alt1_1.b01jpp8
+- new version
+
 * Tue Jul 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0:1.8.0.71-alt7_1.b15jpp8
 - Fixed build with gcc-6
 
