@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.11.4
-Release: alt2.1.1
+Version: 4.12.1
+Release: alt1%ubt
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -19,6 +19,7 @@ URL: http://www.riverbankcomputing.co.uk/software/pyqt
 
 %add_python_req_skip Compiler
 
+BuildRequires(pre): rpm-build-ubt
 # Automatically added by buildreq on Fri Jan 29 2016 (-bi)
 # optimized out: elfutils fontconfig libGL-devel libX11-devel libXext-devel libdbus-devel libgpg-error libgst-plugins1.0 libjson-c libqt4-clucene libqt4-core libqt4-dbus libqt4-declarative libqt4-designer libqt4-devel libqt4-gui libqt4-help libqt4-location libqt4-multimedia libqt4-network libqt4-opengl libqt4-script libqt4-scripttools libqt4-sensors libqt4-sql libqt4-svg libqt4-test libqt4-webkit libqt4-xml libqt4-xmlpatterns libstdc++-devel pkg-config python-base python-devel python-module-dbus python-module-sip python-modules python-modules-compiler python-modules-logging python-modules-xml python3 python3-base python3-dev python3-module-sip
 BuildRequires: gcc-c++ libqt4-webkit-devel phonon-devel python-module-dbus-devel python-module-sip-devel python3-module-sip-devel rpm-build-python3
@@ -225,6 +226,9 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %endif
 
 %changelog
+* Thu Oct 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.12.1-alt1%ubt
+- Updated to upstream version 4.12.1.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.11.4-alt2.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
