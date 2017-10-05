@@ -17,8 +17,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -32,7 +32,7 @@ Obsoletes: %name-search-tool < 1.99.0
 Obsoletes: nautilus-%name < 1.99.0
 
 Requires: lib%name = %version-%release
-%{?_without_bootstrap:Requires: %name-miners >= %version}
+%{?_without_bootstrap:Requires: %name-miners >= %ver_major}
 
 %define dbus_ver 1.3.1
 %define glib_ver 2.44.0
@@ -234,6 +234,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 
 
 %changelog
+* Wed Oct 04 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Sun Sep 17 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt2
 - requires tracker-miners
 

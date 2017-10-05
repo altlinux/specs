@@ -5,7 +5,7 @@
 %def_enable gtk_doc
 
 Name: gnome-calendar
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Calendar application for GNOME
@@ -69,7 +69,7 @@ This package provides Calendar reference manual.
 %_datadir/glib-2.0/schemas/org.gnome.calendar.enums.xml
 %_iconsdir/hicolor/*x*/apps/%xdg_name.png
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
-%_datadir/metainfo/%xdg_name.metainfo.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc NEWS README.md
 
 %if_enabled gtk_doc
@@ -78,6 +78,9 @@ This package provides Calendar reference manual.
 %endif
 
 %changelog
+* Thu Oct 05 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
+- 3.26.2
+
 * Thu Sep 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 

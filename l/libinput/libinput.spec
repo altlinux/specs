@@ -4,7 +4,7 @@
 %def_disable documentation
 
 Name: libinput
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 
 Summary: Input devices library
@@ -117,6 +117,9 @@ This package contains visual debug helper for %name.
 
 
 %changelog
+* Wed Oct 04 2017 Yuri N. Sedunov <aris@altlinux.org> 1.8.3-alt1
+- 1.8.3
+
 * Thu Sep 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt1
 - 1.8.2
 
