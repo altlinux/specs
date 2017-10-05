@@ -1,6 +1,6 @@
 %define mjversion 3.7
 Name: povray
-Version: %mjversion.0.2
+Version: %mjversion.0.4
 Release: alt1
 
 Summary: Persistence of Vision Ray Tracer (POV-Ray)
@@ -83,6 +83,9 @@ find %buildroot%_datadir/povray-%mjversion/scripts/ -type f -print0 |\
 %doc %_man1dir/*
 
 %changelog
+* Thu Oct 05 2017 Anton Farygin <rider@altlinux.ru> 3.7.0.4-alt1
+- new version
+
 * Tue Jun 06 2017 Anton Farygin <rider@altlinux.ru> 3.7.0.2-alt1
 - 3.0.7.2 from git
 
