@@ -1,12 +1,13 @@
 Name: nvme
 Version: 1.4
-Release: alt1
+Release: alt2
 Summary: Core nvme tools
 License: GPL
 Group: System/Configuration/Hardware
 Url: https://github.com/linux-nvme/nvme-cli/
 Source: nvme-%version.tar
 Provides: nvme
+BuildRequires: libuuid-devel
 Requires(post): util-linux
 
 %description
@@ -26,7 +27,7 @@ mkdir -p %buildroot%_sysconfdir/bash_completion.d
 mv %buildroot%_datadir/bash_completion.d/nvme %buildroot%_sysconfdir/bash_completion.d/
 
 %files
-%doc Documentation/nvme*.1
+%doc *.md LICENSE
 %_sbindir/nvme
 %_man1dir/nvme*.1*
 %_sysconfdir/bash_completion.d/nvme
@@ -52,6 +53,10 @@ if [ "$1" = "remove" ]; then
 	fi
 fi
 %changelog
+* Thu Oct 05 2017 L.A. Kostis <lakostis@altlinux.ru> 1.4-alt2
+- Rebuild with uuid support.
+- Re-organize documentation.
+
 * Thu Oct 05 2017 L.A. Kostis <lakostis@altlinux.ru> 1.4-alt1
 - Initial build for ALTLinux.
 
