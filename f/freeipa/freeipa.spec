@@ -12,7 +12,7 @@
 
 Name: freeipa
 Version: 4.3.3
-Release: alt8
+Release: alt9
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -127,6 +127,7 @@ Requires: python-module-ipaclient = %version-%release
 # Explicitly require python-module-samba
 # to avoid conflict with python-module-samba-DC
 Requires: python-module-samba
+Requires: zip
 
 %description -n python-module-ipaserver
 IPA is an integrated solution to provide centrally managed Identity
@@ -714,6 +715,10 @@ fi
 %_man1dir/ipa-test-task.1.*
 
 %changelog
+* Thu Oct 05 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt9
+- selinux: Allow digits in SELinux user names (closes: #33838).
+- Require zip.
+
 * Wed Sep 27 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt8
 - Fix replica creation (closes: #33513):
     + Don't try to use bundled urllib3 in the python-module-request.
