@@ -25,7 +25,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.7.1
-Release: alt13%ubt
+Release: alt14%ubt
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -62,6 +62,7 @@ Patch1004: alt-timezone.patch
 Patch1005: alt-hidpi_scale_at_192.patch
 #Patch1006: alt-relax-hidpi-scaling.patch
 Patch1007: e2k-qt-5.7.1.patch
+Patch1008: alt-decrease-iconloader-fallback-depth.patch
 
 # macros
 %define _qt5 %gname
@@ -381,6 +382,7 @@ EGL integration library for the Qt%major toolkit
 %ifarch e2k
 %patch1007 -p1 -b .e2k
 %endif
+%patch1008 -p1
 bin/syncqt.pl -version %version -private
 [ -e include/QtCore/QtCoreDepends ] || >include/QtCore/QtCoreDepends
 
@@ -786,6 +788,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Thu Oct 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt14%ubt
+- decrease iconloader fallback icon names depth
+
 * Fri Aug 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt13%ubt
 - fix compile qt-based apps with lcc compiler
 
