@@ -1,6 +1,6 @@
 Name: trophy
 Version: 2.0.3
-Release: alt1
+Release: alt2
 
 Summary: Trophy is a 2D car racing action game
 License: GPLv2
@@ -63,6 +63,9 @@ install -pD -m644 %SOURCE5 %buildroot%_desktopdir/trophy.desktop
 %_man6dir/*
 
 %changelog
+* Wed Oct 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.3-alt2
+- Rebuilt with updated clanlib0.8.
+
 * Fri Mar 16 2012 Victor Forsiuk <force@altlinux.org> 2.0.3-alt1
 - 2.0.3
 
