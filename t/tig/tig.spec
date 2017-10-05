@@ -1,6 +1,6 @@
 Name: tig
 Version: 2.3.0
-Release: alt1
+Release: alt2
 
 Summary: text-mode interface for git
 License: GPL
@@ -12,8 +12,8 @@ Patch: tig-%version-%release.patch
 
 Requires: git-core
 
-# Automatically added by buildreq on Wed Oct 24 2012
-BuildRequires: asciidoc libncursesw-devel python-modules-encodings xmlto
+# Automatically added by buildreq on Thu Oct 05 2017
+BuildRequires: asciidoc libncursesw-devel libreadline-devel xmlto
 
 %description
 Tig is a git repository browser that additionally can act as a pager
@@ -48,6 +48,9 @@ install -pD -m644 doc/tigmanual.7 %buildroot%_man7dir/tigmanual.7
 %_man7dir/tigmanual.7*
 
 %changelog
+* Thu Oct 05 2017 Alexey Tourbin <at@altlinux.ru> 2.3.0-alt2
+- built with readline
+
 * Wed Oct 04 2017 Alexey Tourbin <at@altlinux.ru> 2.3.0-alt1
 - 2.2.2 -> 2.3.0
 
