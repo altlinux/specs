@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.24
+%define ver_major 3.26
 %define _libexecdir %_prefix/libexec
 %def_with compiz
 
@@ -132,6 +132,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Thu Oct 05 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Tue Mar 28 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 
