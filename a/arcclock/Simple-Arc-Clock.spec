@@ -1,5 +1,5 @@
 Name:		arcclock
-Version:	1.1
+Version:	1.2
 Release:	alt1
 Summary:	Simple desktop clock
 Url:		https://www.linux-apps.com/p/1190699/
@@ -24,7 +24,7 @@ qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" %name.pro
 %make_build
 
 %install
-subst 's|Utility;|Qt;Utility;|g' %name.desktop
+# #subst 's|Utility;|Qt;Utility;|g' %name.desktop
 install -Dp -m 0755 %name %buildroot%_bindir/%name
 install -Dp -m 0644 %name.desktop %buildroot%_desktopdir/%name.desktop
 
@@ -45,5 +45,8 @@ install -Dp -m 0644 ./arcclock.svg %buildroot%_iconsdir/hicolor/scalable/apps/%n
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Oct 06 2017 Motsyo Gennadi <drool@altlinux.ru> 1.2-alt1
+- 1.2
+
 * Wed Oct 04 2017 Motsyo Gennadi <drool@altlinux.ru> 1.1-alt1
 - initial build for ALT Linux
