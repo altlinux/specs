@@ -1,13 +1,13 @@
 %define rname kscreenlocker
 
-%def_enable seccomp
+%def_disable seccomp
 
 %define sover 5
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: kf5-%rname
 Version: 5.10.5
-Release: alt2%ubt
+Release: alt3%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -116,6 +116,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt3%ubt
+- build without seccomp support again
+
 * Thu Oct 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt2%ubt
 - build with fixed seccomp support
 
