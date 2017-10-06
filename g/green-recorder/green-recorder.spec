@@ -2,7 +2,7 @@ Name: green-recorder
 Summary: A simple yet functional desktop recorder for Linux systems
 Group: Video
 Url: https://foss-project.com
-Version: 3.0.3
+Version: 3.0.4
 Release: alt1
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
@@ -48,5 +48,8 @@ window. And a lot more.
 %_pixmapsdir/%name.png
 
 %changelog
+* Fri Oct 06 2017 Anton Midyukov <antohami@altlinux.org> 3.0.4-alt1
+- new version 3.0.4
+
 * Tue Aug 08 2017 Anton Midyukov <antohami@altlinux.org> 3.0.3-alt1
 - Initial build for ALT Sisyphus.
