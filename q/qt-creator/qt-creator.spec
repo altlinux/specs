@@ -1,9 +1,12 @@
+# clang 4.0.1 is not supported, only missing clang 3.9
+%def_without ClangCodeModel
+
 %add_findreq_skiplist *gdbmacros*
 %add_python_req_skip lldb
 %add_findreq_skiplist %_datadir/qtcreator/templates/wizards/classes/python/file.py
 
 Name:    qt-creator
-Version: 4.4.0
+Version: 4.4.1
 Release: alt1
 Summary: Cross-platform IDE for Qt
 
@@ -32,7 +35,10 @@ BuildRequires: qt5-x11extras-devel >= 5.5.0
 BuildRequires: qt5-xmlpatterns-devel >= 5.5.0
 BuildRequires: qt5-tools-devel >= 5.5.0
 BuildRequires: libbotan-devel
-BuildRequires: python-devel
+%if_with ClangCodeModel
+BuildRequires: llvm4.0-devel
+BuildRequires: clang4.0-devel
+%endif
 
 Requires: qt5-quickcontrols
 
@@ -71,6 +77,9 @@ subst 's,tools\/qdoc3,bin,' doc/doc.pri
 %build
 export QTDIR=%_qt5_prefix
 export PATH="%{_qt5_bindir}:$PATH"
+%if_with ClangCodeModel
+export LLVM_INSTALL_DIR="%_prefix"
+%endif
 %qmake_qt5 -r IDE_LIBRARY_BASENAME=%_lib USE_SYSTEM_BOTAN=1 CONFIG+=disable_rpath
 NPROCS=1
 %make_build
@@ -117,6 +126,10 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Fri Oct 06 2017 Andrey Cherepanov <cas@altlinux.org> 4.4.1-alt1
+- New version
+- Add optional build ClangCodeModel plugin (disabled by default)
+
 * Thu Sep 07 2017 Andrey Cherepanov <cas@altlinux.org> 4.4.0-alt1
 - New version
 
