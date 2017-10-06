@@ -1,7 +1,7 @@
 %def_without libidn2
 
 Name: dnsmasq
-Version: 2.77
+Version: 2.78
 
 Release: alt1
 Summary: A lightweight caching nameserver
@@ -136,6 +136,11 @@ fi
 %_man1dir/dhcp_*
 
 %changelog
+* Fri Oct 06 2017 Mikhail Efremov <sem@altlinux.org> 2.78-alt1
+- Updated to 2.78 (fixes: CVE-2017-13704, CVE-2017-14491,
+    CVE-2017-14492, CVE-2017-14493, CVE-2017-14494, CVE-2017-14495,
+    CVE-2017-14496).
+
 * Wed Jun 14 2017 Mikhail Efremov <sem@altlinux.org> 2.77-alt1
 - Patch from upstream:
   + Fix logic of appending ".<layer>" to PXE basename.
