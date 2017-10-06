@@ -1,9 +1,7 @@
-# TODO: add cherrypy, check other bundled three part projects and drop it
-
 # -*- coding: utf-8 -*-
 Name: calibre
 Version: 3.9.0
-Release: alt1
+Release: alt2
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -25,7 +23,7 @@ Patch1: calibre-0.8.55-alt-no-macmenu.patch
 Requires: fonts-ttf-liberation
 Requires: xkeyboard-config
 
-Requires: python-module-netifaces
+BuildRequires(pre): rpm-build-intro >= 1.9.19
 
 %add_python_req_skip win32serviceutil win32service win32event win32con win32com win32api win32gui winerror _winreg pywintypes pythoncom usbobserver
 
@@ -34,17 +32,16 @@ BuildRequires: /proc
 
 BuildRequires: cmake gcc-c++ libX11-devel libXext-devel libXrender-devel libpng-devel libjpeg-devel libusb-devel libsqlite3-devel
 
-BuildRequires: python >= 2.7.9
-BuildRequires: python-modules-json python-modules-compiler python-modules-curses python-modules-encodings
-BuildRequires: python-module-sip-devel >= 4.19.1
-BuildRequires: python-module-msgpack >= 0.4.8
-BuildRequires: python-module-html5-parser
-
-#BuildRequires: python-module-imaging >= 1.1.6
-#BuildRequires: libImageMagick-devel >= 6.5.9
-
 # missed in the official list
 BuildRequires: glib2-devel fontconfig-devel libfreetype-devel libssl-devel libudev-devel
+
+BuildRequires: python >= 2.7.9
+Requires: python >= 2.7.9
+
+BuildRequires: python-modules-json python-modules-compiler python-modules-curses python-modules-encodings
+
+BuildRequires: python-module-sip-devel >= 4.19.1
+Requires: python-module-sip-devel >= 4.19.1
 
 # Checked 01.10.2017 with
 # https://github.com/kovidgoyal/build-calibre/blob/master/scripts/sources.json
@@ -52,15 +49,8 @@ BuildRequires: glib2-devel fontconfig-devel libfreetype-devel libssl-devel libud
 BuildRequires: qt5-base-devel-static >= 5.3.2
 BuildRequires: python-module-PyQt5-devel
 # >= 5.8
-
-BuildRequires: python-module-mechanize
-# TODO
-# >= 0.3.5
 BuildRequires: xdg-utils >= 1.0.2
-BuildRequires: python-module-lxml >= 3.8.0
-BuildRequires: python-module-dateutil >= 2.5.3
-BuildRequires: python-module-cssutils >= 1.0.1
-BuildRequires: python-module-dns >= 1.14.0
+
 BuildRequires: libpoppler-qt5-devel >= 0.20.2
 BuildRequires: libpoppler-devel >= 0.52
 BuildRequires: libpodofo-devel >= 0.9.5
@@ -69,17 +59,28 @@ BuildRequires: libwmf-devel >= 0.2.8
 BuildRequires: libchm-devel >= 0.40
 BuildRequires: libicu-devel >= 5.6
 BuildRequires: libmtp-devel >= 1.1.11
-BuildRequires: python-module-netifaces >= 0.10.5
-BuildRequires: python-module-psutil >= 4.3.0
-BuildRequires: python-module-apsw >= 3.13.0
-BuildRequires: python-module-dbus >= 1.2.4
+
+%py_use msgpack >= 0.4.8
+%py_use html5-parser
+%py_use mechanize
+# TODO
+# >= 0.3.5
+%py_use lxml >= 3.8.0
+%py_use dateutil >= 2.5.3
+%py_use cssutils >= 1.0.1
+%py_use dns >= 1.14.0
+
+%py_use netifaces >= 0.10.5
+%py_use psutil >= 4.3.0
+%py_use apsw >= 3.13.0
+%py_use dbus >= 1.2.4
 BuildRequires: libdbus-devel >= 1.10.8
 # pygments 2.1.3
 # optipng 0.7.6
 # mozjpeg 3.1
 # need it really?
-BuildRequires: python-module-BeautifulSoup >= 3.0.5
-BuildRequires: python-module-cssselect >= 0.7.1
+%py_use BeautifulSoup >= 3.0.5
+%py_use cssselect >= 0.7.1
 
 BuildRequires: libmtdev-devel libts-devel libinput-devel libxkbcommon-devel
 
@@ -87,27 +88,28 @@ BuildRequires: zlib-devel bzlib-devel
 # TODO? unrarsrc unrardll
 BuildRequires: libexpat >= 2.2.4
 BuildRequires: libffi-devel >= 3.2.1
-BuildRequires: python-module-six >= 1.10.0
-BuildRequires: python-module-regex >= 2017.01.11
-BuildRequires: python-module-dukpy
-# >= 0.3
-BuildRequires: python-module-chardet >= 3.0.3
-BuildRequires: python-module-pycrypto >= 2.6.1
-BuildRequires: nasm
+#BuildRequires: nasm
 BuildRequires: libwebp-devel >= 0.5.0
-# TODO jxrlib
-# https://packages.debian.org/ru/source/sid/jxrlib
 # iconv?
 BuildRequires: libxml2-devel
 # >= 2.9.5
 BuildRequires: libxslt-devel
 # >= 1.1.30
-BuildRequires: python-module-webencodings >= 0.5.1
-BuildRequires: python-module-html5lib >= 0.999999999
-BuildRequires: python-module-Pillow >= 3.2.0
 BuildRequires: libgpg-error-devel >= 1.22
 BuildRequires: libgcrypt-devel >= 1.7.1
 BuildRequires: libdbus-glib-devel >= 0.106
+
+%py_use six >= 1.10.0
+%py_use regex >= 2017.01.11
+%py_use dukpy
+# >= 0.3
+%py_use chardet >= 3.0.3
+%py_use pycrypto >= 2.6.1
+# TODO jxrlib
+# https://packages.debian.org/ru/source/sid/jxrlib
+%py_use webencodings >= 0.5.1
+%py_use html5lib >= 0.999999999
+%py_use Pillow >= 3.2.0
 # TODO qtwebkit
 
 %description
@@ -166,6 +168,9 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 
 
 %changelog
+* Fri Oct 06 2017 Vitaly Lipatov <lav@altlinux.ru> 3.9.0-alt2
+- add versioned python requires
+
 * Fri Oct 06 2017 Vitaly Lipatov <lav@altlinux.ru> 3.9.0-alt1
 - new version 3.9.0 (with rpmrb script)
 
