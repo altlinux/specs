@@ -1,25 +1,20 @@
 Name: wifi-radar
-Version: 1.9.8
-Release: alt2.1.1
-
+Version: 2.0.10
+Release: alt1
 Summary: Tool for connecting to wireless networks
 Group: System/Configuration/Networking
 License: GPL2
+BuildArch: noarch
 Url: http://wifi-radar.systemimager.org/
 
 Source: http://wifi-radar.systemimager.org/pub/%name-%version.tar.bz2
-Source1: %name.init
-Source2: %name.pam
-Source3: %name.consolehelper
-Source4: %name.desktop
+Source1: %name.pam
+Source2: %name.consolehelper
+Source3: %name.desktop
 
-
-Patch: alt-%name-makefile.patch
-
-Packager: Andrey Alexandrov <demion@altlinux.ru>
+Patch1: %name-%version-alt-install.patch
 
 Requires: python-module-pygtk
-BuildArch: noarch
 
 %description
 WiFi Radar is a Python/PyGTK2  utility for managing WiFi profiles.
@@ -27,7 +22,7 @@ It enables you to scan for available networks and create profiles for your prefe
 
 %prep
 %setup
-%patch -p1
+%patch1 -p2
 
 %build
 %make_build
@@ -37,27 +32,27 @@ It enables you to scan for available networks and create profiles for your prefe
 
 # pam auth
 install -d %buildroot%_bindir
+install -d %buildroot%_sysconfdir
 install -d %buildroot%_sysconfdir/pam.d/
 install -d %buildroot%_sysconfdir/security/console.apps
-install -m 644 %SOURCE2 %buildroot%_sysconfdir/pam.d/%name
-install -m 644 %SOURCE3 %buildroot%_sysconfdir/security/console.apps/%name
+install -m 644 %SOURCE1 %buildroot%_sysconfdir/pam.d/%name
+install -m 644 %SOURCE2 %buildroot%_sysconfdir/security/console.apps/%name
 ln -s consolehelper %buildroot%_bindir/%name
 
+install -d %buildroot%_desktopdir
+install -m 644 %SOURCE3 %buildroot%_desktopdir
 
-mkdir -p %buildroot%_initdir
-install -m 755 %SOURCE1 %buildroot%_initdir/%name
-rm -rf %buildroot%_sysconfdir/init.d
-
-install -m 644 %SOURCE4 %buildroot%_desktopdir
+# An empty config file
+install -d %buildroot%_sysconfdir/%name
+touch %buildroot%_sysconfdir/%name/%name.conf
 
 %files
-%doc DEVELOPER_GUIDELINES README README.WPA-Mini-HOWTO.txt TODO
-%_initdir/%name
+%doc docs/DEVELOPER_GUIDELINES docs/README docs/README.WPA-Mini-HOWTO.txt docs/TODO
 %_sysconfdir/%name/%name.conf
 %_sbindir/%name
 %_desktopdir/%name.desktop
-%_man1dir/%name.1.gz
-%_man5dir/%name.conf.5.gz
+%_man1dir/%name.1*
+%_man5dir/%name.conf.5*
 %_pixmapsdir/%name.png
 %_pixmapsdir/%name.svg
 
@@ -65,8 +60,10 @@ install -m 644 %SOURCE4 %buildroot%_desktopdir
 %config(noreplace) %_sysconfdir/security/console.apps/*
 %_bindir/%name
 
-
 %changelog
+* Fri Oct 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.10-alt1
+- Updated to upstream version 2.0.10.
+
 * Wed Oct 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.9.8-alt2.1.1
 - Rebuild with Python-2.7
 
