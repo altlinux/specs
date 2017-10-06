@@ -1,8 +1,9 @@
 
 %global qt_module qtconnectivity
+%def_enable btle
 
 Name: qt5-connectivity
-Version: 5.7.1
+Version: 5.9.2
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -25,6 +26,7 @@ BuildRequires: gcc-c++ glibc-devel libbluez-devel qt5-declarative-devel qt5-xmlp
 %package common
 Summary: Common package for %name
 Group: System/Configuration/Other
+BuildArch: noarch
 Requires: qt5-base-common
 %description common
 Common package for %name
@@ -69,12 +71,15 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -n %qt_module-opensource-src-%version
+%if_disabled btle
 %patch1 -p1
+%endif
 syncqt.pl-qt5 -version %version -private
 
 %build
 %qmake_qt5
 %make_build
+export QT_HASH_SEED=0
 %make docs
 
 %install
@@ -109,6 +114,9 @@ syncqt.pl-qt5 -version %version -private
 %_qt5_docdir/*
 
 %changelog
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
 * Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
 - new version
 

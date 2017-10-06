@@ -1,6 +1,6 @@
 Name: qt5ct
 Version: 0.30
-Release: alt1
+Release: alt1.1
 Summary: Qt5 Configuration Tool
 License: BSD
 
@@ -14,7 +14,7 @@ BuildRequires(pre): rpm-macros-qt5
 
 # Automatically added by buildreq on Fri Feb 03 2017
 # optimized out: fontconfig fontconfig-devel gcc-c++ glib2-devel libEGL-devel libGL-devel libX11-devel libXext-devel libXrender-devel libfreetype-devel libqt5-core libqt5-dbus libqt5-gui libqt5-widgets libqt5-xml libstdc++-devel libudev-devel python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-script-devel qt5-tools qt5-webchannel-devel qt5-xmlpatterns-devel
-BuildRequires: libinput-devel libmtdev-devel libts-devel libxkbcommon-devel python3-module-zope qt5-base-devel-static qt5-connectivity-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-sensors-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel
+BuildRequires: libinput-devel libmtdev-devel libts-devel libxkbcommon-devel python3-module-zope qt5-base-devel-static qt5-connectivity-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-sensors-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-webengine-devel qt5-websockets-devel qt5-x11extras-devel
 
 %description
 This applications allows users to configure Qt5 settings (theme,
@@ -46,6 +46,9 @@ install -Dm 0644 %name.csh %buildroot%_sysconfdir/profile.d/%name.csh
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Oct 19 2017 Sergey V Turchin <zerg@altlinux.org> 0.30-alt1.1
+- NMU: build with Qt 5.9
+
 * Tue Jan 31 2017 Hihin Ruslan <ruslandh@altlinux.ru> 0.30-alt1
 - New Version
 

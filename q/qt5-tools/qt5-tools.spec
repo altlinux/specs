@@ -1,16 +1,16 @@
 
 %define qt_module qttools
 %define gname qt5
-%def_disable bootstrap
+%def_enable bootstrap
 %def_disable qtconfig
 
 %define kf5_bindir %prefix/lib/kf5/bin
 
 %define major 5
-%define minor 5
-%define bugfix 0
+%define minor 9
+%define bugfix 2
 Name: qt5-tools
-Version: 5.7.1
+Version: 5.9.2
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -162,6 +162,7 @@ syncqt.pl-qt5 -version %version -private
 %build
 %make_build
 %if_disabled bootstrap
+export QT_HASH_SEED=0
 %make docs
 %endif
 
@@ -229,6 +230,7 @@ done
 %_bindir/qtpaths*
 %_bindir/qtdiag*
 %_bindir/qtplugininfo*
+%_bindir/qtattributionsscanner*
 %_qt5_bindir/lconvert*
 %_qt5_bindir/lrelease*
 %_qt5_bindir/lupdate*
@@ -240,6 +242,7 @@ done
 %_qt5_bindir/qtpaths*
 %_qt5_bindir/qtdiag*
 %_qt5_bindir/qtplugininfo*
+%_qt5_bindir/qtattributionsscanner*
 %kf5_bindir/qtpaths
 
 %if_enabled qtconfig
@@ -283,7 +286,7 @@ done
 %_iconsdir/hicolor/*/apps/linguist*.*
 
 %files devel
-%_qt5_headerdir/QtCLucene/
+#%_qt5_headerdir/QtCLucene/
 %_qt5_headerdir/QtDesigner/
 %_qt5_headerdir/QtDesignerComponents/
 %_qt5_headerdir/QtHelp/
@@ -314,8 +317,8 @@ done
 
 #%files -n libqt5-uitools
 #%_qt5_libdir/libQt5UiTools.so.*
-%files -n libqt5-clucene
-%_qt5_libdir/libQt5CLucene.so.*
+#%files -n libqt5-clucene
+#%_qt5_libdir/libQt5CLucene.so.*
 %files -n libqt5-designer
 %_qt5_libdir/libQt5Designer.so.*
 %files -n libqt5-designercomponents
@@ -324,6 +327,9 @@ done
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
 * Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
 - new version
 

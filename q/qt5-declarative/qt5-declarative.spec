@@ -1,10 +1,9 @@
 
 %define qt_module qtdeclarative
-%define gname qt5
-%def_disable bootstrap
+%def_enable bootstrap
 
 Name: qt5-declarative
-Version: 5.7.1
+Version: 5.9.2
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -14,10 +13,13 @@ License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
 # FC
-Patch10: qtdeclarative-opensource-src-5.5.0-no_sse2.patch
+Patch10: qtdeclarative-opensource-src-5.9.0-no_sse2.patch
 Patch11: qtdeclarative-QQuickShaderEffectSource_deadlock.patch
+Patch12: qtdeclarative-kdebug346118.patch
+Patch13: Do-not-make-lack-of-SSE2-support-on-x86-32-fatal.patch
 
 BuildRequires(pre): rpm-build-ubt
+BuildRequires: rpm-build-qml
 BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-xmlpatterns-devel
 %if_disabled bootstrap
 BuildRequires: qt5-tools
@@ -37,7 +39,7 @@ Common package for %name
 Group: Development/KDE and QT
 Summary: Development files for %name
 Requires: %name-common = %EVR
-Requires: qt5-base-devel
+Requires: qt5-base-devel rpm-build-qml
 %description devel
 %summary.
 
@@ -62,6 +64,7 @@ Group: System/Libraries
 Summary: Qt5 - library
 Requires: %name-common = %EVR
 Obsoletes: libqt5-v8 < %version-%release
+#Conflicts: qt5-quickcontrols < 5.7
 %description -n libqt5-qml
 %summary
 
@@ -97,12 +100,15 @@ Requires: %name-common = %EVR
 %setup -n %qt_module-opensource-src-%version
 %patch10 -p1
 %patch11 -p1
+%patch12 -p0
+%patch13 -p1
 syncqt.pl-qt5 -version %version -private
 
 %build
 %qmake_qt5
 %make_build
 %if_disabled bootstrap
+export QT_HASH_SEED=0
 %make docs
 %endif
 
@@ -115,7 +121,7 @@ syncqt.pl-qt5 -version %version -private
 
 
 %files common
-%doc LGPL_EXCEPTION.txt
+%doc LICENSE.*EXCEPT*
 %doc dist/changes*
 %dir %_qt5_qmldir/
 %dir %_qt5_qmldir/Qt/
@@ -134,6 +140,7 @@ syncqt.pl-qt5 -version %version -private
 %_qt5_qmldir/builtins.qmltypes
 %_qt5_qmldir/Qt/labs/folderlistmodel/
 %_qt5_qmldir/Qt/labs/settings/
+%_qt5_qmldir/Qt/labs/sharedimage/
 %_qt5_qmldir/QtQml/*
 %_qt5_qmldir/QtQuick/LocalStorage/
 %_qt5_qmldir/QtQuick/XmlListModel/
@@ -167,7 +174,8 @@ syncqt.pl-qt5 -version %version -private
 %_qt5_libdir/libQt*.prl
 %_qt5_libdatadir/libQt*.prl
 %_qt5_headerdir/Qt*/
-%_qt5_archdatadir/mkspecs/modules/*.pri
+%_qt5_archdatadir/mkspecs/modules/*.pr*
+%_qt5_archdatadir/mkspecs/features/*.pr*
 %_libdir/cmake/Qt*/
 %_pkgconfigdir/Qt?Qml.pc
 %_pkgconfigdir/Qt?Quick*.pc
@@ -176,12 +184,15 @@ syncqt.pl-qt5 -version %version -private
 %files devel-static
 %_qt5_libdir/libQt?QmlDevTools.a
 %_qt5_libdatadir/libQt?QmlDevTools.a
-#%_qt5_libdir/libQt?PacketProtocol.a
-#%_qt5_libdatadir/libQt?PacketProtocol.a
-#%_qt5_libdir/libQt?QmlDebug.a
-#%_qt5_libdatadir/libQt?QmlDebug.a
+%_qt5_libdir/libQt?PacketProtocol.a
+%_qt5_libdatadir/libQt?PacketProtocol.a
+%_qt5_libdir/libQt?QmlDebug.a
+%_qt5_libdatadir/libQt?QmlDebug.a
 
 %changelog
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
 * Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
 - new version
 

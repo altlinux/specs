@@ -1,8 +1,9 @@
+%define _amq5if_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
 
 %define rname appmenu-qt5
 Name: appmenu-qt5
 Version: 0.3.1
-Release: alt0.1%ubt
+Release: alt0.2%ubt
 
 Group: Graphical desktop/Other
 Summary: Global application menu to Qt
@@ -10,6 +11,7 @@ Url: http://launchpad.net/appmenu-qt5
 License: LGPLv3
 
 Source: %rname-%version.tar
+Patch1: alt-qt59.patch
 
 # Automatically added by buildreq on Wed Aug 17 2016 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel gcc-c++ glib2-devel kde5-akonadi-devel kde5-libkleo-devel kf5-attica-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjs-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libdbusmenu-qt52 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libpango-devel libqt5-core libqt5-dbus libqt5-gui libqt5-widgets libstdc++-devel libudev-devel libwayland-client libwayland-server perl pkg-config python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-phonon-devel qt5-script-devel qt5-webchannel-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-python3 ruby ruby-stdlibs xorg-xproto-devel
@@ -24,6 +26,9 @@ This package allows Qt to export its menus over DBus.
 
 %prep
 %setup -qn %rname-%version
+%_amq5if_ver_gteq %_qt5_version 5.9
+%patch1 -p1
+%endif
 
 %qmake_qt5
 
@@ -38,6 +43,9 @@ This package allows Qt to export its menus over DBus.
 %_qt5_plugindir/platformthemes/libappmenu-qt5.so
 
 %changelog
+* Thu Oct 19 2017 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt0.2%ubt
+- build with Qt 5.9
+
 * Mon Mar 20 2017 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt0.1%ubt
 - update to 0.3.1 20170216
 

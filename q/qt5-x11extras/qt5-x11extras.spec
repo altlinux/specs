@@ -2,8 +2,8 @@
 %global qt_module qtx11extras
 
 Name: qt5-x11extras
-Version: 5.7.1
-Release: alt2%ubt
+Version: 5.9.2
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - X11 support library
@@ -72,6 +72,7 @@ syncqt.pl-qt5 -version %version -private
 %build
 %qmake_qt5
 %make_build
+export QT_HASH_SEED=0
 %make docs
 
 %install
@@ -80,7 +81,7 @@ syncqt.pl-qt5 -version %version -private
 
 %files common
 %files -n libqt5-x11extras
-%doc LGPL_EXCEPTION.txt
+%doc LGPL_EXCEPTION.txt LICENSE*EXCEPT*
 %_qt5_libdir/libQt?X11Extras.so.*
 
 %files doc
@@ -97,6 +98,9 @@ syncqt.pl-qt5 -version %version -private
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
 * Tue Feb 28 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt2%ubt
 - update provides (ALT#33111)
 

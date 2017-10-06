@@ -3,8 +3,8 @@
 %def_disable bootstrap
 
 Name: qt5-location
-Version: 5.7.1
-Release: alt3%ubt
+Version: 5.9.2
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtLocation component
@@ -132,6 +132,9 @@ export QT_HASH_SEED=0
 %endif
 
 %changelog
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
 * Thu Aug 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt3%ubt
 - fix to build with lcc compiler
 

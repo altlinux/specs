@@ -4,8 +4,8 @@
 %def_enable pulse
 
 Name: qt5-multimedia
-Version: 5.7.1
-Release: alt2%ubt
+Version: 5.9.2
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - Multimedia support
@@ -101,7 +101,7 @@ export QT_HASH_SEED=0
 %files common
 
 %files -n libqt5-multimedia
-%doc LGPL_EXCEPTION.txt
+%doc LICENSE*EXCEPT*
 %_qt5_libdir/libQt?Multimedia.so.*
 %_qt5_libdir/libQt?MultimediaQuick_p.so.*
 %_qt5_libdir/libQt?MultimediaWidgets.so.*
@@ -128,6 +128,9 @@ export QT_HASH_SEED=0
 %endif
 
 %changelog
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
 * Wed Aug 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt2%ubt
 - allow to build without pulseaudio
 

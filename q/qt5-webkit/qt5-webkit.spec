@@ -5,7 +5,7 @@
 %def_disable bootstrap
 
 Name: qt5-webkit
-Version: 5.7.1
+Version: 5.9.2
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -119,6 +119,7 @@ export LDFLAGS="$LDFLAGS -Wl,--reduce-memory-overheads -Wl,--no-keep-memory"
     #
 %make_build
 %if_disabled bootstrap
+export QT_HASH_SEED=0
 %make docs
 %endif
 
@@ -158,6 +159,9 @@ export LDFLAGS="$LDFLAGS -Wl,--reduce-memory-overheads -Wl,--no-keep-memory"
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
 * Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
 - new version
 
