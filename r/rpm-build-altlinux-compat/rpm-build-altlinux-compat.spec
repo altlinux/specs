@@ -1,8 +1,8 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 1.9.18
-Release: alt2
+Version: 1.9.19
+Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
 
@@ -111,6 +111,13 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Fri Oct 06 2017 Vitaly Lipatov <lav@altlinux.ru> 1.9.19-alt1
+- introduce python3_dirsetup, python3_dirbuild, python3_dirinstall (see python-module-chatdet for example)
+- introduce py_use and lib_use (set low version for buildrequires and requires)
+
+* Wed Sep 13 2017 Vitaly Lipatov <lav@altlinux.ru> 1.9.18-alt3
+- fix end of line in _ln_sr macro
+
 * Tue Sep 12 2017 Vitaly Lipatov <lav@altlinux.ru> 1.9.18-alt2
 - ln_sr: add nonrelative workaround if ln --relative not yet supported
 
