@@ -1,6 +1,6 @@
-%def_without ffmpeg
+%def_with ffmpeg
 Name: qtox
-Version: 1.10.2
+Version: 1.12.0
 Release: alt1
 
 Summary: Powerful Tox client that follows the Tox design guidelines
@@ -16,14 +16,22 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 BuildPreReq: rpm-macros-qt5
+BuildRequires(pre): rpm-macros-ubt
+
+BuildRequires: cmake
 
 # manually removed: i586-libxcb ruby ruby-stdlibs 
 # Automatically added by buildreq on Sat Jun 13 2015
 # optimized out: fontconfig glib2-devel glibc-devel-static libGL-devel libX11-devel libatk-devel libavcodec-devel libavutil-devel libcairo-devel libcloog-isl4 libdc1394-22 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libjson-c libopencore-amrnb0 libopencore-amrwb0 libp11-kit libpango-devel libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-sql libqt5-svg libqt5-widgets libqt5-xml libraw1394-11 libsodium-devel libstdc++-devel libswscale-devel libvpx-devel libwayland-client libwayland-server python3-base qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-tools xorg-scrnsaverproto-devel xorg-xproto-devel
-BuildRequires: gcc-c++ git-core libXScrnSaver-devel libdb4-devel libfilteraudio-devel libgtk+2-devel libopenal-devel qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel
+BuildRequires: gcc-c++ git-core libXScrnSaver-devel libdb4-devel libfilteraudio-devel libgtk+2-devel libopenal-devel qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel libexif-devel
 
 %if_with ffmpeg
+%if %__ubt_branch_id == "M80P"
+BuildRequires: libffmpeg-devel-static
+%def_with ffmpeg_static
+%else
 BuildRequires: libavdevice-devel libavformat-devel libswscale-devel libswresample-devel
+%endif
 %else
 BuildRequires: libavdevice-devel libavformat-devel libswscale-devel libavresample-devel
 %endif
@@ -42,9 +50,13 @@ Powerful Tox Qt5 client that follows the Tox design guidelines.
 
 %prep
 %setup
+%__subst "s|.*-Werror.*||g" CMakeLists.txt
 
 %build
-%qmake_qt5
+%if_with ffmpeg_static
+export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
+%endif
+%cmake_insource
 %make_build
 
 %install
@@ -68,6 +80,11 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri Oct 06 2017 Vitaly Lipatov <lav@altlinux.ru> 1.12.0-alt1
+- new version 1.12.0 (with rpmrb script)
+- switched to cmake
+- rebuild with ffmpeg really
+
 * Sat Jun 17 2017 Vitaly Lipatov <lav@altlinux.ru> 1.10.2-alt1
 - new version 1.10.2 (with rpmrb script)
 - build with new toxcore-devel 0.1.9
