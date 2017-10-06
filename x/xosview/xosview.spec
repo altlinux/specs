@@ -1,23 +1,19 @@
 Name: xosview
-Version: 1.8.3
-Release: alt4.1.qa1
+Version: 1.19
+Release: alt1
 
 Summary: An X Window System utility for monitoring system resources
 Group: Monitoring
 License: GPL
 Url: http://xosview.sourceforge.net/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
-# http://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
+# https://github.com/hills/xosview.git
 Source: %name-%version.tar
 Source2: xosview16.png
 Source3: xosview32.png
 Source4: xosview48.png
 
-Patch: xosview-1.8.3-alt-gcc44.patch
-
-# Automatically added by buildreq on Tue Mar 21 2006
-BuildRequires: gcc-c++ libXpm-devel desktop-file-utils
+BuildRequires: gcc-c++ libXpm-devel libX11-devel desktop-file-utils
 
 %description
 The %name utility displays a set of bar graphs which show the current
@@ -25,19 +21,10 @@ system state, including memory usage, CPU usage, system load, etc.
 Xosview runs under the X Window System.
 
 %prep
-%setup -q
-%patch -p1
-# Strip hacks
-sed -i 's/\$(CFLAGS) @EXTRA_CXXFLAGS@ -I@x_includes@ //' \
-	config/Makefile.config.in
+%setup
 
 %build
-# Can't build both 2.0.x/2.1.x memstat modules
-%configure \
-	--x-includes=%_includedir \
-	--x-libraries=%_libdir \
-	--disable-linux-memstat
-%make_build
+%make_build OPTFLAGS="${CFLAGS:-%optflags}"
 
 cat > %{name}.desktop <<EOF
 [Desktop Entry]
@@ -54,15 +41,14 @@ EOF
 
 %install
 mkdir -p %buildroot{%_bindir,%_man1dir,%_x11appconfdir}
-%make_install install PREFIX_TO_USE=%buildroot%prefix \
-	XAPPLOADDIR=%buildroot%_x11appconfdir \
-	INSTALL_ARGS=-pm755
+%make_install install PREFIX=%buildroot%prefix
 
+install -pD -m644 Xdefaults %buildroot%_x11appconfdir/XOsview
 install -pD -m644 %SOURCE2 %buildroot%_miconsdir/%name.png
 install -pD -m644 %SOURCE3 %buildroot%_niconsdir/%name.png
 install -pD -m644 %SOURCE4 %buildroot%_liconsdir/%name.png
 
-desktop-file-install --dir %{buildroot}%{_datadir}/applications %{name}.desktop
+desktop-file-install --dir %buildroot%_datadir/applications %{name}.desktop
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Utility \
 	%buildroot%_desktopdir/xosview.desktop
@@ -78,6 +64,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc CHANGES README.linux TODO
 
 %changelog
+* Fri Oct 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.19-alt1
+- Updated to upstream version 1.19.
+
 * Tue May 24 2011 Repocop Q. A. Robot <repocop@altlinux.org> 1.8.3-alt4.1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
