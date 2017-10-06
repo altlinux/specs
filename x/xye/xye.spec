@@ -1,20 +1,20 @@
-
 Name:	xye
 Version:	0.12.1
-Release:	alt1.1
+Release:	alt2
 Summary:	Puzzle game that reproduces and extends Kye
 License:	GPL
-Packager: Alex Karpov <karpov@altlinux.ru>
 
 Url:	http://xye.sourceforge.net
 Group:	Games/Puzzles
 Source:	http://heanet.dl.sourceforge.net/sourceforge/xye/%name-%version.tar.gz
+Source1: xye.xpm
+Source2: xye.desktop
+
 Patch: xye-0.12.1-alt-glibc-2.16.patch
 Patch1: xye-0.12.1-alt-gcc4.7.patch
 
 
-# Automatically added by buildreq on Sun Feb 03 2008
-BuildRequires: gcc-c++ libSDL-devel libSDL_image-devel libSDL_ttf-devel
+BuildRequires: gcc-c++ libSDL-devel libSDL_image-devel libSDL_ttf-devel desktop-file-utils
 
 Requires: fonts-ttf-dejavu
 
@@ -33,20 +33,30 @@ Yet it was a very simple game to understand the nice thing was the way the objec
 %patch1 -p2
 
 %build
-autoreconf -fisv
+%add_optflags -Wno-error=narrowing
+%autoreconf
 %configure 
 %make_build
 
 %install
 make docdir=%_defaultdocdir/%name-%version DESTDIR=%buildroot install
 
+install -pD -m644 %SOURCE1 %buildroot%_pixmapsdir/%name.xpm
+desktop-file-install --dir %buildroot%_desktopdir %SOURCE2
+
 %files
 %doc NEWS AUTHORS COPYING INSTALL README 
 %_bindir/%name
 %_datadir/%name
 #exclude %_datadir/%name/*.ttf
+%_pixmapsdir/%name.xpm
+%_desktopdir/*.desktop
 
 %changelog
+* Fri Oct 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.12.1-alt2
+- Fixed build with new toolchain.
+- Added desktop menu entry.
+
 * Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.1-alt1.1
 - Fixed build with glibc 2.16
 
