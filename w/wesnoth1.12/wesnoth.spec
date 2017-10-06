@@ -38,7 +38,7 @@ BuildRequires: libvorbis-devel
 
 Name: wesnoth%wessuffix
 Version: 1.12.6
-Release: alt2
+Release: alt3
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
@@ -46,6 +46,7 @@ License: %gpl2plus
 Url: http://www.%name.org
 Source0: wesnoth-%version.tar
 Patch: wesnoth-1.12-boost-1.57-fix.patch
+Patch1: wesnoth-1.12.6-boost1.64.patch
 
 Requires: %name-data = %version-%release
 
@@ -191,6 +192,7 @@ This package contains python interface to Battle for Wesnoth.
 %prep
 %setup -n wesnoth-%version
 %patch -p2
+%patch1 -p2
 
 %build
 %define _optlevel 3
@@ -635,6 +637,9 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/
 %endif
 
 %changelog
+* Fri Oct 06 2017 Igor Vlasenko <viy@altlinux.ru> 1.12.6-alt3
+- rebuild with new boost >= 1.64
+
 * Sat May 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.12.6-alt2
 - 1.12 stable branch
 
