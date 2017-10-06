@@ -4,8 +4,8 @@
 
 Name: python-module-%oname
 Version: 4.12.1
-Release: alt1%ubt
-Summary: Python bindings for Qt.
+Release: alt2%ubt
+Summary: Python bindings for Qt4
 License: GPL
 Group: Development/Python
 
@@ -19,37 +19,42 @@ URL: http://www.riverbankcomputing.co.uk/software/pyqt
 
 %add_python_req_skip Compiler
 
-BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-ubt python-module-sip-devel
 # Automatically added by buildreq on Fri Jan 29 2016 (-bi)
 # optimized out: elfutils fontconfig libGL-devel libX11-devel libXext-devel libdbus-devel libgpg-error libgst-plugins1.0 libjson-c libqt4-clucene libqt4-core libqt4-dbus libqt4-declarative libqt4-designer libqt4-devel libqt4-gui libqt4-help libqt4-location libqt4-multimedia libqt4-network libqt4-opengl libqt4-script libqt4-scripttools libqt4-sensors libqt4-sql libqt4-svg libqt4-test libqt4-webkit libqt4-xml libqt4-xmlpatterns libstdc++-devel pkg-config python-base python-devel python-module-dbus python-module-sip python-modules python-modules-compiler python-modules-logging python-modules-xml python3 python3-base python3-dev python3-module-sip
-BuildRequires: gcc-c++ libqt4-webkit-devel phonon-devel python-module-dbus-devel python-module-sip-devel python3-module-sip-devel rpm-build-python3
+BuildRequires: gcc-c++ libqt4-webkit-devel phonon-devel python-module-dbus-devel
 
 #BuildRequires: gcc-c++ libqt4-devel lout
 #BuildPreReq: python-module-qscintilla2-qt4-devel libqscintilla2-qt4-devel
 #BuildRequires: python-module-sip-devel python-devel
 #BuildPreReq: python-module-dbus-devel phonon-devel
 
+%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
+Requires: python-module-sip = %sipver2
+
 %if_with python3
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 python3-module-sip-devel
 #BuildRequires: python3-devel python3-module-sip-devel
 #BuildPreReq: python3-module-dbus-devel
 #BuildPreReq: python3-module-qscintilla2-qt4-devel
 #BuildPreReq: python3-module-sip-devel
+%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
 %endif
 
 %description
-Python bindings for the Qt C++ class library.  Also includes a PyQt4 backend
-code generator for Qt Designer.
+Python bindings for the Qt4 C++ class library.  Also includes a PyQt4 backend
+code generator for Qt4 Designer.
 
 %if_with python3
 %package -n python3-module-%oname
-Summary: Python 3 bindings for Qt
+Summary: Python 3 bindings for Qt4
 Group: Development/Python3
 %add_python3_req_skip Compiler
+Requires: python3-module-sip = %sipver3
 
 %description -n python3-module-%oname
-Python bindings for the Qt C++ class library.  Also includes a PyQt4 backend
-code generator for Qt Designer.
+Python bindings for the Qt4 C++ class library.  Also includes a PyQt4 backend
+code generator for Qt4 Designer.
 
 %package -n python3-module-%oname-devel
 Requires: python3-module-%oname = %version-%release
@@ -59,7 +64,7 @@ Group: Development/Python3
 %py3_provides %oname-devel
 
 %description -n python3-module-%oname-devel
-Sip files for PyQt to build extension
+Sip files for PyQt4 to build extension
 %endif
 
 %package devel
@@ -70,7 +75,7 @@ Group: Development/Python
 %py_package_provides %modulename-devel = %version-%release
 
 %description devel
-Sip files for PyQt to build extension
+Sip files for PyQt4 to build extension
 
 %package examples
 Summary: PyQt4 examples
@@ -226,6 +231,9 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %endif
 
 %changelog
+* Fri Oct 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.12.1-alt2%ubt
+- Set strict require to sip version we build with.
+
 * Thu Oct 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.12.1-alt1%ubt
 - Updated to upstream version 4.12.1.
 
