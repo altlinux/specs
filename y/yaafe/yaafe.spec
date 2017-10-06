@@ -1,11 +1,10 @@
 Name: yaafe
 Version: 0.64
-Release: alt1.git20130420
+Release: alt2.git20130420
 Summary: Yaafe - Yet Another Audio Feature Extractor
 License: LGPLv3
 Group: Sound
 Url: http://yaafe.sourceforge.net/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # git://git.code.sf.net/p/yaafe/code
 Source: %name-%version.tar
@@ -83,31 +82,20 @@ This package contains documentation for %name.
 ln -s ../objects.inv doc/source/
 
 %build
-mkdir BUILD
-pushd BUILD
-cmake \
-%if %_lib == lib64
-	-DLIB_SUFFIX=64 \
-%endif
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_PREFIX_PATH=%_libdir \
+%cmake \
 	-DCMAKE_INSTALL_PYTHON_PACKAGES=%python_sitelibdir_noarch \
 	-DCMAKE_INSTALL_YAAFE_EXTENSIONS=%_libdir/yaafe_extensions \
-	-DCMAKE_C_FLAGS:STRING="%optflags" \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	-DCMAKE_Fortran_FLAGS:STRING="%optflags" \
 	-DWITH_HDF5:BOOL=ON \
 	-DWITH_MPG123:BOOL=ON \
 	-DWITH_LAPACK:BOOL=ON \
 	-DWITH_FFTW3:BOOL=ON \
 	-DWITH_TIMERS:BOOL=ON \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
-	..
-%make_build VERBOSE=1
-popd
+
+%cmake_build VERBOSE=1
 
 %install
-%makeinstall_std -C BUILD
+%cmakeinstall_std
 
 export LD_LIBRARY_PATH=%buildroot%_libdir
 %make -C doc html
@@ -116,6 +104,8 @@ install -d %buildroot%_sysconfdir/profile.d
 cat <<EOF > %buildroot%_sysconfdir/profile.d/%name.sh
 export YAAFE_PATH=%_libdir/yaafe_extensions
 EOF
+
+chmod +x %buildroot%_sysconfdir/profile.d/%name.sh
 
 %files
 %doc DISCLAIMER README
@@ -138,6 +128,9 @@ EOF
 %doc doc/build/html/*
 
 %changelog
+* Fri Oct 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.64-alt2.git20130420
+- Fixed build with new toolchain.
+
 * Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.64-alt1.git20130420
 - Initial build for Sisyphus
 
