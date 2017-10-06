@@ -21,8 +21,8 @@
 %endif
 
 Name: xorg-server
-Version: 1.19.3
-Release: alt4
+Version: 1.19.4
+Release: alt1
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -326,6 +326,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Fri Oct 06 2017 Valery Inozemtsev <shrek@altlinux.ru> 2:1.19.4-alt1
+- 1.19.4
+
 * Tue Jun 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 2:1.19.3-alt4
 - use intel ddx only on pre-gen4 hw, newer ones will fall back to modesetting (closes: #33242)
 
