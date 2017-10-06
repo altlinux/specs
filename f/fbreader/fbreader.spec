@@ -1,6 +1,6 @@
 Name: fbreader
 Version: 0.99.5
-Release: alt4%ubt
+Release: alt5%ubt
 Summary: E-Book Reader
 Summary (ru_RU.UTF-8): Программа для чтения электронных книг (E-Book, Ebook)
 License: GPL
@@ -36,12 +36,13 @@ E-Book Reader. Supports several e-book formats: fb2 (fictionbook), html, plucker
 %patch4 -p2
 
 %build
-%make ZLSHARED=no TARGET_ARCH=desktop UI_TYPE=qt4 TARGET_STATUS=debug
+# explicitly setting CC variable is required for building on p8, c8 and older branches.
+%make ZLSHARED=no TARGET_ARCH=desktop UI_TYPE=qt4 TARGET_STATUS=debug CC='g++ -std=c++11'
 
 %install
 #%__subst "s,mozilla,firefox," fbreader/data/default/external.desktop.xml
 #%__subst "s,FBReader.png,fbreader.png," fbreader/desktop/desktop
-%make ZLSHARED=no LIBDIR=%_libdir DESTDIR=%buildroot INSTALLDIR=/usr TARGET_ARCH=desktop UI_TYPE=qt4 TARGET_STATUS=debug MOC=%_qt4dir/bin/moc install
+%make ZLSHARED=no LIBDIR=%_libdir DESTDIR=%buildroot INSTALLDIR=/usr TARGET_ARCH=desktop UI_TYPE=qt4 TARGET_STATUS=debug CC='g++ -std=c++11' MOC=%_qt4dir/bin/moc install
 ln -s FBReader %buildroot%_bindir/fbreader
 %__install -pD -m644 %SOURCE2 %buildroot%_miconsdir/%name.png
 %__install -pD -m644 %SOURCE3 %buildroot%_niconsdir/%name.png
@@ -63,6 +64,9 @@ ln -s FBReader %buildroot%_bindir/fbreader
 %_liconsdir/%name.png
 
 %changelog
+* Fri Oct 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.99.5-alt5%ubt
+- Fixed build for older branches.
+
 * Thu Oct 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.99.5-alt4%ubt
 - Fixed 'about program' menu action (closes: #33971).
 
