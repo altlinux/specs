@@ -1,5 +1,8 @@
+# TODO
+%def_with plugins
+
 Name: certbot
-Version: 0.14.2
+Version: 0.19.0
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -17,7 +20,9 @@ Source: %name-%version.tar
 BuildArch: noarch
 BuildRequires: python-devel python-module-distribute
 
-Requires: python-module-%name = %version-%release
+#Requires: python-module-%name = %version-%release
+Provides: python-module-%name = %EVR
+Obsoletes: python-module-%name < %EVR
 
 Requires: python-module-zope.component
 Requires: python-module-zope.interface >= 4.1.0
@@ -39,10 +44,14 @@ BuildRequires: python-module-acme >= %version
 Provides: letsencrypt = %version
 Obsoletes: letsencrypt
 
+%define certbotdir %_datadir/%name
+%add_python_req_skip certbot
+
 %description
 Let's Encrypt is a free, automated certificate authority that aims
 to lower the barriers to entry for encrypting all HTTP traffic on the internet.
 
+# TODO: move to /usr/share/%name
 %package -n python-module-%name
 Group: Networking/Other
 Requires: python-module-configargparse >= 0.10.0
@@ -60,14 +69,47 @@ Obsoletes: python-module-letsencrypt
 %description -n python-module-%name
 The python2 libraries to interface with letsencrypt.
 
+# TODO
+%if_with plugins
+%package apache
+Group: Networking/Other
+Summary: Certbot Apache plugin
+AutoProv: no
+Requires: %name = %version-%release
+
+%description apache
+Certbot Apache plugin.
+
+%package nginx
+Group: Networking/Other
+Summary: Certbot nginx plugin
+AutoProv: no
+Requires: %name = %version-%release
+
+%description nginx
+Certbot nginx plugin.
+%endif
+
 %prep
 %setup
 
 %build
 %python_build
 
+cd certbot-apache
+%python_build
+cd ../certbot-nginx
+%python_build
+
+
 %install
-%python_install
+%python_install --install-purelib=%certbotdir
+
+cd certbot-apache
+%python_install --install-purelib=%certbotdir
+cd ../certbot-nginx
+%python_install --install-purelib=%certbotdir
+cd -
 
 # TODO: remove compat dirs
 mkdir -p %buildroot%_sysconfdir/letsencrypt
@@ -79,8 +121,13 @@ ln -s letsencrypt %buildroot%_logdir/%name
 
 ln -s %name %buildroot%_bindir/letsencrypt
 
-#  it is better to not to require argparse on python >= 2.7.
-%__subst "s|^argparse$||" %buildroot%python_sitelibdir/%name-%{version}*.egg-info/requires.txt
+#  it is better do not require argparse on python >= 2.7.
+#__subst "s|^argparse$||" %buildroot%python_sitelibdir/%name-%{version}*.egg-info/requires.txt
+
+%__subst 's|^__requires__.*|\
+# ALT: use own package dir\
+import site\
+site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 
 %check
 #python_test
@@ -89,7 +136,6 @@ ln -s %name %buildroot%_bindir/letsencrypt
 %doc LICENSE.txt
 %doc README.rst CHANGES.rst CONTRIBUTING.md
 %_bindir/%name
-%_bindir/letsencrypt
 #%doc %attr(0644,root,root) %_man1dir/%{name}*
 %dir %_sysconfdir/%name/
 %dir %_sharedstatedir/%name/
@@ -100,12 +146,29 @@ ln -s %name %buildroot%_bindir/letsencrypt
 %dir %_sharedstatedir/letsencrypt/
 %dir %_logdir/letsencrypt/
 
-%files -n python-module-%name
+#files -n python-module-%name
+#doc LICENSE.txt
+%certbotdir/%name/
+%certbotdir/%name-%{version}*.egg-info
+
+%if_with plugins
+%files nginx
 %doc LICENSE.txt
-%python_sitelibdir/%name/
-%python_sitelibdir/%name-%{version}*.egg-info
+%certbotdir/certbot_nginx/
+%certbotdir/certbot_nginx-%{version}*.egg-info
+
+%files apache
+%doc LICENSE.txt
+%certbotdir/certbot_apache/
+%certbotdir/certbot_apache-%{version}*.egg-info
+%endif
 
 %changelog
+* Fri Oct 06 2017 Vitaly Lipatov <lav@altlinux.ru> 0.19.0-alt1
+- new version 0.19.0 (with rpmrb script)
+- drop python-module-cerbot subpackage
+- pack nginx and apache plugins
+
 * Tue Aug 08 2017 Vitaly Lipatov <lav@altlinux.ru> 0.14.2-alt1
 - new version 0.14.2 (with rpmrb script)
 

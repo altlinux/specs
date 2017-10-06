@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-acme
-Version: 0.14.2
+Version: 0.19.0
 Release: alt1
 
 Summary: Python library for the ACME protocol
@@ -24,13 +24,18 @@ BuildRequires: python-devel python-module-setuptools
 #BuildRequires: python-pyrfc3339
 #BuildRequires: python-werkzeug
 
+# requires list checked 06.10.2017 with https://pypi.python.org/pypi/acme
 # requests[security] is requests with extra pyOpenSSL cryptography idna
+BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-OpenSSL >= 0.14
 BuildRequires: python-module-cryptography >= 1.3.4
 BuildRequires: python-module-idna >= 2.0.0
 BuildRequires: python-module-cffi >= 1.7
 BuildRequires: python-module-requests >= 2.10
+BuildRequires: python-module-pytz
+#BuildRequires: python-module-pyrfc3339
 
+Requires: python-module-six >= 1.9.0
 Requires: python-module-OpenSSL >= 0.14
 Requires: python-module-cryptography >= 1.3.4
 Requires: python-module-idna >= 2.0.0
@@ -44,12 +49,14 @@ BuildPreReq: python3-devel python3-module-setuptools python3-module-setuptools-t
 #BuildRequires: python3-sphinxcontrib-programoutput
 
 # requests[security] is requests with extra pyOpenSSL cryptography idna
+BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-OpenSSL >= 0.14
 BuildRequires: python3-module-cryptography >= 1.3.4
 BuildRequires: python3-module-idna >= 2.0.0
 BuildRequires: python3-module-cffi >= 1.7
 BuildRequires: python3-module-requests >= 2.10
-#BuildRequires: python3-pyrfc3339
+BuildRequires: python3-module-pytz
+#BuildRequires: python3-module-pyrfc3339
 #BuildRequires: python3-werkzeug
 %endif
 
@@ -182,6 +189,9 @@ grep -q python %buildroot%_bindir/jws
 #%doc docs/_build/html
 
 %changelog
+* Fri Oct 06 2017 Vitaly Lipatov <lav@altlinux.ru> 0.19.0-alt1
+- new version 0.19.0 (with rpmrb script)
+
 * Tue Aug 08 2017 Vitaly Lipatov <lav@altlinux.ru> 0.14.2-alt1
 - new version 0.14.2 (with rpmrb script)
 
