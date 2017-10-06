@@ -1,17 +1,17 @@
 %define _name blockdev
-%define ver_major 2.12
+%define ver_major 2.13
 %define rev 1
 
 Name: lib%_name
-Version: %ver_major.%rev
+Version: %ver_major
 Release: alt1
 
 Summary: A library for low-level manipulation with block devices
 Group: System/Libraries
 License: LGPLv2+
-Url: https://github.com/rhinstaller/%name
+Url: https://github.com/storaged-project/%name
 
-Source: %url/archive/%name-%ver_major-%rev.tar.gz
+Source: %url/releases/download/%ver_major-%rev/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python rpm-build-python3
 BuildRequires: python-devel python3-devel
@@ -370,7 +370,7 @@ Requires: %name-s390 = %version-%release
 A meta-package that pulls all the libblockdev plugins as dependencies.
 
 %prep
-%setup -n %name-%name-%ver_major-%rev
+%setup -n %name-%version
 subst 's/mkfs\.vfat/mkfs.fat/g
 	s/fsck\.vfat/fsck.fat/g' src/plugins/fs.c src/lib/plugin_apis/fs.api tests/fs_test.py
 
@@ -389,7 +389,7 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %_libdir/libblockdev.so.*
 %_typelibdir/BlockDev*.typelib
 %config %_sysconfdir/libblockdev/conf.d/00-default.cfg
-%doc README* LICENSE
+%doc *.rst LICENSE
 
 %files devel
 %_libdir/libblockdev.so
@@ -533,6 +533,9 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 
 
 %changelog
+* Fri Oct 06 2017 Yuri N. Sedunov <aris@altlinux.org> 2.13-alt1
+- 2.13
+
 * Thu Sep 07 2017 Yuri N. Sedunov <aris@altlinux.org> 2.12.1-alt1
 - 2.12.1
 
