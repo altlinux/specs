@@ -3,7 +3,7 @@
 Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
-Version: 19.0.3
+Version: 20.0.1
 Release: alt1
 License: GPLv2+
 Group: Video
@@ -50,7 +50,6 @@ sed -i 's|OBS_MULTIARCH_SUFFIX|LIB_SUFFIX|g' cmake/Modules/ObsHelpers.cmake
 
 %build
 %cmake_insource -DOBS_VERSION_OVERRIDE=%version -DUNIX_STRUCTURE=1
-		
 %make_build
 
 %install
@@ -80,5 +79,8 @@ mv -f %buildroot/%_datadir/obs/obs-plugins/obs-ffmpeg/ffmpeg-mux \
 %_libdir/cmake/LibObs
 
 %changelog
+* Fri Oct 06 2017 Anton Midyukov <antohami@altlinux.org> 20.0.1-alt1
+- new version 20.0.1
+
 * Wed Jul 12 2017 Anton Midyukov <antohami@altlinux.org> 19.0.3-alt1
 - Initial build for ALT Linux Sisyphus (Closes: 30989).
