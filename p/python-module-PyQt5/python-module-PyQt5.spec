@@ -4,8 +4,8 @@
 
 Name: python-module-%oname
 Version: 5.9
-Release: alt1
-Summary: Python bindings for Qt.
+Release: alt2
+Summary: Python bindings for Qt 5
 License: GPL
 Group: Development/Python
 
@@ -20,7 +20,9 @@ URL: http://www.riverbankcomputing.co.uk/software/pyqt
 
 # Automatically added by buildreq on Fri Jan 29 2016 (-bi)
 # optimized out: elfutils gcc-c++ libGL-devel libdbus-devel libgpg-error libgst-plugins1.0 libjson-c libqt5-bluetooth libqt5-clucene libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-help libqt5-location libqt5-multimedia libqt5-network libqt5-nfc libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sensors libqt5-serialport libqt5-sql libqt5-svg libqt5-test libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-websockets libqt5-widgets libqt5-x11extras libqt5-xml libqt5-xmlpatterns libstdc++-devel pkg-config python-base python-devel python-module-dbus python-module-sip python-modules python-modules-compiler python-modules-logging python-modules-xml python3 python3-base python3-dev python3-module-sip qt5-base-devel qt5-declarative-devel rpm-build-gir
-BuildRequires: python-module-dbus-devel python-module-sip-devel python3-module-dbus python3-module-sip-devel qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel rpm-build-python3
+BuildRequires: python-module-dbus-devel
+BuildRequires(pre):python-module-sip-devel
+BuildRequires: qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel
 
 #BuildRequires: gcc-c++ qt5-base-devel lout
 #BuildPreReq: python-module-qscintilla2-qt5-devel libqscintilla2-qt5-devel
@@ -31,12 +33,18 @@ BuildRequires: python-module-dbus-devel python-module-sip-devel python3-module-d
 #BuildPreReq: qt5-xmlpatterns-devel qt5-tools-devel qt5-sensors-devel
 #BuildPreReq: qt5-serialport-devel qt5-x11extras-devel qt5-location-devel
 #BuildPreReq: qt5-connectivity-devel qt5-websockets-devel
+
+%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
+Requires: python-module-sip = %sipver2
+
 %if_with python3
 # %%__python3_includedir was fixed in rpm-build-python3-0.1.9.2-alt1.
 BuildRequires(pre): rpm-build-python3 >= 0.1.9.2-alt1
-#BuildRequires: python3-module-sip-devel python3-devel
-#BuildPreReq: python3-module-dbus
+BuildRequires: python3-module-dbus
+BuildRequires(pre): python3-module-sip-devel
+%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
 %endif
+
 
 %description
 Python bindings for the Qt C++ class library.  Also includes a PyQt5 backend
@@ -45,6 +53,7 @@ code generator for Qt Designer.
 %package -n python3-module-%oname
 Summary: Python bindings for Qt.
 Group: Development/Python3
+Requires: python3-module-sip = %sipver3
 
 %description -n python3-module-%oname
 Python bindings for the Qt C++ class library.  Also includes a PyQt5 backend
@@ -208,6 +217,9 @@ find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print 
 %endif
 
 %changelog
+* Fri Oct 06 2017 Vitaly Lipatov <lav@altlinux.ru> 5.9-alt2
+- set strict require to sip version we build with
+
 * Thu Oct 05 2017 Vitaly Lipatov <lav@altlinux.ru> 5.9-alt1
 - build new version 5.9, rebuild with new sip 4.19.3
 
