@@ -6,14 +6,13 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: flac
-Version: 1.2.1
-Release: alt11.1.1
+Version: 1.3.2
+Release: alt1
 
 Summary: Free Lossless Audio Codec
 License: GPLv2+
 Group: Sound
-Url: http://flac.sourceforge.net/
-# http://download.sourceforge.net/%name/%name-%version.tar.gz
+Url: https://xiph.org/flac/download.html
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -114,8 +113,8 @@ Xmms plugin for playing FLAC files.
 %patch -p1
 
 %build
-# due to libtool mess
-#autoreconf
+touch config.rpath
+%autoreconf
 %configure \
 	%{?!_with_bootstrap:--enable-exhaustive-tests} \
 	%{subst_enable static} \
@@ -137,7 +136,6 @@ install -pm644 COPYING.Xiph AUTHORS README %buildroot%flacdocs/
 %flacdocs/html/*.html
 %flacdocs/html/*.ico
 %flacdocs/html/*.css
-%flacdocs/html/ru
 %flacdocs/html/images
 
 %files -n lib%name%soversion
@@ -184,6 +182,9 @@ install -pm644 COPYING.Xiph AUTHORS README %buildroot%flacdocs/
 # TODO: 1.3.2+
 
 %changelog
+* Fri Oct 06 2017 Anton Farygin <rider@altlinux.ru> 1.3.2-alt1
+- 1.3.2
+
 * Wed Mar 15 2017 Michael Shigorin <mike@altlinux.org> 1.2.1-alt11.1.1
 - BOOTSTRAP: introduce xmms knob (on by default),
   skip exhaustive tests when bootstrapping
