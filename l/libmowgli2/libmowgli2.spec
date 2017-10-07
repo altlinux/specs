@@ -1,5 +1,5 @@
 Name: libmowgli2
-Version: 2.0.0
+Version: 2.1.3
 Release: alt1
 
 Summary: libmowgli is a class library containing performance and usability oriented extensions to C
@@ -54,6 +54,9 @@ Header files for %name.
 %_includedir/*
 
 %changelog
+* Sat Oct 07 2017 Vitaly Lipatov <lav@altlinux.ru> 2.1.3-alt1
+- new version 2.1.3 (with rpmrb script)
+
 * Wed May 07 2014 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
 - initial build for ALT Linux Sisyphus
 
