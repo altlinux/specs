@@ -16,13 +16,13 @@ BuildRequires: libvorbis-devel
 %def_disable debug
 %def_disable tests
 %def_disable static
-%def_enable python
 %def_enable optipng
 %def_enable game
 %def_enable server
-%def_enable editor
-%def_enable tools
-%def_enable display_revision
+%def_disable editor
+%def_disable python3
+%def_disable python
+%def_disable tools
 %def_enable bandwidth_monitor
 %def_enable sdltest
 #----------------------------------------------------------------------
@@ -33,11 +33,10 @@ BuildRequires: libvorbis-devel
 %define _pseudouser_home     %_var/run/wesnothd
 
 %define wessuffix %nil
-#define wesdesktopsuffix unstable
-#define wessuffix -%wesdesktopsuffix
+#define wesdesktopsuffix %nil
 
 Name: wesnoth%wessuffix
-Version: 1.12.6
+Version: 1.13.8
 Release: alt1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
@@ -45,27 +44,38 @@ Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия
 License: %gpl2plus
 Url: http://www.%name.org
 Source0: wesnoth-%version.tar
-Patch: wesnoth-1.12-boost-1.57-fix.patch
+Patch: wesnoth-1.13.8-boost1.64.patch
 
 Requires: %name-data = %version-%release
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: ImageMagick-tools asciidoc boost-devel desktop-file-utils fribidi gcc-c++ hd2u imake libICE-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libfreetype-devel libfribidi-devel libpango-devel libpng-devel po4a subversion xorg-cf-files xsltproc liblua5-devel libpng-devel cmake boost-program_options-devel boost-filesystem-devel boost-locale-devel libdbus-devel boost-asio-devel libpixman-devel libXdmcp-devel
+BuildRequires: ImageMagick-tools asciidoc boost-devel desktop-file-utils fribidi gcc-c++ hd2u imake libICE-devel libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_net-devel libSDL2_ttf-devel libfreetype-devel libfribidi-devel libpango-devel libpng-devel po4a subversion xorg-cf-files xsltproc liblua5-devel libpng-devel cmake boost-program_options-devel boost-filesystem-devel boost-locale-devel libdbus-devel boost-asio-devel libpixman-devel libXdmcp-devel libreadline-devel
 %if_with build_using_scons
 BuildRequires: scons
 %endif
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-sazanami-gothic fonts-ttf-wqy-zenhei
-BuildRequires: python-devel
-%{?_enable_tools:BuildRequires: perl(Tie/File.pm)}
 %{?_enable_optipng:BuildRequires: optipng}
-%{?_enable_display_revision:BuildRequires: subversion}
 
-%if_enabled python
-Requires: python-module-%name = %version-%release
+%if_disabled tools
+Obsoletes: %name-tools < 1.13
 %endif
+%if_enabled python
+%if_enabled python3
+BuildRequires: python3-devel rpm-build-python3
+BuildRequires(pre): rpm-build-python3
+Requires: python3-module-%name = %version-%release
+Obsoletes: python-module-%name < 1.13
+%else
+BuildRequires: python-devel
+Requires: python-module-%name = %version-%release
 Conflicts: %name-tools < 1.11.7
+%endif
+%else
+Obsoletes: python-module-%name < 1.13
+AutoReq: yes,nopython,nopython3
+%endif
 
 %description
 Battle for Wesnoth is a fantasy turn-based strategy game.
@@ -91,7 +101,11 @@ Group: Games/Strategy
 Summary: Data files to Battle for Wesnoth
 BuildArch: noarch
 Conflicts: %name < 1.6.5-alt1
-Conflicts: %name-editor < 1.10.3
+Conflicts: %name-editor < 1.13.0
+Obsoletes: %name-editor < 1.13.0
+%if_disabled python
+AutoReq: yes,nopython,nopython3
+%endif
 
 %description data
 Battle for Wesnoth is a fantasy turn-based strategy game.
@@ -143,7 +157,13 @@ This package contains Battle for Wesnoth map editor.
 %package tools
 Group: Games/Strategy
 Summary: Battle for Wesnoth tools
+%if_enabled python
+%if_enabled python3
+Requires: python3-module-%name = %version-%release
+%else
 Requires: python-module-%name = %version-%release
+%endif
+%endif
 
 %description tools
 Battle for Wesnoth is a fantasy turn-based strategy game.
@@ -171,13 +191,22 @@ Battle for Wesnoth multiplayer network daemon.
 %endif
 
 %if_enabled python
+%if_enabled python3
+%package -n python3-module-%name
+%py3_provides %name
+%else
 %package -n python-module-%name
 %py_provides %name
+%endif
 Group: Development/Python
 Summary: Python interface to Battle for Wesnoth
 BuildArch: noarch
 
+%if_enabled python3
+%description -n python3-module-%name
+%else
 %description -n python-module-%name
+%endif
 Battle for Wesnoth is a fantasy turn-based strategy game.
 Battle for control of villages, using variety of units which have
 advantages and disadvantages in different types of terrains and against
@@ -190,13 +219,12 @@ This package contains python interface to Battle for Wesnoth.
 
 %prep
 %setup -n wesnoth-%version
-%patch -p2
+%patch -p1
 
 %build
 %define _optlevel 3
 # note for 1.10.5 - outdated.
 # evil, evil... configure does not work, cmake does not build translations,
-# scons does not build schema_validator
 # note for 1.10.7 - upstream really moved to scons.
 # scons now works. cmake is outdated and does not build campaignd.
 %if_with build_using_scons
@@ -207,8 +235,14 @@ scons all \
 	  fifodir=%_runtimedir/wesnothd%wessuffix \
 	  datadirname=%name \
 	  docdir=%_docdir/%name \
-          python_site_packages_dir=%{python_sitelibdir_noarch}/%{name} \
           extra_flags_release="%optflags" \
+%if_enabled python
+%if_enabled python3
+          python_site_packages_dir=%{python3_sitelibdir_noarch}/%{name} \
+%else
+          python_site_packages_dir=%{python_sitelibdir_noarch}/%{name} \
+%endif
+%endif
           %{?_smp_mflags}
 
 # TODO
@@ -218,12 +252,13 @@ scons all \
 
 	  # let it be default - translations - for now, for cmake install compatibility
 	  #localedirname=locale \
-scons schema_generator
-#no more built in scons
-#scons schema_validator
 %else
 export PYTHON_PREFIX=/usr
+%if_enabled python3
+export PYTHON_VERSION=%__python3_version
+%else
 export PYTHON_VERSION=%__python_version
+%endif
 #%%configure \
 #    --disable-option-checking \
 #    --with-gnu-ld \
@@ -262,8 +297,8 @@ cmake . \
 %endif # scons
 
 for s in 96 72 48 36 32 24 22 16; do
-    convert -depth 8 -resize ${s}x$s icons/wesnoth-{icon-Mac,$s}.png
-    convert -depth 8 -resize ${s}x$s icons/{map-editor-icon-Mac,wesnoth_editor-$s}.png
+    convert -depth 8 -resize ${s}x$s icons/wesnoth-{icon,$s}.png
+#    convert -depth 8 -resize ${s}x$s icons/{map-editor-icon-Mac,wesnoth_editor-$s}.png
 done
 bzip2 --keep --best --force changelog
 
@@ -283,8 +318,8 @@ bzip2 --keep --best --force changelog
 scons install install-pytools destdir=$RPM_BUILD_ROOT
 rm %buildroot%{_datadir}/icons/wesnoth-icon.png
 rm %buildroot%_desktopdir/wesnoth.desktop
-rm -rf %buildroot/%python_sitelibdir_noarch/%name
-install -m 755 schema_generator %buildroot%_bindir/
+rm -rf %buildroot/usr/lib/python/site-packages/%name
+rm -rf %buildroot%{python3_sitelibdir_noarch}/%{name}
 %endif
 
 %if_with install_using_manual
@@ -303,13 +338,13 @@ done
 %endif
 
 %ifdef wesdesktopsuffix
-for i in cutter exploder wesnoth schema_generator wesnoth_addon_manager \
+# cutter exploder
+for i in wesnoth wesnoth_addon_manager \
  wmlindent wmllint wmlscope \
  ; do
 	 mv %buildroot%_bindir/$i %buildroot%_bindir/${i}%wessuffix
 done
 cp icons/wesnoth{,%wessuffix}.desktop
-cp icons/wesnoth_editor{,%wessuffix}.desktop
 find %buildroot%_mandir -name wesnoth.6 -execdir mv {} wesnoth%wessuffix.6 \;
 find %buildroot%_mandir -name wesnothd.6 -execdir mv {} wesnothd%wessuffix.6 \;
 sed -i -e 's,Exec=wesnoth,Exec=wesnoth%wessuffix,;s,^\(Name.*\),\1 (%wesdesktopsuffix),' icons/wesnoth*%{wessuffix}.desktop
@@ -320,10 +355,9 @@ sed -i -e 's,Exec=wesnoth,Exec=wesnoth%wessuffix,;s,^\(Name.*\),\1 (%wesdesktops
 desktop-file-install --dir %buildroot%_desktopdir \
                      --mode="0644" \
                      --remove-key="Version" \
-                     icons/wesnoth%wessuffix.desktop icons/wesnoth_editor%wessuffix.desktop
+                     icons/wesnoth%wessuffix.desktop
 mkdir -p %buildroot%{_datadir}/pixmaps
 cp icons/wesnoth-icon.png %buildroot%{_datadir}/pixmaps
-cp icons/wesnoth_editor-icon.png %buildroot%{_datadir}/pixmaps
 mkdir -p %buildroot%_docdir/
 cp -a doc/manual %buildroot%_docdir/%name
 %endif
@@ -337,10 +371,33 @@ mv %buildroot%_bindir/{,%name-}test
 %endif
 
 %if_enabled python
+%if_enabled python3
+mkdir -p %buildroot/%python3_sitelibdir_noarch
+mv %buildroot%_datadir/%name/data/tools/wesnoth %buildroot%python3_sitelibdir_noarch
+#mv %buildroot%_datadir/%name/data/tools/addon_manager %buildroot%python3_sitelibdir_noarch
+#mv %buildroot%_datadir/%name/data/tools/unit_tree %buildroot%python3_sitelibdir_noarch
+find %buildroot%python3_sitelibdir_noarch \( -name wmldata.py -or -name wmlparser.py -or -name wmlparser2.py \) -delete
+echo python2 rm -f \
+   %buildroot%_datadir/%name/data/tools/expand-terrain-macros.py \
+   %buildroot%_datadir/%name/data/tools/journeylifter \
+   %buildroot%_datadir/%name/data/tools/rmtrans/rmtrans.py \
+   %buildroot%_datadir/%name/data/tools/scoutDefault.py \
+   %buildroot%_datadir/%name/data/tools/wmlflip \
+   %buildroot%_datadir/%name/data/tools/wmlvalidator \
+   %buildroot%_datadir/%name/data/tools/unit_tree/overview.py
+%else
 mkdir -p %buildroot/%python_sitelibdir_noarch
-mv %buildroot%_datadir/%name/data/tools/wesnoth %buildroot/%python_sitelibdir_noarch
-mv %buildroot%_datadir/%name/data/tools/addon_manager %buildroot/%python_sitelibdir_noarch
-mv %buildroot%_datadir/%name/data/tools/unit_tree %buildroot/%python_sitelibdir_noarch
+mv %buildroot%_datadir/%name/data/tools/wesnoth %buildroot%python_sitelibdir_noarch
+#mv %buildroot%_datadir/%name/data/tools/addon_manager %buildroot%python_sitelibdir_noarch
+#mv %buildroot%_datadir/%name/data/tools/unit_tree %buildroot%python_sitelibdir_noarch
+# python2 only
+#rm -f \
+#%buildroot/%python_sitelibdir_noarch/wmlparser3.py \
+#%buildroot/%python_sitelibdir_noarch/wmltools3.py \
+#%buildroot/%python_sitelibdir_noarch/wesnoth/campaignserver_client.py \
+#%buildroot/%python_sitelibdir_noarch/wesnoth/wmltools3.py \
+#%buildroot/%python_sitelibdir_noarch/wesnoth/wmliterator3.py
+%endif
 %endif
 
 #pushd data
@@ -356,13 +413,17 @@ mv %buildroot%_docdir/%name/* %buildroot%_docdir/%name-%version/manual/
 install -m 0644 README.md copyright changelog.* %buildroot%_docdir/%name-%version/
 install -d -m 0755 %buildroot%_iconsdir/hicolor/64x64/apps
 mv %buildroot{%_pixmapsdir/wesnoth-icon,%_iconsdir/hicolor/64x64/apps/%name}.png
-mv %buildroot{%_pixmapsdir/wesnoth_editor-icon,%_iconsdir/hicolor/64x64/apps/wesnoth_editor%{wessuffix}}.png
-install -D -m 0644 {icons/wesnoth-icon-Mac,%buildroot%_iconsdir/hicolor/128x128/apps/%name}.png
-install -D -m 0644 {icons/map-editor-icon-Mac,%buildroot%_iconsdir/hicolor/128x128/apps/wesnoth_editor%{wessuffix}}.png
-for s in 96 72 48 36 32 24 22 16; do
-    install -D -m 0644 {icons/wesnoth-$s,%buildroot%_iconsdir/hicolor/${s}x$s/apps/%name}.png
-    install -D -m 0644 {icons/wesnoth-$s,%buildroot%_iconsdir/hicolor/${s}x$s/apps/wesnoth_editor%{wessuffix}}.png
+#install -D -m 0644 {icons/wesnoth-icon-Mac,%buildroot%_iconsdir/hicolor/128x128/apps/%name}.png
+%if_enabled editor
+for s in 48 32 16; do
+    install -D -m 0644 utils/umc_dev/org.wesnoth/icons/wesnoth_editor-icon_$s.png %buildroot%_iconsdir/hicolor/${s}x$s/apps/wesnoth_editor%{wessuffix}.png
 done
+%endif
+for s in 32 16; do
+    install -D -m 0644 utils/umc_dev/org.wesnoth/icons/wesnoth-icon_$s.png %buildroot%_iconsdir/hicolor/${s}x$s/apps/%name.png
+done
+install -D -m 0644 icons/wesnoth-48.png %buildroot%_iconsdir/hicolor/48x48/apps/wesnoth%{wessuffix}.png
+#install -D -m 0644 utils/umc_dev/org.wesnoth/icons/wesnoth-icon.png %buildroot%_iconsdir/hicolor/64x64/apps/wesnoth%{wessuffix}.png
 
 mkdir -p %buildroot%_initdir/ %buildroot%_sysconfdir/sysconfig/
 cat > %buildroot%_sysconfdir/sysconfig/wesnoth%wessuffix <<'EOF'
@@ -508,7 +569,7 @@ for d in %buildroot%_datadir/%name/translations/*; do
     echo "%%lang($c) %%dir %_datadir/%name/translations/$l" >> %name.lang
     echo "%%lang($c) %%dir %_datadir/%name/translations/$l/LC_MESSAGES" >> %name.lang
     [ -f $d/LC_MESSAGES/wesnoth.mo ] && echo "%%lang($c) %_datadir/%name/translations/$l/LC_MESSAGES/wesnoth.mo" >> %name.lang
-    for i in ai anl aoi did dm editor ei httt l lib low multiplayer nr sof sotbe tb test thot trow tsg tutorial units utbs dw help manpages manual; do
+    for i in ai anl aoi did dm editor ei httt l lib low multiplayer nr sof sotbe tb test thot trow tsg tutorial units utbs dw help manpages manual sota; do
 	[ -f $d/LC_MESSAGES/wesnoth-$i.mo ] && echo "%%lang($c) %_datadir/%name/translations/$l/LC_MESSAGES/wesnoth-$i.mo" >> %name.lang
     done
 done
@@ -531,8 +592,12 @@ ln -s %_datadir/fonts/ttf/wqy-zenhei/wqy-zenhei.ttc %buildroot%_datadir/%name/fo
 
 
 sed -i 's/wesnoth-icon/wesnoth%wessuffix/' %buildroot%_desktopdir/%name.desktop
-%if_enabled editor
-sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/wesnoth_editor%wessuffix.desktop
+
+%if_disabled tools
+rm -rf %buildroot%_bindir/wesnoth_addon_manager \
+   %buildroot%_bindir/wmlindent \
+   %buildroot%_bindir/wmllint \
+   %buildroot%_bindir/wmlscope
 %endif
 
 %if_enabled server
@@ -571,6 +636,7 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/
 %_datadir/%name/data/gui/
 %_datadir/%name/data/hardwired
 %_datadir/%name/data/multiplayer
+%_datadir/%name/data/shaders
 %_datadir/%name/data/themes
 %_datadir/%name/data/lua
 %_datadir/%name/data/test
@@ -596,11 +662,11 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/
 
 %if_enabled tools
 %files tools
-%_bindir/cutter%wessuffix
-%_bindir/exploder%wessuffix
-%_bindir/schema_generator%wessuffix
+#%_bindir/cutter%wessuffix
+#%_bindir/exploder%wessuffix
 %if_with build_using_scons
 %else
+%_bindir/schema_generator%wessuffix
 %_bindir/schema_validator%wessuffix
 %endif
 %_bindir/wesnoth_addon_manager%wessuffix
@@ -608,7 +674,11 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/
 %dir %_datadir/%name/data
 %_datadir/%name/data/tools
 %{?_enable_tests:%_bindir/%name-test}
-%{?_enable_python:%_bindir/wml*}
+%if_enabled python
+%_bindir/wml*
+%else
+%exclude %_bindir/wml*
+%endif
 %endif
 
 %if_enabled server
@@ -624,13 +694,26 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/
 %endif
 
 %if_enabled python
+%if_enabled python3
+%files -n python3-module-%name
+%python3_sitelibdir_noarch/wesnoth
+#python3_sitelibdir_noarch/addon_manager
+#python3_sitelibdir_noarch/unit_tree
+%else
 %files -n python-module-%name
 %python_sitelibdir_noarch/wesnoth
-%python_sitelibdir_noarch/addon_manager
-%python_sitelibdir_noarch/unit_tree
+#python_sitelibdir_noarch/addon_manager
+#python_sitelibdir_noarch/unit_tree
+%endif
 %endif
 
 %changelog
+* Thu Oct 05 2017 Igor Vlasenko <viy@altlinux.ru> 1.13.8-alt1
+- 1.14 Beta 1
+
+* Tue Oct 18 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.6-alt0.M80P.1
+- backport
+
 * Tue Oct 18 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.6-alt1
 - 1.20.6 stable release
 
