@@ -1,6 +1,6 @@
 %define oname fonttools
 Name: python-module-%oname
-Version: 3.0
+Version: 3.15.1
 Release: alt1
 
 Summary: Converts OpenType and TrueType fonts to and from XML
@@ -11,7 +11,7 @@ Url: https://github.com/behdad/fonttools/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-%setup_python_module %oname
+%setup_python_module fontTools
 
 %add_python_req_skip Res calldll macfs
 
@@ -24,7 +24,7 @@ BuildPreReq: rpm-build-compat >= 1.2
 
 # manually removed: python-module-numpy python-modules-email rpm-build-java rpm-build-mono rpm-build-seamonkey
 # Automatically added by buildreq on Sun Nov 30 2008
-BuildRequires: python-devel python-module-PyXML python-module-ctypes xorg-sdk python-module-numpy 
+BuildRequires: python-devel python-module-setuptools python-module-PyXML python-module-ctypes xorg-sdk python-module-numpy
 
 %description
 TTX is a tool to convert OpenType and TrueType fonts to and from
@@ -47,12 +47,16 @@ Mac-specific formats.
 %files
 %_bindir/ttx
 %_bindir/pyft*
-%python_sitelibdir/FontTools/
-%python_sitelibdir/FontTools.pth
-#%python_sitelibdir/%oname-%version-py%__python_version.egg-info
+%_bindir/fonttools
+%python_sitelibdir/%modulename/
+#python_sitelibdir/%modulename.pth
+%python_sitelibdir/%oname-%version-py%__python_version.egg-info
 %_man1dir/*
 
 %changelog
+* Sun Oct 08 2017 Vitaly Lipatov <lav@altlinux.ru> 3.15.1-alt1
+- new version 3.15.1 (with rpmrb script)
+
 * Tue Nov 17 2015 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1
 - new version 3.0
 
