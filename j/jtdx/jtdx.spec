@@ -1,5 +1,5 @@
 Name: jtdx
-Version: 17.9
+Version: 18.0
 Release: alt1
 Summary: JTDX means "JT modes for DXing"
 License: GPLv3
@@ -58,27 +58,13 @@ pushd wsjtx
 %makeinstall_std
 popd
 
-cp CALL3.TXT %buildroot%_datadir/wsjtx
-cp JTDX* Release* %buildroot%_docdir/wsjtx
+cp CALL3.TXT %buildroot%_datadir/%name
+cp JTDX* Release* %buildroot%_docdir/%name
 
 for x in 16 32 48; do
     mkdir -p %buildroot%_iconsdir/hicolor/$x'x'$x/apps/
-	convert %buildroot%_pixmapsdir/wsjtx_icon.png -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/wsjtx_icon.png
+    convert %buildroot%_pixmapsdir/wsjtx_icon.png -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/wsjtx_icon.png
 done
-
-# executable file
-cat>%name<<END
-#!/bin/sh
-if [ ! -f "\$HOME/.local/share/JTDX/CALL3.TXT" ]; then
-    mkdir -p \$HOME/.local/share/JTDX
-    rm -fr \$HOME/.local/share/JTDX/CALL3.TXT
-    cp %_datadir/wsjtx/CALL3.TXT \$HOME/.local/share/JTDX
-fi
-wsjtx
-END
-
-mkdir -p %buildroot%_bindir/
-install -m 755 %name %buildroot%_bindir/%name
 
 sed -i 's/Name=wsjtx/Name=%name/g' %buildroot%_desktopdir/wsjtx.desktop
 sed -i 's/Exec=wsjtx/Exec=%name/g' %buildroot%_desktopdir/wsjtx.desktop
@@ -94,9 +80,12 @@ mv %buildroot%_desktopdir/wsjtx.desktop %buildroot%_desktopdir/%name.desktop
 %_liconsdir/wsjtx_icon.png
 %_niconsdir/wsjtx_icon.png
 %_miconsdir/wsjtx_icon.png
-%_datadir/wsjtx
-%_docdir/wsjtx
+%_datadir/jtdx
+%_docdir/jtdx
 
 %changelog
+* Sat Oct 07 2017 Anton Midyukov <antohami@altlinux.org> 18.0-alt1
+- Version 18.0 Step 89.
+
 * Sun Aug 06 2017 Anton Midyukov <antohami@altlinux.org> 17.9-alt1
 - Initial build for ALT Sisyphus.
