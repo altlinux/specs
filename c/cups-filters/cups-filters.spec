@@ -1,10 +1,12 @@
+%def_with php
 %define php5_extension cups
 %define _cups_serverbin %_libexecdir/cups
-Summary: OpenPrinting CUPS filters and backends
+
 Name: cups-filters
 Version: 1.17.8
-Release: alt1%ubt
+Release: alt2%ubt
 
+Summary: OpenPrinting CUPS filters and backends
 # For a breakdown of the licensing, see COPYING file
 # GPLv2:   filters: commandto*, imagetoraster, pdftops, rasterto*,
 #                   imagetopdf, pstopdf, texttopdf
@@ -13,16 +15,16 @@ Release: alt1%ubt
 # GPLv3:   filters: bannertopdf
 # MIT:     filters: pdftoijs, pdftoopvp, pdftopdf, pdftoraster
 License: GPLv2 and GPLv2+ and GPLv3 and MIT
-
 Group: System/Servers
 
+Url: http://www.linuxfoundation.org/collaborate/workgroups/openprinting/pdf_as_standard_print_job_format
 Source0: http://www.openprinting.org/download/cups-filters/cups-filters-%version.tar
 Source1: %name.watch
 Source2: cups-browsed.init
 Patch0: %name-alt.patch
 Patch1: %name-alt-php-5.4.14-fix.patch
 Patch2: %name-braille-indexv4-path.patch
-Url: http://www.linuxfoundation.org/collaborate/workgroups/openprinting/pdf_as_standard_print_job_format
+
 Conflicts: cups < 1.6.1-alt1
 Conflicts: ghostscript-cups
 Obsoletes: ghostscript-cups
@@ -52,7 +54,7 @@ BuildRequires: libfreetype-devel
 BuildRequires: mupdf
 BuildRequires: fontconfig-devel
 BuildRequires: liblcms2-devel
-BuildRequires: php5-devel
+%{?_with_php:BuildRequires: php5-devel}
 BuildRequires: libgio-devel
 BuildRequires: libavahi-devel libavahi-glib-devel
 BuildRequires(pre): rpm-build-ubt
@@ -89,6 +91,7 @@ This package provides cupsfilters and fontembed libraries.
 %description devel
 This is the development package for OpenPrinting CUPS filters and backends.
 
+%if_with php
 %package -n php5-cups
 Epoch: 1
 Summary: PHP5 module for the Common Unix Printing System
@@ -99,6 +102,7 @@ BuildRequires(pre): rpm-build-php5
 
 %description -n php5-cups
 PHP5 module for the Common Unix Printing System
+%endif
 
 %package -n cups-backend-serial
 Epoch: 1
@@ -129,8 +133,9 @@ serial backend for cups
            --with-pdftops=pdftops
 
 %make
-pushd scripting/php
 
+%if_with php
+pushd scripting/php
 phpize
 
 BUILD_HAVE=`echo %php5_extension | tr '[:lower:]-' '[:upper:]_'`
@@ -140,23 +145,27 @@ export LDFLAGS=-lphp-%_php5_version
 	--with-%php5_extension=%_usr
 %php5_make
 popd
-
+%endif
 
 %install
 %make install DESTDIR=%buildroot
+%if_with php
 install -D -m 755 scripting/php/.libs/cups.so %buildroot/%php5_extdir/cups.so
 install -D -m 644 scripting/php/php-cups.ini %buildroot/%php5_extconf/%php5_extension/config
 install -D -m 644 scripting/php/php-cups-params.sh %buildroot/%php5_extconf/%php5_extension/params
+%endif
 install -D -m 755 %SOURCE2 %buildroot/%_initdir/cups-browsed
 mkdir -p %buildroot/%_unitdir/
 install -m 644 utils/cups-browsed.service %buildroot/%_unitdir/
 ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 
+%if_with php
 %post -n php5-cups
 %php5_extension_postin
 
 %preun -n php5-cups
 %php5_extension_preun
+%endif
 
 %files
 %doc README AUTHORS NEWS
@@ -196,10 +205,11 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %files -n cups-backend-serial
 %attr(0700,root,root) %_prefix/lib/cups/backend/serial
 
-
+%if_with php
 %files -n php5-cups
 %php5_extdir/cups.so
 %php5_extconf/%php5_extension
+%endif
 
 %files libs
 %doc COPYING fontembed/README
@@ -215,6 +225,9 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Sat Oct 07 2017 Michael Shigorin <mike@altlinux.org> 1.17.8-alt2%ubt
+- introduced php knob (on by default)
+
 * Mon Oct 02 2017 Anton Farygin <rider@altlinux.ru> 1.17.8-alt1%ubt
 - new version 1.17.8
 
