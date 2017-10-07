@@ -19,7 +19,7 @@
 %def_with pam_helper
 
 Name: enlightenment
-Version: %ver_major.9
+Version: %ver_major.10
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -36,7 +36,7 @@ URL: http://www.enlightenment.org/
 %ifdef cvs_date
 Source: %name-%version-%cvs_date.tar
 %else
-Source: http://download.enlightenment.org/rel/apps/%name/%name-%version%beta.tar.xz
+Source: https://download.enlightenment.org/rel/apps/%name/%name-%version%beta.tar.xz
 %endif
 
 Source1: E.png
@@ -211,6 +211,9 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Sat Oct 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1:0.21.10-alt1
+- 0.21.10
+
 * Thu Aug 17 2017 Yuri N. Sedunov <aris@altlinux.org> 1:0.21.9-alt1
 - 0.21.9
 
