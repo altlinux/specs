@@ -1,5 +1,5 @@
 Name: repocop-unittest-altlinux-policy
-Version: 0.35
+Version: 0.36
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -42,6 +42,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Sat Oct 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
+- do not clean %%__python in postclean pl
+
 * Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
 - added exception for hpmud.so
 
