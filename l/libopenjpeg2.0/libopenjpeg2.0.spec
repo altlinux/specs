@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name openjpeg
-%define ver_major 2.2
+%define ver_major 2.3
 %define api_ver 2.0
 %define libname libopenjp2
 
@@ -87,6 +87,9 @@ mv %buildroot%_man1dir/opj_dump.1 %buildroot%_man1dir/opj2_dump.1
 %exclude %_datadir/doc/html/
 
 %changelog
+* Sat Oct 07 2017 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
+- 2.3.0
+
 * Sat Aug 19 2017 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
 - 2.2.0
 
