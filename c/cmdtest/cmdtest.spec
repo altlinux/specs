@@ -1,6 +1,6 @@
 
 Name: cmdtest
-Version: 0.27
+Version: 0.30
 Release: alt1
 
 Summary: Black-box testing for Unix command line tools
@@ -57,6 +57,9 @@ rm -rf build
 %python_sitelibdir_noarch/*
 
 %changelog
+* Sat Oct 07 2017 Vitaly Lipatov <lav@altlinux.ru> 0.30-alt1
+- new version 0.30 (with rpmrb script)
+
 * Sat Dec 17 2016 Vitaly Lipatov <lav@altlinux.ru> 0.27-alt1
 - new version 0.27 (with rpmrb script)
 
