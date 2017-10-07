@@ -1,5 +1,5 @@
 Name: logstalgia
-Version: 1.0.8
+Version: 1.0.9
 Release: alt1
 
 Summary: Web server access log visualizer
@@ -36,6 +36,9 @@ access log (eg access.log) as a retro arcade game-like simulation.
 %_man1dir/%name.1*
 
 %changelog
+* Sat Oct 07 2017 Michael Shigorin <mike@altlinux.org> 1.0.9-alt1
+- new version (watch file uupdate)
+
 * Fri Sep 29 2017 Michael Shigorin <mike@altlinux.org> 1.0.8-alt1
 - new version (watch file uupdate)
 
