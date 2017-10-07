@@ -1,5 +1,5 @@
 Name: xl2tpd
-Version: 1.3.9
+Version: 1.3.10
 Release: alt1%ubt
 
 Summary: Layer 2 Tunnelling Protocol Daemon (RFC 2661)
@@ -50,6 +50,7 @@ It was de-facto maintained by Jacco de Leeuw <jacco2@dds.nl> in 2002 and 2003.
 %install
 %makeinstall
 install -pDm0755 %name.init %buildroot%_initdir/%name
+install -pDm0644 %name.service %buildroot%_unitdir/%name.service
 install -Dm 664 doc/l2tp-secrets.sample %buildroot%_sysconfdir/%name/l2tp-secrets
 install -Dm 664 doc/l2tpd.conf.sample %buildroot%_sysconfdir/%name/%name.conf
 
@@ -68,6 +69,7 @@ fi
 %files
 %doc BUGS CHANGES CREDITS README* TODO
 %config %_initdir/%name
+%_unitdir/%name.service
 %_sbindir/%name
 %_sbindir/%name-control
 %_bindir/pfc
@@ -76,6 +78,9 @@ fi
 %config(noreplace) %attr(0640,root,root) %_sysconfdir/%name/l2tp-secrets
 
 %changelog
+* Sat Oct 07 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.10-alt1%ubt
+- 1.3.10 released
+
 * Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 1.3.9-alt1%ubt
 - new version
 
