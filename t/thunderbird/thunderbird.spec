@@ -1,12 +1,12 @@
 %def_with	enigmail
 %define 	r_name thunderbird
 
-%define enigmail_version  1.9.8.1
+%define enigmail_version  1.9.8.3
 %define gdata_version     2.6
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	52.3.0
+Version:	52.4.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -186,13 +186,6 @@ cp -f %SOURCE4 .mozconfig
 
 echo 'ac_add_options --enable-calendar' >> .mozconfig
 
-%ifnarch %{ix86} x86_64 armh
-echo "ac_add_options --disable-methodjit" >> .mozconfig
-echo "ac_add_options --disable-monoic"    >> .mozconfig
-echo "ac_add_options --disable-polyic"    >> .mozconfig
-echo "ac_add_options --disable-tracejit"  >> .mozconfig
-%endif
-
 sed -i -e '\,hyphenation/,d' mail/installer/removed-files.in
 
 %build
@@ -221,7 +214,7 @@ MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fno-delete-null-pointer-checks -fno-schedule-insn
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
 
-%ifarch x86_64
+%ifarch aarch64 x86_64
 export CFLAGS="$CFLAGS -DHAVE_USR_LIB64_DIR=1"
 %endif
 
@@ -236,12 +229,8 @@ export MOZILLA_OBJDIR="$PWD"
 %__autoconf
 
 MOZ_SMP_FLAGS=-j1
-# On x86 architectures, Mozilla can build up to 4 jobs at once in parallel,
-# however builds tend to fail on other arches when building in parallel.
-%ifarch %ix86 x86_64 armh
 [ "%__nprocs" -ge 2 ] && MOZ_SMP_FLAGS=-j2
 [ "%__nprocs" -ge 4 ] && MOZ_SMP_FLAGS=-j4
-%endif
 
 mkdir objdir mozilla/objdir
 
@@ -435,6 +424,10 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Sat Oct 07 2017 Andrey Cherepanov <cas@altlinux.org> 52.4.0-alt1
+- New version (52.4.0)
+- Enigmail 1.9.8.3
+
 * Sun Aug 20 2017 Andrey Cherepanov <cas@altlinux.org> 52.3.0-alt1
 - New version (52.3.0)
 - Enigmail 1.9.8.1
