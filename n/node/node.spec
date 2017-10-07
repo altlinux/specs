@@ -29,7 +29,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.1
+Version: %major.4
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -259,6 +259,10 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Sat Oct 07 2017 Vitaly Lipatov <lav@altlinux.ru> 6.11.4-alt1
+- new version 6.11.4 (with rpmrb script)
+- 2017-10-03, Version 6.11.4 'Boron' (LTS)
+
 * Fri Jul 14 2017 Vitaly Lipatov <lav@altlinux.ru> 6.11.1-alt1
 - new version 6.11.1 (with rpmrb script)
 - 2017-07-11 v6.11.1 'Boron' (LTS) Release
