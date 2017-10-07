@@ -1,6 +1,6 @@
 Name: xtreemfs
 Version: 1.5.1
-Release: alt1
+Release: alt2
 
 Summary: XtreemFS base package
 
@@ -62,7 +62,7 @@ This package contains the XtreemFS server components (DIR, MRC, OSD).
 %package tools
 Summary: XtreemFS administration tools
 Group: File tools
-Requires: %name-backend == %version-%release
+Requires: %name-server = %version-%release
 Requires: attr >= 2
 Requires: jre >= 1.6.0
 
@@ -234,6 +234,9 @@ fi
 %doc LICENSE
 
 %changelog
+* Sat Oct 07 2017 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt2
+- rebuild with boost 1.65
+
 * Tue Jun 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt1
 - initial build for ALT Linux Sisyphus
 
