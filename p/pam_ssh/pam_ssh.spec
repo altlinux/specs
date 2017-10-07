@@ -1,5 +1,5 @@
 Name: pam_ssh
-Version: 1.98
+Version: 2.1
 Release: alt1
 
 Summary: This PAM module provides single sign-on behavior for SSH
@@ -44,6 +44,9 @@ rm -f %buildroot/%_lib/security/%name.la
 %_man8dir/*
 
 %changelog
+* Sat Oct 07 2017 Vitaly Lipatov <lav@altlinux.ru> 2.1-alt1
+- new version 2.1 (with rpmrb script)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.98-alt1
 - new version 1.98 (with rpmrb script)
 
