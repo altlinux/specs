@@ -1,6 +1,6 @@
 Name: runawfe
 Version: 4.3.0
-Release: alt2
+Release: alt3
 
 Summary: Runawfe
 
@@ -347,6 +347,9 @@ useradd -d %runadir -r -s %_sbindir/%name %runauser >/dev/null 2>&1 || :
 %attr(755,root,root) %_bindir/runawfe-notifier
 
 %changelog
+* Sat Oct 07 2017 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt3
+- Updated to 4.3.0 code 
+
 * Sun Sep 17 2017 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt2
 - Updated to 4.3.0 code 
 
