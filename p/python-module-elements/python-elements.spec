@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel swig
+BuildRequires: swig
 # END SourceDeps(oneline)
 %define oldname python-elements
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name python-elements
 %define version 0.13
 # sitelib for noarch packages, sitearch for others (remove the unneeded one)
@@ -20,25 +22,27 @@ BuildRequires: python-devel swig
 
 Name:           python-module-elements
 Version:        0.13
-Release:        alt1_11.%{svndate}svn
+Release:        alt1_15.%{svndate}svn
 Summary:        A 2D Physics API for Python
 
-Group:          Development/Python
+Group:          Development/Other
 License:        GPLv3+
 URL:            http://www.assembla.com/wiki/show/elements
 Source0:        %{tarfile}
 
 BuildArch:      noarch
-BuildRequires:  python-dev
+BuildRequires:  python-devel
 BuildRequires:  python-module-setuptools
-Requires:       python-module-pybox2d
+
+%global _description\
+An easy to use API for integrating 2D physics (with pybox2d) into own\
+python ideas, that includes user interfaces & simulations, as well as\
+teaching & learning tools.\
+
 Source44: import.info
 
-%description
-An easy to use API for integrating 2D physics (with pybox2d) into own
-python ideas, that includes user interfaces & simulations, as well as
-teaching & learning tools.
 
+%description %_description
 
 %prep
 %setup -n %{oldname}-%{version} -q
@@ -55,12 +59,15 @@ sed -i elements/elements.py -e 1d
 %{__python} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
 
 
-%files
+%files -n python-module-elements
 %doc CREDITS LICENSE README
 %{python_sitelibdir_noarch}/*
 
 
 %changelog
+* Sat Oct 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_15.20100110svn
+- applied repocop patch
+
 * Tue May 31 2016 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_11.20100110svn
 - converted for ALT Linux by srpmconvert tools
 
