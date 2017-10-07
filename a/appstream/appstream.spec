@@ -1,5 +1,5 @@
 Name:    appstream
-Version: 0.11.5
+Version: 0.11.6
 Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
@@ -70,9 +70,9 @@ Group:	  Development/Documentation
 %setup
 
 %build
-%meson  -Denable-qt=true \
-	-Denable-documentation=true \
-	-Denable-stemming=true
+%meson  -Dqt=true \
+	-Ddocs=true \
+	-Dstemming=true
 %meson_build
 
 %install
@@ -92,7 +92,7 @@ mv %{buildroot}%{_datadir}/metainfo/*.xml \
 %meson_test
 
 %files -f appstream.lang
-%doc AUTHORS LICENSE.GPLv2 LICENSE.LGPLv2.1
+%doc AUTHORS LICENSE.GPLv2 LICENSE.LGPLv2.1 MAINTAINERS NEWS README.md RELEASE
 %config(noreplace) %_sysconfdir/appstream.conf
 %_bindir/appstreamcli
 %_libdir/girepository-1.0/AppStream-1.0.typelib
@@ -128,6 +128,9 @@ mv %{buildroot}%{_datadir}/metainfo/*.xml \
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Sat Oct 07 2017 Andrey Cherepanov <cas@altlinux.org> 0.11.6-alt1
+- New version
+
 * Thu Sep 07 2017 Andrey Cherepanov <cas@altlinux.org> 0.11.5-alt1
 - New version
 
