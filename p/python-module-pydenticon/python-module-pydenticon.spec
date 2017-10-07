@@ -3,7 +3,7 @@
 
 %define modulename pydenticon
 Name: python-module-pydenticon
-Version: 0.3
+Version: 0.3.1
 Release: alt1
 
 Summary: Library for generating identicons
@@ -80,6 +80,9 @@ popd
 
 
 %changelog
+* Sun Oct 08 2017 Vitaly Lipatov <lav@altlinux.ru> 0.3.1-alt1
+- new version 0.3.1 (with rpmrb script)
+
 * Wed Jun 14 2017 Vitaly Lipatov <lav@altlinux.ru> 0.3-alt1
 - initial build for ALT Sisyphus
 
