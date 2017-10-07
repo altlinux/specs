@@ -1,14 +1,13 @@
 Summary: Imports map data from www.OpenStreetMap.org to a PostgresSQL database
 Name: osm2pgsql
 Group: Databases
-Version: 0.92.1
+Version: 0.94.0
 Release: alt1
 
 License: GPLv2+
 Url: https://github.com/openstreetmap/osm2pgsql
 
 Source: %name-%version.tar
-Patch:  %name-geos36-support.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -32,7 +31,6 @@ geospatial analysis.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %cmake
@@ -48,6 +46,9 @@ geospatial analysis.
 %_man1dir/%name.*
 
 %changelog
+* Sat Oct 07 2017 Andrey Cherepanov <cas@altlinux.org> 0.94.0-alt1
+- New version
+
 * Fri Aug 18 2017 Andrey Cherepanov <cas@altlinux.org> 0.92.1-alt1
 - New version
 - Build by cmake
