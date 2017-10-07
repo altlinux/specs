@@ -3,7 +3,7 @@
 
 Name: meson
 Version: 0.42.1
-Release: alt1
+Release: alt2
 
 Summary: High productivity build system
 Group: Development/Python3
@@ -76,6 +76,9 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 
 
 %changelog
+* Sat Oct 07 2017 Yuri N. Sedunov <aris@altlinux.org> 0.42.1-alt2
+- meson.macros: localstatedir=%%_var
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 0.42.1-alt1
 - 0.42.1
 
