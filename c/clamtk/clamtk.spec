@@ -1,5 +1,5 @@
 Name: clamtk
-Version: 5.24
+Version: 5.25
 Release: alt1
 
 Summary: Easy to use front-end for ClamAV
@@ -8,12 +8,11 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 License: Perl
 Group: File tools
-Url: http://clamtk.sourceforge.net/
+Url: https://dave-theunsub.github.io/clamtk/
 
 BuildArch: noarch
 
-#Source: http://prdownloads.sf.net/%name/%name-%version.tar
-Source: https://bitbucket.org/dave_theunsub/clamtk/downloads/%name-%version.tar
+Source: https://bitbucket.org/davem_/clamtk/downloads/clamtk-%version.tar
 Patch: %name-gtk.patch
 
 Requires: clamav >= 0.83
@@ -59,6 +58,9 @@ done
 %_man1dir/*
 
 %changelog
+* Sat Oct 07 2017 Vitaly Lipatov <lav@altlinux.ru> 5.25-alt1
+- new version 5.25 (with rpmrb script)
+
 * Sun Dec 04 2016 Vitaly Lipatov <lav@altlinux.ru> 5.24-alt1
 - new version 5.24 (with rpmrb script)
 
