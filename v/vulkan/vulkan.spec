@@ -1,8 +1,8 @@
-%define git 115665a
+%define git 7e48885
 
 Name: vulkan
-Version: 1.0.51
-Release: alt0.2.%git
+Version: 1.0.61
+Release: alt0.2
 Summary: Vulkan loader and validation layers
 
 Group: System/Libraries
@@ -23,6 +23,11 @@ BuildRequires(pre): cmake gcc-c++ rpm-build-python3
 BuildRequires: libImageMagick-devel libpciaccess-devel libsystemd-devel
 BuildRequires: python3-devel libxcb-devel libXau-devel libXdmcp-devel libX11-devel libXrandr-devel
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
+
+# textrel due asm optimisation in loader code
+%ifarch i586
+%set_verify_elf_method textrel=relaxed
+%endif
 
 %description
 Vulkan is a new generation graphics and compute API that provides
@@ -155,6 +160,15 @@ chrpath -d %buildroot%_bindir/vulkaninfo
 %dir %_datadir/vulkan/icd.d
 
 %changelog
+* Sun Oct 08 2017 L.A. Kostis <lakostis@altlinux.ru> 1.0.61-alt0.2
+- i586: Don't check for textrel due asm optimization in loader code.
+
+* Sat Oct 07 2017 L.A. Kostis <lakostis@altlinux.ru> 1.0.61-alt0.1
+- Updated to vulkan sdk-1.0.61:
+  + glslang 3a21c88.
+  + spirv-tools 7e2d26c.
+  + spirv-headers 2bb92e6.
+
 * Wed Jun 07 2017 L.A. Kostis <lakostis@altlinux.ru> 1.0.51-alt0.2.115665a
 - Fix Obsoletes.
 - libvulkan->libvulkan1 in accordance with ALT Shared Libs Policy.
