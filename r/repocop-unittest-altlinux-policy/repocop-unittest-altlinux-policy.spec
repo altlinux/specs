@@ -1,5 +1,5 @@
 Name: repocop-unittest-altlinux-policy
-Version: 0.36
+Version: 0.37
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -42,6 +42,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Sun Oct 08 2017 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
+- added altlinux-policy-policykit-bad-location.posttest
+
 * Sat Oct 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
 - do not clean %%__python in postclean pl
 
