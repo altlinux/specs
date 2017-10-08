@@ -1,31 +1,49 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python rpm-build-python3
 # END SourceDeps(oneline)
 %define oldname libssh2-python
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%{!?python_sitearch: %define python_sitearch %(python -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
+%global __provides_exclude_from ^(%{python_sitelibdir}/.*\\.so)$
+%global __provides_exclude_from ^(%{python3_sitelibdir}/.*\\.so)$
 
-Summary: Python binding for the libssh2 library
-Name: python-module-libssh2
-Version: 0.7.1
-Release: alt1_13
-License: LGPLv2+
-Group: Development/Other
-URL: https://github.com/wallunit/ssh4py
+Summary:        Python binding for the libssh2 library
+Name:           python-module-libssh2
+Version:        0.7.1
+Release:        alt1_18
+License:        LGPLv2+
+URL:            https://github.com/wallunit/ssh4py
 # The source for the package was pulled from upstream's vcs.  Use the
 # following commands to generate the tarball:
 #  git clone git://github.com/wallunit/ssh4py.git
 #  cd ssh4py ; python setup.py sdist
-Source0: https://github.com/wallunit/ssh4py/zipball/0.7.1/%{oldname}-%{version}.tar.gz
+Source0:        https://github.com/wallunit/ssh4py/zipball/0.7.1/%{oldname}-%{version}.tar.gz
 
-BuildRequires: python-devel
-BuildRequires: libssh2-devel
-BuildRequires: libssl-devel
-BuildRequires: zlib-devel
+BuildRequires:  python-devel
+BuildRequires:  python3-devel
+BuildRequires:  libssh2-devel
+BuildRequires:  libssl-devel
+BuildRequires:  zlib-devel
 
-%description
-libssh2-python is a python binding for the libssh2 library
+%global _description\
+libssh2-python is a python binding for the libssh2 library\
+
+Source44: import.info
+
+
+%description %_description
+
+%package -n python3-module-libssh2
+Group: Development/Other
+Summary:        %summary
+%{?python_provide:%python_provide python3-libssh2}
+# Remove before F30
+Provides:       libssh2-python = %{version}-%{release}
+Provides:       libssh2-python = %{version}-%{release}
+Obsoletes:      libssh2-python < %{version}-%{release}
+
+%description -n python3-module-libssh2 %_description
 
 
 %prep
@@ -33,19 +51,31 @@ libssh2-python is a python binding for the libssh2 library
 
 
 %build
-python setup.py build
+%python_build
+%python3_build
 
 
 %install
-python setup.py install -O1 --root=$RPM_BUILD_ROOT
+%python_install
+%python3_install
+mv %{buildroot}%{python3_sitelibdir}/libssh2.*.so %{buildroot}%{python3_sitelibdir}/libssh2.so
 
 
-%files
+%files -n python-module-libssh2
 %doc README.txt COPYING
 %{python_sitelibdir}/libssh2.so
 %{python_sitelibdir}/libssh2*-*.egg-info
 
+%files -n python3-module-libssh2
+%doc README.txt COPYING
+%{python3_sitelibdir}/libssh2.so
+%{python3_sitelibdir}/libssh2*-*.egg-info
+
+
 %changelog
+* Sun Oct 08 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_18
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_13
 - update to new release by fcimport
 
