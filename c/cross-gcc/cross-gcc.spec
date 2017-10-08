@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/expect /usr/bin/m4 gcc-c++ libX11-devel libalsa-devel libjack-devel perl(English.pm) perl(Exporter.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(IPC/Open2.pm) swig texinfo
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/expect /usr/bin/m4 gcc-c++ perl(English.pm) perl(Exporter.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(IPC/Open2.pm) swig texinfo
 # END SourceDeps(oneline)
 # due to explicit symlinks
 %set_compress_method off
@@ -8,9 +9,11 @@ BuildRequires: /usr/bin/expect /usr/bin/m4 gcc-c++ libX11-devel libalsa-devel li
 %add_debuginfo_skiplist /usr
 %remove_optflags -g
 
-%define fedora 25
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define release 2
+%define release 3
 %global cross cross
 %global rpmprefix %{nil}
 
@@ -34,6 +37,7 @@ BuildRequires: /usr/bin/expect /usr/bin/m4 gcc-c++ libX11-devel libalsa-devel li
 %global build_mn10300		%{build_all}
 %global build_nios2		%{build_all}
 %global build_powerpc64		%{build_all}
+%global build_powerpc64le	%{build_all}
 %global build_s390x		%{build_all}
 %global build_sh		%{build_all}
 %global build_sparc64		%{build_all}
@@ -69,25 +73,28 @@ BuildRequires: /usr/bin/expect /usr/bin/m4 gcc-c++ libX11-devel libalsa-devel li
 %global multilib_64_archs sparc64 ppc64 s390x x86_64
 
 # we won't build libgcc for these as it depends on C library or kernel headers
-%global no_libgcc_targets	nios2*|tile-*
+# % global no_libgcc_targets	nios2*|tile-*
+%global no_libgcc_targets	none
 
 ###############################################################################
 #
 # The gcc versioning information.  In a sed command below, the specfile winds
 # pre-release version numbers in BASE-VER back to the last actually-released
 # number.
-%global DATE 20160621
-%global SVNREV 237634
-%global gcc_version 6.1.1
+%global DATE 20170622
+%global SVNREV 249497
+%global gcc_version 7.1.1
+%global gcc_major 7
 
 # Note, cross_gcc_release must be integer, if you want to add suffixes
 # to %{release}, append them after %{cross_gcc_release} on Release:
 # line.  gcc_release is the Fedora gcc release that the patches were
 # taken from.
 %global gcc_release 3
-%global cross_gcc_release 2
-%global cross_binutils_version 2.26.1-1
-%global isl_version 0.14
+%global cross_gcc_release 3
+%global cross_binutils_version 2.27-5
+%global isl_version 0.16.1
+%global isl_libmajor 15
 
 %global _performance_build 1
 # Hardening slows the compiler way too much.
@@ -96,7 +103,7 @@ BuildRequires: /usr/bin/expect /usr/bin/m4 gcc-c++ libX11-devel libalsa-devel li
 Summary: Cross C compiler
 Name: %{cross}-gcc
 Version: %{gcc_version}
-Release: alt1_2
+Release: alt1_3
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
 # GCC Runtime Exception.
 License: GPLv3+ and GPLv3+ with exceptions and GPLv2+ with exceptions and LGPLv2+ and BSD
@@ -105,7 +112,10 @@ URL: http://gcc.gnu.org
 BuildRequires: libisl-devel >= %{isl_version}
 
 # sh5 is deprecrated: https://gcc.gnu.org/ml/gcc/2015-08/msg00101.html
-Obsoletes: gcc-sh64-linux-gnu, gcc-c++-sh64-linux-gnu
+%if !%{build_sh64}
+Obsoletes: gcc-sh64-linux-gnu < 6.0.0-1
+Obsoletes: gcc-c++-sh64-linux-gnu < 6.0.0-1
+%endif
 
 # The source for this package was pulled from upstream's vcs.  Use the
 # following commands to generate the tarball:
@@ -114,26 +124,22 @@ Obsoletes: gcc-sh64-linux-gnu, gcc-c++-sh64-linux-gnu
 %global srcdir gcc-%{version}-%{DATE}
 Source0: %{srcdir}.tar.bz2
 
-Patch0: gcc6-hack.patch
-Patch1: gcc6-java-nomulti.patch
-Patch2: gcc6-ppc32-retaddr.patch
-Patch3: gcc6-rh330771.patch
-Patch4: gcc6-i386-libgomp.patch
-Patch5: gcc6-sparc-config-detection.patch
-Patch6: gcc6-libgomp-omp_h-multilib.patch
-Patch7: gcc6-libtool-no-rpath.patch
-Patch8: gcc6-isl-dl.patch
-Patch9: gcc6-libstdc++-docs.patch
-Patch10: gcc6-no-add-needed.patch
-Patch11: gcc6-libgo-p224.patch
-Patch12: gcc6-aarch64-async-unw-tables.patch
-Patch13: gcc6-libsanitize-aarch64-va42.patch
-Patch14: gcc6-pr71559.patch
+Patch0: gcc7-hack.patch
+Patch1: gcc7-ppc32-retaddr.patch
+Patch2: gcc7-i386-libgomp.patch
+Patch3: gcc7-sparc-config-detection.patch
+Patch4: gcc7-libgomp-omp_h-multilib.patch
+Patch5: gcc7-libtool-no-rpath.patch
+Patch6: gcc7-isl-dl.patch
+Patch7: gcc7-libstdc++-docs.patch
+Patch8: gcc7-no-add-needed.patch
+Patch9: gcc7-aarch64-async-unw-tables.patch
+Patch10: gcc7-foffload-default.patch
+Patch11: gcc7-Wno-format-security.patch
 
 Patch900: cross-intl-filename.patch
-Patch901: cross-gcc-with-libgcc.patch
+Patch901: cross-gcc-microblaze.patch
 Patch902: cross-gcc-format-config.patch
-Patch903: cross-gcc-microblaze.patch
 
 BuildRequires: binutils >= 2.24
 BuildRequires: zlib-devel gettext gettext-tools, dejagnu, bison, flex, makeinfo, sharutils
@@ -183,7 +189,6 @@ number of packages.
 Summary: Debug information for package %{name}
 Group: Development/Debug
 AutoReqProv: 0
-Requires: gcc-base-debuginfo = %{version}
 
 %description debuginfo
 This package provides debug information for package %{name}.
@@ -207,6 +212,11 @@ Group: Development/Tools \
 Requires: %{cross}-gcc-common == %{version}-%{release} \
 BuildRequires: %{rpmprefix}binutils-%1 >= %{cross_binutils_version} \
 Requires: %{rpmprefix}binutils-%1 >= %{cross_binutils_version} \
+%if 0%{?__isa_bits} == 64 \
+Requires: libisl.so.%{isl_libmajor}()(64bit) \
+%else \
+Requires: libisl.so.%{isl_libmajor} \
+%endif \
 %description -n %{rpmprefix}gcc-%1 \
 Cross-build GNU C compiler. \
 \
@@ -276,8 +286,10 @@ the number of packages. \
 %do_package openrisc-linux-gnu	%{build_openrisc}
 %do_package powerpc-linux-gnu	%{build_powerpc}
 %do_package powerpc64-linux-gnu	%{build_powerpc64}
+%do_package powerpc64le-linux-gnu %{build_powerpc64le}
 %do_symlink ppc-linux-gnu	%{build_powerpc}	powerpc-linux-gnu
 %do_symlink ppc64-linux-gnu	%{build_powerpc64}	powerpc64-linux-gnu
+%do_symlink ppc64le-linux-gnu	%{build_powerpc64le}	powerpc64le-linux-gnu
 %do_package s390-linux-gnu	%{build_s390}
 %do_package s390x-linux-gnu	%{build_s390x}
 %do_package score-linux-gnu	%{build_score}
@@ -301,30 +313,25 @@ the number of packages. \
 %setup -q -n %{srcdir} -c
 cd %{srcdir}
 %patch0 -p0 -b .hack~
-%patch1 -p0 -b .java-nomulti~
-%patch2 -p0 -b .ppc32-retaddr~
-%patch3 -p0 -b .rh330771~
-%patch4 -p0 -b .i386-libgomp~
-%patch5 -p0 -b .sparc-config-detection~
-%patch6 -p0 -b .libgomp-omp_h-multilib~
-%patch7 -p0 -b .libtool-no-rpath~
-# % if %{build_isl}
-%patch8 -p0 -b .isl-dl~
-# % endif
-# % if %{build_libstdcxx_docs}
-# % patch9 -p0 -b .libstdc++-docs~
-# % endif
-%patch10 -p0 -b .no-add-needed~
-%patch11 -p0 -b .libgo-p224~
-rm -f libgo/go/crypto/elliptic/p224{,_test}.go
-%patch12 -p0 -b .aarch64-async-unw-tables~
-%patch13 -p0 -b .libsanitize-aarch64-va42~
-%patch14 -p0 -b .pr71559~
+%patch1 -p0 -b .ppc32-retaddr~
+%patch2 -p0 -b .i386-libgomp~
+%patch3 -p0 -b .sparc-config-detection~
+%patch4 -p0 -b .libgomp-omp_h-multilib~
+%patch5 -p0 -b .libtool-no-rpath~
+# %if %{build_isl}
+%patch6 -p0 -b .isl-dl~
+# %endif
+# %if %{build_libstdcxx_docs}
+# %patch7 -p0 -b .libstdc++-docs~
+# %endif
+%patch8 -p0 -b .no-add-needed~
+%patch9 -p0 -b .aarch64-async-unw-tables~
+%patch10 -p0 -b .foffload-default~
+%patch11 -p0 -b .Wno-format-security~
 
 %patch900 -p0 -b .cross-intl~
-%patch901 -p1 -b .with-libgcc~
+%patch901 -p0 -b .microblaze~
 %patch902 -p0 -b .format-config~
-%patch903 -p0 -b .microblaze~
 
 echo 'Red Hat Cross %{version}-%{cross_gcc_release}' > gcc/DEV-PHASE
 
@@ -423,6 +430,7 @@ chmod 755 split-debuginfo.sh
     prep_target openrisc-linux-gnu	%{build_openrisc}
     prep_target powerpc-linux-gnu	%{build_powerpc}
     prep_target powerpc64-linux-gnu	%{build_powerpc64}
+    prep_target powerpc64le-linux-gnu	%{build_powerpc64le}
     prep_target s390-linux-gnu		%{build_s390}
     prep_target s390x-linux-gnu		%{build_s390x}
     prep_target score-linux-gnu		%{build_score}
@@ -525,10 +533,17 @@ function config_target () {
 	    CONFIG_FLAGS="--with-arch=mips64r2 --with-abi=64 --with-arch_32=mips32r2 --with-fp-32=xx"
 	    ;;
 	powerpc-*|powerpc64-*|ppc-*|ppc64-*)
-	    CONFIG_FLAGS="--with-cpu-32=power7 --with-tune-32=power8 --with-cpu-64=power7 --with-tune-64=power8 --enable-secureplt --enable-targets=all"
+	    CONFIG_FLAGS="--with-cpu-32=power7 --with-tune-32=power8 --with-cpu-64=power7 --with-tune-64=power8 --enable-secureplt"
+	    ;;
+	powerpc64le-*|ppc64le-*)
+	    CONFIG_FLAGS="--with-cpu-32=power8 --with-tune-32=power8 --with-cpu-64=power8 --with-tune-64=power8 --enable-secureplt"
 	    ;;
 	s390*-*)
+%if 0%{?fedora} >= 26
+	    CONFIG_FLAGS="--with-arch=zEC12 --with-tune=z13 --enable-decimal-float"
+%else
 	    CONFIG_FLAGS="--with-arch=z9-109 --with-tune=z10 --enable-decimal-float"
+%endif
 	    ;;
 	sh-*)
 	    CONFIG_FLAGS=--with-multilib-list=m1,m2,m2e,m2a,m2a-single,m4,m4-single,m4-single-only,m4-nofpu
@@ -579,7 +594,7 @@ function config_target () {
     CXX="$CXX" \
     CFLAGS="$OPT_FLAGS" \
     CXXFLAGS="`echo " $OPT_FLAGS " | sed 's/ -Wall / /g;s/ -fexceptions / /g' \
-    		  | sed 's/ -Werror=format-security / -Wformat -Werror=format-security /'`" \
+		  | sed 's/ -Wformat-security / -Wformat -Wformat-security /'`" \
     CFLAGS_FOR_TARGET="-g -O2 -Wall -fexceptions" \
     AR_FOR_TARGET=%{_bindir}/$arch-ar \
     AS_FOR_TARGET=%{_bindir}/$arch-as \
@@ -642,6 +657,7 @@ function config_target () {
 %if 0%{fedora} >= 21 && 0%{fedora} <= 22
 	--with-default-libstdcxx-abi=gcc4-compatible \
 %endif
+	--with-gcc-major-version-only \
 	--with-isl \
 	--with-newlib \
 	--with-plugin-ld=%{_bindir}/$arch-ld \
@@ -693,7 +709,7 @@ function build_target () {
 	%{no_libgcc_targets})
 	    ;;
 	*)
-	    make -C $build_dir %{_smp_mflags} tooldir=%{_prefix} all-target-libgcc
+	    make -C $build_dir tooldir=%{_prefix} all-target-libgcc
 	    ;;
     esac
 
@@ -724,7 +740,7 @@ function install_bin () {
 
     make -C $arch DESTDIR=%{buildroot} install-gcc ${with_libgcc}
 
-    # We want links for ppc and ppc64 also if we make powerpc or powerpc64
+    # We want links for ppc and ppc64 also if we make powerpc, powerpc64 or  powerpc64le
     case $cpu in
 	powerpc*)
 	    cd %{buildroot}/usr/bin
@@ -751,8 +767,8 @@ rm -rf %{buildroot}%{_infodir}
 # Remove binaries we will not be including, so that they don't end up in
 # gcc-debuginfo
 rm -f %{buildroot}%{_libdir}/{libffi*,libiberty.a}
-rm -f %{buildroot}%{_libexecdir}/gcc/*/%{gcc_version}/install-tools/{mkheaders,fixincl}
-rm -f %{buildroot}%{_prefix}/bin/*-gcc-%{version} || :
+rm -f %{buildroot}%{_libexecdir}/gcc/*/%{gcc_major}/install-tools/{mkheaders,fixincl}
+rm -f %{buildroot}%{_prefix}/bin/*-gcc-%{gcc_major} || :
 rmdir  %{buildroot}%{_includedir}
 
 find %{buildroot}%{_datadir} -name gcc.mo |
@@ -786,7 +802,7 @@ do
 done
 
 # Add manpages the additional symlink-only targets
-%if %{build_powerpc}%{build_powerpc64}
+%if %{build_powerpc}%{build_powerpc64}%{build_powerpc64le}
 for i in powerpc*
 do
     ln -s $i ppc${i#powerpc}
@@ -862,7 +878,7 @@ if [ \${f##*/} = libgcc.a -o \${f##*/} = libgcov.a ]
 then
 	:
 else
-	%{__strip} \$*
+	strip \$*
 fi
 EOF
 chmod +x %{__ar_no_strip}
@@ -911,8 +927,10 @@ chmod +x %{__ar_no_strip}
 %do_files openrisc-linux-gnu	%{build_openrisc}
 %do_files powerpc-linux-gnu	%{build_powerpc}
 %do_files powerpc64-linux-gnu	%{build_powerpc64}
+%do_files powerpc64le-linux-gnu	%{build_powerpc64le}
 %do_files ppc-linux-gnu		%{build_powerpc}
 %do_files ppc64-linux-gnu	%{build_powerpc64}
+%do_files ppc64le-linux-gnu	%{build_powerpc64le}
 %do_files s390-linux-gnu	%{build_s390}
 %do_files s390x-linux-gnu	%{build_s390x}
 %do_files score-linux-gnu	%{build_score}
@@ -927,6 +945,9 @@ chmod +x %{__ar_no_strip}
 %do_files xtensa-linux-gnu	%{build_xtensa}
 
 %changelog
+* Mon Oct 09 2017 Igor Vlasenko <viy@altlinux.ru> 7.1.1-alt1_3
+- update to new release by fcimport
+
 * Thu Jan 12 2017 Igor Vlasenko <viy@altlinux.ru> 6.1.1-alt1_2
 - new version
 
