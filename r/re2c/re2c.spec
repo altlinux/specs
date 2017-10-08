@@ -1,5 +1,5 @@
 Name: re2c
-Version: 0.14.3
+Version: 1.0.1
 Release: alt1
 
 Summary: re2c - A tool for generating C-based recognizers from regular expressions
@@ -27,27 +27,31 @@ flexible.
 
 %build
 %configure
-
-make re2c
-#regenerate file scanner.cc
-rm -f scanner.cc
-./re2c scanner.re > scanner.cc
-rm -f re2c scanner.o
-make
+%make_build
+#make re2c
+##regenerate file scanner.cc
+#rm -f scanner.cc
+#./re2c scanner.re > scanner.cc
+#rm -f re2c scanner.o
+#make
 
 %install
-mkdir -p %buildroot%_bindir/
-install -m 0755 re2c %buildroot%_bindir/
+%makeinstall_std
+#mkdir -p %buildroot%_bindir/
+#install -m 0755 re2c %buildroot%_bindir/
 
-mkdir -p %buildroot%_man1dir
-install -m 0755 re2c.1 %buildroot%_man1dir/
+#mkdir -p %buildroot%_man1dir
+#install -m 0755 re2c.1 %buildroot%_man1dir/
 
 %files
 %_bindir/re2c
 %_man1dir/re2c.1*
-%doc README examples doc/* lessons
+%doc README examples
 
 %changelog
+* Sun Oct 08 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
+- new version 1.0.1 (with rpmrb script)
+
 * Sat Oct 17 2015 Vitaly Lipatov <lav@altlinux.ru> 0.14.3-alt1
 - new version (0.14.3) with rpmgs script
 
