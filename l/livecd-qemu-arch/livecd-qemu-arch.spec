@@ -1,5 +1,5 @@
 Name: livecd-qemu-arch
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: prepare live-builder.iso for ARM/PPC QEMU
@@ -21,6 +21,15 @@ AutoReqProv: no
 %install
 mkdir -p %buildroot{%_bindir,%_sysconfdir/apt}
 
+cat > %buildroot%_bindir/register-qemu-aarch64 << EOF
+#!/bin/sh
+modprobe binfmt_misc
+sleep 0.1
+[ -d /proc/sys/fs/binfmt_misc ] || exit 1
+echo ":qemu-aarch64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xb7:\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff:/.host/qemu-aarch64:" > /proc/sys/fs/binfmt_misc/register
+echo 32768 > /proc/sys/vm/mmap_min_addr
+EOF
+
 cat > %buildroot%_bindir/register-qemu-arm << EOF
 #!/bin/sh
 modprobe binfmt_misc
@@ -37,6 +46,18 @@ sleep 0.1
 [ -d /proc/sys/fs/binfmt_misc ] || exit 1
 echo ':ppc:M::\x7fELF\x01\x02\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x14:\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff:/.host/qemu-ppc:' > /proc/sys/fs/binfmt_misc/register
 echo 32768 > /proc/sys/vm/mmap_min_addr
+EOF
+
+cat > %buildroot%_sysconfdir/apt/apt.conf.sisyphus.aarch64 << EOF
+Dir::Etc::main "/dev/null";
+Dir::Etc::parts "/var/empty";
+Dir::Etc::SourceParts "/var/empty";
+Dir::Etc::sourcelist "/etc/apt/sources.list.sisyphus.aarch64";
+EOF
+
+cat > %buildroot%_sysconfdir/apt/sources.list.sisyphus.aarch64 << EOF
+rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/Sisyphus aarch64 classic
+rpm http://ftp.altlinux.org/pub/distributions/ALTLinux/Sisyphus noarch classic
 EOF
 
 cat > %buildroot%_sysconfdir/apt/apt.conf.sisyphus.arm << EOF
@@ -68,5 +89,8 @@ EOF
 %attr(755,root,root) %_bindir/register-qemu-*
 
 %changelog
+* Sun Oct 08 2017 Mike Radyuk <torabora@altlinux.org> 0.2-alt1
+- added aarch64 support
+
 * Wed Aug 01 2012 Michael Shigorin <mike@altlinux.org> 0.1-alt1
 - initial build
