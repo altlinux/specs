@@ -7,16 +7,15 @@
 %def_without hal
 %def_with gudev
 %def_enable daap
-# required obsolete clutter-gst2.0
-%def_disable visualizer
 %def_enable grilo
 %def_disable gtk_doc
 %def_enable zeitgeist
 %def_enable soundcloud
+%def_disable magnatune
 
 Name: rhythmbox
-Version: %ver_major.1
-Release: alt2%rev
+Version: %ver_major.2
+Release: alt1%rev
 
 Summary: Music Management Application
 License: GPL
@@ -97,7 +96,6 @@ BuildRequires: libpeas-devel libtdb-devel zlib-devel
 %{?_enable_grilo:BuildRequires: libgrilo-devel >= %grilo_ver}
 BuildRequires: libavahi-glib-devel
 BuildRequires: libdmapsharing-devel >= %dmapsharing_ver
-%{?_enable_visualizer:BuildRequires: libclutter-gtk3-devel libclutter-gst2.0-devel libmx-devel >= %mx_ver}
 %{?_with_hal:BuildRequires: libhal-devel}
 %{?_with_gudev:BuildRequires: libgudev-devel}
 BuildRequires: libgtk+3-gir-devel libgstreamer%gst_api_ver-gir-devel gst-plugins%gst_api_ver-gir-devel
@@ -220,15 +218,6 @@ Requires: %name = %version-%release
 Plugin to the Rhythmbox music manager that provides
 inhibit Power Manager from suspending the machine while playing
 
-%package plugins-visualizer
-Summary: Visualizer plugin for Rhythmbox
-Group: Sound
-Requires: %name = %version-%release
-
-%description plugins-visualizer
-Plugin to the Rhythmbox music manager that provides
-displays visualizations
-
 %package plugins-mozilla
 Summary: Browser plugin for Rhythmbox
 Group: Sound
@@ -335,7 +324,6 @@ Requires: %name-plugins-lirc = %version-%release
 Requires: %name-plugins-mmkeys = %version-%release
 Requires: %name-plugins-mtpdevice = %version-%release
 Requires: %name-plugins-power-manager = %version-%release
-%{?_enable_visualizer:Requires: %name-plugins-visualizer = %version-%release}
 Requires: %name-plugins-im-status = %version-%release
 Requires: %name-plugins-notification = %version-%release
 Requires: %name-plugins-media-server = %version-%release
@@ -442,11 +430,6 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %files plugins-power-manager
 %_libdir/%name/plugins/power-manager/
 
-%if_enabled visualizer
-%files plugins-visualizer
-%_libdir/%name/plugins/visualizer/
-%endif
-
 %files plugins-mozilla
 %browser_plugins_path/librhythmbox-itms-detection-plugin.so
 %exclude %browser_plugins_path/librhythmbox-itms-detection-plugin.la
@@ -484,7 +467,7 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %_libdir/%name/plugins/python-console/
 %_libdir/%name/plugins/artsearch/
 %_libdir/%name/plugins/lyrics/
-#%_libdir/%name/plugins/magnatune/
+%{?_disable_magnatune:%exclude %_libdir/%name/plugins/magnatune/}
 %_libdir/%name/plugins/context/
 %_libdir/%name/plugins/replaygain/
 %_libdir/%name/plugins/sendto/
@@ -505,6 +488,9 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Sun Oct 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
+- 3.4.2
+
 * Tue Jan 10 2017 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt2
 - temporarily disabled visualizer (depends on obsolete clutter-gst2.0)
 
