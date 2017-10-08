@@ -5,7 +5,7 @@
 
 Name: geos
 Version: 3.6.2
-Release: alt1
+Release: alt2
 
 Summary: Geometry Engine - Open Source
 Group: Sciences/Geosciences
@@ -103,6 +103,9 @@ Ruby bindings for the lib%name library.
 %setup
 %patch1 -p1
 
+# E2K: strip unicode BOM
+find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
+
 %if_with python3
 cp -fR . ../python3
 %endif
@@ -138,7 +141,14 @@ popd
 LIB_SUFFIX=64
 %endif
 
-%cmake_insource -DGEOS_BUILD_STATIC:BOOL=OFF
+
+# E2K: tests/unit/tut/tut.hpp: excessive recursion at instantiation [...]
+%cmake_insource \
+	-DGEOS_BUILD_STATIC:BOOL=OFF \
+%ifarch e2k
+	-DGEOS_ENABLE_TESTS:BOOL=OFF \
+%endif
+	#
 %make_build VERBOSE=1
 
 %if_with python
@@ -205,6 +215,11 @@ make check || exit 0
 %doc doc/doxygen_docs/html/*
 
 %changelog
+* Sun Oct 08 2017 Michael Shigorin <mike@altlinux.org> 3.6.2-alt2
+- E2K:
+  + strip Unicode BOM
+  + disable tests
+
 * Wed Aug 02 2017 Andrey Cherepanov <cas@altlinux.org> 3.6.2-alt1
 - New version
 - Change project URL, packager and repo address
