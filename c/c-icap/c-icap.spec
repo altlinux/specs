@@ -1,6 +1,6 @@
 Name: 	 c-icap
-Version: 0.4.2
-Release: alt3
+Version: 0.5.2
+Release: alt1
 Epoch:	 1
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -98,17 +98,21 @@ rm -f %buildroot%_libdir/c_icap/*.la
 %if_with clamav
 %exclude %_libdir/c_icap/srv_clamav.so
 %endif
-%dir %attr (750,_c_icap,root) %_logdir/%name/
+%attr (750,_c_icap,root) %_logdir/%name/
 %ghost %_logdir/%name/*.log
-%dir %attr (750,_c_icap,root) %_var/run/%name/
-%dir %attr (750,_c_icap,root) %_cachedir/%name/
-%_man8dir/c-icap*.8.*
+%attr (750,_c_icap,root) %_var/run/%name/
+%attr (750,_c_icap,root) %_cachedir/%name/
+%_man8dir/c-icap*.8*
 
 %files devel
 %_includedir/c_icap
 %_libdir/libicapapi.so
 
 %changelog
+* Sun Oct 08 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.5.2-alt1
+- New version
+- Package run and cache dirs to fix daemon run
+
 * Sat Mar 19 2016 Sergey Y. Afonin <asy@altlinux.ru> 1:0.4.2-alt3
 - Updated BuildRequires (gear-buildreq output used)
 
