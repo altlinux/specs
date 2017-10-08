@@ -1,6 +1,6 @@
 Name: netpolice-filter
 Version: 1.01
-Release: alt3
+Release: alt4
 Packager: Anton Pischulin <letanton@altlinux.ru>
 
 Summary: url filter for c-icap server
@@ -45,6 +45,9 @@ rm -f %buildroot%_libdir/c_icap/*.la
 %_libdir/c_icap/srv_url_filter.so
 
 %changelog
+* Sun Oct 08 2017 Andrey Cherepanov <cas@altlinux.org> 1.01-alt4
+- Rebuild with c-icap 0.5.2
+
 * Mon Dec 07 2015 Andrey Cherepanov <cas@altlinux.org> 1.01-alt3
 - Rebuild with new version of c-icap
 - Fix typo in c-icap function name

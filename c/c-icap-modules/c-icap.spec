@@ -1,6 +1,6 @@
 Name: 	 c-icap-modules
-Version: 0.4.2
-Release: alt3
+Version: 0.4.5
+Release: alt1
 Epoch:	 1
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -47,6 +47,9 @@ rm -f %buildroot%_libdir/c_icap/*.la
 %_bindir/c-icap-mods-sguardDB
 
 %changelog
+* Sun Oct 08 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.4.5-alt1
+- New version
+
 * Sat Mar 19 2016 Sergey Y. Afonin <asy@altlinux.ru> 1:0.4.2-alt3
 - Updated BuildRequires (gear-buildreq output used)
 - Packaged c-icap-mods-sguardDB binary
