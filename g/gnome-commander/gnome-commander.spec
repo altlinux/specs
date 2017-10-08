@@ -1,4 +1,4 @@
-%define ver_major 1.6
+%define ver_major 1.8
 %def_with exiv2
 %def_with chm
 %def_with taglib
@@ -8,7 +8,7 @@
 %def_with unique
 
 Name: gnome-commander
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A Gnome file manager similar to the Norton Commander (TM)
@@ -20,9 +20,11 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 Requires: dconf
 Requires: gnome-vfs gnome-vfs-module-sftp gnome-vfs-module-smb
+# for python plugins
+Requires: python-module-pygtk python-module-pygnome-gnome-vfs
 
 BuildRequires: flex gcc-c++
-BuildRequires: gnome-doc-utils gnome-doc-utils-xslt intltool libappstream-glib-devel
+BuildRequires: yelp-tools libappstream-glib-devel
 BuildRequires: libgnomeui-devel libgnome-keyring-devel gnome-vfs-devel
 BuildRequires: python-devel
 %{?_with_exiv2:BuildRequires: libexiv2-devel}
@@ -39,6 +41,7 @@ and some extra features like FTP support.
 
 %prep
 %setup
+subst 's/\(PYTHON_LIBS=`$PYTHON-config --\)ldflags/\1libs/' configure.ac
 
 %build
 %autoreconf
@@ -75,6 +78,9 @@ and some extra features like FTP support.
 
 
 %changelog
+* Sun Oct 08 2017 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Sun May 28 2017 Yuri N. Sedunov <aris@altlinux.org> 1.6.4-alt1
 - 1.6.4
 
