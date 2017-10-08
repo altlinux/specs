@@ -3,7 +3,7 @@
 
 %define modulename hyperlink
 Name: python-module-hyperlink
-Version: 17.1.1
+Version: 17.3.0
 Release: alt1
 
 Summary: A featureful, correct URL for Python
@@ -84,6 +84,9 @@ popd
 
 
 %changelog
+* Sun Oct 08 2017 Vitaly Lipatov <lav@altlinux.ru> 17.3.0-alt1
+- new version 17.3.0 (with rpmrb script)
+
 * Thu Jun 15 2017 Vitaly Lipatov <lav@altlinux.ru> 17.1.1-alt1
 - initial build for ALT Sisyphus
 
