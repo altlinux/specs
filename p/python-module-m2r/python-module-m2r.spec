@@ -6,7 +6,7 @@
 
 %define modulename m2r
 Name: python-module-m2r
-Version: 0.1.6
+Version: 0.1.12
 Release: alt1
 
 Summary: Markdown to reStructuredText converter
@@ -87,6 +87,9 @@ popd
 
 
 %changelog
+* Sun Oct 08 2017 Vitaly Lipatov <lav@altlinux.ru> 0.1.12-alt1
+- new version 0.1.12 (with rpmrb script)
+
 * Thu Jun 15 2017 Vitaly Lipatov <lav@altlinux.ru> 0.1.6-alt1
 - initial build for ALT Sisyphus
 
