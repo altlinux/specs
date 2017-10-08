@@ -2,12 +2,14 @@
 # and use those C sources during bootstrap phase. Next package rebuilds must be done
 # without bootstrap define.
 %def_disable snapshot
+# valadoc tests compilation failed
+%def_disable check
 %{?_enable_snapshot:%def_with bootstrap}
 %define ver_major 0.38
 %define api_ver 0.38
 
 Name: vala
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Vala is a programming language which makes GNOME programming easy
@@ -186,8 +188,7 @@ export PATH="$OLD_PATH"
 mkdir -p %buildroot%_datadir/vala/vapi
 
 %check
-# valadoc tests compilation failed
-#%make check
+%make check
 
 %files
 %_bindir/valac
@@ -256,6 +257,9 @@ mkdir -p %buildroot%_datadir/vala/vapi
 
 
 %changelog
+* Sun Oct 08 2017 Yuri N. Sedunov <aris@altlinux.org> 0.38.2-alt1
+- 0.38.2
+
 * Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 0.38.1-alt1
 - 0.38.1
 
