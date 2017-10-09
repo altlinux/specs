@@ -8,7 +8,7 @@
 Summary: SquirrelMail -- PHP-based webmail client with IMAP access
 Name: squirrelmail
 Version: 1.4.22
-Release: alt1
+Release: alt2
 License: GPL
 URL: http://www.squirrelmail.org/
 Group: Networking/Mail
@@ -18,7 +18,7 @@ Source: http://heanet.dl.sourceforge.net/sourceforge/squirrelmail/%name-webmail-
 Source1: http://heanet.dl.sourceforge.net/sourceforge/squirrelmail/all_locales-%locale_version-%locale_stamp.tar.bz2
 
 BuildArch: noarch
-Requires: webserver, apache-mod_php5, perl, aspell, webserver-common
+Requires: webserver, php-engine, perl, aspell, webserver-common
 #Requires: webserver, mod_php, perl, aspell, php-mbstring
 requires: MTA
 #Requires: IMAPD, MTA
@@ -151,6 +151,9 @@ done
 #------------------------------------------------------------------------------
 
 %changelog
+* Mon Oct 09 2017 Anton Farygin <rider@altlinux.ru> 1.4.22-alt2
+- changed requires to php-engine instead of apache-mod_php5
+
 * Tue Aug 16 2011 Ilya Mashkin <oddity@altlinux.ru> 1.4.22-alt1
 - 1.4.22
 
