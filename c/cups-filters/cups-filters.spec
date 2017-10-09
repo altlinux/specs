@@ -3,8 +3,8 @@
 %define _cups_serverbin %_libexecdir/cups
 
 Name: cups-filters
-Version: 1.17.8
-Release: alt2%ubt
+Version: 1.17.9
+Release: alt1
 
 Summary: OpenPrinting CUPS filters and backends
 # For a breakdown of the licensing, see COPYING file
@@ -225,6 +225,9 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Mon Oct 09 2017 Anton Farygin <rider@altlinux.ru> 1.17.9-alt1
+- new version 1.17.9
+
 * Sat Oct 07 2017 Michael Shigorin <mike@altlinux.org> 1.17.8-alt2%ubt
 - introduced php knob (on by default)
 
