@@ -1,8 +1,8 @@
 %define oname psycopg2
 %def_with python3
 
-Version: 2.7
-Release: alt1.dev0.git20150602.1.1
+Version: 2.7.3.1
+Release: alt1
 %setup_python_module %oname
 
 Summary: psycopg2 is a PostgreSQL database adapter for Python
@@ -46,7 +46,7 @@ being thread safe at level 2.
 %package -n python3-module-%oname-tests
 Summary: Tests for psycopg2 python 3 PostgreSQL database adapter
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
+Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-tests
 Tests for the psycopg2 python 3 PostgreSQL database adapter.
@@ -55,7 +55,7 @@ Tests for the psycopg2 python 3 PostgreSQL database adapter.
 %package tests
 Summary: Tests for psycopg2 python PostgreSQL database adapter
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 Tests for the psycopg2 python PostgreSQL database adapter.
@@ -77,13 +77,17 @@ echo "include_dirs=.:/usr/include/pgsql" >> setup.cfg
 %build
 %add_optflags -fno-strict-aliasing
 %python_build
+
+%if_with python3
 %python3_build
+%endif
 
 %install
 %python_install --optimize=2 --record=INSTALLED_FILES
+
+%if_with python3
 %python3_install
-sed -i 's|_psycopg|%oname._psycopg|' \
-	%buildroot%python3_sitelibdir/%oname/psycopg1.py
+%endif
 
 %files -f INSTALLED_FILES
 %dir %python_sitelibdir/psycopg2
@@ -105,6 +109,9 @@ sed -i 's|_psycopg|%oname._psycopg|' \
 %endif
 
 %changelog
+* Mon Oct 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.3.1-alt1
+- Updated to upstream version 2.7.3.1.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.7-alt1.dev0.git20150602.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
