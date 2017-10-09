@@ -1,4 +1,4 @@
-# 5.4.1.2
+# 5.4.2.2
 %def_without forky
 %def_without python
 %def_with parallelism
@@ -7,7 +7,7 @@
 
 Name: LibreOffice
 %define hversion 5.4
-%define urelease 1.2
+%define urelease 2.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -51,7 +51,10 @@ Patch2: FC-0001-Related-tdf-106100-recover-mangled-svg-in-presentati.patch
 Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
 Patch4: FC-0001-rename-IsAutoCapitalizeWordDelim-to-NonFieldWordDeli.patch
 Patch5: FC-0002-consider-field-marks-as-text-for-auto-quotes.patch
-Patch6: FC-0001-disable-libe-book-support.patch
+Patch6: FC-0001-gtk3-only-for-3.20.patch
+Patch7: FC-0001-Improve-resizing-chevrons-so-the-control-point-is-a-.patch
+Patch8: FC-0001-Resolves-tdf-42873-videos-in-presenter-console-mispl.patch
+Patch9: FC-0001-disable-libe-book-support.patch
 
 ## Long-term FC patches
 
@@ -229,7 +232,10 @@ echo Direct build
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-#patch6 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+#patch9 -p1
 
 ## Long-term FC patches applying
 
@@ -493,6 +499,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Oct 05 2017 Fr. Br. George <george@altlinux.ru> 5.4.2.2-alt1
+- Update to 5.4.2.2
+
 * Tue Sep 12 2017 Fr. Br. George <george@altlinux.ru> 5.4.1.2-alt1
 - Update to 5.4.1.2
 
