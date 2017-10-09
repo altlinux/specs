@@ -1,5 +1,5 @@
 Name: ostree
-Version: 2017.8
+Version: 2017.12
 Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
@@ -22,6 +22,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/ostreedev/ostree/archive/v%version.tar.gz
 Source: %name-%version.tar
 
+# Note! Always use HEAD!!
 # TODO: https://github.com/GNOME/libglnx
 # Source1-url: https://git.gnome.org/browse/libglnx/snapshot/libglnx-master.tar.xz
 Source1: libglnx.tar
@@ -83,6 +84,7 @@ Development package containing library and header files of %name.
 
 %prep
 %setup -a1 -a2
+%__subst 's|$(prefix)\(/lib/tmpfiles.d\)|\1|g' Makefile-boot.am
 
 %build
 NOCONFIGURE=1 sh -x ./autogen.sh
@@ -110,6 +112,8 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 %_datadir/%name/
 %_unitdir/ostree-prepare-root.service
 %_unitdir/ostree-remount.service
+%_tmpfilesdir/ostree-tmpfiles.conf
+%_datadir/bash-completion/completions/ostree
 # due missed buildreqs
 #    /usr/lib64/girepository-1.0/OSTree-1.0.typelib
 #    /usr/share/gir-1.0/OSTree-1.0.gir
@@ -128,6 +132,12 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Oct 08 2017 Vitaly Lipatov <lav@altlinux.ru> 2017.12-alt1
+- new version 2017.12 (with rpmrb script)
+
+* Sat Oct 07 2017 Vitaly Lipatov <lav@altlinux.ru> 2017.11-alt1
+- new version 2017.11 (with rpmrb script)
+
 * Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 2017.8-alt1
 - new version 2017.8 (with rpmrb script)
 

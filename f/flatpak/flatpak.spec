@@ -1,7 +1,7 @@
 %define _userunitdir /usr/lib/systemd/user
 
 Name: flatpak
-Version: 0.9.7
+Version: 0.9.98.2
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -143,7 +143,7 @@ rm -rf %buildroot%_docdir/%name/
 %_libexecdir/xdg-permission-store
 %dir %_localstatedir/lib/flatpak
 %_man1dir/%{name}*.1*
-%exclude %_man1dir/flatpak-builder.1*
+#exclude %_man1dir/flatpak-builder.*
 %_sysconfdir/dbus-1/system.d/org.freedesktop.Flatpak.SystemHelper.conf
 %_sysconfdir/profile.d/flatpak.sh
 %_unitdir/flatpak-system-helper.service
@@ -155,9 +155,9 @@ rm -rf %buildroot%_docdir/%name/
 %_man5dir/*
 
 %files builder
-%_bindir/flatpak-builder
+#_bindir/flatpak-builder
 %_bindir/flatpak-bisect
-%_man1dir/flatpak-builder.1*
+#_man1dir/flatpak-builder.*
 
 %files -n lib%name-devel
 %_datadir/gir-1.0/Flatpak-1.0.gir
@@ -172,6 +172,12 @@ rm -rf %buildroot%_docdir/%name/
 %_libdir/libflatpak.so.*
 
 %changelog
+* Sun Oct 08 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.98.2-alt1
+- new version 0.9.98.2 (with rpmrb script)
+
+* Sat Oct 07 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.11-alt1
+- new version 0.9.11 (with rpmrb script)
+
 * Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt1
 - new version (0.9.7) with rpmgs script
 
