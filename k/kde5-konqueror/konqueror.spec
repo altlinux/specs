@@ -11,7 +11,7 @@
 
 Name: kde5-%rname
 Version: 17.04.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Networking/WWW
@@ -51,6 +51,7 @@ Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kf5-filesystem
+Conflicts: kde5-baseapps-common
 %description common
 %name common package
 
@@ -189,6 +190,9 @@ rm -f %buildroot/%_K5xdgapp/kfmclient_dir.desktop
 #%_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Mon Oct 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt2%ubt
+- conflict with kde5-baseapps-common
+
 * Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
 - new version
 
