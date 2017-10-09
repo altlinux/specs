@@ -1,24 +1,24 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20141024.1.1
 %def_with python3
 
 Name: z3
-Version: 4.3.2
-#Release: alt1.git20141024.1
+Version: 4.5.0
+Release: alt1
 Summary: High-performance theorem prover
-License: Noncommercial use only
+License: MIT
 Group: Sciences/Mathematics
-Url: http://z3.codeplex.com/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://github.com/Z3Prover/z3
 
-# https://git01.codeplex.com/z3
+# https://github.com/Z3Prover/z3.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-make
-BuildPreReq: python-devel gcc-c++ doxygen graphviz
+BuildRequires: python-devel gcc-c++ doxygen graphviz libtau-devel
+BuildRequires: python2.7(pkg_resources)
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python-tools-2to3
+BuildRequires: python3-devel python-tools-2to3
+BuildRequires: python3(pkg_resources)
 %endif
 
 %description
@@ -87,6 +87,9 @@ This package contains Python bindings of %name.
 %prep
 %setup
 
+# fix path to file
+sed -i 's|../src/api/python/z3.py|../src/api/python/z3/z3.py|' doc/mk_api_doc.py
+
 %build
 python scripts/mk_make.py
 sed -i 's|\$(CC)|$(CC) -g %optflags_shared|' build/Makefile
@@ -103,7 +106,7 @@ popd
 %install
 sed -i 's|\(%python_sitelibdir_noarch\)|%buildroot\1|' build/Makefile
 install -d %buildroot%python_sitelibdir_noarch
-%makeinstall_std -C build PREFIX=%buildroot%prefix
+%makeinstall_std -C build
 rm -f  %buildroot%python_sitelibdir_noarch/lib%name.so
 ln -s ../../lib%name.so %buildroot%python_sitelibdir_noarch/
 
@@ -111,11 +114,15 @@ ln -s ../../lib%name.so %buildroot%python_sitelibdir_noarch/
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
+install -d %buildroot%python_sitelibdir
+cp -a build/python/%{name} %buildroot%python_sitelibdir/
+
 %if_with python3
-find build -type f -name '*.py' -exec sed -i 's|\t|        |g' '{}' +
-find build -type f -name '*.py' -exec 2to3 -w -n '{}' +
+cp -a build/python build/python3
+find build/python3 -type f -name '*.py' -exec sed -i 's|\t|        |g' '{}' +
+find build/python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 install -d %buildroot%python3_sitelibdir
-install -m644 build/%{name}*.py %buildroot%python3_sitelibdir/
+cp -a build/python3/%{name} %buildroot%python3_sitelibdir/
 ln -s ../../lib%name.so %buildroot%python3_sitelibdir/
 %endif
 
@@ -123,11 +130,11 @@ ln -s ../../lib%name.so %buildroot%python3_sitelibdir/
 export LD_LIBRARY_PATH=%buildroot%_libdir
 export PYTHONPATH=%buildroot%python_sitelibdir
 python -c "import z3; print (z3.get_version_string())"
-python build/example.py
+python build/python/example.py
 %if_with python3
 export PYTHONPATH=%buildroot%python3_sitelibdir
 python3 -c "import z3; print (z3.get_version_string())"
-python3 build/example.py
+python3 build/python3/example.py
 %endif
 
 %files
@@ -153,6 +160,9 @@ python3 build/example.py
 %endif
 
 %changelog
+* Mon Oct 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.5.0-alt1
+- Updated to upstream version 4.5.0.
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.3.2-alt1.git20141024.1.1
 - (AUTO) subst_x86_64.
 
