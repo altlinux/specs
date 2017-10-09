@@ -1,11 +1,10 @@
 Name: tinyxml2
-Version: 2.1.0
+Version: 5.0.1
 Release: alt1
 Summary: Simple, small, efficient, C++ XML parser
 License: zlib
 Group: File tools
 Url: http://www.grinninglizard.com/tinyxml2/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
@@ -81,6 +80,9 @@ doxygen dox
 %doc docs/*
 
 %changelog
+* Mon Oct 09 2017 Anton Farygin <rider@altlinux.ru> 5.0.1-alt1
+- new version
+
 * Fri Jun 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt1
 - Initial build for Sisyphus
 
