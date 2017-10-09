@@ -1,14 +1,15 @@
 Name: barcode
-Version: 0.98
-Release: alt5.qa2.1
+Version: 0.99
+Release: alt1
 Group: Graphics
 Summary: Utility to generate printable barcodes in PostScript format
 Summary(ru_RU.UTF-8): Утилита для генерации штрих-кодов для печати в формате PostScript
-License: GPL
+License: GPLv3
 Url: http://www.gnu.org/software/barcode/barcode.html
-Packager: Mikhail Yakshin <greycat@altlinux.org>
-Source: %name-%version.tar.gz
-Patch: %name-info.patch
+Source: %name-%version.tar
+Patch0: barcode-0.99-info.patch
+Patch1: barcode-0.98-leak-fix.patch
+Patch2: barcode-0.99-fix-renamed-include.patch
 
 # Automatically added by buildreq on Wed Jul 08 2009
 BuildRequires: ghostscript-utils /usr/bin/tex gcc
@@ -50,38 +51,26 @@ Encapsulated Postscript (other back-ends may be added if needed).
 The package includes a static library.
 
 %prep
-%setup -q
-%patch
+%setup
+%patch0 -p2
+%patch1 
+%patch2 -p1
 
 %build
 %configure
-sed -i 's,LIBDIR = $(prefix)/lib,LIBDIR=%buildroot%_libdir,' Makefile
-sed -i 's,INFODIR = $(prefix)/info,INFODIR=%buildroot%_infodir,' Makefile
-sed -i 's,MAN1DIR = $(prefix)/man/man1,MAN1DIR=%buildroot%_mandir/man1,' Makefile
-sed -i 's,MAN3DIR = $(prefix)/man/man3,MAN3DIR=%buildroot%_mandir/man3,' Makefile
-cd doc
-make clean
-cd ..
 
 %make
 
 %install
 %makeinstall
-
-# The package contains a CVS/.svn/.git/.hg/.bzr/_MTN directory of revision control system.
-# It was most likely included by accident since CVS/.svn/.hg/... etc. directories 
-# usually don't belong in releases. 
-# When packaging a CVS/SVN snapshot, export from CVS/SVN rather than use a checkout.
-find $RPM_BUILD_ROOT -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o -name '.bzr' -o -name '_MTN' \) -print -exec rm -rf {} \; ||:
-# the find below is useful in case those CVS/.svn/.git/.hg/.bzr/_MTN directory is added as %%doc
-find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o -name '.bzr' -o -name '_MTN' \) -print -exec rm -rf {} \; ||:
+install -Dm0644 .libs/libbarcode.a %buildroot%_libdir/libbarcode.a
+install -Dm0644 barcode.h %buildroot%_includedir/barcode.h
+sed -i '/^#include.*config.h"$/d' %buildroot%_includedir/barcode.h
 
 %files
 %defattr(0644,root,root,0755)
-%doc README INSTALL TODO ChangeLog contrib
+%doc README INSTALL TODO NEWS
 %attr(0755,root,root) %_bindir/barcode
-%_mandir/man1/barcode.1.*
-%_mandir/man3/barcode.3.*
 %_infodir/barcode.info*
 
 %files -n libbarcode-static-devel
@@ -89,6 +78,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %_libdir/libbarcode.a
 
 %changelog
+* Mon Oct 09 2017 Anton Farygin <rider@altlinux.ru> 0.99-alt1
+- new version
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.98-alt5.qa2.1
 - NMU: added BR: texinfo
 
