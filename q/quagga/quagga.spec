@@ -4,9 +4,12 @@
 %define	quagga_gid	quagga
 %define	vty_gid		quaggavty
 
+# https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define	_localstatedir	/var/lib
+
 Name: quagga
 
-%define baseversion 1.0.20160315
+%define baseversion 1.2.2
 Release: alt1
 
 %if %cvs
@@ -29,7 +32,7 @@ Url: http://www.quagga.net/
 %if %cvs
 Source0:	%name-%baseversion-%cvsdate.tar.gz
 %else
-Source0:	%name-%version.tar.xz
+Source0:	%name-%version.tar.gz
 %endif
 Source1:	%name.logrotate
 Source2:	%name.pam
@@ -57,7 +60,7 @@ Source28:	%name-pimd.conf
 
 Patch1:		quagga-libzebra_to_libospf.patch
 Patch2:		quagga-libospf_to_libospfclient.patch
-Patch3:		quagga-0.99.24-man.patch
+Patch3:		quagga-1.2.2-man.patch
 
 #Errata
 #Patch1001:
@@ -69,7 +72,8 @@ Requires:	libquagga = %{version}-%{release}
 BuildRequires: /proc
 BuildRequires: rpm-build-licenses
 
-BuildRequires: gcc-c++ libcap-devel libpam-devel libpcap-devel libreadline-devel libtinfo-devel libnet-snmp-devel texi2html makeinfo
+BuildRequires: gcc-c++ libcap-devel libpam-devel libpcap-devel libreadline-devel libtinfo-devel libnet-snmp-devel libcares-devel
+BuildRequires: texi2html makeinfo
 
 %description
 Quagga is a free software that manages TCP/IP based routing protocol.
@@ -77,7 +81,7 @@ It takes multi-server and multi-thread approach to resolve the current
 complexity of the Internet.
 
 Quagga supports BGP4, BGP4+, OSPFv2, OSPFv3, RIPv1, RIPv2, RIPng,
-                IS-SI, PIM-SSM and MPLS-VPN.
+                PIM-SSM, NHRP. And very early support for IS-IS.
 
 Quagga is intended to be used as a Route Server and a Route Reflector.
 It is not a toolkit, it provides full routing power under a new
@@ -101,17 +105,6 @@ Requires: libquagga = %{version}-%{release}
 %description devel
 The quagga-devel package contains the header and object files neccessary for
 developing OSPF-API and quagga applications.
-
-%package tools
-Summary: Quagga tools (zc.pl only)
-Copyright: %gpl2only
-Group: System/Configuration/Other
-BuildRequires: perl-Net-Telnet
-BuildArch: noarch
-
-%description tools
-Quagga tools
-zc.pl: Zebra interactive console
 
 %package ospfclient
 Summary: Simple program to demonstrate how OSPF API can be used.
@@ -226,13 +219,12 @@ install -m 755 %SOURCE18 $RPM_BUILD_ROOT%_initdir/pimd
 
 install -m 755 %SOURCE19 $RPM_BUILD_ROOT%_initdir/watchquagga
 
-cp -f tools/zc.pl $RPM_BUILD_ROOT%_bindir
-
 %pre
-/usr/sbin/groupadd -rf %quagga_gid
-/usr/sbin/useradd -r -g %quagga_gid -d /dev/null -s /dev/null -n %quagga_user &>/dev/null ||:
-
 /usr/sbin/groupadd -rf %vty_gid
+/usr/sbin/groupadd -rf %quagga_gid
+
+/usr/sbin/useradd -r -g %quagga_gid -d /dev/null -s /dev/null -n %quagga_user &>/dev/null ||:
+/usr/sbin/usermod -G %vty_gid %quagga_user &>/dev/null ||:
 
 %post
 # "&>/dev/null" used for restarting when connection lost
@@ -270,8 +262,8 @@ cp -f tools/zc.pl $RPM_BUILD_ROOT%_bindir
 %config %_sysconfdir/pam.d/%name
 %config %_sysconfdir/sysconfig/%name
 
-%exclude %_bindir/zc.pl
 %_bindir/*
+
 %exclude %_sbindir/ospfclient
 %_sbindir/*
 
@@ -290,9 +282,6 @@ cp -f tools/zc.pl $RPM_BUILD_ROOT%_bindir
 %_includedir/%name/ospfd/*.h
 %_includedir/%name/ospfapi/*.h
 
-%files tools
-%_bindir/zc.pl
-
 %files ospfclient
 %_sbindir/ospfclient
 
@@ -307,6 +296,10 @@ cp -f tools/zc.pl $RPM_BUILD_ROOT%_bindir
 %doc doc/draft-zebra-00.* doc/BGP-TypeCode
 
 %changelog
+* Mon Oct 09 2017 Sergey Y. Afonin <asy@altlinux.ru> 1.2.2-alt1
+- new version
+- removed quagga-tools (zc.pl removed from source)
+
 * Fri May 13 2016 Sergey Y. Afonin <asy@altlinux.ru> 1.0.20160315-alt1
 - new version (removed babeld)
 
