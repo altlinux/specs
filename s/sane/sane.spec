@@ -3,7 +3,7 @@
 
 Name: sane
 Version: 1.0.27
-Release: alt1
+Release: alt2
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -21,6 +21,7 @@ Source2: %name.xinetd
 
 Patch3: sane-1.0.19-hp-psc.patch
 Patch4: sane-backends-1.0.18-epson-1270.patch
+Patch5: 0001-Revert-use-rewind-instead-of-slow_back_home.patch
 
 # Fedora patches
 Patch109: sane-backends-1.0.18-glibc-2.7.patch
@@ -142,6 +143,7 @@ This package contains SANE static libraries.
 %setup -n %oname-%version
 %patch3
 %patch4
+%patch5 -p1
 
 # Fedora patches
 %patch109 -p1 -b .glibc-2.7
@@ -253,6 +255,9 @@ rm -f %buildroot%_libdir/%name/*.a
 %endif
 
 %changelog
+* Mon Oct 09 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.27-alt2
+- revert bd0b0cd218504868f32962a5558449956c8ce242 (ALT bug 33993)
+
 * Thu May 25 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.27-alt1
 - new version 1.0.27 (with rpmrb script)
 - disable v4k backend by default
