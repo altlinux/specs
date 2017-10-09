@@ -3,7 +3,7 @@
 
 Name: tcl
 Version: 8.6.7
-Release: alt1
+Release: alt2
 
 Summary: A Tool Command Language (TCL)
 License: BSD
@@ -30,7 +30,7 @@ Provides: %_tcldatadir
 Summary: Header files and C programming manual for TCL
 Group: Development/C
 Requires: %name = %version-%release
-Requires: rpm-build-tcl >= 0.3-alt1
+Requires: rpm-build-tcl >= 0.5-alt1
 
 %description
 The Tcl (Tool Command Language) provides a powerful platform for
@@ -126,6 +126,9 @@ install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 %_man3dir/*
 
 %changelog
+* Sun Sep 17 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.7-alt2
+- added %%_libdir/tcl to tcl extension search path (new packaging policy)
+
 * Fri Aug 18 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.7-alt1
 - 8.6.7 released
 

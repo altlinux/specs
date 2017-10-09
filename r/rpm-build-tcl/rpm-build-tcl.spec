@@ -1,6 +1,6 @@
 Name: rpm-build-tcl
-Version: 0.4
-Release: alt2
+Version: 0.5
+Release: alt1
 
 Summary: RPM helpers to use with Tcl scripts
 License: GPL
@@ -10,7 +10,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 
 Conflicts: rpm-build < 4.0.4-alt44
-Conflicts: tcl-devel < 0:8.4.7-alt2
+Conflicts: tcl-devel < 0:8.6.7-alt2
 
 %description
 %name is set of scripts and rpm macros to assist in tcl modules
@@ -34,6 +34,9 @@ install -p -m0755 tcl.prov.files %buildroot%_rpmlibdir/tcl.prov.files
 %_rpmlibdir/tcl.*
 
 %changelog
+* Sun Sep 17 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.5-alt1
+- new Tcl/Tk extension packaging policy
+
 * Thu Oct 22 2015 Ivan Zakharyaschev <imz@altlinux.org> 0.4-alt2
 - .spec: do not require rpm-build (express the compatibility with
   Conflicts).

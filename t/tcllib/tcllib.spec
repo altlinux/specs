@@ -13,26 +13,29 @@
 %add_tcl_req_skip doctools::toc::import::plugin
 %add_tcl_req_skip pt::peg::export::plugin
 %add_tcl_req_skip pt::peg::import::plugin
-# next two require tcl 8.6
-%add_tcl_req_skip coroutine
-%add_tcl_req_skip tcl::transform::core
-# optional, requires tcl 8.6 or extra package
+# actually provided by tcl 8.6
 %add_tcl_req_skip TclOO
+# Windows platform
+%add_tcl_req_skip twapi
 
 Name: tcllib
-Version: 1.13
+Version: 1.18
 Release: alt1
-Serial: 1
+Epoch: 1
 
 Summary: A Tcl standard library
 License: BSD
 Group: Development/Tcl
-Url: http://tcllib.sourceforge.net/
+Url: https://core.tcl.tk/tcllib/
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-tcl >= 0.2.1-alt2
 BuildRequires: tcl >= 8.4.0-alt1
 
+# cause segfault in some apps (e.g. tkabber)
+Conflicts: tcl-trf < 2.1-alt8
+
+# git://git.altlinux.org/gears/t/tcllib.git
 Source: %name-%version-%release.tar
 
 %description
@@ -48,10 +51,8 @@ rely on to be available and stable.
 %install
 %configure
 %make_install DESTDIR=%buildroot install
-# clashes with tcl own manpages, has a prefixed with textutil_ copy 
+# clashes with tcl own manpages, has a prefixed with textutil_ copy
 rm -f %buildroot%_mandir/mann/split.n %buildroot%_mandir/mann/string.n
-# clashes with memchan package
-mv %buildroot%_mandir/mann/random.n %buildroot%_mandir/mann/simulation_random.n
 
 find examples -type f -print0 |xargs -r0 chmod 0644 --
 
@@ -59,11 +60,19 @@ find examples -type f -print0 |xargs -r0 chmod 0644 --
 %doc ChangeLog README* license* devdoc examples support/releases/history support/releases/PACKAGES
 %_bindir/dtplite
 %_bindir/page
+%_bindir/nns*
+%_bindir/page
+%_bindir/pt
 %_bindir/tcldocstrip
 %_tcldatadir/%name%version
 %_mandir/mann/*
 
 %changelog
+* Sat Aug 19 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.18-alt1
+- 1.18 released
+- packaged %%_bindir/nns*, %%_bindir/page and %%_bindir/pt binaries
+- fixed file conflict caused by rebuilding to e2k (ALT#26382)
+
 * Wed Aug 24 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.13-alt1
 - 1.13 released
 

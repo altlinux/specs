@@ -4,7 +4,7 @@
 
 Name: tk
 Version: 8.6.7
-Release: alt1
+Release: alt2
 
 Summary: A Tk toolkit fot Tcl scripting language
 License: BSD
@@ -14,9 +14,11 @@ Url: http://www.tcl.tk/
 # git://git.altlinux.org/gears/t/tk.git
 Source: %name-%version-%release.tar
 
-BuildRequires(pre): rpm-build-tcl >= 0.4-alt1
+BuildRequires(pre): rpm-build-tcl >= 0.5-alt1
 BuildRequires: tcl-devel = %version libXt-devel libXft-devel libXScrnSaver-devel
 Requires: tcl = %version lib%name = %version-%release
+# remove it in the next Tcl/Tk version
+Conflicts: tcl <= 8.6.7-alt1
 
 Provides: tcl(Ttk) = %version
 
@@ -72,7 +74,6 @@ the features of the Tk toolkit.
 
 %prep
 %setup
-sed -i "s@^\([[:blank:]]\+relative=\)\`[^\`]\+\`\(.\+\)\$@\1'.. .. .. %_lib '\2@" unix/Makefile.in
 
 %build
 pushd unix
@@ -101,6 +102,7 @@ install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 %_bindir/wish*
 %dir %_tcldatadir/%name%major
 %_tcldatadir/%name%major/*
+%_tcllibdir/%name%major/pkgIndex.tcl
 %exclude %_tcldatadir/%name%major/demos
 %exclude %_tcldatadir/%name%major/%{name}AppInit.c
 %_man1dir/*
@@ -123,6 +125,9 @@ install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 %_tcldatadir/%name%major/demos
 
 %changelog
+* Tue Sep 19 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.7-alt2
+- adapted for new Tcl/Tk extension packaging policy
+
 * Fri Aug 18 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.7-alt1
 - 8.6.7 released
 

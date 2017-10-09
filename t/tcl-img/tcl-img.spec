@@ -1,9 +1,9 @@
 %define teaname img
-%define major 1.3
+%define major 1.4
 
 Name: tcl-img
-Version: 1.3.2
-Release: alt2
+Version: 1.4.2
+Release: alt1
 
 Summary: Tcl Image Formats (Img)
 License: BSD
@@ -12,11 +12,14 @@ Url: http://tkimg.sf.net
 
 Provides: %teaname = %version-%release
 Obsoletes: %teaname
+Conflicts: tcl < 8.6.7-alt2
 
+# git://git.altlinux.org/gears/t/tcl-img.git
 Source0: %name-%version-%release.tar
 
-BuildRequires: rpm-build-tcl >= 0.4-alt1
+BuildRequires: rpm-build-tcl >= 0.5-alt1
 BuildRequires: libjpeg-devel libpng12-devel tk-devel zlib-devel
+BuildRequires: tcllib
 
 %description
 %name is a Tk enhancement, adding support for many other Image formats:
@@ -24,34 +27,30 @@ BMP, XBM, XPM, GIF, PNG, JPEG, postscript and others.
 
 %prep
 %setup
-find . -name pkgIndex.tcl.in| while read; do
-%teapatch -C ${REPLY%%/*}
-sed -i 's/@lib@/%_lib/' ${REPLY}
-done
+find . -name config.cache -delete
 
 %build
-find . -name configure.in |while read; do
-    (cd ${REPLY%%/*} && autoconf)
-done
-%configure
+export TCL_SRC_DIR=%_includedir/tcl
+export TK_SRC_DIR=%_includedir/tk
+%autoreconf
+%configure --with-tcl=%_libdir --with-tk=%_libdir
 %make_build
+
+gzip -9 ChangeLog
 
 %install
 %make_install DESTDIR=%buildroot install
-find %buildroot%_tcldatadir -name pkgIndex.tcl|\
-grep -v tkimg%major |while read; do
-grep -v '^\#' $REPLY
-rm -rf ${REPLY%%/*}
-done >> %buildroot%_tcldatadir/tkimg%major/pkgIndex.tcl
-find %buildroot '(' -path \*%_includedir/\* -o -path \*%_libdir/\*.sh \
-	-o -path \*%_libdir/\*.a ')' -delete
 
 %files
-%doc doc/*
-%_tcllibdir/*.so
-%_tcldatadir/*
+%doc ANNOUNCE ChangeLog.gz README doc/*.css doc/*.htm
+%_tcllibdir/Img%version/*.so
+%_tcllibdir/Img%version/pkgIndex.tcl
+%_mandir/mann/*
 
 %changelog
+* Tue Sep 12 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.2-alt1
+- 1.4.2 released
+
 * Sun Apr 07 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.2-alt2
 - use png12 from now
 
