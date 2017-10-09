@@ -1,6 +1,6 @@
 Name: dmidecode
-Version: 3.0
-Release: alt1
+Version: 3.1
+Release: alt1%ubt
 
 Summary: Dmidecode is a tool for dumping a computer's DMI table
 License: GPLv2+
@@ -9,6 +9,7 @@ Group: System/Kernel and hardware
 URL: http://www.nongnu.org/dmidecode/
 Source0: http://download.savannah.gnu.org/releases/dmidecode/dmidecode-%version.tar
 Source1: %name.watch
+BuildRequires(pre): rpm-build-ubt
 
 %description
 dmidecode reports information about x86 hardware as described in the system BIOS
@@ -36,6 +37,9 @@ subst 's/-O./%optflags/' Makefile
 %_man8dir/*
 
 %changelog
+* Mon Oct 09 2017 Anton Farygin <rider@altlinux.ru> 3.1-alt1%ubt
+- new version 3.1
+
 * Wed Apr 27 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0-alt1
 - 3.0 released
 
