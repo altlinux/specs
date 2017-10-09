@@ -1,7 +1,7 @@
 %define rname owncloudclient
 Name: owncloud-client
-Version: 2.2.4
-Release: alt2
+Version: 2.3.3
+Release: alt1%ubt
 
 Group: Networking/File transfer
 Summary: ownCloud Desktop Client
@@ -19,8 +19,9 @@ Patch3: alt-static-libs.patch
 # Automatically added by buildreq on Mon Oct 24 2016 (-bi)
 # optimized out: cmake cmake-modules desktop-file-utils elfutils gcc-c++ kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libgpg-error libgst-plugins1.0 libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-sensors libqt5-sql libqt5-svg libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libqtkeychain-qt5 libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-module-google python-module-sphinx python-modules python3 python3-base qt5-base-devel qt5-tools rpm-build-gir rpm-build-python3 texlive-latex-base zlib-devel
 #BuildRequires: doxygen extra-cmake-modules graphviz kf5-kio-devel libqtkeychain-qt5-devel libsqlite3-devel libssl-devel python3-dev qt5-tools-devel qt5-webkit-devel ruby ruby-stdlibs zlib-devel-static
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: kde-common-devel rpm-build-kf5
-BuildRequires: doxygen extra-cmake-modules graphviz kf5-kio-devel libqtkeychain-qt5-devel libsqlite3-devel libssl-devel python3-dev qt5-tools-devel qt5-webkit-devel zlib-devel
+BuildRequires: doxygen extra-cmake-modules graphviz kf5-kio-devel libqtkeychain-qt5-devel libsqlite3-devel libssl-devel python3-dev qt5-tools-devel zlib-devel
 
 %description
 The ownCloud Desktop Client is a tool to synchronize files from ownCloud Server with your computer.
@@ -46,6 +47,7 @@ KDE5 %name integration
     -DCMAKE_INSTALL_SYSCONFDIR=/etc/owncloud-client \
     -DKDE_INSTALL_PLUGINDIR=%_K5plug \
     -DKDE_INSTALL_KSERVICES5DIR=%_K5srv \
+    -DNO_SHIBBOLETH=ON \
     #
 
 %install
@@ -75,6 +77,12 @@ desktop-file-install \
 %_K5srv/*owncloud*.desktop
 
 %changelog
+* Mon Oct 09 2017 Sergey V Turchin <zerg@altlinux.org> 2.3.3-alt1%ubt
+- new version
+
+* Thu Nov 03 2016 Sergey V Turchin <zerg@altlinux.org> 2.2.4-alt1.M80P.1
+- build for M80P
+
 * Thu Nov 03 2016 Sergey V Turchin <zerg@altlinux.org> 2.2.4-alt2
 - rebuild with new libqt5keychain
 
