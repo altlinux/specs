@@ -1,18 +1,13 @@
 Summary: A tool to replay captured network traffic
 Name: tcpreplay
-Version: 3.4.4
-Release: alt1
-License: BSD
+Version: 4.2.6
+Release: alt1%ubt
+License: GPLv3
 Group: Networking/Other
-Url: http://tcpreplay.synfin.net/trac/
-Packager: Boris Savelev <boris@altlinux.org>
-
-Source: %name-%version.tar.gz
-Patch: 0001-fix-buffer_overflow.patch
-
-# Automatically added by buildreq on Sat Mar 24 2012
-# optimized out: guile18 libstdc++-devel
-BuildRequires: autogen gcc-c++ groff-base libdnet-devel libpcap-devel tcpdump
+Url: https://github.com/appneta/tcpreplay
+Source: %name-%version.tar
+BuildRequires: autogen gcc-c++ groff-base libdnet-devel libpcap-devel tcpdump libopts-devel
+BuildRequires(pre): rpm-build-ubt
 
 %description
 Tcpreplay is a tool to replay captured network traffic. Currently, tcpreplay
@@ -23,13 +18,13 @@ files.
 
 %prep
 %setup
-%patch -p2
 
 %build
-%undefine __libtoolize
+%autoreconf
 %configure \
     --enable-dynamic-link \
-    --enable-tcpreplay-edit \
+    --disable-local-libopts \
+    --disable-libopts-install \
     --with-testnic=eth0 \
     --with-testnic2=eth1
 
@@ -39,14 +34,19 @@ files.
 %makeinstall_std
 
 %files
-%doc README docs/CHANGELOG docs/CREDIT docs/HACKING docs/INSTALL docs/LICENSE docs/TODO
+%doc README.md docs/CHANGELOG docs/CREDIT docs/HACKING docs/INSTALL docs/LICENSE docs/TODO
 %_bindir/tcpbridge
 %_bindir/tcpprep
 %_bindir/tcpreplay*
 %_bindir/tcprewrite
+%_bindir/tcpliveplay
+%_bindir/tcpcapinfo
 %_man1dir/*
 
 %changelog
+* Mon Oct 09 2017 Anton Farygin <rider@altlinux.ru> 4.2.6-alt1%ubt
+- new version
+
 * Sat Mar 24 2012 Fr. Br. George <george@altlinux.ru> 3.4.4-alt1
 - Autobuild version bump to 3.4.4
 - libdnet and tcpdump dependency
