@@ -8,7 +8,7 @@
 Summary:      SOPE is an extensive set of frameworks which form a complete Web application server environment
 Name:         sope
 Version:      3.2.10
-Release:      alt1
+Release:      alt2
 License:      GPL
 URL:          http://sogo.nu/
 Group:        Development/Objective-C
@@ -282,6 +282,10 @@ if [ "$1" = "0" ] ; then # last uninstall
 fi
 
 %changelog
+* Mon Oct 09 2017 Ivan Zakharyaschev <imz@altlinux.org> 3.2.10-alt2
+- mUTF7 corrections (RFC3501) for non-ASCII IMAP folder names
+  (ALT: #33722, #32426)
+
 * Tue Jul 11 2017 Andrey Cherepanov <cas@altlinux.org> 3.2.10-alt1
 - New version
 
