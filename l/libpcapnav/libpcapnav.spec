@@ -1,10 +1,13 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gtkdoc-mkdb gcc-c++ libpcapnav-devel
+BuildRequires: libpcapnav-devel
 # END SourceDeps(oneline)
+BuildRequires: gcc-c++
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libpcapnav
 Version:        0.8
-Release:        alt1_13
+Release:        alt1_16
 Summary:        Wrapper library for libpcap offering navigation inside of a tracefile
 
 Group:          System/Libraries
@@ -12,7 +15,7 @@ License:        MIT with advertising
 URL:            http://netdude.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/netdude/libpcapnav-%{version}.tar.gz
 
-BuildRequires:  libpcap-devel, gtk-doc >= 0.6, /bin/sed
+BuildRequires:  libpcap-devel gtk-doc gtk-doc-mkpdf, /bin/sed
 Source44: import.info
 
 %description
@@ -23,8 +26,8 @@ offsets. It was originally based on Vern Paxson's tcpslice tool.
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -39,11 +42,11 @@ sed -i -e 's/libdirs=-L@libdir@/libdirs=/' pcapnav-config.in
 
 %build
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 
 %install
-make install DESTDIR=%{buildroot} INSTALL="%{__install} -p"
+make install DESTDIR=%{buildroot} INSTALL="install -p"
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
@@ -59,6 +62,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_datadir}/gtk-doc/html/pcapnav/
 
 %changelog
+* Tue Oct 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_16
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_13
 - update to new release by fcimport
 
