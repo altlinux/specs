@@ -1,37 +1,29 @@
 %define oname packaging
 
 %def_with python3
-%def_disable check
 
 Name: python-module-%oname
-Version: 15.4
-Release: alt2.dev0.git20150801.1
+Version: 16.8
+Release: alt1%ubt
 Summary: Core utilities for Python packages
-License: ASLv2.0
+License: ASLv2.0 or BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/packaging
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/pypa/packaging.git
 Source: %name-%version.tar
-BuildArch: noarch
-BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-invoke python-module-objects.inv python-module-tox
+
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: python-dev python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib
+BuildRequires: python-module-invoke python-module-objects.inv python-module-tox
 BuildPreReq: python-module-sphinx-devel
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-tox python-module-invoke
-#BuildPreReq: python-module-progress python-module-coverage
-#BuildPreReq: python-module-pretend
-#BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
+BuildRequires: python-module-pytest python2.7(pretend) python2.7(pyparsing) python2.7(six)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-coverage python3-module-invoke python3-module-tox
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-tox python3-module-invoke
-#BuildPreReq: python3-module-progress python3-module-coverage
-#BuildPreReq: python3-module-pretend
+BuildRequires: python3-dev python3-module-coverage python3-module-invoke python3-module-tox
+BuildRequires: python3-module-pytest python3(pretend) python3(pyparsing) python3(six)
 %endif
-
-%py_provides %oname
 
 %description
 Core utilities for Python packages.
@@ -40,7 +32,6 @@ Core utilities for Python packages.
 %package -n python3-module-%oname
 Summary: Core utilities for Python packages
 Group: Development/Python3
-%py3_provides %oname
 
 %description -n python3-module-%oname
 Core utilities for Python packages.
@@ -89,17 +80,15 @@ export PYTHONPATH=$PWD
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
-python setup.py test -v
-python -m coverage run --source packaging/ -m pytest --strict -vv
+py.test -v
 %if_with python3
 pushd ../python3
-python3 setup.py test -v
-python3 -m coverage run --source packaging/ -m pytest --strict -vv
+py.test3 -v
 popd
 %endif
 
 %files
-%doc *.rst docs/_build/html tasks
+%doc *.rst LICENSE* docs/_build/html tasks
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 
@@ -108,11 +97,14 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst docs/_build/html tasks
+%doc *.rst LICENSE* docs/_build/html tasks
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 16.8-alt1%ubt
+- Updated to upstream version 16.8.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 15.4-alt2.dev0.git20150801.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
