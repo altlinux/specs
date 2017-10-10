@@ -1,21 +1,30 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++ unzip
+BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools gcc-c++ libGL-devel libGLU-devel unzip
 # END SourceDeps(oneline)
-%global prerel rc4
-
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global svn_rev 1541
 Name:           blobby
 Version:        1.0
-Release:        alt2_0.11.%{prerel}
+Release:        alt2_11.svn%{svn_rev}
 Summary:        Volley-ball game
 Group:          Games/Other
 License:        GPLv2+
 URL:            http://blobby.sourceforge.net
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}2-linux-%{version}%{prerel}.tar.gz
+# Version 1 is broken. Upstream suggested I use the svn checkout.
+#Source0:        http://downloads.sourceforge.net/%{name}/%{name}2-linux-%{version}.tar.gz
+# svn export -r 1541  svn://svn.code.sf.net/p/blobby/code/trunk blobby-1.0svn1541
+# tar -cvzf blobby-1.0svn1541.tar.gz blobby-1.0svn1541/
+Source0:        %{name}-%{version}svn%{svn_rev}.tar.gz
 Source1:        blobby.desktop
 Source2:        blobby.appdata.xml
-BuildRequires:  libSDL2-devel libphysfs-devel zlib-devel ctest cmake boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel zip
-BuildRequires:  ImageMagick desktop-file-utils icon-theme-hicolor
+Patch0:         blobby-ostream.patch
+Patch1:         compile-flags.patch
+
+BuildRequires:  libSDL2-devel, libphysfs-devel, zlib-devel ctest cmake boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel, zip
+BuildRequires:  ImageMagick, desktop-file-utils, icon-theme-hicolor
+BuildRequires:  tinyxml-devel lua-devel
 Source44: import.info
 
 %description
@@ -23,14 +32,30 @@ Blobby Volley is one of the most popular freeware games.
 Blobby Volley 2 is the continuation of this lovely game.
 
 %prep
-%setup -q -n %{name}-%{version}%{prerel}
+%setup -q -n %{name}-%{version}svn%{svn_rev}
+%patch0 -p0 -b .orig
+%patch1 -p0 -b .compile-flags
+
+# Remove lua and tinyxml
+rm -rvf src/lua
+rm -rvf src/tinyxml
+sed -ibackup -e "/add_subdirectory(lua)/d" -e "/add_subdirectory(tinyxml)/d" src/CMakeLists.txt
+sed -ibackup 's|tinyxml/||' src/UserConfig.cpp
+sed -ibackup 's|tinyxml/||' src/TextManager.cpp
+sed -ibackup 's|tinyxml/||' src/state/NetworkSearchState.cpp
+sed -ibackup 's|tinyxml/||' src/ReplayRecorder.cpp
+sed -ibackup 's|tinyxml/||' src/FileRead.cpp
+sed -ibackup 's|lua/||' src/FileRead.cpp
+sed -ibackup 's|lua/||' src/GameLogic.cpp
+sed -ibackup 's|lua/||' src/IScriptableComponent.cpp
+sed -ibackup 's|lua/||' src/ScriptedInputSource.cpp
 
 # Updated to SDL2 but still looks for SDL also? Why!
 sed -ibackup '/find_package(SDL REQUIRED)/d' src/CMakeLists.txt
 
 %build
 %{fedora_cmake} .
-make %{?_smp_mflags}
+%make_build
 
 %install
 %makeinstall_std
@@ -53,10 +78,12 @@ install -p -m 644 -D %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/appdata/blobby.appdat
 %{_datadir}/blobby
 %{_datadir}/icons/hicolor/48x48/apps/*.png
 %{_datadir}/applications/*.desktop
-%dir %{_datadir}/appdata/
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Tue Oct 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_11.svn1541
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.11.rc4
 - update to new release by fcimport
 
