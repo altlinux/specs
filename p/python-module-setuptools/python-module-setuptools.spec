@@ -1,19 +1,20 @@
-%define modulename setuptools
+%define oname setuptools
 
 %def_with python3
+%def_with tests
 
-Name: python-module-%modulename
+Name: python-module-%oname
 Epoch: 1
-Version: 18.5
-Release: alt1
+Version: 36.5.0
+Release: alt1%ubt
 
 Summary: Python Distutils Enhancements
 License: PSF/ZPL
 Group: Development/Python
 URL: http://pypi.python.org/pypi/setuptools
 
-# Source-url: https://pypi.io/packages/source/s/%modulename/%modulename-%version.tar.gz
-Source: %modulename.tar
+# Source-url: https://pypi.io/packages/source/s/%oname/%oname-%version.tar.gz
+Source: %oname.tar
 
 Patch0: 0001-Don-t-remove-setuptools.tests-from-the-installed-pac.patch
 Patch1: 0001-command-test.py-skip-install_requires-and-tests_requ.patch
@@ -21,19 +22,25 @@ Patch2: 0002-dist.py-skip-checking-the-existence-of-system-PKG-IN.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python rpm-build-ubt
 BuildPreReq: python-devel
+BuildRequires: python2.7(packaging) python2.7(pyparsing) python2.7(six) python2.7(appdirs)
+BuildRequires: python-module-pytest python2.7(mock) python2.7(pytest_fixture_config) python2.7(pytest_virtualenv)
+BuildRequires: python2.7(path) python2.7(contextlib2) python-module-virtualenv python-module-pip
 # For more precise reqs:
 %python_req_hier
 
-Provides: python-module-distribute = %epoch:%version-%release
+Provides: python-module-distribute = %EVR
 
-Provides: %name-tests = %epoch:%version-%release
+Provides: %name-tests = %EVR
 Obsoletes: %name-tests <= 1:18.1-alt4
 Obsoletes: python-module-distribute <= 0.6.35-alt1
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel
+BuildRequires: python3(packaging) python3(pyparsing) python3(six) python3(appdirs)
+BuildRequires: python3-module-pytest python3(mock) python3(pytest_fixture_config) python3(pytest_virtualenv)
+BuildRequires: python3(path) python3(contextlib2) python3-module-virtualenv python3-module-pip
 # For more precise reqs:
 %python3_req_hier
 %endif
@@ -46,7 +53,7 @@ especially ones that have dependencies on other packages.
 %package docs
 Summary: Documentation for Setuptools
 Group: Development/Documentation
-Provides: python-module-distribute-docs = %epoch:%version-%release
+Provides: python-module-distribute-docs = %EVR
 
 %description docs
 Distribute is intended to replace Setuptools as the standard method for
@@ -55,25 +62,35 @@ working with Python module distributions.
 This package contains documentation for Distribute.
 
 %if_with python3
-%package -n python3-module-%modulename
+%package -n python3-module-%oname
 Summary: Python Distutils Enhancements
 Group: Development/Python3
-Provides: python3-module-distribute = %epoch:%version-%release
+Provides: python3-module-distribute = %EVR
 
-Provides: python3-module-%modulename-tests = %epoch:%version-%release
-Obsoletes: python3-module-%modulename-tests <= 1:18.1-alt4
+Provides: python3-module-%oname-tests = %EVR
+Obsoletes: python3-module-%oname-tests <= 1:18.1-alt4
 
-%description -n python3-module-%modulename
+%description -n python3-module-%oname
 Setuptools is a collection of enhancements to the Python distutils
 that allow you to more easily build and distribute Python packages,
 especially ones that have dependencies on other packages.
 %endif
 
 %prep
-%setup -n %modulename
-%patch0 -p2
-%patch1 -p2
+%setup -n %oname
+%patch0
+#patch1 -p2
 %patch2 -p2
+
+# don't use bundled packages
+rm -rf pkg_resources/extern pkg_resources/_vendor setuptools/extern
+
+find . -name '*.py' -type f | xargs sed -i \
+	-e "s:from pkg_resources\.extern ::g" \
+	-e "s:from pkg_resources\.extern\.:from :g" \
+	-e "s:'pkg_resources\.extern\.:':g" \
+	-e "s:from setuptools\.extern ::g" \
+	-e "s:from setuptools\.extern\.:from :g"
 
 %if_with python3
 rm -rf ../python3
@@ -106,39 +123,52 @@ ln -s easy_install-%_python_version %buildroot%_bindir/easy_install
 ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
 %endif
 
+%if_with tests
+%check
+# TODO: fix or disable remaining failing tests
+PYTHONPATH=$(pwd) py.test -v ||:
+
+%if_with python3
+pushd ../python3
+PYTHONPATH=$(pwd) py.test3 -v ||:
+popd
+%endif
+%endif
+
 %files
-%doc *.txt
+%doc *.rst
 %_bindir/easy_install
 %_bindir/easy_install-%_python_version
-%python_sitelibdir/_markerlib/
 %python_sitelibdir/pkg_resources/
-%dir %python_sitelibdir/%modulename/
-%python_sitelibdir/%modulename/*.*
-%python_sitelibdir/%modulename/command/
-%python_sitelibdir/%modulename/tests/
+%dir %python_sitelibdir/%oname/
+%python_sitelibdir/%oname/*.*
+%python_sitelibdir/%oname/command/
+%python_sitelibdir/%oname/tests/
 %python_sitelibdir/easy_install.*
-%python_sitelibdir/%modulename-%version-*.egg-info
+%python_sitelibdir/%oname-%version-*.egg-info
 
 %files docs
 %doc docs/*.txt
 
 %if_with python3
-%files -n python3-module-%modulename
+%files -n python3-module-%oname
 %_bindir/easy_install3
 %_bindir/easy_install-%_python3_version
 %python3_sitelibdir/__pycache__/*
-%python3_sitelibdir/_markerlib/
 %python3_sitelibdir/pkg_resources/
-%dir %python3_sitelibdir/%modulename/
-%python3_sitelibdir/%modulename/__pycache__/
-%python3_sitelibdir/%modulename/*.*
-%python3_sitelibdir/%modulename/command/
-%python3_sitelibdir/%modulename/tests/
+%dir %python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname/__pycache__/
+%python3_sitelibdir/%oname/*.*
+%python3_sitelibdir/%oname/command/
+%python3_sitelibdir/%oname/tests/
 %python3_sitelibdir/easy_install.*
-%python3_sitelibdir/%modulename-%version-*.egg-info
+%python3_sitelibdir/%oname-%version-*.egg-info
 %endif
 
 %changelog
+* Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:36.5.0-alt1%ubt
+- Updated to new version.
+
 * Wed Jun 14 2017 Vitaly Lipatov <lav@altlinux.ru> 1:18.5-alt1
 - new version 18.5 (with rpmrb script)
 - add obsoletes python-module-distribute (ALT bug #32546)
