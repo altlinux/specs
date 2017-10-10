@@ -73,7 +73,7 @@
 
 Name: libav
 Version: 11.8
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Hyper fast MPEG1/MPEG4/H263/RV and AC3/MPEG audio encoder
@@ -382,6 +382,9 @@ bzip2 --best --force --keep -- Changelog
 
 # {{{ Changelog
 %changelog
+* Tue Oct 10 2017 Anton Farygin <rider@altlinux.ru> 1:11.8-alt3
+- rebuilt for libx265
+
 * Thu May 25 2017 Anton Farygin <rider@altlinux.ru> 1:11.8-alt2
 - rebuild with new x265
 - removed devel packages

@@ -19,7 +19,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -31,6 +31,7 @@ Requires: gstreamer%api_ver >= %ver_major
 
 Source: http://gstreamer.freedesktop.org/src/%_name-bad/%_name-bad-%version.tar.xz
 Patch: gst-plugins-bad-0.11.94-alt-intltool.patch
+Patch1: gst-plugins-bad-1.12.3-alt-openjpeg.patch
 
 BuildRequires: gst-plugins%api_ver-devel gst-plugins%api_ver-gir-devel
 BuildRequires: bzlib-devel gcc-c++ gtk-doc intltool libSDL-devel libX11-devel
@@ -86,6 +87,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %prep
 %setup -n %_name-bad-%version
 %patch -p1
+%patch1
 
 %build
 %autoreconf
@@ -150,6 +152,10 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Tue Oct 10 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.3-alt2
+- rebuilt against libx265.so.130
+- fixed build with libopenjpeg2.0-2.3.0
+
 * Tue Sep 19 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.3-alt1
 - 1.12.3
 
