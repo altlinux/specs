@@ -4,25 +4,25 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.7.2
-Release: alt1.git20150808.1
+Version: 2.7.6
+Release: alt1
 Summary: An implementation of the psycopg2 module using cffi
 License: LGPLv3+
 Group: Development/Python
 Url: https://pypi.python.org/pypi/psycopg2cffi/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/chtd/psycopg2cffi.git
 Source: %name-%version.tar
+Patch1: %oname-%version-alt-pg10.patch
 
-BuildPreReq: postgresql-devel libpq-devel
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-six python-module-cffi
-BuildPreReq: python-modules-json
+BuildRequires: postgresql-devel libpq-devel
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-six python-module-cffi
+BuildRequires: python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-six python3-module-cffi
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-six python3-module-cffi
 %endif
 
 %py_provides %oname
@@ -66,6 +66,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -129,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.6-alt1
+- Updated to upstream version 2.7.6.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.7.2-alt1.git20150808.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
