@@ -11,7 +11,7 @@
 %define bugfix 1
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3%ubt
 %define libname lib%name
 
 Group: Graphical desktop/KDE
@@ -34,7 +34,7 @@ Patch1005: kdebase-runtime-4.8.0-alt-nepomuk-backup-on.patch
 Patch1006: kdebase-runtime-4.9.3-alt-multimedia-player-chooser.patch
 Patch1007: kdebase-runtime-4.12.3-alt-use-kwallet.patch
 
-BuildRequires(pre): kde4pimlibs-devel attica-devel
+BuildRequires(pre): kde4pimlibs-devel attica-devel rpm-build-ubt
 BuildRequires: gcc-c++ cmake bzlib-devel liblzma-devel xml-utils
 BuildRequires: libalsa-devel libclucene-core-devel libjpeg-devel libpcre-devel libgcrypt-devel
 BuildRequires: libqt4-devel libsmbclient-devel NetworkManager-glib-devel
@@ -223,6 +223,9 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Oct 10 2017 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt3%ubt
+- rebuild with new libwebp
+
 * Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt2
 - fix PATH in kde4 wrapper script
 
