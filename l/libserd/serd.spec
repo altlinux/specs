@@ -1,6 +1,8 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: waf
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname serd
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -8,11 +10,10 @@ BuildRequires: waf
 %global maj 0
 
 Name:           libserd
-Version:        0.22.0
+Version:        0.28.0
 Release:        alt1_2
 Summary:        A lightweight C library for RDF syntax
 
-Group:          System/Libraries
 License:        ISC
 URL:            http://drobilla.net/software/serd/
 Source0:        http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
@@ -21,6 +22,8 @@ BuildRequires:  doxygen
 BuildRequires:  graphviz libgraphviz
 BuildRequires:  glib2-devel libgio libgio-devel
 BuildRequires:  python
+BuildRequires:  gcc-common
+Source44: import.info
 Provides: serd = %{version}-%{release}
 
 %description
@@ -35,8 +38,8 @@ implementations or embedded applications).is a library to make the use of
 LV2 plugins as simple as possible for applications. 
 
 %package devel
+Group: Development/Other
 Summary:        Development libraries and headers for %{oldname}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 Provides: serd-devel = %{version}-%{release}
 
@@ -53,6 +56,7 @@ sed -i -e 's|bld.add_post_fun(autowaf.run_ldconfig)||' wscript
 
 %build
 export CFLAGS="%{optflags}"
+export LDFLAGS="%{__global_ldflags}"
 ./waf configure \
     --prefix=%{_prefix} \
     --libdir=%{_libdir} \
@@ -66,20 +70,28 @@ export CFLAGS="%{optflags}"
 %install
 DESTDIR=%{buildroot} ./waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-%{maj}.so.*
+# Move devel docs to the right directory
+install -d %{buildroot}%{_docdir}/%{oldname}/%{oldname}-%{maj}
+mv %{buildroot}%{_docdir}/%{oldname}-%{maj}/html %{buildroot}%{_docdir}/%{oldname}/%{oldname}-%{maj}/html
 
 %files
-%doc AUTHORS COPYING NEWS README
+%doc COPYING
+%doc AUTHORS NEWS README.md
+%doc %{_mandir}/man1/serdi.1*
 %{_libdir}/lib%{oldname}-%{maj}.so.*
 %{_bindir}/serdi
-%{_mandir}/man1/serdi.1*
 
 %files devel
+%doc %{_mandir}/man3/serd.3*
+%doc %{_docdir}/%{oldname}/%{oldname}-%{maj}/
 %{_libdir}/lib%{oldname}-%{maj}*.so
 %{_libdir}/pkgconfig/%{oldname}*.pc
 %{_includedir}/%{oldname}-%{maj}/
-%{_mandir}/man1/*.1*
 
 %changelog
+* Tue Oct 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.28.0-alt1_2
+- rebuild with libaltascpp
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.22.0-alt1_2
 - update to new release by fcimport
 
