@@ -1,18 +1,15 @@
 %define plugin_dir %_libdir/dirsrv/plugins
-%define POLICYCOREUTILSVER 2.1.12
 %define _localstatedir %_var
 %define _libexecdir /usr/libexec
 %define etc_systemd_dir %_sysconfdir/systemd/system
-%define pki_core_version 10.2.6-alt5_19jpp8
-%define krb5_version 1.14.4-alt2
-%define sssd_version 1.14.2-alt5
 %define apache_conf_dir %_sysconfdir/httpd2/conf
 
 %define _unpackaged_files_terminate_build 1
+%define alt_name ipa
 
 Name: freeipa
-Version: 4.3.3
-Release: alt9
+Version: 4.4.4
+Release: alt4%ubt
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -22,11 +19,13 @@ Source: %name-%version.tar
 Source1: ipa-nss.conf
 Source2: ipa_configured
 Source3: ipa-nss.load
-Patch: %name-%version-%release.patch
+Source4: freeipa-server.filetrigger
+Patch: %name-%version.patch
 
-BuildRequires: 389-ds-devel >= 1.3.1.3
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: 389-ds-devel >= 1.3.5.6
 BuildRequires: libsvrcore-devel
-BuildRequires: policycoreutils >= %POLICYCOREUTILSVER
+BuildRequires: policycoreutils >= 2.1.12
 BuildRequires: systemd-devel
 BuildRequires: samba-devel >= 4.0.5
 BuildRequires: python-module-samba
@@ -37,7 +36,7 @@ BuildRequires: libnspr-devel
 BuildRequires: libnss-devel
 BuildRequires: libssl-devel
 BuildRequires: libldap-devel
-BuildRequires: libkrb5-devel >= %krb5_version
+BuildRequires: libkrb5-devel >= 1.14.4
 BuildRequires: libuuid-devel
 BuildRequires: libcurl-devel >= 7.21.7-2
 BuildRequires: libxmlrpc-devel >= 1.27.4
@@ -56,7 +55,7 @@ BuildRequires: pylint
 BuildRequires: python-module-polib
 BuildRequires: python-module-ipa_hbac
 BuildRequires: python-module-memcached
-BuildRequires: sssd >= %sssd_version
+BuildRequires: sssd >= 1.14.2
 BuildRequires: python-module-lxml
 BuildRequires: python-module-pyasn1 >= 0.0.9a
 BuildRequires: python-module-dns
@@ -64,12 +63,14 @@ BuildRequires: python-module-lesscpy
 BuildRequires: python-module-cffi
 BuildRequires: python-module-six
 BuildRequires: python-module-gssapi
-BuildRequires: libsss_idmap-devel >= %sssd_version
-BuildRequires: libsss_nss_idmap-devel >= %sssd_version
+BuildRequires: libsss_idmap-devel >= 1.14.2
+BuildRequires: libsss_nss_idmap-devel >= 1.14.2
 BuildRequires: java-1.8.0-openjdk
 BuildRequires: libverto-devel
 BuildRequires: systemd
 BuildRequires: libunistring-devel
+BuildRequires: pki-base >= 10.4.8
+BuildRequires: python-module-netifaces
 BuildRequires: libsasl2-devel
 BuildRequires: rpm-macros-webserver-common
 BuildRequires: libini_config-devel
@@ -92,22 +93,22 @@ Requires: %name-server-common = %version-%release
 Requires: python-module-ipaserver = %version-%release
 Requires: python-module-%name = %version-%release
 Requires: %name-client = %version-%release
-Requires: %name-admintools = %version-%release
-Requires: krb5-kinit >= %krb5_version
+Requires: krb5-kinit >= 1.14.4
 Requires: openntpd
-Requires: pki-server >= %pki_core_version
-Requires: pki-ca >= %pki_core_version
-Requires: pki-kra >= %pki_core_version
+Requires: pki-server >= 10.4.8
+Requires: pki-ca >= 10.4.8
+Requires: pki-kra >= 10.4.8
 Requires: java-1.8.0-openjdk
 Requires: apache2-mod_nss
 Requires: apache2-mod_auth_gssapi
 Requires: apache2-mod_wsgi
-Requires: krb5-kdc >= %krb5_version
+Requires: krb5-kdc >= 1.14.4
 Requires: 389-ds-base
 Requires: memcached
 Requires: python-module-kdcproxy
 Requires: oddjob
 Requires: slapi-nis >= 0.55
+Requires: libp11-kit-devel
 
 %description server
 IPA is an integrated solution to provide centrally managed Identity
@@ -124,9 +125,11 @@ BuildArch: noarch
 Requires: %name-server-common = %version-%release
 Requires: %name-common = %version-%release
 Requires: python-module-ipaclient = %version-%release
+Requires: librpm-devel
 # Explicitly require python-module-samba
 # to avoid conflict with python-module-samba-DC
 Requires: python-module-samba
+Requires: python-module-dns
 Requires: zip
 
 %description -n python-module-ipaserver
@@ -191,15 +194,18 @@ Requires: %name-client-common = %version-%release
 Requires: python-module-%name = %version-%release
 Requires: python-module-ipaclient = %version-%release
 Requires: oddjob-mkhomedir
-Requires: sssd-krb5 >= %sssd_version
-Requires: sssd-ipa >= %sssd_version
-Requires: libsss_sudo >= %sssd_version
-Requires: krb5-kinit >= %krb5_version
+Requires: sssd-krb5 >= 1.14.2
+Requires: sssd-ipa >= 1.14.2
+Requires: libsss_sudo >= 1.14.2
+Requires: krb5-kinit >= 1.14.4
 Requires: certmonger
 Requires: openntpd
 Requires: ntpdate
 Requires: nss-utils
 Requires: bind-utils
+
+Obsoletes: %name-admintools < 4.4.1
+Provides: %name-admintools = %version-%release
 
 %description client
 IPA is an integrated solution to provide centrally managed Identity
@@ -208,11 +214,13 @@ Policy (configuration settings, access control information) and Audit
 (events, logs, analysis thereof).
 If your network uses IPA for authentication, this package should be
 installed on every client machine.
+This package provides command-line tools for IPA administrators.
 
 %package -n python-module-ipaclient
 Summary: Python module for IPA client
 Group: Development/Python
 BuildArch: noarch
+Requires: python-module-dns
 
 %description -n python-module-ipaclient
 IPA is an integrated solution to provide centrally managed Identity
@@ -240,20 +248,6 @@ infrastructures (Trusts).
 If your network uses IPA for authentication, this package should be
 installed on every client machine.
 
-%package admintools
-Summary: IPA administrative tools
-Group: System/Base
-BuildArch: noarch
-Requires: python-module-%name = %version-%release
-Requires: %name-client-common = %version-%release
-
-%description admintools
-IPA is an integrated solution to provide centrally managed Identity
-(machine, user, virtual machines, groups, authentication credentials),
-Policy (configuration settings, access control information) and Audit
-(events, logs, analysis thereof).
-This package provides command-line tools for IPA administrators.
-
 %package -n python-module-freeipa
 Summary: Python libraries used by IPA
 Group: Development/Python
@@ -279,7 +273,6 @@ package.
 Summary: Common files used by IPA
 Group: System/Base
 BuildArch: noarch
-
 
 %description common
 IPA is an integrated solution to provide centrally managed Identity (users,
@@ -423,19 +416,17 @@ install -d -m 0700 %buildroot%_runtimedir/httpd2/ipa
 install -d -m 0700 %buildroot%_runtimedir/httpd2/ipa/clientcaches
 install -d -m 0700 %buildroot%_runtimedir/run/httpd2/ipa/krbcache
 
-#mkdir -p %{buildroot}%{_libdir}/krb5/plugins/libkrb5
-#touch %{buildroot}%{_libdir}/krb5/plugins/libkrb5/winbind_krb5_locator.so
+#mkdir -p %buildroot%_libdir/krb5/plugins/libkrb5
+#touch %buildroot%_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so
 
 # NOTE: systemd specific section
 mkdir -p %buildroot%_unitdir
 mkdir -p %buildroot%etc_systemd_dir
 install -m 644 init/systemd/ipa.service %buildroot%_unitdir/ipa.service
 install -m 644 init/systemd/ipa_memcached.service %buildroot%_unitdir/ipa_memcached.service
-install -m 644 init/systemd/httpd.service %buildroot%etc_systemd_dir/httpd2.service
 install -m 644 init/systemd/ipa-custodia.service %buildroot%_unitdir/ipa-custodia.service
 # END
 mkdir -p %buildroot%_localstatedir/lib/ipa/backup
-
 
 touch %buildroot%_sysconfdir/ipa/default.conf
 touch %buildroot%_sysconfdir/ipa/ca.crt
@@ -452,11 +443,17 @@ mkdir -p %buildroot%_sysconfdir/cron.d
 
 mkdir -p %buildroot%_sysconfdir/ipa/custodia
 
+mkdir -p %buildroot%_datadir/ipa/schema.d
+
 mkdir -p %buildroot%_localstatedir/lib/ipa/pki-ca
 touch %buildroot%_localstatedir/lib/ipa/pki-ca/publish
 
 mkdir -p %buildroot%_sysconfdir/pki/ca-trust/source/
 touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
+
+# install filetrigger
+mkdir -p %buildroot%_rpmlibdir
+install -D -p -m 0755 %SOURCE4 %buildroot%_rpmlibdir/freeipa-server.filetrigger
 
 %check
 %make check VERBOSE=yes
@@ -481,6 +478,7 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 #%_libexecdir/ipa/ipa-dnskeysync-replica
 #%_libexecdir/ipa/ipa-ods-exporter
 %_libexecdir/ipa/ipa-httpd-kdcproxy
+%_libexecdir/ipa/ipa-pki-retrieve-key
 %dir %_libexecdir/ipa/oddjob/
 
 %_libexecdir/ipa/oddjob/org.freeipa.server.conncheck
@@ -522,6 +520,8 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 %_man1dir/ipa-cacert-manage.1.*
 %_man1dir/ipa-winsync-migrate.1.*
 
+%_rpmlibdir/freeipa-server.filetrigger
+
 %files -n python-module-ipaserver
 %python_sitelibdir_noarch/freeipa-*.egg-info
 %python_sitelibdir_noarch/ipaserver
@@ -541,7 +541,7 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 %_tmpfilesdir/%name.conf
 %attr(644,root,root) %_unitdir/ipa_memcached.service
 %attr(644,root,root) %_unitdir/ipa-custodia.service
-%attr(644,root,root) %etc_systemd_dir/httpd2.service
+#%ghost %attr(644,root,root) %etc_systemd_dir/httpd.service.d/ipa.conf
 # END
 %_datadir/ipa/*
 %exclude %_datadir/ipa/smb.conf.empty
@@ -575,31 +575,33 @@ touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 #%ghost %_localstatedir/lib/bind/zone/dyndb-ldap/ipa
 #%ghost %_localstatedir/lib/bind/zone/dyndb-ldap/ipa/master
 %dir %attr(0700,root,root) %_sysconfdir/ipa/custodia
+%dir %_datadir/ipa/schema.d
+%attr(0644,root,root) %_datadir/ipa/schema.d/README
 
 # DNSSEC is disabled for now
 %exclude %_datadir/ipa/dnssec.ldif
 %exclude %_datadir/ipa/opendnssec_conf.template
 %exclude %_datadir/ipa/opendnssec_kasp.template
 
-# This should be run from posttrans actually (or from filetrigger if posttrans
-# is not available).
-# But for now just run it in post, this shouldn't cause any damage.
-#posttrans server
 %post server
-# don't execute upgrade and restart of IPA when server is not installed
-if  [ "$1" -eq 2 ] && ipa_configured; then
-    # This must be run in posttrans so that updates from previous
-    # execution that may no longer be shipped are not applied.
-    /usr/sbin/ipa-server-upgrade --quiet >/dev/null || :
-
-    # Restart IPA processes. This must be also run in postrans so that plugins
-    # and software is in consistent state
-    # NOTE: systemd specific section
-    if systemctl is-enabled ipa.service >/dev/null 2>&1; then
-        systemctl try-restart ipa.service >/dev/null 2>&1 || :
-    fi
+# NOTE: systemd specific section
+    systemctl --system daemon-reload 2>&1 ||:
+# END    
+if [ $1 -gt 1 ] ; then
+    systemctl condrestart certmonger.service 2>&1 ||:
 fi
+systemctl reload-or-try-restart dbus ||:
+systemctl reload-or-try-restart oddjobd ||:
+
+%preun server
+if [ $1 = 0 ]; then 
+# NOTE: systemd specific section
+    /bin/systemctl --quiet stop ipa.service ||: 
+    /bin/systemctl --quiet disable ipa.service ||: 
+    /bin/systemctl reload-or-try-restart dbus ||:
+    /bin/systemctl reload-or-try-restart oddjobd ||:
 # END
+fi
 
 %triggerun server-common -- freeipa-server-common <= 4.3.3-alt3
 if ipa_configured; then
@@ -657,6 +659,9 @@ fi
 
 %files client
 %_sbindir/ipa-client-*
+%_bindir/ipa
+%config %_sysconfdir/bash_completion.d
+%_man1dir/ipa.1.*
 %_sbindir/ipa-*keytab
 %_sbindir/ipa-join
 %_sbindir/ipa-certupdate
@@ -670,7 +675,13 @@ fi
 
 %files -n python-module-ipaclient
 %dir %python_sitelibdir_noarch/ipaclient
+%dir %python_sitelibdir_noarch/ipaclient/plugins
+%dir %python_sitelibdir_noarch/ipaclient/remote_plugins
+%dir %python_sitelibdir_noarch/ipaclient/remote_plugins/2_*
 %python_sitelibdir_noarch/ipaclient/*.py*
+%python_sitelibdir_noarch/ipaclient/plugins/*.py*
+%python_sitelibdir_noarch/ipaclient/remote_plugins/*.py*
+%python_sitelibdir_noarch/ipaclient/remote_plugins/2_*/*.py*
 %python_sitelibdir_noarch/ipaclient-*.egg-info
 
 %files client-common
@@ -685,11 +696,6 @@ fi
 %dir %_localstatedir/lib/ipa-client
 %dir %_localstatedir/lib/ipa-client/sysrestore
 %_man5dir/default.conf.5.*
-
-%files admintools
-%_bindir/ipa
-%config %_sysconfdir/bash_completion.d
-%_man1dir/ipa.1.*
 
 %files -n python-module-freeipa
 %python_sitelibdir_noarch/ipapython
@@ -715,14 +721,28 @@ fi
 %_man1dir/ipa-test-task.1.*
 
 %changelog
+* Thu Oct 06 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt4%ubt
+- Fix ipa client schema cache: Handle malformed server info data gracefully
+- Fix ipa client requirements
+- Import patches from 4.3.3-alt9
+
 * Thu Oct 05 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt9
 - selinux: Allow digits in SELinux user names (closes: #33838).
 - Require zip.
+
+* Thu Oct 4 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt3%ubt
+- Fix ipa server upgrade
+
+* Thu Oct 2 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt2%ubt
+- Import patches from 4.3.3-alt8
 
 * Wed Sep 27 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt8
 - Fix replica creation (closes: #33513):
     + Don't try to use bundled urllib3 in the python-module-request.
     + Use ipa CA certificate for https checks.
+
+* Thu Sep 25 2017 Stanislav Levin <slev@altlinux.org> 4.4.4-alt1%ubt
+- Update to upstream's 4.4.4 version
 
 * Thu Aug 24 2017 Mikhail Efremov <sem@altlinux.org> 4.3.3-alt7
 - httpd2: Update existing ipa.conf for fontawesome path.
