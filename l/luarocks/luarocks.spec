@@ -5,7 +5,7 @@
 
 Name: luarocks
 Version: 2.4.2
-Release: alt3
+Release: alt4
 Summary: A deployment and management system for Lua modules
 License: MIT
 Group: Development/Tools
@@ -71,7 +71,7 @@ EOF
 SITECFG_ADDITION="site_config.LUAROCKS_EXTERNAL_DEPS_SUBDIRS =\\
     {\\
       bin = \"bin\",\\
-      lib = \"$LIBSUBDIR\",\\
+      lib = \"%_lib\",\\
       include = \"include\"\\
     }"
 sed -i "/^return/ i $SITECFG_ADDITION" \
@@ -99,6 +99,9 @@ install -m644 %SOURCE2 %buildroot%_rpmlibdir/
 %doc COPYING README*
 
 %changelog
+* Fri Dec 08 2017 Ildar Mulyukov <ildar@altlinux.ru> 2.4.2-alt4
+- fix `lib` external dep subdir accidently lost in 2.4.2-alt1
+
 * Fri Oct 06 2017 Ildar Mulyukov <ildar@altlinux.ru> 2.4.2-alt3
 - disable liblua.so linking according to https://www.altlinux.org/Lua_Policy
 - build luarocks for both Lua 5.3 (latest) and Lua 5.1
