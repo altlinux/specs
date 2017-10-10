@@ -2,7 +2,7 @@
 
 Name: vlc
 Version: 3.0.0
-Release: alt5.git39e0d63
+Release: alt6.git8cacc98
 
 Summary: VLC media player
 License: GPLv2
@@ -757,16 +757,12 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %_bindir/vlc-wrapper
 %vlc_libdir/vlc-cache-gen
 %_libexecdir/rpm/vlc.filetrigger
-
 %dir %vlc_libdir
-%vlc_libdir/lua
-
 %dir %vlc_plugindir
-
 %exclude %_datadir/%name/skins2
-
 %_datadir/%name
-%_datadir/appdata/vlc.appdata.xml
+%dir %_datadir/metainfo
+%_datadir/metainfo/vlc.appdata.xml
 %_man1dir/*
 
 %_iconsdir/hicolor/*/apps/vlc*.png
@@ -875,6 +871,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/codec/libtextst_plugin.so
 %vlc_plugindir/codec/libttml_plugin.so
 %vlc_plugindir/codec/libuleaddvaudio_plugin.so
+%vlc_plugindir/codec/libvaapi_plugin.so
 %vlc_plugindir/codec/libxwd_plugin.so
 
 %dir %vlc_plugindir/control
@@ -903,6 +900,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/demux/libmjpeg_plugin.so
 %vlc_plugindir/demux/libmp4_plugin.so
 %vlc_plugindir/demux/libmpgv_plugin.so
+%vlc_plugindir/demux/libnoseek_plugin.so
 %vlc_plugindir/demux/libnsc_plugin.so
 %vlc_plugindir/demux/libnsv_plugin.so
 %vlc_plugindir/demux/libnuv_plugin.so
@@ -1016,7 +1014,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/stream_out/libstream_out_stats_plugin.so
 %vlc_plugindir/stream_out/libstream_out_transcode_plugin.so
 %vlc_plugindir/stream_out/libstream_out_autodel_plugin.so
-%vlc_plugindir/stream_out/libstream_out_raop_plugin.so
 %vlc_plugindir/stream_out/libstream_out_record_plugin.so
 %vlc_plugindir/stream_out/libstream_out_smem_plugin.so
 %vlc_plugindir/stream_out/libstream_out_delay_plugin.so
@@ -1031,6 +1028,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/stream_filter/libhds_plugin.so
 %vlc_plugindir/stream_filter/libinflate_plugin.so
 %vlc_plugindir/stream_filter/libprefetch_plugin.so
+%vlc_plugindir/stream_filter/libskiptags_plugin.so
 
 %dir %vlc_plugindir/text_renderer
 %vlc_plugindir/text_renderer/libtdummy_plugin.so
@@ -1099,6 +1097,10 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/video_filter/libvhs_plugin.so
 
 %dir %vlc_plugindir/video_output
+%vlc_plugindir/video_output/libglconv_vaapi_drm_plugin.so
+%vlc_plugindir/video_output/libglconv_vaapi_wl_plugin.so
+%vlc_plugindir/video_output/libglconv_vaapi_x11_plugin.so
+%vlc_plugindir/video_output/libglconv_vdpau_plugin.so
 %vlc_plugindir/video_output/libvdummy_plugin.so
 %vlc_plugindir/video_output/libvmem_plugin.so
 %vlc_plugindir/video_output/libyuv_plugin.so
@@ -1250,11 +1252,8 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %dir %vlc_plugindir/vdpau
 %dir %vlc_plugindir/vaapi
 %_libdir/vlc/libvlc_vdpau.so*
-%_libdir/vlc/libvlc_vaapi_instance.so*
 %vlc_plugindir/access/libxcb_screen_plugin.so
 %vlc_plugindir/codec/libvaapi_drm_plugin.so
-%vlc_plugindir/codec/libvaapi_dr_plugin.so
-%vlc_plugindir/codec/libvaapi_x11_plugin.so
 %vlc_plugindir/control/libxcb_hotkeys_plugin.so
 %vlc_plugindir/services_discovery/libxcb_apps_plugin.so
 %vlc_plugindir/vdpau/libvdpau_sharpen_plugin.so
@@ -1263,7 +1262,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/vdpau/libvdpau_avcodec_plugin.so
 %vlc_plugindir/vdpau/libvdpau_adjust_plugin.so
 %vlc_plugindir/vdpau/libvdpau_chroma_plugin.so
-%vlc_plugindir/vaapi/libvaapi_chroma_plugin.so
 %vlc_plugindir/vaapi/libvaapi_filters_plugin.so
 %vlc_plugindir/video_output/libxcb_window_plugin.so
 %vlc_plugindir/video_output/libxcb_x11_plugin.so
@@ -1369,6 +1367,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Tue Oct 10 2017 Anton Farygin <rider@altlinux.ru> 3.0.0-alt6.git8cacc98
+- up to 8cacc98
+
 * Mon Jul 03 2017 Anton Farygin <rider@altlinux.ru> 3.0.0-alt5.git39e0d63
 - up to 39e0d63
 
