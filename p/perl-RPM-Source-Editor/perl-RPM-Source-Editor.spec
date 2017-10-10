@@ -2,7 +2,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.914
+Version: 0.915
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -11,7 +11,8 @@ Summary: Perl library for src.rpm and spec file editing
 Group: Development/Perl
 License: GPL or Artistic
 Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
-Url: http://search.cpan.org/dist/%module
+#Url: http://search.cpan.org/dist/%module
+Url: http://git.altlinux.org/people/viy/packages/RPM-Source-Editor.git
 
 # due to rpmbuild -bE
 # Recommends: rpm-build
@@ -79,6 +80,9 @@ mkdir -p %buildroot%_datadir/srpmtools/hooks
 %_man1dir/hashertarbuild*
 
 %changelog
+* Tue Oct 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.915-alt1
+- bugfix release
+
 * Mon Sep 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.914-alt1
 - bugfix release
 
