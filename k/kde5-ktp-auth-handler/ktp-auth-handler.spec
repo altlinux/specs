@@ -1,7 +1,7 @@
 %define rname ktp-auth-handler
 
 Name: kde5-%rname
-Version: 17.04.2
+Version: 17.04.3
 Release: alt2%ubt
 %K5init altplace
 
@@ -17,14 +17,14 @@ Source: %rname-%version.tar
 Patch1: alt-oauth2-only-google.patch
 
 # Automatically added by buildreq on Wed Jun 17 2015 (-bi)
-# optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libaccounts-glib libaccounts-qt51 libdbusmenu-qt52 libgpg-error libjson-c libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-svg libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libsignon-qt51 libstdc++-devel libtelepathy-logger-qt5 libtelepathy-qt5 libtelepathy-qt5-devel libxcbutil-keysyms python-base python-module-google python3 python3-base qt5-base-devel qt5-webkit-devel telepathy-logger-qt5-devel
-#BuildRequires: accounts-qt5-devel extra-cmake-modules gcc-c++ kde5-kaccounts-integration-devel kde5-ktp-common-internals-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdewebkit-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libdb4-devel libqca-qt5-devel libtelepathy-qt5-devel-static rpm-build-python3 ruby ruby-stdlibs signon-devel
+# optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libaccounts-glib libaccounts-qt51 libdbusmenu-qt52 libgpg-error libjson-c libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsignon-qt51 libstdc++-devel libtelepathy-logger-qt5 libtelepathy-qt5 libtelepathy-qt5-devel libxcbutil-keysyms python-base python-module-google python3 python3-base qt5-base-devel telepathy-logger-qt5-devel
+#BuildRequires: accounts-qt5-devel extra-cmake-modules gcc-c++ kde5-kaccounts-integration-devel kde5-ktp-common-internals-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libdb4-devel libqca-qt5-devel libtelepathy-qt5-devel-static rpm-build-python3 ruby ruby-stdlibs signon-devel
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: accounts-qt5-devel libqca-qt5-devel telepathy-qt5-devel-static signon-devel
 BuildRequires: kde5-kaccounts-integration-devel kde5-ktp-common-internals-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
-BuildRequires: kf5-kdewebkit-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwallet-devel
+BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwallet-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
 
 %description
@@ -83,6 +83,12 @@ KF5 library
 #%_K5lib/libktp-auth-handler.so.*
 
 %changelog
+* Tue Oct 10 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt2%ubt
+- fix build requires
+
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+- new version
+
 * Mon Jul 10 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt2%ubt
 - use oauth2 only with google
 
