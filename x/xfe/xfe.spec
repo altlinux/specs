@@ -1,6 +1,6 @@
 Name: xfe
-Version: 1.32.3
-Release: alt1.qa2
+Version: 1.42
+Release: alt1
 
 Summary: MS-Explorer or Commander like file manager for X
 License: GPLv2+
@@ -8,15 +8,12 @@ Group: File tools
 
 Url: http://roland65.free.fr/xfe/
 Source: %name-%version.tar
-Patch: %name-1.32.3-alt-fixes.patch
-Patch1: %name-1.32.3-alt-DSO.patch
 Packager: Mike Radyuk <torabora@altlinux.org>
 
-# Automatically added by buildreq on Tue Apr 12 2011
-# optimized out: fontconfig fontconfig-devel libX11-devel libXrender-devel libfreetype-devel libstdc++-devel perl-Encode perl-XML-Parser pkg-config xorg-renderproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: gcc-c++ imake intltool libXft-devel libfox-devel libpng-devel tzdata xorg-cf-files
+# Automatically added by buildreq on Mon Oct 09 2017
+# optimized out: fontconfig fontconfig-devel glibc-kernheaders-x86 gnu-config libX11-devel libXrender-devel libfreetype-devel libstdc++-devel perl perl-Encode perl-XML-Parser pkg-config python-base tzdata xorg-kbproto-devel xorg-renderproto-devel xorg-xproto-devel
+BuildRequires: gcc-c++ glibc-kernheaders-generic imake intltool libXft-devel libfox-devel libpng-devel xorg-cf-files
 
-BuildPreReq: libfox-devel >= 1.6 libpng-devel >= 1.2
 BuildRequires: desktop-file-utils
 
 %description
@@ -30,8 +27,6 @@ view/creation/extraction and much more.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p2
 
 %build
 %configure --enable-release
@@ -41,25 +36,19 @@ view/creation/extraction and much more.
 %makeinstall_std
 %find_lang %name
 desktop-file-install --dir %buildroot%_desktopdir \
-	--remove-mime-type=text/plain \
-	--add-mime-type=inode/directory \
-	%buildroot%_desktopdir/xfe.desktop
+        --add-mime-type=inode/directory \
+        %buildroot%_desktopdir/xfe.desktop
 desktop-file-install --dir %buildroot%_desktopdir \
-	--remove-category=Utility \
-	--add-category=Graphics \
-	--add-category=RasterGraphics \
-	--add-category=2DGraphics \
-	--remove-mime-type=text/plain \
-	--add-mime-type=inage/jpg \
-	--add-mime-type=inage/png \
-	%buildroot%_desktopdir/xfi.desktop
+        --remove-category=Utility \
+        --add-category=Graphics \
+        --add-category=RasterGraphics \
+        --add-category=2DGraphics \
+        --add-mime-type=image/jpg \
+        %buildroot%_desktopdir/xfi.desktop
 desktop-file-install --dir %buildroot%_desktopdir \
-	--remove-category=Utility \
-	--add-category=Settings \
-	--remove-mime-type=text/plain \
-	--add-mime-type=application/x-rpm \
-	--add-mime-type=application/x-deb \
-	%buildroot%_desktopdir/xfp.desktop
+        --remove-category=Utility \
+        --add-category=Settings \
+        %buildroot%_desktopdir/xfp.desktop
 
 %files -f %name.lang
 %doc AUTHORS COPYING README TODO BUGS
@@ -69,7 +58,11 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pixmapsdir/*
 %_man1dir/*
 
+
 %changelog
+* Tue Oct 10 2017 Mike Radyuk <torabora@altlinux.org> 1.42-alt1
+- New version (closes: #25570, #27616)
+
 * Sat Jun 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.32.3-alt1.qa2
 - Fixed build
 
