@@ -1,6 +1,6 @@
 Name: universalindentgui
 Version: 1.2.0
-Release: alt1.2
+Release: alt1.3
 
 Summary: GUI for varius source code beautifiers
 License: GPL
@@ -16,6 +16,7 @@ Source1: %name.desktop
 
 Patch: %name-alt-translation.patch
 Patch1: %name-alt-disabled-updates.patch
+Patch2: %name-%version-alt-qscintilla2.patch
 
 # it are examples
 %add_findreq_skiplist */example.*
@@ -55,6 +56,7 @@ UniversalIndentGUI позволяет легко модифицировать
 %setup
 #patch0 -p1
 #patch1 -p1
+%patch2 -p2
 
 %build
 qmake-qt4 UniversalIndentGUI.pro
@@ -84,6 +86,9 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Oct 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt1.3
+- Rebuilt with qscintilla2 2.10.1.
+
 * Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.2
 - Rebuilt with qscintilla2 2.9
 

@@ -5,7 +5,7 @@
 
 Name: kuzya
 Version: 2.1.10
-Release: alt2.4
+Release: alt2.5
 
 Summary: Integrated Development Environment for students
 License: GPL
@@ -13,6 +13,7 @@ Group: Education
 
 Url: http://sourceforge.net/projects/kuzya/
 Source: %name-%version.tar.gz
+Patch1: %name-%version-alt-build.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: libqt4-devel libqscintilla2-qt4-devel gcc-c++
@@ -40,6 +41,7 @@ Developers:
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 qmake-qt4
@@ -84,6 +86,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/*
 
 %changelog
+* Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.10-alt2.5
+- Rebuilt with qscintilla2 2.10.1.
+
 * Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.10-alt2.4
 - Rebuilt with qscintilla2 2.9
 

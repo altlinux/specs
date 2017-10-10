@@ -6,7 +6,7 @@ BuildRequires: boost-filesystem-devel boost-program_options-devel cmake
 Name:           openscad
 Version:        2015.03.2
 %global upversion 2015.03-2
-Release:        alt2_4
+Release:        alt3_4
 Summary:        The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 # Appdata file is CC0
@@ -16,6 +16,7 @@ Group:          Engineering
 URL:            http://www.%{name}.org/
 Source0:        http://files.%{name}.org/%{name}-%{upversion}.src.tar.gz
 Patch0:         %{name}-polyclipping.patch
+Patch1:         %name-%version-alt-qscintilla.patch
 BuildRequires:  libcgal-devel >= 3.6
 BuildRequires:  ImageMagick
 BuildRequires:  xvfb-run
@@ -138,6 +139,7 @@ changes, however many things are already working.
 # Unbundle polyclipping
 rm src/polyclipping -rf
 %patch0 -p1
+%patch1 -p2
 
 %build
 %{qmake_qt4} PREFIX=%{_prefix}
@@ -187,6 +189,9 @@ cd -
 %{_datadir}/%{name}/libraries/MCAD
 
 %changelog
+* Wed Oct 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2015.03.2-alt3_4
+- Rebuilt with qscintilla2 2.10.1.
+
 * Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2015.03.2-alt2_4
 - Rebuilt with CGAL 4.10
 - Enabled tests
