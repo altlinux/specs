@@ -1,19 +1,22 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: bzlib-devel gcc-c++
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname atlascpp
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libatlascpp
-Version:        0.6.3
-Release:        alt1_6
+Version:        0.6.4
+Release:        alt1_2
 Summary:        WorldForge message protocol library
 
-Group:          Development/C++
+Group:          Development/Other
 License:        LGPLv2+
 URL:            http://worldforge.org/dev/eng/libraries/atlas_cpp
 Source0:        http://downloads.sourceforge.net/sourceforge/worldforge/Atlas-C++-%{version}.tar.bz2
 
-BuildRequires:  doxygen zlib-devel bzip2-devel
+BuildRequires:  doxygen zlib-devel bzlib-devel
+BuildRequires:  chrpath
 # Provide the other name that this package is commonly known by
 Provides:       Atlas-C++
 Source44: import.info
@@ -29,8 +32,8 @@ message encode and decode and the overlying Objects layer.
 
 %package devel
 Summary:        Development files for Atlas-C++
-Group:   Development/C++
-Requires: pkgconfig %{oldname} = %{version}
+Group:   Development/Other
+Requires: pkg-config %{oldname} = %{version}-%{release}
 Provides: atlascpp-devel = %{version}-%{release}
 # Atlas-C++ includes simple tutorial that uses skstream
 
@@ -43,23 +46,30 @@ Libraries and header files for developing applications that use Atlas-C++
 
 
 %build
-%configure
+%configure --disable-rpath
 
 # simple hack to remove -Werror from the test suite, which causes it to fail
 sed -i -e 's#-Werror\(=[^ ]*\)\?##' benchmark/Makefile
 sed -i -e 's#-Werror\(=[^ ]*\)\?##' tests/Objects/Makefile
 
-make %{?_smp_mflags}
+%make_build
 make docs
 
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
-
 rm -f $RPM_BUILD_ROOT%{_libdir}/libAtlas*-0.6.la
-
 mkdir -p $RPM_BUILD_ROOT%{_mandir}/man3
 install -p -m 0644 doc/man/man3/Atlas*.3 $RPM_BUILD_ROOT%{_mandir}/man3/
+#ugly hack to delete rpath, reported upstream
+#https://github.com/worldforge/atlas-cpp/issues/11
+chrpath --delete $RPM_BUILD_ROOT%{_bindir}/atlas_convert
+chrpath --delete $RPM_BUILD_ROOT%{_libdir}/libAtlasFilters-0.6.so.3.0.0
+chrpath --delete $RPM_BUILD_ROOT%{_libdir}/libAtlasMessage-0.6.so.3.0.0
+chrpath --delete $RPM_BUILD_ROOT%{_libdir}/libAtlasNet-0.6.so.3.0.0
+chrpath --delete $RPM_BUILD_ROOT%{_libdir}/libAtlasCodecs-0.6.so.3.0.0
+chrpath --delete $RPM_BUILD_ROOT%{_libdir}/libAtlasObjects-0.6.so.3.0.0
+
 
 %check
 # Run tests in debug mode so asserts won't be skipped
@@ -81,6 +91,9 @@ make %{?_smp_mflags} check
 %{_mandir}/man3/Atlas*
 
 %changelog
+* Tue Oct 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.4-alt1_2
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.3-alt1_6
 - update to new release by fcimport
 

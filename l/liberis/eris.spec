@@ -7,7 +7,7 @@ BuildRequires: gcc-c++ pkgconfig(glib-2.0)
 %define _localstatedir %{_var}
 Name:           liberis
 Version:        1.3.23
-Release:        alt1_11
+Release:        alt2_11
 Summary:        Client-side session layer for Atlas-C++
 
 Group:          Development/Other
@@ -70,6 +70,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib%{oldname}-1.3.la
 
 
 %changelog
+* Tue Oct 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.23-alt2_11
+- rebuild with libaltascpp
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.23-alt1_11
 - update to new release by fcimport
 
