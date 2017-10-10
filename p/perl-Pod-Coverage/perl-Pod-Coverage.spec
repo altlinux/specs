@@ -1,7 +1,7 @@
 %define dist Pod-Coverage
 Name: perl-%dist
 Version: 0.23
-Release: alt1
+Release: alt2
 
 Summary: Checks if the documentation of a module is comprehensive
 License: GPL or Artistic
@@ -13,7 +13,7 @@ Source: http://www.cpan.org/authors/id/R/RC/RCLAMP/Pod-Coverage-%{version}.tar.g
 BuildArch: noarch
 
 # Automatically added by buildreq on Fri Nov 11 2011
-BuildRequires: perl-Devel-Symdump perl-Module-Build perl-Pod-Parser perl-Test-Pod
+BuildRequires: perl-Devel-Symdump perl-Pod-Parser perl-Test-Pod
 
 %description
 This module provides a mechanism for determining if the pod for a
@@ -34,6 +34,9 @@ given module is comprehensive.
 %perl_vendor_privlib/Pod
 
 %changelog
+* Tue Oct 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.23-alt2
+- BR: cleanup
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
 - automated CPAN update
 
