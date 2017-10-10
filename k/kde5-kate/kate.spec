@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 17.04.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Editors
@@ -166,6 +166,9 @@ kde5_add_text_mimes %buildroot/%_K5xdgapp/org.kde.kwrite.desktop
 #%_K5link/lib*.so
 
 %changelog
+* Tue Oct 10 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt2%ubt
+- rebuild with new libgit
+
 * Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
 - new version
 
