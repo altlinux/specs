@@ -1,23 +1,24 @@
 %define _optlevel s
 
 Name: stellarium
-Version: 0.14.2
-Release: alt1
+Version: 0.16.1
+Release: alt1%ubt
 
 Group: Education
 Summary: Astronomical Sky Simulator
 Url: http://www.stellarium.org/
 License: GPL
 
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tar
 
 BuildPreReq: cmake rpm-macros-cmake
 
 
 # Automatically added by buildreq on Sun Feb 07 2016
 # optimized out: cmake-modules gcc-c++ libEGL-devel libGL-devel libqt5-concurrent libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-script libqt5-serialport libqt5-test libqt5-widgets libqt5-xml libstdc++-devel perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators qt5-base-devel qt5-tools qt5-script-devel
-BuildRequires: cmake perl-Pod-Usage qt5-script-devel qt5-serialport-devel qt5-tools-devel zlib-devel libdrm-devel
+BuildRequires: cmake perl-Pod-Usage qt5-script-devel qt5-serialport-devel qt5-tools-devel zlib-devel libdrm-devel qt5-multimedia-devel qt5-location-devel
 
+BuildRequires(pre): rpm-build-ubt
 
 %description
 Stellarium is a free software available for Windows, Linux/Unix and MacOSX.
@@ -51,9 +52,11 @@ popd
 %_datadir/pixmaps/%name.xpm
 
 %changelog
-* Sun Feb 21 2016 Mikhail E. Rudachenko (ali) <ali@altlinux.org> 0.14.2-alt1
- - new version
+* Tue Oct 10 2017 Anton Farygin <rider@altlinux.ru> 0.16.1-alt1%ubt
+- new version
 
+* Sun Feb 21 2016 Mikhail E. Rudachenko (ali) <ali@altlinux.org> 0.14.2-alt1
+- new version
 
 * Sun Oct 25 2015 Alexei Takaseev <taf@altlinux.org> 0.14.0-alt1
 - 0.14.0
