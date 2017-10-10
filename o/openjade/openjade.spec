@@ -1,6 +1,6 @@
 Name: openjade
 Version: 1.3.2
-Release: alt13
+Release: alt14
 
 %def_disable static
 %def_enable http
@@ -56,6 +56,8 @@ XML, RTF, TeX, MIF (FrameMaker), SGML, or XML.
 
 %build
 cp config/configure.in ./
+# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=69534
+%add_optflags -fno-lifetime-dse
 %configure \
     --disable-static \
     --datadir=%sgmlbase/%name-%version \
@@ -144,6 +146,9 @@ OJCATALOGS=$(echo %sgmlbase/%name-*/catalog)
 %exclude %_libdir/libostyle.so
 
 %changelog
+* Tue Oct 03 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3.2-alt14
+- Fixed miscompilation with gcc6.
+
 * Mon Feb 08 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt13
 - applied getoptperl.patch
 
