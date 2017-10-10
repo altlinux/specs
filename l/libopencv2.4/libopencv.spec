@@ -29,16 +29,17 @@
 %define Name OpenCV
 %define sover 2.4
 Name: lib%bname%sover
-Version: 2.4.13.2
+Version: 2.4.13.3
 Release: alt1
 Epoch: 1
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
 URL: http://opencv.org
-# git://code.opencv.org/opencv.git
 
+# https://github.com/opencv/opencv.git
 Source: %bname-%version.tar
+
 BuildPreReq: chrpath libcvmser
 BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
 BuildRequires: openexr-devel graphviz libpng-devel libpixman-devel
@@ -73,6 +74,8 @@ improving Python bindings to %Name.
 Group: Development/C++
 Summary: Development files for %name
 Requires: %name = %version-%release
+# generated cmake targets mention tbb, require it here explicitly
+Requires: tbb-devel
 Provides: lib%{bname}2.2-devel = %version-%release
 Provides: lib%{bname}2-devel = %version-%release
 Conflicts: lib%{bname}2.2-devel < %version-%release
@@ -197,8 +200,7 @@ cp -f doc/conf.py ./
 cp doc/opencv-logo2.png ./
 
 %build
-cmake \
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
+%cmake \
 	-DBUILD_PACKAGE:BOOL=ON \
 	-DBUILD_TESTS:BOOL=OFF \
 	-DBUILD_EXAMPLES:BOOL=ON \
@@ -209,8 +211,6 @@ cmake \
 	-DBUILD_PYTHON_SUPPORT:BOOL=ON \
 	-DCMAKE_VERBOSE:BOOL=ON \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
 	-DPYTHON_PLUGIN_INSTALL_PATH:PATH=%python_sitelibdir/%bname \
 	-DWITH_UNICAP:BOOL=ON \
@@ -220,17 +220,13 @@ cmake \
 	-DWITH_GSTREAMER=%{?_with_gstreamer:ON}%{!?_with_gstreamer:OFF} \
 	-DWITH_OPENGL:BOOL=ON \
 	-DINSTALL_PYTHON_EXAMPLES:BOOL=ON \
-	-DCMAKE_SKIP_RPATH:BOOL=ON \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	-DBUILD_opencv_ts:BOOL=OFF \
-%ifarch x86_64
-	-DLIB_SUFFIX:STRING=64 \
-%endif
-	.
-%make_build VERBOSE=1
+
+%cmake_build VERBOSE=1
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 install -d %buildroot%_docdir/%name
 mv %buildroot%_datadir/%Name/doc/* %buildroot%_docdir/%name/
@@ -271,6 +267,9 @@ sed -i \
 %_datadir/*/samples
 
 %changelog
+* Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.4.13.3-alt1
+- Updated to version 2.4.13.3.
+
 * Sat Jun 03 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.13.2-alt1
 - new version
 
