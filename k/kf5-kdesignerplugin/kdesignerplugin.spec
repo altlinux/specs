@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.38.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -16,14 +16,13 @@ Source: %rname-%version.tar
 # optimized out: cmake cmake-modules docbook-dtds elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgpg-error libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel qt5-tools ruby ruby-stdlibs xml-common xml-utils
 #BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kplotting-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel python-module-google qt5-quick1-devel qt5-tools-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules gcc-c++ qt5-quick1-devel qt5-tools-devel
+BuildRequires: extra-cmake-modules gcc-c++ qt5-tools-devel
 BuildRequires: docbook-style-xsl kf5-kdoctools kf5-kdoctools-devel-static
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel
 BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kplotting-devel kf5-kservice-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
-BuildRequires: kf5-kdewebkit-devel
 
 %description
 This framework provides plugins for Qt Designer that allow it to display
@@ -76,6 +75,9 @@ KF5 library
 %_K5lib/cmake/KF5DesignerPlugin
 
 %changelog
+* Tue Oct 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.38.0-alt2%ubt
+- build without kwebkit
+
 * Tue Sep 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.38.0-alt1%ubt
 - new version
 
