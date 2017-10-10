@@ -3,30 +3,33 @@ BuildRequires: gcc-c++ libossp-uuid-devel
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 %add_optflags %optflags_shared
+%define mips mips
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: libdap
 Summary: The C++ DAP2 library from OPeNDAP
-Version: 3.17.2
-Release: alt1_1
+Version: 3.18.3
+Release: alt1_4
 
 License: LGPLv2+
-Group: Development/C
+Group: Development/Other
 URL: http://www.opendap.org/
 Source0: http://www.opendap.org/pub/source/libdap-%{version}.tar.gz
 #Don't run HTTP tests - builders don't have network connections
-Patch0:  libdap-offline.patch
+Patch0: libdap-offline.patch
 
 # For autoreconf
-BuildRequires: libtool
-BuildRequires: bison
+BuildRequires: libtool-common
+BuildRequires: bison >= 3.0
 BuildRequires: cppunit-devel
-BuildRequires: curl-devel
+BuildRequires: libcurl-devel
 BuildRequires: doxygen
 BuildRequires: flex
-BuildRequires: graphviz
+BuildRequires: graphviz libgraphviz
 BuildRequires: libuuid-devel
 BuildRequires: libxml2-devel
 BuildRequires: libssl-devel
-%ifnarch s390
+%ifnarch s390 %{mips}
 BuildRequires: valgrind
 %endif
 
@@ -44,11 +47,11 @@ library and demonstrates simple uses of it.
 
 %package devel
 Summary: Development and header files from libdap
-Group: Development/C
-Requires: %{name} = %{version}
-Requires: pkgconfig
+Group: Development/Other
+Requires: %{name} = %{version}-%{release}
+Requires: pkg-config
 # for the /usr/share/aclocal directory ownership
-Requires: automake
+Requires: automake-common
 
 %description devel
 This package contains all the files needed to develop applications that
@@ -76,13 +79,13 @@ mv COPYRIGHT_W3C.utf8 COPYRIGHT_W3C
 autoreconf -f -i
 %configure --disable-static --disable-dependency-tracking
 # --enable-valgrind - missing valgrind exclusions file
-make %{?_smp_mflags}
+%make_build
 
 make docs
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="%{__install} -p"
+make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/libdap
 mv $RPM_BUILD_ROOT%{_libdir}/libtest-types.a $RPM_BUILD_ROOT%{_libdir}/libdap/
 rm $RPM_BUILD_ROOT%{_libdir}/*.la
@@ -102,15 +105,15 @@ done
 
 
 %files
+%doc COPYRIGHT_W3C COPYING COPYRIGHT_URI
+%doc README NEWS README.dodsrc
 %{_bindir}/getdap
 %{_bindir}/getdap4
-%{_libdir}/libdap.so.21*
+%{_libdir}/libdap.so.23*
 %{_libdir}/libdapclient.so.6*
 %{_libdir}/libdapserver.so.7*
 %{_mandir}/man1/getdap.1*
 %{_mandir}/man1/getdap4.1*
-%doc README NEWS COPYING COPYRIGHT_URI README.dodsrc
-%doc COPYRIGHT_W3C
 
 %files devel
 %{_libdir}/libdap.so
@@ -129,6 +132,9 @@ done
 
 
 %changelog
+* Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.18.3-alt1_4
+- update to new release by fcimport
+
 * Sun May 08 2016 Igor Vlasenko <viy@altlinux.ru> 3.17.2-alt1_1
 - update to new release by fcimport
 
