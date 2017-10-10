@@ -18,7 +18,7 @@
 
 Name: libvpx4
 Version: 1.6.1
-Release: alt1
+Release: alt2
 Summary: VP8 video codec
 Group: Video
 License: BSD
@@ -65,6 +65,12 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 	--enable-shared \
 	--disable-avx \
 	--disable-avx2 \
+	--disable-install-srcs \
+	--enable-vp9-decoder \
+	--enable-vp9-encoder \
+	--enable-experimental \
+	--enable-spatial-svc \
+	--enable-vp9-highbitdepth \
 	--disable-static
 %make_build
 
@@ -81,6 +87,10 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Oct 10 2017 Anton Farygin <rider@altlinux.ru> 1.6.1-alt2
+- enabled spatial svc
+- enabled vp9 encoder/decoder
+
 * Tue Oct 03 2017 Anton Farygin <rider@altlinux.ru> 1.6.1-alt1
 - new version, renamed to libvpx4
 
