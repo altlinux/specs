@@ -1,5 +1,5 @@
 Name: ethtool
-Version: 3.18
+Version: 4.11
 Release: alt1
 Epoch: 1
 
@@ -7,7 +7,6 @@ Summary: Ethernet settings tools for network cards
 License: GPLv2
 Group: System/Configuration/Networking
 Url: http://sourceforge.net/projects/gkernel/
-Packager: Michael Shigorin <mike@altlinux.org>
 
 # http://git.kernel.org/?p=network/ethtool/ethtool.git;a=summary
 # git://git.kernel.org/pub/scm/network/ethtool/ethtool.git
@@ -58,6 +57,9 @@ install -pDm644 ethtool.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %doc AUTHORS NEWS README.ALT
 
 %changelog
+* Tue Oct 10 2017 Anton Farygin <rider@altlinux.ru> 1:4.11-alt1
+- 4.11
+
 * Sat May 23 2015 Denis Pynkin <dans@altlinux.org> 1:3.18-alt1
 - 3.18
 
