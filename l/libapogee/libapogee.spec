@@ -1,31 +1,26 @@
+Group: Development/C
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ pkgconfig(libusb-1.0)
 # END SourceDeps(oneline)
-Group: Development/C
-%add_optflags %optflags_shared
-%global majorver 2
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global majorver 3 
 
 Name: libapogee
-Version: 2.2
-Release: alt2_18
+Version: 3.0.3234
+Release: alt1_6
 Summary: Library for Apogee CCD Cameras
 
-License: GPLv2+
-URL: http://indi.sourceforge.net/index.php
+License: GPLv2+ and MPLv2.0
+URL: http://indilib.org
 
-Source0: http://downloads.sourceforge.net/indi/%{name}%{majorver}_%{version}.tar.gz
-Patch0: libapogee-suffix.patch
-# Patch to build in ppc ppc64
-#https://sourceforge.net/tracker2/?func=detail&aid=2215787&group_id=90275&atid=593019
-Patch1: libapogee-sysio.patch
-Patch2: libapogee-format-security.patch
+# Tar is generated from the huge all-in-one tar from INDI
+# by using ./libapogee-generate-tarball.sh 1.3.1
+Source0: %{name}-%{version}.tar.gz
+Source1: %{name}-generate-tarball.sh
 
-# Bug upstream about libapogee calling exit()
-# https://sourceforge.net/tracker2/?func=detail&aid=2595732&group_id=90275&atid=593019
-
-# Since curl 7.21.7, curl/types.h has been removed
-BuildRequires: ctest cmake libusb-compat-devel libusb-devel libcurl-devel
+BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel ctest cmake libusb-compat-devel libcurl-devel journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-utils
 Source44: import.info
 
 %description
@@ -34,37 +29,37 @@ Apogee library is used by applications to control Apogee CCDs.
 %package devel
 Group: Development/C
 Summary: Libraries, includes, etc. used to develop an application with %{name}
-Requires: %{name}%{?_isa} = %{version}
+Requires: %{name} = %{version}-%{release}
 %description devel
 These are the header files needed to develop a %{name} application
 
 %prep
-%setup -q -n %{name}%{majorver}-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-# curl/types.h is deprecated
-# upstream bug https://sourceforge.net/tracker/?func=detail&aid=3462419&group_id=90275&atid=593019
-sed -i '/include.*[<"]curl\/types.h[">]/d' \
-`egrep -rl 'include.*["<]curl/types.h[">]' .`
+%setup -q -n %{name}-%{version}
+sed -i 's|/lib/udev/rules.d|%{_udevrulesdir}|g' CMakeLists.txt
+sed -i 's|DESTINATION lib|DESTINATION lib${LIB_SUFFIX}|g' CMakeLists.txt
 
 %build
 %{fedora_cmake}
 make VERBOSE=1 %{?_smp_mflags}
 
 %install
-rm -fr %{buildroot}
 make install DESTDIR=%{buildroot}
 
 %files
-%doc %doc AUTHORS ChangeLog README
+%doc LICENSE
+%doc README
 %{_libdir}/*.so.*
+%{_sysconfdir}/Apogee/*
+%{_udevrulesdir}/99-apogee.rules
 
 %files devel
 %{_includedir}/*
 %{_libdir}/*.so
 
 %changelog
+* Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.3234-alt1_6
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_18
 - update to new release by fcimport
 
