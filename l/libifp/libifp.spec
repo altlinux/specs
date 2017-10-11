@@ -1,12 +1,11 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen
-# END SourceDeps(oneline)
 BuildRequires: chrpath
 BuildRequires: gcc-c++
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libifp
 Version:        1.0.0.2
-Release:        alt2_18
+Release:        alt2_24
 Summary:        A general-purpose library-driver for iRiver's iFP portable audio players
 
 Group:          System/Base
@@ -18,12 +17,14 @@ Source2:        10-libifp.rules
 # autoconf-2.69 breaks configure.in (likely configure.in is the broken part)
 # Upstream is dead, so fix it here:
 Patch0:         libifp-1.0.0.2-fix-broken-configure.in.diff
+Patch1:         libifp-1.0.0.2-fix-broken-configure-again.diff
 
-BuildRequires:  autoconf
-BuildRequires:  automake
+BuildRequires:  autoconf-common
+BuildRequires:  automake-common
 BuildRequires:  doxygen
-BuildRequires:  libtool
-BuildRequires: libusb-compat-devel libusb-devel
+BuildRequires:  libtool-common
+BuildRequires:  libusb-compat-devel
+BuildRequires:  journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-utils
 Source44: import.info
 
 %description
@@ -34,7 +35,7 @@ Also included is a console app that uses the library.
 
 %package        devel
 Summary:        Headers and libraries for developing with libifp
-Group:          Development/C
+Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 
 %description    devel
@@ -44,28 +45,30 @@ libifp.
 %prep
 %setup -q
 %patch0 -p0
+%patch1 -p1
 
 %build
 autoreconf -fiv
 %configure --with-libusb --disable-static
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name \*.la -exec rm {} \;
 install -D -m 0755 %{SOURCE1} $RPM_BUILD_ROOT/sbin/libifp-hotplug
-install -D -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d/10-libifp.rules
+install -D -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_udevrulesdir}/10-libifp.rules
 # kill rpath
 for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
 	chrpath -d $i ||:
 done
 
 %files
-%doc ChangeLog COPYING README TODO
+%doc COPYING
+%doc ChangeLog README TODO
 %{_bindir}/*
 %{_libdir}/*.so.*
 /sbin/*
-%{_sysconfdir}/udev/rules.d/*.rules
+%{_udevrulesdir}/*libifp.rules
 
 %files devel
 %{_includedir}/*.h
@@ -73,6 +76,9 @@ done
 %{_mandir}/man3/*
 
 %changelog
+* Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0.2-alt2_24
+- update to new release by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0.2-alt2_18
 - update to new release by fcimport
 
