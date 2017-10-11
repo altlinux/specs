@@ -1,19 +1,21 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++ waf
 # END SourceDeps(oneline)
+BuildRequires: libpcre-devel
 %add_optflags %optflags_shared
 %define oldname sord
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sord
-%define version 0.12.2
+%define version 0.16.0
 %global maj 0
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 
 Name:       libsord
-Version:    0.12.2
-Release:    alt1_10
+Version:    0.16.0
+Release:    alt1_3
 Summary:    A lightweight Resource Description Framework (RDF) C library
 
 Group:      System/Libraries
@@ -26,7 +28,9 @@ BuildRequires: doxygen
 BuildRequires: graphviz libgraphviz
 BuildRequires: glib2-devel libgio libgio-devel
 BuildRequires: python
-BuildRequires: libserd-devel >= 0.14.0
+BuildRequires: libserd-devel >= 0.22.4
+BuildRequires: gcc-c++-common
+Source44: import.info
 Provides: sord = %{version}-%{release}
 
 %description
@@ -57,6 +61,7 @@ sed -i -e "s|bld.add_post_fun(autowaf.run_ldconfig)||" \
 %build
 export CXXFLAGS="%{optflags}"
 export CFLAGS="%{optflags}"
+export LINKFLAGS="%{__global_ldflags}"
 ./waf configure \
     --prefix=%{_prefix} \
     --libdir=%{_libdir} \
@@ -75,6 +80,8 @@ install -pm 644 AUTHORS NEWS README COPYING %{buildroot}%{_docdir}/%{oldname}
 %files
 %{_docdir}/%{oldname}
 %exclude %{_docdir}/%{oldname}/%{oldname}-%{maj}/
+%exclude %{_docdir}/%{oldname}/COPYING
+%doc COPYING
 %{_libdir}/lib%{oldname}-%{maj}.so.*
 %{_bindir}/sordi
 %{_bindir}/sord_validate
@@ -88,6 +95,9 @@ install -pm 644 AUTHORS NEWS README COPYING %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/%{oldname}*.3*
 
 %changelog
+* Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt1_3
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.12.2-alt1_10
 - update to new release by fcimport
 
