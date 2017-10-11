@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: waf
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
@@ -7,13 +8,13 @@ BuildRequires: waf
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sratom
-%define version 0.4.6
+%define version 0.6.0
 %global maj 0
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 
 Name:       libsratom
-Version:    0.4.6
-Release:    alt1_5
+Version:    0.6.0
+Release:    alt1_3
 Summary:    A C library for serializing LV2 plugins
 
 Group:      System/Libraries
@@ -24,10 +25,11 @@ BuildRequires:  python
 BuildRequires:  doxygen
 BuildRequires:  graphviz libgraphviz
 BuildRequires:  libsord-devel >= 0.12.0
-BuildRequires:  lv2-devel >= 1.0.0
+BuildRequires:  libserd-devel >= 0.23.0
+BuildRequires:  lv2-devel >= 1.10.0
+BuildRequires:  gcc-common
+Source44: import.info
 Provides: sratom = %{version}-%{release}
-
-
 
 %description
 %{oldname} is a new C library for serializing LV2 atoms to/from Turtle. It is 
@@ -60,6 +62,7 @@ sed -i -e "s| '-ftest-coverage'\]|\
 
 %build
 export CFLAGS="%{optflags}" CXXFLAGS="%{optflags}"
+export LDFLAGS="%{__global_ldflags}"
 ./waf configure -v \
     --prefix=%{_prefix} \
     --libdir=%{_libdir} \
@@ -75,13 +78,14 @@ DESTDIR=%{buildroot} ./waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 install -pm 644 COPYING NEWS README %{buildroot}%{_docdir}/%{oldname}
 
-# tests failing - see http://dev.drobilla.net/ticket/832
-#%%check
+#check
 #./build/sratom_test
 
 %files
 %{_docdir}/%{oldname}
 %exclude %{_docdir}/%{oldname}/%{oldname}-%{maj}/
+%exclude %{_docdir}/%{oldname}/COPYING
+%doc COPYING
 %{_libdir}/lib%{oldname}-%{maj}.so.*
 
 %files devel
@@ -92,6 +96,9 @@ install -pm 644 COPYING NEWS README %{buildroot}%{_docdir}/%{oldname}
 %{_mandir}/man3/*
 
 %changelog
+* Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_3
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.6-alt1_5
 - update to new release by fcimport
 
