@@ -1,10 +1,10 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.7.1
-%define major 2.17
+%define major 2.18
 
 Name: wine
-Version: %major.1
+Version: %major.0
 Release: alt1
 Epoch: 1
 
@@ -476,6 +476,10 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Wed Oct 11 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.18.0-alt1
+- new version (2.18.0) with rpmgs script
+- update Kerberos patches (eterbug #11982)
+
 * Fri Sep 29 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.17.1-alt1
 - add Kerberos SSPI (via GSSIAPI support)
 
