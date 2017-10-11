@@ -1,10 +1,12 @@
-BuildRequires: boost-devel
+#filter_from_requires /^debug64.libtolua..-5.1.so./d
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/xmllint boost-interprocess-devel gcc-c++ pkgconfig(CEGUI-0-LUA) pkgconfig(CEGUI-0-OGRE) pkgconfig(OGRE) pkgconfig(OGRE-Overlay) pkgconfig(OGRE-Terrain) pkgconfig(atlascpp-0.6) pkgconfig(eris-1.3) pkgconfig(freealut) pkgconfig(libwfut-0.2) pkgconfig(mercator-0.3) pkgconfig(openal) pkgconfig(sigc++-2.0) pkgconfig(varconf-1.0) pkgconfig(wfmath-1.0) pkgconfig(x11)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/xmllint boost-interprocess-devel gcc-c++ pkgconfig(sigc++-2.0) pkgconfig(x11)
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           ember
 Version:        0.7.2
-Release:        alt2_14.src.rpm
+Release:        alt2_22
 Summary:        3D client for WorldForge
 
 Group:          Games/Other
@@ -19,17 +21,17 @@ Patch7:         ember-0.7.2-fix-boost-m4.patch
 Patch8:         ember-0.7.2-sigc++.patch
 # Use cegui06 to avoid cegui's dependency on lua >= 5.2
 BuildRequires:  libSDL-devel tinyxml-devel libdevil-devel cegui-devel libogre-devel
-BuildRequires:  liblua5-devel tolua++-devel libopenal-devel libalut-devel
-BuildRequires:  atlascpp-devel 
-BuildRequires:  eris-devel >= 1.3.16 
-BuildRequires:  mercator-devel 
-BuildRequires:  varconf-devel 
-BuildRequires:  wfmath-devel >= 1.0
+BuildRequires:  lua-devel tolua++-devel libopenal-devel libopenal1 libalut-devel
+BuildRequires:  libatlascpp-devel 
+BuildRequires:  liberis-devel >= 1.3.16 
+BuildRequires:  libmercator-devel 
+BuildRequires:  libvarconf-devel 
+BuildRequires:  libwfmath-devel >= 1.0
 BuildRequires:  libwfut-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  cppunit-devel
 # libtool is only needed while we need to run autogen.sh
-BuildRequires:  libtool
+BuildRequires:  libtool-common
 
 Requires:       %{name}-media >= 0.7.2 %{name}-media < 0.7.3
 
@@ -54,7 +56,6 @@ It uses the Ogre 3D engine with CEGUI.
 iconv -f iso-8859-1 -t utf-8 AUTHORS > AUTHORS.conv && mv -f AUTHORS.conv AUTHORS
 %patch33 -p1
 
-sed -i -e s,@BOOST_THREAD_LIB@,@BOOST_THREAD_LIBS@, test/Makefile.am test/Makefile.in
 
 %build
 autoreconf -fisv
@@ -62,7 +63,7 @@ autoreconf -fisv
 # work with gcc 5. This shouldn't be needed after the next ember release.
 ./autogen.sh
 %configure --disable-static --disable-freeimage-check
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -108,6 +109,9 @@ make check
 %config %{_sysconfdir}/%{name}/*
 
 %changelog
+* Tue Oct 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.2-alt2_22
+- rebuild with libaltascpp
+
 * Mon Feb 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.7.2-alt2_14.src.rpm
 - fixed build
 
