@@ -1,40 +1,39 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
 BuildRequires: waf
 # END SourceDeps(oneline)
 BuildRequires: libnumpy-devel
 BuildRequires: gcc-c++
+Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname lilv
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name lilv
-%define version 0.20.0
+%define version 0.24.2
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 %global maj 0
 
 Name:       liblilv
-Version:    0.20.0
-Release:    alt1_7
+Version:    0.24.2
+Release:    alt1_4
 Summary:    An LV2 Resource Description Framework Library
 
-Group:      System/Libraries
 License:    MIT
 URL:        http://drobilla.net/software/lilv/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
-Patch1:     lilv-0.16.0-gcc.patch
 BuildRequires:  doxygen
 BuildRequires:  graphviz libgraphviz
-BuildRequires:  libsord-devel >= 0.12.0
+BuildRequires:  libsord-devel >= 0.13.0
 BuildRequires:  libsratom-devel >= 0.4.4
-BuildRequires:  lv2-devel >= 1.8.0
+BuildRequires:  lv2-devel >= 1.14.0
 BuildRequires:  python-devel
 BuildRequires:  swig
-BuildRequires:  libnumpy-devel python-module-numpy python-module-numpy-doc python-module-numpy-testing
+BuildRequires:  python-module-numpy python-module-numpy-doc python-module-numpy-testing
+BuildRequires:  libserd-devel >= 0.14.0
+Source44: import.info
 Provides: lilv = %{version}-%{release}
-
-
 
 %description
 %{oldname} is a library to make the use of LV2 plugins as simple as possible 
@@ -42,8 +41,8 @@ for applications. Lilv is the successor to SLV2, rewritten to be significantly
 faster and have minimal dependencies. 
 
 %package devel
+Group: Development/Other
 Summary:    Development libraries and headers for %{oldname}
-Group:      Development/Other
 Requires:   %{name} = %{version}-%{release}
 Provides: lilv-devel = %{version}-%{release}
 
@@ -54,11 +53,12 @@ supports reading and writing Turtle and NTriples.
 This package contains the headers and development libraries for %{oldname}.
 
 %package -n python-module-lilv
+Group: Development/Other
+%{?python_provide:%python_provide python2-%{oldname}}
 Summary:    Python bindings for %{oldname}
-Group:      Development/Other
 Requires:   %{name} = %{version}-%{release}
 
-%description -n python-module-lilv 
+%description -n python-module-lilv
 %{oldname} is a lightweight C library for Resource Description Syntax which 
 supports reading and writing Turtle and NTriples.
 
@@ -66,7 +66,6 @@ This package contains the python libraries for %{oldname}.
 
 %prep
 %setup -n %{oldname}-%{version} -q 
-%patch1 -p1 
 # we'll run ld config
 sed -i -e 's|bld.add_post_fun(autowaf.run_ldconfig)||' wscript
 # for packagers sake, build the tests with debug symbols
@@ -75,6 +74,7 @@ sed -i -e "s|'-ftest-coverage'\]|\
 
 %build
 export CFLAGS="%{optflags}" CXXFLAGS="%{optflags}"
+export LINKFLAGS="%{__global_ldflags}"
 ./waf configure -v --prefix=%{_prefix}\
  --libdir=%{_libdir} --configdir=%{_sysconfdir} --mandir=%{_mandir}\
  --docdir=%{_docdir}/%{oldname}\
@@ -89,7 +89,8 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 ./build/test/lilv_test
 
 %files
-%doc AUTHORS NEWS README COPYING
+%doc AUTHORS NEWS README
+%doc COPYING
 %exclude %{_docdir}/%{oldname}/%{oldname}-%{maj}/
 %{_libdir}/lib%{oldname}-%{maj}.so.*
 %{_bindir}/lilv-bench
@@ -109,9 +110,11 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 
 %files -n python-module-lilv
 %{python_sitelibdir_noarch}/%{oldname}.*
-%{python_sitelibdir}/_%{oldname}.so
 
 %changelog
+* Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.24.2-alt1_4
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.20.0-alt1_7
 - update to new release by fcimport
 
