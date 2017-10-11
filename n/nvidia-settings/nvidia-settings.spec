@@ -1,5 +1,5 @@
 Name: nvidia-settings
-Version: 375.66
+Version: 384.90
 Release: alt1%ubt
 
 Group: System/Configuration/Hardware
@@ -23,6 +23,7 @@ Patch3: alt-ui-modules-dir.patch
 #BuildRequires: libXrandr-devel libXv-devel libXxf86vm-devel libgtk+2-devel libvdpau-devel ruby ruby-stdlibs
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: libXrandr-devel libXv-devel libXxf86vm-devel libGL-devel libvdpau-devel
+BuildRequires: libdbus-devel
 BuildRequires: libgtk+2-devel libgtk+3-devel
 
 %description
@@ -111,6 +112,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Wed Oct 11 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt1%ubt
+- new version
+
 * Wed May 10 2017 Sergey V Turchin <zerg@altlinux.org> 375.66-alt1%ubt
 - new version
 
