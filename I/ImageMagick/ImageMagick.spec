@@ -1,6 +1,6 @@
 %define mversion	6
 %define dversion	%mversion.9.9
-%define drelease	18
+%define drelease	19
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		4
@@ -9,7 +9,7 @@
 %def_enable x
 
 Name: ImageMagick
-Version: %dversion.%drelease
+Version: 6.9.9.19
 Release: alt1
 
 Summary: An X application for displaying and manipulating images
@@ -224,6 +224,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Wed Oct 11 2017 Anton Farygin <rider@altlinux.ru> 6.9.9.19-alt1
+- new version 6.9.9.19
+
 * Fri Oct 06 2017 Anton Farygin <rider@altlinux.ru> 6.9.9.18-alt1
 - new version
 
