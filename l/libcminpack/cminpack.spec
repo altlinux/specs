@@ -4,17 +4,19 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname cminpack
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libcminpack
-Version:        1.3.1
-Release:        alt1_4
+Version:        1.3.4
+Release:        alt1_5
 Summary:        Solver for nonlinear equations and nonlinear least squares problems
 
-Group:          Development/C
+Group:          Development/Other
 License:        BSD
 URL:            http://devernay.free.fr/hacks/cminpack/cminpack.html
 Source0:        http://devernay.free.fr/hacks/cminpack/%{oldname}-%{version}.tar.gz
 
-BuildRequires: ctest cmake
+BuildRequires:  ctest cmake
 BuildRequires:  gcc-fortran
 Source44: import.info
 Provides: cminpack = %{version}-%{release}
@@ -27,7 +29,7 @@ It is fully re-entrant and thread-safe.
 
 %package devel
 Summary: Header files and libraries for cminpack
-Group: Development/C
+Group: Development/Other
 Requires: %{name} = %{version}-%{release}
 Provides: cminpack-devel = %{version}-%{release}
 
@@ -52,17 +54,22 @@ make -C build install DESTDIR=%{buildroot}
 
 
 %files
-%doc CopyrightMINPACK.txt readme.txt readmeC.txt
+%doc CopyrightMINPACK.txt
+%doc README.md
 %{_libdir}/libcminpack.so.*
 
 %files devel
 %doc doc/*.html doc/*.txt
+%{_datadir}/CMake/Modules/*.cmake
 %{_libdir}/pkgconfig/*
 %{_libdir}/libcminpack.so
 %{_includedir}/cminpack-1
 
 
 %changelog
+* Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt1_5
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_4
 - update to new release by fcimport
 
