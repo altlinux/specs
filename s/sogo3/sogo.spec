@@ -3,8 +3,10 @@
 
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo3
-Version:      3.2.10
-Release:      alt2
+# Use the same version as in the "nightly" packages at
+# http://v2.sogo.nu/downloads/backend_v3_nightly.html:
+Version:      3.2.10.20171010
+Release:      alt1
 
 License:      GPL
 URL:          https://sogo.nu/
@@ -401,6 +403,12 @@ fi
 %preun_service sogo
 
 %changelog
+* Wed Oct 11 2017 Ivan Zakharyaschev <imz@altlinux.org> 3.2.10.20171010-alt1
+- Build the current "nightly" revision to correctly handle top-level
+  non-ASCII folder names in ActiveSync (ALT: #33721) as suggested
+  in https://lists.inverse.ca/sogo/arc/users/2017-09/msg00011.html
+  and https://sogo.nu/bugs/view.php?id=4240 not to wait for the 3.3 release.
+
 * Fri Jul 21 2017 Andrey Cherepanov <cas@altlinux.org> 3.2.10-alt2
 - Fix project URL (ALT #33669)
 
