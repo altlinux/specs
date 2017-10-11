@@ -1,5 +1,5 @@
 Name: nvidia-xconfig
-Version: 375.20
+Version: 384.90
 Release: alt1%ubt
 
 Group: System/Configuration/Hardware
@@ -33,6 +33,9 @@ make install PREFIX=%buildroot/%prefix bindir=%buildroot/%_bindir mandir=%buildr
 
 
 %changelog
+* Wed Oct 11 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt1%ubt
+- new version
+
 * Fri Dec 02 2016 Sergey V Turchin <zerg@altlinux.org> 375.20-alt1%ubt
 - new version
 
