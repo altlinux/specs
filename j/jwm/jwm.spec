@@ -1,65 +1,72 @@
+Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: libX11-devel libXrender-devel libfribidi-devel xorg-xproto-devel
+BuildRequires: libX11-devel libXext-devel libpng-devel xorg-xproto-devel
 # END SourceDeps(oneline)
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           jwm
-Version:        2.1.0
-Release:        alt1_6
+Version:        2.3.7
+Release:        alt1_3
 Summary:        Joe's Window Manager
 
-Group:          Graphical desktop/Other
 License:        GPLv2+
-URL:            http://joewing.net/programs/jwm
-Source0:        http://joewing.net/programs/jwm/releases/%{name}-%{version}.tar.bz2
+URL:            http://joewing.net/projects/jwm/
+Source0:        %{url}/releases/%{name}-%{version}.tar.xz
 Source1:        %{name}.desktop
-Patch0:         %{name}-nostrip.patch
-Patch1:         %{name}-timestamps.patch
-Patch2:         %{name}-destdir.patch
 
-BuildRequires:  libXext-devel libXmu-devel libXinerama-devel
-BuildRequires:  libXpm-devel libjpeg-devel libpng-devel
-BuildRequires:  libXft-devel fribidi-devel libfreetype-devel
-Requires:       xterm
+BuildRequires:  gcc-common
+BuildRequires:  pkgconfig(libpng)
+%if 0%{?fedora} > 24
+BuildRequires:  pkgconfig(libjpeg)
+%else
+BuildRequires:  libjpeg-devel
+%endif
+BuildRequires:  pkgconfig(cairo)
+BuildRequires:  pkgconfig(librsvg-2.0)
+BuildRequires:  pkgconfig(freetype2)
+BuildRequires:  pkgconfig(xft)
+BuildRequires:  pkgconfig(xrender)
+BuildRequires:  pkgconfig(fribidi)
+BuildRequires:  libXpm libXpm-devel
+BuildRequires:  libXmu-devel
+BuildRequires:  libXinerama-devel
+BuildRequires:  gettext gettext-tools
+Requires:     /usr/bin/xterm
+Requires:     /usr/bin/xlock
 Source44: import.info
-Patch33: jwm-alt-add-sigchld-sigign.patch
-Patch34: jwm-alt-fix-build-warning.patch
-Patch35: jwm-alt-config-file.patch
-Patch36: jwm-alt-dead-windows-in-taskbar.patch
+Patch33: jwm-2.3.7-alt-config-file.patch
 Source45: jwm.method
 Source46: jwm.wmsession
 Source47: jwm-conf.tar
 Source48: startjwm
 
 %description
-JWM is a window manager for the X11 Window System. JWM is written in C and uses
+JWM is a window manager for the X11 Window System. It's written in C and uses
 only Xlib at a minimum. The following libraries can also be used if available:
 
-* libXext for the shape extension
-* libXext for the render extension
-* libXmu for drawing rounded windows (shape extension also needed)
-* libXinerama for Xinerama support
-* libXpm for XPM backgrounds and icons
-* libjpeg for JPEG backgrounds and icons
-* libpng for PNG backgrounds and icons
-* libxft for antialiased and true type fonts
-* libfribidi for right-to-left language support
+* cairo and librsvg2 for SVG icons and backgrounds.
+* fribidi for bi-directional text support.
+* libjpeg for JPEG icons and backgrounds.
+* libpng for PNG icons and backgrounds.
+* libXext for the shape extension.
+* libXrender for the render extension.
+* libXmu for rounded corners.
+* libXft for anti-aliased and true type fonts.
+* libXinerama for multiple head support.
+* libXpm for XPM icons and backgrounds.
 
 JWM supports MWM and Extended Window Manager Hints (EWMH).
+
+Note that Fedora package is built with all supported features enabled.
 
 %prep
 %setup -q
 
-# Do not strip binary file
-%patch0 -p0 -b .orig
 
 # Preserve timestamps in installation
-%patch1 -p0 -b .orig
-
-# Enable the use of DESTDIR
-%patch2 -p0 -b .orig
-%patch33 -p2
-%patch34 -p2
-%patch35 -p1
-%patch36 -p2
+sed -i -e 's|install -m|install -pm|g' Makefile.in
+%patch33 -p1
 
 %build
 # -Werror
@@ -69,13 +76,15 @@ CFLAGS="$CFLAGS -O3 -Wall"
         --enable-debug \
         --enable-shade \
         --sysconfdir=%_sysconfdir/X11/jwm 
-make %{?_smp_mflags}
+%make_build
 
 %install
-make install DESTDIR=%{buildroot}
+%makeinstall_std
 
 mkdir -p %{buildroot}%{_datadir}/xsessions
-install -p -m 644 %{SOURCE1} %{buildroot}%{_datadir}/xsessions/
+install -Dpm0644 %{SOURCE1} %{buildroot}%{_datadir}/xsessions/
+
+%find_lang %{name}
 
 tar -xC %buildroot/%_sysconfdir/X11/jwm -f %SOURCE47
 rm -f -- %buildroot/%_sysconfdir/X11/jwm/system.jwmrc
@@ -84,16 +93,21 @@ rm -f -- %buildroot/%_sysconfdir/X11/jwm/system.jwmrc
 install -D -m644 %SOURCE46 %buildroot/%_sysconfdir/X11/wmsession.d/jwm
 install -D -m 755 %{SOURCE45} %buildroot%_sysconfdir/menu-methods/jwm
 
-%files
-%doc LICENSE README todo.txt
+%files -f %{name}.lang
+%doc LICENSE
+%doc ChangeLog README.md
+%doc %{_mandir}/man1/%{name}.1*
 %{_bindir}/%{name}
 %config(noreplace) %{_sysconfdir}/X11/jwm/*
 %{_datadir}/xsessions/%{name}.desktop
-%{_mandir}/man1/%{name}.*
+%{_datadir}/%{name}/
 %config %_sysconfdir/menu-methods/jwm
 %config %_sysconfdir/X11/wmsession.d/jwm
 
 %changelog
+* Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.7-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_6
 - update to new release by fcimport
 
