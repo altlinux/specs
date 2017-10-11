@@ -1,15 +1,16 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install perl(IO/Socket.pm) perl(Time/HiRes.pm)
 # END SourceDeps(oneline)
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name cave9
-%define version 0.4
 %global fontname mutante
 %global fontconf 64-%{name}-%{fontname}.conf
 
 Name:           cave9
 Version:        0.4
-Release:        alt3_14
+Release:        alt3_17
 Summary:        3d game of cave exploration
 
 Group:          Games/Other
@@ -162,6 +163,9 @@ fi
 %{_datadir}/applications/cave9.desktop
 
 %changelog
+* Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_17
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_14
 - update to new release by fcimport
 
