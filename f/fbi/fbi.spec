@@ -2,7 +2,7 @@
 # viewers) into united project named "fbida". But we really not interested in
 # packaging ugly motif apps, so we will name our main package just "fbi".
 Name: fbi
-Version: 2.13
+Version: 2.14
 Release: alt1
 
 Summary: Image viewer for Linux framebuffer console
@@ -12,8 +12,9 @@ Group: Graphics
 Url: http://www.kraxel.org/cgit/fbida/
 Source: http://www.kraxel.org/releases/fbida/fbida-%version.tar.gz
 
-# Automatically added by buildreq on Mon Jun 06 2016
-BuildRequires: libdrm-devel libepoxy-devel libexif-devel libgbm-devel libgif-devel libjpeg-devel liblirc-devel libpoppler-glib-devel libsane-devel libtiff-devel libwebp-devel
+BuildRequires: libdrm-devel libepoxy-devel libexif-devel libgbm-devel libgif-devel
+BuildRequires: libjpeg-devel liblirc-devel libpoppler-glib-devel libsane-devel libtiff-devel libwebp-devel
+BuildRequires: libpixman-devel
 
 %description
 Image viewer for Linux framebuffer console.
@@ -49,6 +50,9 @@ export CFLAGS="%optflags"
 %_man1dir/exiftran*
 
 %changelog
+* Wed Oct 11 2017 Yuri N. Sedunov <aris@altlinux.org> 2.14-alt1
+- 2.14
+
 * Wed Apr 05 2017 Yuri N. Sedunov <aris@altlinux.org> 2.13-alt1
 - 2.13
 
