@@ -2,7 +2,7 @@
 
 Name: amsynth
 Version: 1.6.4
-Release: alt1
+Release: alt1.1
 Summary: A classic synthesizer with dual oscillators
 
 License: GPLv2+
@@ -142,6 +142,9 @@ install -pDm644 %SOURCE4 %buildroot%_datadir/appdata/
 %_datadir/appdata/vst-%name-plugin.metainfo.xml
 
 %changelog
+* Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.6.4-alt1.1
+- NMU: rebuild with new lv2
+
 * Sat May 28 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.6.4-alt1
 - Version 1.6.4
 
