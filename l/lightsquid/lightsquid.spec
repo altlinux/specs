@@ -1,6 +1,6 @@
 Name: lightsquid
 Version: 1.8
-Release: alt1
+Release: alt2
 
 Summary: Lite, small size and fast log analizer for squid proxy
 Summary(ru_RU.UTF-8): Легкий, маленький и быстрый анализатор лога для прокси сервера squid
@@ -16,8 +16,6 @@ Requires: webserver
 BuildArch: noarch
 
 %define apache_home %_var/www/html
-%define apache_confdir %_sysconfdir/httpd/conf
-%define apache_addonconfdir %apache_confdir/addon-modules.d
 %define lightsquid_confdir %_sysconfdir/lightsquid
 %define lightdir %apache_home/lightsquid
 
@@ -37,17 +35,6 @@ BuildArch: noarch
 	 Не требует базы данных
 	 Не требует дополнительных модулей perl
 	 Использует шаблоны html
-
-%package apache
-Summary: Config %name for apache
-Summary(ru_RU.UTF-8): Конфигурационный файл %name для вебсервера apache
-License: GPL
-Group: System/Servers
-Requires: %name = %version-%release
-Requires: apache
-
-%description apache
-Config %name for apache
 
 %prep
 %setup -n %name-%version
@@ -72,7 +59,6 @@ iconv -f WINDOWS-1251 -t UTF8 lang/ru.lng > lang/ru-utf8.lng
 %__mkdir_p %buildroot%lightsquid_confdir
 %__mkdir_p %buildroot%_sysconfdir/cron.d
 %__mkdir_p %buildroot%_datadir/%name/{lang,ip2name,tpl}
-%__mkdir_p %buildroot%apache_addonconfdir
 %__mkdir_p %buildroot%_localstatedir/%name
 %__mkdir_p %buildroot%lightdir
 %__mkdir_p %buildroot%_lockdir/%name
@@ -84,12 +70,6 @@ iconv -f WINDOWS-1251 -t UTF8 lang/ru.lng > lang/ru-utf8.lng
 %__install -p -m 644 lightsquid.cfg %buildroot%lightsquid_confdir/lightsquid.cfg
 %__install -p -m 644 group.cfg.src %buildroot%lightsquid_confdir/group.cfg
 %__install -p -m 644 realname.cfg %buildroot%lightsquid_confdir/realname.cfg
-%__cat << EOF > %buildroot%apache_addonconfdir/lightsquid.conf
-<Directory "/var/www/html/lightsquid">
-    Options FollowSymLinks +ExecCGI
-    AddHandler cgi-script .cgi
-</Directory>
-EOF
 
 # install cron
 %__cat << EOF > %buildroot%_sysconfdir/cron.d/lightsquid
@@ -121,9 +101,6 @@ if [[ -d %lightdir/report ]]; then
 fi
 find %_localstatedir/%name -print0 | xargs -r0 chown %name:%name
 
-%post apache
-%post_service httpd
-
 %files
 %doc doc/*
 %_sbindir/*
@@ -138,10 +115,10 @@ find %_localstatedir/%name -print0 | xargs -r0 chown %name:%name
 %dir %attr(1775,root,%name) %_lockdir/%name
 %attr(0755,%name,%name) %lightdir/*.cgi
 
-%files apache
-%config(noreplace) %verify(not md5 size mtime) %apache_addonconfdir/lightsquid.conf
-
 %changelog
+* Wed Oct 11 2017 Anton Farygin <rider@altlinux.ru> 1.8-alt2
+- removed subpackage with configuration file for apache-1
+
 * Tue Jul 07 2009 Slava Dubrovskiy <dubrsl@altlinux.org> 1.8-alt1
 - Update to 1.8
 - Convert spec to UTF-8
