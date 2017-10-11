@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.11.2
-Release: alt3
+Release: alt4
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -103,6 +103,12 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Wed Oct 11 2017 Alexei Takaseev <taf@altlinux.org> 1.11.2-alt4
+- update upstream to git:dc9638c595cffb142d0ae302a0e3210c67e83087
+    * ppp_lcp: fixed missing braces (possible bug)
+    * ipoe: more verbose netlink errors
+    * radius: split request queue to 2 subqueues
+
 * Thu Sep 28 2017 Alexei Takaseev <taf@altlinux.org> 1.11.2-alt3
 - update upstream to git:08e048a76d1d566bf280e3c09d4d839ff40f7af7
     * libnetlink: added function iplink_set_mtu
