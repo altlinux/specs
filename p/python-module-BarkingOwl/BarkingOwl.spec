@@ -5,29 +5,32 @@
 
 Name: python-module-%oname
 Version: 0.8.1
-Release: alt1
+Release: alt2
 Summary: Scalable web scraper framework for finding documents on websites
 License: GPLv3
 Group: Development/Python
 Url: https://pypi.python.org/pypi/BarkingOwl/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/thequbit/BarkingOwl.git
 Source0: https://pypi.python.org/packages/a2/6d/f3d53fbbc1f616835345dfce105f2a33e556dae0b6b6cf6e5ed8ebeca17b/%{oname}-%{version}.tar.gz
+Patch1: %oname-%version-alt-build.patch
+
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-BeautifulSoup4 python-module-libmagic
-BuildPreReq: python-module-pika python-module-six
-BuildPreReq: python-module-tldextract python-modules-wsgiref
-BuildPreReq: python-module-requests python-modules-json
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-BeautifulSoup4 python-module-libmagic
+BuildRequires: python-module-pika python-module-six
+BuildRequires: python-module-tldextract python-modules-wsgiref
+BuildRequires: python-module-requests python-modules-json
+BuildRequires: python2.7(daemon) python2.7(pymongo) python2.7(sqlalchemy) python2.7(docutils)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-BeautifulSoup4 python3-module-libmagic
-BuildPreReq: python3-module-pika python3-module-six
-BuildPreReq: python3-module-tldextract python3-module-requests
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-BeautifulSoup4 python3-module-libmagic
+BuildRequires: python3-module-pika python3-module-six
+BuildRequires: python3-module-tldextract python3-module-requests
+BuildRequires: python-tools-2to3
+BuildRequires: python3(daemon) python3(pymongo) python3(sqlalchemy) python3(docutils)
 %endif
 
 %py_provides barking_owl
@@ -77,6 +80,7 @@ This package contains tests for %oname.
 
 %prep
 %setup -q -n %{oname}-%{version}
+%patch1 -p2
 
 %if_with python3
 cp -fR . ../python3
@@ -130,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.1-alt2
+- Fixed build.
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1
 - automated PyPI update
 
