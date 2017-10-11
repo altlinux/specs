@@ -2,7 +2,7 @@
 %define dist Test-Pod
 Name: perl-%dist
 Version: 1.51
-Release: alt1
+Release: alt2
 
 Summary: Check for POD errors in files
 License: GPL or Artistic
@@ -14,7 +14,7 @@ Source: http://www.cpan.org/authors/id/E/ET/ETHER/Test-Pod-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Nov 14 2011
-BuildRequires: perl-Module-Build
+BuildRequires: perl-devel perl(Pod/Simple.pm)
 
 %description
 Test::Pod allows to check the validity of a POD file, and report
@@ -34,6 +34,9 @@ its results in standard Test::Simple fashion.
 %perl_vendor_privlib/Test
 
 %changelog
+* Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.51-alt2
+- updated BuildRequires.
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.51-alt1
 - automated CPAN update
 
