@@ -1,35 +1,31 @@
 %define _unpackaged_files_terminate_build 1
+
 %def_with python
-%def_without python-qt3
-%def_without qt3
 %def_with qt4
 %def_with python3
 %def_with python3qt5
 
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 %define oname qscintilla2
-%define suff 13
+%define suff 15
 Name: %oname
-Version: 2.10.8
-Release: alt4
+Version: 2.11.2
+Release: alt1
 License: GPL
 Group: Development/KDE and QT
 
 Source: qscintilla-gpl-%version.tar
-Patch1: %name-2.10.1-alt-build.patch
+Patch1: %name-%version-alt-build.patch
 
-Url: http://www.riverbankcomputing.co.uk/software/qscintilla/
+Url: https://riverbankcomputing.com/software/qscintilla
 
 %define libname lib%{oname}-%{suff}
 
 BuildRequires(pre): python-module-sip-devel
 %define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
 BuildRequires: gcc-c++
-%if_with qt3
-BuildRequires: libqt3-devel python-module-qt-devel
-%endif
 %if_with qt4
-Buildrequires: libqt4-devel
+BuildRequires: libqt4-devel
 %endif
 %if_with python
 %if_with qt4
@@ -43,10 +39,10 @@ BuildRequires(pre): rpm-build-python3 python3-module-sip-devel
 %define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
 BuildRequires: python3-devel python3-module-sip-devel
 %if_with qt4
-BuildPreReq: python3-module-PyQt4-devel
+BuildRequires: python3-module-PyQt4-devel
 %endif
 %endif
-BuildRequires: chrpath qt5-base-devel
+BuildRequires: qt5-base-devel qt5-tools-devel
 %if_with python3qt5
 BuildRequires: python3-module-PyQt5-devel
 %endif
@@ -63,29 +59,6 @@ choices are more open than with many editors, allowing the use of proportional
 fonts, bold and italics, multiple foreground and background colours and
 multiple fonts.
 
-%if_with qt3
-%package -n %libname-qt3
-Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class.
-Group: Development/KDE and QT
-Conflicts: libqscintilla
-Provides: lib%oname-qt3 = %EVR
-Obsoletes: lib%oname-qt3
-Obsoletes: lib%oname-5-qt3
-Obsoletes: lib%oname-qt3-compat
-
-%description -n %libname-qt3
-Qscintilla is a free source code editing component. It comes with complete
-source code and a license that permits use in any free project or commercial
-product. As well as features found in standard text editing components,
-Scintilla includes features especially useful when editing and debugging
-source code. These include support for syntax styling, error indicators, code
-completion and call tips. The selection margin can contain markers like those
-used in debuggers to indicate breakpoints and the current line. Styling
-choices are more open than with many editors, allowing the use of proportional
-fonts, bold and italics, multiple foreground and background colours and
-multiple fonts.
-%endif
-
 %if_with qt4
 %package -n %libname-qt4
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class.
@@ -98,6 +71,8 @@ Conflicts: lib%oname-11-qt4
 Obsoletes: lib%oname-11-qt4
 Conflicts: lib%oname-12-qt4
 Obsoletes: lib%oname-12-qt4
+Conflicts: lib%oname-13-qt4
+Obsoletes: lib%oname-13-qt4
 
 %description -n %libname-qt4
 Qscintilla is a free source code editing component. It comes with complete
@@ -120,6 +95,8 @@ Conflicts: lib%oname-11-qt5
 Obsoletes: lib%oname-11-qt5
 Conflicts: lib%oname-12-qt5
 Obsoletes: lib%oname-12-qt5
+Conflicts: lib%oname-13-qt5
+Obsoletes: lib%oname-13-qt5
 
 %description -n %libname-qt5
 Qscintilla is a free source code editing component. It comes with complete
@@ -132,17 +109,6 @@ used in debuggers to indicate breakpoints and the current line. Styling
 choices are more open than with many editors, allowing the use of proportional
 fonts, bold and italics, multiple foreground and background colours and
 multiple fonts.
-
-%if_with qt3
-%package -n lib%oname-qt3-devel
-Requires: %libname-qt3 = %EVR
-Requires: libqt3-devel
-Summary: Header files for %oname
-Group: Development/KDE and QT
-
-%description -n lib%oname-qt3-devel
-Header files for %oname
-%endif
 
 %if_with qt4
 %package -n lib%oname-qt4-devel
@@ -164,16 +130,6 @@ Group: Development/KDE and QT
 %description -n lib%oname-qt5-devel
 Header files for %oname-qt5
 
-%if_with qt3
-%package -n lib%oname-qt3-designer
-Requires: %libname-qt3 = %EVR
-Summary: QScintilla designer plugin
-Group: Development/KDE and QT
-
-%description -n lib%oname-qt3-designer
-QScintillla designer plugin.
-%endif
-
 %if_with qt4
 %package -n lib%oname-qt4-designer
 Requires: %libname-qt4 = %EVR
@@ -183,6 +139,14 @@ Group: Development/KDE and QT
 %description -n lib%oname-qt4-designer
 QScintillla designer plugin.
 %endif
+
+%package -n lib%oname-qt5-designer
+Requires: %libname-qt5 = %EVR
+Summary: QScintilla designer plugin
+Group: Development/KDE and QT
+
+%description -n lib%oname-qt5-designer
+QScintillla designer plugin.
 
 %if_with python
 %if_with qt4
@@ -274,29 +238,6 @@ BuildArch: noarch
 Devel files for Python bindings for %oname
 %endif
 %endif
-
-%if_with python-qt3
-%package -n python-module-%oname-qt3
-Requires: %libname-qt3 = %EVR
-Summary: Python bindings for %oname
-Group: Development/KDE and QT
-Provides: lib%oname-qt3-python = %EVR
-Obsoletes: lib%oname-qt3-python
-
-%description -n python-module-%oname-qt3
-Python bindings for %oname
-
-%package -n python-module-%oname-qt3-devel
-Requires: python-module-%oname-qt3 = %EVR
-Summary: Python bindings for %oname
-Group: Development/KDE and QT
-BuildArch: noarch
-Provides: lib%oname-qt3-python-devel = %EVR
-Obsoletes: lib%oname-qt3-python-devel
-
-%description -n python-module-%oname-qt3-devel
-Devel files for Python bindings for %oname
-%endif
 %endif
 
 %package -n %libname-doc
@@ -312,6 +253,7 @@ Documentation for %oname
 %patch1 -p2
 %if_with qt4
 ln -s Qt4Qt5 Qt4
+cp -fR designer-Qt4Qt5 designer-Qt4
 %endif
 cp -fR Qt4Qt5 Qt5
 %if_with qt4
@@ -337,9 +279,6 @@ cp -fR Python-qt4 ../python3
 %if_with python3qt5
 cp -fR Python-qt5 ../python3qt5
 %endif
-%if_with python-qt3
-mv Python Python-qt3
-%endif
 
 %build
 
@@ -352,29 +291,20 @@ forDebug() {
 # bits/c++0x_warning.h
 %add_optflags -std=gnu++11
 %endif
-# Qt3
-%if_with qt3
-pushd Qt3
-qmake-qt3 QMAKE_CFLAGS_RELEASE="%optflags" \
-	QMAKE_CXXFLAGS_RELEASE="%optflags" qscintilla.pro
-forDebug
-%make_build
-popd
-
-# Designer for Qt3
-pushd designer-Qt3
-qmake-qt3 QMAKE_CFLAGS_RELEASE="%optflags" \
-	QMAKE_CXXFLAGS_RELEASE="%optflags" designer.pro
-forDebug
-%make_build
-popd
-%endif
 
 # Qt4
 %if_with qt4
 pushd Qt4Qt5
 qmake-qt4 QMAKE_CFLAGS_RELEASE="%optflags" \
 	QMAKE_CXXFLAGS_RELEASE="%optflags" qscintilla.pro
+forDebug
+%make_build
+popd
+
+# Designer for Qt4
+pushd designer-Qt4
+qmake-qt4 QMAKE_CFLAGS_RELEASE="%optflags" \
+	QMAKE_CXXFLAGS_RELEASE="%optflags" designer.pro
 forDebug
 %make_build
 popd
@@ -388,30 +318,17 @@ forDebug
 %make_build
 popd
 
-# Designer for Qt4
-%if_with qt4
+# Designer for Qt5
 pushd designer-Qt4Qt5
-qmake-qt4 QMAKE_CFLAGS_RELEASE="%optflags" \
+qmake-qt5 QMAKE_CFLAGS_RELEASE="%optflags" \
 	QMAKE_CXXFLAGS_RELEASE="%optflags" designer.pro
 forDebug
 %make_build
 popd
-%endif
 
 %if_with python
-# Python bindings
-%if_with python-qt3
-pushd Python-qt3
-python configure.py -p 3 -n ../Qt3 -o ../Qt3
-STR=`cat Makefile | grep "LFLAGS ="`
-# add rpath for use qt3 %oname lib
-%if_with qt3
-sed -i "s:$STR:$STR,-rpath,%_qt3dir/lib:g" Makefile
-%endif
-%make
-popd
-%endif
 
+# Python bindings
 cp -fR Qt4Qt5 ../
 cp -fR Qt5 ../Qt5
 
@@ -468,18 +385,12 @@ sed -i \
 popd
 export PATH=$OLDPATH
 %endif
-
 %endif
 
 %install
 %if_with python
+
 # Python bindings
-%if_with python-qt3
-pushd Python-qt3
-%makeinstall_std
-mv %buildroot%python_sitelibdir/PyQt4/qsci.so %buildroot%python_sitelibdir
-popd
-%endif
 
 # Python bindings for PyQt4
 %if_with qt4
@@ -516,28 +427,11 @@ mkdir -p %buildroot%_datadir/qt4/qsci/api/python
 mkdir -p %buildroot%python_sitelibdir/PyQt5
 mkdir -p %buildroot%python3_sitelibdir/PyQt5
 mkdir -p %buildroot%_includedir/qt5/Qsci
-mkdir -p %buildroot%_libdir/qt5/{lib,translations,plugins/designer}
 mkdir -p %buildroot%_qt5_libdatadir
 mkdir -p %buildroot%_qt5_translationdir
+mkdir -p %buildroot%_qt5_plugindir/designer
 mkdir -p %buildroot%_datadir/sip/qsci
 mkdir -p %buildroot%_datadir/qt5/qsci/api/python
-%if_with qt3
-mkdir -p %buildroot%_qt3dir/include/Qsci
-mkdir -p %buildroot%_libdir/qt3/{lib,translations,plugins/designer}
-mkdir -p %buildroot%_datadir/qt3/qsci/api/python
-mkdir -p %buildroot%_datadir/qt3/qsci3/api/python
-%endif
-
-# Qt3 library
-%if_with qt3
-install Qt3/lib%oname.so.*.*.* %buildroot%_qt3dir/lib
-install Qt3/*.qm %buildroot%_qt3dir/translations
-pushd %buildroot%_qt3dir/lib
-ln -s lib%oname.so.*.*.* `ls lib%oname.so.*.*.* | sed s/\.[0-9]$//`
-ln -s lib%oname.so.*.*.* `ls lib%oname.so.*.*.* | sed s/\.[0-9]\.[0-9]$//`
-ln -s lib%oname.so.*.*.* `ls lib%oname.so.*.*.* | sed s/\.[0-9]\.[0-9]\.[0-9]$//`
-popd
-%endif
 
 # Qt4 library
 %if_with qt4
@@ -571,21 +465,13 @@ ln -s $libname ./
 done
 popd
 
-# Qt3 designer
-%if_with qt3
-install designer-Qt3/libqscintillaplugin.so %buildroot%_qt3dir/plugins/designer
-%endif
-
 # Qt4 designer
 %if_with qt4
-install designer-Qt4Qt5/libqscintillaplugin.so %buildroot%_qt4dir/plugins/designer
+install designer-Qt4/libqscintillaplugin.so %buildroot%_qt4dir/plugins/designer
 %endif
 
-# Qt3 headers
-%if_with qt3
-install -m644 Qt3/*.h %buildroot%_qt3dir/include
-install -m644 Qt3/Qsci/*.h %buildroot%_qt3dir/include/Qsci
-%endif
+# Qt5 designer
+install -D designer-Qt4Qt5/libqscintillaplugin.so %buildroot%_qt5_plugindir/designer
 
 # Qt4 headers
 %if_with qt4
@@ -600,23 +486,11 @@ install -m644 Qt5/Qsci/*.h %buildroot%_qt5_headerdir/Qsci/
 # docs
 mkdir -p %buildroot%_docdir/%libname-%version
 cp -a doc/Scintilla %buildroot%_docdir/%libname-%version
-#cp -a doc/html-Qt3 %buildroot%_docdir/%libname-%version
 cp -a doc/html-Qt4Qt5 %buildroot%_docdir/%libname-%version
 cp ChangeLog NEWS README %buildroot%_docdir/%libname-%version
 
-# Quick fix RPATH
-%if_with qt4
-chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so 
-%endif
-
 rm -rf %buildroot/%python_sitelibdir/QScintilla-%version.dist-info
 rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
-
-%if_with qt3
-%files -n %libname-qt3
-%_qt3dir/lib/*.so.*
-%_qt3dir/translations/*
-%endif
 
 %if_with qt4
 %files -n %libname-qt4
@@ -629,13 +503,6 @@ rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
 %_qt5_libdatadir/*.so.*
 %_libdir/*_qt5.so.*
 %_qt5_translationdir/*
-
-%if_with qt3
-%files -n lib%oname-qt3-devel
-%_qt3dir/include/*.h
-%_qt3dir/include/Qsci
-%_qt3dir/lib/*.so
-%endif
 
 %if_with qt4
 %files -n lib%oname-qt4-devel
@@ -652,26 +519,15 @@ rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
 %_qt5_libdatadir/*.so
 %_libdir/*_qt5.so
 
-%if_with qt3
-%files -n lib%oname-qt3-designer
-%_qt3dir/plugins/designer/*.so
-%endif
-
 %if_with qt4
 %files -n lib%oname-qt4-designer
 %_qt4dir/plugins/designer/*.so
 %endif
 
+%files -n lib%oname-qt5-designer
+%_qt5_plugindir/designer/*.so
+
 %if_with python
-%if_with python-qt3
-%files -n python-module-%oname-qt3
-%python_sitelibdir/qsci.so
-%_qt3dir/qsci
-
-%files -n python-module-%oname-qt3-devel
-%_datadir/sip/qsci
-%endif
-
 %if_with qt4
 %files -n python-module-%oname-qt4
 %python_sitelibdir/PyQt4/Qsci.so
@@ -718,6 +574,10 @@ rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
 %_docdir/%libname-%version
 
 %changelog
+* Fri Jul 05 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 2.11.2-alt1
+- Updated to upstream version 2.11.2.
+- Removed disabled qt3 support.
+
 * Thu Apr 25 2019 Michael Shigorin <mike@altlinux.org> 2.10.8-alt4
 - fix build on %%e2k
 
@@ -738,21 +598,21 @@ rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
 * Wed Feb 14 2018 Vitaly Lipatov <lav@altlinux.ru> 2.10.1-alt5.S1.1
 - NMU: autorebuild with python-module-sip 4.9.7
 
-* Thu Jan 25 2018 Andrew Savchenko <bircoph@altlinux.org> 2.10.1-alt5%ubt
+* Thu Jan 25 2018 Andrew Savchenko <bircoph@altlinux.org> 2.10.1-alt5
 - Make qt4 support optional (needed on e2k arch)
 
-* Mon Nov 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10.1-alt4%ubt
+* Mon Nov 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10.1-alt4
 - Fix provides.
 
-* Sun Nov 12 2017 Anton Midyukov <antohami@altlinux.org> 2.10.1-alt3%ubt
+* Sun Nov 12 2017 Anton Midyukov <antohami@altlinux.org> 2.10.1-alt3
 - Added missing files
 - Fix missing provides (Closes: 34171)
 
-* Thu Nov 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10.1-alt2%ubt
+* Thu Nov 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10.1-alt2
 - Added devel symlink for compatibility.
 - Pinned dependency on sip because rebuild of sip requires rebuild of this package.
 
-* Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10.1-alt1%ubt
+* Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10.1-alt1
 - Updated to upstream version 2.10.1.
 
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.9-alt4.1
