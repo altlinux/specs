@@ -1,12 +1,12 @@
 
 Summary: osinfo database files
 Name: osinfo-db
-Version: 20161026
+Version: 20170813
 Release: alt1
 License: LGPLv2+
 Group: System/Libraries
-Url: http://libosinfo.org/
-Source: https://fedorahosted.org/releases/l/i/libosinfo/%name-%version.tar.xz
+Url: https://libosinfo.org
+Source: https://releases.pagure.io/libosinfo/%{name}-%{version}.tar.xz
 BuildArch: noarch
 
 BuildRequires: intltool >= 0.40.0
@@ -26,6 +26,9 @@ osinfo-db-import --root %buildroot --system %SOURCE0
 %_datadir/osinfo/*
 
 %changelog
+* Wed Oct 11 2017 Alexey Shabalin <shaba@altlinux.ru> 20170813-alt1
+- 20170813
+
 * Fri Dec 30 2016 Alexey Shabalin <shaba@altlinux.ru> 20161026-alt1
 - 20161026
 
