@@ -1,7 +1,7 @@
 
 Name: akonadi
 Version: 1.13.1
-Release: alt0.3
+Release: alt0.4%ubt
 
 Group: Databases
 Summary: An extensible cross-desktop storage service for PIM
@@ -23,7 +23,7 @@ Patch105: akonadi-1.11.0-alt-start-mysqlcheck.patch
 Patch106: akonadi-1.6.2-alt-own-mysql_install_db.patch
 Patch107: akonadi-1.6.2-alt-check-nepomuk.patch
 
-BuildRequires(pre): libqt4-devel
+BuildRequires(pre): libqt4-devel rpm-build-ubt
 BuildRequires: gcc-c++ automoc
 BuildRequires: libqt4-devel >= 4.4 kde-common-devel >= 4
 BuildRequires: shared-mime-info >=  0.20
@@ -201,6 +201,9 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Oct 11 2017 Sergey V Turchin <zerg@altlinux.org> 1.13.1-alt0.4%ubt
+- rebuild with new boost
+
 * Wed Feb 24 2016 Sergey V Turchin <zerg@altlinux.org> 1.13.1-alt0.3
 - fix requires
 
