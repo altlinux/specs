@@ -1,17 +1,14 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: perl(Digest/MD5.pm) perl(Digest/SHA1.pm) perl(Encode.pm) perl(I18N/Langinfo.pm) perl(Text/Tabs.pm) perl(Time/Local.pm)
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           dc3dd
-Version:        7.2.641
-Release:        alt1_2
+Version:        7.2.646
+Release:        alt1_3
 Summary:        Patched version of GNU dd for use in computer forensics
 
 Group:          Editors
 License:        GPLv2+ and GPLv3+
-URL:            http://dc3dd.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/dc3dd/%{name}-%{version}.tar.xz
+URL:            http://sourceforge.net/projects/dc3dd/
+Source0:        http://downloads.sourceforge.net/dc3dd/%{name}-%{version}.tar
 
 #Fixing build error: automatic de-ANSI-fication support has been removed
 #Removing the check for AM_C_PROTOTYPES
@@ -20,8 +17,9 @@ Patch0:         dc3dd-automake.patch
 BuildRequires:  gettext gettext-tools
 BuildRequires:  gettext-tools libasprintf-devel
 BuildRequires:  perl(Locale/gettext.pm)
-BuildRequires:  gzip-utils less xz
+BuildRequires:  p7zip-standalone p7zip
 BuildRequires:  m4, readline-devel, autoconf-common, automake-common
+Source44: import.info
 
 %description
 dc3dd is a patched version of GNU dd to include a number of features useful
@@ -47,15 +45,9 @@ were rewritten for dc3dd.
 %setup -q
 %patch0 -p 1 -b .automake
 
-### Release dc3dd-7.1.614.tar.gz removed the need for this
-#
-#for file in README Sample_Commands.txt Options_Reference.txt; 
-#do
-#    sed 's|\r||' $file > $file.tmp
-#    touch -r $file $file.tmp
-#    mv -f $file.tmp $file
-#done
-#rm po/*.gmo
+#Missing x flag in version 7.2.646 makes the build fail
+chmod +x build-aux/git-version-gen configure
+
 
 %build
 autoreconf -vif #BZ925238 - support aarch64
@@ -73,6 +65,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_mandir}/man1/%{name}.*
 
 %changelog
+* Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 7.2.646-alt1_3
+- update to new release by fcimport
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 7.2.641-alt1_2
 - update to new release by fcimport
 
