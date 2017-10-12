@@ -4,7 +4,7 @@
 
 Name:    qgis
 Version: 2.18.13
-Release: alt1
+Release: alt2
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPLv3+ with exceptions
@@ -330,6 +330,9 @@ echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
 %_libexecdir/%name
 
 %changelog
+* Wed Oct 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.18.13-alt2
+- Rebuilt with qscintilla2 2.10.1.
+
 * Sat Sep 16 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.13-alt1
 - New version
 

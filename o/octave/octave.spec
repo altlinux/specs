@@ -1,6 +1,6 @@
 Name: octave
 Version: 4.2.1
-Release: alt2
+Release: alt3
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -34,6 +34,7 @@ Source1: octave.filetrigger
 Patch0: octave-include-pcre.patch
 Patch1: octave-4.0.3-alt-desktop-l10n.patch
 Patch2: octave-alt-fix-build.patch
+Patch3: octave-4.2.1-upstream-qscintilla.patch
 
 Requires: gnuplot
 
@@ -87,6 +88,7 @@ This package contains extra documentation for GNU Octave.
 %patch0 -p2
 %patch1 -p2
 #patch2 -p2
+%patch3 -p2
 
 %build
 %add_optflags $(pkg-config hdf5-seq --cflags) $(pcre-config --cflags)
@@ -165,6 +167,9 @@ EOF
 %doc doc/interpreter/octave.html doc/liboctave/liboctave.html doc/interpreter/octave.pdf doc/liboctave/liboctave.pdf doc/refcard/refcard*.pdf
 
 %changelog
+* Wed Oct 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.1-alt3
+- Rebuilt with qscintilla2 2.10.1.
+
 * Wed Jul 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.1-alt2
 - Rebuilt with new libsuitesparse
 

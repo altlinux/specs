@@ -1,6 +1,6 @@
 Name: sqliteman
 Version: 1.2.2
-Release: alt1.qa6
+Release: alt1.qa7
 
 Url: http://sqliteman.com/
 License: GPL
@@ -28,7 +28,9 @@ contains the most complette feature set of all tools available.
 %setup
 
 %build
-%cmake
+%cmake \
+	-DQSCINTILLA_NAMES=qscintilla2_qt4
+
 cd BUILD
 %make_build
 
@@ -46,6 +48,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/sqliteman/
 
 %changelog
+* Wed Oct 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt1.qa7
+- Rebuilt with qscintilla2 2.10.1.
+
 * Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.qa6
 - Rebuilt with qscintilla2 2.9
 
