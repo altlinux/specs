@@ -8,14 +8,14 @@ BuildRequires: perl(B.pm) perl(Term/ReadLine.pm) perl-podlators
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt2_3
+Version:    1.003006
+Release:    alt1
 
 Summary:    Persist compile hints between evals
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Eval/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/H/HA/HAARG/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(Moo.pm)
@@ -31,7 +31,7 @@ strict manpage and the warnings manpage flags in effect).
 Saves and restores the '$^H' and '%^H' variables.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %__perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -45,12 +45,15 @@ Saves and restores the '$^H' and '%^H' variables.
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml  README
+%doc Changes META.json META.yml README
 %{_mandir}/man*/*
 %{perl_vendor_privlib}/*
 /usr/bin/tinyrepl
 
 %changelog
+* Thu Oct 12 2017 Igor Vlasenko <viy@altlinux.ru> 1.003006-alt1
+- automated CPAN update
+
 * Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.003005-alt2_3
 - to Sisyphus
 
