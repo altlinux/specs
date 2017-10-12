@@ -8,8 +8,14 @@
 
 %define _unpackaged_files_terminate_build 1
 
+%ifarch e2k
+%define more_warnings no
+%else
+%define more_warnings error
+%endif
+
 Name: NetworkManager-openvpn
-Version: 1.2.10
+Version: 1.8.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -67,7 +73,7 @@ NetworkManager panel applet.
 	--without-libnm-glib \
 %endif
 	--disable-silent-rules \
-	--enable-more-warnings=error
+	--enable-more-warnings=%more_warnings
 %make_build
 
 %install
@@ -93,13 +99,19 @@ make check
 %_libdir/NetworkManager/libnm-openvpn-properties.so*
 %endif
 %_libexecdir/NetworkManager/nm-openvpn-auth-dialog
-%_datadir/gnome-vpn-properties/*
 %_libdir/NetworkManager/libnm-vpn-plugin-openvpn-editor.so
 %_datadir/appdata/*.xml
 
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Thu Oct 12 2017 Mikhail Efremov <sem@altlinux.org> 1.8.0-alt1
+- Fix build on e2k.
+- Fixes from upstream:
+  + properties: fix validation of static-key in GUI.
+  + properties: fix unusable config imports.
+- Updated to 1.8.0.
+
 * Tue Jul 11 2017 Mikhail Efremov <sem@altlinux.org> 1.2.10-alt1
 - Disable silent rules.
 - Updated to 1.2.10.
