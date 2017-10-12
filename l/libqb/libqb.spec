@@ -14,15 +14,19 @@ BuildRequires: /usr/bin/splint gcc-c++ pkgconfig(glib-2.0)
 
 Name:           libqb
 Version:        1.0.2
-Release:        alt1_7
+Release:        alt1_8
 Summary:        An IPC library for high performance servers
 
 Group:          System/Libraries
 License:        LGPLv2+
 URL:            https://github.com/ClusterLabs/libqb
 Source0:        https://github.com/ClusterLabs/libqb/releases/download/v%{version}/%{name}-%{version}.tar.xz
-Patch0:         0001-build-configure-run-attribute-section-test-through-r.patch
-Patch1:         0002-WIP-5-Experimental-fix-for-libqb-logging-not-working.patch
+Patch0:         01-Med-qblog.h-better-explanation-behaviour-of-QB_LOG_I.patch
+Patch1:         02-build-configure-run-attribute-section-test-through-r.patch
+Patch2:         03-tests-new-sort-of-tests-dubbed-functional-cover-link.patch
+Patch3:         04-Med-add-extra-run-time-client-side-sanity-check-that.patch
+Patch4:         05-High-bare-fix-for-libqb-logging-not-working-with-ld..patch
+Patch5:         06-Low-fix-internal-object-symbol-s-leak-expose-run-tim.patch
 
 BuildRequires:  autoconf-common automake-common libtool-common doxygen procps sysvinit-utils libcheck-devel
 # https://fedoraproject.org/wiki/Packaging:C_and_C%2B%2B#BuildRequires_and_Requires
@@ -40,6 +44,10 @@ and polling.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 ## Make sure the timestamps are correct
 #find . -exec touch \{\} \;
@@ -78,6 +86,9 @@ developing applications that use %{name}.
 %{_mandir}/man3/qb*3*
 
 %changelog
+* Thu Oct 12 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_8
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_7
 - update to new release by fcimport
 
