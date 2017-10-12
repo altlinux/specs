@@ -2,8 +2,8 @@
 %define module Geo-IP
 
 Name: perl-%module
-Version: 1.50
-Release: alt1.1
+Version: 1.51
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -12,7 +12,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/M/MA/MAXMIND/Geo-IP-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MAXMIND/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: libGeoIP-devel perl-devel
@@ -23,7 +23,7 @@ as keys, and countries as values. This database should be more complete and
 accurate than reverse DNS lookups.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 find lib/ example/ -type f -print0 | xargs -r0 %__subst -p 's./usr/local/share/GeoIP./usr/share/GeoIP.'
 
@@ -34,11 +34,14 @@ find lib/ example/ -type f -print0 | xargs -r0 %__subst -p 's./usr/local/share/G
 %perl_vendor_install
 
 %files
-%doc README* Changes example
+%doc README* Changes example CONTRIBUTING.md
 %perl_vendor_archlib/Geo
 %perl_vendor_autolib/Geo
 
 %changelog
+* Thu Oct 12 2017 Igor Vlasenko <viy@altlinux.ru> 1.51-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.50-alt1.1
 - rebuild with new perl 5.24.1
 
