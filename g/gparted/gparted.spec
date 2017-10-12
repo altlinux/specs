@@ -1,8 +1,10 @@
-%def_with pic
 %define Name GParted
 
+%def_with pic
+%def_disable usermode
+
 Name: gparted
-Version: 0.29.0
+Version: 0.30.0
 Release: alt1
 
 Summary: %Name Partition Editor
@@ -21,7 +23,10 @@ Patch1: %name-0.29.0-alt-dmraid.patch
 
 AutoReq: yes, noshell
 
-Requires: consolehelper
+%define polkit_ver 0.112
+
+Requires: polkit >= %polkit_ver
+%{?_enable_usermode:Requires: consolehelper}
 Requires: hdparm
 # for raid support
 Requires: mdadm dmraid dmsetup lvm2 cryptsetup
@@ -34,6 +39,7 @@ BuildRequires: libparted-devel >= 3.2
 BuildRequires: libgtkmm2-devel >= 2.22.0
 BuildRequires: gcc-c++ libprogsreiserfs-devel libuuid-devel intltool
 BuildRequires: perl-XML-Parser gnome-doc-utils gnome-common librarian
+BuildRequires: polkit >= %polkit_ver
 
 %description
 %Name stands for %Name Partition Editor. It uses libparted to detect
@@ -67,9 +73,13 @@ general approach is to keep the GUI as simple as possible.
 %setup
 %patch1 -p0
 
+# get polkit version from pkaction in hasher
+subst 's/pkexec --version/pkaction --version/' configure*
+
 %build
 #NOCONFIGURE=1 ./autogen.sh
-%configure %{subst_with pic} --bindir=%_sbindir \
+%configure %{subst_with pic} \
+	%{?_enable_usermode:--bindir=%_sbindir} \
 	--enable-libparted-dmraid \
 	--enable-online-resize
 %make_build
@@ -78,27 +88,37 @@ bzip2 --best --keep --force ChangeLog
 %install
 %makeinstall_std
 
-# usermode
+%if_enabled usermode
 install -pD -m640 %SOURCE1 %buildroot%_sysconfdir/pam.d/%name
 install -pD -m640 %SOURCE2 %buildroot%_sysconfdir/security/console.apps/%name
 install -d -m 0755 %buildroot%_bindir
 ln -s %_bindir/consolehelper %buildroot%_bindir/%name
 sed -i 's|%_sbindir|%_bindir|' %buildroot%_desktopdir/%name.desktop
+%endif
 
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog.* README
-%_sbindir/*
-%_bindir/*
-%_man8dir/*
-%_sysconfdir/pam.d/*
-%_sysconfdir/security/console.apps/*
+%doc AUTHORS ChangeLog.* README NEWS
+%_bindir/%name
+%_sbindir/%{name}bin
+%_man8dir/%name.8.*
 %_iconsdir/hicolor/*/apps/*
-%_desktopdir/*
+%_desktopdir/%name.desktop
+%_datadir/polkit-1/actions/org.gnome.gparted.policy
 %_datadir/appdata/%name.appdata.xml
 
+%if_enabled usermode
+%_bindir/%name
+%_sysconfdir/pam.d/%name
+%_sysconfdir/security/console.apps/%name
+%endif
+
 %changelog
+* Thu Oct 12 2017 Yuri N. Sedunov <aris@altlinux.org> 0.30.0-alt1
+- 0.30.0
+- removed consolehelper support in favor of polkit
+
 * Wed Aug 09 2017 Yuri N. Sedunov <aris@altlinux.org> 0.29.0-alt1
 - 0.29.0
 - ekorneechev@:
