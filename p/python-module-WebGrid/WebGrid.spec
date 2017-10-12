@@ -1,28 +1,27 @@
 %define _unpackaged_files_terminate_build 1
 %define oname WebGrid
 Name: python-module-%oname
-Version: 0.1.31
+Version: 0.1.34
 Release: alt1
 Summary: A library for rendering HTML tables and Excel files from SQLAlchemy models
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/WebGrid/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: https://pypi.python.org/packages/72/20/ab20cbb0ff098d5ea7854bc779fbd63d7b1521a7227c858011a745593ddc/%{oname}-%{version}.tar.gz
+Source: %{oname}-%{version}.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-BlazeUtils python-module-FormEncode
-BuildPreReq: python-module-jinja2 python-module-SQLAlchemy
-BuildPreReq: python-module-webhelpers python-module-dateutil
-BuildPreReq: python-module-werkzeug python-module-BlazeWeb-tests
-BuildPreReq: python-module-SQLAlchemyBWC python-module-mock
-BuildPreReq: python-module-nose python-module-flask
-BuildPreReq: python-module-nose python-module-Flask-Bootstrap
-BuildPreReq: python-module-flask_sqlalchemy python-module-Flask-WebTest
-BuildPreReq: python-module-wrapt python-module-xlrd
-BuildPreReq: python-module-xlwt python-module-PasteDeploy
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-BlazeUtils python-module-FormEncode
+BuildRequires: python-module-jinja2 python-module-SQLAlchemy
+BuildRequires: python-module-webhelpers2 python-module-dateutil
+BuildRequires: python-module-werkzeug python-module-BlazeWeb-tests
+BuildRequires: python-module-SQLAlchemyBWC python-module-mock
+BuildRequires: python-module-nose python-module-flask
+BuildRequires: python-module-nose python-module-Flask-Bootstrap
+BuildRequires: python-module-flask_sqlalchemy python-module-Flask-WebTest
+BuildRequires: python-module-wrapt python-module-xlrd
+BuildRequires: python-module-xlwt python-module-PasteDeploy
 
 %py_provides webgrid
 %py_requires formencode blazeutils jinja2 sqlalchemy webhelpers wrapt
@@ -78,6 +77,9 @@ python setup.py test
 %python_sitelibdir/*/tests
 
 %changelog
+* Thu Oct 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.34-alt1
+- Updated to upstream version 0.1.34.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.31-alt1
 - automated PyPI update
 
