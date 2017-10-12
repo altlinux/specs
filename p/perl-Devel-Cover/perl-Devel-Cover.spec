@@ -3,7 +3,7 @@
 %add_findreq_skiplist %perl_vendor_archlib/Devel/Cover/Collection.pm
 %define dist Devel-Cover
 Name: perl-%dist
-Version: 1.27
+Version: 1.28
 Release: alt1
 
 Summary: Code coverage metrics for Perl
@@ -50,6 +50,9 @@ echo 'sub Devel::Cover::set_first_init_and_end{}1' >%buildroot/hack.pm
 %exclude /hack.pm
 
 %changelog
+* Thu Oct 12 2017 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1
+- automated CPAN update
+
 * Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
 - automated CPAN update
 
