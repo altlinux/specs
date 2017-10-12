@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Scalar/Util.pm) perl(XSLoader.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Devel-FindRef
-Version:        1.44
-Release:        alt3_3.1.1
+Version:        1.45
+Release:        alt1
 Summary:        Where is that reference to my variable hiding?
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -15,9 +16,7 @@ Source0:        http://www.cpan.org/authors/id/M/ML/MLEHMANN/Devel-FindRef-%{ver
 Patch0:         perl-Devel-FindRef-1.44-fix-format-warnings.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=786085
 Patch2:         Devel-FindRef-fix.patch
-# https://rt.cpan.org/Public/Bug/Display.html?id=101077
-Patch3:		823247.patch
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(ExtUtils/MakeMaker.pm) perl(Canary/Stability.pm)
 BuildRequires:  perl(common/sense.pm)
 Source44: import.info
 
@@ -31,15 +30,14 @@ references "backwards" is usually possible.
 %setup -q -n Devel-FindRef-%{version}
 %patch0 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 # remove me in proper upstream release
-[ %version = 1.44 ] || exit 3
+#[ %version = 1.44 ] || exit 3
 %define _without_test 1
 # end remove
 
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
+yes | perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
 make %{?_smp_mflags}
 
 %install
@@ -59,6 +57,9 @@ make test
 %{perl_vendor_archlib}/Devel
 
 %changelog
+* Thu Oct 12 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.45-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.44-alt3_3.1.1
 - rebuild with new perl 5.24.1
 
