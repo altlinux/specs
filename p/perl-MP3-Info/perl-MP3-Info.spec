@@ -1,6 +1,6 @@
 %define dist MP3-Info
 Name: perl-%dist
-version: 1.24
+Version: 1.26
 Release: alt1
 
 Summary: Manipulate / fetch info from MP3 audio files
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/J/JM/JMERELO/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -19,7 +19,7 @@ BuildRequires: perl-Encode perl-Module-Install
 This module is used for getting info out of and into MP3 files.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -28,10 +28,13 @@ This module is used for getting info out of and into MP3 files.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README.md
 %perl_vendor_privlib/MP3*
 
 %changelog
+* Thu Oct 12 2017 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1
+- automated CPAN update
+
 * Fri Apr 30 2010 Alexey Tourbin <at@altlinux.ru> 1.24-alt1
 - 1.02 -> 1.24
 
