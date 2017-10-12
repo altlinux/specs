@@ -13,7 +13,7 @@ Name: ruby
 %define ver_teeny 2
 #define _pl
 Version: %branch.%ver_teeny
-Release: alt1
+Release: alt2
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -334,6 +334,11 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/site_ruby/%version%
 
 
 %changelog
+* Thu Oct 12 2017 Andrey Cherepanov <cas@altlinux.org> 2.4.2-alt2
+- Merge rubygems-2.6.14 changes
+- Fixes:
+  + CVE-2017-0903 Unsafe Object Deserialization Vulnerability in RubyGems
+
 * Sat Sep 16 2017 Andrey Cherepanov <cas@altlinux.org> 2.4.2-alt1
 - New version 2.4.2
 - Security fixes:
