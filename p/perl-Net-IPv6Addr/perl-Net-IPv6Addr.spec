@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Net-IPv6Addr
-Version: 0.9
+Version: 0.91
 Release: alt1
 
 Summary: - check validity of IPv6 addresses
@@ -52,10 +52,13 @@ The public interface of this module is rather small.
 rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
-%doc README ChangeLog examples
+%doc README examples Changes
 %perl_vendor_privlib/Net/*
 
 %changelog
+* Thu Oct 12 2017 Igor Vlasenko <viy@altlinux.ru> 0.91-alt1
+- automated CPAN update
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1
 - automated CPAN update
 
