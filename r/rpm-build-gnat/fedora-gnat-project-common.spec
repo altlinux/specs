@@ -2,16 +2,23 @@
 BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 %define oldname fedora-gnat-project-common
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           rpm-build-gnat
 Version:        3.9
-Release:        alt1_5
+Release:        alt1_7
 Summary:        Files shared by Ada libraries
 Summary(sv):    Gemensamma filer för adabibliotek
 
 Group:          System/Libraries
 License:        Copyright only
-URL:            https://fedorahosted.org/released/fedora-gnat-project-common
-Source1:        https://fedorahosted.org/released/fedora-gnat-project-common/download/fedora-gnat-project-common-%{version}.tar.gz
+URL:            https://src.fedoraproject.org/cgit/rpms/fedora-gnat-project-common.git
+Source1:        directories.gpr.in
+Source2:        macros.gnat.in
+Source3:        gnat-project.sh
+Source4:        gnat-project.csh
+Source5:        configure
+Source6:        LICENSE
 BuildArch:      noarch
 
 BuildRequires:  sed
@@ -43,7 +50,6 @@ GNAT-projektfilerna för flera adabibliotek, samt GNAT-specifika RPM-makron.
 
 
 
-
 %package -n rpm-macros-gnat
 Summary: Set of RPM macros for packaging GNAT applications
 Group: Development/Other
@@ -54,7 +60,8 @@ Set of RPM macros for packaging GNAT applications for ALT Linux.
 Install this package if you want to create RPM packages that use GNAT.
 
 %prep
-%setup -n %{oldname}-%{version} -q -T -b 1
+%setup -n %{oldname}-%{version} -c -T
+cp --preserve=timestamps %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} %{SOURCE5} %{SOURCE6} .
 %patch33 -p0
 
 
@@ -63,10 +70,10 @@ exec_prefix=%{_exec_prefix} bindir=%{_bindir} libexecdir=%{_libexecdir} included
 
 
 %install
-mkdir --parents %{buildroot}%{_GNAT_project_dir} %{buildroot}%{_sysconfdir}/profile.d %{buildroot}%_rpmmacrosdir/
+mkdir --parents %{buildroot}%{_GNAT_project_dir} %{buildroot}%{_sysconfdir}/profile.d %{buildroot}%{_rpmmacrosdir}
 cp -p directories.gpr %{buildroot}%{_GNAT_project_dir}/
 cp -p gnat-project.sh gnat-project.csh %{buildroot}%{_sysconfdir}/profile.d/
-cp -p macros.gnat %{buildroot}%_rpmmacrosdir/gnat
+cp -p macros.gnat %{buildroot}%{_rpmmacrosdir}/gnat
 
 
 %files
@@ -80,6 +87,9 @@ cp -p macros.gnat %{buildroot}%_rpmmacrosdir/gnat
 
 
 %changelog
+* Thu Oct 12 2017 Igor Vlasenko <viy@altlinux.ru> 3.9-alt1_7
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 3.9-alt1_5
 - update to new release by fcimport
 
