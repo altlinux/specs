@@ -1,19 +1,20 @@
 %define oname BlazeForm
+
 Name: python-module-%oname
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 Summary: A library for generating and validating HTML forms
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/BlazeForm/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: https://pypi.python.org/packages/8a/46/36526c5c1e4adf7dd5feb6d2ae1954f7e89f2c9f2a2f3f01b18d92570a1b/%{oname}-%{version}.tar.gz
+Source: %{oname}-%{version}.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-FormEncode
-BuildPreReq: python-module-BlazeUtils python-module-webhelpers
-BuildPreReq: python-module-nose python-module-DNS
+BuildRequires: python-module-setuptools-tests python-module-FormEncode
+BuildRequires: python-module-BlazeUtils python-module-webhelpers
+BuildRequires: python-module-nose python-module-DNS
+BuildRequires: python2.7(webhelpers2)
 
 %py_provides blazeform
 %py_requires formencode blazeutils webhelpers
@@ -48,6 +49,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Thu Oct 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.1-alt1
+- Updated to upstream version 0.4.1.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1
 - automated PyPI update
 
