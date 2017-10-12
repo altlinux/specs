@@ -5,13 +5,13 @@ BuildRequires: perl(Scalar/Util.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Test-MockModule
-Version:        0.12
-Release:        alt1_2
+Version:        0.13
+Release:        alt1
 Summary:        Override subroutines in a module for unit testing
 Group:          Development/Other
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Test-MockModule/
-Source0:        http://search.cpan.org/CPAN/authors/id/S/SI/SIMONFLK/Test-MockModule-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/G/GF/GFRANKS/Test-MockModule-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(CGI.pm)
@@ -42,6 +42,9 @@ chmod -R u+w $RPM_BUILD_ROOT/*
 %{perl_vendor_privlib}/Test
 
 %changelog
+* Thu Oct 12 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- automated CPAN update
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_2
 - update to new release by fcimport
 
