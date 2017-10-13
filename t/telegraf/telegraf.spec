@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/telegraf
-%global commit 7bbd3daa98d5931c6e9025a98105092b0722de0d
+%global commit 0cc5fc0ce40b09467012fffddcea6985b2763a97
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		telegraf
-Version:	1.3.5
+Version:	1.4.2
 Release:	alt1%ubt
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
@@ -73,7 +73,12 @@ export GOPATH="%go_path"
 
 %golang_install
 
+# cleanup
 rm -rf -- %buildroot/%_datadir
+rm -f %buildroot%_bindir/gdm
+rm -f %buildroot%_bindir/stress_test_write
+rm -f %buildroot%_bindir/thrift_serialize
+
 
 # Install config files
 install -p -D -m 640 etc/telegraf.conf %buildroot%_sysconfdir/%name/%name.conf
@@ -116,6 +121,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Thu Oct 12 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.2-alt1%ubt
+- 1.4.2
+
 * Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt1%ubt
 - rebuild with Universal Branch Tag
 - fix run with sysv init script
