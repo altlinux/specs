@@ -1,7 +1,7 @@
 %define destname rpm-uscan
 %define debian_ver 2.17.10
 Name: %destname
-Version: 0.17.%debian_ver
+Version: 0.18.%debian_ver
 Release: alt1
 
 Summary: Utility to check watch files
@@ -43,6 +43,9 @@ pod2man scripts/uscan.pl > %buildroot%_man1dir/%destname.1
 %_man1dir/*
 
 %changelog
+* Fri Oct 13 2017 Igor Vlasenko <viy@altlinux.ru> 0.18.2.17.10-alt1
+- added shared library code
+
 * Sat Oct 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.17.2.17.10-alt1
 - sync with debian uscan 2.17.10
 - basic library support
