@@ -11,7 +11,7 @@ BuildRequires: perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:    Haml Perl implementation
 License:    GPL+ or Artistic
@@ -46,7 +46,7 @@ features. Do not expect Ruby specific things to work.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
+/usr/bin/perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 ./Build
 
 %check
@@ -62,6 +62,9 @@ rm -f %{buildroot}/%{perl_vendor_privlib}/Text/README.pod
 
 
 %changelog
+* Fri Oct 13 2017 Igor Vlasenko <viy@altlinux.ru> 0.990118-alt1_2
+- update by mgaimport
+
 * Mon Sep 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.990118-alt1_1
 - update by mgaimport
 
