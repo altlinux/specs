@@ -11,7 +11,7 @@ BuildRequires: perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:    %{upstream_name} perl module
 License:    GPL or Artistic
@@ -40,7 +40,7 @@ several predefined digit sets.
 
 %build
 
-CFLAGS="$RPM_OPT_FLAGS" %__perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+CFLAGS="$RPM_OPT_FLAGS" /usr/bin/perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make
 make test
 
@@ -52,6 +52,9 @@ make PREFIX=$RPM_BUILD_ROOT%{_prefix} install DESTDIR=$RPM_BUILD_ROOT
 %{perl_vendor_privlib}/Math/*
 
 %changelog
+* Fri Oct 13 2017 Igor Vlasenko <viy@altlinux.ru> 1.019-alt1_2
+- update by mgaimport
+
 * Mon Sep 25 2017 Igor Vlasenko <viy@altlinux.ru> 1.019-alt1_1
 - update by mgaimport
 
