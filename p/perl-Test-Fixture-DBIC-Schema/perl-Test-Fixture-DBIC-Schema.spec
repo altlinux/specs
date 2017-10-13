@@ -10,7 +10,7 @@ BuildRequires: perl(DBD/SQLite.pm)
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_7
+Release:    alt1_8
 
 Summary:    Load fixture data to storage
 License:    GPL+ or Artistic
@@ -37,7 +37,7 @@ Test::Fixture::DBIC::Schema is fixture data loader for DBIx::Class::Schema.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -53,6 +53,9 @@ Test::Fixture::DBIC::Schema is fixture data loader for DBIx::Class::Schema.
 
 
 %changelog
+* Fri Oct 13 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1_8
+- update by mgaimport
+
 * Mon Sep 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1_7
 - update by mgaimport
 
