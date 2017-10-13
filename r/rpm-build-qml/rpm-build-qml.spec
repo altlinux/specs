@@ -1,6 +1,6 @@
 Name: rpm-build-qml
 Version: 0.0.6
-Release: alt1
+Release: alt2
 
 Summary: RPM helper macros to rebuild QML packages
 License: GPLv2+
@@ -42,6 +42,9 @@ install -pD -m755 qml.req.files %buildroot%_rpmlibdir/qml.req.files
 %_bindir/qmlinfo
 
 %changelog
+* Fri Oct 13 2017 Oleg Solovyov <mcpain@altlinux.org> 0.0.6-alt2
+- fix macro
+
 * Tue Oct 10 2017 Oleg Solovyov <mcpain@altlinux.org> 0.0.6-alt1
 - Add: requires without versions
 
