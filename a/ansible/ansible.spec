@@ -1,23 +1,20 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 2.2.2.0
+Version: 2.4.0.0
 Release: alt1
 
 Group: System/Libraries
 License: GPLv3
 Source0: %name-%version.tar
-Source1: %name-modules-core-%version.tar
-Source2: %name-modules-extras-%version.tar
 
 Patch0:%name-%version-alt.patch
-Patch1: %name-modules-core-%version-alt.patch
 
 Url: http://www.ansible.com
 
 Packager: Evgenii Terechkov <evg@altlinux.org>
 
 BuildArch: noarch
-BuildRequires: python-module-setuptools asciidoc-a2x
+BuildRequires: python-module-setuptools asciidoc-a2x python-module-jinja2 python-module-yaml
 
 Requires: ca-certificates >= 2015.10.29
 %py_requires yaml
@@ -25,6 +22,7 @@ Requires: ca-certificates >= 2015.10.29
 
 # Skip findreq on all modules:
 %add_findreq_skiplist %python_sitelibdir/%name/modules/*
+%add_findreq_skiplist %python_sitelibdir/%name/module_utils/ansible_tower.py
 
 %description
 Ansible is a radically simple model-driven configuration management,
@@ -35,12 +33,7 @@ are transferred to managed machines automatically.
 
 %prep
 %setup
-# %%patch0 -p1
-tar -xvf %SOURCE1               # creates ./library/...
-tar -xvf %SOURCE2
-pushd library
-%patch1 -p1
-popd
+%patch0 -p1
 
 %build
 %python_build
@@ -53,8 +46,6 @@ touch %buildroot%_sysconfdir/%name/hosts
 mkdir -p %buildroot/%_man1dir
 make docs
 cp -v docs/man/man1/*.1 %buildroot/%_man1dir/
-rm -f library/{VERSION,README.md,COPYING,CONTRIBUTING.md}
-cp -va library/* %buildroot%python_sitelibdir/%name/modules
 
 %files
 %_bindir/%{name}*
@@ -62,9 +53,12 @@ cp -va library/* %buildroot%python_sitelibdir/%name/modules
 %_man1dir/%{name}*
 %python_sitelibdir/%{name}*
 %doc examples/playbooks examples/scripts examples/hosts
-%doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt CODING_GUIDELINES.md .github/ISSUE_TEMPLATE.md
+%doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt CODING_GUIDELINES.md MODULE_GUIDELINES.md
 
 %changelog
+* Sun Oct  8 2017 Terechkov Evgenii <evg@altlinux.org> 2.4.0.0-alt1
+- 2.4.0.0-1 (ALT#33908)
+
 * Wed Mar 29 2017 Terechkov Evgenii <evg@altlinux.org> 2.2.2.0-alt1
 - 2.2.2.0-1 (ALT#32709)
 
