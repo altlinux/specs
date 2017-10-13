@@ -1,20 +1,21 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(base.pm) perl-podlators perl(Mojo/Base.pm)
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define upstream_name    WebService-MusicBrainz
-%define upstream_version 0.94
+%define upstream_version 1.0.2
 
 Name:       perl-%{upstream_name}
-Version:    1.0.2
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_3
 
 Summary:    No summary found
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/B/BF/BFAIST/%{upstream_name}-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/WebService/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Class/Accessor.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
@@ -23,6 +24,7 @@ BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(URI.pm)
 BuildRequires: perl(XML/LibXML.pm)
 BuildRequires: perl(Module/Build/Compat.pm)
+BuildRequires: perl(Mojo/Base.pm)
 BuildArch: noarch
 Source44: import.info
 
@@ -31,29 +33,31 @@ This module will act as a factory using static methods to return specific
 web service objects;
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%make_build CFLAGS="%{optflags}"
 
-%make
-
-%if 0
 %check
-%make test
-%endif
+# (tv) those tests needs networking and thus fails with iurt-0.7:
+exit 0
+make test
 
 %install
 %makeinstall_std
 
 %files
-%doc Changes META.yml README*
+%doc Changes META.yml README.md
 %perl_vendor_privlib/*
 
 
 
 
 %changelog
+* Fri Oct 13 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_3
+- update by mgaimport
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1
 - automated CPAN update
 
