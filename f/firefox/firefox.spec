@@ -5,14 +5,14 @@
 %define firefox_datadir %_datadir/firefox
 
 %define gst_version 1.0
-%define nspr_version 4.13.1
-%define nss_version 3.28.1
+%define nspr_version 4.17
+%define nss_version 3.33.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        55.0.3
+Version:        56.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -33,6 +33,7 @@ Patch6:         firefox-alt-disable-werror.patch
 Patch14:        firefox-fix-install.patch
 Patch16:        firefox-cross-desktop.patch
 Patch17:        firefox-mediasource-crash.patch
+Patch18:        firefox-alt-nspr-for-rust.patch
 
 # Upstream
 Patch200:       mozilla-bug-256180.patch
@@ -46,8 +47,9 @@ BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
 BuildRequires(pre): browser-plugins-npapi-devel
 
+BuildRequires: gcc-c++
+BuildRequires: clang4.0 clang4.0-devel llvm4.0 llvm4.0-libs llvm4.0-devel
 BuildRequires: rpm-macros-alternatives
-BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend glibc-kernheaders
 BuildRequires: rust rust-cargo
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
 BuildRequires: libXcomposite-devel
@@ -77,6 +79,7 @@ BuildRequires: libpulseaudio-devel
 # Python requires
 BuildRequires: /dev/shm
 BuildRequires: python-module-distribute
+BuildRequires: python-module-pip
 BuildRequires: python-modules-compiler
 BuildRequires: python-modules-logging
 BuildRequires: python-modules-sqlite3
@@ -138,6 +141,7 @@ tar -xf %SOURCE2
 %patch14 -p1
 %patch16 -p2
 %patch17 -p2
+%patch18 -p2
 
 %patch200 -p1
 %patch201 -p1
@@ -197,8 +201,6 @@ export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export srcdir="$PWD"
 export SHELL=/bin/sh
 export RUST_BACKTRACE=1
-
-%__autoconf
 
 # On x86 architectures, Mozilla can build up to 4 jobs at once in parallel,
 # however builds tend to fail on other arches when building in parallel.
@@ -317,6 +319,28 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Sun Oct 08 2017 Alexey Gladkov <legion@altlinux.ru> 56.0-alt1
+- New release (56.0).
+- Fixed:
+  + CVE-2017-7793: Use-after-free with Fetch API
+  + CVE-2017-7817: Firefox for Android address bar spoofing through fullscreen mode
+  + CVE-2017-7818: Use-after-free during ARIA array manipulation
+  + CVE-2017-7819: Use-after-free while resizing images in design mode
+  + CVE-2017-7824: Buffer overflow when drawing and validating elements with ANGLE
+  + CVE-2017-7805: Use-after-free in TLS 1.2 generating handshake hashes
+  + CVE-2017-7812: Drag and drop of malicious page content to the tab bar can open locally stored files
+  + CVE-2017-7814: Blob and data URLs bypass phishing and malware protection warnings
+  + CVE-2017-7813: Integer truncation in the JavaScript parser
+  + CVE-2017-7825: OS X fonts render some Tibetan and Arabic unicode characters as spaces
+  + CVE-2017-7815: Spoofing attack with modal dialogs on non-e10s installations
+  + CVE-2017-7816: WebExtensions can load about: URLs in extension UI
+  + CVE-2017-7821: WebExtensions can download and open non-executable files without user interaction
+  + CVE-2017-7823: CSP sandbox directive did not create a unique origin
+  + CVE-2017-7822: WebCrypto allows AES-GCM with 0-length IV
+  + CVE-2017-7820: Xray wrapper bypass with new tab and web console
+  + CVE-2017-7811: Memory safety bugs fixed in Firefox 56
+  + CVE-2017-7810: Memory safety bugs fixed in Firefox 56 and Firefox ESR 52.4
+
 * Tue Aug 29 2017 Alexey Gladkov <legion@altlinux.ru> 55.0.3-alt1
 - New release (55.0.3).
 
