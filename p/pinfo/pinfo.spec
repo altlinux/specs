@@ -1,14 +1,16 @@
 Name: pinfo
-Version: 0.6.9
-Release: alt3.qa1.1
+Version: 0.6.10
+Release: alt1
 
 Summary: Przemek's Info Viewer - a (much) better info
 Group: System/Base
 License: GPL
 #Url: http://dione.ids.pl/~pborys/software/pinfo
-Url: http://pinfo.alioth.debian.org/
-Source: %name-%version.tar
-Patch: %name-%version-alt-changes.patch
+#Url: http://pinfo.alioth.debian.org/
+Url: https://github.com/baszoetekouw/pinfo
+Source: %name-%version.tar.gz
+Patch1: pinfo-0.6.10-alt.patch
+Patch2: pinfo-0.6.10-xz.patch
 
 Requires: url_handler
 
@@ -25,7 +27,8 @@ pages as man pages. Regexp searching included.
 
 %prep
 %setup -q
-%patch -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -40,13 +43,18 @@ mkdir -p %buildroot/{%_sysconfdir,%_bindir,%_mandir/man1}
 ln -s %name %buildroot%_bindir/pman
 
 %files -f %name.lang
-%doc ABOUT-NLS AUTHORS ChangeLog NEWS README
+%doc ABOUT-NLS AUTHORS ChangeLog* NEWS README*
 %config(noreplace) %_sysconfdir/%{name}rc
 %_bindir/*
 %_mandir/man?/*
 %_infodir/*.info*
 
 %changelog
+* Fri Oct 13 2017 Fr. Br. George <george@altlinux.ru> 0.6.10-alt1
+- Upstream switch to GH
+- Freshen (version is 0.6.10 sitll)
+- Provide .xz recognition
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.6.9-alt3.qa1.1
 - NMU: added BR: texinfo
 
