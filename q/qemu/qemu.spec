@@ -63,7 +63,11 @@
 %def_enable tpm
 %def_enable libssh2
 %def_enable live_block_migration
+%ifnarch armh
 %def_enable numa
+%else
+%def_disable numa
+%endif
 %def_disable tcmalloc
 %def_disable jemalloc
 %def_enable replication
@@ -94,11 +98,13 @@
 %ifarch s390x
 %global kvm_package   system-s390x
 %endif
-%ifarch armv7hl
+%ifarch armh
 %global kvm_package   system-arm
+%def_enable qemu_kvm
 %endif
 %ifarch aarch64
 %global kvm_package   system-aarch64
+%def_enable qemu_kvm
 %endif
 %ifarch %mips_arch
 %global kvm_package   system-mips
@@ -213,7 +219,7 @@
 
 Name: qemu
 Version: 2.10.1
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -1023,6 +1029,9 @@ This package provides the system emulator for NIOS2.
 %setup
 %patch -p1
 cp -f %SOURCE2 qemu-kvm.control.in
+%ifarch armh aarch64
+sed -i 's,/usr/bin/qemu-system-x86_64,/usr/bin/qemu-%kvm_package,' %SOURCE5
+%endif
 
 %build
 export CFLAGS="%optflags"
@@ -1581,6 +1590,10 @@ fi
 %endif
 
 %changelog
+* Fri Oct 13 2017 Alexey Shabalin <shaba@altlinux.ru> 2.10.1-alt2
+- fixed qemu-kvm for armh and aarch64 (sbolshakov@)
+- disable numa for armh (sbolshakov@)
+
 * Tue Oct 10 2017 Alexey Shabalin <shaba@altlinux.ru> 2.10.1-alt1
 - 2.10.1
 - package arm flavour, with defaults to aarch64
