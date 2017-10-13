@@ -1,25 +1,29 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(IPC/Cmd.pm) perl-podlators
+BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/CPAN/Meta.pm) perl(Test/Perl/Critic.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define upstream_name    Proc-InvokeEditor
-%define upstream_version 1.07
+%define upstream_version 1.13
+
+%{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    1.13
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_2
 
 Summary:    Perl extension for starting a text editor
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/M/MS/MSTEVENS/%{upstream_name}-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Proc/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Carp/Assert.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(File/Spec.pm)
 BuildRequires: perl(File/Temp.pm)
+BuildRequires: perl(IPC/Cmd.pm)
 BuildRequires: perl(Test/More.pm)
 BuildRequires: ed
 BuildArch:  noarch
@@ -42,10 +46,10 @@ and anything after the editor name will be passed as arguments to your
 editor. A shell is not used but this should cover most simple cases.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -56,11 +60,13 @@ editor. A shell is not used but this should cover most simple cases.
 %makeinstall_std
 
 %files
-%doc Changes LICENSE META.yml README examples
+%doc Changes LICENSE META.json META.yml  README examples
 %perl_vendor_privlib/Proc/
 
-
 %changelog
+* Fri Oct 13 2017 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_2
+- update by mgaimport
+
 * Wed Aug 30 2017 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
 - automated CPAN update
 
