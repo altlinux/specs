@@ -1,6 +1,6 @@
 Name:           nftables
 Epoch: 1
-Version:        0.7
+Version:        0.8
 Release:        alt1
 Summary:        nftables is the project that aims to replace the existing {ip,ip6,arp,eb}tables framework
 Group:          System/Libraries
@@ -24,7 +24,7 @@ This library is currently used by nftables.
 
 %build
 %autoreconf
-%configure --enable-debug --enable-pdf-doc
+%configure --enable-debug --disable-pdf-doc
 %make_build
 
 %check
@@ -35,7 +35,7 @@ This library is currently used by nftables.
 
 %files
 %doc COPYING TODO
-%doc %_docdir/%name
+#%%doc %_docdir/%name
 %dir %_sysconfdir/nftables
 %config %_sysconfdir/nftables/*
 %_sbindir/*
@@ -43,6 +43,10 @@ This library is currently used by nftables.
 
 
 %changelog
+* Fri Oct 13 2017 Alexei Takaseev <taf@altlinux.org> 1:0.8-alt1
+- Version 0.8
+- disable pdf
+
 * Wed Dec 21 2016 Alexei Takaseev <taf@altlinux.org> 1:0.7-alt1
 - Version 0.7
 
