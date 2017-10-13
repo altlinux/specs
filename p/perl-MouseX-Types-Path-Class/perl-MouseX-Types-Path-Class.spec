@@ -2,12 +2,14 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(MouseX/Getopt.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Pod/Parser.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(parent.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define upstream_name    MouseX-Types-Path-Class
 %define upstream_version 0.07
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt3_8
+Release:    alt3_10
 
 Summary:    A Path::Class type library for Mouse
 License:    GPL+ or Artistic
@@ -16,6 +18,7 @@ Url:        http://search.cpan.org/dist/%{upstream_name}
 Source0:    http://www.cpan.org/modules/by-module/MouseX/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
+BuildRequires: perl(inc/Module/Install.pm)
 BuildRequires: perl(Mouse.pm)
 BuildRequires: perl(MouseX/Types.pm)
 BuildRequires: perl(Path/Class.pm)
@@ -39,7 +42,7 @@ Path::Class::Dir manpage and the Path::Class::File manpage.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -53,7 +56,11 @@ Path::Class::Dir manpage and the Path::Class::File manpage.
 %doc Changes META.yml  README
 %perl_vendor_privlib/*
 
+
 %changelog
+* Fri Oct 13 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt3_10
+- converted for ALT Linux by srpmconvert tools
+
 * Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.07-alt3_8
 - update by mgaimport
 
