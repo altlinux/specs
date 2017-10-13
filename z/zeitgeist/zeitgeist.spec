@@ -7,7 +7,7 @@
 
 Name: zeitgeist
 Version: %major
-Release: alt1.1
+Release: alt2
 
 Summary: Framework providing Desktop activity awareness
 
@@ -218,6 +218,9 @@ rm -rf %buildroot%_prefix/doc/
 %endif
 
 %changelog
+* Fri Oct 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt2
+- Rebuilt with new xapian.
+
 * Sat Apr 08 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1.1
 - fixed data/completions/%name-daemon
 

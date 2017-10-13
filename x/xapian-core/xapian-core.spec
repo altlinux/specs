@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: xapian-core
-Version: 1.2.23
+Version: 1.4.5
 Release: alt1
 
 Summary: The Xapian Probabilistic Information Retrieval Library
@@ -11,7 +11,6 @@ Group: Databases
 Url: http://www.xapian.org
 Source0: http://www.oligarchy.co.uk/xapian/%version/%{name}-%{version}.tar.xz
 Source100: %name.watch
-Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Wed May 05 2010
 BuildRequires: gcc-c++ libblkid libe2fs libpasswdqc libss libtic libuuid-devel libwrap libzio pam0_userpass python-base zlib-devel
@@ -72,6 +71,14 @@ This package contains API reference in HTML and PostScript.
 
 %prep
 %setup
+%ifarch e2k
+# current lcc doesn't know these
+sed -i  -e 's,-fno-gnu-keywords,,;s,-Wstrict-null-sentinel,,' \
+	-e 's,-Wstrict-overflow=1,,;s,-Wlogical-op,,;s,-Wdouble-promotion,,' \
+	configure.ac
+# http://stackoverflow.com/questions/14892101/
+%add_optflags -ftls-model=global-dynamic
+%endif
 
 %build
 %autoreconf
@@ -91,20 +98,20 @@ rm -f %buildroot%_libdir/libxapian.a
 
 %files
 %_bindir/copydatabase
-%_bindir/delve
 %_bindir/quest
 %_bindir/simpleexpand
 %_bindir/simpleindex
 %_bindir/simplesearch
 %_bindir/xapian-check
-%_bindir/xapian-chert-update
 %_bindir/xapian-compact
-%_bindir/xapian-inspect
+%_bindir/xapian-delve
 %_bindir/xapian-metadata
 %_bindir/xapian-progsrv
 %_bindir/xapian-replicate
 %_bindir/xapian-replicate-server
 %_bindir/xapian-tcpsrv
+%dir %_datadir/xapian-core
+%_datadir/xapian-core/*
 %_man1dir/*.1*
 %doc AUTHORS ChangeLog* NEWS PLATFORMS README
 
@@ -127,11 +134,13 @@ rm -f %buildroot%_libdir/libxapian.a
 
 %files -n %name-doc
 %doc docs/*.html
-%doc docs/apidoc.pdf
 %doc docs/apidoc/html/
 %doc HACKING
 
 %changelog
+* Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.5-alt1
+- Updated to latest stable upstream version 1.4.5.
+
 * Wed Mar 30 2016 Michael Shigorin <mike@altlinux.org> 1.2.23-alt1
 - new version (watch file uupdate)
 

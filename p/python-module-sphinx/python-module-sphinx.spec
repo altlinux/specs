@@ -8,8 +8,8 @@
 %endif
 
 Name: python-module-%oname
-Version: 1.4.1
-Release: alt2
+Version: 1.6.4
+Release: alt1
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -20,6 +20,10 @@ Packager: Python Development Team <python@packages.altlinux.org>
 
 %py_requires simplejson
 %py_requires alabaster
+%py_requires requests
+%py_requires typing
+%py_requires sphinxcontrib.websupport
+%py_requires docutils
 
 Provides: python-module-objects.inv
 Obsoletes: python-module-objects.inv
@@ -30,6 +34,7 @@ Source1: conf.py.template
 Source2: macro
 Source3: macro3
 Source4: refcounting.py
+Source5: sphinx-1.6.4-alt-disable-remote-tests.patch
 Patch0: sphinx-1.4b1-alt-avoid-download-objects.inv.patch 
 
 BuildArch: noarch
@@ -38,7 +43,9 @@ BuildRequires(pre): rpm-build-python
 BuildRequires: python-sphinx-objects.inv
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-nose time
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-nose
+BuildRequires: python2.7(typing) python2.7(sphinxcontrib.websupport)
+BuildRequires: python2.7(sphinxcontrib) /usr/bin/convert
 
 #BuildRequires: python-devel python-module-setuptools python-module-simplejson
 # for docs
@@ -58,9 +65,10 @@ BuildRequires: python3-module-html5lib python3-module-nose
 #BuildRequires: python-tools-2to3 python3-module-jinja2-tests
 #BuildRequires: python3-module-snowballstemmer python3-module-babel
 #BuildRequires: python3-module-alabaster python3-module-sphinx_rtd_theme
+BuildRequires: python3(typing) python3(sphinxcontrib.websupport)
 
 # For python3-2to3:
-BuildPreReq: python3-tools
+BuildRequires: python3-tools
 %endif
 
 # For running the new sphinx itself (and generating the docs):
@@ -70,18 +78,18 @@ BuildPreReq: python3(imagesize)
 %endif
 
 # For %%check:
-BuildPreReq: %py_dependencies mock
+BuildRequires: %py_dependencies mock
 # minimal deps on the built-in sqlite driver have been fixed in 1.0.8-alt2:
-BuildPreReq: python-module-SQLAlchemy >= 1.0.8-alt2
+BuildRequires: python-module-SQLAlchemy >= 1.0.8-alt2
 # These 2 must be recent to pass the tests:
-BuildPreReq: python-module-Pygments >= 2.1.3
-BuildPreReq: python-module-alabaster >= 0.7.6-alt2.git20150703
+BuildRequires: python-module-Pygments >= 2.1.3
+BuildRequires: python-module-alabaster >= 0.7.6-alt2.git20150703
 %if_with python3
-BuildPreReq: python3(mock) python3(docutils) python3(jinja2) python3(pygments)
-BuildPreReq: python3-module-SQLAlchemy >= 1.0.8-alt2
+BuildRequires: python3(mock) python3(docutils) python3(jinja2) python3(pygments)
+BuildRequires: python3-module-SQLAlchemy >= 1.0.8-alt2
 # These 2 must be recent to pass the tests:
-BuildPreReq: python3-module-Pygments >= 2.1.3
-BuildPreReq: python3-module-alabaster >= 0.7.6-alt2.git20150703
+BuildRequires: python3-module-Pygments >= 2.1.3
+BuildRequires: python3-module-alabaster >= 0.7.6-alt2.git20150703
 %endif
 
 %description
@@ -93,8 +101,8 @@ multiple reStructuredText sources)
 %package -n python3-module-%oname
 Summary: Tool for producing documentation for Python 3 projects
 Group: Development/Python3
-%add_python3_req_skip xapian
 %py3_requires alabaster
+%py3_requires requests
 Provides: python3-module-objects.inv
 Obsoletes: python3-module-objects.inv
 
@@ -137,7 +145,8 @@ Requires: python3-module-%oname = %epoch:%version-%release
 %py3_requires nose
 %add_python3_req_skip compiler
 %add_python3_req_skip missing_module missing_package1 missing_package2
-%add_python3_req_skip missing_package3 typing
+%add_python3_req_skip missing_package3
+%add_python3_req_skip dummy missing_package1.missing_module1 missing_package3.missing_module3
 
 %description -n python3-module-%oname-tests
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -206,7 +215,7 @@ Requires: %name = %epoch:%version-%release
 %py_requires nose
 %add_python_req_skip compiler
 %add_python_req_skip missing_module missing_package1 missing_package2
-%add_python_req_skip missing_package3
+%add_python_req_skip dummy missing_package3
 %add_findreq_skiplist %sphinx_dir/tests/typing_test_data.py
 
 %description tests
@@ -219,6 +228,8 @@ This packages contains tests for Sphinx.
 %package doc
 Summary: Documentation for Sphinx
 Group: Development/Python
+%add_findreq_skiplist %sphinx_dir/pickle/_downloads/example_google.py
+%add_findreq_skiplist %sphinx_dir/pickle/_downloads/example_numpy.py
 
 %description doc
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -256,7 +267,7 @@ install -pm644 %_sourcedir/macro3 ../python3/
 
 install -pm644 %_sourcedir/macro .
 # Invalid Python2:
-rm tests/test_autodoc_py35.py
+rm tests/py35/test_autodoc_py35.py
 
 %build
 %python_build
@@ -264,12 +275,9 @@ rm tests/test_autodoc_py35.py
 %if_with python3
 pushd ../python3
 
-python3-2to3 -w -n tests/etree13/HTMLTreeBuilder.py
 sed -i 's|python|python3|' doc/Makefile
-sed -i 's|mimetools|email|g' tests/etree13/HTMLTreeBuilder.py
-sed -i 's|%_bindir/python|%_bindir/python3|' tests/coverage.py
 sed -i 's|%_bindir/env python|%_bindir/env python3|' \
-	tests/path.py tests/run.py
+	tests/run.py
 
 #cp -R tests %oname/
 #for i in $(find %oname/tests -type d)
@@ -283,7 +291,6 @@ popd
 %endif
 
 # docs
-
 %make_build -C doc html
 %make_build -C doc man
 
@@ -329,7 +336,6 @@ ln -frs %buildroot%_datadir/python-sphinx/objects.inv \
 	%buildroot%sphinx_dir/tests/
 
 # docs
-
 install -d %buildroot%_docdir/%name
 #install -d %buildroot%_docdir/%name/pdf
 install -d %buildroot%_man1dir
@@ -355,14 +361,13 @@ sed -e 's:@SPHINX3_DIR@:%sphinx3_dir:g' < ../python3/macro3 > %buildroot%_rpmmac
 #endif
 
 # add pickle files
-
 %make_build -C doc pickle
 
 install -d %buildroot%sphinx_dir/doctrees
 install -p -m644 doc/_build/doctrees/*.pickle \
 	%buildroot%sphinx_dir/doctrees/
-install -p -m644 %oname/pycode/*.pickle \
-	%buildroot%sphinx_dir/pycode/
+#install -p -m644 %oname/pycode/*.pickle \
+#	%buildroot%sphinx_dir/pycode/
 cp -R doc/_build/pickle %buildroot%sphinx_dir/
 install -p -m644 conf.py.template \
 	%buildroot%sphinx_dir/
@@ -399,10 +404,16 @@ EOF
 export LC_ALL=en_US.utf8 # some tests fail otherwise, because they use paths with Unicode
 %if_with python3
 pushd ../python3
-%make_build PYTHON=python3 test
+# disable remote tests
+rm -f tests/test_build_linkcheck.py
+patch -p1 < %SOURCE5
+PYTHONPATH=$(pwd) %make_build PYTHON=python3 test
 popd
 %endif
-%make_build test
+# disable remote tests
+rm -f tests/test_build_linkcheck.py
+patch -p1 < %SOURCE5
+PYTHONPATH=$(pwd) %make_build test
 
 %files
 %_bindir/*
@@ -423,7 +434,6 @@ popd
 
 %files tests
 #dir %sphinx_dir/
-%sphinx_dir/tests
 %sphinx_dir/tests
 
 %files doc
@@ -459,6 +469,9 @@ popd
 %endif
 
 %changelog
+* Thu Oct 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.6.4-alt1
+- Updated to upstream version 1.6.4.
+
 * Sat Apr 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.4.1-alt2
 - %%py_requires alabaster (in the new source code, alabaster looks
   like a conditional import--i.e., not top-level and hence not

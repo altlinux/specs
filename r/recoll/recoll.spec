@@ -7,7 +7,7 @@
 
 Name: recoll
 Version: 1.23.3
-Release: alt2
+Release: alt3
 
 Summary: A personal full text search package
 License: %gpl2plus
@@ -146,6 +146,9 @@ sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 #  ("small recoll integration and extension hacks")
 
 %changelog
+* Fri Oct 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.23.3-alt3
+- Rebuilt with new xapian.
+
 * Fri Sep 08 2017 Michael Shigorin <mike@altlinux.org> 1.23.3-alt2
 - build against qt5
 
