@@ -1,5 +1,5 @@
 Name: tintin++
-Version: 2.01.2
+Version: 2.01.3
 Release: alt1
 Summary: Console MUD client
 License: GPLv2
@@ -61,6 +61,9 @@ install -pm644 TODO %buildroot%docdir/
 %docdir/*
 
 %changelog
+* Fri Oct 13 2017 Andrey Bergman <vkni@altlinux.org> 2.01.3-alt1
+- Update to a new version.
+
 * Sat Jan 21 2017 Andrey Bergman <vkni@altlinux.org> 2.01.2-alt1
 - Update to a new version.
 
