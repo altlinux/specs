@@ -28,12 +28,12 @@
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
 Name: hplip
 Epoch: 1
-Version: 3.16.11
-Release: alt4
+Version: 3.17.9
+Release: alt1
 %if_without ernie
-License: GPL/MIT/BSD
+License: GPLv2/MIT/BSD
 %else
-License: GPL/MIT/BSD/hardware specific
+License: GPLv2/MIT/BSD/hardware specific
 %endif
 Group: Publishing
 #URL: http://hplip.sourceforge.net -- old
@@ -105,6 +105,7 @@ BuildRequires: polkit libpolkit-devel
 
 Source: http://dl.sourceforge.net/hplip/%name-%version.tar
 Source2: %name.init
+Source3: %{name}.appdata.xml
 Source4: 80-hpmud.perms
 Source5: %name.png
 Source6: %name-icons.tar
@@ -166,10 +167,11 @@ Patch121: hplip-strncpy.patch
 Patch122: hplip-no-write-bytecode.patch
 Patch123: hplip-silence-ioerror.patch
 Patch124: hplip-3165-sourceoption.patch
-Patch125: hplip-badwhitespace.patch
 %if_without ernie
-Patch126: hplip-noernie.patch
+Patch125: hplip-noernie.patch
 %endif
+Patch126: hplip-appdata.patch
+Patch127: hplip-check-cups.patch
 # end fedora patches
 
 # ubuntu patches
@@ -533,22 +535,25 @@ mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
 # [abrt] hplip: hp-scan:663:<module>:NameError: name 'source_option' is not defined (bug #1341304)
 %patch124 -p1 -b .sourceoption
 
-# Bad whitespaces (bug #1372343)
-%patch125 -p1 -b .badwhitespace
-
 %if_without ernie
 # hplip license problem (bug #1364711)
-%patch126 -p1 -b .no-ernie
+%patch125 -p1 -b .no-ernie
 rm prnt/hpcups/ErnieFilter.{cpp,h} prnt/hpijs/ernieplatform.h
 %endif
 
-%patch201 -p1 -b .download-plugin
+# hplip appdata
+#patch126 -p1 -b .appdata
+
+# hp-check shows 'CUPS incompatible or not running' even if CUPS is running (bug #1456467)
+%patch127 -p1 -b .check-cups
 
 # from fedora 3.9.12-3/3.10.9-9
 sed -i.duplex-constraints \
     -e 's,\(UIConstraints.* \*Duplex\),//\1,' \
     prnt/drv/hpcups.drv.in
 
+
+%patch201 -p1 -b .download-plugin
 
 tar -xf %SOURCE6
 
@@ -715,10 +720,21 @@ cp COPYING $RPM_BUILD_ROOT%_docdir/%name-%version/
 # # which cause syntax error in 1.6.6a, but is deprecated with PyQT = 3.16
 # perl -p -i -e 'if (/^(.*setSizePolicy.*)$/) {$_="#".$_; if (/,\s*$/) {$endcomma=1}} elsif ($endcomma) {$_="#".$_; $endcomma=0}' `grep -l setSizePolicy $RPM_BUILD_ROOT%_datadir/%name/ui/*.py`
 
+mkdir -p %{buildroot}%{_datadir}/appdata
+cp %{SOURCE3} %{buildroot}%{_datadir}/appdata/
+
 # Menu Icons
-install -pD -m644 %name.16.png $RPM_BUILD_ROOT%_miconsdir/hplip.png
-install -pD -m644 %name.32.png $RPM_BUILD_ROOT%_niconsdir/hplip.png
+#install -pD -m644 %name.16.png $RPM_BUILD_ROOT%_miconsdir/hplip.png
+#install -pD -m644 %name.32.png $RPM_BUILD_ROOT%_niconsdir/hplip.png
 install -pD -m644 %name.48.png $RPM_BUILD_ROOT%_liconsdir/hplip.png
+
+# TODO: switch to hp_logo in desktop?
+install -pD -m644 %{buildroot}%{_datadir}/hplip/data/images/16x16/hp_logo.png \
+   %{buildroot}%{_datadir}/icons/hicolor/16x16/apps/hplip.png
+install -pD -m644 %{buildroot}%{_datadir}/hplip/data/images/32x32/hp_logo.png \
+   %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/hplip.png
+install -pD -m644 %{buildroot}%{_datadir}/hplip/data/images/64x64/hp_logo.png \
+   %{buildroot}%{_datadir}/icons/hicolor/64x64/apps/hplip.png
 
 # Remove the installed /etc/sane.d/dll.conf
 # because this is provided by the sane package:
@@ -841,28 +857,20 @@ fi
 %_prefix/lib/cups/backend/hpfax
 # python
 %{_bindir}/hp-align
-%{_bindir}/hp-check
 %{_bindir}/hp-clean
 %{_bindir}/hp-colorcal
 %{_bindir}/hp-config_usb_printer
-%{_bindir}/hp-devicesettings
 %{_bindir}/hp-diagnose_plugin
 %{_bindir}/hp-diagnose_queues
 %{_bindir}/hp-fab
-%{_bindir}/hp-faxsetup
 %{_bindir}/hp-firmware
 %{_bindir}/hp-info
 %{_bindir}/hp-levels
-%{_bindir}/hp-linefeedcal
-%{_bindir}/hp-logcapture
-%{_bindir}/hp-makecopies
 %{_bindir}/hp-makeuri
 %if_enabled policykit
 %{_bindir}/hp-pkservice
 %endif
 %{_bindir}/hp-plugin
-%{_bindir}/hp-pqdiag
-%{_bindir}/hp-printsettings
 %{_bindir}/hp-probe
 %{_bindir}/hp-query
 %{_bindir}/hp-scan
@@ -871,22 +879,18 @@ fi
 %{_bindir}/hp-testpage
 %{_bindir}/hp-timedate
 %{_bindir}/hp-unload
-%{_bindir}/hp-wificonfig
 # Files
 %dir %{_datadir}/hplip
 %{_datadir}/hplip/align.py*
-%{_datadir}/hplip/check.py*
 %{_datadir}/hplip/check-plugin.py*
 %{_datadir}/hplip/clean.py*
 %{_datadir}/hplip/colorcal.py*
 %{_datadir}/hplip/config_usb_printer.py*
-%{_datadir}/hplip/devicesettings.py*
 %{_datadir}/hplip/diagnose_plugin.py*
 %{_datadir}/hplip/diagnose_queues.py*
 %{_datadir}/hplip/fab.py*
 %{_datadir}/hplip/fax
 #exclude %{_datadir}/hplip/fax/pstotiff*
-%{_datadir}/hplip/faxsetup.py*
 %{_datadir}/hplip/firmware.py*
 %{_datadir}/hplip/hpdio.py*
 %{_datadir}/hplip/hplip_clean.sh
@@ -894,13 +898,8 @@ fi
 %{_datadir}/hplip/info.py*
 %{_datadir}/hplip/__init__.py*
 %{_datadir}/hplip/levels.py*
-%{_datadir}/hplip/linefeedcal.py*
-%{_datadir}/hplip/logcapture.py*
-%{_datadir}/hplip/makecopies.py*
 %{_datadir}/hplip/makeuri.py*
 %{_datadir}/hplip/plugin.py*
-%{_datadir}/hplip/pqdiag.py*
-%{_datadir}/hplip/printsettings.py*
 %{_datadir}/hplip/probe.py*
 %{_datadir}/hplip/query.py*
 %{_datadir}/hplip/scan.py*
@@ -909,7 +908,6 @@ fi
 %{_datadir}/hplip/testpage.py*
 %{_datadir}/hplip/timedate.py*
 %{_datadir}/hplip/unload.py*
-%{_datadir}/hplip/wificonfig.py*
 %if_enabled policykit
 %{_datadir}/hplip/pkservice.py*
 %{_datadir}/polkit-1/actions/com.hp.hplip.policy
@@ -965,16 +963,35 @@ fi
 # window), so don't ship the launcher yet.
 #/etc/xdg/autostart/hplip-systray.desktop
 #_bindir/hp-*
-%{_bindir}/hp-doctor
+%{_bindir}/hp-check
+%{_bindir}/hp-devicesettings
+%{_bindir}/hp-faxsetup
+%{_bindir}/hp-linefeedcal
+%{_bindir}/hp-makecopies
 %{_bindir}/hp-print
+%{_bindir}/hp-printsettings
 %{_bindir}/hp-systray
 #%{_bindir}/hp-toolbox.wrapper
 %{_bindir}/hp-toolbox
+%{_bindir}/hp-wificonfig
 # Files
-%{_datadir}/hplip/doctor.py*
+%{_datadir}/hplip/check.py*
+%{_datadir}/hplip/devicesettings.py*
+%{_datadir}/hplip/faxsetup.py*
+%{_datadir}/hplip/linefeedcal.py*
+%{_datadir}/hplip/makecopies.py*
 %{_datadir}/hplip/print.py*
 %{_datadir}/hplip/toolbox.py*
 %{_datadir}/hplip/systray.py*
+%{_datadir}/hplip/printsettings.py*
+%{_datadir}/hplip/wificonfig.py*
+# garbage
+%{_bindir}/hp-doctor
+%{_bindir}/hp-logcapture
+%{_bindir}/hp-pqdiag
+%{_datadir}/hplip/doctor.py*
+%{_datadir}/hplip/logcapture.py*
+%{_datadir}/hplip/pqdiag.py*
 # Directories
 %{_datadir}/hplip/data/images
 # qt3 interface
@@ -990,12 +1007,14 @@ fi
 %if_enabled qt5
 %{_datadir}/hplip/ui5
 %endif
-
+# gui data
+%{_datadir}/appdata/hplip.appdata.xml
 # HPLIP menu files
 %_datadir/applications/%name.desktop
-%_niconsdir/hplip.png
-%_liconsdir/hplip.png
-%_miconsdir/hplip.png
+#_niconsdir/hplip.png
+#_liconsdir/hplip.png
+#_miconsdir/hplip.png
+%_iconsdir/hicolor/*/apps/hplip.png
 
 %if_enabled autostart
 %files gui-autostart
@@ -1061,6 +1080,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Sat Oct 14 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.17.9-alt1
+- new version
+
 * Tue Aug 01 2017 Sergey V Turchin <zerg@altlinux.org> 1:3.16.11-alt4
 - fix download plugin
 - fix fax setup
