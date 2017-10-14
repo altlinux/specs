@@ -1,5 +1,5 @@
 # clang 4.0.1 is not supported, only missing clang 3.9
-%def_without ClangCodeModel
+%def_with ClangCodeModel
 
 %add_findreq_skiplist *gdbmacros*
 %add_python_req_skip lldb
@@ -7,7 +7,7 @@
 
 Name:    qt-creator
 Version: 4.4.1
-Release: alt1
+Release: alt2
 Summary: Cross-platform IDE for Qt
 
 Group:   Development/Tools
@@ -67,6 +67,27 @@ Requires: %name
 %description data
 Data files for %name
 
+%if_with ClangCodeModel
+%package clangcodemodel
+Summary: ClangCodeModel plugin for Qt Creator
+Group: Development/Tools
+Requires: %name
+
+%description clangcodemodel
+The Clang project provides libraries for parsing C language family
+source files. The feedback you get through warning and error markers is
+the same as a compiler will give you, not an incomplete set or a close
+approximation, as when using the built-in Qt Creator code model. Clang
+focuses on detailed information for diagnostics, which is really useful
+if the code contains typos, for example.
+
+The following services are currently implemented in the Clang code model
+plugin:
+- Code completion
+- Syntactic and semantic highlighting
+- Diagnostics
+%endif
+
 %prep
 %setup
 subst 's,tools\/qdoc3,bin,' doc/doc.pri
@@ -113,7 +134,12 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %doc README* LICENSE*
 %_bindir/*
 %_libdir/qtcreator
+%dir %_libdir/qtcreator/plugins
+%if_with ClangCodeModel
+%exclude %_libdir/qtcreator/plugins/libClangCodeModel.so
+%endif
 %_prefix/libexec/qtcreator
+%exclude %_prefix/libexec/qtcreator/clangbackend
 %_iconsdir/hicolor/*/apps/QtProject-qtcreator.png
 %_desktopdir/qtcreator.desktop
 %_datadir/appdata/qtcreator.appdata.xml
@@ -125,7 +151,16 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %dir %_datadir/qtcreator
 %_datadir/qtcreator/*
 
+%if_with ClangCodeModel
+%files clangcodemodel
+%_prefix/libexec/qtcreator/clangbackend
+%_libdir/qtcreator/plugins/libClangCodeModel.so
+%endif
+
 %changelog
+* Sat Oct 14 2017 Andrey Cherepanov <cas@altlinux.org> 4.4.1-alt2
+- Package ClangCodeModel (ALT #33943)
+
 * Fri Oct 06 2017 Andrey Cherepanov <cas@altlinux.org> 4.4.1-alt1
 - New version
 - Add optional build ClangCodeModel plugin (disabled by default)
