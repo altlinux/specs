@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.24.1
-Release: alt1.git20150224.1
+Version: 0.24.2
+Release: alt1.git20170214.1
 Summary: A Python binding to Poppler-Qt5
 License: LGPLv2.1+
 Group: Development/Python
@@ -49,7 +49,7 @@ export PATH=$PATH:%_qt5_bindir
 
 %if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build_debug --debug -j6
 popd
 %endif
 
@@ -83,6 +83,9 @@ popd
 %endif
 
 %changelog
+* Sat Oct 14 2017 Fr. Br. George <george@altlinux.ru> 0.24.2-alt1.git20170214.1
+- Merge upstream updates
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.24.1-alt1.git20150224.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
