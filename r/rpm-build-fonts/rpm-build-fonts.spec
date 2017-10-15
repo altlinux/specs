@@ -1,6 +1,6 @@
 Name: rpm-build-fonts
 Version: 0.6
-Release: alt4
+Release: alt5
 
 Summary: RPM helper scripts for building font packages
 
@@ -59,6 +59,9 @@ install -D -m755 fontconfig.prov.files %buildroot/usr/lib/rpm/fontconfig.prov.fi
 %_rpmmacrosdir/fonts
 
 %changelog
+* Sun Oct 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.6-alt5
+- bugfix: cleaned up 'id 0' from recent fc-query output
+
 * Sat May 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt4
 - enabled fontlang provides for en,ru,uk,be
 
