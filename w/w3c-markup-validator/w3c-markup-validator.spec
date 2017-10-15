@@ -1,13 +1,12 @@
+%def_without apache1
 Name: w3c-markup-validator
 Version: 1.2
-Release: alt1
+Release: alt2
 Summary: W3C Markup Validator helps check the validity of Web documents
 
 Group: Networking/WWW
 License: W3C Software License
 Url: http://validator.w3.org/
-
-Packager: Sergey Kurakin <kurakin@altlinux.org>
 
 Source0: http://validator.w3.org/sgml-lib.tar
 Source1: http://validator.w3.org/validator.tar
@@ -206,8 +205,10 @@ done
 %files control
 %_sysconfdir/control.d/facilities/%name
 
+%if_with apache1
 %files apache
 %config %apache_modconfdir/%name.conf
+%endif
 
 %files apache2
 %config %apache2_extra_available/*
@@ -219,6 +220,9 @@ done
 %_datadir/sgml/%name/
 
 %changelog
+* Sun Oct 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2
+- NMU: build w/o apache1
+
 * Sat Sep 10 2011 Sergey Kurakin <kurakin@altlinux.org> 1.2-alt1
 - 1.2
 
