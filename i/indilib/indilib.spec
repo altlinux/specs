@@ -2,8 +2,8 @@
 
 
 Name: indilib
-Version: 1.3.1
-Release: alt2%ubt
+Version: 1.5.0
+Release: alt1
 
 %add_verify_elf_skiplist %_libdir/libindidriver.so.%version
 %add_verify_elf_skiplist %_libdir/libindimain.so.%version
@@ -84,8 +84,8 @@ chmod -x drivers/telescope/lx200fs2.{h,cpp}
 
 %files -n lib%shortname
 %doc ChangeLog README
-%_libdir/libindi.so.1
-%_libdir/libindi.so.1.*
+#%_libdir/libindi.so.1
+#%_libdir/libindi.so.1.*
 %_libdir/libindiAlignmentDriver.so.1
 %_libdir/libindiAlignmentDriver.so.1.*
 %_libdir/libindidriver.so.1
@@ -103,6 +103,9 @@ chmod -x drivers/telescope/lx200fs2.{h,cpp}
 %_pkgconfigdir/libindi.pc
 
 %changelog
+* Sun Oct 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1
+- NMU: new version (closes: #33997)
+
 * Mon Sep 18 2017 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt2%ubt
 - rebuild with new libgsl
 
