@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/desktop-file-install perl(IO/Socket.pm) perl(Time/HiRes.
 
 Name:           cave9
 Version:        0.4
-Release:        alt3_17
+Release:        alt4_17
 Summary:        3d game of cave exploration
 
 Group:          Games/Other
@@ -163,6 +163,9 @@ fi
 %{_datadir}/applications/cave9.desktop
 
 %changelog
+* Sun Oct 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt4_17
+- rebuild to fix font provides
+
 * Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_17
 - update to new release by fcimport
 
