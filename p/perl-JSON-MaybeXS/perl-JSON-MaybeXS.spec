@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.003009
-Release: alt1
+Release: alt2
 Summary: use L<Cpanel::JSON::XS> with a fallback to L<JSON::PP>
 Group: Development/Perl
 License: perl
@@ -15,6 +15,7 @@ Url: %CPAN %module_name
 
 Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
+Requires: perl(Cpanel/JSON/XS.pm)
 
 %description
 %summary
@@ -33,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/J*
 
 %changelog
+* Sun Oct 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.003009-alt2
+- added JSON requires
+
 * Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.003009-alt1
 - automated CPAN update
 
