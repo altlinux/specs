@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(CPAN/SQLite.pm) perl(CPAN/SQLite/Index.pm) perl(Config.pm) perl(Fcntl.pm) perl(File/Find.pm) perl(FindBin.pm) perl(GDBM_File.pm) perl(IO/String.pm) perl(IPC/Open3.pm) perl(IPC/Run3.pm) perl(Pod/Escapes.pm) perl(Pod/ParseLink.pm) perl(Pod/Parser.pm) perl(Pod/Simple/HTML.pm) perl(Pod/Simple/HTMLBatch.pm) perl(Smart/Comments.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(File/Find.pm) perl(FindBin.pm) perl(GDBM_File.pm) perl(IO/String.pm) perl(IPC/Open3.pm) perl(IPC/Run3.pm) perl(Pod/Escapes.pm) perl(Pod/ParseLink.pm) perl(Pod/Parser.pm) perl(Pod/Simple/HTML.pm) perl(Pod/Simple/HTMLBatch.pm) perl(Smart/Comments.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-podlinkcheck
 Version:        15
-Release:        alt1
+Release:        alt2
 Summary:        Check Perl POD L<> link references
 License:        GPLv3+
 Group:          Development/Perl
@@ -83,6 +83,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Sun Oct 15 2017 Igor Vlasenko <viy@altlinux.ru> 15-alt2
+- cleaned up perl-CPAN-SQLite BR: dependency
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 15-alt1
 - automated CPAN update
 
