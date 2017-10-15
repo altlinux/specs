@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.4.1
+Version: 2.4.2
 Release: alt1%ubt
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -232,6 +232,7 @@ _EOF_
 %_bindir/text2pcap
 %_bindir/reordercap
 %_man1dir/capinfos.*
+%_man1dir/udpdump.*
 %_man1dir/sshdump.*
 %_man1dir/randpkt.*
 %_man1dir/randpktdump.*
@@ -286,6 +287,15 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Sun Oct 15 2017 Anton Farygin <rider@altlinux.ru> 2.4.2-alt1%ubt
+- 2.4.2
+- fixes:
+     * wnpa-sec-2017-42 BT ATT dissector crash CVE-2017-15192
+     * wnpa-sec-2017-43 MBIM dissector crash CVE-2017-15193
+     * wnpa-sec-2017-44 DMP dissector crash CVE-2017-15191
+     * wnpa-sec-2017-45 RTSP dissector crash CVE-2017-15190
+     * wnpa-sec-2017-46 DOCSIS infinite loop CVE-2017-15189
+
 * Mon Sep 18 2017 Anton Farygin <rider@altlinux.ru> 2.4.1-alt1%ubt
 - 2.4.1 with following fixes:
      * wnpa-sec-2017-38 MSDP dissector infinite loop CVE-2017-13767
