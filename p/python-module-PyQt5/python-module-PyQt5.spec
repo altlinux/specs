@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 5.9
-Release: alt2
+Release: alt3
 Summary: Python bindings for Qt 5
 License: GPL
 Group: Development/Python
@@ -13,6 +13,7 @@ Group: Development/Python
 
 # Source0-url: https://prdownloads.sourceforge.net/pyqt/%oname/PyQt-%version/PyQt5_gpl-%version.tar.gz
 Source0: PyQt-gpl-%version.tar
+Patch0: PyQt-gpl-5.9-gles.patch
 URL: http://www.riverbankcomputing.co.uk/software/pyqt
 
 #BuildPreReq: %py_package_dependencies sip-devel >= 4.8.1
@@ -101,6 +102,7 @@ This package contains PyQt5 docs
 
 %prep
 %setup -qn PyQt-gpl-%version
+%patch0 -p1
 subst 's|/lib/libpython|/%_lib/libpython|g' configure.py
 subst 's|/lib" |/%_lib" |g' configure.py
 subst 's|#include <QTextStream>|#include <QTextStream>\n#define QT_SHARED\n|g' \
@@ -217,6 +219,9 @@ find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print 
 %endif
 
 %changelog
+* Mon Oct 16 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.9-alt3
+- backported fix for qt built with GLES
+
 * Fri Oct 06 2017 Vitaly Lipatov <lav@altlinux.ru> 5.9-alt2
 - set strict require to sip version we build with
 
