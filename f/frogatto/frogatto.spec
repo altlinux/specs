@@ -3,12 +3,14 @@ Group: Games/Arcade
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ libGL-devel zlib-devel
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global commit a7ef3bfa0c32df4852bf057fab969c1a080edf4d
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:           frogatto
 Version:        1.3.3
-Release:        alt2_6
+Release:        alt2_9
 Summary:        An old-school 2D platform game
 
 # Artwork and music not released under an open license
@@ -27,6 +29,13 @@ Patch2:         %{name}-1.3-fonts.patch
 # Fix gcc6 build only fixes some of the narrowing conversion warnings, there
 # are too many, so we add -Wno-narrowing to the CXXFLAGS as a workaround
 Patch3:         %{name}-1.3-narrowing-conversion-fixes.patch
+# Fix comparison between pointer and integer errors
+# https://github.com/anura-engine/anura/commit/18ad198565f7a3280d991a5878316f6e5c9351d3
+Patch4:         %{name}-1.3-comparison.patch
+
+# We have problems with these architectures
+# https://lists.rpmfusion.org/archives/list/rpmfusion-developers@lists.rpmfusion.org/thread/LQXC5S37G6S4NRZNB7KKGD2Q25OKXSEV/
+ExcludeArch:    ppc64 ppc64le aarch64
 
 BuildRequires:  libSDL-devel >= 1.2.7
 BuildRequires:  libSDL_image-devel
@@ -36,7 +45,7 @@ BuildRequires:  libGLU-devel
 BuildRequires:  libGLEW-devel
 BuildRequires:  libpng-devel
 BuildRequires:  ccache
-BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
 BuildRequires:  perl-podlators
 BuildRequires:  libicns-utils
 BuildRequires:  desktop-file-utils 
@@ -74,13 +83,14 @@ Game data for frogatto.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 # Fix locale file path
 sed -i 's!"./locale/"!"%{_datadir}/locale/"!' src/i18n.cpp
 
 
 %build
-make %{?_smp_mflags} \
+%make_build \
   BASE_CXXFLAGS="$RPM_OPT_FLAGS -fno-inline-functions -fthreadsafe-statics -Wno-narrowing"
 
 
@@ -143,6 +153,9 @@ pod2man --section=6 \
 
 
 %changelog
+* Mon Oct 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt2_9
+- update to new release by fcimport
+
 * Wed Nov 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt2_6
 - set to ArcadeGame in frogatto.desktop
 - fixed font path (for the level editor)
