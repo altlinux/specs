@@ -1,15 +1,15 @@
-Name:		riscvemu
-Version:	20170112
-Release:	alt1
-License:	MIT
-URL:		http://bellard.org/riscvemu/
-Group:		Emulators
-Summary:	A system emulator for the RISC-V architecture
-Source:		%name-%version.tar.gz
+Name: riscvemu
+Version: 20170806
+Release: alt1
+License: MIT
+Url: http://bellard.org/riscvemu/
+Group: Emulators
+Summary: A system emulator for the RISC-V architecture
+Source: %name-%version.tar.gz
 
-# Automatically added by buildreq on Fri Jan 20 2017
-# optimized out: python-base
-BuildRequires: libcurl-devel
+# Automatically added by buildreq on Mon Oct 16 2017
+# optimized out: glibc-kernheaders-x86 libgpg-error python-base
+BuildRequires: glibc-kernheaders-generic libSDL-devel libcurl-devel libssl-devel
 
 %description
 RISCVEMU is a system emulator for the RISC-V architecture. Its purpose
@@ -42,15 +42,16 @@ sed -i '/^PROGS+=riscvemu128/s/^/#/' Makefile
 
 %install
 install -d %buildroot%_bindir %buildroot%_datadir
-cp -a js %buildroot%_datadir/%name
 install riscvemu riscvemu[0-9]*[0-9] %buildroot%_bindir/
 
 %files
-%doc readme.* patches rv128test* netinit.sh
+%doc readme.* netinit.sh
 %_bindir/*
-%_datadir/%name
 
 %changelog
+* Thu Sep 28 2017 Fr. Br. George <george@altlinux.ru> 20170806-alt1
+- Autobuild version bump to 20170806
+
 * Fri Jan 20 2017 Fr. Br. George <george@altlinux.ru> 20170112-alt1
 - Initial build for ALT
 
