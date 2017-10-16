@@ -8,7 +8,7 @@ Name: hiredis
 Name: hiredis%sover
 %endif
 Version: 0.13.3
-Release: alt1
+Release: alt2
 Summary: The official C client for Redis
 
 Group: System/Libraries
@@ -68,19 +68,22 @@ cp hiredis-test %buildroot%_bindir/
 
 %files -n libhiredis%sover
 %doc COPYING CHANGELOG.md
-%_bindir/hiredis-example*
-%_bindir/hiredis-test
 %_libdir/*.so.%{sover}*
 
 %if_with devel
 %files -n libhiredis-devel
 %doc README.md
+%_bindir/hiredis-example*
+%_bindir/hiredis-test
 %_includedir/hiredis
 %_libdir/*.so
 %_libdir/pkgconfig/hiredis.pc
 %endif
 
 %changelog
+* Mon Oct 16 2017 Mikhail Gordeev <obirvalger@altlinux.org> 0.13.3-alt2
+- (ALT #34016) Move example files to devel package
+
 * Wed Sep 13 2017 Mikhail Gordeev <obirvalger@altlinux.org> 0.13.3-alt1
 - Version 0.13.3
 
