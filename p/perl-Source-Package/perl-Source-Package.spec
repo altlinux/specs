@@ -1,7 +1,7 @@
 %define module Source-Package
 
 Name: perl-%module
-Version: 0.15
+Version: 0.16
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -13,7 +13,6 @@ Source: %module-%version.tar
 Url: http://search.cpan.org/dist/%module
 
 BuildRequires: perl-devel perl(RPM/Vercmp.pm)
-#Requires: perl-RPM-Source-Editor > 0.801
 Conflicts: perl-Source-Repository < 0.388
 
 %description
@@ -34,6 +33,9 @@ Conflicts: perl-Source-Repository < 0.388
 %perl_vendor_privlib/Source*
 
 %changelog
+* Mon Oct 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- rsync url support
+
 * Fri Sep 29 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - do not use old Source:Repository download call
 
