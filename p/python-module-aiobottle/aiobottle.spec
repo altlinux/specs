@@ -2,38 +2,31 @@
 
 %def_without python2
 %def_with python3
+%def_without check
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt1.git20140523.1.1
+Release: alt2.git20140523
 Summary: A warper bottle use aiohttp base on Asyncio (PEP-3156) 
 License: Free
 Group: Development/Python
 Url: https://pypi.python.org/pypi/aiobottle
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/Lupino/aiobottle.git
 Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-trollius python-module-aiohttp
-#BuildPreReq: python-module-bottle
+BuildRequires: python-dev python-module-setuptools-tests
+BuildRequires: python2.7(asyncio) python2.7(aiohttp) python2.7(bottle)
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-asyncio python3-module-aiohttp
-#BuildPreReq: python3-module-bottle
+BuildRequires: python3-dev python3-module-setuptools-tests
+BuildRequires: python3(asyncio) python3(aiohttp) python3(bottle)
 %endif
 
 %py_provides %oname
-%py_requires trollius
-
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python3 python3-base python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-django python3-module-dns python3-module-enum34 python3-module-greenlet python3-module-gunicorn python3-module-paste python3-module-psycopg2 python3-module-pycares python3-module-pycparser python3-module-pytest python3-module-setuptools python3-module-yaml python3-module-zope python3-module-zope.interface
-BuildRequires: python3-module-aiohttp python3-module-setuptools-tests rpm-build-python3
 
 %description
 Aiobottle, a warper bottle use aiohttp base on Asyncio (PEP-3156).
@@ -42,7 +35,6 @@ Aiobottle, a warper bottle use aiohttp base on Asyncio (PEP-3156).
 Summary: A warper bottle use aiohttp base on Asyncio (PEP-3156)
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires asyncio
 
 %description -n python3-module-%oname
 Aiobottle, a warper bottle use aiohttp base on Asyncio (PEP-3156).
@@ -99,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.1-alt2.git20140523
+- Updated build and runtime dependencies.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.1-alt1.git20140523.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
