@@ -1,22 +1,27 @@
+%define xdg_name org.kde.partitionmanager
+
 Name: partitionmanager
-Version: 1.1.0
+Version: 3.2.1
 Release: alt1
 
 Summary: KDE Partition Manager
-License: GPL
+License: GPLv3
 Group: Graphical desktop/KDE
 
 Url: https://www.kde.org/applications/system/kdepartitionmanager/
 
-Packager: Evgeny V Shishkov <shev@altlinux.org>
+# VCS: git://anongit.kde.org/partitionmanager
+Source: http://download.kde.org/stable/partitionmanager/%version/src/%name-%version.tar.xz
 
-Source: http://download.kde.org/stable/partitionmanager/1.1.0/src/%name-%version.tar.xz
+Requires: lvm2 cryptsetup
 
-Requires: kde4libs
-BuildRequires(pre): kde4libs-devel
+%define qt_ver 5.7.0
+%define kpmcore_ver 3.2.0
 
-BuildRequires: gcc-c++ libblkid-devel libparted-devel libuuid-devel
-BuildRequires: libatasmart-devel
+BuildRequires: gcc-c++ extra-cmake-modules rpm-build-kf5 qt5-base-devel >= %qt_ver
+BuildRequires: kf5-kcrash-devel kf5-kdoctools-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel
+BuildRequires: libkpmcore-devel >= %kpmcore_ver libatasmart-devel libblkid-devel
+BuildRequires: libappstream-glib-devel
 
 %description
 KDE Partition Manager is a utility program to help you manage the disk
@@ -33,31 +38,29 @@ file systems.
 %setup
 
 %build
-%K4cmake -DCMAKE_INSTALL_PREFIX=`kde4-config --prefix`
-%K4make
+%K5build
 
 %install
-%K4install
+%K5install
+%find_lang %name --all-name --with-kde
 
-%K4find_lang --with-kde %name
 
 %files -f %name.lang
-%_bindir/*
-%_libdir/*.so
-%_libdir/kde4/pmdummybackendplugin.so
-%_libdir/kde4/pmlibpartedbackendplugin.so
-%_desktopdir/kde4/%name.desktop
-%_datadir/kde4/services/pmdummybackendplugin.desktop
-%_datadir/kde4/services/pmlibpartedbackendplugin.desktop
-%_datadir/kde4/servicetypes/pmcorebackendplugin.desktop
-%_K4apps/%name/*
-%_miconsdir/%name.png
-%_niconsdir/%name.png
-%_liconsdir/%name.png
-%_datadir/icons/hicolor/*x*/apps/%name.png
-%_datadir/appdata/%name.appdata.xml
+%_K5bin/%name
+%_kf5_xdgapp/%xdg_name.desktop
+%_kf5_icon/hicolor/scalable/apps/%name.svg
+%_K5cfg/%name.kcfg
+%_K5xmlgui/%name/
+#%_datadir/metainfo/%name.appdata.xml
+%doc README* TODO
 
 %changelog
+* Mon Oct 16 2017 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
+* Wed Apr 05 2017 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
 * Tue Oct 21 2014 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 

@@ -1,7 +1,7 @@
 %define _name kpmcore
 
 Name: lib%_name
-Version: 3.0.3
+Version: 3.2.0
 Release: alt1
 
 Summary: Library for managing partitions
@@ -13,8 +13,10 @@ Source: %url/archive/%_name-%version.tar.gz
 
 Provides: %_name = %version-%release
 
+%define blkid_ver 2.30
+
 BuildRequires: gcc-c++ extra-cmake-modules rpm-build-kf5
-BuildRequires: libatasmart-devel libblkid-devel libparted-devel
+BuildRequires: libatasmart-devel libblkid-devel >= %blkid_ver libparted-devel
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel
 
 %description
@@ -57,6 +59,9 @@ using %_name.
 
 
 %changelog
+* Mon Oct 16 2017 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Thu Apr 06 2017 Yuri N. Sedunov <aris@altlinux.org> 3.0.3-alt1
 - first build for Sisyphus
 
