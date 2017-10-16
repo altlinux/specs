@@ -3,8 +3,8 @@
 
 %define oname logilab-common
 Name: python-module-%oname
-Version: 1.0.2
-Release: alt2.hg20150708
+Version: 1.4.1
+Release: alt1
 
 Summary: Useful miscellaneous modules used by Logilab projects
 License: LGPLv2.1+
@@ -29,16 +29,10 @@ Source: %name-%version.tar
 %setup_python_module %oname
 
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc %py_dependencies mx.DateTime unittest2}}
-#BuildPreReq: python-module-six python-module-pytz
+BuildRequires: python-module-egenix-mx-base python-module-pytz python-module-unittest2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-setuptools python-module-six python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base xz
-BuildRequires: python-module-egenix-mx-base python-module-pytz python-module-unittest2 python3-module-pytz python3-module-setuptools python3-module-six rpm-build-python3 time
-
-#BuildRequires: python3-devel python3-module-distribute
-#BuildPreReq: python-tools-2to3
-#BuildPreReq: python3-module-six python3-module-pytz
+BuildRequires: python3-module-pytz python3-module-setuptools python3-module-six
 %endif
 
 %description
@@ -107,26 +101,25 @@ pushd ../python3
 %python3_install
 install -p -m644 logilab/__init__.py \
 	-t %buildroot%python3_sitelibdir/logilab/
-install -pD -m644 doc/pytest.1 -T %buildroot%_man1dir/pytest3_logilab-common.1
+install -pD -m644 doc/logilab-pytest.1 -T %buildroot%_man1dir/logilab-pytest-3.1
 popd
-mv %buildroot%_bindir/pytest -T %buildroot%_bindir/pytest3_logilab-common
+mv %buildroot%_bindir/logilab-pytest -T %buildroot%_bindir/logilab-pytest-3
 %endif
 
 %python_install
 install -p -m644 logilab/__init__.py \
 	-t %buildroot%python_sitelibdir/logilab/
-install -pD -m644 doc/pytest.1 -T %buildroot%_man1dir/pytest_logilab-common.1
-mv %buildroot%_bindir/pytest -T %buildroot%_bindir/pytest_logilab-common
+install -pD -m644 doc/logilab-pytest.1 -T %buildroot%_man1dir/logilab-pytest.1
 
 %check
 PYTHONPATH=%buildroot%python_sitelibdir \
-    %buildroot%_bindir/pytest_logilab-common \
+    %buildroot%_bindir/logilab-pytest \
     -t test \
     -s test_4
 %if_with python3
 pushd ../python3
 PYTHONPATH=%buildroot%python3_sitelibdir \
-    %buildroot%_bindir/pytest3_logilab-common \
+    %buildroot%_bindir/logilab-pytest-3 \
     -t test \
     -s test_4
 popd
@@ -134,24 +127,27 @@ popd
 
 %global _unpackaged_files_terminate_build 1
 %files
-%_bindir/pytest_logilab-common
+%_bindir/logilab-pytest
 %python_sitelibdir/logilab/
 %python_sitelibdir/*.egg-info
 %python_sitelibdir/*.pth
-%_man1dir/pytest_*
+%_man1dir/logilab-pytest.1*
 %doc ChangeLog README
 
 %if_with python3
 %files -n python3-module-%oname
-%_bindir/pytest3_logilab-common
+%_bindir/logilab-pytest-3
 %python3_sitelibdir/logilab/
 %python3_sitelibdir/*.egg-info
 %python3_sitelibdir/*.pth
-%_man1dir/pytest3_*
+%_man1dir/logilab-pytest-3.1*
 %doc ChangeLog README
 %endif
 
 %changelog
+* Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.1-alt1
+- Updated to upstream version 1.4.1.
+
 * Thu Jan 26 2017 Ivan Zakharyaschev <imz@altlinux.org> 1.0.2-alt2.hg20150708
 - Rename /usr/bin/pytest{,3} to avoid collision with pytest{,3}-3.0.5
   (ALT#33028).

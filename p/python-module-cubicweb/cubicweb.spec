@@ -1,31 +1,32 @@
 %define oname cubicweb
 Name: python-module-%oname
-Version: 3.20.4
+Version: 3.25.2
 Release: alt1
 Summary: A repository of entities / relations for knowledge management
 License: LGPL
 Group: Development/Python
 Url: https://pypi.python.org/pypi/cubicweb/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-logilab-common python-module-rql
-BuildPreReq: python-module-logilab-mtconverter python-module-yams
-BuildPreReq: python-module-lxml python-module-twisted-core
-BuildPreReq: python-module-twisted-web
-BuildPreReq: python-module-passlib python-module-docutils
-BuildPreReq: python-module-Pyro4 python-module-Pillow
-BuildPreReq: python-module-pycrypto python-module-fyzz
-BuildPreReq: python-module-vobject python-module-rdflib
-BuildPreReq: python-module-zmq python-module-logilab-constraint
-BuildPreReq: python-module-yapps2 python-module-markdown
-BuildPreReq: python-module-logilab-database-tests
+BuildRequires: python-dev python-module-setuptools-tests
+BuildRequires: python-module-logilab-common python-module-logilab-mtconverter
+BuildRequires: python-module-rql python-module-yams
+BuildRequires: python-module-lxml python-module-logilab-database
+BuildRequires: python-module-passlib python-module-pytz
+BuildRequires: python-module-markdown
+BuildRequires: python-module-twisted-core
+BuildRequires: python-module-twisted-web
+BuildRequires: python-module-docutils
+BuildRequires: python-module-Pillow
+BuildRequires: python-module-pycrypto python-module-fyzz
+BuildRequires: python-module-vobject python-module-rdflib
+BuildRequires: python-module-logilab-constraint
+BuildRequires: python-module-yapps2
 
 %py_requires twisted.internet twisted.web logilab.common docutils rdflib
-%py_requires logilab.mtconverter logilab.database Pyro4 PIL vobject
+%py_requires logilab.mtconverter logilab.database PIL vobject
 %py_requires cubicweb.devtools.testlib sqlite3 logilab.constraint
 %py_requires markdown
 
@@ -103,6 +104,9 @@ python setup.py test
 %doc doc/*
 
 %changelog
+* Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.25.2-alt1
+- Updated to upstream version 3.25.2.
+
 * Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.20.4-alt1
 - Version 3.20.4
 
