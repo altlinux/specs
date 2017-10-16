@@ -1,11 +1,11 @@
 Name:     genspec
-Version:  1.2.11
+Version:  1.2.12
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
 License:  GPLv3+
 Group:    System/Configuration/Packaging
-URL: 	  http://altlinux.org/genspec
+URL:      http://altlinux.org/genspec
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildArch: noarch
@@ -32,6 +32,9 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_datadir/spectemplates
 
 %changelog
+* Mon Oct 16 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.12-alt1
+- Replace tabs with whitespaces
+
 * Thu Sep 28 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.11-alt1
 - (ALT #33935) Print created directory
 
