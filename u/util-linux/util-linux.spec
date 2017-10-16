@@ -3,7 +3,7 @@
 ### Header
 Summary: A collection of basic system utilities
 Name: util-linux
-Version: 2.29.2
+Version: 2.30.2
 Release: alt1
 License: GPLv2 and GPLv2+ and BSD with advertising and Public Domain
 Group: System/Base
@@ -91,7 +91,7 @@ Patch13: util-linux-2.25.2-alt-hwclock-badyear.patch
 Patch41: util-linux-2.29.0-owl-write.patch
 
 Patch50: util-linux-2.25.2-alt-pg.patch
-Patch51: util-linux-ng-2.25.2-mount-pamconsole.patch
+Patch51: util-linux-ng-2.30.2-mount-pamconsole.patch
 Patch52: util-linux-2.11a-gecossize.patch
 Patch54: util-linux-2.11f-rh-rawman.patch
 Patch58: util-linux-2.12r-alt-mount-MS_SILENT.patch
@@ -100,8 +100,6 @@ Patch60: util-linux-2.20-alt-agetty-release.patch
 
 # 33152 - logger without systemd support
 Patch70: util-linux-2.29.2-alt-logger_man.patch
-
-Patch71: util-linux-2.29.2-alt-blkid-exit-code.patch
 
 %description
 The util-linux package contains a large variety of low-level system
@@ -452,7 +450,7 @@ cp -r -- %SOURCE8 %SOURCE9 %SOURCE10 %SOURCE11 %SOURCE12 .
 %patch41 -p1 -b .write
 
 %patch50 -p1
-%patch51 -p1 -b .pamconsole
+%patch51 -p2 -b .pamconsole
 %patch52 -p1
 %patch54 -p1
 %patch59 -p2
@@ -461,9 +459,6 @@ cp -r -- %SOURCE8 %SOURCE9 %SOURCE10 %SOURCE11 %SOURCE12 .
 %if_without systemd
 %patch70 -p1
 %endif
-
-%patch71 -p2
-
 
 echo %version > .tarball-version
 
@@ -554,7 +549,7 @@ klcc -Wall -Wextra -Werror nologin.c -o nologin
 # cal: broken.
 # mount, swapon: required real root and ignored in hasher.
 # ipcs/limits*: failed in hasher.
-rm -rf tests/ts/{cal,login,look,ipcs/limits*,libmount/{lock,utils},misc/ionice,more/regexp}
+rm -rf tests/ts/{cal,fincore,login,look,ipcs/limits*,libmount/{lock,utils},misc/ionice,more/regexp}
 LANG=C %make check-local-tests
 
 %install
@@ -955,6 +950,9 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Mon Oct 16 2017 Alexey Gladkov <legion@altlinux.ru> 2.30.2-alt1
+- New version (2.30.2).
+
 * Sun Apr 02 2017 Alexey Gladkov <legion@altlinux.ru> 2.29.2-alt1
 - New version (2.29.2).
 - Fix `blkid -v` exit code (ALT#29544).
