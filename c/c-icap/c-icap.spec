@@ -1,6 +1,6 @@
 Name: 	 c-icap
 Version: 0.5.2
-Release: alt1
+Release: alt2
 Epoch:	 1
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -12,7 +12,7 @@ Url: 	 http://c-icap.sourceforge.net/
 Source0: %name-%version.tar.gz
 Source1: %name.init
 Source2: %name.watch
-
+Source3: %name.conf
 
 Requires(pre): shadow-utils
 
@@ -75,6 +75,9 @@ rm -f %buildroot%_libdir/c_icap/*.la
 %cfg_set AccessLog   %_logdir/%name/access.log ' ' ' '
 %cfg_set LoadMagicFile %_sysconfdir/%name.magic ' ' ' '
 
+# Install /var/run rules
+install -Dm 0644 %SOURCE3 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
+
 %pre
 /usr/sbin/groupadd -r -f _c_icap ||:
 /usr/sbin/useradd -M -n _c_icap -r -d %_runtimedir/%name -s /dev/null -c "System user for %name" -g _c_icap > /dev/null 2>&1 ||:
@@ -102,6 +105,7 @@ rm -f %buildroot%_libdir/c_icap/*.la
 %ghost %_logdir/%name/*.log
 %attr (750,_c_icap,root) %_var/run/%name/
 %attr (750,_c_icap,root) %_cachedir/%name/
+%_sysconfdir/tmpfiles.d/%name.conf
 %_man8dir/c-icap*.8*
 
 %files devel
@@ -109,6 +113,9 @@ rm -f %buildroot%_libdir/c_icap/*.la
 %_libdir/libicapapi.so
 
 %changelog
+* Mon Oct 16 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.5.2-alt2
+- Fix missing /var/run/c-icap after reboot
+
 * Sun Oct 08 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.5.2-alt1
 - New version
 - Package run and cache dirs to fix daemon run
