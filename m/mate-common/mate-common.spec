@@ -4,11 +4,11 @@ Group: Development/Tools
 %define _localstatedir %{_var}
 Name:           mate-common
 Summary:        mate common build files
-Version:        1.18.0
-Release:        alt1_2
+Version:        1.19.0
+Release:        alt1_1
 License:        GPLv3+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.18/mate-common-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.19/mate-common-%{version}.tar.xz
 BuildArch:      noarch
 BuildRequires:  automake-common autoconf-common
 Requires:       automake-common 
@@ -45,6 +45,9 @@ binaries for building all MATE desktop sub components
 %{_mandir}/man1/*
 
 %changelog
+* Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
+- new fc release
+
 * Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.0-alt1_2
 - new fc release
 

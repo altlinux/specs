@@ -12,7 +12,7 @@ Requires: mate-desktop
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name atril
-%define version 1.19.3
+%define version 1.19.4
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
@@ -28,7 +28,7 @@ Requires: mate-desktop
 %{!?rel_build:%global git_tar %{oldname}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-document-viewer
-Version:       %{branch}.3
+Version:       %{branch}.4
 %if 0%{?rel_build}
 Release:       alt1_1
 %else
@@ -75,7 +75,7 @@ BuildRequires:  libdjvu-devel
 BuildRequires:  libwebkit2gtk-devel libwebkit2gtk-gir-devel
 %endif
 %if 0%{?rhel}
-BuildRequires:  libjavascriptcoregtk3-devel libjavascriptcoregtk3-gir-devel libwebkitgtk3-devel libwebkitgtk3-gir-devel libwebkitgtk3-jsc
+BuildRequires:  libwebkitgtk3-devel
 %endif
 
 Requires:       mate-document-viewer-libs = %{version}-%{release}
@@ -292,6 +292,9 @@ fi
 
 
 %changelog
+* Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.4-alt1_1
+- new fc release
+
 * Wed Sep 13 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.3-alt1_1
 - new fc release
 

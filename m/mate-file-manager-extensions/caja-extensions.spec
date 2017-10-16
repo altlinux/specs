@@ -8,12 +8,12 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel pkgconfi
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name caja-extensions
-%define version 1.18.1
+%define version 1.19.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.18
+%global branch 1.19
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 298c7255b82986eeba72fff06f59479deae0b9d0}
@@ -25,11 +25,11 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel pkgconfi
 
 Name:           mate-file-manager-extensions
 Summary:        Set of extensions for caja file manager
-Version:        %{branch}.1
+Version:        %{branch}.0
 %if 0%{?rel_build}
-Release:        alt1_4
+Release:        alt1_1
 %else
-Release:        alt1_4
+Release:        alt1_1
 %endif
 License:        GPLv2+
 URL:            http://mate-desktop.org
@@ -55,10 +55,10 @@ BuildRequires:  libdbus-glib-devel
 BuildRequires:  gajim
 Source44: import.info
 
+
 %description
 Extensions for the caja file-browser, open-terminal,
 image-converter, sendto and share
-
 
 %package common
 Group: Graphical desktop/MATE
@@ -78,7 +78,6 @@ Requires:   /usr/bin/convert
 The caja-image-converter extension allows you to
 re-size/rotate images from Caja.
 
-
 %package -n mate-file-manager-open-terminal
 Group: Graphical desktop/MATE
 Summary:    Mate-file-manager extension for an open terminal shortcut
@@ -87,7 +86,6 @@ Requires:   %{name}-common = %{version}-%{release}
 %description -n mate-file-manager-open-terminal
 The caja-open-terminal extension provides a right-click "Open
 Terminal" option for mate-file-manager users who prefer that option.
-
 
 %package -n mate-file-manager-sendto
 Group: Graphical desktop/MATE
@@ -98,15 +96,14 @@ Requires:   %{name}-common = %{version}-%{release}
 The caja-sendto extension provides 'send to' functionality
 to the MATE Desktop file-manager, Caja.
 
-
 %package -n mate-file-manager-sendto-devel
 Group: Graphical desktop/MATE
 Summary:    Development libraries and headers for caja-sendto
 Requires:   %{name}-common = %{version}-%{release}
+Requires:   mate-file-manager-sendto = %{version}-%{release}
 
 %description -n mate-file-manager-sendto-devel
 Development libraries and headers for caja-sendto
-
 
 %package -n mate-file-manager-share
 Group: Graphical desktop/MATE
@@ -118,7 +115,6 @@ Requires:   samba
 Caja extension designed for easier folders 
 sharing via Samba (CIFS protocol) in *NIX systems.
 
-
 %package -n mate-file-manager-beesu
 Group: Graphical desktop/MATE
 Summary:    MATE file manager beesu
@@ -128,7 +124,6 @@ Requires:   beesu
 %description -n mate-file-manager-beesu
 Caja beesu extension for open files as superuser
 
-
 %package -n mate-file-manager-wallpaper
 Group: Graphical desktop/MATE
 Summary:    MATE file manager wallpaper
@@ -136,7 +131,6 @@ Requires:   %{name}-common = %{version}-%{release}
 
 %description -n mate-file-manager-wallpaper
 Caja wallpaper extension, allows to quickly set wallpaper.
-
 
 %package -n caja-xattr-tags
 Group: Graphical desktop/MATE
@@ -244,6 +238,9 @@ cp %{SOURCE2} %{buildroot}/%{_sysconfdir}/samba/
 
 
 %changelog
+* Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
+- new fc release
+
 * Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.1-alt1_4
 - new fc release
 

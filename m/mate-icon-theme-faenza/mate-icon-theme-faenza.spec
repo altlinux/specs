@@ -5,8 +5,8 @@ Group: Graphical desktop/MATE
 #%%global _internal_version  c147867
 
 Name:           mate-icon-theme-faenza
-Version:        1.18.1
-Release:        alt1_2
+Version:        1.19.0
+Release:        alt1_1
 #Release:        0.1.git%{_internal_version}%{?dist}
 Summary:        Extra set of icon themes for MATE Desktop
 License:        GPLv2+
@@ -63,6 +63,9 @@ fi
 
 
 %changelog
+* Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
+- new fc release
+
 * Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.1-alt1_2
 - new fc release
 

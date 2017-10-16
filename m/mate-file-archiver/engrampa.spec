@@ -9,7 +9,7 @@ BuildRequires: libmagic-devel libSM-devel
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name engrampa
-%define version 1.19.0
+%define version 1.19.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
@@ -25,11 +25,11 @@ BuildRequires: libmagic-devel libSM-devel
 %{!?rel_build:%global git_tar %{oldname}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-file-archiver
-Version:       %{branch}.0
+Version:       %{branch}.1
 %if 0%{?rel_build}
-Release:       alt1_4
+Release:       alt1_1
 %else
-Release:       alt1_4
+Release:       alt1_1
 %endif
 Summary:       MATE Desktop file archiver
 License:       GPLv2+ and LGPLv2+
@@ -122,6 +122,9 @@ find %{buildroot} -name "*.la" -exec rm -f {} ';'
 
 
 %changelog
+* Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.1-alt1_1
+- new fc release
+
 * Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_4
 - new fc release
 - split mate-file-manager-archiver subpackage (ALT#33641)

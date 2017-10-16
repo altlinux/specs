@@ -9,7 +9,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name eom
-%define version 1.19.0
+%define version 1.19.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
@@ -25,11 +25,11 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 %{!?rel_build:%global git_tar %{oldname}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-image-viewer
-Version:       %{branch}.0
+Version:       %{branch}.1
 %if 0%{?rel_build}
-Release:       alt1_4
+Release:       alt1_1
 %else
-Release:       alt1_4
+Release:       alt1_1
 %endif
 Summary:       Eye of MATE image viewer
 License:       GPLv2+ and LGPLv2+ 
@@ -69,7 +69,6 @@ The Eye of MATE (eom) is the official image viewer for the
 MATE desktop. It can view single image files in a variety of formats, as
 well as large image collections.
 Eye of Mate is extensible through a plugin system.
-
 
 %package devel
 Summary:  Support for developing plugins for the eom image viewer
@@ -136,6 +135,9 @@ find ${RPM_BUILD_ROOT} -type f -name "*.la" -exec rm -f {} ';'
 
 
 %changelog
+* Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.1-alt1_1
+- new fc release
+
 * Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_4
 - new fc release
 

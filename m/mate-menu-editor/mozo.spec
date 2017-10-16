@@ -7,11 +7,11 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/g
 %define oldname mozo
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global branch 1.18
+%global branch 1.19
 
 Name:           mate-menu-editor
 Version:        %{branch}.0
-Release:        alt1_3
+Release:        alt1_1
 Summary:        MATE Desktop menu editor
 License:        LGPLv2+
 URL:            http://mate-desktop.org
@@ -66,6 +66,9 @@ desktop-file-install                                  \
 
 
 %changelog
+* Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
+- new fc release
+
 * Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.0-alt1_3
 - new fc release
 
