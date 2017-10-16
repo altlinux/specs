@@ -2,7 +2,7 @@
 
 Name: wpa_supplicant
 Version: 2.6
-Release: alt1
+Release: alt2
 
 Summary: wpa_supplicant is an implementation of the WPA Supplicant component
 License: BSD
@@ -122,6 +122,18 @@ tar c -C %name/wpa_gui-qt4/icons hicolor |tar x -C %buildroot%_iconsdir
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Mon Oct 16 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.6-alt2
+- multiple vulnerabilities (so-called KRACK attack) fixed:
+  + CVE-2017-13077
+  + CVE-2017-13078
+  + CVE-2017-13079
+  + CVE-2017-13080
+  + CVE-2017-13081
+  + CVE-2017-13082
+  + CVE-2017-13086
+  + CVE-2017-13087
+  + CVE-2017-13088
+
 * Fri Dec 23 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.6-alt1
 - 2.6-alt1 released
 
