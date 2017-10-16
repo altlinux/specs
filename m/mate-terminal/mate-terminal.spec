@@ -7,12 +7,12 @@ BuildRequires: /usr/bin/desktop-file-install libICE-devel pkgconfig(x11)
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-terminal
-%define version 1.18.1
+%define version 1.19.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.18
+%global branch 1.19
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit ac33ed09bb41ba717df3722cc71e25c1aa5134c5}
@@ -24,11 +24,11 @@ BuildRequires: /usr/bin/desktop-file-install libICE-devel pkgconfig(x11)
 
 Summary:        Terminal emulator for MATE
 Name:           mate-terminal
-Version:        %{branch}.1
+Version:        %{branch}.0
 %if 0%{?rel_build}
-Release:        alt1_3
+Release:        alt1_1
 %else
-Release:        alt1_3
+Release:        alt1_1
 %endif
 License:        GPLv3+
 URL:            http://mate-desktop.org
@@ -109,6 +109,9 @@ EOF
 
 
 %changelog
+* Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
+- new fc release
+
 * Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.1-alt1_3
 - new fc release
 

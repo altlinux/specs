@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/g
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-desktop
-%define version 1.19.0
+%define version 1.19.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
@@ -26,11 +26,11 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/g
 Summary:        Shared code for mate-panel, mate-session, mate-file-manager, etc
 Name:           mate-desktop
 License:        GPLv2+ and LGPLv2+ and MIT
-Version:        %{branch}.0
+Version:        %{branch}.1
 %if 0%{?rel_build}
-Release:        alt1_2
+Release:        alt1_1
 %else
-Release:        alt2_0.5%{?git_rel}
+Release:        alt1_1
 %endif
 URL:            http://mate-desktop.org
 
@@ -39,13 +39,6 @@ URL:            http://mate-desktop.org
 %{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
-
-# https://github.com/mate-desktop/mate-desktop/pull/282
-Patch1:         mate-desktop_0001-mate-about-switch-to-GtkAboutDialog.patch
-Patch2:         mate-desktop_0002-mate-about-remove-remains-of-libunique-references.patch
-Patch3:         mate-desktop_0003-drop-MateAboutDialog.patch
-# https://github.com/mate-desktop/mate-desktop/pull/283
-Patch4:         mate-desktop_0001-gtk-3.22-avoid-deprecated-gdk_screen_get_monitor.-fu.patch
 
 # fedora specific settings
 Source2:        mate-fedora-f25.gschema.override
@@ -71,7 +64,11 @@ Requires: mate-control-center-filesystem
 Requires: mate-panel
 Requires: mate-notification-daemon
 Requires: mate-user-guide
-%if 0%{?fedora}
+%if 0%{?fedora} && 0%{?fedora} == 27
+# temporary
+Requires: f27-backgrounds-mate
+%endif
+%if 0%{?fedora} && 0%{?fedora} == 26
 # temporary
 %endif
 
@@ -152,18 +149,10 @@ libmatedesktop.
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
-%patch1 -p1 -b .0001
-%patch2 -p1 -b .0002
-%patch3 -p1 -b .0003
-%patch4 -p1 -b .0001
-
-# for the last 3 patches
-%patch33 -p0
-%patch34 -p0
-NOCONFIGURE=1 ./autogen.sh
-
 %if 0%{?rel_build}
 # for releases
+%patch33 -p0
+%patch34 -p0
 NOCONFIGURE=1 ./autogen.sh
 %else
 # needed for git snapshots
@@ -255,6 +244,9 @@ mkdir -p %buildroot%{_datadir}/mate-about
 
 
 %changelog
+* Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.1-alt1_1
+- new fc release
+
 * Wed Sep 13 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_2
 - new fc release
 

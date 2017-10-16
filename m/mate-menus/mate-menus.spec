@@ -8,12 +8,12 @@ Requires: altlinux-freedesktop-menu-mate
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           mate-menus
-Version:        1.18.0
-Release:        alt1_4
+Version:        1.19.0
+Release:        alt1_1
 Summary:        Displays menus for MATE Desktop
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.18/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.19/%{name}-%{version}.tar.xz
 
 BuildRequires:  chrpath
 BuildRequires:  gobject-introspection-devel
@@ -109,6 +109,9 @@ chrpath --delete $RPM_BUILD_ROOT%{python_sitelibdir}/matemenu.so
 
 
 %changelog
+* Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
+- new fc release
+
 * Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.0-alt1_4
 - new fc release
 

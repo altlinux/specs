@@ -7,12 +7,12 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-user-guide
-%define version 1.18.0
+%define version 1.19.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.18
+%global branch 1.19
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 61aec06d978154fea42f1f42d845fdb710c924f7}
@@ -26,9 +26,9 @@ Name:        mate-user-guide
 Summary:     User Guide for MATE desktop
 Version:     %{branch}.0
 %if 0%{?rel_build}
-Release:     alt1_2
+Release:     alt1_1
 %else
-Release:     alt1_2
+Release:     alt1_1
 %endif
 License:     GPLv2+
 URL:         http://mate-desktop.org
@@ -82,6 +82,9 @@ $RPM_BUILD_ROOT%{_datadir}/applications/mate-user-guide.desktop
 
 
 %changelog
+* Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
+- new fc release
+
 * Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.0-alt1_2
 - new fc release
 

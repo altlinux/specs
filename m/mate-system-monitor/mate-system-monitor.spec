@@ -6,12 +6,12 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libgio-devel pkgconfig(giom
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           mate-system-monitor
-Version:        1.18.0
-Release:        alt1_4
+Version:        1.19.0
+Release:        alt1_1
 Summary:        Process and resource monitor
 License:        GPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.18/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.19/%{name}-%{version}.tar.xz
 
 BuildRequires: libdbus-glib-devel
 BuildRequires: desktop-file-utils
@@ -34,8 +34,6 @@ such as CPU and memory.
 
 %prep
 %setup -q
-
-sed -i 's/OnlyShowIn=MATE;/OnlyShowIn=MATE;X-Cinnamon;/g' mate-system-monitor.desktop.in.in
 
 %build
 %add_optflags -std=c++11
@@ -70,6 +68,9 @@ desktop-file-install --delete-original             \
 
 
 %changelog
+* Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
+- new fc release
+
 * Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.0-alt1_4
 - new fc release
 

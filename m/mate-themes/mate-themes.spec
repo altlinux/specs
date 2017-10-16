@@ -7,14 +7,14 @@ BuildRequires: /usr/bin/glib-gettextize
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-themes
-%define version 3.22.13
+%define version 3.22.14
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
 %global branch 3.22
 
-%global rel_ver 3.22.13
+%global rel_ver 3.22.14
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 59b3286ac467f19e9bce39783e71836ced239b7b}
@@ -42,6 +42,9 @@ BuildArch:      noarch
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
+Patch1:         mate-themes_0001-Revert-Gtk-3.20-all-themes-fix-redraw-issue-with-yel.patch
+Patch2:         mate-themes_0002-BlackMATE-Workaround-for-Yelp-Lireoffice-Firefox-scr.patch
+
 BuildRequires:  mate-common
 BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
 BuildRequires:  libgdk-pixbuf-devel libgdk-pixbuf-gir-devel
@@ -64,6 +67,9 @@ MATE Desktop themes
 # needed for git snapshots
 NOCONFIGURE=1 ./autogen.sh
 %endif # 0%{?rel_build}
+
+%patch1 -p1 -b .revert
+%patch2 -p1 -b .blackmate
 
 %build
 %configure --enable-icon-mapping
@@ -112,6 +118,9 @@ fi
 
 
 %changelog
+* Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.22.14-alt1_2
+- new fc release
+
 * Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.22.13-alt1_2
 - new fc release
 

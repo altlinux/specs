@@ -8,12 +8,12 @@ BuildRequires: /usr/bin/desktop-file-install pkgconfig(dbus-1) pkgconfig(x11) pk
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-power-manager
-%define version 1.18.0
+%define version 1.19.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.18
+%global branch 1.19
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 3a68372f379644cc50d4cd9bb6f012653eddb683}
@@ -26,9 +26,9 @@ BuildRequires: /usr/bin/desktop-file-install pkgconfig(dbus-1) pkgconfig(x11) pk
 Name:          mate-power-manager
 Version:       %{branch}.0
 %if 0%{?rel_build}
-Release:       alt1_5
+Release:       alt1_1
 %else
-Release:       alt1_5
+Release:       alt1_1
 %endif
 Summary:       MATE power management service
 License:       GPLv2+
@@ -39,9 +39,6 @@ URL:           http://pub.mate-desktop.org
 %{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
-
-# https://github.com/mate-desktop/mate-power-manager/commit/7facec4
-Patch1:        mate-power-manager_0001-don-t-abort-on-unknown-DBus-signal-name.patch
 
 BuildRequires: libcairo-devel
 BuildRequires: libdbus-glib-devel
@@ -68,8 +65,6 @@ displaying icons and handling user callbacks in an interactive MATE session.
 
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
-
-%patch1 -p1 -b .0001
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -116,6 +111,9 @@ desktop-file-install                               \
 
 
 %changelog
+* Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
+- new fc release
+
 * Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.0-alt1_5
 - new fc release
 

@@ -28,9 +28,9 @@ BuildRequires: libXi-devel
 Name:           mate-panel
 Version:        %{branch}.3
 %if 0%{?rel_build}
-Release:        alt1_1
+Release:        alt1_2
 %else
-Release:        alt1_1
+Release:        alt2_0.6%{?git_rel}
 %endif
 Summary:        MATE Desktop panel and applets
 #libs are LGPLv2+ applications GPLv2+
@@ -46,8 +46,20 @@ URL:            http://mate-desktop.org
 Source1:        mate-panel_fedora.layout
 Source2:        mate-panel_rhel.layout
 
-# https://github.com/mate-desktop/mate-panel/pull/600
+# https://github.com/mate-desktop/mate-panel/commit/4a25da5
 Patch1:         mate-panel_0001-Add-a-gsettings-key-to-enable-disable-SNI-Support.patch
+# https://github.com/mate-desktop/mate-panel/commit/57d3c8f
+Patch2:         mate-panel_0001-gtk-3.22-avoid-deprecated-gdk_screen_get_monitor.-fu.patch
+# https://github.com/mate-desktop/mate-panel/commit/2dbcb02
+# https://github.com/mate-desktop/mate-panel/commit/4fbe8e2
+Patch3:         mate-panel_0001-Fix-crashes-on-moving-removing-applets-with-glib-2.5.patch
+Patch4:         mate-panel_0002-clock-disconnect-signal-handlers-on-destroy.patch
+# https://github.com/mate-desktop/mate-panel/commit/8a158fe
+Patch5:         mate-panel_0001-Add-option-to-context-menu-to-reset-the-panel.patch
+# https://github.com/mate-desktop/mate-panel/commit/c13f02a
+Patch6:         mate-panel_0001-panel-context-menu-Add-confirmation-dialog-to-panel-.patch
+# https://github.com/mate-desktop/mate-panel/commit/cfb9e30
+Patch7:         mate-panel_0001-make-file-folder-launchers-work-again.patch
 
 Requires:       %{name}-libs = %{?epoch:%epoch:}%{version}-%{release}
 #for fish
@@ -98,6 +110,12 @@ Development files for mate-panel
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
 %patch1 -p1 -b .0001
+%patch2 -p1 -b .0001
+%patch3 -p1 -b .0001
+%patch4 -p1 -b .0002
+%patch5 -p1 -b .0001
+%patch6 -p1 -b .0001
+%patch7 -p1 -b .0001
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -117,7 +135,7 @@ autoreconf -fisv
            --with-x                               \
            --libexecdir=%{_libexecdir}/mate-panel \
            --enable-introspection                 \
-           --disable-gtk-doc                       \
+           --disable-gtk-doc                      \
            --with-in-process-applets=none
 
 # remove unused-direct-shlib-dependency
@@ -176,6 +194,9 @@ install -D -m 0644 %{SOURCE2} %{buildroot}%{_datadir}/mate-panel/layouts/rhel.la
 
 
 %changelog
+* Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.19.3-alt1_2
+- new fc release
+
 * Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.19.3-alt1_1
 - new fc release
 
