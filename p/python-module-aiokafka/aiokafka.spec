@@ -5,37 +5,33 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1
+Release: alt2
 Summary: asyncio client for kafka
 License: ASLv2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/aiokafka/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/aio-libs/aiokafka.git
 Source0: https://pypi.python.org/packages/d4/ff/f440264776a1dc0d869d66197a0b74903206880c1c5d32c99ae5c9f9a337/%{oname}-%{version}.tar.gz
+Patch1: %oname-%version-alt-deps.patch
 BuildArch: noarch
 
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-asyncio python-module-kafka
-#BuildPreReq: python-module-snappy python-module-flake8
-#BuildPreReq: python-module-nose
+BuildRequires: python-dev python-module-setuptools-tests
+BuildRequires: python2.7(asyncio) python2.7(kafka)
+BuildRequires: python2.7(snappy) python2.7(flake8)
+BuildRequires: python2.7(nose)
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-asyncio python3-module-kafka
-#BuildPreReq: python3-module-snappy python3-module-flake8
-#BuildPreReq: python3-module-nose
+BuildRequires: python3-dev python3-module-setuptools-tests
+BuildRequires: python3(asyncio) python3(kafka)
+BuildRequires: python3(snappy) python3(flake8)
+BuildRequires: python3(nose)
 %endif
 
 %py_provides %oname
 %py_requires asyncio kafka snappy
-
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-modules python3 python3-base python3-module-mccabe python3-module-pytest python3-module-setuptools python3-module-snappy python3-pyflakes python3-tools-pep8
-BuildRequires: python3-module-flake8 python3-module-kafka python3-module-nose python3-module-setuptools-tests rpm-build-python3
 
 %description
 Kafka integration with asyncio.
@@ -51,6 +47,7 @@ Kafka integration with asyncio.
 
 %prep
 %setup -q -n %{oname}-%{version}
+%patch1 -p2
 
 %if_with python3
 cp -fR . ../python3
@@ -107,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.0-alt2
+- Fixed build.
+
 * Tue Jan 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt1
 - automated PyPI update
 
