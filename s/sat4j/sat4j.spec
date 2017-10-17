@@ -4,15 +4,16 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # should be consistent across one release
 %global build_date 20130405
 
 Name:           sat4j
 Version:        2.3.5
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        A library of SAT solvers written in Java
 
 License:        EPL or LGPLv2
@@ -23,7 +24,7 @@ Source1:        sat4j-fetch.sh
 Patch0:         sat4j-classpath.patch
 
 BuildRequires:  ant
-BuildRequires:  javapackages-local
+BuildRequires:  javapackages-tools rpm-build-java
 
 BuildArch:      noarch
 Source44: import.info
@@ -54,6 +55,9 @@ cp -rp dist/%{version}/org.sat4j.pb.jar \
 %{_javadir}/org.sat4j*
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_9jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_8jpp8
 - new fc release
 
