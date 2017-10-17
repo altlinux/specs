@@ -3,9 +3,16 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: docbook-dtds
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -36,11 +43,13 @@ BuildRequires: jpackage-generic-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+%bcond_without  hsqldb
+
 %global base_name jaxme
 
 Name:           ws-jaxme
 Version:        0.5.2
-Release:        alt5_16jpp8
+Release:        alt5_19jpp8
 Epoch:          0
 Summary:        Open source implementation of JAXB
 License:        ASL 2.0
@@ -75,18 +84,21 @@ BuildRequires:  ant-apache-resolver
 BuildRequires:  antlr-tool
 BuildRequires:  apache-commons-codec
 BuildRequires:  junit
+%if %{with hsqldb}
 BuildRequires:  hsqldb1
+%endif
 BuildRequires:  log4j12
 BuildRequires:  xalan-j2
 BuildRequires:  xerces-j2
 BuildRequires:  docbook-style-xsl
 BuildRequires:  docbook-dtds
 BuildRequires:  zip
-BuildRequires:  /usr/bin/perl
 Requires:       antlr-tool
 Requires:       apache-commons-codec
 Requires:       junit
+%if %{with hsqldb}
 Requires:       hsqldb1
+%endif
 Requires:       log4j12
 Requires:       xalan-j2
 Requires:       xerces-j2
@@ -130,8 +142,8 @@ find . -name "*.jar" -print -delete
 %patch0 -p0
 %patch1 -p0
 %patch2 -p1
-DOCBOOKX_DTD=`%{_bindir}/xmlcatalog %{_datadir}/sgml/docbook/xmlcatalog "-//OASIS//DTD DocBook XML V4.5//EN" 2>/dev/null`
-%{__perl} -pi -e 's|@DOCBOOKX_DTD@|$DOCBOOKX_DTD|' src/documentation/manual/jaxme2.xml
+DOCBOOKX_DTD=`xmlcatalog %{_datadir}/sgml/docbook/xmlcatalog "-//OASIS//DTD DocBook XML V4.5//EN" 2>/dev/null`
+sed -i 's|@DOCBOOKX_DTD@|$DOCBOOKX_DTD|' src/documentation/manual/jaxme2.xml
 %patch3 -p1
 %patch4 -b .sav
 %patch5 -b .sav
@@ -142,6 +154,11 @@ sed -i 's/\r//' NOTICE
 
 sed -i "s|log4j.jar|log4j12-1.2.17.jar|" ant/js.xml
 sed -i "s|hsqldb.jar|hsqldb1-1.jar|" ant/js.xml ant/pm.xml
+
+%if %{without hsqldb}
+rm -r src/js/org/apache/ws/jaxme/sqls/hsqldb
+%pom_xpath_remove 'target[@name="JS.generate"]/@depends' ant/js.xml
+%endif
 
 %build
 export CLASSPATH=$(build-classpath antlr hsqldb1-1 commons-codec junit log4j12-1.2.17 xerces-j2 xalan-j2 xalan-j2-serializer)
@@ -187,6 +204,9 @@ rm -rf build/docs/src/documentation/content/apidocs
 %doc build/docs/src/documentation/content/manual
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt5_19jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt5_16jpp8
 - new fc release
 
