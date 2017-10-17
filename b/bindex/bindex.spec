@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # SVN info
 %global svnRev 96
 
@@ -12,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    bindex
 Version: 2.2
-Release: alt3_15.svn96jpp8
+Release: alt3_16.svn96jpp8
 Summary: Bundle Manifest Header Mapper
 
 Group:   Development/Other
@@ -34,6 +35,7 @@ BuildRequires: ant
 BuildRequires: aqute-bnd
 BuildRequires: felix-osgi-obr
 BuildRequires: felix-osgi-core
+BuildRequires: java-devel >= 1.6.0
 BuildRequires: junit
 BuildRequires: kxml
 BuildRequires: xpp3
@@ -73,6 +75,9 @@ bnd buildx --output %{name}.jar bindex.bnd
 %{_javadir}/*
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_16.svn96jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_15.svn96jpp8
 - new fc release
 
