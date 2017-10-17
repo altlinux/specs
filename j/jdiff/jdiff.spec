@@ -3,13 +3,14 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 
 Name:          jdiff
 Version:       1.1.1
-Release:       alt2_11jpp8
+Release:       alt2_12jpp8
 Summary:       An HTML Report of API Differences
 License:       GPL+ and LGPLv2+
 URL:           http://javadiff.sourceforge.net/
@@ -117,6 +118,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc LICENSE.txt
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt2_12jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt2_11jpp8
 - new fc release
 
