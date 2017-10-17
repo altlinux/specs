@@ -2,12 +2,13 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           jorbis
 Version:        0.0.17
-Release:        alt1_14jpp8
+Release:        alt1_15jpp8
 Summary:        Pure Java Ogg Vorbis Decoder
 URL:            http://www.jcraft.com/jorbis/
 License:        LGPLv2+
@@ -20,6 +21,7 @@ Source0:        http://www.jcraft.com/jorbis/%{name}-%{version}.zip
 # the actual patches have been rebased to 0.0.17 !
 Patch0:         jorbis-0.0.17-cortado-fixes.patch
 BuildArch:      noarch
+BuildRequires:  java-devel
 # We used to also package the comment editor example, but that is not so
 # useful to end users (esp. the passing of cmdline args as java defines)
 Obsoletes:      %{name}-comment <= 0.0.17-3
@@ -42,7 +44,8 @@ This package contains the API documentation for jorbis.
 Summary:        Java applet for playing ogg-vorbis files from a browser
 License:        GPLv2+
 Group:          Sound
-Requires:       %{name} = %{version}
+Requires:       java
+Requires:       %{name} = %{version}-%{release}
 
 %description player
 This package contains JOrbisPlayer a simple java applet for playing
@@ -86,6 +89,9 @@ cp -a doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.17-alt1_15jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.0.17-alt1_14jpp8
 - new fc release
 
