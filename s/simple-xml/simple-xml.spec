@@ -2,13 +2,14 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          simple-xml
 Summary:       An XML serialization framework for Java
 Version:       2.7.1
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 License:       ASL 2.0
 Url:           http://simple.sourceforge.net/
 Source0:       http://downloads.sourceforge.net/simple/%{name}-%{version}.tar.gz
@@ -78,6 +79,9 @@ cp -pr javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt1_9jpp8
+- new jpp release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt1_8jpp8
 - new fc release
 
