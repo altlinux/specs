@@ -4,7 +4,6 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: subversion
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # fedora bcond_with macro
@@ -13,7 +12,9 @@ BuildRequires: jpackage-generic-compat
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name xmlbeans
 %define version 2.6.0
 # Copyright (c) 2000-2005, JPackage Project
@@ -52,7 +53,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xmlbeans
 Version:        2.6.0
-Release:        alt1_12jpp8
+Release:        alt1_13jpp8
 Summary:        XML-Java binding tool
 URL:            http://xmlbeans.apache.org/
 Source0:        http://www.apache.org/dist/xmlbeans/source/%{name}-%{version}-src.tgz
@@ -125,7 +126,7 @@ BuildArch: noarch
 %package scripts
 Group: Development/Java
 Summary:        Scripts for %{name}
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description scripts
 %{summary}.
@@ -220,6 +221,9 @@ cp -pr build/docs/* README.txt $RPM_BUILD_ROOT%{_docdir}/%{name}
 
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt1_13jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt1_12jpp8
 - new fc release
 
