@@ -3,9 +3,10 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2007, JPackage Project
 # All rights reserved.
 #
@@ -38,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           dtdparser
 Version:        1.21
-Release:        alt2_17jpp8
+Release:        alt2_18jpp8
 Summary:        A Java DTD Parser
 
 # The code has no license attribution.
@@ -55,9 +56,10 @@ Source1:        http://repo1.maven.org/maven2/com/wutka/%{name}/%{version}/%{nam
 Patch0:         %{name}-unmappable-chars-in-comments.patch
 
 BuildRequires:  ant
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  java-devel
+BuildRequires:  jpackage-utils
 
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -111,6 +113,9 @@ install -p -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE ASL_LICENSE
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.21-alt2_18jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.21-alt2_17jpp8
 - new fc release
 
