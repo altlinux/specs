@@ -1,9 +1,8 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
 BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # fedora bcond_with macro
@@ -18,9 +17,10 @@ BuildRequires: jpackage-generic-compat
 %else
 %define __isa_bits 32
 %endif
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-service-wrapper
-%define version 3.2.5
 %global javaver 1.7
 %global hgrev   3290d306074a
 %global pname yaja-wrapper
@@ -45,7 +45,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           java-service-wrapper
 Version:        3.2.5
-Release:        alt1_23jpp8
+Release:        alt1_26jpp8
 Summary:        Java service wrapper
 License:        MIT
 URL:            https://bitbucket.org/ivertex/yaja-wrapper
@@ -67,7 +67,10 @@ Patch2:         %{name}-3.2.4-docbuild.patch
 Patch3:         %{name}-3.2.5-rhbz1037144.patch
 Patch99:	ppc64le-support.patch
 BuildRequires:  ant
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  java-devel
+BuildRequires:  jpackage-utils
+BuildRequires:  gcc-common
+BuildRequires:  make
 Source44: import.info
 
 %description
@@ -98,9 +101,9 @@ unzip -q %{cocoon}/cocoon.war ; mv WEB-INF/lib %{cocoon}/
 cd ..
 %endif
 (cd src/c; cp Makefile-linux-ppc64le-64.make Makefile-linux-aarch64-64.make)
+(cd src/c; cp Makefile-linux-arm-32.make Makefile-linux-aarch32-32.make)
 # -Wl,as-needed
 perl -i -npe 's,(\$[({]COMPILE[)}](?: -pthread)?) -lm(.*)$,$1$2 -lm,' src/c/Makefile-linux-*
-
 
 %build
 %ant -Dbits=%{__isa_bits} -Djavac.target.version=%{javaver}
@@ -140,6 +143,9 @@ cp -pR javadoc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc doc/license.txt
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.5-alt1_26jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.2.5-alt1_23jpp8
 - new fc release
 
