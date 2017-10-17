@@ -20,6 +20,8 @@ BuildRequires: jpackage-generic-compat
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Don't generate requires on jpackage-utils and java-headless for
 # provided pseudo-artifacts: com.sun:tools and sun.jdk:jconsole.
 %global __requires_exclude_from %{?__requires_exclude_from:%__requires_exclude_from|}/maven-metadata/javapackages-metadata.xml$
@@ -31,7 +33,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javapackages-tools
 Version:        4.6.0
-Release:        alt10_14jpp8.1
+Release:        alt10_15jpp8
 
 Summary:        Macros and scripts for Java packaging support
 
@@ -45,7 +47,7 @@ Patch1:         0002-install-Move-mvn_build-and-builddep-from-maven-local.patch
 BuildArch:      noarch
 
 BuildRequires:  make
-BuildRequires: asciidoc asciidoc-a2x
+BuildRequires:  asciidoc asciidoc-a2x
 BuildRequires:  xmlto
 BuildRequires:  dia
 %if ! 0%{?bootstrap}
@@ -55,7 +57,8 @@ BuildRequires:  xmvn-resolve >= 2
 
 Requires:       coreutils
 Requires:       findutils
-Requires:       lua
+Requires:       which
+Requires:       lua5.3
 
 Provides:       jpackage-utils = %{version}-%{release}
 Source44: import.info
@@ -106,8 +109,8 @@ RPM build helpers for Java packages.
 %package -n maven-local
 Group: Development/Java
 Summary:        Macros and scripts for Maven packaging support
-Requires:       maven-local = %{version}
-Requires:       javapackages-local = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       javapackages-tools rpm-build-java
 Requires:       maven
 Requires:       xmvn >= 2
 Requires:       xmvn-mojo >= 2
@@ -148,8 +151,8 @@ This package provides macros and scripts to support packaging Maven artifacts.
 %package -n gradle-local
 Group: Development/Java
 Summary:        Local mode for Gradle
-Requires:       maven-local = %{version}
-Requires:       javapackages-local = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       javapackages-tools rpm-build-java
 Requires:       gradle >= 2.2.1
 Requires:       xmvn-connector-gradle >= 2
 
@@ -160,8 +163,8 @@ resolution using XMvn resolver.
 %package -n ivy-local
 Group: Development/Java
 Summary:        Local mode for Apache Ivy
-Requires:       maven-local = %{version}
-Requires:       javapackages-local = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       javapackages-tools rpm-build-java
 Requires:       apache-ivy >= 2.3.0
 Requires:       xmvn-connector-ivy >= 2
 
@@ -190,7 +193,7 @@ User guide for Java packaging and using utilities from javapackages-tools
 %package -n javapackages-local
 Group: Development/Java
 Summary:        Non-essential macros and scripts for Java packaging support
-Requires:       maven-local = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       xmvn-install >= 2
 Requires:       xmvn-subst >= 2
 Requires:       xmvn-resolve >= 2
@@ -206,7 +209,7 @@ This package provides non-essential macros and scripts to support Java packaging
 
 sed -i '/fedora-review/d' install
 %patch33 -p1
-%patch34 -p1
+#patch34 -p1
 %patch35 -p1
 %patch36 -p1
 %patch37 -p1
@@ -311,6 +314,9 @@ popd
 
 
 %changelog
+* Mon Oct 16 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt10_15jpp8
+- updated javapackages-tools-4.6.0-alt-req-headless-off.patch
+
 * Tue Oct 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.6.0-alt10_14jpp8.1
 - Fixed build with new python-module-lxml.
 
