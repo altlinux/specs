@@ -1,18 +1,18 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jboss-specs-parent
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.0.0
 %global namedreltag .Beta2
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-specs-parent
 Version:          1.0.0
-Release:          alt2_0.13.Beta2jpp8
+Release:          alt2_0.14.Beta2jpp8
 Summary:          JBoss Specification API Parent POM
 Group:            Development/Other
 # The license is not included because it's not a part of this tag. License file
@@ -25,12 +25,12 @@ Url:              http://www.jboss.org/
 # tar czf jboss-specs-parent-1.0.0.Beta2-src-svn.tar.gz jboss-specs-parent-1.0.0.Beta2
 Source0:          %{name}-%{namedversion}-src-svn.tar.gz
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:    jpackage-utils
 
 Requires:         jboss-parent
 Requires:         maven-compiler-plugin
 Requires:         maven-release-plugin
-Requires: javapackages-tools rpm-build-java
+Requires:         jpackage-utils
 BuildArch:        noarch
 Source44: import.info
 
@@ -51,6 +51,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.jboss-%{name}.pom
 %files -f .mfiles
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_0.14.Beta2jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_0.13.Beta2jpp8
 - new fc release
 
