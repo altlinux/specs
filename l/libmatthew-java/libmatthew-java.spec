@@ -1,12 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libmatthew-java
 Version:        0.8
-Release:        alt2_14jpp8
+Release:        alt2_15jpp8
 Summary:        A few useful Java libraries
 Group:          Development/Other
 License:        MIT
@@ -23,6 +24,7 @@ Patch0:         install_doc.patch
 Patch1:         native-library-paths.patch
 Patch2:         classpath_fix.patch
 
+BuildRequires:  java-devel >= 1.6.0
 
 Source44: import.info
 
@@ -69,7 +71,7 @@ sed -e 's|@JNIPATH@|%{_libdir}/%{name}|' %{PATCH1} | patch -p1
 
 %build
 export JAVA_HOME=%{java_home}
-make %{?_smp_mflags} \
+%make_build \
     CFLAGS='%{optflags}'\
     GCJFLAGS='%{optflags}' \
     LDFLAGS='%{optflags}' \
@@ -100,6 +102,9 @@ make install \
 
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_15jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_14jpp8
 - new fc release
 
