@@ -2,12 +2,13 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		taggle
 Version:	1.0
-Release:	alt2_10jpp8
+Release:	alt2_11jpp8
 Summary:	An online french word game
 
 Group:		Games/Other
@@ -21,10 +22,11 @@ Source4:	%{name}-server.sh
 
 BuildArch:	noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:	java-devel >= 1.6.0
+BuildRequires:	jpackage-utils
 BuildRequires:	desktop-file-utils
 
-Requires: javapackages-tools rpm-build-java
+Requires:	jpackage-utils
 Source44: import.info
 
 %description
@@ -36,7 +38,7 @@ of adjacent letters
 %package server
 Summary:	Server for %{name}
 Group:		Games/Other
-Requires: javapackages-tools rpm-build-java
+Requires:	jpackage-utils
 
 %description server
 The server for the taggle game
@@ -99,6 +101,9 @@ install -D -p -m 0755 %{S:4} %{buildroot}%{_bindir}/%{name}-server
 %{_bindir}/%{name}-server
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_11jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_10jpp8
 - new fc release
 
