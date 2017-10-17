@@ -2,22 +2,23 @@
 %define oname cubicweb-timesheet
 Name: python-module-%oname
 Version: 0.15.2
-Release: alt1
+Release: alt2
 Summary: Record who did what and when for the CubicWeb framework
 License: LGPL
 Group: Development/Python
 Url: https://pypi.python.org/pypi/cubicweb-timesheet/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: https://pypi.python.org/packages/38/8d/d6982d4d20d5e81aa521fcbadfef7e0201b861781fd6d6a32e252eab3bb4/%{oname}-%{version}.tar.gz
+Source: %{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
-BuildPreReq: python-module-cubicweb-calendar
-BuildPreReq: python-module-cubicweb-workorder
+BuildRequires: python-module-setuptools-tests cubicweb
+BuildRequires: python-module-cubicweb-calendar
+BuildRequires: python-module-cubicweb-workorder
+BuildRequires: python-module-cubicweb-rqlcontroller
 
 Requires: cubicweb python-module-cubicweb-calendar
 Requires: python-module-cubicweb-workorder
+Requires: python-module-cubicweb-rqlcontroller
 
 %description
 This cube is for tracking resource availability and usage (persons and
@@ -41,6 +42,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.15.2-alt2
+- Updated dependencies.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.15.2-alt1
 - automated PyPI update
 
