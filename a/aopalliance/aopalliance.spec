@@ -4,12 +4,13 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           aopalliance
 Version:        1.0
-Release:        alt6_12jpp8
+Release:        alt6_13jpp8
 Epoch:          0
 Summary:        Java/J2EE AOP standards
 License:        Public Domain
@@ -23,7 +24,7 @@ Source1:        http://repo1.maven.org/maven2/aopalliance/aopalliance/1.0/aopall
 Source2:        %{name}-MANIFEST.MF
 
 BuildRequires:  ant
-BuildRequires:  javapackages-local
+BuildRequires:  javapackages-tools rpm-build-java
 Source44: import.info
 
 %description
@@ -71,6 +72,9 @@ cp -pr build/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_13jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_12jpp8
 - new fc release
 
