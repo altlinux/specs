@@ -2,12 +2,13 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:      brazil
 Version:   2.3
-Release:   alt3_15jpp8
+Release:   alt3_16jpp8
 Summary:   Extremely small footprint Java HTTP stack
 Group:     Development/Other
 License:   SPL
@@ -20,9 +21,10 @@ Source2:   brazil-build.xml
 
 BuildArch:        noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:    java-devel
+BuildRequires:    jpackage-utils
 BuildRequires:    ant
-Requires: javapackages-tools rpm-build-java
+Requires:         jpackage-utils
 Source44: import.info
 
 %description
@@ -42,8 +44,8 @@ API documentation for %{name}.
 %package demo
 Summary:   Demos for %{name}
 Group:     Development/Other
-Requires:  %{name} = %{version}
-Requires:  tcl
+Requires:  %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:  libtcl tcl
 
 %description demo
 Demonstrations and samples for %{name}.
@@ -85,6 +87,9 @@ cp -pr samples %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_16jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_15jpp8
 - new fc release
 
