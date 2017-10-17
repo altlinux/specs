@@ -1,5 +1,8 @@
+# test_rpm failed
+%def_disable check
+
 Name: libextractor
-Version: 1.4
+Version: 1.6
 Release: alt1
 
 Summary: libextractor is a simple library for keyword extraction
@@ -10,7 +13,9 @@ Url: http://www.gnu.org/software/%name/
 
 Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
 
-BuildRequires: gcc-c++ zlib-devel bzlib-devel glib2-devel libexiv2-devel libflac-devel
+%define flac_ver 1.3
+
+BuildRequires: gcc-c++ zlib-devel bzlib-devel glib2-devel libexiv2-devel libflac-devel >= %flac_ver
 BuildRequires: libgsf-devel libltdl7-devel libgtk+3-devel
 BuildRequires: libmpeg2-devel libtiff-devel libmp4v2-devel libqt4-devel librpm-devel
 BuildRequires: libopus-devel libvorbis-devel libflac-devel
@@ -52,12 +57,8 @@ This package contains the files needed to build packages that depend on %name.
 
 %build
 %autoreconf
-%configure --disable-static \
-	--with-gtk-version=3 \
-	--disable-gtktest
-
-# SMP-incompatible build
-%make
+%configure --disable-static
+%make_build
 
 %install
 %makeinstall_std
@@ -71,7 +72,7 @@ rm -f %buildroot%_libdir/%name/*.la
 export LD_LIBRARY_PATH=%buildroot%_libdir
 export LIBEXTRACTOR_PREFIX=%buildroot%_libdir
 # some tests failed in hasher -- need to investigate
-#%%make check
+%make check
 
 %files -f %name.lang
 %_libdir/*.so.*
@@ -91,6 +92,9 @@ export LIBEXTRACTOR_PREFIX=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Tue Oct 17 2017 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt1
+- 1.6
+
 * Wed Jun 14 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt1
 - 1.4
 
