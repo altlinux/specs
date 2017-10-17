@@ -10,7 +10,7 @@
 %def_enable gspell
 
 Name: lib%{_name}4
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -149,6 +149,9 @@ xvfb-run %make check
 
 
 %changelog
+* Tue Oct 17 2017 Yuri N. Sedunov <aris@altlinux.org> 3.99.6-alt1
+- 3.99.6
+
 * Wed Sep 06 2017 Yuri N. Sedunov <aris@altlinux.org> 3.99.5-alt1
 - 3.99.5
 
