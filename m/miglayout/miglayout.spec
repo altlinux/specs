@@ -3,12 +3,13 @@ Group: System/Libraries
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           miglayout
 Version:        4.2
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Versatile and flexible Swing layout manager
 URL:            http://www.miglayout.com/
 License:        BSD
@@ -18,7 +19,9 @@ Source0:        miglayout-core-4.2-sources.jar
 Source1:        miglayout-swing-4.2-sources.jar
 
 BuildArch:      noarch
+BuildRequires:  java-devel
 
+Requires:       java
 # We no longer have an examples sub-package, note no provides as the examples
 # are no longer packaged, so we do not provide them
 Obsoletes:      %{name}-examples < %{version}-%{release}
@@ -68,6 +71,9 @@ cp -a doc %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 4.2-alt1_6jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 4.2-alt1_5jpp8
 - new fc release
 
