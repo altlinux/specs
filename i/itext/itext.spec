@@ -3,15 +3,16 @@ Epoch: 1
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global alternate_name iText
 
 Summary:          A Free Java-PDF library
 Name:             itext
 Version:          2.1.7
-Release:          alt2_33jpp8
+Release:          alt2_36jpp8
 #src/toolbox/com/lowagie/toolbox/Versions.java is MPLv1.1 or MIT
 #src/toolbox/com/lowagie/toolbox/plugins/XML2Bookmarks.java is MPLv1.1 or LGPLv2+
 #src/rups/com/lowagie/rups/Rups.java is LGPLv2+
@@ -91,7 +92,7 @@ BuildRequires:    jpackage-utils
 BuildArch:        noarch
 
 Provides:         %{alternate_name} == %{version}-%{release}
-Requires:         %{name}-core = %{version}
+Requires:         %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Source44: import.info
 
 %description
@@ -121,7 +122,7 @@ Summary:        Library to output Rich Text Files
 Group:          Development/Other
 BuildArch:      noarch
 License:        MPLv1.1 or LGPLv2+
-Requires:       %{name}-core = %{version}
+Requires:       %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 
 %description rtf
 The RTF package is an extension of the iText library and allows iText to output
@@ -133,7 +134,7 @@ Summary:        Reading/Updating PDF Syntax
 Group:          Development/Java
 BuildArch:      noarch
 License:        LGPLv2+ and CC-BY
-Requires:       %{name}-core = %{version}
+Requires:       %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       dom4j
 Requires:       pdf-renderer
 
@@ -147,7 +148,7 @@ Summary:        Some %{alternate_name} tools
 Group:          Development/Java
 BuildArch:      noarch
 License:        MPLv1.1 or MIT
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description toolbox
 iText is a free open source Java-PDF library released on SF under the MPL/LGPL;
@@ -160,7 +161,7 @@ iText tools.
 Summary:        Javadoc for %{alternate_name}
 Group:          Development/Java
 BuildArch:      noarch
-Requires:       %{name}-core = %{version}
+Requires:       %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils
 
 %description javadoc
@@ -233,6 +234,9 @@ sed -i 's|debug="true"||g' src/ant/compile.xml
 sed -i 's|author|Encoding="ISO-8859-1" author|' src/ant/site.xml
 # and set max memory higher or we run out
 sed -i 's|maxmemory="128m"|maxmemory="512m"|' src/ant/site.xml
+
+sed -i '/Class-Path/d' src/ant/compile.xml
+sed -i 's,59 Temple Place,51 Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1307,02110-1301,' src/core/com/lowagie/text/lgpl.txt
 
 %build
 export CLASSPATH=$(build-classpath bcprov bcmail bcpkix pdf-renderer dom4j)
@@ -322,6 +326,9 @@ cp -pr JPP-%{name}-rups.pom $RPM_BUILD_ROOT%{_mavenpomdir}
 # -----------------------------------------------------------------------------
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.1.7-alt2_36jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.1.7-alt2_33jpp8
 - new fc release
 
