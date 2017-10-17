@@ -2,22 +2,21 @@
 %define oname nazca
 Name: python-module-%oname
 Version: 0.7.2
-Release: alt1
+Release: alt2
 Summary: Python library for data alignment
 License: LGPL
 Group: Development/Python
-Url: https://pypi.python.org/pypi/nazca/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/f9/5a/92d007b82a5fb40a8b0697b2b89aad1a1cb506b0d736660b34406e7e54eb/%{oname}-%{version}.tar.gz
 BuildArch: noarch
+Url: https://pypi.python.org/pypi/nazca/
 
-BuildPreReq: python-module-setuptools-tests python-module-lxml
-BuildPreReq: python-module-scipy python-module-scikit-learn
-BuildPreReq: python-module-dateutil
+Source: %{oname}-%{version}.tar.gz
+
+BuildRequires: python-module-setuptools-tests python-module-lxml
+BuildRequires: python-module-scipy python-module-scikit-learn
+BuildRequires: python-module-dateutil python2.7(SPARQLWrapper) python2.7(nltk)
 
 %py_provides %oname
-%py_requires scipy sklearn lxml dateutil
+%py_requires scipy sklearn lxml dateutil SPARQLWrapper nltk
 
 %description
 Python library for data alignment.
@@ -55,6 +54,9 @@ python setup.py test
 %python_sitelibdir/*/examples
 
 %changelog
+* Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.2-alt2
+- Updated dependencies.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.2-alt1
 - automated PyPI update
 
