@@ -2,12 +2,13 @@
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
 BuildRequires: gcc-c++ java-devel-default python-devel rpm-build-java rpm-build-python
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:             dogtag-pki-theme
 Version:          10.3.5
-Release:          alt1_1jpp8
+Release:          alt1_2jpp8
 Summary:          Certificate System - Dogtag PKI Theme Components
 URL:              http://pki.fedoraproject.org/
 License:          GPLv2
@@ -16,7 +17,7 @@ Group:            System/Base
 BuildArch:        noarch
 
 
-BuildRequires: ctest cmake
+BuildRequires:    ctest cmake
 BuildRequires:    java-1.8.0-openjdk-devel
 BuildRequires:    jpackage-utils >= 1.7.5
 
@@ -159,6 +160,9 @@ cd build
 
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 10.3.5-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 10.3.5-alt1_1jpp8
 - new version
 
