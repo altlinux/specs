@@ -3,16 +3,17 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ perl(LWP/UserAgent.pm) unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 24
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global majorversion 3
 
 Summary:        High-performance, full-featured text search engine
 Name:           lucene3
 Version:        3.6.2
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Epoch:          0
 License:        ASL 2.0 and BSD
 URL:            http://lucene.apache.org/
@@ -26,11 +27,13 @@ Patch0:         lucene_contrib_icu4j_v50.patch
 # Add hamcrest-core in classpath
 # Disable doclint in javadoc task
 Patch1:         lucene-3.6.2-hamcrest-core.patch
+# javascript not allowed in javadoc
+Patch2:         lucene-3.6.2-javascript.patch
 #svn export http://svn.apache.org/repos/asf/lucene/dev/tags/lucene_solr_3_6_2/dev-tools@r1450168
 #tar caf dev-tools.tar.xz dev-tools/
 Source4:        dev-tools.tar.xz
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  ant-junit >= 0:1.6
 BuildRequires:  junit
@@ -39,13 +42,14 @@ BuildRequires:  java-javadoc
 BuildRequires:  jtidy
 BuildRequires:  regexp
 BuildRequires:  apache-commons-digester
+BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  apache-commons-compress
 BuildRequires:  apache-ivy
 BuildRequires:  lucene
 BuildRequires:  apache-commons-codec
 
 # for tests
-BuildRequires: subversion subversion-server-common
+BuildRequires:  subversion subversion-server-common
 BuildRequires:  hamcrest-core
 
 %if 0%{?fedora}
@@ -54,7 +58,7 @@ BuildRequires:  icu4j
 
 BuildArch:      noarch
 
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -67,7 +71,7 @@ cross-platform.
 %package contrib
 Group: Development/Java
 Summary:        Lucene contributed extensions
-Requires:       %{name} = %{epoch}:%{version}
+Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %description contrib
 %{summary}.
@@ -109,6 +113,7 @@ sed -i -e "s|icu4j|icu4j/icu4j|g" contrib/icu/ivy.xml
 # ICU4J v50 compatibility
 %patch0 -p2
 %patch1 -p1
+%patch2 -p1
 
 %build
 mkdir -p docs
@@ -223,6 +228,9 @@ cp -pr build/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %endif
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.6.2-alt1_9jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.6.2-alt1_8jpp8
 - new fc release
 
