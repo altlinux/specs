@@ -2,10 +2,11 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sblim-cim-client2
 %define version 2.2.5
 
@@ -14,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           sblim-cim-client2
 Version:        2.2.5
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Java CIM Client library
 
 Group:          Development/Other
@@ -24,10 +25,11 @@ Source0:        http://downloads.sourceforge.net/project/sblim/%{name}/%{version
 
 BuildArch:      noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  java-devel >= 1.4
+BuildRequires:  jpackage-utils >= 0:1.5.32
 BuildRequires:  ant >= 0:1.6
 
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils >= 0:1.5.32
 Source44: import.info
 
 %description
@@ -41,8 +43,8 @@ http://www.jcp.org and http://www.jcp.org/en/jsr/detail?id=48.
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires:       sblim-cim-client2 = %{version}
-Requires: javapackages-tools rpm-build-java
+Requires:       sblim-cim-client2 = %{version}-%{release}
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -51,7 +53,7 @@ Javadoc for %{name}.
 %package manual
 Summary:        Manual and sample code for %{name}
 Group:          Development/Java
-Requires:       sblim-cim-client2 = %{version}
+Requires:       sblim-cim-client2 = %{version}-%{release}
 BuildArch: noarch
 
 %description manual
@@ -123,6 +125,9 @@ cp -pr %{archive_folder}/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt1_6jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt1_5jpp8
 - new fc release
 
