@@ -1,7 +1,8 @@
 Group: Development/Java
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -35,7 +36,7 @@ BuildRequires: jpackage-generic-compat
 Summary:	Parser Generator with Java Extension
 Name:		byaccj
 Version:	1.15
-Release:	alt1_12jpp8
+Release:	alt1_13jpp8
 Epoch:		0
 License:	Public Domain
 URL:		http://byaccj.sourceforge.net/
@@ -75,6 +76,9 @@ cp -p src/yacc.linux \
 %attr(755, root, root) %{_bindir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt1_13jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt1_12jpp8
 - new fc release
 
