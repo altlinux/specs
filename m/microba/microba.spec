@@ -3,12 +3,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           microba
 Version:        0.4.4.3
-Release:        alt1_14jpp8
+Release:        alt1_15jpp8
 Summary:        Set of JFC (Swing) components
 License:        BSD
 URL:            http://microba.sourceforge.net/
@@ -22,11 +23,13 @@ Patch1:         %{name}-0.4.4.3-disable-jgraph.patch
 
 BuildRequires:  ant
 BuildRequires:  dos2unix
+BuildRequires:  java-devel
 # sinjdoc doesn't do the job for us in f12, drag in real javadoc
 BuildRequires:  java-devel-openjdk
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils
 # BuildRequires:  jgraph
-Requires: javapackages-tools rpm-build-java
+Requires:       java
+Requires:       jpackage-utils
 BuildArch:      noarch
 Source44: import.info
 
@@ -77,6 +80,9 @@ cp -r javadoc %{buildroot}%{_javadocdir}/%{name}
 %doc license.txt
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.4.3-alt1_15jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.4.3-alt1_14jpp8
 - new fc release
 
