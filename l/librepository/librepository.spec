@@ -2,12 +2,13 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: librepository
 Version: 1.1.3
-Release: alt1_14jpp8
+Release: alt1_15jpp8
 Summary: Hierarchical repository abstraction layer
 License: LGPLv2
 Group: System/Libraries
@@ -16,8 +17,8 @@ Group: System/Libraries
 #to simplify the licensing
 Source: %{name}-%{version}-jarsdeleted.zip
 URL: http://reporting.pentaho.org/
-BuildRequires: ant ant-contrib javapackages-tools rpm-build-java libbase >= 1.1.3
-Requires: javapackages-tools rpm-build-java libbase >= 1.1.3
+BuildRequires: ant ant-contrib java-devel jpackage-utils libbase >= 1.1.3
+Requires: jpackage-utils libbase >= 1.1.3
 BuildArch: noarch
 Patch0: librepository-1.1.2.build.patch
 Source44: import.info
@@ -29,8 +30,8 @@ is organized in a hierarchical layer.
 %package javadoc
 Summary: Javadoc for %{name}
 Group: Development/Java
-Requires: %{name} = %{version}
-Requires: javapackages-tools rpm-build-java
+Requires: %{name} = %{version}-%{release}
+Requires: jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -67,6 +68,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_15jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_14jpp8
 - new fc release
 
