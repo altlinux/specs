@@ -2,15 +2,16 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           colossus
 %global         rev        5331
 %global         revdate    20130917
 Version:        0.14.0
 %global         branch    %{nil}
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Allows people to play Titan against each other or AIs
 
 Group:          Games/Other
@@ -34,12 +35,14 @@ BuildArch:      noarch
 
 # Note the intention is to eventually require only java 1.5 for both building
 # and installing. But bug 510243 in gjdoc currently blocks this.
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  java-devel >= 1.6.0
+BuildRequires:  jpackage-utils
 BuildRequires:  ant
 BuildRequires:  jdom
 BuildRequires:  desktop-file-utils
 BuildRequires:  zip
-Requires: javapackages-tools rpm-build-java
+Requires:       java >= 1.6.0
+Requires:       jpackage-utils
 Requires:       jdom
 Requires(post):  coreutils
 Requires(postun):  coreutils
@@ -54,8 +57,8 @@ of humans.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}
-Requires: javapackages-tools rpm-build-java
+Requires:       %{name} = %{version}-%{release}
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -188,6 +191,9 @@ touch --no-create %{_datadir}/pixmaps || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_6jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_5jpp8
 - new fc release
 
