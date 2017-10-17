@@ -2,18 +2,18 @@
 %define oname cubicweb-worker
 Name: python-module-%oname
 Version: 3.2.0
-Release: alt1
+Release: alt2
 Summary: Asynchronous workers in your instance
 License: LGPL
 Group: Development/Python
 Url: https://pypi.python.org/pypi/cubicweb-worker/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/df/aa/8cb373f76300a05e253c746ab050f2020ce2fcd96d3c0457eec057a34fbd/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
-BuildPreReq: python-module-cubicweb-subprocess
+Source: %{oname}-%{version}.tar.gz
+
+BuildRequires: python-module-setuptools-tests cubicweb
+BuildRequires: python-module-cubicweb-subprocess
+BuildRequires: python2.7(cwtags)
 
 Requires: cubicweb python-module-cubicweb-subprocess
 
@@ -38,6 +38,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.0-alt2
+- Updated build dependencies.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt1
 - automated PyPI update
 
