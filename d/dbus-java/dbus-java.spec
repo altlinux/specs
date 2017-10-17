@@ -2,16 +2,17 @@
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/xsltproc
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # the package is arch-dependent because scripts contain arch dependent paths
 # the debuginfo package will be empty if produced
 %global debug_package %{nil}
 
 Name:       dbus-java
 Version:    2.7
-Release:    alt2_22jpp8
+Release:    alt2_23jpp8
 Summary:    Java implementation of the DBus protocol
 Group:      Development/Other
 License:    AFL or LGPLv2
@@ -30,6 +31,7 @@ Patch2:     parallel.patch
 Patch3:     utf-8-encoding.patch
 Patch4:     version-less-jars.patch
 
+BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  texlive-base
 BuildRequires:  texlive-latex-base
 BuildRequires:  texlive-base
@@ -43,11 +45,12 @@ BuildRequires:  texlive-generic-recommended
 BuildRequires:  tex4ht
 BuildRequires:  texlive-base-bin
 BuildRequires:  docbook-utils
-BuildRequires: gettext gettext-tools gettext-tools-python
+BuildRequires:  gettext gettext-tools
 BuildRequires:  libmatthew-java
 BuildRequires:  docbook2X
 BuildRequires:  texlive-latex-recommended
 
+Requires:   java >= 1.6.0
 Requires:   libmatthew-java
 Source44: import.info
 
@@ -72,7 +75,7 @@ Unix-sockets it requires a small JNI library to use Unix-Sockets.
 %package javadoc
 Summary:    Javadocs for %{name}
 Group:      Development/Other
-Requires: javapackages-tools rpm-build-java
+Requires:   jpackage-utils
 BuildArch: noarch
 
 
@@ -93,7 +96,7 @@ sed -i 's|<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.1//EN"|<!DOCTYPE r
 %build
 
 # no configure file
-make %{?_smp_mflags} \
+%make_build \
     DOCBOOKTOMAN="db2x_docbook2man --to-stdout"\
     -j1 \
     JARPREFIX=%{_javadir}/%{name} \
@@ -154,6 +157,9 @@ make install \
 
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_23jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_22jpp8
 - new fc release
 
