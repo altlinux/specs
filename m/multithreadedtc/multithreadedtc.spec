@@ -4,13 +4,14 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global project_name MultithreadedTC
 Name:           multithreadedtc
 Version:        1.01
-Release:        alt3_20jpp8
+Release:        alt3_21jpp8
 Summary:        A framework for testing concurrent Java application
 License:        BSD 
 URL:            http://www.cs.umd.edu/projects/PL/multithreadedtc
@@ -21,12 +22,13 @@ Patch0:         %{name}-build.patch
 
 BuildArch: noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: java-devel >= 1.6.0
+BuildRequires: jpackage-utils
 BuildRequires: ant >= 0:1.6
 BuildRequires: ant-junit
 BuildRequires: junit
 
-Requires: javapackages-tools rpm-build-java
+Requires:      jpackage-utils
 Requires:      junit
 Source44: import.info
 
@@ -91,6 +93,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.01-alt3_21jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.01-alt3_20jpp8
 - new fc release
 
