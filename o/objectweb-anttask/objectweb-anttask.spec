@@ -2,9 +2,10 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -44,15 +45,16 @@ BuildRequires: jpackage-generic-compat
 Summary:        ObjectWeb Ant task
 Name:           objectweb-anttask
 Version:        1.3.2
-Release:        alt4_12jpp8
+Release:        alt4_13jpp8
 Epoch:          0
 Group:          Development/Java
 License:        LGPLv2+
 URL:            http://forge.objectweb.org/projects/monolog/
 BuildArch:      noarch
 Source0:        http://download.forge.objectweb.org/monolog/ow_util_ant_tasks_1.3.2.zip
+BuildRequires:  java-devel
 BuildRequires:  ant >= 0:1.6
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils >= 0:1.6
 
 %if %{without_bootstrap}
 BuildRequires:  asm2
@@ -110,6 +112,9 @@ echo "%{name}" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt4_13jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt4_12jpp8
 - new fc release
 
