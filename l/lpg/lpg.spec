@@ -6,15 +6,16 @@ BuildRequires: unzip
 BuildRequires: gcc-c++
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global    _version 2.0.17
 %global    _compat_version 1.1.0
 
 Name:      lpg
 Version:   %{_version}
-Release:   alt1_19jpp8
+Release:   alt1_21jpp8
 Summary:   LALR Parser Generator
 # although the text of the licence isn't distributed with some of the source,
 # the author has exlicitly stated that everything is covered under the EPL
@@ -46,6 +47,9 @@ Patch1:    %{name}-osgi-jar.patch
 
 # fix segfault caused by aggressive optimisation of null checks in gcc 4.9
 Patch2:    %{name}-segfault.patch
+
+BuildRequires: gcc-c++
+BuildRequires: make
 Source44: import.info
 
 %description
@@ -60,9 +64,10 @@ Summary:       Java runtime library for LPG
 
 BuildArch:     noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: java-devel
+BuildRequires: jpackage-utils
 BuildRequires: ant-apache-regexp
-Requires: javapackages-tools rpm-build-java
+Requires:      jpackage-utils
 
 %description   java
 Java runtime library for parsers generated with the LALR Parser Generator
@@ -75,9 +80,10 @@ Summary:       Compatibility Java runtime library for LPG 1.x
 
 BuildArch:     noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: java-devel
+BuildRequires: jpackage-utils
 BuildRequires: ant
-Requires: javapackages-tools rpm-build-java
+Requires:      jpackage-utils
 
 %description   java-compat
 Compatibility Java runtime library for parsers generated with the LALR Parser
@@ -144,6 +150,9 @@ install -pD -T lpg-generator-cpp/bin/%{name}-linux_x86 \
 %{_javadir}/%{name}javaruntime.jar
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_21jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_19jpp8
 - new fc release
 
