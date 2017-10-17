@@ -2,9 +2,10 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Upstream is not in the habit of releasing tarballs.  We pull from git.
 %global gitdate         20160519
 %global gittag          b813d5594edaeeffee2f7d03326d2712fac356a1
@@ -12,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jinput
 Version:        2.0.7
-Release:        alt2_6.20160519git.b813d55jpp8
+Release:        alt2_7.20160519git.b813d55jpp8
 Summary:        Java Game Controller API
 
 License:        BSD
@@ -36,12 +37,13 @@ Patch6:         007_jinput_linux_4.5.patch
 
 BuildRequires:  ant
 BuildRequires:  gcc-common
+BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  java-javadoc >= 1:1.6.0
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils
 BuildRequires:  jutils
 BuildRequires:  jutils-javadoc
 
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 Requires:       jutils
 Source44: import.info
 
@@ -58,7 +60,7 @@ understandable descriptions of the inputs available.
 %package javadoc
 Group: Development/Java
 Summary:        Javadocs for %{name}
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{version}-%{release}
 Requires:       jutils-javadoc
 BuildArch:      noarch
 
@@ -157,6 +159,9 @@ ant versiontest
 %{_javadocdir}/%{name}/
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt2_7.20160519git.b813d55jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt2_6.20160519git.b813d55jpp8
 - new fc release
 
