@@ -1,16 +1,17 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # This is a snapshot of the BCEL trunk for FindBugs 3.0.
 
 %global findbugsver 20140707svn1547656
 
 Name:           findbugs-bcel
 Version:        6.0
-Release:        alt1_0.6.20140707svn1547656jpp8
+Release:        alt1_0.7.20140707svn1547656jpp8
 Summary:        Byte Code Engineering Library for FindBugs
 
 Group:          Development/Other
@@ -23,8 +24,8 @@ URL:            http://commons.apache.org/proper/commons-bcel/
 Source0:        bcel-%{findbugsver}.tgz
 Source1:        http://central.maven.org/maven2/com/google/code/findbugs/bcel-findbugs/%{version}/bcel-findbugs-%{version}.pom
 
-BuildRequires:  javapackages-tools rpm-build-java
-Requires:       javapackages-tools rpm-build-java
+BuildRequires:  java-devel jpackage-utils
+Requires:       jpackage-utils
 
 BuildArch:      noarch
 Source44: import.info
@@ -85,6 +86,9 @@ fi ||:
 %{_javadocdir}/findbugs-bcel*
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 6.0-alt1_0.7.20140707svn1547656jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 6.0-alt1_0.6.20140707svn1547656jpp8
 - new fc release
 
