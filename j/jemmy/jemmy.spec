@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jemmy
-%define version 2.3.0.0
 # Prevent brp-java-repack-jars from being run.
 %global __jar_repack %{nil}
 
@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jemmy
 Version:        2.3.0.0
-Release:        alt2_13jpp8
+Release:        alt2_14jpp8
 Summary:        Java UI testing library
 
 Group:          Development/Other
@@ -38,9 +38,11 @@ Source0:        jemmy-2.3.0.0.tar.gz
 Source1:        %{name}.pom
 
 BuildRequires:  ant >= 1.6.5
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  java-devel >= 1.6.0
+BuildRequires:  jpackage-utils
 
-Requires: javapackages-tools rpm-build-java
+Requires:       java >= 1.6.0
+Requires:       jpackage-utils
 
 BuildArch:      noarch
 Source44: import.info
@@ -56,7 +58,7 @@ also do any other operations needed to be done from test.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -94,6 +96,9 @@ install -p -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.0.0-alt2_14jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.0.0-alt2_13jpp8
 - new fc release
 
