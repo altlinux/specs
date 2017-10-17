@@ -4,12 +4,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          junit-addons
 Version:       1.4
-Release:       alt3_12jpp8
+Release:       alt3_13jpp8
 Summary:       JUnitX helper classes for JUnit
 License:       ASL 1.1
 Url:           http://sourceforge.net/projects/junit-addons/
@@ -19,7 +20,8 @@ Source1:       %{name}-build.xml
 Source2:       http://mirrors.ibiblio.org/pub/mirrors/maven2/%{name}/%{name}/%{version}/%{name}-%{version}.pom
 Patch0:        junit-addons-1.4-enum.patch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: java-devel
+BuildRequires: jpackage-utils
 
 BuildRequires: ant
 BuildRequires: apache-commons-logging
@@ -35,7 +37,7 @@ Requires:      jdom
 Requires:      junit
 Requires:      xerces-j2
 
-Requires: javapackages-tools rpm-build-java
+Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -129,6 +131,9 @@ cp -pr build/api/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt3_13jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt3_12jpp8
 - new fc release
 
