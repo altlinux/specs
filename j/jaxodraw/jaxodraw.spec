@@ -2,15 +2,16 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global major 2.0
 %global minor 1
 
 Name:		jaxodraw
 Version:	%{major}.%{minor}
-Release:	alt1_17jpp8
+Release:	alt1_18jpp8
 Summary:	A Java program for drawing Feynman diagrams
 Group:		Engineering
 License:	GPLv2+
@@ -28,11 +29,13 @@ BuildArch:	noarch
 BuildRequires:	ant
 BuildRequires:	desktop-file-utils
 # java-devel, we need at least 1.6.0
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:	java-devel >= 1.6.0
+BuildRequires:	jpackage-utils
 # Unit testing capabilities
 BuildRequires:	ant-junit
 
-Requires: javapackages-tools rpm-build-java
+Requires:	java >= 1.6.0
+Requires:	jpackage-utils
 Source44: import.info
 
 %description
@@ -45,8 +48,8 @@ be saved in XML files to be used in later sessions.
 %package javadoc
 Summary:	Javadocs for %{name}
 Group:		Development/Java
-Requires:	%{name} = %{version}
-Requires: javapackages-tools rpm-build-java
+Requires:	%{name} = %{version}-%{release}
+Requires:	jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -58,7 +61,7 @@ Summary:	LaTeX style file axodraw4j.sty for documents generated with jaxodraw
 Group:		Engineering
 License:	LPPL
 # In order to compile documents one needs a LaTeX compiler
-Requires: /usr/bin/latex texlive-latex-recommended
+Requires:	/usr/bin/latex texlive-latex-recommended
 
 %description latex
 This package contains the LaTeX style file that is needed for EPS export
@@ -154,6 +157,9 @@ EOF
 %{_datadir}/texmf/tex/latex/axodraw4j/
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_18jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_17jpp8
 - new fc release
 
