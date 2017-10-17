@@ -4,52 +4,32 @@
 #def_disable check
 
 Name: python-module-%oname
-Version: 4.2.1
-Release: alt4.dev0.git20150714.1.1
+Version: 5.3.0
+Release: alt1
 Summary: Zope Object Database: object database and persistence
 License: ZPL
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/ZODB
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/zopefoundation/ZODB.git
 Source: %name-%version.tar
-BuildArch: noarch
-# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
-# optimized out: python-base python-devel python-module-manuel python-module-persistent python-module-pytest python-module-setuptools python-module-six python-module-zc python-module-zconfig python-module-zope python-module-zope.exceptions python-module-zope.interface python-module-zope.testing python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-modules-xml python3 python3-base python3-module-persistent python3-module-setuptools python3-module-zope python3-module-zope.exceptions python3-module-zope.interface
-BuildRequires: python-module-BTrees python-module-manuel-tests python-module-setuptools-tests python-module-transaction python-module-zc.lockfile python-module-zdaemon python-module-zodbpickle python3-module-BTrees python3-module-pytest python3-module-transaction python3-module-zc.lockfile python3-module-zdaemon python3-module-zope.testing rpm-build-python3
+Patch1: %oname-%version-alt-build.patch
 
-#BuildRequires: python-module-BTrees python-module-pytest python-module-transaction python-module-zc.lockfile python-module-zdaemon python-module-zope.testing
-
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-Zope2-tests
-#BuildPreReq: python-module-zope.interface python-module-persistent
-#BuildPreReq: python-module-BTrees
-#BuildPreReq: python-module-zconfig
-#BuildPreReq: python-module-transaction
-#BuildPreReq: python-module-six
-#BuildPreReq: python-module-zc.lockfile
-#BuildPreReq: python-module-zdaemon
-#BuildPreReq: python-module-zodbpickle
-#BuildPreReq: python-module-manuel-tests
+BuildRequires: python-dev python-module-setuptools-tests
+BuildRequires: python2.7(persistent) python2.7(BTrees) python2.7(ZConfig) python2.7(transaction)
+BuildRequires: python2.7(six) python2.7(zc.lockfile) python2.7(zope.interface) python2.7(zodbpickle)
+BuildRequires: python-module-manuel-tests python2.7(zope.testing) python2.7(zope.testrunner)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-zope.interface python3-module-persistent
-#BuildPreReq: python3-module-BTrees
-#BuildPreReq: python3-module-zconfig
-#BuildPreReq: python3-module-transaction
-#BuildPreReq: python3-module-six
-#BuildPreReq: python3-module-zc.lockfile
-#BuildPreReq: python3-module-zdaemon
-#BuildPreReq: python3-module-zodbpickle
-#BuildPreReq: python3-module-manuel-tests
-#BuildRequires: python3-module-BTrees python3-module-pytest python3-module-transaction python3-module-zc.lockfile python3-module-zdaemon python3-module-zope.testing
+BuildRequires: python3-dev python3-module-setuptools-tests
+BuildRequires: python3(persistent) python3(BTrees) python3(ZConfig) python3(transaction)
+BuildRequires: python3(six) python3(zc.lockfile) python3(zope.interface) python3(zodbpickle)
+BuildRequires: python3-module-manuel-tests python3(zope.testing) python3(zope.testrunner)
 %endif
 
-%py_provides %oname
-#%py_requires transaction BTrees persistent zc.lockfile ZConfig zdaemon
-#%py_requires zope.event zope.interface zope.proxy zodbpickle
+%py_provides %oname %oname.TimeStamp
+%py_requires persistent.TimeStamp zc.lockfile zdaemon zope.event zope.interface zope.proxy zodbpickle
 
 %description
 The Zope Object Database provides an object-oriented database for Python
@@ -91,9 +71,8 @@ This package contains documentation for Zope Object Database.
 %package -n python3-module-%oname
 Summary: Zope Object Database: object database and persistence
 Group: Development/Python3
-%py3_provides %oname
-#%py3_requires transaction BTrees persistent zc.lockfile ZConfig zdaemon
-#%py3_requires zope.event zope.interface zope.proxy
+%py3_provides %oname %oname.TimeStamp
+%py3_requires persistent.TimeStamp zodbpickle zdaemon zope.event zope.proxy
 
 %description -n python3-module-%oname
 The Zope Object Database provides an object-oriented database for Python
@@ -120,6 +99,7 @@ This package contains tests for Zope Object Database.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -150,11 +130,10 @@ popd
 %python_install
 
 %check
-python setup.py test
-#if_with python3
-%if 0
+py.test
+%if_with python3
 pushd ../python3
-python3 setup.py test
+py.test3
 popd
 %endif
 
@@ -195,6 +174,9 @@ popd
 %endif
 
 %changelog
+* Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.3.0-alt1
+- Updated to upstream version 5.3.0.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.2.1-alt4.dev0.git20150714.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

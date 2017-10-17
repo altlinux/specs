@@ -1,51 +1,31 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-
-%define modulename persistent
+%define oname persistent
 
 %def_with python3
 
-%if_with python3
-%define py3name python3-module-%modulename
-%define py3dir %py3name-%version
-%endif
+Name: python-module-%oname
+Version: 4.2.4.2
+Release: alt1
 
-Name: python-module-%modulename
-Version: 4.1.1
-Release: alt2.1.1
-
-%setup_python_module %modulename
+%setup_python_module %oname
 
 Summary: Translucent persistent objects
 License: ZPL 2.1
 Group: Development/Python
 
 Url: http://www.zope.org/Products/ZODB
-Packager: Aleksey Avdeev <solo@altlinux.ru>
 
-# git://github.com/zopefoundation/persistent.git
+# https://github.com/zopefoundation/persistent.git
 Source: %name-%version.tar
 
-#BuildPreReq: python-module-coverage
-#BuildPreReq: python-module-nose
-#BuildPreReq: python-module-zope.interface
-#BuildPreReq: python-module-setuptools-tests
-#BuildPreReq: python-module-sphinx-devel
-#BuildPreReq: python-module-repoze.sphinx.autointerface
-
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-repoze.sphinx.autointerface
+BuildRequires: python-dev python-module-coverage python-module-nose python-module-setuptools-tests python-module-zope
 %if_with python3
-#BuildPreReq: rpm-build-python3
-#BuildPreReq: python3-devel
-#BuildPreReq: python3-module-coverage
-#BuildPreReq: python3-module-distribute
-#BuildPreReq: python3-module-nose
-#BuildPreReq: python3-module-zope.interface
-#BuildPreReq: python3-module-setuptools-tests
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-dev python3-module-coverage python3-module-nose python3-module-setuptools-tests python3-module-zope
 %endif
 
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-repoze python-module-repoze.sphinx python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools python3-module-zope.interface
-BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-repoze.sphinx.autointerface python-module-setuptools-tests python3-devel python3-module-coverage python3-module-nose python3-module-setuptools-tests python3-module-zope rpm-build-python3 time
+%py_provides persistent.TimeStamp
 
 %description
 This package contains a generic persistence implementation for Python.
@@ -73,32 +53,32 @@ Python. It forms the core protocol for making objects interact
 "transparently" with a database such as the ZODB.
 
 %if_with python3
-%package -n %py3name
+%package -n python3-module-%oname
 Summary: Sample python3 module specfile
 Group: Development/Python
+%py3_provides persistent.TimeStamp
 
-%description -n %py3name
+%description -n python3-module-%oname
 This specfile is provided as sample specfile for python3 module
 packages. It contains most of usual tags and constructions used in such
 specfiles.
 
-%package -n %py3name-tests
+%package -n python3-module-%oname-tests
 Summary: Sample python3 module tests specfile
 Group: Development/Python
-Requires: %py3name = %EVR
+Requires: python3-module-%oname = %EVR
 
-%description -n %py3name-tests
+%description -n python3-module-%oname-tests
 This specfile is provided as sample specfile for python3 module tests
 packages. It contains most of usual tags and constructions used in such
 specfiles.
-
 %endif
 
 %prep
 %setup
+
 %if_with python3
-rm -rf ../%py3dir
-cp -a . ../%py3dir
+cp -a . ../python3
 %endif
 
 %prepare_sphinx .
@@ -107,14 +87,14 @@ ln -s ../objects.inv docs/
 %build
 %python_build
 %if_with python3
-pushd ../%py3dir
+pushd ../python3
 %python3_build
 popd
 %endif
 
 %install
 %if_with python3
-pushd ../%py3dir
+pushd ../python3
 %python3_install
 install -p -m644 persistent/_compat.h \
 	%buildroot%_includedir/python%_python3_version%_python3_abiflags/
@@ -129,39 +109,42 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C docs html
 
 %check
-%__python setup.py test -q
+USING_CFFI=1 python setup.py test -q
 %if_with python3
-pushd ../%py3dir
-%__python3 setup.py test -q
+pushd ../python3
+USING_CFFI=1 python3 setup.py test -q
 popd
 %endif
 
 %files
 %doc *.txt
 %_includedir/python%_python_version
-%python_sitelibdir/%modulename/
-%exclude %python_sitelibdir/%modulename/test*
+%python_sitelibdir/%oname/
+%exclude %python_sitelibdir/%oname/test*
 %python_sitelibdir/*.egg-info
 
 %files tests
-%python_sitelibdir/%modulename/test*
+%python_sitelibdir/%oname/test*
 
 %files docs
 %doc docs/_build/html/*
 
 %if_with python3
-%files -n %py3name
+%files -n python3-module-%oname
 %doc *.txt
 %_includedir/python%_python3_version%_python3_abiflags
-%python3_sitelibdir/%modulename/
-%exclude %python3_sitelibdir/%modulename/test*
+%python3_sitelibdir/%oname/
+%exclude %python3_sitelibdir/%oname/test*
 %python3_sitelibdir/*.egg-info
 
-%files -n %py3name-tests
-%python3_sitelibdir/%modulename/test*
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/%oname/test*
 %endif
 
 %changelog
+* Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.4.2-alt1
+- Updated to upstream version 4.2.4.2.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.1-alt2.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

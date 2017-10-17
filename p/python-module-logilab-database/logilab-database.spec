@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.13.2
-Release: alt1.hg20150318.1.1
+Version: 1.15.0
+Release: alt1
 Summary: Provides some classes to make unified access to different RDBMS possible
 
 Group: Development/Python
@@ -13,18 +13,11 @@ URL: http://www.logilab.org/project/logilab-database
 # hg clone http://hg.logilab.org/logilab/database
 Source: database-%version.tar
 BuildArch: noarch
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-#BuildPreReq: python-devel python-module-logilab-common
-#buildPreReq: python-module-distribute
+BuildRequires: python-module-logilab-common
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-egenix-mx-base python-module-kerberos python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-setuptools
-BuildRequires: python-module-logilab-common python3-module-logilab-common rpm-build-python3 time
-
-#BuildRequires: python3-devel python3-module-distribute
-#BuildPreReq: python3-module-logilab-common python-tools-2to3
+BuildRequires: python3-module-logilab-common
 %endif
 
 %description
@@ -53,43 +46,7 @@ RDBMS possible:
 * extensions functions for common tasks such as creating database, index,
   users, dump and restore, etc...
 * sql generation for INSERT/UPDATE/DELETE (in sqlgen.py)
-
-%package -n python3-module-%oname-tests
-Summary: Tests for logilab database package (Python 3)
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-tests
-logilab-database provides some classes to make unified access to different
-RDBMS possible:
-
-* actually compatible db-api from different drivers to postgres, mysql,
-  sqlite and sqlserver
-* additional api for full text search
-* extensions functions for common tasks such as creating database, index,
-  users, dump and restore, etc...
-* sql generation for INSERT/UPDATE/DELETE (in sqlgen.py)
-
-This package contains tests for logilab constraint package.
 %endif
-
-%package tests
-Summary: Tests for logilab database package
-Group: Development/Python
-Requires: %name = %version-%release
-
-%description tests
-logilab-database provides some classes to make unified access to different
-RDBMS possible:
-
-* actually compatible db-api from different drivers to postgres, mysql,
-  sqlite and sqlserver
-* additional api for full text search
-* extensions functions for common tasks such as creating database, index,
-  users, dump and restore, etc...
-* sql generation for INSERT/UPDATE/DELETE (in sqlgen.py)
-
-This package contains tests for logilab constraint package.
 
 %prep
 %setup
@@ -124,22 +81,17 @@ rm -f %buildroot%python3_sitelibdir/logilab/__init__.py*
 %files
 %doc ChangeLog README
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/*/test
-
-%files tests
-%python_sitelibdir/*/*/test
 
 %if_with python3
 %files -n python3-module-%oname
 %doc ChangeLog README
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/*/test
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/*/test
 %endif
 
 %changelog
+* Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.15.0-alt1
+- Updated to upstream version 1.15.0.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.13.2-alt1.hg20150318.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

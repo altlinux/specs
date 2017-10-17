@@ -3,34 +3,27 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.5
-Release: alt1.dev0.git20150807.1.1
+Version: 2.1.2
+Release: alt1
 Summary: Transaction management for Python
 License: ZPLv2.1
 Group: Development/Python
+BuildArch: noarch
 Url: http://pypi.python.org/pypi/transaction/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/zopefoundation/transaction.git
 Source: %name-%version.tar
-BuildArch: noarch
+Patch1: %oname-%version-alt-docs.patch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-sphinx-devel
-#BuildPreReq: python-module-repoze.sphinx.autointerface
-#BuildPreReq: python-module-nose python-module-coverage
-%py_requires zope.interface
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib  python-module-objects.inv python-module-repoze.sphinx.autointerface 
+BuildRequires: python-module-coverage python-module-nose python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-repoze python-module-repoze.sphinx python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools python3-module-zope.interface
-BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-repoze.sphinx.autointerface python-module-setuptools-tests python3-module-coverage python3-module-nose python3-module-setuptools-tests python3-module-zope rpm-build-python3 time
-
-#BuildRequires: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-nose python3-module-coverage
-#BuildPreReq: python3-module-zope.interface
+BuildRequires: python3-module-coverage python3-module-nose python3-module-setuptools-tests python3-module-zope
 %endif
+
+%py_requires zope.interface
 
 %description
 This package contains a generic transaction implementation for Python.
@@ -128,8 +121,9 @@ Python.
 
 %prep
 %setup
+%patch1 -p1
+
 %if_with python3
-rm -rf ../python3
 cp -a . ../python3
 %endif
 
@@ -192,6 +186,9 @@ popd
 %endif
 
 %changelog
+* Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.2-alt1
+- Update to upstream version 2.1.2.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.4.5-alt1.dev0.git20150807.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

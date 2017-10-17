@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define modulename zconfig
+%define oname zconfig
 
 %def_with python3
 
-Name: python-module-%modulename
-Version: 3.1.0
+Name: python-module-%oname
+Version: 3.2.0
 Release: alt1
 
 Summary: Python configuration module from Zope
@@ -13,17 +13,19 @@ Group: Development/Python
 
 Url: http://pypi.python.org/pypi/ZConfig/
 BuildArch: noarch
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: https://pypi.python.org/packages/52/b3/a96d62711a26d8cfbe546519975dc9ed54d2eb50b3238d2e6de045764796/ZConfig-%{version}.tar.gz
+# https://github.com/zopefoundation/ZConfig.git
+Source: %name-%version.tar
+# https://github.com/zopefoundation/ZConfig/issues/34
+Patch1: %oname-%version-upstream-schema2html.patch
 
-%setup_python_module %modulename
-BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-zope.testrunner
+%setup_python_module %oname
+BuildRequires: python-dev python-module-setuptools-tests
+BuildRequires: python-module-zope.testrunner python2.7(manuel) python2.7(manuel.testing) python2.7(docutils)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-zope.testrunner python3(manuel) python3(manuel.testing) python3(docutils)
 %endif
 
 %description
@@ -47,11 +49,11 @@ Authors:
 Zope Corporation < zodb-devAATTzope.org>
 
 %if_with python3
-%package -n python3-module-%modulename
+%package -n python3-module-%oname
 Summary: Python 3 configuration module from Zope
 Group: Development/Python3
 
-%description -n python3-module-%modulename
+%description -n python3-module-%oname
 ZConfig is a configuration library intended for general use. It supports a
 hierarchical schema-driven configuration model that allows a schema to specify
 data conversion routines written in Python. ZConfig\'s model is very different
@@ -71,13 +73,13 @@ Authors:
 --------
 Zope Corporation < zodb-devAATTzope.org>
 
-%package -n python3-module-%modulename-tests
+%package -n python3-module-%oname-tests
 Summary: Tests for ZConfig
 Group: Development/Python3
-Requires: python3-module-%modulename = %version-%release
-#%py3_requires zope.testrunner
+Requires: python3-module-%oname = %version-%release
+%py3_requires zope.testrunner manuel manuel.testing docutils
 
-%description -n python3-module-%modulename-tests
+%description -n python3-module-%oname-tests
 ZConfig is a configuration library intended for general use. It supports a
 hierarchical schema-driven configuration model that allows a schema to specify
 data conversion routines written in Python. ZConfig\'s model is very different
@@ -91,7 +93,7 @@ This package contains tests for ZConfig.
 Summary: Tests for ZConfig
 Group: Development/Python
 Requires: %name = %version-%release
-#%py_requires zope.testrunner
+%py_requires zope.testrunner manuel manuel.testing docutils
 
 %description tests
 ZConfig is a configuration library intended for general use. It supports a
@@ -103,9 +105,10 @@ library, and is more suitable to configuration-intensive applications.
 This package contains tests for ZConfig.
 
 %prep
-%setup -q -n ZConfig-%{version}
+%setup
+%patch1 -p1
+
 %if_with python3
-rm -rf ../python3
 cp -a . ../python3
 %endif
 
@@ -113,10 +116,6 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in scripts/zconfig*; do
-	2to3 -w $i
-done
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
 %endif
@@ -138,6 +137,12 @@ popd
 %check
 python setup.py test
 
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %_bindir/*
 %exclude %_bindir/py3_*
@@ -150,18 +155,22 @@ python setup.py test
 %python_sitelibdir/*/*/*/tests
 
 %if_with python3
-%files -n python3-module-%modulename
+%files -n python3-module-%oname
 %_bindir/py3_*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/*/*/tests
 
-%files -n python3-module-%modulename-tests
+%files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/*/*/*/tests
 %endif
 
 %changelog
+* Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.0-alt1
+- Updated to upstream version 3.2.0.
+- Fixed python3 build.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1
 - automated PyPI update
 
