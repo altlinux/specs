@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           xmlgraphics-commons
 Version:        2.0.1
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Epoch:          0
 Summary:        XML Graphics Commons
 
@@ -16,12 +17,14 @@ URL:            http://xmlgraphics.apache.org/
 Source0:        http://apache.org/dist/xmlgraphics/commons/source/%{name}-%{version}-src.tar.gz
 
 BuildArch:      noarch
-BuildRequires:  javapackages-local
+BuildRequires:  java-devel >= 1.6.0
+BuildRequires:  javapackages-tools rpm-build-java
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  ant-junit >= 0:1.6
 BuildRequires:  junit
 BuildRequires:  apache-commons-io >= 1.3.1
 BuildRequires:  apache-commons-logging >= 1.0.4
+Requires:       java
 Requires:       apache-commons-io >= 1.3.1
 Requires:       apache-commons-logging >= 1.0.4
 Source44: import.info
@@ -79,6 +82,9 @@ cp -pr build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.1-alt1_3jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.1-alt1_2jpp8
 - new fc release
 
