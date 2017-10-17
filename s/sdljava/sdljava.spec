@@ -1,10 +1,13 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: ruby-stdlibs zlib-devel
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2007 oc2pus <toni@links2linux.de>
 # Copyright (c) 2007 Hans de Goede <j.w.r.degoede@hhs.nl>
 # This file and all modifications and additions to the pristine
@@ -14,23 +17,39 @@ BuildRequires: jpackage-compat
 
 Name:           sdljava
 Version:        0.9.1
-Release:        alt2_23jpp7
+Release:        alt2_34jpp8
 Summary:        Java binding to the SDL API
-Group:          System/Libraries
 License:        LGPLv2+
-Url:            http://sdljava.sourceforge.net/
+URL:            http://sdljava.sourceforge.net/
 # this is http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 # with the included Microsoft Copyrighted Arial fonts removed
 Source0:        %{name}-%{version}.tar.gz
 Source1:        %{name}-runtest.sh
-Source2:	sdljava-0.9.1-generated.tar
 Patch0:         sdljava-0.9.1-regen.patch
 Patch1:         sdljava-0.9.1-ftgl213.patch
 Patch2:         sdljava-0.9.1-ruby19.patch
-BuildRequires:  ftgl-devel libglew-devel libSDL-devel libSDL_gfx-devel libSDL_image-devel
-BuildRequires:  libSDL_mixer-devel libSDL_ttf-devel jpackage-utils
-BuildRequires:  java-javadoc ant xml-commons-apis swig bsh jdom ruby
-Requires:       bsh jdom
+
+BuildRequires:  libftgl-devel
+BuildRequires:  libGLEW-devel
+BuildRequires:  libSDL-devel
+BuildRequires:  libSDL_gfx-devel
+BuildRequires:  libSDL_image-devel
+BuildRequires:  libSDL_mixer-devel
+BuildRequires:  libSDL_ttf-devel
+
+BuildRequires:  javapackages-tools rpm-build-java
+BuildRequires:  ant
+BuildRequires:  swig
+BuildRequires:  bsh-utils
+BuildRequires:  jdom
+BuildRequires:  xml-commons-apis
+
+BuildRequires:  jruby
+BuildRequires:  ruby
+
+Requires:       java
+Requires:       bsh-utils
+Requires:       jdom
 Source44: import.info
 
 %description
@@ -42,25 +61,23 @@ efficient and easy to use.
 
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch:      noarch
-Requires:       %{name} = %{version}-%{release}
 
 %description javadoc
 Javadoc for %{name}.
 
 
 %package demo
+Group: Development/Java
 Summary:        Some examples for %{name}
-Group:          Development/Java
 BuildArch:      noarch
 Requires:       %{name} = %{version}-%{release}
-#Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans.ttf
-#Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans-Bold.ttf
-#Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans-Oblique.ttf
-#Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans-BoldOblique.ttf
-Requires:       jpackage-utils
+Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans.ttf
+Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans-Bold.ttf
+Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans-Oblique.ttf
+Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans-BoldOblique.ttf
 
 %description demo
 Demonstrations and samples for %{name}.
@@ -71,6 +88,10 @@ Demonstrations and samples for %{name}.
 %patch0 -p1 -z .regen
 %patch1 -p1
 %patch2 -p1
+
+find -name '*.jar' -or -name '*.class' -or -name '*.bat' -name '*.so' -delete
+rm -r etc/build/gljava/windows etc/build/windows
+
 # Newer ftgl no longer exports the FTFace class
 rm src/org/gljava/opengl/ftgl/FTFace.java
 iconv -f ISO_8859-2 -t UTF8 docs/CHANGES_0_9_1 > docs/CHANGES_0_9_1.tmp
@@ -89,11 +110,7 @@ find ./testsrc -name '*.java' | xargs sed -i \
   -e 's|testdata|%{_datadir}/%{name}/testdata|g'
 
 # use system versions of bsh & jdom
-pushd lib
-rm *.jar
-ln -s /usr/share/java/jdom.jar .
-ln -s /usr/share/java/bsh.jar .
-popd
+build-jar-repository -p lib jdom bsh
 
 # copy the Linux Makefiles into place
 cp etc/build/linux/Makefile src/sdljava/native
@@ -104,9 +121,7 @@ cp etc/build/gljava/linux/ftgl/Makefile src/org/gljava/opengl/native/ftgl
 rm src/sdljava/native/SDL*_wrap.c src/sdljava/native/SDL_types.h
 rm src/org/gljava/opengl/native/glew_wrap.c
 
-pushd ..
-tar xf %{SOURCE2}
-popd
+
 %build
 # We must add -D__%{_arch}__ to swigs arguments as swig doesn't do that itself.
 # Special case ppc as the define is powerpc not ppc and both ppc and ppc64
@@ -118,16 +133,26 @@ export ARCH_DEFINE="-D__powerpc__ -D__LONG_DOUBLE_128__"
 %ifarch ppc64
 export ARCH_DEFINE="-D__powerpc__ -D__powerpc64__ -D__LONG_DOUBLE_128__"
 %endif
+%ifarch ppc64le
+export ARCH_DEFINE="-D__powerpc__ -D__powerpc64__ -D__LITTLE_ENDIAN__ -D\"__BYTE_ORDER__=1234\" -D\"_CALL_ELF=2\" -D__LONG_DOUBLE_128__"
+%endif
 # special case ix86 as all of ix86 should define __i386__
 %ifarch %{ix86}
 export ARCH_DEFINE="-D__i386__"
+%endif
+# arm also needs a bunch of special defines
+%ifarch %{arm}
+export ARCH_DEFINE="-D__arm__ -D__ARMEL__ -D__ARM_EABI__"
+%ifnarch armv5tel
+export ARCH_DEFINE="$ARCH_DEFINE -D__ARM_PCS_VFP"
+%endif
 %endif
 # All other archs
 if [ -z "$ARCH_DEFINE" ]; then
   export ARCH_DEFINE="-D__%{_arch}__"
 fi
 
-export JAVA_HOME=/usr/lib/jvm/java
+export JAVA_HOME=%{_jvmdir}/java
 
 pushd src/sdljava/native
 make CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -fPIC"
@@ -202,6 +227,9 @@ ln -s ../../fonts/ttf/dejavu/DejaVuSans-BoldOblique.ttf \
 
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_34jpp8
+- new jpp release
+
 * Thu Dec 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_23jpp7
 - rebuild with new SDL
 
