@@ -1,13 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 24
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           javatar
 Version:        2.5
-Release:        alt1_16jpp8
+Release:        alt1_17jpp8
 Summary:        Java tar archive io package
 
 Group:          Development/Other
@@ -18,12 +19,14 @@ Source0:        http://www.gjt.org/download/time/java/tar/javatar-%{version}.tar
 Patch0:         %{name}-2.5-build.patch
 BuildArch:      noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils
+BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  ant
 
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 %if 0%{?fedora} >= 20 || 0%{?rhel} >= 7
 %else
+Requires:       java >= 1.6.0
 %endif
 Source44: import.info
 
@@ -37,7 +40,7 @@ java.util.zip package to handle .tar.gz files.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Documentation
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -79,6 +82,9 @@ cp -rp doc $RPM_BUILD_ROOT/%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_17jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_16jpp8
 - new fc release
 
