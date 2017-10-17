@@ -3,9 +3,10 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2012, JPackage Project
 # All rights reserved.
 #
@@ -38,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jdom
 Version:        1.1.3
-Release:        alt3_10jpp8
+Release:        alt3_11jpp8
 Epoch:          0
 Summary:        Java alternative to DOM and SAX
 License:        ASL 1.1
@@ -52,11 +53,11 @@ Patch1:         %{name}-1.1-OSGiManifest.patch
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  java-javadoc
 BuildRequires:  jaxen
-BuildRequires:  javapackages-local
+BuildRequires:  javapackages-tools rpm-build-java
 BuildRequires:  xalan-j2 >= 0:2.2.0
 
 Requires:       jaxen
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 Requires:       xalan-j2 >= 0:2.2.0
 
 BuildArch:      noarch
@@ -73,7 +74,7 @@ and SAX.
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -82,7 +83,7 @@ Javadoc for %{name}.
 %package demo
 Summary:        Demos for %{name}
 Group:          Development/Other
-Requires:       %{name} = %{epoch}:%{version}
+Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %description demo
 Demonstrations and samples for %{name}.
@@ -130,6 +131,9 @@ cp %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-jdom.pom
 %doc LICENSE.txt
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt3_11jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt3_10jpp8
 - new fc release
 
