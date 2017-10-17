@@ -1,19 +1,20 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: jcommon-serializer
 Version: 0.3.0
-Release: alt1_14jpp8
+Release: alt1_15jpp8
 Summary: JFree Java General Serialization Framework
 License: LGPLv2+
 Group: System/Libraries
 Source0: http://downloads.sourceforge.net/jfreereport/%{name}-%{version}.tar.gz
 URL: http://www.jfree.org/jfreereport/jcommon-serializer
-BuildRequires: ant javapackages-tools rpm-build-java libbase >= 1.0.0
-Requires: javapackages-tools rpm-build-java libbase >= 1.0.0
+BuildRequires: ant java-devel jpackage-utils libbase >= 1.0.0
+Requires: jpackage-utils libbase >= 1.0.0
 BuildArch: noarch
 Patch1: jcommon-serializer-0.3.0-depends.patch
 Source44: import.info
@@ -25,8 +26,8 @@ JFreeReport and other projects.
 %package javadoc
 Summary: Javadoc for %{name}
 Group: Development/Documentation
-Requires: %{name} = %{version}
-Requires: javapackages-tools rpm-build-java
+Requires: %{name} = %{version}-%{release}
+Requires: jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -57,6 +58,9 @@ cp -rp javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_15jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_14jpp8
 - new fc release
 
