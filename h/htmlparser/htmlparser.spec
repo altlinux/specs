@@ -2,13 +2,14 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		htmlparser
 Epoch:		1
 Version:	1.5
-Release:	alt1_5jpp8
+Release:	alt1_6jpp8
 Summary:	HTML Parser, a Java library used to parse HTML
 Group:		Development/Java
 License:	LGPLv2+
@@ -17,9 +18,10 @@ Source0:	http://downloads.sourceforge.net/htmlparser/htmlparser1_5_20050614.zip
 Patch1:         htmlparser-build.patch
 BuildArch:	noarch
 
-BuildRequires: javapackages-tools rpm-build-java ant
+BuildRequires:	java-devel >= 1.6.0
+BuildRequires:	jpackage-utils ant
 
-Requires: javapackages-tools rpm-build-java
+Requires:	jpackage-utils
 Source44: import.info
 
 %description
@@ -31,8 +33,8 @@ robust and well tested package.
 %package	javadoc
 Summary:	Javadocs for %{name}
 Group:		Development/Java
-Requires:	%{name} = %{epoch}:%{version}
-Requires: javapackages-tools rpm-build-java
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	jpackage-utils
 BuildArch: noarch
 %description 	javadoc
 This package contains the API documentation for %{name}.
@@ -68,6 +70,9 @@ cp -rp docs/javadoc/ $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/*
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.5-alt1_6jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.5-alt1_5jpp8
 - new fc release
 
