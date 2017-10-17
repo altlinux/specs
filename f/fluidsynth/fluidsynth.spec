@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %def_disable static
 %def_disable ladcca
@@ -9,7 +9,7 @@
 %def_enable dbus
 
 Name: fluidsynth
-Version: 1.1.7
+Version: 1.1.8
 Release: alt1
 
 Summary: Software real-time synthesizer
@@ -27,11 +27,13 @@ Source: %name-%version.tar
 
 Requires: lib%name = %version-%release
 
+%define cmake_ver 3.0.2
 %define jack_ver 0.75.0
 %define ladcca_ver 0.4.0
 %define alsa_ver 0.9.8-alt2
 
-BuildRequires: cmake gcc-c++ doxygen xsltproc docbook-dtds docbook-style-xsl
+BuildRequires: cmake >= %cmake_ver gcc-c++
+BuildRequires: doxygen graphviz xsltproc docbook-dtds docbook-style-xsl
 BuildRequires: glib2-devel libsndfile-devel libalsa-devel >= %alsa_ver libe2fs-devel
 BuildRequires: libncurses-devel libreadline-devel
 %{?_enable_ladcca:BuildRequires: libladcca-devel >= %ladcca_ver}
@@ -182,6 +184,9 @@ cp -r BUILD/doc/api/html ./
 %endif
 
 %changelog
+* Tue Oct 17 2017 Yuri N. Sedunov <aris@altlinux.org> 1.1.8-alt1
+- 1.1.8
+
 * Fri Sep 22 2017 Yuri N. Sedunov <aris@altlinux.org> 1.1.7-alt1
 - updated to v1.1.7-26-geba43fa
 
