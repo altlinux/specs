@@ -2,9 +2,10 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global gitdate  20120218
 %global gittag   e547893deebde5a1340a72bc05f19b9caab1774a
 %global shorttag %(echo %{gittag} | cut -b -7)
@@ -12,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jacknativeclient
 Version:        0
-Release:        alt2_0.11.20120218gitjpp8
+Release:        alt2_0.12.20120218gitjpp8
 Summary:        Java bindings for JACK clients
 
 License:        LGPLv3+
@@ -20,11 +21,13 @@ URL:            https://github.com/%{user}/%{name}/
 Source0:        https://github.com/%{user}/%{name}/tarball/%{gittag}/%{user}-%{name}-%{gittag}.tar.gz
 
 BuildRequires:  ant
+BuildRequires:  gcc-common
 BuildRequires:  libjack-devel
+BuildRequires:  java-devel
 BuildRequires:  java-javadoc
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils
 
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -33,7 +36,7 @@ This package exposes the JACK audio interface to Java clients.
 %package javadoc
 Group: Development/Java
 Summary:        Javadoc documentation for %{name}
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{version}-%{release}
 BuildArch:      noarch
 
 %description javadoc
@@ -90,6 +93,9 @@ cp -a api %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}/
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.12.20120218gitjpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.11.20120218gitjpp8
 - new fc release
 
