@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2009, JPackage Project
 # All rights reserved.
 #
@@ -36,7 +37,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           gnu-getopt
 Version:        1.0.14
-Release:        alt1_10jpp8
+Release:        alt1_11jpp8
 Epoch:          0
 Summary:        Java getopt implementation
 License:        LGPLv2+
@@ -48,8 +49,8 @@ Provides:       gnu.getopt = %{epoch}:%{version}-%{release}
 Obsoletes:      gnu.getopt < %{epoch}:%{version}-%{release}
 BuildArch:      noarch
 BuildRequires:  ant
-BuildRequires:  javapackages-local
-Requires: javapackages-tools rpm-build-java
+BuildRequires:  javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 Source44: import.info
 
 
@@ -64,7 +65,7 @@ appreciate bug reports as well as hearing about positive experiences.
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Documentation
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 Provides:       gnu.getopt-javadoc = %{epoch}:%{version}-%{release}
 Obsoletes:      gnu.getopt-javadoc < %{epoch}:%{version}-%{release}
 BuildArch: noarch
@@ -105,6 +106,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt1_11jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt1_10jpp8
 - new fc release
 
