@@ -1,6 +1,6 @@
 Name: rpm-build-qml
-Version: 0.0.6
-Release: alt2
+Version: 0.0.7
+Release: alt1
 
 Summary: RPM helper macros to rebuild QML packages
 License: GPLv2+
@@ -19,7 +19,8 @@ QML modules by some Alt Linux Team Policy compatible way.
 %setup
 
 %build
-%make
+%qmake_qt5 qmlinfo.pro
+%make_build
 
 %install
 install -pD -m755 qmlinfo %buildroot%_bindir/qmlinfo
@@ -42,6 +43,9 @@ install -pD -m755 qml.req.files %buildroot%_rpmlibdir/qml.req.files
 %_bindir/qmlinfo
 
 %changelog
+* Tue Oct 17 2017 Oleg Solovyov <mcpain@altlinux.org> 0.0.7-alt1
+- migrate from make to qmake
+
 * Fri Oct 13 2017 Oleg Solovyov <mcpain@altlinux.org> 0.0.6-alt2
 - fix macro
 
