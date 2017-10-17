@@ -3,9 +3,10 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -38,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           kxml
 Version:        2.3.0
-Release:        alt3_11jpp8
+Release:        alt3_12jpp8
 Summary:        Small XML pull parser
 License:        MIT
 URL:            http://kxml.sourceforge.net/
@@ -50,6 +51,7 @@ Source3:        %{name}-%{version}-OSGI-MANIFEST.MF
 
 Patch0:         0001-Unbundle-xpp3-classes.patch
 
+BuildRequires:  java-devel
 BuildRequires:  ant >= 0:1.6.5
 BuildRequires:  xpp3 >= 0:1.1.3.1
 BuildRequires:  zip
@@ -123,6 +125,9 @@ ln -s kxml.jar %buildroot%_javadir/kxml2.jar
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt3_12jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt3_11jpp8
 - new fc release
 
