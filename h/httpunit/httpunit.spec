@@ -2,9 +2,10 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -37,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           httpunit
 Version:        1.7
-Release:        alt5_20jpp8
+Release:        alt5_21jpp8
 Epoch:          0
 Summary:        Automated web site testing toolkit
 License:        MIT and ASL 2.0
@@ -55,7 +56,7 @@ Patch2:         %{name}-servlettest.patch
 Patch3:         %{name}-servlet31.patch
 Patch4:         junit4.patch
 URL:            http://httpunit.sourceforge.net/
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  nekohtml
 BuildRequires:  jtidy
@@ -63,6 +64,7 @@ BuildRequires:  junit >= 0:3.8
 BuildRequires:  tomcat-servlet-3.1-api
 BuildRequires:  javamail >= 0:1.3
 BuildRequires:  rhino
+BuildRequires:  java-devel >= 1.6.0
 
 Requires:       junit >= 0:3.8
 Requires:       tomcat-servlet-3.1-api
@@ -170,6 +172,9 @@ popd
 %doc --no-dereference doc/*
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt5_21jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt5_20jpp8
 - new fc release
 
