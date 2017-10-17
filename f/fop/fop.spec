@@ -6,13 +6,14 @@ BuildRequires(pre): rpm-macros-java
 %filter_from_requires /^.usr.bin.run/d
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           fop
 Summary:        XSL-driven print formatter
 Version:        2.0
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 # ASL 1.1:
 # several files in src/java/org/apache/fop/render/awt/viewer/resources/
 # rest is ASL 2.0
@@ -30,6 +31,7 @@ Patch2:         0003-Disable-javadoc-doclint.patch
 Patch3:         0004-Port-to-QDox-2.0.patch
 # https://issues.apache.org/jira/browse/FOP-2461
 Patch4:         0005-NPE-FOP-2461.patch
+Patch5:         0006-Allow-javascript-in-javadoc.patch
 
 BuildArch:      noarch
 
@@ -42,9 +44,10 @@ Requires:       jakarta-commons-httpclient
 Requires:       apache-commons-io >= 1.2
 Requires:       apache-commons-logging >= 1.0.4
 Requires:       fontbox
+Requires:       java
 
 BuildRequires:  ant
-BuildRequires:  javapackages-local
+BuildRequires:  javapackages-tools rpm-build-java
 BuildRequires:  apache-commons-logging
 BuildRequires:  apache-commons-io
 BuildRequires:  avalon-framework
@@ -85,6 +88,7 @@ Javadoc for %{name}.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 cp %{SOURCE4} LICENSE-1.1
 
@@ -151,6 +155,9 @@ ln -s fop %buildroot%_bindir/xmlgraphics-fop
 
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_5jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_3jpp8
 - new fc release
 
