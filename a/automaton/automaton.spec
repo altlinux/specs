@@ -2,9 +2,10 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Upstream uses version-release.  Control the madness here.
 %global upver 1.11
 %global uprel 8
@@ -12,15 +13,18 @@ BuildRequires: jpackage-generic-compat
 
 Name:           automaton
 Version:        %{upver}r%{uprel}
-Release:        alt1_12jpp8
+Release:        alt1_13jpp8
 Summary:        A Java finite state automata/regular expression library
 
 License:        BSD
 URL:            http://www.brics.dk/automaton/
 Source0:        http://www.brics.dk/~amoeller/%{name}/%{name}-%{filever}.tar.gz
 Source1:        https://repo1.maven.org/maven2/dk/brics/%{name}/%{name}/%{filever}/%{name}-%{filever}.pom
+# Fix javadoc errors
+Patch0:         %{name}-javadoc.patch
 
 BuildRequires:  ant
+BuildRequires:  java-devel
 BuildRequires:  java-javadoc
 
 BuildArch:      noarch
@@ -46,9 +50,13 @@ Javadoc documentation for automaton.
 
 %prep
 %setup -q -n %{name}-%{upver}
+%patch0
 
 # Remove prebuilt artifacts
 rm -fr dist/%{name}.jar doc/*
+
+# Build for newer Java versions
+sed -i 's/="1.5"/="1.6"/g' build.xml
 
 # Link to offline javadocs
 sed -i 's,http.*api/,file://%{_javadocdir}/java/,' build.xml
@@ -78,6 +86,9 @@ cp -p %{SOURCE1} %{buildroot}%{_mavenpomdir}/%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.11r8-alt1_13jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.11r8-alt1_12jpp8
 - new fc release
 
