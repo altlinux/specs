@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           patricia-trie
 Version:        0.2
-Release:        alt1_11.20091116svnjpp8
+Release:        alt1_12.20091116svnjpp8
 Summary:        Java prefix tree library
 License:        ASL 2.0
 URL:            http://patricia-trie.googlecode.com/
@@ -17,8 +18,9 @@ URL:            http://patricia-trie.googlecode.com/
 Source0:        %{name}.tar.gz
 
 BuildRequires:  ant
-BuildRequires: javapackages-tools rpm-build-java
-Requires: javapackages-tools rpm-build-java
+BuildRequires:  java-devel
+BuildRequires:  jpackage-utils
+Requires:       jpackage-utils
 
 BuildArch:      noarch
 Source44: import.info
@@ -62,6 +64,9 @@ cp -a dist/%{name}-%{version}/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc dist/%{name}-%{version}/LICENSE-2.0.txt
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.2-alt1_12.20091116svnjpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.2-alt1_11.20091116svnjpp8
 - new fc release
 
