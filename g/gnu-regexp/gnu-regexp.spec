@@ -3,9 +3,10 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -38,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           gnu-regexp
 Version:        1.1.4
-Release:        alt1_22jpp8
+Release:        alt1_23jpp8
 Summary:        Java NFA regular expression engine implementation
 # GPLv2+: gnu/regexp/util/Egrep.java
 #         gnu/regexp/util/Grep.java
@@ -51,7 +52,7 @@ License:        LGPLv2+
 Source0:        http://ftp.frugalware.org/pub/other/sources/gnu.regexp/gnu.regexp-%{version}.tar.gz
 Source1:        %{name}.build.xml
 Source2:        http://repo1.maven.org/maven2/gnu-regexp/gnu-regexp/%{version}/gnu-regexp-%{version}.pom
-BuildRequires:  javapackages-local
+BuildRequires:  javapackages-tools rpm-build-java
 BuildRequires:  ant
 BuildRequires:  gnu-getopt
 URL:            http://savannah.gnu.org/projects/gnu-regexp
@@ -71,7 +72,7 @@ to the syntax and usage notes.
 Group: Development/Java
 Summary:        Demo for %{name}
 License:        LGPLv2+ and GPLv2+ and Public Domain
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       gnu-getopt
 Provides:       gnu.regexp-demo = %{version}-%{release}
 Obsoletes:      gnu.regexp-demo < %{version}-%{release}
@@ -132,6 +133,9 @@ cp -rp build/api/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt1_23jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt1_22jpp8
 - new fc release
 
