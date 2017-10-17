@@ -3,12 +3,13 @@ Epoch: 0
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           not-yet-commons-ssl
 Version:        0.3.17
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Library to make SSL and Java Easier
 
 Group:          Development/Other
@@ -20,6 +21,7 @@ Source2:        %{name}-%{version}.pom
 BuildArch:      noarch
 
 BuildRequires:  ant
+BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  log4j
 BuildRequires:  jakarta-commons-httpclient
 BuildRequires:  bouncycastle
@@ -38,7 +40,7 @@ bleed into the rest of your system.
 %package javadoc
 Summary:        API documentation for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
@@ -82,6 +84,9 @@ install -pm 644 %{SOURCE2} \
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.3.17-alt1_4jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.3.17-alt1_3jpp8
 - new fc release
 
