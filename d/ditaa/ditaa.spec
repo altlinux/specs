@@ -1,13 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary:        Diagrams Through ASCII Art
 Name:           ditaa
 Version:        0.10
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Group:          System/Base
 License:        GPLv2+
 URL:            http://ditaa.sourceforge.net/
@@ -15,8 +16,9 @@ Source0:        https://github.com/stathissideris/ditaa/archive/v%{version}.tar.
 Source1:        ditaa.wrapper
 Patch0:         ditaa-0.9-port-to-batik-1.8.patch
 BuildArch:      noarch
+BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  ant
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils
 BuildRequires:  batik
 BuildRequires:  jericho-html
 BuildRequires:  xml-commons-apis
@@ -25,7 +27,7 @@ Requires:       apache-commons-cli
 Requires:       xml-commons-apis
 Requires:       jericho-html
 Requires:       batik
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -55,6 +57,9 @@ install -D -p -m 0755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}
 %{_javadir}/%{name}.jar
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_3jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_2jpp8
 - new fc release
 
