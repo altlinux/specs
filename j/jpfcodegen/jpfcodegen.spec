@@ -1,12 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           jpfcodegen
 Version:        0.4
-Release:        alt1_11jpp8
+Release:        alt1_12jpp8
 Summary:        A tool for generating classes from JPF plug-ins
 
 Group:          Development/Java
@@ -22,18 +23,19 @@ Patch0:         %{name}-build.patch
 # Fix the build on javadoc
 Patch1:         %{name}-javadoc.patch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils
+BuildRequires:  java-devel >= 1.7.0
 BuildRequires:  ant
 BuildRequires:  jpf
 BuildRequires:  velocity
 
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 Source44: import.info
 
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 BuildArch: noarch
 %description javadoc
 %{summary}.
@@ -78,6 +80,9 @@ cp -r javadoc ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_12jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_11jpp8
 - new fc release
 
