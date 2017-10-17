@@ -3,9 +3,10 @@ Epoch: 0
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -46,15 +47,16 @@ Source1:        http://dist.codehaus.org/stax/jars/stax-1.2.0.pom
 Source2:        http://dist.codehaus.org/stax/jars/stax-api-1.0.1.pom
 Name:           bea-stax
 Version:        %{mainver}
-Release:        alt3_12jpp8
+Release:        alt3_13jpp8
 License:        ASL 1.1 and ASL 2.0
 Group:          Development/Java
 BuildArch:      noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:          jpackage-utils
 BuildRequires:          ant
 BuildRequires:          xerces-j2 xalan-j2
-Requires: javapackages-tools rpm-build-java
+BuildRequires:          java-devel
+Requires:               jpackage-utils
 Source44: import.info
 Obsoletes: stax-bea <= 1.0-alt1
 
@@ -66,7 +68,7 @@ efficiently.
 %package api
 Summary:        The StAX API
 Group:          Development/Documentation
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 
 %description api
 %{summary}
@@ -74,7 +76,7 @@ Requires: javapackages-tools rpm-build-java
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Documentation
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -120,6 +122,9 @@ install -Dpm 644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}-api.pom
 %doc %{_javadocdir}/*
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt3_13jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt3_12jpp8
 - new fc release
 
