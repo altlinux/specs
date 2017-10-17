@@ -3,12 +3,13 @@ Group: Engineering
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           electric
 Version:        8.09
-Release:        alt1_11jpp8
+Release:        alt1_12jpp8
 Summary:        Sophisticated ASIC and MEM CAD System
 
 License:        GPLv3
@@ -18,9 +19,11 @@ Source0:        ftp://ftp.gnu.org/pub/gnu/electric/%{name}-%{version}.jar
 Source1:        %{name}.desktop
 Source2:        %{name}.1
 
+BuildRequires:  java-devel
 BuildRequires:  ant
 BuildRequires:  desktop-file-utils
 
+Requires:       java
 
 BuildArch:      noarch
 Source44: import.info
@@ -107,6 +110,9 @@ install -d %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 8.09-alt1_12jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 8.09-alt1_11jpp8
 - new fc release
 
