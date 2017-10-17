@@ -1,15 +1,16 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define patched_resolver_ver 1.2
 %define patched_resolver xml-commons-resolver-%{patched_resolver_ver}
 
 Name:    netbeans-resolver
 Version: 6.7.1
-Release: alt1_12jpp8
+Release: alt1_13jpp8
 Summary: Resolver subproject of xml-commons patched for NetBeans
 
 Group:   Development/Other
@@ -25,11 +26,12 @@ Patch2: javadoc-source-version.patch
 
 BuildArch: noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: java-devel
+BuildRequires: jpackage-utils
 BuildRequires: ant
 BuildRequires: dos2unix
 
-Requires: javapackages-tools rpm-build-java
+Requires: jpackage-utils
 Source44: import.info
 
 %description
@@ -39,7 +41,7 @@ a patch for NetBeans.
 %package javadoc
 Summary:    Javadocs for %{name}
 Group:      Development/Java
-Requires: javapackages-tools rpm-build-java
+Requires:   jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -77,6 +79,9 @@ cp -rp build/apidocs/resolver %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.resolver.txt
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 6.7.1-alt1_13jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 6.7.1-alt1_12jpp8
 - new fc release
 
