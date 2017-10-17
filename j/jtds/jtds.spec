@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          jtds
 Version:       1.3.1
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       SQL Server and Sybase JDBC driver
 License:       MIT and LGPLv2+
 URL:           http://jtds.sourceforge.net/
@@ -20,7 +21,8 @@ Source1:       %{name}-create-tarball.sh
 # remove classpath from manifest
 Patch0:        %{name}-1.3.1-build.patch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: java-devel
+BuildRequires: jpackage-utils
 
 BuildRequires: ant
 BuildRequires: jcifs
@@ -31,7 +33,7 @@ BuildRequires: jdbc-stdext
 
 Requires:      jcifs
 
-Requires: javapackages-tools rpm-build-java
+Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -94,6 +96,9 @@ cp -pr build/doc/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_7jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_6jpp8
 - new fc release
 
