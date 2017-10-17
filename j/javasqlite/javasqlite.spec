@@ -2,13 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: libsqlite-devel
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 24
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name javasqlite
-%define version 20150419
 # javaver nil: build for 1.5.0 and 1.6.0
 # javaver something else: build only for that
 
@@ -36,7 +36,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javasqlite
 Version:        20150419
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        SQLite Java Wrapper/JDBC Driver
 
 License:        BSD
@@ -52,7 +52,9 @@ BuildRequires:  java-%{javaver}-devel
 BuildRequires:  java-%{javaver}-javadoc
 Requires:       jre-%{javaver}%{?headless}
 %else
+BuildRequires:  java-1.6.0-devel
 BuildRequires:  java-1.6.0-javadoc
+BuildRequires:  java-1.5.0-devel
 Requires:       jre%{?headless} >= 1.5.0
 %endif
 Source44: import.info
@@ -96,7 +98,7 @@ common_flags="
 export PATH="%{_jvmdir}/java-%{javaver}/bin:$origpath" # bug 460761
 %configure $common_flags --with-jdk=%{_jvmdir}/java-%{javaver}
 make sqlite.jar # Java build not parallel clean
-make %{?_smp_mflags}
+%make_build
 
 %else
 
@@ -155,6 +157,9 @@ done
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 20150419-alt1_4jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 20150419-alt1_3jpp8
 - new fc release
 
