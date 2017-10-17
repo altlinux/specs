@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -38,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jakarta-oro
 Version:        2.0.8
-Release:        alt2_19jpp8
+Release:        alt2_20jpp8
 Epoch:          0
 Summary:        Full regular expressions API
 License:        ASL 1.1
@@ -48,10 +49,10 @@ Source1:        MANIFEST.MF
 Source2:        http://repo1.maven.org/maven2/%{base_name}/%{base_name}/%{version}/%{base_name}-%{version}.pom
 Patch1:         %{name}-build-xml.patch
 URL:            http://jakarta.apache.org/oro
-BuildRequires:  javapackages-local
+BuildRequires:  javapackages-tools rpm-build-java
 BuildRequires:  ant
 BuildArch:      noarch
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 Source44: import.info
 Provides: oro = %epoch:%version-%release
 
@@ -66,7 +67,7 @@ libraries from ORO, Inc. (www.oroinc.com).
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -111,6 +112,9 @@ install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.8-alt2_20jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.8-alt2_19jpp8
 - new fc release
 
