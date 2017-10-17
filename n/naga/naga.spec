@@ -1,14 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global svnrel 82
 
 Name:           naga
 Version:        3.0
-Release:        alt1_7.82svnjpp8
+Release:        alt1_8.82svnjpp8
 Summary:        Simplified Java NIO asynchronous sockets
 
 Group:        	System/Base
@@ -24,10 +25,11 @@ Source0:        naga-%{svnrel}svn.tar.bz2
 Patch0:		naga-encoding.patch
 BuildArch:      noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils
+BuildRequires:  java-devel
 BuildRequires:  ant
 
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -51,7 +53,7 @@ flags.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -85,6 +87,9 @@ cp -rp _BUILD/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_8.82svnjpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_7.82svnjpp8
 - new fc release
 
