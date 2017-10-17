@@ -2,20 +2,23 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          jtoaster
 Version:       1.0.5
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Java utility class for swing applications
 License:       ASL 2.0
 URL:           http://jtoaster.sourceforge.net/
 Source0:       http://downloads.sourceforge.net/project/jtoaster/%{name}/1.0/%{name}-%{version}.jar
 Source1:       %{name}-template.pom
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: java-devel
+BuildRequires: jpackage-utils
 
-Requires: javapackages-tools rpm-build-java
+Requires:      java
+Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -73,6 +76,9 @@ cp -pr docs/* %{buildroot}%{_javadocdir}/%{name}/
 %doc apache2.0_license.txt
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_7jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_6jpp8
 - new fc release
 
