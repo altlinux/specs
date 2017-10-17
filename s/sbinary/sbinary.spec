@@ -2,9 +2,10 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global sbinary_version 0.4.2
 %global scala_version 2.10
 %global scala_long_version 2.10.3
@@ -13,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           sbinary
 Version:        %{sbinary_version}
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Library for describing binary formats for Scala types
 
 License:        MIT
@@ -26,6 +27,7 @@ BuildArch:	noarch
 BuildRequires:  sbt
 BuildRequires:	python
 %else
+BuildRequires:	java-devel
 %endif
 BuildRequires:  mvn(org.scala-lang:scala-compiler)
 BuildRequires:	mvn(net.sourceforge.fmpp:fmpp)
@@ -151,6 +153,9 @@ cp -rp core/target/scala-%{scala_version}/api/* %{buildroot}/%{_javadocdir}/%{na
 %doc LICENSE
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_6jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_5jpp8
 - new fc release
 
