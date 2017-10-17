@@ -2,18 +2,18 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name papaki
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.0.0
 %global namedreltag .Beta3
 %global namedversion %{version}%{?namedreltag}
 
 Name:           papaki
 Version:        1.0.0
-Release:        alt1_0.8.Beta3jpp8
+Release:        alt1_0.9.Beta3jpp8
 Summary:        An annotation scanner and repository
 
 License:        LGPLv2+
@@ -44,7 +44,8 @@ Patch2:         %{name}-javadoc.patch
  
 BuildArch:      noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils
+BuildRequires:  java-devel >= 1.6.0
 
 BuildRequires:  apache-ivy
 BuildRequires:  junit
@@ -53,7 +54,7 @@ BuildRequires:  apiviz
 BuildRequires:  jdepend
 BuildRequires:  javassist
 
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 Requires:       javassist
 Source44: import.info
 
@@ -64,7 +65,7 @@ and generate a repository of these annotations.
 %package javadoc
 Summary:          Javadocs for %{name}
 Group:            Development/Java
-Requires: javapackages-tools rpm-build-java
+Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -117,6 +118,9 @@ cp -rp target/docs/indexer/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/%{name}-index
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.9.Beta3jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.8.Beta3jpp8
 - new fc release
 
