@@ -3,14 +3,15 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:       simplevalidation
 # upstream is pretty bad about version numbering
 # this is a guess based on the version of a separate api "release" jar
 Version:    1.0
-Release:    alt1_0.5.SNAPSHOTjpp8
+Release:    alt1_0.6.SNAPSHOTjpp8
 Summary:    A library for adding user-interface input validation to Swing applications
 License:    GPLv2 or CDDL
 URL:        http://kenai.com/projects/simplevalidation
@@ -21,12 +22,14 @@ Patch0:     simplevalidation-1.0-disable-doclint.patch
 
 BuildArch:  noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils
+BuildRequires:  java-devel
 
 BuildRequires:  ant
 BuildRequires:  dos2unix
 
-Requires: javapackages-tools rpm-build-java
+Requires:   jpackage-utils
+Requires:   java
 Source44: import.info
 
 %description
@@ -87,6 +90,9 @@ cp -a ValidationAPI/dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.6.SNAPSHOTjpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.5.SNAPSHOTjpp8
 - new fc release
 
