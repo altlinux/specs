@@ -1,15 +1,16 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          xml-stylebook
 Version:       1.0
-Release:       alt2_0.18.b3_xalan2.svn313293jpp8
+Release:       alt2_0.20.b3_xalan2.svn313293jpp8
 Summary:       Apache XML Stylebook
-Group:         Development/Other
 License:       ASL 1.1
 URL:           http://xml.apache.org/
 
@@ -26,13 +27,12 @@ Patch1:        %{name}-build-javadoc.patch
 
 BuildArch:     noarch
 
-BuildRequires: java-javadoc
+BuildRequires: java-devel >= 1.6.0
 BuildRequires: javapackages-tools rpm-build-java
 BuildRequires: ant
 BuildRequires: xml-commons-apis
 BuildRequires: xerces-j2
 BuildRequires: fonts-ttf-dejavu
-Requires: javapackages-tools rpm-build-java
 Requires:      xml-commons-apis
 Requires:      xerces-j2
 Source44: import.info
@@ -43,18 +43,17 @@ Obsoletes: stylebook < 1.0-alt1
 Apache XML Stylebook is a HTML documentation generator.
 
 %package       javadoc
+Group: Development/Java
 Summary:       API documentation for %{name}
-Group:         Development/Java
-Requires:      java-javadoc
 BuildArch: noarch
 
 %description   javadoc
 %{summary}.
 
 %package       demo
+Group: Development/Other
 Summary:       Examples for %{name}
-Group:         Development/Other
-Requires:      %{name} = %{version}
+Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description   demo
 Examples demonstrating the use of %{name}.
@@ -121,6 +120,9 @@ ln -s xml-stylebook.jar $RPM_BUILD_ROOT/%{_javadir}/stylebook.jar
 %{_datadir}/%{name} 
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.20.b3_xalan2.svn313293jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.18.b3_xalan2.svn313293jpp8
 - new fc release
 
