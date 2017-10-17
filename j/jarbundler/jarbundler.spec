@@ -2,22 +2,24 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          jarbundler	
 Version:       2.2.0
-Release:       alt1_11jpp8
+Release:       alt1_12jpp8
 Summary:       A feature-rich Ant task which will create a Mac OS X application bundle
 License:       ASL 2.0
 URL:           http://informagen.com/JarBundler/
 Source0:       http://informagen.com/JarBundler/dist/%{name}.tar.gz
 Source1:       %{name}-template-pom.xml
 BuildRequires: ant
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: jpackage-utils
+BuildRequires: java-devel
 
 Requires:      ant
-Requires: javapackages-tools rpm-build-java
+Requires:      jpackage-utils
 
 BuildArch:     noarch
 Source44: import.info
@@ -93,6 +95,9 @@ echo "%{name}" >  %{buildroot}/%{_sysconfdir}/ant.d/%{name}
 %doc LICENSE.TXT
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_12jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_11jpp8
 - new fc release
 
