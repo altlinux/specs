@@ -2,15 +2,16 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global majorv 5
 %global minorv 6
 
 Name:           jpanoramamaker
 Version:        %{majorv}.%{minorv}
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Tool for stitching photos to panorama in linear curved space
 BuildArch:      noarch
 
@@ -21,12 +22,14 @@ URL:            http://jpanoramamaker.wz.cz
 Source0:        http://jpanoramamaker.wz.cz/fedora/%{name}-%{version}.src.tar.gz
 Source1:        %{name}.appdata.xml
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils
+BuildRequires:  java-devel
 BuildRequires:  ant
 BuildRequires:  swing-layout
 BuildRequires:  desktop-file-utils
 
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
+Requires:       java
 Requires:       swing-layout
 Source44: import.info
 
@@ -36,8 +39,8 @@ Tool for stitching photos to panorama in linear curved space
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}
-Requires: javapackages-tools rpm-build-java
+Requires:       %{name} = %{version}-%{release}
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -112,6 +115,9 @@ install -Dpm0644 %{SOURCE1} %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
 
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 5.6-alt1_6jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 5.6-alt1_5jpp8
 - new fc release
 
