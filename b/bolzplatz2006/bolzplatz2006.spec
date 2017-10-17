@@ -2,9 +2,10 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2007 oc2pus <toni@links2linux.de>
 # Copyright (c) 2007 Hans de Goede <j.w.r.degoede@hhs.nl>
 # This file and all modifications and additions to the pristine
@@ -14,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           bolzplatz2006
 Version:        1.0.3
-Release:        alt1_32jpp8
+Release:        alt1_34jpp8
 Summary:        Slam Soccer 2006 is a funny football game in 3D-comic-style
 Summary(fr):    Coup de Foot 2006 est un jeu comique en 3D
 Summary(de):    Bolzplatz 2006 ist ein spaßiges Fußballspiel im 3D-Comic-Stil
@@ -48,9 +49,10 @@ BuildRequires:  ant sdljava dom4j vecmath1.2 swig xml-commons-apis
 BuildRequires:  libGLU-devel libdevil-devel libXxf86vm-devel libjpeg-devel
 BuildRequires:  libpng-devel libXext-devel libXrandr-devel libXcursor-devel
 BuildRequires:  libXt-devel libXrender-devel libvorbis-devel desktop-file-utils
-# Building ( & running) only works with openjdk
+# Make sure we get the normal openjdk and not the incomplete aarch32 version
+BuildRequires:  java-1.8.0-openjdk-devel
 BuildRequires:  libappstream-glib
-Requires:       sdljava dom4j vecmath1.2 javapackages-tools rpm-build-java
+Requires:       sdljava dom4j vecmath1.2 java >= 1.6.0 jpackage-utils
 Requires:       icon-theme-hicolor autodownloader
 # These are dynamically opened by lwjgl:
 Requires:       libopenal1
@@ -172,7 +174,7 @@ echo "export LD_LIBRARY_PATH=/usr/lib/jvm/jre-openjdk/lib/$JAVA_ARCH" >> \
 
 # build irrlicht-0.14
 pushd libsrc/irrlicht-0.14-patched
-make %{?_smp_mflags} CPP="g++ $RPM_OPT_FLAGS -fPIC -fno-strict-aliasing" \
+%make_build CPP="g++ $RPM_OPT_FLAGS -fPIC -fno-strict-aliasing" \
   CC="g++ $RPM_OPT_FLAGS -fPIC -fno-strict-aliasing"
 popd
 
@@ -242,6 +244,9 @@ install -p -m 644 %{name}-functions.sh %{SOURCE8} %{SOURCE9} \
 
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_34jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_32jpp8
 - new fc release
 
