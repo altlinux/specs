@@ -3,7 +3,6 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # fedora bcond_with macro
@@ -12,6 +11,8 @@ BuildRequires: jpackage-generic-compat
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -58,7 +59,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           hamcrest
 Version:        1.3
-Release:        alt3_14jpp8
+Release:        alt3_18jpp8
 Epoch:          0
 Summary:        Library of matchers for building test expressions
 License:        BSD
@@ -85,17 +86,18 @@ Patch0:         %{name}-%{version}-build.patch
 Patch1:         %{name}-%{version}-no-jarjar.patch
 Patch3:         %{name}-%{version}-javadoc.patch
 Patch4:         %{name}-%{version}-qdox-2.0.patch
+Patch5:         %{name}-%{version}-fork-javac.patch
 
 Requires:       qdox
 Requires:       easymock >= 3.0
-Requires:       %{name}-core = %{epoch}:%{version}
+Requires:       %{name}-core = %{epoch}:%{version}-%{release}
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils >= 0:1.7.4
+BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  ant >= 0:1.6.5
 BuildRequires:  ant-junit
 BuildRequires:  zip
 BuildRequires:  easymock >= 3.0
-BuildRequires:  perl
 %if %with jarjar
 BuildRequires:  jarjar
 %endif
@@ -134,7 +136,7 @@ Javadoc for %{name}.
 %package demo
 Group:          Development/Other
 Summary:        Demos for %{name}
-Requires:       %{name} = %{epoch}:%{version}
+Requires:       %{name} = %{epoch}:%{version}-%{release}
 Requires:       junit
 %if %with tests
 Requires:       testng
@@ -169,8 +171,9 @@ ln -sf $(build-classpath testng-jdk15) lib/integration/
 %endif
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
-perl -pi -e 's/\r$//g' LICENSE.txt
+sed -i 's/\r//' LICENSE.txt
 
 %build
 export CLASSPATH=$(build-classpath qdox)
@@ -268,6 +271,9 @@ cp -pr %{name}-examples $RPM_BUILD_ROOT%{_datadir}/%{name}/
 %{_datadir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_18jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_14jpp8
 - new fc release
 
