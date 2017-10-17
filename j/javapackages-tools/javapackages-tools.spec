@@ -33,7 +33,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javapackages-tools
 Version:        4.6.0
-Release:        alt10_15jpp8
+Release:        alt11_15jpp8
 
 Summary:        Macros and scripts for Java packaging support
 
@@ -110,7 +110,7 @@ RPM build helpers for Java packages.
 Group: Development/Java
 Summary:        Macros and scripts for Maven packaging support
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       javapackages-tools rpm-build-java
+Requires:       javapackages-local = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       maven
 Requires:       xmvn >= 2
 Requires:       xmvn-mojo >= 2
@@ -152,7 +152,7 @@ This package provides macros and scripts to support packaging Maven artifacts.
 Group: Development/Java
 Summary:        Local mode for Gradle
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       javapackages-tools rpm-build-java
+Requires:       javapackages-local = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       gradle >= 2.2.1
 Requires:       xmvn-connector-gradle >= 2
 
@@ -164,7 +164,7 @@ resolution using XMvn resolver.
 Group: Development/Java
 Summary:        Local mode for Apache Ivy
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       javapackages-tools rpm-build-java
+Requires:       javapackages-local = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       apache-ivy >= 2.3.0
 Requires:       xmvn-connector-ivy >= 2
 
@@ -209,7 +209,7 @@ This package provides non-essential macros and scripts to support Java packaging
 
 sed -i '/fedora-review/d' install
 %patch33 -p1
-#patch34 -p1
+%patch34 -p1
 %patch35 -p1
 %patch36 -p1
 %patch37 -p1
@@ -314,8 +314,11 @@ popd
 
 
 %changelog
-* Mon Oct 16 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt10_15jpp8
-- updated javapackages-tools-4.6.0-alt-req-headless-off.patch
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt11_15jpp8
+- fixed interpackage dependencies
+
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt10_15jpp8
+- update
 
 * Tue Oct 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.6.0-alt10_14jpp8.1
 - Fixed build with new python-module-lxml.
