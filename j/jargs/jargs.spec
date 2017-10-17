@@ -2,12 +2,13 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           jargs
 Version:        1.0
-Release:        alt1_17jpp8
+Release:        alt1_18jpp8
 Summary:        Java command line option parsing suite
 
 Group:          Development/Other
@@ -17,7 +18,8 @@ Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.
 Source1:        https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/net/sf/jargs/1.0/jargs-1.0.pom
 BuildArch:      noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  java-devel
+BuildRequires:  jpackage-utils
 BuildRequires:  ant
 BuildRequires:  junit
 Source44: import.info
@@ -70,6 +72,9 @@ cp -p %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_18jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_17jpp8
 - new fc release
 
