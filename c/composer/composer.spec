@@ -1,7 +1,7 @@
 #!!! Create new vendor cache for new composer version by get_vendor_cache.sh !!!
 
 Name: composer
-Version: 1.4.2
+Version: 1.5.2
 Release: alt1
 
 Summary: Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere.
@@ -60,6 +60,9 @@ EOF
 %attr(755,root,root) %_datadir/%name.phar
 
 %changelog
+* Tue Oct 17 2017 Vitaly Lipatov <lav@altlinux.ru> 1.5.2-alt1
+- build new version
+
 * Thu Jul 13 2017 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt1
 - build new version
 
