@@ -3,14 +3,15 @@ Group: Databases
 BuildRequires(pre): rpm-macros-java
 BuildRequires: perl(DBD/ODBC.pm) perl(DBI.pm) unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global pomversion 2.3.0
 
 Name:           hsqldb
 Version:        2.3.4
-Release:        alt1_1jpp8
+Release:        alt1_3jpp8
 Epoch:          1
 Summary:        HyperSQL Database Engine
 License:        BSD
@@ -37,12 +38,12 @@ Patch0:         %{name}-apidocs.patch
 Patch1:         %{name}-cmdline.patch
 
 BuildRequires:  ant
-BuildRequires:  javapackages-local
-BuildRequires:  junit
+BuildRequires:  javapackages-tools rpm-build-java
 BuildRequires:  glassfish-servlet-api
 
-Requires:       %{name}-lib = %{epoch}:%{version}
-Requires(pre): shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
+Requires:       %{name}-lib = %{epoch}:%{version}-%{release}
+Requires:       glassfish-servlet-api
+Requires(pre):  shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
 Source44: import.info
 Source45: hsqldb.init
 
@@ -90,21 +91,26 @@ Javadoc for %{name}.
 %package demo
 Group: Development/Java
 Summary:    Demo for %{name}
-Requires:   %{name} = %{epoch}:%{version}
+Requires:   %{name} = %{epoch}:%{version}-%{release}
 
 %description demo
 Demonstrations and samples for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}/%{name}
+
 # set right permissions
 find . -name "*.sh" -exec chmod 755 \{\} \;
+
 # remove all _notes directories
 for dir in `find . -name _notes`; do rm -rf $dir; done
+
 # remove all binary libs
 find . -name "*.jar" -exec rm -f {} \;
 find . -name "*.class" -exec rm -f {} \;
 find . -name "*.war" -exec rm -f {} \;
+find . -name "*.zip" -exec rm -f {} \;
+
 # correct silly permissions
 chmod -R go=u-w *
 
@@ -116,12 +122,9 @@ sed -i -e 's|doc/apidocs|%{_javadocdir}/%{name}|g' index.html
 %patch1 -p1
 
 %build
-export CLASSPATH=$(build-classpath \
-servlet \
-junit)
 pushd build
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
-ant hsqldb javadoc
+ant hsqldb javadoc -Dservletapi.lib=$(build-classpath glassfish-servlet-api)
 popd
 
 %install
@@ -141,17 +144,17 @@ install -m 755 %{SOURCE9} %{buildroot}%{_prefix}/lib/%{name}/%{name}-stop
 install -d -m 755 %{buildroot}%{_sysconfdir}/sysconfig
 install -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/sysconfig/%{name}
 # serverconfig
-install -d -m 755 %{buildroot}%{_var}/lib/%{name}
-install -m 644 %{SOURCE2} %{buildroot}%{_var}/lib/%{name}/server.properties
-install -m 644 %{SOURCE3} %{buildroot}%{_var}/lib/%{name}/webserver.properties
-install -m 600 %{SOURCE4} %{buildroot}%{_var}/lib/%{name}/sqltool.rc
+install -d -m 755 %{buildroot}%{_localstatedir}/lib/%{name}
+install -m 644 %{SOURCE2} %{buildroot}%{_localstatedir}/lib/%{name}/server.properties
+install -m 644 %{SOURCE3} %{buildroot}%{_localstatedir}/lib/%{name}/webserver.properties
+install -m 600 %{SOURCE4} %{buildroot}%{_localstatedir}/lib/%{name}/sqltool.rc
 # lib
-install -d -m 755 %{buildroot}%{_var}/lib/%{name}/lib
+install -d -m 755 %{buildroot}%{_localstatedir}/lib/%{name}/lib
 # javadoc
 install -d -m 755 %{buildroot}%{_javadocdir}
 mv doc/apidocs %{buildroot}%{_javadocdir}/%{name}
 # data
-install -d -m 755 %{buildroot}%{_var}/lib/%{name}/data
+install -d -m 755 %{buildroot}%{_localstatedir}/lib/%{name}/data
 # manual
 install -d -m 755 %{buildroot}%{_docdir}/%{name}
 cp -r doc index.html %{buildroot}%{_docdir}/%{name}
@@ -160,11 +163,11 @@ cp -r doc index.html %{buildroot}%{_docdir}/%{name}
 install -pD -T -m 644 %{SOURCE5} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap
 
-pushd %{buildroot}%{_var}/lib/%{name}/lib
+pushd %{buildroot}%{_localstatedir}/lib/%{name}/lib
     # build-classpath can not be used as the jar is not
     # yet present during the build
     ln -s %{_javadir}/hsqldb.jar hsqldb.jar
-    ln -s $(build-classpath servlet) servlet.jar
+    ln -s $(build-classpath glassfish-servlet-api) servlet.jar
 popd
 # sysv init
 install -d -m 755 $RPM_BUILD_ROOT%{_initrddir}
@@ -178,7 +181,7 @@ install -m 755 %{SOURCE45} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 %pre
 %{_sbindir}/groupadd  -f -r %{name} 2> /dev/null || :
 %{_sbindir}/useradd  -g %{name} -s /sbin/nologin \
-    -d %{_var}/lib/%{name} -r %{name} 2> /dev/null || :
+    -d %{_localstatedir}/lib/%{name} -r %{name} 2> /dev/null || :
 
 %post
 %post_service hsqldb
@@ -189,12 +192,12 @@ install -m 755 %{SOURCE45} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 %{_prefix}/lib/%{name}/%{name}-wrapper
 %{_prefix}/lib/%{name}/%{name}-post
 %{_prefix}/lib/%{name}/%{name}-stop
-%attr(0700,hsqldb,hsqldb) %{_var}/lib/%{name}/data
-%{_var}/lib/%{name}/lib
-%{_var}/lib/%{name}/server.properties
-%{_var}/lib/%{name}/webserver.properties
-%attr(0600,hsqldb,hsqldb) %{_var}/lib/%{name}/sqltool.rc
-%dir %{_var}/lib/%{name}
+%attr(0700,hsqldb,hsqldb) %{_localstatedir}/lib/%{name}/data
+%{_localstatedir}/lib/%{name}/lib
+%{_localstatedir}/lib/%{name}/server.properties
+%{_localstatedir}/lib/%{name}/webserver.properties
+%attr(0600,hsqldb,hsqldb) %{_localstatedir}/lib/%{name}/sqltool.rc
+%dir %{_localstatedir}/lib/%{name}
 %dir %{_prefix}/lib/%{name}
 %{_initrddir}/%{name}
 
@@ -209,6 +212,9 @@ install -m 755 %{SOURCE45} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 %files demo
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.3.4-alt1_3jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.3.4-alt1_1jpp8
 - new version
 
