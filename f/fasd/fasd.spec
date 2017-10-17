@@ -1,6 +1,6 @@
 Name: 	  fasd
 Version:  1.0.1.0.7.git90b531a
-Release:  alt1
+Release:  alt2
 
 Summary:  Command-line productivity booster, offers quick access to files and directories
 
@@ -12,6 +12,7 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 Source:   %name-%version.tar
 Patch0:   fasd-1.0.1.0.7.git90b531a-fix_shebang.patch
+Patch1:   fasd-1.0.1.0.7.git90b531a-fix_gnustep_gworkspace.patch
 
 BuildArch: noarch
 
@@ -25,6 +26,7 @@ in the command line.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 %make_build
@@ -37,5 +39,8 @@ in the command line.
 %_man1dir/*
 
 %changelog
+* Tue Oct 17 2017 Grigory Ustinov <grenka@altlinux.org> 1.0.1.0.7.git90b531a-alt2
+- Fix gnustep-gworkspace dependency.
+
 * Mon Oct 16 2017 Grigory Ustinov <grenka@altlinux.org> 1.0.1.0.7.git90b531a-alt1
 - Initial build for Sisyphus.
