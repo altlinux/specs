@@ -2,12 +2,13 @@
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /.opt-share.etc.profile.ant/d
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           gluegen2
 Version:        2.3.2
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 %global src_name gluegen-v%{version}
 Summary:        Java/JNI glue code generator to call out to ANSI C
 
@@ -52,7 +53,7 @@ Summary:        GlueGen2 devel utilities required to build JOGL2
 Group:          Development/Other
 BuildArch:      noarch
 
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{version}-%{release}
 Requires:       ant-antlr
 Requires:       ant-contrib
 Requires:       ant-junit
@@ -230,6 +231,9 @@ rm -fr %{buildroot}%{_jnidir}/test
 %{_docdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_5jpp8
+- new jpp release
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_4jpp8
 - new version
 
