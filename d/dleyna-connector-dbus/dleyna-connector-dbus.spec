@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name dleyna
 %define api_ver 1.0
 
 Name: %_name-connector-dbus
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: D-Bus connector for dLeyna services
@@ -57,6 +57,9 @@ use %name.
 
 
 %changelog
+* Wed Oct 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Wed Feb 22 2017 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - first build for Sisyphus
 

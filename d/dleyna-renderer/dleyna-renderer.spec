@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name dleyna
 %define api_ver 1.0
 
 Name: %_name-renderer
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: Service for interacting with Digital Media Renderers
@@ -65,6 +65,9 @@ developing applications that use %name-service.
 
 
 %changelog
+* Wed Oct 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Wed Feb 22 2017 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - first build for Sisyphus
 
