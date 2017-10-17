@@ -1,14 +1,15 @@
-Serial: 1
+Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           jlatexmath
 Version:        1.0.3
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Java API to display mathematical formulas written in LaTeX
 
 Group:          Development/Other
@@ -16,10 +17,12 @@ License:        GPLv2+
 URL:            http://forge.scilab.org/index.php/p/jlatexmath/
 Source0:        http://forge.scilab.org/index.php/p/jlatexmath/downloads/get/%{name}-src-all-%{version}.zip
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils
+BuildRequires:  java-devel
 BuildRequires:  ant
 
-Requires: javapackages-tools rpm-build-java
+Requires:       java
+Requires:       jpackage-utils
 
 BuildArch:      noarch
 Source44: import.info
@@ -34,12 +37,13 @@ JLaTeXMath is a fork of the excellent project JMathTeX.
 Summary:        FOP plug-in for %{name}
 Group:          Development/Other
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils
+BuildRequires:  java-devel
 BuildRequires:  ant
 BuildRequires:  fop
 
-Requires: javapackages-tools rpm-build-java
-Requires:       %{name} = %{version}
+Requires:       jpackage-utils
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       fop
 
 
@@ -49,8 +53,8 @@ This package contains the FOP plug-in for %{name}.
 %package javadoc
 Summary:        API Documentation for %{name}
 Group:          Development/Java
-Requires: javapackages-tools rpm-build-java
-Requires:       %{name} = %{version}
+Requires:       jpackage-utils
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
@@ -94,6 +98,9 @@ cp -rp doc/ $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0.3-alt1_5jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.3-alt1_4jpp8
 - new fc release
 
