@@ -5,10 +5,11 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /.etc.java.jing-trang.conf/d
 %filter_from_requires /^.usr.bin.run/d
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 24
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # TODO:
 # - Install dtdinst's schemas, XSL etc as non-doc and to system catalogs?
 # - Drop isorelax and xerces license texts and references to them because
@@ -20,7 +21,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jing-trang
 Version:        20131210
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Schema validation and conversion based on RELAX NG
 
 License:        BSD
@@ -42,12 +43,12 @@ BuildRequires:  ant-trax
 %else
 BuildRequires:  ant >= 1.8.2
 %endif
-BuildRequires:  bsh
+BuildRequires:  bsh-utils
 BuildRequires:  isorelax
 BuildRequires:  java-devel-openjdk >= 1.6.0
 BuildRequires:  java-javadoc
 BuildRequires:  javacc
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils
 BuildRequires:  qdox
 BuildRequires:  relaxngDatatype
 BuildRequires:  relaxngDatatype-javadoc
@@ -64,7 +65,7 @@ Source44: import.info
 %package     -n jing
 Summary:        RELAX NG validator in Java
 Group:          Text tools
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 Requires:       java%{?headless} >= 1.5.0
 Requires:       relaxngDatatype
 Requires:       xerces-j2
@@ -90,7 +91,7 @@ Javadoc API documentation for Jing.
 %package     -n trang
 Summary:        Multi-format schema converter based on RELAX NG
 Group:          Text tools
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 Requires:       java%{?headless} >= 1.5.0
 Requires:       relaxngDatatype
 Requires:       xerces-j2
@@ -107,7 +108,7 @@ for output only, not for input.
 %package     -n dtdinst
 Summary:        XML DTD to XML instance format converter
 Group:          Text tools
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 Requires:       java%{?headless} >= 1.5.0
 
 %description -n dtdinst
@@ -196,6 +197,9 @@ install -pm 644 dtdinst-%{version}/dtdinst.jar $RPM_BUILD_ROOT%{_javadir}
 
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:20131210-alt1_7jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:20131210-alt1_6jpp8
 - new fc release
 
