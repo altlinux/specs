@@ -1,18 +1,19 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          axis
 Version:       1.4
-Release:       alt4_29jpp8
+Release:       alt4_32jpp8
 Epoch:         0
 Summary:       SOAP implementation in Java
 License:       ASL 2.0
-Group:         Development/Other
 URL:           http://ws.apache.org/axis/
 Source0:       axis-1.4-src.tar.gz
 # svn export http://svn.apache.org/repos/asf/webservices/axis/branches/AXIS_1_4_FINAL/
@@ -60,7 +61,7 @@ BuildRequires: apache-commons-logging
 BuildRequires: apache-commons-net
 BuildRequires: jakarta-oro
 BuildRequires: regexp
-BuildRequires: log4j
+BuildRequires: log4j12
 BuildRequires: javax.wsdl
 BuildRequires: xalan-j2
 BuildRequires: xerces-j2
@@ -75,7 +76,7 @@ Requires:      jpackage-utils >= 0:1.6
 Requires:      apache-commons-discovery
 Requires:      apache-commons-logging
 Requires:      jakarta-commons-httpclient >= 1:3.0
-Requires:      log4j
+Requires:      log4j12
 Requires:      javax.mail
 Requires:      javax.wsdl
 
@@ -120,12 +121,9 @@ Documentation for %{name}.
 ln -s %{_javadocdir}/%{name} docs/apiDocs
 
 # Remove provided binaries
-#find . -name "*.jar" -exec rm -f {} \;
-for f in $(find . -name "*.jar"); do mv $f $f.no; done
-#find . -name "*.zip" -exec rm -f {} \;
-for f in $(find . -name "*.zip"); do mv $f $f.no; done
-#find . -name "*.class" -exec rm -f {} \;
-for f in $(find . -name "*.class"); do mv $f $f.no; done
+find . -name "*.jar" -delete
+find . -name "*.zip" -delete
+find . -name "*.class" -delete
 
 %patch0 -b .orig
 %patch1 -b .orig
@@ -139,50 +137,29 @@ cp %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} .
 # Disable doclinting for java 8
 sed -i '/doctitle/a additionalparam="-Xdoclint:none"' build.xml
 
+# Use correct encoding
+sed -i '/<javac/a encoding="iso-8859-1"' build.xml
+sed -i '/<javadoc/a encoding="iso-8859-1"' build.xml
+
 %build
 pushd lib
-ln -sf $(build-classpath bea-stax-api) .
-ln -sf $(build-classpath bsf) .
-ln -sf $(build-classpath castor) .
-ln -sf $(build-classpath commons-discovery) .
-ln -sf $(build-classpath commons-httpclient) .
-ln -sf $(build-classpath commons-logging) .
-ln -sf $(build-classpath commons-net) .
-ln -sf $(build-classpath httpunit) .
-ln -sf $(build-classpath log4j) .
-ln -sf $(build-classpath oro) .
-ln -sf $(build-classpath xalan-j2) .
-ln -sf $(build-classpath xml-security) .
-ln -sf $(build-classpath xmlbeans/xbean) .
-ln -sf $(build-classpath wsdl4j) .
+build-jar-repository -s -p . \
+  bea-stax-api bsf castor commons-discovery commons-httpclient commons-logging commons-net httpunit \
+  log4j-1 oro xalan-j2 xml-security xmlbeans/xbean wsdl4j javamail/mail glassfish-servlet-api
 pushd endorsed
-ln -sf $(build-classpath xerces-j2) .
-ln -sf $(build-classpath xml-commons-apis) .
+build-jar-repository -s -p . \
+  xerces-j2 xml-commons-apis
 popd
-ln -sf $(build-classpath javamail/mail) .
 popd
 
 ant \
     -Dant.build.javac.source=1.4 \
     -Dtest.functional.fail=no \
     -Dcommons-discovery.jar=$(build-classpath commons-discovery) \
-    -Dcommons-httpclient.jar=$(build-classpath commons-httpclient) \
     -Dcommons-logging.jar=$(build-classpath commons-logging) \
-    -Dlog4j-core.jar=$(build-classpath log4j) \
+    -Dlog4j-core.jar=$(build-classpath log4j-1) \
     -Dwsdl4j.jar=$(build-classpath wsdl4j) \
-    -Dregexp.jar=$(build-classpath regexp) \
-    -Dxmlunit.jar=$(build-classpath xmlunit) \
-    -Dmailapi.jar=$(build-classpath javamail/mail) \
-    -Dservlet.jar=$(build-classpath glassfish-servlet-api) \
-    -Dbsf.jar=$(build-classpath bsf) \
-    -Dcastor.jar=$(build-classpath castor) \
-    -Dcommons-net.jar=$(build-classpath commons-net) \
-    -Dsecurity.jar=$(build-classpath xml-security) \
-    -Dxmlbeans.jar=$(build-classpath xmlbeans) \
-    -Dhttpunit.jar=$(build-classpath httpunit) \
     clean war javadocs # junit
-
-#    -Djimi.jar=$(build-classpath jimi) \
 
 # inject axis-ant OSGi manifest
 mkdir -p META-INF
@@ -190,16 +167,14 @@ cp -p %{SOURCE9} META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
 zip -u build/lib/%{name}-ant.jar META-INF/MANIFEST.MF
 
-
 %install
 ### Jar files
 
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
 
 pushd build/lib
-# install axis-schema.jar when xmlbeans is available
-   install -m 644 axis.jar axis-ant.jar saaj.jar jaxrpc.jar axis-schema.jar \
-           $RPM_BUILD_ROOT%{_javadir}/%{name}
+install -m 644 axis.jar axis-ant.jar saaj.jar jaxrpc.jar axis-schema.jar \
+    $RPM_BUILD_ROOT%{_javadir}/%{name}
 popd
 
 ### Javadoc
@@ -229,22 +204,28 @@ ln -sf ../%{name}/jaxrpc.jar %{buildroot}%{_javadir}/javax.xml.rpc/
 ln -sf ../%{name}/%{name}.jar %{buildroot}%{_javadir}/javax.xml.rpc/
 build-jar-repository %{buildroot}%{_javadir}/javax.xml.rpc/ javax.wsdl \
               javax.mail apache-commons-logging apache-commons-discovery \
-              jakarta-commons-httpclient log4j
+              jakarta-commons-httpclient log4j-1
 
 
 %files -f .mfiles
-%doc LICENSE README release-notes.html changelog.html
+%doc LICENSE
+%doc README release-notes.html changelog.html
 %dir %{_javadir}/%{name}
 %{_javadir}/javax.xml.rpc
 %{_datadir}/%{name}-%{version}
 
 %files javadoc
+%doc LICENSE
 %{_javadocdir}/%{name}
 
 %files manual
+%doc LICENSE
 %doc --no-dereference docs/*
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt4_32jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt4_29jpp8
 - new fc release
 
