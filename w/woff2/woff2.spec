@@ -1,5 +1,5 @@
 Name: woff2
-Version: 0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: WOFF2 compress/decompress tools
@@ -36,5 +36,8 @@ cp -a woff2_compress woff2_decompress %buildroot%_bindir/
 %_bindir/woff2_decompress
 
 %changelog
+* Wed Oct 18 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
+- build new release
+
 * Tue Apr 25 2017 Vitaly Lipatov <lav@altlinux.ru> 0.0-alt1
 - initial build for ALT Linux Sisyphus
