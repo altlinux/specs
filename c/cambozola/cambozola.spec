@@ -1,12 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           cambozola
 Version:        0.936
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        A viewer for multipart jpeg streams
 
 Group:          Development/Other
@@ -23,7 +24,9 @@ BuildArch:      noarch
 BuildRequires:  jpackage-utils
 BuildRequires:  java-devel
 BuildRequires:  ant
-#BuildRequires:  ant-nodeps
+%if 0%{?el6}
+BuildRequires:  ant-nodeps
+%endif
 Requires:       jpackage-utils
 Requires:       java
 Source44: import.info
@@ -79,6 +82,9 @@ cp -rp javadoc/*  \
 
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.936-alt1_4jpp8
+- new jpp release
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.936-alt1_2jpp8
 - new version
 
