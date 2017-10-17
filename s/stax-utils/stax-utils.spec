@@ -3,14 +3,15 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global svnrev 238
 
 Name:           stax-utils
 Version:        0
-Release:        alt1_0.10.20110309svn238jpp8
+Release:        alt1_0.11.20110309svn238jpp8
 Summary:        StAX utility classes
 License:        BSD
 URL:            http://java.net/projects/stax-utils/
@@ -28,10 +29,11 @@ Source1:        http://repo1.maven.org/maven2/net/java/dev/stax-utils/stax-utils
 Patch0:         %{name}-build-fixes.patch
 BuildArch:      noarch
 
+BuildRequires: java-devel
 BuildRequires: ant
 BuildRequires: ant-junit
-BuildRequires: javapackages-tools rpm-build-java
-Requires: javapackages-tools rpm-build-java
+BuildRequires: jpackage-utils
+Requires:      jpackage-utils
 Source44: import.info
 
 %description
@@ -78,6 +80,9 @@ cp -rp build/javadoc %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1:0-alt1_0.11.20110309svn238jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:0-alt1_0.10.20110309svn238jpp8
 - new fc release
 
