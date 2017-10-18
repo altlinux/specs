@@ -1,11 +1,11 @@
 %define oname pyramid
 
 %def_with python3
-%def_with bootstrap
+%def_without bootstrap
 
 Name:           python-module-%oname
 Version:        1.9.1
-Release:        alt1
+Release:        alt2
 Summary:        The Pyramid web application framework, a Pylons project
 Group:          Development/Python
 License:        BSD
@@ -168,6 +168,9 @@ python setup.py test
 %endif
 
 %changelog
+* Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.1-alt2
+- Rebuilt without bootstrap.
+
 * Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.1-alt1
 - Initial build for ALT.
 
