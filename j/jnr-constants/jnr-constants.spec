@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           jnr-constants
-Version:        0.9.2
-Release:        alt1_1jpp8
+Version:        0.9.6
+Release:        alt1_2jpp8
 Summary:        Java Native Runtime constants 
 License:        ASL 2.0
 URL:            http://github.com/jnr/%{name}/
@@ -17,6 +18,7 @@ BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
@@ -51,6 +53,9 @@ find ./ -name '*.class' -delete
 %doc LICENSE
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.6-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt1_1jpp8
 - new version
 
