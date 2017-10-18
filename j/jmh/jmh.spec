@@ -2,16 +2,15 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global hghash 534d83d9137f
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global hghash 7ff584954008
 Name:          jmh
-Version:       1.11.3
-Release:       alt1_3jpp8
+Version:       1.13
+Release:       alt1_2jpp8
 Summary:       Java Microbenchmark Harness
-# BSD jmh-samples/src/main/java/*
-# 2 files have unknown license, reported @ http://mail.openjdk.java.net/pipermail/jmh-dev/2015-August/002037.html
 License:       GPLv2 with exceptions
 URL:           http://openjdk.java.net/projects/code-tools/jmh/
 Source0:       http://hg.openjdk.java.net/code-tools/jmh/archive/%{hghash}.tar.bz2
@@ -20,12 +19,8 @@ BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(net.sf.jopt-simple:jopt-simple)
 BuildRequires: mvn(org.apache.commons:commons-math3)
-# BuildRequires: mvn(org.apache.maven.plugins:maven-shade-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-site-plugin)
 BuildRequires: mvn(org.ow2.asm:asm)
-
-Obsoletes:     %{name}-core-ct
-Obsoletes:     %{name}-core-it
 
 BuildArch:     noarch
 Source44: import.info
@@ -80,6 +75,7 @@ Java Microbenchmark Harness Parent POM.
 %package samples
 Group: Development/Java
 Summary:       JMH Samples
+# BSD jmh-samples/src/main/java/*
 License:       BSD
 
 %description samples
@@ -88,7 +84,6 @@ JMH Samples.
 %package javadoc
 Group: Development/Java
 Summary:       Javadoc for %{name}
-# BSD jmh-samples/src/main/java/*
 License:       BSD and GPLv2 with exceptions
 BuildArch: noarch
 
@@ -125,7 +120,7 @@ for s in $(find %{name}-samples -name "*.java") \
 done
 
 # http://mail.openjdk.java.net/pipermail/jmh-dev/2015-August/001997.html
-sed -i "s,59,51,;s,Temple Place,Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1307,02110-1301,"  $(find -name "LICENSE") src/license/gpl_cpe/license.txt
+sed -i "s,59,51,;s,Temple Place,Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1307,02110-1301," src/license/gpl_cpe/license.txt
 
 %build
 
@@ -162,6 +157,9 @@ sed -i "s,59,51,;s,Temple Place,Franklin Street,;s,Suite 330,Fifth Floor,;s,0211
 %doc LICENSE src/license/*
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.11.3-alt1_3jpp8
 - new fc release
 
