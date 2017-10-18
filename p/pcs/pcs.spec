@@ -1,6 +1,6 @@
 Name: 	  pcs
-Version:  0.9.159
-Release:  alt3
+Version:  0.9.160
+Release:  alt1
 Epoch:    1
 
 Summary:  Pacemaker/Corosync configuration system
@@ -96,6 +96,9 @@ rm -rf %buildroot/%ruby_sitelibdir/pcsd/*{.service,.logrotate,debian,orig}*
 %ruby_sitelibdir/pcsd/test/*
 
 %changelog
+* Sun Oct 15 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.9.160-alt1
+- New version
+
 * Tue Sep 26 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.9.159-alt3
 - Completely remove requirement rack as gem
 - pcs-pcsd requires openssl
