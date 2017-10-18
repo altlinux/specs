@@ -1,10 +1,10 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name dleyna
 %define api_ver 1.0
 
 Name: %_name-core
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: Utilities for higher level %_name libraries
@@ -70,6 +70,9 @@ developing applications that use %name library.
 
 
 %changelog
+* Wed Oct 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Wed Feb 22 2017 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - first build for Sisyphus
 
