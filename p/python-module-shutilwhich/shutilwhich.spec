@@ -5,21 +5,20 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1
+Release: alt2
 Summary: shutil.which for those not using Python 3.3 yet
 License: PSF
 Group: Development/Python
 Url: https://pypi.python.org/pypi/shutilwhich/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-# https://github.com/mbr/shutilwhich.git
-Source0: https://pypi.python.org/packages/66/be/783f181594bb8bcfde174d6cd1e41956b986d0d8d337d535eb2555b92f8d/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
+# https://github.com/mbr/shutilwhich.git
+Source: %oname-%version.tar.gz
+
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -36,7 +35,7 @@ Group: Development/Python3
 A copy & paste backport of Python 3.3's shutil.which function.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -q -n %oname-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -71,6 +70,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt2
+- Rebuilt to fix file permissions.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1
 - automated PyPI update
 
