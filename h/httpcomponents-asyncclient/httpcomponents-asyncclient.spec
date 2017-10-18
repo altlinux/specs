@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          httpcomponents-asyncclient
-Version:       4.1.1
-Release:       alt1_4jpp8
+Version:       4.1.2
+Release:       alt1_2jpp8
 Summary:       Apache components to build asynchronous client side HTTP services
 License:       ASL 2.0
 URL:           http://hc.apache.org/
@@ -95,24 +96,6 @@ for p in httpasyncclient httpasyncclient-cache; do
  </configuration>"
 done
 
-# Remove deprecated httpclient annotations
-sed -i '/ThreadSafe/d' \
- httpasyncclient/src/main/java/org/apache/http/impl/nio/client/CloseableHttpPipeliningClient.java \
- httpasyncclient/src/main/java/org/apache/http/impl/nio/client/CloseableHttpAsyncClient.java \
- httpasyncclient/src/main/java/org/apache/http/impl/nio/conn/CPool.java \
- httpasyncclient/src/main/java/org/apache/http/impl/nio/conn/CPoolEntry.java \
- httpasyncclient/src/main/java/org/apache/http/impl/nio/conn/PoolingNHttpClientConnectionManager.java \
- httpasyncclient/src/main/java-deprecated/org/apache/http/impl/nio/conn/AsyncSchemeRegistryFactory.java \
- httpasyncclient-cache/src/main/java/org/apache/http/impl/client/cache/CachingHttpAsyncClient.java
-sed -i '/NotThreadSafe/d' \
- httpasyncclient/src/main/java/org/apache/http/impl/nio/client/HttpAsyncClientBuilder.java \
- httpasyncclient/src/main/java/org/apache/http/impl/nio/client/MinimalHttpAsyncClientBuilder.java \
- httpasyncclient/src/main/java/org/apache/http/impl/nio/conn/CPoolProxy.java
-sed -i '/Immutable/d' \
- httpasyncclient/src/main/java/org/apache/http/impl/nio/client/DefaultAsyncUserTokenHandler.java \
- httpasyncclient/src/main/java/org/apache/http/impl/nio/client/HttpAsyncClients.java \
- httpasyncclient/src/main/java/org/apache/http/impl/nio/conn/PoolingNHttpClientConnectionManager.java
-
 %mvn_file org.apache.httpcomponents:httpasyncclient httpasyncclient
 %mvn_file org.apache.httpcomponents:httpasyncclient-cache httpasyncclient-cache
 
@@ -137,6 +120,9 @@ sed -i '/Immutable/d' \
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_4jpp8
 - new fc release
 
