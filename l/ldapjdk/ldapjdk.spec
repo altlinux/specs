@@ -1,31 +1,29 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global spname		ldapsp
 %global filtname	ldapfilt
 %global beansname	ldapbeans
 
 Name:		ldapjdk
-Version:	4.18
-Release:	alt1_19jpp8
+Version:	4.19
+Release:	alt1_1jpp8
 Epoch:		1
 Summary: 	The Mozilla LDAP Java SDK
 License:	MPLv1.1 or GPLv2+ or LGPLv2+
 Group:		Development/Java
-URL:		http://www.mozilla.org/directory/javasdk.html
-# mkdir ldapjdk-4.18 ; 
-# cvs -d:pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot Export -r LDAPJavaSDK_418 DirectorySDKSourceJava
-# tar -zcf ldapjdk-4.18,tar.gz ldapjdk-4.18
-Source:		http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}.tar.gz
+URL:		http://www-archive.mozilla.org/directory/javasdk.html
+# mkdir ldapjdk-4.19 ; 
+# cvs -d:pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot Export -r LDAPJavaSDK_419 DirectorySDKSourceJava
+# tar -zcf ldapjdk-4.19.tar.gz ldapjdk-4.19
+Source:		http://pki.fedoraproject.org/pki/sources/%{name}/%{version}/%{name}-%{version}.tar.gz
 # originally taken from http://mirrors.ibiblio.org/pub/mirrors/maven2/ldapsdk/ldapsdk/4.1/ldapsdk-4.1.pom
 # changed: gId, aId and version
-Source1:	http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}.pom
-Patch0: 	%{name}-jarnamefix.patch
-Patch1:         matching-rule-parsing-640750.patch
-Patch2:         %{name}-support-IPv6.patch
+Source1:	http://pki.fedoraproject.org/pki/sources/%{name}/%{version}/%{name}-%{version}.pom
 
 Requires:	jpackage-utils >= 0:1.5
 Requires:       jss
@@ -58,29 +56,25 @@ Javadoc for %{name}
 %prep
 %setup -q
 # Remove all bundled jars, we must build against build-system jars
-rm -f ./mozilla/directory/java-sdk/ldapjdk/lib/{jss32_stub,jsse,jnet,jaas,jndi}.jar
-
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+rm -f ./java-sdk/ldapjdk/lib/{jss32_stub,jsse,jnet,jaas,jndi}.jar
 
 %build
 # cleanup CVS dirs
 rm -fr $(find . -name CVS -type d)
 # Link to build-system BRs
 pwd
-( cd  mozilla/directory/java-sdk/ldapjdk/lib && build-jar-repository -s -p . jss4 jsse jaas jndi )
-cd mozilla/directory/java-sdk
+( cd  java-sdk/ldapjdk/lib && build-jar-repository -s -p . jss4 jsse jaas jndi )
+cd java-sdk
 if [ ! -e "$JAVA_HOME" ] ; then export JAVA_HOME="%{_jvmdir}/java" ; fi
 sh -x ant dist
 
 %install
 
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 mozilla/directory/java-sdk/dist/packages/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-install -m 644 mozilla/directory/java-sdk/dist/packages/%{spname}.jar $RPM_BUILD_ROOT%{_javadir}/%{spname}.jar
-install -m 644 mozilla/directory/java-sdk/dist/packages/%{filtname}.jar $RPM_BUILD_ROOT%{_javadir}/%{filtname}.jar
-install -m 644 mozilla/directory/java-sdk/dist/packages/%{beansname}.jar $RPM_BUILD_ROOT%{_javadir}/%{beansname}.jar
+install -m 644 java-sdk/dist/packages/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+install -m 644 java-sdk/dist/packages/%{spname}.jar $RPM_BUILD_ROOT%{_javadir}/%{spname}.jar
+install -m 644 java-sdk/dist/packages/%{filtname}.jar $RPM_BUILD_ROOT%{_javadir}/%{filtname}.jar
+install -m 644 java-sdk/dist/packages/%{beansname}.jar $RPM_BUILD_ROOT%{_javadir}/%{beansname}.jar
 
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}-1.3.0
 
@@ -93,7 +87,7 @@ install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap JPP-%{name}.pom %{name}.jar -a "ldapsdk:ldapsdk"
 
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -r mozilla/directory/java-sdk/dist/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -r java-sdk/dist/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 ln -s ldapjdk.jar %buildroot%_javadir/ldapsdk.jar
 
 %files -f .mfiles
@@ -109,6 +103,9 @@ ln -s ldapjdk.jar %buildroot%_javadir/ldapsdk.jar
 %{_javadocdir}/%{name}/*
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.19-alt1_1jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.18-alt1_19jpp8
 - new fc release
 
