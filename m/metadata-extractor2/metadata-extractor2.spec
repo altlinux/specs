@@ -2,17 +2,18 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global majorversion 2
 Name:          metadata-extractor2
-Version:       2.8.1
-Release:       alt1_4jpp8
+Version:       2.9.1
+Release:       alt1_2jpp8
 Summary:       Extracts EXIF, IPTC, XMP, ICC and other metadata from image files
 License:       ASL 2.0
 URL:           http://drewnoakes.com/code/exif/
-Source0:       https://github.com/drewnoakes/metadata-extractor/archive/%{version}.tar.gz
+Source0:       https://github.com/drewnoakes/metadata-extractor/archive/%{version}/metadata-extractor-%{version}.tar.gz
 
 BuildRequires: maven-local
 BuildRequires: mvn(com.adobe.xmp:xmpcore)
@@ -55,6 +56,9 @@ find -name '*.class' -delete
 # Use standard maven output directory
 %pom_xpath_remove "pom:build/pom:directory"
 %pom_xpath_remove "pom:build/pom:outputDirectory"
+
+# javascript not allowed in javadoc
+%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration/pom:bottom"
 
 # Add OSGi support
 %pom_xpath_set "pom:project/pom:packaging" bundle 
@@ -100,6 +104,9 @@ sed -i 's/\r//' LICENSE-2.0.txt README.md CONTRIBUTING.md Resources/javadoc-styl
 %doc LICENSE-2.0.txt
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.9.1-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.8.1-alt1_4jpp8
 - new fc release
 
