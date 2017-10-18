@@ -2,39 +2,43 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          littleproxy
-Version:       0.5.3
-Release:       alt1_3jpp8
+Version:       1.1.0
+Release:       alt1_1jpp8
 Summary:       High Performance HTTP Proxy
 License:       ASL 2.0
 URL:           http://www.littleshoot.org/littleproxy/
 Source0:       https://github.com/adamfisk/LittleProxy/archive/%{name}-%{version}.tar.gz
+
+Patch0:        littleproxy-1.1.0-remove-netty-udt.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(com.google.guava:guava)
 BuildRequires: mvn(commons-cli:commons-cli)
 BuildRequires: mvn(commons-codec:commons-codec)
 BuildRequires: mvn(commons-io:commons-io)
-BuildRequires: mvn(io.netty:netty:3)
-BuildRequires: mvn(javax.servlet:javax.servlet-api)
+BuildRequires: mvn(dnsjava:dnsjava)
+BuildRequires: mvn(io.netty:netty-all)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(log4j:log4j:1.2.17)
+BuildRequires: mvn(org.apache.commons:commons-exec)
 BuildRequires: mvn(org.apache.commons:commons-lang3)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.httpcomponents:httpclient)
 BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires: mvn(org.eclipse.jetty:jetty-server:8.1.17.v20150415)
+BuildRequires: mvn(org.eclipse.jetty:jetty-server:8.1)
+BuildRequires: mvn(org.hamcrest:hamcrest-core)
+BuildRequires: mvn(org.hamcrest:hamcrest-library)
+BuildRequires: mvn(org.jctools:jctools-core)
 BuildRequires: mvn(org.littleshoot:dnssec4j)
-BuildRequires: mvn(org.mockito:mockito-all)
+BuildRequires: mvn(org.mockito:mockito-core)
 BuildRequires: mvn(org.slf4j:slf4j-api)
 BuildRequires: mvn(org.slf4j:slf4j-log4j12)
 BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
-%if 0
-# Not available test dep
-BuildRequires: mvn(org.seleniumhq.selenium:selenium-java:2.28.0)
-%endif
 
 BuildArch:     noarch
 Source44: import.info
@@ -53,37 +57,88 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n LittleProxy-%{name}-%{version}
+
 find . -name "*.class" -print -delete
 find . -name "*.jar" -print -delete
-#%% patch0 -p1
+
+%patch0 -p1
+%pom_remove_dep :barchart-udt-bundle
+%pom_remove_dep :netty-transport-udp
+rm src/test/java/org/littleshoot/proxy/*UDT*Test.java
 
 # Unavailable plugins
-%pom_remove_plugin org.sonatype.plugins:nexus-staging-maven-plugin
-%pom_remove_plugin org.apache.maven.plugins:maven-site-plugin
-# 8.1.14.v20131031 8.1.17.v20150415
-%pom_xpath_set "pom:dependency[pom:artifactId = 'jetty-server']/pom:version" 8.1.17.v20150415
+%pom_remove_plugin :nexus-staging-maven-plugin
+
+%pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :maven-shade-plugin
+mkdir src/main/resources
+cp -p src/main/config/log4j.xml src/main/resources
+
+%pom_xpath_set "pom:project/pom:packaging" bundle
+%pom_add_plugin org.apache.felix:maven-bundle-plugin . "
+<extensions>true</extensions>
+<configuration>
+  <instructions>
+    <Bundle-Version>\${project.version}</Bundle-Version>
+    <Main-Class>org.littleshoot.proxy.Launcher</Main-Class>
+  </instructions>
+</configuration>
+<executions>
+  <execution>
+    <id>bundle-manifest</id>
+    <phase>process-classes</phase>
+    <goals>
+      <goal>manifest</goal>
+    </goals>
+  </execution>
+</executions>"
+
+# 8.1.17.v20150415
+%pom_change_dep :jetty-server ::8.1
 %pom_xpath_inject "pom:dependency[pom:artifactId = 'jetty-server']" "
 <exclusions>
-    <exclusion>
-    <groupId>org.eclipse.jetty.orbit</groupId>
-    <artifactId>javax.servlet</artifactId>
-    </exclusion>
+ <exclusion>
+  <groupId>org.eclipse.jetty.orbit</groupId>
+  <artifactId>javax.servlet</artifactId>
+ </exclusion>
 </exclusions>"
 
-%pom_xpath_set "pom:dependency[pom:artifactId = 'netty']/pom:version" 3
+# org.seleniumhq.selenium:selenium-java:2.46.0
+%pom_remove_dep :selenium-java
+rm src/test/java/org/littleshoot/proxy/EndToEndStoppingTest.java
+# org.mock-server:mockserver-netty:3.10.4
+%pom_remove_dep :mockserver-netty
+rm src/test/java/org/littleshoot/proxy/ClonedProxyTest.java \
+ src/test/java/org/littleshoot/proxy/HttpFilterTest.java \
+ src/test/java/org/littleshoot/proxy/KeepAliveTest.java \
+ src/test/java/org/littleshoot/proxy/MessageTerminationTest.java \
+ src/test/java/org/littleshoot/proxy/ProxyHeadersTest.java \
+ src/test/java/org/littleshoot/proxy/ServerGroupTest.java \
+ src/test/java/org/littleshoot/proxy/TimeoutTest.java
 
-%pom_remove_dep org.seleniumhq.selenium:selenium-java
-rm -r src/test/java/org/littleshoot/proxy/EndToEndStoppingTest.java
+# NoClassDefFoundError: org/jctools/queues/SpscLinkedQueue
+%pom_add_dep org.jctools:jctools-core:1.2.1:test
 
-%pom_add_dep javax.servlet:javax.servlet-api:3.1.0:test
+# Connection refused: /127.0.0.1:0
+rm src/test/java/org/littleshoot/proxy/ChainedProxyWithFallbackTest.java \
+ src/test/java/org/littleshoot/proxy/ChainedProxyWithFallbackToDirectDueToSSLTest.java \
+ src/test/java/org/littleshoot/proxy/ChainedProxyWithFallbackToOtherChainedProxyDueToSSLTest.java \
+ src/test/java/org/littleshoot/proxy/ClientAuthenticationNotRequiredTCPChainedProxyTest.java \
+ src/test/java/org/littleshoot/proxy/EncryptedTCPChainedProxyTest.java \
+ src/test/java/org/littleshoot/proxy/MitmProxyTest.java \
+ src/test/java/org/littleshoot/proxy/MITMUsernamePasswordAuthenticatingProxyTest.java \
+ src/test/java/org/littleshoot/proxy/MitmWithChainedProxyTest.java \
+ src/test/java/org/littleshoot/proxy/MitmWithClientAuthenticationNotRequiredTCPChainedProxyTest.java \
+ src/test/java/org/littleshoot/proxy/MitmWithEncryptedTCPChainedProxyTest.java \
+ src/test/java/org/littleshoot/proxy/MitmWithUnencryptedTCPChainedProxyTest.java \
+ src/test/java/org/littleshoot/proxy/SimpleProxyTest.java \
+ src/test/java/org/littleshoot/proxy/UnencryptedTCPChainedProxyTest.java \
+ src/test/java/org/littleshoot/proxy/UsernamePasswordAuthenticatingProxyTest.java \
+ src/test/java/org/littleshoot/proxy/MitmWithBadServerAuthenticationTCPChainedProxyTest.java \
+ src/test/java/org/littleshoot/proxy/MitmWithBadClientAuthenticationTCPChainedProxyTest.java
 
-# Use web connection
-rm -r src/test/java/org/littleshoot/proxy/HttpProxyTest.java
-# NoClassDefFoundError: Could not initialize class org.littleshoot.proxy.ProxyUtils
-rm -r src/test/java/org/littleshoot/proxy/HttpFilterTest.java \
- src/test/java/org/littleshoot/proxy/ProxyChainTest.java \
- src/test/java/org/littleshoot/proxy/ProxyUtilsTest.java \
- src/test/java/org/littleshoot/proxy/RegexHttpRequestFilterTest.java
+# @ random fails with: Socket Too many open files
+rm src/test/java/org/littleshoot/proxy/IdleTest.java
 
 %mvn_file :%{name} %{name}
 
@@ -102,6 +157,9 @@ rm -r src/test/java/org/littleshoot/proxy/HttpFilterTest.java \
 %doc COPYRIGHT.txt LICENSE.txt
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_1jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1_3jpp8
 - new fc release
 
