@@ -5,39 +5,43 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           plexus-containers
-Version:        1.6
-Release:        alt3_6jpp8
+Version:        1.7.1
+Release:        alt1_2jpp8
 Summary:        Containers for Plexus
 License:        ASL 2.0 and MIT
 URL:            https://github.com/codehaus-plexus/plexus-containers
 BuildArch:      noarch
 
-Source0:        https://github.com/sonatype/%{name}/archive/%{name}-%{version}.tar.gz
+Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
+
+Patch0:         0001-Port-to-current-qdox.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.collections:google-collections)
 BuildRequires:  mvn(commons-cli:commons-cli)
 BuildRequires:  mvn(com.sun:tools)
 BuildRequires:  mvn(com.thoughtworks.qdox:qdox)
-BuildRequires:  mvn(jdom:jdom)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.xbean:xbean-reflect)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-classworlds)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-cli)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.jdom:jdom2)
 BuildRequires:  mvn(org.ow2.asm:asm-all)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 Source44: import.info
 
 
@@ -98,6 +102,10 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
+%patch0 -p1
+
+%pom_remove_plugin -r :maven-site-plugin
+
 # For Maven 3 compat
 %pom_add_dep org.apache.maven:maven-core plexus-component-metadata
 
@@ -156,6 +164,9 @@ sed -i "s|<version>2.3</version>|<version> %{javadoc_plugin_version}</version>|"
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt3_6jpp8
 - new fc release
 
