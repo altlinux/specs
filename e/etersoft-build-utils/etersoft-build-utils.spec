@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.7.1
+Version: 2.7.2
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -20,14 +20,14 @@ BuildArchitectures: noarch
 %define altcompat_ver 1.9.3
 
 # Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
-BuildRequires: rpm-build-compat >= %altcompat_ver
+#BuildRequires: rpm-build-compat >= %altcompat_ver
 
 Requires: giter >= 1.10
 Requires: eepm >= 2.1.0
 Requires: erc >= 0.9.2
 
 Requires: rpm-build
-Requires: rpm-build-compat >= %altcompat_ver
+#Requires: rpm-build-compat >= %altcompat_ver
 
 %if %_vendor == "alt"
 Requires: sisyphus_check rsync openssh-clients srpmcmp
@@ -68,6 +68,16 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Wed Oct 18 2017 Vitaly Lipatov <lav@altlinux.ru> 2.7.2-alt1
+- rpmgs: fix get source url again
+- rpmbs: fix rpmbs -t
+- rpmgs: download all sources by default
+- rpmgs: rewrite npm hook
+- rpmbs: improve task and subtask handling
+- loginhsh: improve tool packages install
+- rpmlog: use gammit
+- use distr_info from eepm instead distr_vendor from rpm-build-altlinux-compat
+
 * Tue Aug 29 2017 Vitaly Lipatov <lav@altlinux.ru> 2.7.1-alt1
 - rpmgp: fix -l
 - rpmgs: initial support for non archive downloading
