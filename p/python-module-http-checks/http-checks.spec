@@ -4,27 +4,27 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.1.8
+Version: 0.2.0
 Release: alt1
 Summary: Test a couple of hundred urls in seconds
 License: Free
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/http-checks/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/Hipo/http-checks.git
-Source0: https://pypi.python.org/packages/17/0b/b1fcad012963b5b275a7ca6b4675b4e76dfef3b6f6479b936c5418247cf3/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %oname-%version.tar
 
-BuildPreReq: python-modules-json
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-yaml python-module-requests
-BuildPreReq: python-module-gevent python-module-BeautifulSoup4
+BuildRequires: python-dev python-module-setuptools-tests
+BuildRequires: python-module-yaml python-module-requests
+BuildRequires: python-module-gevent python-module-BeautifulSoup4
+BuildRequires: python2.7(json) python2.7(jsonpath_rw)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-yaml python3-module-requests
-BuildPreReq: python3-module-gevent python3-module-BeautifulSoup4
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-yaml python3-module-requests
+BuildRequires: python3-module-gevent python3-module-BeautifulSoup4
+BuildRequires: python3(json) python3(jsonpath_rw)
 %endif
 
 %py_provides httpchecks
@@ -47,7 +47,7 @@ seconds.
 %endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -q -n %oname-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -105,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.0-alt1
+- Updated to upstream version 0.2.0.
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.8-alt1
 - automated PyPI update
 
