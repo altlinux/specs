@@ -3,17 +3,17 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name mvel
-%define version 2.2.7
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 2.2.8
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:          mvel
-Version:       2.2.7
+Version:       2.2.8
 Release:       alt1_2jpp8
 Summary:       MVFLEX Expression Language
 License:       ASL 2.0
@@ -22,7 +22,7 @@ Source0:       https://github.com/mvel/mvel/archive/%{name}2-%{namedversion}.tar
 Source1:       %{name}-script
 Patch0:        %{name}-2.2.7.Final-use-system-asm.patch
 # remove tests which require internal objectweb-asm libraries
-Patch1:        %{name}-2.2.7.Final-tests.patch
+Patch1:        %{name}-2.2.8.Final-tests.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(com.thoughtworks.xstream:xstream)
@@ -63,7 +63,7 @@ rm -rf src/main/java/org/mvel2/asm
 # See https://bugzilla.redhat.com/show_bug.cgi?id=1095339
 sed -i '/Unsafe/d' src/main/java/org/mvel2/util/JITClassLoader.java
 
-# Uwanted
+# Unwanted task
 %pom_remove_plugin :maven-source-plugin
 # Remove org.apache.maven.wagon:wagon-webdav:1.0-beta-2
 %pom_xpath_remove "pom:project/pom:build/pom:extensions"
@@ -98,6 +98,9 @@ touch $RPM_BUILD_ROOT/etc/mvel.conf
 %doc LICENSE.txt
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.8-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt1_2jpp8
 - new fc release
 
