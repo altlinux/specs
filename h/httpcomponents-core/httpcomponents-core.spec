@@ -2,9 +2,10 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # READ BEFORE UPDATING: After updating this package to new upstream
 # version eclipse-ecf should be rebuilt.  For more info, see:
 # https://fedoraproject.org/wiki/SIGs/Java#Package_Update.2FRebuild_Notes
@@ -13,8 +14,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:              httpcomponents-core
 Summary:           Set of low level Java HTTP transport components for HTTP services
-Version:           4.4.5
-Release:           alt1_2jpp8
+Version:           4.4.6
+Release:           alt1_3jpp8
 License:           ASL 2.0
 URL:               http://hc.apache.org/
 Source0:           http://www.apache.org/dist/httpcomponents/httpcore/source/httpcomponents-core-%{version}-src.tar.gz
@@ -25,8 +26,6 @@ BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.httpcomponents:project:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.apache.rat:apache-rat-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.mockito:mockito-core)
 Source44: import.info
@@ -61,6 +60,8 @@ BuildArch: noarch
 
 %pom_remove_plugin :maven-checkstyle-plugin
 %pom_remove_plugin :apache-rat-plugin
+%pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :maven-javadoc-plugin
 
 # we don't need these artifacts right now
 %pom_disable_module httpcore-osgi
@@ -102,6 +103,9 @@ done
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 4.4.6-alt1_3jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 4.4.5-alt1_2jpp8
 - new version
 
