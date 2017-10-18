@@ -4,44 +4,58 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-Name:           pdfbox
-Version:        1.8.12
-Release:        alt1_1jpp8
-Summary:        Java library for working with PDF documents
-License:        ASL 2.0
-URL:            http://pdfbox.apache.org/
-Source0:        http://www.apache.org/dist/pdfbox/%{version}/%{name}-%{version}-src.zip
-#Don't download anything
-Patch0:         %{name}-nodownload.patch
-#Use sysytem bitream-vera-sans-fonts instead of bundled fonts
-Patch1:         %{name}-1.2.0-bitstream.patch
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:          pdfbox
+Version:       1.8.13
+Release:       alt1_1jpp8
+Summary:       Java library for working with PDF documents
+License:       ASL 2.0
+URL:           http://pdfbox.apache.org/
+Source0:       http://www.apache.org/dist/pdfbox/%{version}/%{name}-%{version}-src.zip
+# Don't download anything
+Patch0:        pdfbox-nodownload.patch
+# Use system bitream-vera-sans-fonts instead of bundled fonts
+Patch1:        pdfbox-1.2.0-bitstream.patch
+Patch2:        pdfbox-1.8.13-port-to-bouncycastle1.54.patch
+# Skip testImageIOUtils https://issues.apache.org/jira/browse/PDFBOX-2084
+Patch3:        pdfbox-1.8.12-testImageIOUtils.patch
+# https://java.net/jira/browse/JAVACC-292 thanks to Michael Simacek <msimacek@redhat.com>
+Patch4:        pdfbox-1.8.12-javacc6.patch
+# https://issues.apache.org/jira/browse/PDFBOX-3571
+Patch5:        pdfbox-1.8.13-use-system-icc-profiles-openicc.patch
+# Fix test and remove unavailable ArialMT.ttf referencies
+Patch6:        pdfbox-1.8.12-examples-use-system-bitstream-vera-sans-fonts.patch
 
-Patch2:         pdfbox-1.8.11-port-to-bouncycastle1.50.patch
+Patch7:        pdfbox-1.8.13-preflight-syncmetadata.patch
 
-BuildRequires:  fonts-ttf-vera
-BuildRequires:  fontconfig
-BuildRequires:  maven-local >= 4.3.2
-BuildRequires:  maven-local
-BuildRequires:  mvn(com.adobe.pdf:pcfi)
-BuildRequires:  mvn(com.ibm.icu:icu4j)
-BuildRequires:  mvn(commons-logging:commons-logging)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(log4j:log4j:1.2.17)
-BuildRequires:  mvn(org.apache.ant:ant)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
-BuildRequires:  mvn(org.apache.rat:apache-rat-plugin)
-BuildRequires:  mvn(org.bouncycastle:bcmail-jdk15on)
-BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
+BuildRequires: fonts-ttf-vera
+BuildRequires: fontconfig
+BuildRequires: icc-profiles-openicc
+BuildRequires: maven-local
+BuildRequires: mvn(com.adobe.pdf:pcfi)
+BuildRequires: mvn(com.ibm.icu:icu4j)
+BuildRequires: mvn(commons-logging:commons-logging)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(log4j:log4j:1.2.17)
+BuildRequires: mvn(org.apache.ant:ant)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires: mvn(org.apache.rat:apache-rat-plugin)
+BuildRequires: mvn(org.bouncycastle:bcmail-jdk15on)
+BuildRequires: mvn(org.codehaus.mojo:javacc-maven-plugin)
 
-BuildArch:      noarch
+Requires:      fonts-ttf-vera
+Requires:      icc-profiles-openicc
+Requires:      java >= 1.6.0
 
-Requires:       java >= 1.6.0
-Requires:       fonts-ttf-vera
+# ./pdfbox/src/main/resources/org/apache/pdfbox/resources/cmap/*
+# (FILES) With multiple versions
+Provides:      bundled(adobe-cmap-resources)
+BuildArch:     noarch
 Source44: import.info
 
 %description
@@ -126,12 +140,27 @@ XmpBox is a subproject of Apache PDFBox.
 %setup -q
 find -name '*.class' -delete
 find -name '*.jar' -delete
+find -name '*.icc' -print -delete
+find -name '*.icm' -print -delete
 
 %patch0 -p1 -b .nodownload
 %patch1 -p1 -b .bitstream
-%patch2 -p1 -b .bouncycastle1.50
-sed -i.bcprov1.54 "s|algorithmidentifier.getObjectId().getId()|algorithmidentifier.getAlgorithm().getId()|" \
- pdfbox/src/main/java/org/apache/pdfbox/pdmodel/encryption/PublicKeySecurityHandler.java
+# Remove included fonts
+rm -r pdfbox/src/main/resources/org/apache/pdfbox/resources/ttf
+%patch2 -p1 -b .bouncycastle1.54
+# Use jdk15on version of bcprov
+%pom_change_dep -r :bcmail-jdk15 :bcmail-jdk15on:1.54
+%pom_change_dep -r :bcprov-jdk15 :bcprov-jdk15on:1.54
+%pom_add_dep org.bouncycastle:bcpkix-jdk15on:1.54 pdfbox
+%patch3 -p1 -b .testImageIOUtils
+rm -f pdfbox/src/test/java/org/apache/pdfbox/util/TestImageIOUtils.java 
+%patch4 -p1 -b .javacc
+%patch5 -p1 -b .icc-profiles
+rm -r examples/src/main/resources/org/apache/pdfbox/resources/pdfa
+#rm pdfbox/src/test/resources/org/apache/pdfbox/pdmodel/*Profile.icm*
+%patch6 -p1 -b .bitstream-vera-sans-fonts
+
+%patch7 -p1 -b .preflight-syncmetadata
 
 %pom_disable_module war
 #Disable lucene, not compatible with lucene 3.6
@@ -149,43 +178,36 @@ sed -i.bcprov1.54 "s|algorithmidentifier.getObjectId().getId()|algorithmidentifi
 %pom_change_dep -r :ant-nodeps :ant
 %pom_change_dep -r :log4j ::1.2.17
 
-#Fix line endings
-sed -i -e 's|\r||' RELEASE-NOTES.txt
-#Remove META-INF file that does not exist
+# Fix line endings
+for file in RELEASE-NOTES.txt README.txt fontbox/README.txt jempbox/README.txt preflight/README.txt xmpbox/README.txt; do
+ sed -i.orig 's|\r||g' $file
+ touch -r $file.orig $file
+ rm $file.orig
+done
 
-#Use jdk15on version of bcprov
-%pom_change_dep -r :bcmail-jdk15 :bcmail-jdk15on:1.50
-%pom_change_dep -r :bcprov-jdk15 :bcprov-jdk15on:1.50
-%pom_add_dep org.bouncycastle:bcpkix-jdk15on:1.50 %{name}
-
+# Remove META-INF file that does not exist
 sed -i -e '/META-INF/d' pdfbox/pom.xml
-#Remove included fonts
-rm -r pdfbox/src/main/resources/org/apache/pdfbox/resources/ttf
 
-# TODO
-rm -rf examples/src/main/java/org/apache/pdfbox/examples/signature/CreateSignature.java \
+rm examples/src/main/java/org/apache/pdfbox/examples/signature/CreateSignature.java \
  examples/src/main/java/org/apache/pdfbox/examples/signature/CreateVisibleSignature.java \
  examples/src/test/java/org/apache/pdfbox/examples/pdfa/CreatePDFATest.java
 # IllegalArgumentException: Parameter 'directory' is not a directory
 rm -r preflight/src/test/java/org/apache/pdfbox/preflight/integration/TestValidFiles.java
 
-# Skip testImageIOUtils
-# https://issues.apache.org/jira/browse/PDFBOX-2084
-sed -i -e "/TestImageIOUtils.java/d" pdfbox/pom.xml
 # Remove unpackaged deps for the above tests
-%pom_remove_dep net.java.dev.jai-imageio:jai-imageio-core-standalone pdfbox
+# com.github.jai-imageio:jai-imageio-core:1.3.1,jai-imageio-jpeg2000:1.3.0
+%pom_remove_dep com.github.jai-imageio: pdfbox
 # https://bugzilla.redhat.com/show_bug.cgi?id=1094417
 %pom_remove_dep com.levigo.jbig2:levigo-jbig2-imageio pdfbox
-rm -rf pdfbox/src/test/java/org/apache/pdfbox/util/TestImageIOUtils.java \
- pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/xobject/PDJpegTest.java \
+
+rm pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/xobject/PDJpegTest.java \
  pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/xobject/PDCcittTest.java
 sed -i -e /PDJpegTest/d pdfbox/src/test/java/org/apache/pdfbox/TestAll.java
 sed -i -e /PDCcittTest/d pdfbox/src/test/java/org/apache/pdfbox/TestAll.java
-sed -i -e /TestImageIOUtils/d pdfbox/src/test/java/org/apache/pdfbox/TestAll.java
 
-# com.googlecode.maven-download-plugin:download-maven-plugin:1.2.1 used for get 
+# com.googlecode.maven-download-plugin:maven-download-plugin:1.1.0 used for get 
 # test resources: http://www.pdfa.org/wp-content/uploads/2011/08/isartor-pdfa-2008-08-13.zip
-%pom_remove_plugin :download-maven-plugin preflight
+%pom_remove_plugin :maven-download-plugin preflight
 
 # Disable filtering
 sed -i -e /filtering/d examples/pom.xml
@@ -237,6 +259,9 @@ sed -i -e /filtering/d examples/pom.xml
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.8.13-alt1_1jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.12-alt1_1jpp8
 - new version
 
