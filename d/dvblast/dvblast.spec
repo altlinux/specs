@@ -1,6 +1,6 @@
 Name: dvblast
-Version: 3.0
-Release: alt2.git11102016
+Version: 3.1
+Release: alt1
 
 Summary: Video/Audio streaming application based on the linux-dvb API
 License: GPLv2+
@@ -47,6 +47,17 @@ install -pm0644 -D dvblast.1 %buildroot%_man1dir/dvblast.1
 %_man1dir/dvblast.1*
 
 %changelog
+* Wed Oct 18 2017 Alexei Takaseev <taf@altlinux.org> 3.1-alt1
+- 3.1
+- update to git:77cfaa8434cb3f0a9abd5df2bd763efd7cb35f85
+    * Fix HEVC support
+    * Fix memory leak on loading the configuration
+    * Also remap ONID in EIT
+    * Fix segmentation fault when using output charset different from native
+    * Use default charset ISO 6937 for ASCII strings
+    * Add /charset= output option
+    * Fix EIT schedule signaling in SDT
+
 * Wed Oct 18 2017 Alexei Takaseev <taf@altlinux.org> 3.0-alt2.git11102016
 - update to git:12a1eb975f2f781ac666e8ba06566c93f369bfba
 
