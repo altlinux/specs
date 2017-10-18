@@ -15,7 +15,7 @@
 %def_enable wayland
 
 Name: libwebkitgtk4
-Version: 2.18.0
+Version: 2.18.1
 Release: alt1
 
 Summary: Web browser engine
@@ -193,8 +193,8 @@ GObject introspection devel data for the JavaScriptCore library
 %prep
 %setup -n %_name-%version
 # quick fix for build WebCore/platform/graphics/cairo/BackingStoreBackendCairoImpl with NPROCS=1
-subst 's|\(<WebCore\/\)\(HysteresisActivity.h>\)|\1platform/\2|' \
-Source/WebCore/platform/graphics/cairo/BackingStoreBackendCairoImpl.h
+#subst 's|\(<WebCore\/\)\(HysteresisActivity.h>\)|\1platform/\2|' \
+#Source/WebCore/platform/graphics/cairo/BackingStoreBackendCairoImpl.h
 
 # Remove bundled libraries
 rm -rf Source/ThirdParty/leveldb/
@@ -294,6 +294,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Wed Oct 18 2017 Yuri N. Sedunov <aris@altlinux.org> 2.18.1-alt1
+- 2.18.1
+
 * Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 2.18.0-alt1
 - 2.18.0
 
