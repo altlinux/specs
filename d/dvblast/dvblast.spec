@@ -1,6 +1,6 @@
 Name: dvblast
 Version: 3.0
-Release: alt1.git19092016
+Release: alt2.git11102016
 
 Summary: Video/Audio streaming application based on the linux-dvb API
 License: GPLv2+
@@ -47,6 +47,9 @@ install -pm0644 -D dvblast.1 %buildroot%_man1dir/dvblast.1
 %_man1dir/dvblast.1*
 
 %changelog
+* Wed Oct 18 2017 Alexei Takaseev <taf@altlinux.org> 3.0-alt2.git11102016
+- update to git:12a1eb975f2f781ac666e8ba06566c93f369bfba
+
 * Tue Sep 20 2016 Alexei Takaseev <taf@altlinux.org> 3.0-alt1.git19092016
 - update to git:f4b1a8e15f0514d80f729c876c6a960639ecf9b9
 
