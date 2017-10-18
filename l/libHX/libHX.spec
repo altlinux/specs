@@ -1,14 +1,14 @@
-Name:           libHX
-Version:        3.11
-Release:        alt1
-Summary:        General-purpose library for typical low-level operations
+Name: libHX
+Version: 3.22
+Release: alt1
+Summary: General-purpose library for typical low-level operations
 
-Group:          System/Libraries
-License:        LGPLv2 or LGPLv3
-URL:            http://jengelh.hopto.org/files/libHX/
-Source0:        libHX-%{version}.tar
-BuildRequires:  gcc-c++ gcc-fortran glibc-devel-static lyx
-Packager: Anton V. Boyarshinov <boyarsh@altlinux.org>
+Group: System/Libraries
+License: LGPLv2 or LGPLv3
+URL: http://jengelh.hopto.org/files/libHX/
+
+Source: libHX-%version.tar
+Patch: %name-%version-%release.patch
 
 %description
 A library for:
@@ -23,51 +23,46 @@ A library for:
   /dev/urandom support
 - various string, memory and zvec ops
 
+%package devel
+Summary: Development files for %name
+Group: Development/C
 
-%package        devel
-Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
-Requires:       pkgconfig
-
-%description    devel
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
-
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name
 
 %prep
 %setup -q
-
+%patch -p1
 
 %build
-# Move libHX.so.* to /%{_lib}:
-# /sbin/mount.crypt from pam_mount uses libHX
-# /lib/security/pam_mount.so from pam_mount uses libHX
 %autoreconf
-%configure --libdir=/%_lib
-export echo=echo
+%configure \
+	--disable-static
 %make_build
 
-
 %install
-export echo=echo
 %makeinstall
-mkdir -p %buildroot/%_lib/
-mv %buildroot/%_libdir/*so* %buildroot/%_lib/
-subst 's|libdir=/usr|libdir=|' %buildroot/%_libdir/pkgconfig/libHX.pc
+mkdir -p %buildroot/%_lib
+for f in %buildroot%_libdir/%name.so; do
+        t=$(readlink "$f")
+        ln -sf ../../%_lib/"$t" "$f"
+done
+mv %buildroot%_libdir/%name.so.* %buildroot/%_lib/
 
 %files
-/%{_lib}/*.so.*
+/%_lib/%name.so.*
 
 %files devel
-%defattr(-,root,root,-)
-%doc doc/* README.txt
-%{_includedir}/*
-/%{_lib}/*.so
-%{_libdir}/pkgconfig/libHX.pc
-
+%doc doc/api.txt README.txt
+%_includedir/*
+%_libdir/*.so
+%_pkgconfigdir/libHX.pc
 
 %changelog
+* Wed Oct 18 2017 Valery Inozemtsev <shrek@altlinux.ru> 3.22-alt1
+- 3.22
+
 * Thu Oct 06 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 3.11-alt1
 - v3.11
 

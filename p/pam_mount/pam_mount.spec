@@ -1,14 +1,16 @@
 Name: pam_mount 
-Version: 2.11
-Release: alt5
+Version: 2.16
+Release: alt1
 
 Summary: Pluggable Authentication Module that can mount volumes for a user session 
 License: GPLv2+ and LGPLv2+
 Group: System/Libraries
 
-BuildRequires:  glib2-devel, pam-devel, openssl-devel, libHX-devel libxml2-devel libavahi-devel libcryptsetup-devel
+BuildRequires: glib2-devel pam-devel openssl-devel libHX-devel libxml2-devel libavahi-devel
+BuildRequires: libcryptsetup-devel libmount-devel libpcre-devel
 
 Source0: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 %description
 This module is aimed at environments with central file servers that
@@ -18,26 +20,33 @@ mounting the entire /home from a server is a security risk, or listing
 all possible volumes in /etc/fstab is not feasible.
 
 %prep
-%setup 
+%setup -q
+%patch -p1
 
 %build
 %autoreconf
-%configure --with-slibdir=%buildroot/%_lib --with-ssbindir=%buildroot/sbin
+%configure \
+	--with-slibdir=/%_lib \
+	--with-ssbindir=/sbin
 %make_build
 
 %install
-%makeinstall
+%make DESTDIR=%buildroot install
+mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 
 %files
 %doc doc/*.txt
 %config(noreplace) %_sysconfdir/security/%name.conf.xml
-/%{_lib}/security/*
-/usr/sbin/*
-#/usr/bin/*
+/%_lib/security/*
+%_sbindir/*
 /sbin/*
-%{_mandir}/man?/*
+/%_lib/*.so.*
+%_mandir/man?/*
 
 %changelog
+* Wed Oct 18 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.16-alt1
+- 2.16
+
 * Thu Apr 04 2013 Andrey Cherepanov <cas@altlinux.org> 2.11-alt5
 - Use full path to /usr/sbin/pmvarrun to prevent warning in su/sudo
 
