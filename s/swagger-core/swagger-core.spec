@@ -2,16 +2,16 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name swagger-core
-%define version 1.5.8
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 1.5.10
 %global namedreltag %nil
 %global namedversion %{version}%{?namedreltag}
 Name:          swagger-core
-Version:       1.5.8
+Version:       1.5.10
 Release:       alt1_2jpp8
 Summary:       Java implementation of Swagger
 # Source files without license headers https://github.com/swagger-api/swagger-core/issues/1882
@@ -216,6 +216,9 @@ rm modules/swagger-jaxrs/src/test/java/io/swagger/functional/test/ApiListingReso
 %doc LICENSE
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.10-alt1_2jpp8
+- new jpp release
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.8-alt1_2jpp8
 - new version
 
