@@ -1,26 +1,24 @@
 %define _unpackaged_files_terminate_build 1
-%define shortname simplejson
+%define oname simplejson
 
 %def_with python3
 
-Name: python-module-simplejson
-Version: 3.10.0
+Name: python-module-%oname
+Version: 3.11.1
 Release: alt1
-
 Summary: Simplejson is a simple, fast, extensible JSON encoder/decoder for Python
 License: MIT/X Consortium
 Group: Development/Python
+Url: https://simplejson.readthedocs.io/
 
-Url: http://undefined.org/python/#simplejson
+# https://github.com/simplejson/simplejson.git
+Source: %name-%version.tar
+Patch: %oname-3.5.3-alt-python3.patch
 
-Source0: https://pypi.python.org/packages/40/ad/52c1f3a562df3b210e8f165e1aa243a178c454ead65476a39fa3ce1847b6/simplejson-%{version}.tar.gz
-Patch: simplejson-3.5.3-alt-python3.patch
-
-BuildRequires: python-module-setuptools python-module-sphinx
+BuildRequires: python-dev python-module-setuptools python-module-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-dev python3-module-setuptools
 %endif
 
 
@@ -29,11 +27,11 @@ Simplejson is a simple, fast, complete, correct and extensible JSON
 encoder and decoder for Python 2.3+. It is pure Python code with no
 dependencies.
 
-%package -n python3-module-simplejson
+%package -n python3-module-%oname
 Summary: Simplejson is a simple, fast, extensible JSON encoder/decoder for Python
 Group: Development/Python3
 
-%description -n python3-module-simplejson
+%description -n python3-module-%oname
 Simplejson is a simple, fast, complete, correct and extensible JSON
 encoder and decoder for Python 2.3+. It is pure Python code with no
 dependencies.
@@ -50,9 +48,8 @@ dependencies.
 
 This package contains documentation for simplejson.
 
-
 %prep
-%setup -q -n simplejson-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -67,7 +64,6 @@ popd
 
 %if_with python3
 pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build_debug
 popd
 %endif
@@ -83,30 +79,33 @@ pushd ../python3
 popd
 %endif
 
-%files
-%python_sitelibdir/%shortname/
-%exclude %python_sitelibdir/%shortname/tests
-%python_sitelibdir/*.egg-info
-
 %check
-python setup.py check
+python setup.py test
 %if_with python3
 pushd ../python3
-python3 setup.py check
+python3 setup.py test
 popd
 %endif
+
+%files
+%python_sitelibdir/%oname/
+%exclude %python_sitelibdir/%oname/tests
+%python_sitelibdir/*.egg-info
 
 %files doc
 %doc docs/*
 
 %if_with python3
-%files -n python3-module-simplejson
-%python3_sitelibdir/%shortname/
-%exclude %python3_sitelibdir/%shortname/tests
+%files -n python3-module-%oname
+%python3_sitelibdir/%oname/
+%exclude %python3_sitelibdir/%oname/tests
 %python3_sitelibdir/*.egg-info
 %endif
 
 %changelog
+* Wed Oct 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.11.1-alt1
+- Updated to upstream version 3.11.1.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt1
 - automated PyPI update
 
