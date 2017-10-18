@@ -2,21 +2,21 @@
 %define oname mozinfo
 
 Name: python-module-%oname
-Version: 0.9
+Version: 0.10
 Release: alt1
 Summary: Library to get system information for use in Mozilla testing
 License: MPL
 Group: Development/Python
 Url: https://pypi.python.org/pypi/mozinfo/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/cd/18/666fe2f87bb833966a5c4834fe2397fc95cd2083fff0419f548fb04bfe7d/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-mozfile python-modules-json
+Source: %oname-%version.tar
+
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-mozfile python-modules-json
 
 %py_provides %oname
+%py_requires mozfile json
 
 %description
 Library to get system information for use in Mozilla testing.
@@ -39,6 +39,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Wed Oct 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10-alt1
+- Updated to upstream version 0.10.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1
 - automated PyPI update
 
