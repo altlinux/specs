@@ -4,9 +4,10 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -38,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 #
 
 Name:           checkstyle
-Version:        7.1
+Version:        7.7
 Release:        alt1_1jpp8
 Summary:        Java source code checker
 URL:            http://checkstyle.sourceforge.net/
@@ -55,14 +56,12 @@ BuildRequires:  mvn(antlr:antlr)
 BuildRequires:  mvn(com.google.guava:guava)
 BuildRequires:  mvn(commons-beanutils:commons-beanutils)
 BuildRequires:  mvn(commons-cli:commons-cli)
-BuildRequires:  mvn(commons-collections:commons-collections)
 BuildRequires:  mvn(com.sun:tools)
 BuildRequires:  mvn(org.antlr:antlr4-maven-plugin)
 BuildRequires:  mvn(org.antlr:antlr4-runtime)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.ant:ant-nodeps)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:antlr-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
@@ -94,6 +93,7 @@ sed -i s/guava-jdk5/guava/ pom.xml
 %pom_remove_plugin :maven-eclipse-plugin
 %pom_remove_plugin :maven-site-plugin
 %pom_remove_plugin :nexus-staging-maven-plugin
+%pom_remove_plugin :maven-enforcer-plugin
 
 # these are only needed for upstream QA
 %pom_remove_plugin :cobertura-maven-plugin
@@ -170,6 +170,9 @@ fi
 
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:7.7-alt1_1jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:7.1-alt1_1jpp8
 - new version
 
