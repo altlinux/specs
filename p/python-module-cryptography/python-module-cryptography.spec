@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0.0
+Version: 2.1.1
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers.
@@ -87,6 +87,9 @@ pushd ../python3
 popd
 
 %filter_from_requires /python3[(]cryptography.hazmat.bindings._commoncrypto[)]/d
+%filter_from_requires /python3[(]cryptography.hazmat.bindings._constant_time[)]/d
+%filter_from_requires /python3[(]cryptography.hazmat.bindings._openssl[)]/d
+%filter_from_requires /python3[(]cryptography.hazmat.bindings._padding[)]/d
 %endif
 
 %files
@@ -101,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 18 2017 Vladimir Didenko <cow@altlinux.ru> 2.1.1-alt1
+- 2.1.1
+
 * Wed Jul 19 2017 Vladimir Didenko <cow@altlinux.ru> 2.0.0-alt1
 - 2.0.0
 

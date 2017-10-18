@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.22.0
+Version: 0.23.0
 Release: alt1
 
 Summary: Python ASN.1 parser
@@ -77,6 +77,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 18 2017 Vladimir Didenko <cow@altlinux.ru> 0.23.0-alt1
+- New version
+
 * Mon Mar 20 2017 Vladimir Didenko <cow@altlinux.ru> 0.22.0-alt1
 - New version
 
