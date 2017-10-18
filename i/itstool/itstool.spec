@@ -1,6 +1,8 @@
+%def_with python3
+
 Name: itstool
 Version: 2.0.4
-Release: alt1
+Release: alt2
 
 Summary: ITS-based XML translation tool
 Group: Development/GNOME and GTK+
@@ -8,10 +10,16 @@ License: GPLv3+
 Url: http://itstool.org/
 
 Source: http://files.itstool.org/itstool/%name-%version.tar.bz2
+Patch: itstool-2.0.4-up-d3adf026.patch
+Patch1: itstool-2.0.4-up-14f42865.patch
 
 BuildArch: noarch
 
+%if_with python3
 BuildRequires: rpm-build-python3 python3-devel python3-module-libxml2
+%else
+BuildRequires: rpm-build-python python-devel python-module-libxml2
+%endif
 
 %description
 ITS Tool allows to translate XML documents with PO files, using rules
@@ -20,9 +28,11 @@ translate and how to separate it into PO file messages.
 
 %prep
 %setup
+%patch -R -p1
+%patch1 -R -p1
 
 %build
-%configure PYTHON=%_bindir/%__python3
+%configure %{?_with_python3:PYTHON=%_bindir/%__python3}
 %make_build
 
 %install
@@ -38,6 +48,9 @@ translate and how to separate it into PO file messages.
 %doc NEWS
 
 %changelog
+* Wed Oct 18 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt2
+- revert all unsuccessful attempts to fix BGO #762110
+
 * Mon Oct 16 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt1
 - 2.0.4 with Python3
 
