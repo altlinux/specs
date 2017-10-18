@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 1.3.5
-Release: alt1
+Release: alt2
 Summary: http client/server for asyncio
 License: ASLv2.0
 Group: Development/Python
@@ -31,7 +31,7 @@ BuildPreReq: python-module-objects
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-setuptools-tests python3-module-multidict python3-module-yarl python3-module-async-timeout python3-module-trollius python3-module-asyncio python3-module-pytest-mock python3-module-chardet
+BuildRequires: python3-module-setuptools-tests python3-module-multidict python3-module-yarl python3-module-async-timeout python3-module-trollius python3(asyncio) python3-module-pytest-mock python3-module-chardet
 %endif
 %if_with docs
 BuildRequires(pre): python3-module-sphinx-devel
@@ -196,6 +196,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.5-alt2
+- Updated build dependencies.
+
 * Thu May 04 2017 Anton Midyukov <antohami@altlinux.org> 1.3.5-alt1
 - New version 1.3.5
 
