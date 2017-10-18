@@ -1,13 +1,15 @@
 %define rname owncloudclient
 %define theme client_theming
 Name: nextcloud-client
-Version: 2.3.2
-Release: alt4
+Version: 2.3.3
+Release: alt1%ubt
 
 Group: Networking/File transfer
 Summary: Nextcloud Desktop Client
 License: GPLv2
 Url: https://github.com/nextcloud/client_theming
+
+BuildRequires(pre): rpm-build-ubt
 
 Provides: mirall = %version-%release
 Obsoletes: mirall <= %version-%release
@@ -86,6 +88,12 @@ desktop-file-install \
 %_K5srv/*nextcloud*.desktop
 
 %changelog
+* Wed Oct 18 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.3.3-alt1%ubt
+- new version (beta1)
+
+* Fri Sep 22 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.3.2-alt3.M80P.1
+- build for M80P
+
 * Fri Sep 22 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.3.2-alt4
 - fixed unowned files
 
