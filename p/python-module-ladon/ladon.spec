@@ -3,32 +3,26 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.10
-Release: alt1.1.1
+Version: 0.9.40
+Release: alt1
 Summary: Several web service interfaces at once, including JSON-WSP, SOAP and JSON-RPC
 License: LGPLv3
 Group: Development/Python
 Url: https://pypi.python.org/pypi/ladon/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source: %name-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-jinja2
-#BuildPreReq: python-modules-json
+Source: %name-%version.tar
+
+BuildRequires: python-dev python-module-setuptools-tests
+BuildRequires: python-module-jinja2 python2.7(sphinx_bootstrap_theme)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-jinja2
+BuildRequires: python3-dev python3-module-setuptools-tests
+BuildRequires: python3-module-jinja2 python3(sphinx_bootstrap_theme)
 %endif
 
 %py_provides %oname
 %py_requires jinja2 json
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-jinja2 python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-jinja2 python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
 
 %description
 Ladon is a framework for exposing python methods to several internet
@@ -42,7 +36,7 @@ class.
 Summary: Several web service interfaces at once, including JSON-WSP, SOAP and JSON-RPC
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires jinja2
+%py3_requires jinja2 json
 
 %description -n python3-module-%oname
 Ladon is a framework for exposing python methods to several internet
@@ -82,6 +76,12 @@ popd
 
 %python_install
 
+rm -rf %buildroot%python_sitelibdir/*/test.* ||:
+%if_with python3
+rm -rf %buildroot%python3_sitelibdir/*/test.* ||:
+rm -rf %buildroot%python3_sitelibdir/*/*/test.* ||:
+%endif
+
 %check
 python setup.py test
 %if_with python3
@@ -91,24 +91,24 @@ popd
 %endif
 
 %files
-%doc *.rst docs/html examples
+%doc *.rst examples
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
 %endif
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/test.*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst docs/html examples
+%doc *.rst examples
 %_bindir/*.py3
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test.*
-%exclude %python3_sitelibdir/*/*/test.*
 %endif
 
 %changelog
+* Wed Oct 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.40-alt1
+- Updated to upstream version 0.9.40.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.10-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
