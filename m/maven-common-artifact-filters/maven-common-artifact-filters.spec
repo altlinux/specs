@@ -3,11 +3,12 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-common-artifact-filters
-Version:        3.0.0
+Version:        3.0.1
 Release:        alt1_2jpp8
 Summary:        Maven Common Artifact Filters
 License:        ASL 2.0
@@ -66,6 +67,9 @@ find -name SonatypeAether\*.java -delete
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_2jpp8
+- new jpp release
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_2jpp8
 - new version
 
