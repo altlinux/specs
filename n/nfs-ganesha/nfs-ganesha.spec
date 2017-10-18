@@ -71,7 +71,7 @@
 
 Name: nfs-ganesha
 Version: 2.5.0
-Release: alt2
+Release: alt3
 
 Summary: NFS-Ganesha is a NFS Server running in user space
 
@@ -83,6 +83,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/nfs-ganesha/nfs-ganesha/archive/V%version.tar.gz
 Source: %name-%version.tar
+
+BuildRequires: rpm-build-intro
 
 BuildRequires: cmake gcc-c++
 BuildRequires: bison
@@ -540,6 +542,9 @@ install -m 644 ChangeLog	%buildroot%_docdir/ganesha
 %endif
 
 %changelog
+* Wed Oct 18 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt3
+- add rpm-build-intro buildreq (fix /var/lib/run)
+
 * Tue Aug 08 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt2
 - build with new libntirpc 1.5.3
 
