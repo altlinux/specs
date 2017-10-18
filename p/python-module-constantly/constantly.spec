@@ -4,24 +4,24 @@
 %define oname constantly
 Name: python-module-%oname
 Version: 15.1.0
-Release: alt2
+Release: alt3
 
 Summary: Symbolic constants in Python
 
 Url: http://github.com/twisted/constantly
 License: X11
 Group: Development/Python
+BuildArch: noarch
 
 # https://github.com/twisted/constantly.git
 Source: %name-%version.tar
 
 BuildRequires: python-dev python-module-setuptools
-
-BuildArch: noarch
+BuildRequires: git-core
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools
 %endif
 
 #setup_python_module %oname
@@ -44,6 +44,13 @@ Originally ``twisted.python.constants`` from the `Twisted <https://twistedmatrix
 
 %prep
 %setup
+
+git config --global user.email "<python@packages.altlinux.org>"
+git config --global user.name "Python Development Team"
+git init-db
+git add . -A
+git commit -a -m "REL: v%version"
+git tag -m "v%version" v%version
 
 %if_with python3
 cp -fR . ../python3
@@ -84,8 +91,10 @@ popd
 %python3_sitelibdir/*
 %endif
 
-
 %changelog
+* Wed Oct 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 15.1.0-alt3
+- Fixed egg-info version.
+
 * Wed Aug 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 15.1.0-alt2
 - Enabled build for python-3.
 

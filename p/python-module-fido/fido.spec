@@ -3,40 +3,37 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.1.1
-Release: alt1.git20150807.1.1
+Version: 4.2.2
+Release: alt1
 Summary: Intelligent asynchronous HTTP client
 License: ASLv2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/fido
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/Yelp/fido.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-twisted-core python-module-crochet
-#BuildPreReq: python-module-service-identity python-module-OpenSSL
-#BuildPreReq: python-module-coverage python-module-flake8
-#BuildPreReq: python-module-mock python-module-twisted-web
-#BuildPreReq: python-module-futures
+BuildRequires: python-dev python-module-setuptools-tests
+BuildRequires: python-module-twisted-core python-module-crochet
+BuildRequires: python-module-service-identity python-module-OpenSSL
+BuildRequires: python-module-coverage python-module-flake8
+BuildRequires: python-module-mock python-module-twisted-web
+BuildRequires: python-module-futures
+BuildRequires: python2.7(yelp_bytes) python2.7(constantly)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-twisted-core python3-module-crochet
-#BuildPreReq: python3-module-service-identity python3-module-OpenSSL
-#BuildPreReq: python3-module-coverage python3-module-flake8
-#BuildPreReq: python3-module-mock python3-module-twisted-web
+BuildRequires: python3-dev python3-module-setuptools-tests
+BuildRequires: python3-module-twisted-core python3-module-crochet
+BuildRequires: python3-module-service-identity python3-module-OpenSSL
+BuildRequires: python3-module-coverage python3-module-flake8
+BuildRequires: python3-module-mock python3-module-twisted-web
+BuildRequires: python3(yelp_bytes) python3(constantly)
 %endif
 
 %py_provides %oname
 %py_requires twisted.internet crochet service_identity OpenSSL
 %py_requires twisted.web concurrent.futures
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: pyflakes python-base python-devel python-module-OpenSSL python-module-cffi python-module-cryptography python-module-enum34 python-module-mccabe python-module-pyasn1 python-module-pyasn1-modules python-module-pytest python-module-serial python-module-setuptools python-module-twisted-core python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python-tools-2to3 python-tools-pep8 python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-mccabe python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-pytest python3-module-setuptools python3-module-zope.interface python3-pyflakes python3-tools-pep8
-BuildRequires: python-module-coverage python-module-crochet python-module-flake8 python-module-pbr python-module-service-identity python-module-setuptools-tests python-module-unittest2 python3-module-coverage python3-module-flake8 python3-module-html5lib python3-module-pbr python3-module-pygobject3 python3-module-serial python3-module-unittest2 python3-module-zope rpm-build-python3 time
 
 %description
 Fido is a simple, asynchronous HTTP client built on top of Crochet,
@@ -66,7 +63,6 @@ ThreadPoolExecutor).
 
 %if_with python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -88,11 +84,16 @@ popd
 %endif
 
 %check
-python setup.py test -v
-#if_with python3
-%if 0
+# remove remote tests
+rm -f tests/0_import_reactor_test.py
+rm -f tests/acceptance/fetch_test.py
+py.test
+%if_with python3
 pushd ../python3
-python3 setup.py test -v
+# remove remote tests
+rm -f tests/0_import_reactor_test.py
+rm -f tests/acceptance/fetch_test.py
+py.test3
 popd
 %endif
 
@@ -107,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.2-alt1
+- Updated to upstream version 4.2.2.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.1.1-alt1.git20150807.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
