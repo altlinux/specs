@@ -2,37 +2,29 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global oname GMetrics
 
 Name:          gmetrics
-Version:       0.6
-Release:       alt1_15jpp8
+Version:       0.7
+Release:       alt1_2jpp8
 Summary:       Groovy library that provides reports and metrics for Groovy code
 License:       ASL 2.0
 Url:           http://gmetrics.sourceforge.net/
-Source0:       http://downloads.sourceforge.net/project/%{name}/%{name}-%{version}/%{oname}-%{version}-bin.tar.gz
-# use antrun-plugin instead of gmaven
-# fix log4j groovy version
-# rebase for groovy 2
-Patch0:        gmetrics-0.6-antrunplugin.patch
-Patch1:        gmetrics-0.6-groovy2.patch
+Source0:       http://downloads.sourceforge.net/%{name}/%{oname}-%{version}-bin.tar.gz
 
 BuildRequires: maven-local
-BuildRequires: mvn(log4j:log4j:1.2.17)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(log4j:log4j:12)
 BuildRequires: mvn(org.apache.ant:ant)
-BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires: mvn(org.codehaus.groovy:groovy-all)
-BuildRequires: mvn(org.fusesource:fusesource-pom:pom:)
-# groovy-all embedded libs
-BuildRequires: mvn(antlr:antlr)
-BuildRequires: mvn(org.ow2.asm:asm-all)
-BuildRequires: mvn(commons-cli:commons-cli)
-BuildRequires: mvn(org.slf4j:slf4j-nop)
-
+BuildRequires: mvn(org.codehaus.gmavenplus:gmavenplus-plugin)
+BuildRequires: mvn(org.codehaus.groovy:groovy)
+BuildRequires: mvn(org.codehaus.groovy:groovy-ant)
+BuildRequires: mvn(org.codehaus.groovy:groovy-xml)
+BuildRequires: mvn(org.codehaus.groovy:groovy-test)
 BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildArch:     noarch
@@ -54,24 +46,42 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n %{oname}-%{version}
-
-# clean up
+# Cleanup
 find . -name "*.jar" -delete
 find . -name "*.class" -delete
 rm -rf docs/*
-%patch0 -p0
-%patch1 -p1
 
+%pom_remove_plugin :maven-assembly-plugin
 %pom_remove_plugin :maven-javadoc-plugin
-%pom_remove_plugin :gmaven-plugin
-%pom_remove_dep :CodeNarc
+%pom_remove_plugin :maven-release-plugin
+%pom_remove_plugin :maven-site-plugin
 
-sed -i "s|pom.version|project.version|" pom.xml
+%pom_remove_plugin :gmaven-plugin
+%pom_add_plugin org.codehaus.gmavenplus:gmavenplus-plugin:1.5 . "
+ <executions>
+  <execution>
+   <goals>
+    <goal>generateStubs</goal>
+    <goal>testGenerateStubs</goal>
+   </goals>
+  </execution>
+ </executions>"
+
+%pom_remove_dep :CodeNarc
+%pom_change_dep :log4j ::12
+
+# package org.apache.tools.ant does not exist
+%pom_add_dep org.apache.ant:ant:1.9.6 . "<optional>true</optional>"
+
+#sed -i "s|pom.version|project.version|" pom.xml
 
 chmod 644 README.txt
 
-for d in CHANGELOG.txt LICENSE.txt NOTICE.txt README.txt ; do
-  sed -i 's/\r//' $d
+# Convert from dos to unix line ending
+for file in CHANGELOG.txt LICENSE.txt NOTICE.txt README.txt ; do
+ sed -i.orig 's|\r||g' $file
+ touch -r $file.orig $file
+ rm $file.orig
 done
 
 %mvn_file :%{oname} %{name} %{oname}
@@ -79,7 +89,7 @@ done
 %build
 
 # test skipped require Codenarc, circular deps
-%mvn_build -f
+%mvn_build
 
 %install
 %mvn_install
@@ -92,6 +102,9 @@ done
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.6-alt1_15jpp8
 - new fc release
 
