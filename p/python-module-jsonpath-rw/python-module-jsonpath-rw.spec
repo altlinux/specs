@@ -3,7 +3,7 @@
 
 Name: python-module-%pkgname
 Version: 1.4.0
-Release: alt1.1.1
+Release: alt2
 Summary: Extended implementation of JSONPath for Python
 Group: Development/Python
 
@@ -12,24 +12,23 @@ Url: https://github.com/kennknowles/python-jsonpath-rw
 Source: %name-%version.tar
 
 BuildArch: noarch
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
 
-#BuildRequires: python-devel
-#BuildRequires: python-module-setuptools
-#BuildRequires: python-module-ply
-#BuildRequires: python-module-decorator
-#BuildRequires: python-module-six
+BuildRequires: python-dev
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-ply
+BuildRequires: python-module-decorator
+BuildRequires: python-module-six
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel
-#BuildRequires: python3-module-setuptools
-#BuildRequires: python3-module-ply
-#BuildRequires: python3-module-decorator
-#BuildRequires: python3-module-six
+BuildRequires: python3-dev
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-ply
+BuildRequires: python3-module-decorator
+BuildRequires: python3-module-six
 %endif
+
+%py_requires decorator
 
 %description
 This library provides a robust and significantly extended implementation of
@@ -44,6 +43,7 @@ objects, easy to analyze, transform, parse, print, and extend.
 %package -n python3-module-%pkgname
 Summary: Extended implementation of JSONPath for Python
 Group: Development/Python3
+%py3_requires decorator
 
 %description -n python3-module-%pkgname
 This library provides a robust and significantly extended implementation of
@@ -106,6 +106,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Wed Oct 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.0-alt2
+- Updated dependencies.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.4.0-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
