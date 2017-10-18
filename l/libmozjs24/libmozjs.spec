@@ -1,6 +1,6 @@
 Name:		libmozjs24
 Version:	24.2.0
-Release:	alt4
+Release:	alt5
 
 Summary:	Mozilla SpiderMonkey (JavaScript-C) Engine
 Group:		System/Libraries
@@ -11,6 +11,8 @@ Packager:	Alexey Gladkov <legion@altlinux.ru>
 Source0:	%name-%version.tar
 Patch0:		libmozjs-DLL_SUFFIX.patch
 Patch1:		mozjs24-perl522.patch
+Patch2:		mozjs24-0001-Add-AArch64-support.patch
+Patch3:		mozbz-1143022.patch
 
 BuildRequires: gcc-c++ libnspr-devel libreadline-devel zip unzip
 BuildRequires: libffi-devel libffi-devel-static
@@ -51,6 +53,8 @@ SpiderMonkey is the code-name for the Mozilla's C implementation of JavaScript.
 %setup -q -n %name-%version
 %patch0 -p2
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 cd js/src
@@ -112,6 +116,9 @@ ln -s libmozjs-24.so.1.0 libmozjs-24.so
 %_libdir/*.a
 
 %changelog
+* Wed Oct 18 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 24.2.0-alt5
+- fix build on AArch64
+
 * Tue Mar 15 2016 Alexey Gladkov <legion@altlinux.ru> 24.2.0-alt4
 - Fix build with Perl 5.22
 
