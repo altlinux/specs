@@ -13,7 +13,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt4
+Release: alt5
 
 Summary: Matlab(TM) style python plotting package
 
@@ -54,6 +54,7 @@ BuildRequires: python3-module-setuptools-tests python3-module-numpy-testing pyth
 %add_python_req_skip _winreg builtins
 #py_provides backend_agg
 %py_requires functools32
+%py_requires numpy pytz six subprocess32
 
 %description
 matplotlib is a pure python 2D plotting library with a Matlab(TM)
@@ -77,6 +78,7 @@ Requires: python3-module-%oname-gtk3
 #py3_provides matplotlib.externals.six.moves
 #py3_provides matplotlib.externals.six.moves.urllib.parse
 #py3_provides matplotlib.externals.six.moves.urllib.request
+%py3_requires pytz
 
 %description -n python3-module-%oname
 matplotlib is a pure python 2D plotting library with a Matlab(TM)
@@ -795,6 +797,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Wed Oct 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt5
+- Updated runtime dependencies.
+
 * Tue Jun 27 2017 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt4
 - Fix version egg-info (Closes: 33574)
 

@@ -2,7 +2,7 @@
 
 Name: libfreetype
 Version: 2.8
-Release: alt3
+Release: alt4
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
 Group: System/Libraries
@@ -40,6 +40,8 @@ text-rendering library.
 Summary: Header files and library for development with FreeType2
 Group: Development/C
 Requires: %name = %version-%release
+# harfbuzz is required in pkg-config file
+Requires: libharfbuzz-devel
 Provides: freetype2-devel = %version
 Obsoletes: freetype2-devel < %version
 
@@ -151,6 +153,9 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8-alt4
+- Updated runtime dependencies of devel package.
+
 * Wed Sep 13 2017 Dmitry V. Levin <ldv@altlinux.org> 2.8-alt3
 - Added export of FT_Done_GlyphSlot symbol for libInventor.
 
