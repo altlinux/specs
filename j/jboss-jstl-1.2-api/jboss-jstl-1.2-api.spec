@@ -2,33 +2,36 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jboss-jstl-1.2-api
-%define version 1.0.3
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 1.1.2
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
+%global pname jboss-jstl-api_spec
+%global oname jboss-jstl-api_1.2_spec
 
 Name:          jboss-jstl-1.2-api
-Version:       1.0.3
-Release:       alt4_14jpp8
+Version:       1.1.2
+Release:       alt1_3jpp8
 Summary:       JSP Standard Template Library 1.2 API
-License:       CDDL or GPLv2 with exceptions
-URL:           http://www.jboss.org
-# git clone git://github.com/jboss/jboss-jstl-api_spec.git jboss-jstl-1.2-api
-# cd jboss-jstl-1.2-api/ && git archive --format=tar --prefix=jboss-jstl-1.2-api-1.0.3.Final/ jboss-jstl-api_1.2_spec-1.0.3.Final | xz > jboss-jstl-1.2-api-1.0.3.Final.tar.xz
-Source0:       %{name}-%{namedversion}.tar.xz
+License:       ASL 2.0 and (CDDL or GPLv2 with exceptions)
+URL:           https://github.com/jboss/jboss-jstl-api_spec
+Source0:       https://github.com/jboss/jboss-jstl-api_spec/archive/%{oname}-%{namedversion}.tar.gz
 # Fix the FSF address in the license file:
 Patch0:        %{name}-fix-fsf-address.patch
 Patch1:        %{name}-endorse_xalan.patch
 
 BuildRequires: maven-local
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.easymock:easymock)
 BuildRequires: mvn(org.jboss:jboss-parent:pom:)
-BuildRequires: mvn(org.jboss.spec.javax.el:jboss-el-api_2.2_spec)
-BuildRequires: mvn(org.jboss.spec.javax.servlet:jboss-servlet-api_3.0_spec)
-BuildRequires: mvn(org.jboss.spec.javax.servlet.jsp:jboss-jsp-api_2.2_spec)
+BuildRequires: mvn(org.jboss.spec.javax.el:jboss-el-api_3.0_spec)
+BuildRequires: mvn(org.jboss.spec.javax.servlet:jboss-servlet-api_3.1_spec)
+BuildRequires: mvn(org.jboss.spec.javax.servlet.jsp:jboss-jsp-api_2.3_spec)
 BuildRequires: mvn(xalan:xalan)
 
 BuildArch:     noarch
@@ -47,10 +50,13 @@ This package contains the API documentation for %{name}.
 
 %prep
 # Unpack the sources:
-%setup -q -n %{name}-%{namedversion}
+%setup -q -n %{pname}-%{oname}-%{namedversion}
 # Apply the patches:
 %patch0 -p1
+# only for EL, in fedora ibm jdk is not available
+%if 0%{?el7}
 %patch1 -p1
+%endif
 
 %pom_remove_plugin :maven-source-plugin
 
@@ -64,13 +70,16 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE
-%doc README
+%doc LICENSE README
+%doc CHANGES.txt README.md
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc LICENSE README
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_3jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt4_14jpp8
 - new fc release
 
