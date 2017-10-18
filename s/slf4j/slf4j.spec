@@ -1,11 +1,13 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2009, JPackage Project
 # All rights reserved.
 #
@@ -37,11 +39,10 @@ BuildRequires: jpackage-generic-compat
 #
 
 Name:           slf4j
-Version:        1.7.21
-Release:        alt1_2jpp8
+Version:        1.7.22
+Release:        alt1_4jpp8
 Epoch:          0
 Summary:        Simple Logging Facade for Java
-Group:          Development/Other
 # the log4j-over-slf4j and jcl-over-slf4j submodules are ASL 2.0, rest is MIT
 License:        MIT and ASL 2.0
 URL:            http://www.slf4j.org/
@@ -49,23 +50,15 @@ Source0:        http://www.slf4j.org/dist/%{name}-%{version}.tar.gz
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils >= 0:1.7.5
-BuildRequires:  java-devel >= 1.5.0
-BuildRequires:  ant >= 0:1.6.5
-BuildRequires:  ant-junit >= 0:1.6.5
-BuildRequires:  javassist >= 0:3.4
-BuildRequires:  junit >= 0:3.8.2
 BuildRequires:  maven-local
-BuildRequires:  maven-antrun-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-source-plugin
-BuildRequires:  maven-site-plugin
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  maven-plugin-build-helper
-BuildRequires:  log4j
-BuildRequires:  apache-commons-logging
-BuildRequires:  cal10n
-BuildRequires:  perl
+BuildRequires:  mvn(ch.qos.cal10n:cal10n-api)
+BuildRequires:  mvn(commons-lang:commons-lang)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(javassist:javassist)
+BuildRequires:  mvn(log4j:log4j:1.2.17)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 Source44: import.info
 
 %description
@@ -145,6 +138,13 @@ Summary:        JUL to SLF4J bridge
 %description -n jul-to-slf4j
 JUL to SLF4J bridge.
 
+%package sources
+Group: Development/Other
+Summary:        SLF4J Source JARs
+
+%description sources
+SLF4J Source JARs.
+
 %prep
 %setup -q
 find . -name "*.jar" | xargs rm
@@ -154,7 +154,6 @@ cp -p %{SOURCE1} APACHE-LICENSE
 %pom_disable_module osgi-over-slf4j
 %pom_disable_module slf4j-android
 %pom_disable_module slf4j-migrator
-%pom_remove_plugin :maven-source-plugin
 
 # Because of a non-ASCII comment in slf4j-api/src/main/java/org/slf4j/helpers/MessageFormatter.java
 %pom_xpath_inject "pom:project/pom:properties" "
@@ -168,8 +167,8 @@ cp -p %{SOURCE1} APACHE-LICENSE
     <links><link>/usr/share/javadoc/java</link></links>"
 
 # dos2unix
-%{_bindir}/find -name "*.css" -o -name "*.js" -o -name "*.txt" | \
-    %{_bindir}/xargs -t %{__perl} -pi -e 's/\r$//g'
+find -name "*.css" -o -name "*.js" -o -name "*.txt" | \
+    xargs -t sed -i 's/\r$//'
 
 # Remove wagon-ssh build extension
 %pom_xpath_remove pom:extensions
@@ -190,6 +189,9 @@ cp -p %{SOURCE1} APACHE-LICENSE
 # optional one.
 # Reported upstream: http://bugzilla.slf4j.org/show_bug.cgi?id=283
 sed -i "/Import-Package/s/.$/;resolution:=optional&/" slf4j-api/src/main/resources/META-INF/MANIFEST.MF
+
+# Source JARs for are required by Maven 3.4.0
+%mvn_package :::sources: sources
 
 %mvn_package :%{name}-parent __noinstall
 %mvn_package :%{name}-site __noinstall
@@ -213,7 +215,6 @@ cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
 
 %files -f .mfiles
 %doc LICENSE.txt APACHE-LICENSE
-%dir %{_javadir}/%{name}
 
 %files jdk14 -f .mfiles-%{name}-jdk14
 %files log4j12 -f .mfiles-%{name}-log4j12
@@ -223,6 +224,9 @@ cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
 %files -n log4j-over-slf4j -f .mfiles-log4j-over-slf4j
 %files -n jul-to-slf4j -f .mfiles-jul-to-slf4j
 
+%files sources -f .mfiles-sources
+%doc LICENSE.txt APACHE-LICENSE
+
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt APACHE-LICENSE
 
@@ -231,6 +235,9 @@ cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
 %{_defaultdocdir}/%{name}-manual
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.22-alt1_4jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.7.21-alt1_2jpp8
 - new version
 
