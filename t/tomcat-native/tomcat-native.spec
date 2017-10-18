@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ java-devel-default perl(File/Spec/Functions.pm) perl(IO/File.pm) rpm-build-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           tomcat-native
-Version:        1.2.8
+Version:        1.2.12
 Release:        alt1_1jpp8
 Summary:        Tomcat native library
 
@@ -44,7 +45,7 @@ cd native
 %configure \
     --with-apr=%{_bindir}/apr-1-config \
     --with-java-home=%{java_home}
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -63,6 +64,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/pkgconfig
 
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt1_1jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.8-alt1_1jpp8
 - new version
 
