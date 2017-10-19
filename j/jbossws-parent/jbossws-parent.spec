@@ -3,18 +3,18 @@ Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jbossws-parent
-%define version 1.2.0
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 1.3.0
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jbossws-parent
-Version:          1.2.0
-Release:          alt1_1jpp8
+Version:          1.3.0
+Release:          alt1_2jpp8
 Summary:          JBossWS Parent
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossws
@@ -42,6 +42,9 @@ This package contains the JBossWS Parent.
 %files -f .mfiles
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.0-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt1_1jpp8
 - new version
 
