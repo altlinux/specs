@@ -2,7 +2,7 @@
 %global qt_module qtcharts
 
 Name: qt5-charts
-Version: 5.7.1
+Version: 5.9.2
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -98,5 +98,8 @@ export QT_HASH_SEED=0
 %_qt5_docdir/*
 
 %changelog
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
 * Thu Oct 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
 - initial build

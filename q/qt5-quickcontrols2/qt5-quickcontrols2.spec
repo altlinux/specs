@@ -1,7 +1,7 @@
 %global qt_module qtquickcontrols2
 
 Name: qt5-quickcontrols2
-Version: 5.7.1
+Version: 5.9.2
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -35,6 +35,7 @@ Common package for %name
 #BuildArch: noarch
 Summary: Document for developing apps which will use Qt5 %qt_module
 Group: Development/KDE and QT
+BuildArch: noarch
 Requires: %name-common = %EVR
 %description doc
 This package contains documentation for Qt5 %qt_module
@@ -83,6 +84,7 @@ syncqt.pl-qt5 -version %version -private
 %build
 %qmake_qt5
 %make_build
+export QT_HASH_SEED=0
 %make docs
 
 %install
@@ -99,6 +101,10 @@ syncqt.pl-qt5 -version %version -private
 %files doc
 %_qt5_docdir/qtquickcontrols2.qch
 %_qt5_docdir/qtquickcontrols2/
+%_qt5_docdir/qtlabsplatform.qch
+%_qt5_docdir/qtlabsplatform/
+%_qt5_docdir/qtlabscalendar.qch
+%_qt5_docdir/qtlabscalendar/
 
 %files -n libqt5-quicktemplates2
 %_qt5_libdir/libQt?QuickTemplates2.so.*
@@ -122,6 +128,9 @@ syncqt.pl-qt5 -version %version -private
 #%_qt5_libdatadir/libQt*.a
 
 %changelog
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
 * Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
 - new version
 

@@ -2,8 +2,8 @@
 %global qt_module qtsvg
 
 Name: qt5-svg
-Version: 5.7.1
-Release: alt2%ubt
+Version: 5.9.2
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - Support for rendering and displaying SVG
@@ -77,7 +77,7 @@ export QT_HASH_SEED=0
 
 %files common
 %files -n libqt5-svg
-%doc LGPL_EXCEPTION.txt
+%doc LGPL_EXCEPTION.txt LICENSE*EXCEPT*
 %_qt5_libdir/libQt?Svg.so.*
 %_qt5_plugindir/iconengines/libqsvgicon.so
 %_qt5_plugindir/imageformats/libqsvg.so
@@ -98,6 +98,9 @@ export QT_HASH_SEED=0
 %_qt5_docdir/qtsvg/
 
 %changelog
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
 * Thu Aug 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt2%ubt
 - provides qt5-svg
 

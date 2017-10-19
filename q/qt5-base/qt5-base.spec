@@ -1,6 +1,6 @@
 
 #def_enable qtchooser
-%def_disable bootstrap
+%def_enable bootstrap
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_ibase
@@ -21,11 +21,11 @@
 %define gname  qt5
 %define libname  lib%gname
 %define major  5
-%define minor  5
-%define bugfix 0
+%define minor  9
+%define bugfix 2
 Name: qt5-base
-Version: 5.7.1
-Release: alt14%ubt
+Version: 5.9.2
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -36,23 +36,14 @@ Source: %rname-opensource-src-%version.tar
 Source1: rpm-macros
 Source2: rpm-macros-addon
 # FC
-Patch1: qtbase-opensource-src-5.7.1-moc_system_defines.patch
-Patch2: qtbase-opensource-src-5.7.1-QT_VERSION_CHECK.patch
-Patch3: qtbase-opensource-src-5.6.0-arm.patch
-Patch4: qtbase-opensource-src-5.7.1-moc_macros.patch
-Patch5: qt5-qtbase-5.7.1-libpng.patch
-Patch6: 0001-Merge-the-QDBusMetaType-s-custom-information-to-QDBu.patch
-Patch7: 0053-QMimeXMLProvider-add-missing-out-of-line-destructor.patch
+Patch1: qtbase-opensource-src-5.7.1-QT_VERSION_CHECK.patch
+Patch2: qtbase-opensource-src-5.7.1-moc_macros.patch
 #
 Patch11: QTBUG-35459.patch
-Patch12: QTBUG-55583.patch
-Patch13: QTBUG-56140.patch
 # upstream
 # SuSE
 Patch100: disable-rc4-ciphers-bnc865241.diff
 Patch101: libqt5-do-not-use-shm-if-display-name-doesnt-look-local.patch
-Patch102: Fix-some-QtDBus-crashes-during-application-destruction.patch
-Patch103: Stop-unloading-plugins-in-QPluginLoader-and-QFactoryLoader.patch
 # ALT
 Patch1000: alt-sql-ibase-firebird.patch
 Patch1001: alt-enable-ft-lcdfilter.patch
@@ -60,9 +51,9 @@ Patch1002: alt-dont-require-plugin-file.patch
 Patch1003: alt-ca-certificates-path.patch
 Patch1004: alt-timezone.patch
 Patch1005: alt-hidpi_scale_at_192.patch
-#Patch1006: alt-relax-hidpi-scaling.patch
-Patch1007: e2k-qt-5.7.1.patch
-Patch1008: alt-decrease-iconloader-fallback-depth.patch
+Patch1006: e2k-qt-5.7.1.patch
+Patch1007: alt-decrease-iconloader-fallback-depth.patch
+Patch1008: alt-mkspecs-features.patch
 
 # macros
 %define _qt5 %gname
@@ -75,13 +66,14 @@ Patch1008: alt-decrease-iconloader-fallback-depth.patch
 #BuildRequires: firebird-devel gcc-c++ gst-plugins-devel libXi-devel libalsa-devel libcups-devel libdbus-devel libfreetds-devel libgtk+2-devel libicu-devel libjpeg-devel libmysqlclient-devel libpcre-devel libpulseaudio-devel libsqlite3-devel libudev-devel libunixODBC-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel postgresql-devel python-module-distribute rpm-build-python3 rpm-build-ruby zlib-devel-static
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libcups-devel libdbus-devel libicu-devel libjpeg-devel libpng-devel libharfbuzz-devel
-BuildRequires: libpcre-devel libudev-devel libEGL-devel libdrm-devel libgbm-devel zlib-devel libgtk+3-devel
+BuildRequires: libpcre2-devel libudev-devel libEGL-devel libdrm-devel libgbm-devel zlib-devel libgtk+3-devel
 BuildRequires: libmtdev-devel libinput-devel libts-devel
 BuildRequires: pkgconfig(gl) pkgconfig(glesv2) pkgconfig(egl)
 BuildRequires: libSM-devel libICE-devel
 BuildRequires: libX11-devel libXi-devel libxkbcommon-devel libxkbcommon-x11-devel
 BuildRequires: libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel
 BuildRequires: libalsa-devel
+BuildRequires: libat-spi2-core-devel
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
 %{?_enable_journald:BuildRequires: pkgconfig(libsystemd-journal)}
 %{?_enable_sql_tds:BuildRequires: libfreetds-devel}
@@ -334,11 +326,11 @@ Requires: %name-common = %EVR
 %description -n lib%{gname}-widgets
 Widgets library for the Qt%major toolkit
 
-%package -n lib%{gname}-egldeviceintegration
+%package -n lib%{gname}-eglfsdeviceintegration
 Summary: EGL integration library for the Qt%major toolkit
 Group: System/Libraries
 Requires: %name-common = %EVR
-%description -n lib%{gname}-egldeviceintegration
+%description -n lib%{gname}-eglfsdeviceintegration
 EGL integration library for the Qt%major toolkit
 
 %package -n lib%{gname}-xcbqpa
@@ -359,29 +351,20 @@ EGL integration library for the Qt%major toolkit
 %setup -n %rname-opensource-src-%version
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
 #
 %patch11 -p1 -b .QTBUG
-%patch12 -p1 -b .QTBUG
-%patch13 -p1 -b .QTBUG
 %patch100 -p1
 %patch101 -p1
-%patch102 -p1
-%patch103 -p1
 %patch1000 -p1 -b .ibase
 #%patch1001 -p1 -b .lcd
 %patch1002 -p1 -b .plugin-file
 %patch1003 -p1 -b .ca-bundle
 %patch1004 -p1 -b .timezone
 %patch1005 -p1 -b .dpi
-#%patch1006 -p1 -b .relax-scaling
 %ifarch e2k
-%patch1007 -p1 -b .e2k
+%patch1006 -p1 -b .e2k
 %endif
+%patch1007 -p1
 %patch1008 -p1
 bin/syncqt.pl -version %version -private
 [ -e include/QtCore/QtCoreDepends ] || >include/QtCore/QtCoreDepends
@@ -399,7 +382,7 @@ sed -i "s|^\s*QMAKE_CFLAGS_OPTIMIZE_FULL\s*=.*$|QMAKE_CFLAGS_OPTIMIZE_FULL = $QM
 # move some bundled libs to ensure they're not accidentally used
 pushd src/3rdparty
 mkdir UNUSED
-mv freetype libjpeg libpng sqlite zlib xcb xkbcommon UNUSED/
+mv freetype libjpeg libpng pcre2 sqlite zlib xcb xkbcommon UNUSED/
 popd
 
 %build
@@ -412,7 +395,6 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
 ./configure -v \
     -opensource \
     -confirm-license \
-    -I/usr/include/pcre -I/usr/include/libdrm \
     -prefix %_qt5_prefix \
     -archdatadir %_qt5_archdatadir \
     -bindir %_qt5_bindir \
@@ -431,16 +413,14 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     -release \
     -shared \
     -pkg-config \
-    -largefile \
+    -optimized-qmake \
     -accessibility \
     -dbus-linked \
     -fontconfig \
     -glib \
     -gtk \
-    -iconv \
     -icu \
     -openssl \
-    -optimized-qmake \
     -nomake examples \
     -nomake tests \
     -make tools \
@@ -529,7 +509,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.7.1
+Version: 5.9.2
 __EOF__
 
 # rpm macros
@@ -777,8 +757,8 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 %files -n lib%{gname}-xml
 %_qt5_libdir/libQt%{major}Xml.so.*
 
-%files -n lib%{gname}-egldeviceintegration
-%_qt5_libdir/libQt%{major}EglDeviceIntegration.so.*
+%files -n lib%{gname}-eglfsdeviceintegration
+%_qt5_libdir/libQt%{major}EglFSDeviceIntegration.so.*
 
 %files -n lib%{gname}-xcbqpa
 %_qt5_libdir/libQt%{major}XcbQpa.so.*
@@ -788,6 +768,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
 * Thu Oct 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt14%ubt
 - decrease iconloader fallback icon names depth
 

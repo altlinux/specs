@@ -2,7 +2,7 @@
 %global qt_module qt3d
 
 Name: qt5-3d
-Version: 5.7.1
+Version: 5.9.2
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -16,6 +16,7 @@ Source: %qt_module-opensource-src-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: qt5-base-devel-static qt5-tools
+BuildRequires: zlib-devel
 BuildRequires: pkgconfig(Qt5Quick) pkgconfig(Qt5XmlPatterns) pkgconfig(Qt5Qml) pkgconfig(Qt5Network) pkgconfig(Qt5Core) pkgconfig(Qt5OpenGL)
 BuildRequires: pkgconfig(assimp)
 
@@ -47,7 +48,7 @@ Requires: %name-devel
 %summary.
 
 %package doc
-#BuildArch: noarch
+BuildArch: noarch
 Summary: Document for developing apps which will use Qt5 %qt_module
 Group: Development/KDE and QT
 Requires: %name-common = %EVR
@@ -117,6 +118,27 @@ Requires: %name-common = %EVR
 %description -n libqt5-3dquickextras
 %summary
 
+%package -n libqt5-3danimation
+Summary: Qt5 library
+Group: System/Libraries
+Requires: %name-common = %EVR
+%description -n libqt5-3danimation
+%summary
+
+%package -n libqt5-3dquickanimation
+Summary: Qt5 library
+Group: System/Libraries
+Requires: %name-common = %EVR
+%description -n libqt5-3dquickanimation
+%summary
+
+%package -n libqt5-3dquickscene2d
+Summary: Qt5 library
+Group: System/Libraries
+Requires: %name-common = %EVR
+%description -n libqt5-3dquickscene2d
+%summary
+
 %prep
 %setup -n %qt_module-opensource-src-%version
 syncqt.pl-qt5 -version %version -private
@@ -124,6 +146,7 @@ syncqt.pl-qt5 -version %version -private
 %build
 %qmake_qt5
 %make_build
+export QT_HASH_SEED=0
 %make docs
 
 %install
@@ -132,13 +155,17 @@ syncqt.pl-qt5 -version %version -private
 
 %files common
 %dir %_qt5_plugindir/sceneparsers
+%dir %_qt5_plugindir/geometryloaders/
+%dir %_qt5_plugindir/renderplugins/
 
 %files
 %_bindir/qgltf-qt5
 %_qt5_bindir/qgltf
 %_qt5_qmldir/Qt3D/
-%_qt5_qmldir/QtQuick/Scene3D/
+%_qt5_qmldir/QtQuick/Scene?D/
 %_qt5_plugindir/sceneparsers/*.so
+%_qt5_plugindir/geometryloaders/*.so
+%_qt5_plugindir/renderplugins/*.so
 
 %files -n libqt5-3dcore
 %_qt5_libdir/libQt?3DCore.so.*
@@ -158,7 +185,12 @@ syncqt.pl-qt5 -version %version -private
 %_qt5_libdir/libQt?3DExtras.so.*
 %files -n libqt5-3dquickextras
 %_qt5_libdir/libQt?3DQuickExtras.so.*
-
+%files -n libqt5-3danimation
+%_qt5_libdir/libQt?3DAnimation.so.*
+%files -n libqt5-3dquickanimation
+%_qt5_libdir/libQt?3DQuickAnimation.so.*
+%files -n libqt5-3dquickscene2d
+%_qt5_libdir/libQt?3DQuickScene2D.so.*
 
 %files devel
 %_qt5_headerdir/Qt*/
@@ -174,6 +206,9 @@ syncqt.pl-qt5 -version %version -private
 %_qt5_docdir/*
 
 %changelog
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
 * Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
 - new version
 

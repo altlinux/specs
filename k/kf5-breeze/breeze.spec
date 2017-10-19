@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.10.5
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -89,6 +89,9 @@ KF5 library
 %_libdir/cmake/Breeze/
 
 %changelog
+* Wed Oct 11 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt2%ubt
+- rebuild with new Qt
+
 * Mon Sep 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt1%ubt
 - new version
 

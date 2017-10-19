@@ -3,7 +3,7 @@
 %def_disable bootstrap
 
 Name: qt5-websockets
-Version: 5.7.1
+Version: 5.9.2
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -72,6 +72,7 @@ syncqt.pl-qt5 -version %version -private
 %qmake_qt5
 %make_build
 %if_disabled bootstrap
+export QT_HASH_SEED=0
 %make docs
 %endif
 
@@ -103,6 +104,9 @@ syncqt.pl-qt5 -version %version -private
 %endif
 
 %changelog
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
 * Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
 - new version
 

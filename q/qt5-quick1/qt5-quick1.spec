@@ -3,8 +3,8 @@
 %def_disable qtwebkit
 
 Name: qt5-quick1
-Version: 5.7.1
-Release: alt2%ubt
+Version: 5.9.2
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: A declarative language for describing user interfaces in Qt5
@@ -12,6 +12,7 @@ License: LGPLv2 / GPLv3
 Url: http://qt.io/
 
 Source: %qt_module-opensource-src-%version.tar
+Patch1: alt-reverse-qrandomgenerator.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ glibc-devel
@@ -71,7 +72,12 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -qn %qt_module-opensource-src-%version
+%patch1 -p1
 syncqt.pl-qt5 -version %version -private
+
+# fix version
+sed -i 's|^MODULE_VERSION[[:space:]]*=.*|MODULE_VERSION = %version|' .qmake.conf
+
 
 %build
 %qmake_qt5
@@ -115,6 +121,9 @@ syncqt.pl-qt5 -version %version -private
 #%_qt5_docdir/*
 
 %changelog
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
 * Thu Aug 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt2%ubt
 - build without qtwebkit
 

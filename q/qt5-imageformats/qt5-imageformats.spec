@@ -5,8 +5,8 @@
 %def_enable fmt_jp2
 
 Name: qt5-imageformats
-Version: 5.7.1
-Release: alt2%ubt
+Version: 5.9.2
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtImageFormats component
@@ -73,7 +73,7 @@ export QT_HASH_SEED=0
 
 %files common
 %files
-%doc LGPL_EXCEPTION.txt
+%doc LGPL_EXCEPTION.txt LICENSE*EXCEPT*
 %_qt5_plugindir/imageformats/*.so
 %_libdir/cmake/Qt5Gui/Qt5Gui_*Plugin.cmake
 
@@ -81,6 +81,9 @@ export QT_HASH_SEED=0
 %_qt5_docdir/*
 
 %changelog
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
 * Fri May 12 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt2%ubt
 - rebuild with new libmng
 

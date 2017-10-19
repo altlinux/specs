@@ -1,7 +1,7 @@
 %global qt_module qtquickcontrols
 
 Name: qt5-quickcontrols
-Version: 5.7.1
+Version: 5.9.2
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -32,7 +32,7 @@ Requires: qt5-base-common qt5-declarative-common
 Common package for %name
 
 %package doc
-#BuildArch: noarch
+BuildArch: noarch
 Summary: Document for developing apps which will use Qt5 %qt_module
 Group: Development/KDE and QT
 Requires: %name-common = %EVR
@@ -46,6 +46,7 @@ syncqt.pl-qt5 -version %version -private
 %build
 %qmake_qt5
 %make_build
+export QT_HASH_SEED=0
 %make docs
 
 %install
@@ -62,6 +63,9 @@ syncqt.pl-qt5 -version %version -private
 %_qt5_docdir/qtquick*s/
 
 %changelog
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+- new version
+
 * Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
 - new version
 
