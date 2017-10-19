@@ -2,28 +2,25 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global project   felix
-%global bundle    org.apache.felix.scr.annotations
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global bundle org.apache.felix.scr.annotations
+
 Name:          felix-scr-annotations
-Version:       1.9.12
-Release:       alt1_3jpp8
+Version:       1.12.0
+Release:       alt1_1jpp8
 Summary:       Annotations for SCR
 License:       ASL 2.0
 URL:           http://felix.apache.org/
-Source0:       http://www.apache.org/dist/felix/%{bundle}-%{version}-source-release.tar.gz
+Source0:       http://archive.apache.org/dist/felix/%{bundle}-%{version}-source-release.tar.gz
 
-BuildRequires: maven-local
-BuildRequires: mvn(org.apache.felix:felix-parent:pom:)
-BuildRequires: mvn(org.apache.felix:org.apache.felix.scr.generator)
-BuildRequires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-surefire-plugin)
-# i dont know which package as missing this required...
-BuildRequires: mvn(org.mockito:mockito-all)
+BuildArch:      noarch
 
-BuildArch:     noarch
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.felix:felix-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:org.apache.felix.scr.generator)
 Source44: import.info
 
 %description
@@ -40,10 +37,9 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q -n %{bundle}-%{version}
 
-%mvn_file :%{bundle} %{project}/%{bundle}
+%mvn_file : felix/%{bundle}
 
 %build
-
 # no test to run
 %mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
@@ -58,6 +54,9 @@ This package contains javadoc for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_1jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.12-alt1_3jpp8
 - new fc release
 
