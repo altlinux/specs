@@ -2,15 +2,16 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global base_name woodstox
 %global core_name %{base_name}-core
 
 Name:           %{core_name}
-Version:        5.0.2
-Release:        alt1_1jpp8
+Version:        5.0.3
+Release:        alt1_2jpp8
 Summary:        High-performance XML processor
 License:        ASL 2.0 or LGPLv2+ or BSD
 URL:            https://github.com/FasterXML/woodstox
@@ -77,6 +78,9 @@ rm ./src/test/java/org/codehaus/stax/test/stream/TestNamespaces.java
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 5.0.3-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.2-alt1_1jpp8
 - new version
 
