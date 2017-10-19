@@ -3,31 +3,26 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.2
-Release: alt1.git20150101.1.1
+Version: 0.3.1
+Release: alt1
 Summary: Omni API
-License: GPLv3
+License: Apache-2.0
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/omni_api/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/hivesolutions/omni_api.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-appier
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-appier
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-appier
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-appier
 %endif
 
 %py_provides omni
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
 
 %description
 Simple rest api wrapper for the omni infra-structure.
@@ -84,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.1-alt1
+- Updated to upstream version 0.3.1.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.2-alt1.git20150101.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
