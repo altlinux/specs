@@ -1,36 +1,30 @@
 Group: Development/Java
-%filter_from_requires /^java-headless/d
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global oname CodeNarc
 Name:          codenarc
-Version:       0.17
-Release:       alt1_15jpp8
+Version:       0.24.1
+Release:       alt1_2jpp8
 Summary:       Groovy library that provides static analysis features for Groovy code
 License:       ASL 2.0
 Url:           http://codenarc.sourceforge.net/
-Source0:       http://downloads.sourceforge.net/project/codenarc/codenarc/CodeNarc%%20Version%%20%{version}/CodeNarc-%{version}-bin.tar.gz
-# use antrun-plugin instead of gmaven
-# fix log4j version
-Patch0:        codenarc-0.17-antrunplugin.patch
-# remove @Override
-# unavailable method in groovy 1.8.x (...)
-Patch1:        codenarc-0.17-groovy18.patch
+Source0:       https://github.com/CodeNarc/CodeNarc/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(log4j:log4j:1.2.17)
 BuildRequires: mvn(org.apache.ant:ant)
-BuildRequires: mvn(org.apache.ant:ant-junit)
-BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires: mvn(org.codehaus.groovy:groovy-all:1.8)
+BuildRequires: mvn(org.codehaus.gmavenplus:gmavenplus-plugin)
+BuildRequires: mvn(org.codehaus.groovy:groovy)
+BuildRequires: mvn(org.codehaus.groovy:groovy-ant)
+BuildRequires: mvn(org.codehaus.groovy:groovy-xml)
 BuildRequires: mvn(org.gmetrics:GMetrics)
 BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
-# groovy-all embedded libraries
-BuildRequires: mvn(antlr:antlr)
-BuildRequires: mvn(asm:asm-all)
-BuildRequires: mvn(commons-cli:commons-cli)
-BuildRequires: mvn(org.slf4j:slf4j-nop)
 
 BuildArch:     noarch
 Source44: import.info
@@ -60,17 +54,54 @@ find . -name "*.jar" -delete
 find . -name "*.class" -delete
 rm -rf docs/*
 
-%patch0 -p0
-%patch1 -p1
+cp -p site-pom.xml pom.xml
 
-%pom_remove_plugin :maven-javadoc-plugin
+mkdir -p src/main/java/org/codenarc/analyzer
+cp -p src/main/groovy/org/codenarc/analyzer/SuppressionAnalyzer.java \
+ src/main/java/org/codenarc/analyzer/
 
-%pom_remove_dep net.sourceforge.cobertura:cobertura
-%pom_remove_plugin org.codehaus.mojo:cobertura-maven-plugin
+# Set encoding
+%pom_xpath_inject pom:project/pom:properties '
+  <antVersion>1.9.6</antVersion>
+  <gmetricsVersion>0.7</gmetricsVersion>
+  <junitVersion>4.12</junitVersion>
+  <log4jVersion>1.2.17</log4jVersion>
+  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>'
 
-chmod 644 README.txt
-for d in CHANGELOG.txt LICENSE.txt NOTICE.txt README.txt ; do
-  sed -i 's/\r//' $d
+%pom_xpath_set pom:properties/pom:targetJdk 1.6
+%pom_xpath_set pom:properties/pom:groovyVersion 2.4.5
+
+%pom_add_plugin org.apache.maven.plugins:maven-compiler-plugin:3.5.1 . "
+<configuration>
+    <source>\${targetJdk}</source>
+    <target>\${targetJdk}</target>
+</configuration>"
+
+%pom_add_plugin org.codehaus.gmavenplus:gmavenplus-plugin:1.5 . "
+ <executions>
+  <execution>
+   <goals>
+    <goal>generateStubs</goal>
+    <!--goal>testCompile</goal-->
+    <goal>testGenerateStubs</goal>
+   </goals>
+  </execution>
+ </executions>"
+
+%pom_add_dep org.apache.ant:ant:'${antVersion}' . "<optional>true</optional>"
+%pom_add_dep org.codehaus.groovy:groovy:'${groovyVersion}'
+%pom_add_dep org.codehaus.groovy:groovy-ant:'${groovyVersion}'
+%pom_add_dep org.codehaus.groovy:groovy-xml:'${groovyVersion}'
+%pom_add_dep org.gmetrics:GMetrics:'${gmetricsVersion}'
+%pom_add_dep junit:junit:'${junitVersion}'
+%pom_add_dep log4j:log4j:'${log4jVersion}'
+
+# Convert from dos to unix line ending
+for file in CHANGELOG.txt LICENSE.txt NOTICE.txt README.md ; do
+ sed -i.orig 's|\r||g' $file
+ touch -r $file.orig $file
+ rm $file.orig
 done
 
 %mvn_file org.%{name}:%{oname} %{name} %{oname}
@@ -83,13 +114,16 @@ done
 %mvn_install
 
 %files -f .mfiles
-%doc CHANGELOG.txt README.txt
+%doc CHANGELOG.txt README.md
 %doc LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.24.1-alt1_2jpp8
+- new jpp release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_15jpp8
 - java8 mass update
 
