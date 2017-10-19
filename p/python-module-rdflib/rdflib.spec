@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.2.1
+Version: 4.2.2
 Release: alt1
 
 Summary: RDFLib is a Python library for working with RDF
@@ -14,20 +14,17 @@ Url: http://rdflib.net/
 
 %setup_python_module %oname
 
-# Source-url: https://github.com/RDFLib/rdflib/archive/4.0.1.tar.gz
+# https://github.com/RDFLib/rdflib.git
 Source: %oname-%version.tar
 
 BuildArch: noarch
 
 #add_python_req_skip FOPLRelationalModel RDF
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-enum34 python-module-numpy python-module-pyasn1 python-module-serial python-module-setuptools python-module-twisted-core python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
-BuildRequires: python-module-BeautifulSoup python-module-PyXML python-module-Pyrex python-module-bibtex python3-module-setuptools rpm-build-python3
-
+BuildRequires: python-dev python-module-setuptools python-module-BeautifulSoup python-module-PyXML python-module-Pyrex python-module-bibtex
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-dev python3-module-setuptools python3-module-distribute
 %endif
 
 %description
@@ -97,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.2-alt1
+- Updated to upstream version 4.2.2.
+
 * Fri Feb 10 2017 Vitaly Lipatov <lav@altlinux.ru> 4.2.1-alt1
 - new version 4.2.1 (with rpmrb script)
 
