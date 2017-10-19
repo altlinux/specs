@@ -4,7 +4,7 @@
 %define oname constantly
 Name: python-module-%oname
 Version: 15.1.0
-Release: alt3
+Release: alt4
 
 Summary: Symbolic constants in Python
 
@@ -17,8 +17,6 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires: python-dev python-module-setuptools
-BuildRequires: git-core
-
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -45,12 +43,10 @@ Originally ``twisted.python.constants`` from the `Twisted <https://twistedmatrix
 %prep
 %setup
 
-git config --global user.email "<python@packages.altlinux.org>"
-git config --global user.name "Python Development Team"
-git init-db
-git add . -A
-git commit -a -m "REL: v%version"
-git tag -m "v%version" v%version
+# fix version info
+sed -i \
+	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: %version\)\"/" \
+	%oname/_version.py
 
 %if_with python3
 cp -fR . ../python3
@@ -84,14 +80,20 @@ popd
 %endif
 
 %files
-%python_sitelibdir/*
+%python_sitelibdir/%oname
+%python_sitelibdir/%oname-%version-py*.egg-info
 
 %if_with python3
-%files -n python3-module-constantly
-%python3_sitelibdir/*
+%files -n python3-module-%oname
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py*.egg-info
 %endif
 
 %changelog
+* Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 15.1.0-alt4
+- Fixed egg-info version.
+- Explicitely stated egg-info including valid version.
+
 * Wed Oct 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 15.1.0-alt3
 - Fixed egg-info version.
 
