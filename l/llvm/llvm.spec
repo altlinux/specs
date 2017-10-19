@@ -16,7 +16,7 @@
 
 Name: llvm
 Version: 3.8.0
-Release: alt1
+Release: alt1.1
 Summary: The Low Level Virtual Machine
 Group: Development/C
 License: NCSA
@@ -365,9 +365,9 @@ file %buildroot%_libdir/ocaml/*.so | awk -F: '$2~/ELF/{print $1}' | xargs -r chr
 find examples -name 'Makefile' -delete
 
 # need for build cmake projects
-mkdir -p %buildroot%_datadir/CMake/Modules
-install -p -m644 ../cmake/modules/*.cmake %buildroot%_datadir/CMake/Modules
-ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
+mkdir -p %buildroot%_datadir/cmake/Modules
+install -p -m644 ../cmake/modules/*.cmake %buildroot%_datadir/cmake/Modules
+ln -s LLVM-Config.cmake %buildroot%_datadir/cmake/Modules/LLVMConfig.cmake
 
 %files
 %doc CREDITS.TXT LICENSE.TXT README.txt build/llvm-testlog.txt
@@ -390,7 +390,7 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %_bindir/llvm-config
 %_includedir/llvm
 %_includedir/llvm-c
-%_datadir/CMake/Modules
+%_datadir/cmake/Modules
 
 %files devel-static
 %_libdir/*.a
@@ -452,6 +452,9 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %endif
 
 %changelog
+* Thu Oct 19 2017 Igor Vlasenko <viy@altlinux.ru> 3.8.0-alt1.1
+- NMU: changed CMake Modules install path
+
 * Fri Jun 03 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.8.0-alt1
 - Updated to 3.8.0.
 - Disabled build with debug symbols.
