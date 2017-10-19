@@ -2,31 +2,29 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global base_name       lang
 %global short_name      commons-%{base_name}3
 
 Name:           apache-%{short_name}
-Version:        3.4
-Release:        alt4_5jpp8
+Version:        3.5
+Release:        alt1_2jpp8
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
 URL:            http://commons.apache.org/%{base_name}
 Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 BuildArch:      noarch
 
-# testParseSync() test fails on ARM and PPC64LE for unknown reason
-Patch0:         fix-ppc64le-test-failure.patch
-Patch1:         0001-Fix-parsing-of-ISO-dates-with-UTC-TZ.patch
-
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-BuildRequires:  mvn(org.hamcrest:hamcrest-all)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 %if 0%{?rhel} <= 0
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.hamcrest:hamcrest-all)
 BuildRequires:  mvn(org.easymock:easymock)
 %endif
 Source44: import.info
@@ -58,9 +56,12 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
-%patch0
-%patch1 -p1
+
 %mvn_file : %{name} %{short_name}
+
+# testParseSync() test fails on ARM and PPC64LE for unknown reason
+sed -i 's/\s*public void testParseSync().*/@org.junit.Ignore\n&/' \
+    src/test/java/org/apache/commons/lang3/time/FastDateFormatTest.java
 
 %build
 %mvn_build %{?rhel:-f}
@@ -75,6 +76,9 @@ BuildArch: noarch
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 3.5-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.4-alt4_5jpp8
 - new fc release
 
