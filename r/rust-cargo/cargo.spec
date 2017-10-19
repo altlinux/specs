@@ -1,6 +1,6 @@
 %def_without bootstrap
 Name: rust-cargo
-Version: 0.21.1
+Version: 0.22.0
 Release: alt1
 Summary: The Rust package manager
 
@@ -68,6 +68,9 @@ CFG_DISABLE_CROSS_TESTS=1 cargo test || :
 %_man1dir/cargo*
 
 %changelog
+* Thu Oct 19 2017 Vladimir Lettiev <crux@altlinux.org> 0.22.0-alt1
+- 0.22.0
+
 * Fri Sep 15 2017 Vladimir Lettiev <crux@altlinux.org> 0.21.1-alt1
 - 0.21.1
 
