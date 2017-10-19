@@ -4,40 +4,30 @@
 
 Name: python-module-%oname
 Version: 3.1.1
-Release: alt1.git20131114.1.1
+Release: alt2.git20131114
 Summary: A Python library implementing the Data Access Protocol (DAP, aka OPeNDAP or DODS)
 License: MIT
 Group: Development/Python
 Url: http://pypi.python.org/pypi/dap/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/robertodealmeida/pydap.git
 Source: %oname-%version.tar.gz
-BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-httplib2
-#BuildPreReq: python-module-paste python-module-cheetah
-#BuildPreReq: python-module-Paver python-module-setuptools-tests
-#BuildPreReq: python-module-sphinx-devel libnumpy-devel
-#BuildPreReq: python-module-PasteScript python-module-PasteDeploy
-#BuildPreReq: python-module-genshi
 %setup_python_module %oname
+
+BuildRequires: python-module-PasteDeploy python-module-PasteScript python-module-Paver python-module-genshi
+BuildRequires: python-module-httplib2 python-module-numpy-testing python-module-pytest
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-matplotlib python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-httplib2
-#BuildPreReq: python3-module-setuptools-tests libnumpy-py3-devel
-#BuildPreReq: python3-module-paste python3-module-Paver
-#BuildPreReq: python3-module-PasteScript python3-module-PasteDeploy
-#BuildPreReq: python3-module-genshi
+BuildRequires: python3-module-PasteDeploy python3-module-PasteScript python3-module-Paver python3-module-genshi
+BuildRequires: python3-module-httplib2 python3-module-numpy-testing python3-module-pytest
 %endif
 
 Requires: python-modules-email
 %py_requires paste.deploy
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: bzr python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mimeparse python-module-numpy python-module-paste python-module-pbr python-module-pyasn1 python-module-pyparsing python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-twisted-core python-module-unittest2 python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base python3-module-numpy python3-module-paste python3-module-setuptools xz
-BuildRequires: python-module-PasteDeploy python-module-PasteScript python-module-Paver python-module-alabaster python-module-docutils python-module-html5lib python-module-httplib2 python-module-matplotlib python-module-numpy-testing python-module-objects.inv python-module-pytest python3-module-PasteDeploy python3-module-PasteScript python3-module-Paver python3-module-genshi python3-module-httplib2 python3-module-pytest rpm-build-python3 time
 
 %description
 Pydap is an implementation of the Opendap/DODS protocol, written from
@@ -133,23 +123,24 @@ popd
 ln -s ../objects.inv docs/
 
 %build
-paver build
+# PYTHONPATH is required for obtaining correct package version.
+PYTHONPATH=$(pwd) paver build
 
 %if_with python3
 pushd ../python3
-paver.py3 build
+PYTHONPATH=$(pwd) paver.py3 build
 popd
 %endif
 
 %install
-paver install --root=%buildroot
+PYTHONPATH=$(pwd) paver install --root=%buildroot
 for i in $(find %buildroot%python_sitelibdir/%oname -type d); do
 	touch $i/__init__.py
 done
 
 %if_with python3
 pushd ../python3
-paver.py3 install --root=%buildroot
+PYTHONPATH=$(pwd) paver.py3 install --root=%buildroot
 popd
 for i in $(find %buildroot%python3_sitelibdir/%oname -type d |\
 	grep -v __pycache__)
@@ -166,7 +157,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %files
 %doc README.md
-%python_sitelibdir/*
+%python_sitelibdir/%oname
+%python_sitelibdir/Pydap-%version-py*.egg-info
+%python_sitelibdir/Pydap-%version-py*-nspkg.pth
 %exclude %python_sitelibdir/*/tests.*
 %exclude %python_sitelibdir/*/pickle
 
@@ -182,7 +175,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %if_with python3
 %files -n python3-module-%oname
 %doc README.md
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/Pydap-%version-py*.egg-info
+%python3_sitelibdir/Pydap-%version-py*-nspkg.pth
 %exclude %python3_sitelibdir/*/tests.*
 %exclude %python3_sitelibdir/*/*/tests.*
 
@@ -192,6 +187,10 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Oct 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.1-alt2.git20131114
+- Fixed version in egg-info.
+- Explicitely stated egg-info including valid version.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.1.1-alt1.git20131114.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
