@@ -1,37 +1,51 @@
+%define _unpackaged_files_terminate_build 1
 %define oname tox
 
-%def_with python3
-%def_disable check
-
 Name: python-module-%oname
-Version: 2.1.1
-Release: alt1.1.1
+Version: 2.9.1
+Release: alt1%ubt
 Summary: virtualenv-based automation of test activities
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/tox/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+#fix for https://github.com/tox-dev/tox/issues/655
+Patch0: tox-alt-fix-test_pythonpath_usage.patch
+#fix for https://github.com/tox-dev/tox/issues/654
+Patch1: tox-alt-fix-test_verbosity[-vv].patch
 BuildArch: noarch
-
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-virtualenv python-module-py
-#BuildPreReq: python-module-pytest python-module-py
-#BuildPreReq: python-module-sphinx-devel python-modules-json
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-virtualenv python3-module-py
-#BuildPreReq: python3-module-pytest python3-module-py
-%endif
 
 %py_provides %oname
 
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pluggy python-module-py python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-setuptools-tests python-module-virtualenv python3-module-setuptools-tests python3-module-virtualenv rpm-build-python3 time
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: python-module-setuptools_scm
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python-module-virtualenv
+BuildRequires: python3-module-virtualenv
+BuildRequires: python-module-six
+BuildRequires: python3-module-six
+BuildRequires: python-module-pluggy
+BuildRequires: python3-module-pluggy
+BuildRequires: python-module-py
+BuildRequires: python3-module-py
+# requires for tests
+BuildRequires: python-module-pytest
+BuildRequires: python3-module-pytest
+BuildRequires: python-module-pytest-cov
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python-module-pytest-timeout
+BuildRequires: python3-module-pytest-timeout
+BuildRequires: python-module-pytest-xdist
+BuildRequires: python3-module-pytest-xdist
+BuildRequires: python-module-pytest-runner
+BuildRequires: python3-module-pytest-runner
+BuildRequires: python-module-pip
+BuildRequires: python3-module-pip
+BuildRequires: pytest
+BuildRequires: pytest3
+
 
 %description
 Tox as is a generic virtualenv management and test command line tool you
@@ -60,111 +74,59 @@ can use for:
 * acting as a frontend to Continuous Integration servers, greatly
   reducing boilerplate and merging CI and shell-based testing.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python
-
-%description pickles
-Tox as is a generic virtualenv management and test command line tool you
-can use for:
-
-* checking your package installs correctly with different Python
-  versions and interpreters
-* running your tests in each of the environments, configuring your test
-  tool of choice
-* acting as a frontend to Continuous Integration servers, greatly
-  reducing boilerplate and merging CI and shell-based testing.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-Tox as is a generic virtualenv management and test command line tool you
-can use for:
-
-* checking your package installs correctly with different Python
-  versions and interpreters
-* running your tests in each of the environments, configuring your test
-  tool of choice
-* acting as a frontend to Continuous Integration servers, greatly
-  reducing boilerplate and merging CI and shell-based testing.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
-
-%if_with python3
-cp -fR . ../python3
-%endif
-
-%prepare_sphinx .
-ln -s ../objects.inv doc/
+%patch0 -p2
+%patch1 -p2
+#workaround for https://github.com/tox-dev/tox/issues/651
+sed -i 's/^include CHANGELOG$/include CHANGELOG.rst/g' %_builddir/%name-%version/MANIFEST.in
+rm -rfv ../python3
+cp -a . ../python3
 
 %build
 %python_build_debug
 
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 popd
 pushd %buildroot%_bindir
 for i in $(ls); do
-	mv $i $i.py3
+        mv $i $i.py3
 done
 popd
-%endif
 
 %python_install
 
-export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C doc pickle
-%make -C doc html
-
-cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
-
 %check
-python setup.py test
-%if_with python3
+export PATH=$PATH:%buildroot%_bindir
+export PYTHONPATH=%buildroot%python_sitelibdir:%python_sitelibdir
+TOX_TESTENV_PASSENV='PYTHONPATH' python setup.py pytest --addopt "--verbose --cov-config=tox.ini --cov=tox --timeout=180"
 pushd ../python3
-python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir:%python3_sitelibdir
+TOX_TESTENV_PASSENV='PYTHONPATH' python3 setup.py pytest --addopt "--verbose --cov-config=tox.ini --cov=tox --timeout=180"
 popd
-%endif
 
 %files
-%doc CHANGELOG CONTRIBUTORS *.txt *.rst
-%_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+%_bindir/%oname
+%_bindir/%oname-quickstart
+%python_sitelibdir/%oname
+%python_sitelibdir/%oname-%version-py2.?.egg-info
 
-%files pickles
-%python_sitelibdir/*/pickle
-
-%files docs
-%doc doc/_build/html/*
-
-%if_with python3
 %files -n python3-module-%oname
-%doc CHANGELOG CONTRIBUTORS *.txt *.rst
-%_bindir/*.py3
-%python3_sitelibdir/*
-%endif
+%_bindir/%oname.py3
+%_bindir/%oname-quickstart.py3
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Oct 19 2017 Stanislav Levin <slev@altlinux.org> 2.9.1-alt1%ubt
+- Version 2.9.1
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.1.1-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
