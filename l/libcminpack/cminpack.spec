@@ -8,7 +8,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           libcminpack
 Version:        1.3.4
-Release:        alt1_5
+Release:        alt2_5
 Summary:        Solver for nonlinear equations and nonlinear least squares problems
 
 Group:          Development/Other
@@ -60,13 +60,16 @@ make -C build install DESTDIR=%{buildroot}
 
 %files devel
 %doc doc/*.html doc/*.txt
-%{_datadir}/CMake/Modules/*.cmake
+%{_datadir}/cmake/Modules/*.cmake
 %{_libdir}/pkgconfig/*
 %{_libdir}/libcminpack.so
 %{_includedir}/cminpack-1
 
 
 %changelog
+* Thu Oct 19 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt2_5
+- NMU: changed CMake Modules install path
+
 * Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt1_5
 - update to new release by fcimport
 
