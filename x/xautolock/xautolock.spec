@@ -1,11 +1,12 @@
 Name: xautolock
 Version: 2.2
-Release: alt1.qa2
+Release: alt2
 Group: Graphical desktop/Other
 Summary: Monitor X window system activity and fire up a program when idle
 License: GPL
 Source: %name-%version.tar
 Patch: xautolock-2.2-fix-union-wait-usage.patch
+Patch1: xautolock-2.2-max_lock_mins-patch.patch
 
 # Automatically added by buildreq on Wed Aug 18 2010
 BuildRequires: gccmakedep imake libX11-devel libXScrnSaver-devel libXext-devel xorg-cf-files
@@ -25,6 +26,7 @@ locker exits.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 xmkmf -a
@@ -39,6 +41,9 @@ xmkmf -a
 %_man1dir/%name.*
 
 %changelog
+* Thu Oct 19 2017 Lenar Shakirov <snejok@altlinux.ru> 2.2-alt2
+- Patch: correct maximum lock minutes to 240
+
 * Mon Nov 21 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.2-alt1.qa2
 - Fixed build with glibc >= 2.24.
 
