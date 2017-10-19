@@ -2,9 +2,10 @@
 %def_enable libwacom
 %def_enable debug_gui
 %def_disable documentation
+%def_enable tests
 
 Name: libinput
-Version: 1.8.3
+Version: 1.9.0
 Release: alt1
 
 Summary: Input devices library
@@ -17,13 +18,13 @@ Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
 %define mtdev_ver 1.1.0
 %define evdev_ver 0.4
 
-BuildRequires: gcc-c++ libmtdev-devel >= %mtdev_ver libevdev-devel >= %evdev_ver
+BuildRequires: meson gcc-c++ rpm-build-python3
+BuildRequires: libmtdev-devel >= %mtdev_ver libevdev-devel >= %evdev_ver
 BuildRequires: libudev-devel libcheck-devel libunwind-devel
 %{?_enable_libwacom:BuildRequires: libwacom-devel}
 %{?_enable_debug_gui:BuildRequires: libgtk+3-devel}
-%{?_enable_documentation:BuildRequires: doxygen}
-# for check
-#BuildRequires: valgrind
+%{?_enable_documentation:BuildRequires: doxygen graphviz}
+%{?_enable_tests:BuildRequires: valgrind python3-module-pyparsing}
 
 %description
 libinput is a library that handles input devices for display servers and
@@ -68,19 +69,18 @@ This package contains visual debug helper for %name.
 %setup
 
 %build
-%autoreconf
-%configure --disable-static \
-           %{subst_enable libwacom} \
-           %{?_enable_debug_gui:--enable-debug-gui} \
-           %{subst_enable documentation} \
-           --with-udev-dir=/lib/udev
-%make_build
+%meson %{?_enable_libwacom:-Dlibwacom=true} \
+       %{?_enable_debug_gui:-Ddebug-gui=true} \
+       %{?_disable_documentation:-Ddocumentation=false} \
+       %{?_enable_tests:-Dtests=true} \
+       -Dudev-dir=/lib/udev
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-#%make check
+%{?_enable_tests:%meson_test}
 
 %files
 %_libdir/%name.so.*
@@ -108,6 +108,9 @@ This package contains visual debug helper for %name.
 %_man1dir/%name-debug-events.1.*
 %_man1dir/%name-measure.1.*
 %_man1dir/%name-measure-touchpad-tap.1.*
+%_man1dir/%name-measure-touch-size.1.*
+%_man1dir/%name-measure-touchpad-pressure.1.*
+%_man1dir/%name-measure-trackpoint-range.1.*
 
 %if_enabled debug_gui
 %files tools-gui
@@ -117,6 +120,9 @@ This package contains visual debug helper for %name.
 
 
 %changelog
+* Thu Oct 19 2017 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Wed Oct 04 2017 Yuri N. Sedunov <aris@altlinux.org> 1.8.3-alt1
 - 1.8.3
 
