@@ -1,47 +1,49 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python rpm-macros-java
-BuildRequires: gcc-c++ perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(threads.pm) perl-devel python-devel
+BuildRequires: gcc-c++ perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(threads.pm) perl-devel
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 24
-%global commit          601207e1151b2691112c431fc3b4130a85ac93b5
-%global shortcommit     %(c=%{commit}; echo ${c:0:7})
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global _hardened_build 1
 %global skiptests       1
 
 Name:          zookeeper
-Version:       3.4.6
-Release:       alt1_16jpp8
+Version:       3.4.9
+Release:       alt1_3jpp8
 Summary:       A high-performance coordination service for distributed applications
 License:       ASL 2.0 and BSD
-URL:           http://zookeeper.apache.org/
-Source0:       https://github.com/apache/zookeeper/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+URL:           https://zookeeper.apache.org/
+Source0:       https://www.apache.org/dist/%{name}/%{name}-%{version}.tar.gz
 Source1:       %{name}-ZooInspector-template.pom
 Source2:       %{name}.service
 Source3:       zkEnv.sh
 
 Patch1:        %{name}-3.4.5-zktreeutil-gcc.patch
-Patch2:        %{name}-3.4.6-ivy-build.patch
-Patch3:        %{name}-3.4.6-server.patch
-# patch accepted in 3.5.0
-Patch4:        https://issues.apache.org/jira/secure/attachment/12570030/mt_adaptor.c.patch
+Patch2:        %{name}-3.4.9-ivy-build.patch
+Patch3:        %{name}-3.4.9-server.patch
+# ZOOKEEPER-1643; patch accepted in 3.5.0
+Patch4:        mt_adaptor.c.patch
+Patch5:        0001-cppunit-config-no-longer-exists-use-pkg-config.patch
+Patch6:        missing-pom.template.patch
 
 
 BuildRequires: autoconf-common
-BuildRequires: automake-common
+BuildRequires: automake
 BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
-BuildRequires: cppunit-devel
+BuildRequires: pkgconfig(cppunit)
 BuildRequires: dos2unix
 BuildRequires: doxygen
 BuildRequires: graphviz libgraphviz
+BuildRequires: java-devel
 BuildRequires: java-javadoc
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: jpackage-utils
 BuildRequires: libtool-common
 BuildRequires: libxml2-devel
-BuildRequires: python-base python-dev
+BuildRequires: python-devel
 
 BuildRequires: ant
 BuildRequires: ant-junit
@@ -86,8 +88,9 @@ Requires:      junit
 Requires:      mockito
 Requires:      netty3
 Requires:      slf4j
-Requires: javapackages-tools rpm-build-java
-Requires:      %{name}-java = %{version}
+Requires:      java
+Requires:      jpackage-utils
+Requires:      %{name}-java = %{version}-%{release}
 Source44: import.info
 
 %description
@@ -98,7 +101,7 @@ naming, providing distributed synchronization, and providing group services.
 %package devel
 Group: Development/Java
 Summary:       Development files for the %{name} library
-Requires:      %{name}%{?_isa} = %{version}
+Requires:      %{name} = %{version}-%{release}
 
 %description devel
 Development files for the ZooKeeper C client library.
@@ -107,7 +110,7 @@ Development files for the ZooKeeper C client library.
 %package java
 Summary:        Java interface for %{name}
 Group:          Development/Other
-Requires:       %{name}%{?_isa} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description java
 The %{name}-java package contains Java bindings for %{name}.
@@ -124,20 +127,21 @@ This package contains javadoc for %{name}.
 %package -n python-module-zookeeper
 Group: Development/Java
 Summary:       Python support for %{name}
-Requires:      %{name}%{?_isa} = %{version}
-Provides:      zkpython%{?_isa} = %{version}-%{release}
+Requires:      %{name} = %{version}-%{release}
+Provides:      zkpython = %{version}-%{release}
 Requires:      python
 
 %description -n python-module-zookeeper
 The python-%{name} package contains Python bindings for %{name}.
 
 %prep
-%setup -q -n %{name}-%{commit}
-
-%patch1 -p0
+%setup -q
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p0 -F2
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 iconv -f iso8859-1 -t utf-8 src/c/ChangeLog > src/c/ChangeLog.conv && mv -f src/c/ChangeLog.conv src/c/ChangeLog
 sed -i 's/\r//' src/c/ChangeLog
@@ -155,6 +159,14 @@ sed -i 's@^dataDir=.*$@dataDir=%{_sharedstatedir}/zookeeper/data\ndataLogDir=%{_
 -Dant.build.javac.source=1.5 \
 -Dant.build.javac.target=1.5 \
 package
+
+# cppunit-config patch touches configure.ac in these dirs
+pushd src/recipes/lock/src/c
+autoreconf -if
+popd
+pushd src/recipes/queue/src/c
+autoreconf -if
+popd
 
 pushd src/c
 autoreconf -if
@@ -231,7 +243,7 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 mkdir -p %{buildroot}%{_unitdir}
 mkdir -p %{buildroot}%{_sysconfdir}/zookeeper
-mkdir -p %{buildroot}%{_var}/log/zookeeper
+mkdir -p %{buildroot}%{_localstatedir}/log/zookeeper
 mkdir -p %{buildroot}%{_sharedstatedir}/zookeeper
 mkdir -p %{buildroot}%{_sharedstatedir}/zookeeper/data
 mkdir -p %{buildroot}%{_sharedstatedir}/zookeeper/log
@@ -275,7 +287,7 @@ getent passwd zookeeper >/dev/null || \
 %attr(0644,root,root) %{_sysconfdir}/zookeeper/zoo_sample.cfg
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/zookeeper/log4j.properties
 
-%attr(0755,zookeeper,zookeeper) %dir %{_var}/log/zookeeper
+%attr(0755,zookeeper,zookeeper) %dir %{_localstatedir}/log/zookeeper
 %attr(0755,root,root) %dir %{_sharedstatedir}/zookeeper
 %attr(0750,zookeeper,zookeeper) %dir %{_sharedstatedir}/zookeeper/data
 %attr(0640,zookeeper,zookeeper) %ghost %{_sharedstatedir}/zookeeper/data/myid
@@ -314,6 +326,9 @@ getent passwd zookeeper >/dev/null || \
 %doc LICENSE.txt NOTICE.txt src/contrib/zkpython/README
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 3.4.9-alt1_3jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.4.6-alt1_16jpp8
 - new fc release
 
