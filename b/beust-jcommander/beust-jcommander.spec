@@ -2,20 +2,26 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global short_name   jcommander
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:           beust-jcommander
+Version:        1.65
+Release:        alt1_1jpp8
+Summary:        Java framework for parsing command line parameters
+License:        ASL 2.0
+URL:            http://jcommander.org/
+BuildArch:      noarch
 
-Name:             beust-%{short_name}
-Version:          1.47
-Release:          alt1_3jpp8
-Summary:          Java framework for parsing command line parameters
-License:          ASL 2.0
-URL:              http://jcommander.org/
-Source0:          https://github.com/cbeust/%{short_name}/archive/%{short_name}-%{version}.tar.gz
-BuildArch:        noarch
-BuildRequires:    maven-local
+Source0:        https://github.com/cbeust/jcommander/archive/%{version}.tar.gz
+# Adapted from earlier version that still shipped poms. It uses kobalt for building now
+Source1:        %{name}.pom
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires:  mvn(org.testng:testng)
 Source44: import.info
 
 %description
@@ -24,15 +30,18 @@ parse command line parameters (with annotations).
 
 %package javadoc
 Group: Development/Java
-Summary:          API documentation for %{name}
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the %{summary}.
 
 %prep
-%setup -q -n %{short_name}-%{short_name}-%{version}
+%setup -q -n jcommander-%{version}
+
 chmod -x license.txt
+cp -p %SOURCE1 pom.xml
+sed -i 's/@VERSION@/%{version}/g' pom.xml
 
 %build
 %mvn_file : %{name}
@@ -48,6 +57,9 @@ chmod -x license.txt
 %doc license.txt notice.md
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.65-alt1_1jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.47-alt1_3jpp8
 - new fc release
 
