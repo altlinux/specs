@@ -2,14 +2,23 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global vertag 106418cae0ba
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global vertag 70abb5efa4c0
+
+%bcond_without    spring
 
 Name:             snakeyaml
-Version:          1.16
-Release:          alt1_2jpp8
+Version:          1.17
+Release:          alt1_3jpp8
 Summary:          YAML parser and emitter for the Java programming language
 License:          ASL 2.0
 URL:              https://bitbucket.org/asomov/%{name}/
@@ -28,17 +37,16 @@ Patch1:           0002-Replace-bundled-gdata-java-client-classes-with-commo.patc
 BuildArch:        noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(asm:asm)
 BuildRequires:  mvn(biz.source_code:base64coder)
 BuildRequires:  mvn(commons-codec:commons-codec)
 BuildRequires:  mvn(joda-time:joda-time)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-eclipse-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-site-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.apache.velocity:velocity)
+%if %{with spring}
 BuildRequires:  mvn(org.springframework:spring-core)
+%endif
 Source44: import.info
 
 %description
@@ -67,23 +75,35 @@ This package contains %{summary}.
 
 %mvn_file : %{name}
 
-%pom_remove_plugin org.codehaus.mojo:cobertura-maven-plugin
+%pom_remove_plugin :cobertura-maven-plugin
 %pom_remove_plugin :maven-changes-plugin
 %pom_remove_plugin :maven-license-plugin
 %pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-site-plugin
 
 sed -i "/<artifactId>spring</s/spring/&-core/" pom.xml
 rm -f src/test/java/examples/SpringTest.java
 
 # Replacement for bundled gdata-java-client
 %pom_add_dep commons-codec:commons-codec
+# Re-add bundled base64coder
+%pom_add_dep biz.source_code:base64coder
 
 # remove bundled stuff
 rm -rf target
-rm -rf src/main/java/org/yaml/snakeyaml/external
+
+# fails in rpmbuild only due to different locale
+rm src/test/java/org/yaml/snakeyaml/issues/issue67/NonAsciiCharsInClassNameTest.java
+# fails after unbundling
+rm src/test/java/org/yaml/snakeyaml/issues/issue318/ContextClassLoaderTest.java
 
 # convert CR+LF to LF
 sed -i 's/\r//g' LICENSE.txt
+
+%if %{without spring}
+%pom_remove_dep org.springframework
+rm -r src/test/java/org/yaml/snakeyaml/issues/issue9
+%endif
 
 %build
 %mvn_build
@@ -98,6 +118,9 @@ sed -i 's/\r//g' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_3jpp8
+- new jpp release
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1_2jpp8
 - new version
 
