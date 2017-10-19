@@ -1,30 +1,29 @@
 %define oname SPARQLWrapper
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
-Version: 1.7.0
-Release: alt1.dev.git20140925.1
+Version: 1.8.0
+Release: alt1
 Summary: SPARQL Endpoint interface to Python
 License: W3C SOFTWARE NOTICE AND LICENSE
 Group: Development/Python
 Url: https://pypi.python.org/pypi/SPARQLWrapper/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/RDFLib/sparqlwrapper.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-rdflib python-module-rdflib_jsonld
-BuildPreReq: python-module-nose python-module-html5lib
-BuildPreReq: python-module-six
+BuildRequires: python-dev python-module-setuptools-tests
+BuildRequires: python-module-rdflib python-module-rdflib_jsonld
+BuildRequires: python-module-nose python-module-html5lib
+BuildRequires: python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-rdflib python3-module-rdflib_jsonld
-BuildPreReq: python3-module-nose python3-module-html5lib
-BuildPreReq: python3-module-six
+BuildRequires: python3-dev python3-module-setuptools-tests
+BuildRequires: python3-module-rdflib python3-module-rdflib_jsonld
+BuildRequires: python3-module-nose python3-module-html5lib
+BuildRequires: python3-module-six
 %endif
 
 %py_provides %oname
@@ -73,29 +72,30 @@ pushd ../python3
 popd
 %endif
 
-rm -f requirements.txt
-
 %check
-python setup.py test
-./tests.sh
+nosetests
+
 %if_with python3
 pushd ../python3
-python3 setup.py test
-./run_tests_py3.sh
+nosetests3
 popd
 %endif
 
 %files
-%doc *.txt *.txt scripts
+%doc *.md ChangeLog.txt LICENSE.txt scripts
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt *.txt scripts
+%doc *.md ChangeLog.txt LICENSE.txt scripts
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.0-alt1
+- Updated to upstream version 1.8.0.
+- Disabled build for python-3.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.7.0-alt1.dev.git20140925.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
