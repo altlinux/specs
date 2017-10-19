@@ -2,22 +2,24 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-Summary:       Java implementation of a binary protocol for web services 
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          hessian
-Version:       4.0.7
-Release:       alt2_12jpp8
+Summary:       Java implementation of a binary protocol for web services 
+Version:       4.0.38
+Release:       alt1_2jpp8
 Epoch:         1
 License:       ASL 1.1
 URL:           http://hessian.caucho.com/
-Source0:       http://caucho.com/download/hessian-4.0.7-src.jar
-Source1:       %{name}-build.xml
-Source2:       http://repo1.maven.org/maven2/com/caucho/hessian/4.0.7/hessian-4.0.7.pom
-BuildRequires: javapackages-local
-BuildRequires: ant >= 0:1.6
-BuildRequires: tomcat-servlet-3.1-api
+Source0:       http://caucho.com/download/%{name}-%{version}-src.jar
+Source1:       http://repo1.maven.org/maven2/com/caucho/%{name}/%{version}/%{name}-%{version}.pom
+Source2:       hessian-license.txt
+
+BuildRequires: maven-local
+BuildRequires: mvn(javax.servlet:javax.servlet-api)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 
 BuildArch:     noarch
 Source44: import.info
@@ -36,16 +38,56 @@ API documentation for %{name}.
 
 %prep
 %setup -q -c
-cp %{SOURCE1} build.xml
+
+mkdir src
+mv com src/
+# Remove useless files
+rm -r META-INF
+# NO test suite
+rm -r src/com/caucho/hessian/test
+
+cp -p %{SOURCE1} pom.xml
+cp -p %{SOURCE2} apache.license
+%pom_change_dep :servlet-api javax.servlet:javax.servlet-api:3.1.0
+
+# Useless tasks
+%pom_remove_plugin :maven-gpg-plugin
+%pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-source-plugin
+
+%pom_xpath_set pom:properties/pom:project.build.sourceEncoding UTF-8
+
+%pom_xpath_set "pom:project/pom:packaging" bundle
+%pom_add_plugin org.apache.felix:maven-bundle-plugin:3.0.1 . "
+<extensions>true</extensions>
+<configuration>
+  <excludeDependencies>true</excludeDependencies>
+  <instructions>
+    <Bundle-SymbolicName>\${project.groupId}.\${project.artifactId}</Bundle-SymbolicName>
+    <Bundle-Name>\${project.name}</Bundle-Name>
+    <Bundle-Version>\${project.version}</Bundle-Version>
+  </instructions>
+</configuration>
+<executions>
+  <execution>
+    <id>bundle-manifest</id>
+    <phase>process-classes</phase>
+    <goals>
+      <goal>manifest</goal>
+    </goals>
+  </execution>
+</executions>"
+
+%mvn_config buildSettings/compilerSource 1.8
+
+%mvn_file com.caucho:%{name} %{name}
 
 %build
-ant jar 
-ant javadoc 
+
+%mvn_build
 
 %install
-%mvn_artifact %{SOURCE2} %{name}.jar
-%mvn_file com.caucho:%{name} %{name}
-%mvn_install -J doc/api
+%mvn_install
 
 %files -f .mfiles
 %doc apache.license
@@ -54,6 +96,9 @@ ant javadoc
 %doc apache.license
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.0.38-alt1_2jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.0.7-alt2_12jpp8
 - new fc release
 
