@@ -2,23 +2,22 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global githash 1946c096a1321366771569b74297ddfaa12faffe
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global githash 25f63a4a5a98a4bc82bb0e155cdf4d28e0c9e8a7
 Name:          curvesapi
-Version:       1.03
+Version:       1.04
 Release:       alt1_2jpp8
 Summary:       Java implementation of various mathematical curves
 # Fork of https://sourceforge.net/projects/curves/
 License:       BSD
 URL:           https://github.com/virtuald/curvesapi
-Source0:       https://github.com/virtuald/curvesapi/archive/%{githash}/%{name}-%{githash}.tar.gz
-# https://github.com/virtuald/curvesapi/issues/1
-# https://github.com/virtuald/curvesapi/pull/2/
-Patch0:        https://github.com/virtuald/curvesapi/commit/72a2627849a6e48fcca244388a5c1fca78a30300.patch
+Source0:       https://github.com/virtuald/curvesapi/archive/%{githash}/%{name}-%{version}.tar.gz
 
 BuildRequires: maven-local
+BuildRequires: mvn(junit:junit)
 
 BuildArch:     noarch
 Source44: import.info
@@ -39,12 +38,6 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n %{name}-%{githash}
-%patch0 -p1
-
-# Remove JVM bundle code sun.awt.geom.Curve
-rm -r src/com/graphbuilder/sun
-sed -i "s|com.graphbuilder.sun.awt.geom|sun.awt.geom|" \
- src/com/graphbuilder/curve/ShapeMultiPath.java
 
 # Convert from dos to unix line ending
 for file in r*.txt demo/*.java
@@ -71,6 +64,9 @@ done
 %doc license.txt
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1_2jpp8
+- new jpp release
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1_2jpp8
 - new version
 
