@@ -3,28 +3,28 @@
 %def_with python3
 
 Name: %oname
-Version: 0.38
+Version: 0.41
 Release: alt1
 Summary: Python REPL build on top of prompt_toolkit
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/ptpython
 
 # https://github.com/jonathanslenders/ptpython.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests ipython
-BuildPreReq: python-module-prompt_toolkit python-module-jedi
-BuildPreReq: python-module-docopt
+BuildRequires: python-devel python-module-setuptools-tests ipython
+BuildRequires: python-module-prompt_toolkit python-module-jedi
+BuildRequires: python-module-docopt
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests ipython3
-BuildPreReq: python3-module-prompt_toolkit python3-module-jedi
-BuildPreReq: python3-module-docopt
+BuildRequires: python3-devel python3-module-setuptools-tests ipython3
+BuildRequires: python3-module-prompt_toolkit python3-module-jedi
+BuildRequires: python3-module-docopt
 %endif
 
-%py_requires  IPython
+%py_requires  IPython jedi
 %add_python_req_skip asyncio asyncssh
 
 %description
@@ -35,7 +35,7 @@ library.
 %package -n %{oname}3
 Summary: Python REPL build on top of prompt_toolkit
 Group: Development/Python3
-%py3_requires IPython
+%py3_requires IPython jedi
 
 %description -n %{oname}3
 ptpython is an advanced Python REPL built on top of the prompt_toolkit
@@ -97,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.41-alt1
+- Updated to upstream version 0.41.
+
 * Thu Aug 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.38-alt1
 - Updated to upstream version 0.38.
 
