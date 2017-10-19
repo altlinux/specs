@@ -5,8 +5,8 @@ BuildRequires: bzlib-devel libsocket
 BuildRequires: gcc-c++
 Summary: Hercules S/370, ESA/390, and z/Architecture emulator
 Name: hercules
-Version: 3.12
-Release: alt2
+Version: 3.13
+Release: alt1
 License: QPL
 Group: Emulators
 URL: http://www.hercules-390.eu/
@@ -105,6 +105,9 @@ rm %{buildroot}%{_libdir}/*.la
 
 
 %changelog
+* Thu Oct 19 2017 Denis Medvedev <nbr@altlinux.org> 3.13-alt1
+- new version 3.13
+
 * Tue Nov 08 2016 Denis Medvedev <nbr@altlinux.org> 3.12-alt2
 - Compile to sisyphus
 
