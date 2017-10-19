@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.15.0
-Release: alt1
+Release: alt2
 Summary: Provides some classes to make unified access to different RDBMS possible
 
 Group: Development/Python
@@ -89,6 +89,9 @@ rm -f %buildroot%python3_sitelibdir/logilab/__init__.py*
 %endif
 
 %changelog
+* Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.15.0-alt2
+- Rebuilt with updated setuptools.
+
 * Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.15.0-alt1
 - Updated to upstream version 1.15.0.
 
