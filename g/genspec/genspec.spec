@@ -1,5 +1,5 @@
 Name:     genspec
-Version:  1.2.12
+Version:  1.2.13
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
@@ -32,6 +32,9 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_datadir/spectemplates
 
 %changelog
+* Thu Oct 19 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.13-alt1
+- (ALT #34017) Use deafult value for optional arguments
+
 * Mon Oct 16 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.12-alt1
 - Replace tabs with whitespaces
 
