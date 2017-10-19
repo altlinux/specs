@@ -13,7 +13,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt5
+Release: alt6
 
 Summary: Matlab(TM) style python plotting package
 
@@ -797,6 +797,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt6
+- Rebuilt with updated setuptools.
+
 * Wed Oct 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt5
 - Updated runtime dependencies.
 
