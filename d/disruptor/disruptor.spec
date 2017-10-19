@@ -2,16 +2,17 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          disruptor
-Version:       3.3.4
-Release:       alt1_1jpp8
+Version:       3.3.6
+Release:       alt1_2jpp8
 Summary:       Concurrent Programming Framework
 License:       ASL 2.0
 URL:           http://lmax-exchange.github.io/disruptor/
-Source0:       https://github.com/LMAX-Exchange/disruptor/archive/%{version}.tar.gz
+Source0:       https://github.com/LMAX-Exchange/disruptor/archive/%{version}/%{name}-%{version}.tar.gz
 Source1:       http://repo1.maven.org/maven2/com/lmax/%{name}/%{version}/%{name}-%{version}.pom
 # see http://www.jmock.org/threading-synchroniser.html
 Patch0:        disruptor-3.3.2-jmock.patch
@@ -25,8 +26,7 @@ BuildRequires: mvn(org.jmock:jmock-legacy)
 
 %if 0
 # Unavailable performance test deps
-# lib/test/hdrhistogram-1.0-SNAPSHOT.jar
-BuildRequires: mvn(com.google.caliper:caliper:0.5-rc1)
+BuildRequires: mvn(org.hdrhistogram:HdrHistogram:1.2.1)
 %endif
 
 BuildArch:     noarch
@@ -99,6 +99,9 @@ rm -r src/test/java/com/lmax/disruptor/dsl/DisruptorTest.java
 %doc LICENCE.txt
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 3.3.6-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.4-alt1_1jpp8
 - new version
 
