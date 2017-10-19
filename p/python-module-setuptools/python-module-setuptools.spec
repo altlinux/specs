@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 36.5.0
+Version: 36.6.0
 Release: alt1%ubt
 
 Summary: Python Distutils Enhancements
@@ -17,13 +17,13 @@ URL: http://pypi.python.org/pypi/setuptools
 Source: %oname.tar
 
 Patch0: 0001-Don-t-remove-setuptools.tests-from-the-installed-pac.patch
-Patch1: 0001-command-test.py-skip-install_requires-and-tests_requ.patch
-Patch2: 0002-dist.py-skip-checking-the-existence-of-system-PKG-IN.patch
+Patch1: 0002-dist.py-skip-checking-the-existence-of-system-PKG-IN.patch
+Patch2: %oname-%version-alt-pth-generator.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python rpm-build-ubt
-BuildPreReq: python-devel
+BuildRequires: python-devel
 BuildRequires: python2.7(packaging) python2.7(pyparsing) python2.7(six) python2.7(appdirs)
 BuildRequires: python-module-pytest python2.7(mock) python2.7(pytest_fixture_config) python2.7(pytest_virtualenv)
 BuildRequires: python2.7(path) python2.7(contextlib2) python-module-virtualenv python-module-pip
@@ -37,7 +37,7 @@ Obsoletes: %name-tests <= 1:18.1-alt4
 Obsoletes: python-module-distribute <= 0.6.35-alt1
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
+BuildRequires: python3-devel
 BuildRequires: python3(packaging) python3(pyparsing) python3(six) python3(appdirs)
 BuildRequires: python3-module-pytest python3(mock) python3(pytest_fixture_config) python3(pytest_virtualenv)
 BuildRequires: python3(path) python3(contextlib2) python3-module-virtualenv python3-module-pip
@@ -79,7 +79,7 @@ especially ones that have dependencies on other packages.
 %prep
 %setup -n %oname
 %patch0
-#patch1 -p2
+%patch1 -p2
 %patch2 -p2
 
 # don't use bundled packages
@@ -166,6 +166,10 @@ popd
 %endif
 
 %changelog
+* Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:36.6.0-alt1%ubt
+- Updated to upstream version 36.6.0.
+- Fixed issue with generated .pth files.
+
 * Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:36.5.0-alt1%ubt
 - Updated to new version.
 
