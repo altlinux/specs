@@ -4,14 +4,15 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 Obsoletes: vuse < 4.2.0.3
 Conflicts: vuse < 4.2.0.3
 Requires: java
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global		_newname Vuze
 
 Name:		azureus
-Version:	5.7.2.0
-Release:	alt1_1jpp8
+Version:	5.7.4.0
+Release:	alt1_3jpp8
 Summary:	A BitTorrent Client
 Group:		Networking/WWW
 
@@ -21,7 +22,7 @@ License:	GPLv2 with exceptions
 
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5720_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5740_source.zip
 
 Source2:	Azureus.desktop
 Source3:	azureus.applications
@@ -161,6 +162,9 @@ sed -i 's,uname -i,uname -m,' %buildroot%_bindir/%name
 %{_datadir}/azureus
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 5.7.4.0-alt1_3jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 5.7.2.0-alt1_1jpp8
 - new version
 
