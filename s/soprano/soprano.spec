@@ -3,7 +3,7 @@
 Summary: Qt wrapper API to different RDF storage solutions
 Name: soprano
 Version: 2.9.4
-Release: alt1
+Release: alt1.1
 
 Group: Text tools
 License: LGPLv2+
@@ -135,12 +135,15 @@ Development files for the lib%name
 %files -n lib%name-devel
 %_libdir/lib*.so
 %_pkgconfigdir/soprano*.pc
-%_datadir/CMake/Modules/SopranoAddOntology.cmake
+%_datadir/cmake/Modules/SopranoAddOntology.cmake
 %_includedir/soprano/
 %_includedir/Soprano/
 %_datadir/dbus-1/interfaces/*
 
 %changelog
+* Thu Oct 19 2017 Igor Vlasenko <viy@altlinux.ru> 2.9.4-alt1.1
+- NMU: changed CMake Modules install path
+
 * Fri Nov 01 2013 Sergey V Turchin <zerg@altlinux.org> 2.9.4-alt1
 - new version
 
