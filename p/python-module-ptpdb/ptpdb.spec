@@ -3,24 +3,23 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7
-Release: alt1.git20150808.1
+Version: 0.17
+Release: alt1
 Summary: Python debugger (pdb) build on top of prompt_toolkit
 License: Free
 Group: Development/Python
 Url: https://pypi.python.org/pypi/ptpdb
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/jonathanslenders/ptpdb.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: ptpython python-module-prompt_toolkit
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: ptpython python-module-prompt_toolkit
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: ptpython3 python3-module-prompt_toolkit
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: ptpython3 python3-module-prompt_toolkit
 %endif
 
 %py_provides %oname
@@ -86,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.17-alt1
+- Updated to upstream version 0.17.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7-alt1.git20150808.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
