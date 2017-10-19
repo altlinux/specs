@@ -4,7 +4,7 @@
 %def_enable server
 Name: cmake
 Version: 3.9.2
-Release: alt0.2
+Release: alt0.3
 
 Summary: Cross-platform, open-source make system
 
@@ -34,7 +34,7 @@ Requires: rpm-macros-%name = %version-%release
 
 %define _unpackaged_files_terminate_build 1
 
-%add_findreq_skiplist %_datadir/CMake/Templates/cygwin-package.sh.in
+%add_findreq_skiplist %_datadir/%name/Templates/cygwin-package.sh.in
 
 
 %description
@@ -147,7 +147,7 @@ CFLAGS="%optflags" CXXFLAGS="%optflags" ../bootstrap \
 	--sphinx-man \
 	--sphinx-html \
 	--prefix=%prefix \
-	--datadir=/share/CMake \
+	--datadir=/share/%name \
 	--mandir=/share/man \
 	%if_enabled server
 	--server \
@@ -175,10 +175,10 @@ done
 mkdir -p %buildroot{%vim_indent_dir,%vim_syntax_dir,%_sysconfdir/bash_completion.d}
 install -m644 Auxiliary/vim/indent/%name.vim %buildroot%vim_indent_dir/%name.vim
 install -m644 Auxiliary/vim/syntax/%name.vim %buildroot%vim_syntax_dir/%name.vim
-rm -rf %buildroot%_datadir/CMake/editors/vim
+rm -rf %buildroot%_datadir/%name/editors/vim
 install -pD -m644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 
-mv -f %buildroot%_datadir/CMake/completions %buildroot%_sysconfdir/bash_completion.d
+mv -f %buildroot%_datadir/%name/completions %buildroot%_sysconfdir/bash_completion.d/%name
 
 install -p  build/Source/kwsys/libcmsys.so  %buildroot%_libdir/libcmsys.so
 install -p  build/Source/kwsys/libcmsys_c.so  %buildroot%_libdir/libcmsys_c.so
@@ -210,7 +210,7 @@ popd
 %_libdir/libcmcompress.so
 %_libdir/libcmsys.so
 %_libdir/libcmsys_c.so
-%_datadir/CMake/
+%_datadir/%name/
 %_aclocaldir/*
 %_man1dir/cmake*.*
 %_man1dir/cpack.*
@@ -220,11 +220,11 @@ popd
 %_docdir/%name-%version/Copyright.txt
 %_docdir/%name-%version/cmcompress/
 %_docdir/%name-%version/cmsys/
-%exclude %_datadir/CMake/Modules/
+%exclude %_datadir/%name/Modules/
 
 %files modules
-%dir %_datadir/CMake/
-%_datadir/CMake/Modules/
+%dir %_datadir/%name/
+%_datadir/%name/Modules/
 
 
 %files -n ccmake
@@ -269,6 +269,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Thu Oct 19 2017 Igor Vlasenko <viy@altlinux.ru> 3.9.2-alt0.3
+- NMU: set cmake sharedir to %%_datadir/ cmake, not CMake
+
 * Wed Sep 13 2017 Alexey Shabalin <shaba@altlinux.org> 3.9.2-alt0.2
 - Set optimization for RELEASE to ALTLinux default.
 - FindBoost: Add version 1.65.1 (thx Roger Leigh).
