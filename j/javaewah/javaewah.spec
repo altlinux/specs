@@ -1,21 +1,19 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global commit c6a7fca48eb10572c57e8f644c11633456611d8f
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           javaewah
-Version:        0.8.4
-Release:        alt1_7jpp8
+Version:        1.1.6
+Release:        alt1_1jpp8
 Summary:        A word-aligned compressed variant of the Java bitset class
 
-Group:          Development/Other
 License:        ASL 2.0
-URL:            http://code.google.com/p/javaewah/
-Source0:        https://github.com/lemire/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+URL:            https://github.com/lemire/javaewah
+Source0:        https://github.com/lemire/javaewah/archive/JavaEWAH-%{version}.tar.gz
 
 BuildArch:      noarch
 
@@ -39,19 +37,24 @@ uncompressed bitmap (implemented in Java as the BitSet class). Unlike
 some alternatives, javaewah does not rely on a patented scheme.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 API documentation for %{name}.
 
-
 %prep
-%setup -qn %{name}-%{commit}
+%setup -qn javaewah-JavaEWAH-%{version}
 
+# Plugins that are unnecessary for RPM build
 %pom_remove_plugin :maven-gpg-plugin
 %pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :animal-sniffer-maven-plugin
+%pom_remove_plugin :jacoco-maven-plugin
+
+# Avoids JVM startup error when jacoco-maven-plugin is not in use
+%pom_xpath_inject "pom:project/pom:properties" "<argLine/>"
 
 %build
 %mvn_build
@@ -60,12 +63,16 @@ API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc CHANGELOG README.md LICENSE-2.0.txt
+%doc CHANGELOG README.md
+%doc LICENSE-2.0.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE-2.0.txt
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_1jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt1_7jpp8
 - new fc release
 
