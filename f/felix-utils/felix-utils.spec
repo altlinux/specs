@@ -2,14 +2,15 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global bundle org.apache.felix.utils
 
 Name:           felix-utils
-Version:        1.8.2
-Release:        alt1_3jpp8
+Version:        1.8.6
+Release:        alt1_2jpp8
 Summary:        Utility classes for OSGi
 License:        ASL 2.0
 URL:            http://felix.apache.org
@@ -19,7 +20,6 @@ Source0:        http://repo1.maven.org/maven2/org/apache/felix/%{bundle}/%{versi
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:felix-parent:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.osgi:org.osgi.compendium)
 BuildRequires:  mvn(org.osgi:org.osgi.core)
 Source44: import.info
@@ -38,10 +38,7 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{bundle}-%{version}
 
-# Remove compiler plugin so default target is used instead of 1.5
-%pom_remove_plugin :maven-compiler-plugin
-# Remove rat plugin that is not in Fedora
-%pom_remove_plugin org.codehaus.mojo:rat-maven-plugin
+%pom_remove_plugin :apache-rat-plugin
 
 %mvn_file :%{bundle} "felix/%{bundle}"
 
@@ -59,6 +56,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.6-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt1_3jpp8
 - new fc release
 
