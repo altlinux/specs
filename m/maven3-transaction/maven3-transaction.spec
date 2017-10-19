@@ -5,11 +5,13 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt0.6jpp
+Release: alt0.7jpp
 
 #i586-runawfe-gpd.32bit#3.6.0-alt1.svn4700       i586-eclipse-swt
 #i586-runawfe-notifier.32bit#3.6.0-alt1.svn4700  i586-eclipse-swt
 Provides: i586-eclipse-swt = 4.0
+# i586-scilab.32bit#6.0.0-alt1    i586-jogl2 >= 2.3
+Provides: i586-jogl2 = 2.4
 
 %description
 Maven3 transaction unfinished files.
@@ -23,6 +25,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Thu Oct 19 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt0.7jpp
+- updated dependencies
+
 * Thu Oct 12 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt0.6jpp
 - updated dependencies
 
