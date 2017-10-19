@@ -1,6 +1,6 @@
 Name: libface
 Version: 0.1
-Release: alt1.3
+Release: alt1.4
 Summary: Face recognition library
 License: GPLv2
 Group: System/Libraries
@@ -9,7 +9,8 @@ Packager: Aeliya Grevnyov <gray_graff@altlinux.org>
 
 Source: %name-%version.tar
 
-BuildRequires: cmake gcc-c++ libopencv-devel doxygen
+BuildRequires: cmake gcc4.7-c++ libopencv-devel doxygen
+%set_gcc_version 4.7
 
 %description
 Libface is a library aimed at bringing face recognition technology to the open source community.
@@ -36,9 +37,13 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_CXX_FLAGS:STRING='%optflags'
 %files devel
 %_pkgconfigdir/%name.pc
 %_includedir/%name
-%_datadir/CMake/Modules/FindLibFace.cmake
+%_datadir/cmake/Modules/FindLibFace.cmake
 
 %changelog
+* Thu Oct 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1.4
+- NMU: changed CMake Modules install path
+- NMU: fixed build: quick fix - use gcc4.7
+
 * Wed Sep 26 2012 Aeliya Grevnyov <gray_graff@altlinux.org> 0.1-alt1.3
 - Rebuilt with OpenCV 2.4.9
 
