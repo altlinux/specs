@@ -1,7 +1,7 @@
 %define  pkgname rash
 
 Name: 	 ruby-%pkgname
-Version: 0.4.3 
+Version: 0.4.4
 Release: alt1
 
 Summary: Simple extension to Hashie::Mash for rubyified keys
@@ -55,5 +55,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Oct 19 2017 Andrey Cherepanov <cas@altlinux.org> 0.4.4-alt1
+- New version
+
 * Fri Sep 01 2017 Andrey Cherepanov <cas@altlinux.org> 0.4.3-alt1
 - Initial build for Sisyphus
