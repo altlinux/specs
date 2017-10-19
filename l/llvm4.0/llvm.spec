@@ -1,6 +1,6 @@
 %global llvm_svnrel %nil
 %global clang_svnrel %nil
-%global rel alt1.1
+%global rel alt1.2
 %global llvm_name llvm4.0
 %global clang_name clang4.0
 
@@ -239,7 +239,7 @@ make check-all -C BUILD || :
 %_libdir/LLVMHello.so
 %_libdir/BugpointPasses.so
 %exclude %_libdir/libclang.so
-%_datadir/CMake/Modules/llvm
+%_datadir/cmake/Modules/llvm
 
 %files devel-static
 %_libdir/*.a
@@ -260,7 +260,7 @@ make check-all -C BUILD || :
 %_includedir/clang
 %_includedir/clang-c
 %_libdir/libclang.so
-%_datadir/CMake/Modules/clang
+%_datadir/cmake/Modules/clang
 
 %files -n %clang_name-devel-static
 %_libdir/libclang*.a
@@ -277,6 +277,9 @@ make check-all -C BUILD || :
 %doc %_docdir/clang
 
 %changelog
+* Thu Oct 19 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.1-alt1.2.rel
+- NMU: changed CMake Modules install path
+
 * Thu Sep 14 2017 L.A. Kostis <lakostis@altlinux.ru> 4.0.1-alt1.1.rel
 - remove conflicts: llvm from -libs pkg (closes #33879).
 
