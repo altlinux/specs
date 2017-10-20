@@ -1,41 +1,36 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
-%define version 2.7
-%define release alt1.svn20140804
-%define source_version 2.7
-%define source_name pyserial
 %define oname serial
-%setup_python_module %oname
 
 %def_without doc_package
-%def_without win32
 %def_without jython
 %def_with python3
 
-Version: %version
-Release: alt1.svn20140804.1.1
-
+Name: python-module-%oname
+Version: 3.4
+Release: alt1
 Summary: Serial port access for python
 Summary(ru_RU.UTF-8): Доступ к последовательному порту из python
-Name: %packagename
-# http://svn.code.sf.net/p/pyserial/code/trunk/pyserial/
-Source: %source_name-%source_version.tar
+# https://github.com/pyserial/pyserial
+Source: %name-%version.tar
 License: Python
 Group: Development/Python
 Prefix: %_prefix
-Url: http://pyserial.sf.net
+Url: https://github.com/pyserial/pyserial
 BuildArch: noarch
 
-Provides: %{__python_module_prefix}-pyserial
-Obsoletes: %{__python_module_prefix}-pyserial
+Provides: python-module-pyserial
+Obsoletes: python-module-pyserial
 
 %add_python_req_skip System clr
 %if_without doc_package
-Provides: %{__python_module_prefix}-pyserial-doc
-Obsoletes: %{__python_module_prefix}-pyserial-doc
+Provides: python-module-pyserial-doc
+Obsoletes: python-module-pyserial-doc
 %endif
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3-module-setuptools
 %endif
 
 %description
@@ -88,23 +83,6 @@ This module contains Jython compatible serial port access.
 It's built for python %__python_version
 %endif
 
-# Do we really need this?
-%if_with win32
-%package win32
-Summary: Win32-specific serial port access
-Group: Development/Python
-AutoReqProv: yes, python
-
-%description win32
-This module capsulates the access for the serial port. It provides
-backends for standard Python running on Windows, Linux, BSD (possibly
-any POSIX compilant system) and Jython. The module automaticaly
-selects the appropriate backend.
-
-This module contains Win32-specific serial port access.
-It's built for python %__python_version
-%endif
-
 %if_with doc_package
 %package -n python-%modulename-doc
 Summary: %modulename documentation and example programs
@@ -126,7 +104,7 @@ and examples for this module
 %endif
 
 %prep
-%setup -n %source_name-%source_version
+%setup
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -148,25 +126,24 @@ pushd ../python3
 popd
 pushd %buildroot%_bindir
 for i in $(ls); do
-	mv $i ${i}3
+    mv $i ${i}3
 done
 popd
 %endif
 
-%python_build_install --optimize=2 \
-		--record=INSTALLED_FILES
+%python_build_install --optimize=2
 
-grep java INSTALLED_FILES > JAVA_INSTALLED_FILES
-subst '/java/d' INSTALLED_FILES
-grep win32 INSTALLED_FILES > WIN32_INSTALLED_FILES
-subst '/win32/d' INSTALLED_FILES
-
-%files -f INSTALLED_FILES
-%doc CHANGES.txt README.txt
+%files
+%doc CHANGES.rst README.rst LICENSE.txt
+%_bindir/*
 %if_with python3
 %exclude %_bindir/*3
 %endif
-%python_sitelibdir_noarch/serial/serialcli.py
+%python_sitelibdir/*
+%exclude %python_sitelibdir/serial/*java.py*
+%exclude %python_sitelibdir/serial/*win32.py*
+%exclude %python_sitelibdir/serial/tools/*windows.py*
+%exclude %python_sitelibdir/serial/serialcli.py*
 
 %if_with doc_package
 %files -n python-%modulename-doc
@@ -174,27 +151,29 @@ subst '/win32/d' INSTALLED_FILES
 %doc examples
 
 %if_with jython
-%files jython -f JAVA_INSTALLED_FILES
-%endif
-
-%if_with win32
-%files win32 -f WIN32_INSTALLED_FILES
+%files jython
+%python_sitelibdir/serial/*java.py*
 %endif
 
 %if_with python3
 %files -n python3-module-%oname
-%doc CHANGES.txt README.txt
+%doc CHANGES.rst README.rst LICENSE.txt
 %_bindir/*3
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/serial/serialjava.py*
-%exclude %python3_sitelibdir/serial/__pycache__/serialjava.*
-%exclude %python3_sitelibdir/serial/serialwin32.py*
-%exclude %python3_sitelibdir/serial/__pycache__/serialwin32.*
-%exclude %python3_sitelibdir/serial/win32.py*
-%exclude %python3_sitelibdir/serial/__pycache__/win32.*
+%exclude %python3_sitelibdir/serial/*java.py*
+%exclude %python3_sitelibdir/serial/__pycache__/*java.*
+%exclude %python3_sitelibdir/serial/*win32.py*
+%exclude %python3_sitelibdir/serial/__pycache__/*win32.*
+%exclude %python3_sitelibdir/serial/tools/*windows.py*
+%exclude %python3_sitelibdir/serial/tools/__pycache__/*windows.*
+%exclude %python3_sitelibdir/serial/serialcli.py*
+%exclude %python3_sitelibdir/serial/__pycache__/serialcli.*
 %endif
 
 %changelog
+* Fri Oct 20 2017 Anton Midyukov <antohami@altlinux.org> 3.4-alt1
+- New version 3.4
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.7-alt1.svn20140804.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
