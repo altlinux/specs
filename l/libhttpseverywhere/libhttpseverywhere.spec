@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define _name httpseverywhere
-%define ver_major 0.4
-%define api_ver 0.4
+%define ver_major 0.6
+%define api_ver 0.6
 
 %def_enable introspection
-%def_disable valadoc
+%def_enable valadoc
 
 Name: lib%_name
-Version: %ver_major.8
+Version: %ver_major.1
 Release: alt1
 
 Summary: Library to use HTTPSEverywhere in desktop applications
@@ -26,7 +26,7 @@ Source: %name-%version.tar
 BuildRequires: meson >= 0.36.0 vala-tools valadoc
 BuildRequires: libgio-devel libsoup-devel libarchive-devel libxml2-devel
 BuildRequires: libjson-glib-devel libgee0.8-devel
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgee0.8-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgee0.8-gir-devel libjson-glib-gir-devel}
 %{?_enable_valadoc:BuildRequires: valadoc}
 
 %description
@@ -74,7 +74,7 @@ This package contains development documentation for %name
 %setup
 
 %build
-%meson %{?_enable_valadoc:-Denable-valadoc=true}
+%meson %{?_enable_valadoc:-Denable_valadoc=true}
 %meson_build
 
 %install
@@ -89,7 +89,7 @@ This package contains development documentation for %name
 %files
 %_libdir/%name-%api_ver.so.*
 %dir %_datadir/%name
-%_datadir/%name/rulesets.json
+%_datadir/%name/default.rulesets
 %doc README.md
 
 %files devel
@@ -107,12 +107,18 @@ This package contains development documentation for %name
 #%_girdir/HTTPSEverywhere-%api_ver.gir
 %endif
 
-%if_enabled doc
+%if_enabled valadoc
 %files devel-doc
 %_datadir/devhelp/books/%_name-%api_ver/
 %endif
 
 %changelog
+* Mon Oct 09 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
+- 0.6.1
+
+* Sat Sep 23 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Thu Jul 27 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.8-alt1
 - 0.4.8
 
