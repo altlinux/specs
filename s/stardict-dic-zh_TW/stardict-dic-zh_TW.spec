@@ -1,8 +1,10 @@
 Group: Text tools
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: stardict-dic-zh_TW
 Summary: Traditional Chinese(zh_TW) dictionaries for StarDict
 Version: 2.4.2
-Release: alt2_17
+Release: alt2_19
 License: GPL+
 URL: http://stardict.sourceforge.net
 
@@ -56,6 +58,9 @@ cp -rf stardict-* ${RPM_BUILD_ROOT}%{_datadir}/stardict/dic/
 %{_datadir}/stardict/dic/*
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt2_19
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt2_17
 - update to new release by fcimport
 
