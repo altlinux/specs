@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.20.3
-Release: alt1
+Release: alt2
 
 Summary: Python Data Analysis Library
 License: BSD
@@ -22,7 +22,7 @@ BuildRequires(pre): rpm-build-python
 BuildRequires: python-devel
 BuildRequires: libnumpy-devel python-module-Cython python-module-notebook python-module-numpy-testing python-module-pathlib
 BuildRequires: python-module-objects.inv
-BuildRequires: gcc-c++ pandoc git-core
+BuildRequires: gcc-c++ pandoc
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -94,12 +94,10 @@ This package contains documentation for pandas.
 %prep
 %setup
 
-git config --global user.email "<python@packages.altlinux.org>"
-git config --global user.name "Python Development Team"
-git init-db
-git add . -A
-git commit -a -m "REL: v%version"
-git tag -m "v%version" v%version
+# fix version info
+sed -i \
+	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: v%version\)\"/" \
+	%oname/_version.py
 
 %if_with python3
 cp -fR . ../python3
@@ -149,7 +147,8 @@ popd
 
 %files
 %doc *.md
-%python_sitelibdir/*
+%python_sitelibdir/%oname
+%python_sitelibdir/%oname-%version-py*.egg-info
 %exclude %python_sitelibdir/*/tests
 %exclude %python_sitelibdir/*/*/test*
 
@@ -165,7 +164,8 @@ popd
 %if_with python3
 %files -n python3-module-%oname
 %doc *.md
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py*.egg-info
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/*/test*
 %exclude %python3_sitelibdir/*/*/*/test*
@@ -177,6 +177,10 @@ popd
 %endif
 
 %changelog
+* Fri Oct 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.20.3-alt2
+- Fixed version in egg-info.
+- Explicitely stated egg-info including valid version.
+
 * Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.20.3-alt1
 - Updated to upstream version 0.20.3.
 - Fixed version in egg-info.
