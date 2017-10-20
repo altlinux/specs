@@ -1,7 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-%define fedora 21
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %if ! (0%{?fedora} > 12 || 0%{?rhel} > 5)
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
@@ -10,14 +13,15 @@ BuildRequires(pre): rpm-build-python
 Summary: A vocabulary building application
 Name: wordgroupz
 Version: 0.3.1
-Release: alt1_10
+Release: alt1_13
 Source0: http://rtnpro.fedorapeople.org/wordgroupz/wordgroupz-%{version}.tar.gz
 License: GPLv3
-Group: Text tools
+Group: Games/Other
 URL: http://gitorious.org/wordgroupz/
 BuildArch: noarch
-BuildRequires: python-devel desktop-file-utils
-Requires: pygtk2 wordnet
+BuildRequires: python-devel, desktop-file-utils
+Requires: python-module-pygtk python-module-pygtk-demo, python-module-pywebkitgtk, python-module-nltk libwordnet wordnet
+Requires: python-module-BeautifulSoup, python-module-gst
 Source44: import.info
 
 %description
@@ -43,6 +47,9 @@ desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{name}.des
 %{python_sitelibdir_noarch}/*.egg-info
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1_13
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1_10
 - update to new release by fcimport
 
