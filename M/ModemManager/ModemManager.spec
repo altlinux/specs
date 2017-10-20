@@ -10,7 +10,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.6.8
+Version: 1.6.10
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -127,6 +127,11 @@ Requires: libmm-glib-devel = %version-%release
 %patch -p1
 
 %build
+%ifarch e2k
+%define more_warnings no
+%else
+%define more_warnings yes
+%endif
 %autoreconf
 %configure \
 	--disable-static \
@@ -138,7 +143,8 @@ Requires: libmm-glib-devel = %version-%release
 	%{subst_with mbim} \
 	%{subst_enable introspection} \
 	%{subst_enable vala} \
-	--enable-gtk-doc
+	--enable-gtk-doc \
+	--enable-more-warnings=%more_warnings
 
 %make_build
 
@@ -236,6 +242,9 @@ fi
 %endif
 
 %changelog
+* Fri Oct 20 2017 Mikhail Efremov <sem@altlinux.org> 1.6.10-alt1
+- Updated to 1.6.10.
+
 * Wed Jul 05 2017 Mikhail Efremov <sem@altlinux.org> 1.6.8-alt1
 - Patches from upstream:
   + libmm-glib,voice: fix object unref in
