@@ -1,4 +1,6 @@
 %define oldname abattis-cantarell-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global actualname cantarell
 
 %global fontname abattis-%{actualname}
@@ -8,8 +10,8 @@
 %global archivename2 Cantarell-Regular
 
 Name: fonts-otf-abattis-cantarell
-Version: 0.0.18
-Release: alt1_1
+Version: 0.0.25
+Release: alt1_3
 Summary: Cantarell, a Humanist sans-serif font family
 
 Group: System/Fonts/True type
@@ -20,7 +22,7 @@ Source1: %{fontname}.metainfo.xml
 
 BuildArch: noarch
 BuildRequires: fontpackages-devel
-BuildRequires: fontforge
+BuildRequires: fontforge libfontforge
 Source44: import.info
 
 %description
@@ -35,7 +37,7 @@ rm otf/*.otf
 
 %build
 %configure --enable-source-rebuild
-make %{?_smp_mflags}
+%make_build
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
@@ -94,6 +96,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.25-alt1_3
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.0.18-alt1_1
 - update to new release by fcimport
 
