@@ -1,9 +1,10 @@
 Group: Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python rpm-build-python3
-BuildRequires: python3-devel
 # END SourceDeps(oneline)
 %define oldname pycanberra
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global commit 88c53cd44a626ede3b07dab0b548f8bcfda42867
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
@@ -14,7 +15,7 @@ License:       LGPLv2
 
 # There's no versioning upstream, it's all about the Git hash
 Version:       0
-Release:       alt2_0.11.git%{shortcommit}
+Release:       alt2_0.14.git%{shortcommit}
 
 # There aren't any release yet, I'm downloading straight from the last commit
 Source0:       https://github.com/psykoyiko/pycanberra/archive/%{commit}/%{oldname}-%{version}-%{shortcommit}.tar.gz
@@ -22,7 +23,7 @@ Source0:       https://github.com/psykoyiko/pycanberra/archive/%{commit}/%{oldna
 BuildArch:     noarch
 
 BuildRequires: python-devel
-BuildRequires: python3-dev
+BuildRequires: python3-devel
 
 # This will break at run time when libcanberra bumps its soname :(
 Requires:      libcanberra
@@ -67,6 +68,9 @@ install -p -m 0644 pycanberra.py %{buildroot}%{python3_sitelibdir_noarch}
 
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.14.git88c53cd
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.11.git88c53cd
 - update to new release by fcimport
 
