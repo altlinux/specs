@@ -2,25 +2,43 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 26
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# Conditionals to help with missing test dependencies
+%if 0%{?fedora}
+#def_with checker
+%bcond_with checker
+%endif
+
 Name:          rxjava
-Version:       1.0.13
-Release:       alt1_3jpp8
+Version:       1.1.8
+Release:       alt1_2jpp8
 Summary:       Reactive Extensions for the JVM
 License:       ASL 2.0
 URL:           https://github.com/ReactiveX/RxJava
-Source0:       https://github.com/ReactiveX/RxJava/archive/v%{version}.tar.gz
+Source0:       https://github.com/ReactiveX/RxJava/archive/v%{version}/%{name}-%{version}.tar.gz
 Source1:       http://central.maven.org/maven2/io/reactivex/%{name}/%{version}/%{name}-%{version}.pom
-# Remove bundle jctools library
-Patch0:        rxjava-1.0.13-use-system-jctools.patch
 
 BuildRequires: maven-local
-BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.jctools:jctools-core)
+%if %{with checker}
+BuildRequires: mvn(com.google.guava:guava)
+BuildRequires: mvn(com.pushtorefresh.java-private-constructor-checker:checker)
+BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.mockito:mockito-core)
+%endif
+
+# RxJava adaptation of jctools
+Provides:      bundled(jctools-core) = 1.2-SNAPSHOT
 
 BuildArch:     noarch
 Source44: import.info
@@ -46,21 +64,6 @@ find . -name '*.jar' -print -delete
 
 cp -p %{SOURCE1} pom.xml
 
-%patch0 -p1
-rm -rf src/main/java/rx/internal/util/unsafe/ConcurrentCircularArrayQueue.java \
- src/main/java/rx/internal/util/unsafe/ConcurrentSequencedCircularArrayQueue.java \
- src/main/java/rx/internal/util/unsafe/MessagePassingQueue.java \
- src/main/java/rx/internal/util/unsafe/MpmcArrayQueue.java \
- src/main/java/rx/internal/util/unsafe/Pow2.java \
- src/main/java/rx/internal/util/unsafe/SpmcArrayQueue.java \
- src/main/java/rx/internal/util/unsafe/SpscArrayQueue.java \
- src/main/java/rx/internal/util/unsafe/BaseLinkedQueue.java \
- src/main/java/rx/internal/util/unsafe/MpscLinkedQueue.java \
- src/main/java/rx/internal/util/unsafe/SpscLinkedQueue.java
-
-# Add test deps
-%pom_add_dep junit:junit:4.10:test
-%pom_add_dep org.mockito:mockito-core:1.8.5:test
 # Add OSGi support
 %pom_xpath_inject "pom:project" "<packaging>bundle</packaging>"
 %pom_add_plugin org.apache.felix:maven-bundle-plugin:2.3.7 . '
@@ -82,33 +85,45 @@ rm -rf src/main/java/rx/internal/util/unsafe/ConcurrentCircularArrayQueue.java \
     </goals>
   </execution>
 </executions>'
+
 # Fix javadoc plugin configuration
 %pom_add_plugin org.apache.maven.plugins:maven-javadoc-plugin:2.9.1 . '
 <configuration>
   <excludePackageNames>*.internal.*</excludePackageNames>
 </configuration>'
 
+%if %{with checker}
+
+# Add test deps
+%pom_add_dep junit:junit:4.12:test
+%pom_add_dep org.mockito:mockito-core:1.10.19:test
+%pom_add_dep com.google.guava:guava:19.0:test
+%pom_add_dep com.pushtorefresh.java-private-constructor-checker:checker:1.2.0:test
+
 # This test take too much time on ARM builder e.g.:
 # Time elapsed: 3.027 sec  <<< ERROR!
 # org.junit.runners.model.TestTimedOutException: test timed out after 3000 milliseconds
-rm -r src/test/java/rx/internal/operators/OperatorMergeMaxConcurrentTest.java \
+rm src/test/java/rx/internal/operators/OperatorMergeMaxConcurrentTest.java \
  src/test/java/rx/internal/operators/OperatorMergeTest.java \
  src/test/java/rx/internal/operators/OperatorPublishTest.java \
  src/test/java/rx/internal/operators/OperatorRepeatTest.java \
  src/test/java/rx/internal/operators/OperatorRetryTest.java \
- src/test/java/rx/observables/AbstractOnSubscribeTest.java \
- src/test/java/rx/schedulers/CachedThreadSchedulerTest.java \
- src/test/java/rx/schedulers/ExecutorSchedulerTest.java \
  src/test/java/rx/subjects/ReplaySubjectBoundedConcurrencyTest.java \
  src/test/java/rx/subjects/ReplaySubjectConcurrencyTest.java
 # Require OperatorRetryTest
-rm -r src/test/java/rx/internal/operators/OperatorRetryWithPredicateTest.java
- 
+rm src/test/java/rx/internal/operators/OperatorRetryWithPredicateTest.java
+
+%endif
+
 %mvn_file io.reactivex:%{name} %{name}
 
 %build
 
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
+%if %{without checker}
+opts="-f"
+%endif
+# Test skipped unavailable test dep
+%mvn_build $opts -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
@@ -121,6 +136,9 @@ rm -r src/test/java/rx/internal/operators/OperatorRetryWithPredicateTest.java
 %doc LICENSE
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.8-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.13-alt1_3jpp8
 - new fc release
 
