@@ -1,56 +1,52 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libalsa-devel zlib-devel
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ libalsa-devel libglvnd-devel
 # END SourceDeps(oneline)
-%define fedora 21
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           milkytracker
-Version:        0.90.85
-Release:        alt2_11
+Version:        1.0.0
+Release:        alt1_3
 Summary:        Module tracker software for creating music
 
 Group:          Sound
 License:        GPLv3+
-URL:            http://www.milkytracker.net/
-Source0:        http://milkytracker.org/files/%{name}-%{version}.tar.bz2
-Source1:        %{name}.desktop
-Patch0:         milkytracker-0.90.85-use-system-library.patch
-Patch1:         milkytracker-0.90.85-use-system-library-pregenerated.patch
-Patch2:         milkytracker-0.90.85-integer-types.patch
-Patch3:         milkytracker-0.90.85-gzfile-type.patch
+URL:            http://www.milkytracker.org/
+Source0:        https://github.com/milkytracker/MilkyTracker/archive/v%{version}.tar.gz
+Patch0:         milkytracker-1.0.0-rtmidi-name.patch
+Patch1:         milkytracker-1.0.0-sdlmain.patch
 
-BuildRequires:  libSDL-devel
+BuildRequires:  libSDL2-devel
+BuildRequires:  ctest cmake
 BuildRequires:  desktop-file-utils
+BuildRequires:  librtmidi-devel
+BuildRequires:  zlib-devel
 BuildRequires:  zziplib-devel
 BuildRequires:  libjack-devel
 Source44: import.info
-
 
 %description
 MilkyTracker is an application for creating music in the .MOD and .XM formats.
 Its goal is to be free replacement for the popular Fasttracker II software.
 
 %prep
-%setup -q
+%setup -q -n MilkyTracker-%{version}
+
 find . -regex '.*\.\(cpp\|h\|inl\)' -print0 | xargs -0 chmod 644
 
-%patch0 -p1 -b .debug
-%patch1 -p1 -b .debug
-%patch2 -p1 -b .debug
-%patch3 -p1 -b .debug
-
-# Explicitly remove source files
-rm -rf src/compression/zlib/
-rm -rf src/compression/zziplib/generic/
-
-# timestamp: touch files to remove autotool call
-touch -r configure aclocal.m4 Makefile.in config.h.in
+%patch0 -p1
+%patch1 -p1
 
 %build
-%configure
-make %{?_smp_mflags}
-
+mkdir build
+cd build
+%{fedora_cmake} -DBUILD_SHARED_LIBS:BOOL=OFF ..
+%make_build
 
 %install
+cd build
 make install DESTDIR=%{buildroot}
+cd ..
 
 # copy the icon
 mkdir -p %{buildroot}%{_datadir}/pixmaps
@@ -58,23 +54,20 @@ cp -p resources/pictures/carton.png %{buildroot}%{_datadir}/pixmaps/milkytracker
 
 # copy the desktop file
 desktop-file-install \
-%if 0%{?fedora} && 0%{?fedora} < 19
-  --vendor fedora \
-%endif
-  --dir=%{buildroot}%{_datadir}/applications/ %{SOURCE1}
+  --dir=%{buildroot}%{_datadir}/applications/ resources/milkytracker.desktop
 
 
 %files
-%doc AUTHORS COPYING NEWS README
 %{_bindir}/milkytracker
-%if 0%{?fedora} && 0%{?fedora} < 19
-%{_datadir}/applications/fedora-%{name}.desktop
-%else
 %{_datadir}/applications/%{name}.desktop
-%endif
 %{_datadir}/pixmaps/milkytracker.png
+%{_datadir}/%{name}
+%{_docdir}/%{name}
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_3
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.90.85-alt2_11
 - update to new release by fcimport
 
