@@ -3,12 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname cf-sorts-mill-goudy-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname cf-sorts-mill-goudy
 %global fontconf 62-%{fontname}.conf
 
 Name:           fonts-otf-cf-sorts-mill-goudy
 Version:        3.1 
-Release:        alt3_10
+Release:        alt3_12
 Summary:        Goudy Oldstyle and Italic fonts  
 
 License:        MIT
@@ -92,6 +94,9 @@ fi
 
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 3.1-alt3_12
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 3.1-alt3_10
 - update to new release by fcimport
 
