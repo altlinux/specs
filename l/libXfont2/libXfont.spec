@@ -1,6 +1,6 @@
 Name: libXfont2
-Version: 2.0.1
-Release: alt1.1
+Version: 2.0.2
+Release: alt1
 Summary: X.Org libXfont runtime library
 License: MIT/X11
 Group: System/Libraries
@@ -33,7 +33,7 @@ This package contains the libXfont development library and header files
 %def_enable ipv6
 
 %prep
-%setup
+%setup -q
 %patch -p1
 
 %build
@@ -46,7 +46,7 @@ This package contains the libXfont development library and header files
 %make_build
 
 %install
-%makeinstall_std
+%make DESTDIR=%buildroot install
 
 %files
 %_libdir/*.so.*
@@ -57,6 +57,9 @@ This package contains the libXfont development library and header files
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Oct 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.0.2-alt1
+- 2.0.2
+
 * Fri Jan 13 2017 Michael Shigorin <mike@altlinux.org> 2.0.1-alt1.1
 - BOOTSTRAP: dropped docs-related BRs (unused)
 
