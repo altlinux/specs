@@ -2,9 +2,11 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %define power64 ppc64
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           xalan-c
 Version:        1.11.0
-Release:        alt1_9
+Release:        alt1_12
 Summary:        Xalan XSLT processor for C
 
 Group:          System/Libraries
@@ -23,8 +25,8 @@ other XML document types.
 
 %package        devel
 Summary:        Header files, libraries and development documentation for %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 
 %description devel
 This package contains the header files, static libraries and development
@@ -35,6 +37,7 @@ you will need to install %{name}-devel.
 %package doc
 Group:          Documentation
 Summary:        Documentation for Xerces-C++ validating XML parser
+BuildArch: noarch
 
 %description doc
 Documentation for %{name}.
@@ -84,6 +87,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.11.0-alt1_12
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.11.0-alt1_9
 - update to new release by fcimport
 
