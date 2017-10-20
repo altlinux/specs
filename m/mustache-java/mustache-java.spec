@@ -2,44 +2,38 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global oname mustache.java
 Name:          mustache-java
-Version:       0.9.1
-Release:       alt1_3jpp8
+Version:       0.9.4
+Release:       alt1_2jpp8
 Summary:       Implementation of mustache.js for Java
 License:       ASL 2.0
 URL:           https://github.com/spullara/mustache.java/
 Source0:       https://github.com/spullara/mustache.java/archive/%{oname}-%{version}.tar.gz
 
-BuildRequires: maven-local
-BuildRequires: mvn(com.github.spullara.cli-parser:cli-parser)
-BuildRequires: mvn(com.google.guava:guava)
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.apache.maven:maven-plugin-api)
-BuildRequires: mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-release-plugin)
-BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires: mvn(org.codehaus.jackson:jackson-mapper-asl)
-BuildRequires: mvn(org.codehaus.mojo:exec-maven-plugin)
-BuildRequires: mvn(org.codehaus.plexus:plexus-compiler-api)
-BuildRequires: mvn(org.eclipse.jetty:jetty-server)
-BuildRequires: mvn(org.openjdk.jmh:jmh-core)
-BuildRequires: mvn(org.openjdk.jmh:jmh-generator-annprocess)
-BuildRequires: mvn(org.ow2.asm:asm-commons)
-BuildRequires: mvn(org.ow2.asm:asm-util)
+# This patch is sent upstream: https://github.com/spullara/mustache.java/pull/183
+Patch0: jackson-standardisation.patch
 
-%if 0
-BuildRequires: mvn(com.twitter:util-core_2.10:6.25.0)
-BuildRequires: mvn(org.scala-lang:scala-library:2.10.4)
-BuildRequires: mvn(com.twitter:util-core_2.11:6.23.0)
-BuildRequires: mvn(org.scala-lang:scala-library:2.11.4)
-BuildRequires: mvn(org.scala-tools:maven-scala-plugin:2.14.1)
-%endif
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core)
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
+BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-yaml)
+BuildRequires:  mvn(com.github.spullara.cli-parser:cli-parser)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-api)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-server)
+BuildRequires:  mvn(org.openjdk.jmh:jmh-core)
+BuildRequires:  mvn(org.openjdk.jmh:jmh-generator-annprocess)
 
 BuildArch:     noarch
 Source44: import.info
@@ -76,20 +70,15 @@ This package contains javadoc for %{name}.
 find . -name "*.class" -print -delete
 find . -name "*.jar" -print -delete
 
+%patch0 -p1
+
 %pom_disable_module scala-extensions
 
+%pom_remove_plugin :maven-assembly-plugin handlebar
 %pom_remove_plugin :maven-assembly-plugin compiler
-# Build problem during javadoc (openjdk 1.8.0.60-15.b28) task
-# [ERROR] Failed to execute goal org.apache.maven.plugins:maven-javadoc-plugin:2.10.3:aggregate (default-cli)
-#         on project mustache.java: An error has occurred in JavaDocs report generation:
-# [ERROR] Exit code: 1 - javadoc: error - com.sun.tools.doclets.internal.toolkit.util.DocletAbortException:
-#         com.sun.tools.javac.code.Symbol$CompletionFailure: class file for junit.framework.TestCase not found
-#%% pom_disable_module benchmarks
-%pom_add_dep junit:junit:4.12:provided
 %pom_remove_plugin :maven-shade-plugin benchmarks
 %pom_remove_plugin :maven-source-plugin benchmarks
 
-%pom_remove_plugin :maven-assembly-plugin handlebar
 # Fix manifest entries
 %pom_add_plugin org.apache.maven.plugins:maven-jar-plugin handlebar "
 <configuration>
@@ -134,6 +123,9 @@ find . -name "*.jar" -print -delete
 %doc LICENSE
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1_3jpp8
 - new fc release
 
