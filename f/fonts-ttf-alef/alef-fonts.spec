@@ -2,13 +2,15 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname alef-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname alef
 %global fontconf 65-%{fontname}.conf
 
 
 Name:           fonts-ttf-alef
 Version:        1.0
-Release:        alt1_5
+Release:        alt1_7
 Summary:        A free multi-lingual font designed for screens
 
 Group:          System/Fonts/True type
@@ -90,6 +92,9 @@ fi
 
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_7
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_5
 - update to new release by fcimport
 
