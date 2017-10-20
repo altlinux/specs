@@ -4,7 +4,7 @@
 %define xdg_name com.github.wwmm.pulseeffects
 
 Name: pulseeffects
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -33,6 +33,7 @@ BuildRequires: python3-devel python3-module-pygobject3-devel
 BuildRequires: python3-module-pycairo-devel
 BuildRequires: libgtk+3-devel libgtk+3-gir-devel
 BuildRequires: gst-plugins-bad%gst_api_ver-devel
+BuildRequires: libpulseaudio-devel
 
 %description
 PulseEffects is a limiter, compressor, reverberation, stereo equalizer and auto volume
@@ -63,6 +64,9 @@ effects for Pulseaudio applications.
 %doc README*
 
 %changelog
+* Fri Oct 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
 * Fri Sep 22 2017 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
 - 3.0.0
 
