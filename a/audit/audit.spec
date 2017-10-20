@@ -4,7 +4,7 @@
 %def_with prelude
 
 Name: audit
-Version: 2.7.8
+Version: 2.8.1
 Release: alt1%ubt
 
 Packager: Anton Farygin <rider@altlinux.com>
@@ -203,6 +203,9 @@ install -pD -m644 rules/10-base-config.rules %buildroot%_sysconfdir/%name/rules.
 %endif
 
 %changelog
+* Sun Oct 15 2017 Anton Farygin <rider@altlinux.ru> 2.8.1-alt1%ubt
+- new version
+
 * Fri Sep 22 2017 Anton Farygin <rider@altlinux.ru> 2.7.8-alt1%ubt
 - new version
 
