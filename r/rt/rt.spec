@@ -70,8 +70,8 @@ BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
 %global RT_STATICDIR		%{_datadir}/%{name}/static
 
 Name:		rt
-Version:	4.4.1
-Release:	alt1_3
+Version:	4.4.2
+Release:	alt1_1
 Summary:	Request tracker
 
 Group:		Networking/WWW
@@ -131,6 +131,7 @@ BuildRequires: perl(Devel/StackTrace.pm)
 BuildRequires: perl(Devel/GlobalDestruction.pm)
 BuildRequires: perl(Digest/base.pm)
 BuildRequires: perl(Digest/MD5.pm)
+# Email::Address < 1.908 is vulnerable to CVE-2015-7686
 BuildRequires: perl(Email/Address.pm)
 BuildRequires: perl(Email/Address/List.pm)
 BuildRequires: perl(Encode.pm)
@@ -455,10 +456,10 @@ sed -i -e 's,$(RT_ETC_PATH)/upgrade,%{_datadir}/%{name}/upgrade,g' Makefile.in
 --with-web-handler=modperl2 \
 --libdir=%{RT_LIBDIR}
 
-make %{?_smp_mflags}
+%make_build
 
 # Explicitly check for devel-mode deps
-%{?with_devel_mode:%{__perl} ./sbin/rt-test-dependencies --verbose --with-%{?with_mysql:mysql}%{?with_pg:pg} --with-modperl2 --with-dev}
+%{?with_devel_mode:/usr/bin/perl ./sbin/rt-test-dependencies --verbose --with-%{?with_mysql:mysql}%{?with_pg:pg} --with-modperl2 --with-dev}
 
 # Generate man-pages
 for file in \
@@ -649,6 +650,9 @@ fi
 %endif
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 4.4.2-alt1_1
+- update to new release by fcimport
+
 * Wed Feb 01 2017 Igor Vlasenko <viy@altlinux.ru> 4.4.1-alt1_3
 - new version
 
