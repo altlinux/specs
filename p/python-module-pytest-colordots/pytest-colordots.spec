@@ -3,31 +3,26 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1
-Release: alt1.git20141120.1.1
+Version: 1.1
+Release: alt1
 Summary: Colorizes the progress indicators
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/pytest-colordots
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/svenstaro/pytest-colordots.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-blessings
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python2.7(colorama) python2.7(pytest)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-blessings
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3(colorama) python3(pytest)
 %endif
 
 %py_provides pytest_colordots
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
 
 %description
 Colorizes the progress indicators
@@ -35,6 +30,7 @@ Colorizes the progress indicators
 This is an adoption of pytest-greendots which sadly does not have an
 upstream repository.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Colorizes the progress indicators
 Group: Development/Python3
@@ -45,6 +41,7 @@ Colorizes the progress indicators
 
 This is an adoption of pytest-greendots which sadly does not have an
 upstream repository.
+%endif
 
 %prep
 %setup
@@ -90,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Fri Oct 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1-alt1
+- Updated to upstream version 1.1.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt1.git20141120.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
