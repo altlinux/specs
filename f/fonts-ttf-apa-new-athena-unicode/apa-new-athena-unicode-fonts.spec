@@ -3,13 +3,15 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname apa-new-athena-unicode-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname apa-new-athena-unicode
 %global fontconf 64-%{fontname}.conf
 
 
 Name:		fonts-ttf-apa-new-athena-unicode
 Version:	3.4
-Release:	alt3_12
+Release:	alt3_14
 Summary:	New Athena Unicode is a libre/open multilingual font
 
 License:	OFL
@@ -93,6 +95,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 3.4-alt3_14
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 3.4-alt3_12
 - update to new release by fcimport
 
