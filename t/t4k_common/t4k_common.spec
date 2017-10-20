@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ libSDL_ttf-devel
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: t4k_common
 Version: 0.1.1
-Release: alt2_14
+Release: alt2_17
 URL: http://tux4kids.alioth.debian.org/
 Summary: Library for Tux4Kids applications
 License: GPLv3+
@@ -18,8 +20,8 @@ Source44: import.info
 
 %package devel
 Summary: Development files for the Tux4Kids library
-Group: Development/C++
-Requires: %{name}%{?_isa} = %{version}
+Group: Development/Other
+Requires: %{name} = %{version}-%{release}
 Requires: pkg-config
 
 %description
@@ -39,7 +41,7 @@ These are the development files.
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 doxygen
 rm -f doxygen/html/installdox
 
@@ -62,6 +64,9 @@ chmod 755 $RPM_BUILD_ROOT%{_libdir}/lib%{name}.so
 %{_libdir}/pkgconfig/t4k_common.pc
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_17
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_14
 - update to new release by fcimport
 
