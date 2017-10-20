@@ -1,20 +1,21 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: xhtml2fo-style-xsl
 Version: 20051222
-Release: alt1_12
+Release: alt1_15
 Group: Text tools
 
 Summary: Antenna House, Inc. XHTML to XSL:FO stylesheets
 License: Copyright only
 URL: http://www.antennahouse.com/XSLsample/XSLsample.htm
 
-Requires(pre): xhtml1-dtds
-Requires(pre): xml-common >= 0.6.3
+Requires: xhtml1-dtds
+Requires: xml-common >= 0.6.3
 #Requires(post): libxml2
 #Requires(postun): libxml2
-
 
 BuildArch: noarch
 Source0: http://www.antennahouse.com/XSLsample/sample-xsl-xhtml2fo.zip
@@ -27,17 +28,17 @@ With a XSL:FO processor you could create PDF versions of XHTML documents.
 
 
 %prep
-%setup -q -c -n %{name}-%{version} -T -b 0
-%__cp %{SOURCE1} .
+%setup -c -q -n %{name}-%{version}
+cp %{SOURCE1} .
 %build
 
 
 %install
-%__rm -Rf $RPM_BUILD_ROOT
-%__mkdir -p $RPM_BUILD_ROOT
+rm -Rf $RPM_BUILD_ROOT
+mkdir -p $RPM_BUILD_ROOT
 DESTDIR=$RPM_BUILD_ROOT/usr/share/sgml/xhtml1/xhtml2fo-stylesheets
-%__mkdir -p $DESTDIR
-%__cp *xsl $DESTDIR/
+mkdir -p $DESTDIR
+cp *xsl $DESTDIR/
 
 %files
 %doc AntennaHouse-COPYRIGHT
@@ -62,6 +63,9 @@ fi
 
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20051222-alt1_15
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20051222-alt1_12
 - update to new release by fcimport
 
