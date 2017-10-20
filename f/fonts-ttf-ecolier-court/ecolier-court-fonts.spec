@@ -1,4 +1,6 @@
 %define oldname ecolier-court-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname ecolier-court
 %global fontconf 61-%{fontname}
 
@@ -12,7 +14,7 @@ this package.
 
 Name:    fonts-ttf-ecolier-court
 Version: 20070702
-Release: alt3_21
+Release: alt3_23
 Summary: Schoolchildren cursive fonts
 
 Group:     System/Fonts/True type
@@ -31,7 +33,7 @@ Source7:   %{fontname}-lignes.metainfo.xml
 
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
-Requires:      %{name}-common = %{version}
+Requires:      %{name}-common = %{version}-%{release}
 Source44: import.info
 
 %description
@@ -57,7 +59,7 @@ This package consists of files used by other %{oldname} packages.
 %package -n fonts-ttf-ecolier-court-lignes
 Group: System/Fonts/True type
 Summary:  Schoolchildren cursive fonts with lines
-Requires: %{name}-common = %{version}
+Requires: %{name}-common = %{version}-%{release}
 
 Obsoletes: %{oldname}-lignes < 20070702-7
 
@@ -155,6 +157,9 @@ fi
 
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20070702-alt3_23
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20070702-alt3_21
 - update to new release by fcimport
 
