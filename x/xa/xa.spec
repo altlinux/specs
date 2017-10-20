@@ -1,6 +1,8 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           xa
-Version:        2.3.7
-Release:        alt1_3
+Version:        2.3.8
+Release:        alt1_1
 Summary:        6502/65816 cross-assembler
 
 Group:          Development/Tools
@@ -9,6 +11,8 @@ URL:            http://www.floodgap.com/retrotech/xa/
 Source0:        http://www.floodgap.com/retrotech/%{name}/dists/%{name}-%{version}.tar.gz
 # update the build system, reported in private email
 Patch0:         %{name}-2.3.7-make.patch
+# Perl needed for test-suite
+BuildRequires:  rpm-build-perl
 Source44: import.info
 
 
@@ -43,7 +47,7 @@ done
 
 
 %build
-make %{?_smp_mflags} CFLAGS="$RPM_OPT_FLAGS"
+%make_build CFLAGS="$RPM_OPT_FLAGS"
 
 
 %check
@@ -61,6 +65,9 @@ make install DESTDIR=$RPM_BUILD_ROOT PREFIX=%{_prefix} INSTALL="install -p"
 
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.8-alt1_1
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.7-alt1_3
 - update to new release by fcimport
 
