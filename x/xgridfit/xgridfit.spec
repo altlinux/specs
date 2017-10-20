@@ -2,9 +2,11 @@
 BuildRequires(pre): rpm-build-python
 # END SourceDeps(oneline)
 Requires: python-module-libxml2
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name xgridfit
-%define version 2.2
+%define version 2.3
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print (get_python_lib())")}
 
 %global alphatag 20100725cvs
@@ -13,15 +15,15 @@ Requires: python-module-libxml2
 %global archivever %{!?alphatag:%{version}%{?patchlevel}}%{?alphatag:%{name}}
 
 Name:    xgridfit
-Version: 2.2
-Release: alt3_14%{?patchlevel:.%{patchlevel}}%{?alphatag:.%{alphatag}}
+Version: 2.3
+Release: alt1_3
 Summary: Font hinting tool
 
 # This is where we drop fontforge
 Group:   Publishing
 License: LGPLv2
 URL:     http://%{name}.sf.net/
-Source0: %{!?alphatag:http://downloads.sourceforge.net/%{name}/}%{name}-%{archivever}.tar.gz
+Source0: %{name}-%{version}.tar.gz
 Patch1:  %{name}-2.2a-maindir-in-python.patch
 
 
@@ -46,7 +48,7 @@ Open-Source font editor, to do so.
 Group:    Documentation
 Summary:  Font hinting tool use documentation
 # Does not really make sense without the tool itself
-Requires: %{name} = %{version}
+Requires: %{name} = %{version}-%{release}
 
 %description doc
 Xgridfit font hinting tool user documentation.
@@ -60,8 +62,6 @@ Xgridfit font hinting tool user documentation.
 
 
 %install
-rm -fr %{buildroot}
-
 make install DESTDIR=%{buildroot} \
              BINDIR=%{_bindir} \
              MANDIR=%{_mandir} \
@@ -70,6 +70,7 @@ make install DESTDIR=%{buildroot} \
 # Simplify preun/post catalog logic
 ln -s catalog.xml \
       %{buildroot}%{_datadir}/xml/%{name}-%{version}/schemas/catalog-%{version}.%{release}.xml
+
 
 %post
 cd %{_sysconfdir}/xml
@@ -89,21 +90,18 @@ xmlcatalog --noout --del \
 
 %files
 %doc COPYING ChangeLog
-
 %{_datadir}/xml/%{name}-%{version}
 %{_mandir}/man1/*
-
 %{python_sitelibdir_noarch}/*
-
-#%defattr(0755,root,root,0755)
 %{_bindir}/*
-
 
 %files doc
 %doc docs/*
 
-
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_3
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_14.a.20100725cvs
 - update to new release by fcimport
 
