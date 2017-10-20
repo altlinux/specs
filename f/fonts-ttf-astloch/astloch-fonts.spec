@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: python
 # END SourceDeps(oneline)
 %define oldname astloch-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname astloch
 %global fontconf 61-%{fontname}-fonts.conf
 %global checkout 41528389c445hg
@@ -10,7 +12,7 @@ BuildRequires: python
 
 Name:          fonts-ttf-astloch
 Version:       1.00
-Release:       alt1_5.%{checkout}
+Release:       alt1_8.%{checkout}
 Summary:       Astloch fonts released by Dan Rhatigan
 License:       OFL
 URL:           http://www.google.com/fonts/specimen/Astloch
@@ -105,6 +107,9 @@ fi
 
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_8.41528389c445hg
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_5.41528389c445hg
 - update to new release by fcimport
 
