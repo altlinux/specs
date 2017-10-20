@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           jsoup
-Version:        1.9.2
-Release:        alt1_1jpp8
+Version:        1.10.2
+Release:        alt1_2jpp8
 Summary:        Java library for working with real-world HTML
 License:        MIT
 URL:            http://jsoup.org/
@@ -16,6 +17,7 @@ BuildArch:      noarch
 Source0:        https://github.com/jhy/%{name}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(com.google.code.gson:gson)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
@@ -69,6 +71,9 @@ API documentation for %{name}.
 %doc LICENSE
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt1_1jpp8
 - new version
 
