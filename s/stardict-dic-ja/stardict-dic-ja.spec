@@ -1,8 +1,10 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: stardict-dic-ja
 Summary: Japanese(ja) dictionaries for StarDict
 Version: 2.4.2
-Release: alt2_14
-Group: Text tools
+Release: alt2_16
+Group: System/Base
 # Upstream calls this the "EDRDG" license
 # but it is just CC-BY-SA
 # http://www.edrdg.org/edrdg/newlic.html
@@ -41,6 +43,9 @@ cp -rf stardict-* ${RPM_BUILD_ROOT}%{_datadir}/stardict/dic/
 %{_datadir}/stardict/dic/*
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt2_16
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt2_14
 - update to new release by fcimport
 
