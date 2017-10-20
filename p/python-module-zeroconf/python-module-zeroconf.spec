@@ -2,7 +2,7 @@
 %define oname zeroconf
 
 Name: python-module-zeroconf
-Version: 0.17.6
+Version: 0.19.1
 Release: alt1
 Summary: Pure Python Multicast DNS Service Discovery Library (Bonjour/Avahi compatible)
 
@@ -12,7 +12,6 @@ Url: https://github.com/jstasiak/python-zeroconf
 Packager: Python Development Team <python at packages.altlinux.org>
 
 Source: %name-%version.tar
-Patch: python-zeroconf-0.17.4-enum34-instead-of-enum-compat.patch
 BuildArch: noarch
 
 %if_with python3
@@ -21,6 +20,7 @@ BuildPreReq: python3-devel python3-module-setuptools
 %endif
 BuildPreReq: python-devel python-module-setuptools
 %py_provides %oname
+%py_requires enum34
 
 %description
 This is fork of pyzeroconf, Multicast DNS Service Discovery for Python,
@@ -31,6 +31,7 @@ modified by William McBrine (https://github.com/wmcbrine/pyzeroconf).
 Summary: Pure Python Multicast DNS Service Discovery Library (Bonjour/Avahi compatible)
 Group: Development/Python
 %py3_provides %oname
+%py3_requires enum34
 BuildArch: noarch
 
 %description -n python3-module-%oname
@@ -41,7 +42,10 @@ Python 3 version.
 
 %prep
 %setup
-%patch -p1
+# Remove bundled egg-info
+rm -rf %oname.egg-info
+
+sed -i '/enum-compat/d' setup.py
 
 %if_with python3
 cp -fR . ../python3
@@ -74,5 +78,8 @@ popd
 %endif
 
 %changelog
+* Fri Oct 20 2017 Anton Midyukov <antohami@altlinux.org> 0.19.1-alt1
+- new version 0.19.1
+
 * Mon Sep 19 2016 Anton Midyukov <antohami@altlinux.org> 0.17.6-alt1
 - Initial build for Alt Linux Sisiphus.
