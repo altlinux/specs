@@ -3,13 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname gdouros-aegyptus-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname gdouros-aegyptus
 %global fontconf 65-%{fontname}.conf
-%global checkout 20151024
 
 Name:           fonts-otf-gdouros-aegyptus
-Version:        5.03
-Release:        alt1_0.8.%{checkout}
+Version:        6.17
+Release:        alt1_3
 Summary:        A font for Egyptian hieroglyphs
 
 # https://web.archive.org/web/20150625020428/http://users.teilar.gr/~g1951d/
@@ -58,7 +59,7 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
 install -Dm 0644 -p %{SOURCE2} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+        %{buildroot}%{_datadir}/metainfo/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -96,17 +97,20 @@ fi
 
 %check
 appstream-util validate-relax --nonet \
-      %{buildroot}/%{_datadir}/appdata/%{fontname}.metainfo.xml
+      %{buildroot}/%{_datadir}/metainfo/%{fontname}.metainfo.xml
 
 
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/Aegyptus*.ttf
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+%{_datadir}/metainfo/%{fontname}.metainfo.xml
 %doc *.pdf
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 6.17-alt1_3
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 5.03-alt1_0.8.20151024
 - update to new release by fcimport
 
