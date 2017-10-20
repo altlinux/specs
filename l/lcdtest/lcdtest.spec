@@ -1,6 +1,6 @@
 Name: lcdtest
 Version: 1.18
-Release: alt1
+Release: alt2
 
 Summary: The LCD screen quality testing utility
 
@@ -18,12 +18,15 @@ Patch: lcdtest-1.02-alt-man-double_content_fix.patch
 # Automatically added by buildreq on Thu Sep 20 2007
 BuildRequires: flex gcc-c++ libSDL-devel libSDL_image-devel libSDL_ttf-devel  scons swig
 
+BuildRequires: rpm-macros-fonts
 
 BuildRequires: netpbm
 
 # due bug in IMG_ReadXPMFromArray
 Requires: libSDL_image > 1.2.5-alt1
 BuildRequires: desktop-file-utils
+
+Requires: fonts-ttf-liberation
 
 %description
 lcdtest is a utility to display LCD monitor test patterns. It may be
@@ -39,7 +42,8 @@ lcdtest отображает различные паттерны, позволя
 тестировалась в Linux и Windows.
 
 %prep
-%setup -q
+%setup
+%__subst "s|/usr/share/fonts/liberation/|%_ttffontsdir/liberation/|g" src/lcdtest.c
 #patch -p1
 
 %build
@@ -64,6 +68,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Oct 20 2017 Vitaly Lipatov <lav@altlinux.ru> 1.18-alt2
+- fix path to Liberation font and require package with it (ALT bug 34032)
+
 * Tue Aug 27 2013 Vitaly Lipatov <lav@altlinux.ru> 1.18-alt1
 - new version 1.18 (with rpmrb script)
 
