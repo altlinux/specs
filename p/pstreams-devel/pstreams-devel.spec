@@ -1,12 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           pstreams-devel
 Version:        0.8.1
-Release:        alt1_4
+Release:        alt1_6
 Summary:        POSIX Process Control in C++
 
-Group:          Development/C
+Group:          Development/Other
 License:        LGPLv3+
 URL:            http://pstreams.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/pstreams/pstreams-%{version}.tar.gz
@@ -28,7 +30,7 @@ library.
 %setup -q -n pstreams-%{version}
 
 %build
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install  DESTDIR=$RPM_BUILD_ROOT includedir=%{_includedir}
@@ -38,6 +40,9 @@ make install  DESTDIR=$RPM_BUILD_ROOT includedir=%{_includedir}
 %{_includedir}/pstreams
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1_6
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1_4
 - update to new release by fcimport
 
