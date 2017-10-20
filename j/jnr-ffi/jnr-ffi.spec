@@ -2,31 +2,34 @@ Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:     jnr-ffi
-Version:  2.0.9
-Release:  alt1_1jpp8
+Version:  2.1.2
+Release:  alt1_3jpp8
 Summary:  Java Abstracted Foreign Function Layer
 License:  ASL 2.0
 URL:      http://github.com/jnr/%{name}/
 Source0:  https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
 
+BuildRequires:  gcc-common
+BuildRequires:  make
+
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.github.jnr:jffi)
 BuildRequires:  mvn(com.github.jnr:jffi::native:)
 BuildRequires:  mvn(com.github.jnr:jnr-x86asm)
-BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.ow2.asm:asm-analysis)
 BuildRequires:  mvn(org.ow2.asm:asm-commons)
 BuildRequires:  mvn(org.ow2.asm:asm-tree)
 BuildRequires:  mvn(org.ow2.asm:asm-util)
-BuildRequires:  sonatype-oss-parent
-
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildArch:     noarch
 Source44: import.info
@@ -69,6 +72,9 @@ sed -i 's|-Werror||' libtest/GNUmakefile
 %doc LICENSE
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.2-alt1_3jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.9-alt1_1jpp8
 - new version
 
