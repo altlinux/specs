@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname gfs-artemisia-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname gfs-artemisia
 %global fontconf 60-%{fontname}.conf
 
@@ -10,7 +12,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-artemisia
 Version: 20070415
-Release: alt3_21
+Release: alt3_23
 Summary: GFS Artemisia fonts
 
 License:   OFL
@@ -106,6 +108,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_23
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_21
 - update to new release by fcimport
 
