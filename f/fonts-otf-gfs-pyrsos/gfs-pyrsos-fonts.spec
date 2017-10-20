@@ -2,6 +2,8 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname gfs-pyrsos-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname gfs-pyrsos
 %global fontconf 61-%{fontname}.conf
 
@@ -9,7 +11,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-pyrsos
 Version: 20090618
-Release: alt3_11
+Release: alt3_13
 Summary: A 20th century italic Greek typeface
 
 Group:     System/Fonts/True type
@@ -107,6 +109,9 @@ fi
 
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20090618-alt3_13
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20090618-alt3_11
 - update to new release by fcimport
 
