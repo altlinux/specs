@@ -14,7 +14,7 @@ BuildRequires: /usr/bin/splint gcc-c++ pkgconfig(glib-2.0)
 
 Name:           libqb
 Version:        1.0.2
-Release:        alt1_8
+Release:        alt1_10
 Summary:        An IPC library for high performance servers
 
 Group:          System/Libraries
@@ -24,11 +24,11 @@ Source0:        https://github.com/ClusterLabs/libqb/releases/download/v%{versio
 Patch0:         01-Med-qblog.h-better-explanation-behaviour-of-QB_LOG_I.patch
 Patch1:         02-build-configure-run-attribute-section-test-through-r.patch
 Patch2:         03-tests-new-sort-of-tests-dubbed-functional-cover-link.patch
-Patch3:         04-Med-add-extra-run-time-client-side-sanity-check-that.patch
+Patch3:         04-Med-add-extra-run-time-client-libqb-checks-that-logg.patch
 Patch4:         05-High-bare-fix-for-libqb-logging-not-working-with-ld..patch
 Patch5:         06-Low-fix-internal-object-symbol-s-leak-expose-run-tim.patch
 
-BuildRequires:  autoconf-common automake-common libtool-common doxygen procps sysvinit-utils libcheck-devel
+BuildRequires:  autoconf-common automake libtool-common doxygen procps sysvinit-utils libcheck-devel
 # https://fedoraproject.org/wiki/Packaging:C_and_C%2B%2B#BuildRequires_and_Requires
 BuildRequires:  gcc-common
 # git-style patch application
@@ -86,6 +86,9 @@ developing applications that use %{name}.
 %{_mandir}/man3/qb*3*
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_10
+- update to new release by fcimport
+
 * Thu Oct 12 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_8
 - update to new release by fcimport
 
