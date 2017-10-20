@@ -1,11 +1,13 @@
 Group: System/Fonts/True type
 %define oldname aldusleaf-crimson-text-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname aldusleaf-crimson-text
 %global fontconf 62-%{fontname}.conf
 
 Name:           fonts-ttf-aldusleaf-crimson-text
 Version:        0.8
-Release:        alt1_0.6.20130806
+Release:        alt1_0.8.20130806
 Summary:        A latin font for the production of technical books and papers
 
 License:        OFL
@@ -91,6 +93,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_0.8.20130806
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_0.6.20130806
 - update to new release by fcimport
 
