@@ -25,7 +25,7 @@
 %def_enable lua
 
 Name: efl
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Enlightenment Foundation Libraries
@@ -423,6 +423,9 @@ find %buildroot%_libdir -name "*.la" -delete
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Fri Oct 20 2017 Yuri N. Sedunov <aris@altlinux.org> 1.20.5-alt1
+- 1.20.5
+
 * Tue Sep 19 2017 Yuri N. Sedunov <aris@altlinux.org> 1.20.4-alt1
 - 1.20.4
 
