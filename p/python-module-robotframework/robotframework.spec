@@ -3,33 +3,34 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.9
-Release: alt1.dev20150202.1.1
+Version: 3.0.2
+Release: alt1
 Summary: A generic test automation framework
 License: ASLv2.0
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/robotframework/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/robotframework/robotframework.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-modules-logging
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python-tools-2to3
 %endif
 
 %py_provides %oname
 %py_provides robot
 %add_python_req_skip java javax org System
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
-BuildRequires: python-devel python-tools-2to3 rpm-build-python3 time
+%add_findreq_skiplist /usr/lib*/python*/site-packages/robot/libraries/dialogs_ipy.py
+%add_findreq_skiplist /usr/lib*/python*/site-packages/robot/libraries/dialogs_jy.py
+%add_findreq_skiplist /usr/lib*/python*/site-packages/robot/running/timeouts/ironpython.py
+%add_findreq_skiplist /usr/lib*/python*/site-packages/robot/running/timeouts/jython.py
+%add_findreq_skiplist /usr/lib*/python*/site-packages/robot/htmldata/jartemplate.py
+%add_findreq_skiplist /usr/lib*/python*/site-packages/robot/jarrunner.py
 
 %description
 Robot Framework is a generic test automation framework for acceptance
@@ -40,12 +41,13 @@ libraries implemented either with Python or Java, and users can create
 new higher-level keywords from existing ones using the same syntax that
 is used for creating test cases.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A generic test automation framework
 Group: Development/Python3
 %py3_provides %oname
 %py3_provides robot
-%add_python3_req_skip java javax org System UserDict
+%add_python3_req_skip java javax java.lang org System UserDict
 
 %description -n python3-module-%oname
 Robot Framework is a generic test automation framework for acceptance
@@ -55,6 +57,7 @@ testing approach. Its testing capabilities can be extended by test
 libraries implemented either with Python or Java, and users can create
 new higher-level keywords from existing ones using the same syntax that
 is used for creating test cases.
+%endif
 
 %package docs
 Summary: Documentation for %oname
@@ -122,6 +125,9 @@ popd
 %endif
 
 %changelog
+* Fri Oct 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.2-alt1
+- Updated to upstream version 3.0.2.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.9-alt1.dev20150202.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

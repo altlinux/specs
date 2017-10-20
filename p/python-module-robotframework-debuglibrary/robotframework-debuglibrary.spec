@@ -4,30 +4,32 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8
+Version: 1.0.2
 Release: alt1
 Summary: RobotFramework debug library and an interactive shell
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/robotframework-debuglibrary/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/xyb/robotframework-debuglibrary.git
-Source0: https://pypi.python.org/packages/df/1a/cdf43b96ee735e47f2aa05fe1d09088004c06594c8bdf958dfac6d92815b/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-robotframework
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-robotframework
+BuildRequires: python2.7(pygments) python2.7(prompt_toolkit)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools-tests
-BuildPreReq: python3-module-robotframework
+BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-robotframework
+BuildRequires: python3(pygments) python3(prompt_toolkit)
 %endif
 
 %description
 Robotframework-DebugLibrary is A debug library for RobotFramework, which
 can be used as an interactive shell(REPL) also.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: RobotFramework debug library and an interactive shell
 Group: Development/Python3
@@ -35,9 +37,10 @@ Group: Development/Python3
 %description -n python3-module-%oname
 Robotframework-DebugLibrary is A debug library for RobotFramework, which
 can be used as an interactive shell(REPL) also.
+%endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -68,6 +71,7 @@ popd
 
 %check
 python setup.py test
+
 %if_with python3
 pushd ../python3
 python3 setup.py test
@@ -90,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Fri Oct 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.2-alt1
+- Updated to upstream version 1.0.2.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1
 - automated PyPI update
 
