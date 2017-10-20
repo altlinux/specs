@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.8.0
-Release: alt1
+Release: alt2
 Summary: SPARQL Endpoint interface to Python
 License: W3C SOFTWARE NOTICE AND LICENSE
 Group: Development/Python
@@ -34,6 +34,7 @@ This is a wrapper around a SPARQL service. It helps in creating the
 query URI and, possibly, convert the result into a more manageable
 format.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: SPARQL Endpoint interface to Python
 Group: Development/Python3
@@ -44,6 +45,7 @@ Group: Development/Python3
 This is a wrapper around a SPARQL service. It helps in creating the
 query URI and, possibly, convert the result into a more manageable
 format.
+%endif
 
 %prep
 %setup
@@ -92,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Fri Oct 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.0-alt2
+- Fixed build without python-3.
+
 * Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.0-alt1
 - Updated to upstream version 1.8.0.
 - Disabled build for python-3.
