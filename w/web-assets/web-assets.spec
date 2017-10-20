@@ -1,12 +1,14 @@
 Group: Development/Other
 %filter_from_requires /^.usr.share.fonts$/d
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 #disable the httpd stuff while we're waiting on getting the path issues
 #cleared up
 %global enable_httpd 0
 
 Name:           web-assets
 Version:        5
-Release:        alt3_4
+Release:        alt3_6
 Summary:        A simple framework for bits pushed to browsers
 BuildArch:      noarch
 
@@ -35,7 +37,6 @@ License:        Public Domain
 Group: Other
 Summary:        RPM macros for Web Assets packaging
 License:        MIT
-#Requires:       web-assets-filesystem = %{version}
 Provides: %name-devel = %{?epoch:%epoch:}%{version}-%{release}
 
 %description -n rpm-macros-%name
@@ -46,8 +47,8 @@ Provides: %name-devel = %{?epoch:%epoch:}%{version}-%{release}
 Group: Other
 Summary:        Web Assets aliases for the Apache HTTP daemon
 License:        MIT
-Requires:       web-assets-filesystem = %{version}
-Requires:       httpd
+Requires:       web-assets-filesystem = %{version}-%{release}
+Requires:       apache-base apache2-base apache2-htcacheclean
 
 %description httpd
 %{summary}.
@@ -90,6 +91,9 @@ install -Dpm0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/httpd/conf.d/web-assets.c
 %endif
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 5-alt3_6
+- update to new release by fcimport
+
 * Fri Feb 19 2016 Igor Vlasenko <viy@altlinux.ru> 5-alt3_4
 - added rpm-macros-web-assets
 
