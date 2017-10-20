@@ -3,28 +3,30 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname gdouros-aroania-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname gdouros-aroania
 %global fontconf 65-%{fontname}.conf
 
 Name:           fonts-ttf-gdouros-aroania
-Version:        6.31
-Release:        alt1_1
+Version:        7.17
+Release:        alt1_3
 Summary:        A font based on Victor Julius Scholderer's "New Hellenic"
 License:        Public Domain
-URL:            http://users.teilar.gr/~g1951d/Textfonts.htm
-Source0:        http://users.teilar.gr/~g1951d/Aroania.zip
-Source1:        http://users.teilar.gr/~g1951d/Textfonts.pdf
-Source2:        %{oldname}-fontconfig.conf
-Source3:        %{fontname}.metainfo.xml
+URL:            http://users.teilar.gr/~g1951d/
+Source0:        http://users.teilar.gr/~g1951d/TextfontsFonts.zip
+Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
 BuildRequires:  libappstream-glib
+Requires:     gdouros-textfonts-doc
 Source44: import.info
 
 %description
 Aroania is a modern recast of Victor Scholderer's "New Hellenic" font, on the
-basis of Verdana. In 1927, Victor Julius Scholderer (1880o...1971), on behalf of
+basis of Verdana. In 1927, Victor Julius Scholderer (1880-1971), on behalf of
 the "Society for the Promotion of Greek Studies", got involved in choosing and
 consulting the design and production of a Greek type called "New Hellenic", cut
 by the Lanston Monotype Corporation. He chose the revival of a round, and
@@ -42,7 +44,6 @@ It was created by George Douros.
 
 %prep
 %setup -n %{oldname}-%{version} -q -c
-cp -p %{SOURCE1} .
 
 %build
 
@@ -53,13 +54,13 @@ install -m 0644 -p Aroania.ttf %{buildroot}%{_fontdir}
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
 
-install -m 0644 -p %{SOURCE2} \
+install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
-install -Dm 0644 -p %{SOURCE3} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/metainfo/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -97,17 +98,19 @@ fi
 
 %check
 appstream-util validate-relax --nonet \
-      %{buildroot}/%{_datadir}/appdata/%{fontname}.metainfo.xml
+      %{buildroot}/%{_datadir}/metainfo/%{fontname}.metainfo.xml
 
 
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/Aroania.ttf
-%{_datadir}/appdata/%{fontname}.metainfo.xml
-%doc Textfonts.pdf
+%{_datadir}/metainfo/%{fontname}.metainfo.xml
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 7.17-alt1_3
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 6.31-alt1_1
 - update to new release by fcimport
 
