@@ -1,7 +1,9 @@
 Group: Text tools
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           stardict-dic-hi
 Version:        3.0.1
-Release:        alt2_15
+Release:        alt2_17
 Summary:        Hindi dictionary for stardict
 
 License:        GPL+
@@ -11,7 +13,7 @@ URL:            http://stardict.sourceforge.net/
 # usage example: source generate-tarball.sh 3.0.1 shabdanjali-fedora.tgz shabdanjali-fedora
 Source0:        shabdanjali-fedora-3.0.1-nobinary.tar.gz
 Source1:        generate-tarball.sh
-Requires: stardict stardict-plugin-espeak stardict-plugin-spell
+Requires:       stardict stardict-plugin-espeak stardict-plugin-spell
 BuildArch:      noarch
 Source44: import.info
 
@@ -36,6 +38,9 @@ chmod 644 README
 %{_datadir}/stardict/dic/*
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt2_17
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt2_15
 - update to new release by fcimport
 
