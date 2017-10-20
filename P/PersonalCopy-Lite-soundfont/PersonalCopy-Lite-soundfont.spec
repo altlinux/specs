@@ -1,6 +1,8 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           PersonalCopy-Lite-soundfont
 Version:        4.1
-Release:        alt1_14
+Release:        alt1_16
 Summary:        Lite version of the PersonalCopy General Midi soundfont
 Group:          Sound
 License:        Redistributable, no modification permitted
@@ -40,6 +42,9 @@ install -p -m 644 %{SOURCE0} $RPM_BUILD_ROOT%{_datadir}/soundfonts
 
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_16
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_14
 - update to new release by fcimport
 
