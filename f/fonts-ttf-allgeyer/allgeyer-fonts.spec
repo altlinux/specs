@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname allgeyer-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname allgeyer
 
 %global common_desc \
@@ -14,7 +16,7 @@ embedded in PDF files.
 Name:		fonts-ttf-allgeyer
 Summary: 	Musical Notation True Type Fonts
 Version:	5.002
-Release:	alt3_14
+Release:	alt3_16
 License:	OFL
 # The source was originally downloaded from:
 # http://www.icogitate.com/~ergosum/fonts/musiqwik_musisync_y6.zip
@@ -28,7 +30,7 @@ Source3:       %{fontname}-musiqwik.metainfo.xml
 URL:		http://www.icogitate.com/~ergosum/fonts/musicfonts.htm
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
-Requires:	%{name}-common = %{version}
+Requires:	%{name}-common = %{version}-%{release}
 Source44: import.info
 
 %description
@@ -46,7 +48,7 @@ This package consists of files used by other Allgeyer font packages.
 %package -n fonts-ttf-allgeyer-musisync
 Group: System/Fonts/True type
 Summary:	A musical notation font family that provides general musical decorations
-Requires:	%{name}-common = %{version}
+Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-allgeyer-musisync
 %common_desc
@@ -60,7 +62,7 @@ This font family provides a collection of general musical decorations.
 %package -n fonts-ttf-allgeyer-musiqwik
 Group: System/Fonts/True type
 Summary:	A musical notation font family intended for writing lines of actual music
-Requires:	%{name}-common = %{version}
+Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-allgeyer-musiqwik
 %common_desc
@@ -138,6 +140,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 5.002-alt3_16
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 5.002-alt3_14
 - update to new release by fcimport
 
