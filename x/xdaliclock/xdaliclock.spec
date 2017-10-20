@@ -1,17 +1,19 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install perl(diagnostics.pm) perl(open.pm)
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary: A clock for the X Window System
 Name: xdaliclock
 Version: 2.43
-Release: alt1_2
+Release: alt1_5
 Group: Graphics
 License: BSD
 URL: http://www.jwz.org/xdaliclock/
 Source0: http://www.jwz.org/xdaliclock/xdaliclock-%{version}.tar.gz
 Source1: xdaliclock.desktop
 BuildRequires: desktop-file-utils
-BuildRequires: libICE-devel, libXmu-devel, libSM-devel xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
+BuildRequires: libICE-devel, libXmu-devel, libSM-devel xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-dri2proto-devel xorg-dri3proto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-presentproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86miscproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
 BuildRequires: libXext-devel, libXaw-devel, libXt-devel
 Source44: import.info
 
@@ -31,7 +33,7 @@ for window transparency.
 
 cd X11
 %configure
-make %{?_smp_mflags}
+%make_build
 
 %install
 cd X11
@@ -60,6 +62,9 @@ desktop-file-install  \
 %{_datadir}/applications/*
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 2.43-alt1_5
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.43-alt1_2
 - update to new release by fcimport
 
