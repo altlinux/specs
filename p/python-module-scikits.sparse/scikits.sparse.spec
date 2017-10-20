@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.4.2
-Release: alt1
+Release: alt2
 Summary: Scikits sparse matrix package
 License: GPL
 Group: Development/Python
@@ -104,6 +104,11 @@ This package contains pickles for %oname.
 %prep
 %setup
 
+# fix version info
+sed -i \
+	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: v%version\)\"/" \
+	%mname/_version.py
+
 %if_with python3
 cp -fR . ../python3
 find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
@@ -151,7 +156,7 @@ popd
 %files
 %doc README.md doc/_build/html
 %python_sitelibdir/%mname/*
-%python_sitelibdir/*.egg-info
+%python_sitelibdir/scikit_sparse-%version-py*.egg-info
 %exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/*/test*
 
@@ -165,7 +170,7 @@ popd
 %files -n python3-module-%oname
 %doc README.md doc/_build/html
 %python3_sitelibdir/%mname/*
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/scikit_sparse-%version-py*.egg-info
 %exclude %python3_sitelibdir/*/test*
 %exclude %python3_sitelibdir/*/*/test*
 
@@ -175,6 +180,9 @@ popd
 %endif
 
 %changelog
+* Fri Oct 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.2-alt2
+- Fixed version in egg-info.
+
 * Mon Aug 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.2-alt1
 - Updated to upstream version 0.4.2.
 - Updated build dependencies.
