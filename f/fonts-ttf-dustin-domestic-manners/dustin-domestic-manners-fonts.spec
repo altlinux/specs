@@ -2,12 +2,14 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname dustin-domestic-manners-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname dustin-domestic-manners
 %global fontconf 63-%{fontname}.conf
 
 Name:          fonts-ttf-dustin-domestic-manners
 Version:       20030527
-Release:       alt3_14
+Release:       alt3_16
 Summary:       Handwriting font by Dustin Norlander
 
 Group:         System/Fonts/True type
@@ -93,6 +95,9 @@ fi
 %doc license.txt
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20030527-alt3_16
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20030527-alt3_14
 - update to new release by fcimport
 
