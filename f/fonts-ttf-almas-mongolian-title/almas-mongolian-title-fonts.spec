@@ -1,12 +1,14 @@
 Group: System/Fonts/True type
 %define oldname almas-mongolian-title-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname almas-mongolian-title
 %global fontconf 61-%{fontname}.conf
 
 
 Name:           fonts-ttf-almas-mongolian-title
 Version:        1.0
-Release:        alt1_7
+Release:        alt1_9
 Summary:        Mongolian Title font
 
 License:        GPLv2
@@ -87,6 +89,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_9
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_7
 - update to new release by fcimport
 
