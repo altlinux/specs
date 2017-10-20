@@ -1,11 +1,13 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install libICE-devel libSM-devel libX11-devel libXext-devel libXt-devel
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ libICE-devel libSM-devel libX11-devel libXext-devel libXt-devel
 # END SourceDeps(oneline)
 Summary(ru_RU.KOI8-R): Tgif - пакет 2-мерной графики
-%define fedora 24
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		tgif
 Version:	4.2.5
-Release:	alt2_10
+Release:	alt2_13
 Summary:	2-D drawing tool
 Group:		Graphics
 
@@ -18,13 +20,13 @@ Patch10:	tgif-textcursor-a-urasim.patch
 Patch101:	tgif-QPL-4.1.45-size-debug.patch
 Patch102:	tgif-QPL-4.2.5-format-security.patch
 
-BuildRequires: xorg-cf-files gccmakedep imake
+BuildRequires:	xorg-cf-files gccmakedep imake
 BuildRequires:	desktop-file-utils
-BuildRequires: gettext gettext-tools gettext-tools-python
+BuildRequires:	gettext gettext-tools
 BuildRequires:	libXmu-devel
 BuildRequires:	libidn-devel
 BuildRequires:	zlib-devel
-Requires: ghostscript-utils ghostscript
+Requires:	ghostscript-utils ghostscript
 Requires:	netpbm
 Requires:	fonts-bitmap-75dpi
 Requires:	fonts-bitmap-75dpi
@@ -36,7 +38,6 @@ X11.  Supports hierarchical construction of  drawings  and
 easy  navigation  between  sets  of drawings.  It's also a
 hyper-graphics (or hyper-structured-graphics)  browser  on
 the World-Wide-Web.
-
 
 %description -l ru_RU.KOI8-R
 Tgif является пакетом для двумерной графики. Он поддерживает создание иерархических
@@ -51,35 +52,35 @@ Tgif является пакетом для двумерной графики. Он поддерживает создание иерархичес
 #%%patch101 -p1 -b .size
 %patch102 -p1 -b .format
 
-%{__perl} -pi \
+/usr/bin/perl -pi \
 	-e 's,JISX-0208-1983-0,EUC-JP,g' \
 	po/ja/ja.po
 
 # use scalable bitmap font
-%{__sed} \
+sed \
 	-e s,alias\-mincho,misc\-mincho,g \
 	-e s,alias\-gothic,jis\-fixed,g \
 	-i po/ja/Tgif.ad
 
 # Fix desktop file
-%{__sed} -i.icon -e 's|Icon=tgif|Icon=tgificon|' \
+sed -i.icon -e 's|Icon=tgif|Icon=tgificon|' \
 	po/ja/tgif.desktop
 
 # Fix installation path for icon files
-%{__sed} -i.path \
+sed -i.path \
 	-e '/InstallNonExec.*hicolor/s|\$(TGIFDIR)|\$(DATADIR)/icons/|' \
 	-e '/MakeDirectories.*hicolor/s|\$(TGIFDIR)|\$(DATADIR)/icons/|' \
 	Imakefile
 
 %build
-%{__cp} -pf Tgif.tmpl-linux Tgif.tmpl
-%{__sed} -i.mode -e 's|0664|0644|' Tgif.tmpl
+cp -pf Tgif.tmpl-linux Tgif.tmpl
+sed -i.mode -e 's|0664|0644|' Tgif.tmpl
 
 xmkmf
-%{__sed} -i.mode -e 's|0444|0644|' Makefile
+sed -i.mode -e 's|0444|0644|' Makefile
 DEFOPTS='-DOVERTHESPOT -DUSE_XT_INITIALIZE -D_ENABLE_NLS -DPRINT_CMD=\"lpr\" -DA4PAPER'
-%{__make} %{?_smp_mflags} \
-	CC="%{__cc} %{optflags}" \
+make %{?_smp_mflags} \
+	CC="gcc %{optflags}" \
 	MOREDEFINES="$DEFOPTS" \
 	TGIFDIR=%{_datadir}/tgif/ \
 	LOCAL_LIBRARIES="-lXmu -lXt -lX11" \
@@ -87,8 +88,8 @@ DEFOPTS='-DOVERTHESPOT -DUSE_XT_INITIALIZE -D_ENABLE_NLS -DPRINT_CMD=\"lpr\" -DA
 
 pushd po
 xmkmf 
-%{__sed} -i.mode -e 's|0444|0644|' Makefile
-%{__make} \
+sed -i.mode -e 's|0444|0644|' Makefile
+make \
 	Makefile \
 	Makefiles \
 	depend \
@@ -96,9 +97,9 @@ xmkmf
 popd
 
 %install
-%{__rm} -rf $RPM_BUILD_ROOT/
+rm -rf $RPM_BUILD_ROOT/
 
-%{__make} \
+make \
 	DESTDIR=$RPM_BUILD_ROOT/ \
 	BINDIR=/usr/libexec/ \
 	TGIFDIR=%{_datadir}/tgif/ \
@@ -108,30 +109,30 @@ popd
 	install.man
 
 # wrap tgif
-%{__mkdir_p} $RPM_BUILD_ROOT%{_bindir}/
-%{__install} -cpm 0755 po/ja/tgif-wrapper.sh \
+mkdir -p $RPM_BUILD_ROOT%{_bindir}/
+install -cpm 0755 po/ja/tgif-wrapper.sh \
 	$RPM_BUILD_ROOT%{_bindir}/%{name}
 
-%{__rm} -f $RPM_BUILD_ROOT%{_datadir}/tgif/*.obj
-%{__install} -cpm 0644 *.obj \
+rm -f $RPM_BUILD_ROOT%{_datadir}/tgif/*.obj
+install -cpm 0644 *.obj \
 	$RPM_BUILD_ROOT%{_datadir}/tgif/
 
 
 # Japanese specific
-%{__mkdir_p} $RPM_BUILD_ROOT%{_datadir}/X11/ja/app-defaults/
-%{__install} -cpm 0644 \
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/X11/ja/app-defaults/
+install -cpm 0644 \
 	po/ja/Tgif.ad \
 	$RPM_BUILD_ROOT%{_datadir}/X11/ja/app-defaults/Tgif
 
 pushd po
-%{__make} \
+make \
 	DESTDIR=$RPM_BUILD_ROOT/ \
 	INSTALLFLAGS="-cp" \
 	install
 popd
 
 # desktop file & icon
-%{__mkdir_p} $RPM_BUILD_ROOT%{_datadir}/applications/
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications/
 desktop-file-install \
 	--remove-category 'Application' \
 	--remove-category 'X-Fedora' \
@@ -169,6 +170,9 @@ desktop-file-install \
 %{_datadir}/applications/*%{name}.desktop
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt2_13
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt2_10
 - update to new release by fcimport
 
