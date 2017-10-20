@@ -1,9 +1,11 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary: Utilities for creating compressed CD-ROM filesystems
 Name: zisofs-tools
 Version: 1.0.8
-Release: alt2_15
+Release: alt2_18
 License: GPL+
-Group: File tools
+Group: System/Base
 URL: http://www.kernel.org/pub/linux/utils/fs/zisofs/
 #Source: http://www.kernel.org/pub/linux/utils/fs/zisofs/zisofs-tools-%{version}.tar.bz2
 Source: http://mirror.linux.org.au/linux/utils/fs/zisofs/zisofs-tools-%{version}.tar.bz2
@@ -23,7 +25,7 @@ filesystems.
 
 %build
 %configure
-make  %{?_smp_mflags}
+%make_build
 
 %install
 make install INSTALLROOT="$RPM_BUILD_ROOT"
@@ -34,6 +36,9 @@ make install INSTALLROOT="$RPM_BUILD_ROOT"
 %{_mandir}/man1/mkzftree.1*
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_18
+- update to new release by fcimport
+
 * Wed Sep 28 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_15
 - to Sisyphus
 
