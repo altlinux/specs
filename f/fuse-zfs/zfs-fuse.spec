@@ -1,32 +1,39 @@
+Group: System/Base
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(IO/Handle.pm)
+BuildRequires: gcc-c++ perl(IO/Handle.pm)
 # END SourceDeps(oneline)
 %define oldname zfs-fuse
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define _hardened_build 1
 Name:             fuse-zfs
-Version:          0.7.0
-Release:          alt1_23
+Version:          0.7.2.2
+Release:          alt1_6
 Summary:          ZFS ported to Linux FUSE
-Group:            System/Base
 License:          CDDL
-URL:              http://zfs-fuse.net/
-Source00:         http://zfs-fuse.net/releases/0.7.0/%{oldname}-%{version}.tar.bz2
+URL:              https://github.com/gordan-bobic/zfs-fuse
+Source00:         http://github.com/gordan-bobic/zfs-fuse/archive/%{oldname}-%{version}.tar.gz
 Source01:         zfs-fuse.service
 Source02:         zfs-fuse.scrub
 Source03:         zfs-fuse.sysconfig
 Source04:         zfs-fuse-helper
-Patch0:           zfs-fuse-0.7.0-umem.patch
-Patch1:           zfs-fuse-0.7.0-stack.patch
-Patch2:           zfs-fuse-printf-format.patch
-Patch3:           zfs-fuse-0.7.0-ppc64le.patch
-BuildRequires:    libfuse-devel libaio-devel scons zlib-devel libssl-devel libattr-devel 
+Patch0:           zfs-fuse-0.7.2.2-stack.patch
+BuildRequires:    libfuse-devel libaio-devel rpm-build-perl scons
+BuildRequires:    zlib-devel libssl-devel libattr-devel liblzo2-devel bzlib-devel liblzma-devel
 %ifnarch aarch64 ppc64le
 BuildRequires:    /usr/bin/execstack
 %endif
-BuildRequires: journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-utils
+BuildRequires:    journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-utils
 Requires:         fuse >= 2.7.4
 # (2010 karsten@redhat.com) zfs-fuse doesn't have s390(x) implementations for atomic instructions
-ExcludeArch:      s390 s390x %{arm} aarch64
+ExcludeArch:      s390 s390x aarch64
+# For compatibility for packages expecting slightly other locations
+Provides:         /sbin/zfs
+Provides:         /sbin/zpool
+Provides:         /sbin/zdb
+Provides:         /sbin/ztest
+Provides:         /sbin/zstreamdump
+Provides:         /sbin/mount.zfs
 Source44: import.info
 Source45: zfs-fuse.init
 
@@ -41,9 +48,6 @@ operating system.
 %setup -n %{oldname}-%{version} -q
 
 %patch0 -p0
-%patch1 -p1
-%patch2 -p0
-%patch3 -p1 -b .ppc64le
 
 f=LICENSE
 mv $f $f.iso88591
@@ -60,20 +64,20 @@ chmod -x contrib/zfsstress.py
 export CCFLAGS="%{optflags}"
 pushd src
 
-scons debug=1 optim='%{optflags}'
+scons debug=2 optim='%{optflags}'
 
 %install
 pushd src
-scons debug=1 install install_dir=%{buildroot}%{_bindir} man_dir=%{buildroot}%{_mandir}/man8/ cfg_dir=%{buildroot}/%{_sysconfdir}/%{oldname}
+scons debug=1 install install_dir=%{buildroot}%{_sbindir} man_dir=%{buildroot}%{_mandir}/man8/ cfg_dir=%{buildroot}/%{_sysconfdir}/%{oldname}
 install -Dp -m 0644 %{SOURCE1} %{buildroot}%{_unitdir}/%{oldname}.service
 install -Dp -m 0755 %{SOURCE2} %{buildroot}%{_sysconfdir}/cron.weekly/98-%{oldname}-scrub
 install -Dp -m 0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/sysconfig/%{oldname}
-install -Dp -m 0755 %{SOURCE4} %{buildroot}%{_bindir}/zfs-fuse-helper
+install -Dp -m 0755 %{SOURCE4} %{buildroot}%{_sbindir}/zfs-fuse-helper
 
 %ifnarch aarch64 ppc64le
 #set stack not executable, BZ 911150
 for i in zdb zfs zfs-fuse zpool ztest; do
-       /usr/bin/execstack -c %{buildroot}%{_bindir}/$i
+       /usr/bin/execstack -c %{buildroot}%{_sbindir}/$i
 done
 %endif
 
@@ -107,13 +111,14 @@ rm -rf /var/lock/zfs
 %files
 %doc BUGS CHANGES contrib HACKING LICENSE README 
 %doc README.NFS STATUS TESTING TODO
-%{_bindir}/zdb
-%{_bindir}/zfs
-%{_bindir}/zfs-fuse
-%{_bindir}/zfs-fuse-helper
-%{_bindir}/zpool
-%{_bindir}/zstreamdump
-%{_bindir}/ztest
+%{_sbindir}/zdb
+%{_sbindir}/zfs
+%{_sbindir}/zfs-fuse
+%{_sbindir}/zfs-fuse-helper
+%{_sbindir}/zpool
+%{_sbindir}/zstreamdump
+%{_sbindir}/ztest
+%{_sbindir}/mount.zfs
 %{_unitdir}/%{oldname}.service
 %{_sysconfdir}/cron.weekly/98-%{oldname}-scrub
 %config(noreplace) %{_sysconfdir}/sysconfig/%{oldname}
@@ -126,6 +131,9 @@ rm -rf /var/lock/zfs
 %config(noreplace) %_initdir/zfs-fuse
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.2.2-alt1_6
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_23
 - update to new release by fcimport
 
