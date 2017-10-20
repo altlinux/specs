@@ -3,12 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname ekmukta-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname ekmukta
 %global fontconf 67-%{fontname}.conf
 
 Name:           fonts-ttf-ekmukta
 Version:        1.2.2
-Release:        alt1_4
+Release:        alt1_6
 Summary:        A Unicode compliant mono-linear typeface
 
 License:        OFL
@@ -90,6 +92,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_6
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_4
 - update to new release by fcimport
 
