@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname darkgarden-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Due to changes in the Fedora legal environment, rpm spec files are now specifically listed as a "contribution" 
 # in/to Fedora (refer to FPCA FAQ here: https://fedoraproject.org/wiki/Legal:Fedora_Project_Contributor_Agreement ).
 # Quote: 
@@ -18,7 +20,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-darkgarden
 Version:	1.1
-Release:        alt3_20
+Release:        alt3_22
 Summary:	Dark Garden is a decorative outline font of unusual shape
 
 License:        GPLv2
@@ -111,6 +113,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_22
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_20
 - update to new release by fcimport
 
