@@ -1,7 +1,9 @@
 Group: Development/Tools
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:       ttembed
 Version:    1.1
-Release:    alt1_5
+Release:    alt1_8
 Summary:    Remove embedding limitations from TrueType fonts
 License:    Public Domain
 URL:        https://github.com/hisdeedsaredust/ttembed
@@ -17,7 +19,7 @@ in the OS/2 table to zero. That's it; this program is a one-trick pony.
 
 %build
 export CFLAGS="$CFLAGS %{optflags}"
-make %{?_smp_mflags}
+%make_build
 
 %install
 install -d %{buildroot}%{_bindir}
@@ -40,6 +42,9 @@ fi
 rm test
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_8
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_5
 - update to new release by fcimport
 
