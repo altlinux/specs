@@ -1,12 +1,15 @@
-%set_perl_req_method relaxed
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools gcc-c++ perl(Class/Accessor.pm) perl(Encode.pm) perl(ExtUtils/CppGuess.pm) perl(IO/All.pm) perl(Math/Trig.pm) perl(OpenGL.pm) perl(PDF/API2.pm) perl(WebService/Prowl.pm) perl(XML/SAX/Base.pm) perl-Module-Build perl-podlators
+BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools gcc-c++ perl(Class/Accessor.pm) perl(Encode.pm) perl(ExtUtils/CppGuess.pm) perl(IO/All.pm) perl(Math/Trig.pm) perl(OpenGL.pm) perl(PDF/API2.pm) perl(WebService/Prowl.pm) perl(XML/SAX/Base.pm) perl-podlators
 # END SourceDeps(oneline)
-%define fedora 25
+%set_perl_req_method relaxed
+
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           slic3r
 Version:        1.2.9
-Release:        alt1_8.1
+Release:        alt1_15
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
@@ -34,6 +37,9 @@ Patch6:         %{name}-boolcast.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1285807
 # https://github.com/alexrj/Slic3r/commit/1a09ae81db06602050ae83620268efa33ed14da1
 Patch7:         %{name}-wxclose.patch
+
+# https://github.com/alexrj/Slic3r/pull/3575
+Patch8:         %{name}-opengl070.patch
 
 Source1:        %{name}.desktop
 Source2:        %{name}.appdata.xml
@@ -71,7 +77,7 @@ BuildRequires:  perl(XML/SAX.pm)
 BuildRequires:  perl(XML/SAX/ExpatXS.pm)
 
 BuildRequires:  libadmesh-devel >= 0.98.1
-BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
+BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  libpoly2tri-devel
 #BuildRequires:  polyclipping-devel >= 6.2.0
@@ -79,7 +85,9 @@ BuildRequires:  ImageMagick
 
 Requires:       perl(XML/SAX.pm)
 Requires:       libadmesh >= 0.98.1
+Provides:       bundled(polyclipping) = 6.2.9
 Source44: import.info
+
 
 %description
 Slic3r is a G-code generator for 3D printers. It's compatible with RepRaps,
@@ -98,6 +106,7 @@ for more information.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 # Remove bundled admesh, clipper, poly2tri and boost
 rm -rf xs/src/admesh
@@ -172,12 +181,14 @@ SLIC3R_NO_AUTO=1 perl Build.PL installdirs=vendor
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/applications/%{name}.desktop
 %if 0%{?fedora} < 21
-%dir %{_datadir}/appdata
 %endif
 %{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/%{name}
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.9-alt1_15
+- update to new release by fcimport
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.9-alt1_8.1
 - rebuild with new perl 5.24.1
 
