@@ -1,11 +1,14 @@
 Group: Development/Tools
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%define fedora 24
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: xsd
 Version: 4.0.0
-Release: alt1_15
+Release: alt1_20
 Summary: W3C XML schema to C++ data binding compiler
 # Exceptions permit otherwise GPLv2 incompatible combination with ASL 2.0
 License: GPLv2 with exceptions and ASL 2.0  
@@ -128,6 +131,9 @@ make -j 1 test EXTERNAL_LIBCUTL=y BOOST_LINK_SYSTEM=y
 %doc apidocdir/*
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt1_20
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt1_15
 - update to new release by fcimport
 
