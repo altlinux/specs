@@ -1,9 +1,11 @@
 BuildRequires: xml-utils
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global date    20020801
 
 Name:           xhtml1-dtds
 Version:        1.0
-Release:        alt1_%{date}.13.1
+Release:        alt1_%{date}.13.3
 Summary:        XHTML 1.0 document type definitions
 
 Group:          Text tools
@@ -19,10 +21,10 @@ Patch0:         %{name}-sgml-catalog.patch
 Patch1:         %{name}-sgml-dcl.patch
 
 BuildArch:      noarch
-BuildRequires: libxml2 xml-utils
-Requires: libxml2 xml-utils
+BuildRequires:  libxml2 xml-utils
+Requires:       libxml2 xml-utils
 Requires:       xml-common
-Requires: xml-common sgml-common
+Requires:       xml-common sgml-common
 Requires(post): /usr/bin/xmlcatalog
 Requires(preun): /usr/bin/xmlcatalog
 Source44: import.info
@@ -121,6 +123,9 @@ cd - >/dev/null
 
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_20020801.13.3
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_20020801.13.1
 - update to new release by fcimport
 
