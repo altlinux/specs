@@ -1,29 +1,33 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-validate gcc-c++ pkgconfig(gtk+-3.0) pkgconfig(gtkspell3-3.0) pkgconfig(webkitgtk-3.0) pkgconfig(zlib)
+BuildRequires: /usr/bin/desktop-file-validate gcc-c++ pkgconfig(gcr-3) pkgconfig(gtk+-3.0) pkgconfig(gtkspell3-3.0) pkgconfig(libsecret-1) pkgconfig(webkitgtk-3.0) pkgconfig(zlib)
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary:	A Usenet newsreader for GNOME/GTK+
 Name:		pan
-Version:	0.140
-Release:	alt2_1
+Version:	0.142
+Release:	alt1_3
 Epoch:		1
 License:	GPLv2
 Group:		Networking/WWW
 Source0:	http://pan.rebelbase.com/download/releases/%{version}/source/%{name}-%{version}.tar.bz2
 URL:		http://pan.rebelbase.com/
 BuildRequires:	desktop-file-utils
-BuildRequires: gettext-tools libasprintf-devel
-BuildRequires:	intltool >= 0.40.6
-BuildRequires: glib2-devel libgio libgio-devel
-BuildRequires: libgmime-devel libgmime-gir-devel
-BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:	gettext-tools libasprintf-devel
+BuildRequires:	intltool
+BuildRequires:	glib2-devel libgio libgio-devel
+BuildRequires:	libgmime-devel libgmime-gir-devel
+BuildRequires:	gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
 BuildRequires:	libgtkspell-devel >= 2.0.7
 BuildRequires:	libenchant-devel >= 1.6.0
 BuildRequires:	libappstream-glib
-BuildRequires: libnotify-devel libnotify-gir-devel
-BuildRequires: libgnome-keyring-devel libgnome-keyring-gir-devel
+BuildRequires:	libnotify-devel libnotify-gir-devel
+BuildRequires:	libgnome-keyring-devel libgnome-keyring-gir-devel
+BuildRequires:	itstool
+BuildRequires:	yelp-tools
 # In the past, we could not link GPLv2-only Pan with GnuTLS due to libgnutls being effectively LGPLv3+
 # However, the GnuTLS libs are now clearly LGPLv2+, which is compatible.
-BuildRequires: libgnutls-devel libgnutlsxx-devel
+BuildRequires:	libgnutls-devel libgnutlsxx-devel
 Source44: import.info
 
 %description
@@ -44,14 +48,14 @@ sed -i -e 's|StartupNotify=false|StartupNotify=true|' %{name}.desktop.in
 %configure --without-gtk3 --with-gnutls \
     --with-dbus --with-gmime-crypto \
     --with-gtkspell --enable-libnotify \
-    --enable-gkr
+    --enable-gkr --enable-manual
 
-make %{?_smp_mflags}
+%make_build
 
 %install
 make DESTDIR=%{buildroot} install
 
-%find_lang %{name}
+%find_lang %{name} --with-gnome
 
 %check
 appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/%{name}.appdata.xml
@@ -59,13 +63,17 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/%{name}.a
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %files -f %{name}.lang
-%doc AUTHORS COPYING NEWS README
+%doc AUTHORS NEWS README
+%doc COPYING
 %{_bindir}/%{name}
 %{_datadir}/pixmaps/*
 %{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.142-alt1_3
+- update to new release by fcimport
+
 * Mon Oct 10 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.140-alt2_1
 - to Sisyphus for TDE
 
