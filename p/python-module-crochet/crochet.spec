@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 Summary: Use Twisted anywhere!
 License: MIT
@@ -17,7 +17,7 @@ Patch1: %oname-%version-alt-docs.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: git-core python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
 BuildRequires: python-module-setuptools-tests python-module-twisted-core-test python-module-twisted-logger python-module-wrapt
 BuildRequires: python-module-service-identity
 %if_with python3
@@ -126,12 +126,10 @@ This package contains pickles for %oname.
 %setup
 %patch1 -p1
 
-git config --global user.email "real at altlinux.org"
-git config --global user.name "REAL"
-git init-db
-git add . -A
-git commit -a -m "%version"
-git tag -m "%version" %version
+# fix version info
+sed -i \
+	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: %version\)\"/" \
+	%oname/_version.py
 
 %if_with python3
 cp -fR . ../python3
@@ -172,7 +170,8 @@ popd
 
 %files
 %doc *.rst examples docs/_build/html
-%python_sitelibdir/*
+%python_sitelibdir/%oname
+%python_sitelibdir/%oname-%version-py*.egg-info
 %exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/*/tests
 
@@ -185,7 +184,8 @@ popd
 %if_with python3
 %files -n python3-module-%oname
 %doc *.rst examples docs/_build/html
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py*.egg-info
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
@@ -193,6 +193,11 @@ popd
 %endif
 
 %changelog
+* Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.0-alt1
+- Updated to upstream version.
+- Fixed version in egg-info.
+- Explicitely stated egg-info including valid version.
+
 * Tue Aug 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.0-alt1
 - Updated to upstream version 1.8.0.
 
