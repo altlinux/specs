@@ -5,7 +5,7 @@
 %def_enable introspection
 
 Name: libatk
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Accessibility features for Gtk+
@@ -151,6 +151,9 @@ install -p -m644 %_sourcedir/atk-compat.lds atk/compat.lds
 %endif
 
 %changelog
+* Fri Oct 20 2017 Yuri N. Sedunov <aris@altlinux.org> 2.26.1-alt1
+- 2.26.1
+
 * Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 2.26.0-alt1
 - 2.26.0
 
