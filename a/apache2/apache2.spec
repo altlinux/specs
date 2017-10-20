@@ -12,7 +12,7 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.27
+Version: 2.4.28
 Release: alt1%ubt
 Epoch: 1
 
@@ -25,6 +25,7 @@ Summary(ru_RU.UTF-8): Самый популярный веб-сервер Intern
 Summary(uk_UA.UTF-8): Найбільш популярний веб-сервер Internet
 
 Source0: httpd-%version.tar
+Source1: apache2.watch
 
 Source11: apache2-alt-configs-3.0.tar
 Source12: README.ALT.ru_RU.KOI8-R
@@ -66,7 +67,7 @@ Source70: apache2-cert-sh-functions.sh
 Source71: apache2-cert-sh.sh
 
 # ALT patches:
-Patch1: apache2-2.4.25-alt-all-0.3.patch
+Patch1: apache2-2.4.28-alt-all-0.3.patch
 Patch2: apache2-2.4.25-alt-apachectl.patch
 Patch3: apache2-2.4.27-alt-httpd.conf.patch
 
@@ -223,7 +224,7 @@ Summary(ru_RU.UTF-8): Модули для инсталляции %name
 Group: System/Servers
 Conflicts: apache2 < 2.2.4-alt17
 Conflicts: apache2-base <= 2.2.22-alt15
-PreReq: %name-base >= %EVR
+PreReq: %name-base = %EVR
 Requires: %name-mmn = %mmn
 Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
 Requires: %apache2_libapr_name >= %apache2_libapr_evr
@@ -243,7 +244,7 @@ Group: System/Servers
 BuildArch: noarch
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
-Requires: %name-base > 2.2.22-alt15
+Requires: %name-base = %EVR
 
 %description configs-A1PROXIED
 This is a hack to run proxified Apache2 in case Apache1 is running.
@@ -255,7 +256,7 @@ This is a hack to run proxified Apache2 in case Apache1 is running.
 Summary: High speed threaded model for Apache HTTPD 2.1
 Summary(ru_RU.UTF-8): Высокоскоростная нитевая модель для Apache HTTPD 2.1
 Group: System/Servers
-PreReq: %name-base >= %EVR
+PreReq: %name-base = %EVR
 PreReq: alternatives >= 0.4
 Provides: %name-mmn = %mmn
 Provides: %_sbindir/%apache2_dname
@@ -1512,6 +1513,14 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Tue Oct 10 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.28-alt1%ubt
+- new version 2.4.28
+- disabled NameVirtualHost directive in ports_all.conf (closes: #32269)
+- increased timeout for restarting httpd on SysVinit sytems (closes: #31062)
+- increased LOOPSSTART and TimeoutStartSec (closes: #33978)
+- fixes:
+	* CVE-2017-9798 Corrupted or freed memory access
+
 * Fri Jul 14 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.27-alt1%ubt
 - 2.4.27
 - removed use of rpm-eval.sh from spec
