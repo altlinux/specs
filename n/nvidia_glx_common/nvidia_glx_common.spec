@@ -13,8 +13,8 @@
 %define nv_version 384
 %define nv_release 90
 %define nv_minor %nil
-%define pkg_rel alt179%ubt
-%define set_gl_nvidia_ver 0.19.2
+%define pkg_rel alt180%ubt
+%define set_gl_nvidia_ver 0.20.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -193,6 +193,7 @@ install -m 0755 %SOURCE3 %buildroot/%_bindir/
 %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libGLESv2_nvidia.so.2
 %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libGLESv1_CM_nvidia.so.1
 %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libGLX_nvidia.so.0
+%__ln_s ../../..%x11driver_dir %buildroot/%nv_etclib_sym_dir/current
 
 %__ln_s ../../..%nv_etclib_sym_dir/libvdpau_nvidia.so %buildroot/%x11_lib_dir/vdpau/libvdpau_nvidia.so
 %__ln_s libvdpau_nvidia.so %buildroot/%x11_lib_dir/vdpau/libvdpau_nvidia.so.1
@@ -253,6 +254,7 @@ fi
 %nv_etclib_sym_dir/libGLESv2_nvidia.so.?
 %nv_etclib_sym_dir/libGLESv1_CM_nvidia.so.?
 %nv_etclib_sym_dir/libGLX_nvidia.so.?
+%nv_etclib_sym_dir/current
 #%nv_etclib_sym_dir/nvidia.xinf
 %if "%_lib" == "lib64"
 %dir %nv_lib32_sym_dir/
@@ -271,6 +273,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Fri Oct 20 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt180%ubt
+- create /etc/X11/lib{64,}_nvidia/current symlink to all nvidia libsraries directory
+
 * Tue Sep 26 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt179%ubt
 - new version
 
