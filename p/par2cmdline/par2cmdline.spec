@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary:        PAR 2.0 compatible file verification and repair tool
 Name:           par2cmdline
 Version:        0.6.14
-Release:        alt2_2
+Release:        alt2_6
 License:        GPLv2+
 Group:          Archiving/Other
 URL:            http://parchive.sourceforge.net/
@@ -23,7 +25,7 @@ Patch1:         par2cmdline-use-urandom-in-tests.patch
 Obsoletes:      parchive <= 1.1.4
 Provides:       parchive = 1.1.4.0.par2.%{version}
 
-BuildRequires:  autoconf automake libtool
+BuildRequires:  autoconf-common automake libtool-common
 Source44: import.info
 Conflicts: par2 < 0.5
 Obsoletes: par2 < 0.5
@@ -51,7 +53,7 @@ sed -i 's/\r//' AUTHORS PORTING README ROADMAP
 
 %build
 %configure
-make %{_smp_mflags}
+%make_build
 chmod 644 ChangeLog galois.h par1repairer.cpp par2repairer.cpp par2repairersourcefile.cpp par2repairersourcefile.h
 
 
@@ -73,6 +75,9 @@ make check-TESTS
 
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.14-alt2_6
+- update to new release by fcimport
+
 * Wed Sep 28 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.14-alt2_2
 - to Sisyphus
 
