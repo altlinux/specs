@@ -1,5 +1,7 @@
 Group: System/Fonts/True type
 %define oldname apanov-edrip-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname apanov-edrip
 %global fontconf 61-%{fontname}.conf
 
@@ -9,7 +11,7 @@ Group: System/Fonts/True type
 
 Name:    fonts-ttf-apanov-edrip
 Version: 20100430
-Release: alt2_10
+Release: alt2_11
 Summary: A decorative contrast sans-serif font
 
 License:   OFL
@@ -21,7 +23,7 @@ Source1:   %{oldname}-fontconfig.conf
 Source2:   %{fontname}.metainfo.xml
 
 BuildArch:     noarch
-BuildRequires: fontforge xgridfit >= 2.2-4.a.20100725cvs.fc14
+BuildRequires: fontforge libfontforge, xgridfit >= 2.2
 BuildRequires: fontpackages-devel
 Source44: import.info
 
@@ -35,7 +37,7 @@ Latin alphabets.
 %setup -n %{oldname}-%{version} -q -c
 
 %build
-make %{?_smp_mflags}
+%make_build
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
@@ -95,6 +97,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20100430-alt2_11
+- update to new release by fcimport
+
 * Sun Oct 18 2015 Igor Vlasenko <viy@altlinux.ru> 20100430-alt2_10
 - new version
 
