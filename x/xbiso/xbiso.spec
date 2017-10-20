@@ -1,6 +1,8 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		xbiso
 Version:	0.6.1
-Release:	alt2_15
+Release:	alt2_18
 Summary:	ISO extraction utility for xdvdfs images
 Group:		Archiving/Other
 License:	GPLv2+
@@ -21,7 +23,7 @@ xbiso is an ISO extraction utility for xdvdfs images.
 
 %build
 %configure
-make %{?_smp_mflags}
+%make_build
 
 %install
 mkdir $RPM_BUILD_ROOT
@@ -33,6 +35,9 @@ make DESTDIR=$RPM_BUILD_ROOT install
 %{_bindir}/xbiso
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.1-alt2_18
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.1-alt2_15
 - update to new release by fcimport
 
