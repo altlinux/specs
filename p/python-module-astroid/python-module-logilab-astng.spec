@@ -4,7 +4,7 @@
 %define oname astroid
 Name: python-module-%oname
 Version: 1.5.3
-Release: alt2
+Release: alt3
 
 Summary: Python Abstract Syntax Tree New Generation
 License: LGPLv2.1+
@@ -50,7 +50,7 @@ BuildRequires: python3-module-lazy_object_proxy python3-module-singledispatch
 BuildRequires: python3-module-wrapt
 %endif
 
-%py_requires logilab.common six
+%py_requires logilab.common six backports.functools_lru_cache enum34 singledispatch
 
 %description
 The aim of this module is to provide a common base representation of
@@ -177,6 +177,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir python3 -m unittest discover -p "unitte
 %endif
 
 %changelog
+* Fri Oct 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.3-alt3
+- Updated runtime dependencies.
+
 * Thu Aug 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.3-alt2
 - Fixed build.
 
