@@ -1,6 +1,6 @@
 Name: retroshare
-Version: 0.6.2
-Release: alt2
+Version: 0.6.3
+Release: alt1
 
 Summary: Secure communication with friends
 
@@ -76,24 +76,21 @@ qmake-qt5 "CONFIG-=debug" "CONFIG+=release" PREFIX=%prefix LIB_DIR=%_libdir Retr
 
 %install
 make INSTALL_ROOT=%buildroot install
-#menu
-desktop-file-validate %buildroot%_desktopdir/retroshare06.desktop
-ln -s RetroShare06 %buildroot%_bindir/%name
-ln -s RetroShare06-nogui %buildroot%_bindir/%name-cli
+ln -s %name-nogui %buildroot%_bindir/%name-cli
+desktop-file-validate %buildroot%_desktopdir/retroshare.desktop
 
 %files
 %_bindir/%name
-%_bindir/RetroShare06
-%_pixmapsdir/retroshare06.xpm
+%_pixmapsdir/retroshare.xpm
 %_iconsdir/hicolor/*/apps/*.png
-%_desktopdir/retroshare06.desktop
+%_desktopdir/retroshare.desktop
 
 %files common
-%_datadir/RetroShare06/
+%_datadir/%name/
 
 %files nogui
 %_bindir/%name-cli
-%_bindir/RetroShare06-nogui
+%_bindir/%name-nogui
 
 %files voip-plugin
 %_libdir/retroshare/extensions6/libVOIP.so*
@@ -102,6 +99,9 @@ ln -s RetroShare06-nogui %buildroot%_bindir/%name-cli
 %_libdir/retroshare/extensions6/libFeedReader.so*
 
 %changelog
+* Sat Oct 21 2017 Vitaly Lipatov <lav@altlinux.ru> 0.6.3-alt1
+- new version 0.6.3 (with rpmrb script)
+
 * Thu Jun 08 2017 Vitaly Lipatov <lav@altlinux.ru> 0.6.2-alt2
 - rebuild with ffmpeg
 
