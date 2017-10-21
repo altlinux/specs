@@ -1,10 +1,9 @@
-%define ver_major 1.8
+%define ver_major 1.10
 %define gst_api_ver 1.0
 %define _name gstreamermm
 
-%def_disable plugins_bad
 %def_disable examples
-%def_disable tests
+%def_disable check
 
 Name: lib%_name%gst_api_ver
 Version: %ver_major.0
@@ -22,8 +21,8 @@ Source: http://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version
 
 BuildRequires: mm-common doxygen gcc-c++ libglibmm-devel >= %glib_ver
 BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_ver
-%{?_enable_plugins_bad:BuildRequires: gst-plugins-bad%gst_api_ver-devel}
 %{?_enable_examples:BuildRequires: libgtkmm3-devel}
+%{?_enable_check:BuildRequires: libgtest-devel}
 
 %description
 GStreamermm provides C++ bindings for the GStreamer (1.0 API) streaming multimedia
@@ -52,26 +51,24 @@ This package contains all API documentation for the GStreamermm library.
 %setup -n %_name-%version
 
 %build
-%configure %{subst_enable examples} \
-		%{subst_enable tests} \
-		%{?_disable_plugins_bad:--disable-plugins-bad}
+%configure
 %make_build
 
 %install
 %makeinstall_std
 
+%check
+%make check
+
 %files
 %_libdir/lib%_name-%gst_api_ver.so.*
-%{?_enable_plugins_bad:%_libdir/lib%_name-plugins-bad-%gst_api_ver.so.*}
 %doc AUTHORS ChangeLog NEWS README
 
 %files devel
 %_includedir/gstreamermm-%gst_api_ver/
 %_libdir/%_name-%gst_api_ver/
 %_libdir/lib%_name-%gst_api_ver.so
-%{?_enable_plugins_bad:%_libdir/lib%_name-plugins-bad-%gst_api_ver.so}
 %_pkgconfigdir/%_name-%gst_api_ver.pc
-%{?_enable_plugins_bad:%_pkgconfigdir/%_name-plugins-bad-%gst_api_ver.pc}
 
 %files doc
 %_datadir/devhelp/books/%_name-%gst_api_ver/
@@ -79,6 +76,9 @@ This package contains all API documentation for the GStreamermm library.
 
 
 %changelog
+* Sat Oct 21 2017 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Mon Oct 10 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - first build for Sisyphus
 
