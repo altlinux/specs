@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          jasypt
 Version:       1.9.2
-Release:       alt1_3jpp8
+Release:       alt1_6jpp8
 Summary:       Java Simplified Encryption
 License:       ASL 2.0
 Url:           http://www.jasypt.org/
@@ -71,20 +72,19 @@ This package contains javadoc for %{name}.
   <encoding>UTF-8</encoding>
 </configuration>"
 
-%pom_remove_dep bouncycastle:bcprov-jdk12
-%pom_add_dep org.bouncycastle:bcprov-jdk16:1.46:test
+%pom_change_dep bouncycastle:bcprov-jdk12 org.bouncycastle:bcprov-jdk16:1.46:test
 
 %pom_add_dep commons-logging:commons-logging::test
 
 # force servlet-3.1 api
-%pom_xpath_set "pom:dependency[pom:groupId = 'javax.servlet']/pom:version" 3.1.0
-%pom_xpath_set "pom:dependency[pom:groupId = 'javax.servlet']/pom:artifactId" javax.servlet-api
+%pom_change_dep javax.servlet: :javax.servlet-api:3.1.0
+
 
 %mvn_file :%{name} %{name}
 
 %build
 
-%mvn_build
+%mvn_build -f
 
 %install
 %mvn_install
@@ -97,6 +97,9 @@ This package contains javadoc for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt1_6jpp8
+- new jpp release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt1_3jpp8
 - new fc release
 
