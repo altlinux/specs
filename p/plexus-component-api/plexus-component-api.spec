@@ -2,14 +2,15 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define project_version 1.0-alpha-15
 
 Name:           plexus-component-api
 Version:        1.0
-Release:        alt4_0.20.alpha15jpp8
+Release:        alt4_0.22.alpha15jpp8
 Summary:        Plexus Component API
 
 License:        ASL 2.0
@@ -20,10 +21,10 @@ Source0:        %{name}-%{project_version}.tar.gz
 
 BuildArch: noarch
 
+BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  maven-local
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-site-plugin
 BuildRequires:  maven-plugin-plugin
 BuildRequires:  plexus-classworlds
 # requires as parent pom
@@ -60,6 +61,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_0.22.alpha15jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_0.20.alpha15jpp8
 - new fc release
 
