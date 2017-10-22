@@ -1,13 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:              httpcomponents-project
 Summary:           Common POM file for HttpComponents
 Version:           7
-Release:           alt1_3jpp8
+Release:           alt1_5jpp8
 Group:             Development/Other
 License:           ASL 2.0
 URL:               http://hc.apache.org/
@@ -16,7 +17,8 @@ URL:               http://hc.apache.org/
 Source:            %{name}-%{version}.tar.xz
 BuildArch:         noarch
 
-BuildRequires:     maven-local
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache:apache:pom:)
 Source44: import.info
 
 Obsoletes: hc-project < 4.1.1-alt1_1jpp6
@@ -48,6 +50,9 @@ use it as runtime requirement.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 7-alt1_5jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 7-alt1_3jpp8
 - new fc release
 
