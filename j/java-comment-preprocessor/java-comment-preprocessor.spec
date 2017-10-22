@@ -2,15 +2,16 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global section		devel
 
 Summary:	The Most Powerful Multi-Pass Java Preprocessor
 Name:		java-comment-preprocessor
 Version:	6.0.1
-Release:	alt1_3jpp8
+Release:	alt1_5jpp8
 License:	ASL 2.0
 
 URL:		https://github.com/raydac/java-comment-preprocessor
@@ -18,8 +19,11 @@ Source0:	https://github.com/raydac/java-comment-preprocessor/archive/%{version}.
 
 BuildArch:		noarch
 BuildRequires:	maven-local
+BuildRequires:	maven-plugin-plugin
+BuildRequires:	maven-source-plugin
 BuildRequires:	exec-maven-plugin
 # Test requirements
+BuildRequires:	maven-plugin-testing-harness
 BuildRequires:	maven-shared-jar
 BuildRequires:	ant-testutil
 BuildRequires:	maven-verifier
@@ -65,6 +69,9 @@ find -name "*.jar" -or -name "*.class" | xargs rm -f
 %doc texts/LICENSE-2.0.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_5jpp8
+- new jpp release
+
 * Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_3jpp8
 - new version
 
