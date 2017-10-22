@@ -4,12 +4,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 Requires: fusesource-pom
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:             jansi
 Version:          1.11
-Release:          alt1_10jpp8
+Release:          alt1_12jpp8
 Summary:          Jansi is a java library for generating and interpreting ANSI escape sequences
 License:          ASL 2.0
 URL:              http://jansi.fusesource.org/
@@ -23,7 +24,6 @@ BuildArch:        noarch
 BuildRequires:    maven-local
 BuildRequires:    jansi-native
 BuildRequires:    maven-plugin-bundle
-BuildRequires:    maven-site-plugin
 BuildRequires:    fusesource-pom
 Source44: import.info
 
@@ -46,6 +46,8 @@ This package contains the API documentation for %{name}.
 
 %pom_disable_module jansi-website
 %pom_xpath_remove "pom:build/pom:extensions"
+
+%pom_remove_plugin :maven-site-plugin
 
 # No org.fusesource.mvnplugins:fuse-javadoc-skin available
 %pom_remove_plugin "org.apache.maven.plugins:maven-dependency-plugin"
@@ -75,6 +77,9 @@ This package contains the API documentation for %{name}.
 %doc license.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.11-alt1_12jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.11-alt1_10jpp8
 - new fc release
 
