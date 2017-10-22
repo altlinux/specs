@@ -1,17 +1,17 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # empty debuginfo
 %global debug_package %nil
 
 Name:             snappy-java
 Version:          1.1.2.4
-Release:          alt2_2jpp8
+Release:          alt2_6jpp8
 Summary:          Fast compressor/decompresser
 License:          ASL 2.0
 URL:              http://xerial.org/snappy-java/
@@ -28,13 +28,19 @@ Source0:          https://github.com/xerial/snappy-java/archive/%{version}.tar.g
 # org.xerial.sbt:sbt-sonatype:0.5.0
 Source1:          http://central.maven.org/maven2/org/xerial/snappy/%{name}/%{version}/%{name}-%{version}.pom
 Patch0:           snappy-java-1.1.2-build.patch
+Patch1:           snappy-java-1.1.2.4-lsnappy.patch
 
+BuildRequires:    make
+BuildRequires:    gcc-c++
 BuildRequires:    libstdc++-devel-static
+BuildRequires:    libsnappy-devel
+
 BuildRequires:    maven-local
+BuildRequires:    mvn(com.sun:tools)
 BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:    mvn(org.apache.felix:org.osgi.core)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:    libsnappy-devel
+
 Requires:         libsnappy
 Source44: import.info
 
@@ -64,6 +70,7 @@ find -name "*.a" -print -delete
 find -name "*.h" -print -delete
 
 %patch0 -p1
+%patch1 -p1
 
 cp %{SOURCE1} pom.xml
 %pom_change_dep org.osgi: org.apache.felix::1.4.0
@@ -91,12 +98,8 @@ cp %{SOURCE1} pom.xml
          classpathref="maven.plugin.classpath">
          <include name="**/OSInfo.java"/>
        </javac>
-       <exec executable="make">
-        <arg line="%{?_smp_mflags}
-        JAVA_HOME=%{_jvmdir}/java
-        JAVA=%{_jvmdir}/java/bin/java
-        JAVAC=%{_jvmdir}/java/bin/javac
-        JAVAH=%{_jvmdir}/java/bin/javah"/>
+       <exec executable="make" failonerror="true">
+        <arg line="%{?_smp_mflags}"/>
        </exec>
       </target>
     </configuration>
@@ -163,6 +166,9 @@ export CXXFLAGS
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.2.4-alt2_6jpp8
+- new jpp release
+
 * Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.2.4-alt2_2jpp8
 - new version
 
