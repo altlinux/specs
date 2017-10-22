@@ -2,17 +2,18 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global shortname looks
 
 Name:           jgoodies-looks
 Version:        2.6.0
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        Free high-fidelity Windows and multi-platform appearance
 
-Group:          Development/Java
+Group:          Development/Other
 License:        BSD
 URL:            http://www.jgoodies.com/freeware/looks/
 Source0:        http://www.jgoodies.com/download/libraries/%{shortname}/%{name}-%(tr "." "_" <<<%{version}).zip
@@ -20,14 +21,10 @@ Source0:        http://www.jgoodies.com/download/libraries/%{shortname}/%{name}-
 # Fontconfig and DejaVu fonts needed for tests
 BuildRequires:  fonts-ttf-dejavu
 BuildRequires:  fontconfig
-BuildRequires:  jgoodies-common >= 1.8.0
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
-BuildRequires:  maven-clean-plugin
-BuildRequires:  maven-dependency-plugin
-Requires:       jgoodies-common >= 1.8.0
-Requires:       jpackage-utils
-# JGoodies Looks <= 2.4.2 doesn't provide demo jars anymore
+BuildRequires:  mvn(com.jgoodies:jgoodies-common) >= 1.8.0
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
+# JGoodies Looks >= 2.4.2 doesn't provide demo jars anymore
 Provides:       %{name}-demo = %{version}-%{release}
 Obsoletes:      %{name}-demo < 2.4.2
 BuildArch:      noarch
@@ -41,7 +38,6 @@ They have been optimized for readability, precise micro-design and usability.
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -89,13 +85,17 @@ done
 
 
 %files -f .mfiles
-%doc LICENSE.txt README.html RELEASE-NOTES.txt
+%doc README.html RELEASE-NOTES.txt
+%doc LICENSE.txt
 
 
 %files javadoc -f .mfiles-javadoc
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt1_5jpp8
+- new jpp release
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt1_3jpp8
 - new version
 
