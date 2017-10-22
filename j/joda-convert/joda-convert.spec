@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           joda-convert
 Version:        1.8.1
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        Java library for conversion to and from standard string formats
 License:        ASL 2.0
 URL:            https://github.com/JodaOrg/joda-convert/
@@ -18,8 +19,6 @@ Source0:        https://github.com/JodaOrg/joda-convert/archive/v%{version}.tar.
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-checkstyle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 Source44: import.info
 
 %description
@@ -36,8 +35,11 @@ This package contains the %{summary}.
 %prep
 %setup -q
 %mvn_file : %{name}
-sed -i s/// *.txt
+sed -i s/\r// *.txt
+
 %pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :maven-javadoc-plugin
 
 %build
 %mvn_build
@@ -52,6 +54,9 @@ sed -i s/// *.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_5jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_3jpp8
 - new fc release
 
