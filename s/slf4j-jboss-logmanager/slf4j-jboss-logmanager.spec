@@ -3,18 +3,18 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name slf4j-jboss-logmanager
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.0.3
 %global namedreltag .GA
 %global namedversion %{version}%{?namedreltag}
 
 Name:             slf4j-jboss-logmanager
 Version:          1.0.3
-Release:          alt1_1jpp8
+Release:          alt1_2jpp8
 Summary:          SLF4J backend for JBoss LogManager
 License:          LGPLv2+
 URL:              https://github.com/jboss-logging/slf4j-jboss-logmanager
@@ -56,6 +56,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0.3-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.3-alt1_1jpp8
 - new version
 
