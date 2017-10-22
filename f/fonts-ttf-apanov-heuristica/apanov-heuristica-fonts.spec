@@ -1,7 +1,8 @@
 Group: System/Fonts/True type
 %define oldname apanov-heuristica-fonts
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name apanov-heuristica-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.0.2
 %global fontname apanov-heuristica
 %global fontconf 61-%{fontname}.conf
@@ -11,7 +12,7 @@ Group: System/Fonts/True type
 
 Name:    fonts-ttf-apanov-heuristica
 Version: 1.0.2
-Release: alt1_6
+Release: alt1_8
 Epoch:   1
 Summary: A serif latin & cyrillic font
 
@@ -99,6 +100,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_8
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_6
 - update to new release by fcimport
 
