@@ -2,14 +2,15 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global spec_ver 1.0
 %global spec_name geronimo-jcdi_%{spec_ver}_spec
 Name:          geronimo-jcdi-1.0-api
 Version:       1.0
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Apache Geronimo Java Contexts and Dependency Injection (JSR-299) Spec API
 License:       ASL 2.0
 URL:           http://geronimo.apache.org/
@@ -81,6 +82,9 @@ done
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_7jpp8
+- new jpp release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_6jpp8
 - new fc release
 
