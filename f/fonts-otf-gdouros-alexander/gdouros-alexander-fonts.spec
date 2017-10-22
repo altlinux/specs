@@ -3,16 +3,18 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname gdouros-alexander-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname gdouros-alexander
 %global fontconf 65-%{fontname}.conf
 
 Name:           fonts-otf-gdouros-alexander
-Version:        6.31
-Release:        alt1_1
+Version:        7.17
+Release:        alt1_4
 Summary:        A Greek typeface inspired by Alexander Wilson
 License:        Public Domain
-URL:            http://users.teilar.gr/~g1951d/Textfonts.htm
-Source0:        http://users.teilar.gr/~g1951d/Alexander.zip
+URL:            http://users.teilar.gr/~g1951d/
+Source0:        http://users.teilar.gr/~g1951d/TextfontsFonts.zip
 Source1:        http://users.teilar.gr/~g1951d/Textfonts.pdf
 Source2:        %{oldname}-fontconfig.conf
 Source3:        %{fontname}.metainfo.xml
@@ -20,6 +22,7 @@ Source3:        %{fontname}.metainfo.xml
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
 BuildRequires:  libappstream-glib
+Requires:     gdouros-textfonts-doc
 Source44: import.info
 
 %description
@@ -40,6 +43,15 @@ Forms, Stylistic Alternates, Ligatures).
 
 It was created by George Douros.
 
+%package -n gdouros-textfonts-doc
+Group: System/Fonts/True type
+Summary:        Documentation for all Textfonts by G. Douros
+%description -n gdouros-textfonts-doc
+This package contains documentation regarding the Textfonts family of fonts by
+G. Douros, i.e. Aroania, Anaktoria, Alexander, Avdira and Asea. The origin of
+each font is presented, as well as sample texts along with a character overview
+and opentype features supported by the fonts.
+
 %prep
 %setup -n %{oldname}-%{version} -q -c
 cp -p %{SOURCE1} .
@@ -59,7 +71,7 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
 install -Dm 0644 -p %{SOURCE3} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+        %{buildroot}%{_datadir}/metainfo/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -97,17 +109,22 @@ fi
 
 %check
 appstream-util validate-relax --nonet \
-      %{buildroot}/%{_datadir}/appdata/%{fontname}.metainfo.xml
+      %{buildroot}/%{_datadir}/metainfo/%{fontname}.metainfo.xml
 
 
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/Alexander.ttf
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+%{_datadir}/metainfo/%{fontname}.metainfo.xml
+
+%files -n gdouros-textfonts-doc
 %doc Textfonts.pdf
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 7.17-alt1_4
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 6.31-alt1_1
 - update to new release by fcimport
 
