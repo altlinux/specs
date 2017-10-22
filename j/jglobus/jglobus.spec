@@ -2,13 +2,14 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 24
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		jglobus
 Version:	2.1.0
-Release:	alt1_4jpp8
+Release:	alt1_5jpp8
 Summary:	Globus Java client libraries
 
 #		Everything is Apache 2.0 except for one file that is MIT:
@@ -69,7 +70,7 @@ Globus Java library with SSL and proxy certificate support
 Group: Development/Java
 Summary:	Globus Java - SSL support
 License:	ASL 2.0
-Requires:	%{name}-ssl-proxies = %{version}
+Requires:	%{name}-ssl-proxies = %{version}-%{release}
 
 %description jsse
 Globus Java library with SSL support
@@ -78,7 +79,7 @@ Globus Java library with SSL support
 Group: Development/Java
 Summary:	Globus Java - GSS-API implementation for SSL with proxies
 License:	ASL 2.0
-Requires:	%{name}-jsse = %{version}
+Requires:	%{name}-jsse = %{version}-%{release}
 
 %description gss
 Globus Java GSS-API implementation for SSL with proxies
@@ -87,7 +88,7 @@ Globus Java GSS-API implementation for SSL with proxies
 Group: Development/Java
 Summary:	Globus Java - Grid Resource Allocation and Management (GRAM)
 License:	ASL 2.0
-Requires:	%{name}-gss = %{version}
+Requires:	%{name}-gss = %{version}-%{release}
 
 %description gram
 Globus Java library with GRAM support
@@ -96,7 +97,7 @@ Globus Java library with GRAM support
 Group: Development/Java
 Summary:	Globus Java - GridFTP
 License:	ASL 2.0
-Requires:	%{name}-gss = %{version}
+Requires:	%{name}-gss = %{version}-%{release}
 
 %description gridftp
 Globus Java library with GridFTP support
@@ -105,7 +106,7 @@ Globus Java library with GridFTP support
 Group: Development/Java
 Summary:	Globus Java - SSL and proxy certificate support for Tomcat
 License:	ASL 2.0
-Requires:	%{name}-jsse = %{version}
+Requires:	%{name}-jsse = %{version}-%{release}
 
 %description ssl-proxies-tomcat
 Globus Java library with SSL and proxy certificate support for Tomcat
@@ -114,8 +115,8 @@ Globus Java library with SSL and proxy certificate support for Tomcat
 Group: Development/Java
 Summary:	Globus Java - IO
 License:	ASL 2.0
-Requires:	%{name}-gram = %{version}
-Requires:	%{name}-gridftp = %{version}
+Requires:	%{name}-gram = %{version}-%{release}
+Requires:	%{name}-gridftp = %{version}-%{release}
 
 %description io
 Globus Java library with IO utilities
@@ -124,7 +125,7 @@ Globus Java library with IO utilities
 Group: Development/Java
 Summary:	Globus Java - MyProxy
 License:	ASL 2.0
-Requires:	%{name}-gss = %{version}
+Requires:	%{name}-gss = %{version}-%{release}
 
 %description myproxy
 Globus Java library with MyProxy support
@@ -134,7 +135,7 @@ Globus Java library with MyProxy support
 Group: Development/Java
 Summary:	Globus Java - Apache AXIS support
 License:	ASL 2.0
-Requires:	%{name}-gss = %{version}
+Requires:	%{name}-gss = %{version}-%{release}
 
 %description axisg
 Globus Java library with Apache AXIS support
@@ -203,6 +204,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_5jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_4jpp8
 - new fc release
 
