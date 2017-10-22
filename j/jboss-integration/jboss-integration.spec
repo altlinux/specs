@@ -3,18 +3,18 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jboss-integration
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 6.0.0
 %global namedreltag .CR1
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-integration
 Version:          6.0.0
-Release:          alt1_0.5.CR1jpp8
+Release:          alt1_0.7.CR1jpp8
 Summary:          JBoss Integration
 License:          LGPLv2+
 URL:              http://www.jboss.org
@@ -32,6 +32,7 @@ BuildRequires:    maven-enforcer-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
 BuildRequires:    maven-javadoc-plugin
+BuildRequires:    jboss-parent
 BuildRequires:    jboss-transaction-1.1-api
 Source44: import.info
 
@@ -77,6 +78,9 @@ sed -i "s,59 Temple Place,51 Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1
 %doc build/lgpl.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:6.0.0-alt1_0.7.CR1jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:6.0.0-alt1_0.5.CR1jpp8
 - new fc release
 
