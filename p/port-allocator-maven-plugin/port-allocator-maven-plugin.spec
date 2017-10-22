@@ -1,12 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		port-allocator-maven-plugin
 Version:	1.2
-Release:	alt3_10jpp8
+Release:	alt3_11jpp8
 Summary:	Port Allocator Maven Plugin
 
 Group:		Development/Other
@@ -69,6 +70,9 @@ find -name '*.jar' -exec rm -f '{}' \;
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_11jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_10jpp8
 - new fc release
 
