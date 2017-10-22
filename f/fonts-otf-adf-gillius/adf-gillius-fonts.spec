@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname adf-gillius-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname adf-gillius
 %global fontconf 69-%{fontname}
 
@@ -14,7 +16,7 @@ bold weight.
 
 Name:		fonts-otf-adf-gillius
 Version:	1.008
-Release:	alt3_12
+Release:	alt3_14
 Summary:	Gillius ADF sans-serif typeface family
 
 License:	GPLv2+ with exceptions
@@ -28,7 +30,7 @@ Source5:        %{fontname}-sans-2.metainfo.xml
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
 
-Requires:	%{name}-common = %{version}
+Requires:	%{name}-common = %{version}-%{release}
 Source44: import.info
 %description
 %common_desc
@@ -54,7 +56,7 @@ This package consists of files used by other %{fontname} packages
 %package -n fonts-ttf-adf-gillius-2
 Group: System/Fonts/True type
 Summary:	Gillius ADF No2 sans-serif typeface family
-Requires:	%{name}-common = %{version}
+Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-adf-gillius-2
 %common_desc
@@ -143,6 +145,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.008-alt3_14
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.008-alt3_12
 - update to new release by fcimport
 
