@@ -3,7 +3,6 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # fedora bcond_with macro
@@ -12,11 +11,13 @@ BuildRequires: jpackage-generic-compat
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 #def_with arquillian
 %bcond_with arquillian
 Name:          openwebbeans
 Version:       1.2.8
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Implementation of the JSR-299 WebBeans
 License:       ASL 2.0
 URL:           http://openwebbeans.apache.org/
@@ -321,6 +322,9 @@ rm -rf webbeans-clustering/src/test/java/org/apache/webbeans/web/failover/tests/
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.8-alt1_3jpp8
+- new jpp release
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.8-alt1_2jpp8
 - new version
 
