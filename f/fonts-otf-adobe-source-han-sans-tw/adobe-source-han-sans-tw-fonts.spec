@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname adobe-source-han-sans-tw-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname adobe-source-han-sans-tw
 %global fontconf 65-0-%{fontname}.conf
 
@@ -10,7 +12,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-adobe-source-han-sans-tw
 Version:        1.004
-Release:        alt1_3
+Release:        alt1_6
 Summary:        Adobe OpenType Pan-CJK font family for Traditional Chinese
 
 License:        OFL
@@ -40,6 +42,7 @@ Japanese, and Korean.
 
 %prep
 %setup -q -n %{archivename}
+
 
 
 %build
@@ -101,6 +104,9 @@ fi
 
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1_6
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1_3
 - update to new release by fcimport
 
