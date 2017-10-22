@@ -2,18 +2,18 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jboss-logmanager-log4j
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.0.0
 %global namedreltag .GA
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-logmanager-log4j
 Version:          1.0.0
-Release:          alt2_14jpp8
+Release:          alt2_15jpp8
 Summary:          JBoss LogManager Log4j Compatibility Library 
 License:          LGPLv2+
 URL:              https://github.com/jboss-logging/jboss-logmanager-log4j
@@ -57,6 +57,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_15jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_14jpp8
 - new fc release
 
