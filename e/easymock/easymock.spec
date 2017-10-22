@@ -3,12 +3,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           easymock
 Version:        3.4
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        Easy mock objects
 License:        ASL 2.0
 URL:            http://www.easymock.org
@@ -24,12 +25,14 @@ BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(cglib:cglib)
-BuildRequires:  mvn(com.mycila.maven-license-plugin:maven-license-plugin)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.objenesis:objenesis)
+BuildRequires:  mvn(org.ow2.asm:asm)
+# xmvn-builddep misses this:
+BuildRequires:  mvn(org.apache:apache-jar-resource-bundle)
 
 Obsoletes:      %{name}3 < 3.4
 Provides:       %{name}3 = %{version}-%{release}
@@ -60,6 +63,8 @@ Javadoc for %{name}.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+
+%pom_remove_plugin :maven-license-plugin
 
 # remove android support
 rm core/src/main/java/org/easymock/internal/Android*.java
@@ -102,6 +107,9 @@ rm core/src/test/java/org/easymock/tests2/ClassExtensionHelperTest.java
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.4-alt1_4jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.4-alt1_2jpp8
 - new version
 
