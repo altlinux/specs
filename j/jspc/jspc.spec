@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jspc
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 2.0
 %global namedreltag  -alpha-3
 %global namedversion %{version}%{?namedreltag}
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jspc
 Version:       2.0
-Release:       alt1_0.18.alpha.3jpp8
+Release:       alt1_0.20.alpha.3jpp8
 Summary:       Compile JSPs under Maven
 Group:         Development/Other
 License:       ASL 2.0
@@ -24,6 +24,7 @@ Source0:       %{name}-%{namedversion}-src-svn.tar.gz
 Source1:       %{name}-mp-plugin.xml
 Patch0:        %{name}-ant-groovyc.patch
 
+BuildRequires: java-devel
 BuildRequires: maven-local
 
 BuildRequires: apache-resource-bundles
@@ -42,6 +43,8 @@ BuildRequires: maven-invoker-plugin
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-remote-resources-plugin
 BuildRequires: maven-install-plugin
+
+BuildRequires: mvn(org.codehaus.plexus:plexus-component-metadata)
 
 BuildRequires: groovy18
 Requires: groovy18
@@ -69,6 +72,8 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n %{name}
+
+%pom_remove_parent
 
 for d in LICENSE ; do
   iconv -f iso8859-1 -t utf-8 $d.txt > $d.txt.conv && mv -f $d.txt.conv $d.txt
@@ -174,6 +179,9 @@ jar uf  %{name}-maven-plugin/target/%{name}-maven-plugin-2.0-alpha-3.jar META-IN
 %doc LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_0.20.alpha.3jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_0.18.alpha.3jpp8
 - new fc release
 
