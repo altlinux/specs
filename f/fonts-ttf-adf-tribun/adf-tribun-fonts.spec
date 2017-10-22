@@ -2,6 +2,8 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname adf-tribun-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname adf-tribun
 %global fontconf 60-%{fontname}.conf
 
@@ -9,7 +11,7 @@ BuildRequires: unzip
 
 Name:    fonts-ttf-adf-tribun
 Version: 1.13
-Release: alt3_11
+Release: alt3_13
 Summary: A newsprint-like serif typeface
 
 Group:     System/Fonts/True type
@@ -129,6 +131,9 @@ fi
 %doc NOTICE TTF/COPYING *.pdf
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.13-alt3_13
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.13-alt3_11
 - update to new release by fcimport
 
