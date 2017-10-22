@@ -5,24 +5,23 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 25
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%if 0%{?fedora}
-%bcond_without extensions
-%endif
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%bcond_without jpa
+%bcond_without spring
 
 %global short_name guice
 
 Name:           google-%{short_name}
-Version:        4.0
+Version:        4.1
 Release:        alt1_5jpp8
 Summary:        Lightweight dependency injection framework for Java 5 and above
 License:        ASL 2.0
@@ -52,9 +51,13 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.sonatype.plugins:munge-maven-plugin)
+# xmvn-builddep misses this:
+BuildRequires:  mvn(org.apache:apache-jar-resource-bundle)
 
-%if %{with extensions}
+%if %{with jpa}
 BuildRequires:  hibernate-jpa-2.0-api
+%endif
+%if %{with spring}
 BuildRequires:  springframework-beans
 %endif
 
@@ -99,8 +102,6 @@ Summary:        Guice parent POM
 %description -n %{short_name}-parent
 Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides parent POM for Guice modules.
-
-%if %{with extensions}
 
 %package -n %{short_name}-assistedinject
 Group: Development/Java
@@ -150,6 +151,7 @@ Summary:        MultiBindings extension module for Guice
 Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides MultiBindings module for Guice.
 
+%if %{with jpa}
 %package -n %{short_name}-persist
 Group: Development/Java
 Summary:        Persist extension module for Guice
@@ -157,6 +159,7 @@ Summary:        Persist extension module for Guice
 %description -n %{short_name}-persist
 Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides Persist module for Guice.
+%endif
 
 %package -n %{short_name}-servlet
 Group: Development/Java
@@ -166,6 +169,7 @@ Summary:        Servlet extension module for Guice
 Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides Servlet module for Guice.
 
+%if %{with spring}
 %package -n %{short_name}-spring
 Group: Development/Java
 Summary:        Spring extension module for Guice
@@ -173,6 +177,7 @@ Summary:        Spring extension module for Guice
 %description -n %{short_name}-spring
 Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides Spring module for Guice.
+%endif
 
 %package -n %{short_name}-testlib
 Group: Development/Java
@@ -194,8 +199,6 @@ and above. This package provides ThrowingProviders module for Guice.
 Group: Development/Java
 Summary:        Bill of Materials for Guice
 
-%endif # with extensions
-
 %description -n %{short_name}-bom
 Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides Bill of Materials module for Guice.
@@ -212,9 +215,9 @@ This package provides %{summary}.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1
-%patch100 -p1
-%patch101 -p1
+#%patch0 -p1
+#%patch100 -p1
+#%patch101 -p1
 
 # We don't have struts2 in Fedora yet.
 %pom_disable_module struts2 extensions
@@ -233,7 +236,7 @@ This package provides %{summary}.
 
 # We don't have the custom doclet used by upstream. Remove
 # maven-javadoc-plugin to generate javadocs with default style.
-%pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin -r :maven-javadoc-plugin
 
 # remove test dependency to make sure we don't produce requires
 # see #1007498
@@ -243,17 +246,17 @@ This package provides %{summary}.
 %pom_remove_parent
 %pom_set_parent com.google.inject:guice-parent:%{version} jdk8-tests
 
-# Don't try to build extension modules unless they are needed
-%if %{without extensions}
-%pom_disable_module extensions
+%if %{without jpa}
+%pom_disable_module persist extensions
+%endif
+%if %{without spring}
+%pom_disable_module spring extensions
 %endif
 
-%mvn_package :jdk8-tests __noinstall
+%pom_disable_module jdk8-tests
 
 %build
-%if %{with extensions}
 %mvn_alias "com.google.inject.extensions:" "org.sonatype.sisu.inject:"
-%endif # with extensions
 
 %mvn_package :::no_aop: guice
 
@@ -272,19 +275,21 @@ This package provides %{summary}.
 %files -n %{short_name}-parent -f .mfiles-guice-parent
 %doc COPYING
 
-%if %{with extensions}
 %files -n %{short_name}-assistedinject -f .mfiles-guice-assistedinject
 %files -n %{short_name}-extensions -f .mfiles-extensions-parent
 %files -n %{short_name}-grapher -f .mfiles-guice-grapher
 %files -n %{short_name}-jmx -f .mfiles-guice-jmx
 %files -n %{short_name}-jndi -f .mfiles-guice-jndi
 %files -n %{short_name}-multibindings -f .mfiles-guice-multibindings
+%if %{with jpa}
 %files -n %{short_name}-persist -f .mfiles-guice-persist
+%endif
 %files -n %{short_name}-servlet -f .mfiles-guice-servlet
+%if %{with spring}
 %files -n %{short_name}-spring -f .mfiles-guice-spring
+%endif
 %files -n %{short_name}-testlib -f .mfiles-guice-testlib
 %files -n %{short_name}-throwingproviders -f .mfiles-guice-throwingproviders
-%endif # with extensions
 
 %files -n %{short_name}-bom -f .mfiles-guice-bom
 
@@ -293,6 +298,9 @@ This package provides %{summary}.
 
 
 %changelog
+* Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:4.1-alt1_5jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.0-alt1_5jpp8
 - new fc release
 
