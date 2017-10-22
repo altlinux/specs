@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:             castor-maven-plugin
 Version:          2.5
-Release:          alt1_2jpp8
+Release:          alt1_4jpp8
 Summary:          Maven plugin for Castor XML's code generator
 License:          ASL 2.0
 URL:              http://www.mojohaus.org/castor-maven-plugin/
@@ -17,7 +18,11 @@ Patch0:           duplicate-descriptors.patch
 
 BuildArch:        noarch
 
+BuildRequires:    java-devel
 BuildRequires:    maven-local
+BuildRequires:    maven-plugin-plugin
+BuildRequires:    maven-plugin-testing-harness
+BuildRequires:    maven-source-plugin
 BuildRequires:    mojo-parent
 BuildRequires:    castor >= 1.3.2
 Source44: import.info
@@ -64,6 +69,9 @@ sed -i 's/\r/\n/g' src/main/java/org/codehaus/mojo/castor/ConvertDTD2XSDMojo.jav
 %doc LICENSE.TXT
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_4jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_2jpp8
 - new fc release
 
