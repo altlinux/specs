@@ -1,11 +1,13 @@
 Group: System/Fonts/True type
 %define oldname cdac-sakal-marathi-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname cdac-sakal-marathi
 %global fontconf 68-%{fontname}.conf
 
 Name:        fonts-ttf-cdac-sakal-marathi
 Version:     9.21
-Release:     alt1_6
+Release:     alt1_8
 Summary:     Marathi language font from CDAC
 
 License:     OFL
@@ -83,6 +85,9 @@ fi
 
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 9.21-alt1_8
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 9.21-alt1_6
 - update to new release by fcimport
 
