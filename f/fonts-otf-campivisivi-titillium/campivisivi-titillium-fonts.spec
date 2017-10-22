@@ -3,12 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname campivisivi-titillium-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname campivisivi-titillium
 %global fontconf 61-%{fontname}.conf
 
 Name:		fonts-otf-campivisivi-titillium
 Version:	20120913
-Release:	alt1_12
+Release:	alt1_14
 Summary:	Sans-serif typeface designed inside Campi Visivi's Type Design course
 
 License:	OFL
@@ -99,6 +101,9 @@ fi
 
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20120913-alt1_14
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20120913-alt1_12
 - update to new release by fcimport
 
