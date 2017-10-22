@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           jetty-parent
 Version:        19
-Release:        alt2_14jpp8
+Release:        alt2_15jpp8
 Summary:        Jetty parent POM file
 License:        ASL 2.0 or EPL
 URL:            http://www.eclipse.org/jetty/
@@ -20,7 +21,6 @@ Source2:        http://www.eclipse.org/legal/epl-v10.html
 Source3:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildRequires:  maven-local
-BuildRequires:  maven-release-plugin
 Source44: import.info
 
 %description
@@ -30,6 +30,8 @@ Jetty parent POM file
 %setup -q -c -T
 cp -p %{SOURCE0} pom.xml
 cp -p %{SOURCE2} %{SOURCE3} .
+
+%pom_remove_plugin :maven-release-plugin
 
 %build
 %mvn_build
@@ -42,6 +44,9 @@ cp -p %{SOURCE2} %{SOURCE3} .
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 19-alt2_15jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 19-alt2_14jpp8
 - new fc release
 
