@@ -2,6 +2,8 @@
 BuildRequires: python
 # END SourceDeps(oneline)
 %define oldname beteckna-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global	fontname	beteckna
 %global common_desc \
 This font is available from beteckna.se, it is a geometric sans-serif \
@@ -14,7 +16,7 @@ Special character &#x2708; ( a'. ) depicts two cats.
 
 Name:		fonts-otf-beteckna
 Version:	0.3
-Release:	alt4_15
+Release:	alt4_17
 Summary:	Beteckna sans-serif fonts
 
 Group:		System/Fonts/True type
@@ -29,8 +31,8 @@ Source5:	%{fontname}-lower-case.metainfo.xml
 Source6:	%{fontname}-small-caps.metainfo.xml
 
 BuildArch:	noarch
-BuildRequires: fontforge libfontforge, fontpackages-devel
-Requires:	%{name}-common = %{version}
+BuildRequires:	fontforge libfontforge, fontpackages-devel
+Requires:	%{name}-common = %{version}-%{release}
 Source44: import.info
 
 %description
@@ -55,7 +57,7 @@ This package consists of files used by other %{oldname} packages.
 %package -n fonts-otf-beteckna-lower-case
 Group: System/Fonts/True type
 Summary:	Beteckna lower case sfd fonts
-Requires:	%{name}-common = %{version}
+Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-otf-beteckna-lower-case
 %common_desc
@@ -73,7 +75,7 @@ These are lower case Beteckna Fonts.
 %package -n fonts-otf-beteckna-small-caps
 Group: System/Fonts/True type
 Summary:	Beteckna small caps sfd fonts
-Requires:	%{name}-common = %{version}
+Requires:	%{name}-common = %{version}-%{release}
 
 %description -n fonts-otf-beteckna-small-caps
 %common_desc
@@ -175,6 +177,9 @@ fi
 %doc AUTHORS LICENSE CHANGELOG readme.html
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.3-alt4_17
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.3-alt4_15
 - update to new release by fcimport
 
