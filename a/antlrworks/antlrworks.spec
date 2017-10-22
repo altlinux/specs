@@ -2,12 +2,13 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           antlrworks
 Version:        1.5.2
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Summary:        Grammar development environment for ANTLR v3 grammars
 
 Group:          Development/Java
@@ -15,26 +16,24 @@ License:        BSD
 URL:            http://www.antlr3.org/works
 Source0:        https://github.com/antlr/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
 Source1:        %{name}.desktop
-# Disable embedding of dependency jars files into antlrworks jar file
-Patch0:         %{name}-1.5.2-build.patch
+Source2:        %{name}.appdata.xml
 # Fix compilation with JGoodies Forms >= 1.7.1
-Patch1:         %{name}-1.5.2-jgoodies-forms_1.7.1.patch
+Patch0:         %{name}-1.5.2-jgoodies-forms_1.7.1.patch
 # Add xdg-open to the list of available browsers to open the help
-Patch2:         %{name}-1.5.2-browsers.patch
+Patch1:         %{name}-1.5.2-browsers.patch
 
-BuildRequires:  ant
-BuildRequires:  antlr3-tool >= 3.5
 BuildRequires:  desktop-file-utils
-BuildRequires:  jgoodies-forms >= 1.7.1
-BuildRequires:  stringtemplate
-BuildRequires:  stringtemplate4
-Requires:       antlr3-tool >= 3.5
-Requires: graphviz libgraphviz
+BuildRequires:  libappstream-glib
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.jgoodies:jgoodies-forms)
+BuildRequires:  mvn(org.antlr:antlr)
+BuildRequires:  mvn(org.antlr:antlr-runtime)
+BuildRequires:  mvn(org.antlr:stringtemplate)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
+Requires:       graphviz libgraphviz
 # Owns /usr/share/icons/hicolor
 Requires:       icon-theme-hicolor
 # Antlrworks requires javac
-Requires:       jgoodies-forms >= 1.7.1
-Requires:       stringtemplate4
 BuildArch:      noarch
 Source44: import.info
 
@@ -54,26 +53,24 @@ encountered by grammar developers.
 
 %prep
 %setup -q
-%patch0 -p0 -b .build
-%patch1 -p0 -b .jgoodies-forms_1.7.1
-%patch2 -p0 -b .browsers
+%patch0 -p0
+%patch1 -p0
 
-# Fix version
-sed -i "s|^version=.*|version=%{version}|" build.properties
+# Remove MacOSX-specific code
+rm -r src/org/antlr/xjlib/appkit/app/MacOS/
 
-# Add JARs to the default classpath folder
-mkdir -p lib/
-build-jar-repository -s -p lib/ antlr3-runtime jgoodies-forms stringtemplate stringtemplate4/ST4 
+%pom_remove_dep com.apple:AppleJavaExtensions
+%pom_change_dep com.jgoodies:forms com.jgoodies:jgoodies-forms
 
 
 %build
-ant build -Daw.lib=lib/ -Dantlr3.jar=antlr3-runtime.jar -Djgoodies.jar=jgoodies-forms.jar
+%mvn_build -j
 
 
 %install
-install -Dpm 0644 dist/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-%jpackage_script org.antlr.works.IDE "-Xmx400m" "" antlrworks:antlr:antlr3:antlr3-runtime:jgoodies-common:jgoodies-forms:stringtemplate:stringtemplate4 %{name} true
+%jpackage_script org.antlr.works.IDE "-Xmx400m" "" antlrworks:antlr:antlr3:antlr3-runtime:jgoodies-common:jgoodies-forms:stringtemplate:stringtemplate4 %{name} false
 
 desktop-file-install \
   --dir=$RPM_BUILD_ROOT%{_datadir}/applications \
@@ -84,6 +81,8 @@ for i in 16 32 64; do
   install -Dpm 0644 resources/icons/app_${i}x$i.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/${i}x$i/apps/%{name}.png
 done
 
+install -Dpm 0644 %{SOURCE2} $RPM_BUILD_ROOT/%{_datadir}/appdata/%{name}.appdata.xml
+
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%name.conf`
 touch $RPM_BUILD_ROOT/etc/java/%name.conf
 
@@ -91,17 +90,22 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 %check
 desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop
 
+appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
-%files
+
+%files -f .mfiles
 %doc History.txt
 %{_bindir}/%{name}
 %{_datadir}/applications/*.desktop
-%{_datadir}/icons/hicolor/*/apps/*.png
-%{_javadir}/*.jar
+%{_datadir}/icons/hicolor/*/apps/*.*
+%{_datadir}/appdata/*.appdata.xml
 %config(noreplace,missingok) /etc/java/%name.conf
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_6jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_4jpp8
 - new fc release
 
