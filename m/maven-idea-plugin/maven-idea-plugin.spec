@@ -1,12 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-idea-plugin
 Version:        2.2.1
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Maven IDEA Plugin
 
 Group:          Development/Other
@@ -68,6 +69,9 @@ cp %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_7jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_6jpp8
 - new fc release
 
