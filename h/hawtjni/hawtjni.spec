@@ -3,12 +3,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:             hawtjni
 Version:          1.10
-Release:          alt1_6jpp8
+Release:          alt1_9jpp8
 Summary:          Code generator that produces the JNI code
 License:          ASL 2.0 and EPL and BSD
 URL:              http://hawtjni.fusesource.org/
@@ -21,24 +22,29 @@ Patch1:           0002-Fix-xbean-compatibility.patch
 Patch2:           0003-Remove-plexus-maven-plugin-dependency.patch
 Patch3:           0004-Remove-eclipse-plugin.patch
 
-BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-plugin-plugin
-BuildRequires:    maven-surefire-report-plugin
-BuildRequires:    maven-project-info-reports-plugin
-BuildRequires:    maven-plugin-jxr
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-clean-plugin
-BuildRequires:    plexus-containers-component-metadata
-BuildRequires:    log4j
-BuildRequires:    junit
-BuildRequires:    fusesource-pom
-BuildRequires:    xbean
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-cli:commons-cli)
+BuildRequires:  mvn(org.apache.maven:maven-archiver)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-artifact-manager)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.xbean:xbean-finder)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.fusesource:fusesource-pom:pom:)
+BuildRequires:  mvn(org.ow2.asm:asm)
+BuildRequires:  mvn(org.ow2.asm:asm-commons)
 
-Requires:         autoconf-common
-Requires:         automake-common
-Requires:         libtool-common
+Requires:         autoconf
+Requires:         automake
+Requires:         libtool
+Requires:         make
 Source44: import.info
 
 %description
@@ -110,6 +116,9 @@ This package allows to use HawtJNI from a maven plugin.
 %files -n maven-hawtjni-plugin -f .mfiles-maven-plugin
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt1_9jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt1_6jpp8
 - new fc release
 
