@@ -5,14 +5,15 @@ BuildRequires: gcc-c++ perl(LWP/UserAgent.pm) unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 25
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary:        High-performance, full-featured text search engine
 Name:           lucene
 Version:        5.5.0
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -47,7 +48,6 @@ BuildRequires:  mvn(org.apache.uima:WhitespaceTokenizer)
 BuildRequires:  mvn(org.carrot2:morfologik-fsa)
 BuildRequires:  mvn(org.carrot2:morfologik-polish)
 BuildRequires:  mvn(org.carrot2:morfologik-stemming)
-BuildRequires:  mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-continuation)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-http)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-io)
@@ -329,17 +329,10 @@ ant generate-maven-artifacts -Divy.mode=local -Dversion=%{version}
 for pom in `find build/poms/%{name} -name pom.xml`; do
     sed 's/\${module-path}/${basedir}/g' "$pom" > "${pom##build/poms/%{name}/}"
 done
-%pom_remove_plugin :forbiddenapis
-for module in test-framework; do
-    %pom_remove_plugin :forbiddenapis ${module}
-done
-
 %pom_disable_module src/test core
 %pom_disable_module src/test codecs
 
 # test deps
-%pom_add_dep org.ow2.asm:asm::test demo
-%pom_add_dep org.ow2.asm:asm-commons::test demo
 %pom_add_dep org.antlr:antlr-runtime::test demo
 
 popd
@@ -347,9 +340,11 @@ popd
 mv lucene/build/poms/pom.xml .
 
 %pom_disable_module solr
-%pom_remove_plugin :gmaven-plugin
-%pom_remove_plugin :forbiddenapis
-%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin -r :gmaven-plugin
+%pom_remove_plugin -r :maven-enforcer-plugin
+%pom_remove_plugin -r :forbiddenapis
+%pom_remove_plugin -r :buildnumber-maven-plugin
+
 
 # For some reason TestHtmlParser.testTurkish fails when building inside SCLs
 %mvn_build -s -f
@@ -357,7 +352,8 @@ mv lucene/build/poms/pom.xml .
 # Fix OSGi metadata in misc module
 pushd lucene/misc/target
 unzip lucene-misc-%{version}.jar META-INF/MANIFEST.MF
-sed -i -e '1aRequire-Bundle: org.apache.lucene.core' META-INF/MANIFEST.MF
+sed -i -e '1aRequire-Bundle: org.apache.lucene.core
+' META-INF/MANIFEST.MF
 jar ufm lucene-misc-%{version}.jar META-INF/MANIFEST.MF 2>&1 > /dev/null
 popd
 
@@ -416,6 +412,9 @@ popd
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:5.5.0-alt1_6jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.5.0-alt1_4jpp8
 - new fc release
 
