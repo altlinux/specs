@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           plexus-interactivity
 Version:        1.0
-Release:        alt6_0.22.alpha6jpp8
+Release:        alt6_0.23.alpha6jpp8
 Epoch:          0
 Summary:        Plexus Interactivity Handler Component
 License:        MIT
@@ -81,6 +82,9 @@ jline module for %{name}.
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_0.23.alpha6jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_0.22.alpha6jpp8
 - new fc release
 
