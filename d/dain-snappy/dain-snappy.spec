@@ -2,7 +2,6 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # fedora bcond_with macro
@@ -11,6 +10,8 @@ BuildRequires: jpackage-generic-compat
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global commit e02f7c887d666afbdd11763f3a6ba22e68f53f15
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
@@ -19,7 +20,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           dain-snappy
 Version:        0.4
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Snappy compression library
 License:        ASL 2.0 and BSD
 URL:            https://github.com/dain/snappy
@@ -82,6 +83,9 @@ sed -i /@Test/d $(find -name SnappyTest.java)
 %doc license.txt notice.md
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_3jpp8
+- new jpp release
+
 * Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_2jpp8
 - new version
 
