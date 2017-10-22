@@ -1,17 +1,19 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install libgio-devel pkgconfig(glib-2.0) pkgconfig(gmodule-export-2.0) pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/desktop-file-install libgio-devel pkgconfig(glib-2.0) pkgconfig(gmodule-export-2.0)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		mate-calc
-Version:	1.8.0
-Release:	alt1_6
+Version:	1.19.0
+Release:	alt1_1
 Summary:	MATE Desktop calculator
 License:	GPLv2+
 URL:		http://mate-desktop.org
-Source0:	http://pub.mate-desktop.org/releases/1.8/%{name}-%{version}.tar.xz
+Source0:	http://pub.mate-desktop.org/releases/1.18/%{name}-%{version}.tar.xz
 
-BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:	gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	mate-common
 BuildRequires:	bison
@@ -30,10 +32,9 @@ It uses a multiple precision package to do its arithmetic to give a high degree 
 
 
 %build
-%configure --disable-schemas-compile \
-           --with-gtk=3.0
+%configure --disable-schemas-compile
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 %install
 make install DESTDIR=%{buildroot}
@@ -44,7 +45,7 @@ desktop-file-install									\
 	--dir=%{buildroot}%{_datadir}/applications					\
 %{buildroot}%{_datadir}/applications/*.desktop
 
-%find_lang %{name} --all-name
+%find_lang %{name} --with-gnome --all-name
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
@@ -52,13 +53,16 @@ desktop-file-install									\
 %{_bindir}/mate-calc
 %{_bindir}/mate-calc-cmd
 %{_bindir}/mate-calculator
+%{_datadir}/appdata/mate-calc.appdata.xml
 %{_datadir}/applications/mate-calc.desktop
 %{_datadir}/glib-2.0/schemas/org.mate.calc.gschema.xml
 %{_datadir}/mate-calc
-%{_datadir}/help/*/mate-calc
 
 
 %changelog
+* Sun Oct 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
+- new fc release
+
 * Fri Oct 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_6
 - update to 1.16
 
