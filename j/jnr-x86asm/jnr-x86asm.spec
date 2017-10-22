@@ -1,15 +1,16 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global commit_hash 1dead92
 %global tag_hash 2a7fb9b
 
 Name:           jnr-x86asm
 Version:        1.0.2
-Release:        alt2_9jpp8
+Release:        alt2_11jpp8
 Summary:        Pure-java port of asmjit
 
 Group:          Development/Other
@@ -20,7 +21,9 @@ Source1:        MANIFEST.MF
 Patch0:         add-manifest.patch
 BuildArch:      noarch
 
+BuildRequires:  java-devel
 BuildRequires:  maven-local
+BuildRequires:  sonatype-oss-parent
 Source44: import.info
 
 %description
@@ -54,6 +57,9 @@ find ./ -name '*.class' -delete
 %doc LICENSE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_11jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_9jpp8
 - new fc release
 
