@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          randomizedtesting
 Version:       2.3.1
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Java Testing Framework
 License:       ASL 2.0
 URL:           http://labs.carrotsearch.com/randomizedtesting.html
@@ -46,7 +47,7 @@ principles of Randomized Testing.
 %package junit4-ant
 Group: Development/Java
 Summary:       RandomizedTesting JUnit4 ANT Task
-Requires:      %{name} = %{version}
+Requires:      %{name} = %{version}-%{release}
 
 %description junit4-ant
 RandomizedTesting JUnit4 ANT Task.
@@ -54,7 +55,7 @@ RandomizedTesting JUnit4 ANT Task.
 %package junit4-maven-plugin
 Group: Development/Java
 Summary:       RandomizedTesting JUnit4 Maven Plugin
-Requires:      %{name} = %{version}
+Requires:      %{name} = %{version}-%{release}
 
 %description junit4-maven-plugin
 RandomizedTesting JUnit4 Maven Plugin.
@@ -62,7 +63,7 @@ RandomizedTesting JUnit4 Maven Plugin.
 %package runner
 Group: Development/Java
 Summary:       RandomizedTesting Randomized Runner
-Requires:      %{name} = %{version}
+Requires:      %{name} = %{version}-%{release}
 
 %description runner
 RandomizedRunner is a JUnit runner, so it is capable of
@@ -194,6 +195,9 @@ rm -r randomized-runner/src/test/java/com/carrotsearch/randomizedtesting/TestCla
 %doc LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_3jpp8
+- new jpp release
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_2jpp8
 - new version
 
