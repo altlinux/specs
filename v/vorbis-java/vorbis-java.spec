@@ -2,16 +2,17 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 25
+%define fedora 26
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Conditionals to help breaking vorbis-java-tika <-> tika dependency cycle
 %if 0%{?fedora}
 #def_with tika
@@ -20,7 +21,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          vorbis-java
 Version:       0.8
-Release:       alt1_1jpp8
+Release:       alt1_2jpp8
 Summary:       Ogg and Vorbis toolkit for Java
 License:       ASL 2.0
 URL:           https://github.com/Gagravarr/VorbisJava
@@ -109,6 +110,9 @@ find . -name "*.jar" -delete
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_1jpp8
 - new version
 
