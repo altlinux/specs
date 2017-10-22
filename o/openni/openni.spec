@@ -2,6 +2,8 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: python-modules-xml python-devel
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global commit 1e9524ffd759841789dadb4ca19fb5d4ac5820e7
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %ifarch x86_64
@@ -17,7 +19,7 @@ BuildRequires: python-modules-xml python-devel
 
 Name:           openni
 Version:        1.5.7.10
-Release:        alt2_6
+Release:        alt2_11
 Summary:        Library for human-machine Natural Interaction
 
 Group:          System/Libraries
@@ -39,12 +41,12 @@ Patch3:         openni-1.3.2.1-silence-assert.patch
 Patch4:         openni-1.3.2.1-fedora-java.patch
 Patch5:         openni-1.5.2.23-disable-softfloat.patch
 Patch6:         openni-1.5.2.23-armsamples.patch
-Patch7:         %name-%version-alt-gcc6.patch
+Patch7:         openni-1.5.7.10-rename-equivalent-for-gcc6.patch
 
 ExclusiveArch:  %{ix86} x86_64 %{arm}
 
-BuildRequires:  libfreeglut-devel tinyxml-devel libjpeg-devel dos2unix libusb-devel
-BuildRequires:  doxygen graphviz
+BuildRequires:  libfreeglut-devel, tinyxml-devel, libjpeg-devel, dos2unix, libusb-devel
+BuildRequires:  python, doxygen graphviz libgraphviz
 Source44: import.info
 
 %description
@@ -59,7 +61,7 @@ enables communication with both:
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/C
+Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 
 %description    devel
@@ -69,7 +71,7 @@ developing applications that use %{name}.
 
 %package        java
 Summary:        %{name} Java library
-Group:          Development/C
+Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 BuildRequires:  java-devel
 BuildRequires:  jpackage-utils
@@ -108,7 +110,7 @@ The %{name}-examples package contains example programs for OpenNI.
 %patch4 -p1 -b .fedora-java
 %patch5 -p1 -b .disable-softfloat
 %patch6 -p1 -b .armsamples
-%patch7 -p2
+%patch7 -p1 -b .rename-equivalent-for-gcc6
 rm -rf Source/External
 rm -rf Platform/Linux/Build/Prerequisites/*
 find Samples -name GL -prune -exec rm -rf {} \;
@@ -175,6 +177,14 @@ sed -e 's![@]prefix[@]!%{_prefix}!g' \
     -e 's![@]version[@]!%{version}!g' \
     %{SOURCE1} > %{buildroot}%{_libdir}/pkgconfig/libopenni.pc
 
+# touching all ghosts; hack for rpm 4.0.4
+for rpm_404_ghost in %{_var}/lib/ni/modules.xml
+do
+    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
+    touch %buildroot"$rpm_404_ghost"
+done
+
+
 
 %post
 if [ $1 == 1 ]; then
@@ -220,6 +230,9 @@ fi
 
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.7.10-alt2_11
+- update to new release by fcimport
+
 * Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.7.10-alt2_6
 - Fixed build with gcc-6
 
