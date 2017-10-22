@@ -1,5 +1,5 @@
 Name: erc
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
 Summary: Universal Archive Tool
@@ -48,6 +48,9 @@ See detailed russian description here: http://wiki.etersoft.ru/ERC
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Sun Oct 22 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt1
+- add support for pack to zip if one dir arg was received
+
 * Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.2-alt1
 - fix get extension: check for tar.* firstly
 - allow get type of archive for nonexists files too
