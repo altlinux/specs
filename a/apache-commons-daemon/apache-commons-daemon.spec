@@ -2,16 +2,17 @@ Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 
 %global base_name   daemon
 %global short_name  commons-%{base_name}
 
 Name:           apache-%{short_name}
 Version:        1.0.15
-Release:        alt1_11jpp8
+Release:        alt1_13jpp8
 Summary:        Defines API to support an alternative invocation mechanism
 License:        ASL 2.0
 Group:          System/Base
@@ -24,10 +25,13 @@ Patch2:         apache-commons-daemon-secondary.patch
 # https://issues.apache.org/jira/browse/DAEMON-308
 Patch3:         apache-commons-daemon-aarch64.patch
 BuildRequires:  maven-local
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  java-devel >= 1.6.0
+BuildRequires:  jpackage-utils
 BuildRequires:  apache-commons-parent
 BuildRequires:  maven-surefire-provider-junit
 BuildRequires:  xmlto
+BuildRequires:  gcc-common
+BuildRequires:  make
 Source44: import.info
 
 
@@ -50,7 +54,7 @@ Provides:       jsvc = 1:%{version}-%{release}
 %package        javadoc
 Summary:        API documentation for %{name}
 Group:          Development/Java
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 BuildArch:      noarch
 
 %description    javadoc
@@ -78,7 +82,7 @@ pushd src/native/unix
 %configure --with-java=%{java_home}
 # this is here because 1.0.2 archive contains old *.o
 make clean
-make %{?_smp_mflags}
+%make_build
 popd
 
 # build jars
@@ -111,6 +115,9 @@ install -Dpm 644 src/native/unix/jsvc.1 $RPM_BUILD_ROOT%{_mandir}/man1/jsvc.1
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0.15-alt1_13jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.15-alt1_11jpp8
 - new fc release
 
