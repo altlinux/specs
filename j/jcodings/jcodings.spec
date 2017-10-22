@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global commit_hash d50ee0e
 %global tag_hash d50ee0e
 
@@ -12,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jcodings
 Version:        1.0.9
-Release:        alt2_9jpp8
+Release:        alt2_11jpp8
 Summary:        Java-based codings helper classes for Joni and JRuby
 
 Group:          Development/Other
@@ -23,6 +24,7 @@ Source0:        https://github.com/jruby/jcodings/tarball/%{version}/jruby-%{nam
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+BuildRequires:  maven-source-plugin
 Source44: import.info
 
 %description
@@ -50,6 +52,9 @@ echo "See %{url} for more info about the %{name} project." > README.txt
 %doc README.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt2_11jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt2_9jpp8
 - new fc release
 
