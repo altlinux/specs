@@ -4,12 +4,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-enforcer
 Version:        1.4.1
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Maven Enforcer
 License:        ASL 2.0
 URL:            http://maven.apache.org/enforcer
@@ -104,6 +105,9 @@ sed -e "s|<artifactId>plexus-maven-plugin</artifactId>|<artifactId>plexus-compon
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4.1-alt1_5jpp8
+- new jpp release
+
 * Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4.1-alt1_4jpp8
 - new version
 
