@@ -2,18 +2,18 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jboss-j2eemgmt-1.1-api
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.0.1
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 %global oname jboss-j2eemgmt-api_1.1_spec
 Name:          jboss-j2eemgmt-1.1-api
 Version:       1.0.1
-Release:       alt2_10jpp8
+Release:       alt2_11jpp8
 Summary:       Java EE Management 1.1 API
 License:       LGPLv2+
 URL:           http://www.jboss.org/
@@ -21,6 +21,7 @@ URL:           http://www.jboss.org/
 # cd jboss-j2eemgmt-1.1-api/ && git archive --format=tar --prefix=jboss-j2eemgmt-1.1-api/ jboss-j2eemgmt-api_1.1_spec-1.0.1.Final | xz > jboss-j2eemgmt-1.1-api-1.0.1.Final.tar.xz
 Source0:       %{name}-%{namedversion}.tar.xz
 
+BuildRequires: java-devel
 BuildRequires: jboss-specs-parent
 
 BuildRequires: jboss-ejb-3.1-api
@@ -60,6 +61,9 @@ This package contains javadoc for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_11jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_10jpp8
 - new fc release
 
