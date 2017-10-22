@@ -1,13 +1,17 @@
 Epoch: 1
 Group: Development/Java
-%filter_from_requires /^java-headless/d
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global short_name commons-launcher
 
 Name:          apache-%{short_name}
 Version:       1.1
-Release:       alt3_18.20100521svn936225jpp8
+Release:       alt3_19.20100521svn936225jpp8
 Summary:       A cross platform Java application launcher
 License:       ASL 2.0
 URL:           http://commons.apache.org/launcher/
@@ -106,6 +110,9 @@ rm src/java/LauncherBootstrap.java
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt3_19.20100521svn936225jpp8
+- new jpp release
+
 * Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt3_18.20100521svn936225jpp8
 - unbootstrap build
 
