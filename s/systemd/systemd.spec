@@ -57,7 +57,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 234
-Release: alt3
+Release: alt4
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1920,6 +1920,14 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Thu Oct 19 2017 Ivan Zakharyaschev <imz@altlinux.org> 1:234-alt4
+- udevd.init (SysV): fix creating static device inodes (ALT: #34031).
+  (Use an option introduced in v209 for "unsafe" tmpfiles actions,
+  because the static devices are listed as such by kmod.)
+- This also helps the unmounting of NFS when halting after having
+  upgraded/reinstalled udev (& other) on a system with SysV init
+  (ALT: #34019) by a lucky coincidence.
+
 * Fri Aug 11 2017 Paul Wolneykien <manowar@altlinux.org> 1:234-alt3
 - Fix: Make --root option really work (closes: 33749).
 
