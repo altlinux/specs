@@ -2,14 +2,15 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global artifactId javax.servlet-api
 
 Name:           glassfish-servlet-api
 Version:        3.1.0
-Release:        alt3_11jpp8
+Release:        alt3_12jpp8
 Summary:        Java Servlet API
 License:        (CDDL or GPLv2 with exceptions) and ASL 2.0
 URL:            http://servlet-spec.java.net
@@ -69,6 +70,9 @@ cp -p src/main/resources/META-INF/README .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt3_12jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt3_11jpp8
 - new fc release
 
