@@ -2,15 +2,16 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global bootstrap 0
 %global bootstrap_version 3.1.3
 
 Name:           antlr32
 Version:        3.2
-Release:        alt1_15jpp8
+Release:        alt1_16jpp8
 Summary:        ANother Tool for Language Recognition
 
 License:        BSD
@@ -60,7 +61,7 @@ dependency on this one.
 %package     maven-plugin
 Group: Development/Java
 Summary:     Maven plug-in for creating ANTLR-generated parsers
-Requires:    %{name}-tool = %{version}
+Requires:    %{name}-tool = %{version}-%{release}
 
 %description maven-plugin
 Maven plug-in for creating ANTLR-generated parsers.
@@ -68,7 +69,7 @@ Maven plug-in for creating ANTLR-generated parsers.
 %package     tool
 Group: Development/Java
 Summary:     Command line tool for creating ANTLR-generated parsers
-Requires:    %{name}-java = %{version}
+Requires:    %{name}-java = %{version}-%{release}
 
 %description tool
 Command line tool for creating ANTLR-generated parsers.
@@ -160,6 +161,9 @@ cp -p %{SOURCE6} %{SOURCE7} .m2/org/antlr/antlr3-maven-plugin/%{bootstrap_versio
 %doc tool/LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_16jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_15jpp8
 - new fc release
 
