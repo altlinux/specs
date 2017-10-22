@@ -2,18 +2,22 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          shrinkwrap-resolver
 Version:       2.2.2
-Release:       alt1_1jpp8
+Release:       alt1_3jpp8
 Summary:       Java API to obtain Maven artifacts
 # Some file are without license headers
 # reported @ https://issues.jboss.org/projects/SHRINKRES/issues/SHRINKRES-242
 License:       ASL 2.0
 URL:           http://arquillian.org/modules/resolver-shrinkwrap/
 Source0:       https://github.com/shrinkwrap/resolver/archive/%{version}.tar.gz
+
+Patch0:        shrinkwrap-resolver-2.2.2-maven-model3.4.patch
+Patch1:        shrinkwrap-resolver-2.2.2-override.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(com.google.guava:guava)
@@ -56,6 +60,7 @@ BuildRequires: mvn(org.jboss.shrinkwrap:shrinkwrap-bom:pom:)
 BuildRequires: mvn(org.jboss.shrinkwrap:shrinkwrap-impl-base)
 BuildRequires: mvn(org.mockito:mockito-all)
 BuildRequires: mvn(org.sonatype.plexus:plexus-sec-dispatcher)
+BuildRequires: xmvn
 
 BuildArch:     noarch
 Source44: import.info
@@ -204,6 +209,9 @@ This package contains the API documentation for %{name}.
 find -name '*.jar' -print -delete
 rm -rf */target
 
+%patch0 -p1
+%patch1 -p1
+
 # Build problems, use old configurations
 %pom_remove_plugin -r :maven-checkstyle-plugin
 %pom_remove_plugin ":maven-enforcer-plugin"
@@ -265,6 +273,9 @@ rm -r impl-maven-archive/src/test/java/org/jboss/shrinkwrap/resolver/impl/maven/
 %doc LICENSE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt1_3jpp8
+- new jpp release
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt1_1jpp8
 - new version
 
