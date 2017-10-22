@@ -3,13 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname gdouros-akkadian-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname gdouros-akkadian
 %global fontconf 65-%{fontname}.conf
-%global checkout 20151024
 
 Name:           fonts-otf-gdouros-akkadian
-Version:        7.13
-Release:        alt1_0.6.%{checkout}
+Version:        7.17
+Release:        alt1_3
 Summary:        A font for Sumero-Akkadian cuneiform
 
 # https://web.archive.org/web/20150625020428/http://users.teilar.gr/~g1951d/
@@ -19,7 +20,7 @@ Summary:        A font for Sumero-Akkadian cuneiform
 # they are free for any use. George Douros"
 License:        Public Domain
 URL:            http://users.teilar.gr/~g1951d/
-Source0:        http://users.teilar.gr/~g1951d/Akkadian.zip
+Source0:        http://users.teilar.gr/~g1951d/AkkadianAssyrian.zip
 Source1:        %{oldname}-fontconfig.conf
 Source2:        %{fontname}.metainfo.xml
 
@@ -55,7 +56,7 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
 install -Dm 0644 -p %{SOURCE2} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+        %{buildroot}%{_datadir}/metainfo/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -93,17 +94,20 @@ fi
 
 %check
 appstream-util validate-relax --nonet \
-      %{buildroot}/%{_datadir}/appdata/%{fontname}.metainfo.xml
+      %{buildroot}/%{_datadir}/metainfo/%{fontname}.metainfo.xml
 
 
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/Akkadian.ttf
-%{_datadir}/appdata/%{fontname}.metainfo.xml
-%doc Akkadian.pdf
+%{_datadir}/metainfo/%{fontname}.metainfo.xml
+%doc Akkadian*.pdf
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 7.17-alt1_3
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 7.13-alt1_0.6.20151024
 - update to new release by fcimport
 
