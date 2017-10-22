@@ -3,9 +3,10 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2009, JPackage Project
 # All rights reserved.
 #
@@ -39,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        A library for instantiating Java objects
 Name:           objenesis
 Version:        2.1
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 License:        ASL 2.0
 URL:            http://objenesis.org/
 Source0:        https://github.com/easymock/%{name}/archive/%{version}.tar.gz
@@ -51,7 +52,8 @@ BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
-BuildRequires:  mvn(org.apache.maven.wagon:wagon-ssh-external)
+# xmvn-builddep misses this:
+BuildRequires:  mvn(org.apache:apache-jar-resource-bundle)
 
 BuildArch:      noarch
 Source44: import.info
@@ -98,6 +100,8 @@ This package contains the API documentation for %{name}.
 %pom_remove_plugin :maven-license-plugin
 %pom_xpath_remove "pom:dependency[pom:scope='test']" tck
 
+%pom_xpath_remove pom:build/pom:extensions
+
 %build
 # tests are skipped because of missing dependency spring-osgi-test
 %mvn_build -- -Dyear=2009 -Dmaven.test.skip=true
@@ -114,6 +118,9 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_6jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_4jpp8
 - new fc release
 
