@@ -12,7 +12,7 @@
 %define docdir %_docdir/%name-%version-doc
 
 Name: lighttpd
-Version: 1.4.45
+Version: 1.4.46
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -119,7 +119,7 @@ mkdir -p %buildroot{%_spooldir/%name/tmp,%_var/log/%name,%_var/lib/%name}
 
 # inirscript, sysconfig and unit
 install -m755 %name.init %buildroot%_initdir/%name
-install -m644 doc/initscripts/sysconfig.lighttpd %buildroot%_sysconfdir/sysconfig/lighttpd
+#install -m644 doc/initscripts/sysconfig.lighttpd %buildroot%_sysconfdir/sysconfig/lighttpd
 install -m644 doc/systemd/lighttpd.service %buildroot%_unitdir/lighttpd.service
 
 # configs
@@ -149,7 +149,7 @@ gpasswd -a %lighttpd_user %webserver_group
 %files
 %doc README INSTALL COPYING AUTHORS
 %config %_initdir/%name
-%config(noreplace) %_sysconfdir/sysconfig/lighttpd
+#%config(noreplace) %_sysconfdir/sysconfig/lighttpd
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %_unitdir/*
 %dir %attr(0750,root,%lighttpd_group) %_sysconfdir/%name
@@ -201,6 +201,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Sun Oct 22 2017 Alexei Takaseev <taf@altlinux.org> 1.4.46-alt1
+- 1.4.46
+
 * Fri Aug 11 2017 Alexei Takaseev <taf@altlinux.org> 1.4.45-alt1
 - 1.4.45
 
