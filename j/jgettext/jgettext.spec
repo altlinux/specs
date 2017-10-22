@@ -3,12 +3,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           jgettext
 Version:        0.14
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        An ANTLR-based parser and generator for GNU Gettext PO/POT 
 
 License:        LGPLv2
@@ -19,10 +20,12 @@ Source1:        http://www.gnu.org/licenses/lgpl-2.1.txt
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  antlr-maven-plugin
-BuildRequires: gettext gettext-tools gettext-tools-python
-
-Requires:       antlr-tool
+BuildRequires:  mvn(antlr:antlr)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.codehaus.mojo:antlr-maven-plugin)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires:  gettext gettext-tools
 Source44: import.info
 
 %description
@@ -49,13 +52,16 @@ cp -p %{SOURCE1} .
 %mvn_install
 
 %files -f .mfiles
-%doc lgpl-2.1.txt README.txt
-%dir %{_javadir}/%{name}
+%doc lgpl-2.1.txt
+%doc README.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc lgpl-2.1.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_5jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_3jpp8
 - new fc release
 
