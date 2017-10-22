@@ -3,15 +3,16 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global base_name       collections
 %global short_name      commons-%{base_name}
 
 Name:           apache-%{short_name}
 Version:        3.2.2
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Provides new interfaces, implementations and utilities for Java Collections
 License:        ASL 2.0
 URL:            http://commons.apache.org/%{base_name}/
@@ -47,7 +48,7 @@ such as union, intersection, and closure.
 %package testframework
 Group: Development/Java
 Summary:        Testframework for %{name}
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description testframework
 %{summary}.
@@ -78,7 +79,7 @@ sed -i 's/\r//' LICENSE.txt PROPOSAL.html README.txt NOTICE.txt
 %mvn_file ':%{short_name}{,-testframework}' %{name}@1 %{short_name}@1
 
 %build
-%mvn_build -- -Dmaven.test.skip.exec=true
+%mvn_build
 
 ant tf.javadoc -Dtf.build.docs=target/site/apidocs/
 
@@ -98,6 +99,9 @@ ant tf.javadoc -Dtf.build.docs=target/site/apidocs/
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.2.2-alt1_4jpp8
+- new jpp release
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.2.2-alt1_3jpp8
 - new version
 
