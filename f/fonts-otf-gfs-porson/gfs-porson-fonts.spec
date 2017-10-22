@@ -2,6 +2,8 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname gfs-porson-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname gfs-porson
 %global fontconf 61-%{fontname}.conf
 
@@ -9,7 +11,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-porson
 Version: 20060908
-Release: alt3_21
+Release: alt3_23
 Summary: GFS Porson Greek font
 
 Group:     System/Fonts/True type
@@ -113,6 +115,9 @@ fi
 
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20060908-alt3_23
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20060908-alt3_21
 - update to new release by fcimport
 
