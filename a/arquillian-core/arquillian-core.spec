@@ -2,23 +2,26 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name arquillian-core
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.1.11
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:          arquillian-core
 Version:       1.1.11
-Release:       alt1_3jpp8
+Release:       alt1_6jpp8
 Summary:       Java Testing Platform for the JVM Member
 # No license header report @ https://github.com/arquillian/arquillian-core/issues/101
 License:       ASL 2.0
 URL:           http://arquillian.org/
 Source0:       https://github.com/arquillian/arquillian-core/archive/%{namedversion}.tar.gz
+
+# [ARQ-2058] Updates testNG to use 6.9.10 https://github.com/arquillian/arquillian-core/issues/119
+Patch0:        https://github.com/arquillian/arquillian-core/commit/3fa56bfa6b5866cc096568cfc008466ad101c0fc.patch
 
 BuildRequires: graphviz libgraphviz
 BuildRequires: maven-local
@@ -355,13 +358,11 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q -n %{name}-%{namedversion}
 
+%patch0 -p1
+rm -r testng/core/src/test/* testng/container/src/test/*
+
 %pom_remove_plugin -r org.codehaus.mojo:animal-sniffer-maven-plugin
 
-# Use testng:5.14.6
-# cannot find symbol: class AnnotationTypeEnum location: package org.testng.internal
-sed -i '/AnnotationTypeEnum/d' \
- testng/core/src/test/java/org/jboss/arquillian/testng/TestNGTestBaseClass.java
- 
 # Use jetty:8.1.2.v20120308
 %pom_xpath_set pom:properties/pom:version.jetty_jetty 8.1 protocols/servlet
 
@@ -438,6 +439,9 @@ sed -i '/AnnotationTypeEnum/d' \
 %doc LICENSE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.11-alt1_6jpp8
+- new jpp release
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.11-alt1_3jpp8
 - new version
 
