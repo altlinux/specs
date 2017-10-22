@@ -1,5 +1,7 @@
 %define oldname cjkuni-uming-fonts
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name cjkuni-uming-fonts
 %define version 0.2.20080216.1
 %global fontname cjkuni-uming
@@ -17,7 +19,7 @@ the CJK Unifonts project.
 
 Name:           fonts-ttf-cjkuni-uming
 Version:        0.2.20080216.1
-Release:        alt4_57
+Release:        alt4_59
 Summary:        Chinese Unicode TrueType font in Ming face
 
 Group:          System/Fonts/True type
@@ -114,6 +116,9 @@ fi
 %doc ../%{umingbuilddir}/README
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.20080216.1-alt4_59
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.20080216.1-alt4_57
 - update to new release by fcimport
 
