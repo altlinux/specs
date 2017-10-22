@@ -2,18 +2,18 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name glassfish-jax-rs-api
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 2.0.1
 %global namedreltag %{nil}
 %global namedversion %{version}%{?namedreltag}
 %global oname javax.ws.rs-api
 Name:          glassfish-jax-rs-api
 Version:       2.0.1
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       JAX-RS API Specification (JSR 339)
 License:       CDDL or GPLv2 with exceptions
 URL:           http://jax-rs-spec.java.net/
@@ -143,6 +143,9 @@ cd src/jax-rs-api
 %endif
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_4jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_3jpp8
 - new fc release
 
