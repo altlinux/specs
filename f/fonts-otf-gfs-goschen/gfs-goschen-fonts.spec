@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname gfs-goschen-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname gfs-goschen
 %global fontconf 64-%{fontname}.conf
 
@@ -10,7 +12,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-goschen
 Version: 20100203
-Release: alt3_10
+Release: alt3_12
 Summary: A 19th century Greek typeface
 
 License:   OFL
@@ -119,6 +121,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20100203-alt3_12
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20100203-alt3_10
 - update to new release by fcimport
 
