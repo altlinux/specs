@@ -1,19 +1,20 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 24
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           jchardet
 Version:        1.1
-Release:        alt2_12jpp8
+Release:        alt2_14jpp8
 Summary:        Java port of Mozilla's automatic character set detection algorithm
 
-Group:          Development/Other
-License:        MPLv1.1
+License:        MPLv1.1 or GPLv2+ or LGPLv2+
 URL:            http://jchardet.sourceforge.net/
 Source0:        http://download.sourceforge.net/jchardet/%{version}/jchardet-%{version}.zip
 Source1:        http://repo1.maven.org/maven2/net/sourceforge/%{name}/%{name}/1.0/%{name}-1.0.pom
@@ -21,11 +22,12 @@ BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils
 
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 %if 0%{?fedora} >= 20 || 0%{?rhel} >= 7
 %else
+Requires:       java
 %endif
 Source44: import.info
 
@@ -37,9 +39,9 @@ from http://lxr.mozilla.org/mozilla/source/intl/chardet/. More information can
 be found at http://www.mozilla.org/projects/intl/chardet.html.
 
 %package javadoc
+Group: Development/Java
 Summary:    API documentation for %{name}
-Group:      Development/Java
-Requires: javapackages-tools rpm-build-java
+Requires:   jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -77,6 +79,9 @@ mv src/*java src/main/java/org/mozilla/intl/chardet
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_14jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_12jpp8
 - new fc release
 
