@@ -1,14 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global bundle org.apache.felix.main
 
 Name:    felix-main
 Version: 5.4.0
-Release: alt1_1jpp8
+Release: alt1_3jpp8
 Summary: Apache Felix Main
 Group:   Development/Other
 License: ASL 2.0
@@ -28,7 +29,10 @@ BuildRequires: felix-osgi-core
 BuildRequires: felix-parent
 BuildRequires: felix-framework >= 4.2.0
 BuildRequires: maven-local
+BuildRequires: maven-antrun-plugin
 BuildRequires: maven-dependency-plugin
+BuildRequires: maven-plugin-bundle
+BuildRequires: maven-source-plugin
 BuildRequires: maven-surefire-provider-junit
 BuildRequires: mockito
 
@@ -71,6 +75,9 @@ This package contains API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 5.4.0-alt1_3jpp8
+- new jpp release
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 5.4.0-alt1_1jpp8
 - new version
 
