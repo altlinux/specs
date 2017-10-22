@@ -5,16 +5,21 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/xsltproc
 %py_provides caja
 %define _libexecdir %_prefix/libexec
 %define oldname python-caja
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global _description\
+Python bindings for Caja
+
 Name:           python-module-caja
-Version:        1.16.0
+Version:        1.19.0
 Release:        alt1_1
 Epoch:          1
 Summary:        Python bindings for Caja
 
-Group:          Development/C
+Group:          Development/Other
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.16/%{oldname}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.19/%{oldname}-%{version}.tar.xz
 
 BuildRequires:  python-devel
 BuildRequires:  mate-file-manager-devel
@@ -22,14 +27,12 @@ BuildRequires:  python-module-pygobject3-common-devel
 BuildRequires:  mate-common
 Source44: import.info
 
-
-%description
-Python bindings for Caja
+%description %_description
 
 %package -n python-module-caja-devel
 Summary:        Python bindings for Caja
-Group:          Development/C
-Requires:       python-module-caja = %{epoch}:%{version}
+Group:          Development/Other
+Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %description -n python-module-caja-devel
 Python bindings for Caja
@@ -50,7 +53,7 @@ sed -i -e 's~#!/usr/bin/python~#!%{__python}~g' examples/update-file-info-async.
 %configure \
      --disable-static
 
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -58,9 +61,12 @@ make %{?_smp_mflags}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/caja-python/extensions
 find $RPM_BUILD_ROOT -name '*.la' -delete
 
+# We use %%doc instead
+rm $RPM_BUILD_ROOT%{_docdir}/python-caja/README
+
 %find_lang %{oldname} --with-gnome --all-name
 
-%files -f %{oldname}.lang
+%files -n python-module-caja -f %{oldname}.lang
 %doc README AUTHORS COPYING NEWS
 %{_libdir}/caja/extensions-2.0/libcaja-python.so
 %{_datadir}/caja/extensions/libcaja-python.caja-extension
@@ -73,6 +79,9 @@ find $RPM_BUILD_ROOT -name '*.la' -delete
 
 
 %changelog
+* Sun Oct 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.19.0-alt1_1
+- new fc release
+
 * Wed Oct 12 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.16.0-alt1_1
 - update to mate 1.16
 
