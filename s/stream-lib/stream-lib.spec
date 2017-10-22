@@ -2,9 +2,10 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # NB: this package includes a forked version of Bloom filter code
 # from Apache Cassandra.  FPC has granted a bundling exception since
 # it is a fork; see https://fedorahosted.org/fpc/ticket/401 and
@@ -16,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           stream-lib
 Version:        %{streamlib_version}
-Release:        alt1_5jpp8
+Release:        alt1_7jpp8
 Summary:        Stream summarizer and cardinality estimator
 License:        ASL 2.0
 URL:            https://github.com/addthis/stream-lib/
@@ -25,6 +26,7 @@ BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(it.unimi.dsi:fastutil)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -66,6 +68,9 @@ This package provides %{summary}.
 %doc LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt1_7jpp8
+- new jpp release
+
 * Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt1_5jpp8
 - new version
 
