@@ -4,15 +4,18 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-archetype
 Version:        2.4
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        Maven project templating toolkit
 
-License:        ASL 2.0
+# Most of the code is under ASL 2.0, but some bundled jdom sources are
+# under ASL 1.1
+License:        ASL 2.0 and ASL 1.1
 URL:            https://maven.apache.org/archetype/
 Source0:        http://repo.maven.apache.org/maven2/org/apache/maven/archetype/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
@@ -218,6 +221,9 @@ popd
 %doc LICENSE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_5jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_3jpp8
 - new fc release
 
