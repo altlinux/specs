@@ -2,12 +2,14 @@
 BuildRequires: python
 # END SourceDeps(oneline)
 %define oldname gargi-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname gargi
 %global fontconf 69-%{fontname}.conf
 
 Name:           fonts-ttf-gargi
 Version:        1.9
-Release:        alt3_13
+Release:        alt3_15
 Summary:        A Devanagari font
 
 Group:          System/Fonts/True type
@@ -107,6 +109,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.9-alt3_15
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.9-alt3_13
 - update to new release by fcimport
 
