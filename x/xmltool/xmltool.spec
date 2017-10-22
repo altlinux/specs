@@ -2,12 +2,14 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           xmltool
 Version:        3.3
-Release:        alt3_15jpp8
+Release:        alt3_18jpp8
 Summary:        Tool to manage XML documents through a Fluent Interface
 
 Group:          Development/Other
@@ -18,11 +20,14 @@ URL:            http://code.google.com/p/xmltool
 # svn export http://xmltool.googlecode.com/svn/tags/xmltool-3.3 xmltool
 # tar cfJ xmltool-3.3.tar.xz xmltool
 Source0:        %{name}-%{version}.tar.xz
+Patch0:         fix-deprecated-assembly-goal.patch
 BuildArch:      noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  java-devel
+BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
 BuildRequires:  maven-remote-resources-plugin
+BuildRequires:  maven-source-plugin
 BuildRequires:  maven-surefire-provider-testng
 BuildRequires:  apache-resource-bundles
 Source44: import.info
@@ -44,16 +49,21 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{name}
 
+%if 0%{?fedora} >= 26
+%patch0 -p0
+%endif
+
 # Fix end-of-line encoding
 sed -i 's/\r//' LICENSE.txt
 
 %mvn_file : %{name}
 
-%build
 # Remove dep on maven-wagon and maven-license plugins
 %pom_xpath_remove "pom:build/pom:extensions"
 %pom_remove_plugin com.google.code.maven-license-plugin:maven-license-plugin
 
+
+%build
 # Disable tests because they require an internet connection to run!
 %mvn_build -f
 
@@ -67,6 +77,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt3_18jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt3_15jpp8
 - new fc release
 
