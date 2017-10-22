@@ -1,5 +1,5 @@
 Name: lximage-qt
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: Image viewer and screenshot tool
@@ -38,6 +38,9 @@ BuildRequires: glib2-devel libpcre-devel
 %doc AUTHORS
 
 %changelog
+* Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 0.5.0-alt1
 - 0.5.0
 

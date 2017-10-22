@@ -1,5 +1,5 @@
 Name: lxqt-openssh-askpass
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 
 Summary: Used to ask for user/password with GUI for OpenSSH
@@ -35,6 +35,9 @@ Obsoletes: razorqt-openssh-askpass < 0.7.0
 %doc AUTHORS
 
 %changelog
+* Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.12.0-alt1
+- 0.12.0
+
 * Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 0.11.0-alt1
 - 0.11.0
 

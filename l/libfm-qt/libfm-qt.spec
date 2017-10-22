@@ -1,7 +1,7 @@
 %define soname 3
 
 Name: libfm-qt
-Version: 0.11.1
+Version: 0.12.0
 Release: alt1
 
 Summary: Core library of PCManFM-Qt file manager
@@ -47,6 +47,7 @@ LibFM-Qt is a core library of PCManFM-Qt file manager.
 %package devel
 Summary: Development files for %name
 Group: Development/Other
+Requires: libexif-devel libmenu-cache-devel
 
 %description devel
 This package contains files needed to build applications using LibFM-Qt.
@@ -55,22 +56,23 @@ This package contains files needed to build applications using LibFM-Qt.
 %setup
 
 %build
-%cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
-%make_build
+# FIXME: insource build broken upstream as of 0.12.0:
+# https://pastebin.com/ExqvpJVa (notified agaida@)
+#cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
+%cmake -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
+%make_build -C BUILD
 
 %install
-%makeinstall_std
+%makeinstall_std -C BUILD
 %find_lang --with-qt %name
 
 # We need to fix this upstream
-find %{buildroot} -size 0 -delete
+find %buildroot -size 0 -delete
 
 %files -n %name%soname -f libfm-qt.lang
-#_xdgconfigdir/*
 %_libdir/*.so.*
-#_libdir/%name/modules/*.so
-#_xdgmimedir/packages/*
-#_datadir/%name/
+%_datadir/%name/
+%_xdgmimedir/*/*
 
 %files devel
 %_libdir/*.so
@@ -80,6 +82,9 @@ find %{buildroot} -size 0 -delete
 %doc AUTHORS
 
 %changelog
+* Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.12.0-alt1
+- 0.12.0
+
 * Tue Oct 04 2016 Michael Shigorin <mike@altlinux.org> 0.11.1-alt1
 - built for sisyphus (partially based on fedora spec)
 

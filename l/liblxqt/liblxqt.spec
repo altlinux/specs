@@ -1,5 +1,5 @@
 Name: liblxqt
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 
 Summary: Core utility library for LXDE-Qt components
@@ -13,7 +13,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools-devel
 BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: libqtxdg-devel
+BuildRequires: lxqt-build-tools libqtxdg-devel
 BuildRequires: git-core
 
 Provides: librazorqt = %version
@@ -37,6 +37,7 @@ This package provides shared data files for LXQt library.
 Summary: Development headers for LXQt library
 Group: Development/C++
 Requires: %name = %version
+Requires: lxqt-build-tools
 
 %description devel
 This package provides the development files for LXQt library.
@@ -62,6 +63,9 @@ This package provides the development files for LXQt library.
 %_datadir/cmake/*/
 
 %changelog
+* Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.12.0-alt1
+- 0.12.0
+
 * Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 0.11.0-alt1
 - 0.11.0
 - data subpackage superseded by lxqt-l10n

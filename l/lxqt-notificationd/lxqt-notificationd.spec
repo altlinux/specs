@@ -1,5 +1,5 @@
 Name: lxqt-notificationd
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 
 Summary: Notification service
@@ -13,10 +13,12 @@ Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core git-core
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
 BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: libqtxdg-devel
+BuildRequires: rpm-build-xdg libqtxdg-devel
 
 Provides: razorqt-notificationd = %version
 Obsoletes: razorqt-notificationd < 0.7.0
+
+Conflicts: lxqt-common <= 0.11.0
 
 %description
 %summary
@@ -33,10 +35,14 @@ Obsoletes: razorqt-notificationd < 0.7.0
 
 %files
 %_bindir/*
+%_xdgconfigdir/*/*
 %_desktopdir/*.desktop
 %doc AUTHORS
 
 %changelog
+* Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.12.0-alt1
+- 0.12.0
+
 * Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 0.11.0-alt1
 - 0.11.0
 

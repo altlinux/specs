@@ -1,5 +1,5 @@
 Name: lxqt-panel
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 
 Summary: Desktop panel
@@ -26,6 +26,8 @@ BuildRequires: libsysstat-devel >= 0.3.0
 
 Provides: razorqt-panel = %version
 Obsoletes: razorqt-panel < 0.7.0
+
+Conflicts: lxqt-common <= 0.11.0
 
 Requires: menu-cache
 Requires: udisks2 gvfs
@@ -54,16 +56,21 @@ This package provides the development files for %name.
 %makeinstall_std
 
 %files
+%_man1dir/*
 %_bindir/*
 %_libdir/*/*.so
 %_xdgconfigdir/*/*
 %_datadir/lxqt/*
+%_datadir/desktop-directories/*
 %doc AUTHORS
 
 %files devel
 %_includedir/*/*.h
 
 %changelog
+* Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.12.0-alt1
+- 0.12.0
+
 * Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 0.11.0-alt1
 - 0.11.0
 - disabled pulseaudio for build
