@@ -3,12 +3,21 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%bcond_without  groovy
+
 Name:           maven-invoker-plugin
 Version:        1.10
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        Maven Invoker Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-invoker-plugin/
@@ -35,7 +44,9 @@ BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-project)
 BuildRequires:  mvn(org.apache.maven:maven-settings)
 BuildRequires:  mvn(org.beanshell:bsh)
+%if %{with groovy}
 BuildRequires:  mvn(org.codehaus.groovy:groovy)
+%endif
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-i18n)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
@@ -58,6 +69,10 @@ API documentation for %{name}.
 %prep
 %setup -q 
 
+%if %{without groovy}
+%pom_remove_dep ':${groovy-artifactId}'
+%endif
+
 %build
 %mvn_build -f 
 
@@ -71,6 +86,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_5jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_3jpp8
 - new fc release
 
