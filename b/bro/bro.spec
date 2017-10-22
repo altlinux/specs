@@ -1,14 +1,18 @@
 Name: bro
 Version: 2.3.1
-Release: alt6
+Release: alt7
+
 Summary: A Network Intrusion Detection System and Analysis Framework
+
 Group: Networking/Other
 License: BSD
 Url: http://bro.org
+
 Source0: http://www.bro.org/downloads/release/%name-%version.tar
 Source1: bro.service
 Source3: bro.init
 Source2: bro-logrotate.conf
+
 # Fix for the usage of configure with cmake. This is Fedora specific.
 Patch0: bro-2.3-configure.patch
 # The aux tools are separate packages. No need to build them.
@@ -17,8 +21,10 @@ Patch1: bro-2.3-broctl-disable-aux.patch
 Patch2: bro-2.3-broctl-path.patch
 # commit 36bc7ba5b5 Handle guess_lexer exceptions in pygments reST directive
 Patch3: bro-2.3-pygments-reST-alt.patch
+
 Provides: /var/spool/bro/broctl-config.sh
 
+BuildRequires: rpm-build-intro
 
 BuildRequires: cmake
 BuildRequires: libpcap-devel
@@ -287,6 +293,9 @@ fi
 %doc build/doc/sphinx_output/html
 
 %changelog
+* Sun Oct 22 2017 Vitaly Lipatov <lav@altlinux.ru> 2.3.1-alt7
+- add BuildRequires: rpm-build-intro (ALT bug 34025)
+
 * Thu Jan 29 2015 Andriy Stepanov <stanv@altlinux.ru> 2.3.1-alt6
 - noarch for documentation package
 
