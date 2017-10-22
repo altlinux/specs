@@ -1,9 +1,8 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: gcc-c++
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # fedora __isa_bits tmp hack
@@ -12,6 +11,8 @@ BuildRequires: jpackage-generic-compat
 %else
 %define __isa_bits 32
 %endif
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global debug_package %{nil}
 
 # rpmbuild < 4.6 support
@@ -25,15 +26,15 @@ BuildRequires: jpackage-generic-compat
 
 Name:          leveldbjni
 Version:       1.8
-Release:       alt1_13jpp8
+Release:       alt1_15jpp8
 Summary:       A Java Native Interface to LevelDB
 License:       BSD
 URL:           https://github.com/fusesource/leveldbjni/
 Source0:       https://github.com/fusesource/leveldbjni/archive/%{name}-%{version}.tar.gz
 
-BuildRequires: autoconf-common
-BuildRequires: automake-common
-BuildRequires: libtool-common
+BuildRequires: autoconf
+BuildRequires: automake
+BuildRequires: libtool
 BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
@@ -46,6 +47,7 @@ BuildRequires: mvn(org.iq80.leveldb:leveldb-api)
 # see https://bugzilla.redhat.com/show_bug.cgi?id=881608
 BuildRequires: pkgconfig(leveldb) >= 1.7.0
 BuildRequires: libsnappy-devel
+BuildRequires: xmvn
 Source44: import.info
 
 %description
@@ -118,6 +120,14 @@ This package contains javadoc for %{name}.
 rm -r %{name}/src/test/java/org/fusesource/%{name}/test/DBTest.java
 # cp -f /usr/lib/rpm/config.{sub,guess} /usr/share/automake-*/compile leveldbjni/src/main/native-package/autotools/
 
+%pom_remove_plugin :maven-jar-plugin %{name}
+%pom_add_plugin org.apache.maven.plugins:maven-jar-plugin:3.0.2 %{name} '
+<configuration>
+  <archive>  
+    <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+  </archive> 
+</configuration>'
+
 %build
 
 %ifarch ppc64
@@ -139,6 +149,9 @@ export JAVA_HOME=%{_jvmdir}/java LEVELDB_HOME=%{_prefix} SNAPPY_HOME=%{_prefix}
 %doc license.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_15jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_13jpp8
 - new fc release
 
