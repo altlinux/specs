@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          replacer
 Version:       1.6
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Replacer Maven Mojo
 License:       MIT
 URL:           https://github.com/beiliubei/maven-replacer-plugin
@@ -72,6 +73,9 @@ sed -i.hamcrest '/startsWith/d' src/test/java/com/google/code/maven_replacer_plu
 %doc LICENSE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_4jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_3jpp8
 - new fc release
 
