@@ -3,12 +3,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          velocity-tools
 Version:       2.0
-Release:       alt2_13jpp8
+Release:       alt2_15jpp8
 Summary:       Collection of useful tools for Velocity template engine
 License:       ASL 2.0
 Url:           http://velocity.apache.org/tools/releases/2.0/
@@ -19,6 +20,7 @@ Patch1:        %{name}-%{version}-dont_copy_test_lib.patch
 # servlet 3.1 support
 Patch2:        %{name}-%{version}-servlet.patch
 
+BuildRequires: maven-local
 BuildRequires: mvn(commons-beanutils:commons-beanutils)
 BuildRequires: mvn(commons-chain:commons-chain)
 BuildRequires: mvn(commons-collections:commons-collections)
@@ -27,6 +29,10 @@ BuildRequires: mvn(commons-lang:commons-lang)
 BuildRequires: mvn(commons-logging:commons-logging)
 BuildRequires: mvn(commons-validator:commons-validator)
 BuildRequires: mvn(dom4j:dom4j)
+BuildRequires: mvn(org.apache.maven.plugins:maven-resources-plugin)
+# required by resources-plugin
+BuildRequires: mvn(org.apache.maven.shared:maven-filtering)
+BuildRequires: mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires: mvn(org.apache.struts:struts-core)
 BuildRequires: mvn(org.apache.struts:struts-taglib)
 BuildRequires: mvn(org.apache.struts:struts-tiles)
@@ -48,12 +54,7 @@ BuildRequires: mvn(xerces:xercesImpl) = 2.8.1
 BuildRequires: mvn(xerces:xmlParserAPIs) = 2.6.2
 %endif
 BuildRequires: mvn(junit:junit)
-
-BuildRequires: maven-local
-BuildRequires: maven-resources-plugin
-# required by resources-plugin
-BuildRequires: mvn(org.apache.maven.shared:maven-filtering)
-BuildRequires: mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires: xmvn
 
 BuildArch:     noarch
 Source44: import.info
@@ -93,6 +94,8 @@ sed -i 's/\r//' LICENSE NOTICE WHY_THREE_JARS.txt
 %pom_xpath_remove "pom:project/pom:build/pom:outputDirectory"
 %pom_xpath_remove "pom:project/pom:build/pom:directory"
 
+%pom_remove_dep org.mortbay.jetty:jetty-embedded
+
 %mvn_file :%{name} %{name}
 %mvn_alias :%{name} %{name}:%{name}
 %mvn_alias :%{name} org.apache.velocity:%{name}-generic
@@ -116,6 +119,9 @@ sed -i 's/\r//' LICENSE NOTICE WHY_THREE_JARS.txt
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt2_15jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt2_13jpp8
 - new fc release
 
