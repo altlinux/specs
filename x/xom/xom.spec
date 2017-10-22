@@ -3,9 +3,10 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: dom4j
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -44,7 +45,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        XML Object Model
 Name:           xom
 Version:        1.2.10
-Release:        alt1_6jpp8
+Release:        alt1_8jpp8
 Epoch:          1
 License:        LGPLv2
 URL:            http://www.xom.nu
@@ -67,6 +68,7 @@ BuildRequires:  dom4j
 BuildRequires:  xml-commons-apis
 BuildRequires:  tagsoup
 # Use JAXP implementation in JDK
+BuildRequires:  java-devel
 BuildRequires:  xml-commons-resolver
 BuildRequires:  servlet
 
@@ -99,13 +101,15 @@ This package provides %{summary}.
 %package demo
 Group: Development/Java
 Summary:        Samples for %{name}
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description demo
 This package provides %{summary}.
 
 %prep
 %setup -q -n XOM
+
+find \( -name '*.jar' -or -name '*.class' \) -delete
 
 %patch0 -p1
 
@@ -202,6 +206,9 @@ ln -s xom/xom.pom %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_datadir}/%{name}/xom-samples.jar
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.2.10-alt1_8jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.2.10-alt1_6jpp8
 - new fc release
 
