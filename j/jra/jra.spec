@@ -2,18 +2,18 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jra
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.0
 %global namedreltag -alpha-4
 %global namedversion %{version}%{?namedreltag}
 
 Name:          jra
 Version:       1.0
-Release:       alt2_0.11.alpha4jpp8
+Release:       alt2_0.12.alpha4jpp8
 Summary:       Java REST Annotations
 License:       ASL 2.0
 Group:         Development/Other
@@ -46,7 +46,7 @@ implementations. However, the idea with JRA is that many different frameworks
 %package javadoc
 Summary:       Javadocs for %{name}
 Group:         Development/Java
-Requires: javapackages-tools rpm-build-java
+Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -71,6 +71,9 @@ This package contains the API documentation for %{name}.
 %doc src/main/resources/META-INF/LICENSE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.12.alpha4jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.11.alpha4jpp8
 - new fc release
 
