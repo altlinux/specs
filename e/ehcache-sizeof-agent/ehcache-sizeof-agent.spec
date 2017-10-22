@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          ehcache-sizeof-agent
 Version:       1.0.1
-Release:       alt2_11jpp8
+Release:       alt2_13jpp8
 Summary:       Ehcache Size Of Agent
 License:       ASL 2.0
 URL:           http://www.terracotta.org/
@@ -17,16 +18,16 @@ Source0:       %{name}-%{version}.tar.gz
 # ehcache-sizeof-agent package don't include the license file
 Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
 
-
 BuildRequires: maven-local
 BuildRequires: maven-shared
 BuildRequires: maven-gpg-plugin
 BuildRequires: maven-idea-plugin
-BuildRequires: maven-pmd-plugin
 BuildRequires: maven-source-plugin
 BuildRequires: maven-release-plugin
+
 BuildRequires: ehcache-parent
 Requires:      ehcache-parent
+
 BuildArch:     noarch
 Source44: import.info
 
@@ -64,6 +65,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_13jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_11jpp8
 - new fc release
 
