@@ -2,7 +2,7 @@
 # $ download.sh
 # $ download_crl.sh
 Name: ca-gost-certificates-auc
-Version: 2017.09.24
+Version: 2017.10.22
 Release: alt1
 
 Summary: GOST CA intermediate certificates
@@ -69,5 +69,8 @@ cp crl.list crl.url.failed.list %buildroot%_datadir/%name/
 %_datadir/%name/crl-pem/
 
 %changelog
+* Sun Oct 22 2017 Vitaly Lipatov <lav@altlinux.ru> 2017.10.22-alt1
+- update 22.10.2017
+
 * Sun Sep 24 2017 Vitaly Lipatov <lav@altlinux.ru> 2017.09.24-alt1
 - initial build for ALT Sisyphus
