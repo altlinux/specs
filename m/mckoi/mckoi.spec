@@ -4,12 +4,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          mckoi
 Version:       1.0.4
-Release:       alt2_11jpp8
+Release:       alt2_13jpp8
 Summary:       Open Source Java SQL Database
 License:       GPLv2
 URL:           http://mckoi.com/database/
@@ -18,7 +19,8 @@ Patch0:        %{name}-%{version}-jdk7.patch
 Patch1:        %{name}-%{version}-fix_fsf-address.patch
 
 BuildRequires: gnu-regexp
-BuildRequires: javacc
+BuildRequires: java-devel
+#BuildRequires: javacc
 BuildRequires: maven-local
 BuildRequires: zip
 BuildArch:     noarch
@@ -43,7 +45,7 @@ This package contains javadoc for %{name}.
 %package demos
 Group: Development/Java
 Summary:       Demonstrations and samples for %{name}
-Requires:      %{name} = %{version}
+Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:      gnu-regexp
 
 %description demos
@@ -67,10 +69,10 @@ sed -i "s|../mckoidb.jar:../gnu-regexp-1.0.8.jar|../target/MckoiSQLDB-%{version}
 chmod 755 test/*.sh
 
 sed -i 's/\r//' README.txt LICENSE.txt docs/LICENSE.txt
-
-cd src/main/java/com/mckoi/database/sql
-rm -rf TokenMgrError.java ParseException.java Token.java SimpleCharStream.java
-javacc.sh SQL.jj
+# javacc 6.x generate broken java files
+#cd src/main/java/com/mckoi/database/sql
+#rm -rf TokenMgrError.java ParseException.java Token.java SimpleCharStream.java
+#javacc.sh SQL.jj
 
 %mvn_file :MckoiSQLDB %{name}
 %mvn_file :MckoiSQLDB MckoiSQLDB
@@ -111,6 +113,9 @@ sh ./runLocalTest.sh
 %doc LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt2_13jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt2_11jpp8
 - new fc release
 
