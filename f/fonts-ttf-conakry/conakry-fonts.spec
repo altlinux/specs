@@ -3,12 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname conakry-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname conakry
 %global fontconf 65-%{fontname}.conf
 
 Name:		fonts-ttf-conakry
 Version:	20070829
-Release:	alt3_13
+Release:	alt3_15
 Summary:	N'Ko font by Michael Everson
 
 License:	OFL
@@ -94,6 +96,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20070829-alt3_15
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20070829-alt3_13
 - update to new release by fcimport
 
