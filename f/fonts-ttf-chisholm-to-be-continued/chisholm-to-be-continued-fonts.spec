@@ -3,12 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname chisholm-to-be-continued-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define fontname chisholm-to-be-continued
 %define fontconf 61-%{fontname}.conf
 
 Name:           fonts-ttf-chisholm-to-be-continued
 Version:        20090124
-Release:        alt3_13
+Release:        alt3_15
 Summary:        Decorative Sans Serif Font
 
 License:        OFL
@@ -89,6 +91,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20090124-alt3_15
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20090124-alt3_13
 - update to new release by fcimport
 
