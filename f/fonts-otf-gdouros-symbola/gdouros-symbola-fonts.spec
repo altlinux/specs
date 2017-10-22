@@ -3,11 +3,13 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname gdouros-symbola-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname gdouros-symbola
 %global fontconf 65-%{fontname}.conf
 
 Name:           fonts-otf-gdouros-symbola
-Version:        9.00
+Version:        10.03
 Release:        alt1_1
 Summary:        A symbol font
 
@@ -56,7 +58,7 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
 install -Dm 0644 -p %{SOURCE2} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+        %{buildroot}%{_datadir}/metainfo/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -94,17 +96,20 @@ fi
 
 %check
 appstream-util validate-relax --nonet \
-      %{buildroot}/%{_datadir}/appdata/%{fontname}.metainfo.xml
+      %{buildroot}/%{_datadir}/metainfo/%{fontname}.metainfo.xml
 
 
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/Symbola.ttf
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+%{_datadir}/metainfo/%{fontname}.metainfo.xml
 %doc Symbola.pdf
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 10.03-alt1_1
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 9.00-alt1_1
 - update to new release by fcimport
 
