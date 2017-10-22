@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jboss-httpserver
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.0.0
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-%{realname}
 Version:          1.0.0
-Release:          alt2_11jpp8
+Release:          alt2_12jpp8
 Summary:          JBoss httpserver
 Group:            Development/Other
 License:          GPLv2 and GPLv2 with exceptions
@@ -25,6 +25,7 @@ Source0:          %{name}-%{namedversion}.tar.xz
 
 BuildArch:        noarch
 
+BuildRequires:    java-devel
 BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
@@ -65,6 +66,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_12jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_11jpp8
 - new fc release
 
