@@ -2,18 +2,18 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name picketbox
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 4.9.6
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             picketbox
 Version:          4.9.6
-Release:          alt1_1jpp8
+Release:          alt1_4jpp8
 Summary:          Security framework for Java Applications
 License:          LGPLv2+
 URL:              http://picketbox.jboss.org
@@ -46,6 +46,7 @@ BuildRequires:    mvn(org.jboss.spec.javax.security.auth.message:jboss-jaspi-api
 BuildRequires:    mvn(org.jboss.spec.javax.security.jacc:jboss-jacc-api_1.5_spec)
 BuildRequires:    mvn(org.jboss.spec.javax.servlet:jboss-servlet-api_3.0_spec)
 BuildRequires:    mvn(org.picketbox:picketbox-commons)
+BuildRequires:    xmvn
 Source44: import.info
 
 %description
@@ -86,6 +87,16 @@ This package contains the API documentation for %{name}.
   <phase>skip</phase>
 </execution>" security-jboss-sx/jbosssx-client
 
+%pom_remove_dep org.jboss.modules:jboss-modules security-jboss-sx/parent
+%pom_add_dep_mgmt org.jboss.modules:jboss-modules:1.3.4.Final:compile security-jboss-sx/parent
+
+# Don't use deprecated "attached" goal of Maven Assembly Plugin, which
+# was removed in version 3.0.0.
+%pom_xpath_set -r "pom:plugin[pom:artifactId='maven-assembly-plugin']/pom:executions/pom:execution/pom:goals/pom:goal[text()='attached']" single
+
+%pom_remove_dep org.picketbox:common-spi security-jboss-sx/identity
+%pom_add_dep org.picketbox:common-spi:'${project.version}':compile security-jboss-sx/identity
+
 %build
 
 %mvn_build -f
@@ -102,6 +113,9 @@ install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}.po
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 4.9.6-alt1_4jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 4.9.6-alt1_1jpp8
 - new version
 
