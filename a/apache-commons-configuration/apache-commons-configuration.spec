@@ -3,15 +3,16 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global base_name       configuration
 %global short_name      commons-%{base_name}
 
 Name:           apache-%{short_name}
 Version:        1.10
-Release:        alt1_6jpp8
+Release:        alt1_9jpp8
 Summary:        Commons Configuration Package
 
 License:        ASL 2.0
@@ -28,12 +29,10 @@ BuildRequires:  mvn(commons-jxpath:commons-jxpath)
 BuildRequires:  mvn(commons-lang:commons-lang)
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(javax.servlet:servlet-api)
-BuildRequires:  mvn(log4j:log4j)
+BuildRequires:  mvn(log4j:log4j:1.2.17)
 BuildRequires:  mvn(org.apache.commons:commons-jexl)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.commons:commons-vfs2)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
 BuildRequires:  mvn(xml-apis:xml-apis)
 BuildRequires:  mvn(xml-resolver:xml-resolver)
@@ -53,6 +52,7 @@ Custom configuration objects are very easy to create now
 by just subclassing AbstractConfiguration. This works
 similar to how AbstractList works.
 
+%if 0
 %package        javadoc
 Group: Development/Java
 Summary:        API documentation for %{name}
@@ -60,17 +60,22 @@ BuildArch: noarch
 
 %description    javadoc
 %{summary}.
+%endif
 
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
-%{__sed} -i 's/\r//' LICENSE.txt NOTICE.txt
+sed -i 's/\r//' LICENSE.txt NOTICE.txt
+
+%pom_change_dep :log4j ::1.2.17
 
 %build
 %mvn_file   : %{short_name} %{name}
 %mvn_alias  : org.apache.commons:%{short_name}
 # We skip tests because we don't have test deps (dbunit in particular).
-%mvn_build -f
+# FIXME Javadocs are temporarly disabled due to JDK bug, see
+# https://bugzilla.redhat.com/show_bug.cgi?id=1423421
+%mvn_build -f -j
 
 %install
 %mvn_install
@@ -78,11 +83,16 @@ BuildArch: noarch
 %files -f .mfiles
 %doc LICENSE.txt NOTICE.txt
 
+%if 0
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
+%endif
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt1_9jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt1_6jpp8
 - new fc release
 
