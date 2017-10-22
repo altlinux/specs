@@ -3,12 +3,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           jmdns
 Version:        3.4.1
-Release:        alt1_10jpp8
+Release:        alt1_12jpp8
 Summary:        Java implementation of multi-cast DNS
 
 # The project was originally developed under the GNU
@@ -25,6 +26,8 @@ Source1:        create-tarball.sh
 Patch0:         0001-added-an-unclean-shut-down-that-s-a-whole-lot-faster.patch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildArch:      noarch
@@ -57,6 +60,9 @@ sed -i "s,59 Temple Place,51 Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1
 chmod -x README.txt LICENSE-LGPL.txt
 sed -i 's/\r//' LICENSE-LGPL.txt
 
+# Remove duplicate jar execution
+%pom_xpath_remove "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions"
+
 %mvn_alias : "org.jenkins-ci:jmdns"
 
 %build
@@ -68,13 +74,17 @@ sed -i 's/\r//' LICENSE-LGPL.txt
 
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc LICENSE LICENSE-LGPL.txt NOTICE.txt README.txt
+%doc LICENSE LICENSE-LGPL.txt NOTICE.txt
+%doc README.txt
+
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE LICENSE-LGPL.txt NOTICE.txt README.txt
+%doc LICENSE LICENSE-LGPL.txt NOTICE.txt
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.4.1-alt1_12jpp8
+- new jpp release
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.4.1-alt1_10jpp8
 - new version
 
