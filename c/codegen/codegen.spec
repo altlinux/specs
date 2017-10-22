@@ -2,16 +2,16 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name codegen
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 0.6.8
 %global _version %( echo %{version} | tr . _ )
 Name:          codegen
 Version:       0.6.8
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Java/Scala Code generation tool
 License:       ASL 2.0
 URL:           http://www.querydsl.com
@@ -101,6 +101,9 @@ sed -i.ecj4.6 "s|Map<String, Object> settings|Map<String, String> settings|" \
 %doc LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.8-alt1_3jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.8-alt1_2jpp8
 - new version
 
