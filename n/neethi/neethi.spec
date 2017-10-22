@@ -3,12 +3,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          neethi
 Version:       3.0.1
-Release:       alt1_12jpp8
+Release:       alt1_13jpp8
 Summary:       Web Services Policy framework
 License:       ASL 2.0
 URL:           http://ws.apache.org/neethi/
@@ -66,6 +67,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_13jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_12jpp8
 - new fc release
 
