@@ -4,12 +4,24 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 26
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%if 0%{?fedora}
+%bcond_without testlib
+%endif
+
 Name:           guava
 Version:        18.0
-Release:        alt2_8jpp8
+Release:        alt2_10jpp8
 Summary:        Google Core Libraries for Java
 License:        ASL 2.0
 URL:            https://github.com/google/guava
@@ -22,11 +34,12 @@ Patch1:         guava-jdk8-HashMap-testfix.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
-BuildRequires:  mvn(com.google.guava:guava)
-BuildRequires:  mvn(com.google.truth:truth)
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
+%if %{with testlib}
+BuildRequires:  mvn(com.google.truth:truth)
+BuildRequires:  mvn(junit:junit)
+%endif
 Source44: import.info
 
 %description
@@ -45,12 +58,14 @@ BuildArch: noarch
 %description javadoc
 API documentation for %{name}.
 
+%if %{with testlib}
 %package testlib
 Group: Development/Java
 Summary:        The guava-testlib subartefact
 
 %description testlib
 guava-testlib provides additional functionality for conveinent unit testing
+%endif
 
 %prep
 %setup -q
@@ -59,6 +74,9 @@ guava-testlib provides additional functionality for conveinent unit testing
 find . -name '*.jar' -delete
 
 %pom_disable_module guava-gwt
+%if %{without testlib}
+%pom_disable_module guava-testlib
+%endif
 %pom_remove_plugin -r :animal-sniffer-maven-plugin 
 %pom_remove_plugin :maven-gpg-plugin
 %pom_remove_dep jdk:srczip guava
@@ -89,9 +107,14 @@ find . -name '*.jar' -delete
 %files javadoc -f .mfiles-javadoc
 %doc COPYING
 
+%if %{with testlib}
 %files testlib -f .mfiles-guava-testlib
+%endif
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 18.0-alt2_10jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 18.0-alt2_8jpp8
 - new fc release
 
