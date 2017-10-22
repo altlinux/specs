@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-reporting-api
 Version:        3.0
-Release:        alt3_10jpp8
+Release:        alt3_11jpp8
 # Maven-shared defines maven-reporting-api version as 3.0
 Epoch:          1
 Summary:        API to manage report generation
@@ -66,6 +67,9 @@ cp %{SOURCE1} LICENSE.txt
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.0-alt3_11jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.0-alt3_10jpp8
 - new fc release
 
