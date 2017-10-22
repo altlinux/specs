@@ -2,17 +2,17 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name shrinkwrap
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.2.3
 %global namedreltag %{nil}
 %global namedversion %{version}%{?namedreltag}
 Name:          shrinkwrap
 Version:       1.2.3
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       A simple mechanism to assemble Java archives
 # Some file are without license headers
 # reported @ https://issues.jboss.org/browse/SHRINKWRAP-501
@@ -183,6 +183,9 @@ rm LICENSE.orig
 %doc LICENSE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_3jpp8
+- new jpp release
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_2jpp8
 - new version
 
