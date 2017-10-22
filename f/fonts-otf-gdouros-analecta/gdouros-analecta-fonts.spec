@@ -3,12 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname gdouros-analecta-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname gdouros-analecta
 %global fontconf 65-%{fontname}.conf
 
 Name:           fonts-otf-gdouros-analecta
-Version:        5.00
-Release:        alt1_2
+Version:        5.17
+Release:        alt1_3
 Summary:        An ecclesiastic scripts font
 
 # https://web.archive.org/web/20150625020428/http://users.teilar.gr/~g1951d/
@@ -52,7 +54,7 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
 install -Dm 0644 -p %{SOURCE2} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+        %{buildroot}%{_datadir}/metainfo/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -90,17 +92,20 @@ fi
 
 %check
 appstream-util validate-relax --nonet \
-      %{buildroot}/%{_datadir}/appdata/%{fontname}.metainfo.xml
+      %{buildroot}/%{_datadir}/metainfo/%{fontname}.metainfo.xml
 
 
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/Analecta.ttf
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+%{_datadir}/metainfo/%{fontname}.metainfo.xml
 %doc Analecta.pdf
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 5.17-alt1_3
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 5.00-alt1_2
 - update to new release by fcimport
 
