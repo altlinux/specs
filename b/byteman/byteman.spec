@@ -2,12 +2,12 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name byteman
-%define version 3.0.6
 %global javacup_or_asm java_cup:java_cup|org.ow2.asm:asm-all
 
 
@@ -16,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             byteman
 Version:          3.0.6
-Release:          alt1_1jpp8
+Release:          alt1_3jpp8
 Summary:          Java agent-based bytecode injection tool
 License:          LGPLv2+
 URL:              http://www.jboss.org/byteman
@@ -27,6 +27,9 @@ BuildArch:        noarch
 
 BuildRequires:    maven-local
 BuildRequires:    maven-shade-plugin
+BuildRequires:    maven-source-plugin
+BuildRequires:    maven-plugin-plugin
+BuildRequires:    maven-plugin-bundle
 BuildRequires:    maven-failsafe-plugin
 BuildRequires:    maven-jar-plugin
 BuildRequires:    maven-surefire-plugin
@@ -149,6 +152,9 @@ ln -s %{_javadir}/byteman/byteman.jar $RPM_BUILD_ROOT%{apphomedir}/lib/byteman.j
 %doc docs/copyright.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.6-alt1_3jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.6-alt1_1jpp8
 - new version
 
