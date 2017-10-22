@@ -2,18 +2,18 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jboss-logging-tools1
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.2.1
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-logging-tools1
 Version:          1.2.1
-Release:          alt1_1jpp8
+Release:          alt1_2jpp8
 Summary:          JBoss Logging I18n Annotation Processor
 # ASL 2.0: ./annotations/src/main/java/org/jboss/logging/annotations/*.java
 # Source files without license headers https://issues.jboss.org/browse/LOGTOOL-113
@@ -76,6 +76,9 @@ cp -p processor/src/main/resources/META-INF/LICENSE.txt LICENSE-LGPL.txt
 %doc LICENSE-ASL.txt LICENSE-LGPL.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_2jpp8
+- new jpp release
+
 * Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_1jpp8
 - new version
 
