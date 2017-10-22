@@ -1,14 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global commit bd245c9
 
 Name:           pcfi
 Version:        2010.08.09
-Release:        alt2_10.20111103gitbd245c9jpp8
+Release:        alt2_11.20111103gitbd245c9jpp8
 Summary:        PDF Core Font Information
 
 Group:          Publishing
@@ -20,7 +21,7 @@ Source0:        https://github.com/jukka/pcfi/tarball/%{commit}/jukka-pcfi-%{com
 Source1:        License
 BuildArch:      noarch
 BuildRequires:  maven-local
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 Source44: import.info
 
 
@@ -51,6 +52,9 @@ cp %SOURCE1 .
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2010.08.09-alt2_11.20111103gitbd245c9jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2010.08.09-alt2_10.20111103gitbd245c9jpp8
 - new fc release
 
