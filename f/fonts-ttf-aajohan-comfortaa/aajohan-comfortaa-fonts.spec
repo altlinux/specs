@@ -3,12 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname aajohan-comfortaa-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname aajohan-comfortaa
 %global fontconf 61-%{fontname}.conf
 
 Name:           fonts-ttf-aajohan-comfortaa
-Version:        2.004
-Release:        alt1_6
+Version:        3.001
+Release:        alt1_1
 Summary:        Modern style true type font
 
 License:        OFL
@@ -19,6 +21,7 @@ Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
+BuildRequires:	libappstream-glib
 Source44: import.info
 
 %description
@@ -27,7 +30,8 @@ Bold, Regular, and Thin variants.
 It has very good European language coverage and decent Cyrillic coverage.  
 
 %prep
-%setup -q -n Comfortaa
+%setup -q -n %{version}
+
 
 # Fixing
 # wrong-file-end-of-line-encoding issue
@@ -90,6 +94,8 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
     done ||:
 fi
+%check
+appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %files
 %{_fontconfig_templatedir}/%{fontconf}
@@ -99,6 +105,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 3.001-alt1_1
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.004-alt1_6
 - update to new release by fcimport
 
