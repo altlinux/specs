@@ -2,13 +2,14 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary:        Extension of the Java Collections Framework
 Name:           apache-commons-collections4
 Version:        4.0
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 License:        ASL 2.0
 URL:            http://commons.apache.org/proper/commons-collections/
 BuildArch:      noarch
@@ -18,7 +19,7 @@ Source0:        http://www.apache.org/dist/commons/collections/source/commons-co
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-checkstyle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.easymock:easymock)
 Source44: import.info
 
@@ -52,6 +53,9 @@ This package provides %{summary}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_7jpp8
+- new jpp release
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_6jpp8
 - new version
 
