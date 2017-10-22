@@ -5,12 +5,13 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           plexus-classworlds
 Version:        2.5.2
-Release:        alt2_5jpp8
+Release:        alt2_7jpp8
 Summary:        Plexus Classworlds Classloader Framework
 License:        ASL 2.0 and Plexus
 URL:            https://github.com/codehaus-plexus/plexus-classworlds
@@ -23,6 +24,11 @@ BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
+
+# test deps missed by builddep
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(xml-apis:xml-apis)
 
 Obsoletes:      classworlds < 1.1-13
 Source44: import.info
@@ -63,6 +69,9 @@ API documentation for %{name}.
 %doc LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.5.2-alt2_7jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.5.2-alt2_5jpp8
 - new fc release
 
