@@ -2,15 +2,16 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global spec_ver 3.0
 %global spec_name geronimo-jpa_%{spec_ver}_spec
 
 Name:           geronimo-jpa
 Version:        1.1.1
-Release:        alt3_17jpp8
+Release:        alt3_19jpp8
 Summary:        Java persistence API implementation
 
 License:        ASL 2.0
@@ -24,10 +25,8 @@ Source0:       %{spec_name}-%{version}.tar.xz
 
 BuildArch:     noarch
 
-# This pulls in all of the required java and maven stuff
 BuildRequires:  maven-local
-BuildRequires:  geronimo-parent-poms
-BuildRequires:  maven-resources-plugin
+BuildRequires:  mvn(org.apache.geronimo.specs:specs:pom:)
 
 Provides:       jpa_api = %{spec_ver}
 Provides:       javax.persistence = %{spec_ver}
@@ -72,6 +71,9 @@ ln -sf ../%{name}.jar %{buildroot}%{_javadir}/javax.persistence/
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_19jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_17jpp8
 - new fc release
 
