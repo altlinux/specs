@@ -2,18 +2,18 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name glassfish-hk2
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 2.4.0
 %global namedreltag %nil
 %global namedversion %{version}%{?namedreltag}
 
 Name:          glassfish-hk2
 Version:       2.4.0
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Hundred Kilobytes Kernel
 License:       CDDL or GPLv2 with exceptions
 URL:           http://hk2.java.net/
@@ -617,6 +617,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_7jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_6jpp8
 - new fc release
 
