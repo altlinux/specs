@@ -2,12 +2,13 @@ Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:             weld-parent
 Version:          34
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          Parent POM for Weld
 License:          ASL 2.0
 URL:              http://weld.cdi-spec.org
@@ -19,7 +20,6 @@ BuildRequires:    maven-local
 BuildRequires:    mvn(org.apache.maven.plugins:maven-install-plugin)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:    mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:    mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 Source44: import.info
 
 %description
@@ -31,6 +31,7 @@ Parent POM for Weld
 %pom_remove_plugin ":maven-enforcer-plugin"
 %pom_remove_plugin ":maven-remote-resources-plugin"
 %pom_remove_plugin ":maven-eclipse-plugin"
+%pom_remove_plugin ":buildnumber-maven-plugin"
 
 %build
 %mvn_build
@@ -41,6 +42,9 @@ Parent POM for Weld
 %files -f .mfiles
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 34-alt1_3jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 34-alt1_2jpp8
 - new version
 
