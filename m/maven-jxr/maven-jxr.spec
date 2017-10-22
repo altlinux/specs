@@ -3,12 +3,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-jxr
 Version:        2.5
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Epoch:          0
 Summary:        Source cross referencing tool
 # BSD: maven-jxr/src/main/java/org/apache/maven/jxr/JavaCodeTransform.java
@@ -56,7 +57,7 @@ API documentation for %{name}.
 %package -n maven-plugin-jxr
 Group: Development/Java
 Summary:        Maven plugin for JXR
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description -n maven-plugin-jxr
 Maven plugin for JXR.
@@ -98,6 +99,9 @@ cp %{SOURCE1} .
 %files -n maven-plugin-jxr -f .mfiles-maven-plugin-jxr
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt1_5jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt1_4jpp8
 - new fc release
 
