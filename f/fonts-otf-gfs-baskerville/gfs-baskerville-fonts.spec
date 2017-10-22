@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname gfs-baskerville-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname gfs-baskerville
 %global fontconf 61-%{fontname}.conf
 
@@ -10,7 +12,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-baskerville
 Version: 20070327
-Release: alt3_22
+Release: alt3_24
 Summary: GFS Baskerville Greek font
 
 License:   OFL
@@ -120,6 +122,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20070327-alt3_24
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20070327-alt3_22
 - update to new release by fcimport
 
