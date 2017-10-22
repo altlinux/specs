@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname gfs-olga-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname gfs-olga
 %global fontconf 61-%{fontname}.conf
 
@@ -10,7 +12,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-olga
 Version: 20060908
-Release: alt3_20
+Release: alt3_22
 Summary: GFS Olga experimental oblique font
 
 License:   OFL
@@ -112,6 +114,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 20060908-alt3_22
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20060908-alt3_20
 - update to new release by fcimport
 
