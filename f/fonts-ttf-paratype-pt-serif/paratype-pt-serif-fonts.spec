@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname paratype-pt-serif-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname paratype-pt-serif
 %global fontconf 59-%{fontname}
 
@@ -26,7 +28,7 @@ of Olga Umpeleva and under supervision of Vladimir Yefimov. \
 
 Name:           fonts-ttf-paratype-pt-serif
 Version:        20141121
-Release:        alt2_2
+Release:        alt2_5
 Summary:        A pan-Cyrillic typeface
 
 License:        OFL
@@ -139,6 +141,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 20141121-alt2_5
+- update to new release by fcimport
+
 * Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 20141121-alt2_2
 - lowered .conf priority
 
