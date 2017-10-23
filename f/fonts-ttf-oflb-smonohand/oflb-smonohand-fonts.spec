@@ -1,10 +1,12 @@
 %define oldname oflb-smonohand-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname oflb-smonohand
 %global fontconf 64-%{fontname}.conf
 
 Name:           fonts-ttf-oflb-smonohand
 Version:        20090423
-Release:        alt3_9
+Release:        alt3_13
 Summary:        A handwritten monospace font
 
 Group:          System/Fonts/True type
@@ -90,6 +92,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 20090423-alt3_13
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 20090423-alt3_9
 - update to new release by fcimport
 
