@@ -2,9 +2,10 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -37,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jline1
 Version:        1.0
-Release:        alt3_12jpp8
+Release:        alt3_14jpp8
 Summary:        Java library for reading and editing user input in console applications
 License:        BSD
 URL:            http://jline.sourceforge.net/
@@ -46,7 +47,7 @@ Source0:        http://download.sourceforge.net/sourceforge/jline/jline-%{versio
 Source1:        CatalogManager.properties
 Patch1:         jline-0.9.94-crosslink.patch
 
-Requires: bash sh
+Requires:      bash sh
 # for /bin/stty
 Requires:      coreutils
 
@@ -56,6 +57,7 @@ BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
+BuildRequires: maven-plugin-bundle
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-site-plugin
 BuildRequires: maven-surefire-plugin
@@ -75,7 +77,7 @@ chain to other console applications.
 %package        demo
 Summary:        Demos for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description    demo
 Demonstrations and samples for %{name}.
@@ -125,6 +127,9 @@ mv tmp/* .
 %doc LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_14jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_12jpp8
 - new fc release
 
