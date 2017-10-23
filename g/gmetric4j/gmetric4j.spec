@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          gmetric4j
 Version:       1.0.10
-Release:       alt1_4jpp8
+Release:       alt1_6jpp8
 Summary:       JVM instrumentation to Ganglia
 License:       BSD
 URL:           https://github.com/ganglia/gmetric4j
@@ -18,6 +19,7 @@ BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.acplt.remotetea:remotetea-oncrpc)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires: xmvn
 
 BuildArch:     noarch
 Source44: import.info
@@ -40,17 +42,24 @@ This package contains javadoc for %{name}.
 find . -name "*.class" -delete
 find . -name "*.jar" -type f -delete
 
-# disable javadoc jar
-%pom_xpath_remove "pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:executions"
-%pom_xpath_inject "pom:plugin[pom:artifactId ='maven-javadoc-plugin']" '
- <configuration>
-   <doctitle>Gmetric4j ${project.version} API</doctitle>
-   <windowtitle>Gmetric4j ${project.version} API</windowtitle>
-</configuration>'
+%pom_remove_plugin :maven-jar-plugin
+%pom_add_plugin "org.apache.maven.plugins:maven-jar-plugin:2.4" . '
+<executions>
+  <execution>
+    <goals>
+      <goal>test-jar</goal>
+    </goals>
+  </execution>
+</executions>'
+
+%pom_remove_plugin :maven-javadoc-plugin
 # disable source jar
 %pom_remove_plugin :maven-source-plugin
 
-sed -i '/Class-Path/d' src/main/resources/META-INF/MANIFEST.MF
+%pom_xpath_inject "pom:plugin[pom:artifactId ='maven-bundle-plugin']/pom:configuration/pom:instructions" "
+ <Can-Redefine-Classes>false</Can-Redefine-Classes>"
+
+rm src/main/resources/META-INF/MANIFEST.MF
 
 rm -r src/test/java/info/ganglia/gmetric4j/gmetric/GMetricIT.java
 
@@ -72,6 +81,9 @@ rm -r src/test/java/info/ganglia/gmetric4j/gmetric/GMetricIT.java
 %doc COPYING
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.10-alt1_6jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.10-alt1_4jpp8
 - new fc release
 
