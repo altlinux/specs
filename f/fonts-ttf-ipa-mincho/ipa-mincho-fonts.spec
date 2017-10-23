@@ -2,6 +2,8 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname ipa-mincho-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global		priority	65-2
 %global		fontname	ipa-mincho
 %global		fontconf	%{priority}-%{fontname}.conf
@@ -10,7 +12,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-ipa-mincho
 Version:	003.03
-Release:	alt2_6
+Release:	alt2_11
 Summary:	Japanese Mincho-typeface OpenType font by IPA
 
 Group:		System/Fonts/True type
@@ -18,6 +20,7 @@ License:	IPA
 URL:		http://ossipedia.ipa.go.jp/ipafont/
 Source0:	http://info.openlab.ipa.go.jp/ipafont/fontdata/%{archivename}.zip
 Source1:	%{oldname}-fontconfig.conf
+Source2:	%{fontname}.metainfo.xml
 
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
@@ -43,6 +46,9 @@ install -m 0755 -d	$RPM_BUILD_ROOT%{_fontconfig_templatedir}	\
 			$RPM_BUILD_ROOT%{_fontconfig_confdir}
 install -m 0644 -p	%{SOURCE1}	\
 			$RPM_BUILD_ROOT%{_fontconfig_templatedir}/%{fontconf}
+
+install -m 0755 -d $RPM_BUILD_ROOT%{_datadir}/appdata
+install -m 0644 -p %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/appdata
 
 ln -s	%{_fontconfig_templatedir}/%{fontconf}	\
 	$RPM_BUILD_ROOT%{_fontconfig_confdir}/%{fontconf}
@@ -88,9 +94,13 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc Readme_%{archivename}.txt IPA_Font_License_Agreement_v1.0.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 003.03-alt2_11
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 003.03-alt2_6
 - update to new release by fcimport
 
