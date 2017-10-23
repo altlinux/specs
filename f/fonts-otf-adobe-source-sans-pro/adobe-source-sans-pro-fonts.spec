@@ -1,39 +1,52 @@
 Group: System/Fonts/True type
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 %define oldname adobe-source-sans-pro-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname source-sans-pro
 %global fontconf 63-%{fontname}.conf
-%define fversion 2.010roman-1.065-italic
+
+%global roman_version 2.020
+%global italic_version 1.075
+%global github_tag %{roman_version}R-ro/%{italic_version}R-it
+%global source_dir %{fontname}-%(tr "/" "-" <<<%{github_tag})
 
 Name:           fonts-otf-adobe-source-sans-pro
-Version:        1.065
-Release:        alt1_0
+Version:        %{roman_version}
+Release:        alt1_1
 Summary:        A set of OpenType fonts designed for user interfaces
 
 License:        OFL
-URL:            http://sourceforge.net/projects/sourcesans.adobe/
-
-#unable to build from source : source format is unbuldable with free software
-Source0:        http://downloads.sourceforge.net/sourcesans.adobe/SourceSansPro_FontsOnly-%{fversion}.zip
+URL:            https://github.com/adobe-fonts/source-sans-pro
+#unable to build from source: source format is unbuildable with free software
+Source0:        https://github.com/adobe-fonts/source-sans-pro/archive/%{github_tag}/%{oldname}-%{version}.tar.gz
 Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
-BuildArch:      noarch
 BuildRequires:  fontpackages-devel
+BuildArch:      noarch
 Source44: import.info
 
 %description
 Source Sans is a set of OpenType fonts that have been designed to work well in
-user interface (UI) environments, as well as in text setting for screen and 
+user interface (UI) environments, as well as in text setting for screen and
 print.
 
-%prep
-%setup -q -n source-sans-pro-2.010R-ro-1.065R-it
 
-sed -i "s|\r||" LICENSE.txt
+%prep
+%setup -q -n %{source_dir}
+
+
+# Fix permissions
+chmod 0644 LICENSE.txt README.md
+
+# Fix wrong EOLs
+sed -i.orig "s/\r//" LICENSE.txt && \
+touch -r LICENSE.txt.orig LICENSE.txt && \
+rm LICENSE.txt.orig
+
 
 %build
+
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
@@ -46,6 +59,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -86,11 +103,15 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.otf
-
-%doc *.txt SourceSansProReadMe.html
+%doc README.md
+%doc LICENSE.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.020-alt1_1
+- update to new release by fcimport
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.065-alt1_0
 - new version 2.010roman-1.065-italic
 
