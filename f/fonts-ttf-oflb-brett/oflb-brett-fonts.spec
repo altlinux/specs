@@ -1,10 +1,12 @@
 %define oldname oflb-brett-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname oflb-brett
 %global fontconf 63-%{fontname}.conf
 
 Name:           fonts-ttf-oflb-brett
 Version:        20080506
-Release:        alt3_14
+Release:        alt3_18
 Summary:        A handwriting font
 
 Group:          System/Fonts/True type
@@ -91,6 +93,9 @@ fi
 %doc License.txt
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 20080506-alt3_18
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 20080506-alt3_14
 - update to new release by fcimport
 
