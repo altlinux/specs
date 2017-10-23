@@ -1,22 +1,25 @@
 Group: System/Fonts/True type
 %define oldname moyogo-molengo-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname moyogo-molengo
 %global fontconf 62-%{fontname}.conf
 
 Name:           fonts-ttf-moyogo-molengo
 Version:        0.10 
-Release:        alt3_10
+Release:        alt3_15
 Summary:        A Latin typeface for documents 
 
 License:        OFL
-URL:            http://code.google.com/p/molengo-fonts/
-Source0:        http://molengo-fonts.googlecode.com/files/Molengo-fonts.7z
-Source1:        %{oldname}-fontconfig.conf
-Source2:        %{fontname}.metainfo.xml
+URL:            https://fonts.google.com/specimen/Molengo
+Source0:        https://github.com/google/fonts/raw/master/ofl/molengo/Molengo-Regular.ttf
+Source1:        https://raw.githubusercontent.com/google/fonts/master/ofl/molengo/OFL.txt
+Source2:        https://raw.githubusercontent.com/google/fonts/master/ofl/molengo/FONTLOG.txt
+Source3:        %{oldname}-fontconfig.conf
+Source4:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
-BuildRequires: p7zip-standalone p7zip
 Source44: import.info
 
 
@@ -26,14 +29,9 @@ features required by many minority languages such as non-spacing mark placement.
 The font is produced with Fontforge. 
  
 %prep
-7za x -y %{SOURCE0}
-cp -p Molengo-fonts/* .
+%setup -n %{oldname}-%{version} -q -c -T
 
-for file in OFL-FAQ.txt  Fontlog.txt  OpenFontLicense.txt; do
- sed "s|\r||g" $file > $file.new && \
- touch -r $file $file.new && \
- mv $file.new $file
-done
+cp -p %{SOURCE0} %{SOURCE1} %{SOURCE2} .
 
 
 %build
@@ -46,13 +44,13 @@ install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
 
-install -m 0644 -p %{SOURCE1} \
+install -m 0644 -p %{SOURCE3} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
 # Add AppStream metadata
-install -Dm 0644 -p %{SOURCE2} \
+install -Dm 0644 -p %{SOURCE4} \
         %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
@@ -93,10 +91,14 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-%doc OFL-FAQ.txt  Fontlog.txt  OpenFontLicense.txt
+%doc FONTLOG.txt 
+%doc OFL.txt
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_15
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_10
 - update to new release by fcimport
 
