@@ -4,15 +4,16 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global spec_ver 1.1
 %global spec_name geronimo-annotation_%{spec_ver}_spec
 
 Name:             geronimo-annotation
 Version:          1.0
-Release:          alt4_18jpp8
+Release:          alt4_19jpp8
 Summary:          Java EE: Annotation API v1.1
 License:          ASL 2.0
 URL:              http://geronimo.apache.org/
@@ -67,6 +68,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_19jpp8
+- new jpp release
+
 * Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_18jpp8
 - added osgi provides
 
