@@ -1,9 +1,11 @@
 Group: System/Fonts/True type
 %define oldname layla-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname layla
 %global fontconf 67-%{fontname}
 Name:		fonts-ttf-layla
-Version:	1.6
+Version:	2.0
 Release:	alt1_2
 Summary:	A collection of traditional Arabic fonts
 License:	OFL
@@ -196,6 +198,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_2
+- update to new release by fcimport
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_2
 - new version
 
