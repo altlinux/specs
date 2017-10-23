@@ -2,18 +2,18 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jboss-jacc-1.4-api
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.0.2
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:           jboss-jacc-1.4-api
 Version:        1.0.2
-Release:        alt2_11jpp8
+Release:        alt2_12jpp8
 Summary:        JBoss JACC 1.4 API
 License:        CDDL or GPLv2 with exceptions
 URL:            http://www.jboss.org
@@ -62,6 +62,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE README
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_12jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_11jpp8
 - new fc release
 
