@@ -1,7 +1,9 @@
 %define oldname horai-ume-fonts
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name horai-ume-fonts
-%define version 620
+%define version 670
 %global fontname horai-ume
 %global fontconf 65-%{fontname}
 %global archivename umefont_%{version}
@@ -9,10 +11,10 @@
 
 %global common_desc \
 This package contains fonts published by Wataru Horai. It contains Gothic and\
-Mincho styles in 19 variants total:\
+Mincho styles in 20 variants total:\
 \
  * Ume Gothic Original, O5, C4, C5, S4, S5\
- * Ume Hy Gothic\
+ * Ume Hy Gothic, O5\
  * Ume P Gothic Original, O5, C4, C5, S4, S5\
  * Ume UI Gothic Original, O5\
  * Ume Mincho Original, S3\
@@ -23,8 +25,8 @@ and CJK. These fonts are suitable for easy on-screen legibility.
 
 
 Name:           fonts-ttf-horai-ume
-Version:        620
-Release:        alt1_1
+Version:        670
+Release:        alt1_2
 Summary:        Gothic and Mincho fonts designed for easy on-screen legibility
 
 Group:          System/Fonts/True type
@@ -66,6 +68,7 @@ The Ume Gothic family features sans-serif fonts.
 %package -n fonts-ttf-horai-ume-hgothic
 Group: System/Fonts/True type
 # hgo4    Ume Hy Gothic / Regular
+# hgo5    Ume Hy Gothic O5 / Regular?
 Summary:        Free Japanese fonts family Ume Hy Gothic
 
 %description -n fonts-ttf-horai-ume-hgothic
@@ -238,6 +241,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 670-alt1_2
+- update to new release by fcimport
+
 * Sun Jun 12 2016 Igor Vlasenko <viy@altlinux.ru> 620-alt1_1
 - converted for ALT Linux by srpmconvert tools
 
