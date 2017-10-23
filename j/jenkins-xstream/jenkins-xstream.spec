@@ -2,19 +2,25 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global patchlvl 1
 
 Name:           jenkins-xstream
 Version:        1.4.7
-Release:        alt4_8.jenkins1jpp8
+Release:        alt4_11.jenkins1jpp8
 Summary:        Jenkins XStream library
 
 License:        BSD
 URL:            https://github.com/jenkinsci/xstream
 Source0:        https://github.com/jenkinsci/xstream/archive/%{version}-jenkins-%{patchlvl}.tar.gz
+
+# Fixes deserialization of void
+# https://bugzilla.redhat.com/show_bug.cgi?id=1441541
+# backport of https://github.com/x-stream/xstream/commit/b3570be2f39234e61f99f9a20640756ea71b1b40
+Patch0:         0001-Prevent-deserialization-of-void.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(cglib:cglib)
@@ -24,6 +30,8 @@ BuildRequires:  mvn(dom4j:dom4j)
 BuildRequires:  mvn(joda-time:joda-time)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.sf.kxml:kxml2)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-eclipse-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.codehaus:codehaus-parent:pom:)
@@ -40,10 +48,6 @@ BuildRequires:  mvn(xpp3:xpp3_min)
 
 BuildArch:      noarch
 Source44: import.info
-
-Source11: jenkins-xstream.xml
-Source12: xstream-parent.pom
-Source13: xstream.pom
 
 %description
 XStream is a simple library to serialize objects to XML
@@ -79,6 +83,8 @@ API documentation for %{name}.
 %prep
 %setup -q -n xstream-%{version}-jenkins-%{patchlvl}
 
+%patch0 -p1
+
 # no need for uber artifact
 %pom_disable_module xstream-distribution
 # and Jenkins doesn't use hibernate and benchmark artifact
@@ -86,8 +92,7 @@ API documentation for %{name}.
 %pom_disable_module xstream-benchmark
 
 # fix gIds for parent POM, Jenkins upstream uses "org.jvnet.hudson"
-#pom_xpath_set "pom:project/pom:groupId" "org.jvnet.hudson"
-#sed -i -e s,org.jvnet.hudson,com.thoughtworks.xstream,g xstream/pom.xml
+%pom_xpath_set "pom:project/pom:groupId" "org.jvnet.hudson"
 
 # unavailable deps
 %pom_xpath_remove "pom:extension[pom:artifactId[text()='wagon-webdav']]"
@@ -104,22 +109,16 @@ API documentation for %{name}.
 %pom_remove_dep :cglib-nodep xstream
 %pom_add_dep cglib:cglib xstream "<optional>true</optional>"
 
+# remove OSGi metadata - it would duplicate vanilla xstream
+%pom_remove_plugin -r :maven-jar-plugin
+%pom_remove_plugin -r :maven-bundle-plugin
+
 %build
 # tests require old JMock library (version 1.x)
 %mvn_build -f
-#mvn_alias com.thoughtworks.xstream:xstream org.jvnet.hudson:xstream 
 
 %install
 %mvn_install
-
-diff -u %{S:11} %buildroot%_datadir/maven-metadata/%name.xml ||:
-diff -u %{S:12} %buildroot%_datadir/maven-poms/%name/xstream-parent.pom ||:
-diff -u %{S:13} %buildroot%_datadir/maven-poms/%name/xstream.pom ||:
-
-install -m 644 %{S:11} %buildroot%_datadir/maven-metadata/
-install -m 644 %{S:12} %buildroot%_datadir/maven-poms/%name/
-install -m 644 %{S:13} %buildroot%_datadir/maven-poms/%name/
-
 
 %files -f .mfiles
 %dir %{_javadir}/%{name}
@@ -128,6 +127,9 @@ install -m 644 %{S:13} %buildroot%_datadir/maven-poms/%name/
 %doc LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.7-alt4_11.jenkins1jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.7-alt4_8.jenkins1jpp8
 - removed alias; should have org.jvnet.hudson
 
