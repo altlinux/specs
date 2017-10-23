@@ -1,10 +1,12 @@
 %define oldname navilu-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname navilu
 %global fontconf 67-%{fontname}.conf
 
 Name:           fonts-ttf-navilu
 Version:        1.2
-Release:        alt2_5
+Release:        alt2_9
 Summary:        Free Kannada opentype sans-serif font
 
 Group:          System/Fonts/True type
@@ -12,7 +14,7 @@ License:        OFL
 URL:            https://github.com/aravindavk/Navilu
 Source0:         http://cloud.github.com/downloads/aravindavk/Navilu/%{fontname}-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires: fontforge
+BuildRequires: fontforge libfontforge
 BuildRequires:  fontpackages-devel
 Source1: 67-navilu.conf
 Source2:       %{fontname}.metainfo.xml
@@ -90,6 +92,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_9
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_5
 - update to new release by fcimport
 
