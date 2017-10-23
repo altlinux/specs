@@ -1,17 +1,19 @@
 %define oldname kalapi-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname kalapi
 %global fontconf 67-%{fontname}.conf
 
 Name:           fonts-ttf-kalapi
 Version:        0.1
-Release:        alt1_6
+Release:        alt1_10
 Summary:        OpenType sanserif font for Gujarati script
 Group:          System/Fonts/True type
 License:        OFL
 URL:            https://github.com/gujaratilexicon
 Source0:        https://github.com/downloads/gujaratilexicon/font-kalapi/font-kalapi-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires: fontforge
+BuildRequires: fontforge libfontforge
 BuildRequires:  fontpackages-devel
 Source1: 67-kalapi.conf
 Source2: Makefile
@@ -95,6 +97,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_10
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_6
 - update to new release by fcimport
 
