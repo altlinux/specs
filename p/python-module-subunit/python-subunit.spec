@@ -6,25 +6,26 @@
 
 Name: python-module-%oname
 Version: 1.2.0
-Release: alt2
+Release: alt3
 Summary: Python implementation of subunit test streaming protocol
 License: Apache or BSD
 Group: Development/Python
+BuildArch: noarch
 Url: http://pypi.python.org/pypi/python-subunit/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-testtools python-module-mimeparse
-BuildPreReq: python-module-testscenarios
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-testtools python-module-mimeparse
+BuildRequires: python-module-testscenarios
+BuildRequires: python2.7(hypothesis) python2.7(fixtures)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-testtools python-tools-2to3
-BuildPreReq: python3-module-mimeparse
-BuildPreReq: python3-module-testscenarios
+BuildRequires: python3-module-testtools python-tools-2to3
+BuildRequires: python3-module-mimeparse
+BuildRequires: python3-module-testscenarios
+BuildRequires: python3(hypothesis) python3(fixtures)
 %endif
 
 Provides: python-module-python-%oname = %EVR
@@ -157,6 +158,9 @@ popd
 %endif
 
 %changelog
+* Mon Oct 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt3
+- Updated build dependencies.
+
 * Mon Jun 05 2017 Lenar Shakirov <snejok@altlinux.ru> 1.2.0-alt2
 - Fix test_results packaging
 
