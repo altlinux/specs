@@ -1,6 +1,6 @@
 # for set release
 %define release_pre alt
-%define release_base_num 2
+%define release_base_num 3
 %define release_base_num2 %nil
 %define release_suff %nil
 
@@ -49,7 +49,7 @@
 
 # set firebird UDF dir
 %define firebirddir %_libdir/firebird
-%define firebirdudfdir %firebirddir/UDF
+%define firebirdudfdir %firebirddir/udf
 
 Name: FreeAdhocUDF
 Version: 0.0.0.20090128a
@@ -65,11 +65,12 @@ Packager: Aleksey Avdeev <solo@altlinux.ru>
 Source: %name-%version.tar
 Patch1: %name-%version-alt-makefile.0.1.patch
 Patch2: %name-%version-alt-fix-uuid_functions.0.1.patch
+Patch3: %name-alt-udf-path.patch
 
 Requires: %firebirdudfdir
 
 BuildPreReq: rpm-build-licenses
-BuildPreReq: firebird-devel
+BuildPreReq: firebird-devel firebird-server
 
 %description
 The FreeadhocUDFs depends on
@@ -105,6 +106,7 @@ FreeadhocUDFs возвращают одинаковые значения в Inte
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 pushd source/adhoc/
@@ -125,6 +127,9 @@ popd
 %firebirdudfdir/*
 
 %changelog
+* Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.0.20090128a-alt3
+- Rebuilt with Firebird-3.0.x.
+
 * Mon Aug 03 2009 Aleksey Avdeev <solo@altlinux.ru> 0.0.0.20090128a-alt2
 - Fix always overflow destination buffer (Closes: #20941)
 

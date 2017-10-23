@@ -2,16 +2,16 @@
 %define develname libdbi-devel
 
 Name: libdbi
-Version: 1.0
-Release: alt1.cvs20092729.3
+Epoch: 1
+Version: 0.9.0
+Release: alt1
 
 Summary: Database Independent Abstraction Layer for C
 License: LGPL
 Group: System/Libraries
 
 Url: http://libdbi.sourceforge.net/
-Source: %name-%version.tar.gz
-Packager: Boris Savelev <boris@altlinux.org>
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Mon Feb 09 2009
 BuildRequires: gcc-c++
@@ -86,6 +86,9 @@ sed -i 's,-O20,-O2,g' configure*
 %_libdir/*.a
 
 %changelog
+* Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.9.0-alt1
+- Updated to upstream release version 0.9.0.
+
 * Wed Feb 22 2017 Michael Shigorin <mike@altlinux.org> 1.0-alt1.cvs20092729.3
 - BOOTSTRAP: introduced docs knob (leave off by default)
 - E2K: "-O20" is a bit too much!

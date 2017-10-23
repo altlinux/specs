@@ -13,7 +13,7 @@
 
 Name: rsyslog
 Version: 8.28.0
-Release: alt1.1
+Release: alt2
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: GPLv3+ ASL2.0
@@ -555,6 +555,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/mmsnmptrapd.so
 
 %changelog
+* Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 8.28.0-alt2
+- Rebuilt with libdbi-0.9.0.
+
 * Mon Sep 18 2017 Gordeev Mikhail <obirvalger@altlinux.org> 8.28.0-alt1.1
 - Rebuild with libhiredis 1.13.3
 

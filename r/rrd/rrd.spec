@@ -1,18 +1,17 @@
 Name: rrd
 Version: 1.5.4
-Release: alt2.2
+Release: alt3
 
 %define native rrdtool
 %define abiversion 4
 %define rrdcached_user root
-%def_with tcl
+%def_without tcl
 
 Summary: RRD - round robin database
 License: %gpl2plus with exceptions
 Group: Development/Databases
 
 Url: http://oss.oetiker.ch/rrdtool
-Packager: Dmitry Lebkov <dlebkov@altlinux.ru>
 
 Source0: http://oss.oetiker.ch/rrdtool/pub/%native-%version.tar
 Source1: rrdcached.init
@@ -27,11 +26,14 @@ Patch3: rrdtool-1.5.3-top-dir.patch
 
 Requires: lib%name = %version-%release
 
-BuildRequires: rpm-build-licenses rpm-build-tcl
+BuildRequires: rpm-build-licenses
 BuildRequires: chrpath
+%if_with tcl
+BuildRequires: rpm-build-tcl tcl-devel
+%endif
 
 # Automatically added by buildreq on Wed Oct 12 2011
-BuildRequires: groff-base libdbi-devel libpango-devel libpng-devel libxml2-devel lua5 perl-Pod-Parser perl-devel python-devel tcl-devel
+BuildRequires: groff-base libdbi-devel libpango-devel libpng-devel libxml2-devel lua5 perl-Pod-Parser perl-devel python-devel
 
 Summary(ru_RU.UTF-8): RRDtool - база данных с "циклическим обновлением"
 
@@ -224,7 +226,9 @@ find doc bindings/perl-piped -type f -print0 |
 	--enable-shared \
 	--with-pic \
 	--disable-static \
+%if_with tcl
 	--with-tcllib=%_libdir \
+%endif
 	--disable-ruby \
 	--disable-lua
 
@@ -250,7 +254,9 @@ pushd bindings/perl-shared
 	%perl_vendor_install
 popd
 
+%if_with tcl
 mkdir -p %buildroot%_tcllibdir/
+%endif
 make DESTDIR=%buildroot install
 
 # seems to have changed in newer configure,
@@ -338,6 +344,10 @@ rm -rf %buildroot/usr/lib/perl
 #   (the tcl one looks broken too as of 1.5.4-alt2.1)
 
 %changelog
+* Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.4-alt3
+- Rebuilt with libdbi-0.9.0.
+- Disabled tcl bindings.
+
 * Wed Feb 22 2017 Michael Shigorin <mike@altlinux.org> 1.5.4-alt2.2
 - dropped BR: ruby as it's unconditionally disabled anyways
 

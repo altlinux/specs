@@ -2,7 +2,7 @@
 
 Name: gammu
 Version: 1.38.5
-Release: alt1
+Release: alt2
 
 Summary: Mobile phones management utility
 License: GPL
@@ -184,6 +184,9 @@ cp -R contrib/bash-completion %buildroot%_gammu_docdir/other/
 %_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Mon Oct 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.38.5-alt2
+- Rebuilt with libdbi-0.9.0.
+
 * Thu Oct 19 2017 Michael Shigorin <mike@altlinux.org> 1.38.5-alt1
 - new version (watch file uupdate)
 

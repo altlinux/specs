@@ -12,7 +12,7 @@
 
 Name: syslog-ng
 Version: 3.8.1
-Release: alt1.2
+Release: alt2
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
@@ -389,6 +389,9 @@ fi
 %_libdir/pkgconfig/%name-test.pc
 
 %changelog
+* Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.8.1-alt2
+- Rebuilt with libdbi-0.9.0.
+
 * Fri Jun 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.8.1-alt1.2
 - Update syslong-ng-json dependencies
 
