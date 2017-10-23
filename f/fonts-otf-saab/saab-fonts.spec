@@ -2,12 +2,14 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname saab-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname saab
 %global fontconf 67-%{fontname}.conf
 
 Name:        fonts-otf-saab
 Version:     0.91
-Release:     alt3_11
+Release:     alt3_15
 Summary:     Free Punjabi Unicode OpenType Font
 
 Group:       System/Fonts/True type
@@ -88,6 +90,9 @@ fi
 %doc License_font_exception.txt
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.91-alt3_15
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.91-alt3_11
 - update to new release by fcimport
 
