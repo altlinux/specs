@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           jetty-artifact-remote-resources
 Version:        1.0
-Release:        alt3_14jpp8
+Release:        alt3_15jpp8
 Summary:        Jetty toolchain artifact remote resources
 
 License:        ASL 2.0 or EPL
@@ -42,6 +43,9 @@ cp -p %{SOURCE2} %{SOURCE3} .
 %doc LICENSE-2.0.txt epl-v10.html
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_15jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_14jpp8
 - new fc release
 
