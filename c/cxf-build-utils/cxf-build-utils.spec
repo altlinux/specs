@@ -2,12 +2,13 @@ Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          cxf-build-utils
 Version:       3.2.0
-Release:       alt1_1jpp8
+Release:       alt1_3jpp8
 Summary:       Apache CXF Build Utils
 License:       ASL 2.0
 URL:           http://cxf.apache.org/build-utils.html
@@ -17,7 +18,7 @@ BuildRequires: maven-local
 BuildRequires: mvn(com.sun.xml.fastinfoset:FastInfoset)
 BuildRequires: mvn(jdom:jdom)
 BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(net.sourceforge.pmd:pmd-java)
+# BuildRequires: mvn(net.sourceforge.pmd:pmd-java)
 BuildRequires: mvn(org.apache:apache:pom:)
 BuildRequires: mvn(org.apache.maven:maven-artifact)
 BuildRequires: mvn(org.apache.maven:maven-model)
@@ -45,6 +46,9 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
+# Was retired
+%pom_remove_dep net.sourceforge.pmd:pmd-java buildtools
+rm -r buildtools/src/main/java/org/apache/cxf/pmd
 
 %build
 
@@ -57,6 +61,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt1_3jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt1_1jpp8
 - new version
 
