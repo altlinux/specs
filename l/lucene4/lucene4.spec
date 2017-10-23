@@ -3,12 +3,10 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ perl(LWP/UserAgent.pm)
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name lucene4
-%define version 4.10.4
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -39,14 +37,10 @@ BuildRequires: jpackage-generic-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%{?scl:%scl_package lucene}
-%{!?scl:%global pkg_name %{name}}
-%global lbasename lucene
-
 Summary:        High-performance, full-featured text search engine
-Name:           %{?scl_prefix}%{lbasename}4
+Name:           lucene4
 Version:        4.10.4
-Release:        alt1_5jpp8
+Release:        alt1_8jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -62,11 +56,11 @@ Patch1:         0001-dependency-generation.patch
 Patch2:         lucene-4.10.4-morfologik-stemming.patch
 
 BuildRequires:  git
-BuildRequires: subversion subversion-server-common
+BuildRequires:  subversion subversion-server-common
 BuildRequires:  ant
-%{!?scl:BuildRequires:  ivy-local}
-%{?scl:BuildRequires:  apache-ivy}
-BuildRequires:  %{?scl_prefix}icu4j
+BuildRequires:  ivy-local
+BuildRequires:  apache-ivy
+BuildRequires:  icu4j
 BuildRequires:  httpcomponents-client
 BuildRequires:  jetty-continuation
 BuildRequires:  jetty-http
@@ -92,8 +86,6 @@ BuildRequires:  junit
 BuildRequires:  randomizedtesting-junit4-ant
 BuildRequires:  randomizedtesting-runner
 
-%{?scl:Requires: %scl_runtime}
-
 Provides:       %{name}-core = %{epoch}:%{version}-%{release}
 
 BuildArch:      noarch
@@ -114,18 +106,18 @@ BuildArch: noarch
 %{summary}.
 
 %prep
-%setup -n %{lbasename}-%{version}
+%setup -q -n lucene-%{version}
 
 # dependency generator expects that the directory name is just lucene
-mkdir %{lbasename}
+mkdir lucene
 find -maxdepth 1 \
     ! -name CHANGES.txt ! -name LICENSE.txt ! -name README.txt \
     ! -name NOTICE.txt ! -name MIGRATE.txt  ! -name ivy-settings.xml \
-    ! -path ./%{lbasename} -exec mv \{} %{lbasename}/ \;
+    ! -path ./lucene -exec mv \{} lucene/ \;
 
 tar xf %{SOURCE1}
 
-pushd %{lbasename}
+pushd lucene
 %patch0 -p1
 %patch1 -p1
 
@@ -137,27 +129,33 @@ rm sandbox/src/test/org/apache/lucene/sandbox/queries/regex/TestJakartaRegexpCap
 # old API
 rm -r replicator/src/test/*
 
+rm -r analysis/common/src/test/*
+
 # Because ivy-local is not available before F21
-%{?scl:ln -s %{_sysconfdir}/ivy/ivysettings.xml}
+ln -s %{_sysconfdir}/ivy/ivysettings.xml
 
 popd
 
 %patch2 -p1
 
+# Ensure OSGi package imports are versioned correctly
+sed -i -e '/Export-Package/a<Import-Package>org.apache.lucene*;version="[${project.version},5.0.0)",org.tartarus*;version="[${project.version},5.0.0)",*</Import-Package>' \
+  dev-tools/maven/pom.xml.template
+
 # suggest provides spellchecker
-%mvn_alias :%{lbasename}-suggest :%{lbasename}-spellchecker
+%mvn_alias :lucene-suggest :lucene-spellchecker
 # compatibility with existing packages
-%mvn_alias :%{lbasename}-analyzers-common :%{lbasename}-analyzers
+%mvn_alias :lucene-analyzers-common :lucene-analyzers
 %mvn_compat_version : 4 %{version}
 
 %build
-pushd %{lbasename}
+pushd lucene
 # generate dependencies
 ant filter-pom-templates -Divy.mode=local -Dversion=%{version}
 
 # fix source dir + move to expected place
-for pom in `find build/poms/%{lbasename} -name pom.xml`; do
-    sed 's/\${module-path}/${basedir}/g' "$pom" > "${pom##build/poms/%{lbasename}/}"
+for pom in `find build/poms/lucene -name pom.xml`; do
+    sed 's/\${module-path}/${basedir}/g' "$pom" > "${pom##build/poms/lucene/}"
 done
 
 %pom_disable_module src/test core
@@ -182,15 +180,11 @@ mv lucene/build/poms/pom.xml .
 # Prevent build failure
 %pom_remove_plugin -r :maven-enforcer-plugin
 
-%{?scl:scl enable %{scl} - <<"EOF"}
 # For some reason TestHtmlParser.testTurkish fails when building inside SCLs
 %mvn_build -f
-%{?scl:EOF}
 
 %install
 %mvn_install
-
-%global _docdir_fmt %{name}
 
 %files -f .mfiles
 %doc CHANGES.txt README.txt MIGRATE.txt
@@ -200,6 +194,9 @@ mv lucene/build/poms/pom.xml .
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:4.10.4-alt1_8jpp8
+- new jpp release
+
 * Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.10.4-alt1_5jpp8
 - new fc release
 
