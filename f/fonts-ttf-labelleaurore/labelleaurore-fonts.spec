@@ -1,5 +1,7 @@
 Group: System/Fonts/True type
 %define oldname labelleaurore-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname labelleaurore
 %global fontconf 61-%{fontname}-fonts.conf
 %global alphatag 20140913hg
@@ -7,7 +9,7 @@ Group: System/Fonts/True type
 
 Name:          fonts-ttf-labelleaurore
 Version:       1.001
-Release:       alt1_0.3.%{alphatag}
+Release:       alt1_0.6.%{alphatag}
 Summary:       La Belle Aurore font by Kimberly Geswein
 License:       OFL
 URL:           http://www.google.com/fonts/specimen/La+Belle+Aurore
@@ -90,6 +92,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.001-alt1_0.6.20140913hg
+- update to new release by fcimport
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.001-alt1_0.3.20140913hg
 - new version
 
