@@ -2,12 +2,14 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname jisksp16-1990-fonts
-%define	fontname	jisksp16-1990
-%define	catalogue	%{_sysconfdir}/X11/fontpath.d
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global	fontname	jisksp16-1990
+%global	catalogue	%{_sysconfdir}/X11/fontpath.d
 
 Name:		fonts-bitmap-jisksp16-1990
 Version:	0.983
-Release:	alt4_11
+Release:	alt4_15
 Summary:	16x16 JIS X 0212:1990 Bitmap font
 Group:		System/Fonts/True type
 License:	Public Domain
@@ -16,7 +18,7 @@ URL:		http://kanji.zinbun.kyoto-u.ac.jp/~yasuoka/ftp/fonts/
 Source0:	http://kanji.zinbun.kyoto-u.ac.jp/~yasuoka/ftp/fonts/jisksp16-1990.bdf.Z
 
 BuildArch:	noarch
-BuildRequires:	gzip mkfontdir xorg-x11-font-utils fontpackages-devel
+BuildRequires:	gzip gzip-utils less bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils fontpackages-devel
 
 Provides:	jisksp16-1990 = 0.1-16
 Obsoletes:	jisksp16-1990 <= 0.1-16
@@ -89,6 +91,9 @@ fi
 %{catalogue}/*
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.983-alt4_15
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.983-alt4_11
 - update to new release by fcimport
 
