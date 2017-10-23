@@ -4,7 +4,7 @@
 %def_enable server
 Name: cmake
 Version: 3.9.2
-Release: alt0.3
+Release: alt0.4
 
 Summary: Cross-platform, open-source make system
 
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 Source1: %name.macros
 Source2: CMakeCache.txt
 Patch: %name-%version-%release.patch
+Patch1: alt-fallback-modules-dir.patch
 
 BuildRequires: bzlib-devel gcc-c++ libarchive-devel >= 2.8.4
 BuildRequires: libcurl-devel libexpat-devel libncurses-devel qt5-base-devel libxml2-devel
@@ -133,6 +134,7 @@ Set of RPM macros for packaging applications that use cmake.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 mkdir build
@@ -269,6 +271,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Mon Oct 23 2017 Sergey V Turchin <zerg@altlinux.org> 3.9.2-alt0.4
+- search old sharedir CMake directory too
+
 * Thu Oct 19 2017 Igor Vlasenko <viy@altlinux.ru> 3.9.2-alt0.3
 - NMU: set cmake sharedir to %%_datadir/ cmake, not CMake
 
