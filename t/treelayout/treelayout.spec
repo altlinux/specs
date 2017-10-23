@@ -2,13 +2,14 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global core org.abego.treelayout
 Name:          treelayout
 Version:       1.0.3
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Efficient and customizable Tree Layout Algorithm in Java
 License:       BSD
 URL:           http://treelayout.sourceforge.net/
@@ -96,6 +97,9 @@ native2ascii -encoding UTF8 %{core}/src/main/java/org/abego/treelayout/package-i
 %doc %{core}/src/LICENSE.TXT
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_4jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_3jpp8
 - new fc release
 
