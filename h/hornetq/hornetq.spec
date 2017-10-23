@@ -1,12 +1,11 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 25
+%define fedora 26
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -19,8 +18,9 @@ BuildRequires: jpackage-generic-compat
 %else
 %define __isa_bits 32
 %endif
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name hornetq
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 2.4.7
 # empty debuginfo
 %global debug_package %nil
@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          hornetq
 Version:       2.4.7
-Release:       alt1_2jpp8
+Release:       alt1_4jpp8
 Summary:       High performance messaging system
 License:       ASL 2.0
 URL:           http://hornetq.jboss.org/
@@ -47,11 +47,11 @@ Source0:       https://github.com/hornetq/hornetq/archive/HornetQ_%{customnamedv
 # Replace json.org with javax.json
 Patch0:        hornetq-2.4.7-javax.json.patch
 
-BuildRequires: autoconf-common
-BuildRequires: automake-common
+BuildRequires: autoconf
+BuildRequires: automake
 BuildRequires: graphviz libgraphviz
 BuildRequires: libaio-devel
-BuildRequires: libtool-common
+BuildRequires: libtool
 BuildRequires: maven-local
 BuildRequires: mvn(com.github.maven-nar:nar-maven-plugin)
 BuildRequires: mvn(io.netty:netty-all)
@@ -286,6 +286,8 @@ cp -p distribution/hornetq/src/main/resources/licenses/LICENSE.txt .
   </modules>
 </profile>"
 
+rm -r **/src/test/* tests/*/src/test/*
+
 # [ERROR] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique duplicate declaration of version
 %pom_remove_dep org.jboss.logmanager:jboss-logmanager hornetq-server
 %pom_add_dep org.jboss.logmanager:jboss-logmanager:1.2.2.GA:test hornetq-server
@@ -343,6 +345,9 @@ cp -L hornetq-native/bin/libHornetQAIO.so %{buildroot}/%{_libdir}/libHornetQAIO.
 %doc LICENSE.txt NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.7-alt1_4jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.7-alt1_2jpp8
 - new version
 
