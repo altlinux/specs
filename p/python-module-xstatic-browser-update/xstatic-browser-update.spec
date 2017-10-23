@@ -5,20 +5,23 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt2
+Release: alt3
 Summary: browser-update (XStatic packaging standard)
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/%pypi_name/
-Source: %pypi_name-%version.tar.gz
 BuildArch: noarch
+Url: https://pypi.python.org/pypi/%pypi_name/
+
+Source: %pypi_name-%version.tar.gz
 
 BuildRequires: python-devel python-module-setuptools-tests
 BuildRequires: python-module-%mname
+BuildRequires: python2.7(xstatic.pkg.jquery)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools-tests
 BuildRequires: python3-module-%mname
+BuildRequires: python3(xstatic.pkg.jquery)
 %endif
 
 %py_provides %mname.pkg.browser_update
@@ -80,18 +83,21 @@ popd
 %files
 %doc *.txt
 %python_sitelibdir/%mname/pkg/*
-%python_sitelibdir/*.egg-info
+%python_sitelibdir/XStatic_browser_update-%version-py*.egg-info
 %exclude %python_sitelibdir/*.pth
 
 %if_with python3
 %files -n python3-module-%oname
 %doc *.txt
 %python3_sitelibdir/%mname/pkg/*
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/XStatic_browser_update-%version-py*.egg-info
 %exclude %python3_sitelibdir/*.pth
 %endif
 
 %changelog
+* Mon Oct 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt3
+- Updated build dependencies.
+
 * Wed Jun 14 2017 Alexey Shabalin <shaba@altlinux.ru> 1.0.1-alt2
 - build as noarch
 
