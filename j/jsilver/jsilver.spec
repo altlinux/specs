@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           jsilver
 Version:        1.0.0
-Release:        alt1_11jpp8
+Release:        alt1_12jpp8
 Summary:        A pure-Java implementation of Clearsilver
 
 License:        ASL 2.0 
@@ -16,6 +17,8 @@ URL:            http://code.google.com/p/jsilver/
 # svn export http://jsilver.googlecode.com/svn/tags/jsilver-1.0.0 jsilver-1.0.0
 # tar caf jsilver-1.0.0.tar.xz jsilver-1.0.0
 Source0:        jsilver-1.0.0.tar.xz
+# javascript not allowed in javadoc.
+Patch0:         jsilver-1.0.0-javascript.patch
 
 BuildArch:      noarch
 
@@ -37,7 +40,9 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q 
+%setup -q
+%patch0 -p1
+
 find . -name *.jar -exec rm -f {} \;
 ln -s %{_javadir}/sablecc.jar sablecc/
 
@@ -58,6 +63,9 @@ mv build/site target
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_12jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_11jpp8
 - new fc release
 
