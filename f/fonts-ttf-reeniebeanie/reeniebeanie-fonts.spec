@@ -1,5 +1,7 @@
 Group: System/Fonts/True type
 %define oldname reeniebeanie-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname reeniebeanie
 %global fontconf 61-%{fontname}-fonts.conf
 %global alphatag 20140913hg
@@ -7,7 +9,7 @@ Group: System/Fonts/True type
 
 Name:          fonts-ttf-reeniebeanie
 Version:       1.000
-Release:       alt1_0.5.%{alphatag}
+Release:       alt1_0.8.%{alphatag}
 Summary:       Reenie Beanie font by James Grieshaber
 License:       OFL
 URL:           http://www.google.com/fonts/specimen/Reenie+Beanie
@@ -93,6 +95,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.000-alt1_0.8.20140913hg
+- update to new release by fcimport
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.000-alt1_0.5.20140913hg
 - new version
 
