@@ -2,13 +2,15 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname msimonson-anonymouspro-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname msimonson-anonymouspro
 %global fontconf 61-%{fontname}.conf
 %global archivename AnonymousPro
 
 Name:           fonts-ttf-msimonson-anonymouspro
 Version:        1.002.001
-Release:        alt4_8
+Release:        alt4_12
 Summary:        A coding-friendly monospace font
 
 Group:          System/Fonts/True type
@@ -113,6 +115,9 @@ fi
 %doc *.txt
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.002.001-alt4_12
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.002.001-alt4_8
 - update to new release by fcimport
 
