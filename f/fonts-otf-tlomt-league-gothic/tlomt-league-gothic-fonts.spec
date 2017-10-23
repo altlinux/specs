@@ -3,12 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname tlomt-league-gothic-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname tlomt-league-gothic
 %global fontconf 61-%{fontname}.conf
 
 Name:           fonts-otf-tlomt-league-gothic
 Version:        1.0
-Release:        alt2_8
+Release:        alt2_12
 Summary:        A sans serif gothic typeface
 
 License:        OFL
@@ -96,6 +98,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_12
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_8
 - update to new release by fcimport
 
