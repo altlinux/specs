@@ -1,5 +1,5 @@
 Name: curl
-Version: 7.56.0
+Version: 7.56.1
 Release: alt1%ubt
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -144,6 +144,11 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Mon Oct 23 2017 Anton Farygin <rider@altlinux.ru> 7.56.1-alt1%ubt
+- new version
+- fixes:
+  * CVE-2017-1000257 libcurl contains a buffer overrun flaw in the IMAP handler
+
 * Wed Oct 04 2017 Anton Farygin <rider@altlinux.ru> 7.56.0-alt1%ubt
 - new version
 - fixes:
