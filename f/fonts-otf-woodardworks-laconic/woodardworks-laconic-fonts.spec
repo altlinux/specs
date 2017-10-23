@@ -2,13 +2,15 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname woodardworks-laconic-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname woodardworks-laconic
 %global fontconf 60-%{fontname}
 
 Name:		fonts-otf-woodardworks-laconic
 Summary:	An artistic and minimal sans-serif font family
 Version:	001.001
-Release:	alt3_11
+Release:	alt3_15
 License:	OFL
 Group:		System/Fonts/True type
 Source0:	http://www.woodardworks.com/laconic.zip
@@ -117,6 +119,9 @@ fi
 %doc laconic_eula.pdf
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 001.001-alt3_15
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 001.001-alt3_11
 - update to new release by fcimport
 
