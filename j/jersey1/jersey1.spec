@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          jersey1
 Version:       1.19
-Release:       alt1_7jpp8
+Release:       alt1_9jpp8
 Summary:       JAX-RS (JSR 311) production quality Reference Implementation
 # One file in jersey-core/ is under ASL 2.0 license
 # License file with incorrect fsf address https://java.net/jira/browse/JERSEY-2870
@@ -299,6 +300,8 @@ rm -r contribs/jersey-apache-client4/src/test/java/com
 
 rm -r jersey-core/src/test/java/com/sun/jersey/core/SecurityTest.java
 
+rm contribs/jersey-oauth/oauth-server/src/test/java/com/sun/jersey/oauth/server/NonceManagerTest.java
+
 %mvn_compat_version : %{version} 1
 
 # Do not install source jars
@@ -356,6 +359,9 @@ install -p -m 644 ant-wadl-task %{buildroot}%{_sysconfdir}/ant.d/ant-wadl-task
 %doc license.html legal/LICENSE.txt legal/maintenance/copyright.txt LICENSE-2.0.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1_9jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1_7jpp8
 - new fc release
 
