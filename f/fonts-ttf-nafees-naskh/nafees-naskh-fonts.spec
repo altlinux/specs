@@ -2,13 +2,15 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname nafees-naskh-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname        nafees-naskh
 %global fontconf        67-%{fontname}.conf
 %global archivename     Nafees_Naskh_v2.01
 
 Name:           fonts-ttf-nafees-naskh
 Version:        2.01
-Release:        alt2_9
+Release:        alt2_13
 Summary:        Nafees naskh font for writing Urdu in the Naskh script with full aerab support
 
 Group:          System/Fonts/True type
@@ -23,7 +25,7 @@ Source3:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
-BuildRequires:  fontforge
+BuildRequires:  fontforge libfontforge
 Source44: import.info
 
 %description
@@ -105,6 +107,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.01-alt2_13
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.01-alt2_9
 - update to new release by fcimport
 
