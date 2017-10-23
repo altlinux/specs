@@ -3,18 +3,18 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name narayana
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 5.3.3
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:          narayana
 Version:       5.3.3
-Release:       alt1_1jpp8
+Release:       alt1_2jpp8
 Summary:       Distributed Transaction Manager
 License:       LGPLv2+
 URL:           http://narayana.io/
@@ -184,6 +184,9 @@ done
 %doc common/copyright.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 5.3.3-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 5.3.3-alt1_1jpp8
 - new version
 
