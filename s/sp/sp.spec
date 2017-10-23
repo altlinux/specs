@@ -1,6 +1,6 @@
 Name:           sp
 Version:        5.2.1
-Release:        alt21
+Release:        alt22
 Summary:        School Portal
 Summary(ru):    Школьный портал
 License:        Distributable, non-free
@@ -10,7 +10,7 @@ Packager:       Andrey Stroganov <dja@altlinux.org>
 Source:         sp-5.2.1.tar
 BuildRequires:  fpc
 Requires:       perl-base perl-CGI perl-CGI-Session perl-Archive-Zip perl-GD perl-GD-Graph perl-CGI-SpeedyCGI perl-Magick perl-Mail-Sender perl-Text-Iconv perl-DBD-InterBase perl-HTML-TagFilter pwgen perl-IO-Compress xinetd mpg123 perl-libwww
-Requires: 	apache2 firebird-classic squid-server net-tools apache2-base
+Requires: 	apache2 firebird-server squid-server net-tools apache2-base
 Autoprov:       0
 Autoreq:        0
 
@@ -37,7 +37,7 @@ Integrated school control system.
 %prep
 %setup
 # Build UDFlib for Firebird
-mkdir -p usr/lib/firebird/UDF/
+mkdir -p usr/lib/firebird/udf/
 cd UDFlib-src
 fpc -Mdelphi -Xc -Cccdecl UDFLib.dpr -oUDFLib.dll
 mv UDFLib.dll ..
@@ -61,8 +61,8 @@ mkdir -p %buildroot/var/www/html/sp/tmp/{img_report_links,img_report_parallel,im
 cp -r * %buildroot/
 
 # UDFlib
-mkdir -p      %buildroot/%_libdir/firebird/UDF/
-mv UDFLib.dll %buildroot/%_libdir/firebird/UDF/UDFLib.dll
+mkdir -p      %buildroot/%_libdir/firebird/udf/
+mv UDFLib.dll %buildroot/%_libdir/firebird/udf/UDFLib.dll
 
 # -------------------------------------------
 # Список файлов, которые попадут в пакет
@@ -72,7 +72,7 @@ mv UDFLib.dll %buildroot/%_libdir/firebird/UDF/UDFLib.dll
 %attr(640,apache2,mail)      %config(noreplace) /var/www/cgi-bin/sp/sp.conf
 %dir /var/lib/firebird/xxi/
 %attr(660,firebird,firebird) %config(noreplace) /var/lib/firebird/xxi/*
-%attr(440,firebird,firebird) %_libdir/firebird/UDF/UDFLib.dll
+%attr(440,firebird,firebird) %_libdir/firebird/udf/UDFLib.dll
 %attr(640,apache2,apache2)     /var/www/html/.htaccess
 %attr(640,apache2,apache2)     %config /etc/httpd2/conf/sites-available/000-sp.conf
 %attr(640,apache2,apache2)     %config /etc/httpd2/conf/mods-start.d/900-sp.conf
@@ -379,6 +379,9 @@ fi
 # a2dissite 000-sp
 
 %changelog
+* Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.1-alt22
+- Rebuilt with Firebird-3.0.x.
+
 * Sat Aug 26 2017 Andrey Cherepanov <cas@altlinux.org> 5.2.1-alt21
 - Require apache2-base instead of deprecated apache-common
 

@@ -1,4 +1,4 @@
-%define major 2.1.5.18497
+%define major 3.0.2.32703
 %define minor 0
 %define pkgname Firebird
 %define pkgversion %major-%minor
@@ -7,25 +7,29 @@
 # all binary utils exept isql. isql rename to fbsql.
 %define utilsbin gdef gbak gfix gstat qli
 %define serverbin gsec fb_lock_print fbsvcmgr
-%define utilsshell changeDBAPassword.sh createAliasDB.sh
+
 Name: firebird
 Version: %major.%minor
-Release: alt2.1
+Release: alt1
 Summary: Firebird SQL Database, fork of InterBase
 Group: Databases
 License: IPL
-Url: http://www.firebirdsql.org/
-Packager: Boris Savelev <boris@altlinux.org>
+Url: https://www.firebirdsql.org/
+
 Source: %pkgname-%pkgversion.tar
 Source1: %name.init
 Source2: %name.xinetd
 
-Patch: firebird-2.1.2.18118.0-deps-flags-libs.patch
-Patch2: firebird-update-valgrind.patch
-Patch4: firebird-alt-buffer.patch
+Patch1: %name-%pkgversion-fedora-obsolete-syslogd.target.patch
+Patch2: %name-%pkgversion-fedora-no-copy-from-icu.patch
+Patch3: %name-%pkgversion-fedora-honour-buildflags.patch
+Patch4: %name-%pkgversion-fedora-cloop-honour-build-flags.patch
+Patch5: %name-%pkgversion-fedora-add-pkgconfig-files.patch
+Patch6: %name-%pkgversion-fedora-Provide-sized-global-delete-operators-when-compiled.patch
+Patch7: %name-%pkgversion-fedora-Make-the-generated-code-compatible-with-gcc-6-in-C-1.patch
+Patch8: %name-%pkgversion-alt-rpath.patch
 
-Requires: libfbclient = %version-%release
-Requires: libfbembed = %version-%release
+Requires: libfbclient = %EVR
 
 BuildPreReq: rpm-build-compat
 BuildRequires: libtinfo-devel libicu-devel libedit-devel
@@ -35,112 +39,38 @@ BuildRequires: automake
 BuildRequires: bison
 BuildRequires: libtool
 BuildRequires: libncurses-devel
+BuildRequires: zlib-devel libtommath-devel
 
 %description
 This is the Firebird SQL Database shared files.
 
-%files
-%doc work/%pkgname-%pkgversion/doc/*
-%dir %fbroot
-%dir %fbroot/help
-%dir %_sysconfdir/%name
-%config(noreplace) %_sysconfdir/%name/aliases.conf
-%config(noreplace) %_sysconfdir/%name/firebird.conf
-%fbroot/*.msg
-%fbroot/help/*
-%dir %_datadir/%name
-%dir %_datadir/%name/upgrade
-%_datadir/%name/upgrade/*
-%dir %_datadir/%name/examples
-%_datadir/%name/examples/*
-
-%package classic
-Summary: Meta-package for Firebird SQL Classic Database (xinetd based)
-Group: Databases
-Provides: %name-arch = %version-%release
-Requires: %name-server-classic = %version
-Requires: %name-utils-classic = %version
-Conflicts: %name-superserver
-
-%description classic
-This is a meta-package for easy selecting the Classic arch for Firebird 2
-
-%files classic
-%package superserver
-Summary: Meta-package for Firebird SQL SuperServer Database (standalone)
-Group: Databases
-Provides: %name-arch = %version-%release
-Requires: %name-server-superserver = %version
-Requires: %name-utils-superserver = %version
-Conflicts: %name-classic
-
-%description superserver
-This is a meta-package for easy selecting the SuperServer arch for Firebird 2
-
-%files superserver
 #
 # Development headers and static libraries
 #
 %package devel
 Summary: Development Libraries for Firebird SQL Database
 Group: Development/Databases
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Development libraries for firebird.
-
-%files devel
-%attr (0755,root,root) %_bindir/fb_config
-%_bindir/gpre
-%_includedir/*
-%_libdir/*.so
 
 #
 # Standard client programs
 #
 
 #
-# Utils programs (classic)
+# Utils programs
 #
-%package utils-classic
+%package utils
 Summary: Client programs for Firebird SQL Database
 Group: Databases
-Requires: %name = %version-%release
-Provides: %name-utils = %version-%release
+Requires: %name = %EVR
 Conflicts: %name-utils-superserver
 Obsoletes: %name-client-embedded <= 2.0
 
-%description utils-classic
+%description utils
 Client access tools for firebird.
-
-%files utils-classic
-%_bindir/gbak.classic
-%_bindir/gdef.classic
-%_bindir/gfix.classic
-%_bindir/gstat.classic
-%_bindir/fbsql.classic
-%_bindir/qli.classic
-
-#
-# Utils programs (superserver)
-#
-%package utils-superserver
-Summary: Client programs for Firebird SQL Database
-Group: Databases
-Requires: %name = %version-%release
-Provides: %name-utils = %version-%release
-Conflicts: %name-utils-classic
-
-%description utils-superserver
-Client access tools for firebird.
-
-%files utils-superserver
-%_bindir/gbak.superserver
-%_bindir/gdef.superserver
-%_bindir/gfix.superserver
-%_bindir/gstat.superserver
-%_bindir/fbsql.superserver
-%_bindir/qli.superserver
 
 #
 # Multi-threaded, independant client libraries
@@ -152,369 +82,173 @@ Group: System/Libraries
 %description -n libfbclient
 Multi-threaded, non-local client libraries for Firebird SQL Database
 
-%files -n libfbclient
-%_libdir/libfbclient.so.*
-
 #
-# Multi-process, independant client libraries
+# Server programs
 #
-%package -n libfbembed
-Summary: Multi-process, non-local client libraries for Firebird SQL Database
-Group: System/Libraries
-
-%description -n libfbembed
-Multi-process, non-local client libraries for Firebird SQL Database
-
-%files -n libfbembed
-%_libdir/libfbembed.so.*
-
-#
-# Classic server programs
-#
-%package server-classic
-Summary: Classic (xinetd) server for Firebird SQL Database
+%package server
+Summary: Server for Firebird SQL Database
 Group: Databases
-Provides: firebird-server = %version-%release
-Requires: xinetd
-Requires: %name-server-common = %version-%release
+Requires: %name = %EVR
 Conflicts: %name-server-superserver
+%add_findreq_skiplist %_sbindir/changeServerMode.sh
 
-%description server-classic
-This is the classic (xinetd) server for the Firebird SQL Database.
+%description server
+This is the server for the Firebird SQL Database.
 It can also be used as an embedded server, when paired with the
 client-embedded package.
 
 It does not include any client access tools, nor does it include the
 multi-threaded client library.
 
-%files server-classic
-%config(noreplace) %attr(640,root,root) %_sysconfdir/xinetd.d/%name
-%_bindir/fb_inet_server
-%_bindir/fb_lock_mgr
-%_bindir/fb_lock_print.classic
-%_bindir/gds_drop
-%_bindir/gsec.classic
-%_bindir/fbsvcmgr.classic
-
-#
-# Super server programs
-#
-%package server-superserver
-Summary: Superserver (single process) server for Firebird SQL Database
+%package doc
+Summary: Documentation for Firebird SQL server
 Group: Databases
-Provides: firebird-server = %version-%release
-#Requires: %name
-Requires: %name-server-common = %version-%release
-Conflicts: %name-server-classic
+Requires: %name-server = %EVR
 
-%description server-superserver
-This is the Superserver (single process) for the Firebird SQL Database.
+%description doc
+Documentation for Firebird SQL server.
 
-It does not include any client access tools, nor does it include the
-multi-threaded client library.
-
-%files server-superserver
-%attr(0755,root,root) %_initdir/%name
-%_bindir/fb_lock_print.superserver
-%_bindir/fbguard
-%_bindir/fbmgr.bin
-%_bindir/fbmgr
-%_bindir/fbserver
-%_bindir/gsec.superserver
-%_bindir/fbsvcmgr.superserver
-
-#
-# Server's common files
-#
-%package server-common
-Summary: Common files for Firebird SQL Database servers
+%package examples
+Summary: Examples for Firebird SQL server
 Group: Databases
-Conflicts: firebird-server-classic < 2.0
-Obsoletes: %name-server-superserver < 2.0.1.12855.0
-Requires: %name = %version-%release
+Requires: %name-server = %EVR
 
-%description server-common
-This package contains common files between firebird-server-classic and
-firebird-server-superserver. You will need this if you want to use either one.
-
-%files server-common
-%dir %attr(2775,root,%name) %_var/run/%name
-%dir %attr(2775,root,%name) %_localstatedir/%name/backup
-%dir %attr(2775,root,%name) %_localstatedir/%name
-#ghost %_sysconfdir/gds_hosts.equiv
-%dir %fbroot/UDF
-%dir %fbroot/intl
-%config %attr (0660,%name,%name) %_sysconfdir/%name/security2.fdb
-%config(noreplace) %_sysconfdir/%name/fbintl.conf
-%dir %attr (2770,root,%name) %_logdir/%name
-%attr (0660,%name,%name) %_logdir/%name/%name.log
-%fbroot/UDF/*
-%fbroot/intl/*
-# in mandriva they in common. is they different?
-# %_bindir/gdef
-# %_bindir/gsec
-%_bindir/gsplit
-%_bindir/nbackup
-%attr (0755,root,root) %_bindir/*.sh
-%_datadir/%name/*.sh
+%description examples
+Examples for Firebird SQL server.
 
 %prep
-rm -rf %_builddir/work
-mkdir -p %_builddir/work
-tar -xf %SOURCE0
-mv %pkgname-%pkgversion work
-cd %workdir
-%patch0 -p1
-%patch2 -p0
+%setup -n %pkgname-%pkgversion
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 %patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p2
 
-# compile time relative path hacks, ew :(
-for d in ../etc usr var/log/firebird var/run/firebird ; do
-    rm -rf %workdir/../$d
-    mkdir -p %workdir/../$d
-done
-cd "%workdir/../usr"; ln -sf "%workdir/gen/firebird/bin"
-cd "%workdir/../../etc"; ln -sf "%workdir/gen/firebird" firebird
-cd "%workdir"
-
-function check_sed() {
-        MSG="sed of $3, required $2 lines modified $1"
-        [[ $1 -ge $2 ]]
-}
 # sed vs patch for portability and addtional location changes
 # based on FIREBIRD=%_libdir/firebird
-	check_sed "$(sed -i -e 's:"aliases.conf":"../../..%_sysconfdir/firebird/aliases.conf":w /dev/stdout' \
-		src/jrd/db_alias.cpp | wc -l )" "1" "src/jrd/db_alias.cpp" # 1 line
-	check_sed "$(sed -i -e 's:"isc_event1:"../../../var/run/firebird/isc_event1:w /dev/stdout' \
-		-e 's:"isc_lock1:"../../../var/run/firebird/isc_lock1:w /dev/stdout' \
-		-e 's:"isc_init1:"../../../var/run/firebird/isc_init1:w /dev/stdout' \
-		-e 's:"isc_guard1:"../../../var/run/firebird/isc_guard1:w /dev/stdout' \
-		-e 's:"isc_monitor1:"../../../var/run/firebird/isc_monitor1:w /dev/stdout' \
-		-e 's:"firebird.log":"../../../var/log/firebird/firebird.log":w /dev/stdout' \
-		-e 's:"security2.fdb":"../../..%_sysconfdir/firebird/security2.fdb":w /dev/stdout' \
-		src/jrd/file_params.h | wc -l)" "12" "src/jrd/file_params.h" # 12 lines
-	check_sed "$(sed -i -e 's:"security2.fdb":"../../..%_sysconfdir/firebird/security2.fdb":w /dev/stdout' \
-		src/jrd/jrd_pwd.h | wc -l)" "1" "src/jrd/jrd_pwd.h" # 1 line
-	check_sed "$(sed -i -e 's:"firebird.conf":"../../..%_sysconfdir/firebird/firebird.conf":w /dev/stdout' \
-		src/jrd/os/config_root.h | wc -l)" "1" "src/jrd/os/config_root.h" # 1 line
-	check_sed "$(sed -i -e 's:"bin/fb_cache_print":"../../..%_bindir/fb_cache_print":w /dev/stdout' \
-		-e 's:"bin/fb_lock_print":"../../..%_bindir/fb_lock_print":w /dev/stdout' \
-		-e 's:"bin/fb_cache_manager":"../../..%_bindir/fb_cache_manager":w /dev/stdout' \
-		-e 's:"bin/gstat":"../../..%_bindir/gstat":w /dev/stdout' \
-		-e 's:"bin/gbak":"../../..%_bindir/gbak":w /dev/stdout' \
-		-e 's:"bin/gdef":"../../..%_bindir/gdef":w /dev/stdout' \
-		-e 's:"bin/gsec":"../../..%_bindir/gsec":w /dev/stdout' \
-		-e 's:"bin/gjrn":"../../..%_bindir/gjrn":w /dev/stdout' \
-		-e 's:"bin/gfix":"../../..%_bindir/gfix":w /dev/stdout' \
-		src/jrd/svc.cpp | wc -l)" "26" "src/jrd/svc.cpp" # 26 lines
-	check_sed "$(sed -i -e 's:"bin/fb_lock_mgr":"../../..%_bindir/fb_lock_mgr":w /dev/stdout' \
-		src/lock/lock.cpp | wc -l)" "1" "src/lock/lock.cpp" # 1 line
-	check_sed "$(sed -i -e 's:m_Root_Path + "firebird.conf":"../../..%_sysconfdir/firebird/firebird.conf":w /dev/stdout' \
-		src/utilities/fbcpl/fbdialog.cpp | wc -l)" "1" "src/utilities/fbcpl/fbdialog.cpp" # 1 line
-	check_sed "$(sed -i -e 's:"security2.fdb":"../../..%_sysconfdir/firebird/security2.fdb":w /dev/stdout' \
-		src/utilities/gsec/security.epp | wc -l)" "1" "src/utilities/gsec/security.epp" # 1 line
-	check_sed "$(sed -i -e 's:"bin/fbserver":"../../..%_bindir/fbserver":w /dev/stdout' \
-		src/utilities/guard/guard.cpp | wc -l)" "1" "src/utilities/guard/guard.cpp" # 1 line
-	check_sed "$(sed -i -e 's:"bin/fbguard":"../../..%_bindir/fbguard":w /dev/stdout' \
-		src/utilities/ibmgr/ibmgr.h | wc -l)" "1" "src/utilities/ibmgr/ibmgr.h" # 1 line
-	check_sed "$(sed -i -e 's:$FIREBIRD/firebird.log:/var/log/firebird/firebird.log:w /dev/stdout' \
-		src/utilities/ibmgr/srvrmgr.cpp | wc -l)" "1" "src/utilities/ibmgr/srvrmgr.cpp" # 1 line
-
-# Rename references to isql to fbsql
-	check_sed "$(sed -i -e 's:"isql :"fbsql :w /dev/stdout' \
-		src/isql/isql.epp | wc -l)" "1" "src/isql/isql.epp" # 1 line
-	check_sed "$(sed -i -e 's:isql :fbsql :w /dev/stdout' \
-		src/msgs/history.sql | wc -l)" "4" "src/msgs/history.sql" # 4 lines
-	check_sed "$(sed -i -e 's:isql :fbsql :w /dev/stdout' \
-		src/msgs/history2.sql | wc -l)" "4" "src/msgs/history2.sql" # 4 lines
-	check_sed "$(sed -i -e 's:isql :fbsql :w /dev/stdout' \
-		-e 's:ISQL :FBSQL :w /dev/stdout' \
-		src/msgs/messages.sql | wc -l)" "4" "src/msgs/messages.sql" # 4 lines
-	check_sed "$(sed -i -e 's:--- ISQL:--- FBSQL:w /dev/stdout' \
-		-e 's:isql :fbsql :w /dev/stdout' \
-		-e 's:ISQL :FBSQL :w /dev/stdout' \
-		src/msgs/messages2.sql | wc -l)" "6" "src/msgs/messages2.sql" # 6 lines
-
-find . -name \*.sh -print0 | xargs -0 chmod +x
-rm -rf extern/{editline,icu}
-
-%build
-%add_optflags "-fpermissive"
-# server-superserver
-cd %workdir
-mkdir -p m4
-%autoreconf
-%configure \
---prefix=%fbroot \
---with-system-editline \
---with-system-icu \
---enable-superserver
-# Can't use %%make as itsparallel build is broken
-make
-mv gen/%name gen/superserver
-
-# server-classic
-cd %workdir
-%configure \
---prefix=%fbroot \
---with-system-editline \
---with-system-icu
-# Can't use %%make as itsparallel build is broken
-make
-ln -sf %name gen/classic
-
-%install
-function installbin() {
-# goto fbroot
-    cd %workdir/gen/$1
-# remove scripts
-    rm -rf bin/*.sh
-# different binaries on classic and super
-    for f in %utilsbin %serverbin isql; do
-	mv bin/$f bin/$f.$1
-    done
-    cp -a bin/* %buildroot%_bindir
+check_sed() {
+	MSG="sed of $3, required $2 line(s) modified $1"
+	echo "${MSG}"
+	[[ $1 -ge $2 ]] || { echo "${MSG}" ; exit -1 ; }
 }
 
+check_sed "$(sed -i -e 's:"isql :"isql-fb :w /dev/stdout' \
+	src/isql/isql.epp | wc -l)" "1" "src/isql/isql.epp" # 1 line
+check_sed "$(sed -i -e 's:isql :isql-fb :w /dev/stdout' \
+	src/msgs/history2.sql | wc -l)" "4" "src/msgs/history2.sql" # 4 lines
+check_sed "$(sed -i -e 's:--- ISQL:--- ISQL-FB:w /dev/stdout' \
+	-e 's:isql :isql-fb :w /dev/stdout' \
+	-e 's:ISQL :ISQL-FB :w /dev/stdout' \
+	src/msgs/messages2.sql | wc -l)" "6" "src/msgs/messages2.sql" # 6 lines
+
+find . -name \*.sh -exec chmod +x {} + || { echo "chmod failed" ; exit -1 ; }
+rm -rf ./extern/{editline,icu} || { echo "rm -rf failed" ; exit -1 ;}
+
+%build
+%add_optflags -fno-sized-deallocation -fno-delete-null-pointer-checks -I%_includedir/tommath
+
+%autoreconf
+%configure \
+	--prefix=%fbroot \
+	--with-system-editline \
+	--with-system-icu \
+	--with-fbbin=%_bindir \
+	--with-fbsbin=%_sbindir \
+	--with-fbconf=%_sysconfdir/%name \
+	--with-fblib=%_libdir \
+	--with-fbinclude=%_includedir/%name \
+	--with-fbdoc=%_defaultdocdir/%name \
+	--with-fbudf=%_libdir/%name/udf \
+	--with-fbsample=%_defaultdocdir/%name/sample \
+	--with-fbsample-db=%_var/lib/%name/data/ \
+	--with-fbhelp=%_var/lib/%name/system/ \
+	--with-fbintl=%_libdir/%name/intl \
+	--with-fbmisc=%_datadir/%name/misc \
+	--with-fbsecure-db=%_var/lib/%name/secdb/ \
+	--with-fbmsg=%_var/lib/%name/system/ \
+	--with-fblog=%_var/log/%name \
+	--with-fbglock=%_var/run/%name \
+	--with-fbplugins=%_libdir/%name/plugins
+
+# Can't use %%make as itsparallel build is broken
+make
+
+pushd gen
+make -f Makefile.install buildRoot
+chmod -R u+w buildroot%{_docdir}/%{name}
+chmod u+rw,a+rx buildroot/usr/include/firebird/firebird/impl
+popd
+
+%install
+mkdir -p %buildroot
+cp -r gen/buildroot/* %buildroot/
+
 # prepare dir
-mkdir -p %buildroot%_sysconfdir/%name
 mkdir -p %buildroot%_sysconfdir/xinetd.d
 mkdir -p %buildroot%_initdir
-mkdir -p %buildroot%_bindir
-mkdir -p %buildroot%fbroot/help
-mkdir -p %buildroot%fbroot/UDF
 mkdir -p %buildroot%fbroot/intl
-mkdir -p %buildroot%_includedir
 mkdir -p %buildroot%_datadir/%name
 mkdir -p %buildroot%_sysconfdir/profile.d
 mkdir -p %buildroot%_var/run/%name
-mkdir -p %buildroot%_localstatedir/%name/backup
+mkdir -p %buildroot%_var/lib/%name/backup
 mkdir -p %buildroot%_logdir/%name/
-cd %workdir/gen/%name
-# scripts
-for f in %utilsshell ; do
-    mv bin/$f %buildroot%_bindir
-done
-mv bin/posixLibrary.sh %buildroot%_datadir/%name
-# libs
-cp -a lib/* %buildroot%_libdir
-cp *.msg %buildroot%fbroot
-cp help/*.fdb %buildroot%fbroot/help
-cp include/* %buildroot%_includedir
-# etc
-cp misc/* %buildroot%_sysconfdir/%name
-cp ../install/misc/aliases.conf %buildroot%_sysconfdir/%name
-%__subst 's|%_libdir|%_datadir|g' %buildroot%_sysconfdir/%name/aliases.conf
-cp security2.fdb %buildroot%_sysconfdir/%name
-# UDF
-cp UDF/* %buildroot%fbroot/UDF
+mkdir -p %buildroot%_unitdir
+mkdir -p %buildroot%_pkgconfigdir
+
+cp -a src/misc/upgrade %buildroot%_datadir/%name
+
+install -m 0644 gen/install/misc/firebird-superserver.service %buildroot%_unitdir/
+install -m 0644 gen/install/misc/firebird-classic@.service %buildroot%_unitdir/
+install -m 0644 gen/install/misc/firebird-classic.socket %buildroot%_unitdir/
+
+cp -v gen/install/misc/*.pc %buildroot%_pkgconfigdir
+
+pushd gen/Release/%name
 # intl
 cp intl/libfbintl.so %buildroot%fbroot/intl/fbintl.so
-cp ../install/misc/fbintl.conf %buildroot%_sysconfdir/%name
-ln -sf %_sysconfdir/%name/fbintl.conf %buildroot%fbroot/intl/fbintl.conf
+cp -a bin/posixLibrary.sh %buildroot%_datadir/%name
+# examples
+cp -a examples %buildroot%_datadir/%name
+popd
+
+mv %buildroot%fbroot/intl/fbintl.conf %buildroot%_sysconfdir/%name/fbintl.conf
+ln -sf $(relative %_sysconfdir/%name/fbintl.conf %fbroot/intl/fbintl.conf) %buildroot%fbroot/intl/fbintl.conf
 # services
 install -m 755 %SOURCE1 %buildroot%_initdir/%name
 install -m 755 %SOURCE2 %buildroot%_sysconfdir/xinetd.d/%name
-# depended
-installbin classic
-installbin superserver
-mv %buildroot%_bindir/isql.classic %buildroot%_bindir/fbsql.classic
-mv %buildroot%_bindir/isql.superserver %buildroot%_bindir/fbsql.superserver
-ln -sf %_bindir/fbmgr.bin %buildroot%_bindir/fbmgr
+
 # log
 touch %buildroot%_logdir/%name/%name.log
-# examples
-cp -a examples %buildroot%_datadir/%name
-cp -a %workdir/src/misc/upgrade %buildroot%_datadir/%name
 
-#touch %buildroot%_sysconfdir/gds_hosts.equiv
+mv %buildroot%_bindir/isql %buildroot%_bindir/isql-fb
+mv %buildroot%_bindir/gstat %buildroot%_bindir/gstat-fb
+mv %buildroot%_sbindir/fb_config %buildroot%_bindir/fb_config
+mv %buildroot%_sysconfdir/%name/README %buildroot%_docdir/%name/
+mv %buildroot%_sysconfdir/%name/{WhatsNew,*.txt} %buildroot%_docdir/%name/
+
+rm -f %buildroot%_sbindir/FirebirdUninstall.sh
+rm -rf %buildroot%_datadir/%name/misc/upgrade
 
 # -----------------------------------------------------------------------------
 # server-common scripts
 # -----------------------------------------------------------------------------
-%post server-common
+%post server
 if [ ! -f %_sysconfdir/gds_hosts.equiv ]; then
 	echo localhost > %_sysconfdir/gds_hosts.equiv
 fi
-# -----------------------------------------------------------------------------
-# server-classic scripts
-# -----------------------------------------------------------------------------
-%post server-classic
-for f in %serverbin; do
-    if [ -e %_bindir/$f.classic ]; then
-	ln -sf %_bindir/$f.classic %_bindir/$f
-    fi
-done
-%post_service xinetd
-
-%preun server-classic
-%preun_service xinetd
-for f in %serverbin; do
-    if [ "$(readlink %_bindir/$f)" = "%_bindir/$f.classic" ]; then
-	rm -f %_bindir/$f
-    fi
-done
-# -----------------------------------------------------------------------------
-# server-superserver scripts
-# -----------------------------------------------------------------------------
-%post server-superserver
-for f in %serverbin; do
-    if [ -e %_bindir/$f.superserver ]; then
-	ln -sf %_bindir/$f.superserver %_bindir/$f
-    fi
-done
 %post_service %name
 
-%preun server-superserver
+%preun server
 %preun_service %name
-for f in %serverbin; do
-    if [ "$(readlink %_bindir/$f)" = "%_bindir/$f.superserver" ]; then
-	rm -f %_bindir/$f
-    fi
-done
-# -----------------------------------------------------------------------------
-# utils-classic scripts
-# -----------------------------------------------------------------------------
-%post utils-classic
-for f in %utilsbin fbsql ; do
-    if [ -e %_bindir/$f.classic ]; then
-	ln -sf %_bindir/$f.classic %_bindir/$f
-    fi
-done
 
-%preun utils-classic
-for f in %utilsbin fbsql ; do
-    if [ "$(readlink %_bindir/$f)" = "%_bindir/$f.classic" ]; then
-	rm -f %_bindir/$f
-    fi
-done
-# -----------------------------------------------------------------------------
-# utils-superserver scripts
-# -----------------------------------------------------------------------------
-%post utils-superserver
-for f in %utilsbin fbsql ; do
-    if [ -e %_bindir/$f.superserver ]; then
-	ln -sf %_bindir/$f.superserver %_bindir/$f
-    fi
-done
-
-%preun utils-superserver
-for f in %utilsbin fbsql ; do
-    if [ "$(readlink %_bindir/$f)" = "%_bindir/$f.superserver" ]; then
-	rm -f %_bindir/$f
-    fi
-done
-# -----------------------------------------------------------------------------
-# server-common scripts
-# -----------------------------------------------------------------------------
-%pre server-common
+%pre server
 # Create the firebird group if it doesn't exist
 %_sbindir/groupadd -f -r %name 2>/dev/null ||:
 %_sbindir/useradd -d %_localstatedir/%name -g %name -s /dev/null -r %name 2>/dev/null ||:
 
-# -----------------------------------------------------------------------------
-# firebird scripts
-# -----------------------------------------------------------------------------
 %pre
 # Add gds_db to %_sysconfdir/services if needed
 FileName=%_sysconfdir/services
@@ -524,7 +258,89 @@ if [ -z "$oldLine" ]; then
 	echo $newLine >> $FileName
 fi
 
+%files
+%_docdir/%name/IDPLicense.txt
+%_docdir/%name/IPLicense.txt
+%doc doc/*
+%dir %fbroot
+%dir %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name/databases.conf
+%config(noreplace) %_sysconfdir/%name/fbtrace.conf
+%config(noreplace) %_sysconfdir/%name/firebird.conf
+%config(noreplace) %_sysconfdir/%name/plugins.conf
+%dir %_datadir/%name
+%dir %_datadir/%name/upgrade
+%_datadir/%name/upgrade/*
+%dir %_libdir/%name/plugins
+%_libdir/%name/plugins/*
+%dir %_datadir/%name/misc
+%_datadir/%name/misc/*.sql
+
+%files devel
+%attr (0755,root,root) %_bindir/fb_config
+%_bindir/gpre
+%_includedir/*
+%_libdir/libfbclient.so
+%_pkgconfigdir/*.pc
+
+%files utils
+%_bindir/gbak
+%_bindir/gfix
+%_bindir/gstat-fb
+%_bindir/isql-fb
+%_bindir/qli
+%_bindir/fbtracemgr
+
+%files -n libfbclient
+%_libdir/libfbclient.so.*
+
+%files server
+%dir %attr(2775,root,%name) %_var/run/%name
+%dir %attr(2775,root,%name) %_var/lib/%name
+%dir %attr(2775,root,%name) %_var/lib/%name/secdb
+%dir %attr(2775,root,%name) %_var/lib/%name/system
+%dir %attr(2775,root,%name) %_var/lib/%name/backup
+#ghost %_sysconfdir/gds_hosts.equiv
+%dir %fbroot/udf
+%dir %fbroot/intl
+%attr(0660,firebird,firebird) %config(noreplace) %_var/lib/%name/secdb/security3.fdb
+%attr(0664,firebird,firebird) %_var/lib/%name/system/help.fdb
+%attr(0664,firebird,firebird) %_var/lib/%name/system/firebird.msg
+%config(noreplace) %_sysconfdir/%name/fbintl.conf
+%attr(0755,root,root) %_initdir/%name
+%config(noreplace) %attr(640,root,root) %_sysconfdir/xinetd.d/%name
+%_unitdir/*
+%dir %attr (2770,root,%name) %_logdir/%name
+%attr (0660,%name,%name) %_logdir/%name/%name.log
+%fbroot/udf/*
+%fbroot/intl/*
+%_bindir/gsplit
+%_bindir/nbackup
+%_bindir/gsec
+%_bindir/fbsvcmgr
+%attr (0755,root,root) %_sbindir/*.sh
+%_sbindir/fb_lock_print
+%_sbindir/fbguard
+%_sbindir/firebird
+%_libdir/libib_util.so
+%_datadir/%name/*.sh
+
+%files doc
+%_docdir/%name
+%exclude %_docdir/%name/IDPLicense.txt
+%exclude %_docdir/%name/IPLicense.txt
+%exclude %_docdir/%name/sample
+
+%files examples
+%_docdir/%name/sample
+%attr(0660,%name,%name) %_var/lib/%name/data/employee.fdb
+%dir %_datadir/%name/examples
+%_datadir/%name/examples/*
+
 %changelog
+* Wed Oct 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.2.32703.0-alt1
+- Updated to upstream version 3.0.2.32703-0 (closes: #30271).
+
 * Fri Feb 26 2016 Andrey Cherepanov <cas@altlinux.org> 2.1.5.18497.0-alt2.1
 - Rebuild with new icu
 

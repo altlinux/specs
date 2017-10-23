@@ -1,6 +1,6 @@
 Name: ulogd
 Version: 2.0.5
-Release: alt2
+Release: alt3
 
 %def_disable nfacct
 
@@ -158,6 +158,9 @@ sed -i -r 's;^(plugin="%_libdir/ulogd/ulogd_inpflow_NFACCT\.so");#\1;' %buildroo
 %_libdir/%name/ulogd_output_DBI.so
 
 %changelog
+* Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.5-alt3
+- Rebuilt with libdbi-0.9.0.
+
 * Thu Dec 17 2015 Mikhail Efremov <sem@altlinux.org> 2.0.5-alt2
 - Fix documentation files mode.
 - Fix logrotate config mode.

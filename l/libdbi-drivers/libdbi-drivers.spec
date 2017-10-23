@@ -1,14 +1,14 @@
 %define builddoc 0
 Summary: Database drivers for libdbi
 Name: libdbi-drivers
-Version: 1.0
-Release: alt3.cvs20092729.qa1
+Epoch: 1
+Version: 0.9.0
+Release: alt1
 License: LGPL
 Group: System/Libraries
 Url: http://libdbi-drivers.sourceforge.net/
-Packager: Boris Savelev <boris@altlinux.org>
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Mon Feb 09 2009
 BuildRequires: docbook-style-dsssl gcc-c++ libMySQL-devel libdbi-devel zlib-devel
@@ -228,6 +228,9 @@ cp drivers/firebird/TODO TODO.firebird
 %endif
 
 %changelog
+* Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.9.0-alt1
+- Updated to upstream release version 0.9.0.
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt3.cvs20092729.qa1
 - NMU: rebuilt with libmysqlclient.so.18.
 

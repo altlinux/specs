@@ -4,7 +4,7 @@
 
 Name: 	 gnucash
 Version: 2.6.18
-Release: alt1
+Release: alt2
 
 Summary: GnuCash is an application to keep track of your finances
 Summary(ru_RU.UTF8): Программа учёта финансов GnuCash
@@ -179,6 +179,9 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 %files quotes
 
 %changelog
+* Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.18-alt2
+- Rebuilt with libdbi-0.9.0.
+
 * Mon Oct 02 2017 Andrey Cherepanov <cas@altlinux.org> 2.6.18-alt1
 - New version
 

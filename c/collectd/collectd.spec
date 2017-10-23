@@ -30,7 +30,7 @@
 
 Name: collectd
 Version: 5.7.2
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -837,6 +837,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.7.2-alt2%ubt
+- Rebuilt with libdbi-0.9.0.
+
 * Mon Aug 07 2017 Anton Farygin <rider@altlinux.ru> 5.7.2-alt1%ubt
 - 5.7.2
 

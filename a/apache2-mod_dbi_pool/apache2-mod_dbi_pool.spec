@@ -6,7 +6,7 @@
 Summary: Provides database connection pooling services for the apache web server
 Name: apache2-mod_dbi_pool
 Version: 0.4.0
-Release: alt1.qa2
+Release: alt2
 Group: System/Servers
 License: GPL
 Url: http://www.outoforder.cc/projects/apache/mod_dbi_pool/
@@ -77,6 +77,9 @@ install -m0644 include/mod_dbi_pool.h %buildroot%_includedir/apache2/
 %_includedir/apache2/*.h
 
 %changelog
+* Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.0-alt2
+- Rebuilt with libdbi-0.9.0.
+
 * Wed Apr 06 2016 Andrey Cherepanov <cas@altlinux.org> 0.4.0-alt1.qa2
 - Rebuild with new apache2
 

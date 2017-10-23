@@ -1,6 +1,6 @@
 # for set release
 %define release_pre alt
-%define release_base_num 1
+%define release_base_num 2
 %define release_base_num2 %nil
 %define release_suff %nil
 
@@ -45,7 +45,7 @@
 
 # set firebird UDF dir
 %define firebirddir %_libdir/firebird
-%define firebirdudfdir %firebirddir/UDF
+%define firebirdudfdir %firebirddir/udf
 
 %define uuidlib_name uuidlib
 %define uuidlib_so %uuidlib_name.so
@@ -98,5 +98,8 @@ install -pD %uuidlib_so %buildroot%firebirdudfdir/%uuidlib_so
 %firebirdudfdir/*
 
 %changelog
+* Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3-alt2
+- Rebuild with firebird 3.0.x.
+
 * Mon Nov 17 2008 Aleksey Avdeev <solo@altlinux.ru> 1.3-alt1
 - Initial build
