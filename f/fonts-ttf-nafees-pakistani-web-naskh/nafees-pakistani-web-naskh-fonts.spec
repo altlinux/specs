@@ -1,9 +1,11 @@
 %define oldname nafees-pakistani-web-naskh-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname   nafees-pakistani-web-naskh
 %global fontconf   67-%{fontname}.conf 
 Name:		fonts-ttf-nafees-pakistani-web-naskh
 Version:	2.0
-Release:	alt2_7
+Release:	alt2_11
 Summary:	Nafees pakistani web naskh font for writing Urdu 
 
 Group:		System/Fonts/True type
@@ -16,7 +18,7 @@ Source3:	http://www.crulp.org/Downloads/NafeesPakistaniWebNaskh(BTK2.0).pdf
 Source4:	http://www.crulp.org/software/license/Nafees_Pakistani_Naskh_License.html
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
-BuildRequires:	fontforge
+BuildRequires:	fontforge libfontforge	
 Source44: import.info
 
 %description
@@ -89,6 +91,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.0-alt2_11
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt2_7
 - update to new release by fcimport
 
