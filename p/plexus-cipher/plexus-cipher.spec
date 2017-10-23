@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           plexus-cipher
 Version:        1.7
-Release:        alt3_11jpp8
+Release:        alt3_12jpp8
 Summary:        Plexus Cipher: encryption/decryption Component
 License:        ASL 2.0
 # project moved to GitHub and it looks like there is no official website anymore
@@ -67,6 +68,9 @@ API documentation for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.7-alt3_12jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.7-alt3_11jpp8
 - new fc release
 
