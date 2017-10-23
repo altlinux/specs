@@ -1,10 +1,12 @@
 %define oldname oflb-roadstencil-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname oflb-roadstencil
 %global fontconf 63-%{fontname}.conf
 
 Name:           fonts-otf-oflb-roadstencil
 Version:        1.0
-Release:        alt3_16
+Release:        alt3_20
 Summary:        Roadstencil Fonts
 
 Group:          System/Fonts/True type
@@ -16,6 +18,7 @@ Source0:        http://openfontlibrary.org/people/andyfitz/andyfitz_-_roadstenci
 Source1:        %{oldname}-fontconfig.conf
 #license text extracted from font file
 Source2:        License.txt
+Source3:        %{fontname}.metainfo.xml
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
 Obsoletes:      roadstencil-fonts < 1.0-9
@@ -44,17 +47,8 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
 # Add AppStream metadata
-mkdir -p %{buildroot}%{_datadir}/appdata
-cat > %{buildroot}%{_datadir}/appdata/RoadStencil.metainfo.xml <<EOF
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2014 Richard Hughes <richard@hughsie.com> -->
-<component type="font">
-  <id>RoadStencil</id>
-  <metadata_license>CC0-1.0</metadata_license>
-  <name>Road Stencil</name>
-  <summary>A font based on painted street markings</summary>
-</component>
-EOF
+install -Dm 0644 -p %{SOURCE3} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -95,9 +89,12 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.otf
 %doc  License.txt
-%{_datadir}/appdata/RoadStencil.metainfo.xml
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_20
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_16
 - update to new release by fcimport
 
