@@ -2,16 +2,17 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global commit f159b88a16be4d103c7e7beb90e07a92617980b9
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global zipcommit %(c=%{commit}; echo ${c:0:12})
 
 Name:           jFormatString
 Version:        0
-Release:        alt1_0.23.20131227gitf159b88jpp8
+Release:        alt1_0.24.20131227gitf159b88jpp8
 Summary:        Java format string compile-time checker
 
 Group:          Development/Other
@@ -25,7 +26,7 @@ Source1:        http://search.maven.org/remotecontent?filepath=com/google/code/f
 Patch0:         %{name}-build.patch
 
 BuildRequires:  ant java-devel java-javadoc jpackage-utils junit
-Requires: jpackage-utils
+Requires:       jpackage-utils
 
 BuildArch:      noarch
 Source44: import.info
@@ -90,6 +91,9 @@ cp -rp docs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}*
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.24.20131227gitf159b88jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.23.20131227gitf159b88jpp8
 - new fc release
 
