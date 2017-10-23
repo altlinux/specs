@@ -1,7 +1,7 @@
 
 %define qt_module qttools
 %define gname qt5
-%def_enable bootstrap
+%def_disable bootstrap
 %def_disable qtconfig
 
 %define kf5_bindir %prefix/lib/kf5/bin
@@ -11,7 +11,7 @@
 %define bugfix 2
 Name: qt5-tools
 Version: 5.9.2
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
@@ -327,6 +327,9 @@ done
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Mon Oct 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt2%ubt
+- build docs
+
 * Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
 - new version
 

@@ -1,10 +1,10 @@
 
 %define qt_module qtdeclarative
-%def_enable bootstrap
+%def_disable bootstrap
 
 Name: qt5-declarative
 Version: 5.9.2
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
@@ -190,6 +190,9 @@ export QT_HASH_SEED=0
 %_qt5_libdatadir/libQt?QmlDebug.a
 
 %changelog
+* Mon Oct 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt2%ubt
+- build docs
+
 * Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
 - new version
 
