@@ -3,12 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: python
 # END SourceDeps(oneline)
 %define oldname levien-inconsolata-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname levien-inconsolata
 %global fontconf 75-%{fontname}.conf
 
 Name:           fonts-ttf-levien-inconsolata
 Version:        1.01
-Release:        alt3_11
+Release:        alt3_15
 Summary:        Inconsolata fonts
 
 License:        OFL
@@ -19,7 +21,7 @@ Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
-BuildRequires:  fontforge
+BuildRequires:  fontforge libfontforge
 
 Obsoletes: inconsolata-fonts < 1.009-3
 Source44: import.info
@@ -100,6 +102,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_15
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_11
 - update to new release by fcimport
 
