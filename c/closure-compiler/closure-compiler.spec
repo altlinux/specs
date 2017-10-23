@@ -1,11 +1,12 @@
-Serial: 1
+Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 #global _check 1
 
 Summary:    JavaScript minifier and checker
@@ -13,14 +14,15 @@ Name:       closure-compiler
 #define commit ad29f06d581fb8c54ad031334b82a5c301b6ce0a
 #define shorthash %(printf %%.7s %commit)
 Version:    20141215
-Release:    alt1_3jpp8
+Release:    alt1_7jpp8
 License:    ASL 2.0
 URL:        https://developers.google.com/closure/compiler/
 Source0:    https://github.com/google/closure-compiler/archive/maven-release-v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 Source1:    closure-compiler.xml
 BuildArch:  noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: jpackage-utils
+BuildRequires: java-devel
 BuildRequires: maven-local
 BuildRequires: jarjar
 BuildRequires: args4j
@@ -39,9 +41,14 @@ BuildRequires: findbugs
 BuildRequires: mockito
 %endif
 BuildRequires: libxslt xsltproc
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires: docbook-style-xsl
 
-Requires: javapackages-tools rpm-build-java
+Requires:      jpackage-utils
 Requires:      args4j
 Requires:      guava
 Requires:      google-gson
@@ -125,6 +132,9 @@ install -Dm0644 %{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
 %doc COPYING
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:20141215-alt1_7jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:20141215-alt1_3jpp8
 - new fc release
 
