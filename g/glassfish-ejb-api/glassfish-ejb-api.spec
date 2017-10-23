@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          glassfish-ejb-api
 Version:       3.2
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Java EJB 3.2 API Design Specification
 License:       CDDL or GPLv2 with exceptions
 URL:           https://java.net/projects/ejb-spec/
@@ -74,6 +75,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_4jpp8
+- new jpp release
+
 * Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_3jpp8
 - new version
 
