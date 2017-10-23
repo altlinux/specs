@@ -1,8 +1,7 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # fedora __isa_bits tmp hack
@@ -11,21 +10,23 @@ BuildRequires: jpackage-generic-compat
 %else
 %define __isa_bits 32
 %endif
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global bits %{__isa_bits}
 %global debug_package %{nil}
 
 Name:           jansi-native
 Version:        1.5
-Release:        alt2_10jpp8
+Release:        alt2_11jpp8
 Summary:        Jansi Native implements the JNI Libraries used by the Jansi project
 Group:          Development/Other
 License:        ASL 2.0
 URL:            http://jansi.fusesource.org/
 Source0:        https://github.com/fusesource/jansi-native/archive/jansi-native-1.5.tar.gz
 
-BuildRequires:  autoconf-common
-BuildRequires:  automake-common
-BuildRequires:  libtool-common
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -67,6 +68,9 @@ This package contains the API documentation for %{name}.
 %doc license.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt2_11jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt2_10jpp8
 - new fc release
 
