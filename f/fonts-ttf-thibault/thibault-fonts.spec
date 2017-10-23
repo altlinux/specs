@@ -1,4 +1,6 @@
 %define oldname thibault-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Due to changes in the Fedora legal environment, rpm spec files are now specifically listed as a "contribution" 
 # in/to Fedora (refer to FPCA FAQ here: https://fedoraproject.org/wiki/Legal:Fedora_Project_Contributor_Agreement ).
 # Quote: 
@@ -22,7 +24,7 @@ and Rockets.
 
 Name:           fonts-ttf-thibault
 Version:        0.1
-Release:        alt3_23
+Release:        alt3_27
 
 Summary:        Thibault.org font collection
 Group:          System/Fonts/True type
@@ -49,7 +51,7 @@ Source13:       %{fontname}-staypuft.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
-BuildRequires:  fontforge >= 20061025-1
+BuildRequires:  fontforge libfontforge
 Source44: import.info
 
 %description
@@ -258,6 +260,9 @@ fi
 %doc staypuft/COPYING.LIB staypuft/README.txt
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_27
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_23
 - update to new release by fcimport
 
