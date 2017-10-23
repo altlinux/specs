@@ -1,8 +1,10 @@
 Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/fontforge /usr/bin/mkfontdir /usr/bin/mkfontscale /usr/bin/mktexlsr /usr/bin/ttmkfdir /usr/bin/vptovf
+BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/mkfontdir /usr/bin/mkfontscale /usr/bin/mktexlsr /usr/bin/ttmkfdir /usr/bin/vptovf
 # END SourceDeps(oneline)
 %define oldname thai-scalable-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname thai-scalable
 %global fontconf 90-%{fontname}-synthetic
 
@@ -12,15 +14,16 @@ BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/fontforge /usr/bin/mk
 %{archivename} provides a collection of free scalable Thai fonts.
 
 Name:      fonts-ttf-thai-scalable
-Version:   0.5.0
-Release:   alt2_9
+Version:   0.6.4
+Release:   alt1_1
 Summary:   Thai TrueType fonts
 License:   GPLv2+ and Bitstream Vera
 URL:       http://linux.thai.net/projects/thaifonts-scalable
-Source0:   http://linux.thai.net/pub/ThaiLinux/software/%{archivename}/%{archivename}-%{version}.tar.gz
+Source0:   http://linux.thai.net/pub/ThaiLinux/software/%{archivename}/%{archivename}-%{version}.tar.xz
 Source1:   %{fontconf}-garuda.conf
 Source2:   %{fontconf}-kinnari.conf
 Source3:   %{fontconf}-umpush.conf
+Source4:   %{fontconf}-laksaman.conf
 
 #Appdata Metainfo
 Source11:  %{fontname}-garuda.metainfo.xml
@@ -35,10 +38,11 @@ Source19:  %{fontname}-tlwgtpist.metainfo.xml
 Source20:  %{fontname}-tlwgtypo.metainfo.xml
 Source21:  %{fontname}-umpush.metainfo.xml
 Source22:  %{fontname}-waree.metainfo.xml
+Source23:  %{fontname}-laksaman.metainfo.xml
 
 
 BuildArch: noarch
-BuildRequires: fontforge >= 20071110
+BuildRequires: fontforge libfontforge
 BuildRequires: fontpackages-devel
 Source44: import.info
 Provides: fonts-ttf-thai = 0.1-alt7
@@ -233,6 +237,21 @@ This package provides the Umpush family of Thai fonts.
 %{_fontbasedir}/*/%{_fontstem}/Umpush*.ttf
 %{_datadir}/appdata/%{fontname}-umpush.metainfo.xml
 
+%package -n fonts-ttf-thai-scalable-laksaman
+Group: System/Fonts/True type
+Summary:        Thai Laksaman fonts
+Requires:       %{name}-common = %{version}-%{release}
+
+%description -n fonts-ttf-thai-scalable-laksaman
+%common_desc
+
+This package provides the Laksaman family of Thai fonts.
+
+%files -n fonts-ttf-thai-scalable-laksaman
+%{_fontconfig_templatedir}/%{fontconf}-laksaman.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-laksaman.conf
+%{_fontbasedir}/*/%{_fontstem}/Laksaman*.ttf
+%{_datadir}/appdata/%{fontname}-laksaman.metainfo.xml
 
 %package -n fonts-ttf-thai-scalable-waree
 Group: System/Fonts/True type
@@ -266,7 +285,9 @@ make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 # remove upstream font config
 # fontconfig's 65-nonlatin.conf covers 65-ttf-thai-tlwg.conf
-rm %{buildroot}%{_sysconfdir}/fonts/conf.avail/*-ttf-thai-tlwg*.conf
+rm %{buildroot}%{_sysconfdir}/fonts/conf.avail/64-15-laksaman.conf
+rm %{buildroot}%{_sysconfdir}/fonts/conf.avail/64-*-tlwg*.conf
+rm %{buildroot}%{_sysconfdir}/fonts/conf.avail/89-tlwg*-synthetic.conf
 
 # split up 90-ttf-thai-tlwg-synthetic.conf
 install -m 0644 -p %{SOURCE1} \
@@ -275,10 +296,13 @@ install -m 0644 -p %{SOURCE2} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-kinnari.conf
 install -m 0644 -p %{SOURCE3} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-umpush.conf
+install -m 0644 -p %{SOURCE4} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-laksaman.conf
 
 for fconf in %{fontconf}-garuda.conf \
              %{fontconf}-kinnari.conf \
-             %{fontconf}-umpush.conf ; do
+             %{fontconf}-umpush.conf \
+	     %{fontconf}-laksaman.conf ; do
   ln -s %{_fontconfig_templatedir}/$fconf \
         %{buildroot}%{_fontconfig_confdir}/$fconf
 done
@@ -308,6 +332,8 @@ install -Dm 0644 -p %{SOURCE21} \
         %{buildroot}%{_datadir}/appdata/%{fontname}-umpush.metainfo.xml
 install -Dm 0644 -p %{SOURCE22} \
         %{buildroot}%{_datadir}/appdata/%{fontname}-waree.metainfo.xml
+install -Dm 0644 -p %{SOURCE23} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-laksaman.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -348,6 +374,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.4-alt1_1
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_9
 - update to new release by fcimport
 
