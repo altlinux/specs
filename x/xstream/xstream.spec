@@ -5,9 +5,16 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define _without_maven 1
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright statement from JPackage this file is derived from:
 
 # Copyright (c) 2000-2007, JPackage Project
@@ -40,15 +47,22 @@ BuildRequires: jpackage-generic-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+%bcond_without  hibernate
+
 Name:           xstream
 Version:        1.4.9
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        Java XML serialization library
 License:        BSD
-URL:            http://xstream.codehaus.org/
+URL:            http://x-stream.github.io/
 BuildArch:      noarch
 
 Source0:        http://repo1.maven.org/maven2/com/thoughtworks/%{name}/%{name}-distribution/%{version}/%{name}-distribution-%{version}-src.zip
+
+# Fixes deserialization of void
+# https://bugzilla.redhat.com/show_bug.cgi?id=1441542
+# backport of https://github.com/x-stream/xstream/commit/b3570be2f39234e61f99f9a20640756ea71b1b40
+Patch0:         0001-Prevent-deserialization-of-void.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(cglib:cglib)
@@ -62,8 +76,10 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.codehaus.jettison:jettison)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
+%if %{with hibernate}
 BuildRequires:  mvn(org.hibernate:hibernate-core)
 BuildRequires:  mvn(org.hibernate:hibernate-envers)
+%endif
 BuildRequires:  mvn(org.jdom:jdom)
 BuildRequires:  mvn(org.jdom:jdom2)
 BuildRequires:  mvn(org.slf4j:slf4j-simple)
@@ -104,18 +120,20 @@ BuildArch: noarch
 %description    javadoc
 %{name} API documentation.
 
+%if %{with hibernate}
 %package        hibernate
 Group: Development/Java
 Summary:        hibernate module for %{name}
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description    hibernate
 hibernate module for %{name}.
+%endif
 
 %package        benchmark
 Group: Development/Java
 Summary:        benchmark module for %{name}
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description    benchmark
 benchmark module for %{name}.
@@ -123,7 +141,7 @@ benchmark module for %{name}.
 %package parent
 Group: Development/Java
 Summary:        Parent POM for %{name}
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description parent
 Parent POM for %{name}.
@@ -133,6 +151,8 @@ Parent POM for %{name}.
 %setup -qn %{name}-%{version}
 find . -name "*.class" -print -delete
 find . -name "*.jar" -print -delete
+
+%patch0 -p1
 
 # Remove org.apache.maven.wagon:wagon-webdav
 %pom_xpath_remove "pom:project/pom:build/pom:extensions"
@@ -174,6 +194,10 @@ find . -name "*.jar" -print -delete
 %pom_xpath_inject "pom:project/pom:dependencies/pom:dependency[pom:groupId = 'junit' ]" "<scope>test</scope>" xstream-benchmark
 %pom_remove_plugin :maven-javadoc-plugin xstream-benchmark
 
+%if %{without hibernate}
+%pom_disable_module xstream-hibernate
+%endif
+
 %mvn_file :%{name} %{name}/%{name} %{name}
 %mvn_file :%{name}-benchmark %{name}/%{name}-benchmark %{name}-benchmark
 
@@ -190,13 +214,18 @@ find . -name "*.jar" -print -delete
 %doc LICENSE.txt README.txt
 %dir %{_javadir}/%{name}
 %files parent -f .mfiles-%{name}-parent
+%if %{with hibernate}
 %files hibernate -f .mfiles-%{name}-hibernate
+%endif
 %files benchmark -f .mfiles-%{name}-benchmark
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4.9-alt1_5jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4.9-alt1_3jpp8
 - new fc release
 
