@@ -6,7 +6,7 @@
 
 Name: viewnior
 Version: 1.6
-Release: alt1
+Release: alt2
 
 Summary: Elegant image viewer
 License: GPLv3+
@@ -64,6 +64,9 @@ chmod 644 AUTHORS COPYING NEWS README TODO src/*
 %_datadir/%name/
 
 %changelog
+* Mon Oct 23 2017 Michael Shigorin <mike@altlinux.org> 1.6-alt2
+- rebuilt against current libexiv2
+
 * Fri Dec 18 2015 Michael Shigorin <mike@altlinux.org> 1.6-alt1
 - new version (watch file uupdate)
 
