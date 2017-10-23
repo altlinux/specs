@@ -3,12 +3,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		cpptasks
 Version:	1.0b5
-Release:	alt2_16jpp8
+Release:	alt2_18jpp8
 Summary:	Compile and link task for ant
 
 License:	ASL 2.0
@@ -16,8 +17,10 @@ URL:		http://ant-contrib.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/ant-contrib/cpptasks-1.0b5.tar.gz
 Source1:	%{name}-README.fedora
 
-BuildRequires:	ant
-BuildRequires:	maven-local
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(xerces:xercesImpl)
 
 BuildArch:	noarch
 Source44: import.info
@@ -51,12 +54,15 @@ cp -p %{SOURCE1} ./README.fedora
 
 # Let xmvn generate javadocs
 %pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-source-plugin
+
+# No need to assemble distribution tarballs
+%pom_remove_plugin :maven-assembly-plugin
 
 # Fix dependency on ant
-%pom_remove_dep ant:ant
+%pom_change_dep ant:ant org.apache.ant:ant
 %pom_remove_dep ant:ant-nodeps
 %pom_remove_dep ant:ant-trax
-%pom_add_dep org.apache.ant:ant
 
 %mvn_file :%{name} ant/%{name}
 
@@ -71,13 +77,17 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/
 echo "ant/%{name}" > $RPM_BUILD_ROOT/%{_sysconfdir}/ant.d/%{name}
 
 %files -f .mfiles
-%doc LICENSE NOTICE README.fedora
+%doc LICENSE NOTICE
+%doc README.fedora
 %{_sysconfdir}/ant.d/%{name}
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0b5-alt2_18jpp8
+- new jpp release
+
 * Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0b5-alt2_16jpp8
 - updated gradle support
 
