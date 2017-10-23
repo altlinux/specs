@@ -3,12 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: python unzip
 # END SourceDeps(oneline)
 %define oldname oflb-notcouriersans-fonts
-%define	fontname	oflb-notcouriersans
-%define fontconf	62-%{fontname}.conf
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global	fontname	oflb-notcouriersans
+%global fontconf	62-%{fontname}.conf
 
 Name:		fonts-ttf-oflb-notcouriersans
 Version:	1.1
-Release:	alt3_9
+Release:	alt3_14
 Summary:	NotCourier Sans is a re-interpretation of Nimbus Mono
 
 License:	GPLv2
@@ -18,7 +20,7 @@ Source1:	%{oldname}-fontconfig.conf
 Source2:        %{fontname}.metainfo.xml
 
 BuildArch:	noarch
-BuildRequires:	fontforge fontpackages-devel
+BuildRequires:	fontforge libfontforge,fontpackages-devel
 Source44: import.info
 
 %description
@@ -110,6 +112,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_14
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_9
 - update to new release by fcimport
 
