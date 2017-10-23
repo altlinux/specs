@@ -3,12 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname vollkorn-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname vollkorn
 %global fontconf 64-%{fontname}.conf
 
 Name:           fonts-otf-vollkorn
 Version:        3.005
-Release:        alt1_1
+Release:        alt1_5
 Summary:        A serif Latin font with good readability
 
 License:        OFL
@@ -98,6 +100,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 3.005-alt1_5
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 3.005-alt1_1
 - update to new release by fcimport
 
