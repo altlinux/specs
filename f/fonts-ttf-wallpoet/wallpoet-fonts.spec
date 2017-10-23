@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: python
 # END SourceDeps(oneline)
 %define oldname wallpoet-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname wallpoet
 %global fontconf 61-%{fontname}-fonts.conf
 %global alphatag 20140916hg
@@ -10,7 +12,7 @@ BuildRequires: python
 
 Name:          fonts-ttf-wallpoet
 Version:       1.000
-Release:       alt1_0.2.%{alphatag}
+Release:       alt1_0.4.%{alphatag}
 Summary:       Wallpoet font by Lars Berggren
 License:       OFL
 URL:           https://www.google.com/fonts/specimen/Wallpoet
@@ -19,7 +21,7 @@ Source1:       https://googlefontdirectory.googlecode.com/hg/ofl/wallpoet/OFL.tx
 Source10:      %{fontconf}
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
-BuildRequires: fontforge
+BuildRequires: fontforge libfontforge
 BuildRequires: ttname
 Source44: import.info
 
@@ -113,6 +115,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.000-alt1_0.4.20140916hg
+- update to new release by fcimport
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.000-alt1_0.2.20140916hg
 - new version
 
