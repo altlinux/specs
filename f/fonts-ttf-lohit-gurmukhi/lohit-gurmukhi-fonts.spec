@@ -1,22 +1,26 @@
 Group: System/Fonts/True type
 %define oldname lohit-gurmukhi-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname lohit-gurmukhi
 %global fontconf0 65-0-%{fontname}.conf
 %global fontconf1 30-%{fontname}.conf
+%global metainfo io.pagure.lohit.gurmukhi.font.metainfo
+
 
 Name:           fonts-ttf-lohit-gurmukhi
-Version:        2.91.0
-Release:        alt1_5
+Version:        2.91.2
+Release:        alt1_2
 Summary:        Free Gurmukhi truetype font for Punjabi language
 
 License:        OFL
-URL:            https://fedorahosted.org/lohit/
-Source0:        https://fedorahosted.org/releases/l/o/lohit/%{fontname}-%{version}.tar.gz
+URL:            https://pagure.io/lohit
+Source0:        https://releases.pagure.org/lohit/%{fontname}-%{version}.tar.gz
 Source1:        %{oldname}.conf
-Source2:       %{fontname}.metainfo.xml
 BuildArch:      noarch
-BuildRequires: fontforge >= 20080429
+BuildRequires: fontforge libfontforge
 BuildRequires:  fontpackages-devel
+BuildRequires: python3-devel
 Provides:       lohit-punjabi-fonts = %{version}-%{release}
 Obsoletes:      lohit-punjabi-fonts < 2.5.3-5
 Source44: import.info
@@ -53,8 +57,8 @@ ln -s %{_fontconfig_templatedir}/%{fontconf1} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf1}
 
 # Add AppStream metadata
-install -Dm 0644 -p %{SOURCE2} \
-       %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{metainfo}.xml \
+       %{buildroot}%{_datadir}/metainfo/%{metainfo}.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -90,17 +94,18 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/*.conf
 %config(noreplace) %{_fontconfig_confdir}/*.conf
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc ChangeLog COPYRIGHT OFL.txt AUTHORS README test-gurmukhi.txt
-%{_datadir}/appdata/%{fontname}.metainfo.xml
-
+%{_datadir}/metainfo/%{metainfo}.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.91.2-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.91.0-alt1_5
 - update to new release by fcimport
 
