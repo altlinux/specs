@@ -1,5 +1,7 @@
 Group: System/Fonts/True type
 %define oldname opendyslexic-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname opendyslexic
 %global fontconf 60-%{fontname}.conf
 %global gitdate 20121008
@@ -7,7 +9,7 @@ Group: System/Fonts/True type
 
 Name:		fonts-otf-opendyslexic
 Version:	0.600
-Release:	alt1_5
+Release:	alt1_9
 Summary:	Font designed for dyslexics and high readability
 License:	Bitstream Vera and CC-BY
 URL:		http://dyslexicfonts.com/
@@ -93,6 +95,9 @@ fi
 %doc README.md
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.600-alt1_9
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.600-alt1_5
 - update to new release by fcimport
 
