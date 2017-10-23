@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          glassfish-transaction-api
 Version:       1.2
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Java JTA 1.2 API Design Specification
 License:       CDDL or GPLv2 with exceptions
 URL:           https://java.net/projects/jta-spec/
@@ -19,7 +20,6 @@ BuildRequires: maven-local
 BuildRequires: mvn(javax.enterprise:cdi-api)
 BuildRequires: mvn(net.java:jvnet-parent:pom:)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-release-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires: mvn(org.glassfish:legal)
 BuildRequires: mvn(org.glassfish.build:spec-version-maven-plugin)
@@ -45,6 +45,7 @@ This package contains javadoc for %{name}.
 %pom_remove_plugin :maven-site-plugin
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-release-plugin
 
 %mvn_file : %{name}
 
@@ -65,6 +66,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_3jpp8
+- new jpp release
+
 * Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_2jpp8
 - new version
 
