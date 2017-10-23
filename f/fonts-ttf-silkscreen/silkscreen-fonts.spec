@@ -1,8 +1,10 @@
 %define oldname silkscreen-fonts
-%define fontname silkscreen
-%define fontconf 60-%{fontname}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global fontname silkscreen
+%global fontconf 60-%{fontname}
 
-%define common_desc \
+%global common_desc \
 Silkscreen is a four member type family for your Web graphics created by Jason \
 Kottke. Silkscreen is best used in places where extremely small graphical \
 display type is needed. The primary use is for navigational items (nav bars, \
@@ -13,7 +15,7 @@ multiples (8pt., 16pt., 24pt., etc.) with anti-aliasing turned off. \
 Name:		fonts-ttf-silkscreen
 Summary: 	Silkscreen four member type family
 Version:	1.0
-Release:	alt3_11
+Release:	alt3_16
 # License attribution confirmed by author and Open Font Library
 # http://openfontlibrary.org/media/files/jkottke/218
 License:	OFL
@@ -126,6 +128,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_16
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_11
 - update to new release by fcimport
 
