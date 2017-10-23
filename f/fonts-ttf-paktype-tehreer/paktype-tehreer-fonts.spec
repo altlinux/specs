@@ -1,10 +1,12 @@
 %define oldname paktype-tehreer-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname paktype-tehreer
 %global fontconf 67-paktype
 
 Name:	fonts-ttf-paktype-tehreer
 Version:     4.1
-Release:     alt1_3
+Release:     alt1_7
 Summary:     Fonts for Arabic from PakType
 Group:		System/Fonts/True type
 License:     GPLv2 with exceptions
@@ -28,7 +30,7 @@ mv PakType\ Tehreer.ttf PakType_Tehreer.ttf
 mv PakType\ Tehreer\ License.txt PakType_Tehreer_License.txt
 mv PakType\ Tehreer\ Features.pdf PakType_Tehreer_Features.pdf
 
-%{__sed} -i 's/\r//' PakType_Tehreer_License.txt
+sed -i 's/\r//' PakType_Tehreer_License.txt
 chmod a-x PakType_Tehreer.ttf PakType_Tehreer_License.txt PakType_Tehreer_Features.pdf
 
 
@@ -90,6 +92,9 @@ fi
 %doc PakType_Tehreer_License.txt PakType_Tehreer_Features.pdf
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_7
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_3
 - update to new release by fcimport
 
