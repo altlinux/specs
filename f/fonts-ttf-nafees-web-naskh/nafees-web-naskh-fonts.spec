@@ -2,6 +2,8 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname nafees-web-naskh-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname        nafees-web-naskh
 %global fontconf        67-%{fontname}.conf
 %global archivename     NafeesWeb
@@ -9,7 +11,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-nafees-web-naskh
 Version:        1.2
-Release:        alt3_13
+Release:        alt3_17
 Summary:        Nafees Web font for writing Urdu in the Naskh script 
 
 Group:          System/Fonts/True type
@@ -29,7 +31,7 @@ Source3:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
-BuildRequires:  fontforge
+BuildRequires:  fontforge libfontforge
 Source44: import.info
 
 %description
@@ -112,6 +114,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_17
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_13
 - update to new release by fcimport
 
