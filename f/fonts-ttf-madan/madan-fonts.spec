@@ -3,12 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname madan-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname madan
 %global fontconf 65-0-%{fontname}.conf
 
 Name: fonts-ttf-madan
 Version: 2.000
-Release: alt3_16
+Release: alt3_19
 Summary: Font for Nepali language
 License: GPL+
 URL: http://madanpuraskar.org/
@@ -19,7 +21,7 @@ Source2: ttf2sfd.pe
 Source3: sfd2ttf.pe
 Source4: %{fontname}.metainfo.xml
 BuildArch: noarch
-BuildRequires: fontforge
+BuildRequires: fontforge libfontforge
 BuildRequires: fontpackages-devel
 # This patch will make sure "fc-scan madan.ttf |grep lang:" will show ne
 # This is now newly created against fontforge2 build
@@ -108,6 +110,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.000-alt3_19
+- update to new release by fcimport
+
 * Mon Nov 23 2015 Igor Vlasenko <viy@altlinux.ru> 2.000-alt3_16
 - fixed build
 
