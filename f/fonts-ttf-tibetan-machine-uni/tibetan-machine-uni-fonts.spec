@@ -3,12 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname tibetan-machine-uni-fonts
-%define	fontname	tibetan-machine-uni
-%define zipname		TibetanMachineUnicodeFont
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global	fontname	tibetan-machine-uni
+%global zipname		TibetanMachineUnicodeFont
 
 Name:		fonts-ttf-tibetan-machine-uni
 Version:	1.901
-Release:	alt3_14
+Release:	alt3_19
 Summary:	Tibetan Machine Uni font for Tibetan, Dzongkha and Ladakhi
 
 # .ttf file now states GPLv3+ with fonts exceptions
@@ -84,6 +86,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.901-alt3_19
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.901-alt3_14
 - update to new release by fcimport
 
