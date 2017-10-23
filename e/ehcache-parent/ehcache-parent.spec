@@ -3,12 +3,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          ehcache-parent
 Version:       2.3
-Release:       alt2_11jpp8
+Release:       alt2_13jpp8
 Summary:       Ehcache Parent
 License:       ASL 2.0
 URL:           http://www.terracotta.org/
@@ -16,6 +17,7 @@ URL:           http://www.terracotta.org/
 # tar czf ehcache-parent-2.3-src-svn.tar.gz ehcache-parent-2.3
 Source0:       ehcache-parent-2.3-src-svn.tar.gz
 BuildRequires: maven-local
+BuildRequires: maven-source-plugin
 BuildArch: noarch
 Source44: import.info
 Obsoletes: ehcache1-parent < 2.0
@@ -35,6 +37,9 @@ Ehcache is a widely used, pure Java, in-process, distributed cache.
 %files -f .mfiles
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt2_13jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt2_11jpp8
 - new fc release
 
