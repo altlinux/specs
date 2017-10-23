@@ -1,5 +1,5 @@
 Name: obconf-qt
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 
 Summary: Openbox configuration tool
@@ -36,6 +36,12 @@ BuildRequires: libopenbox-devel libXdmcp-devel libpcre-devel
 %doc AUTHORS
 
 %changelog
+* Tue Sep 26 2017 Michael Shigorin <mike@altlinux.org> 0.12.0-alt1
+- 0.12.0
+
+* Mon May 29 2017 Michael Shigorin <mike@altlinux.org> 0.11.1-alt1
+- 0.11.1
+
 * Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 0.11.0-alt1
 - 0.11.0
   + built against Qt5

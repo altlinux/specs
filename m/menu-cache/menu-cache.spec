@@ -1,5 +1,5 @@
 Name: menu-cache
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Library and utils to speed up the manipulation for freedesktop.org menu
@@ -77,6 +77,9 @@ This package contains development headers for libmenu-cache.
 %exclude %_libdir/*.a
 
 %changelog
+* Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 1.0.1-alt1
 - 1.0.1
 

@@ -1,5 +1,5 @@
 Name: lxqt-session
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 
 Summary: Session manager
@@ -14,20 +14,24 @@ Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
 BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: libqtxdg-devel xdg-utils xdg-user-dirs
+BuildRequires: rpm-build-xdg libqtxdg-devel xdg-utils xdg-user-dirs
 BuildRequires: libudev-devel
 
-Requires: lxqt-common
+Requires: lxqt-themes
 Requires: xdg-utils
 
 Provides: razorqt-session = %version
 Obsoletes: razorqt-session < 0.7.0
+
+Conflicts: lxqt-common <= 0.11.0
 
 %description
 %summary
 
 %prep
 %setup
+# https://bugzilla.altlinux.org/32657
+sed -i 's,Exec=,Exec=%_bindir/,' xsession/lxqt.desktop.in
 
 %build
 %cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF -DBUNDLE_XDG_UTILS=No
@@ -38,12 +42,21 @@ Obsoletes: razorqt-session < 0.7.0
 install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 
 %files
+%_man1dir/*
 %_bindir/*
+%dir %_xdgconfigdir/lxqt
+%_xdgconfigdir/*/*
 %_desktopdir/*.desktop
+%_datadir/xsessions/*.desktop
+%_datadir/kdm/sessions/*.desktop
 %_sysconfdir/X11/wmsession.d/08lxqt
 %doc AUTHORS
 
 %changelog
+* Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.12.0-alt1
+- 0.12.0
+- tweak desktop file (see also #32657)
+
 * Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 0.11.0-alt1
 - 0.11.0
 

@@ -1,6 +1,6 @@
 Name: libsysstat
-Version: 0.3.2
-Release: alt2
+Version: 0.4.0
+Release: alt1
 
 Summary: Library used to query system info and statistics
 License: LGPL
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: qt5-base-devel qt5-tools-devel
+BuildRequires: lxqt-build-tools qt5-base-devel qt5-tools-devel
 
 %description
 %summary
@@ -48,6 +48,9 @@ which is used to query system info and statistics.
 %_datadir/cmake/*/
 
 %changelog
+* Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Fri Aug 25 2017 Michael Shigorin <mike@altlinux.org> 0.3.2-alt2
 - E2K: add -std=c++11 explicitly
 

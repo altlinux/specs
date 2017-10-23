@@ -1,5 +1,5 @@
 Name: lxqt-config
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 
 Summary: LXDE-Qt system configurations (control center)
@@ -43,9 +43,13 @@ Obsoletes: lxqt-config-randr < 0.8.0
 %_datadir/lxqt/*
 %_xdgconfigdir/*/*
 %_desktopdir/*.desktop
+%_iconsdir/*/*/*/*
 %doc AUTHORS
 
 %changelog
+* Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.12.0-alt1
+- 0.12.0
+
 * Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 0.11.0-alt1
 - 0.11.0
 

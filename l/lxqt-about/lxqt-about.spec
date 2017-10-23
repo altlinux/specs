@@ -1,5 +1,5 @@
 Name: lxqt-about
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 
 Summary: About dialog of LXDE-Qt
@@ -33,6 +33,9 @@ BuildRequires: kf5-kwindowsystem-devel
 %doc AUTHORS
 
 %changelog
+* Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.12.0-alt1
+- 0.12.0
+
 * Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 0.11.0-alt1
 - 0.11.0
 
