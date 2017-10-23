@@ -4,30 +4,25 @@
 
 Name: python-module-%oname
 Version: 0.8.1
-Release: alt1.git20130425.1.1
+Release: alt2.git20130425
 Summary: SlimIt - a JavaScript minifier/parser in Python
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/slimit/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/rspivak/slimit.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-ply
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-ply
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-ply python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-ply python-tools-2to3
 %endif
 
 %py_provides %oname
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
 
 %description
 SlimIt is a JavaScript minifier written in Python. It compiles
@@ -108,9 +103,12 @@ popd
 
 %check
 python setup.py test
+py.test
 %if_with python3
 pushd ../python3
 python3 setup.py test
+# TODO: check why python-3 tests fail
+#py.test3
 popd
 %endif
 
@@ -138,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Mon Oct 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.1-alt2.git20130425
+- Updated build dependencies, updated tests for python-2.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.1-alt1.git20130425.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
