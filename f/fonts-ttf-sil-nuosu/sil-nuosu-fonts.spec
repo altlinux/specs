@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: perl(FileHandle.pm) perl(Font/TTF/Font.pm) perl(IO/File.pm) perl(Parse/RecDescent.pm) perl(Pod/Usage.pm)
 # END SourceDeps(oneline)
 %define oldname sil-nuosu-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname sil-nuosu
 %global fontconf 66-%{fontname}.conf
 
@@ -10,7 +12,7 @@ BuildRequires: perl(FileHandle.pm) perl(Font/TTF/Font.pm) perl(IO/File.pm) perl(
 
 Name:           fonts-ttf-sil-nuosu
 Version:        2.1.1
-Release:        alt3_9
+Release:        alt3_13
 Summary:        The Nuosu SIL Font
 
 License:        OFL
@@ -93,6 +95,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt3_13
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt3_9
 - update to new release by fcimport
 
