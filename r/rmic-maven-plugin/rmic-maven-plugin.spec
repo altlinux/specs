@@ -3,12 +3,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:             rmic-maven-plugin
 Version:          1.2.1
-Release:          alt1_13jpp8
+Release:          alt1_14jpp8
 Summary:          Uses the java rmic compiler to generate classes used in remote method invocation
 License:          MIT
 URL:              http://mojo.codehaus.org/%{name}
@@ -65,6 +66,9 @@ sed -i -e "s|groupId>plexus|groupId>org.codehaus.plexus|g" pom.xml
 %doc License.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_14jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_13jpp8
 - new fc release
 
