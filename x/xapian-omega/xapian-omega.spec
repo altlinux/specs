@@ -1,5 +1,5 @@
 Name: xapian-omega
-Version: 1.2.21
+Version: 1.4.5
 Release: alt1
 
 Summary: A CGI search frontend and indexers built on Xapian
@@ -8,14 +8,12 @@ License: GPLv2+
 Group: Networking/WWW
 Url: http://www.xapian.org
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 Source: http://www.oligarchy.co.uk/xapian/%version/%name-%version.tar.bz2
 
 Requires: xapian-core >= %version
 
 # Automatically added by buildreq on Sun Jan 03 2010 (-bi)
-BuildRequires: gcc-c++ glibc-devel-static libxapian-devel perl-DBI libpcre-devel
+BuildRequires: gcc-c++ glibc-devel-static libxapian-devel perl-DBI libpcre-devel zlib-devel libmagic-devel
 
 %description
 Omega is a CGI application which uses the Xapian Information Retrieval
@@ -54,10 +52,14 @@ rm -rf %buildroot%_docdir/%name/
 %doc AUTHORS ChangeLog README TODO NEWS docs/*.html
 %_bindir/dbi2omega
 %_bindir/omindex
+%_bindir/omindex-list
 %_bindir/scriptindex
 %_bindir/htdig2omega
 %_bindir/mbox2omega
 %_libdir/%name/bin/outlookmsg2html
+%_libdir/%name/bin/mhtml2html
+%_libdir/%name/bin/rfc822tohtml
+%_libdir/%name/bin/vcard2text
 
 %dir %_datadir/omega
 %_datadir/omega/*.script
@@ -71,9 +73,13 @@ rm -rf %buildroot%_docdir/%name/
 
 %config(noreplace) %_sysconfdir/omega.conf
 %_man1dir/omindex.1*
+%_man1dir/omindex-list.1*
 %_man1dir/scriptindex.1*
 
 %changelog
+* Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.5-alt1
+- Updated to latest stable upstream version 1.4.5.
+
 * Fri May 22 2015 Michael Shigorin <mike@altlinux.org> 1.2.21-alt1
 - 1.2.21
   + added outlookmsg2html helper

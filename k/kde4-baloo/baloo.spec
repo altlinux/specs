@@ -4,7 +4,7 @@
 %define rname baloo
 Name: kde4-baloo
 Version: 4.14.3
-Release: alt4
+Release: alt5
 
 Group: Graphical desktop/KDE
 Summary: A framework for searching and managing metadata
@@ -150,6 +150,9 @@ Requires: %name-common = %EVR
 %_K4libdir/libbalooqueryparser.so.*
 
 %changelog
+* Fri Oct 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.14.3-alt5
+- Rebuilt with new xapian.
+
 * Wed Feb 24 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt4
 - fix build requires
 

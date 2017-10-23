@@ -4,28 +4,32 @@
 %def_with docs
 
 Name:           python-module-%oname
-Version:        4.39
-Release:        alt2
+Version:        4.62
+Release:        alt1
 Summary:        Python Remote Objects
 Group:          Development/Python
 License:        LGPLv2+
 URL:            https://pypi.python.org/pypi/Pyro4/
-Source:         Pyro4-%version.tar.gz
 BuildArch:      noarch
-Packager: Python Development Team <python@packages.altlinux.org>
 
-BuildPreReq: python-devel python-module-sphinx-devel
-BuildPreReq: python-module-setuptools-tests
+# https://github.com/irmen/Pyro4.git
+Source: %oname-%version.tar
+Patch1: %oname-alt-tune-docs.patch
+
+BuildRequires: python-devel python-module-sphinx-devel
+BuildRequires: python-module-setuptools-tests python-module-serpent python2.7(selectors34) python2.7(wsgiref) python2.7(wsgiref.util)
+BuildRequires: python2.7(cloudpickle) python2.7(msgpack) python2.7(dill)
 %if_with docs
-BuildPreReq: python-module-serpent python3-module-sphinx-devel
+BuildRequires: python3-module-sphinx-devel
 %endif #docs
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-serpent
+BuildRequires: python3-devel python3-module-setuptools-tests python3-module-serpent python3(wsgiref) python3(wsgiref.util)
+BuildRequires: python3(cloudpickle) python3(msgpack) python3(dill)
 %endif
 
 %py_requires json wsgiref
+%py_requires selectors34
 
 %description
 Pyro is an acronym for PYthon Remote Objects. It is an advanced and
@@ -133,8 +137,9 @@ This package contains pickles for Pyro4.
 
 %prep
 %setup
+%patch1 -p2
+
 %if_with python3
-rm -rf ../python3
 cp -a . ../python3
 %endif
 
@@ -145,6 +150,7 @@ ln -s ../objects.inv docs/source
 
 %build
 %python_build
+
 %if_with python3
 pushd ../python3
 %python3_build
@@ -177,15 +183,25 @@ cp -fR build/sphinx/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %check
+# remove remote tests
+rm -f tests/PyroTests/test_socket.py
+rm -f tests/PyroTests/test_naming.py
+rm -f tests/PyroTests/test_naming2.py
 python setup.py test
+PYTHONPATH=%buildroot%python_sitelibdir python tests/run_testsuite.py
 %if_with python3
 pushd ../python3
+# remove remote tests
+rm -f tests/PyroTests/test_socket.py
+rm -f tests/PyroTests/test_naming.py
+rm -f tests/PyroTests/test_naming2.py
 python3 setup.py test
+PYTHONPATH=%buildroot%python3_sitelibdir python3 tests/run_testsuite.py
 popd
 %endif
 
 %files
-%doc LICENSE *.txt
+%doc LICENSE README.md
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -213,7 +229,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc LICENSE *.txt
+%doc LICENSE README.md
 %_bindir/*.py3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/test
@@ -223,6 +239,9 @@ popd
 %endif
 
 %changelog
+* Thu Oct 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.62-alt1
+- Updated to upstream version 4.62.
+
 * Sun Jun 11 2017 Anton Midyukov <antohami@altlinux.org> 4.39-alt2
 - Remove obsoletes and provides python-module-Pyro 
 

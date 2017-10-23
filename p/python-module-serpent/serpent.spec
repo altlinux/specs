@@ -3,13 +3,12 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.11
-Release: alt2.git20150621.1
+Version: 1.23
+Release: alt1
 Summary: Serializer for literal Python expressions
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/serpent
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/irmen/Serpent.git
 Source: %name-%version.tar
@@ -79,16 +78,19 @@ popd
 %endif
 
 %files
-%doc *.txt
+%doc LICENSE README.md
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc LICENSE README.md
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Fri Oct 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.23-alt1
+- Updated to upstream version 1.23.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.11-alt2.git20150621.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

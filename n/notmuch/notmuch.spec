@@ -1,6 +1,6 @@
 Name: notmuch
 Version: 0.22.1
-Release: alt1
+Release: alt2
 
 Summary: new email reading system called notmuch
 
@@ -108,6 +108,9 @@ install -m0755 notmuch-emacs-mua %buildroot%_bindir/notmuch-emacs-mua
 %_libdir/lib%name.so
 
 %changelog
+* Fri Oct 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.22.1-alt2
+- Rebuilt with new xapian.
+
 * Tue Jul 19 2016 Terechkov Evgenii <evg@altlinux.org> 0.22.1-alt1
 - 0.22.1
 
