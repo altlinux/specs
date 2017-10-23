@@ -1,17 +1,19 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 26
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define fedora 23
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Conditionals to help breaking bookkeeper <-> hadoop dependency cycle
 %if 0%{?fedora}
 #def_with hadoop
@@ -27,7 +29,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          bookkeeper
 Version:       4.3.2
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Replicated log service
 License:       ASL 2.0
 URL:           http://bookkeeper.apache.org/
@@ -86,7 +88,7 @@ BuildRequires: mvn(org.apache.maven.plugins:maven-shade-plugin)
 # hedwig-client cpp
 BuildRequires: autoconf
 BuildRequires: automake
-BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
 BuildRequires: libtool
 BuildRequires: log4cxx-devel
 BuildRequires: libssl-devel
@@ -114,7 +116,7 @@ This package provides a C client interface to Hedwig server.
 %package -n libhedwig-devel
 Group: Development/Java
 Summary:       Development files for the Hedwig C client library
-Requires:      libhedwig%{?_isa} = %{version}
+Requires:      libhedwig = %{version}-%{release}
 
 %description  -n libhedwig-devel
 Development files for the Hedwig C client library.
@@ -368,6 +370,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt1_3jpp8
+- new jpp release
+
 * Sat Feb 13 2016 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt1_2jpp8
 - new version
 
