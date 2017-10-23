@@ -2,28 +2,27 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          jackson-dataformat-yaml
 Version:       2.7.6
-Release:       alt1_1jpp8
+Release:       alt1_2jpp8
 Summary:       Jackson module to add YAML back-end (parser/generator adapters)
 License:       ASL 2.0
 URL:           http://wiki.fasterxml.com/JacksonExtensionYAML
 Source0:       https://github.com/FasterXML/jackson-dataformat-yaml/archive/%{name}-%{version}.tar.gz
 
-BuildRequires: maven-local
-BuildRequires: mvn(com.fasterxml.jackson:jackson-parent:pom:)
-BuildRequires: mvn(com.fasterxml.jackson.core:jackson-annotations)
-BuildRequires: mvn(com.fasterxml.jackson.core:jackson-core)
-BuildRequires: mvn(com.fasterxml.jackson.core:jackson-databind)
-BuildRequires: mvn(com.google.code.maven-replacer-plugin:replacer)
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.apache.felix:org.apache.felix.framework)
-BuildRequires: mvn(org.apache.maven.plugins:maven-failsafe-plugin)
-BuildRequires: mvn(org.slf4j:slf4j-log4j12)
-BuildRequires: mvn(org.yaml:snakeyaml)
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations)
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core)
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
+BuildRequires:  mvn(com.fasterxml.jackson:jackson-parent:pom:)
+BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
+BuildRequires:  mvn(org.slf4j:slf4j-log4j12)
+BuildRequires:  mvn(org.yaml:snakeyaml)
 
 BuildArch:     noarch
 Source44: import.info
@@ -56,7 +55,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %pom_remove_dep org.ops4j.pax.exam:pax-exam-junit4
 %pom_remove_dep org.ops4j.pax.exam:pax-exam-link-mvn
 %pom_remove_dep org.ops4j.pax.url:pax-url-aether
+%pom_remove_dep :org.apache.felix.framework
 rm -r src/test/java/com/fasterxml/jackson/dataformat/yaml/failsafe/OSGiIT.java
+
 
 %mvn_file : %{name}
 
@@ -75,6 +76,9 @@ rm -r src/test/java/com/fasterxml/jackson/dataformat/yaml/failsafe/OSGiIT.java
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_1jpp8
 - new version
 
