@@ -1,8 +1,10 @@
 %define oldname ghostscript-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary: Fonts for the Ghostscript PostScript interpreter
 Name: fonts-type1-ghostscript
 Version: 5.50
-Release: alt1_33
+Release: alt1_37
 # Contacted Kevin Hartig, who agreed to relicense his fonts under the SIL Open Font 
 # License. Hershey fonts are under the "Hershey Font License", which is not what Fontmap 
 # says (Fontmap is wrong).
@@ -20,7 +22,7 @@ Source2: SIL-Open-Font-License.txt
 # ./generate-tarball.sh 5.50
 Source3: generate-tarball.sh
 Requires: fontconfig
-Requires(post): xorg-x11-font-utils
+Requires(post): mkfontdir mkfontscale
 Requires(post): fontconfig
 Requires(postun): fontconfig
 BuildArchitectures: noarch
@@ -52,46 +54,41 @@ touch $RPM_BUILD_ROOT%{fontdir}/fonts.{dir,scale}
 
 # Install catalogue symlink
 mkdir -p $RPM_BUILD_ROOT%{catalogue}
-#ln -sf %{fontdir} $RPM_BUILD_ROOT%{catalogue}/default-ghostscript
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
+ln -sf %{fontdir} $RPM_BUILD_ROOT%{catalogue}/default-ghostscript
+
+# touching all ghosts; hack for rpm 4.0.4
+for rpm_404_ghost in %{fontdir}/fonts.dir %{fontdir}/fonts.scale
+do
+    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
+    touch %buildroot"$rpm_404_ghost"
+done
+
 
 %post
 {
    mkfontscale %{fontdir}
    mkfontdir %{fontdir}
-   fc-cache %{_datadir}/fonts
+   fc-cache %{fontdir}
 } &> /dev/null || :
 
 %postun
 {
    if [ "$1" = "0" ]; then
-      fc-cache %{_datadir}/fonts
+      fc-cache %{fontdir}
    fi
 } &> /dev/null || :
 
 %files
 %doc Kevin_Hartig-Font_License.txt SIL-Open-Font-License.txt
 %{_datadir}/fonts/type1/*
-%{catalogue}/ghostscript*
+%{catalogue}/default-ghostscript
 %ghost %verify(not md5 size mtime) %{fontdir}/fonts.dir
 %ghost %verify(not md5 size mtime) %{fontdir}/fonts.scale
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 5.50-alt1_37
+- update
+
 * Thu Jun 05 2014 Igor Vlasenko <viy@altlinux.ru> 5.50-alt1_33
 - new fc release
 
