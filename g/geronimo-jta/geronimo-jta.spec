@@ -1,23 +1,23 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global spec_name geronimo-jta_1.1_spec
 
 Name:		geronimo-jta
 Version:	1.1.1
-Release:	alt3_19jpp8
+Release:	alt3_21jpp8
 Summary:	J2EE JTA v1.1 API
-
-Group:		Development/Other
 License:	ASL 2.0
 URL:		http://geronimo.apache.org/
+BuildArch:	noarch
+
 # svn export http://svn.apache.org/repos/asf/geronimo/specs/tags/%{spec_name}-%{version}/
 Source0:	%{spec_name}-%{version}.tar.bz
-
-BuildArch:	noarch
 
 # This pulls in almost all of the required java and maven stuff
 BuildRequires:  maven-local
@@ -26,8 +26,6 @@ BuildRequires:	maven-resources-plugin
 
 # Ensure a smooth transition from geronimo-specs
 Provides:	jta = %{version}-%{release}
-Obsoletes:	geronimo-specs <= 1.0-3.3
-Obsoletes:	geronimo-specs-compat <= 1.0-3.3
 Source44: import.info
 
 %description
@@ -37,9 +35,9 @@ system: the resource manager, the application server, and the transactional
 applications.
 
 %package javadoc
+Group: Development/Java
 Summary:	API documentation for %{name}
-Group:		Development/Java
-BuildArch:	noarch
+BuildArch: noarch
 
 %description javadoc
 %{summary}.
@@ -69,6 +67,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_21jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_19jpp8
 - new fc release
 
