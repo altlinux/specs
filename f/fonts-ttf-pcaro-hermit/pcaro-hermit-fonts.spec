@@ -1,11 +1,13 @@
 Group: System/Fonts/True type
 %define oldname pcaro-hermit-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname pcaro-hermit
 %global fontconf 69-%{fontname}.conf
 
 Name:           fonts-ttf-pcaro-hermit
 Version:        1.21
-Release:        alt1_5
+Release:        alt1_8
 Summary:        Hermit monospace fonts
 
 License:        OFL
@@ -91,6 +93,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1_8
+- update to new release by fcimport
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1_5
 - new version
 
