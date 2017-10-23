@@ -1,6 +1,7 @@
 %define oldname wqy-microhei-fonts
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name wqy-microhei-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 0.2.0
 %global fontname wqy-microhei
 %global fontconf 65-0-%{fontname}.conf
@@ -9,7 +10,7 @@
 
 Name:           fonts-ttf-wqy-microhei
 Version:        0.2.0
-Release:        alt3_0.15.beta
+Release:        alt3_0.19.beta
 Summary:        Compact Chinese fonts derived from Droid
 
 Group:          System/Fonts/True type
@@ -93,6 +94,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt3_0.19.beta
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt3_0.15.beta
 - update to new release by fcimport
 
