@@ -1,12 +1,14 @@
 Group: System/Fonts/True type
 %define oldname google-roboto-mono-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontconf 64-%{fontname}
 %global fontname google-roboto-mono
 %global commit0 e4d4513e11593dc7647c283c61e111a4c1ef2153
 
 Name:          fonts-ttf-google-roboto-mono
 Version:       2.000986
-Release:       alt1_0.1.20150923git
+Release:       alt1_0.4.20150923git
 Summary:       Google Roboto Mono fonts
 
 License:       ASL 2.0
@@ -104,6 +106,9 @@ fi
 %doc LICENSE.txt
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.000986-alt1_0.4.20150923git
+- update to new release by fcimport
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 2.000986-alt1_0.1.20150923git
 - new version
 
