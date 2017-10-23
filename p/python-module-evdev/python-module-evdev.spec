@@ -4,7 +4,7 @@
 
 Name: python-module-%modname
 Version: 0.7.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings to the generic input event interface
 Group: Development/Python
@@ -60,16 +60,19 @@ popd
 %if_enabled python2
 %files
 %python_sitelibdir/%modname/
-%python_sitelibdir/*.egg-info
+%exclude %python_sitelibdir/*.egg-info
 %doc README*
 %endif
 
 %files -n python3-module-%modname
 %python3_sitelibdir/%modname/
-%python3_sitelibdir/*.egg-info
+%exclude %python3_sitelibdir/*.egg-info
 %doc README*
 
 %changelog
+* Thu Oct 19 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1.1
+- exclude %%python*_sitelibdir/*.egg-info
+
 * Thu Oct 19 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - first build for Sisyphus
 
