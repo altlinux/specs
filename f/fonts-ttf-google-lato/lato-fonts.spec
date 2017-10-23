@@ -2,20 +2,23 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname lato-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname lato
 %global fontconf 61-%{fontname}.conf
 
 Name:           fonts-ttf-google-lato
-Version:        2.010
-Release:        alt1_2
+Version:        2.015
+Release:        alt1_4
 Summary:        A sanserif typeface family
 
 Group:          System/Fonts/True type
 License:        OFL
 URL:            http://www.latofonts.com/
-# Fonts retrieved 2014-09-04 from http://www.latofonts.com/download/Lato2OFL.zip
+# Fonts retrieved 2015-08-07 from http://www.latofonts.com/download/Lato2OFL.zip
 Source0:        %{oldname}-%{version}.zip
 Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -55,6 +58,9 @@ sed "s/\r//" Lato2OFL/OFL.txt > Lato2OFL/OFL.txt.new
 touch -r Lato2OFL/OFL.txt Lato2OFL/OFL.txt.new
 mv Lato2OFL/OFL.txt.new Lato2OFL/OFL.txt
 
+# Fix permissions
+chmod 0644 Lato2OFL/{OFL.txt,README.txt}
+
 
 %build
 
@@ -69,25 +75,8 @@ install -m 0644 -p %{SOURCE1} $RPM_BUILD_ROOT%{_fontconfig_templatedir}/%{fontco
 ln -s %{_fontconfig_templatedir}/%{fontconf} $RPM_BUILD_ROOT%{_fontconfig_confdir}/%{fontconf}
 
 # Add AppStream metadata
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
-cat > $RPM_BUILD_ROOT%{_datadir}/appdata/Lato.metainfo.xml <<EOF
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2014 Richard Hughes <richard@hughsie.com> -->
-<component type="font">
-  <id>Lato</id>
-  <metadata_license>CC0-1.0</metadata_license>
-  <name>Lato</name>
-  <summary>A classical sans-serif font family</summary>
-  <description>
-    <p>
-      The semi-rounded details of the letters give Lato a feeling of warmth,
-      while the strong structure provides stability and seriousness.
-    </p>
-  </description>
-  <updatecontact>richard_at_hughsie_dot_com</updatecontact>
-  <url type="homepage">http://www.latofonts.com/</url>
-</component>
-EOF
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -127,11 +116,15 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-%doc Lato2OFL/{OFL.txt,README.txt}
-%{_datadir}/appdata/Lato.metainfo.xml
+%doc Lato2OFL/README.txt
+%doc Lato2OFL/OFL.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.015-alt1_4
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.010-alt1_2
 - update to new release by fcimport
 
