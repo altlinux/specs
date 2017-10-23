@@ -2,13 +2,14 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global oname oauth
 Name:          java-oauth
 Version:       20100601
-Release:       alt2_12jpp8
+Release:       alt2_13jpp8
 Summary:       An open protocol to allow API authentication
 License:       ASL 2.0
 Url:           http://code.google.com/p/oauth/
@@ -76,6 +77,9 @@ This package contains javadoc for %{name}.
 %doc LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 20100601-alt2_13jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 20100601-alt2_12jpp8
 - new fc release
 
