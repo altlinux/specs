@@ -3,14 +3,16 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname yanone-tagesschrift-fonts
-%define fontname yanone-tagesschrift
-%define fontconf 64-%{fontname}.conf
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global fontname yanone-tagesschrift
+%global fontconf 64-%{fontname}.conf
 
-%define archivename YanoneTagesschrift
+%global archivename YanoneTagesschrift
 
 Name:           fonts-ttf-yanone-tagesschrift
 Version:        20050524
-Release:        alt3_10
+Release:        alt3_15
 Summary:        A serif decorative latin font
 
 License:        CC-BY
@@ -93,6 +95,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 20050524-alt3_15
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 20050524-alt3_10
 - update to new release by fcimport
 
