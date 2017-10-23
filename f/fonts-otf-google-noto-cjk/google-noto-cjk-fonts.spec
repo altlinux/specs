@@ -1,24 +1,32 @@
 Group: System/Fonts/True type
 %define oldname google-noto-cjk-fonts
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global commit0 32a5844539f2e348ed36b44e990f9b06d7fb89fe
+%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+
 %global fontname google-noto-cjk
 %global fontconf 66-%{fontname}
 
 
 Name:           fonts-otf-google-noto-cjk
-Version:        1.004
-Release:        alt1_5
+Version:        20170602
+Release:        alt1_2
 Summary:        Google Noto Sans CJK Fonts
 
 License:        OFL
 URL:            https://github.com/googlei18n/noto-cjk
-Source0:        https://github.com/googlei18n/noto-cjk/archive/v%{version}.tar.gz
-Source1:        %{fontconf}-sans-simplified-chinese.conf
-Source2:        %{fontconf}-sans-traditional-chinese.conf
-Source3:        %{fontconf}-sans-japanese.conf
-Source4:        %{fontconf}-sans-korean.conf
+Source0:        https://github.com/googlei18n/noto-cjk/archive/%{commit0}.tar.gz#/noto-cjk-%{shortcommit0}.tar.gz
+Source1:        %{fontconf}-simplified-chinese.conf
+Source2:        %{fontconf}-traditional-chinese.conf
+Source3:        %{fontconf}-japanese.conf
+Source4:        %{fontconf}-korean.conf
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
+
+%if 0%{?fedora}
 
 Obsoletes:      google-noto-sans-cjk-fonts < 20150617
 Provides:       google-noto-sans-cjk-fonts = 20150617
@@ -36,6 +44,8 @@ Provides:       google-noto-cjk-%{pname}-fonts = %{version}-%{release}\
 %notocjkrep Sans Traditional Chinese
 %notocjkrep Sans Japanese
 %notocjkrep Sans Korean
+
+%endif
 Source44: import.info
 
 
@@ -53,7 +63,7 @@ In addition, it supports Japanese kana, vertical forms, and variant characters
 
 
 %prep
-%setup -q -n noto-cjk-%{version}
+%setup -q -n noto-cjk-%{commit0}
 cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} .
 
 
@@ -63,12 +73,13 @@ cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} .
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p NotoSansCJK-*.ttc %{buildroot}%{_fontdir}
+install -m 0644 -p NotoSerifCJK-*.ttc %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
             %{buildroot}%{_fontconfig_confdir}
 
-for f in sans-simplified-chinese sans-traditional-chinese \
-    sans-japanese sans-korean;
+for f in simplified-chinese traditional-chinese \
+    japanese korean;
 do
     install -m 0644 -p %{fontconf}-$f.conf \
                 %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-$f.conf
@@ -116,11 +127,15 @@ fi
 %{_fontconfig_templatedir}/*.conf
 %config(noreplace) %{_fontconfig_confdir}/*.conf
 %{_fontbasedir}/*/%{_fontstem}/NotoSansCJK-*.ttc
+%{_fontbasedir}/*/%{_fontstem}/NotoSerifCJK-*.ttc
 %doc NEWS HISTORY README.formats README.third_party
 %doc LICENSE
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 20170602-alt1_2
+- update to new release by fcimport
+
 * Sun Jun 12 2016 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1_5
 - converted for ALT Linux by srpmconvert tools
 
