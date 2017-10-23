@@ -1,21 +1,21 @@
 Epoch: 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jboss-jaspi-1.0-api
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.0.1
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-jaspi-1.0-api
 Version:          1.0.1
-Release:          alt2_11jpp8
+Release:          alt2_13jpp8
 Summary:          JBoss Java Authentication SPI for Containers 1.0 API
-Group:            Development/Other
 License:          CDDL or GPLv2 with exceptions
 URL:              http://www.jboss.org
 
@@ -23,13 +23,11 @@ URL:              http://www.jboss.org
 # cd jboss-jaspi-api_spec/ && git archive --format=tar --prefix=jboss-jaspi-1.0-api/ jboss-jaspi-api_1.0_spec-1.0.1.Final | xz > jboss-jaspi-1.0-api-1.0.1.Final.tar.xz
 Source0:          %{name}-%{namedversion}.tar.xz
 
-BuildRequires:    jboss-logging
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
 BuildRequires:    maven-local
+BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
+BuildRequires:    xmvn
 
 BuildArch:        noarch
 Source44: import.info
@@ -38,9 +36,8 @@ Source44: import.info
 The Java Authentication SPI for Containers 1.0 API classes
 
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires: javapackages-tools rpm-build-java
+Group: Development/Java
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -48,6 +45,8 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n jboss-jaspi-1.0-api
+
+%pom_remove_plugin :maven-source-plugin
 
 # Fixing JDK7 ASCII issues
 files='
@@ -72,12 +71,16 @@ done
 
 %files -f .mfiles
 %dir %{_javadir}/%{name}
-%doc LICENSE README
+%doc README
+%doc LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE README
+%doc LICENSE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt2_13jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt2_11jpp8
 - new fc release
 
