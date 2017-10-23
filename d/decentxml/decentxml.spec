@@ -3,12 +3,13 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:             decentxml
 Version:          1.4
-Release:          alt3_13jpp8
+Release:          alt3_15jpp8
 Summary:          XML parser optimized for round-tripping and code reuse
 License:          BSD
 URL:              http://code.google.com/p/%{name}
@@ -57,6 +58,10 @@ sed -i '/not_wf_sa_16[89] /d' src/test/java/de/pdark/decentxml/XMLConformanceTes
 
 %pom_remove_plugin :maven-javadoc-plugin
 
+# Don't use deprecated "attached" goal of Maven Assembly Plugin, which
+# was removed in version 3.0.0.
+%pom_xpath_set "pom:plugin[pom:artifactId='maven-assembly-plugin']/pom:executions/pom:execution/pom:goals/pom:goal[text()='attached']" single
+
 %build
 %mvn_file  : %{name}
 %mvn_build
@@ -71,6 +76,9 @@ sed -i '/not_wf_sa_16[89] /d' src/test/java/de/pdark/decentxml/XMLConformanceTes
 %doc LICENSE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_15jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_13jpp8
 - new fc release
 
