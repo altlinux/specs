@@ -2,14 +2,15 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define shortname forms
 
 Name:           jgoodies-forms
 Version:        1.8.0
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        Framework to lay out and implement elegant Swing panels in Java
 
 Group:          Development/Other
@@ -20,12 +21,9 @@ Source0:        http://www.jgoodies.com/download/libraries/%{shortname}/%{name}-
 # Fontconfig and DejaVu fonts needed for tests
 BuildRequires:  fonts-ttf-dejavu
 BuildRequires:  fontconfig
-BuildRequires:  jgoodies-common >= 1.8.0
-BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  maven-local
-BuildRequires:  maven-clean-plugin
-Requires:       jgoodies-common >= 1.8.0
-Requires: javapackages-tools rpm-build-java
+BuildRequires:  mvn(com.jgoodies:jgoodies-common) >= 1.8.0
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 BuildArch:      noarch
 Source44: import.info
 
@@ -38,7 +36,6 @@ possible, the good design easy and the bad difficult.
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -47,6 +44,7 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
+
 
 # Unzip source and test files from provided JARs
 mkdir -p src/main/java/ src/test/java/
@@ -88,13 +86,17 @@ done
 
 
 %files -f .mfiles
-%doc LICENSE.txt README.html RELEASE-NOTES.txt
+%doc README.html RELEASE-NOTES.txt
+%doc LICENSE.txt
 
 
 %files javadoc -f .mfiles-javadoc
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_5jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_3jpp8
 - new fc release
 
