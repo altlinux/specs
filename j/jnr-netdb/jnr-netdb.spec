@@ -1,12 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:    jnr-netdb
 Version: 1.1.5
-Release: alt1_1jpp8
+Release: alt1_3jpp8
 Summary: Network services database access for java
 
 Group:   System/Libraries
@@ -22,6 +23,7 @@ BuildRequires: junit
 BuildRequires: jffi
 
 BuildRequires:  maven-local
+BuildRequires:  sonatype-oss-parent
 
 Requires: jpackage-utils
 Requires: jnr-ffi
@@ -56,6 +58,9 @@ find ./ -name '*.class' -exec rm -f '{}' \;
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.5-alt1_3jpp8
+- new jpp release
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.5-alt1_1jpp8
 - new version
 
