@@ -1,7 +1,8 @@
 Group: System/Fonts/True type
 %define oldname un-core-fonts
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name un-core-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.0.2
 %global fontname un-core
 %global fontconf 65-1-%{fontname}
@@ -22,7 +23,7 @@ The Un Core set is composed of: \
 - UnGungseo: cursive, brush-stroke \
 - UnPilgi: script
 
-%define common_desc_ko \
+%global common_desc_ko \
 i'.e..e.. i.'e..i..e.. HLaTexe.'e.'i..i'.i.. i'.e..i'.e.'i'. 1998e..i-. e.'e.'i.' i..i..i..e..e... \
 2003e..i-. e..i..e.'e.'i'. FontForgee.. i'.i..i.'i-. i..e..i..i..i..i..e.' e..i''i..i..e..e... \
 i'.e..e..i'. e..i.. i'.e.'i..i'. e..e..e..i..e..e... \
@@ -37,7 +38,7 @@ Core e..i'.: \
 
 Name:           fonts-ttf-un-core
 Version:        1.0.2
-Release:        alt3_0.24.%{alphatag}
+Release:        alt3_0.30.%{alphatag}
 Summary:        Un Core family of Korean TrueType fonts
 Summary(ko):    한글 은글꼴 Core 모음
 
@@ -72,7 +73,7 @@ Summary:        Common files of Un Core fonts
 This package consists of files used by other %{oldname} packages.
 
 # un_subpkg 1:name 2:Name 3:Hangul [4:obsolete] [5:obsolete]
-%define un_subpkg() \
+%global un_subpkg() \
 %package -n fonts-ttf-%{fontname}-%1 \
 Summary:        Un Core fonts - %(echo %2) \
 Summary(ko):    i.'e.. i'.e..e.. Core e..i'. - %(echo %3) \
@@ -231,19 +232,19 @@ for fconf in %{fontconf}-batang.conf \
 done
 
 # Add AppStream metadata
-install -Dm 0644 -p %{SOURCE4} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-batang.metainfo.xml
-install -Dm 0644 -p %{SOURCE5} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-dinaru.metainfo.xml
-install -Dm 0644 -p %{SOURCE6} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-dotum.metainfo.xml
 install -Dm 0644 -p %{SOURCE7} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-graphic.metainfo.xml
+        %{buildroot}%{_datadir}/appdata/%{fontname}-batang.metainfo.xml
 install -Dm 0644 -p %{SOURCE8} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+        %{buildroot}%{_datadir}/appdata/%{fontname}-dinaru.metainfo.xml
 install -Dm 0644 -p %{SOURCE9} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-gungseo.metainfo.xml
+        %{buildroot}%{_datadir}/appdata/%{fontname}-dotum.metainfo.xml
 install -Dm 0644 -p %{SOURCE10} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-graphic.metainfo.xml
+install -Dm 0644 -p %{SOURCE11} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE12} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-gungseo.metainfo.xml
+install -Dm 0644 -p %{SOURCE13} \
         %{buildroot}%{_datadir}/appdata/%{fontname}-pilgi.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
@@ -285,6 +286,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.30.080608
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.24.080608
 - update to new release by fcimport
 
