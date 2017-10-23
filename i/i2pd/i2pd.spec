@@ -1,9 +1,9 @@
 %define i2pduser _i2pd
-%define _i2pd_root %_localstatedir/%name
+%define _i2pd_root %_sharedstatedir/%name
 
 Name: i2pd
 Version: 2.14.0
-Release: alt1
+Release: alt2
 
 Summary: Full C++ implementation of I2P router
 
@@ -18,8 +18,11 @@ Source1: %name.service
 Source2: %name.logrotate
 Source3: i2p.conf
 Source4: tunnels.conf
+Source5: %name.sysconfig
 
-BuildRequires: gcc-c++ cmake libssl-devel boost-devel boost-filesystem-devel boost-program_options-devel boost-asio-devel libminiupnpc-devel zlib-devel rpm-macros-cmake
+BuildRequires: rpm-build-intro rpm-macros-cmake
+
+BuildRequires: gcc-c++ cmake libssl-devel boost-devel boost-filesystem-devel boost-program_options-devel boost-asio-devel libminiupnpc-devel zlib-devel
 
 BuildRequires: /proc
 
@@ -56,7 +59,7 @@ pushd build
 %makeinstall_std
 popd
 
-# fix strange install 
+# fix strange install
 rm -rf %buildroot/%prefix/{LICENSE,lib/lib*.a,src/}
 
 install -pDm 644 contrib/subscriptions.txt %buildroot%_sysconfdir/%name/subscriptions.txt
@@ -65,6 +68,7 @@ install -pDm 644 %SOURCE1 %buildroot%_unitdir/%name.service
 install -pDm 644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/%name
 install -pDm 644 %SOURCE3 %buildroot%_sysconfdir/%name/i2p.conf
 install -pDm 644 %SOURCE4 %buildroot%_sysconfdir/%name/tunnels.conf
+install -pDm 644 %SOURCE5 %buildroot%_sysconfigdir/%name
 
 mkdir -p %buildroot%_i2pd_root %buildroot%_datadir/%name/
 cp -rav contrib/certificates %buildroot%_datadir/%name/
@@ -100,6 +104,7 @@ touch %buildroot%_logdir/%name/%name.log
 # configs:
 %defattr(640,root,%i2pduser,710)
 %dir %_sysconfdir/%name/
+%config(noreplace) %_sysconfigdir/%name
 %config(noreplace) %_sysconfdir/%name/i2p.conf
 %config(noreplace) %_sysconfdir/%name/tunnels.conf
 %config(noreplace) %_sysconfdir/%name/subscriptions.txt
@@ -111,6 +116,9 @@ touch %buildroot%_logdir/%name/%name.log
 %dir %_logdir/%name/
 
 %changelog
+* Mon Oct 23 2017 Vitaly Lipatov <lav@altlinux.ru> 2.14.0-alt2
+- add /etc/sysconfig/i2pd support
+
 * Mon Jun 05 2017 Vitaly Lipatov <lav@altlinux.ru> 2.14.0-alt1
 - new version 2.14.0 (with rpmrb script)
 
