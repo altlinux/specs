@@ -2,14 +2,15 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global spec_name geronimo-jms_1.1_spec
 
 Name:           geronimo-jms
 Version:        1.1.1
-Release:        alt3_22jpp8
+Release:        alt3_23jpp8
 Summary:        J2EE JMS v1.1 API
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/
@@ -59,6 +60,9 @@ This package provides %{summary}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_23jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_22jpp8
 - new fc release
 
