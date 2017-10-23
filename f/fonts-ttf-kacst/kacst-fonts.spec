@@ -1,4 +1,6 @@
 %define oldname kacst-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define fontname kacst
 %define fontdir %{_datadir}/fonts/%{fontname}
 %define	fontconf	67-%{fontname}
@@ -10,7 +12,7 @@ from the King Abdulaziz City for Science & Technology(kacst).
 
 Name: fonts-ttf-kacst
 Version: 2.0
-Release: alt3_14
+Release: alt3_18
 License: GPLv2
 Source: http://downloads.sourceforge.net/sourceforge/arabeyes/%{fontname}_fonts_%{version}.tar.bz2
 Source1: %{fontconf}-art.conf
@@ -444,6 +446,9 @@ fi
 %doc Copyright LICENSE README
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_18
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_14
 - update to new release by fcimport
 
