@@ -3,13 +3,15 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname tuladha-jejeg-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname tuladha-jejeg
 %global fontconf 62-%{fontname}.conf
 
 
 Name:           fonts-ttf-tuladha-jejeg
 Version:        2.01
-Release:        alt1_3
+Release:        alt1_7
 Summary:        Unicode font for Javanese script
 
 License:        OFL
@@ -91,6 +93,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1_7
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1_3
 - update to new release by fcimport
 
