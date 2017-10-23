@@ -1,11 +1,13 @@
 %define oldname paktype-ajrak-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname paktype-ajrak
 %global fontconf 67-paktype
 %global fontdir %{_datadir}/fonts/%{fontname}
 
 Name:	fonts-ttf-paktype-ajrak
 Version:     4.1
-Release:     alt1_3
+Release:     alt1_7
 Summary:     Fonts for Arabic from PakType
 
 Group:	System/Fonts/True type
@@ -30,7 +32,7 @@ mv PakType\ Ajrak\ License.txt PakType_Ajrak_License.txt
 mv PakType\ Ajrak\ Features.pdf PakType_Ajrak_Features.pdf
 chmod a-x PakType_Ajrak.ttf PakType_Ajrak_License.txt PakType_Ajrak_Features.pdf
 
-%{__sed} -i 's/\r//' PakType_Ajrak_License.txt
+sed -i 's/\r//' PakType_Ajrak_License.txt
 
 %build
 echo "Nothing to do in Build."
@@ -91,6 +93,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_7
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_3
 - update to new release by fcimport
 
