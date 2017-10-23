@@ -3,29 +3,35 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-Name:           ezmorph
-Version:        1.0.6
-Release:        alt1_14jpp8
-Summary:        Object transformation library for Java
-License:        ASL 2.0
-URL:            http://ezmorph.sourceforge.net/
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:          ezmorph
+Version:       1.0.6
+Release:       alt1_15jpp8
+Summary:       Object transformation library for Java
+License:       ASL 2.0
+URL:           http://ezmorph.sourceforge.net/
 # A plain jarball with the source is provided by upstream.  We could use
 # it, but we choose to build with maven for the sake of consistency.
 # Therefore we pull the tree with maven metadata from VCS.
 # cvs -d:pserver:anonymous@ezmorph.cvs.sourceforge.net:/cvsroot/ezmorph login
 # cvs -z3 -d:pserver:anonymous@ezmorph.cvs.sourceforge.net:/cvsroot/ezmorph co -r REL_1_0_6 -d ezmorph-1.0.6 -P ezmorph
 # tar czf ezmorph-1.0.6.tar.gz --exclude CVS ezmorph-1.0.6
-Source0:        %{name}-%{version}.tar.gz
+Source0:       %{name}-%{version}.tar.gz
 # License is not in tarball, but has since been added to upstream's source control:
-Source1:        http://ezmorph.cvs.sourceforge.net/viewvc/ezmorph/ezmorph/LICENSE.txt
-Patch0:         ezmorph-1.0.6-maven.patch
+Source1:       http://ezmorph.cvs.sourceforge.net/viewvc/ezmorph/ezmorph/LICENSE.txt
 
-BuildRequires:  jakarta-oro
-BuildRequires:  maven-local
-BuildArch:      noarch
+#BuildRequires: jakarta-oro
+BuildRequires: maven-local
+BuildRequires: mvn(commons-beanutils:commons-beanutils)
+BuildRequires: mvn(commons-lang:commons-lang)
+BuildRequires: mvn(commons-logging:commons-logging)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(log4j:log4j:12)
+
+BuildArch:     noarch
 Source44: import.info
 
 %description
@@ -35,7 +41,7 @@ multidimensional arrays.
 
 %package javadoc
 Group: Development/Java
-Summary:        Javadoc for %{name}
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -43,9 +49,12 @@ API documentation for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1 -b .maven
 
 cp -p %{SOURCE1} .
+
+%pom_change_dep :log4j ::12
+
+%pom_xpath_remove "pom:plugins"
 
 %mvn_file : %{name}
 
@@ -62,6 +71,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0.6-alt1_15jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.6-alt1_14jpp8
 - new fc release
 
