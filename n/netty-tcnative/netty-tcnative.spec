@@ -2,18 +2,19 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name netty-tcnative
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.1.30
 %global namedreltag .Fork2
 %global namedversion %{version}%{?namedreltag}
 
 Name:           netty-tcnative
 Version:        1.1.30
-Release:        alt2_3jpp8
+Release:        alt2_6jpp8
 Summary:        Fork of Tomcat Native with improved OpenSSL and mavenized build
 License:        ASL 2.0
 URL:            https://github.com/netty/netty/wiki/Forked-Tomcat-Native
@@ -23,15 +24,24 @@ Patch1:         fixLibNames.patch.in
 Patch2:         i388aprFix.patch
 
 BuildRequires:  maven-local
-BuildRequires:  autoconf-common
-BuildRequires:  automake-common
-BuildRequires:  libtool-common
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
 BuildRequires:  glibc-devel
 BuildRequires:  libapr1-devel
+%if 0%{?fedora} >= 26
 BuildRequires:  libssl-devel
+%else
+BuildRequires:  libssl-devel
+%endif
+BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-hawtjni-plugin
+BuildRequires:  maven-plugin-build-helper
+BuildRequires:  maven-plugin-bundle
+BuildRequires:  maven-source-plugin
 #parent pom is needed
 BuildRequires:  netty
+BuildRequires:  sonatype-oss-parent
 BuildRequires: mvn(kr.motd.maven:os-maven-plugin)
 Source44: import.info
 
@@ -87,6 +97,9 @@ javac -d . -cp $RPM_BUILD_ROOT%{_jnidir}/%{name}/%{name}.jar %{SOURCE1}
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.30-alt2_6jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.30-alt2_3jpp8
 - new fc release
 
