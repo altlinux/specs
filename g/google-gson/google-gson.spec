@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:             google-gson
 Version:          2.3.1
-Release:          alt1_4jpp8
+Release:          alt1_6jpp8
 Summary:          Java lib for conversion of Java objects into JSON representation
 License:          ASL 2.0
 URL:              https://github.com/google/gson
@@ -54,6 +55,8 @@ rm src/test/java/com/google/gson/functional/ThrowableFunctionalTest.java
       <phase>skip</phase>
     </execution>"
 
+%pom_remove_plugin :maven-javadoc-plugin
+
 %build
 # LANG="C" or LANG="en_US.utf8" needed for the tests
 %mvn_build
@@ -68,6 +71,9 @@ rm src/test/java/com/google/gson/functional/ThrowableFunctionalTest.java
 %doc LICENSE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_6jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_4jpp8
 - new fc release
 
