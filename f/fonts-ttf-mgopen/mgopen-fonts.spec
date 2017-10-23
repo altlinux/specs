@@ -1,5 +1,7 @@
 Group: System/Fonts/True type
 %define oldname mgopen-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname 	mgopen
 %global fontconf        61-%{fontname}
 %global archivename     MgOpen
@@ -21,7 +23,7 @@ It can be safely uninstalled.
 
 Name:      fonts-ttf-mgopen
 Version:   0.%{upstream_date}
-Release:   alt3_23
+Release:   alt3_27
 Summary:   Truetype greek fonts
 
 License:   MgOpen
@@ -59,8 +61,8 @@ This package consists of files used by other MgOpen packages.
 Group: System/Fonts/True type
 Summary:   Truetype greek fonts, compatibility package
 Obsoletes: mgopen-fonts < 0.20050515-8
-Requires:  fonts-ttf-mgopen-canonica fonts-ttf-mgopen-cosmetica
-Requires:  fonts-ttf-mgopen-modata fonts-ttf-mgopen-moderna
+Requires:  fonts-ttf-mgopen-canonica, fonts-ttf-mgopen-cosmetica
+Requires:  fonts-ttf-mgopen-modata, fonts-ttf-mgopen-moderna
 %description compat
 %common_desc
 %compat_desc
@@ -214,6 +216,9 @@ fi
 %files compat
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.20050515-alt3_27
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.20050515-alt3_23
 - update to new release by fcimport
 
