@@ -1,6 +1,6 @@
 Name: wmfire
 Version: 1.2.4
-Release: alt4
+Release: alt5
 
 Summary: WindowMaker dock-app showing CPU load as a flame
 License: GPL
@@ -86,6 +86,9 @@ install -pDm644 %SOURCE2  %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Mon Oct 23 2017 Michael Shigorin <mike@altlinux.org> 1.2.4-alt5
+- rebuilt against current libgtop
+
 * Thu Feb 23 2017 Michael Shigorin <mike@altlinux.org> 1.2.4-alt4
 - E2K: avoid -fexpensive-optimizations (lcc)
 
