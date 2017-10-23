@@ -1,6 +1,8 @@
+Group: System/Fonts/True type
 %define oldname vlgothic-fonts
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name vlgothic-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 20141206
 %global	priority	65-1
 %global	ppriority	65-0
@@ -15,20 +17,22 @@ but some have also been improved by the project.
 
 Name:		fonts-ttf-vlgothic
 Version:	20141206
-Release:	alt1_1
+Release:	alt1_8
 Summary:	Japanese TrueType font
 
 License:	mplus and BSD
-Group:		System/Fonts/True type
 URL:		http://dicey.org/vlgothic
 Source0:	http://osdn.dl.sourceforge.jp/vlgothic/62375/%{archivename}.tar.bz2
 Source1:	%{oldname}-fontconfig-pgothic.conf
 Source2:	%{oldname}-fontconfig-gothic.conf
 Source3:        %{fontname}.metainfo.xml
 Source4:        %{fontname}-proportional.metainfo.xml
+Patch0:		%{oldname}-1331050.patch
+Patch1:		%{oldname}-p-1331050.patch
 
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
+BuildRequires:	python-module-fonttools
 
 Obsoletes:	%{oldname}-common < 20121230-2
 Provides:	%{oldname}-common = %{version}-%{release}
@@ -40,8 +44,8 @@ This package provides the monospace VLGothic font.
 
 
 %package -n fonts-ttf-vlgothic-p
+Group: System/Fonts/True type
 Summary:	Proportional Japanese TrueType font
-Group:		System/Fonts/True type
 Obsoletes:	%{oldname}-common < 20121230-2
 Provides:	%{oldname}-common = %{version}-%{release}
 
@@ -56,8 +60,23 @@ non-Japanese characters.
 
 
 %build
-%{nil}
+#rhbz#1331050: reassign U+23F4 and U+23F5 each other.
+ttx -i -a -e VL-Gothic-Regular.ttf
+ttx -i -a -e VL-PGothic-Regular.ttf
+sed -ie 's/<!--.*-->//g' VL-Gothic-Regular.ttx
+sed -ie 's/<!--.*-->//g' VL-PGothic-Regular.ttx
+patch -b -z .1331050 VL-Gothic-Regular.ttx %{PATCH0}
+patch -b -z .1331050 VL-PGothic-Regular.ttx %{PATCH1}
+touch -r VL-Gothic-Regular.ttf VL-Gothic-Regular.ttx
+touch -r VL-PGothic-Regular.ttf VL-PGothic-Regular.ttx
+rm VL-Gothic-Regular.ttf
+rm VL-PGothic-Regular.ttf
+ttx -b VL-Gothic-Regular.ttx
+ttx -b VL-PGothic-Regular.ttx
+touch -r VL-Gothic-Regular.ttx VL-Gothic-Regular.ttf
+touch -r VL-PGothic-Regular.ttx VL-PGothic-Regular.ttf
 
+%{nil}
 
 %install
 install -m 0755 -d $RPM_BUILD_ROOT%{_fontdir}
@@ -117,17 +136,22 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
 %{_fontbasedir}/*/%{_fontstem}/VL-Gothic-Regular.ttf
-%doc README* LICENSE*
+%doc README*
+%doc LICENSE*
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %files -n fonts-ttf-vlgothic-p
 %{_fontconfig_templatedir}/%{pfontconf}.conf
 %config(noreplace) %{_fontconfig_confdir}/%{pfontconf}.conf
 %{_fontbasedir}/*/%{_fontstem}/VL-PGothic-Regular.ttf
-%doc README* LICENSE*
+%doc README*
+%doc LICENSE*
 %{_datadir}/appdata/%{fontname}-proportional.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 20141206-alt1_8
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 20141206-alt1_1
 - update to new release by fcimport
 
