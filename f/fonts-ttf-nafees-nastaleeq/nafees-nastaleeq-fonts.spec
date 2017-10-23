@@ -2,13 +2,15 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname nafees-nastaleeq-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname        nafees-nastaleeq
 %global fontconf        67-%{fontname}.conf
 %global archivename     Nafees_Nastaleeq_v1.02
 
 Name:           fonts-ttf-nafees-nastaleeq
 Version:        1.02
-Release:        alt2_8
+Release:        alt2_12
 Summary:        Nafees nastaleeq font for writing Urdu in the Nastaleeq script
 
 Group:          System/Fonts/True type
@@ -24,7 +26,7 @@ Source3:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
-BuildRequires:  fontforge
+BuildRequires:  fontforge libfontforge
 Source44: import.info
 
 %description
@@ -106,6 +108,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.02-alt2_12
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.02-alt2_8
 - update to new release by fcimport
 
