@@ -1,4 +1,6 @@
 %define oldname google-croscore-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname google-croscore
 %global fontconf62 62-%{fontname}
 %global fontconf30 30-0-%{fontname}
@@ -12,7 +14,7 @@ portability across platforms.
 
 Name:           fonts-ttf-google-croscore
 Version:        1.23.0
-Release:        alt2_6
+Release:        alt2_10
 Summary:        The width-compatible fonts for improved on-screen readability
 
 Group:          Graphical desktop/Other
@@ -208,6 +210,9 @@ fi
 %doc LICENSE-2.0.txt
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.23.0-alt2_10
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.23.0-alt2_6
 - update to new release by fcimport
 
