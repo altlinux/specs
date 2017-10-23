@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname gust-antykwa-torunska-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname gust-antykwa-torunska
 %global shortname antt
 %global fontconf 69-%{fontname}.conf
@@ -10,7 +12,7 @@ BuildRequires: unzip
 Name:           fonts-otf-gust-antykwa-torunska
 Version:        2.08
 %global versiontag %(echo %{version}|tr . _)
-Release:        alt1_5
+Release:        alt1_9
 Summary:        Two-element typeface for typesetting of small prints
 License:        LPPL
 URL:            http://jmn.pl/en/antykwa-torunska/
@@ -92,6 +94,9 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/*.otf
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.08-alt1_9
+- update to new release by fcimport
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.08-alt1_5
 - converted for ALT Linux by srpmconvert tools
 
