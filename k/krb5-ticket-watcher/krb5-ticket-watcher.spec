@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt9%ubt
+Release: alt10%ubt
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
 Url: http://sourceforge.net/projects/krb5ticketwatch
 License: %gpl2plus
@@ -16,6 +16,7 @@ Patch5: alt-qt5-1.patch
 Patch6: alt-tray-icon.patch
 Patch7: alt-wait-for-tray.patch
 Patch8: alt-force-kinit.patch
+Patch9: alt-raise-password-dialog.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: kde-common-devel rpm-build-licenses rpm-build-xdg libkrb5-devel libkeyutils-devel
@@ -35,6 +36,7 @@ tickets.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1 -b .raise
 
 %build
 %add_optflags -DDEBUG -I%_includedir/krb5
@@ -56,6 +58,9 @@ desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 %doc COPYING Changes News TODO
 
 %changelog
+* Mon Oct 23 2017 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt10%ubt
+- set password dialog on top (ALT#34001)
+
 * Mon Jul 24 2017 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt9%ubt
 - fix check for auth at start
 
