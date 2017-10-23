@@ -1,6 +1,6 @@
 Name: xorg-installers
 Version: 7.8
-Release: alt4
+Release: alt5
 
 Summary: Set of various Xorg-related installers
 License: MIT/X11
@@ -37,6 +37,7 @@ Requires: xorg-drv-radeon
 %else
 Requires: xorg-drv-ati xorg-drv-intel xorg-drv-nv xorg-drv-openchrome xorg-drv-cirrus
 Requires: xorg-drv-nouveau xorg-drv-qxl
+Requires: xorg-drv-amdgpu
 %endif
 
 %description -n xorg-drv-video
@@ -71,6 +72,9 @@ X proto header files
 %files -n xorg-proto-devel
 
 %changelog
+* Mon Oct 23 2017 Mikhail Efremov <sem@altlinux.org> 7.8-alt5
+- xorg-drv-video: Add amdgpu.
+
 * Wed Jul 26 2017 Michael Shigorin <mike@altlinux.org> 7.8-alt4
 - E2K: use only specific drivers in metapackage
 
