@@ -1,18 +1,19 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           jfreechart
 Version:        1.0.19
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Summary:        Java chart library
 
-Group:          Development/Java
+Group:          Development/Other
 License:        LGPLv2+
 URL:            http://www.jfree.org/jfreechart/
 Source0:        http://download.sourceforge.net/sourceforge/jfreechart/%{name}-%{version}.zip
@@ -25,6 +26,8 @@ BuildRequires:  servlet >= 2.5
 %if 0%{?fedora}
 BuildRequires:  eclipse-swt
 %endif
+BuildRequires:  sonatype-oss-parent
+BuildRequires:  ant
 
 BuildArch:      noarch
 Source44: import.info
@@ -36,8 +39,8 @@ developers to display professional quality charts in their applications.
 %if 0%{?fedora}
 %package swt
 Summary:        Swt extension for jfreechart
-Group:          Development/Java
-Requires:       %{name} = %{version}
+Group:          Development/Other
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       eclipse-swt jpackage-utils
 
 %description swt
@@ -47,13 +50,12 @@ Experimental swt extension for jfreechart.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
-
 
 
 %description javadoc -l fr
@@ -101,7 +103,7 @@ MVN_BUNDLE_PLUGIN_EXTRA_XML="<extensions>true</extensions>
 %if 0%{?fedora}
 # /usr/lib/java/swt.jar is an arch independent path to swt
 ant -f ant/build-swt.xml \
-        -Dswt.jar=%_jnidir/swt.jar \
+        -Dswt.jar=/usr/lib/java/swt.jar \
         -Djcommon.jar=$(build-classpath jcommon) \
         -Djfreechart.jar=target/jfreechart-%{version}.jar
 %endif
@@ -126,6 +128,9 @@ install -m 644 lib/jfreechart-%{version}-swt.jar  $RPM_BUILD_ROOT%{_javadir}/%{n
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0.19-alt1_6jpp8
+- new jpp release
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.19-alt1_4jpp8
 - fixed build
 
