@@ -1,8 +1,9 @@
 %def_enable check
+
 Name: pve-common
 Summary: PVE base library
-Version: 5.0.16
-Release: alt4
+Version: 5.0.20
+Release: alt1
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -59,6 +60,12 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Mon Oct 23 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.20-alt1
+- 5.0-20
+
+* Tue Oct 10 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.19-alt1
+- 5.0-19
+
 * Fri Sep 29 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.16-alt4
 - brivlanport support
 
