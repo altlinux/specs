@@ -2,9 +2,10 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # jetty8 is a compat package and as such it shouldn't have any OSGi provides
 
 
@@ -12,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jetty8
 Version:        8.1.17
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Java Webserver and Servlet Container
 # Jetty is dual licensed under both ASL 2.0 and EPL 1.0, see NOTICE.txt
 # some MIT-licensed code (from Utf8Appendable) is used too
@@ -38,19 +39,19 @@ BuildRequires:  mvn(org.jboss.spec.javax.servlet:jboss-servlet-api_3.0_spec)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.slf4j:slf4j-jdk14)
 
-Requires:       %{name}-rewrite = %{version}
-Requires:       %{name}-client = %{version}
-Requires:       %{name}-xml = %{version}
-Requires:       %{name}-websocket = %{version}
-Requires:       %{name}-webapp = %{version}
-Requires:       %{name}-util = %{version}
-Requires:       %{name}-servlet = %{version}
-Requires:       %{name}-server = %{version}
-Requires:       %{name}-security = %{version}
-Requires:       %{name}-jmx = %{version}
-Requires:       %{name}-io = %{version}
-Requires:       %{name}-http = %{version}
-Requires:       %{name}-continuation = %{version}
+Requires:       %{name}-rewrite = %{version}-%{release}
+Requires:       %{name}-client = %{version}-%{release}
+Requires:       %{name}-xml = %{version}-%{release}
+Requires:       %{name}-websocket = %{version}-%{release}
+Requires:       %{name}-webapp = %{version}-%{release}
+Requires:       %{name}-util = %{version}-%{release}
+Requires:       %{name}-servlet = %{version}-%{release}
+Requires:       %{name}-server = %{version}-%{release}
+Requires:       %{name}-security = %{version}-%{release}
+Requires:       %{name}-jmx = %{version}-%{release}
+Requires:       %{name}-io = %{version}-%{release}
+Requires:       %{name}-http = %{version}-%{release}
+Requires:       %{name}-continuation = %{version}-%{release}
 Source44: import.info
 %filter_from_provides /^osgi\\(/d
 
@@ -249,6 +250,9 @@ rm -Rf LICENSE-CONTRIBUTOR/
 %doc NOTICE.txt LICENSE*
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 8.1.17-alt1_6jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 8.1.17-alt1_5jpp8
 - new fc release
 
