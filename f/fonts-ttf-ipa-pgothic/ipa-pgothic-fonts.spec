@@ -2,6 +2,8 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname ipa-pgothic-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global		priority	65-2
 %global		fontname	ipa-pgothic
 %global		fontconf	%{priority}-%{fontname}.conf
@@ -10,7 +12,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-ipa-pgothic
 Version:	003.03
-Release:	alt2_6
+Release:	alt2_10
 Summary:	Japanese Proportional Gothic-typeface OpenType font by IPA
 
 Group:		System/Fonts/True type
@@ -91,6 +93,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 003.03-alt2_10
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 003.03-alt2_6
 - update to new release by fcimport
 
