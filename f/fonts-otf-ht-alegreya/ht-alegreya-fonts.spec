@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname ht-alegreya-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname alegreya
 %global fontconf 60-%{fontname}.conf
 %global common_desc \
@@ -22,7 +24,7 @@ elements designed in an atmosphere of diversity.
 
 Name:		fonts-otf-ht-alegreya
 Version:	1.004
-Release:	alt1_5
+Release:	alt1_9
 Summary:	A Serif typeface originally intended for literature
 License:	OFL
 URL:		http://www.huertatipografica.com.ar/tipografias/alegreya/ejemplos.html
@@ -128,6 +130,9 @@ fi
 %doc OFL.txt
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1_9
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1_5
 - update to new release by fcimport
 
