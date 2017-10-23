@@ -1,6 +1,8 @@
 Group: System/Fonts/True type
 %define oldname google-droid-fonts
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name google-droid-fonts
 %define version 20120715
 %global fontname google-droid
@@ -18,7 +20,7 @@ Pascal Zoghbi of 29ArabicLetters.
 Name:    fonts-ttf-google-droid
 # No sane versionning upstream, use git clone timestamp
 Version: 20120715
-Release: alt3_8
+Release: alt3_12
 Summary: General-purpose fonts released by Google as part of Android
 
 License:   ASL 2.0
@@ -217,6 +219,9 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 20120715-alt3_12
+- update to new release by fcimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 20120715-alt3_8
 - update to new release by fcimport
 
