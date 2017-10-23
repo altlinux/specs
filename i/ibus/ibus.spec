@@ -10,7 +10,7 @@
 %def_disable emoji_dict
 
 Name: ibus
-Version: 1.5.16
+Version: 1.5.17
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -203,6 +203,7 @@ fi
 %_datadir/%name/*
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
+%_libexecdir/%name-portal
 %_libexecdir/%name-ui-gtk3
 %_libexecdir/%name-x11
 %_libexecdir/%name-engine-simple
@@ -222,6 +223,7 @@ fi
 %_datadir/glib-2.0/schemas/org.freedesktop.%name.gschema.xml
 %endif
 %_datadir/dbus-1/services/org.freedesktop.IBus.service
+%_datadir/dbus-1/services/org.freedesktop.portal.IBus.service
 
 %config %_xinputconf
 %_man1dir/%name-daemon.1.*
@@ -266,6 +268,9 @@ fi
 %python_sitelibdir/gi/overrides/IBus.py*
 
 %changelog
+* Mon Oct 23 2017 Yuri N. Sedunov <aris@altlinux.org> 1.5.17-alt1
+- 1.5.17
+
 * Wed May 17 2017 Yuri N. Sedunov <aris@altlinux.org> 1.5.16-alt1
 - 1.5.16
 
