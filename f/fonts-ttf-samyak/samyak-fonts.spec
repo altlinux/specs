@@ -1,4 +1,6 @@
 %define oldname samyak-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global	fontname	samyak
 %global fontconf	67-%{fontname}
 
@@ -9,7 +11,7 @@ Scripts Devanagari, Gujarati, Malayalam, Odia and Tamil
 
 Name:	 fonts-ttf-samyak
 Version:	1.2.2
-Release:	alt4_14
+Release:	alt4_18
 Summary:	Free Indian truetype/opentype fonts
 Group:	System/Fonts/True type
 License:	GPLv3+ with exceptions
@@ -29,7 +31,7 @@ Source11: %{fontname}-odia.metainfo.xml
 
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
-BuildRequires: fontforge >= 20080429
+BuildRequires: fontforge libfontforge
 Patch1: bug-1040288.patch
 Source44: import.info
 
@@ -213,6 +215,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt4_18
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt4_14
 - update to new release by fcimport
 
