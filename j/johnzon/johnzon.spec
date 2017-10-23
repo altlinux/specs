@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          johnzon
 Version:       0.9.4
-Release:       alt1_1jpp8
+Release:       alt1_3jpp8
 Summary:       Implementation of JSR-353
 License:       ASL 2.0
 URL:           http://johnzon.apache.org/
@@ -43,7 +44,7 @@ BuildRequires: mvn(org.apache.rat:apache-rat-plugin)
 BuildRequires: mvn(org.apache.tomcat:tomcat-api)
 BuildRequires: mvn(org.apache.tomcat:tomcat-servlet-api)
 BuildRequires: mvn(org.jboss.arquillian.junit:arquillian-junit-container)
-#BuildRequires: /usr/bin/asciidoctor
+BuildRequires: /usr/bin/asciidoctor
 
 BuildArch:     noarch
 Source44: import.info
@@ -170,13 +171,19 @@ rm -r johnzon-jaxrs/src/test/java johnzon-jsonb/src/test/java/org/apache/johnzon
 # javax.json.stream.JsonGenerationException: Invalid json
 rm johnzon-jsonb/src/test/java/org/apache/johnzon/jsonb/CdiAdapterTest.java
 
+# There were errors initializing your configuration:
+# <openjpa-2.4.1-runknown fatal user error> org.apache.openjpa.util.UserException:
+# A connection could not be obtained for driver class "org.h2.Driver" and
+# URL "jdbc:h2:target/h2-3".  You may have specified an invalid URL.
+rm johnzon-mapper/src/test/java/org/apache/johnzon/mapper/JPATest.java
+
 %build
 
 %mvn_build -s
 
 # Re-generate documentation
-#rm MATURITY.html
-#asciidoctor MATURITY.adoc
+rm MATURITY.html
+asciidoctor MATURITY.adoc
 
 %install
 %mvn_install
@@ -201,6 +208,9 @@ rm johnzon-jsonb/src/test/java/org/apache/johnzon/jsonb/CdiAdapterTest.java
 %files websocket -f .mfiles-johnzon-websocket
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt1_3jpp8
+- new jpp release
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt1_1jpp8
 - new version
 
