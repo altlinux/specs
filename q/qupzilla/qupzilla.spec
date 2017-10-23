@@ -11,7 +11,7 @@
 %define libqupzilla libqupzilla%sover
 
 Name: qupzilla
-Version: 2.1.2
+Version: 2.2.0
 Release: alt1
 
 Summary: A very fast open source browser based on WebKit core
@@ -98,14 +98,13 @@ __EOF__
 %_libdir/%name/libPIM.so
 %_libdir/%name/libStatusBarIcons.so
 %_libdir/%name/libTabManager.so
-%_desktopdir/%name.desktop
+%_desktopdir/*.desktop
 %_pixmapsdir/%name.png
 %_iconsdir/hicolor/*/*/*.png
 %dir %_datadir/%name
 %dir %_datadir/%name/locale
 %_datadir/%name/themes
 %_datadir/bash-completion/completions/qupzilla
-%_datadir/appdata/*
 
 %files kde5
 %_libdir/%name/libKWalletPasswords.so
@@ -118,6 +117,9 @@ __EOF__
 %_libdir/libQupZilla.so.%sover.*
 
 %changelog
+* Sun Oct 08 2017 Michael Shigorin <mike@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Thu Mar 16 2017 Michael Shigorin <mike@altlinux.org> 2.1.2-alt1
 - 2.1.2
 
