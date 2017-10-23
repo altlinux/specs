@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          truezip
 Version:       7.7.9
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Java based VFS for treating archive files as virtual directories
 
 License:       EPL
@@ -32,20 +33,20 @@ BuildRequires: mvn(org.jsr-305:ri)
 BuildRequires: mvn(org.netbeans:jemmy)
 BuildRequires: mvn(org.tukaani:xz)
 
-Requires:      %{name}-driver-parent = %{version}
-Requires:      %{name}-driver-file = %{version}
-Requires:      %{name}-driver-http = %{version}
-Requires:      %{name}-driver-tar = %{version}
-Requires:      %{name}-driver-tzp = %{version}
-Requires:      %{name}-driver-zip = %{version}
-Requires:      %{name}-extension-parent = %{version}
-Requires:      %{name}-extension-jmx-jul = %{version}
-Requires:      %{name}-extension-pace = %{version}
-Requires:      %{name}-file = %{version}
-Requires:      %{name}-kernel = %{version}
-Requires:      %{name}-path = %{version}
-Requires:      %{name}-samples = %{version}
-Requires:      %{name}-swing = %{version}
+Requires:      %{name}-driver-parent = %{version}-%{release}
+Requires:      %{name}-driver-file = %{version}-%{release}
+Requires:      %{name}-driver-http = %{version}-%{release}
+Requires:      %{name}-driver-tar = %{version}-%{release}
+Requires:      %{name}-driver-tzp = %{version}-%{release}
+Requires:      %{name}-driver-zip = %{version}-%{release}
+Requires:      %{name}-extension-parent = %{version}-%{release}
+Requires:      %{name}-extension-jmx-jul = %{version}-%{release}
+Requires:      %{name}-extension-pace = %{version}-%{release}
+Requires:      %{name}-file = %{version}-%{release}
+Requires:      %{name}-kernel = %{version}-%{release}
+Requires:      %{name}-path = %{version}-%{release}
+Requires:      %{name}-samples = %{version}-%{release}
+Requires:      %{name}-swing = %{version}-%{release}
 Source44: import.info
 
 %description
@@ -252,6 +253,9 @@ find -name pom.xml -exec \
 
 %pom_remove_plugin -r :maven-assembly-plugin
 
+# javascript not allowed in javadoc
+%pom_xpath_remove "pom:properties/pom:header"
+
 cp -p %{SOURCE1} .
 
 %build
@@ -281,6 +285,9 @@ cp -p %{SOURCE1} .
 %files swing -f .mfiles-%{name}-swing
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 7.7.9-alt1_4jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 7.7.9-alt1_3jpp8
 - new fc release
 
