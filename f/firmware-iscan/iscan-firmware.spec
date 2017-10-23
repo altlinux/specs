@@ -1,9 +1,11 @@
 Group: System/Base
 %define oldname iscan-firmware
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary:	Firmware for Epson flatbed scanners
 Name:		firmware-iscan
 Version:	20130319
-Release:	alt1_2
+Release:	alt1_5
 License:	Redistributable, no modification permitted
 URL:		http://download.ebz.epson.net/dsc/search/01/search/
 BuildArch:	noarch
@@ -40,7 +42,7 @@ Source13:      http://download.ebz.epson.net/dsc/f/01/00/02/02/24/cef942974b8c8d
 Source14:      http://download.ebz.epson.net/dsc/f/01/00/02/50/84/11b8cdbb026274db075bd61d6de6ddd5b9481377/iscan-plugin-perfection-v550-1.0.0-2.x86_64.rpm
 
 %if 0%{?rhel} == 6
-Requires:	udev
+Requires:	systemd udev
 %else
 Requires:	linux-firmware
 %endif
@@ -96,6 +98,9 @@ install -pm644 .%{_datadir}/{iscan,esci}/esfw*.bin %{buildroot}/lib/firmware/eps
 /lib/firmware/epson
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 20130319-alt1_5
+- update to new release by fcimport
+
 * Sat Jul 04 2015 Igor Vlasenko <viy@altlinux.ru> 20130319-alt1_2
 - new version
 
