@@ -3,13 +3,15 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname tlomt-sniglet-fonts
-%define fontname tlomt-sniglet
-%define fontconf 60-%{fontname}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global fontname tlomt-sniglet
+%global fontconf 60-%{fontname}
 
 Name:		fonts-ttf-tlomt-sniglet
 Summary:	A rounded, sans-serif font useful for headlines
 Version:	1.000
-Release:	alt3_9
+Release:	alt3_14
 # License attribution confirmed by author
 # See: sniglet-license-confirmation-email.txt
 License:	OFL
@@ -89,6 +91,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.000-alt3_14
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.000-alt3_9
 - update to new release by fcimport
 
