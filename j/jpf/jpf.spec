@@ -3,12 +3,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		jpf
 Version:	1.5.1
-Release:	alt2_14jpp8
+Release:	alt2_16jpp8
 Summary:	Java Plug-in Framework
 License:	LGPLv2
 URL:		http://jpf.sourceforge.net/
@@ -24,6 +25,7 @@ Patch1:		jpf-1.5.1-no-class-manifest.patch
 
 BuildRequires:	maven-local
 BuildRequires:	apache-commons-logging
+BuildRequires:  mvn(log4j:log4j)
 Source44: import.info
 
 %description
@@ -36,12 +38,11 @@ extension points and extensions).
 
 %package javadoc
 Group: Development/Java
-Summary:	Javadoc for %{name}
+Summary: Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 Documentation for the %{name} Java library.
-
 
 %prep
 %setup -q -c %{name}-%{version}
@@ -49,7 +50,7 @@ find . -name "*.jar" | xargs rm
 
 # Build the javadoc all together, but not for the "tools" sub-package
 # (it uses the unpackaged "jxp" library)
-%patch0 -p1
+%patch0 -b .jadoc -p0
 
 # Don't put classpaths into the manifests
 %patch1 -p1
@@ -57,12 +58,21 @@ find . -name "*.jar" | xargs rm
 sed -i "s|\r||g" license.txt
 
 files=$(ls)
+%pom_add_parent "net.sf.jpf:jpf-parent:%{version}" $PWD/jpf-pom.xml
+%pom_add_parent "net.sf.jpf:jpf-parent:%{version}" $PWD/jpf-boot-pom.xml
+%pom_xpath_set "pom:project/pom:version" "%{version}" $PWD/jpf-pom.xml
+%pom_xpath_set "pom:project/pom:version" "%{version}" $PWD/jpf-boot-pom.xml
+%pom_xpath_set "pom:dependencies/pom:dependency[pom:artifactId='jpf']/pom:version" "%{version}" $PWD/jpf-boot-pom.xml
+
+%pom_xpath_inject "pom:project" "<properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding></properties>" $PWD/jpf-pom.xml
+%pom_xpath_inject "pom:project" "<properties><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding></properties>" $PWD/jpf-boot-pom.xml
+
 mkdir jpf && cp -pr $files jpf && mv jpf/jpf-pom.xml jpf/pom.xml
 mkdir jpf-boot && cp -pr $files jpf-boot && mv jpf-boot/jpf-boot-pom.xml jpf-boot/pom.xml
 cp -p %{SOURCE1} .
 
 %build
-%mvn_build
+%mvn_build -X
 
 %install
 %mvn_install
@@ -70,13 +80,14 @@ mkdir -p %{buildroot}%{_mavenpomdir}/jpf
 
 %files -f .mfiles
 %doc license.txt
-%dir %{_javadir}/jpf
-%dir %{_mavenpomdir}/jpf
 
 %files javadoc -f .mfiles-javadoc
 %doc license.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2_16jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2_14jpp8
 - new fc release
 
