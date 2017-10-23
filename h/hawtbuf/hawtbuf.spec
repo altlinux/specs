@@ -1,10 +1,14 @@
 Group: Development/Java
-%filter_from_requires /^java-headless/d
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          hawtbuf
 Version:       1.11
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       A rich byte buffer library
 License:       ASL 2.0
 URL:           https://github.com/fusesource/hawtbuf/
@@ -90,6 +94,9 @@ This package contains javadoc for %{name}.
 %doc license.txt notice.md
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1_5jpp8
+- new jpp release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1_4jpp8
 - java8 mass update
 
