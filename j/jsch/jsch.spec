@@ -5,12 +5,13 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           jsch
 Version:        0.1.54
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        Pure Java implementation of SSH2
 Group:          Development/Other
 License:        BSD
@@ -57,6 +58,8 @@ BuildArch: noarch
 %setup -q
 %mvn_file : jsch
 
+%pom_remove_plugin :maven-javadoc-plugin
+
 %pom_xpath_remove pom:project/pom:build/pom:extensions
 %pom_xpath_set pom:project/pom:version %{version}
 
@@ -82,6 +85,9 @@ zip target/%{name}-%{version}.jar plugin.properties
 %doc LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.1.54-alt1_4jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.1.54-alt1_2jpp8
 - new version
 
