@@ -1,5 +1,7 @@
 Group: System/Fonts/True type
 %define oldname specialelite-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname specialelite
 %global fontconf 61-%{fontname}-fonts.conf
 %global alphatag 20140913hg
@@ -7,7 +9,7 @@ Group: System/Fonts/True type
 
 Name:          fonts-ttf-specialelite
 Version:       1.000
-Release:       alt1_0.3.%{alphatag}
+Release:       alt1_0.6.%{alphatag}
 Summary:       Special Elite font by Brian J. Bonislawsky
 License:       ASL 2.0
 URL:           http://www.google.com/fonts/specimen/Special+Elite
@@ -16,7 +18,7 @@ Source1:       https://googlefontdirectory.googlecode.com/hg/apache/specialelite
 Source10:      %{fontconf}
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
-BuildRequires: fontforge
+BuildRequires: fontforge libfontforge
 BuildRequires: ttname
 Source44: import.info
 
@@ -95,6 +97,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.000-alt1_0.6.20140913hg
+- update to new release by fcimport
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.000-alt1_0.3.20140913hg
 - new version
 
