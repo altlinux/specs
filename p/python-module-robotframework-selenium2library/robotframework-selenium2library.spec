@@ -3,32 +3,29 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.7
-Release: alt1.dev.git20150217.1.1
+Version: 1.8.0
+Release: alt1
 Summary: Web testing library for Robot Framework
 License: ASLv2.0
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/robotframework-selenium2library/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/rtomac/robotframework-selenium2library.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-#BuildPreReq: python-module-setuptools-tests python-module-decorator
-#BuildPreReq: python-module-selenium python-module-robotframework
-#BuildPreReq: python-module-docutils
+BuildRequires: python-module-setuptools-tests python-module-decorator
+BuildRequires: python-module-selenium python-module-robotframework
+BuildRequires: python-module-docutils python-module-html5lib
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-module-setuptools-tests python3-module-decorator
-#BuildPreReq: python3-module-selenium python3-module-robotframework
-#BuildPreReq: python3-module-docutils
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-module-setuptools-tests python3-module-decorator
+BuildRequires: python3-module-selenium python3-module-robotframework
+BuildRequires: python3-module-docutils python3-module-html5lib
+BuildRequires: python-tools-2to3 python3-module-sphinx
 %endif
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-pytest python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytest python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
-BuildRequires: python-module-docutils python-module-html5lib python-module-robotframework python-module-setuptools-tests python3-module-html5lib python3-module-robotframework python3-module-setuptools-tests python3-module-sphinx rpm-build-python3 time
+%py_requires decorator
 
 %description
 Selenium2Library is a web testing library for Robot Framework that
@@ -37,6 +34,7 @@ leverages the Selenium 2 (WebDriver) libraries.
 %package -n python3-module-%oname
 Summary: Web testing library for Robot Framework
 Group: Development/Python3
+%py3_requires decorator
 
 %description -n python3-module-%oname
 Selenium2Library is a web testing library for Robot Framework that
@@ -70,25 +68,32 @@ popd
 
 %check
 python setup.py test
+PYTHONPATH=./src:./test/lib py.test
+
 %if_with python3
 pushd ../python3
 python3 setup.py test
+# TODO: two tests still fail
+PYTHONPATH=./src:./test/lib py.test3 ||:
 popd
 %endif
 
 %files
-%doc *.txt *.rst doc/*.html demo
+%doc *.txt *.rst *.md docs/*.html
 %python_sitelibdir/Selenium2Library
-%python_sitelibdir/*.egg-info
+%python_sitelibdir/robotframework_selenium2library-%version-py*.egg-info
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt *.rst doc/*.html demo
+%doc *.txt *.rst *.md docs/*.html
 %python3_sitelibdir/Selenium2Library
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/robotframework_selenium2library-%version-py*.egg-info
 %endif
 
 %changelog
+* Mon Oct 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.0-alt1
+- Updated to upstream version 1.8.0.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.7-alt1.dev.git20150217.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
