@@ -1,20 +1,24 @@
+Group: System/Fonts/True type
 %define oldname lohit-marathi-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname lohit-marathi
 %global fontconf 65-0-%{fontname}.conf
+%global metainfo io.pagure.lohit.marathi.font.metainfo
 
 Name:           fonts-ttf-lohit-marathi
-Version:        2.94.0
-Release:        alt1_3
+Version:        2.94.2
+Release:        alt1_2
 Summary:        Free truetype font for Marathi language
 
-Group:          System/Fonts/True type
 License:        OFL
-URL:            https://fedorahosted.org/lohit/
-Source1:       %{fontname}.metainfo.xml
-Source0:        https://fedorahosted.org/releases/l/o/lohit/%{fontname}-%{version}.tar.gz
+URL:            https://pagure.io/lohit
+Source0:        https://releases.pagure.org/lohit/%{fontname}-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires: fontforge
+BuildRequires:  fontforge libfontforge
 BuildRequires:  fontpackages-devel
+BuildRequires:  python3-devel
+BuildRequires:  python-tools-2to3 python-tools-i18n python-tools-idle python-tools-pynche python-tools-smtpd
 Source44: import.info
 
 %description
@@ -22,13 +26,12 @@ This package provides a free Marathi truetype/opentype font.
 
 
 %prep
-%setup -q -n %{fontname}-%{version} 
+%setup -q -n %{fontname}-%{version}
 
 %build
 make ttf %{?_smp_mflags}
 
 %install
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
@@ -41,8 +44,8 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
 # Add AppStream metadata
-install -Dm 0644 -p %{SOURCE1} \
-       %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{metainfo}.xml \
+       %{buildroot}%{_datadir}/metainfo/%{metainfo}.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -83,12 +86,14 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-
-%doc ChangeLog COPYRIGHT OFL.txt AUTHORS README test-marathi.txt
-%{_datadir}/appdata/%{fontname}.metainfo.xml
-
+%doc ChangeLog COPYRIGHT AUTHORS README test-marathi.txt
+%doc OFL.txt
+%{_datadir}/metainfo/%{metainfo}.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.94.2-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.94.0-alt1_3
 - update to new release by fcimport
 
