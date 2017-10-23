@@ -3,21 +3,24 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname grimmer-proggy-tinysz-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname grimmer-proggy-tinysz
 %global fontconf 66-%{fontname}.conf
 
 Name: fonts-ttf-grimmer-proggy-tinysz
 Version: 1.0
-Release: alt3_11
+Release: alt3_17
 License: MIT
-URL: http://proggyfonts.com/
-Source0: http://proggyfonts.com/download/ProggyTinySZ.ttf.zip
+URL: http://upperbounds.net/
+Source0: http://upperbounds.net/download/ProggyTinySZ.ttf.zip
 Source1: 66-grimmer-proggy-tinysz.conf
 Source2: %{fontname}.metainfo.xml
 
 BuildArch: noarch
 Summary: Proggy Tiny with slashed zero programming font
 BuildRequires: fontpackages-devel
+BuildRequires: libappstream-glib
 Source44: import.info
 
 %description
@@ -47,6 +50,9 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
 # Add AppStream metadata
 install -Dm 0644 -p %{SOURCE2} \
         %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+
+appstream-util validate-relax --nonet \
+               %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -90,6 +96,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_17
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_11
 - update to new release by fcimport
 
