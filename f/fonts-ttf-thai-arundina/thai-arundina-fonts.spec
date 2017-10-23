@@ -1,10 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/afm2tfm /usr/bin/fontforge /usr/bin/mktexlsr /usr/bin/vptovf
+BuildRequires: /usr/bin/afm2tfm /usr/bin/mktexlsr /usr/bin/vptovf
 # END SourceDeps(oneline)
 %define oldname thai-arundina-fonts
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name thai-arundina-fonts
-%define version 0.2.0
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 0.2.1
 %global fontname thai-arundina
 %global fontconf 67-%{fontname}
 %global archivename fonts-sipa-arundina-%{version}
@@ -16,14 +17,14 @@ modified by TLWG for certain aspects, such as Latin glyph size \
 compatibility and OpenType conformance.
 
 Name:		fonts-ttf-thai-arundina
-Version:	0.2.0
-Release:	alt2_6
+Version:	0.2.1
+Release:	alt1_3
 Summary:	Thai Arundina fonts
 
 Group:		System/Fonts/True type
 License:	Bitstream Vera
 URL:		http://linux.thai.net/projects/fonts-sipa-arundina
-Source0:	http://linux.thai.net/pub/thailinux/software/fonts-sipa-arundina/%{archivename}.tar.gz
+Source0:	http://linux.thai.net/pub/thailinux/software/fonts-sipa-arundina/%{archivename}.tar.xz
 Source1:	%{oldname}-sans-fontconfig.conf
 Source2:	%{oldname}-serif-fontconfig.conf
 Source3:	%{oldname}-sans-mono-fontconfig.conf
@@ -33,7 +34,7 @@ Source6:	%{fontname}-sans-mono.metainfo.xml
 Source7:	%{fontname}-serif.metainfo.xml
 
 BuildArch:	noarch
-BuildRequires:	fontforge
+BuildRequires:	fontforge libfontforge
 BuildRequires:	fontpackages-devel
 Source44: import.info
 
@@ -142,13 +143,13 @@ done
 
 # Add AppStream metadata
 install -Dm 0644 -p %{SOURCE4} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+	%{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 install -Dm 0644 -p %{SOURCE5} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-sans.metainfo.xml
+	%{buildroot}%{_datadir}/appdata/%{fontname}-sans.metainfo.xml
 install -Dm 0644 -p %{SOURCE6} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-sans-mono.metainfo.xml
+	%{buildroot}%{_datadir}/appdata/%{fontname}-sans-mono.metainfo.xml
 install -Dm 0644 -p %{SOURCE7} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}-serif.metainfo.xml
+	%{buildroot}%{_datadir}/appdata/%{fontname}-serif.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -190,6 +191,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_3
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_6
 - update to new release by fcimport
 
