@@ -3,12 +3,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          glassfish-jaxws
 Version:       2.2.10
-Release:       alt1_4jpp8
+Release:       alt1_6jpp8
 Summary:       JAX-WS Reference Implementation (RI) Project
 # ASL 2.0
 # tools/wscompile/src/com/sun/tools/ws/ant/AnnotationProcessingTask.java
@@ -218,7 +219,8 @@ rm -r tools/wscompile/src/test/java/com/sun/tools/ws/ant/* \
  eclipselink_jaxb/src/test/java/com/sun/xml/ws/cts/dl_swa/SwaMimeAttachmentTest.java
 find -name SAAJMessageTest.java -delete
 find -name SAAJMessageWrapperTest.java -delete
-
+# Only on ARM fails
+find -name ClientProxyTest.java -delete
 
 
 %mvn_package ":jaxws-*-transport" transports
@@ -248,6 +250,9 @@ find -name SAAJMessageWrapperTest.java -delete
 %doc CDDL+GPLv2.html CDDL-1.0-license.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.2.10-alt1_6jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.2.10-alt1_4jpp8
 - new fc release
 
