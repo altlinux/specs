@@ -3,18 +3,18 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jboss-common-core
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 2.5.0
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-common-core
 Version:          2.5.0
-Release:          alt1_1jpp8
+Release:          alt1_3jpp8
 Summary:          JBoss Common Classes
 # Under Public Domain license src/main/java/org/jboss/util/Base64.java
 License:          ASL 2.0 and Public Domain
@@ -54,6 +54,9 @@ rm src/main/java/org/jboss/net/protocol/URLLister.java \
 
 %pom_change_dep org.jboss.logging:jboss-logging-spi org.jboss.logging:jboss-logging
 
+# javascript not allowed in javadoc. this is a bit weird
+find ./ -name "package.html" -exec sed -i "s/javascript/java script/g" {} +
+
 # AssertionFailedError: expected:<333> but was:<324>
 rm src/test/java/org/jboss/test/util/test/xml/resolver/JBossEntityResolverUnitTestCase.java
 
@@ -72,6 +75,9 @@ rm src/test/java/org/jboss/test/util/test/xml/resolver/JBossEntityResolverUnitTe
 %doc LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.5.0-alt1_3jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.5.0-alt1_1jpp8
 - new version
 
