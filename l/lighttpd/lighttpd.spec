@@ -12,7 +12,7 @@
 %define docdir %_docdir/%name-%version-doc
 
 Name: lighttpd
-Version: 1.4.46
+Version: 1.4.47
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -201,6 +201,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Mon Oct 23 2017 Alexei Takaseev <taf@altlinux.org> 1.4.47-alt1
+- 1.4.47
+
 * Sun Oct 22 2017 Alexei Takaseev <taf@altlinux.org> 1.4.46-alt1
 - 1.4.46
 
