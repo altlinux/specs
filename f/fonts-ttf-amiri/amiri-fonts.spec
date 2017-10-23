@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname amiri-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname amiri
 
 %global common_desc \
@@ -20,17 +22,17 @@ O.U.U.O.O. O.U. U.O.O.O.O. O.U.U.O.U. U.U.O. O.U.O.O.U. O.U.U.O.U. O.U.O.O.O.U.U
 O.U.O.U.O. O.O.U.U.O.O.O.O. O.U.O.U.U.O.U.O.O. U.U.U. U.U.O. O.O.O. O.U.O.O. O.O.U.U..
 
 Name: fonts-ttf-amiri
-Version: 0.108
+Version: 0.109
 Release: alt1_2
 License: OFL
 
-Source0: https://github.com/khaledhosny/amiri-font/releases/download/%{version}/%{fontname}-%{version}.zip
+Source0: https://github.com/alif-type/amiri/releases/download/%{version}/%{fontname}-%{version}.zip
 Source1: %{fontname}-quran-fontconfig.conf
 Source2: %{fontname}-fontconfig.conf
 
 BuildArch: noarch
 BuildRequires: fontpackages-devel
-Requires: %{name}-common = %{version}
+Requires: %{name}-common = %{version}-%{release}
 
 Summary: A classical Arabic font in Naskh style
 Summary(ar): الخطوط الأميرية ذات المظهر الأنيق و التّراث العريق
@@ -63,7 +65,7 @@ This package consists of files used by other %{oldname} packages.
 Group: System/Fonts/True type
 Summary: Quran type of Amiri fonts
 Summary(ar): النّمط القُرآني من الخط الأميري
-Requires: %{name}-common = %{version}
+Requires: %{name}-common = %{version}-%{release}
 
 %description -n fonts-ttf-amiri-quran
 %common_desc
@@ -152,6 +154,9 @@ fi
 %doc amiri-table.pdf NEWS README README-Arabic NEWS-Arabic documentation-arabic.pdf
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.109-alt1_2
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.108-alt1_2
 - update to new release by fcimport
 
