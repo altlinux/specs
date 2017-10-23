@@ -2,6 +2,8 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname manchu-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname manchu
 %global fontconf  66-%{fontname}.conf
 
@@ -9,7 +11,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-manchu
 Version:        2.006
-Release:        alt3_9
+Release:        alt3_13
 Summary:        A Manchu OpenType (TrueType-flavored) font
 
 Group:          System/Fonts/True type
@@ -93,6 +95,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.006-alt3_13
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.006-alt3_9
 - update to new release by fcimport
 
