@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 5.0.24
-Release: alt8
+Version: 5.1.35
+Release: alt2
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -52,6 +52,7 @@ Patch23: qemu-server-migrate-local-devices.patch
 Patch24: pve-manager-postfix-ntpd.patch
 Patch25: pve-manager-gettext.patch
 Patch26: pve-ha-manager-watchdog.patch
+Patch27: pve-manager-pve_ceph_pools.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -64,7 +65,7 @@ This package contains the PVE management tools
 
 %package -n pve-container
 Summary: PVE Container management tool
-Version: 2.0.16
+Version: 2.0.17
 Group: Development/Perl
 PreReq: shadow-submap
 Requires: pve-lxc >= 2.1.0 dtach perl-Crypt-Eksblowfish >= 0.009-alt5_15
@@ -74,7 +75,7 @@ Tool to manage Linux Containers on PVE
 
 %package -n pve-firewall
 Summary: PVE Firewall
-Version: 3.0.2
+Version: 3.0.3
 Group: System/Servers
 Requires: ipset iptables iptables-ipv6 shorewall shorewall6 iproute2 >= 4.10.0
 
@@ -83,7 +84,7 @@ This package contains the PVE Firewall
 
 %package -n pve-ha-manager
 Summary: PVE HA Manager
-Version: 2.0.2
+Version: 2.0.3
 Group: System/Servers
 
 %description -n pve-ha-manager
@@ -91,7 +92,7 @@ HA Manager PVE
 
 %package -n pve-qemu-server
 Summary: Qemu Server Tools
-Version: 5.0.15
+Version: 5.0.17
 Group: System/Servers
 Requires: socat pve-qemu-system >= 2.6.1-alt4
 Provides: qemu-server = %version-%release
@@ -102,7 +103,7 @@ This package contains the Qemu Server tools used by PVE
 
 %package -n pve-guest-common
 Summary: PVE common guest-related modules
-Version: 2.0.11
+Version: 2.0.13
 Group: System/Servers
 
 %description -n pve-guest-common
@@ -110,7 +111,7 @@ This package contains a common code base used by pve-container and qemu-server
 
 %package -n pve-http-server
 Summary: PVE Asynchrounous HTTP Server Implementation
-Version: 2.0.5
+Version: 2.0.6
 Group: System/Servers
 Requires: fonts-font-awesome
 
@@ -147,6 +148,7 @@ This is used to implement the PVE REST API
 %patch24 -p0 -b .postfix-3
 %patch25 -p0 -b .gettext
 %patch26 -p0 -b .watchdog
+%patch27 -p0 -b .pve_ceph_pools
 
 install -m0644 %SOURCE5 pve-manager/po/ru.po
 
@@ -229,7 +231,7 @@ __EOF__
 #systemd_unitdir/pvebanner.service
 #systemd_unitdir/pvenetcommit.service
 %systemd_unitdir/pvedaemon.service
-%systemd_unitdir/pve-manager.service
+%systemd_unitdir/pve-guests.service
 %systemd_unitdir/pveproxy.service
 %systemd_unitdir/pvestatd.service
 %systemd_unitdir/spiceproxy.service
@@ -324,6 +326,8 @@ __EOF__
 %files -n pve-container
 %_sysconfdir/bash_completion.d/pct
 %systemd_unitdir/lxc@.service.d
+%systemd_unitdir/pve-container@.service
+%systemd_unitdir/system-pve*container.slice
 %_sbindir/pct
 %_sbindir/pve-update-lxc-config
 %_datadir/lxc
@@ -424,6 +428,7 @@ __EOF__
 %perl_vendor_privlib/PVE/QemuServer/PCI.pm
 %perl_vendor_privlib/PVE/QemuServer/USB.pm
 %perl_vendor_privlib/PVE/QemuServer/ImportDisk.pm
+%perl_vendor_privlib/PVE/QemuServer/OVF.pm
 %_datadir/qemu-server
 %_localstatedir/qemu-server
 %_man1dir/qm.1*
@@ -444,6 +449,27 @@ __EOF__
 %_datadir/libpve-http-server-perl
 
 %changelog
+* Mon Oct 23 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.1.35-alt2
+- pve-manager 5.1-35
+
+* Mon Oct 23 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.34-alt1
+- pve-manager 5.0-34
+- pve-container 2.0-17
+- pve-firewall 3.0-3
+- pve-ha-manager 2.0-3
+- qemu-server 5.0-17
+- pve-guest-common 2.0-13
+- pve-http-server 2.0-6
+
+* Mon Sep 25 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.24-alt5.M80C.8
+- backport to c8 branch
+
+* Thu Sep 21 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.24-alt5.M80P.8
+- fixed creation osd in ceph 10
+
+* Tue Sep 19 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.24-alt4.M80P.8
+- backport to p8 branch
+
 * Tue Sep 19 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.24-alt8
 - pve-container 2.0-16
 

@@ -1,6 +1,6 @@
 Name: pve-docs
 Summary: PVE Documentation
-Version: 5.0.9
+Version: 5.0.10
 Release: alt1
 License: GPLv3
 Group: Documentation
@@ -58,6 +58,12 @@ install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screensho
 %_datadir/pve-doc-generator
 
 %changelog
+* Mon Oct 23 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.10-alt1
+- 5.0-10
+
+* Mon Sep 25 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.9-alt0.M80C.1
+- backport to c8 branch
+
 * Thu Jul 13 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.9-alt1
 - 5.0-9
 

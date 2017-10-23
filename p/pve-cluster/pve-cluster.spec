@@ -1,7 +1,7 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
-Version: 5.0.12
-Release: alt2
+Version: 5.0.15
+Release: alt1
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -31,7 +31,7 @@ on all nodes.
 
 %package -n pve-access-control
 Summary: PVE access control library
-Version: 5.0.5
+Version: 5.0.7
 Group: Development/Perl
 
 %description -n pve-access-control
@@ -143,6 +143,19 @@ fi
 %_man1dir/pveum.1*
 
 %changelog
+* Mon Oct 23 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.15-alt1
+- 5.0-15
+
+* Tue Oct 10 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.14-alt1
+- pve-cluster 5.0-14
+- pve-access-control 5.0-7
+
+* Mon Sep 25 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.12-alt0.M80C.1
+- backport to c8 branch
+
+* Fri Aug 04 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.12-alt1.M80P.1
+- backport to p8 branch
+
 * Fri Aug 04 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.12-alt2
 - replace requires openntpd to ntp-server
 
