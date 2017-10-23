@@ -2,9 +2,10 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global artifactId javax.servlet.jsp-api
 %global jspspec 2.2
 %global reltag b01
@@ -12,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:       glassfish-jsp-api
 Version:    2.3.2
-Release:    alt1_0.4.b01jpp8
+Release:    alt1_0.5.b01jpp8
 Summary:    Glassfish J2EE JSP API specification
 
 License:    (CDDL or GPLv2 with exceptions) and ASL 2.0
@@ -74,6 +75,9 @@ sed -i "/<bundle.symbolicName>/s/-api//" pom.xml
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_0.5.b01jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_0.4.b01jpp8
 - new fc release
 
