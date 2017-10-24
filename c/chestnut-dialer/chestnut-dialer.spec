@@ -4,13 +4,13 @@
 %define pamdir %_sysconfdir/pam.d
 %define consoleappsdir %_sysconfdir/security/console.apps
 
-%def_enable qt
+%def_disable qt
 %def_enable gtk2
 %def_with consolehelper
 
 Name: chestnut-dialer
 Version: 0.3.3
-Release: alt8.1.1
+Release: alt8.2
 
 Summary: A PPP dialing program, written in Python
 License: GPL
@@ -186,6 +186,9 @@ install -m 0644 chestnut-dialer-qt.desktop %buildroot%_datadir/applications/
 # - check ru.po
 
 %changelog
+* Thu Oct 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.3-alt8.2
+- Rebuilt without Qt-3.
+
 * Wed Oct 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.3-alt8.1.1
 - Rebuild with Python-2.7
 
