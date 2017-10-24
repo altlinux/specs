@@ -1,5 +1,5 @@
 Name: tzdata
-Version: 2017b
+Version: 2017c
 Release: alt1
 
 Summary: Timezone data
@@ -77,7 +77,7 @@ make -k check_tables
 %files
 %_sbindir/tzupdate
 %_datadir/zoneinfo
-%doc NEWS README Theory tz-link.html
+%doc NEWS README theory.html tz-link.html
 
 %if_with java
 %files java
@@ -85,6 +85,9 @@ make -k check_tables
 %endif #with java
 
 %changelog
+* Tue Oct 24 2017 Dmitry V. Levin <ldv@altlinux.org> 2017c-alt1
+- 2017b -> 2017c.
+
 * Fri Mar 17 2017 Dmitry V. Levin <ldv@altlinux.org> 2017b-alt1
 - 2017a -> 2017b.
 
