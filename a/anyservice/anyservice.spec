@@ -1,5 +1,5 @@
 Name: anyservice
-Version: 0.6
+Version: 0.7
 Release: alt1
 
 Summary: Anyservice - scripts for making systemd like service from any programs
@@ -16,7 +16,7 @@ Packager: Danil Mikhailov <danil@altlinux.org>
 BuildArch: noarch
 BuildPreReq: rpm-build-compat
 
-#Requires: eepm >= 1.9.0
+Requires: eepm >= 1.9.7
 
 %description
 Anyservice - scripts for making systemd like service from any programs
@@ -48,6 +48,10 @@ cp %name.sh %buildroot/%_bindir/%name
 %dir /var/log/%name/
 
 %changelog
+* Tue Oct 24 2017 Vitaly Lipatov <lav@altlinux.ru> 0.7-alt1
+- anyservice.sh: fix tabs
+- add sleep to fix restart issue (eterbug #11688)
+
 * Thu Oct 13 2016 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1
 - replace $MYMONIT with monit (add monit to requires)
 
