@@ -1,7 +1,7 @@
 %define _sover 6.1
 Name: libdb%_sover
 Version: %_sover.19
-Release: alt3
+Release: alt4
 %define srcname db-%version
 
 Summary: Berkeley database library
@@ -38,7 +38,6 @@ Source:  %srcname.tar.gz
 %{?_enable_tcl:BuildPreReq: tcl-devel >= 8.4.0-alt1}
 
 BuildRequires: libsocket-devel
-Provides: libdb6-devel = %version-%release
 
 %package -n db%_sover-utils
 Summary: Command line tools for managing Berkeley DB databases
@@ -403,6 +402,9 @@ done
 %endif
 
 %changelog
+* Tue Oct 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.19-alt4
+- Fixed provides.
+
 * Thu Aug 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.19-alt3
 - Rebuilt with gcc-6.
 
