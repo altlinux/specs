@@ -1,5 +1,5 @@
 Name: rust
-Version: 1.20.0
+Version: 1.21.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -25,6 +25,8 @@ Source6: liblibc.tar
 Source7: vendor.tar
 # Cloned from https://github.com/rust-lang-nursery/compiler-builtins
 Source8: libcompiler_builtins.tar
+# Cloned from https://github.com/rust-lang-nursery/rls
+Source9: rls.tar
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
@@ -48,10 +50,10 @@ Requires: %name = %version-%release
 %summary
 
 %prep
-%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8
+%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9
 mv vendor jemalloc libcompiler_builtins liblibc src
 mv hoedown src/rt
-mv rust-installer cargo src/tools
+mv rls rust-installer cargo src/tools
 mv compiler-rt src/libcompiler_builtins
 
 %build
@@ -110,6 +112,9 @@ DESTDIR=%buildroot ./x.py install
 %exclude %_libdir/rustlib/etc/lldb_*
 
 %changelog
+* Thu Oct 19 2017 Vladimir Lettiev <crux@altlinux.org> 1.21.0-alt1
+- 1.21.0
+
 * Fri Sep 08 2017 Vladimir Lettiev <crux@altlinux.org> 1.20.0-alt1
 - 1.20.0
 
