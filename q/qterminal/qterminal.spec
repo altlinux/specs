@@ -1,8 +1,8 @@
 Name: qterminal
-Version: 0.7.0
-Release: alt2
+Version: 0.8.0
+Release: alt1
 
-Summary: QT-based multitab terminal emulator
+Summary: Qt-based multitab terminal emulator
 License: GPL
 Group: Terminals
 
@@ -10,12 +10,12 @@ Url: http://github.com/qterminal/qterminal
 Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: gcc-c++ cmake git-core
-BuildRequires: qt5-base-devel qt5-tools-devel
-BuildRequires: libqtermwidget-qt5-devel >= %version
+BuildRequires: gcc-c++ cmake lxqt-build-tools
+BuildRequires: qt5-base-devel qt5-tools-devel qt5-x11extras-devel
+BuildRequires: libqtermwidget-devel >= %version
 
 %description
-QT-based multitab terminal emulator based on QTermWidget.
+Qt-based multitab terminal emulator based on QTermWidget.
 
 Initially this project was started as an attempt to create relatively
 light and stable terminal emulator application like Konsole or
@@ -39,7 +39,7 @@ at http://qterminal.sourceforge.net/
 %endif
 %cmake_insource \
 	-DUSE_QT5=true -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF \
-	-DUSE_SYSTEM_QXT=0 -DQTERMWIDGET_PATH_SHARE=%_datadir/qtermwidget5
+	-DQTERMWIDGET_PATH_SHARE=%_datadir/qtermwidget5
 %make_build
 
 %install
@@ -47,17 +47,16 @@ at http://qterminal.sourceforge.net/
 %find_lang %name
 
 %files -f %name.lang
-# NB: translations in lxqt-l10n
-%doc AUTHORS COPYING NEWS README
+%doc AUTHORS LICENSE CHANGELOG README*
 %_bindir/%name
-#_datadir/%name
 %_desktopdir/*.desktop
-%_pixmapsdir/%name.png
-
-# TODO:
-# - package system libqxt (lots of macros missing in rpm-macros-qt4)
+%_iconsdir/*/*/*/*
+%_datadir/appdata/*
 
 %changelog
+* Tue Oct 24 2017 Michael Shigorin <mike@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Fri Aug 25 2017 Michael Shigorin <mike@altlinux.org> 0.7.0-alt2
 - build against qt5/qtermwidget-qt5
 - E2K: add -std=c++11 explicitly

@@ -1,6 +1,6 @@
 Name: qtermwidget
-Version: 0.7.0
-Release: alt1
+Version: 0.8.0
+Release: alt2
 
 Summary: unicode-enabled, embeddable QT4 terminal widget
 License: GPL
@@ -12,15 +12,17 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Wed Mar 07 2012
 # optimized out: cmake-modules fontconfig libqt4-core libqt4-designer libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libstdc++-devel
-BuildRequires: cmake gcc-c++ phonon-devel qt5-base-devel git-core
+BuildRequires: cmake gcc-c++
+BuildRequires: qt5-base-devel qt5-tools-devel
+BuildRequires: lxqt-build-tools
 
 %description
-QTermWidget is an opensource project based on KDE4 Konsole
+QTermWidget is an opensource project based on KDE Konsole
 application. The main goal of this project is to provide
-unicode-enabled, embeddable QT4 widget for using as a built-in
+unicode-enabled, embeddable Qt5 widget for using as a built-in
 console (or terminal emulation widget).
 
-Of course I`m aware about embedding abilities of original
+Of course I'm aware about embedding abilities of original
 Konsole, but once I had Qt without KDE, and it was a serious
 problem.
 
@@ -28,42 +30,34 @@ problem.
 at http://qtermwidget.sourceforge.net/
 
 %package data
-Summary: unicode-enabled, embeddable QT4 terminal widget shared data
+Summary: unicode-enabled, embeddable Qt5 terminal widget shared data
 Group: Terminals
 BuildArch: noarch
+Conflicts: qtermwidget-qt5-data < 0.8.0
 
 %description data
-QTermWidget is an opensource project based on KDE4 Konsole
+QTermWidget is an opensource project based on KDE Konsole
 application. The main goal of this project is to provide
-unicode-enabled, embeddable QT4 widget for using as a built-in
+unicode-enabled, embeddable Qt5 widget for using as a built-in
 console (or terminal emulation widget).
 
 This package contains the shared data.
 
 %package -n lib%name
-Summary: unicode-enabled, embeddable QT4 terminal widget library
+Summary: unicode-enabled, embeddable Qt5 terminal widget library
 Group: System/Libraries
 Requires: %name-data = %version-%release
+Conflicts: libqtermwidget-qt5 < 0.8.0
 
 %description -n lib%name
-QTermWidget is an opensource project based on KDE4 Konsole
-application. The main goal of this project is to provide
-unicode-enabled, embeddable QT4 widget for using as a built-in
-console (or terminal emulation widget).
-
-This package contains the shared library.
+This package contains the shared library for %name.
 
 %package -n lib%name-devel
-Summary: unicode-enabled, embeddable QT4 terminal widget library
+Summary: unicode-enabled, embeddable Qt5 terminal widget library
 Group: Development/KDE and QT
 
 %description -n lib%name-devel
-QTermWidget is an opensource project based on KDE4 Konsole
-application. The main goal of this project is to provide
-unicode-enabled, embeddable QT4 widget for using as a built-in
-console (or terminal emulation widget).
-
-This package contains the development headers for the library.
+This package contains the development headers for %name library.
 
 %prep
 %setup
@@ -84,14 +78,23 @@ This package contains the development headers for the library.
 %_libdir/*.so.*
 
 %files -n lib%name-devel
-%doc AUTHORS COPYING README
+%doc AUTHORS LICENSE README*
 %_includedir/*
 %_libdir/*.so
-%_libdir/qt4/plugins/designer/lib%{name}*plugin.so
 %_pkgconfigdir/*.pc
 %_datadir/cmake/*/
 
+# TODO:
+# - P:/O: qtermwidget-qt5 after check
+# - build with libutf8proc (pkgconfig problem in 0.8.0 though)
+
 %changelog
+* Tue Oct 24 2017 Michael Shigorin <mike@altlinux.org> 0.8.0-alt2
+- added conflicts with qtermwidget-qt5 package
+
+* Tue Oct 24 2017 Michael Shigorin <mike@altlinux.org> 0.8.0-alt1
+- 0.8.0 built against Qt5
+
 * Tue Oct 04 2016 Michael Shigorin <mike@altlinux.org> 0.7.0-alt1
 - 0.7.0
 
