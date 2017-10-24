@@ -1,6 +1,6 @@
 Name: tzdata
 Version: 2017c
-Release: alt1
+Release: alt2
 
 Summary: Timezone data
 # tzdata itself is Public Domain, but tzupdate is GPLv2+,
@@ -38,6 +38,7 @@ This package contains timezone information for use by Java runtimes.
 
 %prep
 %setup -n %name-%version-%release
+xz -9k NEWS
 
 %build
 make CFLAGS='%optflags' TZDIR=%_datadir/zoneinfo
@@ -52,7 +53,7 @@ gij -jar %_datadir/java/javazic.jar -V %version -d zoneinfo/javazi \
 %endif #with java
 
 %install
-%makeinstall_std TZDIR=%_datadir/zoneinfo
+%makeinstall_std TZDIR=%_datadir/zoneinfo TZDATA_TEXT=
 mv %buildroot%_datadir/zoneinfo{-leaps,/right}
 rm %buildroot%_datadir/zoneinfo-posix
 mkdir %buildroot%_datadir/zoneinfo/posix
@@ -77,7 +78,7 @@ make -k check_tables
 %files
 %_sbindir/tzupdate
 %_datadir/zoneinfo
-%doc NEWS README theory.html tz-link.html
+%doc NEWS.xz README theory.html tz-link.html
 
 %if_with java
 %files java
@@ -85,6 +86,9 @@ make -k check_tables
 %endif #with java
 
 %changelog
+* Tue Oct 24 2017 Dmitry V. Levin <ldv@altlinux.org> 2017c-alt2
+- Unpackaged text data files tzdata.zi and leapseconds.
+
 * Tue Oct 24 2017 Dmitry V. Levin <ldv@altlinux.org> 2017c-alt1
 - 2017b -> 2017c.
 
