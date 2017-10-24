@@ -1,5 +1,5 @@
 Name: nginx-etersoft
-Version: 0.2.17
+Version: 0.2.18
 Release: alt1
 
 Summary: Additional Nginx templates and functions
@@ -63,6 +63,11 @@ install -m644 www/* %buildroot%webserver_htdocsdir/maintenance/
 %config(noreplace) %webserver_htdocsdir/maintenance/*
 
 %changelog
+* Tue Oct 24 2017 Vitaly Lipatov <lav@altlinux.ru> 0.2.18-alt1
+- separate locations by file types
+- add CORS wide-open rules
+- add CORS with http_referer
+
 * Thu Apr 20 2017 Vitaly Lipatov <lav@altlinux.ru> 0.2.17-alt1
 - letsencrypt: add allow all
 - ssl: improve comment
