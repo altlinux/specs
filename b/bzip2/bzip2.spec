@@ -1,6 +1,6 @@
 Name: bzip2
 Version: 1.0.6
-Release: alt4
+Release: alt5
 Epoch: 1
 
 Summary: Extremely powerful file compression utility
@@ -19,6 +19,7 @@ Patch4: bzip2-1.0.6-alt-owl-fopen.patch
 Patch5: bzip2-1.0.6-alt-const.patch
 Patch6: bzip2-1.0.6-alt-progname.patch
 Patch7: bzip2-1.0.6-flok-show-progress.patch
+Patch8: CVE-2016-3189.patch
 
 PreReq: bzlib = %epoch:%version-%release
 BuildPreReq: glibc-devel-static makeinfo
@@ -89,6 +90,7 @@ decompression library.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 find -type f -name \*.orig -delete
 chmod a+x *.sh
 install -pm644 %_sourcedir/bzip2.texi .
@@ -174,6 +176,9 @@ install -pm644 CHANGES LICENSE README *.html %buildroot%docdir/
 %docdir/*.html
 
 %changelog
+* Tue Oct 24 2017 Dmitry V. Levin <ldv@altlinux.org> 1:1.0.6-alt5
+- bzip2recover: fixed a use-after-free bug (by sem@; fixes: CVE-2016-3189).
+
 * Wed Dec 02 2015 Dmitry V. Levin <ldv@altlinux.org> 1:1.0.6-alt4
 - Regenerated texinfo documentation.
 
