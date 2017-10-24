@@ -1,7 +1,7 @@
 %define  pkgname coderay
 
 Name: 	 ruby-%pkgname
-Version: 1.1.1 
+Version: 1.1.2
 Release: alt1
 
 Summary: Fast and easy syntax highlighting for selected languages, written in Ruby
@@ -57,5 +57,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Sat Oct 21 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.2-alt1
+- new version 1.1.2
+
 * Wed May 17 2017 Gordeev Mikhail <obirvalger@altlinux.org> 1.1.1-alt1
 - Initial build in Sisyphus
