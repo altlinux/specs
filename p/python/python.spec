@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.11
-Release: alt4
+Release: alt6
 
 %define package_name		%real_name
 %define weight			1001
@@ -69,6 +69,9 @@ Patch22: python-2.6.6-alt-bdist_altrpm.patch
 Patch23: python-2.7.4-alt-linux2-platform.patch
 Patch24: python-2.7.10-python-config-ldflags-alt.patch
 Patch25: python-2.7.11-glibc-2.25-getentropy.patch
+
+Patch30: CVE-2016-0772.patch
+Patch31: CVE-2016-5636.patch
 
 # XXX ignore pydoc dependencies for now
 %add_findreq_skiplist %_bindir/pydoc*
@@ -666,6 +669,9 @@ rm -r Modules/expat
 %patch24 -p2
 %patch25 -p1
 
+%patch30 -p1
+%patch31 -p1
+
 # XXX temporary Issue20445 fix
 sed -i 's/val1 == nice(2)/val1 == nice(2)+2/' configure.ac
 
@@ -675,6 +681,8 @@ find -type f \( -name \*~ -o -name \*.orig \) -print0 |
 find -type f -print0 |
     xargs -r0 grep -FZl -- /usr/local/bin/python |
     xargs -r0 sed -i 's@/usr/local/bin/python@/usr/bin/python@' --
+
+xz -9k Misc/{HISTORY,NEWS,cheatsheet}
 
 %build
 rm -rf ../build-static
@@ -919,7 +927,7 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %dir %python_sitelibdir
 %dir %python_tooldir
 %doc LICENSE
-%doc Misc/{HISTORY,NEWS,cheatsheet}
+%doc Misc/{HISTORY,NEWS,cheatsheet}.xz
 %if "lib" != "%_lib"
 %prefix/lib/%python_name
 %endif
@@ -1097,6 +1105,13 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Tue Oct 24 2017 Dmitry V. Levin <ldv@altlinux.org> 2.7.11-alt6
+- python-base: compressed documentation files.
+
+* Wed Sep 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.7.11-alt5
+- libpython, python-modules: backported upstream fixes
+  (Fixes: CVE-2016-0772, CVE-2016-5636)
+
 * Tue Apr 11 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7.11-alt4
 - Fixed 'random' module regression caused by glibc >= 2.25 (closes: #33355).
 
