@@ -1,6 +1,6 @@
 Name: ncurses
 Version: 5.9
-Release: alt9
+Release: alt10
 
 %define rootdatadir /lib
 
@@ -300,6 +300,7 @@ sed -i 's/EXTRA_LIBS="-ldl -lncurses $EXTRA_LIBS"/EXTRA_LIBS="$EXTRA_LIBS"/
 s/SHLIB_LIST="-ldl $SHLIB_LIST"/SHLIB_LIST="-lgpm $SHLIB_LIST"/
 s/TINFO_LIST="$SHLIB_LIST"/TINFO_LIST=/' ./configure
 
+xz -9k NEWS
 
 %build
 %remove_optflags %optflags_notraceback %optflags_nocpp
@@ -524,7 +525,7 @@ find %buildroot%_datadir/terminfo -type f -mindepth 2 |
 # Prepare docs.
 rm -rf %buildroot%_docdir/%name-%version
 mkdir -p %buildroot%_docdir/%name-%version
-install -pm644 ANNOUNCE NEWS README TO-DO \
+install -pm644 ANNOUNCE NEWS.xz README TO-DO \
 	c++/demo.cc doc/*.doc doc/html/*.html \
 	%buildroot%_docdir/%name-%version/
 install -pm644 c++/README-first \
@@ -673,6 +674,9 @@ done
 %endif # with_utf8
 
 %changelog
+* Tue Oct 24 2017 Dmitry V. Levin <ldv@altlinux.org> 5.9-alt10
+- libncurses: compressed NEWS file.
+
 * Tue Sep 12 2017 Fr. Br. George <george@altlinux.ru> 5.9-alt9
 - Remove circular buildreqs
 
