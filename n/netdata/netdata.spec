@@ -1,8 +1,8 @@
 # Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
-%define release_commit 4016e2d9e3c2fcf5f6d59827bf5f81083d6645ba
+%define release_commit 89ed309252981ddd50f697fde4fe93019cb3e652
 
 Name: netdata
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: Real-time performance monitoring, done right!
@@ -50,6 +50,7 @@ happened, on your systems and applications.
 %package postgres
 Summary: PostgreSQL module for %name
 Group: Development/Python
+Requires: %name = %EVR
 
 %description postgres
 PostgreSQL module for %name.
@@ -137,6 +138,9 @@ getent passwd netdata > /dev/null || useradd -r -g netdata -c netdata -s /sbin/n
 %_libexecdir/%name/python.d/postgres.chart.py
 
 %changelog
+* Tue Oct 24 2017 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
+- new version 1.8.0 (with rpmrb script)
+
 * Thu Jul 27 2017 Vitaly Lipatov <lav@altlinux.ru> 1.7.0-alt1
 - new version (1.7.0) with rpmgs script
 
