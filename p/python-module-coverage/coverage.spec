@@ -4,36 +4,31 @@
 %def_with doc
 
 Name: python-module-%oname
-Version: 4.0
-Release: alt1.a7.git20150730.1.3
+Version: 4.4.1
+Release: alt1
 Summary: A tool for measuring code coverage of Python programs
-License: BSD
+License: Apache-2.0
 Group: Development/Python
 Url: http://nedbatchelder.com/code/coverage/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # hg clone http://bitbucket.org/ned/coveragepy
-Source: %oname-%version.tar.gz
+# https://github.com/nedbat/coveragepy.git
+Source: %oname-%version.tar
+Patch1: %oname-%version-alt-build-docs.patch
 
-BuildRequires(pre): rpm-build-python
-#BuildPreReq: python-devel python-module-sphinx python-module-Pygments
-#BuildPreReq: python-module-enchant libenchant
-#BuildPreReq: python-module-sphinxcontrib-napoleon
-#BuildPreReq: python-module-sphinxcontrib-spelling
-
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: bzr elfutils python-base python-devel python-module-Paver python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-docutils python-module-enchant python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mimeparse python-module-pbr python-module-pyasn1 python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-sphinxcontrib python-module-twisted-core python-module-unittest2 python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base
-BuildRequires: time
-
+BuildRequires: python-devel python-module-setuptools
 %if_with doc
 BuildRequires: libenchant python-module-alabaster python-module-html5lib python-module-sphinxcontrib-napoleon python-module-sphinxcontrib-spelling
-%else
-BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-sphinx_rtd_theme
 %endif
 
 %if_with python3
-BuildRequires: python3-devel python3-module-setuptools rpm-build-python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
 %endif
+
+%add_findreq_skiplist /usr/lib*/python2.7/site-packages/%oname/lab/genpy.py
+%add_python_req_skip lnotab
 
 %description
 Coverage.py is a tool for measuring code coverage of Python programs. It
@@ -76,8 +71,6 @@ This package contains pickles for Coverage.py.
 %package -n python3-module-%oname
 Summary: A tool for measuring code coverage of Python3 programs
 Group: Development/Python3
-BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-distribute
 
 %description -n python3-module-%oname
 Coverage.py is a tool for measuring code coverage of Python programs. It
@@ -92,8 +85,9 @@ by tests, and which are not.
 
 %prep
 %setup
+%patch1 -p1
+
 %if_with python3
-rm -rf ../python3
 cp -a . ../python3
 %endif
 
@@ -109,7 +103,7 @@ export PYTHONPATH=$PWD
 
 %if_with python3
 pushd ../python3
-%python3_build
+%python3_build_debug
 popd
 %endif
 
@@ -133,8 +127,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %files
-%doc CHANGES.txt README.txt TODO.txt
-%python_sitelibdir/*
+%doc CHANGES.rst README.rst TODO.txt
+%python_sitelibdir/%oname
+%python_sitelibdir/%oname-%version-py*.egg-info
 %if_with doc
 %exclude %python_sitelibdir/%oname/pickle
 %endif
@@ -156,11 +151,14 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %files -n python3-module-%oname
 %_bindir/coverage3
 %_bindir/coverage-%_python3_version
-%python3_sitelibdir/*.egg-info
 %python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py*.egg-info
 %endif
 
 %changelog
+* Mon Oct 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.1-alt1
+- Updated to upstream version 4.4.1.
+
 * Mon Jan 02 2017 Michael Shigorin <mike@altlinux.org> 4.0-alt1.a7.git20150730.1.3
 - BOOTSTRAP:
   + made python3 knob *really* work

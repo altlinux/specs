@@ -5,15 +5,16 @@
 
 Name: python-module-%oname
 Version: 2.9.1
-Release: alt1
+Release: alt2
 Summary: Python interface to coveralls.io API
 License: ASLv2.0
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/python-coveralls/
 
 # https://github.com/z4r/python-coveralls.git
 Source: %name-%version.tar
-BuildArch: noarch
+Patch1: %oname-%version-alt-build.patch
 
 BuildRequires: python-module-pytest-cov python-module-pytest-pep8 python-module-setuptools-tests python-module-sh
 BuildRequires: python-module-yaml
@@ -74,6 +75,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -136,6 +138,9 @@ popd
 %endif
 
 %changelog
+* Tue Oct 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.9.1-alt2
+- Fixed build with new setuptools.
+
 * Thu Aug 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.9.1-alt1
 - Updated to upstream release 2.9.1.
 
