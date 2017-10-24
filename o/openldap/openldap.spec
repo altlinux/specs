@@ -18,7 +18,7 @@
 
 Name: openldap
 Version: %_sover.45
-Release: alt1
+Release: alt2
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -26,6 +26,7 @@ Obsoletes: openldap2.4 < %version-%release
 %define so_maj %_sover
 %define ldap_ssl_dir %_sysconfdir/%name/ssl
 %define ssl_dir %_localstatedir/ssl/certs
+%define ldap_dir %_localstatedir/ldap
 
 Summary: LDAP libraries and sample clients
 License: OpenLDAP Public License
@@ -69,8 +70,7 @@ Source60: %_bname-aacls-patch-1.6a.tgz
 %endif
 
 ### PATCHES
-## This path for chrooting ldap
-Patch1: %_bname-2.3.12-alt-servers-path.patch
+Patch1: %_bname-alt-defaults.patch
 
 ## Patch created by Alexander Bokovoy <ab@altlinux.ru>
 Patch2: %_bname-2.3.34-alt-pid.patch
@@ -78,7 +78,6 @@ Patch3: %_bname-2.3.12-autoconf-2.5-alt.patch
 
 Patch4: %_bname-2.3.20-alt-makefile.patch
 Patch5: %_bname-2.3.20-alt-ldapconf.patch
-Patch6: %_bname-2.3.34-alt-defaults.patch
 
 Patch7: %_bname-2.3.34-alt-meta-backend.patch
 
@@ -257,7 +256,6 @@ HTML and TXT versions
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 #%%patch7 -p1
 
 %if_enabled ntlm
@@ -428,24 +426,24 @@ popd
 ###
 
 # Create the /var/lib data directory and chroot enviroment.
-%__mkdir_p -m750 %buildroot/%_localstatedir/ldap
-#__mkdir_p -m750 %buildroot/%_localstatedir/ldap/bases
-%__mkdir_p -m770 %buildroot/%_localstatedir/ldap/dblogs
-#__mkdir_p -m750 %buildroot/%_localstatedir/ldap/replica
-%__mkdir_p -m755 %buildroot/%_localstatedir/ldap/dev
-%__mkdir_p -m750 %buildroot/%_localstatedir/ldap/%_sysconfdir/ssl
-%__mkdir_p -m750 %buildroot/%_localstatedir/ldap/%_sysconfdir/schema
-%__ln_s . %buildroot/%_localstatedir/ldap/%_sysconfdir/%_bname
-%__mkdir_p -m775 %buildroot/%_localstatedir/ldap/lib
-%__ln_s lib %buildroot/%_localstatedir/ldap/lib64
-%__mkdir_p -m755 %buildroot/%_localstatedir/ldap/usr/lib/%_bname
-%__mkdir_p -m755 %buildroot/%_localstatedir/ldap/usr/lib/sasl2
-%__ln_s lib %buildroot/%_localstatedir/ldap/usr/lib64
-%__mkdir_p -m775 %buildroot/%_localstatedir/ldap/var/run
-%__mkdir_p -m775 %buildroot/%_localstatedir/ldap/%_localstatedir/ldap
-%__ln_s ../../../bases %buildroot/%_localstatedir/ldap/%_localstatedir/ldap/
-%__ln_s ../../../dblogs %buildroot/%_localstatedir/ldap/%_localstatedir/ldap/
-mksock %buildroot%_localstatedir/ldap/dev/log
+%__mkdir_p -m750 %buildroot%ldap_dir
+#__mkdir_p -m750 %buildroot%ldap_dir/bases
+%__mkdir_p -m770 %buildroot%ldap_dir/dblogs
+#__mkdir_p -m750 %buildroot%ldap_dir/replica
+%__mkdir_p -m755 %buildroot%ldap_dir/dev
+%__mkdir_p -m750 %buildroot%ldap_dir/%_sysconfdir/ssl
+%__mkdir_p -m750 %buildroot%ldap_dir/%_sysconfdir/schema
+%__ln_s . %buildroot%ldap_dir/%_sysconfdir/%_bname
+%__mkdir_p -m775 %buildroot%ldap_dir/lib
+%__ln_s lib %buildroot%ldap_dir/lib64
+%__mkdir_p -m755 %buildroot%ldap_dir/usr/lib/%_bname
+%__mkdir_p -m755 %buildroot%ldap_dir/usr/lib/sasl2
+%__ln_s lib %buildroot%ldap_dir/usr/lib64
+%__mkdir_p -m775 %buildroot%ldap_dir/var/run
+%__mkdir_p -m775 %buildroot%ldap_dir%ldap_dir
+%__ln_s ../../../bases %buildroot%ldap_dir%ldap_dir/
+%__ln_s ../../../dblogs %buildroot%ldap_dir%ldap_dir/
+mksock %buildroot%ldap_dir/dev/log
 
 # Install init scripts.
 %__install -pD -m644 %SOURCE11 %buildroot/%_sysconfdir/sysconfig/ldap
@@ -462,13 +460,13 @@ mksock %buildroot%_localstatedir/ldap/dev/log
 
 # syslog.d
 mkdir -pm700 %buildroot%_sysconfdir/syslog.d
-ln -s %_localstatedir/ldap/dev/log %buildroot%_sysconfdir/syslog.d/ldap
+ln -s %ldap_dir/dev/log %buildroot%_sysconfdir/syslog.d/ldap
 
 
 # config files
 %__mkdir_p -m750 %buildroot/%_sysconfdir/%_bname/ssl
 %__install -pD -m640 %SOURCE18 %buildroot/%_sysconfdir/%_bname/slapd.conf
-%__install -pD -m640 %SOURCE19 %buildroot/%_localstatedir/ldap/bases/DB_CONFIG
+%__install -pD -m640 %SOURCE19 %buildroot%ldap_dir/bases/DB_CONFIG
 %__install -pD -m640 %SOURCE20 %buildroot/%_sysconfdir/%_bname/slapd-access.conf
 %__install -pD -m640 %SOURCE21 %buildroot/%_sysconfdir/%_bname/slapd-hdb-db01.conf
 %__install -pD -m640 %SOURCE22 %buildroot/%_sysconfdir/%_bname/slapd-hdb-db02.conf
@@ -480,7 +478,7 @@ ln -s %_localstatedir/ldap/dev/log %buildroot%_sysconfdir/syslog.d/ldap
 	%buildroot/%_docdir/%_bname-servers-%version/default/
 %__mv %buildroot/%_sysconfdir/%_bname/*.example \
 	%buildroot/%_docdir/%_bname-servers-%version/
-rm -f %buildroot/%_localstatedir/ldap/bases/*.example
+rm -f %buildroot%ldap_dir/bases/*.example
 
 # Documentations for servers
 %__mkdir_p %buildroot/%_docdir/%_bname-servers-%version/{back-{null,perl,sql},schema,slapi,overlays}/
@@ -559,10 +557,7 @@ done
 %pre servers
 # Take care to only do ownership-changing if we're adding the user.
 /usr/sbin/groupadd -rf ldap
-/usr/sbin/useradd  -rM -c "LDAP User" -g ldap -u 55 -s /dev/null -d %_localstatedir/ldap ldap &>/dev/null
-if [ -d %_localstatedir/ldap/bases ]; then
-	chown -R ldap:ldap %_localstatedir/ldap/bases
-fi
+/usr/sbin/useradd  -rM -c "LDAP User" -g ldap -u 55 -s /dev/null -d %ldap_dir ldap &>/dev/null
 if [ -d "$ldap_ssl_dir" -a ! -L "$ldap_ssl_dir" ]; then
 	echo "Your certificates are moved to $ldap_ssl_dir.rpmsave, please CHECK!"
 	%__mv "$ldap_ssl_dir" "$ldap_ssl_dir".rpmsave
@@ -649,17 +644,17 @@ rm -f /var/lib/ldap/%_lib/*.so*
 %doc %_docdir/%_bname-servers-%version
 #attr(0775,root,ldap) %dir %_logdir/ldap
 
-%attr(0750,root,ldap) %dir %_localstatedir/ldap
-%attr(1770,root,ldap) %dir %_localstatedir/ldap/bases
-%attr(0640,root,ldap) %_localstatedir/ldap/bases/DB_CONFIG
-%attr(1770,root,ldap) %_localstatedir/ldap/dblogs
-%attr(0775,root,ldap) %_localstatedir/ldap/dev
-%attr(0755,root,ldap) %_localstatedir/ldap/etc
-%attr(0750,root,ldap) %_localstatedir/ldap/lib
-%_localstatedir/ldap/lib64
-%_localstatedir/ldap/usr
-%_localstatedir/ldap/var
-%attr(0775,root,ldap) %dir %_localstatedir/ldap/var/run
+%attr(0750,root,ldap) %dir %ldap_dir
+%attr(1770,root,ldap) %dir %ldap_dir/bases
+%attr(0640,root,ldap) %ldap_dir/bases/DB_CONFIG
+%attr(1770,root,ldap) %ldap_dir/dblogs
+%attr(0775,root,ldap) %ldap_dir/dev
+%attr(0755,root,ldap) %ldap_dir/etc
+%attr(0750,root,ldap) %ldap_dir/lib
+%ldap_dir/lib64
+%ldap_dir/usr
+%ldap_dir/var
+%attr(0775,root,ldap) %dir %ldap_dir/var/run
 
 ##### CLIENTS
 %files clients
@@ -702,6 +697,11 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Tue Oct 24 2017 Dmitry V. Levin <ldv@altlinux.org> 2.4.45-alt2
+- slapd:
+  + dropped bogus chown from %%pre script;
+  + fixed ldapi:/// (closes: #34023).
+
 * Mon Sep 11 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.4.45-alt1
 - updated to 2.4.45 (Fixes: CVE-2017-9287)
 
