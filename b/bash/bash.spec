@@ -2,7 +2,7 @@ Name: bash
 %define bash_version 3.2
 %define bash_patchlevel 57
 Version: %bash_version.%bash_patchlevel
-Release: alt1
+Release: alt3
 
 Summary: The GNU Bourne Again SHell (Bash)
 Group: Shells
@@ -245,8 +245,8 @@ install -p -m644 \
 install -p -m644 doc/*.html %buildroot%docdir/html/
 install -p -m644 doc/*.ps %buildroot%docdir/ps/
 install -p -m644 doc/*.txt %buildroot%docdir/txt/
-find %buildroot%docdir/{[A-Z],{ps,txt}/}* -type f -size +8k -print0 |
-	xargs -r0 bzip2 -9 --
+find %buildroot%docdir/{[A-Z],{ps,txt}/}* -type f -size +4k -print0 |
+	xargs -r0 xz -9 --
 cp -a examples %buildroot%docdir/
 find %buildroot%docdir/examples/ -type f -name 'Makefile*' -delete -print
 
@@ -291,6 +291,14 @@ EOF
 %_includedir/*
 
 %changelog
+* Tue Oct 24 2017 Dmitry V. Levin <ldv@altlinux.org> 3.2.57-alt3
+- Changed compression method applied to documentation files
+  from bzip2 to xz.
+
+* Wed Sep 20 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 3.2.57-alt2
+- Applied upstream patch that drops inheritance of PS4 environment
+  variable for root (by glebfm@; fixes CVE-2016-7543).
+
 * Thu Dec 10 2015 Dmitry V. Levin <ldv@altlinux.org> 3.2.57-alt1
 - Updated to 3.2 patchlevel 57.
 
