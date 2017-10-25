@@ -2,7 +2,6 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # fedora bcond_with macro
@@ -11,8 +10,9 @@ BuildRequires: jpackage-generic-compat
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name springframework-amqp
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.3.9
 %global namedreltag .RELEASE
 %global namedversion %{version}%{?namedreltag}
@@ -24,7 +24,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          springframework-amqp
 Version:       1.3.9
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Support for Spring programming model with AMQP
 License:       ASL 2.0
 URL:           http://projects.spring.io/spring-amqp/
@@ -197,6 +197,9 @@ opts="-f"
 %doc src/dist/apache-license.txt src/dist/notice.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.9-alt1_6jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.9-alt1_5jpp8
 - new fc release
 
