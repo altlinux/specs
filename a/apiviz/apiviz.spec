@@ -2,19 +2,19 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 24
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name apiviz
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.3.2
 %global namedreltag .GA
 %global namedversion %{version}%{?namedreltag}
 
 Name:             apiviz
 Version:          1.3.2
-Release:          alt1_10jpp8
+Release:          alt1_13jpp8
 Summary:          APIviz is a JavaDoc doclet to generate class and package diagrams
 Group:            Development/Other
 License:          LGPLv2+
@@ -22,10 +22,11 @@ URL:              http://code.google.com/p/apiviz/
 Source0:          http://apiviz.googlecode.com/files/apiviz-%{namedversion}-dist.tar.gz
 Patch0:           0001-JDK7-compatibility.patch
 Patch1:           0002-JDK8-compatibility.patch
+Patch2:           0003-fix-deprecated-assembly-goal.patch
 
 BuildArch:        noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 BuildRequires:    maven-antrun-plugin
 BuildRequires:    maven-compiler-plugin
@@ -38,6 +39,7 @@ BuildRequires:    maven-enforcer-plugin
 BuildRequires:    maven-surefire-plugin
 BuildRequires:    maven-surefire-provider-junit
 BuildRequires:    maven-plugin-jxr
+BuildRequires:    jboss-parent
 BuildRequires:    jdepend
 BuildRequires:    ant-contrib
 BuildRequires:    junit
@@ -64,6 +66,10 @@ This package contains the API documentation for %{name}.
 %patch1 -p1
 %endif
 
+%if 0%{?fedora} >= 26
+%patch2 -p0
+%endif
+
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 
@@ -88,6 +94,9 @@ find -name '*.jar' -exec rm -f '{}' \;
 %doc LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt1_13jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt1_10jpp8
 - new fc release
 
