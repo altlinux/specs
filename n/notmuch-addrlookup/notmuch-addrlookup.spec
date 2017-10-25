@@ -1,6 +1,6 @@
 Name: notmuch-addrlookup
-Version: 7
-Release: alt1
+Version: 8
+Release: alt2
 
 Summary: Notmuch Address Lookup tool
 
@@ -11,6 +11,7 @@ Url: https://github.com/aperezdc/notmuch-addrlookup-c
 Packager: Evgenii Terechkov <evg@altlinux.org>
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: glib2-devel libnotmuch-devel
 
@@ -27,6 +28,8 @@ Emacs interface.
 
 %prep
 %setup
+%patch -p1
+
 %build
 export CFLAGS="%optflags"
 export CXXFLAGS="%optflags"
@@ -40,6 +43,12 @@ install -p -D -m 755 %name %buildroot%_bindir/%name
 %doc README.md CHANGELOG.md
 
 %changelog
+* Wed Oct 25 2017 Terechkov Evgenii <evg@altlinux.org> 8-alt2
+- v8-5-g99b4315
+
+* Tue Aug 22 2017 Terechkov Evgenii <evg@altlinux.org> 8-alt1
+- v8-4-g88f156d
+
 * Tue Jul 19 2016 Terechkov Evgenii <evg@altlinux.org> 7-alt1
 - 7
 
