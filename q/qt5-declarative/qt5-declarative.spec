@@ -4,7 +4,7 @@
 
 Name: qt5-declarative
 Version: 5.9.2
-Release: alt2%ubt
+Release: alt3%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
@@ -12,14 +12,23 @@ Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
+Source1: qml
+Source2: qml.env
+Source3: find-provides.sh
+Source4: find-requires.sh
 # FC
 Patch10: qtdeclarative-opensource-src-5.9.0-no_sse2.patch
 Patch11: qtdeclarative-QQuickShaderEffectSource_deadlock.patch
 Patch12: qtdeclarative-kdebug346118.patch
 Patch13: Do-not-make-lack-of-SSE2-support-on-x86-32-fatal.patch
 
+%include %SOURCE1
+%qml_req_skipall 0
+%qml_add_req_nover Qt.test.qtestroot
+%define __find_provides %SOURCE3
+%define __find_requires %SOURCE4
+
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: rpm-build-qml
 BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-xmlpatterns-devel
 %if_disabled bootstrap
 BuildRequires: qt5-tools
@@ -27,6 +36,7 @@ BuildRequires: qt5-tools
 
 %description
 %summary
+
 
 %package common
 Summary: Common package for %name
@@ -85,6 +95,7 @@ Requires: %name-common = %EVR
 %package -n libqt5-quicktest
 Group: System/Libraries
 Summary: Qt5 - library
+Provides: qml(Qt.test.qtestroot)
 Requires: %name-common = %EVR
 %description -n libqt5-quicktest
 %summary
@@ -96,7 +107,15 @@ Requires: %name-common = %EVR
 %description -n libqt5-quickwidgets
 %summary
 
+%package -n rpm-build-qml
+Group: Development/Other
+Summary: RPM helper macros to rebuild QML packages
+%description -n rpm-build-qml
+These helper macros provide possibility to rebuild
+QML modules by some Alt Linux Team Policy compatible way.
+
 %prep
+%include %SOURCE2
 %setup -n %qt_module-opensource-src-%version
 %patch10 -p1
 %patch11 -p1
@@ -112,6 +131,13 @@ export QT_HASH_SEED=0
 %make docs
 %endif
 
+#build rpm-build-qml
+export BUILDFLAGS="-I../../include/QtQml/%version -I../../include/QtQml/%version/QtQml -I../../include/QtQml"
+cp -r .gear/rpm-build-qml src/rpm-build-qml
+pushd src/rpm-build-qml
+%qmake_qt5 rpmbqml-qmlinfo.pro
+%make_build
+popd
 
 %install
 %install_qt5
@@ -119,6 +145,19 @@ export QT_HASH_SEED=0
 %make INSTALL_ROOT=%buildroot install_docs ||:
 %endif
 
+#install rpm-build-qml
+pushd src/rpm-build-qml
+install -pD -m755 rpmbqml-qmlinfo %buildroot%_bindir/rpmbqml-qmlinfo
+install -pD -m755 rpmbqml-prov-enum.pl %buildroot%_bindir/rpmbqml-prov-enum.pl
+install -pD -m755 qml.prov %buildroot%_rpmlibdir/qml.prov
+install -pD -m755 qml.prov.files %buildroot%_rpmlibdir/qml.prov.files
+install -pD -m755 qml.req %buildroot%_rpmlibdir/qml.req
+install -pD -m755 qml.req.files %buildroot%_rpmlibdir/qml.req.files
+popd
+
+mkdir -p %buildroot%_rpmmacrosdir/
+cat %SOURCE1 | sed 's|define[[:space:]][[:space:]]*||' >> %buildroot%_rpmmacrosdir/qml
+cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 
 %files common
 %doc LICENSE.*EXCEPT*
@@ -189,7 +228,21 @@ export QT_HASH_SEED=0
 %_qt5_libdir/libQt?QmlDebug.a
 %_qt5_libdatadir/libQt?QmlDebug.a
 
+%files -n rpm-build-qml
+%doc src/rpm-build-qml/LICENSE
+%_rpmmacrosdir/qml
+%_rpmmacrosdir/qml.env
+%_rpmlibdir/qml.req
+%_rpmlibdir/qml.req.files
+%_rpmlibdir/qml.prov
+%_rpmlibdir/qml.prov.files
+%_bindir/rpmbqml-prov-enum.pl
+%_bindir/rpmbqml-qmlinfo
+
 %changelog
+* Wed Oct 25 2017 Oleg Solovyov <mcpain@altlinux.org> 5.9.2-alt3%ubt
+- add rpm-build-qml package
+
 * Mon Oct 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt2%ubt
 - build docs
 
