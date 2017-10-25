@@ -8,12 +8,12 @@ BuildRequires: libgtk+2-gir-devel libgtk+3-gir-devel libpolkit-gir-devel
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-polkit
-%define version 1.18.1
+%define version 1.19.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.18
+%global branch 1.19
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 8e0c8e17e0138afa7757a1bdf8edd6f2c7b47a14}
@@ -24,11 +24,11 @@ BuildRequires: libgtk+2-gir-devel libgtk+3-gir-devel libpolkit-gir-devel
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:		mate-polkit
-Version:    %{branch}.1
+Version:    %{branch}.0
 %if 0%{?rel_build}
-Release:	alt1_3
+Release:	alt1_1
 %else
-Release:    alt1_3
+Release:    alt1_1
 %endif
 Summary:	Integrates polkit authentication for MATE desktop
 License:	LGPLv2+
@@ -112,6 +112,9 @@ find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 
 
 %changelog
+* Wed Oct 25 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
+- new fc release
+
 * Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.1-alt1_3
 - new fc release
 
