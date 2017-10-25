@@ -3,15 +3,16 @@ Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global jarname commons-jexl
 %global compatver 2.1.0
 
 Name:           apache-%{jarname}
 Version:        2.1.1
-Release:        alt2_16jpp8
+Release:        alt2_18jpp8
 Summary:        Java Expression Language (JEXL)
 License:        ASL 2.0
 URL:            http://commons.apache.org/jexl
@@ -23,6 +24,7 @@ Source0:        http://www.apache.org/dist/commons/jexl/source/%{jarname}-%{vers
 Patch0:         001-Fix-tests.patch
 # Fix javadoc build
 Patch1:         apache-commons-jexl-javadoc.patch
+Patch2:         0001-Port-to-current-javacc.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-logging:commons-logging)
@@ -49,8 +51,8 @@ needed Velocity-ish method access, it just had to have it.
 
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
 Requires:       jpackage-utils
 Provides:       %{jarname}-javadoc = %{version}-%{release}
 BuildArch: noarch
@@ -63,6 +65,8 @@ This package contains the API documentation for %{name}.
 %setup -q -n %{jarname}-%{version}-src
 %patch0 -p1 -b .test
 %patch1 -p1 -b .javadoc
+%patch2 -p1
+
 # Java 1.6 contains bsf 3.0, so we don't need the dependency in the pom.xml file
 %pom_remove_dep org.apache.bsf:bsf-api
 find \( -name '*.jar' -o -name '*.class' \) -delete
@@ -103,6 +107,9 @@ echo "
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_18jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_16jpp8
 - new fc release
 
