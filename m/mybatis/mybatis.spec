@@ -2,7 +2,6 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # fedora bcond_with macro
@@ -11,6 +10,8 @@ BuildRequires: jpackage-generic-compat
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Started: Wed, 06 Jul 2016 13:50:35 UTC
 # Terminated: Thu, 07 Jul 2016 06:37:46 UTC
 #def_with test
@@ -18,7 +19,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          mybatis
 Version:       3.2.8
-Release:       alt1_5jpp8
+Release:       alt1_7jpp8
 Summary:       SQL Mapping Framework for Java
 License:       ASL 2.0
 # http://code.google.com/p/mybatis/
@@ -27,6 +28,8 @@ Source0:       https://github.com/mybatis/mybatis-3/archive/%{name}-%{version}.t
 # thanks to jhernand
 # replace ognl ognl with apache-commons-ognl
 Patch0:        %{name}-%{version}-commons-ognl.patch
+
+Patch1:        mybatis-3.2.8-log4j2.6.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(cglib:cglib)
@@ -90,6 +93,8 @@ This package contains javadoc for %{name}.
 %setup -q -n %{name}-3-%{name}-%{version}
 
 %patch0 -p1
+%patch1 -p1
+
 %pom_remove_plugin :maven-pdf-plugin
 %pom_remove_plugin :jarjar-maven-plugin
 %pom_remove_plugin :cobertura-maven-plugin
@@ -131,6 +136,9 @@ opts="-f"
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_7jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_5jpp8
 - new fc release
 
