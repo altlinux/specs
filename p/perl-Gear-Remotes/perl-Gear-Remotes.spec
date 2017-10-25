@@ -1,7 +1,7 @@
 %define module Gear-Remotes
 
 Name: perl-%module
-Version: 0.012
+Version: 0.013
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -55,6 +55,9 @@ Requires: gear-uupdate
 %_bindir/*
 
 %changelog
+* Wed Oct 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1
+- gear-remotes-save now git add .gear/upstream/remotes
+
 * Wed Feb 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.012-alt1
 - bugfix release
 
