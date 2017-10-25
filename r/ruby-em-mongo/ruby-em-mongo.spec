@@ -1,7 +1,7 @@
 %define  pkgname em-mongo
 
 Name: 	 ruby-%pkgname
-Version: 0.5.0 
+Version: 0.5.1
 Release: alt1
 
 Summary: EventMachine MongoDB Driver (based off of RMongo)
@@ -56,5 +56,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Oct 25 2017 Andrey Cherepanov <cas@altlinux.org> 0.5.1-alt1
+- New version
+
 * Wed Oct 18 2017 Andrey Cherepanov <cas@altlinux.org> 0.5.0-alt1
 - Initial build for Sisyphus
