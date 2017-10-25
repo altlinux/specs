@@ -6,7 +6,7 @@
 
 Name: gnustep-%oname
 Version: 1.7.0
-Release: alt11.svn20140704
+Release: alt12.svn20140704
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
@@ -108,7 +108,7 @@ cmake \
 	-DCMAKE_ASM_COMPILER:FILEPATH='%_bindir/cc' \
 	-DCMAKE_C_COMPILER:FILEPATH='%_bindir/cc' \
 	-DCMAKE_CXX_COMPILER:FILEPATH='%_bindir/g++' \
-	-DLLVM_DIR:PATH='%_datadir/CMake/Modules' \
+	-DLLVM_DIR:PATH='%_datadir/cmake/Modules' \
 	-DCMAKE_STRIP:FILEPATH='/bin/echo' \
 	-DCPACK_STRIP_FILES:BOOL=OFF \
 	-DCXX_RUNTIME:FILEPATH='-lpthread -lstdc++' \
@@ -177,6 +177,9 @@ ln -s objc2 %buildroot%_includedir/objc
 %endif
 
 %changelog
+* Wed Oct 25 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt12.svn20140704
+- NMU: changed cmake modules location
+
 * Mon Jan 11 2016 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt11.svn20140704
 - Build with gcc
 - Do not package -opts subpackages
