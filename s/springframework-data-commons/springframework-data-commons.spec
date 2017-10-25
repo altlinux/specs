@@ -2,11 +2,11 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name springframework-data-commons
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.8.4
 %global namedreltag .RELEASE
 %global namedversion %{version}%{?namedreltag}
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          springframework-data-commons
 Version:       1.8.4
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Interfaces between relational and non-relational data stores
 License:       ASL 2.0
 URL:           http://projects.spring.io/spring-data/
@@ -151,6 +151,9 @@ sed -i 's/\r//' *.txt
 %doc license.txt notice.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt1_8jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt1_7jpp8
 - new fc release
 
