@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          activemq
 Version:       5.6.0
-Release:       alt2_17jpp8
+Release:       alt2_18jpp8
 Summary:       Open source messaging and Integration Patterns server
 License:       ASL 2.0
 URL:           http://activemq.apache.org
@@ -158,6 +159,9 @@ iconv -f iso-8859-1 -t utf-8 LICENSE.orig > LICENSE
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt2_18jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt2_17jpp8
 - new fc release
 
