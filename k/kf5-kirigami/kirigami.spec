@@ -1,21 +1,21 @@
 %define rname kirigami
 
 Name: kf5-%rname
-Version: 5.38.0
+Version: 5.39.0
 Release: alt1%ubt
 %K5init
 
 Group: System/Libraries
 Summary: A QtQuick based components set
 Url: https://techbase.kde.org/Kirigami
-License: %lgpl2only
+License: LGPLv2
 
 Requires: %name-common = %version-%release
 Requires: qt5-quickcontrols2
 
 Source0: %rname-%version.tar
 
-BuildRequires(pre):	rpm-build-kf5 rpm-build-ubt rpm-build-licenses
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-quickcontrols2-devel
 BuildRequires: qt5-svg-devel qt5-tools-devel
 BuildRequires: kf5-plasma-framework-devel kf5-kpackage-devel kf5-kservice-devel kf5-kwindowsystem-devel
@@ -50,6 +50,13 @@ Requires: %name-common = %version-%release
 The %name-devel package contains libraries and header files for developing
 applications that use %name
 
+%package -n libkf5kirigami2
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5kirigami2
+KF5 library
+
 %prep
 %setup -n %rname-%version
 
@@ -66,10 +73,18 @@ applications that use %name
 %_K5qml/org/kde/kirigami.2/
 
 %files devel
+%_K5link/lib*.so
+%_K5inc/Kirigami2/
 %_libdir/cmake/KF5Kirigami2/
 %_K5archdata/mkspecs/modules/qt_Kirigami2.pri
 
+%files -n libkf5kirigami2
+%_K5lib/libKF5Kirigami2.so.*
+
 %changelog
+* Tue Oct 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.39.0-alt1%ubt
+- new version
+
 * Tue Sep 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.38.0-alt1%ubt
 - new version
 
