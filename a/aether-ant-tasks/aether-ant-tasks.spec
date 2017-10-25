@@ -1,15 +1,16 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global vertag v20141111
 
 Name:           aether-ant-tasks
 Epoch:          1
 Version:        1.0.1
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Summary:        Ant tasks using Aether to resolve, install and deploy artifacts
 Group:          Development/Other
 BuildArch:      noarch
@@ -19,9 +20,9 @@ URL:            http://www.eclipse.org/aether
 Source0:        http://git.eclipse.org/c/aether/aether-ant.git/snapshot/%{name}-%{version}.%{vertag}.tar.bz2
 Source5:        ant-classpath
 
-Patch0001:      0001-Add-support-for-XMvn-workspace-reader.patch
-# Forwarded upstream: http://bugs.eclipse.org/470696
-Patch0002:      0002-Update-to-Maven-3.2.3.patch
+# Partially forwarded upstream: http://bugs.eclipse.org/470696
+Patch0001:      0001-Compatibility-with-Maven-3.4.0.patch
+Patch0002:      0002-Add-support-for-XMvn-workspace-reader.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
@@ -43,8 +44,15 @@ BuildRequires:  mvn(org.eclipse.aether:aether-util)
 BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
 BuildRequires:  mvn(org.hamcrest:hamcrest-core)
 BuildRequires:  mvn(org.hamcrest:hamcrest-library)
+BuildRequires:  mvn(org.fedoraproject.xmvn:xmvn-api)
+BuildRequires:  mvn(org.fedoraproject.xmvn:xmvn-launcher)
+BuildRequires:  mvn(org.fedoraproject.xmvn:xmvn-connector-aether)
 
 Requires:       ant
+Requires:       xmvn-api
+Requires:       xmvn-core
+Requires:       xmvn-launcher
+Requires:       xmvn-connector-aether
 Source44: import.info
 
 %description
@@ -89,6 +97,9 @@ install -p -m 644 %{SOURCE5} %{buildroot}/%{_sysconfdir}/ant.d/%{name}
 %doc epl-v10.html notice.html
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt1_6jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt1_4jpp8
 - new fc release
 
