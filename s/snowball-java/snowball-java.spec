@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          snowball-java
 Version:       0
-Release:       alt1_0.7.20130902jpp8
+Release:       alt1_0.8.20130902jpp8
 Summary:       Java stemming algorithm library
 License:       BSD
 URL:           http://snowball.tartarus.org/index.php
@@ -74,6 +75,9 @@ sed -i 's/\r//' license.txt notice.txt
 %doc license.txt notice.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.8.20130902jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.7.20130902jpp8
 - new fc release
 
