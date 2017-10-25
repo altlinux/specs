@@ -3,16 +3,17 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global jar_version 1.4
 %global lh_version 1.1
 %global id_version 1.1
 
 Name:           apache-resource-bundles
 Version:        2
-Release:        alt4_17jpp8
+Release:        alt4_18jpp8
 Summary:        Apache Resource Bundles
 License:        ASL 2.0
 URL:            http://repo1.maven.org/maven2/org/apache/apache-resource-bundles/
@@ -79,6 +80,9 @@ popd
 %files -f .mfiles
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:2-alt4_18jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:2-alt4_17jpp8
 - new fc release
 
