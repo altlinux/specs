@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           sonar
 Version:        3.2
-Release:        alt1_8jpp8
+Release:        alt1_10jpp8
 Summary:        An open platform to manage code quality
 License:        LGPLv3+
 URL:            http://www.sonarqube.org
@@ -298,12 +299,16 @@ rm -r plugins/sonar-squid-java-plugin/test-resources/ sonar-duplications/src/tes
 %pom_change_dep -r :jruby-complete :jruby
 %pom_change_dep -r jfree org.jfree
 %pom_change_dep -r :staxmate com.fasterxml.staxmate:
-%pom_change_dep -r :hibernate-annotations org.hibernate:hibernate-core
 %pom_change_dep org.hibernate:hibernate-commons-annotations org.hibernate.common: sonar-core
 %pom_change_dep geronimo-spec:geronimo-spec-jta org.apache.geronimo.specs:geronimo-jta_1.1_spec sonar-core
 %pom_add_dep javax.persistence:persistence-api sonar-plugin-api
 %pom_add_dep org.apache.maven:maven-artifact sonar-plugin-api
 %pom_add_dep org.apache.maven:maven-core sonar-plugin-api
+
+# to prevent duplicity remove hibernate-anotations
+%pom_remove_dep :hibernate-annotations ./pom.xml
+%pom_remove_dep :hibernate-annotations ./sonar-core/pom.xml
+%pom_change_dep -r :hibernate-annotations org.hibernate:hibernate-core
 
 # requires maven 2.x
 %pom_disable_module sonar-maven-plugin
@@ -384,6 +389,9 @@ rm -r plugins/sonar-squid-java-plugin/test-resources/ sonar-duplications/src/tes
 %files jacoco-plugin -f .mfiles-%{name}-jacoco-plugin
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_10jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_8jpp8
 - new fc release
 
