@@ -1,5 +1,5 @@
 Name:		uget
-Version:	2.0.10
+Version:	2.1.6
 Release:	alt1
 Summary:	Download manager using GTK+ and libcurl
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -53,6 +53,10 @@ desktop-file-install \
 
 
 %changelog
+
+* Thu Oct 26 2017 Ilya Mashkin <oddity@altlinux.ru> 2.1.6-alt1
+- 2.1.6
+
 * Mon Oct 02 2017 Ilya Mashkin <oddity@altlinux.ru> 2.0.10-alt1
 - 2.0.10
 
