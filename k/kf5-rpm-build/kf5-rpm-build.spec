@@ -1,6 +1,6 @@
 
 Name: kf5-rpm-build
-Version: 5.5.3
+Version: 5.10.0
 Release: alt1
 
 Group: Development/KDE and QT
@@ -21,7 +21,7 @@ Set of KF5 RPM macroses.
 %package -n rpm-build-kf5
 Summary: Set of RPM macros for packaging KF5-based applications
 Group: Development/Other
-Requires: rpm-build-xdg rpm-macros-qt5 /usr/bin/rpmvercmp
+Requires: rpm-build-xdg rpm-macros-qt5 rpm-build-qml /usr/bin/rpmvercmp
 %description -n rpm-build-kf5
 Set of RPM macroses for packaging KF5-based applications for ALT Linux.
 Install this package if you want to create RPM packages that use KF5.
@@ -38,6 +38,9 @@ install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf5-find-qtlang
 %_bindir/rpm-build-kf5-*
 
 %changelog
+* Wed Oct 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.0-alt1
+- require rpm-build-qml
+
 * Wed Sep 07 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.3-alt1
 - fix removing metainfo appdata
 
