@@ -3,19 +3,22 @@
 %def_with python3
 
 Summary: Docutils -- Python Documentation Utilities
-Version: 0.13.1
-Release: alt2
+Version: 0.14
+Release: alt1
 %setup_python_module %oname
 Name: %packagename
-# git://repo.or.cz/docutils.git
-Source0: https://pypi.python.org/packages/05/25/7b5484aca5d46915493f1fd4ecb63c38c333bd32aa9ad6e19da8d08895ae/%{oname}-%{version}.tar.gz
 License: public domain, Python, BSD, GPL (see COPYING.txt)
 Group: Development/Python
 BuildArch: noarch
+
 URL: http://docutils.sourceforge.net/
 Packager: Python Development Team <python@packages.altlinux.org>
-Conflicts: Zope-docutils
+
+# git://repo.or.cz/docutils.git
+Source: %{oname}-%{version}.tar.gz
 Patch: docutils-ALT-disable_assert.patch
+
+Conflicts: Zope-docutils
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -126,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.14-alt1
+- Updated to upstream version 0.14.
+
 * Thu Mar 23 2017 Fr. Br. George <george@altlinux.ru> 0.13.1-alt2
 - Comment out buggy assertion again
 

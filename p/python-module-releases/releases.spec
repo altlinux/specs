@@ -4,21 +4,21 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 Summary: A Sphinx extension for changelog manipulation
 License: BSD
 Group: Development/Python
-Url: https://pypi.python.org/pypi/releases/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/93/6e/6c9bfd8f195b6aa0bbc1e705010ea78c9d7c97c6bda69a8bb2b59074488c/%{oname}-%{version}.tar.gz
 BuildArch: noarch
+Url: https://pypi.python.org/pypi/releases/
 
-BuildPreReq: python-devel python-module-setuptools
+# https://github.com/bitprophet/releases.git
+Source: %name-%version.tar
+
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools
 %endif
 
 %description
@@ -36,7 +36,7 @@ control friendly, merge friendly changelog file & turn it into useful,
 human readable HTML output.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -62,15 +62,20 @@ popd
 
 %files
 %doc README.rst
-%python_sitelibdir/*
+%python_sitelibdir/%oname
+%python_sitelibdir/%oname-%version-py*.egg-info
 
 %if_with python3
 %files -n python3-module-%oname
 %doc README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py*.egg-info
 %endif
 
 %changelog
+* Wed Oct 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.0-alt1
+- Updated to upstream version 1.4.0.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1
 - automated PyPI update
 

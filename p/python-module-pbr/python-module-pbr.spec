@@ -4,30 +4,27 @@
 %def_with python3
 
 Name:		python-module-%pypi_name
-Version:	2.0.0
+Version:	3.1.1
 Release:	alt1
 Summary:	Python Build Reasonableness
 Group:		Development/Python
+BuildArch:	noarch
 
 License:	ASL 2.0
 URL:		http://pypi.python.org/pypi/pbr
-Source0:	%name-%version.tar.gz
-BuildArch:	noarch
 
+# git://git.openstack.org/openstack-dev/pbr
+Source:	%name-%version.tar
 
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pyasn1 python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-twisted-core python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
-BuildRequires: python-module-alabaster python-module-d2to1 python-module-docutils python-module-html5lib python-module-mimeparse python-module-pbr python-module-unittest2 python3-module-d2to1 python3-module-html5lib python3-module-mimeparse python3-module-pbr python3-module-unittest2 rpm-build-python3 time python-module-subunit-tests python-module-oslosphinx python-module-setuptools-tests python3-module-setuptools-tests
-#BuildRequires:	python-devel
-#BuildRequires:	python-module-d2to1 >= 0.2.10
-#BuildRequires:	python-module-testtools
-#BuildRequires:	python-module-sphinx >= 1.1.3
-#BuildRequires:	python-module-objects.inv
+BuildRequires: python-module-setuptools-tests python-module-unittest2 python-module-d2to1
+BuildRequires: python-module-pbr
+BuildRequires: python-module-html5lib python-module-mimeparse
+BuildRequires: python-module-alabaster python-module-docutils python-module-subunit-tests python-module-oslosphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires:	python3-devel
-#BuildRequires:	python3-module-d2to1
-#BuildRequires:	python3-module-testtools
+BuildRequires: python3-module-setuptools-tests python3-module-unittest2 python3-module-d2to1
+BuildRequires: python3-module-pbr
+BuildRequires: python3-module-html5lib python3-module-mimeparse
 %endif
 
 %description
@@ -81,6 +78,8 @@ cp -fR . ../python3
 %endif
 
 %build
+export PBR_VERSION="%version"
+
 export SKIP_PIP_INSTALL=1
 %python_build
 
@@ -98,6 +97,8 @@ rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
+export PBR_VERSION="%version"
+
 %if_with python3
 pushd ../python3
 %python3_install
@@ -120,7 +121,7 @@ popd
 %if_with python3
 %exclude %_bindir/*.py3
 %endif
-%python_sitelibdir/%pypi_name-*.egg-info
+%python_sitelibdir/%pypi_name-%version-py*.egg-info
 %python_sitelibdir/%pypi_name
 %exclude %python_sitelibdir/%pypi_name/tests
 
@@ -132,7 +133,7 @@ popd
 %files -n python3-module-%pypi_name
 %doc README.rst LICENSE
 %_bindir/*.py3
-%python3_sitelibdir/%pypi_name-*.egg-info
+%python3_sitelibdir/%pypi_name-%version-py*.egg-info
 %python3_sitelibdir/%pypi_name
 %exclude %python3_sitelibdir/%pypi_name/tests
 
@@ -142,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.1-alt1
+- Updated to upstream version 3.1.1.
+
 * Tue May 23 2017 Lenar Shakirov <snejok@altlinux.ru> 2.0.0-alt1
 - Version 2.0.0
 
