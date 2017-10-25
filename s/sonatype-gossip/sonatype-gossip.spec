@@ -1,17 +1,18 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global shortname gossip
 
 Name:             sonatype-gossip
 Version:          1.7
-Release:          alt1_14jpp8
+Release:          alt1_16jpp8
 Summary:          SLF4j Gossip Provider
-Group:            Development/Other
 License:          ASL 2.0
 URL:              http://github.com/jdillon/gossip
 
@@ -24,25 +25,68 @@ Patch0:           %{shortname}-%{version}-use-java5-modello.patch
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-BuildRequires:    maven-license-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    slf4j
-BuildRequires:    modello
-BuildRequires:    jansi
-BuildRequires:    fusesource-pom
+BuildRequires:    mvn(com.mycila.maven-license-plugin:maven-license-plugin)
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires:    mvn(org.codehaus.modello:modello-maven-plugin)
+BuildRequires:    mvn(org.fusesource.jansi:jansi)
+BuildRequires:    mvn(org.slf4j:slf4j-api)
+BuildRequires:    mvn(org.sonatype.forge:forge-parent:pom:)
 Source44: import.info
 
 %description
 Gossip is a plugin for SLF4j which has simple and flexible configuration.
 
+%package bootstrap
+Group: Development/Other
+Summary:          Gossip Bootstrap
+
+%description bootstrap
+Contains just enough Gossip to allow the
+internal org.sonatype.gossip.Log to function.
+
+%package bootstrap-slf4j
+Group: Development/Other
+Summary:          Gossip Bootstrap SLF4j
+
+%description bootstrap-slf4j
+SLF4j bindings for Gossip Bootstrap.
+
+%package core
+Group: Development/Other
+Summary:          Gossip Core
+
+%description core
+Gossip Core.
+
+%package extra
+Group: Development/Other
+Summary:          Gossip Extra
+
+%description extra
+Gossip Extra.
+
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
+Group: Development/Java
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %{name}
+
+%package slf4j
+Group: Development/Other
+Summary:          Gossip SLF4j
+
+%description slf4j
+Gossip SLF4j.
+
+%package support
+Group: Development/Other
+Summary:          Gossip Support
+
+%description support
+Gossip Support, helper and utilities.
 
 %prep
 %setup -q -n %{shortname}-%{version}
@@ -51,19 +95,35 @@ This package contains the API documentation for %{name}.
 %pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin
 
 %build
-%mvn_build
+
+%mvn_build -s
 
 %install
 %mvn_install
 
-%files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc README.md header.txt
+%files -f .mfiles-gossip
+%doc header.txt
+
+%files bootstrap -f .mfiles-gossip-bootstrap
+%doc README.md
+%doc header.txt
+
+%files bootstrap-slf4j -f .mfiles-gossip-bootstrap-slf4j
+%files core -f .mfiles-gossip-core
+%doc header.txt
+
+%files extra -f .mfiles-gossip-extra
 
 %files javadoc -f .mfiles-javadoc
 %doc header.txt
 
+%files slf4j -f .mfiles-gossip-slf4j
+%files support -f .mfiles-gossip-support
+
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_16jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_14jpp8
 - new fc release
 
