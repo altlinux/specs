@@ -1,9 +1,8 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
-BuildRequires: gcc-c++ java-devel-default rpm-build-java
+BuildRequires: java-devel-default rpm-build-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # fedora __isa_bits tmp hack
@@ -12,20 +11,23 @@ BuildRequires: jpackage-generic-compat
 %else
 %define __isa_bits 32
 %endif
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # empty debuginfo
 %global debug_package %nil
 
 Name:          artemis
 Version:       1.4.0
-Release:       alt1_2jpp8
+Release:       alt1_4jpp8
 Summary:       Java high performance, clustered, asynchronous messaging system
 License:       ASL 2.0
 URL:           https://activemq.apache.org/artemis/
 Source0:       https://github.com/apache/activemq-artemis/archive/%{version}/%{name}-%{version}.tar.gz
 
+BuildRequires: gcc-c++
 BuildRequires: ctest cmake
 BuildRequires: libaio-devel
-BuildRequires: libtool-common
+BuildRequires: libtool
 BuildRequires: maven-local
 BuildRequires: mvn(com.google.guava:guava)
 BuildRequires: mvn(commons-beanutils:commons-beanutils)
@@ -407,7 +409,7 @@ done
 (
  cd artemis-native
  %{fedora_cmake} .
- make %{?_smp_mflags}
+%make_build
 )
 # Some test dependecies are not available 
 # e.g. org.apache.qpid:qpid-client:0.24,org.apache.qpid:qpid-jms-client:0.5.0
@@ -474,6 +476,9 @@ install -pm 755 artemis-native/bin/libartemis-native-%{__isa_bits}.so %{buildroo
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_4jpp8
+- new jpp release
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_2jpp8
 - new version
 
