@@ -2,7 +2,7 @@
 
 Name: qt5-quickcontrols2
 Version: 5.9.2
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Libraries
 Summary: Qt5 - module with set of QtQuick Controls 2
@@ -65,7 +65,7 @@ Requires: %name-common = %EVR
 Group: Development/KDE and QT
 Summary: Development files for %name
 Requires: %name-common = %EVR
-Requires: qt5-base-devel
+Requires: qt5-base-devel rpm-build-qml
 %description devel
 %summary.
 
@@ -128,6 +128,9 @@ export QT_HASH_SEED=0
 #%_qt5_libdatadir/libQt*.a
 
 %changelog
+* Wed Oct 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt2%ubt
+- require rpm-build-qml for devel subpackage
+
 * Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
 - new version
 
