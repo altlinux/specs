@@ -2,13 +2,14 @@ Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           avalon-framework
 Epoch:          0
 Version:        4.3
-Release:        alt4_16jpp8
+Release:        alt4_17jpp8
 Summary:        Java components interfaces
 License:        ASL 2.0
 URL:            http://avalon.apache.org/
@@ -90,6 +91,9 @@ done
 %doc avalon-framework-api-4.3/NOTICE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:4.3-alt4_17jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.3-alt4_16jpp8
 - new fc release
 
