@@ -1,7 +1,7 @@
 %define module Gear-Remotes
 
 Name: perl-%module
-Version: 0.013
+Version: 0.014
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -13,7 +13,7 @@ Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
 Url: http://search.cpan.org/dist/%module
 
 # Automatically added by buildreq on Wed Nov 06 2002
-BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm) perl(RPM/uscan.pm)
+BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm) perl(RPM/uscan.pm) perl(Gear/Rules.pm) perl(RPM/Source/Editor.pm)
 Requires: gear perl(Pod/Text.pm)
 Provides: gear-remotes = %version
 
@@ -53,8 +53,12 @@ Requires: gear-uupdate
 %files -n gear-remotes-utils
 %endif
 %_bindir/*
+%_man1dir/*
 
 %changelog
+* Wed Oct 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1
+- support for git repository comments in spec file
+
 * Wed Oct 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1
 - gear-remotes-save now git add .gear/upstream/remotes
 
