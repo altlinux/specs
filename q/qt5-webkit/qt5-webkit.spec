@@ -6,7 +6,7 @@
 
 Name: qt5-webkit
 Version: 5.9.2
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -27,14 +27,17 @@ Patch10: alt-flags.patch
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: flex fontconfig-devel gcc-c++ libicu-devel libjpeg-devel libpng-devel
 BuildRequires: libsqlite3-devel libudev-devel libwebp-devel libxslt-devel libpcre-devel gperf
-BuildRequires: pkgconfig(glib-2.0) pkgconfig(gio-2.0) pkgconfig(gstreamer-1.0) pkgconfig(gstreamer-plugins-base-1.0) pkgconfig(gstreamer-app-1.0)
-BuildRequires: libXcomposite-devel libXext-devel libXrender-devel libGL-devel
+BuildRequires: pkgconfig(glib-2.0) pkgconfig(gio-2.0)
+# pkgconfig(gstreamer-1.0) pkgconfig(gstreamer-plugins-base-1.0) pkgconfig(gstreamer-app-1.0)
+BuildRequires: libXcomposite-devel libXext-devel libXrender-devel
+# libGL-devel
 BuildRequires: python-module-distribute python-module-simplejson rpm-build-python
 BuildRequires: rpm-build-ruby
 BuildRequires: perl(Term/ANSIColor.pm) perl(Perl/Version.pm) perl(Digest/Perl/MD5.pm)
 BuildRequires: zlib-devel libxml2-devel
 #BuildRequires: libleveldb-devel
-BuildRequires: qt5-base-devel qt5-xmlpatterns-devel qt5-declarative-devel qt5-location-devel qt5-multimedia-devel qt5-sensors-devel qt5-webchannel-devel
+BuildRequires: qt5-base-devel qt5-xmlpatterns-devel qt5-declarative-devel qt5-webchannel-devel
+#qt5-location-devel qt5-multimedia-devel qt5-sensors-devel
 %if_disabled bootstrap
 BuildRequires: qt5-tools
 %endif
@@ -117,6 +120,7 @@ export LDFLAGS="$LDFLAGS -Wl,--reduce-memory-overheads -Wl,--no-keep-memory"
     DEFINES+=ENABLE_JIT=0 DEFINES+=ENABLE_YARR_JIT=0 \
 %endif
     #
+[ "%__nprocs" != 1 ] || export NPROCS=3
 %make_build
 %if_disabled bootstrap
 export QT_HASH_SEED=0
@@ -159,6 +163,9 @@ export QT_HASH_SEED=0
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Wed Oct 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt2%ubt
+- turn off multimedia support
+
 * Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
 - new version
 
