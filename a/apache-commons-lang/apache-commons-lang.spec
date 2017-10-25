@@ -4,16 +4,17 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 
 %global base_name       lang
 %global short_name      commons-%{base_name}
 
 Name:           apache-%{short_name}
 Version:        2.6
-Release:        alt5_18jpp8
+Release:        alt5_19jpp8
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
 Group:          Development/Other
@@ -77,6 +78,9 @@ sed -i 's/\r//' *.txt *.html
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt5_19jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt5_18jpp8
 - new fc release
 
