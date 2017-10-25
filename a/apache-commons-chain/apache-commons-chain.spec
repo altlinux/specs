@@ -3,14 +3,15 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global base_name chain
 %global short_name commons-%{base_name}
 Name:          apache-commons-chain
 Version:       1.2
-Release:       alt1_14jpp8
+Release:       alt1_15jpp8
 Summary:       An implementation of the GoF Chain of Responsibility pattern
 License:       ASL 2.0
 URL:           http://commons.apache.org/%{base_name}/
@@ -20,21 +21,15 @@ Patch0:        %{name}-%{version}-tests-servlet31.patch
 # javax.portlet 2.0 api support
 Patch1:        %{name}-%{version}-portlet20.patch
 
-BuildRequires: maven-local
-BuildRequires: mvn(commons-beanutils:commons-beanutils)
-BuildRequires: mvn(commons-digester:commons-digester)
-BuildRequires: mvn(commons-logging:commons-logging)
-BuildRequires: mvn(javax.portlet:portlet-api)
-BuildRequires: mvn(javax.servlet:javax.servlet-api)
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-site-plugin)
-BuildRequires: mvn(org.codehaus.mojo:buildnumber-maven-plugin)
-BuildRequires: mvn(org.jboss.spec.javax.faces:jboss-jsf-api_2.1_spec)
-BuildRequires: /usr/bin/perl
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-beanutils:commons-beanutils)
+BuildRequires:  mvn(commons-digester:commons-digester)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(javax.portlet:portlet-api)
+BuildRequires:  mvn(javax.servlet:javax.servlet-api)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.jboss.spec.javax.faces:jboss-jsf-api_2.1_spec)
 
 BuildArch:     noarch
 Source44: import.info
@@ -70,10 +65,11 @@ This package contains javadoc for %{name}.
 find . -name '*.class' -delete
 find . -name '*.jar' -delete
 
-perl -pi -e 's/\r$//g;' *.txt
+sed -i 's/\r$//g;' *.txt
 
 %patch0 -p1
 %patch1 -p0
+
 # Failed tests:   testDefaut(org.apache.commons.chain.config.ConfigParserTestCase):
 # Correct command count expected:<17> but was:<19>
 rm -r src/test/org/apache/commons/chain/config/ConfigParserTestCase.java
@@ -102,6 +98,9 @@ rm -r src/test/org/apache/commons/chain/config/ConfigParserTestCase.java
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_15jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_14jpp8
 - new fc release
 
