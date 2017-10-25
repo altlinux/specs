@@ -3,7 +3,7 @@
 
 Name: indilib
 Version: 1.5.0
-Release: alt2
+Release: alt3%ubt
 
 %add_verify_elf_skiplist %_libdir/libindidriver.so.%version
 %add_verify_elf_skiplist %_libdir/libindimain.so.%version
@@ -33,9 +33,18 @@ INDI is an instrument neutral distributed interface control protocol
 that aims to provide backend driver support and automation for a wide
 range of Astronomical devices (telescopes, focusers, CCDs..etc).
 
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Conflicts: indilib <= 1.5.0-alt2
+%description common
+%name common package
+
 %package -n libsbigudrv
 Summary: Librar file for INDI
 Group: Development/C
+Requires: %name-common = %EVR
 %description -n libsbigudrv
   INDI is an instrument neutral distributed interface control protocol
 that aims to provide backend driver support and automation for a wide
@@ -45,8 +54,7 @@ range of Astronomical devices (telescopes, focusers, CCDs..etc).
 %package -n lib%shortname
 Group: System/Libraries
 Summary: Library to control astronomical devices
-Conflicts: indilib < 1.5.0-alt2
-
+Requires: %name-common = %EVR
 %description -n lib%shortname
 INDI is an instrument neutral distributed interface control protocol
 that aims to provide backend driver support and automation for a wide
@@ -55,7 +63,7 @@ range of Astronomical devices (telescopes, focusers, CCDs..etc).
 %package -n lib%shortname-devel
 Summary: INDI devellopment files
 Group: Development/C
-Requires: lib%shortname = %version-%release
+Requires: %name-common = %EVR
 Provides: %shortname-devel = %version-%release
 Provides: %name-devel = %version-%release
 Obsoletes: %name-devel < %version-%release
@@ -77,13 +85,16 @@ chmod -x drivers/telescope/lx200fs2.{h,cpp}
 %install
 %Kinstall
 
-%files
+%files common
 %doc ChangeLog README
+# an essential part of libindi according to FindINDI.cmake
+%_datadir/%shortname/
+
+%files
 %_bindir/*
 %_udevrulesdir/*.rules
 
 %files -n lib%shortname
-%doc ChangeLog README
 #%_libdir/libindi.so.1
 #%_libdir/libindi.so.1.*
 %_libdir/libindiAlignmentDriver.so.1
@@ -92,13 +103,12 @@ chmod -x drivers/telescope/lx200fs2.{h,cpp}
 %_libdir/libindidriver.so.1.*
 # an essential part of libindi according to FindINDI.cmake
 %_libdir/%shortname/
-%_datadir/%shortname/
 
 #%files -n libsbigudrv
 #%_libdir/libsbigudrv.so.*
 
 %files -n lib%shortname-devel
-%doc ChangeLog TODO README
+%doc TODO
 #%doc src/examples
 %_libdir/*.so
 %_libdir/*.a
@@ -106,6 +116,9 @@ chmod -x drivers/telescope/lx200fs2.{h,cpp}
 %_pkgconfigdir/libindi.pc
 
 %changelog
+* Wed Oct 25 2017 Sergey V Turchin <zerg@altlinux.org> 1.5.0-alt3%ubt
+- move data to common subpackage
+
 * Mon Oct 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2
 - NMU: moved %%_libdir/indi, %_datadir/indi to libindi.
 - * they are an essential part of libindi according to FindINDI.cmake
