@@ -3,15 +3,24 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%bcond_without  scm
+%bcond_without  ssh
 %global bname     wagon
 %global split_verrel 2.6-4
 
 Name:           maven-%{bname}
 Version:        2.10
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Epoch:          0
 Summary:        Tools to manage artifacts and deployment
 License:        ASL 2.0
@@ -23,9 +32,11 @@ Patch0:         0001-Port-to-jetty-9.patch
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+%if %{with ssh}
 BuildRequires:  mvn(com.jcraft:jsch)
 BuildRequires:  mvn(com.jcraft:jsch.agentproxy.connector-factory)
 BuildRequires:  mvn(com.jcraft:jsch.agentproxy.jsch)
+%endif
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(commons-lang:commons-lang)
 BuildRequires:  mvn(commons-logging:commons-logging)
@@ -33,9 +44,10 @@ BuildRequires:  mvn(commons-net:commons-net)
 BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
 BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+%if %{with scm}
 BuildRequires:  mvn(org.apache.maven.scm:maven-scm-api)
+%endif
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interactivity-api)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
@@ -44,20 +56,6 @@ BuildRequires:  mvn(org.slf4j:slf4j-api)
 
 Obsoletes:      %{name}-manual < %{epoch}:%{version}-%{release}
 Obsoletes:      %{name}-provider-test < %{epoch}:%{version}-%{release}
-
-# Require all submodules for now until all packages migrate to wagon
-# subpackages.
-Requires:       %{name}-provider-api = %{version}
-Requires:       %{name}-providers = %{version}
-Requires:       %{name}-file = %{version}
-Requires:       %{name}-ftp = %{version}
-Requires:       %{name}-http = %{version}
-Requires:       %{name}-http-shared = %{version}
-Requires:       %{name}-http-lightweight = %{version}
-Requires:       %{name}-scm = %{version}
-Requires:       %{name}-ssh-external = %{version}
-Requires:       %{name}-ssh-common = %{version}
-Requires:       %{name}-ssh = %{version}
 Source44: import.info
 
 %description
@@ -122,13 +120,16 @@ Summary:        http-lightweight module for %{name}
 %description http-lightweight
 http-lightweight module for %{name}.
 
+%if %{with scm}
 %package scm
 Group: Development/Java
 Summary:        scm module for %{name}
 
 %description scm
 scm module for %{name}.
+%endif
 
+%if %{with ssh}
 %package ssh-external
 Group: Development/Java
 Summary:        ssh-external module for %{name}
@@ -149,6 +150,7 @@ Summary:        ssh module for %{name}
 
 %description ssh
 ssh module for %{name}.
+%endif
 
 %package javadoc
 Group: Development/Java
@@ -164,6 +166,7 @@ Javadoc for %{name}.
 %patch0 -p1
 
 %pom_remove_plugin :animal-sniffer-maven-plugin
+%pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_dep :wagon-tck-http wagon-providers/wagon-http
 
 # correct groupId for jetty
@@ -178,6 +181,15 @@ Javadoc for %{name}.
 
 # missing dependencies
 %pom_disable_module wagon-webdav-jackrabbit wagon-providers
+
+%if %{without scm}
+%pom_disable_module wagon-scm wagon-providers
+%endif
+%if %{without ssh}
+%pom_disable_module wagon-ssh wagon-providers
+%pom_disable_module wagon-ssh-common wagon-providers
+%pom_disable_module wagon-ssh-external wagon-providers
+%endif
 
 %build
 %mvn_file ":wagon-{*}" %{name}/@1
@@ -204,15 +216,22 @@ Javadoc for %{name}.
 %files http -f .mfiles-wagon-http
 %files http-shared -f .mfiles-wagon-http-shared
 %files http-lightweight -f .mfiles-wagon-http-lightweight
+%if %{with scm}
 %files scm -f .mfiles-wagon-scm
+%endif
+%if %{with ssh}
 %files ssh-external -f .mfiles-wagon-ssh-external
 %files ssh-common -f .mfiles-wagon-ssh-common
 %files ssh -f .mfiles-wagon-ssh
+%endif
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE DEPENDENCIES
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.10-alt1_3jpp8
+- new jpp release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.10-alt1_2jpp8
 - new version
 
