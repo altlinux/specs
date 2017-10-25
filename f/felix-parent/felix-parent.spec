@@ -3,12 +3,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           felix-parent
 Version:        2.1
-Release:        alt1_10jpp8
+Release:        alt1_13jpp8
 Summary:        Parent POM file for Apache Felix Specs
 License:        ASL 2.0
 URL:            http://felix.apache.org/
@@ -16,10 +17,9 @@ Source0:        http://repo1.maven.org/maven2/org/apache/felix/felix-parent/%{ve
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  easymock
-BuildRequires:  mockito
-BuildRequires:  maven-site-plugin
-BuildRequires:  maven-release-plugin
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(org.mockito:mockito-all)
 
 # FIXME auto-requires are not generated
 Requires: easymock
@@ -33,6 +33,7 @@ Parent POM file for Apache Felix Specs.
 %setup -q -n felix-parent-%{version}
 %mvn_alias : :felix
 %pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :maven-release-plugin
 %pom_remove_plugin org.codehaus.mojo:ianal-maven-plugin
 %pom_remove_plugin :apache-rat-plugin
 
@@ -49,6 +50,9 @@ Parent POM file for Apache Felix Specs.
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_13jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_10jpp8
 - new fc release
 
