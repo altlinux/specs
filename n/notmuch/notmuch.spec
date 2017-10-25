@@ -1,6 +1,6 @@
 Name: notmuch
-Version: 0.22.1
-Release: alt2
+Version: 0.25.1
+Release: alt1
 
 Summary: new email reading system called notmuch
 
@@ -72,7 +72,7 @@ export CXXFLAGS="%optflags"
 
 %install
 make libdir=%_libdir DESTDIR=%buildroot install
-install -D -m0644 %name.desktop %buildroot%_desktopdir/%name.desktop
+install -D -m0644 emacs/%name-emacs-mua.desktop %buildroot%_desktopdir/%name-emacs-mua.desktop
 install -D -m0644 completion/notmuch-completion.bash %buildroot%_sysconfdir/bash_completion.d/%name
 
 mkdir -p %buildroot%_emacs_sitestart_dir
@@ -83,12 +83,12 @@ cat >%buildroot%_emacs_sitestart_dir/%name.el <<EOF
 (require 'notmuch)
 EOF
 
-install -m0755 notmuch-emacs-mua %buildroot%_bindir/notmuch-emacs-mua
+install -m0755 emacs/notmuch-emacs-mua %buildroot%_bindir/notmuch-emacs-mua
 
 %files
 %_bindir/%name
 %_sysconfdir/bash_completion.d/%name
-%_desktopdir/%name.desktop
+%_desktopdir/%name-emacs-mua.desktop
 %_man1dir/%{name}*
 %_man5dir/%{name}*
 %_man7dir/%{name}*
@@ -108,6 +108,10 @@ install -m0755 notmuch-emacs-mua %buildroot%_bindir/notmuch-emacs-mua
 %_libdir/lib%name.so
 
 %changelog
+* Wed Oct 25 2017 Terechkov Evgenii <evg@altlinux.org> 0.25.1-alt1
+- 0.25.1
+- Rebuild with libxapian-1.4.5
+
 * Fri Oct 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.22.1-alt2
 - Rebuilt with new xapian.
 
