@@ -3,12 +3,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:			antlr-maven-plugin
 Version:		2.2
-Release:		alt3_18jpp8
+Release:		alt3_19jpp8
 Summary:		Maven plugin that generates files based on grammar file(s)
 License:		ASL 2.0
 URL:			http://mojo.codehaus.org/antlr-maven-plugin/
@@ -86,6 +87,9 @@ find -name '*.jar' -exec rm -f '{}' \;
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_19jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_18jpp8
 - new fc release
 
