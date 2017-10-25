@@ -2,12 +2,21 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%bcond_without  memoryfilesystem
+
 Name:           assertj-core
 Version:        2.2.0
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Library of assertions similar to fest-assert
 License:        ASL 2.0
 URL:            http://joel-costigliola.github.io/assertj/
@@ -17,7 +26,9 @@ BuildArch:      noarch
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(cglib:cglib-nodep)
+%if %{with memoryfilesystem}
 BuildRequires:  mvn(com.github.marschall:memoryfilesystem)
+%endif
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.mockito:mockito-core)
 Source44: import.info
@@ -53,6 +64,11 @@ This package provides API documentation for %{name}.
 # package org.mockito.internal.util.collections does not exist
 rm -rf ./src/test/java/org/assertj/core/error/ShouldContainString_create_Test.java
 
+%if %{without memoryfilesystem}
+%pom_remove_dep :memoryfilesystem
+rm -r src/test/java/org/assertj/core/internal/{Paths*.java,paths}
+%endif
+
 %build
 %mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
@@ -68,6 +84,9 @@ rm -rf ./src/test/java/org/assertj/core/error/ShouldContainString_create_Test.ja
 %doc LICENSE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_3jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_2jpp8
 - new fc release
 
