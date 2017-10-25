@@ -10,7 +10,7 @@
 
 Name: firebird
 Version: %major.%minor
-Release: alt2
+Release: alt3
 Summary: Firebird SQL Database, fork of InterBase
 Group: Databases
 License: IPL
@@ -18,7 +18,6 @@ Url: https://www.firebirdsql.org/
 
 Source: %pkgname-%pkgversion.tar
 Source1: %name.init
-Source2: %name.xinetd
 
 Patch1: %name-%pkgversion-fedora-obsolete-syslogd.target.patch
 Patch2: %name-%pkgversion-fedora-no-copy-from-icu.patch
@@ -51,9 +50,6 @@ Provides: %name-classic = %EVR
 %description
 This is the Firebird SQL Database shared files.
 
-#
-# Development headers and static libraries
-#
 %package devel
 Summary: Development Libraries for Firebird SQL Database
 Group: Development/Databases
@@ -62,13 +58,6 @@ Requires: %name = %EVR
 %description devel
 Development libraries for firebird.
 
-#
-# Standard client programs
-#
-
-#
-# Utils programs
-#
 %package utils
 Summary: Client programs for Firebird SQL Database
 Group: Databases
@@ -84,9 +73,6 @@ Provides: %name-utils-classic = %EVR
 %description utils
 Client access tools for firebird.
 
-#
-# Multi-threaded, independant client libraries
-#
 %package -n libfbclient
 Summary: Multi-threaded, non-local client libraries for Firebird SQL Database
 Group: System/Libraries
@@ -94,9 +80,6 @@ Group: System/Libraries
 %description -n libfbclient
 Multi-threaded, non-local client libraries for Firebird SQL Database
 
-#
-# Server programs
-#
 %package server
 Summary: Server for Firebird SQL Database
 Group: Databases
@@ -236,9 +219,12 @@ popd
 
 mv %buildroot%fbroot/intl/fbintl.conf %buildroot%_sysconfdir/%name/fbintl.conf
 ln -sf $(relative %_sysconfdir/%name/fbintl.conf %fbroot/intl/fbintl.conf) %buildroot%fbroot/intl/fbintl.conf
+ln -sf fbintl.so %buildroot%fbroot/intl/libfbintl.so
+ln -sf $(relative %fbroot/intl/fbintl.so %_sysconfdir/%name/libfbintl.so) %buildroot%_sysconfdir/%name/libfbintl.so
+
 # services
 install -m 755 %SOURCE1 %buildroot%_initdir/%name
-install -m 755 %SOURCE2 %buildroot%_sysconfdir/xinetd.d/%name
+mv %buildroot%_datadir/%name/misc/%name.xinetd %buildroot%_sysconfdir/xinetd.d/%name
 
 # log
 touch %buildroot%_logdir/%name/%name.log
@@ -327,6 +313,7 @@ fi
 %attr(0664,firebird,firebird) %_var/lib/%name/system/help.fdb
 %attr(0664,firebird,firebird) %_var/lib/%name/system/firebird.msg
 %config(noreplace) %_sysconfdir/%name/fbintl.conf
+%_sysconfdir/%name/libfbintl.so
 %attr(0755,root,root) %_initdir/%name
 %config(noreplace) %attr(640,root,root) %_sysconfdir/xinetd.d/%name
 %_unitdir/*
@@ -358,6 +345,11 @@ fi
 %_datadir/%name/examples/*
 
 %changelog
+* Wed Oct 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.2.32703.0-alt3
+- Fixed init script once more (closes: #34060).
+- Fixed issue with firebird not finding INTL module.
+- Fixed config for xinetd.
+
 * Wed Oct 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.2.32703.0-alt2
 - Fixed init script (closes: #34060).
 - Updated provides and obsoletes.
