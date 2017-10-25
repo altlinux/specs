@@ -4,7 +4,7 @@
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %def_disable static
-%def_enable compat
+%def_disable compat
 
 %if_disabled compat
 %def_enable cpp
@@ -27,18 +27,18 @@
 %endif
 
 %define rname poppler
-%define somajor 67
+%define somajor 71
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_qt5 1
 %define somajor_glib 8
 %define major 0
-%define minor 56
-%define bugfix 0
+%define minor 60
+%define bugfix 1
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt2%ubt
+Release: alt1%ubt
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -68,6 +68,7 @@ Source: %rname-%version.tar
 #BuildRequires: gcc-c++ glib-networking glibc-devel-static gtk-doc gvfs imake libXt-devel libcurl-devel libgtk+2-devel libgtk+2-gir-devel libjpeg-devel liblcms-devel libopenjpeg-devel libqt3-devel libqt4-devel libqt4-gui libqt4-xml libxml2-devel python-modules-compiler python-modules-encodings time xorg-cf-files
 
 BuildRequires(pre): rpm-utils rpm-build-ubt
+BuildRequires: cmake
 %if_enabled qt5
 BuildRequires: qt5-base-devel
 %endif
@@ -77,8 +78,8 @@ BuildRequires: libqt4-devel
 %if_enabled glib
 BuildRequires: glib2-devel
 %endif
-BuildRequires: gcc-c++ glibc-devel libcurl-devel libgtk+2-devel zlib-devel
-BuildRequires: libgtk+2-gir-devel libjpeg-devel liblcms2-devel libopenjpeg-devel libtiff-devel libpng-devel
+BuildRequires: gcc-c++ glibc-devel libcurl-devel libgtk+2-devel zlib-devel libnss-devel
+BuildRequires: libgtk+2-gir-devel libjpeg-devel liblcms2-devel libopenjpeg2.0-devel libtiff-devel libpng-devel
 BuildRequires: libxml2-devel gtk-doc libcairo-gobject-devel
 BuildRequires: libXt-devel poppler-data
 
@@ -266,43 +267,35 @@ statically linked libpoppler-based software
 %prep
 %setup -q -n %rname-%version
 
-%autoreconf
-#aclocal --force -I m4
-#automake
-#autoconf --force
 
 %build
 %if_enabled qt4
 export QT4DIR=%_qt4dir
 %endif
-%configure \
-    --disable-rpath \
-    %{subst_enable static} \
-    --enable-shared \
-    --enable-compile-warnings=yes \
-    --enable-introspection=yes \
-    --enable-libcurl \
-    --enable-zlib \
-%if_enabled xpdfheaders
-    --enable-xpdf-headers \
-%endif
-%if_disabled cpp
-    --disable-poppler-cpp \
-%endif
-%if_disabled glib
-    --disable-poppler-glib \
-%endif
-%if_disabled qt4
-    --disable-poppler-qt4 \
-%endif
-%if_disabled qt5
-    --disable-poppler-qt5 \
-%endif
+%cmake \
+    -DSHARE_INSTALL_DIR=%_datadir \
+    -DBUILD_SHARED_LIBS=ON \
+    -DENABLE_LIBCURL=ON \
+    -DENABLE_ZLIB=OFF \
+    -DENABLE_CMS=lcms2 \
+    -DENABLE_DCTDECODER=libjpeg \
+    -DENABLE_LIBOPENJPEG=openjpeg2 \
+    -DENABLE_XPDF_HEADERS=%{?_enable_xpdfheaders:ON}%{!?_enable_xpdfheaders:OFF} \
+    -DENABLE_UTILS=%{?_enable_utils:ON}%{!?_enable_utils:OFF} \
+    -DENABLE_CPP=%{?_enable_cpp:ON}%{!?_enable_cpp:OFF} \
+    -DENABLE_GLIB=%{?_enable_glib:ON}%{!?_enable_glib:OFF} \
+    -DENABLE_QT4=%{?_enable_qt4:ON}%{!?_enable_qt4:OFF} \
+    -DENABLE_QT5=%{?_enable_qt5:ON}%{!?_enable_qt5:OFF} \
     #
-%make_build
+#    -DBUILD_GTK_TESTS=OFF \
+#    -DBUILD_QT4_TESTS=OFF \
+#    -DBUILD_QT5_TESTS=OFF \
+#    -DBUILD_CPP_TESTS=OFF \
+%cmake_build
 
 %install
-%makeinstall
+make install DESTDIR=%buildroot -C BUILD
+#cmakeinstall_std
 
 %if_enabled utils
 %files -n %rname
@@ -311,7 +304,7 @@ export QT4DIR=%_qt4dir
 %endif
 
 %files -n lib%name
-%doc AUTHORS ChangeLog NEWS README* TODO
+%doc AUTHORS ChangeLog NEWS README*
 %_libdir/libpoppler.so.%somajor
 %_libdir/libpoppler.so.%somajor.*
 
@@ -393,8 +386,8 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
-* Wed Oct 25 2017 Sergey V Turchin <zerg@altlinux.org> 0.56.0-alt2%ubt
-- build compat library
+* Tue Oct 24 2017 Sergey V Turchin <zerg@altlinux.org> 0.60.1-alt1%ubt
+- new version
 
 * Mon Jul 03 2017 Sergey V Turchin <zerg@altlinux.org> 0.56.0-alt1%ubt
 - new version
