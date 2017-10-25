@@ -10,7 +10,7 @@
 
 Name: firebird
 Version: %major.%minor
-Release: alt1
+Release: alt2
 Summary: Firebird SQL Database, fork of InterBase
 Group: Databases
 License: IPL
@@ -41,6 +41,13 @@ BuildRequires: libtool
 BuildRequires: libncurses-devel
 BuildRequires: zlib-devel libtommath-devel
 
+Obsoletes: %name-superserver
+Conflicts: %name-superserver < %EVR
+Provides: %name-superserver = %EVR
+Obsoletes: %name-classic
+Conflicts: %name-classic < %EVR
+Provides: %name-classic = %EVR
+
 %description
 This is the Firebird SQL Database shared files.
 
@@ -66,8 +73,13 @@ Development libraries for firebird.
 Summary: Client programs for Firebird SQL Database
 Group: Databases
 Requires: %name = %EVR
-Conflicts: %name-utils-superserver
 Obsoletes: %name-client-embedded <= 2.0
+Obsoletes: %name-utils-superserver
+Conflicts: %name-utils-superserver < %EVR
+Provides: %name-utils-superserver = %EVR
+Obsoletes: %name-utils-classic
+Conflicts: %name-utils-classic < %EVR
+Provides: %name-utils-classic = %EVR
 
 %description utils
 Client access tools for firebird.
@@ -89,7 +101,15 @@ Multi-threaded, non-local client libraries for Firebird SQL Database
 Summary: Server for Firebird SQL Database
 Group: Databases
 Requires: %name = %EVR
-Conflicts: %name-server-superserver
+Obsoletes: %name-server-superserver
+Conflicts: %name-server-superserver < %EVR
+Provides: %name-server-superserver = %EVR
+Obsoletes: %name-server-classic
+Conflicts: %name-server-classic < %EVR
+Provides: %name-server-classic = %EVR
+Obsoletes: %name-server-common
+Conflicts: %name-server-common < %EVR
+Provides: %name-server-common = %EVR
 %add_findreq_skiplist %_sbindir/changeServerMode.sh
 
 %description server
@@ -338,6 +358,10 @@ fi
 %_datadir/%name/examples/*
 
 %changelog
+* Wed Oct 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.2.32703.0-alt2
+- Fixed init script (closes: #34060).
+- Updated provides and obsoletes.
+
 * Wed Oct 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.2.32703.0-alt1
 - Updated to upstream version 3.0.2.32703-0 (closes: #30271).
 
