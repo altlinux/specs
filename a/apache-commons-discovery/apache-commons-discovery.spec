@@ -2,15 +2,16 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global base_name  discovery
 %global short_name commons-%{base_name}
 
 Name:           apache-%{short_name}
 Version:        0.5
-Release:        alt3_16jpp8
+Release:        alt3_17jpp8
 Epoch:          2
 Summary:        Apache Commons Discovery
 License:        ASL 2.0
@@ -63,6 +64,9 @@ BuildArch: noarch
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt3_17jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt3_16jpp8
 - new fc release
 
