@@ -8,7 +8,7 @@
 %endif
 
 Name: python-module-%oname
-Version: 1.6.4
+Version: 1.6.5
 Release: alt1
 Epoch: 1
 
@@ -469,6 +469,9 @@ PYTHONPATH=$(pwd) %make_build test
 %endif
 
 %changelog
+* Wed Oct 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.6.5-alt1
+- Updated to upstream version 1.6.5.
+
 * Thu Oct 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.6.4-alt1
 - Updated to upstream version 1.6.4.
 
