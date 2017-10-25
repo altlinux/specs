@@ -2,16 +2,16 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name android-opengl-api
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.1
 %global namedversion gl%{version}-android-2.1_r1
 Name:          android-opengl-api
 Version:       1.1
-Release:       alt1_11jpp8
+Release:       alt1_12jpp8
 Summary:       Google Android Java ME Library (Khronos)
 License:       ASL 2.0
 # While the EULA for the Android SDK restricts distribution of those binaries, the source code 
@@ -69,6 +69,9 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %doc LICENSE-2.0.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_12jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_11jpp8
 - new fc release
 
