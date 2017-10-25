@@ -3,12 +3,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-plugin-testing
 Version:        3.3.0
-Release:        alt1_7jpp8
+Release:        alt1_9jpp8
 Summary:        Maven Plugin Testing
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugin-testing/
@@ -28,7 +29,6 @@ BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-site-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.apache.maven.shared:maven-invoker)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-file)
@@ -81,6 +81,7 @@ Framework to test Maven Plugins with Easymock objects.
 %patch1 -p1
 
 %pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :maven-site-plugin
 
 sed -i -e "s/MockControl/IMocksControl/g" maven-test-tools/src/main/java/org/apache/maven/shared/tools/easymock/MockManager.java
 
@@ -104,6 +105,9 @@ rm maven-plugin-testing-tools/src/test/java/org/apache/maven/shared/test/plugin/
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_9jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_7jpp8
 - new fc release
 
