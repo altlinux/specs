@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-osgi
 Version:        0.2.0
-Release:        alt1_12jpp8
+Release:        alt1_13jpp8
 # Maven-shared defines maven-osgi version as 0.3.0
 Epoch:          1
 Summary:        Library for Maven-OSGi integration
@@ -72,6 +73,9 @@ sed -i 's/import aQute\.lib\.osgi/import aQute.bnd.osgi/g' src/main/java/org/apa
 
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.2.0-alt1_13jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.2.0-alt1_12jpp8
 - new fc release
 
