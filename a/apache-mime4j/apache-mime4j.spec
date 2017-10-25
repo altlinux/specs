@@ -4,12 +4,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           apache-mime4j
 Version:        0.7.2
-Release:        alt3_13jpp8
+Release:        alt3_15jpp8
 Summary:        Apache JAMES Mime4j
 License:        ASL 2.0
 URL:            http://james.apache.org/mime4j
@@ -52,6 +53,10 @@ for p in core dom storage; do
   %mvn_file :*$p %{name}/%{name}-$p %{name}/$p
 done
 
+# Don't use deprecated "attached" goal of Maven Assembly Plugin, which
+# was removed in version 3.0.0.
+%pom_xpath_set "pom:plugin[pom:artifactId='maven-assembly-plugin']/pom:executions/pom:execution/pom:goals/pom:goal[text()='attached']" single assemble
+
 %build
 %mvn_build
 
@@ -66,6 +71,9 @@ done
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.7.2-alt3_15jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.7.2-alt3_13jpp8
 - new fc release
 
