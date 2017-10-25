@@ -2,15 +2,16 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global base_name       dbcp
 %global short_name      commons-%{base_name}
 
 Name:             apache-%{short_name}
 Version:          1.4
-Release:          alt2_20jpp8
+Release:          alt2_21jpp8
 Summary:          Apache Commons DataBase Pooling Package
 Group:            Development/Other
 License:          ASL 2.0
@@ -74,6 +75,9 @@ iconv -f iso8859-1 -t utf-8 RELEASE-NOTES.txt > RELEASE-NOTES.txt.conv && mv -f 
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_21jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_20jpp8
 - new fc release
 
