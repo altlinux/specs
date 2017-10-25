@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           apache-commons-csv
 Version:        1.4
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Summary:        Utilities to assist with handling of CSV files
 License:        ASL 2.0
 URL:            https://commons.apache.org/proper/commons-csv/
@@ -16,7 +17,6 @@ BuildArch:      noarch
 Source0:        http://www.apache.org/dist/commons/csv/source/commons-csv-%{version}-src.tar.gz
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.h2database:h2)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
@@ -46,6 +46,10 @@ find -name profile.jacoco -delete
 %pom_remove_plugin :apache-rat-plugin
 %pom_remove_plugin :maven-checkstyle-plugin
 
+# unwanted dependency
+%pom_remove_dep :h2
+rm src/test/java/org/apache/commons/csv/CSVPrinterTest.java
+
 %mvn_file ":{*}" %{name} @1
 %mvn_alias : commons-csv:
 
@@ -63,6 +67,9 @@ find -name profile.jacoco -delete
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_1jpp8
 - new version
 
