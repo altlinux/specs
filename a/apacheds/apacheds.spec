@@ -4,11 +4,11 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name apacheds
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 2.0.0
 %global namedreltag -M21
 %global namedversion %{version}%{?namedreltag}
@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          apacheds
 Version:       2.0.0
-Release:       alt1_0.3.M21jpp8
+Release:       alt1_0.4.M21jpp8
 Summary:       Apache Directory Server
 License:       ASL 2.0
 Url:           http://directory.apache.org/
@@ -299,6 +299,9 @@ sed -i '/ConcurrentJunitRunner/d' $(find */src/test/java -name "*.java")
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_0.4.M21jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_0.3.M21jpp8
 - new fc release
 
