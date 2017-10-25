@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.42
+Version: 0.8.43
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,9 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Wed Oct 25 2017 Dmitry V. Levin <ldv@altlinux.org> 0.8.43-alt1
+- 130-check-fhs (check_fhs): disallow invalid path names (closes: #34024).
+
 * Mon Feb 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.42-alt1
 - check-python: minor version is not allowed in
   /usr/lib(64)?/python3[.][0-9]/site-packages/.
