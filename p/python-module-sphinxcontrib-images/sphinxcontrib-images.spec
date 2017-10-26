@@ -4,31 +4,32 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5.0
-Release: alt1.git20150324.1
+Version: 0.7.0
+Release: alt1
 Summary: Sphinx "images" extension
 License: ASLv2.0
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/sphinxcontrib-images/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/spinus/sphinxcontrib-images.git
 Source: %name-%version.tar
 # https://github.com/lokesh/lightbox2.git
 Source1: lightbox2.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-requests python-module-sphinx-devel
-BuildPreReq: python-module-tox python-modules-json
-BuildPreReq: python-module-wheel
-BuildPreReq: python-module-sphinx_rtd_theme
+Patch1: %oname-%version-alt-build.patch
+
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-requests python-module-sphinx-devel
+BuildRequires: python-module-tox python-modules-json
+BuildRequires: python-module-wheel
+BuildRequires: python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-requests python3-module-sphinx-devel
-BuildPreReq: python3-module-tox
-BuildPreReq: python3-module-wheel
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-requests python3-module-sphinx-devel
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-wheel
 %endif
 
 %py_provides %mname.images
@@ -64,6 +65,7 @@ Features:
 
 %prep
 %setup
+%patch1 -p1
 
 pushd sphinxcontrib_images_lightbox2
 tar -xf %SOURCE1
@@ -122,6 +124,9 @@ export PYTHONPATH=$PWD
 %endif
 
 %changelog
+* Thu Oct 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.0-alt1
+- Updated to upstream version 0.7.0.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.0-alt1.git20150324.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
