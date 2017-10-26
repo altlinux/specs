@@ -1,11 +1,11 @@
 %define ver_major 12.10
 %define api_ver 0.1
 
-%def_without mono
+%def_with mono
 
 Name: libappindicator
 Version: %ver_major.0
-Release: alt6
+Release: alt7
 Summary: Application indicators library
 
 Group: System/Libraries
@@ -14,15 +14,16 @@ Url: https://launchpad.net/%name
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version.tar.gz
+Patch: 0001_Fix_mono_dir.patch
 BuildRequires(pre): gcc
-BuildRequires: gtk-doc vala-tools
+BuildRequires: vala-tools gtk-doc
 BuildRequires: libdbus-glib-devel libdbusmenu-devel
 BuildRequires: libdbusmenu-gtk2-devel libdbusmenu-gtk3-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: libgtk+2-devel libgtk+2-gir-devel
 BuildRequires: libgtk+3-devel libgtk+3-gir-devel
 BuildRequires: libindicator-devel libindicator-gtk3-devel
-BuildRequires: python-devel python-module-pygtk-devel
+BuildRequires: python-devel python-module-pygtk-devel rpm-build-gir
 %if_with mono
 BuildRequires(pre): rpm-build-mono
 BuildRequires: libgtk-sharp2-devel libgtk-sharp2-gapi
@@ -135,34 +136,43 @@ Requires: %name-sharp = %version-%release
 This package contains the development files for the appindicator-sharp library.
 
 %prep
-%setup -a0
-mv %name-%version %name-gtk3
+%setup
+%patch0 -p1 -b .monodir
+
+sed -i "s#gmcs#mcs#g" configure.ac
 
 %build
-%define opts --disable-static --enable-gtk-doc --disable-dumper
-
+%define opts --disable-static --disable-gtk-doc --disable-dumper
 %autoreconf
-export CFLAGS="%{optflags} $CFLAGS -Wno-deprecated-declarations"
-%configure  %opts --with-gtk=2
-make -j1 V=1
-%make
+%define _configure_script ../configure
+mkdir build-gtk2 build-gtk3
 
-pushd %name-gtk3
-%autoreconf
-export CFLAGS="%{optflags} $CFLAGS -Wno-deprecated-declarations"
+pushd build-gtk2
+export CFLAGS="%optflags $CFLAGS -Wno-deprecated-declarations"
+%configure %opts --with-gtk=2
+%make_build
+popd
+
+pushd build-gtk3
+export CFLAGS="%optflags $CFLAGS -Wno-deprecated-declarations"
 %configure %opts --with-gtk=3
-make -j1 V=1
+%make_build
 popd
 
 %install
-%makeinstall_std
-
-pushd %name-gtk3
+pushd build-gtk2
 %makeinstall_std
 popd
 
+pushd build-gtk3
+%makeinstall_std
+popd
+
+find %buildroot -type f -name '*.la' -delete
+
 %files
 %_libdir/libappindicator.so.*
+%doc AUTHORS README COPYING COPYING.LGPL.2.1
 
 %files gir
 %_typelibdir/AppIndicator-%api_ver.typelib
@@ -183,7 +193,6 @@ popd
 %dir %python_sitelibdir/appindicator/
 %python_sitelibdir/appindicator/__init__.py*
 %python_sitelibdir/appindicator/_appindicator.so
-%python_sitelibdir/appindicator/_appindicator.la
 %dir %_datadir/pygtk/
 %dir %_datadir/pygtk/2.0/
 %dir %_datadir/pygtk/2.0/defs/
@@ -209,17 +218,16 @@ popd
 
 %files devel-doc
 %doc %_datadir/gtk-doc/html/*
-%doc AUTHORS README COPYING COPYING.LGPL.2.1
 
 %if_with mono
 %files sharp
-%dir %_libdir/cli/appindicator-sharp-%api_ver/
-%_libdir/cli/appindicator-sharp-%api_ver/appindicator-sharp.dll
-%_libdir/cli/appindicator-sharp-%api_ver/appindicator-sharp.dll.config
-%_libdir/cli/appindicator-sharp-%api_ver/policy.0.0.appindicator-sharp.config
-%_libdir/cli/appindicator-sharp-%api_ver/policy.0.0.appindicator-sharp.dll
-%_libdir/cli/appindicator-sharp-%api_ver/policy.0.1.appindicator-sharp.config
-%_libdir/cli/appindicator-sharp-%api_ver/policy.0.1.appindicator-sharp.dll
+%dir %_libdir/appindicator-sharp-%api_ver/
+%_libdir/appindicator-sharp-%api_ver/appindicator-sharp.dll
+%_libdir/appindicator-sharp-%api_ver/appindicator-sharp.dll.config
+%_libdir/appindicator-sharp-%api_ver/policy.0.0.appindicator-sharp.config
+%_libdir/appindicator-sharp-%api_ver/policy.0.0.appindicator-sharp.dll
+%_libdir/appindicator-sharp-%api_ver/policy.0.1.appindicator-sharp.config
+%_libdir/appindicator-sharp-%api_ver/policy.0.1.appindicator-sharp.dll
 %dir %_monodir/appindicator-sharp/
 %_monodir/appindicator-sharp/appindicator-sharp.dll
 %_monodir/appindicator-sharp/policy.0.0.appindicator-sharp.dll
@@ -237,6 +245,10 @@ popd
 %endif
 
 %changelog
+* Thu Oct 26 2017 Anton Midyukov <antohami@altlinux.org> 12.10.0-alt7
+- Disable build with gtk-doc (Fix FTBFS)
+- Enable build with mono.
+
 * Wed Sep 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 12.10.0-alt6
 - Updated build dependencies.
 
