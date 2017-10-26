@@ -2,7 +2,7 @@
 
 Name: rivalcfg
 Version: 2.6.0
-Release: alt2.git%git
+Release: alt3.git%git
 
 Summary: Configure SteelSeries Rival gaming mice
 License: DWTFYWTPL
@@ -15,7 +15,7 @@ Packager: L.A. Kostis <lakostis@altlinux.org>
 
 BuildArch: noarch
 
-BuildRequires(pre): python-dev python-module-setuptools
+BuildRequires(pre): python-devel python-module-setuptools
 
 %description
 rivalcfg is a small CLI utility program that allows you to configure
@@ -30,8 +30,8 @@ CFLAGS="%optflags" python setup.py build
 
 %install
 python setup.py install --root %buildroot --record=INSTALLED_FILES
-mkdir -p %buildroot%_sysconfdir/udev/rules.d
-install -m644 rivalcfg/data/99-steelseries-rival.rules %buildroot%_sysconfdir/udev/rules.d/
+mkdir -p %buildroot%_udevrulesdir
+install -m644 rivalcfg/data/99-steelseries-rival.rules %buildroot%_udevrulesdir/
 cat << EOF > %buildroot%_bindir/%name
 #!/usr/bin/env python
 
@@ -43,9 +43,12 @@ EOF
 %files -f INSTALLED_FILES
 %doc README* LICENSE* doc/*.md
 %exclude %python_sitelibdir_noarch/%name-%{version}*
-%_sysconfdir/udev/rules.d/*.rules
+%_udevrulesdir/*.rules
 
 %changelog
+* Thu Oct 26 2017 L.A. Kostis <lakostis@altlinux.ru> 2.6.0-alt3.gitd0c3ec2
+- .spec cleanup (based on repocop suggestions).
+
 * Tue Oct 24 2017 L.A. Kostis <lakostis@altlinux.ru> 2.6.0-alt2.gitd0c3ec2
 - rival95: experimental support of Rival 95.
 
