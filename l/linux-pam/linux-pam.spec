@@ -1,5 +1,5 @@
 Name: linux-pam
-Version: 1.3.0.0.17.7d0c
+Version: 1.3.0.0.23.94f5
 Release: alt1
 
 Summary: Pluggable Authentication Modules
@@ -185,10 +185,10 @@ done
 	%{subst_enable nls} \
 	%{subst_enable static} \
 	#
-%make_build
+%make_build sepermitlockdir=%_lockdir/sepermit
 
 %install
-%makeinstall_std
+%makeinstall_std sepermitlockdir=%_lockdir/sepermit
 
 # Relocate development libraries from /%_lib/ to %_libdir/.
 mkdir -p %buildroot%_libdir
@@ -254,6 +254,11 @@ install -pm644 alt/50-defaults.conf \
 install -pDm644 alt/linux-pam.macros \
 	%buildroot%_rpmmacrosdir/pam
 
+%if_enabled selinux
+mkdir -p %buildroot{%_tmpfilesdir,%_lockdir/sepermit}
+install -pm644 alt/sepermit.conf %buildroot%_tmpfilesdir/
+%endif # enabled selinux
+
 # Documentation
 mkdir -p %buildroot%docdir/modules
 for f in modules/pam_*/README; do
@@ -316,8 +321,12 @@ make check
 %config(noreplace) %_secdir/limits.d
 %config(noreplace) %_secdir/namespace.*
 %config(noreplace) %_secdir/pam_env.conf
-%{?_enable_selinux:%config(noreplace) %_secdir/sepermit.conf}
 %config(noreplace) %_sysconfdir/environment
+%if_enabled selinux
+%config(noreplace) %_secdir/sepermit.conf
+%dir %_lockdir/sepermit/
+%_tmpfilesdir/sepermit.conf
+%endif # enabled selinux
 %_pam_modules_dir/*
 %exclude %_pam_modules_dir/pam_deny.so
 %exclude %_pam_modules_dir/pam_permit.so
@@ -336,6 +345,10 @@ make check
 %docdir/Linux-PAM*
 
 %changelog
+* Thu Oct 26 2017 Dmitry V. Levin <ldv@altlinux.org> 1.3.0.0.23.94f5-alt1
+- v1.3.0-17-g7d0c508 -> v1.3.0-23-g94f529d4.
+- pam_sepermit: changed sepermit lock directory to %_lockdir/sepermit.
+
 * Tue Jun 20 2017 Dmitry V. Levin <ldv@altlinux.org> 1.3.0.0.17.7d0c-alt1
 - v1.3.0-4-gdce30cd -> v1.3.0-17-g7d0c508.
 - Enabled pam_keyinit module (closes: #33558).
