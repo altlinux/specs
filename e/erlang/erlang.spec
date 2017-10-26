@@ -50,10 +50,10 @@
 
 
 %define Name Erlang
-%define ver 19
+%define ver 20
 Name: erlang
 Epoch: 1
-%define subver 0.7
+%define subver 1.3
 Version: %ver.%subver
 %define plevel b
 Release: alt1
@@ -589,9 +589,9 @@ This package contains documentation for %Name/OTP in PDF format.
 %setup -n otp_src_OTP-%ver.%subver
 chmod -R u+w ./
 
-#%if_with ssl
+#if_with ssl
 #subst "s/\/usr\/local\/kerberos\/include/\/usr\/include\/krb5/g" erts/configure.in
-#%endif
+#endif
 %__mkdir_p lib/hipe/ebin
 subst "s/\@libdir\@/\@libexecdir\@/g" Makefile.in
 sed -i 's/ -Wl,-R\$(.*) / /' lib/crypto/priv/Makefile
@@ -601,7 +601,7 @@ sed -i '/^include .*\/make\/otp_subdir.mk/iMAKEFLAGS += -j1' \
 sed -i  '/^include .*\/make\/run_make.mk/iMAKEFLAGS += -j1' \
 	lib/{tools,asn1}/c_src/Makefile
 sed -i '/^include .*\/make\/otp_release_targets.mk/iMAKEFLAGS += -j1' \
-	lib/{ssh,common_test,gs,eunit,odbc,cos*}/src/Makefile \
+	lib/{ssh,common_test,eunit,odbc,cos*}/src/Makefile \
 	lib/{{os_mon,snmp}/mibs,public_key/asn1,ic/examples/pre_post_condition,orber/examples/Stack,orber/COSS/CosNaming,megaco/src/binary}/Makefile*
 sed -i '/^bootstrap_setup_target:/s|:| $(BOOTSTRAP_ROOT)/bootstrap/target:|' Makefile.in
 subst "s/^.*ERL_COMPILE_FLAGS.*\+debug_info/#\0/g" make/otp.mk.in
@@ -667,7 +667,6 @@ done
 %install
 %{?_with_java:%{?java_options:export _JAVA_OPTIONS="%java_options"}}
 
-#sed -i -e '/Generated\ mod/d ' -e '/Handcrafted mod/d ' lib/wx/src/wx.app.src
 
 %make_install -j1 ERLANG_LIBDIR=%buildroot%_otpdir ERLANG_ILIBDIR=%_otpdir INSTALL_PREFIX=%buildroot install
 
@@ -676,7 +675,7 @@ export ERL_LIBS=%buildroot%_otpdir/lib
 %make_install PATH=$PWD/bin:$PATH ERLANG_LIBDIR=%buildroot%_otpdir ERLANG_ILIBDIR=%_otpdir INSTALL_PREFIX=%buildroot install-docs
 gzip -9nf %buildroot%_erlmandir/man?/*
 install -d -m 0755 %buildroot{%_man1dir,%_man3dir,%_man4dir,%_man6dir,%_man7dir,%_docdir/%name-%version/{pdf,html/lib}}
-mv %buildroot%_otpdir/{COPYRIGHT,PR.template,README} %buildroot%_docdir/%name-%version
+mv %buildroot%_otpdir/{COPYRIGHT,PR.template,README.md} %buildroot%_docdir/%name-%version
 ln -sf  %buildroot{%_otpdir/{doc,erts-*/doc,lib/*/doc}/pdf/*.pdf,%_docdir/%name-%version/pdf/}
 ln -sf %buildroot%_erldocdir/* %buildroot%_docdir/%name-%version/html/
 ln -sf %buildroot%_otpdir/erts-*/doc/html %buildroot%_docdir/%name-%version/html/erts
@@ -761,7 +760,6 @@ install_ebin()
     shift
     for d in %buildroot%_otplibdir/*/ebin; do
 		install -d -m 0755 $d.$f
-#                %__erlang -noshell -run beam_strip start -run erlang halt -extra -o $d.$f $@ $d/*.beam
 		done
     cat > %buildroot%_otpdir/bin/erl.$f <<__EOF__
 #!/bin/sh
@@ -774,10 +772,6 @@ __EOF__
 %{?_with_otp_debug:install_ebin debug -A -r CInf -c}
 
 %{?_with_otp_native:install_ebin native -s -c}
-#%{?_with_otp_native:install_ebin native -s -c}
-#for d in %buildroot%_otplibdir/*/ebin; do
-#%{?_enable_strip_beam:%__erlang -noshell -run beam_strip start -run erlang halt -extra -d -A -c $d/*.beam}
-#done
 
 for f in ct_run dialyzer erl erlc escript run_erl start to_erl typer; do
     ln -sf %buildroot%_otpdir{/erts-*,}/bin/$f
@@ -790,7 +784,7 @@ symlinks -scdr %buildroot
 
 %add_findreq_skiplist %_otplibdir/megaco-*/examples/meas/*.sh.skel
 %add_findreq_skiplist %_otplibdir/*/contribs/ebin/* %_otplibdir/*/examples/ebin/* %_otplibdir/*/examples/*/ebin/*
-#%add_erlang_req_modules_skiplist win32reg
+##add_erlang_req_modules_skiplist win32reg
 
 
 # systemd-related stuff
@@ -821,7 +815,7 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_bindir/*
 %exclude %_bindir/ct_run
 %dir %_otpdir
-%dir %_otpdir/doc
+##dir %_otpdir/doc
 %dir %_otpdir/bin
 %dir %_otplibdir
 %dir %_erldocdir
@@ -887,7 +881,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/ic-*/priv
 %dir %_otplibdir/inets-*
 %_otplibdir/inets-*/priv
-#dir %_otplibdir/inviso-*
 %dir %_otplibdir/kernel-*
 %dir %_otplibdir/mnesia-*
 %dir %_otplibdir/orber-*
@@ -902,8 +895,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %dir %_otplibdir/observer-*
 %dir %_otplibdir/observer-*/ebin
 %dir %_otplibdir/parsetools-*
-%dir %_otplibdir/percept-*
-%_otplibdir/percept-*/priv
 %dir %_otplibdir/public_key-*
 %dir %_otplibdir/runtime_tools-*
 %dir %_otplibdir/sasl-*
@@ -915,11 +906,7 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %dir %_otplibdir/ssl-*
 %dir %_otplibdir/stdlib-*
 %dir %_otplibdir/syntax_tools-*
-#%dir %_otplibdir/test_server-*
 %dir %_otplibdir/tools-*
-#%_otplibdir/tools-*/priv
-#%dir %_otplibdir/webtool-*
-#%_otplibdir/webtool-*/priv
 %dir %_otplibdir/xmerl-*
 
 
@@ -942,6 +929,7 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/hipe-*/main
 %_otplibdir/hipe-*/misc
 %_otplibdir/hipe-*/rtl
+%_otplibdir/hipe-*/llvm
 %_otplibdir/ic-*/include
 %_otplibdir/ic-*/src
 %_otplibdir/inets-*/include
@@ -970,7 +958,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/ssl-*/src
 %_otplibdir/stdlib-*/include
 %_otplibdir/stdlib-*/src
-#%_otplibdir/test_server-*/include
 %_otplibdir/tools-*/include
 %_otplibdir/tools-*/src
 %_otplibdir/xmerl-*/include
@@ -989,10 +976,9 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/eunit-*/ebin
 %_otplibdir/eldap-*/ebin
 %_otplibdir/hipe-*/ebin
-#%{?_enable_hipe:%exclude %_otplibdir/hipe-*/ebin/hipe_tool*}
+##%{?_enable_hipe:%exclude %_otplibdir/hipe-*/ebin/hipe_tool*}
 %_otplibdir/ic-*/ebin
 %_otplibdir/inets-*/ebin
-#_otplibdir/inviso-*/ebin
 %_otplibdir/kernel-*/ebin
 %_otplibdir/mnesia-*/ebin
 %_otplibdir/observer-*/ebin/ttb.*
@@ -1000,7 +986,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/os_mon-*/ebin
 %_otplibdir/otp_mibs-*/ebin
 %_otplibdir/parsetools-*/ebin
-%_otplibdir/percept-*/ebin
 %_otplibdir/public_key-*/ebin
 %_otplibdir/runtime_tools-*/ebin
 %_otplibdir/sasl-*/ebin
@@ -1009,12 +994,11 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/ssl-*/ebin
 %_otplibdir/stdlib-*/ebin
 %_otplibdir/syntax_tools-*/ebin
-#%_otplibdir/test_server-*/ebin
 %_otplibdir/tools-*/ebin
-#%_otplibdir/webtool-*/ebin
 %_otplibdir/xmerl-*/ebin
+%_otplibdir/erl_interface-*/ebin
 # Windows
-#%exclude %_otplibdir/stdlib-*/ebin/win32*
+##exclude #_otplibdir/stdlib-*/ebin/win32*
 
 
 %files megaco-drivers
@@ -1035,63 +1019,37 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otpdir/erts-*/bin/typer
 %_otpdir/bin/typer*
 %_bindir/typer*
-#dir %_otplibdir/appmon-* -obsoleted
-#_otplibdir/appmon-*/priv
 %dir %_otplibdir/debugger-*
 %_otplibdir/debugger-*/priv
 %dir %_otplibdir/et-*
-%dir %_otplibdir/gs-*
-%_otplibdir/gs-*/priv
-#dir %_otplibdir/pman-* - obsoleted
 %dir %_otplibdir/observer-*
 %_otplibdir/observer-*/priv
-#_otplibdir/pman-*/priv
 %dir %_otplibdir/reltool-*
-#dir %_otplibdir/toolbar-*
-#dir %_otplibdir/tv-*
-#_otplibdir/tv-*/priv
-%dir %_otplibdir/typer-*
 %dir %_otplibdir/wx-*
 %_otplibdir/wx-*/priv
 
 %files visual-devel
-#_otplibdir/appmon-*/include
-#_otplibdir/appmon-*/src
-%_otplibdir/debugger-*/include
 %_otplibdir/debugger-*/src
+%_otplibdir/debugger-*/include
 %_otplibdir/dialyzer-*/include
 %_otplibdir/dialyzer-*/src
 %_otplibdir/et-*/include
-%_otplibdir/gs-*/include
-%_otplibdir/gs-*/src
 %_otplibdir/observer-*/include
 %_otplibdir/observer-*/src
-#_otplibdir/pman-*/include
-#_otplibdir/pman-*/src
-%_otplibdir/reltool-*/include
 %_otplibdir/reltool-*/src
-#_otplibdir/toolbar-*/include
-#_otplibdir/toolbar-*/src
-#_otplibdir/tv-*/include
-#_otplibdir/tv-*/src
+%_otplibdir/reltool-*/include
 %_otplibdir/wx-*/include
 %_otplibdir/wx-*/src
 
 
 %files visual
-#_otplibdir/appmon-*/ebin
 %_otplibdir/debugger-*/ebin
 %_otplibdir/dialyzer-*/ebin
 %_otplibdir/et-*/ebin
-%_otplibdir/gs-*/ebin
 %{?_enable_hipe:%_otplibdir/hipe*}
 %_otplibdir/observer-*/ebin
 %exclude %_otplibdir/observer-*/ebin/ttb.*
-#_otplibdir/pman-*/ebin
 %_otplibdir/reltool-*/ebin
-#_otplibdir/toolbar-*/ebin
-#_otplibdir/tv-*/ebin
-%_otplibdir/typer-*/ebin
 %_otplibdir/wx-*/ebin
 
 
@@ -1141,17 +1099,11 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %files otp-debug
 %_otplibdir/*/ebin.debug
 %exclude %_otplibdir/megaco-*
-#exclude %_otplibdir/appmon-*
 %exclude %_otplibdir/common_test-*
 %exclude %_otplibdir/debugger-*
 %exclude %_otplibdir/et-*
-%exclude %_otplibdir/gs-*
 %{?_enable_hipe:%exclude %_otplibdir/hipe*}
 %exclude %_otplibdir/observer-*
-#exclude %_otplibdir/pman-*
-#exclude %_otplibdir/toolbar-*
-#exclude %_otplibdir/tv-*
-%exclude %_otplibdir/typer-*
 %exclude %_otplibdir/odbc-*
 %exclude %_otplibdir/reltool-*/ebin.debug
 %exclude %_otplibdir/wx-*/ebin.debug
@@ -1166,17 +1118,10 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %files visual-debug
-#_otplibdir/appmon-*/ebin.debug
 %_otplibdir/debugger-*/ebin.debug
 %_otplibdir/et-*/ebin.debug
-%_otplibdir/gs-*/ebin.debug
-#{?_enable_hipe:%_otplibdir/hipe-*/ebin.debug/hipe_tool*}
 %_otplibdir/observer-*/ebin.debug
-#_otplibdir/pman-*/ebin.debug
 %_otplibdir/reltool-*/ebin.debug
-#_otplibdir/toolbar-*/ebin.debug
-#_otplibdir/tv-*/ebin.debug
-%_otplibdir/typer-*/ebin.debug
 %_otplibdir/wx-*/ebin.debug
 
 
@@ -1192,18 +1137,11 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %files otp-native
 %_otplibdir/*/ebin.native
 %exclude %_otplibdir/megaco-*
-#exclude %_otplibdir/appmon-*
 %exclude %_otplibdir/common_test-*
 %exclude %_otplibdir/debugger-*
 %exclude %_otplibdir/et-*
-%exclude %_otplibdir/gs-*
-#exclude %_otplibdir/hipe-*/ebin.native/hipe_tool*
 %exclude %_otplibdir/observer-*
-#exclude %_otplibdir/pman-*
 %exclude %_otplibdir/reltool-*
-#exclude %_otplibdir/toolbar-*
-#exclude %_otplibdir/tv-*
-%exclude %_otplibdir/typer-*
 %exclude %_otplibdir/wx-*
 %exclude %_otplibdir/odbc-*
 %_otpdir/bin/*.native
@@ -1217,17 +1155,10 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %files visual-native
-#_otplibdir/appmon-*/ebin.native
 %_otplibdir/debugger-*/ebin.native
 %_otplibdir/et-*/ebin.native
-%_otplibdir/gs-*/ebin.native
-#_otplibdir/hipe-*/ebin.native/hipe_tool*
 %_otplibdir/observer-*/ebin.native
-#_otplibdir/pman-*/ebin.native
 %_otplibdir/reltool-*/ebin.native
-#_otplibdir/toolbar-*/ebin.native
-#_otplibdir/tv-*/ebin.native
-%_otplibdir/typer-*/ebin.native
 %_otplibdir/wx-*/ebin.native
 
 
@@ -1289,6 +1220,12 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Thu Oct 26 2017 Denis Medvedev <nbr@altlinux.org> 1:20.1.3-alt1
+- new version
+
+* Wed Apr 05 2017 Denis Medvedev <nbr@altlinux.org> 1:19.0.7-alt2
+- recompilation with updated rpm-build-erlang
+
 * Tue Sep 20 2016 Denis Medvedev <nbr@altlinux.org> 1:19.0.7-alt1
 - new version
 

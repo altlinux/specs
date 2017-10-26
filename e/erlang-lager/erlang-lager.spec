@@ -5,7 +5,7 @@
 
 Name: erlang-lager
 Version: 3.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: A logging framework for Erlang/OTP
 Group: Development/Erlang
@@ -49,5 +49,8 @@ install -p -m 0644 -D include/%realname.hrl %buildroot%_erllibdir/%realname-%ver
 %_erllibdir/%realname-%version/include/%realname.hrl
 
 %changelog
+* Mon Oct 23 2017 Denis Medvedev <nbr@altlinux.org> 3.1.0-alt1.1
+- Rebuild with fixed rpm-build-erlang.
+
 * Fri Apr 08 2016 Denis Medvedev <nbr@altlinux.org> 3.1.0-alt1
 - Initial Sisyphus release

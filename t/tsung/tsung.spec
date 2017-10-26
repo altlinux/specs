@@ -1,5 +1,5 @@
 Name: tsung
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 Summary: A distributed multi-protocol load testing tool
 URL: http://%name.erlang-projects.org/
@@ -37,7 +37,7 @@ It also has support for SSL.
 %configure
 %make_build %name doc
 %make
-bzip2 --best --keep --force CHANGES
+bzip2 --best --keep --force CHANGELOG.md
 
 
 %install
@@ -49,19 +49,25 @@ bzip2 --best --keep --force CHANGES
     LIBDIR=%_libexecdir/%name \
     install
 rm -rf %buildroot%_otplibdir/{*/{src,BUILD_OPTIONS},tsung_*/include}
-install -m 0644 CHANGES.* CONTRIBUTORS README.md TODO  %buildroot%_docdir/%name-%version/
+install -m 0644 CHANGELOG* CONTRIBUTORS README.md TODO  %buildroot%_docdir/%name-%version/
 
 
 %files
 %_docdir/%name-%version/*
 %_bindir/*
-%_otplibdir/*
+#%_otplibdir/*
 %_man1dir/*
 %_libexecdir/%name
 %_datadir/%name
 
 
 %changelog
+* Tue Oct 31 2017 Denis Medvedev <nbr@altlinux.org> 1.7.0-alt1
+- new version
+
+* Mon Oct 23 2017 Denis Medvedev <nbr@altlinux.org> 1.6.0-alt1.1
+- Rebuild with fixed rpm-build-erlang.
+
 * Thu Apr 07 2016 Denis Medvedev <nbr@altlinux.org> 1.6.0-alt1
 - new version 1.6.0
 
