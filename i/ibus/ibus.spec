@@ -1,6 +1,7 @@
 %def_disable snapshot
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
+%define _localstatedir %_var
 
 %def_enable python
 %def_enable dconf
@@ -11,7 +12,7 @@
 
 Name: ibus
 Version: 1.5.17
-Release: alt1
+Release: alt2
 
 Summary: Intelligent Input Bus for Linux OS
 License: LGPLv2+
@@ -175,6 +176,7 @@ override some functions in GObject-Introspection.
 
 %install
 %makeinstall_std
+mkdir -p %buildroot%_localstatedir/cache/%name
 
 # install xinput config file
 install -pm 644 -D %SOURCE1 %buildroot%_xinputconf
@@ -224,8 +226,8 @@ fi
 %endif
 %_datadir/dbus-1/services/org.freedesktop.IBus.service
 %_datadir/dbus-1/services/org.freedesktop.portal.IBus.service
-
 %config %_xinputconf
+%_localstatedir/cache/%name
 %_man1dir/%name-daemon.1.*
 %_man1dir/%name-setup.1.*
 %_man1dir/%name.1.*
@@ -268,6 +270,9 @@ fi
 %python_sitelibdir/gi/overrides/IBus.py*
 
 %changelog
+* Thu Oct 26 2017 Yuri N. Sedunov <aris@altlinux.org> 1.5.17-alt2
+- rebuild with _localstatedir=%%_var
+
 * Mon Oct 23 2017 Yuri N. Sedunov <aris@altlinux.org> 1.5.17-alt1
 - 1.5.17
 
