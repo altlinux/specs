@@ -1,13 +1,21 @@
+%def_disable snapshot
+%define _localstatedir %_var
+
 Name: usbmuxd
 Version: 1.1.0
-Release: alt3
+Release: alt4
 
 Summary: Daemon for communicating with Apple's iPod Touch and iPhone
 Group: System/Servers
 License: GPLv3+
 Url: http://www.libimobiledevice.org/
 
+%if_disabled snapshot
 Source: http://www.libimobiledevice.org/downloads/%name-%version.tar.bz2
+%else
+# VCS: https://github.com/libimobiledevice/usbmuxd.git
+Source: %name-%version.tar
+%endif
 
 %define plist_ver 1.12
 %define usb_ver 1.0.3
@@ -43,6 +51,9 @@ the device to be accessed simultaneously.
 %doc AUTHORS README
 
 %changelog
+* Thu Oct 26 2017 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt4
+- rebuilt with _localstatedir=%%_var
+
 * Fri Apr 08 2016 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt3
 - rebuilt for new gcc, python, cython etc.
 
