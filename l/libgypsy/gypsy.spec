@@ -1,15 +1,16 @@
 %define _name gypsy
+%define _localstatedir %_var
 
 Name: lib%_name
 Version: 0.9
-Release: alt2
+Release: alt3
 
 Summary: A library for Gypsy
 Group: System/Libraries
 # See LICENSE file for details
 License: LGPLv2 and GPLv2
 Url: http://gypsy.freedesktop.org/
-Source: http://gypsy.freedesktop.org/gypsy-releases/%_name-%version.tar.gz
+Source: http://gypsy.freedesktop.org/releases/%_name-%version.tar.gz
 Patch: gypsy-0.8-unusedvar.patch
 Patch1: gypsy-0.9-alt-g_type_init.patch
 
@@ -87,6 +88,9 @@ access GPS data from multiple GPS sources concurrently.
 %_datadir/gtk-doc/html/gypsy
 
 %changelog
+* Thu Oct 26 2017 Yuri N. Sedunov <aris@altlinux.org> 0.9-alt3
+- rebuilt with _localstatedir=%%_var
+
 * Sun Apr 07 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9-alt2
 - fixed build with glib-2.36
 
