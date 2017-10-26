@@ -1,5 +1,5 @@
 Name: SDL2_image
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1%ubt
 
 Summary: Simple DirectMedia Layer - Image library
@@ -13,10 +13,11 @@ Source0: http://www.libsdl.org/projects/SDL_image/release/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-ubt
 
-BuildRequires: chrpath
-BuildRequires: libSDL2-devel >= 2.0.1
+BuildRequires: glibc-kernheaders-generic
+BuildRequires: libSDL2-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libpng-devel
+BuildRequires: libpng15
 BuildRequires: libtiff-devel
 BuildRequires: libwebp-devel
 
@@ -37,8 +38,6 @@ TGA, and TIFF formats.
 %package -n lib%name-devel
 Summary: Libraries, includes and more to develop SDL applications.
 Group: Development/C
-Requires: lib%name = %version-%release
-Requires: libSDL2-devel >= 2.0.1
 
 %description -n lib%name-devel
 This is a simple library to load images of various formats as SDL surfaces.
@@ -53,20 +52,13 @@ to develop SDL applications.
 
 %build
 %__autoconf
-%configure \
-	--disable-jpg-shared \
-	--disable-png-shared \
-	--disable-jpg-shared \
-	--disable-tif-shared \
-	--disable-webp-shared \
-	--disable-static
+%configure --disable-static
 
 %make_build
 
 %install
 %makeinstall_std
-%__rm -rf %buildroot%_libdir/lib%name.la
-chrpath -d %buildroot%_libdir/lib%name-2.0.so.*
+%__rm -f %buildroot%_libdir/lib%name.la
 
 %files -n lib%name
 %doc CHANGES.txt COPYING.txt README.txt
@@ -79,6 +71,9 @@ chrpath -d %buildroot%_libdir/lib%name-2.0.so.*
 %_libdir/lib%name.so
 
 %changelog
+* Thu Oct 26 2017 Nazarov Denis <nenderus@altlinux.org> 2.0.2-alt1%ubt
+- Version 2.0.2
+
 * Tue Oct 10 2017 Nazarov Denis <nenderus@altlinux.org> 2.0.1-alt1%ubt
 - Rebuilt with new libwebp
 

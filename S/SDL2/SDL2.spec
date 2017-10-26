@@ -5,8 +5,8 @@
 %def_disable static
 
 Name: SDL2
-Version: 2.0.6
-Release: alt3%ubt
+Version: 2.0.7
+Release: alt1%ubt
 
 Summary: Simple DirectMedia Layer
 License: zlib
@@ -19,21 +19,22 @@ Source: http://www.libsdl.org/release/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-ubt
 
+BuildPreReq: libXext-devel
+BuildPreReq: libdbus-devel
+
+%{?_with_fcitx:BuildRequires: fcitx-devel}
 BuildRequires: gcc-c++
 BuildRequires: glibc-kernheaders-generic
 BuildRequires: libGLES-devel
 BuildRequires: libXScrnSaver-devel
 BuildRequires: libXxf86vm-devel
-BuildRequires: libXext-devel
 BuildRequires: libalsa-devel
-BuildRequires: libdbus-devel
+%{?_with_nas:BuildRequires: libaudio-devel}
 BuildRequires: libesd-devel
+%{?_with_ibus:BuildRequires: libibus-devel}
+%{?_with_pulse:BuildRequires: libpulseaudio-devel}
 BuildRequires: libsamplerate-devel
 BuildRequires: libudev-devel
-%{?_with_ibus:BuildRequires: libibus-devel}
-%{?_with_fcitx:BuildRequires: fcitx-devel}
-%{?_with_nas:BuildRequires: libaudio-devel}
-%{?_with_pulse:BuildRequires: libpulseaudio-devel}
 
 %description
 This is the Simple DirectMedia Layer, a generic API that provides low
@@ -109,6 +110,9 @@ rm -f %buildroot%_libdir/*.la
 %endif
 
 %changelog
+* Thu Oct 26 2017 Nazarov Denis <nenderus@altlinux.org> 2.0.7-alt1%ubt
+- Version 2.0.7
+
 * Wed Sep 27 2017 Michael Shigorin <mike@altlinux.org> 2.0.6-alt3%ubt
 - introduce ibus, fcitx, nas, pulse knobs (on by default)
 

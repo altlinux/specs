@@ -1,6 +1,6 @@
 Name: SDL2_mixer
-Version: 2.0.1
-Release: alt1.1
+Version: 2.0.2
+Release: alt1%ubt
 
 Summary: Simple DirectMedia Layer - Sample Mixer Library
 License: zlib
@@ -9,15 +9,17 @@ Group: System/Libraries
 Url: http://www.libsdl.org/projects/SDL_mixer/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source0: http://www.libsdl.org/projects/SDL_mixer/release/%name-%version.tar.gz
+Source: http://www.libsdl.org/projects/SDL_mixer/release/%name-%version.tar.gz
 
-BuildRequires: chrpath
-BuildRequires: libSDL2-devel >= 2.0.1
+BuildRequires(pre): rpm-build-ubt
+
+BuildRequires: glibc-kernheaders-generic
+BuildRequires: libSDL2-devel
 BuildRequires: libflac-devel
-BuildRequires: libmodplug-devel
-BuildRequires: libsmpeg2-devel
-BuildRequires: libvorbis-devel
 %{?!_with_bootstrap:BuildRequires: libfluidsynth-devel}
+BuildRequires: libmodplug-devel
+BuildRequires: libmpg123-devel
+BuildRequires: libvorbis-devel
 
 %description
 Due to popular demand, here is a simple multi-channel audio mixer.
@@ -38,8 +40,6 @@ libraries.
 %package -n lib%name-devel
 Summary: Libraries, includes and more to develop SDL applications.
 Group: Development/C
-Requires: lib%name = %version-%release
-Requires: libSDL2-devel >= 2.0.1
 
 %description -n lib%name-devel
 Due to popular demand, here is a simple multi-channel audio mixer.
@@ -51,22 +51,13 @@ libraries.
 %setup
 
 %build
-%add_optflags -I%_includedir/libmodplug
-%autoreconf
-%configure \
-	--disable-music-mod-modplug-shared \
-	--disable-music-mod-mikmod-shared \
-	--disable-music-flac-shared \
-	--disable-music-mp3-smpeg-shared \
-	--disable-music-ogg-shared \
-	--disable-music-fluidsynth-shared \
-	--disable-static
+%__autoconf
+%configure --disable-static
 %make_build
 
 %install
 %makeinstall_std
-rm -f %buildroot%_libdir/lib%name.la
-chrpath -d %buildroot%_libdir/lib%name-2.0.so.*
+%__rm -f %buildroot%_libdir/lib%name.la
 
 %files -n lib%name
 %doc CHANGES.txt COPYING.txt README.txt
@@ -79,6 +70,9 @@ chrpath -d %buildroot%_libdir/lib%name-2.0.so.*
 %_libdir/lib%name.so
 
 %changelog
+* Thu Oct 26 2017 Nazarov Denis <nenderus@altlinux.org> 2.0.2-alt1%ubt
+- Version 2.0.2
+
 * Wed Apr 05 2017 Michael Shigorin <mike@altlinux.org> 2.0.1-alt1.1
 - avoid libfluidsynth when bootstrapping (hairy BRs)
 
