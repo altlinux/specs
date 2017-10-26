@@ -1,10 +1,11 @@
 %def_with php
 %define php5_extension cups
 %define _cups_serverbin %_libexecdir/cups
+%global _localstatedir %_var
 
 Name: cups-filters
 Version: 1.17.9
-Release: alt1
+Release: alt2
 
 Summary: OpenPrinting CUPS filters and backends
 # For a breakdown of the licensing, see COPYING file
@@ -225,6 +226,9 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Thu Oct 26 2017 Anton Farygin <rider@altlinux.ru> 1.17.9-alt2
+- use /var for localstatedir
+
 * Mon Oct 09 2017 Anton Farygin <rider@altlinux.ru> 1.17.9-alt1
 - new version 1.17.9
 
