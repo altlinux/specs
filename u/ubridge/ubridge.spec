@@ -1,5 +1,5 @@
 Name: ubridge
-Version: 0.9.11
+Version: 0.9.13
 Release: alt1
 
 Summary: Bridge for UDP tunnels, Ethernet, TAP and VMnet interfaces
@@ -36,6 +36,9 @@ chmod 4755 %_bindir/%name
 %_bindir/%name
 
 %changelog
+* Thu Oct 26 2017 Anton Midyukov <antohami@altlinux.org> 0.9.13-alt1
+- new version 0.9.13
+
 * Thu Feb 23 2017 Anton Midyukov <antohami@altlinux.org> 0.9.11-alt1
 - new version 0.9.11
 
