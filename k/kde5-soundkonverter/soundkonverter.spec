@@ -8,7 +8,7 @@
 %define rname soundKonverter
 %define tname soundkonverter
 Name: kde5-soundkonverter
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1%ubt
 %K5init
 
@@ -106,5 +106,8 @@ popd
 %_K5lib/libsoundkonvertercore.so.*
 
 %changelog
+* Thu Oct 26 2017 Sergey V Turchin <zerg@altlinux.org> 3.0.1-alt1%ubt
+- new version
+
 * Mon Sep 18 2017 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt1%ubt
 - initial build
