@@ -4,13 +4,13 @@
 BuildRequires(pre): rpm-build-python
 %define python_noarch %python_sitelibdir_noarch
 %define modname scipy
-%define ver_major 0.19
+%define ver_major 1.0
 
 %def_enable docs
 %def_with python3
 
 Name: python-module-%modname
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: SciPy is the library of scientific codes
@@ -337,6 +337,9 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 %endif
 
 %changelog
+* Thu Oct 26 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Sat Jul 08 2017 Yuri N. Sedunov <aris@altlinux.org> 0.19.1-alt1
 - 0.19.1
 
