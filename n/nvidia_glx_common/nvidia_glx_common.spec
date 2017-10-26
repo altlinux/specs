@@ -13,7 +13,7 @@
 %define nv_version 384
 %define nv_release 90
 %define nv_minor %nil
-%define pkg_rel alt180%ubt
+%define pkg_rel alt181%ubt
 %define set_gl_nvidia_ver 0.20.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -273,8 +273,11 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Thu Oct 26 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt181%ubt
+- use new driver directory if available for current libraries directory symlink
+
 * Fri Oct 20 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt180%ubt
-- create /etc/X11/lib{64,}_nvidia/current symlink to all nvidia libsraries directory
+- create /etc/X11/lib{64,}_nvidia/current symlink to all nvidia libraries directory
 
 * Tue Sep 26 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt179%ubt
 - new version
