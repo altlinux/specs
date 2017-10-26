@@ -4,14 +4,12 @@
 
 Name: python-module-%mname
 Version: 3.5.0
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: This library brings the updated configparser from Python 3.5 to Python 2.6-3.5
 
 Group: Development/Python
 License: MIT
 Url: https://pypi.python.org/pypi/configparser
-
-BuildArch: noarch
 
 Source: %name-%version.tar
 
@@ -59,6 +57,10 @@ pushd ../python3
 %python3_install
 popd
 
+%if "%_libexecdir" != "%_libdir"
+mv %buildroot%_libexecdir %buildroot%_libdir
+%endif
+
 %check
 python setup.py test
 pushd ../python3
@@ -72,6 +74,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Thu Oct 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.0-alt2%ubt
+- Made package arch-specific for compatibility with python-2 backports setup.
+
 * Wed Oct 25 2017 Stanislav Levin <slev@altlinux.org> 3.5.0-alt1%ubt
 - Initial build
 

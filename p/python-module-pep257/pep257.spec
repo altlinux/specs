@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0.0
+Version: 2.1.1
 Release: alt1
 Summary: Python docstring style checker
 License: MIT
@@ -18,9 +18,11 @@ BuildArch: noarch
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-alabaster python-module-objects.inv python-module-sphinxcontrib-issuetracker
 BuildRequires: python-module-html5lib python-module-mock python-module-pytest python-module-pathlib
+BuildRequires: python2.7(backports.configparser)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-html5lib python3-module-mock python3-module-pytest python3-module-pathlib
+BuildRequires: python3(backports.configparser)
 %endif
 
 %py_provides %oname
@@ -147,6 +149,9 @@ popd
 %endif
 
 %changelog
+* Thu Oct 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.1-alt1
+- Updated to upstream version 2.1.1.
+
 * Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt1
 - Updated to upstream version 2.0.0.
 

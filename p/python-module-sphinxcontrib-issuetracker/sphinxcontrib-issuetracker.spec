@@ -1,17 +1,20 @@
 %define rname sphinxcontrib
 %define oname %rname-issuetracker
+
 Name: python-module-%oname
 Version: 0.11
-Release: alt1.git20130117
+Release: alt2.git20130117
 Summary: Sphinx integration with different issuetrackers
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/sphinxcontrib-issuetracker
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/lunaryorn/sphinxcontrib-issuetracker.git
 Source: %name-%version.tar
-BuildArch: noarch
+
+# https://github.com/ignatenkobrain/sphinxcontrib-issuetracker/pull/13
+Patch1: %oname-%version-sphinx-support.patch
 
 BuildPreReq: python-devel python-module-setuptools
 
@@ -31,6 +34,7 @@ Currently the following issue trackers are supported:
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %python_build_debug
@@ -42,6 +46,9 @@ Currently the following issue trackers are supported:
 %python_sitelibdir/*
 
 %changelog
+* Thu Oct 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.11-alt2.git20130117
+- Applied fixes for sphinx-1.6.5 support.
+
 * Fri Aug 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt1.git20130117
 - Initial build for Sisyphus
 
