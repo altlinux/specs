@@ -11,7 +11,7 @@
 
 Name: bacula9
 Version: 9.0.3
-Release: alt1%ubt
+Release: alt2%ubt
 
 License: AGPLv3
 Summary: Network based backup program
@@ -528,20 +528,20 @@ rm -f %buildroot/usr/share/baculum/htdocs/protected/API/Lang/pt/messages.mo
 rm -f %buildroot/usr/share/baculum/htdocs/protected/API/Lang/ja/messages.mo
 
 # Link cache to specific directory
-mkdir -p %buildroot/%_localstatedir/cache/baculum/assets
-mkdir -p %buildroot/%_localstatedir/cache/baculum/runtime
+mkdir -p %buildroot/%_cachedir/baculum/assets
+mkdir -p %buildroot/%_cachedir/baculum/runtime
 rmdir %buildroot%_datadir/baculum/htdocs/assets
 rmdir %buildroot%_datadir/baculum/htdocs/protected/runtime
-ln -s $(relative %_localstatedir/cache/baculum/assets %_datadir/baculum/htdocs/assets) %buildroot%_datadir/baculum/htdocs/assets
-ln -s $(relative %_localstatedir/cache/baculum/runtime %_datadir/baculum/htdocs/protected/runtime) %buildroot%_datadir/baculum/htdocs/protected/runtime
+ln -s $(relative %_cachedir/baculum/assets %_datadir/baculum/htdocs/assets) %buildroot%_datadir/baculum/htdocs/assets
+ln -s $(relative %_cachedir/baculum/runtime %_datadir/baculum/htdocs/protected/runtime) %buildroot%_datadir/baculum/htdocs/protected/runtime
 
 # initial user config support for apache2
-mkdir -p %buildroot%_localstatedir/cache/baculum/API-Config
-mkdir -p %buildroot%_localstatedir/cache/baculum/Web-Config
+mkdir -p %buildroot%_cachedir/baculum/API-Config
+mkdir -p %buildroot%_cachedir/baculum/Web-Config
 rmdir %buildroot%_datadir/baculum/htdocs/protected/API/Config
 rmdir %buildroot%_datadir/baculum/htdocs/protected/Web/Config
-ln -s $(relative %_localstatedir/cache/baculum/API-Config %_datadir/baculum/htdocs/protected/API/Config) %buildroot%_datadir/baculum/htdocs/protected/API/Config
-ln -s $(relative %_localstatedir/cache/baculum/Web-Config %_datadir/baculum/htdocs/protected/Web/Config) %buildroot%_datadir/baculum/htdocs/protected/Web/Config
+ln -s $(relative %_cachedir/baculum/API-Config %_datadir/baculum/htdocs/protected/API/Config) %buildroot%_datadir/baculum/htdocs/protected/API/Config
+ln -s $(relative %_cachedir/baculum/Web-Config %_datadir/baculum/htdocs/protected/Web/Config) %buildroot%_datadir/baculum/htdocs/protected/Web/Config
 mv %buildroot%_sysconfdir/baculum/Config-api-apache %buildroot%_sysconfdir/baculum/Config-api-apache2
 mv %buildroot%_sysconfdir/baculum/Config-web-apache %buildroot%_sysconfdir/baculum/Config-web-apache2
 #ln -s $(relative %_sysconfdir/baculum/Config-api-apache2/baculum.users %_datadir/baculum/htdocs/protected/API/Config/baculum.users) %buildroot%_datadir/baculum/htdocs/protected/API/Config/baculum.users
@@ -796,16 +796,19 @@ fi
 %_datadir/baculum/htdocs/protected/Web/Logs
 %_datadir/baculum/htdocs/protected/API/Config
 %_datadir/baculum/htdocs/protected/Web/Config
-%attr(755,apache2,apache2) %_localstatedir/cache/baculum/
-%attr(755,apache2,apache2) %_localstatedir/cache/baculum/assets
-%attr(755,apache2,apache2) %_localstatedir/cache/baculum/runtime
-%attr(755,apache2,apache2) %_localstatedir/cache/baculum/API-Config
-%attr(755,apache2,apache2) %_localstatedir/cache/baculum/Web-Config
+%attr(755,apache2,apache2) %_cachedir/baculum/
+%attr(755,apache2,apache2) %_cachedir/baculum/assets
+%attr(755,apache2,apache2) %_cachedir/baculum/runtime
+%attr(755,apache2,apache2) %_cachedir/baculum/API-Config
+%attr(755,apache2,apache2) %_cachedir/baculum/Web-Config
 %attr(755,apache2,apache2) %_logdir/httpd2/baculum-api
 %attr(755,apache2,apache2) %_logdir/httpd2/baculum-web
 %endif
 
 %changelog
+* Thu Oct 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.3-alt2%ubt
+- Fixed cache dir location.
+
 * Mon Sep 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.3-alt1%ubt
 - Updated to upstream version 9.0.3.
 - Packaged web-interface baculum.
