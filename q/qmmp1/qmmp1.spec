@@ -5,8 +5,8 @@
 
 %define rname qmmp
 Name: qmmp1
-Version: 1.1.10
-Release: alt2%ubt
+Version: 1.1.12
+Release: alt1%ubt
 
 Group: Sound
 Summary: Qmmp - Qt-based multimedia player
@@ -272,6 +272,9 @@ ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/
 %_libdir/lib*.so
 
 %changelog
+* Thu Oct 26 2017 Sergey V Turchin <zerg@altlinux.org> 1.1.12-alt1%ubt
+- new version
+
 * Tue Sep 19 2017 Sergey V Turchin <zerg@altlinux.org> 1.1.10-alt2%ubt
 - build without libsidplayfp
 
