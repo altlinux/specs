@@ -1,6 +1,7 @@
+%global _localstatedir %_var
 Name: sphinx
 Version: 2.2.11
-Release: alt4%ubt
+Release: alt5%ubt
 Summary: Free open-source SQL full-text search engine
 
 Group: Text tools
@@ -127,6 +128,7 @@ cat > %buildroot%_sysconfdir/logrotate.d/sphinx << EOF
        compress
        notifempty
        missingok
+       su _sphinx _sphinx
 }
 EOF
 
@@ -171,6 +173,11 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 %_libdir/libsphinxclient.a
 
 %changelog
+* Thu Oct 26 2017 Anton Farygin <rider@altlinux.ru> 2.2.11-alt5%ubt
+- fixed localstatedir location
+- fixed typo in systemd unit (closes: #33177)
+- rotate logs under unprivileged user (closes: #33634)
+
 * Fri Jun 16 2017 Anton Farygin <rider@altlinux.ru> 2.2.11-alt4%ubt
 - pidfile location fixed (closes: #33551)
 
