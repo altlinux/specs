@@ -46,8 +46,8 @@
 %def_with libcephfs
 
 Name:    samba-DC
-Version: 4.6.8
-Release: alt3%ubt
+Version: 4.6.9
+Release: alt1%ubt
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -1360,6 +1360,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Wed Oct 25 2017 Evgeny Sinelnikov <sin@altlinux.org> 4.6.9-alt1%ubt
+- Update for second autumn release with common bugfixes
+
 * Thu Oct 12 2017 Evgeny Sinelnikov <sin@altlinux.org> 4.6.8-alt3%ubt
 - Fix KDC not works in configuration with trusted domain (samba bug #13078)
 
