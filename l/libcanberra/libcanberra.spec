@@ -1,3 +1,5 @@
+%define _localstatedir %_var
+
 %def_enable tdb
 %def_disable oss
 %def_enable gtk
@@ -10,7 +12,7 @@
 
 Name: libcanberra
 Version: %ver_major
-Release: alt2
+Release: alt3
 
 Summary: Portable Sound Event Library
 Group: System/Libraries
@@ -142,7 +144,7 @@ libcanberra-gtk libraries
 %make check
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 rm -f %buildroot%_docdir/libcanberra/README
 
 
@@ -214,6 +216,9 @@ rm -f %buildroot%_docdir/libcanberra/README
 %{?_enable_gtk3:%exclude %_libdir/gtk-%gtk3_api_ver/modules/*.la}
 
 %changelog
+* Thu Oct 26 2017 Yuri N. Sedunov <aris@altlinux.org> 0.30-alt3
+- rebuild with _localstatedir=%%_var
+
 * Fri Oct 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.30-alt2
 - upstream patch to drop hardcoded X11 assumptions
 
