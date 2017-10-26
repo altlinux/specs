@@ -3,44 +3,30 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 1.4.9
+Version: 2.2.2
 Epoch: 1
 Release: alt1
 Group: Development/Python
 License: GPLv2
 Summary: fork of amqplib used by Kombu containing additional features and improvements
 URL: http://github.com/celery/py-amqp.git
+
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-sphinx-devel
-#BuildPreReq: python-module-sphinxcontrib-issuetracker
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-alabaster python-module-html5lib python-module-objects.inv python-module-sphinxcontrib-issuetracker python2.7(sphinx_celery)
+BuildRequires: python2.7(vine) python2.7(case)
+BuildRequires(pre): rpm-macros-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3(vine) python3(case)
 %endif
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-docutils python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-ndg-httpsclient python-module-ntlm python-module-pyasn1 python-module-pytest python-module-pytz python-module-requests python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-sphinxcontrib python-module-urllib3 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-alabaster python-module-html5lib python-module-objects.inv python-module-setuptools-tests python-module-sphinxcontrib-issuetracker python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 This is a fork of amqplib_ which was originally written by Barry Pederson.
 It is maintained by the Celery_ project, and used by kombu as a pure python
 alternative when librabbitmq is not available.
-
-%package tests
-Summary: Tests for %module_name
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-This is a fork of amqplib_ which was originally written by Barry Pederson.
-It is maintained by the Celery_ project, and used by kombu as a pure python
-alternative when librabbitmq is not available.
-
-This package contains tests for %module_name.
 
 %package pickles
 Summary: Pickles for %module_name
@@ -65,6 +51,7 @@ alternative when librabbitmq is not available.
 
 This package contains documentation for %module_name.
 
+%if_with python3
 %package -n python3-module-%module_name
 Summary: fork of amqplib used by Kombu containing additional features and improvements
 Group: Development/Python3
@@ -73,18 +60,7 @@ Group: Development/Python3
 This is a fork of amqplib_ which was originally written by Barry Pederson.
 It is maintained by the Celery_ project, and used by kombu as a pure python
 alternative when librabbitmq is not available.
-
-%package -n python3-module-%module_name-tests
-Summary: Tests for %module_name
-Group: Development/Python3
-Requires: python3-module-%module_name = %EVR
-
-%description -n python3-module-%module_name-tests
-This is a fork of amqplib_ which was originally written by Barry Pederson.
-It is maintained by the Celery_ project, and used by kombu as a pure python
-alternative when librabbitmq is not available.
-
-This package contains tests for %module_name.
+%endif
 
 %prep
 %setup
@@ -122,34 +98,40 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C docs pickle
 %make -C docs html
 
-cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%module_name/
+cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%module_name/
+
+%check
+python setup.py test
+
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
 
 %files
 %doc AUTHORS Changelog LICENSE README.rst
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
-%exclude %python_sitelibdir/*/tests
-
-%files tests
-%python_sitelibdir/*/tests
+%python_sitelibdir/%module_name
+%python_sitelibdir/%module_name-%version-py*.egg-info
+%exclude %python_sitelibdir/%module_name/pickle
 
 %files pickles
-%python_sitelibdir/*/pickle
+%python_sitelibdir/%module_name/pickle
 
 %files docs
-%doc docs/.build/html/*
+%doc docs/_build/html/*
 
 %if_with python3
 %files -n python3-module-%module_name
 %doc AUTHORS Changelog LICENSE README.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files -n python3-module-%module_name-tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%module_name
+%python3_sitelibdir/%module_name-%version-py*.egg-info
 %endif
 
 %changelog
+* Wed Oct 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.2.2-alt1
+- Updated to upstream version 2.2.2.
+
 * Wed Oct 26 2016 Alexey Shabalin <shaba@altlinux.ru> 1:1.4.9-alt1
 - 1.4.9
 
