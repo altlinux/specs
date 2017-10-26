@@ -1,7 +1,7 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.395
+Version: 0.396
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -32,6 +32,9 @@ BuildRequires: perl-devel perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-String-Sh
 %perl_vendor_privlib/Source*
 
 %changelog
+* Thu Oct 26 2017 Igor Vlasenko <viy@altlinux.ru> 0.396-alt1
+- development release
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.395-alt1
 - development release
 
