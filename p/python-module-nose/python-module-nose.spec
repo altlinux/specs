@@ -5,7 +5,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 1.3.7
-Release: alt1.git20160316.1
+Release: alt2.git20160316
 
 Summary: A unittest-based testing framework for python that makes writing and running tests easier
 
@@ -20,6 +20,7 @@ BuildArch: noarch
 %setup_python_module %oname
 
 Source: %name-%version.tar
+Patch1: %oname-%version-alt-coverage4.patch
 
 BuildRequires: python-module-setuptools python-module-coverage
 %if_with python3
@@ -46,6 +47,8 @@ as is reasonably possible without resorting to too much magic.
 
 %prep
 %setup
+%patch1 -p1
+
 sed -i "s|man/man1|share/man/man1|g" setup.py
 
 %if_with python3
@@ -101,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Thu Oct 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.3.7-alt2.git20160316
+- Fixed build with new coverage.
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.3.7-alt1.git20160316.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
