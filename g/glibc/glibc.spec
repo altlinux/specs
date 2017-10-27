@@ -1,6 +1,8 @@
+%define glibc_sourcedir /usr/src/glibc-source
+
 Name: glibc
 Version: 2.25
-Release: alt2
+Release: alt3
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -215,6 +217,11 @@ Conflicts: kernel < 2.2.0
 PreReq: shadow-utils
 PreReq: %name-pthread = %epoch:%version-%release
 
+%package source
+Summary: GNU libc sources
+Group: Development/Other
+BuildArch: noarch
+
 %description
 The GNU C library defines all of the library functions that are specified
 by the ISO C standard, as well as additional features specific to POSIX
@@ -296,6 +303,9 @@ Nscd caches name service lookups and can dramatically improve performance
 with NIS+, and may help with DNS as well.  Note that you can't use nscd
 with 2.0 kernels because of bugs in the kernel-side thread support.
 Unfortunately, nscd happens to hit these bugs particularly hard.
+
+%description source
+This package contains source code of GNU libc.
 
 %prep
 %setup -n %name-%version-%release
@@ -482,6 +492,9 @@ for lang in $((cat alt/locales-add && cd %buildroot%_prefix/lib/locale && ls |se
 done |sort -u >>libc.lang
 %endif #with locales
 
+mkdir -p %buildroot%glibc_sourcedir
+cp %SOURCE0 %buildroot%glibc_sourcedir/
+
 %brp_strip_debug */%_lib/ld-*.so* */%_lib/libpthread-*.so
 
 # due to libpthread.
@@ -496,6 +509,7 @@ cat > %buildtarget/xfail.mk <<@@@
 export test-xfail-tst-bug18665-tcp=yes
 export test-xfail-tst-res_use_inet6=yes
 export test-xfail-tst-resolv-basic=yes
+export test-xfail-tst-resolv-edns=yes
 export test-xfail-tst-resolv-search=yes
 export test-xfail-tst-getrandom=yes
 %ifarch x86_64
@@ -702,7 +716,15 @@ fi
 %files i18ndata
 %_datadir/i18n
 
+%files source
+%glibc_sourcedir
+
 %changelog
+* Thu Oct 26 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.25-alt3
+- Backported upstream fixes for sw bugs: 21209 21242 21265 21298 21386 21624
+  21654 21778 21972 (fixes for CVE-2017-15670 CVE-2017-15804).
+- Packaged glibc sources as a separate package.
+
 * Thu Apr 06 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.25-alt2
 - x86_64: moved libm-2.25.a to glibc-devel-static subpackage.
 - check: xfailed tst-getrandom test.
