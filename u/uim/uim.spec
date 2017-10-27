@@ -1,6 +1,6 @@
 Name: uim
 Version: 1.8.6
-Release: alt4.git89542ac.1
+Release: alt4.git89542ac.2
 
 Summary: useful input method metapackage
 
@@ -366,6 +366,9 @@ export LC_ALL=en_US.UTF-8
 %_mandir/man1/uim-xim.1.xz
 
 %changelog
+* Mon Oct 23 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.6-alt4.git89542ac.2
+- uim-qt5: rebuilt to work with new Qt5 version (5.9.2)
+
 * Thu May 11 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.6-alt4.git89542ac.1
 - rebuilt with libm17n-db
 - moved %%_datadir/applications/uim.desktop to uim-gtk package
