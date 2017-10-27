@@ -6,7 +6,7 @@
 %def_with libproxy
 
 Name: glib-networking
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Networking support for GIO
@@ -92,6 +92,9 @@ sed -i 's,-Werror=missing-include-dirs,,' configure*
 %endif
 
 %changelog
+* Fri Oct 27 2017 Yuri N. Sedunov <aris@altlinux.org> 2.54.1-alt1
+- 2.54.1
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 2.54.0-alt1
 - 2.54.0
 
