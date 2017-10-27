@@ -1,6 +1,6 @@
 Name: keepass
-Version: 2.36
-Release: alt2%ubt
+Version: 2.37
+Release: alt1%ubt
 
 Summary: Password manager
 
@@ -118,6 +118,9 @@ cp -pr Docs/Chm %buildroot/%_docdir/%name/
 %doc %_docdir/%name/Chm/
 
 %changelog
+* Fri Oct 27 2017 Oleg Solovyov <mcpain@altlinux.org> 2.37-alt1%ubt
+- new version: 2.37
+
 * Tue Jul 25 2017 Oleg Solovyov <mcpain@altlinux.org> 2.36-alt2%ubt
 - Build with mono 5
 
