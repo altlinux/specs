@@ -1,6 +1,6 @@
 Name: bubblewrap
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: Unprivileged sandboxing tool
 
@@ -14,6 +14,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/projectatomic/bubblewrap/releases/download/v%version/bubblewrap-%version.tar.xz
 Source: %name-%version.tar
+#Source: https://github.com/projectatomic/%name/releases/download/v%version/%name-%version.tar.xz
 
 # manually removed: python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs 
 # Automatically added by buildreq on Sun Aug 14 2016
@@ -32,18 +33,28 @@ because it is trivial to turn such access into to a fully privileged root shell 
 
 %build
 %autoreconf
-%configure
+%configure --with-priv-mode=none
 %make_build
 
 %install
 %makeinstall_std
 
+mkdir -p %buildroot%_sysctldir
+cat > %buildroot%_sysctldir/90-bwrap.conf << _EOF_
+kernel.userns_restrict = 0
+_EOF_
+
 %files
-%_bindir/bwrap
+%attr(4511,root,root) %_bindir/bwrap
+%_sysctldir/90-bwrap.conf
 %_man1dir/bwrap*
 %_datadir/bash-completion/completions/bwrap
 
 %changelog
+* Fri Oct 27 2017 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt2
+- fixed permissions for bwrap
+- created %%_sysctldir/90-bwrap.conf
+
 * Mon Oct 16 2017 Vitaly Lipatov <lav@altlinux.ru> 0.2.0-alt1
 - new version 0.2.0 (with rpmrb script)
 
