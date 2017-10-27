@@ -9,7 +9,7 @@
 %define tname soundkonverter
 Name: kde5-soundkonverter
 Version: 3.0.1
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Summary: A frontend to various audio converters
@@ -23,13 +23,15 @@ Url: https://github.com/dfaust/soundkonverter
 Source: %tname-%version.tar
 Patch1: alt-mp3gain1.4.patch
 Patch2: alt-lib-sover.patch
+Patch3: alt-mp2-range.patch
+Patch4: alt-load-translations.patch
 
 %if %is_ffmpeg
 Requires: /usr/bin/ffmpeg
 %else
 Requires: /usr/bin/avconv
 %endif
-Requires: vorbis-tools vorbisgain flac lame mp3gain cdparanoia speex wavpack faad mppenc sox
+Requires: vorbis-tools vorbisgain flac lame mp3gain cdparanoia speex wavpack faad mppenc sox opus-tools
 #Requires: faac
 
 # Automatically added by buildreq on Tue Sep 19 2017 (-bi)
@@ -70,6 +72,8 @@ Requires: %name-common = %version-%release
 %patch1 -p1
 %endif
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 rm -f cmake/modules/FindTaglib.cmake
 
@@ -83,7 +87,7 @@ popd
 %install
 pushd src
 %K5install
-%K5install_move data %tname solid
+%K5install_move data %tname solid locale
 popd
 %find_lang --with-kde %tname
 
@@ -106,6 +110,10 @@ popd
 %_K5lib/libsoundkonvertercore.so.*
 
 %changelog
+* Fri Oct 27 2017 Sergey V Turchin <zerg@altlinux.org> 3.0.1-alt2%ubt
+- fix mp2 bitrate range (ALT#34073)
+- fix load translations
+
 * Thu Oct 26 2017 Sergey V Turchin <zerg@altlinux.org> 3.0.1-alt1%ubt
 - new version
 
