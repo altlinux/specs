@@ -1,5 +1,5 @@
 Name: repocop
-Version: 0.73
+Version: 0.74
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -134,6 +134,9 @@ done
 %_datadir/repocop/html
 
 %changelog
+* Fri Oct 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.74-alt1
+- do not use deprecated COPYRIGHT rpm tag
+
 * Sat Jan 21 2017 Igor Vlasenko <viy@altlinux.ru> 0.73-alt1
 - new Shared::CLI
 
