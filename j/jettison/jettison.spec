@@ -3,12 +3,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           jettison
 Version:        1.3.7
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        A JSON StAX implementation
 License:        ASL 2.0
 URL:            http://jettison.codehaus.org/
@@ -22,7 +23,6 @@ Patch0: %{name}-update-woodstox-version.patch
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
 BuildRequires:  mvn(org.codehaus:codehaus-parent:pom:)
 BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
 BuildRequires:  mvn(stax:stax-api)
@@ -48,6 +48,8 @@ This package contains the API documentation for %{name}.
 # We don't need wagon-webdav
 %pom_xpath_remove pom:build/pom:extensions
 
+%pom_remove_plugin :maven-release-plugin
+
 # Confuses maven-bundle-plugin
 %pom_xpath_remove pom:Private-Package
 
@@ -65,6 +67,9 @@ This package contains the API documentation for %{name}.
 %doc src/main/resources/META-INF/LICENSE
 
 %changelog
+* Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.7-alt1_4jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.7-alt1_3jpp8
 - new fc release
 
