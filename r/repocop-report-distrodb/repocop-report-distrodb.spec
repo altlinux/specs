@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.35
+Version: 0.36
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -9,7 +9,7 @@ Group: Development/Other
 License: GPL or Artistic
 Url: http://repocop.altlinux.org
 
-Requires: repocop > 0.67
+Requires: repocop > 0.73
 Obsoletes: repocop-report-distromap-db < 0.12
 Requires: repocop-collector-buildreqs-subst
 
@@ -39,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Fri Oct 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
+- added sourceurl.raw
+
 * Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
 - added exception for libgdiplus
 
