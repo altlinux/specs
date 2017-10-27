@@ -1,6 +1,6 @@
 %define distro centaurus
 Name: installer-distro-%distro
-Version: 8.1
+Version: 8.2
 Release: alt1
 
 Summary: Installer files for Centaurus distro 
@@ -68,6 +68,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Fri Oct 27 2017 Mikhail Efremov <sem@altlinux.org> 8.2-alt1
+- Enable cpufreq-simple.service.
+
 * Mon Apr 17 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.1-alt1
 - net-bond and net-bridge into stage3
 
