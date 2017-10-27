@@ -1,8 +1,10 @@
 Name: ulogd
 Version: 2.0.5
-Release: alt3
+Release: alt4
 
 %def_disable nfacct
+
+%define _unpackaged_files_terminate_build 1
 
 Summary: ulogd - The userspace logging daemon for netfilter
 Url: http://www.netfilter.org/projects/ulogd/
@@ -158,6 +160,11 @@ sed -i -r 's;^(plugin="%_libdir/ulogd/ulogd_inpflow_NFACCT\.so");#\1;' %buildroo
 %_libdir/%name/ulogd_output_DBI.so
 
 %changelog
+* Fri Oct 27 2017 Mikhail Efremov <sem@altlinux.org> 2.0.5-alt4
+- Use _unpackaged_files_terminate_build.
+- ulogd: restructures signal handling by self-pipe trick.
+- Fix default log path.
+
 * Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.5-alt3
 - Rebuilt with libdbi-0.9.0.
 
