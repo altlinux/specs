@@ -1,4 +1,4 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %define api_ver 1.0
 
 %def_disable debug
@@ -6,9 +6,10 @@
 %def_with libsocialweb
 %def_enable systemd
 %def_enable ibus
+%def_enable onlineaccounts
 
 Name: cinnamon-control-center
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Cinnamon Control Center
@@ -29,7 +30,7 @@ Patch: %name-%version-%release.patch
 %define libmetacity_ver 2.30.0
 %define gsds_ver 3.6.0
 %define notify_ver 0.7.3
-%define nm_ver 0.9.8
+%define nm_ver 1.2.0
 %define gnome_menus_ver 3.5.5
 %define goa_ver 3.5.90
 %define sett_daemon_ver 0.0.1
@@ -70,8 +71,9 @@ BuildRequires: libgnomekbd-devel libxklavier-devel
 BuildRequires: libwacom-devel
 BuildRequires: libcinnamon-menus-devel
 
-# for test-endianess
 BuildRequires: glibc-i18ndata
+BuildRequires: libnm-devel >= %nm_ver
+BuildRequires: libnma-devel >= %nm_ver
 BuildRequires: libnm-gtk-devel >= %nm_ver
 BuildRequires: libnm-glib-devel >= %nm_ver
 BuildRequires: libnm-glib-vpn-devel >= %nm_ver
@@ -124,7 +126,8 @@ you'll want to install this package.
 	--disable-update-mimedb \
 	%{subst_with libsocialweb} \
 	%{subst_enable systemd} \
-	%{subst_enable ibus}
+	%{subst_enable ibus} \
+	%{subst_enable onlineaccounts}
 
 %make_build
 
@@ -143,7 +146,7 @@ you'll want to install this package.
 %_libdir/%{name}-1/panels/libregion.so
 %_libdir/%{name}-1/panels/libwacom-properties.so
 %_libdir/%{name}-1/panels/libdate_time.so
-#%_libdir/%{name}-1/panels/libuser-accounts.so
+%_libdir/%{name}-1/panels/libonline-accounts.so
 %_libdir/*.so.*
 
 %exclude %_libdir/%{name}-1/panels/*.la
@@ -167,6 +170,9 @@ you'll want to install this package.
 
 
 %changelog
+* Fri Oct 27 2017 Vladimir Didenko <cow@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Fri May 5 2017 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt1
 - 3.4.0
 

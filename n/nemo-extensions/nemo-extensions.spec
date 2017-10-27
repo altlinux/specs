@@ -1,7 +1,7 @@
 %define api_ver 3.0
 
 Name: nemo-extensions
-Version: 3.4.2
+Version: 3.6.1
 Release: alt1
 Summary: Extensions for Nemo
 
@@ -36,6 +36,8 @@ BuildRequires: libgtksourceview3-gir-devel
 BuildRequires: libgtksourceview3-devel
 BuildRequires: perl(XML/Parser.pm)
 BuildRequires: libcogl-gir-devel
+BuildRequires: libxreader-gir-devel
+BuildRequires: libcinnamon-desktop-devel
 
 %description
 Extensions for Nemo
@@ -54,6 +56,7 @@ Summary: Python bindings for Nemo
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Requires: nemo
+Requires: nemo-extensions-translations
 
 %description -n nemo-python
 Python bindings for Nemo
@@ -74,6 +77,7 @@ Group: Graphical desktop/GNOME
 Requires: nemo >= 2.8
 Requires: samba >= 3.0.23
 Requires: nemo-share-common
+Requires: nemo-extensions-translations
 
 %description -n nemo-share
 Application for the Cinnamon desktop integrated in Nemo, that allows
@@ -95,6 +99,7 @@ Group: Graphical desktop/GNOME
 BuildArch: noarch
 Requires: nemo-python
 Requires: libvte3_2.90-gir
+Requires: nemo-extensions-translations
 
 %description -n nemo-terminal
 Embedded terminal window for Nemo
@@ -104,6 +109,7 @@ Summary: A quick previewer for Nemo
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Requires: nemo
+Requires: nemo-extensions-translations
 
 %description -n nemo-preview
 Nemo Preview is a GtkClutter and Javascript-based quick previewer
@@ -120,15 +126,17 @@ License: %gpl3plus
 Group: Graphical desktop/GNOME
 BuildArch: noarch
 Requires: nemo-python
+Requires: nemo-extensions-translations
 
 %description -n nemo-emblems
 Restores the emblems functionality that used to be in GNOME 2.
 
 %package -n nemo-image-converter
 Summary: Nemo extension to mass resize images
-Requires: ImageMagick
 License: %gpl3plus
 Group: Graphical desktop/GNOME
+Requires: nemo-extensions-translations
+Requires: ImageMagick
 
 %description -n nemo-image-converter
 Adds a "Resize Images..." menu item to the context menu. This opens a dialog where you set the desired image size and file name.
@@ -141,6 +149,7 @@ BuildArch: noarch
 Requires: nemo-python
 Requires: meld
 Requires: pyxdg
+Requires: nemo-extensions-translations
 
 %description -n nemo-compare
 Context menu comparison extension for Nemo file manager.
@@ -222,16 +231,14 @@ popd
 
 pushd nemo-compare
 mkdir -p %buildroot/%_datadir/applications/
-install -pm 0644 src/{nemo-compare,nemo-compare-preferences,utils}.py %buildroot/%_datadir/nemo-python/extensions/
-install -pm 0644 data/nemo-compare-preferences.desktop %buildroot/%_datadir/applications/
+install -pm 0644 src/{nemo-compare,utils}.py %buildroot/%_datadir/nemo-python/extensions/
+install -pm 0755 src/nemo-compare-preferences.py %buildroot/%_datadir/nemo-python/extensions/
+mkdir -p %buildroot/%_bindir
+ln -s %_datadir/nemo-python/extensions/nemo-compare-preferences.py %buildroot/%_bindir/nemo-compare-preferences
 popd
 
 rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.la
 rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
-
-%find_lang nemo-preview
-%find_lang nemo-image-converter
-%find_lang nemo-share
 
 %files -n nemo-fileroller
 %doc nemo-fileroller/README
@@ -247,7 +254,7 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %files -n nemo-python-devel
 %_pkgconfigdir/nemo-python.pc
 
-%files -n nemo-share-common -f nemo-share.lang
+%files -n nemo-share-common
 %doc nemo-share/AUTHORS
 %doc nemo-share/COPYING
 %doc nemo-share/README
@@ -263,7 +270,7 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_datadir/nemo-terminal/
 %_datadir/glib-2.0/schemas/org.nemo.extensions.nemo-terminal.gschema.xml
 
-%files -n nemo-preview -f nemo-preview.lang
+%files -n nemo-preview
 %doc nemo-preview/README
 %doc nemo-preview/COPYING
 %_bindir/nemo-preview
@@ -276,7 +283,7 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %doc nemo-emblems/COPYING.GPL3
 %_datadir/nemo-python/extensions/nemo-emblems.py*
 
-%files -n nemo-image-converter  -f nemo-image-converter.lang
+%files -n nemo-image-converter
 %doc nemo-image-converter/README
 %doc nemo-image-converter/COPYING
 %_libdir/nemo/extensions-%api_ver/libnemo-image-converter.so
@@ -286,9 +293,12 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_datadir/nemo-python/extensions/nemo-compare.py*
 %_datadir/nemo-python/extensions/nemo-compare-preferences.py*
 %_datadir/nemo-python/extensions/utils.py*
-%_datadir/applications/nemo-compare-preferences.desktop
+%_bindir/nemo-compare-preferences
 
 %changelog
+* Mon Oct 30 2017 Vladimir Didenko <cow@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Thu Jun 29 2017 Vladimir Didenko <cow@altlinux.org> 3.4.2-alt1
 - 3.4.0-19-g0ad0a0c
 

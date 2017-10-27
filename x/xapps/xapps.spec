@@ -1,5 +1,5 @@
 Name: xapps
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: Libraries and common resources for XApps
@@ -115,6 +115,8 @@ GObject introspection devel data for the %name library
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
+%_vapidir/xapp.vapi
+%_datadir/glade/catalogs/xapp-glade-catalog.xml
 
 %files -n lib%name-gir
 %_typelibdir/*
@@ -123,6 +125,9 @@ GObject introspection devel data for the %name library
 %_girdir/*
 
 %changelog
+* Fri Oct 27 2017 Vladimir Didenko <cow@altlinux.org> 1.0.4-alt1
+- 1.0.4
+
 * Thu May 18 2017 Vladimir Didenko <cow@altlinux.org> 1.0.3-alt1
 - 1.0.3
 

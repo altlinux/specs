@@ -1,7 +1,7 @@
-%define ver_major 3.4
+%define ver_major 3.6
 
 Name: cinnamon-translations
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Translations for Cinnamon
@@ -28,6 +28,14 @@ License: %lgpl2plus
 %description -n nemo-translations
 Translations for Nemo
 
+%package -n nemo-extensions-translations
+Summary: Translations for Nemo extensions
+Group: Graphical desktop/GNOME
+License: %lgpl2plus
+
+%description -n nemo-extensions-translations
+Translations for Nemo extensions
+
 %package -n cinnamon-control-center-translations
 Summary: Translations for cinnamon-control-center
 Group: Graphical desktop/GNOME
@@ -52,6 +60,14 @@ License: %lgpl2plus
 %description -n cinnamon-session-translations
 Translations for cinnamon-session
 
+%package -n cinnamon-settings-daemon-translations
+Summary: Translations for cinnamon-settings-daemon
+Group: Graphical desktop/GNOME
+License: %lgpl2plus
+
+%description -n cinnamon-settings-daemon-translations
+Translations for cinnamon-settings-daemon
+
 %prep
 %setup -q -n %name-%version
 
@@ -65,14 +81,18 @@ rm -f %{buildroot}%{_datadir}/locale/*/LC_MESSAGES/cinnamon-bluetooth.mo
 
 %find_lang cinnamon
 %find_lang nemo
+%find_lang nemo-extensions
 %find_lang cinnamon-control-center
 %find_lang cinnamon-screensaver
 %find_lang cinnamon-session
+%find_lang cinnamon-settings-daemon
 
 %files -f cinnamon.lang
 %doc COPYING
 
 %files -n nemo-translations -f nemo.lang
+
+%files -n nemo-extensions-translations -f nemo-extensions.lang
 
 %files -n cinnamon-control-center-translations -f cinnamon-control-center.lang
 
@@ -80,7 +100,12 @@ rm -f %{buildroot}%{_datadir}/locale/*/LC_MESSAGES/cinnamon-bluetooth.mo
 
 %files -n cinnamon-session-translations -f cinnamon-session.lang
 
+%files -n cinnamon-settings-daemon-translations -f cinnamon-settings-daemon.lang
+
 %changelog
+* Fri Oct 27 2017 Vladimir Didenko <cow@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Thu Jun 29 2017 Vladimir Didenko <cow@altlinux.org> 3.4.3-alt1
 - 3.4.3
 

@@ -1,5 +1,5 @@
 %define api_ver 3.0
-%define ver_major 3.4
+%define ver_major 3.6
 
 %def_enable exempi
 %def_disable packagekit
@@ -8,7 +8,7 @@
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.7
+Version: %ver_major.2
 Release: alt1
 
 Summary: default file manager for Cinnamon
@@ -68,6 +68,7 @@ BuildRequires: libX11-devel xorg-xproto-devel
 BuildRequires: docbook-utils gtk-doc
 BuildRequires: python3-module-polib python3-module-pygobject3
 BuildRequires: autoconf-archive
+BuildRequires: libxapps-devel >= 1.0.4
 %{?_enable_exempi:BuildPreReq: libexempi-devel >= %exempi_ver}
 %{?_enable_tracker:BuildPreReq: tracker-devel >= %tracker_ver}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
@@ -176,8 +177,8 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %_iconsdir/hicolor/*/actions/*.svg
 %_iconsdir/hicolor/*/actions/*.png
 %_iconsdir/hicolor/*/status/*.png
-%_datadir/dbus-1/services/org.Nemo.service
-%_datadir/dbus-1/services/org.nemo.freedesktop.FileManager1.service
+%_datadir/dbus-1/services/nemo.FileManager1.service
+%_datadir/dbus-1/services/nemo.service
 %_datadir/gtksourceview-2.0/language-specs/nemo_action.lang
 %_datadir/gtksourceview-3.0/language-specs/nemo_action.lang
 %_datadir/polkit-1/actions/org.nemo.root.policy
@@ -210,6 +211,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Fri Oct 27 2017 Vladimir Didenko <cow@altlinux.org> 3.6.2-alt1
+- 3.6.2-7-g5842a47
+
 * Wed Aug 23 2017 Vladimir Didenko <cow@altlinux.org> 3.4.7-alt1
 - 3.4.7
 
