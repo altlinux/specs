@@ -2,7 +2,7 @@ Summary: An open source software for the creation of electronic schematic diagra
 Summary(ru_RU.UTF-8): Программа с открытым исходным кодом для проектирования электронных схем
 Name: kicad
 Version: 4.0.7
-Release: alt1
+Release: alt2
 Epoch: 1
 Packager: Anton Midyukov <antohami@altlinux.org>
 
@@ -54,7 +54,7 @@ Summary(ru_RU.UTF-8): Программа с открытым исходным к
 Group: Sciences/Computer science
 BuildArch: noarch
 Requires: icon-theme-hicolor
-%add_python_req_skip kicad
+%add_python_req_skip pcbnew
 
 %description data
 Kicad is an open source (GPL) software for the creation of electronic
@@ -87,18 +87,18 @@ gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом 
 
 %build
 %cmake \
-	-DBUILD_SHARED_LIBS:BOOL=OFF \
-	-DDEFAULT_INSTALL_PATH=/usr \
-	-DBUILD_GITHUB_PLUGIN=ON \
-	-DKICAD_SCRIPTING=ON \
-	-DKICAD_SCRIPTING_MODULES=ON \
-	-DKICAD_SCRIPTING_WXPYTHON=OFF \
-	-DKICAD_SKIP_BOOST=ON
+    -DBUILD_SHARED_LIBS:BOOL=OFF \
+    -DDEFAULT_INSTALL_PATH=/usr \
+    -DBUILD_GITHUB_PLUGIN=ON \
+    -DKICAD_SCRIPTING=ON \
+    -DKICAD_SCRIPTING_MODULES=ON \
+    -DKICAD_SCRIPTING_WXPYTHON=OFF \
+    -DKICAD_SKIP_BOOST=ON
 
-%make_build -C BUILD
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmakeinstall_std
 
 #fix line ending
 dos2unix %buildroot%_desktopdir/*.desktop
@@ -123,6 +123,9 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %_datadir/%name/
 
 %changelog
+* Thu Oct 26 2017 Anton Midyukov <antohami@altlinux.org> 1:4.0.7-alt2
+- Skip requires pcbnew.
+
 * Wed Aug 30 2017 Anton Midyukov <antohami@altlinux.org> 1:4.0.7-alt1
 - New version 4.0.7
 - exclude cvpcb.desktop
