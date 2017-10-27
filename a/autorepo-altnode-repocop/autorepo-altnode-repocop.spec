@@ -2,7 +2,7 @@
 
 #BuildRequires: 
 Name: autorepo-altnode-repocop
-Version: 0.16
+Version: 0.17
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -35,6 +35,9 @@ install -m 755 repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
+* Fri Oct 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- support for new distrodb extra
+
 * Fri Mar 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - stable release
 
