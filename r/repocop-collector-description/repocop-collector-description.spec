@@ -1,7 +1,7 @@
 %define collectorname description
 
 Name: repocop-collector-%collectorname
-Version: 0.01
+Version: 0.02
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -37,5 +37,8 @@ install -m 644 %collectorname.sql %buildroot%_datadir/repocop/srccollectors/%col
 %_datadir/repocop/srccollectors/%collectorname
 
 %changelog
+* Fri Oct 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
+- bugfix release
+
 * Fri Oct 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.01-alt1
 - First build for Sisyphus.
