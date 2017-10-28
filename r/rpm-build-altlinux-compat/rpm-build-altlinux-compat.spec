@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
@@ -128,6 +128,9 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Sat Oct 28 2017 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
+- spread _rundir, _logdir to other platforms
+
 * Sat Oct 28 2017 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
 - move _localstatedir macro to rpm-macros-intro-conflicts package (ALT bug 32554)
 
