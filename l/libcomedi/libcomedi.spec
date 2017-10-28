@@ -1,7 +1,7 @@
 %define oname comedilib
 Name: libcomedi
 Version: 0.11.0
-Release: alt1
+Release: alt2
 %define oversion %(echo "%version" | sed -e "s|\\.|_|g")
 
 Summary: Data Acquisition library for the Comedi DAQ driver
@@ -47,11 +47,15 @@ Requires: %name = %version-%release
 
 %description devel
 The %name-devel package contains the necessary include files
-for developing applications with %name
+for developing applications with %name.
+
+See demo dir in the source repository for examples.
 
 %description devel -l ru_RU.UTF-8
 Пакет %name-devel содержит необходимые заголовочные файлы
 для разработки приложений, которые используют %name.
+
+Посмотрите в каталог demo в исходниках проекта, там есть примеры.
 
 %package -n python-module-comedi
 Summary: Python interface for %name
@@ -127,7 +131,7 @@ for developing applications with %name
 %python_sitelibdir/comedi.py*
 
 %files devel
-%doc demo
+#doc demo
 #_bindir/comedi_monitor
 %_includedir/comedi*
 %_libdir/%name.so
@@ -141,6 +145,9 @@ for developing applications with %name
 #_libdir/_comedi.la
 
 %changelog
+* Sat Oct 28 2017 Vitaly Lipatov <lav@altlinux.ru> 0.11.0-alt2
+- drop demo with binaries from devel subpackage
+
 * Sat Oct 28 2017 Vitaly Lipatov <lav@altlinux.ru> 0.11.0-alt1
 - build new version
 - cleanup spec
@@ -211,6 +218,6 @@ for developing applications with %name
 * Sun Nov 03 2002 Vitaly Lipatov <lav@altlinux.ru> 0.7.19-alt0.1
 - initial build for Sisyphus
 
-* Wed Feb 21 2002 Tim Ousley <tim.ousley@ni.com>
+* Thu Feb 21 2002 Tim Ousley <tim.ousley@ni.com>
 - initial build of comedilib RPM
 
