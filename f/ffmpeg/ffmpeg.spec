@@ -56,8 +56,8 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	3.3.4
-Release:	alt3
+Version:	3.3.5
+Release:	alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -648,6 +648,11 @@ xz Changelog
 %endif
 
 %changelog
+* Sat Oct 28 2017 Anton Farygin <rider@altlinux.ru> 2:3.3.5-alt1
+- 3.3.4
+- fixes:
+   * CVE-2017-15186 double free when ffmpeg parsing an craft AVI file to MKV file using ffvhuff decoder.
+
 * Fri Oct 06 2017 Anton Farygin <rider@altlinux.ru> 2:3.3.4-alt3
 - rebuild for libx265 2.5
 
