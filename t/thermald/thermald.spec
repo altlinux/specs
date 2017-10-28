@@ -1,5 +1,7 @@
+%define _localstatedir /var
+
 Name: thermald
-Version: 1.6
+Version: 1.7.1
 Release: alt1
 
 Summary: Thermal daemon for IA
@@ -14,7 +16,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar.gz
 Source1: thermald.init
 
-Buildrequires: gcc-c++ glib-devel libdbus-glib-devel libgio-devel libgomp-devel libxml2-devel
+BuildRequires: gcc-c++ pkgconfig(glib) pkgconfig(dbus-glib-1) pkgconfig(gio-2.0) libgomp-devel pkgconfig(libxml-2.0)
 Requires: dbus
 
 %description
@@ -51,7 +53,6 @@ install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
 
 %preun
 %preun_service thermald
-
 %files
 %_sbindir/%name
 %_datadir/dbus-1/system-services/org.freedesktop.%name.service
@@ -65,6 +66,9 @@ install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
 %_man8dir/*
 
 %changelog
+* Sat Oct 28 2017 Anton Midyukov <antohami@altlinux.org> 1.7.1-alt1
+- new version (1.7.1) with rpmgs script
+
 * Fri Mar 10 2017 Anton Midyukov <antohami@altlinux.org> 1.6-alt1
 - new version (1.6) with rpmgs script
 
