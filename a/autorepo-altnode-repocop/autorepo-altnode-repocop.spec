@@ -2,7 +2,7 @@
 
 #BuildRequires: 
 Name: autorepo-altnode-repocop
-Version: 0.17
+Version: 0.18
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -14,7 +14,7 @@ License: GPL2+
 Source: %name-%version.tar
 
 BuildRequires: repocop perl(Pod/Text.pm)
-Requires: repocop > 0.67
+Requires: repocop > 0.73
 
 %description
 %summary
@@ -35,6 +35,9 @@ install -m 755 repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
+* Sat Oct 28 2017 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- support for autoimports distrodb extra
+
 * Fri Oct 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - support for new distrodb extra
 
