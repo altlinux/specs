@@ -1,7 +1,7 @@
 %define  pkgname em-synchrony
  
 Name: 	 ruby-%pkgname
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
  
 Summary: Fiber aware EventMachine clients and convenience classes
@@ -67,6 +67,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Sat Jan 28 2017 Andrey Cherepanov <cas@altlinux.org> 1.0.6-alt1
+- new version 1.0.6
+
 * Fri Sep 23 2016 Andrey Cherepanov <cas@altlinux.org> 1.0.5-alt1
 - new version 1.0.5
 
