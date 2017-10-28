@@ -2,7 +2,7 @@
 
 Name: vlc
 Version: 3.0.0
-Release: alt6.git8cacc98
+Release: alt7.git3767a33
 
 Summary: VLC media player
 License: GPLv2
@@ -39,8 +39,8 @@ BuildRequires: libupnp-devel liblua5-devel lua5
 BuildRequires: libtiger-devel libudev-devel libprojectM-devel libsqlite3-devel
 BuildRequires: libgtk+3-devel libXpm-devel libXt-devel libminizip-devel
 BuildRequires: libchromaprint-devel libvncserver-devel libwayland-egl-devel wayland-protocols
-BuildRequires: qt5-x11extras-devel libsecret-devel libgtk+2-devel libsoxr-devel libmpg123-devel libsidplay
-BuildRequires: libnfs-devel libdca-devel libarchive-devel
+BuildRequires: qt5-x11extras-devel libsecret-devel libgtk+2-devel libsoxr-devel libmpg123-devel libsidplay qt5-svg-devel
+BuildRequires: libnfs-devel libdca-devel libarchive-devel 
 %{?_enable_freerdp:BuildRequires: libfreerdp-devel}
 BuildRequires: fortune-mod >= 1.0-ipl33mdk
 
@@ -826,7 +826,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/audio_filter/libstereo_widen_plugin.so
 %vlc_plugindir/audio_filter/libtospdif_plugin.so
 
-
 %dir %vlc_plugindir/audio_mixer
 %vlc_plugindir/audio_mixer/libfloat_mixer_plugin.so
 %vlc_plugindir/audio_mixer/libinteger_mixer_plugin.so
@@ -872,6 +871,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/codec/libttml_plugin.so
 %vlc_plugindir/codec/libuleaddvaudio_plugin.so
 %vlc_plugindir/codec/libvaapi_plugin.so
+%vlc_plugindir/codec/libwebvtt_plugin.so
 %vlc_plugindir/codec/libxwd_plugin.so
 
 %dir %vlc_plugindir/control
@@ -1367,6 +1367,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Sat Oct 28 2017 Anton Farygin <rider@altlinux.ru> 3.0.0-alt7.git3767a33
+- up to 3767a33
+
 * Tue Oct 10 2017 Anton Farygin <rider@altlinux.ru> 3.0.0-alt6.git8cacc98
 - up to 8cacc98
 
