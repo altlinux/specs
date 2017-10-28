@@ -1,6 +1,6 @@
 Name: yandex-browser-preinstall
 Version: 0.3
-Release: alt1
+Release: alt2
 
 Summary: Set correct environment for Yandex.Browser
 License: GPL
@@ -30,9 +30,13 @@ Set correct environment for Yandex.Browser
 %files
 %_sysconfdir/default/yandex-browser
 %_sysconfdir/default/yandex-browser-beta
+%dir %_libexecdir/chromium-browser
 %_libexecdir/chromium-browser/libffmpeg.so
 
 %changelog
+* Sat Oct 28 2017 Nazarov Denis <nenderus@altlinux.org> 0.3-alt2
+- Fix post-install unowned files
+
 * Sat Oct 28 2017 Nazarov Denis <nenderus@altlinux.org> 0.3-alt1
 - Fix playable video with H.264 codec
 - Remove require on libgcrypt11 (now use libgcrypt20)
