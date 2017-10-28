@@ -1,12 +1,11 @@
-%set_automake_version 1.11
-
 %define oname comedilib
 Name: libcomedi
-Version: 0.10.0
-Release: alt1.1
+Version: 0.11.0
+Release: alt1
+%define oversion %(echo "%version" | sed -e "s|\\.|_|g")
 
 Summary: Data Acquisition library for the Comedi DAQ driver
-Summary(ru_RU.UTF-8): Библиотека получения данных для драйвера Comedi DAQ.
+Summary(ru_RU.UTF-8): Библиотека получения данных для драйвера Comedi DAQ
 
 License: LGPL
 Group: Development/Other
@@ -15,9 +14,13 @@ Url: http://www.comedi.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 AutoReq: noshell
 
-Source: http://www.comedi.org/download/%oname-%version.tar.bz2
+# Source-url: https://github.com/Linux-Comedi/comedilib/archive/r%oversion.tar.gz
+Source: %oname-%version.tar
 Source1: http://www.comedi.org/download/comedi_examples.tar.gz
 Patch: %name-as-needed.patch
+
+# for correct _localstatedir
+BuildRequires: rpm-macros-intro-conflicts
 
 # manually removed: hostinfo eric gcc-g77
 # Automatically added by buildreq on Sun Nov 07 2004
@@ -39,6 +42,8 @@ Summary: The files needed for %name application development
 Summary(ru_RU.UTF-8): Файлы, требующиеся для разработки приложений с использованием %name
 Group: Development/C
 Requires: %name = %version-%release
+# https://bugzilla.altlinux.org/show_bug.cgi?id=19191
+#Requires: kernel-headers-comedi
 
 %description devel
 The %name-devel package contains the necessary include files
@@ -73,8 +78,8 @@ for developing applications with %name
 для разработки приложений, которые используют %name.
 
 %prep
-%setup -q -n comedilib-%version
-%patch
+%setup -n %oname-%version
+#patch
 # unpack examples
 #tar xfz %SOURCE1
 #__subst 's|comedi_data_read_n|comedi_data_read_n_obsolete|' ./comedi_examples/monitor/sv.c
@@ -82,7 +87,7 @@ for developing applications with %name
 
 %build
 %autoreconf
-%configure --localstatedir=%buildroot%_localstatedir --disable-ruby-binding
+%configure --disable-ruby-binding
 %make_build
 #cd comedi_examples/monitor
 #	make
@@ -132,8 +137,14 @@ for developing applications with %name
 
 %files devel-static
 %_libdir/%name.a
+#_libdir/_comedi.a
+#_libdir/_comedi.la
 
 %changelog
+* Sat Oct 28 2017 Vitaly Lipatov <lav@altlinux.ru> 0.11.0-alt1
+- build new version
+- cleanup spec
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt1.1
 - Fixed build
 
