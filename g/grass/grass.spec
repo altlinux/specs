@@ -1,6 +1,6 @@
 Name:    grass
-Version: 7.2.1
-Release: alt2
+Version: 7.2.2
+Release: alt1
 
 %def_with mysql
 %def_with postgres
@@ -188,10 +188,9 @@ done
 sed -i -e 's/^.TH \(.*\) 1/.TH \1 1grass/' %buildroot%_man1dir/*
 rm -rf %buildroot%_prefix/%grassdir/man
 
-# Make locales available on system, correct case for pt_br locale
+# Make locales available on system
 mkdir -p %buildroot%_datadir/locale/
 mv %buildroot%_prefix/%grassdir/locale %buildroot%_datadir/
-mv %buildroot%_datadir/locale/pt_br %buildroot%_datadir/locale/pt_BR
 
 # Create versionless symlinks for binary and libdir
 # The libdir symlink is handy for QGIS. QGIS asks the user for gisbase
@@ -302,6 +301,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Sat Oct 28 2017 Andrey Cherepanov <cas@altlinux.org> 7.2.2-alt1
+- New version
+
 * Wed Aug 16 2017 Andrey Cherepanov <cas@altlinux.org> 7.2.1-alt2
 - Rebuild with geos 3.6.2
 
