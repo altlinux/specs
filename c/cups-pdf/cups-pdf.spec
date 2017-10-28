@@ -1,12 +1,13 @@
 Name: cups-pdf
 Version: 2.6.1
-Release: alt1
+Release: alt2
 
 Summary: Extension for creating pdf-Files with CUPS
 Summary(ru_RU.UTF-8): Расширения для создания PDF файлов с помощью CUPS
+
 License: GPLv2+
+Group: Publishing
 Url: http://cip.physik.uni-wuerzburg.de/~vrbehr/cups-pdf
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
 Source: http://www.physik.uni-wuerzburg.de/~vrbehr/cups-pdf/src/%{name}_%version.tar.gz
 Source1: cups-pdf.sh
@@ -14,7 +15,6 @@ Source1: cups-pdf.sh
 Patch1: cups-pdf-conf.patch
 Patch2: cups-pdf-desktop.patch
 
-Group: Publishing
 
 Requires(pre): cups
 Requires: ghostscript
@@ -31,7 +31,7 @@ device to produce PDF Files.
 %patch2 -p0 -b .desktop
 
 %build
-cc %optflags -o cups-pdf src/cups-pdf.c
+cc %optflags -D_FILE_OFFSET_BITS=64 -o cups-pdf src/cups-pdf.c
 
 %install
 install -D -m 700 cups-pdf %buildroot%_libexecdir/cups/backend/cups-pdf
@@ -72,6 +72,9 @@ fi
 %dir %_spooldir/cups-pdf/SPOOL
 
 %changelog
+* Thu Sep 11 2014 Vitaly Lipatov <lav@altlinux.ru> 2.6.1-alt2
+- build with -D_FILE_OFFSET_BITS=64 (ALT bug 28214)
+
 * Thu Sep 27 2012 Andriy Stepanov <stanv@altlinux.ru> 2.6.1-alt1
 - New version
 
