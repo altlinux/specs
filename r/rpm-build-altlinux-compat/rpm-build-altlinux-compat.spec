@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 2.0.2
+Version: 2.1.0
 Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
@@ -67,7 +67,20 @@ This package contains new macros introduced for
 include in ALT Linux rpm build.
 
 If you wish to use these macros, add rpm-build-intro
-package to buildrequires.
+package to build requires.
+
+%package -n rpm-macros-intro-conflicts
+Summary: Conflicts macros for ALT Linux rpm build
+Group: Development/Other
+Requires: %_rpmmacrosdir
+Requires: rpm-build-intro = %EVR
+
+%description -n rpm-macros-intro-conflicts
+This package contains conflicts macros for
+use with ALT Linux rpm build.
+
+If you wish to use these macros, add rpm-macros-intro-conflicts
+package to build requires.
 
 %package -n rpm-build-compat
 Summary: ALT Linux compatibility macros for backport purposes
@@ -93,6 +106,10 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %doc AUTHORS TODO
 %_rpmmacrosdir/etersoft-intro
 
+%files -n rpm-macros-intro-conflicts
+%doc AUTHORS
+%_rpmmacrosdir/etersoft-intro-conflicts
+
 %files -n rpm-build-compat
 %doc AUTHORS
 %_rpmmacrosdir/compat
@@ -111,6 +128,9 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Sat Oct 28 2017 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
+- move _localstatedir macro to rpm-macros-intro-conflicts package (ALT bug 32554)
+
 * Sun Oct 22 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.2-alt1
 - add support for python3_dir* args
 
