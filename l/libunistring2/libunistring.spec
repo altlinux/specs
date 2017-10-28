@@ -1,9 +1,9 @@
 Name: libunistring2
-Version: 0.9.4
+Version: 0.9.7
 Release: alt1
 
 Summary: GNU Unicode string library
-License: LGPLv3+
+License: GPLV2+ or LGPLv3+
 Group: System/Libraries
 Url: http://www.gnu.org/software/libunistring/
 %define srcname libunistring-%version
@@ -55,6 +55,9 @@ subst --preserve 's/gl_printf_safe=yes/gl_printf_safe=/' \
 %endif
 
 %changelog
+* Sat Oct 28 2017 Dmitry V. Levin <ldv@altlinux.org> 0.9.7-alt1
+- 0.9.4 -> 0.9.7 (closes: #30746).
+
 * Wed Dec 09 2015 Dmitry V. Levin <ldv@altlinux.org> 0.9.4-alt1
 - Updated: 0.9.3 -> 0.9.4.
 - Renamed: libunistring -> libunistring2.
