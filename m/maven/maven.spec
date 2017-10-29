@@ -1,14 +1,23 @@
-Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%bcond_without  logback
+
 Name:           maven
+Epoch:          1
 Version:        3.3.9
-Release:        alt1_6jpp8
+Release:        alt1_9jpp8
 Summary:        Java project management and project comprehension tool
 License:        ASL 2.0
 URL:            http://maven.apache.org/
@@ -17,9 +26,10 @@ BuildArch:      noarch
 Source0:        http://archive.apache.org/dist/%{name}/%{name}-3/%{version}/source/apache-%{name}-%{version}-src.tar.gz
 Source1:        maven-bash-completion
 Source2:        mvn.1
-Source200:      %{name}-script
+Source1010: mvn-script
 
 Patch0:         0001-Force-SLF4J-SimpleLogger-re-initialization.patch
+Patch1:         0002-Adapt-mvn-script.patch
 
 BuildRequires:  maven-local
 
@@ -39,7 +49,6 @@ BuildRequires:  apache-commons-jxpath
 BuildRequires:  apache-commons-logging
 BuildRequires:  apache-resource-bundles
 BuildRequires:  atinject
-BuildRequires:  buildnumber-maven-plugin
 BuildRequires:  cglib
 BuildRequires:  easymock3
 BuildRequires:  google-guice >= 3.1.6
@@ -51,14 +60,11 @@ BuildRequires:  jsr-305
 BuildRequires:  junit
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-parent
 BuildRequires:  maven-remote-resources-plugin
 BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-site-plugin
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-wagon-file
 BuildRequires:  maven-wagon-http
@@ -77,11 +83,13 @@ BuildRequires:  sisu-plexus >= 1:0.1
 BuildRequires:  sisu-mojos
 BuildRequires:  slf4j
 BuildRequires:  xmlunit
+%if %{with logback}
 BuildRequires:  mvn(ch.qos.logback:logback-classic)
+%endif
 BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
 
-Requires:       %{name}-lib = %{version}
+Requires:       %{name}-lib = %{epoch}:%{version}-%{release}
 
 # Theoretically Maven might be usable with just JRE, but typical Maven
 # workflow requires full JDK, so we recommend it here.
@@ -142,8 +150,8 @@ concept of a project object model (POM), Maven can manage a project's build,
 reporting and documentation from a central piece of information.
 
 %package        lib
+Group: Development/Java
 Summary:        Core part of Maven
-Group:          Development/Java
 # If XMvn is part of the same RPM transaction then it should be
 # installed first to avoid triggering rhbz#1014355.
 
@@ -151,43 +159,39 @@ Group:          Development/Java
 Core part of Apache Maven that can be used as a library.
 
 %package        javadoc
+Group: Development/Java
 Summary:        API documentation for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description    javadoc
 %{summary}.
 
 %prep
-%setup -q -n apache-%{name}-%{version}%{?ver_add}
+%setup -q -n apache-%{name}-%{version}
+
 %patch0 -p1
+%patch1 -p1
 
 # not really used during build, but a precaution
-rm maven-ant-tasks-*.jar
+find -name '*.jar' -not -path '*/test/*' -delete
+find -name '*.class' -delete
+find -name '*.bat' -delete
 
-# Use Eclipse Sisu plugin
-sed -i s/org.sonatype.plugins/org.eclipse.sisu/ maven-core/pom.xml
-
-# fix for animal-sniffer (we don't generate 1.5 signatures)
-sed -i 's:check-java-1.5-compat:check-java-1.6-compat:' pom.xml
-
-rm -f apache-maven/src/bin/*.bat
 sed -i 's:\r::' apache-maven/src/conf/settings.xml
 
-# Update shell scripts to use unversioned classworlds
-sed -i -e s:'-classpath "${M2_HOME}"/boot/plexus-classworlds-\*.jar':'-classpath "${M2_HOME}"/boot/plexus-classworlds.jar':g \
-        apache-maven/src/bin/mvn*
-
-# Disable QA plugins which are not useful for us
+# Disable plugins which are not useful for us
 %pom_remove_plugin :animal-sniffer-maven-plugin
 %pom_remove_plugin :apache-rat-plugin
-
-# logback is not really needed by maven in typical use cases, so set
-# its scope to provided
-%pom_xpath_inject "pom:dependency[pom:artifactId='logback-classic']" "<scope>provided</scope>" maven-embedder
+%pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin -r :buildnumber-maven-plugin
 
 %mvn_package :apache-maven __noinstall
 
+%if %{without logback}
+%pom_remove_dep -r :logback-classic
+rm maven-embedder/src/main/java/org/apache/maven/cli/logging/impl/LogbackConfiguration.java
+%endif
 
 %build
 # Put all JARs in standard location, but create symlinks in Maven lib
@@ -218,12 +222,10 @@ install -d -m 755 %{buildroot}%{_sysconfdir}/%{name}
 install -d -m 755 %{buildroot}%{_datadir}/bash-completion/completions
 install -d -m 755 %{buildroot}%{_mandir}/man1
 
-for cmd in mvnDebug mvnyjp; do
-    sed s/@@CMD@@/$cmd/ %{SOURCE200} >%{buildroot}%{_bindir}/$cmd
+for cmd in mvn mvnDebug mvnyjp; do
+    ln -s %{_datadir}/%{name}/bin/$cmd %{buildroot}%{_bindir}/$cmd
     echo ".so man1/mvn.1" >%{buildroot}%{_mandir}/man1/$cmd.1
 done
-sed s/@@CMD@@/mvn/ %{SOURCE200} >%{buildroot}%{_datadir}/%{name}/bin/mvn-script
-ln -sf %{_datadir}/%{name}/bin/mvn-script %{buildroot}%{_bindir}/mvn
 install -p -m 644 %{SOURCE2} %{buildroot}%{_mandir}/man1
 install -p -m 644 %{SOURCE1} %{buildroot}%{_datadir}/bash-completion/completions/mvn
 mv $M2_HOME/bin/m2.conf %{buildroot}%{_sysconfdir}
@@ -238,45 +240,45 @@ cp -a $M2_HOME/bin/* %{buildroot}%{_datadir}/%{name}/bin
 ln -sf $(build-classpath plexus/classworlds) \
     %{buildroot}%{_datadir}/%{name}/boot/plexus-classworlds.jar
 
-(cd %{buildroot}%{_datadir}/%{name}/lib
-    build-jar-repository -s -p . \
-        aether/aether-api \
-        aether/aether-connector-basic \
-        aether/aether-impl \
-        aether/aether-spi \
-        aether/aether-transport-wagon \
-        aether/aether-util \
-        aopalliance \
-        cdi-api \
-        commons-cli \
-        commons-io \
-        commons-lang \
-        commons-lang3 \
-        guava \
-        atinject \
-        jsoup/jsoup \
-        jsr-305 \
-        org.eclipse.sisu.inject \
-        org.eclipse.sisu.plexus \
-        plexus/plexus-cipher \
-        plexus/containers-component-annotations \
-        plexus/interpolation \
-        plexus/plexus-sec-dispatcher \
-        plexus/utils \
-        google-guice-no_aop \
-        slf4j/api \
-        slf4j/simple \
-        maven-wagon/file \
-        maven-wagon/http-shaded \
-        maven-wagon/http-shared \
-        maven-wagon/provider-api \
-        \
-        httpcomponents/httpclient \
-        httpcomponents/httpcore \
-        commons-logging \
-        commons-codec \
-        objectweb-asm/asm \
-)
+pushd %{buildroot}%{_datadir}/%{name}/lib
+build-jar-repository -s -p . \
+    aether/aether-api \
+    aether/aether-connector-basic \
+    aether/aether-impl \
+    aether/aether-spi \
+    aether/aether-transport-wagon \
+    aether/aether-util \
+    aopalliance \
+    cdi-api \
+    commons-cli \
+    commons-io \
+    commons-lang \
+    commons-lang3 \
+    guava \
+    google-guice-no_aop \
+    atinject \
+    jsoup/jsoup \
+    jsr-305 \
+    org.eclipse.sisu.inject \
+    org.eclipse.sisu.plexus \
+    plexus/plexus-cipher \
+    plexus/containers-component-annotations \
+    plexus/interpolation \
+    plexus/plexus-sec-dispatcher \
+    plexus/utils \
+    slf4j/api \
+    slf4j/simple \
+    maven-wagon/file \
+    maven-wagon/http-shaded \
+    maven-wagon/http-shared \
+    maven-wagon/provider-api \
+    \
+    httpcomponents/httpclient \
+    httpcomponents/httpcore \
+    commons-logging \
+    commons-codec \
+    objectweb-asm/asm
+popd
 # maven-filesystem
 rm -f %buildroot%_datadir/%{name}/repository-jni/JPP
 
@@ -285,6 +287,8 @@ touch $RPM_BUILD_ROOT/etc/mavenrc
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/maven.conf`
 touch $RPM_BUILD_ROOT/etc/java/maven.conf
+
+install -m 755 %{SOURCE1010} %buildroot%_datadir/maven/bin/mvn-script
 
 %pre 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=27807 (upgrade from maven1)
@@ -295,17 +299,17 @@ touch $RPM_BUILD_ROOT/etc/java/maven.conf
 %files lib -f .mfiles
 %doc LICENSE NOTICE README.md
 %{_datadir}/%{name}
-%attr(0755,root,root) %{_datadir}/%{name}/bin/mvn-script
 %dir %{_javadir}/%{name}
 %dir %{_sysconfdir}/%{name}
 %dir %{_sysconfdir}/%{name}/logging
 %config(noreplace) %{_sysconfdir}/m2.conf
 %config(noreplace) %{_sysconfdir}/%{name}/settings.xml
 %config(noreplace) %{_sysconfdir}/%{name}/logging/simplelogger.properties
+%_datadir/maven/bin/mvn-script
 
 %files
 %attr(0755,root,root) %{_bindir}/mvn*
-%{_datadir}/bash-completion/completions/mvn
+%{_datadir}/bash-completion
 %{_mandir}/man1/mvn*.1*
 %config(noreplace,missingok) /etc/mavenrc
 %config(noreplace,missingok) /etc/java/maven.conf
@@ -315,6 +319,9 @@ touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
 
 %changelog
+* Sun Oct 29 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.3.9-alt1_9jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.3.9-alt1_6jpp8
 - new fc release
 
