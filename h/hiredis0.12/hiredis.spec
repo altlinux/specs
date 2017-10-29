@@ -8,7 +8,7 @@ Name: hiredis
 Name: hiredis%sover
 %endif
 Version: 0.12.1
-Release: alt1
+Release: alt2
 Summary: The official C client for Redis
 
 Group: System/Libraries
@@ -68,19 +68,26 @@ cp hiredis-test %buildroot%_bindir/
 
 %files -n libhiredis%sover
 %doc COPYING CHANGELOG.md
-%_bindir/hiredis-example*
-%_bindir/hiredis-test
 %_libdir/*.so.%{sover}*
 
 %if_with devel
 %files -n libhiredis-devel
 %doc README.md
+%_bindir/hiredis-example*
+%_bindir/hiredis-test
 %_includedir/hiredis
 %_libdir/*.so
 %_libdir/pkgconfig/hiredis.pc
 %endif
 
 %changelog
+* Sun Oct 29 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.12.1-alt2
+- Do not package example and test executables in the compat library package
+  (ALT #34016)
+
+* Mon Oct 16 2017 Mikhail Gordeev <obirvalger@altlinux.org> 0.13.3-alt2
+- (ALT #34016) Move example files to devel package
+
 * Tue Sep 19 2017 Mikhail Gordeev <obirvalger@altlinux.org> 0.12.1-alt1
 - Version 0.12.1
 
