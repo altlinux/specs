@@ -1,12 +1,14 @@
 Group: System/Fonts/True type
 %define oldname wqy-bitmap-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define fontname  wqy-bitmap
 %define fontconf  61-wqy-bitmapsong.conf
 %define wqyroot   wqy-bitmapsong
 
 Name:           fonts-bitmap-wqy
 Version:        1.0.0
-Release:        alt3_0.9.rc1
+Release:        alt3_0.12.rc1
 Summary:        WenQuanYi Bitmap Chinese Fonts
 
 License:        GPLv2 with exceptions
@@ -15,7 +17,7 @@ Source0:        http://downloads.sourceforge.net/wqy/wqy-bitmapsong-bdf-1.0.0-RC
 Source1:        61-wqy-bitmapsong.conf
 
 BuildArch:      noarch
-BuildRequires:  fontpackages-devel, bdftopcf
+BuildRequires:  fontpackages-devel bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils
 Source44: import.info
 
 %description
@@ -94,6 +96,9 @@ fi
 %doc AUTHORS ChangeLog COPYING README LOGO.png
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_0.12.rc1
+- update to new release by fcimport
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_0.9.rc1
 - fixed build
 
