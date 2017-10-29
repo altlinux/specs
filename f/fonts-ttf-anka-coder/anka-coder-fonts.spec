@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: python
 # END SourceDeps(oneline)
 %define oldname anka-coder-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname anka-coder
 %global fontconf 65-%{fontname}
 %global hgrev 4348cf4ec395
@@ -19,7 +21,7 @@ size 2048x922)
 
 Name:           fonts-ttf-anka-coder
 Version:        1.100
-Release:        alt1_0.4.20130409hg%{hgrev}
+Release:        alt1_0.6.20130409hg%{hgrev}
 Summary:        A mono spaced, courier-width font
 
 License:        OFL
@@ -39,7 +41,7 @@ Source7:        %{fontname}-norm.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
-BuildRequires: fontforge libfontforge
+BuildRequires:  fontforge libfontforge
 Source44: import.info
 
 %description
@@ -58,7 +60,7 @@ This package consists of files used by other %{oldname} packages.
 %package -n fonts-ttf-anka-coder-norm
 Group: System/Fonts/True type
 Summary:        Normal version of %{oldname}
-Requires:       fonts-ttf-anka-coder-common = %{version}
+Requires:       fonts-ttf-anka-coder-common = %{version}-%{release}
 
 %description -n fonts-ttf-anka-coder-norm
 %common_desc
@@ -80,7 +82,7 @@ Requires:       fonts-ttf-anka-coder-common = %{version}
 %package -n fonts-ttf-anka-coder-condensed
 Group: System/Fonts/True type
 Summary:        Condensed version of %{oldname}
-Requires:       fonts-ttf-anka-coder-common = %{version}
+Requires:       fonts-ttf-anka-coder-common = %{version}-%{release}
 
 %description -n fonts-ttf-anka-coder-condensed
 %common_desc
@@ -99,7 +101,7 @@ viewing of source code, also as for displaying terminal windows.
 %package -n fonts-ttf-anka-coder-narrow
 Group: System/Fonts/True type
 Summary:        Narrow version of %{oldname}
-Requires:       fonts-ttf-anka-coder-common = %{version}
+Requires:       fonts-ttf-anka-coder-common = %{version}-%{release}
 
 %description -n fonts-ttf-anka-coder-narrow
 %common_desc
@@ -210,6 +212,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.100-alt1_0.6.20130409hg4348cf4ec395
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.100-alt1_0.4.20130409hg4348cf4ec395
 - update to new release by fcimport
 
