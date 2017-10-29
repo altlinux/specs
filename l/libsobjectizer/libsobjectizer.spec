@@ -1,10 +1,10 @@
 Name: libsobjectizer
 Version: 5.5.19
-Release: alt3
+Release: alt4
 
 Summary: SObjectizer is an in-process message dispatching framework with implementation of Actor Model (C++)
 
-License: SObjectizer license
+License: BSD-3-CLAUSE
 Group: Development/C++
 Url: https://sourceforge.net/projects/sobjectizer/
 
@@ -65,6 +65,9 @@ ln -s libso.%version.so %buildroot%_libdir/libso.so
 %_libdir/*.so
 
 %changelog
+* Sun Oct 29 2017 Pavel Vainerman <pv@altlinux.ru> 5.5.19-alt4
+- update license information 
+
 * Sun Oct 29 2017 Pavel Vainerman <pv@altlinux.ru> 5.5.19-alt3
 - update license information
 
