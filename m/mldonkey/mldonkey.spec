@@ -1,32 +1,22 @@
-%def_disable gui
 Name: mldonkey
-Version: 3.1.0
-Release: alt1.2
-
-%define ml_ver %version
-
+Version: 3.1.6
+Release: alt1
 Group: Networking/File transfer
 Summary: The eDonkey client for Linux/Unix/Windows
-URL: http://mldonkey.sourceforge.net/
+URL: https://github.com/ygrek/mldonkey
 License: GPL
-Source: http://savannah.nongnu.org/download/mldonkey/%name-%version.tar
-Source1: mldonkey_client.sh
-Source3: mldonkey_server.sh
+# git https://github.com/ygrek/mldonkey
+Source: %name-%version.tar
+Source1: %name.service
+Source2: %name.logrotate
+Source3: %name.tmpfiles.conf
 
-Patch: alt-site-lib.patch
-Patch1: mldonkey-3.1.0-alt-DSO.patch
-
-# Automatically added by buildreq on Sat Sep 03 2005
-BuildRequires: bzlib-devel camlp4 fontconfig libfreetype-devel glib2-devel libatk-devel libgd2-devel libjpeg-devel libncurses-devel libpango-devel libpng12-devel librsvg-devel libXpm-devel ocaml-runtime pkgconfig wget zlib-devel
-%if_enabled gui
-BuildRequires: lablgtk2 libgtk+2-devel
-%endif
+BuildRequires: bzlib-devel ocaml-camlp4-devel ocaml-lablgtk-devel  fontconfig libfreetype-devel glib2-devel libatk-devel libgd2-devel libjpeg-devel libncurses-devel libpango-devel libpng12-devel librsvg-devel libXpm-devel ocaml-runtime pkgconfig wget zlib-devel
+BuildRequires: libgtk+2-devel desktop-file-utils
 # for mldonkey-submit
 BuildRequires(pre): perl-libwww-perl
 
-Conflicts: mldonkey-client
 Provides: mldonkey-server
-Obsoletes: mldonkey-client
 Obsoletes: mldonkey-server
 
 %description
@@ -46,7 +36,6 @@ downloads from multiple sources and corruption detection, complex search
 requests, chat with friends, internationalization, history of search results,
 etc...
 
-%if_enabled gui
 %package client
 Group: Networking/File transfer
 Summary: Graphical frontend for mldonkey based on GTK
@@ -57,86 +46,114 @@ The GTK interface for mldonkey provides a convenient way of managing
 all mldonkey operations. It gives details about conected servers,               
 downloaded files, friends and lets one search for files in a pleasing           
 way.
-%endif
 
 %prep
 %setup -q
-%patch -p2
-%patch1 -p2
 
 %build
 cd config
 autoconf
 cd ../
 ./configure --enable-largefile \
-	    %if_enabled gui
-	     --enable-gui
-	    %endif
+	    --sysconfdir=%_sysconfdir/mldonkey \
+            --sharedstatedir=%_localstatedir/mldonkey \
+            --localstatedir=%_localstatedir/mldonkey \
+            --prefix=%_prefix \
+	     --enable-gui=newgui2 \
+	     --disable-rpath \
+	     --enable-checks \
+	     --enable-ocamlver=%(rpm -q --qf '%%{version}' ocaml) \
 #
 %make_build
+%make_build utils
 %__make make_torrent
 
 %install
-%__mkdir_p %buildroot%_bindir
-%if_enabled gui
-%__mkdir_p %buildroot%_datadir/%name
-%__mkdir_p %buildroot%_niconsdir
-%__mkdir_p %buildroot%_liconsdir
-%__mkdir_p %buildroot%_miconsdir
-%endif
+DONT_GPRINTIFY=1
+export DONT_GPRINTIFY
+%makeinstall_std
 
-%__install -pD -m755 mlnet %buildroot%_bindir/mlnet
-%__install -pD -m755 %SOURCE3 %buildroot%_bindir/mldonkey_server
-%__install -pD -m755 make_torrent %buildroot%_bindir/mldonkey_make_torrent
+install -dm755 %buildroot%_bindir
+install -dm755 %buildroot%_cachedir/%name
+install -dm755 %buildroot%_libdir/mldonkey
+install -dm755 %buildroot%_localstatedir/mldonkey/incoming
+install -pm755 distrib/mldonkey_command %buildroot%_bindir/mldonkey_command
+install -pm755 distrib/kill_mldonkey %buildroot%_bindir/kill_mldonkey
+for util in copysources mld_hash get_range svg_converter subconv; do
+    install -pm755 $util %buildroot%_bindir/$util ;
+done
+install -pm755 make_torrent %buildroot%_bindir/mldonkey_make_torrent
+install -pm755 mlguistarter %buildroot%_bindir/mlguistarter
+install -pm755 distrib/mldonkey_previewer %buildroot%_bindir/mldonkey_previewer
 
-%if_enabled gui
-cp -R distrib/* %buildroot%_datadir/%name
-%__install -pD -m755 mlnet+gui %buildroot%_bindir/mlnet+gui
-%__install -pD -m755 mlgui %buildroot%_bindir/mlgui
-%__install -pD -m755 %SOURCE1 %buildroot%_bindir/mldonkey_client
-%__install -pD -m755 mlguistarter %buildroot%_bindir/mlguistarter
-%__install -pD -m755 distrib/mldonkey_previewer %buildroot%_bindir/mldonkey_previewer
+%__install -pD -m644 packages/rpm/%name-icon-16.png %buildroot/%_niconsdir/%name.png
+%__install -pD -m644 packages/rpm/%name-icon-32.png %buildroot/%_miconsdir/%name.png
+%__install -pD -m644 packages/rpm/%name-icon-48.png %buildroot/%_liconsdir/%name.png
+desktop-file-install --dir=%buildroot%_desktopdir distrib/%name.desktop
+install -dm755 %buildroot%_logdir/%name
+install -pDm644 %SOURCE2 %buildroot%_logrotatedir/%name
+install -pDm644 %SOURCE1 %buildroot%_unitdir/%name.service
+install -pDm644 %SOURCE3 %buildroot%_tmpfilesdir/%name.conf
+echo -e \
+"temp_directory = \"%_var/cache/mldonkey\"\n"\
+"incoming_directory = \"%_localstatedir/%name/incoming\"\n"\
+"mldonkey_gui = \"%_bindir/mlgui\"\n"\
+"mldonkey_bin = \"%_bindir/mldonkey\"\n"\
+"log_file = \"%_logdir/mldonkey/mldonkey.log\"\n"\
+> %buildroot%_localstatedir/%name/downloads.ini
 
-## menu ##
-%__install -p -m644 packages/rpm/%name-icon-16.png %buildroot/%_niconsdir/%name.png
-%__install -p -m644 packages/rpm/%name-icon-32.png %buildroot/%_miconsdir/%name.png
-%__install -p -m644 packages/rpm/%name-icon-48.png %buildroot/%_liconsdir/%name.png
+%pre
+getent group _%name >/dev/null || groupadd -r _%name
+getent passwd _%name >/dev/null || \
+    useradd -r -g _%name -d %_localstatedir/%name -s /sbin/nologin \
+    -c "MLDonkey server" _%name
 
-mkdir -p %buildroot%_desktopdir
-cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=eDonkey2000
-Comment=Door to the 'donkey' network
-Icon=%{name}
-Exec=%{name}_client
-Terminal=false
-Categories=Network;FileTransfer;
-EOF
-%endif
 
 %files
+%config(noreplace) %_sysconfdir/logrotate.d/mldonkey
+%_unitdir/mldonkey.service
+%_tmpfilesdir/%name.conf
+%attr(750,_mldonkey,_mldonkey) %dir %_logdir/mldonkey
+%attr(750,_mldonkey,_mldonkey) %dir %_cachedir/mldonkey
+%attr(750,_mldonkey,_mldonkey) %dir %_localstatedir/mldonkey
+%attr(770,_mldonkey,_mldonkey) %dir %_localstatedir/mldonkey/incoming
+%config(noreplace) %_localstatedir/mldonkey/downloads.ini
 %_bindir/mlnet
-%_bindir/mldonkey_server
+%_bindir/copysources
+%_bindir/get_range
+%_bindir/kill_mldonkey
+%_bindir/mlbt
+%_bindir/mld_hash
+%_bindir/mldc
+%_bindir/mldonkey_command
+%_bindir/mldonkey
+%_bindir/mlgnut
+%_bindir/mlslsk
+%_bindir/subconv
+%_bindir/svg_converter
 %_bindir/mldonkey_make_torrent
 
-%if_enabled gui
 %files client
+%doc  distrib/Authors.txt distrib/Bugs.txt distrib/ChangeLog distrib/Developers.txt Copying.txt
 %_bindir/mlgui
 %_bindir/mlnet+gui
-%_bindir/mldonkey_client
+%_bindir/mlbt+gui
+%_bindir/mldc+gui
+%_bindir/mldonkey+gui
+%_bindir/mldonkey_gui
+%_bindir/mlgnut+gui
+%_bindir/mlslsk+gui
 %_bindir/mlguistarter
 %_bindir/mldonkey_previewer
-%_datadir/%name
-%exclude %_datadir/%name/ed2k_mozilla
-%_desktopdir/%{name}.desktop
+%_desktopdir/%name.desktop
 %_niconsdir/%name.png
 %_miconsdir/%name.png
 %_liconsdir/%name.png
-%endif
 
 %changelog
+* Sun Oct 29 2017 Anton Farygin <rider@altlinux.ru> 3.1.6-alt1
+- 3.1.6
+
 * Wed Sep 26 2012 Aeliya Grevnyov <gray_graff@altlinux.org> 3.1.0-alt1.2
 - Fixed build
 
