@@ -1,11 +1,13 @@
 Group: System/Fonts/True type
 %define oldname oflb-asana-math-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname oflb-asana-math
 %global fontconf 63-%{fontname}.conf
 
 Name:           fonts-otf-oflb-asana-math
-Version:        0.952
-Release:        alt1_2
+Version:        0.954
+Release:        alt1_5
 Summary:        An OpenType font with a MATH table
 
 License:        OFL
@@ -95,6 +97,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.954-alt1_5
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.952-alt1_2
 - update to new release by fcimport
 
