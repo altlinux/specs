@@ -1,6 +1,6 @@
 Name: freeswitch
 Version: 1.6.19
-Release: alt2%ubt
+Release: alt3%ubt
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -608,6 +608,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Sun Oct 29 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.19-alt3%ubt
+- rebuilt for new postgresql 10
+
 * Tue Oct 03 2017 Anton Farygin <rider@altlinux.ru> 1:1.6.19-alt2%ubt
 - rebuilt for new libcodev2 0.7
 
