@@ -1,22 +1,24 @@
 Group: System/Fonts/True type
 %define oldname tharlon-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname tharlon
 %global fontconf 62-%{fontname}.conf
 
 Name:           fonts-ttf-tharlon
 Version:        1.002
-Release:        alt1_4
+Release:        alt1_10
 Summary:        The Myanmar font which is designed by Ngwe Tun
 
 License:        OFL
-URL:            http://code.google.com/p/tharlon-font/
-Source0:        http://tharlon-font.googlecode.com/files/Tharlon-Regular.ttf
-Source1:        %{oldname}-fontconfig.conf
-Source2:        http://tharlon-font.googlecode.com/files/OFL.txt
+URL:            http://code.google.com/archive/p/tharlon-font/
+Source0:        https://raw.githubusercontent.com/google/fonts/master/ofl/tharlon/Tharlon-Regular.ttf
+Source1:        https://raw.githubusercontent.com/google/fonts/master/ofl/tharlon/OFL.txt
+Source2:        %{oldname}-fontconfig.conf
 Source3:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
-BuildRequires:  fontpackages-devel dos2unix
+BuildRequires:  fontpackages-devel
 Source44: import.info
 
 %description
@@ -31,8 +33,8 @@ Open Font License with the Reserved Font Name 'TharLon'.
 
 %prep
 %setup -n %{oldname}-%{version} -q -T -c
-cp -p %{SOURCE0} %{SOURCE2} .
-dos2unix OFL.txt
+
+cp -p %{SOURCE0} %{SOURCE1} .
 
 %build
 
@@ -44,7 +46,7 @@ install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
 
-install -m 0644 -p %{SOURCE1} \
+install -m 0644 -p %{SOURCE2} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
@@ -95,6 +97,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.002-alt1_10
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.002-alt1_4
 - update to new release by fcimport
 
