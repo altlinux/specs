@@ -3,13 +3,15 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname oflb-goudy-bookletter-1911-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname oflb-goudy-bookletter-1911
 %global fontconf 61-%{fontname}.conf
 
 Name:		fonts-otf-oflb-goudy-bookletter-1911
 Summary:	Clean serif font based on Kennerly Old Style
 Version:	20080206
-Release:	alt3_10
+Release:	alt3_14
 License:	Public Domain
 # Source was originally downloaded from here:
 # http://openfontlibrary.org/people/chemoelectric/chemoelectric_-_Goudy_Bookletter_1.zip
@@ -22,7 +24,7 @@ Source2:	GoudyBookletter1911.otf
 Source3:        %{fontname}.metainfo.xml
 
 URL:		http://home.comcast.net/~crudfactory/cf3/gb1911.html
-BuildRequires:	fontpackages-devel fontforge
+BuildRequires:	fontpackages-devel fontforge libfontforge
 BuildArch:	noarch
 Source44: import.info
 
@@ -95,6 +97,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 20080206-alt3_14
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 20080206-alt3_10
 - update to new release by fcimport
 
