@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: python unzip
 # END SourceDeps(oneline)
 %define oldname unifrakturmaguntia-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname unifrakturmaguntia
 %global fontconf 61-%{fontname}-fonts.conf
 %global source_date 20140706
@@ -10,7 +12,7 @@ BuildRequires: python unzip
 
 Name:          fonts-ttf-unifrakturmaguntia
 Version:       0
-Release:       alt1_0.3.%{source_date}
+Release:       alt1_0.6.%{source_date}
 Summary:       Font that provide a Fraktur typeface that may be embedded on websites
 License:       OFL
 URL:           http://unifraktur.sourceforge.net/maguntia.html
@@ -18,7 +20,7 @@ Source0:       http://sourceforge.net/projects/unifraktur/files/fonts/Unifraktur
 Source10:      %{fontconf}
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
-BuildRequires: fontforge
+BuildRequires: fontforge libfontforge
 Source44: import.info
 
 %description
@@ -108,6 +110,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.6.20140706
+- update to new release by fcimport
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.3.20140706
 - new version
 
