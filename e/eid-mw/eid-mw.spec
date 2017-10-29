@@ -1,4 +1,4 @@
-%define mainline_ver 4.2.10
+%define mainline_ver 4.3.3
 
 Name: eid-mw
 Version: %mainline_ver
@@ -168,7 +168,7 @@ fi
 %_desktopdir/eid-viewer.desktop
 %_datadir/eid-mw
 %_datadir/glib-2.0/schemas/eid-viewer.gschema.xml
-%_iconsdir/eid-viewer.png
+%_iconsdir/hicolor/*/apps/eid-viewer.png
 
 %files -n libeidviewer
 %_libdir/libeidviewer.so.*
@@ -179,6 +179,9 @@ fi
 %_libdir/libeidviewer.so
 
 %changelog
+* Sun Oct 29 2017 Pavel Nakonechnyi <zorg@altlinux.org> 4.3.3-alt1
+- updated to version 4.3.3
+
 * Sat Sep 02 2017 Pavel Nakonechnyi <zorg@altlinux.org> 4.2.10-alt1
 - updated to version 4.2.10
 
