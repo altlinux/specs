@@ -1,18 +1,22 @@
 Group: System/Fonts/True type
 %define oldname overpass-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname overpass
 %global fontconf 60-%{fontname}.conf
+%global monofontconf 60-%{fontname}-mono.conf
 
 Name:		fonts-ttf-overpass
-Version:	1.01
-Release:	alt1_9
+Version:	3.0.2
+Release:	alt1_2
 Summary:	Typeface based on the U.S. interstate highway road signage type system
-License:	OFL or ASL 2.0 
-URL:		https://fedorahosted.org/overpass-fonts/
-Source0:	https://fedorahosted.org/releases/o/v/overpass-fonts/Overpass-Fonts-%{version}.tar.gz
+License:	OFL or LGPLv2+
+URL:		https://github.com/RedHatBrand/overpass/
+Source0:	https://github.com/RedHatBrand/Overpass/archive/%{version}.tar.gz
 Source1:	%{oldname}-fontconfig.conf
-Source2:	http://www.apache.org/licenses/LICENSE-2.0.txt
-Source3:        %{fontname}.metainfo.xml
+Source2:	%{fontname}.metainfo.xml
+Source3:	%{fontname}-mono-fonts-fontconfig.conf
+Source4:	%{fontname}-mono.metainfo.xml
 
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
@@ -25,16 +29,24 @@ Obsoletes: fonts-ttf-overpass-fonts <= 1.01-alt1_7
 Free and open source typeface based on the U.S. interstate highway road signage
 type system; it is sans-serif and suitable for both body and titling text.
 
+%package -n fonts-ttf-overpass-mono
+Group: System/Fonts/True type
+Summary:	Monospace version of overpass fonts
+
+%description -n fonts-ttf-overpass-mono
+Free and open source typeface based on the U.S. interstate highway road signage
+type system. This is the monospace family variant.
+
 %prep
-%setup -n %{oldname}-%{version} -q
-cp %{SOURCE2} .
+%setup -q -n Overpass-%{version}
 
 %build
 # Nothing to do here.
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
+
+install -m 0644 -p desktop-fonts/overpass*/*.otf %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
 		%{buildroot}%{_fontconfig_confdir}
@@ -42,12 +54,21 @@ install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
 install -m 0644 -p %{SOURCE1} \
 		%{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 
+install -m 0644 -p %{SOURCE3} \
+		%{buildroot}%{_fontconfig_templatedir}/%{monofontconf}
+
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
 		%{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
+ln -s %{_fontconfig_templatedir}/%{monofontconf} \
+                %{buildroot}%{_fontconfig_confdir}/%{monofontconf}
+
 # Add AppStream metadata
-install -Dm 0644 -p %{SOURCE3} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{SOURCE2} \
+	%{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+
+install -Dm 0644 -p %{SOURCE4} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}-mono.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -86,11 +107,30 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
-%{_fontbasedir}/*/%{_fontstem}/*.ttf
-%doc Overpass-OFL.txt LICENSE-2.0.txt
+%{_fontbasedir}/*/%{_fontstem}/overpass-bold*.otf
+%{_fontbasedir}/*/%{_fontstem}/overpass-extra*.otf
+%{_fontbasedir}/*/%{_fontstem}/overpass-heavy*.otf
+%{_fontbasedir}/*/%{_fontstem}/overpass-italic*.otf
+%{_fontbasedir}/*/%{_fontstem}/overpass-light*.otf
+%{_fontbasedir}/*/%{_fontstem}/overpass-regular*.otf
+%{_fontbasedir}/*/%{_fontstem}/overpass-semibold*.otf
+%{_fontbasedir}/*/%{_fontstem}/overpass-thin*.otf
+%doc README.md overpass-specimen.pdf
+%doc LICENSE.md
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
+%files -n fonts-ttf-overpass-mono
+%{_fontconfig_templatedir}/%{monofontconf}
+%config(noreplace) %{_fontconfig_confdir}/%{monofontconf}
+%{_fontbasedir}/*/%{_fontstem}/overpass-mono-*.otf
+%doc README.md overpass-mono-specimen.pdf
+%doc LICENSE.md
+%{_datadir}/appdata/%{fontname}-mono.metainfo.xml
+
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_9
 - update to new release by fcimport
 
