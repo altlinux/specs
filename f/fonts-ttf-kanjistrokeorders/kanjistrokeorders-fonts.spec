@@ -3,8 +3,9 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname kanjistrokeorders-fonts
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name kanjistrokeorders-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 3.001
 %global fontname kanjistrokeorders
 %global fontconf 69-%{fontname}.conf
@@ -12,7 +13,7 @@ BuildRequires: unzip
 
 Name:    fonts-ttf-kanjistrokeorders
 Version: 3.001
-Release: alt1_2
+Release: alt1_6
 Summary: Font to view stroke order diagrams for Kanji, Kana and etc
 License: BSD
 URL:     http://sites.google.com/site/nihilistorguk/
@@ -101,6 +102,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 3.001-alt1_6
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 3.001-alt1_2
 - update to new release by fcimport
 
