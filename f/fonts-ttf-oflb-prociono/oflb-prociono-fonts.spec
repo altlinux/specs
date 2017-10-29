@@ -1,11 +1,13 @@
 Group: System/Fonts/True type
 %define oldname oflb-prociono-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname oflb-prociono
 %global fontconf 62-%{fontname}.conf
 
 Name:    fonts-ttf-oflb-prociono
 Version: 20141125
-Release: alt1_2
+Release: alt1_6
 Summary: A text roman with standard and discretionary ligatures, class-based kerning
 License: OFL
 URL:     http://www.google.com/fonts/specimen/Prociono
@@ -15,7 +17,7 @@ Source2: %{oldname}-fontconfig.conf
 Source3: %{fontname}.metainfo.xml
 
 BuildArch: noarch
-BuildRequires: fontforge fontpackages-devel
+BuildRequires: fontforge libfontforge,fontpackages-devel
 Source44: import.info
 
 %description
@@ -91,6 +93,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 20141125-alt1_6
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 20141125-alt1_2
 - update to new release by fcimport
 
