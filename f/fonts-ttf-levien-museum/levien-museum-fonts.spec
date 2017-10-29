@@ -2,12 +2,14 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname levien-museum-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname levien-museum
 %global fontconf 61-%{fontname}.conf
 
 Name:           fonts-ttf-levien-museum
 Version:        1.0
-Release:        alt3_8
+Release:        alt3_12
 Summary:        Based on historical metal Centaur fonts
 
 Group:          System/Fonts/True type
@@ -88,6 +90,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_12
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_8
 - update to new release by fcimport
 
