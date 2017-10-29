@@ -1,27 +1,27 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname sil-padauk-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname sil-padauk
 %global fontconf 65-%{fontname}
-%global archivename padauk-2.8
+%global archivename padauk-3.002
 
 %global common_desc \
-Padauk is a Myanmar font covering all currently used characters \
-in the Myanmar block. The font aims to cover all minority language needs. \
-At the moment, these do not extend to stylistic variation needs. \
-The font is a smart font using a Graphite description.
+Padauk is a pan Burma font designed to support all Myanmar script based \
+languages. It covers all of the Unicode Myanmar script blocks and works \
+on all OpenType and Graphite based systems.
 
 Name:    fonts-ttf-sil-padauk
-Version: 2.8
-Release: alt2_7
+Version: 3.002
+Release: alt1_2
 Summary: A font for Burmese and the Myanmar script
 
-Group:   System/Fonts/True type
 License: OFL
 URL:     http://scripts.sil.org/Padauk
-# The source link is a redirect and is not directly accessible
-Source0: %{archivename}.zip
+Source0: http://software.sil.org/downloads/d/padauk/%{archivename}.zip
 Source1: %{oldname}-fontconfig.conf
 Source2: %{oldname}-book-fontconfig.conf
 Source3: %{fontname}.metainfo.xml
@@ -38,9 +38,9 @@ Source44: import.info
 %files
 %{_fontconfig_templatedir}/%{fontconf}.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
-%{_fontbasedir}/*/%{_fontstem}/Padauk.ttf
-%{_fontbasedir}/*/%{_fontstem}/Padauk-bold.ttf
-%doc *.txt
+%{_fontbasedir}/*/%{_fontstem}/Padauk-Regular.ttf
+%{_fontbasedir}/*/%{_fontstem}/Padauk-Bold.ttf
+%doc *.txt documentation
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %package -n fonts-ttf-sil-padauk-book
@@ -55,27 +55,17 @@ Padauk Book family font.
 %files -n fonts-ttf-sil-padauk-book
 %{_fontconfig_templatedir}/%{fontconf}-book.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-book.conf
-%{_fontbasedir}/*/%{_fontstem}/Padauk-book*.ttf
+%{_fontbasedir}/*/%{_fontstem}/PadaukBook*.ttf
 %{_datadir}/appdata/%{fontname}-book.metainfo.xml
-%doc *.txt
+%doc *.txt documentation
 
 %prep
-%setup -q -n padauk-2.80
-sed -i 's/\r//' OFL.txt
+%setup -q -n %{archivename}
+
+sed -i 's/\r//' *.txt documentation/DOCUMENTATION.txt
 
 %build
-# Following is needed to fix the postscript font name
-ttx *.ttf
-sed -i 's|&#225;&#128;&#149;&#225;&#128;&#173;&#225;&#128;&#144;&#225;&#128;&#177;&#225;&#128;&#172;&#225;&#128;&#128;&#225;&#128;&#186;|Padauk|g' Padauk*.ttx
-
-sed -i 's|&#225;&#128;&#133;&#225;&#128;&#172;&#225;&#128;&#156;&#225;&#128;&#175;&#225;&#128;&#182;&#225;&#128;&#184;&#225;&#128;&#153;&#225;&#128;&#178;|Bold|g' Padauk*.ttx
-
-sed -i 's|&#225;&#128;&#133;&#225;&#128;&#172;&#225;&#128;&#161;&#225;&#128;&#175;&#225;&#128;&#149;&#225;&#128;&#186;|Book|g' Padauk-book*.ttx
-rm *.ttf
-ttx Padauk*.ttx
-
-rm *.ttx
-
+# nothing to do here
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
@@ -136,6 +126,9 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 3.002-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.8-alt2_7
 - update to new release by fcimport
 
