@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: python
 # END SourceDeps(oneline)
 %define oldname vt323-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname vt323
 %global fontconf 61-%{fontname}-fonts.conf
 %global alphatag 20140916hg
@@ -10,7 +12,7 @@ BuildRequires: python
 
 Name:          fonts-ttf-vt323
 Version:       1.002
-Release:       alt1_0.2.%{alphatag}
+Release:       alt1_0.4.%{alphatag}
 Summary:       VT323 font by Peter Hull
 License:       OFL
 URL:           https://www.google.com/fonts/specimen/VT323
@@ -19,7 +21,7 @@ Source1:       https://googlefontdirectory.googlecode.com/hg/ofl/vt323/OFL.txt
 Source10:      %{fontconf}
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
-BuildRequires: fontforge
+BuildRequires: fontforge libfontforge
 BuildRequires: ttname
 Source44: import.info
 
@@ -105,6 +107,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.002-alt1_0.4.20140916hg
+- update to new release by fcimport
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.002-alt1_0.2.20140916hg
 - new version
 
