@@ -2,8 +2,9 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname khmeros-fonts
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name khmeros-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 5.0
 %global fontname khmeros
 %global archivename All_KhmerOS_%{version}
@@ -20,7 +21,7 @@ They were created by Danh Hong of the Cambodian Open Institute.
 
 Name:           fonts-ttf-khmeros
 Version:        5.0
-Release:        alt3_19
+Release:        alt3_23
 Summary:        Khmer font set created by Danh Hong of the Cambodian Open Institute
 
 Group:          System/Fonts/True type
@@ -262,6 +263,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 5.0-alt3_23
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 5.0-alt3_19
 - update to new release by fcimport
 
