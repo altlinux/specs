@@ -2,13 +2,15 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname kanotf-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname kanotf
 %global fontconf 65-%{fontname}.conf
 %global _subdir /fonts
 
 Name:           fonts-ttf-kanotf
 Version:        20050515
-Release:        alt3_6
+Release:        alt3_10
 Summary:        OpenType Kannada fonts
 Group:          System/Fonts/True type
 License:        GPLv2
@@ -87,6 +89,9 @@ fi
 %doc ../readme.txt ../gpl.txt
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 20050515-alt3_10
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20050515-alt3_6
 - update to new release by fcimport
 
