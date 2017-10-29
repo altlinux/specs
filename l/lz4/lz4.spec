@@ -1,6 +1,6 @@
 Name: lz4
 Epoch: 1
-Version: 1.7.5
+Version: 1.8.0
 Release: alt1
 Summary: Fast LZ compression algorithm library and tools
 License: GPLv2+ and BSD
@@ -70,18 +70,17 @@ sed -i 's/^\([[:space:]]*\)@\$/\1\$/' */Makefile
 sed -i '1 i.\\"' programs/lz4.1
 # skip recompilation attempts during check
 sed -i '/ clean \$@ / s/^\([[:space:]]*\)\(.*\)/\1: SKIP: \2/' tests/Makefile
-# export deprecated symbols
-sed -i 's/^LZ4_DEPRECATED/LZ4LIB_API &/' lib/lz4.h lib/lz4hc.h
 
 %build
-export CFLAGS='%optflags -fvisibility=hidden'
+export CFLAGS='%optflags'
 %make_build all -C lib BUILD_STATIC=%BUILD_STATIC
 %make_build all -C programs
 %make_build all -C tests
 
 %install
-export CFLAGS=--EPERM # nothing should be compiled during install
-%makeinstall_std BUILD_STATIC=%BUILD_STATIC PREFIX=%prefix LIBDIR=%_libdir
+export CC=false CXX=false # nothing should be compiled or linked during install
+%makeinstall_std BUILD_STATIC=%BUILD_STATIC \
+	PREFIX=%prefix LIBDIR=%_libdir MANDIR=%_man1dir
 
 # Relocate shared libraries from %_libdir/ to /%_lib/ (ALT#30628).
 mkdir -p %buildroot/%_lib
@@ -95,7 +94,7 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %define _unpackaged_files_terminate_build 1
 
 %check
-export CFLAGS=--EPERM # nothing should be compiled during check
+export CC=false CXX=false # nothing should be compiled or linked during check
 make test -C tests # these tests don't run in parallel
 
 %files
@@ -118,5 +117,11 @@ make test -C tests # these tests don't run in parallel
 %endif
 
 %changelog
+* Sun Oct 29 2017 Dmitry V. Levin <ldv@altlinux.org> 1:1.8.0-alt1
+- v1.7.5-84-g84246b9 -> v1.8.0.
+
+* Sat Mar 25 2017 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.5.0.84.8424-alt1
+- v1.7.5 -> v1.7.5-84-g84246b9.
+
 * Mon Mar 06 2017 Dmitry V. Levin <ldv@altlinux.org> 1:1.7.5-alt1
 - Initial revision.
