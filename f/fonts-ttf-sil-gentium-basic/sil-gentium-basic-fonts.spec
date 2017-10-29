@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname sil-gentium-basic-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define fontname sil-gentium-basic
 %define fontconf 59-%{fontname}
 
@@ -17,7 +19,7 @@ characters, with miscellaneous diacritical marks, symbols and punctuation.
 
 Name: fonts-ttf-sil-gentium-basic
 Version: 1.1
-Release: alt3_12
+Release: alt3_16
 Summary: SIL Gentium Basic font family
 
 License:   OFL
@@ -154,6 +156,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_16
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_12
 - update to new release by fcimport
 
