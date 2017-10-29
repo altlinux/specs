@@ -1,6 +1,8 @@
 Group: System/Fonts/True type
 %define oldname serafettin-cartoon-fonts
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name serafettin-cartoon-fonts
 %define version 0.6
 %define fontname serafettin-cartoon
@@ -9,7 +11,7 @@ Group: System/Fonts/True type
 
 Name:          fonts-ttf-serafettin-cartoon
 Version:       0.6
-Release:       alt3_8
+Release:       alt3_12
 Summary:       Sans-serif Cartoon Fonts
 License:       GPLv2+
 URL:           http://serafettin.sourceforge.net/
@@ -19,7 +21,7 @@ Source2:       %{fontname}-condensed.metainfo.xml
 
 BuildArch:     noarch
 
-BuildRequires: fontforge
+BuildRequires: fontforge libfontforge
 BuildRequires: fontpackages-devel
 Source44: import.info
 
@@ -99,6 +101,9 @@ fi
 %{_datadir}/appdata/%{fontname}-condensed.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_12
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_8
 - update to new release by fcimport
 
