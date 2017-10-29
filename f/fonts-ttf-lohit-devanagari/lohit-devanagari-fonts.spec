@@ -1,19 +1,24 @@
 %define oldname lohit-devanagari-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname lohit-devanagari
 %global fontconf 65-1-%{fontname}.conf
+%global fontconf1 59-%{fontname}.conf
+%global metainfo io.pagure.lohit.devanagari.font.metainfo
 
 Name:           fonts-ttf-lohit-devanagari
-Version:        2.94.0
-Release:        alt1_4
+Version:        2.95.4
+Release:        alt1_2
 Summary:        Free Devanagari Script Font
 Group:          System/Fonts/True type
 License:        OFL
-URL:            https://fedorahosted.org/lohit/
-Source0:        https://fedorahosted.org/releases/l/o/lohit/%{fontname}-%{version}.tar.gz
-Source1:       %{fontname}.metainfo.xml
+URL:            https://pagure.io/lohit
+Source0:        https://releases.pagure.org/lohit/%{fontname}-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires: fontforge >= 20080429
+BuildRequires: fontforge libfontforge
 BuildRequires:  fontpackages-devel
+BuildRequires:  ttfautohint
+BuildRequires: python3-devel
 Source44: import.info
 
 %description
@@ -36,12 +41,19 @@ install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
 
 install -m 0644 -p %{fontconf} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
+
+install -m 0644 -p %{fontconf1} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf1}
+
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
+ln -s %{_fontconfig_templatedir}/%{fontconf1} \
+      %{buildroot}%{_fontconfig_confdir}/%{fontconf1}
+
 # Add AppStream metadata
-install -Dm 0644 -p %{SOURCE1} \
-       %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+install -Dm 0644 -p %{metainfo}.xml \
+       %{buildroot}%{_datadir}/metainfo/%{metainfo}.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -78,15 +90,18 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %files
-%{_fontconfig_templatedir}/%{fontconf}
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%{_fontconfig_templatedir}/*-%{fontname}.conf
+%config(noreplace) %{_fontconfig_confdir}/*-%{fontname}.conf
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
 %doc ChangeLog COPYRIGHT OFL.txt AUTHORS README test-devanagari.txt
-%{_datadir}/appdata/%{fontname}.metainfo.xml
+%{_datadir}/metainfo/%{metainfo}.xml
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.95.4-alt1_2
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.94.0-alt1_4
 - update to new release by fcimport
 
