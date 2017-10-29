@@ -1,5 +1,5 @@
 Name: libmlx4
-Version: 1.0.6
+Version: 1.2.1
 Release: alt1
 
 Summary: Mellanox InfiniBand HCA Userspace Driver
@@ -8,7 +8,6 @@ Group: System/Libraries
 
 Url: http://openib.org/
 Source: http://openib.org/downloads/%name-%version.tar
-Packager: Stanislav Ievlev <inger@altlinux.org>
 
 BuildRequires(pre): rpm-build-compat
 BuildPreReq: libibverbs-devel-static >= 1.1.8
@@ -42,6 +41,7 @@ application, which may be useful for debugging.
 %setup
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -68,6 +68,9 @@ mv	%buildroot%_sysconfdir/libibverbs.d/mlx4.driver \
 %_libdir/libmlx4.a
 
 %changelog
+* Sun Oct 29 2017 Anton Farygin <rider@altlinux.ru> 1.2.1-alt1
+- 1.2.1
+
 * Wed Feb 04 2015 Anton Farygin <rider@altlinux.ru> 1.0.6-alt1
 - new version
 
