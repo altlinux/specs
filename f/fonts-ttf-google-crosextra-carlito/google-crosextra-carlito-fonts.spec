@@ -1,5 +1,7 @@
 Group: System/Fonts/True type
 %define oldname google-crosextra-carlito-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname google-crosextra-carlito
 %global fontconf62 62-%{fontname}
 %global fontconf30 30-0-%{fontname}
@@ -8,7 +10,7 @@ Group: System/Fonts/True type
 
 Name:           fonts-ttf-google-crosextra-carlito
 Version:        1.103
-Release:        alt1_0.3.20130920
+Release:        alt1_0.7.20130920
 Summary:        Sans-serif font metric-compatible with Calibri font
 
 License:        OFL
@@ -99,6 +101,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.103-alt1_0.7.20130920
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.103-alt1_0.3.20130920
 - update to new release by fcimport
 
