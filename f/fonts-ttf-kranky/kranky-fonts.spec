@@ -1,5 +1,7 @@
 Group: System/Fonts/True type
 %define oldname kranky-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname kranky
 %global fontconf 61-%{fontname}-fonts.conf
 %global checkout 716ff965e2b0hg
@@ -7,7 +9,7 @@ Group: System/Fonts/True type
 
 Name:          fonts-ttf-kranky
 Version:       1.00
-Release:       alt1_5.%{checkout}
+Release:       alt1_8.%{checkout}
 Summary:       Kranky fonts
 License:       ASL 2.0
 URL:           http://www.google.com/fonts/specimen/Kranky
@@ -16,7 +18,7 @@ Source1:       https://googlefontdirectory.googlecode.com/hg/apache/kranky/LICEN
 Source10:      %{fontconf}
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
-BuildRequires: fontforge
+BuildRequires: fontforge libfontforge
 BuildRequires: ttname
 Source44: import.info
 
@@ -93,6 +95,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_8.716ff965e2b0hg
+- update to new release by fcimport
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_5.716ff965e2b0hg
 - new version
 
