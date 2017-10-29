@@ -3,13 +3,15 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname sil-mingzat-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname sil-mingzat
 %global fontconf 65-%{fontname}.conf
 %global archivename Mingzat
 
 Name:    fonts-ttf-sil-mingzat
 Version: 0.100
-Release: alt1_3
+Release: alt1_7
 Summary: A font for Lepcha script
 License: OFL
 URL:     http://scripts.sil.org/Mingzat
@@ -97,6 +99,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.100-alt1_7
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.100-alt1_3
 - update to new release by fcimport
 
