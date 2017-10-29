@@ -1,5 +1,7 @@
 Group: System/Fonts/True type
 %define oldname smc-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global	fontname	smc
 
 # Common description
@@ -9,7 +11,7 @@ traditional and new Malayalam Script.
 
 Name:		fonts-ttf-smc
 Version:	6.1
-Release:	alt1_4
+Release:	alt1_8
 Summary:	Open Type Fonts for Malayalam script
 License:	GPLv3+ with exceptions and GPLv2+ with exceptions and GPLv2+ and  GPLv2 and GPL+
 URL:		http://savannah.nongnu.org/projects/smc
@@ -23,7 +25,7 @@ Source6: 67-smc-raghumalayalam.conf
 Source7: 67-smc-suruma.conf
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel > 1.13
-BuildRequires:	fontforge >= 20080429
+BuildRequires:	fontforge libfontforge
 Source44: import.info
 
 %description
@@ -256,6 +258,9 @@ fi
 %doc ChangeLog
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 6.1-alt1_8
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 6.1-alt1_4
 - update to new release by fcimport
 
