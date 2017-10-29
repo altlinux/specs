@@ -11,8 +11,8 @@
 
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
-Version: 4.8.1
-Release: alt10%ubt
+Version: 4.8.2
+Release: alt1%ubt
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -20,10 +20,10 @@ URL: http://www.xenproject.org/
 %define pre %nil
 %define qemu_ver %version%pre
 
-Source0: %name-%version%pre.tar.bz2
-Source1: qemu-xen-%qemu_ver.tar.bz2
-Source2: qemu-xen-traditional-%qemu_ver.tar.bz2
-Source3: mini-os-%version%pre.tar.bz2
+Source0: %name-%version%pre.tar
+Source1: qemu-xen-%qemu_ver.tar
+Source2: qemu-xen-traditional-%qemu_ver.tar
+Source3: mini-os-%version%pre.tar
 Source4: %name.logrotate
 Source5: %name-qemu-dom0
 
@@ -131,7 +131,7 @@ BuildRequires: flex discount libfdt-devel libgcrypt-devel liblzo2-devel libvde-d
 BuildRequires: libnl-devel >= 3.2.8 libnl3 >= 3.2.8 libnl3-utils >= 3.2.8
 BuildRequires: libpixman-devel >= 0.21.8 libpixman >= 0.21.8
 BuildRequires: libnettle-devel nettle
-BuildRequires: gcc5-c++
+BuildRequires: gcc-c++
 BuildRequires: libsystemd-devel >= 209
 # VirtFS support
 BuildRequires: libcap-devel libattr-devel
@@ -349,14 +349,14 @@ ln -s ../mini-os-%version extras/mini-os
 %{?_with_hypervisor:%patch21 -p1}
 %patch50 -p2
 
-cd tools/qemu-xen-traditional
+pushd tools/qemu-xen-traditional
 %patch55 -p1
-cd ../..
+popd
 
 sed -i '/^[[:blank:]]*\. \/etc\/rc\.status[[:blank:]]*$/s/\. /: # &/' tools/hotplug/Linux/xendomains.in
 
 # stubdoms sources
-cd stubdom
+pushd stubdom
 ln -s %SOURCE10
 ln -s %SOURCE11
 ln -s %SOURCE12
@@ -368,7 +368,7 @@ ln -s %SOURCE15
 ln -s %SOURCE16
 ln -s %SOURCE17
 %endif
-cd ..
+popd
 
 %build
 %{?_with_efi:install -d -m 0755 dist/install/boot/efi/efi/altlinux}
@@ -652,9 +652,6 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_man5dir/xl.conf.*
 %_man5dir/xlcpupool.cfg.*
 
-# General Xen state
-%_localstatedir/%name
-
 # Xen logfiles
 %dir %attr(0700,root,root) %_localstatedir/xen
 %dir %attr(0700,root,root) %_localstatedir/xenstored
@@ -793,6 +790,58 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Sun Oct 29 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.2-alt1%ubt
+- 4.8.2 release
+- upstream updates:
+  + x86emul: handle address wrapping (thx Jan Beulich).
+  + VMX: PLATFORM_INFO MSR is r/o (thx Jan Beulich).
+  + x86: avoid #GP for PV guest MSR accesses (thx Jan Beulich).
+  + x86/vvmx: Fix WRMSR interception of VMX MSRs (thx Andrew Cooper).
+  + x86: fix do_update_va_mapping_otherdomain() wrt translated
+    domains (thx Jan Beulich).
+  + x86: request page table page-in for the correct domain (thx Jan Beulich).
+  + xen/domctl: Fix Xen heap leak via XEN_DOMCTL_getvcpucontext (thx Andrew Cooper).
+  + x86/PV: fix/generalize guest nul selector handling (thx Jan Beulich).
+  + x86/msr: Correct the definition of MSR_IA32_APICBASE_BASE (thx Andrew Cooper).
+  + x86/svm: Fix a livelock when trying to run shadowed unpaged
+    guests (thx Andrew Cooper).
+  + gnttab: fix pin count / page reference race (thx Jan Beulich).
+  + tools/libxc/xc_dom_arm: add missing variable initialization (thx Bernd Kuhls).
+  + x86/cpu: Fix IST handling during PCPU bringup (thx Andrew Cooper).
+  + x86/shadow: Don't create self-linear shadow mappings for 4-level
+    translated guests (thx Andrew Cooper).
+  + x86: don't allow page_unlock() to drop the last type reference (thx Jan Beulich).
+  + x86: don't store possibly stale TLB flush time stamp (thx Jan Beulich).
+  + x86: limit linear page table use to a single level (thx Jan Beulich).
+  + x86/HVM: prefill partially used variable on emulation paths (thx Jan Beulich).
+  + x86/ioreq server: correctly handle bogus
+    XEN_DMOP_{,un}map_io_range_to_ioreq_server arguments (thx Vitaly Kuznetsov).
+  + x86/FLASK: fix unmap-domain-IRQ XSM hook (thx Jan Beulich).
+  + x86/IRQ: conditionally preserve irq <-> pirq mapping on map
+    error paths (thx Jan Beulich).
+  + x86/MSI: disallow redundant enabling (thx Jan Beulich).
+  + x86: enforce proper privilege when (un)mapping pIRQ-s (thx Jan Beulich).
+  + x86: don't allow MSI pIRQ mapping on unowned device (thx Jan Beulich).
+  + xen/arm: p2m: Read *_mapped_gfn with the p2m lock taken (thx Julien Grall).
+  + xen/arm: Fix the issue in cmp_mmio_handler used in
+    find_mmio_handler (thx Bhupinder Thakur).
+  + xen/arm: Correctly report the memory region in the dummy
+    NUMA helpers (thx Julien Grall).
+  + xen/page_alloc: Cover memory unreserved after boot in
+    first_valid_mfn (thx Julien Grall).
+  + x86: introduce and use setup_force_cpu_cap() (thx Jan Beulich).
+  + x86/emul: Fix the handling of unimplemented Grp7 instructions (thx Andrew Cooper).
+  + VT-d: use correct BDF for VF to search VT-d unit (thx Chao Gao).
+  + hvmloader: use base instead of pci_mem_start for find_next_rmrr() (thx Xiong Zhang).
+  + x86/efi: don't write relocations in efi_arch_relocate_image()
+    first pass (thx David Woodhouse).
+  + x86: check for allocation errors in modify_xen_mappings() (thx Jan Beulich).
+  + vga: stop passing pointers to vga_draw_line* functions (thx Gerd Hoffmann).
+  + gnttab: also validate PTE permissions upon destroy/replace (thx Jan Beulich).
+  + tools/xenstore: dont unlink connection object twice (thx Juergen Gross).
+  + grant_table: fix GNTTABOP_cache_flush handling (thx Andrew Cooper).
+  + xen/mm: make sure node is less than MAX_NUMNODES (thx George Dunlap).
+
 * Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 4.8.1-alt10%ubt
 - rebuild with ocaml 4.04.2
 
