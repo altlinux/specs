@@ -3,12 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname phetsarath-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname phetsarath
 %global fontconf 67-%{fontname}.conf
 
 Name:           fonts-ttf-phetsarath
 Version:        1.01
-Release:        alt1_5
+Release:        alt1_8
 Summary:        The font for the Lao language
 
 License:        OFL
@@ -93,6 +95,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_8
+- update to new release by fcimport
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_5
 - new version
 
