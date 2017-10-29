@@ -3,12 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname typemade-josefinsansstd-light-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname typemade-josefinsansstd-light
 %global fontconf 62-%{fontname}.conf
 
 Name:           fonts-otf-typemade-josefinsansstd-light
 Version:        1.000 
-Release:        alt3_11
+Release:        alt3_15
 Summary:        A latin font that is geometric, elegant, and kind of vintage
 
 License:        OFL
@@ -93,6 +95,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.000-alt3_15
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.000-alt3_11
 - update to new release by fcimport
 
