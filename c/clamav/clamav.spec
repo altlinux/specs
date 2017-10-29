@@ -13,13 +13,11 @@
 
 Name: clamav
 Version: 0.99.2
-Release: alt3
+Release: alt4
 %define abiversion 7
 
-Packager: Victor Forsiuk <force@altlinux.org>
-
 Summary: Clam Antivirus scanner
-License: GPLv2 and LGPLv2.1 with exeptions
+License: %gpllgpl2only with exeptions
 Group: File tools
 
 URL: http://www.clamav.net/
@@ -51,8 +49,11 @@ Patch1: clamav-config.patch
 Patch2: freshclam-config.patch
 
 Patch20: clamav-0.99-pkgconfig.patch
+Patch21: clamav-AC_SYS_LARGEFILE.patch
 Patch6418: cve-2017-6418.patch
 Patch6420: cve-2017-6420.patch
+
+BuildRequires: rpm-build-licenses
 
 # Package with clamd should require libclamav, not vice versa.
 # Corresponding libclamav version need to be updated before, or clamd restart may fail!
@@ -86,7 +87,7 @@ scanner, and a tool for automatic updating via Internet. The programs are
 based on a shared library distributed with the Clam AntiVirus package, which
 you can use in your own software.
 
-Some parts of code have separate license.
+Some parts of code have separate licenses. See %_defaultdocdir/%name-%version
 
 %package -n lib%{name}%{abiversion}
 Summary: Shared libraries for clamav
@@ -138,6 +139,7 @@ database automatically. It uses the freshclam(1) utility for this task.
 %patch2 -p1
 
 %patch20 -p1
+%patch21 -p0
 %patch6418 -p1
 %patch6420 -p1
 
@@ -325,6 +327,11 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Sun Oct 29 2017 Sergey Y. Afonin <asy@altlinux.ru> 0.99.2-alt4
+- used AC_SYS_LARGEFILE (ALT #34085)
+- removed "Packager" field
+- corrected "License" field
+
 * Mon Sep 25 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.99.2-alt3
 - Fixes:
   + CVE-2017-6418 remote attackers can cause a denial of service (out-of-bounds read) via a crafted e-mail message
