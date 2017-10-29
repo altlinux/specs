@@ -3,12 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname impallari-lobster-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname impallari-lobster
 %global fontconf 62-%{fontname}.conf
 
 Name:           fonts-otf-impallari-lobster
 Version:        1.4
-Release:        alt3_9
+Release:        alt3_13
 Summary:        Hand written font with various ligatures for better connecting of letters
 
 License:        OFL
@@ -100,6 +102,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_13
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_9
 - update to new release by fcimport
 
