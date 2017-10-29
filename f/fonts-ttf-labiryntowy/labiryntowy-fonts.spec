@@ -1,10 +1,12 @@
 Group: System/Fonts/True type
 %define oldname labiryntowy-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname labiryntowy
 
 Name:          fonts-ttf-labiryntowy
 Version:       1.53
-Release:       alt1_3
+Release:       alt1_6
 Summary:       Artificial font consisting of vertical and horizontal bars
 License:       OFL
 URL:           http://alfabet-ozdobny.appspot.com/?str=labiryntowy
@@ -69,6 +71,9 @@ fi
 %doc opis.txt
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.53-alt1_6
+- update to new release by fcimport
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.53-alt1_3
 - new version
 
