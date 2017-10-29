@@ -2,10 +2,12 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname tiresias-fonts
-%define fontname tiresias
-%define fontconf 60-%{fontname}.conf
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global fontname tiresias
+%global fontconf 60-%{fontname}.conf
 
-%define common_desc \
+%global common_desc \
 The Tiresias family of fonts has been designed for use in multiple environments \
 to help improve legibility, especially for individuals with visual impairment. \
 It includes specialized fonts for information labels, control labels (for key \
@@ -15,7 +17,7 @@ signs.
 Name:		fonts-ttf-tiresias
 Summary: 	Low vision fonts
 Version:	1.0
-Release:	alt3_15
+Release:	alt3_20
 # Font exception
 License:	GPLv3+ with exceptions
 Group:		System/Fonts/True type
@@ -209,10 +211,10 @@ Signfont Z family, the zero is crossed out.
 
 %prep
 %setup -q -c -n %{oldname}
-%{__unzip} -qqo %{SOURCE1}
-%{__unzip} -qqo %{SOURCE2}
-%{__unzip} -qqo %{SOURCE3}
-%{__unzip} -qqo %{SOURCE4}
+unzip -qqo %{SOURCE1}
+unzip -qqo %{SOURCE2}
+unzip -qqo %{SOURCE3}
+unzip -qqo %{SOURCE4}
 for f in *.TTF; do 
 	newname=`echo "$f"|sed -e 's/.TTF/.ttf/'`;
 	mv "$f" "$newname"; 
@@ -300,6 +302,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_20
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_15
 - update to new release by fcimport
 
