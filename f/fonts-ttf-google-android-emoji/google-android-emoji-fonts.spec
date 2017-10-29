@@ -1,8 +1,9 @@
 Group: System/Fonts/True type
 %define oldname google-android-emoji-fonts
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name google-android-emoji-fonts
-%define version 1.01
 %global fontname google-android-emoji
 %global checkout 20120228git
 %global archivename %{oldname}-%{checkout}
@@ -10,7 +11,7 @@ Group: System/Fonts/True type
 Name:    fonts-ttf-google-android-emoji
 # No sane versionning upstream, use git clone timestamp
 Version: 1.01
-Release: alt1_0.3.%{checkout}
+Release: alt1_0.7.%{checkout}
 Summary: Android Emoji font released by Google
 
 License:   ASL 2.0
@@ -86,6 +87,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_0.7.20120228git
+- update to new release by fcimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_0.3.20120228git
 - update to new release by fcimport
 
