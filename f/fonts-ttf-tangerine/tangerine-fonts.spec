@@ -1,19 +1,22 @@
 Group: System/Fonts/True type
 %define oldname tangerine-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname tangerine
 %global fontconf 62-%{fontname}.conf
 
 Name:           fonts-ttf-tangerine
 Version:        1.3
-Release:        alt1_3
+Release:        alt1_9
 Summary:        Tangerine is a calligraphy font inspired by many italic chancery hands 
 
 License:        OFL
-URL:            http://www.google.com/fonts/specimen/Tangerine
-Source0:        http://googlefontdirectory.googlecode.com/hg/ofl/tangerine/Tangerine_Regular.ttf
-Source1:        http://googlefontdirectory.googlecode.com/hg/ofl/tangerine/Tangerine_Bold.ttf
-Source2:        %{oldname}-fontconfig.conf
-Source3:        %{fontname}.metainfo.xml
+URL:            https://fonts.google.com/specimen/Tangerine
+Source0:        https://github.com/google/fonts/raw/master/ofl/tangerine/Tangerine_Regular.ttf
+Source1:        https://github.com/google/fonts/raw/master/ofl/tangerine/Tangerine_Bold.ttf
+Source2:        https://raw.githubusercontent.com/google/fonts/master/ofl/tangerine/OFL.txt
+Source3:        %{oldname}-fontconfig.conf
+Source4:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -29,8 +32,9 @@ produced by Japanese type designer Toshi Omagari and was named after a woman
 who encouraged him to begin this work.
 
 %prep
-%setup -n %{oldname}-%{version} -c -T
-cp -p %{SOURCE0} %{SOURCE1} .
+%setup -n %{oldname}-%{version} -q -c -T
+
+cp -p %{SOURCE0} %{SOURCE1} %{SOURCE2} .
 
 
 %build
@@ -43,13 +47,13 @@ install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
 
-install -m 0644 -p %{SOURCE2} \
+install -m 0644 -p %{SOURCE3} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
 # Add AppStream metadata
-install -Dm 0644 -p %{SOURCE3} \
+install -Dm 0644 -p %{SOURCE4} \
         %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
@@ -90,11 +94,14 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-%doc
+%doc OFL.txt
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_9
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_3
 - update to new release by fcimport
 
