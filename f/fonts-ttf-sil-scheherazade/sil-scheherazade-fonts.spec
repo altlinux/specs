@@ -3,12 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname sil-scheherazade-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname sil-scheherazade
 %global fontconf 65-%{fontname}.conf
 
 Name:           fonts-ttf-sil-scheherazade
-Version:        2.020
-Release:        alt1_3
+Version:        2.100
+Release:        alt1_4
 Summary:        An Arabic script unicode font
 
 License:        OFL
@@ -98,6 +100,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.100-alt1_4
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.020-alt1_3
 - update to new release by fcimport
 
