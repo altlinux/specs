@@ -1,5 +1,7 @@
 Group: System/Fonts/True type
 %define oldname motoya-lmaru-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global	priority	65-4
 %global	fontname	motoya-lmaru
 %global	archivedate	20110406
@@ -8,7 +10,7 @@ Group: System/Fonts/True type
 
 Name:		fonts-ttf-motoya-lmaru
 Version:	1.00
-Release:	alt3_0.10.%{archivedate}git
+Release:	alt3_0.14.%{archivedate}git
 Summary:	Japanese Round Gothic-typeface TrueType fonts by MOTOYA Co,LTD
 
 License:	ASL 2.0
@@ -94,6 +96,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_0.14.20110406git
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_0.10.20110406git
 - update to new release by fcimport
 
