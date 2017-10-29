@@ -1,9 +1,11 @@
 %define oldname jsmath-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 
 Summary: A collection of Math symbol fonts 
 Name:	 fonts-ttf-jsmath
 Version: 20090708 
-Release: alt3_8
+Release: alt3_12
 
 # derived from computer modern metafont tex sources
 License: Public domain 
@@ -73,6 +75,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 20090708-alt3_12
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20090708-alt3_8
 - update to new release by fcimport
 
