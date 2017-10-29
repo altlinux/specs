@@ -3,11 +3,13 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname inkboy-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname inkboy
 %global fontconf 65-%{fontname}.conf
 Name:           fonts-ttf-inkboy
 Version:        20070624
-Release:        alt3_12
+Release:        alt3_16
 Summary:        A clean and usable latin fantasy font
 License:        OFL
 URL:            http://inkboy.fr/html/telechargement-ressources.php
@@ -107,6 +109,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 20070624-alt3_16
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 20070624-alt3_12
 - update to new release by fcimport
 
