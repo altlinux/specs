@@ -3,13 +3,15 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname sil-doulos-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define fontname sil-doulos
 %define archivename DoulosSIL
 %define docversion 4.100
 
 Name:           fonts-ttf-sil-doulos
 Version:        4.104
-Release:        alt3_12
+Release:        alt3_16
 Summary:        Doulos SIL fonts
 
 License:        OFL
@@ -89,6 +91,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 4.104-alt3_16
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 4.104-alt3_12
 - update to new release by fcimport
 
