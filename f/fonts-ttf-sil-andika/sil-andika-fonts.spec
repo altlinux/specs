@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname sil-andika-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname sil-andika
 %global fontconf 60-%{fontname}.conf
 
@@ -11,7 +13,7 @@ BuildRequires: unzip
 
 Name:    fonts-ttf-sil-andika
 Version: 1.0
-Release: alt3_14
+Release: alt3_18
 Summary: A font for literacy and beginning readers
 
 License:   OFL
@@ -119,6 +121,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_18
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_14
 - update to new release by fcimport
 
