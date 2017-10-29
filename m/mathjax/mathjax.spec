@@ -2,13 +2,15 @@ Group: Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:       mathjax
-Version:    2.4.0
-Release:    alt1_3
+Version:    2.7.1
+Release:    alt1_2
 Summary:    JavaScript library to render math in the browser
 License:    ASL 2.0
 URL:        http://mathjax.org
-Source0:    https://github.com/mathjax/MathJax/archive/%{version}.tar.gz
+Source0:    https://github.com/mathjax/MathJax/archive/%{version}.tar.gz#/mathjax-%{version}.tar.gz
 
 BuildArch:  noarch
 
@@ -144,8 +146,8 @@ License:       OFL
 %prep
 %setup -q -n MathJax-%{version}
 # Remove bundled fonts
-rm -rf MathJax-2.4.0/jax/output
-rm -rf MathJax-2.4.0/fonts/HTML-CSS/{Asana-Math,Gyre-Pagella,Gyre-Termes,Latin-Modern,Neo-Euler,STIX-Web}
+rm -rf MathJax-%{version}/jax/output
+rm -rf MathJax-%{version}/fonts/HTML-CSS/{Asana-Math,Gyre-Pagella,Gyre-Termes,Latin-Modern,Neo-Euler,STIX-Web}
 
 # Remove minified javascript.
 for i in $(find . -type f -path '*unpacked*'); do \
@@ -157,12 +159,15 @@ for i in MathJax.js jax/output/HTML-CSS/jax.js jax/output/HTML-CSS/imageFonts.js
     mv $i.tmp $i; \
 done
 
+# Remove .htaccess file, just in case
+find . -name .htaccess -print -delete
+
 %build
 # minification should be performed here at some point
 
 %install
 mkdir -p %{buildroot}%{_jsdir}/mathjax
-cp -pr MathJax.js config/ extensions/ jax/ localization/ images/ test/ \
+cp -pr MathJax.js config/ extensions/ jax/ localization/ test/ \
     %{buildroot}%{_jsdir}/mathjax/
 
 mkdir -p %{buildroot}%{_jsdir}/mathjax/fonts/HTML-CSS/TeX/
@@ -255,6 +260,9 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/MathJax_WinChrome*.svg
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt1_2
+- update to new release by fcimport
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_3
 - update to new release by fcimport
 
