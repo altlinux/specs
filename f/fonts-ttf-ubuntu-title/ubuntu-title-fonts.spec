@@ -1,11 +1,13 @@
 Group: System/Fonts/True type
 %define oldname ubuntu-title-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname ubuntu-title
 %global fontconf 64-%{fontname}.conf
 
 Name:           fonts-ttf-ubuntu-title
 Version:        002.000
-Release:        alt3_9
+Release:        alt3_13
 Summary:        A titling decorative font to create the lettering of the Ubuntu logo
 
 License:        OFL or GPLv2 with exceptions
@@ -16,7 +18,7 @@ Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
-BuildRequires:  fontforge
+BuildRequires:  fontforge libfontforge
 Source44: import.info
 
 %description
@@ -93,6 +95,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 002.000-alt3_13
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 002.000-alt3_9
 - update to new release by fcimport
 
