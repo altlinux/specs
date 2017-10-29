@@ -3,12 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname jomolhari-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global	fontname jomolhari
 %global fontconf 65-0-%{fontname}.conf
 
 Name:		fonts-ttf-jomolhari
 Version:	0.003
-Release:	alt3_19
+Release:	alt3_23
 Summary:	Jomolhari a Bhutanese style font for Tibetan and Dzongkha
 
 License:	OFL
@@ -100,6 +102,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.003-alt3_23
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.003-alt3_19
 - update to new release by fcimport
 
