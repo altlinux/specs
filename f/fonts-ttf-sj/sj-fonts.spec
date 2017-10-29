@@ -2,6 +2,8 @@
 BuildRequires: python
 # END SourceDeps(oneline)
 %define oldname sj-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define fontname sj
 %define fontconf 63-%{fontname}
 
@@ -9,7 +11,7 @@ BuildRequires: python
 
 Name:          fonts-ttf-sj
 Version:       2.0.2
-Release:       alt3_12
+Release:       alt3_16
 Summary:       Two fonts by Steve Jordi released under the GPL
 
 Group:         System/Fonts/True type
@@ -23,7 +25,7 @@ Source4:       %{fontname}-delphine.metainfo.xml
 
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
-BuildRequires: fontforge
+BuildRequires: fontforge libfontforge
 Source44: import.info
 
 %description
@@ -147,6 +149,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt3_16
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt3_12
 - update to new release by fcimport
 
