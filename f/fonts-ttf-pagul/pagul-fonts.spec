@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: python unzip
 # END SourceDeps(oneline)
 %define oldname pagul-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname pagul
 %global fontconf 66-%{fontname}.conf
 
@@ -10,7 +12,7 @@ BuildRequires: python unzip
 
 Name:           fonts-ttf-pagul
 Version:        1.0
-Release:        alt3_8
+Release:        alt3_11
 Summary:        Font for Saurashtra script
 
 License:        GPLv3+ with exceptions
@@ -20,7 +22,7 @@ Source1:        %{oldname}-fontconfig.conf
 Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
-BuildRequires:  fontforge fontpackages-devel
+BuildRequires:  fontforge libfontforge fontpackages-devel
 Source44: import.info
 
 %description
@@ -107,6 +109,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_11
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_8
 - update to new release by fcimport
 
