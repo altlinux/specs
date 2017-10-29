@@ -1,13 +1,15 @@
+Group: System/Fonts/True type
 %define oldname oflb-icelandic-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname oflb-icelandic
 %global fontconf 63-%{fontname}.conf
 
 Name:           fonts-otf-oflb-icelandic
 Version:        1.001
-Release:        alt3_16
+Release:        alt3_20
 Summary:        Icelandic Magical Staves
 
-Group:          System/Fonts/True type
 License:        OFL
 ## Note that upstream is dead and there is no download link available at this minute
 ## so please don't report FTBFS bugs for this package.
@@ -17,6 +19,8 @@ Source1:        %{oldname}-fontconfig.conf
 Source2:        README.license
 #license text extracted from font file
 Source3:        License.txt
+Source4:        %{fontname}.metainfo.xml
+
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
 Obsoletes:      icelandic-fonts < 1.001-9
@@ -45,6 +49,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE4} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -85,8 +93,12 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.otf
 %doc README.license License.txt
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.001-alt3_20
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.001-alt3_16
 - update to new release by fcimport
 
