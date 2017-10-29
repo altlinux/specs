@@ -3,8 +3,9 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname senamirmir-washra-fonts
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name senamirmir-washra-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 4.1
 %global fontname senamirmir-washra
 %global fontconf 65-%{fontname}
@@ -19,7 +20,7 @@ Eritrean languages (Amharic, Blin, GeE.ez, Harari, MeE.en, Tigre, Tigrinyaa..).
 
 Name:    fonts-ttf-senamirmir-washra
 Version: 4.1
-Release: alt3_12
+Release: alt3_16
 Summary: Fonts for the GeE.ez (Ethiopic) script
 
 License: OFL
@@ -307,6 +308,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 4.1-alt3_16
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 4.1-alt3_12
 - update to new release by fcimport
 
