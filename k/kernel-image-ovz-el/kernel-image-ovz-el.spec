@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt155
+Release: alt157
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -47,7 +47,7 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Source11: config-x86
 Source12: config-x86_64
-Patch0: patch-042stab116.1-combined
+Patch0: patch-042stab125.5-combined
 Patch1: %name-%version-%release.patch
 
 ExclusiveArch: i586 i686 x86_64
@@ -617,6 +617,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?(reboot: )?Power down' boot.log || {
 %endif # staging
 
 %changelog
+* Mon Oct 30 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt157
+- Updated to 042stab125.5.
+
+* Tue Sep 26 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt156
+- Updated to 042stab125.1.
+
 * Tue Aug 22 2017 Dmitry V. Levin <ldv@altlinux.org> 2.6.32-alt155
 - Added %%check like one found in std-def kernels.
 - Restricted access to %%modules_dir/ (see #5969).
