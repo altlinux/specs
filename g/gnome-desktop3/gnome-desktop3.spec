@@ -14,7 +14,7 @@
 
 Name: %{_name}3
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Library with common API for various GNOME 3 modules
 License: %gpl2plus, %fdl
@@ -59,6 +59,7 @@ Group: Graphical desktop/GNOME
 License: %lgpl2plus
 Requires: icon-theme-hicolor
 Requires: udev-hwdb
+Requires: bubblewrap
 
 %description -n lib%name
 Gnome 3 desktop libraries.
@@ -176,6 +177,9 @@ the functionality of the Gnome 3 desktop library.
 
 
 %changelog
+* Sun Oct 29 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt2
+- lib%%name requires bubblewrap
+
 * Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 
