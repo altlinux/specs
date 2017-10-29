@@ -2,6 +2,8 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname comic-neue-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname comic-neue
 %global fontconf 63-%{fontname}
 
@@ -13,7 +15,7 @@ and writing passive aggressive office memos.
 
 Name:           fonts-otf-comic-neue
 Version:        2.2
-Release:        alt1_3
+Release:        alt1_5
 Summary:        A typeface family inspired by Comic Sans
 
 Group:          System/Fonts/True type
@@ -26,7 +28,7 @@ Source2:        %{fontname}-angular-fontconfig.conf
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
 
-Requires:       fonts-otf-comic-neue-common = %{version}
+Requires:       fonts-otf-comic-neue-common = %{version}-%{release}
 Source44: import.info
 
 
@@ -47,7 +49,7 @@ This package consists of files used by other %{oldname} packages.
 %package -n fonts-otf-comic-neue-angular
 Group: System/Fonts/True type
 Summary:        A typeface family inspired by Comic Sans, angular variant
-Requires:       fonts-otf-comic-neue-common = %{version}
+Requires:       fonts-otf-comic-neue-common = %{version}-%{release}
 
 %description -n fonts-otf-comic-neue-angular
 %common_desc
@@ -134,6 +136,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_5
+- update to new release by fcimport
+
 * Sun Jun 12 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_3
 - converted for ALT Linux by srpmconvert tools
 
