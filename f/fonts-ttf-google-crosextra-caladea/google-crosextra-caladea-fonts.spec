@@ -1,5 +1,7 @@
 Group: System/Fonts/True type
 %define oldname google-crosextra-caladea-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname google-crosextra-caladea
 %global fontconf62 62-%{fontname}
 %global fontconf30 30-0-%{fontname}
@@ -8,7 +10,7 @@ Group: System/Fonts/True type
 
 Name:           fonts-ttf-google-crosextra-caladea
 Version:        1.002
-Release:        alt1_0.5.20130214
+Release:        alt1_0.9.20130214
 Summary:        Serif font metric-compatible with Cambria font
 
 # License added in font as "otfinfo -i Caladea-Regular.ttf | grep License"
@@ -99,6 +101,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.002-alt1_0.9.20130214
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.002-alt1_0.5.20130214
 - update to new release by fcimport
 
