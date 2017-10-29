@@ -1,4 +1,6 @@
 %define oldname knm-new-fixed-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global		priority	69
 %global		fontname	knm-new-fixed
 %global		fontconf	%{priority}-%{fontname}.conf
@@ -6,7 +8,7 @@
 
 Name:		fonts-bitmap-knm-new-fixed
 Version:	1.1
-Release:	alt4_20
+Release:	alt4_24
 
 Summary:	12x12 JIS X 0208 Bitmap fonts
 Group:		System/Fonts/True type
@@ -18,7 +20,7 @@ License:	GPL+
 Source0:	knm_new.tar.gz
 Source1:	%{oldname}-fontconfig.conf
 BuildArch:	noarch
-BuildRequires:	mkfontdir fontpackages-devel
+BuildRequires:	bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils fontpackages-devel
 
 Obsoletes:	knm_new <= 1.1-16 knm_new-fonts < 1.1-7
 Source44: import.info
@@ -100,6 +102,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4_24
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4_20
 - update to new release by fcimport
 
