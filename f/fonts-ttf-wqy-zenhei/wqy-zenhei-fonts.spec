@@ -1,7 +1,8 @@
 %define oldname wqy-zenhei-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname wqy-zenhei
-%global fontconf1 65-0-%{fontname}.conf
-%global fontconf2 65-0-%{fontname}-sharp.conf
+%global fontconf2 65-%{fontname}-sharp.conf
 %global common_desc \
 WenQuanYi Zen Hei is a Hei-Ti style (sans-serif type) Chinese \
 outline font. It is designed for general purpose text formatting \
@@ -21,20 +22,17 @@ and ko (Korean) locales for fontconfig. Starting from version \
 the proportionally-spaced Zen Hei, and a mono-spaced face \
 named "WenQuanYi Zen Hei Mono".
 
-%global setscript zenheiset
 
 Name:           fonts-ttf-wqy-zenhei
 Version:        0.9.46
-Release:        alt3_12
+Release:        alt3_17
 Summary:        WenQuanYi Zen Hei CJK Font
 
 Group:          System/Fonts/True type
 License:        GPLv2 with exceptions
 URL:            http://wenq.org/enindex.cgi
 Source0:        http://downloads.sourceforge.net/wqy/%{fontname}-%{version}-May.tar.bz2
-Source1:        %{fontconf1}
-Source2:        %{fontconf2}
-Source3:        %{setscript}
+Source2:        %{oldname}-fontconfig.conf
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -66,18 +64,11 @@ install -m 0644 -p *.ttc %{buildroot}%{_fontdir}
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
 
-install -m 0644 -p %{SOURCE1} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf1}
 install -m 0644 -p %{SOURCE2} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf2}
 
 ln -s %{_fontconfig_templatedir}/%{fontconf2} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf2}
-
-install -m 0755 -d %{buildroot}%{_bindir}
-
-install -m 0755 -p %{SOURCE3} \
-        %{buildroot}%{_bindir}/%{setscript}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -115,15 +106,16 @@ fi
 
 
 %files
-%{_fontconfig_templatedir}/??-?-%{fontname}*.conf
-%config(noreplace) %{_fontconfig_confdir}/??-?-%{fontname}*.conf
+%{_fontconfig_templatedir}/??-%{fontname}*.conf
+%config(noreplace) %{_fontconfig_confdir}/??-%{fontname}*.conf
 %{_fontbasedir}/*/%{_fontstem}/*.ttc
-%dir %{_fontbasedir}/*/%{_fontstem}
 %doc AUTHORS ChangeLog COPYING README
-%{_bindir}/%{setscript}
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.46-alt3_17
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.46-alt3_12
 - update to new release by fcimport
 
