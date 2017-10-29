@@ -1,10 +1,12 @@
 %define oldname ucs-miscfixed-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname ucs-miscfixed
 %global fontconf 66-%{fontname}.conf
 
 Name: fonts-bitmap-ucs-miscfixed
 Version: 0.3
-Release: alt1_12
+Release: alt1_16
 License: Public Domain
 URL: http://www.cl.cam.ac.uk/~mgk25/ucs-fonts.html
 Source0: http://www.cl.cam.ac.uk/~mgk25/download/ucs-fonts.tar.gz
@@ -13,7 +15,7 @@ BuildArch: noarch
 Group: System/Fonts/X11 bitmap
 Summary: Selected set of bitmap fonts
 BuildRequires: fontpackages-devel
-BuildRequires: xorg-x11-font-utils
+BuildRequires: bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils
 Source44: import.info
 
 %description
@@ -85,6 +87,9 @@ fi
 %doc README	
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1_16
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1_12
 - update to new release by fcimport
 
