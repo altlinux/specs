@@ -1,4 +1,6 @@
 %define oldname linux-libertine-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname            linux-libertine
 %global prio_libertine      60
 %global prio_biolinum       61
@@ -6,7 +8,7 @@
 %global fontconf_biolinum   %{prio_biolinum}-%{fontname}-biolinum.conf
 %global fontconf_metrics    29-%{fontname}-metrics-alias.conf
 %global archivename         LinLibertine
-%define posttag             2012_07_02
+%global posttag             2012_07_02
 
 %define common_desc                                                     \
 The Linux Libertine Open Fonts are a TrueType font family for practical \
@@ -15,7 +17,7 @@ proprietary standard fonts.
 
 Name:           fonts-ttf-linuxlibertine
 Version:        5.3.0
-Release:        alt1_5.%{posttag}
+Release:        alt1_10.%{posttag}
 Summary:        Linux Libertine Open Fonts
 
 Group:          System/Fonts/True type
@@ -25,11 +27,13 @@ Source0:        http://download.sourceforge.net/sourceforge/linuxlibertine/LinLi
 Source1:        %{oldname}-libertine-fontconfig.conf
 Source2:        %{oldname}-biolinum-fontconfig.conf
 Source3:        %{oldname}-libertine-metrics-alias-fontconfig.conf
+Source4:        libertine.metainfo.xml
+Source5:        biolinum.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
 #BuildRequires:  fontforge
-Requires:       %{name}-common = %{version}-%{release}
+Requires:       fonts-ttf-linuxlibertine-common = %{version}-%{release}
 Source44: import.info
 
 %description
@@ -39,7 +43,7 @@ This package contains Serif fonts.
 
 %package -n fonts-ttf-linuxlibertine-biolinum
 Summary:        Sans-serif fonts from Linux Libertine Open Fonts
-Requires:       %{name}-common = %{version}-%{release}
+Requires:       fonts-ttf-linuxlibertine-common = %{version}-%{release}
 Group:          System/Fonts/True type
 
 %description -n fonts-ttf-linuxlibertine-biolinum
@@ -47,11 +51,11 @@ Group:          System/Fonts/True type
 
 This package contains Sans fonts.
 
-%package common
+%package -n fonts-ttf-linuxlibertine-common
 Summary:        Common files for Linux Libertine Open Fonts
 Group:          System/Fonts/True type
 
-%description common
+%description -n fonts-ttf-linuxlibertine-common
 %common_desc
 
 This package consists of files used by other %{oldname} packages.
@@ -87,6 +91,12 @@ for fconf in %{fontconf_libertine} %{fontconf_metrics} %{fontconf_biolinum}; do
     ln -s %{_fontconfig_templatedir}/$fconf \
           %{buildroot}%{_fontconfig_confdir}/$fconf
 done
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE4} \
+        %{buildroot}%{_datadir}/appdata/libertine.metainfo.xml
+install -Dm 0644 -p %{SOURCE5} \
+        %{buildroot}%{_datadir}/appdata/biolinum.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -122,13 +132,14 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-%files common
+%files -n fonts-ttf-linuxlibertine-common
 %doc Bugs.txt ChangeLog.txt GPL.txt LICENCE.txt OFL-1.1.txt Readme-TEX.txt README
 
 %files
 %{_fontconfig_templatedir}/%{fontconf_libertine}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf_libertine}
 %{_fontbasedir}/*/%{_fontstem}/LinLibertine*.otf
+%{_datadir}/appdata/libertine.metainfo.xml
 
 %{_fontconfig_templatedir}/%{fontconf_metrics}
 %{_fontconfig_confdir}/%{fontconf_metrics}
@@ -137,8 +148,12 @@ fi
 %{_fontconfig_templatedir}/%{fontconf_biolinum}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf_biolinum}
 %{_fontbasedir}/*/%{_fontstem}/LinBiolinum*.otf
+%{_datadir}/appdata/biolinum.metainfo.xml
 
 %changelog
+* Sun Oct 29 2017 Igor Vlasenko <viy@altlinux.ru> 5.3.0-alt1_10.2012_07_02
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 5.3.0-alt1_5.2012_07_02
 - update to new release by fcimport
 
