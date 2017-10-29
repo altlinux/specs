@@ -1,12 +1,14 @@
 Group: System/Fonts/True type
 %define oldname google-roboto-slab-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontconf 64-%{fontname}
 %global fontname google-roboto-slab
 %global commit0 90abd17b4f97671435798b6147b698aa9087612f
 
 Name:          fonts-ttf-google-roboto-slab
 Version:       1.100263
-Release:       alt1_0.3.20150923git
+Release:       alt1_0.6.20150923git
 Summary:       Google Roboto Slab fonts
 
 License:       ASL 2.0
@@ -97,6 +99,9 @@ fi
 %doc LICENSE.txt
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.100263-alt1_0.6.20150923git
+- update to new release by fcimport
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.100263-alt1_0.3.20150923git
 - new version
 
