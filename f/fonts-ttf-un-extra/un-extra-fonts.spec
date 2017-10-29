@@ -1,11 +1,13 @@
 %define oldname un-extra-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname    un-extra
 %global fontconf    66-%{fontname}
 
 %global archivename un-fonts-extra
-%define alphatag    080608
+%global alphatag    080608
 
-%define common_desc_en \
+%global common_desc_en \
 The UN set of Korean TrueType fonts is derived from the HLaTeX Type1 fonts \
 made by Koaunghi Un in 1998. They were converted to TrueType with \
 FontForge(PfaEdit) by Won-kyu Park in 2003. \
@@ -20,7 +22,7 @@ The Un Extra set is composed of: \
 - UnVada \
 - UnPilgia: script \
 
-%define common_desc_ko \
+%global common_desc_ko \
 i'.e..e.. i.'e..i..e.. HLaTexe.'e.'i..i'.i.. i'.e..i'.e.'i'. 1998e..i-. e.'e.'i.' i..i..i..e..e... \
 2003e..i-. e..i..e.'e.'i'. FontForgee.. i'.i..i.'i-. i..e..i..i..i..i..e.' e..i''i..i..e..e... \
 i'.e..e..i'. e..i.. i'.e.'i..i'. e..e..e..i..e..e... \
@@ -37,7 +39,7 @@ Extra e..i'. \
 
 Name:        fonts-ttf-un-extra
 Version:     1.0.2
-Release:     alt3_0.19.%{alphatag}
+Release:     alt3_0.24.%{alphatag}
 Summary:     Un Extra family of Korean TrueType fonts
 Summary(ko): 한글 은글꼴 Extra 모음
 
@@ -63,15 +65,15 @@ BuildRequires: fontpackages-devel
 Source44: import.info
 
 
-%package common
+%package -n fonts-ttf-un-extra-common
 Group: System/Fonts/True type
 Summary:     Common files for the Un Extra font set
 
-%files common
+%files -n fonts-ttf-un-extra-common
 %doc COPYING README
 
 
-%define un_subpkg() \
+%global un_subpkg() \
 %package -n fonts-ttf-%{fontname}-%1 \
 Summary:     Un Extra fonts - %(echo %2) \
 Summary(ko): 한글 은글꼴 Extra 모음 - %(echo %3) \
@@ -99,7 +101,7 @@ Requires:    %{name}-common = %{version}-%{release} \
 %description -l ko
 %common_desc_ko
 
-%description common
+%description -n fonts-ttf-un-extra-common
 %common_desc_en
 
 This package consists of files used by other %{oldname} packages.
@@ -367,6 +369,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.24.080608
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.19.080608
 - update to new release by fcimport
 
