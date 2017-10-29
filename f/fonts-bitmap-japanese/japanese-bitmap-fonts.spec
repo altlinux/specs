@@ -1,32 +1,34 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/awk /usr/bin/gawk /usr/bin/mkfontdir /usr/bin/perl unzip
+BuildRequires: /usr/bin/perl unzip
 # END SourceDeps(oneline)
 %define oldname japanese-bitmap-fonts
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name japanese-bitmap-fonts
 %define version 0.20080710
 %global	fontname        japanese-bitmap
-%define cataloguedir    %{_sysconfdir}/X11/fontpath.d
-%define cidmapdir       %{_datadir}/ghostscript/conf.d
+%global cataloguedir    %{_sysconfdir}/X11/fontpath.d
+%global cidmapdir       %{_datadir}/ghostscript/conf.d
 
-%define chxlfd          /usr/bin/perl $RPM_BUILD_DIR/%{oldname}-%{version}/%{vft}/chbdfxlfd.pl
-%define mkalias         /usr/bin/perl $RPM_BUILD_DIR/%{oldname}-%{version}/%{vft}/mkalias.pl
-%define mkbold          $RPM_BUILD_DIR/%{oldname}-%{version}/%{shinonome}-src/tools/mkbold
-%define mkitalic        $RPM_BUILD_DIR/%{oldname}-%{version}/%{vft}/mkitalic
+%global chxlfd          /usr/bin/perl $RPM_BUILD_DIR/%{oldname}-%{version}/%{vft}/chbdfxlfd.pl
+%global mkalias         /usr/bin/perl $RPM_BUILD_DIR/%{oldname}-%{version}/%{vft}/mkalias.pl
+%global mkbold          $RPM_BUILD_DIR/%{oldname}-%{version}/%{shinonome}-src/tools/mkbold
+%global mkitalic        $RPM_BUILD_DIR/%{oldname}-%{version}/%{vft}/mkitalic
 
-%define kappa           Kappa20-0.396
-%define shinonome       shinonome-0.9.11
-%define warabi12        warabi12-0.19a
-%define mplus           mplus_bitmap_fonts-2.2.4
-%define vft             vine-fonttools-0.1
+%global kappa           Kappa20-0.396
+%global shinonome       shinonome-0.9.11
+%global warabi12        warabi12-0.19a
+%global mplus           mplus_bitmap_fonts-2.2.4
+%global vft             vine-fonttools-0.1
 
 Name:           fonts-bitmap-japanese
 Version:        0.20080710
-Release:        alt2_15
+Release:        alt2_19
 License:        Public Domain and BSD and mplus
 Group:          System/Fonts/True type
 BuildArch:      noarch
-BuildRequires:  xorg-x11-font-utils mkfontdir gawk fontpackages-devel
+BuildRequires:  bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils gawk fontpackages-devel
 
 ## files in ttfonts-ja
 Source2:        FAPIcidfmap.ja
@@ -95,7 +97,7 @@ Patch54:        fonttools-replace.patch
 
 Summary:        Free Japanese Bitmap fonts
 
-Provides:	jisksp14 = 0.1-16 kappa20 = 0.3-15 fonts-ja = 8.0-16 fonts-japanese = 0.20061016-13
+Provides:	jisksp14 = 0.1-16, kappa20 = 0.3-15, fonts-ja = 8.0-16, fonts-japanese = 0.20061016-13
 Source44: import.info
 
 %description
@@ -325,6 +327,13 @@ install -m 0644 -p fonts-ja/fonts.alias $RPM_BUILD_ROOT%{_fontdir}/
 # Install catalogue symlink
 install -m 0755 -d $RPM_BUILD_ROOT%{cataloguedir}
 ln -sf %{_fontdir} $RPM_BUILD_ROOT%{cataloguedir}/%{fontname}
+
+# touching all ghosts; hack for rpm 4.0.4
+for rpm_404_ghost in %{_fontdir}/encodings.dir
+do
+    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
+    touch %buildroot"$rpm_404_ghost"
+done
 sed -i -e s,%{_datadir}/fonts/,%{_datadir}/fonts/ttf/,g %buildroot/usr/share/ghostscript/conf.d/*
 # lowercase to befriend repocop tests
 sed -i -e 's,\(^.*$\),\L\1,' `find %buildroot/usr/share/fonts -name fonts.alias`
@@ -364,6 +373,7 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 
+
 %files
 %{_fontbasedir}/*/%{_fontstem}/*.pcf.gz
 
@@ -378,6 +388,9 @@ fi
 %{cataloguedir}/*
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.20080710-alt2_19
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.20080710-alt2_15
 - update to new release by fcimport
 
