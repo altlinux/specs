@@ -1,7 +1,8 @@
 %define oldname taipeifonts
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%oldname is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name taipeifonts
-%define version 1.2
 %define fontname taipeifonts
 %define common_desc Traditional Chinese Bitmap fonts
 
@@ -10,7 +11,7 @@
 
 Name:       fonts-bitmap-taipei
 Version:    1.2
-Release:    alt1_18
+Release:    alt1_22
 Summary:    %common_desc
 
 Group:      Graphical desktop/Other
@@ -18,7 +19,7 @@ License:    Public Domain
 URL:        http://cle.linux.org.tw/
 
 BuildArch:        noarch
-BuildRequires:    xorg-x11-font-utils
+BuildRequires:    bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils
 
 Source0:    ftp://cle.linux.org.tw/pub/CLE/devel/wjwu/slackware/slackware-10.0/source/%{oldname}-%{version}/%{oldname}-%{version}.tar.gz
 Source1:    ftp://cle.linux.org.tw/pub/CLE/devel/wjwu/slackware/slackware-10.0/source/%{oldname}-%{version}/%{oldname}.alias
@@ -61,6 +62,9 @@ ln -s %{bmpfontdir} $RPM_BUILD_ROOT%{catalogue}/%{oldname}
 %{catalogue}/%{oldname}
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_22
+- update to new release by fcimport
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_18
 - update to new release by fcimport
 
