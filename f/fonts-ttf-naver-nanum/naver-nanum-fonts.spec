@@ -1,5 +1,7 @@
 Group: System/Fonts/True type
 %define oldname naver-nanum-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname naver-nanum
 %global fontconf 65-0-%{fontname}
 
@@ -11,7 +13,7 @@ publisher is Naver Corporation.
 
 Name:       fonts-ttf-naver-nanum
 Version:    3.020
-Release:    alt1_15.20140930
+Release:    alt1_18.20140930
 Summary:    Nanum family of Korean TrueType fonts
 
 License:    OFL
@@ -270,6 +272,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 3.020-alt1_18.20140930
+- update to new release by fcimport
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 3.020-alt1_15.20140930
 - new version
 
