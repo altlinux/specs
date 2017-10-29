@@ -1,46 +1,48 @@
 %define oldname mplus-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 ###############################################################################
 # Definitions
 ###############################################################################
-%define fixed_desc() \
+%global fixed_desc() \
 The combination of fixed-fullwidth M+ %2 for Japanese and fixed-halfwidth \
 %1 %2 %3 for alphabets. They are 5 weights from Thin to Bold.   
 
-%define proportional_desc() \
+%global proportional_desc() \
 The combination of fixed-fullwidth M+ %2 for Japanese and proportional  \
 %1 %2 %3 for alphabets. They are 7 weights from Thin to Black.         
 
-%define common_desc() \
+%global common_desc() \
 The Mplus fonts are 7 families of fonts, of which 4 are combinations \
 of proportional font families,variations of fixed-fullwidth fonts, \
 variations of fixed-halfwidth fonts and each have between 5 - 7 \
 different weights.
 
-%define summary_p M+ P is aimed as sophisticated and relaxed design
+%global summary_p M+ P is aimed as sophisticated and relaxed design
 
-%define summary_c M+ C is optimized to be proportioned and has two variations
+%global summary_c M+ C is optimized to be proportioned and has two variations
 
-%define summary_m M+ M emphasize the balance of natural letterform and high legibility
+%global summary_m M+ M emphasize the balance of natural letterform and high legibility
 
 
-%define fontname mplus
+%global fontname mplus
 
 ###############################################################################
 # Header
 ###############################################################################
 
 Name:       fonts-ttf-mplus
-Version:    028 
-Release:    alt3_5
+Version:    056
+Release:    alt1_7
 Summary:    The Mplus fonts is a superfamily of fonts designed by Coji Morishita
 
 Group:      System/Fonts/True type
 License:    mplus
 URL:        http://%{fontname}-fonts.sourceforge.jp/%{fontname}-outline-fonts/index-en.html
-Source0:    http://downloads.sourceforge.jp/%{fontname}-fonts/6650/%{fontname}-TESTFLIGHT-%{version}.tar.gz
+Source0:    http://dl.sourceforge.jp/%{fontname}-fonts/6650/%{fontname}-TESTFLIGHT-%{version}.tar.xz
 
 BuildArch: noarch  
-BuildRequires:   fontpackages-devel
+BuildRequires:   fontpackages-devel  
 Source44: import.info
 
 %description
@@ -50,11 +52,11 @@ Source44: import.info
 # Package section
 ###############################################################################
 
-%package common
+%package -n fonts-ttf-mplus-common
 Group: System/Fonts/True type
 Summary:  Mplus, common files (documentationa..)
 
-%description common
+%description -n fonts-ttf-mplus-common
 %common_desc
 
 This package consists of files used by other %{oldname} packages.
@@ -71,6 +73,7 @@ Requires: %{name}-common = %{version}-%{release}
 
 %files -n fonts-ttf-mplus-1p
 %{_fontbasedir}/*/%{_fontstem}/%{fontname}-1p-*.ttf
+%{_datadir}/appdata/mplus-1p.metainfo.xml
 
 # 2p
 %package -n fonts-ttf-mplus-2p
@@ -83,6 +86,7 @@ Requires: %{name}-common = %{version}-%{release}
 
 %files -n fonts-ttf-mplus-2p
 %{_fontbasedir}/*/%{_fontstem}/%{fontname}-2p-*.ttf
+%{_datadir}/appdata/%{fontname}-2p.metainfo.xml
 
 # 1c
 %package -n fonts-ttf-mplus-1c
@@ -95,6 +99,7 @@ Requires: %{name}-common = %{version}-%{release}
 
 %files -n fonts-ttf-mplus-1c
 %{_fontbasedir}/*/%{_fontstem}/%{fontname}-1c-*.ttf
+%{_datadir}/appdata/%{fontname}-1c.metainfo.xml
 
 # 2c
 %package -n fonts-ttf-mplus-2c
@@ -107,6 +112,7 @@ Requires: %{name}-common = %{version}-%{release}
 
 %files -n fonts-ttf-mplus-2c
 %{_fontbasedir}/*/%{_fontstem}/%{fontname}-2c-*.ttf
+%{_datadir}/appdata/%{fontname}-2c.metainfo.xml
 
 # 1m
 %package -n fonts-ttf-mplus-1m
@@ -119,6 +125,7 @@ Requires: %{name}-common = %{version}-%{release}
 
 %files -n fonts-ttf-mplus-1m
 %{_fontbasedir}/*/%{_fontstem}/%{fontname}-1m-*.ttf
+%{_datadir}/appdata/%{fontname}-1m.metainfo.xml
 
 # 2m
 %package -n fonts-ttf-mplus-2m
@@ -131,6 +138,7 @@ Requires: %{name}-common = %{version}-%{release}
 
 %files -n fonts-ttf-mplus-2m
 %{_fontbasedir}/*/%{_fontstem}/%{fontname}-2m-*.ttf
+%{_datadir}/appdata/%{fontname}-2m.metainfo.xml
 
 # 1mn
 %package -n fonts-ttf-mplus-1mn
@@ -143,6 +151,7 @@ Requires: %{name}-common = %{version}-%{release}
 
 %files -n fonts-ttf-mplus-1mn
 %{_fontbasedir}/*/%{_fontstem}/%{fontname}-1mn-*.ttf
+%{_datadir}/appdata/%{fontname}-1mn.metainfo.xml
 
 ###############################################################################
 # Files
@@ -153,7 +162,79 @@ Requires: %{name}-common = %{version}-%{release}
 %build
 
 %install
-rm -fr %{buildroot}
+
+# Add AppStream metadata
+mkdir -p %{buildroot}%{_datadir}/appdata
+cat > %{buildroot}%{_datadir}/appdata/%{fontname}-1c.metainfo.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Richard Hughes <richard@hughsie.com> -->
+<component type="font">
+  <id>mplus-1c</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <name>M+ 1C</name>
+  <summary>A font which is optimized to be proportioned</summary>
+</component>
+EOF
+cat > %{buildroot}%{_datadir}/appdata/%{fontname}-2c.metainfo.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Richard Hughes <richard@hughsie.com> -->
+<component type="font">
+  <id>mplus-2c</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <name>M+ 1C</name>
+  <summary>A font which is optimized to be proportioned</summary>
+</component>
+EOF
+cat > %{buildroot}%{_datadir}/appdata/%{fontname}-1m.metainfo.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Richard Hughes <richard@hughsie.com> -->
+<component type="font">
+  <id>mplus-1m</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <name>M+ 1M</name>
+  <summary>A font which emphasizes the balance of natural letterform with high legibility</summary>
+</component>
+EOF
+cat > %{buildroot}%{_datadir}/appdata/%{fontname}-1mn.metainfo.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Richard Hughes <richard@hughsie.com> -->
+<component type="font">
+  <id>mplus-1mn</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <name>M+ 1MN</name>
+  <summary>A font which emphasizes the balance of natural letterform with high legibility</summary>
+</component>
+EOF
+cat > %{buildroot}%{_datadir}/appdata/%{fontname}-1p.metainfo.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Richard Hughes <richard@hughsie.com> -->
+<component type="font">
+  <id>mplus-1p</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <name>M+ 1P</name>
+  <summary>A font which is aimed as sophisticated and relaxed design</summary>
+</component>
+EOF
+cat > %{buildroot}%{_datadir}/appdata/%{fontname}-2p.metainfo.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Richard Hughes <richard@hughsie.com> -->
+<component type="font">
+  <id>mplus-1p</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <name>M+ 2P</name>
+  <summary>A font which is aimed as sophisticated and relaxed design</summary>
+</component>
+EOF
+cat > %{buildroot}%{_datadir}/appdata/%{fontname}-2m.metainfo.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Richard Hughes <richard@hughsie.com> -->
+<component type="font">
+  <id>mplus-2m</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <name>M+ 2M</name>
+  <summary>A font which emphasizes the balance of natural letterform with high legibility</summary>
+</component>
+EOF
 
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
@@ -192,10 +273,14 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-%files common
-%doc LICENSE_{E,J} README_{E,J}
+%files -n fonts-ttf-mplus-common
+%doc LICENSE_E README_{E,J}
+%doc LICENSE_J README_{E,J}
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 056-alt1_7
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 028-alt3_5
 - update to new release by fcimport
 
