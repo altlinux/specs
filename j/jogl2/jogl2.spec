@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jogl2
 Version:        2.3.2
-Release:        alt2_3jpp8
+Release:        alt2_5jpp8
 %global src_name jogl-v%{version}
 Summary:        Java bindings for the OpenGL API
 
@@ -40,7 +40,6 @@ Requires:       jpackage-utils
 Requires:       gluegen2 = %{version}
 Source44: import.info
 Patch33: jogl2-disable-build-native-broadcom.patch
-BuildArch: noarch
 
 %description
 The JOGL project hosts the development version of the Java Binding for
@@ -106,7 +105,7 @@ xargs -t ant <<EOF
  -Dant-junit.jar=%{_javadir}/ant/ant-junit.jar 
  -Dgluegen.jar=%{_javadir}/gluegen2.jar 
  -Dgluegen-rt.jar=%{_jnidir}/gluegen2-rt.jar 
- -Dswt.jar=%{_libdir}/eclipse/swt.jar 
+ -Dswt.jar=%{_jnidir}/swt.jar 
 
  -Djava.excludes.all='com/jogamp/newt/util/applet*/**/*.java com/jogamp/audio/**/*.java jogamp/opengl/gl2/fixme/**/*.java com/jogamp/opengl/test/**/*.java'
 
@@ -123,6 +122,7 @@ mkdir -p %{buildroot}%{_javadir}/%{name} \
 
 install build/jar/jogl-all.jar %{buildroot}%{_javadir}/%{name}.jar
 ln -s ../../..%{_javadir}/%{name}.jar %{buildroot}%{_libdir}/%{name}/
+install -t %{buildroot}%{_libdir}/%{name}/ build/lib/*.so
 
 # Provide JPP pom
 mkdir -p %{buildroot}%{_mavenpomdir}
@@ -138,12 +138,16 @@ cp -t %{buildroot}%{_docdir}/%{name}/ README.txt LICENSE.txt CHANGELOG.txt
 %{_docdir}/%{name}/README.txt
 %{_docdir}/%{name}/LICENSE.txt
 %{_docdir}/%{name}/CHANGELOG.txt
+%{_libdir}/%{name}
 
 %files doc
 %{_docdir}/%{name}/LICENSE.txt
 %{_docdir}/%{name}
 
 %changelog
+* Sun Oct 29 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt2_5jpp8
+- restored arch libs (closes: #34087)
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt2_3jpp8
 - new jpp release
 
