@@ -1,9 +1,11 @@
 %define oldname wqy-unibit-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname wqy-unibit
 
 Name:           fonts-bitmap-wqy-unibit
 Version:        1.1.0
-Release:        alt3_16
+Release:        alt3_19
 Summary:        WenQuanYi Unibit Bitmap Font
 
 Group:          System/Fonts/True type
@@ -13,7 +15,7 @@ Source0:        http://downloads.sourceforge.net/wqy/wqy-unibit-bdf-%{version}-1
 Patch0:         wqy-unibit-fixes-build.patch
 
 BuildArch:      noarch
-BuildRequires:  fontpackages-devel, bdftopcf
+BuildRequires:  fontpackages-devel bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils
 Source44: import.info
 
 %description
@@ -40,7 +42,7 @@ http://wenq.org/eindex.cgi?Unicode_Chart_EN
 
 
 %build
-make %{?_smp_mflags}
+%make_build
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
@@ -92,6 +94,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt3_19
+- update to new release by fcimport
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt3_16
 - fixed build
 
