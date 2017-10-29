@@ -3,12 +3,14 @@ Group: System/Fonts/True type
 BuildRequires: python
 # END SourceDeps(oneline)
 %define oldname tulrich-tuffy-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname tulrich-tuffy
 %global fontconf 60-%{fontname}.conf
 
 Name:           fonts-ttf-tulrich-tuffy
 Version:        1.28
-Release:        alt1_5
+Release:        alt1_9
 Summary:        Generic sans font
 
 License:        Public Domain
@@ -19,7 +21,7 @@ Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
-BuildRequires:  fontforge
+BuildRequires:  fontforge libfontforge
 Source44: import.info
 
 %description
@@ -105,6 +107,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1_9
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1_5
 - update to new release by fcimport
 
