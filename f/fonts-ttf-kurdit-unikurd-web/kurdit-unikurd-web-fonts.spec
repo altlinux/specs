@@ -3,13 +3,15 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname kurdit-unikurd-web-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname kurdit-unikurd-web
 %global archivename unikurdweb
 %global fontconf 65-%{fontname}.conf
 
 Name:    fonts-ttf-kurdit-unikurd-web
 Version: 20020502
-Release: alt3_13
+Release: alt3_17
 Summary: A widely used Kurdish font for Arabic-like scripts and Latin
 
 License:   GPLv3
@@ -91,6 +93,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 20020502-alt3_17
+- update to new release by fcimport
+
 * Mon Oct 27 2014 Igor Vlasenko <viy@altlinux.ru> 20020502-alt3_13
 - update to new release by fcimport
 
