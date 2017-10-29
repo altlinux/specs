@@ -3,6 +3,8 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname sil-charis-compact-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname sil-charis-compact
 %global fontconf 61-%{fontname}.conf
 
@@ -10,7 +12,7 @@ BuildRequires: unzip
 
 Name:    fonts-ttf-sil-charis-compact
 Version: 4.106
-Release: alt3_9
+Release: alt3_13
 Summary: A version of Charis SIL with tighter line spacing
 
 License:   OFL
@@ -111,6 +113,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 4.106-alt3_13
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 4.106-alt3_9
 - update to new release by fcimport
 
