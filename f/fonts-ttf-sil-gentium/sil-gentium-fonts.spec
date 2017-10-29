@@ -1,5 +1,7 @@
 Group: System/Fonts/True type
 %define oldname sil-gentium-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define fontname sil-gentium
 %define archivename ttf-sil-gentium
 %define common_desc \
@@ -11,7 +13,7 @@ a wide range of Latin-based alphabets.
 
 Name:           fonts-ttf-sil-gentium
 Version:        1.02
-Release:        alt5_17
+Release:        alt5_21
 Summary:        SIL Gentium fonts
 
 License:        OFL
@@ -137,6 +139,9 @@ fi
 
 
 %changelog
+* Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.02-alt5_21
+- update to new release by fcimport
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.02-alt5_17
 - update to new release by fcimport
 
