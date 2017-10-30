@@ -3,12 +3,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-resources-plugin
-Version:        3.0.1
-Release:        alt1_1jpp8
+Version:        3.0.2
+Release:        alt1_2jpp8
 Summary:        Maven Resources Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-resources-plugin
@@ -60,6 +61,9 @@ API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_1jpp8
 - new version
 
