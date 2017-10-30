@@ -1,5 +1,5 @@
 Name: xfce4-pulseaudio-plugin
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: A pulseaudio plugin for the Xfce panel
@@ -37,6 +37,7 @@ A panel plugin for controlling PulseAudio mixer.
 %configure \
 	--enable-maintainer-mode \
 	--enable-keybinder \
+	--disable-silent-rules \
 	--enable-debug=minimal
 %make_build
 
@@ -53,6 +54,10 @@ A panel plugin for controlling PulseAudio mixer.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Oct 30 2017 Mikhail Efremov <sem@altlinux.org> 0.3.2-alt1
+- Updated to 0.3.2.
+- Disable silent rules.
+
 * Fri Sep 29 2017 Mikhail Efremov <sem@altlinux.org> 0.3.1-alt1
 - Updated to 0.3.1.
 
