@@ -8,7 +8,7 @@ Name: hiredis
 Name: hiredis%sover
 %endif
 Version: 0.13.3
-Release: alt2
+Release: alt3
 Summary: The official C client for Redis
 
 Group: System/Libraries
@@ -40,6 +40,12 @@ Requires: libhiredis%sover = %version-%release
 
 Provides: hiredis-devel = %version-%release
 Obsoletes: hiredis-devel
+
+# Those pkgs included the example & test executables, too:
+Conflicts: libhiredis0.12 <= 0.12-alt1
+Conflicts: libhiredis <= 0.12-alt1
+Conflicts: libhiredis0.11
+Conflicts: libhiredis0.10
 
 %description -n libhiredis-devel
 The hiredis-devel package contains the header files and
@@ -81,6 +87,10 @@ cp hiredis-test %buildroot%_bindir/
 %endif
 
 %changelog
+* Mon Oct 30 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.13.3-alt3
+- Added to devel subpkg: Conflicts: libhiredis* <= 0.12-alt1
+  (which included the example & test executables, too)
+
 * Mon Oct 16 2017 Mikhail Gordeev <obirvalger@altlinux.org> 0.13.3-alt2
 - (ALT #34016) Move example files to devel package
 
