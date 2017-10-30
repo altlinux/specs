@@ -1,5 +1,5 @@
 Name: volumes-profile-kdesktop
-Version: 0.7.3
+Version: 0.7.4
 Release: alt1%ubt
 
 Summary: Volumes description for Desktop KDE distribution
@@ -30,6 +30,9 @@ install -pm755 10-*.sh %buildroot%hook1dir/
 #%hook2dir/*
 
 %changelog
+* Fri Oct 27 2017 Sergey V Turchin <zerg@altlinux.org> 0.7.4-alt1%ubt
+- fix to decrease default swap size
+
 * Wed Oct 25 2017 Sergey V Turchin <zerg@altlinux.org> 0.7.3-alt1%ubt
 - fix to decrease default swap size
 
