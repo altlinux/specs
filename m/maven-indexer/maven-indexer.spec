@@ -1,64 +1,50 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# Use 5.1.2 snapshot there was no release tagged by upstream,
+# but this is what is available in maven central
+%global git_tag e0570bff5c60604115ab7ad0d5498055a60fc772
+
 Name:           maven-indexer
-Version:        5.1.1
-Release:        alt1_9jpp8
+Version:        5.1.2
+Release:        alt1_0.1.gite0570bfjpp8
 Summary:        Standard for producing indexes of Maven repositories
 
 License:        ASL 2.0
 URL:            http://maven.apache.org/maven-indexer/index.html
 
-## jars need to be removed from tarball so that the srpm doesn't violate their
-## licensing terms:
-#
-# wget http://central.maven.org/maven2/org/apache/maven/indexer/maven-indexer/5.1.1/maven-indexer-5.1.1-source-release.zip
-# unzip maven-indexer-5.1.1-source-release.zip
-# pushd maven-indexer-5.1.1/ && find -name *.jar -delete && popd
-# zip -r maven-indexer-5.1.1-source-release-CLEAN.zip maven-indexer-5.1.1/
-Source0:        %{name}-%{version}-source-release-CLEAN.zip
+Source0:        https://github.com/apache/maven-indexer/archive/%{git_tag}/maven-indexer-%{version}.tar.gz
+
+# Port to lucene 5
+Patch0:         maven-indexer-lucene5.patch
+
+# Drop dep on truezip
+Patch1:         maven-indexer-truezip.patch
 
 BuildArch:      noarch
 
-BuildRequires:  aether-api
-BuildRequires:  aether-util
-BuildRequires:  apache-commons-cli
-BuildRequires:  apache-commons-compress
-BuildRequires:  atinject
-BuildRequires:  bouncycastle
-BuildRequires:  felix-osgi-compendium
-BuildRequires:  felix-osgi-core
-BuildRequires:  google-guice
-BuildRequires:  jetty-start
-BuildRequires:  jmock
-BuildRequires: javapackages-tools rpm-build-java
-BuildRequires:  junit
-BuildRequires:  lucene3
-BuildRequires:  lucene3-contrib
 BuildRequires:  maven-local
-BuildRequires:  maven-archetype-catalog
-BuildRequires:  maven-archetype-common
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-failsafe-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-shade-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-wagon
-BuildRequires:  plexus-cli
-BuildRequires:  plexus-containers-component-metadata
-BuildRequires:  plexus-utils
-BuildRequires:  port-allocator-maven-plugin
-BuildRequires:  regexp
-BuildRequires:  slf4j
-BuildRequires:  truezip-driver-zip
-BuildRequires:  truezip-file
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.lucene:lucene-analyzers-common)
+BuildRequires:  mvn(org.apache.lucene:lucene-core)
+BuildRequires:  mvn(org.apache.lucene:lucene-highlighter)
+BuildRequires:  mvn(org.apache.lucene:lucene-queryparser)
+BuildRequires:  mvn(org.apache.maven.archetype:archetype-common)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
+BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.eclipse.aether:aether-api)
+BuildRequires:  mvn(org.eclipse.aether:aether-util)
 Source44: import.info
 
 %description
@@ -75,20 +61,25 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{git_tag}
+%patch0 -p1
+%patch1
 
 find -name '*.jar' -delete
 find -name '*.zip' -delete
 find -name '*.class' -delete
 
-%pom_remove_dep org.mortbay.jetty:jetty indexer-cli
-%pom_remove_dep org.mortbay.jetty:jetty indexer-core
+# Tests need porting to a modern jetty
+%pom_remove_dep -r org.mortbay.jetty:jetty
 
+# Switch from sonatype aether to eclipse aether
 %pom_remove_dep org.sonatype.aether:aether-api indexer-core
 %pom_remove_dep org.sonatype.aether:aether-util indexer-core
 %pom_add_dep org.eclipse.aether:aether-api indexer-core
 %pom_add_dep org.eclipse.aether:aether-util indexer-core
+find -name *.java -exec sed -i -e "s/org.sonatype.aether/org.eclipse.aether/g" {} \;
 
+# Switch from sonatype to codehaus plexus
 %pom_remove_dep org.sonatype.sisu:sisu-inject-plexus indexer-cli
 %pom_remove_dep org.sonatype.sisu:sisu-inject-plexus indexer-core
 %pom_remove_dep org.sonatype.sisu:sisu-inject-plexus indexer-artifact
@@ -96,27 +87,36 @@ find -name '*.class' -delete
 %pom_add_dep org.codehaus.plexus:plexus-container-default indexer-core
 %pom_add_dep org.codehaus.plexus:plexus-container-default indexer-artifact
 
-%pom_remove_plugin org.apache.rat:apache-rat-plugin
-%pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin
+# Remove unnecessary plugins
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :apache-rat-plugin
+%pom_remove_plugin :animal-sniffer-maven-plugin
 
+# Disable CLI module because of how it bundles stuff
 %pom_disable_module indexer-cli
 
-find -name *.java -exec sed -i -e "s/org.sonatype.aether/org.eclipse.aether/g" {} \;
+# Drop unneeded dep on truezip
+%pom_remove_dep -r de.schlichtherle.truezip:
+rm indexer-core/src/main/java/org/apache/maven/index/util/zip/TrueZipZipFileHandle.java
 
 %build
-# skip tests because of unpackaged test deps
-%mvn_build --skip-tests
+# Skip tests because they need porting to modern jetty
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE README.md
+%doc NOTICE
+%doc README.md
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc NOTICE
 
 %changelog
+* Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.2-alt1_0.1.gite0570bfjpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 5.1.1-alt1_9jpp8
 - new fc release
 
