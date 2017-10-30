@@ -1,7 +1,7 @@
 Summary: Openfire XMPP Server
 Name: openfire
 Version: 4.1.6
-Release: alt1
+Release: alt2
 
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
@@ -15,7 +15,7 @@ BuildArch: noarch
 
 Requires: jre-openjdk >= 1.7.0
 
-BuildPreReq: /proc rpm-build-java java-1.7.0-openjdk-devel
+BuildPreReq: /proc rpm-build-java java-1.8.0-openjdk-devel
 # Automatically added by buildreq on Sat Jul 12 2014
 BuildRequires: ant-apache-bsf ant-apache-log4j ant-apache-resolver ant-commons-logging ant-commons-net ant-junit
 
@@ -91,6 +91,9 @@ ln -s %_bindir/embedded-db.rc %buildroot%firedir/bin/embedded-db.rc
 %dir %attr(3770,_%name,_%name) %_logdir/%name
 
 %changelog
+* Mon Oct 30 2017 Alexei Takaseev <taf@altlinux.org> 4.1.6-alt2
+- Rebuild with java-1.8.0-openjdk-devel
+
 * Fri Oct 06 2017 Alexei Takaseev <taf@altlinux.org> 4.1.6-alt1
 - 4.1.6
 
