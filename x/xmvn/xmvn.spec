@@ -2,7 +2,6 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # fedora bcond_with macro
@@ -11,6 +10,8 @@ BuildRequires: jpackage-generic-compat
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # XMvn uses OSGi environment provided by Tycho, it shouldn't require
 # any additional bundles.
 
@@ -20,21 +21,24 @@ BuildRequires: jpackage-generic-compat
 #def_with its
 %bcond_with its
 
+%bcond_without gradle
+
 Name:           xmvn
 Version:        2.5.0
-Release:        alt1_11jpp8
+Release:        alt1_21jpp8
 Summary:        Local Extensions for Apache Maven
 License:        ASL 2.0
-URL:            http://mizdebsk.fedorapeople.org/xmvn
+URL:            https://fedora-java.github.io/xmvn/
 BuildArch:      noarch
 
-Source0:        https://fedorahosted.org/released/%{name}/%{name}-%{version}.tar.xz
+Source0:        https://github.com/fedora-java/xmvn/releases/download/%{version}/xmvn-%{version}.tar.xz
 
 Patch0:         0001-Copy-core-dependencies-to-lib-core-in-assembly.patch
 Patch1:         0002-Try-to-procect-builddep-MOJO-against-patological-cas.patch
 Patch2:         0003-Don-t-install-POM-files-for-Tycho-projects.patch
+Patch3:         0004-Allow-xmvn-to-install-files-who-names-whitespace.patch
 
-BuildRequires:  maven-lib >= 3.3.9
+BuildRequires:  maven
 BuildRequires:  maven-local
 BuildRequires:  beust-jcommander
 BuildRequires:  cglib
@@ -42,7 +46,6 @@ BuildRequires:  maven-dependency-plugin
 BuildRequires:  maven-plugin-build-helper
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-install-plugin
-BuildRequires:  maven-site-plugin
 BuildRequires:  maven-plugin-plugin
 BuildRequires:  objectweb-asm
 BuildRequires:  modello
@@ -51,9 +54,12 @@ BuildRequires:  apache-ivy
 BuildRequires:  sisu-mojos
 BuildRequires:  junit
 BuildRequires:  easymock
+BuildRequires:  maven-invoker
+%if %{with gradle}
 BuildRequires:  gradle >= 2.5
+%endif
 
-Requires:       xmvn = %{version}
+Requires:       xmvn-minimal = %{version}-%{release}
 Requires:       maven
 Source44: import.info
 %filter_from_requires /^osgi\\($/d
@@ -67,10 +73,30 @@ creating RPM packages containing Maven artifacts.
 %package        minimal
 Group: Development/Java
 Summary:        Dependency-reduced version of XMvn
-Requires:       maven-lib >= 3.2.5
-Requires:       xmvn-api = %{version}
-Requires:       xmvn-connector-aether = %{version}
-Requires:       xmvn-core = %{version}
+Requires:       maven-lib
+Requires:       xmvn-api = %{version}-%{release}
+Requires:       xmvn-connector-aether = %{version}-%{release}
+Requires:       xmvn-core = %{version}-%{release}
+Requires:       aether-api
+Requires:       aether-impl
+Requires:       aether-spi
+Requires:       aether-util
+Requires:       apache-commons-cli
+Requires:       apache-commons-lang3
+Requires:       atinject
+Requires:       google-guice
+Requires:       guava
+Requires:       maven-lib
+Requires:       maven-wagon-provider-api
+Requires:       objectweb-asm
+Requires:       plexus-cipher
+Requires:       plexus-containers-component-annotations
+Requires:       plexus-interpolation
+Requires:       plexus-sec-dispatcher
+Requires:       plexus-utils
+Requires:       sisu-inject
+Requires:       sisu-plexus
+Requires:       slf4j
 
 %description    minimal
 This package provides minimal version of XMvn, incapable of using
@@ -119,6 +145,7 @@ provides integration of Eclipse Aether with XMvn.  It provides an
 adapter which allows XMvn resolver to be used as Aether workspace
 reader.
 
+%if %{with gradle}
 %package        connector-gradle
 Group: Development/Java
 Summary:        XMvn Connector for Gradle
@@ -127,6 +154,7 @@ Summary:        XMvn Connector for Gradle
 This package provides XMvn Connector for Gradle, which provides
 integration of Gradle with XMvn.  It provides an adapter which allows
 XMvn resolver to be used as Gradle resolver.
+%endif
 
 %package        connector-ivy
 Group: Development/Java
@@ -204,8 +232,15 @@ This package provides %{summary}.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+
+%pom_remove_plugin -r :maven-site-plugin
 
 %mvn_package ":xmvn{,-it}" __noinstall
+
+%if %{without gradle}
+%pom_disable_module xmvn-connector-gradle
+%endif
 
 %if %{without its}
 %pom_disable_module xmvn-it
@@ -236,9 +271,15 @@ rm -Rf %{name}-%{version}*/{AUTHORS,README,LICENSE,NOTICE}
 
 install -d -m 755 %{buildroot}%{_datadir}/%{name}
 cp -r %{name}-%{version}*/* %{buildroot}%{_datadir}/%{name}/
-ln -sf %{_datadir}/maven/bin/mvn %{buildroot}%{_datadir}/%{name}/bin/mvn
-ln -sf %{_datadir}/maven/bin/mvnDebug %{buildroot}%{_datadir}/%{name}/bin/mvnDebug
-ln -sf %{_datadir}/maven/bin/mvnyjp %{buildroot}%{_datadir}/%{name}/bin/mvnyjp
+
+for cmd in mvn mvnDebug mvnyjp; do
+    cat <<EOF >%{buildroot}%{_datadir}/%{name}/bin/$cmd
+#!/bin/sh -e
+export _FEDORA_MAVEN_HOME="%{_datadir}/%{name}"
+exec %{_datadir}/maven/bin/$cmd "\${@}"
+EOF
+    chmod 755 %{buildroot}%{_datadir}/%{name}/bin/$cmd
+done
 
 # helper scripts
 install -d -m 755 %{buildroot}%{_bindir}
@@ -254,14 +295,10 @@ done
 cp -r %{_datadir}/maven/lib/* %{buildroot}%{_datadir}/%{name}/lib/
 
 # possibly recreate symlinks that can be automated with xmvn-subst
-%{name}-subst %{buildroot}%{_datadir}/%{name}/
+%{name}-subst -s -R %{buildroot} %{buildroot}%{_datadir}/%{name}/
 
-# /usr/bin/xmvn script
-cat <<EOF >%{buildroot}%{_bindir}/%{name}
-#!/bin/sh -e
-export M2_HOME="\${M2_HOME:-%{_datadir}/%{name}}"
-exec %{_datadir}/maven/bin/mvn-script "\${@}"
-EOF
+# /usr/bin/xmvn
+ln -s %{_datadir}/%{name}/bin/mvn %{buildroot}%{_bindir}/%{name}
 
 # mvn-local symlink
 ln -s %{name} %{buildroot}%{_bindir}/mvn-local
@@ -270,10 +307,10 @@ ln -s %{name} %{buildroot}%{_bindir}/mvn-local
 install -d -m 755 %{buildroot}%{_datadir}/%{name}/conf/
 cp -P %{_datadir}/maven/conf/settings.xml %{buildroot}%{_datadir}/%{name}/conf/
 cp -P %{_datadir}/maven/bin/m2.conf %{buildroot}%{_datadir}/%{name}/bin/
-chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
+#chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 
 %files
-%attr(755,-,-) %{_bindir}/mvn-local
+%{_bindir}/mvn-local
 %{_datadir}/%{name}/lib/aether_aether-connector-basic.jar
 %{_datadir}/%{name}/lib/aether_aether-transport-wagon.jar
 %{_datadir}/%{name}/lib/aopalliance.jar
@@ -291,7 +328,7 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %{_datadir}/%{name}/lib/maven-wagon_http-shared.jar
 
 %files minimal
-%attr(755,-,-) %{_bindir}/%{name}
+%{_bindir}/%{name}
 %dir %{_datadir}/%{name}/bin
 %dir %{_datadir}/%{name}/lib
 %exclude %{_datadir}/%{name}/lib/aether_aether-connector-basic.jar
@@ -335,7 +372,9 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 
 %files connector-aether -f .mfiles-xmvn-connector-aether
 
+%if %{with gradle}
 %files connector-gradle -f .mfiles-xmvn-connector-gradle
+%endif
 
 %files connector-ivy -f .mfiles-xmvn-connector-ivy
 %dir %{_datadir}/%{name}/lib
@@ -377,6 +416,9 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt1_21jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt1_11jpp8
 - new fc release
 
