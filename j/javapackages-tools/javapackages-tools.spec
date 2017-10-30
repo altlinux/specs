@@ -11,7 +11,6 @@ BuildRequires: python3-devel
 
 BuildRequires: source-highlight python3-module-nose python3-module-setuptools-tests
 %add_python3_path /usr/share/java-utils/
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # fedora bcond_with macro
@@ -29,11 +28,12 @@ BuildRequires: jpackage-generic-compat
 # Avoid circular dependency on itself when bootstrapping
 %{!?_with_bootstrap: %global bootstrap 0}
 
+%bcond_without gradle
 %bcond_with tests
 
 Name:           javapackages-tools
-Version:        4.6.0
-Release:        alt11_15jpp8
+Version:        4.7.0
+Release:        alt1_15jpp8
 
 Summary:        Macros and scripts for Java packaging support
 
@@ -41,8 +41,11 @@ License:        BSD
 URL:            https://git.fedorahosted.org/git/javapackages.git
 Source0:        https://fedorahosted.org/released/javapackages/javapackages-%{version}.tar.xz
 
-Patch0:         0001-Initial-gradle_build-implementation.patch
-Patch1:         0002-install-Move-mvn_build-and-builddep-from-maven-local.patch
+Patch0:         0001-Don-t-build-and-install-docs.patch
+# Upstream patch for https://github.com/fedora-java/javapackages/issues/26
+Patch1:         0002-Fix-generation-of-versioned-OSGi-requires.patch
+# https://github.com/fedora-java/javapackages/issues/33
+Patch2:         0003-Avoid-calling-zipfile.open-.-rU.patch
 
 BuildArch:      noarch
 
@@ -70,7 +73,6 @@ Patch34: javapackages-tools-4.6.0-alt-req-headless-off.patch
 Patch35: javapackages-tools-4.6.0-alt-shade-jar.patch
 Patch36: macros.fjava-to-alt-rpm404.patch
 Patch37: macros.jpackage-alt-script.patch
-Patch38: javapackages-tools-4.6.0-alt-lxml-compat.patch
 
 Conflicts:       jpackage-utils < 0:5.0.1
 Obsoletes:       jpackage-utils < 0:5.0.1
@@ -111,30 +113,15 @@ Group: Development/Java
 Summary:        Macros and scripts for Maven packaging support
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       javapackages-local = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       maven
-Requires:       xmvn >= 2
+Requires:       xmvn-minimal >= 2
 Requires:       xmvn-mojo >= 2
 Requires:       xmvn-connector-aether >= 2
 # POM files needed by maven itself
-Requires:       apache-commons-parent
 Requires:       apache-parent
-Requires:       geronimo-parent-poms
-Requires:       httpcomponents-project
-Requires:       jboss-parent
-Requires:       jvnet-parent
-Requires:       maven-parent
-Requires:       maven-plugins-pom
-Requires:       mojo-parent
-Requires:       objectweb-pom
-Requires:       plexus-components-pom
-Requires:       plexus-pom
-Requires:       sonatype-oss-parent
-Requires:       weld-parent
 # Common Maven plugins required by almost every build. It wouldn't make
 # sense to explicitly require them in every package built with Maven.
 Requires:       maven-assembly-plugin
 Requires:       maven-compiler-plugin
-Requires:       maven-enforcer-plugin
 Requires:       maven-jar-plugin
 Requires:       maven-javadoc-plugin
 Requires:       maven-resources-plugin
@@ -148,6 +135,7 @@ Requires:       maven-surefire-provider-testng
 %description -n maven-local
 This package provides macros and scripts to support packaging Maven artifacts.
 
+%if %{with gradle}
 %package -n gradle-local
 Group: Development/Java
 Summary:        Local mode for Gradle
@@ -159,6 +147,7 @@ Requires:       xmvn-connector-gradle >= 2
 %description -n gradle-local
 This package implements local mode for Gradle, which allows artifact
 resolution using XMvn resolver.
+%endif
 
 %package -n ivy-local
 Group: Development/Java
@@ -183,13 +172,6 @@ Obsoletes:      python-javapackages < %{version}-%{release}
 Module for handling, querying and manipulating of various files for Java
 packaging in Linux distributions
 
-%package doc
-Group: Development/Java
-Summary:        Guide for Java packaging
-
-%description doc
-User guide for Java packaging and using utilities from javapackages-tools
-
 %package -n javapackages-local
 Group: Development/Java
 Summary:        Non-essential macros and scripts for Java packaging support
@@ -204,16 +186,15 @@ This package provides non-essential macros and scripts to support Java packaging
 
 %prep
 %setup -q -n javapackages-%{version}
+
 %patch0 -p1
 %patch1 -p1
-
-sed -i '/fedora-review/d' install
+%patch2 -p1
 %patch33 -p1
 %patch34 -p1
 %patch35 -p1
 %patch36 -p1
 %patch37 -p1
-%patch38 -p2
 
 # alt specific shabang
 sed -i -e 1,1s,/bin/bash,/bin/sh, java-utils/java-wrapper bin/*
@@ -230,6 +211,12 @@ sed -e 's/.[17]$/&.*/' -e 's/.py$/&*/' -i files-*
 pushd python
   %{__python3} setup.py install -O1 --skip-build --root %{buildroot}
 popd
+
+%if %{without gradle}
+rm -rf %{buildroot}%{_bindir}/gradle-local
+rm -rf %{buildroot}%{_datadir}/gradle-local
+rm -rf %{buildroot}%{_mandir}/man7/gradle_build.7
+%endif
 
 install -m755 -D %{SOURCE46} %buildroot/usr/lib/rpm/maven.prov.files
 install -m755 -D %{SOURCE46} %buildroot/usr/lib/rpm/maven.req.files
@@ -281,20 +268,6 @@ popd
 %exclude %_datadir/java-utils/__pycache__/pom_editor.*
 %exclude %_datadir/java-utils/__pycache__/request-artifact.*
 
-
-%files -n maven-local -f files-maven
-
-%files -n gradle-local -f files-gradle
-
-%files -n ivy-local -f files-ivy
-
-%files -n python3-module-javapackages
-%doc LICENSE
-%{python3_sitelibdir_noarch}/javapackages*
-
-%files doc -f files-doc
-%doc LICENSE
-
 %files -n rpm-macros-java
 %_rpmmacrosdir/javapackages-fjava
 %_rpmmacrosdir/javapackages-jpackage
@@ -313,7 +286,23 @@ popd
 %_datadir/java-utils/__pycache__/request-artifact.*
 
 
+
+%files -n maven-local -f files-maven
+
+%if %{with gradle}
+%files -n gradle-local -f files-gradle
+%endif
+
+%files -n ivy-local -f files-ivy
+
+%files -n python3-module-javapackages
+%doc LICENSE
+%{python3_sitelibdir_noarch}/javapackages*
+
 %changelog
+* Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.7.0-alt1_15jpp8
+- new jpp release
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt11_15jpp8
 - fixed interpackage dependencies
 
