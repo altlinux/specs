@@ -12,7 +12,7 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.28
+Version: 2.4.29
 Release: alt1%ubt
 Epoch: 1
 
@@ -1513,6 +1513,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Fri Oct 27 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.29-alt1%ubt
+- new version 2.4.29
+
 * Tue Oct 10 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.28-alt1%ubt
 - new version 2.4.28
 - disabled NameVirtualHost directive in ports_all.conf (closes: #32269)
