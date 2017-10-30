@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/influxdb
-%global commit 742b9cb3d74ff1be4aff45d69ee7c9ba66c02565
+%global commit 2d474a3089bcfce6b472779be9470a1f0ef3d5e4
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		influxdb
-Version:	1.3.4
+Version:	1.3.7
 Release:	alt1%ubt
 Summary:	Distributed time-series database
 
@@ -122,6 +122,12 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Mon Oct 30 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.7-alt1%ubt
+- 1.3.7
+
+* Fri Oct 13 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.6-alt1%ubt
+- 1.3.6
+
 * Mon Aug 28 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.4-alt1%ubt
 - 1.3.4
 
