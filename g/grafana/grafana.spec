@@ -1,5 +1,5 @@
 %global import_path github.com/grafana/grafana
-%global commit ec2b0fe6bfb1f11f1a509f4a614ce796217ab4f7
+%global commit 989bf2067c199ffd2aa38a29f2c4e12cea689925
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -10,7 +10,7 @@
 
 
 Name:		grafana
-Version:	4.5.2
+Version:	4.6.0
 Release:	alt1%ubt
 Summary:	Metrics dashboard and graph editor
 
@@ -147,6 +147,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Mon Oct 30 2017 Alexey Shabalin <shaba@altlinux.ru> 4.6.0-alt1%ubt
+- 4.6.0
+
 * Fri Oct 13 2017 Alexey Shabalin <shaba@altlinux.ru> 4.5.2-alt1%ubt
 - 4.5.2
 
