@@ -1,11 +1,14 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %def_enable docs
 %def_enable tests
 
 %define _libexec %prefix/libexec
 
 Name: gnuradio
-Version: 3.7.12.0
-Release: alt3
+Version: 3.7.13.4
+Release: alt1
 Summary: Software defined radio framework
 License: GPLv2+
 Group: Engineering
@@ -14,7 +17,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 Patch: fix-gnuradio-qtgui.pc.patch
-Patch1: gnuradio-3.7.12.0-upstream-boost-1.67-compat.patch
+#Patch1: gnuradio-3.7.12.0-upstream-boost-1.67-compat.patch
 
 BuildPreReq: cmake rpm-macros-cmake rpm-build-python rpm-build-gir
 BuildRequires: gcc-c++
@@ -23,7 +26,7 @@ BuildRequires: boost-interprocess-devel
 BuildRequires: boost-program_options-devel
 BuildRequires: libgsm-devel
 BuildRequires: libqt4-devel
-BuildRequires: libqwt-devel
+BuildRequires: libqwt6-devel
 BuildRequires: libzeromq-cpp-devel
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(codec2)
@@ -109,7 +112,7 @@ GNU Radio Headers.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
+#patch1 -p1
 
 %build
 %cmake  -DENABLE_INTERNAL_VOLK=OFF \
@@ -193,6 +196,10 @@ rm -f %buildroot%_datadir/%name/examples/fcd/fcd_nfm_rx
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Dec 29 2018 Anton Midyukov <antohami@altlinux.org> 3.7.13.4-alt1
+- new version 3.7.13.4
+- build with libqwt6
+
 * Thu Aug 09 2018 Anton Farygin <rider@altlinux.ru> 3.7.12.0-alt3
 - rebuilt with libcodec2-0.8.1
 

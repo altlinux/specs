@@ -3,8 +3,8 @@
 %define modulename rtlsdr
 
 Name: python-module-%modulename
-Version: 0.2.7
-Release: alt2
+Version: 0.2.91
+Release: alt1
 
 Summary: A Python wrapper for librtlsdr (a driver for Realtek RTL2832U based SDR's)
 License: GPLv3
@@ -13,8 +13,15 @@ URL: https://github.com/roger-/pyrtlsdr
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
+
+
 BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools python-module-pypandoc
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-m2r
+BuildRequires: python-module-mistune
+BuildRequires: python-module-docutils
 
 BuildArch: noarch
 
@@ -30,7 +37,10 @@ Summary: %summary
 Group: Development/Python3
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-pypandoc
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-m2r
+BuildRequires: python3-module-mistune
+BuildRequires: python3-module-docutils
 
 %description -n python3-module-%modulename
 %summary
@@ -81,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 28 2018 Anton Midyukov <antohami@altlinux.org> 0.2.91-alt1
+- new version 0.2.91
+
 * Mon Mar 26 2018 Anton Midyukov <antohami@altlinux.org> 0.2.7-alt2
 - Fix buildrequires
 

@@ -1,3 +1,6 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %_var
 
@@ -13,8 +16,8 @@
 
 Name: uhd
 Url: http://code.ettus.com/redmine/ettus/projects/uhd/wiki
-Version: 3.11.0.0
-Release: alt5
+Version: 3.13.0.2
+Release: alt1
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -23,8 +26,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 Source1: %name-limits.conf
 Source2: http://files.ettus.com/binaries/images/uhd-images_003.010.002.000-release.tar.xz
-
-Patch1: uhd-3.11.0.0-alt-boost-compat.patch
+Patch: uhd-3.13.0.2-alt-boost-compat.patch
 
 BuildRequires: ctest cmake
 BuildRequires: boost-interprocess-devel gcc-c++ boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-program_options-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel libusb-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel libgps-devel libudev-devel
@@ -74,7 +76,7 @@ Tools that are useful for working with and/or debugging USRP device.
 
 %prep
 %setup
-%patch1 -p1
+%patch -p1
 mkdir -p images/images
 tar -xJf %SOURCE2 -C images/images --strip-components=4
 rm -f images/images/{LICENSE.txt,*.tag}
@@ -129,15 +131,6 @@ cp -r images/images/* %buildroot%_datadir/uhd/images
 # remove win stuff
 rm -rf %buildroot%_datadir/uhd/images/winusb_driver
 
-# convert hardlinks to symlinks (to not package the file twice)
-pushd %buildroot%_bindir
-for f in usrp_n2xx_simple_net_burner usrp_x3xx_fpga_burner;
-do
-  unlink $f
-  ln -s ../..%_libexecdir/uhd/$f
-done
-popd
-
 # tools
 install -Dpm 0755 tools/usrp_x3xx_fpga_jtag_programmer.sh %buildroot%_bindir/usrp_x3xx_fpga_jtag_programmer.sh
 install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
@@ -175,6 +168,9 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %_bindir/chdr_log
 
 %changelog
+* Sat Dec 29 2018 Anton Midyukov <antohami@altlinux.org> 3.13.0.2-alt1
+- New version 3.13.0.2
+
 * Fri Aug 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.11.0.0-alt5
 - NMU: updated build dependencies.
 
