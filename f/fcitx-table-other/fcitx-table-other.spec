@@ -2,19 +2,20 @@
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-Name: fcitx-table-other
-Version: 0.2.2
-Release: alt2
-Summary: Other tables for Fcitx
-Packager: Ilya Mashkin <oddity@altlinux.ru>
-Group: System/Libraries
-License: GPLv3+
-Url: https://fcitx-im.org/wiki/Fcitx
-Source0: http://download.fcitx-im.org/fcitx-table-other/%name-%version.tar.xz
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:		fcitx-table-other
+Version:	0.2.4
+Release:	alt1_1
+Summary:	Other tables for Fcitx
+Group:		System/Libraries
+License:	GPLv3+
+URL:		https://fcitx-im.org/wiki/Fcitx
+Source0:	http://download.fcitx-im.org/fcitx-table-other/%{name}-%{version}.tar.xz
 
-BuildRequires: ctest cmake fcitx-devel gettext intltool libtool fcitx
-BuildArch: noarch
-Requires: fcitx
+BuildRequires:	ctest cmake, fcitx-devel gettext gettext-tools, intltool, libtool, fcitx
+BuildArch:	noarch
+Requires:	fcitx
 Source44: import.info
 
 %description
@@ -22,31 +23,38 @@ Fcitx-table-other is a fork of ibus-table-others for Fcitx,
 provides additional tables.
 
 %prep
-%setup -n %name-%version
+%setup -q -n %{name}-%{version}
+
 
 %build
 mkdir -pv build
 pushd build
-%fedora_cmake ..
+%{fedora_cmake} ..
+mkdir tables/{am,ar,ml,ru,th,uk,vi,ta}
 make VERBOSE=1
+popd
 
 %install
 pushd build
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 popd
 
-%find_lang %name
+%find_lang %{name}
 
-%files -f %name.lang
+%files -f %{name}.lang
 %doc AUTHORS COPYING README
-%_datadir/fcitx/table/*.mb
-%_datadir/fcitx/table/*.conf
-%_datadir/fcitx/imicon/*.png
-%_datadir/icons/hicolor/64x64/apps/*.png
-%_datadir/icons/hicolor/48x48/apps/*.png
-%_datadir/icons/hicolor/32x32/apps/*.png
+%{_datadir}/fcitx/table/*.mb
+%{_datadir}/fcitx/table/*.conf
+%{_datadir}/fcitx/imicon/*.png
+%{_datadir}/icons/hicolor/64x64/apps/*.png
+%{_datadir}/icons/hicolor/48x48/apps/*.png
+%{_datadir}/icons/hicolor/32x32/apps/*.png
+
 
 %changelog
+* Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.4-alt1_1
+- update to new version by fcimport
+
 * Fri Sep 05 2014 Ilya Mashkin <oddity@altlinux.ru> 0.2.2-alt2
 - build for Sisyphus
 
