@@ -4,18 +4,18 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: perl(IO/Socket.pm)
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 25
+%define fedora 26
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name grizzly
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 2.3.24
 %global namedreltag %{nil}
 %global _version %(echo %version | tr . _)
@@ -31,7 +31,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          grizzly
 Version:       2.3.24
-Release:       alt1_2jpp8
+Release:       alt1_4jpp8
 Summary:       Java NIO Server Framework
 # see Grizzly_THIRDPARTYLICENSEREADME.txt
 License:       (CDDL or GPLv2 with exceptions) and BSD and ASL 2.0 and Public Domain
@@ -213,6 +213,9 @@ done
 %doc LICENSE.txt Grizzly_THIRDPARTYLICENSEREADME.txt
 
 %changelog
+* Tue Oct 31 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.3.24-alt1_4jpp8
+- new jpp release
+
 * Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.3.24-alt1_2jpp8
 - new version
 
