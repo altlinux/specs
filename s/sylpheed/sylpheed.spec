@@ -1,6 +1,6 @@
 Name: sylpheed
 Version: 3.6.0
-Release: alt0.1
+Release: alt0.2
 
 Summary: a GTK+ based, lightweight, and fast e-mail client
 License: GPLv2+
@@ -33,6 +33,8 @@ Patch11: %name-2.2.5-alt-gtkspell-enchant.patch
 Patch21: %name-3.1.0-alt-desktop.patch
 Patch22: %name-3.1.0-alt-icons.patch
 Patch23: %name-3.1.2-alt-glib2-2.32.0.patch
+Patch24: %name-3.6.0-alt-certdir.patch
+
 
 # old patches - not applied, should be obsolete now
 Patch1000: %name-0.9.3cvs9-alt-wm_race.patch
@@ -105,6 +107,8 @@ This package contains development files.
 #patch21 -p2
 %patch22 -p2
 #patch23 -p2
+%patch24 -p2
+
 
 cp -a %SOURCE5 README.actions
 bzip2 -9fk ChangeLog
@@ -154,6 +158,8 @@ autoconf
 %_includedir/sylpheed/
 
 %changelog
+* Tue Oct 31 2017 Ilya Mashkin <oddity@altlinux.ru> 3.6.0-alt0.2
+- Fix bug 34098: wrong search path for root certificates.  Thanks to Andrew Savchenko
 
 * Wed Oct 25 2017 Ilya Mashkin <oddity@altlinux.ru> 3.6.0-alt0.1
 - 3.6.0
