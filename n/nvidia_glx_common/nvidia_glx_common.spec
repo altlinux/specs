@@ -13,8 +13,8 @@
 %define nv_version 384
 %define nv_release 90
 %define nv_minor %nil
-%define pkg_rel alt182%ubt
-%define set_gl_nvidia_ver 0.20.1
+%define pkg_rel alt183%ubt
+%define set_gl_nvidia_ver 0.20.2
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -273,6 +273,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Mon Oct 30 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt183%ubt
+- fix create symlinks to current nvidia libraries directory
+
 * Mon Oct 30 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt182%ubt
 - fix symlinks (ALT#34080)
 
