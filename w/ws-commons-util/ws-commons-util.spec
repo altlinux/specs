@@ -3,12 +3,13 @@ Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           ws-commons-util
 Version:        1.0.2
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Summary:        Common utilities from the Apache Web Services Project
 
 License:        ASL 2.0
@@ -22,7 +23,6 @@ BuildArch:      noarch
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(xml-apis:xml-apis)
 Source44: import.info
 
 %description
@@ -62,6 +62,12 @@ BuildArch: noarch
   </execution>
 </executions>'
 
+# This dep is supplied by the JRE
+%pom_remove_dep "xml-apis:xml-apis"
+
+# Avoid unnecessary runtime dependency on junit, used for tests only
+%pom_xpath_inject 'pom:dependency[pom:artifactId="junit"]' "<scope>test</scope>"
+
 %build
 %mvn_build
 
@@ -75,6 +81,9 @@ BuildArch: noarch
 %doc LICENSE.txt
 
 %changelog
+* Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_5jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_3jpp8
 - new fc release
 
