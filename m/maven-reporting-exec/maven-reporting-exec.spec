@@ -3,12 +3,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-reporting-exec
-Version:        1.2
-Release:        alt1_4jpp8
+Version:        1.3
+Release:        alt1_2jpp8
 BuildArch:      noarch
 Summary:        Classes to manage report plugin executions with Maven 3
 
@@ -16,38 +17,26 @@ License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-reporting-exec/
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/reporting/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
+Patch0001:      0001-Port-to-Eclipse-Aether-and-Eclipse-Sisu.patch
+
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.google.guava:guava)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
-BuildRequires:  mvn(org.apache.maven:maven-aether-provider)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-embedder)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-settings)
 BuildRequires:  mvn(org.apache.maven:maven-settings-builder)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
-BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
-BuildRequires:  mvn(org.apache.maven.wagon:wagon-http-lightweight)
-BuildRequires:  mvn(org.apache.velocity:velocity)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-velocity)
 BuildRequires:  mvn(org.eclipse.aether:aether-api)
-BuildRequires:  mvn(org.eclipse.aether:aether-transport-wagon)
 BuildRequires:  mvn(org.eclipse.aether:aether-util)
 BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
-BuildRequires:  mvn(velocity:velocity)
-
-Patch0001:      0001-Port-to-Maven-3.1.0-Eclipse-Aether-and-Eclipse-Sisu.patch
-
 Source44: import.info
+
 
 %description
 Classes to manage report plugin executions with Maven 3. Contains classes for
@@ -96,6 +85,9 @@ sed -i 's/\r//g' pom.xml src/main/java/org/apache/maven/reporting/exec/*
 
 
 %changelog
+* Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_2jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_4jpp8
 - new fc release
 
