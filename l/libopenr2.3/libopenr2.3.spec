@@ -1,13 +1,13 @@
 Name: libopenr2.3
-Version: 1.3.0
-Release: alt4
+Version: 1.3.3
+Release: alt1.a0bf085
 
 Summary: MFC/R2 call setup library
 License: LGPL
 Group: System/Libraries
 Url: http://www.libopenr2.org/
-
-Source: %name-%version-%release.tar
+# https://github.com/moises-silva/openr2
+Source: %name-%version.tar
 
 BuildRequires: dahdi-linux-headers
 
@@ -74,6 +74,9 @@ This package contains OpenR2 utilities.
 %_man8dir/r2test.8*
 
 %changelog
+* Mon Oct 30 2017 Anton Farygin <rider@altlinux.ru> 1.3.3-alt1.a0bf085
+- new version
+
 * Wed Oct 07 2015 Anton Farygin <rider@altlinux.ru> 1.3.0-alt4
 - fixed build
 
