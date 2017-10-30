@@ -2,19 +2,19 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 25
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jboss-modules
+%define fedora 26
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.5.2
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-modules
 Version:          1.5.2
-Release:          alt1_1jpp8
+Release:          alt1_2jpp8
 Summary:          A Modular Classloading System
 # XPP3 License: src/main/java/org/jboss/modules/xml/MXParser.java
 #  src/main/java/org/jboss/modules/xml/XmlPullParser.java
@@ -30,7 +30,7 @@ BuildRequires:    mvn(junit:junit)
 BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
 BuildRequires:    mvn(org.jboss.shrinkwrap:shrinkwrap-impl-base)
 %if 0%{?fedora}
-BuildRequires: graphviz libgraphviz
+BuildRequires:    graphviz libgraphviz
 BuildRequires:    mvn(jdepend:jdepend)
 BuildRequires:    mvn(org.jboss.apiviz:apiviz)
 %endif
@@ -75,10 +75,14 @@ rm src/test/java/org/jboss/modules/MavenResourceTest.java \
 %doc README.md
 %doc LICENSE.txt XPP3-LICENSE.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt XPP3-LICENSE.txt
+#%files javadoc -f .mfiles-javadoc
+#%doc LICENSE.txt XPP3-LICENSE.txt
 
 %changelog
+* Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_2jpp8
+- new jpp release
+- removed javadoc due to non-identical noarch problem
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_1jpp8
 - new version
 
