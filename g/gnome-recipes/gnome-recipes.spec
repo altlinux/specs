@@ -1,8 +1,8 @@
-%define ver_major 1.4
+%define ver_major 2.0
 %define xdg_name org.gnome.Recipes
 
 Name: gnome-recipes
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME likes to cook
@@ -23,6 +23,7 @@ BuildRequires: meson git-core libappstream-glib-devel rpm-build-xdg yelp-tools
 BuildRequires: libgtk+3-devel >= %gtk_ver libjson-glib-devel
 BuildRequires: libgspell-devel libgnome-autoar-devel libsoup-devel
 BuildRequires: libcanberra-gtk3-devel
+BuildRequires: libgnome-online-accounts-devel librest-devel
 BuildRequires: vala-tools gobject-introspection-devel
 
 %description
@@ -75,6 +76,12 @@ This package contains common noarch files needed for Recipes.
 
 
 %changelog
+* Mon Oct 30 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
+* Thu Jul 27 2017 Yuri N. Sedunov <aris@altlinux.org> 1.6.2-alt1
+- 1.6.2
+
 * Thu Jun 22 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4.6-alt1
 - 1.4.6
 
