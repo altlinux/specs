@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		telegraf
-Version:	1.4.2
+Version:	1.4.3
 Release:	alt1%ubt
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
@@ -121,6 +121,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Mon Oct 30 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.3-alt1%ubt
+- 1.4.3
+
 * Thu Oct 12 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.2-alt1%ubt
 - 1.4.2
 
