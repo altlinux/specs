@@ -2,7 +2,7 @@
 %define use_syslog 1
 Name: bladerf
 Version: 1.8.0
-Release: alt1
+Release: alt2
 Summary: SDR radio receiver
 License: GPL-2.0
 Group: Communications
@@ -26,31 +26,16 @@ BuildRequires: help2man
 BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(udev)
 
-Requires: lib%name = %version-%release
+Provides: lib%name = %version-%release
+Provides: %name-udev = %version-%release
 
 %description
 The software for bladeRF USB 3.0 Superspeed Software Defined Radio.
 
-%package -n lib%name
-Summary: Library for bladeRF
-Group: Development/Other
-Requires: %name-udev
-
-%description -n lib%name
-Library for bladeRF, SDR transceiver.
-
-%package udev
-Summary: Udev rules for bladeRF
-Group: Communications
-Buildarch: noarch
-
-%description udev
-Udev rules for bladeRF
-
 %package -n lib%name-devel
 Summary: Development files for libbladeRF
 Group: Development/Other
-Requires: lib%name = %version
+Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
 Libraries and header files for developing applications that want to make
@@ -58,7 +43,7 @@ use of libbladerf.
 
 %prep
 %setup
-%patch0 -p1
+%patch -p1
 %patch1 -p1
 
 %build
@@ -80,19 +65,15 @@ pushd host
 %cmakeinstall_std
 popd
 
-%pre udev
+%pre
 getent group %bladerf_group >/dev/null || groupadd -r %bladerf_group
 
 %files
 %doc README.md COPYING CONTRIBUTORS
 %_bindir/*
-%_man1dir/*
-
-%files udev
-%_udevrulesdir/88-nuand.rules
-
-%files -n lib%name
 %_libdir/libbladeRF.so.*
+%_udevrulesdir/88-nuand.rules
+%_man1dir/*
 
 %files -n lib%name-devel
 %_libdir/libbladeRF.so
@@ -100,5 +81,8 @@ getent group %bladerf_group >/dev/null || groupadd -r %bladerf_group
 %_pkgconfigdir/libbladeRF.pc
 
 %changelog
+* Mon Oct 30 2017 Anton Midyukov <antohami@altlinux.org> 1.8.0-alt2
+- Merge packages libbladerf and bladerf-udev with bladerf.
+
 * Wed Oct 18 2017 Anton Midyukov <antohami@altlinux.org> 1.8.0-alt1
 - Initial build for ALT Sisyphus.
