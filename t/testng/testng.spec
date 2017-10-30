@@ -5,18 +5,23 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-
-%global group_id  org.testng
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%bcond_without groovy
 
 Name:           testng
-Version:        6.9.11
-Release:        alt1_1jpp8
+Version:        6.9.12
+Release:        alt1_4jpp8
 Summary:        Java-based testing framework
-# org/testng/remote/strprotocol/AbstractRemoteTestRunnerClient.java is CPL
-License:        ASL 2.0 and CPL
+License:        ASL 2.0
 URL:            http://testng.org/
 Source0:        https://github.com/cbeust/testng/archive/%{version}.tar.gz
 
@@ -28,11 +33,16 @@ BuildRequires:  mvn(com.google.inject:guice::no_aop:)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.assertj:assertj-core)
 BuildRequires:  mvn(org.beanshell:bsh)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires:  mvn(org.yaml:snakeyaml)
+%if %{with groovy}
+BuildRequires:  mvn(org.assertj:assertj-core)
+BuildRequires:  mvn(org.codehaus.gmavenplus:gmavenplus-plugin)
+BuildRequires:  mvn(org.codehaus.groovy:groovy-all)
+BuildRequires:  mvn(org.spockframework:spock-core)
+%endif
 Source44: import.info
 
 %description
@@ -61,6 +71,17 @@ find -name *.class -delete
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :maven-javadoc-plugin
 
+# missing test deps
+%if %{with groovy}
+%pom_add_plugin "org.codehaus.gmavenplus:gmavenplus-plugin" pom.xml \
+  "<executions><execution><goals><goal>addTestSources</goal><goal>testGenerateStubs</goal><goal>testCompile</goal><goal>removeTestStubs</goal></goals></execution></executions>"
+%pom_add_dep "org.spockframework:spock-core::test"
+%pom_add_dep "org.codehaus.groovy:groovy-all::test"
+%endif
+
+# avoid SNAPSHOT in version number
+sed -i -e '/<version>/s/-SNAPSHOT//' pom.xml
+
 # plugins not in Fedora
 %pom_remove_plugin com.coderplus.maven.plugins:copy-rename-maven-plugin
 sed -i -e 's/VersionTemplateJava/Version.java/' pom.xml
@@ -74,8 +95,11 @@ cp -p ./src/main/java/*.dtd.html ./src/main/resources/.
 %mvn_alias : :::jdk15:
 
 %build
-
+%if %{with groovy}
 %mvn_build -- -Dmaven.local.debug=true
+%else
+%mvn_build -f -- -Dmaven.local.debug=true
+%endif
 
 %install
 %mvn_install
@@ -88,6 +112,9 @@ cp -p ./src/main/java/*.dtd.html ./src/main/resources/.
 %doc LICENSE.txt
 
 %changelog
+* Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 0:6.9.12-alt1_4jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:6.9.11-alt1_1jpp8
 - new version
 
