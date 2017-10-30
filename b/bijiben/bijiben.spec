@@ -6,7 +6,7 @@
 %def_enable zeitgeist
 
 Name: bijiben
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Note editor for GNOME
@@ -40,8 +40,6 @@ desktop integration.
 
 %prep
 %setup
-# try to build against tracker 2.0
-subst 's/\(tracker-sparql-\)1.0/\12.0/g' configure.ac
 
 %build
 %autoreconf
@@ -49,7 +47,7 @@ subst 's/\(tracker-sparql-\)1.0/\12.0/g' configure.ac
 	--disable-static \
 	--disable-schemas-compile \
 	--disable-update-mimedb
-%make_build V=1
+%make_build
 
 %install
 %makeinstall_std
@@ -68,9 +66,13 @@ subst 's/\(tracker-sparql-\)1.0/\12.0/g' configure.ac
 %_xdgmimedir/packages/%xdg_name.xml
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc README AUTHORS NEWS
 
 %changelog
+* Mon Oct 30 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
+- 3.26.2
+
 * Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 
