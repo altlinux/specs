@@ -1,17 +1,18 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global short_name      commons-parent
 
 Name:             apache-%{short_name}
-Version:          40
-Release:          alt1_2jpp8
+Version:          42
+Release:          alt1_3jpp8
 Summary:          Apache Commons Parent Pom
-Group:            Development/Other
 License:          ASL 2.0
 URL:              http://svn.apache.org/repos/asf/commons/proper/%{short_name}/tags/%{short_name}-%{version}/
 
@@ -26,12 +27,9 @@ BuildRequires:    mvn(org.apache:apache:pom:)
 BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-assembly-plugin)
-BuildRequires:    mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires:    mvn(org.apache.rat:apache-rat-plugin)
 BuildRequires:    mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:    mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+
 Requires:         mvn(org.codehaus.mojo:build-helper-maven-plugin)
-Requires:         mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 Source44: import.info
 
 %description
@@ -44,9 +42,16 @@ The Project Object Model files for the apache-commons packages.
 %pom_remove_plugin org.apache.commons:commons-build-plugin
 %pom_remove_plugin org.apache.maven.plugins:maven-scm-publish-plugin
 
+# Plugins useless in package builds
+%pom_remove_plugin :apache-rat-plugin
+%pom_remove_plugin :buildnumber-maven-plugin
+%pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :maven-site-plugin
 
-%pom_xpath_remove "pom:profile[pom:id='animal-sniffer']"
+# Remove profiles for plugins that are useless in package builds
+for profile in animal-sniffer japicmp jacoco cobertura clirr; do
+    %pom_xpath_remove "pom:profile[pom:id='$profile']"
+done
 
 %build
 %mvn_build
@@ -58,6 +63,9 @@ The Project Object Model files for the apache-commons packages.
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
 
 %changelog
+* Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 0:42-alt1_3jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:40-alt1_2jpp8
 - new version
 
