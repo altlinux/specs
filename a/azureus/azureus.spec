@@ -11,8 +11,8 @@ BuildRequires: jpackage-generic-compat
 %global		_newname Vuze
 
 Name:		azureus
-Version:	5.7.4.0
-Release:	alt1_3jpp8
+Version:	5.7.5.0
+Release:	alt1_2jpp8
 Summary:	A BitTorrent Client
 Group:		Networking/WWW
 
@@ -22,7 +22,7 @@ License:	GPLv2 with exceptions
 
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5740_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5750_source.zip
 
 Source2:	Azureus.desktop
 Source3:	azureus.applications
@@ -33,8 +33,6 @@ Source4:	build.xml
 Patch0:		azureus-remove-manifest-classpath.patch
 Patch1:		azureus-no-shared-plugins.patch
 Patch2:	azureus-SecureMessageServiceClientHelper-bcprov.patch
-
-Patch4:	azureus-4.0.0.4-stupid-invalid-characters.diff
 
 Patch5:	azureus-4.2.0.4-java5.patch
 
@@ -90,8 +88,6 @@ rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
 rm org/gudy/azureus2/ui/swt/osx/Start.java
 rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 
-%patch4  -p1 -b stupid-invalid-characters
-
 %patch5 -p1 -b .java5
 
 %patch6 -p1 -b .no-bundled-apache-commons
@@ -113,6 +109,7 @@ chmod 644 *.txt
 #remove bundled libs
 rm -fR org/apache
 rm -fR org/bouncycastle
+rm -fR org/gudy/bouncycastle
 rm -fR org/json
 #rm -fR org/pf
 
@@ -162,6 +159,9 @@ sed -i 's,uname -i,uname -m,' %buildroot%_bindir/%name
 %{_datadir}/azureus
 
 %changelog
+* Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 5.7.5.0-alt1_2jpp8
+- new jpp release
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 5.7.4.0-alt1_3jpp8
 - new jpp release
 
