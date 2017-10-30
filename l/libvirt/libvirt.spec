@@ -106,7 +106,7 @@
 
 
 Name: libvirt
-Version: 3.7.0
+Version: 3.8.0
 Release: alt1%ubt
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -1010,6 +1010,9 @@ fi
 %dir %attr(0711, root, root) %_localstatedir/lib/libvirt/filesystems
 %dir %attr(0711, root, root) %_localstatedir/lib/libvirt/boot
 %dir %attr(0700, root, root) %_localstatedir/cache/libvirt
+%dir %_libdir/libvirt
+%dir %_libdir/libvirt/connection-driver
+%dir %_libdir/libvirt/lock-driver
 
 %if_with polkit
 %_datadir/polkit-1/actions/org.libvirt.unix.policy
@@ -1253,6 +1256,10 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Mon Oct 30 2017 Alexey Shabalin <shaba@altlinux.ru> 3.8.0-alt1%ubt
+- 3.8.0
+- fixed CVE-2017-1000256
+
 * Mon Sep 04 2017 Alexey Shabalin <shaba@altlinux.ru> 3.7.0-alt1%ubt
 - 3.7.0
 
