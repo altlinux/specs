@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/chronograf
-%global commit 9172f1bd1fcbc94bc55e360533a7bdc0c17f2844
+%global commit 2eca970c8a2158ca89575c28e673c8baa6886767
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		chronograf
-Version:	1.3.7.0
+Version:	1.3.10.0
 Release:	alt1%ubt
 Summary:	Open source framework for processing, monitoring, and alerting on time series data
 
@@ -125,6 +125,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Mon Oct 30 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.10.0-alt1%ubt
+- 1.3.10.0
+
 * Mon Aug 28 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.7.0-alt1%ubt
 - 1.3.7.0
 
