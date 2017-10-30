@@ -3,12 +3,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-shade-plugin
-Version:        2.4.3
-Release:        alt1_1jpp8
+Version:        3.0.0
+Release:        alt1_2jpp8
 Summary:        This plugin provides the capability to package the artifact in an uber-jar
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/%{name}
@@ -21,14 +22,13 @@ Patch0:         0001-Port-to-maven-dependency-tree-3.0.patch
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.guava:guava)
 BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer)
 BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
@@ -37,8 +37,8 @@ BuildRequires:  mvn(org.jdom:jdom)
 BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.ow2.asm:asm-commons)
 BuildRequires:  mvn(org.vafer:jdependency)
-BuildRequires:  mvn(xmlunit:xmlunit)
 Source44: import.info
+
 
 %description
 This plugin provides the capability to package the artifact in an
@@ -74,6 +74,9 @@ ln -s $(build-classpath plexus/utils) src/test/jars/plexus-utils-1.4.1.jar
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.3-alt1_1jpp8
 - new version
 
