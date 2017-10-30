@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.22
+%define ver_major 3.26
 %define xdg_name org.gnome.Screenshot
 
 Name: gnome-screenshot
@@ -15,6 +15,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 %define glib_ver 2.36
 
+BuildRequires(pre): meson
 BuildPreReq: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel libcanberra-gtk3-devel libX11-devel libXext-devel
 BuildRequires: rpm-build-gnome intltool libappstream-glib-devel
@@ -26,11 +27,11 @@ GNOME Screenshot Tool makes screenshots from desktop.
 %setup
 
 %build
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang %name
 
@@ -40,11 +41,14 @@ GNOME Screenshot Tool makes screenshots from desktop.
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/GConf/gsettings/%name.convert
 %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %_man1dir/%name.1.*
-%doc NEWS
+%doc NEWS README*
 
 %changelog
+* Mon Oct 30 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
