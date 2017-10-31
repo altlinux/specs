@@ -1,10 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-mirror
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
-
-BuildArch: noarch
 
 Source:%name-%version.tar
 
@@ -14,16 +12,20 @@ Packager: Stanislav Ievlev <inger@altlinux.org>
 
 Group: System/Configuration/Other
 
-Requires: alterator >= 3.9-alt2 alterator-sh-functions >= 0.10-alt5 libshell
+Requires: alterator >= 5.0 alterator-sh-functions >= 0.10-alt5 libshell
 Requires: sisyphus-mirror >= 0.8.3
 Requires: alterator-l10n >= 2.4-alt9 altlinux-repos
 
-BuildPreReq: alterator >= 3.5-alt1
+BuildPreReq: alterator >= 5.0
+BuildRequires: alterator-fbi
+BuildRequires: guile22-devel
 
 Conflicts: alterator-fbi < 5.17-alt4
 Conflicts: apt-conf-sisyphus < 5.0-alt3
 Conflicts: apt-conf-desktop < 5.0-alt2
 Conflicts: apt-conf-branch < 5.0-alt2
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 local mirrors setup and maintainance
@@ -46,10 +48,16 @@ install -Dpm640 %name.logrotate %buildroot%_sysconfdir/logrotate.d/%name
 %_sbindir/*
 %_datadir/alterator/applications/*
 %_datadir/alterator/ui/*
+%_alterator_libdir/ui/*
 %_alterator_backend3dir/*
 %attr(700,root,adm) %_logdir/%name
 
 %changelog
+* Tue Oct 31 2017 Mikhail Efremov <sem@altlinux.org> 0.4.4-alt1
+- Use _unpackaged_files_terminate_build.
+- Changes for guile22.
+- Fix size calculation regexp.
+
 * Mon Jul 27 2015 Aleksey Avdeev <solo@altlinux.org> 0.4.3-alt1
 - fix support hardlink between repositories (ALT #31162)
 
