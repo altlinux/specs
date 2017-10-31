@@ -7,8 +7,9 @@
 
 Name: calligra
 Version: 3.0.1
-Release: alt1
+Release: alt2%ubt
 Epoch: 0
+%K5init no_altplace
 %define libname lib%name
 
 Group: Office
@@ -19,30 +20,30 @@ License: GPLv2+ / LGPLv2+
 Provides: koffice = %koffice_ver
 Obsoletes: koffice < %koffice_ver
 
-Requires: %name-words = %EVR
-Requires: %name-sheets = %EVR
-Requires: %name-stage = %EVR
-Requires: %name-karbon = %EVR
-Requires: %name-plan = %EVR
-Requires: %name-okular-generators = %EVR
+Requires: %name-words
+Requires: %name-sheets
+Requires: %name-stage
+Requires: %name-karbon
+Requires: %name-plan
+Requires: %name-okular-generators
 
 Source: http://download.kde.org/stable/calligra/%version/calligra-%version.tar
 # ALT
 Patch103: alt-disable-products.patch
 
-# Automatically added by buildreq on Fri Nov 02 2012 (-bi)
-# optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static ilmbase-devel kde4libs kde4libs-devel kde4pimlibs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libgst-plugins libjpeg-devel libpng-devel libpoppler-devel libpoppler4-qt4 libpq-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-svg libqt4-test libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libtiff-devel libxkbfile-devel openssh-common phonon-devel pkg-config python-base rpm-build-gir ruby shared-desktop-ontologies-devel shared-mime-info soprano-backend-redland soprano-backend-virtuoso xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
-#BuildRequires: attica-devel boost-devel-headers cups-filters cvs eigen2 gcc-c++ git-core glib2-devel jdkgcj kde4-okular-devel kde4edu-devel kde4pimlibs-devel libexiv2-devel libfftw3-devel libfreetds-devel libglew-devel libgsl-devel libicu-devel libkdcraw4-devel liblcms2-devel libmysqlclient-devel libopenjpeg-devel libpoppler-qt4-devel libqca2-devel libqt3-devel libsqlite3-devel libxbase-devel mercurial openexr-devel postgresql-devel pstoedit python-module-distribute rpm-build-ruby soprano sqlite3 subversion valgrind zlib-devel-static
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: attica-devel boost-devel eigen3 gcc-c++ glib2-devel rpm-build-python rpm-build-ruby
 BuildRequires: extra-cmake-modules
-BuildRequires: qt5-base-devel qt5-svg-devel qt5-declarative-devel qt5-quick1-devel qt5-webkit-devel qt5-script-devel qt5-x11extras-devel
+BuildRequires: qt5-base-devel qt5-svg-devel qt5-declarative-devel qt5-script-devel qt5-x11extras-devel
+#BuildRequires: qt5-quick1-devel
+BuildRequires: qt5-webkit-devel
 BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdoctools-devel kf5-kguiaddons-devel kf5-khtml-devel kf5-kjs-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kcmutils-devel kf5-kdelibs4support-devel
 BuildRequires: kf5-kio-devel kf5-kross-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-sonnet-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-threadweaver-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
-BuildRequires: kde5-marble-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-akonadi-devel kde5-akonadi-contacts-devel
+#BuildRequires: kde5-marble-devel
+BuildRequires: kde5-kcalcore-devel kde5-kcontacts-devel kde5-akonadi-devel kde5-akonadi-contacts-devel
 BuildRequires: kde5-okular-devel
 BuildRequires: kf5-kdiagram-devel kf5-kreport-devel kf5-kproperty-devel
 BuildRequires: qt5-phonon-devel libqca-qt5-devel libpoppler-qt5-devel
@@ -51,7 +52,6 @@ BuildRequires: liblcms2-devel libmysqlclient-devel
 BuildRequires: libsqlite3-devel sqlite3 libxbase-devel openexr-devel postgresql-devel
 BuildRequires: libvisio-devel libwpg-devel libwpd10-devel libwps-devel libodfgen-devel libetonyek-devel libxml2-devel
 BuildRequires: libdrm-devel libpng-devel libexpat-devel
-#BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
 
 %description
 %summary.
@@ -72,7 +72,6 @@ Provides:  koffice-kchart = %koffice_ver
 Obsoletes: koffice-kchart < %koffice_ver
 Provides:  koffice-kformula = %koffice_ver
 Obsoletes: koffice-kformula < %koffice_ver
-Requires: %libname = %EVR
 Requires: fonts-ttf-latex-xft
 %description core
 %summary.
@@ -80,7 +79,6 @@ Requires: fonts-ttf-latex-xft
 %package devel
 Group: Development/KDE and QT
 Summary: Header files and libraries needed for %name development
-Requires: %libname = %EVR
 Conflicts: libflake-devel
 %description devel
 Header files and libraries needed for %name development
@@ -90,8 +88,7 @@ Group: Office
 Summary: An intuitive word processor application with desktop publishing features
 Provides: koffice-kword = %koffice_ver
 Obsoletes: koffice-kword < %koffice_ver
-Requires: %name-core = %EVR
-Requires: %libname = %EVR
+Requires: %name-core
 %description words
 KWord is an intuitive word processor and desktop publisher application.
 With it, you can create informative and attractive documents with
@@ -100,11 +97,8 @@ pleasure and ease.
 %package sheets
 Group: Office
 Summary: A fully-featured spreadsheet application
-Provides: koffice-kspread = %koffice_ver
-Obsoletes: koffice-kspread < %koffice_ver
 Provides: %name-tables = %EVR
-Requires: %name-core = %EVR
-Requires: %libname = %EVR
+Requires: %name-core
 %description sheets
 Tables is a fully-featured calculation and spreadsheet tool.  Use it to
 quickly create and calculate various business-related spreadsheets, such
@@ -115,8 +109,7 @@ Group: Office
 Summary: A full-featured presentation program
 Provides: koffice-kpresenter = %koffice_ver
 Obsoletes: koffice-kpresenter < %koffice_ver
-Requires: %name-core = %EVR
-Requires: %libname = %EVR
+Requires: %name-core
 %description stage
 Stage is a powerful and easy to use presentation application. You
 can dazzle your audience with stunning slides containing images, videos,
@@ -127,8 +120,7 @@ Group: Graphics
 Summary: A vector drawing application
 Provides: koffice-karbon = %koffice_ver
 Obsoletes: koffice-karbon < %koffice_ver
-Requires: %name-core = %EVR
-Requires: %libname = %EVR
+Requires: %name-core
 Requires: pstoedit
 %description karbon
 Karbon is a vector drawing application with an user interface that is
@@ -145,9 +137,7 @@ Group: Office
 Summary: A project planner
 Provides: koffice-kplato = %koffice_ver
 Obsoletes: koffice-kplato < %koffice_ver
-Requires: %libname = %EVR
-Requires: %name-core = %EVR
-Requires: %libname = %EVR
+Requires: %name-core
 %description plan
 Plan is a project management application. It is intended for managing
 moderately large projects with multiple resources.
@@ -155,10 +145,12 @@ moderately large projects with multiple resources.
 %package  okular-generators
 Group: Office
 Summary:  OpenDocument text and presenter support for okular
-Obsoletes: koffice-okular-odpgenerator < %{koffice_ver}
-Requires: %libname = %EVR
-Requires: %name-stage = %EVR
+Requires: %name-stage
 Requires: kde5-okular-core
+Provides: calligra-okular-odp = %EVR
+Obsoletes: calligra-okular-odp < %EVR
+Provides: calligra-okular-odf = %EVR
+Obsoletes: calligra-okular-odf < %EVR
 %description okular-generators
 %summary.
 
@@ -189,7 +181,7 @@ rm -fv %buildroot%_datadir/mime/packages/{krita_ora,x-iwork-keynote-sffkey}.xml
 rm -frv %buildroot%_K5data/locale/x-test/
 
 # remove InitialPreference
-for f in %buildroot/%_kf5_xdgapp/*.desktop ; do
+for f in %buildroot/%_K5xdgapp/*.desktop ; do
     sed -i '/^InitialPreference=/d' $f
 done
 
@@ -407,6 +399,9 @@ done
 %exclude %_K5lib/libkookularGenerator_odt.so*
 
 %changelog
+* Tue Oct 31 2017 Sergey V Turchin <zerg@altlinux.org> 0:3.0.1-alt2%ubt
+- move binaries to /usr/bin
+
 * Wed Aug 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0:3.0.1-alt1
 - Updated to upstream version 3.0.1.
 
