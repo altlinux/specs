@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 2.26
 %define api_ver 2.0
@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: at-spi2-atk
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A GTK+ module that bridges ATK to D-Bus at-spi
@@ -53,9 +53,6 @@ This package provides development files for atk-bridge library.
 
 %prep
 %setup
-# quick fix for pc-file
-subst 's|\(@libdir@\)|@prefix@/\1|
-       s|\(@includedir@\)|@prefix@/\1|' atk-bridge-2.0.pc.in
 
 %build
 %meson
@@ -74,7 +71,6 @@ subst 's|\(@libdir@\)|@prefix@/\1|
 %_libdir/gnome-settings-daemon-3.0/gtk-modules/at-spi2-atk.desktop
 %doc AUTHORS README NEWS
 
-#%%exclude %_libdir/gtk-*/modules/libatk-bridge.la
 
 %files devel
 %dir %_includedir/%name
@@ -84,6 +80,9 @@ subst 's|\(@libdir@\)|@prefix@/\1|
 %_pkgconfigdir/atk-bridge-%api_ver.pc
 
 %changelog
+* Tue Oct 31 2017 Yuri N. Sedunov <aris@altlinux.org> 2.26.1-alt1
+- 2.26.1
+
 * Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 2.26.0-alt1
 - 2.26.0
 
