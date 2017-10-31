@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.43
+Version: 0.8.44
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,10 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Tue Oct 31 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.8.44-alt1
+- 220-check-python: prohibit modules with version files containing
+  unknown version. (Thanks Aleksei Nikiforov darktemplar@)
+
 * Wed Oct 25 2017 Dmitry V. Levin <ldv@altlinux.org> 0.8.43-alt1
 - 130-check-fhs (check_fhs): disallow invalid path names (closes: #34024).
 
