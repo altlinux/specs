@@ -3,8 +3,8 @@
 %define real_name               python
 Name: %real_name
 
-Version: 2.7.11
-Release: alt6
+Version: 2.7.14
+Release: alt1
 
 %define package_name		%real_name
 %define weight			1001
@@ -52,11 +52,11 @@ Patch2: python-2.5.1-deb-distutils-link.patch
 Patch3: python-2.5.1-alt-TextTools.patch
 Patch4: python-2.6.5-alt-distutils-get_python_lib.patch
 # use system libexpat library
-Patch5: python-2.7.4-alt-expat.patch
+Patch5: python-2.7.14-alt-expat.patch
 # raise fatal error when extension fails to load
 Patch6: python-2.5.1-alt-setup-PyBuildExt-raise.patch
 # x64 build patches
-Patch8: python-2.6.6-alt-lib64.patch
+Patch8: python-2.7.14-alt-lib64.patch
 Patch9: python-2.7-lib64-sysconfig.patch
 # add alt to the list of supported distribution
 Patch10: python-2.6.2-detect-alt.patch
@@ -68,10 +68,6 @@ Patch21: python-2.6-ctypes-noexecmem.patch
 Patch22: python-2.6.6-alt-bdist_altrpm.patch
 Patch23: python-2.7.4-alt-linux2-platform.patch
 Patch24: python-2.7.10-python-config-ldflags-alt.patch
-Patch25: python-2.7.11-glibc-2.25-getentropy.patch
-
-Patch30: CVE-2016-0772.patch
-Patch31: CVE-2016-5636.patch
 
 # XXX ignore pydoc dependencies for now
 %add_findreq_skiplist %_bindir/pydoc*
@@ -667,10 +663,6 @@ rm -r Modules/expat
 %patch22 -p2
 %patch23 -p1
 %patch24 -p2
-%patch25 -p1
-
-%patch30 -p1
-%patch31 -p1
 
 # XXX temporary Issue20445 fix
 sed -i 's/val1 == nice(2)/val1 == nice(2)+2/' configure.ac
@@ -690,9 +682,11 @@ mkdir -p ../build-static
 export OPT="$RPM_OPT_FLAGS"
 libtoolize --copy --force
 autoconf
-cp -rl * ../build-static/
+##cp -rl * ../build-static/
 
 build () {
+_Target="$1"
+shift
 %configure \
 	--with-threads \
 	%{subst_with valgrind} \
@@ -702,14 +696,15 @@ build () {
 	--enable-ipv6 \
 	$*
 
-%make_build LDFLAGS=-L$PWD
+%make_build LDFLAGS=-L$PWD $_Target
 }
 
-pushd ../build-static
-build
-popd
+#pushd ../build-static
+##build python
+#build all
+#popd
 
-build --enable-shared
+build all --enable-shared
 
 #bzip2 info/python*info*
 #cat > info/python%nodot_ver.dir <<EOF
@@ -745,21 +740,23 @@ echo 'install_dir='"%buildroot%_bindir" >>setup.cfg
 export LD_LIBRARY_PATH=%buildroot%_libexecdir:$LD_LIBRARY_PATH
 
 makeinstall() {
-%makeinstall \
-	BINDIR=%buildroot%_bindir \
-	LIBDIR=%buildroot%_libdir \
-	MANDIR=%buildroot%_mandir \
-	INCLUDEDIR=%buildroot%_includedir
+%make \
+	DESTDIR=%buildroot \
+	BINDIR=%_bindir \
+	LIBDIR=%_libdir \
+	MANDIR=%_mandir \
+	INCLUDEDIR=%_includedir \
+	"$@"
 install %SOURCE2 %buildroot%python_libdir/encodings
 }
 
-pushd ../build-static
-makeinstall
-popd
+makeinstall install
 
-makeinstall
+##pushd ../build-static
+##makeinstall bininstall
+##popd
 
-rm %buildroot%python_libdir/config/lib%python_name.a
+mv %buildroot%python_libdir/config/lib%python_name.a %buildroot%_libdir/lib%python_name.a
 
 # cray : hack for hotshot
 rm %buildroot%python_libdir/hotshot/stones.py*
@@ -1105,6 +1102,10 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Tue Oct 31 2017 Fr. Br. George <george@altlinux.ru> 2.7.14-alt1
+- Version up
+- Turn off static build that have been lost long ago
+
 * Tue Oct 24 2017 Dmitry V. Levin <ldv@altlinux.org> 2.7.11-alt6
 - python-base: compressed documentation files.
 
@@ -1528,7 +1529,7 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 - Modulator and Pynche moved into python/tools
 - Some unused pathes excluded
 
-* Mon Nov 25 2003 Andrey Orlov <cray@altlinux.ru> 2.3.2-alt3
+* Mon Nov 24 2003 Andrey Orlov <cray@altlinux.ru> 2.3.2-alt3
 - Emacs python-mode file temporary abandoned
 
 * Fri Nov 21 2003 Andrey Orlov <cray@altlinux.ru> 2.3.2-alt2
@@ -1603,7 +1604,7 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 - 2.1.1
 - Light spec cleanup.
 
-* Wed Jun 26 2001 AEN <aen@logic.ru> 2.1-alt1
+* Wed Jun 27 2001 AEN <aen@logic.ru> 2.1-alt1
 - new version
 
 * Tue Jan 30 2001 Dmitry V. Levin <ldv@fandra.org> 2.0-ipl5mdk
