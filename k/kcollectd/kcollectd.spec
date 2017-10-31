@@ -1,6 +1,6 @@
 Name: kcollectd
 Version: 0.9
-Release: alt4
+Release: alt5
 
 Summary: collectd graphing frontend for KDE
 License: %gpl3plus
@@ -67,6 +67,9 @@ ln -rs -- %buildroot{%_kde4_bindir/%name,%_bindir/%name}
 %_K4xdg_mime/%name.*
 
 %changelog
+* Tue Oct 31 2017 Sergey Y. Afonin <asy@altlinux.ru> 0.9-alt5
+- Rebuilt with librrd8
+
 * Thu Jan 26 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.9-alt4
 - Rebuilt with GCC 6.3
 
