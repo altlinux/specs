@@ -5,7 +5,7 @@
 
 Name: gtk-doc
 Version: 1.26.1
-Release: alt0.1
+Release: alt0.2
 
 Summary: API documentation generation tool for GTK+ and GNOME
 Group: Development/Other
@@ -16,7 +16,6 @@ Url: http://www.gtk.org/gtk-doc/
 %define python_ver 2.7
 
 Requires: python >= %python_ver
-Requires: pkgconfig(glib-2.0)
 Requires: sgml-common >= 0.6.3-alt11
 Requires: docbook-dtds >= 4.3-alt1
 Requires: docbook-style-xsl
@@ -153,6 +152,9 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Tue Oct 31 2017 Yuri N. Sedunov <aris@altlinux.org> 1.26.1-alt0.2
+- updated to GTK_DOC_1_26-23-g8ad03e1 (fixed BGO ##787862, 787768)
+
 * Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 1.26.1-alt0.1
 - updated to GTK_DOC_1_26-14-g95a9312
 
