@@ -4,7 +4,7 @@
 %define ver_major 3.26
 
 Name: %_name-tool
-Version: %ver_major.2.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: A tool to customize advanced GNOME 3 options
@@ -20,7 +20,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Patch: gnome-tweak-tool-3.25.4-alt-desktop.patch
 
 BuildArch: noarch
-Requires: gnome-shell >= %ver_major
+Requires: gnome-shell >= %ver_major nautilus
 
 BuildRequires: meson rpm-build-gir
 BuildRequires: gsettings-desktop-schemas-devel >= 3.24.0
@@ -70,6 +70,9 @@ Features:
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Oct 31 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt1
+- 3.26.3
+
 * Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2.1-alt1
 - 3.26.2.1
 
