@@ -1,7 +1,7 @@
 %global _localstatedir %_var
 Name: sphinx
 Version: 2.2.11
-Release: alt5%ubt
+Release: alt6%ubt
 Summary: Free open-source SQL full-text search engine
 
 Group: Text tools
@@ -12,9 +12,6 @@ Source0: http://sphinxsearch.com/downloads/%name-%version.tar.gz
 Source1: %name.init
 Source2: %name.unit
 BuildRequires(pre): rpm-build-ubt
-
-Packager: Dmitriy Kulik <lnkvisitor@altlinux.org>
-
 BuildRequires: gcc-c++ libexpat-devel libmysqlclient-devel libssl-devel libunixODBC-devel postgresql-devel zlib-devel libstemmer-devel
 
 %description
@@ -94,9 +91,6 @@ install -p -D -m 0644 %SOURCE2 %buildroot%_unitdir/searchd.service
 # Create /var/log/sphinx
 mkdir -p %buildroot%_var/log/sphinx
 
-# Create /var/run/sphinx
-mkdir -p %buildroot%_var/run/sphinx
-
 # Create /var/lib/sphinx
 mkdir -p %buildroot%_var/lib/sphinx
 
@@ -105,16 +99,16 @@ cp %buildroot%_sysconfdir/sphinx/sphinx-min.conf.dist \
     %buildroot%_sysconfdir/sphinx/sphinx.conf
 
 # Modify sphinx.conf
-sed -i 's/\/var\/lib\/log\/searchd.log/\/var\/log\/sphinx\/searchd.log/g' \
+sed -i 's/\/var\/log\/searchd.log/\/var\/log\/sphinx\/searchd.log/g' \
 %buildroot%_sysconfdir/sphinx/sphinx.conf
 
-sed -i 's/\/var\/lib\/log\/query.log/\/var\/log\/sphinx\/query.log/g' \
+sed -i 's/\/var\/log\/query.log/\/var\/log\/sphinx\/query.log/g' \
 %buildroot%_sysconfdir/sphinx/sphinx.conf
 
-sed -i 's/\/var\/lib\/log\/searchd.pid/\/var\/run\/sphinx\/searchd.pid/g' \
+sed -i 's/\/var\/log\/searchd.pid/\/var\/run\/sphinx\/searchd.pid/g' \
 %buildroot%_sysconfdir/sphinx/sphinx.conf
 
-sed -i 's|/var/lib/data|/var/lib/sphinx|g' \
+sed -i 's|/var/data|/var/lib/sphinx|g' \
 %buildroot%_sysconfdir/sphinx/sphinx.conf
 
 # Create /etc/logrotate.d/sphinx
@@ -129,7 +123,16 @@ cat > %buildroot%_sysconfdir/logrotate.d/sphinx << EOF
        notifempty
        missingok
        su _sphinx _sphinx
+       postrotate
+       killall -SIGUSR1 searchd
+       endscript
 }
+EOF
+
+# Create tmpfiles run configuration
+mkdir -p %buildroot%_tmpfilesdir
+cat > %buildroot%_tmpfilesdir/%name.conf << EOF
+d /run/sphinx 755 _sphinx root -
 EOF
 
 # Install libsphinxclient
@@ -150,6 +153,7 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 %doc COPYING doc/sphinx.txt sphinx-min.conf.dist sphinx.conf.dist example.sql
 %dir %attr(775,root,_sphinx) %_sysconfdir/sphinx
 %config(noreplace) %attr(644,root,_sphinx) %_sysconfdir/sphinx/sphinx.conf
+%config(noreplace) %attr(644,root,root) %_tmpfilesdir/%name.conf
 %exclude %_sysconfdir/sphinx/*.conf.dist
 %exclude %_sysconfdir/sphinx/example.sql
 %_initdir/*
@@ -157,7 +161,6 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 %config(noreplace) %_sysconfdir/logrotate.d/sphinx
 %_bindir/*
 %dir %attr(775,root,_sphinx) %_var/log/sphinx
-%dir %attr(775,root,_sphinx) %_var/run/sphinx
 %dir %attr(775,root,_sphinx) %_var/lib/sphinx
 %_man1dir/*
 
@@ -173,6 +176,12 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 %_libdir/libsphinxclient.a
 
 %changelog
+* Tue Oct 31 2017 Anton Farygin <rider@altlinux.ru> 2.2.11-alt6%ubt
+- added config for tmpfilesdir
+- send SIGUSR1 to searchd for rotate logs
+- systemd unit cleanup
+- fixed paths in default config
+
 * Thu Oct 26 2017 Anton Farygin <rider@altlinux.ru> 2.2.11-alt5%ubt
 - fixed localstatedir location
 - fixed typo in systemd unit (closes: #33177)
