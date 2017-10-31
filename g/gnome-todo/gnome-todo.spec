@@ -8,7 +8,7 @@
 %def_disable gtk_doc
 
 Name: gnome-todo
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Todo manager for GNOME
@@ -111,6 +111,9 @@ GObject introspection devel data for the GNOME Todo.
 %_girdir/Gtd-%api_ver.gir
 
 %changelog
+* Tue Oct 31 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
+- 3.26.2
+
 * Thu Sep 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 
