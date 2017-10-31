@@ -13,8 +13,8 @@
 %def_enable udev
 
 Name: %{_name}3
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
 License: %gpl2plus, %fdl
@@ -177,6 +177,9 @@ the functionality of the Gnome 3 desktop library.
 
 
 %changelog
+* Tue Oct 31 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
+- 3.26.2
+
 * Sun Oct 29 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt2
 - lib%%name requires bubblewrap
 
@@ -184,7 +187,7 @@ the functionality of the Gnome 3 desktop library.
 - 3.26.1
 
 * Sat Sep 16 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt2
-- updfated to 3.26.0-1-g22b89aa (fixed BGO #787072)
+- updated to 3.26.0-1-g22b89aa (fixed BGO #787072)
 
 * Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
