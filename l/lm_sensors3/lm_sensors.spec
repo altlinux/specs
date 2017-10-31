@@ -2,7 +2,7 @@
 
 Name: lm_sensors3
 Version: 3.4.0
-Release: alt2
+Release: alt3
 
 Summary: Hardware Health Monitoring Tools
 License: LGPLv2+ and GPLv3+ and GPLv2+ and Verbatim and Public Domain
@@ -142,7 +142,7 @@ install -pm 644 %SOURCE7 %buildroot%_sysconfdir/sysconfig/sensord
 # service files
 install -pD -m755 %SOURCE1 %buildroot%_initrddir/lm_sensors
 install -pD -m644 lm_sensors.service %buildroot%_unitdir/lm_sensors.service
-install -pD -m644 lm_sensors.service %buildroot%_unitdir/sensord.service
+install -pD -m644 sensord.service %buildroot%_unitdir/sensord.service
 install -pD -m644 prog/init/fancontrol.service %buildroot%_unitdir/fancontrol.service
 
 # customized modprobe calls
@@ -240,6 +240,9 @@ fi
 %endif #static
 
 %changelog
+* Wed Nov 01 2017 Lenar Shakirov <snejok@altlinux.ru> 3.4.0-alt3
+- sensord.service packaging fixed
+
 * Wed Feb 22 2017 Michael Shigorin <mike@altlinux.org> 3.4.0-alt2
 - E2K: don't expect isadump(8) and isaset(8), like on %%arm
 
