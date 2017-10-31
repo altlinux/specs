@@ -2,7 +2,7 @@
 %def_disable packagekit
 
 Name: simple-scan
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Simple scanning utility
@@ -45,6 +45,9 @@ find ./ -name "*.stamp" -delete
 %_man1dir/*
 
 %changelog
+* Tue Oct 31 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
+- 3.26.2
+
 * Tue Oct 03 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 
