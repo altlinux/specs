@@ -2,7 +2,7 @@
 
 Name: jrrd
 Version: 1.0.5
-Release: alt1.2
+Release: alt1.3
 License: GPL
 Group: Databases
 Summary: Java interface to RRDTool
@@ -39,6 +39,9 @@ make
 %_datadir/java/*.jar
 
 %changelog
+* Tue Oct 31 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1.3
+- NMU: rebuild with new librrd-devel
+
 * Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1.2
 - NMU: fixed java deps
 
