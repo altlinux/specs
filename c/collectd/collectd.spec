@@ -30,7 +30,7 @@
 
 Name: collectd
 Version: 5.7.2
-Release: alt2%ubt
+Release: alt3
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -837,6 +837,10 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Tue Oct 31 2017 Sergey Y. Afonin <asy@altlinux.ru> 5.7.2-alt3
+- cherry-pick from upstream 'apcups: allow to use plugin without explicit configuration'
+  (ALT #33957)
+
 * Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.7.2-alt2%ubt
 - Rebuilt with libdbi-0.9.0.
 

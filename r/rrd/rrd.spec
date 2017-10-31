@@ -1,11 +1,16 @@
 Name: rrd
-Version: 1.5.4
-Release: alt3
+Version: 1.7.0
+Release: alt1
+
 
 %define native rrdtool
-%define abiversion 4
+%define abiversion 8
 %define rrdcached_user root
-%def_without tcl
+%def_with tcl
+
+# fixed rrdcached.pid place
+# https://lists.altlinux.org/pipermail/devel/2017-October/203277.html
+%define	_localstatedir	/var
 
 Summary: RRD - round robin database
 License: %gpl2plus with exceptions
@@ -28,6 +33,7 @@ Requires: lib%name = %version-%release
 
 BuildRequires: rpm-build-licenses
 BuildRequires: chrpath
+BuildRequires: python-module-setuptools
 %if_with tcl
 BuildRequires: rpm-build-tcl tcl-devel
 %endif
@@ -212,11 +218,15 @@ This package contains tcl extension for access the Round Robin Databases.
 %patch0 -p2
 #patch1 -p1
 #patch2 -p2
-%patch3 -p1
+#patch3 -p1
 
 find doc bindings/perl-piped -type f -print0 |
 	xargs -r0 fgrep -l /usr/local |
 	xargs -r perl -pi -e 's,/usr/local,%prefix,g'
+
+# temporary hack for build tcl subpackage in Sisyphus
+# https://lists.altlinux.org/pipermail/devel/2017-October/203186.html
+sed -i 's@$TCL_PACKAGE_PATH@%_tcldatadir@g' configure.ac
 
 %build
 %add_optflags -I%_builddir/%native-%version/src %optflags_shared -I%_includedir/cgilib -lpng
@@ -274,7 +284,7 @@ cp {CONTRIBUTORS,COPYRIGHT,TODO,NEWS,THREADS,LICENSE} %buildroot%_docdir/%native
 # rrdcached
 #
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/{rc.d/init.d,sysconfig}
-install -d $RPM_BUILD_ROOT%_localstatedir/rrdcached
+install -d $RPM_BUILD_ROOT%_localstatedir/lib/rrdcached
 install -m644 %SOURCE1 $RPM_BUILD_ROOT%_initdir/rrdcached
 sed -e 's|@@USER@@|%rrdcached_user|g' < %SOURCE2 > $RPM_BUILD_ROOT%_sysconfdir/sysconfig/rrdcached
 
@@ -287,6 +297,11 @@ sed -e 's|@@USER@@|%rrdcached_user|g' < %SOURCE2 > $RPM_BUILD_ROOT%_sysconfdir/s
 #    /usr/lib/perl/5.16.3/x86_64-linux-thread-multi/auto/RRDs/RRDs.so
 #    /usr/lib/perl/5.16.3/x86_64-linux-thread-multi/perllocal.pod
 rm -rf %buildroot/usr/lib/perl
+
+# warning: Installed (but unpackaged) file(s) found:
+#    /usr/share/locale/hu/LC_MESSAGES/rrdtool.mo
+# hu only in 1.7.0, removed
+rm -f %buildroot/usr/share/locale/hu/LC_MESSAGES/rrdtool.mo
 
 %pre cached
 # %%rrdcached_user is root now, so groupadd/useradd is not needed
@@ -315,7 +330,7 @@ rm -rf %buildroot/usr/lib/perl
 %_bindir/rrdcached
 %attr(0755,root,root) %config %_initdir/rrdcached
 %config(noreplace) %_sysconfdir/sysconfig/rrdcached
-%attr(3775,root,%rrdcached_user) %dir %_localstatedir/rrdcached
+%attr(3775,root,%rrdcached_user) %dir %_localstatedir/lib/rrdcached
 
 %files man
 %_man1dir/*
@@ -344,9 +359,17 @@ rm -rf %buildroot/usr/lib/perl
 #   (the tcl one looks broken too as of 1.5.4-alt2.1)
 
 %changelog
+* Sat Oct 28 2017 Sergey Y. Afonin <asy@altlinux.ru> 1.7.0-alt1
+- 1.7.0 (abiversion changed to 8)
+- added python-module-setuptools to BuildRequires
+- enabled tcl bindings (used temporary hack)
+- redefined _localstatedir
+
 * Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.4-alt3
-- Rebuilt with libdbi-0.9.0.
-- Disabled tcl bindings.
+- rebuilt with libdbi-0.9.0
+- removed "Packager" field
+- moved build requires for tcl into if_with section
+- disabled tcl bindings
 
 * Wed Feb 22 2017 Michael Shigorin <mike@altlinux.org> 1.5.4-alt2.2
 - dropped BR: ruby as it's unconditionally disabled anyways

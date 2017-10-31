@@ -1,6 +1,6 @@
 Name: nfdump
 Version: 1.6.15
-Release: alt1
+Release: alt2
 Summary: collect and process netflow data
 
 Group: Monitoring
@@ -133,6 +133,9 @@ install -m0644 %SOURCE8 %buildroot%_unitdir/sfcapd.service
 %_libdir/libnfdump.so
 
 %changelog
+* Tue Oct 31 2017 Sergey Y. Afonin <asy@altlinux.ru> 1.6.15-alt2
+- rebuilt with librrd8
+
 * Sat Jul 09 2016 Sergey Y. Afonin <asy@altlinux.ru> 1.6.15-alt1
 - 1.6.15 (Security update)
 - added libnfdump and libnfdump-devel packages

@@ -62,7 +62,7 @@ URL:		http://xymon.sourceforge.net/
 
 %if_disabled trunk
 Version:	4.3.28
-Release:	alt1
+Release:	alt2
 Source0:	http://prdownloads.sourceforge.net/xymon/Xymon/%{version}/%{name}-%{version}.tar.gz
 %else
 %define		trunkVersion	%(svn info ~/svn/xymon/trunk/ | grep ^Revision | awk '{print $2}')
@@ -1254,6 +1254,9 @@ done
 ################ end extra clients ################
 
 %changelog
+* Tue Oct 31 2017 Sergey Y. Afonin <asy@altlinux.ru> 4.3.28-alt2
+- rebuilt with librrd8
+
 * Tue May 23 2017 Sergey Y. Afonin <asy@altlinux.ru> 4.3.28-alt1
 - new version
 - increased logfetch's buffer size from 2048000 to 4194303
