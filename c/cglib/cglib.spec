@@ -3,24 +3,27 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global tarball_name RELEASE_3_2_4
+
 Name:           cglib
-Version:        3.1
-Release:        alt1_10jpp8
+Version:        3.2.4
+Release:        alt1_4jpp8
 Summary:        Code Generation Library for Java
 License:        ASL 2.0 and BSD
-Url:            http://cglib.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-src-%{version}.jar
-Source1:        https://repo1.maven.org/maven2/cglib/cglib/%{version}/cglib-%{version}.pom
-Source2:        bnd.properties
+Url:            https://github.com/cglib/cglib
+Source0:        https://github.com/cglib/cglib/archive/%{tarball_name}.tar.gz
 
-BuildRequires:  ant
+BuildRequires:  maven-local
+BuildRequires:  maven-plugin-bundle
 BuildRequires:  javapackages-local
-BuildRequires:  objectweb-asm
-BuildRequires:  unzip
-BuildRequires:  aqute-bnd
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.ow2.asm:asm)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 BuildArch:      noarch
 Source44: import.info
 
@@ -38,41 +41,52 @@ BuildArch: noarch
 Documentation for the cglib code generation library.
 
 %prep
-%setup -q -c %{name}-%{version}
-cp -p %{SOURCE1} pom.xml
+%setup -q -n %{name}-%{tarball_name}
 
-rm lib/*.jar
-build-jar-repository -s lib objectweb-asm ant
+%pom_disable_module cglib-nodep
+%pom_disable_module cglib-integration-test
+%pom_disable_module cglib-jmh
+%pom_xpath_set pom:packaging 'bundle' cglib
+%pom_xpath_inject pom:build/pom:plugins '<plugin>
+                                           <groupId>org.apache.felix</groupId>
+                                           <artifactId>maven-bundle-plugin</artifactId>
+                                           <version>1.4.0</version>
+                                           <extensions>true</extensions>
+                                           <configuration>
+                                             <instructions>
+                                               <Bundle-SymbolicName>net.sf.cglib.core</Bundle-SymbolicName>
+                                               <Export-Package>net.*</Export-Package>
+                                               <Import-Package>org.apache.tools.*;resolution:=optional,*</Import-Package>
+                                             </instructions>
+                                           </configuration>
+                                         </plugin>' cglib
+%pom_remove_plugin org.apache.maven.plugins:maven-gpg-plugin
+%pom_remove_plugin org.apache.maven.plugins:maven-jarsigner-plugin cglib-sample
+%pom_remove_plugin -r :maven-javadoc-plugin
 
-# Remove the repackaging step that includes other jars into the final thing
-sed -i "/<taskdef name=.jarjar/,/<.jarjar>/d" build.xml
-sed -i '/doctitle/a additionalparam="-Xdoclint:none"' build.xml
+%pom_xpath_inject "pom:dependency[pom:artifactId='ant']" "<optional>true</optional>" cglib
 
-%pom_xpath_remove "pom:dependency[pom:artifactId = 'asm-util']/pom:optional"
-%pom_xpath_set "pom:dependency[pom:groupId = 'ant']/pom:groupId" "org.apache.ant"
-
-%mvn_file :cglib cglib
 %mvn_alias :cglib "net.sf.cglib:cglib" "cglib:cglib-full" "cglib:cglib-nodep" "org.sonatype.sisu.inject:cglib"
 
 %build
-ant jar javadoc
-# Convert to OSGi bundle
-bnd wrap --output dist/cglib-%{version}.bar --properties %{SOURCE2} \
-         --version %{version} dist/cglib-%{version}.jar
-
-mv dist/cglib-%{version}.bar dist/cglib-%{version}.jar
-%mvn_artifact pom.xml dist/cglib-%{version}.jar
+%mvn_build
 
 %install
-%mvn_install -J docs
+%mvn_install
+ln -s cglib/cglib.jar %buildroot%_javadir/cglib.jar
 
 %files -f .mfiles
 %doc LICENSE NOTICE
+%_javadir/cglib.jar
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Oct 31 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.2.4-alt1_4jpp8
+- new version
+- manually added compat symlink for hadoop
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt1_10jpp8
 - new fc release
 
