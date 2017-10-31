@@ -1,9 +1,9 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %define _name cjs
 %define api_ver 1.0
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Javascript Bindings for Cinnamon
@@ -81,6 +81,9 @@ cp %SOURCE1 m4/
 %doc examples/*
 
 %changelog
+* Fri Oct 27 2017 Vladimir Didenko <cow@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Wed Aug 23 2017 Vladimir Didenko <cow@altlinux.org> 3.4.4-alt1
 - 3.4.4
 

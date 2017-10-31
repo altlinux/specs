@@ -1,8 +1,6 @@
-%def_enable gtk_doc
-
 Name: cinnamon
-Version: 3.4.6
-Release: alt2
+Version: 3.6.0
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -132,9 +130,11 @@ Development docs package for Cinnamon.
 rm -rf debian
 
 %build
-export CFLAGS="$RPM_OPT_FLAGS -Wno-error=deprecated-declarations"
-(if ! test -x configure; then NOCONFIGURE=1 ./autogen.sh; fi;
-%configure --disable-static --enable-compile-warnings=yes --without-ca-certificates %{?_enable_gtk_doc:--enable-gtk-doc})
+%autoreconf
+%configure --disable-static \
+           --enable-compile-warnings=yes\
+           --without-ca-certificates\
+           --disable-gtk-doc
 
 %make_build
 
@@ -166,6 +166,7 @@ install -D -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT/%{_datadir}/polkit-1/actions/
 install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 
 %filter_from_requires /typelib[(]CDesktopEnums.MediaKeyType[)]/d
+%filter_from_requires /python3[(]JsonSettingsWidgets[)]/d
 
 %files
 %exclude %_bindir/%{name}-launcher
@@ -202,6 +203,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Fri Oct 27 2017 Vladimir Didenko <cow@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Mon Sep 4 2017 Vladimir Didenko <cow@altlinux.org> 3.4.6-alt2
 - Show lightdm-settings module in cinnamon-settings
 

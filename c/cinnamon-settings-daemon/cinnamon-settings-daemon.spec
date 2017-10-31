@@ -1,4 +1,4 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -7,7 +7,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A program that manages general Cinnamon settings
@@ -38,6 +38,7 @@ Patch: %name-%version-%release.patch
 
 Requires: dconf >= %dconf_ver
 Requires: colord >= %colord_ver
+Requires: %name-translations
 
 # From configure.ac
 BuildPreReq: glib2-devel >= %glib2_ver
@@ -95,9 +96,8 @@ developing applications that use %name.
 
 %install
 %make_install DESTDIR=%buildroot install
-%find_lang --with-gnome %name
 
-%files -f %name.lang
+%files
 %doc AUTHORS NEWS
 %dir %_libdir/%name-%api_ver
 %_libdir/%name-%api_ver/*.so
@@ -112,6 +112,7 @@ developing applications that use %name.
 %_datadir/polkit-1/actions/org.cinnamon.settingsdaemon.datetimemechanism.policy
 %_datadir/dbus-1/system-services/org.cinnamon.SettingsDaemon.DateTimeMechanism.service
 %_sysconfdir/xdg/autostart/*.desktop
+%_datadir/applications/*.desktop
 
 %exclude %_libdir/%name-%api_ver/*.la
 %exclude %_datadir/%name-%api_ver/input-device-example.sh
@@ -121,6 +122,9 @@ developing applications that use %name.
 %_pkgconfigdir/*
 
 %changelog
+* Fri Oct 27 2017 Vladimir Didenko <cow@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Thu Aug 24 2017 Vladimir Didenko <cow@altlinux.org> 3.4.4-alt1
 - 3.4.4
 
