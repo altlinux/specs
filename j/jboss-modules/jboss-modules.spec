@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-modules
 Version:          1.5.2
-Release:          alt1_2jpp8
+Release:          alt2_2jpp8
 Summary:          A Modular Classloading System
 # XPP3 License: src/main/java/org/jboss/modules/xml/MXParser.java
 #  src/main/java/org/jboss/modules/xml/XmlPullParser.java
@@ -75,10 +75,13 @@ rm src/test/java/org/jboss/modules/MavenResourceTest.java \
 %doc README.md
 %doc LICENSE.txt XPP3-LICENSE.txt
 
-#%files javadoc -f .mfiles-javadoc
-#%doc LICENSE.txt XPP3-LICENSE.txt
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt XPP3-LICENSE.txt
 
 %changelog
+* Tue Oct 31 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt2_2jpp8
+- new jpp release
+
 * Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_2jpp8
 - new jpp release
 - removed javadoc due to non-identical noarch problem
