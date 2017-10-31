@@ -2,8 +2,8 @@
 %define buildmode Release
 
 # TODO: improve detection
-BuildRequires(pre): rpm-macros-ubt
-%if %__ubt_branch_id == "M80P"
+BuildRequires(pre): rpm-build-ubt
+%if %ubt_id == "M80P"
 %def_with ffmpeg_static
 %else
 %def_without ffmpeg_static
@@ -12,7 +12,7 @@ BuildRequires(pre): rpm-macros-ubt
 
 Name: telegram-desktop
 Version: 1.1.23
-Release: alt2
+Release: alt3
 
 Summary: Telegram is a messaging app with a focus on speed and security
 
@@ -31,6 +31,7 @@ Patch3: 0003_qt-plugins.patch
 Patch4: 0004_API-ID.patch
 Patch5: 0005_Downgrade-Qt-version.patch
 Patch6: 0006_fix-static-qt-functions.patch
+Patch7: 0007_cvefix.patch
 Patch8: 0008_add_locales.patch
 #Patch9: 0001-use-correct-executable-path.patch
 Patch14: 0014-get-language-name-and-country-name-from-QLocale.patch
@@ -61,7 +62,13 @@ BuildRequires: libminizip-devel libpcre-devel libexpat-devel libssl-devel bison
 #BuildRequires: libexif-devel libpixman-devel libz3-devel liblzma-devel
 #BuildRequires: libxkbcommon-devel libxkbcommon-x11-devel
 #BuildRequires: libXi-devel libSM-devel libICE-devel libdbus-devel libXfixes-devel
-BuildRequires: libX11-devel libgtk+3-devel libappindicator-gtk3-devel
+BuildRequires: libX11-devel
+
+# GTK 3.0 integration
+BuildRequires: libgtk+3-devel libappindicator-gtk3-devel
+# makes pkg-config happy
+#BuildRequires: libpixman-devel libXdmcp-devel
+
 # libappindicator-devel
 BuildRequires: libopenal-devel >= 1.17.2
 # libportaudio2-devel libxcb-devel 
@@ -112,6 +119,7 @@ $ XDG_CURRENT_DESKTOP=NONE tdesktop
 %patch3 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 %patch8 -p1
 #patch9 -p1
 %patch14 -p1
@@ -121,8 +129,6 @@ $ XDG_CURRENT_DESKTOP=NONE tdesktop
 cp %SOURCE2 Telegram/
 # MacOS things will conflicts with binary name, so delete Telegram dir
 rm -rf Telegram/Telegram/
-rm -f Telegram/SourceFiles/base/tests_main.cpp
-rm -f Telegram/SourceFiles/base/*_tests.cpp
 
 # set App ID
 subst "s|../../../TelegramPrivate/|../../|" Telegram/SourceFiles/config.h
@@ -172,6 +178,11 @@ ln -s %name %buildroot%_bindir/telegram
 %doc README.md
 
 %changelog
+* Sat Oct 21 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.23-alt3
+- fix old lang code in settings
+- fix CVE-2016-10351: Insecure cWorkingDir permissions
+- sync CMakeLists.txt with Gentoo, fix build with new Qt 5.9.2
+
 * Fri Sep 29 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.23-alt2
 - add support for build with static ffmpeg
 
