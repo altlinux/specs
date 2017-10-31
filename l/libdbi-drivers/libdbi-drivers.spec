@@ -3,7 +3,7 @@ Summary: Database drivers for libdbi
 Name: libdbi-drivers
 Epoch: 1
 Version: 0.9.0
-Release: alt1
+Release: alt2
 License: LGPL
 Group: System/Libraries
 Url: http://libdbi-drivers.sourceforge.net/
@@ -168,6 +168,8 @@ This package contains the doc.
     --with-freetds-libdir=%_libdir \
     --with-dbi-incdir=%_includedir/dbi \
     --with-dbi-libdir=%_libdir \
+    --localstatedir=%_var \
+    --sharedstatedir=%_var \
     --disable-docs
 
 %make_build
@@ -228,6 +230,9 @@ cp drivers/firebird/TODO TODO.firebird
 %endif
 
 %changelog
+* Tue Oct 31 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.9.0-alt2
+- Fixed localstatedir/sharedstatedir location.
+
 * Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.9.0-alt1
 - Updated to upstream release version 0.9.0.
 
