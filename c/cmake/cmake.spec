@@ -4,7 +4,7 @@
 %def_enable server
 Name: cmake
 Version: 3.9.2
-Release: alt0.4
+Release: alt1
 
 Summary: Cross-platform, open-source make system
 
@@ -271,6 +271,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Tue Oct 31 2017 Vitaly Lipatov <lav@altlinux.ru> 3.9.2-alt1
+- autogen: Don't use AUTOMOC_MOC_OPTIONS in moc-predefs command (ALT bug 34055)
+
 * Mon Oct 23 2017 Sergey V Turchin <zerg@altlinux.org> 3.9.2-alt0.4
 - search old sharedir CMake directory too
 
