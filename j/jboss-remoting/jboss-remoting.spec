@@ -3,26 +3,26 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jboss-remoting
-%define version 4.0.3
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 4.0.21
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-remoting
-Version:          4.0.3
-Release:          alt1_4jpp8
+Version:          4.0.21
+Release:          alt1_2jpp8
 Summary:          JBoss Remoting
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossremoting
 
 # git clone git://github.com/jboss-remoting/jboss-remoting.git
-# cd jboss-remoting && git checkout 4.0.3.Final && git checkout-index -f -a --prefix=jboss-remoting-4.0.3.Final/
-# rm jboss-remoting-4.0.3.Final/src/test/resources/test-content.bin
-# tar -cJf jboss-remoting-4.0.3.Final-CLEAN.tar.xz jboss-remoting-4.0.3.Final
+# cd jboss-remoting && git checkout 4.0.21.Final && git checkout-index -f -a --prefix=jboss-remoting-4.0.21.Final/
+# rm jboss-remoting-4.0.21.Final/src/test/resources/test-content.bin
+# tar -cJf jboss-remoting-4.0.21.Final-CLEAN.tar.xz jboss-remoting-4.0.21.Final
 Source0:          jboss-remoting-%{namedversion}-CLEAN.tar.xz
 
 BuildArch:        noarch
@@ -69,6 +69,9 @@ This package contains the API documentation for %{name}.
 %doc COPYING.txt
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:4.0.21-alt1_2jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.0.3-alt1_4jpp8
 - new fc release
 
