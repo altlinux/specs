@@ -1,23 +1,21 @@
 %add_optflags %optflags_shared
 
 Name: dcmtk
-Version: 3.5.4
-Release: alt3.3
+Version: 3.6.2
+Release: alt1
 
 Summary: DCMTK - DICOM Toolkit
 License: MIT license
 Group: Graphics
 Url: http://dcmtk.org/dcmtk.php.en
-Packager: Andrey Yurkovsky <anyr@altlinux.org>
 
 # ftp://dicom.offis.de/pub/dicom/offis/software/dcmtk/dcmtk354/%name-%version.tar.gz
 Source: %name-%version.tar
-Patch: pdcmtk-r27.diff
-Patch1: pdcmtk-3.5.4-alt-openssl.patch
 
 Requires: lib%name = %version-%release
 BuildPreReq: gcc-c++, zlib-devel, libpng-devel, libtiff-devel
-BuildPreReq: libxml2-devel, libwrap-devel, libssl-devel
+BuildPreReq: libxml2-devel, libwrap-devel, libssl-devel, cmake
+BuildRequires: libjpeg-devel
 
 %description
 DCMTK is a collection of libraries and applications implementing large parts 
@@ -45,16 +43,27 @@ Headers for building software that uses %name.
 
 %prep
 %setup
-%patch
-%patch1 -p1
 
 %build
-%add_optflags -fPIC -fpermissive
-%configure
-make
+%add_optflags -fPIC
+%cmake -DBUILD_SHARED_LIBS:BOOL=ON \
+	-DDCMTK_INSTALL_LIBDIR=%_lib \
+	-DDCMTK_INSTALL_CMKDIR=%_libdir/cmake/dcmtk \
+	-DDCMTK_INSTALL_ETCDIR=%_sysconfdir \
+	-DDCMTK_WITH_OPENSSL:BOOL=ON \
+	-DDCMTK_ENABLE_PRIVATE_TAGS:BOOL=ON \
+	-DDCMTK_WITH_XML:BOOL=ON \
+	-DDCMTK_WITH_TIFF:BOOL=ON \
+	-DDCMTK_WITH_ZLIB:BOOL=ON \
+	-DDCMTK_WITH_ICONV:BOOL=ON \
+	-DCMAKE_VERBOSE_MAKEFILE=ON \
+	-DDCMTK_INSTALL_DATDIC:STRING=share/libdcmtk12 \
+	-DDCMTK_USE_CXX11_STL:BOOL=ON \
+	-DDCMTK_ENABLE_CXX11:BOOL=ON
+%cmake_build VERBOSE=1
 
 %install
-%makeinstall_std install-lib
+%cmakeinstall_std
 
 %files
 %_bindir/*
@@ -64,14 +73,18 @@ make
 %config(noreplace) %_sysconfdir/*
 
 %files -n lib%name
-%_libdir/dcm2xml.dtd
-%_libdir/dsr2xml.xsd
+%_libdir/*.so.*
 
 %files -n lib%name-devel
 %_includedir/dcmtk/
-%_libdir/*.a
+%_libdir/*.so
+%_libdir/cmake/dcmtk/*.cmake
 
 %changelog
+* Wed Nov 01 2017 Anton Farygin <rider@altlinux.ru> 3.6.2-alt1
+- new version
+- enabled build shared libraries
+
 * Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.4-alt3.3
 - Fixed build with gcc 4.7
 
