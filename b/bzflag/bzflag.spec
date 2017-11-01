@@ -7,12 +7,12 @@
 %undefine cvs
 
 Name: bzflag
-Version: 2.4.11
+Version: 2.4.12
 
 # %%ifndef git_commit
-# Release: alt1
+Release: alt1
 # %%else
-Release: alt0.git_1_%git_commit
+# Release: alt0.git_1_%git_commit
 # %%endif
 
 Summary: A multiplayer 3D tank battle game
@@ -223,6 +223,9 @@ mkdir -p %buildroot/var/run/%name
 %_initdir/bzfs
 
 %changelog
+* Wed Nov 01 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2.4.12-alt1
+- Version 2.4.12 (Release)
+
 * Thu May 04 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2.4.11-alt0.git_1_e2fefd
 - Update from git
 
