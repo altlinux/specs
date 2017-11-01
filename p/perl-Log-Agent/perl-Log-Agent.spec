@@ -2,7 +2,7 @@
 %define module_name Log-Agent
 
 Name: perl-%module_name
-Version: 1.001
+Version: 1.002
 Release: alt1
 
 Summary: %module_name module for perl
@@ -10,7 +10,7 @@ License: Artistic
 Group: Development/Perl
 
 Url: %CPAN %module_name
-Source: http://www.cpan.org/authors/id/M/MR/MROGASKI/Log-Agent-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MR/MROGASKI/%{module_name}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri May 21 2010 (-bi)
 BuildRequires: perl-MailTools perl-devel sendmail-common
@@ -24,7 +24,7 @@ calls to warn() or syslog()) which can conflict with the final application's
 choice, one may use logwarn() for instance to emit a warning.
 
 %prep
-%setup -n %module_name-%version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,10 +33,14 @@ choice, one may use logwarn() for instance to emit a warning.
 %perl_vendor_install
 
 %files
+%doc README CHANGELOG.md
 %perl_vendor_privlib/Log*
 %perl_vendor_privlib/auto/Log*
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.002-alt1
+- automated CPAN update
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.001-alt1
 - automated CPAN update
 
