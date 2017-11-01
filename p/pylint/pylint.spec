@@ -1,7 +1,7 @@
 %def_with python3
 
 Name: pylint
-Version: 1.5.1
+Version: 1.7.4
 Release: alt1%ubt
 
 Summary: Python code static checker
@@ -11,7 +11,7 @@ Group: Development/Python
 BuildArch: noarch
 
 Url: http://www.pylint.org/
-# hg clone https://bitbucket.org/logilab/pylint
+# https://github.com/PyCQA/pylint.git
 Source: %name-%version.tar
 
 %add_findreq_skiplist %python_sitelibdir/%name/gui.py
@@ -20,13 +20,17 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: python-module-singledispatch python-module-astroid-tests
+BuildRequires: python-module-pytest-runner
+BuildRequires: python2.7(configparser) python2.7(backports.functools_lru_cache)
+BuildRequires: python2.7(isort) python2.7(mccabe) python2.7(six)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-astroid
-BuildPreReq: python3-module-unittest2
-BuildPreReq: python-tools-2to3
-BuildRequires: python3-module-singledispatch python3-module-astroid-tests
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-astroid
+BuildRequires: python3-module-unittest2
+BuildRequires: python3-module-astroid-tests
+BuildRequires: python3-module-pytest-runner
+BuildRequires: python3(isort) python3(mccabe) python3(six)
 %endif
 
 %description
@@ -94,7 +98,13 @@ popd
 rm -rf %buildroot%python_sitelibdir/%name/test
 
 %check
-PYTHONPATH=$(pwd)/build/lib/ py.test ||:
+PYTHONPATH=$(pwd)/build/lib/ py.test
+
+%if_with python3
+pushd ../python3
+PYTHONPATH=$(pwd)/build/lib/ py.test3
+popd
+%endif
 
 %files
 %_bindir/*
@@ -102,18 +112,21 @@ PYTHONPATH=$(pwd)/build/lib/ py.test ||:
 %exclude %_bindir/*.py3
 %endif
 %python_sitelibdir/%name
-%python_sitelibdir/*.egg-info
-%doc ChangeLog README doc/
+%python_sitelibdir/%name-%version-py2*.egg-info
+%doc ChangeLog README.rst doc/
 
 %if_with python3
 %files py3
 %_bindir/*.py3
 %python3_sitelibdir/%name
-%python3_sitelibdir/*.egg-info
-%doc ChangeLog README doc/
+%python3_sitelibdir/%name-%version-py3*.egg-info
+%doc ChangeLog README.rst doc/
 %endif
 
 %changelog
+* Wed Nov 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.4-alt1%ubt
+- Updated to upstream version 1.7.4.
+
 * Mon Sep 25 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.5.1-alt1%ubt
 - Rebuild with universal build tag (aka ubt macros)
 
