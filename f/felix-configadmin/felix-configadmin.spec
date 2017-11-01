@@ -2,33 +2,33 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global site_name org.apache.felix.configadmin
-%global grp_name  felix
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global bundle org.apache.felix.configadmin
 
-Name:             felix-configadmin
-Version:          1.4.0
-Release:          alt2_15jpp8
-Summary:          Felix Configuration Admin Service
-License:          ASL 2.0
-URL:              http://felix.apache.org/site/apache-felix-config-admin.html
+Name:           felix-configadmin
+Version:        1.8.14
+Release:        alt1_1jpp8
+Summary:        Apache Felix Configuration Admin Service
+License:        ASL 2.0
+URL:            http://felix.apache.org/site/apache-felix-config-admin.html
 
-Source0:          http://www.fightrice.com/mirrors/apache/felix/%{site_name}-%{version}-source-release.tar.gz
+Source0:        http://archive.apache.org/dist/felix/%{bundle}-%{version}-source-release.tar.gz
 
-BuildArch:        noarch
+BuildArch:      noarch
 
-BuildRequires:    maven-local
-BuildRequires:    felix-parent
-BuildRequires:    felix-osgi-compendium >= 1.4.0
-BuildRequires:    felix-osgi-core
-BuildRequires:    aqute-bndlib
-BuildRequires:    maven-shared
+BuildRequires:  maven-local
+BuildRequires:  mvn(biz.aQute:bndlib)
+BuildRequires:  mvn(org.apache.felix:felix-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.osgi:osgi.cmpn)
+BuildRequires:  mvn(org.osgi:osgi.core)
 Source44: import.info
 
 %description
-Implementation of the OSGi Configuration Admin Service Specification 1.4.
+Implementation of the OSGi Configuration Admin Service Specification 1.5.
 
 %package javadoc
 Group: Development/Java
@@ -39,9 +39,16 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{site_name}-%{version}
+%setup -q -n %{bundle}-%{version}
 
-%pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin
+# Needed enterprise classes are also provided by compendium
+%pom_change_dep org.osgi:org.osgi.core       org.osgi:osgi.core:6.0.0:provided
+%pom_change_dep org.osgi:org.osgi.enterprise org.osgi:osgi.cmpn:6.0.0:provided
+
+# Many test deps are not in Fedora
+%pom_remove_dep ":::test"
+
+%mvn_file : felix/%{bundle}
 
 %build
 # Pax test dependency unavailable
@@ -51,13 +58,16 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc LICENSE NOTICE DEPENDENCIES
+%doc changelog.txt
+%doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.14-alt1_1jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2_15jpp8
 - new fc release
 
