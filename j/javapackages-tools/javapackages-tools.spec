@@ -33,7 +33,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javapackages-tools
 Version:        4.7.0
-Release:        alt1_15jpp8
+Release:        alt1_17jpp8
 
 Summary:        Macros and scripts for Java packaging support
 
@@ -46,10 +46,12 @@ Patch0:         0001-Don-t-build-and-install-docs.patch
 Patch1:         0002-Fix-generation-of-versioned-OSGi-requires.patch
 # https://github.com/fedora-java/javapackages/issues/33
 Patch2:         0003-Avoid-calling-zipfile.open-.-rU.patch
+# Fixes test failures due to warnings from python
+Patch3:         0004-Force-locale-in-tests.patch
+Patch4:         0005-Fix-traceback-on-corrupt-zipfile.patch
 
 BuildArch:      noarch
 
-BuildRequires:  make
 BuildRequires:  asciidoc asciidoc-a2x
 BuildRequires:  xmlto
 BuildRequires:  dia
@@ -190,6 +192,8 @@ This package provides non-essential macros and scripts to support Java packaging
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 %patch33 -p1
 %patch34 -p1
 %patch35 -p1
@@ -300,6 +304,9 @@ popd
 %{python3_sitelibdir_noarch}/javapackages*
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.7.0-alt1_17jpp8
+- new jpp release
+
 * Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.7.0-alt1_15jpp8
 - new jpp release
 
