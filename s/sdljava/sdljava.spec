@@ -4,6 +4,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: ruby-stdlibs zlib-devel
+BuildRequires: bsh
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -17,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           sdljava
 Version:        0.9.1
-Release:        alt2_34jpp8
+Release:        alt2_38jpp8
 Summary:        Java binding to the SDL API
 License:        LGPLv2+
 URL:            http://sdljava.sourceforge.net/
@@ -37,7 +38,7 @@ BuildRequires:  libSDL_image-devel
 BuildRequires:  libSDL_mixer-devel
 BuildRequires:  libSDL_ttf-devel
 
-BuildRequires:  javapackages-tools rpm-build-java
+BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  swig
 BuildRequires:  bsh-utils
@@ -45,7 +46,7 @@ BuildRequires:  jdom
 BuildRequires:  xml-commons-apis
 
 BuildRequires:  jruby
-BuildRequires:  ruby
+BuildRequires:  %{_bindir}/ruby
 
 Requires:       java
 Requires:       bsh-utils
@@ -135,6 +136,9 @@ export ARCH_DEFINE="-D__powerpc__ -D__powerpc64__ -D__LONG_DOUBLE_128__"
 %endif
 %ifarch ppc64le
 export ARCH_DEFINE="-D__powerpc__ -D__powerpc64__ -D__LITTLE_ENDIAN__ -D\"__BYTE_ORDER__=1234\" -D\"_CALL_ELF=2\" -D__LONG_DOUBLE_128__"
+%endif
+%ifarch s390x
+export ARCH_DEFINE="-D__s390x__ -D__LONG_DOUBLE_128__"
 %endif
 # special case ix86 as all of ix86 should define __i386__
 %ifarch %{ix86}
@@ -227,6 +231,9 @@ ln -s ../../fonts/ttf/dejavu/DejaVuSans-BoldOblique.ttf \
 
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_38jpp8
+- new jpp release
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_34jpp8
 - new jpp release
 
