@@ -3,15 +3,16 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global base_name       compress
 %global short_name      commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        1.12
-Release:        alt1_1jpp8
+Version:        1.13
+Release:        alt1_2jpp8
 Summary:        Java API for working with compressed files and archivers
 License:        ASL 2.0
 URL:            http://commons.apache.org/proper/commons-compress/
@@ -44,10 +45,12 @@ This package provides %{summary}.
 %prep
 %setup -q -n %{short_name}-%{version}-src
 
+%pom_remove_plugin :jacoco-maven-plugin
+
 %build
 %mvn_file  : %{short_name} %{name}
 %mvn_alias : commons:
-%mvn_build
+%mvn_build -- -P!jacoco
 
 %install
 %mvn_install
@@ -59,6 +62,9 @@ This package provides %{summary}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.13-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.12-alt1_1jpp8
 - new version
 
