@@ -9,7 +9,7 @@ BuildRequires: chrpath
 Name: libdap
 Summary: The C++ DAP2 library from OPeNDAP
 Version: 3.18.3
-Release: alt1_4
+Release: alt2_4
 
 License: LGPLv2+
 Group: Development/Other
@@ -19,7 +19,7 @@ Source0: http://www.opendap.org/pub/source/libdap-%{version}.tar.gz
 Patch0: libdap-offline.patch
 
 # For autoreconf
-BuildRequires: libtool-common
+BuildRequires: libtool
 BuildRequires: bison >= 3.0
 BuildRequires: cppunit-devel
 BuildRequires: libcurl-devel
@@ -51,7 +51,7 @@ Group: Development/Other
 Requires: %{name} = %{version}-%{release}
 Requires: pkg-config
 # for the /usr/share/aclocal directory ownership
-Requires: automake-common
+Requires: automake
 
 %description devel
 This package contains all the files needed to develop applications that
@@ -61,6 +61,7 @@ will use libdap.
 %package doc
 Summary: Documentation of the libdap library
 Group: Documentation
+BuildArch: noarch
 
 %description doc
 Documentation of the libdap library.
@@ -132,6 +133,9 @@ done
 
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 3.18.3-alt2_4
+- set doc to noarch
+
 * Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.18.3-alt1_4
 - update to new release by fcimport
 
