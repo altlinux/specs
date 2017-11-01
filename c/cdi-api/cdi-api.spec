@@ -4,37 +4,36 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name cdi-api
-%define version 1.1
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 1.2
 %global namedreltag .NOTHING
 %global namedversion %{version}%{?namedreltag}
 
 Name:             cdi-api
-Version:          1.1
-Release:          alt3_13jpp8
+Version:          1.2
+Release:          alt1_4jpp8
 Summary:          CDI API
 License:          ASL 2.0
 URL:              http://seamframework.org/Weld
 Source0:          https://github.com/cdi-spec/cdi/archive/%{version}.tar.gz
 
 BuildArch:        noarch
+BuildRequires:    asciidoc asciidoc-a2x
 BuildRequires:    maven-local
-# geronimo-annotation
-BuildRequires:    mvn(javax.annotation:jsr250-api)
 BuildRequires:    mvn(javax.el:javax.el-api)
 BuildRequires:    mvn(javax.inject:javax.inject)
-BuildRequires:    mvn(org.apache.geronimo.specs:specs:pom:)
+BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:    mvn(org.apache.maven.surefire:surefire-testng)
 BuildRequires:    mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:    mvn(org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.2_spec)
-BuildRequires:    mvn(org.jboss.spec.javax.ejb:jboss-ejb-api_3.1_spec)
 BuildRequires:    mvn(org.jboss.weld:weld-parent:pom:)
 BuildRequires:    mvn(org.testng:testng::jdk15:)
+BuildRequires:    /usr/bin/pygmentize
 
 Provides:         javax.enterprise.inject
 Source44: import.info
@@ -53,53 +52,44 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n cdi-%{version}
 
-# Generate OSGI info
-%pom_xpath_set pom:project/pom:packaging bundle api
-%pom_xpath_inject "pom:project" "
-    <build>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.felix</groupId>
-          <artifactId>maven-bundle-plugin</artifactId>
-          <extensions>true</extensions>
-          <configuration>
-            <instructions>
-              <_nouses>true</_nouses>
-              <Export-Package>javax.decorator.*;javax.enterprise.context.*;javax.enterprise.event.*;javax.enterprise.inject.*;javax.enterprise.util.*</Export-Package>
-            </instructions>
-          </configuration>
-        </plugin>
-      </plugins>
-    </build>" api
-
-%pom_xpath_set "pom:dependency[pom:groupId = 'javax.el']/pom:artifactId" javax.el-api api
-
 cd api
 # J2EE API directory
 %mvn_file :{cdi-api} %{name}/@1 javax.enterprise.inject/@1
 
 # Use newer version of interceptors API
-%pom_remove_dep "org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.1_spec"
-%pom_add_dep "org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.2_spec"
+%pom_change_dep "javax.interceptor:javax.interceptor-api" "org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.2_spec"
 
 %build
-cd api
-%mvn_build -- -Denforcer.skip
+
+(
+ cd api
+ %mvn_build -- -Denforcer.skip
+)
+
+cd spec/src/main/doc
+asciidoc -n -b html5 -a toc2 -a toclevels=3 -a pygments -f html5.conf -o ../../../../cdi-spec.html cdi-spec.asciidoc
+asciidoc -n -b html5 -a toc2 -a toclevels=3 -a pygments -f html5.conf -o ../../../../license-asl2.html license-asl2.asciidoc
+asciidoc -n -b html5 -a toc2 -a toclevels=3 -a pygments -f html5.conf -o ../../../../license-jcp.html license-jcp.asciidoc
 
 %install
 cd api
 %mvn_install
 
 build-jar-repository %{buildroot}%{_javadir}/javax.enterprise.inject/ \
-                     jboss-interceptors-1.2-api geronimo-annotation javax.inject
+                     jboss-interceptors-1.2-api glassfish-el-api javax.inject
 
 %files -f api/.mfiles
-%dir %{_javadir}/%{name}
 %{_javadir}/javax.enterprise.inject/
+%doc cdi-spec.html
+%doc license-asl2.html license-jcp.html
 
 %files javadoc -f api/.mfiles-javadoc
+%doc license-asl2.html license-jcp.html
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_4jpp8
+- new jpp release
+
 * Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_13jpp8
 - added osgi provides
 
