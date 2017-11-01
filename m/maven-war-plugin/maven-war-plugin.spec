@@ -5,12 +5,13 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Requires: xpp3-minimal
 BuildRequires: xpp3-minimal
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-war-plugin
-Version:        2.5
-Release:        alt1_4jpp8
+Version:        3.0.0
+Release:        alt1_3jpp8
 Summary:        Maven WAR Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-war-plugin/
@@ -21,23 +22,15 @@ Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(com.thoughtworks.xstream:xstream)
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-archiver)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
-BuildRequires:  mvn(org.apache.maven:maven-settings)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
-BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.shared:maven-filtering)
 BuildRequires:  mvn(org.apache.maven.shared:maven-mapping)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
@@ -69,6 +62,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_3jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_4jpp8
 - new fc release
 
