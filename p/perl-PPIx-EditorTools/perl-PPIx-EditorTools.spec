@@ -1,6 +1,6 @@
 %define dist PPIx-EditorTools
 Name: perl-PPIx-EditorTools
-Version: 0.19
+Version: 0.20
 Release: alt1
 
 Summary: PPIx::EditorTools - Utility methods and base class for manipulating Perl
@@ -8,7 +8,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SZ/SZABGAB/PPIx-EditorTools-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/Y/YA/YANICK/%{dist}-%{version}.tar.gz
 
 BuildRequires: perl-devel perl-Test-Differences perl-Class-XSAccessor perl-PPI perl-Test-Most perl-Test-Warn perl-Test-Exception perl-Test-Deep perl-Try-Tiny perl-Pod-Parser
 BuildArch: noarch
@@ -17,7 +17,7 @@ BuildArch: noarch
 %summary
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -26,10 +26,14 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
+%doc README.mkdn Changes CONTRIBUTORS README LICENSE
 %perl_vendor_privlib/PPIx/EditorTools*
 %doc Changes README
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- automated CPAN update
+
 * Mon Oct 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - automated CPAN update
 
