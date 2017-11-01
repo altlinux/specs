@@ -2,18 +2,17 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global githash f80d536912fb133d4176804d1945997e8c73894f
-
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          jackson-dataformat-csv
-Version:       2.6.3
+Version:       2.7.6
 Release:       alt1_2jpp8
 Summary:       Jackson extension for adding support for reading and writing CSV formatted data 
 License:       ASL 2.0
 URL:           http://wiki.fasterxml.com/JacksonExtensionCSV
-Source0:       https://github.com/FasterXML/jackson-dataformat-csv/archive/%{githash}/%{name}-%{githash}.tar.gz
+Source0:       https://github.com/FasterXML/jackson-dataformat-csv/archive/%{name}-%{version}.tar.gz
 
 BuildRequires: maven-local
 BuildRequires: mvn(com.fasterxml.jackson:jackson-parent:pom:)
@@ -40,25 +39,10 @@ BuildArch: noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n %{name}-%{githash}
+%setup -q -n %{name}-%{name}-%{version}
 find . -name "*.jar" -delete
 
-%pom_xpath_remove "pom:properties/pom:osgi.import"
-%pom_xpath_inject "pom:properties" "
-    <osgi.import>
-com.fasterxml.jackson.core,
-com.fasterxml.jackson.core.base,
-com.fasterxml.jackson.core.format,
-com.fasterxml.jackson.core.io,
-com.fasterxml.jackson.core.json,
-com.fasterxml.jackson.core.type,
-com.fasterxml.jackson.core.util,
-com.fasterxml.jackson.databind,
-com.fasterxml.jackson.databind.deser,
-com.fasterxml.jackson.databind.introspect,
-com.fasterxml.jackson.databind.type,
-com.fasterxml.jackson.databind.util
-</osgi.import>"
+%pom_xpath_remove "pom:properties/pom:osgi.private"
 
 sed -i 's/\r//' src/main/resources/META-INF/LICENSE
 cp -p src/main/resources/META-INF/LICENSE .
@@ -80,6 +64,9 @@ cp -p src/main/resources/META-INF/LICENSE .
 %doc LICENSE
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_2jpp8
+- new jpp release
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_2jpp8
 - new version
 
