@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-Runtime
 Name: perl-%dist
-Version: 0.015
+Version: 0.016
 Release: alt1
 
 Summary: Runtime module handling
@@ -34,6 +34,9 @@ modules, which are normally handled at compile time.
 %perl_vendor_privlib/Module
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1
+- automated CPAN update
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.015-alt1
 - automated CPAN update
 
