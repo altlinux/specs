@@ -1,10 +1,11 @@
 %define real_name zim
 Summary: A desktop wiki and outliner
 Name: zim-wiki
-Version: 0.65
+Version: 0.67
 Release: alt1
-Packager: Evgeny Sinelnikov <sin@altlinux.ru>
+Packager: Pavel Vyazovoy <paulelms@altlinux.org>
 
+#Source: https://github.com/jaap-karssenberg/zim-desktop-wiki/archive/%version.tar.gz
 Source: %name-%version.tar
 License: GPLv2
 Group: Editors
@@ -12,7 +13,7 @@ Url: http://www.zim-wiki.org/
 
 BuildRequires: python-dev
 BuildRequires: python-module-pygobject-devel
-BuildRequires: python-modules-json python-module-pygtk python-module-pyxdg xdg-utils
+BuildRequires: python-modules-json python-module-pygtk python-module-pyxdg xdg-utils python-modules-sqlite3
 Requires: python
 Requires: python-module-pygtk
 Requires: python-module-pygobject
@@ -46,16 +47,21 @@ keep track of TODO lists or to serve as a personal scratch book.
 %files -f %real_name.lang
 %doc README.txt CHANGELOG.txt LICENSE.txt
 %_bindir/%real_name
-%_datadir/%real_name/*
+%_datadir/%real_name
 %_desktopdir/%real_name.desktop
 %python_sitelibdir/*
 %_man1dir/%{real_name}*
 %_datadir/mime/*
 %_datadir/appdata/*
 %_iconsdir/hicolor/*/*/*
+%exclude %_iconsdir/ubuntu-mono-light
+%exclude %_iconsdir/ubuntu-mono-dark
 %_datadir/pixmaps/*
 
 %changelog
+* Sun Oct 15 2017 Pavel Vyazovoy <paulelms@altlinux.org> 0.67-alt1
+- Updated to 0.67.
+
 * Fri May 27 2016 Evgeny Sinelnikov <sin@altlinux.ru> 0.65-alt1
 - Update to latest release
 
