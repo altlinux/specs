@@ -2,34 +2,35 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global commit dc873a4d3eb1ae1e55d661dff8ed85ec3d8eb936
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           plexus-archiver
-Version:        3.0.1
-Release:        alt1_0.3.gitdc873a4jpp8
+Version:        3.4
+Release:        alt1_2jpp8
 Epoch:          0
 Summary:        Plexus Archiver Component
 License:        ASL 2.0
-URL:            https://github.com/codehaus-plexus/plexus-archiver
+URL:            http://codehaus-plexus.github.io/plexus-archiver
 BuildArch:      noarch
 
-Source0:        https://github.com/codehaus-plexus/plexus-archiver/archive/%{commit}/%{name}-%{shortcommit}.tar.gz
-
-# This prevents "Too many open files" when building Eclipse documentation
-# bundles inside a slow VM/mock environment
-# This problem is reported upstream: https://github.com/codehaus-plexus/plexus-archiver/issues/6
-Patch0:         0001-Avoid-using-ParallelScatterZipCreator.patch
+Source0:        https://github.com/codehaus-plexus/plexus-archiver/archive/plexus-archiver-%{version}.tar.gz
 
 BuildRequires:  maven-local
-BuildRequires:  plexus-containers-container-default
-BuildRequires:  plexus-io
-BuildRequires:  plexus-utils
-BuildRequires:  apache-commons-compress
-BuildRequires:  snappy-java
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(org.apache.commons:commons-compress)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
+BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.iq80.snappy:snappy)
+
+# Missing from xmvn-builddep
+BuildRequires:  mvn(org.tukaani:xz)
 Source44: import.info
 
 %description
@@ -51,11 +52,8 @@ Javadoc for %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{commit}
-%pom_remove_plugin :maven-shade-plugin
+%setup -q -n %{name}-%{name}-%{version}
 %mvn_file :%{name} plexus/archiver
-
-%patch0 -p1
 
 %build
 %mvn_build -f
@@ -70,6 +68,9 @@ Javadoc for %{name}.
 %doc LICENSE
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.4-alt1_2jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_0.3.gitdc873a4jpp8
 - new fc release
 
