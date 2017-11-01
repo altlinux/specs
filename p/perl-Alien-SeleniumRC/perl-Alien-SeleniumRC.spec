@@ -10,14 +10,14 @@ BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Fil
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_4
+Version:    3.6
+Release:    alt1
 
 Summary:    Packaging up SeleniumRC java server
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Alien/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/H/HI/HISSO/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(Test/More.pm)
@@ -36,7 +36,7 @@ start/stop/control any supported browser. It works by using Selenium Core,
 a pure-HTML+JS library that performs automated tasks in JavaScript.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %__perl -I. Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -49,12 +49,15 @@ a pure-HTML+JS library that performs automated tasks in JavaScript.
 %makeinstall_std
 
 %files
-%doc Changes  README SIGNATURE
+%doc Changes README SIGNATURE
 %{perl_vendor_privlib}/*
 /usr/bin/selenium-rc
 
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 3.6-alt1
+- automated CPAN update
+
 * Mon Sep 25 2017 Igor Vlasenko <viy@altlinux.ru> 2.95-alt1_4
 - update by mgaimport
 
