@@ -10,7 +10,7 @@ Name:           libUnihan
 %global         libUnihan_ver_major 0
 %global         libUnihan_ver_minor 5
 Version:        %{libUnihan_ver_major}.%{libUnihan_ver_minor}.3
-Release:        alt4_19
+Release:        alt5_19
 License:        LGPLv2+
 Summary:        C library for Unihan character database in fifth normal form 
 Summary(zh_CN): 用于符合第五正规化之统汉字(Unihan)数据库的 C 库文件
@@ -44,6 +44,7 @@ Summary:    The libUnihan C API documents in Doxygen style
 License:        LGPLv2+
 BuildRequires:  doxygen
 Requires:       %{name} = %{version}-%{release}
+BuildArch: noarch
 
 %description doc
 The libUnihan C API documents in Doxygen style.
@@ -88,6 +89,9 @@ make doxygen
 %doc %{_docdir}/%{name}/*
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt5_19
+- set doc to noarch
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt4_19
 - update to new release by fcimport
 
