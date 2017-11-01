@@ -2,25 +2,24 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(overload.pm) perl(Math/Trig.pm)
 # END SourceDeps(oneline)
-%define module_version 0.18
 %define module_name Math-LongDouble
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.18
-Release: alt1.1
+Version: 0.19
+Release: alt1
 Summary: perl module %module_name
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/S/SI/SISYPHUS/Math-LongDouble-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SI/SISYPHUS/%{module_name}-%{version}.tar.gz
 
 %description
 %summary
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +33,9 @@ Source: http://www.cpan.org/authors/id/S/SI/SISYPHUS/Math-LongDouble-%{version}.
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1.1
 - rebuild with new perl 5.24.1
 
