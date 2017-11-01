@@ -3,14 +3,15 @@ Epoch: 0
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global noupdatechecks_version 20140707gitcce19ac
 
 Name:           findbugs
 Version:        3.0.1
-Release:        alt1_6jpp8
+Release:        alt1_8jpp8
 Summary:        Find bugs in Java code
 
 Group:          Development/Other
@@ -66,11 +67,11 @@ BuildRequires:  junit
 BuildRequires:  objectweb-asm
 BuildRequires:  perl
 BuildRequires:  rpm-build-perl
-BuildRequires: /usr/bin/latex texlive-latex-recommended
+BuildRequires:  /usr/bin/latex texlive-latex-recommended
 BuildRequires:  texlive-publishers
 
 # For generating HTML version of manual using xsltproc
-BuildRequires: libxslt xsltproc
+BuildRequires:  libxslt xsltproc
 BuildRequires:  docbook-style-xsl
 
 Requires:       findbugs-bcel
@@ -94,7 +95,7 @@ bugs.
 %package -n ant-findbugs
 Group:          Development/Java
 Summary:        Ant task for findbugs
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       ant
 
 %description -n ant-findbugs
@@ -112,7 +113,7 @@ Javadoc documentation for findbugs.
 %package tools
 Group:          Development/Other
 Summary:        Addon tools for findbugs
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       junit
 
 %description tools
@@ -240,6 +241,9 @@ fi ||:
 %{_javadir}/findbugs-tools.jar
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_8jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_6jpp8
 - new fc release
 
