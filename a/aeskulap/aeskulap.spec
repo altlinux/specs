@@ -2,22 +2,17 @@
 
 Name: aeskulap
 Version: 0.2.2
-Release: alt2.1.qa3.1
+Release: alt3.git2ac922d
 
 Summary: Medial image viewer for DICOM images
 License: GPL/LGPL
 Group: Graphics
 
 Url: http://aeskulap.nongnu.org
+# Git https://github.com/jenslody/aeskulap
+Source: %name-%version.tar
 
-Packager: Andrey Yurkovsky <anyr@altlinux.org>
-Source: %name-%version.tar.gz
-Patch0: aeskulap-gcc4.patch
-Patch1: aeskulap-dcmtk.patch
-Patch2: aeskulap-i18n_pt.patch
-Patch3: aeskulap-0.2.2-alt-DSO.patch
-
-Requires: dcmtk, libdcmtk
+Requires: dcmtk, libdcmtk, GConf
 BuildPreReq: gcc-c++, zlib-devel, libpng-devel, libtiff-devel
 BuildPreReq: libxml2-devel, libwrap-devel, libssl-devel
 BuildPreReq: libgtkmm2-devel, libglademm-devel, libgconfmm2-devel
@@ -37,14 +32,8 @@ any platform were these packages are available.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p2
 
 %build
-rm -rf COPYING.DCMTK dcmtk
-touch NEWS
 %autoreconf
 %configure
 
@@ -61,12 +50,16 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_bindir/aeskulap
 %_datadir/aeskulap/*
 %_datadir/applications/aeskulap.desktop
+%_datadir/appdata/*
 %_libdir/aeskulap/*
-%_liconsdir/*.*
+%_iconsdir/*/*/*
 %config %_sysconfdir/gconf/schemas/aeskulap.schemas
 %doc ABOUT-NLS AUTHORS ChangeLog COPYING COPYING.LIB NEWS README
 
 %changelog
+* Wed Nov 01 2017 Anton Farygin <rider@altlinux.ru> 0.2.2-alt3.git2ac922d
+- build from new upstream git
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.2-alt2.1.qa3.1
 - Rebuilt for gcc5 C++11 ABI.
 
