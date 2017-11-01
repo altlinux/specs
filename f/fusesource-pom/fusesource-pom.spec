@@ -3,12 +3,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:             fusesource-pom
 Version:          1.9
-Release:          alt1_13jpp8
+Release:          alt1_14jpp8
 Summary:          Parent POM for FuseSource Maven projects
 License:          ASL 2.0
 URL:              http://fusesource.com/
@@ -17,8 +18,6 @@ Source1:          http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-BuildRequires:    mvn(org.apache.maven.plugins:maven-scm-plugin)
-BuildRequires:    mvn(org.apache.maven.scm:maven-scm-provider-gitexe)
 Source44: import.info
 
 %description
@@ -30,6 +29,7 @@ cp %{SOURCE0} pom.xml
 cp -p %{SOURCE1} LICENSE
 
 %pom_remove_plugin :clirr-maven-plugin
+%pom_remove_plugin :maven-scm-plugin
 
 # WebDAV wagon is not available in Fedora.
 %pom_xpath_remove "pom:extension[pom:artifactId[text()='wagon-webdav-jackrabbit']]"
@@ -44,6 +44,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt1_14jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt1_13jpp8
 - new fc release
 
