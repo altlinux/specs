@@ -3,39 +3,45 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           jboss-parent
-Version:        11
-Release:        alt3_7jpp8
+Version:        20
+Release:        alt1_2jpp8
 Summary:        JBoss Parent POM
-License:        Public Domain
+License:        CC0
 URL:            http://www.jboss.org/
 BuildArch:      noarch
 
-Source0:        https://github.com/jboss/jboss-parent-pom/archive/86bff326310a192ef657d893fa8e96ebd33e1ae4.tar.gz
+Source0:        https://github.com/jboss/jboss-parent-pom/archive/%{name}-%{version}.tar.gz
+Source1:        http://repository.jboss.org/licenses/cc0-1.0.txt
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.sun:tools)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 Source44: import.info
 
 %description
 The Project Object Model files for JBoss packages.
 
 %prep
-%setup -n jboss-parent-pom-86bff326310a192ef657d893fa8e96ebd33e1ae4
+%setup -q -n %{name}-pom-%{name}-%{version}
 
+# NOT available plugins
 %pom_remove_plugin :maven-clover2-plugin
+%pom_remove_plugin :cobertura-maven-plugin
 %pom_remove_plugin :findbugs-maven-plugin
-%pom_remove_plugin :sonar-maven-plugin
 %pom_remove_plugin :javancss-maven-plugin
+%pom_remove_plugin :jdepend-maven-plugin
+%pom_remove_plugin :license-maven-plugin
+%pom_remove_plugin :sonar-maven-plugin
 
-%pom_remove_dep com.sun:tools
-%pom_add_dep com.sun:tools
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :buildnumber-maven-plugin
+
+cp -p %SOURCE1 LICENSE
+sed -i 's/\r//' LICENSE
 
 %build
 %mvn_build
@@ -45,8 +51,12 @@ The Project Object Model files for JBoss packages.
 
 %files -f .mfiles
 %doc README.md
+%doc LICENSE
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:20-alt1_2jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:11-alt3_7jpp8
 - new fc release
 
