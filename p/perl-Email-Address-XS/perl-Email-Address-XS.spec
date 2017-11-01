@@ -6,14 +6,14 @@ BuildRequires: perl(Carp.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.00
-Release: alt2
+Version: 1.01
+Release: alt1
 Summary: Parse and format RFC 2822 email addresses and groups
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PA/PALI/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PA/PALI/%{module_name}-%{version}.tar.gz
 
 %description
 This module implements RFC 2822
@@ -59,6 +59,9 @@ instead of the Email::Address::List module.
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1
+- automated CPAN update
+
 * Sun Oct 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.00-alt2
 - to Sisyphus
 
