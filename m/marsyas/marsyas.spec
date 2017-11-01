@@ -1,6 +1,6 @@
 Name: marsyas
 Version: 0.6.0
-Release: alt1.alpha.git20150301.1
+Release: alt1.alpha.git20150301.2
 Summary: Music Analysis, Retrieval and Synthesis for Audio Signals
 License: GPLv2
 Group: Sound
@@ -165,6 +165,9 @@ rm -f doc/CMakeLists.txt
 %doc MIREX doc/*.txt doc/examples doc/out-www
 
 %changelog
+* Wed Nov 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.0-alt1.alpha.git20150301.2
+- Fixed build with new librtmidi.
+
 * Wed Sep 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.0-alt1.alpha.git20150301.1
 - Updated build dependencies.
 - Rebuilt for new gcc abi.
