@@ -1,14 +1,22 @@
 Group: Development/Java
-%filter_from_requires /^java-headless/d
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 0.2.11
+%global git_tag mchange-commons-java-%{version}
+
 Name:          mchange-commons
-Version:       0.2.7
-Release:       alt1_4jpp8
+Version:       0.2.11
+Release:       alt1_1jpp8
 Summary:       A collection of general purpose utilities for c3p0
 License:       LGPLv2 or EPL
 URL:           https://github.com/swaldman/mchange-commons-java
-Source0:       https://github.com/swaldman/mchange-commons-java/archive/mchange-commons-java-%{version}-final.tar.gz
+Source0:       https://github.com/swaldman/mchange-commons-java/archive/%{git_tag}/mchange-commons-%{version}.tar.gz
 Source1:       https://raw.github.com/willb/climbing-nemesis/master/climbing-nemesis.py
 
 # There is a missing dep in Fedora so cannot build tests
@@ -38,7 +46,7 @@ BuildArch: noarch
 %{summary}.
 
 %prep
-%setup -q -n %{name}-java-%{name}-java-%{version}-final
+%setup -q -n mchange-commons-java-%{git_tag}
 
 %patch0
 
@@ -48,8 +56,7 @@ find -name '*.jar' -delete
 cp %{SOURCE1} .
 chmod 755 climbing-nemesis.py
 
-# Fix java8doc task
-sed -i 's|Seq("-source","1.6")|Seq("-source","1.6","-Xdoclint:none")|' project/Build.scala
+sed -i -e 's/0.13.6/0.13.1/' project/build.properties
 
 cp -pr /usr/share/sbt/ivy-local .
 
@@ -59,10 +66,9 @@ rm ivy-local/org.fusesource.hawtjni/hawtjni-runtime/1.8/hawtjni-runtime-1.8.jar
 ln -s $(build-classpath hawtjni/hawtjni-runtime) ivy-local/org.fusesource.hawtjni/hawtjni-runtime/1.8/hawtjni-runtime-1.8.jar
 
 # XXX: Link deps, I understand this is a temp measure until sbt gains real xmvn integration
-./climbing-nemesis.py com.typesafe config ivy-local --version 1.0.0
-# XXX: Have to specify exact pom here in case log4j2's compat api gets resolved instead
-./climbing-nemesis.py log4j log4j ivy-local --version 1.2.14 --pom /usr/share/maven-poms/log4j12-*.pom --ignore ant --ignore junit --ignore sun.jdk
-./climbing-nemesis.py org.slf4j slf4j-api ivy-local --version 1.7.5
+./climbing-nemesis.py com.typesafe config any ivy-local --version 1.2.1
+./climbing-nemesis.py log4j log4j 12 ivy-local --version 1.2.14
+./climbing-nemesis.py org.slf4j slf4j-api any ivy-local --version 1.7.5
 
 export SBT_BOOT_DIR=$PWD/boot
 export SBT_IVY_DIR=$PWD/ivy-local
@@ -80,6 +86,9 @@ sbt package make-pom doc
 %doc LICENSE*
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.11-alt1_1jpp8
+- new jpp release
+
 * Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.7-alt1_4jpp8
 - unbootstrap build
 
