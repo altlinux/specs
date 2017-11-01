@@ -3,24 +3,23 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 24
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%if 0%{?fedora}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %bcond_without itext
 %bcond_without markdown
-%endif
+%bcond_without fop
 
 Name:           maven-doxia
-Version:        1.6
-Release:        alt1_5jpp8
+Version:        1.7
+Release:        alt1_2jpp8
 Epoch:          0
 Summary:        Content generation framework
 License:        ASL 2.0
@@ -35,14 +34,11 @@ Patch1:         0001-Fix-itext-dependency.patch
 # Forwarded upstream: DOXIA-504
 Patch2:         0002-Update-to-Plexus-Container-1.5.5.patch
 
-# Accepted upstream: DOXIA-505
-Patch3:         0003-Update-to-Commons-Collections-1.10.patch
-
 # Don't run bad tests which rely on ordering in set (they fail with Java 8)
-Patch4:         0004-Disable-tests-which-rely-on-ordering-in-set.patch
+Patch3:         0003-Disable-tests-which-rely-on-ordering-in-set.patch
 
 # Not upstreamable due to higher Java version of fop's dependencies
-Patch5:         0005-Port-to-fop-2.0.patch
+Patch4:         0004-Port-to-fop-2.0.patch
 
 BuildArch:      noarch
 
@@ -62,7 +58,9 @@ BuildRequires:  mvn(org.apache.maven.doxia:doxia:pom:)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-test-docs)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
+%if %{with fop}
 BuildRequires:  mvn(org.apache.xmlgraphics:fop)
+%endif
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
@@ -132,12 +130,14 @@ Summary: FML module for %{name}
 %description module-fml
 This package provides %{summary}.
 
+%if %{with fop}
 %package module-fo
 Group: Development/Java
 Summary: FO module for %{name}
 
 %description module-fo
 This package provides %{summary}.
+%endif
 
 %if %{with itext}
 %package module-itext
@@ -216,6 +216,7 @@ This package provides %{summary}.
 %package test-docs
 Group: Development/Java
 Summary: Test-docs module for %{name}
+BuildArch: noarch
 
 %description test-docs
 This package provides %{summary}.
@@ -235,15 +236,20 @@ API documentation for %{name}.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
 # we don't have clirr-maven-plugin
 %pom_remove_plugin org.codehaus.mojo:clirr-maven-plugin pom.xml
+
+# complains
+%pom_remove_plugin :apache-rat-plugin
 
 # use java 5 generics in modello plugin
 %pom_xpath_inject "pom:plugin[pom:artifactId[text()='modello-maven-plugin']]"\
 "/pom:executions/pom:execution/pom:configuration" \
 "<useJava5>true</useJava5>" doxia-modules/doxia-module-fml/pom.xml
+
+# requires network
+rm doxia-core/src/test/java/org/apache/maven/doxia/util/XmlValidatorTest.java
 
 %mvn_package :::tests: tests
 
@@ -252,6 +258,9 @@ API documentation for %{name}.
 %endif
 %if %{without markdown}
 %pom_disable_module doxia-module-markdown doxia-modules
+%endif
+%if %{without fop}
+%pom_disable_module doxia-module-fo doxia-modules
 %endif
 
 %build
@@ -271,7 +280,9 @@ API documentation for %{name}.
 %files module-confluence -f .mfiles-doxia-module-confluence
 %files module-docbook-simple -f .mfiles-doxia-module-docbook-simple
 %files module-fml -f .mfiles-doxia-module-fml
+%if %{with fop}
 %files module-fo -f .mfiles-doxia-module-fo
+%endif
 %if %{with itext}
 %files module-itext -f .mfiles-doxia-module-itext
 %endif
@@ -293,6 +304,9 @@ API documentation for %{name}.
 
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_2jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_5jpp8
 - new fc release
 
