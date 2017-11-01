@@ -2,37 +2,36 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           mojo-parent
-Version:        39
-Release:        alt1_1jpp8
+Version:        40
+Release:        alt1_4jpp8
 Summary:        Codehaus MOJO parent project pom file
 
 License:        ASL 2.0
-URL:            http://mojo.codehaus.org/
-Source0:        http://repo1.maven.org/maven2/org/codehaus/mojo/%{name}/%{version}/%{name}-%{version}-source-release.zip
+URL:            http://www.mojohaus.org/mojo-parent/
+Source0:        https://github.com/mojohaus/mojo-parent/archive/%{name}-%{version}.tar.gz
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  codehaus-parent
-BuildRequires:  maven-checkstyle-plugin
-BuildRequires:  maven-site-plugin
 Source44: import.info
 
 %description
 Codehaus MOJO parent project pom file
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{name}-%{version}
 # Cobertura plugin is executed only during clean Maven phase.
 %pom_remove_plugin :cobertura-maven-plugin
 # Not needed in Fedora.
 %pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :maven-checkstyle-plugin
 
 cp %SOURCE1 .
 
@@ -47,6 +46,9 @@ cp %SOURCE1 .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:40-alt1_4jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:39-alt1_1jpp8
 - new version
 
