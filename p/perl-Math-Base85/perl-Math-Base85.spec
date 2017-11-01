@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Math-Base85
-Version: 0.2
+Version: 0.4
 Release: alt1
 
 Summary: Perl extension for base 85 numbers, as referenced by RFC 1924
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/T/TM/TMONROE/%m_distro-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PT/PTC/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Nov 07 2009
 BuildRequires: perl-Math-BigInt perl-devel
@@ -51,7 +51,7 @@ Additionally, the following two functions are defined for general
 use.  (They will be exported upon request.)
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -60,9 +60,13 @@ use.  (They will be exported upon request.)
 rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
+%doc README.md Changes rfc1924.txt LICENSE
 %perl_vendor_privlib/Math/*
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1
+- automated CPAN update
+
 * Sat Nov 07 2009 Denis Smirnov <mithraen@altlinux.ru> 0.2-alt1
 - initial build for ALT Linux Sisyphus
 
