@@ -10,8 +10,8 @@ BuildRequires: jpackage-generic-compat
 %global short_name      commons-cli
 
 Name:             apache-%{short_name}
-Version:          1.3.1
-Release:          alt1_6jpp8
+Version:          1.4
+Release:          alt1_2jpp8
 Summary:          Command Line Interface Library for Java
 License:          ASL 2.0
 URL:              http://commons.apache.org/cli/
@@ -32,7 +32,7 @@ Conflicts: jakarta-%{short_name} < 1:%{version}-%{release}
 Provides: jakarta-commons-cli = %version
 
 %description
-The CLI library provides a simple and easy to use API for working with the 
+The CLI library provides a simple and easy to use API for working with the
 command line arguments and options.
 
 %package javadoc
@@ -65,6 +65,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_2jpp8
+- new jpp release
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt1_6jpp8
 - new jpp release
 
