@@ -2,24 +2,24 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name springframework
-%define version 3.2.15
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 3.2.18
 %global namedreltag .RELEASE
 %global namedversion %{version}%{?namedreltag}
 
 Name:          springframework
-Version:       3.2.15
-Release:       alt1_3jpp8
+Version:       3.2.18
+Release:       alt1_2jpp8
 Summary:       Spring Java Application Framework
 Epoch:         0
 License:       ASL 2.0
 URL:           http://projects.spring.io/spring-framework/
 
-Source0:       https://github.com/spring-projects/spring-framework/archive/v%{namedversion}.tar.gz
+Source0:       https://github.com/spring-projects/spring-framework/archive/v%{namedversion}/%{name}-%{namedversion}.tar.gz
 
 Source101:     springframework-%{namedversion}.pom
 Source102:     http://repo1.maven.org/maven2/org/%{name}/spring-core/%{namedversion}/spring-core-%{namedversion}.pom
@@ -43,6 +43,7 @@ Source119:     http://repo1.maven.org/maven2/org/%{name}/spring-webmvc-portlet/%
 # Customized pom file
 # Some project use these classes.
 Source120:     spring-test-mvc-%{namedversion}.pom
+Source121:     spring-orm-hibernate4-template.pom
 
 Patch0:        springframework-3.2.6-java.io.IOException-is-never-thrown.patch
 Patch1:        springframework-3.2.6-port-spring-jms-to-javax.resources-1.7.patch
@@ -55,6 +56,8 @@ Patch6:        springframework-3.2.13-derby.patch
 # jopt-simple 4.6 support
 Patch7:        springframework-3.2.14-jopt-simple.patch
 Patch8:        springframework-3.2.14-build-with-tomcat8.patch
+# Hibernate 4.3+ and for JTA 1.1 support
+Patch9:        springframework-3.2.18-hibernate4.3.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(aopalliance:aopalliance)
@@ -64,6 +67,7 @@ BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
 BuildRequires:  mvn(com.h2database:h2)
 BuildRequires:  mvn(com.jamonapi:jamon)
 BuildRequires:  mvn(com.lowagie:itext)
+BuildRequires:  mvn(com.rometools:rome)
 BuildRequires:  mvn(commons-beanutils:commons-beanutils)
 BuildRequires:  mvn(commons-fileupload:commons-fileupload)
 BuildRequires:  mvn(commons-httpclient:commons-httpclient)
@@ -93,6 +97,7 @@ BuildRequires:  mvn(net.sf.ehcache:ehcache-core)
 BuildRequires:  mvn(net.sourceforge.jexcelapi:jxl)
 BuildRequires:  mvn(org.apache.derby:derby)
 BuildRequires:  mvn(org.apache.derby:derbyclient)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-interceptor_3.0_spec)
 BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-jms_1.1_spec)
 BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-jta_1.1_spec)
@@ -125,10 +130,13 @@ BuildRequires:  mvn(org.eclipse.persistence:org.eclipse.persistence.core)
 BuildRequires:  mvn(org.eclipse.persistence:org.eclipse.persistence.jpa)
 BuildRequires:  mvn(org.freemarker:freemarker)
 BuildRequires:  mvn(org.hamcrest:hamcrest-core)
+BuildRequires:  mvn(org.hibernate:hibernate-core:4)
 BuildRequires:  mvn(org.hibernate:hibernate-core:3)
+BuildRequires:  mvn(org.hibernate:hibernate-entitymanager:4)
 BuildRequires:  mvn(org.hibernate:hibernate-entitymanager:3)
 BuildRequires:  mvn(org.hibernate:hibernate-validator)
 BuildRequires:  mvn(org.hibernate.javax.persistence:hibernate-jpa-2.0-api)
+BuildRequires:  mvn(org.hibernate.javax.persistence:hibernate-jpa-2.1-api)
 BuildRequires:  mvn(org.jboss.spec.javax.resource:jboss-connector-api_1.7_spec)
 BuildRequires:  mvn(org.jibx:jibx-run)
 BuildRequires:  mvn(org.jruby.extras:bytelist)
@@ -137,7 +145,6 @@ BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.quartz-scheduler:quartz)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.testng:testng)
-BuildRequires:  mvn(rome:rome)
 BuildRequires:  mvn(toplink.essentials:toplink-essentials)
 BuildRequires:  mvn(velocity-tools:velocity-tools-view)
 BuildRequires:  mvn(velocity:velocity)
@@ -147,6 +154,9 @@ BuildRequires:  mvn(javax.servlet:jstl)
 BuildRequires:  mvn(org.apache.taglibs:taglibs-standard-spec)
 BuildRequires:  mvn(com.jayway.jsonpath:json-path)
 BuildRequires:  mvn(net.sf.jopt-simple:jopt-simple)
+BuildRequires:  xmvn
+
+Obsoletes:     %{name}-instrument-tomcat
 
 BuildArch:     noarch
 Source44: import.info
@@ -213,14 +223,13 @@ The Spring Instrumentation Framework exposes performance and
 resource utilization metrics for the Spring container and
 gives you runtime control of the container.
 
-%package instrument-tomcat
-Group: Development/Java
-Summary:       Spring Instrument Tomcat Weaver
+#%%package instrument-tomcat
+#Summary:       Spring Instrument Tomcat Weaver
 
-%description instrument-tomcat
-Extension of Tomcat's default class loader which
-adds instrumentation to loaded classes without the
-need to use a VM-wide agent.
+#%%description instrument-tomcat
+#Extension of Tomcat's default class loader which
+#adds instrumentation to loaded classes without the
+#need to use a VM-wide agent.
 
 %package jdbc
 Group: Development/Java
@@ -244,6 +253,13 @@ Summary:       Spring ORM
 %description orm
 This package provide JDO support, JPA support, Hibernate
 support, TopLink support.
+
+%package orm-hibernate4
+Group: Development/Java
+Summary:       Spring ORM Hibernate 4 Support
+
+%description orm-hibernate4
+This package provide Hibernate 4 support.
 
 %package oxm
 Group: Development/Java
@@ -326,7 +342,7 @@ find -name "*.jar" -print -delete
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-
+%patch9 -p1
 
 cp %{SOURCE101} pom.xml
 cp %{SOURCE102} spring-core/pom.xml
@@ -338,7 +354,10 @@ cp %{SOURCE107} spring-beans/pom.xml
 cp %{SOURCE108} spring-orm/pom.xml
 cp %{SOURCE109} spring-test/pom.xml
 cp %{SOURCE110} spring-context-support/pom.xml
-cp %{SOURCE111} spring-instrument-tomcat/pom.xml
+
+%pom_disable_module spring-instrument-tomcat
+#cp %%{SOURCE111} spring-instrument-tomcat/pom.xml
+
 cp %{SOURCE112} spring-jdbc/pom.xml
 cp %{SOURCE113} spring-jms/pom.xml
 cp %{SOURCE114} spring-tx/pom.xml
@@ -348,10 +367,16 @@ cp %{SOURCE117} spring-struts/pom.xml
 cp %{SOURCE118} spring-webmvc/pom.xml
 cp %{SOURCE119} spring-webmvc-portlet/pom.xml
 cp %{SOURCE120} spring-test-mvc/pom.xml
+cp %{SOURCE121} spring-orm-hibernate4/pom.xml
+sed -i "s|@VERSION@|%{namedversion}|" spring-orm-hibernate4/pom.xml
+%pom_xpath_inject pom:modules "<module>spring-orm-hibernate4</module>"
+%pom_change_dep -r org.hibernate: ::4 spring-orm-hibernate4
 
 # do not generate R on hiberante4, we use version 3
 %pom_remove_dep :hibernate-entitymanager spring-orm
 %pom_add_dep org.hibernate:hibernate-entitymanager:3 spring-orm
+%pom_remove_dep :hibernate-core spring-orm
+%pom_add_dep org.hibernate:hibernate-core:3 spring-orm
 
 %pom_remove_dep struts:struts spring-struts
 %pom_add_dep org.apache.struts:struts-core spring-struts
@@ -360,6 +385,8 @@ cp %{SOURCE120} spring-test-mvc/pom.xml
 
 # remove optional/missing deps
 %pom_remove_dep org.apache.tiles:tiles-extras spring-webmvc
+%pom_change_dep :tiles-el ::2.1.2 spring-webmvc
+%pom_remove_dep ::3.0.4 spring-webmvc
 
 # build against connector-api 1.7 instead of 1.5
 %pom_remove_dep javax.resource:connector-api spring-tx
@@ -394,10 +421,10 @@ rm -rf spring-orm/src/main/java/org/springframework/orm/ibatis/*
 %pom_add_dep hsqldb:hsqldb:1 spring-jdbc
 
 # use tomcat 7 lib
-%pom_remove_dep org.apache.tomcat:catalina spring-instrument-tomcat
-%pom_add_dep org.apache.tomcat:tomcat-catalina spring-instrument-tomcat
+#%% pom_remove_dep org.apache.tomcat:catalina spring-instrument-tomcat
+#%% pom_add_dep org.apache.tomcat:tomcat-catalina spring-instrument-tomcat
 
-# missing dep jcache
+# missing dep jcache TODO use geronimo-jcache
 rm -Rf spring-context-support/src/main/java/org/springframework/cache/jcache/
 %pom_remove_dep javax.cache:cache-api spring-context-support
 
@@ -422,7 +449,7 @@ done
 %pom_add_dep org.jruby.extras:bytelist spring-context
 
 %pom_remove_dep :persistence-api spring-orm
-%pom_add_dep org.hibernate.javax.persistence:hibernate-jpa-2.0-api spring-context
+%pom_add_dep org.hibernate.javax.persistence:hibernate-jpa-2.0-api spring-orm
 %pom_remove_dep javax.servlet:servlet-api spring-orm
 %pom_add_dep org.apache.tomcat:tomcat-servlet-api spring-context
 
@@ -457,6 +484,12 @@ find ./ -name "*.java" -exec sed -i "s/org.springframework.asm/org.objectweb.asm
 find ./ -name "*.java" -exec sed -i "s/org.springframework.cglib/net.sf.cglib/g" {} +
 find ./ -name "*.java" -exec sed -i "/edu.emory.mathcs.backport/d" {} +
 
+%pom_change_dep -r :rome com.rometools: spring-test-mvc spring-web spring-webmvc
+find ./spring-test-mvc -name "*.java" -exec sed -i "s/com.sun.syndication/com.rometools.rome/g" {} + 
+find ./spring-web -name "*.java" -exec sed -i "s/com.sun.syndication/com.rometools.rome/g" {} +
+find ./spring-webmvc -name "*.java" -exec sed -i "s/com.sun.syndication/com.rometools.rome/g" {} +
+
+
 rm spring-context/src/main/java/org/springframework/scheduling/backportconcurrent/*
 
 # copy license and notice file
@@ -484,6 +517,7 @@ mkdir -p spring-webmvc-portlet/src/main/resources/org/springframework/web/portle
 cp -p spring-webmvc-portlet/src/main/java/org/springframework/web/portlet/DispatcherPortlet.properties \
  spring-webmvc-portlet/src/main/resources/org/springframework/web/portlet/
 
+#  instrument-tomcat
 for p in aop \
  beans \
  context \
@@ -491,7 +525,6 @@ for p in aop \
  core \
  expression \
  instrument \
- instrument-tomcat \
  jdbc \
  jms \
  orm \
@@ -523,7 +556,27 @@ for p in aop \
    </execution>
  </executions>"
 done
- 
+
+%pom_xpath_inject "pom:project" "<packaging>bundle</packaging>" spring-orm-hibernate4
+%pom_add_plugin org.apache.felix:maven-bundle-plugin:2.5.4 spring-orm-hibernate4 "
+<extensions>true</extensions>
+ <configuration>
+  <instructions>
+    <Bundle-SymbolicName>\${project.groupId}.orm.hibernate4</Bundle-SymbolicName>
+    <Bundle-Name>\${project.name}</Bundle-Name>
+    <Bundle-Version>\${project.version}</Bundle-Version>
+  </instructions>
+ </configuration>
+ <executions>
+  <execution>
+    <id>bundle-manifest</id>
+    <phase>process-classes</phase>
+    <goals>
+      <goal>manifest</goal>
+    </goals>
+  </execution>
+</executions>"
+
 %mvn_package ":spring-core" %{name}
 %mvn_package :spring-project __noinstall
 
@@ -547,11 +600,12 @@ done
 %files expression -f .mfiles-spring-expression
 %files instrument -f .mfiles-spring-instrument
 %doc license.txt  notice.txt
-%files instrument-tomcat -f .mfiles-spring-instrument-tomcat
-%doc license.txt  notice.txt
+#%%files instrument-tomcat -f .mfiles-spring-instrument-tomcat
+#%%license license.txt  notice.txt
 %files jdbc -f .mfiles-spring-jdbc
 %files jms -f .mfiles-spring-jms
 %files orm -f .mfiles-spring-orm
+%files orm-hibernate4 -f .mfiles-spring-orm-hibernate4
 %files oxm -f .mfiles-spring-oxm
 %files struts -f .mfiles-spring-struts
 %files test -f .mfiles-spring-test
@@ -563,6 +617,9 @@ done
 
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.2.18-alt1_2jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.2.15-alt1_3jpp8
 - new fc release
 
