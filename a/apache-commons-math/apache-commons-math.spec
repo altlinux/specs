@@ -2,28 +2,29 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 25
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global short_name commons-math3
 
 Name:             apache-commons-math
 Version:          3.4.1
-Release:          alt1_3jpp8
+Release:          alt1_6jpp8
 Summary:          Java library of lightweight mathematics and statistics components
 Group:            Development/Other
 License:          ASL 1.1 and ASL 2.0 and BSD
 URL:              http://commons.apache.org/math/
 Source0:          http://www.apache.org/dist/commons/math/source/%{short_name}-%{version}-src.tar.gz
+# Fix random build self-test failures reported on RHBZ #1402145 (see
+# https://git1-us-west.apache.org/repos/asf?p=commons-math.git;a=commit;h=a9006aa)
+Patch1:           %{name}-3.4.1-RHBZ1402145.patch
 
 BuildRequires:    java-devel >= 1.6.0
 BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 
-%if 0%{?fedora} >= 21
-BuildRequires:    mvn(org.jacoco:jacoco-maven-plugin) >= 0.7.0
-%endif
+BuildRequires:    mvn(org.apache.commons:commons-parent:pom:)
 Requires:         jpackage-utils
 BuildArch:        noarch
 Source44: import.info
@@ -45,15 +46,11 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
+%patch1 -p1
 
 # Compatibility links
 %mvn_alias "org.apache.commons:%{short_name}" "%{short_name}:%{short_name}"
 %mvn_file :%{short_name} %{short_name} %{name}
-
-# Disable Jacoco Maven plugin for Fedora releases having jacoco < 0.7.0
-%if 0%{?fedora} < 21
-rm src/site/resources/profile.jacoco
-%endif
 
 # Disable maven-jgit-buildnumber-plugin plugin (not available in Fedora)
 %pom_remove_plugin ru.concerteza.buildnumber:maven-jgit-buildnumber-plugin
@@ -76,6 +73,9 @@ rm src/site/resources/profile.jacoco
 
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.4.1-alt1_6jpp8
+- new jpp release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.4.1-alt1_3jpp8
 - new fc release
 
