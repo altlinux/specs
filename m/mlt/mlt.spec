@@ -18,7 +18,7 @@
 
 Name: mlt
 Version: 6.4.1
-Release: alt3%ubt
+Release: alt4%ubt
 
 Summary: Multimedia framework designed for television broadcasting
 License: GPLv3
@@ -33,6 +33,7 @@ Patch1: mlt-0.9.2-alt-configure-mmx.patch
 Patch2: mlt-0.9.0-alt-no-version-script.patch
 # SuSE
 Patch10: libmlt-0.8.2-vdpau.patch
+Patch11: rem_close.patch
 # Debian
 Patch20: 01-changed-preset-path.diff
 Patch21: 01-crash-affine.diff
@@ -109,6 +110,7 @@ This module allows to work with %Name using python..
 %patch1 -p1
 %patch2 -p1
 %patch10 -p0
+%patch11 -p1
 %if %is_ffmpeg
 %else
 %patch20 -p1
@@ -190,6 +192,9 @@ install -pm 0755 src/swig/python/_%name.so %buildroot%python_sitelibdir/
 %_pkgconfigdir/mlt++.pc
 
 %changelog
+* Wed Nov 01 2017 Sergey V Turchin <zerg@altlinux.org> 6.4.1-alt4%ubt
+- Allow Mlt::Repository to be deleted without bad side effect (ALT#34108)
+
 * Tue Jun 20 2017 Sergey V Turchin <zerg@altlinux.org> 6.4.1-alt3%ubt
 - fix find ffmpeg presets
 - update Debian patches
