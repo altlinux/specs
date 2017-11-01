@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/valgrind
 %define _localstatedir %{_var}
 Name:           libfishsound
 Version:        1.0.0
-Release:        alt3_14
+Release:        alt4_14
 Summary:        Simple programming interface for Xiph.Org codecs
 
 Group:          System/Libraries
@@ -45,6 +45,7 @@ Summary:        Documentation for %{name}
 Group:          Documentation
 # note: intentionally not noarch; contains a target-specific Makefile
 Requires:       %{name} = %{version}-%{release}
+BuildArch: noarch
 
 %description    doc
 The %{name}-doc package contains the documentation for %{name}.
@@ -110,6 +111,9 @@ mv src/examples .
 
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt4_14
+- set doc to noarch
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_14
 - update to new release by fcimport
 
