@@ -2,7 +2,7 @@
 %define dist Package-DeprecationManager
 Name: perl-%dist
 Version: 0.17
-Release: alt1
+Release: alt2
 
 Summary: Manage deprecation warnings for your distribution
 License: GPL or Artistic
@@ -15,6 +15,7 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Sun Jan 09 2011
 BuildRequires: perl-List-MoreUtils perl-Test-Fatal perl-Test-Output perl-Test-Requires perl(Test/Warnings.pm) perl(Package/Stash.pm) perl(namespace/autoclean.pm) perl(Sub/Name.pm)
+BuildRequires: perl(Params/Util.pm) perl(Sub/Install.pm)
 
 %description
 This module allows you to manage a set of deprecations for one or more modules.
@@ -33,6 +34,9 @@ This module allows you to manage a set of deprecations for one or more modules.
 %perl_vendor_privlib/Package*
 
 %changelog
+* Thu Aug 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.17-alt2
+- Updated build dependencies.
+
 * Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - automated CPAN update
 
