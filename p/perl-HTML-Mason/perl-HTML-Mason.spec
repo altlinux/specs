@@ -16,7 +16,7 @@
 %define _enable_test 1
 
 Name: perl-HTML-Mason
-Version: 1.56
+Version: 1.58
 Release: alt1
 
 Summary: HTML-Mason - Perl module
@@ -28,7 +28,7 @@ Url: %CPAN %m_distro
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/HTML-Mason-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DR/DROLSKY/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Nov 19 2009
 BuildRequires: perl-Cache-Cache perl-HTML-Mason perl-Log-Agent perl-Module-Build perl-Switch perl-Test-Pod perl-libwww perl(Log/Any/Test.pm) perl(Test/Deep.pm)
@@ -64,7 +64,7 @@ that's why most people are interested in it, that is the focus of this
 documentation.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -77,11 +77,14 @@ rm -f %buildroot%perl_vendor_privlib/HTML/Mason/Apache/Request.pm
 rm -f %buildroot%_bindir/*
 
 %files
-%doc README.md Changes
+%doc README.md Changes CONTRIBUTING.md CREDITS
 %perl_vendor_privlib/HTML/
 #perl_vendorlib/Bundle/
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.58-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.56-alt1
 - automated CPAN update
 
