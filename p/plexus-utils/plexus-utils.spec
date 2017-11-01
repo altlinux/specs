@@ -5,12 +5,13 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           plexus-utils
-Version:        3.0.22
-Release:        alt2_3jpp8
+Version:        3.0.24
+Release:        alt1_3jpp8
 Summary:        Plexus Common Utilities
 # ASL 1.1: several files in src/main/java/org/codehaus/plexus/util/ 
 # xpp: src/main/java/org/codehaus/plexus/util/xml/pull directory
@@ -21,14 +22,16 @@ Summary:        Plexus Common Utilities
 # Public domain: src/main/java/org/codehaus/plexus/util/TypeFormat.java
 # rest is ASL 2.0
 License:        ASL 1.1 and ASL 2.0 and xpp and BSD and Public Domain
-URL:            https://github.com/codehaus-plexus/plexus-utils
+URL:            https://codehaus-plexus.github.io/plexus-utils/
 BuildArch:      noarch
 
 Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
 Source1:        http://apache.org/licenses/LICENSE-2.0.txt
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 Source44: import.info
 
 %description
@@ -83,6 +86,9 @@ cp %{SOURCE1} .
 %doc NOTICE.txt LICENSE-2.0.txt
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.0.24-alt1_3jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.0.22-alt2_3jpp8
 - new fc release
 
