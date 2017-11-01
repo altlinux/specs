@@ -3,31 +3,35 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-compiler-plugin
-Version:        3.5.1
-Release:        alt1_4jpp8
+Version:        3.6.1
+Release:        alt1_2jpp8
 Summary:        Maven Compiler Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-compiler-plugin
 BuildArch:      noarch
 
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source0:        http://archive.apache.org/dist/maven/plugins/%{name}-%{version}-source-release.zip
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(com.thoughtworks.qdox:qdox)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-incremental)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-api) >= 2.0
+BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-api)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-manager)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.ow2.asm:asm)
 Source44: import.info
+
 
 %description
 The Compiler Plugin is used to compile the sources of your project.
@@ -42,7 +46,6 @@ API documentation for %{name}.
 
 %prep
 %setup -q
-%pom_remove_dep :maven-toolchain
 
 %build
 %mvn_build -f
@@ -57,6 +60,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 3.6.1-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.5.1-alt1_4jpp8
 - new fc release
 
