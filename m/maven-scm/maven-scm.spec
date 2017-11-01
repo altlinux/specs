@@ -4,9 +4,10 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -38,22 +39,22 @@ BuildRequires: jpackage-generic-compat
 #
 
 Name:           maven-scm
-Version:        1.9.4
-Release:        alt1_5jpp8
+Version:        1.9.5
+Release:        alt1_3jpp8
 Summary:        Common API for doing SCM operations
 License:        ASL 2.0
 URL:            http://maven.apache.org/scm
 BuildArch:      noarch
 
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/scm/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source0:        http://archive.apache.org/dist/maven/scm/%{name}-%{version}-source-release.zip
 
 # Patch to migrate to new plexus default container
 # This has been sent upstream: https://issues.apache.org/jira/browse/SCM-731
-Patch6:         0001-port-maven-scm-to-latest-version-of-plexus-default-c.patch
+Patch1:         0001-Port-maven-scm-to-latest-version-of-plexus-default-c.patch
 # Workaround upstream's workaround for a modello bug, see: https://issues.apache.org/jira/browse/SCM-518
-Patch7:         vss-modello-config.patch
+Patch2:         0002-Fix-vss-modello-config.patch
 # Compatibility with JGit 4.x, not yet forwarded
-Patch8:         %{name}-jgit-4-compat.patch
+Patch3:         0003-Compatibility-with-JGit-4.0.0.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
@@ -84,7 +85,7 @@ tools (e.g. Continuum) in providing them a common API for doing SCM operations.
 %package test
 Group: Development/Java
 Summary:        Tests for %{name}
-Requires:       maven-scm = %{version}
+Requires:       maven-scm = %{?epoch:%epoch:}%{version}-%{release}
 
 %description test
 Tests for %{name}.
@@ -99,9 +100,10 @@ Javadoc for %{name}.
 
 %prep
 %setup -q
-%patch6 -p1 -b .orig
-%patch7 -p0 -b .orig
-%patch8 -p1
+
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 # Remove unnecessary animal sniffer
 %pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin
@@ -121,8 +123,12 @@ sed -i s/cvsjava.CvsJava/cvsexe.CvsExe/ maven-scm-client/src/main/resources/META
 %pom_remove_dep org.mockito: maven-scm-providers/maven-scm-provider-jazz
 %pom_remove_dep org.mockito: maven-scm-providers/maven-scm-provider-accurev
 
-# Accepted upstream: https://issues.apache.org/jira/browse/SCM-786
-%pom_add_dep junit:junit:4.11 maven-scm-test
+# Don't use deprecated "descriptorId" configuration parameter of Maven
+# Assembly Plugin, which was removed in version 3.0.0.
+%pom_xpath_replace "pom:plugin[pom:artifactId='maven-assembly-plugin']/pom:configuration/pom:descriptorId" "
+    <descriptorRefs>
+      <descriptorRef>jar-with-dependencies</descriptorRef>
+    </descriptorRefs>" maven-scm-client
 
 # Put TCK tests into a separate sub-package
 %mvn_package :%{name}-provider-cvstest test
@@ -149,6 +155,9 @@ sed -i s/cvsjava.CvsJava/cvsexe.CvsExe/ maven-scm-client/src/main/resources/META
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.9.5-alt1_3jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.4-alt1_5jpp8
 - new fc release
 
