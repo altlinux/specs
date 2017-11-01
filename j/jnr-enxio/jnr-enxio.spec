@@ -1,12 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           jnr-enxio
-Version:        0.12
-Release:        alt1_1jpp8
+Version:        0.14
+Release:        alt1_2jpp8
 Summary:        Unix sockets for Java
 Group:          Development/Other
 # src/main/java/jnr/enxio/channels/PollSelectionKey.java is LGPLv3
@@ -26,8 +27,11 @@ BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-plugin-bundle
+BuildRequires:  maven-source-plugin
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-surefire-provider-junit
+BuildRequires:  sonatype-oss-parent
 
 Requires:       jnr-constants
 Requires:       jnr-ffi
@@ -63,6 +67,9 @@ find ./ -name '*.class' -delete
 %doc LICENSE
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_1jpp8
 - new version
 
