@@ -1,19 +1,21 @@
 Name: bmon
-Version: 2.1.0
-Release: alt1.1.qa1
+Version: 4.0
+Release: alt1
 
 Summary: A portable bandwidth monitor
-License: GPL 
+License: %bsd %mit
 Group: Monitoring
 
-Url: http://people.suug.ch/~tgr/bmon/
-Source: http://people.suug.ch/~tgr/bmon/files/%name-%version.tar.gz 
+Url: https://github.com/tgraf/bmon
+Source: https://github.com/tgraf/bmon/releases/download/v4.0/%name-%version.tar.gz
+
 Patch1: bmon-2.1.0-gcc4.diff
 Patch2: bmon-2.1.0-nostrip.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-# Automatically added by buildreq on Mon Feb 12 2007
-BuildRequires: libncurses-devel librrd-devel
+BuildRequires(pre): rpm-build-licenses
+
+BuildRequires: libconfuse-devel libnl-devel libncurses-devel
 
 %description
 %name is a portable bandwidth monitor and rate estimator
@@ -28,8 +30,8 @@ a summary of statistics for a set of nodes.
 
 %prep
 %setup 
-%patch1 -p1
-%patch2 -p0
+#patch1 -p1
+#patch2 -p0
 
 %build
 %configure --disable-asound
@@ -38,12 +40,21 @@ a summary of statistics for a set of nodes.
 %install
 %makeinstall
 
+# packaged by %doc examples/
+rm -rf $RPM_BUILD_ROOT/usr/share/doc/bmon/examples
+
 %files
 %_bindir/*
 %_mandir/man?/*
-%doc TODO BUGS etc/ trem/ xtra/ 
+%doc NEWS examples/ LICENSE.BSD LICENSE.MIT
 
 %changelog
+* Wed Nov 01 2017 Sergey Y. Afonin <asy@altlinux.ru> 4.0-alt1
+- New version
+- changed URL
+- fixed "License"
+- removed old patches
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.0-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
