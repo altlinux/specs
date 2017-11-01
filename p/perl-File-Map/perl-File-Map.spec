@@ -6,8 +6,8 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-File-Map
-Version:        0.64
-Release:        alt1_7
+Version:        0.65
+Release:        alt1
 Summary:        Memory mapping made simple and safe
 License:        GPL+ or Artistic
 
@@ -83,6 +83,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1
+- automated CPAN update
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1_7
 - update to new release by fcimport
 
