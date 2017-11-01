@@ -1,14 +1,14 @@
 %define dist Class-Accessor
 Name: perl-%dist
-Version: 0.34
-Release: alt3
+Version: 0.51
+Release: alt1
 
 Summary: Automated accessor generation
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/K/KA/KASEI/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ BuildRequires: perl-Sub-Name perl-devel
 This module automagically generates accessor/mutators for your class.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,10 +31,13 @@ This module automagically generates accessor/mutators for your class.
 %perl_vendor_install
 
 %files
-%doc Changes README 
+%doc Changes README examples
 %perl_vendor_privlib/Class
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.51-alt1
+- automated CPAN update
+
 * Tue Oct 04 2011 Alexey Tourbin <at@altlinux.ru> 0.34-alt3
 - rebuilt as plain src.rpm
 
