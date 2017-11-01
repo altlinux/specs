@@ -2,15 +2,16 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global vertag M3
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global vertag M5
 
 Summary:        Extract class/interface/method definitions from sources
 Name:           qdox
 Version:        2.0
-Release:        alt1_0.5.M3jpp8
+Release:        alt1_0.8.M5jpp8
 Epoch:          1
 License:        ASL 2.0
 URL:            https://github.com/paul-hammant/qdox
@@ -19,16 +20,17 @@ BuildArch:      noarch
 Source0:        http://repo2.maven.org/maven2/com/thoughtworks/qdox/qdox/%{version}-%{vertag}/%{name}-%{version}-%{vertag}-project.tar.gz
 Source1:        qdox-MANIFEST.MF
 
+# https://github.com/paul-hammant/qdox/issues/16
+Patch1:         0001-16-Single-comment-line-not-recognized.patch
+
 BuildRequires:  byaccj
 BuildRequires:  jflex
 BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
-BuildRequires:  mvn(org.codehaus:codehaus-parent:pom:)
 BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
-BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 Obsoletes: qdox16-poms < 1.1
 
@@ -54,11 +56,12 @@ API docs for %{name}.
 find -name *.jar -delete
 rm -rf bootstrap
 
+%patch1 -p1
+
 # We don't need these plugins
 %pom_remove_plugin :animal-sniffer-maven-plugin
 %pom_remove_plugin :maven-failsafe-plugin
 %pom_remove_plugin :maven-jflex-plugin
-%pom_xpath_remove pom:build/pom:extensions
 
 %mvn_file : %{name}
 %mvn_alias : qdox:qdox
@@ -83,12 +86,15 @@ zip -u target/%{name}-%{version}.jar META-INF/MANIFEST.MF
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt README.txt
+%doc LICENSE.txt README.md
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.0-alt1_0.8.M5jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.0-alt1_0.5.M3jpp8
 - new fc release
 
