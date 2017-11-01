@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          shibboleth-java-parent-v3
 Version:       8
-Release:       alt1_1jpp8
+Release:       alt1_3jpp8
 Summary:       Shibboleth Project V3 Super POM
 License:       ASL 2.0
 URL:           http://shibboleth.net/
@@ -25,6 +26,7 @@ BuildRequires: mvn(org.slf4j:slf4j-api)
 BuildRequires: mvn(org.testng:testng)
 BuildRequires: mvn(xmlunit:xmlunit)
 
+Provides:      opensaml-java-parent = %{version}
 # com.unboundid:unboundid-ldapsdk:2.3.8
 # org.cryptacular:cryptacular:1.0
 # org.ldaptive:ldaptive:1.0.6
@@ -38,6 +40,8 @@ etc. that are common across all Shibboleth V3 projects.
 %prep
 %setup -q -n %{name}-%{version}
 
+%mvn_alias : net.shibboleth:parent
+
 %build
 
 %mvn_build -j
@@ -50,6 +54,9 @@ etc. that are common across all Shibboleth V3 projects.
 %doc resources/doc/LICENSE.txt
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 8-alt1_3jpp8
+- new jpp release
+
 * Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 8-alt1_1jpp8
 - new version
 
