@@ -4,14 +4,24 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%bcond_without  markdown
+%bcond_without  fop
+
 %global parent maven-doxia
 %global subproj sitetools
 
 Name:           %{parent}-%{subproj}
-Version:        1.6
+Version:        1.7.4
 Release:        alt1_3jpp8
 Summary:        Doxia content generation framework
 License:        ASL 2.0
@@ -20,37 +30,49 @@ BuildArch:      noarch
 
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/doxia/doxia-sitetools/%{version}/doxia-%{subproj}-%{version}-source-release.zip
 
-Patch1:         0001-Remove-dependency-on-velocity-tools.patch
+Patch0:         0001-Port-to-plexus-utils-3.0.24.patch
+Patch1:         0002-Remove-dependency-on-velocity-tools.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-collections:commons-collections)
 BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(commons-lang:commons-lang)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-decoration-model)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-logging-api)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-apt)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-confluence)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-docbook-simple)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-fml)
+%if %{with fop}
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-fo)
+%endif
+%if %{with markdown}
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-markdown)
+%endif
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-xdoc)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-xhtml)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-sitetools:pom:)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-artifact:2.2.1)
+BuildRequires:  mvn(org.apache.maven:maven-artifact-manager)
+BuildRequires:  mvn(org.apache.maven:maven-model:2.2.1)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 BuildRequires:  mvn(org.apache.velocity:velocity)
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-i18n)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-velocity)
 BuildRequires:  mvn(xalan:xalan)
 BuildRequires:  mvn(xml-apis:xml-apis)
-Source44: import.info
 
+Provides:      maven-doxia-tools = %{version}-%{release}
+Obsoletes:     maven-doxia-tools < 1.7
+Source44: import.info
 
 %description
 Doxia is a content generation framework which aims to provide its
@@ -69,16 +91,16 @@ API documentation for %{name}.
 
 %prep
 %setup -q -n doxia-%{subproj}-%{version}
-
-# upstream added support for velocity toolmanager, but it also means new
-# dependency on velocity-tools. we don't want to depend on this package
-# (it depends on struts 1) so this patch reverts upstream changes
+%patch0 -p1
 %patch1 -p1
-%pom_remove_dep :velocity-tools doxia-site-renderer
+
+# complains
+%pom_remove_plugin :apache-rat-plugin
+%pom_remove_plugin :maven-enforcer-plugin
 
 %pom_remove_plugin org.codehaus.mojo:clirr-maven-plugin
 %pom_remove_dep net.sourceforge.htmlunit:htmlunit doxia-site-renderer/pom.xml
-
+%pom_remove_dep -r :velocity-tools
 
 %pom_xpath_inject "pom:plugin[pom:artifactId[text()='modello-maven-plugin']]/pom:configuration" \
     "<useJava5>true</useJava5>" doxia-decoration-model
@@ -92,8 +114,17 @@ API documentation for %{name}.
 # See also: http://maven.apache.org/doxia/faq.html#How_to_export_in_PDF
 # http://lists.fedoraproject.org/pipermail/java-devel/2013-April/004742.html
 rm -rf $(find -type d -name itext)
-%pom_remove_dep :itext doxia-doc-renderer
-%pom_remove_dep :doxia-module-itext doxia-doc-renderer
+%pom_remove_dep -r :doxia-module-itext
+
+%if %{without markdown}
+%pom_remove_dep -r :doxia-module-markdown
+%endif
+%if %{without fop}
+%pom_remove_dep -r :doxia-module-fo
+rm -r doxia-doc-renderer/src/main/java/org/apache/maven/doxia/docrenderer/pdf/fo
+%endif
+
+%mvn_alias :doxia-integration-tools org.apache.maven.shared:maven-doxia-tools
 
 %build
 # tests can't run because of missing deps
@@ -109,6 +140,9 @@ rm -rf $(find -type d -name itext)
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.4-alt1_3jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_3jpp8
 - new fc release
 
