@@ -11,7 +11,7 @@
 %def_with bluetooth
 
 Name: gnome-control-center
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME Control Center
@@ -179,6 +179,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gettext/its/gnome-keybindings.loc
 
 %changelog
+* Wed Nov 01 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
+- 3.26.2
+
 * Tue Oct 03 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 
