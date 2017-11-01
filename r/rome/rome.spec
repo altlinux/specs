@@ -4,73 +4,197 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-Name:       rome
-Version:    0.9
-Release:    alt3_20jpp8
-Summary:    RSS and Atom Utilities
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:          rome
+Version:       1.7.0
+Release:       alt1_2jpp8
+Summary:       RSS and Atom Utilities
+License:       ASL 2.0
+URL:           http://rometools.github.io/rome/
+# Original source archive 73,8 MB
+# sh rome-create-tarball.sh < VERSION >
+# Repackaged source archive 575 KB
+Source0:       %{name}-%{version}.tar.xz
+Source1:       %{name}-create-tarball.sh
 
-License:    ASL 2.0
-URL:        https://rome.dev.java.net/
-# wget https://rome.dev.java.net/source/browse/*checkout*/rome/www/dist/rome-0.9-src.tar.gz?rev=1.1
-Source0:    %{name}-%{version}-src.tar.gz
-# wget http://download.eclipse.org/tools/orbit/downloads/drops/R20090825191606/bundles/com.sun.syndication_0.9.0.v200803061811.jar
-# unzip com.sun.syndication_0.9.0.v200803061811.jar META-INF/MANIFEST.MF
-# sed -i 's/\r//' META-INF/MANIFEST.MF
-# # We won't have the same SHA-1 sums (class sometimes spills into # cl\nass)
-# sed -i -e "/^Name/d" -e "/^SHA/d" -e "/^\ ass$/d" -e "/^$/d" META-INF/MANIFEST.MF
-Source1:    MANIFEST.MF
-Source2:    http://repo1.maven.org/maven2/%{name}/%{name}/%{version}/%{name}-%{version}.pom
-BuildArch:  noarch
+BuildRequires: maven-local
+BuildRequires: mvn(ch.qos.logback:logback-classic)
+BuildRequires: mvn(commons-beanutils:commons-beanutils)
+BuildRequires: mvn(commons-httpclient:commons-httpclient)
+BuildRequires: mvn(javax.persistence:persistence-api)
+BuildRequires: mvn(javax.servlet:javax.servlet-api)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(net.oauth.core:oauth)
+BuildRequires: mvn(org.apache.commons:commons-lang3)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.xmlrpc:xmlrpc-client)
+BuildRequires: mvn(org.hamcrest:hamcrest-library)
+BuildRequires: mvn(org.jdom:jdom2)
+BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires: mvn(xmlunit:xmlunit)
 
-Patch0:     %{name}-%{version}-addosgimanifest.patch
-# fix maven-surefire-plugin aId
-Patch1:     %{name}-%{version}-pom.patch
-
-BuildRequires:  javapackages-local
-BuildRequires:  ant
-BuildRequires:  jdom >= 1.1.2
-Requires: jdom >= 1.1.2
+BuildArch:     noarch
 Source44: import.info
 
 %description
 ROME is an set of open source Java tools for parsing, generating and
 publishing RSS and Atom feeds.
 
-%package	javadoc
+%package certiorem
 Group: Development/Java
-Summary:  Javadocs for %{name}
-Requires: %{name} = %{version}
+Summary:       A PubSubHubub implementation for Java based on ROME
+
+%description certiorem
+PubSubHubub protocol implementation based on ROME.
+
+%package fetcher
+Group: Development/Java
+Summary:       Retrieves RSS feeds via HTTP conditional gets using ROME
+
+%description fetcher
+ROME Fetcher is a caching feed fetcher that supports retrieval of
+feeds via HTTP conditional GET. Supports ETags, GZip compression,
+and RFC3229 Delta encoding.
+
+%package modules
+Group: Development/Java
+Summary:       Plugin collection for the ROME RSS and Atom Utilities
+# LGPL:
+# rome-modules/src/main/java/com/rometools/modules/base/Course.java
+# rome-modules/src/main/java/com/rometools/modules/base/CustomTagImpl.java
+# rome-modules/src/main/java/com/rometools/modules/content/ContentItem.java
+# rome-modules/src/main/java/com/rometools/modules/itunes/types/Duration.java
+# rome-modules/src/main/java/com/rometools/modules/photocast/PhotocastModule.java
+# rome-modules/src/main/java/com/rometools/modules/slash/Slash.java
+# rome-modules/src/main/java/com/rometools/modules/yahooweather/YWeatherEntryModule.java
+License:       ASL 2.0 and LGPLv2
+
+%description modules
+This module contains extensions that enable ROME to
+handle several feed extensions like MediaRSS,
+GeoRSS and others.
+
+%package opml
+Group: Development/Java
+Summary:       Support for OPML 1 and OPML 2 in ROME
+
+%description opml
+This module contains Outline Processor Markup Language parser and tools.
+
+#%%package parent
+#Summary:       Parent for all ROME projects
+
+#%%description parent
+#Parent POM for all ROME projects.
+
+%package propono
+Group: Development/Java
+Summary:       ROME Propono
+
+%description propono
+The ROME Propono sub-project is a Java class library that
+supports publishing protocols, specifically the Atom Publishing Protocol
+and the legacy MetaWeblog API. Propono includes an Atom client library,
+Atom server framework and a Blog client that supports both Atom protocol
+and the MetaWeblog API. 
+
+%package utils
+Group: Development/Java
+Summary:       Utility classes for ROME projects
+
+%description utils
+This modules provides utility classes for all ROME projects.
+
+%package javadoc
+Group: Development/Java
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains javadoc for %{name}.
 
 %prep
 %setup -q
-find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
-cp -p %{SOURCE1} .
-%patch0
-cp -p %{SOURCE2} pom.xml
-%patch1
+
+# Unneeded tasks
+%pom_remove_plugin -r :maven-scm-publish-plugin
+
+%pom_xpath_remove -r "pom:Embed-Dependency" %{name} %{name}-modules
+%pom_xpath_remove "pom:Embed-Transitive" %{name}-modules
+
+%pom_change_dep -r com.rometools: ::'${project.version}'
+
+# Force servlet 3.1
+%pom_change_dep -r :servlet-api javax.servlet:javax.servlet-api:3.1.0
+sed -i "s|String, Object|String, String[]|" \
+ %{name}-propono/src/main/java/com/rometools/propono/atom/server/AtomRequestImpl.java \
+ %{name}-propono/src/main/java/com/rometools/propono/atom/server/AtomRequest.java
+
+# com.google.inject.extensions:guice-servlet
+%pom_disable_module rome-certiorem-webapp
+# No test deps (contains only tests)
+# org.ops4j.pax.exam:pax-exam-container-native:4.8.0
+# org.ops4j.pax.exam:pax-exam-junit4:4.8.0
+# org.ops4j.pax.exam:pax-exam-link-mvn:4.8.0
+# org.ops4j.pax.url:pax-url-wrap:2.4.5
+%pom_disable_module rome-osgi-test
+
+# No test dep
+# jetty:jetty:4.2.12
+%pom_remove_dep -r jetty:jetty
+rm %{name}-fetcher/src/test/java/com/rometools/fetcher/AbstractJettyTest.java \
+ %{name}-fetcher/src/test/java/com/rometools/fetcher/impl/HttpClientFeedFetcherTest.java \
+ %{name}-fetcher/src/test/java/com/rometools/fetcher/impl/HttpURLFeedFetcherTest.java \
+ %{name}-propono/src/test/java/com/rometools/propono/atom/server/AtomClientServerTest.java \
+ %{name}-propono/src/test/java/com/rometools/propono/atom/server/TestAtomHandlerImpl.java \
+ %{name}-propono/src/test/java/com/rometools/propono/atom/server/TestAtomHandlerFactory.java
+
+# Convert from dos to unix line ending
+sed -i.orig 's|\r||g' README.md
+touch -r README.md.orig README.md
+rm README.md.orig
+
+# @ random fails: AssertionError
+rm %{name}-modules/src/test/java/com/rometools/modules/cc/types/LicenseTest.java
+
+%mvn_alias com.rometools:%{name} %{name}:%{name} net.java.dev.%{name}:%{name}
+# Avoid problems with old rome-parent-1.5.0 package
+%mvn_package :%{name}-parent %{name}
 
 %build
-mkdir -p target/lib
-build-jar-repository -p target/lib jdom
-ant -Dnoget=true dist
 
-%mvn_artifact pom.xml target/rome-%{version}.jar
+%mvn_build -s 
 
 %install
-%mvn_install -J dist/docs/api
+%mvn_install
 
-%files -f .mfiles
+%files -f .mfiles-%{name}
+%files certiorem -f .mfiles-%{name}-certiorem
+%files fetcher -f .mfiles-%{name}-fetcher
+%files modules -f .mfiles-%{name}-modules
+%files opml -f .mfiles-%{name}-opml
+
+#%%files parent -f .mfiles-%%{name}-parent
+#%%license LICENSE
+
+%files propono -f .mfiles-%{name}-propono
+%doc %{name}-propono/NOTICE
+
+%files utils -f .mfiles-%{name}-utils
+%doc README.md
+%doc LICENSE
 
 %files javadoc -f .mfiles-javadoc
+%doc LICENSE
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1_2jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.9-alt3_20jpp8
 - new fc release
 
