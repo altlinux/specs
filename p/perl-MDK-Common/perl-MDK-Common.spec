@@ -1,6 +1,6 @@
 %define dist MDK-Common
 Name: perl-MDK-Common
-Version: 1.2.30
+Version: 1.2.34.2
 Release: alt1
 
 Summary: Various simple Perl functions
@@ -8,7 +8,7 @@ License: GPL
 Group: Development/Perl
 
 URL: http://cvs.mandrakesoft.com/cgi-bin/cvsweb.cgi/soft/perl-MDK-Common/
-Source: http://www.cpan.org/authors/id/T/TV/TVIGNAUD/MDK-Common-%{version}.tgz
+Source0: http://www.cpan.org/authors/id/T/TV/TVIGNAUD/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -19,7 +19,7 @@ BuildRequires: perl-devel perl(File/Sync.pm)
 Various simple perl functions created for DrakX.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 #mv MDK/Common.pm.pl MDK/Common.pm.in
 
 %build
@@ -35,12 +35,16 @@ Various simple perl functions created for DrakX.
 %perl_vendor_install
 
 %files
+%doc AUTHORS COPYING
 %dir %perl_vendor_privlib/MDK
 %perl_vendor_privlib/MDK/Common.pm
 %dir %perl_vendor_privlib/MDK/Common
 %perl_vendor_privlib/MDK/Common/*.pm
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.34.2-alt1
+- automated CPAN update
+
 * Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.30-alt1
 - automated CPAN update
 
