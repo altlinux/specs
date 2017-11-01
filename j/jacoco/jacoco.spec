@@ -2,14 +2,12 @@
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /osgi(org.apache.ant*/d
-
-AutoReq: yes,noosgi
-BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:      jacoco
-Version:   0.7.7
+Version:   0.7.8
 Release:   alt1_2jpp8
 Summary:   Java Code Coverage for Eclipse 
 Group:     System/Libraries
@@ -17,8 +15,6 @@ License:   EPL
 URL:       http://www.eclemma.org/jacoco/
 Source0:   https://github.com/jacoco/jacoco/archive/v%{version}.tar.gz
 Source1:   EnchancedManifest.mf
-
-Patch0:    removeUselessBuildParts.patch
 
 BuildArch:        noarch
 
@@ -69,7 +65,6 @@ A Jacoco plugin for maven.
 
 %prep
 %setup -q 
-%patch0 -b .sav
 
 %pom_disable_module ../org.jacoco.examples org.jacoco.build
 %pom_disable_module ../org.jacoco.doc org.jacoco.build
@@ -81,10 +76,30 @@ A Jacoco plugin for maven.
 
 sed -i -e "s|nb-configuration.xml|nb-configuration.xml,build.xml, pom.xml|g" org.jacoco.build/pom.xml
 
-%build
-%mvn_build
+# Remove problematic plugin, which old patch tried to correct, completely
+%pom_remove_plugin org.codehaus.groovy.maven:gmaven-plugin ./org.jacoco.build/pom.xml
 
-dos2unix org.jacoco.doc/docroot/doc/.resources/doc.css 
+# Remove enforcer plugin that causes build failure of 'Jacoco :: Maven Plugin'
+%pom_remove_plugin -f -r org.apache.maven.plugins:maven-enforcer-plugin
+
+# Add execution config for maven.antrun.plugin
+%pom_xpath_inject pom:plugin[pom:artifactId=\'maven-antrun-plugin\']/pom:executions '<execution>
+             <id>parse-version</id>
+             <phase>validate</phase>
+             <goals>
+               <goal>run</goal>
+             </goals>
+             <configuration>
+                <target>
+                     <property name="jacoco.runtime.package.name" value="org.jacoco.agent.rt.internal_${randomNumber}" />
+               </target>
+               <exportAntProperties>true</exportAntProperties>
+             </configuration>
+           </execution>' org.jacoco.build/pom.xml
+
+
+%build
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 # workaround missing premain in agent.rt RH1151442. Not sure where to fix this in build.
 # TODO, fix in build itself
@@ -112,6 +127,9 @@ echo %{name} %{name}/org.jacoco.ant objectweb-asm/asm-debug-all > %{buildroot}%{
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.8-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.7.7-alt1_2jpp8
 - new version
 
