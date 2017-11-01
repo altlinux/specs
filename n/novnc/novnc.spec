@@ -1,5 +1,5 @@
 Name: novnc
-Version: 0.5.1
+Version: 0.6.2
 Release: alt1
 Summary: VNC client using HTML5 (Web Sockets, Canvas) with encryption support
 Requires: python-module-websockify
@@ -46,6 +46,9 @@ install -m 644 docs/novnc_server.1 %buildroot%_man1dir/
 %_man1dir/novnc_server.1*
 
 %changelog
+* Wed Nov 01 2017 Lenar Shakirov <snejok@altlinux.ru> 0.6.2-alt1
+- 0.6.2
+
 * Thu Oct 15 2015 Alexey Shabalin <shaba@altlinux.ru> 0.5.1-alt1
 - 0.5.1
 - cleanup spec
