@@ -3,21 +3,24 @@ BuildRequires: python3-module-setuptools
 BuildRequires: desktop-file-utils
 # Automatically added by buildreq on Tue Jun 27 2017
 # optimized out: libqt5-core python-base python-modules python3 python3-base python3-module-setuptools
-BuildRequires: python3-dev python3-module-PyQt5 python3-module-sip
+BuildRequires: python3-dev python3-module-PyQt5 python3-module-sip python3-module-keyring
 
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           nagstamon
-Version:        2.1
-Release:        alt0.20170723.1
+Version:        3.0.1
+Release:        alt1
 Summary:        Nagios status monitor for the desktop
 License:        GPLv2
 Group:          Monitoring
 Url:            http://nagstamon.ifw-dresden.de/
-Source:         http://sourceforge.net/projects/nagstamon/files/nagstamon/nagstamon%%200.9.9/Nagstamon-%{version}.tar.gz
-Requires:       python3-module-secretstorage
+Source:         %name-%version.tar
+%py3_requires   secretstorage sip
 BuildArch:      noarch
+Patch1:         nagstamon-2.1-alt-translation-in-QUI-__init__.patch
 Source44:       import.info
+Source1:        all.ts
+Source2:        all.qm
 
 %description
 Nagstamon is a Nagios status monitor which takes place in systray or on desktop
@@ -27,7 +30,10 @@ to multiple Nagios, Icinga, Opsview, Op5, Check_MK/Multisite and Centreon
 servers.
 
 %prep
-%setup -q -n Nagstamon
+%setup
+%patch1 -p2
+
+cp %SOURCE1 %SOURCE2 Nagstamon/QUI/
 
 %build
 python3 setup.py build
@@ -65,6 +71,9 @@ desktop-file-install \
 
 
 %changelog
+* Sat Oct 21 2017 Mikhail Gordeev <obirvalger@altlinux.org> 3.0.1-alt1
+- new version 3.0.1
+
 * Mon Jul 24 2017 Mikhail Gordeev <obirvalger@altlinux.org> 2.1-alt0.20170723.1
 - new version 2.1
 
