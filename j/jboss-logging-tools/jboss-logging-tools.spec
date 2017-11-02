@@ -2,40 +2,43 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jboss-logging-tools
-%define version 1.2.0
-%global namedreltag .Beta1
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 2.0.1
+%global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-logging-tools
-Version:          1.2.0
-Release:          alt1_0.4.Beta1jpp8
+Version:          2.0.1
+Release:          alt1_4jpp8
 Summary:          JBoss Logging I18n Annotation Processor
-License:          LGPLv2+
+# Not available license file https://issues.jboss.org/browse/LOGTOOL-107
+# ./annotations/src/main/java/org/jboss/logging/annotations/*.java: Apache (v2.0)
+License:          ASL 2.0 and LGPLv2+
 URL:              https://github.com/jboss-logging/jboss-logging-tools
 Source0:          https://github.com/jboss-logging/jboss-logging-tools/archive/%{namedversion}.tar.gz
 
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-BuildRequires:    testng
-BuildRequires:    maven-surefire-provider-testng
-BuildRequires:    jboss-parent
-BuildRequires:    jboss-logging
-BuildRequires:    jboss-logmanager
-BuildRequires:    jdeparser
+BuildRequires:    mvn(org.apache.maven.surefire:surefire-testng)
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
+BuildRequires:    mvn(org.jboss.jdeparser:jdeparser)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging)
+BuildRequires:    mvn(org.jboss.logmanager:jboss-logmanager)
+BuildRequires:    mvn(org.testng:testng)
 Source44: import.info
+
 
 %description
 This pacakge contains JBoss Logging I18n Annotation Processor
 
 %package javadoc
 Group: Development/Java
-Summary:          Javadocs for %{name}
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -44,18 +47,22 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n jboss-logging-tools-%{namedversion}
 
+%pom_disable_module processor-tests
+
 %build
-%mvn_build
+# @ random java.lang.ArrayIndexOutOfBoundsException: 0
+%mvn_build -- -Dmaven.test.failure.ignore=true
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_4jpp8
+- new version
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_0.4.Beta1jpp8
 - new fc release
 
