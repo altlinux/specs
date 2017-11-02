@@ -12,7 +12,7 @@
 %def_without autotools_templates
 
 Name: gnome-builder
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -223,6 +223,9 @@ This package provides noarch data needed for Gnome Builder to work.
 
 
 %changelog
+* Wed Nov 01 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
+- 3.26.2
+
 * Wed Oct 04 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 
