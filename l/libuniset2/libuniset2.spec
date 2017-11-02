@@ -16,7 +16,7 @@
 
 Name: libuniset2
 Version: 2.6
-Release: alt19.1
+Release: alt41
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -508,8 +508,82 @@ rm -f %buildroot%_libdir/*.la
 # history of current unpublished changes
 
 %changelog
+* Thu Nov 02 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt41
+- build new version
+
+# * Thu Nov 02 2017 Vinogradov Aleksei <uzum@server> 2.6-alt40
+# - DBInterface: minor fix in method name
+
+# * Wed Nov 01 2017 Vinogradov Aleksei <uzum@server> 2.6-alt39
+# - PostgreSQLInterface: cancel query method added
+
 * Tue Sep 12 2017 Alexei Takaseev <taf@altlinux.org> 2.6-alt19.1
 - Rebuild with poco 1.7.9
+
+# * Mon Jul 31 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt38
+# - iocontrol: fix segfault
+
+# * Tue Jul 11 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt37
+# - (LogReader): add '--grep' mode
+# - minor fixes
+# - MBExchange: safemode
+
+# * Wed Jun 28 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt36
+# - new release (fixes after coverity scan)
+
+# * Tue Jun 27 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt35
+# - (Modbus): add new log
+
+# * Sun Jun 25 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt34
+# - (DelayTimer): add new functions (isWaiting[On|Off])
+
+# * Sun Jun 25 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt33
+# - (ModbusSlave): Added processing of a couple of new errors
+# - (UNet): added initial pause mechanism
+
+# * Sat Jun 03 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt32
+# - refactoring function names
+
+# * Sat Jun 03 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt31
+# - (EventLoopServer): refactoring start process
+
+# * Sat Jun 03 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt30
+# - test build (devel)
+
+# * Fri Jun 02 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt29
+# - test build (devel)
+
+# * Thu Jun 01 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt27
+# - test build (devel)
+
+# * Thu Jun 01 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt26
+# - test build (devel)
+
+# * Wed May 31 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt25
+# - test build (devel)
+
+# * Wed May 31 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt25
+# - test build (devel)
+
+# * Wed May 31 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt24
+# - minor release
+
+# * Tue May 30 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt23.1
+# - CommonEventLoop refactring start process
+
+# * Mon May 29 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt23
+# - (Configuration): add getStartapIgnoreTimeout()
+# - minor fixes
+
+# * Mon May 29 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt22
+# - set default sm-ready-timeout to 120000 msec (2 min)
+# - changed raise(SIGTERM) --> std::terminate()
+
+# * Mon May 29 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt21
+# - (UNetExchange): add function for setup eventloop timeout 
+
+# * Sun May 28 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt20
+# - (Configuration): fixed bug in check endPoint function
 
 * Thu May 25 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt19
 - MBSlave: Now does not terminate when socket is not open
