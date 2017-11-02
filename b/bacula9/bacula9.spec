@@ -11,7 +11,7 @@
 
 Name: bacula9
 Version: 9.0.3
-Release: alt2%ubt
+Release: alt3%ubt
 
 License: AGPLv3
 Summary: Network based backup program
@@ -806,6 +806,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.3-alt3%ubt
+- Fixed sql scripts to use VersionId with correct case (closes: #34118).
+
 * Thu Oct 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.3-alt2%ubt
 - Fixed cache dir location.
 
