@@ -2,7 +2,7 @@
 
 Name: gimagereader
 Version: 3.2.3
-Release: alt1
+Release: alt2
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -181,6 +181,10 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Thu Nov 02 2017 Andrew Savchenko <bircoph@altlinux.org> 3.2.3-alt2
+- Fix OpenMP detection: use native cmake's find_package
+- C++11 exceptions are not yet implemented in lcc.
+
 * Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 3.2.3-alt1
 - new version 3.2.3 (with rpmrb script)
 
