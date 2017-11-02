@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           zinc
 Version:        0.3.1
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Incremental scala compiler
 License:        ASL 2.0
 URL:            https://github.com/typesafehub/zinc
@@ -56,6 +57,9 @@ jar cf zinc.jar com
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1_3jpp8
+- new jpp release
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1_2jpp8
 - new version
 
