@@ -1,32 +1,29 @@
 %define oname ldap3
 
 %def_with python3
+%def_disable check
 
 Summary: A strictly RFC 4511 conforming LDAP V3 pure Python 3 client - Python 2 compatible
 Name: python-module-%oname
-Version: 0.9.7.4
-Release: alt1.git20150203.1.1
-# https://github.com/cannatag/ldap3.git
-Source0: %name-%version.tar
-BuildArch: noarch
+Version: 2.3
+Release: alt1%ubt
 License: LGPLv3
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/ldap3/
 
-BuildRequires(pre): rpm-build-python
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-pyasn1 python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3 time
+# https://github.com/cannatag/ldap3.git
+Source: %name-%version.tar
 
-#BuildRequires: libsasl2-devel libldap-devel libssl-devel
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-pyasn1 python-modules-json
-#BuildPreReq: python-module-sphinx-devel
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-pyasn1
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-sphinx_rtd_theme python2.7(gssapi)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-pyasn1
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-pyasn1
 %endif
 
 %py_provides %oname
@@ -72,6 +69,8 @@ This package contains documentation for %oname.
 
 %if_with python3
 cp -fR . ../python3
+# it is stated in comment that this file is used for python2 only, remove it for python3
+rm -f ../python3/ldap3/utils/ordDict.py
 %endif
 
 %prepare_sphinx docs/manual
@@ -122,6 +121,10 @@ popd
 %endif
 
 %changelog
+* Thu Nov 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3-alt1%ubt
+- Updated to upstream version 2.3.
+- Disabled tests since it requires running ldap server.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.7.4-alt1.git20150203.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
