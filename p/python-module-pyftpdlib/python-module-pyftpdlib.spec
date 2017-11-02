@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%modulename
-Version: 1.4.0
-Release: %branch_release alt1.1
+Version: 1.5.2
+Release: alt1
 
 %setup_python_module %modulename
 
@@ -12,22 +12,20 @@ Summary: Python FTP server library
 Summary(ru_RU.UTF-8): Модуль Python FTP-сервера
 License: %mit
 Group: Development/Python
-
-Url: http://code.google.com/p/pyftpdlib
-Packager: Aleksey Avdeev <solo@altlinux.ru>
 BuildArch: noarch
+Url: https://github.com/giampaolo/pyftpdlib
 
 # https://github.com/giampaolo/pyftpdlib.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-branch
-BuildPreReq: rpm-build-licenses python-module-sphinx-devel
-#BuildPreReq: %py_dependencies setuptools
+BuildRequires(pre): rpm-macros-branch rpm-build-licenses
+BuildRequires: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools
 %endif
+
+%py_provides %modulename
 
 %description
 Python FTP server library provides a high-level portable interface to easily
@@ -65,6 +63,20 @@ language.
 
 This package contains documentation for %modulename.
 
+%package tests
+Summary: Documentation for %modulename
+Group: Development/Python
+%py_requires %modulename
+
+%description tests
+Python FTP server library provides a high-level portable interface to easily
+write asynchronous FTP servers with Python. pyftpdlib is currently the most
+complete RFC-959 FTP server implementation available for Python programming
+language.
+
+This package contains tests for %modulename.
+
+%if_with python3
 %package -n python3-module-%modulename
 Summary: Python FTP server library
 Group: Development/Python3
@@ -76,12 +88,28 @@ write asynchronous FTP servers with Python. pyftpdlib is currently the most
 complete RFC-959 FTP server implementation available for Python programming
 language.
 
+%package -n python3-module-%modulename-tests
+Summary: Documentation for %modulename
+Group: Development/Python3
+%py3_requires %modulename
+
+%description -n python3-module-%modulename-tests
+Python FTP server library provides a high-level portable interface to easily
+write asynchronous FTP servers with Python. pyftpdlib is currently the most
+complete RFC-959 FTP server implementation available for Python programming
+language.
+
+This package contains tests for %modulename.
+%endif
+
 %prep
 %setup
 
+# correct version
+sed -i -e "s|^__ver__ = '[^']*'|__ver__ = '%version'|" pyftpdlib/__init__.py
+
 %if_with python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %prepare_sphinx .
@@ -112,10 +140,15 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%modulename/
 
 %files
-%doc CREDITS LICENSE *.rst demo/ test/
+%doc CREDITS LICENSE *.rst demo/
 %python_sitelibdir/%modulename/
+%python_sitelibdir/%modulename-%version-py2*.egg-info
 %exclude %python_sitelibdir/%modulename/pickle
-%python_sitelibdir/*.egg-info
+%exclude %python_sitelibdir/%modulename/test
+
+%files tests
+%python_sitelibdir/%modulename/test
+%exclude %python_sitelibdir/%modulename/test/README
 
 %files pickles
 %python_sitelibdir/%modulename/pickle
@@ -125,12 +158,20 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%modulename/
 
 %if_with python3
 %files -n python3-module-%modulename
-%doc CREDITS LICENSE *.rst demo/ test/
+%doc CREDITS LICENSE *.rst demo/
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename-%version-py3*.egg-info
+%exclude %python3_sitelibdir/%modulename/test
+
+%files -n python3-module-%modulename-tests
+%python3_sitelibdir/%modulename/test
+%exclude %python3_sitelibdir/%modulename/test/README
 %endif
 
 %changelog
+* Thu Nov 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.2-alt1
+- Updated to upstream version 1.5.2.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.4.0-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

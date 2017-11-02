@@ -4,7 +4,7 @@
 %def_without docs
 
 Name: python-module-%oname
-Version: 2.0.5
+Version: 2.0.13
 Release: alt1
 Summary: Filesystem abstraction layer
 License: BSD
@@ -19,12 +19,12 @@ BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-chardet python-module-django python-module-ecdsa python-module-html5lib
 BuildRequires: python-module-ndg-httpsclient python-module-ntlm python-module-pycrypto python-module-setuptools-tests
 BuildRequires: python-module-sphinxcontrib-spelling python-module-wx python-module-nose python-module-mock
-BuildRequires: python-module-appdirs python-module-pyftpdlib
+BuildRequires: python-module-appdirs python-module-pyftpdlib-tests python2.7(pytz)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-django python3-module-ecdsa python3-module-pycrypto python3-module-setuptools-tests
-BuildRequires: python3-module-yieldfrom.requests python3-module-nose python3-module-mock
-BuildRequires: python3-module-appdirs python3-module-pyftpdlib
+BuildRequires: python3-module-nose python3-module-mock
+BuildRequires: python3-module-appdirs python3-module-pyftpdlib-tests python3(pytz)
 %endif
 
 %py_provides %oname
@@ -115,10 +115,10 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %check
-python setup.py test ||:
+LC_ALL=en_US.UTF-8 python setup.py test
 %if_with python3
 pushd ../python3
-python3 setup.py test ||:
+LC_ALL=en_US.UTF-8 python3 setup.py test
 popd
 %endif
 
@@ -144,6 +144,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.13-alt1
+- Updated to upstream release 2.0.13.
+
 * Thu Aug 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.5-alt1
 - Updated to upstream release 2.0.5
 
