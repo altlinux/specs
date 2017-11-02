@@ -5,14 +5,15 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary:        Web Services Description Language Toolkit for Java
 Name:           wsdl4j
 Epoch:          0
 Version:        1.6.3
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 License:        CPL
 URL:            http://sourceforge.net/projects/wsdl4j
 BuildArch:      noarch
@@ -75,6 +76,9 @@ ln -sf ../qname.jar %{buildroot}%{_javadir}/javax.wsdl/
 %doc license.html
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.6.3-alt1_9jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6.3-alt1_8jpp8
 - new fc release
 
