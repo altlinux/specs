@@ -2,37 +2,43 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name xnio
-%define version 3.3.0
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 3.4.0
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             xnio
-Version:          3.3.0
+Version:          3.4.0
 Release:          alt1_3jpp8
 Summary:          JBoss XNIO
-License:          ASL 2.0
+# LGPLv2+ ./api/src/main/java/org/xnio/ObjectProperties.java
+License:          ASL 2.0 and LGPLv2+
 URL:              http://www.jboss.org/xnio
-Source0:          https://github.com/xnio/xnio/archive/%{namedversion}.tar.gz
+Source0:          https://github.com/xnio/xnio/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
 
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-
-BuildRequires:    jboss-parent
-BuildRequires:    jboss-logging
-BuildRequires:    jboss-logging-tools >= 1.1.0
-BuildRequires:    jboss-logmanager
-BuildRequires:    maven-injection-plugin
-BuildRequires:    maven-surefire-provider-junit
-BuildRequires:    junit
-BuildRequires:    maven-shared
-BuildRequires:    jmock
-BuildRequires:    byteman >= 2.0.4
+BuildRequires:    mvn(java_cup:java_cup)
+BuildRequires:    mvn(jdepend:jdepend)
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
+BuildRequires:    mvn(org.jboss.apiviz:apiviz)
+BuildRequires:    mvn(org.jboss.byteman:byteman)
+BuildRequires:    mvn(org.jboss.byteman:byteman-bmunit)
+BuildRequires:    mvn(org.jboss.byteman:byteman-install)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging-annotations)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging-processor)
+BuildRequires:    mvn(org.jboss.logmanager:jboss-logmanager)
+BuildRequires:    mvn(org.jboss.maven.plugins:maven-injection-plugin)
+BuildRequires:    mvn(org.jmock:jmock)
+BuildRequires:    mvn(org.jmock:jmock-junit4)
+BuildRequires:    mvn(org.wildfly.common:wildfly-common)
 Source44: import.info
 
 %description
@@ -43,32 +49,47 @@ maintaining all the capabilities present in NIO.
 
 %package javadoc
 Group: Development/Java
-Summary:          Javadocs for %{name}
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n xnio-%{namedversion}
+%setup -q -n %{name}-%{namedversion}
 
-%pom_remove_plugin "org.jboss.bridger:bridger" api/pom.xml
+%pom_remove_plugin "org.jboss.bridger:bridger" api
+%pom_remove_plugin -r :maven-source-plugin
 
+#  @ random fails in koji (arm) builder
+rm nio-impl/src/test/java/org/xnio/nio/test/MultiThreadedNioSslTcpConnectionTestCase.java \
+ nio-impl/src/test/java/org/xnio/nio/test/NioSslTcpChannelTestCase.java \
+ nio-impl/src/test/java/org/xnio/nio/test/NioSslTcpConnectionTestCase.java \
+ nio-impl/src/test/java/org/xnio/nio/test/NioStartTLSTcpChannelTestCase.java \
+ nio-impl/src/test/java/org/xnio/nio/test/NioStartTLSTcpConnectionTestCase.java \
+ nio-impl/src/test/java/org/xnio/nio/test/MultiThreadedNioSslTcpChannelTestCase.java \
+ nio-impl/src/test/java/org/xnio/nio/test/MultiThreadedNioStartTLSTcpConnectionTestCase.java \
+ nio-impl/src/test/java/org/xnio/nio/test/MultiThreadedNioStartTLSTcpChannelTestCase.java \
+ nio-impl/src/test/java/org/xnio/nio/test/NioTcpConnectionTestCase.java \
+ nio-impl/src/test/java/org/xnio/nio/test/MultiThreadedNioTcpConnectionTestCase.java
+ 
 %build
-# JMock is too old in Fedora
-%mvn_build -f
+
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt1_3jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_3jpp8
 - new fc release
 
