@@ -7,10 +7,12 @@
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
 %def_enable privatelib
+%def_enable remote_desktop
+%def_disable egl_device
 %define api_ver 1
 
 Name: mutter
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 Epoch: 1
 
@@ -34,9 +36,6 @@ Source: %name-%version.tar
 
 #https://lists.altlinux.org/pipermail/sisyphus-incominger/2016-October/444041.html
 
-Requires: lib%name = %EVR
-Requires: zenity
-
 %define gtk_ver 3.20.0
 %define gi_ver 0.9.5
 %define glib_ver 2.53.2
@@ -49,6 +48,11 @@ Requires: zenity
 %define libinput_ver 0.99.0
 %define gsds_ver 3.21.4
 %define gudev_ver 232
+%define pipewire_ver 0.1.4
+
+Requires: lib%name = %EVR
+Requires: zenity
+%{?_enable_remote_desktop:Requires: pipewire >= %pipewire_ver}
 
 BuildPreReq: rpm-build-gnome gnome-common
 BuildRequires: gobject-introspection-devel >= %gi_ver
@@ -68,6 +72,7 @@ BuildRequires: libclutter-gir-devel libpango-gir-devel libgtk+3-gir-devel gsetti
 BuildRequires: libgnome-desktop3-devel libupower-devel >= %upower_ver
 BuildRequires: libxkbcommon-x11-devel libinput-devel >= %libinput_ver libxkbfile-devel xkeyboard-config-devel
 BuildRequires: libwacom-devel
+%{?_enable_remote_desktop:BuildRequires: pipewire-libs-devel >= %pipewire_ver}
 # for mutter native backend
 BuildRequires: libdrm-devel libsystemd-devel libgudev-devel >= %gudev_ver
 
@@ -104,7 +109,8 @@ GObject introspection data for the Mutter library
 %package -n lib%name-gir-devel
 Summary: GObject introspection devel data for the Mutter library
 Group: System/Libraries
-Requires: lib%name-devel = %EVR lib%name-gir = %EVR
+Requires: lib%name-devel = %EVR
+Requires: lib%name-gir = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Mutter library.
@@ -131,7 +137,9 @@ DATADIRNAME=share %configure \
 	--enable-introspection \
 	--disable-static \
 	--disable-schemas-compile \
-	--enable-compile-warnings=maximum
+	--enable-compile-warnings=maximum \
+	%{?_enable_remote_desktop:--enable-remote-desktop} \
+	%{?_enable_egl_device:--enable-egl-device}
 %make_build
 
 %install
@@ -179,6 +187,10 @@ DATADIRNAME=share %configure \
 %_datadir/gnome-control-center/keybindings/*.xml
 
 %changelog
+* Thu Nov 02 2017 Yuri N. Sedunov <aris@altlinux.org> 1:3.26.2-alt1
+- 3.26.2
+- enabled support for remote desktop
+
 * Wed Oct 04 2017 Yuri N. Sedunov <aris@altlinux.org> 1:3.26.1-alt1
 - 3.26.1
 
