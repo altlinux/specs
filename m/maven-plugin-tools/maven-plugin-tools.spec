@@ -3,12 +3,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-plugin-tools
-Version:        3.4
-Release:        alt1_4jpp8
+Version:        3.5
+Release:        alt1_2jpp8
 Epoch:          0
 Summary:        Maven Plugin Tools
 License:        ASL 2.0
@@ -19,19 +20,21 @@ Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugin-tools/%{na
 
 Patch0:         0001-Avoid-duplicate-MOJO-parameters.patch
 Patch1:         0002-Deal-with-nulls-from-getComment.patch
+Patch2:         0003-Port-to-plexus-utils-3.0.24.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.sun:tools)
-BuildRequires:  mvn(com.thoughtworks.qdox:qdox) >= 2.0
+BuildRequires:  mvn(com.thoughtworks.qdox:qdox)
 BuildRequires:  mvn(net.sf.jtidy:jtidy)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.ant:ant-launcher)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-artifact:2.2.1)
 BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-model:2.2.1)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-repository-metadata)
@@ -40,21 +43,20 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
+BuildRequires:  mvn(org.apache.maven.surefire:maven-surefire-common)
 BuildRequires:  mvn(org.apache.velocity:velocity)
 BuildRequires:  mvn(org.beanshell:bsh)
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-ant-factory)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-bsh-factory)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-manager)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-velocity)
+BuildRequires:  mvn(org.easymock:easymock)
 BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.ow2.asm:asm-commons)
-BuildRequires:  mvn(xmlunit:xmlunit)
 Source44: import.info
 
 %description
@@ -195,6 +197,9 @@ API documentation for %{name}.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+
+%pom_remove_plugin :maven-enforcer-plugin
 
 # For com.sun:tools use scope "compile" instead of "system"
 %pom_remove_dep com.sun:tools maven-plugin-tools-javadoc
@@ -281,6 +286,9 @@ API documentation for %{name}.
 
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.5-alt1_2jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.4-alt1_4jpp8
 - new fc release
 
