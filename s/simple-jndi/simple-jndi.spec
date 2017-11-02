@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          simple-jndi
 Version:       0.11.4.1
-Release:       alt2_10jpp8
+Release:       alt2_11jpp8
 Summary:       A JNDI implementation
 License:       BSD
 Url:           https://github.com/hen/osjava
@@ -16,6 +17,7 @@ Source0:       http://osjava.googlecode.com/svn/dist/releases/official/simple-jn
 Source1:       simple-jndi-%{version}.pom
 Patch0:        simple-jndi-0.11.4.1-jdk7.patch
 
+BuildRequires: java-devel
 BuildRequires: javapackages-local
 BuildRequires: ant
 BuildRequires: apache-commons-dbcp
@@ -82,6 +84,9 @@ rm -r src/test/org/osjava/sj/memory/SharedMemoryTest.java
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.11.4.1-alt2_11jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.11.4.1-alt2_10jpp8
 - new fc release
 
