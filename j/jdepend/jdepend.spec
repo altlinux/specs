@@ -2,9 +2,10 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -37,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jdepend
 Version:        2.9.1
-Release:        alt3_15jpp8
+Release:        alt3_16jpp8
 Epoch:          0
 Summary:        Java Design Quality Metrics
 License:        BSD
@@ -48,6 +49,7 @@ Source1:        %{name}-%{version}.pom
 BuildArch:      noarch
 
 BuildRequires:  ant
+BuildRequires:  java-devel
 BuildRequires:  javapackages-local
 Source44: import.info
 
@@ -69,7 +71,7 @@ Javadoc for %{name}.
 %package demo
 Group: Development/Java
 Summary:        Demos for %{name}
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description demo
 Demonstrations and samples for %{name}.
@@ -105,6 +107,9 @@ cp -pr sample $RPM_BUILD_ROOT%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt3_16jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt3_15jpp8
 - new fc release
 
