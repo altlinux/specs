@@ -1,5 +1,5 @@
 %define _name blockdev
-%define ver_major 2.13
+%define ver_major 2.14
 %define rev 1
 
 Name: lib%_name
@@ -419,6 +419,7 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %_includedir/blockdev/utils.h
 %_includedir/blockdev/sizes.h
 %_includedir/blockdev/exec.h
+%_pkgconfigdir/blockdev-utils.pc
 
 %files btrfs
 %_libdir/libbd_btrfs.so.*
@@ -533,6 +534,9 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 
 
 %changelog
+* Thu Nov 02 2017 Yuri N. Sedunov <aris@altlinux.org> 2.14-alt1
+- 2.14
+
 * Fri Oct 06 2017 Yuri N. Sedunov <aris@altlinux.org> 2.13-alt1
 - 2.13
 

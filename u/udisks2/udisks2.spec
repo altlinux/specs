@@ -20,7 +20,7 @@
 %def_enable bcache
 
 Name: %{_name}2
-Version: 2.7.3
+Version: 2.7.4
 Release: alt1
 
 Summary: Disk Management Service (Second Edition)
@@ -46,7 +46,7 @@ Obsoletes: %_name
 %define udev_ver 165
 %define libatasmart_ver 0.17
 %define dbus_ver 1.4.0
-%define blockdev_ver 2.10
+%define blockdev_ver 2.14
 
 Requires(pre): control
 Requires: lib%name = %version-%release
@@ -255,6 +255,7 @@ fi
 %ghost %_localstatedir/lib/%name/mtab
 %attr(0700,root,root) %dir %_localstatedir/run/%name
 %config %systemd_unitdir/udisks2.service
+%config %systemd_unitdir/clean-mount-point@.service
 %config %_controldir/%name
 %doc README.md AUTHORS NEWS HACKING
 
@@ -317,6 +318,9 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Thu Nov 02 2017 Yuri N. Sedunov <aris@altlinux.org> 2.7.4-alt1
+- 2.7.4
+
 * Thu Sep 07 2017 Yuri N. Sedunov <aris@altlinux.org> 2.7.3-alt1
 - 2.7.3
 
