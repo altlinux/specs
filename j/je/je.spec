@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          je
 Version:       6.3.8
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Berkeley DB Java Edition
 License:       AGPLv3 and BSD
 URL:           http://www.oracle.com/us/products/database/berkeley-db/je/overview/index.html
@@ -47,7 +48,7 @@ quickly, simply and reliably.
 %package examples
 Group: Development/Java
 Summary:       Examples for %{name}
-Requires:      %{name} = %{version}
+Requires:      %{name} = %{version}-%{release}
 
 %description examples
 This package contains examples for %{name}.
@@ -63,7 +64,8 @@ This package contains javadoc for %{name}.
 %package examples-javadoc
 Group: Development/Java
 Summary:       Javadoc for %{name}-examples
-Requires:      %{name}-javadoc = %{version}
+Requires:      %{name}-javadoc = %{version}-%{release}
+BuildArch: noarch
 
 %description examples-javadoc
 This package contains javadoc for %{name}-examples.
@@ -111,6 +113,9 @@ cp -a docs/examples %{buildroot}%{_javadocdir}/%{name}-examples
 %doc LICENSE
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 6.3.8-alt1_3jpp8
+- new jpp release
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 6.3.8-alt1_2jpp8
 - new version
 
