@@ -4,23 +4,26 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: perl(Getopt/Mixed.pm)
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global rhino_fork_githash ef0faa3e34ef6c3b42c1be4474d0252d96eb4535
+
 Name:          htmlunit-core-js
-Version:       2.17
-Release:       alt1_3jpp8
+Version:       2.23
+Release:       alt1_2jpp8
 Summary:       Rhino fork for htmlunit
 License:       MPLv2.0
 URL:           http://htmlunit.sourceforge.net/
 Source0:       https://github.com/HtmlUnit/htmlunit-core-js/archive/core-js-%{version}.tar.gz
 Source1:       https://github.com/HtmlUnit/htmlunit-rhino-fork/archive/%{rhino_fork_githash}/htmlunit-rhino-fork-%{rhino_fork_githash}.tar.gz
 
-Patch0:        %{name}-2.17-build.patch
+Patch0:        %{name}-2.23-build.patch
 
 
 BuildRequires: ant
+BuildRequires: java-devel
 BuildRequires: javapackages-local
 BuildRequires: junit
 
@@ -34,9 +37,9 @@ BuildRequires: xmlbeans
 %endif
 
 # Modified version of Mozilla Rhino 1.7.7
-# see http://central.maven.org/maven2/net/sourceforge/htmlunit/htmlunit-core-js/2.17/htmlunit-core-js-2.17-sources.jar#rhinoDiff.txt
+# see http://central.maven.org/maven2/net/sourceforge/htmlunit/htmlunit-core-js/2.23/htmlunit-core-js-2.23-sources.jar#rhinoDiff.txt
 # https://fedorahosted.org/fpc/ticket/538
-Provides:      bundled(rhino)
+Provides:      bundled(rhino) = 1.7.7
 
 BuildArch:     noarch
 Source44: import.info
@@ -67,30 +70,6 @@ find . -name '*.zip' -print -delete
 
 cp -p htmlunit-rhino-fork/LICENSE.txt LICENSE-MPL.txt
 
-# package netscape.javascript does not exist
-sed -i 's|depends="test"||' build.xml
-%if 0
-# Fix non ASCII chars
-for s in htmlunit-rhino-fork/toolsrc/org/mozilla/javascript/tools/shell/ShellConsole.java \
- htmlunit-rhino-fork/testsrc/org/mozilla/javascript/tests/Bug637811Test.java \
- htmlunit-rhino-fork/testsrc/org/mozilla/javascript/tests/Bug685403Test.java \
- htmlunit-rhino-fork/testsrc/org/mozilla/javascript/tests/Bug687669Test.java \
- htmlunit-rhino-fork/testsrc/org/mozilla/javascript/tests/Bug688018Test.java \
- htmlunit-rhino-fork/testsrc/org/mozilla/javascript/tests/Bug688021Test.java \
- htmlunit-rhino-fork/testsrc/org/mozilla/javascript/tests/Bug688023Test.java \
- htmlunit-rhino-fork/testsrc/org/mozilla/javascript/tests/Bug689308Test.java \
- htmlunit-rhino-fork/testsrc/org/mozilla/javascript/tests/Bug689314Test.java \
- htmlunit-rhino-fork/testsrc/org/mozilla/javascript/tests/Bug708801Test.java \
- htmlunit-rhino-fork/testsrc/org/mozilla/javascript/tests/Bug714204Test.java \
- htmlunit-rhino-fork/testsrc/org/mozilla/javascript/tests/Bug782363Test.java \
- htmlunit-rhino-fork/testsrc/org/mozilla/javascript/tests/Bug789277Test.java \
- htmlunit-rhino-fork/testsrc/org/mozilla/javascript/tests/Bug783797Test.java \
- htmlunit-rhino-fork/testsrc/org/mozilla/javascript/tests/es5/Test262RegExpTest.java \
- htmlunit-rhino-fork/testsrc/org/mozilla/javascript/tests/json/JsonParserTest.java;do
-  native2ascii -encoding UTF8 ${s} ${s}
-done
-%endif
-
 %build
 
 %ant jar-all
@@ -108,6 +87,9 @@ done
 %doc LICENSE.txt LICENSE-MPL.txt
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.23-alt1_2jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.17-alt1_3jpp8
 - new fc release
 
