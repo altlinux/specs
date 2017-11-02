@@ -1,5 +1,5 @@
 Name: quilt
-Version: 0.65.0.3.1cde1
+Version: 0.65.0.27.0f2a
 Release: alt1
 
 Summary: Scripts for working with series of patches
@@ -62,6 +62,9 @@ install -pm644 AUTHORS NEWS TODO doc/README.EMACS doc/*.pdf \
 %docdir/
 
 %changelog
+* Thu Nov 02 2017 Dmitry V. Levin <ldv@altlinux.org> 0.65.0.27.0f2a-alt1
+- v0.65-3-g1cde193 -> v0.65-27-g0f2a913.
+
 * Thu Mar 30 2017 Dmitry V. Levin <ldv@altlinux.org> 0.65.0.3.1cde1-alt1
 - v0.60-54-g0bdc116 -> v0.65-3-g1cde193.
 
