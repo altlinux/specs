@@ -2,26 +2,24 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global site_name org.apache.felix.bundlerepository
-%global grp_name  felix
-
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           felix-bundlerepository
-Version:        1.6.6
-Release:        alt4_20jpp8
+Version:        2.0.8
+Release:        alt1_2jpp8
 Summary:        Bundle repository service
 License:        ASL 2.0 and MIT
-URL:            http://felix.apache.org/site/apache-felix-osgi-bundle-repository.html
+URL:            http://felix.apache.org/documentation/subprojects/apache-felix-osgi-bundle-repository.html
 BuildArch:      noarch
 
-Source0:        http://www.fightrice.com/mirrors/apache/felix/org.apache.felix.bundlerepository-%{version}-source-release.tar.gz
+Source0:        https://archive.apache.org/dist/felix/org.apache.felix.bundlerepository-%{version}-source-release.tar.gz
 
 Patch1:         0001-Unbundle-libraries.patch
+Patch2:         0002-Compatibility-with-osgi-r6.patch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.sf.kxml:kxml2)
 BuildRequires:  mvn(org.apache.felix:felix-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -30,11 +28,10 @@ BuildRequires:  mvn(org.apache.felix:org.apache.felix.utils)
 BuildRequires:  mvn(org.apache.felix:org.osgi.service.obr)
 BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
 BuildRequires:  mvn(org.easymock:easymock)
-BuildRequires:  mvn(org.osgi:org.osgi.compendium)
-BuildRequires:  mvn(org.osgi:org.osgi.core)
+BuildRequires:  mvn(org.osgi:osgi.cmpn)
+BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(xpp3:xpp3)
 Source44: import.info
-
 
 %description
 Bundle repository service
@@ -48,14 +45,25 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{site_name}-%{version}
+%setup -q -n org.apache.felix.bundlerepository-%{version}
 %patch1 -p1
+%patch2 -p1
 
-# Add xpp3 dependency (upstream bundles this)
+%pom_remove_plugin :maven-source-plugin
+
+# Unbundle xpp3
 %pom_add_dep "xpp3:xpp3:1.1.3.4.O" pom.xml "<optional>true</optional>"
 
 # Make felix utils mandatory dep
 %pom_xpath_remove "pom:dependency[pom:artifactId[text()='org.apache.felix.utils']]/pom:optional"
+
+%pom_change_dep :easymock :::test
+
+# Removing and adding is necessary (order matters)
+%pom_remove_dep :org.osgi.core
+%pom_add_dep org.osgi:osgi.core
+%pom_remove_dep :org.osgi.compendium
+%pom_add_dep org.osgi:osgi.cmpn
 
 # For compatibility reasons
 %mvn_file : felix/%{name}
@@ -74,6 +82,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE LICENSE.kxml2 NOTICE
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.8-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.6-alt4_20jpp8
 - new fc release
 
