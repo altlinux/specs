@@ -1,14 +1,15 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary:	Java Simple Serial Connector
 Name:		jssc
 Version:	2.8.0
-Release:	alt1_5jpp8
+Release:	alt1_6jpp8
 License:	GPLv3+
 Group:		System/Libraries
 URL:		http://jssc.scream3r.org
@@ -101,6 +102,9 @@ ln -srf %{buildroot}%{jni}/%{jniFullSoName} %{buildroot}%{jni}/%{jniSoName}
 
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.8.0-alt1_6jpp8
+- new jpp release
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 2.8.0-alt1_5jpp8
 - new version
 
