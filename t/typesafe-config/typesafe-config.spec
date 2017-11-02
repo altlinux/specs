@@ -1,10 +1,14 @@
 Group: Development/Java
-%filter_from_requires /^java-headless/d
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          typesafe-config
 Version:       1.2.0
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Configuration library for JVM languages
 License:       ASL 2.0
 URL:           https://github.com/typesafehub/config/
@@ -89,6 +93,9 @@ bnd wrap -p %{SOURCE1} -o config/target/config.jar --version %{version} config/t
 %doc LICENSE-2.0.txt
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_8jpp8
+- new jpp release
+
 * Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_7jpp8
 - new version
 
