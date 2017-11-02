@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 BuildRequires: rpm-build-java-osgi
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name eclipselink
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 2.6.3
 
 %global reltag .v20160428-59c81c5
@@ -25,7 +25,7 @@ BuildRequires: rpm-build-java-osgi
 
 Name:          eclipselink
 Version:       2.6.3
-Release:       alt1_1jpp8
+Release:       alt1_2jpp8
 Summary:       Eclipse Persistence Services Project
 License:       EPL and BSD
 Url:           http://www.eclipse.org/eclipselink/
@@ -182,6 +182,9 @@ ant
 %doc license.html
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_1jpp8
 - new version
 
