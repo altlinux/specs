@@ -5,18 +5,13 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name objectweb-asm
-%define version 5.1
-%{?scl:%scl_package objectweb-asm}
-%{!?scl:%global pkg_name %{name}}
-
-Name:           %{?scl_prefix}objectweb-asm
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:           objectweb-asm
 Version:        5.1
-Release:        alt1_4jpp8
+Release:        alt1_7jpp8
 Summary:        Java bytecode manipulation and analysis framework
 License:        BSD
 URL:            http://asm.ow2.org/
@@ -27,12 +22,8 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildRequires:  ant
 BuildRequires:  aqute-bnd
-BuildRequires:  maven-local
+BuildRequires:  javapackages-local
 BuildRequires:  objectweb-pom
-%{?scl:Requires: %scl_runtime}
-
-Obsoletes:      %{?scl_prefix}objectweb-asm4 < 5
-Provides:       %{?scl_prefix}objectweb-asm4 = %{version}-%{release}
 Source44: import.info
 
 %description
@@ -44,7 +35,7 @@ custom complex transformations and code analysis tools.
 
 %package        javadoc
 Group: Development/Java
-Summary:        API documentation for %{pkg_name}
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description    javadoc
@@ -56,33 +47,34 @@ find -name *.jar -delete
 
 sed -i /Class-Path/d archive/*.bnd
 sed -i "s/Import-Package:/&org.objectweb.asm,org.objectweb.asm.util,/" archive/asm-xml.bnd
-sed -i "s|\${config}/biz.aQute.bnd.jar|`build-classpath aqute-bnd slf4j/api slf4j/simple eclipse/osgi.services`|" archive/*.xml
+sed -i "s|\${config}/biz.aQute.bnd.jar|`build-classpath aqute-bnd slf4j/api slf4j/simple osgi-core osgi-compendium`|" archive/*.xml
 sed -i -e '/kind="lib"/d' -e 's|output/eclipse|output/build|' .classpath
 
 %build
 %ant -Dobjectweb.ant.tasks.path= jar jdoc
 
 %install
-%{?scl:scl enable %{scl} - <<"EOF"}
 %mvn_artifact output/dist/lib/asm-parent-%{version}.pom
 for m in asm asm-analysis asm-commons asm-tree asm-util asm-xml all/asm-all all/asm-debug-all; do
     %mvn_artifact output/dist/lib/${m}-%{version}.pom \
                   output/dist/lib/${m}-%{version}.jar
 done
 %mvn_install -J output/dist/doc/javadoc/user
-%{?scl:EOF}
 
-%jpackage_script org.objectweb.asm.xml.Processor "" "" %{pkg_name}/asm:%{pkg_name}/asm-attrs:%{pkg_name}/asm-util:%{pkg_name}/asm-xml %{pkg_name}-processor true
+%jpackage_script org.objectweb.asm.xml.Processor "" "" %{name}/asm:%{name}/asm-attrs:%{name}/asm-util:%{name}/asm-xml %{name}-processor true
 
 %files -f .mfiles
-%doc LICENSE.txt README.txt
-%{_bindir}/%{pkg_name}-processor
-%dir %{_javadir}/%{pkg_name}
+%doc LICENSE.txt
+%doc README.txt
+%{_bindir}/%{name}-processor
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:5.1-alt1_7jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.1-alt1_4jpp8
 - new version
 
