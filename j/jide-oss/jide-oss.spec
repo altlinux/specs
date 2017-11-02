@@ -2,38 +2,39 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # SVN revision used
 %global svnrel 1340
 
-Name:		jide-oss
-Version:	2.7.6
-Release:	alt1_13.1340svnjpp8
-Summary:	Swing component library built on top of Java/Swing
-License:	GPLv2 with exceptions
-URL:		https://jide-oss.dev.java.net/
+Name:           jide-oss
+Version:        2.7.6
+Release:        alt1_15.1340svnjpp8
+Summary:        Swing component library built on top of Java/Swing
+License:        GPLv2 with exceptions
+URL:            https://jide-oss.dev.java.net/
+# Newer release are available here https://github.com/jidesoft/jide-oss
+# This is an svn snapshot, to get this tarball :
+# then to checkout the project source repository :
+# svn checkout https://jide-oss.dev.java.net/svn/jide-oss/branches/trunk_%%{version} jide-oss --username guest
+# create the tarball : tar -cjvf jide-oss-%%{version}-%%{svnrel}svn.tar.bz2 jide-oss
 
-#This is an svn snapshot, to get this tarball :
-#then to checkout the project source repository : svn checkout https://jide-oss.dev.java.net/svn/jide-oss/branches/trunk_%{version} jide-oss --username guest
-#create the tarball : tar -cjvf jide-oss-%{version}-%{svnrel}svn.tar.bz2 jide-oss
+Source0:        %{name}-%{version}-%{svnrel}svn.tar.bz2
 
-Source0:	%{name}-%{version}-%{svnrel}svn.tar.bz2
-
-#Patch0: remove an unknown character
-Patch0:		jide-oss-Eclipse3xJideTabbedPaneUI.java.patch
 #Patch1: use a standard component instead of a vendor specific extension
-Patch1:		jide-oss-AquaJidePopupMenuUI.java.patch
-Patch2:		jide-oss-name-clash.patch
+Patch1:         jide-oss-AquaJidePopupMenuUI.java.patch
+Patch2:         jide-oss-name-clash.patch
 
-BuildArch:	noarch
+BuildArch:      noarch
 
-BuildRequires: javapackages-tools rpm-build-java
-BuildRequires:	dos2unix
-BuildRequires:	dos2unix
-BuildRequires:	ant
+BuildRequires:  ant
+BuildRequires:  java-devel >= 1.6.0
+BuildRequires:  java-javadoc
+BuildRequires:  javapackages-local
 
+Requires:	java >= 1.6.0
 Source44: import.info
 
 %description
@@ -51,55 +52,65 @@ building them again.
 
 %package javadoc
 Group: Development/Java
-Summary:	User documentation for %{name}
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
-User documentation for %{name}.
+API documentation for %{name}.
 
 %package doc
 Group: Development/Java
-Summary:	User documentation for %{name}
+Summary:        User documentation for %{name}
+BuildArch: noarch
 
 %description doc
 User documentation for %{name}.
 
 %prep
 %setup -q -n %{name}
-find -name '*.jar' -exec rm -f '{}' \;
-find -name '*.class' -exec rm -f '{}' \;
+find -name '*.jar' -delete
+find -name '*.class' -delete
 sed -i "s|\r||g" LICENSE.txt
 
-%patch0 -p1 -b .unknown_character
+
 %patch1 -p1 -b .replace_aquapopupmenuui
-dos2unix src/com/jidesoft/utils/DateUtils.java
-dos2unix src/com/jidesoft/swing/CheckBoxListWithSelectable.java
+
+# fix non ASCII chars
+for s in src/com/jidesoft/utils/DateUtils.java \
+   src/com/jidesoft/swing/CheckBoxListWithSelectable.java \
+   src/com/jidesoft/plaf/eclipse/Eclipse3xJideTabbedPaneUI.java
+ do
+  native2ascii -encoding UTF8 ${s} ${s}
+done
 %patch2 -p2
-unix2dos src/com/jidesoft/utils/DateUtils.java
-unix2dos src/com/jidesoft/swing/CheckBoxListWithSelectable.java
+
+sed -i.crosslink "s|http://java.sun.com/j2se/1.5.0/docs/api/|%{_javadocdir}/java|" build.xml
+sed -i.doclint 's|destdir="${javadoc_dir}"|destdir="${javadoc_dir}" additionalparam="-Xdoclint:none"|' build.xml
+sed -i.javac "s|1.5|1.6|" build.properties
+
+%mvn_file com.jidesoft:%{name} %{name}
 
 %build
 %ant javadoc jar
 
 %install
-install -D -p -m 644 %{name}-%{version}.jar \
-	%{buildroot}%{_javadir}/%{name}.jar
+%mvn_artifact pom.xml %{name}-%{version}.jar
+%mvn_install -J javadoc
 
-install -dm 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rf -p javadoc/* %{buildroot}%{_javadocdir}/%{name}
-
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt
-%{_javadir}/%{name}.jar
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt
 
 %files doc
 %doc docs/JIDE_Common_Layer_Developer_Guide.pdf
+%doc LICENSE.txt
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_15.1340svnjpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_13.1340svnjpp8
 - new fc release
 
