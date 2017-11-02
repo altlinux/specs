@@ -1,7 +1,8 @@
-%define ver_major 0.21
+%define ver_major 0.22
 %define beta %nil
 # since 0.20.4 requires ecore_wl2 available in efl >= 1.17
-%define efl_ver_major 1.18
+%define efl_ver_major 1.20
+%define efl_ver %efl_ver_major.5
 %define snapshot 2015-10-28
 %define cvs_date 5469c3b6
 %undefine cvs_date
@@ -19,7 +20,7 @@
 %def_with pam_helper
 
 Name: enlightenment
-Version: %ver_major.10
+Version: %ver_major.0
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -45,15 +46,10 @@ Source3: %name.wmsession
 Source8: %name.desktop
 %{?_enable_install_sysactions:Source11: %name-alt-sysactions.conf}
 
-Patch0: fix-systray-height.patch
-Patch1: add-systray-mobile.patch
-Patch2: add-systray-standard.patch
-Patch3: illume-keyboard-bigfont.patch
-Patch4: e17-0.17.0-alt-g-s-d_path.patch
-Patch5: enlightenment-0.19.99-alt-e_sys_nosuid.patch
-Patch6: auto-ptrace-disable.patch
-Patch11: enlightenment-0.19.0-alt-pam-helper.patch
-Patch12: fix-connman-module-detection.patch
+Patch: e17-0.17.0-alt-g-s-d_path.patch
+Patch1: enlightenment-0.19.99-alt-e_sys_nosuid.patch
+Patch2: auto-ptrace-disable.patch
+Patch3: enlightenment-0.19.0-alt-pam-helper.patch
 
 Provides: e19 = %EVR
 # Obsoletes/Provides old eNN
@@ -81,7 +77,7 @@ Requires: geoclue2
 %{?_with_pam_helper:Requires: chkpwd-pam}
 
 BuildRequires: rpm-build-xdg
-BuildRequires: efl-libs-devel >= %efl_ver_major libelementary-devel >= %efl_ver_major
+BuildRequires: efl-libs-devel >= %efl_ver libelementary-devel >= %efl_ver
 BuildRequires: libpam-devel libalsa-devel libudev-devel libxcbutil-keysyms-devel
 BuildRequires: libdbus-devel libp11-kit-devel xorg-xproto-devel libxcbutil-keysyms-devel
 BuildRequires: libuuid-devel libpulseaudio-devel
@@ -90,7 +86,7 @@ BuildRequires: doxygen
 # for sysv
 BuildRequires: pm-utils
 %{?_enable_bluetooth:BuildRequires: libbluez-devel}
-%{?_enable_wayland:BuildRequires: libwayland-server-devel >= 1.3.0 libpixman-devel libEGL-devel libwayland-egl-devel}
+%{?_enable_wayland:BuildRequires: libwayland-server-devel >= 1.3.0 libpixman-devel libEGL-devel libwayland-egl-devel wayland-protocols}
 %{?_enable_systemd:BuildRequires: systemd-devel}
 
 %description
@@ -114,17 +110,13 @@ Development headers for Enlightenment.
 %else
 %setup -n %name-%version%beta
 %endif
-#%%patch0 -p2
-#%patch1 -p2
-#%patch2 -p2
-#%patch3 -p2
-%patch4 -p1 -b .gsd
-%patch5 -p1 -b .nosuid
-%patch6 -p2 -b .ptrace
+
+%patch -p1 -b .gsd
+%patch1 -p1 -b .nosuid
+%patch2 -p2 -b .ptrace
 %if_with pam_helper
-%patch11 -p1 -b .pam_helper
+%patch3 -p1 -b .pam_helper
 %endif
-#%patch12 -p2
 
 %build
 %autoreconf
@@ -186,7 +178,8 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %find_lang %name
 
 %files -f %name.lang
-%config %_sysconfdir/X11/wmsession.d/*
+%exclude %config %_sysconfdir/X11/wmsession.d/*
+
 %config %_sysconfdir/%name/sysactions.conf
 %config(noreplace) %_sysconfdir/pam.d/%name
 %dir %_libdir/%name/
@@ -194,9 +187,10 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_liconsdir/*.png
 %_bindir/*
 %_datadir/%name/
-#!
-%_datadir/pixmaps/emixer.png
 %_datadir/xsessions/%name.desktop
+%_datadir/wayland-sessions/enlightenment.desktop
+%_datadir/pixmaps/emixer.png
+%_pixmapsdir/enlightenment-askpass.png
 %_datadir/applications/*.desktop
 %{?_enable_systemd:%_prefix/lib/systemd/user/%name.service}
 %_xdgmenusdir/e-applications.menu
@@ -211,6 +205,9 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Thu Nov 02 2017 Yuri N. Sedunov <aris@altlinux.org> 1:0.22.0-alt1
+- 0.22.0
+
 * Sat Oct 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1:0.21.10-alt1
 - 0.21.10
 
