@@ -1,15 +1,18 @@
 Group: Development/Java
-%filter_from_requires /^java-headless/d
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name glassfish-gmbal
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 3.2.0
 %global namedreltag -b003
 %global namedversion %{version}%{?namedreltag}
 Name:          glassfish-gmbal
 Version:       3.2.0
-Release:       alt3_0.9.b003jpp8
+Release:       alt3_0.10.b003jpp8
 Summary:       GlassFish MBean Annotation Library
 License:       CDDL or GPLv2 with exceptions
 URL:           http://java.net/projects/gmbal/pages/Home
@@ -83,6 +86,9 @@ mv dist/gmbal-api-only.bar dist/gmbal-api-only.jar
 %doc legal/LICENSE.TXT
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt3_0.10.b003jpp8
+- new jpp release
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt3_0.9.b003jpp8
 - java8 mass update
 
