@@ -4,30 +4,26 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global base_name       io
-%global short_name      commons-%{base_name}
-
-Name:           apache-%{short_name}
-Version:        2.4
-Release:        alt6_15jpp8
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:           apache-commons-io
+Version:        2.5
+Release:        alt1_2jpp8
 Epoch:          1
 Summary:        Utilities to assist with developing IO functionality
 License:        ASL 2.0
-URL:            http://commons.apache.org/%{base_name}
-Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+URL:            http://commons.apache.org/io
+Source0:        http://archive.apache.org/dist/commons/io/source/commons-io-%{version}-src.tar.gz
 BuildArch:      noarch
 
-BuildRequires:  java-devel >= 1.6
 BuildRequires:  maven-local
-BuildRequires:  apache-commons-parent
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 Source44: import.info
-# jpackage compat
-Provides:       jakarta-%{short_name} = %version
-Obsoletes:      jakarta-%{short_name} < %version
-Provides:       %{short_name} = %version
+Provides: jakarta-commons-io = %EVR
 
 %description
 Commons-IO contains utility classes, stream implementations,
@@ -43,18 +39,17 @@ BuildArch: noarch
 This package provides %{summary}.
 
 %prep
-%setup -q -n %{short_name}-%{version}-src
+%setup -q -n commons-io-%{version}-src
 sed -i 's/\r//' *.txt
 
 %build
-%mvn_file  : %{short_name} %{name}
+%mvn_file  : commons-io %{name}
 %mvn_alias : org.apache.commons:
-%mvn_build -- -Dmaven.test.skip.exec=true
+
+%mvn_build
 
 %install
 %mvn_install
-# jpp compat
-ln -sf %{name}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}.jar
 
 %files -f .mfiles
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
@@ -63,6 +58,9 @@ ln -sf %{name}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}.jar
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.5-alt1_2jpp8
+- new version
+
 * Wed Dec 07 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.4-alt6_15jpp8
 - fixed build
 
