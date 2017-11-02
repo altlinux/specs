@@ -1,28 +1,48 @@
+%define _unpackaged_files_terminate_build 1
+%define pubconfpath %_sysconfdir/gssproxy
+%define gpstatepath %_sharedstatedir/gssproxy
+%define _localstatedir %_var
+
 Name: gssproxy
-Version: 0.5.1
-Release: alt1
+Version: 0.7.0
+Release: alt1%ubt
 Summary: GSSAPI Proxy
 
 Group: System/Servers
 License: %mit
-Url: http://fedorahosted.org/gss-proxy
+Url: https://pagure.io/gssproxy
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-macros-fedora-compat
 
-BuildRequires: libverto-devel
-BuildRequires: libini_config-devel
+BuildRequires: libxslt
+BuildRequires: xsltproc
+BuildRequires: libxml2
+BuildRequires: docbook-style-xsl
+BuildRequires: doxygen
+BuildRequires: gettext-devel
+BuildRequires: pkg-config
 BuildRequires: libkrb5-devel
 BuildRequires: libselinux-devel
+BuildRequires: libkeyutils-devel
+BuildRequires: libini_config-devel >= 1.3.1
+BuildRequires: libverto-devel
 BuildRequires: libpopt-devel
-#BuildRequires: libkeyutils-devel
-BuildRequires: doxygen po4a xml-utils docbook-style-xsl
+BuildRequires: systemd
+BuildRequires: po4a
 
-%define _unpackaged_files_terminate_build 1
-%define pubconfpath %_sysconfdir/gssproxy
-%define gpstatepath %_localstatedir/gssproxy
+Requires: libkrb5
+Requires: libkeyutils
+Requires: libverto-module-base
+Requires: libini_config >= 1.3.1
+Requires(post): systemd
+Requires(preun): systemd
+Requires(postun): systemd
+
 
 %description
 A proxy for GSSAPI credential handling.
@@ -32,6 +52,7 @@ A proxy for GSSAPI credential handling.
 %patch -p1
 
 %build
+cd proxy
 %autoreconf
 %configure \
 	--with-pubconf-path=%pubconfpath \
@@ -40,44 +61,52 @@ A proxy for GSSAPI credential handling.
 	--with-systemdunitdir=%_unitdir \
 	--disable-static \
 	--disable-rpath \
-	--with-gpp-default-behavior=REMOTE_FIRST \
-	--with-manpages \
-	--with-selinux
+	--with-gpp-default-behavior=REMOTE_FIRST
 
-%make_build
+%make_build all
+
+%check
+cd proxy
+%make_build test_proxymech
 
 %install
+cd proxy
 %makeinstall_std
 install -d -m755 %buildroot%_sysconfdir/gssproxy
 install -m644 examples/gssproxy.conf %buildroot%_sysconfdir/gssproxy/gssproxy.conf
-install -m644 examples/24-nfs-server.conf %buildroot%_sysconfdir/gssproxy/24-nfs-server.conf
 install -m644 examples/99-nfs-client.conf %buildroot%_sysconfdir/gssproxy/99-nfs-client.conf
 mkdir -p %buildroot%_sysconfdir/gss/mech.d
 install -m644 examples/mech %buildroot%_sysconfdir/gss/mech.d/gssproxy.conf
 mkdir -p %buildroot%gpstatepath/rcache
+# do not pack la files
+rm -f %buildroot%_libdir/%name/proxymech.la
 
 %post
-%post_service %name
+%systemd_post %name.service
 
 %preun
-%preun_service %name
+%systemd_preun %name.service
+
+%postun
+%systemd_postun_with_restart %name.service
 
 %files
-%doc COPYING
-%_unitdir/gssproxy.service
-%_sbindir/gssproxy
+%_unitdir/%name.service
+%_sbindir/%name
 %attr(755,root,root) %dir %pubconfpath
 %attr(755,root,root) %dir %gpstatepath
 %attr(700,root,root) %dir %gpstatepath/clients
 %attr(700,root,root) %dir %gpstatepath/rcache
 %attr(0600,root,root) %config(noreplace) %_sysconfdir/gssproxy/*.conf
 %attr(0644,root,root) %config(noreplace) %_sysconfdir/gss/mech.d/*.conf
-%_libdir/gssproxy/
+%dir %_libdir/%name
+%_libdir/%name/proxymech.so
 %_man5dir/*
 %_man8dir/*
 
-%exclude %_libdir/gssproxy/*.la
-
 %changelog
+* Wed Nov 01 2017 Stanislav Levin <slev@altlinux.org> 0.7.0-alt1%ubt
+- New 0.7.0 version
+
 * Thu Jul 28 2016 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt1
 - Initial build.
