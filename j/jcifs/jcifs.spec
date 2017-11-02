@@ -3,12 +3,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          jcifs
 Version:       1.3.18
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Common Internet File System Client in 100% Java
 # Licenses:
 #   src/jcifs/util/DES.java: BSD and MIT
@@ -54,7 +55,7 @@ Group: Development/Java
 Summary:       Demo for %{name}
 # Files from the directory 'examples' are here, some are under GPLv2+
 License:       LGPLv2+ and GPLv2+
-Requires:      %{name} = %{version}
+Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description demo
 Demonstrations and samples for %{name}.
@@ -90,7 +91,9 @@ mkdir -p %{buildroot}%{_datadir}/%{name}/examples
 cp -pr examples/*.java  %{buildroot}%{_datadir}/%{name}/examples
 
 %files -f .mfiles
-%doc README.txt docs/*.{html,txt,gif}
+%doc README.txt docs/*.html
+%doc README.txt docs/*.txt
+%doc README.txt docs/*.gif
 %doc LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
@@ -101,6 +104,9 @@ cp -pr examples/*.java  %{buildroot}%{_datadir}/%{name}/examples
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.18-alt1_5jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.18-alt1_4jpp8
 - new fc release
 
