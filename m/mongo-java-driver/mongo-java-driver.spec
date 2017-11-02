@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mongo-java-driver
-%define version 3.2.1
 %{?scl:%scl_package mongo-java-driver}
 %{!?scl:%global pkg_name %{name}}
 
@@ -16,8 +16,8 @@ BuildRequires: jpackage-generic-compat
 %endif
 
 Name:		%{?scl_prefix}mongo-java-driver
-Version:	3.2.1
-Release:	alt1_2jpp8
+Version:	3.4.2
+Release:	alt1_1jpp8
 Summary:	A Java driver for MongoDB
 
 Group:		Development/Other
@@ -153,6 +153,9 @@ set -ex
 %doc README.md LICENSE.txt
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 3.4.2-alt1_1jpp8
+- new jpp release
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1_2jpp8
 - new version
 
