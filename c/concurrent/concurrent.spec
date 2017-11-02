@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2007, JPackage Project
 # All rights reserved.
 #
@@ -36,7 +37,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           concurrent
 Version:        1.3.4
-Release:        alt1_21jpp8
+Release:        alt1_22jpp8
 Epoch:          0
 Summary:        Utility classes for concurrent Java programming
 License:        Public Domain
@@ -51,11 +52,11 @@ Group:          Development/Java
 
 BuildArch:      noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils
 BuildRequires:  ant
 BuildRequires:  javapackages-local
 
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 Source44: import.info
 
 %description 
@@ -67,7 +68,7 @@ to save you the trouble of coding them.
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Documentation
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -108,6 +109,9 @@ popd
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.4-alt1_22jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.4-alt1_21jpp8
 - new fc release
 
