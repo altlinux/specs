@@ -1,6 +1,9 @@
+
+%define _localstatedir %_var
+
 Name: dirmngr
 Version: 1.1.1
-Release: alt3.1
+Release: alt4%ubt
 
 Summary: Client for Managing/Downloading CRLs
 Group: System/Libraries
@@ -12,6 +15,7 @@ Source: %name-%version.tar
 # Arch
 Patch1: dirmngr-pth-fix.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: libassuan-devel libgcrypt-devel libksba-devel libldap-devel libpth-devel
 # explicitly added texinfo for info files
 BuildRequires: texinfo
@@ -53,6 +57,9 @@ install -pm644 AUTHORS NEWS README THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Thu Nov 02 2017 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt4%ubt
+- fix _localstatedir usage
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3.1
 - NMU: added BR: texinfo
 
