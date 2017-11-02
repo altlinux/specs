@@ -4,11 +4,11 @@ Group: Text tools
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name saxon
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 9.4.0.9
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
@@ -47,7 +47,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Java XPath, XSLT 2.0 and XQuery implementation
 Name:           saxon
 Version:        9.4.0.9
-Release:        alt1_2jpp8
+Release:        alt1_5jpp8
 # net.sf.saxon.om.XMLChar is from ASL-licensed Xerces
 # net/sf/saxon/option/jdom/ is MPLv1.1
 # net/sf/saxon/serialize/codenorm/ is UCD
@@ -79,8 +79,6 @@ BuildRequires:  jdom2
 BuildRequires:  dom4j
 Requires:       bea-stax-api
 Requires:       bea-stax
-Requires: chkconfig update-alternatives
-Provides:       jaxp_transform_impl = %{version}-%{release}
 
 # Older versions were split into multile packages
 Obsoletes:  %{name}-xpath < %{version}-%{release}
@@ -123,7 +121,7 @@ Javadoc for %{name}.
 %package        demo
 Group: Text tools
 Summary:        Demos for %{name}
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description    demo
 Demonstrations and samples for %{name}.
@@ -131,7 +129,7 @@ Demonstrations and samples for %{name}.
 %package        scripts
 Group: Text tools
 Summary:        Utility scripts for %{name}
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description    scripts
 Utility scripts for %{name}.
@@ -193,7 +191,7 @@ config=net.sf.saxon.Configuration
 platform=net.sf.saxon.java.JavaPlatform
 EOF
 
-export CLASSPATH=%(build-classpath axiom xml-commons-apis xml-commons-resolver jdom jdom2 xom bea-stax-api dom4j)
+export CLASSPATH=$(build-classpath axiom xml-commons-apis xml-commons-resolver jdom jdom2 xom bea-stax-api dom4j)
 ant \
   -Dj2se.javadoc=%{_javadocdir}/java \
   -Djdom.javadoc=%{_javadocdir}/jdom
@@ -223,17 +221,16 @@ install -p -m755 %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/%{name}q
 mkdir -p $RPM_BUILD_ROOT%{_mandir}/man1
 install -p -m644 %{SOURCE4} $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
 install -p -m644 %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/man1/%{name}q.1
-
-# jaxp_transform_impl ghost symlink
-ln -s %{_sysconfdir}/alternatives \
-  $RPM_BUILD_ROOT%{_javadir}/jaxp_transform_impl.jar
-install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jaxp_transform_impl_saxon<<EOF
-%{_javadir}/jaxp_transform_impl.jar	%{_javadir}/saxon/%{artifact_id}.jar	25
-EOF
 chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 
+%post
+mv %{_javadir}/jaxp_transform_impl.jar{,.tmp} || :
+# alternatives removed in f26
+:
+# restore the symlink
+mv %{_javadir}/jaxp_transform_impl.jar{.tmp,} || :
+
 %files -f .mfiles
-%_altdir/jaxp_transform_impl_saxon
 %doc mpl-1.0.txt mpl-1.1.txt
 %{_javadir}/%{name}/saxon.jar
 
@@ -254,6 +251,9 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %{_mandir}/man1/%{name}q.1*
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:9.4.0.9-alt1_5jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:9.4.0.9-alt1_2jpp8
 - new version
 
