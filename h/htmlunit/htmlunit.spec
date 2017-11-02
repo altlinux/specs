@@ -3,31 +3,34 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           htmlunit
-Version:        2.20
-Release:        alt1_2jpp8
+Version:        2.23
+Release:        alt1_3jpp8
 Summary:        A headless web browser for automated testing
 License:        ASL 2.0 
 URL:            http://htmlunit.sourceforge.net/
 # Source0:        http://downloads.sourceforge.net/htmlunit/%%{name}-%%{version}-src.zip
 # Steps for generate the archive:
-# svn checkout svn://svn.code.sf.net/p/htmlunit/code/tags/HtmlUnit-2.20/  htmlunit-2.20
+# svn export http://svn.code.sf.net/p/htmlunit/code/tags/HtmlUnit-2.23/  htmlunit-2.23
 # Cleanup, remove unused test resources (taraball become more lightweight: 60MB >> 24MB)
-# find htmlunit-2.20 -name '*.jar' -print -delete
-# find htmlunit-2.20 -name '*.js' -print -delete 
-# find htmlunit-2.20 -name '*.class' -print -delete
-# find htmlunit-2.20 -name '*.dll' -print -delete
-# find htmlunit-2.20 -name '*.exe' -print -delete
-# find htmlunit-2.20 -name '*.gz' -print -delete
-# find htmlunit-2.20 -name 'php-cgi' -print -delete
-# rm -rf htmlunit-2.20/src/test/resources/libraries
-# rm -rf htmlunit-2.20/src/test/resources/pjl-comp-filter
-# tar cJf htmlunit-2.20.tar.xz htmlunit-2.20
+# find htmlunit-2.23 -name '*.jar' -print -delete
+# find htmlunit-2.23 -name '*.js' -print -delete 
+# find htmlunit-2.23 -name '*.class' -print -delete
+# find htmlunit-2.23 -name '*.dll' -print -delete
+# find htmlunit-2.23 -name '*.exe' -print -delete
+# find htmlunit-2.23 -name '*.gz' -print -delete
+# find htmlunit-2.23 -name 'php-cgi*' -print -delete
+# rm -rf htmlunit-2.23/src/test/resources/libraries
+# rm -rf htmlunit-2.23/src/test/resources/pjl-comp-filter
+# tar cJf htmlunit-2.23.tar.xz htmlunit-2.23
 
 Source0:        %{name}-%{version}.tar.xz
+# javascript not allowed in javadoc
+Patch0:         htmlunit-2.23-javascript.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-codec:commons-codec)
@@ -36,7 +39,7 @@ BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(net.sourceforge.cssparser:cssparser)
 BuildRequires:  mvn(net.sourceforge.htmlunit:htmlunit-core-js)
-BuildRequires:  mvn(net.sourceforge.nekohtml:nekohtml)
+BuildRequires:  mvn(net.sourceforge.htmlunit:neko-htmlunit)
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
@@ -68,6 +71,8 @@ This package contains the API documentation for %{name}.
 #find -name '*.jar' -print -delete 
 #find -name '*.class' -print -delete
 
+%patch0 -p1
+
 %pom_xpath_remove "pom:build/pom:extensions"
 
 %pom_xpath_set "pom:packaging" bundle
@@ -82,7 +87,6 @@ This package contains the API documentation for %{name}.
 %pom_remove_plugin :maven-source-plugin
 
 # Unavailable test deps
-%pom_remove_dep :gsbase
 %pom_remove_dep org.seleniumhq.selenium:
 %pom_xpath_remove "pom:dependency[pom:type = 'test-jar']"
 # org.apache.httpcomponents:httpclient:4.1.2:test-jar
@@ -107,6 +111,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.23-alt1_3jpp8
+- new version
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.20-alt1_2jpp8
 - new version
 
