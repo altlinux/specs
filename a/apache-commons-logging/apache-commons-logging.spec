@@ -5,19 +5,24 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# READ BEFORE UPDATING: After updating this package to new upstream
-# version eclipse-ecf should be rebuilt.  For more info, see:
-# https://fedoraproject.org/wiki/SIGs/Java#Package_Update.2FRebuild_Notes
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%bcond_without  avalon
 
 %global base_name  logging
 %global short_name commons-%{base_name}
 
 Name:           apache-%{short_name}
 Version:        1.2
-Release:        alt1_5jpp8
+Release:        alt1_9jpp8
 Summary:        Apache Commons Logging
 License:        ASL 2.0
 URL:            http://commons.apache.org/%{base_name}
@@ -25,14 +30,17 @@ Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_n
 Source2:        http://mirrors.ibiblio.org/pub/mirrors/maven2/%{short_name}/%{short_name}-api/1.1/%{short_name}-api-1.1.pom
 
 Patch0:         0001-Generate-different-Bundle-SymbolicName-for-different.patch
+Patch1:         0002-Port-to-maven-jar-plugin-3.0.0.patch
 
 BuildRequires:  maven-local
+%if %{with avalon}
 BuildRequires:  mvn(avalon-framework:avalon-framework-api)
 BuildRequires:  mvn(avalon-framework:avalon-framework-impl)
+BuildRequires:  mvn(logkit:logkit)
+%endif
 BuildRequires:  mvn(javax.servlet:servlet-api)
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(log4j:log4j)
-BuildRequires:  mvn(logkit:logkit)
+BuildRequires:  mvn(log4j:log4j:12)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
@@ -66,13 +74,22 @@ BuildArch: noarch
 %prep
 %setup -q -n %{short_name}-%{version}-src
 %patch0 -p1
+%patch1 -p1
 
+%if %{with avalon}
 # Sent upstream https://issues.apache.org/jira/browse/LOGGING-143
 %pom_remove_dep :avalon-framework
 %pom_add_dep avalon-framework:avalon-framework-api:4.3:provided
 %pom_add_dep avalon-framework:avalon-framework-impl:4.3:test
-
 %pom_xpath_inject "pom:dependency[pom:artifactId='logkit']" '<scope>provided</scope>'
+
+%else
+%pom_remove_dep -r :avalon-framework
+%pom_remove_dep -r :logkit
+rm -r src/test/java/org/apache/commons/logging/{avalon,logkit}
+rm src/main/java/org/apache/commons/logging/impl/AvalonLogger.java
+rm src/main/java/org/apache/commons/logging/impl/LogKitLogger.java
+%endif
 
 %pom_remove_plugin :cobertura-maven-plugin
 %pom_remove_plugin :maven-scm-publish-plugin
@@ -95,8 +112,8 @@ rm -rf src/test/java/org/apache/commons/logging/log4j/log4j12
 %install
 %mvn_install
 
-install -p -m 644 target/%{short_name}-api-%{version}.jar %{buildroot}/%{_javadir}/%{name}-api.jar
-install -p -m 644 target/%{short_name}-adapters-%{version}.jar %{buildroot}/%{_javadir}/%{name}-adapters.jar
+install -p -m 644 target/%{short_name}-%{version}-api.jar %{buildroot}/%{_javadir}/%{name}-api.jar
+install -p -m 644 target/%{short_name}-%{version}-adapters.jar %{buildroot}/%{_javadir}/%{name}-adapters.jar
 
 pushd %{buildroot}/%{_javadir}
 for jar in %{name}-*; do
@@ -121,6 +138,9 @@ install -pm 644 %{SOURCE2} %{buildroot}/%{_mavenpomdir}/JPP-%{short_name}-api.po
 # -----------------------------------------------------------------------------
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_9jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_5jpp8
 - new fc release
 
