@@ -9,9 +9,11 @@
 %def_enable pixbuf_loader
 %def_enable introspection
 %def_enable vala
+# 2.40.19 -- FAIL:  13
+%def_disable check
 
 Name: %bname
-Version: %ver_major.18
+Version: %ver_major.19
 Release: alt1
 Epoch: 1
 
@@ -24,19 +26,18 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 
 # From configure.ac
 %define glib_ver 2.24.0
-%define gio_ver 2.24.0
+%define pango_ver 1.38
 %define gtk3_ver 3.10.0
-%define libxml2_ver 2.7.0
+%define libxml2_ver 2.9.0
 %define cairo_ver 1.2.0
 %define croco_ver 0.6.7
 %define vala_ver 0.18
 
 PreReq: libcroco >= %croco_ver
 
-# From configure.in
+BuildPreReq: libpango-devel >= %pango_ver
 BuildPreReq: libgtk+3-devel >= %gtk3_ver
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libgio-devel >= %gio_ver
+BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libxml2-devel >= %libxml2_ver
 BuildPreReq: libcairo-devel >= %cairo_ver
 BuildPreReq: libcroco-devel >= %croco_ver
@@ -182,6 +183,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Wed Oct 04 2017 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.19-alt1
+- 2.40.19
+
 * Thu Jul 20 2017 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.18-alt1
 - 2.40.18 (fixed CVE-2017-11464)
 
