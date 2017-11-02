@@ -4,13 +4,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 24
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           mockito
 Version:        1.10.19
-Release:        alt1_10jpp8
+Release:        alt1_12jpp8
 Summary:        A Java mocking framework
 
 License:        MIT
@@ -27,6 +27,7 @@ Patch4:         fix-incompatible-types.patch
 
 BuildArch:      noarch
 BuildRequires:  javapackages-local
+BuildRequires:  java-devel
 BuildRequires:  ant
 BuildRequires:  objenesis
 BuildRequires:  cglib
@@ -74,16 +75,10 @@ ant jar javadoc
 
 # Convert to OSGi bundle
 pushd target
-%if 0%{?fedora} >= 23
 bnd wrap \
  --version %{version} \
  --output %{name}-core-%{version}.bar \
  --properties ../conf/%{name}-core.bnd \
-%else
-java -jar $(build-classpath aqute-bnd) wrap \
- -output %{name}-core-%{version}.bar \
- -properties ../conf/%{name}-core.bnd \
-%endif
  %{name}-core-%{version}.jar
 mv %{name}-core-%{version}.bar %{name}-core-%{version}.jar
 
@@ -107,6 +102,9 @@ sed -i -e "s|@version@|%{version}|g" maven/%{name}-core.pom
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.10.19-alt1_12jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10.19-alt1_10jpp8
 - new fc release
 
