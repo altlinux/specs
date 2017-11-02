@@ -2,11 +2,12 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          jackson-module-jsonSchema
-Version:       2.6.3
+Version:       2.7.6
 Release:       alt1_2jpp8
 Summary:       Jackson JSON Schema Module
 License:       ASL 2.0
@@ -62,6 +63,9 @@ rm -r src/test/java/com/fasterxml/jackson/module/jsonSchema/TestReadJsonSchema.j
 %doc LICENSE
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_2jpp8
+- new jpp release
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_2jpp8
 - new version
 
