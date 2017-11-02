@@ -24,7 +24,7 @@
 %def_enable user_display_server
 
 Name: gdm
-Version: %ver_major.1
+Version: %ver_major.2.1
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -56,7 +56,7 @@ Provides: gnome-dm
 # from configure.ac
 %define glib_ver 2.36.0
 %define gtk_ver 3.16.0
-%define shell_ver 3.19.4
+%define shell_ver %ver_major
 %define libcanberra_ver 0.4
 %define accountsservice_ver 0.6.35
 %define check_ver 0.9.4
@@ -291,7 +291,8 @@ xvfb-run %make check
 %files libs-devel
 %_includedir/gdm/
 %_libdir/libgdm.so
-%_libdir/pkgconfig/gdm.pc
+%_pkgconfigdir/%name.pc
+%_pkgconfigdir/%name-pam-extensions.pc
 
 %files libs-gir
 %_typelibdir/Gdm-%api_ver.typelib
@@ -302,6 +303,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Tue Oct 31 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2.1-alt1
+- 3.26.2.1
+
 * Wed Oct 04 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 
