@@ -2,19 +2,19 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 25
+%define fedora 26
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name querydsl3
-%define version 3.6.6
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 3.7.2
 %global _version %( echo %{version} | tr . _ )
 
 %if 0%{?fedora}
@@ -27,8 +27,8 @@ BuildRequires: jpackage-generic-compat
 %endif
 
 Name:          querydsl3
-Version:       3.6.6
-Release:       alt1_3jpp8
+Version:       3.7.2
+Release:       alt1_6jpp8
 Summary:       Type safe queries for Java
 License:       ASL 2.0
 URL:           http://www.querydsl.com
@@ -66,19 +66,19 @@ BuildRequires: mvn(org.apache.maven:maven-core)
 BuildRequires: mvn(org.apache.maven:maven-model)
 BuildRequires: mvn(org.apache.maven:maven-plugin-api)
 BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
-# eclipselink :2.5.1
 BuildRequires: mvn(org.eclipse.persistence:eclipselink)
 BuildRequires: mvn(org.geolatte:geolatte-geom)
 BuildRequires: mvn(org.hamcrest:hamcrest-core)
-BuildRequires: mvn(org.hibernate:hibernate-core)
-BuildRequires: mvn(org.hibernate:hibernate-entitymanager)
+BuildRequires: mvn(org.hibernate:hibernate-core:4)
+BuildRequires: mvn(org.hibernate:hibernate-entitymanager:4)
 BuildRequires: mvn(org.hibernate:hibernate-search-orm)
 BuildRequires: mvn(org.hibernate:hibernate-validator)
 BuildRequires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.0-api)
 BuildRequires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.1-api)
 BuildRequires: mvn(org.jenkins-ci:annotation-indexer)
-BuildRequires: mvn(org.mongodb:mongo-java-driver:2.14.1)
+BuildRequires: mvn(org.mongodb:mongo-java-driver:2)
 BuildRequires: mvn(org.mongodb.morphia:morphia)
 %if %{with postgis}
 BuildRequires: mvn(org.postgis:postgis-jdbc)
@@ -88,6 +88,7 @@ BuildRequires: mvn(org.scala-lang:scala-library)
 BuildRequires: mvn(org.scala-lang:scala-compiler)
 BuildRequires: mvn(org.slf4j:slf4j-api)
 BuildRequires: mvn(org.slf4j:slf4j-log4j12)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires: mvn(org.sonatype.plexus:plexus-build-api)
 BuildRequires: mvn(org.springframework:spring-jdbc)
 
@@ -96,7 +97,6 @@ BuildRequires: mvn(org.springframework:spring-jdbc)
 BuildRequires: mvn(com.h2database:h2)
 # https://bugzilla.redhat.com/show_bug.cgi?id=1217563
 BuildRequires: mvn(com.jolbox:bonecp:0.7.1.RELEASE)
-# https://bugzilla.redhat.com/show_bug.cgi?id=1217162
 BuildRequires: mvn(com.mysema.maven:apt-maven-plugin)
 BuildRequires: mvn(com.oracle:ojdbc6)
 BuildRequires: mvn(cubrid:cubrid-jdbc:9.3.1.0005)
@@ -127,6 +127,7 @@ BuildRequires: mvn(org.postgresql:postgresql:9.3-1101-jdbc41)
 BuildRequires: mvn(org.xerial:sqlite-jdbc)
 %endif
 
+Obsoletes:     %{name}-scala <= %{version}-4
 BuildArch:     noarch
 Source44: import.info
 
@@ -268,9 +269,10 @@ find . -name "*.jar" -print -delete
 
 %pom_remove_parent
 %pom_remove_plugin :maven-assembly-plugin
-%pom_remove_plugin :maven-pmd-plugin
-%pom_remove_plugin :maven-source-plugin
-%pom_remove_plugin :maven-version-plugin
+%pom_remove_plugin -r :maven-pmd-plugin
+%pom_remove_plugin -r :maven-source-plugin
+%pom_remove_plugin -r org.eluder.coveralls:coveralls-maven-plugin
+%pom_remove_plugin -r :jacoco-maven-plugin
 %pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin
 %pom_xpath_remove "pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration/pom:outputDirectory"
 %pom_xpath_remove "pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration/pom:reportOutputDirectory"
@@ -339,6 +341,15 @@ rm -r querydsl-sql/src/main/java/com/mysema/query/sql/spatial/PGgeometryConverte
 %pom_remove_plugin com.mysema.maven:apt-maven-plugin querydsl-mongodb
 %pom_remove_plugin :maven-assembly-plugin querydsl-mongodb
 
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  Internal Error (assembler_aarch32.hpp:215), pid=9324, tid=0xb50d8470
+#  guarantee(val < (1U << nbits)) failed: Field too big for insn
+#
+# JRE version: OpenJDK Runtime Environment (8.0_102) (build 1.8.0_102-160812)
+# Java VM: OpenJDK Client VM (25.102-b160812 mixed mode linux-aarch32 )
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+%if 0
 %pom_remove_plugin net.alchim31.maven:scala-maven-plugin querydsl-scala
 %pom_add_plugin org.apache.maven.plugins:maven-antrun-plugin:1.7 querydsl-scala '
 <executions>
@@ -367,8 +378,15 @@ rm -r querydsl-sql/src/main/java/com/mysema/query/sql/spatial/PGgeometryConverte
       <version>${scala.full.version}</version>
   </dependency>
 </dependencies>'
+%endif
 
-%pom_xpath_set "pom:properties/pom:mongodb.version" 2.14.1 querydsl-mongodb
+%pom_disable_module querydsl-scala
+
+%pom_xpath_set "pom:properties/pom:mongodb.version" 2 querydsl-mongodb
+%pom_xpath_set -r "pom:properties/pom:hibernate.version" 4 querydsl-apt querydsl-hibernate-search querydsl-jpa querydsl-jpa-codegen querydsl-examples/querydsl-example-jpa-guice
+
+# fix build failure. 'useDefaultManifestFile' has been removed from the maven-jar-plugin >= 3.0.0
+%pom_remove_plugin :maven-jar-plugin
 
 %mvn_package :querydsl-jdo::apt: querydsl-jdo
 %mvn_package :querydsl-jpa::apt: querydsl-jpa
@@ -412,7 +430,10 @@ rm -r querydsl-sql/src/main/java/com/mysema/query/sql/spatial/PGgeometryConverte
 %files root -f .mfiles-querydsl-root
 %doc LICENSE.txt
 
+%if 0
 %files scala -f .mfiles-querydsl-scala
+%endif
+
 %files spatial -f .mfiles-querydsl-spatial
 
 %files sql -f .mfiles-querydsl-sql
@@ -425,6 +446,9 @@ rm -r querydsl-sql/src/main/java/com/mysema/query/sql/spatial/PGgeometryConverte
 %doc LICENSE.txt
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 3.7.2-alt1_6jpp8
+- new jpp release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 3.6.6-alt1_3jpp8
 - new fc release
 
