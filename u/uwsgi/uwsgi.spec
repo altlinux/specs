@@ -3,8 +3,8 @@
 %define _pseudouser_home     /var/empty
 
 Name: uwsgi
-Version: 0.9.6.5
-Release: alt1.2.qa1
+Version: 2.0.15
+Release: alt1
 
 Summary: fast (pure C), self-healing, developer-friendly WSGI server
 License: GPLv2
@@ -13,7 +13,10 @@ Group: System/Servers
 Url: http://projects.unbit.it/uwsgi/
 
 Source: %name-%version.tar
-Patch: %name-0.9.6.5-alt-no-Werror.patch
+Source1: %name.init
+Source2: %name.logrotate
+Source3: %name.sysconfig
+Patch: %name-2.0.15-alt-no-rpath.patch
 
 BuildRequires: libxml2-devel python-devel
 
@@ -44,9 +47,9 @@ Erlang message exchanger are already available.
 install -dm0775 %buildroot%_logdir/%name
 
 install -pDm0755 %name %buildroot%_sbindir/%name
-install -pDm0755 altlinux/%name.init %buildroot%_initdir/%name
-install -pDm0644 altlinux/%name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
-install -pDm0644 altlinux/%name.logrotate %buildroot%_sysconfdir/logrotate.d/%name
+install -pDm0755 %SOURCE1 %buildroot%_initdir/%name
+install -pDm0644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
+install -pDm0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/%name
 
 %post
 %post_service %name
@@ -60,9 +63,12 @@ install -pDm0644 altlinux/%name.logrotate %buildroot%_sysconfdir/logrotate.d/%na
 %config %_initdir/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/logrotate.d/%name
-%doc ChangeLog README contrib django
+%doc README contrib
 
 %changelog
+* Thu Nov 02 2017 Oleg Solovyov <mcpain@altlinux.org> 2.0.15-alt1
+- update to 2.0.15
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.6.5-alt1.2.qa1
 - NMU: rebuilt for updated dependencies.
 
