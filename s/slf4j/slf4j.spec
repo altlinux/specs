@@ -39,8 +39,8 @@ BuildRequires: jpackage-generic-compat
 #
 
 Name:           slf4j
-Version:        1.7.22
-Release:        alt1_4jpp8
+Version:        1.7.25
+Release:        alt1_2jpp8
 Epoch:          0
 Summary:        Simple Logging Facade for Java
 # the log4j-over-slf4j and jcl-over-slf4j submodules are ASL 2.0, rest is MIT
@@ -235,6 +235,9 @@ cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
 %{_defaultdocdir}/%{name}-manual
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.25-alt1_2jpp8
+- new jpp release
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.22-alt1_4jpp8
 - new jpp release
 
