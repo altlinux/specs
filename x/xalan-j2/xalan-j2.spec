@@ -4,9 +4,10 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -41,38 +42,43 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xalan-j2
 Version:        2.7.1
-Release:        alt4_28jpp8
+Release:        alt4_31jpp8
 Epoch:          0
 Summary:        Java XSLT processor
 # src/org/apache/xpath/domapi/XPathStylesheetDOM3Exception.java is W3C
 License:        ASL 2.0 and W3C
+URL:            http://xalan.apache.org/
 Source0:        http://archive.apache.org/dist/xml/xalan-j/xalan-j_2_7_1-src.tar.gz
 Source1:        %{name}-serializer-MANIFEST.MF
 Source2:        http://repo1.maven.org/maven2/xalan/xalan/2.7.1/xalan-2.7.1.pom
 Source3:        http://repo1.maven.org/maven2/xalan/serializer/2.7.1/serializer-2.7.1.pom
 Source4:        xsltc-%{version}.pom
 Source5:        %{name}-MANIFEST.MF
+
 Patch0:         %{name}-noxsltcdeps.patch
 # Fix CVE-2014-0107: insufficient constraints in secure processing
 # feature (oCERT-2014-002).  Generated form upstream revisions 1581058
 # and 1581426.
 Patch2:         %{name}-CVE-2014-0107.patch
-URL:            http://xalan.apache.org/
 
 BuildArch:      noarch
-Provides:       jaxp_transform_impl
-Requires:       xerces-j2
+
 BuildRequires:  javapackages-local
 BuildRequires:  ant
+BuildRequires:  apache-parent
 BuildRequires:  bcel
 BuildRequires:  java_cup
 BuildRequires:  regexp
 BuildRequires:  sed
-BuildRequires:  tomcat-servlet-3.1-api
+BuildRequires:  glassfish-servlet-api
 BuildRequires:  xerces-j2 >= 0:2.7.1
 BuildRequires:  xml-commons-apis >= 0:1.3
 BuildRequires:  xml-stylebook
 BuildRequires:  zip
+
+Requires:       xerces-j2
+
+Provides:       jaxp_transform_impl
 Source44: import.info
 BuildRequires: dos2unix
 Provides: xalan-j = %{name}-%{version}
@@ -108,7 +114,6 @@ Documentation for %{name}.
 %package        javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
-BuildRequires:  java-javadoc
 BuildArch: noarch
 
 %description    javadoc
@@ -117,8 +122,8 @@ Javadoc for %{name}.
 %package        demo
 Group: Development/Java
 Summary:        Demo for %{name}
-Requires:       %{name} = %{epoch}:%{version}
-Requires:       tomcat-servlet-3.1-api
+Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       glassfish-servlet-api
 
 %description    demo
 Demonstrations and samples for %{name}.
@@ -145,8 +150,12 @@ sed -i '/class-path/I d' $(find -iname '*manifest*')
 sed -i 's/\r//' KEYS LICENSE.txt NOTICE.txt xdocs/style/resources/script.js \
     xdocs/sources/xsltc/README* `find -name '*.sh'`
 
+%mvn_file :xalan %{name} jaxp_transform_impl
+%mvn_file :serializer %{name}-serializer
+%mvn_file :xsltc xsltc
+%mvn_package :xsltc xsltc
+
 %build
-if [ ! -e "$JAVA_HOME" ] ; then export JAVA_HOME="%{java_home}" ; fi
 pushd lib
 ln -sf $(build-classpath java_cup-runtime) runtime.jar
 ln -sf $(build-classpath bcel) BCEL.jar
@@ -159,7 +168,7 @@ ln -sf $(build-classpath java_cup) java_cup.jar
 ln -sf $(build-classpath ant) ant.jar
 ln -sf $(build-classpath xml-stylebook) stylebook-1.0-b3_xalan-2.jar
 popd
-export CLASSPATH=$(build-classpath servlet)
+export CLASSPATH=$(build-classpath glassfish-servlet-api)
 
 ant \
   -Djava.awt.headless=true \
@@ -172,8 +181,6 @@ ant \
   samples \
   servlet
 
-
-%install
 # inject OSGi manifests
 mkdir -p META-INF
 cp -p %{SOURCE1} META-INF/MANIFEST.MF
@@ -183,28 +190,12 @@ cp -p %{SOURCE5} META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
 zip -u build/xalan-interpretive.jar META-INF/MANIFEST.MF
 
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -p -m 644 build/xalan-interpretive.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-install -p -m 644 build/xsltc.jar \
-  $RPM_BUILD_ROOT%{_javadir}/xsltc.jar
-install -p -m 644 build/serializer.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-serializer.jar
+%mvn_artifact %{SOURCE2} build/xalan-interpretive.jar
+%mvn_artifact %{SOURCE3} build/serializer.jar
+%mvn_artifact %{SOURCE4} build/xsltc.jar
 
-# POMs
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-serializer.pom
-install -p -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-xsltc.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-%add_maven_depmap JPP-%{name}-serializer.pom %{name}-serializer.jar
-%add_maven_depmap -f xsltc JPP-xsltc.pom xsltc.jar
-
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr build/docs/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-rm -rf build/docs/apidocs
+%install
+%mvn_install -J build/docs/apidocs
 
 # demo
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
@@ -217,19 +208,17 @@ cp -pr samples $RPM_BUILD_ROOT%{_datadir}/%{name}
 # fix link between manual and javadoc
 (cd build/docs; ln -sf %{_javadocdir}/%{name} apidocs)
 
-# jaxp_transform_impl ghost symlink
-ln -s %{_sysconfdir}/alternatives \
-  $RPM_BUILD_ROOT%{_javadir}/jaxp_transform_impl.jar
-install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jaxp_transform_impl_xalan-j2<<EOF
-%{_javadir}/jaxp_transform_impl.jar	%{_javadir}/%{name}.jar	30
-EOF
-
 find $RPM_BUILD_ROOT -name '*.sh' -print0 | xargs -0 dos2unix
 grep -r -m 1 -l -Z '^#!/bin/sh' $RPM_BUILD_ROOT%_bindir | xargs -0 dos2unix
 
+%post
+mv %{_javadir}/jaxp_transform_impl.jar{,.tmp} || :
+# alternatives removed in f26
+:
+# restore the symlink
+mv %{_javadir}/jaxp_transform_impl.jar{.tmp,} || :
 
 %files -f .mfiles
-%_altdir/jaxp_transform_impl_xalan-j2
 %doc LICENSE.txt NOTICE.txt
 %doc KEYS readme.html
 
@@ -248,6 +237,9 @@ grep -r -m 1 -l -Z '^#!/bin/sh' $RPM_BUILD_ROOT%_bindir | xargs -0 dos2unix
 %{_datadir}/%{name}
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt4_31jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt4_28jpp8
 - new fc release
 
