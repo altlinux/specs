@@ -6,14 +6,21 @@ BuildRequires(pre): rpm-macros-java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^.usr.bin.run/d
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_without  nosql
+
 Name:           log4j
-Version:        2.5
-Release:        alt1_5jpp8
+Version:        2.7
+Release:        alt1_4jpp8
 Summary:        Java logging package
 BuildArch:      noarch
 License:        ASL 2.0
@@ -23,10 +30,12 @@ Source0:        http://www.apache.org/dist/logging/%{name}/%{version}/apache-%{n
 Patch0:         0001-Backport-fix-for-CVE-2017-5645.patch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(com.beust:jcommander)
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core)
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
 BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-xml)
 BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-yaml)
+BuildRequires:  mvn(com.fasterxml.woodstox:woodstox-core)
 BuildRequires:  mvn(com.lmax:disruptor)
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(com.sun.mail:javax.mail)
@@ -38,17 +47,16 @@ BuildRequires:  mvn(org.apache.commons:commons-compress)
 BuildRequires:  mvn(org.apache.commons:commons-csv)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
-BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
-BuildRequires:  mvn(org.eclipse:osgi)
-BuildRequires:  mvn(org.eclipse.osgi:org.eclipse.osgi)
-BuildRequires:  mvn(org.eclipse.persistence:org.eclipse.persistence.jpa)
 BuildRequires:  mvn(org.fusesource.jansi:jansi)
 BuildRequires:  mvn(org.hibernate.javax.persistence:hibernate-jpa-2.1-api)
 BuildRequires:  mvn(org.jboss.spec.javax.jms:jboss-jms-api_1.1_spec)
+BuildRequires:  mvn(org.jctools:jctools-core)
+%if %{with nosql}
 BuildRequires:  mvn(org.lightcouch:lightcouch)
 BuildRequires:  mvn(org.liquibase:liquibase-core)
 BuildRequires:  mvn(org.mongodb:mongo-java-driver)
-BuildRequires:  mvn(org.osgi:org.osgi.core)
+%endif
+BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.slf4j:slf4j-ext)
 BuildRequires:  mvn(org.zeromq:jeromq)
@@ -111,6 +119,8 @@ Summary:        Apache Log4j BOM
 %description bom
 Apache Log4j 2 Bill of Material
 
+
+%if %{with nosql}
 %package nosql
 Group: Development/Java
 Summary:        Apache Log4j NoSql
@@ -124,6 +134,8 @@ Summary:        Apache Log4j Liquibase Binding
 
 %description liquibase
 The Apache Log4j Liquibase binding to Log4j 2 Core.
+
+%endif
 
 %package        javadoc
 Group: Development/Java
@@ -152,8 +164,16 @@ rm -rf docs/api
 # Apache Flume is not in Fedora yet
 %pom_disable_module %{name}-flume-ng
 
-# jmh not available
+# artifact for upstream testing of log4j itself, shouldn't be distributed
 %pom_disable_module %{name}-perf
+
+# unavailable com.conversantmedia:disruptor
+rm log4j-core/src/main/java/org/apache/logging/log4j/core/async/DisruptorBlockingQueueFactory.java
+%pom_remove_dep com.conversantmedia:disruptor %{name}-core
+
+# unavailable net.alchim31.maven:scala-maven-plugin
+%pom_disable_module log4j-api-scala_2.10
+%pom_disable_module log4j-api-scala_2.11
 
 # kafka not available
 rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
@@ -163,13 +183,8 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 %pom_remove_dep :jconsole %{name}-jmx-gui
 %pom_add_dep sun.jdk:jconsole %{name}-jmx-gui
 
-# Different AID, provided by equinox
-%pom_remove_dep : %{name}-api
-%pom_add_dep org.eclipse:osgi:any:provided %{name}-api
-
-# Classpath hell, equinox must come before felix
-%pom_remove_dep org.eclipse.osgi:org.eclipse.osgi %{name}-core
-%pom_add_dep org.eclipse.osgi:org.eclipse.osgi:any:provided %{name}-core
+# old AID is provided by felix, we want osgi-core
+%pom_change_dep -r org.osgi:org.osgi.core org.osgi:osgi.core
 
 # Old version of specification
 %pom_remove_dep :javax.persistence %{name}-core
@@ -178,9 +193,10 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 # BOM package shouldn't require Apache RAT
 %pom_remove_plugin :apache-rat-plugin %{name}-bom
 
-# Required at compile-time not just test, but we don't want requires
-%pom_xpath_set "pom:dependency[pom:groupId='org.eclipse.persistence']/pom:scope" provided %{name}-core
-%pom_xpath_set "pom:dependency[pom:groupId='org.eclipse.osgi']/pom:scope" provided %{name}-core
+%if %{without nosql}
+%pom_disable_module %{name}-nosql
+%pom_disable_module %{name}-liquibase
+%endif
 
 %mvn_alias :%{name}-1.2-api %{name}:%{name}
 
@@ -211,24 +227,6 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/chainsaw.conf`
 touch $RPM_BUILD_ROOT/etc/chainsaw.conf
 
-# TODO: Remove this in F-24
-%preun
-if [ $1 -eq 0 ]; then
-  if [ -x xmlcatalog -a -w %{_sysconfdir}/xml/catalog ]; then
-    xmlcatalog --noout --del \
-      file://%{_datadir}/sgml/%{name}/log4j.dtd \
-      %{_sysconfdir}/xml/catalog > /dev/null || :
-  fi
-fi
-
-# TODO: Remove this in F-24
-%postun
-if [ -x install-catalog -a -d %{_sysconfdir}/sgml ]; then
-  install-catalog --remove \
-    %{_sysconfdir}/sgml/%{name}-%{version}-%{release}.cat \
-    %{_datadir}/sgml/%{name}/catalog > /dev/null || :
-fi
-
 %files -f .mfiles
 %dir %{_javadir}/%{name}
 %doc LICENSE.txt NOTICE.txt
@@ -239,8 +237,10 @@ fi
 %files jcl -f .mfiles-jcl
 %files web -f .mfiles-web
 %files bom -f .mfiles-bom
+%if %{with nosql}
 %files nosql -f .mfiles-nosql
 %files liquibase -f .mfiles-liquibase
+%endif
 %files jmx-gui -f .mfiles-jmx-gui
 %{_bindir}/%{name}-jmx
 
@@ -249,6 +249,9 @@ fi
 
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.7-alt1_4jpp8
+- new version
+
 * Thu Sep 28 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt1_5jpp8
 - CVE-2017-5645
 
