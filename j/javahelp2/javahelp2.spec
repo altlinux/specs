@@ -6,9 +6,10 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 %def_without demo
 %filter_from_requires /^.usr.bin.run/d
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -41,7 +42,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		javahelp2
 Version:	2.0.05
-Release:	alt3_19jpp8
+Release:	alt3_20jpp8
 Summary:	JavaHelp is a full-featured, platform-independent, extensible help system 
 License:	GPLv2 with exceptions
 Url:		https://javahelp.java.net/
@@ -51,6 +52,7 @@ Source2:	%{name}-jhsearch.sh
 BuildArch:	noarch
 
 BuildRequires:	javapackages-local
+BuildRequires:	java-devel >= 1.6.0
 
 BuildRequires:	ant
 BuildRequires:	tomcat-servlet-3.1-api
@@ -128,6 +130,9 @@ touch $RPM_BUILD_ROOT/etc/jhsearch.conf
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.05-alt3_20jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.05-alt3_19jpp8
 - new fc release
 
