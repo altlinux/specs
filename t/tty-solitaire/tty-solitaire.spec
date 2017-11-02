@@ -2,7 +2,7 @@
 
 Name:     tty-solitaire
 Version:  1.0.0
-Release:  alt1
+Release:  alt2
 
 Summary:  Play solitaire in your terminal!
 
@@ -22,18 +22,21 @@ Buildrequires: libncursesw-devel
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
 
 %build
 %make_build CFLAGS='%optflags'
 
 %install
-%makeinstall PREFIX=%buildroot%_prefix
+%makeinstall_std PREFIX=%_prefix
 
 %files
 %_bindir/*
 %doc README.md
 
 %changelog
+* Thu Nov 02 2017 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt2
+- Remove buildroot macro from spec.
+
 * Thu Oct 26 2017 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus.
