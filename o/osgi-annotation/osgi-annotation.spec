@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:    osgi-annotation
 Version: 6.0.0
-Release: alt1_5jpp8
+Release: alt1_6jpp8
 Summary: Annotations for use in compiling OSGi bundles
 
 License: ASL 2.0
@@ -80,6 +80,9 @@ cp -p %{SOURCE1} pom.xml
 %doc LICENSE
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt1_6jpp8
+- new jpp release
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt1_5jpp8
 - new jpp release
 
