@@ -3,67 +3,65 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-site-plugin
-Version:        3.4
-Release:        alt1_5jpp8
+Version:        3.6
+Release:        alt1_2jpp8
 Summary:        Maven Site Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-site-plugin/
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 BuildArch:      noarch
 
-Patch0:         0001-Port-to-jetty-9.patch
-Patch1:         0001-Fix-jetty-dependencies.patch
-# Jetty is needed only in interactive mode of maven-site-plugin. Change
-# dependency scope from compile to provided to reduce dependency bloat.
-Patch2:         %{name}-jetty-provided.patch
+Patch1:         0001-Port-to-jetty-9.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(commons-lang:commons-lang)
 BuildRequires:  mvn(javax.servlet:servlet-api)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-decoration-model)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-integration-tools)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-logging-api)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-xdoc)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-xhtml)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-markdown)
 BuildRequires:  mvn(org.apache.maven:maven-archiver)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-settings)
 BuildRequires:  mvn(org.apache.maven:maven-settings-builder)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-exec)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
-BuildRequires:  mvn(org.apache.velocity:velocity)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-classworlds)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-i18n)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-velocity)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-client)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-proxy)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-server)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-servlet)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-util)
 BuildRequires:  mvn(org.eclipse.jetty:jetty-webapp)
+BuildRequires:  mvn(org.sonatype.sisu:sisu-inject-plexus)
 Source44: import.info
 
 %description
 The Maven Site Plugin is a plugin that generates a site for the current project.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
 BuildArch: noarch
 
@@ -72,12 +70,15 @@ API documentation for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
+
 %patch1 -p1
-%patch2
+
+# Jetty is needed only in interactive mode of maven-site-plugin. Change
+# dependency scope from compile to provided to reduce dependency bloat.
+%pom_change_dep org.eclipse.jetty::: :::provided
 
 %build
-# skipping tests because we need to fix them first for jetty update
+# missing webdav
 %mvn_build -f
 
 %install
@@ -91,6 +92,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 3.6-alt1_2jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.4-alt1_5jpp8
 - new fc release
 
