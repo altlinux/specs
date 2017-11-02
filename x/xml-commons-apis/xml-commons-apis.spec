@@ -1,16 +1,18 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          xml-commons-apis
 Version:       1.4.01
-Release:       alt3_20jpp8
+Release:       alt3_22jpp8
 Summary:       APIs for DOM, SAX, and JAXP
-Group:         Development/Other
 License:       ASL 2.0 and W3C and Public Domain
 URL:           http://xml.apache.org/commons/
+BuildArch:     noarch
 
 # From source control because the published tarball doesn't include some docs:
 #   svn export http://svn.apache.org/repos/asf/xml/commons/tags/xml-commons-external-1_4_01/java/external/
@@ -21,14 +23,11 @@ Source2:       %{name}-ext-MANIFEST.MF
 Source3:       http://repo1.maven.org/maven2/xml-apis/xml-apis/2.0.2/xml-apis-2.0.2.pom
 Source4:       http://repo1.maven.org/maven2/xml-apis/xml-apis-ext/1.3.04/xml-apis-ext-1.3.04.pom
 
-BuildArch:     noarch
-
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: javapackages-local
 BuildRequires: ant
 BuildRequires: zip
-Requires: javapackages-tools rpm-build-java
+BuildRequires: apache-parent
 
-Obsoletes:     xml-commons < %{version}-%{release}
 Provides:      xml-commons = %{version}-%{release}
 
 # TODO: Ugh, this next line should be dropped since it actually provides JAXP 1.4 now...
@@ -53,16 +52,16 @@ the various externally-defined standard interfaces for XML. This
 includes the DOM, SAX, and JAXP.
 
 %package manual
+Group: Development/Java
 Summary:       Manual for %{name}
-Group:         Development/Java
 BuildArch: noarch
 
 %description manual
 %{summary}.
 
 %package javadoc
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Group:         Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -84,10 +83,13 @@ iconv -f iso8859-1 -t utf-8 LICENSE.dom-software.txt > \
 cp %{SOURCE3} %{SOURCE4} .
 sed -i '/distributionManagement/,/\/distributionManagement/ {d}' *.pom
 
+%mvn_file :xml-apis xml-commons-apis jaxp13 jaxp xml-commons-jaxp-1.3-apis
+%mvn_file :xml-apis-ext xml-commons-apis-ext
+%mvn_alias :xml-apis-ext xerces:dom3-xml-apis
+
 %build
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jar javadoc
 
-%install
 # inject OSGi manifests
 mkdir -p META-INF
 cp -p %{SOURCE1} META-INF/MANIFEST.MF
@@ -97,23 +99,11 @@ cp -p %{SOURCE2} META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
 zip -u build/xml-apis-ext.jar META-INF/MANIFEST.MF
 
-# Jars
-install -pD -T build/xml-apis.jar %{buildroot}%{_javadir}/%{name}.jar
-install -pDm 644 xml-apis-[0-9]*.pom %{buildroot}/%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap -a xerces:dom3-xml-apis
+%mvn_artifact xml-apis-[0-9]*.pom build/xml-apis.jar
+%mvn_artifact xml-apis-ext*.pom build/xml-apis-ext.jar
 
-install -pD -T build/xml-apis-ext.jar %{buildroot}%{_javadir}/%{name}-ext.jar
-install -pDm 644 xml-apis-ext*.pom %{buildroot}/%{_mavenpomdir}/JPP-%{name}-ext.pom
-%add_maven_depmap JPP-%{name}-ext.pom %{name}-ext.jar
-
-# for better interoperability with the jpp apis packages
-ln -sf %{name}.jar %{buildroot}%{_javadir}/jaxp13.jar
-ln -sf %{name}.jar %{buildroot}%{_javadir}/jaxp.jar
-ln -sf %{name}.jar %{buildroot}%{_javadir}/xml-commons-jaxp-1.3-apis.jar
-
-# Javadocs
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr build/docs/javadoc/* %{buildroot}%{_javadocdir}/%{name}
+%install
+%mvn_install -J build/docs/javadoc
 
 # prevent apis javadoc from being included in doc
 rm -rf build/docs/javadoc
@@ -132,6 +122,9 @@ rm -rf build/docs/javadoc
 %{_javadocdir}/*
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.01-alt3_22jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.01-alt3_20jpp8
 - new fc release
 
