@@ -1,10 +1,10 @@
 %def_disable snapshot
-%define ver_major 3.25
+%define ver_major 3.26
 %define xdg_name org.gnome.Calculator
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-calculator
-Version: %ver_major.92
+Version: %ver_major.0
 Release: alt1
 
 Summary: GTK+3 based desktop calculator
@@ -69,6 +69,9 @@ A single graphics driver for GTK included with this package.
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Thu Nov 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Tue Sep 05 2017 Yuri N. Sedunov <aris@altlinux.org> 3.25.92-alt1
 - 3.25.92
 
