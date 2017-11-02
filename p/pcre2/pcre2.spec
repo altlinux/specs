@@ -1,7 +1,7 @@
 %def_enable static
 
 Name: pcre2
-Version: 10.23
+Version: 10.30
 Release: alt1
 
 Summary: Perl-compatible regular expression library
@@ -122,6 +122,9 @@ Utilities demonstrating PCRE2 capabilities like pcre2grep or pcre2test.
 %exclude %_docdir/%name
 
 %changelog
+* Thu Nov 02 2017 Yuri N. Sedunov <aris@altlinux.org> 10.30-alt1
+- 10.30
+
 * Sun Feb 19 2017 Yuri N. Sedunov <aris@altlinux.org> 10.23-alt1
 - 10.23
 
