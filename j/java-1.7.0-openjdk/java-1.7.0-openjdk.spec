@@ -15,7 +15,7 @@ BuildRequires: unzip gcc-c++ libstdc++-devel-static
 BuildRequires: libXext-devel libXrender-devel libfreetype-devel libkrb5-devel
 BuildRequires(pre): browser-plugins-npapi-devel lsb-release
 BuildRequires(pre): rpm-build-java
-BuildRequires: pkgconfig(gtk+-2.0) ant-nodeps
+BuildRequires: pkgconfig(gtk+-2.0) ant1.9-nodeps
 %set_compress_method none
 %define with_systemtap 0
 BuildRequires: /proc
@@ -205,7 +205,7 @@ BuildRequires: jpackage-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt2_2.5.5.0jpp7
+Release: alt3_2.5.5.0jpp7
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -348,7 +348,7 @@ BuildRequires: libpng-devel
 BuildRequires: wget
 BuildRequires: xsltproc libxslt
 BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
-BuildRequires: ant
+BuildRequires: ant1.9
 BuildRequires: libXinerama-devel
 BuildRequires: rhino
 BuildRequires: zip
@@ -715,7 +715,7 @@ umask $oldumask
 make MEMORY_LIMIT=-J-Xmx512m \
   DISABLE_INTREE_EC=true \
   UNLIMITED_CRYPTO=true \
-  ANT="/usr/bin/ant" \
+  ANT="/usr/bin/ant1.9" \
   DISTRO_NAME="ALTLinux" \
   DISTRO_PACKAGE_VERSION="ALTLinux-%{release}-%{_arch} u%{updatever}-b%{buildver}" \
   JDK_UPDATE_VERSION=`printf "%02d" %{updatever}` \
@@ -999,8 +999,8 @@ do
     touch %buildroot"$rpm_404_ghost"
 done
 
-%__subst 's,^Categories=.*,Categories=Settings;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*policytool.desktop
-%__subst 's,^Categories=.*,Categories=Development;Profiling;System;Monitor;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*jconsole.desktop
+sed -i 's,^Categories=.*,Categories=Settings;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*policytool.desktop
+sed -i 's,^Categories=.*,Categories=Development;Profiling;System;Monitor;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*jconsole.desktop
 
 ##### javadoc Alt specific #####
 echo java-javadoc >java-javadoc-buildreq-substitute
@@ -1321,6 +1321,9 @@ $java -Xshare:dump >/dev/null 2>/dev/null
 %{_jvmdir}/%{jredir}/lib/accessibility.properties
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.79-alt3_2.5.5.0jpp7
+- fixed build (built with ant1.9)
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.79-alt2_2.5.5.0jpp7
 - added javadoc alternatives
 - supports build with gcc 5
