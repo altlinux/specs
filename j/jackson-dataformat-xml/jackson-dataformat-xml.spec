@@ -2,19 +2,17 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          jackson-dataformat-xml
-Version:       2.6.3
+Version:       2.7.6
 Release:       alt1_3jpp8
 Summary:       XML data binding extension for Jackson
 License:       ASL 2.0
 URL:           http://wiki.fasterxml.com/JacksonExtensionXmlDataBinding
 Source0:       https://github.com/FasterXML/jackson-dataformat-xml/archive/%{name}-%{version}.tar.gz
-# fix for CVE-2016-3720 (jackson-dataformat-xml issues#190)
-# https://github.com/FasterXML/jackson-dataformat-xml/commit/f0f19a4c924d9db9a1e2830434061c8640092cc0
-Patch0:        jackson-dataformat-xml-2.6.3-CVE-2016-3720.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(com.fasterxml.jackson:jackson-parent:pom:)
@@ -28,8 +26,6 @@ BuildRequires: mvn(javax.xml.stream:stax-api)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.codehaus.woodstox:stax2-api)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-site-plugin)
 BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
 
 BuildArch:     noarch
@@ -53,7 +49,6 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
-%patch0 -p1
 
 cp -p src/main/resources/META-INF/LICENSE .
 cp -p src/main/resources/META-INF/NOTICE .
@@ -77,6 +72,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_3jpp8
+- new jpp release
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_3jpp8
 - new version
 
