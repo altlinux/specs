@@ -6,13 +6,14 @@ Obsoletes: jakarta-regexp = 1.4-alt1
 Obsoletes: jakarta-regexp = 1.4-alt2
 Obsoletes: jakarta-regexp = 1.4-alt3
 Obsoletes: jakarta-regexp = 1.4-alt4
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           regexp
 Epoch:          1
 Version:        1.5
-Release:        alt1_23jpp8
+Release:        alt1_24jpp8
 Summary:        Simple regular expressions API
 License:        ASL 2.0
 URL:            http://jakarta.apache.org/%{name}/
@@ -85,6 +86,9 @@ mkdir lib
 %doc LICENSE
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.5-alt1_24jpp8
+- new jpp release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.5-alt1_23jpp8
 - new fc release
 
