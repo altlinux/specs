@@ -2,18 +2,19 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          mongo-java-driver2
-Version:       2.14.1
-Release:       alt1_3jpp8
+Version:       2.14.3
+Release:       alt1_2jpp8
 Summary:       MongoDB Java Driver
 # BSD-3-clause: src/main/org/bson/io/UTF8Encoding.java
 # CC-BY-SA-3.0: src/main/org/bson/util/annotations/*
 License:       ASL 2.0 and BSD and CC-BY-SA
 URL:           http://docs.mongodb.org/ecosystem/drivers/java/
-Source0:       https://github.com/mongodb/mongo-java-driver/archive/r%{version}.tar.gz
+Source0:       https://github.com/mongodb/mongo-java-driver/archive/r%{version}/mongo-java-driver-%{version}.tar.gz
 
 BuildRequires: maven-local
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
@@ -49,6 +50,11 @@ find -name '*.jar' -print -delete
 # Unwanted task
 %pom_remove_plugin :maven-source-plugin
 
+# Fix osgi manifest
+%pom_xpath_remove pom:Export-Package
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-bundle-plugin']/pom:configuration/pom:instructions" '
+                 <Export-Package>com.mongodb.*,org.bson.*</Export-Package>'
+
 %mvn_compat_version org.mongodb:mongo-java-driver %{version} 2
 %mvn_file org.mongodb:mongo-java-driver mongo-java-driver %{name}
 
@@ -73,6 +79,9 @@ find -name '*.jar' -print -delete
 %doc LICENSE.txt
 
 %changelog
+* Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 2.14.3-alt1_2jpp8
+- new jpp release
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 2.14.1-alt1_3jpp8
 - new version
 
