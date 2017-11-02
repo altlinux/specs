@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          extra166y
 Version:       1.7.0
-Release:       alt1_5jpp8
+Release:       alt1_7jpp8
 Summary:       Concurrency JSR-166 - Collections supporting parallel operations
 License:       Public Domain
 URL:           http://gee.cs.oswego.edu/dl/concurrency-interest
@@ -29,7 +30,7 @@ Source1:       http://repository.codehaus.org/org/codehaus/jsr166-mirror/%{name}
 Source2:       extra166y-OSGi.bnd
 Patch0:        extra166y-osgi-manifest.patch
 BuildRequires: ant
-BuildRequires: aqute-bnd
+BuildRequires: aqute-bnd >= 3.2.0
 BuildRequires: javapackages-local
 BuildRequires: junit
 BuildArch:     noarch
@@ -79,6 +80,9 @@ ant extra166yjar extra166ydist-docs
 %doc src/main/intro.html src/main/readme
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1_7jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1_5jpp8
 - new fc release
 
