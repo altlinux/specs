@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,10 +15,12 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 %bcond_without  logback
 
+%global bundled_slf4j_version 1.7.25
+
 Name:           maven
 Epoch:          1
-Version:        3.3.9
-Release:        alt1_9jpp8
+Version:        3.5.0
+Release:        alt1_6jpp8
 Summary:        Java project management and project comprehension tool
 License:        ASL 2.0
 URL:            http://maven.apache.org/
@@ -26,68 +29,63 @@ BuildArch:      noarch
 Source0:        http://archive.apache.org/dist/%{name}/%{name}-3/%{version}/source/apache-%{name}-%{version}-src.tar.gz
 Source1:        maven-bash-completion
 Source2:        mvn.1
-Source1010: mvn-script
 
-Patch0:         0001-Force-SLF4J-SimpleLogger-re-initialization.patch
-Patch1:         0002-Adapt-mvn-script.patch
+Patch1:         0001-Adapt-mvn-script.patch
+# Part of https://github.com/apache/maven/pull/109
+Patch2:         0002-Update-to-current-slf4j.patch
+# Fedora specific, avoids usage of unpackaged groovy-maven-plugin
+Patch3:         0003-Replace-groovy-invocation-with-antrun.patch
+# Downstream-specific, avoids dependency on logback
+# Used only when %without logback is in effect
+Patch4:         0004-Invoke-logback-via-reflection.patch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(com.google.guava:guava)
+BuildRequires:  mvn(com.google.inject:guice::no_aop:)
+BuildRequires:  mvn(commons-cli:commons-cli)
+BuildRequires:  mvn(commons-jxpath:commons-jxpath)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
+BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-api)
+BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-connector-basic)
+BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-impl)
+BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-spi)
+BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-transport-wagon)
+BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-util)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
+BuildRequires:  mvn(org.apache.maven.wagon:wagon-file)
+BuildRequires:  mvn(org.apache.maven.wagon:wagon-http::shaded:)
+BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
+BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-classworlds)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(org.fusesource.jansi:jansi)
+BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
+BuildRequires:  mvn(org.slf4j:slf4j-simple)
+BuildRequires:  mvn(org.sonatype.plexus:plexus-cipher)
+BuildRequires:  mvn(org.sonatype.plexus:plexus-sec-dispatcher)
+BuildRequires:  mvn(regexp:regexp)
+BuildRequires:  mvn(xmlunit:xmlunit)
 
-BuildRequires:  aether-api >= 1:0
-BuildRequires:  aether-connector-basic >= 1:0
-BuildRequires:  aether-impl >= 1:0
-BuildRequires:  aether-spi >= 1:0
-BuildRequires:  aether-util >= 1:0
-BuildRequires:  aether-transport-wagon >= 1:0
-BuildRequires:  aopalliance
-BuildRequires:  apache-commons-cli
-BuildRequires:  apache-commons-io
-BuildRequires:  apache-commons-lang
-BuildRequires:  apache-commons-lang3
-BuildRequires:  apache-commons-codec
-BuildRequires:  apache-commons-jxpath
-BuildRequires:  apache-commons-logging
-BuildRequires:  apache-resource-bundles
-BuildRequires:  atinject
-BuildRequires:  cglib
-BuildRequires:  easymock3
-BuildRequires:  google-guice >= 3.1.6
-BuildRequires:  hamcrest
-BuildRequires:  httpcomponents-core
-BuildRequires:  httpcomponents-client
-BuildRequires:  jsoup
-BuildRequires:  jsr-305
-BuildRequires:  junit
-BuildRequires:  maven-assembly-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-parent
-BuildRequires:  maven-remote-resources-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-wagon-file
-BuildRequires:  maven-wagon-http
-BuildRequires:  maven-wagon-http-shared
-BuildRequires:  maven-wagon-provider-api
-BuildRequires:  objectweb-asm
-BuildRequires:  plexus-cipher
-BuildRequires:  plexus-classworlds
-BuildRequires:  plexus-containers-component-annotations
-BuildRequires:  plexus-containers-component-metadata >= 1.5.5
-BuildRequires:  plexus-interpolation
-BuildRequires:  plexus-sec-dispatcher
-BuildRequires:  plexus-utils >= 3.0.10
-BuildRequires:  sisu-inject >= 1:0.1
-BuildRequires:  sisu-plexus >= 1:0.1
-BuildRequires:  sisu-mojos
-BuildRequires:  slf4j
-BuildRequires:  xmlunit
+# Missed by builddep
+BuildRequires:  mvn(org.slf4j:jcl-over-slf4j:pom:)
+
+BuildRequires:  slf4j-sources = %{bundled_slf4j_version}
+
 %if %{with logback}
 BuildRequires:  mvn(ch.qos.logback:logback-classic)
 %endif
-BuildRequires:  mvn(org.mockito:mockito-core)
-BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
 
 Requires:       %{name}-lib = %{epoch}:%{version}-%{release}
 
@@ -100,31 +98,33 @@ Requires:       %{name}-lib = %{epoch}:%{version}-%{release}
 # by XMvn.  It would be possible to explicitly specify only
 # dependencies which are not generated automatically, but adding
 # everything seems to be easier.
-Requires:       aether-api
-Requires:       aether-connector-basic
-Requires:       aether-impl
-Requires:       aether-spi
-Requires:       aether-transport-wagon
-Requires:       aether-util
 Requires:       aopalliance
 Requires:       apache-commons-cli
 Requires:       apache-commons-io
 Requires:       apache-commons-lang
 Requires:       apache-commons-lang3
-Requires:       apache-commons-codec
 Requires:       apache-commons-logging
 Requires:       atinject
+Requires:       cdi-api
 Requires:       google-guice
 Requires:       guava
+Requires:       hawtjni-runtime
 Requires:       httpcomponents-client
 Requires:       httpcomponents-core
-Requires:       jsoup
-Requires:       jsr-305
+Requires:       jansi
+Requires:       jansi-native
+Requires:       jcl-over-slf4j
+Requires:       maven-resolver-api
+Requires:       maven-resolver-connector-basic
+Requires:       maven-resolver-impl
+Requires:       maven-resolver-spi
+Requires:       maven-resolver-transport-wagon
+Requires:       maven-resolver-util
+Requires:       maven-shared-utils
 Requires:       maven-wagon-file
 Requires:       maven-wagon-http
 Requires:       maven-wagon-http-shared
 Requires:       maven-wagon-provider-api
-Requires:       objectweb-asm
 Requires:       plexus-cipher
 Requires:       plexus-classworlds
 Requires:       plexus-containers-component-annotations
@@ -134,10 +134,6 @@ Requires:       plexus-utils
 Requires:       sisu-inject
 Requires:       sisu-plexus
 Requires:       slf4j
-
-# Temporary fix for broken sisu
-Requires:       cdi-api
-BuildRequires:  cdi-api
 # maven-filesystem
 Requires: maven-filesystem
 BuildArch: noarch
@@ -155,6 +151,12 @@ Summary:        Core part of Maven
 # If XMvn is part of the same RPM transaction then it should be
 # installed first to avoid triggering rhbz#1014355.
 
+# Maven upstream uses patched version of SLF4J.  They unpack
+# slf4j-simple-sources.jar, apply non-upstreamable, Maven-specific
+# patch (using a script written in Groovy), compile and package as
+# maven-slf4j-provider.jar, together with Maven-specific additions.
+Provides:       bundled(slf4j) = %{bundled_slf4j_version}
+
 %description    lib
 Core part of Apache Maven that can be used as a library.
 
@@ -169,8 +171,9 @@ BuildArch: noarch
 %prep
 %setup -q -n apache-%{name}-%{version}
 
-%patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 # not really used during build, but a precaution
 find -name '*.jar' -not -path '*/test/*' -delete
@@ -180,31 +183,34 @@ find -name '*.bat' -delete
 sed -i 's:\r::' apache-maven/src/conf/settings.xml
 
 # Disable plugins which are not useful for us
-%pom_remove_plugin :animal-sniffer-maven-plugin
-%pom_remove_plugin :apache-rat-plugin
-%pom_remove_plugin :maven-site-plugin
-%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin -r :animal-sniffer-maven-plugin
+%pom_remove_plugin -r :apache-rat-plugin
+%pom_remove_plugin -r :maven-site-plugin
+%pom_remove_plugin -r :maven-enforcer-plugin
 %pom_remove_plugin -r :buildnumber-maven-plugin
+sed -i "
+/buildNumber=/ {
+  s/=.*/=Red Hat %{version}-%{release}/
+  s/%{dist}$//
+}
+/timestamp=/ d
+" `find -name build.properties`
 
 %mvn_package :apache-maven __noinstall
 
 %if %{without logback}
 %pom_remove_dep -r :logback-classic
-rm maven-embedder/src/main/java/org/apache/maven/cli/logging/impl/LogbackConfiguration.java
+%patch4 -p1
 %endif
 
-%build
-# Put all JARs in standard location, but create symlinks in Maven lib
-# directory so that Plexus Classworlds can find them.
-%mvn_file ":{*}:jar:" %{name}/@1 %{_datadir}/%{name}/lib/@1
+%mvn_alias :maven-resolver-provider :maven-aether-provider
 
+%build
 %mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 mkdir m2home
 (cd m2home
     tar --delay-directory-restore -xvf ../apache-maven/target/*tar.gz
-    chmod -R +rwX apache-%{name}-%{version}%{?ver_add}
-    chmod -x apache-%{name}-%{version}%{?ver_add}/conf/settings.xml
 )
 
 
@@ -213,14 +219,22 @@ mkdir m2home
 
 export M2_HOME=$(pwd)/m2home/apache-maven-%{version}%{?ver_add}
 
-install -d -m 755 %{buildroot}%{_datadir}/%{name}/bin
 install -d -m 755 %{buildroot}%{_datadir}/%{name}/conf
-install -d -m 755 %{buildroot}%{_datadir}/%{name}/boot
-install -d -m 755 %{buildroot}%{_datadir}/%{name}/lib/ext
 install -d -m 755 %{buildroot}%{_bindir}
 install -d -m 755 %{buildroot}%{_sysconfdir}/%{name}
 install -d -m 755 %{buildroot}%{_datadir}/bash-completion/completions
 install -d -m 755 %{buildroot}%{_mandir}/man1
+
+cp -a $M2_HOME/{bin,lib,boot} %{buildroot}%{_datadir}/%{name}/
+xmvn-subst -R %{buildroot} -s %{buildroot}%{_datadir}/%{name}
+
+# Transitive deps of wagon-http, missing because of unshading
+build-jar-repository -s -p %{buildroot}%{_datadir}/%{name}/lib \
+    commons-{codec,logging} httpcomponents/{httpclient,httpcore} maven-wagon/http-shared
+
+# Transitive deps of cdi-api that should have been excluded
+rm %{buildroot}%{_datadir}/%{name}/lib/jboss-interceptors*.jar
+rm %{buildroot}%{_datadir}/%{name}/lib/javax.el-api*.jar
 
 for cmd in mvn mvnDebug mvnyjp; do
     ln -s %{_datadir}/%{name}/bin/$cmd %{buildroot}%{_bindir}/$cmd
@@ -234,51 +248,6 @@ mv $M2_HOME/conf/settings.xml %{buildroot}%{_sysconfdir}/%{name}
 ln -sf %{_sysconfdir}/%{name}/settings.xml %{buildroot}%{_datadir}/%{name}/conf/settings.xml
 mv $M2_HOME/conf/logging %{buildroot}%{_sysconfdir}/%{name}
 ln -sf %{_sysconfdir}/%{name}/logging %{buildroot}%{_datadir}/%{name}/conf
-
-cp -a $M2_HOME/bin/* %{buildroot}%{_datadir}/%{name}/bin
-
-ln -sf $(build-classpath plexus/classworlds) \
-    %{buildroot}%{_datadir}/%{name}/boot/plexus-classworlds.jar
-
-pushd %{buildroot}%{_datadir}/%{name}/lib
-build-jar-repository -s -p . \
-    aether/aether-api \
-    aether/aether-connector-basic \
-    aether/aether-impl \
-    aether/aether-spi \
-    aether/aether-transport-wagon \
-    aether/aether-util \
-    aopalliance \
-    cdi-api \
-    commons-cli \
-    commons-io \
-    commons-lang \
-    commons-lang3 \
-    guava \
-    google-guice-no_aop \
-    atinject \
-    jsoup/jsoup \
-    jsr-305 \
-    org.eclipse.sisu.inject \
-    org.eclipse.sisu.plexus \
-    plexus/plexus-cipher \
-    plexus/containers-component-annotations \
-    plexus/interpolation \
-    plexus/plexus-sec-dispatcher \
-    plexus/utils \
-    slf4j/api \
-    slf4j/simple \
-    maven-wagon/file \
-    maven-wagon/http-shaded \
-    maven-wagon/http-shared \
-    maven-wagon/provider-api \
-    \
-    httpcomponents/httpclient \
-    httpcomponents/httpcore \
-    commons-logging \
-    commons-codec \
-    objectweb-asm/asm
-popd
 # maven-filesystem
 rm -f %buildroot%_datadir/%{name}/repository-jni/JPP
 
@@ -288,12 +257,11 @@ touch $RPM_BUILD_ROOT/etc/mavenrc
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/maven.conf`
 touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
-install -m 755 %{SOURCE1010} %buildroot%_datadir/maven/bin/mvn-script
+ln -s maven-resolver-provider.jar $RPM_BUILD_ROOT%_javadir/maven/maven-aether-provider.jar
 
 %pre 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=27807 (upgrade from maven1)
 [ -d %_datadir/maven/repository/JPP ] && rm -rf %_datadir/maven/repository/JPP ||:
-
 
 
 %files lib -f .mfiles
@@ -305,7 +273,7 @@ install -m 755 %{SOURCE1010} %buildroot%_datadir/maven/bin/mvn-script
 %config(noreplace) %{_sysconfdir}/m2.conf
 %config(noreplace) %{_sysconfdir}/%{name}/settings.xml
 %config(noreplace) %{_sysconfdir}/%{name}/logging/simplelogger.properties
-%_datadir/maven/bin/mvn-script
+%_javadir/maven/maven-aether-provider.jar
 
 %files
 %attr(0755,root,root) %{_bindir}/mvn*
@@ -319,6 +287,9 @@ install -m 755 %{SOURCE1010} %buildroot%_datadir/maven/bin/mvn-script
 
 
 %changelog
+* Sun Nov 19 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.5.0-alt1_6jpp8
+- new version
+
 * Sun Oct 29 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.3.9-alt1_9jpp8
 - new jpp release
 

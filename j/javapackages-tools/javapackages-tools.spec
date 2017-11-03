@@ -45,7 +45,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javapackages-tools
 Version:        5.0.0
-Release:        alt1_0jpp8
+Release:        alt1_9jpp8
 
 Summary:        Macros and scripts for Java packaging support
 
@@ -86,16 +86,15 @@ Provides:       mvn(com.sun:tools) = SYSTEM
 Provides:       mvn(sun.jdk:jconsole) = SYSTEM
 Source44: import.info
 Patch33: macros.jpackage-alt-jvmjardir.patch
-Patch34: javapackages-tools-5.0.0-alt-xmvn25.patch
 Source45: abs2rel
 Source46: osgi-fc.prov.files
 Source47: maven.prov.files
 Source48: maven.env
-Patch35: javapackages-tools-4.6.0-alt-use-enviroment.patch
-Patch36: javapackages-tools-4.6.0-alt-req-headless-off.patch
-Patch37: javapackages-tools-4.6.0-alt-shade-jar.patch
-Patch38: macros.fjava-to-alt-rpm404.patch
-Patch39: macros.jpackage-alt-script.patch
+Patch34: javapackages-tools-4.6.0-alt-use-enviroment.patch
+Patch35: javapackages-tools-4.6.0-alt-req-headless-off.patch
+Patch36: javapackages-tools-4.6.0-alt-shade-jar.patch
+Patch37: macros.fjava-to-alt-rpm404.patch
+Patch38: macros.jpackage-alt-script.patch
 
 Conflicts:       jpackage-utils < 0:5.0.1
 Obsoletes:       jpackage-utils < 0:5.0.1
@@ -224,7 +223,6 @@ sed -i '/${mandir}/d' install
 %patch36 -p1
 %patch37 -p1
 %patch38 -p1
-%patch39 -p1
 
 # alt specific shabang
 sed -i -e 1,1s,/bin/bash,/bin/sh, java-utils/java-wrapper bin/*
@@ -333,6 +331,9 @@ popd
 %doc LICENSE
 
 %changelog
+* Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.0.0-alt1_9jpp8
+- full version for xmvn 3
+
 * Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.0.0-alt1_0jpp8
 - new version - pre for old xmvn
 
