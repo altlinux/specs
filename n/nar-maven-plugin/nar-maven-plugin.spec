@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:             nar-maven-plugin
 Version:          3.0.0
-Release:          alt1_11jpp8
+Release:          alt1_15jpp8
 Summary:          Native ARchive plugin for Maven
 License:          ASL 2.0 and LGPLv2
 URL:              https://github.com/maven-nar/nar-maven-plugin/
@@ -21,6 +21,11 @@ Patch2:           0003-Added-PPC64LE-support.patch
 # Patch adds support for rest sec archs not included in previous patches, 
 # also fixes bad C defines on ppc64le
 Patch3:           secarch.patch
+# NarProperties unreported exception java.io.IOException; must be caught or declared to be thrown
+Patch4:           nar-maven-plugin-3.0.0-unreported-IOException.patch
+
+# test suite runtime deps
+BuildRequires:    gcc-common gcc-c++
 
 BuildRequires:    maven-local
 BuildRequires:    mvn(commons-io:commons-io)
@@ -32,6 +37,7 @@ BuildRequires:    mvn(org.apache.maven:maven-model)
 BuildRequires:    mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:    mvn(org.apache.maven:maven-project)
 BuildRequires:    mvn(org.apache.maven:maven-toolchain)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:    mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:    mvn(org.apache.maven.shared:maven-artifact-resolver)
@@ -42,7 +48,7 @@ BuildRequires:    mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:    mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:    mvn(xerces:xercesImpl)
 
-Requires:         gcc-c++-common
+Requires:         gcc-c++
 
 BuildArch:        noarch
 Source44: import.info
@@ -73,6 +79,7 @@ This package contains the API documentation for %{name}.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1 -b .secarch
+%patch4 -p1
 
 # Remove bundled stuff
 rm -rf src/it/it0006-jni-3rdparty/src/nar/resources/aol
@@ -105,6 +112,9 @@ rm src/main/java/com/github/maven_nar/NarIntegrationTestMojo.java
 %doc LICENSE-2.0.txt
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_15jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_11jpp8
 - new fc release
 
