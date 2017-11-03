@@ -7,9 +7,10 @@ BuildRequires: perl(Getopt/Mixed.pm)
 %filter_from_requires /^.usr.bin.run/d
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -44,7 +45,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           rhino
 Version:        1.7.7.1
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Summary:        JavaScript for Java
 License:        MPLv2.0
 
@@ -139,6 +140,9 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %{_datadir}/%{name}
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.7.7.1-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.7.7.1-alt1_1jpp8
 - new version
 
