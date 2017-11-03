@@ -1,11 +1,12 @@
 Name:    sunfish
 Version: 0.1
-Release: alt1
+Release: alt2
 
-Summary: Sunfish: a Python Chess Engine in 111 lines of code
-License: GPL v3
+Summary: A Python Chess Engine in 111 lines of code
+
+License: GPLv3
 Group:   Games/Boards
-URL:     https://github.com/greno4ka/sunfish
+Url:     https://github.com/thomasahle/sunfish
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -37,5 +38,8 @@ install -Dm755 %name.py %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Thu Nov 02 2017 Grigory Ustinov <grenka@altlinux.org> 0.1-alt2
+- Change summary and upstream.
+
 * Wed Sep 20 2017 Grigory Ustinov <grenka@altlinux.org> 0.1-alt1
-- Initial build for Sisyphus
+- Initial build for Sisyphus.
