@@ -3,12 +3,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-javadoc-plugin
 Version:        2.10.4
-Release:        alt1_1jpp8
+Release:        alt1_3jpp8
 Summary:        Maven Javadoc Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-javadoc-plugin
@@ -20,35 +21,37 @@ Patch0:         reduce-exceptions.patch
 Patch1:         doxia-sitetools-1.6.patch
 
 BuildRequires:  maven-local
-BuildRequires:  apache-commons-io
-BuildRequires:  apache-commons-lang
-BuildRequires:  apache-commons-logging
-BuildRequires:  httpcomponents-client
-BuildRequires:  log4j
-BuildRequires:  maven
-BuildRequires:  maven-archiver
-BuildRequires:  maven-common-artifact-filters
-BuildRequires:  maven-doxia-sink-api
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  maven-invoker
-BuildRequires:  maven-plugin-annotations
-BuildRequires:  maven-plugin-plugin
-BuildRequires:  maven-plugins-pom
-BuildRequires:  maven-reporting-api
-BuildRequires:  maven-shade-plugin
-BuildRequires:  maven-wagon-provider-api
-BuildRequires:  modello
-BuildRequires:  plexus-archiver
-BuildRequires:  plexus-containers-container-default
-BuildRequires:  plexus-interactivity-api
-BuildRequires:  plexus-utils
-BuildRequires:  qdox
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(commons-lang:commons-lang)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(log4j:log4j:1.2.17)
+BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
+BuildRequires:  mvn(org.apache.maven:maven-archiver)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-settings)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
+BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
+BuildRequires:  mvn(org.apache.maven.shared:maven-invoker)
+BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
+BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-interactivity-api)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
 %description
 The Maven Javadoc Plugin is a plugin that uses the javadoc tool for
 generating javadocs for the specified project.
- 
+
 %package javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
@@ -58,12 +61,14 @@ BuildArch: noarch
 API documentation for %{name}.
 
 %prep
-%setup -q 
+%setup -q
 %patch0
 %patch1
 
 # Remove test dependencies because tests are skipped anyways.
 %pom_xpath_remove "pom:dependency[pom:scope[text()='test']]"
+
+%pom_change_dep :log4j ::1.2.17
 
 %pom_add_dep org.codehaus.plexus:plexus-interactivity-api pom.xml "
 <exclusions>
@@ -93,12 +98,15 @@ rm -f src/main/java/org/apache/maven/plugin/javadoc/*FixJavadocMojo.java
 
 %files -f .mfiles
 %dir %{_javadir}/%{name}
-%doc LICENSE NOTICE 
+%doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE 
+%doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.10.4-alt1_3jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.10.4-alt1_1jpp8
 - new version
 
