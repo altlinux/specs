@@ -3,36 +3,39 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           h2
-Version:        1.3.176
-Release:        alt1_6jpp8
+Version:        1.4.192
+Release:        alt1_2jpp8
 Summary:        Java SQL database
 
 License:        EPL or MPLv1.1
 URL:            http://www.h2database.com
-Source0:        http://www.h2database.com/h2-2014-04-05.zip
+Source0:        http://www.h2database.com/h2-2016-05-26.zip
 Source1:        http://repo2.maven.org/maven2/com/h2database/h2/%{version}/h2-%{version}.pom
-Patch0:         fix-build.patch
-Patch1:         rm-osgi-jdbc-service.patch
-Patch2:         fix-broken-tests.patch
+
+Patch0:         port-to-servlet-3.1.0.patch
+Patch1:         port-to-lucene-5.patch
+
 BuildArch: noarch
-BuildRequires:  ant
-BuildRequires:  lucene3
-BuildRequires:  slf4j >= 1.5
-BuildRequires:  felix-osgi-core >= 1.2
+
+BuildRequires:  javapackages-local
+BuildRequires:  lucene
+BuildRequires:  lucene-analysis
+BuildRequires:  lucene-queryparser
+BuildRequires:  slf4j
+BuildRequires:  felix-osgi-core
 BuildRequires:  glassfish-servlet-api
 BuildRequires:  jts
 Source44: import.info
 
 %description
-H2 is a the Java SQL database. The main features of H2 are:
-* Very fast, open source, JDBC API
-* Embedded and server modes; in-memory databases
-* Browser based Console application
-* Small footprint: around 1 MB jar file size 
+H2 is a the Java SQL database. The main features of H2 are: Very fast, open
+source, JDBC API; Embedded and server modes; In-memory databases; Browser
+based Console application; Small footprint: around 1 MB jar file size.
 
 %package javadoc
 Group: Development/Java
@@ -44,52 +47,58 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}
-pushd src/test/org/h2/test/unit
-rm TestServlet.java
-popd
-%patch0
-%patch2
+%patch0 -p2
+%patch1 -p2
 
 # Because no Fedora package provides org.osgi.service.jdbc interfaces yet
-%patch1
 rm src/main/org/h2/util/OsgiDataSourceFactory.java
-rm -fr src/test/org/h2/test/server/TestWeb.java
-sed -i -e "s|import org.h2.test.server.TestWeb;||g" src/test/org/h2/test/TestAll.java
-sed -i -e "s|new TestWeb().runTest(this);||g" src/test/org/h2/test/TestAll.java
-sed -i '/org.osgi.service.jdbc/d' src/main/META-INF/MANIFEST.MF
+sed -i -e '/OsgiDataSourceFactory/d' src/main/org/h2/util/DbDriverActivator.java
+sed -i -e '/org.osgi.service.jdbc/d' src/main/META-INF/MANIFEST.MF
 
 # Delete pre-built binaries
-find -name '*.class' -exec rm -f '{}' \;
-find -name '*.jar' -exec rm -f '{}' \;
+find -name '*.class' -delete
+find -name '*.jar' -delete
+find -name '*.exe' -delete
+find -name '*.dll' -delete
 
-sed -i -e 's|authenticated|authenticate authenticated|' src/tools/org/h2/build/doc/dictionary.txt
+# Don't attempt to download from Internet
+sed -i -e '/downloadTest();/d' -e '/download();/d' \
+  src/tools/org/h2/build/Build.java
+
+# Use system libraries instead
+mkdir ext
+ln -s -T $(build-classpath jts) ext/jts-core-1.14.0.jar
+ln -s -T $(build-classpath glassfish-servlet-api) ext/servlet-api-3.1.0.jar
+ln -s -T $(build-classpath slf4j/api) ext/slf4j-api-1.6.0.jar
+ln -s -T $(build-classpath slf4j/nop) ext/slf4j-nop-1.6.0.jar
+ln -s -T $(build-classpath lucene/lucene-core) ext/lucene-core-5.4.1.jar
+ln -s -T $(build-classpath lucene/lucene-analyzers-common) ext/lucene-analyzers-common-5.4.1.jar
+ln -s -T $(build-classpath lucene/lucene-queryparser) ext/lucene-queryparser-5.4.1.jar
+ln -s -T $(build-classpath felix/org.osgi.core) ext/org.osgi.core-4.2.0.jar
+
+echo " classic queryparser" >> src/tools/org/h2/build/doc/dictionary.txt
+find . -name '*.orig' -print -delete
 
 %build
-export JAVA_HOME=%{java_home}
-chmod u+x build.sh
-./build.sh jar docs
+export JAVA_HOME=%{_jvmdir}/java
+sh build.sh jar docs
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p bin/h2-%{version}.jar   \
-$RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp docs/javadoc  \
-$RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
-cp -rp %SOURCE1 $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%mvn_artifact %SOURCE1 bin/h2-%{version}.jar
+%mvn_install -J docs/javadoc
 
 %files -f .mfiles
+%doc docs/index.html
+%doc docs/html
 %doc src/docsrc/html/license.html
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc src/docsrc/html/license.html
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.192-alt1_2jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.176-alt1_6jpp8
 - new fc release
 
