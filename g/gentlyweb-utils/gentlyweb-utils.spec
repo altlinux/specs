@@ -2,20 +2,23 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          gentlyweb-utils
 # there are no differences in the debian source taraball
 # http://ftp.de.debian.org/debian/pool/main/g/gentlyweb-utils/gentlyweb-utils_1.5.orig.tar.gz
 # the version is changed only in the activemq package see activemq-5.6.0/pom.xml
 Version:       1.5
-Release:       alt1_9jpp8
+Release:       alt1_11jpp8
 Summary:       Java utility library used by JoSQL for I/O
 License:       ASL 2.0
 Url:           http://josql.sourceforge.net/
 Source0:       http://sourceforge.net/projects/josql/files/josql/stable-2.2/gentlyWEB-src-utils-1.1.tar.gz
 Source1:       http://repo.fusesource.com/nexus/content/groups/public/net/sf/josql/%{name}/%{version}/gentlyweb-utils-%{version}.pom
+Source2:       gentlyweb-utils.bnd
+
 # use system libraries
 # fix javac target/source 1.5, encoding
 # fix version
@@ -23,6 +26,7 @@ Source1:       http://repo.fusesource.com/nexus/content/groups/public/net/sf/jos
 Patch0:        %{name}-%{version}-build.patch
 
 BuildRequires: ant
+BuildRequires: aqute-bnd
 BuildRequires: javapackages-local
 BuildRequires: jdom
 
@@ -50,9 +54,10 @@ This package contains javadoc for %{name}.
 
 %ant -f build-utils.xml createUtilsJar javadoc
 
-%install
+bnd wrap -p %{SOURCE2} -o %{name}.jar -v %{version} gentlyWEB-utils-%{version}.jar
 
-%mvn_artifact %{SOURCE1} gentlyWEB-utils-%{version}.jar
+%install
+%mvn_artifact %{SOURCE1} %{name}.jar
 %mvn_install -J apidocs
 
 %files -f .mfiles
@@ -62,6 +67,9 @@ This package contains javadoc for %{name}.
 %doc LICENSE-2.0.txt
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_11jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_9jpp8
 - new fc release
 
