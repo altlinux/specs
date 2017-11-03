@@ -3,16 +3,17 @@ Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Test of properly function library need DNS querys. It work perfectly on my machine and pass all tests.
 # But internet access is not allowed from mock chroot. So, I need disable it by default. Yo may enable it if you want.
 %global do_not_test 1
 
 Name:          dnsjava
 Version:       2.1.3
-Release:       alt1_11jpp8
+Release:       alt1_12jpp8
 Summary:       Java DNS implementation
 License:       BSD and MIT
 URL:           http://www.dnsjava.org/
@@ -98,6 +99,9 @@ ant -Dj2se.javadoc=%{_javadocdir}/java run_tests
 %doc LICENSE
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_12jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_11jpp8
 - new fc release
 
