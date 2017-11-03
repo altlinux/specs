@@ -4,86 +4,116 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-Name:           wss4j 
-Version:        1.6.18
-Release:        alt1_5jpp8
-Summary:        Apache WS-Security implementation
-License:        ASL 2.0
-URL:            http://ws.apache.org/wss4j/
-Source0:        http://archive.apache.org/dist/ws/wss4j/1_6_18/wss4j-src-%{version}.zip
-Patch0:         fix-tests.patch
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:          wss4j
+Version:       2.1.5
+Release:       alt1_2jpp8
+Summary:       Apache WS-Security implementation
+License:       ASL 2.0
+URL:           http://ws.apache.org/wss4j/
 
-BuildRequires:  mvn(commons-logging:commons-logging)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(log4j:log4j:1.2.17)
-BuildRequires:  mvn(net.shibboleth:parent:pom:)
-BuildRequires:  mvn(org.apache.santuario:xmlsec)
-BuildRequires:  mvn(org.bouncycastle:bcprov-jdk15on)
-BuildRequires:  mvn(org.opensaml:opensaml)
-BuildRequires:  mvn(org.slf4j:slf4j-log4j12)
-BuildRequires:  mvn(xalan:xalan)
-BuildRequires:  mvn(xerces:xercesImpl)
-BuildRequires:  mvn(xml-apis:xml-apis)
-BuildRequires:  dos2unix
-BuildRequires:  maven-local
-BuildRequires:  maven-shared
-BuildRequires:  maven-remote-resources-plugin
-BuildRequires:  plexus-pom
-BuildRequires:  plexus-components-pom
+Source0:       http://archive.apache.org/dist/ws/wss4j/%{version}/%{name}-%{version}-source-release.zip
+Patch0:        wss4j-2.1.5-ehcache-core-2.6.patch
 
-BuildArch:      noarch
+BuildRequires: maven-local
+BuildRequires: mvn(com.sun.mail:javax.mail)
+BuildRequires: mvn(junit:junit)
+# ehcache:2.10.1 https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=1364535
+BuildRequires: mvn(net.sf.ehcache:ehcache-core)
+BuildRequires: mvn(org.apache:apache:pom:)
+BuildRequires: mvn(org.apache.commons:commons-compress)
+BuildRequires: mvn(org.apache.directory.server:apacheds-kerberos-codec)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-checkstyle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
+# neethi:3.0.3
+BuildRequires: mvn(org.apache.neethi:neethi)
+BuildRequires: mvn(org.apache.santuario:xmlsec) >= 2.0.5
+BuildRequires: mvn(org.bouncycastle:bcpkix-jdk15on)
+BuildRequires: mvn(org.bouncycastle:bcprov-jdk15on)
+BuildRequires: mvn(org.jasypt:jasypt)
+BuildRequires: mvn(org.opensaml:opensaml-saml-impl) >= 3.1.1
+BuildRequires: mvn(org.opensaml:opensaml-xacml-impl)
+BuildRequires: mvn(org.opensaml:opensaml-xacml-saml-impl)
+BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(org.slf4j:slf4j-log4j12)
+BuildRequires: mvn(org.tukaani:xz)
+BuildRequires: mvn(wsdl4j:wsdl4j)
+BuildRequires: mvn(xalan:xalan)
+BuildRequires: mvn(xmlunit:xmlunit)
+
+BuildArch:     noarch
 Source44: import.info
 
 %description
 The Apache WSS4J project provides a Java implementation of the
-primary security standards for Web Services. 
+primary security standards for Web Services.
 
 %package javadoc
 Group: Development/Java
-Summary: Javadoc for %{name}
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q
-%patch0
+%setup -q -n %{name}-%{version}
+
+%patch0 -p1
+
+%pom_disable_module integration
 
 # This plugin does not impact the build, and it currently raises this error:
 # Reporting mojo's can only be called from ReportDocumentRender
 %pom_remove_plugin "org.apache.maven.plugins:maven-pmd-plugin"
 
 %pom_remove_plugin :maven-source-plugin
-%pom_xpath_remove "pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId = 'maven-javadoc-plugin']/pom:executions"
-%pom_xpath_set "pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId = 'maven-compiler-plugin']/pom:configuration/pom:source" 1.6
-%pom_xpath_set "pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId = 'maven-compiler-plugin']/pom:configuration/pom:target" 1.6
+%pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-javadoc-plugin']/pom:executions"
 
-dos2unix NOTICE
+%pom_change_dep -r net.sf.ehcache:ehcache net.sf.ehcache:ehcache-core
+%pom_change_dep -r :geronimo-javamail_1.4_spec com.sun.mail:javax.mail
 
-# Fails on java8
-rm -r src/test/java/org/apache/ws/security/message/EncryptionCRLTest.java \
- src/test/java/org/apache/ws/security/message/SignatureCRLTest.java \
- src/test/java/org/apache/ws/security/message/EncryptionGCMTest.java
+# VulnerabliltyVectorsTest.testMaximumAllowedDecompressedBytes:572->AbstractTestBase.doOutboundSecurity:167 ? NoClassDefFound: org.tukaani.xz.FilterOptions
+%pom_add_dep org.tukaani:xz:1.5:test ws-security-stax
+
+# OutOfMemoryError: unable to create new native thread (only on koji)
+rm ws-security-stax/src/test/java/org/apache/wss4j/stax/test/AttachmentTest.java \
+ ws-security-stax/src/test/java/org/apache/wss4j/stax/test/DerivedKeyTokenTest.java \
+ ws-security-stax/src/test/java/org/apache/wss4j/stax/test/FaultTest.java \
+ ws-security-stax/src/test/java/org/apache/wss4j/stax/test/HeaderOrderingTest.java \
+ ws-security-stax/src/test/java/org/apache/wss4j/stax/test/ReplayTest.java \
+ ws-security-stax/src/test/java/org/apache/wss4j/stax/test/VulnerabliltyVectorsTest.java \
+ ws-security-stax/src/test/java/org/apache/wss4j/stax/test/saml/SamlAuthnTest.java \
+ ws-security-stax/src/test/java/org/apache/wss4j/stax/test/saml/SamlConditionsTest.java \
+ ws-security-stax/src/test/java/org/apache/wss4j/stax/test/saml/SamlTokenDerivedTest.java \
+ ws-security-stax/src/test/java/org/apache/wss4j/stax/test/saml/SAMLTokenHOKTest.java \
+ ws-security-stax/src/test/java/org/apache/wss4j/stax/test/saml/SAMLTokenReferenceTest.java \
+ ws-security-stax/src/test/java/org/apache/wss4j/stax/test/saml/SAMLTokenSVTest.java \
+ ws-security-stax/src/test/java/org/apache/wss4j/stax/test/saml/SAMLTokenTest.java
 
 %build
-# Some tests now failing with "Algorithm constraints check failed: MD5withRSA"
-%mvn_build -f
+
+%mvn_build -- -Dmaven.test.skip.exec=true
+
 
 %install
 %mvn_install
 
 %files -f .mfiles
 %doc ChangeLog.txt README.txt
-%doc LICENSE.txt NOTICE
+%doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE
+%doc LICENSE NOTICE
 
 %changelog
+* Fri Nov 03 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.1.5-alt1_2jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6.18-alt1_5jpp8
 - new fc release
 
