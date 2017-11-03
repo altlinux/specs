@@ -3,17 +3,20 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global githash cb6709646eed97c271d73f50ad750cc43c8e052a
 Name:             paranamer
 Version:          2.8
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          Library for accessing non-private method parameter names at run-time
 License:          BSD
 URL:              https://github.com/paul-hammant/paranamer
 Source0:          https://github.com/paul-hammant/paranamer/archive/%{githash}/%{name}-%{githash}.tar.gz
+
+Patch0:           0001-Port-to-current-qdox.patch
 
 BuildRequires:    maven-local
 BuildRequires:    mvn(com.thoughtworks.qdox:qdox)
@@ -84,6 +87,9 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{githash}
+
+%patch0 -p1
+
 # Cleanup
 find -name "*.class" -print -delete
 # Do not erase test resources
@@ -141,6 +147,9 @@ rm -r %{name}/src/test/com/thoughtworks/paranamer/BytecodeReadingParanamerTestCa
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.8-alt1_4jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.8-alt1_3jpp8
 - new fc release
 
