@@ -2,18 +2,18 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 25
+%define fedora 26
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name querydsl
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 4.0.4
 %global _version %( echo %{version} | tr . _ )
 
@@ -32,7 +32,7 @@ BuildRequires: jpackage-generic-compat
 Name:          querydsl
 # NOTE: newer release use hibernate-core:4.3.11.Final
 Version:       4.0.4
-Release:       alt1_3jpp8
+Release:       alt1_6jpp8
 Summary:       Type-safe queries for Java
 License:       LGPLv2+
 URL:           http://www.querydsl.com
@@ -81,8 +81,8 @@ BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires: mvn(org.eclipse.persistence:eclipselink)
 BuildRequires: mvn(org.geolatte:geolatte-geom)
 BuildRequires: mvn(org.hamcrest:hamcrest-core)
-BuildRequires: mvn(org.hibernate:hibernate-core)
-BuildRequires: mvn(org.hibernate:hibernate-entitymanager)
+BuildRequires: mvn(org.hibernate:hibernate-core:4)
+BuildRequires: mvn(org.hibernate:hibernate-entitymanager:4)
 BuildRequires: mvn(org.hibernate:hibernate-search-orm)
 BuildRequires: mvn(org.hibernate:hibernate-validator)
 BuildRequires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.0-api)
@@ -138,6 +138,7 @@ BuildRequires: mvn(org.postgresql:postgresql:9.3-1101-jdbc41)
 BuildRequires: mvn(org.xerial:sqlite-jdbc)
 %endif
 
+Obsoletes:     %{name}-scala =< %{version}-4
 BuildArch:     noarch
 Source44: import.info
 
@@ -365,6 +366,16 @@ rm -r %{name}-sql-spatial/src/main/java/com/querydsl/sql/spatial/PGgeometryConve
 %pom_remove_plugin com.mysema.maven:apt-maven-plugin %{name}-mongodb
 %pom_remove_plugin :maven-assembly-plugin %{name}-mongodb
 
+
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  Internal Error (assembler_aarch32.hpp:215), pid=27932, tid=0xb5198470
+#  guarantee(val < (1U << nbits)) failed: Field too big for insn
+#
+# JRE version: OpenJDK Runtime Environment (8.0_102) (build 1.8.0_102-160812)
+# Java VM: OpenJDK Client VM (25.102-b160812 mixed mode linux-aarch32 )
+# Core dump written. Default location: /builddir/build/BUILD/querydsl-QUERYDSL_4_0_4/core or core.27932
+%if 0
 %pom_remove_plugin net.alchim31.maven:scala-maven-plugin %{name}-scala
 %pom_add_plugin org.apache.maven.plugins:maven-antrun-plugin:1.7 %{name}-scala '
 <executions>
@@ -393,6 +404,8 @@ rm -r %{name}-sql-spatial/src/main/java/com/querydsl/sql/spatial/PGgeometryConve
       <version>${scala.full.version}</version>
   </dependency>
 </dependencies>'
+%endif
+%pom_disable_module %{name}-scala
 
 %pom_remove_dep -r org.codehaus.mojo:animal-sniffer-annotations
 rm -r querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310InstantType.java \
@@ -405,6 +418,7 @@ rm -r querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310InstantType.java \
  querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310OffsetDateTimeType.java
 
 %pom_xpath_set "pom:properties/pom:mongodb.version" 2 querydsl-mongodb
+%pom_xpath_set -r "pom:properties/pom:hibernate.version" 4 querydsl-apt querydsl-hibernate-search querydsl-jpa querydsl-jpa-codegen querydsl-examples/querydsl-example-jpa-guice
 
 # fix build failure. 'useDefaultManifestFile' has been removed from the maven-jar-plugin >= 3.0.0
 %pom_remove_plugin :maven-jar-plugin
@@ -451,7 +465,10 @@ rm -r querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310InstantType.java \
 %files root -f .mfiles-%{name}-root
 %doc LICENSE.txt
 
+%if 0
 %files scala -f .mfiles-%{name}-scala
+%endif
+
 %files spatial -f .mfiles-%{name}-spatial
 
 %files sql -f .mfiles-%{name}-sql
@@ -465,6 +482,9 @@ rm -r querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310InstantType.java \
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt1_6jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt1_3jpp8
 - new version
 
