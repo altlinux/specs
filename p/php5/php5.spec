@@ -3,13 +3,13 @@
 
 Summary: The PHP5 scripting language
 Name:	 php5
-Version: 5.6.31
+Version: 5.6.32
 Release: alt1%ubt
 
 %define php5_name      %name
 %define _php5_version  %version
 %define _php5_major  5.6
-%define _php5_snapshot 20170607
+%define _php5_snapshot 20171025
 %define php5_release   %release
 %define rpm_build_version %_php5_version%([ -z "%_php5_snapshot" ] || echo ".%_php5_snapshot")
 
@@ -50,6 +50,7 @@ Patch61: php5-5.5.9-phar-phppath.patch
 Patch62: php-mysqlnd-socket.patch
 Patch63: php5-5.6-syms-visibility.patch
 Patch64: php-7.1-alt-phar-manfile-suffix.patch
+Patch65: php5-5.6.32-debian-use_embedded_timezonedb.patch
 
 PreReq:  php5-libs = %version-%release
 Requires(post):  php5-suhosin
@@ -179,6 +180,7 @@ popd
 %patch62 -p1
 %patch63 -p1
 %patch64 -p1
+%patch65 -p1
 
 
 cp Zend/LICENSE Zend/ZEND_LICENSE
@@ -250,6 +252,7 @@ subst "s,./stamp=$,," build/buildcheck.sh
 	--without-sqlite \
 	--with-regex=php \
 	--without-pear \
+	--with-system-tzdata \
 #
 export NPROCS=1
 %php5_make
@@ -423,6 +426,10 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %doc tests run-tests.php 
 
 %changelog
+* Fri Nov 03 2017 Anton Farygin <rider@altlinux.ru> 5.6.32-alt1%ubt
+- new version (Fixes: CVE-2016-1283)
+- switched to the use a system-wide timezone configuration, patch from Debian (closes: #32202)
+
 * Fri Jul 07 2017 Anton Farygin <rider@altlinux.ru> 5.6.31-alt1%ubt
 - new version with security fixes for mbstring (CVE-2017-9224, CVE-2017-9226, CVE-2017-9227, CVE-2017-9228, CVE-2017-9229)
 
