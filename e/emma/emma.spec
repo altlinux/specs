@@ -3,9 +3,10 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2007, JPackage Project
 # All rights reserved.
 #
@@ -41,7 +42,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Code Coverage Tool
 Name:           emma
 Version:        %{shortver}.5312
-Release:        alt2_17jpp8
+Release:        alt2_18jpp8
 Epoch:          0
 License:        CPL
 URL:            http://emma.sourceforge.net/
@@ -68,7 +69,8 @@ Patch4:         %{name}-timestamp.patch
 Patch5:         %{name}-%{version}-64_bit_fix.patch
 Requires:       xerces-j2
 BuildRequires:  ant >= 0:1.6.5
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  java-devel >= 1.6
+BuildRequires:  jpackage-utils >= 0:1.7.5
 # For the timestamp hack (see above)
 BuildRequires:  bc
 BuildRequires:  javapackages-local
@@ -126,6 +128,9 @@ ant -Dbuild.compiler=modern build javadoc
 %doc cpl-v10.html
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5312-alt2_18jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5312-alt2_17jpp8
 - new fc release
 
