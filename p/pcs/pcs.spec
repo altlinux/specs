@@ -1,5 +1,5 @@
 Name: 	  pcs
-Version:  0.9.160
+Version:  0.9.161
 Release:  alt1
 Epoch:    1
 
@@ -96,6 +96,9 @@ rm -rf %buildroot/%ruby_sitelibdir/pcsd/*{.service,.logrotate,debian,orig}*
 %ruby_sitelibdir/pcsd/test/*
 
 %changelog
+* Fri Nov 03 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.9.161-alt1
+- New version
+
 * Sun Oct 15 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.9.160-alt1
 - New version
 
