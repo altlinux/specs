@@ -4,18 +4,16 @@
 #def_disable check
 
 Name: python-module-%oname
-Version: 4.0.3
-Release: alt3
+Version: 4.6.1
+Release: alt1
 Summary: IPython Kernel for Jupyter
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/ipykernel
 
 Source: %name-%version.tar
-BuildArch: noarch
-Patch1: %oname-%version-alt-tests.patch
 
-BuildRequires: time
 BuildRequires: python-module-html5lib python-module-ipyparallel python-module-mock python-module-nose python-module-numpy-testing
 BuildRequires: python-module-pytest
 BuildRequires: python-module-pathlib2
@@ -67,7 +65,6 @@ This package contains tests for %oname.
 
 %prep
 %setup
-%patch1 -p2
 
 %if_with python3
 cp -fR . ../python3
@@ -93,13 +90,12 @@ popd
 
 %check
 rm -fR build
-export PYTHONPATH=$PWD
-py.test -vv
+PYTHONPATH=$(pwd) py.test -vv
+
 %if_with python3
 pushd ../python3
 rm -fR build
-export PYTHONPATH=$PWD
-py.test3 -vv
+PYTHONPATH=$(pwd) py.test3 -vv
 popd
 %endif
 
@@ -126,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.6.1-alt1
+- Updated to upstream version 4.6.1.
+
 * Wed Aug 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.3-alt3
 - Fixed build
 

@@ -2,11 +2,10 @@
 
 %def_with python3
 %def_disable check
-%add_python3_req_skip feather
 
 Name: python-module-%oname
-Version: 0.20.3
-Release: alt2
+Version: 0.21.0
+Release: alt1
 
 Summary: Python Data Analysis Library
 License: BSD
@@ -16,6 +15,7 @@ Url: http://pandas.pydata.org/
 
 # https://github.com/pandas-dev/pandas.git
 Source: %name-%version.tar
+Patch1: %oname-%version-alt-docs.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires(pre): rpm-build-python
@@ -23,10 +23,13 @@ BuildRequires: python-devel
 BuildRequires: libnumpy-devel python-module-Cython python-module-notebook python-module-numpy-testing python-module-pathlib
 BuildRequires: python-module-objects.inv
 BuildRequires: gcc-c++ pandoc
+BuildRequires: xvfb-run python2.7(nbsphinx)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: libnumpy-py3-devel python3-module-Cython python3-module-notebook python3-module-numpy-testing
+BuildRequires: xvfb-run python3(nbsphinx)
+BuildRequires: python3(scipy) python3(xlrd) python3(tables.tests) python3(openpyxl)
 %endif
 
 %setup_python_module %oname
@@ -40,9 +43,11 @@ pandas is an open source, BSD-licensed library providing
 high-performance, easy-to-use data structures and data analysis tools
 for the Python programming language.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python Data Analysis Library
 Group: Development/Python3
+%add_python3_req_skip feather
 %py3_requires pytz pandas.util.testing dateutil numpy sqlalchemy numexpr
 %py3_requires scipy boto bs4 xlrd openpyxl xlsxwriter xlwt httplib2 rpy2
 %py3_requires oauth2client apiclient gflags tables statsmodels
@@ -66,6 +71,19 @@ for the Python programming language.
 
 This package contains tests for pandas.
 
+%package -n python3-module-%oname-docs
+Summary: Documentation for pandas
+Group: Development/Documentation
+BuildArch: noarch
+
+%description -n python3-module-%oname-docs
+pandas is an open source, BSD-licensed library providing
+high-performance, easy-to-use data structures and data analysis tools
+for the Python programming language.
+
+This package contains documentation for pandas.
+%endif
+
 %package tests
 Summary: Tests for pandas
 Group: Development/Python
@@ -79,20 +97,9 @@ for the Python programming language.
 
 This package contains tests for pandas.
 
-%package docs
-Summary: Documentation for pandas
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-pandas is an open source, BSD-licensed library providing
-high-performance, easy-to-use data structures and data analysis tools
-for the Python programming language.
-
-This package contains documentation for pandas.
-
 %prep
 %setup
+%patch1 -p1
 
 # fix version info
 sed -i \
@@ -101,12 +108,13 @@ sed -i \
 
 %if_with python3
 cp -fR . ../python3
-%endif
-
+pushd ../python3
 %prepare_sphinx doc
 ln -s ../objects.inv doc/source/
 
-sed -i 's|@PYPATH@|%buildroot%python_sitelibdir|' doc/make.py
+sed -i 's|@PYPATH@|%buildroot%python3_sitelibdir|' doc/make.py
+popd
+%endif
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -124,8 +132,6 @@ popd
 %if_with python3
 pushd ../python3
 %python3_install
-popd
-%endif
 
 # It is the file in the package whose name matches the format emacs or vim uses 
 # for backup and autosave files. It may have been installed by  accident.
@@ -134,8 +140,10 @@ find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -d
 find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 
 pushd doc
-./make.py html
+PYTHONPATH=$(echo ../build/lib.*) xvfb-run ./make.py html
 popd
+popd
+%endif
 
 %check
 xvfb-run python setup.py test
@@ -156,11 +164,6 @@ popd
 %python_sitelibdir/*/tests
 %python_sitelibdir/*/*/test*
 
-%files docs
-%doc doc/build/html
-#doc doc/source
-#doc examples
-
 %if_with python3
 %files -n python3-module-%oname
 %doc *.md
@@ -174,9 +177,17 @@ popd
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/*/*/test*
 %python3_sitelibdir/*/*/*/test*
+
+%files -n python3-module-%oname-docs
+%doc ../python3/doc/build/html
+#doc doc/source
+#doc examples
 %endif
 
 %changelog
+* Tue Nov 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.21.0-alt1
+- Updated to upstream version 0.21.0.
+
 * Fri Oct 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.20.3-alt2
 - Fixed version in egg-info.
 - Explicitely stated egg-info including valid version.

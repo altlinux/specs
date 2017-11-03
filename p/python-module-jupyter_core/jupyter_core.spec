@@ -2,38 +2,31 @@
 %define oname jupyter_core
 
 %def_with python3
-%def_disable check
+%def_enable check
 
 Name: python-module-%oname
-Version: 4.2.1
-Release: alt2
+Version: 4.4.0
+Release: alt1
 Summary: Jupyter core package
 License: BSD
 Group: Development/Python
-Url: https://pypi.python.org/pypi/jupyter_core
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/bc/d0/8f57f733913fbd4ce1a01991b008bace8dcf05158080821c6de76b4c5d01/%{oname}-%{version}.tar.gz
 BuildArch: noarch
+Url: https://pypi.python.org/pypi/jupyter_core
+
+Source: %oname-%version.tar
+Source2: %oname-%version-alt-tests.patch
+
 BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-module-zope rpm-build-python3 time python3-module-pytest
-
-#BuildRequires: python-module-objects.inv
-
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-traitlets python-module-mock ipython
-#BuildPreReq: python-module-sphinx-devel
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
+BuildRequires: python-module-zope python-module-pytest python2.7(traitlets.config)
+BuildRequires: python2.7(sphinxcontrib_github_alt)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-traitlets python3-module-mock ipython3
-#BuildRequires: python3 python3-module-zope
+BuildRequires: python3-module-zope python3-module-pytest python3(traitlets.config)
+BuildRequires: python3(sphinxcontrib_github_alt)
 %endif
 
 %py_provides %oname
-#%py_requires traitlets
 
 Conflicts: python-module-jupyter <= 1.0.0-alt1
 Obsoletes: python-module-jupyter <= 1.0.0-alt1
@@ -56,7 +49,6 @@ This package contains tests for %oname.
 Summary: Jupyter core package
 Group: Development/Python3
 %py3_provides %oname
-#%py3_requires traitlets
 
 %description -n python3-module-%oname
 Jupyter core package. A base package on which Jupyter projects rely.
@@ -110,11 +102,15 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 
 %check
 rm -fR build
-py.test -vv
+# disable tests messing with env since package is not properly installed to system
+patch -p2 < %SOURCE2
+LC_ALL=en_US.UTF-8 PYTHONPATH=%buildroot%python_sitelibdir py.test -vv
 %if_with python3
 pushd ../python3
 rm -fR build
-py.test-%_python3_version -vv
+# disable tests messing with env since package is not properly installed to system
+patch -p2 < %SOURCE2
+LC_ALL=en_US.UTF-8 PYTHONPATH=%buildroot%python_sitelibdir py.test3 -vv
 popd
 %endif
 
@@ -142,6 +138,10 @@ popd
 %endif
 
 %changelog
+* Fri Nov 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.0-alt1
+- Updated to upstream version 4.4.0.
+- Enabled tests.
+
 * Wed Feb 15 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt2
 - added conflict on python-module-jupyter
 
