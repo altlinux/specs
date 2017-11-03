@@ -2,7 +2,7 @@
 
 Name: aptitude
 Version: 0.4.5
-Release: alt8
+Release: alt9
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
@@ -85,6 +85,9 @@ rm -f %buildroot%_datadir/%name/function_*
 %doc doc/en/output-html/*
 
 %changelog
+* Mon Oct 23 2017 Andrew Savchenko <bircoph@altlinux.org> 0.4.5-alt9
+- Fix build with lcc.
+
 * Tue Apr 11 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.5-alt8
 - Fixed build with gcc6.
 - Fixed crash in internal minesweeper game.
