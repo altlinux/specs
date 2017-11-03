@@ -1,7 +1,7 @@
 %define _name mygpoclient
 
 Name: python-module-%_name
-Version: 1.7
+Version: 1.8
 Release: alt1
 
 Summary: Python interface to the my.gpodder.org webservices
@@ -31,11 +31,17 @@ and download episode status changes.
 %python_install
 
 %files
-%_bindir/bpsync
+%_bindir/mygpo-bpsync
+%_bindir/mygpo-list-devices
+%_bindir/mygpo-simple-client
 %python_sitelibdir/*
-%doc AUTHORS README
+%_man1dir/mygpo-bpsync.1.*
+%doc AUTHORS README*
 
 %changelog
+* Fri Nov 03 2017 Yuri N. Sedunov <aris@altlinux.org> 1.8-alt1
+- 1.8
+
 * Fri Jun 06 2014 Yuri N. Sedunov <aris@altlinux.org> 1.7-alt1
 - 1.7
 
