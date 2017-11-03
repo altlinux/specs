@@ -3,13 +3,14 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary:        Bitronix Transaction Manager
 Name:           btm
 Version:        2.1.2
-Release:        alt1_9jpp8
+Release:        alt1_10jpp8
 Epoch:          0
 License:        LGPLv3
 URL:            http://bitronix.be
@@ -84,6 +85,9 @@ ant build
 
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_10jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_9jpp8
 - new fc release
 
