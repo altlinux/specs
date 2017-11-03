@@ -2,15 +2,16 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global test_interface_version 1.0
 %global build_with_sbt 0
 
 Name:           test-interface
 Version:        %{test_interface_version}
-Release:        alt2_7jpp8
+Release:        alt2_8jpp8
 Summary:        Uniform interface to Scala and Java test frameworks
 
 License:        BSD
@@ -108,6 +109,9 @@ cp pom.xml target/%{name}-%{version}.pom
 %doc LICENSE
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_8jpp8
+- new jpp release
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_7jpp8
 - cleaned up req on javapackages
 
