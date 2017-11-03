@@ -3,12 +3,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          annogen 
 Version:       0.1.0
-Release:       alt1_14jpp8
+Release:       alt1_15jpp8
 Summary:       Java framework for JSR-175 annotations 
 License:       ASL 2.0
 URL:           https://github.com/codehaus/annogen
@@ -26,6 +27,7 @@ Patch0:        annogen-doc-build.patch
 BuildArch:     noarch
 BuildRequires: ant
 BuildRequires: dos2unix
+BuildRequires: java-devel
 BuildRequires: javapackages-local
 BuildRequires: qdox
 Requires:      qdox
@@ -83,6 +85,9 @@ ant docs
 %doc license/LICENSE.txt license/NOTICE.txt
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.1.0-alt1_15jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.1.0-alt1_14jpp8
 - new fc release
 
