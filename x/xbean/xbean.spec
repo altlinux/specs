@@ -4,26 +4,25 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 25
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Conditionals to help breaking eclipse <-> xbean dependency cycle
 # when bootstrapping for new architectures
-%if 0%{?fedora}
 %bcond_without equinox
+%bcond_without groovy
 %bcond_without spring
-%endif
 
 Name:           xbean
 Version:        4.5
-Release:        alt1_3jpp8
+Release:        alt1_7jpp8
 Summary:        Java plugin based web server
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/xbean/
@@ -37,49 +36,39 @@ Patch0:         0001-Unshade-ASM.patch
 Patch1:         0002-Port-to-Eclipse-Luna-OSGi.patch
 Patch2:         0003-Port-to-QDox-2.0.patch
 
-BuildRequires:  java-devel
-BuildRequires:  apache-commons-beanutils
-BuildRequires:  apache-commons-logging
-BuildRequires:  objectweb-asm
-BuildRequires:  ant
-BuildRequires:  qdox
-BuildRequires:  slf4j
 BuildRequires:  maven-local
-BuildRequires:  maven-plugin-bundle
-BuildRequires:  maven-antrun-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-dependency-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-site-plugin
-BuildRequires:  maven-shade-plugin
-BuildRequires:  maven-source-plugin
-%if %{with equinox}
-BuildRequires:  eclipse-equinox-osgi
-%else
-BuildRequires:  felix-framework
-%endif
-%if %{with spring}
-BuildRequires:  apache-commons-jexl
-BuildRequires:  aries-blueprint
-# test deps
-BuildRequires:  cglib
-BuildRequires:  felix-osgi-compendium
-BuildRequires:  felix-osgi-core
-BuildRequires:  geronimo-annotation
-BuildRequires:  pax-logging
+BuildRequires:  mvn(commons-logging:commons-logging-api)
+BuildRequires:  mvn(log4j:log4j:1.2.12)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.osgi:org.osgi.core)
+BuildRequires:  mvn(org.ow2.asm:asm)
+BuildRequires:  mvn(org.ow2.asm:asm-commons)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
 
-BuildRequires:  maven-archiver
-BuildRequires:  maven-plugin-plugin
-BuildRequires:  maven-project
-BuildRequires:  plexus-archiver
-BuildRequires:  plexus-utils
-BuildRequires:  springframework
-BuildRequires:  springframework-beans
-BuildRequires:  springframework-context
-BuildRequires:  springframework-web
+%if %{with equinox}
+BuildRequires:  mvn(org.eclipse:osgi)
+%endif
+
+%if %{with groovy}
+BuildRequires:  mvn(org.codehaus.groovy:groovy-all)
+%endif
+
+%if %{with spring}
+BuildRequires:  mvn(ant:ant)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(com.thoughtworks.qdox:qdox)
+BuildRequires:  mvn(org.apache.maven:maven-archiver)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.springframework:spring-beans)
+BuildRequires:  mvn(org.springframework:spring-context)
+BuildRequires:  mvn(org.springframework:spring-web)
 %endif
 Source44: import.info
 
@@ -113,7 +102,7 @@ This package provides %{summary}.
 %package        spring
 Group: Development/Java
 Summary:        Schema-driven namespace handler for spring contexts
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description    spring
 This package provides %{summary}.
@@ -172,10 +161,13 @@ rm src/site/site.xml
 %pom_disable_module xbean-blueprint
 
 %if %{without equinox}
-  # Replace Eclipse Equinox OSGi dependency with Apeche Felix
-  rm -rf xbean-bundleutils/src/main/java/org/apache/xbean/osgi/bundle/util/equinox/
-  %pom_remove_dep org.eclipse:osgi xbean-bundleutils
-  %pom_add_dep org.apache.felix:org.apache.felix.framework xbean-bundleutils
+  %pom_remove_dep :xbean-bundleutils xbean-finder
+  rm -r xbean-finder/src/main/java/org/apache/xbean/finder{,/archive}/Bundle*
+  %pom_disable_module xbean-bundleutils
+%endif
+
+%if %{without groovy}
+%pom_disable_module xbean-telnet
 %endif
 
 # maven-xbean-plugin invocation makes no sense as there are no namespaces
@@ -218,6 +210,9 @@ sed -i "s|</Private-Package>|</Private-Package-->|" xbean-blueprint/pom.xml
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:4.5-alt1_7jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.5-alt1_3jpp8
 - new version
 
