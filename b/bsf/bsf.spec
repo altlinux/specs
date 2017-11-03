@@ -1,60 +1,32 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# Copyright (c) 2000-2005, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           bsf
-Version:        2.4.0
-Release:        alt3_23jpp8
 Epoch:          1
+Version:        2.4.0
+Release:        alt3_26jpp8
 Summary:        Bean Scripting Framework
 License:        ASL 2.0
 URL:            http://commons.apache.org/bsf/
-Group:          Development/Other
+BuildArch:      noarch
+
 Source0:        http://apache.mirror.anlx.net//commons/%{name}/source/%{name}-src-%{version}.tar.gz
 Source1:        %{name}-pom.xml
+
 Patch0:         build-file.patch
-Patch1:	        build.properties.patch
+Patch1:         build.properties.patch
+
 BuildRequires:  javapackages-local
 BuildRequires:  ant
+BuildRequires:  apache-parent
 BuildRequires:  xalan-j2
 BuildRequires:  rhino
 BuildRequires:  apache-commons-logging
-Requires:       xalan-j2
-Requires:       apache-commons-logging
-Requires: javapackages-tools rpm-build-java
-BuildArch:      noarch
 Source44: import.info
 %add_findreq_skiplist /usr/share/bsf-*
 
@@ -85,9 +57,8 @@ engines:
 * JudoScript
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -95,39 +66,33 @@ Javadoc for %{name}.
 
 %prep
 %setup -q
-# remove all binary libs
-find . -name "*.jar" -exec %{__rm} -f {} \;
-rm -fr bsf
-
 %patch0 -p1
 %patch1 -p1
+find -name \*.jar -delete
+
+%mvn_file : %{name}
+%mvn_alias : org.apache.bsf:
 
 %build
-export CLASSPATH=$(build-classpath apache-commons-logging xalan-j2 rhino)
-ant jar
-rm -rf bsf/src/org/apache/bsf/engines/java
-ant javadocs
+export CLASSPATH=$(build-classpath apache-commons-logging rhino xalan-j2)
+ant jar javadocs
+
+%mvn_artifact %{SOURCE1} build/lib/%{name}.jar
 
 %install
-# jar
-install -d -m 755 %{buildroot}%{_javadir}
-install -m 644 build/lib/%{name}.jar \
-             %{buildroot}%{_javadir}/%{name}.jar
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr build/javadocs/* %{buildroot}%{_javadocdir}/%{name}
-
-install -DTm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap -a "org.apache.bsf:%{name}"
+%mvn_install -J build/javadocs
 
 %files -f .mfiles
-%doc LICENSE.txt AUTHORS.txt CHANGES.txt NOTICE.txt README.txt TODO.txt RELEASE-NOTE.txt
-
-%files javadoc
 %doc LICENSE.txt NOTICE.txt
-%{_javadocdir}/%{name}
+%doc AUTHORS.txt CHANGES.txt README.txt TODO.txt RELEASE-NOTE.txt
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt3_26jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt3_23jpp8
 - new fc release
 
