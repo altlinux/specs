@@ -1,6 +1,6 @@
 Name: bind
-Version: 9.10.6
-%define src_version 9.10.6
+Version: 9.11.2
+%define src_version 9.11.2
 Release: alt1
 
 Summary: ISC BIND - DNS server
@@ -46,7 +46,6 @@ Patch0007: 0007-alt-nofile.patch
 Patch0008: 0008-alt-ads-remove.patch
 Patch0009: 0009-Minimize-linux-capabilities.patch
 Patch0010: 0010-Link-libirs-with-libdns-libisc-and-libisccfg.patch
-Patch0011: 0011-rh-dyndb.patch
 
 # root directory for chrooted environment.
 %define _chrootdir %_localstatedir/bind
@@ -177,7 +176,6 @@ rather than the DNS protocol.
 %patch0008 -p2
 %patch0009 -p2
 %patch0010 -p2
-%patch0011 -p2
 
 install -D -pm644 %_sourcedir/rfc1912.txt doc/rfc/rfc1912.txt
 install -pm644 %_sourcedir/bind.README.bind-devel README.bind-devel
@@ -416,11 +414,13 @@ fi
 %files utils
 %_bindir/delv
 %_bindir/dig
+%_bindir/mdig
 %_bindir/host
 %_bindir/nslookup
 %_bindir/nsupdate
 %_man1dir/delv.*
 %_man1dir/dig.*
+%_man1dir/mdig.*
 %_man1dir/host.*
 %_man1dir/nslookup.*
 %_man1dir/nsupdate.*
@@ -433,6 +433,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Fri Nov 03 2017 Stanislav Levin <slev@altlinux.org> 9.11.2-alt1
+- 9.10.6 -> 9.11.2.
+
 * Fri Jul 28 2017 Dmitry V. Levin <ldv@altlinux.org> 9.10.6-alt1
 - 9.10.5-P3 -> 9.10.6.
 
