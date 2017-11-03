@@ -49,7 +49,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           ant%major_version
 Version:        1.9.6
-Release:        alt1_3jpp8
+Release:        alt2_3jpp8
 Epoch:          0
 Summary:        Java build tool
 Summary(it):    Tool per la compilazione di programmi java
@@ -497,8 +497,8 @@ cp -p src/etc/*.xsl $RPM_BUILD_ROOT%{ant_home}/etc
 
 # install everything else
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
-cp -p src/script/ant $RPM_BUILD_ROOT%{_bindir}/%name
-cp -p src/script/antRun $RPM_BUILD_ROOT%{_bindir}/antRun%{major_version}
+install -m 755 -D src/script/ant $RPM_BUILD_ROOT%{_bindir}/%name
+install -m 755 -D src/script/antRun $RPM_BUILD_ROOT%{_bindir}/antRun%{major_version}
 ln -sf %{_bindir}/%name $RPM_BUILD_ROOT%{ant_home}/bin/ant
 ln -sf %{_bindir}/antRun%{major_version} $RPM_BUILD_ROOT%{ant_home}/bin/antRun
 ln -sf %name $RPM_BUILD_ROOT%{_bindir}/ant
@@ -682,6 +682,9 @@ sed -i -e '1s,^#! *,#!,' %buildroot/%_bindir/*
 # -----------------------------------------------------------------------------
 
 %changelog
+* Fri Nov 03 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.9.6-alt2_3jpp8
+- added compat /usr/bin/ant
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.9.6-alt1_3jpp8
 - ant1.9 for old JVMs
 
