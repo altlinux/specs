@@ -3,24 +3,23 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.0
-Release: alt1.git20150423.1
+Version: 0.7.1
+Release: alt1
 Summary: pytest plugin to check source code with pylint
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/pytest-pylint/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/carsongee/pytest-pylint.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests pylint
-BuildPreReq: python-module-pytest-pep8
+BuildRequires: python-devel python-module-setuptools-tests pylint
+BuildRequires: python-module-pytest-pep8
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests pylint-py3
-BuildPreReq: python3-module-pytest-pep8
+BuildRequires: python3-devel python3-module-setuptools-tests pylint-py3
+BuildRequires: python3-module-pytest-pep8
 %endif
 
 %py_provides pytest_pylint
@@ -88,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.1-alt1
+- Updated to upstream version 0.7.1.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.0-alt1.git20150423.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
