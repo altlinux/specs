@@ -3,15 +3,16 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global ver 1.54
 %global archivever  jdk15on-%(echo %{ver}|sed 's|\\\.||')
 
 Name:          bouncycastle-pg
 Version:       %{ver}
-Release:       alt1_1jpp8
+Release:       alt1_2jpp8
 Summary:       Bouncy Castle OpenPGP API
 # modified BZIP2 library org/bouncycastle/apache/bzip2 ASL 2.0
 License:       ASL 2.0 and MIT
@@ -98,6 +99,9 @@ ant -Dbc.test.data.home=$(pwd)/src/test jar javadoc
 %doc LICENSE.html
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.54-alt1_2jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.54-alt1_1jpp8
 - new version
 
