@@ -2,7 +2,7 @@
 
 Name:		vor
 Version:	0.5.7
-Release:	alt1
+Release:	alt2
 
 Summary:	Variations on Rockdogders is an 2D space shooter
 
@@ -13,11 +13,8 @@ Url:		http://jasonwoof.org/vor
 Source0:	%name-%version.tar
 Source1:	vor.desktop
 
-BuildRequires: libSDL libSDL_mixer libSDL_image libSDL_image-devel
-BuildRequires: libSDL_mixer-devel desktop-file-utils gcc-c++
+BuildRequires: libSDL_image-devel libSDL_mixer-devel desktop-file-utils gcc-c++
 BuildRequires: netpbm povray
-
-Requires: libSDL libSDL_mixer libSDL_image
 
 %description
 VoR is a simple, fast-paced action game that will challenge your reflexes.
@@ -35,7 +32,7 @@ thumpy beat to help put you in the mood for old-school 2D gaming.
 %install
 %makeinstall_std
 
-desktop-file-install --dir=%{buildroot}%{_datadir}/applications	%SOURCE1
+desktop-file-install --dir=%buildroot%_datadir/applications %SOURCE1
 
 %files
 %doc COPYING README
@@ -44,9 +41,12 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications	%SOURCE1
 %_datadir/%name
 
 %changelog
+* Fri Nov 03 2017 Grigory Ustinov <grenka@altlinux.org> 0.5.7-alt2
+- Remove requires from spec and change previous changelog entry.
+
 * Thu Nov 02 2017 Grigory Ustinov <grenka@altlinux.org> 0.5.7-alt1
 - Build new version.
-  Change spec and remove patch.
+  Change spec and remove patch due upstream included it in new version.
 
 * Wed Feb 16 2011 Igor Vlasenko <viy@altlinux.ru> 0.5.5-alt1_3
 - converted from Fedora by srpmconvert script
