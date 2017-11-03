@@ -4,6 +4,7 @@
 %define svnrev		73588
 
 %def_with pgsql
+%def_enable java
 
 %ifndef _unitdir
 %define _unitdir %systemd_unitdir
@@ -11,7 +12,7 @@
 
 Name: zabbix
 Version: 3.4.3
-Release: alt1
+Release: alt2
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -27,15 +28,16 @@ Url: http://www.zabbix.com
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildPreReq: java-devel-default
+%{?_enable_java:BuildPreReq: java-devel-default}
 BuildPreReq: libelf-devel
 BuildRequires(pre): rpm-build-webserver-common
 
-# Automatically added by buildreq on Tue Aug 22 2017 (-bi)
-# optimized out: elfutils glibc-kernheaders-x86 java java-1.8.0-oracle-headless libcom_err-devel libgpg-error libkrb5-devel libnet-snmp30 libp11-kit libpq-devel libsasl2-3 libssl-devel net-snmp-config perl pkg-config python-base python3 python3-base python3-module-javapackages python3-module-lxml python3-module-six rpm-build-python3 xz
-BuildRequires: glibc-kernheaders-generic java-devel libcurl-devel libelf-devel libevent-devel libiksemel-devel libldap-devel libmysqlclient-devel libnet-snmp-devel libopenipmi-devel libpcre-devel libsqlite3-devel libxml2-devel postgresql-devel rpm-build-java
+# Automatically added by buildreq on Thu Nov 02 2017 (-bi)
+# optimized out: elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libkrb5-devel libnet-snmp30 libp11-kit libpq-devel libsasl2-3 libssl-devel net-snmp-config perl pkg-config python-base python3 rpm-build-python3 xz
+BuildRequires: libcurl-devel libelf-devel libevent-devel libiksemel-devel libldap-devel libmysqlclient-devel libnet-snmp-devel libopenipmi-devel libpcre-devel libsqlite3-devel libxml2-devel postgresql-devel python3-base
+BuildRequires: perl-Switch
 
-BuildRequires: libnet-snmp-devel libopenipmi-devel libsqlite3-devel libxml2-devel perl-Switch
+%{?_enable_java:BuildRequires: java-devel rpm-build-java}
 
 %if_with pgsql
 BuildRequires: postgresql-devel
@@ -86,6 +88,7 @@ Group: Monitoring
 Requires: %name-common >= 1:2.0.4-alt1
 Requires: %_sbindir/fping
 
+%if_enabled java
 %package java-gateway
 Summary: %name java gateway
 Group: Monitoring
@@ -94,6 +97,7 @@ Requires: jre-openjdk >= 1.7.0
 BuildArch: noarch
 %filter_from_requires /^\/etc\/sysconfig\/network/d
 %filter_from_requires /^\/etc\/sysconfig\/zabbix-java-gateway/d
+%endif
 
 %package phpfrontend-engine
 Summary: zabbix web frontend (php)
@@ -175,8 +179,10 @@ ZABBIX supports both polling and trapping techniques to collect data from
 monitored hosts. A flexible notification mechanism allows easy and quickly
 configure different types of notifications for pre-defined events.
 
+%if_enabled java
 %description java-gateway
 Zabbix java gateway
+%endif
 
 %description agent
 zabbix network monitor agent.
@@ -268,7 +274,7 @@ mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_pgsql
 	--enable-proxy \
 	--enable-ipv6 \
 	--enable-agent \
-	--enable-java \
+	%{subst_enable java} \
 	--with-libcurl \
 	--with-libxml2 \
 	--with-net-snmp \
@@ -343,8 +349,10 @@ install -pDm0755 sources/%{name}_mysql.init %buildroot%_initdir/%{name}_mysql
 install -pDm0644 sources/%{name}_mysql.service %buildroot%_unitdir/%{name}_mysql.service
 install -pDm0755 sources/%{name}_proxy.init %buildroot%_initdir/%{name}_proxy
 install -pDm0644 sources/%{name}_proxy.service %buildroot%_unitdir/%{name}_proxy.service
+%if_enabled java
 install -pDm0755 sources/%{name}_java_gateway.init %buildroot%_initdir/%{name}_java_gateway
 install -pDm0644 sources/%{name}_java_gateway.service %buildroot%_unitdir/%{name}_java_gateway.service
+%endif
 
 # sudo entry
 install -pDm0400 sources/%name.sudo %buildroot%_sysconfdir/sudoers.d/%name
@@ -361,6 +369,7 @@ mv upgrades/dbpatches-final/dbpatches/2.0/postgresql upgrades-postgresql/2.0
 # include files
 cp include/* %buildroot%_includedir/%name
 
+%if_enabled java
 # delete unnecessary files from java gateway
 rm %buildroot%_sbindir/zabbix_java/settings.sh
 rm %buildroot%_sbindir/zabbix_java/startup.sh
@@ -377,6 +386,7 @@ cat src/zabbix_java/settings.sh | sed \
         -e 's|^PID_FILE=.*|PID_FILE="/var/run/zabbix/zabbix_java.pid"|g' \
         -e '/^# TIMEOUT=/a \\nTIMEOUT=3' \
         > %buildroot%_sysconfdir/zabbix/zabbix_java_gateway.conf
+%endif
 
 # ChangeLog
 bzip2 ChangeLog
@@ -404,11 +414,15 @@ bzip2 ChangeLog
 
 %preun proxy
 %preun_service zabbix_proxy
+
+%if_enabled java
 %post java-gateway
 %post_service zabbix_java_gateway
 
 %preun java-gateway
 %preun_service zabbix_java_gateway
+%endif
+
 %post agent
 %post_service zabbix_agentd
 if [ $1 -eq 1 ]; then
@@ -458,6 +472,7 @@ fi
 %config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/%name/%{name}_proxy.conf
 %_man8dir/%{name}_proxy.*
 
+%if_enabled java
 %files java-gateway
 %_sbindir/%{name}_java_gateway
 %_initdir/%{name}_java_gateway
@@ -465,6 +480,7 @@ fi
 %config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/%name/%{name}_java_gateway.conf
 %config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/%name/%{name}_java_gateway_logback.xml
 %_javadir/*
+%endif
 
 %files agent
 %config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/%name/%{name}_agentd.conf
@@ -499,6 +515,10 @@ fi
 %_includedir/%name
 
 %changelog
+* Fri Nov 03 2017 Alexei Takaseev <taf@altlinux.org> 1:3.4.3-alt2
+- introduce java knob (on by default) (closes: #34122)
+- buildreq again
+
 * Thu Oct 19 2017 Alexei Takaseev <taf@altlinux.org> 1:3.4.3-alt1
 - 3.4.3
 
