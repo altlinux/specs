@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: python-module-%modname
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: Simple, fast and efficient podcast parser written in Python.
@@ -62,14 +62,17 @@ popd
 
 %files
 %python_sitelibdir_noarch/%{modname}*
-%doc README.md PKG-INFO
+%doc README.md
 
 %files -n python3-module-%modname
 %python3_sitelibdir_noarch/%{modname}*
 %python3_sitelibdir_noarch/__pycache__/%{modname}*
-%doc README.md PKG-INFO
+%doc README.md
 
 %changelog
+* Fri Nov 03 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.2-alt1
+- 0.6.2
+
 * Sun Jan 08 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
 - first build for Sisyphus
 
