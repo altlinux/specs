@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A collection of card games
@@ -78,6 +78,9 @@ fi
 %exclude %_libdir/valgrind/aisleriot.supp
 
 %changelog
+* Fri Nov 03 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.4-alt1
+- 3.22.4
+
 * Tue Sep 19 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
 - 3.22.3
 
