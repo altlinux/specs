@@ -1,11 +1,9 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1
 %set_automake_version 1.11
 
 %define rname getfem
 Name: getfemxx
-Version: 5.0
-#Release: alt1
+Version: 5.2
+Release: alt1
 %setup_python_module getfem
 
 Group: Development/C++
@@ -18,7 +16,6 @@ Provides: %rname = %version-%release
 Obsoletes: %rname < %version-%release
 
 Source0: http://download.gna.org/getfem/stable/getfem-%version.tar.gz
-Patch1: getfemxx-alt-qhull-2011.2.patch
 
 BuildRequires: boost-devel gcc-c++ gcc-fortran glibc-devel-static libnumpy-devel
 BuildRequires: python-module-scipy-devel python-module-mpi4py-devel
@@ -52,7 +49,6 @@ Python bindings to %name
 
 %prep
 %setup -q -n %rname-%version
-%patch1 -p2
 %autoreconf
 
 %build
@@ -66,7 +62,6 @@ export CFLAGS="%optflags" CXXFLAGS="%optflags"
 	--enable-mumps \
 	--with-mumps="dmumps zmumps smumps cmumps mumps_common pord" \
 	--enable-qhull \
-	--enable-scilab \
 	--with-blas=openblas \
 	--with-pic \
 	--with-matlab-toolbox-dir=%_datadir/getfem_toolbox
@@ -97,6 +92,9 @@ mv %buildroot%python_sitelibdir_noarch/getfem/* \
 %python_sitelibdir/getfem
 
 %changelog
+* Fri Nov 03 2017 Oleg Solovyov <mcpain@altlinux.org> 5.2-alt1
+- Version 5.2
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.0-alt1.1
 - (AUTO) subst_x86_64.
 
