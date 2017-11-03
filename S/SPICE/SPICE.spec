@@ -6,7 +6,7 @@
 %def_disable manual
 
 Name: SPICE
-Version: 0.13.90
+Version: 0.14.0
 Release: alt1
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
@@ -96,6 +96,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Fri Nov 03 2017 Alexey Shabalin <shaba@altlinux.ru> 0.14.0-alt1
+- 0.14.0
+
 * Mon Sep 04 2017 Alexey Shabalin <shaba@altlinux.ru> 0.13.90-alt1
 - 0.13.90
 
