@@ -1,5 +1,5 @@
 Name: nfs
-Version: 2.1.1
+Version: 2.2.1
 Release: alt1
 Epoch: 1
 
@@ -10,10 +10,19 @@ Url: http://nfs.sourceforge.net/
 
 Source0: %name-%version-%release.tar
 
-BuildRequires: libblkid-devel libevent-devel libnfsidmap-devel >= 0.23 libwrap-devel
+BuildRequires: libblkid-devel libevent-devel libwrap-devel
 BuildRequires: libdevmapper-devel libkrb5-devel libsqlite3-devel
 BuildRequires: libcap-devel libtirpc-devel libkeyutils-devel libmount-devel
 BuildRequires: libkeyutils-devel
+
+%package -n libnfsidmap
+Summary: Name to user id mapping library
+Group: System/Libraries
+
+%package -n libnfsidmap-devel
+Summary: Name to user id mapping library and headers
+Group: Development/C
+Requires: libnfsidmap = %EVR
 
 %package clients
 Summary: The Linux NFS client
@@ -52,6 +61,15 @@ Conflicts: nfs-utils < 1:1.2.4-alt0.4
 This package provides the Linux NFS utilities and server.
 This package replaces the old knfsd package.
 
+%description -n libnfsidmap
+libnfsidmap is a library holding mulitiple methods of mapping names to id's
+and visa versa, mainly for NFSv4.
+
+%description -n libnfsidmap-devel
+libnfsidmap is a library holding mulitiple methods of mapping names to id's
+and visa versa, mainly for NFSv4.
+This package holds development part of libnfsidmap library
+
 %description clients
 This package provides the Linux NFS clients.
 
@@ -80,6 +98,7 @@ This package provides the Linux NFS stats utilities.
     --with-statduser=rpcuser \
     --with-statdpath=%_localstatedir/nfs/statd \
     --with-systemd=%systemd_unitdir \
+    --disable-static \
     #
 sed -i 's/#define[[:blank:]]\+START_STATD.\+$/#undef START_STATD/' support/include/config.h
 %make_build
@@ -91,6 +110,7 @@ cp -a altlinux/etc %buildroot
 cp -p systemd/README README.systemd
 
 install -pm0644 nfs.conf %buildroot%_sysconfdir/nfs.conf
+install -pm0644 support/nfsidmap/idmapd.conf %buildroot%_sysconfdir/idmapd.conf
 
 ln -s nfs-blkmap.service %buildroot%systemd_unitdir/blkmapd.service
 ln -s nfs-idmapd.service %buildroot%systemd_unitdir/idmapd.service
@@ -149,6 +169,19 @@ touch /var/lock/subsys/rpc.svcgssd
 /sbin/service svcgssd condrestart
 
 #-------------------------------------------------------------------------------
+%files -n libnfsidmap
+%config(noreplace) %_sysconfdir/idmapd.conf
+%_libdir/libnfsidmap.so.*
+%dir %_libdir/libnfsidmap
+%_libdir/libnfsidmap/*.so
+%_man5dir/idmapd.conf.*
+
+%files -n libnfsidmap-devel
+%_libdir/libnfsidmap.so
+%_includedir/nfsidmap.h
+%_pkgconfigdir/libnfsidmap.pc
+%_man3dir/nfs4_uid_to_name.3*
+
 %files server
 %_initdir/nfs
 %_initdir/idmapd
@@ -210,6 +243,7 @@ touch /var/lock/subsys/rpc.svcgssd
 %systemd_unitdir/gssd.service
 %systemd_unitdir/nfslock.service
 
+%systemd_unitdir/rpc_pipefs.target
 %systemd_unitdir/nfs-client.target
 %systemd_unitdir/nfs-utils.service
 %systemd_unitdir/auth-rpcgss-module.service
@@ -218,7 +252,7 @@ touch /var/lock/subsys/rpc.svcgssd
 %systemd_unitdir/rpc-statd.service
 %systemd_unitdir/rpc-statd-notify.service
 %systemd_unitdir/rpc-gssd.service
-
+%systemd_unitdir-generators/rpc-pipefs-generator
 %systemd_unitdir-generators/nfs-server-generator
 
 /sbin/rpc.gssd
@@ -262,6 +296,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Thu Nov 02 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.2.1-alt1
+- 2.2.1 released
+
 * Tue Jan 17 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.1.1-alt1
 - 2.1.1 released
 
