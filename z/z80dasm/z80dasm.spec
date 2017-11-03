@@ -1,17 +1,19 @@
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		z80dasm
-Version:	1.1.2
-Release:	alt2
+Version:	1.1.3
+Release:	alt1_6
 Summary:	Z80 Disassembler
 Group:		Development/Other
 License:	GPLv2+
 URL:		http://www.tablix.org/~avian/blog/articles/%{name}/
 Source0:	http://www.tablix.org/~avian/%{name}/%{name}-%{version}.tar.gz
-Packager: Ilya Mashkin <oddity@altlinux.ru>
+
 # Target addresses are 16 bits, but relative address computations were not
 # being masked to 16 bits, causing bad results on all systems and buffer
 # overruns in sprintf on 64-bit systems.  Reported to upstream via email
 # on 27-Feb-2012.
-Patch0:		z80dasm-1.1.2-16-bit-addr.patch
+Patch0:		z80dasm-1.1.3-16-bit-addr.patch
 
 BuildRequires:	z80asm
 Source44: import.info
@@ -30,7 +32,7 @@ assemblers. Compatibility with z80asm was thoroughly tested.
 %configure
 
 %build
-make %{?_smp_mflags} CFLAGS="%{optflags}"
+%make_build CFLAGS="%{optflags}"
 
 %check
 make test
@@ -39,11 +41,15 @@ make test
 make install DESTDIR="%{buildroot}"
 
 %files
-%doc COPYING AUTHORS NEWS README
+%doc COPYING
+%doc AUTHORS NEWS README
 %{_bindir}/%{name}
 %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Fri Nov 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_6
+- update to new version by fcimport
+
 * Fri Mar 20 2015 Ilya Mashkin <oddity@altlinux.ru> 1.1.2-alt2
 - build for Sisyphus
 
