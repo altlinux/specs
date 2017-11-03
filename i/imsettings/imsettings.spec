@@ -1,20 +1,21 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize gcc-c++ glib2-devel pkgconfig(check) pkgconfig(gconf-2.0) pkgconfig(gdk-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/desktop-file-validate /usr/bin/gtkdocize gcc-c++ glib2-devel pkgconfig(check) pkgconfig(gconf-2.0) pkgconfig(gdk-2.0) pkgconfig(gio-2.0) pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 %add_findreq_skiplist %_libexecdir/xinputinfo.sh
 %add_findreq_skiplist /etc/X11/xinit/xinitrc.d/50-xinput.sh
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:		imsettings
-Version:	1.6.8
-Release:	alt1
+Version:	1.7.2
+Release:	alt1_5
 License:	LGPLv2+
 URL:		https://tagoh.bitbucket.org/%{name}/
-Packager: Ilya Mashkin <oddity@altlinux.ru>
 BuildRequires:	desktop-file-utils
-BuildRequires:	intltool gettext
+BuildRequires:	intltool gettext gettext-tools
 BuildRequires:	libtool automake autoconf
-BuildRequires:	glib2 >= 2.32.0 gobject-introspection-devel libgtk+3-devel >= 3.3.3
-BuildRequires:	libnotify-devel
-BuildRequires:	libX11-devel libgxim-devel >= 0.5.0
+BuildRequires:	libgio >= 2.32.0, gobject-introspection-devel gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:	libnotify-devel libnotify-gir-devel
+BuildRequires:	libX11-devel, libgxim-devel >= 0.5.0
 %if !0%{?rhel}
 BuildRequires:	libxfconf-devel
 %endif
@@ -27,16 +28,13 @@ Patch1:		%{name}-disable-xim.patch
 Patch2:		%{name}-xinput-xcompose.patch
 ## Fedora specific: Force enable the IM management on imsettings for Cinnamon
 Patch3:		%{name}-force-enable-for-cinnamon.patch
-Patch4:		%{name}-fix-configure.patch
-
 
 Summary:	Delivery framework for general Input Method configuration
-Group:		File tools
-Requires:	xinit >= 1.0.2-22.fc8
-Requires:	%{name}-libs%{?_isa} = %{version}-%{release}
-Requires:	%{name}-desktop-module%{?_isa} = %{version}-%{release}
-Requires(post):	/bin/dbus-send alternatives
-Requires(postun):	/bin/dbus-send alternatives
+Group:		System/Base
+Requires:	xinit >= 1.0.2
+Requires:	%{name}-libs = %{version}-%{release}
+Requires:	%{name}-desktop-module = %{version}-%{release}
+Requires:	%{name}-gsettings
 Source44: import.info
 
 %description
@@ -49,7 +47,7 @@ This package contains the core DBus services and some utilities.
 
 %package	libs
 Summary:	Libraries for imsettings
-Group:		Development/C
+Group:		Development/Other
 
 %description	libs
 IMSettings is a framework that delivers Input Method
@@ -61,8 +59,10 @@ This package contains the shared library for imsettings.
 
 %package	devel
 Summary:	Development files for imsettings
-Group:		Development/C
-Requires:	%{name}-libs%{?_isa} = %{version}-%{release}
+Group:		Development/Other
+Requires:	%{name}-libs = %{version}-%{release}
+Requires:	pkg-config
+Requires:	libgio
 
 %description	devel
 IMSettings is a framework that delivers Input Method
@@ -75,8 +75,8 @@ applications with imsettings.
 
 %package	xim
 Summary:	XIM support on imsettings
-Group:		File tools
-Requires:	%{name}%{?_isa} = %{version}-%{release}
+Group:		System/Base
+Requires:	%{name} = %{version}-%{release}
 Requires:	im-chooser
 
 %description	xim
@@ -89,10 +89,10 @@ This package contains a module to get this working with XIM.
 
 %package	gsettings
 Summary:	GSettings support on imsettings
-Group:		File tools
-Requires:	%{name}%{?_isa} = %{version}-%{release}
-Requires:	dconf
-Provides:	imsettings-desktop-module%{?_isa} = %{version}-%{release}
+Group:		System/Base
+Requires:	%{name} = %{version}-%{release}
+Requires:	dconf libdconf
+Provides:	imsettings-desktop-module = %{version}-%{release}
 Provides:	%{name}-gnome = %{version}-%{release}
 Obsoletes:	%{name}-gnome < 1.5.1-3
 
@@ -108,10 +108,10 @@ own XSETTINGS daemons.
 
 %package	qt
 Summary:	Qt support on imsettings
-Group:		File tools
-Requires:	%{name}%{?_isa} = %{version}-%{release}
+Group:		System/Base
+Requires:	%{name} = %{version}-%{release}
 Requires:	im-chooser
-Provides:	imsettings-desktop-module%{?_isa} = %{version}-%{release}
+Provides:	imsettings-desktop-module = %{version}-%{release}
 
 %description	qt
 IMSettings is a framework that delivers Input Method
@@ -125,11 +125,11 @@ applications.
 %if !0%{?rhel}
 %package	xfce
 Summary:	Xfce support on imsettings
-Group:		File tools
-Requires:	%{name}%{?_isa} = %{version}-%{release}
+Group:		System/Base
+Requires:	%{name} = %{version}-%{release}
 Requires:	im-chooser-xfce
-Requires:	xfce4-settings >= 4.5.99.1-2
-Provides:	imsettings-desktop-module%{?_isa} = %{version}-%{release}
+Requires:	xfce4-settings >= 4.5.99.1
+Provides:	imsettings-desktop-module = %{version}-%{release}
 
 %description	xfce
 IMSettings is a framework that delivers Input Method
@@ -141,14 +141,14 @@ This package contains a module to get this working on Xfce.
 
 %package	lxde
 Summary:	LXDE support on imsettings
-Group:		File tools
-Requires:	%{name}%{?_isa} = %{version}-%{release}
-Requires:	lxde-settings-daemon
+Group:		System/Base
+Requires:	%{name} = %{version}-%{release}
+Requires:	lxde-lxsession
 # Hack for upgrades: see https://bugzilla.redhat.com/show_bug.cgi?id=693809
 Requires:	lxde-lxsession
 Requires:	/usr/bin/lxsession
 Requires:	im-chooser
-Provides:	imsettings-desktop-module%{?_isa} = %{version}-%{release}
+Provides:	imsettings-desktop-module = %{version}-%{release}
 
 %description	lxde
 IMSettings is a framework that delivers Input Method
@@ -160,13 +160,13 @@ This package contains a module to get this working on LXDE.
 
 %package	mate
 Summary:	MATE support on imsettings
-Group:		File tools
-Requires:	%{name}%{?_isa} = %{version}-%{release}
+Group:		System/Base
+Requires:	%{name} = %{version}-%{release}
 # need to keep more deps for similar reason to https://bugzilla.redhat.com/show_bug.cgi?id=693809
 Requires:	mate-settings-daemon >= 1.5.0
-Requires:	mate-session-manager
+Requires:	mate-session
 Requires:	im-chooser
-Provides:	imsettings-desktop-module%{?_isa} = %{version}-%{release}
+Provides:	imsettings-desktop-module = %{version}-%{release}
 
 %description	mate
 IMSettings is a framework that delivers Input Method
@@ -178,13 +178,13 @@ This package contains a module to get this working on MATE.
 
 %package	cinnamon
 Summary:	Cinnamon support on imsettings
-Group:		File tools
-Requires:	%{name}%{?_isa} = %{version}-%{release}
+Group:		System/Base
+Requires:	%{name} = %{version}-%{release}
 # need to keep more deps for similar reason to https://bugzilla.redhat.com/show_bug.cgi?id=693809
 Requires:	cinnamon
 Requires:	cinnamon-session
 Requires:	im-chooser
-Provides:	imsettings-desktop-module%{?_isa} = %{version}-%{release}
+Provides:	imsettings-desktop-module = %{version}-%{release}
 
 %description	cinnamon
 IMSettings is a framework that delivers Input Method
@@ -201,8 +201,6 @@ This package contains a module to get this working on Cinnamon.
 %patch1 -p1 -b .1-xim
 %patch2 -p1 -b .2-xcompose
 %patch3 -p1 -b .3-force-cinnamon
-%patch4 -p1 -b .4-fix-configure
-
 
 %build
 autoreconf -f
@@ -211,7 +209,7 @@ autoreconf -f
 	--disable-static \
 	--disable-schemas-install
 
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -247,15 +245,6 @@ EOF
 #%%check
 ## Disable it because it requires DBus session
 # make check
-
-%post
-dbus-send --system --type=method_call --dest=org.freedesktop.DBus / org.freedesktop.DBus.ReloadConfig > /dev/null 2>&1 || :
-
-%postun
-if [ "$1" = 0 ]; then
-	:
-	dbus-send --system --type=method_call --dest=org.freedesktop.DBus / org.freedesktop.DBus.ReloadConfig > /dev/null 2>&1 || :
-fi
 
 %files	-f %{name}.lang
 %_altdir/xinputrc_imsettings
@@ -325,6 +314,9 @@ fi
 
 
 %changelog
+* Fri Nov 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.2-alt1_5
+- update to new version by fcimport
+
 * Sat Nov 07 2015 Ilya Mashkin <oddity@altlinux.ru> 1.6.8-alt1
 - 1.6.8
 - update patchset
