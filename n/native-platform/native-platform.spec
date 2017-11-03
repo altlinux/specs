@@ -1,12 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name native-platform
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 0.10
 %global debug_package %{nil}
 
@@ -15,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          native-platform
 Version:       0.10
-Release:       alt1_8jpp8
+Release:       alt1_9jpp8
 Summary:       Java bindings for various native APIs
 License:       ASL 2.0
 URL:           https://github.com/adammurdoch/native-platform
@@ -30,8 +31,9 @@ Patch0:        %{name}-0.10-NativeLibraryLocator.patch
 Patch1:        %{name}-0.10-native-libraries-name.patch
 
 # build tools and deps
+BuildRequires: java-devel
 BuildRequires: javapackages-local
-BuildRequires: ncurses-devel
+BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 BuildRequires: jopt-simple
 Source44: import.info
 Patch33: native-platform-0.10-as-needed.patch
@@ -74,7 +76,7 @@ mv src/shared/cpp/* src/main/cpp
 CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ;
 CPPFLAGS="${CPPFLAGS:-%optflags}" ; export CPPFLAGS ;
 CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ;
-make %{?_smp_mflags} JAVA_HOME=%{_jvmdir}/java
+%make_build JAVA_HOME=%{_jvmdir}/java
 
 %mvn_artifact net.rubygrapefruit:%{name}:%{version} build/%{name}.jar
 %mvn_file : %{name}
@@ -94,6 +96,9 @@ install -pm 0755 build/binaries/libnative-platform.so %{buildroot}%{_libdir}/%{n
 %doc LICENSE
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_9jpp8
+- new jpp release
+
 * Sat Feb 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_8jpp8
 - fixed linkage
 
