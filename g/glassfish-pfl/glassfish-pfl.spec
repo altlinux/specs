@@ -3,17 +3,17 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: swig
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name glassfish-pfl
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 3.2.0
 %global namedreltag -b001
 %global namedversion %{version}%{?namedreltag}
 Name:          glassfish-pfl
 Version:       3.2.0
-Release:       alt2_0.10.b001jpp8
+Release:       alt2_0.11.b001jpp8
 Summary:       GlassFish Primitive Function Library
 # Few files in src/org/glassfish/pfl/test/ is under ASL 2.0
 License:       (CDDL or GPLv2 with exceptions) and ASL 2.0
@@ -161,6 +161,9 @@ sed -i 's/\r//' LICENSE.txt LICENSE-2.0.txt
 %doc LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt2_0.11.b001jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt2_0.10.b001jpp8
 - new fc release
 
