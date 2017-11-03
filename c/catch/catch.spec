@@ -1,10 +1,10 @@
 Name: catch
-Version: 1.9.7
+Version: 2.0.1
 Release: alt1
 
 Summary: C++ Unit Test framework ("all in one header")
 
-License: GPL
+License: Boost Software License, Version 1.0
 Group: Development/C++
 Url: https://github.com/philsquared/Catch
 
@@ -34,6 +34,9 @@ mv -f catch.hpp %buildroot%_includedir
 %_includedir/*.hpp
 
 %changelog
+* Fri Nov 03 2017 Pavel Vainerman <pv@altlinux.ru> 2.0.1-alt1
+- new version (2.0.1) with rpmgs script
+
 * Fri Aug 11 2017 Pavel Vainerman <pv@altlinux.ru> 1.9.7-alt1
 - new version (1.9.7) with rpmgs script
 
