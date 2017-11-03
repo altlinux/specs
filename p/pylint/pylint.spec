@@ -2,7 +2,7 @@
 
 Name: pylint
 Version: 1.7.4
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Python code static checker
 License: GPLv2+
@@ -33,6 +33,8 @@ BuildRequires: python3-module-pytest-runner
 BuildRequires: python3(isort) python3(mccabe) python3(six)
 %endif
 
+%py_requires mccabe
+
 %description
 Pylint is a Python source code analyzer which looks for programming
 errors, helps enforcing a coding standard and sniffs for some code
@@ -50,6 +52,7 @@ Additionally, it is possible to write plugins to add your own checks.
 %package py3
 Summary: Python code static checker
 Group: Development/Python3
+%py3_requires mccabe
 
 %description py3
 Pylint is a Python source code analyzer which looks for programming
@@ -124,6 +127,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.4-alt2%ubt
+- Updated runtime dependencies.
+
 * Wed Nov 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.4-alt1%ubt
 - Updated to upstream version 1.7.4.
 
