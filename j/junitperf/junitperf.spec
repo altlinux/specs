@@ -4,9 +4,10 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2007, JPackage Project
 # All rights reserved.
 #
@@ -39,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           junitperf
 Version:        1.9.1
-Release:        alt1_17jpp8
+Release:        alt1_18jpp8
 Summary:        JUnit extension for performance and scalability testing
 License:        BSD
 Source0:        http://www.clarkware.com/software/junitperf-1.9.1.zip
@@ -47,6 +48,7 @@ Source1:        https://repository.jboss.org/nexus/content/repositories/thirdpar
 URL:            http://www.clarkware.com/software/JUnitPerf.html
 BuildRequires:  ant
 BuildRequires:  ant-junit
+BuildRequires:  java-devel
 BuildRequires:  javapackages-local
 BuildRequires:  junit >= 3.2
 BuildArch:      noarch
@@ -69,7 +71,7 @@ BuildArch: noarch
 %package demo
 Group: Development/Java
 Summary:        Demos and samples for %{name}
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description demo
 %{summary}.
@@ -111,6 +113,9 @@ cp -pr samples %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.9.1-alt1_18jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.1-alt1_17jpp8
 - new fc release
 
