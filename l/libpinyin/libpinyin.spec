@@ -1,24 +1,25 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 Group: Other
-%add_optflags %optflags_shared
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++ libdb4-devel
+# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global snapshot 0
 
 Name:           libpinyin
-Version:        1.0.0
-Release:        alt1_3
+Version:        2.1.0
+Release:        alt1_1
 Summary:        Library to deal with pinyin
 
-License:        GPLv2+
+License:        GPLv3+
 URL:            https://github.com/libpinyin/libpinyin
 Source0:        http://downloads.sourceforge.net/libpinyin/libpinyin/%{name}-%{version}.tar.gz
 %if %snapshot
-Patch0:         libpinyin-1.0.x-head.patch
+Patch0:         libpinyin-2.1.x-head.patch
 %endif
 
-BuildRequires:  libdb4.8-devel glib2-devel
-Requires:       %{name}-data%{?_isa} = %{version}-%{release}
+BuildRequires:  libkyotocabinet-devel glib2-devel libgio libgio-devel
+Requires:       %{name}-data = %{version}-%{release}
 Source44: import.info
 
 %description
@@ -30,6 +31,8 @@ for intelligent sentence-based Chinese pinyin input methods.
 Group: Other
 Summary:        Development files for %{name}
 Requires:       %{name} = %{version}-%{release}
+Provides:       libzhuyin-devel = %{version}-%{release}
+Obsoletes:      libzhuyin-devel < %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -44,7 +47,6 @@ Requires:       %{name} = %{version}-%{release}
 %description data
 The %{name}-data package contains data files.
 
-
 %package        tools
 Group: Other
 Summary:        Tools for %{name}
@@ -52,6 +54,14 @@ Requires:       %{name} = %{version}-%{release}
 
 %description tools
 The %{name}-tools package contains tools.
+
+%package -n     libzhuyin
+Group: Other
+Summary:        Library to deal with zhuyin
+Requires:       %{name} = %{version}-%{release}
+
+%description -n libzhuyin
+The libzhuyin package contains libzhuyin compatibility library.
 
 
 %prep
@@ -62,8 +72,10 @@ The %{name}-tools package contains tools.
 %endif
 
 %build
-%configure --disable-static
-make %{?_smp_mflags}
+%configure --disable-static \
+           --with-dbm=KyotoCabinet \
+           --enable-libzhuyin
+%make_build
 
 %check
 make check
@@ -75,15 +87,17 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 %files
 %doc AUTHORS COPYING README
-%{_libdir}/*.so.*
+%{_libdir}/libpinyin*.so.*
 %dir %{_libdir}/libpinyin
 
 %files devel
 %doc
 %dir %{_includedir}/libpinyin-%{version}
 %{_includedir}/libpinyin-%{version}/*
-%{_libdir}/*.so
+%{_libdir}/libpinyin.so
 %{_libdir}/pkgconfig/libpinyin.pc
+%{_libdir}/libzhuyin.so
+%{_libdir}/pkgconfig/libzhuyin.pc
 
 %files data
 %doc
@@ -95,7 +109,13 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_bindir}/gen_unigram
 %{_mandir}/man1/*.1.*
 
+%files -n libzhuyin
+%{_libdir}/libzhuyin*.so.*
+
 %changelog
+* Fri Nov 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_1
+- update to new version by fcimport
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_3
 - update to new release by fcimport
 
