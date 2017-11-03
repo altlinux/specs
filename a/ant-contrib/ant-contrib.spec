@@ -3,15 +3,16 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global beta_number b3
 
 Summary:        Collection of tasks for Ant
 Name:           ant-contrib
 Version:        1.0
-Release:        alt5_0.29.b3jpp8
+Release:        alt5_0.30.b3jpp8
 License:        ASL 2.0 and ASL 1.1
 URL:            http://ant-contrib.sourceforge.net/
 Source0:        https://downloads.sourceforge.net/project/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3-src.tar.bz2
@@ -24,6 +25,7 @@ BuildRequires:  junit
 BuildRequires:  ant-junit
 BuildRequires:  xerces-j2
 BuildRequires:  bcel
+BuildRequires:  java-devel
 BuildRequires:  apache-ivy
 BuildRequires:  jakarta-commons-httpclient
 BuildRequires:  apache-commons-logging
@@ -42,7 +44,7 @@ for Apache Ant.
 %package        javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
@@ -86,6 +88,9 @@ echo "ant-contrib/ant-contrib" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/ant-contrib
 %doc target/docs/LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.30.b3jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.29.b3jpp8
 - new fc release
 
