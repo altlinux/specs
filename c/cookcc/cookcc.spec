@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:             cookcc
 Version:          0.3.3
-Release:          alt2_14jpp8
+Release:          alt2_15jpp8
 Summary:          Lexer and Parser Generator
 License:          BSD
 URL:              https://github.com/coconut2015/cookcc
@@ -70,6 +71,9 @@ CLASSPATH=$(build-classpath xerces-j2 freemarker cookxml) ant cookcc_jar javadoc
 %doc LICENSE_cookcc.txt
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt2_15jpp8
+- new jpp release
+
 * Sun Nov 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt2_14jpp8
 - new fc release
 
