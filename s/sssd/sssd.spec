@@ -4,7 +4,7 @@
 
 Name: sssd
 Version: 1.15.3
-Release: alt3%ubt
+Release: alt4%ubt
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -94,7 +94,7 @@ BuildRequires: libsystemd-devel
 BuildRequires: selinux-policy-targeted
 BuildRequires: cifs-utils-devel
 BuildRequires: libsasl2-devel
-BuildRequires: libnfsidmap-devel
+BuildRequires: libnfsidmap-devel >= 1:2.2.1-alt1
 BuildRequires: libaugeas-devel
 BuildRequires: libcmocka-devel >= 1.0.0
 BuildRequires: nscd
@@ -445,7 +445,6 @@ UIDs/GIDs to names and vice versa. It can be also used for mapping principal
     --enable-nsslibdir=/%_lib \
     --enable-pammoddir=/%_lib/security \
     --enable-ldb-version-check \
-    --enable-nfsidmaplibdir=/%_lib/libnfsidmap \
     --with-syslog=journald \
     --with-test-dir=/dev/shm \
     --enable-krb5-locator-plugin \
@@ -810,9 +809,12 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_man8dir/idmap_sss*
 
 %files nfs-idmap
-/%_lib/libnfsidmap/sss.so
+%_libdir/libnfsidmap/sss.so
 
 %changelog
+* Fri Nov 03 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.15.3-alt4%ubt
+- relocate nfs-idmap plugin back under %%_libdir
+
 * Thu Sep 21 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.3-alt3%ubt
 - Avoid build another trouble with ubt macros id on branch c8
 
