@@ -1,20 +1,34 @@
-Name: maven-shared-utils
-Version: 3.1.0
-Summary: Maven shared utility classes
-License: ASL 2.0
-Url: http://maven.apache.org/shared/maven-shared-utils
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-shared-utils = 3.1.0-5.fc27
-Provides: mvn(org.apache.maven.shared:maven-shared-utils) = 3.1.0
-Provides: mvn(org.apache.maven.shared:maven-shared-utils:pom:) = 3.1.0
-Requires: java-headless
-Requires: javapackages-tools
-Requires: mvn(commons-io:commons-io)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: maven-shared-utils-3.1.0-5.fc27.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:           maven-shared-utils
+Version:        3.1.0
+Release:        alt1_4jpp8
+Summary:        Maven shared utility classes
+License:        ASL 2.0
+URL:            http://maven.apache.org/shared/maven-shared-utils
+BuildArch:      noarch
+
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.fusesource.jansi:jansi)
+BuildRequires:  mvn(org.hamcrest:hamcrest-core)
+Source44: import.info
 
 %description
 This project aims to be a functional replacement for plexus-utils in Maven.
@@ -23,24 +37,34 @@ It is not a 100% API compatible replacement though but a replacement with
 improvements: lots of methods got cleaned up, generics got added and we dropped
 a lot of unused code.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+    
+%description javadoc
+API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+%pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_4jpp8
+- new jpp release
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
