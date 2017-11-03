@@ -5,7 +5,7 @@
 %define libdrumstick_rt libdrumstick-rt%sover
 
 Name: drumstick
-Version: 1.0.2
+Version: 1.1.0
 Release: alt1
 
 Group: System/Libraries
@@ -21,6 +21,7 @@ Source: %name-%version.tar
 BuildRequires: kde-common-devel
 BuildRequires: cmake docbook-style-xsl doxygen graphviz xsltproc
 BuildRequires: libfluidsynth-devel qt5-svg-devel qt5-tools-devel
+BuildRequires: libalsa-devel
 
 %description
 The drumstick library is a C++ wrapper around the ALSA library sequencer
@@ -131,7 +132,6 @@ popd
 %_includedir/drumstick.h
 
 %files examples
-%_bindir/drumstick-buildsmf
 %_bindir/drumstick-dumpmid
 %_bindir/drumstick-dumpove
 %_bindir/drumstick-dumpsmf
@@ -139,7 +139,6 @@ popd
 %_bindir/drumstick-metronome
 %_bindir/drumstick-playsmf
 %_bindir/drumstick-sysinfo
-%_man1dir/drumstick-buildsmf.*
 %_man1dir/drumstick-dumpmid.*
 %_man1dir/drumstick-dumpove.*
 %_man1dir/drumstick-dumpsmf.*
@@ -164,5 +163,11 @@ popd
 %_man1dir/drumstick-vpiano.*
 
 %changelog
+* Fri Nov 03 2017 Oleg Solovyov <mcpain@altlinux.org> 1.1.0-alt1
+- update to 1.1.0
+
+* Fri Nov 03 2017 Oleg Solovyov <mcpain@altlinux.org> 1.0.2-alt2
+- fix build
+
 * Thu May 26 2016 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt1
 - initial build
