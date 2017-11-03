@@ -2,12 +2,21 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%bcond_without  hsqldb
+
 Name:           velocity
 Version:        1.7
-Release:        alt3_19jpp8
+Release:        alt3_20jpp8
 Epoch:          1
 Summary:        Java-based template engine
 License:        ASL 2.0
@@ -31,11 +40,13 @@ BuildRequires:  ant
 BuildRequires:  antlr-tool
 BuildRequires:  junit
 BuildRequires:  ant-junit
+%if %{with hsqldb}
 BuildRequires:  hsqldb-lib
+%endif
 BuildRequires:  apache-commons-collections
 BuildRequires:  apache-commons-logging
 BuildRequires:  apache-commons-lang
-BuildRequires:  servlet3
+BuildRequires:  glassfish-servlet-api
 BuildRequires:  jakarta-oro
 BuildRequires:  jaxen
 BuildRequires:  jdom
@@ -44,6 +55,7 @@ BuildRequires:  log4j12
 BuildRequires:  apache-parent
 
 # It fails one of the arithmetic test cases with gcj
+BuildRequires:  java-devel >= 1.6.0
 Source44: import.info
 
 %description
@@ -86,7 +98,7 @@ Javadoc for %{name}.
 %package        demo
 Group: Development/Java
 Summary:        Demo for %{name}
-Requires:       %{name} = %{epoch}:%{version}
+Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %description    demo
 Demonstrations and samples for %{name}.
@@ -137,6 +149,10 @@ cp %{SOURCE1} ./pom.xml
 # Remove werken-xpath Import/Export refences in OSGi manifest file
 %patch7 -p1
 
+%if %{without hsqldb}
+rm -r src/test/org/apache/velocity/test/sql
+%endif
+
 # -----------------------------------------------------------------------------
 
 %build
@@ -146,7 +162,7 @@ antlr \
 apache-commons-collections \
 commons-lang \
 commons-logging \
-tomcat-servlet-api \
+glassfish-servlet-api \
 junit \
 jakarta-oro \
 log4j:log4j:1.2.17 \
@@ -196,6 +212,9 @@ cp -pr examples test %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt3_20jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt3_19jpp8
 - new fc release
 
