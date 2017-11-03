@@ -2,12 +2,13 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:    c3p0
 Version: 0.9.5
-Release: alt1_0.3.pre8jpp8
+Release: alt1_0.4.pre8jpp8
 Summary: JDBC DataSources/Resource Pools
 License: LGPLv2 or EPL
 URL:     https://github.com/swaldman/c3p0
@@ -79,6 +80,9 @@ cp -pr build/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.9.5-alt1_0.4.pre8jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.9.5-alt1_0.3.pre8jpp8
 - new fc release
 
