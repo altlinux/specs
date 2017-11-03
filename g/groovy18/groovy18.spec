@@ -2,9 +2,10 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Note to packagers: When rebasing this to a later version, do not
 # forget to ensure that sources 1 and 2 are up to date as well as
 # the Requires list.
@@ -13,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           groovy18
 Version:        1.8.9
-Release:        alt1_24jpp8
+Release:        alt1_26jpp8
 Summary:        Dynamic language for the Java Platform
 
 # Some of the files are licensed under BSD and CPL terms, but the CPL has been superceded
@@ -48,8 +49,9 @@ BuildRequires:  glassfish-jsp-api
 BuildRequires:  junit
 BuildRequires:  glassfish-servlet-api
 BuildRequires:  xstream
+BuildRequires:  java-devel >= 1.8
 BuildRequires:  desktop-file-utils
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils
 BuildRequires:  apache-commons-cli
 BuildRequires:  unzip
 BuildRequires:  javapackages-local
@@ -58,7 +60,7 @@ BuildRequires:  mvn(org.apache.ant:ant-launcher)
 BuildRequires:  mvn(javax.servlet:servlet-api)
 BuildRequires:  mvn(javax.servlet:jsp-api)
 
-Requires:       %{name}-lib = %{version}
+Requires:       %{name}-lib = %{version}-%{release}
 # Following dependencies are optional from Maven POV,
 # but upstream ships them in binary distribution
 Requires:       mvn(junit:junit)
@@ -120,6 +122,9 @@ cp %{SOURCE4} %{SOURCE5} %{SOURCE6} .
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+
+# build.xml is not compatible with Ant 1.10+
+sed -i "s| depends=\"-excludeLegacyAntVersion\"||" build.xml
 
 # We don't want to generate auto-R on optional dependencies
 %pom_xpath_replace "pom:dependency[pom:optional[text()='true']]/pom:scope" "<scope>provided</scope>"
@@ -211,6 +216,9 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %doc LICENSE.txt LICENSE-2.0.txt NOTICE.txt cpl-v10.txt epl-v10.txt
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.9-alt1_26jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.9-alt1_24jpp8
 - new fc release
 
