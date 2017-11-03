@@ -158,7 +158,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{buildver}
-Release: alt24.b41
+Release: alt25.b41
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -215,8 +215,8 @@ BuildRequires: wget
 BuildRequires: xsltproc libxslt
 BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
 BuildRequires: mercurial
-BuildRequires: ant
-BuildRequires: ant-nodeps
+BuildRequires: ant1.9
+BuildRequires: ant1.9-nodeps
 BuildRequires: libXinerama-devel
 BuildRequires: rhino
 %if %{gcjbootstrap}
@@ -439,6 +439,7 @@ export CFLAGS="$CFLAGS -mieee"
 
 ./autogen.sh
 ./configure %{icedteaopt} --with-openjdk-src-zip=%{SOURCE1} \
+  --with-ant-home=/usr/share/ant1.9 \
   --with-pkgversion=ALTLinux-%{release}-%{_arch} --enable-pulse-java \
   --with-jaf-drop-zip=%{SOURCE8} \
   --with-jaxp-drop-zip=%{SOURCE7} --with-jaxws-drop-zip=%{SOURCE9} \
@@ -950,6 +951,9 @@ done
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.0-alt25.b41
+- fixed build
+
 * Fri May 26 2017 Andrey Cherepanov <cas@altlinux.org> 0:1.6.0.0-alt24.b41
 - Build 41 (04_jan_2017) (ALT #33467)
 - Package local_policy.jar and US_export_policy.jar
