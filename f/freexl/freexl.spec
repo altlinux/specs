@@ -1,16 +1,17 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: freexl-devel gcc-c++
 # END SourceDeps(oneline)
-Name: freexl
-Version: 1.0.2
-Release: alt1
-Summary: Library to extract data from within an Excel spreadsheet
-Group: System/Libraries
-License: MPLv1.1 or GPLv2+ or LGPLv2+
-Url: http://www.gaia-gis.it/FreeXL
-Source0: http://www.gaia-gis.it/FreeXL/%name-%version.tar.gz
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:      freexl
+Version:   1.0.4
+Release:   alt1_1
+Summary:   Library to extract data from within an Excel spreadsheet 
+Group:     System/Libraries
+License:   MPLv1.1 or GPLv2+ or LGPLv2+
+URL:       http://www.gaia-gis.it/FreeXL
+Source0:   http://www.gaia-gis.it/gaia-sins/%{name}-sources/%{name}-%{version}.tar.gz
 BuildRequires: doxygen
-Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source44: import.info
 Patch33: freexl-1.0.0d-alt-linkage.patch
 
@@ -25,22 +26,25 @@ Design goals:
     * completely ignore any GUI-related oddity
 
 %package devel
-Summary: Development Libraries for FreeXL
-Group: Development/C
-Requires: %name%{?_isa} = %version-%release
+Summary:  Development Libraries for FreeXL
+Group:    Development/Other
+Requires: %{name} = %{version}-%{release}
+Requires: pkg-config
 
 %description devel
-The %%{name}-devel package contains libraries and header files for
-developing applications that use %%{name}.
+The %{name}-devel package contains libraries and header files for
+developing applications that use %{name}.
+
 
 %prep
-%setup
-#patch33 -p1
+%setup -q
+%patch33 -p1
+
 
 %build
 autoreconf -fisv
 %configure --enable-gcov=no --disable-static
-make %{?_smp_mflags}
+%make_build
 
 # Mailed the author on Dec 5th 2011
 # Preserve date of header file
@@ -50,6 +54,7 @@ sed -i 's/^INSTALL_HEADER = \$(INSTALL_DATA)/& -p/' headers/Makefile.in
 doxygen
 rm -f html/installdox
 
+
 %check
 make check
 
@@ -58,23 +63,29 @@ pushd examples
   make clean
 popd
 
+
 %install
-make install DESTDIR=%buildroot
+make install DESTDIR=%{buildroot}
 
 # Delete undesired libtool archives
-rm -f %buildroot%_libdir/lib%name.la
+rm -f %{buildroot}%{_libdir}/lib%{name}.la
 
-%files
+
+%files 
 %doc COPYING AUTHORS README
-%_libdir/lib%name.so.*
+%{_libdir}/lib%{name}.so.*
 
 %files devel
 %doc examples html
-%_includedir/freexl.h
-%_libdir/lib%name.so
-%_libdir/pkgconfig/freexl.pc
+%{_includedir}/freexl.h
+%{_libdir}/lib%{name}.so
+%{_libdir}/pkgconfig/freexl.pc
+
 
 %changelog
+* Fri Nov 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_1
+- update to new version by fcimport
+
 * Sat Jul 25 2015 Ilya Mashkin <oddity@altlinux.ru> 1.0.2-alt1
 - 1.0.2
 
