@@ -1,6 +1,6 @@
 Name: 	 tellico
-Version: 3.0.2
-Release: alt1.1
+Version: 3.1
+Release: alt1
 
 Summary: A collection manager for KDE
 License: GPLv2+
@@ -83,6 +83,9 @@ video games, coins, stamps, trading cards, comic books, and wines.
 %_K5xmlgui/%name
 
 %changelog
+* Fri Nov 03 2017 Andrey Cherepanov <cas@altlinux.org> 3.1-alt1
+- New version
+
 * Thu Apr 06 2017 Sergey V Turchin <zerg@altlinux.org> 3.0.2-alt1.1
 - NMU: rebuild with new libkcddb
 - NMU: clean build requires
