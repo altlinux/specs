@@ -33,7 +33,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javapackages-tools
 Version:        4.7.0
-Release:        alt1_17jpp8
+Release:        alt2_17jpp8
 
 Summary:        Macros and scripts for Java packaging support
 
@@ -239,10 +239,10 @@ install -m755 -D %{SOURCE47} %buildroot%_rpmmacrosdir/maven.env
 # in rpm-build-java
 sed -i -e '/usr\/lib\/rpm/d' files-common
 # move /usr/share/xmvn/* to maven-local
-grep /usr/share/xmvn files-common >> files-maven
-sed -i -e '/usr\/share\/xmvn/d' files-common
-sed -i -e '/usr\/share\/java-utils\/.*\.py/d' files-common
-sed -i -e '/usr\/bin\/xmvn-builddep/d' files-common
+#grep /usr/share/xmvn files-common >> files-maven
+#sed -i -e '/usr\/share\/xmvn/d' files-common
+#sed -i -e '/usr\/share\/java-utils\/.*\.py/d' files-common
+#sed -i -e '/usr\/bin\/xmvn-builddep/d' files-common
 
 rm -rf %buildroot/usr/lib/rpm/fileattrs
 
@@ -266,11 +266,10 @@ popd
 %files -f files-common
 
 %files -n javapackages-local -f files-local
-
 %_datadir/java-utils/__pycache__
-%exclude %_datadir/java-utils/__pycache__/maven_depmap.*
-%exclude %_datadir/java-utils/__pycache__/pom_editor.*
-%exclude %_datadir/java-utils/__pycache__/request-artifact.*
+#exclude %_datadir/java-utils/__pycache__/maven_depmap.*
+#exclude %_datadir/java-utils/__pycache__/pom_editor.*
+#exclude %_datadir/java-utils/__pycache__/request-artifact.*
 
 %files -n rpm-macros-java
 %_rpmmacrosdir/javapackages-fjava
@@ -281,13 +280,13 @@ popd
 /usr/lib/rpm/javadoc.*
 /usr/lib/rpm/osgi-fc.*
 %_rpmmacrosdir/maven.env
-%_datadir/java-utils/maven_depmap.py
-%_datadir/java-utils/pom_editor.py
-%_datadir/java-utils/request-artifact.py
-%_bindir/xmvn-builddep
-%_datadir/java-utils/__pycache__/maven_depmap.*
-%_datadir/java-utils/__pycache__/pom_editor.*
-%_datadir/java-utils/__pycache__/request-artifact.*
+#%_datadir/java-utils/maven_depmap.py
+#%_datadir/java-utils/pom_editor.py
+#%_datadir/java-utils/request-artifact.py
+#%_bindir/xmvn-builddep
+#%_datadir/java-utils/__pycache__/maven_depmap.*
+#%_datadir/java-utils/__pycache__/pom_editor.*
+#%_datadir/java-utils/__pycache__/request-artifact.*
 
 
 
@@ -304,6 +303,9 @@ popd
 %{python3_sitelibdir_noarch}/javapackages*
 
 %changelog
+* Fri Nov 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.7.0-alt2_17jpp8
+- move xmvn config back to local
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.7.0-alt1_17jpp8
 - new jpp release
 
