@@ -1,21 +1,23 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           apache-rat
-Version:        0.11
+Version:        0.12
 Release:        alt1_3jpp8
 Summary:        Apache Release Audit Tool (RAT)
 
-Group:          Development/Other
 License:        ASL 2.0
 URL:            http://creadur.apache.org/rat/
 Source0:        http://www.apache.org/dist/creadur/%{name}-%{version}/%{name}-%{version}-src.tar.bz2
-Patch3:         0001-Update-to-Maven-Doxia-1.6.patch
 BuildArch:      noarch
+
+Patch1:         0001-Port-to-current-doxia-sitetools.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-cli:commons-cli)
@@ -32,20 +34,21 @@ BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-decoration-model)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-artifact:2.2.1)
 BuildRequires:  mvn(org.apache.maven:maven-artifact-manager)
-BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-model:2.2.1)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-project)
-BuildRequires:  mvn(org.apache.maven:maven-settings)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven:maven-settings:2.2.1)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.hamcrest:hamcrest-library)
+BuildRequires:  mvn(org.mockito:mockito-all)
+BuildRequires:  mvn(org.mockito:mockito-core)
 Source44: import.info
 
 %description
@@ -61,6 +64,12 @@ It is therefore highly tuned to the Apache style of releases.
 This package just contains meta-data, you will want either apache-rat-tasks,
 or apache-rat-plugin.
 
+%package api
+Group: Development/Other
+Summary:        API module for %{name}
+
+%description api
+Shared beans and services.
 
 %package core
 Group: Development/Java
@@ -99,7 +108,8 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch3 -p1
+
+%patch1 -p1
 
 # apache-rat is a module bundling other RAT modules together and as
 # such it is not needed.
@@ -107,23 +117,28 @@ This package contains the API documentation for %{name}.
 
 # maven-antrun-plugin is used for running tests only and tests are
 # skipped anyways.  See rhbz#988561
-%pom_remove_plugin :maven-antrun-plugin apache-rat-tasks
+%pom_remove_plugin -r :maven-antrun-plugin
 
 %pom_remove_plugin :animal-sniffer-maven-plugin
 %pom_remove_plugin :maven-enforcer-plugin
 
+# runs non-xmvn maven and downloads stuff
+%pom_remove_plugin -r :maven-invoker-plugin
+
 # wagon-ssh is not needed in Fedora.
 %pom_xpath_remove pom:extensions
 
+# incompatible with our plexus-container
+rm apache-rat-plugin/src/test/java/org/apache/rat/mp/RatCheckMojoTest.java
+
 %build
-# Tests are skipped because of incompatibility with Maven 3
-%mvn_build -s -f
+%mvn_build -s
 
 %install
 %mvn_install
 
 #Wrapper script
-%jpackage_script org.apache.rat.Report "" "" %{name}/%{name}-core:commons-cli:commons-io:commons-collections:commons-compress:commons-lang:junit apache-rat true 
+%jpackage_script org.apache.rat.Report "" "" %{name}/%{name}-core:commons-cli:commons-io:commons-collections:commons-compress:commons-lang:junit apache-rat true
 
 #Ant taksks
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ant.d
@@ -136,10 +151,11 @@ touch $RPM_BUILD_ROOT/etc/java/apache-rat.conf
 %files -f .mfiles-%{name}-project
 %doc LICENSE NOTICE
 
-%files core -f .mfiles-%{name}-core
-%doc README.txt RELEASE_NOTES.txt
+%files api -f .mfiles-%{name}-api
+%doc README.txt RELEASE-NOTES.txt
 %doc LICENSE NOTICE
-%dir %{_javadir}/%{name}
+
+%files core -f .mfiles-%{name}-core
 %{_bindir}/%{name}
 %config(noreplace,missingok) /etc/java/apache-rat.conf
 
@@ -147,12 +163,16 @@ touch $RPM_BUILD_ROOT/etc/java/apache-rat.conf
 
 %files tasks -f .mfiles-%{name}-tasks
 %{_sysconfdir}/ant.d/%{name}
+%doc ant-task-examples.xml
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_3jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_3jpp8
 - new fc release
 
