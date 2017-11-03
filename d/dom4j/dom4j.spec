@@ -2,9 +2,10 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2007, JPackage Project
 # All rights reserved.
 #
@@ -38,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Open Source XML framework for Java
 Name:           dom4j
 Version:        1.6.1
-Release:        alt6_27jpp8
+Release:        alt6_28jpp8
 Epoch:          0
 License:        BSD
 URL:            http://sourceforge.net/projects/dom4j
@@ -82,7 +83,7 @@ DOM and SAX and is seamlessly integrated with full XPath support.
 %package demo
 Group: Development/Java
 Summary:        Samples for %{name}
-Requires:       dom4j = 0:%{version}
+Requires:       dom4j = 0:%{version}-%{release}
 
 %description demo
 Samples for %{name}.
@@ -195,6 +196,9 @@ install -m 755 run.sh $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 %{_datadir}/%{name}-%{version}
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt6_28jpp8
+- new jpp release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt6_27jpp8
 - new fc release
 
