@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          fastutil
 Version:       7.0.7
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Fast & compact type-specific collections for Java
 # LGPL (v2.1 or later):
 # src/it/unimi/dsi/fastutil/io/InspectableFileCachedInputStream.java
@@ -31,7 +32,6 @@ BuildRequires: java-javadoc
 BuildRequires: javapackages-local
 # Required for generate source code
 BuildRequires: gcc-common
-BuildRequires: make
 
 BuildArch:     noarch
 Source44: import.info
@@ -71,7 +71,7 @@ sed -i "s,59 Temple Place,51 Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1
 
 # Generate source code
 mkdir -p build
-%{__make} -s clean sources
+make -s clean sources
 # Build
 ant -Djar.base=%{_javadir}/emma -Dj2se.apiurl=%{_javadocdir}/java pom
 
@@ -92,6 +92,9 @@ ant -Djar.base=%{_javadir}/emma junit
 %doc LICENSE-2.0
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 7.0.7-alt1_3jpp8
+- new jpp release
+
 * Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 7.0.7-alt1_2jpp8
 - new version
 
