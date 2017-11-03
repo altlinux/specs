@@ -59,7 +59,7 @@
 
 %define  Name MPD
 Name: 	 mpd
-Version: 0.20.21
+Version: 0.20.23
 Release: alt1
 Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
 
@@ -162,6 +162,7 @@ sed -i 's/\[mad\]/[libmad]/' configure.ac
 
 %build
 %define _optlevel 3
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
     %{subst_enable debug} \
@@ -262,6 +263,7 @@ bzip2 --best %buildroot%_docdir/%name-%version/NEWS
 %attr(775,root,%mpd_group) %dir %_localstatedir/%name
 %attr(775,root,%mpd_group) %dir %_localstatedir/%name/playlists
 %attr(775,root,%mpd_group) %dir %_logdir/%name
+%_iconsdir/hicolor/scalable/apps/%name.svg
 
 %if_enabled doc
 %files doc
@@ -279,6 +281,10 @@ bzip2 --best %buildroot%_docdir/%name-%version/NEWS
 
 
 %changelog
+* Fri Jan 18 2019 Yuri N. Sedunov <aris@altlinux.org> 0.20.23-alt1
+- 0.20.23
+- built against libfluidsynth.so.2
+
 * Fri Sep 21 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.20.21-alt1
 - Updated to upstream version 0.20.21.
 

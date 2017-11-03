@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 Name: lmms
 Version: 1.2.0
-Release: alt1.rc2.1
+Release: alt2.20190117
 
 Summary: Linux MultiMedia Studio
 License: GPL
@@ -16,10 +16,36 @@ Source6: %name-48x48.png
 Patch1: %name-%version-no_werror.patch
 Patch2: %name-%version-vst-nowine.patch
 
-BuildPreReq: rpm-build-lmms libfltk-devel
-# Automatically added by buildreq on Sun Mar 27 2011
-BuildRequires: cmake gcc-c++ libSDL-devel libfluidsynth-devel libpulseaudio-devel libqt4-opengl libqt4-qt3support libqt4-script libqt4-svg libqt4-xml libsamplerate-devel libsndfile-devel libstk-devel libvorbis-devel phonon-devel libfftw3-devel libportaudio2-devel libXft-devel libjpeg-devel
-#BuildRequires: libwine-vanilla-devel
+BuildPreReq: rpm-build-lmms libfltk-devel rpm-macros-cmake
+BuildRequires: gcc-c++ cmake
+
+BuildRequires: desktop-file-utils
+BuildRequires: libfluidsynth-devel
+BuildRequires: qt5-base-devel
+BuildRequires: liblame-devel
+BuildRequires: qt5-tools-devel
+BuildRequires: libstk-devel
+BuildRequires: pkgconfig(Qt5Core)
+BuildRequires: pkgconfig(Qt5Test)
+BuildRequires: pkgconfig(Qt5UiTools)
+BuildRequires: pkgconfig(Qt5X11Extras)
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(fftw3f) >= 3.0.0
+BuildRequires: pkgconfig(fluidsynth) >= 1.0.7
+BuildRequires: pkgconfig(jack) >= 0.77
+BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(ogg)
+BuildRequires: pkgconfig(portaudio-2.0)
+BuildRequires: pkgconfig(samplerate) >= 0.1.8
+BuildRequires: pkgconfig(sdl)
+BuildRequires: pkgconfig(shared-mime-info)
+BuildRequires: pkgconfig(sndfile) >= 1.0.11
+BuildRequires: pkgconfig(vorbis)
+BuildRequires: pkgconfig(vorbisenc)
+BuildRequires: pkgconfig(vorbisfile)
+BuildRequires: pkgconfig(xcb-keysyms)
+BuildRequires: pkgconfig(xcb-util)
+BuildRequires: pkgconfig(zlib)
 
 %add_verify_elf_skiplist %_libdir/%name/*
 
@@ -40,78 +66,40 @@ Development files and headers for %name
 %prep
 %setup
 %patch1 -p1
-#%%patch2 -p1
-
-##find ./plugins -type f -print0 | xargs -r0 %__subst "s|(LDFLAGS)|(LDFLAGS) \$(QT_LDADD) -lpthread |g"
-##find ./plugins -type f -print0 | xargs -r0 %__subst "s|(LIBS)|(LIBS) \$(QT_LDADD) -lpthread |g"
-# (tpg) fix ladspa plugins path
-#__subst "s|/usr/lib|%{_libdir}|g" src/core/ladspa_manager.cpp
+mv qt5-x11embed/* src/3rdparty/qt5-x11embed
+mv rpmalloc/* src/3rdparty/rpmalloc/rpmalloc/
 
 %build
-%cmake_insource \
-        -DWANT_FFTW3F:BOOL=OFF \
-        -DWANT_CMT:BOOL=OFF \
+%cmake \
+    -DWANT_QT5=ON \
 %ifarch %ix86
-        -DWANT_VST:BOOL=ON \
+    -DWANT_VST:BOOL=ON \
 %else
-        -DWANT_VST:BOOL=OFF \
+    -DWANT_VST:BOOL=OFF \
 %endif
-        -DCMAKE_INSTALL_LIBDIR=%_lib \
-        -Wno-dev \
-        -DWANT_VST_NOWINE:BOOL=ON \
-#%%ifarch x86_64
-#        -DWANT_VST_NOWINE:BOOL=ON \
-#%%endif
-#-DWANT_CAPS:BOOL=OFF  -DWANT_SWH:BOOL=OFF -DWANT_TAP:BOOL=OFF
-%make_build VERBOSE=1
+    -DCMAKE_INSTALL_LIBDIR=%_lib \
+    -Wno-dev \
+    -DWANT_VST_NOWINE:BOOL=ON
+%cmake_build VERBOSE=1
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
-#%%if "%_libexecdir" != "%_libdir"
-#install -d %buildroot%_libdir
-#mv %buildroot%_libexecdir/%name %buildroot%_libdir/
-#%%endif
+# remove unneeded static helper library from install
+rm %buildroot%_libdir/libqx11embedcontainer.a
+
+rm -fr %buildroot%_datadir/bash-completion/completions/lmms
 
 %find_lang %name
 
-%__mkdir_p %buildroot%_pixmapsdir
-%__install -p -m 644 data/themes/default/icon.png %buildroot%_pixmapsdir/%name.png
-#icons
-%__mkdir_p %buildroot%_miconsdir
-%__mkdir_p %buildroot%_liconsdir
-%__mkdir_p %buildroot%_niconsdir
-%__install -p -m 644 %SOURCE4 %buildroot%_miconsdir/%name.png
-%__install -p -m 644 %SOURCE5 %buildroot%_niconsdir/%name.png
-%__install -p -m 644 %SOURCE6 %buildroot%_liconsdir/%name.png
-
-
-# menu
-%__mkdir_p %buildroot%_desktopdir
-%__cat << EOF > %buildroot%_desktopdir/%name.desktop
-[Desktop Entry]
-Name=LMMS
-GenericName=Linux MultiMedia Studio
-Comment=Free cross-platform alternative to commercial programs like FL Studio®
-TryExec=lmms
-Exec=lmms
-Icon=lmms
-Terminal=false
-StartupNotify=true
-Type=Application
-Categories=AudioVideo;Audio;Midi;Sequencer;Recorder;
-EOF
-
 %files -f %name.lang
-%doc README.md LICENSE.txt
+%doc README.md LICENSE.txt doc/AUTHORS
 %_bindir/*
 %_libdir/%name/
 %_datadir/%name/
 %_man1dir/*
-%_pixmapsdir/*
-%_miconsdir/*
-%_liconsdir/*
-%_niconsdir/*
+%_iconsdir/hicolor/*/apps/*
+%_iconsdir/hicolor/*/mimetypes/*
 %_desktopdir/*
 %_datadir/mime/packages/*
 
@@ -119,6 +107,11 @@ EOF
 %_includedir/%name
 
 %changelog
+* Fri Jan 18 2019 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt2.20190117
+- new snapshot
+- build with qt5
+- build with fluidsynth-2
+
 * Tue Feb 21 2017 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1.rc2.1
 - new snapshot 1.2.0-rc2
 
