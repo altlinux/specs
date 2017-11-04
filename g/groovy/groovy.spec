@@ -5,16 +5,17 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Note to packagers: When rebasing this to a later version, do not
 # forget to ensure that sources 1 and 2 are up to date as well as
 # the Requires list.
 
 Name:           groovy
-Version:        2.4.5
-Release:        alt1_7jpp8
+Version:        2.4.8
+Release:        alt1_4jpp8
 Summary:        Dynamic language for the Java Platform
 
 # Some of the files are licensed under BSD and CPL terms, but the CPL has been superceded
@@ -24,7 +25,7 @@ Summary:        Dynamic language for the Java Platform
 License:        ASL 2.0 and BSD and EPL and Public Domain and CC-BY
 URL:            http://groovy-lang.org
 
-Source0:        https://dl.bintray.com/groovy/maven/apache-groovy-src-%{version}-incubating.zip
+Source0:        https://dl.bintray.com/groovy/maven/apache-groovy-src-%{version}.zip
 Source1:        groovy-script.sh
 Source3:        groovy.desktop
 Source4:        cpl-v10.txt
@@ -35,7 +36,8 @@ Patch0:         0001-Port-to-Servlet-API-3.1.patch
 Patch1:         0002-Gradle-local-mode.patch
 Patch2:         0003-Bintray.patch
 Patch3:         0004-Remove-android-support.patch
-Patch4:         0005-Port-to-QDox-2.0.patch
+Patch4:         0005-Update-to-QDox-2.0.patch
+Patch5:         0006-Disable-artifactory-publish.patch
 
 
 BuildRequires:  gradle-local >= 2.1
@@ -65,24 +67,33 @@ BuildRequires:  junit
 BuildRequires:  xstream
 BuildRequires:  desktop-file-utils
 BuildRequires:  unzip
+BuildRequires:  qdox
 BuildRequires:  mvn(org.apache.ant:ant-junit)
 BuildRequires:  mvn(org.apache.ant:ant-launcher)
 BuildRequires:  mvn(javax.servlet:servlet-api)
 BuildRequires:  mvn(javax.servlet:jsp-api)
 
-Requires:       %{name}-lib = %{version}
-Requires:       glassfish-jsp-api
-Requires:       glassfish-servlet-api
-# FIXME: this dependency is missing in generated POM files from some reason...
-Requires:       apache-commons-cli
+Requires:       %{name}-lib = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-ant = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-bsf = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-console = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-docgenerator = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-groovydoc = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-groovysh = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-jmx = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-json = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-jsr223 = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-nio = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-servlet = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-sql = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-swing = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-templates = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-test = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-testng = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-xml = %{?epoch:%epoch:}%{version}-%{release}
 
 # optional in pom.xml, but present in upstream binary tarball
-Requires:       xstream
 Requires:       xpp3-minimal
-Requires:       gpars
-Requires:       apache-ivy
-
-# Joint compilation requires tools.jar from java-devel
 
 BuildArch:      noarch
 Source44: import.info
@@ -103,6 +114,125 @@ Obsoletes:      %{name}-javadoc < 2
 %description lib
 This package contains Groovy JAR artifact.
 
+%package ant
+Group: Development/Java
+Summary:        ant module for %{name}
+
+%description ant
+ant module for %{name}.
+
+%package bsf
+Group: Development/Java
+Summary:        bsf module for %{name}
+
+%description bsf
+bsf module for %{name}.
+
+%package console
+Group: Development/Java
+Summary:        console module for %{name}
+
+%description console
+console module for %{name}.
+
+%package docgenerator
+Group: Development/Java
+Summary:        docgenerator module for %{name}
+
+%description docgenerator
+docgenerator module for %{name}.
+
+%package groovydoc
+Group: Development/Java
+Summary:        groovydoc module for %{name}
+
+%description groovydoc
+groovydoc module for %{name}.
+
+%package groovysh
+Group: Development/Java
+Summary:        groovysh module for %{name}
+
+%description groovysh
+groovysh module for %{name}.
+
+%package jmx
+Group: Development/Java
+Summary:        jmx module for %{name}
+
+%description jmx
+jmx module for %{name}.
+
+%package json
+Group: Development/Java
+Summary:        json module for %{name}
+
+%description json
+json module for %{name}.
+
+%package jsr223
+Group: Development/Java
+Summary:        jsr223 module for %{name}
+
+%description jsr223
+jsr223 module for %{name}.
+
+%package nio
+Group: Development/Java
+Summary:        nio module for %{name}
+
+%description nio
+nio module for %{name}.
+
+%package servlet
+Group: Development/Java
+Summary:        servlet module for %{name}
+
+%description servlet
+servlet module for %{name}.
+
+%package sql
+Group: Development/Java
+Summary:        sql module for %{name}
+
+%description sql
+sql module for %{name}.
+
+%package swing
+Group: Development/Java
+Summary:        swing module for %{name}
+
+%description swing
+swing module for %{name}.
+
+%package templates
+Group: Development/Java
+Summary:        templates module for %{name}
+
+%description templates
+templates module for %{name}.
+
+%package test
+Group: Development/Java
+Summary:        test module for %{name}
+
+%description test
+test module for %{name}.
+
+%package testng
+Group: Development/Java
+Summary:        testng module for %{name}
+
+%description testng
+testng module for %{name}.
+
+%package xml
+Group: Development/Java
+Summary:        xml module for %{name}
+
+%description xml
+xml module for %{name}.
+
 
 %prep
 %setup -q
@@ -115,15 +245,21 @@ find \( -name *.jar -o -name *.class \) -delete
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
+
+%mvn_package ':groovy-{*}' @1
 
 %build
-%gradle_build -f -G distBin -- -x groovydoc -x javadoc
+# When groovy is built, the whole build is executed twice - without and with indy
+# Supplying -x jarAllWithIndy -Pindy=true makes it compile with indy only
+%gradle_build -f -G distBin -- -x groovydoc -x javadoc -x jarAllWithIndy -Pindy=true
 
 %install
+%pom_xpath_remove '*[local-name()="classifier"]' .xmvn-reactor
 %mvn_artifact %{SOURCE6} target/libs/groovy-all-%{version}-indy.jar
 %mvn_install
 
-unzip target/distributions/apache-groovy-binary-%{version}.zip
+unzip -o target/distributions/apache-groovy-binary-%{version}.zip
 rm -rf groovy-%{version}/{*LICENSE.txt,NOTICE.txt,bin/*.bat,META-INF}
 install -d -m 755 %{buildroot}%{_datadir}/
 cp -a groovy-%{version} %{buildroot}%{_datadir}/%{name}
@@ -229,6 +365,8 @@ SentUpstream: No public bugtracker
   -->
 </application>
 EOF
+# multiple -f flags in %files: merging -f .mfiles-all into -f .mfiles
+cat .mfiles-all >> .mfiles
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/groovy-starter.conf`
 touch $RPM_BUILD_ROOT/etc/groovy-starter.conf
@@ -242,10 +380,30 @@ touch $RPM_BUILD_ROOT/etc/groovy-starter.conf
 %config(noreplace) %{_sysconfdir}/*
 %config(noreplace,missingok) /etc/groovy-starter.conf
 
-%files lib -f .mfiles
+%files lib -f .mfiles 
 %doc LICENSE NOTICE README.adoc
+%files ant -f .mfiles-ant
+%files bsf -f .mfiles-bsf
+%files console -f .mfiles-console
+%files docgenerator -f .mfiles-docgenerator
+%files groovydoc -f .mfiles-groovydoc
+%files groovysh -f .mfiles-groovysh
+%files jmx -f .mfiles-jmx
+%files json -f .mfiles-json
+%files jsr223 -f .mfiles-jsr223
+%files nio -f .mfiles-nio
+%files servlet -f .mfiles-servlet
+%files sql -f .mfiles-sql
+%files swing -f .mfiles-swing
+%files templates -f .mfiles-templates
+%files test -f .mfiles-test
+%files testng -f .mfiles-testng
+%files xml -f .mfiles-xml
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.4.8-alt1_4jpp8
+- new version
+
 * Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4.5-alt1_7jpp8
 - new version
 
