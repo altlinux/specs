@@ -1,11 +1,15 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 7.0.2
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -36,27 +40,25 @@ BuildRequires: jpackage-generic-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+%global releasename release_%(tr . _ <<< %{version})
+
 Name:           javacc
-Version:        5.0
-Release:        alt6_14jpp8
+Version:        7.0.2
+Release:        alt1_3jpp8
 Epoch:          0
 Summary:        A parser/scanner generator for java
 License:        BSD
-Source0:        http://java.net/projects/%{name}/downloads/download/%{name}-%{version}src.tar.gz
-Source1:        javacc.sh
-Source2:        jjdoc
-Source3:        jjtree
-Patch0:         0001-Add-javadoc-target-to-build.xml.patch
-URL:            http://javacc.java.net/
+URL:            http://javacc.org
+Source0:        https://github.com/javacc/javacc/archive/%{releasename}.tar.gz
+
+BuildRequires:  javapackages-local
 BuildRequires:  ant
-BuildRequires:  ant-junit
-BuildRequires:  junit
 BuildRequires:  javacc
 
 BuildArch:      noarch
 Source44: import.info
 
-%description 
+%description
 Java Compiler Compiler (JavaCC) is the most popular parser generator for use
 with Java applications. A parser generator is a tool that reads a grammar
 specification and converts it to a Java program that can recognize matches to
@@ -75,7 +77,7 @@ Manual for %{name}.
 %package demo
 Group: Development/Java
 Summary:        Examples for %{name}
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description demo
 Examples for %{name}.
@@ -89,9 +91,7 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}
-
-%patch0 -p1
+%setup -q -n %{name}-%{releasename}
 
 # Remove binary information in the source tar
 find . -name "*.jar" -delete
@@ -99,56 +99,47 @@ find . -name "*.class" -delete
 
 find ./examples -type f -exec sed -i 's/\r//' {} \;
 
-ln -s `build-classpath javacc` bootstrap/javacc.jar
+build-jar-repository -p bootstrap javacc
 
-sed -i 's/source="1.4"/source="1.5"/g' src/org/javacc/{parser,jjdoc,jjtree}/build.xml
+%mvn_file : %{name}
 
 %build
-# Use the bootstrap javacc.jar to generate some required
-# source java files. After these source files are generated we
-# remove the bootstrap jar and build the binary from source.
-ant -f src/org/javacc/parser/build.xml parser-files
-ant -f src/org/javacc/jjtree/build.xml tree-files
-find . -name "*.jar" -delete
+# There is maven pom which doesn't really work for building. The tests don't
+# work either (even when using bundled jars).
 ant jar javadoc
 
+# The pom dependencies are also wrong
+%mvn_artifact --skip-dependencies pom.xml target/javacc-%{version}.jar
+
 %install
-# jar
-install -Dpm 644 bin/lib/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install -J target/javadoc
 
-# bin
-install -Dp -T -m 755 %{SOURCE1} %{buildroot}/%{_bindir}/javacc.sh
-install -Dp -T -m 755 %{SOURCE2} %{buildroot}/%{_bindir}/jjdoc
-install -Dp -T -m 755 %{SOURCE3} %{buildroot}/%{_bindir}/jjtree
-
-# javadoc
-install -d -p 755 %{buildroot}/%{_javadocdir}/%{name}
-cp -rp api/* %{buildroot}/%{_javadocdir}/%{name}
-
-# pom
-install -Dpm 644 pom.xml %{buildroot}/%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-ln -s javacc.sh %buildroot%_bindir/%name
-
+%jpackage_script javacc '' '' javacc javacc true
+ln -s %{_bindir}/javacc %{buildroot}%{_bindir}/javacc.sh
+%jpackage_script jjdoc '' '' javacc jjdoc true
+%jpackage_script jjtree '' '' javacc jjtree true
 
 %files -f .mfiles
-%{_javadir}/*.jar
-%doc LICENSE README
-%{_bindir}/*
-%_bindir/%name
+%doc LICENSE
+%doc README
+%{_bindir}/javacc
+%{_bindir}/javacc.sh
+%{_bindir}/jjdoc
+%{_bindir}/jjtree
 
 %files manual
-%doc LICENSE README
 %doc www/*
 
 %files demo
 %doc examples
 
-%files javadoc
-%doc LICENSE README
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:7.0.2-alt1_3jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.0-alt6_14jpp8
 - new fc release
 
