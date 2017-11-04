@@ -3,30 +3,31 @@ Epoch: 0
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /bin/ping
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global base_name exec
 %global short_name commons-%{base_name}
 
 Name:           apache-commons-exec
 Version:        1.3
-Release:        alt1_4jpp8
+Release:        alt1_7jpp8
+Group: Development/Java
 Summary:        Java library to reliably execute external processes from within the JVM
-
-Group:          Development/Other
 License:        ASL 2.0
 URL:            http://commons.apache.org/exec/
+BuildArch:      noarch
+
 Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 
-BuildRequires:  iputils
-BuildRequires:  java-devel >= 1.6.0
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-invoker-plugin
-Requires:       jpackage-utils
-BuildArch:      noarch
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+
+# Tests execute /usr/bin/ping
+BuildRequires:  iputils
 Source44: import.info
 
 %description
@@ -35,9 +36,8 @@ environment management in Java.
 
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -65,8 +65,7 @@ find -name Exec57Test.java -delete
 
 
 %build
-%mvn_build -- \
- -Dmaven.test.skip.exec=true \
+%mvn_build  -- -Dmaven.test.failure.ignore=true
 
 
 %install
@@ -82,6 +81,9 @@ find -name Exec57Test.java -delete
 
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt1_7jpp8
+- fixed build
+
 * Wed Dec 07 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt1_4jpp8
 - new fc release; disabled tests due to network dependency
 
