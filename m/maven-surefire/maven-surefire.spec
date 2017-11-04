@@ -3,12 +3,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-surefire
 Version:        2.19.1
-Release:        alt1_2jpp8
+Release:        alt1_8jpp8
 Epoch:          0
 Summary:        Test framework project
 License:        ASL 2.0 and CPL
@@ -18,41 +19,33 @@ BuildArch:      noarch
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/surefire/surefire/%{version}/surefire-%{version}-source-release.tar
 Source2:        http://junit.sourceforge.net/cpl-v10.html
 
-Patch0:         maven-surefire-maven3.patch
+Patch0:         0001-Maven-3.patch
+Patch1:         0002-Fix-test-with-doxia-1.7.patch
+Patch2:         0003-Port-to-TestNG-6.11.patch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.github.stephenc.jcip:jcip-annotations)
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(net.sourceforge.htmlunit:htmlunit)
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
-BuildRequires:  mvn(org.apache.maven:maven-artifact:2.2.1)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model:2.2.1)
+BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-descriptor)
-BuildRequires:  mvn(org.apache.maven:maven-project)
-BuildRequires:  mvn(org.apache.maven:maven-settings:2.0.6)
-BuildRequires:  mvn(org.apache.maven:maven-toolchain)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-deploy-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-install-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-site-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-surefire-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-surefire-report-plugin)
-BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
+BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 BuildRequires:  mvn(org.apache.maven.shared:maven-verifier)
 BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
@@ -130,7 +123,10 @@ Javadoc for %{name}.
 %prep
 %setup -q -n surefire-%{version}
 cp -p %{SOURCE2} .
+
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %pom_disable_module surefire-shadefire
 
@@ -147,6 +143,13 @@ cp -p %{SOURCE2} .
 # We don't need site-source
 %pom_remove_plugin :maven-assembly-plugin maven-surefire-plugin
 %pom_remove_dep -r ::::site-source
+
+%pom_xpath_set pom:mavenVersion 3.3.3
+%pom_remove_dep :maven-project maven-surefire-report-plugin
+%pom_remove_dep :maven-project maven-surefire-common
+%pom_remove_dep :maven-plugin-descriptor maven-surefire-common
+%pom_remove_dep :maven-toolchain maven-surefire-common
+%pom_remove_dep :maven-toolchain maven-surefire-plugin
 
 %build
 %mvn_package ":*{surefire-plugin,report-plugin}*" @1
@@ -175,6 +178,9 @@ cp -p %{SOURCE2} .
 %doc LICENSE NOTICE cpl-v10.html
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.19.1-alt1_8jpp8
+- new release
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.19.1-alt1_2jpp8
 - new version
 
