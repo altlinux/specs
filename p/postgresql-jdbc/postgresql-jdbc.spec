@@ -1,10 +1,13 @@
 Epoch: 0
+Group: Databases
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: perl(YAML.pm)
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -33,127 +36,178 @@ BuildRequires: jpackage-generic-compat
 # THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+
+
+# Configuration for rpmbuild, might be specified by options
+# like e.g. 'rpmbuild --define "runselftest 0"'.
+
+%{!?runselftest:%global runselftest 0}
+
 
 %global section		devel
-%global upstreamrel	1200
-%global upstreamver	9.4-%{upstreamrel}
+%global upstreamrel	1212
+%global upstreammajor	9.4
+%global source_path	pgjdbc/src/main/java/org/postgresql
+%global parent_ver	1.1.2
+%global parent_poms_builddir	./pgjdbc-parent-poms
+
+%global pgjdbc_mvn_options -DwaffleEnabled=false -DosgiEnabled=false \\\
+	-DexcludePackageNames=org.postgresql.osgi:org.postgresql.sspi
 
 Summary:	JDBC driver for PostgreSQL
 Name:		postgresql-jdbc
-Version:	9.4.%{upstreamrel}
-Release:	alt1_3jpp8
-# ASL 2.0 applies only to postgresql-jdbc.pom file, the rest is BSD
-License:	BSD and ASL 2.0
-Group:		Databases
+Version:	%upstreammajor.%{upstreamrel}
+Release:	alt1_4jpp8
+License:	BSD
 URL:		http://jdbc.postgresql.org/
 
-Source0:	http://jdbc.postgresql.org/download/%{name}-%{upstreamver}.src.tar.gz
-# originally http://repo2.maven.org/maven2/postgresql/postgresql/8.4-701.jdbc4/postgresql-8.4-701.jdbc4.pom:
-Source1:	%{name}.pom
+Source0:	https://github.com/pgjdbc/pgjdbc/archive/REL%version.tar.gz
 
-# Revert back fix for travis build which breaks our ant-build for version 1.9.2
-# & 1.9.4.
-# ~> downstream
-# ~> 1118667
-Patch0:		postgresql-jdbc-9.3-1102-revert-88b9a034.patch
+# Upstream moved parent pom.xml into separate project (even though there is only
+# one dependant project on it?).  Let's try to not complicate packaging by
+# having separate spec file for it, too.
+Source1:	https://github.com/pgjdbc/pgjdbc-parent-poms/archive/REL%parent_ver.tar.gz
+
+# disable test that makes unpredictable assumptions about non-routable IPs
+# See https://github.com/pgjdbc/pgjdbc/issues/556
+Patch0:         disable-ConnectTimeoutTest.patch
 
 BuildArch:	noarch
-BuildRequires: javapackages-tools rpm-build-java
-BuildRequires:	ant
-BuildRequires:	ant-junit
-BuildRequires:	junit
+BuildRequires:	java-devel >= 1.8
+BuildRequires:	maven-local
+BuildRequires:	java-comment-preprocessor
+BuildRequires:	properties-maven-plugin
+BuildRequires:	maven-enforcer-plugin
+BuildRequires:	maven-plugin-bundle
+BuildRequires:	maven-plugin-build-helper
+BuildRequires:	classloader-leak-test-framework
+
+%if %runselftest
+BuildRequires:	postgresql10-contrib
+BuildRequires:	libecpg-devel libpq-devel postgresql-devel
+BuildRequires:	perl-MColPro-scripts
+%endif
+Source44: import.info
+
 # gettext is only needed if we try to update translations
 #BuildRequires:	gettext
-Requires: javapackages-tools rpm-build-java
-Source44: import.info
 
 %description
 PostgreSQL is an advanced Object-Relational database management
 system. The postgresql-jdbc package includes the .jar files needed for
 Java programs to access a PostgreSQL database.
 
+
+%package	parent-poms
+Group: Databases
+Summary:	Build dependency management for PostgreSQL JDBC driver.
+
+%description parent-poms
+Pom files bringing dependencies required for successful PostgreSQL JDBC driver
+build.
+
+
 %package javadoc
-Summary:        API docs for %{name}
-Group:          Development/Java
+Group: Development/Java
+Summary:	API docs for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API Documentation for %{name}.
 
+
 %prep
-%setup -c -q
-mv -f %{name}-%{upstreamver}.src/* .
-rm -f %{name}-%{upstreamver}.src/.gitignore
-rm -f %{name}-%{upstreamver}.src/.travis.yml
-rmdir %{name}-%{upstreamver}.src
+%setup -c -q -a 1 -n pgjdbc-REL%version
+
+mv pgjdbc-REL%version/* .
+mv pgjdbc-parent-poms-REL%parent_ver pgjdbc-parent-poms
+
+%patch0
 
 # remove any binary libs
 find -name "*.jar" -or -name "*.class" | xargs rm -f
 
-%patch0 -p1 -b .revert-travis-fix
+%pom_disable_module ubenchmark
+
+# Build parent POMs in the same Maven call.
+%pom_xpath_inject pom:modules "<module>%parent_poms_builddir</module>"
+%pom_xpath_inject pom:parent "<relativePath>pgjdbc-parent-poms/pgjdbc-versions</relativePath>"
+%pom_xpath_set pom:relativePath ../pgjdbc-parent-poms/pgjdbc-core-parent pgjdbc
+
+# compat symlink: requested by dtardon (libreoffice), reverts part of
+# 0af97ce32de877 commit.
+%mvn_file org.postgresql:postgresql %{name}/postgresql %{name}
+
+# Parent POMs should be installed in a separate subpackage.
+%mvn_package ":*{parent,versions,prevjre}*" parent-poms
+
+# For compat reasons, make Maven artifact available under older coordinates.
+%mvn_alias org.postgresql:postgresql postgresql:postgresql
+
+# Hack #1!  This directory is missing for some reason, it is most probably some
+# misunderstanding between maven, maven-compiler-plugin and
+# java-comment-preprocessor?  Not solved yet.  See rhbz#1325060.
+mkdir -p pgjdbc/target/generated-sources/annotations
+
 
 %build
-export OPT_JAR_LIST="ant/ant-junit junit"
-export CLASSPATH=
-
 # Ideally we would run "sh update-translations.sh" here, but that results
 # in inserting the build timestamp into the generated messages_*.class
 # files, which makes rpmdiff complain about multilib conflicts if the
 # different platforms don't build in the same minute.  For now, rely on
 # upstream to have updated the translations files before packaging.
 
-ant jar publicapi
+# Include PostgreSQL testing methods and variables.
+%if %runselftest
+%pgtests_init
+
+PGTESTS_LOCALE=C.UTF-8
+
+cat <<EOF > build.local.properties
+server=localhost
+port=$PGTESTS_PORT
+database=test
+username=test
+password=test
+privilegedUser=$PGTESTS_ADMIN
+privilegedPassword=$PGTESTS_ADMINPASS
+preparethreshold=5
+loglevel=0
+protocolVersion=0
+EOF
+
+# Start the local PG cluster.
+%pgtests_start
+%else
+# -f is equal to -Dmaven.test.skip=true
+opts="-f"
+%endif
+
+%mvn_build $opts -- %pgjdbc_mvn_options
+
 
 %install
-install -d $RPM_BUILD_ROOT%{_javadir}
-# Per jpp conventions, jars have version-numbered names and we add
-# versionless symlinks.
-install -m 644 jars/postgresql-%{upstreamver}.jdbc41.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-
-pushd $RPM_BUILD_ROOT%{_javadir}
-# Also, for backwards compatibility with our old postgresql-jdbc packages,
-# add these symlinks.  (Probably only the jdbc3 symlink really makes sense?)
-ln -s postgresql-jdbc.jar postgresql-jdbc2.jar
-ln -s postgresql-jdbc.jar postgresql-jdbc2ee.jar
-ln -s postgresql-jdbc.jar postgresql-jdbc3.jar
-popd
-
-# Install the pom after inserting the correct version number
-sed 's/UPSTREAM_VERSION/%{upstreamver}/g' %{SOURCE1} >JPP-%{name}.pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}/
-install -m 644 JPP-%{name}.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap
-
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}
-cp -ra build/publicapi $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-install -d build/publicapi docs/%{name}
-
-
-%check
-%if 0%{?runselftest}
-# Note that this requires to have PostgreSQL properly configured;  for this
-# reason the testsuite is turned off by default (see org/postgresql/test/README)
-test_log=test.log
-# TODO: more reliable testing
-ant test 2>&1 | tee "$test_log" || :
-( test -f "$test_log" && ! grep FAILED "$test_log" )
-
-%endif
+%mvn_install
 
 
 %files -f .mfiles
-%doc LICENSE README.md doc/*
-%{_javadir}/%{name}2.jar
-%{_javadir}/%{name}2ee.jar
-%{_javadir}/%{name}3.jar
-
-%files javadoc
 %doc LICENSE
-%doc %{_javadocdir}/%{name}
+%doc README.md
+
+
+%files parent-poms -f .mfiles-parent-poms
+%doc LICENSE
+%doc pgjdbc-parent-poms/CHANGELOG.md pgjdbc-parent-poms/README.md
+
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE
+
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:9.4.1212-alt1_4jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:9.4.1200-alt1_3jpp8
 - new fc release
 
