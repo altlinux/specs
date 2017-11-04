@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          zxing
 Version:       3.2.1
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Java multi-format 1D/2D bar-code image processing library
 License:       ASL 2.0
 URL:           https://github.com/zxing/zxing/
@@ -121,8 +122,7 @@ sed -i '/Code39ExtendedBlackBox2TestCase/d' core/src/test/java/com/google/zxing/
 
 %build
 
-#mvn_build -s
-%mvn_build -s -- -Dmaven.test.skip.exec=true
+%mvn_build -s  -- -Dmaven.test.skip.exec=true
 
 %install
 %mvn_install
@@ -141,6 +141,9 @@ sed -i '/Code39ExtendedBlackBox2TestCase/d' core/src/test/java/com/google/zxing/
 %doc COPYING NOTICE
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1_4jpp8
+- fixed build
+
 * Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1_3jpp8
 - new version
 
