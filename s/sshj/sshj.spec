@@ -2,12 +2,13 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          sshj
 Version:       0.13.0
-Release:       alt1_4jpp8
+Release:       alt1_6jpp8
 Summary:       SSHv2 library for Java
 License:       ASL 2.0
 URL:           https://github.com/hierynomus/sshj
@@ -99,6 +100,9 @@ gradle -s --offline -x javadocs install
 %doc LICENSE NOTICE
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0.13.0-alt1_6jpp8
+- new release
+
 * Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.13.0-alt1_4jpp8
 - new fc release
 
