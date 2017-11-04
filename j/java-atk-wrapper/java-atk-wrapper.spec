@@ -1,19 +1,20 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/xprop gcc-c++ imake java-devel-default libXt-devel pkgconfig(dbus-1) xorg-cf-files
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global major_version 0.33
 %global minor_version 2
 %global libver 5.0.0
 
 Name:       java-atk-wrapper
 Version:    %{major_version}.%{minor_version}
-Release:    alt1_2jpp8
+Release:    alt1_3jpp8
 Summary:    Java ATK Wrapper
 
-Group:      Development/Other
+Group:      Development/Java
 License:    LGPLv2+
 URL:        http://git.gnome.org/browse/java-atk-wrapper
 Source0:    http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{major_version}/%{name}-%{version}.tar.xz
@@ -24,14 +25,14 @@ Patch1:		removeNotExistingManifestInclusion.patch
 
 BuildRequires:  java-devel
 
-BuildRequires: libatk-devel libatk-gir-devel
-BuildRequires: GConf libGConf-devel libGConf-gir-devel
-BuildRequires: glib2-devel libgio libgio-devel
-BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:  libatk-devel libatk-gir-devel
+BuildRequires:  GConf libGConf-devel libGConf-gir-devel
+BuildRequires:  glib2-devel libgio libgio-devel
+BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
 BuildRequires:  xorg-utils
-BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:  at-spi2-atk-devel
-BuildRequires: libat-spi2-core-devel libat-spi2-core-gir-devel
+BuildRequires:  libat-spi2-core-devel libat-spi2-core-gir-devel
 
 
 Requires:   java
@@ -85,6 +86,9 @@ ln -s %{_libdir}/%{name}/libatk-wrapper.so.%{libver} \
 
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0.33.2-alt1_3jpp8
+- fixed build
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.33.2-alt1_2jpp8
 - new fc release
 
