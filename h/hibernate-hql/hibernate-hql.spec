@@ -2,22 +2,22 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name hibernate-hql
-%define version 1.0.0
-%global namedreltag .Alpha6
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 1.3.0
+%global namedreltag .Alpha2
 %global namedversion %{version}%{?namedreltag}
 
 Name:             hibernate-hql
-Version:          1.0.0
-Release:          alt1_0.7.Alpha6jpp8
+Version:          1.3.0
+Release:          alt1_0.2.Alpha2jpp8
 Summary:          Hibernate Query Parser
 License:          LGPLv2 and ASL 2.0
 Url:              https://github.com/hibernate/hibernate-hql-parser
-Source0:          https://github.com/hibernate/hibernate-hql-parser/archive/%{namedversion}.tar.gz
+Source0:          https://github.com/hibernate/hibernate-hql-parser/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
 
 Source1:          https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/hibernate/hql/%{name}-parser/%{namedversion}/%{name}-parser-%{namedversion}.pom
 Source2:          https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/hibernate/hql/%{name}-lucene/%{namedversion}/%{name}-lucene-%{namedversion}.pom
@@ -26,14 +26,14 @@ BuildRequires:    maven-local
 BuildRequires:    mvn(org.antlr:antlr-runtime) >= 3.4
 BuildRequires:    mvn(org.antlr:antlr3-maven-plugin)
 BuildRequires:    mvn(org.antlr:stringtemplate)
-BuildRequires:    mvn(org.apache.lucene:lucene-core:3)
-BuildRequires:    mvn(org.apache.lucene:lucene-analyzers:3)
-BuildRequires:    mvn(org.apache.lucene:lucene-facet:3)
+BuildRequires:    mvn(org.apache.lucene:lucene-core) >= 5.3.0
+BuildRequires:    mvn(org.apache.lucene:lucene-analyzers) >= 5.3.0
+BuildRequires:    mvn(org.apache.lucene:lucene-facet) >= 5.3.0
 BuildRequires:    mvn(org.bsc.maven:maven-processor-plugin)
-BuildRequires:    mvn(org.hibernate:hibernate-search-engine)
-BuildRequires:    mvn(org.hibernate.javax.persistence:hibernate-jpa-2.0-api)
+BuildRequires:    mvn(org.hibernate:hibernate-search-engine) >= 5.3.0
+BuildRequires:    mvn(org.hibernate.javax.persistence:hibernate-jpa-2.1-api)
 BuildRequires:    mvn(org.jboss.logging:jboss-logging)
-BuildRequires:    mvn(org.jboss.logging:jboss-logging-processor)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging-processor) >= 1.2.0
 
 BuildArch:        noarch
 Source44: import.info
@@ -110,7 +110,7 @@ EOF
     <dependency>
         <groupId>org.jboss.logging</groupId>
         <artifactId>jboss-logging-processor</artifactId>
-        <version>1.0.3.Final</version>
+        <version>1.2.0.Final</version>
     </dependency>
 </dependencies>'
 
@@ -129,10 +129,9 @@ EOF
 
 # package org.antlr.stringtemplate does not exist
 %pom_add_dep org.antlr:stringtemplate:3.3-SNAPSHOT:provided parser
-# Force usage of lucene3 used by hibernate-search-engine
-%pom_add_dep org.apache.lucene:lucene-core:3:provided lucene
-%pom_add_dep org.apache.lucene:lucene-analyzers:3:provided lucene
-%pom_add_dep org.apache.lucene:lucene-facet:3:provided lucene
+%pom_add_dep org.apache.lucene:lucene-core:5.3.0:provided lucene
+%pom_add_dep org.apache.lucene:lucene-analyzers:5.3.0:provided lucene
+%pom_add_dep org.apache.lucene:lucene-facet:5.3.0:provided lucene
 
 %mvn_package :hibernate-hql-parent __noinstall
 
@@ -150,6 +149,9 @@ EOF
 %doc copyright.txt license.txt
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_0.2.Alpha2jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.7.Alpha6jpp8
 - new fc release
 

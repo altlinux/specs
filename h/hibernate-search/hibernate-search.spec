@@ -2,68 +2,63 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 24
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name hibernate-search
-%define version 4.5.1
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 5.5.4
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
-# Use this switch to rebuild without infinispan
-# This is useful to break the hibernate-search circular dependency
-%define with_infinispan 1
+Name:          hibernate-search
+Version:       5.5.4
+Release:       alt1_2jpp8
+Summary:       Hibernate Search
+License:       LGPLv2+
+URL:           http://hibernate.org/search/
+Source0:       https://github.com/hibernate/hibernate-search/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
 
-Name:             hibernate-search
-Version:          4.5.1
-Release:          alt1_6jpp8
-Summary:          Hibernate Search
-License:          LGPLv2+
-Url:              http://search.hibernate.org
+BuildRequires: maven-local
+BuildRequires: mvn(com.puppycrawl.tools:checkstyle)
+BuildRequires: mvn(commons-io:commons-io)
+BuildRequires: mvn(java_cup:java_cup)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(log4j:log4j:12)
+BuildRequires: mvn(org.apache.avro:avro)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.lucene:lucene-analyzers-common)
+BuildRequires: mvn(org.apache.lucene:lucene-analyzers-phonetic)
+BuildRequires: mvn(org.apache.lucene:lucene-backward-codecs)
+BuildRequires: mvn(org.apache.lucene:lucene-core) >= 5.3.1
+BuildRequires: mvn(org.apache.lucene:lucene-facet)
+BuildRequires: mvn(org.apache.lucene:lucene-misc)
+BuildRequires: mvn(org.apache.lucene:lucene-queryparser)
+BuildRequires: mvn(org.apache.maven.plugins:maven-checkstyle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires: mvn(org.apache.pdfbox:pdfbox)
+BuildRequires: mvn(org.apache.tika:tika-core)
+BuildRequires: mvn(org.bsc.maven:maven-processor-plugin)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires: mvn(org.hibernate:hibernate-core) >= 5.0.7
+BuildRequires: mvn(org.hibernate:hibernate-entitymanager)
+BuildRequires: mvn(org.hibernate:hibernate-envers)
+BuildRequires: mvn(org.hibernate:hibernate-testing)
+BuildRequires: mvn(org.hibernate.common:hibernate-commons-annotations) >= 5.0.1
+BuildRequires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.1-api)
+BuildRequires: mvn(org.jboss.byteman:byteman)
+BuildRequires: mvn(org.jboss.byteman:byteman-bmunit)
+BuildRequires: mvn(org.jboss.byteman:byteman-install)
+BuildRequires: mvn(org.jboss.logging:jboss-logging)
+BuildRequires: mvn(org.jboss.logging:jboss-logging-annotations)
+BuildRequires: mvn(org.jboss.maven.plugins:maven-injection-plugin)
+BuildRequires: mvn(org.jboss.spec.javax.jms:jboss-jms-api_2.0_spec)
+BuildRequires: mvn(org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec)
+BuildRequires: mvn(org.jgroups:jgroups) >= 3.6.6
+BuildRequires: mvn(simple-jndi:simple-jndi)
+BuildRequires: xmvn
 
-# wget https://github.com/hibernate/hibernate-search/archive/4.5.1.Final.tar.gz
-# tar -xf 4.5.1.Final.tar.gz
-# rm -rf hibernate-search-4.5.1.Final/orm/src/test/resources/org/hibernate/search/test/bridge/tika/
-# tar -cvjf hibernate-search-4.5.1.Final-CLEAN.tar.gz hibernate-search-4.5.1.Final/
-Source0:          hibernate-search-%{namedversion}-CLEAN.tar.gz
-
-BuildRequires:    maven-local
-BuildRequires:    jboss-logging
-BuildRequires:    jboss-logging-tools
-BuildRequires:    avro
-BuildRequires:    jgroups
-BuildRequires:    slf4j
-BuildRequires:    jboss-transaction-1.1-api
-
-%if 0%{?fedora} >= 21
-BuildRequires:    lucene3
-BuildRequires:    lucene3-contrib
-%else
-BuildRequires:    lucene
-BuildRequires:    lucene-contrib
-%endif
-
-BuildRequires:    solr3
-
-BuildRequires:    h2
-BuildRequires:    maven-checkstyle-plugin
-BuildRequires:    maven-processor-plugin
-BuildRequires:    maven-injection-plugin
-BuildRequires:    byteman
-BuildRequires:    hibernate-commons-annotations
-BuildRequires:    hibernate-jpa-2.1-api
-BuildRequires:    hibernate-core >= 4.3.1
-BuildRequires:    geronimo-jta
-BuildRequires:    junit
-BuildRequires:    tika
-
-%if %{with_infinispan}
-BuildRequires:    infinispan
-%endif
-
-BuildArch:        noarch
+BuildArch:     noarch
 Source44: import.info
 
 %description
@@ -81,47 +76,68 @@ Hibernate Search is using Apache Lucene under the cover.
 
 %package javadoc
 Group: Development/Java
-Summary:          Javadocs for %{name}
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n hibernate-search-%{namedversion}
+%setup -q -n %{name}-%{namedversion}
+rm -rf orm/src/test/resources/org/hibernate/search/test/bridge/tika/
 
-%pom_disable_module integrationtest/wildfly
-%pom_disable_module integrationtest/spring
+%pom_disable_module integrationtest/jms
 %pom_disable_module integrationtest/narayana
-%pom_disable_module testing
-%pom_disable_module modules
+%pom_disable_module integrationtest/spring
+%pom_disable_module integrationtest/wildfly
+%pom_disable_module integrationtest/performance
+%pom_disable_module integrationtest/osgi/karaf-features
+%pom_disable_module integrationtest/osgi/karaf-it
+%pom_disable_module integrationtest/sandbox
+%pom_disable_module integrationtest/engine-performance
+%pom_disable_module distribution
+%pom_disable_module documentation
+# This component is now owned and maintained by the Infinispan team:
+# org.infinispan:infinispan-directory-provider:8.0.1.Final
+%pom_disable_module infinispan
 %pom_disable_module legacy
 
-%if !%{with_infinispan}
-%pom_disable_module infinispan
-%endif
+# hibernate-search-engine, hibernate-search-orm
+%pom_xpath_remove "pom:dependency[pom:type = 'test-jar']" testing
 
 %pom_remove_plugin ":maven-enforcer-plugin"
+# de.thetaphi:forbiddenapis:1.8
+%pom_remove_plugin -r :forbiddenapis
 
-%pom_remove_dep "org.apache.tika:tika-parsers" engine/pom.xml
-%pom_add_dep "org.apache.tika:tika-core" engine/pom.xml
+%pom_remove_dep org.apache.tika:tika-core
+%pom_change_dep -r "org.apache.tika:tika-parsers" "org.apache.tika:tika-core"
+%pom_change_dep -r :log4j ::12
 
-sed -i "s|luceneVersion>3.6.2</luceneVersion|luceneVersion>3</luceneVersion|" pom.xml
+# org.easytesting:fest-assert:1.4
+%pom_remove_dep -r :fest-assert
+# org.unitils:unitils-easymock:3.3
+%pom_remove_dep -r :unitils-easymock
+
+%mvn_alias :hibernate-search-orm :hibernate-search
 
 %build
+# NO test deps see above
 %mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc lgpl.txt README.md
+%doc changelog.txt README.md
+%doc lgpl.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc lgpl.txt
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 5.5.4-alt1_2jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 4.5.1-alt1_6jpp8
 - new fc release
 
