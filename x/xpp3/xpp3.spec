@@ -2,17 +2,17 @@ Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global oversion 1.1.4c
 
 Summary:        XML Pull Parser
 Name:           xpp3
 Version:        1.1.4
-Release:        alt1_11.cjpp8
+Release:        alt1_17.cjpp8
 License:        ASL 1.1
 URL:            http://www.extreme.indiana.edu/xgws/xsoap/xpp/mxp1/index.html
 Source0:        http://www.extreme.indiana.edu/dist/java-repository/xpp3/distributions/xpp3-%{oversion}_src.tgz
@@ -21,12 +21,11 @@ Source2:        http://repo1.maven.org/maven2/xpp3/xpp3_xpath/%{oversion}/xpp3_x
 Source3:        http://repo1.maven.org/maven2/xpp3/xpp3_min/%{oversion}/xpp3_min-%{oversion}.pom
 Source4:        %{name}-%{oversion}-OSGI-MANIFEST.MF
 Patch0:         %{name}-link-docs-locally.patch
+
 BuildRequires:  javapackages-local
-BuildRequires:  zip
+BuildRequires:  java-javadoc
 BuildRequires:  ant
 BuildRequires:  junit
-BuildRequires:  xml-commons-apis
-Requires:       xml-commons-apis
 
 BuildArch:      noarch
 Source44: import.info
@@ -47,6 +46,7 @@ Minimal XML pull parser implementation.
 %package javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
+Requires:       java-javadoc
 BuildArch: noarch
 
 %description javadoc
@@ -64,57 +64,44 @@ rm -rf src/java/builder/javax
 # "src/java/addons_tests" does not exist
 sed -i 's|depends="junit_main,junit_addons"|depends="junit_main"|' build.xml
 
+# relax javadoc linting
+sed -i '/<javadoc/aadditionalparam="-Xdoclint:none"' build.xml
+
 %build
-export CLASSPATH=$(build-classpath xml-commons-apis junit)
+export CLASSPATH=$(build-classpath junit)
 ant xpp3 junit apidoc
 
 # Add OSGi metadata
-pushd build
-mkdir META-INF
-unzip -o %{name}-%{oversion}.jar META-INF/MANIFEST.MF
-cat %{SOURCE4} >> META-INF/MANIFEST.MF
-sed -i '/^\r$/d' META-INF/MANIFEST.MF
-zip -u %{name}-%{oversion}.jar META-INF/MANIFEST.MF
-popd
+jar ufm build/%{name}-%{oversion}.jar %{SOURCE4}
 
 %install
-install -d -m 755 %{buildroot}%{_javadir}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+%mvn_file ':{*}' @1
+%mvn_package :xpp3_min minimal
 
-# JARs
-install -p -m 644 build/%{name}-%{oversion}.jar \
-    %{buildroot}%{_javadir}/%{name}.jar
-install -p -m 644 build/%{name}_xpath-%{oversion}.jar \
-    %{buildroot}%{_javadir}/%{name}-xpath.jar
-install -p -m 644 build/%{name}_min-%{oversion}.jar \
-    %{buildroot}%{_javadir}/%{name}-minimal.jar
-
-# POMs
-install -p -m 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-install -p -m 644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}-xpath.pom
-install -p -m 644 %{SOURCE3} %{buildroot}%{_mavenpomdir}/JPP-%{name}-minimal.pom
-
-# XMvn metadata
-%add_maven_depmap
-%add_maven_depmap JPP-%{name}-xpath.pom %{name}-xpath.jar
-%add_maven_depmap JPP-%{name}-minimal.pom %{name}-minimal.jar -f minimal
+%mvn_artifact %{SOURCE1} build/%{name}-%{oversion}.jar
+%mvn_artifact %{SOURCE2} build/%{name}_xpath-%{oversion}.jar
+%mvn_artifact %{SOURCE3} build/%{name}_min-%{oversion}.jar
 
 # Javadocs
-cp -pr doc/api/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_install -J doc/api
+
+ln -s xpp3_min.jar %buildroot%_javadir/xpp3-minimal.jar
 
 %files -f .mfiles
-%doc README.html doc/*
+%doc README.html doc/*.txt doc/*.html
 %doc LICENSE.txt
 
 %files minimal -f .mfiles-minimal
 %doc LICENSE.txt
+%_javadir/xpp3-minimal.jar
 
-%files javadoc
-%doc %{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.1.4-alt1_17.cjpp8
+- new fc release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.1.4-alt1_11.cjpp8
 - new fc release
 
