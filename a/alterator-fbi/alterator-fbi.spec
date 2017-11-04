@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.38
+Version: 5.39
 Release: alt1
 
 Source:%name-%version.tar
@@ -141,6 +141,9 @@ fi ||:
 
 
 %changelog
+* Sat Nov 04 2017 Ivan Zakharyaschev <imz@altlinux.org> 5.39-alt1
+- backend3/ahttpd-server (do_reload): fix for systemd.
+
 * Thu Jun 22 2017 Ivan Zakharyaschev <imz@altlinux.org> 5.38-alt1
 - form.js: fix arbitrary HTML+JS injection by constructing new HTML
   elements "structurally".
