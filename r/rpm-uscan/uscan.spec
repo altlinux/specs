@@ -1,5 +1,5 @@
 %define destname rpm-uscan
-%define debian_ver 2.17.10
+%define debian_ver 2.17.11
 Name: %destname
 Version: 0.19.%debian_ver
 Release: alt1
@@ -43,6 +43,9 @@ pod2man scripts/uscan.pl > %buildroot%_man1dir/%destname.1
 %_man1dir/*
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0.19.2.17.11-alt1
+- new version
+
 * Fri Oct 13 2017 Igor Vlasenko <viy@altlinux.ru> 0.19.2.17.10-alt1
 - fixes for --any-archive && xpi
 
