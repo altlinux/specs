@@ -1,22 +1,23 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global cvs_version 2_11_0
 
 %define __requires_exclude system.bundle
 
 Name:          xerces-j2
 Version:       2.11.0
-Release:       alt3_24jpp8
+Release:       alt3_28jpp8
 Summary:       Java XML parser
-Group:         Development/Other
 License:       ASL 2.0
 URL:           http://xerces.apache.org/xerces2-j/
 
@@ -47,25 +48,22 @@ Patch2:        xerces-j2-CVE-2013-4002.patch
 
 BuildArch:     noarch
 
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: javapackages-local
+BuildRequires: ant
+BuildRequires: apache-parent
 BuildRequires: xalan-j2 >= 2.7.1
 BuildRequires: xml-commons-apis >= 1.4.01
 BuildRequires: xml-commons-resolver >= 1.2
-BuildRequires: ant
-BuildRequires: xerces-j2
 BuildRequires: fonts-ttf-dejavu
-BuildRequires: xerces-j2
-Requires: javapackages-tools rpm-build-java
+
 Requires:      xalan-j2 >= 2.7.1
 Requires:      xml-commons-apis >= 1.4.01
 Requires:      xml-commons-resolver >= 1.2
 
 Provides:      jaxp_parser_impl = 1.4
 Provides:      %{name}-scripts = %{version}-%{release}
-Obsoletes:     %{name}-scripts < 2.11.0-6
 
-Requires(post): xerces-j2
-Requires(preun): xerces-j2
+Obsoletes:     %{name}-scripts < 2.11.0-6
 
 # This documentation is provided by xml-commons-apis
 Obsoletes:     %{name}-javadoc-apis < %{version}-%{release}
@@ -102,9 +100,8 @@ and will correctly serialize XML 1.1 documents if the DOM level 3 load/save
 APIs are in use.
 
 %package        javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires: javapackages-tools rpm-build-java
 
 # Consolidating all javadocs into one package
 Obsoletes:      %{name}-javadoc-impl < %{version}-%{release}
@@ -117,9 +114,9 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %package        demo
+Group: Development/Other
 Summary:        Demonstrations and samples for %{name}
-Group:          Development/Other
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description    demo
 %{summary}.
@@ -140,6 +137,10 @@ find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 
 sed -i 's/\r//' LICENSE README NOTICE
+
+# legacy aliases for compatability
+%mvn_alias : xerces:xerces xerces:xmlParserAPIs apache:xerces-j2
+%mvn_file : %{name} jaxp_parser_impl
 
 %build
 pushd tools
@@ -164,9 +165,10 @@ ant -Djavac.source=1.5 -Djavac.target=1.5 \
     -Dbuild.compiler=modern \
     clean jars javadocs
 
+%mvn_artifact %{SOURCE7} build/xercesImpl.jar
+
 %install
-# jars
-install -pD -T build/xercesImpl.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
 # javadoc
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
@@ -193,23 +195,11 @@ install -p -m 644 %{SOURCE12} %{buildroot}%{_mandir}/man1
 install -pD -T build/xercesSamples.jar %{buildroot}%{_datadir}/%{name}/%{name}-samples.jar
 cp -pr data %{buildroot}%{_datadir}/%{name}
 
-# Pom
-install -pD -T -m 644 %{SOURCE7} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# Depmap with legacy depmaps for compatability
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "xerces:xerces,xerces:xmlParserAPIs,apache:xerces-j2"
-
-# jaxp_parser_impl ghost symlink
-ln -s %{_sysconfdir}/alternatives \
-  %{buildroot}%{_javadir}/jaxp_parser_impl.jar
-install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jaxp_parser_impl_xerces-j2<<EOF
-%{_javadir}/jaxp_parser_impl.jar	%{_javadir}/%{name}.jar	40
-EOF
+%post
+ln -sf %{name}.jar %{_javadir}/jaxp_parser_impl.jar
 
 %files -f .mfiles
-%_altdir/jaxp_parser_impl_xerces-j2
 %doc LICENSE NOTICE README
-%{_javadir}/%{name}*
 %{_bindir}/*
 %{_mandir}/*/*
 
@@ -220,6 +210,9 @@ EOF
 %{_datadir}/%{name}
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.11.0-alt3_28jpp8
+- new jpp release
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.11.0-alt3_24jpp8
 - new fc release
 
