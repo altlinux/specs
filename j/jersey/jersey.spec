@@ -2,7 +2,6 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # fedora bcond_with macro
@@ -11,23 +10,27 @@ BuildRequires: jpackage-generic-compat
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# Use jetty 9.1.1.v20140108.
-#def_with jetty
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# Use jetty 9.2.14.v20151106
 %bcond_with jetty
 Name:          jersey
-Version:       2.22.2
-Release:       alt1_1jpp8
+Version:       2.23.2
+Release:       alt1_3jpp8
 Summary:       JAX-RS (JSR 311) production quality Reference Implementation
 # One file in jersey-core/ is under ASL 2.0 license
 License:       (CDDL or GPLv2 with exceptions) and ASL 2.0
 URL:           http://jersey.java.net/
-Source0:       https://github.com/jersey/jersey/archive/%{version}.tar.gz
+Source0:       https://github.com/jersey/jersey/archive/%{version}/%{name}-%{version}.tar.gz
 Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
 
 # Support fo servlet 3.1 apis
-Patch1:        jersey-2.17-mvc-jsp-servlet31.patch
-# Support for simple 6.0.1
-Patch2:        jersey-2.22.2-simple.patch
+Patch0:        jersey-2.17-mvc-jsp-servlet31.patch
+
+Patch1:        jersey-2.23.2-port-to-simple6.patch
+
+Patch2:        jersey-2.23.1-port-json-jackson-to-jackson-2.7.patch
+
 
 BuildRequires: maven-local
 BuildRequires: mvn(com.esotericsoftware:kryo)
@@ -75,6 +78,7 @@ BuildRequires: mvn(org.freemarker:freemarker)
 BuildRequires: mvn(org.glassfish:javax.json)
 BuildRequires: mvn(org.glassfish:jsonp-jaxrs)
 BuildRequires: mvn(org.glassfish.grizzly:grizzly-http-servlet)
+# Use hk2:2.5.0-b05 update when is available "Final" release
 BuildRequires: mvn(org.glassfish.hk2:hk2)
 BuildRequires: mvn(org.glassfish.hk2:hk2-api)
 BuildRequires: mvn(org.glassfish.hk2:hk2-bom:pom:)
@@ -83,17 +87,15 @@ BuildRequires: mvn(org.glassfish.hk2:osgi-resource-locator)
 BuildRequires: mvn(org.glassfish.hk2:spring-bridge)
 BuildRequires: mvn(org.glassfish.web:javax.el)
 BuildRequires: mvn(org.hamcrest:hamcrest-library)
-# org.hibernate:hibernate-validator:5.1.3.Final
-# https://bugzilla.redhat.com/show_bug.cgi?id=1182918
 BuildRequires: mvn(org.hibernate:hibernate-validator)
 BuildRequires: mvn(org.hibernate:hibernate-validator-cdi)
 BuildRequires: mvn(org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.2_spec)
 BuildRequires: mvn(org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec)
 BuildRequires: mvn(org.jboss:jboss-vfs)
-# https://bugzilla.redhat.com/show_bug.cgi?id=1204638
 BuildRequires: mvn(org.jboss.weld.se:weld-se-core)
 BuildRequires: mvn(org.jvnet.jaxb2.maven2:maven-jaxb22-plugin)
 BuildRequires: mvn(org.jvnet.mimepull:mimepull)
+BuildRequires: mvn(org.mockito:mockito-all)
 BuildRequires: mvn(org.osgi:org.osgi.core)
 BuildRequires: mvn(org.ow2.asm:asm-all)
 BuildRequires: mvn(org.simpleframework:simple-common)
@@ -105,10 +107,7 @@ BuildRequires: mvn(org.springframework:spring-core)
 BuildRequires: mvn(org.springframework:spring-web)
 BuildRequires: mvn(org.testng:testng)
 BuildRequires: mvn(xerces:xercesImpl)
-
-Obsoletes:     maven-wadl-plugin
-Provides:      %{name}-contribs
-Obsoletes:     %{name}-contribs < 2.17-1
+BuildRequires: xmvn
 
 BuildArch:     noarch
 Source44: import.info
@@ -138,8 +137,10 @@ This package contains javadoc for %{name}.
 find . -name "*.jar" -print -delete
 find . -name "*.class" -print -delete
 
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
+
 
 # Remove repackaged dependencies: guava, atinject
 sed -i '/jersey.repackaged/d' \
@@ -196,7 +197,12 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %pom_disable_module examples/java8-webapp
 %pom_disable_module examples/rx-client-java8-webapp
 %pom_disable_module gae-integration incubator
-%pom_disable_module html-json incubator
+
+# org.netbeans.api:org-openide-util-lookup:RELEASE80
+# org.netbeans.html:ko-ws-tyrus:1.0
+# org.netbeans.html:net.java.html.json:1.0
+#%% pom_disable_module html-json incubator
+
 # org.codehaus.groovy:groovy-eclipse-compiler:2.9.2-01
 %pom_disable_module container-runner-maven-plugin test-framework/maven
 
@@ -230,6 +236,13 @@ sed -i 's/\r//' LICENSE-2.0.txt
 # eclipselink:2.6.0
 %pom_disable_module moxy media
 %pom_remove_dep :jersey-media-moxy bom
+
+# io.netty:netty-all:4.1.4.Final
+%pom_disable_module netty-connector connectors
+%pom_disable_module netty-http containers
+%pom_remove_dep :jersey-container-netty-http bom
+%pom_disable_module netty test-framework/providers
+%pom_remove_dep :jersey-test-framework-provider-netty test-framework/providers/bundle
 
 # Fix asm aId (asm-debug-all)
 %pom_xpath_set "pom:dependency[pom:groupId = 'org.ow2.asm']/pom:artifactId" asm-all
@@ -334,6 +347,7 @@ rm -r media/multipart/src/test/java/org/glassfish/jersey/media/multipart/interna
  media/multipart/src/test/java/org/glassfish/jersey/media/multipart/internal/FormDataMultiPartBufferTest.java
 
 # Add OSGi manifest required by docker-client
+%pom_remove_plugin :maven-bundle-plugin connectors/apache-connector
 %pom_add_plugin org.apache.felix:maven-bundle-plugin:2.3.7 connectors/apache-connector '
 <executions>
   <execution>
@@ -344,6 +358,10 @@ rm -r media/multipart/src/test/java/org/glassfish/jersey/media/multipart/interna
     </goals>
   </execution>
 </executions>'
+
+
+# @ random break build: ExecutionException The forked VM terminated without properly saying goodbye. VM crash or System.exit called?
+sed -i "s|Xmx1024m|Xmx512m|" pom.xml
 
 %mvn_package "org.glassfish.jersey.test-framework:project" test-framework
 %mvn_package "org.glassfish.jersey.test-framework.providers:project" test-framework
@@ -374,9 +392,8 @@ rm -r media/multipart/src/test/java/org/glassfish/jersey/media/multipart/interna
 %mvn_file "org.glassfish.jersey.security:project" %{name}/security-project
 
 %build
-
-%mvn_build -- -Dmaven.test.failure.ignore=true \
- -Dmaven.test.skip.exec=true
+# ExecutionException The forked VM terminated without properly saying goodbye. VM crash or System.exit called?
+%mvn_build -f -- -Dmaven.test.failure.ignore=true
 
 %install
 %mvn_install
@@ -392,6 +409,9 @@ rm -r media/multipart/src/test/java/org/glassfish/jersey/media/multipart/interna
 %doc LICENSE.html LICENSE.txt LICENSE-2.0.txt etc/config/copyright.txt
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 2.23.2-alt1_3jpp8
+- new version
+
 * Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.22.2-alt1_1jpp8
 - new version
 
