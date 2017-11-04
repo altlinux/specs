@@ -1,64 +1,89 @@
-Name: jeuclid
-Version: 3.1.6
-Release: alt1
-Summary: MathML rendering solution
-Group: Development/Java
-License: ASL 2.0 and SPL
-Url: http://jeuclid.sourceforge.net/index.html
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+BuildRequires: /usr/bin/desktop-file-install unzip
+# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Epoch:          2
 
-Source: http://downloads.sourceforge.net/%name/%name-parent-%version-src.zip
+Name:		jeuclid
+Version:	3.1.3
+Release:	alt1_22
+Summary:	MathML rendering solution
+Group:		Development/Java
+License:	ASL 2.0 and SPL
+URL:		http://jeuclid.sourceforge.net/index.html
+Source0:	http://downloads.sourceforge.net/%{name}/%{name}-parent-%{version}-src.zip
 #fedora specific build script based on debian
-Source1: build.xml
-Source2: jeuclid-mathviewer.desktop
-Source3: jeuclid-mathviewer.sh
-Source4: jeuclid-cli.sh
+Source1:	build.xml
+Source2:	jeuclid-mathviewer.desktop
+Source3:	jeuclid-mathviewer.sh
+Source4:	jeuclid-cli.sh
 
+#removes FreeHep support as per the build README, optional feature (not upstream)
+Patch0:		jeuclid-core-FreeHep.patch
 #Allows for compiling code that uses Apple EAWT without the lib
-Patch1: AppleJavaExtensions.patch
+Patch1:		AppleJavaExtensions.patch
 #removes OSX dep for the viewer
-Patch2: MacOSX.patch
+Patch2:		MacOSX.patch
 
-BuildArch: noarch
-BuildRequires(pre): unzip rpm-build-java desktop-file-utils
+BuildArch:	noarch
 
-# Automatically added by buildreq on Thu Sep 10 2009
-BuildRequires: ant jakarta-commons-cli jakarta-commons-lang jcip-annotations tzdata unzip xmlgraphics-fop
+BuildRequires:	javapackages-tools
+BuildRequires:	java-devel-default /proc
+BuildRequires:	ant
+BuildRequires:	batik >= 1.7 
+BuildRequires:	apache-commons-logging
+BuildRequires:	jcip-annotations
+BuildRequires:	xmlgraphics-commons >= 1.3
+BuildRequires:	fop >= 0.95
+BuildRequires:	apache-commons-cli >= 1.1
+BuildRequires:	apache-commons-lang
+BuildRequires:	desktop-file-utils
+
+Requires:	javapackages-tools
+Requires:	java >= 1.6.0
+Requires:	apache-commons-logging
+Requires:	batik >= 1.7
+Requires:	xmlgraphics-commons >= 1.3	
+Requires:	jcip-annotations
+Source44: import.info
 
 %description
 Core module containing basic JEuclid rendering and document handling classes.
 
-%package mathviewer
-Summary: Viewer for MathML files
-Group: Publishing
-Requires: %name = %version-%release
+%package	mathviewer
+Summary:	Viewer for MathML files
+Group:		Development/Java
+Requires:	%{name} = %epoch:%{version}-%{release}
+Requires:	icon-theme-hicolor
 
-%description mathviewer
-The %name-mathviewer package contains the Swing MathViewer application.
+%description	mathviewer
+The %{name}-mathviewer package contains the Swing MathViewer application.
 
-%package fop
-Summary: JEuclid plug-in for FOP
-Group: Publishing
-Requires: %name = %version-%release
-Requires: xmlgraphics-fop
+%package	fop
+Summary:	JEuclid plug-in for FOP
+Group:	 	Development/Java
+Requires:	%{name} = %epoch:%{version}-%{release}
+Requires:	fop >= 0.95
 
-%description fop
-The %name-fop package is a jeuclid plug-in for FOP.
+%description	fop
+The %{name}-fop package is a jeuclid plug-in for FOP.
 
-%package cli
-Summary: Command line interface for Jeuclid
-Group: Publishing
-Requires: %name = %version-%release
-Requires: jakarta-commons-cli
-Requires: jakarta-commons-lang
-Requires: jakarta-commons-io
+%package	cli
+Summary:	Command line interface for Jeuclid
+Group:		Development/Java
+Requires:	%{name} = %epoch:%{version}-%{release}
+Requires:	apache-commons-cli >= 1.1
+Requires:	apache-commons-lang
+Requires:	apache-commons-io
 
-%description cli
-The %name-cli package provides a command line interface for jeuclid
+%description	cli
+The %{name}-cli package provides a command line interface for jeuclid
 
 %prep
-%setup -q -n %name-parent-%version
-cp %SOURCE1 %_builddir/%name-parent-%version/
+%setup -q -n %{name}-parent-%{version}
+cp %{SOURCE1} %{_builddir}/%{name}-parent-%{version}/ 
 #fix line endings
 sed 's/\r//' NOTICE > NOTICE.unix
 touch -r NOTICE NOTICE.unix;
@@ -67,63 +92,64 @@ mv NOTICE.unix NOTICE
 mkdir lib
 build-jar-repository -s -p lib jcip-annotations commons-logging xmlgraphics-commons batik-all fop commons-cli commons-lang
 
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 
 find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
 
 #removes the FreeHep support from the build per the build README
-rm -f %name-core/src/main/java/net/sourceforge/jeuclid/converter/FreeHep*;
+rm -f %{name}-core/src/main/java/net/sourceforge/jeuclid/converter/FreeHep*;
 
 %build
-ant compile-core compile-mathviewer compile-cli compile-fop -verbose
+ant compile-core compile-mathviewer compile-cli compile-fop -verbose 
 
 %install
-mkdir -p %buildroot%_javadir
-cp -p target/%name-core.jar \
-%buildroot%_javadir/%name-core-%version.jar
-cp -p target/%name-fop.jar \
-%buildroot%_javadir/%name-fop-%version.jar
-cp -p target/%name-mathviewer.jar \
-%buildroot%_javadir/%name-mathviewer-%version.jar
-cp -p target/%name-cli.jar \
-%buildroot%_javadir/%name-cli-%version.jar
+mkdir -p $RPM_BUILD_ROOT%{_javadir}
+cp -p target/%{name}-core.jar \
+$RPM_BUILD_ROOT%{_javadir}/%{name}-core.jar
+cp -p target/%{name}-fop.jar \
+$RPM_BUILD_ROOT%{_javadir}/%{name}-fop.jar
+cp -p target/%{name}-mathviewer.jar \
+$RPM_BUILD_ROOT%{_javadir}/%{name}-mathviewer.jar
+cp -p target/%{name}-cli.jar \
+$RPM_BUILD_ROOT%{_javadir}/%{name}-cli.jar
 
-(cd %buildroot%_javadir && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed "s|-%version||g"`; done)
+install -dm 755 $RPM_BUILD_ROOT%{_bindir}
+install -pm 755 %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/jeuclid-mathviewer
+install -pm 755 %{SOURCE4} $RPM_BUILD_ROOT%{_bindir}/jeuclid-cli
 
-install -dm 755 %buildroot%_bindir
-install -pm 755 %SOURCE3 %buildroot%_bindir/jeuclid-mathviewer
-install -pm 755 %SOURCE4 %buildroot%_bindir/jeuclid-cli
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/48x48/apps/
+cp -p src/icons/jeuclid_48x48.png $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/48x48/apps/
 
-mkdir -p %buildroot%_iconsdir/hicolor/48x48/apps/
-cp -p src/icons/jeuclid_48x48.png %buildroot%_iconsdir/hicolor/48x48/apps/
-
-mkdir -p %buildroot%_desktopdir
-desktop-file-install --dir=%buildroot%_desktopdir \
-%SOURCE2
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/applications
+desktop-file-install --dir=$RPM_BUILD_ROOT/%{_datadir}/applications \
+%{SOURCE2}
 
 %files
 %doc NOTICE LICENSE.txt README.Release
-%_javadir/%name-core-%version.jar
-%_javadir/%name-core.jar
+%{_javadir}/%{name}-core.jar
 
 %files mathviewer
-%_javadir/%name-mathviewer-%version.jar
-%_javadir/%name-mathviewer.jar
-%_bindir/jeuclid-mathviewer
-%_iconsdir/hicolor/48x48/apps/jeuclid_48x48.png
-%_desktopdir/jeuclid-mathviewer.desktop
+%{_javadir}/%{name}-mathviewer.jar
+%{_bindir}/jeuclid-mathviewer
+%{_datadir}/icons/hicolor/48x48/apps/jeuclid_48x48.png
+%{_datadir}/applications/jeuclid-mathviewer.desktop
 
 %files fop
-%_javadir/%name-fop-%version.jar
-%_javadir/%name-fop.jar
+%{_javadir}/%{name}-fop.jar
 
-%files cli
-%_javadir/%name-cli-%version.jar
-%_javadir/%name-cli.jar
-%_bindir/jeuclid-cli
+%files cli 
+%{_javadir}/%{name}-cli.jar
+%{_bindir}/jeuclid-cli
+
+
+
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 2:3.1.3-alt1_22
+- NMU: fixed build, downgraded version to 3.1.3
+
 * Thu Sep 10 2009 Vitaly Kuznetsov <vitty@altlinux.ru> 3.1.6-alt1
 - 3.1.6
 
