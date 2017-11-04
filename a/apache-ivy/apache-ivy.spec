@@ -3,12 +3,22 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%bcond_without  ssh
+%bcond_without  bouncycastle
+
 Name:           apache-ivy
 Version:        2.4.0
-Release:        alt1_5jpp8
+Release:        alt1_9jpp8
 Summary:        Java-based dependency manager
 
 License:        ASL 2.0
@@ -30,8 +40,10 @@ BuildRequires:  ant-contrib
 BuildRequires:  ant-testutil
 BuildRequires:  apache-commons-vfs
 BuildRequires:  apache-commons-lang
+%if %{with bouncycastle}
 BuildRequires:  bouncycastle
 BuildRequires:  bouncycastle-pg
+%endif
 BuildRequires:  jakarta-commons-httpclient
 BuildRequires:  jsch
 BuildRequires:  jakarta-oro
@@ -39,9 +51,11 @@ BuildRequires:  apache-commons-parent
 BuildRequires:  sonatype-oss-parent
 BuildRequires:  apache-parent
 BuildRequires:  ivy-local >= 4
+%if %{with ssh}
 BuildRequires:  jsch-agent-proxy-connector-factory
 BuildRequires:  jsch-agent-proxy-core
 BuildRequires:  jsch-agent-proxy-jsch
+%endif
 Source44: import.info
 AutoReqProv: yes,noosgi
 Obsoletes: ivy < 2
@@ -55,8 +69,8 @@ of powerful Ant tasks ranging from dependency resolution to dependency
 reporting and publication.
 
 %package javadoc
+Group: Development/Java
 Summary:        API Documentation for ivy
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -66,6 +80,23 @@ JavaDoc documentation for %{name}
 %setup -q
 %patch0
 %patch1 -p1
+
+# Don't hardcode sysconfdir path
+sed -i 's:/etc/ivy/:%{_sysconfdir}/ivy/:' src/java/org/apache/ivy/ant/IvyAntSettings.java
+
+%if %{without ssh}
+%pom_remove_dep :jsch
+%pom_remove_dep :jsch.agentproxy
+%pom_remove_dep :jsch.agentproxy.connector-factory
+%pom_remove_dep :jsch.agentproxy.jsch
+rm -r src/java/org/apache/ivy/plugins/repository/{ssh,sftp}
+rm src/java/org/apache/ivy/plugins/resolver/*{Ssh,SFTP}*.java
+%endif
+
+%if %{without bouncycastle}
+%pom_remove_dep org.bouncycastle
+rm src/java/org/apache/ivy/plugins/signer/bouncycastle/OpenPGPSignatureGenerator.java
+%endif
 
 %mvn_alias : jayasoft:ivy
 %mvn_file : %{name}/ivy ivy
@@ -98,7 +129,6 @@ sed -i -e s,yyyyMMddHHmmss,yyyyMMddHH, build.xml
 %build
 %ant -Divy.mode=local -Dtarget.ivy.bundle.version=%{version} -Dtarget.ivy.bundle.version.qualifier= -Dtarget.ivy.version=%{version} jar javadoc publish-local
 
-
 %install
 %mvn_install -J build/doc/reports/api
 
@@ -114,6 +144,9 @@ echo "apache-ivy/ivy" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.4.0-alt1_9jpp8
+- new fc release
+
 * Mon Nov 28 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4.0-alt1_5jpp8
 - new fc release
 
