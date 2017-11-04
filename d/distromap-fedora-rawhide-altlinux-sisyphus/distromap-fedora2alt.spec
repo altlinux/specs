@@ -1,7 +1,7 @@
 %define module fedora-rawhide-altlinux-sisyphus
 
 Name: distromap-%module
-Version: 0.411
+Version: 0.412
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -25,22 +25,29 @@ Requires: distrodb-static-altlinux-sisyphus
 
 %install
 destdir=%buildroot/usr/share/distromap/fedora/rawhide/altlinux/sisyphus
-for type in binary source ; do
+for type in binary source group-strict group-approx; do
+    if [ -d $type ] && stat -t $type/* >/dev/null 2>&1 ; then
 	install -m755 -d $destdir/$type
 	install -m644 $type/* $destdir/$type/
+    fi
 done
 ln -s rawhide %buildroot/usr/share/distromap/fedora/default
 for type in binary source ; do
-	for flag in flags/$type/* ; do
-		install -m755 -d $destdir/$flag
-		install -m644 $flag/* $destdir/$flag/
-	done
+    for flag in flags/$type/* ; do
+	if [ -d $flag ] && stat -t $flag/* >/dev/null 2>&1 ; then
+	    install -m755 -d $destdir/$flag
+	    install -m644 $flag/* $destdir/$flag/
+	fi
+    done
 done
 
 %files
 /usr/share/distromap/*
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0.412-alt1
+- db updates
+
 * Thu Oct 05 2017 Igor Vlasenko <viy@altlinux.ru> 0.411-alt1
 - db updates
 
