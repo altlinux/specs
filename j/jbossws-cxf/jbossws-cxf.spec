@@ -1,100 +1,146 @@
-Name: jbossws-cxf
-Version: 4.2.3
-Summary: JBoss Web Services CXF stack
-License: LGPLv2+
-Url: http://www.jboss.org/jbossws
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jbossws-cxf = 4.2.3-1.fc21
-Provides: mvn(org.jboss.ws.cxf:jbossws-cxf-addons:pom:) = 4.2.3.Final
-Provides: mvn(org.jboss.ws.cxf:jbossws-cxf-client) = 4.2.3.Final
-Provides: mvn(org.jboss.ws.cxf:jbossws-cxf-client:pom:) = 4.2.3.Final
-Provides: mvn(org.jboss.ws.cxf:jbossws-cxf-factories) = 4.2.3.Final
-Provides: mvn(org.jboss.ws.cxf:jbossws-cxf-factories:pom:) = 4.2.3.Final
-Provides: mvn(org.jboss.ws.cxf:jbossws-cxf-resources) = 4.2.3.Final
-Provides: mvn(org.jboss.ws.cxf:jbossws-cxf-resources::wildfly800:) = 4.2.3.Final
-Provides: mvn(org.jboss.ws.cxf:jbossws-cxf-resources:pom:) = 4.2.3.Final
-Provides: mvn(org.jboss.ws.cxf:jbossws-cxf-server) = 4.2.3.Final
-Provides: mvn(org.jboss.ws.cxf:jbossws-cxf-server:pom:) = 4.2.3.Final
-Provides: mvn(org.jboss.ws.cxf:jbossws-cxf-transports-httpserver) = 4.2.3.Final
-Provides: mvn(org.jboss.ws.cxf:jbossws-cxf-transports-httpserver:pom:) = 4.2.3.Final
-Provides: mvn(org.jboss.ws.cxf:jbossws-cxf-transports-udp) = 4.2.3.Final
-Provides: mvn(org.jboss.ws.cxf:jbossws-cxf-transports-udp:pom:) = 4.2.3.Final
-Provides: mvn(org.jboss.ws.cxf:jbossws-cxf:pom:) = 4.2.3.Final
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(asm:asm)
-Requires: mvn(com.sun.xml.bind:jaxb-impl)
-Requires: mvn(com.sun.xml.bind:jaxb-xjc)
-Requires: mvn(com.sun.xml.fastinfoset:FastInfoset)
-Requires: mvn(commons-collections:commons-collections)
-Requires: mvn(commons-lang:commons-lang)
-Requires: mvn(javax.xml.stream:stax-api)
-Requires: mvn(log4j:log4j)
-Requires: mvn(org.apache.cxf.services.sts:cxf-services-sts-core)
-Requires: mvn(org.apache.cxf.services.ws-discovery:cxf-services-ws-discovery-api)
-Requires: mvn(org.apache.cxf.xjcplugins:cxf-xjc-boolean)
-Requires: mvn(org.apache.cxf.xjcplugins:cxf-xjc-dv)
-Requires: mvn(org.apache.cxf.xjcplugins:cxf-xjc-ts)
-Requires: mvn(org.apache.cxf:cxf-rt-bindings-coloc)
-Requires: mvn(org.apache.cxf:cxf-rt-bindings-object)
-Requires: mvn(org.apache.cxf:cxf-rt-bindings-soap)
-Requires: mvn(org.apache.cxf:cxf-rt-frontend-jaxws)
-Requires: mvn(org.apache.cxf:cxf-rt-management)
-Requires: mvn(org.apache.cxf:cxf-rt-transports-http)
-Requires: mvn(org.apache.cxf:cxf-rt-transports-jms)
-Requires: mvn(org.apache.cxf:cxf-rt-transports-local)
-Requires: mvn(org.apache.cxf:cxf-rt-ws-mex)
-Requires: mvn(org.apache.cxf:cxf-rt-ws-policy)
-Requires: mvn(org.apache.cxf:cxf-rt-ws-rm)
-Requires: mvn(org.apache.cxf:cxf-rt-ws-security)
-Requires: mvn(org.apache.cxf:cxf-tools-java2ws)
-Requires: mvn(org.apache.cxf:cxf-tools-wsdlto-core)
-Requires: mvn(org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb)
-Requires: mvn(org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws)
-Requires: mvn(org.apache.santuario:xmlsec)
-Requires: mvn(org.apache.velocity:velocity)
-Requires: mvn(org.codehaus.woodstox:woodstox-core-asl)
-Requires: mvn(org.jboss.com.sun.httpserver:httpserver)
-Requires: mvn(org.jboss.logging:jboss-logging)
-Requires: mvn(org.jboss.spec.javax.ejb:jboss-ejb-api_3.1_spec)
-Requires: mvn(org.jboss.spec.javax.jms:jboss-jms-api_1.1_spec)
-Requires: mvn(org.jboss.spec.javax.servlet:jboss-servlet-api_3.0_spec)
-Requires: mvn(org.jboss.spec.javax.xml.bind:jboss-jaxb-api_2.2_spec)
-Requires: mvn(org.jboss.spec.javax.xml.rpc:jboss-jaxrpc-api_1.1_spec)
-Requires: mvn(org.jboss.spec.javax.xml.soap:jboss-saaj-api_1.3_spec)
-Requires: mvn(org.jboss.spec.javax.xml.ws:jboss-jaxws-api_2.2_spec)
-Requires: mvn(org.jboss.ws.projects:jaxws-jboss-httpserver-httpspi)
-Requires: mvn(org.jboss.ws:jbossws-api)
-Requires: mvn(org.jboss.ws:jbossws-common)
-Requires: mvn(org.jboss.ws:jbossws-common-tools)
-Requires: mvn(org.jboss.ws:jbossws-spi)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: jbossws-cxf-4.2.3-1.fc21.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 5.1.5
+%global namedreltag .Final
+%global namedversion %{version}%{?namedreltag}
+
+Name:             jbossws-cxf
+Version:          5.1.5
+Release:          alt1_3jpp8
+Summary:          JBoss Web Services CXF stack
+License:          LGPLv2+
+URL:              http://jbossws.jboss.org/
+
+Source0:          http://download.jboss.org/jbossws/%{name}-%{namedversion}.zip
+
+BuildArch:        noarch
+
+BuildRequires:    maven-local
+BuildRequires:    mvn(asm:asm)
+BuildRequires:    mvn(com.sun.xml.fastinfoset:FastInfoset)
+BuildRequires:    mvn(commons-collections:commons-collections)
+BuildRequires:    mvn(commons-lang:commons-lang)
+BuildRequires:    mvn(javax.xml.stream:stax-api)
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(log4j:log4j)
+BuildRequires:    mvn(org.apache.cxf:cxf-rt-bindings-coloc)
+BuildRequires:    mvn(org.apache.cxf:cxf-rt-bindings-object)
+BuildRequires:    mvn(org.apache.cxf:cxf-rt-bindings-soap)
+BuildRequires:    mvn(org.apache.cxf:cxf-rt-frontend-jaxws)
+BuildRequires:    mvn(org.apache.cxf:cxf-rt-management)
+BuildRequires:    mvn(org.apache.cxf:cxf-rt-transports-http)
+BuildRequires:    mvn(org.apache.cxf:cxf-rt-transports-http-hc)
+BuildRequires:    mvn(org.apache.cxf:cxf-rt-transports-jms)
+BuildRequires:    mvn(org.apache.cxf:cxf-rt-transports-local)
+BuildRequires:    mvn(org.apache.cxf:cxf-rt-ws-mex)
+BuildRequires:    mvn(org.apache.cxf:cxf-rt-ws-policy)
+BuildRequires:    mvn(org.apache.cxf:cxf-rt-ws-rm)
+BuildRequires:    mvn(org.apache.cxf:cxf-rt-ws-security)
+BuildRequires:    mvn(org.apache.cxf:cxf-tools-java2ws)
+BuildRequires:    mvn(org.apache.cxf:cxf-tools-wsdlto-core)
+BuildRequires:    mvn(org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb)
+BuildRequires:    mvn(org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws)
+BuildRequires:    mvn(org.apache.cxf.services.sts:cxf-services-sts-core)
+BuildRequires:    mvn(org.apache.cxf.services.ws-discovery:cxf-services-ws-discovery-api)
+BuildRequires:    mvn(org.apache.cxf.xjcplugins:cxf-xjc-boolean)
+BuildRequires:    mvn(org.apache.cxf.xjcplugins:cxf-xjc-bug986)
+BuildRequires:    mvn(org.apache.cxf.xjcplugins:cxf-xjc-dv)
+BuildRequires:    mvn(org.apache.cxf.xjcplugins:cxf-xjc-ts)
+BuildRequires:    mvn(org.apache.cxf.xjc-utils:cxf-xjc-runtime)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires:    mvn(org.apache.santuario:xmlsec)
+BuildRequires:    mvn(org.apache.velocity:velocity)
+BuildRequires:    mvn(org.codehaus.mojo:exec-maven-plugin)
+BuildRequires:    mvn(org.codehaus.woodstox:woodstox-core-asl)
+BuildRequires:    mvn(org.glassfish.jaxb:jaxb-core)
+BuildRequires:    mvn(org.glassfish.jaxb:jaxb-runtime)
+BuildRequires:    mvn(org.glassfish.jaxb:jaxb-xjc)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging-annotations)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging-processor)
+BuildRequires:    mvn(org.jboss.spec.javax.ejb:jboss-ejb-api_3.1_spec)
+BuildRequires:    mvn(org.jboss.spec.javax.jms:jboss-jms-api_1.1_spec)
+BuildRequires:    mvn(org.jboss.spec.javax.security.auth.message:jboss-jaspi-api_1.1_spec)
+BuildRequires:    mvn(org.jboss.spec.javax.security.jacc:jboss-jacc-api_1.5_spec)
+BuildRequires:    mvn(org.jboss.spec.javax.servlet:jboss-servlet-api_3.1_spec)
+BuildRequires:    mvn(org.jboss.spec.javax.xml.bind:jboss-jaxb-api_2.2_spec)
+BuildRequires:    mvn(org.jboss.spec.javax.xml.soap:jboss-saaj-api_1.3_spec)
+BuildRequires:    mvn(org.jboss.spec.javax.xml.ws:jboss-jaxws-api_2.2_spec)
+BuildRequires:    mvn(org.jboss.ws:jbossws-api)
+BuildRequires:    mvn(org.jboss.ws:jbossws-common)
+BuildRequires:    mvn(org.jboss.ws:jbossws-common-tools)
+BuildRequires:    mvn(org.jboss.ws:jbossws-parent:pom:)
+BuildRequires:    mvn(org.jboss.ws:jbossws-spi)
+BuildRequires:    mvn(org.jboss.ws.projects:jaxws-undertow-httpspi)
+BuildRequires:    mvn(org.jboss.shrinkwrap:shrinkwrap-depchain:pom:)
+BuildRequires:    mvn(org.opensaml:opensaml-saml-impl)
+BuildRequires:    mvn(org.opensaml:opensaml-xacml-impl)
+BuildRequires:    mvn(org.opensaml:opensaml-xacml-saml-impl)
+BuildRequires:    mvn(org.picketbox:picketbox)
+BuildRequires:    mvn(org.slf4j:slf4j-log4j12)
+BuildRequires:    mvn(xerces:xercesImpl)
+Source44: import.info
 
 %description
 JBoss Web Services CXF integration stack
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:          Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{name}-%{namedversion}
+
+%pom_remove_plugin -r :maven-deploy-plugin
+%pom_remove_plugin -r :maven-enforcer-plugin
+%pom_remove_plugin -r :maven-jdocbook-plugin
+
+# Available in JDK
+%pom_remove_dep -r "javax.jws:jsr181-api"
+
+#%% pom_disable_module modules/dist
+%pom_disable_module modules/testsuite
+
+# Disable default-jar execution of maven-jar-plugin, which is causing
+# problems with version 3.0.0 of the plugin.
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions" "
+<execution>
+  <id>default-jar</id>
+  <phase>skip</phase>
+</execution>" modules/resources
+
+%mvn_package :::wildfly*: __default
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc README*
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt1_3jpp8
+- new version
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 4.2.3-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
