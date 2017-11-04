@@ -9,9 +9,10 @@ BuildRequires: jline
 Requires: jline libreadline-java
 AutoReq: yes, nopython
 %filter_from_requires /^.usr.bin.run/d
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global cpython_version    2.7
 %global scm_tag            v2.7.1b3
 
@@ -21,7 +22,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:                      jython
 Version:                   2.7.1
-Release:                   alt1_0.1.b3jpp8
+Release:                   alt1_0.3.b3jpp8
 Summary:                   Jython is an implementation of Python written in pure Java.
 License:                   ASL 1.1 and BSD and CNRI and JPython and Python
 URL:                       http://www.jython.org/
@@ -37,6 +38,8 @@ Patch0:                    jython-cachedir.patch
 Patch1:                    jython-dont-validate-pom.patch
 # Dep for this feature is not yet in Fedora
 Patch2:                    jython-no-carrotsearch-sizeof.patch
+# Tweak launcher script
+Patch3:                    jython-launcher.patch
 
 Requires:                  python >= %{cpython_version}
 Requires:                  antlr32-java
@@ -55,7 +58,7 @@ Requires:                  netty
 # We build with ant, but install with maven
 BuildRequires:             javapackages-local
 BuildRequires:             ant
-BuildRequires:             junit
+BuildRequires:             ant-junit
 BuildRequires:             glassfish-servlet-api
 BuildRequires:             python >= %{cpython_version}
 BuildRequires:             antlr32-tool
@@ -68,6 +71,9 @@ BuildRequires:             jnr-netdb
 BuildRequires:             jnr-posix >= 3.0.9
 BuildRequires:             jffi
 BuildRequires:             jline >= 2.12.1
+BuildRequires:             jansi
+BuildRequires:             icu4j
+BuildRequires:             netty
 
 BuildArch:                 noarch
 Source44: import.info
@@ -93,23 +99,18 @@ mix the two languages both during development and in shipping products.
 %package javadoc
 Group: Development/Java
 Summary:           Javadoc for %{name}
+# Obsoletes/Provides added in F25
+Obsoletes:         %{name}-manual = %{version}-%{release}
+Provides:          %{name}-manual < %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
 API documentation for %{name}.
 
-%package manual
-Group: Development/Java
-Summary:           Manual for %{name}
-BuildArch: noarch
-
-%description manual
-Usage documentation for %{name}.
-
 %package demo
 Group: Development/Java
 Summary:           Demo for %{name}
-Requires:          %{name} = %{version}
+Requires:          %{name} = %{?epoch:%epoch:}%{version}-%{release}
 AutoReq: yes, nopython
 #AutoProv: yes, nopython
 
@@ -121,6 +122,7 @@ Demonstrations and samples for %{name}.
 %patch2 -R -p1
 %patch0
 %patch1
+%patch3
 
 rm -rf extlibs/*
 
@@ -128,6 +130,7 @@ rm -rf extlibs/*
 sed -i -e '/<javadoc/a encoding="UTF-8" additionalparam="-Xdoclint:none"' build.xml
 
 %build
+# Symlink build-time libs
 build-jar-repository -p -s extlibs \
   antlr32/antlr antlr32/antlr-runtime stringtemplate antlr \
   jnr-constants jnr-ffi jnr-netdb jnr-posix jffi jline/jline \
@@ -137,7 +140,7 @@ build-jar-repository -p -s extlibs \
 ant \
   -Djython.dev.jar=jython.jar \
   -Dhas.repositories.connection=false \
-  developer-build javadoc
+  javatest javadoc
 
 # remove shebangs from python files
 find dist -type f -name '*.py' | xargs sed -i "s:#!\s*/usr.*::"
@@ -147,6 +150,13 @@ pushd maven
 ant -Dproject.version=%{version} install
 popd
 
+# Symlink run-time libs
+rm dist/javalib/*.jar
+build-jar-repository -p -s dist/javalib \
+  antlr32/antlr-runtime-3.2 objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util guava \
+  jnr-constants jnr-ffi jnr-netdb jnr-posix jffi jline/jline jansi/jansi icu4j/icu4j \
+  netty/netty-buffer netty/netty-codec netty/netty-common netty/netty-handler netty/netty-transport
+
 # request maven artifact installation
 %mvn_artifact build/maven/jython-%{version}.pom dist/jython.jar
 %mvn_alias org.python:jython org.python:jython-standalone
@@ -155,58 +165,31 @@ popd
 # install maven artifacts
 %mvn_install -J dist/Doc/javadoc
 
-# data
+# jython home dir
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
-# don't distribute tests
+ln -s %{_javadir}/%{name}/jython.jar $RPM_BUILD_ROOT%{_datadir}/%{name}
+cp -pr dist/javalib $RPM_BUILD_ROOT%{_datadir}/%{name}
+rm dist/bin/jython_regrtest.bat
+cp -pr dist/bin $RPM_BUILD_ROOT%{_datadir}/%{name}
+install -m 644 dist/registry $RPM_BUILD_ROOT%{_datadir}/%{name}
+# libs without tests
 rm -rf dist/Lib/{distutils/tests,email/test,json/tests,test,unittest/test}
-# libs
 cp -pr dist/Lib $RPM_BUILD_ROOT%{_datadir}/%{name}
 # demo
 cp -pr Demo $RPM_BUILD_ROOT%{_datadir}/%{name}
-# manual
-cp -pr Doc $RPM_BUILD_ROOT%{_datadir}/%{name}
+# javadoc
+install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}/Doc
+ln -s %{_javadocdir}/%{name} $RPM_BUILD_ROOT%{_datadir}/%{name}/Doc/javadoc
 
-# registry
-install -m 644 registry $RPM_BUILD_ROOT%{_datadir}/%{name}
 # scripts
 install -d $RPM_BUILD_ROOT%{_bindir}
-
-cat > $RPM_BUILD_ROOT%{_bindir}/%{name} << EOF
-#!/bin/sh
-
-# Source functions library
-. %{_datadir}/java-utils/java-functions
-
-# Source system prefs
-if [ -f %{_sysconfdir}/%{name}.conf ] ; then
-  . %{_sysconfdir}/%{name}.conf
-fi
-
-# Source user prefs
-if [ -f \$HOME/.%{name}rc ] ; then
-  . \$HOME/.%{name}rc
-fi
-
-# Configuration
-MAIN_CLASS=org.python.util.jython
-BASE_FLAGS=-Dpython.home=%{_datadir}/jython
-BASE_JARS="jython/jython guava jnr-constants jnr-ffi jnr-netdb jnr-posix jffi jline/jline jansi/jansi antlr32/antlr-runtime objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util commons-compress icu4j netty/netty-buffer netty/netty-codec netty/netty-common netty/netty-handler netty/netty-transport"
-
-# Set parameters
-set_jvm
-set_classpath \$BASE_JARS
-set_flags \$BASE_FLAGS
-set_options \$BASE_OPTIONS
-
-# Let's start
-run "\$@"
-EOF
+ln -s %{_datadir}/%{name}/bin/jython $RPM_BUILD_ROOT%{_bindir}
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/jython.conf`
 touch $RPM_BUILD_ROOT/etc/jython.conf
 
-mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/jython/cachedir/packages
-ln -s $(relative %{_localstatedir}/jython/cachedir %{_datadir}/jython/) $RPM_BUILD_ROOT%{_datadir}/jython/
+mkdir -p $RPM_BUILD_ROOT%{_var}/lib/jython/cachedir/packages
+ln -s $(relative %{_var}/lib/jython/cachedir %{_datadir}/jython/) $RPM_BUILD_ROOT%{_datadir}/jython/
 
 %post 
 
@@ -217,7 +200,7 @@ echo | /usr/bin/jython ||:
 # cleanup
 if [ "$1" -eq 0 ]
 then
-    rm %{_localstatedir}/jython/cachedir/packages/*.{pkc,idx}
+    rm %{_var}/lib/jython/cachedir/packages/*.{pkc,idx}
     find /usr/share/jython/Lib -name "*py.class" -delete
 fi || :
 
@@ -226,21 +209,20 @@ fi || :
 %doc ACKNOWLEDGMENTS NEWS README.txt
 %doc LICENSE.txt
 %attr(0755,root,root) %{_bindir}/%{name}
-%dir %{_datadir}/java/%{name}
 %dir %{_datadir}/%{name}
+%{_datadir}/%{name}/bin
+%{_datadir}/%{name}/javalib
+%{_datadir}/%{name}/jython.jar
 %{_datadir}/%{name}/Lib
 %{_datadir}/%{name}/registry
 %config(noreplace,missingok) /etc/jython.conf
-
-%{_localstatedir}/jython
+# package cache
+%{_var}/lib/jython
 # is it worth ghosting?
-#%ghost %{_localstatedir}/jython/cachedir/packages
+#%ghost %{_var}/lib/jython/cachedir/packages
 %{_datadir}/jython/cachedir
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
-
-%files manual
 %doc LICENSE.txt
 %{_datadir}/%{name}/Doc
 
@@ -249,6 +231,9 @@ fi || :
 %{_datadir}/%{name}/Demo
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt1_0.3.b3jpp8
+- fixed build
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt1_0.1.b3jpp8
 - new version
 
