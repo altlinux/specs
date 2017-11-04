@@ -8,8 +8,8 @@
 %define oversion 10_0
 
 Name:    icebw
-Version: 12.6
-Release: alt2
+Version: 12.14
+Release: alt1
 Summary: Free financial accounting system with GTK interface
 
 Group:   Office
@@ -23,7 +23,10 @@ Source1: %name.watch
 Patch1:	 %name-fix-pathes.patch
 Patch2:  %name-alt-fix-missing-global-variables.patch
 
-BuildRequires: gcc-c++ libMySQL-devel libgtk+3-devel
+BuildRequires(pre): cmake
+BuildRequires: gcc-c++
+BuildRequires: libMySQL-devel
+BuildRequires: libgtk+3-devel
 
 %description
 Free financial accounting system.
@@ -32,22 +35,34 @@ Free financial accounting system.
 %setup -q -c
 %patch1 -p2
 %patch2 -p2
-subst "s|/usr/share/locale/ru/|%buildroot%_datadir/locale/uk/|g" locale/Makefile
+subst "s|/usr/share/locale/ru/|%buildroot%_datadir/locale/uk/|g" locale/uk_ru
 
 %build
-export LANG=%build_lang
+%cmake_insource
 %make_build
 
 %install
-mkdir -p %buildroot%_bindir %buildroot%_datadir/locale/uk/LC_MESSAGES/
-make install install \
-    BINDIR=%buildroot%_bindir
+mkdir -p %buildroot%_bindir
+find buhg_g -perm 0755 -a -name i_\* -a ! -name \*.dir -exec cp -v '{}' %buildroot%_bindir ';'
+mkdir -p %buildroot%_datadir/locale/uk/LC_MESSAGES
+pushd locale
+./uk_ru
+popd
+mkdir -p %buildroot%_desktopdir
+cp -v desktop/applications/*.desktop %buildroot%_desktopdir
+mkdir -p %buildroot%_pixmapsdir
+cp -v desktop/pixmaps/*.png %buildroot%_pixmapsdir
 
 %files
 %_bindir/*
+%_desktopdir/*.desktop
+%_pixmapsdir/*.png
 %_datadir/locale/uk/LC_MESSAGES/%oname.mo
 
 %changelog
+* Sat Nov 04 2017 Andrey Cherepanov <cas@altlinux.org> 12.14-alt1
+- new version 12.14
+
 * Mon Feb 06 2017 Andrey Cherepanov <cas@altlinux.org> 12.6-alt2
 - Prepare for cronbuild
 
