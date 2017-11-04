@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jetty-alpn-api
 Version:        1.1.3
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Jetty ALPN API
 License:        ASL 2.0 and EPL
 URL:            http://www.eclipse.org/jetty
@@ -64,6 +64,9 @@ cp %{SOURCE1} %{SOURCE2} .
 
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_3jpp8
+- new version
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_2jpp8
 - new jpp release
 
