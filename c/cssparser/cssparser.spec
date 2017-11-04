@@ -3,14 +3,15 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:          cssparser
-Version:       0.9.18
-Release:       alt1_2jpp8
+Version:       0.9.20
+Release:       alt1_3jpp8
 Summary:       CSS Parser
-License:       LGPLv2+ 
+License:       ASL 2.0
 URL:           http://cssparser.sourceforge.net/
 # sh ./fetch-cssparser.sh <VERSION>
 Source0:       cssparser-%{version}.tar.xz
@@ -40,7 +41,8 @@ BuildArch: noarch
 API documentation for %{name}.
 
 %prep
-%setup -q 
+%setup -q
+
 %pom_remove_plugin :maven-checkstyle-plugin
 # unused artefact
 %pom_remove_plugin :maven-source-plugin
@@ -63,6 +65,9 @@ rm src/test/java/com/steadystate/css/parser/SACParserCSS3Test.java
 %doc LICENSE.txt
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.9.20-alt1_3jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.9.18-alt1_2jpp8
 - new version
 
