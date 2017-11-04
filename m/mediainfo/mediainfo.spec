@@ -1,6 +1,6 @@
 Name: mediainfo
-Version: 0.7.99
-Release: alt2
+Version: 17.10
+Release: alt1
 
 Group: File tools
 Summary: MediaInfo supplies information about a video or audio file
@@ -118,7 +118,7 @@ grep -v '^Encoding=' Project/GNU/GUI/mediainfo-gui.kde4.desktop >%buildroot%_K4s
 %doc ReadMe_GUI_Linux.txt
 %_bindir/%name-gui
 %_desktopdir/%name-gui.desktop
-%_datadir/appdata/%name-gui.appdata.xml
+%_datadir/metainfo/%name-gui.metainfo.xml
 %_datadir/apps/konqueror/servicemenus/%name-gui.desktop
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
@@ -129,6 +129,9 @@ grep -v '^Encoding=' Project/GNU/GUI/mediainfo-gui.kde4.desktop >%buildroot%_K4s
 %_K4srv/ServiceMenus/%name-gui.desktop
 
 %changelog
+* Sat Nov 04 2017 Yuri N. Sedunov <aris@altlinux.org> 17.10-alt1
+- 17.10
+
 * Wed Sep 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.99-alt2
 - removed obsolete gui-KDE3 subpackage
 
