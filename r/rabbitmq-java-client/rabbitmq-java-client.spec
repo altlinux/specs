@@ -2,16 +2,17 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 25
+%define fedora 26
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %bcond_without buildtex
 
 %global jarname   rabbitmq-client
@@ -21,8 +22,8 @@ BuildRequires: jpackage-generic-compat
 #global failjunit yes
 
 Name:          rabbitmq-java-client
-Version:       3.6.0
-Release:       alt1_2jpp8
+Version:       3.6.5
+Release:       alt1_1jpp8
 Summary:       Java Advanced Message Queue Protocol client library
 License:       ASL 2.0 and GPLv2+ and MPLv1.1
 URL:           http://www.rabbitmq.com/java-client.html
@@ -40,6 +41,11 @@ BuildRequires: %{_bindir}/pdflatex
 %endif
 
 %if 0%{?fedora}
+# for tests execution
+BuildRequires:  rabbitmq-server
+BuildRequires:  coreutils
+BuildRequires:  procps sysvinit-utils
+
 Requires:       rabbitmq-server
 Requires:       activemq
 %endif
@@ -58,7 +64,8 @@ to use with the client library.
 %package doc
 Group: Development/Java
 Summary:       Documentation for %{name}
-Requires:      %{name} = %{version}
+Requires:      %{name} = %{version}-%{release}
+BuildArch: noarch
 
 %description doc
 This package contains additional documentation for %{name}.
@@ -106,27 +113,29 @@ find . -name \*.tex -print -exec 'texi2html {} ; pdflatex {}' \; -delete
 find . -not -name channels.\* -delete
 
 
+%install
+%mvn_artifact build/bundle/amqp-client-%{version}.pom build/bundle/amqp-client-%{version}.jar
+%mvn_install -J build/doc/api
+
+
 %check
 ant test-jar
 
-# client tests need a mock server
-export RABBITMQ_LOG_BASE=.
-export RABBITMQ_MNESIA_BASE=.
-export RABBITMQ_NODENAME=testrabbit
-su rabbitmq -c 'rabbitmq-server -detach' &disown
-
 #ant test-suite
 #ant -Dtest=testDoubleDeletionExchange test-single
-ant test-server
-ant test-client
+#ant test-server
+
+# client tests need a mock server, ugly hackery :)
+export RABBITMQ_LOG_BASE=.
+export RABBITMQ_MNESIA_BASE=.
+#%{_prefix}/lib/rabbitmq/bin/rabbitmq-server start -detached
+#pgrep -cf rabbitmq_server && ant test-client
+
 # FIXME functional tests failure ahead!
 #ant test-functional
 #ant test-functional-and-server-with-ha
 
-
-%install
-%mvn_artifact build/bundle/amqp-client-%{version}.pom build/bundle/amqp-client-%{version}.jar
-%mvn_install -J build/doc/api
+#pkill -f rabbitmq_server ||:
 
 
 %files -f .mfiles
@@ -141,6 +150,9 @@ ant test-client
 
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 3.6.5-alt1_1jpp8
+- new version
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 3.6.0-alt1_2jpp8
 - new version
 
