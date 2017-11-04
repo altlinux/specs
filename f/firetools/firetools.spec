@@ -1,7 +1,7 @@
 Summary: Firejail graphical user interface
 Name: firetools
 Version: 0.9.50
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: Development/Tools
 Source: %name-%version.tar
@@ -9,9 +9,10 @@ Url: https://github.com/netblue30/firetools
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
+BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel
 Requires: firejail
-# qt5-qtsvg
+Requires: libqt5-svg
 
 %description
 Firetools is the graphical user interface of Firejail.
@@ -35,14 +36,17 @@ Control Groups.
 %find_lang %name
 
 %files -f %name.lang
-%doc README* RELNOTES COPYING
-%exclude %_docdir/%name
+%_docdir/%name
+%_libexecdir/%name
 %_bindir/*
 %_man1dir/*
-%_desktopdir/firetools.desktop
-%_pixmapsdir/firetools.png
+%_desktopdir/*.desktop
+%_pixmapsdir/*.png
 
 %changelog
+* Sat Nov 04 2017 Anton Midyukov <antohami@altlinux.org> 0.9.50-alt2
+- Fix build error (Closes: 34129). Thanks Michael A. Kangin
+
 * Thu Oct 26 2017 Anton Midyukov <antohami@altlinux.org> 0.9.50-alt1
 - new version 0.9.50
 
