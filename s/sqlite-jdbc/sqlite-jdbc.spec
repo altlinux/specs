@@ -1,18 +1,19 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 %define power64 ppc64
-%global githash b6efb5f83befbc8ec297c9577451390d9e5b0447
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+#%% global githash
 # empty debuginfo
 %global debug_package %nil
 
 Name:          sqlite-jdbc
-Version:       3.8.11.2
-Release:       alt1_4jpp8
+Version:       3.15.1
+Release:       alt1_5jpp8
 Summary:       SQLite JDBC library
 
 # ASL 2.0:
@@ -50,9 +51,10 @@ Summary:       SQLite JDBC library
 
 License:       ASL 2.0 and BSD and ISC
 URL:           https://github.com/xerial/sqlite-jdbc
-Source0:       https://github.com/xerial/sqlite-jdbc/archive/%{githash}/%{name}-%{githash}.tar.gz
-Patch0:        %{name}-build.patch
+Source0:       https://github.com/xerial/sqlite-jdbc/archive/%{version}/%{name}-%{version}.tar.gz
+Patch0:        %{name}-3.15.1-build.patch
 
+BuildRequires: gcc-common
 BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
@@ -61,6 +63,7 @@ BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires: libsqlite3-devel
 Source44: import.info
 Patch33: sqlite-jdbc-alt-linkage.patch
+
 
 %description
 SQLite JDBC, is a library for accessing and
@@ -75,7 +78,7 @@ BuildArch:     noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n %{name}-%{githash}
+%setup -q -n %{name}-%{version}
 # Cleanup
 find . -name "*.class" -delete
 # Do not delete test resources
@@ -86,14 +89,14 @@ find -name "*.jnilib" -print -delete
 find -name "*.dll" -print -delete
 find -name "*.so" -print -delete
 find -name "*.h" -print -delete
-rm -r archive/*
+rm -r archive/* docker/*
 
 # extensions won't work with our sqlite (should be patched)
-# or use http://www.sqlite.org/2015/sqlite-amalgamation-3080900.zip
-# ./sqlite-amalgamation-3080900/shell.c
-# ./sqlite-amalgamation-3080900/sqlite3.c
-# ./sqlite-amalgamation-3080900/sqlite3.h
-# ./sqlite-amalgamation-3080900/sqlite3ext.h
+# or use http://www.sqlite.org/2016/sqlite-amalgamation-3150100.zip
+# ./sqlite-amalgamation-3150100/shell.c
+# ./sqlite-amalgamation-3150100/sqlite3.c
+# ./sqlite-amalgamation-3150100/sqlite3.h
+# ./sqlite-amalgamation-3150100/sqlite3ext.h
 # disable extensions and remove tests for them
 # java.sql.SQLException: [SQLITE_ERROR] SQL error or missing database (no such function: radians)
 rm -r src/test/java/org/sqlite/ExtensionTest.java
@@ -111,7 +114,8 @@ sed -i '/SQLiteDataSourceTest/d' src/test/java/org/sqlite/AllTests.java
 
 %patch0 -p1
 
-# Build JNI library
+# Build JNI library. Use native task to avoid to run multiple, conflicting,
+# operations at the same time
 %pom_add_plugin org.apache.maven.plugins:maven-antrun-plugin:1.7 . '
 <dependencies>
  <dependency>
@@ -138,7 +142,8 @@ sed -i '/SQLiteDataSourceTest/d' src/test/java/org/sqlite/AllTests.java
         JAVA_HOME=%{_jvmdir}/java
         JAVA=%{_jvmdir}/java/bin/java
         JAVAC=%{_jvmdir}/java/bin/javac
-        JAVAH=%{_jvmdir}/java/bin/javah"/>
+        JAVAH=%{_jvmdir}/java/bin/javah
+        native"/>
        </exec>
       </target>
     </configuration>
@@ -148,18 +153,24 @@ sed -i '/SQLiteDataSourceTest/d' src/test/java/org/sqlite/AllTests.java
   </execution>
 </executions>'
 
+# Used for build JNI library
+cp -p src/main/java/org/sqlite/util/OSInfo.java lib/org/sqlite/
+sed -i "s|package org.sqlite.util;|package org.sqlite;|" lib/org/sqlite/OSInfo.java
+
 %mvn_file org.xerial:%{name} %{name}
 %patch33 -p0
 
 %build
 
-# Used for build JNI library
-cp -p src/main/java/org/sqlite/util/OSInfo.java lib
-sed -i "s|package org.sqlite.util;|package org.sqlite;|" lib/OSInfo.java
+%ifarch %{arm}
+opts='-f'
+%endif
 
-CCFLAGS="${CFLAGS:-%optflags}"
-export CCFLAGS
-%mvn_build -- -Dmaven.test.failure.ignore=true
+sed -i 's|$(CCFLAGS) -I|$(CCFLAGS) $(CFLAGS) -I|' Makefile
+CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ;
+sed -i 's|$(CCFLAGS) -o|$(CCFLAGS) $(LDFLAGS) -o|' Makefile
+LDFLAGS="${LDFLAGS:-%__global_ldflags}"; export LDFLAGS;
+%mvn_build $opts -- -Dmaven.test.failure.ignore=true
 
 %install
 %mvn_install
@@ -172,6 +183,9 @@ export CCFLAGS
 %doc LICENSE* NOTICE
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 3.15.1-alt1_5jpp8
+- new version
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.8.11.2-alt1_4jpp8
 - new fc release
 
