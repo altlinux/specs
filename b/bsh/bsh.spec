@@ -3,9 +3,10 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Copyright (c) 2000-2007, JPackage Project
 # All rights reserved.
 #
@@ -36,31 +37,39 @@ BuildRequires: jpackage-generic-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+%global reltag b6
+
 Name:           bsh
-Version:        1.3.0
-Release:        alt6_35jpp8
+Version:        2.0
+Release:        alt1_5.b6jpp8
 Epoch:          0
 Summary:        Lightweight Scripting for Java
-License:        (SPL or LGPLv2+) and Public Domain
-Source0:        %{name}-%{version}-src.tar.bz2
-#cvs -d:pserver:anonymous@beanshell.cvs.sourceforge.net:/cvsroot/beanshell login
-#cvs -z3 -d:pserver:anonymous@beanshell.cvs.sourceforge.net:/cvsroot/beanshell export -r rel_1_3_0_final BeanShell
-#tar cjf bsh-1.3.0-src.tar.bz2 BeanShell
-Source1:        bsh-1.3.0.pom
-Source2:        bsh-bsf-1.3.0.pom
-Source3:        %{name}-desktop.desktop
+URL:            http://www.beanshell.org/
+# bundled asm is BSD
+# bsf/src/bsh/util/BeanShellBSFEngine.java is public-domain
+License:        ASL 2.0 and BSD and Public Domain
+BuildArch:      noarch
+Source0:        https://github.com/beanshell/beanshell/archive/%{version}%{reltag}.tar.gz
+Source1:        %{name}-desktop.desktop
 
-Patch0:         %{name}-build.patch
-Patch1:         %{name}-xsl-fixes.patch
-BuildRequires:  java-devel
+BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  bsf
+BuildRequires:  junit
+BuildRequires:  javacc
 BuildRequires:  ImageMagick
 BuildRequires:  desktop-file-utils
-BuildRequires:  servlet
+BuildRequires:  glassfish-servlet-api
 Requires:       bsf
-URL:            http://www.beanshell.org/
-BuildArch:      noarch
+Requires:       jline
+
+Provides:       %{name}-utils = %{epoch}:%{version}-%{release}
+Obsoletes:      %{name}-utils < 0:2.0
+Obsoletes:      %{name}-demo < 0:2.0
+
+# bsh uses small subset of modified (shaded) classes from ancient version of
+# objecweb-asm under asm directory
+Provides:       bundled(objectweb-asm) = 1.3.6
 Source44: import.info
 
 %description
@@ -99,155 +108,79 @@ BuildArch: noarch
 %description javadoc
 This package provides %{summary}.
 
-%package demo
-Group: Development/Java
-Summary:        Demo for %{name}
-AutoReqProv:    no
-Requires:       bsh-utils = %{epoch}:%{version}
-
-%description demo
-Demonstrations and samples for %{name}.
-
-%package utils
-Group: Development/Java
-Summary:        %{name} utilities
-Requires:       bsh-utils = %{epoch}:%{version}
-Requires:       jline1
-Provides:       %{name}-desktop = %{epoch}:%{version}-%{release}
-
-%description utils
-%{name} utilities.
-
 %prep
-%setup -q -n BeanShell
-%patch0 -p1
-%patch1 -p1
-for j in $(find . -name "*.jar"); do
-    mv $j $j.no
-done
-# remove all CVS files
-for dir in `find . -type d -name CVS`; do rm -rf $dir; done
-for file in `find . -type f -name .cvsignore`; do rm -rf $file; done
-# fix rpmlint spurious-executable-perm warnings
-for i in backbutton forwardbutton homebutton remoteconsole upbutton; do
-    chmod 644 docs/images/$i.gif
-done
+%setup -q -n beanshell-%{version}%{reltag}
+
+rm -r lib
+find -name '*.jar' -delete
+find -name '*.class' -delete
+
+# those are now included in JDK itself
+rm -r engine/javax-src
+
+sed -i 's,org.apache.xalan.xslt.extensions.Redirect,http://xml.apache.org/xalan/redirect,' docs/manual/xsl/*.xsl
+
+%mvn_alias :bsh bsh:bsh bsh:bsh-bsf org.beanshell:bsh
+
+%mvn_file : %{name}
 
 %build
-mkdir -p lib
-pushd lib
-ln -sf $(build-classpath bsf)
-ln -sf $(build-classpath servlet)
-popd
-ant="ant -Dant.build.javac.source=1.5"
-$ant test dist
-(cd docs/faq && $ant)
-(cd docs/manual && $ant)
+mkdir lib
+build-jar-repository lib bsf javacc junit glassfish-servlet-api
+
+ant test dist
 
 %install
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-for mod in '' bsf classpath commands core reflect util; do
-    install -p -m 644 dist/%{name}${mod:+-${mod}}-%{version}.jar \
-             $RPM_BUILD_ROOT%{_javadir}/%{name}${mod:+-${mod}}.jar
-done
+%mvn_artifact pom.xml dist/%{name}-%{version}%{reltag}.jar
 
-# poms
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-install -pm 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-bsf.pom
+%mvn_install -J javadoc
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a org.beanshell:%{name}
-%add_maven_depmap JPP-%{name}-bsf.pom %{name}-bsf.jar
-
-# manual
-find docs -name ".cvswrappers" -exec rm -f {} \;
-find docs -name "*.xml" -exec rm -f {} \;
-find docs -name "*.xsl" -exec rm -f {} \;
-find docs -name "*.log" -exec rm -f {} \;
-(cd docs/manual && mv html/* .)
-(cd docs/manual && rm -rf html)
-(cd docs/manual && rm -rf xsl)
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 # menu entry
 desktop-file-install --mode=644 \
-  --dir=$RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE3}
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps
+  --dir=%{buildroot}%{_datadir}/applications %{SOURCE1}
+install -d -m 755 %{buildroot}%{_datadir}/pixmaps
 convert src/bsh/util/lib/icon.gif \
-  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps/bsh.png
+  %{buildroot}%{_datadir}/pixmaps/bsh.png
 
-# demo
-for i in `find tests -name \*.bsh`; do
-  sed -ri '1s,^#!(/(usr/)?bin/java bsh\.Interpreter|/bin/sh),#!/usr/bin/env %{_bindir}/%{name},' $i
-  if head -1 $i | grep '#!/usr/bin/env %{_bindir}/%{name}' >/dev/null; then
-    chmod 755 $i
-  fi
-done
-chmod 755 tests/Template
-cat > one << EOF
-#!/bin/sh
-
-EOF
-cat tests/Interactive/reload/one >> one
-cat one > tests/Interactive/reload/one
-rm one
-cat > two << EOF
-#!/bin/sh
-
-EOF
-cat tests/Interactive/reload/two >> two
-cat two > tests/Interactive/reload/two
-rm two
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
-cp -pr tests $RPM_BUILD_ROOT%{_datadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}/webapps
-install -m 644 dist/bshservlet.war $RPM_BUILD_ROOT%{_datadir}/%{name}/webapps
-install -m 644 dist/bshservlet-wbsh.war $RPM_BUILD_ROOT%{_datadir}/%{name}/webapps
+install -d -m 755 %{buildroot}%{_datadir}/%{name}
+install -d -m 755 %{buildroot}%{_datadir}/%{name}/webapps
+install -m 644 dist/bshservlet.war %{buildroot}%{_datadir}/%{name}/webapps
+install -m 644 dist/bshservlet-wbsh.war %{buildroot}%{_datadir}/%{name}/webapps
 
 # scripts
-install -d $RPM_BUILD_ROOT%{_bindir}
+install -d %{buildroot}%{_bindir}
 
-%jpackage_script bsh.Interpreter "\${BSH_DEBUG:+-Ddebug=true}" jline.ConsoleRunner %{name}:jline1/jline-1 %{name} true
-%jpackage_script bsh.Console "\${BSH_DEBUG:+-Ddebug=true}" "" %{name} %{name}-console true
+%jpackage_script bsh.Interpreter "\${BSH_DEBUG:+-Ddebug=true}" jline.console.internal.ConsoleRunner %{name}:jline %{name} true
+%jpackage_script bsh.Console "\${BSH_DEBUG:+-Ddebug=true}" "" bsh bsh-console true
 
-cat > $RPM_BUILD_ROOT%{_bindir}/%{name}doc << EOF
-#!/usr/bin/env %{_bindir}/%{name}
-EOF
-cat scripts/bshdoc.bsh >> $RPM_BUILD_ROOT%{_bindir}/%{name}doc
+echo '#!%{_bindir}/bsh' > %{buildroot}%{_bindir}/bshdoc
+cat scripts/bshdoc.bsh >> %{buildroot}%{_bindir}/bshdoc
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 %files -f .mfiles
-%doc src/License.txt
-%doc src/Changes.html src/README.txt
-%{_javadir}/*
-%dir %{_datadir}/%{name}
-%{_datadir}/%{name}/webapps
+%doc LICENSE NOTICE
+%doc README.md src/Changes.html src/CodeMap.html docs/faq/faq.html
+%attr(0755,root,root) %{_bindir}/%{name}*
+%{_datadir}/applications/%{name}-desktop.desktop
+%{_datadir}/pixmaps/%{name}.png
+%{_datadir}/%{name}
 %config(noreplace,missingok) /etc/java/%{name}.conf
 
 %files manual
-%doc src/License.txt
-%doc docs/*
+%doc docs/manual/html
+%doc docs/manual/images/*.jpg
+%doc docs/manual/images/*.gif
+%doc LICENSE NOTICE
 
-%files javadoc
-%doc src/License.txt
-%{_javadocdir}/%{name}
-
-%files demo
-%doc tests/README.txt tests/Interactive/README
-%{_datadir}/%{name}/*
-
-%files utils
-%attr(0755,root,root) %{_bindir}/%{name}*
-%{_datadir}/applications/%{name}-desktop.desktop
-%{_datadir}/icons/hicolor/*x*/apps/%{name}.png
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_5.b6jpp8
+- new version
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.0-alt6_35jpp8
 - new fc release
 
