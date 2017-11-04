@@ -2,23 +2,24 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name spock
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 0.7
 %global namedreltag  -groovy-2.0
 %global namedversion %{version}%{?namedreltag}
 %global nameddottag  %(echo %{?namedreltag} | tr - . )
 Name:          spock
 Version:       0.7
-Release:       alt3_0.14.groovy.2.0jpp8
+Release:       alt3_0.17.groovy.2.0jpp8
 Summary:       A testing and specification framework
 License:       ASL 2.0
 URL:           https://github.com/spockframework/spock
 Source0:       https://github.com/spockframework/spock/archive/%{name}-%{namedversion}.tar.gz
 Patch0:        0001-Build-with-Gradle-local-mode.patch
+Patch1:        spock-0.7-core-port-to-groovy2.4.8.patch
 
 BuildRequires: gradle-local
 BuildRequires: apache-parent
@@ -34,7 +35,6 @@ BuildRequires: hamcrest
 BuildRequires: junit
 BuildRequires: objenesis
 BuildRequires: objectweb-asm
-BuildRequires: /usr/bin/perl
 
 Requires:      java
 BuildArch:     noarch
@@ -64,12 +64,9 @@ testing Guice 2/3 based applications.
 %prep
 %setup -q -n %{name}-%{name}-%{namedversion}
 %patch0 -p1
+%patch1 -p1
 find . -name "*.class" -delete
 find . -name "*.jar" -delete
-
-# Enable local mode
-perl -p -e "s/mavenCentral/xmvn()\n    mavenCentral/" build.gradle > build.gradle.temp
-mv build.gradle.temp build.gradle
 
 sed -i "s|sourceCompatibility = 1.5|sourceCompatibility = 1.6|" build.gradle
 
@@ -91,6 +88,9 @@ rm -rf spock-maven spock-specs spock-spring spock-tapestry spock-unitils
 %files guice -f .mfiles-spock-guice
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0.7-alt3_0.17.groovy.2.0jpp8
+- fixed build
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.7-alt3_0.14.groovy.2.0jpp8
 - new fc release
 
