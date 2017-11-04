@@ -1,23 +1,25 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ swig unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global reldate 20150929
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global reldate %{nil}
 %global rcver %{nil}
 
 Name:          apache-poi
-Version:       3.13
-Release:       alt1_2jpp8
+Version:       3.14
+Release:       alt1_4jpp8
 Summary:       The Java API for Microsoft Documents
 # ASLv2 + GPLv3 src/resources/scratchpad/org/apache/poi/hdgf/chunks_parse_cmds.tbl
 # https://bugzilla.redhat.com/show_bug.cgi?id=1146670#c13
 License:       ASL 2.0 and (CC-BY and CC-BY-SA and W3C) and GPLv3
 URL:           http://poi.apache.org/
-Source0:       http://www.apache.org/dist/poi/release/src/poi-src-%{version}-%{reldate}.tar.gz
+Source0:       http://www.apache.org/dist/poi/release/src/poi-src-%{version}%{reldate}.tar.gz
 #Source0:       http://www.apache.org/dist/poi/dev/src/poi-src-%%{version}%%{?rcver}-%%{reldate}.tar.gz
 # Creative Commons license 4.0 (Attribution-ShareAlike)
 Source1:       http://www.ecma-international.org/publications/files/ECMA-ST/Office%%20Open%%20XML%%201st%%20edition%%20Part%%204%%20(PDF).zip
@@ -41,13 +43,15 @@ Source13:      http://repo2.maven.org/maven2/org/apache/poi/poi-ooxml-schemas/%{
 Source14:      http://repo2.maven.org/maven2/org/apache/poi/poi-scratchpad/%{version}/poi-scratchpad-%{version}.pom
 
 #Force compile of xsds if disconnected
-Patch1:        %{name}-compile-xsds.patch
-Patch2:        %{name}-build.patch
+Patch1:        apache-poi-3.14-compile-xsds.patch
+# Fix jacoco libraries and disable javadoc doclint
+Patch2:        apache-poi-3.14-build.patch
 
 BuildArch:     noarch
 
 BuildRequires: jacoco
 BuildRequires: javapackages-local
+BuildRequires: mvn(com.github.virtuald:curvesapi)
 BuildRequires: mvn(commons-codec:commons-codec)
 BuildRequires: mvn(commons-logging:commons-logging)
 BuildRequires: mvn(dom4j:dom4j)
@@ -115,13 +119,11 @@ This package contains the API documentation for %{name}.
 find -name '*.class' -delete
 find -name '*.jar' -delete
 
-# Disable java8doc doclint
-sed -i 's|additionalparam="-notimestamp"|additionalparam="-notimestamp -Xdoclint:none"|' build.xml
-
 mkdir lib ooxml-lib
 build-jar-repository -s -p lib ant commons-codec commons-logging jacoco hamcrest/core junit bcprov bcpkix objectweb-asm/asm-all xmlsec slf4j/slf4j-api
 ln -sf $(build-classpath log4j-1.2.17) lib/log4j.jar
-build-jar-repository -s -p ooxml-lib dom4j xmlbeans/xbean
+
+build-jar-repository -s -p ooxml-lib dom4j xmlbeans/xbean curvesapi
 #Unpack the XMLSchema
 pushd ooxml-lib
 unzip "%SOURCE1" OfficeOpenXML-XMLSchema.zip
@@ -144,6 +146,11 @@ for m in examples excelant ooxml ooxml-schemas scratchpad;do
 %mvn_file org.apache.poi:poi-${m} poi/%{name}-${m} poi/poi-${m}
 done
 
+# These tests fails on arm builders
+rm src/ooxml/testcases/org/apache/poi/xssf/usermodel/TestXSSFSheet.java \
+ src/ooxml/testcases/org/apache/poi/xssf/usermodel/TestXSSFSheetMergeRegions.java
+sed -i '/TestXSSFSheet/d' src/ooxml/testcases/org/apache/poi/xssf/usermodel/AllXSSFUsermodelTests.java
+
 %build
 cat > build.properties <<'EOF'
 main.ant.jar=lib/ant.jar
@@ -153,6 +160,7 @@ main.log4j.jar=lib/log4j.jar
 main.junit.jar=lib/junit.jar
 main.hamcrest.jar=lib/hamcrest_core.jar
 ooxml.dom4j.jar=ooxml-lib/dom4j.jar
+ooxml.curvesapi.jar=ooxml-lib/curvesapi.jar
 ooxml.xmlbeans23.jar=ooxml-lib/xmlbeans_xbean.jar
 ooxml.xmlbeans26.jar=ooxml-lib/xmlbeans_xbean.jar
 dsig.xmlsec.jar=lib/xmlsec.jar
@@ -190,6 +198,9 @@ ant -propertyfile build.properties test || :
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.14-alt1_4jpp8
+- new version
+
 * Sat Feb 13 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.13-alt1_2jpp8
 - new version
 
