@@ -4,15 +4,16 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # set to 0 provides a minimal test suite
 %global with_tests 0
 
 Name:          openjpa
 Version:       2.4.1
-Release:       alt1_2jpp8
+Release:       alt1_7jpp8
 Summary:       Java Persistence 2.0 API
 # For a breakdown of the licensing, see NOTICE file
 License:       ASL 2.0 and CDDL
@@ -20,6 +21,8 @@ Url:           http://openjpa.apache.org/
 Source0:       http://www.apache.org/dist/openjpa/%{version}/%{name}-parent-%{version}-source-release.zip
 # Thanks to Robert Rati
 Patch0:        %{name}-2.3.0-remove-WASRegistryManagedRuntime.patch
+
+Patch1:        openjpa-2.4.1-javacc6.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(ant-contrib:ant-contrib)
@@ -112,6 +115,7 @@ find . -name "*.class" -delete
 find . -name "*.jar" -delete
 # openjpa-kernel/internal-repository/com/ibm/websphere/websphere_uow_api/0.0.1/websphere_uow_api-0.0.1.jar
 %patch0 -p0
+%patch1 -p1
 
 %pom_disable_module %{name}
 %pom_disable_module %{name}-all
@@ -185,6 +189,7 @@ sed -i "s|org.apache.xbean.asm5|org.objectweb.asm|" \
 
 %build
 
+export MAVEN_OPTS="-Xms1024m -Xmx2048m -Xss5m"
 # test random fails
 %mvn_build -- \
 %if %{with_tests}
@@ -215,6 +220,9 @@ install -p -m 644 %{name}-ant %{buildroot}%{_sysconfdir}/ant.d/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt1_7jpp8
+- new release
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt1_2jpp8
 - new version
 
