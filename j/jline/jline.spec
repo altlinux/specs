@@ -3,31 +3,31 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:             jline
 Version:          2.13
-Release:          alt1_2jpp8
+Release:          alt1_10jpp8
 Summary:          JLine is a Java library for handling console input
-License:          BSD and ASL 2.0
+License:          BSD
 URL:              https://github.com/jline/jline2
+BuildArch:        noarch
 
 # git clone git://github.com/jline/jline2.git
 # cd jline2/ && git archive --format=tar --prefix=jline-2.13/ jline-2.13 | xz > jline-2.13.tar.xz
 Source0:          jline-%{version}.tar.xz
 
-BuildArch:        noarch
-
-BuildRequires:    jpackage-utils
-BuildRequires:    java-devel
-BuildRequires:    maven-local
-BuildRequires:    maven-site-plugin
-BuildRequires:    jansi
-BuildRequires:    fusesource-pom
-BuildRequires:    mvn(org.powermock:powermock-module-junit4)
-BuildRequires:    mvn(org.powermock:powermock-api-easymock)
-BuildRequires:    mvn(org.easymock:easymock)
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.easymock:easymock)
+BuildRequires:  mvn(org.fusesource.jansi:jansi)
+BuildRequires:  mvn(org.powermock:powermock-api-easymock)
+BuildRequires:  mvn(org.powermock:powermock-module-junit4)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 
 Obsoletes: jline2 < %{version}-%{release}
 Provides: jline2 = %{version}-%{release}
@@ -38,7 +38,7 @@ JLine is a Java library for handling console input. It is similar
 in functionality to BSD editline and GNU readline. People familiar
 with the readline/editline capabilities for modern shells (such as
 bash and tcsh) will find most of the command editing features of
-JLine to be familiar. 
+JLine to be familiar.
 
 %package javadoc
 Group: Development/Java
@@ -60,18 +60,22 @@ This package contains the API documentation for %{name}.
 
 # Remove unavailable and unneeded deps
 %pom_xpath_remove "pom:build/pom:extensions"
-%pom_xpath_remove "pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId = 'maven-site-plugin']"
+%pom_remove_plugin :maven-site-plugin
 
 # Do not import non-existing internal package
 %pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:executions/pom:execution/pom:configuration/pom:instructions/pom:Import-Package"
 %pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:executions/pom:execution/pom:configuration/pom:instructions" "<Import-Package>javax.swing;resolution:=optional,org.fusesource.jansi,!org.fusesource.jansi.internal</Import-Package>"
 
-# Let maven bundle plugin figure out the exports.
-%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:executions/pom:execution/pom:configuration/pom:instructions/pom:Export-Package"
+# Be sure to export jline.internal, but not org.fusesource.jansi.
+# See https://bugzilla.redhat.com/show_bug.cgi?id=1317551
+%pom_xpath_set "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:executions/pom:execution/pom:configuration/pom:instructions/pom:Export-Package" "jline.*;-noimport:=true"
 
 # For some reason these directories do not exist, failing compilation due to -Werror
 mkdir -p target/generated-sources/annotations
 mkdir -p target/generated-test-sources/test-annotations
+
+# nondeterministic
+find -name TerminalFactoryTest.java -delete
 
 %build
 %mvn_build -- -Dmaven.test.skip.exec=true
@@ -80,12 +84,13 @@ mkdir -p target/generated-test-sources/test-annotations
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/jline
-%dir %{_mavenpomdir}/jline
 
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.13-alt1_10jpp8
+- fixed build
+
 * Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.13-alt1_2jpp8
 - new version
 
