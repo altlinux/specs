@@ -2,20 +2,28 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%bcond_without     memcached
+%bcond_without     ehcache
+
 Name:              httpcomponents-client
 Summary:           HTTP agent implementation based on httpcomponents HttpCore
-Version:           4.5.2
+Version:           4.5.3
 Release:           alt1_4jpp8
 License:           ASL 2.0
 URL:               http://hc.apache.org/
 Source0:           http://www.apache.org/dist/httpcomponents/httpclient/source/%{name}-%{version}-src.tar.gz
 
 Patch0:            0001-Use-system-copy-of-effective_tld_names.dat.patch
-# Some compile-time only annotations were removed from httpcore
-Patch1:            0002-Remove-missing-compile-time-annotations.patch
 
 BuildArch:         noarch
 
@@ -23,12 +31,15 @@ BuildRequires:     maven-local
 BuildRequires:     mvn(commons-codec:commons-codec)
 BuildRequires:     mvn(commons-logging:commons-logging)
 BuildRequires:     mvn(junit:junit)
+%if %{with ehcache}
 BuildRequires:     mvn(net.sf.ehcache:ehcache-core)
+%endif
+%if %{with memcached}
 BuildRequires:     mvn(net.spy:spymemcached)
+%endif
 BuildRequires:     mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:     mvn(org.apache.httpcomponents:httpcore)
 BuildRequires:     mvn(org.apache.httpcomponents:project:pom:)
-BuildRequires:     mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:     mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:     mvn(org.easymock:easymock)
 BuildRequires:     mvn(org.mockito:mockito-core)
@@ -68,10 +79,6 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1
-%patch1 -p1
-
-# Don't install javadoc and sources jars
-%mvn_package ":{*}::{sources,javadoc}:" __noinstall
 
 %mvn_package :httpclient-cache cache
 
@@ -82,6 +89,8 @@ BuildArch: noarch
 %pom_remove_plugin :clirr-maven-plugin
 %pom_remove_plugin :maven-checkstyle-plugin
 %pom_remove_plugin :apache-rat-plugin
+%pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :maven-javadoc-plugin
 
 # Don't compile/run httpclient-cache tests - they are incompatible with EasyMock 3.3
 %pom_remove_plugin org.apache.maven.plugins:maven-jar-plugin httpclient-cache
@@ -167,10 +176,18 @@ done
 # requires network
 rm httpclient/src/test/java/org/apache/http/client/config/TestRequestConfig.java
 
+%if %{without memcached}
+rm -r httpclient-cache/src/*/java/org/apache/http/impl/client/cache/memcached
+%pom_remove_dep :spymemcached httpclient-cache
+%endif
+%if %{without ehcache}
+rm -r httpclient-cache/src/*/java/org/apache/http/impl/client/cache/ehcache
+%pom_remove_dep :ehcache-core httpclient-cache
+%endif
+
 %build
 %mvn_file ":{*}" httpcomponents/@1
 
-#mvn_build
 %mvn_build -- -Dmaven.test.skip.exec=true
 
 %install
@@ -186,6 +203,9 @@ rm httpclient/src/test/java/org/apache/http/client/config/TestRequestConfig.java
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 4.5.3-alt1_4jpp8
+- new version
+
 * Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 4.5.2-alt1_4jpp8
 - new version
 
