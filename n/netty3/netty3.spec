@@ -2,23 +2,25 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name netty3
-%define version 3.9.3
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 3.10.6
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:           netty3
-Version:        3.9.3
-Release:        alt1_4jpp8
+Version:        3.10.6
+Release:        alt1_3jpp8
 Summary:        An asynchronous event-driven network application framework and tools for Java
-License:        ASL 2.0 and BSD
+# CC0: src/main/java/org/jboss/netty/handler/codec/base64/Base64.java
+License:        ASL 2.0 and BSD and CC0
 URL:            http://netty.io/
-Source0:        http://netty.googlecode.com/files/netty-%{namedversion}-dist.tar.bz2
-Patch0:         netty-port-to-jzlib-1.1.0.patch
+Source0:        https://github.com/netty/netty/archive/netty-%{namedversion}.tar.gz
+
+Patch0:         netty-3.10.6-port-to-jzlib-1.1.0.patch
 Patch1:         disableNPN.patch
 
 BuildArch:      noarch
@@ -45,7 +47,9 @@ BuildRequires:  mvn(org.jboss.marshalling:jboss-marshalling)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 
-Requires: netty-tcnative
+Requires:       netty-tcnative
+# src/main/java/org/jboss/netty/handler/codec/base64/Base64.java (unkown version)
+Provides:       bundled(java-base64)
 Source44: import.info
 
 %description
@@ -71,7 +75,8 @@ BuildArch: noarch
 %{summary}.
 
 %prep
-%setup -q -n netty-%{namedversion}
+%setup -q -n netty-netty-%{namedversion}
+
 # just to be sure, but not used anyway
 rm -rf jar doc license
 
@@ -85,10 +90,9 @@ rm -rf jar doc license
 %pom_xpath_remove "pom:execution[pom:id[text()='remove-examples']]"
 %pom_xpath_remove "pom:plugin[pom:artifactId[text()='maven-javadoc-plugin']]/pom:configuration"
 %pom_xpath_remove "pom:dependency[pom:artifactId[text()='netty-tcnative']]/pom:classifier"
-%pom_xpath_remove "pom:dependency[pom:artifactId[text()='netty-tcnative']]/pom:scope"
+#%% pom_xpath_remove "pom:dependency[pom:artifactId[text()='netty-tcnative']]/pom:scope"
 # Set scope of optional compile dependencies to 'provided'
-%pom_xpath_set "pom:dependency[pom:scope[text()='compile']
-	       and pom:optional[text()='true']]/pom:scope" provided
+%pom_xpath_set "pom:dependency[pom:scope[text()='compile'] and pom:optional[text()='true']]/pom:scope" provided
 
 # Force use servlet 3.1 apis
 %pom_change_dep :servlet-api javax.servlet:javax.servlet-api:3.1.0
@@ -106,17 +110,17 @@ rm -rf jar doc license
 sed s/jboss-logging-spi/jboss-logging/ -i pom.xml
 
 # Remove bundled jzlib and use system jzlib
-rm -rf src/main/java/org/jboss/netty/util/internal/jzlib
+rm -r src/main/java/org/jboss/netty/util/internal/jzlib
 %pom_add_dep com.jcraft:jzlib
 sed -i s/org.jboss.netty.util.internal.jzlib/com.jcraft.jzlib/ \
     $(find src/main/java/org/jboss/netty/handler/codec -name \*.java | sort -u)
 %patch0 -p1
 %patch1 -p1
 
-#adapting to excluded dep
- rm -v src/main/java/org/jboss/netty/handler/ssl/JettyNpnSslEngine.java
+# adapting to excluded dep
+rm -v src/main/java/org/jboss/netty/handler/ssl/JettyNpnSslEngine.java
 
-%mvn_compat_version : %{version} %{namedversion} 3
+%mvn_compat_version : %{version} 3.9.3 %{namedversion} 3.9.3.Final 3
 %mvn_alias : org.jboss.netty:
 %mvn_file  : %{name}
 
@@ -127,15 +131,20 @@ sed -i s/org.jboss.netty.util.internal.jzlib/com.jcraft.jzlib/ \
 
 %install
 %mvn_install
+ln -s netty3-3.10.6.jar %buildroot%_javadir/netty3-3.9.3.jar
 
 %files -f .mfiles
 %doc README.md
 %doc LICENSE.txt NOTICE.txt
+%_javadir/netty3-3.9.3.jar
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
  
 %changelog
+* Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 3.10.6-alt1_3jpp8
+- new version
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.9.3-alt1_4jpp8
 - new fc release
 
