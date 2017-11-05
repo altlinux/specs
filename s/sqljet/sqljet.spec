@@ -1,14 +1,14 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: unzip hamcrest-core
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           sqljet
 Version:        1.1.10
-Release:        alt1_6jpp8
+Release:        alt2_6jpp8
 Summary:        Pure Java SQLite
 
 Group:          Development/Other
@@ -41,7 +41,6 @@ Java application to read and modify SQLite databases.
 %package        javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description    javadoc
@@ -69,7 +68,7 @@ EOF
 
 
 %build
-export CLASSPATH=$(build-classpath antlr3-runtime antlr3 antlr stringtemplate4 easymock3 junit)
+export CLASSPATH=$(build-classpath antlr3-runtime antlr3 antlr hamcrest/core stringtemplate4 easymock3 junit)
 
 ant jars osgi javadoc
 
@@ -98,6 +97,9 @@ cp -rp build/javadoc %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/*
 
 %changelog
+* Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1.10-alt2_6jpp8
+- updated dependencies
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.10-alt1_6jpp8
 - new fc release
 
