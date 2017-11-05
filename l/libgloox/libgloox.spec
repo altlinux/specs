@@ -1,61 +1,74 @@
-%define		src gloox
+%define sover 17
 
-Name:		lib%src
-Version:	1.0
-Release:	alt1.2.1
-Summary:	A rock-solid, full-featured Jabber/XMPP client library
-Group:		System/Libraries
-License:	GPLv2
-Packager:	Motsyo Gennadi <drool@altlinux.ru>
+Name: libgloox
+Version: 1.0.20
+Release: alt1
 
-URL:		http://camaya.net/gloox
-Source0:	http://camaya.net/download/%src-%version.tar.bz2
+Summary: A full-featured Jabber/XMPP client library
+License: GPLv3
+Group: System/Libraries
 
-# Automatically added by buildreq on Wed Jun 02 2010 (-bi)
+URL: http://camaya.net/gloox
+Source: http://camaya.net/download/gloox-%version.tar.bz2
+
+# Automatically added by buildreq on Sun Nov 05 2017
 BuildRequires: gcc-c++ libidn-devel libssl-devel zlib-devel
+
+%package -n libgloox%sover
+Summary: A full-featured Jabber/XMPP client library
+Group: System/Libraries
+
+%package devel
+Summary: A full-featured Jabber/XMPP client library
+Group: Development/C++
+Requires: libgloox%sover = %version-%release
 
 %description
 gloox is a rock-solid, full-featured Jabber/XMPP client library, written in
 C++. It makes writing spec-compliant clients easy and allows for hassle-free
 integration of Jabber/XMPP functionality into existing applications.
 
-%package	devel
-Summary:	Development files for %name
-Group:		Development/C++
-Requires:	%name = %version-%release
+%description -n libgloox%sover
+gloox is a rock-solid, full-featured Jabber/XMPP client library, written in
+C++. It makes writing spec-compliant clients easy and allows for hassle-free
+integration of Jabber/XMPP functionality into existing applications.
 
-%description	devel
-The %name-devel package contains libraries and header files for
-developing applications that use %name.
+%description devel
+gloox is a rock-solid, full-featured Jabber/XMPP client library, written in
+C++. It makes writing spec-compliant clients easy and allows for hassle-free
+integration of Jabber/XMPP functionality into existing applications.
 
 %prep
-%setup -n %src-%version
+%setup -n gloox-%version
+
+mv AUTHORS AUTHORS.old
+iconv -f iso8859-1 -t UTF-8 AUTHORS.old >AUTHORS
 
 %build
 export PTHREAD_LIBS="-lpthread"
 %configure --disable-static
-
 %make_build
-# recode to UTF
-mv -f AUTHORS AUTHORS.old
-iconv -f iso8859-1 -t UTF-8 AUTHORS.old > AUTHORS
 
 %install
-make install DESTDIR=%buildroot
-find %buildroot -name '*.la' -exec rm -f {} ';'
+%makeinstall_std
 
-%files
-%doc AUTHORS ChangeLog README TODO UPGRADING
-%_libdir/*.so.*
+%files -n libgloox%sover
+%doc AUTHORS ChangeLog README
+%_libdir/libgloox.so.%sover
+%_libdir/libgloox.so.%sover.*
 
 %files devel
-%dir %_includedir/%src
-%_bindir/%src-config
-%_pkgconfigdir/%src.pc
-%_includedir/%src/*
-%_libdir/*.so
+%_bindir/gloox-config
+%_pkgconfigdir/gloox.pc
+%dir %_includedir/gloox
+%_includedir/gloox/*
+%_libdir/libgloox.so
 
 %changelog
+* Sun Nov 05 2017 Alexey Tourbin <at@altlinux.ru> 1.0.20-alt1
+- 1.0 -> 1.0.20
+- License changed from GPLv2 to GPLv3 in 1.0.3.
+
 * Sat Jun 13 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0-alt1.2.1
 - Rebuilt for gcc5 C++11 ABI.
 
