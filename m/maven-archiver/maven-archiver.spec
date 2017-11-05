@@ -3,11 +3,12 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-archiver
-Version:        3.0.0
+Version:        3.1.1
 Release:        alt1_2jpp8
 Epoch:          0
 Summary:        Maven Archiver
@@ -22,17 +23,18 @@ Patch0:         0001-Port-tests-to-Eclipse-Aether.patch
 # Reported upstream: https://issues.apache.org/jira/browse/MSHARED-448
 Patch1:         0002-MSHARED-448-Skip-failing-assertion.patch
 
-BuildRequires:  jpackage-utils >= 0:1.7.2
 BuildRequires:  maven-local
-BuildRequires:  maven-shared
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-site-plugin
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  maven-shared-jar
-BuildRequires:  plexus-interpolation
-BuildRequires:  plexus-archiver >= 2.1
-BuildRequires:  plexus-utils
-BuildRequires:  apache-commons-parent
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
+BuildRequires:  mvn(org.assertj:assertj-core)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
 %description
@@ -65,6 +67,9 @@ Javadoc for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.1.1-alt1_2jpp8
+- new version
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.0.0-alt1_2jpp8
 - new version
 
