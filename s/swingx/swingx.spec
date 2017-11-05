@@ -1,15 +1,16 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Because dash is not allowed in RPM version numbers
 %global real_version 1.6.5-1
 
 Name:           swingx
 Version:        1.6.5.1
-Release:        alt2_6jpp8
+Release:        alt2_8jpp8
 Summary:        A collection of Swing components
 License:        LGPLv2
 Group:          Development/Other
@@ -33,11 +34,12 @@ Patch4:         swingx-java8-compat.patch
 BuildArch:      noarch
 
 BuildRequires:      maven-local
+BuildRequires:      mvn(net.java:jvnet-parent:pom:)
 BuildRequires:      mvn(org.kohsuke.metainf-services:metainf-services)
 BuildRequires:      mvn(org.mockito:mockito-core)
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:      java-devel >= 1.6.0
+BuildRequires:      jpackage-utils
 
-Requires: javapackages-tools rpm-build-java
 Source44: import.info
 
 %description
@@ -50,7 +52,7 @@ created like the JXDatePicker, JXTaskPane, and JXImagePanel.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires: javapackages-tools rpm-build-java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -94,6 +96,9 @@ find . -name "*.dll" -exec rm -f {} \;
 
 
 %changelog
+* Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 1.6.5.1-alt2_8jpp8
+- fixed build
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.5.1-alt2_6jpp8
 - new fc release
 
