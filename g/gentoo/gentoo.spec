@@ -1,6 +1,6 @@
 %define name	gentoo
 %define version	0.20.7
-%define release	alt1
+%define release	alt2
 
 Summary: gentoo is a Gtk+ file manager for Linux
 Name: %name
@@ -14,13 +14,13 @@ BuildRequires: desktop-file-utils
 BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-gir-devel
 BuildRequires: gettext gettext-tools
 
-
 Packager: Ilya Mashkin <oddity@altlinux.ru>
-Url: http://www.obsession.se/gentoo
-Source: ftp://ftp.obsession.se/gentoo/%name-%version.tar.gz
+Url: https://sourceforge.net/projects/gentoo/
+Source: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 Source1: gentoo_16.xpm.bz2
 Source2: gentoo_32.xpm.bz2
 Source3: gentoo_48.xpm.bz2
+Source4: gentoo.desktop
 Patch1: gentoo-0.15.3-0.2-nmu.diff
 Requires: gtk+ >= 1.2.3
 
@@ -35,9 +35,8 @@ gentoo borrows some of its look and feel from the classic Amiga
 file manager "Directory OPUS"(TM) (written by Jonathan Potter).
 
 %prep
-%setup -q
+%setup
 #patch1 -p0
-
 
 # Don't define GTK_DISABLE_DEPRECATED since GtkComboBoxEntry is deprecated in
 # GTK 2.23
@@ -72,17 +71,25 @@ bzcat %SOURCE1 > $RPM_BUILD_ROOT/%_miconsdir/%name.xpm
 bzcat %SOURCE2 > $RPM_BUILD_ROOT/%_niconsdir/%name.xpm
 bzcat %SOURCE3 > $RPM_BUILD_ROOT/%_liconsdir/%name.xpm
 
-%files
+desktop-file-install --dir %buildroot%_datadir/applications %SOURCE4
+
+%find_lang %name
+
+%files -f %name.lang
 %doc docs BUGS COPYING INSTALL README*
 %_bindir/gentoo
 %_libdir/gentoo
 %_mandir/man1/gentoo.1x*
 #_menudir/*
+%_datadir/applications/gentoo.desktop
 %_niconsdir/*.xpm
 %_liconsdir/*.xpm
 %_miconsdir/*.xpm
 
 %changelog
+* Sun Nov 05 2017 Ilya Mashkin <oddity@altlinux.ru> 0.20.7-alt2
+- update urls, update spec
+
 * Sun Nov 05 2017 Ilya Mashkin <oddity@altlinux.ru> 0.20.7-alt1
 - 0.20.7
 
