@@ -1,19 +1,21 @@
 BuildRequires: python-module-numpy-addons
 %define oldname sazanami-fonts
-%define	priority	65-4
-%define	fontname	sazanami
-%define	fontconf	%{priority}-%{fontname}
-%define catalogue	%{_sysconfdir}/X11/fontpath.d
-%define	common_desc	\
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global	priority	65-4
+%global	fontname	sazanami
+%global	fontconf	%{priority}-%{fontname}
+%global catalogue	%{_sysconfdir}/X11/fontpath.d
+%global	common_desc	\
 The Sazanami type faces are automatically generated from Wadalab font kit.\
 They also contains some embedded Japanese bitmap fonts.
 
 Name:		fonts-ttf-sazanami
 Version:	0.20040629
-Release:	alt8_22
+Release:	alt8_28
 BuildArch:	noarch
 BuildRequires:	ttmkfdir >= 3.0.6
-BuildRequires:	mkfontdir fonts-bitmap-misc
+BuildRequires:	bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils fonts-bitmap-misc
 BuildRequires:	fontpackages-devel
 BuildRequires:	python-module-fonttools
 URL:		http://efont.sourceforge.jp/
@@ -35,11 +37,11 @@ Source44: import.info
 %description
 %common_desc
 
-%package	common
+%package	-n fonts-ttf-sazanami-common
 Summary:	Common files for Sazanami Japanese TrueType fonts
 Group:		System/Fonts/True type
 
-%description	common
+%description	-n fonts-ttf-sazanami-common
 %common_desc
 
 This package consists of files used by other %{oldname} packages.
@@ -48,8 +50,8 @@ This package consists of files used by other %{oldname} packages.
 Summary:	Sazanami Gothic Japanese TrueType font
 License:	BSD
 Group:		System/Fonts/True type
-Conflicts:	fonts-japanese <= 0.20061016-9.fc8
-Provides:	ttfonts-ja = 1.2-37 %{fontname}-fonts-gothic = %{version}-%{release}
+Conflicts:	fonts-bitmap-japanese <= 0.20061016-9.fc8
+Provides:	ttfonts-ja = 1.2-37, %{fontname}-fonts-gothic = %{version}-%{release}
 Obsoletes:	ttfonts-ja < 1.2-37, %{fontname}-fonts-gothic < 0.20040629-6.20061016
 Requires:	%{name}-common = %{version}-%{release}
 
@@ -62,8 +64,8 @@ This package contains Japanese TrueType font for Gothic type face.
 Summary:	Sazanami Mincho Japanese TrueType font
 License:	BSD
 Group:		System/Fonts/True type
-Conflicts:	fonts-japanese <= 0.20061016-9.fc8
-Provides:	ttfonts-ja = 1.2-37 %{fontname}-fonts-mincho = %{version}-%{release}
+Conflicts:	fonts-bitmap-japanese <= 0.20061016-9.fc8
+Provides:	ttfonts-ja = 1.2-37, %{fontname}-fonts-mincho = %{version}-%{release}
 Obsoletes:	ttfonts-ja < 1.2-37, %{fontname}-fonts-mincho < 0.20040629-6.20061016
 Requires:	%{name}-common = %{version}-%{release}
 
@@ -122,6 +124,7 @@ ln -sf %{_fontdir}/gothic $RPM_BUILD_ROOT%{catalogue}/%{oldname}-gothic
 ln -sf %{_fontdir}/mincho $RPM_BUILD_ROOT%{catalogue}/%{oldname}-mincho
 # broken aliases - no jisx0201.1976-0 in fonts.dir
 sed -i -e '/jisx0201.1976-0/d' `find %buildroot%_datadir -type f -name fonts.alias`
+sed -i -e 's/\.ttf -[^-]*-/.ttf -misc-/' `find %buildroot%_datadir -type f \( -name fonts.dir -or -name fonts.scale \)`
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -180,11 +183,14 @@ fi
 %verify(not md5 size mtime) %{_fontbasedir}/*/%{_fontstem}/mincho/fonts.scale
 %verify(not md5 size mtime) %{_fontbasedir}/*/%{_fontstem}/mincho/fonts.alias
 
-%files common
+%files -n fonts-ttf-sazanami-common
 %doc doc README
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 0.20040629-alt8_28
+- added appdata
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.20040629-alt8_22
 - update to new release by fcimport
 
