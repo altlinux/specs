@@ -1,16 +1,16 @@
-Name:           mint-translations
-Version:        2017.06.28
-Release:        alt1
-License:        GPLv2+ and MIT
-Summary:        Translation files for Linux Mint applications
+Name:    mint-translations
+Version: 2017.11.03
+Release: alt1
+License: GPLv2+ and MIT
+Summary: Translation files for Linux Mint applications
 
-Group:          Graphical desktop/GNOME
-Url:            http://packages.linuxmint.com/pool/main/m/mint-translations/
-Source:         http://packages.linuxmint.com/pool/main/m/mint-translations/mint-translations_%version.tar.xz
+Group:   Graphical desktop/GNOME
+Url:     http://packages.linuxmint.com/pool/main/m/mint-translations/
+Source:  http://packages.linuxmint.com/pool/main/m/mint-translations/mint-translations_%version.tar.xz
 
-Source1:	mint-translations.watch
+Source1: mint-translations.watch
 
-BuildArch:      noarch
+BuildArch: noarch
 
 %description
 Translation files for Linux Mint applications.
@@ -30,6 +30,9 @@ cp -a usr/share/linuxmint/locale %buildroot%_datadir
 %_datadir/locale/*/LC_MESSAGES/*.mo
 
 %changelog
+* Sun Nov 05 2017 Andrey Cherepanov <cas@altlinux.org> 2017.11.03-alt1
+- New version
+
 * Sat Jul 01 2017 Andrey Cherepanov <cas@altlinux.org> 2017.06.28-alt1
 - New version
 
