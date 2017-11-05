@@ -12,7 +12,8 @@
 %define nxml_version 0.2.20041004
 %define cedet_version 2.0
 
-%define cedet_release alt9
+# perhaps, drop it and increase epoch instead?
+%define cedet_release alt9.1
 
 # subpackages to build;
 %def_enable nox
@@ -23,7 +24,7 @@
 
 Name: emacs25
 Version: 25.3
-Release: alt7
+Release: alt8
 
 Group: Editors
 Summary: GNU Emacs text editor
@@ -36,6 +37,9 @@ Packager: Emacs Maintainers Team <emacs@packages.altlinux.org>
 Source0: %shortname-%emacs_version.tar
 
 Source7: README.KOI8-U
+
+# appdata file from FC emacs 1:25.3-3
+Source9: emacs.appdata.xml
 
 # from Serhij Hlodin
 Source16: CHANGES.ukr
@@ -863,6 +867,23 @@ touch lisp/faces.el lisp/gnus/mm-util.el lisp/gnus/rfc2047.el \
 [ -d build-gtk ] && rm -rf build-gtk; mkdir -p build-gtk
 [ -d build-gtk3 ] && rm -rf build-gtk3; mkdir -p build-gtk3
 
+# Create pkgconfig file
+emacs_pc_file=`find . -name '*.pc' -or -name '*.pc.in'`
+if [ -n "$emacs_pc_file" ]; then
+    echo "Hurray! emacs now ships his own pc file!"
+    echo "Remove me, but merge first sitepkglispdir and sitestartdir!"
+    exit 1
+else
+    cat > emacs.pc << EOF
+sitepkglispdir=%_emacslispdir
+sitestartdir=%_emacs_sitestart_dir
+
+Name: emacs
+Description: GNU Emacs text editor
+Version: %{version}
+EOF
+fi
+
 %build
 autoreconf -i -I m4
 # Try to detect errors and break on errors:
@@ -1238,6 +1259,13 @@ echo %shortname-nox > %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%na
 # check-shadows script
 install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 
+# Install pkgconfig file
+mkdir -p %buildroot%_datadir/pkgconfig
+install -p -m 0644 emacs.pc %buildroot%_datadir/pkgconfig/
+
+# Install app data
+mkdir -p %buildroot%_datadir/appdata
+cp -a %SOURCE9 %buildroot%_datadir/appdata/%{name}.appdata.xml
 
 #
 %files common -f main.ls
@@ -1349,6 +1377,9 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 
 # %exclude %_infodir/dir
 %exclude %_localstatedir/games/%shortname
+
+%_datadir/pkgconfig/emacs.pc
+%_datadir/appdata/*
 
 #
 %files el
@@ -1550,6 +1581,9 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 
 
 %changelog
+* Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 25.3-alt8
+- NMU: added emacs.pc and emacs.appdata.xml
+
 * Wed Sep 13 2017 Terechkov Evgenii <evg@altlinux.org> 25.3-alt7
 - 25.3 (emergency release to fix a security vulnerability)
 
