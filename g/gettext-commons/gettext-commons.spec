@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           gettext-commons
 Version:        0.9.6
-Release:        alt1_14jpp8
+Release:        alt2_14jpp8
 Summary:        Java internationalization (i18n) library
 
 Group:          Development/Other
@@ -18,7 +18,6 @@ Patch0:         %{name}-0.9.6-javadoc.patch
 BuildArch:      noarch
 BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  maven-local
-Requires: javapackages-tools rpm-build-java
 Source44: import.info
 
 %description
@@ -56,6 +55,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.6-alt2_14jpp8
+- updated dependencies
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.6-alt1_14jpp8
 - new fc release
 
