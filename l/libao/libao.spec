@@ -1,20 +1,20 @@
 Name: libao
-Version: 1.1.0
+Version: 1.2.2
 Release: alt1
 Epoch: 1
 Summary: Cross Platform Audio Output Library
 License: GPL
 Group: System/Libraries
 Url: http://www.xiph.org/ao/
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Provides: %name-alsa = %version-%release
 Obsoletes: %name-alsa < %version-%release
 
-Source0: http://downloads.xiph.org/releases/ao/%name-%version.tar.gz
+# https://git.xiph.org/libao.git
+Source0: %name-%version.tar
 Patch0: libao-1.0.0-alt-oss.patch
 
-BuildRequires: gcc-c++ libalsa-devel libpulseaudio-devel
+BuildRequires: libalsa-devel libpulseaudio-devel
 
 %description
 Libao is a cross platform audio output library.
@@ -84,6 +84,10 @@ __EOF__
 %_datadir/aclocal/*
 
 %changelog
+* Sun Nov 05 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.2.2-alt1
+- 1.2.2
+- fixed pulse plugin (ALT#33125)
+
 * Mon Mar 28 2011 Valery Inozemtsev <shrek@altlinux.ru> 1:1.1.0-alt1
 - 1.1.0
 
