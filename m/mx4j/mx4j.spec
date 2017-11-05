@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           mx4j
 Version:        3.0.1
-Release:        alt2_22jpp8
+Release:        alt3_22jpp8
 Epoch:          1
 Summary:        Open source implementation of JMX Java API
 License:        ASL 1.1
@@ -100,7 +100,6 @@ Java(TM) Management Extensions (JMX).
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -215,6 +214,9 @@ rm -f %{_javadir}/%{name}.jar
 %doc dist/docs/*
 
 %changelog
+* Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt3_22jpp8
+- updated dependencies
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt2_22jpp8
 - new fc release
 
