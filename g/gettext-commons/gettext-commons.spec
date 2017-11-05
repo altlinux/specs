@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           gettext-commons
 Version:        0.9.6
-Release:        alt2_14jpp8
+Release:        alt3_14jpp8
 Summary:        Java internationalization (i18n) library
 
 Group:          Development/Other
@@ -33,7 +32,6 @@ and makes programs easier to read.
 Summary:        Javadocs for %{name}
 Group:          Development/Java
 Requires:       %{name} = %{version}
-Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -55,6 +53,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.6-alt3_14jpp8
+- removed requires: from javadoc 
+
 * Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.6-alt2_14jpp8
 - updated dependencies
 
