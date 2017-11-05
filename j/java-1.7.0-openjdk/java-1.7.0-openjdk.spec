@@ -205,7 +205,7 @@ BuildRequires: jpackage-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt3_2.5.5.0jpp7
+Release: alt4_2.5.5.0jpp7
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -1065,17 +1065,20 @@ EOF
 
 # Install substitute rules for buildreq
 echo java >j2se-buildreq-substitute
+echo java-headless >j2se-headless-buildreq-substitute
 echo java-devel >j2se-devel-buildreq-substitute
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 install -m644 j2se-buildreq-substitute \
     %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
+install -m644 j2se-headless-buildreq-substitute \
+    %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-headless
 install -m644 j2se-devel-buildreq-substitute \
     %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-devel
 
 install -d %buildroot%_altdir
 
 # J2SE alternative
-cat <<EOF >%buildroot%_altdir/%name-java
+cat <<EOF >%buildroot%_altdir/%name-java-headless
 %{_bindir}/java	%{_jvmdir}/%{jredir}/bin/java	%priority
 %_man1dir/java.1.gz	%_man1dir/java%{label}.1.gz	%{_jvmdir}/%{jredir}/bin/java
 EOF
@@ -1083,14 +1086,14 @@ EOF
 for i in keytool policytool servertool pack200 unpack200 \
 orbd rmid rmiregistry tnameserv
 do
-  cat <<EOF >>%buildroot%_altdir/%name-java
+  cat <<EOF >>%buildroot%_altdir/%name-java-headless
 %_bindir/$i	%{_jvmdir}/%{jredir}/bin/$i	%{_jvmdir}/%{jredir}/bin/java
 %_man1dir/$i.1.gz	%_man1dir/${i}%{label}.1.gz	%{_jvmdir}/%{jredir}/bin/java
 EOF
 done
 
 # ----- JPackage compatibility alternatives ------
-cat <<EOF >>%buildroot%_altdir/%name-java
+cat <<EOF >>%buildroot%_altdir/%name-java-headless
 %{_jvmdir}/jre	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %{_jvmjardir}/jre	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %{_jvmdir}/jre-%{origin}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
@@ -1098,18 +1101,19 @@ cat <<EOF >>%buildroot%_altdir/%name-java
 %{_jvmdir}/jre-%{javaver}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %{_jvmjardir}/jre-%{javaver}	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 EOF
-%if_enabled moz_plugin
+# JPackage specific: alternatives for security policy
+cat <<EOF >>%buildroot%_altdir/%name-java-headless
+%{_jvmdir}/%{jrelnk}/lib/security/local_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar	%{priority}
+%{_jvmdir}/%{jrelnk}/lib/security/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar
+EOF
+# ----- end: JPackage compatibility alternatives ------
+#if_enabled moz_plugin // not included in openjdk
+%if 0
 cat <<EOF >>%buildroot%_altdir/%name-java
 %{_bindir}/ControlPanel	%{_jvmdir}/%{jredir}/bin/ControlPanel	%{_jvmdir}/%{jredir}/bin/java
 %{_bindir}/jcontrol	%{_jvmdir}/%{jredir}/bin/jcontrol	%{_jvmdir}/%{jredir}/bin/java
 EOF
 %endif
-# JPackage specific: alternatives for security policy
-cat <<EOF >>%buildroot%_altdir/%name-java
-%{_jvmdir}/%{jrelnk}/lib/security/local_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar	%{priority}
-%{_jvmdir}/%{jrelnk}/lib/security/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar
-EOF
-# ----- end: JPackage compatibility alternatives ------
 
 
 # Javac alternative
@@ -1197,13 +1201,18 @@ $java -Xshare:dump >/dev/null 2>/dev/null
 
 
 %files -f %{name}.files
+#if_enabled moz_plugin
+%if 0
 %_altdir/%altname-java
+%endif
 %_sysconfdir/buildreqs/packages/substitute.d/%name
 %{_datadir}/icons/hicolor/*x*/apps/java-%{javaver}.png
 
 # important note, see https://bugzilla.redhat.com/show_bug.cgi?id=1038092 for whole issue 
 # all config/norepalce files (and more) have to be declared in pretrans. See pretrans
 %files headless  -f %{name}.files-headless
+%_altdir/%altname-java-headless
+%_sysconfdir/buildreqs/packages/substitute.d/%name-headless
 %doc %{_jvmdir}/%{sdkdir}/ASSEMBLY_EXCEPTION
 %doc %{_jvmdir}/%{sdkdir}/LICENSE
 %doc %{_jvmdir}/%{sdkdir}/THIRD_PARTY_README
@@ -1321,6 +1330,9 @@ $java -Xshare:dump >/dev/null 2>/dev/null
 %{_jvmdir}/%{jredir}/lib/accessibility.properties
 
 %changelog
+* Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.79-alt4_2.5.5.0jpp7
+- fixed java-headless provides
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.79-alt3_2.5.5.0jpp7
 - fixed build (built with ant1.9)
 
