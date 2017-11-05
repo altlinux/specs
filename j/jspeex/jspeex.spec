@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jspeex
 Version:        0.9.7
-Release:        alt1_8jpp8
+Release:        alt2_8jpp8
 Summary:        Java Implementation of Speex
 
 Group:          Development/Other
@@ -21,7 +21,6 @@ BuildRequires:  ant
 BuildRequires:  proguard
 BuildRequires:  junit
   
-Requires: javapackages-tools rpm-build-java
 Source44: import.info
 
 %description
@@ -32,7 +31,6 @@ the decoder and the encoder in pure Java, as well as a JavaSound SPI.
 %package javadoc
 Summary:        Java docs for %{name}
 Group:          Development/Java
-Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -67,6 +65,9 @@ cp -rp doc/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.7-alt2_8jpp8
+- updated dependencies
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.7-alt1_8jpp8
 - new fc release
 
