@@ -1,4 +1,4 @@
-%def_with	lightning
+%def_without	lightning
 %def_without 	system_mozldap
 %def_without 	enigmail
 
@@ -14,7 +14,7 @@
 %define sm_develdir     %sm_prefix-devel
 
 Name: 	 seamonkey
-Version: 2.48
+Version: 2.49.1
 Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
@@ -395,6 +395,10 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Sun Nov 05 2017 Michael Shigorin <mike@altlinux.org> 1:2.49.1-alt1
+- 2.49.1
+  + NB: lightning no more included in upstream tarball
+
 * Mon Jul 31 2017 Michael Shigorin <mike@altlinux.org> 1:2.48-alt1
 - 2.48
 - dropped patch9
