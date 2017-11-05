@@ -49,7 +49,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           ant%major_version
 Version:        1.9.6
-Release:        alt2_3jpp8
+Release:        alt3_3jpp8
 Epoch:          0
 Summary:        Java build tool
 Summary(it):    Tool per la compilazione di programmi java
@@ -145,6 +145,7 @@ apache xml.
 %package lib
 Group: Development/Java
 Summary:        Core part of %{name}
+Conflicts: ant-lib
 
 %description lib
 Core part of Apache Ant that can be used as a library.
@@ -682,6 +683,9 @@ sed -i -e '1s,^#! *,#!,' %buildroot/%_bindir/*
 # -----------------------------------------------------------------------------
 
 %changelog
+* Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.9.6-alt3_3jpp8
+- added Conflicts: to ant-lib
+
 * Fri Nov 03 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.9.6-alt2_3jpp8
 - added compat /usr/bin/ant
 
