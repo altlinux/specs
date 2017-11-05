@@ -1,20 +1,21 @@
 Group: System/Fonts/True type
 %define oldname baekmuk-ttf-fonts
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name baekmuk-ttf-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 2.2
 %global priority    65-2
 %global fontname    baekmuk-ttf
-%define archivename %{fontname}-%{version}
-%define common_desc \
+%global archivename %{fontname}-%{version}
+%global common_desc \
 This package provides the free Korean TrueType fonts.
 
-%define gsdir          %{_datadir}/ghostscript/conf.d
-%define catalogue      %{_sysconfdir}/X11/fontpath.d
+%global gsdir          %{_datadir}/ghostscript/conf.d
+%global catalogue      %{_sysconfdir}/X11/fontpath.d
 
 Name:           fonts-ttf-baekmuk
 Version:        2.2
-Release:        alt2_39
+Release:        alt2_43
 Summary:        Free Korean TrueType fonts
 
 License:        Baekmuk
@@ -35,7 +36,7 @@ Source11:       %{fontname}.metainfo.xml
 Provides:       fonts-ttf-korean = %{version}-%{release}
 
 BuildArch:      noarch
-BuildRequires:  fontpackages-devel >= 1.13 xorg-x11-font-utils
+BuildRequires:  fontpackages-devel >= 1.13 bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils
 BuildRequires:  ttmkfdir >= 3.0.6
 Source44: import.info
 
@@ -113,11 +114,11 @@ Headline is Korean TrueType font in Black face.
 %package -n fonts-ttf-baekmuk-ghostscript
 Group: System/Fonts/True type
 Summary:        Ghostscript files for Korean Baekmuk TrueType fonts
-Requires: ghostscript-utils ghostscript
-Requires:       fonts-ttf-baekmuk-batang = %{version}-%{release}
-Requires:       fonts-ttf-baekmuk-dotum = %{version}-%{release}
-Requires:       fonts-ttf-baekmuk-gulim = %{version}-%{release}
-Requires:       fonts-ttf-baekmuk-hline = %{version}-%{release}
+Requires:       ghostscript-utils ghostscript
+Requires:       fonts-ttf-baekmuk-batang = %{version}-%{release} 
+Requires:       fonts-ttf-baekmuk-dotum = %{version}-%{release} 
+Requires:       fonts-ttf-baekmuk-gulim = %{version}-%{release} 
+Requires:       fonts-ttf-baekmuk-hline = %{version}-%{release} 
 
 %description -n fonts-ttf-baekmuk-ghostscript
 %common_desc
@@ -156,19 +157,19 @@ This is common files for Baekmuk Korean TrueType fonts.
 
 %install
 # font
-%__install -d -m 0755 %{buildroot}%{_fontdir}
+install -d -m 0755 %{buildroot}%{_fontdir}
 for i in batang dotum gulim hline; do
-  %__install -p -m 0644 ttf/$i.ttf %{buildroot}%{_fontdir}
+  install -p -m 0644 ttf/$i.ttf %{buildroot}%{_fontdir}
 done
 
 # fontconfig conf
-%__install -m 0755 -d %{buildroot}%{_fontconfig_templatedir}
-%__install -m 0755 -d %{buildroot}%{_fontconfig_confdir}
+install -m 0755 -d %{buildroot}%{_fontconfig_templatedir}
+install -m 0755 -d %{buildroot}%{_fontconfig_confdir}
 cd ../
 for fconf in %{SOURCE3} %{SOURCE4} %{SOURCE5} %{SOURCE6}
 do
-    %__install -m 0644 $fconf %{buildroot}%{_fontconfig_templatedir}/%{priority}-$(basename $fconf)
-    %__ln_s %{_fontconfig_templatedir}/%{priority}-$(basename $fconf) \
+    install -m 0644 $fconf %{buildroot}%{_fontconfig_templatedir}/%{priority}-$(basename $fconf)
+    ln -s %{_fontconfig_templatedir}/%{priority}-$(basename $fconf) \
         %{buildroot}%{_fontconfig_confdir}/%{priority}-$(basename $fconf)
 done
 cd -
@@ -179,13 +180,13 @@ cd -
 %{_bindir}/mkfontdir %{buildroot}%{_fontdir}
 
 # ghostscript
-%__install -d -m 0755 %{buildroot}%{gsdir}
-%__install -p -m 0644 %{SOURCE1} %{buildroot}%{gsdir}/
-%__install -p -m 0644 %{SOURCE2} %{buildroot}%{gsdir}/
+install -d -m 0755 %{buildroot}%{gsdir}
+install -p -m 0644 %{SOURCE1} %{buildroot}%{gsdir}/
+install -p -m 0644 %{SOURCE2} %{buildroot}%{gsdir}/
 
 # catalogue
-%__install -d -m 0755 %{buildroot}%{catalogue}
-%__ln_s %{_fontdir} %{buildroot}%{catalogue}/%{fontname}
+install -d -m 0755 %{buildroot}%{catalogue}
+ln -s %{_fontdir} %{buildroot}%{catalogue}/%{fontname}
 
 # convert Korean copyright file to utf8
 %{_bindir}/iconv -f EUC-KR -t UTF-8 COPYRIGHT.ks > COPYRIGHT.ko
@@ -202,6 +203,9 @@ install -Dm 0644 -p %{SOURCE10} \
 install -Dm 0644 -p %{SOURCE11} \
         %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 sed -i -e s,%{_datadir}/fonts/%{fontname},%{_datadir}/fonts/ttf/%{fontname},g %buildroot/usr/share/ghostscript/conf.d/*
+# delete-non-ascii lines (differ on i586 and x86_64)
+test -e %buildroot%{_datadir}/fonts/%{fontname}/fonts.scale
+perl -i -ne 'print unless /[^-a-zA-Z0-9\. \n]/' %buildroot%{_datadir}/fonts/%{fontname}/fonts.{dir,scale}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -238,6 +242,9 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %changelog
+* Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_43
+- added appdata
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_39
 - update to new release by fcimport
 
