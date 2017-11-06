@@ -1,5 +1,5 @@
 Name: sysdig
-Version: 0.17.0
+Version: 0.19.1
 Release: alt1
 
 Summary: A system exploration and troubleshooting tool
@@ -58,6 +58,9 @@ rm -rf %buildroot/usr/etc/
 %_datadir/%name/
 
 %changelog
+* Tue Nov 07 2017 Vitaly Lipatov <lav@altlinux.ru> 0.19.1-alt1
+- new version 0.19.1 (with rpmrb script)
+
 * Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.17.0-alt1
 - Updated to upstream version 0.17.0.
 
