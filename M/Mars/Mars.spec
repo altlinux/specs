@@ -2,12 +2,13 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           Mars
 Version:        4.5
-Release:        alt2
+Release:        alt2_5jpp8
 Summary:        An interactive development environment for programming in MIPS assembly language
 
 Group:          Development/Java
@@ -20,10 +21,12 @@ Source3:        build.xml
 BuildArch:      noarch
 
 BuildRequires:  ant
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  java-devel
+BuildRequires:  jpackage-utils
 BuildRequires:  desktop-file-utils
 
-Requires: javapackages-tools rpm-build-java
+Requires:       java
+Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -47,7 +50,7 @@ ant
 install -Dpm 644 %{name}.jar ${RPM_BUILD_ROOT}%{_javadir}/%{name}.jar
 install -Dpm 755 %{SOURCE1} ${RPM_BUILD_ROOT}%{_bindir}/%{name}
 desktop-file-install                                \
-    --add-category="Development"                    \
+    --add-category="Development" --add-category="IDE"                    \
     --dir=${RPM_BUILD_ROOT}%{_datadir}/applications \
     %{SOURCE2}
 
@@ -58,6 +61,9 @@ desktop-file-install                                \
 %doc MARSlicense.txt
 
 %changelog
+* Mon Nov 06 2017 Igor Vlasenko <viy@altlinux.ru> 4.5-alt2_5jpp8
+- merged manual bugfix for #33076; added IDE to .desktop
+
 * Mon Apr 03 2017 Fr. Br. George <george@altlinux.ru> 4.5-alt2
 - Add .xml descriptions (Closes: #33076)
 
