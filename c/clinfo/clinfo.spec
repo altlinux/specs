@@ -1,5 +1,5 @@
 Name: clinfo
-Version: 2.2.17.06.14
+Version: 2.2.17.10.25
 Release: alt1
 
 Summary: Enumerate OpenCL platforms and devices
@@ -10,7 +10,7 @@ Url: https://github.com/Oblomov/clinfo
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/Oblomov/clinfo/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires: ocl-icd-devel
@@ -33,7 +33,7 @@ export CFLAGS="%optflags"
 
 %install
 install -Dpm0755 %name %buildroot%_bindir/%name
-install -Dpm0644 man/%name.1 %buildroot%_man1dir/%name.1
+install -Dpm0644 man1/%name.1 %buildroot%_man1dir/%name.1
 
 %files
 %doc LICENSE legalcode.txt
@@ -42,6 +42,9 @@ install -Dpm0644 man/%name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Mon Nov 06 2017 Vitaly Lipatov <lav@altlinux.ru> 2.2.17.10.25-alt1
+- new version 2.2.17.10.25 (with rpmrb script)
+
 * Sun Aug 06 2017 Vitaly Lipatov <lav@altlinux.ru> 2.2.17.06.14-alt1
 - new version 2.2.17.06.14 (with rpmrb script)
 
