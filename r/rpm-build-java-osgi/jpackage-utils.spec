@@ -35,9 +35,9 @@
 %def_disable gcj_support
 %def_without lua_scripts
 
-Name:           rpm-macros-java
+Name:           rpm-build-java-osgi
 Version:        5.0.0
-Release:        alt43
+Release:        alt44
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -78,7 +78,15 @@ Patch25: jpackage-utils-build-classpath-symlink-fix.patch
 
 BuildRequires:  awk, grep
 
-#package -n rpm-macros-java
+#package -n rpm-build-java-osgi
+Summary: RPM build helpers for Java packages with OSGi dependencies
+Group: Development/Java
+BuildArch:      noarch
+
+%description -n rpm-build-java-osgi
+RPM build helpers for Java packages with OSGi dependencies
+
+%package -n rpm-macros-java
 Summary: RPM helper macros to build Java packages
 Group: Development/Java
 Conflicts: rpm-build-java < 0:5.0.0-alt34
@@ -146,19 +154,11 @@ Requires: 	rpm-macros-java >= %{epoch}:%{version}-%{release}
 #Requires: rpm-build-java-osgi = %{epoch}:%{version}-%{release}
 # for maven_depmap.pl
 BuildRequires:  perl-XML-Simple
-Provides: javapackages-tools = %javapackagestoolsver
+#Provides: javapackages-tools = %javapackagestoolsver
 #Provides: rpm-build-java = %version
 
 %description -n rpm-build-java-maven-fragments
 RPM build helpers for Java packages.
-
-%package -n rpm-build-java-osgi
-Summary: RPM build helpers for Java packages with OSGi dependencies
-Group: Development/Java
-BuildArch:      noarch
-
-%description -n rpm-build-java-osgi
-RPM build helpers for Java packages with OSGi dependencies
 
 %package -n maven-local
 Summary:        Macros and scripts for Maven packaging support
@@ -510,11 +510,13 @@ rm -f /etc/maven/maven2-depmap.xml
 %_rpmmacrosdir/javapackages-xmvn
 %endif
 
-%files -n rpm-build-java-maven-fragments
-/usr/lib/rpm/maven-fragments.*
-
 %files -n rpm-build-java-osgi
 /usr/lib/rpm/osgi.*
+
+%if 0
+%files -n rpm-build-java-maven-fragments
+/usr/lib/rpm/maven-fragments.*
+%endif
 
 %if 0
 %files -n maven-local
@@ -538,6 +540,10 @@ rm -f /etc/maven/maven2-depmap.xml
 %endif
 
 %changelog
+* Mon Nov 06 2017 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt44
+- dropped rpm-build-java-maven-fragments
+- renamed to rpm-build-java-osgi
+
 * Thu Jan 28 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt43
 - migration on javapackages-tools
 
