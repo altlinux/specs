@@ -1,8 +1,8 @@
 Name: ganglia
 Version: 3.1.7
-Release: alt1.1
+Release: alt2
 
-License: BSD
+License: %bsd
 Summary: Ganglia Distributed Monitoring System
 Group: Monitoring
 URL: http://ganglia.info/
@@ -11,6 +11,7 @@ Source: %name-%version.tar
 Source100: gmond.init
 Source101: gmetad.init
 
+BuildRequires: rpm-build-licenses
 
 # Automatically added by buildreq on Tue Aug 07 2007
 BuildRequires: gcc-c++ glibc-devel-static libapr1-devel libconfuse-devel libexpat-devel librrd-devel
@@ -152,6 +153,7 @@ cp -a web/* %buildroot%_var/www/apache2/html/%name
 %_initdir/gmetad
 %_sbindir/gmetad
 %_man1dir/gmetad*
+%dir %_localstatedir/%name
 %attr(0755,_gmetad,_gmetad)%_localstatedir/%name/rrds
 
 %files gmond
@@ -160,6 +162,7 @@ cp -a web/* %buildroot%_var/www/apache2/html/%name
 %_bindir/gmetric
 %_bindir/gstat
 %_sbindir/gmond
+%dir %_libdir/ganglia
 %_libdir/ganglia/*.so
 %_man5dir/gmond*
 %_man1dir/gmond*
@@ -170,6 +173,11 @@ cp -a web/* %buildroot%_var/www/apache2/html/%name
 %_var/www/apache2/html/%name
 
 %changelog
+* Mon Nov 06 2017 Sergey Y. Afonin <asy@altlinux.ru> 3.1.7-alt2
+- rebuilt with librrd8 (rrd 1.7.0)
+- added LSB init header to gmetad and gmond init scripts
+- used rpm-build-licenses
+
 * Tue Jul 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.7-alt1.1
 - Rebuilt for debuginfo
 
