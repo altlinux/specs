@@ -231,7 +231,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt1_1.b01jpp8
+Release: alt2_1.b01jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -1145,10 +1145,13 @@ EOF
 
 # Install substitute rules for buildreq
 echo java >j2se-buildreq-substitute
+echo java-headless >j2se-headless-buildreq-substitute
 echo java-devel >j2se-devel-buildreq-substitute
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 install -m644 j2se-buildreq-substitute \
     %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
+install -m644 j2se-headless-buildreq-substitute \
+    %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-headless
 install -m644 j2se-devel-buildreq-substitute \
     %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-devel
 
@@ -1278,7 +1281,6 @@ fi
 
 %if %{include_normal_build} 
 %files -f %{name}.files
-%_altdir/%altname-java
 %_sysconfdir/buildreqs/packages/substitute.d/%name
 # main package builds always
 %{_datadir}/icons/hicolor/*x*/apps/java-%{javaver}.png
@@ -1291,6 +1293,8 @@ fi
 
 %if %{include_normal_build} 
 %files headless  -f %{name}.files-headless
+%_sysconfdir/buildreqs/packages/substitute.d/%name-headless
+%_altdir/%altname-java
 # important note, see https://bugzilla.redhat.com/show_bug.cgi?id=1038092 for whole issue 
 # all config/norepalce files (and more) have to be declared in pretrans. See pretrans
 %doc %{buildoutputdir}/images/%{j2sdkimage}/jre/ASSEMBLY_EXCEPTION
@@ -1401,6 +1405,9 @@ fi
 %endif
 
 %changelog
+* Mon Nov 06 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.144-alt2_1.b01jpp8
+- fixed /usr/bin/java provides (closes: #32531)
+
 * Mon Oct 02 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 0:1.8.0.144-alt1_1.b01jpp8
 - new version
 
