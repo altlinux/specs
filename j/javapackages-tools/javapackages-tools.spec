@@ -33,7 +33,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javapackages-tools
 Version:        4.7.0
-Release:        alt2_17jpp8
+Release:        alt3_17jpp8
 
 Summary:        Macros and scripts for Java packaging support
 
@@ -63,13 +63,13 @@ BuildRequires:  xmvn-resolve >= 2
 Requires:       coreutils
 Requires:       findutils
 Requires:       which
-Requires:       lua5.3
 
 Provides:       jpackage-utils = %{version}-%{release}
 Source44: import.info
 Source45: osgi-fc.prov.files
 Source46: maven.prov.files
 Source47: maven.env
+Source48: abs2rel
 Patch33: javapackages-tools-4.6.0-alt-use-enviroment.patch
 Patch34: javapackages-tools-4.6.0-alt-req-headless-off.patch
 Patch35: javapackages-tools-4.6.0-alt-shade-jar.patch
@@ -222,6 +222,8 @@ rm -rf %{buildroot}%{_datadir}/gradle-local
 rm -rf %{buildroot}%{_mandir}/man7/gradle_build.7
 %endif
 
+install -m755 -D %{SOURCE48} %buildroot%_bindir/abs2rel
+
 install -m755 -D %{SOURCE46} %buildroot/usr/lib/rpm/maven.prov.files
 install -m755 -D %{SOURCE46} %buildroot/usr/lib/rpm/maven.req.files
 
@@ -238,13 +240,13 @@ install -m755 -D %{SOURCE47} %buildroot%_rpmmacrosdir/maven.env
 
 # in rpm-build-java
 sed -i -e '/usr\/lib\/rpm/d' files-common
+rm -rf %buildroot/usr/lib/rpm/fileattrs
 # move /usr/share/xmvn/* to maven-local
 #grep /usr/share/xmvn files-common >> files-maven
 #sed -i -e '/usr\/share\/xmvn/d' files-common
 #sed -i -e '/usr\/share\/java-utils\/.*\.py/d' files-common
-#sed -i -e '/usr\/bin\/xmvn-builddep/d' files-common
-
-rm -rf %buildroot/usr/lib/rpm/fileattrs
+sed -i -e '/usr\/bin\/xmvn-builddep/d' files-common
+rm -rf %buildroot/usr/bin/xmvn-builddep
 
 pushd %buildroot%_rpmmacrosdir/
 mv macros.fjava javapackages-fjava
@@ -264,12 +266,15 @@ popd
 %endif
 
 %files -f files-common
+%exclude %_datadir/java-utils/maven_depmap.py
+%exclude %_datadir/java-utils/pom_editor.py
+%exclude %_datadir/java-utils/request-artifact.py
 
 %files -n javapackages-local -f files-local
 %_datadir/java-utils/__pycache__
-#exclude %_datadir/java-utils/__pycache__/maven_depmap.*
-#exclude %_datadir/java-utils/__pycache__/pom_editor.*
-#exclude %_datadir/java-utils/__pycache__/request-artifact.*
+%exclude %_datadir/java-utils/__pycache__/maven_depmap.*
+%exclude %_datadir/java-utils/__pycache__/pom_editor.*
+%exclude %_datadir/java-utils/__pycache__/request-artifact.*
 
 %files -n rpm-macros-java
 %_rpmmacrosdir/javapackages-fjava
@@ -280,15 +285,13 @@ popd
 /usr/lib/rpm/javadoc.*
 /usr/lib/rpm/osgi-fc.*
 %_rpmmacrosdir/maven.env
-#%_datadir/java-utils/maven_depmap.py
-#%_datadir/java-utils/pom_editor.py
-#%_datadir/java-utils/request-artifact.py
 #%_bindir/xmvn-builddep
-#%_datadir/java-utils/__pycache__/maven_depmap.*
-#%_datadir/java-utils/__pycache__/pom_editor.*
-#%_datadir/java-utils/__pycache__/request-artifact.*
-
-
+%_datadir/java-utils/maven_depmap.py
+%_datadir/java-utils/pom_editor.py
+%_datadir/java-utils/request-artifact.py
+%_datadir/java-utils/__pycache__/maven_depmap.*
+%_datadir/java-utils/__pycache__/pom_editor.*
+%_datadir/java-utils/__pycache__/request-artifact.*
 
 %files -n maven-local -f files-maven
 
@@ -303,6 +306,9 @@ popd
 %{python3_sitelibdir_noarch}/javapackages*
 
 %changelog
+* Mon Nov 06 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.7.0-alt3_17jpp8
+- removed lua and python code from javapackages-tools
+
 * Fri Nov 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.7.0-alt2_17jpp8
 - move xmvn config back to local
 
