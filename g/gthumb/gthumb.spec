@@ -11,9 +11,10 @@
 %def_enable web_albums
 %def_disable libchamplain
 %def_enable libraw
+%def_enable colord
 
 Name: gthumb
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -46,7 +47,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 Requires: %name-data = %version-%release
 
-# From configure.in
+# From configure.ac
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libclutter-devel libclutter-gtk3-devel >= %clutter_gtk_ver
@@ -60,6 +61,7 @@ BuildRequires: libwebkitgtk4-devel >= %webkit_ver
 %{?_enable_libbrasero:BuildRequires: libbrasero-devel >= %brasero_ver}
 %{?_enable_web_albums:BuildRequires: bison flex}
 %{?_enabled_libchamplain:BuildRequires: libchamplain-gtk3-devel >= %champlain_ver}
+%{?_enable_colord:BuildRequires: libcolord-devel}
 
 %if_enabled exiv2
 BuildPreReq: libexiv2-devel >= %exiv2_ver gcc-c++
@@ -71,6 +73,7 @@ BuildRequires: libSM-devel libICE-devel
 
 BuildRequires: desktop-file-utils >= %desktop_file_utils_ver
 BuildRequires: gnome-common >= %gnome_common_ver
+BuildRequires: libappstream-glib-devel
 
 %description
 gThumb lets you browse your hard disk, showing thumbnails of image
@@ -115,6 +118,7 @@ This package contains headers needed to build extensions for gThumb.
     %{subst_enable libbrasero} \
     %{subst_enable libchamplain} \
     %{subst_enable libraw} \
+    %{subst_enable colord} \
     --disable-static \
     --disable-schemas-compile \
 
@@ -158,7 +162,6 @@ This package contains headers needed to build extensions for gThumb.
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.rotate.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.slideshow.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.webalbums.gschema.xml
-%_datadir/GConf/gsettings/%name.convert
 %_datadir/appdata/%xdg_name.appdata.xml
 %_man1dir/gthumb.1.*
 %doc AUTHORS NEWS README
@@ -169,6 +172,9 @@ This package contains headers needed to build extensions for gThumb.
 %_pkgconfigdir/*
 
 %changelog
+* Mon Nov 06 2017 Yuri N. Sedunov <aris@altlinux.org> 3.5.4-alt1
+- 3.5.4
+
 * Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.5.3-alt1
 - 3.5.3
 
