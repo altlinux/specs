@@ -3,11 +3,14 @@
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.1
 %define api_ver 0.1
+%define gst_api_ver 1.0
 
 %def_enable systemd
+%def_enable docs
+%def_enable man
 
 Name: pipewire
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Media Sharing Server
@@ -29,16 +32,17 @@ Requires: rtkit
 
 BuildRequires: meson >= 0.35.0
 BuildRequires: libgio-devel libudev-devel libdbus-devel
-BuildRequires: pkgconfig(gstreamer-1.0) >= %gst_ver
-BuildRequires: pkgconfig(gstreamer-base-1.0)
-BuildRequires: pkgconfig(gstreamer-plugins-base-1.0)
-BuildRequires: pkgconfig(gstreamer-net-1.0)
-BuildRequires: pkgconfig(gstreamer-allocators-1.0)
+BuildRequires: pkgconfig(gstreamer-%gst_api_ver) >= %gst_ver
+BuildRequires: pkgconfig(gstreamer-base-%gst_api_ver)
+BuildRequires: pkgconfig(gstreamer-plugins-base-%gst_api_ver)
+BuildRequires: pkgconfig(gstreamer-net-%gst_api_ver)
+BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %{?_enable_systemd:BuildRequires: libsystemd-devel}
 BuildRequires: libalsa-devel libv4l-devel
 BuildRequires: libavformat-devel libavcodec-devel libavfilter-devel
 BuildRequires: libjack-devel
-BuildRequires: doxygen xmltoman graphviz
+%{?_enable_docs:BuildRequires: doxygen graphviz fonts-type1-urw}
+%{?_enable_man:BuildRequires: xmltoman}
 
 %description
 PipeWire is a multimedia server for Linux and other Unix like operating
@@ -64,6 +68,8 @@ a PipeWire media server.
 %package libs-devel-doc
 Summary: PipeWire media server documentation
 Group: Documentation
+# https://bugzilla.altlinux.org/34101
+#BuildArch: noarch
 Conflicts: %name-libs-devel < %version
 
 %description libs-devel-doc
@@ -81,7 +87,9 @@ This package contains command line utilities for the PipeWire media server.
 %setup
 
 %build
-%meson
+%meson \
+	%{?_enable_docs:-Denable_docs=true} \
+	%{?_enable_man:-Denable_man=true}
 %meson_build
 
 %install
@@ -97,7 +105,7 @@ This package contains command line utilities for the PipeWire media server.
 
 %files
 %_bindir/%name
-%_libdir/gstreamer-1.0/libgst%name.so
+%_libdir/gstreamer-%gst_api_ver/libgst%name.so
 %dir %_sysconfdir/%name/
 %_sysconfdir/%name/%name.conf
 %if_enabled systemd
@@ -133,6 +141,9 @@ This package contains command line utilities for the PipeWire media server.
 %_man1dir/%name-cli.1*
 
 %changelog
+* Mon Nov 06 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.6-alt1
+- 0.1.6
+
 * Tue Sep 19 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.5-alt1
 - first build for Sisyphus
 
