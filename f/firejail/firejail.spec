@@ -1,6 +1,6 @@
 Name: firejail
 Version: 0.9.50
-Release: alt1
+Release: alt2
 Summary: Linux namepaces sandbox program
 
 License: GPLv2+
@@ -9,8 +9,6 @@ Source: %name-%version.tar
 Url: http://github.com/netblue30/firejail
 
 Packager: Anton Midyukov <antohami@altlinux.org>
-
-Requires: bash-completion
 
 %description
 Firejail  is  a  SUID sandbox program that reduces the risk of security
@@ -47,6 +45,9 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 
 
 %changelog
+* Mon Nov 06 2017 Anton Midyukov <antohami@altlinux.org> 0.9.50-alt2
+- Remove requires bash-completion (Closes: 34128)
+
 * Thu Oct 26 2017 Anton Midyukov <antohami@altlinux.org> 0.9.50-alt1
 - new version 0.9.50
 
