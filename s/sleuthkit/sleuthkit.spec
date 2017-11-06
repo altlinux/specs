@@ -1,5 +1,5 @@
 Name: sleuthkit
-Version: 4.4.0
+Version: 4.4.2
 Release: alt1
 
 Summary: The Sleuth Kit
@@ -109,6 +109,7 @@ install -m755 mac-robber %buildroot%_bindir/
 %_bindir/sorter
 %_bindir/srch_strings
 %_bindir/tsk_*
+%_bindir/usnjls
 %_man1dir/blkcalc.1*
 %_man1dir/blkcat.1*
 #_man1dir/disk_sreset.1*
@@ -135,6 +136,7 @@ install -m755 mac-robber %buildroot%_bindir/
 %_man1dir/sigfind.1*
 %_man1dir/sorter.1*
 %_man1dir/tsk_*
+%_man1dir/usnjls.1*
 %_datadir/tsk/
 
 %files -n libtsk
@@ -145,6 +147,9 @@ install -m755 mac-robber %buildroot%_bindir/
 %_includedir/tsk/
 
 %changelog
+* Tue Nov 07 2017 Vitaly Lipatov <lav@altlinux.ru> 4.4.2-alt1
+- new version 4.4.2 (with rpmrb script)
+
 * Sun Jan 29 2017 Vitaly Lipatov <lav@altlinux.ru> 4.4.0-alt1
 - new version 4.4.0 (with rpmrb script)
 
