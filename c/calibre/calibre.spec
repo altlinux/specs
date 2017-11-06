@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 3.9.0
-Release: alt3
+Version: 3.10.0
+Release: alt1
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -168,6 +168,9 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 
 
 %changelog
+* Mon Nov 06 2017 Vitaly Lipatov <lav@altlinux.ru> 3.10.0-alt1
+- new version 3.10.0 (with rpmrb script)
+
 * Thu Oct 19 2017 Sergey V Turchin <zerg@altlinux.org> 3.9.0-alt3
 - build with new Qt
 
