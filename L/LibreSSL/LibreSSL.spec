@@ -1,9 +1,9 @@
-Name: LibreSSL
-Version: 2.5.5
-Release: alt3
-
 %define oname libressl
-%define libtls_abi 15
+%define libtls_abi 16
+
+Name: LibreSSL
+Version: 2.6.3
+Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
 
@@ -12,23 +12,15 @@ License: ISC and BSD-style
 Group: Security/Networking
 Url: http://www.libressl.org/
 
-Packager: Vladimir D. Seleznev <vseleznv@altlinux.org>
 # repacked http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/%oname-%version.tar.gz
 Source: %oname-%version.tar
 Source1: %name.watch
-Patch4: netcat-1.159-alt-usage.patch
-Patch8: netcat-1.159-alt-execcmd.patch
-Patch9: netcat-1.159-alt-proxy_pass.patch
-Patch10: LibreSSL-2.5.5-alt-openssl-manpage.patch
-Patch20: LibreSSL-2.5.3-alt-ocspcheck-truncate.patch
-Patch21: LibreSSL-2.5.3-alt-ssl-warnings.patch
-Patch22: LibreSSL-2.5.3-alt-tests-warnings.patch
-Patch23: LibreSSL-2.5.5-alt-apps-ca-file.patch
-Patch24: LibreSSL-2.5.5-alt-devel-manpages.patch
+# git://git.altlinux.org/gears/L/LibreSSL.git
+Patch: %name-%version-%release.patch
 
 %define common_descr \
-LibreSSL is a version of the TLS/crypto stack forked from OpenSSL in \
-2014, with goals of modernizing the codebase, improving security, and \
+LibreSSL is a version of the TLS/crypto stack forked from OpenSSL in\
+2014, with goals of modernizing the codebase, improving security, and\
 applying best practice development processes.
 
 %description
@@ -160,15 +152,7 @@ Common uses include:
 
 %prep
 %setup -n %oname-%version
-%patch8 -p2
-%patch9 -p2
-%patch4 -p2
-%patch10 -p2
-%patch20 -p2
-%patch21 -p2
-%patch22 -p2
-%patch23 -p2
-%patch24 -p2
+%patch -p1
 
 %build
 %autoreconf
@@ -258,6 +242,9 @@ gzip -9 %buildroot%docdir/ChangeLog
 %_man1dir/netcat.*
 
 %changelog
+* Mon Nov 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.6.3-alt1
+- 2.6.3
+
 * Mon Aug 14 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.5.5-alt3
 - fixed cert.pem lookup location for netcat and ocspcheck
 - fixed manpages
