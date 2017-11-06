@@ -1,6 +1,7 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
+%filter_from_requires /^osgi.org.apache.ant/d
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -35,7 +36,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           scala
 Version:        2.10.4
-Release:        alt1_9jpp8
+Release:        alt2_9jpp8
 Summary:        A hybrid functional/object-oriented language for the JVM
 BuildArch:      noarch
 Group:          Development/Other
@@ -103,7 +104,6 @@ BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:  scala
 %endif
 
-Requires: javapackages-tools rpm-build-java
 Requires:       jansi
 
 %if 0%{?fedora} > 20
@@ -117,10 +117,6 @@ Requires:       jline2
 Requires:       %{jansi_jar}
 Requires:       %{jline2_jar}
 
-%{echo 
-%filter_from_requires /ant/d;
-
-}
 Source44: import.info
 
 %description
@@ -386,6 +382,9 @@ install -p -m 644 build/scaladoc/manual/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man
 %endif
 
 %changelog
+* Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 2.10.4-alt2_9jpp8
+- updated dependencies
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.10.4-alt1_9jpp8
 - new fc release
 
