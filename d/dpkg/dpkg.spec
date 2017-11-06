@@ -2,7 +2,7 @@
 
 Name: dpkg
 Version: 1.18.7
-Release: alt1
+Release: alt2
 
 Summary: Package maintenance system for Debian Linux
 
@@ -13,7 +13,14 @@ Url: http://packages.debian.org/unstable/base/dpkg.html
 Source0: ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%version.tar.xz
 
 # Automatically added by buildreq on Mon Dec 13 2010
-BuildRequires: dpkg perl-podlators po4a zlib-devel
+BuildRequires: dpkg perl-podlators zlib-devel
+
+# boostrap notes:
+# 1) build dep loop via perl-Dpkg (just add noarch package);
+# 2) dpkg stub is really needed (for abitable, cputable, ostable,
+#    triplettable and --print-architecture); DIY or ask mike@
+
+%{?!_with_bootstrap:BuildRequires: po4a}
 
 BuildRequires: perl-Storable perl-TimeDate perl-File-FcntlLock perl-parent perl-Time-Piece
 ## BuildRequires: gettext-devel
@@ -22,18 +29,19 @@ BuildRequires: perl-Storable perl-TimeDate perl-File-FcntlLock perl-parent perl-
 %description
 This is dpkg, Debian's package maintenance system.
 
-%package -n	perl-Dpkg
+%package -n perl-Dpkg
 Summary: Package maintenance system for Debian Linux
 Group: Development/Perl
 BuildArch: noarch
 
-%description -n	perl-Dpkg
+%description -n perl-Dpkg
 This module provides dpkg functionalities.
 
 %prep
 %setup
 
 %build
+%autoreconf
 %configure \
     --disable-dselect \
     --with-admindir=/var/lib/%name
@@ -99,6 +107,10 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Fri Nov 03 2017 Michael Shigorin <mike@altlinux.org> 1.18.7-alt2
+- BOOTSTRAP: avoid BR: po4a; add notes
+- E2K: add e2k to cputable
+
 * Thu Jun 30 2016 Vitaly Lipatov <lav@altlinux.ru> 1.18.7-alt1
 - new version 1.18.7 (with rpmrb script)
 - cleanup spec
