@@ -1,7 +1,7 @@
 %define _userunitdir /usr/lib/systemd/user
 
 Name: flatpak
-Version: 0.9.99
+Version: 0.10.0
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -17,7 +17,7 @@ Source: https://github.com/flatpak/flatpak/releases/download/%version/%name-%ver
 # made.
 Patch: flatpak-0.6.8-add-flatpak-metadata-xml.patch
 
-BuildRequires: rpm-build-intro libelf-devel gtk-doc gobject-introspection-devel
+BuildRequires: rpm-macros-intro-conflicts libelf-devel gtk-doc gobject-introspection-devel
 
 BuildRequires: pkgconfig(fuse)
 BuildRequires: pkgconfig(gio-unix-2.0)
@@ -172,6 +172,9 @@ rm -rf %buildroot%_docdir/%name/
 %_libdir/libflatpak.so.*
 
 %changelog
+* Mon Nov 06 2017 Vitaly Lipatov <lav@altlinux.ru> 0.10.0-alt1
+- new version 0.10.0 (with rpmrb script)
+
 * Mon Oct 16 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.99-alt1
 - new version 0.9.99 (with rpmrb script)
 
