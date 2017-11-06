@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.5.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: DeskTop Publishing application written in Qt
@@ -16,12 +16,15 @@ Source1: CMakeCache.txt
 
 Patch0: scribus-1.3.5.1-plugindir-alt.patch
 Patch1: FindFreetype.cmake.diff
+Patch2: scribus-1.3.5.1-poppler.patch
 
 # Automatically added by buildreq on Fri Sep 01 2017
 # optimized out: cmake cmake-modules fontconfig fontconfig-devel gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libEGL-devel libGL-devel libX11-devel libfreetype-devel libgpg-error libharfbuzz-devel libharfbuzz-icu libicu-devel libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-widgets libqt5-xml librevenge-devel libstdc++-devel libwayland-client libwayland-server pkg-config python-base python-devel python-modules python3 python3-base qt5-base-common qt5-base-devel qt5-tools sssd-client xml-utils xorg-xproto-devel zlib-devel
 BuildRequires: boost-devel-headers ccmake libcairo-devel libcdr-devel libcups-devel libhunspell-devel libjpeg-devel liblcms2-devel
-BuildRequires: libpodofo-devel libpoppler-devel libtiff-devel libvisio-devel libxml2-devel
+BuildRequires: libpodofo-devel libpoppler-devel libpoppler-cpp-devel libtiff-devel libvisio-devel libxml2-devel
 BuildRequires: qt5-imageformats qt5-tools-devel zlib-devel
+
+BuildRequires: libfreehand-devel libpagemaker-devel libmspub-devel
 
 # FIXME: obsoletes?
 BuildRequires: libhyphen-devel aspell libaspell-devel hunspell desktop-file-utils
@@ -78,6 +81,7 @@ BuildArch: noarch
 %patch0 -p1
 #cp %_datadir/CMake/Modules/FindFreetype.cmake cmake/modules/
 #patch1 -p0
+%patch2 -p1
 
 # recode man page to UTF-8
 #pushd scribus/manpages
@@ -167,6 +171,10 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Mon Nov 06 2017 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.3-alt2
+- rebuild with new poppler 0.60
+- build with libfreehand, libpagemaker, libmspub
+
 * Wed Aug 30 2017 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.3-alt1
 - new version (1.5.3) with rpmgs script
 
