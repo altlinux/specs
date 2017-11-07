@@ -1,9 +1,11 @@
 %def_with mysql
-%def_with ssl
 %def_with ldap
+%def_with gssapi
+%def_with ssl
 %def_with memcached
 %def_with lua
 %def_with gamin
+%def_with pgsql
 
 %define lighttpd_user lighttpd
 %define lighttpd_group lighttpd
@@ -13,7 +15,7 @@
 
 Name: lighttpd
 Version: 1.4.47
-Release: alt1
+Release: alt2
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -21,7 +23,7 @@ Summary: A fast webserver with minimal memory-footprint
 License: BSD
 Group: System/Servers
 
-# git svn init -Ttrunk -ttags -bbranches svn://svn.lighttpd.net/lighttpd/
+# git clone https://git.lighttpd.net/lighttpd/lighttpd1.4.git
 Url: http://www.lighttpd.net
 
 Source0: %name-%version.tar
@@ -35,16 +37,19 @@ BuildRequires(pre): rpm-macros-webserver-common
 BuildRequires: bzlib-devel libfcgi-devel libpcre-devel zlib-devel
 
 %{?_with_mysql:BuildPreReq: libmysqlclient-devel}
+%{?_with_gssapi:BuildPreReq: libkrb5-devel}
 %{?_with_ssl:BuildPreReq: libssl-devel}
 %{?_with_ldap:BuildPreReq: libldap-devel}
 %{?_with_memcached:BuildPreReq: libmemcached-devel}
-%{?_with_lua:BuildPreReq:lua-devel}
+%{?_with_lua:BuildPreReq: lua-devel}
 %{?_with_gamin:BuildPreReq: libgamin-devel}
+%{?_with_pgsql:BuildPreReq: postgresql-devel}
 
 %description
 %name is intented to be a frontend for ad-servers which have to deliver
 small files concurrently to many connections.
 
+%if_with mysql
 %package mysql-vhost
 Summary: MySQL based vhosting %name module
 Group: System/Servers
@@ -52,6 +57,53 @@ Requires: %name = %version-%release
 
 %description mysql-vhost
 This module provides virtual hosts (vhosts) based on a MySQL table.
+
+%package auth-mysql
+Summary: MySQL authentication for %name
+Group: System/Servers
+Requires: %name = %version-%release
+
+%description auth-mysql
+MySQL authentication for %name
+%endif #mysql
+
+%if_with ldap
+%package auth-ldap
+Summary: LDAP authentication for %name
+Group: System/Servers
+Requires: %name = %version-%release
+
+%description auth-ldap
+LDAP authentication for %name
+
+%package ldap-vhost
+Summary: LDAP based vhosting %name module
+Group: System/Servers
+Requires: %name = %version-%release
+
+%description ldap-vhost
+This module provides virtual hosts (vhosts) based on a LDAP.
+%endif #ldap
+
+%if_with gssapi
+%package auth-gssapi
+Summary: GSSAPI authentication for %name
+Group: System/Servers
+Requires: %name = %version-%release
+
+%description auth-gssapi
+GSSAPI authentication for %name
+%endif #gssapi
+
+%if_with pgsql
+%package pgsql-vhost
+Summary: PostgreSQL based vhosting %name module
+Group: System/Servers
+Requires: %name = %version-%release
+
+%description pgsql-vhost
+This module provides virtual hosts (vhosts) based on a PostgreSQL table.
+%endif #pgsql
 
 %package cml
 Summary: CML (Cache Meta Language) %name module
@@ -96,11 +148,13 @@ libtoolize -f -c
 %build
 %configure --libdir=%_libdir/%name \
     %{?_with_mysql:       --with-mysql} \
+    %{?_with_pgsql:       --with-pgsql} \
     %{?_with_ssl:         --with-openssl} \
     %{?_with_ldap:	  --with-ldap} \
     %{?_with_memcached:	  --with-memcached} \
     %{?_with_lua:	  --with-lua} \
     %{?_with_gamin:	  --with-fam} \
+    %{?_with_gssapi:	  --with-krb5} \
     %{?_with_lua:	  LUA_CFLAGS="-I/usr/include/" LUA_LIBS="-llua"}
 %make_build
 
@@ -166,15 +220,34 @@ gpasswd -a %lighttpd_user %webserver_group
 %dir %attr(1770,root,%lighttpd_group) %_var/log/%name
 %dir %_libdir/%name
 %_libdir/%name/*.so
+
 %if_with mysql
+%exclude %_libdir/%name/*_authn_mysql.so
 %exclude %_libdir/%name/*_mysql_vhost.so
+%exclude %_libdir/%name/*_vhostdb_mysql.so
 %endif #mysql
+
+%if_with pgsql
+%exclude %_libdir/%name/*_vhostdb_pgsql.so
+%endif #pgsql
+
+%if_with ldap
+%exclude %_libdir/%name/*_authn_ldap.so
+%exclude %_libdir/%name/*_vhostdb_ldap.so
+%endif ldap
+
+%if_with gssapi
+%exclude %_libdir/%name/*_authn_gssapi.so
+%endif gssapi
+
 %if_with lua
 %exclude %_libdir/%name/*_cml.so
 %endif #cml
+
 %if_with memcached
 %exclude %_libdir/%name/*_trigger_b4_dl.so
 %endif #trigger_b4_dl
+
 %exclude %_libdir/%name/*_rrdtool.so
 %_sbindir/*
 %exclude %_libdir/%name/*.la
@@ -185,12 +258,34 @@ gpasswd -a %lighttpd_user %webserver_group
 %if_with mysql
 %files mysql-vhost
 %_libdir/%name/*mysql_vhost.so
+%_libdir/%name/*_vhostdb_mysql.so
+
+%files auth-mysql
+%_libdir/%name/*_authn_mysql.so
 %endif #mysql
+
+%if_with ldap
+%files auth-ldap
+%_libdir/%name/*_authn_ldap.so
+
+%files ldap-vhost
+%_libdir/%name/*_vhostdb_ldap.so
+%endif #ldap
+
+%if_with gssapi
+%files auth-gssapi
+%_libdir/%name/*_authn_gssapi.so
+%endif #gssapi
+
+%if_with pgsql
+%files pgsql-vhost
+%_libdir/%name/*_vhostdb_pgsql.so
+%endif #pgsql
 
 %if_with lua
 %files cml
 %_libdir/%name/*cml.so
-%endif lua
+%endif #lua
 
 %if_with memcached
 %files trigger_b4_dl
@@ -201,6 +296,12 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Tue Nov 07 2017 Alexei Takaseev <taf@altlinux.ru> 1.4.47-alt2
+- Build with gssapi support (closes: #34134)
+- Build with pgsql vhosting
+- Split base package to auth-mysql, auth-ldap, ldap-vhost,
+  auth-gssapi, pgsql-vhost subpackages
+
 * Mon Oct 23 2017 Alexei Takaseev <taf@altlinux.org> 1.4.47-alt1
 - 1.4.47
 
