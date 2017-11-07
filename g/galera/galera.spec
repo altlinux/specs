@@ -1,5 +1,5 @@
 Name: galera
-Version: 25.3.20
+Version: 25.3.22
 Release: alt1%ubt
 Summary: Synchronous multi-master wsrep provider (replication engine)
 Group: System/Servers
@@ -94,6 +94,9 @@ install -D -m 644 scripts/packages/README-MySQL %buildroot%_docdir/galera/README
 %doc %_docdir/galera/README-MySQL
 
 %changelog
+* Tue Nov 07 2017 Alexey Shabalin <shaba@altlinux.ru> 25.3.22-alt1%ubt
+- 25.3.22
+
 * Fri May 05 2017 Alexey Shabalin <shaba@altlinux.ru> 25.3.20-alt1%ubt
 - 25.3.20
 
