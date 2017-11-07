@@ -2,12 +2,12 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-generic-compat maven-plugins-pom mvn(org.apache.maven:maven-plugin-descriptor)
+#maven-plugin-testing-harness
 Name:           maven-help-plugin
 Version:        2.2
-Release:        alt1_8jpp8
+Release:        alt2_8jpp8
 Summary:        Plugin to to get relative information about a project or the system
 
 Group:          Development/Other
@@ -34,8 +34,7 @@ BuildRequires: javapackages-tools rpm-build-java
 BuildRequires: plexus-containers-component-metadata
 BuildRequires: maven-plugin-tools-generators
 Requires: ant
-Requires: maven
-Requires: javapackages-tools rpm-build-java
+Requires: javapackages-tools
 Requires: xstream
 Requires: maven-plugin-tools-generators
 Source44: import.info
@@ -50,7 +49,6 @@ and the profiles applied to the current project being built.
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -88,6 +86,9 @@ sed -i "s|PluginUtils.toText|org.apache.maven.tools.plugin.generator.GeneratorUt
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_8jpp8
+- fixed build
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_8jpp8
 - new fc release
 
