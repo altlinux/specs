@@ -5,7 +5,7 @@
 
 Name: foomatic-db
 Version: 4.0.%snapshot
-Release: alt1
+Release: alt1.1
 
 Summary: Foomatic printer database
 License: GPL
@@ -87,6 +87,8 @@ It contains README and ChangeLog.
 %patch2 -p2
 %patch5 -p2
 
+xz ChangeLog
+
 %build
 ./make_configure
 %configure --disable-gzip-ppds
@@ -155,9 +157,12 @@ comm -23 foomatic-db-all.ls foomatic-db-foo2zjs.ls > foomatic-db-main.ls
 %endif
 
 %files -n foomatic-db-docs
-%doc README ChangeLog
+%doc README ChangeLog.xz
 
 %changelog
+* Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.20170906-alt1.1
+- compressed changelog (repocop warning)
+
 * Wed Sep 06 2017 Cronbuild Service <cronbuild@altlinux.org> 4.0.20170906-alt1
 - repocop cronbuild 20170906. At your service.
 
