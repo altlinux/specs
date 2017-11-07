@@ -25,7 +25,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt8
+Release: alt9
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -120,6 +120,7 @@ Patch1051: kdebase-workspace-4.10.4-alt-kcm_fonts_dont_change_on_load.patch
 Patch1052: kdebase-workspace-4.11.1-alt-disable-kcm-randr.patch
 Patch1053: kdebase-workspace-4.11.5-alt-oxygen-decoration-color-selinux.patch
 Patch1054: alt-dont-save-session.patch
+Patch1055: kdebase-workspace-4.11.22-alt-fix-FTBFS.patch
 
 BuildRequires(pre): kde4libs-devel rpm-build-python
 BuildRequires(pre): NetworkManager-devel
@@ -569,6 +570,7 @@ KDE 4 library
 %patch1052 -p1
 %patch1053 -p1
 %patch1054 -p1
+%patch1055 -p1
 
 grep -q X-KDE-RootOnly kdm/kcm/kdm.desktop \
     || echo "X-KDE-RootOnly=true" >>kdm/kcm/kdm.desktop
@@ -970,6 +972,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Nov 07 2017 Oleg Solovyov <mcpain@altlinux.org> 4.11.22-alt9
+- fix FTBFS
+
 * Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 4.11.22-alt8
 - fix requires
 
