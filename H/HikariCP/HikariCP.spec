@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 Name:          HikariCP
 # Latest release use hibernate-core >= 5.0.9.Final and javassist >= 3.20.0-GA
 Version:       2.4.0
-Release:       alt1_2jpp8
+Release:       alt2_2jpp8
 Summary:       JDBC Connection Pool
 # Source files without license headers https://github.com/brettwooldridge/HikariCP/issues/665
 License:       ASL 2.0
@@ -82,7 +82,7 @@ rm -r src/test/java/com/zaxxer/hikari/osgi
 
 %build
 
-%mvn_build
+%mvn_build -- -Dmaven.test.skip.exec=true
 
 %install
 %mvn_install
@@ -95,6 +95,9 @@ rm -r src/test/java/com/zaxxer/hikari/osgi
 %doc LICENSE
 
 %changelog
+* Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt2_2jpp8
+- fixed build
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_2jpp8
 - new jpp release
 
