@@ -1,16 +1,17 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 %define oldname jakarta-commons-httpclient
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global short_name httpclient
 
 Name:           apache-commons-httpclient
 Version:        3.1
-Release:        alt6_23jpp8
+Release:        alt6_27jpp8
 Summary: Jakarta Commons HTTPClient implements the client side of HTTP standards
 License:        ASL 2.0 and (ASL 2.0 or LGPLv2+)
 URL:            http://jakarta.apache.org/commons/httpclient/
@@ -91,12 +92,13 @@ BuildArch: noarch
 %prep
 %setup -q -n commons-httpclient-%{version}
 mkdir lib # duh
+build-jar-repository -p lib commons-codec commons-logging junit
 rm -rf docs/apidocs docs/*.patch docs/*.orig docs/*.rej
 
 %patch0
 
 pushd src/conf
-%{__sed} -i 's/\r//' MANIFEST.MF
+sed -i 's/\r//' MANIFEST.MF
 %patch1
 popd
 
@@ -124,7 +126,6 @@ ant \
   -Djavadoc.j2sdk.link=%{_javadocdir}/java \
   -Djavadoc.logging.link=%{_javadocdir}/jakarta-commons-logging \
   -Dtest.failonerror=false \
-  -Dlib.dir=%{_javadir} \
   -Djavac.encoding=UTF-8 \
   dist test
 
@@ -156,6 +157,9 @@ ln -s %{_javadocdir}/%{oldname} dist/docs/apidocs
 
 
 %changelog
+* Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.1-alt6_27jpp8
+- update
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.1-alt6_23jpp8
 - new version
 
