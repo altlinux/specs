@@ -1,6 +1,6 @@
 %define oname fonttools
 Name: python-module-%oname
-Version: 3.15.1
+Version: 3.18.0
 Release: alt1
 
 Summary: Converts OpenType and TrueType fonts to and from XML
@@ -54,6 +54,9 @@ Mac-specific formats.
 %_man1dir/*
 
 %changelog
+* Tue Nov 07 2017 Vitaly Lipatov <lav@altlinux.ru> 3.18.0-alt1
+- new version 3.18.0 (with rpmrb script)
+
 * Sun Oct 08 2017 Vitaly Lipatov <lav@altlinux.ru> 3.15.1-alt1
 - new version 3.15.1 (with rpmrb script)
 
