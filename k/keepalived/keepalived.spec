@@ -11,7 +11,7 @@
 
 Name: keepalived
 Version: 1.3.9
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
 License: GPL
@@ -61,6 +61,9 @@ userspace daemon for LVS cluster nodes healthchecks and LVS directors failover.
         %{subst_enable libnl} \
         %{?_enable_snmp:--enable-snmp --enable-snmp-rfc} \
         --with-init=systemd
+GIT_TIMESTAMP=`cat gitstamp`
+printf '#define GIT_DATE        "%s"\n' `date -d "1970-01-01 UTC $GIT_TIMESTAMP seconds" +"%m/%d,%Y"` >lib/git-commit.h
+printf '#define GIT_YEAR        "%s"\n' `date -d "1970-01-01 UTC $GIT_TIMESTAMP seconds" +"%Y"` >>lib/git-commit.h
 
 %make_build
 
@@ -102,6 +105,9 @@ install -pD -m644 keepalived/etc/sysconfig/%name %buildroot%_sysconfdir/sysconfi
 %doc doc/samples
 
 %changelog
+* Tue Nov 07 2017 Anton Farygin <rider@altlinux.ru> 1.3.9-alt2%ubt
+- added more correct git_commit.h initialization
+
 * Tue Oct 31 2017 Anton Farygin <rider@altlinux.ru> 1.3.9-alt1%ubt
 - new version
 
