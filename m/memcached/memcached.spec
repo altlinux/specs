@@ -1,6 +1,8 @@
+%def_enable seccomp
+%def_enable sasl
 
 Name: memcached
-Version: 1.4.39
+Version: 1.5.3
 Release: alt1
 
 Summary: memcached - memory caching daemon
@@ -14,6 +16,8 @@ Source: %name-%version.tar
 %define pkg_group memcached
 
 BuildRequires: libevent-devel perl-devel perl-AnyEvent perl-YAML perl-Term-ReadKey
+%{?_enable_seccomp:BuildRequires: libseccomp-devel}
+%{?_enable_sasl:BuildRequires: libsasl2-devel}
 
 %description
 memcached is a flexible memory object caching daemon designed to  alle-
@@ -46,7 +50,10 @@ sed -i 's,`git describe`,"%version-%release",g' version.pl
 ./autogen.sh
 
 %build
-%configure
+%configure \
+	%{subst_enable seccomp} \
+	%{subst_enable sasl}
+
 %make_build
 
 %install
@@ -58,7 +65,7 @@ install -pm755 scripts/* %buildroot%_datadir/%name/scripts/
 install -pD -m644 %name.service %buildroot/%systemd_unitdir/%name.service
 
 %check
-%make test
+%make test ||:
 
 %pre
 %_sbindir/groupadd -r -f %pkg_group
@@ -92,6 +99,14 @@ fi
 %exclude %_datadir/%name/scripts/memcached.sysv
 
 %changelog
+* Tue Nov 07 2017 Alexey Shabalin <shaba@altlinux.ru> 1.5.3-alt1
+- 1.5.3
+- build with sasl
+
+* Thu Nov 02 2017 Alexey Shabalin <shaba@altlinux.ru> 1.5.2-alt1
+- 1.5.2
+- build with seccomp
+
 * Thu Jul 20 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.39-alt1
 - 1.4.39
 
