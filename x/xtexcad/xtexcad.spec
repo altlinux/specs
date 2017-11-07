@@ -1,6 +1,6 @@
 Name:     xtexcad
 Version:  2.4.1
-Release:  alt5
+Release:  alt5.1
 Packager: Igor Vlasenko <viy@altlinux.org>
 License:  Other License(s), see package
 Group:    Graphics
@@ -58,7 +58,7 @@ Comment=%{summary}
 Icon=%{name}
 Exec=%{name}
 Terminal=false
-Categories=Graphics;2DGraphics;VectorGraphics;X-ALTLinux-TeX;Graphics;
+Categories=Graphics;2DGraphics;VectorGraphics;X-ALTLinux-TeX;
 EOF
 # garbage
 rm -f %buildroot/usr/share/X11/app-defaults
@@ -71,6 +71,9 @@ rm -f %buildroot/usr/share/X11/app-defaults
 %_desktopdir/*
 
 %changelog -n texcad
+* Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt5.1
+- cleaned up desktop file
+
 * Sat Dec 08 2012 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt5
 - updated desktop file
 
