@@ -10,7 +10,7 @@
 %define rname pykde4
 Name: kde4-python
 Version: 4.14.3
-Release: alt1
+Release: alt2
 
 Group: Development/KDE and QT
 Summary: Python bindings for KDE4
@@ -42,7 +42,9 @@ Python bindings for KDE4
 Summary: PyKDE4
 Group: Development/Python
 Requires: python-module-PyQt4 >= %{get_version python-module-PyQt4}
-Requires: python-module-sip >= %{get_version python-module-sip}
+%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
+Requires: python-module-sip = %sipver2
+#Requires: python-module-sip >= %{get_version python-module-sip}
 Provides: PyKDE4 = %version-%release
 %description -n python-module-kde4
 Python KDE 4
@@ -95,6 +97,9 @@ Python bindings for KDE4
 
 
 %changelog
+* Tue Nov 07 2017 Oleg Solovyov <mcpain@altlinux.org> 4.14.3-alt2
+- Set strict require to sip version we build with.
+
 * Mon Jan 18 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
 - fix to build
 
