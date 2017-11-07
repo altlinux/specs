@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -39,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           kxml
 Version:        2.3.0
-Release:        alt3_12jpp8
+Release:        alt3_14jpp8
 Summary:        Small XML pull parser
 License:        MIT
 URL:            http://kxml.sourceforge.net/
@@ -51,8 +50,8 @@ Source3:        %{name}-%{version}-OSGI-MANIFEST.MF
 
 Patch0:         0001-Unbundle-xpp3-classes.patch
 
-BuildRequires:  java-devel
-BuildRequires:  ant >= 0:1.6.5
+BuildRequires:  javapackages-local
+BuildRequires:  ant
 BuildRequires:  xpp3 >= 0:1.1.3.1
 BuildRequires:  zip
 Requires:       xpp3 >= 0:1.1.3.1
@@ -91,40 +90,28 @@ sed -i '/^\r$/d' META-INF/MANIFEST.MF
 zip -u %{name}2-%{version}.jar META-INF/MANIFEST.MF
 popd
 
+%mvn_artifact %{SOURCE1} dist/%{name}2-%{version}.jar
+%mvn_artifact %{SOURCE2} dist/%{name}2-min-%{version}.jar
+
+# Compat symlinks
+%mvn_file :kxml2 kxml/kxml2 kxml
+%mvn_file :kxml2-min kxml/kxml2-min kxml-min
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-
-install -m 644 %{SOURCE1} \
-        $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-install -m 644 %{SOURCE2} \
-        $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}-min.pom
-
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 dist/%{name}2-%{version}.jar \
-        $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-install -m 644 dist/%{name}2-min-%{version}.jar \
-        $RPM_BUILD_ROOT%{_javadir}/%{name}-min.jar
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-%add_maven_depmap JPP-%{name}-min.pom %{name}-min.jar
-
-# javadoc
-install -p -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr www/kxml2/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install -J www/kxml2/javadoc
 # jpp compat - just in case
 ln -s kxml.jar %buildroot%_javadir/kxml2.jar
 
 %files -f .mfiles
 %doc license.txt
-%{_javadir}/*.jar
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc license.txt
-%{_javadocdir}/%{name}
 
 %changelog
+* Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt3_14jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt3_12jpp8
 - new jpp release
 
