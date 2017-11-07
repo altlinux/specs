@@ -1,45 +1,49 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++ perl(Digest.pm) perl(English.pm) perl(Error.pm) perl(Exception/Class.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Slurp.pm) perl(File/Spec/Unix.pm) perl(FindBin.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(Moose.pm) perl(Moose/Role.pm) perl(Moose/Util/TypeConstraints.pm) perl(Params/Validate.pm) perl(Readonly.pm) perl(Switch.pm) perl(Test/Builder/Module.pm) perl(Test/Class/Load.pm) perl(Test/More.pm) perl(Test/Perl/Critic.pm) perl(UNIVERSAL.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(blib.pm) perl(overload.pm) perl-devel unzip
+BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
+BuildRequires: gcc-c++ perl-devel rpm-build-java unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global antlr_version 3.5.2
 %global c_runtime_version 3.4
 %global javascript_runtime_version 3.1
-%global baserelease 11
+%global baserelease 16
 
 Summary:            ANother Tool for Language Recognition
 Name:               antlr3
-Version:            %{antlr_version}
-Release:            alt1_11jpp8
 Epoch:              1
+Version:            %{antlr_version}
+Release:            alt1_16jpp8
+License:            BSD
 URL:                http://www.antlr3.org/
+
 Source0:            https://github.com/antlr/antlr3/archive/%{antlr_version}.tar.gz
 #Source2:            http://www.antlr3.org/download/Python/antlr_python_runtime-%{python_runtime_version}.tar.gz
 Source3:            http://www.antlr3.org/download/antlr-javascript-runtime-%{javascript_runtime_version}.zip
-Patch0:             0001-java8-fix.patch
 
+Patch0:             0001-java8-fix.patch
 # Generate OSGi metadata
 Patch1:         osgi-manifest.patch
 
-License:            BSD
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.antlr:antlr)
+BuildRequires:  mvn(org.antlr:antlr3-maven-plugin)
+BuildRequires:  mvn(org.antlr:ST4)
+BuildRequires:  mvn(org.antlr:stringtemplate)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-api)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 
-BuildRequires:      maven-local
-BuildRequires:      maven-plugin-bundle
-BuildRequires:      maven-surefire-provider-junit
-BuildRequires:      junit
-BuildRequires:      tomcat-servlet-3.1-api
-BuildRequires:      stringtemplate4
-BuildRequires:      stringtemplate
-BuildRequires:      antlr3-tool
-
-BuildRequires:      autoconf-common
-BuildRequires:      automake-common
-BuildRequires:      libtool-common
+BuildRequires:      autoconf
+BuildRequires:      automake
+BuildRequires:      libtool
 
 # we don't build it now
 Obsoletes:       antlr3-gunit < 3.2-15
@@ -57,7 +61,7 @@ Summary:     ANother Tool for Language Recognition
 BuildArch:   noarch
 Provides:    %{name} = %{epoch}:%{antlr_version}-%{release}
 Obsoletes:   %{name} < %{epoch}:%{antlr_version}-%{release}
-Requires:    %{name}-java = %{epoch}:%{antlr_version}
+Requires:    %{name}-java = %{epoch}:%{antlr_version}-%{release}
 
 Provides:    ant-antlr3 = %{epoch}:%{antlr_version}-%{release}
 Obsoletes:   ant-antlr3 < %{epoch}:%{antlr_version}-%{release}
@@ -104,7 +108,7 @@ C run-time support for ANTLR-generated parsers
 %package   C-devel
 Group: Development/Java
 Summary:   Header files for the C bindings for ANTLR-generated parsers
-Requires:  %{name}-C = %{epoch}:%{c_runtime_version}
+Requires:  %{name}-C = %{epoch}:%{c_runtime_version}-%{release}
 Version:   %{c_runtime_version}
 
 
@@ -115,9 +119,9 @@ Header files for the C bindings for ANTLR-generated parsers
 Group: Development/Java
 Summary:        API documentation for the C run-time support for ANTLR-generated parsers
 BuildArch:      noarch
-BuildRequires: graphviz libgraphviz
+BuildRequires:  graphviz libgraphviz
 BuildRequires:  doxygen
-Requires:       %{name}-C = %{epoch}:%{c_runtime_version}
+Requires:       %{name}-C = %{epoch}:%{c_runtime_version}-%{release}
 Version:   %{c_runtime_version}
 
 %description    C-docs
@@ -183,7 +187,7 @@ autoreconf -i
 %endif
 
 sed -i "s#CFLAGS = .*#CFLAGS = $RPM_OPT_FLAGS#" Makefile
-make %{?_smp_mflags}
+%make_build
 doxygen -u # update doxygen configuration file
 doxygen # build doxygen documentation
 popd
@@ -211,7 +215,7 @@ ant/ant-antlr3 antlr3
 EOF
 
 # install wrapper script
-%jpackage_script org.antlr.Tool '' '' 'stringtemplate4.jar:antlr3.jar:antlr3-runtime.jar' antlr3 true
+%jpackage_script org.antlr.Tool '' '' 'stringtemplate4/ST4.jar:antlr3.jar:antlr3-runtime.jar' antlr3 true
 
 # install C runtime
 pushd runtime/C
@@ -224,8 +228,8 @@ done
 sed -i -e 's,^\.so man3/pANTLR3,.so man3/antlr3-pANTLR3,' `grep -rl 'man3/pANTLR3' .`
 gzip *
 popd
-mv api/man/man3 $RPM_BUILD_ROOT%{_mandir}/
-rmdir api/man
+#mv api/man/man3 $RPM_BUILD_ROOT%{_mandir}/
+#rmdir api/man
 popd
 
 # install javascript runtime
@@ -237,10 +241,9 @@ popd
 mkdir -p $RPM_BUILD_ROOT/%{_includedir}/%{name}
 install -pm 644 runtime/Cpp/include/* $RPM_BUILD_ROOT/%{_includedir}/
 
-rm -f runtime/C/api/*.png
-
 %files tool -f .mfiles-tool
-%doc README.txt tool/{LICENSE.txt,CHANGES.txt}
+%doc README.txt tool/LICENSE.txt
+%doc README.txt tool/CHANGES.txt
 %{_bindir}/antlr3
 %{_javadir}/ant/ant-antlr3.jar
 %config(noreplace) %{_sysconfdir}/ant.d/ant-antlr3
@@ -250,7 +253,7 @@ rm -f runtime/C/api/*.png
 %{_libdir}/libantlr3c.so
 
 %files C-devel
-%{_mandir}/man3/*
+#%{_mandir}/man3/*
 %{_includedir}/*.h
 
 %files C-docs
@@ -272,6 +275,9 @@ rm -f runtime/C/api/*.png
 %doc tool/LICENSE.txt
 
 %changelog
+* Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.5.2-alt1_16jpp8
+- fixed build
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.5.2-alt1_11jpp8
 - new fc release
 
