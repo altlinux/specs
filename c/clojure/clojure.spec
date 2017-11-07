@@ -2,10 +2,9 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-%define fedora 23
+BuildRequires: jpackage-generic-compat sonatype-oss-parent
+%define fedora 25
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name clojure
 %define version 1.7.0
@@ -18,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 Name:           clojure
 Epoch:          1
 Version:        1.7.0
-Release:        alt1_1jpp8
+Release:        alt2_1jpp8
 Summary:        A dynamic programming language that targets the Java Virtual Machine
 
 Group:          Development/Java
@@ -82,6 +81,9 @@ install -pm 755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}
 %{_bindir}/%{name}
 
 %changelog
+* Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.7.0-alt2_1jpp8
+- fixed build
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.7.0-alt1_1jpp8
 - new version
 
