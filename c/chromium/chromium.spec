@@ -25,7 +25,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        61.0.3163.100
+Version:        62.0.3202.75
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -69,11 +69,11 @@ Patch017: 0017-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
 Patch018: 0018-ALT-gzip-does-not-support-the-rsyncable-option.patch
 Patch019: 0019-UBUNTU-Specify-max-resolution.patch
 Patch020: 0020-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch021: 0021-Remove-third_party-libva.patch
+#Patch021: 0021-Remove-third_party-libva.patch
 Patch022: 0022-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
-Patch023: 0023-wip.patch
+Patch023: 0023-ARCH-gn-bootstrap.patch
 Patch024: 0024-GENTOO-disable-safe_math_shared.patch
-Patch025: 0025-GENTOO-fix-atk-state.patch
+#Patch025: 0025-GENTOO-fix-atk-state.patch
 Patch026: 0026-replace-struct-ucontext-with-ucontext_t.patch
 ### End Patches
 
@@ -212,11 +212,11 @@ cp -a libchromiumcontent/chromiumcontent .
 %patch018 -p1
 %patch019 -p1
 %patch020 -p1
-%patch021 -p1
+#patch021 -p1
 %patch022 -p1
 %patch023 -p1
 %patch024 -p1
-%patch025 -p1
+#patch025 -p1
 %patch026 -p1
 ### Finish apply patches
 
@@ -424,6 +424,30 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Tue Oct 24 2017 Alexey Gladkov <legion@altlinux.ru> 62.0.3202.75-alt1
+- New version (62.0.3202.75).
+- Security fixes:
+  - CVE-2017-5124: UXSS with MHTML.
+  - CVE-2017-5125: Heap overflow in Skia.
+  - CVE-2017-5126: Use after free in PDFium.
+  - CVE-2017-5127: Use after free in PDFium.
+  - CVE-2017-5128: Heap overflow in WebGL.
+  - CVE-2017-5129: Use after free in WebAudio.
+  - CVE-2017-5132: Incorrect stack manipulation in WebAssembly.
+  - CVE-2017-5130: Heap overflow in libxml2.
+  - CVE-2017-5131: Out of bounds write in Skia.
+  - CVE-2017-5133: Out of bounds write in Skia.
+  - CVE-2017-15386: UI spoofing in Blink.
+  - CVE-2017-15387: Content security bypass.
+  - CVE-2017-15388: Out of bounds read in Skia.
+  - CVE-2017-15389: URL spoofing in OmniBox.
+  - CVE-2017-15390: URL spoofing in OmniBox.
+  - CVE-2017-15391: Extension limitation bypass in Extensions.
+  - CVE-2017-15392: Incorrect registry key handling in PlatformIntegration.
+  - CVE-2017-15393: Referrer leak in Devtools.
+  - CVE-2017-15394: URL spoofing in extensions UI.
+  - CVE-2017-15395: Null pointer dereference in ImageCapture.
+
 * Tue Sep 26 2017 Alexey Gladkov <legion@altlinux.ru> 61.0.3163.100-alt1
 - Security fixes:
   - CVE-2017-5121: Out-of-bounds access in V8. Reported by Jordan Rabet, Microsoft Offensive Security Research and Microsoft ChakraCore team on 2017-09-14
