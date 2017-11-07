@@ -27,7 +27,7 @@
 
 Name: glusterfs3
 Version: %major.7
-Release: alt1
+Release: alt2
 
 Summary: Cluster File System
 
@@ -358,7 +358,7 @@ mv %buildroot%_datadir/glusterfs/scripts/gsync-sync-gfid %buildroot%_bindir/
 #done
 
 # Create working directory
-mkdir -p %buildroot%_sharedstatedir/glusterd
+mkdir -p %buildroot%_sharedstatedir/glusterd/
 
 # Update configuration file to /var/lib working directory
 %__subst 's|option working-directory %_sysconfdir/glusterd|option working-directory %_sharedstatedir/glusterd|g' \
@@ -402,13 +402,10 @@ rm -rf %buildroot%_sbindir/conf.py
 %_sbindir/gluster
 %_man8dir/gluster.8*
 
-%dir %glusterlibdir/
-%dir %_datadir/glusterfs/
 %glusterlibdir/rpc-transport/
 %glusterlibdir/auth/
-%exclude %glusterlibdir/xlator/mount/api.so
 %glusterlibdir/xlator/
-%dir %_libexecdir/glusterfs/
+%exclude %glusterlibdir/xlator/mount/api.so
 %_libexecdir/glusterfs/glusterfind/
 %_sbindir/gfind_missing_files
 %_libexecdir/glusterfs/gfind_missing_files/
@@ -546,6 +543,13 @@ rm -rf %buildroot%_sbindir/conf.py
 %_pkgconfigdir/libgfdb.pc
 
 %files -n lib%name
+
+# until we got -common subpackage
+%dir %_libdir/glusterfs/
+%dir %glusterlibdir/
+%dir %_datadir/glusterfs/
+%dir %_libexecdir/glusterfs/
+
 %_libdir/libgfchangelog.so.*
 %_libdir/libgfrpc.so.*
 %_libdir/libgfxdr.so.*
@@ -559,7 +563,11 @@ rm -rf %buildroot%_sbindir/conf.py
 
 %preun server
 %preun_service glusterd
+
 %changelog
+* Tue Nov 07 2017 Vitaly Lipatov <lav@altlinux.ru> 3.10.7-alt2
+- small fixes, pack dirs
+
 * Sun Nov 05 2017 Vitaly Lipatov <lav@altlinux.ru> 3.10.7-alt1
 - new version 3.10.7 (with rpmrb script)
 
