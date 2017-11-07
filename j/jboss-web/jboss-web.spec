@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-generic-compat jboss-parent
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-web
 %define version 8.0.0
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-web
 Version:          8.0.0
-Release:          alt1_0.6.Alpha1jpp8
+Release:          alt2_0.6.Alpha1jpp8
 Summary:          JBoss Web
 License:          LGPLv2+ and ASL 2.0 and MIT and (LGPLv2+ or ASL 2.0)
 URL:              http://www.jboss.org/jbossweb
@@ -76,6 +76,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 8.0.0-alt2_0.6.Alpha1jpp8
+- fixed build
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 8.0.0-alt1_0.6.Alpha1jpp8
 - new fc release
 
