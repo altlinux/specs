@@ -1,6 +1,7 @@
+# Wait: https://github.com/haiwen/seafile/issues/1842
 Name: seafile
-Version: 5.1.4
-Release: alt3
+Version: 6.1.3
+Release: alt1
 
 Summary: Full-fledged cloud storage platform
 
@@ -26,7 +27,8 @@ Requires: lib%name = %version-%release
 # Automatically added by buildreq on Sun Nov 10 2013
 # optimized out: glib2-devel gnu-config libevent-devel libgio-devel libsearpc-devel mariadb-client mariadb-common pkg-config python-base python-devel python-module-distribute python-module-zope python-modules
 BuildRequires: intltool libssl-devel libuuid-devel python-module-paste python-module-peak
-BuildRequires: zlib-devel libfuse-devel vala libjansson-devel libjson-glib-devel
+BuildRequires: zlib-devel libjson-glib-devel
+BuildRequires: vala
 
 BuildRequires: libsearpc-devel >= 3.0.4
 BuildRequires: libccnet-devel >= %version
@@ -55,32 +57,6 @@ so even the server admin cannot view a file's contents.
 
 Seafile allows users to create groups with file syncing,
 wiki, and discussion to enable easy collaboration around documents within a team.
-
-
-%package server
-Summary: Seafile server
-Group: Networking/File transfer
-Requires: lib%name = %version-%release
-
-Requires: ccnet-server >= %version
-
-%description server
-Seafile server.
-Seafile is a next-generation open source cloud storage system
-with advanced support for file syncing, privacy protection and teamwork.
-
-See https://www.altlinux.org/Seafile for detail instructions.
-
-%package nginx
-Summary: Seafile nginx server config
-Group: Networking/File transfer
-Requires: nginx
-#Requires: %name-server = %version-%release
-
-%description nginx
-Seafile nginx server config.
-Seafile is a next-generation open source cloud storage system
-with advanced support for file syncing, privacy protection and teamwork.
 
 %package -n fuse-seafile
 Summary: Seafile FUSE access
@@ -113,48 +89,25 @@ developing applications that use lib%name.
 cp %SOURCE1 .
 # remove buildroot from .pc file
 %__subst 's/(DESTDIR)//' lib/libseafile.pc.in
-# hack for build with compat libevhtp-seafile = 1.2.9
-%__subst 's/-levhtp/-levhtp-seafile/' server/Makefile.am
 
 %build
 %autoreconf
 # hack for build with compat libevhtp-seafile = 1.2.9
 export CPPFLAGS="$CPPFLAGS -I%_includedir/libevhtp-seafile/"
-%configure --enable-client --enable-server \
-	--enable-python --enable-fuse --disable-static
+%configure --enable-client \
+           --enable-python --enable-fuse \
+           --disable-static
 # FIXME: breakes build
 %make_build || %make
 
 %install
 %makeinstall_std
-install -D -m 644 %SOURCE2 %buildroot%_sysconfdir/nginx/sites-available.d/seafile.conf.example
-mkdir -p %buildroot%_datadir/seafile-server/scripts/
-cp -a scripts/upgrade %buildroot%_datadir/seafile-server/scripts/
 
 %files
 %_bindir/seaf-cli
 %_bindir/seaf-daemon
 %_man1dir/seaf-cli.1.*
 %_man1dir/seaf-daemon*.1.*
-
-%files server
-%doc README.ALT.utf8.txt
-%_bindir/seaf-fsck
-%_bindir/seaf-migrate
-%_bindir/seaf-server
-%_bindir/seaf-server-init
-%_bindir/seafile-admin
-%_bindir/seafile-controller
-%_bindir/seafserv-gc
-
-%_datadir/seafile-server/
-%python_sitelibdir/seaserv/
-
-%files -n fuse-seafile
-%_bindir/seaf-fuse
-
-%files nginx
-%_sysconfdir/nginx/sites-available.d/seafile.conf.example
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -166,6 +119,12 @@ cp -a scripts/upgrade %buildroot%_datadir/seafile-server/scripts/
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Tue Nov 07 2017 Vitaly Lipatov <lav@altlinux.ru> 6.1.3-alt1
+- new version 6.1.3 (with rpmrb script)
+
+* Mon Feb 13 2017 Vitaly Lipatov <lav@altlinux.ru> 6.0.3-alt1
+- new version 6.0.3 (with rpmrb script)
+
 * Tue Aug 30 2016 Vitaly Lipatov <lav@altlinux.ru> 5.1.4-alt3
 - build with compat libevhtp-seafile = 1.2.9
 - fix license in spec to GPLv2 with permissions for OpenSSL

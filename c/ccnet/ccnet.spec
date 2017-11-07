@@ -1,11 +1,12 @@
+%def_disable server
 Name: ccnet
-Version: 6.0.0
+Version: 6.1.3
 Release: alt1
 
 Summary: Framework for writing networked applications in C
 
 Group: Networking/File transfer
-License: GPLv3
+License: GPLv2 with permissions for OpenSSL
 Url: https://github.com/haiwen/ccnet
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -16,14 +17,18 @@ Source: %name-%version.tar
 # manually removed: python-module-mwlib 
 # Automatically added by buildreq on Fri Sep 06 2013
 # optimized out: glib2-devel gnu-config libgio-devel pkg-config python-base python-devel python-module-distribute python-module-zope python-modules
-BuildRequires: libevent-devel libsqlite3-devel libssl-devel libuuid-devel python-module-paste python-module-peak
+BuildRequires: libevent-devel libssl-devel libuuid-devel python-module-paste python-module-peak
+
+BuildRequires: libsqlite3-devel
 
 BuildRequires: libsearpc-devel >= 3.0.4
 
 BuildRequires: vala >= 0.8
 
+%if_enabled server
 # server requirements
 BuildRequires: libzdb-devel >= 2.10.2
+%endif
 
 Requires: lib%name = %version-%release
 
@@ -72,10 +77,11 @@ Ccnet python module.
 
 %build
 %autoreconf
-%configure --disable-static --disable-compile-demo \
-	   --enable-server
-#%make_build does not work
-%make
+%configure --disable-static \
+           %subst_enable server
+
+# smp build does not work
+%make_build || %make
 
 %install
 %makeinstall_std
@@ -83,7 +89,7 @@ Ccnet python module.
 %files
 %_bindir/ccnet
 %_bindir/ccnet-init
-%_bindir/ccnet-tool
+#%_bindir/ccnet-tool
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -91,9 +97,11 @@ Ccnet python module.
 %files -n python-module-%name
 %python_sitelibdir/%name/
 
+%if_enabled server
 %files server
 %_bindir/%name-server
 %_bindir/%name-servtool
+%endif
 
 %files -n lib%name-devel
 %doc HACKING
@@ -103,6 +111,9 @@ Ccnet python module.
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Tue Nov 07 2017 Vitaly Lipatov <lav@altlinux.ru> 6.1.3-alt1
+- new version 6.1.3 (with rpmrb script)
+
 * Sun Dec 04 2016 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt1
 - new version 6.0.0 (with rpmrb script)
 

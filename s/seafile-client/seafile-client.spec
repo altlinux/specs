@@ -1,11 +1,11 @@
 Name: seafile-client
-Version: 5.1.4
+Version: 6.1.3
 Release: alt1
 
 Summary: Seafile gui client on QT bassed
 
 Group: Networking/File transfer
-License: GPLv3
+License: Apache License
 Url: https://github.com/haiwen/seafile-client
 
 Packager: Denis Baranov <baraka@altlinux.ru>
@@ -55,6 +55,12 @@ ln -s seafile-applet %buildroot%_bindir/%name
 %_pixmapsdir/*
 
 %changelog
+* Tue Nov 07 2017 Vitaly Lipatov <lav@altlinux.ru> 6.1.3-alt1
+- new version 6.1.3 (with rpmrb script)
+
+* Mon Feb 13 2017 Vitaly Lipatov <lav@altlinux.ru> 6.0.3-alt1
+- new version 6.0.3 (with rpmrb script)
+
 * Wed Aug 03 2016 Vitaly Lipatov <lav@altlinux.ru> 5.1.4-alt1
 - new version 5.1.4 (with rpmrb script)
 
