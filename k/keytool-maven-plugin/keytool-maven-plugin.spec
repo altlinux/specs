@@ -1,15 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-generic-compat mojo-parent maven-plugin-plugin
 
 %global group_id  org.codehaus.mojo
 
 Name:             keytool-maven-plugin
 Version:          1.0
-Release:          alt5_18jpp8
+Release:          alt6_18jpp8
 Summary:          A plugin that wraps the keytool program and allows to manipulate keystores
 License:          MIT and ASL 2.0
 Group:            Development/Other
@@ -25,7 +24,7 @@ BuildArch:        noarch
 BuildRequires: javapackages-tools rpm-build-java
 BuildRequires:    maven-local
 
-Requires: javapackages-tools rpm-build-java
+Requires: javapackages-tools
 Requires:         maven
 Requires:         plexus-utils
 Requires:         apache-commons-lang
@@ -39,7 +38,6 @@ with the goals "keytool:genkey" and "keytool:clean".
 %package javadoc
 Summary:          API documentation for %{name}
 Group:            Development/Java
-Requires: javapackages-tools rpm-build-java
 BuildArch: noarch
 
 %description javadoc
@@ -68,6 +66,9 @@ cp %{SOURCE1} LICENSE-ASL
 %doc LICENSE-MIT LICENSE-ASL
 
 %changelog
+* Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt6_18jpp8
+- fixed build
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5_18jpp8
 - new fc release
 
