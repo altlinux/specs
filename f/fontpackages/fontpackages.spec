@@ -1,7 +1,7 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Font/TTF/Font.pm) perl(Unicode/UCD.pm)
 # END SourceDeps(oneline)
-%define fedora 25
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -14,7 +14,7 @@ BuildRequires: perl(Font/TTF/Font.pm) perl(Unicode/UCD.pm)
 
 Name:    fontpackages
 Version: 1.44
-Release: alt4_19
+Release: alt5_19
 Summary: Common directory and macro definitions used by font packages
 
 Group:     System/Configuration/Other
@@ -50,7 +50,6 @@ including the correct permissions for the directories.
 Group: System/Configuration/Other
 Summary: Templates and macros used to create font packages
 
-Requires: qa-robot rpmdevtools spectool
 Requires: fontconfig
 Requires: rpm-macros-fontpackages rpm-build-fonts xorg-font-encodings
 
@@ -102,8 +101,8 @@ sed -i "s|^DATADIR\([[:space:]]*\)\?=\(.*\)$|DATADIR=%{_datadir}/%{name}|g" \
 # Pull macros out of macros.fonts and emulate them during install
 for dir in fontbasedir        fontconfig_masterdir \
            fontconfig_confdir fontconfig_templatedir ; do
-  export _${dir}=$(rpm --eval $(%{__grep} -E "^%_${dir}\b" \
-    rpm/macros.fonts | %{__awk} '{ print $2 }'))
+  export _${dir}=$(rpm --eval $(grep -E "^%_${dir}\b" \
+    rpm/macros.fonts | gawk '{ print $2 }'))
 done
 
 install -m 0755 -d %{buildroot}${_fontbasedir} \
@@ -111,13 +110,13 @@ install -m 0755 -d %{buildroot}${_fontbasedir} \
                    %{buildroot}${_fontconfig_confdir} \
                    %{buildroot}${_fontconfig_templatedir} \
                    %{buildroot}%{spectemplatedir} \
-                   %{buildroot}%{rpmmacrodir} \
+                   %{buildroot}%{_rpmmacrosdir} \
                    %{buildroot}%{_datadir}/fontconfig/templates \
                    %{buildroot}/%_datadir/%{name} \
                    %{buildroot}%{_bindir}
 install -m 0644 -p spec-templates/*.spec       %{buildroot}%{spectemplatedir}
 install -m 0644 -p fontconfig-templates/*      %{buildroot}%{ftcgtemplatedir}
-install -m 0644 -p rpm/macros*                 %{buildroot}%{rpmmacrodir}
+install -m 0644 -p rpm/macros*                 %{buildroot}%{_rpmmacrosdir}
 install -m 0644 -p private/repo-font-audit.mk  %{buildroot}/%{_datadir}/%{name}
 install -m 0755 -p private/core-fonts-report \
                    private/font-links-report \
@@ -137,11 +136,15 @@ rm -rf %buildroot%{spectemplatedir}
 %files devel
 %doc license.txt
 %doc readme.txt
+%{_rpmmacrosdir}/macros*
 %dir %{ftcgtemplatedir}
 %{ftcgtemplatedir}/*conf
 %{ftcgtemplatedir}/*txt
 
 %changelog
+* Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 1.44-alt5_19
+- cleaned up dependencies (closes: #33161)
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.44-alt4_19
 - update to new release by fcimport
 
