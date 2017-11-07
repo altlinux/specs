@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jutils
 Version:        1.0.1
-Release:        alt2_13.20110719svnjpp8
+Release:        alt3_13.20110719svnjpp8
 Summary:        Common utilities for the Java Gaming Interface
 
 Group:          Development/Other
@@ -41,6 +41,8 @@ This package contains the API documentation for %{name}.
 %setup -q -n %{name}
 sed -i 's/-SNAPSHOT//' pom.xml
 
+%pom_remove_plugin :maven-source-plugin
+
 %mvn_file : %{name}
 
 %build
@@ -56,6 +58,9 @@ sed -i 's/-SNAPSHOT//' pom.xml
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_13.20110719svnjpp8
+- fixed build
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_13.20110719svnjpp8
 - new fc release
 
