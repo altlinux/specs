@@ -3,12 +3,11 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-generic-compat maven-plugins-pom maven-plugin-testing-harness
 Name:           maven-changelog-plugin
 Version:        2.3
-Release:        alt1_2jpp8
+Release:        alt2_2jpp8
 Summary:        Produce SCM changelog reports
 
 License:        ASL 2.0
@@ -60,6 +59,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.3-alt2_2jpp8
+- fixed build
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_2jpp8
 - new fc release
 
