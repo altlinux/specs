@@ -1,10 +1,10 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.7.1
-%define major 2.18
+%define major 2.20
 
 Name: wine
-Version: %major.0
+Version: %major.1
 Release: alt1
 Epoch: 1
 
@@ -476,6 +476,10 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Mon Nov 06 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.20.1-alt1
+- new version (2.20.1) with rpmgs script
+- update Kerberos patches against wine 2.20
+
 * Wed Oct 11 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.18.0-alt1
 - new version (2.18.0) with rpmgs script
 - update Kerberos patches (eterbug #11982)
