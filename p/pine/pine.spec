@@ -63,7 +63,7 @@
 
 Name:           pine
 Version:        %{fullversion}
-Release:        alt8.2
+Release:        alt8.3
 License:        Other License(s), see package, FSR
 Group: Networking/Mail
 Summary: %mainsummary
@@ -259,6 +259,7 @@ Group: Networking/Mail
 # to their version. This is expressed by the following conflicts.
 Conflicts: %name < %fullversion
 Conflicts: %name > %fullversion
+BuildArch: noarch
 
 %description doc
 Three major groups of the additional documentation that supplemets the
@@ -478,12 +479,12 @@ pine/init.c \
 pine/pine.hlp
 do
     echo fixing $i ...
-    %__subst 's,/usr/local/lib/pine.conf,/etc/pine.conf,' $i
-    %__subst 's,/usr/local/bin,/usr/bin,' $i
-    %__subst 's,/usr/spool/mail,/var/spool/mail,' $i
-    %__subst 's,/usr/spool/news,/var/spool/news,' $i
-    %__subst 's,/usr/lib/news/active,/var/lib/news/active,' $i
-    %__subst 's,/usr/local/lib/pine.info,/usr/lib/pine.info,' $i
+    sed -i 's,/usr/local/lib/pine.conf,/etc/pine.conf,' $i
+    sed -i 's,/usr/local/bin,/usr/bin,' $i
+    sed -i 's,/usr/spool/mail,/var/spool/mail,' $i
+    sed -i 's,/usr/spool/news,/var/spool/news,' $i
+    sed -i 's,/usr/lib/news/active,/var/lib/news/active,' $i
+    sed -i 's,/usr/local/lib/pine.info,/usr/lib/pine.info,' $i
 done
 
 %if %CustomPineBuild
@@ -591,14 +592,14 @@ pushd tech-notes
     install -p -m0644 "$txtn" "$txtDir/$txtn"
   done
   for n in tech-notes.txt; do
-    %__rm -f "$n"; %__install -m0644 -p %SOURCE15 "$n"
+    rm -f "$n"; install -m0644 -p %SOURCE15 "$n"
   done
 #------------ end ALT part --------------------
 
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_bindir} $RPM_BUILD_ROOT/%{_man1dir} $RPM_BUILD_ROOT/etc $RPM_BUILD_ROOT/%{_libdir}
-install bin/{mtest,pine,pico,pilot,rpdump,rpload,mailutil} $RPM_BUILD_ROOT%{_bindir}/
+install bin/{pine,pico,pilot,rpdump,rpload,mailutil} $RPM_BUILD_ROOT%{_bindir}/
 install -m 644 doc/{pine.1,pico.1,pilot.1,rpdump.1,rpload.1} $RPM_BUILD_ROOT%{_man1dir}/
 install -m 644 imap/src/mailutil/mailutil.1 $RPM_BUILD_ROOT%{_man1dir}/
 #%%suse_update_desktop_file -i pine ConsoleOnly Email
@@ -711,20 +712,20 @@ EOF
 
 # utils:
 for n in pine2Mutt elm2pine; do
-  %__install -p -m0755 "contrib/utils/$n" "$RPM_BUILD_ROOT"%_bindir/"$n"
+  install -p -m0755 "contrib/utils/$n" "$RPM_BUILD_ROOT"%_bindir/"$n"
 done
 
 for n in brk2pine; do
-  %__install -p -m0755 "contrib/utils/$n.sh" "$RPM_BUILD_ROOT"%_bindir/"$n"
+  install -p -m0755 "contrib/utils/$n.sh" "$RPM_BUILD_ROOT"%_bindir/"$n"
 done
 
 for n in ldif2pine-%ldifver/ldif2pine; do
-  %__install -p -m0755 "$n" "$RPM_BUILD_ROOT"%_bindir
+  install -p -m0755 "$n" "$RPM_BUILD_ROOT"%_bindir
 done
 
 for n in "%_libdir/pwd2pine"; do
- %__install -p -m0644 "contrib/utils/$(basename "$n")" "$RPM_BUILD_ROOT$n"
- %__install -p -m0755 %SOURCE110 "$RPM_BUILD_ROOT%_bindir/$(basename "$n")"
+ install -p -m0644 "contrib/utils/$(basename "$n")" "$RPM_BUILD_ROOT$n"
+ install -p -m0755 %SOURCE110 "$RPM_BUILD_ROOT%_bindir/$(basename "$n")"
 done
 
 #------------ end ALT part --------------------
@@ -840,7 +841,7 @@ done
 #README.SuSE
 %doc doc/brochure.txt doc/mailcap.unx doc/mime.types doc/pine-ports
 #%doc doc/tech-notes.txt doc/tech-notes
-%{_bindir}/mtest
+#%{_bindir}/mtest
 %{_bindir}/pine
 %{_bindir}/rpdump
 %{_bindir}/rpload
@@ -909,6 +910,10 @@ done
 #------------ end ALT part --------------------
 
 %changelog -n pine
+* Wed Nov 08 2017 Igor Vlasenko <viy@altlinux.ru> 4.64L-alt8.3
+- applied repocop patch
+- removed mtest (conflicts with the parmetis package)
+
 * Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 4.64L-alt8.2
 - excluded elm2pine from addrbk-tools
 
