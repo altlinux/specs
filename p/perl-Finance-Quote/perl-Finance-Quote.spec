@@ -2,7 +2,7 @@
 %define dist Finance-Quote
 
 Name: perl-%dist
-Version: 1.38
+Version: 1.44
 Release: alt1
 
 Summary: Get stock and mutual fund quotes from various exchanges
@@ -10,7 +10,7 @@ License: GPLv2+
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/E/EC/ECOCODE/Finance-Quote-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/EC/ECOCODE/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -25,7 +25,7 @@ that is depreciated, and an object-orientated method that provides
 greater flexibility and stability.
 
 %prep
-%setup -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,10 +34,13 @@ greater flexibility and stability.
 %perl_vendor_install
 
 %files
-%doc Examples/ Documentation/
+%doc Examples/ Documentation/ ChangeLog.1 Changes Examples README
 %perl_vendor_privlib/Finance
 
 %changelog
+* Wed Nov 08 2017 Igor Vlasenko <viy@altlinux.ru> 1.44-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1
 - automated CPAN update
 
