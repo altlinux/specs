@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Unicode-Collate
 Name: perl-%dist
-Version: 1.19
-Release: alt1.1
+Version: 1.21
+Release: alt1
 
 Summary: Unicode Collation Algorithm
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SA/SADAHIRO/Unicode-Collate-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SA/SADAHIRO/%{dist}-%{version}.tar.gz
 
 # require Unicode::Normalize without `eval'
 Patch: perl-Unicode-Collate-0.56-alt-deps.patch
@@ -25,7 +25,7 @@ This module implements Unicode Collation Algorithm,
 as described by Unicode Technical Standard #10 (UTS #10).
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch -p1
 
 %build
@@ -40,6 +40,9 @@ as described by Unicode Technical Standard #10 (UTS #10).
 %perl_vendor_autolib/Unicode
 
 %changelog
+* Wed Nov 08 2017 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1.1
 - rebuild with new perl 5.24.1
 
