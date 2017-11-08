@@ -2,15 +2,15 @@
 %define dist Gnome2
 
 Name: perl-%dist
-Version: 1.046
-Release: alt1.1.1
+Version: 1.047
+Release: alt1
 
 Summary: Gnome2 Perl module
 License: LGPLv2.1+
 Group: Development/Perl
 
 Url: %CPAN %dist
-Source: http://www.cpan.org/authors/id/X/XA/XAOC/Gnome2-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/X/XA/XAOC/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Oct 11 2011
 BuildRequires: libgnomeui-devel perl-ExtUtils-Depends perl-ExtUtils-PkgConfig perl-Gnome2-Canvas-devel perl-Gnome2-VFS-devel perl-podlators zsh
@@ -45,7 +45,7 @@ This package contains Gnome2 development files and documentation
 for developers (overview of internals and internal API reference).
 
 %prep
-%setup -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -54,7 +54,7 @@ for developers (overview of internals and internal API reference).
 %perl_vendor_install
 
 %files
-%doc	AUTHORS NEWS README
+%doc	AUTHORS NEWS README ChangeLog.pre-git copyright.pod examples
 	%perl_vendor_archlib/Gnome2.pm
 	%perl_vendor_autolib/Gnome2
 
@@ -67,6 +67,9 @@ for developers (overview of internals and internal API reference).
 %doc	%perl_vendor_archlib/Gnome2/Config
 
 %changelog
+* Wed Nov 08 2017 Igor Vlasenko <viy@altlinux.ru> 1.047-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.046-alt1.1.1
 - rebuild with new perl 5.24.1
 
