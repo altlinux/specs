@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/nasm /usr/bin/yasm gcc-c++ libncurses-devel libsilc-deve
 Summary: SILC Client Library
 Name:    libsilc
 Version: 1.1.10
-Release: alt3_15
+Release: alt4_15
 License: GPLv2 or BSD
 Group:   System/Libraries
 URL:     http://www.silcnet.org/
@@ -38,6 +38,7 @@ SILC clients.
 %package doc
 Summary: Development documentation for %{name}
 Group:   Documentation
+BuildArch: noarch
 
 %description doc
 The SILC Toolkit documentation in HTML format. Useful for writing new SILC
@@ -116,6 +117,9 @@ iconv -f iso-8859-15 -t utf8 -o CREDITS CREDITS.orig
 
 
 %changelog
+* Wed Nov 08 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt4_15
+- set doc to noarch
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt3_15
 - update to new release by fcimport
 
