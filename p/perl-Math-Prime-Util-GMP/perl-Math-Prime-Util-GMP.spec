@@ -6,7 +6,7 @@ BuildRequires: libgmp-devel perl(Benchmark.pm) perl(Carp.pm) perl(Config.pm) per
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.46
+Version: 0.48
 Release: alt1
 Summary: Utilities related to prime numbers, using GMP
 Group: Development/Perl
@@ -56,6 +56,9 @@ test, rather than any number.
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Nov 08 2017 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1
+- automated CPAN update
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.46-alt1
 - automated CPAN update
 
