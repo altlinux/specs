@@ -3,8 +3,8 @@
 %def_enable regexp
 
 Name: liblognorm
-Version: 2.0.3
-Release: alt1
+Version: 2.0.4
+Release: alt1%ubt
 
 Summary: liblognorm is a tool to normalize log data.
 License: LGPLv2.1+
@@ -12,6 +12,7 @@ Group: System/Libraries
 Url: http://www.liblognorm.com/
 
 Source: %name-%version.tar
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: pkgconfig(libestr)
 BuildRequires: pkgconfig(libfastjson)
 %{?_enable_regexp:BuildRequires: pkgconfig(libpcre)}
@@ -67,6 +68,9 @@ Static libs for building statically linked software that uses %name
 %endif
 
 %changelog
+* Wed Nov 08 2017 Alexey Shabalin <shaba@altlinux.ru> 2.0.4-alt1%ubt
+- 2.0.4
+
 * Thu Jun 15 2017 Alexey Shabalin <shaba@altlinux.ru> 2.0.3-alt1
 - 2.0.3
 

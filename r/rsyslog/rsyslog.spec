@@ -2,8 +2,7 @@
 %def_enable liblogging_stdlog
 %def_enable rfc3195
 %def_disable mmcount
-# GuardTime KSI
-%def_disable gt_ksi
+%def_disable guardtime
 %def_disable ksi_ls12
 %def_disable omamqp1
 %def_enable omhiredis
@@ -12,16 +11,17 @@
 %def_enable elasticsearch
 
 Name: rsyslog
-Version: 8.28.0
-Release: alt2
+Version: 8.30.0
+Release: alt1%ubt
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: GPLv3+ ASL2.0
 Group: System/Kernel and hardware
 Url: http://www.rsyslog.com
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: flex
 BuildRequires: zlib-devel
 BuildRequires: libdbi-devel
@@ -33,11 +33,11 @@ BuildRequires: libgnutls-devel libgcrypt-devel
 BuildRequires: libnet-snmp-devel
 BuildRequires: libnet-devel
 BuildRequires: libestr-devel >= 0.1.9
-BuildRequires: libfastjson-devel >= 0.99.3
+BuildRequires: libfastjson-devel >= 0.99.7
 BuildRequires: libuuid-devel
 %{?_enable_liblogging_stdlog:BuildRequires: liblogging-devel >= 1.0.3}
 %{?_enable_rfc3195:BuildRequires: liblogging-devel >= 1.0.1}
-%{?_enable_gt_ksi:BuildRequires: libksi-devel >= 3.4.0.2}
+%{?_enable_guardtime:BuildRequires: libgt-devel >= 0.3.1}
 %{?_enable_ksi_ls12:BuildRequires: libksi-devel >= 3.13.0}
 %{?_enable_omamqp1:BuildRequires: libqpid-proton-devel >= 0.9}
 BuildRequires: liblognorm-devel >= 2.0.3
@@ -257,6 +257,7 @@ The rsyslog-mmnormalize package contains a dynamic shared object that will add
 normalize log messages via liblognorm.
 
  o mmnormalize.so  - This module provides the capability to normalize log messages via liblognorm.
+ o pmnormalize.so        - Parser module that uses liblognorm to parse incoming messages.
 
 %package mmanon
 Summary: mmanon output module for rsyslog
@@ -352,7 +353,7 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-kmsg \
 	--enable-largefile \
 	--enable-libdbi \
-	%{?_enable_gt_ksi:--enable-gt-ksi} \
+	%{subst_enable guardtime} \
 	%{?_enable_ksi_ls12:--enable-ksi-ls12} \
 	%{?_enable_liblogging_stdlog:--enable-liblogging-stdlog} \
 	%{subst_enable rfc3195} \
@@ -378,6 +379,7 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-pmcisconames \
 	--enable-pmciscoios \
 	--enable-pmnull \
+	--enable-pmnormalize \
 	--enable-pmlastmsg \
 	--enable-pmsnare \
 	--enable-pmpanngfw \
@@ -525,6 +527,7 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 
 %files mmnormalize
 %mod_dir/mmnormalize.so
+%mod_dir/pmnormalize.so
 
 %files mmanon
 %mod_dir/mmanon.so
@@ -555,6 +558,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/mmsnmptrapd.so
 
 %changelog
+* Wed Nov 08 2017 Alexey Shabalin <shaba@altlinux.ru> 8.30.0-alt1%ubt
+- 8.30.0
+
 * Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 8.28.0-alt2
 - Rebuilt with libdbi-0.9.0.
 
