@@ -3,8 +3,8 @@
 %define farstream_dev  pkgconfig(farstream-0.2) libtelepathy-farstream-devel
 
 Name: telepathy-qt4
-Version: 0.9.6.1
-Release: alt3
+Version: 0.9.7
+Release: alt2%ubt
 
 Summary: Telepathy framework - Qt4 connection manager library 
 License: GPLv2
@@ -18,11 +18,12 @@ Source: telepathy-qt-%version.tar
 Patch20: telepathy-qt-0.9.5-static_fPIC.patch
 Patch21: 0002-CMakeLists-Minimum-version-bumped-to-2.8.12.patch
 Patch22: 0021-Farstream-gst-gstconfig.h-can-be-in-LIBDIR-search-fo.patch
+Patch23: telepathy-qt-0.9.7-add-missing-links.patch
 
 # Automatically added by buildreq on Tue Apr 03 2012 (-bi)
 # optimized out: cmake-modules elfutils farstream farstream-devel fontconfig glib2-devel gstreamer-devel libdbus-devel libdbus-glib libdbus-glib-devel libgio-devel libqt4-clucene libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-help libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-test libqt4-xml libstdc++-devel libtelepathy-farstream libtelepathy-glib libtelepathy-glib-devel libxml2-devel pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python-modules-xml xml-utils
 #BuildRequires: cmake doxygen gcc-c++ git-core graphviz gst-plugins-devel libicu libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libtelepathy-farstream-devel phonon-devel python-module-dbus python-module-distribute qt4-doc-html
-BuildRequires(pre): libqt4-devel
+BuildRequires(pre): libqt4-devel rpm-build-ubt
 BuildRequires: cmake doxygen gcc-c++ git-core graphviz phonon-devel
 BuildRequires: libxml2-devel glib2-devel libdbus-devel libdbus-glib-devel
 BuildRequires: pkgconfig(gstreamer-1.0)
@@ -57,9 +58,10 @@ Static libraries for %name.
 
 %prep
 %setup -qn telepathy-qt-%version
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
+#%patch20 -p1
+#%patch21 -p1
+#%patch22 -p1
+%patch23 -p2
 
 %build
 export PATH=%_qt4dir/bin:$PATH
@@ -68,7 +70,7 @@ export QT_DOC_DIR=%_docdir/qt-%qt4_ver
     -DDESIRED_QT_VERSION=4 \
     -DENABLE_FARSTREAM:BOOL=ON \
     -DENABLE_FARSIGHT:BOOL=OFF \
-    -DQT_DOC_DIR=%_qt5_docdir \
+    -DQT_DOC_DIR=$QT_DOC_DIR \
     -DENABLE_TESTS=OFF \
     -DENABLE_EXAMPLES=OFF \
     -DDISABLE_WERROR=ON \
@@ -94,9 +96,19 @@ export QT_DOC_DIR=%_docdir/qt-%qt4_ver
 %_includedir/telepathy-qt4
 
 %files -n lib%name-devel-static
-%_libdir/lib*.a
+#%_libdir/lib*.a
 
 %changelog
+* Wed Nov 08 2017 Oleg Solovyov <mcpain@altlinux.org> 0.9.7-alt2%ubt
+- fix build
+- add ubt tag
+
+* Wed Nov 08 2017 Oleg Solovyov <mcpain@altlinux.org> 0.9.7-alt1
+- new version
+
+* Wed Nov 08 2017 Oleg Solovyov <mcpain@altlinux.org> 0.9.6.1-alt4
+- fix path
+
 * Fri Jan 15 2016 Sergey V Turchin <zerg@altlinux.org> 0.9.6.1-alt3
 - build fixed
 - move docs to devel subpackage
