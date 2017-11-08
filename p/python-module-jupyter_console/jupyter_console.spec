@@ -3,33 +3,36 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.0
-Release: alt1.dev.git20150812.1
+Version: 5.2.0
+Release: alt1
 Summary: Jupyter Terminal Console
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/jupyter_console
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/jupyter/jupyter_console.git
 Source: %name-%version.tar
-BuildArch: noarch
+Patch1: %oname-%version-alt-docs.patch
 
-BuildPreReq: python-devel python-module-setuptools-tests /dev/pts
-BuildPreReq: python-module-jupyter_client ipython
-BuildPreReq: python-module-ipykernel python-module-mock
-BuildPreReq: python-module-pexpect python-module-nose
-BuildPreReq: python-module-coverage python-module-traitlets-tests
-BuildPreReq: python-module-ipython_genutils-tests
-BuildPreReq: python-module-sphinx-devel
+BuildRequires: python-devel python-module-setuptools-tests /dev/pts
+BuildRequires: python-module-jupyter_client ipython
+BuildRequires: python-module-ipykernel python-module-mock
+BuildRequires: python-module-pexpect python-module-nose
+BuildRequires: python-module-coverage python-module-traitlets-tests
+BuildRequires: python-module-ipython_genutils-tests
+BuildRequires: python-module-sphinx-devel
+BuildRequires: python2.7(sphinx_rtd_theme) python2.7(sphinxcontrib_github_alt)
+BuildRequires: python2.7(pathlib2) python2.7(PIL)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-jupyter_client ipython3
-BuildPreReq: python3-module-ipykernel python3-module-mock
-BuildPreReq: python3-module-pexpect python3-module-nose
-BuildPreReq: python3-module-coverage python3-module-traitlets-tests
-BuildPreReq: python3-module-ipython_genutils-tests
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-jupyter_client ipython3
+BuildRequires: python3-module-ipykernel python3-module-mock
+BuildRequires: python3-module-pexpect python3-module-nose
+BuildRequires: python3-module-coverage python3-module-traitlets-tests
+BuildRequires: python3-module-ipython_genutils-tests
+BuildRequires: python3(pathlib2) python3(PIL)
 %endif
 
 %py_provides %oname
@@ -75,6 +78,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -110,10 +114,10 @@ export PYTHONPATH=$PWD
 %make -C docs html
 
 %check
-nosetests -vv --with-coverage --cover-package=%oname %oname
+JUPYTER_CONSOLE_TEST=yes nosetests -vv --with-coverage --cover-package=%oname %oname
 %if_with python3
 pushd ../python3
-nosetests3 -vv --with-coverage --cover-package=%oname %oname
+JUPYTER_CONSOLE_TEST=yes nosetests3 -vv --with-coverage --cover-package=%oname %oname
 popd
 %endif
 
@@ -141,6 +145,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.0-alt1
+- Updated to upstream version 5.2.0.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.0-alt1.dev.git20150812.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

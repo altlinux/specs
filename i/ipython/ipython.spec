@@ -2,8 +2,8 @@
 %def_with doc
 
 Name: ipython
-Version: 4.0.0
-Release: alt6
+Version: 5.5.0
+Release: alt1
 
 %setup_python_module IPython
 
@@ -15,34 +15,39 @@ Url: http://ipython.org
 BuildArch: noarch
 
 # https://github.com/ipython/ipython.git
-Source0: %name-%version.tar
-# https://github.com/ipython/ipython-components.git
-Source1: components.tar
+Source: %name-%version.tar
 Patch0: %name-0.10-alt-bindings-fix.patch
-Patch1: 9040.patch
+Patch1: %name-%version-alt-docs.patch
 
 %add_findreq_skiplist %python_sitelibdir/IPython/utils/eventful.py
 %add_findreq_skiplist %python3_sitelibdir/IPython/utils/eventful.py
 
-BuildPreReq: python3-module-tornado python-module-setuptools pyjsdoc
-BuildPreReq: python-module-zmq
-BuildPreReq: python-module-tornado python-modules-sqlite3
-BuildPreReq: python-module-jsonschema python-module-traitlets
-BuildPreReq: python-module-pexpect python-module-pickleshare
-BuildPreReq: python-module-simplegeneric python-module-ipykernel
-BuildPreReq: python-module-ipyparallel
-BuildPreReq: python-module-pathlib2
+BuildRequires: python-module-setuptools pyjsdoc
+BuildRequires: python-module-zmq
+BuildRequires: python-module-tornado python-modules-sqlite3
+BuildRequires: python-module-jsonschema python-module-traitlets
+BuildRequires: python-module-pexpect python-module-pickleshare
+BuildRequires: python-module-simplegeneric python-module-ipykernel
+BuildRequires: python-module-ipyparallel
+BuildRequires: python-module-pathlib2
+BuildRequires: python2.7(prompt_toolkit)
+BuildRequires: python2.7(nose.tools)
+BuildRequires: python-module-testpath
 %if_with doc
-BuildPreReq: python-module-sphinx-devel python-module-matplotlib-sphinxext python-module-numpydoc
+BuildRequires: python-module-sphinx-devel python-module-matplotlib-sphinxext python-module-numpydoc
+BuildRequires: python2.7(sphinx_rtd_theme) graphviz
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-traitlets
-BuildPreReq: python3-module-pexpect python3-module-pickleshare
-BuildPreReq: python3-module-simplegeneric python3-module-ipykernel
-BuildPreReq: python3-module-ipyparallel
-BuildPreReq: python3-module-pathlib2
+BuildRequires: python3-module-traitlets python3-module-tornado
+BuildRequires: python3-module-pexpect python3-module-pickleshare
+BuildRequires: python3-module-simplegeneric python3-module-ipykernel
+BuildRequires: python3-module-ipyparallel
+BuildRequires: python3-module-pathlib2
+BuildRequires: python3(prompt_toolkit)
+BuildRequires: python3(nose.tools)
+BuildRequires: python3-module-testpath
 %endif
 
 %add_python_req_skip Gnuplot Numeric bzrlib foolscap nose setuptools twisted msvcrt oct2py rpy2 System builtins clr
@@ -127,17 +132,9 @@ This package contains examples for IPython.
 
 %prep
 %setup
-#patch0 -p1
 %patch1 -p1
 
-mkdir -p pushd IPython/html/static
-pushd IPython/html/static
-#rm -fR components
-tar -xf %SOURCE1
-popd
-
 %if_with python3
-rm -rf ../python3
 cp -a . ../python3
 %endif
 
@@ -175,6 +172,7 @@ popd
 %python_install
 rm -r %buildroot%python_sitelibdir/IPython/*/tests
 rm %buildroot%_bindir/iptest
+
 %if_with doc
 install -d %buildroot%_docdir/%name
 cp docs/source/*.txt %buildroot%_docdir/%name/
@@ -215,8 +213,10 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %python3_sitelibdir/*
 %endif
 
-
 %changelog
+* Fri Nov 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.5.0-alt1
+- Updated to upstream version 5.5.0.
+
 * Tue Oct 03 2017 Michael Shigorin <mike@altlinux.org> 4.0.0-alt6
 - introduced doc knob (on by default)
 
