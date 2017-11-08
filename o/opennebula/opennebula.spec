@@ -20,7 +20,7 @@
 
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
-Version: 5.4.2
+Version: 5.4.3
 Release: alt1%ubt
 License: Apache
 Group: System/Servers
@@ -42,7 +42,7 @@ BuildRequires: libsqlite3-devel
 BuildRequires: openssh
 BuildRequires: ruby
 BuildRequires: scons
-BuildRequires: java-1.8.0-openjdk-devel rpm-build-java
+BuildRequires: java-1.8.0-openjdk-devel rpm-build-java ws-commons-util xmlrpc-common xmlrpc-client
 BuildRequires: zlib-devel
 BuildRequires: npm
 
@@ -229,6 +229,9 @@ Manage OpenNebula Services
 Summary: Java interface to OpenNebula Cloud API
 Group: Development/Java
 BuildArch: noarch
+Requires: ws-commons-util
+Requires: xmlrpc-common
+Requires: xmlrpc-client
 
 %description java
 Java interface to OpenNebula Cloud API.
@@ -610,7 +613,6 @@ fi
 %_libexecdir/one/ruby/VirtualMachineDriver.rb
 %_libexecdir/one/sh/*
 
-%_man1dir/*
 %doc LICENSE NOTICE
 
 %dir %attr(0750, oneadmin, oneadmin) %_sharedstatedir/one
@@ -676,6 +678,9 @@ fi
 ################################################################################
 
 %changelog
+* Wed Nov 08 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.3-alt1%ubt
+- 5.4.3
+
 * Wed Oct 11 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.2-alt1%ubt
 - 5.4.2
 
