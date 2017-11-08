@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.5.0
+Version: 1.5.3
 Release: alt1
 Summary: Python unittest utilities
 License: BSD
@@ -13,7 +13,7 @@ BuildArch: noarch
 Url: https://github.com/celery/case
 
 # https://github.com/celery/case.git
-Source: %name-%version.tar
+Source: %oname-%version.tar
 
 BuildRequires: python-devel python-module-setuptools
 %if_with python3
@@ -34,7 +34,7 @@ Python unittest utilities.
 %endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -71,5 +71,8 @@ popd
 %endif
 
 %changelog
+* Wed Nov 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.3-alt1
+- Updated to upstream version 1.5.3.
+
 * Wed Oct 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.0-alt1
 - Initial build for ALT.
