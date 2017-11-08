@@ -1,6 +1,6 @@
 Name:    kde4-regular
 Version: 4.14
-Release: alt5
+Release: alt6
 
 Group: Graphical desktop/KDE
 Summary: KDE4 common collection
@@ -40,7 +40,6 @@ Requires: kde4-i18n-ru
 Requires: kde4-i18n-uk
 
 Requires: kde4-kio-mtp
-Requires: kde4-kio-upnp-ms
 Requires: kde4-k3b
 Requires: kde4-k9copy
 Requires: kde4-amarok
@@ -82,6 +81,9 @@ K Desktop Environment 4 сборный пакет,
 %files
 
 %changelog
+* Wed Nov 08 2017 Sergey V Turchin <zerg@altlinux.org> 4.14-alt6
+- remove kde4-kio-upnp-ms
+
 * Tue Jun 13 2017 Sergey V Turchin <zerg@altlinux.org> 4.14-alt5
 - remove sflphone-client-kde4
 
