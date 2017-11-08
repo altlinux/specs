@@ -4,7 +4,7 @@
 %define major 2.20
 
 Name: wine
-Version: %major.1
+Version: %major.2
 Release: alt1
 Epoch: 1
 
@@ -34,6 +34,7 @@ Patch4:   0001-Add-font-smoothing.patch
 Patch101: 0002-add-fast-hack-for-RegQueryValueEx-HKEY_PERFORMANCE_D.patch
 Patch200: t001-oleaut32-Make-OleLoadPicture-load-DIBs-using-WIC-decoder.patch
 Patch201: 0001-kerberos.patch
+Patch202: 0001-server-apc.patch
 
 AutoReq: yes, noperl
 
@@ -264,6 +265,7 @@ wine-staging-%version/patches/patchinstall.sh DESTDIR=$(pwd) --all --backend=pat
 %patch3 -p1
 %patch4 -p2
 %patch201 -p1
+%patch202 -p1
 
 %build
 # Workaround for https://bugzilla.altlinux.org/show_bug.cgi?id=31834
@@ -476,6 +478,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Wed Nov 08 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.20.2-alt1
+- add server APC patches (eterbug #12054, redmine #356)
+
 * Mon Nov 06 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.20.1-alt1
 - new version (2.20.1) with rpmgs script
 - update Kerberos patches against wine 2.20
