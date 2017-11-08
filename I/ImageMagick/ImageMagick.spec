@@ -1,6 +1,6 @@
 %define mversion	6
 %define dversion	%mversion.9.9
-%define drelease	20
+%define drelease	22
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		4
@@ -9,7 +9,7 @@
 %def_enable x
 
 Name: ImageMagick
-Version: %dversion.%drelease 
+Version: 6.9.9.22
 Release: alt1
 
 Summary: An X application for displaying and manipulating images
@@ -139,6 +139,7 @@ subst 's,2.69,2.68,' configure.ac
 	--with-gvc=yes \
 	--with-rsvg=yes \
 	--with-lqr=yes \
+	--without-x \
 	--disable-hdri \
 	--with-gcc-arch=no \
 	--with-perl \
@@ -165,7 +166,6 @@ popd
 %__install -pD -m644 %SOURCE4 %buildroot%_liconsdir/%name.png
 
 chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick/Q16/Q16.so
-chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick/Magick.so
 
 mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %files
@@ -225,6 +225,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Wed Nov 08 2017 Anton Farygin <rider@altlinux.ru> 6.9.9.22-alt1
+- new version 6.9.9.22
+
 * Thu Oct 19 2017 Anton Farygin <rider@altlinux.ru> 6.9.9.20-alt1
 - new version 6.9.9.20
 
