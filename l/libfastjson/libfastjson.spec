@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: libfastjson
-Version: 0.99.4
-Release: alt1
+Version: 0.99.7
+Release: alt1%ubt
 
 Summary: A JSON implementation in C
 License: MIT
@@ -10,6 +10,8 @@ Group: System/Libraries
 URL: https://github.com/rsyslog/libfastjson
 
 Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-ubt
 
 %description
 LIBFASTJSON implements a reference counting object
@@ -63,5 +65,8 @@ Static libs for building statically linked software that uses %name
 %endif
 
 %changelog
+* Wed Nov 08 2017 Alexey Shabalin <shaba@altlinux.ru> 0.99.7-alt1%ubt
+- 0.99.7
+
 * Tue Jan 17 2017 Alexey Shabalin <shaba@altlinux.ru> 0.99.4-alt1
 - Initial build for ALT Linux
