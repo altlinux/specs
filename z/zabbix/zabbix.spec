@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		73588
+%define svnrev		74338
 
 %def_with pgsql
 %def_enable java
@@ -11,8 +11,8 @@
 %endif
 
 Name: zabbix
-Version: 3.4.3
-Release: alt2
+Version: 3.4.4
+Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -515,6 +515,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Wed Nov 08 2017 Alexei Takaseev <taf@altlinux.org> 1:3.4.4-alt1
+- 3.4.4
+
 * Fri Nov 03 2017 Alexei Takaseev <taf@altlinux.org> 1:3.4.3-alt2
 - introduce java knob (on by default) (closes: #34122)
 - buildreq again
