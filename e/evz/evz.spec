@@ -1,5 +1,5 @@
 Name: evz
-Version: 0.0.1
+Version: 0.0.2
 Release: alt1
 
 Summary: OpenVZ control tool
@@ -40,5 +40,8 @@ install -D -m 0644 bash_completion/evz %buildroot%_sysconfdir/bash_completion.d/
 %_sysconfdir/bash_completion.d/evz
 
 %changelog
+* Wed Nov 08 2017 Vitaly Lipatov <lav@altlinux.ru> 0.0.2-alt1
+- evz: add list, exec
+
 * Sat Oct 28 2017 Vitaly Lipatov <lav@altlinux.ru> 0.0.1-alt1
 - initial build for ALT Linux Sisyphus
