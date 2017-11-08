@@ -6,7 +6,7 @@ BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Config.pm) per
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.17
+Version: 0.18
 Release: alt1
 Summary: A Module::Build class for building XS modules
 Group: Development/Perl
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/M*
 
 %changelog
+* Wed Nov 08 2017 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - automated CPAN update
 
