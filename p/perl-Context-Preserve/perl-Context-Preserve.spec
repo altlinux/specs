@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Context-Preserve
 Name: perl-%dist
-Version: 0.02
+Version: 0.03
 Release: alt1
 
 Summary: run code after a subroutine call, preserving the context the subroutine would have seen if it were the last statement in the caller
@@ -40,6 +40,9 @@ which is a pain to type in (and maintain).
 %perl_vendor_privlib/Context*
 
 %changelog
+* Wed Nov 08 2017 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
+- automated CPAN update
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
 - automated CPAN update
 
