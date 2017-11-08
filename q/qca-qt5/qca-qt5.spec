@@ -2,9 +2,9 @@
 Name: qca-qt5
 %define major 2
 %define minor 1
-%define bugfix 1
+%define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt1%ubt
 
 Group: Networking/Instant messaging
 Summary: QCA - Qt Cryptographic Architecture
@@ -18,9 +18,11 @@ Patch2: ansi.diff
 # ALT
 Patch10: qca-2.0.3-alt-paths.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake gcc-c++ glibc-devel ca-certificates
 BuildRequires: qt5-base-devel
-BuildRequires: libgcrypt-devel libnss-devel libsasl2-devel pkcs11-helper-devel
+BuildRequires: zlib-devel bzlib-devel libgmp-devel
+BuildRequires: libgcrypt-devel libnss-devel libsasl2-devel pkcs11-helper-devel libbotan-devel
 BuildRequires: kde-common-devel
 
 %package -n lib%name
@@ -185,6 +187,16 @@ utilize the for Qt Cryptographic Architecture (QCA).
 Этот плагин предоставляет хранилище сертификатов для
 программ, поддерживающих Qt Cryptographic Architecture (QCA).
 
+%package botan
+Group: System/Libraries
+Summary: QCA Botan Plugin
+%description botan
+This plugin provides features based on Botan. It implements:
+* TBA
+%description botan -l ru_RU.UTF-8
+Этот плагин предоставляет функциональность Botan. Он реализует:
+* TBA
+
 %prep
 %setup -q -n %name-%version
 %patch2 -p1
@@ -240,6 +252,8 @@ done
 %_qt5_plugindir/crypto/libqca-nss.so
 %files pkcs11
 %_qt5_plugindir/crypto/libqca-pkcs11.so
+%files botan
+%_qt5_plugindir/crypto/libqca-botan.so
 
 %files -n lib%name-devel
 %_libdir/lib*.so
@@ -250,6 +264,10 @@ done
 #%_qt5_headerdir/Qca-qt5/QtCrypto
 
 %changelog
+* Wed Nov 08 2017 Sergey V Turchin <zerg@altlinux.org> 2.1.3-alt1%ubt
+- new version
+- package botan module
+
 * Tue Oct 06 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt1
 - new version
 
