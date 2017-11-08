@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Class-Container
 Name: perl-%dist
-Version: 0.12
-Release: alt2
+Version: 0.13
+Release: alt1
 
 Summary: Glues object frameworks together transparently
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/K/KW/KWILLIAMS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,7 +25,7 @@ passing the appropriate parameters to the right class, possibly
 substituting other subclasses for any of these objects.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -37,6 +38,9 @@ substituting other subclasses for any of these objects.
 %perl_vendor_privlib/Class*
 
 %changelog
+* Wed Nov 08 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- automated CPAN update
+
 * Mon Sep 26 2011 Alexey Tourbin <at@altlinux.ru> 0.12-alt2
 - rebuilt
 
