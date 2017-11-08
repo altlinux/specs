@@ -3,7 +3,7 @@ BuildRequires: perl(Pod/Usage.pm) perl(RPM/Header.pm) perl(Parallel/ForkManager.
 # END SourceDeps(oneline)
 URL: https://www.altlinux.org/Repofork-utils
 Name: repofork-utils
-Version: 0.07
+Version: 0.08
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -38,6 +38,9 @@ rm $RPM_BUILD_ROOT%_bindir/*.spec
 %_bindir/repofork*
 
 %changelog
+* Wed Nov 08 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- renamed: repofork-helper-create-* -> repofork-create-*
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
 - added repofork-helper-...-for-each-given-autorepo-taskgood-subdir
 
