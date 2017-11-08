@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%modulename
-Version: 3.0.0
+Version: 3.2.0
 Release: alt1
 
 %setup_python_module %modulename
@@ -16,6 +16,9 @@ Packager: Konstantin Artyushkin <akv@altlinux.org>
 BuildArch: noarch
 
 Source: %modulename-%version.tar
+
+Provides: python-module-pytelegrambotapi = %version-%release
+Obsoletes: python-module-pytelegrambotapi
 
 #BuildPreReq: %py_dependencies setuptools
 BuildRequires(pre): rpm-build-python
@@ -78,6 +81,9 @@ popd
 
 
 %changelog
+* Wed Nov 08 2017 Konstantin Artyushkin <akv@altlinux.org> 3.2.0-alt1
+- new version
+
 * Thu May 25 2017 Konstantin Artyushkin <akv@altlinux.org> 3.0.0-alt1
 - initial build
 
