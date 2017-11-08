@@ -219,7 +219,7 @@
 
 Name: qemu
 Version: 2.10.1
-Release: alt2
+Release: alt3
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -245,7 +245,7 @@ Requires: %name-system = %EVR
 Requires: %name-user = %EVR
 
 BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static
-BuildRequires: texinfo perl-podlators libattr-devel libcap-devel libcap-ng-devel
+BuildRequires: texinfo perl-podlators libattr-devel-static libcap-devel libcap-ng-devel
 BuildRequires: libxfs-devel
 BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
 BuildRequires: ipxe-roms-qemu >= 1:20161208-alt1.git26050fd seavgabios seabios >= 1.7.4-alt2 libfdt-devel >= 1.4.2
@@ -1062,7 +1062,6 @@ export buildldflags="VL_LDFLAGS=-Wl,--build-id"
 	--disable-sparse \
 	--disable-strip \
 	--disable-system \
-	--disable-attr \
 	--disable-xfsctl \
 	--disable-smartcard \
 	--disable-usb-redir \
@@ -1099,6 +1098,8 @@ N
 }" linux-user/main.c
 
 %make_build V=1 $buildldflags
+
+%if_with arm
 mv arm-linux-user/qemu-arm arm-linux-user/qemu-armh
 
 sed -i '/cpu_model =/ s,cortex-a8,cortex-a53,' linux-user/main.c
@@ -1107,6 +1108,7 @@ mv arm-linux-user/qemu-arm arm-linux-user/qemu-aarch64
 
 sed -i '/cpu_model =/ s,cortex-a53,any,' linux-user/main.c
 %make_build V=1 $buildldflags
+%endif
 
 find -regex '.*linux-user/qemu.*' -perm 755 -exec mv '{}' '{}'.static ';'
 %make_build clean
@@ -1590,6 +1592,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 02 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.10.1-alt3
+- Enabled support of *attr syscalls in qemu-user static binaries.
+
 * Fri Oct 13 2017 Alexey Shabalin <shaba@altlinux.ru> 2.10.1-alt2
 - fixed qemu-kvm for armh and aarch64 (sbolshakov@)
 - disable numa for armh (sbolshakov@)

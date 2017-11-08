@@ -1,6 +1,6 @@
 Name: attr
 Version: 2.4.47.0.44.315a
-Release: alt1
+Release: alt2
 
 Summary: Utilities for managing filesystem extended attributes
 License: GPLv2+
@@ -12,7 +12,7 @@ Source: %name-%version-%release.tar
 Requires: lib%name = %version-%release
 
 %define _libexecdir %_libdir
-%def_disable static
+%def_enable static
 
 %description
 A set of tools for manipulating extended attributes on filesystem
@@ -105,6 +105,10 @@ fi
 %endif
 
 %changelog
+* Wed Nov 08 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4.47.0.44.315a-alt2
+- Reenabled static subpackage (needed for static qemu-user to support *attr
+  syscalls).
+
 * Mon Jul 04 2016 Dmitry V. Levin <ldv@altlinux.org> 2.4.47.0.44.315a-alt1
 - v2.4.47-35-gdce9b44 -> v2.4.47-44-g315af30 (closes: #32244).
 
