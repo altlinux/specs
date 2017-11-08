@@ -4,7 +4,7 @@
 Summary: The PHP5 scripting language
 Name:	 php5
 Version: 5.6.32
-Release: alt1%ubt
+Release: alt2%ubt
 
 %define php5_name      %name
 %define _php5_version  %version
@@ -51,6 +51,7 @@ Patch62: php-mysqlnd-socket.patch
 Patch63: php5-5.6-syms-visibility.patch
 Patch64: php-7.1-alt-phar-manfile-suffix.patch
 Patch65: php5-5.6.32-debian-use_embedded_timezonedb.patch
+Patch66: php5-5.6.32-debian-use-system-timezone.patch
 
 PreReq:  php5-libs = %version-%release
 Requires(post):  php5-suhosin
@@ -181,6 +182,7 @@ popd
 %patch63 -p1
 %patch64 -p1
 %patch65 -p1
+%patch66 -p1
 
 
 cp Zend/LICENSE Zend/ZEND_LICENSE
@@ -426,6 +428,9 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %doc tests run-tests.php 
 
 %changelog
+* Wed Nov 08 2017 Anton Farygin <rider@altlinux.ru> 5.6.32-alt2%ubt
+- added patch from debian for using system-wide timezone settings by default
+
 * Fri Nov 03 2017 Anton Farygin <rider@altlinux.ru> 5.6.32-alt1%ubt
 - new version (Fixes: CVE-2016-1283)
 - switched to the use a system-wide timezone configuration, patch from Debian (closes: #32202)
