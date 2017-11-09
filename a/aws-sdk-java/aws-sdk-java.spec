@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global githash 9883b981ab5103cc6944fbf8f3b973994777350f
 Name:          aws-sdk-java
 Version:       1.11.3
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       AWS SDK for Java
 # Some source files are without license headers
 # reported @ https://github.com/aws/aws-sdk-java/issues/719
@@ -937,6 +937,9 @@ done
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.11.3-alt1_4jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.11.3-alt1_3jpp8
 - new jpp release
 
