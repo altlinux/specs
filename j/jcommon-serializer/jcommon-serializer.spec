@@ -7,7 +7,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name: jcommon-serializer
 Version: 0.3.0
-Release: alt1_15jpp8
+Release: alt1_16jpp8
 Summary: JFree Java General Serialization Framework
 License: LGPLv2+
 Group: System/Libraries
@@ -58,6 +58,9 @@ cp -rp javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_16jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_15jpp8
 - new jpp release
 
