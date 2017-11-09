@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          javaparser
 Version:       1.0.11
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Java 1.7 Parser and AST
 License:       GPLv3+ and LGPLv3+
 # https://github.com/before/javaparser/
@@ -61,6 +61,9 @@ sed -i 's/\r//' readme.md
 %doc COPYING COPYING.LESSER
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt1_4jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt1_3jpp8
 - new jpp release
 
