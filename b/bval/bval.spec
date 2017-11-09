@@ -1,11 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -23,13 +22,12 @@ BuildRequires: jpackage-generic-compat
 # https://bugzilla.redhat.com/show_bug.cgi?id=1289726
 # https://issues.apache.org/jira/browse/BVAL-142
 # https://issues.apache.org/jira/browse/WEAVER-10
-#def_with commons-weaver
 %bcond_with commons-weaver
 %endif
 
 Name:          bval
 Version:       1.1.1
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Apache Bean Validation
 License:       ASL 2.0
 Url:           http://bval.apache.org/
@@ -212,6 +210,9 @@ sed -i '/Privileged/d' \
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_4jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_3jpp8
 - new jpp release
 
