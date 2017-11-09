@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		taggle
 Version:	1.0
-Release:	alt2_11jpp8
+Release:	alt2_12jpp8
 Summary:	An online french word game
 
 Group:		Games/Other
@@ -101,6 +101,9 @@ install -D -p -m 0755 %{S:4} %{buildroot}%{_bindir}/%{name}-server
 %{_bindir}/%{name}-server
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_12jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_11jpp8
 - new jpp release
 
