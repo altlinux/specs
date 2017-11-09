@@ -1,11 +1,11 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++ perl(LWP/UserAgent.pm) unzip
+BuildRequires: gcc-c++ perl(LWP/UserAgent.pm) rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global majorversion 3
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        High-performance, full-featured text search engine
 Name:           lucene3
 Version:        3.6.2
-Release:        alt1_9jpp8
+Release:        alt1_12jpp8
 Epoch:          0
 License:        ASL 2.0 and BSD
 URL:            http://lucene.apache.org/
@@ -33,9 +33,9 @@ Patch2:         lucene-3.6.2-javascript.patch
 #tar caf dev-tools.tar.xz dev-tools/
 Source4:        dev-tools.tar.xz
 
-BuildRequires:  jpackage-utils >= 0:1.6
-BuildRequires:  ant >= 0:1.6
-BuildRequires:  ant-junit >= 0:1.6
+BuildRequires:  javapackages-local
+BuildRequires:  ant
+BuildRequires:  ant-junit
 BuildRequires:  junit
 BuildRequires:  javacc
 BuildRequires:  java-javadoc
@@ -52,13 +52,12 @@ BuildRequires:  apache-commons-codec
 BuildRequires:  subversion subversion-server-common
 BuildRequires:  hamcrest-core
 
-%if 0%{?fedora}
+%if 0%{?fedora} || 0%{?rhel} > 7
 BuildRequires:  icu4j
+BuildRequires:  xerces-j2
 %endif
 
 BuildArch:      noarch
-
-Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -67,7 +66,7 @@ engine library written entirely in Java. It is a technology suitable
 for nearly any application that requires full-text search, especially
 cross-platform.
 
-%if 0%{?fedora}
+%if 0%{?fedora} || 0%{?rhel} > 7
 %package contrib
 Group: Development/Java
 Summary:        Lucene contributed extensions
@@ -133,7 +132,7 @@ ant -Divy.settings.file=ivy-conf.xml -Dbuild.sysclasspath=first \
   -Djavac.target=1.6 \
   jar-lucene-core docs javadocs-core
 
-%if 0%{?fedora}
+%if 0%{?fedora} || 0%{?rhel} > 7
 export CLASSPATH=$(build-classpath jtidy regexp commons-digester apache-commons-compress icu4j ivy)
 ant -Divy.settings.file=ivy-conf.xml -Dbuild.sysclasspath=first \
   -Djavacc.home=%{_bindir}/javacc \
@@ -155,13 +154,13 @@ mkdir META-INF
 unzip -o build/core/lucene-core-%{version}.jar META-INF/MANIFEST.MF
 cp %{SOURCE1} META-INF/MANIFEST.MF
 sed -i '/^\r$/d' META-INF/MANIFEST.MF
-zip -u build/core/lucene-core-%{version}.jar META-INF/MANIFEST.MF
+zip build/core/lucene-core-%{version}.jar META-INF/MANIFEST.MF
 
-%if 0%{?fedora}
+%if 0%{?fedora} || 0%{?rhel} > 7
 unzip -o build/contrib/analyzers/common/lucene-analyzers-%{version}.jar META-INF/MANIFEST.MF
 cp %{SOURCE2} META-INF/MANIFEST.MF
 sed -i '/^\r$/d' META-INF/MANIFEST.MF
-zip -u build/contrib/analyzers/common/lucene-analyzers-%{version}.jar META-INF/MANIFEST.MF
+zip build/contrib/analyzers/common/lucene-analyzers-%{version}.jar META-INF/MANIFEST.MF
 
 mv build/contrib/analyzers/common build/contrib/analyzers/analyzers
 mv dev-tools/maven/lucene/contrib/analyzers/common dev-tools/maven/lucene/contrib/analyzers/analyzers
@@ -183,7 +182,7 @@ install -pm 0644 dev-tools/maven/lucene/pom.xml.template $RPM_BUILD_ROOT/%{_mave
 install -pm 0644 dev-tools/maven/pom.xml.template $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-solr-grandparent.pom
 %add_maven_depmap JPP.%{name}-solr-grandparent.pom -v "%{majorversion},%{version}"
 
-%if 0%{?fedora}
+%if 0%{?fedora} || 0%{?rhel} > 7
 # contrib jars
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}/%{name}-contrib
 
@@ -213,14 +212,14 @@ install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr build/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files -f .mfiles
-%doc CHANGES.txt LICENSE.txt README.txt
+%doc CHANGES.txt README.txt
 %doc LICENSE.txt NOTICE.txt
 
 %files javadoc
 %doc LICENSE.txt NOTICE.txt
 %{_javadocdir}/%{name}
 
-%if 0%{?fedora}
+%if 0%{?fedora} || 0%{?rhel} > 7
 %files contrib
 %{_javadir}/%{name}-contrib
 %doc contrib/CHANGES.txt
@@ -228,6 +227,9 @@ cp -pr build/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %endif
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.6.2-alt1_12jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.6.2-alt1_9jpp8
 - new jpp release
 
