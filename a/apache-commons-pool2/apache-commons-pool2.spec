@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          apache-commons-pool2
 Version:       2.4.2
-Release:       alt2_3jpp8
+Release:       alt2_4jpp8
 Summary:       Apache Commons Object Pooling Library 2.x series
 License:       ASL 2.0
 URL:           http://commons.apache.org/proper/commons-pool/
@@ -62,6 +62,9 @@ This package contains javadoc for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt2_4jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt2_3jpp8
 - new jpp release
 
