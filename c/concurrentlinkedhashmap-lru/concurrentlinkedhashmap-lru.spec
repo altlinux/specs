@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          concurrentlinkedhashmap-lru
 Version:       1.4.2
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       A ConcurrentLinkedHashMap for Java
 License:       ASL 2.0
 Url:           https://github.com/ben-manes/concurrentlinkedhashmap
@@ -106,6 +106,9 @@ sed -i "s|ConcurrentHashMapV8|java.util.concurrent.ConcurrentHashMap|" \
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1_5jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1_4jpp8
 - new jpp release
 
