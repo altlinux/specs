@@ -1,7 +1,7 @@
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jsr-305
 Version:        0
-Release:        alt4_0.20.20130910svnjpp8
+Release:        alt4_0.21.20130910svnjpp8
 Summary:        Correctness annotations for Java code
 
 # The majority of code is BSD-licensed, but some Java sources
@@ -67,6 +67,9 @@ cp %{SOURCE1} NOTICE-CC-BY
 %doc ri/LICENSE NOTICE-CC-BY
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:0-alt4_0.21.20130910svnjpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:0-alt4_0.20.20130910svnjpp8
 - new jpp release
 
