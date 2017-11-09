@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           xmlrpc
 Version:        3.1.3
-Release:        alt7_16jpp8
+Release:        alt7_18jpp8
 Epoch:          1
 Summary:        Java XML-RPC implementation
 License:        ASL 2.0
@@ -91,6 +91,9 @@ sed -i 's/\r//' LICENSE.txt
 
 %pom_disable_module dist
 %pom_remove_dep jaxme:jaxmeapi common
+# This dep is no longer supplied by ws-commons-util
+%pom_add_dep junit:junit:3.8.1:test
+
 %mvn_file :{*} @1
 %mvn_package :*-common %{name}
 
@@ -112,6 +115,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.1.3-alt7_18jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.1.3-alt7_16jpp8
 - new jpp release
 
