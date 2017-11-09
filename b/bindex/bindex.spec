@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    bindex
 Version: 2.2
-Release: alt3_16.svn96jpp8
+Release: alt3_17.svn96jpp8
 Summary: Bundle Manifest Header Mapper
 
 Group:   Development/Other
@@ -48,8 +48,8 @@ format mapping as described in the RFC-0112 Bundle Repository.
 
 %prep
 %setup -q -n %{name}
-find . -type f -iname "*.jar" | xargs -t %__rm -f ;
-%__mkdir_p bin
+find . -type f -iname "*.jar" | xargs -t rm -f ;
+mkdir -p bin
 %patch0 -p1
 
 %build
@@ -58,16 +58,16 @@ export CLASSPATH=$(build-classpath ant kxml junit xpp3 \
                                    felix/org.osgi.core)
 javac -d bin $(find src -name *.java)
 pushd jar
-  %__ln_s $(build-classpath ant.jar)
-  %__ln_s $(build-classpath kxml.jar) kxml2-min.jar
-  %__ln_s $(build-classpath felix/org.osgi.service.obr.jar)
-  %__ln_s $(build-classpath xpp3.jar)
+  ln -s $(build-classpath ant.jar)
+  ln -s $(build-classpath kxml.jar) kxml2-min.jar
+  ln -s $(build-classpath felix/org.osgi.service.obr.jar)
+  ln -s $(build-classpath xpp3.jar)
 popd
 bnd buildx --output %{name}.jar bindex.bnd
 
 %install
-%__install -d -m 0755 %{buildroot}%{_javadir}
-%__install -m 644 %{name}.jar %{buildroot}%{_javadir}/%{name}.jar
+install -d -m 0755 %{buildroot}%{_javadir}
+install -m 644 %{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 
 %files
 %doc README
@@ -75,6 +75,9 @@ bnd buildx --output %{name}.jar bindex.bnd
 %{_javadir}/*
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_17.svn96jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_16.svn96jpp8
 - new jpp release
 
