@@ -1,6 +1,6 @@
 Name: linux-pam
 Version: 1.3.0.0.23.94f5
-Release: alt1
+Release: alt2
 
 Summary: Pluggable Authentication Modules
 # The library is BSD-style *without* advertising clause, with option to relicense as GPLv2+.
@@ -190,6 +190,9 @@ done
 %install
 %makeinstall_std sepermitlockdir=%_lockdir/sepermit
 
+mkdir -p %buildroot%_logdir
+touch %buildroot%_logdir/tallylog
+
 # Relocate development libraries from /%_lib/ to %_libdir/.
 mkdir -p %buildroot%_libdir
 mv %buildroot/%_lib/*.*a %buildroot%_libdir/
@@ -333,6 +336,7 @@ make check
 %exclude %_pam_modules_dir/pam_timestamp.so
 %_mandir/man[58]/*.*
 %exclude %_mandir/man[58]/pam_timestamp*
+%ghost %attr(600,root,root) %verify(not md5 mtime size) %_logdir/tallylog
 
 %files -n %{make_pam_name timestamp}
 %attr(700,root,root) %helperdir/pam_timestamp_check
@@ -345,6 +349,10 @@ make check
 %docdir/Linux-PAM*
 
 %changelog
+* Thu Nov 09 2017 Dmitry V. Levin <ldv@altlinux.org> 1.3.0.0.23.94f5-alt2
+- %helperdir/pam_tally2 --reset: avoid creating a missing tallylog file (closes: #34035).
+- Packaged %%ghost %_logdir/tallylog file.
+
 * Thu Oct 26 2017 Dmitry V. Levin <ldv@altlinux.org> 1.3.0.0.23.94f5-alt1
 - v1.3.0-17-g7d0c508 -> v1.3.0-23-g94f529d4.
 - pam_sepermit: changed sepermit lock directory to %_lockdir/sepermit.
