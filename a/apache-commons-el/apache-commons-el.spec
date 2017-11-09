@@ -2,6 +2,7 @@ Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -16,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        1.0
-Release:        alt1_37jpp8
+Release:        alt1_38jpp8
 Summary:        The Apache Commons Extension Language
 License:        ASL 1.1
 URL:            http://commons.apache.org/%{base_name}
@@ -27,7 +28,7 @@ Patch0:         %{short_name}-%{version}-license.patch
 Patch1:         %{short_name}-eclipse-manifest.patch
 Patch2:         %{short_name}-enum.patch
 BuildRequires:  ant
-BuildRequires:  javapackages-tools rpm-build-java
+BuildRequires:  javapackages-local
 BuildRequires:  tomcat-jsp-2.3-api
 BuildRequires:  tomcat-servlet-3.1-api
 BuildRequires:  junit
@@ -105,6 +106,9 @@ cp -pr dist/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_38jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_37jpp8
 - new jpp release
 
