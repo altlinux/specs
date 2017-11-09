@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -12,12 +13,10 @@ BuildRequires: jpackage-generic-compat
 
 Name:       dbus-java
 Version:    2.7
-Release:    alt2_23jpp8
+Release:    alt2_26jpp8
 Summary:    Java implementation of the DBus protocol
-Group:      Development/Other
 License:    AFL or LGPLv2
 URL:        http://freedesktop.org/wiki/Software/DBusBindings
-#URL2:      http://dbus.freedesktop.org/doc/dbus-java/
 Source0:    http://dbus.freedesktop.org/releases/%{name}/%{name}-%{version}.tar.gz
 
 # OSGi manifests
@@ -31,7 +30,7 @@ Patch2:     parallel.patch
 Patch3:     utf-8-encoding.patch
 Patch4:     version-less-jars.patch
 
-BuildRequires:  java-devel >= 1.6.0
+BuildRequires:  javapackages-local
 BuildRequires:  texlive-base
 BuildRequires:  texlive-latex-base
 BuildRequires:  texlive-base
@@ -73,9 +72,8 @@ Unix-sockets it requires a small JNI library to use Unix-Sockets.
 
 
 %package javadoc
+Group: Development/Other
 Summary:    Javadocs for %{name}
-Group:      Development/Other
-Requires:   jpackage-utils
 BuildArch: noarch
 
 
@@ -157,6 +155,9 @@ make install \
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_26jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_23jpp8
 - new jpp release
 
