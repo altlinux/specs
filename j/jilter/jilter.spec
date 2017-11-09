@@ -3,12 +3,12 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jilter
 Version:        1.2
-Release:        alt1_12jpp8
+Release:        alt1_13jpp8
 Summary:        Sendmail milter protocol for Java
 
 Group:          Development/Other
@@ -78,6 +78,9 @@ cp -rp build/doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_13jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_12jpp8
 - new jpp release
 
