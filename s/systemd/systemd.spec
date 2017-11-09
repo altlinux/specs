@@ -20,7 +20,7 @@
 %def_enable efi
 %def_enable networkd
 %def_enable timesyncd
-%def_enable resolved
+%def_enable resolve
 %def_disable gnuefi
 %def_enable utmp
 %def_enable xz
@@ -36,7 +36,7 @@
 
 %define hierarchy hybrid
 
-%def_disable sysusers
+%def_enable sysusers
 %def_disable ldconfig
 %def_enable firstboot
 
@@ -56,8 +56,8 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 234
-Release: alt4
+Version: 235
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -131,7 +131,7 @@ Source69: altlinux-simpleresolv.service
 
 %define dbus_ver 1.4.6
 
-BuildPreReq: rpm-build-xdg
+BuildPreReq: rpm-build-xdg meson
 BuildRequires: glibc-kernheaders
 BuildRequires: intltool >= 0.40.0
 BuildRequires: gperf
@@ -156,9 +156,10 @@ BuildRequires: quota
 BuildRequires: pkgconfig(blkid) >= 2.24
 # temporarily lower libmount version check
 # util-linux 2.27.1's configure.ac still claims to be 2.27.0, which breaks our version check
-BuildRequires: libmount-devel >= 2.27.1
+BuildRequires: libmount-devel >= 2.30
 BuildRequires: pkgconfig(mount) >= 2.27
 BuildRequires: pkgconfig(xkbcommon) >= 0.3.0
+BuildRequires: libkeyutils-devel
 
 %{?_enable_libcryptsetup:BuildRequires: libcryptsetup-devel >= 1.6.0}
 %{?_enable_gcrypt:BuildRequires: libgcrypt-devel >= 1.4.5 libgpg-error-devel >= 1.12}
@@ -169,6 +170,7 @@ BuildRequires: pkgconfig(xkbcommon) >= 0.3.0
 %{?_enable_libidn:BuildRequires: pkgconfig(libidn)}
 %{?_enable_libidn2:BuildRequires: pkgconfig(libidn2) >= 2.0.0}
 %{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
+%{?_enable_polkit:BuildRequires: pkgconfig(polkit-gobject-1)}
 %{?_enable_gnuefi:BuildRequires: gnu-efi}
 
 # for make check
@@ -204,6 +206,8 @@ Requires: sysvinit-utils
 Obsoletes: systemd-units < 0:43-alt1
 Provides: systemd-units = %EVR
 Provides: syslogd-daemon
+Provides: /sbin/systemctl
+Provides: /bin/systemctl
 
 %description
 systemd is a system and session manager for Linux, compatible with
@@ -677,83 +681,80 @@ Shared library and headers for libudev
 %patch2 -p1
 
 %build
-export QUOTAON="/sbin/quotaon"
-export QUOTACHECK="/sbin/quotacheck"
-export KILL="/bin/kill"
-export KMOD="/bin/kmod"
-export KEXEC="/sbin/kexec"
-export SETCAP="/sbin/setcap"
-export SULOGIN="/sbin/sulogin"
-export MOUNT_PATH="/bin/mount"
-export UMOUNT_PATH="/bin/umount"
 
-intltoolize --force --automake
-%autoreconf
+%meson \
+	-Drootprefix="/" \
+	-Drootlibdir=/%_lib \
+	-Dpamlibdir=/%_lib/security \
+	-Dsplit-usr=true \
+	-Dsysvinit-path=%_initdir \
+	-Dsysvrcnd-path=%_sysconfdir/rc.d \
+	-Drc-local=%_sysconfdir/rc.d/rc.local \
+	-Ddebug-shell=/bin/bash \
+	-Dquotaon-path=/sbin/quotaon \
+	-Dquotacheck-path=/sbin/quotacheck \
+	-Dkill-path=/bin/kill \
+	-Dkmod-path=/bin/kmod \
+	-Dkexec-path=/sbin/kexec \
+	-Dsetcap-path=/sbin/setcap \
+	-Dsulogin-path=/sbin/sulogin \
+	-Dmount-path=/bin/mount \
+	-Dumount-path=/bin/umount \
+	-Dloadkeys-path=/bin/loadkeys \
+	-Dsetfont-path=/bin/setfont \
+	-Dtelinit-path=/sbin/telinit \
+	-Dsystem-uid-max=499 \
+	-Dsystem-gid-max=499 \
+	-Dtty-gid=5 \
+	%{?_enable_elfutils:-Delfutils=true} \
+	%{?_enable_xz:-Dxz=true} \
+	%{?_enable_zlib:-Dzlib=true} \
+	%{?_enable_bzip2:-Dbzip2=true} \
+	%{?_enable_lz4:-Dlz4=true} \
+	%{?_enable_libcryptsetup:-Dlibcryptsetup=true} \
+	%{?_enable_logind:-Dlogind=true} \
+	%{?_enable_vconsole:-Dvconsole=true} \
+	%{?_enable_quotacheck:-Dquotacheck=true} \
+	%{?_enable_randomseed:-Drandomseed=true} \
+	%{?_enable_coredump:-Dcoredump=true} \
+	%{?_enable_smack:-Dsmack=true} \
+	%{?_enable_gcrypt:-Dgcrypt=true} \
+	%{?_enable_qrencode:-Dqrencode=true} \
+	%{?_enable_microhttpd:-Dmicrohttpd=true} \
+	%{?_enable_gnutls:-Dgnutls=true} \
+	%{?_enable_libcurl:-Dlibcurl=true} \
+	%{?_enable_libidn:-Dlibidn=true} \
+	%{?_enable_libiptc:-Dlibiptc=true} \
+	%{?_enable_polkit:-Dpolkit=true} \
+	%{?_enable_efi:-Defi=true} \
+	%{?_enable_networkd:-Dnetworkd=true} \
+	%{?_enable_resolve:-Dresolve=true} \
+	-Ddns-servers="" \
+	%{?_enable_timesyncd:-Dtimesyncd=true} \
+	-Dntp-servers="" \
+	%{?_enable_sysusers:-Dsysusers=true} \
+	%{?_enable_ldconfig:-Dldconfig=true} \
+	%{?_enable_firstboot:-Dfirstboot=true} \
+	%{?_enable_gnuefi:-Dgnuefi=true} \
+	%{?_enable_seccomp:-Dseccomp=true} \
+	%{?_enable_ima:-Dima=true} \
+	%{?_enable_selinux:-Dselinux=true} \
+	%{?_enable_apparmor:-Dapparmor=true} \
+	%{?_enable_utmp:-Dutmp=true} \
+	-Ddefault-kill-user-processes=false \
+	-Ddefault-hierarchy=%hierarchy \
+	-Db_lto=true
 
-%configure  \
-	--with-rootprefix="/" \
-	--with-rootlibdir=/%_lib \
-	--with-pamlibdir=/%_lib/security \
-	--enable-split-usr \
-	--with-sysvinit-path=%_initdir \
-	--with-sysvrcnd-path=%_sysconfdir/rc.d \
-	--with-rc-local-script-path-start=%_sysconfdir/rc.d/rc.local \
-	--with-debug-shell=/bin/bash \
-	--with-kbd-loadkeys=/bin/loadkeys \
-	--with-kbd-setfont=/bin/setfont \
-	--with-telinit=/sbin/telinit \
-	--with-system-uid-max=499 \
-	--with-system-gid-max=499 \
-	--with-tty-gid=5 \
-	%{subst_enable elfutils} \
-	%{subst_enable xz} \
-	%{subst_enable zlib} \
-	%{subst_enable bzip2} \
-	%{subst_enable lz4} \
-	%{subst_enable libcryptsetup} \
-	%{subst_enable logind} \
-	%{subst_enable vconsole} \
-	%{subst_enable quotacheck} \
-	%{subst_enable randomseed} \
-	%{subst_enable coredump} \
-	%{subst_enable smack} \
-	%{subst_enable gcrypt} \
-	%{subst_enable qrencode} \
-	%{subst_enable microhttpd} \
-	%{subst_enable gnutls} \
-	%{subst_enable libcurl} \
-	%{subst_enable libidn} \
-	%{subst_enable libiptc} \
-	%{subst_enable polkit} \
-	%{subst_enable efi} \
-	%{subst_enable networkd} \
-	%{subst_enable resolved} \
-	--with-dns-servers="" \
-	%{subst_enable timesyncd} \
-	--with-ntp-servers="" \
-	%{subst_enable sysusers} \
-	%{subst_enable ldconfig} \
-	%{subst_enable firstboot} \
-	%{subst_enable gnuefi} \
-	%{subst_enable seccomp} \
-	%{subst_enable ima} \
-	%{subst_enable selinux} \
-	%{subst_enable apparmor} \
-	%{subst_enable utmp} \
-	--without-kill-user-processes \
-	--with-default-hierarchy=%hierarchy \
-	--with-rpmmacrosdir=no \
-	--disable-static
-
-%make_build GCC_COLORS="" V=1
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
+
 
 # remove .so file for the shared library, it's not supposed to be used
 rm -f %buildroot/lib/systemd/libsystemd-shared.so
 # remove systemd rpm macros
-rm -f %buildroot//usr/lib/rpm/macros.d/macros.systemd
+rm -f %buildroot/usr/lib/rpm/macros.d/macros.systemd
 
 %find_lang %name
 
@@ -804,17 +805,17 @@ find %buildroot \( -name '*.a' -o -name '*.la' \) -exec rm {} \;
 mkdir -p %buildroot/{sbin,bin}
 ln -r -s %buildroot/lib/systemd/systemd %buildroot/sbin/init
 ln -r -s %buildroot/lib/systemd/systemd %buildroot/sbin/systemd
-ln -r -s %buildroot/sbin/systemctl %buildroot/sbin/reboot
-ln -r -s %buildroot/sbin/systemctl %buildroot/sbin/halt
-ln -r -s %buildroot/sbin/systemctl %buildroot/sbin/poweroff
-ln -r -s %buildroot/sbin/systemctl %buildroot/sbin/shutdown
-ln -r -s %buildroot/sbin/systemctl %buildroot/sbin/telinit
-ln -r -s %buildroot/sbin/systemctl %buildroot/sbin/runlevel
+ln -r -s %buildroot/bin/systemctl %buildroot/sbin/reboot
+ln -r -s %buildroot/bin/systemctl %buildroot/sbin/halt
+ln -r -s %buildroot/bin/systemctl %buildroot/sbin/poweroff
+ln -r -s %buildroot/bin/systemctl %buildroot/sbin/shutdown
+ln -r -s %buildroot/bin/systemctl %buildroot/sbin/telinit
+ln -r -s %buildroot/bin/systemctl %buildroot/sbin/runlevel
 
 ln -r -s %buildroot/lib/systemd/systemd-{binfmt,modules-load,sysctl} %buildroot/sbin/
-ln -r -s %buildroot/sbin/systemctl %buildroot/bin/
-# for compatibility with older systemd pkgs which expected it at /bin/:
-ln -r -s %buildroot/sbin/journalctl %buildroot/bin/
+# for compatibility with older systemd pkgs which expected it at /sbin/:
+ln -r -s %buildroot/bin/systemctl %buildroot/sbin/
+ln -r -s %buildroot/bin/journalctl %buildroot/sbin/
 
 rm -rf %buildroot%_docdir/systemd
 
@@ -1015,8 +1016,8 @@ install -p -m644 %SOURCE31 %buildroot%_sysconfdir/udev/rules.d/
 %_sbindir/groupadd -r -f systemd-journal >/dev/null 2>&1 ||:
 
 %post
-/sbin/systemctl daemon-reexec >/dev/null 2>&1 || :
-/sbin/journalctl --update-catalog >/dev/null 2>&1 || :
+/bin/systemctl daemon-reexec >/dev/null 2>&1 || :
+/bin/journalctl --update-catalog >/dev/null 2>&1 || :
 
 # Move old stuff around in /var/lib
 [ -d %_localstatedir/lib/systemd/random-seed ] && rm -rf %_localstatedir/lib/systemd/random-seed >/dev/null 2>&1 || :
@@ -1053,17 +1054,17 @@ rm -f /.readahead > /dev/null 2>&1 || :
 
 if [ $1 -eq 1 ] ; then
         # Enable the services we install by default
-        /sbin/systemctl preset-all >/dev/null 2>&1 || :
+        /bin/systemctl preset-all >/dev/null 2>&1 || :
 fi
 
 %postun
 if [ $1 -ge 1 ] ; then
-	/sbin/systemctl daemon-reload > /dev/null 2>&1 || :
+	/bin/systemctl daemon-reload > /dev/null 2>&1 || :
 fi
 
 %preun
 if [ $1 -eq 0 ] ; then
-        /sbin/systemctl disable \
+        /bin/systemctl disable \
                 remote-fs.target \
                 getty@.service \
                 serial-getty@.service \
@@ -1090,7 +1091,7 @@ fi
 %post networkd
 if [ $1 -eq 1 ] ; then
         # Enable the services we install by default
-        /sbin/systemctl preset \
+        /bin/systemctl preset \
                 systemd-networkd.service \
                 systemd-networkd-wait-online.service \
                 systemd-resolved.service \
@@ -1099,7 +1100,7 @@ fi
 
 %preun networkd
 if [ $1 -eq 0 ] ; then
-        /sbin/systemctl disable \
+        /bin/systemctl disable \
                 systemd-networkd.service \
                 systemd-networkd-wait-online.service \
                 systemd-resolved.service \
@@ -1123,14 +1124,14 @@ fi
 %post timesyncd
 if [ $1 -eq 1 ] ; then
         # Enable the services we install by default
-        /sbin/systemctl preset \
+        /bin/systemctl preset \
                 systemd-timesyncd.service \
                  >/dev/null 2>&1 || :
 fi
 
 %preun timesyncd
 if [ $1 -eq 0 ] ; then
-        /sbin/systemctl disable \
+        /bin/systemctl disable \
                 systemd-timesyncd.service \
                  >/dev/null 2>&1 || :
 fi
@@ -1228,7 +1229,7 @@ update_chrooted all
     -d %_logdir/journal -s /dev/null -r -l systemd-journal-gateway >/dev/null 2>&1 ||:
 
 %_sbindir/groupadd -r -f systemd-journal-remote ||:
-%_sbindir/useradd -g systemd-journal-gateway -c 'Journal Remote' \
+%_sbindir/useradd -g systemd-journal-remote -c 'Journal Remote' \
     -d %_logdir/journal/remote -s /dev/null -r -l systemd-journal-remote >/dev/null 2>&1 ||:
 
 %if_enabled libcurl
@@ -1302,9 +1303,9 @@ fi
 /bin/systemctl
 /sbin/systemd
 /sbin/systemd-ask-password
-/sbin/systemd-inhibit
+/bin/systemd-inhibit
 
-/sbin/systemd-notify
+/bin/systemd-notify
 /sbin/systemd-tty-ask-password-agent
 %_bindir/bootctl
 %_bindir/busctl
@@ -1353,7 +1354,7 @@ fi
 
 %dir /lib/environment.d
 /lib/environment.d/99-environment.conf
-%_mandir/man[578]/*environment*
+%_mandir/man[58]/*environment*
 
 %dir %_unitdir
 %_unitdir/*
@@ -1362,8 +1363,6 @@ fi
 %exclude %_unitdir/*networkd*
 %exclude %_unitdir/*resolv*
 %exclude %_unitdir/*/*resolv*
-%exclude %_unitdir/*org.freedesktop.network1.*
-%exclude %_unitdir/*/*org.freedesktop.network1.*
 %endif
 %if_enabled timesyncd
 %exclude %_unitdir/*timesyncd*
@@ -1383,9 +1382,7 @@ fi
 %exclude %_unitdir/*/*udev*
 
 %exclude %_unitdir/*.machine1.*
-%exclude %_unitdir/*/*.machine1.*
 %exclude %_unitdir/*.import1.*
-%exclude %_unitdir/*/*.import1.*
 %exclude %_unitdir/systemd-machined.service
 %exclude %_unitdir/systemd-importd.service
 %exclude %_unitdir/machine.slice
@@ -1394,6 +1391,8 @@ fi
 %exclude %_unitdir/var-lib-machines.mount
 %exclude %_unitdir/*/var-lib-machines.mount
 %exclude %_unitdir/systemd-nspawn@.service
+%exclude %_unitdir/*/systemd-sysusers.service
+%exclude %_unitdir/systemd-sysusers.service
 
 %_man1dir/bootctl.*
 %_man1dir/busctl.*
@@ -1490,7 +1489,6 @@ fi
 %_datadir/systemd/language-fallback-map
 %_datadir/dbus-1/system-services/org.freedesktop.systemd1.service
 %_datadir/dbus-1/services/org.freedesktop.systemd1.service
-%_unitdir/*org.freedesktop.systemd1.*
 
 %if_enabled polkit
 %_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
@@ -1572,7 +1570,7 @@ fi
 %files utils
 %dir /lib/systemd
 
-/sbin/systemd-escape
+/bin/systemd-escape
 %_mandir/*/*escape*
 
 /sbin/systemd-tmpfiles
@@ -1605,11 +1603,11 @@ fi
 %ghost %dir %_localstatedir/lib/systemd/backlight
 
 /sbin/systemd-machine-id-setup
-%_man1dir/systemd-machine-id-*
+%_man8dir/systemd-machine-id-*
 
 %if_enabled firstboot
 /sbin/systemd-firstboot
-%_man1dir/systemd-firstboot.*
+%_man8dir/systemd-firstboot.*
 %endif
 
 %ghost %config(noreplace) %_sysconfdir/machine-info
@@ -1640,7 +1638,7 @@ fi
 %endif
 
 
-/sbin/loginctl
+/bin/loginctl
 /lib/systemd/systemd-logind
 /lib/systemd/systemd-logind-launch
 %_bindir/hostnamectl
@@ -1655,13 +1653,12 @@ fi
 %_mandir/*/*hostname*
 %exclude %_man8dir/*myhostname*
 %exclude %_man8dir/*mymachines*
-%exclude %_man1dir/systemd-machine-id-*
 %_mandir/*/*locale*
 %_mandir/*/*timedate*
 
 %if_enabled networkd
 %files networkd
-/sbin/networkctl
+/bin/networkctl
 %dir %_sysconfdir/systemd/network
 %config(noreplace) %_sysconfdir/systemd/resolved.conf
 %config(noreplace) %_sysconfdir/systemd/system/dbus-org.freedesktop.resolve1.service
@@ -1678,18 +1675,16 @@ fi
 /lib/systemd/systemd-networkd-wait-online
 /lib/systemd/systemd-resolved
 /lib/systemd/resolv.conf
+/lib/modprobe.d/systemd.conf
 %_bindir/systemd-resolve
 %_tmpfilesdir/systemd-network.conf
 %_unitdir/systemd-networkd.*
 %_unitdir/systemd-resolved.*
 %_unitdir/systemd-networkd-wait-online.*
-%_unitdir/*org.freedesktop.network1.*
-%_unitdir/*org.freedesktop.resolve1.*
 %_unitdir/altlinux-libresolv*
 %_unitdir/altlinux-openresolv*
 %_unitdir/altlinux-simpleresolv*
 %_unitdir/*/*resolv*
-%_unitdir/*/*network1*
 /lib/systemd/network/80-container-host0.network
 %_mandir/*/*network*
 %_mandir/*/*netdev*
@@ -1703,14 +1698,12 @@ fi
 %files container
 %_datadir/dbus-1/system.d/org.freedesktop.machine1.conf
 %_datadir/dbus-1/system.d/org.freedesktop.import1.conf
-/sbin/machinectl
+/bin/machinectl
 %_bindir/systemd-nspawn
 /lib/systemd/import-pubring.gpg
 %_tmpfilesdir/systemd-nspawn.conf
 %_unitdir/*.machine1.*
-%_unitdir/*/*.machine1.*
 %_unitdir/*.import1.*
-%_unitdir/*/*.import1.*
 %_unitdir/systemd-machined.service
 %_unitdir/systemd-importd.service
 %_unitdir/machine.slice
@@ -1737,7 +1730,7 @@ fi
 %exclude %_man3dir/*machine*
 %_man8dir/systemd-importd.*
 %exclude %_man8dir/*mymachines.*
-%exclude %_man1dir/systemd-machine-id-*
+%exclude %_man8dir/systemd-machine-id-*
 
 %if_enabled timesyncd
 %files timesyncd
@@ -1754,14 +1747,13 @@ fi
 
 %if_enabled microhttpd
 %files journal-gateway
-%dir %_logdir/journal/remote
+%dir %attr(2755,systemd-journal-remote,systemd-journal-remote) %_logdir/journal/remote
 %config(noreplace) %_sysconfdir/systemd/journal-remote.conf
-%dir %attr(0755,systemd-journal-upload,systemd-journal-upload) %_localstatedir/lib/systemd/journal-upload
+%dir %attr(0755,systemd-journal-upload,systemd-journal-upload) %_var/lib/systemd/journal-upload
 /lib/systemd/systemd-journal-gatewayd
 /lib/systemd/systemd-journal-remote
 %_unitdir/systemd-journal-gatewayd.*
 %_datadir/systemd/gatewayd
-%_tmpfilesdir/systemd-remote.conf
 %_man8dir/systemd-journal-gatewayd.*
 %_man8dir/systemd-journal-remote.*
 %_man5dir/journal-remote.conf.*
@@ -1793,7 +1785,7 @@ fi
 %dir %_localstatedir/lib/systemd/coredump
 %endif
 
-%if_enabled sysuser
+%if_enabled sysusers
 %files stateless
 /sbin/systemd-sysusers
 %dir /lib/sysusers.d
@@ -1920,6 +1912,11 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Wed Nov 08 2017 Alexey Shabalin <shaba@altlinux.ru> 1:235-alt1
+- 235
+- use default upstream path /bin (not /sbin) for binary
+- enable sysusers and build stateless package
+
 * Thu Oct 19 2017 Ivan Zakharyaschev <imz@altlinux.org> 1:234-alt4
 - udevd.init (SysV): fix creating static device inodes (ALT: #34031).
   (Use an option introduced in v209 for "unsafe" tmpfiles actions,
