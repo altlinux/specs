@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    felix-osgi-foundation
 Version: 1.2.0
-Release: alt5_21jpp8
+Release: alt5_22jpp8
 Summary: Felix OSGi Foundation EE Bundle
 Group:   Development/Other
 License: ASL 2.0
@@ -56,6 +56,9 @@ This package contains API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt5_22jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt5_21jpp8
 - new jpp release
 
