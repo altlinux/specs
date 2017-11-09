@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           sblim-cim-client2
 Version:        2.2.5
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Java CIM Client library
 
 Group:          Development/Other
@@ -65,7 +65,7 @@ Manual and sample code for %{name}.
 
 dos2unixConversion() {
         fileName=$1
-        %{__sed} -i 's/\r//g' "$fileName"
+        sed -i 's/\r//g' "$fileName"
 }
 
 dosFiles2unix() {
@@ -125,6 +125,9 @@ cp -pr %{archive_folder}/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt1_7jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt1_6jpp8
 - new jpp release
 
