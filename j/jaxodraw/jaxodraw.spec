@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		jaxodraw
 Version:	%{major}.%{minor}
-Release:	alt1_18jpp8
+Release:	alt1_19jpp8
 Summary:	A Java program for drawing Feynman diagrams
 Group:		Engineering
 License:	GPLv2+
@@ -157,6 +157,9 @@ EOF
 %{_datadir}/texmf/tex/latex/axodraw4j/
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_19jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_18jpp8
 - new jpp release
 
