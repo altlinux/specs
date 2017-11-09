@@ -1,6 +1,7 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-commons-math
 Version:          3.4.1
-Release:          alt1_6jpp8
+Release:          alt1_7jpp8
 Summary:          Java library of lightweight mathematics and statistics components
 Group:            Development/Other
 License:          ASL 1.1 and ASL 2.0 and BSD
@@ -73,6 +74,9 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.4.1-alt1_7jpp8
+- fc27 update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.4.1-alt1_6jpp8
 - new jpp release
 
