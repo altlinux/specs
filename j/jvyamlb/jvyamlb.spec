@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jvyamlb
 Version:        0.2.5
-Release:        alt1_14jpp8
+Release:        alt1_15jpp8
 Summary:        YAML processor for JRuby
 
 License:        MIT
@@ -57,9 +57,9 @@ build-jar-repository -s -p lib joda-time bytelist jcodings
 
 
 %install
-%__mkdir_p %{buildroot}%{_javadir}
+mkdir -p %{buildroot}%{_javadir}
 
-%__cp -p lib/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+cp -p lib/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 
 %check
 %ant test
@@ -71,6 +71,9 @@ build-jar-repository -s -p lib joda-time bytelist jcodings
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.2.5-alt1_15jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.2.5-alt1_14jpp8
 - new jpp release
 
