@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           apache-commons-jxpath
 Version:        1.3
-Release:        alt3_26jpp8
+Release:        alt3_28jpp8
 Summary:        Simple XPath interpreter
 License:        ASL 2.0
 URL:            http://commons.apache.org/jxpath/
@@ -52,7 +52,7 @@ This package contains the API documentation for %{name}.
 %mvn_alias : org.apache.commons:
 
 %pom_xpath_inject 'pom:properties' \
-  '<commons.osgi.import>org.apache.commons.beanutils;resolution:="optional",org.jdom*;resolution:="optional",org.w3c.dom;resolution:="optional",*</commons.osgi.import>'
+  '<commons.osgi.import>org.apache.commons.beanutils;resolution:="optional",org.jdom*;resolution:="optional",org.w3c.dom;resolution:="optional",javax.servlet*;resolution:="optional",*</commons.osgi.import>'
 
 %build
 # we are skipping tests because we don't have com.mockrunner in repos yet
@@ -68,6 +68,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_28jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_26jpp8
 - new jpp release
 
