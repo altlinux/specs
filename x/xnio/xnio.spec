@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             xnio
 Version:          3.4.0
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          JBoss XNIO
 # LGPLv2+ ./api/src/main/java/org/xnio/ObjectProperties.java
 License:          ASL 2.0 and LGPLv2+
@@ -87,6 +87,9 @@ rm nio-impl/src/test/java/org/xnio/nio/test/MultiThreadedNioSslTcpConnectionTest
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt1_4jpp8
+- fc27 update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt1_3jpp8
 - new jpp release
 
