@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %global _version %( echo %{version} | tr . _ )
 Name:          codegen
 Version:       0.6.8
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Java/Scala Code generation tool
 License:       ASL 2.0
 URL:           http://www.querydsl.com
@@ -101,6 +101,9 @@ sed -i.ecj4.6 "s|Map<String, Object> settings|Map<String, String> settings|" \
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.8-alt1_4jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.8-alt1_3jpp8
 - new jpp release
 
