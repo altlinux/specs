@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          airline
 Version:       0.7
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Java annotation-based framework
 License:       ASL 2.0
 URL:           https://github.com/airlift/airline
@@ -67,6 +67,9 @@ find -name '*.jar' -delete
 %doc license.txt notice.md
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_6jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_5jpp8
 - new jpp release
 
