@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           stringtemplate4
 Version:        4.0.8
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        A Java template engine
 License:        BSD
 URL:            http://www.stringtemplate.org/
@@ -68,6 +68,9 @@ rm -r test/org/stringtemplate/v4/test/TestEarlyEvaluation.java
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.8-alt1_5jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.8-alt1_4jpp8
 - new jpp release
 
