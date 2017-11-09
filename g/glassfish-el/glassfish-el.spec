@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          glassfish-el
 Version:       3.0.1
-Release:       alt1_0.4.b08jpp8
+Release:       alt1_0.5.b08jpp8
 Summary:       J2EE Expression Language Implementation
 License:       CDDL or GPLv2 with exceptions
 URL:           http://uel.java.net
@@ -166,6 +166,9 @@ cp -p api/src/main/javadoc/doc-files/*-spec-license.html .
 %doc LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_0.5.b08jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_0.4.b08jpp8
 - new jpp release
 
