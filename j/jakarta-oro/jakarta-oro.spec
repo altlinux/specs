@@ -1,5 +1,6 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -39,20 +40,20 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jakarta-oro
 Version:        2.0.8
-Release:        alt2_20jpp8
+Release:        alt2_22jpp8
 Epoch:          0
 Summary:        Full regular expressions API
 License:        ASL 1.1
-Group:          Development/Other
 Source0:        http://archive.apache.org/dist/jakarta/oro/%{name}-%{version}.tar.gz
 Source1:        MANIFEST.MF
 Source2:        http://repo1.maven.org/maven2/%{base_name}/%{base_name}/%{version}/%{base_name}-%{version}.pom
 Patch1:         %{name}-build-xml.patch
 URL:            http://jakarta.apache.org/oro
-BuildRequires:  javapackages-tools rpm-build-java
+
+BuildRequires:  javapackages-local
 BuildRequires:  ant
+
 BuildArch:      noarch
-Requires:       jpackage-utils
 Source44: import.info
 Provides: oro = %epoch:%version-%release
 
@@ -65,9 +66,8 @@ successor to the OROMatcher, AwkTools, PerlTools, and TextTools
 libraries from ORO, Inc. (www.oroinc.com). 
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -88,30 +88,22 @@ cp %{SOURCE1} .
 ant -Dfinal.name=%{base_name} jar javadocs
 
 %install
-#jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 %{base_name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && ln -sf %{name}.jar %{base_name}.jar)
-#javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-rm -rf docs/api
+%mvn_file : %{name} %{base_name}
+%mvn_artifact %{SOURCE2} %{base_name}.jar
 
-# POM and depmap
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap
+%mvn_install -J docs/api
 
 %files -f .mfiles
-%doc COMPILE ISSUES README TODO CHANGES CONTRIBUTORS LICENSE STYLE
-# symlink, not in .mfiles
-%{_javadir}/%{base_name}.jar
-
-%files javadoc
+%doc COMPILE ISSUES README TODO CHANGES CONTRIBUTORS STYLE
 %doc LICENSE
-%{_javadocdir}/%{name}
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.8-alt2_22jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.8-alt2_20jpp8
 - new jpp release
 
