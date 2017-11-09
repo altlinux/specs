@@ -5,23 +5,22 @@
 
 Name: python-module-%oname
 Version: 0.4.5
-Release: alt1
+Release: alt2
 Summary: Fixtures and markers to simplify testing of asynchronous tornado applications
 License: ASLv2.0
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/pytest-tornado/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/eugeniy/pytest-tornado.git
-Source0: https://pypi.python.org/packages/18/f4/54a40ea6b8c2a1ce803d3383294c1eaf7bd0546bff9d777d76bb824bd8c3/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-tornado
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-tornado
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-tornado
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-tornado
 %endif
 
 %py_provides pytest_tornado
@@ -42,7 +41,7 @@ A py.test plugin providing fixtures and markers to simplify testing of
 asynchronous tornado applications.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -68,13 +67,12 @@ popd
 
 %check
 python setup.py test
-export PYTHONPATH=$PWD
-py.test -vv
+PYTHONPATH=$(pwd) py.test -vv
+
 %if_with python3
 pushd ../python3
 python3 setup.py test
-export PYTHONPATH=$PWD
-py.test-%_python3_version -vv
+PYTHONPATH=$(pwd) py.test3 -vv
 popd
 %endif
 
@@ -89,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.5-alt2
+- Fixed build.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.5-alt1
 - automated PyPI update
 
