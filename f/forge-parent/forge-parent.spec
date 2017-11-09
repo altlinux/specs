@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           forge-parent
 Version:        38
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        Sonatype Forge Parent Pom
 License:        ASL 2.0
 URL:            https://docs.sonatype.org/display/FORGE/Index
@@ -43,6 +43,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 38-alt1_9jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 38-alt1_8jpp8
 - new jpp release
 
