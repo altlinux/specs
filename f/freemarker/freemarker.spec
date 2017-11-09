@@ -1,11 +1,12 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Prevent brp-java-repack-jars from being run.
 %global __jar_repack %{nil}
 
@@ -17,7 +18,7 @@ echo "ERROR: Sources should not contain JAR files:" && echo "$F" && exit 1
 
 Name:           freemarker
 Version:        %{fm_ver}
-Release:        alt1_2jpp8
+Release:        alt1_5jpp8
 Summary:        A template engine
 License:        BSD
 URL:            http://freemarker.sourceforge.net/
@@ -37,6 +38,8 @@ Patch5:         no-javarebel.patch
 Patch6:         enable-jdom.patch
 # use system javacc and fix Token.java
 Patch7:         javacc.patch
+# Fix compatibility with javacc 7
+Patch8:         javacc-7.patch
 
 BuildArch:      noarch
 
@@ -104,16 +107,20 @@ rm -rf documentation/_html/api/
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
-%{__rm} -rf source/ivysettings.xml
+# javacc generated sources are not Java 4 compatible, set source and target levels to Java 8
+sed -i 's/"1\.4"/"1.8"/g' source/build.xml
+
+rm -rf source/ivysettings.xml
 
 # %%{__rm} -rf src/freemarker/core/ParseException.java
-%{__rm} -rf source/src/freemarker/core/FMParser.java
-%{__rm} -rf source/src/freemarker/core/FMParserConstants.java
-%{__rm} -rf source/src/freemarker/core/FMParserTokenManager.java
-%{__rm} -rf source/src/freemarker/core/SimpleCharStream.java
-%{__rm} -rf source/src/freemarker/core/Token.java
-%{__rm} -rf source/src/freemarker/core/TokenMgrError.java
+rm -rf source/src/freemarker/core/FMParser.java
+rm -rf source/src/freemarker/core/FMParserConstants.java
+rm -rf source/src/freemarker/core/FMParserTokenManager.java
+rm -rf source/src/freemarker/core/SimpleCharStream.java
+rm -rf source/src/freemarker/core/Token.java
+rm -rf source/src/freemarker/core/TokenMgrError.java
 
 %checkForbiddenJARFiles
 
@@ -135,6 +142,9 @@ ant -Divy.mode=local javacc jar javadoc maven-pom
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.3.23-alt1_5jpp8
+- fc27 update
+
 * Fri Nov 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.3.23-alt1_2jpp8
 - new version
 
