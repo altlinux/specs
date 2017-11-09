@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          thredds
 Version:       4.6.2
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Thematic Realtime Environmental Distributed Data Services (TDS)
 # GPLv3: opendap/src/main/java/opendap/dap/parsers/DapParser.java
 # LGPLv3: opendap/src/main/java/opendap/servlet/AsciiWriter.java
@@ -275,6 +275,9 @@ sed -i '/org.apache.http.annotation/d' \
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 4.6.2-alt1_6jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 4.6.2-alt1_5jpp8
 - new jpp release
 
