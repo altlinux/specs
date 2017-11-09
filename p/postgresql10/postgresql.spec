@@ -3,8 +3,7 @@
 
 %define prog_name            postgresql
 %define postgresql_major     10
-%define postgresql_minor     0
-#%%define postgresql_subminor  5
+%define postgresql_minor     1
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
@@ -20,7 +19,6 @@ Version: %postgresql_major.%postgresql_minor
 Release: alt%postgresql_altrel
 
 %define PGSQL pgsql
-%define ROOT %_localstatedir/%PGSQL-root
 %define docdir %_docdir/%prog_name-%version
 
 %define libpq_name    libpq%libpq_major.%libpq_minor
@@ -46,8 +44,6 @@ Requires: libpq%libpq_major >= %version-%release
 Provides: %prog_name = %version-%release
 Conflicts: %prog_name < %version-%release
 Conflicts: %prog_name > %version-%release
-Conflicts: %{prog_name}9.1
-Conflicts: %{prog_name}9.2
 Conflicts: %{prog_name}9.3
 Conflicts: %{prog_name}9.4
 Conflicts: %{prog_name}9.5
@@ -334,18 +330,12 @@ ln -s /usr/include/pgsql %buildroot%_libdir/%PGSQL/pgxs/src/include
 pushd altlinux
 
 # The initscripts....
-install -p -m755 -D %prog_name.init.in %buildroot%_initdir/%prog_name
-#install -p -m750 -D %prog_name.chroot.lib.in %buildroot%_sysconfdir/chroot.d/%prog_name.lib
-#install -p -m750 -D %prog_name.chroot.conf.in %buildroot%_sysconfdir/chroot.d/%prog_name.conf
-#install -p -m750 -D %prog_name.chroot.all %buildroot%_sysconfdir/chroot.d/%prog_name.all
-#install -p -m750 -D %prog_name.chroot.bin.in %buildroot%_sysconfdir/chroot.d/%prog_name.bin
+install -p -m 755 -D %prog_name.init.in %buildroot%_initdir/%prog_name
+install -p -m 644 -D %prog_name.service %buildroot%_unitdir/%prog_name.service
 
 # README.ALT
 install -p -m 644 -D README.ALT-ru_RU.UTF-8 %buildroot%docdir/README.ALT-ru_RU.UTF-8
 install -p -m 644 -D README.rpm-dist %buildroot%docdir/README.rpm-dist
-
-install -p -m 644 -D postgresql.service %buildroot%_unitdir/postgresql.service
-
 
 popd
 ##### end ALT-stuff
@@ -361,35 +351,17 @@ install -m 755 postgresql-check-db-dir %buildroot%_bindir/postgresql-check-db-di
 sed -i 's,@VERSION@,%postgresql_major,' %buildroot%_initdir/%prog_name
 sed -i 's,@FULLVERSION@,%version,' %buildroot%_initdir/%prog_name
 
-#pushd %buildroot%_sysconfdir/chroot.d
-#for f in %prog_name.*; do
-# if [ -f "$f" ]; then
-#   subst -p 's|@LIB@|%_lib|g' $f
-# fi
-#done
-#popd
-
 # PGDATA needs removal of group and world permissions due to pg_pwd hole.
-install -d -m700 %buildroot%_localstatedir/%PGSQL/data
+install -d -m 700 %buildroot%_localstatedir/%PGSQL/data
 
 # backups of data go here...
-install -d -m700 %buildroot%_localstatedir/%PGSQL/backups
+install -d -m 700 %buildroot%_localstatedir/%PGSQL/backups
 
 # Fix a dangling symlink
 mkdir -p %buildroot%_includedir/%PGSQL/port
 cp src/include/port/linux.h %buildroot%_includedir/%PGSQL/port/
 ln -s port/linux.h %buildroot%_includedir/%PGSQL/os.h
 ln -s %_includedir/%PGSQL %buildroot%_includedir/postgresql
-
-# Chrooted environment
-mkdir -p %buildroot%ROOT/{bin,dev,%_lib,tmp,%_sysconfdir/%PGSQL,%_localstatedir,%_libdir/%PGSQL,%_libdir/locale}
-
-#mksock %buildroot%ROOT/dev/log
-#mkdir -p -m700 %buildroot%_sysconfdir/syslog.d
-#ln -s %ROOT/dev/log %buildroot%_sysconfdir/syslog.d/%prog_name
-
-mv %buildroot%_localstatedir/%PGSQL %buildroot%ROOT/%_localstatedir/%PGSQL
-install -dm700 %buildroot%_localstatedir/%PGSQL
 
 pushd contrib
 %make_build install DESTDIR=%buildroot pkglibdir=%_libdir/%PGSQL docdir=%docdir
@@ -498,19 +470,6 @@ echo PGLIB=%_datadir/%PGSQL >> ~postgres/.bash_profile
 echo PGDATA=%_localstatedir/%PGSQL/data >> ~postgres/.bash_profile
 echo export PGLIB PGDATA >> ~postgres/.bash_profile
 chown postgres:postgres ~postgres/.bash_profile
-
-SYSLOGD_SCRIPT=/etc/init.d/syslogd
-SYSLOGD_CONFIG=/etc/sysconfig/syslogd
-#if grep -qs '^SYSLOGD_OPTIONS=.*-a %ROOT/dev/log' "$SYSLOGD_CONFIG"; then
-#    subst 's|^\(SYSLOGD_OPTIONS=.*\) \?-a %ROOT/dev/log|\1|' "$SYSLOGD_CONFIG"
-#    if [ -x "$SYSLOGD_SCRIPT" ]; then
-#        "$SYSLOGD_SCRIPT" condreload ||:
-#    fi
-#fi
-
-#if [ $1 -eq 2 ]; then
-#	%_sysconfdir/chroot.d/%prog_name.all force
-#fi
 
 %post_service %prog_name
 
@@ -676,7 +635,6 @@ fi
 
 %files -f server.lang server
 %config %_initdir/%prog_name
-#%config %_sysconfdir/chroot.d/%prog_name.*
 %_bindir/initdb
 %_bindir/postgresql-check-db-dir
 %_bindir/pg_controldata
@@ -724,31 +682,14 @@ fi
 %_datadir/%PGSQL/snowball_create.sql
 %_datadir/%PGSQL/extension
 %_localstatedir/%PGSQL
-#_sysconfdir/syslog.d/%prog_name
 %docdir/README.ALT-ru_RU.UTF-8
 %docdir/README.rpm-dist
 %attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL
+%attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL/backups
+%attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL/data
 %_datadir/%PGSQL/contrib
 %_datadir/%PGSQL/contrib/sepgsql.sql
 %_unitdir/*
-
-%attr(751,root,root)  %dir %ROOT
-%attr(751,root,root)  %dir %ROOT/bin
-%attr(751,root,root)  %dir %ROOT/etc
-%attr(751,root,root)  %dir %ROOT/etc/%PGSQL
-%attr(751,root,root)  %dir %ROOT/dev
-%attr(751,root,root)  %dir %ROOT/%_lib
-%attr(1777,root,root) %dir %ROOT/tmp
-%attr(751,root,root)  %dir %ROOT/usr
-%attr(751,root,root)  %dir %ROOT/var
-%attr(751,root,root)  %dir %ROOT%_libdir
-%attr(751,root,root)  %dir %ROOT%_libdir/%PGSQL
-%attr(751,root,root)  %dir %ROOT%_libdir/locale
-%attr(751,root,root)  %dir %ROOT%_localstatedir
-%attr(700,postgres,postgres)  %dir %ROOT%_localstatedir/%PGSQL
-%attr(700,postgres,postgres)  %dir %ROOT%_localstatedir/%PGSQL/backups
-%attr(700,postgres,postgres)  %dir %ROOT%_localstatedir/%PGSQL/data
-#attr(666,root,root) %ghost %ROOT/dev/log
 
 %if_with devel
 %files -f devel.lang devel
@@ -806,6 +747,12 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Thu Nov 09 2017 Alexei Takaseev <taf@altlinux.org> 10.1-alt1
+- 10.1
+- Remove conflicts to PG 9.1, 9.2
+- Cleanup spec
+- Remove chroot dead code
+
 * Thu Oct 05 2017 Alexei Takaseev <taf@altlinux.org> 10.0-alt1
 - 10.0
 - Enable -devel
