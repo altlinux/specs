@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: gcc-c++
 AutoReq: yes,noosgi
@@ -15,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:      lpg
 Version:   %{_version}
-Release:   alt1_21jpp8
+Release:   alt1_24jpp8
 Summary:   LALR Parser Generator
 # although the text of the licence isn't distributed with some of the source,
 # the author has exlicitly stated that everything is covered under the EPL
@@ -49,7 +48,10 @@ Patch1:    %{name}-osgi-jar.patch
 Patch2:    %{name}-segfault.patch
 
 BuildRequires: gcc-c++
-BuildRequires: make
+
+BuildRequires: ant
+BuildRequires: ant-apache-regexp
+BuildRequires: javapackages-local
 Source44: import.info
 
 %description
@@ -64,11 +66,6 @@ Summary:       Java runtime library for LPG
 
 BuildArch:     noarch
 
-BuildRequires: java-devel
-BuildRequires: jpackage-utils
-BuildRequires: ant-apache-regexp
-Requires:      jpackage-utils
-
 %description   java
 Java runtime library for parsers generated with the LALR Parser Generator
 (LPG).
@@ -79,11 +76,6 @@ Version:       %{_compat_version}
 Summary:       Compatibility Java runtime library for LPG 1.x
 
 BuildArch:     noarch
-
-BuildRequires: java-devel
-BuildRequires: jpackage-utils
-BuildRequires: ant
-Requires:      jpackage-utils
 
 %description   java-compat
 Compatibility Java runtime library for parsers generated with the LALR Parser
@@ -130,26 +122,33 @@ make clean install ARCH=linux_x86 \
 popd
 
 %install
-install -pD -T lpg-java-runtime/%{name}runtime.jar \
-  %{buildroot}%{_javadir}/%{name}runtime.jar
-install -pD -T lpgdistribution/%{name}javaruntime.jar \
-  %{buildroot}%{_javadir}/%{name}javaruntime.jar
+# Install native stuff
 install -pD -T lpg-generator-cpp/bin/%{name}-linux_x86 \
   %{buildroot}%{_bindir}/%{name}
+
+# Install java stuff
+%mvn_package "lpg.runtime:java" java
+%mvn_package "net.sourceforge.lpg:lpgjavaruntime" java-compat
+%mvn_artifact "lpg.runtime:java:%{_version}" lpg-java-runtime/lpgruntime.jar
+%mvn_artifact "net.sourceforge.lpg:lpgjavaruntime:%{_compat_version}" lpgdistribution/lpgjavaruntime.jar
+%mvn_file "lpg.runtime:" lpgruntime
+%mvn_file "net.sourceforge.lpg:" lpgjavaruntime
+%mvn_install
 
 %files
 %doc lpg-generator-templates/docs/*
 %{_bindir}/%{name}
 
-%files java
+%files java -f .mfiles-java
 %doc lpg-java-runtime/Eclipse*.htm
-%{_javadir}/%{name}runtime.jar
 
-%files java-compat
+%files java-compat -f .mfiles-java-compat
 %doc lpg-java-runtime/Eclipse*.htm
-%{_javadir}/%{name}javaruntime.jar
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_24jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_21jpp8
 - new jpp release
 
