@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           portecle
 Version:        1.10
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Multipurpose keystore and certificate tool
 
 License:        GPLv2+
@@ -88,6 +88,9 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_3jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_2jpp8
 - new jpp release
 
