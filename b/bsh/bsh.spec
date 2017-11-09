@@ -1,10 +1,16 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools
+BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2007, JPackage Project
@@ -38,10 +44,11 @@ BuildRequires: jpackage-generic-compat
 #
 
 %global reltag b6
+%bcond_without  desktop
 
 Name:           bsh
 Version:        2.0
-Release:        alt1_5.b6jpp8
+Release:        alt1_8.b6jpp8
 Epoch:          0
 Summary:        Lightweight Scripting for Java
 URL:            http://www.beanshell.org/
@@ -57,9 +64,12 @@ BuildRequires:  ant
 BuildRequires:  bsf
 BuildRequires:  junit
 BuildRequires:  javacc
+BuildRequires:  glassfish-servlet-api
+%if %{with desktop}
 BuildRequires:  ImageMagick
 BuildRequires:  desktop-file-utils
-BuildRequires:  glassfish-servlet-api
+%endif
+
 Requires:       bsf
 Requires:       jline
 
@@ -135,12 +145,14 @@ ant test dist
 
 %mvn_install -J javadoc
 
+%if %{with desktop}
 # menu entry
 desktop-file-install --mode=644 \
   --dir=%{buildroot}%{_datadir}/applications %{SOURCE1}
 install -d -m 755 %{buildroot}%{_datadir}/pixmaps
 convert src/bsh/util/lib/icon.gif \
   %{buildroot}%{_datadir}/pixmaps/bsh.png
+%endif
 
 install -d -m 755 %{buildroot}%{_datadir}/%{name}
 install -d -m 755 %{buildroot}%{_datadir}/%{name}/webapps
@@ -163,8 +175,10 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc LICENSE NOTICE
 %doc README.md src/Changes.html src/CodeMap.html docs/faq/faq.html
 %attr(0755,root,root) %{_bindir}/%{name}*
+%if %{with desktop}
 %{_datadir}/applications/%{name}-desktop.desktop
 %{_datadir}/pixmaps/%{name}.png
+%endif
 %{_datadir}/%{name}
 %config(noreplace,missingok) /etc/java/%{name}.conf
 
@@ -178,6 +192,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_8.b6jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_5.b6jpp8
 - new version
 
