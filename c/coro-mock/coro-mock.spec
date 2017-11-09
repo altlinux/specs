@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name: coro-mock
 Version: 1.0
-Release: alt1_0.11.e55ca83gitjpp8
+Release: alt1_0.12.e55ca83gitjpp8
 Summary: A mock library for compiling JVM coroutine-using code on JVMs without coroutines
 License: Public Domain
 Url: https://github.com/headius/coro-mock
@@ -56,6 +56,9 @@ This package contains javadoc for %{name}.
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.12.e55ca83gitjpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.11.e55ca83gitjpp8
 - new jpp release
 
