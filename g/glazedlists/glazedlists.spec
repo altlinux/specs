@@ -1,11 +1,11 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Work around koji build issues on ppc64
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           glazedlists
 Version:        1.9.1
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        A toolkit for transformations in Java
 License:        (LGPLv2+ or MPLv1.1+) and ASL 2.0
 Url:            http://www.glazedlists.com/
@@ -101,6 +101,9 @@ ant -v dist jar sourcejar javadocjar deploy-init -DartifactId=%{name}
 %doc license
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.1-alt1_3jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.1-alt1_2jpp8
 - new jpp release
 
