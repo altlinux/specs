@@ -1,17 +1,15 @@
 Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jchardet
 Version:        1.1
-Release:        alt2_14jpp8
+Release:        alt2_16jpp8
 Summary:        Java port of Mozilla's automatic character set detection algorithm
 
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
@@ -21,14 +19,6 @@ Source1:        http://repo1.maven.org/maven2/net/sourceforge/%{name}/%{name}/1.
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  jpackage-utils
-
-Requires:       jpackage-utils
-%if 0%{?fedora} >= 20 || 0%{?rhel} >= 7
-%else
-Requires:       java
-%endif
 Source44: import.info
 
 %description
@@ -41,7 +31,6 @@ be found at http://www.mozilla.org/projects/intl/chardet.html.
 %package javadoc
 Group: Development/Java
 Summary:    API documentation for %{name}
-Requires:   jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -53,12 +42,13 @@ find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 
 cp %{SOURCE1} pom.xml
+
 # fix up the provided version
-sed -i 's:<version>1.0</version>:<version>1.1</version>:' pom.xml
+%pom_xpath_set /pom:project/pom:version %{version}
 
 # remove distributionManagement.status from pom (maven stops build
 # when it's there)
-sed -i '/<distributionManagement>/,/<\/distributionManagement>/ d' pom.xml
+%pom_xpath_remove pom:distributionManagement
 
 # create proper dir structure
 mkdir -p src/main/java/org/mozilla/intl/chardet
@@ -79,6 +69,9 @@ mv src/*java src/main/java/org/mozilla/intl/chardet
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_16jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_14jpp8
 - new jpp release
 
