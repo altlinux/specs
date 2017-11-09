@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jatl
 Version:       0.2.2
-Release:       alt1_11jpp8
+Release:       alt1_12jpp8
 Summary:       Java Anti-Template Language
 License:       ASL 2.0
 # https://github.com/agentgt
@@ -67,6 +67,9 @@ This package contains javadoc for %{name}.
 %doc COPYING
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1_12jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1_11jpp8
 - new jpp release
 
