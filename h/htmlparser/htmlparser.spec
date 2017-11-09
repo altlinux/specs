@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Name:		htmlparser
 Epoch:		1
 Version:	1.5
-Release:	alt1_6jpp8
+Release:	alt1_7jpp8
 Summary:	HTML Parser, a Java library used to parse HTML
 Group:		Development/Java
 License:	LGPLv2+
@@ -44,7 +44,7 @@ This package contains the API documentation for %{name}.
 %setup -q -n htmlparser1_5
 
 find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
-%{__unzip} -qq src.zip
+unzip -qq src.zip
 %patch1 -p1
 
 
@@ -70,6 +70,9 @@ cp -rp docs/javadoc/ $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/*
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.5-alt1_7jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.5-alt1_6jpp8
 - new jpp release
 
