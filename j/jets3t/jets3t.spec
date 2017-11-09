@@ -2,17 +2,16 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: swig
+BuildRequires: rpm-build-java swig
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/pod2man
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jets3t
 Version:       0.9.3
-Release:       alt1_5jpp8
+Release:       alt1_7jpp8
 Summary:       Java interface to Amazon S3 and CloudFront services
 # nuvola theme is under LGPL 2.1
 # src/org/jets3t/gui/TableSorter.java BSD
@@ -50,11 +49,7 @@ BuildRequires: java-base64
 BuildRequires: java-xmlbuilder
 BuildRequires: javamail
 BuildRequires: junit
-%if %{?fedora} >= 21
 BuildRequires: log4j12
-%else
-BuildRequires: log4j
-%endif
 BuildRequires: maven-local
 BuildRequires: mx4j
 # pod2man
@@ -88,11 +83,7 @@ Requires:      httpcomponents-core
 Requires:      java
 Requires:      java-xmlbuilder
 Requires:      jpackage-utils
-%if %{?fedora} >= 21
 Requires:      log4j12
-%else
-Requires:      log4j
-%endif
 
 %description app
 The JetS3t toolkit provides Java programmers with an API for interacting and
@@ -133,12 +124,7 @@ This package contains javadoc for %{name}.
 %setup -q
 dos2unix dist-build.xml
 %patch0 -p1
-%if %{?fedora} < 21
-sed -i "s|log4j12-1.2.17.jar|log4j.jar|" scripts/*.sh
-sed -i "s|bcprov-jdk15on|bcprov-jdk16|" pom.xml
-%else
 sed -i "s|log4j.jar|log4j12-1.2.17.jar|" dist-build.xml
-%endif
 %patch1 -p0
 %patch2 -p0
 
@@ -273,6 +259,9 @@ cp -pr servlets %{buildroot}%{_datadir}/%{name}/
 %doc LICENSE-2.0.txt NOTICE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.9.3-alt1_7jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.9.3-alt1_5jpp8
 - new jpp release
 
