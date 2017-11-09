@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Name:          hessian
 Summary:       Java implementation of a binary protocol for web services 
 Version:       4.0.38
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Epoch:         1
 License:       ASL 1.1
 URL:           http://hessian.caucho.com/
@@ -96,6 +96,9 @@ cp -p %{SOURCE2} apache.license
 %doc apache.license
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.0.38-alt1_3jpp8
+- fc27 update
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.0.38-alt1_2jpp8
 - new jpp release
 
