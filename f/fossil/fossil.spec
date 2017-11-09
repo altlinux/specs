@@ -1,7 +1,7 @@
 %def_enable Werror
 Name: fossil
 Version: 2.3
-Release: alt1
+Release: alt2
 
 Summary: A distributed SCM with bug tracking and wiki
 License: %bsdstyle
@@ -13,6 +13,8 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: zlib-devel libssl-devel libreadline-devel tcl
 BuildRequires: libsqlite3-devel >= 3.15.0
+
+Requires: tcllib
 
 %define _unpackaged_files_terminate_build 1
 
@@ -39,7 +41,7 @@ Documentation in HTML format for Fossil.
 	--prefix=%_usr \
 	--disable-internal-sqlite \
 	--with-openssl=auto
-
+export CFLAGS='%optflags'
 %make_build
 
 %install
@@ -57,6 +59,9 @@ install -pDm644 fossil.1 %buildroot%_man1dir/fossil.1
 #doc www
 
 %changelog
+* Thu Nov 09 2017 Grigory Ustinov <grenka@altlinux.org> 2.3-alt2
+- Add tcclib for passing 1 test, correct use -Werror flag.
+
 * Sat Oct 28 2017 Grigory Ustinov <grenka@altlinux.org> 2.3-alt1
 - Updated to 2.3.
 
