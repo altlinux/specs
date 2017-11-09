@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-remoting
 Version:          4.0.21
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          JBoss Remoting
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossremoting
@@ -69,6 +69,9 @@ This package contains the API documentation for %{name}.
 %doc COPYING.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:4.0.21-alt1_3jpp8
+- fc27 update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:4.0.21-alt1_2jpp8
 - new jpp release
 
