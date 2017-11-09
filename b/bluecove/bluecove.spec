@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           bluecove
 Version:        2.1.1
-Release:        alt1_0.13.20101024snap63jpp8
+Release:        alt1_0.15.20101024snap63jpp8
 Summary:        Implementation of JSR-82 Java Bluetooth API
 
 Group:          System/Libraries
@@ -143,6 +143,9 @@ cp -p bluecove-emu-%{version}-SNAPSHOT/target/bluecove-emu-%{version}.jar \
 %doc AUTHORS.txt README.txt LICENSE.txt stacks.txt todo.txt AUTHORS-gpl.txt LICENSE-gpl.txt README.dist
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1_0.15.20101024snap63jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1_0.13.20101024snap63jpp8
 - new jpp release
 
