@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,8 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-reporting-api
 Version:        3.0
-Release:        alt3_11jpp8
-# Maven-shared defines maven-reporting-api version as 3.0
+Release:        alt3_13jpp8
 Epoch:          1
 Summary:        API to manage report generation
 License:        ASL 2.0
@@ -25,9 +24,6 @@ BuildArch:      noarch
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
-
-Obsoletes:      maven-shared-reporting-api < %{epoch}:%{version}-%{release}
-Provides:       maven-shared-reporting-api = %{epoch}:%{version}-%{release}
 Source44: import.info
 
 %description
@@ -59,7 +55,6 @@ cp %{SOURCE1} LICENSE.txt
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
@@ -67,6 +62,9 @@ cp %{SOURCE1} LICENSE.txt
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.0-alt3_13jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.0-alt3_11jpp8
 - new jpp release
 
