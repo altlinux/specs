@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: swig
+BuildRequires: rpm-build-java swig
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          glassfish-pfl
 Version:       3.2.0
-Release:       alt2_0.11.b001jpp8
+Release:       alt2_0.12.b001jpp8
 Summary:       GlassFish Primitive Function Library
 # Few files in src/org/glassfish/pfl/test/ is under ASL 2.0
 License:       (CDDL or GPLv2 with exceptions) and ASL 2.0
@@ -161,6 +160,9 @@ sed -i 's/\r//' LICENSE.txt LICENSE-2.0.txt
 %doc LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt2_0.12.b001jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt2_0.11.b001jpp8
 - new jpp release
 
