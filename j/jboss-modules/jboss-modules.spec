@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-modules
 Version:          1.5.2
-Release:          alt2_2jpp8
+Release:          alt2_3jpp8
 Summary:          A Modular Classloading System
 # XPP3 License: src/main/java/org/jboss/modules/xml/MXParser.java
 #  src/main/java/org/jboss/modules/xml/XmlPullParser.java
@@ -79,6 +79,9 @@ rm src/test/java/org/jboss/modules/MavenResourceTest.java \
 %doc LICENSE.txt XPP3-LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt2_3jpp8
+- fc27 update
+
 * Tue Oct 31 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt2_2jpp8
 - new jpp release
 
