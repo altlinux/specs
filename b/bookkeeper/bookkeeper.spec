@@ -1,11 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -16,20 +15,17 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 # Conditionals to help breaking bookkeeper <-> hadoop dependency cycle
 %if 0%{?fedora}
-#def_with hadoop
 %bcond_with hadoop
 # Unavailable deps: log4cxx was retired
-#def_with libhedwig
 %bcond_with libhedwig
 # Unsupported surefire plugin configuration
 #[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.18.1:test (default-test) on project bookkeeper-server: ExecutionException: java.lang.RuntimeException: The forked VM terminated without properly saying goodbye. VM crash or System.exit called?
-#def_with test
 %bcond_with test
 %endif
 
 Name:          bookkeeper
 Version:       4.3.2
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Replicated log service
 License:       ASL 2.0
 URL:           http://bookkeeper.apache.org/
@@ -318,7 +314,7 @@ sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 # Remove rpath
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-%{__make} %{?_smp_mflags}
+make %{?_smp_mflags}
 popd
 %endif
 
@@ -327,7 +323,7 @@ popd
 
 %if %{with libhedwig}
 pushd hedwig-client/src/main/cpp
-%{__make} install DESTDIR=%{buildroot}
+make install DESTDIR=%{buildroot}
 popd
 
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
@@ -370,6 +366,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt1_4jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt1_3jpp8
 - new jpp release
 
