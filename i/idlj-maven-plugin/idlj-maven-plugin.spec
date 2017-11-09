@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             idlj-maven-plugin
 Version:          1.2.1
-Release:          alt1_8jpp8
+Release:          alt1_9jpp8
 Summary:          The CORBA IDL Compiler Maven Plugin 
 License:          ASL 2.0
 # http://www.mojohaus.org/plugins.html
@@ -67,6 +68,9 @@ cp %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_9jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_8jpp8
 - new jpp release
 
