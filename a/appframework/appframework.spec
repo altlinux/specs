@@ -2,12 +2,13 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:    appframework
 Version: 1.03
-Release: alt2_16jpp8
+Release: alt2_18jpp8
 Summary: Swing Application Framework
 License: LGPLv2+
 URL:     https://appframework.dev.java.net/
@@ -20,8 +21,10 @@ Patch2:  %{name}-%{version}-disable-doclint.diff
 
 BuildRequires: ant
 BuildRequires: ant-junit
+BuildRequires: java-devel >= 1.6.0
 BuildRequires: swing-layout >= 1.0.3
 
+Requires: java >= 1.6.0
 
 Requires: swing-layout >= 1.0.3
 
@@ -45,7 +48,7 @@ Javadoc for %{name}.
 %setup -q -n AppFramework-%{version}
 
 # remove all binary libs
-find . -name "*.jar" -exec %{__rm} -f {} \;
+find . -name "*.jar" -exec rm -f {} \;
 
 %patch0 -b .sav
 %patch1 -p1 -b .sav
@@ -56,11 +59,11 @@ find . -name "*.jar" -exec %{__rm} -f {} \;
 
 %install
 # jar
-%{__install} -d -m 755 %{buildroot}%{_javadir}
-%{__install} -m 644 dist/AppFramework-1.03.jar %{buildroot}%{_javadir}/%{name}.jar
+install -d -m 755 %{buildroot}%{_javadir}
+install -m 644 dist/AppFramework-1.03.jar %{buildroot}%{_javadir}/%{name}.jar
 # javadoc
-%{__install} -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-%{__cp} -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
 %files
 %{_javadir}/*
@@ -70,6 +73,9 @@ find . -name "*.jar" -exec %{__rm} -f {} \;
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_18jpp8
+- fc27 update
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_16jpp8
 - new fc release
 
