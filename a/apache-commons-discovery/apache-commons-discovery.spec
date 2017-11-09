@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        0.5
-Release:        alt3_17jpp8
+Release:        alt3_18jpp8
 Epoch:          2
 Summary:        Apache Commons Discovery
 License:        ASL 2.0
@@ -64,6 +64,9 @@ BuildArch: noarch
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt3_18jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt3_17jpp8
 - new jpp release
 
