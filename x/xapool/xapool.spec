@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          xapool
 Version:       1.5.0
-Release:       alt4_10jpp8
+Release:       alt4_11jpp8
 Summary:       Open source XA JDBC Pool
 License:       LGPLv2+
 URL:           http://xapool.ow2.org/
@@ -84,6 +84,9 @@ ant dist
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0-alt4_11jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0-alt4_10jpp8
 - new jpp release
 
