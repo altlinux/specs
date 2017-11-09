@@ -1,7 +1,6 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           invokebinder
 Version:        1.2
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        A Java DSL for binding method handles forward, rather than backward
 License:        ASL 2.0
 URL:            http://github.com/headius/%{name}/
@@ -55,6 +54,9 @@ find ./ -name '*.class' -exec rm -f '{}' \;
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_7jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_6jpp8
 - new jpp release
 
