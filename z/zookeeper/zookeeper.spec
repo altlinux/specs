@@ -1,11 +1,11 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python rpm-macros-java
-BuildRequires: gcc-c++ perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(threads.pm) perl-devel
+BuildRequires: gcc-c++ perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(threads.pm) perl-devel rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global _hardened_build 1
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          zookeeper
 Version:       3.4.9
-Release:       alt1_3jpp8
+Release:       alt1_7jpp8
 Summary:       A high-performance coordination service for distributed applications
 License:       ASL 2.0 and BSD
 URL:           https://zookeeper.apache.org/
@@ -31,7 +31,7 @@ Patch5:        0001-cppunit-config-no-longer-exists-use-pkg-config.patch
 Patch6:        missing-pom.template.patch
 
 
-BuildRequires: autoconf-common
+BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
 BuildRequires: pkgconfig(cppunit)
@@ -41,7 +41,7 @@ BuildRequires: graphviz libgraphviz
 BuildRequires: java-devel
 BuildRequires: java-javadoc
 BuildRequires: jpackage-utils
-BuildRequires: libtool-common
+BuildRequires: libtool
 BuildRequires: libxml2-devel
 BuildRequires: python-devel
 
@@ -55,7 +55,7 @@ BuildRequires: maven-local
 BuildRequires: jtoaster
 BuildRequires: junit
 BuildRequires: jdiff
-%if 0%{?fedora} >= 21
+%if 0%{?fedora} >= 21 || 0%{?rhel} > 7
 BuildRequires: mvn(org.slf4j:slf4j-log4j12)
 BuildRequires: objectweb-pom
 BuildRequires: jline1
@@ -126,6 +126,7 @@ This package contains javadoc for %{name}.
 
 %package -n python-module-zookeeper
 Group: Development/Java
+%{?python_provide:%python_provide python2-%{name}}
 Summary:       Python support for %{name}
 Requires:      %{name} = %{version}-%{release}
 Provides:      zkpython = %{version}-%{release}
@@ -171,7 +172,7 @@ popd
 pushd src/c
 autoreconf -if
 %configure --disable-static --disable-rpath
-%{__make} %{?_smp_mflags}
+make %{?_smp_mflags}
 popd
 
 ## TODO: install utilities?
@@ -206,7 +207,7 @@ install -pm 755 bin/zkServer.sh %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_libexecdir}
 install -pm 755 %{SOURCE3} %{buildroot}%{_libexecdir}
 
-%if 0%{?fedora} >= 21
+%if 0%{?fedora} >= 21 || 0%{?rhel} > 7
 mkdir -p %{buildroot}%{_datadir}/maven-metadata
 mkdir -p %{buildroot}%{_datadir}/maven-poms
 install -pm 644 build/%{name}-%{version}/dist-maven/%{name}-%{version}.pom %{buildroot}%{_datadir}/maven-poms/%{name}-%{name}.pom
@@ -254,10 +255,10 @@ touch %{buildroot}%{_sysconfdir}/zookeeper/zoo.cfg
 touch %{buildroot}%{_sharedstatedir}/zookeeper/data/myid
 
 # touching all ghosts; hack for rpm 4.0.4
-for rpm_404_ghost in %{_sysconfdir}/zookeeper/zoo.cfg %{_sharedstatedir}/zookeeper/data/myid
+for rpm404_ghost in %{_sysconfdir}/zookeeper/zoo.cfg %{_sharedstatedir}/zookeeper/data/myid
 do
-    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
-    touch %buildroot"$rpm_404_ghost"
+    mkdir -p %buildroot`dirname "$rpm404_ghost"`
+    touch %buildroot"$rpm404_ghost"
 done
 
 
@@ -300,7 +301,7 @@ getent passwd zookeeper >/dev/null || \
 %{_javadir}/%{name}/%{name}.jar
 %{_javadir}/%{name}/%{name}-tests.jar
 %{_javadir}/%{name}/%{name}-ZooInspector.jar
-%if 0%{?fedora} >= 21
+%if 0%{?fedora} >= 21 || 0%{?rhel} > 7
 %{_datadir}/maven-poms/%{name}-%{name}.pom
 %{_datadir}/maven-poms/%{name}-%{name}-ZooInspector.pom
 %{_datadir}/maven-metadata/%{name}.xml
@@ -326,6 +327,9 @@ getent passwd zookeeper >/dev/null || \
 %doc LICENSE.txt NOTICE.txt src/contrib/zkpython/README
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.4.9-alt1_7jpp8
+- fc27 update
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 3.4.9-alt1_3jpp8
 - new jpp release
 
