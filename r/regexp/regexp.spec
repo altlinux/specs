@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 Obsoletes: jakarta-regexp = 1.4-alt1
 Obsoletes: jakarta-regexp = 1.4-alt2
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 Name:           regexp
 Epoch:          1
 Version:        1.5
-Release:        alt1_24jpp8
+Release:        alt1_25jpp8
 Summary:        Simple regular expressions API
 License:        ASL 2.0
 URL:            http://jakarta.apache.org/%{name}/
@@ -86,6 +86,9 @@ mkdir lib
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.5-alt1_25jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.5-alt1_24jpp8
 - new jpp release
 
