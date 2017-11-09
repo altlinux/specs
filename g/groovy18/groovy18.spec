@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           groovy18
 Version:        1.8.9
-Release:        alt1_26jpp8
+Release:        alt1_30jpp8
 Summary:        Dynamic language for the Java Platform
 
 # Some of the files are licensed under BSD and CPL terms, but the CPL has been superceded
@@ -36,6 +36,7 @@ Patch0:         groovy-inner-interface-annotations.patch
 Patch1:         groovy-build-with-java8.patch
 Patch2:         groovy-servlet31.patch
 Patch3:         groovy-commons-cli-1.3.patch
+Patch4:         groovy-CVE-2015-3253-and-CVE-2016-6814.patch
 
 BuildRequires:  ant
 BuildRequires:  antlr-tool
@@ -122,6 +123,7 @@ cp %{SOURCE4} %{SOURCE5} %{SOURCE6} .
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 # build.xml is not compatible with Ant 1.10+
 sed -i "s| depends=\"-excludeLegacyAntVersion\"||" build.xml
@@ -216,6 +218,9 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %doc LICENSE.txt LICENSE-2.0.txt NOTICE.txt cpl-v10.txt epl-v10.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.9-alt1_30jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.9-alt1_26jpp8
 - new jpp release
 
