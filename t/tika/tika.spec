@@ -1,11 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -16,20 +15,16 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 # Conditionals to help breaking tika <-> vorbis-java-tika dependency cycle
 %if 0%{?fedora}
-#def_with vorbis_tika
 %bcond_with vorbis_tika
 # Disable only for now
-#def_with tika_parsers
 %bcond_with tika_parsers
-#def_with tika_app
 %bcond_with tika_app
-#def_with tika_server
 %bcond_with tika_server
 %endif
 
 Name:          tika
 Version:       1.12
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       A content analysis toolkit
 License:       ASL 2.0
 Url:           http://tika.apache.org/
@@ -390,6 +385,9 @@ rm -r %{name}-parsers/src/test/java/org/apache/tika/parser/microsoft/ooxml/OOXML
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_4jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_3jpp8
 - new version
 
