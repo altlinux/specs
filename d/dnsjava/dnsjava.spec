@@ -1,7 +1,7 @@
 Epoch: 0
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          dnsjava
 Version:       2.1.3
-Release:       alt1_12jpp8
+Release:       alt1_13jpp8
 Summary:       Java DNS implementation
 License:       BSD and MIT
 URL:           http://www.dnsjava.org/
@@ -99,6 +99,9 @@ ant -Dj2se.javadoc=%{_javadocdir}/java run_tests
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_13jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_12jpp8
 - new jpp release
 
