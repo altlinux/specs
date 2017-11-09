@@ -1,14 +1,15 @@
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven2
 Version:        2.2.1
-Release:        alt6_54jpp8
+Release:        alt6_56jpp8
 Summary:        Java project management and project comprehension tool
 License:        ASL 2.0 and MIT and BSD
 URL:            http://maven.apache.org
@@ -206,6 +207,9 @@ done
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt6_56jpp8
+- fc27 update
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt6_54jpp8
 - new fc release
 
