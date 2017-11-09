@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jetty-version-maven-plugin
 Version:        1.0.7
-Release:        alt4_16jpp8
+Release:        alt4_17jpp8
 Summary:        Jetty version management Maven plugin
 
 License:        ASL 2.0 or EPL
@@ -65,6 +66,9 @@ pushd %{name}
 %doc LICENSE-APACHE-2.0.txt LICENSE-ECLIPSE-1.0.html notice.html
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt4_17jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt4_16jpp8
 - new jpp release
 
