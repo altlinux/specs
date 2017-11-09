@@ -4,21 +4,20 @@
 
 Name: python-module-%oname
 Version: 0.3.5
-Release: alt1.git20141126.1
+Release: alt1.git20141126.2
 Summary: Plugin for py.test that shows failures and errors instantly and shows a progress bar
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/pytest-sugar/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/Frozenball/pytest-sugar.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides pytest_sugar
@@ -70,7 +69,7 @@ py.test
 %if_with python3
 pushd ../python3
 python3 setup.py test
-py.test-%_python3_version
+py.test3
 popd
 %endif
 
@@ -85,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.5-alt1.git20141126.2
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.5-alt1.git20141126.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
