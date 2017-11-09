@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          glassfish-ha-api
 Version:       3.1.9
-Release:       alt1_9jpp8
+Release:       alt1_10jpp8
 Summary:       High Availability APIs and SPI
 License:       CDDL or GPLv2 with exceptions
 URL:           http://glassfish.java.net/
@@ -77,6 +77,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.9-alt1_10jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.9-alt1_9jpp8
 - new jpp release
 
