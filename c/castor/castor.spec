@@ -2,6 +2,7 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        An open source data binding framework for Java
 Name:           castor
 Version:        1.3.3
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 # Older source files are BSD licensed and newer ones are ASL licensed
 License:        BSD and ASL 2.0
 URL:            http://castor.codehaus.org
@@ -107,6 +108,9 @@ sed -i 's@groupId>ant<@groupId>org.apache.ant<@g' pom.xml xml/pom.xml
 %doc src/doc/license.txt src/doc/new-license.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.3-alt1_6jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.3-alt1_5jpp8
 - new jpp release
 
