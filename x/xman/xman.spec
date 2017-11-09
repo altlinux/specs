@@ -1,12 +1,11 @@
 Name: xman
 Version: 1.1.4
-Release: alt2
+Release: alt3
 Summary: Manual page display program for the X Window System
 Group: System/X11
 Source: %name-%version.tar.bz2
-# Fix xman to work with bzipped pages
+Patch: 0001-Add-xz-compressed-man-pages.patch
 License: MIT
-Packager: Fr. Br. George <george@altlinux.ru>
 
 # Automatically added by buildreq on Thu Apr 14 2011
 # optimized out: libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel pkg-config xorg-xproto-devel
@@ -19,6 +18,7 @@ Xman is a manual page display program for the X Window System.
 
 %prep
 %setup -n %name-%version
+%patch -p2
 for f in `grep -rsl /usr/man .`; do
 	sed -i 's@/usr/man@/usr/share/man@g' $f
 done
@@ -38,6 +38,9 @@ done
 %_mandir/man1/xman.*
 
 %changelog
+* Thu Nov 09 2017 Fr. Br. George <george@altlinux.ru> 1.1.4-alt3
+- Add .xz support (thanks to nbr@)
+
 * Wed Jan 20 2016 Fr. Br. George <george@altlinux.ru> 1.1.4-alt2
 - Fix default manpath
 
