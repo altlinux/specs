@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jbossws-parent
 Version:          1.3.0
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          JBossWS Parent
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossws
@@ -42,6 +42,9 @@ This package contains the JBossWS Parent.
 %files -f .mfiles
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.0-alt1_3jpp8
+- fc27 update
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.0-alt1_2jpp8
 - new jpp release
 
