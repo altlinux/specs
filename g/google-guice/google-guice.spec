@@ -2,6 +2,7 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -22,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           google-%{short_name}
 Version:        4.1
-Release:        alt1_5jpp8
+Release:        alt1_8jpp8
 Summary:        Lightweight dependency injection framework for Java 5 and above
 License:        ASL 2.0
 URL:            https://github.com/google/%{short_name}
@@ -31,13 +32,6 @@ BuildArch:      noarch
 # ./create-tarball.sh %%{version}
 Source0:        %{name}-%{version}.tar.xz
 Source1:        create-tarball.sh
-
-Patch0:         0001-Revert-Some-work-on-issue-910-ensure-that-anonymous-.patch
-
-# Rejected upstream: https://github.com/google/guice/issues/492
-Patch100:       https://raw.githubusercontent.com/sonatype/sisu-guice/master/PATCHES/GUICE_492_slf4j_logger_injection.patch
-# Forwarded upstream: https://github.com/google/guice/issues/618
-Patch101:       https://raw.githubusercontent.com/sonatype/sisu-guice/master/PATCHES/GUICE_618_extensible_filter_pipeline.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(aopalliance:aopalliance)
@@ -215,9 +209,6 @@ This package provides %{summary}.
 
 %prep
 %setup -q -n %{name}-%{version}
-#%patch0 -p1
-#%patch100 -p1
-#%patch101 -p1
 
 # We don't have struts2 in Fedora yet.
 %pom_disable_module struts2 extensions
@@ -227,6 +218,10 @@ This package provides %{summary}.
 # Remove additional build profiles, which we don't use anyways
 # and which are only pulling additional dependencies.
 %pom_xpath_remove "pom:profile[pom:id='guice.with.jarjar']" core
+
+# Fix OSGi metadata due to not using jarjar
+%pom_xpath_set "pom:instructions/pom:Import-Package" \
+  "!com.google.inject.*,*" core
 
 # Animal sniffer is only causing problems. Disable it for now.
 %pom_remove_plugin :animal-sniffer-maven-plugin core
@@ -298,6 +293,9 @@ This package provides %{summary}.
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:4.1-alt1_8jpp8
+- fc27 update
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:4.1-alt1_5jpp8
 - new jpp release
 
