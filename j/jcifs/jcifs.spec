@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jcifs
 Version:       1.3.18
-Release:       alt1_5jpp8
+Release:       alt1_6jpp8
 Summary:       Common Internet File System Client in 100% Java
 # Licenses:
 #   src/jcifs/util/DES.java: BSD and MIT
@@ -104,6 +104,9 @@ cp -pr examples/*.java  %{buildroot}%{_datadir}/%{name}/examples
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.18-alt1_6jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.18-alt1_5jpp8
 - new jpp release
 
