@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global githash b8565e1faa39c4eb8841902cf65a1615f5a933d7
 Name:          annox
 Version:       1.0.1
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Java annotations in XML resources
 License:       BSD
 Url:           http://java.net/projects/annox
@@ -97,6 +97,9 @@ sed -i 's/\r//' LICENSE
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_4jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_3jpp8
 - new jpp release
 
