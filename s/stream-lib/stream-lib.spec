@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           stream-lib
 Version:        %{streamlib_version}
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        Stream summarizer and cardinality estimator
 License:        ASL 2.0
 URL:            https://github.com/addthis/stream-lib/
@@ -68,6 +68,9 @@ This package provides %{summary}.
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt1_8jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt1_7jpp8
 - new jpp release
 
