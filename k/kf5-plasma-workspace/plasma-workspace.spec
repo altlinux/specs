@@ -16,8 +16,8 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.10.5
-Release: alt2%ubt
+Version: 5.11.3
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -229,6 +229,7 @@ done
 %files common -f %name.lang
 %doc COPYING*
 %config(noreplace) %_K5xdgconf/*rc
+%config(noreplace) %_K5xdgconf/*.*categories
 %dir %_K5data/desktop-directories/
 
 %files
@@ -259,7 +260,7 @@ done
 #%_K5qml/org/kde/private/*
 %_K5qml/org/kde/taskmanager/
 %_K5qml/org/kde/holidayeventshelperplugin/
-%_K5data/drkonqi/
+#%_K5data/drkonqi/
 %_K5data/plasma/
 %_K5data/kio_desktop/
 %_K5data/ksplash/
@@ -313,6 +314,12 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1%ubt
+- new version
+
+* Tue Nov 07 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
+- new version
+
 * Wed Oct 04 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt2%ubt
 - clear Ctrl+Alt+R binding
 

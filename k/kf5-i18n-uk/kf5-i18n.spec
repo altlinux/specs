@@ -3,7 +3,7 @@
 %define lngg Ukrainian
 
 Name: kf5-i18n-%lng
-Version: 5.10.4
+Version: 5.12.0
 Release: alt1%ubt
 
 Group: Graphical desktop/KDE
@@ -66,30 +66,20 @@ while read d ; do
 done
 
 
-%build
-%K5build
-
-
-%install
-%K5install
-%K5install_move data all
 
 %files
-%dir %_K5doc/%lng/
-%lang(%lng) %_K5doc/%lng/*
+#%dir %_K5doc/%lng/
+#%lang(%lng) %_K5doc/%lng/*
 #
-%dir %_K5i18n/%lng/
-#%_K5i18n/%lng/entry.desktop
+#%dir %_K5i18n/%lng/
 #
-%dir %_K5i18n/%lng/LC_MESSAGES/
-%lang(%lng) %_K5i18n/%lng/LC_MESSAGES/*.mo
-#%lang(%lng) %_K5i18n/%lng/LC_MESSAGES/*.qm
-#%dir %_K5i18n/%lng/LC_SCRIPTS/
-#%lang(%lng) %_K5i18n/%lng/LC_SCRIPTS/*
-#
-#%lang(%lng) %_K5data/autocorrect/%{lng}_*.xml
+#%dir %_K5i18n/%lng/LC_MESSAGES/
+#%lang(%lng) %_K5i18n/%lng/LC_MESSAGES/*.mo
 
 %changelog
+* Wed Nov 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt1%ubt
+- don't package translations
+
 * Wed Jul 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt1%ubt
 - new version
 
