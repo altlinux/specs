@@ -3,12 +3,12 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           javatar
 Version:        2.5
-Release:        alt1_17jpp8
+Release:        alt1_18jpp8
 Summary:        Java tar archive io package
 
 Group:          Development/Other
@@ -82,6 +82,9 @@ cp -rp doc $RPM_BUILD_ROOT/%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_18jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_17jpp8
 - new jpp release
 
