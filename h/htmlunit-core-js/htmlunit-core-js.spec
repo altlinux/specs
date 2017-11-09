@@ -1,8 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: perl(Getopt/Mixed.pm)
+BuildRequires: perl(Getopt/Mixed.pm) rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          htmlunit-core-js
 Version:       2.23
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Rhino fork for htmlunit
 License:       MPLv2.0
 URL:           http://htmlunit.sourceforge.net/
@@ -87,6 +86,9 @@ cp -p htmlunit-rhino-fork/LICENSE.txt LICENSE-MPL.txt
 %doc LICENSE.txt LICENSE-MPL.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.23-alt1_3jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.23-alt1_2jpp8
 - new version
 
