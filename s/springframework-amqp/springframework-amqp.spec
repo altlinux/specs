@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -19,12 +19,11 @@ BuildRequires: jpackage-generic-compat
 %global oname spring-amqp
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1231430
-#def_with jinterface
 %bcond_with jinterface
 
 Name:          springframework-amqp
 Version:       1.3.9
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Support for Spring programming model with AMQP
 License:       ASL 2.0
 URL:           http://projects.spring.io/spring-amqp/
@@ -197,6 +196,9 @@ opts="-f"
 %doc src/dist/apache-license.txt src/dist/notice.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.9-alt1_7jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.9-alt1_6jpp8
 - new jpp release
 
