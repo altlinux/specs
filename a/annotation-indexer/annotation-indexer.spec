@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           annotation-indexer
 Version:        1.9
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Jenkins annotation-indexer library
 
 # License is specified in pom file
@@ -59,6 +59,9 @@ cp %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.9-alt1_6jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.9-alt1_5jpp8
 - new jpp release
 
