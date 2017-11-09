@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          apache-commons-javaflow
 Version:       1.0
-Release:       alt8_0.12.20120509SNAPSHOTjpp8
+Release:       alt8_0.13.20120509SNAPSHOTjpp8
 Summary:       Commons Javaflow
 License:       ASL 2.0
 Url:           http://commons.apache.org/sandbox/javaflow/
@@ -112,6 +112,9 @@ install -p -m 644 %{short_name} %{buildroot}%{_sysconfdir}/ant.d/%{short_name}
 %config(noreplace) %{_sysconfdir}/ant.d/%{short_name}
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8_0.13.20120509SNAPSHOTjpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8_0.12.20120509SNAPSHOTjpp8
 - new jpp release
 
