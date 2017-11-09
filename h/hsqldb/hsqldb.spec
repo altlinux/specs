@@ -1,7 +1,7 @@
 Group: Databases
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: perl(DBD/ODBC.pm) perl(DBI.pm) unzip
+BuildRequires: perl(DBD/ODBC.pm) perl(DBI.pm) rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           hsqldb
 Version:        2.3.4
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Epoch:          1
 Summary:        HyperSQL Database Engine
 License:        BSD
@@ -38,7 +38,7 @@ Patch0:         %{name}-apidocs.patch
 Patch1:         %{name}-cmdline.patch
 
 BuildRequires:  ant
-BuildRequires:  javapackages-tools rpm-build-java
+BuildRequires:  javapackages-local
 BuildRequires:  glassfish-servlet-api
 
 Requires:       %{name}-lib = %{epoch}:%{version}-%{release}
@@ -212,6 +212,9 @@ install -m 755 %{SOURCE45} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 %files demo
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.3.4-alt1_4jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.3.4-alt1_3jpp8
 - new jpp release
 
