@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:    jackson
 Version: 1.9.11
-Release: alt1_10jpp8
+Release: alt1_12jpp8
 Summary: Jackson Java JSON-processor
 License: ASL 2.0 or LGPLv2
 URL:     http://jackson.codehaus.org
@@ -27,14 +27,12 @@ Patch4:  %{name}-1.9.11-javadoc.patch
 
 BuildArch: noarch
 
-Requires: jpackage-utils
 Requires: joda-time >= 1.6.2
 Requires: stax2-api >= 3.1.1
 Requires: jsr-311 >= 1.1.1
 Requires: objectweb-asm3 >= 3.3
 
-BuildRequires: jpackage-utils
-BuildRequires: java-devel
+BuildRequires: javapackages-local
 BuildRequires: ant >= 1.8.2
 BuildRequires: joda-time >= 1.6.2
 BuildRequires: stax2-api >= 3.1.1
@@ -97,10 +95,6 @@ ant dist
 
 %install
 
-# Create the directories for the jar and pom files:
-mkdir -p %{buildroot}%{_javadir}/jackson
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-
 # For each jar file install it and its pom:
 jars='
 jackson-core-asl
@@ -112,25 +106,23 @@ jackson-jaxrs
 '
 for jar in ${jars}
 do
-  cp -p dist/${jar}-%{version}.jar %{buildroot}%{_javadir}/jackson/${jar}.jar
-  install -pm 644 dist/${jar}-%{version}.pom %{buildroot}/%{_mavenpomdir}/JPP.jackson-${jar}.pom
-  %add_maven_depmap JPP.jackson-${jar}.pom jackson/${jar}.jar
+  %mvn_artifact dist/${jar}-%{version}.pom dist/${jar}-%{version}.jar
 done
 
-# Javadoc files:
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}/.
+%mvn_install -J dist/javadoc/
 
 %files -f .mfiles
 %doc README.txt
 %doc release-notes
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc README.txt
 %doc release-notes
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.11-alt1_12jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.11-alt1_10jpp8
 - new jpp release
 
