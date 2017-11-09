@@ -1,6 +1,6 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: xalan-j2
 Requires: xalan-j2
@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           tagsoup
 Version:        1.2.1
-Release:        alt2_12jpp8
+Release:        alt2_14jpp8
 Epoch:          0
 Summary:        A SAX-compliant HTML parser written in Java 
 # AFL/GPLv2+ license for src/java/org/ccil/cowan/tagsoup/PYXScanner.java is
@@ -48,17 +48,14 @@ Summary:        A SAX-compliant HTML parser written in Java
 License:        ASL 2.0 and (GPLv2+ or AFL)
 Source0:        http://home.ccil.org/~cowan/XML/tagsoup/tagsoup-1.2.1-src.zip
 URL:            http://home.ccil.org/~cowan/XML/tagsoup/
-Group:          Development/Java
 Source1:        http://repo1.maven.org/maven2/org/ccil/cowan/tagsoup/tagsoup/%{version}/tagsoup-%{version}.pom
 # fix version
 Patch0:         tagsoup-1.2.1-man.patch
-BuildRequires:  java-devel >= 1.6.0
-BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  ant-apache-xalan2
-BuildRequires:  bash sh
 BuildRequires:  xalan-j2
-Requires:       jpackage-utils >= 0:1.6
+
 BuildArch:      noarch
 Source44: import.info
 
@@ -71,8 +68,8 @@ design. By providing a SAX interface, it allows standard XML tools to be
 applied to even the worst HTML.
 
 %package javadoc
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Group:         Development/Java
 Requires:      jpackage-utils >= 0:1.6
 BuildArch: noarch
 
@@ -84,6 +81,7 @@ Javadoc for %{name}.
 
 find . -name '*.class' -delete
 find . -name "*.jar" -delete
+
 %patch0 -p0
 
 %build
@@ -95,17 +93,10 @@ ant \
   dist docs-api
 
 %install
+%mvn_file : %{name}
+%mvn_artifact %{SOURCE1} dist/lib/%{name}-%{version}.jar
 
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 dist/lib/%{name}-%{version}.jar \
-  %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr docs/api/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_install -J docs/api
 
 mkdir -p %{buildroot}%{_mandir}/man1
 install -m 644 %{name}.1 %{buildroot}%{_mandir}/man1/
@@ -115,11 +106,13 @@ install -m 644 %{name}.1 %{buildroot}%{_mandir}/man1/
 %doc CHANGES README TODO %{name}.txt
 %doc LICENSE
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.2.1-alt2_14jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.2.1-alt2_12jpp8
 - new jpp release
 
