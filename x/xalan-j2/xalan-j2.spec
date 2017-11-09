@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -42,7 +43,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xalan-j2
 Version:        2.7.1
-Release:        alt4_31jpp8
+Release:        alt4_33jpp8
 Epoch:          0
 Summary:        Java XSLT processor
 # src/org/apache/xpath/domapi/XPathStylesheetDOM3Exception.java is W3C
@@ -74,7 +75,6 @@ BuildRequires:  glassfish-servlet-api
 BuildRequires:  xerces-j2 >= 0:2.7.1
 BuildRequires:  xml-commons-apis >= 0:1.3
 BuildRequires:  xml-stylebook
-BuildRequires:  zip
 
 Requires:       xerces-j2
 
@@ -182,13 +182,8 @@ ant \
   servlet
 
 # inject OSGi manifests
-mkdir -p META-INF
-cp -p %{SOURCE1} META-INF/MANIFEST.MF
-touch META-INF/MANIFEST.MF
-zip -u build/serializer.jar META-INF/MANIFEST.MF
-cp -p %{SOURCE5} META-INF/MANIFEST.MF
-touch META-INF/MANIFEST.MF
-zip -u build/xalan-interpretive.jar META-INF/MANIFEST.MF
+jar ufm build/serializer.jar %{SOURCE1}
+jar ufm build/xalan-interpretive.jar %{SOURCE5}
 
 %mvn_artifact %{SOURCE2} build/xalan-interpretive.jar
 %mvn_artifact %{SOURCE3} build/serializer.jar
@@ -237,6 +232,9 @@ mv %{_javadir}/jaxp_transform_impl.jar{.tmp,} || :
 %{_datadir}/%{name}
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt4_33jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt4_31jpp8
 - new jpp release
 
