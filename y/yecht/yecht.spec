@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:     yecht
 Version:  1.0
-Release:  alt1_5jpp8
+Release:  alt1_6jpp8
 Summary:  A YAML processor based on Syck
 License:  MIT
 URL:      http://github.com/%{cluster}/%{name}
@@ -59,6 +58,9 @@ find ./ -name '*.class' -exec rm -f '{}' \;
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_6jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_5jpp8
 - new jpp release
 
