@@ -1,5 +1,6 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,10 +10,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:		jai-imageio-core
 Version:	1.2
-Release:	alt1_0.19.20100217cvsjpp8
+Release:	alt1_0.21.20100217cvsjpp8
 Summary:	Core Java Advanced Imaging Image I/O Tools API
 
-Group:		System/Libraries
 License:	BSD
 URL:		https://java.net/projects/jai-imageio-core
 Source0:	jai-imageio-core-cvs%{cvs_ver}-CLEANED.tar.xz
@@ -30,9 +30,9 @@ Source1:	README-fedora-epel.txt
 # ./generate-tarball.sh USERNAME DATE
 Source2:	generate-tarball.sh
 
-BuildRequires:	java-devel ant jpackage-utils
+BuildRequires:	javapackages-local
+BuildRequires:	ant
 BuildRequires:	librecode recode
-Requires:	java jpackage-utils
 
 
 Patch0:		jai-imageio-core-remove-imageio-services.patch
@@ -50,8 +50,8 @@ minus JPEG 2000, JAI Image I/O operations, and the C-based codecLib.
 
 
 %package javadoc
+Group: Development/Java
 Summary:	Javadocs for %{name}
-Group:		Development/Java
 Requires:	jpackage-utils
 BuildArch: noarch
 
@@ -90,24 +90,22 @@ ant -DBUILD_TARGET=linux-i586 jar-opt docs-jcp
 
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_file : jai_imageio
+%mvn_artifact net.java.dev.jai-imageio:jai-imageio-core:%{version} build/linux-i586/opt/lib/ext/jai_imageio.jar
 
-cp -av build/linux-i586/opt/lib/ext/jai_imageio.jar $RPM_BUILD_ROOT%{_javadir}/jai_imageio.jar
-%add_maven_depmap net.java.dev.jai-imageio:jai-imageio-core:%{version} jai_imageio.jar
-
-cp -av build/linux-i586/javadocs/docs-jcp/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install -J %build/linux-i586/javadocs/docs-jcp
 
 %files -f .mfiles
 %doc LICENSE.txt COPYRIGHT.txt README-fedora-epel.txt
-%{_javadir}/*.jar
 
-%files javadoc
+%files javadoc -f .mfiles
 %doc LICENSE.txt COPYRIGHT.txt README-fedora-epel.txt
-%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_0.21.20100217cvsjpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_0.19.20100217cvsjpp8
 - new jpp release
 
