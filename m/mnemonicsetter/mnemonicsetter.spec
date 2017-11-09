@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           mnemonicsetter
 Version:        0.5
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Menu and toolbar mnemonic library
 License:        ASL 2.0
 URL:            https://github.com/dpolivaev/%{name}
@@ -43,6 +43,9 @@ echo 'rootProject.name="%{name}"' >settings.gradle
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_3jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_2jpp8
 - new jpp release
 
