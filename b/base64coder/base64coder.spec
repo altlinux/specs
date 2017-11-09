@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,9 +10,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:           base64coder
 Version:        20101219
-Release:        alt3_17jpp8
+Release:        alt3_19jpp8
 Summary:        Fast and compact Base64 encoder/decoder Java library
-License:        EPL or LGPLv2+ or GPLv2+ or ASL 2.0+ or BSD
+License:        EPL or LGPLv2+ or GPLv2+ or ASL 2.0 or BSD
 BuildArch:      noarch
 URL:            http://www.source-code.biz/%{name}/java/
 Source0:        http://repo2.maven.org/maven2/biz/source_code/%{name}/%{long_ver}/%{name}-%{long_ver}-distribution.zip
@@ -59,6 +58,9 @@ sed -i 's/\r//g' README.txt CHANGES.txt
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 20101219-alt3_19jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 20101219-alt3_17jpp8
 - new jpp release
 
