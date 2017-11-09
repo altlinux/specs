@@ -2,6 +2,7 @@ Epoch: 0
 Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 AutoReq: yes,noosgi
@@ -13,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 Name:           fop
 Summary:        XSL-driven print formatter
 Version:        2.0
-Release:        alt1_5jpp8
+Release:        alt1_8jpp8
 # ASL 1.1:
 # several files in src/java/org/apache/fop/render/awt/viewer/resources/
 # rest is ASL 2.0
@@ -47,7 +48,7 @@ Requires:       fontbox
 Requires:       java
 
 BuildRequires:  ant
-BuildRequires:  javapackages-tools rpm-build-java
+BuildRequires:  javapackages-local
 BuildRequires:  apache-commons-logging
 BuildRequires:  apache-commons-io
 BuildRequires:  avalon-framework
@@ -56,7 +57,6 @@ BuildRequires:  batik
 BuildRequires:  servlet
 BuildRequires:  qdox
 BuildRequires:  xmlunit
-BuildRequires:  zip
 BuildRequires:  junit
 BuildRequires:  fontbox
 Source44: import.info
@@ -104,11 +104,8 @@ export CLASSPATH=$(build-classpath apache-commons-logging apache-commons-io \
 ant jar-main transcoder-pkg javadocs
 
 %install
-# inject OSGi manifests
-install -d -m 755 META-INF
-install -p -m 644 %{SOURCE2} META-INF/MANIFEST.MF
-touch META-INF/MANIFEST.MF
-zip -u build/%{name}.jar META-INF/MANIFEST.MF
+# inject OSGi manifest
+jar ufm build/%{name}.jar %{SOURCE2}
 
 # jars
 install -d -m 755 %{buildroot}%{_javadir}
@@ -155,6 +152,9 @@ ln -s fop %buildroot%_bindir/xmlgraphics-fop
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_8jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_5jpp8
 - new jpp release
 
