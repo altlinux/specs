@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          fastutil
 Version:       7.0.7
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Fast & compact type-specific collections for Java
 # LGPL (v2.1 or later):
 # src/it/unimi/dsi/fastutil/io/InspectableFileCachedInputStream.java
@@ -92,6 +93,9 @@ ant -Djar.base=%{_javadir}/emma junit
 %doc LICENSE-2.0
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 7.0.7-alt1_4jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 7.0.7-alt1_3jpp8
 - new jpp release
 
