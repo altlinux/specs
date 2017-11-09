@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             owasp-esapi-java
 Version:          2.1.0
-Release:          alt1_6jpp8
+Release:          alt1_7jpp8
 Summary:          OWASP Enterprise Security API
 License:          BSD
 URL:              https://www.owasp.org/index.php/Main_Page
@@ -59,6 +59,7 @@ This package contains the API documentation for %{name}.
 Group: Development/Java
 Summary:          Documentation for %{name}
 License:          CC-BY-SA
+BuildArch: noarch
 
 %description doc
 This package contains the documentation for %{name}.
@@ -104,6 +105,9 @@ sed -i "s|public void testSetCookie()|public void ignoredSetCookie()|" src/test/
 %doc LICENSE-CONTENT LICENSE-README
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_7jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_6jpp8
 - new jpp release
 
