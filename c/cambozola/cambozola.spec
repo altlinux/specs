@@ -7,7 +7,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           cambozola
 Version:        0.936
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        A viewer for multipart jpeg streams
 
 Group:          Development/Other
@@ -82,6 +82,9 @@ cp -rp javadoc/*  \
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.936-alt1_5jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.936-alt1_4jpp8
 - new jpp release
 
