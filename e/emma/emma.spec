@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -42,7 +42,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Code Coverage Tool
 Name:           emma
 Version:        %{shortver}.5312
-Release:        alt2_18jpp8
+Release:        alt2_19jpp8
 Epoch:          0
 License:        CPL
 URL:            http://emma.sourceforge.net/
@@ -128,6 +128,9 @@ ant -Dbuild.compiler=modern build javadoc
 %doc cpl-v10.html
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5312-alt2_19jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5312-alt2_18jpp8
 - new jpp release
 
