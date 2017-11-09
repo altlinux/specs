@@ -1,5 +1,6 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,21 +10,17 @@ BuildRequires: jpackage-generic-compat
 
 Name:             ant-%{base_name}
 Version:          1.3
-Release:          alt1_5jpp8
+Release:          alt1_8jpp8
 Summary:          Provide antunit ant task
-Group:            Development/Other
 License:          ASL 2.0
 URL:              http://ant.apache.org/antlibs/%{base_name}/
 Source0:          http://www.apache.org/dist/ant/antlibs/%{base_name}/source/apache-%{name}-%{version}-src.tar.bz2
 BuildArch:        noarch
 
-BuildRequires:    java-devel >= 1.6.0
-BuildRequires:    jpackage-utils
+BuildRequires:    javapackages-local
+BuildRequires:    ant
 BuildRequires:    ant-junit
 BuildRequires:    ant-testutil
-
-Requires:         jpackage-utils
-Requires:         ant
 Source44: import.info
 
 
@@ -61,37 +58,28 @@ ant package
 
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}/ant
-install -pm 644 build/lib/%{name}-%{version}.jar %{buildroot}%{_javadir}/ant/%{name}.jar
-install -d -m 0755 %{buildroot}%{_datadir}/ant/lib
-ln -s ../../java/ant/%{name}.jar %{buildroot}%{_datadir}/ant/lib
-
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 %{name}-%{version}.pom %{buildroot}%{_mavenpomdir}/JPP.ant-%{name}.pom
-%add_maven_depmap JPP.ant-%{name}.pom ant/%{name}.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr docs/* %{buildroot}%{_javadocdir}/%{name}/
+%mvn_artifact %{name}-%{version}.pom build/lib/%{name}-%{version}.jar
+%mvn_file ":ant-antunit" ant/ant-antunit
+%mvn_install -J docs/
 
 # OPT_JAR_LIST fragments
 mkdir -p %{buildroot}%{_sysconfdir}/ant.d
-echo "%{base_name} ant/%{name}" > %{buildroot}%{_sysconfdir}/ant.d/%{base_name}
+echo "ant/%{name}" > %{buildroot}%{_sysconfdir}/ant.d/%{base_name}
 
 
 %files -f .mfiles
-%doc CONTRIBUTORS LICENSE NOTICE README README.html WHATSNEW
+%doc LICENSE NOTICE
+%doc CONTRIBUTORS README README.html WHATSNEW
 %config(noreplace) %{_sysconfdir}/ant.d/%{base_name}
-%{_datadir}/ant/lib/%{name}.jar
 
-%files javadoc
-%doc LICENSE
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_8jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_5jpp8
 - new jpp release
 
