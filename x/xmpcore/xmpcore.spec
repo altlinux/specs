@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          xmpcore
 Version:       5.1.2
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Java XMP Library
 License:       BSD
 URL:           http://www.adobe.com/devnet/xmp.html
@@ -64,6 +64,9 @@ sed -i 's/\r//' BSD-License.txt
 %doc BSD-License.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.2-alt1_8jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.2-alt1_7jpp8
 - new jpp release
 
