@@ -1,7 +1,7 @@
 Epoch: 0
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -11,10 +11,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name: sac
 Version: 1.3
-Release: alt3_24jpp8
+Release: alt3_27jpp8
 Summary: Java standard interface for CSS parser
 License: W3C
-Group: System/Libraries
 #Original source: http://www.w3.org/2002/06/%{name}java-%{version}.zip
 #unzip, find . -name "*.jar" -exec rm {} \;
 #to simplify the licensing
@@ -23,8 +22,10 @@ Source1: %{name}-build.xml
 Source2: %{name}-MANIFEST.MF
 Source3: https://repo1.maven.org/maven2/org/w3c/css/sac/1.3/sac-1.3.pom
 URL: http://www.w3.org/Style/CSS/SAC/
-BuildRequires: ant java-devel jpackage-utils zip
-Requires: jpackage-utils
+
+BuildRequires: ant
+BuildRequires: javapackages-local
+
 BuildArch: noarch
 Source44: import.info
 
@@ -48,37 +49,24 @@ find . -name "*.jar" -exec rm -f {} \;
 %build
 ant jar javadoc
 
+# inject OSGi manifest
+jar ufm build/lib/sac.jar %{SOURCE2}
+
 %install
-# inject OSGi manifests
-mkdir -p META-INF
-cp -p %{SOURCE2} META-INF/MANIFEST.MF
-touch META-INF/MANIFEST.MF
-zip -u build/lib/sac.jar META-INF/MANIFEST.MF
+%mvn_artifact %{SOURCE3} build/lib/sac.jar
+%mvn_file ":sac" sac
+%mvn_install -J build/api
 
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p ./build/lib/sac.jar $RPM_BUILD_ROOT%{_javadir}/sac.jar
-
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr build/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 %{SOURCE3} \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
+%files -f .mfiles
 %doc COPYRIGHT.html
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/*
-%{_datadir}/maven-metadata/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc COPYRIGHT.html
-%{_javadocdir}/%{name}
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_27jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_24jpp8
 - new jpp release
 
