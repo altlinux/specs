@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -19,7 +19,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           maven-doxia
 Version:        1.7
-Release:        alt1_2jpp8
+Release:        alt1_5jpp8
 Epoch:          0
 Summary:        Content generation framework
 License:        ASL 2.0
@@ -31,7 +31,7 @@ Source0:        http://repo2.maven.org/maven2/org/apache/maven/doxia/doxia/%{ver
 # https://issues.apache.org/jira/browse/DOXIA-53
 Patch1:         0001-Fix-itext-dependency.patch
 
-# Forwarded upstream: DOXIA-504
+# Accepted upstream: DOXIA-504, https://issues.apache.org/jira/browse/DOXIA-504
 Patch2:         0002-Update-to-Plexus-Container-1.5.5.patch
 
 # Don't run bad tests which rely on ordering in set (they fail with Java 8)
@@ -59,6 +59,7 @@ BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-test-docs)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 %if %{with fop}
+BuildRequires:  mvn(org.apache.logging.log4j:log4j-1.2-api)
 BuildRequires:  mvn(org.apache.xmlgraphics:fop)
 %endif
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
@@ -304,6 +305,9 @@ rm doxia-core/src/test/java/org/apache/maven/doxia/util/XmlValidatorTest.java
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_5jpp8
+- fc27 update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_2jpp8
 - new jpp release
 
