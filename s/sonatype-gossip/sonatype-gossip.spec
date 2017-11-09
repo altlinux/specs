@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             sonatype-gossip
 Version:          1.7
-Release:          alt1_16jpp8
+Release:          alt1_17jpp8
 Summary:          SLF4j Gossip Provider
 License:          ASL 2.0
 URL:              http://github.com/jdillon/gossip
@@ -121,6 +121,9 @@ Gossip Support, helper and utilities.
 %files support -f .mfiles-gossip-support
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_17jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_16jpp8
 - new jpp release
 
