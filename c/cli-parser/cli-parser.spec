@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          cli-parser
 Version:       1.1.2
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Command Line Interface Parser for Java
 License:       ASL 2.0
 URL:           https://github.com/spullara/cli-parser
@@ -55,6 +55,9 @@ find . -name "*.jar" -print -delete
 %doc README.md
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_7jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_6jpp8
 - new jpp release
 
