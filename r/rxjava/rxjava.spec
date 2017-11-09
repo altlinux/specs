@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -15,13 +15,12 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 # Conditionals to help with missing test dependencies
 %if 0%{?fedora}
-#def_with checker
 %bcond_with checker
 %endif
 
 Name:          rxjava
 Version:       1.1.8
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Reactive Extensions for the JVM
 License:       ASL 2.0
 URL:           https://github.com/ReactiveX/RxJava
@@ -136,6 +135,9 @@ opts="-f"
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.8-alt1_3jpp8
+- fc27 update
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.8-alt1_2jpp8
 - new jpp release
 
