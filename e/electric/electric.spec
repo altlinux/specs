@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           electric
 Version:        8.09
-Release:        alt1_12jpp8
+Release:        alt1_13jpp8
 Summary:        Sophisticated ASIC and MEM CAD System
 
 License:        GPLv3
@@ -93,7 +93,7 @@ install -pm 0644 com/sun/electric/tool/user/help/helphtml/iconplug.png \
 
 # javadoc API
 install -d %{buildroot}%{_javadocdir}/%{name}
-%{__cp} -rp apidoc/* %{buildroot}%{_javadocdir}/%{name}
+cp -rp apidoc/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %files
@@ -110,6 +110,9 @@ install -d %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 8.09-alt1_13jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 8.09-alt1_12jpp8
 - new jpp release
 
