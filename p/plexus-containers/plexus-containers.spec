@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           plexus-containers
 Version:        1.7.1
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Containers for Plexus
 License:        ASL 2.0 and MIT
 URL:            https://github.com/codehaus-plexus/plexus-containers
@@ -63,6 +63,7 @@ Summary:        Component metadata from %{name}
 %package component-javadoc
 Group: Development/Java
 Summary:        Javadoc component from %{name}
+BuildArch: noarch
 
 %description component-javadoc
 %{summary}.
@@ -164,6 +165,9 @@ sed -i "s|<version>2.3</version>|<version> %{javadoc_plugin_version}</version>|"
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt1_3jpp8
+- fc27 update
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt1_2jpp8
 - new jpp release
 
