@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          extra166y
 Version:       1.7.0
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Concurrency JSR-166 - Collections supporting parallel operations
 License:       Public Domain
 URL:           http://gee.cs.oswego.edu/dl/concurrency-interest
@@ -80,6 +80,9 @@ ant extra166yjar extra166ydist-docs
 %doc src/main/intro.html src/main/readme
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1_8jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1_7jpp8
 - new jpp release
 
