@@ -1,5 +1,5 @@
 Name: psi-plus-l10n
-Version: 1.2.71
+Version: 1.2.98
 Release: alt1
 
 Summary: Translations for Psi+
@@ -37,6 +37,12 @@ lrelease-qt5 translations/*.ts
 %_datadir/psi-plus/*.qm
 
 %changelog
+* Tue Oct 17 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.98-alt1
+- Version 1.2.98
+
+* Mon Sep 25 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.79-alt1
+- Version 1.2.79
+
 * Mon Sep 11 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.71-alt1
 - Version 1.2.71
 

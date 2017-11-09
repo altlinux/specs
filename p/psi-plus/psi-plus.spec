@@ -1,8 +1,8 @@
 %def_enable webkit
 
 Name: psi-plus
-Version: 1.2.71
-Release: alt1
+Version: 1.2.105
+Release: alt2
 
 Summary: Psi+ Jabber client
 Summary(ru_RU.UTF-8): Jabber-клиент Psi+
@@ -641,7 +641,6 @@ Each element can contain a regular expression to check for matches with JID, fro
 	--bindir=%_bindir \
 	--libdir=%_libdir \
 	--datadir=%_datadir \
-	--enable-plugins \
 	%{subst_enable webkit} \
 	--release \
 	--qtselect=5
@@ -890,6 +889,9 @@ popd
 
 rm %buildroot%_datadir/%name/{COPYING,README}
 rm %buildroot%_bindir/%name.debug
+rm %buildroot%_datadir/appdata/psi-plus.appdata.xml
+rm -r %buildroot%_datadir/%name/plugins/include
+rm -f %buildroot%_datadir/%name/plugins/*.pri
 
 %files
 %doc COPYING ChangeLog INSTALL README TODO
@@ -1036,6 +1038,19 @@ rm %buildroot%_bindir/%name.debug
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Thu Nov 09 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.105-alt2
+- clean unpackaged files
+- cleanup
+
+* Mon Oct 30 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.105-alt1
+- Version 1.2.105
+
+* Tue Oct 17 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.100-alt1
+- Version 1.2.100
+
+* Mon Sep 25 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.80-alt1
+- Version 1.2.80 
+
 * Mon Sep 11 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.71-alt1
 - Version 1.2.71
 
