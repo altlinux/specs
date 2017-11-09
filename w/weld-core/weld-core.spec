@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           weld-core
 Version:        2.3.5
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Reference Implementation for JSR-299: Contexts and Dependency Injection (CDI)
 
 # OFL: ./probe/core/src/main/client/font-awesome.*
@@ -159,6 +159,9 @@ rm -rf environments/servlet/core/src/main/java/org/jboss/weld/environment/gwtdev
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_3jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_2jpp8
 - new jpp release
 
