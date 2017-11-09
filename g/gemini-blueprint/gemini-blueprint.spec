@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 %global dotname gemini.blueprint
 Name:          gemini-blueprint
 Version:       1.0.2
-Release:       alt1_11jpp8
+Release:       alt1_12jpp8
 Summary:       Reference Implementation of the OSGi Blueprint Service
 # BSD file - test-support/src/main/java/org/eclipse/gemini/blueprint/test/internal/util/DependencyVisitor.java,
 License:       ASL 2.0 and BSD and EPL
@@ -196,6 +197,9 @@ rm -r core/src/test/java/org/eclipse/gemini/blueprint/blueprint/ReflectionTest.j
 %doc epl-v10.html license-apache.txt notice.html
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_12jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_11jpp8
 - new jpp release
 
