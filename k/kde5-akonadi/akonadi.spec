@@ -3,7 +3,7 @@
 %def_enable tools
 
 Name: kde5-%rname
-Version: 17.04.3
+Version: 17.08.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -165,6 +165,8 @@ mv %buildroot/%_K5xdgmime/akonadi{,5}-mime.xml
 
 mkdir -p %buildroot/%_K5srv/akonadi/contact
 mkdir -p %buildroot/%_K5lib/akonadi5/contact
+mkdir -p %buildroot/%_K5plug/akonadi/contacts/plugins/
+
 mkdir -p %buildroot/%_datadir/akonadi5/{agents,contact,plugins,accountwizard}
 
 mkdir %buildroot/%_K5data/akonadi/
@@ -206,6 +208,9 @@ done
 %_K5bin/akonadi5_mysql_install_db
 
 %files common -f %name.lang
+%dir %_K5plug/akonadi/
+%dir %_K5plug/akonadi/contacts/
+%dir %_K5plug/akonadi/contacts/plugins/
 %dir %_K5lib/akonadi5/
 %dir %_K5lib/akonadi5/contact/
 %dir %_K5xdgconf/akonadi/
@@ -220,6 +225,7 @@ done
 %config(noreplace) %_K5xdgconf/akonadi.*categories
 %_K5cfg/resourcebase.kcfg
 %_K5xdgmime/akonadi5-mime.xml
+%_K5icon/*/*/apps/*akonadi*.*
 
 %files devel
 %_K5bin/asapcat
@@ -254,6 +260,12 @@ done
 %endif
 
 %changelog
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.2-alt1%ubt
+- new version
+
 * Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
 - new version
 

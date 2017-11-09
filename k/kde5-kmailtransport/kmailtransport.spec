@@ -1,7 +1,7 @@
 %define rname kmailtransport
 
 Name: kde5-%rname
-Version: 17.04.3
+Version: 17.08.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -85,15 +85,24 @@ KF5 library
 %_K5archdata/mkspecs/modules/qt_KMailTransport*.pri
 
 %files -n libkf5mailtransport
+%dir %_K5plug/mailtransport/
 %_K5lib/libKF5MailTransport.so.*
 %_K5plug/*mailtransport.so
+%_K5plug/mailtransport/*smtp*.so
 %_K5plug/kf5/kio/smtp*.so
 %_K5srv/*mailtransport.desktop
 %_K5srv/smtp*.protocol
 %files -n libkf5mailtransportakonadi
+%_K5plug/mailtransport/*akonadi*.so
 %_K5lib/libKF5MailTransportAkonadi.so.*
 
 %changelog
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.2-alt1%ubt
+- new version
+
 * Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
 - new version
 

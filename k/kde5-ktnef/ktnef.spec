@@ -1,7 +1,7 @@
 %define rname ktnef
 
 Name: kde5-%rname
-Version: 17.04.3
+Version: 17.08.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -60,10 +60,11 @@ KF5 library
 
 %install
 %K5install
+rm -rf %buildroot/%_datadir/locale/*/LC_MESSAGES/ktnef.*
+rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/ktnef.*
+rm -rf %buildroot/%_K5doc/*/ktnef
+
 %find_lang %name --with-kde --all-name
-sed -i '/\/LC_MESSAGES\/ktnef\./d'   %name.lang
-sed -i '/\/doc\/HTML\/.*\/ktnef$/d'  %name.lang
-sed -i '/\/doc\/HTML\/.*\/ktnef\//d' %name.lang
 
 %files common -f %name.lang
 #%doc COPYING*
@@ -79,6 +80,12 @@ sed -i '/\/doc\/HTML\/.*\/ktnef\//d' %name.lang
 %_K5lib/libKF5Tnef.so.*
 
 %changelog
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.2-alt1%ubt
+- new version
+
 * Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
 - new version
 

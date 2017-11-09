@@ -1,7 +1,7 @@
 %define rname akonadi-contacts
 
 Name: kde5-%rname
-Version: 17.04.3
+Version: 17.08.3
 Release: alt1%ubt
 %K5init
 
@@ -47,29 +47,37 @@ Requires: %name-common = %version-%release
 %description -n libkf5akonadicontact
 KF5 library
 
+%package -n libkf5contacteditor
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5contacteditor
+KF5 library
+
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
+#%patch1 -p1
 
 %build
 %K5build
 
 %install
 %K5install
-%K5install_move data akonadicontact
+%K5install_move data akonadicontact contacteditor
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
 %doc COPYING*
+%config(noreplace) %_K5xdgconf/*contact*.*categories
 
 %files devel
-%_K5inc/akonadi-contact_version.h
-%_K5inc/Akonadi/Contact/
-%_K5inc/akonadi/contact/
+#%_K5inc/akonadi-contact_version.h
+%_K5inc/?konadi/?ontact/
+%_K5inc/*ontact*/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5AkonadiContact/
-%_K5archdata/mkspecs/modules/qt_AkonadiContact.pri
+%_K5lib/cmake/KF5*Contact*/
+%_K5archdata/mkspecs/modules/qt_*Contact*.pri
 
 %files -n libkf5akonadicontact
 %_K5lib/libKF5AkonadiContact.so.*
@@ -78,10 +86,21 @@ KF5 library
 %_K5srv/*akonadicontact*.desktop
 #
 %_datadir/akonadi5/contact/
-%_K5data/akonadicontact/
 %_K5srvtyp/*.desktop
 
+%files -n libkf5contacteditor
+%_K5lib/libKF5ContactEditor.so.*
+#%_K5plug/*contacteditor*.so
+%_K5plug/akonadi/contacts/plugins/categorieseditwidgetplugin.so
+%_K5data/contacteditor/
+
 %changelog
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.2-alt1%ubt
+- new version
+
 * Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
 - new version
 
