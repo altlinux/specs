@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:      brazil
 Version:   2.3
-Release:   alt3_16jpp8
+Release:   alt3_17jpp8
 Summary:   Extremely small footprint Java HTTP stack
 Group:     Development/Other
 License:   SPL
@@ -87,6 +87,9 @@ cp -pr samples %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_17jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_16jpp8
 - new jpp release
 
