@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           apache-james-project
 Version:        1.8.1
-Release:        alt1_14jpp8
+Release:        alt1_15jpp8
 Summary:        Main project POM files and resources
 License:        ASL 2.0
 URL:            http://james.apache.org/
@@ -45,6 +45,9 @@ Main project POM files and resources for Apache James project.
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_15jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_14jpp8
 - new jpp release
 
