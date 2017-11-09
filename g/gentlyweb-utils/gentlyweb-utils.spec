@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ Name:          gentlyweb-utils
 # http://ftp.de.debian.org/debian/pool/main/g/gentlyweb-utils/gentlyweb-utils_1.5.orig.tar.gz
 # the version is changed only in the activemq package see activemq-5.6.0/pom.xml
 Version:       1.5
-Release:       alt1_11jpp8
+Release:       alt1_12jpp8
 Summary:       Java utility library used by JoSQL for I/O
 License:       ASL 2.0
 Url:           http://josql.sourceforge.net/
@@ -67,6 +67,9 @@ bnd wrap -p %{SOURCE2} -o %{name}.jar -v %{version} gentlyWEB-utils-%{version}.j
 %doc LICENSE-2.0.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_12jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_11jpp8
 - new jpp release
 
