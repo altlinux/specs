@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-injection-plugin
 Version:        1.0.2
-Release:        alt3_16jpp8
+Release:        alt3_17jpp8
 Summary:        Bytecode injection at Maven build time
 License:        LGPLv2+
 URL:            http://www.jboss.org
@@ -53,6 +53,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt3_17jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt3_16jpp8
 - new jpp release
 
