@@ -1,7 +1,7 @@
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: docbook-dtds
 BuildRequires: /proc
@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    hibernate3
 Version: 3.6.10
-Release: alt3_21jpp8
+Release: alt3_22jpp8
 Summary: Relational persistence and query service
 License: LGPLv2+
 URL:     http://www.hibernate.org/
@@ -223,6 +223,9 @@ export LANG=en_US.UTF-8
 %doc lgpl.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt3_22jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt3_21jpp8
 - new jpp release
 
