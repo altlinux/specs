@@ -3,37 +3,38 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0.0
-Release: alt1.git20141219.1.1
+Version: 3.1.1
+Release: alt1
 Summary: py.test fixture for benchmarking code
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/pytest-benchmark/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/ionelmc/pytest-benchmark.git
 Source: %name-%version.tar
-BuildArch: noarch
+Patch1: %oname-%version-alt-tests.patch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-pytest-cov
-#BuildPreReq: python-module-sphinx-devel
-#BuildPreReq: python-module-sphinxcontrib-napoleon
-#BuildPreReq: python-module-sphinx_py3doc_enhanced_theme
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-pytest-cov
+BuildRequires: python-module-sphinx-devel
+BuildRequires: python-module-sphinxcontrib-napoleon
+BuildRequires: python-module-sphinx_py3doc_enhanced_theme
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
+BuildRequires: python2.7(cpuinfo) python2.7(pathlib) python2.7(statistics)
+BuildRequires: python2.7(elasticsearch) python2.7(freezegun) python2.7(pygal) python2.7(aspectlib) python2.7(xdist)
+BuildRequires: git-core
+BuildRequires(pre): rpm-macros-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-pytest-cov
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3(cpuinfo)
+BuildRequires: python3(elasticsearch) python3(freezegun) python3(pygal) python3(aspectlib) python3(xdist)
 %endif
 
 %py_provides pytest_benchmark
-%py_requires pytest
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: bzr python-base python-devel python-module-Paver python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-coverage python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mimeparse python-module-pbr python-module-pluggy python-module-py python-module-pyasn1 python-module-pytest python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-sphinxcontrib python-module-twisted-core python-module-unittest2 python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-coverage python3-module-pluggy python3-module-py python3-module-pytest python3-module-setuptools xz
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-pytest-cov python-module-setuptools-tests python-module-sphinx_py3doc_enhanced_theme python-module-sphinxcontrib-napoleon python3-module-pytest-cov python3-module-setuptools-tests rpm-build-python3 time
+%py_requires pytest cpuinfo docutils
 
 %description
 A py.test fixture for benchmarking code.
@@ -42,7 +43,7 @@ A py.test fixture for benchmarking code.
 Summary: py.test fixture for benchmarking code
 Group: Development/Python3
 %py3_provides pytest_benchmark
-%py3_requires pytest
+%py3_requires pytest cpuinfo docutils
 
 %description -n python3-module-%oname
 A py.test fixture for benchmarking code.
@@ -68,10 +69,10 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %prepare_sphinx .
@@ -87,13 +88,18 @@ popd
 %endif
 
 %install
-%python_install
-
 %if_with python3
 pushd ../python3
 %python3_install
 popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i ${i}.py3
+done
+popd
 %endif
+
+%python_install
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 pushd docs
@@ -108,18 +114,22 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 python setup.py test
 rm -fR src build
 export PYTHONPATH=%buildroot%python_sitelibdir
-py.test
+PATH=$PATH:%buildroot%_bindir py.test
 %if_with python3
 pushd ../python3
 python3 setup.py test
 rm -fR src build
 export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-%_python3_version
+PATH=$PATH:%buildroot%_bindir py.test3
 popd
 %endif
 
 %files
 %doc *.rst
+%_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 
@@ -132,10 +142,14 @@ popd
 %if_with python3
 %files -n python3-module-%oname
 %doc *.rst
+%_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Thu Nov 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.1-alt1
+- Updated to upstream version 3.1.1.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.0-alt1.git20141219.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
