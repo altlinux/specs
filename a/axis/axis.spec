@@ -1,6 +1,7 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -10,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          axis
 Version:       1.4
-Release:       alt4_32jpp8
+Release:       alt4_35jpp8
 Epoch:         0
 Summary:       SOAP implementation in Java
 License:       ASL 2.0
@@ -27,24 +28,17 @@ Source2: axis-MANIFEST.MF
 # cvs -d :pserver:anonymous@dev.eclipse.org:/cvsroot/tools export -r v1_3_0 org.eclipse.orbit/javax.xml.soap/META-INF/MANIFEST.MF
 # mv org.eclipse.orbit/javax.xml.soap/META-INF/MANIFEST.MF saaj-MANIFEST.MF
 Source3: saaj-MANIFEST.MF
-Source4: http://repo1.maven.org/maven2/org/apache/axis/axis/1.4/axis-1.4.pom
-Source5: http://repo1.maven.org/maven2/org/apache/axis/axis-ant/1.4/axis-ant-1.4.pom
-Source6: http://repo1.maven.org/maven2/org/apache/axis/axis-jaxrpc/1.4/axis-jaxrpc-1.4.pom
-Source7: http://repo1.maven.org/maven2/org/apache/axis/axis-saaj/1.4/axis-saaj-1.4.pom
-# This POM is not present upstream, so a placeholder was created
-Source8: axis-schema-1.4.pom
-Source9: axis-ant-MANIFEST.MF
+Source4: axis-ant-MANIFEST.MF
 Patch0:        %{name}-java16.patch
 Patch1:        %{name}-manifest.patch
-Patch2:        axis-1.4-wsdl-pom.patch
 # CVE-2012-5784: Does not verify that the server hostname matches X.509 certificate name
 # https://issues.apache.org/jira/secure/attachment/12560257/CVE-2012-5784-2.patch
 Patch3:        %{name}-CVE-2012-5784.patch
 # Patch to use newer xml-commons-apis
 Patch4:        axis-xml-commons-apis.patch
 BuildRequires: java-devel
-BuildRequires: jpackage-utils >= 0:1.6
-BuildRequires: ant >= 0:1.6
+BuildRequires: javapackages-local
+BuildRequires: ant
 BuildRequires: ant-junit
 BuildRequires: httpunit
 BuildRequires: junit
@@ -64,15 +58,10 @@ BuildRequires: regexp
 BuildRequires: log4j12
 BuildRequires: javax.wsdl
 BuildRequires: xalan-j2
-BuildRequires: xerces-j2
-BuildRequires: xml-commons-apis
 BuildRequires: xmlbeans
 BuildRequires: xml-security
 BuildRequires: zip
-# optional requires
-#BuildRequires: jimi
 
-Requires:      jpackage-utils >= 0:1.6
 Requires:      apache-commons-discovery
 Requires:      apache-commons-logging
 Requires:      jakarta-commons-httpclient >= 1:3.0
@@ -128,9 +117,8 @@ find . -name "*.class" -delete
 %patch0 -b .orig
 %patch1 -b .orig
 
-cp %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} .
+cp %{SOURCE1} %{SOURCE2} %{SOURCE3} .
 
-# %patch2 -b .orig
 %patch3 -p1 -b .orig
 %patch4 -p1 -b .orig
 
@@ -141,15 +129,14 @@ sed -i '/doctitle/a additionalparam="-Xdoclint:none"' build.xml
 sed -i '/<javac/a encoding="iso-8859-1"' build.xml
 sed -i '/<javadoc/a encoding="iso-8859-1"' build.xml
 
+# Use JRE version of xml-apis
+sed -i -e '/javax\.xml\.parsers\./d' axis.properties xmls/properties.xml xmls/targets.xml
+
 %build
 pushd lib
 build-jar-repository -s -p . \
   bea-stax-api bsf castor commons-discovery commons-httpclient commons-logging commons-net httpunit \
   log4j-1 oro xalan-j2 xml-security xmlbeans/xbean wsdl4j javamail/mail glassfish-servlet-api
-pushd endorsed
-build-jar-repository -s -p . \
-  xerces-j2 xml-commons-apis
-popd
 popd
 
 ant \
@@ -163,46 +150,31 @@ ant \
 
 # inject axis-ant OSGi manifest
 mkdir -p META-INF
-cp -p %{SOURCE9} META-INF/MANIFEST.MF
+cp -p %{SOURCE4} META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u build/lib/%{name}-ant.jar META-INF/MANIFEST.MF
+zip build/lib/%{name}-ant.jar META-INF/MANIFEST.MF
 
 %install
-### Jar files
+for i in axis axis-ant axis-jaxrpc axis-saaj axis-schema ; do
+  if [ -f "build/lib/${i}.jar" ] ; then
+    %mvn_artifact "org.apache.axis:$i:%{version}" build/lib/${i}.jar
+  else
+    %mvn_artifact "org.apache.axis:$i:%{version}" build/lib/${i#axis-}.jar
+  fi
+  %mvn_alias "org.apache.axis:$i" "axis:$i"
+done
+%mvn_file ":axis" axis/axis javax.xml.rpc/axis
+%mvn_file ":axis-jaxrpc" axis/jaxrpc javax.xml.rpc/jaxrpc
+%mvn_file ":axis-saaj" axis/saaj
+%mvn_install -J build/javadocs
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-
-pushd build/lib
-install -m 644 axis.jar axis-ant.jar saaj.jar jaxrpc.jar axis-schema.jar \
-    $RPM_BUILD_ROOT%{_javadir}/%{name}
-popd
-
-### Javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/webapps
+# Install webapp
+install -d -m 755 %{buildroot}%{_datadir}/axis/webapps
 install -m 644 build/axis.war \
-    $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/webapps
-
-# POMs
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -m 644 axis-1.4.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-axis.pom
-%add_maven_depmap JPP.%{name}-axis.pom %{name}/axis.jar -a "axis:axis"
-install -m 644 %{S:5} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-axis-ant.pom
-%add_maven_depmap JPP.%{name}-axis-ant.pom %{name}/axis-ant.jar -a "axis:axis-ant"
-install -m 644 %{S:6} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-jaxrpc.pom
-%add_maven_depmap JPP.%{name}-jaxrpc.pom %{name}/jaxrpc.jar -a "axis:axis-jaxrpc"
-install -m 644 %{S:7} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-saaj.pom
-%add_maven_depmap JPP.%{name}-saaj.pom %{name}/saaj.jar -a "axis:axis-saaj"
-install -m 644 %{S:8} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-axis-schema.pom
-%add_maven_depmap JPP.%{name}-axis-schema.pom %{name}/axis-schema.jar -a "axis:axis-schema"
+    %{buildroot}%{_datadir}/axis/webapps
 
 # J2EE API dir
-install -d -m 755 %{buildroot}%{_javadir}/javax.xml.rpc/
-ln -sf ../%{name}/jaxrpc.jar %{buildroot}%{_javadir}/javax.xml.rpc/
-ln -sf ../%{name}/%{name}.jar %{buildroot}%{_javadir}/javax.xml.rpc/
-build-jar-repository %{buildroot}%{_javadir}/javax.xml.rpc/ javax.wsdl \
+build-jar-repository -s -p %{buildroot}%{_javadir}/javax.xml.rpc/ javax.wsdl \
               javax.mail apache-commons-logging apache-commons-discovery \
               jakarta-commons-httpclient log4j-1
 
@@ -210,19 +182,20 @@ build-jar-repository %{buildroot}%{_javadir}/javax.xml.rpc/ javax.wsdl \
 %files -f .mfiles
 %doc LICENSE
 %doc README release-notes.html changelog.html
-%dir %{_javadir}/%{name}
 %{_javadir}/javax.xml.rpc
-%{_datadir}/%{name}-%{version}
+%{_datadir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
-%{_javadocdir}/%{name}
 
 %files manual
 %doc LICENSE
 %doc --no-dereference docs/*
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt4_35jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt4_32jpp8
 - new jpp release
 
