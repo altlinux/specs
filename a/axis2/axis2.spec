@@ -1,8 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          axis2
 Version:       1.6.1
-Release:       alt2_18jpp8
+Release:       alt2_20jpp8
 Summary:       Java-based Web Services / SOAP / WSDL engine
 License:       ASL 2.0
 URL:           http://axis.apache.org/axis2/java/core/
@@ -18,28 +17,35 @@ Source0:       http://mirror.metrocast.net/apache//axis/axis2/java/core/1.6.1/ax
 # wrap generated headers with ifndef/define/endif
 Patch0:        %{name}-AXIS2-5349.patch
 
-BuildArch:     noarch
-BuildRequires: maven-local
-BuildRequires: maven-shared
-BuildRequires: maven-clean-plugin
-BuildRequires: maven-dependency-plugin
-BuildRequires: geronimo-jta
-BuildRequires: geronimo-saaj
-BuildRequires: geronimo-parent-poms
-BuildRequires: XmlSchema
-BuildRequires: apache-commons-logging
-BuildRequires: axiom
-BuildRequires: neethi
-BuildRequires: jsr-311
-BuildRequires: woden
-BuildRequires: javamail
-BuildRequires: dos2unix
-BuildRequires: maven-remote-resources-plugin
-BuildRequires: apache-commons-fileupload
-BuildRequires: glassfish-servlet-api
-BuildRequires: geronimo-saaj
-BuildRequires: maven-plugin-build-helper
-BuildRequires: maven-antrun-plugin
+BuildArch:      noarch
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-cli:commons-cli)
+BuildRequires:  mvn(commons-fileupload:commons-fileupload)
+BuildRequires:  mvn(commons-httpclient:commons-httpclient)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(javax.mail:mail)
+BuildRequires:  mvn(javax.servlet:javax.servlet-api)
+BuildRequires:  mvn(javax.ws.rs:jsr311-api)
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-jta_1.1_spec)
+BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-saaj_1.3_spec)
+BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
+BuildRequires:  mvn(org.apache.neethi:neethi)
+BuildRequires:  mvn(org.apache.woden:woden-api)
+BuildRequires:  mvn(org.apache.woden:woden-impl-dom)
+BuildRequires:  mvn(org.apache.ws.commons.axiom:axiom-api)
+BuildRequires:  mvn(org.apache.ws.commons.axiom:axiom-dom)
+BuildRequires:  mvn(org.apache.ws.commons.axiom:axiom-impl)
+BuildRequires:  mvn(org.apache.ws.commons.schema:XmlSchema)
+BuildRequires:  mvn(org.codehaus.jettison:jettison)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(wsdl4j:wsdl4j)
+BuildRequires:  dos2unix
 
 Requires:      log4j12
 Requires:      xerces-j2
@@ -69,7 +75,6 @@ API documentation for %{name}.
 %pom_disable_module modules/fastinfoset
 %pom_disable_module modules/integration
 %pom_disable_module modules/jibx
-%pom_disable_module modules/json
 %pom_disable_module modules/mex
 %pom_disable_module modules/mtompolicy
 %pom_disable_module modules/mtompolicy-mar
@@ -99,9 +104,6 @@ API documentation for %{name}.
 %pom_disable_module modules/clustering
 %pom_disable_module modules/corba
 %pom_disable_module modules/osgi
-#%% pom_disable_module modules/transport/local
-#%% pom_disable_module modules/transport/http
-#%% pom_disable_module modules/java2wsdl
 
 # Remove non standard apidocs final subdir
 %pom_xpath_remove "pom:project/pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId = 'maven-javadoc-plugin' ]/pom:configuration/pom:destDir"
@@ -148,6 +150,9 @@ dos2unix NOTICE.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt2_20jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt2_18jpp8
 - new jpp release
 
