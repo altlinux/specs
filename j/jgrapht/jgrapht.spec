@@ -1,7 +1,7 @@
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:    jgrapht
 Version: 0.8.1
-Release: alt1_14jpp8
+Release: alt1_15jpp8
 Summary: A free Java graph library that provides mathematical graph objs and algorithms
 License: LGPLv2+
 URL:     http://jgrapht.sourceforge.net/
@@ -66,6 +66,9 @@ ant javadoc
 %doc license-LGPL.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.8.1-alt1_15jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.8.1-alt1_14jpp8
 - new jpp release
 
