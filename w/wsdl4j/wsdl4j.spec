@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -13,7 +13,7 @@ Summary:        Web Services Description Language Toolkit for Java
 Name:           wsdl4j
 Epoch:          0
 Version:        1.6.3
-Release:        alt1_9jpp8
+Release:        alt1_11jpp8
 License:        CPL
 URL:            http://sourceforge.net/projects/wsdl4j
 BuildArch:      noarch
@@ -25,7 +25,6 @@ Source2:        http://repo1.maven.org/maven2/wsdl4j/wsdl4j/%{version}/wsdl4j-%{
 BuildRequires:  ant
 BuildRequires:  ant-junit
 BuildRequires:  javapackages-local
-BuildRequires:  zip
 
 Provides:       javax.wsdl
 Source44: import.info
@@ -51,17 +50,12 @@ Javadoc for %{name}.
 
 %build
 ant compile javadocs
-
 # inject OSGi manifests
-mkdir -p META-INF
-cp -p %{SOURCE1} META-INF/MANIFEST.MF
-touch META-INF/MANIFEST.MF
-zip -u build/lib/%{name}.jar META-INF/MANIFEST.MF
-
-%mvn_artifact %{SOURCE2} build/lib/%{name}.jar
-%mvn_artifact %{name}:qname:%{version} build/lib/qname.jar
+jar ufm build/lib/%{name}.jar %{SOURCE1}
 
 %install
+%mvn_artifact %{SOURCE2} build/lib/%{name}.jar
+%mvn_artifact %{name}:qname:%{version} build/lib/qname.jar
 %mvn_install -J build/javadocs
 
 install -d -m 755 %{buildroot}%{_javadir}/javax.wsdl/
@@ -76,6 +70,9 @@ ln -sf ../qname.jar %{buildroot}%{_javadir}/javax.wsdl/
 %doc license.html
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.6.3-alt1_11jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.6.3-alt1_9jpp8
 - new jpp release
 
