@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -17,16 +17,15 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 %bcond_without  avalon
 
-%global base_name  logging
-%global short_name commons-%{base_name}
+%global short_name commons-logging
 
 Name:           apache-%{short_name}
 Version:        1.2
-Release:        alt1_9jpp8
+Release:        alt1_11jpp8
 Summary:        Apache Commons Logging
 License:        ASL 2.0
-URL:            http://commons.apache.org/%{base_name}
-Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+URL:            http://commons.apache.org/logging
+Source0:        http://www.apache.org/dist/commons/logging/source/%{short_name}-%{version}-src.tar.gz
 Source2:        http://mirrors.ibiblio.org/pub/mirrors/maven2/%{short_name}/%{short_name}-api/1.1/%{short_name}-api-1.1.pom
 
 Patch0:         0001-Generate-different-Bundle-SymbolicName-for-different.patch
@@ -107,30 +106,18 @@ rm -rf src/test/java/org/apache/commons/logging/log4j/log4j12
 %build
 %mvn_build
 
+# The build produces more artifacts from one pom
+%mvn_artifact %{SOURCE2} target/%{short_name}-%{version}-api.jar
+%mvn_artifact commons-logging:commons-logging-adapters:%{version} target/%{short_name}-%{version}-adapters.jar
+
 # -----------------------------------------------------------------------------
 
 %install
 %mvn_install
 
-install -p -m 644 target/%{short_name}-%{version}-api.jar %{buildroot}/%{_javadir}/%{name}-api.jar
-install -p -m 644 target/%{short_name}-%{version}-adapters.jar %{buildroot}/%{_javadir}/%{name}-adapters.jar
-
-pushd %{buildroot}/%{_javadir}
-for jar in %{name}-*; do
-    ln -sf ${jar} `echo ${jar}| sed "s|apache-||g"`
-done
-popd
-
-install -pm 644 %{SOURCE2} %{buildroot}/%{_mavenpomdir}/JPP-%{short_name}-api.pom
-
-%add_maven_depmap JPP-%{short_name}-api.pom %{short_name}-api.jar -a "org.apache.commons:commons-logging-api"
-
 %files -f .mfiles
 %doc LICENSE.txt NOTICE.txt
 %doc PROPOSAL.html RELEASE-NOTES.txt
-%{_javadir}/*%{short_name}-api.jar
-%{_javadir}/*%{short_name}-adapters.jar
-
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
@@ -138,6 +125,9 @@ install -pm 644 %{SOURCE2} %{buildroot}/%{_mavenpomdir}/JPP-%{short_name}-api.po
 # -----------------------------------------------------------------------------
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_11jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_9jpp8
 - new jpp release
 
