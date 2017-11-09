@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           felix-osgi-core
 Version:        1.4.0
-Release:        alt5_21jpp8
+Release:        alt5_22jpp8
 Summary:        Felix OSGi R4 Core Bundle
 License:        ASL 2.0
 URL:            http://felix.apache.org/site/apache-felix-osgi-core.html
@@ -55,6 +55,9 @@ export LC_ALL=en_US.UTF-8
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4.0-alt5_22jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4.0-alt5_21jpp8
 - new jpp release
 
