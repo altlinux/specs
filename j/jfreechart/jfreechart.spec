@@ -1,16 +1,16 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jfreechart
 Version:        1.0.19
-Release:        alt1_6jpp8
+Release:        alt1_8jpp8
 Summary:        Java chart library
 
 Group:          Development/Other
@@ -22,7 +22,7 @@ Patch0:         build_swt_encoding_fix.patch
 BuildRequires:  maven-local
 BuildRequires:  maven-plugin-bundle
 BuildRequires:  mvn(org.jfree:jcommon) >= 1.0.23
-BuildRequires:  servlet >= 2.5
+BuildRequires:  mvn(javax.servlet:javax.servlet-api) >= 2.5
 %if 0%{?fedora}
 BuildRequires:  eclipse-swt
 %endif
@@ -89,6 +89,7 @@ MVN_BUNDLE_PLUGIN_EXTRA_XML="<extensions>true</extensions>
 %pom_remove_plugin :animal-sniffer-maven-plugin
 %pom_remove_plugin :maven-jxr-plugin
 %pom_remove_plugin :maven-javadoc-plugin
+%pom_change_dep javax.servlet:servlet-api: javax.servlet:javax.servlet-api:
 
 %pom_add_plugin org.apache.felix:maven-bundle-plugin . "$MVN_BUNDLE_PLUGIN_EXTRA_XML"
 %pom_add_plugin org.apache.maven.plugins:maven-javadoc-plugin . "<configuration><excludePackageNames>org.jfree.chart.fx*</excludePackageNames></configuration>"
@@ -128,6 +129,9 @@ install -m 644 lib/jfreechart-%{version}-swt.jar  $RPM_BUILD_ROOT%{_javadir}/%{n
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0.19-alt1_8jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0.19-alt1_6jpp8
 - new jpp release
 
