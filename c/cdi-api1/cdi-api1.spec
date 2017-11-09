@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             cdi-api1
 Version:          1.0
-Release:          alt1_19.SP4jpp8
+Release:          alt1_20.SP4jpp8
 Summary:          CDI API 1.0
 License:          ASL 2.0
 URL:              http://seamframework.org/Weld
@@ -75,6 +75,9 @@ cp %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_20.SP4jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_19.SP4jpp8
 - new jpp release
 
