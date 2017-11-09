@@ -1,7 +1,7 @@
 %define rname kmenuedit
 
 Name: kf5-%rname
-Version: 5.10.5
+Version: 5.11.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -74,6 +74,12 @@ KF5 library
 %_K5icon/*/*/apps/kmenuedit.*
 
 %changelog
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1%ubt
+- new version
+
+* Tue Nov 07 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
+- new version
+
 * Mon Sep 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt1%ubt
 - new version
 

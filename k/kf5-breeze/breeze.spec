@@ -1,8 +1,8 @@
 %define rname breeze
 
 Name: kf5-%rname
-Version: 5.10.5
-Release: alt2%ubt
+Version: 5.11.3
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -89,6 +89,12 @@ KF5 library
 %_libdir/cmake/Breeze/
 
 %changelog
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1%ubt
+- new version
+
+* Tue Nov 07 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
+- new version
+
 * Wed Oct 11 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt2%ubt
 - rebuild with new Qt
 

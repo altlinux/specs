@@ -2,7 +2,7 @@
 %def_disable openswan
 
 Name: kf5-%rname
-Version: 5.10.5
+Version: 5.11.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -51,6 +51,7 @@ BuildArch: noarch
 Requires: %name
 Requires: %name-connect-mobile
 Requires: %name-connect-openvpn
+Requires: %name-connect-fortisslvpn
 Requires: %name-connect-vpnc
 Requires: %name-connect-openconnect
 Requires: %name-connect-openswan
@@ -78,6 +79,13 @@ Summary: OpenVPN support for %name
 Requires: %name
 Requires: NetworkManager-openvpn
 %description connect-openvpn
+%summary.
+
+%package connect-fortisslvpn
+Group: Graphical desktop/KDE
+Summary: Fortinet SSLVPN support for %name
+Requires: %name
+%description connect-fortisslvpn
 %summary.
 
 %package connect-vpnc
@@ -172,12 +180,12 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 
 %files -f %name.lang
 %doc COPYING*
-%_K5bin/kde5-nm-connection-editor
+#%_K5bin/kde5-nm-connection-editor
 %_K5lib/libplasmanm_*.so
 %_K5plug/kf5/kded/networkmanagement.so
 %_K5plug/kcm_networkmanagement.so
 %_K5qml/org/kde/plasma/networkmanagement/
-%_K5xdgapp/kde5-nm-connection-editor.desktop
+#%_K5xdgapp/kde5-nm-connection-editor.desktop
 %_K5data/kcm_networkmanagement/
 %_K5data/plasma/plasmoids/org.kde.plasma.networkmanagement/
 %_K5data/plasma/updates/*
@@ -185,7 +193,7 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/kcm_networkmanagement.desktop
 %_K5srv/plasma-applet-org.kde.plasma.networkmanagement.desktop
 %_K5srvtyp/*networkmanagement*.desktop
-%_K5xmlgui/kde5-nm-connection-editor/
+#%_K5xmlgui/kde5-nm-connection-editor/
 
 %files maxi
 %files connect-mobile
@@ -197,6 +205,10 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %files connect-openvpn
 %_K5plug/libplasmanetworkmanagement_openvpnui.so
 %_K5srv/plasmanetworkmanagement_openvpnui.desktop
+
+%files connect-fortisslvpn
+%_K5plug/libplasmanetworkmanagement_fortisslvpnui.so
+%_K5srv/plasmanetworkmanagement_fortisslvpnui.desktop
 
 %files connect-vpnc
 %_K5plug/libplasmanetworkmanagement_vpncui.so
@@ -231,6 +243,12 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1%ubt
+- new version
+
+* Tue Nov 07 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
+- new version
+
 * Mon Sep 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt1%ubt
 - new version
 

@@ -14,8 +14,8 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: kf5-%rname
-Version: 5.10.5
-Release: alt2%ubt
+Version: 5.11.3
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -137,8 +137,7 @@ KF5 library
 %_K5plug/kwin/
 %_K5plug/org.kde.kglobalaccel5.platforms/
 %_K5plug/org.kde.kdecoration2/
-%_K5plug/org.kde.kwin.waylandbackends/
-%_K5plug/org.kde.kwin.platforms/
+%_K5plug/org.kde.kwin.*/
 %_K5plug/*.so
 %_K5cf_bin/kwin5*
 %_K5qml/org/kde/kwin/
@@ -178,6 +177,12 @@ KF5 library
 
 
 %changelog
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1%ubt
+- new version
+
+* Tue Nov 07 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
+- new version
+
 * Wed Oct 11 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt2%ubt
 - rebuild with new Qt
 
