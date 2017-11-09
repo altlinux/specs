@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global oname mustache.java
 Name:          mustache-java
 Version:       0.9.4
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Implementation of mustache.js for Java
 License:       ASL 2.0
 URL:           https://github.com/spullara/mustache.java/
@@ -123,6 +123,9 @@ find . -name "*.jar" -print -delete
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt1_3jpp8
+- fc27 update
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt1_2jpp8
 - new jpp release
 
