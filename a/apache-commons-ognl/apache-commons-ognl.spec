@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          apache-%{short_name}
 Version:       3.0.2
-Release:       alt2_12.20120313svn1102435jpp8
+Release:       alt2_13.20120313svn1102435jpp8
 Summary:       Object Graph Navigation Library 
 License:       ASL 2.0
 URL:           http://commons.apache.org/ognl/
@@ -71,6 +71,9 @@ rm -r src/test/java/org/apache/commons/ognl/test/ArithmeticAndLogicalOperatorsTe
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt2_13.20120313svn1102435jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt2_12.20120313svn1102435jpp8
 - new jpp release
 
