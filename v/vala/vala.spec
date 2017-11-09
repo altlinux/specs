@@ -2,14 +2,13 @@
 # and use those C sources during bootstrap phase. Next package rebuilds must be done
 # without bootstrap define.
 %def_disable snapshot
-# valadoc tests compilation failed
-%def_disable check
+%def_enable check
 %{?_enable_snapshot:%def_with bootstrap}
 %define ver_major 0.38
 %define api_ver 0.38
 
 Name: vala
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Vala is a programming language which makes GNOME programming easy
@@ -26,6 +25,8 @@ Source: %name-%version.tar
 Patch: %name-%version-%release-pregenerated.patch
 %endif
 Patch1: %name-0.35.5-alt-fixes.patch
+Patch2: %name-0.38.2-alt-valadoc_tests.patch
+
 PreReq: rpm-build-vala
 PreReq: vapi-common = %version-%release
 BuildRequires: flex libgio-devel >= 2.40.0 xsltproc help2man dbus-tools-gui gobject-introspection-devel
@@ -114,7 +115,8 @@ Development files for Valadoc.
 
 %prep
 %setup
-%patch1 -p1
+%patch1 -p1 -b .alt_fixes
+%patch2 -b .valadoc_tests
 
 # Automake now requires to have ChangeLog and m4, fake them
 [ ! -f ChangeLog ] && touch ChangeLog
@@ -257,6 +259,9 @@ mkdir -p %buildroot%_datadir/vala/vapi
 
 
 %changelog
+* Thu Nov 09 2017 Yuri N. Sedunov <aris@altlinux.org> 0.38.3-alt1
+- 0.38.3
+
 * Sun Oct 08 2017 Yuri N. Sedunov <aris@altlinux.org> 0.38.2-alt1
 - 0.38.2
 
