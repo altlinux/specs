@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apache-%{short_name}
 Version:          42
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          Apache Commons Parent Pom
 License:          ASL 2.0
 URL:              http://svn.apache.org/repos/asf/commons/proper/%{short_name}/tags/%{short_name}-%{version}/
@@ -63,6 +63,9 @@ done
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:42-alt1_4jpp8
+- fc27 update
+
 * Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 0:42-alt1_3jpp8
 - new jpp release
 
