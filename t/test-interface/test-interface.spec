@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           test-interface
 Version:        %{test_interface_version}
-Release:        alt2_8jpp8
+Release:        alt2_9jpp8
 Summary:        Uniform interface to Scala and Java test frameworks
 
 License:        BSD
@@ -109,6 +109,9 @@ cp pom.xml target/%{name}-%{version}.pom
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_9jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_8jpp8
 - new jpp release
 
