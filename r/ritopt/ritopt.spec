@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           ritopt
 Version:        0.2.1
-Release:        alt1_16jpp8
+Release:        alt1_17jpp8
 Summary:        A Java library for parsing command-line options
 License:        GPLv2+
 Group:          Development/Java
@@ -40,10 +40,10 @@ Documentation for the ritopt library
 
 %prep
 %setup -q 
-%{__sed} -i 's/\r//' NEWS
-%{__sed} -i 's/\r//' ChangeLog
-%{__sed} -i 's/\r//' AUTHORS
-%{__sed} -i 's/\r//' README
+sed -i 's/\r//' NEWS
+sed -i 's/\r//' ChangeLog
+sed -i 's/\r//' AUTHORS
+sed -i 's/\r//' README
 %patch0 -p0 -b .javadoc
 
 %build
@@ -78,6 +78,9 @@ cp -r javadoc ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_17jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_16jpp8
 - new jpp release
 
