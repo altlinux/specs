@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -7,9 +8,8 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           libmatthew-java
 Version:        0.8
-Release:        alt2_15jpp8
+Release:        alt2_18jpp8
 Summary:        A few useful Java libraries
-Group:          Development/Other
 License:        MIT
 
 # actual upstream:
@@ -24,7 +24,7 @@ Patch0:         install_doc.patch
 Patch1:         native-library-paths.patch
 Patch2:         classpath_fix.patch
 
-BuildRequires:  java-devel >= 1.6.0
+BuildRequires:  javapackages-local
 
 Source44: import.info
 
@@ -49,8 +49,8 @@ A colleciton of Java libraries:
 
 
 %package javadoc
+Group: Development/Other
 Summary:        Javadoc for %{name}
-Group:          Development/Other
 BuildArch: noarch
 
 
@@ -94,7 +94,8 @@ make install \
 %files
 %{_jnidir}/*.jar
 %{_libdir}/%{name}
-%doc COPYING INSTALL README
+%doc INSTALL README
+%doc COPYING
 
 %files javadoc
 %{_javadocdir}/%{name}
@@ -102,6 +103,9 @@ make install \
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_18jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_15jpp8
 - new jpp release
 
