@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -44,7 +45,7 @@ URL:            http://iso-relax.sourceforge.net/
 Epoch:          2
 Version:        0
 # I can't use %%{cvstag} as dashes aren't allowed in Release tags
-Release:        alt1_0.20.release20050331jpp8
+Release:        alt1_0.22.release20050331jpp8
 License:        MIT and ASL 1.1
 BuildArch:      noarch
 
@@ -63,7 +64,7 @@ Source1:        license.txt
 Source2:        http://repo2.maven.org/maven2/%{name}/%{name}/20030108/%{name}-20030108.pom
 Patch0:         %{name}-apidocsandcompressedjar.patch
 
-BuildRequires:  javapackages-tools rpm-build-java
+BuildRequires:  javapackages-local
 BuildRequires:  ant
 Source44: import.info
 
@@ -91,27 +92,21 @@ cp %{SOURCE1} .
 ant release
 
 %install
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 %{name}.jar $RPM_BUILD_ROOT%{_javadir}/
+%mvn_file : %{name}
+%mvn_artifact %{SOURCE2} %{name}.jar
 
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
-
-# POM and depmap
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap
+%mvn_install -J apidocs
 
 %files -f .mfiles
 %doc license.txt
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc license.txt
-%{_javadocdir}/*
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2:0-alt1_0.22.release20050331jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2:0-alt1_0.20.release20050331jpp8
 - new jpp release
 
