@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jamonapi
 Version:       2.74
-Release:       alt1_10jpp8
+Release:       alt1_11jpp8
 Summary:       A Java monitoring API
 License:       BSD
 URL:           http://jamonapi.sourceforge.net/
@@ -116,6 +116,9 @@ cp -p src/JAMonUsersGuide/JAMonLicense.html .
 %doc JAMonLicense.html
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.74-alt1_11jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.74-alt1_10jpp8
 - new jpp release
 
