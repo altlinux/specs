@@ -1,7 +1,7 @@
 %define  pkgname rbnacl-libsodium
 
 Name: 	 ruby-%pkgname
-Version: 1.0.13 
+Version: 1.0.15.1
 Release: alt1
 
 Summary: RbNaCl + libsodium packaged as a gem
@@ -58,5 +58,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Nov 09 2017 Andrey Cherepanov <cas@altlinux.org> 1.0.15.1-alt1
+- New version
+
 * Mon Sep 11 2017 Andrey Cherepanov <cas@altlinux.org> 1.0.13-alt1
 - Initial build for Sisyphus.
