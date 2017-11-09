@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          maven-processor-plugin
 Version:       2.2.4
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Maven Processor Plugin
 License:       LGPLv3+
 Url:           https://github.com/bsorrentino/maven-annotation-plugin
@@ -67,6 +67,9 @@ cp -p src/main/resources/COPYING.LESSER .
 %doc COPYING.LESSER
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt1_8jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt1_7jpp8
 - new jpp release
 
