@@ -1,28 +1,37 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.2
+%bcond_without asciidoc
+
 %global namedreltag .NOTHING
 %global namedversion %{version}%{?namedreltag}
 
 Name:             cdi-api
 Version:          1.2
-Release:          alt1_4jpp8
+Release:          alt1_6jpp8
 Summary:          CDI API
 License:          ASL 2.0
 URL:              http://seamframework.org/Weld
+BuildArch:        noarch
+
 Source0:          https://github.com/cdi-spec/cdi/archive/%{version}.tar.gz
 
-BuildArch:        noarch
-BuildRequires:    asciidoc asciidoc-a2x
 BuildRequires:    maven-local
 BuildRequires:    mvn(javax.el:javax.el-api)
 BuildRequires:    mvn(javax.inject:javax.inject)
@@ -33,7 +42,10 @@ BuildRequires:    mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:    mvn(org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.2_spec)
 BuildRequires:    mvn(org.jboss.weld:weld-parent:pom:)
 BuildRequires:    mvn(org.testng:testng::jdk15:)
+%if %{with asciidoc}
+BuildRequires:    asciidoc asciidoc-a2x
 BuildRequires:    /usr/bin/pygmentize
+%endif
 
 Provides:         javax.enterprise.inject
 Source44: import.info
@@ -66,10 +78,15 @@ cd api
  %mvn_build -- -Denforcer.skip
 )
 
+%if %{with asciidoc}
 cd spec/src/main/doc
-asciidoc -n -b html5 -a toc2 -a toclevels=3 -a pygments -f html5.conf -o ../../../../cdi-spec.html cdi-spec.asciidoc
-asciidoc -n -b html5 -a toc2 -a toclevels=3 -a pygments -f html5.conf -o ../../../../license-asl2.html license-asl2.asciidoc
-asciidoc -n -b html5 -a toc2 -a toclevels=3 -a pygments -f html5.conf -o ../../../../license-jcp.html license-jcp.asciidoc
+asciidoc -n -b html5 -a toc2 -a toclevels=3 -a pygments -f html5.conf -o cdi-spec.html cdi-spec.asciidoc
+asciidoc -n -b html5 -a toc2 -a toclevels=3 -a pygments -f html5.conf -o license-asl2.html license-asl2.asciidoc
+asciidoc -n -b html5 -a toc2 -a toclevels=3 -a pygments -f html5.conf -o license-jcp.html license-jcp.asciidoc
+%global adoc html
+%else
+%global adoc asciidoc
+%endif
 
 %install
 cd api
@@ -80,13 +97,18 @@ build-jar-repository %{buildroot}%{_javadir}/javax.enterprise.inject/ \
 
 %files -f api/.mfiles
 %{_javadir}/javax.enterprise.inject/
-%doc cdi-spec.html
-%doc license-asl2.html license-jcp.html
+%doc spec/src/main/doc/cdi-spec.%{adoc}
+%doc spec/src/main/doc/license-asl2.%{adoc}
+%doc spec/src/main/doc/license-jcp.%{adoc}
 
 %files javadoc -f api/.mfiles-javadoc
-%doc license-asl2.html license-jcp.html
+%doc spec/src/main/doc/license-asl2.%{adoc}
+%doc spec/src/main/doc/license-jcp.%{adoc}
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_6jpp8
+- fc27 update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_4jpp8
 - new jpp release
 
