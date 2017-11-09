@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -19,13 +19,12 @@ BuildRequires: jpackage-generic-compat
 # xLightweb depend on xSocket, but the
 # active development of xSocket has been stopped.
 # Currently xSocket supports bug-fixes only.
-#def_with xlightweb
 %bcond_with xlightweb
 %endif
 
 Name:          jbosh
 Version:       0.8.0
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       XEP-0124: Bidirectional-streams Over Synchronous HTTP (BOSH)
 License:       ASL 2.0
 URL:           https://github.com/igniterealtime/jbosh
@@ -133,6 +132,9 @@ opts="-f"
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_5jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_4jpp8
 - new jpp release
 
