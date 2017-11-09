@@ -1,6 +1,6 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             weld-parent
 Version:          34
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          Parent POM for Weld
 License:          ASL 2.0
 URL:              http://weld.cdi-spec.org
@@ -42,6 +42,9 @@ Parent POM for Weld
 %files -f .mfiles
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 34-alt1_4jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 34-alt1_3jpp8
 - new jpp release
 
