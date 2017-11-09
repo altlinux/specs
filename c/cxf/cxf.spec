@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -17,13 +18,12 @@ BuildRequires: jpackage-generic-compat
 %define version 3.1.6
 %global tarname apache-%{name}-%{version}-src
 
-#def_with jetty
 %bcond_with jetty
 
 Name:          cxf
 Epoch:         1
 Version:       3.1.6
-Release:       alt1_5jpp8
+Release:       alt1_7jpp8
 Summary:       Apache CXF
 License:       ASL 2.0
 URL:           http://cxf.apache.org/
@@ -45,7 +45,7 @@ BuildRequires: mvn(com.sun.mail:javax.mail)
 BuildRequires: mvn(com.sun.xml.fastinfoset:FastInfoset)
 BuildRequires: mvn(commons-lang:commons-lang)
 BuildRequires: mvn(io.dropwizard.metrics:metrics-core)
-BuildRequires: mvn(io.netty:netty-codec-http)
+BuildRequires: mvn(io.netty:netty-all)
 BuildRequires: mvn(io.swagger:swagger-jaxrs) >= 1.5.8
 BuildRequires: mvn(javax.annotation:javax.annotation-api)
 BuildRequires: mvn(javax.servlet:javax.servlet-api)
@@ -146,6 +146,7 @@ BuildRequires: mvn(rhino:js)
 BuildRequires: mvn(wsdl4j:wsdl4j)
 BuildRequires: mvn(xerces:xercesImpl)
 BuildRequires: mvn(xml-resolver:xml-resolver)
+BuildRequires: mvn(org.apache:apache-jar-resource-bundle)
 # No more available
 Obsoletes:     %{name}-api < %{version}-%{release}
 
@@ -299,6 +300,8 @@ sed -i '/ThreadSafe/d' \
 %pom_change_dep -r :cglib-nodep :cglib:3.1
 %pom_change_dep -r javax.servlet:servlet-api :javax.servlet-api:3.1.0
 
+%pom_change_dep io.netty:netty-codec-http io.netty:netty-all rt/transports/http-netty/netty-{client,server}
+
 # NOTE: Maybe org.glassfish.jaxb:txw2 should be added as runtime deps in cxf-codegen-plugin pom file
 for mod in rt/ws/policy tools/javato/ws services/wsn/wsn-api services/xkms/xkms-common ; do
 # NoClassDefFoundError: com/sun/xml/txw2/output/XmlSerializer
@@ -412,6 +415,9 @@ install -pm 644 rt/ws/security/target/cxf-rt-ws-security-%{version}-jandex.jar %
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.1.6-alt1_7jpp8
+- fc27 update
+
 * Fri Nov 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.1.6-alt1_5jpp8
 - new version
 
