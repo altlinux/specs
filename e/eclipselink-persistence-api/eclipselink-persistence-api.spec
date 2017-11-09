@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -15,7 +15,7 @@ BuildRequires: rpm-build-java-osgi
 %global api_version 2.1
 Name:          eclipselink-persistence-api
 Version:       2.1.0
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       JPA 2.1 Spec OSGi Bundle
 License:       EPL and ASL 2.0
 URL:           http://www.eclipse.org/eclipselink/
@@ -79,6 +79,9 @@ done
 %doc license.html readme.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_4jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_3jpp8
 - new jpp release
 
