@@ -1,5 +1,5 @@
 Name: apt-scripts-nvidia
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1%ubt
 
 Summary: APT Lua scripts for NVIDIA driver
@@ -42,6 +42,9 @@ ls *.conf |sed 's:^:^/etc/apt/apt.conf.d/:;s:[.]:[.]:g' >%buildroot/etc/buildreq
 %config /etc/buildreqs/files/ignore.d/%name
 
 %changelog
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 0.4.6-alt1%ubt
+- notify about update-kernel if driver not found
+
 * Mon Oct 02 2017 Sergey V Turchin <zerg@altlinux.org> 0.4.5-alt1%ubt
 - fix detect installer environment
 
