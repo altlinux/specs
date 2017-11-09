@@ -1,17 +1,17 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global vertag M5
+%global vertag M7
 
 Summary:        Extract class/interface/method definitions from sources
 Name:           qdox
 Version:        2.0
-Release:        alt1_0.8.M5jpp8
+Release:        alt1_0.11.M7jpp8
 Epoch:          1
 License:        ASL 2.0
 URL:            https://github.com/paul-hammant/qdox
@@ -19,9 +19,6 @@ BuildArch:      noarch
 
 Source0:        http://repo2.maven.org/maven2/com/thoughtworks/qdox/qdox/%{version}-%{vertag}/%{name}-%{version}-%{vertag}-project.tar.gz
 Source1:        qdox-MANIFEST.MF
-
-# https://github.com/paul-hammant/qdox/issues/16
-Patch1:         0001-16-Single-comment-line-not-recognized.patch
 
 BuildRequires:  byaccj
 BuildRequires:  jflex
@@ -56,8 +53,6 @@ API docs for %{name}.
 find -name *.jar -delete
 rm -rf bootstrap
 
-%patch1 -p1
-
 # We don't need these plugins
 %pom_remove_plugin :animal-sniffer-maven-plugin
 %pom_remove_plugin :maven-failsafe-plugin
@@ -77,10 +72,7 @@ jflex --inputstreamctor -d src/main/java/com/thoughtworks/qdox/parser/impl src/g
 %mvn_build -f -- -Dqdox.byaccj.executable=byaccj
 
 # Inject OSGi manifests
-mkdir -p META-INF
-cp -p %{SOURCE1} META-INF/MANIFEST.MF
-touch META-INF/MANIFEST.MF
-zip -u target/%{name}-%{version}.jar META-INF/MANIFEST.MF
+jar ufm target/%{name}-%{version}*.jar %{SOURCE1}
 
 %install
 %mvn_install
@@ -92,6 +84,9 @@ zip -u target/%{name}-%{version}.jar META-INF/MANIFEST.MF
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.0-alt1_0.11.M7jpp8
+- fc27 update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.0-alt1_0.8.M5jpp8
 - new jpp release
 
