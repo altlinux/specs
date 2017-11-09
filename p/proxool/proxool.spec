@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 Summary:       Java connection pool library
 Name:          proxool
 Version:       0.9.1
-Release:       alt2_19jpp8
+Release:       alt2_20jpp8
 Epoch:         0
 License:       ASL 2.0
 URL:           http://proxool.sourceforge.net/
@@ -89,6 +89,9 @@ CLASSPATH=$(build-classpath cglib avalon-framework glassfish-servlet-api) ant bu
 %doc LICENCE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.9.1-alt2_20jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.9.1-alt2_19jpp8
 - new jpp release
 
