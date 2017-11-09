@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           aopalliance
 Version:        1.0
-Release:        alt6_13jpp8
+Release:        alt6_15jpp8
 Epoch:          0
 Summary:        Java/J2EE AOP standards
 License:        Public Domain
@@ -24,7 +24,7 @@ Source1:        http://repo1.maven.org/maven2/aopalliance/aopalliance/1.0/aopall
 Source2:        %{name}-MANIFEST.MF
 
 BuildRequires:  ant
-BuildRequires:  javapackages-tools rpm-build-java
+BuildRequires:  javapackages-local
 Source44: import.info
 
 %description
@@ -56,22 +56,19 @@ export OPT_JAR_LIST=:
 jar umf %{SOURCE2} build/%{name}.jar
 
 %install
-install -d -m 755 %{buildroot}%{_javadir}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -p -m 644 build/%{name}.jar %{buildroot}%{_javadir}/
-install -p -m 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap
+%mvn_file : %{name}
+%mvn_artifact %{SOURCE1} build/%{name}.jar
 
-# javadoc
-install -dm 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr build/javadoc/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_install -J build/javadoc
 
 %files -f .mfiles
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_15jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_13jpp8
 - new jpp release
 
