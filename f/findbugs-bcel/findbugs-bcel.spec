@@ -1,5 +1,7 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,10 +13,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:           findbugs-bcel
 Version:        6.0
-Release:        alt1_0.7.20140707svn1547656jpp8
+Release:        alt1_0.10.20140707svn1547656jpp8
 Summary:        Byte Code Engineering Library for FindBugs
 
-Group:          Development/Other
 License:        ASL 2.0
 URL:            http://commons.apache.org/proper/commons-bcel/
 
@@ -23,6 +24,10 @@ URL:            http://commons.apache.org/proper/commons-bcel/
 #   $ tar -zcf bcel-20140707svn1547656.tgz bcel-6.0
 Source0:        bcel-%{findbugsver}.tgz
 Source1:        http://central.maven.org/maven2/com/google/code/findbugs/bcel-findbugs/%{version}/bcel-findbugs-%{version}.pom
+
+# Add temporary dependency on javapackages-local, for %%add_maven_depmap macro
+# See https://lists.fedoraproject.org/archives/list/java-devel@lists.fedoraproject.org/thread/R3KZ7VI5DPCMCELFIVJQ4AXB2WQED35C/
+BuildRequires:  javapackages-local
 
 BuildRequires:  java-devel jpackage-utils
 Requires:       jpackage-utils
@@ -35,8 +40,8 @@ This is a snapshot of Apache's Byte Code Engineering Library (BCEL) for use
 with FindBugs 3.0.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -86,6 +91,9 @@ fi ||:
 %{_javadocdir}/findbugs-bcel*
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 6.0-alt1_0.10.20140707svn1547656jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 6.0-alt1_0.7.20140707svn1547656jpp8
 - new jpp release
 
