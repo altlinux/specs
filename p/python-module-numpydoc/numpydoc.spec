@@ -1,31 +1,28 @@
 %define oname numpydoc
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
-Version: 0.6
-Release: alt1.dev.git20150712
+Version: 0.7.0
+Release: alt1
 Epoch: 1
 
 Summary: Numpy's Sphinx extensions
 License: BSD
 Group: Development/Python
 Url: http://numpy.scipy.org/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 %setup_python_module %oname
 
 # https://github.com/numpy/numpydoc.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-module-setuptools
-
+BuildRequires: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+BuildRequires: python-tools-2to3
 %endif
 
 %description
@@ -74,15 +71,11 @@ This package contains tests for numpydoc.
 %setup
 
 %if_with python3
-rm -rf ../python3
 cp -a . ../python3
-pushd ../python3
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
-popd
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
-
 %if_with python3
 pushd ../python3
 %python3_build_debug
@@ -101,7 +94,7 @@ popd
 %python_install
 
 %files
-%doc *.txt *.rst
+%doc LICENSE.txt README.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/tests
 
@@ -110,7 +103,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt *.rst
+%doc LICENSE.txt README.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/tests
 
@@ -119,6 +112,10 @@ popd
 %endif
 
 %changelog
+* Thu Nov 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.7.0-alt1
+- Updated to upstream version 0.7.0.
+- Enabled build for python3.
+
 * Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.6-alt1.dev.git20150712
 - New snapshot
 
