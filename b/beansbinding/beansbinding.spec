@@ -2,12 +2,13 @@
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           beansbinding
 Version:        1.2.1
-Release:        alt1_15jpp8
+Release:        alt1_17jpp8
 Summary:        Beans Binding (JSR 295) reference implementation
 
 Group:          Development/Other
@@ -18,7 +19,9 @@ Patch0:         disable-doclint.patch
 
 BuildRequires:  ant
 BuildRequires:  ant-junit
+BuildRequires:  java-devel
 
+Requires:       java >= 1.6.0
 
 BuildArch:      noarch
 Source44: import.info
@@ -41,18 +44,18 @@ Javadoc for %{name}.
 %setup -q -c -n %{name}-%{version}
 %patch0 -p1
 # remove all binary libs
-find . -type f \( -iname "*.jar" -o -iname "*.zip" \) -print0 | xargs -t -0 %{__rm} -f
+find . -type f \( -iname "*.jar" -o -iname "*.zip" \) -print0 | xargs -t -0 rm -f
 
 %build
 %{ant} dist
 
 %install
 # jar
-%{__install} -d -m 755 %{buildroot}%{_javadir}
-%{__install} -m 644 dist/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
+install -d -m 755 %{buildroot}%{_javadir}
+install -m 644 dist/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 # javadoc
-%{__install} -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-%{__cp} -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
 %files
 %{_javadir}/*
@@ -62,6 +65,9 @@ find . -type f \( -iname "*.jar" -o -iname "*.zip" \) -print0 | xargs -t -0 %{__
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_17jpp8
+- fc27 update
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_15jpp8
 - new fc release
 
