@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -37,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           concurrent
 Version:        1.3.4
-Release:        alt1_22jpp8
+Release:        alt1_23jpp8
 Epoch:          0
 Summary:        Utility classes for concurrent Java programming
 License:        Public Domain
@@ -109,6 +110,9 @@ popd
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.4-alt1_23jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.4-alt1_22jpp8
 - new jpp release
 
