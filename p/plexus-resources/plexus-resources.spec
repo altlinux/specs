@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           plexus-resources
 Version:        1.0
-Release:        alt7_0.21.a7jpp8
+Release:        alt7_0.22.a7jpp8
 Summary:        Plexus Resource Manager
 License:        MIT
 URL:            https://github.com/codehaus-plexus/plexus-resources
@@ -63,6 +63,9 @@ cp -p %{SOURCE45} target/classes/META-INF/plexus/components.xml
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_0.22.a7jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_0.21.a7jpp8
 - new jpp release
 
