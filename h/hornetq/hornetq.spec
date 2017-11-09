@@ -1,11 +1,11 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
-BuildRequires: gcc-c++
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: gcc-c++ rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -32,13 +32,12 @@ BuildRequires: jpackage-generic-compat
 # Use this switch to rebuild without narayana
 # This is useful to break the hornetq circular dependency
 %if 0%{?fedora}
-#def_with narayana
 %bcond_with narayana
 %endif
 
 Name:          hornetq
 Version:       2.4.7
-Release:       alt1_4jpp8
+Release:       alt1_6jpp8
 Summary:       High performance messaging system
 License:       ASL 2.0
 URL:           http://hornetq.jboss.org/
@@ -345,6 +344,9 @@ cp -L hornetq-native/bin/libHornetQAIO.so %{buildroot}/%{_libdir}/libHornetQAIO.
 %doc LICENSE.txt NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.7-alt1_6jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.7-alt1_4jpp8
 - new jpp release
 
