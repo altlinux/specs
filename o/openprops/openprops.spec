@@ -1,15 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           openprops
 Version:        0.7.1
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        An improved java.util.Properties from OpenJDK
 
 Group:          Development/Other
@@ -94,6 +94,9 @@ cat .mfiles-javadoc >> .mfiles
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_3jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_2jpp8
 - new jpp release
 
