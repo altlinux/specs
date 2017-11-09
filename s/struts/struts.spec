@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          struts
 Version:       1.3.10
-Release:       alt4_19jpp8
+Release:       alt4_20jpp8
 Summary:       Web application framework
 License:       ASL 2.0
 URL:           http://struts.apache.org/
@@ -137,6 +137,9 @@ rm -rf $RPM_BUILD_ROOT/var/lib/tomcat?/webapps/struts-documentation/download.cgi
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt4_20jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt4_19jpp8
 - new jpp release
 
