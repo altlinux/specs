@@ -1,6 +1,6 @@
 Epoch: 1
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        1.0.15
-Release:        alt1_13jpp8
+Release:        alt1_16jpp8
 Summary:        Defines API to support an alternative invocation mechanism
 License:        ASL 2.0
 Group:          System/Base
@@ -31,7 +31,6 @@ BuildRequires:  apache-commons-parent
 BuildRequires:  maven-surefire-provider-junit
 BuildRequires:  xmlto
 BuildRequires:  gcc-common
-BuildRequires:  make
 Source44: import.info
 
 
@@ -115,6 +114,9 @@ install -Dpm 644 src/native/unix/jsvc.1 $RPM_BUILD_ROOT%{_mandir}/man1/jsvc.1
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0.15-alt1_16jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0.15-alt1_13jpp8
 - new jpp release
 
