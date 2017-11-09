@@ -1,15 +1,15 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-shared-io
 Epoch:          1
 Version:        3.0.0
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        API for I/O support like logging, download or file scanning
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-shared-io
@@ -17,7 +17,7 @@ BuildArch:      noarch
 
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-# Forwarded upstream: https://issues.apache.org/jira/browse/MSHARED-490
+# Rejected upstream: https://issues.apache.org/jira/browse/MSHARED-490
 Patch0:         0001-Fix-running-tests-with-Maven-3.3.9.patch
 
 BuildRequires:  maven-local
@@ -60,6 +60,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.0.0-alt1_4jpp8
+- fc27 update
+
 * Tue Dec 06 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.0.0-alt1_2jpp8
 - new version
 
