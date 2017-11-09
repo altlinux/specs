@@ -1,6 +1,6 @@
 Group: Sciences/Mathematics
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           axiom
 Version:        1.2.12
-Release:        alt1_15jpp8
+Release:        alt1_17jpp8
 Epoch:          2
 Summary:        Axis Object Model
 License:        ASL 2.0
@@ -23,19 +23,15 @@ Source0:        %{name}-%{version}.tar.xz
 # 4) Remove modules which require additional dependencies not yet in Fedora
 Patch0:         axiom-build-fixes.patch
 
-BuildRequires:  apache-rat-plugin
-BuildRequires:  apache-commons-logging
-BuildRequires:  bea-stax-api
-BuildRequires:  javamail
-BuildRequires:  jaxen
-BuildRequires:  jdepend
-BuildRequires:  junit
-BuildRequires:  woodstox-core
 BuildRequires:  maven-local
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-plugin-build-helper
-BuildRequires:  maven-plugin-bundle
-BuildRequires:  xmlunit
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(javax.mail:mail)
+BuildRequires:  mvn(jaxen:jaxen)
+BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
+BuildRequires:  mvn(stax:stax-api)
 BuildRequires:  /usr/bin/perl
 
 BuildArch:      noarch
@@ -65,7 +61,7 @@ BuildArch: noarch
 rm -rf modules/axiom-jaxen-testsuite/src/main/
 
 # fix eol
-%{__perl} -pi -e 's/\r$//g' README.txt NOTICE RELEASE-NOTE.txt
+/usr/bin/perl -pi -e 's/\r$//g' README.txt NOTICE RELEASE-NOTE.txt
 
 %pom_remove_dep :axiom-testutils modules/axiom-api
 
@@ -87,6 +83,9 @@ rm -rf modules/axiom-jaxen-testsuite/src/main/
 %doc NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2:1.2.12-alt1_17jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2:1.2.12-alt1_15jpp8
 - new jpp release
 
