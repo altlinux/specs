@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-marshalling
 Version:          1.4.11
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          JBoss Marshalling
 # LGPLv2 ./serial/src/main/java/org/jboss/marshalling/serial/UnknownDescriptor.java
 License:          ASL 2.0 and LGPLv2+
@@ -87,6 +87,9 @@ fi
 %files osgi -f .mfiles-osgi
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.11-alt1_3jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.11-alt1_2jpp8
 - new jpp release
 
