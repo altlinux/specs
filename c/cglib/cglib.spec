@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           cglib
 Version:        3.2.4
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Summary:        Code Generation Library for Java
 License:        ASL 2.0 and BSD
 Url:            https://github.com/cglib/cglib
@@ -73,16 +73,17 @@ Documentation for the cglib code generation library.
 
 %install
 %mvn_install
-ln -s cglib/cglib.jar %buildroot%_javadir/cglib.jar
 
 %files -f .mfiles
 %doc LICENSE NOTICE
-%_javadir/cglib.jar
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.2.4-alt1_6jpp8
+- fc27 update
+
 * Tue Oct 31 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.2.4-alt1_4jpp8
 - new version
 - manually added compat symlink for hadoop
