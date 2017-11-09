@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           bridge-method-injector
 Version:        1.14
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Evolve Java classes without breaking compatibility
 # License is specified in pom file
 License:        MIT
@@ -82,6 +82,9 @@ cp %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_7jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_6jpp8
 - new jpp release
 
