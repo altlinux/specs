@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jmatio
 Version:       1.1
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Java Matlab IO library
 License:       BSD
 URL:           https://sourceforge.net/projects/jmatio/
@@ -44,7 +43,7 @@ for s in src/main/java/com/jmatio/types/MLSparse.java;do
 done
 
 # fix eol
-%{__perl} -pi -e 's/\r$//g' LICENSE.txt README_old.txt
+/usr/bin/perl -pi -e 's/\r$//g' LICENSE.txt README_old.txt
 
 %build
 
@@ -63,6 +62,9 @@ done
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_7jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_6jpp8
 - new jpp release
 
