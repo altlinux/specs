@@ -1,8 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          junit-addons
 Version:       1.4
-Release:       alt3_13jpp8
+Release:       alt3_15jpp8
 Summary:       JUnitX helper classes for JUnit
 License:       ASL 1.1
 Url:           http://sourceforge.net/projects/junit-addons/
@@ -20,9 +19,7 @@ Source1:       %{name}-build.xml
 Source2:       http://mirrors.ibiblio.org/pub/mirrors/maven2/%{name}/%{name}/%{version}/%{name}-%{version}.pom
 Patch0:        junit-addons-1.4-enum.patch
 
-BuildRequires: java-devel
-BuildRequires: jpackage-utils
-
+BuildRequires: javapackages-local
 BuildRequires: ant
 BuildRequires: apache-commons-logging
 BuildRequires: jaxen
@@ -37,7 +34,6 @@ Requires:      jdom
 Requires:      junit
 Requires:      xerces-j2
 
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -111,26 +107,22 @@ export OPT_JAR_LIST=:
   release
 
 %install
+%mvn_file : %{name}
+%mvn_artifact %{SOURCE2} dist/%{name}-%{version}.jar
 
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 dist/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr build/api/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_install -J build/api
 
 %files -f .mfiles
 %doc README WHATSNEW
 %doc LICENSE
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt3_15jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt3_13jpp8
 - new jpp release
 
