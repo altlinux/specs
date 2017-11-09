@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	4.13
-%define kernel_sublevel .11
+%define kernel_sublevel .12
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -504,7 +504,7 @@ int main()
 }
 __EOF__
 echo init | cpio -H newc -o | gzip -9n > initrd.img
-timeout 600 qemu -no-kvm -kernel %buildroot/boot/vmlinuz-$KernelVer -nographic -append console=ttyS0 -initrd initrd.img > boot.log
+timeout --foreground 600 qemu -no-kvm -kernel %buildroot/boot/vmlinuz-$KernelVer -nographic -append console=ttyS0 -initrd initrd.img > boot.log
 grep -q "^$msg" boot.log &&
 grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 	cat >&2 boot.log
@@ -575,6 +575,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed Nov 08 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.12-alt1
+- v4.13.12
+
 * Thu Nov 02 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.11-alt1
 - v4.13.11   (Fixes: CVE-2017-12193)
 
