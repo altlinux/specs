@@ -2,6 +2,7 @@ Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 AutoReq: yes,noosgi
@@ -16,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          xerces-j2
 Version:       2.11.0
-Release:       alt3_28jpp8
+Release:       alt3_30jpp8
 Summary:       Java XML parser
 License:       ASL 2.0
 URL:           http://xerces.apache.org/xerces2-j/
@@ -54,7 +55,6 @@ BuildRequires: apache-parent
 BuildRequires: xalan-j2 >= 2.7.1
 BuildRequires: xml-commons-apis >= 1.4.01
 BuildRequires: xml-commons-resolver >= 1.2
-BuildRequires: fonts-ttf-dejavu
 
 Requires:      xalan-j2 >= 2.7.1
 Requires:      xml-commons-apis >= 1.4.01
@@ -210,6 +210,9 @@ ln -sf %{name}.jar %{_javadir}/jaxp_parser_impl.jar
 %{_datadir}/%{name}
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.11.0-alt3_30jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.11.0-alt3_28jpp8
 - new jpp release
 
