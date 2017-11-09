@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,10 +9,9 @@ BuildRequires: jpackage-generic-compat
 %global oname oss-parent
 Name:          fasterxml-oss-parent
 Version:       26
-Release:       alt1_3jpp8
+Release:       alt1_5jpp8
 Summary:       FasterXML parent pom
-# pom file licenses ASL 2.0 and LGPL 2.1
-License:       ASL 2.0 and LGPLv2+
+License:       ASL 2.0
 URL:           http://fasterxml.com/
 Source0:       https://github.com/FasterXML/oss-parent/archive/oss-parent-%{version}.tar.gz
 
@@ -65,6 +64,9 @@ This package contains the parent pom file for FasterXML.com projects.
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 26-alt1_5jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 26-alt1_3jpp8
 - new jpp release
 
