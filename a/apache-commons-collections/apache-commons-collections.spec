@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           apache-%{short_name}
 Version:        3.2.2
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Summary:        Provides new interfaces, implementations and utilities for Java Collections
 License:        ASL 2.0
 URL:            http://commons.apache.org/%{base_name}/
@@ -79,7 +79,9 @@ sed -i 's/\r//' LICENSE.txt PROPOSAL.html README.txt NOTICE.txt
 %mvn_file ':%{short_name}{,-testframework}' %{name}@1 %{short_name}@1
 
 %build
-%mvn_build
+# 2017-09-18 mizdebsk: Temporarly disable tests, they stopped working
+# after Maven Surefire upgrade to 2.20, need to investigate why.
+%mvn_build -f
 
 ant tf.javadoc -Dtf.build.docs=target/site/apidocs/
 
@@ -99,6 +101,9 @@ ant tf.javadoc -Dtf.build.docs=target/site/apidocs/
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.2.2-alt1_6jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.2.2-alt1_4jpp8
 - new jpp release
 
