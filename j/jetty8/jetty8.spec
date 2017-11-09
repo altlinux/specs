@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jetty8
 Version:        8.1.17
-Release:        alt1_6jpp8
+Release:        alt1_8jpp8
 Summary:        Java Webserver and Servlet Container
 # Jetty is dual licensed under both ASL 2.0 and EPL 1.0, see NOTICE.txt
 # some MIT-licensed code (from Utf8Appendable) is used too
@@ -196,6 +196,9 @@ done
 %pom_remove_plugin -r :maven-source-plugin
 %pom_remove_plugin -r :maven-site-plugin
 
+# Remove google analytics from javadoc
+%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-javadoc-plugin"]/pom:configuration/pom:header'
+
 # this needs jetty6 things, so just remove it
 # shouldn't cause any trouble since it handled only in loadClass elsewhere
 %pom_remove_dep org.mortbay.jetty:jetty-util jetty-continuation
@@ -250,6 +253,9 @@ rm -Rf LICENSE-CONTRIBUTOR/
 %doc NOTICE.txt LICENSE*
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 8.1.17-alt1_8jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 8.1.17-alt1_6jpp8
 - new jpp release
 
