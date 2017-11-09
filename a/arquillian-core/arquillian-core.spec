@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          arquillian-core
 Version:       1.1.11
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       Java Testing Platform for the JVM Member
 # No license header report @ https://github.com/arquillian/arquillian-core/issues/101
 License:       ASL 2.0
@@ -439,6 +439,9 @@ rm -r testng/core/src/test/* testng/container/src/test/*
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.11-alt1_7jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.11-alt1_6jpp8
 - new jpp release
 
