@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           sat4j
 Version:        2.3.5
-Release:        alt1_9jpp8
+Release:        alt1_11jpp8
 Summary:        A library of SAT solvers written in Java
 
 License:        EPL or LGPLv2
@@ -24,7 +24,7 @@ Source1:        sat4j-fetch.sh
 Patch0:         sat4j-classpath.patch
 
 BuildRequires:  ant
-BuildRequires:  javapackages-tools rpm-build-java
+BuildRequires:  javapackages-local
 
 BuildArch:      noarch
 Source44: import.info
@@ -43,18 +43,21 @@ without worrying about the details.
 ant -Dbuild.compiler=modern -Drelease=%{version} \
  -Dtarget=1.5 -DBUILD_DATE=%{build_date} p2 
 
-%install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-cp -rp dist/%{version}/org.sat4j.core.jar \
- $RPM_BUILD_ROOT%{_javadir}
-cp -rp dist/%{version}/org.sat4j.pb.jar \
- $RPM_BUILD_ROOT%{_javadir}
+%mvn_artifact "org.ow2.sat4j:org.ow2.sat4j.core::%{version}" dist/%{version}/org.sat4j.core.jar
+%mvn_artifact "org.ow2.sat4j:org.ow2.sat4j.pb::%{version}" dist/%{version}/org.sat4j.pb.jar
+%mvn_file ":org.ow2.sat4j.core" org.sat4j.core
+%mvn_file ":org.ow2.sat4j.pb" org.sat4j.pb
 
-%files
+%install
+%mvn_install
+
+%files -f .mfiles
 # No %%doc files as the about.html is in the jar
-%{_javadir}/org.sat4j*
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_11jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_9jpp8
 - new jpp release
 
