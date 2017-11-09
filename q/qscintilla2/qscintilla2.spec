@@ -9,7 +9,7 @@ Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 %define suff 13
 Name: %oname
 Version: 2.10.1
-Release: alt1%ubt
+Release: alt2%ubt
 License: GPL
 Group: Development/KDE and QT
 
@@ -20,7 +20,8 @@ Url: http://www.riverbankcomputing.co.uk/software/qscintilla/
 
 %define libname lib%{oname}-%{suff}
 
-BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-ubt python-module-sip-devel
+%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
 BuildRequires: gcc-c++ libqt4-devel
 %if_with qt3
 BuildRequires: libqt3-devel python-module-qt-devel
@@ -28,7 +29,8 @@ BuildRequires: libqt3-devel python-module-qt-devel
 BuildRequires: python-module-PyQt4-devel
 BuildRequires: python-module-sip-devel
 %if_with python3
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 python3-module-sip-devel
+%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
 BuildRequires: python3-devel python3-module-sip-devel
 BuildPreReq: python3-module-PyQt4-devel
 %endif
@@ -171,6 +173,7 @@ Summary: Python bindings for %oname
 Group: Development/KDE and QT
 Provides: lib%oname-qt4-python = %version-%release
 Obsoletes: lib%oname-qt4-python
+Requires: python-module-sip = %sipver2
 
 %description -n python-module-%oname-qt4
 Python bindings for %oname
@@ -191,6 +194,7 @@ Requires: %libname-qt5 = %version-%release
 Summary: Python bindings for %oname-qt5
 Group: Development/KDE and QT
 Provides: lib%oname-qt5-python = %version-%release
+Requires: python-module-sip = %sipver2
 
 %description -n python-module-%oname-qt5
 Python bindings for %oname-qt5
@@ -210,6 +214,7 @@ Devel files for Python bindings for %oname
 Requires: %libname-qt4 = %version-%release
 Summary: Python 3 bindings for %oname
 Group: Development/KDE and QT
+Requires: python3-module-sip = %sipver3
 
 %description -n python3-module-%oname-qt4
 Python bindings for %oname
@@ -228,6 +233,7 @@ Devel files for Python bindings for %oname
 Requires: %libname-qt5 = %version-%release
 Summary: Python 3 bindings for %oname (Qt5)
 Group: Development/KDE and QT
+Requires: python3-module-sip = %sipver3
 
 %description -n python3-module-%oname-qt5
 Python bindings for %oname
@@ -488,6 +494,8 @@ pushd %buildroot%_libdir
 ln -s lib%{oname}_qt4.so.*.*.* `ls lib%{oname}_qt4.so.*.*.* | sed s/\.[0-9]*$//`
 ln -s lib%{oname}_qt4.so.*.*.* `ls lib%{oname}_qt4.so.*.*.* | sed s/\.[0-9]*\.[0-9]*$//`
 ln -s lib%{oname}_qt4.so.*.*.* `ls lib%{oname}_qt4.so.*.*.* | sed s/\.[0-9]*\.[0-9]*\.[0-9]*$//`
+# NOTE: add a symlink for compatibility with older branches
+ln -s lib%{oname}_qt4.so.*.*.* lib%{oname}.so
 popd
 pushd %buildroot%_qt4dir/lib
 for libname in ../../lib%{oname}_qt4.*; do
@@ -569,6 +577,7 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_includedir/qt4/Qsci
 %_qt4dir/lib/*.so
 %_libdir/*_qt4.so
+%_libdir/lib%{oname}.so
 
 %files -n lib%oname-qt5-devel
 %_includedir/qt5/*.h
@@ -632,6 +641,10 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_docdir/%libname-%version
 
 %changelog
+* Thu Nov 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10.1-alt2%ubt
+- Added devel symlink for compatibility.
+- Pinned dependency on sip because rebuild of sip requires rebuild of this package.
+
 * Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10.1-alt1%ubt
 - Updated to upstream version 2.10.1.
 
