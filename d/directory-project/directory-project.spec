@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          directory-project
 Version:       35
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Apache Directory Project Root pom
 License:       ASL 2.0
 Url:           http://directory.apache.org/
@@ -59,6 +59,9 @@ directory tools (Apache Directory Studio).
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 35-alt1_4jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 35-alt1_3jpp8
 - new jpp release
 
