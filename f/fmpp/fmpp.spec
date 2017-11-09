@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		fmpp
 Version:	%{fmpp_version}
-Release:	alt1_7jpp8
+Release:	alt1_8jpp8
 Summary:	FreeMarker-based text file PreProcessor 
 
 License:	BSD
@@ -108,6 +108,9 @@ ant test
 %doc LICENSE.txt README.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.14-alt1_8jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.14-alt1_7jpp8
 - new jpp release
 
