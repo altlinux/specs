@@ -1,6 +1,8 @@
 Epoch: 1
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,14 +10,17 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jcip-annotations
 Version:        1
-Release:        alt3_19.20060626jpp8
+Release:        alt3_22.20060626jpp8
 Summary:        Java annotations for multithreaded software
 
-Group:          Development/Other
 License:        CC-BY
 URL:            http://www.jcip.net/
 Source0:        http://jcip.net.s3-website-us-east-1.amazonaws.com/%{name}-src.jar
 Source1:        http://mirrors.ibiblio.org/pub/mirrors/maven2/net/jcip/%{name}/1.0/%{name}-1.0.pom
+
+# Add temporary dependency on javapackages-local, for %%add_maven_depmap macro
+# See https://lists.fedoraproject.org/archives/list/java-devel@lists.fedoraproject.org/thread/R3KZ7VI5DPCMCELFIVJQ4AXB2WQED35C/
+BuildRequires:  javapackages-local
 
 # There is no point in building native libraries, as the sources contain only
 # annotation definitions, so no code would be generated.
@@ -38,7 +43,7 @@ the annotation, such as verifying that a class annotated with @Immutable
 actually is immutable.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for jcip-annotations
 BuildArch: noarch
 
@@ -83,6 +88,9 @@ cp -pr docs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:1-alt3_22.20060626jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1:1-alt3_19.20060626jpp8
 - new jpp release
 
