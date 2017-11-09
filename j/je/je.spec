@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          je
 Version:       6.3.8
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Berkeley DB Java Edition
 License:       AGPLv3 and BSD
 URL:           http://www.oracle.com/us/products/database/berkeley-db/je/overview/index.html
@@ -113,6 +114,9 @@ cp -a docs/examples %{buildroot}%{_javadocdir}/%{name}-examples
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 6.3.8-alt1_4jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 6.3.8-alt1_3jpp8
 - new jpp release
 
