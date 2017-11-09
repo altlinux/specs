@@ -7,7 +7,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           tomcat-native
 Version:        1.2.12
-Release:        alt1_1jpp8
+Release:        alt1_3jpp8
 Summary:        Tomcat native library
 
 Group:          System/Libraries
@@ -64,6 +64,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/pkgconfig
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt1_3jpp8
+- fc27 update
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt1_1jpp8
 - new jpp release
 
