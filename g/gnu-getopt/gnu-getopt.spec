@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -37,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           gnu-getopt
 Version:        1.0.14
-Release:        alt1_11jpp8
+Release:        alt1_12jpp8
 Epoch:          0
 Summary:        Java getopt implementation
 License:        LGPLv2+
@@ -49,7 +50,7 @@ Provides:       gnu.getopt = %{epoch}:%{version}-%{release}
 Obsoletes:      gnu.getopt < %{epoch}:%{version}-%{release}
 BuildArch:      noarch
 BuildRequires:  ant
-BuildRequires:  javapackages-tools rpm-build-java
+BuildRequires:  javapackages-local
 Requires:       jpackage-utils
 Source44: import.info
 
@@ -106,6 +107,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt1_12jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt1_11jpp8
 - new jpp release
 
