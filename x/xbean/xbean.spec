@@ -2,7 +2,7 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -22,7 +22,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xbean
 Version:        4.5
-Release:        alt1_7jpp8
+Release:        alt1_8jpp8
 Summary:        Java plugin based web server
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/xbean/
@@ -210,6 +210,9 @@ sed -i "s|</Private-Package>|</Private-Package-->|" xbean-blueprint/pom.xml
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:4.5-alt1_8jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:4.5-alt1_7jpp8
 - new jpp release
 
