@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -22,13 +22,12 @@ BuildRequires: jpackage-generic-compat
 %if 0%{?fedora}
 # Unavailable deps
 # https://bugzilla.redhat.com/show_bug.cgi?id=1240475
-#def_with vpp
 %bcond_with vpp
 %endif
 
 Name:          springframework-batch
 Version:       2.2.7
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Tools for enterprise batch or bulk processing
 License:       ASL 2.0
 URL:           http://www.springsource.org/spring-batch
@@ -291,6 +290,9 @@ sed -i 's|${basedir}/target/generated-resources|${basedir}/target/generated-reso
 %doc license.txt notice.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt1_5jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt1_4jpp8
 - new jpp release
 
