@@ -1,7 +1,7 @@
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jgroups
 Version:       3.6.10
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Toolkit for reliable multicast communication
 License:       ASL 2.0 and LGPLv2+
 URL:           http://www.jgroups.org
@@ -92,6 +92,9 @@ chmod 644 README
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt1_3jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt1_2jpp8
 - new jpp release
 
