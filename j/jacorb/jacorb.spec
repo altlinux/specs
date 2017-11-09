@@ -2,7 +2,7 @@ Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -18,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jacorb
 Version:       2.3.2
-Release:       alt1_2.jbossorg.5jpp8
+Release:       alt1_3.jbossorg.5jpp8
 Summary:       The Java implementation of the OMG's CORBA standard
 License:       LGPLv2
 URL:           http://www.jacorb.org/index.html
@@ -136,6 +136,9 @@ subst 's,maxmemory="256m",maxmemory="512m",' build.xml
 %doc doc/LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.3.2-alt1_3.jbossorg.5jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.3.2-alt1_2.jbossorg.5jpp8
 - new jpp release
 
