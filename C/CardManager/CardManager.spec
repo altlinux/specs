@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           CardManager
 Version:        3
-Release:        alt1_8jpp8
+Release:        alt1_9jpp8
 Summary:        Java application to allows you to play any, especially collectible, card game
 
 Group:          Games/Other
@@ -103,6 +103,9 @@ cp -r dist/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3-alt1_9jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 3-alt1_8jpp8
 - new jpp release
 
