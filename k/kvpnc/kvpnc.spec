@@ -1,7 +1,7 @@
 
 Name: kvpnc
 Version: 0.9.6
-Release: alt3
+Release: alt4%ubt
 #define beta rc1
 
 Group: Networking/Remote access
@@ -15,9 +15,11 @@ Source: %name-%version%{?beta:-%beta}-kde4.tar.bz2
 Source1: %name-%version%{?beta:-%beta}-kde4-locale.tar.bz2
 Patch1: kvpnc-0.9.3-kde4-alt-ppp-test.patch
 Patch2: kvpnc-0.9.6-kde4-alt-gcc47.patch
+Patch3: kvpnc-0.9.6-kde4-alt-fix-build.patch
 
 # Automatically added by buildreq on Tue Dec 30 2008 (-bi)
 #BuildRequires: gcc-c++ kde4base-runtime kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libgcrypt-devel libqt3-devel libxkbfile-devel xorg-xf86vidmodeproto-devel
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ kde4base-runtime-devel kde4libs-devel libgcrypt-devel
 
 %description
@@ -36,6 +38,7 @@ rm -rf %name-%version%{?beta:-%beta}-kde4-locale
 
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 cat >>CMakeLists.txt <<__EOF__
 find_package(Msgfmt REQUIRED)
@@ -74,6 +77,9 @@ done
 %_K4iconsdir/*/*/actions/fritzboximport.*
 
 %changelog
+* Thu Nov 09 2017 Oleg Solovyov <mcpain@altlinux.org> 0.9.6-alt4%ubt
+- fix build
+
 * Mon Apr 18 2016 Sergey V Turchin <zerg@altlinux.org> 0.9.6-alt3
 - rebuild with new evironment
 
