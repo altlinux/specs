@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          classycle
 Version:       1.4
-Release:       alt2_10jpp8
+Release:       alt2_11jpp8
 Summary:       Analysing Tools for Java Class and Package Dependencies
 License:       BSD
 URL:           http://classycle.sourceforge.net/
@@ -70,6 +70,9 @@ ant jar apidoc
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_11jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_10jpp8
 - new jpp release
 
