@@ -4,16 +4,13 @@
 %add_findreq_skiplist */ocf/resource.d/rabbitmq/*
 
 # workaround for not find Provides in plugins/*.ez files
-%add_erlang_req_modules_skiplist app_utils credit_flow gen_server2 mirrored_supervisor pmon priority_queue ranch rand_compat supervisor2 time_compat
-%add_erlang_req_modules_skiplist rabbit_amqqueue rabbit_auth_backend_dummy rabbit_auth_backend_internal rabbit_backing_queue rabbit_basic
-%add_erlang_req_modules_skiplist rabbit_channel rabbit_control_misc rabbit_event rabbit_exchange_decorator rabbit_health_check rabbit_net
-%add_erlang_req_modules_skiplist rabbit_networking rabbit_nodes rabbit_queue_decorator rabbit_reader
-
-
+%add_erlang_req_modules_skiplist ranch delegate ec_semver file_handle_cache file_handle_cache_stats lg recon_alloc vm_memory_monitor worker_pool
+%add_erlang_req_modules_skiplist app_utils credit_flow gen_server2 mirrored_supervisor pmon priority_queue rand_compat supervisor2 time_compat
 
 Name: rabbitmq-server
-Version: 3.6.8
-Release: alt4
+Version: 3.6.14
+Release: alt1
+Summary: The RabbitMQ server
 License: MPLv1.1
 BuildArch: noarch
 Group: System/Servers
@@ -42,22 +39,25 @@ BuildRequires: xmlto zip unzip netcat rsync
 Requires: erlang
 
 # workaround for not find Provides in plugins/*.ez files
+Provides: erlang_app(ranch)
 Provides: erlang_app(rabbit_common) = %version
-Provides: erlang_app(ranch) = %version
-
-Provides: erlang_mod(ec_semver) = %version
+Provides: erlang_mod(rabbit_amqqueue_common) = %version
 Provides: erlang_mod(rabbit_cert_info) = %version
 Provides: erlang_mod(rabbit_core_metrics) = %version
 Provides: erlang_mod(rabbit_data_coercion) = %version
+Provides: erlang_mod(rabbit_heartbeat) = %version
+Provides: erlang_mod(rabbit_log) = %version
+Provides: erlang_mod(rabbit_nodes_common) = %version
 Provides: erlang_mod(rabbit_pbe) = %version
-
-# second workaround for not requires tsung
-Provides: erlang_mod(rabbit_binary_parser)  = %version
-Provides: erlang_mod(rabbit_command_assembler) = %version
-Provides: erlang_mod(rabbit_misc) = %version
-
-
-Summary: The RabbitMQ server
+Provides: erlang_mod(rabbit_queue_collector_common) = %version
+Provides: erlang_mod(rabbit_resource_monitor_misc) = %version
+Provides: erlang_mod(rabbit_ssl_options) = %version
+Provides: erlang_mod(rabbit_writer) = %version
+Provides: erlang_mod(rabbit_auth_backend_dummy) = %version
+Provides: erlang_mod(rabbit_backing_queue) = %version
+Provides: erlang_mod(rabbit_control_misc) = %version
+Provides: erlang_mod(rabbit_event) = %version
+Provides: erlang_mod(rabbit_net) = %version
 
 %description
 RabbitMQ is an implementation of AMQP, the emerging standard for high
@@ -77,7 +77,7 @@ Erlang header files for %name
 cd deps/rabbit
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+#%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 cd ../..
@@ -153,7 +153,8 @@ rm -f %buildroot%_erlanglibdir/rabbitmq_server-%version/{LICENSE,LICENSE-*,INSTA
 %doc LICENSE LICENSE-* deps/rabbit/docs/rabbitmq.config.example
 %_sbindir/*
 %_libexecdir/%oname
-%_erlanglibdir/rabbitmq_server-%version
+%dir %_erlanglibdir/rabbitmq_server-%version
+%_erlanglibdir/rabbitmq_server-%version/*
 %_erldir/bin/*
 %exclude %_erlanglibdir/rabbitmq_server-%version/include
 %attr(0750, rabbitmq, rabbitmq) %dir %_localstatedir/%oname
@@ -174,6 +175,9 @@ rm -f %buildroot%_erlanglibdir/rabbitmq_server-%version/{LICENSE,LICENSE-*,INSTA
 #%_datadir/%name
 
 %changelog
+* Fri Nov 10 2017 Alexey Shabalin <shaba@altlinux.ru> 3.6.14-alt1
+- 3.6.14
+
 * Sun Apr 16 2017 Ivan Zakharyaschev <imz@altlinux.org> 3.6.8-alt4
 - rabbitmq-script-wrapper: optimized and made the Bash-scipting safer
   (tolerant to spaces in values).
