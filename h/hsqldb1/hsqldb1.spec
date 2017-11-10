@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %global majorversion 1
 Name:          hsqldb1
 Version:       1.8.1.3
-Release:       alt1_12jpp8
+Release:       alt1_13jpp8
 Summary:       HyperSQL Database Engine
 License:       BSD
 URL:           http://hsqldb.sourceforge.net/
@@ -95,6 +94,9 @@ popd
 %doc doc/hsqldb_lic.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.1.3-alt1_13jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.1.3-alt1_12jpp8
 - new jpp release
 
