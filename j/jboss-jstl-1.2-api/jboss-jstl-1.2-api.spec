@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -15,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jboss-jstl-1.2-api
 Version:       1.1.2
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       JSP Standard Template Library 1.2 API
 License:       ASL 2.0 and (CDDL or GPLv2 with exceptions)
 URL:           https://github.com/jboss/jboss-jstl-api_spec
@@ -77,6 +77,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE README
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_4jpp8
+- fc27 update
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_3jpp8
 - new jpp release
 
