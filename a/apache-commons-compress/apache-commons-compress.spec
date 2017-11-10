@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %global short_name      commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        1.13
+Version:        1.14
 Release:        alt1_2jpp8
 Summary:        Java API for working with compressed files and archivers
 License:        ASL 2.0
@@ -19,6 +19,8 @@ URL:            http://commons.apache.org/proper/commons-compress/
 BuildArch:      noarch
 
 Source0:        http://archive.apache.org/dist/commons/compress/source/%{short_name}-%{version}-src.tar.gz
+
+Patch0: 0001-Remove-Brotli-compressor.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
@@ -32,7 +34,8 @@ Source44: import.info
 %description
 The Apache Commons Compress library defines an API for working with
 ar, cpio, Unix dump, tar, zip, gzip, XZ, Pack200 and bzip2 files.
-
+In version 1.14 read-only support for Brotli decompression has been added,
+but it has been removed form this package.
 
 %package javadoc
 Group: Development/Java
@@ -44,13 +47,16 @@ This package provides %{summary}.
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
+%patch0 -p1
+%pom_remove_dep org.brotli:dec
 
-%pom_remove_plugin :jacoco-maven-plugin
+rm -r src/main/java/org/apache/commons/compress/compressors/brotli
+rm -r src/test/java/org/apache/commons/compress/compressors/brotli
 
 %build
 %mvn_file  : %{short_name} %{name}
 %mvn_alias : commons:
-%mvn_build -- -P!jacoco
+%mvn_build
 
 %install
 %mvn_install
@@ -62,6 +68,9 @@ This package provides %{summary}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.14-alt1_2jpp8
+- new version
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.13-alt1_2jpp8
 - new jpp release
 
