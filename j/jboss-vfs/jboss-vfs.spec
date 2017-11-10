@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-vfs
 Version:          3.2.12
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          JBoss Virtual File System
 License:          ASL 2.0
 URL:              https://github.com/jbossas/jboss-vfs/
@@ -67,6 +67,9 @@ find . -name "*.zip" -type f -print -delete
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.2.12-alt1_3jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.2.12-alt1_2jpp8
 - new jpp release
 
