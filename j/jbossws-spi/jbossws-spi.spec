@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jbossws-spi
 Version:          3.1.2
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          JBossWS SPI
 # https://issues.jboss.org/browse/JBWS-4002
 License:          LGPLv2+
@@ -76,6 +76,9 @@ rm src/test/java/org/jboss/test/wsf/spi/metadata/config/ConfigMDParserTestCase.j
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.1.2-alt1_3jpp8
+- fc27 update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.1.2-alt1_2jpp8
 - new jpp release
 
