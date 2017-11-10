@@ -1,24 +1,25 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:             google-gson
-Version:          2.3.1
-Release:          alt1_6jpp8
-Summary:          Java lib for conversion of Java objects into JSON representation
-License:          ASL 2.0
-URL:              https://github.com/google/gson
-Source0:          https://github.com/google/gson/archive/gson-%{version}.tar.gz
+Name:           google-gson
+Version:        2.8.1
+Release:        alt1_2jpp8
+Summary:        Java lib for conversion of Java objects into JSON representation
+License:        ASL 2.0
+URL:            https://github.com/google/gson
+Source0:        https://github.com/google/gson/archive/gson-parent-%{version}.tar.gz
+Patch0:         osgi-export-internal.patch
 
-BuildArch:        noarch
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
@@ -30,47 +31,48 @@ pre-existing objects that you do not have source-code of.
 
 %package javadoc
 Group: Development/Java
-Summary:          API documentation for %{name}
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n gson-gson-%{version}
+%setup -q -n gson-gson-parent-%{version}
+%patch0 -p1
 
-# convert CR+LF to LF
-sed -i 's/\r//g' LICENSE
-
-# Test requires network
-rm src/test/java/com/google/gson/DefaultInetAddressTypeAdapterTest.java
-
-# Throwable has more fields serialized, probably incorrect test expectations
-rm src/test/java/com/google/gson/functional/ThrowableFunctionalTest.java
-
-# Fixes build with new maven-jar-plugin
-%pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions" "
+# Use felix maven-bundle-plugin only for OSGi metadata
+%pom_remove_plugin :bnd-maven-plugin gson
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-bundle-plugin']" "<configuration>
+    <instructions>
+      <_include>bnd.bnd</_include>
+    </instructions>
+  </configuration>
+  <executions>
     <execution>
-      <id>default-jar</id>
-      <phase>skip</phase>
-    </execution>"
-
-%pom_remove_plugin :maven-javadoc-plugin
+      <id>create-manifest</id>
+      <phase>process-classes</phase>
+      <goals><goal>manifest</goal></goals>
+    </execution>
+  </executions>" gson
 
 %build
-# LANG="C" or LANG="en_US.utf8" needed for the tests
 %mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE README
+%doc LICENSE
+%doc README.md CHANGELOG.md UserGuide.md
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 2.8.1-alt1_2jpp8
+- new version
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_6jpp8
 - new jpp release
 
