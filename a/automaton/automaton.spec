@@ -1,31 +1,29 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Upstream uses version-release.  Control the madness here.
-%global upver 1.11
-%global uprel 8
+%global upver 1.12
+%global uprel 1
 %global filever %{upver}-%{uprel}
 
 Name:           automaton
 Version:        %{upver}r%{uprel}
-Release:        alt1_13jpp8
+Release:        alt1_1jpp8
 Summary:        A Java finite state automata/regular expression library
 
 License:        BSD
 URL:            http://www.brics.dk/automaton/
 Source0:        http://www.brics.dk/~amoeller/%{name}/%{name}-%{filever}.tar.gz
-Source1:        https://repo1.maven.org/maven2/dk/brics/%{name}/%{name}/%{filever}/%{name}-%{filever}.pom
-# Fix javadoc errors
-Patch0:         %{name}-javadoc.patch
+Source1:        https://github.com/cs-au-dk/dk.brics.automaton/blob/master/pom.xml
 
-BuildRequires:  ant
-BuildRequires:  java-devel
-BuildRequires:  java-javadoc
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
 
 BuildArch:      noarch
 Source44: import.info
@@ -50,42 +48,33 @@ Javadoc documentation for automaton.
 
 %prep
 %setup -q -n %{name}-%{upver}
-%patch0
 
 # Remove prebuilt artifacts
 rm -fr dist/%{name}.jar doc/*
 
-# Build for newer Java versions
-sed -i 's/="1.5"/="1.6"/g' build.xml
+# Add the maven pom file, forgotten by upstream
+cp -p %{SOURCE1} .
 
-# Link to offline javadocs
-sed -i 's,http.*api/,file://%{_javadocdir}/java/,' build.xml
+# Remove references to unneeded plugins
+%pom_remove_plugin org.sonatype.plugins:nexus-staging-maven-plugin
+%pom_remove_plugin org.apache.maven.plugins:maven-gpg-plugin
 
 %build
-ant all
+%mvn_build
 
 %install
-mkdir -p %{buildroot}%{_javadir}
-cp -p dist/%{name}.jar %{buildroot}%{_javadir}
-
-mkdir -p %{buildroot}%{_javadocdir}
-cp -a doc %{buildroot}%{_javadocdir}/%{name}
-
-# Install the POM
-mkdir -p %{buildroot}%{_mavenpomdir}
-cp -p %{SOURCE1} %{buildroot}%{_mavenpomdir}/%{name}.pom
-
-# Add Maven metadata
-%add_maven_depmap %{name}.pom %{name}.jar
+%mvn_install
 
 %files -f .mfiles
 %doc ChangeLog README
 %doc COPYING
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.12r1-alt1_1jpp8
+- new version
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.11r8-alt1_13jpp8
 - new jpp release
 
