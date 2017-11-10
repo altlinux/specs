@@ -5,7 +5,7 @@
 Name: kde4-%rname
 %define beta %nil
 Version: 4.14.0
-Release: alt5%ubt
+Release: alt6%ubt
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -36,7 +36,7 @@ BuildRequires: gcc-c++ kde4pimlibs-devel libgomp-devel libkgeomap-devel qjson-de
 BuildRequires: libgio-devel libgpod-devel libgtk+2-devel boost-devel
 BuildRequires: libtbb-devel libopencv-devel
 BuildRequires: libsane-devel libxslt-devel xsltproc libexpat-devel libxml2-devel libjpeg-devel
-BuildRequires: qoauth-devel libkqoauth-devel qjson-devel herqq-devel qtsoap-devel
+BuildRequires: qoauth-devel libkqoauth-devel qjson-devel qtsoap-devel
 BuildRequires: qt-gstreamer1-devel libImageMagick-devel ImageMagick-tools
 BuildRequires: libkvkontakte-devel libmediawiki-devel libtiff-devel flex
 
@@ -189,6 +189,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Fri Nov 10 2017 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt6%ubt
+- clean build requires
+
 * Fri Aug 18 2017 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt5%ubt
 - rebuild with new ImageMagick
 - fix build requires
