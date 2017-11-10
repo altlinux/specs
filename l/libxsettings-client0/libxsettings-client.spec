@@ -1,18 +1,20 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/gtkdocize libICE-devel libSM-devel libX11-devel
 # END SourceDeps(oneline)
+%def_disable gtkdoc
 Summary: utility functions for the Xsettings protocol (GPE)
 Name: libxsettings-client0
 Version: 0.17
-Release: alt1
+Release: alt2
 Packager: Igor Vlasenko <viy@altlinux.ru>
 License: BSD-like, LGPL
 Group: System/Libraries
 URL: http://standards.freedesktop.org/xsettings-spec/0.5/
 
 Source0: libxsettings-client-0.17.tar.gz
-Source1: libxsettings-client_0.17-6.debian.tar.gz
+Source1: libxsettings-client_0.17-10.debian.tar
 Source2: libxsettings-client.watch
+Patch: cflags.patch
 
 %description
 This library is used for applications making use of the Xsettings
@@ -47,10 +49,13 @@ Documentation for the Xsettings protocol that controls setting of
 
 %prep
 %setup -q -n libxsettings-client-%version
+%patch -p1
 
 %build
 %configure \
+%if_enabled gtkdoc
 	--enable-gtk-doc
+%endif
 %make LIBS=-lX11
 
 %install
@@ -71,6 +76,10 @@ make install DESTDIR=%buildroot
 %_datadir/gtk-doc/html/libXsettings-client
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.17-alt2
+- sync with debian
+- fixed build (disabled gtk-doc; /usr/bin/gtkdoc-mktmpl no more)
+
 * Fri Nov 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - initial import from debian.
 - powered by debian2spec ;)
