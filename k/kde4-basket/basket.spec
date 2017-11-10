@@ -5,7 +5,7 @@
 
 Name: 	 kde4-%rname
 Version: 2.10
-Release: alt0_3beta.git%git_rev
+Release: alt0_4beta.git%git_rev
 
 Summary: multi-purpose note-taking application
 License: GPLv2+
@@ -16,6 +16,7 @@ Requires: %libbasketcommon = %version-%release
 Provides: basket = %version-%release
 
 Source:  %rname-%version.tar
+Patch1:  kde4-basket-2.10-fix-build.patch
 
 BuildRequires(pre): kde4libs-devel
 BuildRequires: gcc-c++ glib2-devel glibc-devel kde4pimlibs-devel
@@ -43,6 +44,7 @@ KDE 4 core library.
 
 %prep
 %setup -q -n %rname-%version
+%patch1 -p1
 
 %build
 %K4build
@@ -68,6 +70,9 @@ KDE 4 core library.
 %_K4libdir/libbasketcommon.so.*
 
 %changelog
+* Fri Nov 10 2017 Oleg Solovyov <mcpain@altlinux.org> 2.10-alt0_4beta.gite93519c
+- fix build
+
 * Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 2.10-alt0_3beta.gite93519c
 - Build without nepomuk
 
