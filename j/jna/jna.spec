@@ -1,14 +1,15 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jna
-Version:        4.3.0
-Release:        alt1_4jpp8
+Version:        4.4.0
+Release:        alt1_7jpp8
 Summary:        Pure Java access to native libraries
 # Most of code is dual-licensed under either LGPL 2.1 only or Apache
 # License 2.0.  WeakIdentityHashMap.java was taken from Apache CXF,
@@ -30,14 +31,15 @@ Patch1:         0002-Load-system-library.patch
 Patch2:         0003-Tests-headless.patch
 # Adds --allow-script-in-comments arg to javadoc to avoid error
 Patch3:         0004-Fix-javadoc-build.patch
+# Avoid generating duplicate manifest entry
+# See https://bugzilla.redhat.com/show_bug.cgi?id=1469022
+Patch4:         0005-Fix-duplicate-manifest-entry.patch
 
 # We manually require libffi because find-requires doesn't work
 # inside jars.
 Requires:       libffi6
 BuildRequires:  gcc-common
-BuildRequires:  make
-BuildRequires:  java-devel
-BuildRequires:  jpackage-utils
+BuildRequires:  javapackages-local
 BuildRequires:  libffi-devel
 BuildRequires:  ant
 BuildRequires:  ant-junit
@@ -81,6 +83,7 @@ cp %{SOURCE1} .
 %patch1 -p1 -b .loadlib
 %patch2 -p1 -b .tests-headless
 %patch3 -p1
+%patch4 -p1
 
 chmod -Rf a+rX,u+w,g-w,o-w .
 sed -i 's|@LIBDIR@|%{_libdir}/%{name}|' src/com/sun/jna/Native.java
@@ -91,7 +94,7 @@ sed -i 's/\r//' LICENSE
 chmod -c 0644 LICENSE OTHERS CHANGES.md
 
 sed s,'<include name="junit.jar"/>,&<include name="reflections.jar"/>,' -i build.xml
-build-jar-repository -s -p lib junit reflections
+build-jar-repository -s -p lib junit reflections ant
 
 cp lib/native/aix-ppc64.jar lib/clover.jar
 
@@ -105,27 +108,21 @@ ant -Dcompatibility=1.6 -Dplatform.compatibility=1.6 -Dcflags_extra.native="%{op
 find contrib -name build -exec rm -rf {} \; || :
 
 %install
-# jars
-install -D -m 644 build/%{name}-min.jar %{buildroot}%{_javadir}/%{name}.jar
-install -d -m 755 %{buildroot}%{_javadir}/%{name}
-find contrib -name '*.jar' -exec cp {} %{buildroot}%{_javadir}/%{name}/ \;
 # NOTE: JNA has highly custom code to look for native jars in this
 # directory.  Since this roughly matches the jpackage guidelines,
 # we'll leave it unchanged.
 install -d -m 755 %{buildroot}%{_libdir}/%{name}
 install -m 755 build/native*/libjnidispatch*.so %{buildroot}%{_libdir}/%{name}/
 
-# install maven pom file
-install -Dm 644 pom-%{name}.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-install -Dm 644 pom-%{name}-platform.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-platform.pom
+%mvn_file :jna jna jna/jna %{_javadir}/jna
 
-# ... and maven depmap
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-%add_maven_depmap JPP.%{name}-%{name}-platform.pom -f platform %{name}/%{name}-platform.jar -a "net.java.dev.jna:platform"
+%mvn_package :jna-platform contrib
+%mvn_alias :jna-platform :platform
 
-# javadocs
-install -p -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -a doc/javadoc/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_artifact pom-jna.xml build/jna-min.jar
+%mvn_artifact pom-jna-platform.xml contrib/platform/dist/jna-platform.jar
+
+%mvn_install -J doc/javadoc
 
 
 %files -f .mfiles
@@ -133,15 +130,16 @@ cp -a doc/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE LGPL2.1 AL2.0
 %{_libdir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE LGPL2.1 AL2.0
-%{_javadocdir}/%{name}
 
-%files contrib -f .mfiles-platform
-%{_javadir}/%{name}
+%files contrib -f .mfiles-contrib
 
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 4.4.0-alt1_7jpp8
+- new version
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 4.3.0-alt1_4jpp8
 - new jpp release
 
