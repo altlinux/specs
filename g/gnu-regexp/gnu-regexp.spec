@@ -2,6 +2,7 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -39,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           gnu-regexp
 Version:        1.1.4
-Release:        alt1_23jpp8
+Release:        alt1_24jpp8
 Summary:        Java NFA regular expression engine implementation
 # GPLv2+: gnu/regexp/util/Egrep.java
 #         gnu/regexp/util/Grep.java
@@ -52,7 +53,7 @@ License:        LGPLv2+
 Source0:        http://ftp.frugalware.org/pub/other/sources/gnu.regexp/gnu.regexp-%{version}.tar.gz
 Source1:        %{name}.build.xml
 Source2:        http://repo1.maven.org/maven2/gnu-regexp/gnu-regexp/%{version}/gnu-regexp-%{version}.pom
-BuildRequires:  javapackages-tools rpm-build-java
+BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  gnu-getopt
 URL:            http://savannah.gnu.org/projects/gnu-regexp
@@ -133,6 +134,9 @@ cp -rp build/api/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt1_24jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt1_23jpp8
 - new jpp release
 
