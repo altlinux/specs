@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             geronimo-saaj
 Version:          1.1
-Release:          alt2_18jpp8
+Release:          alt2_19jpp8
 Summary:          Java EE: SOAP with Attachments API Package v1.3
 License:          ASL 2.0 and W3C
 
@@ -68,6 +68,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_19jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_18jpp8
 - new jpp release
 
