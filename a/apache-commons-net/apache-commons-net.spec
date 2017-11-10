@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 %global short_name   commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        3.5
+Version:        3.6
 Release:        alt1_2jpp8
 Summary:        Internet protocol suite Java library
 License:        ASL 2.0
@@ -72,6 +72,9 @@ rm src/test/java/org/apache/commons/net/tftp/TFTPServerPathTest.java
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.6-alt1_2jpp8
+- new version
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.5-alt1_2jpp8
 - new jpp release
 
