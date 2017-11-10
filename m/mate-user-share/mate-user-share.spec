@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/sbin/httpd /usr/sbin/httpd2 imake libX11-devel libXt-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) xorg-cf-files
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/sbin/httpd2 imake libX11-devel libXt-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) xorg-cf-files
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define fedora 21
@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/sbin/httpd
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.16
+%global branch 1.18
 
 Summary:         Mate user file sharing
 Name:            mate-user-share
@@ -139,6 +139,9 @@ desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-s
 
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.18.0-alt1_0
+- new version
+
 * Fri Oct 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_0
 - new version
 
