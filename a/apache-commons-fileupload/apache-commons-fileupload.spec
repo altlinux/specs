@@ -1,15 +1,22 @@
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_without  portlet
+
 Name:           apache-commons-fileupload
-Version:        1.3.2
+Version:        1.3.3
 Release:        alt1_2jpp8
 Summary:        API to work with HTML file upload
 License:        ASL 2.0
@@ -23,8 +30,7 @@ BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(javax.servlet:servlet-api)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-%if 0%{?fedora}
+%if %{with portlet}
 BuildRequires:  mvn(javax.portlet:portlet-api)
 %endif
 Source44: import.info
@@ -54,16 +60,14 @@ This package contains the API documentation for %{name}.
 sed -i 's/\r//' LICENSE.txt
 sed -i 's/\r//' NOTICE.txt
 
-%if 0%{?fedora}
+%if %{with portlet}
 # fix gId
 sed -i "s|<groupId>portlet-api</groupId>|<groupId>javax.portlet</groupId>|" pom.xml
 %else
-# Non-Fedora: remove portlet stuff
 %pom_remove_dep portlet-api:portlet-api
 %pom_xpath_remove pom:properties/pom:commons.osgi.import
 %pom_xpath_remove pom:properties/pom:commons.osgi.dynamicImport
 rm -r src/main/java/org/apache/commons/fileupload/portlet
-rm src/test/java/org/apache/commons/fileupload/*Portlet*
 %endif
 
 # -----------------------------------------------------------------------------
@@ -88,6 +92,9 @@ rm src/test/java/org/apache/commons/fileupload/*Portlet*
 # -----------------------------------------------------------------------------
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.3.3-alt1_2jpp8
+- new version
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.3.2-alt1_2jpp8
 - new jpp release
 
