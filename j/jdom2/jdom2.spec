@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jdom2
 Version:       2.0.6
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Java manipulation of XML made easy
 License:       ASL 1.1 or BSD
 URL:           http://www.jdom.org/
@@ -23,8 +23,6 @@ Source3:       bnd.properties
 # Process contrib and junit pom files
 Patch0:        jdom-2.0.5-build.patch
 
-BuildRequires: java-devel
-BuildRequires: java-javadoc
 BuildRequires: javapackages-local
 BuildRequires: ant
 BuildRequires: ant-junit
@@ -65,7 +63,7 @@ This package contains javadoc for %{name}.
 find . -name "*.class" -print -delete
 find . -name "*.jar" -print -delete
 
-%patch0 -p0
+%patch0 -p1
 
 cp -p %{SOURCE1} maven/contrib.pom
 cp -p %{SOURCE2} maven/junit.pom
@@ -74,6 +72,8 @@ sed -i 's/\r//' LICENSE.txt README.txt
 
 # Unable to run coverage: use log4j12 but switch to log4j 2.x
 sed -i.coverage "s|coverage, jars|jars|" build.xml
+
+build-jar-repository lib xerces-j2 xml-commons-apis jaxen junit isorelax xalan-j2 xalan-j2-serializer
 
 %build
 ant -Dversion=%{version} -Dj2se.apidoc=%{_javadocdir}/java maven
@@ -97,6 +97,9 @@ mv build/package/jdom-%{version}.bar build/package/jdom-%{version}.jar
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.6-alt1_8jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.6-alt1_7jpp8
 - new jpp release
 
