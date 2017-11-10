@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -17,12 +17,11 @@ BuildRequires: jpackage-generic-compat
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
-#def_with test
 %bcond_with test
 
 Name:          hibernate-jpamodelgen
 Version:       1.3.0
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Hibernate JPA 2 Metamodel Generator
 License:       ASL 2.0
 Url:           http://www.hibernate.org/subprojects/jpamodelgen.html
@@ -98,6 +97,9 @@ opts="-f"
 %doc license.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_4jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_3jpp8
 - new jpp release
 
