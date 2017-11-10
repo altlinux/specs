@@ -1,7 +1,7 @@
 Epoch: 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-ejb-3.1-api
 Version:          1.0.2
-Release:          alt2_16jpp8
+Release:          alt2_17jpp8
 Summary:          EJB 3.1 API
 License:          CDDL or GPLv2 with exceptions
 Url:              http://www.jboss.org
@@ -59,6 +59,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_17jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_16jpp8
 - new jpp release
 
