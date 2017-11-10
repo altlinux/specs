@@ -1,17 +1,15 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global jtidyversion r938
-
 Name:             jtidy
 Version:          1.0
-Release:          alt3_0.23.20100930svn1125jpp8
+Release:          alt3_0.25.20100930svn1125jpp8
 Epoch:            3
 Summary:          HTML syntax checker and pretty printer
 License:          zlib
@@ -22,13 +20,9 @@ Source0:          %{name}.tar.xz
 Source1:          %{name}.jtidy.script
 BuildArch:        noarch
 
-BuildRequires:    java-devel >= 1.6.0
-BuildRequires:    jpackage-utils
+BuildRequires:    javapackages-local
 BuildRequires:    ant
-BuildRequires:    xml-commons-apis
-
-Requires:         jpackage-utils
-Requires:         xml-commons-apis
+BuildRequires:    mvn(xerces:dom3-xml-apis)
 Source44: import.info
 
 %description
@@ -57,18 +51,11 @@ This package contains %{summary}.
 ant -Dant.build.javac.source=1.4
 
 %install
-# jar
-install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 target/%{name}-%{jtidyversion}.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_file : %{name}
+%mvn_alias : net.sf.jtidy:%{name}
+%mvn_artifact pom.xml target/%{name}-*.jar
 
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -p -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap -a net.sf.jtidy:%{name}
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}/
-cp -pr target/javadoc/* %{buildroot}%{_javadocdir}/%{name}/
+%mvn_install -J target/javadoc
 
 # shell script
 mkdir -p %{buildroot}%{_bindir}
@@ -86,12 +73,14 @@ EOF
 %attr(755, root, root) %{_bindir}/*
 %config(noreplace) %{_sysconfdir}/ant.d/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
-%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3:1.0-alt3_0.25.20100930svn1125jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 3:1.0-alt3_0.23.20100930svn1125jpp8
 - new jpp release
 
