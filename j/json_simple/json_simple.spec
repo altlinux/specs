@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           json_simple
 Version:        1.1.1
-Release:        alt2_14jpp8
+Release:        alt2_15jpp8
 Summary:        Simple Java toolkit for JSON
 License:        ASL 2.0
 URL:            http://code.google.com/p/json-simple/
@@ -52,7 +52,7 @@ This package contains %{summary}.
 %setup -q -n json-simple-%{version}
 find . -name '*.jar' -exec rm -f '{}' \;
 # All the files have dos line endings, remove them.
-find . -type f -exec %{__sed} -i 's/\r//' {} \;
+find . -type f -exec sed -i 's/\r//' {} \;
 
 %patch0 -p1
 
@@ -71,6 +71,9 @@ find . -type f -exec %{__sed} -i 's/\r//' {} \;
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_15jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_14jpp8
 - new jpp release
 
