@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jastow
 Version:          2.0.1
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          Jasper fork
 License:          ASL 2.0
 Url:              https://github.com/undertow-io/jastow
@@ -66,6 +67,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_3jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_2jpp8
 - new jpp release
 
