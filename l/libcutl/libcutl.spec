@@ -1,8 +1,7 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%add_optflags %optflags_shared
-%define fedora 25
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # The base of the version (just major and minor without point)
@@ -10,7 +9,7 @@ BuildRequires: gcc-c++
 
 Name:           libcutl
 Version:        %{base_version}.0
-Release:        alt1_8
+Release:        alt1_10
 Summary:        C++ utility library from Code Synthesis
 
 Group:          System/Libraries
@@ -53,17 +52,13 @@ developing applications that use %{name}.
 %prep
 %setup -q
 %patch0
-rm -r cutl/details/boost cutl/details/expat
+#rm -r cutl/details/boost cutl/details/expat
 
 
 %build
 # Use the system Boost and expat libraries
-confopts="--disable-static --with-external-boost --with-external-expat"
-# If building on RHEL 5
-%if 0%{?rhel}%{?fedora} <= 5
-# Use the EPEL Boost 1.41 instead of the standard system one
-confopts="$confopts CPPFLAGS=-I%{_includedir}/boost141 LDFLAGS=-L%{_libdir}/boost141"
-%endif
+#confopts="--disable-static --with-external-boost --with-external-expat"
+confopts="--disable-static --with-external-expat"
 %configure $confopts
 %make_build
 
@@ -91,6 +86,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_10
+- fixed build
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_8
 - update to new release by fcimport
 
