@@ -3,10 +3,11 @@
 
 Name: kde4-%origname
 Version: 2.4.0
-Release: alt0.1.1
+Release: alt1
 
 Source: %origname.tar.gz
 Patch1: not_show_hidden_files.patch
+Patch2: fix-build.patch
 
 Packager: Aeliya Grevnyov <gray_graff@altlinux.org>
 
@@ -40,6 +41,7 @@ published under the GNU General Public Licence
 %prep
 %setup -qn %origname
 %patch1 -p2
+%patch2 -p2
 
 %build
 %add_optflags -fpermissive
@@ -63,6 +65,9 @@ published under the GNU General Public Licence
 %_man1dir/%origname.*
 
 %changelog
+* Fri Nov 10 2017 Oleg Solovyov <mcpain@altlinux.org> 2.4.0-alt1
+- fix build
+
 * Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt0.1.1
 - Fixed build with gcc 4.7
 
