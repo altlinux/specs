@@ -7,7 +7,7 @@ BuildRequires(pre): rpm-macros-java
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # TODO:
@@ -15,27 +15,25 @@ BuildRequires: jpackage-generic-compat
 # - Drop isorelax and xerces license texts and references to them because
 #   our package does not actually contain them?
 
-%if 0%{?fedora} >= 20 || 0%{?rhel} >= 7
+%if 0%{?fedora} || 0%{?rhel} >= 7
 %global headless -headless
 %endif
 
 Name:           jing-trang
-Version:        20131210
-Release:        alt1_7jpp8
+Version:        20151127
+Release:        alt1_2jpp8
 Summary:        Schema validation and conversion based on RELAX NG
 
 License:        BSD
 URL:            https://github.com/relaxng/jing-trang
 Source0:        https://github.com/relaxng/jing-trang/archive/V%{version}.tar.gz
 # Applicable parts submitted upstream:
-# http://code.google.com/p/jing-trang/issues/detail?id=129
-# http://code.google.com/p/jing-trang/issues/detail?id=130
+# https://github.com/relaxng/jing-trang/pull/215
+# https://github.com/relaxng/jing-trang/pull/216
 Patch0:         0001-Various-build-fixes.patch
 # Saxon "HE" doesn't work for this, no old Saxon available, details in #655601
 Patch1:         0002-Use-Xalan-instead-of-Saxon-for-the-build-655601.patch
 Patch2:         %{name}-20091111-datatype-sample.patch
-# https://code.google.com/p/jing-trang/issues/detail?id=182
-Patch3:         jing-trang-20131210-java8.patch
 BuildArch:      noarch
 
 %if 0%{?rhel} && 0%{?rhel} < 7
@@ -84,6 +82,7 @@ Summary:        Javadoc API documentation for Jing
 Group:          Development/Java
 Requires:       java-javadoc
 Requires:       relaxngDatatype-javadoc
+BuildArch: noarch
 
 %description -n jing-javadoc
 Javadoc API documentation for Jing.
@@ -122,15 +121,12 @@ rm -r gcj mod/datatype/src/main/org $(find . -name "*.jar")
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 sed -i -e 's/\r//g' lib/isorelax.copying.txt
 find . -name "OldSaxon*.java" -delete # No "old" saxon available in Fedora
-%if 0%{?_licensedir:1}
 sed -i -e 's|"\(copying\.txt\)"|"%{_licensedir}/dtdinst/\1"|' \
     dtdinst/index.html
 sed -i -e 's|"\(copying\.txt\)"|"%{_licensedir}/trang/\1"|' \
     trang/doc/trang.html trang/doc/trang-manual.html
-%endif
 
 
 %build
@@ -144,42 +140,34 @@ rm -rf $RPM_BUILD_ROOT *-%{version}
 
 install -dm 755 $RPM_BUILD_ROOT{%{_javadir},%{_javadocdir}}
 
-%{__unzip} build/dist/jing-%{version}.zip
+unzip build/dist/jing-%{version}.zip
 install -Dpm 644 jing-%{version}/bin/jing.jar $RPM_BUILD_ROOT%{_javadir}
 mv jing-%{version}/doc/api $RPM_BUILD_ROOT%{_javadocdir}/jing
 ln -s %{_javadocdir}/jing jing-%{version}/doc/api
 rm -f jing-%{version}/sample/datatype/datatype-sample.jar
 %jpackage_script com.thaiopensource.relaxng.util.Driver "" "" jing:relaxngDatatype:xml-commons-resolver:xerces-j2 jing true
-%if 0%{?_licensedir:1}
 mkdir -p jing-%{version}/_licenses
 mv jing-%{version}/doc/*copying.* jing-%{version}/_licenses
-%endif
 
-%{__unzip} build/dist/trang-%{version}.zip
+unzip build/dist/trang-%{version}.zip
 install -pm 644 trang-%{version}/trang.jar $RPM_BUILD_ROOT%{_javadir}
 %jpackage_script com.thaiopensource.relaxng.translate.Driver "" "" trang:relaxngDatatype:xml-commons-resolver:xerces-j2 trang true
 
-%{__unzip} build/dist/dtdinst-%{version}.zip
+unzip build/dist/dtdinst-%{version}.zip
 install -pm 644 dtdinst-%{version}/dtdinst.jar $RPM_BUILD_ROOT%{_javadir}
 %jpackage_script com.thaiopensource.xml.dtd.app.Driver "" "" dtdinst dtdinst true
 
 
-%{!?_licensedir:%global license %%doc}
-
 %files -n jing
-%if 0%{?_licensedir:1}
 %doc --no-dereference jing-%{version}/_licenses/*
-%endif
-%doc --no-dereference jing-%{version}/{readme.html,doc,sample}
+%doc --no-dereference jing-%{version}/readme.html
+%doc --no-dereference jing-%{version}/doc
+%doc --no-dereference jing-%{version}/sample
 %{_bindir}/jing
 %{_javadir}/jing.jar
 
 %files -n jing-javadoc
-%if 0%{?_licensedir:1}
 %doc jing-%{version}/_licenses/*
-%else
-%doc jing-%{version}/doc/*copying.*
-%endif
 %{_javadocdir}/jing/
 
 %files -n trang
@@ -190,13 +178,20 @@ install -pm 644 dtdinst-%{version}/dtdinst.jar $RPM_BUILD_ROOT%{_javadir}
 
 %files -n dtdinst
 %doc dtdinst-%{version}/copying.txt
-%doc dtdinst-%{version}/*.{html,rng,xsl}
-%doc dtdinst-%{version}/{dtdinst.rnc.txt,teixml.dtd.txt,example}
+%doc dtdinst-%{version}/*.html
+%doc dtdinst-%{version}/*.rng
+%doc dtdinst-%{version}/*.xsl
+%doc dtdinst-%{version}/dtdinst.rnc.txt
+%doc dtdinst-%{version}/teixml.dtd.txt
+%doc dtdinst-%{version}/example
 %{_bindir}/dtdinst
 %{_javadir}/dtdinst.jar
 
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 0:20151127-alt1_2jpp8
+- new version
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:20131210-alt1_7jpp8
 - new jpp release
 
