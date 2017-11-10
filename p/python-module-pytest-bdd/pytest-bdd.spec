@@ -1,37 +1,36 @@
 %define oname pytest-bdd
 
 %def_with python3
-#def_disable check
 
 Name: python-module-%oname
-Version: 2.14.1
-Release: alt1.git20150713.1
+Version: 2.19.0
+Release: alt1
 Summary: BDD library for the py.test runner
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/pytest-bdd/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-# https://github.com/olegpidsadnyi/pytest-bdd.git
-Source: %name-%version.tar
 BuildArch: noarch
+Url: https://pypi.python.org/pypi/pytest-bdd/
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-glob2 python-module-mako
-BuildPreReq: python-module-detox python-module-mock
-BuildPreReq: python-module-pytest-pep8 python-module-pytest-cov
-BuildPreReq: python-module-pytest-cache python-module-pytest-xdist
-BuildPreReq: python-module-markupsafe python-module-greenlet
-BuildPreReq: python-module-virtualenv python-module-parse_type
+# https://github.com/pytest-dev/pytest-bdd.git
+Source: %name-%version.tar
+Patch1: %oname-%version-alt-tests.patch
+
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-glob2 python-module-mako
+BuildRequires: python-module-detox python-module-mock
+BuildRequires: python-module-pytest-pep8 python-module-pytest-cov
+BuildRequires: python-module-pytest-cache python-module-pytest-xdist
+BuildRequires: python-module-markupsafe python-module-greenlet
+BuildRequires: python-module-virtualenv python-module-parse_type
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-glob2 python3-module-mako
-BuildPreReq: python3-module-detox python3-module-mock
-BuildPreReq: python3-module-pytest-pep8 python3-module-pytest-cov
-BuildPreReq: python3-module-pytest-cache python3-module-pytest-xdist
-BuildPreReq: python3-module-markupsafe python3-module-greenlet
-BuildPreReq: python3-module-virtualenv python3-module-parse_type
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-glob2 python3-module-mako
+BuildRequires: python3-module-detox python3-module-mock
+BuildRequires: python3-module-pytest-pep8 python3-module-pytest-cov
+BuildRequires: python3-module-pytest-cache python3-module-pytest-xdist
+BuildRequires: python3-module-markupsafe python3-module-greenlet
+BuildRequires: python3-module-virtualenv python3-module-parse_type
 %endif
 
 %py_provides pytest_bdd
@@ -75,6 +74,7 @@ the Gherkin imperative declarations.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -104,12 +104,10 @@ popd
 %python_install
 
 %check
-export PYTHONPATH=$PWD
-py.test -vv
+PYTHONPATH=$(pwd) py.test -vv
 %if_with python3
 pushd ../python3
-export PYTHONPATH=$PWD
-py.test-%_python3_version -vv
+PYTHONPATH=$(pwd) py.test3 -vv
 popd
 %endif
 
@@ -129,6 +127,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.19.0-alt1
+- Updated to upstream version 2.19.0.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.14.1-alt1.git20150713.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
