@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             geronimo-osgi-support
 Version:          1.0
-Release:          alt2_19jpp8
+Release:          alt2_20jpp8
 Summary:          OSGI spec bundle support
 License:          ASL 2.0 and W3C
 URL:              http://geronimo.apache.org/
@@ -78,6 +78,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_20jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_19jpp8
 - new jpp release
 
