@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++ java-devel-default
+BuildRequires: gcc-c++ java-devel-default rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          ironjacamar
 Version:       1.3.4
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Java Connector Architecture 1.7 implementation
 License:       LGPLv2+
 URL:           http://www.ironjacamar.org/
@@ -30,7 +30,7 @@ BuildRequires: apache-ivy
 BuildRequires: graphviz libgraphviz
 BuildRequires: ivy-local
 BuildRequires: java-devel
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: javapackages-local
 BuildRequires: mvn(javax.validation:validation-api)
 BuildRequires: mvn(jdepend:jdepend)
 BuildRequires: mvn(org.apache.ant:ant)
@@ -149,6 +149,9 @@ cp -rp target/docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt1_4jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt1_3jpp8
 - new jpp release
 
