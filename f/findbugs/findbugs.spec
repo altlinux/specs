@@ -1,7 +1,8 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: perl(FileHandle.pm) rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,10 +12,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:           findbugs
 Version:        3.0.1
-Release:        alt1_8jpp8
+Release:        alt1_12jpp8
 Summary:        Find bugs in Java code
 
-Group:          Development/Other
 License:        LGPLv2+
 URL:            http://findbugs.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}-source.zip
@@ -49,6 +49,9 @@ Patch2:         findbugs-ant-task-classpath.patch
 
 Patch3:         findbugs-manual.patch
 
+# Port to dom4j 2.0
+Patch4:         findbugs-dom4j.patch
+
 BuildArch:      noarch
 
 BuildRequires:  findbugs-bcel
@@ -65,10 +68,14 @@ BuildRequires:  jpackage-utils
 BuildRequires:  jsr-305
 BuildRequires:  junit
 BuildRequires:  objectweb-asm
-BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  /usr/bin/latex texlive-latex-recommended
 BuildRequires:  texlive-publishers
+
+# Add temporary dependency on javapackages-local, for %%add_maven_depmap macro
+# See https://lists.fedoraproject.org/archives/list/java-devel@lists.fedoraproject.org/thread/R3KZ7VI5DPCMCELFIVJQ4AXB2WQED35C/
+BuildRequires:  javapackages-local
 
 # For generating HTML version of manual using xsltproc
 BuildRequires:  libxslt xsltproc
@@ -93,7 +100,7 @@ It can check for null pointer exceptions, multithreaded code errors, and other
 bugs.
 
 %package -n ant-findbugs
-Group:          Development/Java
+Group: Development/Java
 Summary:        Ant task for findbugs
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       ant
@@ -103,7 +110,7 @@ This package defines an ant task for findbugs for easy integration of findbugs
 into your ant-controlled project.
 
 %package javadoc
-Group:          Development/Documentation
+Group: Development/Documentation
 Summary:        Javadoc documentation for findbugs
 BuildArch: noarch
 
@@ -111,7 +118,7 @@ BuildArch: noarch
 Javadoc documentation for findbugs.
 
 %package tools
-Group:          Development/Other
+Group: Development/Other
 Summary:        Addon tools for findbugs
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       junit
@@ -127,6 +134,7 @@ README.fedora for more information.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 cp -p %{SOURCE2} README.fedora
 
@@ -241,6 +249,9 @@ fi ||:
 %{_javadir}/findbugs-tools.jar
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_12jpp8
+- fc27 update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_8jpp8
 - new jpp release
 
