@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.1.3
-Release: alt1
+Release: alt2
 Summary: pytest plugin for aiohttp support
 License: ASL 2.0
 Group: Development/Python
@@ -12,7 +12,7 @@ Source: https://pypi.python.org/packages/89/b1/a486d9e969de578c373bb48ca907cbfa3
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests python3-module-pytest-runner
+BuildPreReq: python3-devel python3-module-setuptools-tests python3-module-pytest-runner python3(aiohttp) python3(aiohttp.test_utils)
 
 %description
 pytest plugin for aiohttp support
@@ -20,10 +20,10 @@ pytest plugin for aiohttp support
 %package -n python3-module-%oname
 Summary: pytest plugin for aiohttp support
 Group: Development/Python3
+%add_python3_req_skip aiohttp.pytest_plugin
 
 %description -n python3-module-%oname
 pytest plugin for aiohttp support
-%add_python3_req_skip aiohttp.pytest_plugin
 
 %prep
 %setup -n %oname-%version
@@ -42,5 +42,8 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Fri Nov 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.3-alt2
+- Updated build dependencies.
+
 * Sun Jan 15 2017 Anton Midyukov <antohami@altlinux.org> 0.1.3-alt1
 - Initial build for ALT Linux Sisyphus.
