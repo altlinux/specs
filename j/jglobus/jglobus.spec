@@ -1,15 +1,16 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		jglobus
 Version:	2.1.0
-Release:	alt1_5jpp8
+Release:	alt1_7jpp8
 Summary:	Globus Java client libraries
 
 #		Everything is Apache 2.0 except for one file that is MIT:
@@ -18,9 +19,16 @@ License:	ASL 2.0 and MIT
 URL:		http://github.com/%{name}/
 Source0:	http://github.com/%{name}/JGlobus/archive/JGlobus-Release-%{version}.tar.gz
 #		DERObjectIdentifier is obsolete
+#		https://github.com/jglobus/JGlobus/pull/149
 Patch0:		%{name}-DERObjectIdentifier-is-obsolete.patch
 #		Don't force SSLv3
 Patch1:		%{name}-dont-force-SSLv3.patch
+#		Relax proxy validation to be RFC-3820 compliant
+#		https://github.com/jglobus/JGlobus/issues/160
+Patch2:		%{name}-key-usage.patch
+#		Fix javadoc
+#		https://github.com/jglobus/JGlobus/pull/162
+Patch3:		%{name}-javadoc.patch
 
 BuildArch:	noarch
 
@@ -154,6 +162,8 @@ This package contains the API documentation for %{name}.
 %setup -q -n JGlobus-JGlobus-Release-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 # Do not package test classes
 %mvn_package org.jglobus:container-test-utils __noinstall
@@ -204,6 +214,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_7jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_5jpp8
 - new jpp release
 
