@@ -1,6 +1,6 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           javaewah
 Version:        1.1.6
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Summary:        A word-aligned compressed variant of the Java bitset class
 
 License:        ASL 2.0
@@ -70,6 +70,9 @@ API documentation for %{name}.
 %doc LICENSE-2.0.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_2jpp8
+- fc27 update
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_1jpp8
 - new jpp release
 
