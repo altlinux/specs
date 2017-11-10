@@ -3,15 +3,16 @@
 %def_disable gnutls
 %def_disable nss
 %def_disable polarssl
+%def_disable mbedtls
 
 Name: lib%_name
-Version: 1.12.0
-Release: alt3.git20140427
+Version: 1.22.0
+Release: alt1
 Summary: A library for using PKCS#11 providers
 
 Group: Development/Other
 License: GPLv2 or BSD
-Url: http://www.opensc-project.org/pkcs11-helper/
+Url: https://github.com/OpenSC/pkcs11-helper
 Packager: Mykola Grechukh <gns@altlinux.ru>
 
 # https://github.com/OpenSC/pkcs11-helper.git
@@ -25,6 +26,7 @@ BuildRequires: doxygen graphviz
 %{?_enable_gnutls:BuildRequires: pkgconfig(gnutls) >= 1.4}
 %{?_enable_nss:BuildRequires: pkgconfig(nss) >= 3.11}
 %{?_enable_polarssl:BuildRequires: libpolarssl-devel}
+%{?_enable_mbedtls:BuildRequires: libmbedtls-devel}
 
 %description
 pkcs11-helper is a library that simplifies the interaction with PKCS#11
@@ -59,6 +61,7 @@ programs using the pkcs11-helper library.
 		%{?_disable_gnutls:--disable-crypto-engine-gnutls} \
 		%{?_disable_nss:--disable-crypto-engine-nss} \
 		%{?_disable_polarssl:--disable-crypto-engine-polarssl} \
+		%{?_disable_mbedtls:--disable-crypto-engine-mbedtls} \
 		--enable-tests
 %make_build
 
@@ -86,6 +89,9 @@ rm -f %buildroot%_libdir/*.la
 %_man8dir/pkcs11-helper-1.8*
 
 %changelog
+* Fri Nov 10 2017 Alexey Shabalin <shaba@altlinux.ru> 1.22.0-alt1
+- 1.22
+
 * Fri Jun 30 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.12.0-alt3.git20140427
 - build with openssl, prevent acidental rebuilds with libressl
 
