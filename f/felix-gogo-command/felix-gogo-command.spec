@@ -1,39 +1,36 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           felix-gogo-command
-Version:        0.16.0
-Release:        alt1_4jpp8
+Version:        1.0.2
+Release:        alt1_3jpp8
 Summary:        Apache Felix Gogo Command
 
 License:        ASL 2.0
-URL:            http://felix.apache.org
-Source0:        http://www.apache.org/dist/felix/org.apache.felix.gogo.command-%{version}-project.tar.gz
-
-Patch0:         felix-gogo-command-pom.xml.patch
+URL:            http://felix.apache.org/documentation/subprojects/apache-felix-gogo.html
+Source0:        https://repo1.maven.org/maven2/org/apache/felix/org.apache.felix.gogo.command/%{version}/org.apache.felix.gogo.command-%{version}-source-release.tar.gz
 
 BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:gogo-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.felix:org.apache.felix.bundlerepository)
-BuildRequires:  mvn(org.apache.felix:org.apache.felix.framework)
 BuildRequires:  mvn(org.apache.felix:org.apache.felix.gogo.runtime)
-BuildRequires:  mvn(org.osgi:org.osgi.compendium)
-BuildRequires:  mvn(org.mockito:mockito-all)
+BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  mvn(org.osgi:osgi.cmpn)
+BuildRequires:  mvn(org.osgi:osgi.core)
 Source44: import.info
 
 %description
 Provides basic shell commands for Gogo.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
 BuildArch: noarch
 
@@ -42,17 +39,10 @@ API documentation for %{name}.
 
 %prep
 %setup -q -n org.apache.felix.gogo.command-%{version}
-%patch0 -p1
 
-# These deps are provided at runtime by the osgi framework in which are running
-# Adding "provided" scope here avoids unnecessary deps on the felix stack if we
-# are running in a different osgi container like equinox, for example
-%pom_xpath_inject "pom:dependencies/pom:dependency[pom:artifactId[text()='org.apache.felix.framework']]" "<scope>provided</scope>"
-%pom_xpath_inject "pom:dependencies/pom:dependency[pom:artifactId[text()='org.osgi.compendium']]" "<scope>provided</scope>"
-%pom_xpath_inject "pom:dependencies/pom:dependency[pom:artifactId[text()='org.apache.felix.bundlerepository']]" "<scope>provided</scope>"
-
-# Upstream distribution does not have this requirement, we don't need it here either
-sed -i -e 's|\*</Import-Package>|!org.apache.felix.bundlerepository,*</Import-Package>|' pom.xml
+# Use provided scope because this is useful on OSGi frameworks other than Felix
+%pom_change_dep :org.osgi.core :osgi.core::provided
+%pom_change_dep :org.osgi.compendium :osgi.cmpn::provided
 
 %build
 %mvn_build
@@ -61,12 +51,15 @@ sed -i -e 's|\*</Import-Package>|!org.apache.felix.bundlerepository,*</Import-Pa
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE
+%doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc LICENSE NOTICE
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_3jpp8
+- new version
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt1_4jpp8
 - new jpp release
 
