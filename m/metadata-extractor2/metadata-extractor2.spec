@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,8 +8,8 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 %global majorversion 2
 Name:          metadata-extractor2
-Version:       2.9.1
-Release:       alt1_2jpp8
+Version:       2.10.1
+Release:       alt1_1jpp8
 Summary:       Extracts EXIF, IPTC, XMP, ICC and other metadata from image files
 License:       ASL 2.0
 URL:           http://drewnoakes.com/code/exif/
@@ -80,7 +80,7 @@ for s in Source/com/drew/lang/GeoLocation.java \
   native2ascii -encoding UTF8 ${s} ${s}
 done
 
-sed -i 's/\r//' LICENSE-2.0.txt README.md CONTRIBUTING.md Resources/javadoc-stylesheet.css
+sed -i 's/\r//' LICENSE-2.0.txt README.md Resources/javadoc-stylesheet.css
 
 %mvn_file :metadata-extractor %{name}
 %mvn_alias :metadata-extractor "drew:metadata-extractor"
@@ -97,13 +97,16 @@ sed -i 's/\r//' LICENSE-2.0.txt README.md CONTRIBUTING.md Resources/javadoc-styl
 
 %files -f .mfiles
 %{_bindir}/*
-%doc CONTRIBUTING.md README.md
+%doc README.md
 %doc LICENSE-2.0.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE-2.0.txt
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 2.10.1-alt1_1jpp8
+- new version
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.9.1-alt1_2jpp8
 - new jpp release
 
