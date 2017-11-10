@@ -1,26 +1,21 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             hawtjni
-Version:          1.10
-Release:          alt1_9jpp8
+Version:          1.15
+Release:          alt1_2jpp8
 Summary:          Code generator that produces the JNI code
 License:          ASL 2.0 and EPL and BSD
 URL:              http://hawtjni.fusesource.org/
 BuildArch:        noarch
 
 Source0:          https://github.com/fusesource/hawtjni/archive/hawtjni-project-%{version}.tar.gz
-
-Patch0:           0001-Fix-shading-and-remove-unneeded-modules.patch
-Patch1:           0002-Fix-xbean-compatibility.patch
-Patch2:           0003-Remove-plexus-maven-plugin-dependency.patch
-Patch3:           0004-Remove-eclipse-plugin.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-cli:commons-cli)
@@ -79,21 +74,18 @@ This package allows to use HawtJNI from a maven plugin.
 %prep
 %setup -q -n hawtjni-hawtjni-project-%{version}
 
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%pom_disable_module hawtjni-example
+%pom_add_dep org.apache.maven:maven-compat maven-hawtjni-plugin
+%pom_remove_plugin -r :maven-shade-plugin
+%pom_remove_plugin -r :maven-eclipse-plugin
 
-# Ready to replace patch0
-# %pom_disable_module hawtjni-example
-# %pom_disable_module hawtjni-website
-# %pom_add_dep "org.apache.maven:maven-compat:3.0.3" maven-hawtjni-plugin/pom.xml
-# %pom_remove_plugin ":maven-shade-plugin" hawtjni-generator/pom.xml
+pushd maven-hawtjni-plugin
+%pom_xpath_set 'pom:plugin[pom:artifactId="plexus-maven-plugin"]/pom:artifactId' plexus-component-metadata
+%pom_xpath_set 'pom:plugin[pom:artifactId="plexus-component-metadata"]//pom:goal' generate-metadata
+popd
 
 %mvn_package ":hawtjni-runtime" runtime
 %mvn_package ":maven-hawtjni-plugin" maven-plugin
-
-%pom_xpath_set "pom:groupId[text()='asm']" org.ow2.asm hawtjni-generator
 
 # javadoc generation fails due to strict doclint in JDK 8
 %pom_remove_plugin :maven-javadoc-plugin hawtjni-runtime
@@ -105,7 +97,6 @@ This package allows to use HawtJNI from a maven plugin.
 %mvn_install
 
 %files runtime -f .mfiles-runtime
-%dir %{_javadir}/%{name}
 %doc readme.md license.txt changelog.md
 
 %files -f .mfiles
@@ -116,6 +107,9 @@ This package allows to use HawtJNI from a maven plugin.
 %files -n maven-hawtjni-plugin -f .mfiles-maven-plugin
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt1_2jpp8
+- new version
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt1_9jpp8
 - new jpp release
 
