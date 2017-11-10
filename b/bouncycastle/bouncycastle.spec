@@ -2,112 +2,153 @@ Epoch: 0
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global ver 1.54
-%global archivever jdk15on-%(echo %{ver}|sed 's|\\\.||')
+%global gittag r1rv58
 %global classname org.bouncycastle.jce.provider.BouncyCastleProvider
 
-Summary:          Bouncy Castle Crypto Package for Java
+Summary:          Bouncy Castle Cryptography APIs for Java
 Name:             bouncycastle
-Version:          %{ver}
-Release:          alt1_3jpp8
+Version:          1.58
+Release:          alt1_1jpp8
 License:          MIT
 URL:              http://www.bouncycastle.org
 
-# Source tarball contains everything except test suite rousources
-Source0:          http://www.bouncycastle.org/download/bcprov-%{archivever}.tar.gz
-# Test suite resources are found in this jar
-Source1:          http://www.bouncycastle.org/download/bctest-%{archivever}.jar
+Source0:          https://github.com/bcgit/bc-java/archive/%{gittag}/%{name}-%{version}.tar.gz
 
-Source2:          http://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/%{ver}/bcprov-jdk15on-%{ver}.pom
-Source3:          bouncycastle-OSGi.bnd
+# POMs from Maven Central
+Source1:          http://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/%{version}/bcprov-jdk15on-%{version}.pom
+Source2:          http://repo1.maven.org/maven2/org/bouncycastle/bcpkix-jdk15on/%{version}/bcpkix-jdk15on-%{version}.pom
+Source3:          http://repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk15on/%{version}/bcpg-jdk15on-%{version}.pom
+Source4:          http://repo1.maven.org/maven2/org/bouncycastle/bcmail-jdk15on/%{version}/bcmail-jdk15on-%{version}.pom
+Source5:          http://repo1.maven.org/maven2/org/bouncycastle/bctls-jdk15on/%{version}/bctls-jdk15on-%{version}.pom
 
-BuildRequires:    aqute-bnd
-BuildRequires:    java-devel
-BuildRequires:    junit
-BuildRequires:    javapackages-local
+# Script to fetch POMs from Maven Central
+Source6:          get-poms.sh
 
 BuildArch:        noarch
+
+BuildRequires:    aqute-bnd
+BuildRequires:    ant
+BuildRequires:    ant-junit
+BuildRequires:    javamail
+BuildRequires:    javapackages-local
+
 
 Provides:         bcprov = %{version}-%{release}
 Source44: import.info
 
 %description
 The Bouncy Castle Crypto package is a Java implementation of cryptographic
-algorithms. The package is organized so that it contains a light-weight API
-suitable for use in any environment (including the newly released J2ME) with
-the additional infrastructure to conform the algorithms to the JCE framework.
+algorithms. This jar contains JCE provider and lightweight API for the
+Bouncy Castle Cryptography APIs for JDK 1.5 to JDK 1.8.
+
+%package pkix
+Group: System/Libraries
+Summary: Bouncy Castle PKIX, CMS, EAC, TSP, PKCS, OCSP, CMP, and CRMF APIs
+
+%description pkix
+The Bouncy Castle Java APIs for CMS, PKCS, EAC, TSP, CMP, CRMF, OCSP, and
+certificate generation. This jar contains APIs for JDK 1.5 to JDK 1.8. The
+APIs can be used in conjunction with a JCE/JCA provider such as the one
+provided with the Bouncy Castle Cryptography APIs.
+
+%package pg
+Group: System/Libraries
+Summary: Bouncy Castle OpenPGP API
+
+%description pg
+The Bouncy Castle Java API for handling the OpenPGP protocol. This jar
+contains the OpenPGP API for JDK 1.5 to JDK 1.8. The APIs can be used in
+conjunction with a JCE/JCA provider such as the one provided with the
+Bouncy Castle Cryptography APIs.
+
+%package mail
+Group: System/Libraries
+Summary: Bouncy Castle S/MIME API
+
+%description mail
+The Bouncy Castle Java S/MIME APIs for handling S/MIME protocols. This jar
+contains S/MIME APIs for JDK 1.5 to JDK 1.8. The APIs can be used in
+conjunction with a JCE/JCA provider such as the one provided with the Bouncy
+Castle Cryptography APIs. The JavaMail API and the Java activation framework
+will also be needed.
+
+%package tls
+Group: System/Libraries
+Summary: Bouncy Castle JSSE provider and TLS/DTLS API
+
+%description tls
+The Bouncy Castle Java APIs for TLS and DTLS, including a provider for the
+JSSE.
 
 %package javadoc
 Group: Development/Java
-Summary:        Javadoc for %{name}
+Summary: Javadoc for %{name}
+Provides:  %{name}-pkix-javadoc = %{version}-%{release}
+Obsoletes: %{name}-pkix-javadoc < %{version}-%{release}
+Provides:  %{name}-pg-javadoc = %{version}-%{release}
+Obsoletes: %{name}-pg-javadoc < %{version}-%{release}
+Provides:  %{name}-mail-javadoc = %{version}-%{release}
+Obsoletes: %{name}-mail-javadoc < %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
-API documentation for the %{name} package.
+API documentation for the Bouncy Castle Cryptography APIs.
 
 %prep
-%setup -q -n bcprov-%{archivever}
-
-# Unzip source and test suite resources
-mkdir src
-unzip -qq src.zip -d src/
-unzip -qq %{SOURCE1} 'PKITS/*' 'org/bouncycastle/*' -x '*.class' -d src
-
-cp -p %{SOURCE2} pom.xml
+%setup -q -n bc-java-%{gittag}
 
 # Remove provided binaries
 find . -type f -name "*.class" -exec rm -f {} \;
 find . -type f -name "*.jar" -exec rm -f {} \;
 
-cp -p %{SOURCE3} bc.bnd
-sed -i "s|@VERSION@|%{version}|" bc.bnd
+# Relax javadoc linting and set expected source encoding
+sed -i -e '/<javadoc/aadditionalparam="-Xdoclint:none" encoding="UTF-8"' \
+       -e '/<javac/aencoding="UTF-8"' ant/bc+-build.xml
 
-%mvn_file :bcprov-jdk15on bcprov
-%mvn_alias :bcprov-jdk15on "bouncycastle:bcprov-jdk15" "org.bouncycastle:bcprov-jdk16" "org.bouncycastle:bcprov-jdk15"
+cp -p %{SOURCE1} bcprov.pom
+cp -p %{SOURCE2} bcpkix.pom
+cp -p %{SOURCE3} bcpg.pom
+cp -p %{SOURCE4} bcmail.pom
+cp -p %{SOURCE5} bctls.pom
 
 %build
-pushd src
-  export CLASSPATH=$(build-classpath junit)
-  javac -g -source 1.6 -target 1.6 -encoding UTF-8 $(find . -type f -name "*.java")
-  jarfile="../bcprov.jar"
-  # Exclude all */test/* files except org.bouncycastle.util.test, cf. upstream
-  files="$(find . -type f \( -name '*.class' -o -name '*.properties' \) -not -path '*/test/*')"
-  files="$files $(find . -type f -path '*/org/bouncycastle/util/test/*.class')"
-  test ! -d classes && mf="" \
-    || mf="`find classes/ -type f -name "*.mf" 2>/dev/null`"
-  test -n "$mf" && jar cfm $jarfile $mf $files \
-    || jar cf $jarfile $files
-popd
-bnd wrap -p bc.bnd -o bcprov.bar bcprov.jar
-mv bcprov.bar bcprov.jar
-%mvn_artifact pom.xml bcprov.jar
+ant -f ant/jdk15+.xml \
+  -Djunit.jar.home=$(build-classpath junit) \
+  -Dmail.jar.home=$(build-classpath javax.mail) \
+  -Dactivation.jar.home= \
+  -Drelease.debug=true \
+  clean build-provider build test
+
+cat > bnd.bnd <<EOF
+-classpath=bcprov.jar,bcpkix.jar,bcpg.jar,bcmail.jar,bctls.jar
+Export-Package: *;version=%{version}
+EOF
+
+for bc in bcprov bcpkix bcpg bcmail bctls ; do
+  # Make into OSGi bundle
+  bnd wrap -b $bc -v %{version} -p bnd.bnd -o $bc.jar build/artifacts/jdk1.5/jars/$bc-jdk15on-*.jar
+
+  # Request Maven installation
+  %mvn_file ":$bc-jdk15on" $bc
+  %mvn_package ":$bc-jdk15on" $bc
+  %mvn_alias ":$bc-jdk15on" "org.bouncycastle:$bc-jdk16" "org.bouncycastle:$bc-jdk15"
+  %mvn_artifact $bc.pom $bc.jar
+done
+
+# Not shipping the "lcrypto" jar, so don't ship the javadoc for it
+rm -rf build/artifacts/jdk1.5/javadoc/lcrypto
 
 %install
 install -dm 755 $RPM_BUILD_ROOT%{_sysconfdir}/java/security/security.d
 touch $RPM_BUILD_ROOT%{_sysconfdir}/java/security/security.d/2000-%{classname}
 
-%mvn_install -J javadoc
-
-%check
-# There was 1 failure:
-# 1) testJCE(org.bouncycastle.jce.provider.test.AllTests$SimpleTestTest)
-# junit.framework.AssertionFailedError: CertPathValidator:
-# Exception: org.bouncycastle.jce.exception.ExtCertPathValidatorException:
-# Could not validate certificate: certificate expired on 20160803124921GMT+00:00
-pushd src
-  export CLASSPATH=$PWD:$(build-classpath junit hamcrest/core)
-  for test in $(find . -name AllTests.class) ; do
-    test=${test#./} ; test=${test%.class} ; test=${test//\//.}
-    # TODO: failures; get them fixed and remove || :
-    java -Dbc.test.data.home=$(pwd) org.junit.runner.JUnitCore $test || :
-  done
-popd
+%mvn_install -J build/artifacts/jdk1.5/javadoc
 
 %post
 {
@@ -157,15 +198,30 @@ if [ $1 -eq 0 ] ; then
 
 fi
 
-%files -f .mfiles
-%doc CONTRIBUTORS.html index.html
-%doc LICENSE.html
+%files -f .mfiles-bcprov
+%doc build/artifacts/jdk1.5/bcprov-jdk15on-*/LICENSE.html
+%doc docs/ core/docs/ *.html
 %{_sysconfdir}/java/security/security.d/2000-%{classname}
+
+%files pkix -f .mfiles-bcpkix
+%doc build/artifacts/jdk1.5/bcpkix-jdk15on-*/LICENSE.html
+
+%files pg -f .mfiles-bcpg
+%doc build/artifacts/jdk1.5/bcpg-jdk15on-*/LICENSE.html
+
+%files mail -f .mfiles-bcmail
+%doc build/artifacts/jdk1.5/bcmail-jdk15on-*/LICENSE.html
+
+%files tls -f .mfiles-bctls
+%doc build/artifacts/jdk1.5/bctls-jdk15on-*/LICENSE.html
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.html
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.58-alt1_1jpp8
+- new version
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.54-alt1_3jpp8
 - new jpp release
 
