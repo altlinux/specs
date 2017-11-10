@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jspc
 Version:       2.0
-Release:       alt1_0.20.alpha.3jpp8
+Release:       alt1_0.21.alpha.3jpp8
 Summary:       Compile JSPs under Maven
 Group:         Development/Other
 License:       ASL 2.0
@@ -179,6 +180,9 @@ jar uf  %{name}-maven-plugin/target/%{name}-maven-plugin-2.0-alpha-3.jar META-IN
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_0.21.alpha.3jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_0.20.alpha.3jpp8
 - new jpp release
 
