@@ -1,7 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -11,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jsch
 Version:        0.1.54
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Pure Java implementation of SSH2
 Group:          Development/Other
 License:        BSD
@@ -85,6 +84,9 @@ zip target/%{name}-%{version}.jar plugin.properties
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.1.54-alt1_5jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.1.54-alt1_4jpp8
 - new jpp release
 
