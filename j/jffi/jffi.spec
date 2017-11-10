@@ -1,7 +1,7 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++ texinfo
+BuildRequires: gcc-c++ rpm-build-java texinfo unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jffi
 Version:        1.2.12
-Release:        alt1_5jpp8
+Release:        alt1_8jpp8
 Summary:        Java Foreign Function Interface
 
 License:        LGPLv3+ or ASL 2.0
@@ -24,7 +24,6 @@ Patch1:         jffi-add-built-jar-to-test-classpath.patch
 Patch2:         jffi-fix-compilation-flags.patch
 
 BuildRequires:  gcc-common
-BuildRequires:  make
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -71,7 +70,7 @@ rm -rf archive/* jni/libffi/ jni/win32/ lib/CopyLibs/ lib/junit*
 find ./ -name '*.jar' -exec rm -f '{}' \; 
 find ./ -name '*.class' -exec rm -f '{}' \; 
 
-build-jar-repository -s -p lib/ junit
+build-jar-repository -s -p lib/ junit hamcrest/core
 
 %mvn_package 'com.github.jnr:jffi::native:' native
 %mvn_file ':{*}' %{name}/@1 @1
@@ -94,7 +93,8 @@ jar uf %{buildroot}%{_jnidir}/%{name}/%{name}.jar META-INF/p2.inf
 
 # install *.so
 install -dm 755 %{buildroot}%{_libdir}/%{name}
-cp -rp target/jni/* %{buildroot}%{_libdir}/%{name}/
+unzip dist/jffi-*-Linux.jar
+mv jni/*-Linux %{buildroot}%{_libdir}/%{name}/
 # create version-less symlink for .so file
 pushd %{buildroot}%{_libdir}/%{name}/*
 chmod +x lib%{name}-%{sover}.so
@@ -102,12 +102,9 @@ ln -s lib%{name}-%{sover}.so lib%{name}.so
 popd
 
 %check
-# skip tests on s390 until https://bugzilla.redhat.com/show_bug.cgi?id=1084914 is resolved
-%ifnarch s390
 # don't fail on unused parameters... (TODO: send patch upstream)
 sed -i 's|-Werror||' libtest/GNUmakefile
 ant -Duse.system.libffi=1 test
-%endif
 
 %files -f .mfiles
 %doc COPYING.GPL COPYING.LESSER LICENSE
@@ -120,6 +117,9 @@ ant -Duse.system.libffi=1 test
 %doc COPYING.GPL COPYING.LESSER LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt1_8jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt1_5jpp8
 - new jpp release
 
