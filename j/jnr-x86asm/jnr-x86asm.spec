@@ -1,5 +1,6 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,28 +11,27 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jnr-x86asm
 Version:        1.0.2
-Release:        alt2_11jpp8
+Release:        alt2_13jpp8
 Summary:        Pure-java port of asmjit
 
-Group:          Development/Other
 License:        MIT
-URL:            http://github.com/jnr/%{name}/
+URL:            https://github.com/jnr/%{name}/
 Source0:        https://github.com/jnr/%{name}/tarball/%{version}/jnr-%{name}-%{version}-0-g%{commit_hash}.tar.gz
 Source1:        MANIFEST.MF
 Patch0:         add-manifest.patch
 BuildArch:      noarch
 
-BuildRequires:  java-devel
 BuildRequires:  maven-local
-BuildRequires:  sonatype-oss-parent
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
 Pure-java port of asmjit (http://code.google.com/p/asmjit/)
 
 %package        javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description    javadoc
@@ -51,12 +51,16 @@ find ./ -name '*.class' -delete
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE README
+%doc LICENSE
+%doc README
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_13jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_11jpp8
 - new jpp release
 
