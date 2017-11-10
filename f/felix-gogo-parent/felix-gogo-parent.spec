@@ -1,28 +1,24 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             felix-gogo-parent
-Version:          0.6.0
-Release:          alt3_15jpp8
+Version:          2
+Release:          alt1_2jpp8
 Summary:          Parent package for Felix Gogo
 License:          ASL 2.0
-URL:              http://felix.apache.org/site/apache-felix-gogo.html
+URL:              http://felix.apache.org/documentation/subprojects/apache-felix-gogo.htm
 
-Source0:          http://apache.mirror.rbftpnetworks.com//felix/gogo-parent-0.6.0-project.tar.gz
+Source0:          https://repo1.maven.org/maven2/org/apache/felix/gogo-parent/%{version}/gogo-parent-%{version}-source-release.tar.gz
 
 BuildArch:        noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:felix-parent:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-compiler-plugin)
-BuildRequires:  mvn(org.easymock:easymock)
-BuildRequires:  mvn(org.mockito:mockito-all)
 Source44: import.info
 
 %description
@@ -47,6 +43,9 @@ dynamic service deployment framework that is amenable to remote management.
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 2-alt1_2jpp8
+- new version
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt3_15jpp8
 - new jpp release
 
