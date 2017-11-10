@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-common-core
 Version:          2.5.0
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          JBoss Common Classes
 # Under Public Domain license src/main/java/org/jboss/util/Base64.java
 License:          ASL 2.0 and Public Domain
@@ -75,6 +75,9 @@ rm src/test/java/org/jboss/test/util/test/xml/resolver/JBossEntityResolverUnitTe
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.5.0-alt1_4jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.5.0-alt1_3jpp8
 - new jpp release
 
