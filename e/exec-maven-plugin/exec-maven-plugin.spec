@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           exec-maven-plugin
-Version:        1.5.0
+Version:        1.6.0
 Release:        alt1_2jpp8
 Summary:        Exec Maven Plugin
 
@@ -71,6 +71,9 @@ find . -name *.jar -delete
 %doc LICENSE.txt
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2jpp8
+- new version
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_2jpp8
 - new jpp release
 
