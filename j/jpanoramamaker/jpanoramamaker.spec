@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jpanoramamaker
 Version:        %{majorv}.%{minorv}
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Tool for stitching photos to panorama in linear curved space
 BuildArch:      noarch
 
@@ -115,6 +115,9 @@ install -Dpm0644 %{SOURCE1} %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 5.6-alt1_7jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 5.6-alt1_6jpp8
 - new jpp release
 
