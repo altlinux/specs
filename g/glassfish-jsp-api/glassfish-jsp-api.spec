@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:       glassfish-jsp-api
 Version:    2.3.2
-Release:    alt1_0.5.b01jpp8
+Release:    alt1_0.7.b01jpp8
 Summary:    Glassfish J2EE JSP API specification
 
 License:    (CDDL or GPLv2 with exceptions) and ASL 2.0
@@ -61,6 +61,8 @@ sed -i "/<bundle.symbolicName>/s/-api//" pom.xml
 # javadoc generation fails due to strict doclint in JDK 8
 %pom_remove_plugin :maven-javadoc-plugin
 
+%mvn_alias : javax.servlet:jsp-api
+
 %build
 %mvn_build
 
@@ -75,6 +77,9 @@ sed -i "/<bundle.symbolicName>/s/-api//" pom.xml
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_0.7.b01jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_0.5.b01jpp8
 - new jpp release
 
