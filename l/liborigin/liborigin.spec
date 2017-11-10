@@ -1,21 +1,22 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++ rpm-macros-fedora-compat
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:      liborigin
 Version:   20080225
-Release:   alt1_6
+Release:   alt1_21
 Summary:   Library for reading OriginLab OPJ project files
 
 License:   GPLv2
-Group:     Sciences/Other
+Group:     Development/Other
 URL:       http://sourceforge.net/projects/%{name}/
 
-Source:    http://belnet.dl.sourceforge.net/sourceforge/liborigin/%{name}-%{version}.tar.gz
+Source:    http://master.dl.sourceforge.net/project/liborigin/liborigin/2008/%{name}-%{version}.tar.gz
 # Include <cstddef> into tree.hh
 Patch0:    %{name}-%{version}-gcc.patch
-
+Patch1:    %{name}-%{version}-cxx11.patch
 
 BuildRequires: ctest cmake
 Source44: import.info
@@ -25,7 +26,7 @@ A library for reading OriginLab OPJ project files.
 
 %package devel
 Summary:  Header files, libraries and development documentation for %{name}
-Group:    Development/C
+Group:    Development/Other
 Requires: %{name} = %{version}-%{release}
 
 %description devel
@@ -36,20 +37,19 @@ you will need to install %{name}-devel.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 
 # fix for hardcoded path of %{_libdir}
-%ifarch x86_64 sparc64 ppc64 amd64 s390x
-%{__sed} -i "s|install(TARGETS origin DESTINATION lib)|install(TARGETS origin DESTINATION lib64)|" CMakeLists.txt
-%endif
+sed -i "s|install(TARGETS origin DESTINATION lib)|install(TARGETS origin DESTINATION %{_lib})|" CMakeLists.txt
 
 %{fedora_cmake}
 
-%{__make} VERBOSE=1 %{?_smp_mflags}
+make VERBOSE=1 %{?_smp_mflags}
 
 %install
-%{__make} INSTALL="install -p" DESTDIR=%{buildroot} install
+make INSTALL="install -p" DESTDIR=%{buildroot} install
 
 install -d  %{buildroot}%{_includedir}/%{name}/
 install -pm 644 OPJFile.h tree.hh %{buildroot}%{_includedir}/%{name}/
@@ -67,6 +67,9 @@ chmod 0644 ws4.opj
 %{_libdir}/%{name}.so
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 20080225-alt1_21
+- fixed build
+
 * Sun Dec 18 2011 Igor Vlasenko <viy@altlinux.ru> 20080225-alt1_6
 - initial import by fcimport
 
