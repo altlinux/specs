@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jetty-test-policy
 Version:        1.2
-Release:        alt3_17jpp8
+Release:        alt3_18jpp8
 Summary:        Jetty test policy files
 License:        ASL 2.0 or EPL
 URL:            http://www.eclipse.org/jetty/
@@ -62,6 +62,9 @@ cp -p %{SOURCE2} %{SOURCE3} .
 %doc epl-v10.html LICENSE-2.0.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_18jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_17jpp8
 - new jpp release
 
