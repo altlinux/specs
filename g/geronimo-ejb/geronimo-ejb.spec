@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             geronimo-ejb
 Version:          1.0
-Release:          alt4_17jpp8
+Release:          alt4_18jpp8
 Summary:          Java EE: EJB API v3.1
 Group:            Development/Other
 License:          ASL 2.0
@@ -75,6 +75,9 @@ sed -i 's/\r//' LICENSE
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_18jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_17jpp8
 - new jpp release
 
