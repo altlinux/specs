@@ -1,6 +1,6 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jbossws-common-tools
 Version:          1.2.2
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          JBossWS Common Tools
 License:          LGPLv2+ and ASL 2.0
 URL:              http://jbossws.jboss.org
@@ -65,6 +65,9 @@ cp %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_3jpp8
+- fc27 update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_2jpp8
 - new jpp release
 
