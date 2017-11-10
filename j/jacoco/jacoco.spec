@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /osgi(org.apache.ant*/d
 BuildRequires: /proc
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:      jacoco
 Version:   0.7.8
-Release:   alt1_2jpp8
+Release:   alt1_4jpp8
 Summary:   Java Code Coverage for Eclipse 
 Group:     System/Libraries
 License:   EPL
@@ -65,6 +66,10 @@ A Jacoco plugin for maven.
 
 %prep
 %setup -q 
+
+# Make it work with ASM 6.0
+# TODO: forward upstream
+sed -i '/org.objectweb.asm/s/version="[^"]*"/bundle-version="[5.1.0,7.0.0)"/' $(find -name \*.MF)
 
 %pom_disable_module ../org.jacoco.examples org.jacoco.build
 %pom_disable_module ../org.jacoco.doc org.jacoco.build
@@ -127,6 +132,9 @@ echo %{name} %{name}/org.jacoco.ant objectweb-asm/asm-debug-all > %{buildroot}%{
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.8-alt1_4jpp8
+- fc27 update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.8-alt1_2jpp8
 - new jpp release
 
