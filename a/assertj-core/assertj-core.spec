@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -15,12 +15,12 @@ BuildRequires: jpackage-generic-compat
 %bcond_without  memoryfilesystem
 
 Name:           assertj-core
-Version:        2.2.0
-Release:        alt1_3jpp8
+Version:        3.8.0
+Release:        alt1_1jpp8
 Summary:        Library of assertions similar to fest-assert
 License:        ASL 2.0
 URL:            http://joel-costigliola.github.io/assertj/
-Source0:        https://github.com/joel-costigliola/%{name}/archive/%{name}-%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:        https://github.com/joel-costigliola/assertj-core/archive/assertj-core-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  maven-local
@@ -52,14 +52,9 @@ This package provides API documentation for %{name}.
 %pom_xpath_inject "pom:project" "<groupId>org.assertj</groupId>"
 
 %pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-shade-plugin
+%pom_remove_plugin :maven-dependency-plugin
 %pom_remove_plugin org.jacoco:jacoco-maven-plugin
-%pom_remove_plugin org.sonatype.plugins:jarjar-maven-plugin
-
-%pom_xpath_inject "pom:project" "
-    <properties>
-        <maven.compiler.target>1.7</maven.compiler.target>
-        <maven.compiler.source>1.7</maven.compiler.source>
-    </properties>"
 
 # package org.mockito.internal.util.collections does not exist
 rm -rf ./src/test/java/org/assertj/core/error/ShouldContainString_create_Test.java
@@ -69,8 +64,11 @@ rm -rf ./src/test/java/org/assertj/core/error/ShouldContainString_create_Test.ja
 rm -r src/test/java/org/assertj/core/internal/{Paths*.java,paths}
 %endif
 
+# test lib not in Fedora
+%pom_remove_dep com.tngtech.java:junit-dataprovider
+
 %build
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
@@ -84,6 +82,9 @@ rm -r src/test/java/org/assertj/core/internal/{Paths*.java,paths}
 %doc LICENSE.txt
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 3.8.0-alt1_1jpp8
+- new version
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_3jpp8
 - new jpp release
 
