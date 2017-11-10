@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           json-lib
 Version:        2.4
-Release:        alt1_12jpp8
+Release:        alt1_13jpp8
 Summary:        JSON library for Java
 License:        ASL 2.0
 URL:            http://json-lib.sourceforge.net/
@@ -152,6 +152,9 @@ popd
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_13jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_12jpp8
 - new jpp release
 
