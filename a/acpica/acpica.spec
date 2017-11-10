@@ -1,7 +1,7 @@
 
 Name: acpica
-Version: 20161222
-Release: alt1
+Version: 20170929
+Release: alt1%ubt
 Summary: ACPICA tools for the development and debug of ACPI tables
 
 Group: System/Kernel and hardware
@@ -22,20 +22,18 @@ Source11: badcode.asl.result
 Source12: grammar.asl.result
 Source13: run-misc-tests.sh
 
-Patch0: debian-big_endian.patch
-Patch1: debian-unaligned.patch
-Patch2: name-miscompare.patch
-Patch3: asllookup-miscompare.patch
-Patch4: re-enable-big-endian.patch
-Patch5: OPT_LDFLAGS.patch
-Patch6: int-format.patch
-Patch7: f23-harden.patch
-Patch8: asllookup-ppc64.patch
-Patch9: template.patch
-Patch11: big-endian-part1.patch
-Patch12: free.patch
-Patch13: big-endian-part2.patch
+Patch0: big-endian.patch
+Patch1: unaligned.patch
+Patch2: OPT_LDFLAGS.patch
+Patch3: int-format.patch
+Patch4: f23-harden.patch
+Patch5: template.patch
+Patch6: free.patch
+Patch7: ppc64le.patch
+Patch8: arm7hl.patch
+Patch9: big-endian-v2.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: bison flex
 
 Provides: %name-tools = %version-%release
@@ -84,19 +82,16 @@ This version of the tools is being released under GPLv2 license.
 %prep
 %setup
 
-%patch0 -p1 -b .debian-big_endian
-%patch1 -p1 -b .debian-unaligned
-%patch2 -p1 -b .name-miscompare
-%patch3 -p1 -b .asllookup-miscompare
-%patch4 -p1 -b .re-enable-big-endian
-%patch5 -p1 -b .OPT_LDFLAGS
-%patch6 -p1 -b .int-format
-%patch7 -p1 -b .f23-harden
-%patch8 -p1 -b .asllookup-ppc64
-%patch9 -p1 -b .template
-#%patch11 -p1 -b .big-endian-part1
-%patch12 -p1 -b .free
-#%patch13 -p1 -b .big-endian-part2
+%patch0 -p1 -b .big-endian
+%patch1 -p1 -b .unaligned
+%patch2 -p1 -b .OPT_LDFLAGS
+%patch3 -p1 -b .int-format
+%patch4 -p1 -b .f23-harden
+%patch5 -p1 -b .template
+%patch6 -p1 -b .free
+%patch7 -p1 -b .ppc64le
+%patch8 -p1 -b .arm7hl
+%patch9 -p1 -b .big-endian-v2
 
 cp -p %SOURCE3 iasl.1
 cp -p %SOURCE4 acpibin.1
@@ -110,7 +105,6 @@ cp -p %SOURCE11 badcode.asl.result
 cp -p %SOURCE12 grammar.asl.result
 cp -p %SOURCE13 tests/run-misc-tests.sh
 chmod a+x tests/run-misc-tests.sh
-
 
 %build
 %make HOST=_LINUX OPT_CFLAGS="%optflags"
@@ -153,6 +147,12 @@ cd ..
 %_man1dir/*
 
 %changelog
+* Fri Nov 10 2017 Alexey Shabalin <shaba@altlinux.ru> 20170929-alt1%ubt
+- 20170929
+
+* Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 20170728-alt1%ubt
+- 20170728
+
 * Mon Dec 26 2016 Alexey Shabalin <shaba@altlinux.ru> 20161222-alt1
 - 20161222
 
