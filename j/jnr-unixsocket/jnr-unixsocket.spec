@@ -1,44 +1,37 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jnr-unixsocket
-Version:        0.12
+Version:        0.18
 Release:        alt1_3jpp8
 Summary:        Unix sockets for Java
-Group:          Development/Other
 License:        ASL 2.0
-URL:            http://github.com/jnr/%{name}/
+URL:            https://github.com/jnr/%{name}/
 Source0:        https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
 BuildArch:      noarch
 
-BuildRequires:  java-devel
-BuildRequires:  jnr-constants
-BuildRequires:  jnr-enxio
-BuildRequires:  jnr-ffi
-BuildRequires:  jnr-posix
-
 BuildRequires:  maven-local
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-plugin-bundle
-BuildRequires:  maven-source-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  sonatype-oss-parent
+BuildRequires:  mvn(com.github.jnr:jnr-constants)
+BuildRequires:  mvn(com.github.jnr:jnr-enxio)
+BuildRequires:  mvn(com.github.jnr:jnr-ffi)
+BuildRequires:  mvn(com.github.jnr:jnr-posix)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
 Unix sockets for Java.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -50,22 +43,40 @@ This package contains the API documentation for %{name}.
 # remove unnecessary wagon extension
 %pom_xpath_remove pom:build/pom:extensions
 
+# Unnecessary for RPM builds
+%pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin :findbugs-maven-plugin
+%pom_remove_plugin :maven-pmd-plugin
+%pom_remove_plugin :maven-javadoc-plugin
+
+# Can't run integration tests
+%pom_remove_plugin :maven-assembly-plugin
+%pom_remove_plugin :exec-maven-plugin
+
+# Fix jar plugin usage
+%pom_xpath_remove "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions"
+
 find ./ -name '*.jar' -delete 
 find ./ -name '*.class' -delete
 
 %build
-%mvn_build
+# Tests fails on some arches
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
 %doc LICENSE
+%doc README.md
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_3jpp8
+- new version
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_3jpp8
 - new jpp release
 
