@@ -1,13 +1,13 @@
 %define realname sd_notify
 
 Name: erlang-%realname
-Version: 0.1
+Version: 1.0
 Release: alt1
 Summary: Erlang interface to systemd notify subsystem
 Group: Development/Erlang
 License: MIT
-Url: https://github.com/lemenkov/erlang-sd_notify
-#VCS: scm:git:https://github.com/lemenkov/erlang-sd_notify.git
+Url: https://github.com/systemd/erlang-sd_notify
+#VCS: scm:git:https://github.com/systemd/erlang-sd_notify.git
 Source: %name-%version.tar
 
 BuildRequires: erlang-devel erlang-otp-devel
@@ -21,7 +21,7 @@ BuildRequires: libsystemd-devel
 %setup
 
 %build
-CFLAGS="%optflags" LDFLAGS=-lsystemd REBAR_FLAGS="--verbose 2" make %{?_smp_mflags}
+rebar compile
 
 %install
 mkdir -p %buildroot%_otplibdir/%realname-%version/{ebin,priv}
@@ -38,5 +38,8 @@ install -m 755 -p priv/%{realname}_drv.so %buildroot%_otplibdir/%realname-%versi
 %_otplibdir/*
 
 %changelog
+* Fri Nov 10 2017 Alexey Shabalin <shaba@altlinux.ru> 1.0-alt1
+- 1.0
+
 * Wed Sep 16 2015 Alexey Shabalin <shaba@altlinux.ru> 0.1-alt1
 - initial build
