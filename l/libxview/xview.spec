@@ -5,7 +5,7 @@
 
 Name: lib%origname
 Version: 3.2p1.4
-Release: alt9
+Release: alt10
 
 Summary: XView libraries for X11
 License: Distributable
@@ -24,6 +24,14 @@ Source0: %{origname}_%version.orig.tar.gz
 Patch0: xview-3.2p1.4-debian-26.patch
 Patch1: %{origname}_%version-alt-xorg7.patch
 Patch2: xview_3.2p1.4-alt-gcc41.patch
+
+# debian patches
+Patch21: olvwm-posix-regex.patch
+Patch22: xview-FD_SETSIZE.patch
+Patch23: xview-shelltool-manpage-cpp-compatibility.patch
+Patch24: xview-sysv-wait-and-signals.patch
+
+
 
 Provides: %origname = %version
 
@@ -74,11 +82,6 @@ Static libraries for XView development
 %patch1 -p0
 %patch2 -p1
 
-# gentoo patches
-#%patch3 -p0
-#%patch4 -p0
-#%patch5 -p1
-
 # gentoo
 # Do not build xgettext and msgfmt since they are provided by the gettext
 # package. Using the programs provided by xview breaks many packages
@@ -92,6 +95,12 @@ sed -e 's/MSG_UTIL = xgettext msgfmt/#MSG_UTIL = xgettext msgfmt/' \
 
 #Patch6: xview-3.2-alt-glibc28.patch
 #subst s,__linux__,__old_linux__,g lib/libxview/file_chooser/file_list.c
+
+# debian patches
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
 
 %build
 rm -f make
@@ -157,6 +166,9 @@ ln -sf libxview.so.3.2.4 %buildroot%_libdir/libxview.so
 %endif
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 3.2p1.4-alt10
+- fixed build
+
 * Wed Jun 01 2016 Igor Vlasenko <viy@altlinux.ru> 3.2p1.4-alt9
 - fixed build
 
