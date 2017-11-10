@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           geronimo-jpa
 Version:        1.1.1
-Release:        alt3_19jpp8
+Release:        alt3_20jpp8
 Summary:        Java persistence API implementation
 
 License:        ASL 2.0
@@ -71,6 +72,9 @@ ln -sf ../%{name}.jar %{buildroot}%{_javadir}/javax.persistence/
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_20jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_19jpp8
 - new jpp release
 
