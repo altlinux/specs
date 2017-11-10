@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global hghash 7ff584954008
 Name:          jmh
 Version:       1.13
-Release:       alt1_2jpp8
+Release:       alt1_4jpp8
 Summary:       Java Microbenchmark Harness
 License:       GPLv2 with exceptions
 URL:           http://openjdk.java.net/projects/code-tools/jmh/
@@ -97,11 +97,12 @@ This package contains javadoc for %{name}.
 %pom_disable_module %{name}-core-ct
 %pom_disable_module %{name}-core-it
 
+# Plugins unnecessary for RPM builds
 %pom_remove_plugin -r :maven-eclipse-plugin
 %pom_remove_plugin -r :maven-license-plugin
 %pom_remove_plugin -r :maven-shade-plugin
 %pom_remove_plugin -r :maven-source-plugin
-%pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-javadoc-plugin']/pom:executions"
+%pom_remove_plugin -r :maven-javadoc-plugin
 
 # wagon-ssh
 %pom_xpath_remove "pom:build/pom:extensions" %{name}-core
@@ -157,6 +158,9 @@ sed -i "s,59,51,;s,Temple Place,Franklin Street,;s,Suite 330,Fifth Floor,;s,0211
 %doc LICENSE src/license/*
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_4jpp8
+- fc27 update
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_2jpp8
 - new jpp release
 
