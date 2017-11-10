@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-connector-1.7-api
 Version:          1.0.0
-Release:          alt1_6jpp8
+Release:          alt1_7jpp8
 Summary:          Connector Architecture 1.7 API
 License:          CDDL or GPLv2 with exceptions
 URL:              http://www.jboss.org
@@ -59,6 +60,9 @@ cp %{SOURCE1} .
 %doc cddl.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_7jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_6jpp8
 - new jpp release
 
