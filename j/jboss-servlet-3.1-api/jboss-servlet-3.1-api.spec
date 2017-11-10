@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-servlet-3.1-api
 Version:          1.0.0
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          Java Servlet 3.1 API
 License:          (CDDL or GPLv2 with exceptions) and ASL 2.0
 Url:              http://www.jboss.org
@@ -59,6 +59,9 @@ cp %{SOURCE2} .
 %doc LICENSE cddl.txt LICENSE-2.0.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_3jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_2jpp8
 - new jpp release
 
