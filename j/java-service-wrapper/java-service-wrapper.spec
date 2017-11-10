@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
-BuildRequires: gcc-c++ unzip
+BuildRequires: gcc-c++ rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -39,13 +39,12 @@ BuildRequires: jpackage-generic-compat
 # Whether to build docs too - by default this is not done as Cocoon is not
 # available in Fedora.  Instead we ship a prebuilt archive of the docs
 # (the doc/english dir).
-#def_with docs
 %bcond_with     docs
 %global cocoon  cocoon-2.0.4
 
 Name:           java-service-wrapper
 Version:        3.2.5
-Release:        alt1_26jpp8
+Release:        alt1_27jpp8
 Summary:        Java service wrapper
 License:        MIT
 URL:            https://bitbucket.org/ivertex/yaja-wrapper
@@ -67,10 +66,8 @@ Patch2:         %{name}-3.2.4-docbuild.patch
 Patch3:         %{name}-3.2.5-rhbz1037144.patch
 Patch99:	ppc64le-support.patch
 BuildRequires:  ant
-BuildRequires:  java-devel
-BuildRequires:  jpackage-utils
+BuildRequires:  javapackages-local
 BuildRequires:  gcc-common
-BuildRequires:  make
 Source44: import.info
 
 %description
@@ -90,7 +87,7 @@ API documentation for %{name}.
 sed '/<version>/s/>.*</>%{version}</' %{SOURCE4} >pom.xml
 install -pm 644 %{SOURCE1} doc/template.init
 %patch0 -p1
-sed -e 's|@LIBPATH@|%{_libdir}/%{name}|' %{PATCH1} | %{__patch} -p1 -F 0
+sed -e 's|@LIBPATH@|%{_libdir}/%{name}|' %{PATCH1} | patch -p1 -F 0
 %patch2 -p0
 %patch3
 %patch99 -p1
@@ -119,18 +116,13 @@ rm -r doc/english
 %install
 install -Dpm 755 bin/wrapper $RPM_BUILD_ROOT%{_sbindir}/java-service-wrapper
 
-install -dm 755 $RPM_BUILD_ROOT%{_jnidir}
 install -dm 755 $RPM_BUILD_ROOT%{_libdir}/%{name}
 install -pm 755 lib/libwrapper.so $RPM_BUILD_ROOT%{_libdir}/%{name}
-install -pm 644 lib/wrapper.jar $RPM_BUILD_ROOT%{_jnidir}/%{name}.jar
-ln -sf %{_jnidir}/%{name}.jar $RPM_BUILD_ROOT%{_libdir}/%{name}/wrapper.jar
-    
-install -dm 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap
 
-install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}
-cp -pR javadoc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_file : %{name} %{_libdir}/%{name}/wrapper
+%mvn_artifact pom.xml lib/wrapper.jar
+
+%mvn_install -J javadoc
 
 %files -f .mfiles
 %doc AboutThisRepository.txt doc/
@@ -138,11 +130,13 @@ cp -pR javadoc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_libdir}/%{name}/
 %doc doc/license.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc doc/license.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.5-alt1_27jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.5-alt1_26jpp8
 - new jpp release
 
