@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 Name:           junit
 Epoch:          1
 Version:        4.12
-Release:        alt1_6jpp8
+Release:        alt1_7jpp8
 Summary:        Java regression test package
 License:        EPL
 URL:            http://www.junit.org/
@@ -110,6 +110,9 @@ sed s/@version@/%{version}/ src/main/java/junit/runner/Version.java.template >sr
 %doc doc/*
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.12-alt1_7jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.12-alt1_6jpp8
 - new jpp release
 
