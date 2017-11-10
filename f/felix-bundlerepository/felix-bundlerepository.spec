@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           felix-bundlerepository
-Version:        2.0.8
+Version:        2.0.10
 Release:        alt1_2jpp8
 Summary:        Bundle repository service
 License:        ASL 2.0 and MIT
@@ -23,6 +23,7 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(net.sf.kxml:kxml2)
 BuildRequires:  mvn(org.apache.felix:felix-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.felix:org.apache.felix.gogo.runtime)
 BuildRequires:  mvn(org.apache.felix:org.apache.felix.shell)
 BuildRequires:  mvn(org.apache.felix:org.apache.felix.utils)
 BuildRequires:  mvn(org.apache.felix:org.osgi.service.obr)
@@ -82,6 +83,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE LICENSE.kxml2 NOTICE
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt1_2jpp8
+- new version
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.8-alt1_2jpp8
 - new jpp release
 
