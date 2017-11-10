@@ -7,7 +7,7 @@
 
 Name: teeworlds
 Version: 0.6.4
-Release: alt1
+Release: alt2
 
 Summary: Cute little buggers with guns
 License: distributable
@@ -184,6 +184,9 @@ install -pDm644 altlinux/server-ictf.cfg %buildroot%_sysconfdir/%origname/server
 %_datadir/teeworlds
 
 %changelog
+* Fri Nov 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.4-alt2
+- Fixed build with new bam.
+
 * Wed Sep 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.4-alt1
 - Updated to upstream version 0.6.4.
 
