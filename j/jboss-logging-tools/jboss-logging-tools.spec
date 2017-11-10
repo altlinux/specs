@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-logging-tools
 Version:          2.0.1
-Release:          alt1_4jpp8
+Release:          alt1_5jpp8
 Summary:          JBoss Logging I18n Annotation Processor
 # Not available license file https://issues.jboss.org/browse/LOGTOOL-107
 # ./annotations/src/main/java/org/jboss/logging/annotations/*.java: Apache (v2.0)
@@ -60,6 +60,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_5jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_4jpp8
 - new version
 
