@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jbossws-common
 Version:          3.1.3
-Release:          alt1_2jpp8
+Release:          alt1_3jpp8
 Summary:          JBossWS Common
 License:          LGPLv2+
 URL:              http://jbossws.jboss.org
@@ -71,6 +71,9 @@ rm src/test/java/org/jboss/test/ws/common/management/AbstractServerConfigTestCas
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.1.3-alt1_3jpp8
+- fc27 update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.1.3-alt1_2jpp8
 - new jpp release
 
