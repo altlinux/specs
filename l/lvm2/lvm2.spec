@@ -1,5 +1,5 @@
-%define lvm2version 2.02.174
-%define dmversion 1.02.143
+%define lvm2version 2.02.176
+%define dmversion 1.02.145
 
 %define _sbindir /sbin
 %define _runtimedir /run
@@ -556,6 +556,9 @@ __EOF__
 %python3_sitelibdir/*
 
 %changelog
+* Fri Nov 10 2017 Alexey Shabalin <shaba@altlinux.ru> 2.02.176-alt1
+- 2.02.176
+
 * Fri Sep 29 2017 Alexey Shabalin <shaba@altlinux.ru> 2.02.174-alt1
 - 2.02.174
 
