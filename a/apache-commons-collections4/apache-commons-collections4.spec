@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,13 +8,13 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Summary:        Extension of the Java Collections Framework
 Name:           apache-commons-collections4
-Version:        4.0
-Release:        alt1_7jpp8
+Version:        4.1
+Release:        alt1_1jpp8
 License:        ASL 2.0
 URL:            http://commons.apache.org/proper/commons-collections/
 BuildArch:      noarch
 
-Source0:        http://www.apache.org/dist/commons/collections/source/commons-collections4-4.0-src.tar.gz
+Source0:        http://archive.apache.org/dist/commons/collections/source/commons-collections4-%{version}-src.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
@@ -46,13 +46,16 @@ This package provides %{summary}.
 %mvn_install
 
 %files -f .mfiles
-%doc README.txt RELEASE-NOTES.txt
+%doc RELEASE-NOTES.txt
 %doc LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_1jpp8
+- new version
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_7jpp8
 - new jpp release
 
