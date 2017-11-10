@@ -1,27 +1,26 @@
-%define oname pyasn1
-
-%def_with python3
+%define _unpackaged_files_terminate_build 1
+%define mname pyasn1
 
 Summary: Abstract Syntax Notation One (ASN.1), Python implementation
-Name: python-module-%oname
-Version: 0.1.8
-Release: alt2.1.1.1
-%setup_python_module %oname
-Url: http://pyasn1.sourceforge.net/
-Source0: %modulename-%version.tar.gz
-License: BSD-style
+Name: python-module-%mname
+Version: 0.3.7
+Release: alt1%ubt
+Url: https://pypi.python.org/pypi/pyasn1
+Source0: %name-%version.tar
+License: %bsdstyle
 Group: Development/Python
-Packager: Python Development Team <python at packages.altlinux.org>
 BuildArch: noarch
+%py_provides %mname
 
-%if_with python3
+BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
-BuildRequires: python-devel python-modules-unittest python3-module-setuptools rpm-build-python3
-
-#BuildRequires: python3-devel python3-module-distribute
-%endif
+BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: python-module-sphinx
+BuildRequires: python-module-sphinx_rtd_theme
+BuildRequires: python-modules-unittest
+BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
 
 %description
 This is an implementation of ASN.1 types and codecs in Python programming
@@ -29,43 +28,16 @@ language. It has been first written to support particular protocol (SNMP)
 but then generalized to be suitable for a wide range of protocols
 based on ASN.1 specification.
 
-%if_with python3
-%package -n python3-module-%oname
+%package -n python3-module-%mname
 Summary: Abstract Syntax Notation One (ASN.1), Python 3 implementation
 Group: Development/Python3
+%py3_provides %mname
 
-%description -n python3-module-%oname
+%description -n python3-module-%mname
 This is an implementation of ASN.1 types and codecs in Python programming
 language. It has been first written to support particular protocol (SNMP)
 but then generalized to be suitable for a wide range of protocols
 based on ASN.1 specification.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for pyasn1 (Python 3)
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-tests
-This is an implementation of ASN.1 types and codecs in Python programming
-language. It has been first written to support particular protocol (SNMP)
-but then generalized to be suitable for a wide range of protocols
-based on ASN.1 specification.
-
-This package contains tests for pyasn1.
-%endif
-
-%package tests
-Summary: Tests for pyasn1
-Group: Development/Python
-Requires: %name = %version-%release
-
-%description tests
-This is an implementation of ASN.1 types and codecs in Python programming
-language. It has been first written to support particular protocol (SNMP)
-but then generalized to be suitable for a wide range of protocols
-based on ASN.1 specification.
-
-This package contains tests for pyasn1.
 
 %package docs
 Summary: Documentation for pyasn1
@@ -81,51 +53,51 @@ based on ASN.1 specification.
 This package contains docs for pyasn1.
 
 %prep
-%setup  -q -n %modulename-%version
-%if_with python3
+%setup
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
-%python_build
-%if_with python3
+%python_build_debug
 pushd ../python3
-%python3_build
+%python3_build_debug
 popd
-%endif
 
 %install
-%python_install --record=INSTALLED_FILES
-cp -fR test %buildroot%python_sitelibdir/%modulename/
+%python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
-cp -fR test %buildroot%python3_sitelibdir/%modulename/
 popd
-%endif
 
-%files -f INSTALLED_FILES
-%doc CHANGES LICENSE README THANKS TODO PKG-INFO
+pushd doc
+%make html
+rm -f build/html/.buildinfo
+popd
+
+%check
+python setup.py test
+pushd ../python3
+python3 setup.py test
+popd
+
+%files
+%doc LICENSE.rst README.md
+%python_sitelibdir/%mname
+%python_sitelibdir/%mname-%version-*.egg-info/
 
 %files docs
-%doc doc/*
+%doc doc/build/html/*
 
-%files tests
-%python_sitelibdir/%modulename/test
-
-%if_with python3
-%files -n python3-module-%oname
-%doc CHANGES LICENSE README THANKS TODO PKG-INFO
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/%modulename/test
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/%modulename/test
-%endif
+%files -n python3-module-%mname
+%doc LICENSE.rst README.md
+%python3_sitelibdir/%mname
+%python3_sitelibdir/%mname-%version-*.egg-info/
 
 %changelog
+* Wed Nov 08 2017 Stanislav Levin <slev@altlinux.org> 0.3.7-alt1%ubt
+- 0.1.8 -> 0.3.7
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.8-alt2.1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
