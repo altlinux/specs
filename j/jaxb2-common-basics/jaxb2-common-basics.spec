@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jaxb2-common-basics
 Version:       0.9.5
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       JAXB2 Basics
 License:       BSD
 Url:           https://github.com/highsource/jaxb2-basics
@@ -91,6 +92,9 @@ find -name "*.jar" -print -delete
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.5-alt1_4jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.5-alt1_3jpp8
 - new jpp release
 
