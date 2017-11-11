@@ -1,15 +1,15 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-dependency-analyzer
-Version:        1.6
-Release:        alt1_5jpp8
+Version:        1.7
+Release:        alt1_2jpp8
 Summary:        Maven dependency analyzer
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-dependency-analyzer/
@@ -66,6 +66,9 @@ BuildArch: noarch
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.7-alt1_2jpp8
+- new version
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_5jpp8
 - new jpp release
 
