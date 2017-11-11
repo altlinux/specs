@@ -1,6 +1,7 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,10 +13,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jFormatString
 Version:        0
-Release:        alt1_0.24.20131227gitf159b88jpp8
+Release:        alt1_0.27.20131227gitf159b88jpp8
 Summary:        Java format string compile-time checker
 
-Group:          Development/Other
 License:        GPLv2 with exceptions
 URL:            http://code.google.com/p/j-format-string/
 
@@ -24,6 +24,10 @@ Source1:        http://search.maven.org/remotecontent?filepath=com/google/code/f
 
 # This patch has not been sent upstream, since it is Fedora specific.
 Patch0:         %{name}-build.patch
+
+# Add temporary dependency on javapackages-local, for %%add_maven_depmap macro
+# See https://lists.fedoraproject.org/archives/list/java-devel@lists.fedoraproject.org/thread/R3KZ7VI5DPCMCELFIVJQ4AXB2WQED35C/
+BuildRequires:  javapackages-local
 
 BuildRequires:  ant java-devel java-javadoc jpackage-utils junit
 Requires:       jpackage-utils
@@ -41,8 +45,8 @@ is designed to allow compile time checks as to whether or not a use of a
 format string will be erroneous when executed at runtime.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc documentation for %{name}
-Group:          Development/Java
 Requires:       java-javadoc
 BuildArch: noarch
 
@@ -91,6 +95,9 @@ cp -rp docs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}*
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.27.20131227gitf159b88jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.24.20131227gitf159b88jpp8
 - new jpp release
 
