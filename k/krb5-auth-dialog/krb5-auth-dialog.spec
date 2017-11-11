@@ -1,9 +1,9 @@
-%define ver_major 3.20
+%define ver_major 3.26
 %define gtk_api_ver 3.0
 %def_with pkcs11
 
 Name: krb5-auth-dialog
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Kerberos 5 authentication dialog
@@ -14,20 +14,18 @@ Url: http://redhat.com
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define glib_ver 2.28
-%define gtk_ver 3.0.0
+%define gtk_ver 3.14.0
 %define nm_ver 0.8.997
 %define notify_ver 0.7
-%define control_center_ver 3.0.0
 
 %{?_with_pkcs11:Requires: libopensc}
 
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libnotify-devel >= %notify_ver
-BuildPreReq: NetworkManager-glib-devel >= %nm_ver
-BuildRequires: flex libgio-devel libkrb5-devel libcap-devel libcap-utils libpam-devel
+BuildPreReq: libnm-devel >= %nm_ver
+BuildRequires: flex libkrb5-devel libcap-devel libcap-utils libpam-devel
 BuildRequires: intltool yelp-tools
-BuildRequires: gnome-control-center-devel >= %control_center_ver
 %{?_with_pkcs11:BuildRequires: libopensc}
 
 %description
@@ -70,6 +68,9 @@ pops up a dialog when they are about to expire.
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Sat Nov 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
+- 3.26.1
+
 * Thu Jul 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 
