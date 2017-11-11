@@ -2,6 +2,7 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          libreadline-java
 Version:       0.8.0
-Release:       alt3_44jpp8
+Release:       alt3_46jpp8
 Summary:       Java wrapper for the EditLine library
 License:       LGPLv2+
 URL:           http://java-readline.sf.net/
@@ -87,6 +88,9 @@ ln -sf %{_jnidir}/%{name}.jar %{buildroot}%{_libdir}/%{name}/%{name}.jar
 %doc COPYING.LIB
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.8.0-alt3_46jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.8.0-alt3_44jpp8
 - new jpp release
 
