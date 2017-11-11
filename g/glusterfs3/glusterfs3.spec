@@ -27,7 +27,7 @@
 
 Name: glusterfs3
 Version: %major.7
-Release: alt2
+Release: alt3
 
 Summary: Cluster File System
 
@@ -43,10 +43,7 @@ Source1: glusterd.sysconfig
 Source2: %name.watch
 Source3: umount.glusterfs
 
-# FIXME: to remove:
-Source4: glusterfs-fuse.logrotate
-Source5: glusterd.logrotate
-Source6: glusterfsd.logrotate
+Source4: glusterfs.logrotate
 
 Source7: glusterd.init
 Source8: glustereventsd.init
@@ -374,15 +371,11 @@ install -D -p -m 0644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/glusterd
 # Install wrapper umount script
 install -D -p -m 0755 %SOURCE3 %buildroot/sbin/umount.glusterfs
 
-install -D -p -m 0644 extras/glusterfs-logrotate %buildroot%_sysconfdir/logrotate.d/glusterfs
+%if 0%{!?_without_georeplication:1}
+install -D -p -m 0644 extras/glusterfs-georep-logrotate %buildroot%_sysconfdir/logrotate.d/glusterfs-georep
+%endif
+install -D -p -m 0644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/glusterfs
 
-# Client logrotate entry
-#install -D -p -m 0644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/glusterfs-fuse
-# Server logrotate entry
-#install -D -p -m 0644 %SOURCE5 %buildroot%_sysconfdir/logrotate.d/glusterd
-# Legacy server logrotate entry
-#install -D -p -m 0644 %SOURCE6 %buildroot%_sysconfdir/logrotate.d/glusterfsd
-# Install vim syntax plugin
 install -D -p -m 644 extras/glusterfs.vim \
 %buildroot%_datadir/vim/vimfiles/syntax/glusterfs.vim
 
@@ -444,6 +437,7 @@ rm -rf %buildroot%_sbindir/conf.py
 %_libexecdir/glusterfs/peer_mountbroker.py
 %_sbindir/gluster-georep-sshkey
 %_sbindir/gluster-mountbroker
+%config(noreplace) %_sysconfdir/logrotate.d/glusterfs-georep
 %endif
 
 %files -n lib%name-api
@@ -462,7 +456,6 @@ rm -rf %buildroot%_sbindir/conf.py
 %_sbindir/glusterfsd
 %_man8dir/glusterfs.8*
 %_man8dir/glusterfsd.8*
-#%config(noreplace) %_sysconfdir/logrotate.d/glusterfs-fuse
 %config(noreplace) %_sysconfdir/logrotate.d/glusterfs
 %glusterlibdir/xlator/mount/fuse*
 %_man8dir/mount.glusterfs.8*
@@ -481,8 +474,6 @@ rm -rf %buildroot%_sbindir/conf.py
 %config(noreplace) %_sysconfdir/glusterfs/
 %exclude %_sysconfdir/glusterfs/eventsconfig.json
 
-# Legacy configs
-#%config(noreplace) %_sysconfdir/logrotate.d/glusterfsd
 %_sharedstatedir/glusterd/
 %exclude %_sharedstatedir/glusterd/events/
 
@@ -565,6 +556,9 @@ rm -rf %buildroot%_sbindir/conf.py
 %preun_service glusterd
 
 %changelog
+* Sat Nov 11 2017 Vitaly Lipatov <lav@altlinux.ru> 3.10.7-alt3
+- rearrange logrotate files
+
 * Tue Nov 07 2017 Vitaly Lipatov <lav@altlinux.ru> 3.10.7-alt2
 - small fixes, pack dirs
 
