@@ -1,48 +1,37 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jnr-enxio
-Version:        0.14
+Version:        0.16
 Release:        alt1_2jpp8
 Summary:        Unix sockets for Java
-Group:          Development/Other
 # src/main/java/jnr/enxio/channels/PollSelectionKey.java is LGPLv3
 # rest of the source code is ASL 2.0
 License:        ASL 2.0 and LGPLv3
-URL:            http://github.com/jnr/%{name}/
+URL:            https://github.com/jnr/%{name}/
 Source0:        https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
 BuildArch:      noarch
 
-BuildRequires:  java-devel
-BuildRequires:  jpackage-utils
-BuildRequires:  jnr-constants
-BuildRequires:  jnr-ffi
-
 BuildRequires:  maven-local
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-plugin-bundle
-BuildRequires:  maven-source-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  sonatype-oss-parent
-
-Requires:       jnr-constants
-Requires:       jnr-ffi
+BuildRequires:  mvn(com.github.jnr:jnr-constants)
+BuildRequires:  mvn(com.github.jnr:jnr-ffi)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
 Unix sockets for Java.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -53,6 +42,9 @@ This package contains the API documentation for %{name}.
 
 find ./ -name '*.jar' -delete
 find ./ -name '*.class' -delete
+
+# Unnecessary for RPM builds
+%pom_remove_plugin ":maven-javadoc-plugin"
 
 %build
 %mvn_build
@@ -67,6 +59,9 @@ find ./ -name '*.class' -delete
 %doc LICENSE
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_2jpp8
+- new version
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_2jpp8
 - new jpp release
 
