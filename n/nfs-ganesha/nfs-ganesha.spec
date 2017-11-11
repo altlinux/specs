@@ -70,8 +70,8 @@
 %global use_system_ntirpc %{on_off_switch system_ntirpc}
 
 Name: nfs-ganesha
-Version: 2.5.0
-Release: alt3
+Version: 2.5.3
+Release: alt1
 
 Summary: NFS-Ganesha is a NFS Server running in user space
 
@@ -84,7 +84,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/nfs-ganesha/nfs-ganesha/archive/V%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: rpm-build-intro
+BuildRequires: rpm-macros-intro-conflicts
 
 BuildRequires: cmake gcc-c++
 BuildRequires: bison
@@ -363,7 +363,7 @@ mkdir -p %buildroot%_sysconfdir/logrotate.d
 mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_sbindir
 mkdir -p %buildroot%_libdir/ganesha
-mkdir -p %buildroot%_localstatedir/run/ganesha
+mkdir -p %buildroot%_runtimedir/ganesha
 
 cd src
 install -m 644 config_samples/logrotate_ganesha	%buildroot%_sysconfdir/logrotate.d/ganesha
@@ -374,12 +374,14 @@ install -m 644 config_samples/vfs.conf %buildroot%_sysconfdir/ganesha
 
 %if_with systemd
 mkdir -p %buildroot%_unitdir
-install -m 644 scripts/systemd/nfs-ganesha.service	%buildroot%_unitdir/nfs-ganesha.service
-install -m 644 scripts/systemd/nfs-ganesha-lock.service	%buildroot%_unitdir/nfs-ganesha-lock.service
+install -m 644 scripts/systemd/nfs-ganesha.service.el7	%buildroot%_unitdir/nfs-ganesha.service
+%__subst "s|/run/sysconfig|/etc/sysconfig|g" %buildroot%_unitdir/nfs-ganesha.service
+install -m 644 scripts/systemd/nfs-ganesha-lock.service.el7	%buildroot%_unitdir/nfs-ganesha-lock.service
+%__subst "s|/run/sysconfig|/etc/sysconfig|g" %buildroot%_unitdir/nfs-ganesha-lock.service
 install -m 644 scripts/systemd/sysconfig/nfs-ganesha	%buildroot%_sysconfdir/sysconfig/ganesha
 %else
 mkdir -p %buildroot%_sysconfdir/init.d
-install -m 755 scripts/init.d/nfs-ganesha		%buildroot%_sysconfdir/init.d/nfs-ganesha
+install -m 755 scripts/init.d/nfs-ganesha.el6		%buildroot%_sysconfdir/init.d/nfs-ganesha
 install -m 644 scripts/init.d/sysconfig/ganesha		%buildroot%_sysconfdir/sysconfig/ganesha
 %endif
 
@@ -432,7 +434,7 @@ install -m 644 ChangeLog	%buildroot%_docdir/ganesha
 %dir %_docdir/ganesha/
 %_docdir/ganesha/*
 %doc %_docdir/ganesha/ChangeLog
-%dir %_localstatedir/run/ganesha
+%dir %_runtimedir/ganesha
 
 %if_with systemd
 %_unitdir/nfs-ganesha.service
@@ -542,6 +544,9 @@ install -m 644 ChangeLog	%buildroot%_docdir/ganesha
 %endif
 
 %changelog
+* Tue Nov 07 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5.3-alt1
+- new version 2.5.3 (with rpmrb script)
+
 * Wed Oct 18 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt3
 - add rpm-build-intro buildreq (fix /var/lib/run)
 
