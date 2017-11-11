@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++ perl(LWP/UserAgent.pm)
+BuildRequires: gcc-c++ perl(LWP/UserAgent.pm) rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -40,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        High-performance, full-featured text search engine
 Name:           lucene4
 Version:        4.10.4
-Release:        alt1_8jpp8
+Release:        alt1_10jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -80,6 +79,7 @@ BuildRequires:  maven-local
 BuildRequires:  apache-parent
 BuildRequires:  buildnumber-maven-plugin
 BuildRequires:  maven-plugin-bundle
+BuildRequires:  regexp
 
 # test-framework deps
 BuildRequires:  junit
@@ -194,6 +194,9 @@ mv lucene/build/poms/pom.xml .
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:4.10.4-alt1_10jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:4.10.4-alt1_8jpp8
 - new jpp release
 
