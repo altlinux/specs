@@ -2,7 +2,7 @@
 
 Name:			alterator-pve
 Version:		0.1
-Release:		alt3
+Release:		alt4
 
 ExclusiveArch:		x86_64
 
@@ -38,6 +38,9 @@ Requires:		/usr/bin/ssh-keygen
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Nov 10 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.1-alt4
+- fix local ip resolving checking
+
 * Tue Nov 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.1-alt3
 - start cluster without manual network settings
 
