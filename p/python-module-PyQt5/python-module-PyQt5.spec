@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 5.9
-Release: alt3
+Release: alt4
 Summary: Python bindings for Qt 5
 License: GPL
 Group: Development/Python
@@ -25,15 +25,40 @@ BuildRequires: python-module-dbus-devel
 BuildRequires(pre):python-module-sip-devel
 BuildRequires: qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel
 
-#BuildRequires: gcc-c++ qt5-base-devel lout
-#BuildPreReq: python-module-qscintilla2-qt5-devel libqscintilla2-qt5-devel
-#BuildPreReq: libqscintilla2-qt5-devel
-#BuildRequires: python-module-sip-devel python-devel
-#BuildPreReq: python-module-dbus-devel libqt5-help qt5-multimedia-devel
-#BuildPreReq: qt5-declarative-devel qt5-svg-devel qt5-webkit-devel
-#BuildPreReq: qt5-xmlpatterns-devel qt5-tools-devel qt5-sensors-devel
-#BuildPreReq: qt5-serialport-devel qt5-x11extras-devel qt5-location-devel
-#BuildPreReq: qt5-connectivity-devel qt5-websockets-devel
+BuildRequires:    pkgconfig(dbus-python)
+# we missed it
+#BuildRequires:    pkgconfig(Enginio)
+BuildRequires:    pkgconfig(python)
+BuildRequires:    pkgconfig(Qt5Bluetooth)
+BuildRequires:    pkgconfig(Qt5Core)
+BuildRequires:    pkgconfig(Qt5DBus)
+BuildRequires:    pkgconfig(Qt5Designer)
+BuildRequires:    pkgconfig(Qt5Gui)
+BuildRequires:    pkgconfig(Qt5Help)
+BuildRequires:    pkgconfig(Qt5Multimedia)
+BuildRequires:    pkgconfig(Qt5MultimediaWidgets)
+BuildRequires:    pkgconfig(Qt5Network)
+BuildRequires:    pkgconfig(Qt5OpenGL)
+BuildRequires:    pkgconfig(Qt5Positioning)
+BuildRequires:    pkgconfig(Qt5PrintSupport)
+BuildRequires:    pkgconfig(Qt5Qml)
+BuildRequires:    pkgconfig(Qt5Quick)
+BuildRequires:    pkgconfig(Qt5QuickWidgets)
+BuildRequires:    pkgconfig(Qt5Sensors)
+BuildRequires:    pkgconfig(Qt5SerialPort)
+BuildRequires:    pkgconfig(Qt5Sql)
+BuildRequires:    pkgconfig(Qt5Svg)
+BuildRequires:    pkgconfig(Qt5Test)
+BuildRequires:    pkgconfig(Qt5WebChannel)
+BuildRequires:    pkgconfig(Qt5WebEngineWidgets)
+BuildRequires:    pkgconfig(Qt5WebKit)
+BuildRequires:    pkgconfig(Qt5WebKitWidgets)
+BuildRequires:    pkgconfig(Qt5WebSockets)
+BuildRequires:    pkgconfig(Qt5Widgets)
+BuildRequires:    pkgconfig(Qt5Xml)
+BuildRequires:    pkgconfig(Qt5XmlPatterns)
+BuildRequires:    pkgconfig(Qt5X11Extras)
+
 
 %define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
 Requires: python-module-sip = %sipver2
@@ -219,6 +244,9 @@ find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print 
 %endif
 
 %changelog
+* Sat Nov 11 2017 Vitaly Lipatov <lav@altlinux.ru> 5.9-alt4
+- add add pkgconfig requires (fix missed qt5-webchannel-devel qt5-webengine-devel) (ALT bug 34170)
+
 * Mon Oct 16 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.9-alt3
 - backported fix for qt built with GLES
 
