@@ -1,7 +1,7 @@
 %define  pkgname mixlib-versioning
 
 Name: 	 ruby-%pkgname
-Version: 1.2.2 
+Version: 1.2.3
 Release: alt1
 
 Summary: General purpose Ruby library that allows you to parse, compare, and manipulate version strings in multiple formats.
@@ -54,5 +54,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Sat Nov 11 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.3-alt1
+- New version
+
 * Sun Sep 24 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt1
 - Initial build for Sisyphus
