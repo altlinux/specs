@@ -1,6 +1,7 @@
 Group: Networking/WWW
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -58,7 +59,7 @@ BuildRequires: jpackage-generic-compat
 %global appdir      %{jettylibdir}/webapps
 
 
-%global addver  .v20170317
+%global addver  .v20170531
 
 # minimal version required to build eclipse and thermostat
 # eclipse needs: util, server, http, continuation, io, security, servlet
@@ -67,8 +68,8 @@ BuildRequires: jpackage-generic-compat
 %bcond_with     jp_minimal
 
 Name:           jetty
-Version:        9.4.3
-Release:        alt1_3.v20170317jpp8
+Version:        9.4.6
+Release:        alt1_2.v20170531jpp8
 Summary:        Java Webserver and Servlet Container
 
 # Jetty is dual licensed under both ASL 2.0 and EPL 1.0, see NOTICE.txt
@@ -82,8 +83,6 @@ Source5:        %{name}.service
 Source6:        LICENSE-MIT
 
 Patch1:         0001-Fedora-jetty.home.patch
-# Forwarded upstream, https://github.com/eclipse/jetty.project/pull/1451
-Patch2:         https://patch-diff.githubusercontent.com/raw/eclipse/jetty.project/pull/1451.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
@@ -670,7 +669,6 @@ BuildArch: noarch
 %setup -q -n %{name}.project-%{name}-%{version}%{addver}
 
 %patch1 -p1
-%patch2 -p1
 
 find . -name "*.?ar" -exec rm {} \;
 find . -name "*.class" -exec rm {} \;
@@ -794,9 +792,11 @@ sed -i '/<SystemProperty name="jetty.state"/d' \
 %if %{without jp_minimal}
 %mvn_package ':*-project' project
 %mvn_package ':*-parent' project
+%mvn_package ':*-bom' project
 %else
 %mvn_package ':*-project' __noinstall
 %mvn_package ':*-parent' __noinstall
+%mvn_package ':*-bom' __noinstall
 %endif
 
 # artifact used by demo
@@ -905,10 +905,10 @@ ln -sf %{rundir} %{buildroot}%{apphomedir}/work
 cp -p %{SOURCE1} %{buildroot}%{apphomedir}/bin/jetty.sh
 
 # touching all ghosts; hack for rpm 4.0.4
-for rpm_404_ghost in %{rundir}
+for rpm404_ghost in %{rundir}
 do
-    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
-    touch %buildroot"$rpm_404_ghost"
+    mkdir -p %buildroot`dirname "$rpm404_ghost"`
+    touch %buildroot"$rpm404_ghost"
 done
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/default/jetty`
@@ -966,7 +966,6 @@ exit 0
 %ghost %dir %attr(755, jetty, jetty) %{rundir}
 %{appdir}
 %{_unitdir}/%{name}.service
-%dir %{_javadir}/%{name}
 %config(noreplace,missingok) /etc/default/jetty
 %_initdir/%name
 
@@ -1023,6 +1022,9 @@ exit 0
 %doc LICENSE-eplv10-aslv20.html LICENSE-MIT
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 9.4.6-alt1_2.v20170531jpp8
+- new version
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 9.4.3-alt1_3.v20170317jpp8
 - new version
 
