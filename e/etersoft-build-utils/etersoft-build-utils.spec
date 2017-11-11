@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.7.3
+Version: 2.7.4
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sat Nov 11 2017 Vitaly Lipatov <lav@altlinux.ru> 2.7.4-alt1
+- rpmbph: fix checkout original branch
+- rpmbs: add TESTONLY to task run
+- loginhsh: drop clean install package list
+- epmcs: replace localstate dir to special macros
+
 * Wed Nov 08 2017 Vitaly Lipatov <lav@altlinux.ru> 2.7.3-alt1
 - loginhsh: skip install if no packages for install
 - rpmbs: add support -e (build --test-only)
