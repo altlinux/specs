@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jsoup
-Version:        1.10.2
+Version:        1.10.3
 Release:        alt1_2jpp8
 Summary:        Java library for working with real-world HTML
 License:        MIT
@@ -64,13 +64,16 @@ API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc README CHANGES
+%doc README.md CHANGES
 %doc LICENSE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %changelog
+* Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.10.3-alt1_2jpp8
+- new version
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_2jpp8
 - new jpp release
 
