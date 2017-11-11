@@ -1,7 +1,7 @@
 %define _name kpmcore
 
 Name: lib%_name
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 
 Summary: Library for managing partitions
@@ -59,6 +59,9 @@ using %_name.
 
 
 %changelog
+* Sat Nov 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
 * Mon Oct 16 2017 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
 - 3.2.0
 
