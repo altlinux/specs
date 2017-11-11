@@ -1,8 +1,8 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.0.4
-Release: alt3
+Version: 2.0.5
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL3
@@ -198,6 +198,10 @@ fi
 %_datadir/%myname/features/ucode
 
 %changelog
+* Sat Nov 11 2017 Alexey Gladkov <legion@altlinux.ru> 2.0.5-alt1
+- Replace parser of /proc/cmdline parameters (ALT#33712).
+- Fix unbound variables cpu_vendor cpu_family (ALT#34117).
+
 * Sat Apr 29 2017 Alexey Gladkov <legion@altlinux.ru> 2.0.4-alt3
 - Move halt, replace and showenv from kinit-utils.
 - luks:
