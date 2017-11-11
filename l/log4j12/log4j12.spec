@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -21,7 +21,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          log4j12
 Version:       1.2.17
-Release:       alt1_19jpp8
+Release:       alt1_20jpp8
 Summary:       Java logging package
 License:       ASL 2.0
 URL:           http://logging.apache.org/log4j/1.2/
@@ -198,6 +198,9 @@ fi
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.17-alt1_20jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.17-alt1_19jpp8
 - new jpp release
 
