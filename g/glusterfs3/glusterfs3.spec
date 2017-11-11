@@ -27,7 +27,7 @@
 
 Name: glusterfs3
 Version: %major.7
-Release: alt3
+Release: alt3.1
 
 Summary: Cluster File System
 
@@ -556,6 +556,9 @@ rm -rf %buildroot%_sbindir/conf.py
 %preun_service glusterd
 
 %changelog
+* Sun Nov 12 2017 Vitaly Lipatov <lav@altlinux.ru> 3.10.7-alt3.1
+- autorebuild with libuserspace-rcu.git=0.10.0-alt1
+
 * Sat Nov 11 2017 Vitaly Lipatov <lav@altlinux.ru> 3.10.7-alt3
 - rearrange logrotate files
 
