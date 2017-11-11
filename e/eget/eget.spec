@@ -1,5 +1,5 @@
 Name: eget
-Version: 2.0
+Version: 3.0
 Release: alt1
 
 Summary: wget wrapper with wildcard support
@@ -30,6 +30,10 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Sat Nov 11 2017 Vitaly Lipatov <lav@altlinux.ru> 3.0-alt1
+- improve test for eget, add check for globbing
+- eget: full rewrite, use filter_glob
+
 * Sat Nov 11 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0-alt1
 - rewrite eget
 
