@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             log4j-jboss-logmanager
 Version:          1.1.2
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          JBoss Log4j Emulation
 License:          ASL 2.0
 Url:              https://github.com/jboss-logging/log4j-jboss-logmanager
@@ -73,6 +73,9 @@ sed -i 's/createSourcesJar>true/createSourcesJar>false/' pom.xml
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1.2-alt1_4jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1.2-alt1_3jpp8
 - new jpp release
 
