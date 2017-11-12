@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          vecmath
 Version:       1.6.0
-Release:       alt1_0.7.20130710git41fdddajpp8
+Release:       alt1_0.8.20130710git41fdddajpp8
 Summary:       The 3D vector math Java package, javax.vecmath
 Group:         Development/Other
 # License is GNU General Public License, version 2, with the Classpath Exception
@@ -62,6 +62,9 @@ sed -e "s|<version>1.5.2</version>|<version>1.6.0</version>|" %{SOURCE1} > %{nam
 %doc COPYRIGHT.txt LICENSE.txt LICENSE-SPEC.html
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_0.8.20130710git41fdddajpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_0.7.20130710git41fdddajpp8
 - new jpp release
 
