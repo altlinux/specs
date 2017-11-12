@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          narayana
 Version:       5.3.3
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Distributed Transaction Manager
 License:       LGPLv2+
 URL:           http://narayana.io/
@@ -184,6 +183,9 @@ done
 %doc common/copyright.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 5.3.3-alt1_3jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 5.3.3-alt1_2jpp8
 - new jpp release
 
