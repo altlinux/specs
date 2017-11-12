@@ -1,8 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-archetype
 Version:        2.4
-Release:        alt1_5jpp8
+Release:        alt1_7jpp8
 Summary:        Maven project templating toolkit
 
 # Most of the code is under ASL 2.0, but some bundled jdom sources are
@@ -46,7 +45,6 @@ BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.apache.maven.shared:maven-script-interpreter)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-file)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-http)
-BuildRequires:  mvn(org.apache.rat:apache-rat-plugin)
 BuildRequires:  mvn(org.apache.velocity:velocity)
 BuildRequires:  mvn(org.beanshell:bsh)
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
@@ -151,6 +149,9 @@ Summary:        Maven Plugin for using archetypes
 %patch2 -p1
 %patch3 -p1
 
+# useless in packaging
+%pom_remove_plugin -r :apache-rat-plugin
+
 # Add OSGI info to catalog and descriptor jars
 pushd archetype-models/archetype-catalog
     %pom_xpath_remove "pom:project/pom:packaging"
@@ -221,6 +222,9 @@ popd
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_7jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_5jpp8
 - new jpp release
 
