@@ -1,7 +1,7 @@
 Epoch: 0
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,15 +9,13 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		uddi4j
 Version:	2.0.5
-Release:	alt2_13jpp8
+Release:	alt2_15jpp8
 Summary:	Universal Description, Discovery and Integration registry API for Java
-Group:		Development/Other
 License:	IBM
 URL:		http://sourceforge.net/projects/uddi4j/
 
 Source0:	http://downloads.sf.net/project/uddi4j/uddi4j/%{version}/uddi4j-src-%{version}.zip
 Source1:	%{name}-MANIFEST.MF
-Source2:	http://repo1.maven.org/maven2/org/uddi4j/uddi4j/%{version}/uddi4j-%{version}.pom
 
 # Set javac path in build.xml
 Patch0:		uddi4j-set-javac-path.patch
@@ -30,12 +28,10 @@ BuildArch:	noarch
 BuildRequires:	ant
 BuildRequires:	axis
 BuildRequires:	xerces-j2
-BuildRequires:	java-devel
-BuildRequires:	jpackage-utils
+BuildRequires:	javapackages-local
 
 Requires:	axis
 Requires:	xerces-j2
-Requires:	jpackage-utils
 Source44: import.info
 
 %description
@@ -43,9 +39,8 @@ UDDI4J is a Java class library that provides an API to interact with a
 UDDI (Universal Description, Discovery and Integration) registry.
 
 %package javadoc
+Group: Development/Java
 Summary:	Javadocs for %{name}
-Group:		Development/Java
-Requires:	jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -74,30 +69,21 @@ cp -p %{SOURCE1} META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
 zip -u build/lib/%{name}.jar META-INF/MANIFEST.MF
 
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}
-cp -p build/lib/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_artifact "org.uddi4j:uddi4j:%{version}" build/lib/uddi4j.jar
+%mvn_file ":uddi4j" uddi4j
+%mvn_install -J build/javadocs
 
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# POMs
-install -d -m 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%files
-%doc README
+%files -f .mfiles
 %doc LICENSE.html
-%doc BuildDate.txt
 %doc ReleaseNotes.html
-%{_javadir}/*
-%{_mavenpomdir}/*
 
-%files javadoc
-%doc README
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.html
-%{_javadocdir}/%{name}
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt2_15jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt2_13jpp8
 - new jpp release
 
