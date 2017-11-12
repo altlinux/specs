@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 5.9
-Release: alt4
+Release: alt5%ubt
 Summary: Python bindings for Qt 5
 License: GPL
 Group: Development/Python
@@ -22,6 +22,7 @@ URL: http://www.riverbankcomputing.co.uk/software/pyqt
 # Automatically added by buildreq on Fri Jan 29 2016 (-bi)
 # optimized out: elfutils gcc-c++ libGL-devel libdbus-devel libgpg-error libgst-plugins1.0 libjson-c libqt5-bluetooth libqt5-clucene libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-help libqt5-location libqt5-multimedia libqt5-network libqt5-nfc libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sensors libqt5-serialport libqt5-sql libqt5-svg libqt5-test libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-websockets libqt5-widgets libqt5-x11extras libqt5-xml libqt5-xmlpatterns libstdc++-devel pkg-config python-base python-devel python-module-dbus python-module-sip python-modules python-modules-compiler python-modules-logging python-modules-xml python3 python3-base python3-dev python3-module-sip qt5-base-devel qt5-declarative-devel rpm-build-gir
 BuildRequires: python-module-dbus-devel
+BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre):python-module-sip-devel
 BuildRequires: qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel
 
@@ -59,6 +60,9 @@ BuildRequires:    pkgconfig(Qt5Xml)
 BuildRequires:    pkgconfig(Qt5XmlPatterns)
 BuildRequires:    pkgconfig(Qt5X11Extras)
 
+# https://bugzilla.altlinux.org/show_bug.cgi?id=33873
+%py_provides dbus.mainloop.pyqt5
+
 
 %define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
 Requires: python-module-sip = %sipver2
@@ -80,6 +84,8 @@ code generator for Qt Designer.
 Summary: Python bindings for Qt.
 Group: Development/Python3
 Requires: python3-module-sip = %sipver3
+# https://bugzilla.altlinux.org/show_bug.cgi?id=33873
+%py3_provides dbus.mainloop.pyqt5
 
 %description -n python3-module-%oname
 Python bindings for the Qt C++ class library.  Also includes a PyQt5 backend
@@ -244,6 +250,9 @@ find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print 
 %endif
 
 %changelog
+* Sun Nov 12 2017 Anton Midyukov <antohami@altlinux.org> 5.9-alt5%ubt
+- Added missing provides dbus.mainloop.pyqt5 (ALT bug 33873)
+
 * Sat Nov 11 2017 Vitaly Lipatov <lav@altlinux.ru> 5.9-alt4
 - add add pkgconfig requires (fix missed qt5-webchannel-devel qt5-webengine-devel) (ALT bug 34170)
 
