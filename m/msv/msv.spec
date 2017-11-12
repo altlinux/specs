@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 Name:          msv
 Epoch:         1
 Version:       2013.6.1
-Release:       alt1_9jpp8
+Release:       alt1_10jpp8
 Summary:       Multi-Schema Validator
 License:       BSD and ASL 1.1
 URL:           http://msv.java.net/
@@ -235,6 +235,9 @@ touch $RPM_BUILD_ROOT/etc/java/msv.conf
 %{_datadir}/%{name}
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:2013.6.1-alt1_10jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:2013.6.1-alt1_9jpp8
 - new jpp release
 
