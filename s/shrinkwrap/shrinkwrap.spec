@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          shrinkwrap
 Version:       1.2.3
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       A simple mechanism to assemble Java archives
 # Some file are without license headers
 # reported @ https://issues.jboss.org/browse/SHRINKWRAP-501
@@ -183,6 +183,9 @@ rm LICENSE.orig
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_4jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_3jpp8
 - new jpp release
 
