@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             nar-maven-plugin
 Version:          3.0.0
-Release:          alt1_15jpp8
+Release:          alt1_16jpp8
 Summary:          Native ARchive plugin for Maven
 License:          ASL 2.0 and LGPLv2
 URL:              https://github.com/maven-nar/nar-maven-plugin/
@@ -112,6 +112,9 @@ rm src/main/java/com/github/maven_nar/NarIntegrationTestMojo.java
 %doc LICENSE-2.0.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_16jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_15jpp8
 - new jpp release
 
