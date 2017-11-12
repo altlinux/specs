@@ -1,6 +1,6 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		voms-api-java
 Version:	3.2.0
-Release:	alt1_3jpp8
+Release:	alt1_4jpp8
 Summary:	Virtual Organization Membership Service Java API
 
 License:	ASL 2.0
@@ -68,6 +68,9 @@ Virtual Organization Membership Service (VOMS) Java API Documentation.
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt1_4jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt1_3jpp8
 - new jpp release
 
