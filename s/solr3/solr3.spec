@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             solr3
 Version:          3.6.2
-Release:          alt1_13jpp8
+Release:          alt1_15jpp8
 Summary:          Apache Solr
 License:          ASL 2.0
 Url:              http://lucene.apache.org/solr/
@@ -38,8 +38,7 @@ BuildRequires:    woodstox-core
 BuildRequires:    apache-commons-fileupload
 BuildRequires:    icu4j
 BuildRequires:    jcl-over-slf4j
-# tmp, see below
-BuildRequires:    xmlstarlet
+BuildRequires:    apache-parent
 
 BuildRequires:    regexp
 BuildRequires:    buildnumber-maven-plugin
@@ -126,11 +125,6 @@ sed -i "s|wstx-asl|woodstox-core-asl|" solrj/pom.xml
 %install
 %mvn_install
 
-# Worakround for https://bugzilla.redhat.com/show_bug.cgi?id=1019670
-#for aid in solr-core solr-solrj; do
-#  xmlstarlet ed -L -s "dependencyMap/autoRequires[artifactId = '${aid}']" -t elem -n version -v %{version} %{buildroot}%{_mavendepmapfragdir}/solr3.xml
-#done
-
 %files -f .mfiles
 %doc README.txt
 %doc LICENSE.txt NOTICE.txt
@@ -139,6 +133,9 @@ sed -i "s|wstx-asl|woodstox-core-asl|" solrj/pom.xml
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.6.2-alt1_15jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.6.2-alt1_13jpp8
 - new jpp release
 
