@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		vldocking
 Version:	2.1.5
-Release:	alt1_11jpp8
+Release:	alt1_12jpp8
 Summary:	A Java a.. docking system for JFC Swing applications
 Group:		Development/Java
 License:	CeCILL
@@ -73,6 +73,9 @@ cp -rp doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/*
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.5-alt1_12jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.5-alt1_11jpp8
 - new jpp release
 
