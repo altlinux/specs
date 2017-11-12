@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          noggit
 Version:       0.7
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       JSON streaming parser
 License:       ASL 2.0
 URL:           http://noggit.org/
@@ -57,6 +57,9 @@ chmod 644 LICENSE.txt README.txt
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_4jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_3jpp8
 - new jpp release
 
