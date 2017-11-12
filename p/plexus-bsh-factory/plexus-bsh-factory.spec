@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           %{parent}-%{subname}
 Version:        1.0
-Release:        alt5_0.17.a7jpp8
+Release:        alt5_0.18.a7jpp8
 Epoch:          0
 Summary:        Plexus Bsh component factory
 License:        MIT
@@ -65,6 +65,9 @@ cp -p %{SOURCE3} .
 %doc plexus-bsh-factory-license.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.18.a7jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.17.a7jpp8
 - new jpp release
 
