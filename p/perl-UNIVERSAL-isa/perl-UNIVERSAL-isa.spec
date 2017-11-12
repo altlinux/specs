@@ -1,7 +1,7 @@
 ## SPEC file for Perl module UNIVERSAL-isa
 
 Name: perl-UNIVERSAL-isa
-Version: 1.20150614
+Version: 1.20171012
 Release: alt1
 
 Summary: Perl module UNIVERSAL::isa
@@ -40,11 +40,14 @@ UNIVERSAL::isa() as a function, which it is not.
 %perl_vendor_install
 
 %files
-%doc Changes README LICENSE
+%doc Changes README LICENCE
 %perl_vendor_privlib/UNIVERSAL/isa.pm
 
 
 %changelog
+* Sun Nov 12 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.20171012-alt1
+- New version
+
 * Tue Aug 25 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.20150614-alt1
 - New version 1.20150614
 
