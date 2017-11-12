@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           plexus-classworlds
 Version:        2.5.2
-Release:        alt2_7jpp8
+Release:        alt2_8jpp8
 Summary:        Plexus Classworlds Classloader Framework
 License:        ASL 2.0 and Plexus
 URL:            https://github.com/codehaus-plexus/plexus-classworlds
@@ -69,6 +69,9 @@ API documentation for %{name}.
 %doc LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.5.2-alt2_8jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.5.2-alt2_7jpp8
 - new jpp release
 
