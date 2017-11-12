@@ -2,7 +2,7 @@ Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: perl(Getopt/Mixed.pm)
+BuildRequires: perl(Getopt/Mixed.pm) rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 AutoReq: yes,noosgi
@@ -45,7 +45,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           rhino
 Version:        1.7.7.1
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        JavaScript for Java
 License:        MPLv2.0
 
@@ -140,6 +140,9 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %{_datadir}/%{name}
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.7.7.1-alt1_3jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.7.7.1-alt1_2jpp8
 - new jpp release
 
