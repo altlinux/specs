@@ -1,5 +1,5 @@
 Name: poco
-Version: 1.7.9
+Version: 1.8.0.1
 Release: alt1
 Summary: POrtable COmponents C++ Libraries
 License: Boost Software License v1.0
@@ -104,6 +104,14 @@ Requires: lib%name = %EVR
 
 %description -n lib%name-zip
 POrtable COmponents C++ Libraries: Poco zip library
+
+%package -n lib%name-redis
+Summary: POrtable COmponents C++ Libraries (redis)
+Group: Development/C++
+Requires: lib%name = %EVR
+
+%description -n lib%name-redis
+POrtable COmponents C++ Libraries: Poco redis library
 
 %package -n lib%name-util
 Summary: POrtable COmponents C++ Libraries (util)
@@ -241,6 +249,9 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 %files -n lib%name-zip
 %_libdir/libPocoZip*.so.*
 
+%files -n lib%name-redis
+%_libdir/libPocoRedis*.so.*
+
 %files -n lib%name-devel
 %_bindir/*
 %_includedir/*
@@ -249,6 +260,10 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 #files -n lib%name-devel-docs
 
 %changelog
+* Sun Nov 12 2017 Alexei Takaseev <taf@altlinux.org> 1.8.0.1-alt1
+- 1.8.0.1
+- Add subpackage redis
+
 * Tue Sep 12 2017 Alexei Takaseev <taf@altlinux.org> 1.7.9-alt1
 - 1.7.9
 
