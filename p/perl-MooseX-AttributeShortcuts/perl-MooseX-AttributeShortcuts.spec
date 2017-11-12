@@ -1,7 +1,7 @@
 ## SPEC file for Perl module  MooseX::AttributeShortcuts
 
 Name: perl-MooseX-AttributeShortcuts
-Version: 0.035
+Version: 0.036
 Release: alt1
 
 Summary: Perl module to shorthand for common attribute options
@@ -43,6 +43,9 @@ the above variations.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Sun Nov 12 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.036-alt1
+- New version
+
 * Tue Sep 26 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.035-alt1
 - New version
 
