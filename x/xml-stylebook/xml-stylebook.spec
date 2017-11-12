@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          xml-stylebook
 Version:       1.0
-Release:       alt2_0.20.b3_xalan2.svn313293jpp8
+Release:       alt2_0.24.b3_xalan2.svn313293jpp8
 Summary:       Apache XML Stylebook
 License:       ASL 1.1
 URL:           http://xml.apache.org/
@@ -28,11 +28,17 @@ Patch1:        %{name}-build-javadoc.patch
 BuildArch:     noarch
 
 BuildRequires: java-devel >= 1.6.0
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: javapackages-local
 BuildRequires: ant
 BuildRequires: xml-commons-apis
 BuildRequires: xerces-j2
+%if !0%{?_module_build}
+# Sans-serif font ("Arial") is required to build examples.
+# XXX In modular world lets disable building examples until some fonts
+# are properly modularized.
 BuildRequires: fonts-ttf-dejavu
+%endif
+
 Requires:      xml-commons-apis
 Requires:      xerces-j2
 Source44: import.info
@@ -64,32 +70,22 @@ Examples demonstrating the use of %{name}.
 %patch1 -p0
 
 # Remove bundled binaries
-rm -r bin/*.jar
+find -name *.jar -delete
 
 # Don't include this sample theme because it contains an errant font
 rm -r styles/christmas/
 
-# Make sure upstream hasn't sneaked in any jars we don't know about
-JARS=""
-for j in `find -name "*.jar"`; do
-  if [ ! -L $j ]; then
-    JARS="$JARS $j"
-  fi
-done
-if [ ! -z "$JARS" ]; then
-   echo "These jars should be deleted and symlinked to system jars: $JARS"
-   exit 1
-fi
-
 %build
-ant
+ant -Dclasspath=$(build-classpath xml-commons-apis xerces-j2)
 
 # Build the examples (this serves as a good test suite)
+%if !0%{?_module_build}
 pushd docs
 rm run.bat
-java -classpath "$(build-classpath xml-commons-apis):$(build-classpath jaxp_parser_impl):../bin/stylebook-%{version}-b3_xalan-2.jar" \
+java -classpath "$(build-classpath xml-commons-apis xerces-j2):../bin/stylebook-%{version}-b3_xalan-2.jar" \
   org.apache.stylebook.StyleBook "targetDirectory=../results" book.xml ../styles/apachexml
 popd
+%endif
 
 %install
 # jars
@@ -104,7 +100,9 @@ cp -pr build/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 install -d %{buildroot}%{_datadir}/%{name}
 cp -pr docs %{buildroot}%{_datadir}/%{name}
 cp -pr styles %{buildroot}%{_datadir}/%{name}
+%if !0%{?_module_build}
 cp -pr results %{buildroot}%{_datadir}/%{name}
+%endif
 ln -s xml-stylebook.jar $RPM_BUILD_ROOT/%{_javadir}/stylebook.jar
 
 %files
@@ -120,6 +118,9 @@ ln -s xml-stylebook.jar $RPM_BUILD_ROOT/%{_javadir}/stylebook.jar
 %{_datadir}/%{name} 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.24.b3_xalan2.svn313293jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.20.b3_xalan2.svn313293jpp8
 - new jpp release
 
