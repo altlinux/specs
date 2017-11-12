@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          rome
 Version:       1.7.0
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       RSS and Atom Utilities
 License:       ASL 2.0
 URL:           http://rometools.github.io/rome/
@@ -192,6 +192,9 @@ rm %{name}-modules/src/test/java/com/rometools/modules/cc/types/LicenseTest.java
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1_3jpp8
+- fc27 update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1_2jpp8
 - new jpp release
 
