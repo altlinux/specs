@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: docbook-dtds
 BuildRequires: /proc
@@ -49,7 +49,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           ws-jaxme
 Version:        0.5.2
-Release:        alt5_19jpp8
+Release:        alt5_22jpp8
 Epoch:          0
 Summary:        Open source implementation of JAXB
 License:        ASL 2.0
@@ -76,9 +76,9 @@ Patch5:         ws-jaxme-use-commons-codec.patch
 # Remove xmldb-api, deprecated since f17
 Patch6:         ws-jaxme-remove-xmldb.patch
 Patch7:         ws-jaxme-0.5.2-class-version15.patch
+
 BuildArch:      noarch
-BuildRequires:  jpackage-utils >= 0:1.6
-BuildRequires:  java-devel >= 1.6.0
+BuildRequires:  javapackages-local
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  ant-apache-resolver
 BuildRequires:  antlr-tool
@@ -92,7 +92,6 @@ BuildRequires:  xalan-j2
 BuildRequires:  xerces-j2
 BuildRequires:  docbook-style-xsl
 BuildRequires:  docbook-dtds
-BuildRequires:  zip
 Requires:       antlr-tool
 Requires:       apache-commons-codec
 Requires:       junit
@@ -167,43 +166,32 @@ ant all Docs.all \
 -Ddocbook.home=%{_datadir}/sgml/docbook \
 -Ddocbookxsl.home=%{_datadir}/sgml/docbook/xsl-stylesheets
 
-mkdir -p META-INF
-cp -p %{SOURCE1} META-INF/MANIFEST.MF
-touch META-INF/MANIFEST.MF
-zip -u dist/jaxmeapi-%{version}.jar META-INF/MANIFEST.MF
+# Inject OSGi manifest
+jar ufm dist/jaxmeapi-%{version}.jar %{SOURCE1}
 
 %install
+%mvn_file ':{*}' %{base_name}/@1 %{base_name}/ws-@1
 
-install -dm 755 $RPM_BUILD_ROOT%{_javadir}/%{base_name} $RPM_BUILD_ROOT%{_mavenpomdir}
 for jar in jaxme2 jaxme2-rt jaxmeapi jaxmejs jaxmepm jaxmexs; do
-   install -m 644 dist/${jar}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{base_name}/${jar}.jar
-   install -pm 644 %{_sourcedir}/${jar}-%{version}.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{base_name}-${jar}.pom
-   %add_maven_depmap JPP.%{base_name}-${jar}.pom %{base_name}/${jar}.jar
-  (
-    cd $RPM_BUILD_ROOT%{_javadir}/%{base_name} &&
-    ln -sf ${jar}.jar ws-${jar}.jar
-  )
+   %mvn_artifact %{_sourcedir}/${jar}-%{version}.pom dist/${jar}-%{version}.jar
 done
 
-#javadoc
-install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr build/docs/src/documentation/content/apidocs \
-    $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-rm -rf build/docs/src/documentation/content/apidocs
+%mvn_install -J build/docs/src/documentation/content/apidocs
 
 %files -f .mfiles
 %doc LICENSE NOTICE
-%{_javadir}/%{base_name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
-%doc %{_javadocdir}/%{name}
 
 %files manual
 %doc LICENSE NOTICE
 %doc build/docs/src/documentation/content/manual
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt5_22jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt5_19jpp8
 - new jpp release
 
