@@ -2,6 +2,7 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %global master_version 3
 Name:          tiles
 Version:       2.2.2
-Release:       alt3_16jpp8
+Release:       alt3_17jpp8
 Summary:       Java templating framework for web application user interfaces
 License:       ASL 2.0
 Url:           http://tiles.apache.org/
@@ -168,6 +169,9 @@ cd src
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.2.2-alt3_17jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.2.2-alt3_16jpp8
 - new jpp release
 
