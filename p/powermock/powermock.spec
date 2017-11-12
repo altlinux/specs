@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,9 +9,10 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           powermock
 Version:        1.6.5
-Release:        alt1_5jpp8
+Release:        alt1_7jpp8
 Summary:        A Java mocking framework
 
+# Note: api-mockito subpackage is ASL 2.0 and MIT, the rest is ASL 2.0
 License:        ASL 2.0
 URL:            https://github.com/jayway/powermock
 Source0:        https://github.com/jayway/%{name}/archive/%{name}-%{version}.tar.gz
@@ -101,6 +103,9 @@ This package contains support code for the PowerMock API extensions.
 %package api-mockito
 Group: Development/Java
 Summary:        PowerMock Mockito API module
+# Bundles forked mockito, which is under MIT
+License:        ASL 2.0 and MIT
+Provides:       bundled(mockito) = 2.0
 Requires:       %{name}-common = %{version}-%{release}
 
 %description api-mockito
@@ -210,6 +215,7 @@ sed -i '/shouldLoadClassAndOverrideMethodGreaterThanJvmLimit/i@org.junit.Ignore'
 %files junit4 -f .mfiles-junit4
 %files api-support -f .mfiles-api-support
 %files api-mockito -f .mfiles-api-mockito
+%doc api/mockito2/src/main/java/org/powermock/api/mockito/repackaged/Mockito-LICENSE.txt
 %files api-easymock -f .mfiles-api-easymock
 %files testng -f .mfiles-testng
 
@@ -217,6 +223,9 @@ sed -i '/shouldLoadClassAndOverrideMethodGreaterThanJvmLimit/i@org.junit.Ignore'
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.6.5-alt1_7jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.6.5-alt1_5jpp8
 - new jpp release
 
