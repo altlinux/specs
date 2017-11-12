@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             picketbox
 Version:          4.9.6
-Release:          alt1_4jpp8
+Release:          alt1_5jpp8
 Summary:          Security framework for Java Applications
 License:          LGPLv2+
 URL:              http://picketbox.jboss.org
@@ -113,6 +114,9 @@ install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}.po
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 4.9.6-alt1_5jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 4.9.6-alt1_4jpp8
 - new jpp release
 
