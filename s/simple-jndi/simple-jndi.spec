@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          simple-jndi
 Version:       0.11.4.1
-Release:       alt2_11jpp8
+Release:       alt2_12jpp8
 Summary:       A JNDI implementation
 License:       BSD
 Url:           https://github.com/hen/osjava
@@ -84,6 +84,9 @@ rm -r src/test/org/osjava/sj/memory/SharedMemoryTest.java
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.11.4.1-alt2_12jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.11.4.1-alt2_11jpp8
 - new jpp release
 
