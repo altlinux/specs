@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          tuscany-parent
 Version:       2
-Release:       alt1_14jpp8
+Release:       alt1_15jpp8
 Summary:       Apache Tuscany Project Parent
 License:       ASL 2.0
 Url:           http://tuscany.apache.org/
@@ -50,6 +50,9 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %doc LICENSE-2.0.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2-alt1_15jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2-alt1_14jpp8
 - new jpp release
 
