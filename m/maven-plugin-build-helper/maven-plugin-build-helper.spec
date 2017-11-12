@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -7,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-plugin-build-helper
 Version:        1.9.1
-Release:        alt1_4jpp8
+Release:        alt1_5jpp8
 Summary:        Build Helper Maven Plugin
 Group:          Development/Other
 License:        MIT and ASL 2.0
@@ -71,6 +72,9 @@ cp %{SOURCE1} LICENSE-2.0.txt
 %doc header.txt LICENSE-2.0.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.1-alt1_5jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.1-alt1_4jpp8
 - new jpp release
 
