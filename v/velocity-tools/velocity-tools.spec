@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          velocity-tools
 Version:       2.0
-Release:       alt2_15jpp8
+Release:       alt2_17jpp8
 Summary:       Collection of useful tools for Velocity template engine
 License:       ASL 2.0
 Url:           http://velocity.apache.org/tools/releases/2.0/
@@ -19,6 +19,7 @@ Patch1:        %{name}-%{version}-dont_copy_test_lib.patch
 # servlet 3.0 support thanks to mizdebsk
 # servlet 3.1 support
 Patch2:        %{name}-%{version}-servlet.patch
+Patch3:        %{name}-%{version}-port-to-dom4j-2.0.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(commons-beanutils:commons-beanutils)
@@ -83,6 +84,7 @@ find . -name "*.class" -delete
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 sed -i 's/\r//' LICENSE NOTICE WHY_THREE_JARS.txt
 
@@ -119,6 +121,9 @@ sed -i 's/\r//' LICENSE NOTICE WHY_THREE_JARS.txt
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt2_17jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt2_15jpp8
 - new jpp release
 
