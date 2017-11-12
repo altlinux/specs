@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             snappy-java
 Version:          1.1.2.4
-Release:          alt2_6jpp8
+Release:          alt2_8jpp8
 Summary:          Fast compressor/decompresser
 License:          ASL 2.0
 URL:              http://xerial.org/snappy-java/
@@ -30,7 +30,6 @@ Source1:          http://central.maven.org/maven2/org/xerial/snappy/%{name}/%{ve
 Patch0:           snappy-java-1.1.2-build.patch
 Patch1:           snappy-java-1.1.2.4-lsnappy.patch
 
-BuildRequires:    make
 BuildRequires:    gcc-c++
 BuildRequires:    libstdc++-devel-static
 BuildRequires:    libsnappy-devel
@@ -166,6 +165,9 @@ export CXXFLAGS
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.2.4-alt2_8jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.2.4-alt2_6jpp8
 - new jpp release
 
