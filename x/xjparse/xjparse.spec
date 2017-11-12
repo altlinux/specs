@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		xjparse
 Version:	1.0
-Release:	alt1_15jpp8
+Release:	alt1_16jpp8
 Summary:	Wrapper for the Xerces XML Schema validator
 License:	ASL 2.0
 URL:		http://nwalsh.com/java/xjparse
@@ -51,6 +51,9 @@ install -dm 755 $RPM_BUILD_ROOT%{_bindir}
 %{_bindir}/xjparse
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_16jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_15jpp8
 - new jpp release
 
