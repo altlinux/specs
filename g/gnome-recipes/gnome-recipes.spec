@@ -2,7 +2,7 @@
 %define xdg_name org.gnome.Recipes
 
 Name: gnome-recipes
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME likes to cook
@@ -76,6 +76,9 @@ This package contains common noarch files needed for Recipes.
 
 
 %changelog
+* Sun Nov 12 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
+- 2.0.2
+
 * Mon Oct 30 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - 2.0.0
 
