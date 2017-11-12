@@ -1,6 +1,6 @@
 Name: ncmpcpp
-Version: 0.8
-Release: alt2
+Version: 0.8.1
+Release: alt1
 
 Summary: ncurses-based client for the Music Player Daemon (MPD)
 
@@ -46,6 +46,10 @@ doesn't have. It's been also rewritten from scratch in C++.
 %_man1dir/%name.1*
 
 %changelog
+* Sun Nov 12 2017 Arseny Maslennikov <arseny@altlinux.org> 0.8.1-alt1
+- 0.8.1-alt1
+- Update .gitignore
+
 * Wed Oct 11 2017 Arseny Maslennikov <arseny@altlinux.org> 0.8-alt2
 - Rebuilt with libboost_*.so.1.65.0
 
