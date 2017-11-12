@@ -1,6 +1,7 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          xml-commons-apis
 Version:       1.4.01
-Release:       alt3_22jpp8
+Release:       alt3_24jpp8
 Summary:       APIs for DOM, SAX, and JAXP
 License:       ASL 2.0 and W3C and Public Domain
 URL:           http://xml.apache.org/commons/
@@ -25,7 +26,6 @@ Source4:       http://repo1.maven.org/maven2/xml-apis/xml-apis-ext/1.3.04/xml-ap
 
 BuildRequires: javapackages-local
 BuildRequires: ant
-BuildRequires: zip
 BuildRequires: apache-parent
 
 Provides:      xml-commons = %{version}-%{release}
@@ -91,13 +91,8 @@ sed -i '/distributionManagement/,/\/distributionManagement/ {d}' *.pom
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jar javadoc
 
 # inject OSGi manifests
-mkdir -p META-INF
-cp -p %{SOURCE1} META-INF/MANIFEST.MF
-touch META-INF/MANIFEST.MF
-zip -u build/xml-apis.jar META-INF/MANIFEST.MF
-cp -p %{SOURCE2} META-INF/MANIFEST.MF
-touch META-INF/MANIFEST.MF
-zip -u build/xml-apis-ext.jar META-INF/MANIFEST.MF
+jar ufm build/xml-apis.jar %{SOURCE1}
+jar ufm build/xml-apis-ext.jar %{SOURCE2}
 
 %mvn_artifact xml-apis-[0-9]*.pom build/xml-apis.jar
 %mvn_artifact xml-apis-ext*.pom build/xml-apis-ext.jar
@@ -122,6 +117,9 @@ rm -rf build/docs/javadoc
 %{_javadocdir}/*
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.01-alt3_24jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.01-alt3_22jpp8
 - new jpp release
 
