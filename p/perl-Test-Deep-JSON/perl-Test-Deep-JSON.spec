@@ -3,8 +3,8 @@
 %define real_name Test-Deep-JSON
 
 Name: perl-Test-Deep-JSON
-Version: 0.03
-Release: alt2
+Version: 0.04
+Release: alt1
 
 Summary: Perl module to compare JSON with Test::Deep
 
@@ -21,9 +21,9 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sat Sep 17 2016
-# optimized out: perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-ExtUtils-CBuilder perl-IPC-Cmd perl-JSON-PP perl-JSON-XS perl-Locale-Maketext-Simple perl-Module-Load perl-Module-Load-Conditional perl-Module-Metadata perl-Params-Check perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Types-Serialiser perl-common-sense perl-devel perl-parent perl-podlators perl-threads python-base python-modules python3
-BuildRequires: perl-Exporter-Lite perl-HTML-Parser perl-JSON perl-Module-Build perl-Test-Deep
+# Automatically added by buildreq on Sun Nov 12 2017
+# optimized out: perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-ExtUtils-Config perl-ExtUtils-Helpers perl-ExtUtils-InstallPaths perl-JSON-PP perl-JSON-XS perl-Parse-CPAN-Meta perl-Term-ANSIColor perl-Types-Serialiser perl-common-sense perl-devel perl-threads python-base python-modules python3 python3-base
+BuildRequires: perl-Exporter-Lite perl-JSON perl-Module-Build-Tiny perl-Test-Deep
 
 %description
 Perl module Test::Deep::JSON provides provides json($expected)
@@ -44,5 +44,8 @@ and matches (by cmp_deeply) with $expected.
 %perl_vendor_privlib/Test/Deep/JSON*
 
 %changelog
+* Sun Nov 12 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.04-alt1
+- New version
+
 * Sat Sep 17 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.03-alt2
 - Initial build for ALT Linux Sisyphus
