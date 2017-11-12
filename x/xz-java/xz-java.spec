@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           xz-java
 Version:        1.6
-Release:        alt1_2jpp8
+Release:        alt1_4jpp8
 Summary:        Java implementation of XZ data compression
 License:        Public Domain
 URL:            http://tukaani.org/xz/java.html
@@ -17,11 +16,8 @@ BuildArch:      noarch
 
 Source0:        http://tukaani.org/xz/xz-java-%{version}.zip
 
-BuildRequires:  jpackage-utils
-BuildRequires:  java-devel
+BuildRequires:  javapackages-local
 BuildRequires:  ant
-
-Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -43,6 +39,8 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -c %{name}-%{version}
 
+%mvn_file : %{name} xz
+
 %build
 # During documentation generation the upstream build.xml tries to download
 # package-list from oracle.com. Create a dummy package-list to prevent that.
@@ -51,27 +49,20 @@ mkdir -p extdoc && touch extdoc/package-list
 ant maven
 
 %install
-# jar
-install -dm 755 %{buildroot}%{_javadir}
-install -m 644 build/jar/xz.jar %{buildroot}%{_javadir}/%{name}.jar
-ln -sf %{name}.jar %{buildroot}%{_javadir}/xz.jar
-# javadoc
-install -dm 755 %{buildroot}%{_javadocdir}
-cp -R build/doc %{buildroot}%{_javadocdir}/%{name}
-# pom
-install -dm 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 build/maven/xz-%{version}.pom %{buildroot}/%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap
+%mvn_artifact build/maven/xz-%{version}.pom build/jar/xz.jar
+
+%mvn_install -J build/doc
 
 %files -f .mfiles
 %doc COPYING README THANKS
-%{_javadir}/xz.jar
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc COPYING
-%{_javadocdir}/%{name}
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_4jpp8
+- fc27 update
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_2jpp8
 - new jpp release
 
