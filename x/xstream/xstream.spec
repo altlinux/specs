@@ -2,7 +2,7 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 %define _without_maven 1
 BuildRequires: /proc
@@ -51,7 +51,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xstream
 Version:        1.4.9
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Java XML serialization library
 License:        BSD
 URL:            http://x-stream.github.io/
@@ -223,6 +223,9 @@ find . -name "*.jar" -print -delete
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4.9-alt1_6jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4.9-alt1_5jpp8
 - new jpp release
 
