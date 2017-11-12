@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name: relaxngcc
 Version: 1.12
-Release: alt2_12jpp8
+Release: alt2_13jpp8
 Summary: RELAX NG Compiler Compiler
 
 License: ASL 1.1
@@ -127,6 +127,9 @@ cp -pr javadoc/* %{buildroot}%{_javadocdir}/%{name}/.
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.12-alt2_13jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.12-alt2_12jpp8
 - new jpp release
 
