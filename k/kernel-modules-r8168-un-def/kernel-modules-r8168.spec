@@ -1,6 +1,6 @@
 %define module_name	r8168
-%define module_release	alt4
-%define module_version	8.044.02
+%define module_release	alt1
+%define module_version	8.045.08
 
 %define flavour		un-def
 
@@ -21,8 +21,6 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
 ExclusiveArch: %karch
-
-Patch0: r8168-kernel-4.11.patch
 
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-un-def
@@ -48,7 +46,6 @@ Gigabit Ethernet controllers with PCI-Express interface.
 rm -rf kernel-source-%module_name-%module_version
 tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
-%patch0 -p1
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -63,6 +60,9 @@ install -Dp -m600 src/%module_name.ko %buildroot/%module_dir/%module_name.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sun Nov 12 2017 Nazarov Denis <nenderus@altlinux.org> 8.045.08-alt1
+- Version 8.045.08
 
 * Thu Aug 17 2017 Dmitry V. Levin <ldv@altlinux.org> 8.044.02-alt4
 - Unpackaged %%module_dir/.
