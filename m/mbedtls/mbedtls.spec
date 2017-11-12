@@ -2,7 +2,7 @@
 %def_disable static
 
 Name: mbedtls
-Version: 2.5.1
+Version: 2.6.0
 Release: alt1%ubt
 
 Summary: Light-weight cryptographic and SSL/TLS library
@@ -13,7 +13,7 @@ Url: https://tls.mbed.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 Source: https://tls.mbed.org/download/%name-%version-apache.tgz
 
-BuildPreReq: rpm-build-ubt
+BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: cmake
 BuildRequires: pkcs11-helper-devel
@@ -113,6 +113,9 @@ popd
 %_libexecdir/%name/*
 
 %changelog
+* Sun Nov 12 2017 Nazarov Denis <nenderus@altlinux.org> 2.6.0-alt1%ubt
+- Version 2.6.0
+
 * Sun Jul 30 2017 Nazarov Denis <nenderus@altlinux.org> 2.5.1-alt1%ubt
 - Version 2.5.1
 
