@@ -9,7 +9,7 @@ Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 %define suff 13
 Name: %oname
 Version: 2.10.1
-Release: alt2%ubt
+Release: alt3%ubt
 License: GPL
 Group: Development/KDE and QT
 
@@ -185,6 +185,7 @@ Group: Development/KDE and QT
 BuildArch: noarch
 Provides: lib%oname-qt4-python-devel = %version-%release
 Obsoletes: lib%oname-qt4-python-devel
+%py_provides PyQt4.Qsci
 
 %description -n python-module-%oname-qt4-devel
 Devel files for Python bindings for %oname
@@ -195,6 +196,7 @@ Summary: Python bindings for %oname-qt5
 Group: Development/KDE and QT
 Provides: lib%oname-qt5-python = %version-%release
 Requires: python-module-sip = %sipver2
+%py_provides PyQt5.Qsci
 
 %description -n python-module-%oname-qt5
 Python bindings for %oname-qt5
@@ -215,6 +217,7 @@ Requires: %libname-qt4 = %version-%release
 Summary: Python 3 bindings for %oname
 Group: Development/KDE and QT
 Requires: python3-module-sip = %sipver3
+%py3_provides PyQt5.Qsci
 
 %description -n python3-module-%oname-qt4
 Python bindings for %oname
@@ -234,6 +237,7 @@ Requires: %libname-qt5 = %version-%release
 Summary: Python 3 bindings for %oname (Qt5)
 Group: Development/KDE and QT
 Requires: python3-module-sip = %sipver3
+%py3_provides PyQt5.Qsci
 
 %description -n python3-module-%oname-qt5
 Python bindings for %oname
@@ -605,6 +609,7 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 
 %files -n python-module-%oname-qt4
 %python_sitelibdir/PyQt4/Qsci.so
+%python_sitelibdir/PyQt4/Qsci.pyi
 %_datadir/qt4/qsci/api/python/*.api
 
 %files -n python-module-%oname-qt4-devel
@@ -612,6 +617,7 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 
 %files -n python-module-%oname-qt5
 %python_sitelibdir/PyQt5/Qsci.so
+%python_sitelibdir/PyQt5/Qsci.pyi
 %_datadir/qt5/qsci/api/python/*.api
 
 %files -n python-module-%oname-qt5-devel
@@ -620,6 +626,7 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %if_with python3
 %files -n python3-module-%oname-qt4
 %python3_sitelibdir/PyQt4/Qsci.so
+%python3_sitelibdir/PyQt4/Qsci.pyi
 %_datadir/qt4/qsci3/api/python/*.api
 
 %files -n python3-module-%oname-qt4-devel
@@ -628,6 +635,7 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %if_with python3qt5
 %files -n python3-module-%oname-qt5
 %python3_sitelibdir/PyQt5/Qsci.so
+%python3_sitelibdir/PyQt5/Qsci.pyi
 %_datadir/qt5/qsci3/api/python/*.api
 
 %files -n python3-module-%oname-qt5-devel
@@ -641,6 +649,10 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_docdir/%libname-%version
 
 %changelog
+* Sun Nov 12 2017 Anton Midyukov <antohami@altlinux.org> 2.10.1-alt3%ubt
+- Added missing files
+- Fix missing provides (Closes: 34171)
+
 * Thu Nov 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10.1-alt2%ubt
 - Added devel symlink for compatibility.
 - Pinned dependency on sip because rebuild of sip requires rebuild of this package.
