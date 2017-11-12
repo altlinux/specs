@@ -1,6 +1,7 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 Summary:       Official JDBC driver for MySQL
 Name:          mysql-connector-java
 Version:       5.1.38
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Epoch:         1
 License:       GPLv2 with exceptions
 URL:           http://dev.mysql.com/downloads/connector/j/
@@ -119,6 +120,9 @@ ant -DbuildDir=%{builddir} -DdistDir=%{distdir} \
 %doc COPYING
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.1.38-alt1_5jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.1.38-alt1_4jpp8
 - new jpp release
 
