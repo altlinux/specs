@@ -7,7 +7,7 @@
 
 Name: activesupport-gems
 Version: 5.0.2
-Release: alt2
+Release: alt3
 Summary: ActiveSupport 
 Group: Development/Ruby
 License: MIT,Apache2.0
@@ -17,6 +17,7 @@ packager: Denis Medvedev <nbr@altlinux.org>
 Source: %name-%version.tar
 BuildRequires: ruby  ruby-tools libruby-devel 
 BuildArch: noarch
+Obsoletes: activesupport <= 3.0
 
 %description
 ActiveSupport ruby gem
@@ -77,6 +78,9 @@ rm -f gems/thread_safe-0.3.6/examples/bench_cache.rb
 %doc %gem_docdir
 
 %changelog
+* Sun Nov 12 2017 Denis Medvedev <nbr@altlinux.org> 5.0.2-alt3
+- Added obsoletes for old activesupport
+
 * Thu Sep 14 2017 Denis Medvedev <nbr@altlinux.org> 5.0.2-alt2
 - Switched to macro for gem path.
 
