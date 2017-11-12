@@ -3,7 +3,7 @@
 %define real_name Promises
 
 Name: perl-Promises
-Version: 0.96
+Version: 0.99
 Release: alt1
 
 Summary: An implementation of Promises in Perl
@@ -43,10 +43,13 @@ can often result in asynchronous programs.
 %perl_vendor_install
 
 %files
-%doc README Changes
+%doc README.* Changes
 %perl_vendor_privlib/Promises*
 
 %changelog
+* Sun Nov 12 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.99-alt1
+- New version
+
 * Wed Aug 30 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.96-alt1
 - New version
 
