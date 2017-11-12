@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -14,12 +14,11 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 # Started: Wed, 06 Jul 2016 13:50:35 UTC
 # Terminated: Thu, 07 Jul 2016 06:37:46 UTC
-#def_with test
 %bcond_with test
 
 Name:          mybatis
 Version:       3.2.8
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       SQL Mapping Framework for Java
 License:       ASL 2.0
 # http://code.google.com/p/mybatis/
@@ -136,6 +135,9 @@ opts="-f"
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_8jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_7jpp8
 - new jpp release
 
