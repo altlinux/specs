@@ -12,7 +12,7 @@
 
 Name: multipath-tools
 Version: 0.6.4
-Release: alt1
+Release: alt1.1
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPLv2+
@@ -129,6 +129,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_man8dir/kpartx.8.*
 
 %changelog
+* Sun Nov 12 2017 Vitaly Lipatov <lav@altlinux.ru> 0.6.4-alt1.1
+- autorebuild with libuserspace-rcu.git=0.10.0-alt1
+
 * Thu Mar 23 2017 Alexey Shabalin <shaba@altlinux.ru> 0.6.4-alt1
 - 0.6.4
 

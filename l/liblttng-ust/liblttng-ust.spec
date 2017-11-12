@@ -1,6 +1,6 @@
 Name: liblttng-ust
 Version: 2.8.3
-Release: alt1
+Release: alt1.1
 
 Summary: Linux Trace Toolkit Userspace Tracer library
 
@@ -89,6 +89,9 @@ rm -rf %buildroot/tmp/lttng-ust-divert
 %_man3dir/tracepoint_enabled.3.*
 
 %changelog
+* Sun Nov 12 2017 Vitaly Lipatov <lav@altlinux.ru> 2.8.3-alt1.1
+- autorebuild with libuserspace-rcu.git=0.10.0-alt1
+
 * Fri Jul 14 2017 Vitaly Lipatov <lav@altlinux.ru> 2.8.3-alt1
 - new version 2.8.3 (with rpmrb script)
 - fix dl linking (see https://github.com/lttng/lttng-ust/pull/48)
