@@ -1,8 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -40,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           maven-scm
 Version:        1.9.5
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Common API for doing SCM operations
 License:        ASL 2.0
 URL:            http://maven.apache.org/scm
@@ -155,6 +154,9 @@ sed -i s/cvsjava.CvsJava/cvsexe.CvsExe/ maven-scm-client/src/main/resources/META
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.9.5-alt1_4jpp8
+- fc27 update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.9.5-alt1_3jpp8
 - new jpp release
 
