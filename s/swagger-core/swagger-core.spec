@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          swagger-core
 Version:       1.5.10
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Java implementation of Swagger
 # Source files without license headers https://github.com/swagger-api/swagger-core/issues/1882
 License:       ASL 2.0
@@ -216,6 +216,9 @@ rm modules/swagger-jaxrs/src/test/java/io/swagger/functional/test/ApiListingReso
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.10-alt1_3jpp8
+- fc27 update
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.10-alt1_2jpp8
 - new jpp release
 
