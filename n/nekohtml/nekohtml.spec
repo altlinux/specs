@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
@@ -39,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           nekohtml
 Version:        1.9.22
-Release:        alt1_3jpp8
+Release:        alt1_5jpp8
 Epoch:          0
 Summary:        HTML scanner and tag balancer
 License:        ASL 2.0
@@ -117,7 +118,7 @@ rm data/meta/test-meta-encoding3.html
 %mvn_file ':{*}' @1
 
 %build
-export CLASSPATH=$(build-classpath bcel xerces-j2)
+export CLASSPATH=$(build-classpath bcel xerces-j2 xml-commons-apis)
 %{ant} \
     -Dbuild.sysclasspath=first \
     -Dlib.dir=%{_javadir} \
@@ -154,6 +155,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %files demo -f .mfiles-demo
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.9.22-alt1_5jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.9.22-alt1_3jpp8
 - new jpp release
 
