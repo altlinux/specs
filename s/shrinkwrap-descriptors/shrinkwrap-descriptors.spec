@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          shrinkwrap-descriptors
 Version:       2.0.0
-Release:       alt3_0.18.alpha9jpp8
+Release:       alt3_0.19.alpha9jpp8
 Summary:       ShrinkWrap sub-project for creating Archive Descriptors
 # Some file are without license headers
 # reported @ https://github.com/shrinkwrap/descriptors/issues/106
@@ -287,6 +287,9 @@ export JAVA5_HOME=%{_jvmdir}/java
 %doc LICENSE
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt3_0.19.alpha9jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt3_0.18.alpha9jpp8
 - new jpp release
 
