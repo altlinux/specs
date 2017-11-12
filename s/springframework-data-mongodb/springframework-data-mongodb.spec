@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -20,17 +20,15 @@ BuildRequires: jpackage-generic-compat
 %global oname spring-data-mongodb
 
 %if 0%{?fedora}
-#def_with aspectj
 %bcond_with aspectj
 # https://bugzilla.redhat.com/show_bug.cgi?id=1217162
-#def_with test
 %bcond_with test
 %endif
 
 Name:          springframework-data-mongodb
 # Newer release require springframework >= 4.0.7.RELEASE
 Version:       1.5.2
-Release:       alt1_6jpp8
+Release:       alt1_7jpp8
 Summary:       MongoDB support for Spring Data
 License:       ASL 2.0
 URL:           http://projects.spring.io/spring-data-mongodb/
@@ -220,6 +218,9 @@ opts="-f"
 %doc license.txt notice.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_7jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_6jpp8
 - new jpp release
 
