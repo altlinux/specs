@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: docbook-simple
 BuildRequires: /proc
@@ -40,15 +39,14 @@ BuildRequires: jpackage-generic-compat
 
 Name:           xmlunit
 Version:        1.6
-Release:        alt1_4jpp8
+Release:        alt1_6jpp8
 Epoch:          0
 Summary:        Provides classes to do asserts on xml
 License:        BSD
 Source0:        http://downloads.sourceforge.net/xmlunit/xmlunit-1.6-src.zip
 Source1:        http://repo1.maven.org/maven2/xmlunit/xmlunit/1.0/xmlunit-1.0.pom
 URL:            http://xmlunit.sourceforge.net/
-BuildRequires:  jpackage-utils
-BuildRequires:  java-devel >= 1.6.0
+BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  ant-junit
 BuildRequires:  junit
@@ -59,7 +57,6 @@ BuildRequires:  xml-commons-apis
 Requires:       junit
 Requires:       xalan-j2
 Requires:       xml-commons-apis
-Requires:       jpackage-utils
 
 BuildArch:      noarch
 Source44: import.info
@@ -79,60 +76,47 @@ BuildArch: noarch
 Javadoc for %{name}
 
 %prep
-%setup -q 
+%setup -q
+
 sed -i /java.class.path/d build.xml
 # remove all binary libs and javadocs
 find . -name "*.jar" -exec rm -f {} \;
 rm -rf doc
 
-cat >build.properties <<EOF
-junit.lib=$(build-classpath junit)
-xmlxsl.lib=
-test.report.dir=test
-EOF
-
-cat >docbook.properties <<EOF
-db5.xsl=%{_datadir}/sgml/docbook/xsl-ns-stylesheets
-EOF
-
 #Fix wrong-file-end-of-line-encoding
 sed -i 's/\r//g' README.txt LICENSE.txt
+
+%mvn_file : %{name}
 # damn the net
 # TODO: why catalog does not work? it is ant xslt task
 sed -i 's,http://docbook.org/xml/simple/1.1b1/sdocbook.dtd,http://www.oasis-open.org/docbook/xml/simple/1.1/sdocbook.dtd,g' `grep -rl 'http://docbook.org/xml/simple/1.1b1/sdocbook.dtd' .`
 
 
 %build
-ant -Dbuild.compiler=modern -Dhaltonfailure=yes jar javadocs
+ant -Dbuild.compiler=modern -Dhaltonfailure=yes \
+    -Djunit.lib=$(build-classpath junit) \
+    -Dxmlxsl.lib= -Dtest.report.dir=test \
+    -Ddb5.xsl=%{_datadir}/sgml/docbook/xsl-ns-stylesheets \
+    jar javadocs
+
+%mvn_artifact %{SOURCE1} build/lib/%{name}-%{version}.jar
 
 %install
-
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-install -m 0644 build/lib/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# poms
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-
-install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap
-
-# Javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr build/doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install -J build/doc/api/
 
 %check
 ant
 
 
 %files -f .mfiles
-%doc README.txt LICENSE.txt userguide/XMLUnit-Java.pdf 
+%doc README.txt LICENSE.txt userguide/XMLUnit-Java.pdf
 
-%files javadoc
-%doc %{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_6jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_4jpp8
 - new jpp release
 
