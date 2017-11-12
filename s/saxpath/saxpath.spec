@@ -2,6 +2,7 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:       saxpath
 Version:    1.0
-Release:    alt4_14jpp8
+Release:    alt4_15jpp8
 Summary:    Simple API for XPath
 License:    Saxpath
 URL:        http://sourceforge.net/projects/saxpath/
@@ -20,7 +21,7 @@ BuildArch:  noarch
 
 BuildRequires:  ant
 BuildRequires:  ant-junit
-BuildRequires:  javapackages-tools rpm-build-java
+BuildRequires:  javapackages-local
 Requires:       jpackage-utils
 Source44: import.info
 
@@ -77,6 +78,9 @@ ant test
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_15jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_14jpp8
 - new jpp release
 
