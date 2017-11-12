@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -18,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             snakeyaml
 Version:          1.17
-Release:          alt1_3jpp8
+Release:          alt1_4jpp8
 Summary:          YAML parser and emitter for the Java programming language
 License:          ASL 2.0
 URL:              https://bitbucket.org/asomov/%{name}/
@@ -118,6 +118,9 @@ rm -r src/test/java/org/yaml/snakeyaml/issues/issue9
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_4jpp8
+- fc27 update
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_3jpp8
 - new jpp release
 
