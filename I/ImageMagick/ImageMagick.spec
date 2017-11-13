@@ -10,7 +10,7 @@
 
 Name: ImageMagick
 Version: 6.9.9.22
-Release: alt1
+Release: alt2
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -139,7 +139,6 @@ subst 's,2.69,2.68,' configure.ac
 	--with-gvc=yes \
 	--with-rsvg=yes \
 	--with-lqr=yes \
-	--without-x \
 	--disable-hdri \
 	--with-gcc-arch=no \
 	--with-perl \
@@ -225,6 +224,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Mon Nov 13 2017 Anton Farygin <rider@altlinux.ru> 6.9.9.22-alt2
+- build with libX11 again (closes: #34185)
+
 * Wed Nov 08 2017 Anton Farygin <rider@altlinux.ru> 6.9.9.22-alt1
 - new version 6.9.9.22
 
