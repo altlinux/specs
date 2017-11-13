@@ -11,7 +11,7 @@
 %def_enable selinux
 
 Name: nautilus
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -160,7 +160,6 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 %files -f %name.lang
 %_bindir/*
 %dir %_libdir/%name
-#%_libdir/%name/libgd.so
 %dir %_libdir/%name-%api_ver
 %dir %_libdir/%name-%api_ver/components
 %_desktopdir/*.desktop
@@ -176,8 +175,6 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 %doc --no-dereference COPYING
 %doc NEWS.bz2 README*
 %_man1dir/*
-
-#%exclude %_libdir/%name/libgd.la
 
 %files -n lib%name
 %_libdir/libnautilus-extension.so.*
@@ -202,6 +199,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Mon Nov 13 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
+- 3.26.2
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 
