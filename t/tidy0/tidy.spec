@@ -1,13 +1,12 @@
-%define ver 170301
-%define docsver 170301
+%define ver 051026
+%define docsver 051020
 %define EVR %{?epoch:%epoch:}%version-%release
-%define sover 5
-%define libtidy lib%name%sover
+%define oldname tidy
 
-Name: tidy
-Version: 5.4
-Release: alt1.20%ver
-Epoch: 20171110
+Name: tidy0
+Version: 0.99
+Release: alt12.20%ver
+Epoch: 20120522
 
 Summary: HTML Tidy helps keep webpages clean
 License: W3C license
@@ -23,9 +22,9 @@ Summary(ru_RU.UTF-8): HTML Tidy помогает чистить web-страни
 Summary(uk_UA.UTF-8): HTML Tidy допомагає чистити web-сторінки
 
 # Automatically added by buildreq on Tue Oct 11 2011
-BuildRequires: gcc-c++ cmake
+BuildRequires: gcc-c++
 
-Requires: %libtidy = %EVR
+Requires: lib%oldname = %EVR
 
 %description
 When editing HTML it's easy to make mistakes. Wouldn't it be nice
@@ -81,73 +80,38 @@ Tidy не буде створювати оброблену версію, док�
 проблеми, виправити які автоматично не виходить -- вони
 відмічаються як "помилки" замість "попереджень".
 
-%package -n %libtidy
-Summary: Shared libraries for %name
+%package -n lib%oldname
+Summary: Shared libraries for %oldname
 Group: System/Libraries
 
-%description -n %libtidy
-Shared libraries for %name
-
-%package -n lib%name-devel
-Summary: Header files and libraries for %name development
-Group: Development/C
-Requires: %libtidy = %EVR
-
-%description -n lib%name-devel
-Header files and libraries for %name development
-
-%if_enabled static
-%package -n lib%name-devel-static
-Summary: Static libraries for %name development
-Group: Development/C
-Requires: lib%name-devel = %EVR
-
-%description -n lib%name-devel-static
-Static libraries for %name development
-%endif
+%description -n lib%oldname
+Shared libraries for %oldname
 
 %prep
-%setup -n %name
-%setup -n %name -T -D -b1
+%setup -n %oldname
+%setup -n %oldname -T -D -b1
 
 %build
-%cmake \
-  -DCMAKE_BUILD_TYPE:STRING=Release
-  #
-
-%make_build -C BUILD
+sh build/gnuauto/setup.sh
+%configure %{subst_enable static}
+%make_build
 
 %install
-%makeinstall -C BUILD DESTDIR=%buildroot
+%makeinstall
 install -pDm644 %SOURCE2 %buildroot%_man1dir/tidy.1
+rm htmldoc/doxygen.cfg
 mv htmldoc/api _api
 %if_enabled static
 %else
 rm %buildroot%_libdir/*.a
 %endif
 
-%files
-%doc htmldoc/*
-%_bindir/*
-%_man1dir/*
-
-%files -n %libtidy
-%_libdir/lib%name.so.%{sover}
-%_libdir/lib%name.so.%{sover}.*
-
-%files -n lib%name-devel
-%doc _api/*
-%_includedir/*
-%_libdir/*.so
-
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/*.a
-%endif
+%files -n lib%oldname
+%_libdir/*.so.*
 
 %changelog
-* Fri Nov 10 2017 Oleg Solovyov <mcpain@altlinux.org> 20171110:5.4-alt1.20170301
-- update to 5.4
+* Mon Nov 13 2017 Oleg Solovyov <mcpain@altlinux.org> 20120522:0.99-alt12.20051026
+- replaced tidy with tidy0
 
 * Tue May 22 2012 Michael Shigorin <mike@altlinux.org> 20120522:0.99-alt11.20051026
 - clarified interpackage dependencies regarding Epoch:
