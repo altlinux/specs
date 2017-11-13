@@ -1,11 +1,10 @@
 Name: cilk
 Version: 5.4.6
-Release: alt10
+Release: alt11
 Summary: Language for multithreaded parallel programming based on ANSI C
 License: GPL v2 or later
 Group: Development/C
 Url: http://supertech.csail.mit.edu/cilk/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: http://supertech.csail.mit.edu/cilk/cilk-5.4.6.tar.gz
 
@@ -13,7 +12,7 @@ Requires: lib%name-devel = %version-%release
 Conflicts: lib%name-devel-static < %version-%release
 Obsoletes: lib%name-devel-static < %version-%release
 
-BuildPreReq: flex chrpath
+BuildRequires: flex chrpath
 
 %description
 Cilk is a language for multithreaded parallel programming based on ANSI
@@ -143,7 +142,7 @@ This package contains documentation for Cilk.
 %setup
 
 %build
-%add_optflags %optflags_shared -DHAVE_SYS_TIME_H
+%add_optflags %optflags_shared -DHAVE_SYS_TIME_H -fgnu89-inline
 %autoreconf
 %configure \
 	--with-perfctr=no
@@ -201,6 +200,9 @@ install -m644 FAQ/%name-faq.html/* \
 %doc examples
 
 %changelog
+* Mon Nov 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.4.6-alt11
+- Fixed build with gcc-6.
+
 * Sun Jan 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.4.6-alt10
 - Disabled build of examples
 
