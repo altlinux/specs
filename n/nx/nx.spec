@@ -2,8 +2,8 @@
 %def_without tjpg
 
 Name: nx
-Version: 3.5.1
-Release: alt16
+Version: 3.5.1.1
+Release: alt1
 
 Summary: Next Generation Remote Display
 
@@ -23,7 +23,6 @@ Source7: nxesd-%version-2.tar
 Source9: nxproxy-%version-2.tar
 Source10: nxscripts-%version-1.tar
 Source12: nxservice-%version-2.tar
-Source13: nxssh-%version-2.tar
 Source16: nx-X11-%version-4.tar
 %if_with tjpg
 #http://sourceforge.net/projects/libjpeg-turbo/files/%tjpg_ver/libjpeg-turbo-%tjpg_ver.tar.gz
@@ -115,8 +114,15 @@ NX is an exciting new technology for remote display. It provides near local
 speed application responsiveness over high latency, low bandwidth links. The
 core libraries for NX are provided by NoMachine under the GPL.
 
+%package devel
+Summary: Header files for development with nx
+Group: Development/C
+Requires: %name = %version-%release
+%description devel
+Header files for development with nx
+
 %prep
-%setup -c -a1 -a3 -a4 -a5 -a6 -a7 -a9 -a10 -a12 -a13 -a16
+%setup -c -a1 -a3 -a4 -a5 -a6 -a7 -a9 -a10 -a12 -a16
 %if_with tjpg
 %setup -c -a17
 %endif
@@ -221,20 +227,13 @@ pushd $i
 popd
 done
 
-# build nxssh (links Xcomp)
-pushd nxssh
-%autoreconf
-%configure --without-zlib-version-check
-%make
-popd
-
 # build nxesd
 pushd nxesd
 %__subst "s|\.\./audiofile-0.2.3/libaudiofile/\.libs/libaudiofile\.a|-laudiofile|" configure
 %configure \
     --disable-shared
 # multi proc build is broken on many systems
-%make nxesd
+%make_build nxesd || %make nxesd
 popd
 
 # build nxservice
@@ -283,10 +282,6 @@ cp -a nxcompext/libXcompext.so.* %buildroot%_libdir/
 cp -a nxcompshad/libXcompshad.so.* %buildroot%_libdir/
 cp -a nxcompsh/libXcompsh.so.* %buildroot%_libdir/
 install -m 755 nxproxy/nxproxy %buildroot%_bindir/
-# install nxssh
-pushd nxssh
-install -m755 nxssh %buildroot%_bindir/
-popd
 # install nxesd
 pushd nxesd
 install -m755 nxesd %buildroot%_bindir/
@@ -295,6 +290,7 @@ popd
 pushd nxservice
 install -m755 nxservice %buildroot%_bindir/
 popd
+
 
 # install scripts
 mkdir -p %buildroot%_docdir/%name-%version/
@@ -342,6 +338,11 @@ ln -fs ../libXrender-nx.so.1 %buildroot%_libdir/nxserver/libXrender.so.1
 mkdir -p %buildroot%_datadir/nxserver/
 install -m644 %SOURCE21 %buildroot%_datadir/nxserver/rgb.txt
 
+# install files for development
+mkdir -p %buildroot%_includedir/%name
+cp -a nxcomp/NX.h %buildroot%_includedir/%name/
+cp -a nxcomp/libXcomp.so %buildroot%_libdir/
+
 %files
 %doc %_docdir/%name-%version
 %dir %_sysconfdir/nxagent
@@ -350,7 +351,6 @@ install -m644 %SOURCE21 %buildroot%_datadir/nxserver/rgb.txt
 %_bindir/nxagent
 %_bindir/nxesd
 %_bindir/nxproxy
-%_bindir/nxssh
 %_bindir/nxservice
 %_libdir/lib*.so.*
 %_libdir/nxagent
@@ -369,7 +369,37 @@ install -m644 %SOURCE21 %buildroot%_datadir/nxserver/rgb.txt
 %dir %_datadir/nxserver/
 %_datadir/nxserver/rgb.txt
 
+%files devel
+%_libdir/lib*.so
+%_includedir/%name/
+
 %changelog
+* Wed Nov 08 2017 Pavel Vainerman <pv@altlinux.ru> 3.5.1.1-alt1
+- remove nxssh sources
+
+* Wed Nov 01 2017 Pavel Vainerman <pv@altlinux.ru> 3.5.1-alt22.1
+- exclude nxssh from package
+
+* Tue Oct 31 2017 Pavel Vainerman <pv@altlinux.ru> 3.5.1-alt22
+- build for developers
+
+* Wed Oct 18 2017 Pavel Vainerman <pv@altlinux.ru> 3.5.1-alt21
+- added devel package
+
+* Mon Sep 11 2017 Vitaly Lipatov <lav@altlinux.ru> 3.5.1-alt20
+- update fix-openssl-1.1.patch for nxssh 7.5
+
+* Mon Sep 11 2017 Vitaly Lipatov <lav@altlinux.ru> 3.5.1-alt19
+- update openssl 1.1 patch against openssh 7.5
+- update nxssh to openssh-7.5 (eterbug #11865)
+- build smp if possible
+
+* Fri Jul 14 2017 Vitaly Lipatov <lav@altlinux.ru> 3.5.1-alt18
+- add patch to build with openssl 1.1 (eterbug #11842)
+
+* Tue Jun 20 2017 Vitaly Lipatov <lav@altlinux.ru> 3.5.1-alt17
+- move warning to log (eterbug #11593)
+
 * Mon Feb 27 2017 Vitaly Lipatov <lav@altlinux.ru> 3.5.1-alt16
 - fix debug(line)
 
