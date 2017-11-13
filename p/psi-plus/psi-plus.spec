@@ -2,7 +2,7 @@
 
 Name: psi-plus
 Version: 1.2.105
-Release: alt2
+Release: alt3
 
 Summary: Psi+ Jabber client
 Summary(ru_RU.UTF-8): Jabber-клиент Psi+
@@ -29,6 +29,7 @@ BuildRequires: libXScrnSaver-devel
 BuildRequires: libaspell-devel
 BuildRequires: libidn-devel
 BuildRequires: libqca-qt5-devel
+BuildRequires: libtidy-devel libotr-devel
 BuildRequires: qt5-multimedia-devel
 BuildRequires: qt5-phonon-devel
 %if_enabled webkit
@@ -400,6 +401,23 @@ The plugin is designed to display popup notifications on change of moods, activi
 
 %description plugin-pepchangenotify -l ru_RU.UTF-8
 Плагин предназначен для показа всплывающих уведомлений о смене настроений, занятий и мелодий у контактов из ростера. В настройках можно выбрать для каких именно событий включены уведомления, задать время, в течение которого уведомление будет показываться, а также указать проигрываемый звук.
+
+# OTR plugin
+%package plugin-otr
+Summary: Off-the-Record Messaging plugin for Psi+
+Group: Networking/Instant messaging
+Requires: %name = %version-%release
+
+%description plugin-otr
+Off-the-Record (OTR) Messaging allows you to have private conversations over instant messaging by providing:
+Encryption
+No one else can read your instant messages.
+Authentication
+You are assured the correspondent is who you think it is.
+Deniability
+The messages you send do not have digital signatures that are checkable by a third party. Anyone can forge messages after a conversation to make them look like they came from you. However, during a conversation, your correspondent is assured the messages he sees are authentic and unmodified.
+Perfect forward secrecy
+If you lose control of your private keys, no previous conversation is compromised.
 
 # Pstop plugin
 %package plugin-pstop
@@ -773,6 +791,12 @@ pushd src/plugins/generic/messagefilterplugin
 %make_build
 popd
 
+# OTR plugin
+pushd src/plugins/generic/otrplugin
+%qmake_qt5 otrplugin.pro
+%make_build
+popd
+
 # PEP change notify plugin
 pushd src/plugins/generic/pepchangenotifyplugin
 %qmake_qt5 pepchangenotifyplugin.pro
@@ -874,6 +898,7 @@ for i in attentionplugin/libattentionplugin.so \
 	 jabberdiskplugin/libjabberdiskplugin.so \
 	 juickplugin/libjuickplugin.so \
 	 messagefilterplugin/libmessagefilterplugin.so \
+	 otrplugin/libotrplugin.so \
 	 pepchangenotifyplugin/libpepchangenotifyplugin.so \
 	 qipxstatusesplugin/libqipxstatusesplugin.so \
 	 screenshotplugin/libscreenshotplugin.so \
@@ -993,6 +1018,10 @@ rm -f %buildroot%_datadir/%name/plugins/*.pri
 %files plugin-messagefilter
 %_libdir/%name/plugins/libmessagefilterplugin.so
 
+# OTR plugin
+%files plugin-otr
+%_libdir/%name/plugins/libotrplugin.so
+
 # PEP change notify plugin
 %files plugin-pepchangenotify
 %_libdir/%name/plugins/libpepchangenotifyplugin.so
@@ -1038,6 +1067,9 @@ rm -f %buildroot%_datadir/%name/plugins/*.pri
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Mon Nov 13 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.105-alt3
+- add OTR plugin (Closes: #32384)
+
 * Thu Nov 09 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.105-alt2
 - clean unpackaged files
 - cleanup
