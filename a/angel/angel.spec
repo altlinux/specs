@@ -1,17 +1,16 @@
 Name: angel
 Version: 2014.03.13
-Release: alt1
+Release: alt2
 Summary: ANGEL stands for Automatic differentiation Nested Graph Elimination Library
 License: BSD
 Group: Sciences/Mathematics
 Url: http://sourceforge.net/projects/angellib/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://angellib.svn.sourceforge.net/svnroot/angellib/trunk/
 Source: %name-%version.tar
 
-BuildPreReq: doxygen gcc-c++ boost-devel rpm-macros-make
-BuildPreReq: libxaifBooster-devel graphviz
+BuildRequires: doxygen gcc-c++ boost-devel rpm-macros-make
+BuildRequires: libxaifBooster-devel graphviz
 
 %description
 ANGEL stands for Automatic differentiation Nested Graph Elimination
@@ -137,6 +136,9 @@ rm -fR doc/html doc/latex
 %_docdir/%name
 
 %changelog
+* Mon Nov 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2014.03.13-alt2
+- Rebuilt with new toolchain.
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.03.13-alt1
 - New snapshot
 - Fixed build with new boost (thnx iv@)

@@ -2,20 +2,19 @@
 
 Name: OpenAD
 Version: 20140315
-Release: alt2
+Release: alt3
 Summary: A tool for automatic differentiation (AD) of numerical computer programs
 License: BSD
 Group: Sciences/Mathematics
 Url: http://www.mcs.anl.gov/OpenAD/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 Source1: setenv2.sh
 Source2: XAIFOBJS
 
-BuildPreReq: gcc-fortran python-modules gcc-c++ libxerces-c28-devel
-BuildPreReq: tcsh libsexpr-devel boost-devel /usr/bin/latex
-BuildPreReq: doxygen graphviz
+BuildRequires: gcc-fortran python-modules gcc-c++ libxerces-c28-devel
+BuildRequires: tcsh libsexpr-devel boost-devel /usr/bin/latex
+BuildRequires: doxygen graphviz
 
 Requires: lib%name = %version-%release
 
@@ -276,6 +275,9 @@ install -m755 openad %buildroot%_bindir
 %doc xaifBooster/doc/*.ps
 
 %changelog
+* Mon Nov 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 20140315-alt3
+- Fixed build with new toolchain.
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140315-alt2
 - Fixed build with new boost (thnx iv@)
 
