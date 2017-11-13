@@ -1,17 +1,17 @@
 Summary: Tools for managing the Oracle Cluster Filesystem 2
 Name: ocfs2-tools
-Version: 1.6.4
-Release: alt1.2
+Version: 1.8.5
+Release: alt1.0378c47
 License: GPL
 Group: System/Kernel and hardware
-Source: %name-%version.tar.bz2
+# https://github.com/markfasheh/ocfs2-tools
+Source: %name-%version.tar
 Source1: cluster.conf
-Patch0: %name-initscript.patch
-Patch1: %name-gcc43-alt.patch
-Patch2: %name-1.6.4-alt-umode_t.patch
+
+Patch0: ocfs2-tools-initscript.patch
+
 Url: http://oss.oracle.com/projects/ocfs2-tools/
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
-BuildRequires: e2fsprogs-devel, glib2-devel, python-module-pygtk , python-devel, readline-devel, ncurses-devel, libe2fs-devel, libuuid-devel
+BuildRequires: e2fsprogs-devel, glib2-devel, python-module-pygtk , python-devel, readline-devel, ncurses-devel, libe2fs-devel, libuuid-devel, libaio-devel
 
 %description
 Tools to manage Oracle Cluster Filesystem 2 volumes.
@@ -36,13 +36,12 @@ ocfs2-tools-devel contains the libraries and header files needed to
 develop ocfs2 filesystem-specific programs.
 
 %prep
-%setup -n ocfs2-tools-%version
+%setup
 %patch0 -p1
-%patch1 -p1
-%patch2 -p2
 
 %build
-%configure --enable-dynamic-ctl=yes --enable-dynamic-fsck=yes --disable-debug --prefix=/usr --mandir=%_datadir/man --libdir=%_libdir
+%autoreconf
+%configure --enable-dynamic-ctl=yes --enable-ocfs2console=yes --enable-dynamic-fsck=yes --disable-debug --prefix=/usr --mandir=%_datadir/man --libdir=%_libdir
 make
 
 %install
@@ -76,24 +75,30 @@ make DESTDIR="%buildroot" install
 %config(noreplace) %_sysconfdir/ocfs2/cluster.conf
 %_sbindir/o2hbmonitor
 %_bindir/o2info
-%_man7dir/o2cb.7.gz
-%_man8dir/debugfs.ocfs2.8.gz
-%_man8dir/fsck.ocfs2.8.gz
-%_man8dir/fsck.ocfs2.checks.8.bz2
-%_man8dir/mkfs.ocfs2.8.gz
-%_man8dir/tunefs.ocfs2.8.gz
-%_man8dir/mount.ocfs2.8.gz
-%_man8dir/mounted.ocfs2.8.gz
-%_man8dir/o2cb_ctl.8.gz
-%_man8dir/o2image.8.gz
-%_man8dir/ocfs2_hb_ctl.8.gz
-%_man1dir/o2info.1.gz
+%_man5dir/o2cb.sysconfig.5.*
+%_man5dir/ocfs2.cluster.conf.5*
+%_man7dir/o2cb.7*
+%_man7dir/ocfs2.7*
+%_man8dir/debugfs.ocfs2.8*
+%_man8dir/fsck.ocfs2.8*
+%_man8dir/fsck.ocfs2.checks.8*
+%_man8dir/mkfs.ocfs2.8*
+%_man8dir/tunefs.ocfs2.8*
+%_man8dir/mount.ocfs2.8*
+%_man8dir/mounted.ocfs2.8*
+%_man8dir/o2cb_ctl.8*
+%_man8dir/o2cb.8*
+%_man8dir/o2image.8*
+%_man8dir/o2cluster.8*
+%_man8dir/o2hbmonitor.8*
+%_man8dir/ocfs2_hb_ctl.8*
+%_man1dir/o2info.1*
 %dir /var/run/o2cb
 
 %files -n ocfs2console
 %_libdir/python%__python_version/site-packages/ocfs2interface
 %_sbindir/ocfs2console
-%_man8dir/ocfs2console.8.gz
+%_man8dir/ocfs2console.8*
 
 %files -n ocfs2-tools-devel
 %_libdir/*.a
@@ -108,6 +113,9 @@ make DESTDIR="%buildroot" install
 %_includedir/ocfs2-kernel/*.h
 
 %changelog
+* Mon Oct 30 2017 Anton Farygin <rider@altlinux.ru> 1.8.5-alt1.0378c47
+- 1.8.5
+
 * Tue Jun 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.4-alt1.2
 - Fixed build
 
