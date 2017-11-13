@@ -1,12 +1,14 @@
 Summary: CSS editor for web developers
 Name: cssed
 Version: 0.4.1
-Release: alt1
+Release: alt2
 Group: Development/Tools
 License: GPL
 Source: http://prdownloads.sourceforge.net/cssed/%name-%version.tar.gz
 Url: http://cssed.sourceforge.net/
+
 Requires: gtk2 >= 2.4 glib2 >= 2.4 cssed-common
+
 BuildRequires: desktop-file-utils gcc-c++ libgtk+2-devel libxml2-devel
 
 %description
@@ -47,7 +49,7 @@ done;
 %_bindir/cssed
 
 %files common
-%_mandir/man1/cssed.1.gz
+%_man1dir/cssed.1*
 %_datadir/applications/*
 %_datadir/application-registry/*
 %_datadir/mime-info/cssed.mime
@@ -63,6 +65,9 @@ done;
 %doc AUTHORS COPYING ChangeLog README INSTALL NEWS
 
 %changelog
+* Mon Nov 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.1-alt2
+- Updated spec to allow any man pages compression.
+
 * Sun Apr 03 2011 Alex Negulescu <alecs@altlinux.org> 0.4.1-alt1
 - initial Sisyphus build, from SVN, with small mods
 * Fri Mar 25 2011 Alex Negulescu <alecs@altlinux.org> 0.4.0-alt2
