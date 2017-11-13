@@ -1,13 +1,15 @@
 %define rname kio-extras
 
-%define molletnetwork_sover 5
+%define molletnetwork_sover 17
 %define libmolletnetwork libmolletnetwork5%molletnetwork_sover
+%define kioarchive_sover 5
+%define libkioarchive libkioarchive%kioarchive_sover
 
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 17.04.3
-Release: alt2%ubt
+Version: 17.08.3
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -71,6 +73,13 @@ Requires: %name-common = %version-%release
 %description -n %libmolletnetwork
 KF5 library
 
+%package -n %libkioarchive
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n %libkioarchive
+KF5 library
+
 
 %prep
 %setup -n %rname-%version
@@ -112,11 +121,11 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5cfg/*.kcfg
 
 %files devel
-#%_K5inc/kio_version.h
+%_K5inc/*kio*archive*.h
 #%_K5inc/KIO*/
 #%_K5inc/kio/
 #%_K5link/lib*.so
-#%_K5lib/cmake/KF5KIO/
+%_K5lib/cmake/Kio*/
 #%_K5archdata/mkspecs/modules/qt_KIO*.pri
 %_K5dbus_iface/*.xml
 
@@ -124,7 +133,14 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libmolletnetwork5.so.*
 %_K5lib/libmolletnetwork5.so.%molletnetwork_sover
 
+%files -n %libkioarchive
+%_K5lib/libkioarchive.so.*
+%_K5lib/libkioarchive.so.%kioarchive_sover
+
 %changelog
+* Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
 * Mon Aug 14 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt2%ubt
 - fix changing file permissions (ALT#33502)
 

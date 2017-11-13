@@ -1,7 +1,7 @@
 %define rname libkexiv2
 
 Name: kde5-%rname
-Version: 17.04.3
+Version: 17.08.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -14,7 +14,7 @@ Source: %rname-%version.tar
 
 # Automatically added by buildreq on Mon Jan 11 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-gui libstdc++-devel pkg-config python-base python-modules python3 python3-base ruby ruby-stdlibs
-BuildRequires: extra-cmake-modules libexiv2-devel python-module-google qt5-base-devel rpm-build-python3 rpm-build-ruby
+#BuildRequires: extra-cmake-modules libexiv2-devel python-module-google qt5-base-devel rpm-build-python3 rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: libexiv2-devel
@@ -69,6 +69,9 @@ KF5 library
 %_K5lib/libKF5KExiv2.so.*
 
 %changelog
+* Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
 * Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
 - new version
 

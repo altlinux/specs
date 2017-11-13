@@ -6,8 +6,8 @@
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
-Version: 17.04.3
-Release: alt2%ubt
+Version: 17.08.3
+Release: alt1%ubt
 %K5init
 
 Group: Office
@@ -142,6 +142,9 @@ KF5 library
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
 * Wed Aug 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt2%ubt
 - fix CHM default encoding
 

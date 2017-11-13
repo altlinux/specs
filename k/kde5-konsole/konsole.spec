@@ -4,8 +4,8 @@
 %define libkonsoleprivate libkonsoleprivate%sover
 
 Name: kde5-%rname
-Version: 17.04.3
-Release: alt2%ubt
+Version: 17.08.3
+Release: alt1%ubt
 %K5init
 
 Group: Terminals
@@ -21,7 +21,6 @@ Source: %rname-%version.tar
 Patch10: alt-no-transparency.patch
 Patch11: alt-konsole-profiles.patch
 Patch12: alt-def-font.patch
-Patch13: alt-fix-tabdrag.patch
 
 # Automatically added by buildreq on Mon Apr 27 2015 (-bi)
 # optimized out: alternatives cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -77,7 +76,6 @@ KF5 library
 %patch10 -p1 -b .transparency
 #%patch11 -p1
 %patch12 -p1
-%patch13 -p1
 
 %build
 %K5build
@@ -100,7 +98,7 @@ __EOF__
 %files
 %config %_sysconfdir/alternatives/packages.d/kde5-konsole
 # adding to utmp don't work because dbus checking for saved guid
-#attr(2711,root,utempter) %_K4bindir/konsole
+#attr(2711,root,utempter) %_K5bin/konsole
 %_K5bin/konsole
 %_K5bin/konsoleprofile
 %_K5lib/libkdeinit5_konsole.so
@@ -118,6 +116,9 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
 * Mon Aug 21 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt2%ubt
 - fix tabdrag (ALT#33507)
 

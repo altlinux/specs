@@ -10,8 +10,8 @@
 %define libkonqsidebarplugin libkonqsidebarplugin%konqsidebarplugin_sover
 
 Name: kde5-%rname
-Version: 17.04.3
-Release: alt2%ubt
+Version: 17.08.3
+Release: alt1%ubt
 %K5init
 
 Group: Networking/WWW
@@ -190,6 +190,9 @@ rm -f %buildroot/%_K5xdgapp/kfmclient_dir.desktop
 #%_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
 * Mon Oct 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt2%ubt
 - conflict with kde5-baseapps-common
 

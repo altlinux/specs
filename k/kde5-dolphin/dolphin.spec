@@ -5,8 +5,8 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 17.04.3
-Release: alt5%ubt
+Version: 17.08.3
+Release: alt1%ubt
 %K5init
 
 Group: File tools
@@ -108,7 +108,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5cfg/dolphin*
 %_K5srv/*.desktop
 %_K5srvtyp/*.desktop
-%_K5xmlgui/dolphin*
+#%_K5xmlgui/dolphin*
 %_K5dbus_srv/org.kde.dolphin.FileManager1.service
 
 %files devel
@@ -125,6 +125,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
 * Tue Aug 22 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt5%ubt
 - revert to: F3 closes inactive panel
 
