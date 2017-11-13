@@ -1,6 +1,6 @@
 Name: dangerdeep
 Version: 0.4.0_pre3327
-Release: alt1.qa3
+Release: alt2
 
 Summary: Danger from the Deep - WW2 german submarine simulation
 License: GPL v2
@@ -10,7 +10,7 @@ Url: http://dangerdeep.sourceforge.net
 Source: http://dl.sourceforge.net/dangerdeep/%name-%version.tar.gz
 Patch: dangerdeep-0.4.0_pre3327-alt-libGL-x86_64.patch
 Patch1: dangerdeep-0.4.0_pre3327-alt-glibc-2.16.patch
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
+Patch2: dangerdeep-0.4.0_pre3327-alt-gcc-6.patch
 
 Requires: dangerdeep-data = %version
 
@@ -31,6 +31,7 @@ playable.
 %setup -q
 %patch -p2
 %patch1 -p2
+%patch2 -p2
 
 sed -i 's@-g -O2@%optflags@' SConstruct
 sed -i 's@/usr/local/bin@%_bindir@' SConstruct
@@ -77,6 +78,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Mon Nov 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.0_pre3327-alt2
+- Fixed build with gcc-6.
+
 * Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0_pre3327-alt1.qa3
 - Fixed build with glibc 2.16
 
