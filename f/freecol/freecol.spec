@@ -1,19 +1,22 @@
 Name: freecol
-Version: 0.10.2
+Version: 0.11.6
 Release: alt1
+Summary: FreeCol is opensource Colonization clone.
 Url: http://freecol.org
 Group: Games/Strategy
 License: GPL3
+BuildArch: noarch
+
 Source: %name-%version-%release.tar
 Source1: %name.desktop
 Source2: %name.xpm
-Packager: Mikhail Pokidko <pma at altlinux.ru>
-Summary: FreeCol is opensource Colonization clone.
-BuildArch: noarch
+
+Patch1: %name-%version-fedora-source-encoding.patch
 
 BuildRequires: rpm-build-java
 BuildRequires: ant ant-nodeps
 BuildRequires: subversion
+BuildRequires: java-devel junit
 
 Requires: java
 
@@ -24,10 +27,11 @@ The objective of the game is to create an independent nation.
 
 %prep
 %setup -q -n %name-%version
+%patch1 -p1
 
 
 %build
-export CLASSPATH=$(build-classpath junit example-javalib)
+export CLASSPATH=$(build-classpath junit)
 %ant
 
 %install
@@ -64,6 +68,9 @@ install -p %SOURCE2 %buildroot%_niconsdir/%name.xpm
 %_niconsdir/%name.xpm
 
 %changelog
+* Tue Nov 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.11.6-alt1
+- Updated to upstream version 0.11.6.
+
 * Mon Sep 05 2011 Mikhail Pokidko <pma@altlinux.org> 0.10.2-alt1
 - v0.10.2 (stable)
 
