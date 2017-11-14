@@ -1,43 +1,67 @@
-Name: asio
-Version: 1.10.1
-Release: alt1
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++ perl(Date/Format.pm)
+# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 
-Summary: C++ library for network programming
-License: Boost Software License
-Group: Development/C++
+%global commit 28d9b8d6df708024af5227c551673fdb2519f5bf
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
 
-Url: http://asio.sourceforge.net/
+Name:           asio
+Version:        1.10.8
+Release:        alt1_6
+Summary:        A cross-platform C++ library for network programming
 
-Source0: %name-%version.tar.bz2
+Group:          Development/C++
+License:        Boost Software License
+URL:            https://think-async.com
+Source0:        https://github.com/chriskohlhoff/%{name}/archive/%{commit}.tar.gz#/%{name}-%{shortcommit}.tar.gz
 
-Packager: Ilya Mashkin <oddity@altlinux.ru>
-BuildArch: noarch
-
-# Automatically added by buildreq on Thu Apr 03 2008 (-bi)
-BuildRequires: boost-devel gcc-c++ libssl-devel
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libssl-devel
+BuildRequires:  boost-devel boost-devel-headers boost-python-headers
+Source44: import.info
 
 %description
-asio is a cross-platform C++ library for network programming that provides
-developers with a consistent asynchronous I/O model using a modern C++
-approach.
+The asio package contains a cross-platform C++ library for network programming
+that provides developers with a consistent asynchronous I/O model using a
+modern C++ approach.
+
+%package devel
+Summary:        Header files for asio
+Group:          Development/Other
+
+%description devel
+Header files you can use to develop applications with asio.
+
+The asio package contains a cross-platform C++ library for network programming
+that provides developers with a consistent asynchronous I/O model using a
+modern C++ approach.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{commit}/%{name}
 
 %build
+./autogen.sh
 %configure
+%make_build
 
 %install
-cd include
-%make_install DESTDIR=%buildroot install
+make install DESTDIR=%{buildroot}
 
-%files
-%doc COPYING INSTALL LICENSE_1_0.txt README doc src
-%_includedir/asio.hpp
-%dir %_includedir/asio
-%_includedir/asio/
+%files devel
+%doc src/doc/*
+%doc LICENSE_1_0.txt
+%dir %{_includedir}/asio
+%{_includedir}/asio/*
+%{_includedir}/asio.hpp
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.10.8-alt1_6
+- NMU: update to new version by fcimport
+- requiest by oddity@
+
 * Tue Mar 04 2014 Ilya Mashkin <oddity@altlinux.ru> 1.10.1-alt1
 - 1.10.1
 
