@@ -1,5 +1,5 @@
 Name: anyservice
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: Anyservice - scripts for making systemd like service from any programs
@@ -48,6 +48,9 @@ cp %name.sh %buildroot/%_bindir/%name
 %dir /var/log/%name/
 
 %changelog
+* Tue Nov 14 2017 Vitaly Lipatov <lav@altlinux.ru> 0.8-alt1
+- add support for /etc/systemd/system place for service files
+
 * Tue Oct 24 2017 Vitaly Lipatov <lav@altlinux.ru> 0.7-alt1
 - anyservice.sh: fix tabs
 - add sleep to fix restart issue (eterbug #11688)
