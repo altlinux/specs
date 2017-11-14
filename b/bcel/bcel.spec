@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           bcel
 Version:        6.0
-Release:        alt1_0.6.20140406svn1592769jpp8
+Release:        alt1_0.7.20140406svn1592769jpp8
 Epoch:          1
 Summary:        Byte Code Engineering Library
 License:        ASL 2.0
@@ -80,6 +80,9 @@ sed -i '\|lib/dt\.jar|s|javaHome|javaHome.substring(0, javaHome.length() - 4)|' 
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 1:6.0-alt1_0.7.20140406svn1592769jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:6.0-alt1_0.6.20140406svn1592769jpp8
 - new jpp release
 
