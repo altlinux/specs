@@ -1,5 +1,5 @@
 %define module_name	virtualbox-addition
-%define module_version  5.1.24
+%define module_version  5.1.30
 %define module_release	alt1
 
 %define flavour		std-pae
@@ -102,7 +102,10 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
-* Thu Jul 20 2017 Denis Medvedev <nbr@altlinux.org> 5.1.i24-alt1
+* Tue Nov 14 2017 Denis Medvedev <nbr@altlinux.org> 5.1.30-alt1
+- Updated template for virtualbox 5.1.30
+
+* Thu Jul 20 2017 Denis Medvedev <nbr@altlinux.org> 5.1.24-alt1
 - Updated template for virtualbox 5.1.24
 
 * Thu Mar 16 2017 Denis Medvedev <nbr@altlinux.org> 5.1.18-alt1

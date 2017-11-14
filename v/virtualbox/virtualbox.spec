@@ -53,15 +53,11 @@
 %set_verify_elf_method textrel=relaxed
 %add_findprov_lib_path %vboxdir
 
-%if %ubt_id == "M80P"
-%define gcc_version 5
-%else
 %define gcc_version 6
-%endif
 
 Name: virtualbox
-Version: 5.1.24
-Release: alt1%ubt
+Version: 5.1.30
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -128,7 +124,7 @@ BuildRequires: libXinerama-devel libXrandr-devel
 BuildRequires: libXdamage-devel libXcomposite-devel libXcomposite
 BuildRequires: xorg-xf86driproto-devel xorg-glproto-devel
 BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
-BuildRequires(pre): xorg-sdk rpm-build-ubt
+BuildRequires(pre): xorg-sdk
 BuildPreReq: yasm kBuild >= 0.1.9998.r2689
 %if_with webservice
 BuildRequires: libgsoap-devel libgsoap-devel-static > 2.8.0
@@ -783,6 +779,15 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Mon Nov 13 2017 Denis Medvedev <nbr@altlinux.org> 5.1.30-alt1
+- new version 5.1.30
+No more %ubt - too much changes between branches.
+(Fixes: CVE-2017-10392,
+CVE-2017-10407,
+CVE-2017-10408,
+CVE-2017-3733,
+CVE-2017-10428)
+
 * Thu Jul 20 2017 Denis Medvedev <nbr@altlinux.org> 5.1.24-alt1%ubt
 - new version 5.1.24
 (Fixes: CVE-2017-10129, CVE-2017-10187, CVE-2017-10204, CVE-2017-10209, CVE-2017-10210, CVE-2017-10233, CVE-2017-10235, CVE-2017-10236, CVE-2017-10237, CVE-2017-10238, CVE-2017-10239, CVE-2017-10240, CVE-2017-10241, CVE-2017-10242)
