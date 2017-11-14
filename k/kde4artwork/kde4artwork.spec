@@ -13,7 +13,7 @@
 %define bugfix 0
 Name: kde4artwork
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Summary: K Desktop Environment - Artwork
 Group: Graphical desktop/KDE
@@ -54,7 +54,7 @@ Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 
 
 BuildRequires(pre): kde4base-workspace-devel
-BuildRequires: gcc-c++ eigen2 eigen3 icon-naming-utils
+BuildRequires: gcc-c++ eigen3 icon-naming-utils
 BuildRequires: kde4base-workspace-devel kde4libs-devel >= %version kde4graphics-devel
 
 %description
@@ -420,6 +420,9 @@ done
 %endif
 
 %changelog
+* Tue Nov 14 2017 Oleg Solovyov <mcpain@altlinux.org> 4.14.0-alt2
+- fix build
+
 * Mon Aug 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
 - new version
 
