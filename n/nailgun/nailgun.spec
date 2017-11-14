@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:     nailgun
 Version:  0.9.1
-Release:  alt1_5jpp8
+Release:  alt1_7jpp8
 Summary:  Framework for running Java from the cli without the JVM startup overhead
 Group:    Development/Java
 License:  ASL 2.0
@@ -29,8 +28,8 @@ BuildRequires: maven-local
 BuildRequires: maven-source-plugin
 BuildRequires: sonatype-oss-parent
 Requires:  jpackage-utils
-BuildArch: noarch
 Source44: import.info
+BuildArch: noarch
 
 %description
 Nailgun is a client, protocol, and server for running Java programs from the 
@@ -67,6 +66,9 @@ find ./ -name '*.class' -exec rm -f '{}' \;
 #%doc LICENSE.txt
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1_7jpp8
+- fc update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1_5jpp8
 - new jpp release
 
