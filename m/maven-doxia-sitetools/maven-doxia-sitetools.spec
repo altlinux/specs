@@ -2,7 +2,7 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -22,7 +22,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           %{parent}-%{subproj}
 Version:        1.7.4
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Doxia content generation framework
 License:        ASL 2.0
 URL:            http://maven.apache.org/doxia/
@@ -140,6 +140,9 @@ rm -r doxia-doc-renderer/src/main/java/org/apache/maven/doxia/docrenderer/pdf/fo
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.4-alt1_4jpp8
+- fc27 update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.4-alt1_3jpp8
 - new jpp release
 
