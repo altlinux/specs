@@ -1,5 +1,7 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -7,10 +9,9 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		wsil4j
 Version:	1.0
-Release:	alt2_13jpp8
+Release:	alt2_15jpp8
 Summary:	Web Services Inspection Language for Java API
 
-Group:		Development/Other
 License:	ASL 1.1
 URL:		http://svn.apache.org/repos/asf/webservices/archive/wsil4j/
 
@@ -25,12 +26,7 @@ BuildRequires:	zip
 BuildRequires:	ant
 BuildRequires:	uddi4j
 BuildRequires:	wsdl4j
-BuildRequires:	java-devel
-BuildRequires:	jpackage-utils
-
-Requires:	uddi4j
-Requires:	wsdl4j
-Requires:	jpackage-utils
+BuildRequires:	javapackages-local
 Source44: import.info
 
 %description
@@ -40,9 +36,8 @@ Web services. The WS-Inspection specification defines the locations on a Web
 site where you could look for Web service descriptions.
 
 %package javadoc
+Group: Development/Java
 Summary:	Javadocs for %{name}
-Group:		Development/Java
-Requires:	jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -67,31 +62,22 @@ cp -p %{SOURCE1} META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
 zip -u build/lib/%{name}.jar META-INF/MANIFEST.MF
 
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}
-cp -p build/lib/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_artifact %{SOURCE2} build/lib/wsil4j.jar
+%mvn_file ":wsil4j" wsil4j
+%mvn_install -J build/javadocs
 
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# POMs
-install -d -m 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%files
-%{_javadir}/*
-%doc docs
+%files -f .mfiles
 %doc LICENSE
-%doc README.htm
-%{_mavenpomdir}/*
-
-%files javadoc
 %doc docs
-%doc LICENSE
 %doc README.htm
-%{_javadocdir}/%{name}
 
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_15jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_13jpp8
 - new jpp release
 
