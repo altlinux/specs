@@ -1,30 +1,33 @@
-%global	cvsDATE	20131114
-%global	cvsTIME	1121
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global	cvsDATE	20170102
+%global	cvsTIME	1100
 
-Summary: Dictionaries for SKK (Simple Kana-Kanji conversion program)
-Name: skkdic
-Version: %cvsDATE
-Release: alt1.T%cvsTIME
-License: GPLv2+
-Group: System/Libraries
+Summary:	Dictionaries for SKK (Simple Kana-Kanji conversion program)
+Name:		skkdic
+Version:	%{cvsDATE}
+Release:	alt1_3.T1100
+License:	GPLv2+
+Group:		System/Libraries
 # To create source tarball, use Source10
-Source0: skkdic-%{cvsDATE}T%cvsTIME.tar.bz2
-Source1: http://openlab.ring.gr.jp/skk/skk/tools/unannotation.awk
-Source10: create-skkdic-source.sh
-Source200: README-skkdic.rh.ja
-Url: http://openlab.ring.gr.jp/skk/skk/dic/
-BuildArch: noarch
+Source0:	skkdic-%{cvsDATE}T%{cvsTIME}.tar.bz2
+Source1:	http://openlab.ring.gr.jp/skk/skk/tools/unannotation.awk
+Source10:	create-skkdic-source.sh
+Source200:	README-skkdic.rh.ja
+URL:		http://openlab.ring.gr.jp/skk/skk/dic/
+BuildArch:	noarch
+Source44: import.info
 
 %description
 This package includes the SKK dictionaries, including the large dictionary
 SKK-JISYO.L and pubdic+ dictionary.
 
 %prep
-%setup
+%setup -q
 
 cp -p %SOURCE200 .
 cp -p %SOURCE1 .
-mv zipcode/README.ja zipcode/README-zipcode.ja
+mv zipcode/README.ja zipcode/README-zipcode.ja 
 
 %build
 for dic in \
@@ -36,11 +39,11 @@ do
 done
 
 %install
-mkdir -p $RPM_BUILD_ROOT%_datadir/skk
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/skk
 
 for f in SKK-JISYO* zipcode/SKK-JISYO*
 do
-	install -p -m 644 $f $RPM_BUILD_ROOT%_datadir/skk
+	install -p -m 644 $f $RPM_BUILD_ROOT%{_datadir}/skk
 done
 gzip -9 ChangeLog
 
@@ -51,9 +54,13 @@ gzip -9 ChangeLog
 %doc	edict_doc.txt
 %doc	zipcode/README-zipcode.ja
 
-%_datadir/skk/
+%{_datadir}/skk/
+
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 20170102-alt1_3.T1100
+- NMU (for oddity@): new version by fcimport
+
 * Tue Sep 09 2014 Ilya Mashkin <oddity@altlinux.ru> 20131114-alt1.T1121
 - build for Sisyphus
 
