@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             joda-time
 Version:          2.9.3
-Release:          alt1_3.tzdata2016cjpp8
+Release:          alt1_4.tzdata2016cjpp8
 Summary:          Java date and time API
 
 License:          ASL 2.0
@@ -80,6 +80,9 @@ tar -xzf %{SOURCE1} -C src/main/java/org/joda/time/tz/src/
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.9.3-alt1_4.tzdata2016cjpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.9.3-alt1_3.tzdata2016cjpp8
 - new jpp release
 
