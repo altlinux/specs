@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          aesh
 Version:       0.66.8
-Release:       alt1_3jpp8
+Release:       alt1_4jpp8
 Summary:       Another Extendable SHell
 License:       ASL 2.0
 URL:           http://aeshell.github.io/
@@ -59,6 +59,9 @@ rm src/test/java/org/jboss/aesh/parser/ParserTest.java
 %doc LICENSE
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.66.8-alt1_4jpp8
+- fc update
+
 * Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 0.66.8-alt1_3jpp8
 - new jpp release
 
