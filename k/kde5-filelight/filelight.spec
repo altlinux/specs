@@ -1,7 +1,7 @@
 %define rname filelight
 
 Name: kde5-%rname
-Version: 17.04.3
+Version: 17.08.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -67,13 +67,16 @@ KF5 library
 %doc COPYING*
 %config(noreplace) %_K5xdgconf/filelightrc
 %_K5bin/filelight
-%_K5plug/filelightpart.so
+#%_K5plug/filelightpart.so
 %_K5xdgapp/org.kde.filelight.desktop
 %_K5icon/*/*/*/*filelight.*
-%_K5srv/filelightpart.desktop
+#%_K5srv/filelightpart.desktop
 %_K5xmlgui/filelight*/
 
 %changelog
+* Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
 * Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
 - new version
 

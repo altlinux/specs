@@ -1,8 +1,8 @@
 %define rname khelpcenter
 
 Name: kde5-%rname
-Version: 17.04.3
-Release: alt2%ubt
+Version: 17.08.3
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -62,6 +62,9 @@ KDE help center.
 %_K5xmlgui/*
 
 %changelog
+* Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
 * Fri Oct 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 17.04.3-alt2%ubt
 - Rebuilt with new xapian.
 
