@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-shade-plugin
 Version:        3.0.0
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        This plugin provides the capability to package the artifact in an uber-jar
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/%{name}
@@ -74,6 +73,9 @@ ln -s $(build-classpath plexus/utils) src/test/jars/plexus-utils-1.4.1.jar
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_3jpp8
+- fc27 update
+
 * Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_2jpp8
 - new jpp release
 
