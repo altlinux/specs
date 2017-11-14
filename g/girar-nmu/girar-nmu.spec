@@ -1,5 +1,5 @@
 Name: girar-nmu
-Version: 1.44
+Version: 1.45
 Release: alt1
 
 Summary: git.alt client utilities for NMU automation
@@ -51,6 +51,9 @@ install -m 644 girar-*.1 %buildroot%_man1dir/
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.45-alt1
+- basic support for rpmsign 4.13
+
 * Sat Sep 30 2017 Igor Vlasenko <viy@altlinux.ru> 1.44-alt1
 - use Source::Shared::Utils::GlobList
 
