@@ -1,6 +1,6 @@
 Name: 	 grisbi
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: Personal finance application
 Summary(ru_RU.UTF-8): Программа персонального учёта финансов
@@ -45,9 +45,12 @@ Grisbi - это программа персонального учёта фин�
 %_pixmapsdir/%{name}*
 %_iconsdir/hicolor/scalable/apps/grisbi.svg
 %doc %_docdir/%name/*
-%doc %_man1dir/%name.1.gz
+%doc %_man1dir/%name.1*
 
 %changelog
+* Tue Nov 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt2
+- Updated spec to allow any man pages compression.
+
 * Thu Apr 17 2014 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1
 - New version
 - Build from upstream git
