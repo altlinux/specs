@@ -5,12 +5,11 @@
 %define sover %somver.5.8
 Name: dsdp
 Version: 5.8
-Release: alt10
+Release: alt11
 Summary: Implementation of an interior-point method for semidefinite programming
 License: BSD-like
 Group: Sciences/Mathematics
 Url: http://www.mcs.anl.gov/hs/software/DSDP/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: http://www.mcs.anl.gov/hs/software/DSDP/DSDP5.8.tar.gz
 
@@ -207,6 +206,9 @@ popd
 %_docdir/lib%name-devel
 
 %changelog
+* Tue Nov 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.8-alt11
+- Fixed build with gcc-6.
+
 * Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.8-alt10
 - Built with OpenBLAS instead of GotoBLAS2
 
