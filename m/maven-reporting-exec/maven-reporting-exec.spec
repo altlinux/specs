@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-reporting-exec
 Version:        1.3
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 BuildArch:      noarch
 Summary:        Classes to manage report plugin executions with Maven 3
 
@@ -85,6 +84,9 @@ sed -i 's/\r//g' pom.xml src/main/java/org/apache/maven/reporting/exec/*
 
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_3jpp8
+- fc27 update
+
 * Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_2jpp8
 - new jpp release
 
