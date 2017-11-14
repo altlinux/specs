@@ -1,6 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -14,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:       glassfish-jsp
 Version:    2.3.3
-Release:    alt1_0.7.b02jpp8
+Release:    alt1_0.10.b02jpp8
 Summary:    Glassfish J2EE JSP API implementation
 License:    (CDDL or GPLv2 with exceptions) and ASL 2.0
 URL:        http://glassfish.org
@@ -75,7 +76,7 @@ BuildArch: noarch
 cp -p %{SOURCE2} LICENSE
 cp -p %{SOURCE3} cddllicense.txt
 
-%mvn_alias : "javax.servlet:jsp-api" "org.eclipse.jetty.orbit:org.apache.jasper.glassfish"
+%mvn_alias : "org.eclipse.jetty.orbit:org.apache.jasper.glassfish"
 
 # compat symlink
 %mvn_file : %{name}/javax.servlet.jsp %{name}
@@ -97,7 +98,7 @@ for jar in ../%{name}/*jar; do
 done
 # copy jsp-api so that build-classpath will include dep as well
 build-jar-repository -p . glassfish-jsp-api
-xmvn-subst -R -s .
+xmvn-subst -R %{buildroot} -s .
 popd
 
 %files -f .mfiles
@@ -109,6 +110,9 @@ popd
 
 
 %changelog
+* Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_0.10.b02jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_0.7.b02jpp8
 - new jpp release
 
