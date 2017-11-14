@@ -1,6 +1,6 @@
 Name: gadmin-bind
 Version: 0.2.3
-Release: alt2.qa1
+Release: alt3
 
 Summary: Gadmin-bind -- A GTK+ administation tool for ISC bind
 Group: System/Configuration/Other
@@ -9,7 +9,6 @@ Source1: %name.pam
 Patch1: alt-%name-desktop.patch
 Patch: alt-chroot-path.patch
 License: GPL
-Packager: Eugene Ostapets <eostapets@altlinux.org>
 
 # Automatically added by buildreq on Mon Apr 30 2007
 BuildRequires: libgtk+2-devel ImageMagick
@@ -25,7 +24,7 @@ GBINDADMIN is a fast and easy to use GTK+ administration tool for ISC BIND.
 %patch1 -p1
 
 %build
-%configure SYSINIT_START_CMD="chkconfig bind on" SYSINIT_STOP_CMD="chkconfig bind off"
+%configure SYSINIT_START_CMD="chkconfig bind on" SYSINIT_STOP_CMD="chkconfig bind off" --localstatedir=%_var
 
 %make_build
 
@@ -69,6 +68,9 @@ done
 %_liconsdir/%name.png
 
 %changelog
+* Tue Nov 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.3-alt3
+- Fixed localstatedir location.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.3-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
