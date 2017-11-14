@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-java
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 25
+%define fedora 27
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sbt
 %define version 0.13.1
@@ -60,7 +60,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		sbt
 Version:	%{sbt_version}
-Release:	alt2_8.1jpp8
+Release:	alt3_8.1jpp8
 Summary:	The simple build tool for Scala and Java projects
 
 BuildArch:	noarch
@@ -447,8 +447,8 @@ sed -i -e 's/0.13.0/%{sbt_bootstrap_version}/g' project/build.properties
 %if 0%{?fedora} >= 21
 ./climbing-nemesis.py jline jline %{ivy_local_dir} --version 2.11
 ./climbing-nemesis.py org.fusesource.jansi jansi %{ivy_local_dir} --version 1.11
-./climbing-nemesis.py org.fusesource.jansi jansi-native %{ivy_local_dir} --version 1.5
-./climbing-nemesis.py org.fusesource.hawtjni hawtjni-runtime %{ivy_local_dir} --version 1.8
+./climbing-nemesis.py org.fusesource.jansi jansi-native %{ivy_local_dir} --version 1.7
+./climbing-nemesis.py org.fusesource.hawtjni hawtjni-runtime %{ivy_local_dir} --version 1.15
 %else
 ./climbing-nemesis.py jline jline %{ivy_local_dir} --version 2.11 --jarfile %{_javadir}/jline2-2.10.jar
 ./climbing-nemesis.py org.fusesource.jansi jansi %{ivy_local_dir} --version 1.9
@@ -619,6 +619,11 @@ sed -i -e 's/["]2[.]10[.]2-RC2["]/\"2.10.4\"/g' $(find . -name \*.sbt -type f)
 sed -i -e 's/"-dontnote",/"-dontnote", "-dontshrink", "-dontoptimize",/g' project/Proguard.scala
 sed -i -e 's/mapLibraryJars.all filterNot in[.]toSet./mapLibraryJars(all.map {f => new java.io.File(f.getCanonicalPath())} filterNot in.map {f => new java.io.File(f.getCanonicalPath())}.toSet)/g' project/Proguard.scala
 
+
+# jansi-native hack by viy
+sed -i -e 's,dependency name="jansi-native" org="org.fusesource.jansi" rev="1.5",dependency name="jansi-native" org="org.fusesource.jansi" rev="1.7",' ivy-local/org.fusesource.jansi/jansi/1.11/ivy.xml
+sed -i -e 's,dependency name="hawtjni-runtime" org="org.fusesource.hawtjni" rev="1.8",dependency name="hawtjni-runtime" org="org.fusesource.hawtjni" rev="1.15",' ivy-local/org.fusesource.jansi/jansi/1.11/ivy.xml
+
 %build
 
 %if %{do_bootstrap}
@@ -735,6 +740,9 @@ done
 %doc README.md LICENSE NOTICE
 
 %changelog
+* Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt3_8.1jpp8
+- build with new jansi-native
+
 * Tue Nov 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt2_8.1jpp8
 - new fc release
 
