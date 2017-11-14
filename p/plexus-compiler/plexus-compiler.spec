@@ -1,17 +1,24 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global parent  plexus
+%bcond_without eclipse
 
 Name:       plexus-compiler
 Epoch:      0
 Version:    2.8.1
-Release:    alt1_3jpp8
+Release:    alt1_5jpp8
 Summary:    Compiler call initiators for Plexus
 # extras subpackage has a bit different licensing
 # parts of compiler-api are ASL2.0/MIT
@@ -31,7 +38,9 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+%if %{with eclipse}
 BuildRequires:  mvn(org.eclipse.tycho:org.eclipse.jdt.core)
+%endif
 Source44: import.info
 
 
@@ -79,6 +88,10 @@ cp %{SOURCE2} LICENSE.MIT
 # missing com.google.errorprone:error_prone_core
 %pom_disable_module plexus-compiler-javac-errorprone plexus-compilers
 
+%if %{without eclipse}
+%pom_disable_module plexus-compiler-eclipse plexus-compilers
+%endif
+
 # don't build/install compiler-test module, it needs maven2 test harness
 %pom_disable_module plexus-compiler-test
 
@@ -110,6 +123,9 @@ cp %{SOURCE2} LICENSE.MIT
 %doc LICENSE LICENSE.MIT
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.8.1-alt1_5jpp8
+- fc27 update
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.8.1-alt1_3jpp8
 - new jpp release
 
