@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: perl(Output.pm) perl(Statistics/Descriptive.pm) perl(Statistics/Distributions.pm) perl(XML/LibXML.pm)
+BuildRequires: perl(Output.pm) perl(Statistics/Descriptive.pm) perl(Statistics/Distributions.pm) perl(XML/LibXML.pm) rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           icu4j
 Version:        59.1
-Release:        alt1_1jpp8
+Release:        alt1_2jpp8
 Epoch:          1
 Summary:        International Components for Unicode for Java
 License:        MIT and EPL
@@ -123,6 +123,9 @@ install -m 644 icu4j-localespi.jar %{buildroot}%{_javadir}/icu4j/
 %doc main/shared/licenses/*
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 1:59.1-alt1_2jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1:59.1-alt1_1jpp8
 - new version
 
