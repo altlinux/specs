@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-javadoc-plugin
 Version:        2.10.4
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Maven Javadoc Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-javadoc-plugin
@@ -104,6 +104,9 @@ rm -f src/main/java/org/apache/maven/plugin/javadoc/*FixJavadocMojo.java
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.10.4-alt1_4jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.10.4-alt1_3jpp8
 - new jpp release
 
