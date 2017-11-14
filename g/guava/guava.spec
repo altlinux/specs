@@ -1,12 +1,12 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -21,7 +21,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           guava
 Version:        18.0
-Release:        alt2_10jpp8
+Release:        alt2_11jpp8
 Summary:        Google Core Libraries for Java
 License:        ASL 2.0
 URL:            https://github.com/google/guava
@@ -112,6 +112,9 @@ find . -name '*.jar' -delete
 %endif
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 18.0-alt2_11jpp8
+- fc update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 18.0-alt2_10jpp8
 - new jpp release
 
