@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jgoodies-animation
 Version:       1.4.3
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Framework for time-based real-time animations in Java
 License:       BSD
 #Alt. URL:     http://java.net/projects/animation
@@ -67,6 +66,9 @@ sed -i 's|\r||g' LICENSE.txt RELEASE-NOTES.txt
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_5jpp8
+- fc update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_4jpp8
 - new jpp release
 
