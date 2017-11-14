@@ -1,20 +1,27 @@
-Name: scim-chewing
-Version: 0.3.5
-Release: alt1.qa1
-Summary: Chewing Chinese input method for SCIM
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/glib-gettextize gcc-c++
+# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:           scim-chewing
+Version:        0.3.5
+Release:        alt1.qa1_11
+Summary:        Chewing Chinese input method for SCIM
 
-License: GPLv2+
-Url: http://chewing.csie.net/
-Group: System/Libraries
-Packager: Ilya Mashkin <oddity@altlinux.ru>
-Source: http://chewing.csie.net/download/scim/%name-%version.tar.bz2
+License:        GPLv2+
+Url:            http://chewing.csie.net/
+Group:          System/Libraries
+Source:         http://chewing.googlecode.com/files/%{name}-%{version}.tar.bz2
 Patch0:         scim-chewing-0.3.5-libchewing04.patch
-BuildRequires: scim-devel, libchewing-devel >= 0.3.4, gettext, intltool >= 0.34, gcc-c++
-Requires: scim
-Obsoletes: iiimf-le-xcin <= 0.1.10
+
+BuildRequires:  scim-devel, libchewing-devel >= 0.3.4 gettext gettext-tools, intltool >= 0.34
+BuildRequires:  libtool
+Requires:       scim
+Source44: import.info
 
 %description
-This package provides Chewing Chinese input method for SCIM.
+This package provides Chewing Chinese input method for SCIM. 
+
 
 %prep
 %setup -q
@@ -26,23 +33,28 @@ intltoolize --force
 autoreconf
 
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
+
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 
-rm $RPM_BUILD_ROOT%_libdir/scim-1.0/*/*/*.la
+rm $RPM_BUILD_ROOT%{_libdir}/scim-1.0/*/*/*.la
 
-%find_lang %name
+%find_lang %{name}
 
-%files -f %name.lang
+%files -f %{name}.lang
 %doc README AUTHORS COPYING
-%_libdir/scim-1.0/*/SetupUI/chewing-imengine-setup.so
-%_libdir/scim-1.0/*/IMEngine/chewing.so
-%_datadir/scim/icons/scim-chewing.png
-%_datadir/scim/icons/scim-chewing-swap-colors.png
+%{_libdir}/scim-1.0/*/SetupUI/chewing-imengine-setup.so
+%{_libdir}/scim-1.0/*/IMEngine/chewing.so
+%{_datadir}/scim/icons/scim-chewing.png
+%{_datadir}/scim/icons/scim-chewing-swap-colors.png
+
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.5-alt1.qa1_11
+- NMU (for oddity@): new version by fcimport
+
 * Sat Oct 17 2015 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.3.5-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
