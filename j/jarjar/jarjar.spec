@@ -2,7 +2,7 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jarjar
 Version:        1.4
-Release:        alt1_17jpp8
+Release:        alt1_18jpp8
 Summary:        Jar Jar Links
 License:        ASL 2.0
 URL:            http://code.google.com/p/jarjar/
@@ -143,6 +143,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc COPYING
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_18jpp8
+- fc27 update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_17jpp8
 - new jpp release
 
