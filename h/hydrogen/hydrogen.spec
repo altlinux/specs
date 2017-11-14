@@ -1,24 +1,25 @@
-%define status beta3
-
 Name: hydrogen
-Version: 0.9.6
-Release: alt0.%status
+Version: 0.9.7
+Release: alt1
 
 Summary: Hydrogen Drum Machine
 License: GPL
 Group: Sound
-
-Packager: Alex Karpov <karpov@altlinux.ru>
-
 URL: http://www.hydrogen-music.org
-Source0: %name-%version-%status.tar
 
+# https://github.com/hydrogen-music/hydrogen.git
+Source0: %name-%version.tar
 Source1: %name-32x32.xpm
 Source2: %name-16x16.xpm
 Source3: %name-48x48.xpm
+Patch1: %name-%version-upstream-detect-pulse.patch
+Patch2: %name-%version-upstream-detect-rubberband.patch
+Patch3: %name-%version-alt-desktop.patch
+Patch4: %name-%version-alt-man-dir.patch
 
-# Automatically added by buildreq on Thu Jan 12 2012
-BuildRequires: ccmake ctest doxygen gcc-c++ graphviz ladspa_sdk libalsa-devel libarchive-devel libjack-devel liblo liblrdf-devel libportaudio2-devel libportmidi libqt4-sql-mysql librubberband-devel libsndfile-devel libtar-devel phonon-devel
+BuildRequires: ccmake ctest doxygen gcc-c++ graphviz ladspa_sdk libalsa-devel libarchive-devel libjack-devel liblo liblrdf-devel
+BuildRequires: libportaudio2-devel libportmidi librubberband-devel libsndfile-devel libtar-devel libpulseaudio-devel cppunit-devel
+BuildRequires: libqt4-sql-mysql phonon-devel
 
 BuildRequires: desktop-file-utils
 
@@ -36,41 +37,44 @@ Hydrogen is a sample based drum machine with:
  Import of samples in wav, au, aiff format
 
 %prep
-%setup -qn %name-%version-%status
+%setup
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
-export QTDIR=/usr/lib/qt4
-#scons libarchive=1 prefix=%_prefix
+export QTDIR=%_libdir/qt4
 %cmake -DWANT_RUBBERBAND=ON
-cd BUILD
-%make DESTDIR=%buildroot
+%cmake_build DESTDIR=%buildroot
 
 %install
-export QTDIR=/usr/lib/qt4
-cd BUILD
-%make_install install DESTDIR=%buildroot prefix=%_prefix
+export QTDIR=%_libdir/qt4
+%cmakeinstall_std prefix=%_prefix
 
 install -pD -m644 %SOURCE1 %buildroot%_niconsdir/%name.xpm
 install -pD -m644 %SOURCE2 %buildroot%_miconsdir/%name.xpm
 install -pD -m644 %SOURCE3 %buildroot%_liconsdir/%name.xpm
 
-#ln -sf "$(relative %_datadir/hydrogen/data/doc %_docdir/%name-%version/doc)" html
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=Midi \
 	%buildroot%_desktopdir/hydrogen.desktop
 
 %files
+%doc -P AUTHORS ChangeLog README.txt
 %_bindir/*
 %_datadir/%name/
 %_libdir/*.so
 %_niconsdir/%name.xpm
 %_liconsdir/%name.xpm
 %_miconsdir/%name.xpm
-#_pixmapsdir/h2-icon.svg
 %_desktopdir/%name.desktop
-%doc -P AUTHORS ChangeLog README.txt
+%_man1dir/%name.1*
 
 %changelog
+* Tue Nov 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.7-alt1
+- Updated to upstream version 0.9.7.
+
 * Mon Feb 25 2013 Alex Karpov <karpov@altlinux.ru> 0.9.6-alt0.beta3
 - new beta
 
