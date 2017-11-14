@@ -1,7 +1,7 @@
 %define rname kstars
 
 Name: kde5-%rname
-Version: 17.04.2
+Version: 17.08.3
 Release: alt1%ubt
 %K5init
 
@@ -10,7 +10,7 @@ Summary: Desktop Planetarium
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-Requires: xplanet
+#Requires: indi
 
 Source: %rname-%version.tar
 
@@ -49,6 +49,7 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 %doc COPYING*
 #%config(noreplace) %_K5xdgconf/kstars.knsrc
 %_K5bin/kstars
+%_K5libexecdir/kauth/kauth_kstars_helper
 %_K5data/kstars/
 %_K5icon/*/*/apps/kstars.*
 #%_K5icon/*/*/actions/kstars_*.*
@@ -57,8 +58,17 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 #%_K5xmlgui/kstars/
 %_K5notif/kstars.notifyrc
 %_K5cfg/kstars.kcfg
+%_datadir/polkit-1/actions/*kstars*.policy
+%_K5conf_dbus_sysd/*kstars*.conf
+%_K5dbus_sys_srv/*kstars*.service
 
 %changelog
+* Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+- new version
+
 * Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
 - new version
 
