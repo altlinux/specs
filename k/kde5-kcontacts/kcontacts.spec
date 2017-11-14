@@ -1,8 +1,8 @@
 %define rname kcontacts
 
 Name: kde5-%rname
-Version: 17.04.3
-Release: alt2%ubt
+Version: 17.08.3
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -11,7 +11,6 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
-Patch0: alt-fix-retrieving-contacts.patch
 
 # Automatically added by buildreq on Tue Aug 11 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libqt5-core libqt5-dbus libqt5-gui libqt5-xml libstdc++-devel python-base python3 python3-base ruby ruby-stdlibs
@@ -48,7 +47,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch0 -p1
 
 %build
 %K5build
@@ -72,6 +70,12 @@ KF5 library
 %_K5lib/libKF5Contacts.so.*
 
 %changelog
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.2-alt1%ubt
+- new version
+
 * Mon Jul 17 2017 Oleg Solovyov <mcpain@altlinux.org> 17.04.3-alt2%ubt
 - Fix: parsing vcard will fail in case of missing trailing newline
 

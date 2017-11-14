@@ -1,10 +1,10 @@
 %define rname akonadi-import-wizard
 
 %define sover 5
-%define libimportwizard libimportwizard%sover
+%define libkpimimportwizard libkpimimportwizard%sover
 
 Name: kde5-%rname
-Version: 17.04.3
+Version: 17.08.3
 Release: alt1%ubt
 %K5init
 
@@ -40,15 +40,23 @@ Requires: kf5-filesystem
 %description common
 %name common package
 
-%package -n %libimportwizard
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
+%package -n %libkpimimportwizard
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common = %version-%release
-%description -n %libimportwizard
+%description -n %libkpimimportwizard
 %name library
 
 %prep
 %setup -n %rname-%version
+sed -i '/DESTINATION/s/\${KDE_INSTALL_INCLUDEDIR}\/KPim\//${KDE_INSTALL_INCLUDEDIR_KF5}/' src/libimportwizard/CMakeLists.txt
 
 %build
 %K5build
@@ -64,16 +72,30 @@ Requires: %name-common = %version-%release
 %doc COPYING*
 %config(noreplace) %_K5xdgconf/*importwizard*.*categories
 %_K5bin/*importwizard*
+%_K5plug/importwizard/
 %_K5data/*importwizard*/
 %_K5xdgapp/*importwizard*.desktop
 %_K5icon/*/*/apps/*import-wizard*
 %_K5conf_up/*importwizard*
 
-%files -n %libimportwizard
-%_K5lib/libimportwizard.so.%sover
-%_K5lib/libimportwizard.so.*
+%files devel
+%_K5inc/importwizard_version.h
+%_K5inc/KPim/?mport?izard/
+%_K5link/lib*.so
+%_K5lib/cmake/KPimImportWizard/
+#%_K5archdata/mkspecs/modules/qt_*ImportWizard*.pri
+
+%files -n %libkpimimportwizard
+%_K5lib/libKPimImportWizard.so.%sover
+%_K5lib/libKPimImportWizard.so.*
 
 %changelog
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.2-alt1%ubt
+- new version
+
 * Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
 - new version
 

@@ -1,7 +1,7 @@
 %define rname mbox-importer
 
 Name: kde5-%rname
-Version: 17.04.3
+Version: 17.08.3
 Release: alt1%ubt
 %K5init
 
@@ -77,6 +77,12 @@ KF5 library
 #%_K5lib/libmbox-importer.so.*
 
 %changelog
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.2-alt1%ubt
+- new version
+
 * Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
 - new version
 
