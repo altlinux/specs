@@ -1,26 +1,28 @@
-Name: calcurse
-Version: 2.8
-Release: alt1.qa1
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/a2x /usr/bin/asciidoc
+# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:           calcurse
+Version:        4.2.2
+Release:        alt1_4
+Summary:        Text-based personal organizer
 
-Summary: Calcurse is a text-based personal organizer
-Group: Office
-License: GPL
-Url: http://culot.org/calcurse/
+Group:          Office
+License:        BSD
+URL:            http://calcurse.org
+Source0:        http://calcurse.org/files/%{name}-%{version}.tar.gz
 
-Source0: %name-%version.tar.gz
-
-Packager: Ilya Mashkin <oddity@altlinux.ru>
-
-# Automatically added by buildreq on Sat Nov 15 2008
-BuildRequires: libncurses-devel
+BuildRequires:  gettext gettext-tools libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
+Source44: import.info
 
 %description
-Calcurse is a text-based personal organizer which helps keeping track
-of events and everyday tasks. It contains a calendar, a 'todo' list,
-and puts your appointments in order. The user interface is
-configurable, and one can choose between different color schemes and
-layouts.  All of the commands are documented within an online help
-system.
+Calcurse is a text-based calendar and scheduling application. It helps 
+keep track of events, appointments, and everyday tasks.
+
+A configurable notification system reminds the user of upcoming 
+deadlines, and the curses based interface can be customized to suit user 
+needs.
 
 %prep
 %setup -q
@@ -29,17 +31,24 @@ system.
 %configure
 %make_build
 
+
 %install
-%make_install DESTDIR=%buildroot install
+make install DESTDIR=$RPM_BUILD_ROOT
+install -p -m 0644 doc/calcurse.1 $RPM_BUILD_ROOT%{_mandir}/man1/
+rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/%{name}
+%find_lang %{name}
 
-%find_lang %name
+%files -f %{name}.lang
+%doc AUTHORS NEWS README doc/*.txt
+%{_bindir}/calcurse*
+%{_mandir}/man1/calcurse.1*
 
-%files -f %name.lang
-%doc AUTHORS ChangeLog NEWS README TODO doc/*.html doc/*.css
-%_bindir/*
-%_man1dir/*
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.2-alt1_4
+- NMU: update to new version by fcimport
+- requiest by oddity@
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.8-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
