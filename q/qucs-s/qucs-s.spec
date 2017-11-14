@@ -1,6 +1,6 @@
 Name: qucs-s
 Version: 0.0.20
-Release: alt1
+Release: alt2
 
 Summary: Circuit simulator
 License: GPLv2+
@@ -10,6 +10,7 @@ Url: https://github.com/ra3xdh/qucs
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+Patch: fix_path_to_xspice.patch
 Buildrequires (pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ libqt4-devel
 Requires: %name-data = %version-%release
@@ -36,6 +37,7 @@ Data files  for %name, a circuit simulator.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=Release
@@ -60,5 +62,8 @@ done > %name.lang
 %_man1dir/*
 
 %changelog
+* Tue Nov 14 2017 Anton Midyukov <antohami@altlinux.org> 0.0.20-alt2
+- Fix path to xspice
+
 * Thu Nov 02 2017 Anton Midyukov <antohami@altlinux.org> 0.0.20-alt1
 - Initial build for ALT Sisyphus.
