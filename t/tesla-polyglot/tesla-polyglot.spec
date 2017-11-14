@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,12 +13,11 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Re-enable when https://bugzilla.redhat.com/show_bug.cgi?id=1234368 is fixed
-#def_with ruby
 %bcond_with ruby
 
 Name:          tesla-polyglot
 Version:       0.1.19
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Modules to enable Maven usage in other JVM languages
 License:       EPL
 URL:           https://github.com/takari/maven-polyglot
@@ -289,6 +288,9 @@ sed -i 's/\r//' eclipse-1.0.txt
 %doc eclipse-1.0.txt license-header.txt
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.19-alt1_3jpp8
+- fc27 update
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.19-alt1_2jpp8
 - new jpp release
 
