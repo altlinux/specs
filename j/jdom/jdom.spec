@@ -1,5 +1,6 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -39,26 +40,21 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jdom
 Version:        1.1.3
-Release:        alt3_11jpp8
+Release:        alt3_14jpp8
 Epoch:          0
 Summary:        Java alternative to DOM and SAX
 License:        ASL 1.1
 URL:            http://www.jdom.org/
-Group:          Development/Other
 Source0:        http://jdom.org/dist/binary/archive/jdom-%{version}.tar.gz
 Source1:        http://repo1.maven.org/maven2/org/jdom/jdom/%{version}/jdom-%{version}.pom
 Patch0:         %{name}-crosslink.patch
 Patch1:         %{name}-1.1-OSGiManifest.patch
 
-BuildRequires:  ant >= 0:1.6
-BuildRequires:  java-javadoc
-BuildRequires:  jaxen
-BuildRequires:  javapackages-tools rpm-build-java
-BuildRequires:  xalan-j2 >= 0:2.2.0
+BuildRequires:  ant
+BuildRequires:  javapackages-local
 
-Requires:       jaxen
-Requires:       jpackage-utils
-Requires:       xalan-j2 >= 0:2.2.0
+BuildRequires:  mvn(jaxen:jaxen)
+BuildRequires:  mvn(xerces:xercesImpl)
 
 BuildArch:      noarch
 Source44: import.info
@@ -72,17 +68,16 @@ alternative to DOM and SAX, although it integrates well with both DOM
 and SAX.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 Javadoc for %{name}.
 
 %package demo
+Group: Development/Other
 Summary:        Demos for %{name}
-Group:          Development/Other
 Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %description demo
@@ -98,32 +93,24 @@ find . -name "*.jar" -exec rm -f {} \;
 find . -name "*.class" -exec rm -f {} \;
 
 %build
-export CLASSPATH=$(build-classpath xalan-j2 jaxen)
+export CLASSPATH=$(build-classpath xerces-j2 jaxen)
 ant -Dj2se.apidoc=%{_javadocdir}/java package javadoc-link
 
 %install
-# jars
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p build/%{name}-1.1.2-snap.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr build/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_file : %{name}
+%mvn_alias : jdom:jdom
+%mvn_artifact %{SOURCE1} build/%{name}-*-snap.jar
+%mvn_install -J build/apidocs
 
 # demo
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
 cp -pr samples $RPM_BUILD_ROOT%{_datadir}/%{name}
 
-# maven stuff
-mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
-cp %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-jdom.pom
-%add_maven_depmap JPP-jdom.pom %{name}.jar -a "jdom:jdom"
-
 %files -f .mfiles
-%doc CHANGES.txt COMMITTERS.txt LICENSE.txt README.txt TODO.txt
+%doc LICENSE.txt
+%doc CHANGES.txt COMMITTERS.txt README.txt TODO.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %files demo
@@ -131,6 +118,9 @@ cp %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-jdom.pom
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt3_14jpp8
+- fc27 update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt3_11jpp8
 - new jpp release
 
