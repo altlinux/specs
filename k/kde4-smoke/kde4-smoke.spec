@@ -5,7 +5,7 @@
 %define rname smokekde
 Name: kde4-smoke
 Version: 4.11.1
-Release: alt4
+Release: alt5
 
 Group: Development/KDE and QT
 Summary: Bindings for KDE libraries
@@ -325,6 +325,7 @@ cp -ar %SOURCE3 cmake/modules/
 
 
 %build
+%add_optflags -std=c++98
 %K4cmake
 NPROCS=1 %K4make
 
@@ -386,6 +387,9 @@ NPROCS=1 %K4make
 
 
 %changelog
+* Tue Nov 14 2017 Oleg Solovyov <mcpain@altlinux.org> 4.11.1-alt5
+- fix build
+
 * Fri Oct 16 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt4
 - rebuild with gcc5
 
