@@ -57,7 +57,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 235
-Release: alt2
+Release: alt3
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1912,6 +1912,9 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Tue Nov 14 2017 Alexey Shabalin <shaba@altlinux.ru> 1:235-alt3
+- fixed udevadm path in units
+
 * Tue Nov 14 2017 Alexey Shabalin <shaba@altlinux.ru> 1:235-alt2
 - fixed udevadm path in rules
 - fixed man pages
