@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-invoker
 Version:        2.2
-Release:        alt1_5jpp8
+Release:        alt1_6jpp8
 Summary:        Fires a maven build in a clean environment
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-invoker/
@@ -69,6 +68,9 @@ API documentation for %{name}.
 
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_6jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_5jpp8
 - new jpp release
 
