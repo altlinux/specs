@@ -1,19 +1,20 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Upstream is not in the habit of releasing tarballs.  We pull from git.
-%global gitdate         20160519
-%global gittag          b813d5594edaeeffee2f7d03326d2712fac356a1
+%global gitdate         20170607
+%global gittag          294629a312eed88be8558a8cebc23da87772ffcd
 %global shorttag        %(cut -b -7 <<< %{gittag})
 
 Name:           jinput
 Version:        2.0.7
-Release:        alt2_7.20160519git.b813d55jpp8
+Release:        alt2_10.20170607git.294629ajpp8
 Summary:        Java Game Controller API
 
 License:        BSD
@@ -39,12 +40,10 @@ BuildRequires:  ant
 BuildRequires:  gcc-common
 BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  java-javadoc >= 1:1.6.0
+BuildRequires:  javapackages-local
 BuildRequires:  jpackage-utils
 BuildRequires:  jutils
 BuildRequires:  jutils-javadoc
-
-Requires:       jpackage-utils
-Requires:       jutils
 Source44: import.info
 
 %description
@@ -104,6 +103,9 @@ sed -i "s|-O2 -Wall|$RPM_OPT_FLAGS|;s|-shared|& $RPM_LD_FLAGS|" \
 # Prevent jutils.jar from being included in jinput.jar
 sed -i '\@zipfileset.*/>@d' build.xml
 
+# We cannot resolve this self-dependency properly, so just remove it
+%pom_remove_dep net.java.jinput:jinput-platform jinput.pom
+
 %build
 # Get the latest definitions from <linux/input-event-codes.h>
 ant -f plugins/linux/src/native/build.xml createNativeDefinitions.java
@@ -125,40 +127,32 @@ javadoc -d javadoc -classpath lib/jutils.jar:dist/jinput.jar -package \
   -source 1.6 net.java.games.input
 
 %install
-# jar
-install -Dp -m 644 dist/%{name}.jar $RPM_BUILD_ROOT%{_jnidir}/%{name}.jar
+%mvn_artifact %{name}-platform.pom
+%mvn_artifact %{name}.pom dist/%{name}.jar
+%mvn_install -J javadoc/
 
 # jni
 install -Dp -m 755 dist/libjinput* \
     $RPM_BUILD_ROOT%{_libdir}/%{name}/libjinput.so
-ln -s ../../..%{_jnidir}/%{name}.jar $RPM_BUILD_ROOT%{_libdir}/%{name}/
-
-# javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}
-cp -a javadoc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 jinput-platform.pom  \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-platform.pom
-install -pm 644 jinput.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap
-%add_maven_depmap JPP-%{name}-platform.pom 
+ln -s ../../..%{_jnidir}/%{name}/%{name}.jar $RPM_BUILD_ROOT%{_libdir}/%{name}/
 
 %check
 # Do not rebuild; just run the test
-sed -i 's/"versiontest" depends="init,all"/"versiontest"/' build.xml
+sed -e 's/"versiontest" depends="init,all"/"versiontest"/' \
+    -e 's/"runtest" depends="dist"/"runtest"/' \
+    -i build.xml
 ant versiontest
 
 %files -f .mfiles
-%doc README.txt 
+%doc README.md
 %{_libdir}/%{name}/
 
-%files javadoc
-%{_javadocdir}/%{name}/
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt2_10.20170607git.294629ajpp8
+- fc update
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt2_7.20160519git.b813d55jpp8
 - new jpp release
 
