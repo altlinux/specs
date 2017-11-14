@@ -1,8 +1,8 @@
 %define rname ktp-kded-module
 
 Name: kde5-%rname
-Version: 17.04.2
-Release: alt2%ubt
+Version: 17.08.3
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -82,6 +82,12 @@ KF5 library
 #%_K5lib/libktp-kded-module.so.*
 
 %changelog
+* Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+- new version
+
 * Tue Jun 27 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt2%ubt
 - treat unknown autoconnect state as enabled
 
