@@ -1,6 +1,6 @@
 Name:    projectlibre
-Version: 1.6.2
-Release: alt3
+Version: 1.7.0
+Release: alt1
 
 Summary: ProjectLibre - The open source replacement of Microsoft Project
 
@@ -11,17 +11,18 @@ Url:     https://sourceforge.net/projects/projectlibre/
 
 Source:  %name-%version.tar
 Source1: %name.watch
+Patch0: alt-%version.patch
 Patch1:  %name-1.6.2-mga-l10n-dialogs.patch
 Patch2:  %name-1.6.2-alt-fix-path-in-executable.patch
 
 Packager: Danil Mikhailov <danil@altlinux.org>
 
-Requires: java
+Requires: java >= 1.6.0
 
 BuildArch: noarch
 BuildPreReq: rpm-build-compat
 BuildRequires: ant
-BuildRequires: java-1.7.0-openjdk-devel
+BuildRequires: java-1.8.0-openjdk-devel
 
 %define projectlibredir %_libexecdir/%name
 
@@ -43,31 +44,54 @@ added key features:
 
 %prep
 %setup
-%patch2 -p1
-%patch1 -p1
+%patch -p1
+#patch2 -p1
+#patch1 -p1
 # Replace hard-coded library path by default JRE path
 subst 's|/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/rt.jar|%_libexecdir/jvm/jre/lib/rt.jar|' openproj_contrib/openproj_*.conf
 
 %build
+#Set the file encoding for source files
+export JAVA_TOOL_OPTIONS=-Dfile.encoding=cp1252
 cd openproj_build/
+ant clean
 ant
 
 %install
-install -Dm0755 openproj_build/resources/%name %buildroot/%_bindir/%name
+export NO_BRP_CHECK_BYTECODE_VERSION=true
+mkdir -p %buildroot/%projectlibredir/lib
+install -Dm0755  openproj_build/dist/%name.jar %buildroot/%projectlibredir/
+install -Dm0755 openproj_contrib/*.jar %buildroot/%projectlibredir/lib
+
+# startscript
+cat > %name << EOF
+#!/bin/sh
+#
+echo Starting %name version %version ...
+echo with options : \${@}
+
+java -jar %projectlibredir/%name.jar \${@}
+
+EOF
+
+# Install startscript
+install -Dm0755 %name %buildroot%_bindir/%name
+
 install -Dm0644 openproj_build/resources/%name.desktop %buildroot%_desktopdir/%name.desktop
 install -Dm0644 openproj_build/resources/%name.png %buildroot%_pixmapsdir/%name.png
 
-mkdir -p %buildroot/%projectlibredir/
-cp -a openproj_build/dist/* %buildroot/%projectlibredir/
-
 %files
-%attr(755,root,root) %_bindir/projectlibre
-%attr(755,root,root) %dir %projectlibredir/
+%defattr(-,root,root)
+%_bindir/%name
+%projectlibredir
 %_desktopdir/*
 %_pixmapsdir/*
-%projectlibredir/*
+%doc openproj_build/license/*
 
 %changelog
+* Tue Nov 14 2017 Anton Midyukov <antohami@altlinux.org> 1.7.0-alt1
+- new version 1.7.0
+
 * Tue Oct 04 2016 Andrey Cherepanov <cas@altlinux.org> 1.6.2-alt3
 - Remove strict requires on java-1.7.0-openjdk
 
