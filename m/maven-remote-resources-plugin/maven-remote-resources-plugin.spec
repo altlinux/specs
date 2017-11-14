@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-remote-resources-plugin
 Version:        1.4
-Release:        alt3_12jpp8
+Release:        alt3_13jpp8
 Summary:        Maven Remote Resources Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-remote-resources-plugin/
@@ -87,6 +86,9 @@ rm -f src/main/resources/META-INF/plexus/components.xml
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_13jpp8
+- fc27 update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_12jpp8
 - new jpp release
 
