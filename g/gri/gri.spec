@@ -1,19 +1,20 @@
 Name: gri
 Summary: A language for scientific illustration
 Version: 2.12.23
-Release: alt2
+Release: alt3
 Group: Development/Tools
 License: GPL v2
 URL: http://gri.sourceforge.net
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar.gz
 Source1: http://gri.sourceforge.net/refcard.pdf
 Source2: http://gri.sourceforge.net/cmdrefcard.pdf
 Source3: http://gri.sourceforge.net/gri.pdf
+Patch1: %name-%version-debian-texi.patch
 
-BuildPreReq: gcc-c++ ImageMagick-tools texlive-base-bin info
-BuildPreReq: ghostscript-classic perl4-compat
+BuildRequires: gcc-c++ ImageMagick-tools texlive-base-bin info
+BuildRequires: ghostscript-classic perl4-compat
+BuildRequires: makeinfo
 
 %description
 Gri is a language for scientific graphics programming.  It is a
@@ -57,6 +58,7 @@ This package contains documentation for Gri.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %autoreconf
@@ -81,6 +83,9 @@ install -p -m644 %SOURCE1 %SOURCE2 %SOURCE3 %buildroot%_docdir/%name
 %_docdir/%name
 
 %changelog
+* Tue Nov 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.12.23-alt3
+- Fixed build.
+
 * Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.12.23-alt2
 - Fixed build
 
