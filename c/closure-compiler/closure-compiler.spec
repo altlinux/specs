@@ -1,7 +1,7 @@
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -13,50 +13,29 @@ Summary:    JavaScript minifier and checker
 Name:       closure-compiler
 #define commit ad29f06d581fb8c54ad031334b82a5c301b6ce0a
 #define shorthash %(printf %%.7s %commit)
-Version:    20141215
-Release:    alt1_7jpp8
+Version:    20160315
+Release:    alt1_2jpp8
 License:    ASL 2.0
 URL:        https://developers.google.com/closure/compiler/
 Source0:    https://github.com/google/closure-compiler/archive/maven-release-v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 Source1:    closure-compiler.xml
 BuildArch:  noarch
 
-BuildRequires: jpackage-utils
-BuildRequires: java-devel
-BuildRequires: maven-local
-BuildRequires: jarjar
-BuildRequires: args4j
-BuildRequires: guava >= 15
-BuildRequires: google-gson
-BuildRequires: jsr-305
-BuildRequires: junit
-BuildRequires: protobuf-java
-BuildRequires: rhino
-BuildRequires: nekohtml
-BuildRequires: plexus-classworlds
-BuildRequires: plexus-component-api
-BuildRequires: plexus-utils
-BuildRequires: findbugs
-%if 0%{?_check}
-BuildRequires: mockito
-%endif
-BuildRequires: libxslt xsltproc
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
-BuildRequires: docbook-style-xsl
+BuildRequires:  maven-local
+BuildRequires:  mvn(args4j:args4j)
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
+BuildRequires:  mvn(com.google.code.gson:gson)
+BuildRequires:  mvn(com.google.guava:guava)
+BuildRequires:  mvn(com.google.protobuf:protobuf-java)
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 
-Requires:      jpackage-utils
-Requires:      args4j
-Requires:      guava
-Requires:      google-gson
-Requires:      jsr-305
-Requires:      junit
-Requires:      protobuf-java
-Requires:      rhino
-Requires:      jarjar
+BuildRequires: libxslt xsltproc
+BuildRequires: docbook-style-xsl
 Source44: import.info
 
 %description
@@ -80,30 +59,26 @@ This package contains the %{summary}.
 %setup -q -n %{name}-maven-release-v%{version}
 
 rm -rf lib/*
-build-jar-repository -s -p lib/ \
-    jarjar \
-    args4j \
-    google-gson \
-    jsr-305 \
-    junit \
-    protobuf \
-    js \
-    findbugs \
-%if 0%{?_check}
-    mockito \
-%endif
-    guava
-ln -s android-json-org-java.jar lib/json.jar
-%if 0%{?_check} == 0
-%pom_remove_dep :mockito-core pom-main.xml
-rm test/com/google/javascript/jscomp/fuzzing/FuzzerTest.java
-%endif
+
+# Compatibility with more guava versions
+sed -i -e 's/CharMatcher\.whitespace()/CharMatcher.WHITESPACE/' \
+  src/com/google/javascript/jscomp/deps/*.java
+sed -i -e 's/CharMatcher\.javaUpperCase()/CharMatcher.JAVA_UPPER_CASE/' -e 's/CharMatcher\.javaLetterOrDigit()/CharMatcher.JAVA_LETTER_OR_DIGIT/' \
+  src/com/google/javascript/jscomp/parsing/JsDocInfoParser.java
+sed -i -e 's/isSupertypeOf/isAssignableFrom/g' src/com/google/javascript/jscomp/ConformanceRules.java
+
+# Don't build shaded jar because it bundles all deps
+%pom_disable_module "pom-main-shaded.xml" pom-main.xml
+%mvn_alias :closure-compiler-unshaded :closure-compiler
+
+# Fix OSGi metadata
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-bundle-plugin']" \
+"<configuration><instructions>
+  <Bundle-SymbolicName>\${project.groupId}</Bundle-SymbolicName>
+</instructions></configuration>" pom-main.xml
 
 %build
-%mvn_build -- \
-%if 0%{?_check} == 0
-    -DskipTests
-%endif
+%mvn_build -f
 
 xsltproc \
         --nonet \
@@ -115,7 +90,7 @@ xsltproc \
 
 %install
 %mvn_install
-%jpackage_script com.google.javascript.jscomp.CommandLineRunner "" "" jarjar:args4j:google-gson:jsr-305:junit:protobuf:js:guava:%{name} %{name} true
+%jpackage_script com.google.javascript.jscomp.CommandLineRunner "" "" args4j:google-gson:jsr-305:protobuf-java:js:guava:%{name} %{name} true
 
 install -Dm0644 %{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
 
@@ -126,12 +101,15 @@ install -Dm0644 %{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
 %{_mandir}/man1/%{name}.*
 
 %doc COPYING
-%doc CONTRIBUTORS README.md
+%doc README.md
 
 %files javadoc -f .mfiles-javadoc
 %doc COPYING
 
 %changelog
+* Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 1:20160315-alt1_2jpp8
+- new version
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:20141215-alt1_7jpp8
 - new jpp release
 
