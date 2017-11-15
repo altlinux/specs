@@ -1,18 +1,16 @@
 Name: laf-plugin
 Version: 1.0
-Release: alt2
+Release: alt3
 Summary: Generic plugin framework for Java look-and-feels
-
 Group: Development/Java
 License: BSD and zlib
+BuildArch: noarch
 Url: https://laf-plugin.dev.java.net/
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
 Source: https://laf-plugin.dev.java.net/files/documents/4261/50297/%name-all.tar
 Source1: %name-build.xml
-BuildArch: noarch
 
-BuildRequires: ant rpm-build-java asm2
+BuildRequires: ant rpm-build-java objectweb-asm java-devel
 
 %description
 The goal of this project is to provide a generic plugin framework for
@@ -35,6 +33,9 @@ install -m644 drop/%name-50.jar -D %buildroot%_javadir/%name.jar
 %_javadir/%name.jar
 
 %changelog
+* Wed Nov 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt3
+- Fixed build dependencies.
+
 * Thu Sep 10 2009 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0-alt2
 - Fix BuildRequires (ALT #21519)
 
