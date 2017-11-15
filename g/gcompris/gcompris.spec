@@ -1,7 +1,7 @@
 
 Name:    gcompris
 Version: 15.10
-Release: alt5
+Release: alt6
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
 
@@ -30,7 +30,7 @@ BuildRequires: python-module-pycairo-devel python-module-pygtk-devel
 BuildRequires: python-module-pysqlite2 python-modules-encodings tetex-core
 BuildRequires: libxml2-devel
 
-Requires: chess sqlite3
+Requires: chess sqlite3 gnucap tuxpaint
 # needed for sound support
 Requires: gst-plugins-base1.0
 
@@ -599,6 +599,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gcompris/boards/voices/sk
 
 %changelog
+* Wed Nov 15 2017 Andrey Cherepanov <cas@altlinux.org> 15.10-alt6
+- Require gnucap and tuxpaint.
+
 * Mon Jul 24 2017 Andrey Cherepanov <cas@altlinux.org> 15.10-alt5
 - Remove avconv dependency
 
