@@ -1,5 +1,5 @@
 Name: iproute2
-Version: 4.12.0
+Version: 4.14.1
 Release: alt1
 
 Summary: Advanced IP routing and network devices configuration tools
@@ -13,12 +13,8 @@ Requires: libnetlink = %version-%release
 Provides: iproute = %version-%release
 Obsoletes: iproute < %version
 
-# Automatically added by buildreq on Wed Nov 25 2015
-# optimized out: groff-base perl-parent pkg-config sgml-common tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended texlive-xetex
-BuildRequires: OpenSP flex libatm-devel libdb4-devel libelf-devel libiptables-devel libmnl-devel libselinux-devel linuxdoc-tools
-
-# buildreq overoptimizes these:
-BuildRequires: texlive-latex-recommended
+# Automatically added by buildreq on Wed Nov 15 2017
+BuildRequires: flex libatm-devel libdb4-devel libelf-devel libiptables-devel libmnl-devel libselinux-devel
 
 %description
 The iproute package contains networking utilities (ip and rtmon, for
@@ -61,16 +57,13 @@ This package contains libnetlink dynamic library headers.
 %prep
 %setup -n %name-%version-%release
 sed -i 's,/sbin/arping,/usr/sbin/arping,g' examples/dhcp-client-script
-sed -i 's/\[hidelinks\]//' doc/tc-filters.tex
 
 %build
-%make_build DBM_INCLUDE=%_includedir/db4 LIBDIR=%_libdir CCOPTS='%optflags'
-%make_build -C doc
-%make_build -C doc pdf
+%make_build DBM_INCLUDE=%_includedir/db4 LIBDIR=%_libdir CCOPTS='%optflags' V=1
 
 %install
 %makeinstall_std LIBDIR=%_libdir
-rm -r %buildroot%_docdir/%name
+cp -a doc/actions README* %buildroot%_docdir/%name/
 mkdir -p %buildroot{%_bindir,%_sbindir,%_localstatedir/arpd}
 pushd %buildroot/sbin
 rm rtpr
@@ -83,15 +76,17 @@ mkdir -p %buildroot{%_includedir,%_libdir,%_man3dir,/%_lib}
 install -p -m644 lib/libnetlink.so %buildroot/%_lib
 install -p -m644 include/{libnetlink.h,ll_map.h} %buildroot%_includedir
 install -p -m644 man/man3/libnetlink.3 %buildroot%_man3dir/
-ln -s ../../%_lib/libnetlink.so %buildroot%_libdir/libnetlink.so
+ln -rs %buildroot/%_lib/libnetlink.so %buildroot%_libdir/
 
 # symlinks for unprivileged users
 for prg in ip rtmon tc; do
-	ln -s ../../sbin/$prg %buildroot%_bindir
+	ln -rs %buildroot/sbin/$prg %buildroot%_bindir/
 done
 for prg in lnstat nstat routel ss; do
-	ln -s ../sbin/$prg %buildroot%_bindir
+	ln -rs %buildroot%_sbindir/$prg %buildroot%_bindir/
 done
+
+%define _unpackaged_files_terminate_build 1
 
 %files
 /sbin/*
@@ -102,10 +97,10 @@ done
 %config(noreplace) %_sysconfdir/%name
 %_man7dir/*
 %_man8dir/*
+%_datadir/bash-completion/completions/tc
 
 %files doc
-%doc doc/*.pdf doc/actions
-%doc README* examples
+%_docdir/%name/
 
 %files -n arpd
 %_sbindir/arpd
@@ -120,6 +115,9 @@ done
 %_man3dir/*
 
 %changelog
+* Wed Nov 15 2017 Dmitry V. Levin <ldv@altlinux.org> 4.14.1-alt1
+- 4.12.0 -> 4.14.1.
+
 * Wed Jul 05 2017 Dmitry V. Levin <ldv@altlinux.org> 4.12.0-alt1
 - 4.11.0 -> 4.12.0.
 
