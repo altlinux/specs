@@ -6,6 +6,12 @@
 %def_enable emoticons
 %def_enable wallpapers
 %def_disable icewm
+%ifarch %arm
+# do not bother the universe trying to build 3d screensavers with GLES-flavoured qt
+%def_disable screensavers3d
+%else
+%def_enable screensavers3d
+%endif
 
 %define rname kdeartwork
 %define major 4
@@ -13,7 +19,7 @@
 %define bugfix 0
 Name: kde4artwork
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Summary: K Desktop Environment - Artwork
 Group: Graphical desktop/KDE
@@ -260,6 +266,10 @@ Mono icons for KDE
 
 %prep
 %setup -q -n %rname-%version
+%if_disabled screensavers3d
+sed -i 's,^if(OPENGL_FOUND AND OPENGL_GLU_FOUND AND QT_QTOPENGL_LIBRARY),if(0),' \
+	kscreensaver/kdesavers/CMakeLists.txt
+%endif
 
 %build
 %K4build \
@@ -420,6 +430,9 @@ done
 %endif
 
 %changelog
+* Wed Nov 15 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.14.0-alt3
+- do not build 3d screensavers on GLES-flavoured qt
+
 * Tue Nov 14 2017 Oleg Solovyov <mcpain@altlinux.org> 4.14.0-alt2
 - fix build
 
