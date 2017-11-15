@@ -1,11 +1,11 @@
 Summary: generate wtmp statistics
 Name: logintop10
 Version: 1.9
-Release: alt2
+Release: alt3
 License: GPL
 Group: Monitoring
 URL: http://www.vanheusden.com/logintop10/
-Packager: Mikhail Pokidko <pma@altlinux.ru>
+
 Source0: %name-%version.tgz
 Patch0: %name.patch
 
@@ -27,10 +27,13 @@ mkdir -p %buildroot%_bindir
 %files
 %doc license.txt readme.txt
 %_datadir/locale/*/LC_MESSAGES/%name.mo
-%_man1dir/%name.1.gz
+%_man1dir/%name.1*
 %_bindir/%name
 
 %changelog
+* Wed Nov 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9-alt3
+- Fixed spec to allow any man pages compression.
+
 * Thu Oct 16 2008 Mikhail Pokidko <pma@altlinux.org> 1.9-alt2
 - in-spec description fix
 
