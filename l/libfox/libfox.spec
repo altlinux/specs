@@ -3,8 +3,8 @@
 %define oname fox
 
 Name: libfox
-Version: %major.46
-Release: alt3.qa1
+Version: %major.55
+Release: alt1
 
 Summary: The FOX C++ GUI Toolkit shared libraries
 
@@ -12,17 +12,16 @@ License: LGPL
 Group: System/Libraries
 Url: http://www.fox-toolkit.org/fox.html
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source: ftp://ftp.fox-toolkit.org/pub/%oname-%version.tar.bz2
+# ftp://ftp.fox-toolkit.org/pub/%oname-%version.tar.gz
+Source: %oname-%version.tar
+Patch1: %oname-%version-alt-build.patch
 
 # Automatically added by buildreq on Wed Jul 15 2009
 BuildRequires: bzlib-devel gcc-c++ imake libGL-devel libICE-devel
 BuildRequires: libXcursor-devel libXext-devel libXft-devel
 BuildRequires: libXrandr-devel libjpeg-devel libpng-devel libtiff-devel
 BuildRequires: xorg-cf-files libXfixes-devel libXi-devel
-
-BuildPreReq: libGLU-devel
+BuildRequires: libGLU-devel
 
 %description
 FOX is a C++-Based Library for Graphical User Interface Development
@@ -50,6 +49,7 @@ BuildArch: noarch
 %description doc
 The package contains HTML documentation.
 
+%if_enabled static
 %package devel-static
 Summary: A version of the FOX GUI toolkit for static linking
 Group: Development/C++
@@ -60,6 +60,7 @@ The fox-static package contains the files necessary to link applications
 to the FOX GUI toolkit statically (rather than dynamically). Statically
 linked applications do not require the library to be installed on the system
 running the application.
+%endif
 
 %package examples
 Summary: FOX example applications
@@ -75,6 +76,7 @@ applications, including Adie, calculator and PathFinder.
 
 %prep
 %setup -n %oname-%version
+%patch1 -p2
 subst 's|FXFile::getExecPath(),"Adie.stx"|"%_datadir/fox-examples/","Adie.stx"|g' \
 	adie/Adie.cpp
 
@@ -128,7 +130,7 @@ mv %buildroot%_bindir/calculator %buildroot%_bindir/fox-calculator
 
 %if_enabled static
 %files -n lib%name-devel-static
-%_libdir/.a
+%_libdir/*.a
 %endif
 
 %files examples
@@ -141,6 +143,9 @@ mv %buildroot%_bindir/calculator %buildroot%_bindir/fox-calculator
 %_man1dir/calculator.*
 
 %changelog
+* Wed Nov 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.55-alt1
+- Updated to upstream version 1.6.55.
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.46-alt3.qa1
 - NMU: rebuilt for updated dependencies.
 
