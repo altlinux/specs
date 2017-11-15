@@ -2,7 +2,7 @@
 
 Name: partclone
 Version: 0.3.6
-Release: alt0.1.git96f986f
+Release: alt0.2.git96f986f
 
 Summary: File System Clone Utilities
 License: GPLv2+
@@ -62,6 +62,9 @@ echo '#define git_version "%version"' > src/version.h
 %_man8dir/*
 
 %changelog
+* Wed Nov 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.6-alt0.2.git96f986f
+- Rebuilt with new reiser4 libraries.
+
 * Tue Sep 12 2017 Leonid Krivoshein <klark@altlinux.org> 0.3.6-alt0.1.git96f986f
 - Updated upstream version 0.3.6 from GitHub.
 - Moved to Archiving/Backup group.

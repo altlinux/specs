@@ -1,6 +1,6 @@
 %def_enable shared
 %def_enable static
-%def_enable Werror
+%def_disable Werror
 %def_disable debug
 %def_enable libminimal
 %def_disable memory_manager
@@ -8,19 +8,18 @@
 
 %define bname aal
 Name: lib%bname
-Version: 1.0.5
-Release: alt4
+Version: 1.0.6
+Release: alt1
 Summary: Abstraction library for ReiserFS utilities
 License: GPLv2
 Group: System/Libraries
 URL: http://reiser4.sourceforge.net/
+
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
 
 %description
 This is a library that provides application abstraction mechanism.
 It include device abstraction, libc independence code, etc.
-
 
 %package devel
 Summary: Headers and libraries for developing with %name
@@ -31,7 +30,6 @@ Requires: %name%{?_disable_shared:-devel-static} = %version-%release
 This package includes headers and libraries for developing with the
 %name library.
 
-
 %package devel-static
 Summary: Static libraries for developing with %name
 Group: Development/C
@@ -40,7 +38,6 @@ Requires: %name-devel = %version-%release
 %description devel-static
 This package includes static libraries for developing with the %name
 library.
-
 
 %if_enabled libminimal
 %if_enabled shared
@@ -52,7 +49,6 @@ Group: System/Libraries
 This is a minimal library that provides application abstraction
 mechanism. It include device abstraction, libc independence code, etc.
 %endif
-
 
 %package minimal-devel
 Summary: Headers and libraries for developing with %name-minimal
@@ -66,12 +62,9 @@ This package includes the headers and libraries for developing with the
 %name-minimal library.
 %endif
 
-
 %prep
 %setup
-%patch -p1
 sed -i -r '/^[[:blank:]]+\.\/run-ldconfig/d' Makefile.am
-
 
 %build
 %autoreconf
@@ -87,7 +80,6 @@ sed -i -r '/^[[:blank:]]+\.\/run-ldconfig/d' Makefile.am
 
 %make_build
 
-
 %install
 %makeinstall_std
 
@@ -100,13 +92,11 @@ mv %buildroot/%_lib/*.{a,so} %buildroot%_libdir/
 
 install -m 0644 AUTHORS COPYING CREDITS ChangeLog THANKS %buildroot%_docdir/%name-%version/
 
-
 %if_enabled shared
 %files
 %doc %_docdir/%name-%version
 /%_lib/%name-1.0.so.*
 %endif
-
 
 %files devel
 %{?_disable_shared:%doc %_docdir/%name-%version}
@@ -114,12 +104,10 @@ install -m 0644 AUTHORS COPYING CREDITS ChangeLog THANKS %buildroot%_docdir/%nam
 %_includedir/%bname
 %_datadir/aclocal/*
 
-
 %if_enabled static
 %files devel-static
 %_libdir/%name.a
 %endif
-
 
 %if_enabled libminimal
 %if_enabled shared
@@ -127,13 +115,14 @@ install -m 0644 AUTHORS COPYING CREDITS ChangeLog THANKS %buildroot%_docdir/%nam
 /%_lib/%name-minimal.so.*
 %endif
 
-
 %files minimal-devel
 %_libdir/%name-minimal.*
 %endif
 
-
 %changelog
+* Wed Nov 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.6-alt1
+- Updated to upstream version 1.0.6.
+
 * Sat Aug 31 2013 Led <led@altlinux.ru> 1.0.5-alt4
 - cleaned up code
 - cleaned up spec
