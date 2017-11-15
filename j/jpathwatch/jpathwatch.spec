@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jpathwatch
 Version:          0.95
-Release:          alt1_10jpp8
+Release:          alt1_12jpp8
 Summary:          Java library for monitoring directories for changes
 License:          GPLv2
 # http://jpathwatch.wordpress.com/
@@ -86,6 +86,9 @@ find %{name}-java/src -name '*.java' | xargs javadoc -Xdoclint:none -classpath d
 %doc LICENSE.txt
 
 %changelog
+* Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.95-alt1_12jpp8
+- fc update
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.95-alt1_10jpp8
 - new jpp release
 
