@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -21,8 +21,8 @@ BuildRequires: jpackage-generic-compat
 %global site_name maven-bundle-plugin
 
 Name:           maven-plugin-bundle
-Version:        3.2.0
-Release:        alt1_4jpp8
+Version:        3.3.0
+Release:        alt1_2jpp8
 Summary:        Maven Bundle Plugin
 License:        ASL 2.0
 URL:            http://felix.apache.org
@@ -129,6 +129,9 @@ rm -f src/main/java/org/apache/felix/bundleplugin/baseline/BaselineReport.java
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_2jpp8
+- new version
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt1_4jpp8
 - new version
 
