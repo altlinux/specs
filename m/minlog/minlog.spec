@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          minlog
 Version:       1.3.0
-Release:       alt1_4jpp8
+Release:       alt1_5jpp8
 Summary:       Minimal overhead Java logging
 License:       BSD
 URL:           https://github.com/EsotericSoftware/minlog
@@ -73,6 +73,9 @@ sed -i 's/\r//' license.txt
 %doc license.txt
 
 %changelog
+* Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_5jpp8
+- fc update
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_4jpp8
 - new jpp release
 
