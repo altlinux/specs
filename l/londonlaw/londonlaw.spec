@@ -1,12 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/desktop-file-install
+BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
 Name:           londonlaw
 Version:        0.3.0
-Release:        alt2_0.3.pre2
+Release:        alt2_0.6.pre2
 Summary:        Online multiplayer version of a well known detective boardgame
 License:        GPLv2
 Group:          Games/Other
@@ -14,10 +16,10 @@ URL:            http://github.com/anyc/londonlaw
 Source0:        http://github.com/anyc/londonlaw/archive/v0.3.0_pre2.tar.gz
 Source1:        %{name}.desktop
 Source2:        %{name}-server.desktop
-BuildRequires:  python-devel python-module-wx ghostscript-utils ghostscript ImageMagick
-BuildRequires: /usr/bin/latex texlive-latex-recommended texlive-latex-recommended desktop-file-utils
+BuildRequires:  python-devel python-module-wx3.0 ghostscript-utils ghostscript ImageMagick
+BuildRequires:  /usr/bin/latex texlive-latex-recommended texlive-latex-recommended desktop-file-utils
 BuildArch:      noarch
-Requires:       python-module-wx python-module-twisted-core python-module-twisted-core-gui python-module-twisted-core-gui-tk python-module-twisted-core-gui-wx
+Requires:       python-module-twisted-conch python-module-twisted-conch-gui python-module-twisted-core python-module-twisted-core-gui python-module-twisted-core-gui-tk python-module-twisted-core-gui-wx python-module-twisted-core-test python-module-twisted-logger python-module-twisted-mail python-module-twisted-names python-module-twisted-news python-module-twisted-pair python-module-twisted-positioning python-module-twisted-runner python-module-twisted-web python-module-twisted-words icon-theme-hicolor
 Source44: import.info
 
 %description
@@ -63,6 +65,9 @@ desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE2}
 
 
 %changelog
+* Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt2_0.6.pre2
+- fixed build
+
 * Thu Jun 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt2_0.3.pre2
 - drop Req: python-module-twisted-core-gui-gnome
 
