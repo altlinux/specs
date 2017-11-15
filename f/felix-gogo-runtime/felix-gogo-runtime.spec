@@ -1,41 +1,27 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           felix-gogo-runtime
-Version:        0.16.2
-Release:        alt1_5jpp8
+Version:        1.0.4
+Release:        alt1_2jpp8
 Summary:        Community OSGi R4 Service Platform Implementation - Basic Commands
 License:        ASL 2.0
-URL:            http://felix.apache.org/site/apache-felix-gogo.html
+URL:            http://felix.apache.org/documentation/subprojects/apache-felix-gogo.html
 
-Source0:        http://www.apache.org/dist/felix/org.apache.felix.gogo.runtime-%{version}-project.tar.gz
-
-# Typecast an Event constructor call with java.util.Properties to 
-# java.util.Dictionary because the call to the constructor with Properties
-# was ambiguous.
-Patch1:         felix-gogo-runtime-dictionary.patch
-# Changed path to DEPENDENCIES, LICENSE and NOTICE from META-INF to root dir
-Patch2:         felix-gogo-runtime-bundle-resources.patch
-# Removed failing thread IO test
-Patch3:         felix-gogo-runtime-deleted-io-test.patch
-# Removed relativePath to parent pom
-Patch4:         felix-gogo-runtime-parent.patch
+Source0:        https://repo1.maven.org/maven2/org/apache/felix/org.apache.felix.gogo.runtime/%{version}/org.apache.felix.gogo.runtime-%{version}-source-release.tar.gz
 
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:gogo-parent:pom:)
-BuildRequires:  mvn(org.easymock:easymock)
-BuildRequires:  mvn(org.mockito:mockito-all)
-BuildRequires:  mvn(org.osgi:org.osgi.compendium)
-BuildRequires:  mvn(org.osgi:org.osgi.core)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.osgi:osgi.cmpn)
+BuildRequires:  mvn(org.osgi:osgi.core)
 Source44: import.info
 
 %description
@@ -57,10 +43,9 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n org.apache.felix.gogo.runtime-%{version}
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+
+%pom_change_dep :org.osgi.core :osgi.core
+%pom_change_dep :org.osgi.compendium :osgi.cmpn
 
 %mvn_file : felix/%{name}
 
@@ -71,12 +56,15 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc DEPENDENCIES LICENSE NOTICE 
+%doc DEPENDENCIES LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_2jpp8
+- new version
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0.16.2-alt1_5jpp8
 - new jpp release
 
