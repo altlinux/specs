@@ -7,7 +7,7 @@
 
 Name: kde5-%rname
 Version: 5.1.0
-Release: alt2%ubt
+Release: alt3%ubt
 %K5init
 
 Group:     Networking/File transfer
@@ -53,7 +53,7 @@ KTorrent library
 
 %prep
 %setup -q -n %rname-%version
-%patch10 -p1
+%patch10 -p1 -b .defaults
 %patch11 -p1
 %patch12 -p1
 
@@ -87,6 +87,9 @@ sed -i 's|^add_subdirectory(plasma)||' CMakeLists.txt
 
 
 %changelog
+* Wed Nov 15 2017 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt3%ubt
+- don't suppress power saving by default
+
 * Tue Oct 03 2017 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt2%ubt
 - build without kwebkit
 
