@@ -1,6 +1,6 @@
 Name: elfutils
 Version: 0.170
-Release: alt1
+Release: alt2
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
 License: GPLv3+ and (GPLv2+ or LGPLv3+)
@@ -103,6 +103,7 @@ cd %buildtarget
 %makeinstall_std -C %buildtarget
 %find_lang %name
 %set_verify_elf_method strict,rpath=normal
+%define _unpackaged_files_terminate_build 1
 
 %check
 export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
@@ -137,7 +138,7 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/libasm.so
 %_libdir/libdw.so
 %_libdir/libebl.a
-%_pkgconfigdir/*.pc
+%_pkgconfigdir/libdw.pc
 
 %if_enabled static
 %files devel-static
@@ -155,6 +156,7 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %_includedir/gelf.h
 %_includedir/nlist.h
 %_libdir/libelf.so
+%_pkgconfigdir/libelf.pc
 
 %if_enabled static
 %files -n libelf-devel-static
@@ -162,6 +164,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Nov 15 2017 Dmitry V. Levin <ldv@altlinux.org> 0.170-alt2
+- Moved libelf.pc from %name-devel to libelf-devel.
+
 * Thu Aug 03 2017 Dmitry V. Levin <ldv@altlinux.org> 0.170-alt1
 - 0.168 -> 0.170.
 
