@@ -6,7 +6,7 @@
 
 Name: tidy
 Version: 5.4
-Release: alt1.20%ver
+Release: alt2.20%ver
 Epoch: 20171110
 
 Summary: HTML Tidy helps keep webpages clean
@@ -146,6 +146,9 @@ rm %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed Nov 15 2017 Oleg Solovyov <mcpain@altlinux.org> 20171110:5.4-alt2.20170301
+- include compatibility headers
+
 * Fri Nov 10 2017 Oleg Solovyov <mcpain@altlinux.org> 20171110:5.4-alt1.20170301
 - update to 5.4
 
