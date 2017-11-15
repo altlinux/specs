@@ -2,25 +2,24 @@
 
 Name: log4cplus
 Version: 2.0.0
-Release: alt1.git20150807.1
+Release: alt2.rc2
 Summary: Logging library to C++
 License: Apache License
 Group: Development/C++
 Url: http://log4cplus.sourceforge.net/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/log4cplus/log4cplus.git
 Source: %name-%version.tar
 # https://github.com/log4cplus/ThreadPool.git
 Source1: threadpool.tar
-# https://github.com/log4cplus/Catch.git
+# https://github.com/catchorg/Catch2.git
 Source2: catch.tar
 
-BuildPreReq: gcc-c++ doxygen graphviz swig
-BuildPreReq: python-devel
+BuildRequires: gcc-c++ doxygen graphviz swig
+BuildRequires: python-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
+BuildRequires: python3-devel
 %endif
 
 %description
@@ -131,7 +130,7 @@ popd
 
 %install
 %makeinstall_std
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%python_sitelibdir_noarch/%name/* \
 	%buildroot%python_sitelibdir/%name/
 %endif
@@ -141,7 +140,7 @@ pushd ../python3
 %make_install DESTDIR=$PWD/buildroot install
 install -d %buildroot%python3_sitelibdir
 mv buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir/
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv buildroot%python3_sitelibdir_noarch/%name/* \
 	%buildroot%python3_sitelibdir/%name/
 %endif
@@ -176,6 +175,9 @@ install -m644 docs/man/man3/* %buildroot%_man3dir
 %endif
 
 %changelog
+* Wed Nov 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt2.rc2
+- Updated to upstream version 2.0.0-rc2.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.0-alt1.git20150807.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
