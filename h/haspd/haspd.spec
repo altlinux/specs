@@ -10,8 +10,8 @@
 # 	kernel-source-XXXX for Slackware / MOPSLinux
 
 Name: haspd
-Version: 7.40
-Release: alt10
+Version: 7.60
+Release: alt2
 
 Summary: Hardware key protection drivers and license managers
 
@@ -96,7 +96,8 @@ Please send any comments to hasp@etersoft.ru
 Copyright 1985-2008 Aladdin Knowledge Systems http://www.aladdin.com
 Copyright 2006-2007 Eutron SPA http://www.smartkey.eutron.com
 Copyright 2006-2006 SafeNet Sentinel http://www.safenet-inc.com
-Copyright 2015 SafeNet http://safenet-sentinel.ru/
+Copyright 2015-2016 SafeNet http://safenet-sentinel.ru/
+Copyright 2017 Gemalto http://www.gemalto.com
 
 %package modules
 Summary: Linux kernel modules for HASP LPT keys
@@ -198,6 +199,12 @@ ln -s /lib/libusb-1.0.so.0 %buildroot/lib/%name/libusb-1.0.so.0
 #module_dir/2*
 
 %changelog
+* Wed Nov 15 2017 Vitaly Lipatov <lav@altlinux.ru> 7.60-alt2
+- add comment about usbkeytest
+
+* Thu Jul 20 2017 Vitaly Lipatov <lav@altlinux.ru> 7.60-alt1
+- update binaries for Sentinel^(R) LDK and Sentinel HASP^(R) v 7.60 (July, 2017)
+
 * Fri Nov 25 2016 Vitaly Lipatov <lav@altlinux.ru> 7.40-alt10
 - require i586-libusb in ALT Linux arepo (ALT bug 32808) (thanks, cas@)
 
