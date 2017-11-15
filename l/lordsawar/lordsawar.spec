@@ -1,21 +1,18 @@
 Name: lordsawar
-Version: 0.2.0
-Release: alt1.2.1
+Version: 0.3.1
+Release: alt1
 
 Summary: Turn-based strategy game in a fantasy setting
 License: GPLv2+
 Group: Games/Arcade
 
 Url: http://www.nongnu.org/lordsawar/
-Source: http://download.savannah.gnu.org/releases-noredirect/lordsawar/lordsawar-%version.tar.gz
-Patch1: lordsawar-0.1.7-asneeded.patch
-Patch2: lordsawar-0.2.0-alt-DSO.patch
 
-# Automatically added by buildreq on Sat Mar 12 2011
-BuildRequires: boost-devel-headers gcc-c++ intltool libSDL_mixer-devel libexpat-devel libgnet-devel libgtkmm2-devel libtar-devel zlib-devel
+Source: %name-%version.tar
+Patch1: %name-%version-upstream-gstreamer-1.0.patch
 
-# For gnome_helpdir definition:
-BuildPreReq: rpm-build-gnome
+BuildRequires: gcc-c++ intltool libgtkmm3-devel
+BuildRequires: libxslt-devel libxml++2-devel libarchive-devel libgstreamermm1.0-devel
 
 Requires: %name-data = %version
 
@@ -34,10 +31,9 @@ Data files for lordsawar game.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p2
 
 %build
-%add_optflags -fpermissive
+%autoreconf
 %configure
 %make_build
 
@@ -46,18 +42,20 @@ Data files for lordsawar game.
 
 %find_lang %name
 
-subst 's/.png//' %buildroot%_desktopdir/lordsawar.desktop
-
 %files -f %name.lang
 %_bindir/*
+%_man6dir/*
 
 %files data
 %_desktopdir/*
-%_datadir/lordsawar
-%gnome_helpdir/lordsawar
+%_datadir/appdata/%name-appdata.xml
+%_datadir/%name
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Nov 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.1-alt1
+- Updated to stable upstream version 0.3.1.
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.0-alt1.2.1
 - Rebuilt for gcc5 C++11 ABI.
 
