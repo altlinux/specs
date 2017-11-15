@@ -1,6 +1,7 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -16,21 +17,17 @@ BuildRequires: jpackage-generic-compat
 %global debug_package %{nil}
 
 Name:           jansi-native
-Version:        1.5
-Release:        alt2_11jpp8
+Version:        1.7
+Release:        alt1_3jpp8
 Summary:        Jansi Native implements the JNI Libraries used by the Jansi project
 Group:          Development/Other
 License:        ASL 2.0
 URL:            http://jansi.fusesource.org/
-Source0:        https://github.com/fusesource/jansi-native/archive/jansi-native-1.5.tar.gz
+Source0:        https://github.com/fusesource/jansi-native/archive/jansi-native-%{version}.tar.gz
 
-BuildRequires:  autoconf
-BuildRequires:  automake
-BuildRequires:  libtool
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-clean-plugin)
 BuildRequires:  mvn(org.fusesource:fusesource-pom:pom:)
 BuildRequires:  mvn(org.fusesource.hawtjni:hawtjni-runtime) >= 1.9
 BuildRequires:  mvn(org.fusesource.hawtjni:maven-hawtjni-plugin) >= 1.9
@@ -40,7 +37,7 @@ Source44: import.info
 Jansi is a small java library that allows you to use ANSI escape sequences
 in your Java console applications. It implements ANSI support on platforms
 which don't support it like Windows and provides graceful degradation for
-when output is being sent to output devices which cannot support ANSI sequences. 
+when output is being sent to output devices which cannot support ANSI sequences.
 
 %package javadoc
 Group: Development/Java
@@ -61,13 +58,16 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%dir %{_jnidir}/%{name}
-%doc readme.md license.txt changelog.md
+%doc readme.md changelog.md
+%doc license.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc license.txt
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_3jpp8
+- new version
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt2_11jpp8
 - new jpp release
 
