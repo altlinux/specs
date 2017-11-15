@@ -7,8 +7,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             dogtag-pki-theme
-Version:          10.3.5
-Release:          alt1_2jpp8
+Version:          10.4.8
+Release:          alt1_3jpp8
 Summary:          Certificate System - Dogtag PKI Theme Components
 URL:              http://pki.fedoraproject.org/
 License:          GPLv2
@@ -21,14 +21,7 @@ BuildRequires:    ctest cmake
 BuildRequires:    java-1.8.0-openjdk-devel
 BuildRequires:    jpackage-utils >= 1.7.5
 
-%if 0%{?rhel}
-# NOTE:  In the future, as a part of its path, this URL will contain a release
-#        directory which consists of the fixed number of the upstream release
-#        upon which this tarball was originally based.
-Source0:          http://pki.fedoraproject.org/pki/sources/%{name}/%{version}/%{release}/rhel/%{name}-%{version}%{?prerel}.tar.gz
-%else
 Source0:          http://pki.fedoraproject.org/pki/sources/%{name}/%{version}/%{release}/%{name}-%{version}%{?prerel}.tar.gz
-%endif
 
 %global overview                                                       \
 Several PKI packages utilize a "virtual" theme component.  These       \
@@ -128,19 +121,19 @@ This package is used by the Dogtag Certificate System.
 
 
 %build
-%{__mkdir_p} build
+mkdir -p build
 cd build
 %{fedora_cmake} -DVERSION=%{version}-%{release} \
 	-DVAR_INSTALL_DIR:PATH=/var \
 	-DBUILD_DOGTAG_PKI_THEME:BOOL=ON \
 	-DJAVA_LIB_INSTALL_DIR=%{_jnidir} \
 	..
-%{__make} VERBOSE=1 %{?_smp_mflags}
+make VERBOSE=1 %{?_smp_mflags}
 
 
 %install
 cd build
-%{__make} install DESTDIR=%{buildroot} INSTALL="install -p"
+make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 
 # NOTE:  Several "theme" packages require ownership of the "/usr/share/pki"
@@ -152,14 +145,28 @@ cd build
 %doc dogtag/common-ui/LICENSE
 %dir %{_datadir}/pki
 %{_datadir}/pki/common-ui/
-
+%{_datadir}/pki/server/webapps/pki/ca
+%{_datadir}/pki/server/webapps/pki/css
+%{_datadir}/pki/server/webapps/pki/esc
+%{_datadir}/pki/server/webapps/pki/fonts
+%{_datadir}/pki/server/webapps/pki/images
+%{_datadir}/pki/server/webapps/pki/kra
+%{_datadir}/pki/server/webapps/pki/ocsp
+%{_datadir}/pki/server/webapps/pki/pki.properties
+%{_datadir}/pki/server/webapps/pki/tks
+%dir %{_datadir}/pki/server/webapps/pki
+%dir %{_datadir}/pki/server/webapps
+%dir %{_datadir}/pki/server
 
 %files -n dogtag-pki-console-theme
 %doc dogtag/console-ui/LICENSE
-%{_javadir}/pki/
+%{_javadir}/pki
 
 
 %changelog
+* Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 10.4.8-alt1_3jpp8
+- new version
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 10.3.5-alt1_2jpp8
 - new jpp release
 
