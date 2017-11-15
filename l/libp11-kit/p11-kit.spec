@@ -10,8 +10,8 @@
 %def_disable systemd
 
 Name: lib%_name
-Version: 0.23.8
-Release: alt2
+Version: 0.23.9
+Release: alt1
 
 Summary: Library for loading and sharing PKCS#11 modules
 Group: System/Libraries
@@ -84,9 +84,9 @@ This package contains development documentation for %_name library.
 
 %prep
 %setup -n %_name-%version
+%patch1 -p1
 %{?_enable_snapshot:NOCONFIGURE=1 ./autogen.sh}
 %patch
-%patch1 -p1
 
 %build
 %autoreconf
@@ -147,7 +147,7 @@ EOF
 %_datadir/%_name/modules/%_name-trust.module
 %_libexecdir/%_name/%_name-extract-trust
 %_libexecdir/%_name/trust-extract-compat
-#%_altdir/%name
+%exclude %_altdir/%name
 %endif
 
 %files devel
@@ -161,6 +161,11 @@ EOF
 %endif
 
 %changelog
+* Mon Oct 16 2017 Paul Wolneykien <manowar@altlinux.org> 0.23.9-alt1
+- Exclude the alteranatives file for libnssckbi.so.
+- Patch the sources just after unpacking them.
+- Release 0.23.9 (thx Daiki Ueno).
+
 * Wed Sep 06 2017 Paul Wolneykien <manowar@altlinux.org> 0.23.8-alt2
 - Refresh the slot list each time C_GetSlotList() is called (patch).
 
