@@ -1,6 +1,6 @@
 Name: simplescreenrecorder
 Version: 0.3.8
-Release: alt2
+Release: alt3
 Summary: Simple Screen Recording with OpenGL capture
 
 Group: Video
@@ -9,6 +9,7 @@ Url: http://www.maartenbaert.be/simplescreenrecorder/
 Obsoletes: simplescreenrecording
 
 Source: %version.tar.gz
+Patch:  alt-desktop-l10n-ru.patch
 
 # Automatically added by buildreq on Mon Oct 06 2014
 # optimized out: fontconfig gnu-config libGL-devel libGLU-devel libX11-devel libXext-devel libXfixes-devel libXi-devel libavcodec-devel libavutil-devel libcloog-isl4 libopencore-amrnb0 libopencore-amrwb0 libqt4-core libqt4-gui libstdc++-devel pkg-config xorg-fixesproto-devel xorg-inputproto-devel xorg-xextproto-devel xorg-xproto-devel
@@ -19,6 +20,7 @@ BuildRequires: gcc-c++ glibc-devel-static libalsa-devel libavformat-devel libjac
 
 %prep
 %setup -n ssr-%version
+%patch -p2
 # XXX waiting for support for channels
 sed -i '/#define SSR_USE_AVFRAME_CHANNELS/s/TEST_AV_VERSION.*/TEST_AV_VERSION(LIBAVCODEC, 57, 0, 57, 0)/' src/Global.h
 
@@ -38,6 +40,9 @@ sed -i '/#define SSR_USE_AVFRAME_CHANNELS/s/TEST_AV_VERSION.*/TEST_AV_VERSION(LI
 %_datadir/%name
 
 %changelog
+* Wed Nov 15 2017 Andrey Cherepanov <cas@altlinux.org> 0.3.8-alt3
+- Add Russian localization to desktop file.
+
 * Tue Jun 13 2017 Anton Farygin <rider@altlinux.ru> 0.3.8-alt2
 - rebuilt with ffmpeg
 - added man pages
