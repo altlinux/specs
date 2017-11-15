@@ -8,7 +8,7 @@ BuildRequires: gcc-c++ python-devel
 
 Name:           python-module-pybox2d
 Version:        2.3.2
-Release:        alt1
+Release:        alt1.1
 Summary:        A 2D rigid body simulation library for Python
 
 Group:          Development/Python
@@ -20,7 +20,7 @@ Source0:        https://pypi.python.org/packages/cc/7b/ddb96fea1fa5b24f8929714ef
 #Patch0:         pybox2d-Fix_comments_for_swig_3.0.3.patch
 
 BuildRequires:  gcc
-BuildRequires:  python-dev
+BuildRequires:  python-devel
 BuildRequires:  python-module-setuptools
 BuildRequires:  swig
 Source44: import.info
@@ -63,6 +63,9 @@ sed -i %{buildroot}%{python_sitelibdir}/Box2D/__init__.py -e 's/\r//'
 
 
 %changelog
+* Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1.1
+- applied repocop patch
+
 * Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1
 - automated PyPI update
 
