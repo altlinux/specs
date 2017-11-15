@@ -1,12 +1,9 @@
+%def_enable snapshot
+
 %define ver_major 0.22
 %define beta %nil
-# since 0.20.4 requires ecore_wl2 available in efl >= 1.17
 %define efl_ver_major 1.20
 %define efl_ver %efl_ver_major.5
-%define snapshot 2015-10-28
-%define cvs_date 5469c3b6
-%undefine cvs_date
-%define rel alt1
 
 %def_disable static
 # only bluez4 supported
@@ -21,12 +18,7 @@
 
 Name: enlightenment
 Version: %ver_major.0
-
-%ifdef cvs_date
-Release: %rel.%cvs_date
-%else
-Release: %rel
-%endif
+Release: alt2
 Epoch: 1
 
 Summary: The Enlightenment window manager
@@ -34,8 +26,8 @@ License: BSD
 Group: Graphical desktop/Enlightenment
 URL: http://www.enlightenment.org/
 
-%ifdef cvs_date
-Source: %name-%version-%cvs_date.tar
+%if_enabled snapshot
+Source: %name-%version.tar
 %else
 Source: https://download.enlightenment.org/rel/apps/%name/%name-%version%beta.tar.xz
 %endif
@@ -74,6 +66,7 @@ Requires: altlinux-freedesktop-menu-%name >= 0.55
 Requires: udisks2
 Requires: pulseaudio-daemon
 Requires: geoclue2
+%{?_enable_xwayland:Requires: xorg-xwayland xorg-drv-libinput}
 %{?_with_pam_helper:Requires: chkpwd-pam}
 
 BuildRequires: rpm-build-xdg
@@ -105,11 +98,7 @@ Provides: e18-devel = %EVR
 Development headers for Enlightenment.
 
 %prep
-%ifdef cvs_date
-%setup -n %name-%version-%cvs_date
-%else
 %setup -n %name-%version%beta
-%endif
 
 %patch -p1 -b .gsd
 %patch1 -p1 -b .nosuid
@@ -205,6 +194,9 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Fri Nov 10 2017 Yuri N. Sedunov <aris@altlinux.org> 1:0.22.0-alt2
+- updated to v0.22.0-20-g2f3d147
+
 * Thu Nov 02 2017 Yuri N. Sedunov <aris@altlinux.org> 1:0.22.0-alt1
 - 0.22.0
 
