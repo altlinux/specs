@@ -3,7 +3,7 @@
 
 Name: iperf3
 Version: 3.3
-Release: alt1
+Release: alt2
 
 Summary: A TCP, UDP, and SCTP network bandwidth measurement tool
 License: %bsd
@@ -101,6 +101,9 @@ install -pDm0644 %SOURCE3 %buildroot/%_unitdir/%name.service
 
 
 %changelog
+* Wed Nov 15 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.3-alt2
+- do not build profiled iperf
+
 * Tue Nov 14 2017 Sergey Y. Afonin <asy@altlinux.ru> 3.3-alt1
 - New version
 
