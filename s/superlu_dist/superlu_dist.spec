@@ -6,18 +6,18 @@
 %define sover %somver.5
 Name: superlu_dist
 Version: 3.3
-Release: alt1
+Release: alt2
 Summary: Solve a sparse linear system A*X=B for distributed memory
 License: BSD-like
 Group: Sciences/Mathematics
 Url: http://acts.nersc.gov/superlu/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %{name}_%version.tar.gz
 Source1: superlu_sort_perm.c
 
-BuildPreReq: liblapack-devel
-BuildPreReq: csh libparmetis-devel %mpiimpl-devel
+BuildRequires(pre): %mpiimpl-devel
+BuildRequires: liblapack-devel
+BuildRequires: csh libparmetis-devel
 #BuildPreReq: texlive-latex-base texlive-extra-utils
 #BuildPreReq: doxygen graphviz ghostscript-utils
 
@@ -230,6 +230,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 #exclude %_bindir/test*
 
 %changelog
+* Thu Nov 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3-alt2
+- Fixed build with gcc-6.
+
 * Fri Jul 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1
 - Version 3.3
 
