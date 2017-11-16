@@ -1,16 +1,17 @@
 Epoch: 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global short_name      commons-email
 
 Name:             apache-%{short_name}
-Version:          1.3.1
-Release:          alt1_6jpp8
+Version:          1.5
+Release:          alt1_1jpp8
 Summary:          Apache Commons Email Package
 License:          ASL 2.0
 URL:              http://commons.apache.org/proper/%{short_name}/
@@ -18,9 +19,19 @@ BuildArch:        noarch
 
 Source0:          http://archive.apache.org/dist/commons/email/source/%{short_name}-%{version}-src.tar.gz
 
+# Disable tests that require Internet access
+Patch0:           disable-internet-tests.patch
+
 BuildRequires:  maven-local
-BuildRequires:  mvn(javax.mail:mail)
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(com.sun.mail:javax.mail)
+BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.easymock:easymock)
+BuildRequires:  mvn(org.powermock:powermock-api-easymock)
+BuildRequires:  mvn(org.powermock:powermock-module-junit4)
+BuildRequires:  mvn(org.slf4j:slf4j-jdk14)
+BuildRequires:  mvn(org.subethamail:subethasmtp)
 Source44: import.info
 
 %description
@@ -38,32 +49,32 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
-
-# Activation is now provided by the JRE
-%pom_remove_dep "javax.activation:activation"
-
-# Some test deps are not in fedora
-%pom_remove_dep "org.subethamail:subethasmtp"
-%pom_remove_dep "org.powermock:"
+%patch0
 
 # Compatibility links
 %mvn_alias "org.apache.commons:commons-email" "commons-email:commons-email"
 %mvn_file :commons-email %{short_name} %{name}
 
+# Javascript in Javadoc mis-detection
+sed -i -e '/<script>/s/</&lt;/' src/main/java/org/apache/commons/mail/ImageHtmlEmail.java
+
 %build
-# Skip tests due to some missing deps
-%mvn_build -f
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt RELEASE-NOTES.txt NOTICE.txt
+%doc LICENSE.txt NOTICE.txt
+%doc RELEASE-NOTES.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Nov 16 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_1jpp8
+- new version
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt1_6jpp8
 - new fc release
 
