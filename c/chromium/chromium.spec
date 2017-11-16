@@ -25,7 +25,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        62.0.3202.75
+Version:        62.0.3202.89
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -69,12 +69,10 @@ Patch017: 0017-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
 Patch018: 0018-ALT-gzip-does-not-support-the-rsyncable-option.patch
 Patch019: 0019-UBUNTU-Specify-max-resolution.patch
 Patch020: 0020-ALT-Use-rpath-link-and-absolute-rpath.patch
-#Patch021: 0021-Remove-third_party-libva.patch
-Patch022: 0022-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
-Patch023: 0023-ARCH-gn-bootstrap.patch
-Patch024: 0024-GENTOO-disable-safe_math_shared.patch
-#Patch025: 0025-GENTOO-fix-atk-state.patch
-Patch026: 0026-replace-struct-ucontext-with-ucontext_t.patch
+Patch021: 0022-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
+Patch022: 0023-ARCH-gn-bootstrap.patch
+Patch023: 0024-GENTOO-disable-safe_math_shared.patch
+Patch024: 0026-replace-struct-ucontext-with-ucontext_t.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -212,12 +210,10 @@ cp -a libchromiumcontent/chromiumcontent .
 %patch018 -p1
 %patch019 -p1
 %patch020 -p1
-#patch021 -p1
+%patch021 -p1
 %patch022 -p1
 %patch023 -p1
 %patch024 -p1
-#patch025 -p1
-%patch026 -p1
 ### Finish apply patches
 
 # Enable support for the Widevine CDM plugin
@@ -424,6 +420,12 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Mon Nov 13 2017 Alexey Gladkov <legion@altlinux.ru> 62.0.3202.89-alt1
+- New version (62.0.3202.89).
+- Security fixes:
+  - CVE-2017-15398: Stack buffer overflow in QUIC.
+  - CVE-2017-15399: Use after free in V8.
+
 * Tue Oct 24 2017 Alexey Gladkov <legion@altlinux.ru> 62.0.3202.75-alt1
 - New version (62.0.3202.75).
 - Security fixes:
