@@ -4,7 +4,7 @@
 %define libkrfbprivate libkrfbprivate%sover
 
 Name: kde5-%rname
-Version: 17.04.3
+Version: 17.08.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -20,7 +20,7 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdnssd-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-ki18n-devel kf5-knotifications-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel libvncserver-devel python-module-google qt5-x11extras-devel rpm-build-python3 rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-x11extras-devel
-BuildRequires: libvncserver-devel
+BuildRequires: libvncserver-devel libxcbutil-image-devel
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdnssd-devel
 BuildRequires: kf5-kdoctools kf5-kdoctools-devel-static kf5-ki18n-devel kf5-knotifications-devel kf5-kwallet-devel
@@ -87,6 +87,9 @@ KF5 library
 %_K5lib/libkrfbprivate.so.*
 
 %changelog
+* Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
 * Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
 - new version
 
