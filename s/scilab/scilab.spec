@@ -2,11 +2,11 @@
 %define hdf5_version 1.8.9
 # TODO problem with package freehep-util
 %def_without freehep
-%def_without docs
+%def_with docs
 
 Name:     scilab
 Version:  6.0.0
-Release:  alt1
+Release:  alt2
 Summary:  A high-level language and system for numerical computations
 
 License:  CeCILL
@@ -115,6 +115,9 @@ BuildRequires: eigen3
 # For generated documentation
 BuildRequires: fonts-ttf-liberation
 
+# Other
+BuildRequires: empty
+
 Requires: jogl2 >= 2.3
 Requires: ecj
 Requires: flexdock jrosetta
@@ -134,6 +137,7 @@ Requires: libfftw3
 Requires: freehep-graphics2d
 Requires: freehep-util
 %endif
+Requires: empty
 
 #Requires: jgoodies-looks skinlf ant-commons-logging avalon-framework
 #Requires: docbook-style-xsl saxon
@@ -219,6 +223,11 @@ rm -f %buildroot%_xdgmimedir/packages/scilab.xml
 %_datadir/mime/packages/scilab.xml
 
 %changelog
+* Wed Nov 15 2017 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt2
+- Build docs (ALT #34037)
+- Fix run from menu (ALT #33976)
+- Remove duplicate categories
+
 * Wed Jun 07 2017 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt1
 - New version
 
