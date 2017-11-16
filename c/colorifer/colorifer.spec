@@ -1,6 +1,6 @@
 Name: colorifer
 Version: 1.0.1
-Release: alt15.qa1
+Release: alt16
 
 Summary: Simple program output colorifer
 License: GPLv2+
@@ -10,6 +10,8 @@ Packager: Stanislav Ievlev <inger@altlinux.ru>
 
 Url: http://colorifer.sourceforge.net/
 Source: %name-%{version}rc6.tar.bz2
+
+Patch1: %name-alt-compat1.patch
 
 Requires: lib%name = %version-%release
 
@@ -38,6 +40,7 @@ Shared library between colorifer tools
 
 %prep
 %setup -n %name-%{version}rc6
+%patch1 -p2
 
 %build
 %add_optflags -DCONFIGDIR=\\\"%_datadir/%name/\\\"
@@ -65,6 +68,9 @@ mkdir -p %buildroot%_datadir/%name/
 %_libdir/*.so.*
 
 %changelog
+* Mon Nov 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt16
+- Fixed build with current boost and gcc.
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.1-alt15.qa1
 - NMU: rebuilt for updated dependencies.
 
