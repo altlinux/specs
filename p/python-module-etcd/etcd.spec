@@ -1,12 +1,10 @@
-%define unpackaged_files_terminate_build 1
+%define _unpackaged_files_terminate_build 1
 
 %define mname etcd
-#temporarily skip tests https://github.com/jplana/python-etcd/issues/251
-%def_disable check
 
 Name: python-module-%mname
 Version: 0.4.5
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: A python client for Etcd https://github.com/coreos/etcd
 
 Group: Development/Python
@@ -22,17 +20,19 @@ Patch: %name-%version.patch
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-#for tests
-BuildRequires: pytest
-BuildRequires: python-module-pytest-runner
-BuildRequires: pytest3
-BuildRequires: python3-module-pytest-runner
-#
 BuildRequires: python-module-dns
 BuildRequires: python3-module-dns
-BuildRequires: python-module-nose
-BuildRequires: python3-module-nose
 BuildRequires: etcd
+#for tests
+BuildRequires: pytest
+BuildRequires: python-module-nose
+BuildRequires: python-module-pytest-cov
+BuildRequires: python-module-pytest-runner
+BuildRequires: pytest3
+BuildRequires: python3-module-nose
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-runner
+#
 
 %description
 Client library for interacting with an etcd service, providing Python
@@ -53,6 +53,7 @@ election.
 
 %prep
 %setup
+%patch -p1
 rm -rfv ../python3
 cp -a . ../python3
 
@@ -73,9 +74,13 @@ rm -rfv %buildroot%python3_sitelibdir/%mname/tests
 
 %check
 export PATH=$PATH:%_sbindir
-python -m pytest --verbose
+#export ETCD_UNSUPPORTED_ARCH for etcd
+%if %_arch == "i586"
+export ETCD_UNSUPPORTED_ARCH=386
+%endif
+python -m pytest --cov=etcd --verbose
 pushd ../python3
-python3 -m pytest --verbose
+python3 -m pytest --cov=etcd --verbose
 popd
 
 %files
@@ -85,6 +90,10 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Thu Nov 16 2017 Stanislav Levin <slev@altlinux.org> 0.4.5-alt2%ubt
+- Add fixes from upstream
+- Enable tests
+
 * Thu Oct 26 2017 Stanislav Levin <slev@altlinux.org> 0.4.5-alt1%ubt
 - Initial build
 
