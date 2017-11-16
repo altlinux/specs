@@ -18,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 # build non-bootstrap packages with tests, cross-referenced sources, etc
 %global do_proper 0
 %global pkg_rel 8
-%global scala_version 2.10.4
+%global scala_version 2.10.6
 %global scala_short_version 2.10
 %global sbt_bootstrap_version 0.13.1
 %global sbt_major 0
@@ -60,7 +60,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		sbt
 Version:	%{sbt_version}
-Release:	alt3_8.1jpp8
+Release:	alt4_8.1jpp8
 Summary:	The simple build tool for Scala and Java projects
 
 BuildArch:	noarch
@@ -624,6 +624,9 @@ sed -i -e 's/mapLibraryJars.all filterNot in[.]toSet./mapLibraryJars(all.map {f 
 sed -i -e 's,dependency name="jansi-native" org="org.fusesource.jansi" rev="1.5",dependency name="jansi-native" org="org.fusesource.jansi" rev="1.7",' ivy-local/org.fusesource.jansi/jansi/1.11/ivy.xml
 sed -i -e 's,dependency name="hawtjni-runtime" org="org.fusesource.hawtjni" rev="1.8",dependency name="hawtjni-runtime" org="org.fusesource.hawtjni" rev="1.15",' ivy-local/org.fusesource.jansi/jansi/1.11/ivy.xml
 
+# new scala hack by viy
+sed -i -e s,2.10.4,2.10.6,g `grep -rl 2.10.4 .`
+
 %build
 
 %if %{do_bootstrap}
@@ -740,6 +743,9 @@ done
 %doc README.md LICENSE NOTICE
 
 %changelog
+* Thu Nov 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt4_8.1jpp8
+- build with new scala
+
 * Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt3_8.1jpp8
 - build with new jansi-native
 

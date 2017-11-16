@@ -1,45 +1,30 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-%filter_from_requires /^osgi.org.apache.ant/d
-%filter_from_requires /^java-headless/d
+%filter_from_requires /osgi(org.apache.ant*/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 24
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name scala
-%define version 2.10.4
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 2.10.6
 %global fullversion %{version}
 %global release_repository http://nexus.scala-tools.org/content/repositories/releases
 %global snapshot_repository http://nexus.scala-tools.org/content/repositories/snapshots
-%if 0%{?fedora} > 19
 %global jansi_jar %{_javadir}/jansi/jansi.jar
-%else
-%global jansi_jar %{_javadir}/jansi.jar
-%endif
-%if 0%{?fedora} > 20
 %global jline2_jar %{_javadir}/jline/jline.jar
-%else
-%global jline2_jar %{_javadir}/jline2.jar
-%endif
 %global scaladir %{_datadir}/scala
 
-%if 0%{?fedora} > 19
-%global apidoc %{_docdir}/%{name}-apidoc
-%else
-%global apidoc %{_docdir}/%{name}-apidoc-%{version}
-%endif
-
-%global junit_pkg junit
-
+%global want_jdk8 1
 %global bootstrap_build 0
 
 Name:           scala
-Version:        2.10.4
-Release:        alt2_9jpp8
+Version:        2.10.6
+Release:        alt1_3jpp8
 Summary:        A hybrid functional/object-oriented language for the JVM
 BuildArch:      noarch
-Group:          Development/Other
 # License was confirmed to be standard BSD by fedora-legal
 # https://www.redhat.com/archives/fedora-legal-list/2007-December/msg00012.html
 License:        BSD
@@ -85,38 +70,30 @@ Source24:       scala.ant.d
 
 Source31:       scala-bootstript.xml
 
+BuildRequires:  java-devel >= 1.7.0
 BuildRequires:  ant
 BuildRequires:  ant-junit
 BuildRequires:  ant-contrib
-%if 0%{?fedora} > 20
 BuildRequires:  jline >= 2.10
-%else
-BuildRequires:  jline2
-%endif
-BuildRequires:  maven-local
-BuildRequires:  shtool
+BuildRequires:  javapackages-tools
 BuildRequires:  aqute-bnd
-BuildRequires:  %{junit_pkg}
+BuildRequires:  junit
 BuildRequires:  felix-framework
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  jpackage-utils
 
 %if !(0%{?bootstrap_build})
 BuildRequires:  scala
 %endif
 
+Requires:       jpackage-utils
 Requires:       jansi
 
-%if 0%{?fedora} > 20
 Requires:       jline >= 2.10
-%global want_jdk8 1
-%else
-Requires:       jline2
-%global want_jdk8 0
-%endif
 
-Requires:       %{jansi_jar}
-Requires:       %{jline2_jar}
+%{echo 
+%filter_from_requires /ant/d;
 
+}
 Source44: import.info
 
 %description
@@ -126,8 +103,8 @@ integrates features of object-oriented and functional languages. It is also
 fully interoperable with Java.
 
 %package apidoc
+Group: Development/Java
 Summary:        Documentation for the Scala programming language
-Group:          Development/Java
 
 %description apidoc
 Scala is a general purpose programming language for the JVM that blends
@@ -135,21 +112,19 @@ object-oriented and functional programming. This package provides
 reference and API documentation for the Scala programming language.
 
 %package swing
+Group: Development/Other
 Summary:        The swing library for the scala programming languages
-Group:          Development/Other
-Requires:       scala = %{version}
-
-%if 0%{?fedora} > 20
-%endif
+Requires:       scala = %{version}-%{release}
+Requires:       java >= 1.7.0
 
 %description swing
 This package contains the swing library for the scala programming languages. This library is required to develope GUI-releate applications in scala. The release provided by this package
 is not the original version from upstream because this version is not compatible with JDK-1.7.
 
 %package -n ant-scala
+Group: Development/Other
 Summary:        Development files for Scala
-Group:          Development/Other
-Requires:       scala = %{version} ant
+Requires:       scala = %{version}-%{release} ant
 
 %description -n ant-scala
 Scala is a general purpose programming language for the JVM that blends
@@ -158,11 +133,11 @@ the scala ant tasks.
 
 %if 0
 %package examples
+Group: Development/Other
 Summary:        Examples for the Scala programming language
-Group:          Development/Other
 # Otherwise it will pick up some perl module
 Autoprov:       0
-Requires:       scala = %{version}
+Requires:       scala = %{version}-%{release}
 Requires:       ant
 
 %description examples
@@ -171,9 +146,9 @@ object-oriented and functional programming. This package contains examples for
 the Scala programming language
 
 %package swing-examples
+Group: Development/Other
 Summary:        Examples for the Scala Swing library
-Group:          Development/Other
-Requires:       scala = %{version}
+Requires:       scala = %{version}-%{release}
 Requires:       ant
 
 %description swing-examples
@@ -307,15 +282,15 @@ for libname in scala-compiler \
     scalap \
     scala-swing ; do
         install -m 644 build/pack/lib/$libname.jar $RPM_BUILD_ROOT%{_javadir}/scala/
-        shtool mkln -s $RPM_BUILD_ROOT%{_javadir}/scala/$libname.jar $RPM_BUILD_ROOT%{scaladir}/lib
+        ln -s $(abs2rel %{_javadir}/scala/$libname.jar %{scaladir}/lib) $RPM_BUILD_ROOT%{scaladir}/lib
         sed -i "s|@VERSION@|%{fullversion}|" src/build/maven/$libname-pom.xml
         sed -i "s|@RELEASE_REPOSITORY@|%{release_repository}|" src/build/maven/$libname-pom.xml
         sed -i "s|@SNAPSHOT_REPOSITORY@|%{snapshot_repository}|" src/build/maven/$libname-pom.xml
         install -pm 644 src/build/maven/$libname-pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-$libname.pom
 %add_maven_depmap JPP.%{name}-$libname.pom %{name}/$libname.jar
 done
-shtool mkln -s $RPM_BUILD_ROOT%{jline2_jar} $RPM_BUILD_ROOT%{scaladir}/lib
-shtool mkln -s $RPM_BUILD_ROOT%{jansi_jar} $RPM_BUILD_ROOT%{scaladir}/lib
+ln -s $(abs2rel %{jline2_jar} %{scaladir}/lib) $RPM_BUILD_ROOT%{scaladir}/lib
+ln -s $(abs2rel %{jansi_jar} %{scaladir}/lib) $RPM_BUILD_ROOT%{scaladir}/lib
 
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/ant.d
 install -p -m 644 %{SOURCE24} $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/scala
@@ -382,6 +357,9 @@ install -p -m 644 build/scaladoc/manual/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man
 %endif
 
 %changelog
+* Thu Nov 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.10.6-alt1_3jpp8
+- new version
+
 * Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 2.10.4-alt2_9jpp8
 - updated dependencies
 
