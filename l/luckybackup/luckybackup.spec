@@ -1,7 +1,6 @@
-
 Name:		luckybackup
-Version:	0.4.8
-Release:	alt2
+Version:	0.4.9
+Release:	alt1
 Summary:	A powerful, fast and reliable backup and sync tool
 
 Group:		File tools
@@ -9,8 +8,8 @@ License:	GPLv3+
 URL:		http://luckybackup.sourceforge.net/index.html
 Source0:	http://downloads.sourceforge.net/project/%{name}/%{version}/source/%{name}-%{version}.tar.gz
 
-BuildRequires(pre): gcc-c++ libqt4-devel
-BuildRequires:	qt4-devel desktop-file-utils
+BuildRequires(pre): gcc-c++ qt5-base-devel
+BuildRequires:	desktop-file-utils
 Requires:	beesu
 
 %define _pkgdocdir %{_docdir}/%{name}-%{version}
@@ -32,11 +31,11 @@ sed -i 's,su-to-root -X -c,/usr/bin/beesu,' menu/%{name}-gnome-su.desktop
 chmod a-x manual/index.html
 
 %build
-qmake-qt4 && make %{?_smp_mflags}
+%qmake_qt5
+%make_build
 
 %install
-%makeinstall_std INSTALL_ROOT=%{buildroot}
-
+%makeinstall_std INSTALL_ROOT=%buildroot
 
 %files
 %doc readme/README readme/changelog
@@ -48,6 +47,10 @@ qmake-qt4 && make %{?_smp_mflags}
 %_pixmapsdir/%{name}*
 
 %changelog
+* Thu Nov 16 2017 Andrey Cherepanov <cas@altlinux.org> 0.4.9-alt1
+- New version.
+- Build with Qt5.
+
 * Tue Mar 17 2015 Andrey Cherepanov <cas@altlinux.org> 0.4.8-alt2
 - Initial build in Sisyphus from Fedora Autoimport
 
