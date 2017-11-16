@@ -1,7 +1,7 @@
 
 Name: kf5-rpm-build
-Version: 5.10.0
-Release: alt1
+Version: 5.11.0
+Release: alt1%ubt
 
 Group: Development/KDE and QT
 Summary: Development utils for KDE
@@ -11,6 +11,8 @@ License: GPL
 Requires: cmake
 
 BuildArch: noarch
+
+BuildRequires(pre): rpm-build-ubt
 
 Source1: macrosd
 Source2: rpm-build-kf5-find-qtlang
@@ -38,6 +40,10 @@ install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf5-find-qtlang
 %_bindir/rpm-build-kf5-*
 
 %changelog
+* Thu Nov 16 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.0-alt1%ubt
+- add new macros:
+  _K5if_ver_eq _K5if_ver_not_gt _K5if_ver_not_gteq _K5if_ver_not_lt _K5if_ver_not_lteq _K5if_ver_not_eq
+
 * Wed Oct 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.0-alt1
 - require rpm-build-qml
 
