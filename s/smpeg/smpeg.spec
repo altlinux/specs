@@ -4,7 +4,7 @@
 Name: smpeg
 Summary: summary SDL MPEG Library
 Version: 0.4.5
-Release: alt1.svn20120121
+Release: alt2.svn20120121
 License: LGPL
 Group: Video
 URL: http://icculus.org/smpeg/
@@ -13,6 +13,8 @@ Source: %name-%version.tar
 Source10: gtv_16x16.xpm
 Source11: gtv_32x32.xpm
 Source12: gtv_48x48.xpm
+
+Patch1: %name-%version-debian-gcc-6.patch
 
 # Automatically added by buildreq on Mon Feb 13 2006
 BuildRequires: gcc-c++ glib-devel glibc-devel-static gtk+2-devel imake libICE-devel libSDL-devel libX11-devel libXt-devel libstdc++-devel xorg-cf-files
@@ -66,6 +68,7 @@ This package contains a MPEG player based on %name.
 
 %prep
 %setup
+%patch1 -p1
 
 # needed by Patch6
 #automake --foreign
@@ -127,6 +130,9 @@ EOF
 %_libdir/*.a
 
 %changelog
+* Thu Nov 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.5-alt2.svn20120121
+- Fixed build with gcc-6.
+
 * Mon May 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.5-alt1.svn20120121
 - Version 0.4.5
 
