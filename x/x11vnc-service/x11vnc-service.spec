@@ -1,6 +1,7 @@
 Name: x11vnc-service
-Version: 0.1
-Release: alt3
+%define unitname x11vnc.service
+Version: 0.2
+Release: alt1
 
 Summary: Service for x11vnc
 License: GPL
@@ -20,8 +21,16 @@ This tool adds the systemd service for x11vnc
 %setup
 
 %install
-install -pDm644 x11vnc.service %buildroot%_unitdir/x11vnc.service
+install -pDm644 %unitname %buildroot%_unitdir/%unitname
 install -pDm644 %name.1 %buildroot%_mandir/man1/%name.1
+mkdir %buildroot%_sbindir
+cat > %buildroot%_sbindir/x11vnc-start-daemon << EOF
+#!/bin/bash
+AUTH=\`ps aux | grep "\-auth " | head -n 1\`
+AUTH=\${AUTH/*\-auth /}
+AUTH=\${AUTH/ */}
+/usr/bin/x11vnc -auth \$AUTH -dontdisconnect -usepw -shared -forever -rfbport 5900 -rfbauth /root/.vnc/passwd -display :0
+EOF
 
 %post
 %post_service x11vnc
@@ -30,10 +39,14 @@ install -pDm644 %name.1 %buildroot%_mandir/man1/%name.1
 %preun_service x11vnc
 
 %files
-%_unitdir/x11vnc.service
+%_unitdir/%unitname
+%attr(0755,root,root) %_sbindir/x11vnc-start-daemon
 %_mandir/man1/%name.1.xz
 
 %changelog
+* Thu Nov 16 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 0.2-alt1
+- Fixed start the service on any DM (MIT-MAGIC-COOKIE file)
+
 * Mon Jan 30 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 0.1-alt3
 - Replaced: postun -> preun
 
