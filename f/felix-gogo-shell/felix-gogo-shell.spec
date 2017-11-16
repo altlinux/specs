@@ -1,34 +1,30 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global commit 08a6b74
+
 Name:           felix-gogo-shell
-Version:        0.12.0
+Version:        1.0.0
 Release:        alt1_2jpp8
 Summary:        Community OSGi R4 Service Platform Implementation - Basic Commands
 License:        ASL 2.0
-URL:            http://felix.apache.org/site/apache-felix-gogo.html
+URL:            http://felix.apache.org/documentation/subprojects/apache-felix-gogo.html
 BuildArch:      noarch
 
-Source0:        http://repo1.maven.org/maven2/org/apache/felix/org.apache.felix.gogo.shell/%{version}/org.apache.felix.gogo.shell-%{version}-project.tar.gz
-  
-# Changed GroupID from osgi to felix
-Patch0:         %{name}-groupid.patch
-
-Patch1:         ignoreActivatorException.patch
+# Upstream forgot to make a proper source release, make tarball from commit marked by maven-release-plugin
+Source0:        https://github.com/apache/felix/tarball/%{commit}#/felix-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:gogo-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.felix:org.apache.felix.gogo.runtime)
-BuildRequires:  mvn(org.apache.felix:org.osgi.compendium)
-BuildRequires:  mvn(org.apache.felix:org.osgi.core)
-BuildRequires:  mvn(org.easymock:easymock)
-BuildRequires:  mvn(org.mockito:mockito-all)
+BuildRequires:  mvn(org.osgi:osgi.cmpn)
+BuildRequires:  mvn(org.osgi:osgi.core)
 Source44: import.info
 
 %description
@@ -49,9 +45,13 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n org.apache.felix.gogo.shell-%{version}
-%patch0 -p1 -F3
-%patch1
+%setup -q -n apache-felix-%{commit}/gogo/shell
+
+# Use parent from rpm, not from the tarball
+%pom_xpath_remove pom:parent/pom:relativePath
+
+%pom_change_dep :org.osgi.core :osgi.core
+%pom_change_dep :org.osgi.compendium :osgi.cmpn
 
 %build
 %mvn_build
@@ -66,6 +66,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_2jpp8
+- new version
+
 * Sun Oct 29 2017 Igor Vlasenko <viy@altlinux.ru> 0.12.0-alt1_2jpp8
 - new jpp release
 
