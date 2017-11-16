@@ -2,6 +2,7 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -16,51 +17,50 @@ BuildRequires: jpackage-generic-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without  nosql
+%bcond_with     jp_minimal
 
 Name:           log4j
-Version:        2.7
-Release:        alt1_4jpp8
+Version:        2.8.2
+Release:        alt1_2jpp8
 Summary:        Java logging package
 BuildArch:      noarch
 License:        ASL 2.0
 URL:            http://logging.apache.org/%{name}
 Source0:        http://www.apache.org/dist/logging/%{name}/%{version}/apache-%{name}-%{version}-src.tar.gz
 
-Patch0:         0001-Backport-fix-for-CVE-2017-5645.patch
-
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.beust:jcommander)
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core)
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
+BuildRequires:  mvn(com.lmax:disruptor)
+BuildRequires:  mvn(com.sun.mail:javax.mail)
+BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(org.apache.commons:commons-compress)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.logging:logging-parent:pom:)
+BuildRequires:  mvn(org.fusesource.jansi:jansi)
+BuildRequires:  mvn(org.jctools:jctools-core)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
+BuildRequires:  mvn(org.slf4j:slf4j-ext)
+
+%if %{without jp_minimal}
+BuildRequires:  mvn(com.datastax.cassandra:cassandra-driver-core)
 BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-xml)
 BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-yaml)
 BuildRequires:  mvn(com.fasterxml.woodstox:woodstox-core)
-BuildRequires:  mvn(com.lmax:disruptor)
-BuildRequires:  mvn(commons-logging:commons-logging)
-BuildRequires:  mvn(com.sun.mail:javax.mail)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(javax.servlet.jsp:jsp-api)
 BuildRequires:  mvn(javax.servlet:servlet-api)
-BuildRequires:  mvn(org.apache:apache:pom:)
-BuildRequires:  mvn(org.apache.commons:commons-compress)
 BuildRequires:  mvn(org.apache.commons:commons-csv)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
-BuildRequires:  mvn(org.fusesource.jansi:jansi)
 BuildRequires:  mvn(org.hibernate.javax.persistence:hibernate-jpa-2.1-api)
 BuildRequires:  mvn(org.jboss.spec.javax.jms:jboss-jms-api_1.1_spec)
-BuildRequires:  mvn(org.jctools:jctools-core)
-%if %{with nosql}
 BuildRequires:  mvn(org.lightcouch:lightcouch)
 BuildRequires:  mvn(org.liquibase:liquibase-core)
 BuildRequires:  mvn(org.mongodb:mongo-java-driver)
-%endif
 BuildRequires:  mvn(org.osgi:osgi.core)
-BuildRequires:  mvn(org.slf4j:slf4j-api)
-BuildRequires:  mvn(org.slf4j:slf4j-ext)
 BuildRequires:  mvn(org.zeromq:jeromq)
 BuildRequires:  mvn(sun.jdk:jconsole)
+%endif
 
 Obsoletes:      %{name}-osgi < %{version}-%{release}
 Source44: import.info
@@ -69,19 +69,20 @@ Source44: import.info
 Log4j is a tool to help the programmer output log statements to a
 variety of output targets.
 
-%package osgi
-Group: Development/Java
-Summary:        Apache Log4J Core OSGi Bundles
-
-%description osgi
-Apache Log4J Core OSGi Bundles.
-
 %package slf4j
 Group: Development/Java
 Summary:        Binding between LOG4J 2 API and SLF4J
 
 %description slf4j
 Binding between LOG4J 2 API and SLF4J.
+
+%if %{without jp_minimal}
+%package osgi
+Group: Development/Java
+Summary:        Apache Log4J Core OSGi Bundles
+
+%description osgi
+Apache Log4J Core OSGi Bundles.
 
 %package taglib
 Group: Development/Java
@@ -120,7 +121,6 @@ Summary:        Apache Log4j BOM
 Apache Log4j 2 Bill of Material
 
 
-%if %{with nosql}
 %package nosql
 Group: Development/Java
 Summary:        Apache Log4j NoSql
@@ -149,10 +149,9 @@ BuildArch: noarch
 %prep
 %setup -q -n apache-%{name}-%{version}-src
 
-%patch0 -p1
-
 %pom_remove_plugin -r :maven-site-plugin
 %pom_remove_plugin -r :maven-remote-resources-plugin
+%pom_remove_plugin -r :maven-doap-plugin
 
 # remove all the stuff we'll build ourselves
 find -name "*.jar" -o -name "*.class" -delete
@@ -169,7 +168,7 @@ rm -rf docs/api
 
 # unavailable com.conversantmedia:disruptor
 rm log4j-core/src/main/java/org/apache/logging/log4j/core/async/DisruptorBlockingQueueFactory.java
-%pom_remove_dep com.conversantmedia:disruptor %{name}-core
+%pom_remove_dep -r com.conversantmedia:disruptor
 
 # unavailable net.alchim31.maven:scala-maven-plugin
 %pom_disable_module log4j-api-scala_2.10
@@ -193,9 +192,34 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 # BOM package shouldn't require Apache RAT
 %pom_remove_plugin :apache-rat-plugin %{name}-bom
 
-%if %{without nosql}
+# tests are disabled
+%pom_remove_plugin :maven-failsafe-plugin
+
+%if %{with jp_minimal}
+%pom_disable_module %{name}-jcl
+%pom_disable_module %{name}-taglib
+%pom_disable_module %{name}-jmx-gui
+%pom_disable_module %{name}-bom
 %pom_disable_module %{name}-nosql
+%pom_disable_module %{name}-web
+%pom_disable_module %{name}-iostreams
+%pom_disable_module %{name}-jul
 %pom_disable_module %{name}-liquibase
+%pom_disable_module %{name}-core-its
+
+%pom_remove_dep -r :jackson-dataformat-yaml
+%pom_remove_dep -r :jackson-dataformat-xml
+%pom_remove_dep -r :woodstox-core
+%pom_remove_dep -r :javax.persistence
+%pom_remove_dep -r :jboss-jms-api_1.1_spec
+%pom_remove_dep -r :jeromq
+%pom_remove_dep -r :commons-csv
+%pom_remove_dep -r :hibernate-jpa-2.1-api
+
+rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/{jackson,net/server,net/mom,config/yaml}
+rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/{db,mom}
+rm log4j-core/src/main/java/org/apache/logging/log4j/core/layout/*{Csv,Jackson,Xml,Yaml,Json,Gelf}*.java
+rm log4j-api/src/main/java/org/apache/logging/log4j/util/Activator.java
 %endif
 
 %mvn_alias :%{name}-1.2-api %{name}:%{name}
@@ -215,6 +239,8 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 %mvn_package ':%{name}-nosql' nosql
 %mvn_package ':%{name}-liquibase' liquibase
 
+%mvn_package :log4j-core-its __noinstall
+
 %build
 # missing test deps (mockejb)
 %mvn_build -f
@@ -222,7 +248,9 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 %install
 %mvn_install
 
+%if %{without jp_minimal}
 %jpackage_script org.apache.logging.log4j.jmx.gui.ClientGUI '' '' %{name}/%{name}-jmx-gui:%{name}/%{name}-core %{name}-jmx false
+%endif
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/chainsaw.conf`
 touch $RPM_BUILD_ROOT/etc/chainsaw.conf
@@ -233,22 +261,25 @@ touch $RPM_BUILD_ROOT/etc/chainsaw.conf
 %config(noreplace,missingok) /etc/chainsaw.conf
 
 %files slf4j -f .mfiles-slf4j
+%if %{without jp_minimal}
 %files taglib -f .mfiles-taglib
 %files jcl -f .mfiles-jcl
 %files web -f .mfiles-web
 %files bom -f .mfiles-bom
-%if %{with nosql}
 %files nosql -f .mfiles-nosql
 %files liquibase -f .mfiles-liquibase
-%endif
 %files jmx-gui -f .mfiles-jmx-gui
 %{_bindir}/%{name}-jmx
+%endif
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 
 %changelog
+* Thu Nov 16 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.8.2-alt1_2jpp8
+- new version
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.7-alt1_4jpp8
 - new version
 
