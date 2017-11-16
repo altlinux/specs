@@ -2,7 +2,7 @@
 
 Name: photoprint
 Version: 0.4.1
-Release: alt3.2
+Release: alt4
 
 Summary: Photo Print - Prints photos in various layouts and with color management
 License: GPLv2+
@@ -16,11 +16,7 @@ Source1: http://www.blackfiveservices.co.uk/PhotoPrint/Downloads/photoprint-bord
 Source10: fotoprint16.png
 Source11: fotoprint32.png
 
-Patch0: photoprint-fix-autoconf.patch
-Patch1: photoprint-0.4.1b-glib.patch
-Patch2: photoprint-0.4.2_pre2-cups-automagic.patch
-Patch3: photoprint-0.4.2_pre2-underlinking.patch
-Patch4: photoprint-0.4.2_pre2-tests.patch
+Patch1: %name-%version-alt.patch
 
 # Automatically added by buildreq on Tue Mar 09 2010
 BuildRequires: gcc-c++ libcups-devel libgutenprint-devel libjpeg-devel liblcms-devel libnetpbm-devel libtiff-devel
@@ -42,11 +38,7 @@ mode.
 #setup -n photoprint-%version -T -D -a 1
 #%setup -q -T -D -a 2 -n %{name}-%{version}
 
-%patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build
 gettextize -f
@@ -82,6 +74,9 @@ popd
 %_datadir/photoprint
 
 %changelog
+* Thu Nov 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.1-alt4
+- Fixed build with gcc-6.
+
 * Wed Mar 20 2013 Fr. Br. George <george@altlinux.ru> 0.4.1-alt3.2
 - Build with gutenprint 5.2.9
 
