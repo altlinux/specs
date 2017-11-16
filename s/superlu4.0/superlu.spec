@@ -4,12 +4,11 @@
 %define sover %somver.2.0
 Name: %oname%over
 Version: 4.3
-Release: alt3
+Release: alt4
 Summary: A set of subroutines to solve a sparse linear system A*X=B
 License: BSD-like
 Group: Sciences/Mathematics
 Url: http://acts.nersc.gov/superlu/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %{oname}_%version.tar.gz
 Source1: http://www.netlib.org/clapack/what/testing/matgen/clatm1.c
@@ -19,8 +18,8 @@ Source3: http://www.netlib.org/clapack/CLAPACK-3.1.1/TESTING/MATGEN/blaswrap.h
 Provides: %oname = %version-%release
 Requires: lib%name = %version-%release
 
-BuildPreReq: gcc-fortran gcc-c++ liblapack-devel
-BuildPreReq: csh doxygen graphviz ghostscript-utils
+BuildRequires: gcc-fortran gcc-c++ liblapack-devel
+BuildRequires: csh doxygen graphviz ghostscript-utils
 #BuildPreReq: texlive-latex-recommended texlive-extra-utils
 
 %description
@@ -162,6 +161,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Thu Nov 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3-alt4
+- Fixed build with gcc-6.
+
 * Tue Mar 12 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.3-alt3
 - on %arm liblapack is built with libblas, not libopenblas
 
