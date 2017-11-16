@@ -1,6 +1,6 @@
 Name: smpeg2
 Version: 2.0.0
-Release: alt3
+Release: alt4
 
 Summary: SDL MPEG Player Library
 License: LGPLv2
@@ -10,6 +10,8 @@ Url: http://icculus.org/smpeg/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source0: %name-%version.tar
+
+Patch1: %name-%version-debian-gcc-6.patch
 
 Conflicts: smpeg-player
 
@@ -43,6 +45,7 @@ applications which will use %name.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 ./autogen.sh
@@ -71,6 +74,9 @@ chrpath -d %buildroot%_libdir/lib%name-2.0.so.0.0.0
 %_aclocaldir/%name.m4
 
 %changelog
+* Thu Nov 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt4
+- Fixed build with gcc-6.
+
 * Mon Feb 01 2016 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt3
 - Fix man file
 
