@@ -1,19 +1,19 @@
-Name: dtach
-Version: 0.8
-Release: alt1.qa1
-
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary: A simple program that emulates the detach feature of screen
+Name: dtach
+Version: 0.9
+Release: alt1_4
+License: GPLv2+
+URL: http://dtach.sourceforge.net
 Group: System/Base
-License: GPL
-Url: http://dtach.sourceforge.net/
-
-Packager: Ilya Mashkin <oddity@altlinux.ru>
-
-Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
+Source: http://prdownloads.sourceforge.net/dtach/dtach-%{version}.tar.gz
+Source44: import.info
 
 %description
+
 dtach is a program that emulates the detach feature of screen, with
-less overhead. It is designed to be transparent and un-intrusive; it
+less overhead.  It is designed to be transparent and un-intrusive; it
 avoids interpreting the input and output between attached terminals
 and the program under its control. Consequently, it works best with
 full-screen applications such as emacs.
@@ -23,20 +23,24 @@ full-screen applications such as emacs.
 
 %build
 %configure
+
 %make_build
 
 %install
-%__mkdir -p %buildroot%_bindir
-%__mkdir -p %buildroot%_man1dir
-%__install -m 755 %name %buildroot%_bindir
-%__install -m 644 %name.1 %buildroot%_man1dir
+mkdir -p $RPM_BUILD_ROOT/%{_bindir}
+mkdir -p $RPM_BUILD_ROOT/%{_mandir}/man1
+install -m 755 dtach $RPM_BUILD_ROOT/%{_bindir}/dtach
+install -m 644 dtach.1 $RPM_BUILD_ROOT/%{_mandir}/man1/dtach.1
 
 %files
 %doc COPYING README
-%_bindir/%name
-%_man1dir/%name.*
+%{_bindir}/dtach
+%{_mandir}/*/*
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_4
+- update to new version by fcimport
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
