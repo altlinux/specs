@@ -30,7 +30,7 @@ BuildRequires: chrpath
 
 Name:           GMT
 Version:        5.2.1
-Release:        alt2_3
+Release:        alt3_3
 Summary:        Generic Mapping Tools
 
 License:        LGPLv3+
@@ -39,6 +39,7 @@ Source0:        ftp://ftp.soest.hawaii.edu/gmt/gmt-%{version}-src.tar.xz
 # Upstream patch to fix GCC 5.2 error
 # http://gmt.soest.hawaii.edu/projects/gmt/repository/revisions/15261
 Patch0:         changeset_r15261.diff
+Patch1:         gmt-5.2.1-alt-tmp_usage.patch
 
 BuildRequires: ctest cmake
 BuildRequires:  bash-completion
@@ -139,6 +140,7 @@ applications that use %{name}.
 %prep
 %setup -q -n gmt-%{version}
 %patch0 -p1
+%patch1 -p1
 
 
 %build
@@ -219,6 +221,9 @@ done
 
 
 %changelog
+* Thu Nov 16 2017 Igor Vlasenko <viy@altlinux.ru> 5.2.1-alt3_3
+- added gmt-5.2.1-alt-tmp_usage.patch
+
 * Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.1-alt2_3
 - Rebuilt with libnetcdf11.
 
