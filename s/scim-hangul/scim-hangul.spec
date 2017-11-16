@@ -1,47 +1,65 @@
-Name: scim-hangul
-Version: 0.3.2
-Release: alt1.2.qa1
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++ perl(Shell.pm)
+# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:		scim-hangul
+Version:	0.3.2
+Release:	alt1.2.qa1_24
 
-License: GPLv3
-Url: http://www.scim-im.org/
-Packager: Ilya Mashkin <oddity@altlinux.ru>
+License:	GPLv3
+URL:		http://www.scim-im.org/
+BuildRequires:	scim-devel >= 1.2.0 libhangul-devel
+Source0:	http://downloads.sourceforge.net/scim/%{name}-%{version}.tar.gz
+Patch0:		scim-hangul-0.3.2.gcc43.patch
+Patch1:         scim-hangul-0.3.2.gcc47.patch
 
-BuildRequires: scim-devel >= 1.2.0 libhangul-devel gcc-c++
-Source0: http://downloads.sourceforge.net/scim/%name-%version.tar.gz
-Patch0: scim-hangul-0.3.2.gcc43.patch
-Patch1: scim-hangul-0.3.2-alt-glibc-2.16.patch
+Summary:	Hangul Input Method Engine for SCIM
+Group:		System/Libraries
+Requires:	scim
+%ifarch aarch64
+BuildRequires:	autoconf
+%endif
+Source44: import.info
 
-Summary: Hangul Input Method Engine for SCIM
-Group: System/Libraries
-Requires: scim
-Obsoletes: iiimf-le-hangul <= 1:12.2
 %description
 Scim-hangul is a SCIM IMEngine module for Korean (Hangul) input support.
 
+
 %prep
-%setup -q -n %name-%version
+%setup -q -n %{name}-%{version}
 %patch0 -p1 -b .gcc43
-%patch1 -p2
+%patch1 -p1 -b .gcc47
+
 
 %build
+%ifarch aarch64
+autoconf
+%endif
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
+
 
 %install
-make DESTDIR=$RPM_BUILD_ROOT install
+make DESTDIR=${RPM_BUILD_ROOT} install
 
-rm $RPM_BUILD_ROOT%_libdir/scim-1.0/*/{IMEngine,SetupUI}/hangul*.la
+rm $RPM_BUILD_ROOT%{_libdir}/scim-1.0/*/{IMEngine,SetupUI}/hangul*.la
 
-%find_lang %name
+%find_lang %{name}
 
-%files -f %name.lang
+
+%files -f %{name}.lang
 %doc AUTHORS COPYING README ChangeLog
-%_libdir/scim-1.0/*/IMEngine/hangul.so
-%_libdir/scim-1.0/*/SetupUI/hangul-imengine-setup.so
-%_datadir/scim/icons/scim-hangul.png
-%_datadir/scim/hangul
+%{_libdir}/scim-1.0/*/IMEngine/hangul.so
+%{_libdir}/scim-1.0/*/SetupUI/hangul-imengine-setup.so
+%{_datadir}/scim/icons/scim-hangul.png
+%{_datadir}/scim/hangul
+
 
 %changelog
+* Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1.2.qa1_24
+- NMU (for oddity@): new version by fcimport
+
 * Sat Oct 17 2015 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.3.2-alt1.2.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
