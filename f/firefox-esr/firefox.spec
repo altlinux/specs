@@ -13,7 +13,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        52.4.0
+Version:        52.5.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -325,6 +325,13 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Wed Nov 15 2017 Andrey Cherepanov <cas@altlinux.org> 52.5.0-alt1
+- New ESR version (52.5.0)
+- Fixes:
+  + CVE-2017-7828 Use-after-free of PressShell while restyling layout
+  + CVE-2017-7830 Cross-origin URL information leak through Resource
+  + CVE-2017-7826 Memory safety bugs fixed in Firefox 57 and Firefox ESR
+
 * Fri Sep 29 2017 Andrey Cherepanov <cas@altlinux.org> 52.4.0-alt1
 - New ESR version (52.4.0)
 - Fixes:
