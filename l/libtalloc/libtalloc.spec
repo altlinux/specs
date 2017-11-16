@@ -1,7 +1,7 @@
 %def_enable tests
 
 Name: libtalloc
-Version: 2.1.9
+Version: 2.1.10
 Release: alt1%ubt
 Epoch:   1
 
@@ -91,6 +91,12 @@ make test
 
 
 %changelog
+* Thu Aug 17 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:2.1.10-alt1%ubt
+- Update to release for samba-4.7.0 with tevent-0.9.33
+
+* Sat Jul 15 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:2.1.9-alt2%ubt
+- Rebuild with universal build tag (aka ubt macros) for p7 and c7
+
 * Tue Mar 07 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:2.1.9-alt1%ubt
 - Update to release for samba-4.6.0
 

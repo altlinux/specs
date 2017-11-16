@@ -2,7 +2,7 @@
 
 Name: docbook-style-xsl
 Version: 1.78.1
-Release: alt2
+Release: alt3
 Group: Publishing
 
 Summary: Norman Walsh's XSL stylesheets for DocBook XML
@@ -47,6 +47,8 @@ Patch4: docbook-xsl-non-constant-expressions.patch
 Patch5: docbook-xsl-list-item-body.patch
 #workaround missing mandir section problem (#727251)
 Patch6: docbook-xsl-mandir.patch
+# (ALT #34215)
+Patch7: docbook-style-xsl-non-recursive-string-subst.patch
 
 
 BuildArch: noarch
@@ -75,6 +77,7 @@ in the HTML format.
 %patch4 -p1 -b .nonconstant
 %patch5 -p1 -b .listitembody
 %patch6 -p1 -b .mandir
+%patch7 -p2 -b .stringsubst
 
 find . -type f -name '*.xsl.orig' -delete
 find . -type f -name '.gitignore' -delete
@@ -154,6 +157,9 @@ if [ ! -d "%xmlbase/docbook/xsl-stylesheets-%version" ]; then
 fi
 
 %changelog
+* Thu Nov 16 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.78.1-alt3
+- fix recursive implementation of string.subst (ALT #34215)
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1.78.1-alt2
 - added versioned Provides: docbook-xsl = %{version}
 - updated License: from Distributable to DMIT
