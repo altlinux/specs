@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -36,65 +36,38 @@ BuildRequires: jpackage-generic-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-Summary:        Open Source XML framework for Java
 Name:           dom4j
-Version:        1.6.1
-Release:        alt6_28jpp8
+Version:        2.0.0
+Release:        alt1_2jpp8
 Epoch:          0
+Summary:        Open Source XML framework for Java
 License:        BSD
-URL:            http://sourceforge.net/projects/dom4j
-# ./create-tarball.sh
-Source0:        %{name}-%{version}-clean.tar.xz
-Source1:        dom4j_rundemo.sh
-Source2:        http://repo1.maven.org/maven2/%{name}/%{name}/%{version}/%{name}-%{version}.pom
-Source3:        create-tarball.sh
-Patch0:         dom4j-1.6.1-build_xml.patch
-# See https://bugzilla.redhat.com/show_bug.cgi?id=976180
-Patch1:         dom4j-1.6.1-Remove-references-to-ConcurrentReaderHashMap.patch
-Patch2:         dom4j-1.6.1-Port-to-JAXP-1.4.patch
-# Needed by stapler web framework
-Patch3:         dom4j-1.6.1-Add-ability-to-disable-HTML-handling.patch
-BuildRequires:  jpackage-utils >= 0:1.6
-BuildRequires:  ant >= 0:1.6
-#BuildRequires:  junit
-BuildRequires:  jtidy
-#BuildRequires:  junitperf
-BuildRequires:  isorelax
-BuildRequires:  jaxen
-BuildRequires:  msv-msv
-BuildRequires:  relaxngDatatype
-BuildRequires:  bea-stax
-BuildRequires:  bea-stax-api
-BuildRequires:  ws-jaxme
-BuildRequires:  xalan-j2
-BuildRequires:  xerces-j2
-BuildRequires:  xpp2
-BuildRequires:  xpp3
-BuildRequires:  msv-xsdlib
-BuildRequires:  javapackages-local
+URL:            https://dom4j.github.io/
 BuildArch:      noarch
+
+Source0:        https://github.com/%{name}/%{name}/archive/v%{version}.tar.gz
+Source1:        https://repo1.maven.org/maven2/org/%{name}/%{name}/%{version}/%{name}-%{version}.pom
+
+Obsoletes:      %{name}-demo < 2.0.0
+Obsoletes:      %{name}-manual < 2.0.0
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(jaxen:jaxen)
+BuildRequires:  mvn(javax.xml.stream:stax-api)
+BuildRequires:  mvn(net.java.dev.msv:xsdlib)
+BuildRequires:  mvn(xpp3:xpp3)
+BuildRequires:  mvn(javax.xml.bind:jaxb-api)
+
+# Test deps
+BuildRequires:  mvn(org.testng:testng)
+BuildRequires:  mvn(xerces:xercesImpl)
+BuildRequires:  mvn(xalan:xalan)
 Source44: import.info
 
 %description
 dom4j is an Open Source XML framework for Java. dom4j allows you to read,
-write, navigate, create and modify XML documents. dom4j integrates with 
-DOM and SAX and is seamlessly integrated with full XPath support. 
-
-%package demo
-Group: Development/Java
-Summary:        Samples for %{name}
-Requires:       dom4j = 0:%{version}-%{release}
-
-%description demo
-Samples for %{name}.
-
-%package manual
-Group: Development/Java
-Summary:        Manual for %{name}
-BuildArch: noarch
-
-%description manual
-Documentation for %{name}.
+write, navigate, create and modify XML documents. dom4j integrates with
+DOM and SAX and is seamlessly integrated with full XPath support.
 
 %package javadoc
 Group: Development/Java
@@ -106,96 +79,44 @@ Javadoc for %{name}.
 
 
 %prep
-%setup -q 
-# replace run.sh
-cp -p %{SOURCE1} run.sh
-# fix for deleted jars
-mv build.xml build.xml.orig
-sed -e '/unjar/d' -e 's|,cookbook/\*\*,|,|' build.xml.orig > build.xml
+%setup -q
 
-%patch0 -b .sav
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-
-%mvn_alias : org.jvnet.hudson.dom4j:dom4j
+%mvn_alias org.%{name}:%{name} %{name}:%{name}
 %mvn_file : %{name}/%{name} %{name}
 
-%build
-pushd lib
-ln -sf $(build-classpath xpp2)
-ln -sf $(build-classpath relaxngDatatype)
-ln -sf $(build-classpath jaxme/jaxmeapi) 
-ln -sf $(build-classpath msv-xsdlib) 
-ln -sf $(build-classpath msv-msv) 
-ln -sf $(build-classpath jaxen) 
-ln -sf $(build-classpath bea-stax-api) 
-#pushd test
-#ln -sf $(build-classpath bea-stax-ri)
-#ln -sf $(build-classpath junitperf)
-#ln -sf $(build-classpath junit)
-#popd
-ln -sf $(build-classpath xpp3) 
-pushd tools
-ln -sf $(build-classpath jaxme/jaxmexs) 
-ln -sf $(build-classpath xalan-j2) 
-ln -sf $(build-classpath jaxme/jaxmejs) 
-ln -sf $(build-classpath jtidy) 
-ln -sf $(build-classpath isorelax) 
-ln -sf $(build-classpath jaxme/jaxme2) 
-ln -sf $(build-classpath xerces-j2) 
-popd
-popd
+cp %{SOURCE1} pom.xml
 
-# FIXME: test needs to be fixed
-ant all samples # test
+# optional deps missing from pom
+%pom_add_dep javax.xml.stream:stax-api::provided
+%pom_add_dep net.java.dev.msv:xsdlib::provided
+%pom_add_dep xpp3:xpp3::provided
+%pom_add_dep javax.xml.bind:jaxb-api::provided
+
+# Remove support for ancient xpp2 (deprecated and not developed since 2003)
+rm -r src/main/java/org/dom4j/xpp
+rm src/main/java/org/dom4j/io/XPPReader.java
+
+# non-deterministic test
+rm src/test/java/org/dom4j/util/PerThreadSingletonTest.java
+
+%build
+export LANG=en_US.ISO8859-1
+%mvn_build
 
 %install
-%mvn_artifact %{SOURCE2} build/%{name}.jar
-
-pushd build/doc/javadoc
-for f in `find -name \*.html -o -name \*.css`; do
-  sed -i 's/\r//g' $f;
-done
-popd
-
-%mvn_install -J build/doc/javadoc
-
-# manual
-mkdir -p $RPM_BUILD_ROOT%{_docdir}/%{name}
-rm -rf docs/apidocs docs/clover
-pushd docs
-for f in `find -name \*.html -o -name \*.css -o -name \*.java`; do
-  sed -i 's/\r//g' $f;
-done
-popd
-
-cp -pr docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}
-tr -d \\r <LICENSE.txt >tmp.file; mv tmp.file LICENSE.txt
-cp -p LICENSE.txt $RPM_BUILD_ROOT%{_docdir}/%{name}
-
-# demo
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/classes/org/dom4j
-cp -pr xml $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/src
-cp -pr src/samples $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/src
-cp -pr build/classes/org/dom4j/samples $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/classes/org/dom4j
-install -m 755 run.sh $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
+%mvn_install
 
 %files -f .mfiles
-%doc %{_docdir}/%{name}/LICENSE.txt
+%doc LICENSE
+%doc README.md
 
 %files javadoc -f .mfiles-javadoc
-%doc %{_docdir}/%{name}/LICENSE.txt
-
-%files manual
-%doc %{_docdir}/%{name}
-
-%files demo
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/run.sh
-%{_datadir}/%{name}-%{version}
+%doc LICENSE
 
 %changelog
+* Thu Nov 16 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_2jpp8
+- new version
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt6_28jpp8
 - new jpp release
 
