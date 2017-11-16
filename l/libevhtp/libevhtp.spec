@@ -1,8 +1,8 @@
 # seafile-server hungs with it, see http://bugs.etersoft.ru/show_bug.cgi?id=11271
 
 Name: libevhtp
-Version: 1.2.11n
-Release: alt4
+Version: 1.2.13
+Release: alt1
 
 Summary: Libevhtp was created as a replacement API for Libevent's current HTTP API
 License: BSD
@@ -52,7 +52,9 @@ rm -rf oniguruma
 
 %install
 %makeinstall_std
-ln -s libevhtp.so.1.2.11 %buildroot%_libdir/libevhtp.so.1
+
+# TODO: send patch to fix it
+ln -s libevhtp.so.%version %buildroot%_libdir/libevhtp.so.1
 rm -f %buildroot%_libdir/libevhtp.so
 ln -s libevhtp.so.1 %buildroot%_libdir/libevhtp.so
 
@@ -62,10 +64,14 @@ ln -s libevhtp.so.1 %buildroot%_libdir/libevhtp.so
 
 %files devel
 %_includedir/evhtp/
+%_includedir/evhtp.h
 %_libdir/libevhtp.so
 %_pkgconfigdir/evhtp.pc
 
 %changelog
+* Thu Nov 16 2017 Vitaly Lipatov <lav@altlinux.ru> 1.2.13-alt1
+- new version 1.2.13 (with rpmrb script)
+
 * Wed May 10 2017 Vitaly Lipatov <lav@altlinux.ru> 1.2.11n-alt4
 - change upstream Url
 - build with jemalloc
