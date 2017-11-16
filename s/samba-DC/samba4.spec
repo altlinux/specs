@@ -46,7 +46,7 @@
 %def_with libcephfs
 
 Name:    samba-DC
-Version: 4.6.9
+Version: 4.6.10
 Release: alt1%ubt
 
 Group:   System/Servers
@@ -119,8 +119,8 @@ BuildRequires: libiniparser-devel
 BuildRequires: libcups-devel
 BuildRequires: gawk libgtk+2-devel libcap-devel libuuid-devel
 %{?_with_doc:BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-xsl}
-%{?_without_talloc:BuildRequires: libtalloc-devel >= 2.1.9 libpytalloc-devel}
-%{?_without_tevent:BuildRequires: libtevent-devel >= 0.9.31 python-module-tevent}
+%{?_without_talloc:BuildRequires: libtalloc-devel >= 2.1.10 libpytalloc-devel}
+%{?_without_tevent:BuildRequires: libtevent-devel >= 0.9.34 python-module-tevent}
 %{?_without_tdb:BuildRequires: libtdb-devel >= 1.3.12  python-module-tdb}
 %{?_without_ntdb:BuildRequires: libntdb-devel >= 0.9  python-module-ntdb}
 %{?_without_ldb:BuildRequires: libldb-devel >= 1.1.29 python-module-pyldb-devel}
@@ -1360,6 +1360,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Thu Nov 16 2017 Evgeny Sinelnikov <sin@altlinux.org> 4.6.10-alt1%ubt
+- Update for third autumn release with common bugfixes
+
 * Wed Oct 25 2017 Evgeny Sinelnikov <sin@altlinux.org> 4.6.9-alt1%ubt
 - Update for second autumn release with common bugfixes
 

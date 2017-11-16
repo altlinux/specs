@@ -1,7 +1,7 @@
 %def_enable tests
 
 Name: libtevent
-Version: 0.9.31
+Version: 0.9.34
 Release: alt1%ubt
 Summary: The tevent library
 License: LGPLv3+
@@ -10,8 +10,8 @@ Url: http://tevent.samba.org/
 
 Source: http://samba.org/ftp/tevent/tevent-%{version}.tar.gz
 
-BuildRequires: libtalloc-devel >= 2.1.0
-BuildRequires: libpytalloc-devel >= 2.1.0
+BuildRequires: libtalloc-devel >= 2.0.10
+BuildRequires: libpytalloc-devel >= 2.0.10
 BuildRequires: python-devel zlib-devel
 
 BuildRequires(pre):rpm-build-ubt
@@ -75,6 +75,15 @@ make test
 %python_sitelibdir/tevent.py*
 
 %changelog
+* Thu Nov 16 2017 Evgeny Sinelnikov <sin@altlinux.org> 0.9.34-alt1%ubt
+- New version for samba-4.6.10 and samba-4.7.2
+
+* Thu Aug 17 2017 Evgeny Sinelnikov <sin@altlinux.ru> 0.9.33-alt1%ubt
+- New version for samba-4.7.0
+
+* Sat Jul 15 2017 Evgeny Sinelnikov <sin@altlinux.ru> 0.9.31-alt2%ubt
+- Rebuild with universal build tag (aka ubt macros) for p7 and c7
+
 * Tue Mar 07 2017 Evgeny Sinelnikov <sin@altlinux.ru> 0.9.31-alt1%ubt
 - New version for samba-4.6.0
 
