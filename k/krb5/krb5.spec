@@ -1,7 +1,7 @@
 
 Name: krb5
-Version: 1.14.5
-Release: alt1%ubt
+Version: 1.15.2
+Release: alt2%ubt
 
 %define _docdir %_defaultdocdir/%name-%version
 
@@ -12,6 +12,15 @@ Url: http://web.mit.edu/kerberos/www/
 
 Source0: %name-%version.tar
 Source2: %name-alt.tar
+# due git binary diffs are not supported by current version patch
+Source3: fedora-Add-test-cert-generation-to-make-certs.sh.patch.tar
+Source4: fedora-Add-test-cert-with-no-extensions.patch.tar
+
+# Tex style for new sphinx pdf builder
+Source11: ltxcmds.sty
+
+# Carry this locally until it's available in a packaged form.
+Source100: noport.c
 
 Patch1: krb5-1.10.1-alt-export-krb5int_get_fq_local_hostname.patch
 
@@ -21,21 +30,48 @@ Patch12: krb5-1.12-fedora-ktany.patch
 Patch23: krb5-1.3.1-fedora-dns.patch
 Patch39: krb5-1.12-fedora-api.patch
 Patch60: krb5-1.12.1-fedora-pam.patch
-Patch63: krb5-1.13-fedora-selinux-label.patch
+Patch63: krb5-1.15.1-fedora-selinux-label.patch
 Patch71: krb5-1.13-fedora-dirsrv-accountlock.patch
 Patch86: krb5-1.9-fedora-debuginfo.patch
 Patch129: krb5-1.11-fedora-run_user_0.patch
 Patch134: krb5-1.11-fedora-kpasswdtest.patch
-Patch148: krb5-fedora-disable_ofd_locks.patch
-Patch150: krb5-fedora-acquire_cred_interposer.patch
-Patch153: krb5-1.14.1-fedora-log_file_permissions.patch
+# additional fedora patches:
+Patch137: fedora-Build-with-Werror-implicit-int-where-supported.patch
+Patch138: fedora-Add-PKINIT-UPN-tests-to-t_pkinit.py.patch
+Patch139: fedora-Add-test-case-for-PKINIT-DH-renegotiation.patch
+Patch140: fedora-Use-expected_trace-in-test-scripts.patch
+Patch141: fedora-Use-expected_msg-in-test-scripts.patch
+Patch142: fedora-Use-fallback-realm-for-GSSAPI-ccache-selection.patch
+Patch143: fedora-Use-GSSAPI-fallback-skiptest.patch
+Patch144: fedora-Improve-PKINIT-UPN-SAN-matching.patch
+Patch145: fedora-Add-test-cert-generation-to-make-certs.sh.patch
+Patch146: fedora-Deindent-crypto_retrieve_X509_sans.patch
+Patch147: fedora-Add-the-client_name-kdcpreauth-callback.patch
+Patch148: fedora-Use-the-canonical-client-principal-name-for-OTP.patch
+Patch149: fedora-Add-certauth-pluggable-interface.patch
+Patch150: fedora-Correct-error-handling-bug-in-prior-commit.patch
+Patch151: fedora-Add-k5test-expected_msg-expected_trace.patch
+Patch153: fedora-Add-support-to-query-the-SSF-of-a-GSS-context.patch
+Patch155: fedora-Remove-incomplete-PKINIT-OCSP-support.patch
+Patch157: fedora-Fix-in_clock_skew-and-use-it-in-AS-client-code.patch
+Patch158: fedora-Add-timestamp-helper-functions.patch
+Patch159: fedora-Make-timestamp-manipulations-y2038-safe.patch
+Patch160: fedora-Add-timestamp-tests.patch
+Patch161: fedora-Add-y2038-documentation.patch
+Patch162: fedora-Fix-more-time-manipulations-for-y2038.patch
+Patch163: fedora-Use-krb5_timestamp-where-appropriate.patch
+Patch164: fedora-Add-KDC-policy-pluggable-interface.patch
+Patch165: fedora-Fix-bugs-in-kdcpolicy-commit.patch
+Patch166: fedora-Convert-some-pkiDebug-messages-to-TRACE-macros.patch
+Patch167: fedora-Fix-certauth-built-in-module-returns.patch
+Patch168: fedora-Add-test-cert-with-no-extensions.patch
+Patch169: fedora-Add-PKINIT-test-case-for-generic-client-cert.patch
+Patch170: fedora-Add-hostname-based-ccselect-module.patch
 
-# backported patches from master:
-Patch164: krb5-1.15-kdc_send_receive_hooks.patch
-Patch165: krb5-1.15-kdc_hooks_test.patch
 
 # alt patches:
 Patch200: krb5-1.14.4-alt-default_keytab_group.patch
+Patch201: alt-Fix-test-with-fallback-realm-ccache-selection.patch
 
 
 BuildRequires: /dev/pts /proc
@@ -46,7 +82,9 @@ BuildRequires: libverto-devel libselinux-devel
 BuildRequires: libpam-devel
 
 BuildRequires: python-module-sphinx
-BuildRequires: texlive-latex-base texlive-base-bin texlive-latex-recommended
+BuildRequires: texlive-latex-base texlive-base-bin texlive-latex-recommended latexmk
+
+BuildRequires: nss_wrapper socket_wrapper
 
 %ifarch %{ix86} x86_64
 BuildRequires: yasm
@@ -167,20 +205,50 @@ MIT Kerberos.
 %patch23 -p1 -b .dns
 %patch39 -p1 -b .api
 %patch71 -p1 -b .dirsrv-accountlock
-%patch86 -p0 -b .debuginfo
+%patch86 -p1 -b .debuginfo
 # Apply when the hard-wired or configured default location is
 # DIR:/run/user/%%{uid}/krb5cc.
 %patch129 -p1 -b .run_user_0
 %patch134 -p1 -b .kpasswdtest
-%patch148 -p1 -b .disable_ofd_locks
 
-%patch150 -p1 -b .fix_interposer
-%patch153 -p1 -b .log_file_permissions
-
-%patch164 -p1 -b .kdc_send_receive_hooks
-%patch165 -p1 -b .kdc_hooks_test
+# Special patches from fedora changes ABI
+%patch137 -p1
+%patch138 -p1
+%patch139 -p1
+%patch140 -p1
+%patch141 -p1
+%patch142 -p1
+%patch143 -p1
+%patch144 -p1
+%patch145 -p1
+tar -xf %SOURCE3
+%patch146 -p1
+%patch147 -p1
+%patch148 -p1
+%patch149 -p1
+%patch150 -p1
+%patch151 -p1
+%patch153 -p1
+%patch155 -p1
+%patch157 -p1
+%patch158 -p1
+%patch159 -p1
+%patch160 -p1
+%patch161 -p1
+%patch162 -p1
+%patch163 -p1
+%patch164 -p1
+%patch165 -p1
+%patch166 -p1
+%patch167 -p1
+#patch168 -p1
+#tar -xf %SOURCE4
+#rm -f src/tests/dejagnu/pkinit-certs/user-upn3.csr
+#patch169 -p1
+%patch170 -p1
 
 %patch200 -p2 -b .default_keytab_group
+%patch201 -p1
 
 %build
 # Go ahead and supply tcl info, because configure doesn't know how to find it.
@@ -195,7 +263,7 @@ DEFINES="-D_FILE_OFFSET_BITS=64" ; export DEFINES
 runstatedir=%_runtimedir; export runstatedir
 
 pushd src
-util/reconf --verbose --force
+autoreconf --verbose --force
 %configure \
 	--enable-shared --disable-static \
 	--localstatedir=%_localstatedir/kerberos \
@@ -234,18 +302,37 @@ sphinx-build -a -b man   -t pathsubs doc build-man
 sphinx-build -a -b html  -t pathsubs doc build-html
 rm -fr build-html/_sources
 sphinx-build -a -b latex -t pathsubs doc build-pdf
+# Fix build PDFs with newest sphinx and latexmk
+# https://bugzilla.altlinux.org/show_bug.cgi?id=34119
+mkdir -p build-pdf/texmf/tex/latex
+cp -f %SOURCE11 build-pdf/texmf/tex/latex/
+export TEXMFHOME=texmf/
 # Build the PDFs if we didn't have pre-built ones.
 for pdf in admin appdev basic build plugindev user ; do
     test -s build-pdf/$pdf.pdf || make -C build-pdf
 done
 
+# We need to cut off any access to locally-running nameservers, too.
+%__cc -fPIC -shared -o noport.so -Wall -Wextra %SOURCE100
+
 %check
-make -C src runenv.py
+mkdir nss_wrapper
+
+# Set things up to use the test wrappers.
+export NSS_WRAPPER_HOSTNAME=test.example.com
+export NSS_WRAPPER_HOSTS="$PWD/nss_wrapper/fakehosts"
+echo "127.0.0.1 $NSS_WRAPPER_HOSTNAME localhost" > $NSS_WRAPPER_HOSTS
+export NOPORT='53,111'
+export SOCKET_WRAPPER_DIR="$PWD/sockets" ; mkdir -p $SOCKET_WRAPPER_DIR
+export LD_PRELOAD="$PWD/noport.so:libnss_wrapper.so:libsocket_wrapper.so"
+
 # NOTE(iv@): this test hangs for too long, look at this later
 echo > src/tests/t_iprop.py
 
 # skip this test, because getaddrinfo with flag AI_ADDRCONFIG return error in hasher
 echo > src/tests/t_kprop.py
+
+make -C src runenv.py
 make -C src check TMPDIR=%_tmppath OFFLINE=yes PYTESTFLAGS="-v"
 
 %install
@@ -443,6 +530,16 @@ fi
 # {{{ changelog
 
 %changelog
+* Fri Nov 03 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.15.2-alt2%ubt
+- Fix build-pdf on Sisyphus
+- Add noport, nss_wrapper and socket_wrapper for tests running
+
+* Wed Nov 01 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.15.2-alt1%ubt
+- Update to latest stable release 1.15.2 with kdcpreauth from 1.16.x
+
+* Sun Aug 20 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.15.1-alt1%ubt
+- Update to latest stable release 1.15.1 with kdcpreauth from 1.16.x
+
 * Fri Mar 24 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.14.5-alt1%ubt
 - Update to first spring release 1.14.5
 
