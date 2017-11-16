@@ -1,8 +1,8 @@
 %define rname mscore
-%define mversion 2.0
+%define mversion 2.1
 
 Name: musescore
-Version: 2.0.2
+Version: 2.1.0
 Release: alt1
 
 Summary: Music notation and composition software
@@ -10,8 +10,6 @@ Summary: Music notation and composition software
 License: GPL2
 Group: Sound
 Url: https://musescore.org
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -44,10 +42,13 @@ Music notation and composition software
 %setup
 %patch -p1
 
-sed -i 's@":/fonts@"%_datadir/mscore-%mversion/fonts@g' libmscore/mscore.cpp libmscore/figuredbass.cpp libmscore/sym.cpp libmscore/stafftype.cpp
+for f in `grep -ql ":/fonts" *`; do
+	sed -i 's@":/fonts@"%_datadir/mscore-%mversion/fonts@g' "$f";
+done
 
 %build
 export PATH=$PATH:%%_qt5dir/bin
+echo $PATH
 mkdir build.debug && cd build.debug
 cmake \
 	-DCMAKE_BUILD_TYPE=RELEASE \
@@ -79,17 +80,18 @@ done
 chrpath -d %buildroot%_bindir/mscore
 
 %files
-%_bindir/mscore
+%_bindir/*
 %_desktopdir/mscore.desktop
 %_datadir/mscore-%mversion
-%_man1dir/mscore.1.*
+%_man1dir/*
 %_xdgmimedir/packages/musescore.xml
-%_iconsdir/hicolor/48x48/mimetypes/*
-%_iconsdir/hicolor/64x64/apps/*
-%_iconsdir/hicolor/scalable/mimetypes/*
-%_iconsdir/hicolor/scalable/apps/*
+%_iconsdir/hicolor/*/mimetypes/*
+%_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Thu Nov 16 2017 Fr. Br. George <george@altlinux.ru> 2.1.0-alt1
+- 2.1.0
+
 * Tue Feb 16 2016 Terechkov Evgenii <evg@altlinux.org> 2.0.2-alt1
 - 2.0.2
 - build from upstream git repo
