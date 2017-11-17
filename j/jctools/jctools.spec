@@ -1,18 +1,18 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 1.2.1
+%define version 2.0.2
 %global namedreltag %nil
 %global namedversion %{version}%{?namedreltag}
 
 Name:          jctools
-Version:       1.2.1
+Version:       2.0.2
 Release:       alt1_2jpp8
 Summary:       Java Concurrency Tools for the JVM
 License:       ASL 2.0
@@ -77,6 +77,10 @@ find . -name '*.jar' -print -delete
 
 # Unavailable deps
 %pom_disable_module %{name}-benchmarks
+%pom_disable_module %{name}-concurrency-test
+
+# This dep is unused and unneeded
+%pom_remove_dep "com.google.guava:guava-testlib" jctools-experimental
 
 # Not available
 %pom_remove_plugin :cobertura-maven-plugin %{name}-core
@@ -124,6 +128,9 @@ done
 %doc LICENSE
 
 %changelog
+* Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt1_2jpp8
+- new version
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_2jpp8
 - new jpp release
 
