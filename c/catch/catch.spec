@@ -1,6 +1,6 @@
 Name: catch
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: C++ Unit Test framework ("all in one header")
 
@@ -21,6 +21,20 @@ test framework for C++ and Objective-C (and, maybe, C).
 It is implemented entirely in a set of header files, 
 but is packaged up as a single header for extra convenience.
 
+%package devel
+Summary: C++ Unit Test framework ("all in one header")
+Group: Development/C++
+Conflicts: catch < 2.0.1-alt2
+Obsoletes: catch < 2.0.1-alt2
+Provides: catch = %EVR
+
+%description devel
+Catch stands for C++ Automated Test Cases in Headers 
+and is a multi-paradigm automated 
+test framework for C++ and Objective-C (and, maybe, C). 
+It is implemented entirely in a set of header files, 
+but is packaged up as a single header for extra convenience.
+
 %prep
 %setup
 
@@ -30,10 +44,13 @@ but is packaged up as a single header for extra convenience.
 mkdir -p %buildroot%_includedir
 mv -f catch.hpp %buildroot%_includedir
 
-%files
+%files devel
 %_includedir/*.hpp
 
 %changelog
+* Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2
+- NMU: added proper devel subpackage
+
 * Fri Nov 03 2017 Pavel Vainerman <pv@altlinux.ru> 2.0.1-alt1
 - new version (2.0.1) with rpmgs script
 
