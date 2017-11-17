@@ -4,7 +4,7 @@
 
 Name: kde5-%rname
 Version: 17.08.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Education
@@ -85,6 +85,9 @@ KF5 library
 %_K5inc/minuet/
 
 %changelog
+* Fri Nov 17 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt2%ubt
+- update translations
+
 * Tue Nov 14 2017 Oleg Solovyov <mcpain@altlinux.org> 17.08.3-alt1%ubt
 - update to 17.08.3
 
