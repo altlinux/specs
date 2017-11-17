@@ -3,7 +3,7 @@
 
 Name: perl-%dist
 Version: 1.44
-Release: alt1
+Release: alt1.1
 
 Summary: Get stock and mutual fund quotes from various exchanges
 License: GPLv2+
@@ -38,6 +38,9 @@ greater flexibility and stability.
 %perl_vendor_privlib/Finance
 
 %changelog
+* Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.44-alt1.1
+- automated CPAN update
+
 * Wed Nov 08 2017 Igor Vlasenko <viy@altlinux.ru> 1.44-alt1
 - automated CPAN update
 
