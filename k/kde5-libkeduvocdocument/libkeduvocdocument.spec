@@ -4,7 +4,7 @@
 %define libkeduvocdocument libkeduvocdocument%keduvocdocument_sover
 
 Name: kde5-%rname
-Version: 17.04.2
+Version: 17.08.3
 Release: alt1%ubt
 %K5init
 
@@ -29,6 +29,14 @@ BuildRequires: kf5-solid-devel
 Contains KEduVocDocument and its related class for reading from/writing to the
 KVTML format (and others too).
 
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
+%name common package
+
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
@@ -38,9 +46,10 @@ developing applications that use %name.
 
 %package -n %libkeduvocdocument
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
+Requires: %name-common = %version-%release
 %description -n %libkeduvocdocument
-KF5 library
+%name library
 
 
 %prep
@@ -53,6 +62,9 @@ KF5 library
 
 %install
 %K5install
+%find_lang %name --with-kde --all-name
+
+%files common -f %name.lang
 
 %files devel
 %_K5inc/libkeduvocdocument/
@@ -64,6 +76,12 @@ KF5 library
 %_K5lib/libKEduVocDocument.so.*
 
 %changelog
+* Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+- new version
+
 * Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
 - new version
 

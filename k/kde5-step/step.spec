@@ -1,7 +1,7 @@
 %define rname step
 
 Name: kde5-%rname
-Version: 17.04.2
+Version: 17.08.3
 Release: alt1%ubt
 %K5init
 
@@ -56,8 +56,15 @@ you can not only learn but feel how physics works!
 %_K5icon/*/*/apps/step.*
 %_K5icon/*/*/actions/step_*.*
 %_K5icon/*/*/actions/pointer.*
+%_K5xmlgui/step/
 
 %changelog
+* Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+- new version
+
 * Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
 - new version
 

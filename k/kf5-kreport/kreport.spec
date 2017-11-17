@@ -1,17 +1,22 @@
+
+%define kreport_sover 3
+%define libkreport3 libkreport3%kreport_sover
+
 Name:    kf5-kreport
-Summary: Framework for creation and generation of reports
-Group: Development/KDE and QT
 Version: 3.0.2
-Release: alt1
+Release: alt2%ubt
+%K5init
 
-License: LGPLv2+
-
+Group: Development/KDE and QT
+Summary: Framework for creation and generation of reports
 Url:     https://community.kde.org/KReport
 # git://anongit.kde.org/kreport.git
+License: LGPLv2+
+
 Source: %name-%version.tar
 Patch1: %name-%version-fedora-pkgconfig.patch
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-base-devel qt5-declarative-devel qt5-webkit-devel
 BuildRequires: kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kguiaddons-devel kf5-kwidgetsaddons-devel kde5-marble-devel
@@ -21,11 +26,27 @@ BuildRequires: python cmake pkgconfig
 %description
 A framework for creation and generation of reports in multiple formats.
 
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
+%name common package
+
 %package devel
 Summary: Developer files for %name
 Group: Development/KDE and QT
 %description devel
-%{summary}.
+This package contains libraries and header files for
+developing applications that use %name.
+
+%package -n %libkreport3
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common = %version-%release
+%description -n %libkreport3
+%name library
 
 %prep
 %setup
@@ -38,9 +59,9 @@ Group: Development/KDE and QT
 %install
 %K5install
 
+%files common
+
 %files
-%doc COPYING.LIB
-%_K5lib/libKReport3.so.3*
 %dir %_K5plug/kreport3/
 # TODO: consider splitting some into subpkgs (maps/marble in particular)
 %_K5plug/kreport3/org.kde.kreport.barcode.so
@@ -52,13 +73,20 @@ Group: Development/KDE and QT
 
 %files devel
 %_K5inc/KReport3/
-%_K5link/libKReport3.so
-%_K5lib/cmake/KReport3/
-%_K5lib/pkgconfig/KReport3.pc
+%_K5link/lib*.so
+%_libdir/cmake/KReport3/
+%_pkgconfigdir/KReport3.pc
 %_K5archdata/mkspecs/modules/qt_KReport3.pri
 
+%files -n %libkreport3
+%doc COPYING.LIB
+%_K5lib/libKReport3.so.%kreport_sover
+%_K5lib/libKReport3.so.*
 
 %changelog
+* Thu Nov 16 2017 Sergey V Turchin <zerg@altlinux.org> 3.0.2-alt2%ubt
+- split library to saparate package
+
 * Thu Aug 31 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.2-alt1
 - Initial build for ALT.
 

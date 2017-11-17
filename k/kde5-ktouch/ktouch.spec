@@ -1,7 +1,7 @@
 %define rname ktouch
 
 Name: kde5-%rname
-Version: 17.04.2
+Version: 17.08.3
 Release: alt1%ubt
 %K5init
 
@@ -9,6 +9,8 @@ Group: Education
 Summary: A program for learning touch typing
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+Requires: kde5-kqtquickcharts
 
 Source: %rname-%version.tar
 
@@ -50,6 +52,12 @@ to write. KTouch can also help you to remember what fingers to use.
 %_K5cfg/ktouch.kcfg
 
 %changelog
+* Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+- new version
+
 * Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
 - new version
 
