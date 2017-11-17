@@ -1,5 +1,5 @@
 Name: evz
-Version: 0.0.3
+Version: 0.1
 Release: alt1
 
 Summary: OpenVZ control tool
@@ -40,6 +40,12 @@ install -D -m 0644 bash_completion/evz %buildroot%_sysconfdir/bash_completion.d/
 %_sysconfdir/bash_completion.d/evz
 
 %changelog
+* Fri Nov 17 2017 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt1
+- add compact, status
+- add help
+- improve vz list using (all, ALL for any cases)
+- add missed isatty2 func
+
 * Wed Nov 15 2017 Vitaly Lipatov <lav@altlinux.ru> 0.0.3-alt1
 - list: add support for all and ALL
 - evz: add initial info
