@@ -2,7 +2,7 @@
 %define dist Context-Preserve
 Name: perl-%dist
 Version: 0.03
-Release: alt1
+Release: alt1.1
 
 Summary: run code after a subroutine call, preserving the context the subroutine would have seen if it were the last statement in the caller
 License: GPL or Artistic
@@ -40,6 +40,9 @@ which is a pain to type in (and maintain).
 %perl_vendor_privlib/Context*
 
 %changelog
+* Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1.1
+- automated CPAN update
+
 * Wed Nov 08 2017 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
 - automated CPAN update
 
