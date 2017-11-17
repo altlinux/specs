@@ -2,7 +2,7 @@
 
 Name: psi-plus
 Version: 1.2.105
-Release: alt3
+Release: alt4
 
 Summary: Psi+ Jabber client
 Summary(ru_RU.UTF-8): Jabber-клиент Psi+
@@ -29,7 +29,8 @@ BuildRequires: libXScrnSaver-devel
 BuildRequires: libaspell-devel
 BuildRequires: libidn-devel
 BuildRequires: libqca-qt5-devel
-BuildRequires: libtidy-devel libotr-devel
+BuildRequires: libtidy-devel >= 1.2.0
+BuildRequires: libotr-devel
 BuildRequires: qt5-multimedia-devel
 BuildRequires: qt5-phonon-devel
 %if_enabled webkit
@@ -927,6 +928,8 @@ rm -f %buildroot%_datadir/%name/plugins/*.pri
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
+%dir %_iconsdir/hicolor/64x64
+%dir %_iconsdir/hicolor/64x64/apps
 %_iconsdir/hicolor/64x64/apps/%name.png
 %dir %_iconsdir/hicolor/128x128
 %dir %_iconsdir/hicolor/128x128/apps
@@ -1067,6 +1070,10 @@ rm -f %buildroot%_datadir/%name/plugins/*.pri
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Fri Nov 17 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.105-alt4
+- fix e2k build
+- fix unowned files
+
 * Mon Nov 13 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.105-alt3
 - add OTR plugin (Closes: #32384)
 
