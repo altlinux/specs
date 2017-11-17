@@ -11,7 +11,7 @@
 
 Name: bacula9
 Version: 9.0.3
-Release: alt4%ubt
+Release: alt5%ubt
 
 License: AGPLv3
 Summary: Network based backup program
@@ -61,18 +61,21 @@ Summary: Network based backup program (client only)
 Group: Archiving/Backup
 Provides: %name-fd = %version-%release
 Conflicts: bacula-client
+Conflicts: bacula7-client
 Requires: %name-common = %version-%release
 
 %package storage
 Summary: Network based backup program (storage only)
 Group: Archiving/Backup
 Conflicts: bacula-storage
+Conflicts: bacula7-storage
 Requires: %name-common = %version-%release
 
 %package console
 Summary: Network based backup program (console only)
 Group: Archiving/Backup
 Conflicts: bacula-console
+Conflicts: bacula7-console
 Requires: %name-common = %version-%release
 
 %if_enabled bat
@@ -82,6 +85,7 @@ Group: Archiving/Backup
 BuildRequires(pre): libqt4-devel
 Requires: libqt4-core >= %{get_version libqt4-core}
 Conflicts: bacula-bat
+Conflicts: bacula7-bat
 %endif
 
 %package director-common
@@ -89,6 +93,7 @@ Summary: Network based backup program (director common)
 Group: Archiving/Backup
 Requires: %name-common = %version-%release
 Conflicts: bacula-director-common
+Conflicts: bacula7-director-common
 
 %package director-mysql
 Summary: Network based backup program (MySQL director only)
@@ -98,6 +103,7 @@ Provides: %name-director = %version-%release
 Obsoletes: %name-director < %version-%release
 Provides: %name-dir = %version-%release
 Conflicts: bacula-director-mysql
+Conflicts: bacula7-director-mysql
 
 %package director-sqlite3
 Summary: Network based backup program (SQLITE3 director only)
@@ -106,6 +112,7 @@ Requires(pre): sqlite3
 Requires(pre): %name-director-common = %version-%release
 Provides: %name-dir = %version-%release
 Conflicts: bacula-director-sqlite3
+Conflicts: bacula7-director-sqlite3
 
 %package director-postgresql
 Summary: Network based backup program (PostgreSQL director only)
@@ -113,12 +120,14 @@ Group: Archiving/Backup
 Requires(pre): %name-director-common = %version-%release
 Provides: %name-dir = %version-%release
 Conflicts: bacula-director-postgresql
+Conflicts: bacula7-director-postgresql
 
 %package common
 Summary: Network based backup program (common files)
 Group: Archiving/Backup
 Requires(pre): passwdqc-utils
 Conflicts: bacula-common
+Conflicts: bacula7-common
 
 %package debug
 Summary: Network based backup program (debug files)
@@ -126,11 +135,13 @@ Group: Archiving/Backup
 Requires: %name-common = %version-%release
 BuildArch: noarch
 Conflicts: bacula-debug
+Conflicts: bacula7-debug
 
 %package nagios
 Summary: The check_bacula plugin for nagios
 Group: Archiving/Backup
 Conflicts: bacula-nagios
+Conflicts: bacula7-nagios
 
 %if_enabled webgui
 %package -n baculum9-common
@@ -806,6 +817,9 @@ fi
 %endif
 
 %changelog
+* Fri Nov 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.3-alt5%ubt
+- Added conflicts to bacula7 packages.
+
 * Fri Nov 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.3-alt4%ubt
 - Updated tmpfiles permissions.
 
