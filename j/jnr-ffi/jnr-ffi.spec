@@ -1,26 +1,26 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:     jnr-ffi
-Version:  2.1.2
-Release:  alt1_3jpp8
+Version:  2.1.6
+Release:  alt1_2jpp8
 Summary:  Java Abstracted Foreign Function Layer
 License:  ASL 2.0
 URL:      http://github.com/jnr/%{name}/
 Source0:  https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires:  gcc-common
-BuildRequires:  make
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.github.jnr:jffi)
 BuildRequires:  mvn(com.github.jnr:jffi::native:)
 BuildRequires:  mvn(com.github.jnr:jnr-x86asm)
+BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
@@ -53,25 +53,30 @@ This package contains the API documentation for %{name}.
 # remove all builtin jars
 find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
 
+# Unnecessary for RPM builds
+%pom_remove_plugin ":maven-javadoc-plugin"
+
 # don't fail on unused parameters... (TODO: send patch upstream)
 sed -i 's|-Werror||' libtest/GNUmakefile
 
-%mvn_file :{*} %{name}/@1 @1
-
 %build
-%mvn_build -f
+%mvn_build
 
 %install
 %mvn_install
+ln -s %name/%name.jar %buildroot%_javadir/%name.jar
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc LICENSE
+%_javadir/%name.jar
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %changelog
+* Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.6-alt1_2jpp8
+- new version
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.2-alt1_3jpp8
 - new jpp release
 
