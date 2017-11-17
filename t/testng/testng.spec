@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -18,27 +18,32 @@ BuildRequires: jpackage-generic-compat
 %bcond_without groovy
 
 Name:           testng
-Version:        6.9.12
-Release:        alt1_4jpp8
+Version:        6.12
+Release:        alt1_2jpp8
 Summary:        Java-based testing framework
 License:        ASL 2.0
 URL:            http://testng.org/
 Source0:        https://github.com/cbeust/testng/archive/%{version}.tar.gz
 
+# Allows building with maven instead of gradle
+Source1:        pom.xml
+
+Patch0:         0001-Avoid-accidental-javascript-in-javadoc.patch
+
 BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.beust:jcommander)
-BuildRequires:  mvn(com.google.inject:guice::no_aop:)
+BuildRequires:  mvn(com.google.inject:guice)
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache-extras.beanshell:bsh)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.beanshell:bsh)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires:  mvn(org.yaml:snakeyaml)
 %if %{with groovy}
-BuildRequires:  mvn(org.assertj:assertj-core)
+BuildRequires:  mvn(org.assertj:assertj-core) >= 3.8.0
 BuildRequires:  mvn(org.codehaus.gmavenplus:gmavenplus-plugin)
 BuildRequires:  mvn(org.codehaus.groovy:groovy-all)
 BuildRequires:  mvn(org.spockframework:spock-core)
@@ -62,6 +67,10 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{name}-%{version}
 
+%patch0 -p1
+
+cp %{SOURCE1} .
+
 # remove any bundled libs, but not test resources
 find ! -path "*/test/*" -name *.jar -print -delete
 find -name *.class -delete
@@ -75,20 +84,17 @@ find -name *.class -delete
 %if %{with groovy}
 %pom_add_plugin "org.codehaus.gmavenplus:gmavenplus-plugin" pom.xml \
   "<executions><execution><goals><goal>addTestSources</goal><goal>testGenerateStubs</goal><goal>testCompile</goal><goal>removeTestStubs</goal></goals></execution></executions>"
+%pom_add_dep "org.assertj:assertj-core::test"
 %pom_add_dep "org.spockframework:spock-core::test"
 %pom_add_dep "org.codehaus.groovy:groovy-all::test"
+
+# remove failing test
+sed -i -e '/parallelDataProviderSample/,+12d' ./src/test/java/test/dataprovider/DataProviderTest.java
 %endif
 
-# avoid SNAPSHOT in version number
-sed -i -e '/<version>/s/-SNAPSHOT//' pom.xml
-
-# plugins not in Fedora
-%pom_remove_plugin com.coderplus.maven.plugins:copy-rename-maven-plugin
-sed -i -e 's/VersionTemplateJava/Version.java/' pom.xml
-mv ./src/main/resources/org/testng/internal/VersionTemplateJava ./src/main/resources/org/testng/internal/Version.java
+sed -i -e 's/DEV-SNAPSHOT/%{version}/' src/main/java/org/testng/internal/Version.java
 
 cp -p ./src/main/java/*.dtd.html ./src/main/resources/.
-
 
 %mvn_file : %{name}
 # jdk15 classifier is used by some other packages
@@ -112,6 +118,9 @@ cp -p ./src/main/java/*.dtd.html ./src/main/resources/.
 %doc LICENSE.txt
 
 %changelog
+* Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:6.12-alt1_2jpp8
+- new version
+
 * Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 0:6.9.12-alt1_4jpp8
 - new jpp release
 

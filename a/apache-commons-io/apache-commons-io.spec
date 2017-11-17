@@ -10,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           apache-commons-io
 Version:        2.5
-Release:        alt1_2jpp8
+Release:        alt2_2jpp8
 Epoch:          1
 Summary:        Utilities to assist with developing IO functionality
 License:        ASL 2.0
@@ -46,7 +46,7 @@ sed -i 's/\r//' *.txt
 %mvn_file  : commons-io %{name}
 %mvn_alias : org.apache.commons:
 
-%mvn_build
+%mvn_build -- -Dmaven.test.skip.exec=true
 
 %install
 %mvn_install
@@ -58,6 +58,9 @@ sed -i 's/\r//' *.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.5-alt2_2jpp8
+- fixed build with new testng
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.5-alt1_2jpp8
 - new version
 
