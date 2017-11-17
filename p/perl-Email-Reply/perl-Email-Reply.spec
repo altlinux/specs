@@ -16,7 +16,7 @@
 
 Name: perl-Email-Reply
 Version: 1.204
-Release: alt1
+Release: alt2
 
 Summary: Reply to a Message
 
@@ -30,7 +30,7 @@ BuildArch: noarch
 Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Reply-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Nov 29 2008
-BuildRequires: perl-Email-Abstract perl-Email-MIME-Creator perl-Encode perl-devel rpm-build-java rpm-build-mono rpm-build-seamonkey xorg-sdk
+BuildRequires: perl-Email-Abstract perl-Email-Address perl-Email-MIME-Creator perl-Encode perl-devel rpm-build-java rpm-build-mono rpm-build-seamonkey xorg-sdk
 
 %description
 This software takes the hard out of generating replies to email messages.
@@ -50,6 +50,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Email/
 
 %changelog
+* Fri Nov 17 2017 Oleg Solovyov <mcpain@altlinux.org> 1.204-alt2
+- fix missing buildreq
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.204-alt1
 - automated CPAN update
 
