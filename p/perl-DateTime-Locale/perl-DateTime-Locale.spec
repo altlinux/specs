@@ -2,7 +2,7 @@
 %define dist DateTime-Locale
 Name: perl-%dist
 Version: 1.17
-Release: alt1
+Release: alt1.1
 
 Summary: Localization support for DateTime.pm
 License: GPL or Artistic
@@ -40,6 +40,9 @@ on available locales.
 %perl_vendor_privlib/auto/share/dist/DateTime-Locale
 
 %changelog
+* Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1.1
+- automated CPAN update
+
 * Wed Nov 08 2017 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1
 - automated CPAN update
 
