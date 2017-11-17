@@ -1,6 +1,6 @@
 Name: perl
 Version: 5.24.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -35,6 +35,8 @@ Patch19: perl-5.24.1-alt-viy-no-check-sums-in-customized.t.patch
 # temporary quick hack; should be replaced by a proper surgery
 # not installing version::regex will live perl.req's unmets
 Patch20: perl-5.24.1-alt-viy-installperl-ExtUtils-MakeMaker-version.patch
+# mail from Oleg Solovyov; see patch body
+Patch21: perl-5.24.3-alt-solovyov.patch
 
 # cpan update patches here. use format below:
 #Patch50: cpan-update-Socket-2.013-to-Socket-2.016.diff
@@ -323,6 +325,7 @@ equivalent text will have identical binary representations.
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
+%patch21 -p1
 %patch51 -p1
 
 # ------ inserted with srpm-spec-inject-patches(1) -------
@@ -957,6 +960,9 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%autolib/Unicode
 
 %changelog
+* Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.24.3-alt2
+- added patch21 from Oleg Solovyov
+
 * Sun Oct 01 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.24.3-alt1
 - 5.24.2 -> 5.24.3
 
