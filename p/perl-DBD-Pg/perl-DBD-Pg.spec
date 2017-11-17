@@ -2,7 +2,7 @@
 %define dist DBD-Pg
 Name: perl-%dist
 Version: 3.7.0
-Release: alt1
+Release: alt2
 
 Summary: PostgreSQL database driver for the DBI module
 License: GPL or Artistic
@@ -12,7 +12,7 @@ URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/T/TU/TURNSTEP/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: net-tools perl-DBI-devel perl-Encode perl-Test-Warn postgresql-devel postgresql-server perl(charnames.pm)
+BuildRequires: net-tools perl-DBI-devel perl-Encode perl-Test-Warn postgresql-devel postgresql10-server perl(charnames.pm)
 
 %description
 DBD::Pg is an interface driver for connecting the DBMS independent
@@ -39,6 +39,9 @@ rm %buildroot%perl_vendor_archlib/Bundle/DBD/Pg.pm
 %perl_vendor_autolib/DBD
 
 %changelog
+* Fri Nov 17 2017 Oleg Solovyov <mcpain@altlinux.org> 3.7.0-alt2
+- fix buildreq
+
 * Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 3.7.0-alt1
 - automated CPAN update
 
