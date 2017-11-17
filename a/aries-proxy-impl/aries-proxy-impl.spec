@@ -4,13 +4,13 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-generic-compat felix-osgi-compendium
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global bundle org.apache.aries.proxy.impl
 Name:          aries-proxy-impl
 Version:       1.0.5
-Release:       alt1_2jpp8
+Release:       alt2_2jpp8
 Summary:       Apache Aries Proxy Service
 License:       ASL 2.0
 URL:           http://aries.apache.org/
@@ -101,6 +101,9 @@ sed -i '/delete dir/d' pom.xml
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt2_2jpp8
+- fixed build with new felix-utils
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_2jpp8
 - new jpp release
 
