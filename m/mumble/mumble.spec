@@ -4,7 +4,7 @@
 
 Name: mumble
 Version: 1.2.8
-Release: alt2.1.1
+Release: alt3
 
 Summary: Voice chat software primarily intended for use while gaming
 License: BSD
@@ -19,6 +19,7 @@ Source2: celt-0.7.0-src.tar
 Patch0: configure-libs.patch
 Patch1: overlay_gl.patch
 Patch2: mumble-overlay.patch
+Patch3: mumble-fix-ftbfs.patch
 
 %def_without sys_celt
 
@@ -93,6 +94,7 @@ won't be audible to other players.
 %patch0 -p2
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 
 %build
 %add_optflags -fpermissive
@@ -210,6 +212,9 @@ mkdir -p %buildroot%_var/run/mumble-server/
 %_datadir/kde4/services/mumble.protocol
 
 %changelog
+* Fri Nov 17 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.8-alt3
+- fix build
+
 * Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.8-alt2.1.1
 - NMU: added BR: libspeexdsp-devel
 
