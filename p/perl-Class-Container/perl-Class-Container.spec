@@ -2,7 +2,7 @@
 %define dist Class-Container
 Name: perl-%dist
 Version: 0.13
-Release: alt1
+Release: alt1.1
 
 Summary: Glues object frameworks together transparently
 License: GPL or Artistic
@@ -38,6 +38,9 @@ substituting other subclasses for any of these objects.
 %perl_vendor_privlib/Class*
 
 %changelog
+* Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1.1
+- automated CPAN update
+
 * Wed Nov 08 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - automated CPAN update
 
