@@ -1,7 +1,7 @@
 %define oname eigen
 Name: %{oname}3
 Version: 3.3.4
-Release: alt2
+Release: alt3
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
 Group: Development/C++
@@ -18,7 +18,7 @@ BuildPreReq: libXmu-devel libmetis-devel phonon-devel libXres-devel
 BuildPreReq: libXcomposite-devel libXdamage-devel libXdmcp-devel
 BuildPreReq: libXft-devel libxkbfile-devel libXpm-devel
 BuildPreReq: libXScrnSaver-devel libXxf86misc-devel libXxf86vm-devel
-BuildPreReq: libpastix-devel libscotch-devel libgoogle-sparsehash
+BuildPreReq: libscotch-devel libgoogle-sparsehash
 
 %description
 Eigen is a C++ template library for linear algebra: matrices, vectors,
@@ -100,6 +100,9 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %doc BUILD/doc/html/*
 
 %changelog
+* Fri Nov 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.4-alt3
+- Updated build dependencies.
+
 * Tue Oct 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.4-alt2
 - Rebuilt without libadolc.
 
