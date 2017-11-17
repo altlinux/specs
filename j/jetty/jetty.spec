@@ -1,3 +1,4 @@
+BuildRequires: ecj
 Group: Networking/WWW
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -69,7 +70,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jetty
 Version:        9.4.6
-Release:        alt1_2.v20170531jpp8
+Release:        alt2_2.v20170531jpp8
 Summary:        Java Webserver and Servlet Container
 
 # Jetty is dual licensed under both ASL 2.0 and EPL 1.0, see NOTICE.txt
@@ -1022,6 +1023,9 @@ exit 0
 %doc LICENSE-eplv10-aslv20.html LICENSE-MIT
 
 %changelog
+* Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 9.4.6-alt2_2.v20170531jpp8
+- fixed build with new tomcat
+
 * Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 9.4.6-alt1_2.v20170531jpp8
 - new version
 
