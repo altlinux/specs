@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %global bundle org.apache.felix.utils
 
 Name:           felix-utils
-Version:        1.8.6
+Version:        1.10.0
 Release:        alt1_2jpp8
 Summary:        Utility classes for OSGi
 License:        ASL 2.0
@@ -56,6 +56,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_2jpp8
+- new version
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.6-alt1_2jpp8
 - new jpp release
 
