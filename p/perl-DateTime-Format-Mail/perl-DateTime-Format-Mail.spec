@@ -2,7 +2,7 @@
 %define dist DateTime-Format-Mail
 Name: perl-%dist
 Version: 0.403
-Release: alt1
+Release: alt2
 Serial:  1
 
 Summary: Convert between DateTime and RFC2822/822 formats
@@ -15,7 +15,7 @@ Source: http://www.cpan.org/authors/id/B/BO/BOOK/DateTime-Format-Mail-%{version}
 BuildArch: noarch
 
 # Added by buildreq2 on Thu Aug 10 2006
-BuildRequires: perl-DateTime perl-File-Find-Rule perl-Module-Build perl-Test-Pod
+BuildRequires: perl-DateTime perl-File-Find-Rule perl-Module-Build perl-Test-Pod perl-Params-Validate
 
 %description
 RFCs 2822 and 822 specify date formats to be used by email.
@@ -35,6 +35,9 @@ This module parses and emits such dates.
 %perl_vendor_privlib/DateTime*
 
 %changelog
+* Fri Nov 17 2017 Oleg Solovyov <mcpain@altlinux.org> 1:0.403-alt2
+- fix missing buildreq
+
 * Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.403-alt1
 - automated CPAN update
 
