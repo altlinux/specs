@@ -8,7 +8,7 @@ BuildRequires: perl(CPAN/Meta/Requirements.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:		perl-Test-Kwalitee
 Version:	1.27
-Release:	alt1
+Release:	alt1.1
 Summary:	Test the Kwalitee of a distribution before you release it
 License:	GPL+ or Artistic
 URL:		http://metacpan.org/module/Test::Kwalitee
@@ -69,6 +69,9 @@ make test
 %{_mandir}/man1/kwalitee-metrics.1*
 
 %changelog
+* Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1.1
+- automated CPAN update
+
 * Wed Nov 08 2017 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
 - automated CPAN update
 
