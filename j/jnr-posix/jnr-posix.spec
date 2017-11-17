@@ -1,22 +1,21 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jnr-posix
-Version:        3.0.33
+Version:        3.0.41
 Release:        alt1_2jpp8
 Summary:        Java Posix layer
 License:        CPL or GPLv2+ or LGPLv2+
 URL:            http://github.com/jnr/jnr-posix
 Source0:        https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
-Patch0:		    fix-manifest.patch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.github.jnr:jnr-constants) >= 0.8.8
+BuildRequires:  mvn(com.github.jnr:jnr-constants) >= 0.9.9
 BuildRequires:  mvn(com.github.jnr:jnr-ffi)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -40,7 +39,6 @@ Javadoc for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
-%patch0
 
 # fix test which assumes that there is a group named "nogroup"
 sed -i 's|"nogroup"|"root"|' src/test/java/jnr/posix/GroupTest.java
@@ -48,21 +46,28 @@ sed -i 's|"nogroup"|"root"|' src/test/java/jnr/posix/GroupTest.java
 # Remove useless wagon extension.
 %pom_xpath_remove "pom:build/pom:extensions"
 
-%mvn_file : %{name}/%{name} %{name}
+# Unnecessary for RPM builds
+%pom_remove_plugin ":maven-javadoc-plugin"
 
 %build
 %mvn_build -f
 
 %install
 %mvn_install
+ln -s %name/%name.jar %buildroot%_javadir/%name.jar
 
 %files -f .mfiles
 %doc README.md
 %doc LICENSE.txt
+%_javadir/%name.jar
 
 %files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt
 
 %changelog
+* Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.41-alt1_2jpp8
+- new version
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.33-alt1_2jpp8
 - new jpp release
 
