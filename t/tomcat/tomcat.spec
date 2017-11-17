@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 # fc script use systemctl calls -- gives dependency on systemctl :(
 %add_findreq_skiplist %{_sbindir}/tomcat
@@ -8,11 +9,12 @@ AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name tomcat
-%define version 8.0.43
+%define version 8.0.46
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -46,7 +48,7 @@ BuildRequires: jpackage-generic-compat
 %global jspspec 2.3
 %global major_version 8
 %global minor_version 0
-%global micro_version 43
+%global micro_version 46
 %global packdname apache-tomcat-%{version}-src
 %global servletspec 3.1
 %global elspec 3.0
@@ -115,6 +117,11 @@ BuildRequires: apache-commons-pool
 BuildRequires: tomcat-taglibs-standard
 BuildRequires: java-devel >= 1.6.0
 BuildRequires: jpackage-utils >= 0:1.7.0
+%if 0%{?fedora} >= 27
+# add_maven_depmap is deprecated, using javapackages-local for now
+# See https://fedora-java.github.io/howto/latest/#_add_maven_depmap_macro
+BuildRequires: javapackages-local
+%endif
 BuildRequires: junit
 BuildRequires: geronimo-jaxrpc
 BuildRequires: wsdl4j
@@ -132,6 +139,7 @@ Requires(pre):    shadow-change shadow-check shadow-convert shadow-edit shadow-g
 # added after log4j sub-package was removed
 Provides:         %{name}-log4j = %{epoch}:%{version}-%{release}
 Source44: import.info
+Patch33: tomcat-8.0.46-alt-tomcat-jasper.pom.patch
 Source45: tomcat.init
 Source46: tomcat-sysv.wrapper
 
@@ -248,6 +256,7 @@ find . -type f \( -name "*.bat" -o -name "*.class" -o -name Thumbs.db -o -name "
 
 ln -s $(build-classpath tomcat-taglibs-standard/taglibs-standard-impl) webapps/examples/WEB-INF/lib/jstl.jar
 ln -s $(build-classpath tomcat-taglibs-standard/taglibs-standard-compat) webapps/examples/WEB-INF/lib/standard.jar
+%patch33 -p0
 
 %build
 export OPT_JAR_LIST="xalan-j2-serializer"
@@ -662,6 +671,9 @@ install -D -m 755 %{S:46} %buildroot%_sbindir/%{name}-sysv
 %attr(0660,tomcat,tomcat) %verify(not size md5 mtime) %{logdir}/catalina.out
 
 %changelog
+* Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 1:8.0.46-alt1_1jpp8
+- new version
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1:8.0.43-alt1_1jpp8
 - new jpp release
 

@@ -1,3 +1,4 @@
+BuildRequires: ecj
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
@@ -18,7 +19,7 @@ echo "ERROR: Sources should not contain JAR files:" && echo "$F" && exit 1
 
 Name:           freemarker
 Version:        %{fm_ver}
-Release:        alt1_5jpp8
+Release:        alt2_5jpp8
 Summary:        A template engine
 License:        BSD
 URL:            http://freemarker.sourceforge.net/
@@ -142,6 +143,9 @@ ant -Divy.mode=local javacc jar javadoc maven-pom
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.3.23-alt2_5jpp8
+- fixed build with new tomcat
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.3.23-alt1_5jpp8
 - fc27 update
 
