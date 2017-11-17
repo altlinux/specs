@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-bind
-Version: 0.9.4
+Version: 0.9.5
 Release: alt1
 
 Source:%name-%version.tar
@@ -14,16 +14,16 @@ License: GPL
 Group: System/Configuration/Other
 Requires: bind bind-utils
 Requires: alterator-net-common >= 0.6-alt1
-Requires: alterator-dhcp >= 0.9-alt1 alterator >= 4.24-alt1
+Requires: alterator-dhcp >= 0.9-alt1 alterator >= 5.0
 Requires: alterator-l10n >= 2.8-alt2
 Requires: alterator-net-functions >= 1.3.0
 Requires: alterator-service-functions >= 2.0.0
 
 Conflicts: alterator-fbi < 5.25-alt2
 
-BuildPreReq: alterator
-
-BuildArch: noarch
+BuildPreReq: alterator >= 5.0
+BuildRequires: alterator-fbi
+BuildRequires: guile22-devel
 
 %description
 alterator module to create and manage dynamic dns
@@ -43,12 +43,17 @@ alterator module to create and manage dynamic dns
 %_altdata_dir/ui/*/
 %_altdata_dir/applications/*
 %_alterator_backend3dir/*
+%_alterator_libdir/ui/*
 %_sysconfdir/hooks/hostname.d/*
 %_libexecdir/alterator/hooks/net-eth.d/*
 %_libexecdir/alterator/hooks/net-domain.d/*
 %_libexecdir/alterator/hooks/dhcp.d/*
 
 %changelog
+* Fri Nov 17 2017 Mikhail Efremov <sem@altlinux.org> 0.9.5-alt1
+- Change for guile22.
+- Fix ddns with unchrooted bind (closes: #34212).
+
 * Fri Nov 21 2014 Andrey Cherepanov <cas@altlinux.org> 0.9.4-alt1
 - Fix key upload input decoration as button (class "btn")
 
