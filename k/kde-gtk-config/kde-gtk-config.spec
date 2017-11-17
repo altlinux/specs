@@ -1,6 +1,6 @@
 Name: kde-gtk-config
 Version: 2.2.1
-Release: alt1
+Release: alt2
 
 Summary: GTK2 and GTK3 configurator for KDE
 License: GPLv3
@@ -8,7 +8,8 @@ Group: Graphical desktop/KDE
 
 Url: https://projects.kde.org/projects/playground/base/kde-gtk-config
 Source: ftp://ftp.kde.org/pub/kde/stable/%name/%version/src/%name-%version.tar.xz
-Patch: kde-gtk-config-2.2-gtkrc-2.0-kde-config-file.patch
+Patch1: kde-gtk-config-2.2-gtkrc-2.0-kde-config-file.patch
+Patch2: kde-gtk-config-2.2.1-fix-ftbfs.patch
 
 BuildPreReq: rpm-macros-kde-common-devel
 BuildRequires: kde4libs-devel
@@ -28,7 +29,8 @@ under KDE. Among its many features, it lets you:
 
 %prep
 %setup
-%patch -p1
+%patch1 -p1
+%patch2 -p2
 
 %build
 %K4build
@@ -51,6 +53,9 @@ under KDE. Among its many features, it lets you:
 %_K4srv/kde-gtk-config.desktop
 
 %changelog
+* Fri Nov 17 2017 Oleg Solovyov <mcpain@altlinux.org> 2.2.1-alt2
+- fix build
+
 * Mon Mar 09 2015 Michael Shigorin <mike@altlinux.org> 2.2.1-alt1
 - built for ALT Linux (based on Rosa's 2.2.1-2 package)
 
