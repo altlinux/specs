@@ -2,7 +2,7 @@
 %define dist libwww-perl
 Name: perl-libwww
 Version: 6.29
-Release: alt1
+Release: alt1.1
 
 Summary: WWW client/server library for Perl (aka LWP)
 License: GPL or Artistic
@@ -70,6 +70,9 @@ ln -snf lwp-request.1 %buildroot%_man1dir/POST.1
 %doc	%perl_vendor_privlib/libwww/lwp*.pod
 
 %changelog
+* Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 6.29-alt1.1
+- automated CPAN update
+
 * Wed Nov 08 2017 Igor Vlasenko <viy@altlinux.ru> 6.29-alt1
 - automated CPAN update
 
