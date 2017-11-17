@@ -3,7 +3,7 @@
 
 Name: perl-%dist
 Version: 1.047
-Release: alt1
+Release: alt1.1
 
 Summary: Gnome2 Perl module
 License: LGPLv2.1+
@@ -67,6 +67,9 @@ for developers (overview of internals and internal API reference).
 %doc	%perl_vendor_archlib/Gnome2/Config
 
 %changelog
+* Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.047-alt1.1
+- automated CPAN update
+
 * Wed Nov 08 2017 Igor Vlasenko <viy@altlinux.ru> 1.047-alt1
 - automated CPAN update
 
