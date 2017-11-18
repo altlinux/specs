@@ -1,3 +1,4 @@
+BuildRequires: maven-assembly-plugin
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -13,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          hibernate-search
 Version:       5.5.4
-Release:       alt1_2jpp8
+Release:       alt2_2jpp8
 Summary:       Hibernate Search
 License:       LGPLv2+
 URL:           http://hibernate.org/search/
@@ -135,6 +136,9 @@ rm -rf orm/src/test/resources/org/hibernate/search/test/bridge/tika/
 %doc lgpl.txt
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 5.5.4-alt2_2jpp8
+- added BR: maven-assembly-plugin for javapackages 5
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 5.5.4-alt1_2jpp8
 - new version
 
