@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
@@ -11,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           stax-utils
 Version:        0
-Release:        alt1_0.11.20110309svn238jpp8
+Release:        alt2_0.11.20110309svn238jpp8
 Summary:        StAX utility classes
 License:        BSD
 URL:            http://java.net/projects/stax-utils/
@@ -80,6 +81,9 @@ cp -rp build/javadoc %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1:0-alt2_0.11.20110309svn238jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1:0-alt1_0.11.20110309svn238jpp8
 - new jpp release
 
