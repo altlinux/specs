@@ -1,3 +1,4 @@
+BuildRequires: apache-parent
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          portals-pom
 Version:       1.3
-Release:       alt2_14jpp8
+Release:       alt3_14jpp8
 Summary:       Apache Portals parent pom
 License:       ASL 2.0
 Url:           http://portals.apache.org/
@@ -50,6 +51,9 @@ done
 %doc LICENSE NOTICE
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt3_14jpp8
+- added BR: apache-parent for javapackages 5
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_14jpp8
 - new jpp release
 
