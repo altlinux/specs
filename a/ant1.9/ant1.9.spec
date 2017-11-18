@@ -1,11 +1,12 @@
 %filter_from_provides /^mvn/d
+%filter_from_requires /^mvn/d
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-1.8-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -49,7 +50,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           ant%major_version
 Version:        1.9.6
-Release:        alt3_3jpp8
+Release:        alt4_3jpp8
 Epoch:          0
 Summary:        Java build tool
 Summary(it):    Tool per la compilazione di programmi java
@@ -65,8 +66,7 @@ Patch4:         apache-ant-class-path-in-manifest.patch
 %global ant_home %{_datadir}/%{name}
 %global oldname ant
 
-BuildRequires:  jpackage-utils >= 0:1.7.5
-BuildRequires:  java-devel >= 1.8.0
+BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  ant-junit
 BuildRequires:  junit
@@ -434,6 +434,12 @@ mv KEYS.utf8 KEYS
 iconv LICENSE -f iso-8859-1 -t utf-8 -o LICENSE.utf8
 mv LICENSE.utf8 LICENSE
 
+# It's part of the JDK now
+%pom_remove_dep javax.activation src/etc/poms/ant-javamail/pom.xml
+
+# We want a hard dep on antlr
+%pom_xpath_remove pom:optional src/etc/poms/ant-antlr/pom.xml
+
 %build
 %{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jars test-jar
 
@@ -447,12 +453,17 @@ rm -fr build/lib/ant-jai.jar build/lib/ant-netrexx.jar
 # -----------------------------------------------------------------------------
 
 %install
+%mvn_alias :ant org.apache.ant:ant-nodeps apache:ant ant:ant
+%mvn_alias :ant-launcher ant:ant-launcher
+
+%mvn_file ':{ant,ant-bootstrap,ant-launcher}' %{name}/@1 @1
+
 # ANT_HOME and subdirs
 mkdir -p $RPM_BUILD_ROOT%{ant_home}/{lib,etc,bin}
 
 # jars
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+#install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 
 for jar in build/lib/*.jar
 do
@@ -463,31 +474,46 @@ do
   pomname="JPP.%{name}-${jarname}.pom"
 
   #instal jar
-  install -m 644 ${jar} $RPM_BUILD_ROOT%{_javadir}/%{name}/${jarname}.jar
+  #install -m 644 ${jar} $RPM_BUILD_ROOT%{_javadir}/%{name}/${jarname}.jar
   # jar aliases
   ln -sf ../../java/%{name}/${jarname}.jar $RPM_BUILD_ROOT%{ant_home}/lib/${jarname}.jar
 
   #bootstrap does not have a pom
-  [ $jarname == ant-bootstrap ] && continue
+  #[ $jarname == ant-bootstrap ] && continue
 
   # add backward compatibility for nodeps jar that is now part of main
   # jar
-  alias=
-  [ $jarname == ant ] && alias=org.apache.ant:ant-nodeps,apache:ant,ant:ant
-  [ $jarname == ant-launcher ] && alias=ant:ant-launcher
+  #alias=
+  #[ $jarname == ant ] && alias=org.apache.ant:ant-nodeps,apache:ant,ant:ant
+  #[ $jarname == ant-launcher ] && alias=ant:ant-launcher
 
   #install pom
-  install -p -m 644 src/etc/poms/${jarname}/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/${pomname}
-  %add_maven_depmap ${pomname} %{name}/${jarname}.jar -a "${alias}" -f ${jarname/ant-/}
+  #install -p -m 644 src/etc/poms/${jarname}/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/${pomname}
+  pom=src/etc/poms/${jarname}/pom.xml
+
+  # bootstrap does not have a pom, generate one
+  [ $jarname == ant-bootstrap ] && pom='org.apache.ant:ant-bootstrap:%{version}'
+
+  %mvn_artifact ${pom} ${jar}
+  #add_maven_depmap ${pomname} %{name}/${jarname}.jar -a "${alias}" -f ${jarname/ant-/}
 done
 
-for mod in '' -bootstrap -launcher; do
-    ln -sf %{name}/ant${mod}.jar $RPM_BUILD_ROOT%{_javadir}/%{oldname}${mod}.jar
-done
+#for mod in '' -bootstrap -launcher; do
+#    ln -sf %{name}/ant${mod}.jar $RPM_BUILD_ROOT%{_javadir}/%{oldname}${mod}.jar
+#done
 
 #ant-parent pom
-install -p -m 644 src/etc/poms/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-parent.pom
-%add_maven_depmap JPP-%{name}-parent.pom
+#install -p -m 644 src/etc/poms/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-parent.pom
+#add_maven_depmap JPP-%{name}-parent.pom
+%mvn_artifact src/etc/poms/pom.xml
+%mvn_package :ant lib
+%mvn_package :ant-launcher lib
+%mvn_package :ant-bootstrap lib
+%mvn_package :ant-parent lib
+%mvn_package :ant-junit4 junit
+# catchall rule for the rest
+%mvn_package ':ant-{*}' @1
+%mvn_install
 
 # scripts: remove dos and os/2 scripts
 rm -f src/script/*.bat
@@ -542,12 +568,6 @@ cp -pr build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # fix link between manual and javadoc
 (cd manual; ln -sf %{_javadocdir}/%{name} api)
-# multiple -f flags in %files: merging -f .mfiles-ant into -f .mfiles
-cat .mfiles-ant >> .mfiles
-# multiple -f flags in %files: merging -f .mfiles-launcher into -f .mfiles
-cat .mfiles-launcher >> .mfiles
-# multiple -f flags in %files: merging -f .mfiles-junit4 into -f .mfiles-junit
-cat .mfiles-junit4 >> .mfiles-junit
 sed -i -e '1s,^#! *,#!,' %buildroot/%_bindir/*
 
 %if %with tests
@@ -578,7 +598,7 @@ sed -i -e '1s,^#! *,#!,' %buildroot/%_bindir/*
 %{ant_home}/etc/printFailingTests.xsl
 %dir %{_sysconfdir}/%{name}.d
 
-%files lib -f .mfiles  
+%files lib -f .mfiles-lib
 %dir %{ant_home}/lib
 %{_javadir}/%{oldname}.jar
 %{_javadir}/%{oldname}-bootstrap.jar
@@ -683,6 +703,9 @@ sed -i -e '1s,^#! *,#!,' %buildroot/%_bindir/*
 # -----------------------------------------------------------------------------
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.9.6-alt4_3jpp8
+- add_maven_depmap is deprecated, using mvn_artifact/mvn_install
+
 * Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.9.6-alt3_3jpp8
 - added Conflicts: to ant-lib
 
