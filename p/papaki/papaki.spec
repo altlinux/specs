@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -13,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           papaki
 Version:        1.0.0
-Release:        alt1_0.9.Beta3jpp8
+Release:        alt2_0.9.Beta3jpp8
 Summary:        An annotation scanner and repository
 
 License:        LGPLv2+
@@ -118,6 +119,9 @@ cp -rp target/docs/indexer/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/%{name}-index
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_0.9.Beta3jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.9.Beta3jpp8
 - new jpp release
 
