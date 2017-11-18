@@ -1,7 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2007, JPackage Project
@@ -37,7 +36,7 @@ BuildRequires: jpackage-generic-compat
 Summary:        Fake SMTP Server
 Name:           dumbster
 Version:        1.6
-Release:        alt3_20jpp8
+Release:        alt4_20jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://quintanasoft.com/dumbster/
@@ -47,8 +46,8 @@ Group:          Development/Java
 Source0:        %{name}-%{version}-src.tgz
 Source1:        %{name}-1.6.pom
 Patch0:         %{name}-SimpleSmtpServer.patch
-BuildRequires:  ant >= 0:1.6
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires:  ant
+BuildRequires: javapackages-local rpm-build-java
 BuildRequires:  javamail
 BuildRequires:  junit
 Requires:       java-sasl
@@ -84,7 +83,6 @@ rm -f src/com/dumbster/smtp/SimpleSmtpServer.java.orig
 pushd lib
 ln -sf $(build-classpath javamail)
 ln -sf $(build-classpath junit)
-ln -sf $(build-classpath sasl)
 popd
 
 ant jar javadoc
@@ -108,6 +106,9 @@ cp -pr doc/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt4_20jpp8
+- fixed build
+
 * Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt3_20jpp8
 - cleaned up dependencies
 
