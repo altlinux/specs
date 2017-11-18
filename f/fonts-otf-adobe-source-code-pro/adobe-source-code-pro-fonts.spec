@@ -1,26 +1,29 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 %define oldname adobe-source-code-pro-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname adobe-source-code-pro
 %global fontconf 61-%{fontname}.conf
 
+%global version_roman  2.030
+%global version_italic 1.050
+
 Name:           fonts-otf-adobe-source-code-pro
-Version:        1.017
-Release:        alt1_2
-Summary:        A set of mono-spaced OpenType fonts designed for coding environments 
+Version:        %{version_roman}.%{version_italic}
+Release:        alt1_3
+Summary:        A set of mono-spaced OpenType fonts designed for coding environments
 
 Group:          System/Fonts/True type
 License:        OFL
-URL:            http://sourceforge.net/projects/sourcecodepro.adobe
-Source0:        http://downloads.sourceforge.net/project/sourcecodepro.adobe/SourceCodePro_FontsOnly-%{version}.zip
+URL:            https://github.com/adobe-fonts/source-code-pro
+Source0:        https://github.com/adobe-fonts/source-code-pro/archive/%{version_roman}R-ro%2f%{version_italic}R-it.tar.gz#/SourceCodePro-%{version_roman}R-ro-%{version_italic}R-it.tar.gz
 Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
 Source44: import.info
 
-%description    
+%description
 This font was designed by Paul D. Hunt as a companion to Source Sans. It has
 the same weight range as the corresponding Source Sans design.  It supports
 a wide range of languages using the Latin script, and includes all the
@@ -28,11 +31,11 @@ characters in the Adobe Latin 4 glyph set.
 
 
 %prep
-%setup -q -n SourceCodePro_FontsOnly-%{version}
-
+%setup -n %{oldname}-%{version} -qn source-code-pro-%{version_roman}R-ro-%{version_italic}R-it
+sed -i 's/\r//' LICENSE.txt
+chmod 644 LICENSE.txt
 
 %build
-sed -i 's/\r//' LICENSE.txt
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
@@ -45,6 +48,10 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+
+# Add AppStream metadata
+install -Dm 0644 -p %{SOURCE2} \
+        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -84,11 +91,15 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.otf
+%{_datadir}/appdata/%{fontname}.metainfo.xml
 
-%doc SourceCodeProReadMe.html LICENSE.txt
-
+%doc README.md
+%doc LICENSE.txt
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.030.1.050-alt1_3
+- new version
+
 * Mon Sep 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.017-alt1_2
 - converted for ALT Linux by srpmconvert tools
 
