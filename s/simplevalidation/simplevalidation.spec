@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -11,7 +12,7 @@ Name:       simplevalidation
 # upstream is pretty bad about version numbering
 # this is a guess based on the version of a separate api "release" jar
 Version:    1.0
-Release:    alt1_0.6.SNAPSHOTjpp8
+Release:    alt2_0.6.SNAPSHOTjpp8
 Summary:    A library for adding user-interface input validation to Swing applications
 License:    GPLv2 or CDDL
 URL:        http://kenai.com/projects/simplevalidation
@@ -90,6 +91,9 @@ cp -a ValidationAPI/dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.6.SNAPSHOTjpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.6.SNAPSHOTjpp8
 - new jpp release
 
