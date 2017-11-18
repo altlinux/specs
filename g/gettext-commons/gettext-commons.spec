@@ -1,3 +1,4 @@
+BuildRequires: maven-assembly-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -5,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           gettext-commons
 Version:        0.9.6
-Release:        alt3_14jpp8
+Release:        alt4_14jpp8
 Summary:        Java internationalization (i18n) library
 
 Group:          Development/Other
@@ -53,6 +54,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.6-alt4_14jpp8
+- added BR: maven-assembly-plugin for javapackages 5
+
 * Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.6-alt3_14jpp8
 - removed requires: from javadoc 
 
