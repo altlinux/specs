@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -10,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           swing-layout
 Version:        1.0.4
-Release:        alt1_13jpp8
+Release:        alt2_13jpp8
 Summary:        Natural layout for Swing panels
 License:        LGPLv2
 URL:            https://swing-layout.dev.java.net/
@@ -94,6 +95,9 @@ cp -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %endif
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt2_13jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_13jpp8
 - new jpp release
 
