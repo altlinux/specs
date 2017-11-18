@@ -1,3 +1,4 @@
+BuildRequires: apache-parent
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
@@ -9,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jasperreports
 Version:       6.2.2
-Release:       alt1_3jpp8
+Release:       alt2_3jpp8
 Summary:       Report-generating tool
 License:       LGPLv3+
 URL:           http://jasperforge.org/projects/jasperreports/
@@ -212,6 +213,9 @@ rm changes.txt.orig
 %doc license.txt ThirdPartySoftwareNotices.txt
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:6.2.2-alt2_3jpp8
+- added BR: apache-parent for javapackages 5
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:6.2.2-alt1_3jpp8
 - new version
 
