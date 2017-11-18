@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -38,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           mx4j
 Version:        3.0.1
-Release:        alt3_22jpp8
+Release:        alt4_22jpp8
 Epoch:          1
 Summary:        Open source implementation of JMX Java API
 License:        ASL 1.1
@@ -214,6 +215,9 @@ rm -f %{_javadir}/%{name}.jar
 %doc dist/docs/*
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt4_22jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt3_22jpp8
 - updated dependencies
 
