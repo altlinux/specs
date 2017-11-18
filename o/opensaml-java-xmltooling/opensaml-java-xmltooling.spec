@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          opensaml-java-xmltooling
 Version:       1.3.4
-Release:       alt4_12jpp8
+Release:       alt5_12jpp8
 Summary:       Java XMLTooling library
 License:       ASL 2.0 and W3C
 
@@ -65,6 +65,8 @@ sed -i "s|\${xerces.groupId}|xerces|" pom.xml
 %pom_remove_dep "xerces:serializer"
 %pom_add_dep net.jcip:jcip-annotations:1
 
+sed -i -e 's,${xalan.groupId},xalan,' pom.xml
+
 %build
 # Certificate related tests fail: Tests run: 803, Failures: 24, Errors: 0, Skipped: 0
 %mvn_build -f
@@ -80,6 +82,9 @@ sed -i "s|\${xerces.groupId}|xerces|" pom.xml
 %doc doc/LICENSE.txt
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt5_12jpp8
+- fixed build
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt4_12jpp8
 - new fc release
 
