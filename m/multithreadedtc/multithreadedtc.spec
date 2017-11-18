@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
@@ -11,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 %global project_name MultithreadedTC
 Name:           multithreadedtc
 Version:        1.01
-Release:        alt3_21jpp8
+Release:        alt4_21jpp8
 Summary:        A framework for testing concurrent Java application
 License:        BSD 
 URL:            http://www.cs.umd.edu/projects/PL/multithreadedtc
@@ -93,6 +94,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.01-alt4_21jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.01-alt3_21jpp8
 - new jpp release
 
