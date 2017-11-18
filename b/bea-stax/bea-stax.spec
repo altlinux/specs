@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -47,7 +48,7 @@ Source1:        http://dist.codehaus.org/stax/jars/stax-1.2.0.pom
 Source2:        http://dist.codehaus.org/stax/jars/stax-api-1.0.1.pom
 Name:           bea-stax
 Version:        %{mainver}
-Release:        alt3_13jpp8
+Release:        alt4_13jpp8
 License:        ASL 1.1 and ASL 2.0
 Group:          Development/Java
 BuildArch:      noarch
@@ -122,6 +123,9 @@ install -Dpm 644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}-api.pom
 %doc %{_javadocdir}/*
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt4_13jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt3_13jpp8
 - new jpp release
 
