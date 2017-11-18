@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jarbundler	
 Version:       2.2.0
-Release:       alt1_12jpp8
+Release:       alt2_12jpp8
 Summary:       A feature-rich Ant task which will create a Mac OS X application bundle
 License:       ASL 2.0
 URL:           http://informagen.com/JarBundler/
@@ -95,6 +96,9 @@ echo "%{name}" >  %{buildroot}/%{_sysconfdir}/ant.d/%{name}
 %doc LICENSE.TXT
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt2_12jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_12jpp8
 - new jpp release
 
