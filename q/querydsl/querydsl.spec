@@ -1,3 +1,4 @@
+BuildRequires: apache-parent
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -32,7 +33,7 @@ BuildRequires: jpackage-generic-compat
 Name:          querydsl
 # NOTE: newer release use hibernate-core:4.3.11.Final
 Version:       4.0.4
-Release:       alt1_6jpp8
+Release:       alt2_6jpp8
 Summary:       Type-safe queries for Java
 License:       LGPLv2+
 URL:           http://www.querydsl.com
@@ -482,6 +483,9 @@ rm -r querydsl-sql/src/main/java/com/querydsl/sql/types/JSR310InstantType.java \
 %doc LICENSE.txt
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt2_6jpp8
+- added BR: apache-parent for javapackages 5
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt1_6jpp8
 - new jpp release
 
