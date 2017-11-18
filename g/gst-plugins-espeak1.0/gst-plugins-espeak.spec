@@ -1,5 +1,5 @@
 Name: gst-plugins-espeak1.0
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 Summary: Simple gstreamer plugin to use espeak by way of sound source
 License: LGPLv2+
@@ -42,6 +42,9 @@ make DESTDIR=%{buildroot} install
 %doc AUTHORS COPYING NEWS README
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1
+- new version
+
 * Wed Nov 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1
 - update to 0.4.0 for gstreamer1
 
