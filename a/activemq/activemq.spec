@@ -1,3 +1,4 @@
+BuildRequires: apache-parent
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          activemq
 Version:       5.6.0
-Release:       alt2_18jpp8
+Release:       alt3_18jpp8
 Summary:       Open source messaging and Integration Patterns server
 License:       ASL 2.0
 URL:           http://activemq.apache.org
@@ -159,6 +160,9 @@ iconv -f iso-8859-1 -t utf-8 LICENSE.orig > LICENSE
 %doc LICENSE NOTICE
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt3_18jpp8
+- added BR: apache-parent for javapackages 5
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt2_18jpp8
 - new jpp release
 
