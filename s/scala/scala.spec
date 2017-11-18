@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -22,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           scala
 Version:        2.10.6
-Release:        alt1_3jpp8
+Release:        alt2_3jpp8
 Summary:        A hybrid functional/object-oriented language for the JVM
 BuildArch:      noarch
 # License was confirmed to be standard BSD by fedora-legal
@@ -357,6 +358,9 @@ install -p -m 644 build/scaladoc/manual/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man
 %endif
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.10.6-alt2_3jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Thu Nov 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.10.6-alt1_3jpp8
 - new version
 
