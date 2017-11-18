@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           sequence-library
 Version:        1.0.2
-Release:        alt1_10jpp8
+Release:        alt2_10jpp8
 Summary:        Textual diff and merge library
 
 License:        Sequence     
@@ -88,6 +89,9 @@ cp -rp docs/api/ %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_10jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_10jpp8
 - new jpp release
 
