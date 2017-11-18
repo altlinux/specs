@@ -1,3 +1,4 @@
+BuildRequires: apache-parent
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
@@ -10,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          pdfbox
 Version:       1.8.13
-Release:       alt1_1jpp8
+Release:       alt2_1jpp8
 Summary:       Java library for working with PDF documents
 License:       ASL 2.0
 URL:           http://pdfbox.apache.org/
@@ -259,6 +260,9 @@ sed -i -e /filtering/d examples/pom.xml
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.8.13-alt2_1jpp8
+- added BR: apache-parent for javapackages 5
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.8.13-alt1_1jpp8
 - new jpp release
 
