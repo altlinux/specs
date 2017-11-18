@@ -1,3 +1,4 @@
+BuildRequires: maven-assembly-plugin
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          cryptacular
 Version:       1.1.0
-Release:       alt1_2jpp8
+Release:       alt2_2jpp8
 Summary:       Java Library that complement to the Bouncy Castle crypto API
 # See https://github.com/vt-middleware/cryptacular/issues/25
 License:       ASL 2.0 or LGPLv3
@@ -65,6 +66,9 @@ This package contains javadoc for %{name}.
 %doc LICENSE LICENSE-apache2 LICENSE-lgpl NOTICE
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_2jpp8
+- added BR: maven-assembly-plugin for javapackages 5
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_2jpp8
 - new jpp release
 
