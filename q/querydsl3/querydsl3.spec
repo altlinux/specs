@@ -1,3 +1,4 @@
+BuildRequires: apache-parent
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -28,7 +29,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          querydsl3
 Version:       3.7.2
-Release:       alt1_6jpp8
+Release:       alt2_6jpp8
 Summary:       Type safe queries for Java
 License:       ASL 2.0
 URL:           http://www.querydsl.com
@@ -446,6 +447,9 @@ rm -r querydsl-sql/src/main/java/com/mysema/query/sql/spatial/PGgeometryConverte
 %doc LICENSE.txt
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 3.7.2-alt2_6jpp8
+- added BR: apache-parent for javapackages 5
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 3.7.2-alt1_6jpp8
 - new jpp release
 
