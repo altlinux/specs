@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -9,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           not-yet-commons-ssl
 Version:        0.3.17
-Release:        alt1_4jpp8
+Release:        alt2_4jpp8
 Summary:        Library to make SSL and Java Easier
 
 Group:          Development/Other
@@ -84,6 +85,9 @@ install -pm 644 %{SOURCE2} \
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.3.17-alt2_4jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.3.17-alt1_4jpp8
 - new jpp release
 
