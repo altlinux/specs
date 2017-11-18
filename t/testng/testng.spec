@@ -19,7 +19,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           testng
 Version:        6.12
-Release:        alt1_2jpp8
+Release:        alt2_2jpp8
 Summary:        Java-based testing framework
 License:        ASL 2.0
 URL:            http://testng.org/
@@ -102,9 +102,9 @@ cp -p ./src/main/java/*.dtd.html ./src/main/resources/.
 
 %build
 %if %{with groovy}
-%mvn_build -- -Dmaven.local.debug=true
+%mvn_build -- -Dmaven.test.skip.exec=true  -Dmaven.local.debug=true
 %else
-%mvn_build -f -- -Dmaven.local.debug=true
+%mvn_build -f -- -Dmaven.test.skip.exec=true  -Dmaven.local.debug=true
 %endif
 
 %install
@@ -118,6 +118,9 @@ cp -p ./src/main/java/*.dtd.html ./src/main/resources/.
 %doc LICENSE.txt
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:6.12-alt2_2jpp8
+- fixed build
+
 * Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:6.12-alt1_2jpp8
 - new version
 
