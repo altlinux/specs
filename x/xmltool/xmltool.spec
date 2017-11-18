@@ -1,3 +1,4 @@
+BuildRequires: maven-assembly-plugin
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -9,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           xmltool
 Version:        3.3
-Release:        alt3_18jpp8
+Release:        alt4_18jpp8
 Summary:        Tool to manage XML documents through a Fluent Interface
 
 Group:          Development/Other
@@ -77,6 +78,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt4_18jpp8
+- added BR: maven-assembly-plugin for javapackages 5
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt3_18jpp8
 - new jpp release
 
