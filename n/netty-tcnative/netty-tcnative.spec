@@ -1,3 +1,4 @@
+BuildRequires: maven-remote-resources-plugin
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -15,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           netty-tcnative
 Version:        1.1.30
-Release:        alt2_8jpp8
+Release:        alt3_8jpp8
 Summary:        Fork of Tomcat Native with improved OpenSSL and mavenized build
 License:        ASL 2.0
 URL:            https://github.com/netty/netty/wiki/Forked-Tomcat-Native
@@ -98,6 +99,9 @@ javac -d . -cp $RPM_BUILD_ROOT%{_jnidir}/%{name}/%{name}.jar %{SOURCE1}
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.30-alt3_8jpp8
+- added BR: maven-remote-resources-plugin for javapackages 5
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.30-alt2_8jpp8
 - fc27 update
 
