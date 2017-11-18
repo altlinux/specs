@@ -1,5 +1,5 @@
 Name: gsmartcontrol
-Version: 1.1.1
+Version: 1.1.3
 Release: alt1
 
 Summary: GSmartControl - Hard disk drive and SSD health inspection tool
@@ -49,6 +49,9 @@ to determine its health, as well as run various tests on it.
 %exclude %_defaultdocdir/%name/LICENSE*
 
 %changelog
+* Sat Nov 18 2017 Yuri N. Sedunov <aris@altlinux.org> 1.1.3-alt1
+- 1.1.3
+
 * Fri Oct 06 2017 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
 - 1.1.1
 
