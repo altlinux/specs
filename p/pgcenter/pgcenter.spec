@@ -2,7 +2,7 @@
 #
 
 Name:     pgcenter
-Version:  0.3.0
+Version:  0.4.0
 Release:  alt1
 
 Summary: top-like PostgreSQL statistics viewer
@@ -46,15 +46,19 @@ statistics changes in time interval, eg. per second.
 %make_install install DESTDIR=%buildroot
 
 mkdir -p -- %buildroot%_man1dir
-cp doc/%name.1  %buildroot%_man1dir
+cp share/doc/%name.1  %buildroot%_man1dir
 
 %files
-%doc README.md COPYRIGHT doc/Changelog
+%doc README.md COPYRIGHT share/doc/Changelog
 
 %_bindir/*
 %_man1dir/*
+%_datadir/%{name}*
 
 %changelog
+* Sat Nov 18 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.4.0-alt1
+- New version
+
 * Sat Oct 01 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.3.0-alt1
 - New version
 
