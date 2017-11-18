@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -13,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           bytelist
 Version:        1.0.8
-Release:        alt1_12jpp8
+Release:        alt2_12jpp8
 Summary:        A java library for lists of bytes
 
 Group:          Development/Other
@@ -74,6 +75,9 @@ export CLASSPATH=$(build-classpath junit jcodings)
 %doc README.txt
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_12jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_12jpp8
 - new jpp release
 
