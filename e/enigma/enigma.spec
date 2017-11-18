@@ -1,31 +1,50 @@
-Name: enigma
-Version: 1.01
-Release: alt5.3
-Summary: Find and uncover all pairs of identical Oxyd stones in each landscape
-License: GPL
 Group: Games/Arcade
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/pdflatex ImageMagick-tools texinfo
+# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:           enigma
+Version:        1.21
+Release:        alt1_11.20160222git0027b3b8e694
+Summary:        Game where you control a marble with the mouse
 
-Packager: Ilya Mashkin <oddity@altlinux.ru>
-Url: http://www.nongnu.org/enigma/
-Source0: %name-%version.tar.bz2
-Patch1:         enigma-gcc-4.3-ftbfs.patch
-Patch2:         enigma-gcc-4.4-ftbfs.patch
-Patch3:         enigma-consts.patch
-Patch4:         enigma-1.01-alt-gcc4.6.patch
-Patch5:         enigma-1.01-alt-libpng15.patch
-Patch6:         %name-%version-alt-gcc6.patch
+License:        GPLv2+
+URL:            http://www.nongnu.org/enigma/
+# Using a git snapshot for the C++11 fixes.
+# git clone https://github.com/Enigma-Game/Enigma.git
+# cd Enigma
+# git checkout 0027b3b8e694c8db75b5f8f825dada449ac2a6d1
+# git archive --prefix=enigma-git0027b3b8e694/ 0027b3b8e694c8db75b5f8f825dada449ac2a6d1 | xz -9 > enigma-git0027b3b8e694.tar.xz
+Source0:        enigma-git0027b3b8e694.tar.xz
+#Source0:        http://downloads.sourceforge.net/enigma-game/enigma-%{version}.tar.gz
+Patch1:         0001-Clean-up-.desktop-file-categories.patch
+Patch2:         0002-build-use-system-zipios.patch
+Patch3:         0003-prevent-ImageMagick-inserting-timestamps-to-PNGs.patch
+Patch4:         0004-src-lev-Proxy.cc-fix-check-for-basic_ifstream-s-read.patch
 
-# Automatically added by buildreq on Fri Jan 05 2007
-BuildRequires: esound gcc-c++ libpng-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libX11-devel tetex-core xerces-c-devel
+Requires:       %{name}-data = %{version}-%{release}
+Requires:       fonts-ttf-dejavu
 
-BuildRequires: libSDL-devel >= 1.2
-BuildRequires: libSDL_mixer-devel >= 1.2.5
-BuildRequires: libSDL_image-devel >= 1.2.0
-
-Requires: libSDL >= 1.2
-Requires: libSDL_mixer >= 1.2.4
-Requires: libSDL_image >= 1.2.0
-Requires: libSDL_ttf >= 2.0.6
+BuildRequires:  gcc-c++
+BuildRequires:  libSDL-devel
+BuildRequires:  libSDL_image-devel
+BuildRequires:  libSDL_mixer-devel
+BuildRequires:  libSDL_ttf-devel
+BuildRequires:  gettext gettext-tools
+BuildRequires:  libpng-devel
+BuildRequires:  libappstream-glib
+BuildRequires:  desktop-file-utils
+BuildRequires:  zlib-devel
+BuildRequires:  libxerces-c-devel
+BuildRequires:  libcurl-devel
+BuildRequires:  ImageMagick
+BuildRequires:  git
+BuildRequires:  autoconf automake
+BuildRequires:  libzipios++-devel
+BuildRequires:  pkgconfig(libenet)
+BuildRequires:  texi2html
+Source44: import.info
 
 %description
 Enigma is a tribute to and a re-implementation of one of the most
@@ -35,47 +54,63 @@ Oxyd stones in each landscape.  Sounds simple?  It would be, if it
 weren't for hidden traps, vast mazes, insurmountable obstacles and
 innumerable puzzles blocking your direct way to the Oxyd stones...
 
+%package data
+Group: Games/Arcade
+Summary:        Data for Enigma game
+License:        GPLv2+
+BuildArch:      noarch
+
+%description data
+Data files (levels, graphics, sound, music) and documentation for Enigma.
+
 %prep
-%setup
-%patch1
+%setup -q -n enigma-git0027b3b8e694
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p2
-%patch5 -p2
-%patch6 -p2
+%patch4 -p1
+rm -r lib-src/zipios++ lib-src/enet/*
 
 %build
-
-%add_optflags -fpermissive
-%configure --enable-optimize
+aclocal -I m4 && autoheader && automake --add-missing --foreign --copy && autoconf
+%configure --enable-optimize --with-system-enet
 %make_build
 
 %install
-%makeinstall pngdir=$RPM_BUILD_ROOT%_docdir/%name-%version/images \
-             htmldir=$RPM_BUILD_ROOT%_docdir/%name-%version \
-             docdir=$RPM_BUILD_ROOT%_docdir/%name-%version \
-             indexdir=$RPM_BUILD_ROOT%_docdir/%name-%version \
-             refdir=$RPM_BUILD_ROOT%_docdir/%name-%version/reference
+%makeinstall_std
 
-%__rm -f $RPM_BUILD_ROOT%_docdir/%name-%version/COPYING
-%__ln_s /usr/share/license/GPL-2 $RPM_BUILD_ROOT%_docdir/%name-%version/COPYING
+# Use system fonts instead of bundling our own
+rm -f $RPM_BUILD_ROOT%{_datadir}/%{name}/fonts/DejaVuSansCondensed.ttf
+rm -f $RPM_BUILD_ROOT%{_datadir}/%{name}/fonts/vera_sans.ttf
+ln -s %{_datadir}/fonts/ttf/dejavu/DejaVuSansCondensed.ttf $RPM_BUILD_ROOT%{_datadir}/%{name}/fonts/DejaVuSansCondensed.ttf
+ln -s %{_datadir}/fonts/ttf/dejavu/DejaVuSans.ttf $RPM_BUILD_ROOT%{_datadir}/%{name}/fonts/vera_sans.ttf
 
-%__rm -rf $RPM_BUILD_ROOT%_includedir
-%__rm -rf $RPM_BUILD_ROOT%_libdir
+
+desktop-file-install \
+  --remove-key Version \
+  --dir ${RPM_BUILD_ROOT}%{_datadir}/applications            \
+  $RPM_BUILD_ROOT%{_datadir}/applications/enigma.desktop
+
+appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_datadir}/appdata/enigma.appdata.xml
 
 %find_lang %{name}
 
+%files
+%{_bindir}/enigma
+%{_mandir}/man?/enigma.*
+%{_datadir}/icons/hicolor/48x48/apps/enigma.png
+%{_datadir}/pixmaps/enigma.png
+%{_datadir}/applications/enigma.desktop
+%{_datadir}/appdata/enigma.appdata.xml
 
-%files -f %name.lang
-%_docdir/*
-%_bindir/*
-%_datadir/pixmaps/*
-%_datadir/%name
-%_datadir/applications/*
-%_man6dir/*
-%_iconsdir/hicolor/*/*/*
+%files data -f %{name}.lang
+%{_docdir}/%{name}
+%{_datadir}/enigma
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1_11.20160222git0027b3b8e694
+- new version
+
 * Tue Jul 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.01-alt5.3
 - Fixed build with gcc-6
 
