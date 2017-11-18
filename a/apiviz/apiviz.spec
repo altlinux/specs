@@ -1,3 +1,4 @@
+BuildRequires: maven-assembly-plugin
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -14,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             apiviz
 Version:          1.3.2
-Release:          alt1_13jpp8
+Release:          alt2_13jpp8
 Summary:          APIviz is a JavaDoc doclet to generate class and package diagrams
 Group:            Development/Other
 License:          LGPLv2+
@@ -94,6 +95,9 @@ find -name '*.jar' -exec rm -f '{}' \;
 %doc LICENSE.txt
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt2_13jpp8
+- added BR: maven-assembly-plugin for javapackages 5
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt1_13jpp8
 - new jpp release
 
