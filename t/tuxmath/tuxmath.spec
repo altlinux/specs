@@ -4,18 +4,18 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/makensis gcc-c++ libxml2-d
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           tuxmath
-Version:        2.0.1
-Release:        alt2_14
+Version:        2.0.3
+Release:        alt1_1
 Summary:        Educational math tutor for children
 
 Group:          Games/Other
 License:        GPLv3+ and CC-BY and OFL
 URL:            http://tux4kids.alioth.debian.org/
-Source0:        https://alioth.debian.org/frs/download.php/3272/%{name}_w_fonts-%{version}.tar.gz
+Source0:        https://alioth.debian.org/frs/download.php/3271/%{name}_w_fonts-%{version}.tar.gz
 Source1:        %{name}.appdata.xml
-Patch0:	        tuxmath_w_fonts-2.0.1-scandir.patch
+#Patch0:	        tuxmath_w_fonts-2.0.1-scandir.patch
 Patch1:         tuxmath_w_fonts-2.0.1-gcc5.patch
-Patch2:         tuxmath_w_fonts-2.0.1-powerup-crash.patch
+#Patch2:         tuxmath_w_fonts-2.0.1-powerup-crash.patch
 
 BuildRequires:  desktop-file-utils libappstream-glib
 BuildRequires:  libSDL-devel
@@ -37,9 +37,9 @@ different types of gameplay, at a variety of difficulty levels.
 %setup -q -n %{name}_w_fonts-%{version}
 # remove unneeded font files
 rm -f data/fonts/*.ttf
-%patch0 -p1
+#%patch0 -p1
 %patch1 -p1
-%patch2 -p1
+#%patch2 -p1
 
 
 %build
@@ -81,6 +81,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt1_1
+- new version
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_14
 - update to new release by fcimport
 
