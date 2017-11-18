@@ -1,53 +1,47 @@
-%define aspell_ver 0.60
-%define sourcename spell-uk-%{version}
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global debug_package %{nil}
+%global languagecode uk
+%global debug_package %{nil}
 
-Name:		aspell-uk
-Summary:	Aspell spelling dictionary for Ukrainian
-Version:	1.6.5
-Release:	alt3
-Group:		Text tools
+Summary:	Ukrainian dictionaries for aspell
+Name:		aspell-%{languagecode}
+Version:	1.8.0
+Release:	alt1_1
+
 URL:		http://ispell-uk.sourceforge.net/
-Source:		%{sourcename}.tgz
-License:	GPL and LGPL
-Packager:	Roman Savochenko <rom_as@altlinux.ru>
-Patch:		spell-uk-1.6.5-alt-Makefile.patch
+Source:		http://freefr.dl.sourceforge.net/project/ispell-uk/spell-uk/%{version}/spell-uk-%{version}.tgz
+License:	LGPLv3
+Group:		Text tools
 
-#arch-dependent(byte-order)?
-#BuildArch:	noarch
-#ExcludeArch:	ia64
-
-# Automatically added by buildreq on Thu Jan 18 2007
-BuildRequires: aspell perl-Encode perl-PerlIO
-
-Requires:	aspell >= %aspell_ver
-BuildRequires:	aspell >= %aspell_ver
-#iconv
-
-Provides: aspell-dictionary
+Requires:	aspell >= 0.60
+BuildRequires:	aspell >= 0.60
+BuildRequires:	perl-Encode
+Source44: import.info
 
 %description
-This is ukrainian dictionary for spellchecking with aspell program
+This is Ukrainian dictionary for spellchecking with aspell program
 
 %prep
-%setup -q -n %{sourcename}
-%patch -p1
+%setup -q -n spell-uk-%{version}
 
 %build
-%make aspell
+make ASPELL_ENC=utf-8 ASPELL_ENC_NAME=utf-8 myspell aspell uk.cwl.gz ukrainian
 
 %install
-#rm -fr $RPM_BUILD_ROOT
-%make install-aspell-dict PREFIX=$RPM_BUILD_ROOT
-
-mv $RPM_BUILD_ROOT%{_libdir}/aspell/*.dat $RPM_BUILD_ROOT%{_datadir}/aspell/
+make install PREFIX="$RPM_BUILD_ROOT"
+rm -rf %{buildroot}%{_datadir}/doc/%{name}-%{version}
 
 %files
 %doc README README.uk TODO Copyright COPYING.GPL COPYING.LGPL
-%{_datadir}/aspell/*
 %{_libdir}/aspell*/uk*
 %{_libdir}/aspell*/koi8-u-nl*
+%{_datadir}/aspell/*
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
+- new version
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.5-alt3
 - applied repocop patches
 
