@@ -1,27 +1,29 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: libssl-devel
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libisds
-Version:        0.10.3
-Release:        alt1_1
+Version:        0.10.7
+Release:        alt1_2
 Summary:        Library for accessing the Czech Data Boxes
-Group:          System/Libraries
 License:        LGPLv3
 URL:            http://xpisar.wz.cz/%{name}/
 Source0:        %{url}dist/%{name}-%{version}.tar.xz
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  gcc
+BuildRequires:  gcc-common
 BuildRequires:  libxml2-devel
 BuildRequires:  libcurl-devel
-BuildRequires:  libgcrypt-devel
-BuildRequires:  libgpgme-devel
-BuildRequires:  expat-devel >= 2.0.0
+BuildRequires:  gcrypt-utils libgcrypt-devel
+BuildRequires:  gpgme libgpgme-devel
+BuildRequires:  libexpat-devel >= 2.0.0
 # Run-time:
 BuildRequires:  gnupg2
 # Tests:
-BuildRequires:  libgnutls-devel >= 2.12.0
+BuildRequires:  libgnutls-devel libgnutlsxx-devel
 Requires:       gnupg2
 Source44: import.info
 
@@ -31,11 +33,10 @@ Data Box Information System) SOAPa..services as defined in Czech ISDS Act
 (300/2008 Coll.) and implied documents.
 
 %package        devel
+Group: Development/C
 Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}
-Requires:       gcc
-Requires:       pkgconfig
+Requires:       %{name} = %{version}-%{release}
+Requires:       pkg-config
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -51,17 +52,18 @@ developing applications that use %{name}.
     --enable-test \
     --with-libcurl \
     --enable-curlreauthorizationbug
-make %{?_smp_mflags}
+%make_build
 
 %check
 make check %{?_smp_mflags}
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+find $RPM_BUILD_ROOT -name '*.la' -delete
 %find_lang %{name}
 mv doc specification
-rm -rf client/.deps
+# Remove multilib unsafe files
+rm -rf client/.deps client/Makefile{,.in}
 
 %files -f %{name}.lang
 %doc COPYING
@@ -75,6 +77,9 @@ rm -rf client/.deps
 %doc client specification
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.10.7-alt1_2
+- new version
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.10.3-alt1_1
 - update to new release by fcimport
 
