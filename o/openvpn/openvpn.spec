@@ -14,7 +14,7 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.4.3
+Version: 2.4.4
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
@@ -332,6 +332,11 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %changelog
+* Sat Nov 18 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.4.4-alt1
+- New version
+- Security fixes:
+  +  CVE-2017-12166: Buffer overflow when using (obsolete) '--key-method 1'
+
 * Wed Jun 21 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.4.3-alt1
 - New version
 - Security fixes:
