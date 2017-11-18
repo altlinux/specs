@@ -1,40 +1,40 @@
 Name: dvdbackup
-Version: 0.4.1
-Release: alt1.qa1
+Version: 0.4.2
+Release: alt1
 
 Summary: DVD-copy tool
 License: GPL
 #Group: Video
 Group:		Archiving/Cd burning
 Packager:	Vlasenko Igor <viy@altlinux.ru>
-Source:		%{name}-%{version}.tar.gz
 URL:		http://dvdbackup.sourceforge.net
-Patch:		http://ftp.debian.org/debian/pool/main/d/dvdbackup/dvdbackup_0.4.1-1.diff.gz
+Source0:	%{name}-%{version}.tar
+Source1:	http://ftp.debian.org/debian/pool/main/d/dvdbackup/dvdbackup_0.4.2-4.debian.tar.gz
 
 Requires:       libdvdread
 BuildRequires:  libdvdread-devel >= 0.9.6
 
-Summary(ru_RU.KOI8-R): Утилита для копирования содержимого DVD на жесткий диск
+Summary(ru_RU.UTF-8): пёя┌п╦п╩п╦я┌п╟ п╢п╩я▐ п╨п╬п©п╦я─п╬п╡п╟п╫п╦я▐ я│п╬п╢п╣я─п╤п╦п╪п╬пЁп╬ DVD п╫п╟ п╤п╣я│я┌п╨п╦п╧ п╢п╦я│п╨
 
 %description
 Copy DVD-content on hard disc.
 
-%description -l ru_RU.KOI8-R
-Утилита копирования содержимого DVD диска на жесткий диск. 
-Поддерживает как выборочное копирование, так и полное.
+%description -l ru_RU.UTF-8
+пёя┌п╦п╩п╦я┌п╟ п╨п╬п©п╦я─п╬п╡п╟п╫п╦я▐ я│п╬п╢п╣я─п╤п╦п╪п╬пЁп╬ DVD п╢п╦я│п╨п╟ п╫п╟ п╤п╣я│я┌п╨п╦п╧ п╢п╦я│п╨. 
+п÷п╬п╢п╢п╣я─п╤п╦п╡п╟п╣я┌ п╨п╟п╨ п╡я▀п╠п╬я─п╬я┤п╫п╬п╣ п╨п╬п©п╦я─п╬п╡п╟п╫п╦п╣, я┌п╟п╨ п╦ п©п╬п╩п╫п╬п╣.
 
 %prep
-%setup -q 
-%patch -p1
+%setup -q -a1
+for patch in `cat debian/patches/series`; do
+    patch -p1 < debian/patches/$patch
+done
 
 %build
 ./configure 
 make
 
 %install
-#cd %name
-#---------------
-%__install -pD -m755 src/%name $RPM_BUILD_ROOT%_bindir/%name
+install -pD -m755 src/%name $RPM_BUILD_ROOT%_bindir/%name
 
 %files
 #doc %name/README %name/INSTALL
@@ -42,6 +42,9 @@ make
 %{_bindir}/%{name}
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1
+- new version
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
