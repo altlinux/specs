@@ -1,3 +1,4 @@
+BuildRequires: apache-parent
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          uima-parent-pom
 Version:       10
-Release:       alt1_3jpp8
+Release:       alt2_3jpp8
 Summary:       Apache UIMA Parent POM
 License:       ASL 2.0
 URL:           http://uima.apache.org/
@@ -78,6 +79,9 @@ sed -i 's/\r//' LICENSE-2.0.txt README.txt
 %doc LICENSE-2.0.txt
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 10-alt2_3jpp8
+- added BR: apache-parent for javapackages 5
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 10-alt1_3jpp8
 - new jpp release
 
