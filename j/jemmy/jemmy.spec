@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -17,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jemmy
 Version:        2.3.0.0
-Release:        alt2_14jpp8
+Release:        alt3_14jpp8
 Summary:        Java UI testing library
 
 Group:          Development/Other
@@ -96,6 +97,9 @@ install -p -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.0.0-alt3_14jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.0.0-alt2_14jpp8
 - new jpp release
 
