@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/openssl bzlib-devel gcc-c++ java-devel-default rpm-build
 BuildRequires: zlib-devel
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 24
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -26,7 +26,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:   hadoop
 Version: 2.7.3
-Release: alt1_2jpp8
+Release: alt1_6jpp8
 Summary: A software platform for processing vast amounts of data
 # The BSD license file is missing
 # https://issues.apache.org/jira/browse/HADOOP-9849
@@ -84,11 +84,6 @@ Patch22: %{name}-aws.patch
 # fix classpath issues
 Patch23: classpath.patch
 
-# This is not a real BR, but is here because of rawhide shift to eclipse
-# aether packages which caused a dependency of a dependency to not get
-# pulled in.
-BuildRequires: aether
-
 BuildRequires: ant
 BuildRequires: antlr-tool
 BuildRequires: aopalliance
@@ -142,7 +137,7 @@ BuildRequires: java-base64
 BuildRequires: java-devel
 BuildRequires: java-xmlbuilder
 BuildRequires: javamail
-BuildRequires: maven-local
+BuildRequires: javapackages-tools
 BuildRequires: jdiff
 BuildRequires: jersey1
 BuildRequires: jersey1-contribs
@@ -192,7 +187,7 @@ BuildRequires: servlet3
 BuildRequires: slf4j
 BuildRequires: libsnappy-devel
 BuildRequires: snappy-java
-BuildRequires: journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-utils
+BuildRequires: journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-stateless systemd-utils
 BuildRequires: tomcat
 BuildRequires: tomcat-el-3.0-api
 BuildRequires: tomcat
@@ -457,16 +452,12 @@ This package contains files needed to run Apache Hadoop YARN in secure mode.
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
-#patch19 -p1
+%patch19 -p1
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
 
-%if 0%{?fedora} > 25
-%pom_xpath_set "pom:properties/pom:protobuf.version" 3.2.0 hadoop-project
-%else
-%pom_xpath_set "pom:properties/pom:protobuf.version" 2.6.1 hadoop-project
-%endif
+%pom_xpath_set "pom:properties/pom:protobuf.version" 3.4.0 hadoop-project
 %pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions/pom:execution[pom:phase='test-compile']" "<id>default-jar</id>"  hadoop-yarn-project/hadoop-yarn/hadoop-yarn-applications/hadoop-yarn-applications-distributedshell
 
 # Remove the maven-site-plugin.  It's not needed
@@ -1145,6 +1136,9 @@ fi
 %attr(6010,root,yarn) %{_bindir}/container-executor
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.7.3-alt1_6jpp8
+- fixed build
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 2.7.3-alt1_2jpp8
 - new version
 
