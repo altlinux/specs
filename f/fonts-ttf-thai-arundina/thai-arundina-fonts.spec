@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/afm2tfm /usr/bin/mktexlsr /usr/bin/vptovf
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 0.2.1
+%define version 0.2.2
 %global fontname thai-arundina
 %global fontconf 67-%{fontname}
 %global archivename fonts-sipa-arundina-%{version}
@@ -17,8 +17,8 @@ modified by TLWG for certain aspects, such as Latin glyph size \
 compatibility and OpenType conformance.
 
 Name:		fonts-ttf-thai-arundina
-Version:	0.2.1
-Release:	alt1_3
+Version:	0.2.2
+Release:	alt1_1
 Summary:	Thai Arundina fonts
 
 Group:		System/Fonts/True type
@@ -191,6 +191,9 @@ fi
 
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1_1
+- new version
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_3
 - update to new release by fcimport
 
