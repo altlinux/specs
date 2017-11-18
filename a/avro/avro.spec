@@ -1,3 +1,4 @@
+BuildRequires: apache-parent
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -9,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             avro
 Version:          1.7.6
-Release:          alt1_2jpp8
+Release:          alt2_2jpp8
 Summary:          Data serialization system
 License:          ASL 2.0
 URL:              http://avro.apache.org
@@ -223,6 +224,9 @@ done
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.6-alt2_2jpp8
+- added BR: apache-parent for javapackages 5
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.6-alt1_2jpp8
 - new jpp release
 
