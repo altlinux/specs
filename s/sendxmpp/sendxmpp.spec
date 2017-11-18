@@ -1,49 +1,48 @@
-Name: sendxmpp
-Version: 0.0.8
-Release: alt2.1
-BuildArch: noarch
-
-Summary: sendxmpp is a tool to send XMPP (jabber) messages from scripts
-Group: Networking/Instant messaging
-License: GPL
-Source: http://www.djcbsoftware.nl/code/sendxmpp/%name-%version.tar.gz
-Url: http://www.djcbsoftware.nl/code/sendxmpp/
-
-# Automatically added by buildreq on Wed Feb 08 2006 (-bb)
-BuildRequires: perl-Authen-SASL perl-Digest-SHA1 perl-Encode perl-Net-DNS perl-Net-XMPP perl-XML-Stream perl-devel
-
-# automatically added during perl 5.8 -> 5.12 upgrade.
-# perl-podlators is required for pod2man conversion.
-BuildRequires: perl-podlators
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Authen/SASL.pm) perl(Net/Domain.pm) perl(Net/XMPP.pm) perl(open.pm) perl-devel
+# END SourceDeps(oneline)
+BuildRequires: /usr/bin/pod2man
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Summary:	A Perl script to send XMPP messages
+Name:		sendxmpp
+Version:	1.24
+Release:	alt1_5
+License:	GPLv2
+Group:		Communications
+URL:		http://sendxmpp.hostname.sk/
+Source:		https://github.com/lhost/%{name}/archive/v%{version}.tar.gz
+BuildRequires:	rpm-build-perl
+BuildRequires:	perl(ExtUtils/MakeMaker.pm)
+BuildArch:	noarch
+Source44: import.info
 
 %description
-sendxmpp is a perl-script to send XMPP (jabber) messages, similar to
-what mail(1) does for mail. XMPP is an open, non-proprietary protocol
-for instant messaging. See www.jabber.org for more information.
-
-Obviously, you also need a jabber account; they are freely available
-at jabber.org, but you can also install your own servers.
-
-sendxmpp is already in use for monitoring remote servers (servers can
-warn by sending xmpp-messages), and watching CVS commit messages
-(developers are all connected to a XMPP-chatroom to which messages are
-sent. 
+Sendxmpp is a Perl script to send XMPP (Jabber) messages from the command
+line, similar to what mail(1) does for mail. Messages can be sent both to
+individual recipients and chat rooms.
 
 %prep
-%setup
+%setup -q
 
 %build
-%perl_vendor_build INSTALLMAN1DIR=%_man1dir
+perl Makefile.PL INSTALLDIRS=vendor
+%make_build
 
 %install
-%perl_vendor_install
+make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
+chmod -R u+w $RPM_BUILD_ROOT/*
 
 %files
-%doc README Changes
-%_bindir/%name
-%_man1dir/*
+%doc Changes README
+%{_bindir}/%{name}
+%{_mandir}/man1/%{name}.1*
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.24-alt1_5
+- new version
+
 * Wed Nov 24 2010 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
