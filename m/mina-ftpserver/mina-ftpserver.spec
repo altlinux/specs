@@ -1,3 +1,4 @@
+BuildRequires: apache-parent
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          mina-ftpserver
 Version:       1.0.6
-Release:       alt1_5jpp8
+Release:       alt2_5jpp8
 Summary:       A 100% pure Java FTP server
 License:       ASL 2.0
 URL:           http://mina.apache.org/ftpserver-project/
@@ -141,6 +142,9 @@ rm core/src/test/java/org/apache/ftpserver/impl/DefaultFtpServerTest.java  \
 %doc LICENSE NOTICE
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.6-alt2_5jpp8
+- added BR: apache-parent for javapackages 5
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.6-alt1_5jpp8
 - new release
 
