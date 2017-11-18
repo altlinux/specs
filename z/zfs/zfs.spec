@@ -1,8 +1,9 @@
 %define _libexecdir %_prefix/libexec
+%global _localstatedir %_var
 
 Name: zfs
-Version: 0.7.1
-Release: alt2
+Version: 0.7.3
+Release: alt1
 Summary: ZFS on Linux
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -10,7 +11,7 @@ URL: http://zfsonlinux.org/
 Conflicts: fuse-zfs
 Requires: spl-utils
 
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tar
 Patch0: zfs-0.7.1-conf-alt.patch
 Patch1: zfs-0.6.5.8-import-by-disk-id.patch
 
@@ -190,6 +191,9 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Sat Nov 18 2017 Anton Farygin <rider@altlinux.ru> 0.7.3-alt1
+- 0.7.3
+
 * Fri Sep 15 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.7.1-alt2
 - fixed build kernel modules
 
