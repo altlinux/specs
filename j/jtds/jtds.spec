@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jtds
 Version:       1.3.1
-Release:       alt1_7jpp8
+Release:       alt2_7jpp8
 Summary:       SQL Server and Sybase JDBC driver
 License:       MIT and LGPLv2+
 URL:           http://jtds.sourceforge.net/
@@ -96,6 +97,9 @@ cp -pr build/doc/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt2_7jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_7jpp8
 - new jpp release
 
