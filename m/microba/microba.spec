@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -9,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           microba
 Version:        0.4.4.3
-Release:        alt1_15jpp8
+Release:        alt2_15jpp8
 Summary:        Set of JFC (Swing) components
 License:        BSD
 URL:            http://microba.sourceforge.net/
@@ -80,6 +81,9 @@ cp -r javadoc %{buildroot}%{_javadocdir}/%{name}
 %doc license.txt
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.4.3-alt2_15jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.4.3-alt1_15jpp8
 - new jpp release
 
