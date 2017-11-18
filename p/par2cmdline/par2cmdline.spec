@@ -1,31 +1,17 @@
+Group: Archiving/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Summary:        PAR 2.0 compatible file verification and repair tool
-Name:           par2cmdline
-Version:        0.6.14
-Release:        alt2_6
-License:        GPLv2+
-Group:          Archiving/Other
-URL:            http://parchive.sourceforge.net/
+Name: par2cmdline
+Version: 0.7.4
+Release: alt1_1
+Summary: PAR 2.0 compatible file verification and repair tool
 
-Source:         https://github.com/Parchive/par2cmdline/archive/v%{version}.tar.gz
-
-# Backport of OpenMP support from https://github.com/jkansanen/par2cmdline-mt
-# Also see https://github.com/Parchive/par2cmdline/issues/27
-Patch0:         par2cmdline-openmp-support.patch
-
-# One of the testcases uses /dev/random
-# The koji builders may not have enough entropy
-# available so use the /dev/urandom device instead
-Patch1:         par2cmdline-use-urandom-in-tests.patch
-
-Obsoletes:      parchive <= 1.1.4
-Provides:       parchive = 1.1.4.0.par2.%{version}
-
-BuildRequires:  autoconf-common automake libtool-common
+License: GPLv2+
+URL: https://github.com/Parchive/par2cmdline/
+Source0: https://github.com/Parchive/par2cmdline/releases/download/v%{version}/par2cmdline-%{version}.tar.bz2
 Source44: import.info
 Conflicts: par2 < 0.5
 Obsoletes: par2 < 0.5
@@ -41,32 +27,28 @@ multi-part archives.
 
 
 %prep
-%setup -q -n par2cmdline-%{version}
-%patch0 -p1
-autoreconf -i --force
+%setup -q
 
-%patch1 -p1
-
-# fix end-of-lines of several files
-sed -i 's/\r//' AUTHORS PORTING README ROADMAP
+# Remove executable permission from text files
+chmod -x ChangeLog configure.ac INSTALL Makefile.am NEWS stamp-h.in
 
 
 %build
 %configure
 %make_build
-chmod 644 ChangeLog galois.h par1repairer.cpp par2repairer.cpp par2repairersourcefile.cpp par2repairersourcefile.h
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 
 
 %check
-make check-TESTS
+%{__make} check-TESTS
 
 
 %files
-%doc AUTHORS COPYING ChangeLog README 
+%doc COPYING
+%doc AUTHORS ChangeLog README
 %{_bindir}/par2
 %{_bindir}/par2create
 %{_bindir}/par2repair
@@ -75,6 +57,9 @@ make check-TESTS
 
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.4-alt1_1
+- new version
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.14-alt2_6
 - update to new release by fcimport
 
