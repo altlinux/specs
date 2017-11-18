@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             cookxml
 Version:          3.0.2
-Release:          alt2_12jpp8
+Release:          alt3_12jpp8
 Summary:          Dynamic XML data binding tool
 Group:            Development/Other
 License:          BSD
@@ -75,6 +76,9 @@ install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt3_12jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt2_12jpp8
 - new jpp release
 
