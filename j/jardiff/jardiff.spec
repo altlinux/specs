@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -36,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           jardiff
 Version:        0.2
-Release:	alt8_3jpp6
+Release:	alt9_3jpp6
 Epoch:          0
 Summary:        Jar Diff Util
 License:        BSD
@@ -136,6 +137,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:0.2-alt9_3jpp6
+- added BR: javapackages-local for javapackages 5
+
 * Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.2-alt8_3jpp6
 - added maven metadata and script
 
