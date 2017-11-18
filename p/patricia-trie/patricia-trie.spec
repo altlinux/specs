@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           patricia-trie
 Version:        0.2
-Release:        alt1_12.20091116svnjpp8
+Release:        alt2_12.20091116svnjpp8
 Summary:        Java prefix tree library
 License:        ASL 2.0
 URL:            http://patricia-trie.googlecode.com/
@@ -64,6 +65,9 @@ cp -a dist/%{name}-%{version}/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc dist/%{name}-%{version}/LICENSE-2.0.txt
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_12.20091116svnjpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.2-alt1_12.20091116svnjpp8
 - new jpp release
 
