@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          typesafe-config
 Version:       1.2.0
-Release:       alt1_9jpp8
+Release:       alt2_9jpp8
 Summary:       Configuration library for JVM languages
 License:       ASL 2.0
 URL:           https://github.com/typesafehub/config/
@@ -56,7 +56,7 @@ sed -i -e '/useGpg/,+2d' build.sbt
 sed -i -e '/publishSigned/,+2d' build.sbt
 sed -i -e '/publishLocalSigned/,+2d' build.sbt
 
-sed -i -e 's/2[.]10[.][0-2]/2.10.4/' build.sbt
+sed -i -e 's/2[.]10[.][0-2]/2.10.6/' build.sbt
 
 sed -i -e 's/Some("1[.]6")/Some("1.8")/' project/JavaVersionCheck.scala
 
@@ -93,6 +93,9 @@ bnd wrap -p %{SOURCE1} -o config/target/config.jar --version %{version} config/t
 %doc LICENSE-2.0.txt
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_9jpp8
+- fixed build
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_9jpp8
 - fc27 update
 
