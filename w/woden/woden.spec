@@ -1,3 +1,4 @@
+BuildRequires: apache-parent
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -10,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           woden
 Version:        1.0
-Release:        alt1_0.14.M9jpp8
+Release:        alt2_0.14.M9jpp8
 Summary:        Web Service Description Language (WSDL) validating parser
 License:        ASL 2.0
 URL:            http://ws.apache.org/woden/
@@ -79,6 +80,9 @@ mv LICENSE.utf8 LICENSE
 %doc LICENSE NOTICE
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.14.M9jpp8
+- added BR: apache-parent for javapackages 5
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.14.M9jpp8
 - new jpp release
 
