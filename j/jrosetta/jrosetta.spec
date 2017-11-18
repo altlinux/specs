@@ -1,3 +1,4 @@
+BuildRequires: maven-assembly-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -7,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jrosetta
 Version:        1.0.4
-Release:        alt1_14jpp8
+Release:        alt2_14jpp8
 Summary:        A common base to build a graphical console
 
 Group:          Development/Other
@@ -61,6 +62,9 @@ rm CHANGE.txt.CRLF
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt2_14jpp8
+- added BR: maven-assembly-plugin for javapackages 5
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_14jpp8
 - new jpp release
 
