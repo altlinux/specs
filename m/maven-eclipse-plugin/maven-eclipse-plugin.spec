@@ -1,17 +1,18 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # Eclipse does not yet export virtual maven provides, so filter out the requires
 
 
 Name:           maven-eclipse-plugin
 Version:        2.9
-Release:        alt6_15jpp8
+Release:        alt6_18jpp8
 Summary:        Maven Eclipse Plugin
 
 License:        ASL 2.0
@@ -29,6 +30,8 @@ BuildArch: noarch
 
 # Maven and its dependencies
 BuildRequires: maven-local
+BuildRequires: maven-enforcer-plugin
+BuildRequires: maven-plugins-pom
 BuildRequires: maven-test-tools
 BuildRequires: maven-plugin-testing-tools
 BuildRequires: maven-osgi
@@ -40,6 +43,7 @@ BuildRequires: plexus-resources
 BuildRequires: plexus-interactivity-jline
 BuildRequires: bsf
 BuildRequires: jaxen
+BuildRequires: jdom
 BuildRequires: dom4j
 BuildRequires: xom
 BuildRequires: saxpath
@@ -102,6 +106,9 @@ ln -s "$plugin_file" $CORE_PLUGIN_DIR/resources-$CORE_FAKE_VERSION.jar
 %doc LICENSE NOTICE
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.9-alt6_18jpp8
+- fixed build
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.9-alt6_15jpp8
 - fixed build
 
