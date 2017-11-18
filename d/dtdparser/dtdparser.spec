@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
@@ -39,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           dtdparser
 Version:        1.21
-Release:        alt2_18jpp8
+Release:        alt3_18jpp8
 Summary:        A Java DTD Parser
 
 # The code has no license attribution.
@@ -113,6 +114,9 @@ install -p -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE ASL_LICENSE
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.21-alt3_18jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.21-alt2_18jpp8
 - new jpp release
 
