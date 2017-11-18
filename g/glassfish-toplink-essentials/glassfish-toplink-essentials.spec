@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -9,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          glassfish-toplink-essentials
 Version:       2.0.46
-Release:       alt2_12jpp8
+Release:       alt3_12jpp8
 Summary:       Glassfish JPA Toplink Essentials
 License:       CDDL or GPLv2 with exceptions
 URL:           http://glassfish.java.net/javaee5/persistence/
@@ -111,6 +112,9 @@ cp -pr glassfish/entity-persistence/build/javadoc/* %{buildroot}%{_javadocdir}/%
 %doc glassfish/bootstrap/legal/LICENSE.txt
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.46-alt3_12jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.46-alt2_12jpp8
 - new jpp release
 
