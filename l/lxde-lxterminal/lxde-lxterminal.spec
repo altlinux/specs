@@ -1,7 +1,7 @@
 %define upstreamname lxterminal
 %define gtkver 2
 Name: lxde-lxterminal
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: Desktop-independent VTE-based terminal emulator for LXDE
@@ -37,14 +37,14 @@ process to reduce memory usage)
 %makeinstall_std
 %find_lang %upstreamname
 desktop-file-install --dir %buildroot%_desktopdir \
-	--remove-category=Utility \
-	--add-category=System \
-	%buildroot%_desktopdir/lxterminal.desktop
+    --remove-category=Utility \
+    --add-category=System \
+    %buildroot%_desktopdir/lxterminal.desktop
 
 for x in 16 32 48; do
     mkdir -p %buildroot%_iconsdir/hicolor/$x'x'$x/apps
-	convert %buildroot%_iconsdir/hicolor/128x128/apps/%upstreamname.png -resize $x'x'$x \
-	        %buildroot%_iconsdir/hicolor/$x'x'$x/apps/%upstreamname.png
+    convert %buildroot%_iconsdir/hicolor/128x128/apps/%upstreamname.png -resize $x'x'$x \
+            %buildroot%_iconsdir/hicolor/$x'x'$x/apps/%upstreamname.png
 done
 
 %files -f %upstreamname.lang
@@ -56,6 +56,9 @@ done
 %_iconsdir/hicolor/*/apps/%upstreamname.png
 
 %changelog
+* Sat Nov 18 2017 Anton Midyukov <antohami@altlinux.org> 0.3.1-alt1
+- New version 0.3.1
+
 * Wed Jan 11 2017 Anton Midyukov <antohami@altlinux.org> 0.3.0-alt1
 - New version 0.3.0
 
