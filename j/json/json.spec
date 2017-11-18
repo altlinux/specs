@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -38,7 +39,7 @@ Name:		json
 Summary:	JavaScript Object Notation
 Url:		http://www.json.org/java/index.html
 Version:	20080425
-Release:	alt4_2jpp6
+Release:	alt5_2jpp6
 Epoch:		0
 License:	Open Source
 Group:		Development/Java
@@ -108,6 +109,9 @@ install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-json.pom
 #%doc %{_javadocdir}/%{name}
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:20080425-alt5_2jpp6
+- added BR: javapackages-local for javapackages 5
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:20080425-alt4_2jpp6
 - build as compat
 
