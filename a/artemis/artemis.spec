@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-java
+BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: java-devel-default rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -18,11 +18,13 @@ BuildRequires: jpackage-generic-compat
 
 Name:          artemis
 Version:       1.4.0
-Release:       alt1_4jpp8
+Release:       alt1_7jpp8
 Summary:       Java high performance, clustered, asynchronous messaging system
 License:       ASL 2.0
 URL:           https://activemq.apache.org/artemis/
 Source0:       https://github.com/apache/activemq-artemis/archive/%{version}/%{name}-%{version}.tar.gz
+
+Patch0: artemis-netty-4.1.patch
 
 BuildRequires: gcc-c++
 BuildRequires: ctest cmake
@@ -323,6 +325,8 @@ Documentation for %{name}.
 
 %prep
 %setup -q -n activemq-%{name}-%{version}
+%patch0 -p1
+
 # Cleanup
 find -name "*.class" -print -delete
 find -name "*.dll" -print -delete
@@ -476,6 +480,9 @@ install -pm 755 artemis-native/bin/libartemis-native-%{__isa_bits}.so %{buildroo
 %doc LICENSE NOTICE
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_7jpp8
+- fixed build with netty
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_4jpp8
 - new jpp release
 
