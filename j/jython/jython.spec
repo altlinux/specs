@@ -2,6 +2,7 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 #BuildRequires(pre): j2se-jdbc = 1.4.2
 BuildRequires: jline
@@ -14,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global cpython_version    2.7
-%global scm_tag            v2.7.1b3
+%global scm_tag            v2.7.1
 
 # Turn off the brp-python-bytecompile script
 # We generate JVM bytecode instead
@@ -22,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:                      jython
 Version:                   2.7.1
-Release:                   alt1_0.3.b3jpp8
+Release:                   alt1_3jpp8
 Summary:                   Jython is an implementation of Python written in pure Java.
 License:                   ASL 1.1 and BSD and CNRI and JPython and Python
 URL:                       http://www.jython.org/
@@ -40,21 +41,30 @@ Patch1:                    jython-dont-validate-pom.patch
 Patch2:                    jython-no-carrotsearch-sizeof.patch
 # Tweak launcher script
 Patch3:                    jython-launcher.patch
+# Fix failure with "import multiprocessing"
+Patch4:                    jython-fix-multiprocessing.patch
+# Fix tty detection
+Patch5:                    jython-fix-tty-detection.patch
 
 Requires:                  python >= %{cpython_version}
 Requires:                  antlr32-java
 Requires:                  apache-commons-compress
+Requires:                  bouncycastle
+Requires:                  bouncycastle-pkix
 Requires:                  guava
 Requires:                  objectweb-asm
+Requires:                  jctools >= 2.0.2
 Requires:                  jnr-constants
 Requires:                  jnr-ffi
 Requires:                  jnr-netdb
-Requires:                  jnr-posix >= 3.0.9
+Requires:                  jnr-posix
 Requires:                  jffi
-Requires:                  jline >= 2.12.1
+Requires:                  jffi-native
+Requires:                  jline
 Requires:                  jansi
 Requires:                  icu4j
-Requires:                  netty
+Requires:                  netty >= 4.1.13
+Requires:                  xerces-j2
 # We build with ant, but install with maven
 BuildRequires:             javapackages-local
 BuildRequires:             ant
@@ -63,17 +73,22 @@ BuildRequires:             glassfish-servlet-api
 BuildRequires:             python >= %{cpython_version}
 BuildRequires:             antlr32-tool
 BuildRequires:             apache-commons-compress
+BuildRequires:             bouncycastle
+BuildRequires:             bouncycastle-pkix
 BuildRequires:             guava
 BuildRequires:             objectweb-asm
+BuildRequires:             jctools >= 2.0.2
 BuildRequires:             jnr-constants
 BuildRequires:             jnr-ffi
 BuildRequires:             jnr-netdb
-BuildRequires:             jnr-posix >= 3.0.9
+BuildRequires:             jnr-posix
 BuildRequires:             jffi
-BuildRequires:             jline >= 2.12.1
+BuildRequires:             jffi-native
+BuildRequires:             jline
 BuildRequires:             jansi
 BuildRequires:             icu4j
-BuildRequires:             netty
+BuildRequires:             netty >= 4.1.13
+BuildRequires:             xerces-j2
 
 BuildArch:                 noarch
 Source44: import.info
@@ -123,17 +138,25 @@ Demonstrations and samples for %{name}.
 %patch0
 %patch1
 %patch3
+%patch4 -p1
+%patch5
 
 rm -rf extlibs/*
 
-# Set correct encoding and disable doclint to fix javadoc generation
-sed -i -e '/<javadoc/a encoding="UTF-8" additionalparam="-Xdoclint:none"' build.xml
+# Disable doclint to fix javadoc generation
+sed -i -e '/<javadoc/a additionalparam="-Xdoclint:none"' build.xml
+
+# Broader guava compatibility
+sed -i -e 's/CharMatcher\.ascii()/CharMatcher.ASCII/' \
+  src/org/python/core/PyUnicode.java \
+  src/org/python/core/PyBaseCode.java \
+  src/org/python/core/Py.java
 
 %build
 # Symlink build-time libs
 build-jar-repository -p -s extlibs \
   antlr32/antlr antlr32/antlr-runtime stringtemplate antlr \
-  jnr-constants jnr-ffi jnr-netdb jnr-posix jffi jline/jline \
+  jffi jffi-native jnr-constants jnr-ffi jnr-netdb jnr-posix jline/jline jansi/jansi icu4j/icu4j \
   glassfish-servlet-api guava objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util \
   commons-compress junit hamcrest/core
 
@@ -152,10 +175,11 @@ popd
 
 # Symlink run-time libs
 rm dist/javalib/*.jar
-build-jar-repository -p -s dist/javalib \
-  antlr32/antlr-runtime-3.2 objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util guava \
-  jnr-constants jnr-ffi jnr-netdb jnr-posix jffi jline/jline jansi/jansi icu4j/icu4j \
-  netty/netty-buffer netty/netty-codec netty/netty-common netty/netty-handler netty/netty-transport
+build-jar-repository -p -s dist/javalib antlr32/antlr-runtime-3.2 \
+  objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util guava icu4j/icu4j \
+  jffi jffi-native jnr-constants jnr-ffi jnr-netdb jnr-posix jline/jline jansi/jansi \
+  netty/netty-buffer netty/netty-codec netty/netty-common netty/netty-handler netty/netty-resolver netty/netty-transport \
+  jctools/jctools-core apache-commons-compress bcprov bcpkix xerces-j2
 
 # request maven artifact installation
 %mvn_artifact build/maven/jython-%{version}.pom dist/jython.jar
@@ -231,6 +255,9 @@ fi || :
 %{_datadir}/%{name}/Demo
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt1_3jpp8
+- new version
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt1_0.3.b3jpp8
 - fixed build
 
