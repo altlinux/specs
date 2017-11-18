@@ -6,9 +6,28 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Optionally fetch the release from the environment variable 'PKI_RELEASE'
+%define use_pki_release %{getenv:USE_PKI_RELEASE}
+%if 0%{?use_pki_release}
+%define pki_release %{getenv:PKI_RELEASE}
+%endif
+
 Name:             dogtag-pki-theme
-Version:          10.4.8
-Release:          alt1_3jpp8
+%if 0%{?rhel}
+Version:                10.5.1
+%define redhat_release  1
+%define redhat_stage    0
+#%define default_release %{redhat_release}.%{redhat_stage}
+%define default_release %{redhat_release}
+%else
+Version:                10.5.1
+%define fedora_release  1
+%define fedora_stage    0
+#%define default_release %{fedora_release}.%{fedora_stage}
+%define default_release %{fedora_release}
+%endif
+Release:          alt1_1jpp8
+
 Summary:          Certificate System - Dogtag PKI Theme Components
 URL:              http://pki.fedoraproject.org/
 License:          GPLv2
@@ -21,7 +40,14 @@ BuildRequires:    ctest cmake
 BuildRequires:    java-1.8.0-openjdk-devel
 BuildRequires:    jpackage-utils >= 1.7.5
 
+%if 0%{?rhel}
+# NOTE:  In the future, as a part of its path, this URL will contain a release
+#        directory which consists of the fixed number of the upstream release
+#        upon which this tarball was originally based.
+Source0:          http://pki.fedoraproject.org/pki/sources/%{name}/%{version}/%{release}/rhel/%{name}-%{version}%{?prerel}.tar.gz
+%else
 Source0:          http://pki.fedoraproject.org/pki/sources/%{name}/%{version}/%{release}/%{name}-%{version}%{?prerel}.tar.gz
+%endif
 
 %global overview                                                       \
 Several PKI packages utilize a "virtual" theme component.  These       \
@@ -118,7 +144,7 @@ This package is used by the Dogtag Certificate System.
 
 
 %setup -q -n %{name}-%{version}%{?prerel}
-
+sed -i -e s,/usr/bin/ln,/bin/ln,g dogtag/common-ui/CMakeLists.txt
 
 %build
 mkdir -p build
@@ -160,10 +186,13 @@ make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 %files -n dogtag-pki-console-theme
 %doc dogtag/console-ui/LICENSE
-%{_javadir}/pki
+%{_javadir}/pki/
 
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 10.5.1-alt1_1jpp8
+- new version
+
 * Wed Nov 15 2017 Igor Vlasenko <viy@altlinux.ru> 10.4.8-alt1_3jpp8
 - new version
 
