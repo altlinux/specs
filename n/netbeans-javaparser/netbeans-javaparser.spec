@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -12,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           netbeans-javaparser
 Version:        8.0.1
-Release:        alt1_4jpp8
+Release:        alt2_4jpp8
 Summary:        NetBeans Java Parser
 License:        GPLv2 with exceptions
 Url:            http://netbeans.org/
@@ -60,6 +61,9 @@ install -m 644 make/netbeans/nb-javac/dist/javac-impl.jar %{buildroot}%{_javadir
 %{_javadir}/*.jar
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 8.0.1-alt2_4jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 8.0.1-alt1_4jpp8
 - new jpp release
 
