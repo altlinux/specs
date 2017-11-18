@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name tomcat
-%define version 8.0.46
+%define version 8.0.47
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -48,7 +48,7 @@ BuildRequires: jpackage-generic-compat
 %global jspspec 2.3
 %global major_version 8
 %global minor_version 0
-%global micro_version 46
+%global micro_version 47
 %global packdname apache-tomcat-%{version}-src
 %global servletspec 3.1
 %global elspec 3.0
@@ -74,7 +74,7 @@ BuildRequires: jpackage-generic-compat
 Name:          tomcat
 Epoch:         1
 Version:       %{major_version}.%{minor_version}.%{micro_version}
-Release:       alt1_1jpp8
+Release:       alt1_2jpp8
 Summary:       Apache Servlet/JSP Engine, RI for Servlet %{servletspec}/JSP %{jspspec} API
 
 Group:         System/Servers
@@ -309,25 +309,25 @@ popd
 mkdir -p META-INF
 cp -p %{SOURCE8} META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u output/build/lib/servlet-api.jar META-INF/MANIFEST.MF
+zip output/build/lib/servlet-api.jar META-INF/MANIFEST.MF
 cp -p %{SOURCE9} META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u output/build/lib/jsp-api.jar META-INF/MANIFEST.MF
+zip output/build/lib/jsp-api.jar META-INF/MANIFEST.MF
 cp -p %{SOURCE12} META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u output/build/lib/el-api.jar META-INF/MANIFEST.MF
+zip output/build/lib/el-api.jar META-INF/MANIFEST.MF
 cp -p %{SOURCE13} META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u output/build/lib/jasper-el.jar META-INF/MANIFEST.MF
+zip output/build/lib/jasper-el.jar META-INF/MANIFEST.MF
 cp -p %{SOURCE14} META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u output/build/lib/jasper.jar META-INF/MANIFEST.MF
+zip output/build/lib/jasper.jar META-INF/MANIFEST.MF
 cp -p %{SOURCE15} META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u output/build/lib/tomcat-api.jar META-INF/MANIFEST.MF
+zip output/build/lib/tomcat-api.jar META-INF/MANIFEST.MF
 cp -p %{SOURCE16} META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u output/build/bin/tomcat-juli.jar META-INF/MANIFEST.MF
+zip output/build/bin/tomcat-juli.jar META-INF/MANIFEST.MF
 
 %install
 # build initial path structure
@@ -671,6 +671,9 @@ install -D -m 755 %{S:46} %buildroot%_sbindir/%{name}-sysv
 %attr(0660,tomcat,tomcat) %verify(not size md5 mtime) %{logdir}/catalina.out
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1:8.0.47-alt1_2jpp8
+- new version
+
 * Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 1:8.0.46-alt1_1jpp8
 - new version
 
