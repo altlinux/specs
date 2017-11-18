@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          mchange-commons
 Version:       0.2.11
-Release:       alt1_2jpp8
+Release:       alt2_2jpp8
 Summary:       A collection of general purpose utilities for c3p0
 License:       LGPLv2 or EPL
 URL:           https://github.com/swaldman/mchange-commons-java
@@ -62,8 +62,8 @@ cp -pr /usr/share/sbt/ivy-local .
 
 %build
 # XXX: This jar has changed location, which breaks sbt -- this is a temp workaround
-rm ivy-local/org.fusesource.hawtjni/hawtjni-runtime/1.8/hawtjni-runtime-1.8.jar
-ln -s $(build-classpath hawtjni/hawtjni-runtime) ivy-local/org.fusesource.hawtjni/hawtjni-runtime/1.8/hawtjni-runtime-1.8.jar
+#rm ivy-local/org.fusesource.hawtjni/hawtjni-runtime/1.8/hawtjni-runtime-1.8.jar
+#ln -s $(build-classpath hawtjni/hawtjni-runtime) ivy-local/org.fusesource.hawtjni/hawtjni-runtime/1.8/hawtjni-runtime-1.8.jar
 
 # XXX: Link deps, I understand this is a temp measure until sbt gains real xmvn integration
 ./climbing-nemesis.py com.typesafe config any ivy-local --version 1.2.1
@@ -86,6 +86,9 @@ sbt package make-pom doc
 %doc LICENSE*
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.11-alt2_2jpp8
+- fixed build
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.11-alt1_2jpp8
 - fc27 update
 
