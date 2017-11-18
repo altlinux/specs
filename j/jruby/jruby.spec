@@ -4,21 +4,21 @@ Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ rpm-build-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jruby
-%define version 1.7.22
 %global jruby_vendordir %{_datadir}/%{name}/lib
 %global jruby_sitedir %{_prefix}/local/share/%{name}/lib
 %global rubygems_dir %{_datadir}/rubygems
 
 Name:           jruby
 Version:        1.7.22
-Release:        alt1_2jpp8
+Release:        alt1_5jpp8
 Summary:        Pure Java implementation of the Ruby interpreter
 # (CPL or GPLv2+ or LGPLv2+) - JRuby itself
 # BSD - some files under lib/ruby/shared
@@ -64,11 +64,10 @@ BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.felix:org.apache.felix.framework)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-clean-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-deploy-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-site-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:properties-maven-plugin)
@@ -96,7 +95,6 @@ BuildArch:      noarch
 # yecht is in a separate package now
 Obsoletes:      %{name}-yecht < %{version}-%{release}
 Source44: import.info
-Requires: jffi-native
 
 %description
 JRuby is a 100% Java implementation of the Ruby programming language.
@@ -107,7 +105,7 @@ Standard Libraries.
 %package        devel
 Group: Development/Java
 Summary:        JRuby development environment
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description    devel
 Macros for building JRuby-specific libraries.
@@ -258,6 +256,9 @@ EOF
 %doc COPYING LICENSE.RUBY LEGAL
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.22-alt1_5jpp8
+- fixed build
+
 * Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.7.22-alt1_2jpp8
 - new version
 
