@@ -1,9 +1,9 @@
 #%%define %_libexecdir %_sbindir
-%define snapshot 1
+%define snapshot 0
 
 Name: mailfromd
 
-%define baseversion 8.1
+%define baseversion 8.4
 
 %if %snapshot
 %define snapshotdate 20170306
@@ -12,7 +12,7 @@ Release: alt2.%snapshotdate.1
 %define srcdir %name-%baseversion-%snapshotdate
 %else
 Version: %baseversion
-Release: alt2
+Release: alt1
 %define srcdir %name-%version
 %endif
 
@@ -62,9 +62,10 @@ BuildRequires(pre): rpm-build-licenses
 # optimized out: emacs-X11 emacs-base emacs-cedet-speedbar emacs-common fontconfig libX11-locales libgdk-pixbuf libgpg-error libp11-kit libtinfo-devel mailutils pkg-config
 BuildRequires: emacs-X11 flex libdb4-devel libdspam-devel libgcrypt-devel libgdbm-devel libgnutls-devel libldap-devel libncurses-devel libpam-devel libreadline-devel libtokyocabinet-devel
 
-BuildRequires: libmailutils-devel >= 3.1.91-alt0.20170306.1
+BuildRequires: libmailutils-devel >= 3.4-alt0
 BuildRequires: mailutils
 BuildRequires: makeinfo
+BuildRequires: libadns-devel
 
 %description
 Milter-filter for Sendmail v8, MeTA1 and Postfix (since 2.3; please
@@ -301,6 +302,9 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Mon Nov 13 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.4-alt1
+- new version
+
 * Thu Mar 09 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.1-alt2.20170306.1
 - new snapshot
 - removed mailfromd-mfd-dns.diff (in upstream now)

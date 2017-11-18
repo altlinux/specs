@@ -5,11 +5,11 @@
 %def_disable guile
 
 %define use_chrpath 0
-%define snapshot    1
+%define snapshot    0
 
 Name: mailutils
 
-%define baseversion 3.1.91
+%define baseversion 3.4
 
 %if %snapshot
 %define snapshotdate 20170306
@@ -35,6 +35,7 @@ Source0:        %name-%version.tar.gz
 %endif
 
 Patch1: mailutils-2.0.90-pkg-config-hack.diff
+Patch2: mailutils-3.4-b330af90.diff
 
 URL: http://www.gnu.org/software/%{name}/%{name}.html
 Group: Networking/Mail
@@ -59,6 +60,8 @@ BuildRequires: emacs-X11
 BuildRequires: makeinfo
 
 BuildRequires: libltdl7-devel
+
+BuildRequires: perl-podlators
 
 %if %use_chrpath
 BuildRequires: chrpath
@@ -241,6 +244,7 @@ python-module-mailutils.
 %endif
 
 %patch1 -p0
+%patch2 -p1
 
 gzip ChangeLog
 
@@ -287,7 +291,8 @@ cp -f po/Makefile.in.in~ po/Makefile.in.in
 
 %check
 
-%make check
+#make check MH=/dev/null || { cat mh/tests/testsuite.log; exit 1; }
+%make check MH=/dev/null
 
 %install
 
@@ -337,6 +342,9 @@ done
 %_bindir/movemail
 %_bindir/readmsg
 %_mandir/*/mail*
+
+%dir %_libexecdir/mailutils
+%_libexecdir/mailutils/mailutils-*
 
 %files -n libmailutils
 
@@ -440,6 +448,11 @@ done
 %endif
 
 %changelog
+* Fri Nov 10 2017 Sergey Y. Afonin <asy@altlinux.ru> 3.4-alt1
+- New version
+- added perl-podlators to BuildRequires
+- applied upstream patch b330af90
+
 * Thu Mar 09 2017 Sergey Y. Afonin <asy@altlinux.ru> 3.1.91-alt0.20170306.1
 - New version
 
