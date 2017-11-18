@@ -1,17 +1,17 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global debug_package %{nil}
 %global _version 1_2_6
 Name:          jibx
 Version:       1.2.6
-Release:       alt1_5jpp8
+Release:       alt1_7jpp8
 Summary:       Framework for binding XML data to Java objects
 License:       BSD and ASL 1.1
 URL:           http://sourceforge.net/projects/jibx/
@@ -118,7 +118,7 @@ ln -s $(build-classpath log4j12-1.2.17) lib/
 
 sed -i '/Class-Path/I d' %{_builddir}/%{name}/build/build.xml
 
-#sed -i 's|log4j*.jar|log4j12-1.2.17.jar|' %%{_builddir}/%%{name}/build/build.xml
+%pom_change_dep :log4j ::1.2.17 build/maven/jibx-bind/pom.xml
 
 %build
 
@@ -149,6 +149,9 @@ done
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.2.6-alt1_7jpp8
+- fixed build
+
 * Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.2.6-alt1_5jpp8
 - new version
 
