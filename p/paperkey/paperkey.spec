@@ -1,8 +1,8 @@
 # SPEC file for paperkey package
 
 Name: paperkey
-Version: 1.4
-Release: alt2
+Version: 1.5
+Release: alt1
 
 Summary: an OpenPGP key archiver
 
@@ -50,6 +50,9 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %_man1dir/%{name}*
 
 %changelog
+* Sat Nov 18 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.5-alt1
+- New version
+
 * Tue Sep 26 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.4-alt2
 - Initial build for ALT Linux Sisyphus
 
