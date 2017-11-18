@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -8,7 +9,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           sqljet
 Version:        1.1.10
-Release:        alt2_6jpp8
+Release:        alt3_6jpp8
 Summary:        Pure Java SQLite
 
 Group:          Development/Other
@@ -97,6 +98,9 @@ cp -rp build/javadoc %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/*
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1.10-alt3_6jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1.10-alt2_6jpp8
 - updated dependencies
 
