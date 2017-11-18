@@ -1,28 +1,41 @@
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global git_snapshot 1
+
+%if 0%{?git_snapshot}
+%global git_rev  19dd1a7df9e1cd1c72a47b091ffeac5c0eabb354
+%global git_date 20170810
+%global git_short %(echo %{git_rev} | cut -c-8)
+%global git_version D%{git_date}git%{git_short}
+%endif
+
+%global mainver 0.4.10
+%global mainrel 0.1
+
 Name:           kanatest
-Version:        0.4.8
-Release:        alt2_21
+Version:        %{mainver}
+Release:        alt1_0.1.D20170810git19dd1a7d
 Summary:        Hiragana and Katakana drill tool
 
 Group:          Games/Other
 License:        GPLv2+
 URL:            http://clayo.org/kanatest/
+%if 0%{?git_snapshot}
+Source0:        %{name}-%{version}-%{?git_version}.tar.bz2
+%else
 Source0:        http://clayo.org/kanatest/%{name}-%{version}.tar.gz
-
-# Already fixed upstream, backported until new release is published
-Patch1:         kanatest-0.4.8-gtkfixes.patch
-# Format security patch
-Patch2:		kanatest-0.4.8-format-security.patch
-# gtk_message_dialog_new_with_markup() usage fix
-# bug 1308898
-Patch3:		kanatest-0.4.8-gtk_markup_func_usage_fix.patch
-
+%endif
+# Shell script to create tarball from git scm
+Source100:      create-tarball-from-git.sh
 
 BuildRequires:  desktop-file-utils >= 0.9
 BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
 BuildRequires:  libxml2-devel
 BuildRequires:  gettext gettext-tools
+%if 0%{?git_snapshot}
+BuildRequires:  automake
+BuildRequires:  libtool
+%endif
 Requires:       fontlang(ja)
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -34,15 +47,20 @@ and waits until you enter the romaji equivalent in an entry field. At the end,
 statistics are provided
 
 %prep
-%setup -q
-%patch1 -p1 -b gtkfixes
-%patch2 -p1 -b .format
-%patch3 -p1 -b .dialog_markup
+%setup -q %{?git_version:-n %{name}-%{version}-%{?git_version}}
 
-sed -i src/Makefile.in \
+sed -i \
+	src/Makefile.in \
+%if 0%{?git_snapshot}
+	src/Makefile.am \
+%endif
 	-e 's|DISABLE_DEPRECATED|ENABLE_DEPRECATED|g'
 
 %build
+%if 0%{?git_snapshot}
+bash autogen.sh
+%endif
+
 export PLATFORM_CFLAGS="$RPM_OPT_FLAGS -Werror-implicit-function-declaration"
 %configure
 %make_build
@@ -67,6 +85,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.10-alt1_0.1.D20170810git19dd1a7d
+- new version
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt2_21
 - update to new release by fcimport
 
