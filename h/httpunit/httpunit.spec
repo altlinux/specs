@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -38,7 +39,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           httpunit
 Version:        1.7
-Release:        alt5_21jpp8
+Release:        alt6_21jpp8
 Epoch:          0
 Summary:        Automated web site testing toolkit
 License:        MIT and ASL 2.0
@@ -172,6 +173,9 @@ popd
 %doc --no-dereference doc/*
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt6_21jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt5_21jpp8
 - new jpp release
 
