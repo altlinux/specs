@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           jargs
 Version:        1.0
-Release:        alt1_18jpp8
+Release:        alt2_18jpp8
 Summary:        Java command line option parsing suite
 
 Group:          Development/Other
@@ -72,6 +73,9 @@ cp -p %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_18jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Oct 17 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_18jpp8
 - new jpp release
 
