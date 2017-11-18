@@ -1,3 +1,4 @@
+BuildRequires: apache-parent
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
@@ -9,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          activeio
 Version:       3.1.4
-Release:       alt1_15jpp8
+Release:       alt2_15jpp8
 Summary:       Apache ActiveMQ ActiveIO :: Core
 License:       ASL 2.0
 Url:           http://activemq.apache.org/
@@ -151,6 +152,9 @@ sed -i 's/\r//' NOTICE
 %doc LICENSE NOTICE
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.1.4-alt2_15jpp8
+- added BR: apache-parent for javapackages 5
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.1.4-alt1_15jpp8
 - new jpp release
 
