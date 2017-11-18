@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -37,7 +38,7 @@ BuildRequires: jpackage-compat
 Summary:        Dependency Management Utility
 Name:           jaranalyzer
 Version:        1.1
-Release:	alt5_2jpp6
+Release:	alt6_2jpp6
 Epoch:          0
 License:        BSD-style
 URL:            http://www.kirkk.com/main/Main/JarAnalyzer
@@ -134,6 +135,9 @@ install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt6_2jpp6
+- added BR: javapackages-local for javapackages 5
+
 * Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt5_2jpp6
 - build with java8
 
