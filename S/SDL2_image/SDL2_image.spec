@@ -1,6 +1,6 @@
 Name: SDL2_image
 Version: 2.0.2
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Simple DirectMedia Layer - Image library
 License: zlib
@@ -9,11 +9,10 @@ Group: System/Libraries
 Url: http://www.libsdl.org/projects/SDL_image/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source0: http://www.libsdl.org/projects/SDL_image/release/%name-%version.tar.gz
+Source: http://www.libsdl.org/projects/SDL_image/release/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-ubt
 
-BuildRequires: glibc-kernheaders-generic
 BuildRequires: libSDL2-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libpng-devel
@@ -51,9 +50,7 @@ to develop SDL applications.
 %setup
 
 %build
-%__autoconf
 %configure --disable-static
-
 %make_build
 
 %install
@@ -71,6 +68,9 @@ to develop SDL applications.
 %_libdir/lib%name.so
 
 %changelog
+* Sun Nov 19 2017 Nazarov Denis <nenderus@altlinux.org> 2.0.2-alt2%ubt
+- Fix build
+
 * Thu Oct 26 2017 Nazarov Denis <nenderus@altlinux.org> 2.0.2-alt1%ubt
 - Version 2.0.2
 

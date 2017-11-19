@@ -2,11 +2,10 @@
 %def_with fcitx
 %def_with nas
 %def_with pulse
-%def_disable static
 
 Name: SDL2
 Version: 2.0.7
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Simple DirectMedia Layer
 License: zlib
@@ -24,7 +23,6 @@ BuildPreReq: libdbus-devel
 
 %{?_with_fcitx:BuildRequires: fcitx-devel}
 BuildRequires: gcc-c++
-BuildRequires: glibc-kernheaders-generic
 BuildRequires: libGLES-devel
 BuildRequires: libXScrnSaver-devel
 BuildRequires: libXxf86vm-devel
@@ -32,6 +30,7 @@ BuildRequires: libalsa-devel
 %{?_with_nas:BuildRequires: libaudio-devel}
 BuildRequires: libesd-devel
 %{?_with_ibus:BuildRequires: libibus-devel}
+BuildRequires: libjack-devel
 %{?_with_pulse:BuildRequires: libpulseaudio-devel}
 BuildRequires: libsamplerate-devel
 BuildRequires: libudev-devel
@@ -53,8 +52,6 @@ multiple platforms.
 %package -n lib%name-devel
 Summary: Libraries, includes and more to develop SDL applications.
 Group: Development/C
-# Since 2.0.5, `sdl2-config --libs` forces new dtags;
-# the support for RUNPATH (a new tag) has been added in:
 Conflicts: rpm-build < 4.0.4-alt100.96
 
 %description -n lib%name-devel
@@ -65,29 +62,16 @@ multiple platforms.
 This is the libraries, include files and other resources you can use
 to develop SDL applications.
 
-%if_enabled static
-%package -n lib%name-devel-static
-Summary: Static libraries to develop SDL applications.
-Group: Development/C
-
-%description -n lib%name-devel-static
-This is the Simple DirectMedia Layer, a generic API that provides low
-level access to audio, keyboard, mouse, and display framebuffer across
-multiple platforms.
-
-This is the static libraries you can use to develop SDL applications.
-%endif
-
 %prep
 %setup
 
 %build
-%configure
+%configure --disable-static
 %make_build
 
 %install
 %makeinstall_std
-rm -f %buildroot%_libdir/*.la
+%__rm -f %buildroot%_libdir/*.{a,la}
 
 %files -n lib%name
 %doc BUGS.txt COPYING.txt CREDITS.txt INSTALL.txt README*.txt TODO.txt WhatsNew.txt
@@ -104,12 +88,10 @@ rm -f %buildroot%_libdir/*.la
 %_pkgconfigdir/sdl2.pc
 %_aclocaldir/sdl2.m4
 
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/lib%name*.a
-%endif
-
 %changelog
+* Sun Nov 19 2017 Nazarov Denis <nenderus@altlinux.org> 2.0.7-alt2%ubt
+- Disable static libraries
+
 * Thu Oct 26 2017 Nazarov Denis <nenderus@altlinux.org> 2.0.7-alt1%ubt
 - Version 2.0.7
 
