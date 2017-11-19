@@ -1,6 +1,8 @@
+%def_with bootstrap
+
 Name: SDL2_mixer
 Version: 2.0.2
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Simple DirectMedia Layer - Sample Mixer Library
 License: zlib
@@ -13,7 +15,6 @@ Source: http://www.libsdl.org/projects/SDL_mixer/release/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-ubt
 
-BuildRequires: glibc-kernheaders-generic
 BuildRequires: libSDL2-devel
 BuildRequires: libflac-devel
 %{?!_with_bootstrap:BuildRequires: libfluidsynth-devel}
@@ -51,7 +52,6 @@ libraries.
 %setup
 
 %build
-%__autoconf
 %configure --disable-static
 %make_build
 
@@ -70,6 +70,9 @@ libraries.
 %_libdir/lib%name.so
 
 %changelog
+* Sun Nov 19 2017 Nazarov Denis <nenderus@altlinux.org> 2.0.2-alt2%ubt
+- Fix build
+
 * Thu Oct 26 2017 Nazarov Denis <nenderus@altlinux.org> 2.0.2-alt1%ubt
 - Version 2.0.2
 
