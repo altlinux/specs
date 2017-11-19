@@ -1,11 +1,11 @@
 Name: spl
-Version: 0.7.1
+Version: 0.7.3
 Release: alt1
 Summary: Solaris Porting Layer (SPL)
 License: GPLv2+
 Group: System/Kernel and hardware
 URL: http://zfsonlinux.org
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 Patch: spl-0.7.0-conf-alt.patch
 
 BuildRequires: rpm-build-kernel
@@ -65,6 +65,9 @@ install -pD -m0644 %name-%version.tar.xz %kernel_srcdir/%name-%version.tar.xz
 %_usrsrc/kernel
 
 %changelog
+* Sat Nov 18 2017 Anton Farygin <rider@altlinux.ru> 0.7.3-alt1
+- 0.7.3 
+
 * Thu Sep 14 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.7.1-alt1
 - 0.7.1
 
