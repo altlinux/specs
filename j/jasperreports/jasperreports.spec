@@ -1,3 +1,4 @@
+%def_with lucene4
 BuildRequires: apache-parent
 Epoch: 0
 Group: Development/Java
@@ -10,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          jasperreports
 Version:       6.2.2
-Release:       alt2_3jpp8
+Release:       alt3_3jpp8
 Summary:       Report-generating tool
 License:       LGPLv3+
 URL:           http://jasperforge.org/projects/jasperreports/
@@ -61,11 +62,17 @@ BuildRequires: mvn(org.apache.ant:ant)
 BuildRequires: mvn(org.apache.commons:commons-javaflow)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.httpcomponents:httpclient)
+%if_with lucene4
+BuildRequires: mvn(org.apache.lucene:lucene-analyzers-common:4)
+BuildRequires: mvn(org.apache.lucene:lucene-core:4)
+BuildRequires: mvn(org.apache.lucene:lucene-queryparser:4)
+%else
 BuildRequires: mvn(org.apache.lucene:lucene-analyzers-common)
 BuildRequires: mvn(org.apache.lucene:lucene-core)
 BuildRequires: mvn(org.apache.lucene:lucene-queryparser)
-BuildRequires: mvn(org.apache.poi:poi)
-BuildRequires: mvn(org.apache.poi:poi-ooxml)
+%endif
+BuildRequires: mvn(org.apache.poi:poi:3.14)
+BuildRequires: mvn(org.apache.poi:poi-ooxml:3.14)
 BuildRequires: mvn(org.apache.velocity:velocity)
 BuildRequires: mvn(org.apache.xmlgraphics:batik-bridge)
 BuildRequires: mvn(org.apache.xmlgraphics:batik-svggen)
@@ -132,7 +139,9 @@ rm -r src/net/sf/jasperreports/components/barcode4j
 rm -r src/org
 %pom_add_dep commons-codec:commons-codec:1.10:compile
 
+%if_without lucene4
 %patch4 -p1
+%endif
 %patch5 -p1
 
 
@@ -145,6 +154,9 @@ rm -r src/org
 
 %pom_change_dep :commons-javaflow org.apache.commons:
 
+%if_with lucene4
+%pom_change_dep org.apache.lucene: ::4.10.4
+%endif
 
 # Disable circular dependecy cycle
 %pom_remove_dep org.springframework:
@@ -213,6 +225,9 @@ rm changes.txt.orig
 %doc license.txt ThirdPartySoftwareNotices.txt
 
 %changelog
+* Sun Nov 19 2017 Igor Vlasenko <viy@altlinux.ru> 0:6.2.2-alt3_3jpp8
+- built with compat apache-poi-3.14
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:6.2.2-alt2_3jpp8
 - added BR: apache-parent for javapackages 5
 
