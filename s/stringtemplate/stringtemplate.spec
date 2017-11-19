@@ -1,3 +1,4 @@
+BuildRequires: javapackages-local
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 Summary: A Java template engine
 Name: stringtemplate
 Version: 3.2.1
-Release: alt1_12jpp8
+Release: alt2_12jpp8
 URL: http://www.stringtemplate.org/
 Source0: http://www.stringtemplate.org/download/stringtemplate-%{version}.tar.gz
 # Build jUnit tests + make the antlr2 generated code before preparing sources
@@ -64,6 +65,9 @@ install -Dpm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.2.1-alt2_12jpp8
+- added BR: javapackages-local for javapackages 5
+
 * Tue Nov 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.2.1-alt1_12jpp8
 - new fc release
 
