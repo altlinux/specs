@@ -1,29 +1,29 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++ swig unzip
+BuildRequires: gcc-c++ rpm-build-java swig unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global reldate %{nil}
-%global rcver %{nil}
+%global reldate 20160924
 
 Name:          apache-poi
-Version:       3.14
-Release:       alt1_4jpp8
+Version:       3.15
+Release:       alt1_1jpp8
 Summary:       The Java API for Microsoft Documents
 # ASLv2 + GPLv3 src/resources/scratchpad/org/apache/poi/hdgf/chunks_parse_cmds.tbl
 # https://bugzilla.redhat.com/show_bug.cgi?id=1146670#c13
 License:       ASL 2.0 and (CC-BY and CC-BY-SA and W3C) and GPLv3
 URL:           http://poi.apache.org/
-Source0:       http://www.apache.org/dist/poi/release/src/poi-src-%{version}%{reldate}.tar.gz
-#Source0:       http://www.apache.org/dist/poi/dev/src/poi-src-%%{version}%%{?rcver}-%%{reldate}.tar.gz
+Source0:       http://archive.apache.org/dist/poi/release/src/poi-src-%{version}%{?reldate:-}%{?reldate}.tar.gz
 # Creative Commons license 4.0 (Attribution-ShareAlike)
-Source1:       http://www.ecma-international.org/publications/files/ECMA-ST/Office%%20Open%%20XML%%201st%%20edition%%20Part%%204%%20(PDF).zip
-Source2:       http://www.ecma-international.org/publications/files/ECMA-ST/Office%%20Open%%20XML%%201st%%20edition%%20Part%%202%%20(PDF).zip
+# These two zip files renamed after download for deficiencies in fedpkg
+#Source1:       http://www.ecma-international.org/publications/files/ECMA-ST/Office%20Open%20XML%201st%20edition%20Part%204%20%28PDF%29.zip
+#Source2:       http://www.ecma-international.org/publications/files/ECMA-ST/Office%20Open%20XML%201st%20edition%20Part%202%20%28PDF%29.zip
+Source1:       Office_Open_XML_1st_edition_Part_4__PDF_.zip
+Source2:       Office_Open_XML_1st_edition_Part_2__PDF_.zip
 # Creative Commons Attribution 3.0 License
 Source3:       http://dublincore.org/schemas/xmls/qdc/2003/04/02/dc.xsd
 Source4:       http://dublincore.org/schemas/xmls/qdc/2003/04/02/dcterms.xsd
@@ -42,18 +42,19 @@ Source12:      http://repo2.maven.org/maven2/org/apache/poi/poi-ooxml/%{version}
 Source13:      http://repo2.maven.org/maven2/org/apache/poi/poi-ooxml-schemas/%{version}/poi-ooxml-schemas-%{version}.pom
 Source14:      http://repo2.maven.org/maven2/org/apache/poi/poi-scratchpad/%{version}/poi-scratchpad-%{version}.pom
 
-#Force compile of xsds if disconnected
+# Force compile of xsds if disconnected
 Patch1:        apache-poi-3.14-compile-xsds.patch
-# Fix jacoco libraries and disable javadoc doclint
+# Disable javadoc doclint
 Patch2:        apache-poi-3.14-build.patch
 
 BuildArch:     noarch
 
 BuildRequires: jacoco
 BuildRequires: javapackages-local
+BuildRequires: apache-commons-collections4 >= 4.1
+BuildRequires: apache-commons-codec
+BuildRequires: apache-commons-logging
 BuildRequires: mvn(com.github.virtuald:curvesapi)
-BuildRequires: mvn(commons-codec:commons-codec)
-BuildRequires: mvn(commons-logging:commons-logging)
 BuildRequires: mvn(dom4j:dom4j)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(log4j:log4j:1.2.17)
@@ -112,18 +113,17 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n poi-%{version}%{?rcver}
-%patch1 -p1 -b .compile-xsds
-%patch2 -p1 -b .build
+%setup -q -n poi-%{version}
+%patch1
+%patch2
 
 find -name '*.class' -delete
 find -name '*.jar' -delete
 
 mkdir lib ooxml-lib
-build-jar-repository -s -p lib ant commons-codec commons-logging jacoco hamcrest/core junit bcprov bcpkix objectweb-asm/asm-all xmlsec slf4j/slf4j-api
-ln -sf $(build-classpath log4j-1.2.17) lib/log4j.jar
-
+build-jar-repository -s -p lib ant commons-collections4 commons-codec commons-logging hamcrest/core junit bcprov bcpkix xmlsec slf4j/slf4j-api log4j-1.2.17
 build-jar-repository -s -p ooxml-lib dom4j xmlbeans/xbean curvesapi
+
 #Unpack the XMLSchema
 pushd ooxml-lib
 unzip "%SOURCE1" OfficeOpenXML-XMLSchema.zip
@@ -154,9 +154,10 @@ sed -i '/TestXSSFSheet/d' src/ooxml/testcases/org/apache/poi/xssf/usermodel/AllX
 %build
 cat > build.properties <<'EOF'
 main.ant.jar=lib/ant.jar
+main.commons-collections4.jar=lib/commons-collections4.jar
 main.commons-codec.jar=lib/commons-codec.jar
 main.commons-logging.jar=lib/commons-logging.jar
-main.log4j.jar=lib/log4j.jar
+main.log4j.jar=lib/log4j-1.2.17.jar
 main.junit.jar=lib/junit.jar
 main.hamcrest.jar=lib/hamcrest_core.jar
 ooxml.dom4j.jar=ooxml-lib/dom4j.jar
@@ -167,7 +168,6 @@ dsig.xmlsec.jar=lib/xmlsec.jar
 dsig.bouncycastle-prov.jar=lib/bcprov.jar
 dsig.bouncycastle-pkix.jar=lib/bcpkix.jar
 dsig.sl4j-api.jar=lib/slf4j_slf4j-api.jar
-asm.jar=lib/objectweb-asm_asm-all.jar
 disconnected=1
 DSTAMP=%{reldate}
 EOF
@@ -176,10 +176,8 @@ export ANT_OPTS="-Xmx768m"
 ant -propertyfile build.properties compile-ooxml-xsds jar javadocs
 
 %install
-%mvn_artifact $RPM_SOURCE_DIR/poi-%{version}.pom build/dist/poi-%{version}-%{reldate}.jar
-%mvn_artifact poi-excelant-%{version}.pom build/dist/poi-excelant-%{version}-%{reldate}.jar
-for m in examples ooxml ooxml-schemas scratchpad;do
-%mvn_artifact $RPM_SOURCE_DIR/poi-${m}-%{version}.pom build/dist/poi-${m}-%{version}-%{reldate}.jar
+for m in poi poi-excelant poi-examples poi-ooxml poi-ooxml-schemas poi-scratchpad ; do
+%mvn_artifact $RPM_SOURCE_DIR/${m}-%{version}.pom build/dist/maven/$m/${m}-%{version}.jar
 done
 
 %mvn_install -J build/tmp/site/build/site/apidocs
@@ -198,6 +196,9 @@ ant -propertyfile build.properties test || :
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Nov 20 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.15-alt1_1jpp8
+- new version
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.14-alt1_4jpp8
 - new version
 
