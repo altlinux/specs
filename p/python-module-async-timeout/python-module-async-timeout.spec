@@ -1,7 +1,7 @@
 %define oname async-timeout
 
 Name: python-module-%oname
-Version: 1.1
+Version: 1.4
 Release: alt1
 Summary: Timeout context manager for asyncio programs
 License: ASL 2.0
@@ -42,5 +42,8 @@ Timeout context manager for asyncio programs.
 %python3_sitelibdir/*
 
 %changelog
+* Sun Nov 19 2017 Anton Midyukov <antohami@altlinux.org> 1.4-alt1
+- New version 1.4
+
 * Sat Jan 21 2017 Anton Midyukov <antohami@altlinux.org> 1.1-alt1
 - Initial build for ALT Linux Sisyphus.

@@ -1,7 +1,7 @@
 %define oname yarl
 
 Name: python-module-%oname
-Version: 0.9.8
+Version: 0.11.0
 Release: alt1
 Summary: Yet another URL library http://yarl.readthedocs.io
 License: ASL 2.0
@@ -39,6 +39,9 @@ The module provides handy URL class for url parsing and changing.
 %python3_sitelibdir/*
 
 %changelog
+* Sat Nov 18 2017 Anton Midyukov <antohami@altlinux.org> 0.11.0-alt1
+- New version 0.11.0
+
 * Mon May 8 2017 Anton Midyukov <antohami@altlinux.org> 0.9.8-alt1
 - New version 0.9.8
 
