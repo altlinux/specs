@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 19.7.1
-Release: alt1
+Release: alt2
 Summary: WSGI HTTP Server for UNIX
 License: Mit
 Group: Development/Python
@@ -12,6 +12,7 @@ Url: http://pypi.python.org/pypi/gunicorn
 
 # https://github.com/benoitc/gunicorn.git
 Source: %name-%version.tar
+Patch: deprecate-gaiohttp-worker.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
@@ -35,6 +36,8 @@ Summary: WSGI HTTP Server for UNIX
 Group: Development/Python3
 %py3_provides %oname
 %py3_requires asyncio
+# python3-module-aiohtt >= 2.0 not provides aiohttp.wsgi
+%add_python3_req_skip aiohttp.wsgi 
 
 %description -n python3-module-%oname
 Gunicorn 'Green Unicorn' is a Python WSGI HTTP Server for UNIX. It's a
@@ -69,6 +72,7 @@ This package contains pickles for gunicorn.
 
 %prep
 %setup
+%patch -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -138,6 +142,10 @@ popd
 %endif
 
 %changelog
+* Sun Nov 19 2017 Anton Midyukov <antohami@altlinux.org> 19.7.1-alt2
+- Skip pyrequires aiohttp.wsgi
+- Added deprecate gaiohttp worker patch.
+
 * Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 19.7.1-alt1
 - Updated to upstream version 19.7.1.
 

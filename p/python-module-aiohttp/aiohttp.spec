@@ -1,64 +1,35 @@
 %define oname aiohttp
 
-%def_without python2
 %def_with python3
 %def_without docs
 
 Name: python-module-%oname
-Version: 1.3.5
-Release: alt2
+Version: 2.2.5
+Release: alt1
 Summary: http client/server for asyncio
 License: ASLv2.0
 Group: Development/Python
 Url: https://github.com/KeepSafe/aiohttp.git
 Source: %name-%version.tar
+Requires: python3-multidict >= 3.0.0
+Requires: python3-async-timeout >= 1.2.0
+Requires: python3-yarl >= 0.11
 
-%if_with python2
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib  python3-module-Cython
-
-#BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-trollius python-module-nose
-#BuildPreReq: python-module-gunicorn 
-#BuildPreReq: python-module-gunicorn 
-BuildPreReq: python-module-chardet
-BuildPreReq: python-module-objects
-
-#BuildPreReq: python-module-flake8 python-module-coverage
-#BuildPreReq: python-module-path 
-#python-module-bumpversion
-#BuildPreReq: python-module-Cython
-%endif
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-setuptools-tests python3-module-multidict python3-module-yarl python3-module-async-timeout python3-module-trollius python3(asyncio) python3-module-pytest-mock python3-module-chardet
-%endif
+BuildRequires: python3-devel python3-module-setuptools python3-module-Cython
+BuildRequires: python3-module-setuptools-tests python3-module-multidict python3-module-yarl python3-module-async-timeout python3-module-pytest-mock
 %if_with docs
 BuildRequires(pre): python3-module-sphinx-devel
 BuildRequires: python3-module-sphinxcontrib-asyncio python3-module-sphinxcontrib-newsfeed
 %endif
 
-%py_provides %oname
-#%%py_requires trollius chardet
-
 %description
 http client/server for asyncio (PEP-3156).
-
-%package tests
-Summary: Tests for %oname
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-http client/server for asyncio (PEP-3156).
-
-This package contains tests for %oname.
 
 %package -n python3-module-%oname
 Summary: http client/server for asyncio
 Group: Development/Python3
 %py3_provides %oname
-#%%py3_requires asyncio chardet
 
 %description -n python3-module-%oname
 http client/server for asyncio (PEP-3156).
@@ -72,15 +43,6 @@ Requires: python3-module-%oname = %EVR
 http client/server for asyncio (PEP-3156).
 
 This package contains tests for %oname.
-
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python
-
-%description pickles
-http client/server for asyncio (PEP-3156).
-
-This package contains pickles for %oname.
 
 %package docs
 Summary: Documentation for %oname
@@ -100,15 +62,6 @@ rm -rf ../python3-module-%oname-%version
 cp -R . ../python3-module-%oname-%version
 %endif
 
-%if_with python2
-find -type f -name '*.py' -exec \
-	sed -i 's|asyncio.streams|trollius.streams|g' '{}' +
-find -type f -name '*.py' -exec \
-	sed -i 's|import asyncio|import trollius|' '{}' +
-find -type f -name '*.py' -exec \
-	sed -i 's|from asyncio|from trollius|' '{}' +
-%endif
-
 %if_with docs
 pushd ../python3-module-%oname-%version
 %prepare_sphinx3 .
@@ -117,73 +70,25 @@ popd
 %endif
 
 %build
-%if_with python2
-%python_build_debug
-%endif
-
-%if_with python3
-pushd ../python3-module-%oname-%version
 %python3_build_debug
-popd
-%endif
 
 %if_with docs
 pushd ../python3-module-%oname-%version
 %make_build -C docs html SPHINXBUILD=py3_sphinx-build
-#%%make_build -C docs pickle
 popd
 %endif
 
 %install
-%if_with python2
-%python_install
-%endif
-
-%if_with python3
-pushd ../python3-module-%oname-%version
 %python3_install
-popd
-%endif
-
-%if_with docs
-#install -d %buildroot%python_sitelibdir/%oname
-#cp -R docs/_build/pickle %buildroot%python_sitelibdir/%oname/
-%endif
 
 %check
-%if_with python2
-python setup.py test
-nosetests -s -v ./tests/
-%endif
-%if_with python3
-pushd ../python3-module-%oname-%version
 python3 setup.py test
-#sed -i 's|nosetests|nosetests3|' Makefile
-#sed -i 's|flake8|python3-flake8|' Makefile
-#nosetests3 -s -v ./tests/
-popd
-%endif
-
-%if_with python2
-%files
-%doc *.txt *.rst examples
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
-%exclude %python_sitelibdir/*/test*
-
-%files tests
-%python_sitelibdir/*/test*
-%endif
 
 %if_with docs
-%files pickles
-%python_sitelibdir/*/pickle
-
 %files docs
 %doc docs/_build/html/*
 %endif
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.txt *.rst examples
 %python3_sitelibdir/*
@@ -193,9 +98,11 @@ popd
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/test*
 %python3_sitelibdir/*/*/test*
-%endif
 
 %changelog
+* Sun Nov 19 2017 Anton Midyukov <antohami@altlinux.org> 2.2.5-alt1
+- New version 2.2.5
+
 * Wed Oct 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.5-alt2
 - Updated build dependencies.
 

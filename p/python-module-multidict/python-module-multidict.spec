@@ -1,7 +1,7 @@
 %define oname multidict
 
 Name: python-module-%oname
-Version: 2.1.4
+Version: 3.1.3
 Release: alt1
 Summary: Multidicts are useful for working with HTTP headers, URL query args etc
 
@@ -31,6 +31,7 @@ Python 3 version.
 
 %prep
 %setup -n %oname-%version
+rm -f multidict/_istr.cpython-35m-x86_64-linux-gnu.so
 
 %build
 %python3_build
@@ -44,6 +45,9 @@ Python 3 version.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sun Nov 19 2017 Anton Midyukov <antohami@altlinux.org> 3.1.3-alt1
+- New version 3.1.3
+
 * Sun Jan 15 2017 Anton Midyukov <antohami@altlinux.org> 2.1.4-alt1
 - New version 2.1.4
 
