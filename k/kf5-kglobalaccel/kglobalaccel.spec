@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.39.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -97,6 +97,9 @@ KF5 library
 %_K5lib/libKF5GlobalAccelPrivate.so.*
 
 %changelog
+* Mon Nov 20 2017 Oleg Solovyov <mcpain@altlinux.org> 5.39.0-alt2%ubt
+- fix against KDEBUG#384597
+
 * Tue Oct 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.39.0-alt1%ubt
 - new version
 
