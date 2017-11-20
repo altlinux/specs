@@ -1,7 +1,7 @@
 %def_disable snapshot
 
-%define ver_base 3.5
-%define ver_major 3.5
+%define ver_base 3.6
+%define ver_major 3.6
 %define gst_api_ver 1.0
 %define xdg_name org.gnome.gThumb
 
@@ -14,7 +14,7 @@
 %def_enable colord
 
 Name: gthumb
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -172,6 +172,9 @@ This package contains headers needed to build extensions for gThumb.
 %_pkgconfigdir/*
 
 %changelog
+* Mon Nov 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Mon Nov 06 2017 Yuri N. Sedunov <aris@altlinux.org> 3.5.4-alt1
 - 3.5.4
 
