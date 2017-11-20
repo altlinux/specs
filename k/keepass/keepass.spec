@@ -1,6 +1,6 @@
 Name: keepass
 Version: 2.37
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Password manager
 
@@ -75,7 +75,7 @@ xbuild /target:KeePass /property:Configuration=Release
 %__python -c 'import archmod.CHM; archmod.CHM.CHMDir("Docs").process_templates("Docs/Chm")'
 
 %install
-install -d %buildroot/%prefix/lib/%name %buildroot/%_datadir/%name %buildroot/%_datadir/%name/XSL %buildroot/%_datadir/applications %buildroot/%_bindir %buildroot/%_datadir/mime/packages %buildroot/%_datadir/icons/hicolor/512x512/apps %buildroot/%_datadir/icons/hicolor/256x256/apps %buildroot/%_datadir/icons/hicolor/128x128/apps %buildroot/%_datadir/icons/hicolor/64x64/apps %buildroot/%_datadir/icons/hicolor/48x48/apps %buildroot/%_datadir/icons/hicolor/32x32/apps %buildroot/%_datadir/icons/hicolor/16x16/apps %buildroot/%_mandir/man1 %buildroot/%_docdir/%name %buildroot/%_datadir/appdata
+install -d %buildroot/%prefix/lib/%name %buildroot/%_datadir/%name %buildroot/%_datadir/%name/XSL %buildroot/%_datadir/applications %buildroot/%_bindir %buildroot/%_datadir/mime/packages %buildroot/%_datadir/icons/hicolor/512x512/apps %buildroot/%_datadir/icons/hicolor/256x256/apps %buildroot/%_datadir/icons/hicolor/128x128/apps %buildroot/%_datadir/icons/hicolor/64x64/apps %buildroot/%_datadir/icons/hicolor/48x48/apps %buildroot/%_datadir/icons/hicolor/32x32/apps %buildroot/%_datadir/icons/hicolor/16x16/apps %buildroot/%_mandir/man1 %buildroot/%_docdir/%name %buildroot/%_datadir/metainfo
 install -p -m 0644 Build/KeePass/Release/KeePass.exe Ext/KeePass.config.xml Ext/KeePass.exe.config %buildroot/%prefix/lib/%name
 install -p -m 0644 Ext/XSL/KDBX_Common.xsl Ext/XSL/KDBX_DetailsFull_HTML.xsl Ext/XSL/KDBX_DetailsLight_HTML.xsl Ext/XSL/KDBX_PasswordsOnly_TXT.xsl Ext/XSL/KDBX_Tabular_HTML.xsl %buildroot/%_datadir/%name/XSL
 install -p -m 0644 -T Ext/Icons_15_VA/KeePass_Round/KeePass_Round_512.png %buildroot/%_datadir/icons/hicolor/512x512/apps/%name.png
@@ -88,7 +88,7 @@ install -p -m 0644 -T Ext/Icons_15_VA/KeePass_Round/KeePass_Round_16.png %buildr
 desktop-file-install --dir=%buildroot/%_datadir/applications dist/%name.desktop
 install -p -m 0644 dist/%name.xml %buildroot/%_datadir/mime/packages
 install -p -m 0644 dist/%name.1 %buildroot/%_mandir/man1
-install -p -m 0644 %SOURCE1 %buildroot/%_datadir/appdata
+install -p -m 0644 %SOURCE1 %buildroot/%_datadir/metainfo
 install -p dist/%name %buildroot/%_bindir
 sed 's/\r$//' Docs/History.txt > %buildroot/%_docdir/%name/History.txt
 sed 's/\r$//' Docs/License.txt > %buildroot/%_docdir/%name/License.txt
@@ -111,13 +111,16 @@ cp -pr Docs/Chm %buildroot/%_docdir/%name/
 %_datadir/icons/hicolor/32x32/apps/%name.png
 %_datadir/icons/hicolor/16x16/apps/%name.png
 %_mandir/man1/%name.1*
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 
 %files doc
 %dir %_docdir/%name
 %doc %_docdir/%name/Chm/
 
 %changelog
+* Mon Nov 20 2017 Oleg Solovyov <mcpain@altlinux.org> 2.37-alt2%ubt
+- move appdata -> metainfo
+
 * Fri Oct 27 2017 Oleg Solovyov <mcpain@altlinux.org> 2.37-alt1%ubt
 - new version: 2.37
 
