@@ -6,7 +6,7 @@
 
 Name:     scilab
 Version:  6.0.0
-Release:  alt2
+Release:  alt3
 Summary:  A high-level language and system for numerical computations
 
 License:  CeCILL
@@ -223,6 +223,9 @@ rm -f %buildroot%_xdgmimedir/packages/scilab.xml
 %_datadir/mime/packages/scilab.xml
 
 %changelog
+* Mon Nov 20 2017 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt3
+- Show scinotes menu only in Development section
+
 * Wed Nov 15 2017 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt2
 - Build docs (ALT #34037)
 - Fix run from menu (ALT #33976)
