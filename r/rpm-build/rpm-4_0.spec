@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt105
+Release: alt106
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -74,7 +74,7 @@ BuildPreReq: rpm >= 3.0.6-ipl24mdk, %_bindir/subst
 BuildPreReq: elfutils-devel
 
 # Automatically added by buildreq on Thu Apr 23 2009 and edited manually.
-BuildRequires: bzlib-devel libdb4.7-devel libelf-devel liblzma-devel libpopt-devel python-devel zlib-devel
+BuildRequires: libdb4.7-devel libelf-devel liblzma-devel libpopt-devel python-devel zlib-devel
 
 %package -n lib%oname
 Summary: Shared libraries required for applications which will manipulate RPM packages
@@ -82,7 +82,6 @@ Summary(ru_RU.UTF-8): Файлы, необходимые для разработ
 License: GPL/LGPL
 Group: System/Libraries
 PreReq: zlib >= 1.1.4
-PreReq: bzlib >= 1:1.0.2-alt2
 PreReq: libpopt >= 1:1.7-alt3
 PreReq: libdb4.7
 
@@ -109,7 +108,7 @@ Summary(ru_RU.UTF-8): Статические библиотеки, необхо�
 License: GPL/LGPL
 Group: Development/C
 Requires: lib%oname-devel = %version-%release
-Requires: bzlib-devel-static, libbeecrypt-devel-static, libdb4.7-devel-static, libpopt-devel-static, zlib-devel-static
+Requires: libbeecrypt-devel-static, libdb4.7-devel-static, libpopt-devel-static, zlib-devel-static
 
 
 %package build-topdir
@@ -276,9 +275,9 @@ done
 touch %buildroot%_localstatedir/%oname/files-awaiting-filetriggers
 
 # Prepare documentation.
-bzip2 -9k CHANGES ||:
+xz -9 CHANGES ||:
 mkdir -p %buildroot%_docdir/%oname-%rpm_version
-install -p -m644 CHANGES.bz2 CREDITS README README.ALT* \
+install -p -m644 CHANGES.xz CREDITS README README.ALT* \
 	%buildroot%_docdir/%oname-%rpm_version/
 cp -a doc/manual %buildroot%_docdir/%oname-%rpm_version/
 rm -f %buildroot%_docdir/%oname-%rpm_version/manual/{Makefile*,buildroot}
@@ -510,6 +509,11 @@ mv %buildroot%_rpmlibdir/{,build}macros
 %endif #with python
 
 %changelog
+* Mon Nov 20 2017 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt106
+- Added support for SOURCE_DATE_EPOCH environment variable
+  (by Vladimir D. Seleznev; closes: #34200).
+- Dropped bzdio support.
+
 * Thu Oct 26 2017 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt105
 - brp-check_contents: enabled strict error checking by default.
 
