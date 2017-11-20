@@ -1,7 +1,7 @@
 %define rname kigo
 
 Name: kde5-%rname
-Version: 17.08.0 
+Version: 17.08.3
 Release: alt1%ubt
 %K5init
 
@@ -55,6 +55,9 @@ glass or plastic) on the vacant intersections of a grid of 19x19 lines (9x9 or
 %_K5xdgconf/%{rname}.knsrc
 
 %changelog
+* Fri Nov 17 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+- new version
+
 * Mon Aug 28 2017 Stanislav Levin <slev@altlinux.org> 17.08.0-alt1%ubt
 - Initial build
 
