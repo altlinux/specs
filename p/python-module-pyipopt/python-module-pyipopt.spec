@@ -4,12 +4,11 @@
 %define oname pyipopt
 Name: python-module-%oname
 Version: 1.0
-Release: alt2.git20140116
+Release: alt3.git20140116
 Summary: Python interface to Ipopt
 License: Artistic License/GPL
 Group: Development/Python
 Url: https://github.com/xuy/pyipopt
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/xuy/pyipopt.git
 Source: %oname-%version.tar.gz
@@ -53,6 +52,9 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
 %doc examples/*
 
 %changelog
+* Mon Nov 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt3.git20140116
+- Rebuilt with new libipopt.
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt2.git20140116
 - New snapshot
 

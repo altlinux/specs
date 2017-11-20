@@ -3,20 +3,21 @@
 
 %define oname Osi
 Name: Coin%oname
-Version: 0.106.4
-Release: alt1.svn20140217.1
+Version: 0.107.8
+Release: alt1
 Summary: Coin Open Solver Interface
-License: CPL v1.0
+License: EPL v1.0
 Group: Sciences/Mathematics
-Url: http://www.coin-or.org/projects/Osi.xml
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://projects.coin-or.org/Osi
 
-# https://projects.coin-or.org/svn/Osi/trunk
-Source: %oname-%version.tar.gz
+# https://www.coin-or.org/download/source/%oname/%oname-%version.tgz
+Source: %oname-%version.tar
+Patch1: %oname-%version-alt-build.patch
 
-BuildPreReq: libglpk-devel CoinBuildTools gcc4.9-c++ %mpiimpl-devel
-BuildPreReq: libCoinUtils-devel liblapack-devel chrpath libnuma-devel
-BuildPreReq: doxygen graphviz CoinSample-devel CoinNetlib-devel
+BuildRequires(pre): %mpiimpl-devel
+BuildRequires: libglpk-devel CoinBuildTools gcc-c++
+BuildRequires: libCoinUtils-devel liblapack-devel chrpath libnuma-devel
+BuildRequires: doxygen graphviz CoinSample-devel CoinNetlib-devel
 
 %description
 The COIN-OR Open Solver Interface is a uniform API for interacting with
@@ -104,10 +105,13 @@ Algorithm (OsiVol); XPRESS-MP (OsiXpr).
 This package contains examples for COIN-OR Open Solver Interface.
 
 %prep
-%setup
+%setup -n %oname-%version
+%patch1 -p1
+
+# don't use bundled stuff
+rm -rf {BuildTools,CoinUtils,Data,ThirdParty}
 
 %build
-%set_gcc_version 4.9
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
@@ -125,7 +129,8 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 	--disable-mosek-libcheck \
 	--disable-xpress-libcheck \
 	--disable-gurobi-libcheck \
-	--disable-soplex-libcheck
+	--disable-soplex-libcheck \
+	--disable-dependency-linking
 sed -i 's|\-lglpk||g' Osi/examples/Makefile
 export PKG_CONFIG_PATH=$PWD/Osi
 TOPDIR=$PWD
@@ -170,6 +175,9 @@ done
 #_bindir/*
 
 %changelog
+* Fri Nov 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.107.8-alt1
+- Updated to stable upstream version 0.107.8.
+
 * Tue Feb 28 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.106.4-alt1.svn20140217.1
 - build fixed
 

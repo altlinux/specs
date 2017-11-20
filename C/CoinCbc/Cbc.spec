@@ -3,22 +3,23 @@
 
 %define oname Cbc
 Name: Coin%oname
-Version: 2.8.9
-Release: alt1.svn20140513.1
+Version: 2.9.8
+Release: alt1
 Summary: COIN-OR Branch-and-Cut MIP Solver
-License: CPL v1.0
+License: EPL v1.0
 Group: Sciences/Mathematics
-Url: http://www.coin-or.org/projects/Cbc.xml
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://projects.coin-or.org/Cbc
 
-# https://projects.coin-or.org/svn/Cbc/trunk
-Source: %oname-%version.tar.gz
+# https://www.coin-or.org/download/source/%oname/%oname-%version.tgz
+Source: %oname-%version.tar
+Patch1: %oname-%version-alt-build.patch
 
-BuildPreReq: doxygen graphviz libglpk-devel CoinBuildTools gcc4.9-c++
-BuildPreReq: libCoinUtils-devel liblapack-devel
-BuildPreReq: libCoinCgl-devel libCoinClp-devel libCoinOsi-devel
-BuildPreReq: libCoinVol-devel libCoinDyLP-devel %mpiimpl-devel
-BuildPreReq: CoinMiplib3-devel chrpath libnuma-devel
+BuildRequires(pre): %mpiimpl-devel
+BuildRequires: doxygen graphviz libglpk-devel CoinBuildTools gcc-c++
+BuildRequires: libCoinUtils-devel liblapack-devel
+BuildRequires: libCoinCgl-devel libCoinClp-devel libCoinOsi-devel
+BuildRequires: libCoinVol-devel libCoinDyLP-devel
+BuildRequires: CoinMiplib3-devel chrpath libnuma-devel
 
 Requires: lib%name = %version-%release
 
@@ -81,10 +82,13 @@ library and as a standalone solver.
 This package contains examples for COIN-OR Branch-and-Cut MIP Solver.
 
 %prep
-%setup
+%setup -n %oname-%version
+%patch1 -p1
+
+# don't use bundled stuff
+rm -rf {BuildTools,Cgl,Clp,CoinUtils,Data,Osi,ThirdParty}
 
 %build
-%set_gcc_version 4.9
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
@@ -95,7 +99,8 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 	--with-blas-lib=-lopenblas \
 	--with-lapack-lib=-llapack \
 	--with-glpk-incdir=%_includedir \
-	--with-dot
+	--with-dot \
+	--disable-dependency-linking
 TOPDIR=$PWD
 %make_build TOPDIR=$TOPDIR
 rm -f $(find %oname -name 'libOsiCbc.*') \
@@ -144,7 +149,13 @@ rm -fR %buildroot%_docdir/coin \
 %doc %oname/examples/*.csv %oname/examples/Makefile
 #_bindir/%oname-driver
 
+%files -n lib%name-devel-doc
+%doc %oname/doxydoc/doxydoc/html/*
+
 %changelog
+* Fri Nov 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.9.8-alt1
+- Updated to upstream stable version 2.9.8.
+
 * Mon Feb 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.8.9-alt1.svn20140513.1
 - build fixed
 - gcc set to 4.9, docs not packaged

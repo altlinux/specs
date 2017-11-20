@@ -3,22 +3,23 @@
 
 %define oname Cgl
 Name: Coin%oname
-Version: 0.58.6
-Release: alt1.svn20140317.1
+Version: 0.59.9
+Release: alt1
 Summary: COIN-OR Cut Generation Library
-License: CPL v1.0
+License: EPL v1.0
 Group: Sciences/Mathematics
-Url: http://www.coin-or.org/projects/Cgl.xml
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://projects.coin-or.org/Cgl
 
-# https://projects.coin-or.org/svn/Cgl/trunk
-Source: %oname-%version.tar.gz
+# https://www.coin-or.org/download/source/%oname/%oname-%version.tgz
+Source: %oname-%version.tar
+Patch1: %oname-%version-alt-build.patch
 
-BuildPreReq: libCoinUtils libglpk libCoinOsi libCoinClp
-BuildPreReq: doxygen graphviz libglpk-devel CoinBuildTools gcc4.9-c++
-BuildPreReq: libCoinUtils-devel libCoinClp-devel libCoinOsi-devel
-BuildPreReq: libCoinVol-devel %mpiimpl-devel chrpath
-BuildPreReq: libCoinDyLP-devel libnuma-devel
+BuildRequires(pre): %mpiimpl-devel
+BuildRequires: libCoinUtils libglpk libCoinOsi libCoinClp
+BuildRequires: doxygen graphviz libglpk-devel CoinBuildTools gcc-c++
+BuildRequires: libCoinUtils-devel libCoinClp-devel libCoinOsi-devel
+BuildRequires: libCoinVol-devel chrpath
+BuildRequires: libCoinDyLP-devel libnuma-devel
 
 %description
 The COIN-OR Cut Generation Library (Cgl) is an open collection of
@@ -87,10 +88,13 @@ solver Cbc.
 This package contains examples for COIN-OR Cut Generation Library.
 
 %prep
-%setup
+%setup -n %oname-%version
+%patch1 -p1
+
+# don't use bundled stuff
+rm -rf {BuildTools,Clp,CoinUtils,Data,Osi}
 
 %build
-%set_gcc_version 4.9
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
@@ -98,7 +102,8 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %autoreconf
 %configure \
 	--with-coin-instdir=%prefix \
-	--with-dot
+	--with-dot \
+	--disable-dependency-linking
 TOPDIR=$PWD
 %make_build TOPDIR=$TOPDIR
 #make_build -C %oname/examples TOPDIR=$TOPDIR
@@ -136,7 +141,13 @@ rm -fR %buildroot%_docdir/coin \
 %doc %oname/examples/*.cpp %oname/examples/Makefile
 #_bindir/*
 
+%files -n lib%name-devel-doc
+%doc %oname/doxydoc/doxydoc/html/*
+
 %changelog
+* Fri Nov 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.59.9-alt1
+- Updated to stable upstream version 0.59.9.
+
 * Tue Feb 28 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.58.6-alt1.svn20140317.1
 - build fixed
 - gcc set to 4.9, docs not packaged

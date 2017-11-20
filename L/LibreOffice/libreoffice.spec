@@ -13,7 +13,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -499,6 +499,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Nov 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.4.2.2-alt2
+- Rebuilt with libCoinMP-1.8.3.
+
 * Thu Oct 05 2017 Fr. Br. George <george@altlinux.ru> 5.4.2.2-alt1
 - Update to 5.4.2.2
 

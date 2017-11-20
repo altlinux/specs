@@ -5,24 +5,24 @@
 %define somver 0
 %define sover %somver.0.0
 Name: Coin%oname
-Version: 5.5.7
-Release: alt1.svn20140418
+Version: 5.6.14
+Release: alt1
 Summary: Open-source solver for mixed-integer linear programs (MILPs) written in C
-License: CPL v1.o
+License: EPL v1.0
 Group: Sciences/Mathematics
-Url: http://www.coin-or.org/projects/SYMPHONY.xml
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://projects.coin-or.org/SYMPHONY
 
-# https://projects.coin-or.org/svn/SYMPHONY/trunk
-Source: %oname-%version.tar.gz
+# https://www.coin-or.org/download/source/%oname/%oname-%version.tgz
+Source: %oname-%version.tar
+Patch1: %oname-%version-alt-build.patch
 
-BuildPreReq: doxygen graphviz libglpk-devel CoinBuildTools gcc-c++
-BuildPreReq: libCoinUtils-devel libCoinClp-devel libCoinCgl-devel
-BuildPreReq: libCoinOsi-devel libCoinDyLP-devel libCoinVol-devel
-BuildPreReq: libCoinCbc-devel
-BuildPreReq: liblapack-devel
-BuildPreReq: libreadline-devel %mpiimpl-devel chrpath
-#BuildPreReq: texlive-latex-recommended
+BuildRequires(pre): %mpiimpl-devel
+BuildRequires: doxygen graphviz libglpk-devel CoinBuildTools gcc-c++
+BuildRequires: libCoinUtils-devel libCoinClp-devel libCoinCgl-devel
+BuildRequires: libCoinOsi-devel libCoinDyLP-devel libCoinVol-devel
+BuildRequires: libCoinCbc-devel
+BuildRequires: liblapack-devel
+BuildRequires: libreadline-devel chrpath
 
 Requires: lib%name = %version-%release
 
@@ -92,7 +92,11 @@ mixed-integer linear programs (MILPs).
 This package contains documentation for COIN-OR SYMPHONY.
 
 %prep
-%setup
+%setup -n %oname-%version
+%patch1 -p1
+
+# don't use bundled stuff
+rm -rf {BuildTools,Cgl,Clp,CoinUtils,Data,Osi,ThirdParty}
 
 %build
 mpi-selector --set %mpiimpl
@@ -111,7 +115,8 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 	--enable-gnu-packages \
 	--enable-sensitivity-analysis \
 	--enable-draw-graph \
-	--with-application
+	--with-application \
+	--disable-dependency-linking
 sed -i 's|\(wl=\).*|\1"-Wl,"|' libtool
 cp -fR %oname/Examples ./
 TOPDIR=$PWD
@@ -174,6 +179,9 @@ popd
 %doc %oname/Doc/*
 
 %changelog
+* Fri Nov 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.6.14-alt1
+- Updated to stable upstream version 5.6.14.
+
 * Thu May 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.5.7-alt1.svn20140418
 - Version 5.5.7
 

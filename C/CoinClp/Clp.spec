@@ -3,21 +3,22 @@
 
 %define oname Clp
 Name: Coin%oname
-Version: 1.15.5
-Release: alt1.svn20140507.1
+Version: 1.16.10
+Release: alt1
 Summary: COIN-OR Linear Programming Solver
-License: CPL v1.0
+License: EPL v1.0
 Group: Sciences/Mathematics
-Url: http://www.coin-or.org/projects/Clp.xml
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://projects.coin-or.org/Clp
 
-# https://projects.coin-or.org/svn/Clp/trunk/
-Source: %oname-%version.tar.gz
+# https://www.coin-or.org/download/source/%oname/%oname-%version.tgz
+Source: %oname-%version.tar
+Patch1: %oname-%version-alt-build.patch
 
-BuildPreReq: doxygen graphviz CoinBuildTools gcc4.9-c++ %mpiimpl-devel
-BuildPreReq: libCoinOsi-devel libCoinVol-devel chrpath libmumps-devel
-BuildPreReq: libreadline-devel libtinfo-devel libglpk-devel
-BuildPreReq: libsuitesparse-devel libnuma-devel
+BuildRequires(pre): %mpiimpl-devel
+BuildRequires: doxygen graphviz CoinBuildTools gcc-c++
+BuildRequires: libCoinOsi-devel libCoinVol-devel chrpath libmumps-devel
+BuildRequires: libreadline-devel libtinfo-devel libglpk-devel
+BuildRequires: libsuitesparse-devel libnuma-devel
 
 Requires: lib%name = %version-%release
 
@@ -94,7 +95,11 @@ This package contains examples for COIN-OR Linear Programming
 Solver.
 
 %prep
-%setup
+%setup -n %oname-%version
+%patch1 -p1
+
+# don't use bundled stuff
+rm -rf {BuildTools,CoinUtils,Data,Osi,ThirdParty}
 
 %build
 mpi-selector --set %mpiimpl
@@ -112,7 +117,8 @@ sed -i 's|\(termcap\)|\1 tinfo|' Clp/configure
 	--with-osi-incdir=%_includedir/coin \
 	--with-glpk-lib=-lglpk \
 	--with-mumps-lib="-ldmumps -lzmumps -lsmumps -lcmumps -lmumps_common -lpord" \
-	--with-dot
+	--with-dot \
+	--disable-dependency-linking
 TOPDIR=$PWD
 %make_build TOPDIR=$TOPDIR
 rm -f $(find ./ -name 'libOsiClp.*') $(find ./ -name 'libClpSolver.*')
@@ -160,7 +166,13 @@ rm -fR %buildroot%_docdir/coin \
 %doc %oname/examples/*.tiny %oname/examples/input.*
 #_bindir/*driver
 
+%files -n lib%name-devel-doc
+%doc %oname/doxydoc/doxydoc/html/*
+
 %changelog
+* Fri Nov 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.16.10-alt1
+- Updated to stable upstream version 1.16.10.
+
 * Tue Feb 28 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.15.5-alt1.svn20140507.1
 - build fixed
 - gcc set to 4.9, docs not packaged

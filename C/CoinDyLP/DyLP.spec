@@ -3,19 +3,20 @@
 
 %define oname DyLP
 Name: Coin%oname
-Version: 1.9.4
-Release: alt1.svn20131231
+Version: 1.10.3
+Release: alt1
 Summary: COIN-OR dynamic simplex algorithm
-License: CPL v1.0
+License: EPL v1.0
 Group: Sciences/Mathematics
-Url: http://www.coin-or.org/projects/DyLP.xml
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://projects.coin-or.org/DyLP
 
-# https://projects.coin-or.org/svn/DyLP/trunk
-Source: %oname-%version.tar.gz
+# https://www.coin-or.org/download/source/%oname/%oname-%version.tgz
+Source: %oname-%version.tar
+Patch1: %oname-%version-alt-build.patch
 
-BuildPreReq: doxygen graphviz libglpk-devel CoinBuildTools gcc-c++
-BuildPreReq: libCoinOsi-devel %mpiimpl-devel chrpath
+BuildRequires(pre): %mpiimpl-devel
+BuildRequires: doxygen graphviz libglpk-devel CoinBuildTools gcc-c++
+BuildRequires: libCoinOsi-devel chrpath
 
 %description
 DyLP is an open-source implementation of the dynamic simplex algorithm
@@ -76,7 +77,11 @@ OsiDylp, is also available.
 This package contains examples for DyLP.
 
 %prep
-%setup
+%setup -n %oname-%version
+%patch1 -p1
+
+# don't use bundled stuff
+rm -rf {BuildTools,CoinUtils,Data,Osi}
 
 %build
 mpi-selector --set %mpiimpl
@@ -136,6 +141,9 @@ rm -fR %buildroot%_datadir/coin/doc
 #_bindir/*
 
 %changelog
+* Fri Nov 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.10.3-alt1
+- Updated to stable upstream version 1.10.3.
+
 * Thu May 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.4-alt1.svn20131231
 - Version 1.9.4
 

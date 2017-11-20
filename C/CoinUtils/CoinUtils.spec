@@ -2,21 +2,22 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: CoinUtils
-Version: 2.9.10
-Release: alt1.svn20140507
+Version: 2.10.13
+Release: alt1
 Summary: Open-source collection of classes and functions for COIN-OR project
-License: CPL v1.0
+License: EPL v1.0
 Group: Sciences/Mathematics
-Url: http://www.coin-or.org/projects/CoinUtils.xml
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://projects.coin-or.org/CoinUtils
 
-# https://projects.coin-or.org/svn/CoinUtils/trunk
-Source: %name-%version.tar.gz
+# https://www.coin-or.org/download/source/%name/%name-%version.tgz
+Source: %name-%version.tar
+Patch1: %name-%version-alt-build.patch
 
-BuildPreReq: CoinBuildTools gcc-c++ libglpk-devel
-BuildPreReq: liblapack-devel %mpiimpl-devel zlib-devel bzlib-devel
-BuildPreReq: CoinSample-devel CoinNetlib-devel
-BuildPreReq: graphviz doxygen
+BuildRequires(pre): %mpiimpl-devel
+BuildRequires: CoinBuildTools gcc-c++ libglpk-devel
+BuildRequires: liblapack-devel  zlib-devel bzlib-devel
+BuildRequires: CoinSample-devel CoinNetlib-devel
+BuildRequires: graphviz doxygen
 
 %description
 The CoinUtils project is a collection of open-source utilities developed
@@ -82,6 +83,10 @@ This package contains development documentation for CoinUtils.
 
 %prep
 %setup
+%patch1 -p1
+
+# don't use bundled stuff
+rm -rf {BuildTools,Data}
 
 %build
 mpi-selector --set %mpiimpl
@@ -96,7 +101,8 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 	--with-glpk-incdir=%_includedir/glpk \
 	--with-blas-lib=-lopenblas \
 	--with-lapack-lib=-llapack \
-	--with-dot
+	--with-dot \
+	--disable-dependency-linking
 %make_build
 
 %install
@@ -125,6 +131,9 @@ rm -fR %buildroot%_datadir/coin/doc \
 %doc %name/doxydoc/doxydoc/html/*
 
 %changelog
+* Fri Nov 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10.13-alt1
+- Updated to stable upstream version 2.10.13.
+
 * Thu May 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9.10-alt1.svn20140507
 - New snapshot
 
