@@ -1,5 +1,5 @@
 Name: gear
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: Get Every Archive from git package Repository
@@ -59,6 +59,10 @@ ln -s gear-store-tags.1 %buildroot%_man1dir/gear-update-tag.1
 %doc QUICKSTART* ABOUT*
 
 %changelog
+* Mon Nov 20 2017 Dmitry V. Levin <ldv@altlinux.org> 2.1.1-alt1
+- Applied bash4 compatibility workaround (closes: #32147).
+- Added SOURCE_DATE_EPOCH support (closes: #34203).
+
 * Wed Mar 22 2017 Dmitry V. Levin <ldv@altlinux.org> 2.1.0-alt1
 - Added zstd(1) support in .gear-rules and import tools.
 - gear: added support for lz4(1), lzop(1), xz(1), and zstd(1)
