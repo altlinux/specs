@@ -2,8 +2,8 @@
 %def_enable check
 
 Name: orc
-Version: %ver_major.27
-Release: alt2
+Version: %ver_major.28
+Release: alt1
 
 Summary: The Oil Runtime Compiler
 Group: Development/Other
@@ -135,6 +135,9 @@ This package contains documentation for Orc.
 %_datadir/gtk-doc/html/orc
 
 %changelog
+* Mon Nov 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.28-alt1
+- 0.4.28
+
 * Thu Aug 03 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.27-alt2
 - mike@: BOOTSTRAP: introduce valgrind knob (on by default)
 - enabled %%check
