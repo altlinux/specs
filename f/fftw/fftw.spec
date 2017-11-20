@@ -2,22 +2,19 @@
 
 Name: fftw
 Version: 2.1.5
-Release: alt7.qa2
+Release: alt8
 
 Summary: Fast Fourier transform library
 License: GPL
 Group: System/Libraries
 Url: http://www.fftw.org
 
-Packager: Denis Smirnov <mithraen@altlinux.ru>
-
 Source: fftw-%version.tar
 Patch0: fftw-2.1.5-pentium.patch
 Patch1: fftw-2.1.5-alt-texinfo.patch
 Patch2: fftw-2.1.5-alt-link_no_undefined.patch
 
-# Automatically added by buildreq on Thu Oct 20 2011
-BuildRequires: gcc-fortran
+BuildRequires: gcc-fortran makeinfo
 
 %description
 FFTW is a collection of fast C routines for computing the Discrete Fourier
@@ -114,6 +111,9 @@ popd
 %_libdir/*.a
 
 %changelog
+* Mon Nov 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.5-alt8
+- Updated build dependencies.
+
 * Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.5-alt7.qa2
 - Fixed build
 
