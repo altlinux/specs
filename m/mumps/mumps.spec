@@ -5,20 +5,19 @@
 %define sover %somver.10.0
 Name: mumps
 Version: 4.10.0
-Release: alt7
+Release: alt8
 Summary: MUltifrontal Massively Parallel sparse direct Solver
 License: Free
 Group: Sciences/Mathematics
 Url: http://mumps.enseeiht.fr/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: MUMPS_%version.tar.gz
 Source1: Makefile.inc
 Source2: Makefile.inc.seq
 
-BuildPreReq: %mpiimpl-devel libopenblas-devel
-BuildPreReq: libpastix-devel libscotch-devel libparmetis-devel
-BuildPreReq: libscalapack-devel libblacs-devel libarpack-devel
+BuildRequires: %mpiimpl-devel libopenblas-devel
+BuildRequires: libscotch-devel libparmetis-devel
+BuildRequires: libscalapack-devel libblacs-devel libarpack-devel
 
 %description
 MUMPS solves a sparse system of linear equations A x = b
@@ -153,7 +152,7 @@ function buildIt() {
 			MPIDIR=%mpidir \
 			TOPDIR=$PWD $i \
 			LIBEXT=.a \
-			LIBOTHERS="-lscalapack -lscotchmetis -lblacs -lmpi_f77 -lmpi -lpthread" \
+			LIBOTHERS="-lscalapack -lscotchmetis -lblacs -lmpi -lpthread" \
 			INCS="-I%mpidir/include"
 	done
 }
@@ -279,6 +278,9 @@ popd
 %_docdir/lib%name-devel
 
 %changelog
+* Mon Nov 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.10.0-alt8
+- Fixed build.
+
 * Tue Jul 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.10.0-alt7
 - Fixed build
 
