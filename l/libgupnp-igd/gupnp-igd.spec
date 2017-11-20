@@ -7,7 +7,7 @@
 %def_enable python
 
 Name: libgupnp-igd
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: A library to handle UPnP IGD port mapping
@@ -130,6 +130,9 @@ This package provides Python bindings for gUPnP-IGD
 %exclude %python_sitelibdir/gupnp/*.la
 
 %changelog
+* Mon Nov 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt1
+- 0.2.5
+
 * Wed Oct 01 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt1
 - 0.2.4
 
