@@ -15,7 +15,7 @@
 
 Name: perl-HTML-WikiConverter-MoinMoin
 Version: 0.54
-Release: alt1.1
+Release: alt2
 
 Summary: Convert HTML to MoinMoin markup
 
@@ -27,6 +27,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 Source: http://www.cpan.org/authors/id/D/DI/DIBERRI/HTML-WikiConverter-MoinMoin-0.54.tar.gz
+Patch1: perl-HTML-WikiConverter-MoinMoin-0.54-sort-keys.patch
 
 # Automatically added by buildreq on Thu Jan 03 2008
 BuildRequires: perl-HTML-WikiConverter perl-Test-Pod perl-Test-Pod-Coverage
@@ -37,6 +38,7 @@ markup. See HTML::WikiConverter for additional usage details.
 
 %prep
 %setup -q -n %m_distro-%version
+%patch1 -p2
 
 %build
 %perl_vendor_build
@@ -49,6 +51,9 @@ markup. See HTML::WikiConverter for additional usage details.
 %perl_vendor_privlib/HTML/
 
 %changelog
+* Fri Nov 17 2017 Oleg Solovyov <mcpain@altlinux.org> 0.54-alt2
+- make test more reliable: added keys sorting
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.54-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
