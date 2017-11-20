@@ -12,7 +12,7 @@ Release: alt2.%snapshotdate.1
 %define srcdir %name-%baseversion-%snapshotdate
 %else
 Version: %baseversion
-Release: alt2
+Release: alt3
 %define srcdir %name-%version
 %endif
 
@@ -55,6 +55,7 @@ Source50: mailfromd-clamav_only.mf
 Patch1: mailfromd-savsrv.c-not_cache_mf_timeout.diff
 
 #Errata
+Patch10: mailfromd-59f7cf0f14.diff
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -137,6 +138,8 @@ National Language files for mailfromd (Polish and Ukrainian)
 %patch1 -p1
 
 #Errata
+
+%patch10 -p1
 
 gzip ChangeLog
 
@@ -302,6 +305,9 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Mon Nov 20 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.4-alt3
+- applied upstream's commit 59f7cf0f14
+
 * Mon Nov 20 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.4-alt2
 - BuildRequires: libadns-devel >= 1.5
 - changes in mailfromd.mf:
