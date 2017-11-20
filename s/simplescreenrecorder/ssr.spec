@@ -1,6 +1,6 @@
 Name: simplescreenrecorder
 Version: 0.3.8
-Release: alt3
+Release: alt4
 Summary: Simple Screen Recording with OpenGL capture
 
 Group: Video
@@ -40,6 +40,9 @@ sed -i '/#define SSR_USE_AVFRAME_CHANNELS/s/TEST_AV_VERSION.*/TEST_AV_VERSION(LI
 %_datadir/%name
 
 %changelog
+* Mon Nov 20 2017 Andrey Cherepanov <cas@altlinux.org> 0.3.8-alt4
+- Fix menu localization by add missing original GenericName
+
 * Wed Nov 15 2017 Andrey Cherepanov <cas@altlinux.org> 0.3.8-alt3
 - Add Russian localization to desktop file.
 
