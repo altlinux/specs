@@ -1,5 +1,5 @@
 Name: apf
-Version: 0.1
+Version: 0.3
 Release: alt1
 Summary: Search for a package containing given file
 Group: System/Configuration/Packaging
@@ -64,5 +64,14 @@ rm -rf %buildroot
 %_sysconfdir/cron.daily/%name.update
 
 %changelog
+* Tue Nov 14 2017 Oleg Solovyov <mcpain@altlinux.org> 0.3-alt1
+- search is now case-insensitive (Closes: #34187)
+
+* Wed Sep 20 2017 Gremlin from Kremlin <gremlin@altlinux.org> 0.2-alt1
+- incorporated fixes proposed by mcpain@
+- check whether cache directory is writable
+- try to create cache directory if it does not exist
+- stop update process on rsync failure or interrupt
+
 * Wed Aug 30 2017 Gremlin from Kremlin <gremlin@altlinux.org> 0.1-alt1
 - First public release
