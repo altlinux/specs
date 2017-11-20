@@ -3,9 +3,10 @@
 %define api_ver 3.0
 
 %def_disable static
+%def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Glorious MIME Utility Library
@@ -96,6 +97,9 @@ statically linked GMime-based software.
 %install
 %makeinstall_std
 
+%check
+%make check
+
 %files
 %_libdir/lib%_name-%api_ver.so.*
 %doc AUTHORS ChangeLog README
@@ -122,6 +126,9 @@ statically linked GMime-based software.
 %endif
 
 %changelog
+* Tue Nov 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.0.4-alt1
+- 3.0.4
+
 * Sun Oct 29 2017 Yuri N. Sedunov <aris@altlinux.org> 3.0.3-alt1
 - 3.0.3
 
