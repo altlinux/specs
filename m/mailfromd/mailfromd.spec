@@ -12,7 +12,7 @@ Release: alt2.%snapshotdate.1
 %define srcdir %name-%baseversion-%snapshotdate
 %else
 Version: %baseversion
-Release: alt1
+Release: alt2
 %define srcdir %name-%version
 %endif
 
@@ -65,7 +65,7 @@ BuildRequires: emacs-X11 flex libdb4-devel libdspam-devel libgcrypt-devel libgdb
 BuildRequires: libmailutils-devel >= 3.4-alt0
 BuildRequires: mailutils
 BuildRequires: makeinfo
-BuildRequires: libadns-devel
+BuildRequires: libadns-devel >= 1.5
 
 %description
 Milter-filter for Sendmail v8, MeTA1 and Postfix (since 2.3; please
@@ -302,6 +302,11 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Mon Nov 20 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.4-alt2
+- BuildRequires: libadns-devel >= 1.5
+- changes in mailfromd.mf:
+  - don't compare mx and host's name for mail from:<>
+
 * Mon Nov 13 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.4-alt1
 - new version
 
