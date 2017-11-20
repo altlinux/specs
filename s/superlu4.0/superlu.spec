@@ -4,7 +4,7 @@
 %define sover %somver.2.0
 Name: %oname%over
 Version: 4.3
-Release: alt4
+Release: alt5
 Summary: A set of subroutines to solve a sparse linear system A*X=B
 License: BSD-like
 Group: Sciences/Mathematics
@@ -83,6 +83,12 @@ mkdir lib
 %build
 sed -i "s|(HOME)|$PWD|" make.inc
 sed -i "s|(LIBDIR)|%_libdir|" make.inc
+%ifarch %arm e2k
+sed -i "s|-lopenblas|-lblas|" make.inc
+%endif
+%ifarch e2k
+sed -i "s|-lgfortran||" make.inc
+%endif
 %make install
 %make lib
 %make testing
@@ -136,7 +142,11 @@ for i in libsuperlu_%over libtmglib; do
 %ifarch %arm
 	g++ -shared *.o $ADDLIB -llapack -lblas -lgfortran -lm \
 %else
+%ifarch e2k
+	g++ -shared *.o $ADDLIB -llapack -lblas -lm \
+%else
 	g++ -shared *.o $ADDLIB -llapack -lopenblas -lgfortran -lm \
+%endif
 %endif
 		-Wl,-soname,$i.so.%somver -o $i.so.%sover
 	ln -s $i.so.%sover $i.so.%somver
@@ -161,6 +171,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Mon Nov 20 2017 Andrew Savchenko <bircoph@altlinux.org> 4.3-alt5
+- Fix build on e2k.
+
 * Thu Nov 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3-alt4
 - Fixed build with gcc-6.
 
