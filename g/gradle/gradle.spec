@@ -1,11 +1,11 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -29,7 +29,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           gradle
 Version:        2.13
-Release:        alt1_7jpp8
+Release:        alt1_10jpp8
 Summary:        Build automation tool
 # Some examples and integration tests are under GNU LGPL and Boost
 # Software License, but are not used to create binary package.
@@ -71,6 +71,7 @@ Patch6:         0007-Use-unversioned-dependency-JAR-names.patch
 Patch7:         0008-Port-to-Ivy-2.4.0.patch
 # Accepted upstream: https://github.com/gradle/gradle/pull/451
 Patch8:         0009-Port-to-Polyglot-0.1.8.patch
+Patch9:         0010-Port-to-Checkstyle-8.0.patch
 Patch10:        0011-Port-to-Kryo-3.0.patch
 Patch11:        0012-Port-to-Maven-3.3.9-and-Eclipse-Aether.patch
 Patch12:        0013-Publish-all-artifacts.patch
@@ -227,6 +228,7 @@ BuildRequires:  fonts-ttf-liberation
 #BuildRequires:  js-jquery
 
 # Generic runtime dependencies.
+Requires:       javapackages-tools
 Requires:       bash sh
 Requires:       icon-theme-hicolor
 
@@ -257,7 +259,7 @@ Requires:       aws-sdk-java-s3
 Requires:       beust-jcommander
 Requires:       bouncycastle
 Requires:       bouncycastle-pg
-Requires:       bsh-utils
+Requires:       bsh
 Requires:       dom4j
 Requires:       ecj
 Requires:       geronimo-annotation
@@ -350,6 +352,7 @@ legacy automation challenges.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -455,6 +458,9 @@ sed -i -e s,/usr/bin/bash,/bin/sh, %buildroot%_bindir/*
 %config(noreplace,missingok) /etc/java/%name.conf
 
 %changelog
+* Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1_10jpp8
+- fixed build with new checkstyle
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1_7jpp8
 - rebuild with new xpp3
 
