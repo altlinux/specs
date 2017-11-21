@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             maven-checkstyle-plugin
 Version:          2.13
-Release:          alt1_6jpp8
+Release:          alt2_6jpp8
 Summary:          Plugin that generates a report regarding the code style used by the developers
 License:          ASL 2.0
 URL:              http://maven.apache.org/plugins/%{name}
@@ -22,7 +22,7 @@ BuildArch:        noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-collections:commons-collections)
-BuildRequires:  mvn(com.puppycrawl.tools:checkstyle)
+BuildRequires:  mvn(com.puppycrawl.tools:checkstyle:7)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-decoration-model)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-integration-tools)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
@@ -67,6 +67,9 @@ This package contains the API documentation for %{name}.
 
 %pom_remove_plugin :apache-rat-plugin
 
+
+sed -i -e 's,checkstyleVersion>5.7</checkstyleVersion,checkstyleVersion>7.7</checkstyleVersion,' pom.xml
+
 %build
 %mvn_build -f -- -DmavenVersion=3.2.1
 
@@ -80,6 +83,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 2.13-alt2_6jpp8
+- fixed build with new checkstyle
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1_6jpp8
 - new jpp release
 
