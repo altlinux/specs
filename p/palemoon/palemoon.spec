@@ -1,10 +1,10 @@
-%define git_commit 0918019
+%define git_commit 893b8cf
 		    
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 27.5.1
+Version: 27.6.1
 
 # %%ifndef git_commit
 Release: alt1
@@ -15,7 +15,7 @@ Release: alt1
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 
-# git commit 0918019a803901e59b183c0988a1478d9f1a06bd
+# git commit 893b8cfe9e12c5d2bc98af80e7dad373fe645a3d
 Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
@@ -74,7 +74,7 @@ Patch24: palemoon-27.0.2-ui_picker_false.patch
 Patch103: palemoon-27.4.0-disable-check-default-browser.patch
 Patch105: firefox-3.5.3-default-mail-handler.patch
 Patch106: palemoon-27.4.0-enable-addons.patch
-Patch107: palemoon-27.2.0-user-agent-overrides.patch
+Patch107: palemoon-27.6.1-user-agent-overrides.patch
 
 # Patches for KDE integration of New Moon
 Patch111: palemoon-27.3.0-firefox-kde.patch
@@ -218,6 +218,7 @@ tar -xf %SOURCE1
 %patch103 -p1 -b .disable-software-update
 %patch105 -p1 -b .default-mail-handler
 %patch106 -p1 -b .addons
+
 %patch107 -p1 -b .ua
 
 # KDE integration
@@ -588,8 +589,11 @@ install -D -m 644 README.md ../
 %exclude %_includedir/*
 %exclude %_datadir/idl/*
 
-# git commit 0918019a803901e59b183c0988a1478d9f1a06bd
+# git commit 893b8cfe9e12c5d2bc98af80e7dad373fe645a3d
 %changelog
+* Mon Nov 20 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.6.1-alt1
+- New Version - Release 27.6.1 width "fix Linux loading throbber to be properly encoded"
+
 * Sat Oct 21 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.5.1-alt1
 - New Version - Release 27.5.1
 

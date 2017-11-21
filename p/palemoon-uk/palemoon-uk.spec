@@ -13,8 +13,15 @@
 %define search_dir 	%newmoon_dir%sdir
 
 Name: palemoon-uk
-Version: 27.5.0
-Release: alt4
+
+#commit f353aabc21603a0a919202c32010b4b9a9c7bc9c
+#Author: JustOff <Off.Just.Off@gmail.com>
+#Date:   Sun Nov 5 22:51:34 2017 +0200
+#
+#    Locales update (27.6.0 RC3)
+
+Version: 27.6.0
+Release: alt1
 
 Summary: Ukrainian (UA) Language Pack for Pale Moon
 License: MPL/GPL/LGPL
@@ -28,7 +35,7 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 Source: uk_palemoon_%version.xpi
 Source2: searchplugins.tar
 
-Requires: palemoon >= 27.4.0
+Requires: palemoon >= 27.6.0
 Requires: hunspell-uk
 BuildArch: noarch
 
@@ -107,6 +114,9 @@ ln -s %_datadir/myspell/uk_UA.dic %buildroot/%cid_dict_dir/dictionaries/uk.dic
 %search_dir
 
 %changelog
+* Tue Nov 21 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.6.0-alt1
+- Update for release 27.6.0-RC3
+
 * Sun Sep 03 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.5.0-alt4
 - Update Translations
 

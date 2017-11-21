@@ -5,7 +5,7 @@
 %define cid_dict_dir   %palemoon_noarch_extensionsdir/%cid_dict
 
 %define min_version	27.3.99
-%define max_version	27.*
+%define max_version	27.6.*
 
 %define bname		newmoon
 %define sdir		searchplugins
@@ -13,8 +13,16 @@
 %define search_dir 	%newmoon_dir%sdir
 
 Name: palemoon-ru
-Version: 27.5.0
-Release: alt6
+
+#commit f353aabc21603a0a919202c32010b4b9a9c7bc9c
+#Author: JustOff <Off.Just.Off@gmail.com>
+#Date:   Sun Nov 5 22:51:34 2017 +0200
+#
+#    Locales update (27.6.0 RC3)
+
+
+Version: 27.6.0
+Release: alt1
 
 Summary: Russian (RU) Language Pack for Pale Moon
 License: MPL/GPL/LGPL
@@ -29,7 +37,7 @@ Source:  ru_palemoon_%version.xpi
 Source2: searchplugins.tar
 
 Patch:   %name-27.1.1-search.patch
-Patch2:	 %name-27.3.0-advanced.patch
+#Patch2:	 %name-27.3.0-advanced.patch
 
 Requires: palemoon >= 27.4.0
 Requires: hunspell-ru
@@ -61,7 +69,7 @@ The set of search plugins for Palemoon
 
 %patch -p2
 
-%patch2 -p2
+#patch2 -p2
 
 tar -xf %SOURCE2
 
@@ -124,11 +132,16 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %search_dir
 
 
-#commit 254c3de4aab82f14bef063a1c3a633e1f1fa5258
-#Author: wolfbeast <mcwerewolf@gmail.com>
-#Date:   Thu Sep 21 23:40:44 2017 +0200
-#    Run release pack 27.5.0
+#commit f353aabc21603a0a919202c32010b4b9a9c7bc9c
+#Author: JustOff <Off.Just.Off@gmail.com>
+#Date:   Sun Nov 5 22:51:34 2017 +0200
+#
+#    Locales update (27.6.0 RC3)
+
 %changelog
+* Tue Nov 21 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.6.0-alt1
+- Update for release 27.6.0-RC3
+
 * Tue Sep 26 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.5.0-alt6
 - Update from https://github.com/JustOff/pale-moon-localization.git
     commit 254c3de4aab82f14bef063a1c3a633e1f1fa5258
