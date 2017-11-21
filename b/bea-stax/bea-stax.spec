@@ -1,13 +1,14 @@
-BuildRequires: javapackages-local
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 1.2.0
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -38,26 +39,23 @@ BuildRequires: jpackage-generic-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%global mainver 1.2.0
 %global apiver  1.0.1
 
 Summary:        Streaming API for XML
 URL:            http://stax.codehaus.org/Home
-Source0:        http://dist.codehaus.org/stax/distributions/stax-src-1.2.0.zip
-Source1:        http://dist.codehaus.org/stax/jars/stax-1.2.0.pom
-Source2:        http://dist.codehaus.org/stax/jars/stax-api-1.0.1.pom
+Source0:        http://dist.codehaus.org/stax/distributions/stax-src-%{version}.zip
+Source1:        http://dist.codehaus.org/stax/jars/stax-%{version}.pom
+Source2:        http://dist.codehaus.org/stax/jars/stax-api-%{apiver}.pom
 Name:           bea-stax
-Version:        %{mainver}
-Release:        alt4_13jpp8
+Version:        1.2.0
+Release:        alt4_15jpp8
 License:        ASL 1.1 and ASL 2.0
-Group:          Development/Java
 BuildArch:      noarch
 
-BuildRequires:          jpackage-utils
-BuildRequires:          ant
-BuildRequires:          xerces-j2 xalan-j2
-BuildRequires:          java-devel
-Requires:               jpackage-utils
+BuildRequires:  javapackages-local
+BuildRequires:  ant
+BuildRequires:  xerces-j2
+BuildRequires:  xalan-j2
 Source44: import.info
 Obsoletes: stax-bea <= 1.0-alt1
 
@@ -67,17 +65,15 @@ new Java API for parsing and writing XML easily and
 efficiently.
 
 %package api
+Group: Development/Documentation
 Summary:        The StAX API
-Group:          Development/Documentation
-Requires:       jpackage-utils
 
 %description api
 %{summary}
 
 %package javadoc
+Group: Development/Documentation
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -87,42 +83,38 @@ BuildArch: noarch
 %setup -q -c -n %{name}-%{version}
 
 # Convert CR+LF to LF
-%{__sed} -i 's/\r//' ASF2.0.txt
+sed -i 's/\r//' ASF2.0.txt
+
+cp -p %{SOURCE1} pom.xml
+
+# Incorrectly scoped
+%pom_remove_dep :junit
 
 %build
-export CLASSPATH=`pwd`/build/stax-api-%{apiver}.jar
 ant all javadoc
 
 %install
-# jar
-install -Dpm 0644 build/stax-api-%{apiver}.jar %{buildroot}%{_javadir}/%{name}-api.jar
-install -Dpm 0644 build/stax-%{version}-dev.jar %{buildroot}%{_javadir}/%{name}.jar
-# the following symlink can be removed once no package needs "bea-stax-ri"
-ln -s %{name}.jar %{buildroot}%{_javadir}/%{name}-ri.jar
+%mvn_file ':{*}' bea-@1
+%mvn_package :stax-api api
+%mvn_alias :stax-api javax.xml.stream:stax-api
+%mvn_artifact pom.xml build/stax-%{version}-dev.jar
+%mvn_artifact %{SOURCE2} build/stax-api-%{apiver}.jar
 
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr build/javadoc/* %{buildroot}%{_javadocdir}/%{name}
-
-# pom
-install -Dpm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-install -Dpm 644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}-api.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-%add_maven_depmap -f api -a "javax.xml.stream:stax-api" JPP-%{name}-api.pom %{name}-api.jar
+%mvn_install -J build/javadoc
 
 %files -f .mfiles
 %doc ASF2.0.txt
-%{_javadir}/%{name}-ri.jar
 
 %files api -f .mfiles-api
 %doc ASF2.0.txt
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc ASF2.0.txt
-%doc %{_javadocdir}/*
 
 %changelog
+* Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt4_15jpp8
+- new version
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt4_13jpp8
 - added BR: javapackages-local for javapackages 5
 
