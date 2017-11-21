@@ -1,26 +1,27 @@
 %define oname BuildTools
 Name: Coin%oname
 Epoch: 1
-Version: 0.7.13
-Release: alt1.svn20131130
+Version: 0.8.7
+Release: alt1
 Summary: CoinHelp (BuildTools) project
-License: Public domain
+License: EPL v1.0
 Group: Development/Tools
-Url: http://www.coin-or.org/projects/BuildTools.xml
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-# https://projects.coin-or.org/svn/BuildTools/trunk
-Source: %oname-%version.tar.gz
 BuildArch: noarch
+Url: https://projects.coin-or.org/BuildTools
 
-BuildPreReq: f2c gcc-fortran gcc-c++
-BuildPreReq: liblapack-devel
+# https://projects.coin-or.org/svn/BuildTools/releases/%version
+Source: %oname-%version.tar
+Patch1: %oname-%version-alt-build.patch
+
+BuildRequires: f2c gcc-fortran gcc-c++
+BuildRequires: liblapack-devel
 
 %description
 CoinHelp (BuildTools) project.
 
 %prep
-%setup
+%setup -n %oname-%version
+%patch1 -p1
 
 %install
 install -d %buildroot%_bindir
@@ -53,6 +54,9 @@ ln -s ../%oname/ltmain.sh %buildroot%_datadir/libtool
 %_datadir/config.site
 
 %changelog
+* Fri Nov 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.8.7-alt1
+- Updated to stable upstream version 0.8.7.
+
 * Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.7.13-alt1.svn20131130
 - Version 0.7.13
 

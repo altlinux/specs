@@ -2,22 +2,23 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: CoinMP
-Version: 1.7.6
-Release: alt1.svn20140107.1
+Version: 1.8.3
+Release: alt1
 Summary: C-API library that supports most of the functionality of CLP, CBC, and CGL projects
 License: CPL v1.0
 Group: Sciences/Mathematics
-Url: http://www.coin-or.org/projects/CoinMP.xml
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://projects.coin-or.org/CoinMP
 
-# https://projects.coin-or.org/svn/CoinMP/trunk
-Source: %name-%version.tar.gz
+# https://www.coin-or.org/download/source/%oname/%oname-%version.tgz
+Source: %name-%version.tar
+Patch1: %name-%version-alt-build.patch
 
-BuildPreReq: doxygen graphviz libglpk-devel CoinBuildTools gcc4.9-c++
-BuildPreReq: libCoinUtils-devel libCoinClp-devel libCoinCbc-devel
-BuildPreReq: libCoinOsi-devel libCoinCgl-devel libCoinVol-devel
-BuildPreReq: libCoinDyLP-devel libCoinSYMPHONY-devel %mpiimpl-devel
-BuildPreReq: chrpath libnuma-devel
+BuildRequires(pre): %mpiimpl-devel
+BuildRequires: doxygen graphviz libglpk-devel CoinBuildTools gcc-c++
+BuildRequires: libCoinUtils-devel libCoinClp-devel libCoinCbc-devel
+BuildRequires: libCoinOsi-devel libCoinCgl-devel libCoinVol-devel
+BuildRequires: libCoinDyLP-devel libCoinSYMPHONY-devel
+BuildRequires: chrpath libnuma-devel
 
 %description
 CoinMP is a C-API interface library that supports most of the
@@ -61,14 +62,16 @@ This package contains examples for CoinMP.
 
 %prep
 %setup
+%patch1 -p1
+
+# don't use bundled stuff
+rm -rf {BuildTools,Cbc,Cgl,Clp,CoinUtils,Data,Osi}
 
 %build
-%set_gcc_version 4.9
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-export echo=echo
 %autoreconf
 %configure
 
@@ -76,26 +79,17 @@ pushd %name
 %autoreconf
 %configure \
 	--with-glpk-incdir=%_includedir/glpk \
-	--with-glpk-lib=-lglpk
+	--with-glpk-lib=-lglpk \
+	--disable-dependency-linking
 popd
 
 %make_build
-#make_build -C CoinMP/examples TOPDIR=$PWD
 
 %install
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-export echo=echo
 %makeinstall_std
-
-#install -d %buildroot%_bindir
-#install -m755 %name/examples/example \
-#	%buildroot%_bindir/%name-example
-
-#for i in %buildroot%_bindir/*; do
-#	chrpath -d $i
-#done
 
 rm -fR %buildroot%_docdir/coin
 
@@ -110,9 +104,11 @@ rm -fR %buildroot%_docdir/coin
 
 %files examples
 %doc %name/examples/*
-#_bindir/*
 
 %changelog
+* Mon Nov 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.3-alt1
+- Updated to upstream version 1.8.3.
+
 * Mon Feb 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.7.6-alt1.svn20140107.1
 - build fixed
 

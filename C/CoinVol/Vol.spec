@@ -3,19 +3,20 @@
 
 %define oname Vol
 Name: Coin%oname
-Version: 1.4.3
-Release: alt1.svn20131122
+Version: 1.5.3
+Release: alt1
 Summary: COIN-OR Volume Algorithm
-License: CPL v1.0
+License: EPL v1.0
 Group: Sciences/Mathematics
-Url: http://www.coin-or.org/projects/Vol.xml
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://projects.coin-or.org/Vol
 
-# https://projects.coin-or.org/svn/Vol/trunk
-Source: %oname-%version.tar.gz
+# https://www.coin-or.org/download/source/%oname/%oname-%version.zip
+Source: %oname-%version.tar
+Patch1: %oname-%version-alt-build.patch
 
-BuildPreReq: doxygen libglpk-devel CoinBuildTools gcc-c++ %mpiimpl-devel
-BuildPreReq: libCoinOsi-devel graphviz
+BuildRequires(pre): %mpiimpl-devel
+BuildRequires: doxygen libglpk-devel CoinBuildTools gcc-c++
+BuildRequires: libCoinOsi-devel graphviz
 
 %description
 Vol (Volume Algorithm) is an open-source implementation of a subgradient
@@ -87,7 +88,11 @@ original subgradient algorithm produces only dual solutions.
 This package contains examples for COIN-OR Volume Algorithm.
 
 %prep
-%setup
+%setup -n %oname-%version
+%patch1 -p1
+
+# don't use bundled stuff
+rm -rf {BuildTools,CoinUtils,Data,Osi}
 
 %build
 mpi-selector --set %mpiimpl
@@ -95,7 +100,8 @@ source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %autoreconf
-%configure
+%configure \
+	--disable-dependency-linking
 %make_build TOPDIR=$PWD MPIDIR=%mpidir
 rm -f %oname/src/OsiVol/.libs/libOsiVol.* \
 	%oname/src/OsiVol/libOsiVol.la
@@ -133,6 +139,9 @@ rm -fR %buildroot%_docdir/coin \
 %doc %oname/examples/*
 
 %changelog
+* Fri Nov 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.3-alt1
+- Updated to upstream version 1.5.3.
+
 * Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.3-alt1.svn20131122
 - Version 1.4.3
 

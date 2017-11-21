@@ -1,22 +1,24 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
+%define oname Ipopt
 Name: ipopt
-Version: 3.11.6
-Release: alt1.svn20140513
+Version: 3.12.6
+Release: alt1
 Summary: Large-Scale Nonlinear Optimization Solver (Interior Point OPTimizer)
-License: CPL 1.0
+License: EPL 1.0
 Group: Sciences/Mathematics
-Url: http://www.coin-or.org/projects/Ipopt.xml
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://projects.coin-or.org/Ipopt
 
-# https://projects.coin-or.org/svn/Ipopt/trunk
-Source: Ipopt-%version.tar.gz
+# https://www.coin-or.org/download/source/%oname/%oname-%version.tgz
+Source: %oname-%version.tar
+Patch1: %oname-%version-alt-build.patch
 
-BuildPreReq: liblapack-devel libparmetis-devel libmumps-devel
-BuildPreReq: gcc-fortran gcc-c++ %mpiimpl-devel libscotch-devel
-BuildPreReq: libblacs-devel libscalapack-devel CoinBuildTools
-BuildPreReq: doxygen graphviz latex2html
+BuildRequires(pre): %mpiimpl-devel
+BuildRequires: liblapack-devel libparmetis-devel libmumps-devel
+BuildRequires: gcc-fortran gcc-c++ libscotch-devel
+BuildRequires: libblacs-devel libscalapack-devel CoinBuildTools
+BuildRequires: doxygen graphviz latex2html
 
 %description
 Ipopt (Interior Point OPTimizer, pronounced I-P-Opt) is a software
@@ -85,11 +87,11 @@ package for large-scale nonlinear optimization. It is designed to find
 This package contains examples for Ipopt.
 
 %prep
-%setup
+%setup -n %oname-%version
+%patch1 -p1
 
-mkdir -p BuildTools
-cp -f %_datadir/BuildTools/* %_datadir/libtool/*.m4 \
-	BuildTools/
+# don't use bundled stuff
+rm -rf {BuildTools,ThirdParty}
 
 %build
 mpi-selector --set %mpiimpl
@@ -113,7 +115,8 @@ BLASLAPACK="-llapack -lopenblas"
 	--with-metis="-L%mpidir/lib -lparmetis" \
 	--with-metis-incdir=%mpidir/include/metis \
 	--with-mumps-incdir=%_includedir \
-	--with-mumps-lib="$MUMPS"
+	--with-mumps-lib="$MUMPS" \
+	--disable-dependency-linking
 sed -i '1a\echo=echo' libtool
 %make_build TOPDIR=$PWD
 #popd
@@ -183,6 +186,9 @@ rm -fR %buildroot%_datadir/coin/doc
 %_docdir/coin/Ipopt/examples
 
 %changelog
+* Mon Nov 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.12.6-alt1
+- Updated to stable upstream version 3.12.6.
+
 * Thu May 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.11.6-alt1.svn20140513
 - New snapshot
 
