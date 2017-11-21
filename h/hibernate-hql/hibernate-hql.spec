@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             hibernate-hql
 Version:          1.3.0
-Release:          alt1_0.2.Alpha2jpp8
+Release:          alt2_0.2.Alpha2jpp8
 Summary:          Hibernate Query Parser
 License:          LGPLv2 and ASL 2.0
 Url:              https://github.com/hibernate/hibernate-hql-parser
@@ -26,9 +26,9 @@ BuildRequires:    maven-local
 BuildRequires:    mvn(org.antlr:antlr-runtime) >= 3.4
 BuildRequires:    mvn(org.antlr:antlr3-maven-plugin)
 BuildRequires:    mvn(org.antlr:stringtemplate)
-BuildRequires:    mvn(org.apache.lucene:lucene-core) >= 5.3.0
-BuildRequires:    mvn(org.apache.lucene:lucene-analyzers) >= 5.3.0
-BuildRequires:    mvn(org.apache.lucene:lucene-facet) >= 5.3.0
+BuildRequires:    mvn(org.apache.lucene:lucene-core:4)
+BuildRequires:    mvn(org.apache.lucene:lucene-analyzers:4)
+BuildRequires:    mvn(org.apache.lucene:lucene-facet:4)
 BuildRequires:    mvn(org.bsc.maven:maven-processor-plugin)
 BuildRequires:    mvn(org.hibernate:hibernate-search-engine) >= 5.3.0
 BuildRequires:    mvn(org.hibernate.javax.persistence:hibernate-jpa-2.1-api)
@@ -129,9 +129,9 @@ EOF
 
 # package org.antlr.stringtemplate does not exist
 %pom_add_dep org.antlr:stringtemplate:3.3-SNAPSHOT:provided parser
-%pom_add_dep org.apache.lucene:lucene-core:5.3.0:provided lucene
-%pom_add_dep org.apache.lucene:lucene-analyzers:5.3.0:provided lucene
-%pom_add_dep org.apache.lucene:lucene-facet:5.3.0:provided lucene
+%pom_add_dep org.apache.lucene:lucene-core:4:provided lucene
+%pom_add_dep org.apache.lucene:lucene-analyzers:4:provided lucene
+%pom_add_dep org.apache.lucene:lucene-facet:4:provided lucene
 
 %mvn_package :hibernate-hql-parent __noinstall
 
@@ -149,6 +149,9 @@ EOF
 %doc copyright.txt license.txt
 
 %changelog
+* Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_0.2.Alpha2jpp8
+- build with lucene4
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_0.2.Alpha2jpp8
 - new version
 
