@@ -4,7 +4,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xfce4-whiskermenu-plugin
-Version: 1.7.3
+Version: 1.7.4
 Release: alt1%git_date
 
 Summary: Alternate Xfce menu
@@ -55,6 +55,9 @@ keeps a list of the last ten applications that you've launched from it.
 %_man1dir/*.1.*
 
 %changelog
+* Tue Nov 21 2017 Mikhail Efremov <sem@altlinux.org> 1.7.4-alt1
+- Updated to 1.7.4.
+
 * Mon Aug 07 2017 Mikhail Efremov <sem@altlinux.org> 1.7.3-alt1
 - Updated to 1.7.3.
 
