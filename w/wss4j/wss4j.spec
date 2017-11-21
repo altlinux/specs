@@ -1,8 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -10,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          wss4j
 Version:       2.1.5
-Release:       alt1_2jpp8
+Release:       alt1_4jpp8
 Summary:       Apache WS-Security implementation
 License:       ASL 2.0
 URL:           http://ws.apache.org/wss4j/
@@ -27,7 +26,6 @@ BuildRequires: mvn(org.apache:apache:pom:)
 BuildRequires: mvn(org.apache.commons:commons-compress)
 BuildRequires: mvn(org.apache.directory.server:apacheds-kerberos-codec)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-checkstyle-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 # neethi:3.0.3
 BuildRequires: mvn(org.apache.neethi:neethi)
@@ -70,6 +68,7 @@ This package contains the API documentation for %{name}.
 # This plugin does not impact the build, and it currently raises this error:
 # Reporting mojo's can only be called from ReportDocumentRender
 %pom_remove_plugin "org.apache.maven.plugins:maven-pmd-plugin"
+%pom_remove_plugin "org.apache.maven.plugins:maven-checkstyle-plugin"
 
 %pom_remove_plugin :maven-source-plugin
 %pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-javadoc-plugin']/pom:executions"
@@ -99,7 +98,6 @@ rm ws-security-stax/src/test/java/org/apache/wss4j/stax/test/AttachmentTest.java
 
 %mvn_build -- -Dmaven.test.skip.exec=true
 
-
 %install
 %mvn_install
 
@@ -111,6 +109,9 @@ rm ws-security-stax/src/test/java/org/apache/wss4j/stax/test/AttachmentTest.java
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.1.5-alt1_4jpp8
+- fixed build with new checkstyle
+
 * Fri Nov 03 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.1.5-alt1_2jpp8
 - new version
 
