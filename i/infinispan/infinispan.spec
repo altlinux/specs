@@ -1,10 +1,10 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -28,16 +28,18 @@ BuildRequires: jpackage-generic-compat
 
 Name:          infinispan
 Version:       8.2.4
-Release:       alt1_2jpp8
+Release:       alt1_3jpp8
 Summary:       Data grid platform
 License:       ASL 2.0 and LGPLv2+ and Public Domain
 URL:           http://infinispan.org/
 Source0:       https://github.com/infinispan/infinispan/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
 
+# Port to lucene 6.x
+Patch0: lucene-6.patch
+
 BuildRequires: maven-local
 BuildRequires: mvn(com.clearspring.analytics:stream)
 BuildRequires: mvn(com.mchange:c3p0)
-BuildRequires: mvn(com.puppycrawl.tools:checkstyle)
 BuildRequires: mvn(commons-logging:commons-logging)
 BuildRequires: mvn(commons-pool:commons-pool)
 BuildRequires: mvn(gnu-getopt:getopt)
@@ -56,7 +58,6 @@ BuildRequires: mvn(org.apache.logging.log4j:log4j-slf4j-impl)
 BuildRequires: mvn(org.apache.lucene:lucene-core) >= 5.3.1
 BuildRequires: mvn(org.apache.lucene:lucene-analyzers-common) >= 5.3.1
 BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-checkstyle-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires: mvn(org.codehaus.jackson:jackson-mapper-asl)
@@ -129,11 +130,17 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{namedversion}
+#patch0
+
 find .  -name "*.jar" -print -delete
 find .  -name "*.class" -print -delete
 
 # Rename the license file
 cp -pr license/src/main/resources/META-INF/LICENSE.txt.vm LICENSE.txt
+
+# Checkstyle is unnecessary for RPM builds
+%pom_disable_module checkstyle
+%pom_remove_plugin -r org.apache.maven.plugins:maven-checkstyle-plugin
 
 %pom_disable_module all
 %pom_disable_module all/cli
@@ -285,6 +292,9 @@ done
 %doc LICENSE.txt
 
 %changelog
+* Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 8.2.4-alt1_3jpp8
+- fixed build with new checkstyle
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 8.2.4-alt1_2jpp8
 - new version
 
