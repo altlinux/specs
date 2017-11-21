@@ -1,5 +1,5 @@
 Name: alterator-net-eth
-Version: 5.0.4
+Version: 5.1.0
 Release: alt1
 
 Source:%name-%version.tar
@@ -77,6 +77,12 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Tue Nov 21 2017 Mikhail Efremov <sem@altlinux.org> 5.1.0-alt1
+- Check for configured FreeIPA domain.
+- Allow setup fqdn during system installation (closes: #34224).
+- Use /etc/hostname if it exists (closes: #33135).
+- Preserve /etc/sysconfig/network file metadata.
+
 * Tue Apr 18 2017 Mikhail Efremov <sem@altlinux.org> 5.0.4-alt1
 - Change for guile22.
 - Allow vlan on bonding.
