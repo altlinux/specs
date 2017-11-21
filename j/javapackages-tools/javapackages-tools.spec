@@ -1,8 +1,8 @@
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python3 rpm-macros-java
-BuildRequires: python3-devel
+BuildRequires(pre): rpm-build-python rpm-build-python3 rpm-macros-java
+BuildRequires: python-devel python3-devel rpm-build-java
 # END SourceDeps(oneline)
 # optional dependencies of jpackage-utils
 %filter_from_requires /^.usr.bin.jar/d
@@ -13,6 +13,7 @@ BuildRequires: source-highlight python3-module-nose python3-module-setuptools-te
 %add_python3_path /usr/share/java-utils/
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+%define fedora 27
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -25,56 +26,76 @@ BuildRequires: jpackage-generic-compat
 # provided pseudo-artifacts: com.sun:tools and sun.jdk:jconsole.
 %global __requires_exclude_from %{?__requires_exclude_from:%__requires_exclude_from|}/maven-metadata/javapackages-metadata.xml$
 
-# Avoid circular dependency on itself when bootstrapping
-%{!?_with_bootstrap: %global bootstrap 0}
-
+%bcond_without asciidoc
 %bcond_without gradle
 %bcond_with tests
+%bcond_with xmvn_javadoc
+
+%if 0%{?fedora}
+%global python_prefix python3
+%global python_interpreter %{__python3}
+%else
+%global python_prefix python
+%global python_interpreter %{__python}
+%global rpmmacrodir /etc/rpm
+%endif
+
+%global default_jdk %{?_root_prefix}%{!?_root_prefix:%{_prefix}}/lib/jvm/java-1.8.0-openjdk
+%global default_jre %{?_root_prefix}%{!?_root_prefix:%{_prefix}}/lib/jvm/jre-1.8.0-openjdk
 
 Name:           javapackages-tools
-Version:        4.7.0
-Release:        alt3_17jpp8
+Version:        5.0.0
+Release:        alt1_0jpp8
 
 Summary:        Macros and scripts for Java packaging support
 
 License:        BSD
-URL:            https://git.fedorahosted.org/git/javapackages.git
-Source0:        https://fedorahosted.org/released/javapackages/javapackages-%{version}.tar.xz
-
-Patch0:         0001-Don-t-build-and-install-docs.patch
-# Upstream patch for https://github.com/fedora-java/javapackages/issues/26
-Patch1:         0002-Fix-generation-of-versioned-OSGi-requires.patch
-# https://github.com/fedora-java/javapackages/issues/33
-Patch2:         0003-Avoid-calling-zipfile.open-.-rU.patch
-# Fixes test failures due to warnings from python
-Patch3:         0004-Force-locale-in-tests.patch
-Patch4:         0005-Fix-traceback-on-corrupt-zipfile.patch
+URL:            https://github.com/fedora-java/javapackages
+Source0:        https://github.com/fedora-java/javapackages/archive/%{version}.tar.gz
+Patch0:         0001-Fix-traceback-on-corrupt-zipfile.patch
 
 BuildArch:      noarch
 
+BuildRequires:  coreutils
+BuildRequires:  which
+%if %{with asciidoc}
 BuildRequires:  asciidoc asciidoc-a2x
 BuildRequires:  xmlto
-BuildRequires:  dia
-%if ! 0%{?bootstrap}
-BuildRequires:  maven-local >= 4.0.0
-BuildRequires:  xmvn-resolve >= 2
 %endif
+BuildRequires:  %{python_prefix}-devel
+BuildRequires:  python3-module-lxml
+BuildRequires:  python3-module-distribute
+%if !0%{?_module_build}
+# XXX python-nose is not part of any module yet, but it should get
+# modularized one day, right?  mizdebsk, Sep 2017
+BuildRequires:  python3-module-nose
+%endif
+BuildRequires:  python3-module-six
 
 Requires:       coreutils
 Requires:       findutils
 Requires:       which
+# default JRE
 
+Obsoletes:      eclipse-filesystem < 2
+Provides:       eclipse-filesystem = %{version}-%{release}
 Provides:       jpackage-utils = %{version}-%{release}
+# These could be generated automatically, but then we would need to
+# depend on javapackages-local for dependency generator.
+Provides:       mvn(com.sun:tools) = SYSTEM
+Provides:       mvn(sun.jdk:jconsole) = SYSTEM
 Source44: import.info
-Source45: osgi-fc.prov.files
-Source46: maven.prov.files
-Source47: maven.env
-Source48: abs2rel
-Patch33: javapackages-tools-4.6.0-alt-use-enviroment.patch
-Patch34: javapackages-tools-4.6.0-alt-req-headless-off.patch
-Patch35: javapackages-tools-4.6.0-alt-shade-jar.patch
-Patch36: macros.fjava-to-alt-rpm404.patch
-Patch37: macros.jpackage-alt-script.patch
+Patch33: macros.jpackage-alt-jvmjardir.patch
+Patch34: javapackages-tools-5.0.0-alt-xmvn25.patch
+Source45: abs2rel
+Source46: osgi-fc.prov.files
+Source47: maven.prov.files
+Source48: maven.env
+Patch35: javapackages-tools-4.6.0-alt-use-enviroment.patch
+Patch36: javapackages-tools-4.6.0-alt-req-headless-off.patch
+Patch37: javapackages-tools-4.6.0-alt-shade-jar.patch
+Patch38: macros.fjava-to-alt-rpm404.patch
+Patch39: macros.jpackage-alt-script.patch
 
 Conflicts:       jpackage-utils < 0:5.0.1
 Obsoletes:       jpackage-utils < 0:5.0.1
@@ -115,24 +136,24 @@ Group: Development/Java
 Summary:        Macros and scripts for Maven packaging support
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       javapackages-local = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       xmvn-minimal >= 2
-Requires:       xmvn-mojo >= 2
-Requires:       xmvn-connector-aether >= 2
-# POM files needed by maven itself
-Requires:       apache-parent
+Requires:       xmvn-minimal
+Requires:       xmvn-mojo
+Requires:       xmvn-connector-aether
 # Common Maven plugins required by almost every build. It wouldn't make
 # sense to explicitly require them in every package built with Maven.
-Requires:       maven-assembly-plugin
-Requires:       maven-compiler-plugin
-Requires:       maven-jar-plugin
-Requires:       maven-javadoc-plugin
-Requires:       maven-resources-plugin
-Requires:       maven-surefire-plugin
+Requires:       mvn(org.apache.maven.plugins:maven-compiler-plugin)
+Requires:       mvn(org.apache.maven.plugins:maven-jar-plugin)
+%if %{without xmvn_javadoc}
+Requires:       mvn(org.apache.maven.plugins:maven-javadoc-plugin)
+%endif
+Requires:       mvn(org.apache.maven.plugins:maven-resources-plugin)
+Requires:       mvn(org.apache.maven.plugins:maven-surefire-plugin)
 # Tests based on JUnit are very common and JUnit itself is small.
-# Include JUnit provider for Surefire just for convenience.
-Requires:       maven-surefire-provider-junit
+# Include JUnit and JUnit provider for Surefire just for convenience.
+Requires:       mvn(junit:junit)
+Requires:       mvn(org.apache.maven.surefire:surefire-junit4)
 # testng is quite common as well
-Requires:       maven-surefire-provider-testng
+Requires:       mvn(org.apache.maven.surefire:surefire-testng)
 
 %description -n maven-local
 This package provides macros and scripts to support packaging Maven artifacts.
@@ -144,7 +165,7 @@ Summary:        Local mode for Gradle
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       javapackages-local = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       gradle >= 2.2.1
-Requires:       xmvn-connector-gradle >= 2
+Requires:       xmvn-connector-gradle
 
 %description -n gradle-local
 This package implements local mode for Gradle, which allows artifact
@@ -157,7 +178,7 @@ Summary:        Local mode for Apache Ivy
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       javapackages-local = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       apache-ivy >= 2.3.0
-Requires:       xmvn-connector-ivy >= 2
+Requires:       xmvn-connector-ivy
 
 %description -n ivy-local
 This package implements local mode for Apache Ivy, which allows
@@ -178,10 +199,12 @@ packaging in Linux distributions
 Group: Development/Java
 Summary:        Non-essential macros and scripts for Java packaging support
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       xmvn-install >= 2
-Requires:       xmvn-subst >= 2
-Requires:       xmvn-resolve >= 2
+Requires:       xmvn-install
+Requires:       xmvn-subst
+Requires:       xmvn-resolve
 # Java build systems don't have hard requirement on java-devel, so it should be there
+Requires:       python3-module-javapackages = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{python_prefix}
 
 %description -n javapackages-local
 This package provides non-essential macros and scripts to support Java packaging.
@@ -190,31 +213,36 @@ This package provides non-essential macros and scripts to support Java packaging
 %setup -q -n javapackages-%{version}
 
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+
+%if %{without asciidoc}
+sed -i '/^manpage /d' build
+sed -i '/${mandir}/d' install
+%endif
 %patch33 -p1
 %patch34 -p1
 %patch35 -p1
 %patch36 -p1
 %patch37 -p1
+%patch38 -p1
+%patch39 -p1
 
 # alt specific shabang
 sed -i -e 1,1s,/bin/bash,/bin/sh, java-utils/java-wrapper bin/*
 
 
 %build
-%configure --pyinterpreter=%{__python3}
+%configure --pyinterpreter=%{python_interpreter} \
+    --default_jdk=%{default_jdk} --default_jre=%{default_jre} \
+    --rpmmacrodir=%{_rpmmacrosdir}
 ./build
 
 %install
 ./install
-sed -e 's/.[17]$/&.*/' -e 's/.py$/&*/' -i files-*
 
-pushd python
-  %{__python3} setup.py install -O1 --skip-build --root %{buildroot}
-popd
+%if %{with xmvn_javadoc}
+sed -i 's|mvn_build.py|& --xmvn-javadoc|' $(find %{buildroot} -name 'macros*.fjava')
+%endif
+sed -e 's/.[17]$/&*/' -e 's/.py$/&*/' -i files-*
 
 %if %{without gradle}
 rm -rf %{buildroot}%{_bindir}/gradle-local
@@ -222,35 +250,36 @@ rm -rf %{buildroot}%{_datadir}/gradle-local
 rm -rf %{buildroot}%{_mandir}/man7/gradle_build.7
 %endif
 
-install -m755 -D %{SOURCE48} %buildroot%_bindir/abs2rel
+install -m755 -D %{SOURCE45} %buildroot%_bindir/abs2rel
 
-install -m755 -D %{SOURCE46} %buildroot/usr/lib/rpm/maven.prov.files
-install -m755 -D %{SOURCE46} %buildroot/usr/lib/rpm/maven.req.files
+install -m755 -D %{SOURCE47} %buildroot/usr/lib/rpm/maven.prov.files
+install -m755 -D %{SOURCE47} %buildroot/usr/lib/rpm/maven.req.files
 
-install -m755 -D %{SOURCE46} %buildroot/usr/lib/rpm/javadoc.req.files
+install -m755 -D %{SOURCE47} %buildroot/usr/lib/rpm/javadoc.req.files
 sed -i -e s,/usr/share/maven-metadata/,/usr/share/javadoc/, %buildroot/usr/lib/rpm/javadoc.req.files
 
-install -m755 -D %{SOURCE45} %buildroot/usr/lib/rpm/osgi-fc.prov.files
-install -m755 -D %{SOURCE45} %buildroot/usr/lib/rpm/osgi-fc.req.files
+install -m755 -D %{SOURCE46} %buildroot/usr/lib/rpm/osgi-fc.prov.files
+install -m755 -D %{SOURCE46} %buildroot/usr/lib/rpm/osgi-fc.req.files
 
 chmod 755 %buildroot/usr/lib/rpm/*.req* %buildroot/usr/lib/rpm/*.prov*
 sed -i -e 's,^#!python,#!/usr/bin/python,' %buildroot/usr/lib/rpm/*.req* %buildroot/usr/lib/rpm/*.prov*
 
-install -m755 -D %{SOURCE47} %buildroot%_rpmmacrosdir/maven.env
+install -m755 -D %{SOURCE48} %buildroot%_rpmmacrosdir/maven.env
 
-# in rpm-build-java
-sed -i -e '/usr\/lib\/rpm/d' files-common
+# altlinux python support
+sed -i -e 's,python?\.?,python*,' files-python
+# in rpm-build-java or useless in alt
+sed -i -e '/usr\/lib\/rpm/d' files-common files-local
 rm -rf %buildroot/usr/lib/rpm/fileattrs
-# move /usr/share/xmvn/* to maven-local
-#grep /usr/share/xmvn files-common >> files-maven
-#sed -i -e '/usr\/share\/xmvn/d' files-common
-#sed -i -e '/usr\/share\/java-utils\/.*\.py/d' files-common
-sed -i -e '/usr\/bin\/xmvn-builddep/d' files-common
+
+# useless on alt and requires python
+sed -i -e '/usr\/bin\/xmvn-builddep/d' files-common files-local
 rm -rf %buildroot/usr/bin/xmvn-builddep
 
 pushd %buildroot%_rpmmacrosdir/
 mv macros.fjava javapackages-fjava
 mv macros.jpackage javapackages-jpackage
+#mv macros.scl-java-template javapackages-scl-java-template
 popd
 
 pushd %buildroot/usr/lib/rpm/
@@ -261,24 +290,22 @@ popd
 
 
 %if %{with tests}
+%if !0%{?_module_build}
 %check
 ./check
 %endif
+%endif
 
 %files -f files-common
-%exclude %_datadir/java-utils/maven_depmap.py
-%exclude %_datadir/java-utils/pom_editor.py
-%exclude %_datadir/java-utils/request-artifact.py
 
 %files -n javapackages-local -f files-local
+# alt python3 cache
 %_datadir/java-utils/__pycache__
-%exclude %_datadir/java-utils/__pycache__/maven_depmap.*
-%exclude %_datadir/java-utils/__pycache__/pom_editor.*
-%exclude %_datadir/java-utils/__pycache__/request-artifact.*
 
 %files -n rpm-macros-java
 %_rpmmacrosdir/javapackages-fjava
 %_rpmmacrosdir/javapackages-jpackage
+#%_rpmmacrosdir/javapackages-scl-java-template
 
 %files -n rpm-build-java
 /usr/lib/rpm/maven.*
@@ -286,14 +313,15 @@ popd
 /usr/lib/rpm/osgi-fc.*
 %_rpmmacrosdir/maven.env
 #%_bindir/xmvn-builddep
-%_datadir/java-utils/maven_depmap.py
-%_datadir/java-utils/pom_editor.py
-%_datadir/java-utils/request-artifact.py
-%_datadir/java-utils/__pycache__/maven_depmap.*
-%_datadir/java-utils/__pycache__/pom_editor.*
-%_datadir/java-utils/__pycache__/request-artifact.*
+#%_datadir/java-utils/maven_depmap.py
+#%_datadir/java-utils/pom_editor.py
+#%_datadir/java-utils/request-artifact.py
+#%_datadir/java-utils/__pycache__/maven_depmap.*
+#%_datadir/java-utils/__pycache__/pom_editor.*
+#%_datadir/java-utils/__pycache__/request-artifact.*
 
-%files -n maven-local -f files-maven
+
+%files -n maven-local
 
 %if %{with gradle}
 %files -n gradle-local -f files-gradle
@@ -301,11 +329,13 @@ popd
 
 %files -n ivy-local -f files-ivy
 
-%files -n python3-module-javapackages
+%files -n python3-module-javapackages -f files-python
 %doc LICENSE
-%{python3_sitelibdir_noarch}/javapackages*
 
 %changelog
+* Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.0.0-alt1_0jpp8
+- new version - pre for old xmvn
+
 * Mon Nov 06 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.7.0-alt3_17jpp8
 - removed lua and python code from javapackages-tools
 
