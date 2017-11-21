@@ -12,7 +12,7 @@ Release: alt2.%snapshotdate.1
 %define srcdir %name-%baseversion-%snapshotdate
 %else
 Version: %baseversion
-Release: alt4
+Release: alt5
 %define srcdir %name-%version
 %endif
 
@@ -57,6 +57,7 @@ Patch1: mailfromd-savsrv.c-not_cache_mf_timeout.diff
 #Errata
 Patch10: mailfromd-59f7cf0f14.diff
 Patch11: mailfromd-47011c42b5.diff
+Patch12: mailfromd-c659e6efca.diff
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -307,6 +308,9 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Wed Nov 22 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.4-alt5
+- applied upstream's commit c659e6efca
+
 * Tue Nov 21 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.4-alt4
 - applied upstream's commit 47011c42b5
 
