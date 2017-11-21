@@ -1,6 +1,6 @@
 Name: nsd
 Version: 4.1.5
-Release: alt2
+Release: alt3
 
 Summary: Name Server Daemon
 License: BSD
@@ -29,7 +29,8 @@ NSD is an authoritative only, high performance, simple and open source name serv
   --enable-zone-stats \
   --enable-ratelimit \
   --with-pidfile=%_runtimedir/%name.pid \
-  --with-dbfile=%_localstatedir/%name/%name.db
+  --with-dbfile=%_localstatedir/%name/%name.db \
+  --localstatedir=%_var
 %make_build
 
 %install
@@ -67,6 +68,9 @@ cp contrib/%name.init %buildroot/%_initdir/%name
 %doc doc contrib %name.conf.sample
 
 %changelog
+* Tue Nov 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.5-alt3
+- Fixed localstatedir.
+
 * Tue Sep 29 2015 Eugene Prokopiev <enp@altlinux.ru> 4.1.5-alt2
 - add old changelog rows to respect srpm inheritance check
 
