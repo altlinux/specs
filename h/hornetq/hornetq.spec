@@ -37,7 +37,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          hornetq
 Version:       2.4.7
-Release:       alt1_6jpp8
+Release:       alt2_6jpp8
 Summary:       High performance messaging system
 License:       ASL 2.0
 URL:           http://hornetq.jboss.org/
@@ -45,6 +45,7 @@ Source0:       https://github.com/hornetq/hornetq/archive/HornetQ_%{customnamedv
 # https://issues.jboss.org/browse/HORNETQ-1534
 # Replace json.org with javax.json
 Patch0:        hornetq-2.4.7-javax.json.patch
+Patch1: hornetq-2.4.7-alt-netty.patch
 
 BuildRequires: autoconf
 BuildRequires: automake
@@ -233,6 +234,8 @@ find -name "*.jar" -print -delete
 %patch0 -p1
 rm -rf hornetq-core-client/src/main/java/org/hornetq/utils/json
 
+%patch1 -p1
+
 %pom_change_dep -r :geronimo-json_1.0_spec javax.json:javax.json-api:1.0 hornetq-core-client hornetq-jms-server tests/integration-tests
 
 %pom_disable_module examples
@@ -344,6 +347,9 @@ cp -L hornetq-native/bin/libHornetQAIO.so %{buildroot}/%{_libdir}/libHornetQAIO.
 %doc LICENSE.txt NOTICE
 
 %changelog
+* Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.7-alt2_6jpp8
+- fixed build with new netty
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.7-alt1_6jpp8
 - fc27 update
 
