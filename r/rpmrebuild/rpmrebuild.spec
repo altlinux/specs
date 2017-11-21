@@ -1,6 +1,6 @@
 Name: rpmrebuild
 Version: 2.11
-Release: alt2
+Release: alt3
 License: GPLv2+
 Group: Development/Other
 Summary: A tool to build rpm file from rpm database
@@ -8,6 +8,7 @@ Source: %name-%version.tar.gz
 Patch: rpmrebuild-2.9-alt-tmpdir.patch
 Patch1: rpmrebuild-2.11-alt-toonewtags.patch
 Patch2: rpmrebuild-2.11-correctly-quote-rpmargs.patch
+Patch3: rpmrebuild-alt-remove-SendBugReport.patch
 Url: http://rpmrebuild.sourceforge.net/
 BuildArch: noarch
 
@@ -34,6 +35,7 @@ Rpmrebuild plugin for automatically un-prelinking package content.
 %patch -p2
 %patch1 -p1
 %patch2 -p2
+%patch3 -p2
 
 %build
 %make
@@ -60,6 +62,10 @@ Rpmrebuild plugin for automatically un-prelinking package content.
 %prefix/lib/%name/plugins/un_prelink*
 
 %changelog
+* Tue Nov 21 2017 Dmitry V. Levin <ldv@altlinux.org> 2.11-alt3
+- Removed unused SendBugReport to get rid of /bin/mail dependence
+  (suggested by Ivan Zakharyaschev).
+
 * Mon May 15 2017 Ivan Zakharyaschev <imz@altlinux.org> 2.11-alt2
 - Correctly quote the values passed to --define
 - Rebuild to get correct deps on prelink-tools (without prelink cronjob)
