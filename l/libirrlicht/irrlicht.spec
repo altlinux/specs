@@ -1,19 +1,18 @@
 %def_disable static
 %define realname irrlicht
 %define major 1
-%define libname lib%{name}%{major}
+%define libname %{name}%{major}
 
 Name: libirrlicht
-Version: 1.8.3
+Version: 1.8.4
 Release: alt1
 
 Summary: Fast Open-source 3D engine
 License: BSD-style
 Group: System/Libraries
 Url: http://irrlicht.sourceforge.net/
-Packager: Damir Shayhutdinov <damir@altlinux.ru>
 
-Source0: %realname-%version.tar.bz2
+Source: %realname-%version.tar
 
 # TODO: remake for 1.8 and uncomment doc and examples
 Patch0: irrlicht-1.7.1-alt-autotools.patch
@@ -62,6 +61,9 @@ Headers for building software that uses %name
 Summary:	Shared libraries for Irrlicht 3D engine
 Group:		System/Libraries
 
+Provides: liblibirrlicht1 = %EVR
+Obsoletes: liblibirrlicht1 < %EVR
+Conflicts: liblibirrlicht1 < %EVR
 Provides: libirrlicht = %version
 Obsoletes: libirrlicht < 1.8
 Conflicts: libirrlicht < 1.8
@@ -152,6 +154,9 @@ cp -a include/*.h %{buildroot}%{_includedir}/%{realname}/
 %endif
 
 %changelog
+* Tue Nov 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.4-alt1
+- Updated to upstream version 1.8.4.
+
 * Tue Jun 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.3-alt1
 - NMU update
 
