@@ -14,14 +14,14 @@ BuildRequires: jpackage-generic-compat
 
 Name:          hibernate-search
 Version:       5.5.4
-Release:       alt2_2jpp8
+Release:       alt3_2jpp8
 Summary:       Hibernate Search
 License:       LGPLv2+
 URL:           http://hibernate.org/search/
 Source0:       https://github.com/hibernate/hibernate-search/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
 
 BuildRequires: maven-local
-BuildRequires: mvn(com.puppycrawl.tools:checkstyle)
+BuildRequires: mvn(com.puppycrawl.tools:checkstyle:7)
 BuildRequires: mvn(commons-io:commons-io)
 BuildRequires: mvn(java_cup:java_cup)
 BuildRequires: mvn(junit:junit)
@@ -119,6 +119,8 @@ rm -rf orm/src/test/resources/org/hibernate/search/test/bridge/tika/
 # org.unitils:unitils-easymock:3.3
 %pom_remove_dep -r :unitils-easymock
 
+%pom_change_dep :checkstyle:5.7 :checkstyle:7.7 build-config/pom.xml
+
 %mvn_alias :hibernate-search-orm :hibernate-search
 
 %build
@@ -136,6 +138,9 @@ rm -rf orm/src/test/resources/org/hibernate/search/test/bridge/tika/
 %doc lgpl.txt
 
 %changelog
+* Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 5.5.4-alt3_2jpp8
+- fixed build with new checkstyle
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 5.5.4-alt2_2jpp8
 - added BR: maven-assembly-plugin for javapackages 5
 
