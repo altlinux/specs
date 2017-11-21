@@ -1,3 +1,4 @@
+%filter_from_provides /^osgi/d
 %def_with gcj
 %def_without native
 BuildRequires: /proc
@@ -12,8 +13,7 @@ Group: Development/Java
 Summary: Eclipse Compiler for Java
 Name: ecj-gcj
 Version: 4.4.0
-#Version: 4.5.1
-Release: alt1_1jpp6
+Release: alt2_0jpp6
 URL: http://www.eclipse.org
 License: EPL
 
@@ -46,6 +46,8 @@ BuildRequires: gcc-java >= 4.0.0
 BuildRequires: /usr/bin/aot-compile-rpm
 %if_with native
 BuildArch: noarch
+%else
+Provides: %name-native = %EVR
 %endif
 %else
 BuildArch: noarch
@@ -138,5 +140,8 @@ aot-compile-rpm
 %endif
 
 %changelog
+* Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 4.4.0-alt2_0jpp6
+- updated provides
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 4.4.0-alt1_1jpp6
 - compat package for gcj
