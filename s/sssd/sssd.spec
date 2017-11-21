@@ -4,7 +4,7 @@
 
 Name: sssd
 Version: 1.15.3
-Release: alt4%ubt
+Release: alt5%ubt
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -527,12 +527,14 @@ unset CK_TIMEOUT_MULTIPLIER
 #chown %sssd_user:%sssd_user %pubconfpath/kdcinfo* %pubconfpath/kpasswdinfo*
 #chown %sssd_user:%sssd_user  %_logdir/%name/sssd_*
 chown root:root %_sysconfdir/sssd/sssd.conf
-%post_service %name
-%post_service sssd-secrets
 
-%preun
-%preun_service %name
-%preun_service sssd-secrets
+# Don't restart sssd services until reboot or manual restart
+#post_service %name
+#post_service sssd-secrets
+#
+#preun
+#preun_service %name
+#preun_service sssd-secrets
 
 %triggerpostun -- %name < 1.14.2-alt5
 %_bindir/gpasswd -a %sssd_user _keytab
@@ -812,6 +814,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_libdir/libnfsidmap/sss.so
 
 %changelog
+* Tue Nov 21 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.15.3-alt5%ubt
+- Don't restart sssd services until reboot or manual restart (ALT #34054)
+
 * Fri Nov 03 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.15.3-alt4%ubt
 - relocate nfs-idmap plugin back under %%_libdir
 
