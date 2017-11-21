@@ -1,17 +1,17 @@
 %define somver 0
 %define sover %somver.0.0
 Name: arprec
-Version: 2.2.17
+Version: 2.2.19
 Release: alt1
 Summary: C++/Fortran-90 arbitrary precision package
 License: BSD
 Group: Sciences/Mathematics
 Url: http://crd.lbl.gov/~dhbailey/mpdist/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
+Patch1: %name-%version-alt-build.patch
 
-BuildPreReq: gcc-fortran libgfortran-devel gcc-c++ libqd-devel
+BuildRequires: gcc-fortran libgfortran-devel gcc-c++ libqd-devel
 
 Conflicts: Io-language
 
@@ -124,6 +124,7 @@ integration (Gaussian, error function or tanh-sinh), and summation of series.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %add_optflags %optflags_shared
@@ -185,7 +186,7 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 
 
 %files
-%doc AUTHORS ChangeLog COPYING NEWS README* TODO
+%doc AUTHORS ChangeLog COPYING NEWS README*
 %_bindir/*
 %exclude %_bindir/%name-config
 %exclude %_bindir/math*
@@ -205,6 +206,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %_bindir/math*
 
 %changelog
+* Tue Nov 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.19-alt1
+- Updated to upstream version 2.2.19.
+
 * Fri Nov 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.17-alt1
 - Version 2.2.17
 
