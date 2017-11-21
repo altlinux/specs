@@ -11,13 +11,14 @@
 %def_enable flatpak
 %def_enable ostree
 %def_disable limba
+%def_enable rpm
 %def_disable packagekit
 %def_enable webapps
 %def_enable odrs
 %def_disable tests
 
 Name: gnome-software
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Software manager for GNOME
@@ -46,7 +47,8 @@ BuildRequires: libjson-glib-devel >= %json_glib_ver
 BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: gnome-common rpm-build-xdg intltool yelp-tools gtk-doc xsltproc docbook-style-xsl
 BuildRequires: libsqlite3-devel libsecret-devel gsettings-desktop-schemas-devel liboauth-devel
-BuildRequires: librpm-devel valgrind-tool-devel
+BuildRequires: valgrind-tool-devel
+%{?_enable_rpm:BuildRequires: librpm-devel}
 %{?_enable_gudev:BuildRequires: libgudev-devel}
 %{?_enable_gtkspell:BuildRequires: libgtkspell3-devel}
 %{?_enable_gnome_desktop:BuildRequires: libgnome-desktop3-devel >= %gnome_desktop_ver}
@@ -94,6 +96,7 @@ GNOME Software.
 	%{?_enable_flatpak:-Denable-flatpak=true} \
 	%{?_enable_ostree:-Denable-ostree=true} \
 	%{?_disable_limba:-Denable-limba=false} \
+	%{?_disable_rpm:-Denable-rpm=false} \
 	%{?_disable_packagekit:-Denable-packagekit=false} \
 	%{?_disable_tests:-Denable-tests=false}
 %meson_build
@@ -138,6 +141,9 @@ GNOME Software.
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Tue Nov 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt1
+- 3.26.3
+
 * Thu Nov 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 
