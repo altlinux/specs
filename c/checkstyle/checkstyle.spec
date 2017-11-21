@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
@@ -39,8 +39,8 @@ BuildRequires: jpackage-generic-compat
 #
 
 Name:           checkstyle
-Version:        7.7
-Release:        alt1_1jpp8
+Version:        8.0
+Release:        alt1_2jpp8
 Summary:        Java source code checker
 URL:            http://checkstyle.sourceforge.net/
 # src/checkstyle/com/puppycrawl/tools/checkstyle/grammars/java.g is GPLv2+
@@ -102,6 +102,7 @@ sed -i s/guava-jdk5/guava/ pom.xml
 %pom_remove_plugin :findbugs-maven-plugin
 %pom_remove_plugin :xml-maven-plugin
 %pom_remove_plugin :forbiddenapis
+%pom_remove_plugin :spotbugs-maven-plugin
 
 # get rid of system scope
 %pom_remove_dep com.sun:tools
@@ -170,6 +171,9 @@ fi
 
 
 %changelog
+* Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 0:8.0-alt1_2jpp8
+- new version
+
 * Wed Oct 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:7.7-alt1_1jpp8
 - new jpp release
 
