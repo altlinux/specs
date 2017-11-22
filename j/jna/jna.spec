@@ -8,8 +8,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jna
-Version:        4.4.0
-Release:        alt1_7jpp8
+Version:        4.5.0
+Release:        alt1_1jpp8
 Summary:        Pure Java access to native libraries
 # Most of code is dual-licensed under either LGPL 2.1 only or Apache
 # License 2.0.  WeakIdentityHashMap.java was taken from Apache CXF,
@@ -137,6 +137,9 @@ install -m 755 build/native*/libjnidispatch*.so %{buildroot}%{_libdir}/%{name}/
 
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 4.5.0-alt1_1jpp8
+- new version
+
 * Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 4.4.0-alt1_7jpp8
 - new version
 
