@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.3.30
+Version: 1.3.31
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -58,6 +58,11 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Wed Nov 22 2017 Dmitry V. Levin <ldv@altlinux.org> 1.3.31-alt1
+- hsh-initroot: if /.host/postin hook is available, execute it
+  after ldconfig and adjust_kernel_headers the same way
+  as hsh-install does.
+
 * Mon Nov 20 2017 Dmitry V. Levin <ldv@altlinux.org> 1.3.30-alt1
 - hsh-rebuild, hsh-sh-rebuild-functions:
   implemented $SOURCE_DATE_EPOCH support (closes: #34202):
