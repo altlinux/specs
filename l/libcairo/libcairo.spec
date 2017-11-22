@@ -1,12 +1,13 @@
+%def_without docs
+
 Name: libcairo
-Version: 1.14.4
+Version: 1.14.10
 Release: alt1
 Epoch: 1
 Summary: Multi-platform 2D graphics library
 License: LGPL
 Group: System/Libraries
 URL: http://cairographics.org/
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: cairo-%version.tar
 Patch: cairo-%version-%release.patch
@@ -83,10 +84,15 @@ This package contains tools for working with the cairo graphics library.
 	--enable-svg \
 	--enable-tee \
 	--disable-xml \
+%if_with docs
 	--enable-gtk-doc \
-	--disable-static
+%endif
+	--disable-static \
+	--localstatedir=%_var
 %make_build
+%if_with docs
 %make doc
+%endif
 
 %install
 %make DESTDIR=%buildroot install
@@ -107,7 +113,9 @@ This package contains tools for working with the cairo graphics library.
 %_libdir/%name-script-interpreter.so
 %_pkgconfigdir/*.pc
 %exclude %_pkgconfigdir/cairo-gobject.pc
+%if_with docs
 %_datadir/gtk-doc/html/cairo
+%endif
 
 %files gobject
 %_libdir/%name-gobject.so.*
@@ -122,6 +130,11 @@ This package contains tools for working with the cairo graphics library.
 %_libdir/cairo
 
 %changelog
+* Wed Nov 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.14.10-alt1
+- Updated to upstream version 1.14.10.
+- Disabled docs generation.
+- Fixed localstatedir location.
+
 * Sun Nov 08 2015 Valery Inozemtsev <shrek@altlinux.ru> 1:1.14.4-alt1
 - 1.14.4
 
