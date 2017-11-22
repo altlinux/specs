@@ -7,32 +7,28 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# READ BEFORE UPDATING: After updating this package to new upstream
-# version eclipse-ecf should be rebuilt.  For more info, see:
-# https://fedoraproject.org/wiki/SIGs/Java#Package_Update.2FRebuild_Notes
-
-%global base_name httpcomponents
-
-Name:              httpcomponents-core
-Summary:           Set of low level Java HTTP transport components for HTTP services
-Version:           4.4.6
-Release:           alt1_4jpp8
-License:           ASL 2.0
-URL:               http://hc.apache.org/
-Source0:           http://www.apache.org/dist/httpcomponents/httpcore/source/httpcomponents-core-%{version}-src.tar.gz
-BuildArch:         noarch
+Name:           httpcomponents-core
+Summary:        Set of low level Java HTTP transport components for HTTP services
+Version:        4.4.8
+Release:        alt1_1jpp8
+License:        ASL 2.0
+URL:            http://hc.apache.org/
+Source0:        http://www.apache.org/dist/httpcomponents/httpcore/source/httpcomponents-core-%{version}-src.tar.gz
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.httpcomponents:project:pom:)
+BuildRequires:  mvn(org.apache.httpcomponents:httpcomponents-parent:pom:)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.mockito:mockito-core)
 Source44: import.info
 
 Obsoletes: hc-httpcore < 4.1.1
 Provides: hc-httpcore = %version
+
 
 %description
 HttpCore is a set of low level HTTP transport components that can be
@@ -58,6 +54,10 @@ BuildArch: noarch
 
 %prep
 %setup -q
+
+# Random test failures on ARM -- 100 ms sleep is not eneough on this
+# very performant arch, lets make it 2 s
+sed -i '/Thread.sleep/s/100/2000/' httpcore-nio/src/test/java/org/apache/http/nio/integration/TestHttpAsyncHandlers.java
 
 %pom_remove_plugin :maven-checkstyle-plugin
 %pom_remove_plugin :apache-rat-plugin
@@ -104,6 +104,9 @@ done
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 4.4.8-alt1_1jpp8
+- new version
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 4.4.6-alt1_4jpp8
 - fc27 update
 
