@@ -15,21 +15,17 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 %bcond_without  scm
 %bcond_without  ssh
-%global bname     wagon
-%global split_verrel 2.6-4
 
-Name:           maven-%{bname}
-Version:        2.10
-Release:        alt1_4jpp8
+Name:           maven-wagon
 Epoch:          0
+Version:        3.0.0
+Release:        alt1_1jpp8
 Summary:        Tools to manage artifacts and deployment
 License:        ASL 2.0
 URL:            http://maven.apache.org/wagon
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/wagon/wagon/%{version}/wagon-%{version}-source-release.zip
-
-Patch0:         0001-Port-to-jetty-9.patch
-
 BuildArch:      noarch
+
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/wagon/wagon/%{version}/wagon-%{version}-source-release.zip
 
 BuildRequires:  maven-local
 %if %{with ssh}
@@ -38,8 +34,6 @@ BuildRequires:  mvn(com.jcraft:jsch.agentproxy.connector-factory)
 BuildRequires:  mvn(com.jcraft:jsch.agentproxy.jsch)
 %endif
 BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(commons-lang:commons-lang)
-BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(commons-net:commons-net)
 BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
 BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
@@ -47,11 +41,13 @@ BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
 %if %{with scm}
 BuildRequires:  mvn(org.apache.maven.scm:maven-scm-api)
+BuildRequires:  mvn(org.apache.maven.scm:maven-scm-manager-plexus)
 %endif
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interactivity-api)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.jsoup:jsoup)
+BuildRequires:  mvn(org.slf4j:jcl-over-slf4j)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 
 Obsoletes:      %{name}-manual < %{epoch}:%{version}-%{release}
@@ -72,7 +68,7 @@ following providers:
 %package provider-api
 Group: Development/Java
 Summary:        provider-api module for %{name}
-Obsoletes:      %{name} < %{split_verrel}
+Obsoletes:      %{name} < 2.6-4
 Obsoletes:      %{name}-webdav-jackrabbit < 2.9-2
 
 %description provider-api
@@ -163,14 +159,9 @@ Javadoc for %{name}.
 %prep
 %setup -q -n wagon-%{version}
 
-%patch0 -p1
-
 %pom_remove_plugin :animal-sniffer-maven-plugin
 %pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_dep :wagon-tck-http wagon-providers/wagon-http
-
-# correct groupId for jetty
-%pom_xpath_set "pom:groupId[text()='org.mortbay.jetty']" "org.eclipse.jetty"
 
 # disable tests, missing dependencies
 %pom_disable_module wagon-tcks
@@ -229,6 +220,9 @@ Javadoc for %{name}.
 %doc LICENSE NOTICE DEPENDENCIES
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.0.0-alt1_1jpp8
+- new version
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.10-alt1_4jpp8
 - fc27 update
 
