@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 0.22
 %define beta %nil
@@ -17,8 +17,8 @@
 %def_with pam_helper
 
 Name: enlightenment
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 Epoch: 1
 
 Summary: The Enlightenment window manager
@@ -145,7 +145,7 @@ install -D -pm 644 %SOURCE3 %buildroot%_sysconfdir/X11/wmsession.d/05Enlightenme
 install -pD -m644 %SOURCE1 %buildroot%_liconsdir/E-18.png
 
 # desktop file
-install -pD -m 644 %SOURCE8 %buildroot%_datadir/applications/%name.desktop
+#install -pD -m 644 %SOURCE8 %buildroot%_desktopdir/%name.desktop
 
 # PAM-config
 mkdir -p %buildroot%_sysconfdir/pam.d
@@ -194,8 +194,12 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Wed Nov 22 2017 Yuri N. Sedunov <aris@altlinux.org> 1:0.22.1-alt1
+- 0.22.1
+
 * Fri Nov 10 2017 Yuri N. Sedunov <aris@altlinux.org> 1:0.22.0-alt2
 - updated to v0.22.0-20-g2f3d147
+- updated dependencies
 
 * Thu Nov 02 2017 Yuri N. Sedunov <aris@altlinux.org> 1:0.22.0-alt1
 - 0.22.0
