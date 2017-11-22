@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           maven-indexer
 Version:        5.1.2
-Release:        alt1_0.1.gite0570bfjpp8
+Release:        alt1_0.4.gite0570bfjpp8
 Summary:        Standard for producing indexes of Maven repositories
 
 License:        ASL 2.0
@@ -20,11 +20,12 @@ URL:            http://maven.apache.org/maven-indexer/index.html
 
 Source0:        https://github.com/apache/maven-indexer/archive/%{git_tag}/maven-indexer-%{version}.tar.gz
 
-# Port to lucene 5
-Patch0:         maven-indexer-lucene5.patch
+# Port to latest lucene
+Patch0:         0001-Port-to-Lucene-5.patch
+Patch1:         0002-Port-to-Lucene-6.patch
 
 # Drop dep on truezip
-Patch1:         maven-indexer-truezip.patch
+Patch2:         maven-indexer-truezip.patch
 
 BuildArch:      noarch
 
@@ -63,7 +64,8 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{name}-%{git_tag}
 %patch0 -p1
-%patch1
+%patch1 -p1
+%patch2
 
 find -name '*.jar' -delete
 find -name '*.zip' -delete
@@ -90,7 +92,6 @@ find -name *.java -exec sed -i -e "s/org.sonatype.aether/org.eclipse.aether/g" {
 # Remove unnecessary plugins
 %pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :apache-rat-plugin
-%pom_remove_plugin :animal-sniffer-maven-plugin
 
 # Disable CLI module because of how it bundles stuff
 %pom_disable_module indexer-cli
@@ -114,6 +115,9 @@ rm indexer-core/src/main/java/org/apache/maven/index/util/zip/TrueZipZipFileHand
 %doc NOTICE
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.2-alt1_0.4.gite0570bfjpp8
+- fixed build with new lucene
+
 * Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 5.1.2-alt1_0.1.gite0570bfjpp8
 - new jpp release
 

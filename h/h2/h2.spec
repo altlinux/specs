@@ -1,31 +1,29 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           h2
-Version:        1.4.192
+Version:        1.4.196
 Release:        alt1_2jpp8
 Summary:        Java SQL database
 
 License:        EPL or MPLv1.1
 URL:            http://www.h2database.com
-Source0:        http://www.h2database.com/h2-2016-05-26.zip
+Source0:        http://www.h2database.com/h2-2017-06-10.zip
 Source1:        http://repo2.maven.org/maven2/com/h2database/h2/%{version}/h2-%{version}.pom
 
-Patch0:         port-to-servlet-3.1.0.patch
-Patch1:         port-to-lucene-5.patch
+Patch0:         port-to-lucene-6.patch
 
 BuildArch: noarch
 
 BuildRequires:  javapackages-local
-BuildRequires:  lucene
-BuildRequires:  lucene-analysis
-BuildRequires:  lucene-queryparser
+BuildRequires:  lucene >= 6.1.0
+BuildRequires:  lucene-analysis >= 6.1.0
+BuildRequires:  lucene-queryparser >= 6.1.0
 BuildRequires:  slf4j
 BuildRequires:  felix-osgi-core
 BuildRequires:  glassfish-servlet-api
@@ -48,7 +46,6 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{name}
 %patch0 -p2
-%patch1 -p2
 
 # Because no Fedora package provides org.osgi.service.jdbc interfaces yet
 rm src/main/org/h2/util/OsgiDataSourceFactory.java
@@ -65,23 +62,28 @@ find -name '*.dll' -delete
 sed -i -e '/downloadTest();/d' -e '/download();/d' \
   src/tools/org/h2/build/Build.java
 
+# Tests that use the network
+sed -i -e '/TestNetUtils/d' \
+  src/test/org/h2/test/TestAll.java
+
 # Use system libraries instead
 mkdir ext
 ln -s -T $(build-classpath jts) ext/jts-core-1.14.0.jar
 ln -s -T $(build-classpath glassfish-servlet-api) ext/servlet-api-3.1.0.jar
 ln -s -T $(build-classpath slf4j/api) ext/slf4j-api-1.6.0.jar
 ln -s -T $(build-classpath slf4j/nop) ext/slf4j-nop-1.6.0.jar
-ln -s -T $(build-classpath lucene/lucene-core) ext/lucene-core-5.4.1.jar
-ln -s -T $(build-classpath lucene/lucene-analyzers-common) ext/lucene-analyzers-common-5.4.1.jar
-ln -s -T $(build-classpath lucene/lucene-queryparser) ext/lucene-queryparser-5.4.1.jar
+ln -s -T $(build-classpath lucene/lucene-core) ext/lucene-core-6.1.0.jar
+ln -s -T $(build-classpath lucene/lucene-analyzers-common) ext/lucene-analyzers-common-6.1.0.jar
+ln -s -T $(build-classpath lucene/lucene-queryparser) ext/lucene-queryparser-6.1.0.jar
 ln -s -T $(build-classpath felix/org.osgi.core) ext/org.osgi.core-4.2.0.jar
 
-echo " classic queryparser" >> src/tools/org/h2/build/doc/dictionary.txt
+echo "classic queryparser" >> src/tools/org/h2/build/doc/dictionary.txt
 find . -name '*.orig' -print -delete
 
 %build
 export JAVA_HOME=%{_jvmdir}/java
-sh build.sh jar docs
+sh build.sh jar docs 
+#testFast
 
 %install
 %mvn_artifact %SOURCE1 bin/h2-%{version}.jar
@@ -96,6 +98,9 @@ sh build.sh jar docs
 %doc src/docsrc/html/license.html
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.196-alt1_2jpp8
+- new version
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.192-alt1_2jpp8
 - new version
 
