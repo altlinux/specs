@@ -1,18 +1,19 @@
 %define oname fyzz
+
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt1
+Release: alt2
 Summary: SPARQL parser
 License: LGPLv2
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/fyzz/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
-BuildArch: noarch
+Patch1: %oname-%version-alt-unittest.patch
 
-BuildPreReq: python-module-setuptools-tests python-module-yapps2
-BuildPreReq: python-module-logilab-common
+BuildRequires: python-module-setuptools-tests python-module-yapps2
+BuildRequires: python-module-logilab-common
 
 %description
 SPARQL parser written in Python using yapps.
@@ -29,6 +30,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 %python_build_debug
@@ -38,9 +40,6 @@ This package contains tests for %oname.
 
 %check
 export PYTHONPATH=%buildroot%python_sitelibdir
-pushd test/data
-#tar -xf data-r2.tar.gz
-popd
 for i in test/*.py; do
 	python $i
 done
@@ -54,6 +53,9 @@ done
 %python_sitelibdir/*/test
 
 %changelog
+* Wed Nov 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.0-alt2
+- Fixed tests.
+
 * Wed Nov 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1
 - Initial build for Sisyphus
 
