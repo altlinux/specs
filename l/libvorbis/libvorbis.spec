@@ -1,5 +1,5 @@
 Name: libvorbis
-Version: 1.3.4
+Version: 1.3.5
 Release: alt1
 
 Summary: The Vorbis General Audio Compression Codec
@@ -10,8 +10,9 @@ Url: http://www.xiph.org/vorbis/
 # http://downloads.xiph.org/releases/vorbis/%name-%version.tar.bz2
 Source: %name-%version.tar
 Patch1: libvorbis-1.3.2-alt-export-symbols.patch
-Patch2: libvorbis-1.3.2-alt-add-needed.patch
+Patch2: libvorbis-1.3.5-alt-add-needed.patch
 Patch3: libvorbis-1.3.3-alt-aclocal.patch
+Patch4: libvorbis-1.3.5-alt-configure.patch
 
 BuildRequires: libogg-devel
 
@@ -58,17 +59,21 @@ statically linked libvorbis-based software.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 for f in m4/*.m4; do
 	[ ! -f "%_datadir/aclocal/${f##*/}" ] ||
 		rm -fv "$f"
 done
+# include "config.h" first
+pattern='^[[:space:]]*#[[:space:]]*include[[:space:]]'
+grep -l "$pattern" lib/*.c |
+	xargs -r sed -i '0,/'"$pattern"'/ s/'"$pattern"'/#include "config.h"\n&/'
 # restrict lists of global symbols exported by libraries
 sed -n 's/^extern[[:space:]]\+[^(]*[[:space:]]\**\([a-z][^()[:space:]]\+\)[[:space:]]*(.*/\1/p' \
 	include/vorbis/*.h > lib/libvorbis.sym
 # extra symbols required by packages
 cat >> lib/libvorbis.sym <<'EOF'
 vorbis_window
-_ilog
 EOF
 sort -u -o lib/libvorbis.sym{,}
 
@@ -78,8 +83,8 @@ sort -u -o lib/libvorbis.sym{,}
 %make_build
 
 %install
-%makeinstall_std
-%define docdir %_docdir/%name-%version
+%define docdir %_docdir/%name
+%makeinstall_std docdir=%docdir
 install -pm644 AUTHORS CHANGES COPYING %buildroot%docdir/
 %set_verify_elf_method strict
 
@@ -88,15 +93,15 @@ install -pm644 AUTHORS CHANGES COPYING %buildroot%docdir/
 
 %files
 %_libdir/*.so.*
-%dir %docdir
+%dir %docdir/
 %docdir/[A-Z]*
 
 %files devel
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*.pc
-%_datadir/aclocal/*
-%dir %docdir
+%_aclocaldir/*
+%dir %docdir/
 %docdir/[a-z]*
 
 %if_enabled static
@@ -105,6 +110,10 @@ install -pm644 AUTHORS CHANGES COPYING %buildroot%docdir/
 %endif
 
 %changelog
+* Wed Nov 22 2017 Dmitry V. Levin <ldv@altlinux.org> 1.3.5-alt1
+- 1.3.4 -> 1.3.5.
+- Fixed build on x86.
+
 * Mon Mar 24 2014 Dmitry V. Levin <ldv@altlinux.org> 1.3.4-alt1
 - Updated to 1.3.4.
 
