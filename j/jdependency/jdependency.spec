@@ -8,8 +8,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jdependency
-Version:        1.1
-Release:        alt1_3jpp8
+Version:        1.2
+Release:        alt1_1jpp8
 Summary:        This project provides an API to analyse class dependencies
 License:        ASL 2.0
 URL:            http://github.com/tcurdt/%{name}
@@ -58,6 +58,9 @@ BuildArch: noarch
 %doc LICENSE.txt
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_1jpp8
+- new version
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_3jpp8
 - fc27 update
 
