@@ -7,8 +7,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-archiver
-Version:        3.1.1
-Release:        alt1_3jpp8
+Version:        3.2.0
+Release:        alt1_1jpp8
 Epoch:          0
 Summary:        Maven Archiver
 License:        ASL 2.0
@@ -66,6 +66,9 @@ Javadoc for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.2.0-alt1_1jpp8
+- new version
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.1.1-alt1_3jpp8
 - fc27 update
 
