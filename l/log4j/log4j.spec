@@ -20,7 +20,7 @@ BuildRequires: jpackage-generic-compat
 %bcond_with     jp_minimal
 
 Name:           log4j
-Version:        2.8.2
+Version:        2.9.1
 Release:        alt1_2jpp8
 Summary:        Java logging package
 BuildArch:      noarch
@@ -38,6 +38,7 @@ BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.commons:commons-compress)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.logging:logging-parent:pom:)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.fusesource.jansi:jansi)
 BuildRequires:  mvn(org.jctools:jctools-core)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
@@ -152,6 +153,7 @@ BuildArch: noarch
 %pom_remove_plugin -r :maven-site-plugin
 %pom_remove_plugin -r :maven-remote-resources-plugin
 %pom_remove_plugin -r :maven-doap-plugin
+%pom_remove_plugin -r :maven-source-plugin
 
 # remove all the stuff we'll build ourselves
 find -name "*.jar" -o -name "*.class" -delete
@@ -166,13 +168,14 @@ rm -rf docs/api
 # artifact for upstream testing of log4j itself, shouldn't be distributed
 %pom_disable_module %{name}-perf
 
+# needs java 9 to build
+%pom_disable_module %{name}-api-java9
+%pom_remove_dep -r :%{name}-api-java9
+%pom_remove_plugin :maven-dependency-plugin log4j-api
+
 # unavailable com.conversantmedia:disruptor
 rm log4j-core/src/main/java/org/apache/logging/log4j/core/async/DisruptorBlockingQueueFactory.java
 %pom_remove_dep -r com.conversantmedia:disruptor
-
-# unavailable net.alchim31.maven:scala-maven-plugin
-%pom_disable_module log4j-api-scala_2.10
-%pom_disable_module log4j-api-scala_2.11
 
 # kafka not available
 rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
@@ -216,7 +219,7 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 %pom_remove_dep -r :commons-csv
 %pom_remove_dep -r :hibernate-jpa-2.1-api
 
-rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/{jackson,net/server,net/mom,config/yaml}
+rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/{jackson,config/yaml,parser}
 rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/{db,mom}
 rm log4j-core/src/main/java/org/apache/logging/log4j/core/layout/*{Csv,Jackson,Xml,Yaml,Json,Gelf}*.java
 rm log4j-api/src/main/java/org/apache/logging/log4j/util/Activator.java
@@ -277,6 +280,9 @@ touch $RPM_BUILD_ROOT/etc/chainsaw.conf
 
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt1_2jpp8
+- new version
+
 * Thu Nov 16 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.8.2-alt1_2jpp8
 - new version
 
