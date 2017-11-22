@@ -15,13 +15,13 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %bcond_without ant_tasks
-%if 0%{?fedora}
+%if 0%{?fedora} || 0%{?rhel} > 7
 %bcond_without maven_plugin
 %endif
 
 Name:           aqute-bnd
-Version:        3.3.0
-Release:        alt1_7jpp8
+Version:        3.5.0
+Release:        alt1_1jpp8
 Summary:        BND Tool
 License:        ASL 2.0
 URL:            http://bnd.bndtools.org/
@@ -39,8 +39,8 @@ Source4:        https://repo1.maven.org/maven2/biz/aQute/bnd/biz.aQute.bnd/%{ver
 Source5:        https://repo1.maven.org/maven2/biz/aQute/bnd/biz.aQute.bndlib/%{version}/biz.aQute.bndlib-%{version}.pom
 Source6:        https://repo1.maven.org/maven2/biz/aQute/bnd/biz.aQute.bnd.annotation/%{version}/biz.aQute.bnd.annotation-%{version}.pom
 
-Patch0:         0001-Port-to-Java-8.patch
-Patch1:         0002-Disable-removed-commands.patch
+Patch0:         0001-Disable-removed-commands.patch
+Patch1:         0002-Fix-ant-compatibility.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.osgi:osgi.annotation)
@@ -167,17 +167,26 @@ cp -p %{SOURCE4} pom.xml
 %pom_add_dep org.osgi:osgi.cmpn
 %pom_add_dep org.slf4j:slf4j-api
 
-%pom_add_dep org.slf4j:slf4j-simple:runtime
+%pom_add_dep org.slf4j:slf4j-simple::runtime
 popd
 
 # maven-plugins
-
+pushd maven
+rm bnd-shared-maven-lib/src/main/java/aQute/bnd/maven/lib/resolve/DependencyResolver.java
+%pom_remove_dep -r :biz.aQute.resolve
+%pom_remove_dep -r :biz.aQute.repository
 # Unavailable reactor dependency - org.osgi.impl.bundle.repoindex.cli
-%pom_disable_module bnd-indexer-maven-plugin maven
+%pom_disable_module bnd-indexer-maven-plugin
 # Requires unbuilt parts of bnd
-%pom_disable_module bnd-export-maven-plugin maven
+%pom_disable_module bnd-export-maven-plugin
+%pom_disable_module bnd-resolver-maven-plugin
+%pom_disable_module bnd-testing-maven-plugin
 # Integration tests require Internet access
-%pom_remove_plugin -r :maven-invoker-plugin maven
+%pom_remove_plugin -r :maven-invoker-plugin
+%pom_remove_plugin -r :maven-javadoc-plugin
+
+%pom_remove_plugin -r :flatten-maven-plugin
+popd
 
 
 %mvn_alias biz.aQute.bnd:biz.aQute.bnd :bnd biz.aQute:bnd
@@ -186,6 +195,7 @@ popd
 %mvn_package biz.aQute.bnd:biz.aQute.bndlib bndlib
 %mvn_package biz.aQute.bnd:biz.aQute.bnd.annotation bndlib
 %mvn_package biz.aQute.bnd:aQute.libg bndlib
+%mvn_package biz.aQute.bnd:bnd-shared-maven-lib maven
 %mvn_package biz.aQute.bnd:bnd-maven-plugin maven
 %mvn_package biz.aQute.bnd:bnd-baseline-maven-plugin maven
 %mvn_package biz.aQute.bnd:parent __noinstall
@@ -226,6 +236,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc LICENSE
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.5.0-alt1_1jpp8
+- new version
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.3.0-alt1_7jpp8
 - fc27 update
 
