@@ -7,8 +7,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apache-commons-io
-Version:        2.5
-Release:        alt2_3jpp8
+Version:        2.6
+Release:        alt1_1jpp8
 Epoch:          1
 Summary:        Utilities to assist with developing IO functionality
 License:        ASL 2.0
@@ -43,7 +43,9 @@ sed -i 's/\r//' *.txt
 %mvn_file  : commons-io %{name}
 %mvn_alias : org.apache.commons:
 
-%mvn_build -- -Dmaven.test.skip.exec=true
+# FIXME: tests skipped because commons-io is on surefire's classpath and causes
+# tests to be run against the system version and not the one we just built
+%mvn_build -f -- -Dmaven.test.skip.exec=true
 
 %install
 %mvn_install
@@ -55,6 +57,9 @@ sed -i 's/\r//' *.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.6-alt1_1jpp8
+- new version
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.5-alt2_3jpp8
 - fc27 update
 
