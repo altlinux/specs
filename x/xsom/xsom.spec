@@ -10,9 +10,9 @@ BuildRequires: jpackage-generic-compat
 
 Name: xsom
 Version: 0
-Release: alt2_17.20110809svnjpp8
+Release: alt2_18.20110809svnjpp8
 Summary: XML Schema Object Model (XSOM)
-License: CDDL or GPLv2 with exceptions
+License: CDDL-1.1 or GPLv2 with exceptions
 URL: http://xsom.java.net
 
 # svn export https://svn.java.net/svn/xsom~sources/tags/xsom-20110809 xsom-20110809svn
@@ -80,6 +80,9 @@ popd
 %doc license.txt
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt2_18.20110809svnjpp8
+- new fc release
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt2_17.20110809svnjpp8
 - fc27 update
 
