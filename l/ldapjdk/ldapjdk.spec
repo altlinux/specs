@@ -1,6 +1,6 @@
-BuildRequires: javapackages-local
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		ldapjdk
 Version:	4.19
-Release:	alt2_1jpp8
+Release:	alt2_5jpp8
 Epoch:		1
 Summary: 	The Mozilla LDAP Java SDK
 License:	MPLv1.1 or GPLv2+ or LGPLv2+
@@ -26,11 +26,21 @@ Source:		http://pki.fedoraproject.org/pki/sources/%{name}/%{version}/%{name}-%{v
 # changed: gId, aId and version
 Source1:	http://pki.fedoraproject.org/pki/sources/%{name}/%{version}/%{name}-%{version}.pom
 
+#######################
+## ldapjdk-4.19-4
+#######################
+Patch0:           ldapjdk-Added-getter-methods-for-JDAPFilter-classes.patch
+Patch1:           ldapjdk-Added-gitignore-file.patch
+
 Requires:	jpackage-utils >= 0:1.5
 Requires:       jss
 BuildRequires:  ant
 BuildRequires:  java-devel
+%if 0%{?rhel}
 BuildRequires:	jpackage-utils >= 0:1.5
+%else
+BuildRequires:  javapackages-local
+%endif
 BuildRequires:  jss
 
 Provides:	jndi-ldap = 1.3.0
@@ -58,13 +68,20 @@ Javadoc for %{name}
 %setup -q
 # Remove all bundled jars, we must build against build-system jars
 rm -f ./java-sdk/ldapjdk/lib/{jss32_stub,jsse,jnet,jaas,jndi}.jar
+%patch0 -p1
+%patch1 -p1
 
 %build
 # cleanup CVS dirs
 rm -fr $(find . -name CVS -type d)
 # Link to build-system BRs
 pwd
+%if 0%{?rhel}
 ( cd  java-sdk/ldapjdk/lib && build-jar-repository -s -p . jss4 jsse jaas jndi )
+%else
+( cd  java-sdk/ldapjdk/lib && build-jar-repository -s -p . jss4 )
+ln -s /usr/lib/jvm-exports/java/{jsse,jaas,jndi}.jar java-sdk/ldapjdk/lib
+%endif
 cd java-sdk
 if [ ! -e "$JAVA_HOME" ] ; then export JAVA_HOME="%{_jvmdir}/java" ; fi
 sh -x ant dist
@@ -104,6 +121,9 @@ ln -s ldapjdk.jar %buildroot%_javadir/ldapsdk.jar
 %{_javadocdir}/%{name}/*
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.19-alt2_5jpp8
+- new fc release
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.19-alt2_1jpp8
 - added BR: javapackages-local for javapackages 5
 
