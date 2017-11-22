@@ -8,8 +8,8 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           maven-resolver
 Epoch:          1
-Version:        1.0.3
-Release:        alt1_7jpp8
+Version:        1.1.0
+Release:        alt1_1jpp8
 License:        ASL 2.0
 Summary:        Apache Maven Artifact Resolver library
 URL:            http://maven.apache.org/resolver/
@@ -21,6 +21,7 @@ BuildRequires:  mvn(javax.inject:javax.inject)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
+BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-classworlds)
@@ -30,7 +31,7 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.inject)
 BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
-BuildRequires:  mvn(org.hamcrest:hamcrest-library)
+BuildRequires:  mvn(org.hamcrest:hamcrest-core)
 BuildRequires:  mvn(org.slf4j:jcl-over-slf4j)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.sonatype.sisu:sisu-guice::no_aop:)
@@ -147,6 +148,8 @@ This package provides %{summary}.
 %prep
 %setup -q
 
+%pom_remove_plugin :maven-enforcer-plugin
+
 # tests require jetty 7
 %pom_remove_dep :::test maven-resolver-transport-http
 rm -r maven-resolver-transport-http/src/test
@@ -206,6 +209,9 @@ done
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.1.0-alt1_1jpp8
+- new version
+
 * Sun Nov 19 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.0.3-alt1_7jpp8
 - new version
 
