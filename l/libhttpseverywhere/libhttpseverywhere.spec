@@ -8,7 +8,7 @@
 %def_enable valadoc
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Library to use HTTPSEverywhere in desktop applications
@@ -113,6 +113,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Wed Nov 22 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.4-alt1
+- 0.6.4
+
 * Tue Oct 31 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.3-alt1
 - 0.6.3
 
