@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:           felix-parent
 Version:        4
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Parent POM file for Apache Felix Specs
 License:        ASL 2.0
 URL:            http://felix.apache.org/
@@ -17,9 +17,7 @@ Source0:        http://repo1.maven.org/maven2/org/apache/felix/felix-parent/%{ve
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(jakarta-regexp:jakarta-regexp)
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.ant:ant-apache-regexp)
 BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.easymock:easymock)
@@ -28,8 +26,6 @@ BuildRequires:  mvn(org.mockito:mockito-all)
 # FIXME auto-requires are not generated
 Requires:  mvn(org.easymock:easymock)
 Requires:  mvn(org.mockito:mockito-all)
-Requires:  mvn(jakarta-regexp:jakarta-regexp)
-Requires:  mvn(org.apache.ant:ant-apache-regexp)
 Source44: import.info
 
 %description
@@ -48,6 +44,11 @@ Parent POM file for Apache Felix Specs.
 # wagon ssh dependency unneeded
 %pom_xpath_remove pom:extensions
 
+# Remove workaround for MANTRUN-51/MNG-6205 issue
+# (should only be needed with old versions of Maven)
+# See: http://svn.apache.org/viewvc/maven/plugins/trunk/maven-antrun-plugin/src/site/fml/faq.fml?r1=790402&r2=790401
+%pom_xpath_remove "pom:plugin[pom:artifactId='maven-antrun-plugin']/pom:dependencies"
+
 %build
 %mvn_build
 
@@ -58,6 +59,9 @@ Parent POM file for Apache Felix Specs.
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:4-alt1_4jpp8
+- new fc release
+
 * Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 0:4-alt1_3jpp8
 - new version
 
