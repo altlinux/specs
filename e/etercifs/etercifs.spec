@@ -4,8 +4,8 @@
 %define modname etercifs
 
 Name: etercifs
-Version: 5.5.0
-Release: alt2
+Version: 5.6.0
+Release: alt1
 
 Summary: Advanced Common Internet File System for Linux with Etersoft extension
 
@@ -29,9 +29,8 @@ Requires: gcc make
 # We definitely needs mount.cifs command
 Requires: cifs-utils
 
-# TODO
 # We definitely have to use distr_vendor
-#Requires: eepm
+Requires: eepm
 
 %description
 This package contains Etersoft modified CIFS kernel module
@@ -88,7 +87,7 @@ cat <<EOF >%buildroot%_sysconfdir/sysconfig/%name.conf
 # this options useful only for wine share using and security=share setting in smb.conf
 #MOUNT_OPTIONS=user=guest,pass=,rw,iocharset=utf8,noperm,forcemand,direct,nounix
 # wine options since etercifs 4.4.5 enable full wine support
-MOUNT_OPTIONS=user=guest,pass=,rw,iocharset=utf8,noperm,wine,sec=ntlmv2
+MOUNT_OPTIONS=user=guest,pass=,rw,iocharset=utf8,noperm,wine
 
 # default path for share mounting
 DEFAULT_MOUNTPOINT=/net/sharebase
@@ -150,14 +149,14 @@ AUTOINSTALL="YES"
 EOF
 
 %post -n dkms-etercifs
-if [ "$1" == 1 ]
+if [ "$1" = 1 ]
 then
   dkms add -m %modname -v %version --rpm_safe_upgrade
 fi
 %_initdir/%modname build
 
 %preun -n dkms-etercifs
-if [ "$1" == 0 ]
+if [ "$1" = 0 ]
 then
   dkms remove -m %modname -v %version --rpm_safe_upgrade --all
 fi
@@ -185,6 +184,36 @@ fi
 %endif
 
 %changelog
+* Wed Nov 22 2017 Vitaly Lipatov <lav@altlinux.ru> 5.6.0-alt1
+- add 4.11 (v4.11)
+- add 4.12 (v4.12)
+- add 4.13 (v4.13)
+- add 4.14 (v4.14)
+
+* Wed Nov 22 2017 Vitaly Lipatov <lav@altlinux.ru> 5.5.5-alt1
+- rename centos70 to centos7 (eterbug #11965)
+
+* Thu Sep 21 2017 Vitaly Lipatov <lav@altlinux.ru> 5.5.4-alt1
+- etercifs server: drop --wait from rmmod
+- do not use sec= by default
+
+* Tue Apr 18 2017 Vitaly Lipatov <lav@altlinux.ru> 5.5.3-alt1
+- update 4.9 to correct sources (eterbug #11619)
+
+* Tue Apr 04 2017 Vitaly Lipatov <lav@altlinux.ru> 5.5.2-alt1
+- fix build on Fedora 25 and later
+- use eepm instead lsb_release
+
+* Tue Apr 04 2017 Vitaly Lipatov <lav@altlinux.ru> 5.5.1-alt1
+- add sources for 4.7
+- add sources for 4.8
+- add sources for 4.9
+- add sources for 4.10
+
+* Sun Mar 05 2017 Vitaly Lipatov <lav@altlinux.ru> 5.5.0-alt3
+- implement regexp support in source.table and use it
+- some fixes, prepare to epm using
+
 * Sun Mar 05 2017 Vitaly Lipatov <lav@altlinux.ru> 5.5.0-alt2
 - switch kernel detection on data driven code with source.table
 
