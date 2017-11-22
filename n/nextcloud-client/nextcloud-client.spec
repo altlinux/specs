@@ -2,7 +2,7 @@
 %define theme client_theming
 Name: nextcloud-client
 Version: 2.3.3
-Release: alt2%ubt
+Release: alt3%ubt
 
 Group: Networking/File transfer
 Summary: Nextcloud Desktop Client
@@ -90,6 +90,9 @@ desktop-file-install \
 %_K5srv/*nextcloud*.desktop
 
 %changelog
+* Wed Nov 22 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.3.3-alt3%ubt
+- updated "client_theming" (beta1->release)
+
 * Wed Oct 18 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.3.3-alt2%ubt
 - fixed URL of docs
 
