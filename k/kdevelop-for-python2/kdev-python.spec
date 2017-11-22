@@ -30,7 +30,7 @@
 %add_findreq_skiplist %_K4apps/kdevpythonsupport/documentation_files/* %_K4apps/kdevpythonsupport/correction_files/*
 
 Name: %kdevelop-for-python2
-Version: 1.7.2
+Version: 1.7.3
 Serial: 3
 Release: alt1.git
 
@@ -112,6 +112,9 @@ EOF
 %_K4apps/kdevappwizard/templates/*
 
 %changelog
+* Wed Nov 22 2017 Oleg Solovyov <mcpain@altlinux.org> 3:1.7.3-alt1.git
+- v1.7.3
+
 * Fri Nov 13 2015 Alexey Morozov <morozov@altlinux.org> 3:1.7.2-alt1.git
 - v1.7.2 + cfc34cd3914f6b8b882d900cec3a1e2b2bf5336b build fix
 

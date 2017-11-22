@@ -1,4 +1,4 @@
-Version: 4.7.2
+Version: 4.7.3
 Release: alt1.git
 Serial: 3
 
@@ -564,6 +564,9 @@ done
 %_K4apps/kdevfiletemplates/templates/python_*.tar.bz2
 
 %changelog
+* Wed Nov 22 2017 Oleg Solovyov <mcpain@altlinux.org> 3:4.7.3-alt1.git
+- post v4.7.2 release build (rev.934f5f6923034c685fa48d8e17a67bba1a77a8c5)
+
 * Fri Nov 13 2015 Alexey Morozov <morozov@altlinux.org> 3:4.7.2-alt1.git
 - post v4.7.2 release build (rev.ac55d7a858d9648fceaa96037a2bb74078998806)
 
