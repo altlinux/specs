@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.19.8.1
-Release: alt1
+Release: alt2
 
 %define libintl libintl3
 
@@ -20,12 +20,11 @@ Patch2: 0002-xgettext-Fix-crash-with-.po-file-input.patch
 
 Patch20: gettext-alt-autogen.patch
 Patch21: gettext-alt-gettextize-quiet.patch
-Patch22: gettext-alt-autopoint-cvs-git.patch
+Patch22: gettext-alt-autopoint-archive.patch
 Patch23: gettext-alt-tmp-autopoint.patch
 Patch24: gettext-alt-gcc.patch
 Patch25: gettext-alt-doc.patch
 Patch26: gettext-alt-urlview.patch
-Patch27: gettext-gnulib-tests-hack.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -178,7 +177,6 @@ a formatted output library for C++.
 %patch24 -p1
 %patch25 -p1
 %patch26 -p1
-%patch27 -p1
 
 # Comment out sys_lib_search_path_spec and sys_lib_dlsearch_path_spec.
 mkdir archive
@@ -332,6 +330,11 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Wed Nov 22 2017 Dmitry V. Levin <ldv@altlinux.org> 0.19.8.1-alt2
+- autopoint: removed unused code that caused shell.req to generate
+  a few bogus dependencies.
+- Fixed build with glibc >= 2.25.
+
 * Tue Sep 27 2016 Dmitry V. Levin <ldv@altlinux.org> 0.19.8.1-alt1
 - 0.19.6 -> 0.19.8.1 (closes: #31007).
 
