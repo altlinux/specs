@@ -4,19 +4,11 @@ BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without jmh
-
 Name:           apache-commons-lang3
-Version:        3.6
-Release:        alt1_3jpp8
+Version:        3.7
+Release:        alt1_1jpp8
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
 URL:            http://commons.apache.org/lang
@@ -24,16 +16,8 @@ Source0:        http://archive.apache.org/dist/commons/lang/source/commons-lang3
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.bcel:bcel)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.easymock:easymock)
-BuildRequires:  mvn(org.hamcrest:hamcrest-all)
-%if %{with jmh}
-BuildRequires:  mvn(org.openjdk.jmh:jmh-core)
-BuildRequires:  mvn(org.openjdk.jmh:jmh-generator-annprocess)
-%endif
 Source44: import.info
 
 %description
@@ -74,22 +58,23 @@ sed -i 's/\s*public void testParseSync().*/@org.junit.Ignore\n&/' \
 rm src/test/java/org/apache/commons/lang3/RandomStringUtilsTest.java
 
 %build
-%if %{without jmh}
+# FIXME tests run against current system version of commons-lang3, not the one being built
 %mvn_build -f
-%else
-%mvn_build
-%endif
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt RELEASE-NOTES.txt NOTICE.txt
+%doc LICENSE.txt NOTICE.txt
+%doc RELEASE-NOTES.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.7-alt1_1jpp8
+- new version
+
 * Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 3.6-alt1_3jpp8
 - new version
 
