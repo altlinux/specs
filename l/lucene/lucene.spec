@@ -1,19 +1,25 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++ perl(LWP/UserAgent.pm) unzip
+BuildRequires: gcc-c++ perl(LWP/UserAgent.pm) rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 26
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with     jp_minimal
+
 Summary:        High-performance, full-featured text search engine
 Name:           lucene
-Version:        5.5.0
-Release:        alt1_6jpp8
+Version:        6.1.0
+Release:        alt1_4jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -26,20 +32,22 @@ Patch1:         0002-Dependency-generation.patch
 BuildRequires:  ant
 BuildRequires:  ivy-local
 BuildRequires:  maven-local
+
+BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(jakarta-regexp:jakarta-regexp)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+%if %{without jp_minimal}
 BuildRequires:  mvn(com.carrotsearch.randomizedtesting:randomizedtesting-runner)
 BuildRequires:  mvn(com.ibm.icu:icu4j)
 BuildRequires:  mvn(commons-codec:commons-codec)
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(com.spatial4j:spatial4j)
-BuildRequires:  mvn(jakarta-regexp:jakarta-regexp)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(javax.servlet:servlet-api)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.sourceforge.nekohtml:nekohtml)
 BuildRequires:  mvn(org.antlr:antlr4-runtime)
-BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.commons:commons-compress)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
 BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
 BuildRequires:  mvn(org.apache.uima:Tagger)
@@ -57,6 +65,7 @@ BuildRequires:  mvn(org.eclipse.jetty:jetty-util)
 BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.ow2.asm:asm-commons)
 BuildRequires:  mvn(xerces:xercesImpl)
+%endif
 
 Provides:       %{name}-core = %{epoch}:%{version}-%{release}
 
@@ -69,6 +78,42 @@ engine library written entirely in Java. It is a technology suitable
 for nearly any application that requires full-text search, especially
 cross-platform.
 
+%package analysis
+Group: Development/Java
+Summary:      Lucene Common Analyzers
+
+%description analysis
+Lucene Common Analyzers.
+
+%package queries
+Group: Development/Java
+Summary:      Lucene Queries Module
+
+%description queries
+Lucene Queries Module.
+
+%package queryparser
+Group: Development/Java
+Summary:      Lucene QueryParsers Module
+
+%description queryparser
+Lucene QueryParsers Module.
+
+%package analyzers-smartcn
+Group: Development/Java
+Summary:      Smart Chinese Analyzer
+
+%description analyzers-smartcn
+Lucene Smart Chinese Analyzer.
+
+%package sandbox
+Group: Development/Java
+Summary:      Lucene Sandbox Module
+
+%description sandbox
+Lucene Sandbox Module.
+
+%if %{without jp_minimal}
 %package parent
 Group: Development/Java
 Summary:      Parent POM for Lucene
@@ -182,32 +227,18 @@ Summary:      Lucene Facets Module
 %description facet
 Package for Faceted Indexing and Search.
 
-%package analysis
-Group: Development/Java
-Summary:      Lucene Common Analyzers
-
-%description analysis
-Lucene Common Analyzers.
-
-%package sandbox
-Group: Development/Java
-Summary:      Lucene Sandbox Module
-
-%description sandbox
-Lucene Sandbox Module.
-
-%package queries
-Group: Development/Java
-Summary:      Lucene Queries Module
-
-%description queries
-Lucene Queries Module.
-
 %package spatial
+Group: Development/Java
+Summary:      Geospatial indexing APIs for Apache Lucene
+
+%description spatial
+Geospatial indexing APIs for Apache Lucene.
+
+%package spatial-extras
 Group: Development/Java
 Summary:      Spatial Strategies for Apache Lucene
 
-%description spatial
+%description spatial-extras
 Spatial Strategies for Apache Lucene.
 
 %package spatial3d
@@ -223,20 +254,6 @@ Summary:      Codecs and postings formats for Apache Lucene
 
 %description codecs
 Codecs and postings formats for Apache Lucene.
-
-%package queryparser
-Group: Development/Java
-Summary:      Lucene QueryParsers Module
-
-%description queryparser
-Lucene QueryParsers Module.
-
-%package analyzers-smartcn
-Group: Development/Java
-Summary:      Smart Chinese Analyzer
-
-%description analyzers-smartcn
-Lucene Smart Chinese Analyzer.
 
 %package analyzers-phonetic
 Group: Development/Java
@@ -284,6 +301,7 @@ Summary:      Lucene Stempel Analyzer
 %description analyzers-stempel
 Lucene Stempel Analyzer.
 
+%endif # without jp_minimal
 
 %package javadoc
 Group: Development/Java
@@ -307,8 +325,11 @@ mv lucene/*.txt .
 
 sed -i -e "s|/Export-Package>|/Export-Package><_nouses>true</_nouses>|g" dev-tools/maven/pom.xml.template
 
-# unresolvable test dep
-%pom_remove_dep com.spatial4j:spatial4j::test lucene/spatial
+# make the target public
+sed -i 's/-filter-pom-templates/filter-pom-templates/' lucene/common-build.xml
+# avoid descent to other modules to avoid unnecessary compilation of modules we
+# will recompile with maven anyway
+%pom_xpath_remove 'target[@name="compile-tools"]/modules-crawl' lucene/build.xml
 
 # suggest provides spellchecker
 %mvn_alias :%{name}-suggest :%{name}-spellchecker
@@ -322,8 +343,9 @@ sed -i -e "s|/Export-Package>|/Export-Package><_nouses>true</_nouses>|g" dev-too
 
 %build
 pushd %{name}
+find -maxdepth 2 -type d -exec mkdir -p '{}/lib' \;
 # generate dependencies
-ant generate-maven-artifacts -Divy.mode=local -Dversion=%{version}
+ant -f common-build.xml filter-pom-templates -Divy.mode=local -Dversion=%{version}
 
 # fix source dir + move to expected place
 for pom in `find build/poms/%{name} -name pom.xml`; do
@@ -332,6 +354,15 @@ done
 %pom_disable_module src/test core
 %pom_disable_module src/test codecs
 
+# unresolvable test dep
+%pom_remove_dep org.locationtech.spatial4j:spatial4j::test spatial-extras
+
+# fix dep on spatial4j
+%pom_change_dep org.locationtech.spatial4j:spatial4j com.spatial4j:spatial4j spatial-extras
+%pom_change_dep org.locationtech.spatial4j:spatial4j com.spatial4j:spatial4j benchmark
+find benchmark spatial-extras -name *.java -exec sed -i \
+  -e 's/org\.locationtech\.spatial4j/com.spatial4j.core/' {} \;
+
 # test deps
 %pom_add_dep org.antlr:antlr-runtime::test demo
 
@@ -339,33 +370,64 @@ popd
 
 mv lucene/build/poms/pom.xml .
 
+# deal with split packages in core/misc modules by adding additional metadata and
+# require-bundling the core bundle from misc
+%pom_xpath_set "pom:Export-Package" "*;version=\"%{version}\""
+%pom_add_plugin org.apache.felix:maven-bundle-plugin lucene/misc \
+"<configuration><instructions>
+<Require-Bundle>org.apache.lucene.core;bundle-version=\"%{version}\"</Require-Bundle>
+<Export-Package>
+ org.apache.lucene.document;version=\"%{version}\";misc=split;mandatory:=misc,
+ org.apache.lucene.index;version=\"%{version}\";misc=split;mandatory:=misc,
+ org.apache.lucene.search;version=\"%{version}\";misc=split;mandatory:=misc,
+ org.apache.lucene.store;version=\"%{version}\";misc=split;mandatory:=misc,
+ org.apache.lucene.util.fst;version=\"%{version}\";misc=split;mandatory:=misc,
+ *;version=\"%{version}\"</Export-Package>
+</instructions></configuration>"
+
 %pom_disable_module solr
 %pom_remove_plugin -r :gmaven-plugin
 %pom_remove_plugin -r :maven-enforcer-plugin
 %pom_remove_plugin -r :forbiddenapis
 %pom_remove_plugin -r :buildnumber-maven-plugin
 
+%if %{with jp_minimal}
+pushd lucene
+%pom_disable_module backward-codecs
+%pom_disable_module codecs
+%pom_disable_module test-framework
+%pom_disable_module benchmark
+%pom_disable_module classification
+%pom_disable_module demo
+%pom_disable_module expressions
+%pom_disable_module facet
+%pom_disable_module grouping
+%pom_disable_module highlighter
+%pom_disable_module join
+%pom_disable_module memory
+%pom_disable_module misc
+%pom_disable_module replicator
+%pom_disable_module spatial
+%pom_disable_module spatial-extras
+%pom_disable_module spatial3d
+%pom_disable_module suggest
+
+%pom_disable_module icu analysis
+%pom_disable_module kuromoji analysis
+%pom_disable_module morfologik analysis
+%pom_disable_module phonetic analysis
+%pom_disable_module stempel analysis
+%pom_disable_module uima analysis
+
+popd
+
+%mvn_package :lucene-parent __noinstall
+%mvn_package :lucene-solr-grandparent __noinstall
+%endif
+
 
 # For some reason TestHtmlParser.testTurkish fails when building inside SCLs
 %mvn_build -s -f
-
-# Fix OSGi metadata in misc module
-pushd lucene/misc/target
-unzip lucene-misc-%{version}.jar META-INF/MANIFEST.MF
-sed -i -e '1aRequire-Bundle: org.apache.lucene.core
-' META-INF/MANIFEST.MF
-jar ufm lucene-misc-%{version}.jar META-INF/MANIFEST.MF 2>&1 > /dev/null
-popd
-
-# analyzers-common needs versioned requires on package from core
-# maven-bundle-plugin doesn't seem to recognize this case on F24
-%if 0%{?fedora} == 24
-pushd lucene/analysis/common/target
-unzip lucene-analyzers-common-%{version}.jar META-INF/MANIFEST.MF
-sed -i -e 's/org.apache.lucene.analysis,/org.apache.lucene.analysis;version="[5.5,6)",/' META-INF/MANIFEST.MF
-jar ufm lucene-analyzers-common-%{version}.jar META-INF/MANIFEST.MF 2>&1 > /dev/null
-popd
-%endif
 
 %install
 %mvn_install
@@ -377,6 +439,12 @@ popd
 %doc CHANGES.txt README.txt MIGRATE.txt
 %doc LICENSE.txt NOTICE.txt
 
+%files analysis -f .mfiles-%{name}-analysis
+%files queries -f .mfiles-%{name}-queries
+%files queryparser -f .mfiles-%{name}-queryparser
+%files analyzers-smartcn -f .mfiles-%{name}-analyzers-smartcn
+%files sandbox -f .mfiles-%{name}-sandbox
+%if %{without jp_minimal}
 %files parent -f .mfiles-%{name}-parent
 %files solr-grandparent -f .mfiles-%{name}-solr-grandparent
 %files benchmark -f .mfiles-%{name}-benchmark
@@ -393,25 +461,25 @@ popd
 %files join -f .mfiles-%{name}-join
 %files suggest -f .mfiles-%{name}-suggest
 %files facet -f .mfiles-%{name}-facet
-%files analysis -f .mfiles-%{name}-analysis
-%files sandbox -f .mfiles-%{name}-sandbox
-%files queries -f .mfiles-%{name}-queries
 %files spatial -f .mfiles-%{name}-spatial
+%files spatial-extras -f .mfiles-%{name}-spatial-extras
 %files spatial3d -f .mfiles-%{name}-spatial3d
 %files codecs -f .mfiles-%{name}-codecs
-%files queryparser -f .mfiles-%{name}-queryparser
-%files analyzers-smartcn -f .mfiles-%{name}-analyzers-smartcn
 %files analyzers-phonetic -f .mfiles-%{name}-analyzers-phonetic
 %files analyzers-icu -f .mfiles-%{name}-analyzers-icu
 %files analyzers-morfologik -f .mfiles-%{name}-analyzers-morfologik
 %files analyzers-uima -f .mfiles-%{name}-analyzers-uima
 %files analyzers-kuromoji -f .mfiles-%{name}-analyzers-kuromoji
 %files analyzers-stempel -f .mfiles-%{name}-analyzers-stempel
+%endif
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 0:6.1.0-alt1_4jpp8
+- new version
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:5.5.0-alt1_6jpp8
 - new jpp release
 
