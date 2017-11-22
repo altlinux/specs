@@ -1,6 +1,6 @@
 Name: libnids
 Version: 1.24
-Release: alt3
+Release: alt4
 
 Summary: Libnids is a library that provides a functionality of one of NIDS components
 License: GPLv2+
@@ -12,9 +12,9 @@ Url: http://libnids.sourceforge.net
 Source: %srcname%{?rc_ver:%rc_ver}.tar
 Patch: libnids-%version-%release.patch
 
-Provides: libnids1 = %version-%release
-Provides: libnids2 = %version-%release
-Obsoletes: libnids1, libnids2
+Provides: libnids1 = %EVR
+Provides: libnids2 = %EVR
+Obsoletes: libnids1 < %EVR, libnids2 < %EVR
 
 # Automatically added by buildreq on Wed Oct 30 2002
 BuildRequires: libnet2-devel libpcap-devel
@@ -24,18 +24,18 @@ BuildRequires: libnet2-devel libpcap-devel
 %package devel
 Summary: Development library and header files for libnids
 Group: Development/C
-Provides: libnids1-devel = %version-%release
-Provides: libnids2-devel = %version-%release
+Provides: libnids1-devel = %EVR
+Provides: libnids2-devel = %EVR
 Obsoletes: libnids1-devel, libnids2-devel
-Requires: %name = %version-%release, libnet2-devel, libpcap-devel
+Requires: %name = %EVR, libnet2-devel, libpcap-devel
 
 %package devel-static
 Summary: Static libnids library
 Group: Development/C
-Provides: libnids1-devel-static = %version-%release
-Provides: libnids2-devel-static = %version-%release
+Provides: libnids1-devel-static = %EVR
+Provides: libnids2-devel-static = %EVR
 Obsoletes: libnids1-devel-static, libnids2-devel-static
-Requires: %name-devel = %version-%release, libnet2-devel-static, libpcap-devel-static
+Requires: %name-devel = %EVR, libnet2-devel-static, libpcap-devel-static
 
 %description
 Libnids is a library that provides a functionality of one of NIDS
@@ -101,6 +101,9 @@ install -pm644 doc/{b*,LINUX,PATCH,PERFORMANCE,TESTS} %buildroot%docdir/
 %endif
 
 %changelog
+* Wed Nov 22 2017 Dmitry V. Levin <ldv@altlinux.org> 1.24-alt4
+- Fixed build on x86.
+
 * Sun Apr 24 2011 Dmitry V. Levin <ldv@altlinux.org> 1.24-alt3
 - Rebuilt for debuginfo.
 
