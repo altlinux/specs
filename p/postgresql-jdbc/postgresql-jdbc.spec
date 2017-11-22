@@ -2,7 +2,7 @@ Epoch: 0
 Group: Databases
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: perl(YAML.pm)
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -45,8 +45,6 @@ BuildRequires: jpackage-generic-compat
 
 
 %global section		devel
-%global upstreamrel	1212
-%global upstreammajor	9.4
 %global source_path	pgjdbc/src/main/java/org/postgresql
 %global parent_ver	1.1.2
 %global parent_poms_builddir	./pgjdbc-parent-poms
@@ -56,8 +54,8 @@ BuildRequires: jpackage-generic-compat
 
 Summary:	JDBC driver for PostgreSQL
 Name:		postgresql-jdbc
-Version:	%upstreammajor.%{upstreamrel}
-Release:	alt1_4jpp8
+Version:	42.1.4
+Release:	alt1_1jpp8
 License:	BSD
 URL:		http://jdbc.postgresql.org/
 
@@ -83,9 +81,9 @@ BuildRequires:	maven-plugin-build-helper
 BuildRequires:	classloader-leak-test-framework
 
 %if %runselftest
-BuildRequires:	postgresql10-contrib
+BuildRequires:	postgresql10-contrib postgresql10-server
 BuildRequires:	libecpg-devel libpq-devel postgresql-devel
-BuildRequires:	perl-MColPro-scripts
+BuildRequires:	postgresql10-contrib postgresql10-server
 %endif
 Source44: import.info
 
@@ -122,7 +120,7 @@ This package contains the API Documentation for %{name}.
 mv pgjdbc-REL%version/* .
 mv pgjdbc-parent-poms-REL%parent_ver pgjdbc-parent-poms
 
-%patch0
+%patch0 -p1
 
 # remove any binary libs
 find -name "*.jar" -or -name "*.class" | xargs rm -f
@@ -205,6 +203,9 @@ opts="-f"
 
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:42.1.4-alt1_1jpp8
+- new version
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:9.4.1212-alt1_4jpp8
 - new version
 
