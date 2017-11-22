@@ -39,13 +39,11 @@ BuildRequires: jpackage-generic-compat
 
 Summary:        A library for instantiating Java objects
 Name:           objenesis
-Version:        2.1
-Release:        alt1_7jpp8
+Version:        2.6
+Release:        alt1_1jpp8
 License:        ASL 2.0
 URL:            http://objenesis.org/
 Source0:        https://github.com/easymock/%{name}/archive/%{version}.tar.gz
-
-Patch1:         0001-Fix-build-with-current-jar-plugin.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
@@ -91,8 +89,6 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q
 
-%patch1 -p1
-
 # Enable generation of pom.properties (rhbz#1017850)
 %pom_xpath_remove pom:addMavenDescriptor
 
@@ -118,6 +114,9 @@ This package contains the API documentation for %{name}.
 
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt1_1jpp8
+- new version
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_7jpp8
 - fc27 update
 
