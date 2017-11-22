@@ -27,7 +27,7 @@
 %define kdevelop_pg_qt kdevelop-pg-qt
 
 Name: %kdevelop-for-php
-Version: 1.7.2
+Version: 1.7.3
 Release: alt1
 Serial: 3
 
@@ -105,6 +105,9 @@ find %buildroot -name 'desktop_extragear*.mo' -exec rm {} \;
 %_K4srv/*
 
 %changelog
+* Wed Nov 22 2017 Oleg Solovyov <mcpain@altlinux.org> 3:1.7.3-alt1
+- v1.7.3
+
 * Fri Nov 13 2015 Alexey Morozov <morozov@altlinux.org> 3:1.7.2-alt1
 - v1.7.2
 
