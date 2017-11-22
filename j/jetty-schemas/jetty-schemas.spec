@@ -1,22 +1,21 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global     addver M0
-%global     toolchain_id org.eclipse.jetty.toolchain
-
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%global reltag b07
 Name:       jetty-schemas
-Version:    3.1
-Release:    alt1_7jpp8
+Version:    4.0.0
+Release:    alt1_3.b07jpp8
 Summary:    XML Schemas for Jetty
-License:    CDDL or GPLv2 with exceptions
+License:    CDDL-1.1 or GPLv2 with exceptions
 URL:        http://www.eclipse.org/jetty/
 BuildArch:  noarch
 
-Source0:    http://git.eclipse.org/c/jetty/%{toolchain_id}.git/snapshot/%{toolchain_id}-%{name}-%{version}.%{addver}.tar.bz2
+Source0:    https://github.com/eclipse/jetty.toolchain/archive/%{name}-%{version}-%{reltag}.tar.gz
 Source1:    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
 
 BuildRequires:  maven-local
@@ -28,30 +27,24 @@ Source44: import.info
 %{summary}.
 
 %prep
-%setup -q -n %{toolchain_id}-%{name}-%{version}.%{addver}
+%setup -q -n jetty.toolchain-%{name}-%{version}-%{reltag}/%{name}
 cp %SOURCE1 .
 
-# Disable default-jar execution of maven-jar-plugin, which avoids
-# problems with version 3.0.0 of the plugin.
-%pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions" "
-      <execution>
-        <id>default-jar</id>
-        <phase>skip</phase>
-      </execution>" jetty-schemas
+%pom_remove_plugin :maven-source-plugin
 
 %build
-pushd %{name}
 %mvn_build
 
 %install
-pushd %{name}
 %mvn_install
 
-%files -f %{name}/.mfiles
-%dir %{_javadir}/%{name}
+%files -f .mfiles
 %doc CDDL+GPL_1_1.html
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt1_3.b07jpp8
+- new version
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_7jpp8
 - new fc release
 
