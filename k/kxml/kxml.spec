@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -38,7 +38,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           kxml
 Version:        2.3.0
-Release:        alt3_14jpp8
+Release:        alt3_15jpp8
 Summary:        Small XML pull parser
 License:        MIT
 URL:            http://kxml.sourceforge.net/
@@ -53,7 +53,6 @@ Patch0:         0001-Unbundle-xpp3-classes.patch
 BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  xpp3 >= 0:1.1.3.1
-BuildRequires:  zip
 Requires:       xpp3 >= 0:1.1.3.1
 
 BuildArch:      noarch
@@ -82,13 +81,7 @@ API documentation for %{name}.
 export OPT_JAR_LIST=xpp3
 ant
 
-pushd dist
-mkdir META-INF
-unzip -o %{name}2-%{version}.jar META-INF/MANIFEST.MF
-cat %{SOURCE3} >> META-INF/MANIFEST.MF
-sed -i '/^\r$/d' META-INF/MANIFEST.MF
-zip -u %{name}2-%{version}.jar META-INF/MANIFEST.MF
-popd
+jar ufm dist/%{name}2-%{version}.jar %{SOURCE3}
 
 %mvn_artifact %{SOURCE1} dist/%{name}2-%{version}.jar
 %mvn_artifact %{SOURCE2} dist/%{name}2-min-%{version}.jar
@@ -109,6 +102,9 @@ ln -s kxml.jar %buildroot%_javadir/kxml2.jar
 %doc license.txt
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt3_15jpp8
+- new fc release
+
 * Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt3_14jpp8
 - fc27 update
 
