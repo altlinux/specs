@@ -4,31 +4,36 @@ BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global svnrev 1592769
+%bcond_without jna
 
 Name:           bcel
-Version:        6.0
-Release:        alt1_0.7.20140406svn1592769jpp8
+Version:        6.1
+Release:        alt1_2jpp8
 Epoch:          1
 Summary:        Byte Code Engineering Library
 License:        ASL 2.0
 URL:            http://commons.apache.org/proper/commons-bcel/
-# Source for releases:
-# Source0:        http://archive.apache.org/dist/commons/bcel/source/bcel-%{version}-src.tar.gz
+Source0:        http://archive.apache.org/dist/commons/bcel/source/bcel-%{version}-src.tar.gz
 
-# svn export http://svn.apache.org/repos/asf/commons/proper/bcel/trunk bcel
-# tar cJf bcel-1592769.tar.xz bcel
-Source0:        bcel-%{svnrev}.tar.xz
-# Upstream uses Maven 1, which is not available in Fedora.
-# The following is upstream project.xml converted to Maven 2/3.
-Source1:        %{name}-pom.xml
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(regexp:regexp)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+%if %{with jna}
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(net.java.dev.jna:jna)
+BuildRequires:  mvn(net.java.dev.jna:jna-platform)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
+%endif
 Source44: import.info
 
 %description
@@ -50,15 +55,27 @@ being the Xalan XSLT processor at Apache.
 %package javadoc
 Group: Development/Java
 Summary:        API documentation for %{name}
-Obsoletes:      %{name}-manual < %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
 This package provides %{summary}.
 
 %prep
-%setup -q -n %{name}
-cp -p %{SOURCE1} pom.xml
+%setup -q -n %{name}-%{version}-src
+
+%pom_remove_plugin :maven-source-plugin
+
+%pom_xpath_set /pom:project/pom:packaging bundle
+%pom_add_plugin org.apache.felix:maven-bundle-plugin '
+<extensions>true</extensions>
+<configuration>
+  <instructions>
+    <_nouses>true</_nouses>
+    <Export-Package>org.apache.bcel.*</Export-Package>
+  </instructions>
+</configuration>
+'
+
 %mvn_alias : bcel: apache:
 %mvn_file : %{name}
 
@@ -67,19 +84,26 @@ sed -i '\|lib/dt\.jar|s|javaHome|javaHome.substring(0, javaHome.length() - 4)|' 
         src/test/java/org/apache/bcel/PerformanceTest.java
 
 %build
+%if %{without jna}
+%mvn_build -f
+%else
 %mvn_build
+%endif
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc README.txt
+%doc RELEASE-NOTES.txt
 %doc LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:6.1-alt1_2jpp8
+- new version
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 1:6.0-alt1_0.7.20140406svn1592769jpp8
 - fc27 update
 
