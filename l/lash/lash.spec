@@ -1,166 +1,178 @@
-%def_disable static
-
-Name: lash
-Version: 0.6.0
-Release: alt0.20090725.7
-
-Summary: A session management system for JACK audio systems
+Epoch: 1
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-python
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ texinfo
+# END SourceDeps(oneline)
 Summary(ru_RU.UTF-8): Менеджер сессий для сервера JACK
-License: %gpl2plus
-Group: Sound
-Url: http://www.altlinux.org/SampleSpecs/program
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
-Packager: Timur Batyrshin <erthad@altlinux.org>
-Source0: %name-%version.tar.bz2
-Patch0: %name-0.6.0-alt-DSO.patch
-Patch1: lash-0.6.0-alt-linking.patch
+Summary:      LASH Audio Session Handler
+Name:         lash
+Version:      0.5.4
+Release:      alt1_32
+License:      GPLv2+
+Group:        System/Libraries
+URL:          http://www.nongnu.org/lash/
+Source0:      http://download.savannah.gnu.org/releases/lash/lash-%{version}.tar.gz
+Source1:      %{name}-panel.desktop
+Patch0:       lash-0.5.3-no-static-lib.patch
+# Fix DSO-linking failure
+# Upstream bugtracker is closed for some reason. Sent via email:
+Patch1:       lash-linking.patch
+# Fix build against gcc-4.7
+Patch2:       lash-gcc47.patch
+# Modernize texi2html arguments for texi2html-5.0
+Patch3:       lash-Modernize-texi2html-arguments.patch
 
-BuildPreReq: rpm-build-licenses
-# Automatically added by buildreq on Tue Aug 04 2009
-BuildRequires: gcc-c++ jackit-devel libalsa-devel libdbus-devel libgtk+2-devel libreadline-devel libuuid-devel libxml2-devel swig tetex-core python-devel
+BuildRequires: libalsa-devel
+BuildRequires: desktop-file-utils
+BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel 
+BuildRequires: libjack-devel
+BuildRequires: libxml2-devel
+BuildRequires: python-devel
+BuildRequires: readline-devel
+BuildRequires: swig
+BuildRequires: texi2html
+BuildRequires: chrpath
+BuildRequires: libuuid-devel
+
+Requires:      liblash = %{?epoch:%epoch:}%{version}-%{release}
+Source44: import.info
+
 
 %description
-LASH is a session management system for GNU/Linux audio applications. It allows
-you to save and restore audio sessions consisting of multiple interconneced
-applications, restoring program state (ie loaded patches) and the connections
-between them.
-
-%package doc
-Summary: Documentation for LASH
-Group: Development/Documentation
-
-%description doc
-This package holds documentation for LASH -- a session management system for
-GNU/Linux audio applications. LASH allows you to save and restore audio sessions
-consisting of multiple interconnected applications, restoring program state (ie
-loaded patches) and the connections between them.
-
-
-%package -n liblash
-Summary: Headers for lib%name
-Group: System/Libraries
-
-%description -n liblash
-Headers for building software that uses lib%name
-
+LASH is a session management system for JACK and ALSA audio applications on
+GNU/Linux. It allows you to save and restore audio sessions consisting of
+multiple interconneced applications, restoring program state (i.e. loaded
+patches) and the connections between them.
 
 %package -n liblash-devel
-Summary: Headers for lib%name
-Group: Development/C
-Requires: liblash = %version-%release
+Summary:      Development files for LASH
+Group:        Development/Other
+Requires:     liblash = %{?epoch:%epoch:}%{version}-%{release}
+Provides: lash-devel = %EVR
 
 %description -n liblash-devel
-Headers for building software that uses lib%name
+Development files for the LASH library.
 
+%package -n liblash
+Group: System/Libraries
+Summary:        Shared libraries for using %{name}
 
-%if_enabled static
-%package -n liblash-devel-static
-Summary: Static libraries for lib%name
-Group: Development/C
-Requires: liblash = %version-%release
-
-%description -n liblash-devel-static
-Static libs for building statically linked software that uses lib%name
-%endif
+%description -n liblash
+The %{name}-libs package contains lash shared libraries.
 
 %package -n python-module-lash
-Summary: Python wrapper for LASH
-Group: Development/Python
-Requires: liblash = %version-%release
+%{?python_provide:%python_provide python2-lash}
+Summary:      Python wrapper for LASH
+Group:        System/Libraries
+Requires:     liblash = %{?epoch:%epoch:}%{version}-%{release}
 
 %description -n python-module-lash
-Python bindings for LASH
+Contains Python language bindings for developing Python applications that use
+LASH.
 
 %prep
-%setup
-%patch0 -p1
-%patch1 -p1
+%setup -q
+%patch0 -p0
+%patch1 -p1 -b .linking
+%patch2 -p1 -b .gcc47
+%patch3 -p1 -b .texi2html
 
-%build
-%autoreconf
-%configure --without-jack-dbus --with-python
-%make_build
-
-%install
-%makeinstall_std
-
-mkdir -p %buildroot{%_desktopdir,%_infodir}
-mkdir -p %buildroot%_docdir/lash-doc/{lash-manual-html-one-page,lash-manual-html-split}
-mkdir -p %buildroot%_iconsdir/hicolor/{16x16,24x24,48x48,96x96,scalable}/apps
-
-mv %buildroot%_datadir/lash/icons/lash_16px.png %buildroot%_datadir/icons/hicolor/16x16/apps/lash.png
-mv %buildroot%_datadir/lash/icons/lash_24px.png %buildroot%_datadir/icons/hicolor/24x24/apps/lash.png
-mv %buildroot%_datadir/lash/icons/lash_48px.png %buildroot%_datadir/icons/hicolor/48x48/apps/lash.png
-mv %buildroot%_datadir/lash/icons/lash_96px.png %buildroot%_datadir/icons/hicolor/96x96/apps/lash.png
-mv %buildroot%_datadir/lash/icons/lash.svg %buildroot%_datadir/icons/hicolor/scalable/apps/lash.svg
-
-#install -pD -m0644 docs/lash-manual.info %buildroot%_infodir/lash.info
-
-#cp -ar AUTHORS ChangeLog NEWS README TODO %buildroot%_docdir/lash
-
-cp -ar docs/api-proposal.html %buildroot%_docdir/lash-doc/
-cp -ar docs/lash-manual-html-split/*.html %buildroot%_docdir/lash-doc/lash-manual-html-split/
-cp -ar docs/lash-manual-html-one-page/*.html %buildroot%_docdir/lash-doc/lash-manual-html-one-page/
-
-# install the desktop entry
-cat << EOF > %buildroot%_desktopdir/%{name}-panel.desktop
-[Desktop Entry]
-Name=LASH Panel
-Comment=LASH Panel
-Icon=lash
-Exec=%_bindir/lash_panel
-Terminal=false
-Type=AudioVideo;Audio;
-EOF
-
-if [ %python_sitelibdir_noarch != %python_sitelibdir ]; then
-  if [ -d %buildroot%python_sitelibdir_noarch ]; then
-    mkdir -p %buildroot%python_sitelibdir
-    mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
-  fi
-fi
-
-
-%find_lang %name
-
-%files -f %name.lang
-%doc AUTHORS ChangeLog NEWS README TODO
-%_bindir/*
-%_datadir/dbus-1/services/org.nongnu.lash.service
-%_desktopdir/*
-%_datadir/icons/hicolor/16x16/apps/lash.png
-%_datadir/icons/hicolor/24x24/apps/lash.png
-%_datadir/icons/hicolor/48x48/apps/lash.png
-%_datadir/icons/hicolor/96x96/apps/lash.png
-%_datadir/icons/hicolor/scalable/apps/lash.svg
-%_datadir/lash
-#_infodir/*.info*
-
-%files doc
-%_docdir/lash-doc/api-proposal.html
-%_docdir/lash-doc/lash-manual-html-split
-%_docdir/lash-doc/lash-manual-html-one-page
-
-%files -n liblash
-%_libdir/*.so.*
-
-%files -n liblash-devel
-%_libdir/*.so
-%_includedir/lash-1.0
-%_pkgconfigdir/*.pc
-
-%if_enabled static
-%files -n liblash-devel-static
-%_libdir/lib/liblash.a
+# Hack to build against newer swig
+%if 0%{?rhel}
+sed -i 's|1.3.31|2.0.0|g' configure*
+%else
+sed -i 's|1.3.31|3.0.0|g' configure*
 %endif
 
+%build
+export am_cv_python_pythondir=%{python_sitelibdir}
+CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE" %configure --disable-static --disable-serv-inst
+%make_build
+
+
+%install
+mkdir -p %{buildroot}%{_sysconfdir}
+make DESTDIR=%{buildroot} install
+rm -f %{buildroot}%{_infodir}/dir
+rm -f %{buildroot}%{_libdir}/liblash.la
+rm -f %{buildroot}%{python_sitelibdir}/_lash.la
+
+# Fix permission
+chmod -x %{buildroot}%{python_sitelibdir}/lash.py
+
+# Move icons to the right place
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/16x16/apps
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/24x24/apps
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/48x48/apps
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/96x96/apps
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
+mv %{buildroot}%{_datadir}/lash/icons/lash_16px.png %{buildroot}%{_datadir}/icons/hicolor/16x16/apps/lash.png
+mv %{buildroot}%{_datadir}/lash/icons/lash_24px.png %{buildroot}%{_datadir}/icons/hicolor/24x24/apps/lash.png
+mv %{buildroot}%{_datadir}/lash/icons/lash_48px.png %{buildroot}%{_datadir}/icons/hicolor/48x48/apps/lash.png
+mv %{buildroot}%{_datadir}/lash/icons/lash_96px.png %{buildroot}%{_datadir}/icons/hicolor/96x96/apps/lash.png
+mv %{buildroot}%{_datadir}/lash/icons/lash.svg %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/lash.svg
+
+# Remove rpath
+chrpath --delete %{buildroot}%{_bindir}/lash_control
+chrpath --delete %{buildroot}%{_bindir}/lash_simple_client
+chrpath --delete %{buildroot}%{_bindir}/lashd
+chrpath --delete %{buildroot}%{_bindir}/lash_synth
+chrpath --delete %{buildroot}%{_bindir}/lash_panel
+chrpath --delete %{buildroot}%{_bindir}/lash_save_button
+chrpath --delete %{buildroot}%{python_sitelibdir}/_lash.so
+
+# Move the dtd file to our Fedora Friendly place
+mkdir -p %{buildroot}%{_datadir}/xml/lash/dtds
+mv %{buildroot}%{_datadir}/lash/dtds/lash-project-1.0.dtd %{buildroot}%{_datadir}/xml/lash/dtds
+
+# This directory is empty!
+rm -rf %{buildroot}%{_datadir}/lash
+
+# install the desktop entry
+mkdir -p %{buildroot}%{_datadir}/applications
+desktop-file-install                         \
+  --dir %{buildroot}%{_datadir}/applications \
+  %{SOURCE1}
+
+# Work around the newer texi2html which is behaving somehow else
+if [ ! -d docs/lash-manual-html-split/lash-manual/ ]; then
+  mkdir -p docs/lash-manual-html-split/lash-manual/
+  cp -p docs/lash-manual-html-split/*.html docs/lash-manual-html-split/lash-manual/
+fi
+
+%files
+%doc AUTHORS ChangeLog COPYING NEWS README docs/lash-manual-html-split/lash-manual icons/lash.xcf
+%{_bindir}/lash*
+%{_datadir}/icons/hicolor/16x16/apps/lash.png
+%{_datadir}/icons/hicolor/24x24/apps/lash.png
+%{_datadir}/icons/hicolor/48x48/apps/lash.png
+%{_datadir}/icons/hicolor/96x96/apps/lash.png
+%{_datadir}/icons/hicolor/scalable/apps/lash.svg
+%{_datadir}/xml/lash
+%{_datadir}/applications/lash-panel.desktop
+
+%files -n liblash-devel
+%{_libdir}/liblash.so
+%{_includedir}/lash-1.0
+%{_libdir}/pkgconfig/lash*
+
+%files -n liblash
+%{_libdir}/liblash.so.1
+%{_libdir}/liblash.so.1.*
+
 %files -n python-module-lash
-%python_sitelibdir/*lash*.so
-%python_sitelibdir/*lash*.py
-%python_sitelibdir/*lash*.pyc
-%python_sitelibdir/*lash*.pyo
+%{python_sitelibdir}/_lash.so
+%{python_sitelibdir}/lash.py*
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.5.4-alt1_32
+- picked up from orphaned
+- reverted to last stable version 0.5.4
+
 * Thu Feb 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt0.20090725.7
 - Fixed build
 
