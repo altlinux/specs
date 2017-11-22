@@ -13,26 +13,26 @@ BuildRequires: jpackage-generic-compat
 
 Name:       glassfish-jsp-api
 Version:    2.3.2
-Release:    alt1_0.7.b01jpp8
+Release:    alt1_0.8.b01jpp8
 Summary:    Glassfish J2EE JSP API specification
 
-License:    (CDDL or GPLv2 with exceptions) and ASL 2.0
+License:    (CDDL-1.1 or GPLv2 with exceptions) and ASL 2.0
 URL:        http://java.net/jira/browse/JSP
 Source0:    %{artifactId}-%{version}-%{reltag}.tar.xz
 # no source releases, but this will generate tarball for you from an
 # SVN tag
 Source1:    generate_tarball.sh
 Source2:    http://www.apache.org/licenses/LICENSE-2.0.txt
-Source3:    http://hub.opensolaris.org/bin/download/Main/licensing/cddllicense.txt
+Source3:    https://javaee.github.io/glassfish/LICENSE.html
 
 BuildArch:  noarch
 
 BuildRequires:  maven-local
-BuildRequires:  maven-plugin-bundle
-BuildRequires:  maven-source-plugin
-BuildRequires:  jvnet-parent
-BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(javax.el:javax.el-api)
+BuildRequires:  mvn(javax.servlet:javax.servlet-api)
+BuildRequires:  mvn(net.java:jvnet-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 Source44: import.info
 
 %description
@@ -50,8 +50,9 @@ BuildArch:      noarch
 
 %prep
 %setup -q -n %{artifactId}-%{version}-%{reltag}
-cp -p %{SOURCE2} LICENSE
-cp -p %{SOURCE3} cddllicense.txt
+
+cp -p %{SOURCE2} LICENSE-ASL-2.0.txt
+cp -p %{SOURCE3} LICENSE-CDDL+GPLv2.html
 
 # Submited upstream: http://java.net/jira/browse/JSP-31
 sed -i "/<bundle.symbolicName>/s/-api//" pom.xml
@@ -70,13 +71,16 @@ sed -i "/<bundle.symbolicName>/s/-api//" pom.xml
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE cddllicense.txt
+%doc LICENSE-ASL-2.0.txt LICENSE-CDDL+GPLv2.html
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE cddllicense.txt
+%doc LICENSE-ASL-2.0.txt LICENSE-CDDL+GPLv2.html
 
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_0.8.b01jpp8
+- new fc release
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_0.7.b01jpp8
 - fc27 update
 
