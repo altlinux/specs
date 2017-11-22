@@ -1,3 +1,4 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -5,20 +6,19 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:              httpcomponents-project
-Summary:           Common POM file for HttpComponents
-Version:           7
-Release:           alt1_6jpp8
-Group:             Development/Other
-License:           ASL 2.0
-URL:               http://hc.apache.org/
-# svn export http://svn.apache.org/repos/asf/httpcomponents/project/tags/%{version} %{name}-%{version}
-# tar cJf %{name}-%{version}.tar.xz %{name}-%{version}
-Source:            %{name}-%{version}.tar.xz
-BuildArch:         noarch
+Name:           httpcomponents-project
+Summary:        Common POM file for HttpComponents
+Version:        9
+Release:        alt1_1jpp8
+License:        ASL 2.0
+URL:            http://hc.apache.org/
+Source0:        http://archive.apache.org/dist/httpcomponents/httpcomponents-parent/9/httpcomponents-parent-9.pom
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 Source44: import.info
 
 Obsoletes: hc-project < 4.1.1-alt1_1jpp6
@@ -31,13 +31,20 @@ required only for building dependant packages with Maven. Please don't
 use it as runtime requirement.
 
 %prep
-%setup -q
+%setup -q -T -c %{name}
+
+cp -p %{SOURCE0} pom.xml
+cp -p %{SOURCE1} .
+
 %pom_remove_plugin :buildnumber-maven-plugin
 %pom_remove_plugin :clirr-maven-plugin
 %pom_remove_plugin :docbkx-maven-plugin
-%pom_remove_plugin :maven-clover2-plugin
-%pom_remove_plugin :maven-notice-plugin
 %pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :animal-sniffer-maven-plugin
+%pom_remove_plugin :apache-rat-plugin
+
+# Version <= 8 had this AID
+%mvn_alias : :project
 
 %build
 %mvn_file  : %{name}
@@ -47,9 +54,12 @@ use it as runtime requirement.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
+%doc LICENSE-2.0.txt
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 9-alt1_1jpp8
+- new version
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 7-alt1_6jpp8
 - fc27 update
 
