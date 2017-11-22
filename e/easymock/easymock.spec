@@ -8,18 +8,17 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           easymock
-Version:        3.4
-Release:        alt1_5jpp8
+Version:        3.5
+Release:        alt1_1jpp8
 Summary:        Easy mock objects
 License:        ASL 2.0
 URL:            http://www.easymock.org
 
 Source0:        https://github.com/%{name}/%{name}/archive/%{name}-%{version}.tar.gz
 
-Patch1:         0001-Port-to-maven-jar-plugin-3.0.0.patch
-Patch2:         0002-Disable-android-support.patch
-Patch3:         0003-Unshade-cglib-and-asm.patch
-Patch4:         0004-Fix-OSGi-manifest.patch
+Patch1:         0001-Disable-android-support.patch
+Patch2:         0002-Unshade-cglib-and-asm.patch
+Patch3:         0003-Fix-OSGi-manifest.patch
 
 BuildArch:      noarch
 
@@ -28,9 +27,12 @@ BuildRequires:  mvn(cglib:cglib)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
+BuildRequires:  mvn(org.apache.maven.surefire:surefire-junit47)
+BuildRequires:  mvn(org.apache.maven.surefire:surefire-testng)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.objenesis:objenesis)
 BuildRequires:  mvn(org.ow2.asm:asm)
+BuildRequires:  mvn(org.testng:testng)
 # xmvn-builddep misses this:
 BuildRequires:  mvn(org.apache:apache-jar-resource-bundle)
 
@@ -62,7 +64,6 @@ Javadoc for %{name}.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 %pom_remove_plugin :maven-license-plugin
 
@@ -107,6 +108,9 @@ rm core/src/test/java/org/easymock/tests2/ClassExtensionHelperTest.java
 
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.5-alt1_1jpp8
+- new version
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.4-alt1_5jpp8
 - fc27 update
 
