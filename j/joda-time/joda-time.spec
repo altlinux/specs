@@ -7,11 +7,11 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global tzversion tzdata2016c
+%global tzversion tzdata2017b
 
 Name:             joda-time
-Version:          2.9.3
-Release:          alt1_4.tzdata2016cjpp8
+Version:          2.9.9
+Release:          alt1_1.tzdata2017bjpp8
 Summary:          Java date and time API
 
 License:          ASL 2.0
@@ -24,6 +24,7 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.apache.velocity:velocity)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
 BuildRequires:  mvn(org.joda:joda-convert)
 Source44: import.info
@@ -80,6 +81,9 @@ tar -xzf %{SOURCE1} -C src/main/java/org/joda/time/tz/src/
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.9.9-alt1_1.tzdata2017bjpp8
+- new version
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.9.3-alt1_4.tzdata2016cjpp8
 - fc27 update
 
