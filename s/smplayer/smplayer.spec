@@ -1,4 +1,4 @@
-%define		svn 8715
+%define		svn 8808
 
 %define		rel alt1
 
@@ -9,7 +9,7 @@ Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer/MPV (QT4
 License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
-Version:	17.10.0
+Version:	17.11.2
 Release:	%rel.%svn
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source0:	http://downloads.sourceforge.net/smplayer/%name-%version.tar.bz2
@@ -135,6 +135,9 @@ export OPTFLAGS="%optflags"
 %endif
 
 %changelog
+* Wed Nov 22 2017 Motsyo Gennadi <drool@altlinux.ru> 17.11.2-alt1.8808
+- 17.11.2 version (svn8808)
+
 * Sun Oct 08 2017 Motsyo Gennadi <drool@altlinux.ru> 17.10.0-alt1.8715
 - 17.10.0 version (svn8715)
 
