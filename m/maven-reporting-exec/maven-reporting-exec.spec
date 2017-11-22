@@ -7,8 +7,8 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-reporting-exec
-Version:        1.3
-Release:        alt1_3jpp8
+Version:        1.4
+Release:        alt1_1jpp8
 BuildArch:      noarch
 Summary:        Classes to manage report plugin executions with Maven 3
 
@@ -84,6 +84,9 @@ sed -i 's/\r//g' pom.xml src/main/java/org/apache/maven/reporting/exec/*
 
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_1jpp8
+- new version
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_3jpp8
 - fc27 update
 
