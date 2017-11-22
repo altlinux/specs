@@ -1,22 +1,29 @@
-Name:           python-module-kerberos
-Version:        1.1.1
-Release:        alt1
-Summary:        A high-level wrapper for Kerberos (GSSAPI) operations
+%define _unpackaged_files_terminate_build 1
 
-Group:          System/Libraries
-License:        ASL 2.0
-URL:            http://trac.calendarserver.org/projects/calendarserver/browser/PyKerberos
-Packager: Evgeny Sinelnikov <sin@altlinux.ru>
-# Pull from SVN
-# svn export http://svn.calendarserver.org/repository/calendarserver/PyKerberos/tags/release/PyKerberos-1.1/ python-kerberos-1.1
-# tar czf python-kerberos-%{version}.tar.gz python-kerberos-%{version}
-Source0:        %name-%version.tar.bz2
+%define mname kerberos
 
-BuildRequires:  python-devel
-BuildRequires:  libkrb5-devel
-BuildRequires:  python-module-setuptools
+Name: python-module-%mname
+Version: 1.2.5
+Release: alt1%ubt
+Summary: A high-level wrapper for Kerberos (GSSAPI) operations
 
-Patch0: PyKerberos-delegation.patch
+Group: System/Libraries
+License: ASL 2.0
+Url: https://pypi.python.org/pypi/kerberos
+#git https://github.com/apple/ccs-pykerberos.git
+Source0: %name-%version.tar
+Patch0: %name-%version-alt.patch
+
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python-dev
+BuildRequires: python3-dev
+BuildRequires: libkrb5-devel
+BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
+
+%py_provides %mname
 
 %description
 This Python package is a high-level wrapper for Kerberos (GSSAPI) operations.
@@ -27,24 +34,53 @@ is needed for client/serverKerberos authentication based on
 
 Much of the C-code here is adapted from Apache's mod_auth_kerb-5.0rc7.
 
+%package -n python3-module-%mname
+Summary: A high-level wrapper for Kerberos (GSSAPI) operations
+Group: Development/Python3
+%py3_provides %mname
+
+%description -n python3-module-%mname
+This Python package is a high-level wrapper for Kerberos (GSSAPI) operations.
+The goal is to avoid having to build a module that wraps the entire
+Kerberos.framework, and instead offer a limited set of functions that do what
+is needed for client/serverKerberos authentication based on
+<http://www.ietf.org/rfc/rfc4559.txt>.
+
+Much of the C-code here is adapted from Apache's mod_auth_kerb-5.0rc7.
 
 %prep
 %setup
-#patch0 -p1 -b .delegation
+%patch -p1
+rm -rf ../python3
+cp -a . ../python3
 
 %build
 %add_optflags -fno-strict-aliasing
-%python_build
+%python_build_debug
+pushd ../python3
+%python3_build_debug
+popd
 
 %install
 %python_install
+pushd ../python3
+%python3_install
+popd
 
 %files
-%doc README.txt LICENSE
-%python_sitelibdir/*
+%doc README.rst
+%python_sitelibdir/kerberos*.so
+%python_sitelibdir/kerberos-%version-*.egg-info
 
+%files -n python3-module-%mname
+%doc README.rst
+%python3_sitelibdir/kerberos*.so
+%python3_sitelibdir/kerberos-%version-*.egg-info
 
 %changelog
+* Tue Nov 14 2017 Stanislav Levin <slev@altlinux.org> 1.2.5-alt1%ubt
+- 1.1.1 -> 1.2.5
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1
 - Version 1.1.1
 

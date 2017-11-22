@@ -1,92 +1,89 @@
-%define oname requests-kerberos
+%define _unpackaged_files_terminate_build 1
 
-%def_with python3
+%define mname requests-kerberos
 
-Name: python-module-%oname
-Version: 0.6.1
-Release: alt1.git20141114.1
+Name: python-module-%mname
+Version: 0.11.0
+Release: alt1%ubt
 Summary: A Kerberos authentication handler for python-requests
-License: MIT
+License: %mit
 Group: Development/Python
-Url: https://pypi.python.org/pypi/requests-kerberos/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://pypi.python.org/pypi/requests-kerberos
 
 # https://github.com/requests/requests-kerberos.git
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 BuildArch: noarch
 
-BuildPreReq: python-modules-json
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-mock python-module-requests
-BuildPreReq: python-module-kerberos
-%if_with python3
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-mock python3-module-requests
+BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
+BuildPreReq: python-module-kerberos
 BuildPreReq: python3-module-kerberos
-%endif
 
-%py_provides requests_kerberos
+Requires: python-module-requests >= 1.1
+Requires: python-module-kerberos
+
+%py_provides %mname
 
 %description
 Requests is an HTTP library, written in Python, for human beings. This
 library adds optional Kerberos/GSSAPI authentication support and
 supports mutual authentication.
 
-%package -n python3-module-%oname
+%package -n python3-module-%mname
 Summary: A Kerberos authentication handler for python-requests
 Group: Development/Python3
-%py3_provides requests_kerberos
+Requires: python3-module-requests >= 1.1
+Requires: python3-module-kerberos
+%py3_provides %mname
 
-%description -n python3-module-%oname
+%description -n python3-module-%mname
 Requests is an HTTP library, written in Python, for human beings. This
 library adds optional Kerberos/GSSAPI authentication support and
 supports mutual authentication.
 
 %prep
 %setup
-
-%if_with python3
-cp -fR . ../python3
-%endif
+%patch -p1
+rm -rf ../python3
+cp -a . ../python3
 
 %build
 %python_build_debug
-
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
 %python_install
-
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
-python setup.py test
-%if_with python3
+python -m pytest --verbose
 pushd ../python3
-python3 setup.py test
+python3 -m pytest --verbose
 popd
-%endif
 
 %files
-%doc AUTHORS *.rst
-%python_sitelibdir/*
+%doc AUTHORS README.rst HISTORY.rst LICENSE
+%python_sitelibdir/requests_kerberos
+%python_sitelibdir/requests_kerberos-%version-*.egg-info
 
-%if_with python3
-%files -n python3-module-%oname
-%doc AUTHORS *.rst
-%python3_sitelibdir/*
-%endif
+%files -n python3-module-%mname
+%doc AUTHORS README.rst HISTORY.rst LICENSE
+%python3_sitelibdir/requests_kerberos
+%python3_sitelibdir/requests_kerberos-%version-*.egg-info
 
 %changelog
+* Tue Nov 14 2017 Stanislav Levin <slev@altlinux.org> 0.11.0-alt1%ubt
+- 0.6.1 -> 0.11.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.1-alt1.git20141114.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
