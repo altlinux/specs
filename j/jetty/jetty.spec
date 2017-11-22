@@ -1,4 +1,3 @@
-BuildRequires: ecj
 Group: Networking/WWW
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -60,7 +59,7 @@ BuildRequires: jpackage-generic-compat
 %global appdir      %{jettylibdir}/webapps
 
 
-%global addver  .v20170531
+%global addver  .v20170914
 
 # minimal version required to build eclipse and thermostat
 # eclipse needs: util, server, http, continuation, io, security, servlet
@@ -69,8 +68,8 @@ BuildRequires: jpackage-generic-compat
 %bcond_with     jp_minimal
 
 Name:           jetty
-Version:        9.4.6
-Release:        alt2_2.v20170531jpp8
+Version:        9.4.7
+Release:        alt1_1.v20170914jpp8
 Summary:        Java Webserver and Servlet Container
 
 # Jetty is dual licensed under both ASL 2.0 and EPL 1.0, see NOTICE.txt
@@ -96,6 +95,8 @@ BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.github.jnr:jnr-unixsocket)
 BuildRequires:  mvn(com.google.guava:guava)
+BuildRequires:  mvn(com.hazelcast:hazelcast)
+BuildRequires:  mvn(com.hazelcast:hazelcast-client)
 BuildRequires:  mvn(javax.annotation:javax.annotation-api)
 BuildRequires:  mvn(javax.enterprise:cdi-api)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
@@ -191,6 +192,7 @@ Requires:       %{name}-util-ajax = %{version}-%{release}
 Requires:       %{name}-webapp = %{version}-%{release}
 Requires:       %{name}-xml = %{version}-%{release}
 Requires:       %{name}-infinispan = %{version}-%{release}
+Requires:       %{name}-hazelcast = %{version}-%{release}
 Requires:       %{name}-cdi = %{version}-%{release}
 Requires:       %{name}-websocket-api = %{version}-%{release}
 Requires:       %{name}-websocket-client = %{version}-%{release}
@@ -393,6 +395,13 @@ Group: Networking/WWW
 Summary:        Jetty CDI Configuration
 
 %description cdi
+%{extdesc} %{summary}.
+
+%package        hazelcast
+Group: Networking/WWW
+Summary:        hazelcast module for Jetty
+
+%description    hazelcast
 %{extdesc} %{summary}.
 
 %package        fcgi-client
@@ -735,6 +744,11 @@ sed -i 's#;</Export-Package>#</Export-Package>#' jetty-http2/http2-common/pom.xm
 %pom_disable_module test-memcached-sessions tests/test-sessions
 %pom_remove_dep :jetty-memcached-sessions jetty-home
 
+# missing test deps for jetty-hazelcast
+rm -r jetty-hazelcast/src/test
+%pom_remove_dep :::test jetty-hazelcast
+%pom_xpath_remove 'pom:dependency[pom:type="test-jar"]' jetty-hazelcast
+
 cp %{SOURCE6} .
 
 # the default location is not allowed by SELinux
@@ -771,6 +785,7 @@ sed -i '/<SystemProperty name="jetty.state"/d' \
 %pom_disable_module jetty-rewrite
 %pom_disable_module jetty-nosql
 %pom_disable_module jetty-infinispan
+%pom_disable_module jetty-hazelcast
 %pom_disable_module jetty-unixsocket
 %pom_disable_module tests
 %pom_disable_module examples
@@ -982,6 +997,7 @@ exit 0
 %files fcgi-server -f .mfiles-fcgi-server
 %files http-spi -f .mfiles-jetty-http-spi
 %files infinispan -f .mfiles-jetty-infinispan
+%files hazelcast -f .mfiles-jetty-hazelcast
 %files jaspi -f .mfiles-jetty-jaspi
 %files jndi -f .mfiles-jetty-jndi
 %files jsp -f .mfiles-jetty-jsp
@@ -1023,6 +1039,9 @@ exit 0
 %doc LICENSE-eplv10-aslv20.html LICENSE-MIT
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 9.4.7-alt1_1.v20170914jpp8
+- new version
+
 * Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 9.4.6-alt2_2.v20170531jpp8
 - fixed build with new tomcat
 
