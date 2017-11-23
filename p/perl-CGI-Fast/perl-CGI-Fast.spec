@@ -2,19 +2,18 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(CGI.pm) perl(ExtUtils/MakeMaker.pm) perl(FCGI.pm) perl(Test/More.pm) perl(if.pm) perl(Test/Deep.pm)
 # END SourceDeps(oneline)
-%define module_version 2.12
 %define module_name CGI-Fast
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.12
-Release: alt2
+Version: 2.13
+Release: alt1
 Summary: CGI::Fast is a subclass of the CGI object created by CGI.pm
 Group: Development/Perl
 License: perl
 URL: https://metacpan.org/module/CGI::Fast
 
-Source: http://www.cpan.org/authors/id/L/LE/LEEJO/CGI-Fast-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/L/LE/LEEJO/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -27,7 +26,7 @@ see large performance improvements.
 
 
 %prep
-%setup -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -36,10 +35,13 @@ see large performance improvements.
 %perl_vendor_install
 
 %files
-%doc README Changes
+%doc README Changes README.md
 %perl_vendor_privlib/C*
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1
+- automated CPAN update
+
 * Mon Sep 25 2017 Igor Vlasenko <viy@altlinux.ru> 2.12-alt2
 - fixed Summary (closes: #33638)
 
