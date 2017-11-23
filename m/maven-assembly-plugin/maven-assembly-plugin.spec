@@ -1,14 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-assembly-plugin
-Version:        2.6
-Release:        alt1_8jpp8
+Version:        3.1.0
+Release:        alt1_1jpp8
 Summary:        Maven Assembly Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-assembly-plugin/
@@ -16,14 +16,9 @@ BuildArch:      noarch
 
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-# Patch merged upstream: https://issues.apache.org/jira/browse/MASSEMBLY-790
-# https://github.com/apache/maven-plugins/commit/18e37d5.patch
-Patch0:         0001-Port-to-Maven-Filtering-3.0.0.patch
-# Not forwarded - problem not reproducible with latest upstream SVN trunk
-Patch1:         0002-Port-to-Maven-Shared-IO-3.0.0.patch
-
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
+BuildRequires:  mvn(commons-codec:commons-codec)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(org.apache.maven:maven-archiver)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
@@ -33,9 +28,9 @@ BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.shared:file-management)
+BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer)
 BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
 BuildRequires:  mvn(org.apache.maven.shared:maven-filtering)
-BuildRequires:  mvn(org.apache.maven.shared:maven-repository-builder)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-io)
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
@@ -60,11 +55,6 @@ This package provides %{summary}.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-
-%pom_xpath_set pom:mavenVersion 3.3.3
-%pom_remove_dep :maven-project
 
 %build
 # Tests need easymockclassextension version 2.x, which is incompatible
@@ -75,13 +65,15 @@ This package provides %{summary}.
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_1jpp8
+- new version
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_8jpp8
 - new fc release
 
