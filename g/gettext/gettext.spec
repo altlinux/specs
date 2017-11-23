@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.19.8.1
-Release: alt2
+Release: alt3
 
 %define libintl libintl3
 
@@ -31,7 +31,7 @@ Obsoletes: %name-base
 
 %def_disable static
 %def_without included_gettext
-%def_with java
+%def_without java
 
 %{?_with_included_gettext:Requires: %libintl = %version-%release}
 BuildPreReq: emacs-nox gcc-c++ makeinfo xz %{?_with_java:jdkgcj /proc}
@@ -330,6 +330,10 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Thu Nov 23 2017 Dmitry V. Levin <ldv@altlinux.org> 0.19.8.1-alt3
+- Disabled build of java tools because of gcj retirement, see
+  https://lists.altlinux.org/pipermail/devel/2017-November/203532.html.
+
 * Wed Nov 22 2017 Dmitry V. Levin <ldv@altlinux.org> 0.19.8.1-alt2
 - autopoint: removed unused code that caused shell.req to generate
   a few bogus dependencies.
