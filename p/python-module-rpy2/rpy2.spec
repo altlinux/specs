@@ -1,44 +1,53 @@
 %define oname rpy2
 
+%def_without python2
 %def_with python3
+%def_without docs
 
 Name: python-module-%oname
-Version: 2.7.8
-Release: alt1.1
+Version: 2.9.1
+Release: alt1
 Summary: A simple and efficient access to R from Python, version 2
 License: GPLv2
 Group: Development/Python
 Url: http://rpy.sourceforge.net/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %oname-%version.tar.gz
+Source: %oname-%version.tar
+Patch1: %oname-%version-alt-ldpath.patch
 
-Requires: R-base
+BuildRequires: libpcre-devel liblzma-devel bzlib-devel zlib-devel
+BuildRequires: libicu-devel
+BuildRequires: R-devel libreadline-devel
 
+%if_with python2
 BuildRequires(pre): rpm-build-python
-#BuildPreReq: libpcre-devel liblzma-devel bzlib-devel zlib-devel
-#BuildPreReq: libicu-devel
-#BuildPreReq: python-devel R-devel liblapack-devel libreadline-devel
-#BuildPreReq: python-module-setuptools-tests python-module-singledispatch
-#BuildPreReq: python-module-six python-modules-sqlite3
-#BuildPreReq: python-module-sphinx-devel python-module-Pygments
-#BuildPreReq: graphviz
-BuildPreReq: python-module-sphinx-devel
+BuildRequires: python-devel python-module-setuptools-tests python-module-singledispatch
+BuildRequires: python-modules-sqlite3
+BuildRequires: python-module-pytest
+BuildRequires: python-module-numpy
+%if_with docs
+BuildRequires(pre): python-module-sphinx-devel
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-sphinx-pickles
+%endif
+%endif
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-singledispatch
-#BuildPreReq: python3-module-six python3-modules-sqlite3
+BuildRequires: python3-devel python3-module-setuptools-tests python3-module-singledispatch
+BuildRequires: python3-modules-sqlite3
+BuildRequires: python3-module-numpy
+%if_with docs
+BuildRequires(pre): python3-module-sphinx-devel
+BuildRequires: python3-module-alabaster python3-module-docutils python3-module-html5lib
 %endif
+%endif
+
 %setup_python_module %oname
 
 #add_python_req_skip pandas
+Requires: R-base
 Requires: %oname-common = %EVR
 %py_requires singledispatch sqlite3
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: R-base elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-ordereddict python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-setuptools python3-module-six
-BuildRequires: R-devel bzlib-devel libicu-devel liblzma-devel libpcre-devel libreadline-devel python-module-alabaster python-module-docutils python-module-html5lib python-module-pytest python-module-singledispatch python-module-sphinx-pickles python-modules-sqlite3 python3-devel python3-module-pytest python3-module-singledispatch python3-modules-sqlite3 rpm-build-python3 time zlib-devel
 
 %description
 RPy is a very simple, yet robust, Python interface to the R Programming
@@ -51,6 +60,7 @@ rpy2 is a redesign and rewrite of rpy. It is providing a low-level
 interface to R, a proposed high-level interface, including wrappers to
 graphical libraries, as well as R-like structures and functions.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A simple and efficient access to R from Python, version 2
 Group: Development/Python3
@@ -87,6 +97,46 @@ graphical libraries, as well as R-like structures and functions.
 
 This package contains tests for RPy, version 2.
 
+%if_with docs
+%package -n python3-module-%oname-pickles
+Summary: Pickles for RPy, version 2
+Group: Development/Python3
+
+%description -n python3-module-%oname-pickles
+RPy is a very simple, yet robust, Python interface to the R Programming
+Language. It can manage all kinds of R objects and can execute arbitrary
+R functions (including the graphic functions). All errors from the R
+language are converted to Python exceptions. Any module installed for
+the R system can be used from within Python.
+
+rpy2 is a redesign and rewrite of rpy. It is providing a low-level
+interface to R, a proposed high-level interface, including wrappers to
+graphical libraries, as well as R-like structures and functions.
+
+This package contains pickles for RPy, version 2.
+
+%package -n python3-module-%oname-doc
+Summary: Documentation and demos for RPy, version 2
+Group: Development/Documentation
+BuildArch: noarch
+
+%description -n python3-module-%oname-doc
+RPy is a very simple, yet robust, Python interface to the R Programming
+Language. It can manage all kinds of R objects and can execute arbitrary
+R functions (including the graphic functions). All errors from the R
+language are converted to Python exceptions. Any module installed for
+the R system can be used from within Python.
+
+rpy2 is a redesign and rewrite of rpy. It is providing a low-level
+interface to R, a proposed high-level interface, including wrappers to
+graphical libraries, as well as R-like structures and functions.
+
+This package contains development documentation and demos for RPy,
+version 2.
+%endif
+%endif
+
+%if_with python2
 %package tests
 Summary: Tests for RPy, version 2
 Group: Development/Python
@@ -106,6 +156,7 @@ graphical libraries, as well as R-like structures and functions.
 
 This package contains tests for RPy, version 2.
 
+%if_with docs
 %package pickles
 Summary: Pickles for RPy, version 2
 Group: Development/Python
@@ -141,6 +192,8 @@ graphical libraries, as well as R-like structures and functions.
 
 This package contains development documentation and demos for RPy,
 version 2.
+%endif
+%endif
 
 %package -n %oname-common
 Summary: Common files for Python 2 and Python 3 modules of RPy, version 2
@@ -163,17 +216,30 @@ RPy, version 2.
 
 %prep
 %setup
+%patch1 -p2
 
 %if_with python3
 cp -fR . ../python3
+pushd ../python3
+%if_with docs
+sed -i 's|@PYVER@|%_python3_version|g' doc/Makefile
+%prepare_sphinx3 doc
+%endif
+popd
 %endif
 
+%if_with python2
+%if_with docs
 sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
 %prepare_sphinx doc
+%endif
+%endif
 
 %build
 %add_optflags -fno-strict-aliasing
+%if_with python2
 %python_build_debug
+%endif
 
 %if_with python3
 pushd ../python3
@@ -182,26 +248,37 @@ popd
 %endif
 
 %install
+%if_with python2
 %python_install
+%endif
 
 %if_with python3
 pushd ../python3
 %python3_install
+
+%if_with docs
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py3_sphinx-apidoc -o doc -F rpy
+%make -C doc pickle
+%make -C doc html
+
+install -d %buildroot%python3_sitelibdir/rpy2
+cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/rpy2/
 popd
 %endif
+%endif
 
+%if_with python2
+%if_with docs
 export PYTHONPATH=%buildroot%python_sitelibdir
 sphinx-apidoc -o doc -F rpy
 %make -C doc pickle
 %make -C doc html
 
-#install -d %buildroot%_docdir/%oname/demos
-#cp -fR doc/build/html %buildroot%_docdir/%oname/
-#cp -fR doc/build/latex/*.pdf %buildroot%_docdir/%oname/
-#install -p -m644 demos/*.py %buildroot%_docdir/%oname/demos
-
 install -d %buildroot%python_sitelibdir/rpy2
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/rpy2/
+%endif
+%endif
 
 install -d %buildroot%_sysconfdir/profile.d
 cat <<EOF > %buildroot%_sysconfdir/profile.d/%oname.sh
@@ -209,40 +286,60 @@ export R_HOME=%_libdir/R
 EOF
 
 %check
-cd ~
-export PYTHONPATH=%buildroot%python_sitelibdir
+%if_with python2
+# remove these tests since R packages dplyr and ggplot2 are missing
+rm -f build/lib.linux*/rpy2/robjects/lib/test_dplyr.py
+rm -f build/lib.linux*/rpy2/robjects/lib/tests/test_dplyr.py
+rm -f build/lib.linux*/rpy2/robjects/lib/tests/test_ggplot2.py
+
+export PYTHONPATH=$(readlink -e build/lib.linux*)
 python -m rpy2.tests -v
 python -m unittest -v rpy2.robjects.tests.testVector
 python -m unittest discover -v rpy2.robjects
+%endif
+
 %if_with python3
-export PYTHONPATH=%buildroot%python3_sitelibdir
+pushd ../python3
+# remove these tests since R packages dplyr and ggplot2 are missing
+rm -f build/lib.linux*/rpy2/robjects/lib/test_dplyr.py
+rm -f build/lib.linux*/rpy2/robjects/lib/tests/test_dplyr.py
+rm -f build/lib.linux*/rpy2/robjects/lib/tests/test_ggplot2.py
+
+export PYTHONPATH=$(readlink -e build/lib.linux*)
 python3 -m rpy2.tests -v
 python3 -m unittest -v rpy2.robjects.tests.testVector
 python3 -m unittest discover -v rpy2.robjects
+popd
 %endif
 
+%files -n %oname-common
+%_sysconfdir/profile.d/*
+
+%if_with python2
 %files
 %doc AUTHORS NEWS *.rst gpl*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests*
 %exclude %python_sitelibdir/*/*/tests
 %exclude %python_sitelibdir/*/*/*/tests
+%if_with docs
 %exclude %python_sitelibdir/%oname/pickle
-
-%files -n %oname-common
-%_sysconfdir/profile.d/*
+%endif
 
 %files tests
 %python_sitelibdir/*/tests*
 %python_sitelibdir/*/*/tests
 %python_sitelibdir/*/*/*/tests
 
+%if_with docs
 %files pickles
 %dir %python_sitelibdir/%oname
 %python_sitelibdir/%oname/pickle
 
 %files doc
 %doc doc/_build/html/*
+%endif
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
@@ -251,14 +348,31 @@ python3 -m unittest discover -v rpy2.robjects
 %exclude %python3_sitelibdir/*/tests*
 %exclude %python3_sitelibdir/*/*/tests*
 %exclude %python3_sitelibdir/*/*/*/tests
+%if_with docs
+%exclude %python3_sitelibdir/%oname/pickle
+%endif
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests*
 %python3_sitelibdir/*/*/tests*
 %python3_sitelibdir/*/*/*/tests
+
+%if_with docs
+%files -n python3-module-%oname-pickles
+%dir %python3_sitelibdir/%oname
+%python3_sitelibdir/%oname/pickle
+
+%files -n python3-module-%oname-doc
+%doc ../python3/doc/_build/html/*
+%endif
 %endif
 
 %changelog
+* Thu Nov 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.9.1-alt1
+- Updated to upstream version 2.9.1.
+- Disabled python-2 build.
+- Disabled docs generation.
+
 * Mon Mar 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.7.8-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

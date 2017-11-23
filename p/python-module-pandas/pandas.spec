@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.21.0
-Release: alt1
+Release: alt2
 
 Summary: Python Data Analysis Library
 License: BSD
@@ -34,7 +34,7 @@ BuildRequires: python3(scipy) python3(xlrd) python3(tables.tests) python3(openpy
 
 %setup_python_module %oname
 %py_requires pytz pandas.util.testing dateutil numpy sqlalchemy numexpr
-%py_requires scipy boto bs4 xlrd openpyxl xlsxwriter xlwt httplib2 rpy2
+%py_requires scipy boto bs4 xlrd openpyxl xlsxwriter xlwt httplib2
 %py_requires oauth2client apiclient gflags tables
 %py_requires statsmodels.stats.multitest
 
@@ -185,6 +185,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.21.0-alt2
+- Updated runtime dependencies of python-2 package.
+
 * Tue Nov 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.21.0-alt1
 - Updated to upstream version 0.21.0.
 
