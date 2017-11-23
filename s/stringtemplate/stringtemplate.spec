@@ -1,15 +1,16 @@
-BuildRequires: javapackages-local
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Summary: A Java template engine
 Name: stringtemplate
 Version: 3.2.1
-Release: alt2_12jpp8
+Release: alt2_15jpp8
 URL: http://www.stringtemplate.org/
 Source0: http://www.stringtemplate.org/download/stringtemplate-%{version}.tar.gz
 # Build jUnit tests + make the antlr2 generated code before preparing sources
@@ -20,7 +21,8 @@ BuildArch: noarch
 BuildRequires: ant-antlr ant-junit
 BuildRequires: antlr-tool
 # Standard deps
-BuildRequires: javapackages-tools rpm-build-java
+BuildRequires: java-devel >= 1.6.0
+BuildRequires: javapackages-local
 Requires: antlr-tool
 Source44: import.info
 
@@ -47,7 +49,7 @@ API documentation for %{name}.
 %build
 rm -rf lib target
 ant jar
-ant javadocs -Dpackages= -Djavadocs.additionalparam=
+ant javadocs -Dpackages= -Djavadocs.additionalparam="-Xdoclint:none"
 
 %install
 install -D build/stringtemplate.jar $RPM_BUILD_ROOT%{_datadir}/java/stringtemplate.jar
@@ -65,6 +67,9 @@ install -Dpm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.2.1-alt2_15jpp8
+- new fc release
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 0:3.2.1-alt2_12jpp8
 - added BR: javapackages-local for javapackages 5
 
