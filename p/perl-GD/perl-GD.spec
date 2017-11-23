@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-GD
-Version: 2.66
+Version: 2.67
 Release: alt1
 Epoch: 1
 
@@ -52,6 +52,9 @@ sed -i- '/CCFLAGS/d' Makefile.PL
 #%perl_vendor_archlib/qd.pl
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.67-alt1
+- automated CPAN update
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.66-alt1
 - automated CPAN update
 
