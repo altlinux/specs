@@ -1,36 +1,29 @@
 %define _unpackaged_files_terminate_build 1
 %define oname Fabric
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
-Version: 1.13.1
+Version: 1.14.0
 Release: alt1
 Summary: A simple, Pythonic tool for remote execution and deployment
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://github.com/fabric/fabric
 
-Source0: https://pypi.python.org/packages/de/cd/ad1ebe31ea8143b4f1458283971a7806f7a6062ca26b01c956c6c176597a/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-paramiko
-#BuildPreReq: python-module-setuptools python-module-ecdsa
-#BuildPreReq: python-module-sphinx-devel python-module-alabaster
-#BuildPreReq: python-module-releases
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-module-alabaster python-module-html5lib python-module-objects.inv python-module-paramiko
+BuildRequires: python-module-releases
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-module-setuptools
 %endif
 
 %py_provides %oname
 %py_requires paramiko
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-ecdsa python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pycrypto python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base
-BuildRequires: python-module-alabaster python-module-html5lib python-module-objects.inv python-module-paramiko python-module-releases python3-module-setuptools rpm-build-python3 time
 
 %description
 Fabric is a Python (2.5-2.7) library and command-line tool for
@@ -42,6 +35,7 @@ shell commands (normally or via sudo) and uploading/downloading files,
 as well as auxiliary functionality such as prompting the running user
 for input, or aborting execution.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A simple, Pythonic tool for remote execution and deployment
 Group: Development/Python3
@@ -56,6 +50,7 @@ It provides a basic suite of operations for executing local or remote
 shell commands (normally or via sudo) and uploading/downloading files,
 as well as auxiliary functionality such as prompting the running user
 for input, or aborting execution.
+%endif
 
 %package docs
 Summary: Documentationr for Fabric
@@ -74,7 +69,7 @@ for input, or aborting execution.
 This package contains documentationr for Fabric.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -112,9 +107,11 @@ mv %buildroot%_bindir/fab %buildroot%_bindir/fab.py3
 %python_install
 
 %files
-%doc AUTHORS README.rst PKG-INFO
+%doc LICENSE AUTHORS README.rst
 %_bindir/*
+%if_with python3
 %exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/*
 
 %files docs
@@ -123,12 +120,16 @@ mv %buildroot%_bindir/fab %buildroot%_bindir/fab.py3
 
 %if_with python3
 %files -n python3-module-%oname
-%doc PKG-INFO LICENSE AUTHORS README.rst
+%doc LICENSE AUTHORS README.rst
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Thu Nov 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.14.0-alt1
+- Updated to upstream version 1.14.0.
+- Disabled python-3 build.
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.13.1-alt1
 - automated PyPI update
 

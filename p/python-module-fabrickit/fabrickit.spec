@@ -1,36 +1,31 @@
 %define _unpackaged_files_terminate_build 1
 %define oname fabrickit
 
-%def_with python3
+%def_without python3
 %def_disable check
 
 Name: python-module-%oname
 Version: 0.2.2
-Release: alt1
+Release: alt2
 Summary: Fabric API wrapper
 License: Free
 Group: Development/Python
-Url: https://pypi.python.org/pypi/fabrickit/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/7c/8a/ee5136ff85c4e8dd14fa5c77b2e51deca847582713ea3894a12326fca1bc/%{oname}-%{version}.tar.gz
 BuildArch: noarch
+Url: https://pypi.python.org/pypi/fabrickit/
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-Fabric
+Source: %oname-%version.tar.gz
+
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-Fabric
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-Fabric
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-Fabric
+BuildRequires: python-tools-2to3
 %endif
 
 %py_provides %oname
 %py_requires fabric
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
-BuildRequires: python-devel python-tools-2to3 rpm-build-python3 time
 
 %description
 This is a simple fabric wrapper for emitting Exceptions and several
@@ -91,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.2-alt2
+- Disabled python-3 build.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1
 - automated PyPI update
 
