@@ -10,7 +10,7 @@
 
 Name: fluidsynth
 Version: 1.1.8
-Release: alt1
+Release: alt1.1
 
 Summary: Software real-time synthesizer
 Summary(ru_RU.UTF-8): Программный синтезатор, работающий в режиме реального времени
@@ -148,6 +148,7 @@ MIDI-синтезатора. FluidSynth также может воспроизв
 %build
 %cmake -DLIB_INSTALL_DIR:PATH=lib \
     -DINCLUDE_INSTALL_DIR:PATH=include \
+    -DDEFAULT_SOUNDFONT:STRING="%_datadir/soundfonts/default.sf2" \
     -DCMAKE_BUILD_TYPE:STRING="Release" \
     %{?_enable_lash:-Denable-lash:bool=true} \
     %{?_enable_ladcca:-Denable-ladcca:bool=true} \
@@ -184,6 +185,9 @@ cp -r BUILD/doc/api/html ./
 %endif
 
 %changelog
+* Thu Nov 23 2017 Fr. Br. George <george@altlinux.ru> 1.1.8-alt1.1
+- fix sf2 path (Closes: #32137)
+
 * Tue Oct 17 2017 Yuri N. Sedunov <aris@altlinux.org> 1.1.8-alt1
 - 1.1.8
 
