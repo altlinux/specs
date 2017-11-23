@@ -1,3 +1,4 @@
+BuildRequires: maven-project
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:             castor-maven-plugin
 Version:          2.5
-Release:          alt2_4jpp8
+Release:          alt3_4jpp8
 Summary:          Maven plugin for Castor XML's code generator
 License:          ASL 2.0
 URL:              http://www.mojohaus.org/castor-maven-plugin/
@@ -72,6 +73,9 @@ sed -i 's/\r/\n/g' src/main/java/org/codehaus/mojo/castor/ConvertDTD2XSDMojo.jav
 %doc LICENSE.TXT
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.5-alt3_4jpp8
+- fixed build with new maven-reporting-impl
+
 * Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 2.5-alt2_4jpp8
 - fixed build with new bea-stax
 
