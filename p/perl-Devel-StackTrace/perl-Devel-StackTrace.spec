@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define module Devel-StackTrace
 Name: perl-%module
-Version: 2.02
+Version: 2.03
 Release: alt1
 Epoch: 1
 
@@ -14,7 +14,7 @@ Url: %CPAN %module
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/Devel-StackTrace-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DR/DROLSKY/%{module}-%{version}.tar.gz
 
 BuildRequires: perl-devel
 
@@ -22,7 +22,7 @@ BuildRequires: perl-devel
 %summary
 
 %prep
-%setup -q -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,9 +31,13 @@ BuildRequires: perl-devel
 %perl_vendor_install
 
 %files
+%doc Changes CONTRIBUTING.md README.md LICENSE
 %perl_vendor_privlib/Devel/StackTrace*
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.03-alt1
+- automated CPAN update
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.02-alt1
 - automated CPAN update
 
