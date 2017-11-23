@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Gearman
-Version:        2.004.009
+Version:        2.004.010
 Release:        alt1
 Summary:        Perl interface for Gearman distributed job system
 License:        GPL+ or Artistic
@@ -87,6 +87,9 @@ make test
 %{perl_vendor_privlib}/Gearman
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.004.010-alt1
+- automated CPAN update
+
 * Thu Oct 12 2017 Igor Vlasenko <viy@altlinux.ru> 2.004.009-alt1
 - automated CPAN update
 
