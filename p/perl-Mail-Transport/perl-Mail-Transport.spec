@@ -6,14 +6,14 @@ BuildRequires: perl(Carp.pm) perl(Errno.pm) perl(ExtUtils/MakeMaker.pm) perl(Fil
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 3.000
+Version: 3.001
 Release: alt1
 Summary: Email message exchange
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/M/MA/MARKOV/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MARKOV/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -45,6 +45,9 @@ There are various ways to install this module:
 %perl_vendor_privlib/M*
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 3.001-alt1
+- automated CPAN update
+
 * Thu Sep 28 2017 Igor Vlasenko <viy@altlinux.ru> 3.000-alt1
 - to Sisyphus
 
