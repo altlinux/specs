@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt1
+Release: alt2
 Summary: Sphinx Bootstrap Theme
 License: MIT
 Group: Development/Python
@@ -33,7 +33,7 @@ can use any number of different Bootswatch CSS themes.
 %package -n python3-module-%oname
 Summary: Sphinx Bootstrap Theme
 Group: Development/Python3
-%py3_requires sphinx fabric
+%py3_requires sphinx
 
 %description -n python3-module-%oname
 This Sphinx theme integrates the Twitter Bootstrap CSS / JavaScript
@@ -78,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.0-alt2
+- Updated runtime dependencies for python-3.
+
 * Wed Oct 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.0-alt1
 - Updated to upstream version 0.6.0.
 - Enabled build for python3.
