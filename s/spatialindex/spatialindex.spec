@@ -1,19 +1,20 @@
-Name: spatialindex
-Version: 1.8.1
-Release: alt1
-Summary: Spatial index library
-Group: System/Libraries
-Packager: Ilya Mashkin <oddity@altlinux.ru>
-License: MIT
-Url: http://libspatialindex.org
-Source0: http://download.osgeo.org/lib%name/%name-src-%version.tar.bz2
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: gcc-c++
+# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:      spatialindex
+Version:   1.8.5
+Release:   alt1_7
+Summary:   Spatial index library 
+Group:     System/Libraries
+License:   MIT
+URL:       http://libspatialindex.org
+Source0:   http://download.osgeo.org/lib%{name}/%{name}-src-%{version}.tar.bz2
 
-# Create proper soname symlinks and versioned libspatialindex_c
-# https://github.com/libspatialindex/libspatialindex/issues/9
-# Autotools do it automatically
-Patch0: %name-1.8.0-soname.patch
-
-BuildRequires: cmake gcc gcc-c++ gcc-fortran
+BuildRequires:    ctest cmake
+Source44: import.info
 
 %description
 Spatialindex provides a general framework for developing spatial indices.
@@ -22,39 +23,44 @@ disk based storage managers and a robust implementation of an R*-tree,
 an MVR-tree and a TPR-tree.
 
 %package devel
-Summary: Development files for %name
-Group: System/Libraries
-Requires: %name%{?_isa} = %version-%release
+Summary: Development files for %{name}
+Group: Development/Other
+Requires: %{name} = %{version}-%{release}
 
 %description devel
-Development files for %name.
+Development files for %{name}.
+
 
 %prep
-%setup -n %name-src-%version
-%patch0 -p1 -b .soname~
+%setup -qn %{name}-src-%{version}
+
 
 %build
-%cmake ../
-cd BUILD
-make %{?_smp_mflags}
+%{fedora_cmake} .
+%make_build
+
 
 %install
-cd BUILD
-make install DESTDIR=%buildroot
+make install DESTDIR=%{buildroot}
+
 
 # Tests must be run manually and seemingly are not built yet
 # See changelog 2011-10-11
 
 
-%files
+%files 
 %doc AUTHORS ChangeLog COPYING README
-%_libdir/lib%{name}*.so.*
+%{_libdir}/lib%{name}*.so.*
 
 %files devel
-%_includedir/%name
-%_libdir/lib%{name}*.so
+%{_includedir}/%{name}
+%{_libdir}/lib%{name}*.so
+
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.5-alt1_7
+- new version
+
 * Thu Feb 27 2014 Ilya Mashkin <oddity@altlinux.ru> 1.8.1-alt1
 - 1.8.1
 

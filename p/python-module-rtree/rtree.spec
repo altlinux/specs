@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define oname rtree
-%define sover 3
+%define sover 4
 
 %def_without python3
 %def_disable check
 
 Name: python-module-%oname
 Version: 0.8.3
-Release: alt1
+Release: alt1.1
 Summary: R-Tree spatial index for Python GIS
 License: LGPLv2.1
 Group: Development/Python
@@ -17,8 +17,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/Toblerity/rtree.git
 Source0: https://pypi.python.org/packages/b0/6c/6cc8d738f14d5efa0c38ec29403bbd9c75e64b3fe84b53290178dda0dbd9/Rtree-%{version}.tar.gz
 
-#BuildPreReq: spatialindex-devel
-BuildPreReq: spatialindex
+BuildPreReq: spatialindex-devel
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
@@ -159,6 +158,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt1.1
+- rebuild with spatialindex
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt1
 - automated PyPI update
 
