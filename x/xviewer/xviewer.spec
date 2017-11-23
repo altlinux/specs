@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: xviewer
-Version: 1.4.3
+Version: 1.6.1
 Release: alt1
 
 Summary: Fast and functional image viewer.
@@ -123,6 +123,9 @@ the functionality of the Xviewer GUI.
 %exclude %_libdir/%name/lib%name.la
 
 %changelog
+* Thu Nov 23 2017 Vladimir Didenko <cow@altlinux.org> 1.6.1-alt1
+- New version
+
 * Tue Jul 4 2017 Vladimir Didenko <cow@altlinux.org> 1.4.3-alt1
 - New version
 
