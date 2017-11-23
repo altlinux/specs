@@ -15,9 +15,9 @@ BuildRequires: jpackage-generic-compat
 
 Name:       glassfish-jsp
 Version:    2.3.3
-Release:    alt1_0.10.b02jpp8
+Release:    alt1_0.11.b02jpp8
 Summary:    Glassfish J2EE JSP API implementation
-License:    (CDDL or GPLv2 with exceptions) and ASL 2.0
+License:    (CDDL-1.1 or GPLv2 with exceptions) and ASL 2.0
 URL:        http://glassfish.org
 BuildArch:  noarch
 
@@ -26,7 +26,7 @@ Source0:    %{artifactId}-%{version}-%{reltag}.tar.xz
 # SVN tag
 Source1:    generate_tarball.sh
 Source2:    http://www.apache.org/licenses/LICENSE-2.0.txt
-Source3:    https://svn.java.net/svn/glassfish~svn/tags/legal-1.1/src/main/resources/META-INF/LICENSE.txt
+Source3:    https://javaee.github.io/glassfish/LICENSE.html
 
 Patch0:     %{name}-build-eclipse-compilers.patch
 Patch1:     %{name}-port-to-servlet-3.1.patch
@@ -73,8 +73,8 @@ BuildArch: noarch
 
 %pom_add_dep org.eclipse.jdt:core::provided
 
-cp -p %{SOURCE2} LICENSE
-cp -p %{SOURCE3} cddllicense.txt
+cp -p %{SOURCE2} LICENSE-ASL-2.0.txt
+cp -p %{SOURCE3} LICENSE-CDDL+GPLv2.html
 
 %mvn_alias : "org.eclipse.jetty.orbit:org.apache.jasper.glassfish"
 
@@ -103,13 +103,16 @@ popd
 
 %files -f .mfiles
 %{_javadir}/javax.servlet.jsp
-%doc LICENSE cddllicense.txt
+%doc LICENSE-ASL-2.0.txt LICENSE-CDDL+GPLv2.html
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE cddllicense.txt
+%doc LICENSE-ASL-2.0.txt LICENSE-CDDL+GPLv2.html
 
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_0.11.b02jpp8
+- new fc release
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_0.10.b02jpp8
 - fc27 update
 
