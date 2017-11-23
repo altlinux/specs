@@ -2,7 +2,7 @@
 %define module_name Log-Agent
 
 Name: perl-%module_name
-Version: 1.002
+Version: 1.003
 Release: alt1
 
 Summary: %module_name module for perl
@@ -38,6 +38,9 @@ choice, one may use logwarn() for instance to emit a warning.
 %perl_vendor_privlib/auto/Log*
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.003-alt1
+- automated CPAN update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.002-alt1
 - automated CPAN update
 
