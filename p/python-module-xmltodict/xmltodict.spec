@@ -4,24 +4,23 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.10.2
+Version: 0.11.0
 Release: alt1
 Summary: Makes working with XML feel like you are working with JSON
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/xmltodict/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/martinblech/xmltodict.git
-Source0: https://pypi.python.org/packages/4a/5e/cd36c16c9eca47162fbbea9aa723b9ab3010f9ae9d4be5c9f6cb2bc147ab/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-nose python-module-coverage
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-nose python-module-coverage
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose python3-module-coverage
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-nose python3-module-coverage
 %endif
 
 %py_provides %oname
@@ -40,7 +39,7 @@ xmltodict is a Python module that makes working with XML feel like you
 are working with JSON.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -72,7 +71,7 @@ py.test
 pushd ../python3
 export PYTHONPATH=$PWD
 python3 setup.py test
-py.test-%_python3_version
+py.test3
 popd
 %endif
 
@@ -87,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.11.0-alt1
+- Updated to upstream version 0.11.0.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.10.2-alt1
 - automated PyPI update
 
