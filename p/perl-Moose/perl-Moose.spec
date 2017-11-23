@@ -2,7 +2,7 @@
 %def_without bootstrap
 %define dist Moose
 Name: perl-%dist
-Version: 2.2006
+Version: 2.2008
 Release: alt1
 
 Summary: A postmodern object system for Perl 5
@@ -64,6 +64,9 @@ more about what you want to do and less about the mechanics of OOP.
 %perl_vendor_archlib/oose.pm
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.2008-alt1
+- automated CPAN update
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.2006-alt1
 - automated CPAN update
 
