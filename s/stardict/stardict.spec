@@ -1,6 +1,6 @@
 Name: stardict
-Version: 3.0.5
-Release: alt1.1
+Version: 3.0.6
+Release: alt1
 
 Summary: StarDict dictionary
 # The entire source code is GPLv3+ except
@@ -181,6 +181,9 @@ hardlink -cv %buildroot%_datadir
 %endif
 
 %changelog
+* Thu Nov 16 2017 Fr. Br. George <george@altlinux.ru> 3.0.6-alt1
+- 3.0.5 -> 3.0.6
+
 * Tue Oct 20 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 3.0.5-alt1.1
 - build with gcc 5.2 fixed
 
