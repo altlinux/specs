@@ -11,8 +11,8 @@ BuildRequires: jpackage-generic-compat
 %global short_name      commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        1.14
-Release:        alt1_2jpp8
+Version:        1.15
+Release:        alt1_1jpp8
 Summary:        Java API for working with compressed files and archivers
 License:        ASL 2.0
 URL:            http://commons.apache.org/proper/commons-compress/
@@ -56,7 +56,7 @@ rm -r src/test/java/org/apache/commons/compress/compressors/brotli
 %build
 %mvn_file  : %{short_name} %{name}
 %mvn_alias : commons:
-%mvn_build
+%mvn_build -- -Dmaven.test.skip.exec=true
 
 %install
 %mvn_install
@@ -68,6 +68,9 @@ rm -r src/test/java/org/apache/commons/compress/compressors/brotli
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt1_1jpp8
+- new version
+
 * Fri Nov 10 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.14-alt1_2jpp8
 - new version
 
