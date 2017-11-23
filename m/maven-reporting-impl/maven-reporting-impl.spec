@@ -1,16 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-reporting-impl
-Version:        2.4
-Release:        alt1_4jpp8
+Version:        3.0.0
+Release:        alt1_1jpp8
 Summary:        Abstract classes to manage report generation
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/%{name}
@@ -19,19 +17,20 @@ BuildArch:      noarch
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/reporting/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(commons-validator:commons-validator)
+BuildRequires:  mvn(junit-addons:junit-addons)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-decoration-model)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
+BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
-%{?fedora:BuildRequires: mvn(junit-addons:junit-addons)}
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 
 Obsoletes:      maven-shared-reporting-impl < %{version}-%{release}
 Provides:       maven-shared-reporting-impl = %{version}-%{release}
@@ -65,14 +64,15 @@ API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%{!?_licensedir:%global license %%doc}
-%dir %{_javadir}/%{name}
 %doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_1jpp8
+- new version
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_4jpp8
 - fc27 update
 
