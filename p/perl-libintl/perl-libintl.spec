@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist libintl-perl
 Name: perl-libintl
-Version: 1.28
+Version: 1.29
 Release: alt1
 
 Summary: High-Level Interface to Uniforum Message Translation
@@ -34,7 +34,7 @@ sed -i- '/LIBS/d' gettext_xs/Makefile.PL
 %perl_vendor_install
 
 %files
-%doc	ChangeLog README FAQ README-oldversions README.md README.solaris README.win32 ReleaseNotes
+%doc	README FAQ README-oldversions README.md README.solaris README.win32 Changes
 %dir	%perl_vendor_privlib/Locale
 	%perl_vendor_privlib/Locale/*.pm
 %doc	%perl_vendor_privlib/Locale/*.pod
@@ -45,6 +45,9 @@ sed -i- '/LIBS/d' gettext_xs/Makefile.PL
 	%perl_vendor_autolib/Locale
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1
+- automated CPAN update
+
 * Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1
 - automated CPAN update
 
