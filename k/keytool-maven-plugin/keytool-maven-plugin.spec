@@ -1,3 +1,4 @@
+BuildRequires: maven-project
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
@@ -8,7 +9,7 @@ BuildRequires: jpackage-generic-compat mojo-parent maven-plugin-plugin
 
 Name:             keytool-maven-plugin
 Version:          1.0
-Release:          alt6_18jpp8
+Release:          alt7_18jpp8
 Summary:          A plugin that wraps the keytool program and allows to manipulate keystores
 License:          MIT and ASL 2.0
 Group:            Development/Other
@@ -66,6 +67,9 @@ cp %{SOURCE1} LICENSE-ASL
 %doc LICENSE-MIT LICENSE-ASL
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt7_18jpp8
+- fixed build with new maven-reporting-impl
+
 * Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt6_18jpp8
 - fixed build
 
