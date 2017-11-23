@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist PadWalker
 Name: perl-%dist
-Version: 2.2
-Release: alt1.1.1
+Version: 2.3
+Release: alt1
 
 Summary: Inspect lexical variables in any subroutine which called you
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RO/ROBIN/PadWalker-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RO/ROBIN/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-devel
@@ -29,7 +29,7 @@ PadWalker internally are certainly safe for and useful
 in production.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -43,6 +43,9 @@ in production.
 %perl_vendor_autolib/PadWalker*
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1.1.1
 - rebuild with new perl 5.24.1
 
