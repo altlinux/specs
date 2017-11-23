@@ -1,9 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libGLU-devel libqt4-devel
+BuildRequires: gcc-c++ libGL-devel libGLU-devel libX11-devel
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           opencsg
-Version:        1.4.0
-Release:        alt2_1
+Version:        1.4.2
+Release:        alt1_5
 Summary:        Library for Constructive Solid Geometry using OpenGL
 Group:          System/Libraries
 # license.txt contains a linking exception for CGAL
@@ -11,7 +13,7 @@ License:        GPLv2 with exceptions
 URL:            http://www.opencsg.org/
 Source0:        http://www.opencsg.org/OpenCSG-%{version}.tar.gz
 Patch0:         %{name}-build.patch
-BuildRequires:  qt4-devel libfreeglut-devel libglew-devel dos2unix
+BuildRequires:  libqt4-declarative libqt4-devel qt4-designer, libfreeglut-devel, libGLEW-devel, dos2unix
 Source44: import.info
 
 %description
@@ -34,8 +36,8 @@ Goldfeather algorithm and the SCS algorithm, both of them in several variants.
 
 %package devel
 Summary: OpenCSG development files
-Group: Development/C
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Group: Development/Other
+Requires: %{name} = %{version}-%{release}
 
 %description devel
 Development files for OpenCSG.
@@ -46,6 +48,12 @@ Development files for OpenCSG.
 
 rm src/Makefile RenderTexture/Makefile Makefile example/Makefile
 dos2unix license.txt
+
+# Encoding
+iconv --from=ISO-8859-1 --to=UTF-8 changelog.txt > changelog.txt.new && \
+touch -r changelog.txt changelog.txt.new && \
+mv changelog.txt.new changelog.txt
+
 # New FSF Address
 for FILE in src/*.h src/*.cpp include/opencsg.h
 do
@@ -56,8 +64,8 @@ done
 rm -rf glew/
 
 %build
-qmake-qt4
-make %{?_smp_mflags}
+%{qmake_qt4}
+%make_build
 
 %install
 # No make install
@@ -76,6 +84,9 @@ cp -p include/opencsg.h %{buildroot}/%{_includedir}/
 %{_libdir}/*so
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1_5
+- new version
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2_1
 - moved to sisyphus for dd@
 
