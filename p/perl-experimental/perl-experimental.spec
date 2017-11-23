@@ -5,8 +5,8 @@ BuildRequires: perl(Module/Build/Tiny.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-experimental
-Version:        0.016
-Release:        alt1_394
+Version:        0.017
+Release:        alt1
 Summary:        Experimental features made easy
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -57,6 +57,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.017-alt1
+- automated CPAN update
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1_394
 - update to new release by fcimport
 
