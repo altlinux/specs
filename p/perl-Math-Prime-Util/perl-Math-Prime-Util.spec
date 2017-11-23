@@ -7,7 +7,7 @@ BuildRequires: libsowing-devel perl(Benchmark.pm) perl(Bytes/Random/Secure.pm) p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.68
+Version: 0.69
 Release: alt1
 Summary: Utilities related to prime numbers, including fast sieves and factoring
 Group: Development/Perl
@@ -91,6 +91,9 @@ rm -f t/11-clusters.t
 %_bindir/*
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.69-alt1
+- automated CPAN update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.68-alt1
 - automated CPAN update
 
