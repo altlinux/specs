@@ -3,8 +3,8 @@
 %define pre %nil
 
 Name: dotnet-coreclr
-Version: 2.0.0
-Release: alt4
+Version: 2.0.3
+Release: alt1
 
 Summary: .NET Core runtime, called CoreCLR, and the base library, called mscorlib
 
@@ -27,9 +27,9 @@ ExclusiveArch: x86_64
 # verify-elf: ERROR: ./usr/lib64/dotnet/shared/Microsoft.NETCore.App/1.1.1/Linux.x64.Release/libcoreclr.so: TEXTREL entry found: 0x0000000000000000
 #set_verify_elf_method relaxed
 
-BuildRequires: clang
+BuildRequires: clang4.0 llvm4.0
 
-BuildRequires: cmake llvm libstdc++-devel libunwind-devel liblttng-ust-devel liblwp-devel
+BuildRequires: cmake libstdc++-devel libunwind-devel liblttng-ust-devel liblwp-devel
 #BuildRequires: lldb-devel
 BuildRequires: libicu-devel libuuid-devel zlib-devel libcurl-devel libkrb5-devel openssl-devel
 BuildRequires: python-modules-xml
@@ -98,6 +98,9 @@ cp -a bin/Product/Linux.x64.Release/{System.Globalization.Native.so,libSystem.Gl
 %_dotnet_shared/sosdocsunix.txt
 
 %changelog
+* Thu Nov 23 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.3-alt1
+- new version (2.0.3) with rpmgs script
+
 * Mon Aug 28 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt4
 - .NET Core 2.0.0 Release
 

@@ -2,8 +2,8 @@
 %define pre %nil
 
 Name: dotnet
-Version: 2.0.0
-Release: alt3
+Version: 2.0.3
+Release: alt1
 
 Summary: Installer packages for the .NET Core runtime and libraries
 
@@ -16,9 +16,9 @@ Source: %name-%version.tar
 
 ExclusiveArch: x86_64
 
-BuildRequires: clang
+BuildRequires: clang4.0 llvm4.0
 
-BuildRequires: cmake llvm libstdc++-devel
+BuildRequires: cmake libstdc++-devel
 
 BuildRequires: dotnet-common >= %version
 BuildRequires: rpm-macros-dotnet >= %version
@@ -85,6 +85,9 @@ ln -sr %buildroot%_dotnetdir/dotnet %buildroot%_bindir/dotnet
 #_dotnet_shared/libhostfxr.so
 
 %changelog
+* Sat Nov 25 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.3-alt1
+- new version 2.0.3 (with rpmrb script)
+
 * Mon Aug 28 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt3
 - .NET Core Runtime 2.0.0 Release
 
