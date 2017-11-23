@@ -1,7 +1,7 @@
 %def_disable bootstrap
 
 Name: libpsl
-Version: 0.18.0
+Version: 0.19.1
 Release: alt1
 
 Summary: C library for the Public Suffix List
@@ -149,6 +149,9 @@ make check
 %_man1dir/psl-make-dafsa.1*
 
 %changelog
+* Thu Nov 23 2017 Mikhail Efremov <sem@altlinux.org> 0.19.1-alt1
+- New version.
+
 * Mon Jul 31 2017 Mikhail Efremov <sem@altlinux.org> 0.18.0-alt1
 - Explicitly disable sanitizers.
 - Fix bootstrap.
