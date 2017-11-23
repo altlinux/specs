@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-LibXML-Simple
 Name: perl-%dist
-Version: 0.97
+Version: 0.98
 Release: alt1
 
 Summary: XML::LibXML based XML::Simple clone
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MA/MARKOV/XML-LibXML-Simple-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MARKOV/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -20,7 +20,7 @@ BuildRequires: perl-File-Slurp perl-Test-Pod perl-XML-LibXML perl(File/Slurp/Tin
 None.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %build
 %perl_vendor_build
 
@@ -32,6 +32,9 @@ None.
 %perl_vendor_privlib/XML
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1
+- automated CPAN update
+
 * Wed Apr 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.97-alt1
 - automated CPAN update
 
