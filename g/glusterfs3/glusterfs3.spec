@@ -1,9 +1,11 @@
-# For update, merge with new tag, update version in the spec and do gear-update-tag -a
+# For minor update, merge with new tag, update version in the spec and do gear-update-tag -a
+# For major update, checkout new branch upstream-vX.Y, commit .gear dir to it, do git mergs -s ours from gear/sisyphus and build
 
 %define oname glusterfs
-%define major 3.10
+%define major 3.12
 %define _with_fusermount yes
 %define _without_ocf yes
+%def_without ganesha
 
 # if you wish to compile an rpm without rdma support, compile like this...
 # rpmbuild -ta @PACKAGE_NAME@-@PACKAGE_VERSION@.tar.gz --without rdma
@@ -26,8 +28,8 @@
 %{?_without_ocf:%global _without_ocf --without-ocf}
 
 Name: glusterfs3
-Version: %major.7
-Release: alt3.1
+Version: %major.3
+Release: alt1
 
 Summary: Cluster File System
 
@@ -108,6 +110,7 @@ is in user space and easily manageable.
 This package provides support to ib-verbs library.
 %endif
 
+%if_with ganesha
 %package ganesha
 Summary: NFS-Ganesha configuration
 Group: System/Base
@@ -127,6 +130,7 @@ is in user space and easily manageable.
 
 This package provides the configuration and related files for using
 NFS-Ganesha as the NFS server using GlusterFS.
+%endif
 
 %if 0%{!?_without_georeplication:1}
 %package geo-replication
@@ -385,6 +389,8 @@ rm -rf %buildroot%_libexecdir/ocf/
 
 rm -rf %buildroot%_sbindir/conf.py
 
+# rm HACK due S10selinux-label-brick.sh: line 46: syntax error near unexpected token `('
+rm -f %buildroot%_sharedstatedir/glusterd/hooks/1/create/post/S10selinux-label-brick.sh
 
 # TODO: move common part to -common?
 %files
@@ -393,7 +399,9 @@ rm -rf %buildroot%_sbindir/conf.py
 
 # cli
 %_sbindir/gluster
-%_man8dir/gluster.8*
+%_sbindir/gluster-setgfid2path
+%_man8dir/gluster.*
+%_man8dir/gluster-setgfid2path.*
 
 %glusterlibdir/rpc-transport/
 %glusterlibdir/auth/
@@ -492,6 +500,7 @@ rm -rf %buildroot%_sbindir/conf.py
 %_libexecdir/ocf/resource.d/glusterfs/
 %endif
 
+%if_with ganesha
 %files ganesha
 %dir /etc/ganesha/
 %config(noreplace) /etc/ganesha/ganesha-ha.conf.sample
@@ -502,6 +511,7 @@ rm -rf %buildroot%_sbindir/conf.py
 %_libexecdir/ganesha/generate-epoch.py
 %if 0%{!?_without_ocf:1}
 %_libexecdir/ocf/resource.d/heartbeat/
+%endif
 %endif
 
 # Events
@@ -556,6 +566,13 @@ rm -rf %buildroot%_sbindir/conf.py
 %preun_service glusterd
 
 %changelog
+* Thu Nov 23 2017 Vitaly Lipatov <lav@altlinux.ru> 3.12.3-alt1
+- new version 3.12.3 (with rpmrb script)
+- drop ganesha subpackage
+
+* Thu Nov 23 2017 Vitaly Lipatov <lav@altlinux.ru> 3.12.0-alt1
+- build LTE branch 3.12
+
 * Sun Nov 12 2017 Vitaly Lipatov <lav@altlinux.ru> 3.10.7-alt3.1
 - autorebuild with libuserspace-rcu.git=0.10.0-alt1
 
