@@ -15,10 +15,12 @@
 %def_enable systemd
 %def_enable install_sysactions
 %def_with pam_helper
+# for silly lightdm
+%def_enable wmsession
 
 Name: enlightenment
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: The Enlightenment window manager
@@ -136,16 +138,8 @@ cat > %buildroot%_rpmmacrosdir/%name <<_EOF_
 %%enlightenment_version		%version
 _EOF_
 
-mkdir -p %buildroot%_sysconfdir/X11/wmsession.d
-mkdir -p %buildroot%_bindir/
-install -p -m755 %SOURCE2 %buildroot%_bindir/
-install -D -pm 644 %SOURCE3 %buildroot%_sysconfdir/X11/wmsession.d/05Enlightenment
-
 # Install icon
 install -pD -m644 %SOURCE1 %buildroot%_liconsdir/E-18.png
-
-# desktop file
-#install -pD -m 644 %SOURCE8 %buildroot%_desktopdir/%name.desktop
 
 # PAM-config
 mkdir -p %buildroot%_sysconfdir/pam.d
@@ -164,11 +158,23 @@ cp %SOURCE11 %buildroot%_sysconfdir/%name/sysactions.conf
 # replace original menus by symlink to our enlightenment.menu
 ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 
+%if_enabled wmsession
+mkdir -p %buildroot%_bindir/
+install -p -m755 %SOURCE2 %buildroot%_bindir/
+mkdir -p %buildroot%_sysconfdir/X11/wmsession.d
+install -D -pm 644 %SOURCE3 %buildroot%_sysconfdir/X11/wmsession.d/05Enlightenment
+# replace original desktop file
+install -pD -m 644 %SOURCE8 %buildroot%_desktopdir/%name.desktop
+%endif
+
+# fix Name in session desktop files
+sed -i 's/^\(Name\[.*\]=Enlightenment\)$/\1 on Xorg/' %buildroot%_datadir/xsessions/%name.desktop
+sed -i 's/^\(Name\[.*\]=Enlightenment\)$/\1 on Wayland/' %buildroot%_datadir/wayland-sessions/%name.desktop
+
 %find_lang %name
 
 %files -f %name.lang
-%exclude %config %_sysconfdir/X11/wmsession.d/*
-
+%{?_enable_wmsession:%config %_sysconfdir/X11/wmsession.d/*}
 %config %_sysconfdir/%name/sysactions.conf
 %config(noreplace) %_sysconfdir/pam.d/%name
 %dir %_libdir/%name/
@@ -176,8 +182,8 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_liconsdir/*.png
 %_bindir/*
 %_datadir/%name/
-%_datadir/xsessions/%name.desktop
-%_datadir/wayland-sessions/enlightenment.desktop
+%{?_enable_wmsession:%exclude %_datadir/xsessions/%name.desktop}
+%{?_enable_wayland:%_datadir/wayland-sessions/enlightenment.desktop}
 %_datadir/pixmaps/emixer.png
 %_pixmapsdir/enlightenment-askpass.png
 %_datadir/applications/*.desktop
@@ -194,6 +200,9 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Thu Nov 23 2017 Yuri N. Sedunov <aris@altlinux.org> 1:0.22.1-alt2
+- restored /etc/X11/wmsession.d/05Enlightenment especially for lightdm
+
 * Wed Nov 22 2017 Yuri N. Sedunov <aris@altlinux.org> 1:0.22.1-alt1
 - 0.22.1
 
