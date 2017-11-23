@@ -1,36 +1,30 @@
-%define module_name keyczar
+%define oname keyczar
 
 %def_with python3
 
-Name: python-module-%module_name
-Version: 0.715
-Release: alt1.1.1
-
+Name: python-module-%oname
+Version: 0.716
+Release: alt1
 Summary: Toolkit for safe and simple cryptography
-
 License: Apache 2.0
 Group: Development/Python
-Url: http://www.keyczar.org/
-
-Source: python-%module_name-%version.tar
-
 BuildArch: noarch
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-pycrypto python-module-pyasn1
-#BuildPreReq: python-modules-json
+Url: https://github.com/google/keyczar
+
+Source: python-%oname-%version.tar
+Patch1: %oname-%version-alt-build.patch
+
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-pycrypto python-module-pyasn1
+BuildRequires: python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-pycrypto python3-module-pyasn1
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-pycrypto python3-module-pyasn1
 %endif
 
-%setup_python_module %module_name
+%setup_python_module %oname
 %py_requires Crypto pyasn1 json
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pluggy python-module-py python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-pyasn1 python-module-pycrypto python-module-setuptools-tests python-modules-json python3-module-pycrypto python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 Keyczar is an open source cryptographic toolkit designed to make it
@@ -38,13 +32,13 @@ easier and safer for developers to use cryptography in their
 applications. Keyczar supports authentication and encryption with both
 symmetric and asymmetric keys.
 
-%package -n python3-module-%module_name
+%package -n python3-module-%oname
 Summary: Toolkit for safe and simple cryptography
 Group: Development/Python3
-%py3_provides %module_name
+%py3_provides %oname
 %py3_requires Crypto pyasn1
 
-%description -n python3-module-%module_name
+%description -n python3-module-%oname
 Keyczar is an open source cryptographic toolkit designed to make it
 easier and safer for developers to use cryptography in their
 applications. Keyczar supports authentication and encryption with both
@@ -52,6 +46,7 @@ symmetric and asymmetric keys.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -103,7 +98,7 @@ popd
 %python_sitelibdir/python_keyczar*
 
 %if_with python3
-%files -n python3-module-%module_name
+%files -n python3-module-%oname
 %doc ChangeLog README doc/*
 %_bindir/*.py3
 %python3_sitelibdir/keyczar
@@ -111,6 +106,10 @@ popd
 %endif
 
 %changelog
+* Thu Nov 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.716-alt1
+- Updated to upstream version 0.716.
+- Fixed compatibility issues with pyasn1-0.3.7.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.715-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
