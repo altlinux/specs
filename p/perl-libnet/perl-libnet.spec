@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist libnet
 Name: perl-%dist
-Version: 3.10
+Version: 3.11
 Release: alt1
 Epoch: 1
 
@@ -10,7 +10,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SH/SHAY/libnet-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SH/SHAY/%{dist}-%{version}.tar.gz
 Patch: %name-3.04-alt.patch
 
 BuildArch: noarch
@@ -35,7 +35,7 @@ Net::POP3	RFC1939		Post Office Protocol 3
 Net::SNPP	RFC1861		Simple Network Pager Protocol
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch -p1
 
 %build
@@ -48,7 +48,7 @@ mkdir -p %buildroot/etc/perl5/Net
 mv %buildroot{%perl_vendor_privlib,/etc/perl5}/Net/libnet.cfg
 
 %files
-%doc	Changes README
+%doc	Changes README Artistic Copying
 %dir	/etc/perl5/Net
 %config(noreplace) /etc/perl5/Net/libnet.cfg
 %dir	%perl_vendor_privlib/Net
@@ -58,6 +58,9 @@ mv %buildroot{%perl_vendor_privlib,/etc/perl5}/Net/libnet.cfg
 	%perl_vendor_privlib/Net/FTP/*.pm
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 1:3.11-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.10-alt1
 - automated CPAN update
 
