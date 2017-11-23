@@ -1,3 +1,4 @@
+BuildRequires: maven-project
 # BEGIN SourceDeps(oneline):
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
@@ -7,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		port-allocator-maven-plugin
 Version:	1.2
-Release:	alt3_12jpp8
+Release:	alt4_12jpp8
 Summary:	Port Allocator Maven Plugin
 
 Group:		Development/Other
@@ -70,6 +71,9 @@ find -name '*.jar' -exec rm -f '{}' \;
 
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt4_12jpp8
+- fixed build with new maven-reporting-impl
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_12jpp8
 - fc27 update
 
