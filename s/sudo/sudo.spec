@@ -1,5 +1,5 @@
 Name: sudo
-Version: 1.8.20p2
+Version: 1.8.21p2
 Release: alt1%ubt
 Epoch: 1
 
@@ -172,6 +172,9 @@ fi
 %_man8dir/sudo_plugin.8*
 
 %changelog
+* Thu Nov 23 2017 Evgeny Sinelnikov <sin@altlinux.org> 1:1.8.21p2-alt1%ubt
+- Update to latest autumn release
+
 * Fri Jun 02 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:1.8.20p2-alt1%ubt
 - Update to first summer security release
 
