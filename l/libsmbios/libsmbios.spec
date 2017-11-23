@@ -1,8 +1,8 @@
-%set_automake_version 1.11
+%define git 4fec2ad
 
 Name: libsmbios
-Version: 2.2.28
-Release: alt1.2
+Version: 2.3.3
+Release: alt1.0.g%git
 License: GPLv2+ or OSL 2.1
 Summary: Libsmbios C/C++ shared libraries
 Group: System/Libraries
@@ -13,7 +13,7 @@ BuildRequires: strace libxml2-devel gcc-c++ gettext doxygen valgrind cppunit-dev
 
 # libsmbios only ever makes sense on intel compatible arches
 # no DMI tables on ppc, s390, etc.
-ExclusiveArch: x86_64 ia64 %ix86
+ExclusiveArch: x86_64 %ix86
 
 %description
 Libsmbios is a library and utilities that can be used by client programs to get
@@ -65,7 +65,7 @@ chmod 755 src/pyunit/*.{sh,py}
 
 %build
 %autoreconf
-%configure
+%configure --enable-libsmbios_cxx
 %make_build
 
 %check
@@ -74,26 +74,21 @@ make check
 %install
 %makeinstall_std
 
-#install script
-install -pD -m755 doc/pkgheader.sh %buildroot%_sbindir/pkgheader.sh
-
 #Install headers
 install -d %buildroot%_includedir
 cp -a src/include/*  %buildroot%_includedir/
 cp -a out/public-include/*  %buildroot%_includedir/
 
 #instal man
-install -pD -m644 doc/dellBiosUpdate.4 %buildroot%_man4dir/dellBiosUpdate.4
 install -pD -m644 doc/smbios-sys-info.4 %buildroot%_man4dir/smbios-sys-info.4
 
 #Remove unused files
 rm -rf %buildroot%_libdir/*.a
 
-
 %find_lang %name
 
 %files
-%doc COPYING-GPL COPYING-OSL README src/bin/getopts_LICENSE.txt src/include/smbios/config/boost_LICENSE_1_0_txt
+%doc COPYING* README.md src/bin/getopts_LICENSE.txt src/include/smbios/config/boost_LICENSE_1_0_txt
 %_libdir/libsmbios*.so.*
 
 %files devel
@@ -102,7 +97,6 @@ rm -rf %buildroot%_libdir/*.a
 %_pkgconfigdir/*
 
 %files -n smbios-utils -f %name.lang
-#doc doc/pkgheader.sh
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/logging.conf
 %_sbindir/*
@@ -113,6 +107,9 @@ rm -rf %buildroot%_libdir/*.a
 %python_sitelibdir_noarch/*
 
 %changelog
+* Wed Nov 22 2017 L.A. Kostis <lakostis@altlinux.ru> 2.3.3-alt1.0.g4fec2ad
+- Updated to 2.3.3-g4fec2ad.
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.28-alt1.2
 - Fixed build
 
