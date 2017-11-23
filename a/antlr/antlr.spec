@@ -22,9 +22,9 @@ BuildRequires: jpackage-generic-compat
 Summary:       ANother Tool for Language Recognition
 Name:          antlr
 Version:       2.7.7
-Release:       alt12_51jpp8
+Release:       alt12_52jpp8
 Epoch:         0
-License:       Public Domain
+License:       ANTLR-PD
 URL:           http://www.antlr2.org/
 Source0:       http://www.antlr2.org/download/antlr-%{version}.tar.gz
 Source1:       %{name}-build.xml
@@ -230,6 +230,9 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %endif
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.7.7-alt12_52jpp8
+- new fc release
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.7.7-alt12_51jpp8
 - fc27 update
 
