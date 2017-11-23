@@ -16,8 +16,8 @@ Epoch: 1
 %define _enable_test 1
 
 Name: perl-App-CLI
-Version: 0.45
-Release: alt1.1
+Version: 0.49
+Release: alt1
 
 Summary: Dispatcher module for command line interface programs
 
@@ -31,7 +31,7 @@ BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/P/PT/PTC/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu May 31 2007
-BuildRequires: perl-devel perl-Locale-Maketext-Lexicon perl-Locale-Maketext-Simple perl-Pod-Simple
+BuildRequires: perl-devel perl-Locale-Maketext-Lexicon perl-Locale-Maketext-Simple perl-Pod-Simple perl(Capture/Tiny.pm) perl(Class/Load.pm)
 
 %description
 None.
@@ -49,6 +49,9 @@ None.
 %perl_vendor_privlib/Ap*
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.49-alt1
+- automated CPAN update
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.45-alt1.1
 - automated CPAN update
 
