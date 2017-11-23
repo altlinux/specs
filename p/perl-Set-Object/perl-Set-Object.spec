@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Set-Object
 Name: perl-%dist
-Version: 1.35
-Release: alt1.1.1
+Version: 1.38
+Release: alt1
 
 Summary: Unordered collections (sets) of Perl Objects
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RU/RURBAN/Set-Object-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RU/RURBAN/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
@@ -19,7 +19,7 @@ This modules implements a set of objects, that is, an unordered
 collection of objects without duplication.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,6 +33,9 @@ collection of objects without duplication.
 %perl_vendor_autolib/Set
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1
+- automated CPAN update
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.35-alt1.1.1
 - rebuild with new perl 5.24.1
 
