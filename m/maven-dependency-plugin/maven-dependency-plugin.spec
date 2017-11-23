@@ -1,57 +1,49 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
-%filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           maven-dependency-plugin
-Version:        3.0
-Release:        alt1_0.3.20160119svn1722372jpp8
+Version:        3.0.2
+Release:        alt1_1jpp8
 Summary:        Plugin to manipulate, copy and unpack local and remote artifacts
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/%{name}
 BuildArch:      noarch
 
-# svn export -r 1722372 http://svn.apache.org/viewvc/maven/plugins/trunk
-# mvn -f trunk/maven-dependency-plugin -P apache-release package
-# cp trunk/maven-dependency-plugin/target/maven-dependency-plugin-3.0-SNAPSHOT-source-release.zip .
-Source0:        %{name}-%{version}-SNAPSHOT-source-release.zip
-#Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(classworlds:classworlds)
 BuildRequires:  mvn(commons-collections:commons-collections)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(commons-lang:commons-lang)
-BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-repository-metadata)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
-BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
-BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-tools)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
 BuildRequires:  mvn(org.apache.maven.shared:file-management)
-BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer) >= 3.0
+BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer)
 BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
 BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-analyzer)
 BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
-BuildRequires:  mvn(org.apache.maven.shared:maven-invoker)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-http-lightweight)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
+
 
 %description
 
@@ -69,7 +61,7 @@ BuildArch: noarch
 
 
 %prep
-%setup -q -n %{name}-%{version}-SNAPSHOT
+%setup -q
 
 %pom_remove_plugin :maven-enforcer-plugin
 
@@ -90,6 +82,9 @@ BuildArch: noarch
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt1_1jpp8
+- new version
+
 * Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_0.3.20160119svn1722372jpp8
 - new version
 
