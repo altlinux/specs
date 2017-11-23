@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:          httpcomponents-asyncclient
 Version:       4.1.2
-Release:       alt1_3jpp8
+Release:       alt2_3jpp8
 Summary:       Apache components to build asynchronous client side HTTP services
 License:       ASL 2.0
 URL:           http://hc.apache.org/
@@ -101,7 +101,7 @@ done
 
 %build
 
-%mvn_build -s -- -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -s -- -Dmaven.test.skip.exec=true  -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
@@ -120,6 +120,9 @@ done
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt2_3jpp8
+- fixed build
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_3jpp8
 - fc27 update
 
