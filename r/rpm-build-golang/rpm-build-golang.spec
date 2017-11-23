@@ -1,7 +1,7 @@
 Name:      rpm-build-golang
 Version:   1.0
-Release:   alt4
-Summary:   RPM helper macros to rebuild GO packages
+Release:   alt5
+Summary:   RPM build enviroment to build GO packages
 Group:     Development/Other
 License:   GPL
 BuildArch: noarch
@@ -20,29 +20,45 @@ Source6:   golang-req
 Source7:   golang-req.files
 
 Requires:  golang
+Requires:  rpm-macros-golang >= %EVR
 
 %description
-These helper macros provide possibility to rebuild GO packages.
+RPM build enviroment to build GO packages
+
+%package -n rpm-macros-golang
+Summary: RPM helper macros to build GO packages
+Group: Development/Other
+BuildArch:      noarch
+
+%description -n rpm-macros-golang
+These helper macros provide possibility to create GO packages.
 
 %install
 mkdir -p \
 	%buildroot/%_rpmlibdir \
-	%buildroot/%_sysconfdir/rpm/macros.d \
+	%buildroot/%_rpmmacrosdir \
 	%buildroot/%_datadir/golang
 
-cp %SOURCE0 %buildroot/%_sysconfdir/rpm/macros.d/golang
+cp %SOURCE0 %buildroot%_rpmmacrosdir/golang
 cp %SOURCE1 %SOURCE2 %SOURCE3 %buildroot/%_datadir/golang
-cp %SOURCE4 %buildroot/%_rpmlibdir/golang.prov
-cp %SOURCE5 %buildroot/%_rpmlibdir/golang.prov.files
-cp %SOURCE6 %buildroot/%_rpmlibdir/golang.req
-cp %SOURCE7 %buildroot/%_rpmlibdir/golang.req.files
+cp %SOURCE4 %buildroot%_rpmlibdir/golang.prov
+cp %SOURCE5 %buildroot%_rpmlibdir/golang.prov.files
+cp %SOURCE6 %buildroot%_rpmlibdir/golang.req
+cp %SOURCE7 %buildroot%_rpmlibdir/golang.req.files
 
 %files
-%_sysconfdir/rpm/macros.d/golang
 %_datadir/golang
 %_rpmlibdir/*
+%exclude %{_rpmmacrosdir}*
+
+%files -n rpm-macros-golang
+%_rpmmacrosdir/golang
 
 %changelog
+* Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5
+- NMU: moved macros to %%_rpmmacrosdir/
+- added rpm-macros-golang
+
 * Tue Aug 08 2017 Alexey Gladkov <legion@altlinux.ru> 1.0-alt4
 - golang-build: Add more arguments.
 
