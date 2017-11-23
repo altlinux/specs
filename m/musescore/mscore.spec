@@ -3,7 +3,7 @@
 
 Name: musescore
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: Music notation and composition software
 
@@ -42,9 +42,9 @@ Music notation and composition software
 %setup
 %patch -p1
 
-for f in `grep -ql ":/fonts" *`; do
-	sed -i 's@":/fonts@"%_datadir/mscore-%mversion/fonts@g' "$f";
-done
+#for f in `grep -qrl ":/fonts" *`; do
+#	sed -i 's@":/fonts@"%_datadir/mscore-%mversion/fonts@g' "$f";
+#done
 
 %build
 export PATH=$PATH:%%_qt5dir/bin
@@ -59,6 +59,7 @@ cmake \
 
 make lrelease
 make manpages
+make mops1 mops2
 %make_build
 
 %install
@@ -89,6 +90,9 @@ chrpath -d %buildroot%_bindir/mscore
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Thu Nov 23 2017 Fr. Br. George <george@altlinux.ru> 2.1.0-alt2
+- Fix sf3 coredump
+
 * Thu Nov 16 2017 Fr. Br. George <george@altlinux.ru> 2.1.0-alt1
 - 2.1.0
 
