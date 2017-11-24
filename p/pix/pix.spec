@@ -1,7 +1,7 @@
 %def_disable snapshot
 
-%define ver_base 1.4
-%define ver_major 1.4
+%define ver_base 1.6
+%define ver_major 1.6
 %define gst_api_ver 1.0
 %def_enable debug
 %def_enable exiv2
@@ -11,7 +11,7 @@
 %def_disable libopenraw
 
 Name: pix
-Version: %ver_major.5
+Version: %ver_major.2
 Release: alt1
 
 Summary: An image viewer and browser utility.
@@ -140,5 +140,8 @@ This package contains headers needed to build extensions for pix.
 %_libdir/pkgconfig/*
 
 %changelog
+* Thu Nov 23 2017 Vladimir Didenko <cow@altlinux.org> 1.6.2-alt1
+- New version
+
 * Fri Sep 8 2017 Vladimir Didenko <cow@altlinux.org> 1.4.5-alt1
 - Initial build for Sisyphus
