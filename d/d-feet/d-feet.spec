@@ -1,7 +1,7 @@
 %define ver_major 0.3
 
 Name: d-feet
-Version: %ver_major.12
+Version: %ver_major.13
 Release: alt1
 
 Summary: A powerful D-Bus Debugger
@@ -13,7 +13,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 BuildArch: noarch
 
-BuildRequires: gnome-common python-module-pygobject3-devel python-module-setuptools
+Requires: dbus-tools-gui
+
+BuildRequires: python-module-pygobject3-devel python-module-setuptools
 BuildRequires: python-tools-pep8 intltool yelp-tools libgtk+3-devel libgtk+3-gir-devel >= 3.9.4
 BuildRequires: dbus-tools-gui
 
@@ -53,6 +55,9 @@ objects.
 %doc AUTHORS README NEWS
 
 %changelog
+* Fri Nov 24 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.13-alt1
+- 0.3.13
+
 * Wed Jun 28 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.12-alt1
 - 0.3.12
 
