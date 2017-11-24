@@ -5,33 +5,28 @@
 
 Name: python-module-%oname
 Version: 0.9.16
-Release: alt1.git20150404.1.1
+Release: alt2.git20150404
 Summary: Normal, default, ordered, chained, restricted, counter, and frozen dictionaries
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/stuf
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://bitbucket.org/lcrees/stuf.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-parse python-module-Fabric
-#BuildPreReq: python-module-nose python-module-coverage
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-parse python-module-Fabric
+BuildRequires: python-module-pytest python-module-coverage
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-parse python3-module-Fabric
-#BuildPreReq: python3-module-nose python3-module-coverage
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-parse
+BuildRequires: python3-module-pytest python3-module-coverage
 %endif
 
 %py_provides %oname
-%py_requires parse
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-ecdsa python-module-nose python-module-pycrypto python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-ecdsa python3-module-nose python3-module-pycrypto python3-module-setuptools
-BuildRequires: python-module-Fabric python-module-coverage python-module-parse python-module-pytest python3-module-Fabric python3-module-coverage python3-module-parse python3-module-pytest rpm-build-python3
+%py_requires parse fabric
 
 %description
 A collection of Python dictionary types that support attribute-style
@@ -101,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.16-alt2.git20150404
+- Updated build and runtime dependencies.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.16-alt1.git20150404.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
