@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.2.2
-Release: alt2
+Release: alt3
 Summary: Fabric API wrapper
 License: Free
 Group: Development/Python
@@ -31,6 +31,7 @@ BuildRequires: python-tools-2to3
 This is a simple fabric wrapper for emitting Exceptions and several
 utils.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Fabric API wrapper
 Group: Development/Python3
@@ -40,6 +41,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 This is a simple fabric wrapper for emitting Exceptions and several
 utils.
+%endif
 
 %prep
 %setup -q -n %{oname}-%{version}
@@ -86,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.2-alt3
+- Fixed build.
+
 * Thu Nov 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.2-alt2
 - Disabled python-3 build.
 
