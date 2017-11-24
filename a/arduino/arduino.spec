@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip jackson-modules-base
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -7,7 +7,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 Name:		arduino
 Epoch:		1
-Version:	1.6.6
+Version:	1.8.5
 Release:	alt1_1jpp8
 Summary:	An IDE for Arduino-compatible electronics prototyping platforms
 Group:		Development/Java
@@ -23,16 +23,21 @@ Source1:    http://downloads.arduino.cc/packages/package_index.json.gz
 Source2:    http://downloads.arduino.cc/packages/package_index.json.sig
 Source3:    http://downloads.arduino.cc/libraries/library_index.json.gz
 
-Source4:    https://github.com/arduino-libraries/Firmata/archive/v2.4.4.zip#/Firmata-2.4.4.zip
-Source5:    https://github.com/arduino-libraries/Bridge/archive/1.1.0.zip#/Bridge-1.1.0.zip
-Source6:    https://github.com/arduino-libraries/Robot_Control/archive/1.0.2.zip#/Robot_Control-1.0.2.zip
-Source7:    https://github.com/arduino-libraries/Robot_Motor/archive/1.0.2.zip#/Robot_Motor-1.0.2.zip
-Source8:    https://github.com/arduino-libraries/RobotIRremote/archive/1.0.2.zip#/RobotIRremote-1.0.2.zip
-Source9:    https://github.com/arduino-libraries/SpacebrewYun/archive/1.0.0.zip#/SpacebrewYun-1.0.0.zip
-Source10:   https://github.com/temboo/Temboo/archive/1.1.4.zip#/Temboo-1.1.4.zip
+Source4:    https://github.com/arduino-libraries/Firmata/archive/2.5.6.zip#/Firmata-2.5.6.zip
+Source5:    https://github.com/arduino-libraries/Bridge/archive/1.6.3.zip#/Bridge-1.6.3.zip
+Source6:    https://github.com/arduino-libraries/Robot_Control/archive/1.0.4.zip#/Robot_Control-1.0.4.zip
+Source7:    https://github.com/arduino-libraries/Robot_Motor/archive/1.0.3.zip#/Robot_Motor-1.0.3.zip
+Source8:    https://github.com/arduino-libraries/RobotIRremote/archive/2.0.0.zip#/RobotIRremote-2.0.0.zip
+Source9:    https://github.com/arduino-libraries/SpacebrewYun/archive/1.0.1.zip#/SpacebrewYun-1.0.1.zip
+Source10:   https://github.com/temboo/Temboo/archive/1.2.1.zip#/Temboo-1.2.1.zip
 Source11:   https://github.com/arduino-libraries/Esplora/archive/1.0.4.zip#/Esplora-1.0.4.zip
-Source12:   https://github.com/arduino-libraries/Mouse/archive/1.0.0.zip#/Mouse-1.0.0.zip
-Source13:   https://github.com/arduino-libraries/Keyboard/archive/1.0.0.zip#/Keyboard-1.0.0.zip
+Source12:   https://github.com/arduino-libraries/Mouse/archive/1.0.1.zip#/Mouse-1.0.1.zip
+Source13:   https://github.com/arduino-libraries/Keyboard/archive/1.0.1.zip#/Keyboard-1.0.1.zip
+Source14:   https://github.com/arduino-libraries/SD/archive/1.1.1.zip#/SD-1.1.1.zip
+Source15:   https://github.com/arduino-libraries/Servo/archive/1.1.2.zip#/Servo-1.1.2.zip
+Source16:   https://github.com/arduino-libraries/LiquidCrystal/archive/1.0.7.zip#/LiquidCrystal-1.0.7.zip
+Source17:   https://github.com/adafruit/Adafruit_CircuitPlayground/archive/1.6.8.zip#/Adafruit_CircuitPlayground-1.6.8.zip
+Source18:   https://github.com/arduino-libraries/WiFi101-FirmwareUpdater-Plugin/releases/download/v0.9.1/WiFi101-Updater-ArduinoIDE-Plugin-0.9.1.zip
 
 BuildArch:	noarch
 
@@ -43,30 +48,34 @@ BuildRequires:	apache-commons-compress apache-commons-exec apache-commons-lang3
 BuildRequires:	apache-commons-logging jsch guava jackson-annotations jssc
 BuildRequires:	bouncycastle-pg jackson-databind jackson-module-mrbean
 BuildRequires:	jakarta-commons-httpclient objectweb-asm
-BuildRequires:	rsyntaxtextarea
+BuildRequires:	rsyntaxtextarea batik xml-commons-apis xmlgraphics-commons
 Requires:	java >= 1.8.0
-Requires:	fonts-type1-xorg ecj jna zenity perl polkit ecj jna
+Requires:	fonts-type1-xorg ecj jna zenity polkit ecj jna
 Requires:	jmdns jsemver apache-commons-net apache-commons-codec git
 Requires:	apache-commons-compress apache-commons-exec apache-commons-lang3
 Requires:	apache-commons-logging jsch guava jackson-annotations jssc
 Requires:	bouncycastle-pg jackson-databind jackson-module-mrbean
-Requires:	jakarta-commons-httpclient objectweb-asm astyle
-Requires:	rsyntaxtextarea
+Requires:	jakarta-commons-httpclient objectweb-asm astyle libserialport
+Requires:	rsyntaxtextarea batik xml-commons-apis xmlgraphics-commons
 Requires:	%{name}-core = %{epoch}:%{version}-%{release}
-#Requires:	arduino-builder
+Requires:   arduino-listSerialPortsC
+
+# require arduino-builder, which is a go project and won't exist outside these arches
+Requires:	arduino-builder >= 1.3.25
+
 
 # This patch skips the init process for OSX platforms.
-Patch0:		arduino-macosx.patch
-# Turns off all network downloads in build
-Patch1:		arduino-no-network.patch
+Patch0:		arduino-1.8.5-macosx.patch
 # Redirects Arduino to system avr-gcc and avrdude utilities
-Patch2:		arduino-use-system-avrdude.patch
+Patch2:		arduino-1.8.3-use-system-avrdude.patch
 Patch3:		arduino-add-to-groups.patch
-Patch4:		arduino-script.patch
+Patch4:		arduino-1.8.3-script.patch
 # Redirects Arduino to system astyle libraries
-Patch5:		arduino-use-system-astyle.patch
+Patch5:		arduino-1.8.3-use-system-astyle.patch
 # Allows Arduino to build on non-intel systems
-Patch6:		arduino-armbuild.patch
+Patch6:		arduino-1.8.3-armbuild.patch
+# Do not download listSerialPortsC bits (they are in arduino-listSerialPortsC)
+Patch7:		arduino-1.8.3-use-system-libserialport.patch
 Source44: import.info
 
 %description
@@ -130,28 +139,27 @@ cp -p %SOURCE10 ./build
 cp -p %SOURCE11 ./build
 cp -p %SOURCE12 ./build
 cp -p %SOURCE13 ./build
+cp -p %SOURCE14 ./build
+cp -p %SOURCE15 ./build
+cp -p %SOURCE16 ./build
+cp -p %SOURCE17 ./build
+cp -p %SOURCE18 ./build/shared
 
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
+%patch0 -p1 -b .macosx
+%patch2 -p1 -b .avrdude
+%patch3 -p1 -b .groups
+%patch4 -p1 -b .scripts
+%patch5 -p1 -b .system-astyle
+%patch6 -p1 -b .armbuild
+%patch7 -p1 -b .system-libserialport
 
-# The "extra" wifi components are licensed non-free and do not fall under the
-# "firmware" execption.
-rm -rf hardware/arduino/avr/firmwares/wifishield
-rm -rf libraries/WiFi/extras
-# As mentioned earlier, binary forms are removed here.
+# Remove Windows and OSX specific code
 find -type d \( -name macosx -o -name windows \) -print0 | xargs -0 rm -rf
-find -name '*.tgz' -delete
-find -name '*.tar.gz' -delete
+# As mentioned earlier, binary forms are removed here.
 find -name '*.elf' -delete
 find -name '*.class' -delete
 find -name '*.jar' -delete
 find -name '*.so' -delete
-find -name '*.hex' -delete
 
 echo -e "\n# By default, don't notify the user of a new upstream version." \
 		"\n# https://bugzilla.redhat.com/show_bug.cgi?id=773519" \
@@ -162,18 +170,20 @@ build-jar-repository -p -s arduino-core/lib/ apache-commons-codec \
 apache-commons-compress apache-commons-exec apache-commons-lang3 \
 apache-commons-logging apache-commons-net bcpg bcprov jackson-core \
 jackson-databind jackson-modules-base jmdns jsch jsemver jssc guava \
-objectweb-asm jackson-annotations rsyntaxtextarea
+objectweb-asm jackson-annotations rsyntaxtextarea batik xml-commons-apis-ext xmlgraphics-commons
 
 build-jar-repository -p -s app/lib/ guava apache-commons-logging \
 jakarta-commons-httpclient jsch apache-commons-lang3 jssc jsemver \
-apache-commons-compress apache-commons-codec rsyntaxtextarea
+apache-commons-compress apache-commons-codec rsyntaxtextarea batik xml-commons-apis-ext xmlgraphics-commons
 
 touch app/test/cc/arduino/packages/contributions/library_index.json
 
 %build
+%global antflags -Dno_docs=true -Dno_arduino_builder=true -Dsystem_avr=true -Dlight_bundle=true
+
 pushd build
-ant -verbose
-echo %{version} | ant dist
+ant -verbose %{antflags}
+echo %{version} | ant dist %{antflags}
 mv linux/%{name}*.tar.xz linux/%{name}-%{version}.tar.xz
 tar -xf linux/%{name}-%{version}.tar.xz
 popd
@@ -185,7 +195,13 @@ mkdir -p $RPM_BUILD_ROOT%{_bindir}
 cp -a arduino $RPM_BUILD_ROOT%{_bindir}/
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
-cp -a dist hardware lib libraries examples $RPM_BUILD_ROOT/%{_datadir}/%{name}/
+cp -a hardware lib examples $RPM_BUILD_ROOT/%{_datadir}/%{name}/
+mkdir $RPM_BUILD_ROOT/%{_datadir}/%{name}/dist
+mkdir $RPM_BUILD_ROOT/%{_datadir}/%{name}/tools-builder
+cp -a ../../*.json* $RPM_BUILD_ROOT/%{_datadir}/%{name}/dist/
+cp -a ../../libraries $RPM_BUILD_ROOT/%{_datadir}/%{name}/
+cp -a ../../hardware/* $RPM_BUILD_ROOT/%{_datadir}/%{name}/hardware/
+
 rm $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/*.jar
 rm -r $RPM_BUILD_ROOT%{_datadir}/%{name}/hardware/tools
 
@@ -210,6 +226,9 @@ ln -s %{_sysconfdir}/%{name}/programmers.txt \
 ln -s %{_sysconfdir}/%{name}/preferences.txt \
    $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/preferences.txt
 
+ln -s %{_bindir}/arduino-builder $RPM_BUILD_ROOT%{_datadir}/%{name}/arduino-builder
+
+cp -p ../linux/dist/desktop.template ../linux/dist/%{name}.desktop
 desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications --set-icon=arduino --set-key=Exec --set-value=arduino ../linux/dist/%{name}.desktop
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/mime/packages
@@ -231,10 +250,6 @@ cp -a ../linux/dist/cc.arduino.add-groups.policy $RPM_BUILD_ROOT%{_datadir}/polk
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
 cp -a ../linux/dist/appdata.xml $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
-
-# Remove stray Firmata files (v2.4.4)
-rm -r $RPM_BUILD_ROOT%{_datadir}/%{name}/libraries/Firmata-2.4.4
-rm $RPM_BUILD_ROOT%{_datadir}/%{name}/libraries/Firmata/.gitignore
 # unFedorize; ALTize
 if grep 'dialout lock' %buildroot/%_bindir/arduino; then
    sed -i -e 's,dialout lock,uucp,' %buildroot/%_bindir/arduino
@@ -279,9 +294,14 @@ fi
 %{_datadir}/%{name}/libraries/
 %{_datadir}/%{name}/dist/
 %dir %{_datadir}/%{name}/lib
+%dir %{_datadir}/%{name}/tools-builder
 %{_datadir}/%{name}/lib/version.txt
+%{_datadir}/%{name}/arduino-builder
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.8.5-alt1_1jpp8
+- new version
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.6.6-alt1_1jpp8
 - new version
 
