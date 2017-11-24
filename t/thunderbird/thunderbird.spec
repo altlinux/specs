@@ -6,11 +6,11 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	52.4.0
+Version:	52.5.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
-URL:		http://www.mozillamessaging.com
+URL:		https://www.thunderbird.net
 
 Packager:	Andrey Cherepanov <cas@altlinux.org>
 
@@ -424,9 +424,26 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Fri Nov 24 2017 Andrey Cherepanov <cas@altlinux.org> 52.5.0-alt1
+- New version (52.5.0)
+- Fixes:
+  + CVE-2017-7828 Use-after-free of PressShell while restyling layout
+  + CVE-2017-7830 Cross-origin URL information leak through Resource
+  + CVE-2017-7826 Memory safety bugs fixed in Firefox 57, Firefox ESR 52.5, and Thunderbird 52.5
+
 * Sat Oct 07 2017 Andrey Cherepanov <cas@altlinux.org> 52.4.0-alt1
 - New version (52.4.0)
 - Enigmail 1.9.8.3
+- Fixes:
+  + CVE-2017-7793 Use-after-free with Fetch API
+  + CVE-2017-7818 Use-after-free during ARIA array manipulation
+  + CVE-2017-7819 Use-after-free while resizing images in design mode
+  + CVE-2017-7824 Buffer overflow when drawing and validating elements with ANGLE
+  + CVE-2017-7805 Use-after-free in TLS 1.2 generating handshake hashes
+  + CVE-2017-7814 Blob and data URLs bypass phishing and malware protection warnings
+  + CVE-2017-7825 OS X fonts render some Tibetan and Arabic unicode characters as spaces
+  + CVE-2017-7823 CSP sandbox directive did not create a unique origin
+  + CVE-2017-7810 Memory safety bugs fixed in Firefox 56, Firefox ESR 52.4, and Thunderbird 52.4
 
 * Sun Aug 20 2017 Andrey Cherepanov <cas@altlinux.org> 52.3.0-alt1
 - New version (52.3.0)
