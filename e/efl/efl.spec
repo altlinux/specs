@@ -25,7 +25,7 @@
 %def_enable lua
 
 Name: efl
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Enlightenment Foundation Libraries
@@ -229,7 +229,6 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 	%{subst_enable egl} \
 	%{subst_enable elput} \
 	%{subst_enable drm} \
-	%{subst_enable lua} \
 	%{?_enable_gl_drm:--enable-gl-drm} \
 	%{subst_enable ibus} \
 	%{subst_enable gstreamer1}
@@ -423,6 +422,9 @@ find %buildroot%_libdir -name "*.la" -delete
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Fri Nov 24 2017 Yuri N. Sedunov <aris@altlinux.org> 1.20.6-alt1
+- 1.20.6
+
 * Fri Oct 20 2017 Yuri N. Sedunov <aris@altlinux.org> 1.20.5-alt1
 - 1.20.5
 
