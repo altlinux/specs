@@ -1,5 +1,5 @@
 Name: mongo
-Version: 3.4.9
+Version: 3.4.10
 Release: alt1
 Summary: mongo client shell and tools
 License: AGPL 3.0
@@ -14,7 +14,6 @@ Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 Source: %name-%version.tar
 
 Patch1:         mongodb-2.4.5-no-term.patch
-Patch2:         mongo-3.4.7-fedora-std-string.patch
 
 BuildRequires: /proc gcc-c++ python-devel python-module-pymongo scons boost-devel boost-filesystem-devel boost-program_options-devel libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel libpcap-devel libsnappy-devel libv8-3.24-devel systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel libyaml-cpp-devel valgrind-devel zlib-devel python-modules-json
 
@@ -57,7 +56,6 @@ MongoDB instance.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 
 # CRLF -> LF
 sed -i 's/\r//' README
@@ -182,6 +180,9 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Fri Nov 24 2017 Vladimir Didenko <cow@altlinux.org> 3.4.10-alt1
+- 3.4.10
+
 * Thu Oct 5 2017 Vladimir Didenko <cow@altlinux.org> 3.4.9-alt1
 - 3.4.9
 
