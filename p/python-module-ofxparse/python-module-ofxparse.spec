@@ -1,7 +1,7 @@
 %define  modulename ofxparse
 
 Name:    python-module-%modulename
-Version: 0.16
+Version: 0.17
 Release: alt1
 
 Summary: Tools for working with the OFX (Open Financial Exchange) file format
@@ -40,5 +40,8 @@ files.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Nov 24 2017 Andrey Cherepanov <cas@altlinux.org> 0.17-alt1
+- New version.
+
 * Tue Aug 29 2017 Andrey Cherepanov <cas@altlinux.org> 0.16-alt1
 - Initial build in Sisyphus
