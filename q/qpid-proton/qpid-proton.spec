@@ -4,8 +4,8 @@
 %define proton_datadir %_datadir/proton-%version
 
 Name: qpid-proton
-Version: 0.14.0
-Release: alt1.1
+Version: 0.18.1
+Release: alt1
 Summary: A high performance, lightweight messaging library
 Group: System/Libraries
 
@@ -115,13 +115,18 @@ mv %buildroot%proton_datadir/examples %buildroot%_defaultdocdir/%name-%version/
 %dir %proton_datadir
 %doc %proton_datadir/LICENSE
 %doc %proton_datadir/README*
-%doc %proton_datadir/TODO
 %_libdir/libqpid-proton.so.*
+%_libdir/libqpid-proton-core.so.*
+%_libdir/libqpid-proton-proactor.so.*
 
 %files -n lib%name-devel
 %_includedir/proton
 %_libdir/libqpid-proton.so
+%_libdir/libqpid-proton-core.so
+%_libdir/libqpid-proton-proactor.so
 %_libdir/pkgconfig/libqpid-proton.pc
+%_libdir/pkgconfig/libqpid-proton-core.pc
+%_libdir/pkgconfig/libqpid-proton-proactor.pc
 %_libdir/cmake/Proton
 %doc %_defaultdocdir/%name-%version/
 
@@ -145,6 +150,9 @@ mv %buildroot%proton_datadir/examples %buildroot%_defaultdocdir/%name-%version/
 %perl_vendor_archlib/*
 
 %changelog
+* Fri Nov 24 2017 Igor Vlasenko <viy@altlinux.ru> 0.18.1-alt1
+- NMU: fixed build && updated version
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1.1
 - rebuild with new perl 5.24.1
 

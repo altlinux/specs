@@ -3,8 +3,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: qpid
-Version: 1.35.0
-Release: alt0.rc.1
+Version: 1.36.0
+Release: alt1
 Summary: Libraries for Qpid C++ client applications
 License: ASL 2.0
 Url: http://qpid.apache.org
@@ -362,6 +362,9 @@ mkdir -p %buildroot/%_localstatedir/qpidd
 %doc %_pkgdocdir
 
 %changelog
+* Fri Nov 24 2017 Igor Vlasenko <viy@altlinux.ru> 1.36.0-alt1
+- NMU: new version
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.35.0-alt0.rc.1
 - rebuild with new perl 5.24.1
 
