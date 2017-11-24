@@ -1,5 +1,9 @@
+%def_without glibc_debuginfo
+# turn on by:
+# gear --commit -v --hasher -- hsh --build-args "--with glibc_debuginfo" -v ~/hasher 2>&1 | tee log
+
 Name: ltrace
-Version: 0.6.0
+Version: 0.7.91.0.198.git82c6640
 Release: alt1
 
 Summary: Tracks runtime library calls from dynamically linked executables
@@ -8,10 +12,24 @@ Group: Development/Debuggers
 Url: http://ltrace.alioth.debian.org/
 
 # git://anonscm.debian.org/collab-maint/ltrace.git
-# git://git.altlinux.org/gears/l/ltrace.git
-Source: %name-%version-%release.tar
+# https://github.com/dkogan/ltrace
+Source: %name-%version.tar
 
-BuildRequires: libelf-devel
+Patch0: ltrace-0.7.91.0.198.git82c6640-fix_readdir_r_deprecated.patch
+Patch1: ltrace-0.7.91.0.198.git82c6640-fix_attach_process.patch
+Patch2: ltrace-0.7.91.0.198.git82c6640-fix_attach_process_dlopen.patch
+Patch3: ltrace-0.7.91.0.198.git82c6640-disable_long_double_test_wchar.patch
+# patch3 due Ltrace doesn't support long
+# see: etc/libc.so-types.conf:# XXX ltrace misses long double and long long support
+Patch4: ltrace-0.7.91.0.198.git82c6640-fix_errors_in_tests.patch
+%{?_without_glibc_debuginfo:
+Patch5: ltrace-0.7.91.0.198.git82c6640-disable_glibc_core_debuginfo_tests.patch}
+
+BuildRequires: libelf-devel elfutils-devel gcc-c++
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: dejagnu /dev/pts /proc}}
+%{?!_without_glibc_debuginfo:
+BuildRequires: glibc-core-debuginfo}
 
 Summary(ru_RU.UTF-8): Трассировщик библиотечных вызовов из динамически скомпонованных приложений
 
@@ -25,6 +43,9 @@ It can also intercept and print the system calls executed by the program.
 The program to be traced need not be recompiled for this, so you can
 use it on binaries for which you don't have the source handy.
 
+Optionally you can install glibc-core-debuginfo for obtaining extra
+features of Ltrace.
+
 %description -l ru_RU.UTF-8
 Ltrace представляет из себя утилиту отладки, которая запускает указанную
 пользователем команду и дожидается её завершения. Пока команда выполняется,
@@ -34,9 +55,18 @@ Ltrace перехватывает и выводит все выполняемы�
 Трассируемую программу не требуется перекомпилировать, так что отлаживать
 с помощью Ltrace можно даже те приложения, исходные тексты которых недоступны.
 
+Опционально можно установить glibc-core-debuginfo для получения дополнительных
+возможностей Ltrace.
+
 %prep
-%setup -n %name-%version-%release
-bzip -9k ChangeLog
+%setup
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%{?_without_glibc_debuginfo:
+%patch5 -p1}
 
 %build
 %autoreconf
@@ -46,14 +76,22 @@ bzip -9k ChangeLog
 %install
 %makeinstall_std
 
+%check
+[ -w /dev/ptmx -a -f /proc/self/maps ] || exit
+LC_ALL=en_US.UTF-8 make check RUNTESTFLAGS="--tool_exec=%buildroot/usr/bin/ltrace CFLAGS_FOR_TARGET=" </dev/ptmx
+
 %files
 %_bindir/*
 %_mandir/man?/*
-%config(noreplace) %_sysconfdir/*
-%doc BUGS ChangeLog.bz2 README TODO
+%_datadir/%name
+%doc COPYING CREDITS README TODO
 %exclude %_docdir/%name
 
 %changelog
+* Fri Nov 24 2017 Grigory Ustinov <grenka@altlinux.org> 0.7.91.0.198.git82c6640-alt1
+- Build new version.
+   (Closes: #33470)
+
 * Wed Aug 24 2011 Dmitry V. Levin <ldv@altlinux.org> 0.6.0-alt1
 - Updated to 0.6.0-10-g43d1de9.
 
@@ -94,7 +132,7 @@ bzip -9k ChangeLog
 * Wed Aug 30 2000 Dmitry V. Levin <ldv@fandra.org> 0.3.10-ipl3mdk
 - RE adaptions.
 
-* Wed Apr 17 2000 Jeff Garzik <jgarzik@mandrakesoft.com> 0.3.10-3mdk
+* Mon Apr 17 2000 Jeff Garzik <jgarzik@mandrakesoft.com> 0.3.10-3mdk
 - added more docs
 
 * Tue Apr 11 2000 Christopher Molnar <molnarc@mandrakesoft.com> 0.3.10-2mdk
