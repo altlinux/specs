@@ -1,5 +1,5 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20170707.1
+%define orig_timestamp 20171117.1
 
 Name: firmware-intel-ucode
 Version: 3
@@ -48,6 +48,22 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Fri Nov 24 2017 L.A. Kostis <lakostis@altlinux.ru> 1:3-alt0.20171117.1
+- Update to 20171117.1 (debian changelog below):
+  * New upstream microcode data file 20171117
+    + New Microcodes:
+      sig 0x000506c9, pf_mask 0x03, 2017-03-25, rev 0x002c, size 16384
+      sig 0x000706a1, pf_mask 0x01, 2017-10-31, rev 0x001e, size 72704
+      sig 0x000906ea, pf_mask 0x22, 2017-08-23, rev 0x0070, size 95232
+      sig 0x000906eb, pf_mask 0x02, 2017-09-20, rev 0x0072, size 97280
+    + Updated Microcodes:
+      sig 0x00050654, pf_mask 0xb7, 2017-10-17, rev 0x2000035, size 26624
+      sig 0x000806ea, pf_mask 0xc0, 2017-08-03, rev 0x0070, size 96256
+  * source: remove superseded upstream data file: 20170707.
+  * source: remove unneeded intel-ucode/ directory for 20171117.
+- TODO: we need to implement ucode blacklisting as well as debian does.
+
+
 * Mon Sep 04 2017 L.A. Kostis <lakostis@altlinux.ru> 1:3-alt0.20170707.1
 - Rebased to Debian package (because Fedora version is outdated):
   * New upstream microcode datafile 20170707
