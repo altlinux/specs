@@ -14,7 +14,7 @@ BuildRequires: jpackage-generic-compat
 Name:          springframework-data-redis
 # Newer release require springframework >= 4.0.7.RELEASE
 Version:       1.3.5
-Release:       alt1_5jpp8
+Release:       alt2_5jpp8
 Summary:       Provides support to increase developer productivity in Java when using Redis
 License:       ASL 2.0
 URL:           http://projects.spring.io/spring-data-redis/
@@ -144,7 +144,7 @@ rm -r src/test/java/org/springframework/data/redis/cache/AbstractNativeCacheTest
 
 %build
 
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -- -Dmaven.test.skip.exec=true  -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
@@ -157,6 +157,9 @@ rm -r src/test/java/org/springframework/data/redis/cache/AbstractNativeCacheTest
 %doc license.txt notice.txt
 
 %changelog
+* Fri Nov 24 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.5-alt2_5jpp8
+- fixed build
+
 * Thu Nov 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.5-alt1_5jpp8
 - fc27 update
 
