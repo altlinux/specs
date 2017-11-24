@@ -1,8 +1,8 @@
 %define ltr libtorrent-rasterbar-devel
-%define rel alt1
+%define rel alt3
 
 Name: qbittorrent
-Version: 3.3.16
+Version: 4.0.1
 Epoch: 1
 Release: %rel
 
@@ -15,12 +15,12 @@ Url: http://qbittorrent.org
 
 Source: %name-%version.tar.xz
 
-%define libtorrent_version 2:0.15.9-alt0.1.svn6292
+Patch0: QBT_fix_build_i386.patch
 
 BuildPreReq: desktop-file-utils
 
 BuildRequires: boost-devel boost-filesystem boost-filesystem-devel boost-datetime boost-program-options-devel boost-asio-devel
-BuildRequires: gcc-c++ qt5-base-devel qt5-tools
+BuildRequires: gcc-c++ qt5-base-devel qt5-tools qt5-svg-devel
 BuildRequires: GeoIP-Lite-Country
 BuildRequires: libnotify-devel
 BuildRequires: zlib-devel
@@ -28,7 +28,7 @@ BuildRequires: zlib-devel
 %if "%rel" == "alt0.M80P"
 %define ltr libtorrent-rasterbar9-devel
 %endif
-BuildRequires: %ltr >= %libtorrent_version
+BuildRequires: %ltr
 
 Requires: python-modules-ctypes
 Requires: GeoIP-Lite-Country
@@ -76,8 +76,10 @@ Default is to listen on tcp/8080 with admin/adminadmin credentials
 
 %prep
 %setup
+%patch0 -p1
 
 %build
+./bootstrap.sh
 %_configure_script --prefix=%buildroot%_usr
 %make_build
 
@@ -100,8 +102,24 @@ make clean
 %_datadir/applications/*
 %_man1dir/%name.1.*
 %_datadir/icons/hicolor/*/*/*
+%_datadir/appdata/*.xml
 
 %changelog
+* Fri Nov 24 2017 Motsyo Gennadi <drool@altlinux.ru> 1:4.0.1-alt3
+- fix
+
+* Fri Nov 24 2017 Motsyo Gennadi <drool@altlinux.ru> 1:4.0.1-alt2
+- fix build for x86
+
+* Wed Nov 22 2017 Motsyo Gennadi <drool@altlinux.ru> 1:4.0.1-alt1
+- 4.0.1
+
+* Tue Nov 21 2017 Motsyo Gennadi <drool@altlinux.ru> 1:4.0.0-alt2
+- fix build
+
+* Mon Nov 20 2017 Motsyo Gennadi <drool@altlinux.ru> 1:4.0.0-alt1
+- 4.0.0
+
 * Mon Sep 11 2017 Motsyo Gennadi <drool@altlinux.ru> 1:3.3.16-alt1
 - 3.3.16
 
