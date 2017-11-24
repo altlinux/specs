@@ -1,15 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
+BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-surefire
-Version:        2.19.1
-Release:        alt1_8jpp8
+Version:        2.20.1
+Release:        alt1_3jpp8
 Epoch:          0
 Summary:        Test framework project
 License:        ASL 2.0 and CPL
@@ -28,8 +27,6 @@ BuildRequires:  mvn(com.google.code.findbugs:jsr305)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
@@ -48,9 +45,16 @@ BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
 BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 BuildRequires:  mvn(org.apache.maven.shared:maven-verifier)
+BuildRequires:  mvn(org.apache.maven.surefire:surefire-junit47)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.fusesource.jansi:jansi)
+BuildRequires:  mvn(org.testng:testng)
 BuildRequires:  mvn(org.testng:testng::jdk15:)
+
+# PpidChecker relies on /usr/bin/ps to check process uptime
+Requires:       procps sysvinit-utils
 Source44: import.info
 
 %description
@@ -128,6 +132,9 @@ cp -p %{SOURCE2} .
 %patch1 -p1
 %patch2 -p1
 
+# Disable strict doclint
+sed -i /-Xdoclint:all/d pom.xml
+
 %pom_disable_module surefire-shadefire
 
 %pom_remove_dep -r org.apache.maven.surefire:surefire-shadefire
@@ -149,23 +156,26 @@ cp -p %{SOURCE2} .
 %pom_remove_dep :maven-project maven-surefire-common
 %pom_remove_dep :maven-plugin-descriptor maven-surefire-common
 %pom_remove_dep :maven-toolchain maven-surefire-common
-%pom_remove_dep :maven-toolchain maven-surefire-plugin
+
+%pom_xpath_remove -r "pom:execution[pom:id='shared-logging-generated-sources']"
+
+%pom_add_dep com.google.code.findbugs:jsr305 surefire-api
 
 %build
 %mvn_package ":*{surefire-plugin,report-plugin}*" @1
 %mvn_package ":*{junit,testng,failsafe-plugin,report-parser}*"  @1
 %mvn_package ":*tests*" __noinstall
 # tests turned off because they need jmock
-%mvn_build -f
+# use xmvn-javadoc because maven-javadoc-plugin crashes JVM
+%mvn_build -f -j -G org.fedoraproject.xmvn:xmvn-mojo:javadoc
 
 %install
 %mvn_install
 
 
 %files -f .mfiles
-%doc README.TXT
+%doc README.md
 %doc LICENSE NOTICE cpl-v10.html
-%dir %{_javadir}/maven-surefire
 
 %files plugin -f .mfiles-surefire-plugin
 %files report-plugin -f .mfiles-report-plugin
@@ -178,6 +188,9 @@ cp -p %{SOURCE2} .
 %doc LICENSE NOTICE cpl-v10.html
 
 %changelog
+* Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.20.1-alt1_3jpp8
+- new version
+
 * Sat Nov 04 2017 Igor Vlasenko <viy@altlinux.ru> 0:2.19.1-alt1_8jpp8
 - new release
 
