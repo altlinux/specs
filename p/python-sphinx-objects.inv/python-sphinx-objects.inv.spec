@@ -1,6 +1,6 @@
 %define inversion 2
 %define pyversion 3.7
-%define reldate 20171115
+%define reldate 20171123
 
 Name: python-sphinx-objects.inv
 Version: %inversion.%pyversion.%reldate
@@ -26,6 +26,9 @@ install -pDm644 %SOURCE0 %buildroot%_datadir/python-sphinx/objects.inv
 %_datadir/python-sphinx/
 
 %changelog
+* Fri Nov 24 2017 Cronbuild Service <cronbuild@altlinux.org> 1:2.3.7.20171123-alt1
+- repocop cronbuild 20171124. At your service.
+
 * Wed Nov 15 2017 Cronbuild Service <cronbuild@altlinux.org> 1:2.3.7.20171115-alt1
 - repocop cronbuild 20171115. At your service.
 
