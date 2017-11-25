@@ -1,6 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/pkg-config gcc-c++ libX11-devel libXext-devel libmad-devel libogg-devel lv2core zlib-devel
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/desktop-file-validate /usr/bin/qmake-qt4 gcc-c++ libX11-devel libXext-devel lv2-devel pkgconfig(ogg) pkgconfig(zlib)
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %ifarch %{ix86}
 %global without_sse %{!?_without_sse:0}%{?_without_sse:1}
 %endif
@@ -13,28 +16,40 @@ BuildRequires: /usr/bin/pkg-config gcc-c++ libX11-devel libXext-devel libmad-dev
 
 Summary:       Audio/MIDI multi-track sequencer
 Name:          qtractor
-Version:       0.5.8
-Release:       alt1.1
+Version:       0.8.4
+Release:       alt1_1
 License:       GPLv2+
 Group:         Sound
 URL:           http://qtractor.sourceforge.net/
 Source0:       http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 
+Source20:      qmake-qt5.sh
+
+Patch3:        qtractor-0.6.4-secondary.patch
+
 BuildRequires: libalsa-devel
 BuildRequires: desktop-file-utils
 BuildRequires: dssi-devel
+# for plugin GUI support:
+BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
 BuildRequires: libjack-devel
 BuildRequires: ladspa_sdk
 BuildRequires: liblo-devel
+BuildRequires: libmad-devel
 BuildRequires: libsamplerate-devel
 BuildRequires: libsndfile-devel
 BuildRequires: libvorbis-devel
-BuildRequires: qt4-devel
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-designer qt5-tools
+BuildRequires: qt5-x11extras-devel
 BuildRequires: librubberband-devel
-BuildRequires: suil-devel
-BuildRequires: lilv-devel
+BuildRequires: libsuil-devel
+BuildRequires: liblilv-devel
 BuildRequires: autoconf
 BuildRequires: automake
+
+Requires:      icon-theme-hicolor
+Source44: import.info
 
 %description
 Qtractor is an Audio/MIDI multi-track sequencer application written in C++ 
@@ -46,28 +61,39 @@ dedicated to the personal home-studio.
 
 %prep
 %setup -q -n %{name}-%{version}
-sed -i -e 's|archive|archive;|' src/qtractor.desktop.in
+#patch3 -p1 -b .second
+
+# configure hard-codes prepending searches of /usr (already implicit, causes problems),
+# and /usr/local (not needed here), so force it's non-use -- rex
+sed -i.ac_with_paths -e "s|^ac_with_paths=.*|ac_with_paths=|g" configure configure.ac
+# fedora uses appdata
+sed -i -e 's|/metainfo|/appdata|g' src/src.pro
 
 # Fix odd permissions
 chmod -x src/qtractorMmcEvent.*
 
 %build
 autoreconf
-export PATH=${PATH}:%{_libdir}/qt4/bin
+
+CFLAGS="%{optflags}"; export CFLAGS
+CXXFLAGS="%{optflags}"; export CXXFLAGS
+LDFLAGS="%{?__global_ldflags}"; export LDFLAGS
+
+# force use of custom/local qmake, to inject proper build flags (above)
+install -m755 -D %{SOURCE20} bin/qmake-qt5
+PATH=`pwd`/bin:%{_qt5_bindir}:$PATH; export PATH
+
 %configure \
    --enable-lilv --enable-suil \
 %if %{without_sse}
    --enable-sse=no
 %endif
 
-%make_build
+%make_build QMAKE=`pwd`/bin/qmake-qt5
+
 
 %install
 make install DESTDIR=%{buildroot}
-# %_datadir/locale/ is not appropriate!
-mkdir -p %buildroot%_datadir/qt4/translations
-mv %buildroot%_datadir/locale/*.qm %buildroot%_datadir/qt4/translations/
-
 %find_lang %{name} --with-qt
 
 %check
@@ -76,12 +102,17 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %files -f %{name}.lang
 %doc AUTHORS ChangeLog COPYING README TODO
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/32x32/apps/%{name}*.png
-%{_datadir}/icons/hicolor/32x32/mimetypes/application*.png
+%{_datadir}/icons/hicolor/*/*/*
 %{_datadir}/mime/packages/%{name}.xml
 %{_bindir}/%{name}
+%{_bindir}/%{name}_vst_scan
+%{_datadir}/man/man1/%{name}*
+%{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Sun Nov 26 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt1_1
+- new version
+
 * Thu Jun 20 2013 Andrey Cherepanov <cas@altlinux.org> 0.5.8-alt1.1
 - Rebuild with new version liblo
 
