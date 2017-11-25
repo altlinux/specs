@@ -1,26 +1,29 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
-BuildRequires: python-devel
+BuildRequires(pre): rpm-build-python3
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           autoarchive
 Version:        1.3.0
-Release:        alt1
+Release:        alt1_3
 Summary:        A simple backup tool that uses tar
 
 License:        GPLv3
 URL:            http://autoarchive.sourceforge.net/
-Source:        https://pypi.python.org/packages/71/4a/329d970bee2dc278ecd4523708c4cfd332e91cd2e14617a2057ed9974901/autoarchive-%{version}.tar.bz2
-Patch0:         %{name}-0.5.2-coding.patch
+Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
+# Fix tests. Cannot submit upstream as issue tracker is locked
+Patch0:         autoarchive-1.3.0-fix_tests.patch
 BuildArch:      noarch
 
 BuildRequires:  python3-devel
+BuildRequires:  python3-module-mock
 
-Requires:       xz
-Requires:       tar%{?_isa}
-Requires:       gzip%{?_isa}
-Requires:       bzip2%{?_isa}
-Requires:       xz%{?_isa}
+Requires:       gzip-utils less xz
+Requires:       tar
+Requires:       gzip gzip-utils less
+Requires:       bzip2 gzip-utils less
+Requires:       gzip-utils less xz
 Source44: import.info
 
 %description
@@ -35,14 +38,26 @@ which reads information from it and creates desired backup.
 %patch0 -p1
 
 %build
-%{__python3} setup.py build
+# Need to set LANG to ensure we get utf-8 as default codec, or setup.py
+# crashes
+export LANG=en_US.UTF-8
+%python3_build
 
 %install
-%{__python3} setup.py install -O1 --skip-build --root=%{buildroot}
+# Need to set LANG to ensure we get utf-8 as default codec, or setup.py
+# crashes
+export LANG=en_US.UTF-8 
+%python3_install
 rm -rf %{buildroot}%{_defaultdocdir}/%{name}-%{version}/
 
+%check
+pushd AutoArchive
+%{__python3} tests/run_tests.py
+popd
+
 %files
-%doc COPYING NEWS README README.sk
+%doc NEWS README README.sk
+%doc COPYING
 %config(noreplace) %{_sysconfdir}/aa/
 %{_mandir}/man?/*.*
 %{_bindir}/autoarchive
@@ -51,6 +66,9 @@ rm -rf %{buildroot}%{_defaultdocdir}/%{name}-%{version}/
 %{python3_sitelibdir_noarch}/%{name}*.egg-info
 
 %changelog
+* Sun Nov 26 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_3
+- fixed build
+
 * Tue Jan 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1
 - automated PyPI update
 
