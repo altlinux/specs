@@ -1,12 +1,14 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/bison /usr/bin/desktop-file-validate /usr/bin/pkg-config gcc-c++ libGL-devel libGLEW-devel libGLU-devel pkgconfig(fontconfig) pkgconfig(freetype2) pkgconfig(harfbuzz) python-devel python3-devel rpm-build-python3
+BuildRequires: /usr/bin/desktop-file-validate ImageMagick-tools gcc-c++ libGL-devel libGLU-devel python-devel rpm-build-python
 # END SourceDeps(oneline)
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: boost-filesystem-devel boost-program_options-devel cmake
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           openscad
-Version:        2015.03.2
-%global upversion 2015.03-2
-Release:        alt3_4
+Version:        2015.03.3
+%global upversion 2015.03-3
+Release:        alt1_12
 Summary:        The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 # Appdata file is CC0
@@ -16,34 +18,35 @@ Group:          Engineering
 URL:            http://www.%{name}.org/
 Source0:        http://files.%{name}.org/%{name}-%{upversion}.src.tar.gz
 Patch0:         %{name}-polyclipping.patch
-Patch1:         %name-%version-alt-qscintilla.patch
-BuildRequires:  libcgal-devel >= 3.6
+BuildRequires:  cgal libcgal-devel libcgal-qt5-devel
 BuildRequires:  ImageMagick
-BuildRequires:  xvfb-run
+BuildRequires:  xorg-xvfb xvfb-run
 BuildRequires:  bison >= 2.4
-BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+BuildRequires:  boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  eigen3
 BuildRequires:  flex >= 2.5.35
 BuildRequires:  libfreetype-devel >= 2.4
 BuildRequires:  fontconfig-devel >= 2.10
-BuildRequires:  gettext
-BuildRequires:  libglew-devel >= 1.6
-BuildRequires:  glib2-devel
-BuildRequires: libgmp-devel libgmp_cxx-devel
-BuildRequires:  libharfbuzz-devel >= 0.9.19
-BuildRequires: xorg-dri-intel xorg-dri-nouveau xorg-dri-radeon xorg-dri-swrast
+BuildRequires:  gettext gettext-tools
+BuildRequires:  libGLEW-devel >= 1.6
+BuildRequires:  glib2-devel libgio libgio-devel
+BuildRequires:  libgmp-devel libgmpxx-devel
+BuildRequires:  libharfbuzz-devel libharfbuzz-utils
+BuildRequires:  xorg-dri-nouveau xorg-dri-radeon
 BuildRequires:  libmpfr-devel >= 3.0.0
 BuildRequires:  opencsg-devel >= 1.3.2
-BuildRequires:  polyclipping-devel >= 6.1.3
-BuildRequires:  procps-ng
+BuildRequires:  libpolyclipping-devel >= 6.1.3
+BuildRequires:  procps sysvinit-utils
 BuildRequires:  python
-BuildRequires:  qt4-devel >= 4.4
+BuildRequires:  libqt4-declarative libqt4-devel qt4-designer
 BuildRequires:  libqscintilla2-qt4-devel
-Requires:       fonts-ttf-liberation
-Requires:       fonts-ttf-liberation
-Requires:       fonts-ttf-liberation
+Requires:       font(liberationmono)
+Requires:       font(liberationsans)
+Requires:       font(liberationserif)
+Requires:     %{name}-MCAD = %{version}-%{release}
 Source44: import.info
+Patch33: openscad-2015.03.2-alt-qscintilla.patch
 
 %description
 OpenSCAD is a software for creating solid 3D CAD objects.
@@ -61,7 +64,7 @@ Group: Engineering
 Summary:        OpenSCAD Parametric CAD Library
 License:        LGPLv2+ and LGPLv2 and LGPLv3+ and (GPLv3 or LGPLv2) and (GPLv3+ or LGPLv2) and (CC-BY-SA or LGPLv2+) and (CC-BY-SA or LGPLv2) and CC-BY and BSD and MIT and Public Domain
 URL:            https://www.github.com/openscad/MCAD
-Requires:       %{name} = %{version}
+Requires:       %{name} = %{version}-%{release}
 BuildArch:      noarch
 
 %description    MCAD
@@ -139,16 +142,16 @@ changes, however many things are already working.
 # Unbundle polyclipping
 rm src/polyclipping -rf
 %patch0 -p1
-%patch1 -p2
+%patch33 -p2
 
 %build
 %{qmake_qt4} PREFIX=%{_prefix}
-make %{?_smp_mflags}
+%make_build
 
 # tests
 cd tests
 cmake .
-make %{?_smp_mflags}
+%make_build
 cd -
 
 %install
@@ -189,6 +192,9 @@ cd -
 %{_datadir}/%{name}/libraries/MCAD
 
 %changelog
+* Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 2015.03.3-alt1_12
+- new version
+
 * Wed Oct 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2015.03.2-alt3_4
 - Rebuilt with qscintilla2 2.10.1.
 
