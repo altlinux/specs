@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: cmake gcc-c++ guile18-devel libglibmm-devel
+BuildRequires: texinfo
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libmatheval
-Version:        1.1.10
-Release:        alt1_1
+Version:        1.1.11
+Release:        alt1_8
 Summary:        Library for parsing and evaluating symbolic expressions input as text
 
 Group:          System/Libraries
@@ -14,9 +15,8 @@ URL:            http://www.gnu.org/software/libmatheval/
 Source0:        http://ftp.gnu.org/gnu/libmatheval/libmatheval-%{version}.tar.gz
 
 
-BuildRequires:  gcc-fortran guile-devel bison flex flex texinfo
+BuildRequires:  gcc-fortran, guile18-devel, bison, flex, flex, makeinfo
 Source44: import.info
-
 
 %description
 GNU libmatheval is a library (callable from C and Fortran) to parse
@@ -29,8 +29,9 @@ expressions to strings.
 
 %package devel
 Summary:        Development files for libmatheval
-Group:          Development/C
+Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
+Requires:       pkg-config
 
 %description devel
 This package contains the development files for libmatheval.
@@ -40,8 +41,12 @@ This package contains the development files for libmatheval.
 %setup -q
 
 %build
+autoreconf -fisv
+export GUILE=/usr/bin/guile1.8
+export GUILE_CONFIG=/usr/bin/guile1.8-config
+export GUILE_TOOLS=/usr/bin/guile1.8-tools
 %configure F77=gfortran --disable-static
-make %{?_smp_mflags}
+%make_build LIBS="-lguile -lpthread"
 
 %check
 make check ||:
@@ -66,6 +71,9 @@ rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
 
 %changelog
+* Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.11-alt1_8
+- new version
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt1_1
 - update to new release by fcimport
 
