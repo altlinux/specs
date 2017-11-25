@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libmagic-devel libnetdude-devel
+BuildRequires: gcc-c++ libmagic-devel libnetdude-devel
 # END SourceDeps(oneline)
-%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libnetdude
 Version:        0.11
-Release:        alt1_16
+Release:        alt2_16
 Summary:        Management framework for pcap packet traces
 
 Group:          System/Libraries
@@ -51,12 +50,12 @@ sed -e 's,###loc###,%{name}/%{version},' %{SOURCE1} > libnetdude-lndtool-wrapper
         --datadir=%{_libdir} \
         --with-html-dir=%{_datadir}/gtk-doc/html/%{name}/
 %make_build
-pushd docs
-%make_build docs
-popd
+#pushd docs
+#%make_build docs
+#popd
 
 %install
-make install DESTDIR=%{buildroot} INSTALL="%{__install} -p"
+make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 # Wrapper workaround for conflicting binary
 mkdir -p %{buildroot}%{_libdir}/%{name}/%{version}
@@ -64,8 +63,8 @@ mv %{buildroot}%{_bindir}/lndtool %{buildroot}%{_libdir}/%{name}/%{version}/lndt
 install -D -m 755 -p libnetdude-lndtool-wrapper.sh %{buildroot}%{_bindir}/lndtool
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
-mv %{buildroot}%{_datadir}/gtk-doc/html/%{name}/%{name}/* %{buildroot}%{_datadir}/gtk-doc/html/%{name}/
-rm -rf %{buildroot}%{_datadir}/gtk-doc/html/%{name}/%{name}/
+#mv %{buildroot}%{_datadir}/gtk-doc/html/%{name}/%{name}/* %{buildroot}%{_datadir}/gtk-doc/html/%{name}/
+#rm -rf %{buildroot}%{_datadir}/gtk-doc/html/%{name}/%{name}/
 
 
 %files
@@ -79,9 +78,12 @@ rm -rf %{buildroot}%{_datadir}/gtk-doc/html/%{name}/%{name}/
 %{_includedir}/*
 %{_libdir}/*.so
 %{_libdir}/%{name}/%{version}/lndtool
-%{_datadir}/gtk-doc/html/%{name}/
+#%{_datadir}/gtk-doc/html/%{name}/
 
 %changelog
+* Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt2_16
+- fixed build
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_16
 - update to new release by fcimport
 
