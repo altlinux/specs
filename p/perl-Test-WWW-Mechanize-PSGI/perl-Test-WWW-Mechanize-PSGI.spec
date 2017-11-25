@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,8 +7,8 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Pod/Wordlist.pm) perl(Test/CP
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Test-WWW-Mechanize-PSGI
-Version:        0.37
-Release:        alt1_2
+Version:        0.38
+Release:        alt1
 Summary:        Test PSGI programs using WWW::Mechanize
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Test-WWW-Mechanize-PSGI/
@@ -56,11 +57,14 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{__make} test
 
 %files
-%doc Changes
+%doc Changes CONTRIBUTORS README.md
 %doc LICENSE
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1
+- automated CPAN update
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1_2
 - update to new release by fcimport
 
