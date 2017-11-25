@@ -16,7 +16,7 @@
 
 Name: perl-Module-Starter-Smart
 Epoch: 1
-Version: 0.0.8
+Version: 0.0.9
 Release: alt1
 
 Summary: Add new modules into an existing distribution with this plugin
@@ -55,6 +55,9 @@ recreate the manifest file accordingly.
 %doc Changes README
 
 %changelog
+* Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.0.9-alt1
+- automated CPAN update
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.0.8-alt1
 - automated CPAN update
 
