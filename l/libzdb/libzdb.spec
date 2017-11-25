@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/mysql_config /usr/bin/pg_config /usr/bin/re2c gcc-c++ libssl-devel
+BuildRequires: /usr/bin/re2c gcc-c++
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libzdb
-Version:        3.0
+Version:        3.1
 Release:        alt1_5
 Summary:        Small, easy to use Database Connection Pool Library
 License:        GPLv3+ and MIT
@@ -12,7 +14,8 @@ URL:            http://www.tildeslash.com/libzdb/
 Source0:        http://www.tildeslash.com/%{name}/dist/%{name}-%{version}.tar.gz
 BuildRequires:  flex
 BuildRequires:  libmysqlclient-devel
-BuildRequires:  postgresql-devel >= 8
+BuildRequires:  libssl-devel
+BuildRequires:  libecpg-devel libpq-devel postgresql-devel
 BuildRequires:  libsqlite3-devel >= 3.6.12
 Source44: import.info
 
@@ -25,7 +28,7 @@ specified via a standard URL scheme.
 %package        devel
 Group: Development/C
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 This package contains libraries and header files for
@@ -39,7 +42,7 @@ rm -f doc/api-docs/._*
 
 %build
 %configure --disable-static --enable-protected --enable-sqliteunlock
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=%{buildroot}
@@ -55,6 +58,9 @@ make install DESTDIR=%{buildroot}
 %doc doc/api-docs
 
 %changelog
+* Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_5
+- new version
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_5
 - update to new release by fcimport
 
