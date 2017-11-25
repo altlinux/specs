@@ -2,7 +2,7 @@
 
 Name: libwt
 Version: 3.3.7
-Release: alt1
+Release: alt2
 Summary: Wt (pronounced as witty) is a C++ library for developing web applications.
 License: GPL
 Group: Development/C++
@@ -184,6 +184,9 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir
 #files docs
 
 %changelog
+* Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 3.3.7-alt2
+-NMU: rebuild with libharu
+
 * Wed Jun 14 2017 Pavel Vainerman <pv@altlinux.ru> 3.3.7-alt1
 - new version 3.3.7 (with rpmrb script)
 

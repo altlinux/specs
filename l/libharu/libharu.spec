@@ -1,26 +1,37 @@
+%filter_from_requires /^python2.7.haru/d
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: gcc-c++
+# END SourceDeps(oneline)
+BuildRequires: python-modules-encodings
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%global gittag0 RELEASE_2_3_0
+
 Name:           libharu
-Version:        2.2.1
-Release:        alt1_9
+Version:        2.3.0
+Release:        alt1_3
 Summary:        C library for generating PDF files
-Group:          System/Libraries
 License:        zlib with acknowledgement
 URL:            http://libharu.org
-Source0:        http://libharu.org/files/%{name}-%{version}.tar.gz
-Patch0:		libharu-2.2.1-png15.patch
-BuildRequires:	gcc-common
-BuildRequires:	libpng-devel
-BuildRequires:	zlib-devel
+Source0:        https://github.com/libharu/${name}/archive/%{gittag0}/%{name}-%{version}.tar.gz
+Patch0:         libharu-RELEASE_2_3_0_cmake.patch
+
+BuildRequires:  gcc-common
+BuildRequires:  ctest cmake
+BuildRequires:  libpng-devel
+BuildRequires:  zlib-devel
+Source44: import.info
 
 %description
 libHaru is a library for generating PDF files. 
 It is free, open source, written in ANSI C and cross platform.
 
 %package        devel
+Group: Development/Other
 Summary:        Development files for %{name}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 
 %description    devel
@@ -28,26 +39,34 @@ The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q
-%patch0 -p1 -b .png15
+%setup -qn %{name}-%{gittag0}
+# fix cmake build
+%patch0 -p1 -b .cmake
 
 %build
-%configure --disable-static --enable-debug
-%make_build
+mkdir -p %{_target_platform}
+pushd %{_target_platform}
+%{fedora_cmake} -DLIBHPDF_STATIC=NO ..
+popd
+
+%make_build -C %{_target_platform}
 
 %install
-make install DESTDIR=%{buildroot}
-find %{buildroot} -name '*.la' -exec rm -f {} ';'
+make install/fast -C %{_target_platform}  DESTDIR=%{buildroot}
 
 %files
-%doc README 
-%{_libdir}/libhpdf-%{version}.so
+%doc README
+%{_libdir}/libhpdf.so.*
+%{_datadir}/%{name}
 
 %files devel
 %{_includedir}/*
 %{_libdir}/libhpdf.so
 
 %changelog
+* Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_3
+- new version
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_9
 - update to new release by fcimport
 
