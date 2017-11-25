@@ -3,18 +3,20 @@ BuildRequires(pre): rpm-macros-mageia-compat
 BuildRequires: gcc-c++ libSDL-devel libpng-devel perl(Digest/MD5.pm) python-devel
 # END SourceDeps(oneline)
 %filter_from_requires /^python...._\?GemRB./d
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define _cmake_skip_rpath %{nil}
 
 Name:          gemrb
 Version:       0.8.4
-Release:       alt2_1
+Release:       alt2_2
 Summary:       Port of the original Infinity (Game) Engine
 Group:         Games/Adventure
 License:       GPLv2+
 URL:           http://www.gemrb.org
 Source0:       http://downloads.sourceforge.net/gemrb/%{name}-%{version}.tar.gz
 
-BuildRequires: cmake
+BuildRequires: ccmake cmake ctest
 BuildRequires: pkgconfig(gl)
 BuildRequires: pkgconfig(glew)
 BuildRequires: pkgconfig(libpng)
@@ -48,8 +50,15 @@ supported games can be found at www.gemrb.org
 %{mageia_cmake} -DLAYOUT=fhs \
        -DLIB_DIR=%{_libdir}/%{name} \
        -DUSE_SDL2=1 \
-       -DUSE_OPENGL=1
-%make_build
+       -DUSE_OPENGL=1 \
+       -DCMAKE_SKIP_RPATH:BOOL=OFF \
+       -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF
+       
+
+
+
+       
+%make_build VERBOSE=1
 
 %install
 %makeinstall_std -C build
@@ -73,6 +82,9 @@ rm -f %{buildroot}%{_sysconfdir}/gemrb/GemRB.cfg.noinstall.sample
 
 
 %changelog
+* Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt2_2
+- fixed build
+
 * Fri Dec 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt2_1
 - to Sisyphus
 
