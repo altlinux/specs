@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           CuraEngine
 Version:        15.04
-Release:        alt1_5
+Release:        alt2_5
 Summary:        Engine for processing 3D models into G-code instructions for 3D printers
 License:        AGPLv3
 URL:            https://github.com/Ultimaker/%{name}
@@ -50,6 +50,9 @@ make test
 %{_bindir}/%{name}
 
 %changelog
+* Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 15.04-alt2_5
+- rebuild with libpolyclipping
+
 * Thu Mar 16 2017 Igor Vlasenko <viy@altlinux.ru> 15.04-alt1_5
 - update to new release by fcimport
 

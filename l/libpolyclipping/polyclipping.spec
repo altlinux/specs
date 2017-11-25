@@ -4,6 +4,8 @@ BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname polyclipping
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 # The Clipper C++ crystallographic library already uses the name "clipper".
 # The developer is fine with the choosen name.
 
@@ -11,8 +13,8 @@ BuildRequires: gcc-c++ unzip
 # http://upstream-tracker.org/versions/clipper.html
 
 Name:           libpolyclipping
-Version:        6.1.3a
-Release:        alt1_2
+Version:        6.4.2
+Release:        alt1_1
 Summary:        Polygon clipping library
 
 Group:          System/Libraries
@@ -20,7 +22,7 @@ License:        Boost
 URL:            http://sourceforge.net/projects/polyclipping
 Source0:        http://downloads.sourceforge.net/%{oldname}/clipper_ver%{version}.zip
 
-BuildRequires: ctest cmake
+BuildRequires:  ctest cmake
 BuildRequires:  dos2unix
 Source44: import.info
 Provides: polyclipping = %{version}-%{release}
@@ -36,8 +38,8 @@ and outperforms other clipping libraries.
 
 %package        devel
 Summary:        Development files for %{oldname}
-Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Group:          Development/Other
+Requires:       %{name} = %{version}-%{release}
 Provides: polyclipping-devel = %{version}-%{release}
 
 %description    devel
@@ -63,10 +65,11 @@ done
 # Enable use_lines
 sed -i 's|^//#define use_lines$|#define use_lines|' cpp/clipper.hpp
 
+
 %build
 pushd cpp
   %{fedora_cmake}
-  make %{?_smp_mflags}
+%make_build
 popd
 
 
@@ -78,11 +81,12 @@ pushd cpp
   sed -e 's/\.\.\/clipper\.hpp/clipper.hpp/' < cpp_agg/agg_conv_clipper.h > %{buildroot}/%{_includedir}/%{oldname}/agg_conv_clipper.h
 popd
 
-sed -i -e 's,Version:.*,Version: %version,' %{buildroot}%{_datadir}/pkgconfig/%{oldname}.pc
+# viy hack
+sed -i -e 's/^Version: $/Version: %version/' %buildroot%{_datadir}/pkgconfig/%{oldname}.pc
 
 %files
 %doc License.txt README
-%doc Haskell perl ruby python Documentation
+%doc Third\ Party/Haskell Third\ Party/perl Third\ Party/ruby Third\ Party/python Documentation
 %{_libdir}/lib%{oldname}.so.*
 
 %files devel
@@ -91,6 +95,9 @@ sed -i -e 's,Version:.*,Version: %version,' %{buildroot}%{_datadir}/pkgconfig/%{
 %{_libdir}/lib%{oldname}.so
 
 %changelog
+* Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 6.4.2-alt1_1
+- new version
+
 * Sat Jun 07 2014 Igor Vlasenko <viy@altlinux.ru> 6.1.3a-alt1_2
 - converted for ALT Linux by srpmconvert tools
 
