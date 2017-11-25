@@ -1,26 +1,27 @@
-%set_automake_version 1.11
-
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/pkg-config gcc-c++
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           libpolyxmass
 Version:        0.9.1
-Release:        alt4_11
+Release:        alt4_18
 Summary:        Polymer chemistry-related functionalities
 
 Group:          System/Libraries
 License:        GPLv2+
 URL:            http://www.polyxmass.org
 Source0:        http://www.polyxmass.org/libpolyxmass/downloads/0.9.1/libpolyxmass-0.9.1.tar.gz
+# Fix up autotool-sources and generated files
+# Note: This package's auto*files are too old and incompatible to automake > 1.13.4
 Patch0:         libpolyxmass-x86_64.patch
-Patch1:		libpolyxmass-0.9.1-alt-no-g_memmove.patch
 
-BuildRequires: glib2-devel
+BuildRequires: glib2-devel libgio libgio-devel
 BuildRequires: libxml2-devel
 BuildRequires: zlib-devel
-BuildRequires: autoconf automake libtool
 Source44: import.info
+Patch33: libpolyxmass-0.9.1-alt-no-g_memmove.patch
 
 %description
 libpolyxmass is a library that implements some housekeeping
@@ -36,8 +37,10 @@ library.
 
 %package devel
 Summary:  Files needed for software development with %{name}
-Group:    Development/C
+Group:    Development/Other
 Requires: %{name} = %{version}-%{release}
+Requires: pkg-config
+Requires: libgio
 
 %description devel
 The %{name}-devel package contains the files needed for development with
@@ -45,16 +48,15 @@ The %{name}-devel package contains the files needed for development with
 
 %prep
 %setup -q
-%patch0
-%patch1 -p1
+%patch0 -p1
+# Fix up time stamps to prevent the autotools from being re-run
+touch -r aclocal.m4 configure configure.in Makefile.in Makefile.am
+%patch33 -p1
 
 %build
-libtoolize
-autoreconf
-
 export CFLAGS="${RPM_OPT_FLAGS} -Wno-error"
 %configure --disable-static
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -76,6 +78,9 @@ find ${RPM_BUILD_ROOT} -type f -name "*.la" -exec rm -f {} ';'
 %{_libdir}/pkgconfig/libpolyxmass.pc
 
 %changelog
+* Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt4_18
+- fixed build
+
 * Mon Jun 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt4_11
 - Fixed build
 
