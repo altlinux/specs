@@ -1,5 +1,5 @@
 Name: perl-CPAN-Perl-Releases
-Version: 3.38
+Version: 3.42
 Release: alt1
 
 Summary: Mapping Perl releases on CPAN to the location of the tarballs
@@ -29,6 +29,9 @@ BuildRequires: perl-devel
 %doc Changes LICENSE README
 
 %changelog
+* Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 3.42-alt1
+- automated CPAN update
+
 * Sun Oct 01 2017 Igor Vlasenko <viy@altlinux.ru> 3.38-alt1
 - automated CPAN update
 
