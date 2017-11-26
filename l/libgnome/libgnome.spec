@@ -1,21 +1,26 @@
+%def_enable snapshot
+
 %define ver_major 2.32
 %def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
 # from gnome package
 %define default_gnome_theme_name Glossy
 
 Name: libgnome
 Version: %ver_major.1
-Release: alt3
+Release: alt4
 
 Summary: GNOME base library
 License: LGPLv2
 Group: System/Libraries
 Url: ftp://ftp.gnome.org
 
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
-
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.bz2
+%else
+Source: %name-%version.tar
+%endif
+
 Source1: gnome-menu.svg
 Source2: gnome-button.png
 Source3: desktop_gnome_peripherals_monitor.schemas
@@ -28,14 +33,11 @@ Patch1: libgnome-alt-settings.patch
 Patch2: libgnome-2.28.0-alt-default-interface.patch
 
 Patch3: libgnome-2.11.1-scoreloc.patch
-# backport from upstream svn 
+# backport from upstream svn
 Patch9: libgnome-im-setting.patch
 # from gnome-minimal package
 Patch10: libgnome-2.22.0-alt-default_gtk_theme.patch
-
-Patch11: libgnome-2.22.0-alt-default_browser.patch 
-# https://git.gnome.org/browse/libgnome/commit/?id=ea5e602fb0b316b8e4f76a803404885c7200142c
-Patch12: libgnome-2.32.1-up-warning.patch
+Patch11: libgnome-2.22.0-alt-default_browser.patch
 
 Obsoletes: %name-utils
 Provides: %name-utils = %version-%release
@@ -128,7 +130,6 @@ Static libraries and objects for gnome library infrastructure
 %patch9 -p1 -b .im-setting
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
 
 subst '/DG_DISABLE_DEPRECATED/d' libgnome/Makefile.am
 
@@ -150,7 +151,7 @@ install -pD -m644 %SOURCE1 %buildroot%_datadir/pixmaps/gnome-menu.svg
 install -m644 %SOURCE2 %buildroot%_datadir/pixmaps/gnome-menu.png
 install -m644 %SOURCE3 %buildroot%_sysconfdir/gconf/schemas/
 
-bzip2 -9fk ChangeLog
+%{?_disable_snapshot:bzip2 -9fk ChangeLog}
 
 %find_lang --with-gnome --output=files_list %name-2.0
 
@@ -184,10 +185,12 @@ fi
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
-%doc NEWS ChangeLog*
+%doc NEWS %{?_disable_snapshot:ChangeLog*}
 
+%if_enabled gtk_doc
 %files devel-doc
 %_gtk_docdir/*
+%endif
 
 %if_enabled static
 %files devel-static
@@ -198,6 +201,9 @@ fi
 %exclude %_libdir/bonobo/monikers/*.la
 
 %changelog
+* Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt4
+- updated to LIBGNOME_2_32_1-11-g8487c2b
+
 * Tue Mar 31 2015 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt3
 - removed harmful gnome-open especially for shaba@ & libreoffice
 
