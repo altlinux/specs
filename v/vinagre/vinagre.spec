@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define ver_major 3.22
 %define api_ver 3.0
 %define _libexecdir %_prefix/libexec
@@ -10,14 +12,19 @@
 
 Name: vinagre
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: Remote desktop viewer for the GNOME Desktop
 License: GPLv2
 Group: Networking/Remote access
 URL: https://wiki.gnome.org/Apps/Vinagre
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
+
 #Patches from opensuse
 Patch1:         vinagre-freerdp2.patch
 Patch2:         vinagre-cert-validation-api.patch
@@ -78,11 +85,15 @@ rm -rf %buildroot%_datadir/doc
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Vinagre.service
 %config %_datadir/glib-2.0/schemas/org.gnome.Vinagre.gschema.xml
 %_datadir/GConf/gsettings/org.gnome.Vinagre.convert
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %_man1dir/vinagre.*
 %doc AUTHORS NEWS README
 
 %changelog
+* Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt3
+- updated to latest snapshot (fixed BGO #783517)
+- fixed %%files section
+
 * Wed Jul 26 2017 Alexey Shabalin <shaba@altlinux.ru> 3.22.0-alt2
 - add patches from opensuse for build with freerdp-2.0.0-RC0
 
