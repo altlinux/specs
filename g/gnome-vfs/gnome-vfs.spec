@@ -24,6 +24,7 @@
 %def_enable daemon
 
 %def_disable static
+%def_disable gtk_doc
 %set_automake_version 1.11
 
 %define ver_major 2.24
@@ -31,8 +32,8 @@
 
 Name: gnome-vfs
 Version: %ver_major.4
-Release: alt10
-Serial: 1
+Release: alt11
+Epoch: 1
 
 Summary: The GNOME virtual file-system libraries
 Group: System/Libraries
@@ -101,7 +102,6 @@ Conflicts: libgnome < 2.5.2
 %define hal_ver 0.5.7
 %define gtk_doc_ver 1.0
 
-
 %define shared_mime_info_ver 0.15
 
 PreReq: GConf >= %GConf_ver
@@ -145,7 +145,7 @@ a MIME type manipulation library and other features.
 %package module-sftp
 Summary: SSH/SFTP access module for GNOME VFS.
 Group: System/Libraries
-Requires: %name = %serial:%version-%release
+Requires: %name = %EVR
 Requires: openssh-clients
 
 %description module-sftp
@@ -162,7 +162,7 @@ that begin with ssh: and sftp: prefixes.
 %package module-smb
 Summary: Samba access module for GNOME VFS.
 Group: System/Libraries
-Requires: %name = %serial:%version-%release
+Requires: %name = %EVR
 
 %description module-smb
 GNOME VFS is the GNOME virtual file system. It is the foundation of the
@@ -180,7 +180,7 @@ network.
 %package devel
 Summary: Libraries and include files for developing GNOME VFS applications
 Group: Development/GNOME and GTK+
-Requires: %name = %serial:%version-%release
+Requires: %name = %EVR
 Obsoletes: %oldname-devel < 2.14.2
 Provides: %oldname-devel = %version-%release
 
@@ -191,7 +191,7 @@ GNOME VFS modules and applications that use the GNOME VFS APIs.
 %package devel-doc
 Summary: Development documentation for GNOME VFS.
 Group: Development/C
-Conflicts: %name-devel < %serial:%version-%release
+Conflicts: %name-devel < %EVR
 Obsoletes: %oldname-devel-doc < 2.14.2
 Provides: %oldname-devel-doc = %version-%release
 Requires: gtk-doc
@@ -210,7 +210,7 @@ This package contains development documentation for GNOME VFS.
 %package devel-static
 Summary: Static libraries for developing GNOME VFS applications
 Group: Development/GNOME and GTK+
-Requires: %name-devel = %serial:%version-%release
+Requires: %name-devel = %EVR
 Obsoletes: %oldname-devel-static < 2.14.2
 Provides: %oldname-devel-static = %version-%release
 
@@ -222,7 +222,7 @@ for writing GNOME VFS modules and applications that use the GNOME VFS APIs.
 %package utils
 Summary: Command line applications for GNOME VFS.
 Group: Development/GNOME and GTK+
-Requires: %name = %serial:%version-%release
+Requires: %name = %EVR
 Obsoletes: %oldname-utils < 2.14.2
 Provides: %oldname-utils = %version-%release
 
@@ -241,7 +241,6 @@ This package contains command line tools for GNOME VFS.
 %patch4 -p1 -b .mime-data
 %patch5 -p1 -b .CVE-2009-2473
 %patch6 -p1 -b .mailto-command
-
 %patch8 -p1 -b .about
 %patch10 -p1 -b .pamconsole
 %patch11 -p1 -b .fixh323
@@ -256,9 +255,9 @@ This package contains command line tools for GNOME VFS.
 %patch300 -p1 -b .ignore-certain-mount-points
 %patch404 -p1 -b .utf8-mounts
 
-
 %build
 mkdir -p %buildroot%_datadir/dbus-1/services/
+gtkdocize --copy
 %autoreconf
 export LIBS="$LIBS `%_bindir/libgcrypt-config --libs`"
 %configure \
@@ -277,12 +276,11 @@ export LIBS="$LIBS `%_bindir/libgcrypt-config --libs`"
         --enable-ipv6 \
 	--disable-selinux \
         --disable-schemas-install \
-        --enable-gtk-doc
-
+        %{?_enable_gtk_doc:--enable-gtk-doc}
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 subst '/^\(ssh\|sftp\).*$/d' %buildroot%_sysconfdir/%name-2.0/modules/default-modules.conf
 cat <<EOF >%buildroot%_sysconfdir/%name-2.0/modules/sftp-module.conf
 ssh: sftp
@@ -370,6 +368,9 @@ fi
 %exclude %vfsmodulesdir/*.la
 
 %changelog
+* Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt11
+- disabled doc regeneration
+
 * Mon Dec 07 2015 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt10
 - rebuilt with openssl instead gnutls
 
