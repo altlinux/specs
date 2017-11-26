@@ -8,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 Name:		arduino
 Epoch:		1
 Version:	1.8.5
-Release:	alt1_1jpp8
+Release:	alt2_1jpp8
 Summary:	An IDE for Arduino-compatible electronics prototyping platforms
 Group:		Development/Java
 License:	GPLv2+ and LGPLv2+ and CC-BY-SA
@@ -77,6 +77,7 @@ Patch6:		arduino-1.8.3-armbuild.patch
 # Do not download listSerialPortsC bits (they are in arduino-listSerialPortsC)
 Patch7:		arduino-1.8.3-use-system-libserialport.patch
 Source44: import.info
+Patch33: arduino-1.8.5-use-system-listSerialsj.patch
 
 %description
 Arduino is an open-source electronics prototyping platform based on
@@ -177,6 +178,7 @@ jakarta-commons-httpclient jsch apache-commons-lang3 jssc jsemver \
 apache-commons-compress apache-commons-codec rsyntaxtextarea batik xml-commons-apis-ext xmlgraphics-commons
 
 touch app/test/cc/arduino/packages/contributions/library_index.json
+%patch33 -p1
 
 %build
 %global antflags -Dno_docs=true -Dno_arduino_builder=true -Dsystem_avr=true -Dlight_bundle=true
@@ -299,6 +301,9 @@ fi
 %{_datadir}/%{name}/arduino-builder
 
 %changelog
+* Sun Nov 26 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.8.5-alt2_1jpp8
+- fixed load of liblistSerialsj
+
 * Wed Nov 22 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.8.5-alt1_1jpp8
 - new version
 
