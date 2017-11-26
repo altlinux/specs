@@ -1,14 +1,13 @@
-%define rev svn3269
+%define rev svn3279
 Name: fheroes2
-Version: 20131009
+Version: 20161219
 Release: alt1.%rev
 Summary: Free implementation of Heroes of the Might and Magic II engine
 License: GPL
 Group: Games/Strategy
 Url: http://sourceforge.net/projects/fheroes2/
-Packager: Andrew Clark <andyc@altlinux.org>
 
-Source: http://sourceforge.net/projects/fheroes2/files/fheroes2/%name-%version.tar.gz
+Source: http://sourceforge.net/projects/fheroes2/files/fheroes2/%name-%version.tar
 Source2: %name.sh
 Source3: %name.png
 Source4: %name.desktop
@@ -55,6 +54,10 @@ install -pm 644 {AUTHORS,changelog.txt,COPYING,LICENSE,README} %buildroot%_docdi
 
 
 %changelog
+* Sun Nov 26 2017 Igor Vlasenko <viy@altlinux.ru> 20161219-alt1.svn3279
+- picked up from orphaned
+- updated to the latest commit (closes: #32906)
+
 * Wed Dec 24 2014 Andrew Clark <andyc@altlinux.org> 20131009-alt1.svn3269
 - version update to 20131009-alt1.svn3269
 
