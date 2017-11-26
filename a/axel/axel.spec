@@ -1,24 +1,21 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gettext
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global gittag 2.13.1
-%global gitowner eribertomota
+%global gittag v2.15
+%global gitowner axel-download-accelerator
 
 Name: axel
-Version: 2.13.1
-Release: alt1_2
+Version: 2.15
+Release: alt1_1
 Summary: Light command line download accelerator for Linux and Unix
 
 Group: Networking/WWW
 License: GPLv2+
-URL: https://github.com/eribertomota/%{name}
-Source0: https://github.com/eribertomota/%{name}/archive/%{gittag}/%{name}-%{version}.tar.gz
+URL: https://github.com/%{gitowner}/%{name}
+Source0: https://github.com/%{gitowner}/%{name}/archive/%{gittag}/%{name}-%{version}.tar.gz
 BuildRequires: gettext-tools libasprintf-devel
 BuildRequires: pkgconfig(libssl)
-BuildRequires: autoconf-common
-BuildRequires: automake-common
+BuildRequires: autoconf
+BuildRequires: automake
 Source44: import.info
 
 %description
@@ -57,6 +54,9 @@ install -m 644 -p -T doc/axelrc.example %{buildroot}%{_sysconfdir}/axelrc
 
 
 %changelog
+* Sun Nov 26 2017 Igor Vlasenko <viy@altlinux.ru> 2.15-alt1_1
+- new version
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.13.1-alt1_2
 - update to new release by fcimport
 
