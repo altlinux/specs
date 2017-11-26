@@ -1,5 +1,5 @@
 Name: pycam
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 Summary: Open Source CAM - Toolpath Generation for 3-Axis CNC machining
 Group: Engineering
@@ -41,7 +41,7 @@ PyCAM supports a wide range of toolpath strategies for 3D models and
 %setup
 %patch -p2
 
-for f in ./*.{txt,TXT} ./Changelog ./PKG-INFO; do
+for f in ./*.{txt,TXT} ./Changelog; do
     iconv -f iso-8859-1 -t utf-8 $f |sed 's|\r||g' > $f.utf8
     touch -c -r $f $f.utf8
     mv $f.utf8 $f
@@ -71,19 +71,19 @@ popd
 
 # Install icons
 install -pD -m 0644 share/mime/application-sla.svg \
-	%buildroot%_iconsdir/hicolor/scalable/apps/pycam.svg
+    %buildroot%_iconsdir/hicolor/scalable/apps/pycam.svg
 install -pD -m 0644 share/mime/icons/32x32/application-sla.png \
-	%buildroot%_iconsdir/hicolor/32x32/apps/pycam.png
+    %buildroot%_iconsdir/hicolor/32x32/apps/pycam.png
 install -pD -m 0644 share/mime/icons/64x64/application-sla.png \
-	%buildroot%_iconsdir/hicolor/64x64/apps/pycam.png
+    %buildroot%_iconsdir/hicolor/64x64/apps/pycam.png
 install -pD -m 0644 share/mime/icons/128x128/application-sla.png \
-	%buildroot%_iconsdir/hicolor/128x128/apps/pycam.png
+    %buildroot%_iconsdir/hicolor/128x128/apps/pycam.png
 
 # Install man page
 install -pD -m 0644 man/pycam.1 %buildroot%_man1dir/pycam.1
 
 %files
-%doc Changelog COPYING.TXT LICENSE.TXT PKG-INFO README.md technical_details.txt
+%doc Changelog COPYING.TXT LICENSE.TXT README.md technical_details.txt
 %_datadir/%name/
 %_bindir/%name
 %_desktopdir/pycam.desktop
@@ -92,6 +92,9 @@ install -pD -m 0644 man/pycam.1 %buildroot%_man1dir/pycam.1
 %python_sitelibdir/*
 
 %changelog
+* Sun Nov 26 2017 Anton Midyukov <antohami@altlinux.org> 0.6.2-alt1
+- New version 0.6.2
+
 * Wed Sep 27 2017 Anton Midyukov <antohami@altlinux.org> 0.6.1-alt1
 - New version 0.6.1
 
