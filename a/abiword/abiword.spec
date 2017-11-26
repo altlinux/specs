@@ -10,7 +10,7 @@
 
 Name: abiword
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -26,11 +26,8 @@ Source13: abiword.xml
 
 Patch11: abiword-2.8.3-desktop.patch
 Patch12: abiword-2.6.0-boolean.patch
-Patch16: abiword-3.0.0-librevenge.patch
-Patch20: abiword-3.0.0-libwp.patch
-Patch21: abiword-3.0.1-libwps-0.4.patch
-Patch24: abiword-3.0.1-fixwps.patch
-Patch25: abiword-3.0.2-fix-black-drawing-regression.patch
+Patch13: abiword-3.0.0-librevenge.patch
+Patch14: abiword-3.0.2-fix-black-drawing-regression.patch
 
 Obsoletes: abisuite, abisuite-koi8, abisuite-cp1251, abisuite-iso8859-8
 Obsoletes: %name-%abi_ver
@@ -39,7 +36,7 @@ Conflicts: %name-light
 
 Requires: %name-data = %version-%release
 
-BuildRequires: gcc-c++ boost-devel asio libreadline-devel flex
+BuildRequires: gcc-c++ boost-devel libreadline-devel flex
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libgsf-gir-devel
 BuildRequires: libgtk+3-devel librsvg-devel libfribidi-devel libredland-devel libots-devel
 BuildRequires: liblink-grammar-devel libgsf-devel bzlib-devel zlib-devel libjpeg-devel libpng-devel libxslt-devel
@@ -52,7 +49,7 @@ BuildRequires: telepathy-glib-devel libdbus-glib-devel
 %{?_with_libical:BuildRequires: libical-devel}
 %{?_with_eds:BuildRequires: evolution-data-server-devel}
 %{?_with_python:BuildRequires: python-module-pygobject3-devel python-module-setuptools}
-%{?_enable_collabnet:BuildRequires: libgnutls-devel libsoup-devel libgcrypt-devel}
+%{?_enable_collabnet:BuildRequires: libgnutls-devel libsoup-devel libgcrypt-devel asio-devel}
 
 %description
 AbiWord is a cross-platform, Open Source Word Processor developed
@@ -132,11 +129,8 @@ Python bindings for developing with AbiWord library
 # fedora patches
 %patch11 -p1 -b .desktop
 %patch12 -p1 -b .boolean
-%patch16 -p0 -b .librevenge
-#%%patch20 -p1 -b .libwp
-#%%patch21 -p1 -b .libwps-0.4
-#%%patch24 -p1 -b .wps2
-%patch25 -p1 -b .black
+%patch13 -p0 -b .librevenge
+%patch14 -p1 -b .black
 
 %build
 %add_optflags -std=c++11
@@ -195,6 +189,9 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python_sitelibdir/gi/overrides/*
 
 %changelog
+* Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt2
+- fixed buildreqs
+
 * Sun Dec 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt1
 - 3.0.2
 - enabled abicollab.net support again
