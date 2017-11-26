@@ -6,7 +6,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: The brush library used by MyPaint
 Group: System/Libraries
@@ -15,7 +15,7 @@ Url: https://github.com/%_name/%name
 
 Source: %url/archive/%name-%version.tar.gz
 
-BuildRequires: intltool libjson-devel
+BuildRequires: intltool libjson-c-devel
 BuildRequires: gobject-introspection-devel
 %{?_enable_gegl:BuildRequires: libgegl0.3-devel libgegl0.3-gir-devel}
 
@@ -92,6 +92,9 @@ This package provides GObject introspection devel data for %name.
 %{?_enable_gegl:%_girdir/MyPaintGegl-%api_ver.gir}
 
 %changelog
+* Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt3
+- fixed buildreqs
+
 * Tue May 02 2017 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt2
 - rebuilt against libjson-c.so.2
 
