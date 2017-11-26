@@ -1,15 +1,21 @@
 Name: astyle
 Version: 3.0.1
-Release: alt1
+Release: alt2
+
+%global majorversion    3
+%global soversion       %version
 
 Summary: A small, fast automatic indentation filter for C/C++/Java code
 License: GPL
 Group: Development/Other
 
 Url: http://%name.sourceforge.net/
-Source: %{name}_%{version}_linux.tar.gz
+Source: %{name}_%{version}_linux.tar
 
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ java-devel-default
+
+# Make the astyle-lib usable for arduino
+Patch0:         astyle-arduino.patch
 
 %package -n lib%name
 Group: Development/C++
@@ -43,20 +49,38 @@ source files. These can be used from a command line, or it can be
 incorporated as classes in another C++ program.
 
 %prep
-%setup -n %name
+%setup -q -n %name
+%patch0 -p1
 
 %build
-%make_build CFLAGS=-O2 -C src -f ../build/gcc/Makefile shareddebug astyled
+chmod a-x src/*
+chmod a-x doc/*
+
+pushd src
+    # it's much easier to compile it here than trying to fix the Makefile
+    g++ $RPM_OPT_FLAGS -DASTYLE_LIB -DASTYLE_JNI -fPIC -I/usr/lib/jvm/java/include -I/usr/lib/jvm/java/include/linux -c ASBeautifier.cpp ASEnhancer.cpp ASFormatter.cpp ASResource.cpp astyle_main.cpp
+    g++ -shared -o libastyle.so.%{soversion} *.o -Wl,-soname,libastyle.so.%{majorversion}
+    ln -s libastyle.so.%{soversion} libastyle.so
+    g++ $RPM_OPT_FLAGS -c ASLocalizer.cpp astyle_main.cpp
+    g++ $RPM_OPT_FLAGS -o astyle ASLocalizer.o astyle_main.o -L. -lastyle
+popd
 
 %install
-install -D src/bin/%{name}d %buildroot%_bindir/%name
-install -d %buildroot%_libdir/
-install src/bin/lib* %buildroot%_libdir/
-( cd %buildroot%_libdir; ln -s lib* lib%name.so )
-install -D src/%name.h %buildroot%_includedir/%name.h
+pushd src
+    mkdir -p $RPM_BUILD_ROOT{%{_bindir},%{_libdir},%{_includedir}}
+
+    install -p -m 755 astyle $RPM_BUILD_ROOT%{_bindir}
+    install -p -m 755 libastyle.so.%{soversion} $RPM_BUILD_ROOT%{_libdir}
+    cp -P libastyle.so $RPM_BUILD_ROOT%{_libdir}
+    install -p -m 644 astyle.h $RPM_BUILD_ROOT%{_includedir}
+popd
+
+# hardcoded path! for --help
+mkdir -p %buildroot%_datadir/doc/%name/html
+install -m 644 doc/*.html %buildroot%_datadir/doc/%name/html/
 
 %files
-%doc doc/*
+%doc %_datadir/doc/%name
 %_bindir/%name
 
 %files -n lib%name
@@ -67,6 +91,12 @@ install -D src/%name.h %buildroot%_includedir/%name.h
 %_includedir/%name.h
 
 %changelog
+* Sun Nov 26 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt2
+- NMU:
+- fixed bug: astyle --help files not found (hardcoded path to html doc)
+- added JNI support for arduino (closes: #34238)
+- library should be named lib%name.so.* (closes: #34235)
+
 * Tue Aug 15 2017 Fr. Br. George <george@altlinux.ru> 3.0.1-alt1
 - Autobuild version bump to 3.0.1
 
