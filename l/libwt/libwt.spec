@@ -1,14 +1,14 @@
 %define oname wt
 
 Name: libwt
-Version: 3.3.7
-Release: alt2
+Version: 4.0.2
+Release: alt1
 Summary: Wt (pronounced as witty) is a C++ library for developing web applications.
 License: GPL
 Group: Development/C++
 Url: https://www.webtoolkit.eu
 
-# Source-url: https://github.com/kdeforche/wt/archive/%version.tar.gz
+# Source-url: https://github.com/emweb/wt/archive/%version.tar.gz
 Source: %oname-%version.tar
 
 BuildPreReq: gcc-c++ cmake libsqlite3-devel zlib-devel libpcre-devel
@@ -79,6 +79,21 @@ Summary: Wt (pronounced as witty) is a C++ library for developing web applicatio
 Group: System/Libraries
 
 %description dbo-sqlite
+Wt (pronounced as witty) is a C++ library for developing web applications.
+
+The API is widget-centric and uses well-tested patterns of desktop GUI development 
+tailored to the web. 
+To the developer, it offers abstraction of many web-specific implementation details, 
+including client-server protocols (HTTP, Ajax, WebSockets), 
+and frees the developer from tedious JavaScript manipulations of HTML and dealing 
+with cross-browser issues. Instead, with Wt, 
+you can focus on actual functionality with a rich set of feature-complete widgets.
+
+%package dbo-mssql
+Summary: Wt (pronounced as witty) is a C++ library for developing web applications (dbo mssql)
+Group: System/Libraries
+
+%description dbo-mssql
 Wt (pronounced as witty) is a C++ library for developing web applications.
 
 The API is widget-centric and uses well-tested patterns of desktop GUI development 
@@ -170,6 +185,9 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir
 %files dbo-sqlite
 %_libdir/libwtdbosqlite*.so.*
 
+%files dbo-mssql
+%_libdir/libwtdbomssqlserver*.so.*
+
 %files http
 %_libdir/lib*http*.so.*
 
@@ -184,6 +202,9 @@ mv %buildroot/usr/lib/* %buildroot/%_libdir
 #files docs
 
 %changelog
+* Sun Nov 26 2017 Pavel Vainerman <pv@altlinux.ru> 4.0.2-alt1
+- new version (4.0.2) with rpmgs script
+
 * Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 3.3.7-alt2
 -NMU: rebuild with libharu
 
