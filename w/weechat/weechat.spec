@@ -1,6 +1,6 @@
 Name: weechat
 Version: 1.9.1
-Release: alt1
+Release: alt2
 
 Summary: fast, light & extensible IRC client
 License: GPLv3
@@ -98,6 +98,9 @@ find ./src/plugins -name "Makefile*" -print0 | xargs -r0 subst 's,\(\-module\),\
 ./autogen.sh
 
 %configure \
+	--enable-threads \
+	--enable-exec \
+	--enable-buflist \
 	--enable-perl \
 	--enable-ruby \
 	--enable-lua \
@@ -113,15 +116,27 @@ find ./src/plugins -name "Makefile*" -print0 | xargs -r0 subst 's,\(\-module\),\
 %install
 %make_install DESTDIR=%buildroot install
 
+rm -rf -- \
+	%buildroot/%_includedir \
+	%buildroot/%_pkgconfigdir \
+#
+
+find %buildroot -name '*.la' -delete
+find %buildroot -name '*.a' -delete
+
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/*
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
-%_libdir/%name/plugins/charset.so
+%_niconsdir/%name.png
 %_libdir/%name/plugins/alias.so
+%_libdir/%name/plugins/buflist.so
+%_libdir/%name/plugins/charset.so
 %_libdir/%name/plugins/fifo.so
+%_libdir/%name/plugins/exec.so
+%_libdir/%name/plugins/script.so
 %_libdir/%name/plugins/irc.so
 %_libdir/%name/plugins/logger.so
 %_libdir/%name/plugins/relay.so
@@ -149,6 +164,9 @@ find ./src/plugins -name "Makefile*" -print0 | xargs -r0 subst 's,\(\-module\),\
 %_libdir/%name/plugins/tcl.so
 
 %changelog
+* Sat Nov 25 2017 Alexey Gladkov <legion@altlinux.ru> 1.9.1-alt2
+- Add buflist and exec plugins.
+
 * Mon Nov 20 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.9.1-alt1
 - NMU: New security version (1.9.1) (Fixes: CVE-2017-14727)
 
