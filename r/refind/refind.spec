@@ -1,20 +1,20 @@
 Name: refind
-Version: 0.6.12
-Release: alt4
+Version: 0.11.2
+Release: alt1
 
 Summary: EFI boot manager software
 License: GPLv3
 Group: System/Base
 
 Url: http://www.rodsbooks.com/refind/
-Source: refind-src-%version.zip
-Source1: altlinux_altinst.icns
-Source2: altlinux_live.icns
-Source3: altlinux_rescue.icns
-Patch: 0001-Support-for-memtest86-as-a-second-row-item.patch
-Packager: Michael Shigorin <mike@altlinux.org>
+# https://git.code.sf.net/p/refind/code
+Source: %name-%version.tar 
+Source1: altlinux_altinst.png
+Source2: altlinux_live.png
+Source3: altlinux_rescue.png
+Source4: os_altlinux.png
 
-BuildRequires: gnu-efi-3.0r
+BuildRequires: gnu-efi >= 3.0.6-alt1
 BuildRequires: unzip
 BuildRequires: rpm-macros-uefi
 BuildRequires: pesign >= 0.109-alt4
@@ -25,8 +25,6 @@ ExclusiveArch: x86_64
 
 %define refind_lib %_efi_bindir
 %define refind_data %_datadir/%name
-
-%set_gcc_version 4.7
 
 %description
 A graphical boot manager for EFI- and UEFI-based computers, such as all
@@ -48,11 +46,10 @@ when one can't disable it easily, doesn't want to, or needs not to.
 
 %prep
 %setup
-%patch -p1
 
 %build
-make gnuefi
-make fs_gnuefi
+make gnuefi EFICRT0=%_libdir GNUEFILIB=%_libdir
+make fs_gnuefi EFICRT0=%_libdir GNUEFILIB=%_libdir
 
 %install
 mkdir -p %buildroot{%refind_lib{,/drivers_%_efi_arch},%refind_data}
@@ -68,18 +65,22 @@ install -pm644 refind/refind*.efi %buildroot%refind_lib/
 cp -a drivers_%_efi_arch/*.efi %buildroot%refind_lib/drivers_%_efi_arch/
 
 cp -a icons/ %buildroot%refind_data/
-install -pDm644 %SOURCE1 %buildroot%refind_data/icons/altlinux/altinst.icns
-install -pDm644 %SOURCE2 %buildroot%refind_data/icons/altlinux/live.icns
-install -pDm644 %SOURCE3 %buildroot%refind_data/icons/altlinux/rescue.icns
+install -pDm644 %SOURCE1 %buildroot%refind_data/icons/altlinux/altinst.png
+install -pDm644 %SOURCE2 %buildroot%refind_data/icons/altlinux/live.png
+install -pDm644 %SOURCE3 %buildroot%refind_data/icons/altlinux/rescue.png
+install -pDm644 %SOURCE4 %buildroot%refind_data/icons/os_altlinux.png
 
 %files
 %doc docs/*
 %doc NEWS.txt COPYING.txt LICENSE.txt README.txt CREDITS.txt
-%doc install.sh mkrlconf.sh mvrefind.sh
 %refind_lib
 %refind_data
 
 %changelog
+* Sun Nov 26 2017 Anton Farygin <rider@altlinux.ru> 0.11.2-alt1
+- 0.11.2
+- icons converted to png (refind default format)
+
 * Wed Mar 01 2017 Michael Shigorin <mike@altlinux.org> 0.6.12-alt4
 - FTBFS workaround: use gcc4.7
 

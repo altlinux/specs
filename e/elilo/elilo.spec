@@ -1,6 +1,6 @@
 Name: elilo
-Version: 3.14
-Release: alt1.59265358
+Version: 3.16
+Release: alt1
 
 Summary: EFI Linux Loader
 License: GPL v2+
@@ -13,18 +13,11 @@ Source2: elilo.conf.man5
 
 BuildRequires: rpm-macros-uefi
 BuildRequires: pesign >= 0.109-alt4
-BuildRequires: gnu-efi = 3.0r
-BuildRequires: gnu-efi >= 3.0d
-BuildConflicts: gnu-efi = 3.0s
-BuildConflicts: gnu-efi = 3.0t
+BuildRequires: gnu-efi
 
 ExclusiveArch: x86_64
 
 Obsoletes: elilo-signed
-
-Summary(pl.UTF-8): Linuksowy bootloader dla platform EFI
-
-%set_gcc_version 4.7
 
 %description
 ELILO is an EFI Linux boot loader for IA-64 (IPF), IA-32 (x86)
@@ -40,6 +33,7 @@ oraz x86_64 opartych na EFI.
 %prep
 %setup -c
 tar xf %name-%version-source.tar.gz
+mv elilo-%version-source elilo
 
 %build
 %make -C elilo -j1 \
@@ -68,6 +62,9 @@ install -pDm644 %SOURCE2 %buildroot%_man5dir/elilo.conf.5
 %_man5dir/elilo.conf.5*
 
 %changelog
+* Fri Nov 24 2017 Anton Farygin <rider@altlinux.ru> 3.16-alt1
+- 3.16
+
 * Wed Mar 01 2017 Michael Shigorin <mike@altlinux.org> 3.14-alt1.59265358
 - FTBFS workaround: use gcc4.7
 
