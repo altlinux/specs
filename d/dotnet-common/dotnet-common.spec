@@ -1,9 +1,9 @@
-%define corerelease 2.0.0
-%define sdkrelease 2.0.0
+%define corerelease 2.0.3
+%define sdkrelease 2.0.3
 
 Name: dotnet-common
-Version: 2.0.0
-Release: alt4
+Version: 2.0.3
+Release: alt1
 
 Summary: Common dir and files for the .NET Core runtime and libraries
 
@@ -52,7 +52,7 @@ EOF
 # FIXME: possible hack
 cat <<EOF >.version
 0
-%_dotnet_corerelease
+%corerelease
 EOF
 
 
@@ -86,6 +86,9 @@ install -D -m644 .version %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App
 %_rpmmacrosdir/dotnet
 
 %changelog
+* Thu Nov 23 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.3-alt1
+- build 2.0.3 release
+
 * Mon Aug 28 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt4
 - .NET Core 2.0.0 release
 - add subpackage rpm-macros-dotnet

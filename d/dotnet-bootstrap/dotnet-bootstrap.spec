@@ -1,9 +1,9 @@
-%define sdkversion 2.0.0
-%define coreversion 2.0.0
+%define sdkversion 2.0.3
+%define coreversion 2.0.3
 
 Name: dotnet-bootstrap
-Version: 2.0.0
-Release: alt3
+Version: 2.0.3
+Release: alt1
 
 Summary: .NET Core SDK binaries
 
@@ -11,10 +11,12 @@ License: MIT
 Url: https://github.com/dotnet
 Group: Development/Other
 
-# from https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.0.0-download.md
-# SHA1 6059a6f72fb7aa6205ef4b52583e9c041fd128e768870a0fc4a33ed84c98ca6b
-# Source-url: https://download.microsoft.com/download/1/B/4/1B4DE605-8378-47A5-B01B-2C79D6C55519/dotnet-sdk-2.0.0-linux-x64.tar.gz
-Source: %name-%version.tar
+# To check we manually update download url
+%define downloadversion 2.0.3
+# from https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.0.3.md
+# SHA512 74a0741d4261d6769f29a5f1ba3e8ff44c79f17bbfed5e240c59c0aa104f92e93f5e76b1a262bdfab3769f3366e33ea47603d9d725617a75cad839274ebc5f2b
+# Source-url: https://download.microsoft.com/download/D/7/2/D725E47F-A4F1-4285-8935-A91AE2FCC06A/dotnet-sdk-%downloadversion-linux-x64.tar.gz
+Source: %name-%downloadversion.tar
 
 ExclusiveArch: x86_64
 
@@ -60,6 +62,9 @@ rm -f %buildroot%_libdir/%name/shared/Microsoft.NETCore.App/*/libsosplugin.so
 %_libdir/%name/
 
 %changelog
+* Thu Nov 23 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.3-alt1
+- new version (2.0.3) with rpmgs script
+
 * Sun Aug 27 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt3
 - new version (2.0.0) with rpmgs script
 
