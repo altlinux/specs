@@ -1,10 +1,13 @@
+%def_enable snapshot
+
 %define _name scratch
 %define xdg_name org.pantheon.%_name
+%define rdnn_name io.elementary.code
 %define ver_major 2.4
 
 Name: scratch-text-editor
 Version: %ver_major.1
-Release: alt3
+Release: alt4
 
 Summary: The text editor that works
 License: GPLv3
@@ -12,7 +15,11 @@ Group: Editors
 
 Url: https://launchpad.net/%_name
 
+%if_disabled snapshot
 Source: %url/2.x/%version/+download/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 Patch: %name-2.4.1-up-vala_0.36.patch
 
 Requires: contractor
@@ -81,7 +88,7 @@ This package provides Vala language bindings for the scratch text editor.
 
 %prep
 %setup -n %name-%version
-%patch
+#%%patch
 # fix libdir
 find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINATION}/|g' --
 
@@ -92,20 +99,20 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %install
 %cmakeinstall_std
 
-%find_lang %name
+%find_lang %rdnn_name
 
-%files -f %name.lang
-%_bindir/%name
+%files -f %rdnn_name.lang
+%_bindir/%rdnn_name
 %_libdir/lib%{_name}core.so.*
-%_libdir/%_name/
+%_libdir/%rdnn_name/
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name.plugins.folder-manager.gschema.xml
-%_datadir/glib-2.0/schemas/%xdg_name.plugins.file-manager.gschema.xml
+#%_datadir/glib-2.0/schemas/%xdg_name.plugins.file-manager.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name.plugins.spell.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name.plugins.terminal.gschema.xml
-%_datadir/%_name/
-%_datadir/appdata/%xdg_name.appdata.xml
+%_iconsdir/hicolor/*/*/%rdnn_name.*
+%_datadir/metainfo/%rdnn_name.appdata.xml
 
 %files devel
 %_libdir/*.so
@@ -117,6 +124,9 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %_vapidir/%{_name}core.vapi
 
 %changelog
+* Sat Jan 06 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt4
+- current snapshot built against libgranite.so.4
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt3
 - rebuild with vala-0.38
 

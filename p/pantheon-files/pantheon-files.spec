@@ -3,13 +3,14 @@
 
 Name: pantheon-files
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 
 Summary: The file manager of the Pantheon desktop
 License: GPLv3
 Group: File tools
 Url: https://launchpad.net/pantheon-files
 
+#VCS: https://github.com/elementary/files.git
 Source: https://launchpad.net/%name/%{ver_major}.x/%version/+download/%name-%version.tar.xz
 
 #Depends: tumbler
@@ -99,6 +100,9 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %endif
 
 %changelog
+* Sat Jan 06 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt2
+- rebuilt against libgranite.so.4
+
 * Sun Jun 04 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt1
 - 0.3.5
 

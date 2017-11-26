@@ -4,13 +4,14 @@
 Name: switchboard
 %define xdg_name org.pantheon.%name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Modular Desktop Settings Hub for elementary OS
 License: GPLv2.1+
 Group: Graphical desktop/Other
 Url: https://launchpad.net/%name
 
+# VCS: https://github.com/elementary/switchboard.git
 Source: https://launchpad.net/%name/2.x/%version/+download/%name-%version.tar.xz
 
 Requires: lib%name = %version-%release
@@ -72,6 +73,9 @@ subst 's@\(\/include\)\/@\1@' lib/%name.pc.cmake
 %_vapidir/%name-%api_ver.vapi
 
 %changelog
+* Sat Jan 06 2018 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt2
+- rebuilt against libgranite.so.4
+
 * Wed Aug 02 2017 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
 - 2.3.0
 
