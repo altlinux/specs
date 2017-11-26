@@ -10,7 +10,7 @@
 
 Name: gpaste
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GPaste is a clipboard management system
 Group: Text tools
@@ -123,7 +123,7 @@ cp %SOURCE1 m4/
 %_libexecdir/%name/
 %{?_enable_applet:%exclude %_libexecdir/%name/%name-applet}
 %_desktopdir/%xdg_name.Ui.desktop
-%_datadir/appdata/%xdg_name.Ui.appdata.xml
+%_datadir/metainfo/%xdg_name.Ui.appdata.xml
 %_prefix/lib/systemd/user/%xdg_name.Ui.service
 %_datadir/dbus-1/services/*.service
 %_prefix/lib/systemd/user/%xdg_name.service
@@ -153,7 +153,7 @@ cp %SOURCE1 m4/
 %if_enabled applet
 %files applet
 %_libexecdir/%name/%name-applet
-%_datadir/appdata/%xdg_name.Applet.appdata.xml
+%_datadir/metainfo/%xdg_name.Applet.appdata.xml
 %_datadir/applications/%xdg_name.Applet.desktop
 %_prefix/lib/systemd/user/%xdg_name.Applet.service
 %_sysconfdir/xdg/autostart/%xdg_name.Applet.desktop
@@ -165,6 +165,9 @@ cp %SOURCE1 m4/
 
 
 %changelog
+* Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt2
+- fixed %%files section
+
 * Thu Sep 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 
