@@ -7,7 +7,7 @@
 
 Name: gnome-disk-usage
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: The GNOME disk usage analyser.
 License: GPLv2+
@@ -54,9 +54,12 @@ popd
 %_man1dir/%_name.1.*
 %_datadir/dbus-1/services/%__name.service
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/appdata/%__name.appdata.xml
+%_datadir/metainfo/%__name.appdata.xml
 
 %changelog
+* Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt2
+- fixed %%files section
+
 * Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 

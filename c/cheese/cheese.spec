@@ -13,7 +13,7 @@
 
 Name: cheese
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
 License: GPL
@@ -142,7 +142,7 @@ GObject introspection devel data for the Cheese library.
 %_bindir/%name
 %_desktopdir/%xdg_name.desktop
 %_datadir/icons/hicolor/*/*/*.*
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/*
 %_man1dir/%name.1.*
@@ -168,6 +168,9 @@ GObject introspection devel data for the Cheese library.
 %endif
 
 %changelog
+* Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt2
+- fixed %%files section
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

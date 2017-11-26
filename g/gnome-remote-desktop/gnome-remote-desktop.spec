@@ -5,7 +5,7 @@
 
 Name: gnome-remote-desktop
 Version: 0.1.2
-Release: alt1
+Release: alt2
 
 Summary: GNOME Remote Desktop
 Group: Networking/Remote access
@@ -37,6 +37,7 @@ Remote desktop daemon for GNOME using pipewire.
 
 %prep
 %setup
+subst 's/default:/value:/' meson_options.txt
 
 %build
 %meson -Dsystemd-user-unit-dir=%_userinitdir
@@ -52,6 +53,9 @@ Remote desktop daemon for GNOME using pipewire.
 %doc README
 
 %changelog
+* Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.2-alt2
+- fixed build with meson-0.43
+
 * Wed Sep 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.2-alt1
 - first build for Sisyphus
 
