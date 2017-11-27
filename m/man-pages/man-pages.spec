@@ -1,5 +1,5 @@
 Name: man-pages
-Version: 4.12
+Version: 4.14
 Release: alt1
 
 Summary: Man (manual) pages from the Linux Documentation Project
@@ -11,8 +11,6 @@ Url: http://www.kernel.org/doc/man-pages/
 # http://www.kernel.org/pub/linux/docs/man-pages/%name-%version.tar.xz
 Source: %name-%version.tar
 Source1: %name-extra.tar
-
-Patch1: man-pages-1.39-owl-ccldso.patch
 
 Requires: man >= 1.5i2-alt4
 BuildArch: noarch
@@ -80,7 +78,6 @@ man-pages translators.
 
 %prep
 %setup -b1
-%patch1 -p1
 
 %build
 # Refer to original crypt(3)
@@ -116,6 +113,12 @@ find %buildroot%_mandir -type f -print0 |
 %_datadir/%name/
 
 %changelog
+* Sun Nov 26 2017 Dmitry V. Levin <ldv@altlinux.org> 4.14-alt1
+- 4.13 -> 4.14.
+
+* Fri Sep 15 2017 Dmitry V. Levin <ldv@altlinux.org> 4.13-alt1
+- 4.12 -> 4.13.
+
 * Fri Jul 21 2017 Dmitry V. Levin <ldv@altlinux.org> 4.12-alt1
 - 4.11 -> 4.12.
 
