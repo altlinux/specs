@@ -6,8 +6,8 @@
 %def_enable gladeui
 
 Name: glade
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: A user interface designer for Gtk+ and GNOME
 Group: Development/GNOME and GTK+
@@ -15,7 +15,6 @@ License: %gpl2plus, %lgpl2plus
 URL: http://glade.gnome.org/
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Patch: glade-3.20-fix-xorg-100-percent.patch
 
 Requires: libgladeui%api_ver = %version-%release
 
@@ -84,7 +83,6 @@ GObject introspection devel data for the GladeUI library.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -122,7 +120,7 @@ GObject introspection devel data for the GladeUI library.
 %_datadir/%name/catalogs/*.xml
 %_datadir/%name/catalogs/glade-catalog.dtd
 %_datadir/%name/pixmaps
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 
 %exclude %_libdir/%name/modules/*.la
 
@@ -141,6 +139,10 @@ GObject introspection devel data for the GladeUI library.
 %_girdir/Gladeui-%api_ver.gir
 
 %changelog
+* Mon Nov 27 2017 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
+- 3.20.2
+- removed upstreamed patch from previous release
+
 * Fri Oct 13 2017 Paul Wolneykien <manowar@altlinux.org> 3.20.1-alt2
 - Apply fix-xorg-100-percent patch (thx arnaud-preevio@).
 
