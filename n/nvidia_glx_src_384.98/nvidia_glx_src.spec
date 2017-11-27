@@ -3,18 +3,26 @@
 %ifarch x86_64
 %define tbname         NVIDIA-Linux-x86_64
 %endif
-%define virtual_pkg_name NVIDIA_GLX
 %define bin_pkg_name     nvidia_glx
 %define module_name    nvidia
-%define dirsuffix -common
+%define dirsuffix %nil
+%ifarch x86_64
+%define dirsuffix -no-compat32
+%endif
+
+%define nvidia_egl_wayland_sover 1
+%define nvidia_egl_wayland_libver 1.0.1
+%define libnvidia_egl_wayland libnvidia-egl-wayland%nvidia_egl_wayland_sover
 
 # version-release
-
 %define nv_version 384
 %define nv_release 98
 %define nv_minor %nil
-%define pkg_rel alt184%ubt
-%define set_gl_nvidia_ver 0.20.2
+%define pkg_rel alt176%ubt
+%def_enable kernelsource
+%def_disable glvnd
+%def_enable package_egl_wayland
+%def_disable package_wfb
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -24,15 +32,17 @@
 %define module_release	%pkg_rel
 
 %define myGroup System/Kernel and hardware
-%define mySummary This is common package for usability NVIDIA drivers.
-%define mySummaryRu Пакет для совместимости драйверов NVIDIA.
+%define mySummary NVIDIA drivers and OpenGL libraries for XOrg X-server
+%define mySummaryRu Драйверы NVIDIA и библиотеки OpenGL для Х-сервера XOrg
+%define myUrl http://www.nvidia.com
+%define myVendor NVIDIA Corp.
+%define myLicense NVIDIA
 
-%define module_local_dir /lib/modules/nvidia
 %define mods /modules
 %define exts /modules/extensions
 %define drvs /modules/drivers
-%define x_etclib_sym_dir %_sysconfdir/X11/%_lib
-%define nv_etclib_sym_dir %{x_etclib_sym_dir}_nvidia
+%define lib_sym_dir %_sysconfdir/X11/%_lib
+%define nv_lib_sym_dir %{lib_sym_dir}_nvidia
 %define nv_lib32_sym_dir %_sysconfdir/X11/lib_nvidia
 %define xdrv_d /usr/libexec/X11/drv.d
 %define xdrv_d_old /usr/X11R6/lib/drv.d
@@ -51,110 +61,116 @@
 %define x11_ext_dir /usr/%_lib/X11%exts
 %define x11_ext_old /usr/X11R6/%_lib%exts
 %define x11driver_dir %_libdir/X11
-%define glvnddriver_dir %_libdir/glvnd
 %define nv_lib_dir_prefix %_libdir/nvidia_
 %define nv_lib_dir_prefix_old /usr/X11R6/%_lib/nvidia_
 %define nv_lib_dir %nv_lib_dir_prefix%tbver
 
-%add_findprov_lib_path %nv_lib_dir/*
-%add_findreq_skiplist %_libdir/*
-%add_findreq_skiplist %x11_lib_dir/*
+#add_findreq_skiplist %nv_lib_dir/
 %add_findreq_skiplist %x11_lib_old/*
 %add_findreq_skiplist %_bindir/nvidia-bug-report*.sh
 
-Name: nvidia_glx_common
 %if "%nv_minor" == "%nil"
+Name: nvidia_glx_src_%nv_version.%nv_release
 Version: %nv_version.%nv_release
 %else
+Name: nvidia_glx_src_%nv_version.%nv_release.%nv_minor
 Version: %nv_version.%nv_release.%nv_minor
 %endif
 Release: %pkg_rel
 
-Source: set_gl_nvidia-%set_gl_nvidia_ver.tar
-Source1: alternate-install-present
-Source2: nvidia-install-driver
-Source3: nvidia-clean-driver
+Source0: null
+Source201: ftp://download.nvidia.com/XFree86/Linux-x86/%tbver/NVIDIA-Linux-x86-%tbver.run
+Source202: ftp://download.nvidia.com/XFree86/Linux-x86_64/%tbver/NVIDIA-Linux-x86_64-%tbver-no-compat32.run
+
+Source2: nvidia.xinf
+Source100: nvidia_create_xinf
+
+Patch1: alt-fix-build-kernel.patch
+Patch2: alt-ignore-dma-remap.patch
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: kernel-build-tools libsysfs-devel
+BuildRequires: kernel-build-tools rpm-macros-alternatives
+BuildRequires: libXext-devel libEGL-devel
+BuildRequires: libwayland-client-devel libwayland-server-devel
+#BuildRequires: libGLdispatch libGLX
 ExclusiveArch: %ix86 x86_64
+#ExcludeArch: ppc64 x86_64 ppc s390 s390x ia64
+
 
 
 Group: %myGroup
 Summary: %mySummary
 Summary(ru_RU.UTF-8): %mySummaryRu
-Url: http://altlinux.ru/
-License: GPLv2
-#
-Provides: %virtual_pkg_name = %version-%release
-Obsoletes: %virtual_pkg_name < %version-%release
-#
-Conflicts: xorg-x11-mesagl <= 6.8.2-alt7
-Requires(post): x11presetdrv
-Requires: apt-scripts-nvidia
-# old
-Conflicts: nvidia_glx_100.14.19-100.14.19 <= alt40
-Conflicts: nvidia_glx_169.07-169.07 <= alt40
-Conflicts: nvidia_glx_169.09-169.09 <= alt41
-Conflicts: nvidia_glx_71.86.01-71.86.01 <= alt36
-Conflicts: nvidia_glx_96.43.01-96.43.01 <= alt36
-#
-Conflicts: nvidia_glx_71.86.04-71.86.04 <= alt37
-Conflicts: nvidia_glx_71.86.06-71.86.06 <= alt38
-Conflicts: nvidia_glx_96.43.05-96.43.05 <= alt37
-Conflicts: nvidia_glx_96.43.07-96.43.07 <= alt38
-Conflicts: nvidia_glx_169.12-169.12 <= alt44
-Conflicts: nvidia_glx_173.14.12-173.14.12 <= alt47
+Url: %myUrl
+License: %myLicense
 %description
-This is common package for NVIDIA drivers.
-%description -l ru_RU.UTF-8
-Этот пакет нужен для совместимости при отсутствии
-одной из компонент драйверов для NVIDIA.
+Sources for %{bin_pkg_name}_%{version} package
 
+
+%package -n %{bin_pkg_name}_%{version}
+PreReq: %{bin_pkg_name}_common >= %version
+Requires(post): x11presetdrv
+Requires: libGLdispatch libGLX
+Requires: %libnvidia_egl_wayland >= 0
+#
+Group: %myGroup
+Summary: %mySummary
+Summary(ru_RU.UTF-8): %mySummaryRu
+Url: %myUrl
+License: %myLicense
+%description -n %{bin_pkg_name}_%{version}
+NVIDIA X11 drivers and OpenGL libraries for GeForce/Quadro
+based video cards.
+%description -n %{bin_pkg_name}_%{version} -l ru_RU.UTF-8
+Драйверы и OpenGL-библиотеки для X11 и видеокарт NVIDIA на базе
+GeForce/Quadro.
+
+%package -n kernel-source-%module_name-%module_version
+Group: Development/Kernel
+Summary: Linux %module_name modules sources
+License: %myLicense
+Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
+%description -n kernel-source-%module_name-%module_version
+%module_name modules sources for Linux kernel
+
+%package -n %libnvidia_egl_wayland
+Group: System/Libraries
+Summary: nvidia library
+Provides: libnvidia-egl-wayland = %version-%release
+%description -n %libnvidia_egl_wayland
+nvidia library
 
 %prep
 %setup -T -c -n %tbname-%tbver%dirsuffix
+rm -rf %_builddir/%tbname-%tbver%dirsuffix
 cd %_builddir
+%ifarch x86_64
+sh %SOURCE202 -x
+%else
+sh %SOURCE201 -x
+%endif
 cd %tbname-%tbver%dirsuffix
-tar xvf %SOURCE0
-pushd set_gl_nvidia*
-cp settings.h.in settings.h
-subst "s|@DEFAULT_VERSION@|%version|" settings.h
-subst "s|@X_ETCLIB_SYML_DIR@|%x_etclib_sym_dir|" settings.h
-subst "s|@NV_ETCLIB_SYML_DIR@|%nv_etclib_sym_dir|" settings.h
-subst "s|@TLS_LIB_DIR@|%tls_lib_dir|" settings.h
 
-subst "s|@XLIB_DIR@|%x11_lib_dir|" settings.h
-subst "s|@XLIB_DIR_OLD@|%x11_lib_old|" settings.h
-
-subst "s|@XMOD_DIR@|%x11_mod_dir|" settings.h
-subst "s|@XMOD_DIR_OLD@|%x11_mod_old|" settings.h
-
-subst "s|@XDRV_DIR@|%x11_drv_dir|" settings.h
-subst "s|@XDRV_DIR_OLD@|%x11_drv_old|" settings.h
-
-subst "s|@XEXT_DIR@|%x11_ext_dir|" settings.h
-subst "s|@XEXT_DIR_OLD@|%x11_ext_old|" settings.h
-
-subst "s|@X_DRV_DIR@|%x11driver_dir|" settings.h
-subst "s|@NV_DRV_DIR_PREFIX@|%nv_lib_dir_prefix|" settings.h
-subst "s|@NV_DRV_DIR_PREFIX_OLD@|%nv_lib_dir_prefix_old|" settings.h
-
-subst "s|@XINF_DIR@|%xinf_dir|" settings.h
+pushd kernel
+#%patch1 -p1
+%patch2 -p1
+rm -rf precompiled
 popd
 
 
 %build
-#make OPTFLAGS="%optflags -Wl,--hash-style=sysv" -C set_gl_nvidia*
-make OPTFLAGS="%optflags" LDFLAGS="-L%_libdir" -C set_gl_nvidia*
->nvidianull.c
-gcc %optflags -c nvidianull.c -o nvidianull.o
-#ld --hash-style=sysv --shared nvidianull.o -o libnvidianull.so
-ld --shared nvidianull.o -o libnvidianull.so
 
 
 %install
-%__mkdir_p %buildroot/%module_local_dir
+%set_verify_elf_method textrel=relaxed
+%brp_strip_none %_libdir/*
+%brp_strip_none %nv_lib_dir/*
+
+soname()
+{
+    readelf -a $1| grep SONAME| sed 's/.*\[//'| sed 's/\].*//'
+}
+
 %__mkdir_p %buildroot/%_sbindir
 %__mkdir_p %buildroot/%tls_lib_dir
 %__mkdir_p %buildroot/%nv_lib_dir
@@ -164,65 +180,105 @@ ld --shared nvidianull.o -o libnvidianull.so
 #%__mkdir_p %buildroot/%x11_drv_old
 %__mkdir_p %buildroot/%x11_ext_dir
 #%__mkdir_p %buildroot/%x11_ext_old
-%__mkdir_p %buildroot/%x_etclib_sym_dir
-%__mkdir_p %buildroot/%nv_etclib_sym_dir
+%__mkdir_p %buildroot/%lib_sym_dir
+%__mkdir_p %buildroot/%nv_lib_sym_dir
 %__mkdir_p %buildroot/%nv_lib32_sym_dir
 %__mkdir_p %buildroot/%xdrv_d
 #%__mkdir_p %buildroot/%xdrv_d_old
 %__mkdir_p %buildroot/%xdrv_pre_d
 %__mkdir_p %buildroot/%xinf_dir
 %__mkdir_p %buildroot/%nv_workdirdir
-%__mkdir_p %buildroot/%_datadir/nvidia
-%__mkdir_p %buildroot/%x11_lib_dir/vdpau
-
-# prompt user to don't use nvidia-installer
-mkdir -p %buildroot/usr/lib/nvidia/
-install -m 0644 %SOURCE1 %buildroot/usr/lib/nvidia/
-mkdir -p %buildroot/%_bindir/
-install -m 0755 %SOURCE2 %buildroot/%_bindir/
-install -m 0755 %SOURCE3 %buildroot/%_bindir/
-
-%__install -m 0755 set_gl_nvidia*/nvidia %buildroot/%xdrv_d/nvidia
-#%__ln_s ../../../..%xdrv_d/nvidia %buildroot/%xdrv_d_old/nvidia
-%__install -m 0755 set_gl_nvidia*/nvidia_preset %buildroot/%xdrv_pre_d/nvidia
-%__install -m 0644 libnvidianull.so %buildroot/%x11_lib_dir/
-
-%__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libvdpau_nvidia.so
-%__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libnvidia-cfg.so.1
-%__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libEGL_nvidia.so.0
-%__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libGLESv2_nvidia.so.2
-%__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libGLESv1_CM_nvidia.so.1
-%__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libGLX_nvidia.so.0
-%__ln_s ../../..%x11driver_dir %buildroot/%nv_etclib_sym_dir/current
-
-%__ln_s ../../..%nv_etclib_sym_dir/libvdpau_nvidia.so %buildroot/%x11_lib_dir/vdpau/libvdpau_nvidia.so
-%__ln_s libvdpau_nvidia.so %buildroot/%x11_lib_dir/vdpau/libvdpau_nvidia.so.1
-%__ln_s ../..%nv_etclib_sym_dir/libnvidia-cfg.so.1 %buildroot/%x11_lib_dir/libnvidia-cfg.so.1
-%__ln_s ../..%nv_etclib_sym_dir/libEGL_nvidia.so.0 %buildroot/%x11_lib_dir/libEGL_nvidia.so.0
-%__ln_s ../..%nv_etclib_sym_dir/libGLESv2_nvidia.so.2 %buildroot/%x11_lib_dir/libGLESv2_nvidia.so.2
-%__ln_s ../..%nv_etclib_sym_dir/libGLESv1_CM_nvidia.so.1 %buildroot/%x11_lib_dir/libGLESv1_CM_nvidia.so.1
-%__ln_s ../..%nv_etclib_sym_dir/libGLX_nvidia.so.0 %buildroot/%x11_lib_dir/libGLX_nvidia.so.0
+%__mkdir_p %buildroot/%_datadir/nvidia/
 
 
-# nvidia_drv.o
-if false ; then
-    %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/nvidia_drv.o
-    %__ln_s ../../../../..%nv_etclib_sym_dir/nvidia_drv.o %buildroot/%x11_drv_dir/nvidia_drv.o
-    #%__ln_s ../../../../..%nv_etclib_sym_dir/nvidia_drv.o %buildroot/%x11_drv_old/nvidia_drv.o
+# install libraries
+%__install -m 0644 libnvidia-glcore.so.%tbver %buildroot/%_libdir/
+%__install -m 0644 libnvidia-eglcore.so.%tbver %buildroot/%_libdir/
+%__install -m 0644 libnvidia-glsi.so.%tbver %buildroot/%_libdir/
+%__install -m 0644 tls/libnvidia-tls.so.%tbver %buildroot/%_libdir/
+#
+%if_enabled package_egl_wayland
+%__install -m 0644 libnvidia-egl-wayland.so.%nvidia_egl_wayland_libver %buildroot/%_libdir/
+ln -s libnvidia-egl-wayland.so.%nvidia_egl_wayland_libver %buildroot/%_libdir/libnvidia-egl-wayland.so.%nvidia_egl_wayland_sover
+%endif
+
+%__ln_s %nv_lib_dir/nvidia.xinf %buildroot/%nv_lib_sym_dir/nvidia.xinf
+%__ln_s %nv_lib_dir/nvidia.xinf %buildroot/%xinf_dir/nvidia-%version.xinf
+%__install -m 0644 %SOURCE2 %buildroot/%nv_lib_dir/nvidia.xinf
+
+if [ -f nvidia_drv.o ] ; then
+    %__install -m 0644 nvidia_drv.o  %buildroot/%nv_lib_dir/
 fi
-# nvidia_drv.so
-if true ; then
-    %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/nvidia_drv.so
-    %__ln_s ../../../../..%nv_etclib_sym_dir/nvidia_drv.so %buildroot/%x11_drv_dir/nvidia_drv.so
-    #%__ln_s ../../../../..%nv_etclib_sym_dir/nvidia_drv.so %buildroot/%x11_drv_old/nvidia_drv.so
+if [ -f nvidia_drv.so ] ; then
+    %__install -m 0644 nvidia_drv.so %buildroot/%nv_lib_dir/
 fi
 
+%if_enabled package_wfb
+[ -f libnvidia-wfb.so.%tbver ] && \
+%__install -m 0644 libnvidia-wfb.so.%tbver %buildroot/%nv_lib_dir/libwfb.so
+%endif
 
+%__install -m 0644 libglx.so.%tbver %buildroot/%nv_lib_dir/libglx.so
+%__ln_s libglx.so %buildroot/%nv_lib_dir/libglx.a
+
+%__install -m 0644 libGLdispatch.so.0  %buildroot/%nv_lib_dir/libGLdispatch.so
+#
+%if_enabled glvnd
+%__install -m 0644 libGL.so.1.0.0  %buildroot/%nv_lib_dir/libGL.so
+%__install -m 0644 libEGL.so.1  %buildroot/%nv_lib_dir/libEGL.so
+%else
+%__install -m 0644 libGL.so.%tbver  %buildroot/%nv_lib_dir/libGL.so
+%__install -m 0644 libEGL.so.%tbver  %buildroot/%nv_lib_dir/libEGL.so
+%endif
+#
+%__install -m 0644 libEGL_nvidia.so.%tbver    %buildroot/%nv_lib_dir/libEGL_nvidia.so
+%__install -m 0644 libGLESv2.so.2  %buildroot/%nv_lib_dir/libGLESv2.so
+%__install -m 0644 libGLESv2_nvidia.so.%tbver %buildroot/%nv_lib_dir/libGLESv2_nvidia.so
+%__install -m 0644 libGLESv1_CM.so.1  %buildroot/%nv_lib_dir/libGLESv1_CM.so
+%__install -m 0644 libGLESv1_CM_nvidia.so.%tbver %buildroot/%nv_lib_dir/libGLESv1_CM_nvidia.so
+%__install -m 0644 libGLX.so.0  %buildroot/%nv_lib_dir/libGLX.so
+%__install -m 0644 libGLX_nvidia.so.%tbver    %buildroot/%nv_lib_dir/libGLX_nvidia.so
+
+%__install -m 0644 libvdpau_nvidia.so.%tbver %buildroot/%nv_lib_dir/libvdpau_nvidia.so
+%__install -m 0644 libnvidia-cfg.so.%tbver %buildroot/%nv_lib_dir/libnvidia-cfg.so
+/sbin/ldconfig -n %buildroot/%nv_lib_dir
+
+%__install -m 0644 nvidia-application-profiles-%version-rc \
+    %buildroot/%_datadir/nvidia/nvidia-application-profiles-%version-rc
+%__install -m 0644 nvidia-application-profiles-%version-key-documentation \
+    %buildroot/%_datadir/nvidia/nvidia-application-profiles-%version-key-documentation
+
+mkdir -p %buildroot/%_datadir/glvnd/egl_vendor.d/
+install -m 0644 10_nvidia.json %buildroot/%_datadir/glvnd/egl_vendor.d/%{version}_nvidia.json
+mkdir -p %buildroot/%_datadir/egl/egl_external_platform.d
+install -m 0644 10_nvidia_wayland.json %buildroot/%_datadir/egl/egl_external_platform.d/%{version}_nvidia_wayland.json
+mkdir -p %buildroot/%_datadir/vulkan/icd.d/
+install -m 0644 nvidia_icd.json.template %buildroot/%_datadir/vulkan/icd.d/%{version}_nvidia_icd.json
+%if_enabled glvnd
+sed -i '/\"library_path\"/s|\"library_path\".*:.*\".*\"|"library_path": "libGLX_nvidia.so.0"|' %buildroot/%_datadir/vulkan/icd.d/%{version}_nvidia_icd.json
+%else
+sed -i '/\"library_path\"/s|\"library_path\".*:.*\".*\"|"library_path": "libGL.so.1"|' %buildroot/%_datadir/vulkan/icd.d/%{version}_nvidia_icd.json
+%endif
+
+# kernel-source install
+%__rm -rf kernel-source-%module_name-%module_version/
+%__mkdir_p %buildroot/%_usrsrc/kernel/sources/ kernel-source-%module_name-%module_version/
+%__cp -ar kernel/* kernel-source-%module_name-%module_version/
+%__cp LICENSE kernel-source-%module_name-%module_version/
+tar -c kernel-source-%module_name-%module_version | bzip2 -c > \
+    %buildroot%_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
+
+# install scripts
 mkdir -p %buildroot/%_bindir
-ln -s /bin/true %buildroot/%_bindir/nvidia-bug-report.sh
+install -m 0755 nvidia-bug-report.sh %buildroot/%_bindir/nvidia-bug-report-%version.sh
+mkdir -p %buildroot/%_altdir/
+cat > %buildroot/%_altdir/%name <<__EOF__
+%_bindir/nvidia-bug-report.sh %_bindir/nvidia-bug-report-%version.sh %version
+__EOF__
 
 
-%post -n %{bin_pkg_name}_common
+%post -n %{bin_pkg_name}_%{version}
+# switch nvidia driver and libraries
 if [ -z "$DURING_INSTALL" ]; then
     X11PRESETDRV=`which x11presetdrv 2>/dev/null`
     if [ -n "$X11PRESETDRV" ]; then
@@ -232,358 +288,345 @@ if [ -z "$DURING_INSTALL" ]; then
     fi
 fi
 
-
-%files
-%dir %module_local_dir
-%dir %_datadir/nvidia/
-%ghost %_bindir/nvidia-bug-report.sh
-%xdrv_pre_d/nvidia
-%xdrv_d/nvidia
-#%xdrv_d_old/nvidia
-%x11_lib_dir/libnvidianull.so
-%dir %nv_etclib_sym_dir/
+%files -n %{bin_pkg_name}_%{version}
+%doc LICENSE
+%doc html NVIDIA_Changelog README.txt
 #
-%nv_etclib_sym_dir/nvidia_drv.*
-%x11_drv_dir/nvidia_drv.*
-#%ghost %x11_drv_old/nvidia_drv.*
-#
-%nv_workdirdir
-%nv_etclib_sym_dir/libvdpau_nvidia.so
-%nv_etclib_sym_dir/libnvidia-cfg.so.?
-%nv_etclib_sym_dir/libEGL_nvidia.so.?
-%nv_etclib_sym_dir/libGLESv2_nvidia.so.?
-%nv_etclib_sym_dir/libGLESv1_CM_nvidia.so.?
-%nv_etclib_sym_dir/libGLX_nvidia.so.?
-%nv_etclib_sym_dir/current
-#%nv_etclib_sym_dir/nvidia.xinf
-%if "%_lib" == "lib64"
-%dir %nv_lib32_sym_dir/
+%_libdir/libnvidia-tls.so.%version
+%_libdir/libnvidia-glcore.so.%version
+%_libdir/libnvidia-eglcore.so.%version
+%_libdir/libnvidia-glsi.so.%version
+%_altdir/%name
+%_bindir/nvidia-bug-report-%version.sh
+%dir %nv_lib_dir
+%nv_lib_dir/nvidia_drv.*
+%nv_lib_dir/libglx.*
+%nv_lib_dir/libGL.so*
+%nv_lib_dir/libEGL.so*
+%nv_lib_dir/libEGL_nvidia.so*
+%nv_lib_dir/libGLESv2.so*
+%nv_lib_dir/libGLESv2_nvidia.so*
+%nv_lib_dir/libGLESv1_CM.so*
+%nv_lib_dir/libGLESv1_CM_nvidia.so*
+%nv_lib_dir/libGLX_nvidia.so*
+%nv_lib_dir/libGLdispatch.so*
+%nv_lib_dir/libGLX.so*
+%nv_lib_dir/libnvidia-cfg.so*
+%nv_lib_dir/libvdpau_nvidia.so*
+%if_enabled package_wfb
+%nv_lib_dir/libwfb.so
+%nv_lib_dir/libnvidia-wfb.so*
 %endif
-#
-%x11_lib_dir/vdpau/libvdpau_nvidia.so
-%x11_lib_dir/vdpau/libvdpau_nvidia.so.1
-%x11_lib_dir/libnvidia-cfg.so.?
-%x11_lib_dir/libEGL_nvidia.so.?
-%x11_lib_dir/libGLESv2_nvidia.so.?
-%x11_lib_dir/libGLESv1_CM_nvidia.so.?
-%x11_lib_dir/libGLX_nvidia.so.?
-#
-%_bindir/nvidia-clean-driver
-%_bindir/nvidia-install-driver
-/usr/lib/nvidia/alternate-install-present
+%nv_lib_dir/nvidia.xinf
+%xinf_dir/nvidia-%version.xinf
+%_datadir/nvidia/nvidia-application-profiles-%version-rc
+%_datadir/nvidia/nvidia-application-profiles-%version-key-documentation
+%_datadir/glvnd/egl_vendor.d/%{version}_nvidia.json
+%_datadir/vulkan/icd.d/%{version}_nvidia_icd.json
+%_datadir/egl/egl_external_platform.d/%{version}_nvidia_wayland.json
+
+%if_enabled package_egl_wayland
+%files -n %libnvidia_egl_wayland
+%_libdir/libnvidia-egl-wayland.so.%{nvidia_egl_wayland_sover}
+%_libdir/libnvidia-egl-wayland.so.%{nvidia_egl_wayland_sover}.*
+%endif
+
+%if_enabled kernelsource
+%files -n kernel-source-%module_name-%module_version
+%_usrsrc/*
+%endif
 
 %changelog
-* Mon Nov 27 2017 Sergey V Turchin <zerg@altlinux.org> 384.98-alt184%ubt
+* Tue Nov 28 2017 Sergey V Turchin <zerg@altlinux.org> 384.98-alt176%ubt
+- don't package wfb module
+
+* Mon Nov 27 2017 Sergey V Turchin <zerg@altlinux.org> 384.98-alt175%ubt
 - new version
 
-* Mon Oct 30 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt183%ubt
-- fix create symlinks to current nvidia libraries directory
+* Wed Sep 27 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt174%ubt
+- fix requires
 
-* Mon Oct 30 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt182%ubt
-- fix symlinks (ALT#34080)
-
-* Thu Oct 26 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt181%ubt
-- use new driver directory if available for current libraries directory symlink
-
-* Fri Oct 20 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt180%ubt
-- create /etc/X11/lib{64,}_nvidia/current symlink to all nvidia libraries directory
-
-* Tue Sep 26 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt179%ubt
+* Tue Sep 26 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt173%ubt
 - new version
 
-* Tue Aug 08 2017 Sergey V Turchin <zerg@altlinux.org> 375.82-alt178%ubt
+* Tue Jul 25 2017 Sergey V Turchin <zerg@altlinux.org> 384.59-alt172%ubt
 - new version
 
-* Wed May 10 2017 Sergey V Turchin <zerg@altlinux.org> 375.66-alt177
+* Tue Jul 11 2017 Sergey V Turchin <zerg@altlinux.org> 375.66-alt171%ubt
+- fix nvidia_icd.json library_path
+
+* Wed May 10 2017 Sergey V Turchin <zerg@altlinux.org> 375.66-alt170
 - new version
 
-* Fri Feb 17 2017 Sergey V Turchin <zerg@altlinux.org> 375.39-alt176
+* Tue Apr 18 2017 Sergey V Turchin <zerg@altlinux.org> 375.39-alt169
+- package nvidia_icd.json (ALT#33387)
+
+* Wed Mar 22 2017 Sergey V Turchin <zerg@altlinux.org> 375.39-alt168
+- using non-GLVND libs
+
+* Tue Mar 14 2017 Sergey V Turchin <zerg@altlinux.org> 375.39-alt167
+- add fix against 4.10 kernel
+
+* Fri Feb 17 2017 Sergey V Turchin <zerg@altlinux.org> 375.39-alt166
 - new version
 
-* Fri Dec 16 2016 Sergey V Turchin <zerg@altlinux.org> 375.26-alt175
+* Fri Dec 16 2016 Sergey V Turchin <zerg@altlinux.org> 375.26-alt165
 - new version
 
-* Tue Nov 29 2016 Sergey V Turchin <zerg@altlinux.org> 375.20-alt174
+* Tue Nov 29 2016 Sergey V Turchin <zerg@altlinux.org> 375.20-alt164
 - new version
 
-* Tue Oct 11 2016 Sergey V Turchin <zerg@altlinux.org> 367.57-alt173
-- fix symlinks only for nvidia
-
-* Thu Sep 29 2016 Sergey V Turchin <zerg@altlinux.org> 367.44-alt172
-- force nvidia libraries only for nvidia
-
-* Wed Sep 28 2016 Sergey V Turchin <zerg@altlinux.org> 367.44-alt171
-- fix check for xorg.conf
-
-* Wed Sep 28 2016 Sergey V Turchin <zerg@altlinux.org> 367.44-alt170
-- fix check for xorg.conf
-
-* Mon Aug 29 2016 Sergey V Turchin <zerg@altlinux.org> 367.44-alt169
+* Tue Oct 11 2016 Sergey V Turchin <zerg@altlinux.org> 367.57-alt163
 - new version
 
-* Mon Jul 25 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt168
-- switch libGLESv1_CM
-
-* Thu Jul 21 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt167
-- switch libGLX
-
-* Mon Jul 18 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt166
-- bump version
-
-* Fri Jul 01 2016 Sergey V Turchin <zerg@altlinux.org> 367.27-alt165
-- add nvidia-drm module support
-
-* Fri May 27 2016 Sergey V Turchin <zerg@altlinux.org> 361.45.11-alt164
-- bump version
-
-* Fri May 27 2016 Sergey V Turchin <zerg@altlinux.org> 361.42-alt163
-- switch libGLdispatch
-
-* Fri Apr 22 2016 Sergey V Turchin <zerg@altlinux.org> 361.42-alt162
-- add nvidia-uvm module support
-
-* Mon Apr 11 2016 Sergey V Turchin <zerg@altlinux.org> 361.42-alt161
-- bump version
-
-* Fri Mar 04 2016 Sergey V Turchin <zerg@altlinux.org> 361.28-alt160
-- fix nvidia-modeset symlink
-
-* Fri Mar 04 2016 Sergey V Turchin <zerg@altlinux.org> 361.28-alt159
-- fix 32-bit symlinks on x86_64
-
-* Fri Feb 19 2016 Sergey V Turchin <zerg@altlinux.org> 361.28-alt158
-- add libglvnd support
-- add nvidia-modeset.ko support
-
-* Wed Jan 27 2016 Sergey V Turchin <zerg@altlinux.org> 352.79-alt157
-- bump version
-
-* Tue Nov 24 2015 Sergey V Turchin <zerg@altlinux.org> 352.63-alt156
-- bump version
-
-* Fri Oct 16 2015 Sergey V Turchin <zerg@altlinux.org> 352.55-alt155
-- new version
-- add nvidia-clean-driver
-
-* Tue Sep 01 2015 Sergey V Turchin <zerg@altlinux.org> 352.41-alt154
-- bump version
-
-* Mon Jul 27 2015 Sergey V Turchin <zerg@altlinux.org> 346.87-alt153
-- bump version
-
-* Thu Jun 25 2015 Sergey V Turchin <zerg@altlinux.org> 346.82-alt152
-- bump version
-
-* Fri May 15 2015 Sergey V Turchin <zerg@altlinux.org> 346.72-alt151
-- bump version
-
-* Wed Apr 08 2015 Sergey V Turchin <zerg@altlinux.org> 346.59-alt150
-- bump version
-
-* Tue Mar 10 2015 Sergey V Turchin <zerg@altlinux.org> 346.47-alt149
-- provide NVIDIA_GLX for compatibility
-
-* Tue Mar 10 2015 Sergey V Turchin <zerg@altlinux.org> 346.47-alt148
-- bump version
-
-* Thu Feb 05 2015 Sergey V Turchin <zerg@altlinux.org> 346.35-alt147
-- apt-get update when nvidia-install-driver
-
-* Wed Feb 04 2015 Sergey V Turchin <zerg@altlinux.org> 346.35-alt146
-- small optimization
-
-* Wed Feb 04 2015 Sergey V Turchin <zerg@altlinux.org> 346.35-alt145
-- fix card autoselection
-
-* Wed Feb 04 2015 Sergey V Turchin <zerg@altlinux.org> 346.35-alt144
-- execute x11presetdrv on finish nvidia-install-driver
-
-* Thu Jan 22 2015 Sergey V Turchin <zerg@altlinux.org> 346.35-alt143
-- bump version
-
-* Tue Dec 09 2014 Sergey V Turchin <zerg@altlinux.org> 340.65-alt142
-- bump version
-
-* Mon Nov 10 2014 Sergey V Turchin <zerg@altlinux.org> 340.58-alt141
-- bump version
-
-* Mon Oct 06 2014 Sergey V Turchin <zerg@altlinux.org> 340.46-alt140
-- bump version
-
-* Wed Oct 01 2014 Sergey V Turchin <zerg@altlinux.org> 340.32-alt139
-- update message when restoring symlinks
-
-* Mon Aug 18 2014 Sergey V Turchin <zerg@altlinux.org> 340.32-alt138
-- bump version
-
-* Thu Jul 17 2014 Sergey V Turchin <zerg@altlinux.org> 340.24-alt137
-- bump version
-
-* Mon Jul 07 2014 Sergey V Turchin <zerg@altlinux.org> 331.89-alt136
-- bump version
-
-* Thu May 22 2014 Sergey V Turchin <zerg@altlinux.org> 331.79-alt135
-- bump version
-
-* Tue Apr 29 2014 Sergey V Turchin <zerg@altlinux.org> 331.67-alt134
-- bump version
-
-* Wed Feb 19 2014 Sergey V Turchin <zerg@altlinux.org> 331.49-alt133
-- bump version
-
-* Thu Feb 13 2014 Sergey V Turchin <zerg@altlinux.org> 331.38-alt132
-- using apt-scripts-nvidia for nvidia-install-driver
-
-* Tue Jan 21 2014 Sergey V Turchin <zerg@altlinux.org> 331.38-alt131
-- add libvdpau_nvidia.so.1
-
-* Thu Jan 16 2014 Sergey V Turchin <zerg@altlinux.org> 331.38-alt130
-- move vdpau module to libdir/vdpau/
-
-* Thu Jan 16 2014 Sergey V Turchin <zerg@altlinux.org> 331.38-alt129
-- fix process non-NVIDIA devices (ALT#29729)
-
-* Tue Jan 14 2014 Sergey V Turchin <zerg@altlinux.org> 331.38-alt128
-- bump version
-
-* Tue Nov 19 2013 Sergey V Turchin <zerg@altlinux.org> 331.20-alt127
-- switch new nvidia own libGLESv2 and libEGL
-- imply always have /etc/X11/lib64 on x86_64
-
-* Thu Nov 07 2013 Sergey V Turchin <zerg@altlinux.org> 319.72-alt126
-- bump version
-
-* Thu Oct 03 2013 Sergey V Turchin <zerg@altlinux.org> 319.60-alt125
-- bump version
-
-* Mon Sep 02 2013 Sergey V Turchin <zerg@altlinux.org> 319.49-alt124
-- bump version
-
-* Sun Jul 21 2013 Sergey V Turchin <zerg@altlinux.org> 319.32-alt123
-- fix nvidia-install-driver premissions
-
-* Sat Jul 20 2013 Sergey V Turchin <zerg@altlinux.org> 319.32-alt122
-- simplify driver install command
-
-* Tue Jul 02 2013 Sergey V Turchin <zerg@altlinux.org> 319.32-alt121
-- prompt user to don't use nvidia-installer
-
-* Wed Jun 26 2013 Sergey V Turchin <zerg@altlinux.org> 319.32-alt120
-- bump version
-
-* Fri May 24 2013 Sergey V Turchin <zerg@altlinux.org> 319.23-alt119
-- bump version
-
-* Mon May 13 2013 Sergey V Turchin <zerg@altlinux.org> 319.17-alt118
-- bump version
-
-* Wed Apr 03 2013 Sergey V Turchin <zerg@altlinux.org> 310.44-alt117
-- bump version
-
-* Mon Mar 11 2013 Sergey V Turchin <zerg@altlinux.org> 310.40-alt116
-- bump version
-
-* Wed Jan 23 2013 Sergey V Turchin <zerg@altlinux.org> 310.32-alt115
-- bump version
-
-* Fri Nov 23 2012 Sergey V Turchin <zerg@altlinux.org> 310.19-alt114
-- switch libGLESv2.so.2 and libEGL.so.1
-
-* Wed Nov 21 2012 Sergey V Turchin <zerg@altlinux.org> 310.19-alt113
-- remove XvMC plugin support
-
-* Mon Nov 19 2012 Sergey V Turchin <zerg@altlinux.org> 310.19-alt112
-- bump version
-
-* Wed Nov 07 2012 Sergey V Turchin <zerg@altlinux.org> 304.64-alt111
-- bump version
-
-* Fri Oct 19 2012 Sergey V Turchin <zerg@altlinux.org> 304.60-alt110
-- bump version
-
-* Tue Oct 02 2012 Sergey V Turchin <zerg@altlinux.org> 304.51-alt109
-- bump version
-
-* Wed Aug 29 2012 Sergey V Turchin <zerg@altlinux.org> 304.43-alt108
-- bump version
-
-* Tue Aug 14 2012 Sergey V Turchin <zerg@altlinux.org> 304.37-alt107
-- bump version
-
-* Thu Jul 12 2012 Sergey V Turchin <zerg@altlinux.org> 302.17-alt106
+* Mon Aug 29 2016 Sergey V Turchin <zerg@altlinux.org> 367.44-alt162
 - new version
 
-* Wed Jun 13 2012 Sergey V Turchin <zerg@altlinux.org> 295.59-alt105
-- bump version
+* Wed Aug 03 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt161
+- small cleanup
 
-* Thu May 17 2012 Sergey V Turchin <zerg@altlinux.org> 295.53-alt104
-- bump version
+* Mon Jul 25 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt160
+- package libGLESv1_CM
 
-* Thu May 03 2012 Sergey V Turchin <zerg@altlinux.org> 295.49-alt103
-- bump version
+* Mon Jul 25 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt159
+- add fix against 4.7 kernel
 
-* Wed Apr 11 2012 Sergey V Turchin <zerg@altlinux.org> 295.40-alt102
-- bump version
+* Thu Jul 21 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt158
+- fix requires
 
-* Mon Mar 26 2012 Sergey V Turchin <zerg@altlinux.org> 295.33-alt101
-- bump version
+* Thu Jul 21 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt157
+- package libGLX
 
-* Tue Feb 14 2012 Sergey V Turchin <zerg@altlinux.org> 295.20-alt100
-- bump version
+* Mon Jul 18 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt156
+- fix requires
 
-* Tue Nov 22 2011 Sergey V Turchin <zerg@altlinux.org> 290.10-alt99
-- bump version
+* Mon Jul 18 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt155
+- fix automatic requires
 
-* Tue Oct 04 2011 Sergey V Turchin <zerg@altlinux.org> 285.05.09-alt98
-- cleanup specfile
+* Mon Jul 18 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt154
+- new version
 
-* Wed Aug 24 2011 Sergey V Turchin <zerg@altlinux.org> 280.13-alt97
-- use xsetup-monitor before nvidia-xconfig when setup xorg.conf (see bug 25134)
+* Fri Jul 01 2016 Sergey V Turchin <zerg@altlinux.org> 367.27-alt153
+- new version
 
-* Wed Aug 03 2011 Sergey V Turchin <zerg@altlinux.org> 280.13-alt96
-- bump version
+* Fri May 27 2016 Sergey V Turchin <zerg@altlinux.org> 361.45.11-alt152
+- new version
 
-* Tue Aug 02 2011 Sergey V Turchin <zerg@altlinux.org> 275.21-alt95
-- bump version
+* Mon Apr 11 2016 Sergey V Turchin <zerg@altlinux.org> 361.42-alt151
+- new version
 
-* Wed Jun 15 2011 Sergey V Turchin <zerg@altlinux.org> 275.09.07-alt94
-- bump version
+* Mon Feb 15 2016 Sergey V Turchin <zerg@altlinux.org> 361.28-alt150
+- new version
 
-* Mon May 23 2011 Sergey V Turchin <zerg@altlinux.org> 270.41.19-alt93
-- bump version
+* Tue Jan 26 2016 Sergey V Turchin <zerg@altlinux.org> 352.79-alt149
+- new version
 
-* Tue May 03 2011 Sergey V Turchin <zerg@altlinux.org> 270.41.06-alt92
-- fix libGL.so.1 symlink, when points to /usr/lib*/nvidia_*
+* Tue Nov 24 2015 Sergey V Turchin <zerg@altlinux.org> 352.63-alt148
+- new version
 
-* Fri Apr 22 2011 Sergey V Turchin <zerg@altlinux.org> 270.41.06-alt91
-- bump version
+* Fri Oct 16 2015 Sergey V Turchin <zerg@altlinux.org> 352.55-alt147
+- new version
 
-* Wed Apr 20 2011 Sergey V Turchin <zerg@altlinux.org> 270.41.03-alt90
-- create xorg.conf when needed
+* Wed Sep 30 2015 Sergey V Turchin <zerg@altlinux.org> 352.41-alt146
+- ignore kernel CONFIG_X86_DMA_REMAP
+
+* Wed Sep 02 2015 Sergey V Turchin <zerg@altlinux.org> 352.41-alt145
+- fix building of kernel module
+
+* Tue Sep 01 2015 Sergey V Turchin <zerg@altlinux.org> 352.41-alt144
+- new version
+
+* Mon Jul 27 2015 Sergey V Turchin <zerg@altlinux.org> 346.87-alt143
+- new version
+
+* Thu Jun 25 2015 Sergey V Turchin <zerg@altlinux.org> 346.82-alt142
+- new version
+
+* Thu May 14 2015 Sergey V Turchin <zerg@altlinux.org> 346.72-alt141
+- new version
+
+* Wed Apr 08 2015 Sergey V Turchin <zerg@altlinux.org> 346.59-alt140
+- new version
+
+* Tue Mar 10 2015 Sergey V Turchin <zerg@altlinux.org> 346.47-alt139
+- new version
+
+* Fri Jan 23 2015 Sergey V Turchin <zerg@altlinux.org> 346.35-alt138
+- fix build kernel module
+
+* Wed Jan 21 2015 Sergey V Turchin <zerg@altlinux.org> 346.35-alt137
+- new version
+
+* Tue Dec 09 2014 Sergey V Turchin <zerg@altlinux.org> 340.65-alt136
+- new version
+
+* Mon Nov 10 2014 Sergey V Turchin <zerg@altlinux.org> 340.58-alt135
+- new version
+
+* Fri Oct 31 2014 Sergey V Turchin <zerg@altlinux.org> 340.46-alt134
+- package nvidia-application-profiles-key-documentation
+
+* Mon Oct 06 2014 Sergey V Turchin <zerg@altlinux.org> 340.46-alt133
+- new version
+
+* Mon Aug 18 2014 Sergey V Turchin <zerg@altlinux.org> 340.32-alt132
+- new version
+
+* Thu Jul 17 2014 Sergey V Turchin <zerg@altlinux.org> 340.24-alt131
+- new version
+
+* Mon Jul 07 2014 Sergey V Turchin <zerg@altlinux.org> 331.89-alt130
+- new version
+
+* Thu May 22 2014 Sergey V Turchin <zerg@altlinux.org> 331.79-alt129
+- new version
+
+* Fri May 16 2014 Sergey V Turchin <zerg@altlinux.org> 331.67-alt128
+- add patch against 3.14 kernel
+
+* Tue Apr 29 2014 Sergey V Turchin <zerg@altlinux.org> 331.67-alt127
+- new version
+
+* Wed Feb 19 2014 Sergey V Turchin <zerg@altlinux.org> 331.49-alt126
+- new version
+
+* Tue Jan 28 2014 Sergey V Turchin <zerg@altlinux.org> 331.38-alt125
+- fix against absent DEVICE_ACPI_HANDLE on 3.13 kernel
+
+* Tue Jan 14 2014 Sergey V Turchin <zerg@altlinux.org> 331.38-alt124
+- new version
+
+* Tue Nov 19 2013 Sergey V Turchin <zerg@altlinux.org> 331.20-alt123
+- fix build requires
+
+* Tue Nov 19 2013 Sergey V Turchin <zerg@altlinux.org> 331.20-alt122
+- don't package libEGL and libGLESv2 for x86_64
+
+* Tue Nov 19 2013 Sergey V Turchin <zerg@altlinux.org> 331.20-alt121
+- new version
+
+* Thu Nov 07 2013 Sergey V Turchin <zerg@altlinux.org> 319.72-alt120
+- new version
+
+* Tue Nov 05 2013 Sergey V Turchin <zerg@altlinux.org> 319.60-alt119
+- add patch for 3.12 kernel
+- update patch for 3.11 kernel from upstream
+
+* Mon Oct 07 2013 Sergey V Turchin <zerg@altlinux.org> 319.60-alt118
+- add patch from Ubuntu against 3.11 kernel
+
+* Thu Oct 03 2013 Sergey V Turchin <zerg@altlinux.org> 319.60-alt117
+- new version
+
+* Wed Sep 11 2013 Sergey V Turchin <zerg@altlinux.org> 319.49-alt116
+- add patch from Ubuntu against 3.11 kernel
+
+* Mon Sep 02 2013 Sergey V Turchin <zerg@altlinux.org> 319.49-alt115
+- new version
+
+* Wed Jun 26 2013 Sergey V Turchin <zerg@altlinux.org> 319.32-alt114
+- new version
+
+* Fri May 24 2013 Sergey V Turchin <zerg@altlinux.org> 319.23-alt113
+- new version
+
+* Mon May 13 2013 Sergey V Turchin <zerg@altlinux.org> 319.17-alt112
+- new version
+
+* Wed Apr 03 2013 Sergey V Turchin <zerg@altlinux.org> 310.44-alt111
+- new version
+
+* Mon Mar 11 2013 Sergey V Turchin <zerg@altlinux.org> 310.40-alt110
+- new version
+
+* Wed Jan 23 2013 Sergey V Turchin <zerg@altlinux.org> 310.32-alt109
+- new version
+
+* Mon Nov 19 2012 Sergey V Turchin <zerg@altlinux.org> 310.19-alt108
+- new version
+
+* Wed Nov 07 2012 Sergey V Turchin <zerg@altlinux.org> 304.64-alt107
+- new version
+
+* Fri Oct 19 2012 Sergey V Turchin <zerg@altlinux.org> 304.60-alt106
+- new version
+
+* Tue Oct 02 2012 Sergey V Turchin <zerg@altlinux.org> 304.51-alt105
+- new version
+
+* Wed Aug 29 2012 Sergey V Turchin <zerg@altlinux.org> 304.43-alt104
+- new version
+
+* Tue Aug 14 2012 Sergey V Turchin <zerg@altlinux.org> 304.37-alt103
+- new version
+
+* Thu Jul 12 2012 Sergey V Turchin <zerg@altlinux.org> 302.17-alt102
+- new version
+
+* Wed Jun 13 2012 Sergey V Turchin <zerg@altlinux.org> 295.59-alt101
+- new version
+
+* Thu May 17 2012 Sergey V Turchin <zerg@altlinux.org> 295.53-alt100
+- new release 295.53
+
+* Thu May 03 2012 Sergey V Turchin <zerg@altlinux.org> 295.49-alt100
+- new release 295.49
+
+* Wed Apr 11 2012 Sergey V Turchin <zerg@altlinux.org> 295.40-alt99
+- new release 295.40
+
+* Mon Mar 26 2012 Sergey V Turchin <zerg@altlinux.org> 295.33-alt98
+- new release 295.33
+
+* Tue Feb 14 2012 Sergey V Turchin <zerg@altlinux.org> 295.20-alt97
+- new release 295.20
+
+* Tue Nov 22 2011 Sergey V Turchin <zerg@altlinux.org> 290.10-alt96
+- new release 290.10
+
+* Tue Oct 04 2011 Sergey V Turchin <zerg@altlinux.org> 285.05.09-alt95
+- new release 285.05.09
+
+* Wed Aug 03 2011 Sergey V Turchin <zerg@altlinux.org> 280.13-alt94
+- new release 280.13
+
+* Tue Aug 02 2011 Sergey V Turchin <zerg@altlinux.org> 275.21-alt93
+- new release 275.21
+
+* Wed Jun 15 2011 Sergey V Turchin <zerg@altlinux.org> 275.09.07-alt92
+- new release 275.09.07
+
+* Mon May 23 2011 Sergey V Turchin <zerg@altlinux.org> 270.41.19-alt91
+- new release 270.41.19
+
+* Fri Apr 22 2011 Sergey V Turchin <zerg@altlinux.org> 270.41.06-alt90
+- new release 270.41.06
 
 * Tue Apr 12 2011 Sergey V Turchin <zerg@altlinux.org> 270.41.03-alt89
-- bump version
+- new release 270.41.03
 
 * Tue Mar 15 2011 Sergey V Turchin <zerg@altlinux.org> 260.19.44-alt87.M51.1
 - built for M51
 
 * Mon Mar 14 2011 Sergey V Turchin <zerg@altlinux.org> 260.19.44-alt88
-- bump version
+- new release 260.19.44
 
 * Mon Jan 24 2011 Sergey V Turchin <zerg@altlinux.org> 260.19.36-alt87
-- bump version
+- new release 260.19.36
 
 * Fri Dec 24 2010 Sergey V Turchin <zerg@altlinux.org> 260.19.29-alt86
-- bump version
+- new release 260.19.29
 
 * Wed Nov 10 2010 Sergey V Turchin <zerg@altlinux.org> 260.19.21-alt85
-- bump version
+- new version
 
-* Fri Oct 22 2010 Sergey V Turchin <zerg@altlinux.org> 260.19.12-alt84
-- bump version
+* Thu Oct 21 2010 Sergey V Turchin <zerg@altlinux.org> 260.19.12-alt84
+- new release 260.19.12
+- don't package devel files
 
 * Tue Aug 31 2010 Sergey V Turchin <zerg@altlinux.org> 256.53-alt83
-- split from full package
+- new release 256.53
+- split common subpackage to separate src.rpm
 
 * Mon Aug 30 2010 Sergey V Turchin <zerg@altlinux.org> 256.52-alt82
 - new release 256.52
@@ -851,7 +894,7 @@ fi
 - restore symlinks for libglx.a and libGL.so.1 in /usr/X11R6/lib if absent
 
 * Fri Jun 10 2005 Sergey V Turchin <zerg at altlinux dot org> 1.0.7174-alt6
-- move writable symlinks to nv_etclib_sym_dir
+- move writable symlinks to %nv_lib_sym_dir
 - add check for tls to link libnvidia-tls.so correctly
 
 * Tue Jun 07 2005 Sergey V Turchin <zerg at altlinux dot org> 1.0.7174-alt5
