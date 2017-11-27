@@ -1,7 +1,6 @@
 Name: installer-feature-vm-fs
 Version: 0.3
-Release: alt1
-
+Release: alt2
 Summary: Installer alterator-vm profile tuning and filesystem layout hooks and other stuff for special needs
 License: GPL
 Group: System/Configuration/Other
@@ -50,5 +49,8 @@ install -pm755 01-* %buildroot%hookdir/preinstall.d/
 %hookdir/preinstall.d/*
 
 %changelog
+* Mon Nov 27 2017 Denis Medvedev <nbr@altlinux.org> 0.3-alt2
+- fix typo.
+
 * Mon Nov 27 2017 Denis Medvedev <nbr@altlinux.org> 0.3-alt1
 - Initial Sisyphus release
