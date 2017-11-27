@@ -18,7 +18,7 @@
 
 %def_enable systemd
 %def_enable introspection
-%def_disable teamdctl
+%def_enable teamdctl
 %def_enable nmtui
 %def_enable bluez5dun
 %def_enable vala
@@ -29,6 +29,12 @@
 # NOTE: ONLY use sanitizers for debug purposes
 %def_disable sanitizers
 
+%ifarch e2k
+%define more_warnings no
+%else
+%define more_warnings error
+%endif
+
 %define _name %name-daemon
 %define dispatcherdir %_sysconfdir/NetworkManager/dispatcher.d
 %define nmlibdir %_prefix/lib/NetworkManager
@@ -36,7 +42,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.8.4
+Version: 1.10.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -73,7 +79,7 @@ BuildRequires: libndp-devel
 BuildRequires: libreadline-devel
 BuildRequires: libaudit-devel
 BuildRequires: libcurl-devel libpsl-devel
-%{?_enable_teamdctl:BuildRequires: libteam-devel libjansson-devel}
+%{?_enable_teamdctl:BuildRequires: libteamdctl-devel libjansson-devel}
 %{?_enable_nmtui:BuildRequires: libnewt-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgudev-gir-devel}
 %{?_enable_systemd:BuildRequires: systemd-devel libsystemd-login-devel}
@@ -87,6 +93,7 @@ Requires: dnsmasq
 
 Requires: %name-adsl = %version-%release
 Requires: %name-bluetooth = %version-%release
+%{?_enable_teamdctl:Requires: %name-team}
 Requires: %name-wifi = %version-%release
 Requires: %name-wwan = %version-%release
 Requires: %name-ppp = %version-%release
@@ -154,6 +161,24 @@ Requires: %name-wwan = %version-%release
 
 %description bluetooth
 This package contains NetworkManager support for Bluetooth devices.
+
+%package ovs
+Summary: OpenVSwitch device plugin for NetworkManager
+Group: System/Configuration/Networking
+Requires: %_name = %version-%release
+Requires: openvswitch
+
+%description ovs
+This package contains NetworkManager support for OpenVSwitch bridges.
+
+%package team
+Summary: Team device plugin for NetworkManager
+Group: System/Configuration/Networking
+Requires: teamd
+Requires: %_name = %version-%release
+
+%description team
+This package contains NetworkManager support for team devices.
 
 %package wifi
 Summary: Wifi plugin for NetworkManager
@@ -447,7 +472,7 @@ GObject introspection devel data for the NetworkManager.
 %endif
 	--with-dist-version=%version-%release \
 	--disable-silent-rules \
-	--enable-more-warnings=error
+	--enable-more-warnings=%more_warnings
 
 %make_build
 
@@ -582,14 +607,26 @@ fi
 %{?_enable_systemd:/lib/systemd/system/%name.service}
 %{?_enable_systemd:/lib/systemd/system/%name-wait-online.service}
 %{?_enable_systemd:/lib/systemd/system/%name-dispatcher.service}
+%{?_enable_systemd:%dir %_unitdir/NetworkManager.service.d/}
 
 %exclude %_man1dir/nmtui*
+%exclude %_man7dir/nm-openvswitch.*
 
 %files adsl
 %_libdir/%name/libnm-device-plugin-adsl.so
 
 %files bluetooth
 %_libdir/%name/libnm-device-plugin-bluetooth.so
+
+%files ovs
+%_unitdir/NetworkManager.service.d/NetworkManager-ovs.conf
+%_libdir/%name/libnm-device-plugin-ovs.so
+%_man7dir/nm-openvswitch.*
+
+%if_enabled teamdctl
+%files team
+%_libdir/%name/libnm-device-plugin-team.so
+%endif
 
 %files wifi
 %_libdir/%name/libnm-device-plugin-wifi.so
@@ -688,6 +725,12 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Nov 14 2017 Mikhail Efremov <sem@altlinux.org> 1.10.0-alt1
+- etcnet-alt: Fix nm_settings_connection_delete() call.
+- Enable teamd support.
+- Fix build on e2k.
+- Updated to 1.10.0.
+
 * Wed Sep 20 2017 Mikhail Efremov <sem@altlinux.org> 1.8.4-alt1
 - Updated to 1.8.4.
 

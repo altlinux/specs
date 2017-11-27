@@ -5,12 +5,18 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_without appindicator
-%def_without team
+%def_with team
 %def_without selinux
 %def_with gcr
 
+%ifarch e2k
+%define more_warnings no
+%else
+%define more_warnings error
+%endif
+
 Name: NetworkManager-applet-gtk
-Version: 1.8.4
+Version: 1.8.6
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -172,7 +178,7 @@ This package contains development documentation for libnma-devel-doc.
 	--enable-introspection \
 	--with-libnm-gtk \
 	--enable-gtk-doc \
-	--enable-more-warnings=error
+	--enable-more-warnings=%more_warnings
 
 %make_build
 
@@ -230,6 +236,11 @@ make check
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Wed Nov 15 2017 Mikhail Efremov <sem@altlinux.org> 1.8.6-alt1
+- Updated to 1.8.6.
+- Enable teamd support.
+- Fix build on e2k.
+
 * Wed Sep 20 2017 Mikhail Efremov <sem@altlinux.org> 1.8.4-alt1
 - Updated to 1.8.4.
 
