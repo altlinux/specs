@@ -5,7 +5,7 @@
 
 %define rname qmmp
 Name: qmmp1
-Version: 1.1.12
+Version: 1.2.0
 Release: alt1%ubt
 
 Group: Sound
@@ -34,11 +34,13 @@ Patch5: alt-def-id3v1-encoding.patch
 BuildRequires(pre): kde-common-devel rpm-build-ubt rpm-build-wlskins
 BuildRequires: cmake doxygen qt5-tools-devel qt5-x11extras-devel
 BuildRequires: libmms-devel libprojectM-devel libtag-devel
-BuildRequires: libalsa-devel libjack-devel libpulseaudio-devel
+BuildRequires: libalsa-devel libjack-devel libpulseaudio-devel qt5-multimedia-devel
 BuildRequires: libbs2b-devel libcddb-devel libcdio-paranoia-devel libcurl-devel libenca-devel
 BuildRequires: libavformat-devel libwildmidi-devel
 BuildRequires: libfaad-devel libflac-devel libgme-devel libopusfile-devel libsamplerate-devel libsoxr-devel
 BuildRequires: libmad-devel libmodplug-devel libmpcdec-devel libvorbis-devel libwavpack-devel
+#BuildRequires: libshout2-devel
+#BuildRequires: libarchive-devel
 #BuildRequires: libsidplayfp-devel
 
 %description
@@ -272,6 +274,9 @@ ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/
 %_libdir/lib*.so
 
 %changelog
+* Mon Nov 27 2017 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt1%ubt
+- new version
+
 * Thu Oct 26 2017 Sergey V Turchin <zerg@altlinux.org> 1.1.12-alt1%ubt
 - new version
 
