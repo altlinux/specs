@@ -1,5 +1,5 @@
 Name: anyservice
-Version: 0.8
+Version: 1.0
 Release: alt1
 
 Summary: Anyservice - scripts for making systemd like service from any programs
@@ -9,12 +9,12 @@ Group: System/Base
 Url: http://wiki.etersoft.ru/Anyservice
 
 # Source-git: https://github.com/Etersoft/anyservice.git
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
 Source: %name-%version.tar
 
-Packager: Danil Mikhailov <danil@altlinux.org>
-
 BuildArch: noarch
-BuildPreReq: rpm-build-compat
+BuildRequires: rpm-build-intro >= 2.1.1
 
 Requires: eepm >= 1.9.7
 
@@ -25,12 +25,10 @@ Anyservice - scripts for making systemd like service from any programs
 %setup
 
 %build
-
 %install
 mkdir -p %buildroot/%_bindir/
 mkdir -p %buildroot/etc/%name/
-mkdir -p %buildroot/var/run/%name/
-mkdir -p %buildroot/var/log/%name/
+mkdir -p %buildroot%_logdir/%name/
 
 cp example.service %buildroot/etc/%name/example.service.off
 cp %name.sh %buildroot/%_bindir/%name
@@ -44,10 +42,22 @@ cp %name.sh %buildroot/%_bindir/%name
 %config(noreplace) /etc/%name/*.service.off
 %attr(755,root,root) %_bindir/%name
 
-%dir /var/run/%name/
-%dir /var/log/%name/
+%dir %_logdir/%name/
 
 %changelog
+* Mon Nov 27 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
+- add RHEL/CentOS support
+- add statusd command
+- fix monit dir detection
+- add support for daemon start from /etc/init.d/functions
+- move to clear shell
+- move PID file to /var/run
+
+* Fri Nov 24 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
+- anyservice.sh: drop warning about missed pid file on first start
+- add support for /etc/monitrc.d/*.conf
+- move list command handling to base part
+
 * Tue Nov 14 2017 Vitaly Lipatov <lav@altlinux.ru> 0.8-alt1
 - add support for /etc/systemd/system place for service files
 
