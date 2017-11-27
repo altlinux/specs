@@ -3,37 +3,34 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.0
-Release: alt1.1.1
+Version: 4.4.0
+Release: alt1
 Summary: The Jupyter Notebook format
 License: BSD
 Group: Development/Python
-Url: https://pypi.python.org/pypi/nbformat
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source: %name-%version.tar
 BuildArch: noarch
+Url: https://pypi.python.org/pypi/nbformat
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-ipython_genutils python-module-traitlets
-#BuildPreReq: python-module-jsonschema python-module-jupyter_core
-#BuildPreReq: python-module-nose python-modules-sqlite3
-#BuildPreReq: python-module-numpydoc python-module-sphinx-devel
+# https://github.com/jupyter/nbformat.git
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-pytest python2.7(testpath)
+BuildRequires: python-module-jsonschema python-module-jupyter_core
+BuildRequires: python-module-nose python-modules-sqlite3
+BuildRequires: python-module-numpydoc python-module-sphinx-devel
+BuildRequires: python-module-alabaster python-module-html5lib python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-ipython_genutils python3-module-traitlets
-#BuildPreReq: python3-module-jsonschema python3-module-jupyter_core
-#BuildPreReq: python3-module-nose python3-modules-sqlite3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-pytest python3(testpath)
+BuildRequires: python3-module-jsonschema python3-module-jupyter_core
+BuildRequires: python3-module-nose python3-modules-sqlite3
 %endif
 
 %py_provides %oname
 %py_requires ipython_genutils traitlets jsonschema jupyter_core sqlite3
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-decorator python-module-docutils python-module-functools32 python-module-genshi python-module-ipython_genutils python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-matplotlib python-module-numpy python-module-pyparsing python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-traitlets python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-decorator python3-module-ipython_genutils python3-module-setuptools python3-module-traitlets xz
-BuildRequires: python-module-alabaster python-module-html5lib python-module-jsonschema python-module-jupyter_core python-module-nose python-module-numpydoc python-module-objects.inv python-module-pytest python-modules-sqlite3 python3-module-jsonschema python3-module-jupyter_core python3-module-nose python3-module-pytest python3-modules-sqlite3 rpm-build-python3 time
 
 %description
 This package contains the base implementation of the Jupyter Notebook
@@ -161,6 +158,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.0-alt1
+- Updated to upstream version 4.4.0.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.0-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
