@@ -1,6 +1,8 @@
+%def_enable snapshot
+
 %define ver_major 2.24
 %def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
 
 # For some reason, the above construct doesn't work is some places of the spec.
 #define _disable_static --disable-static
@@ -8,16 +10,19 @@
 
 Name: libgnomeui
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 
 Summary: GNOME base GUI library
 License: LGPL
 Group: System/Libraries
 Url: ftp://ftp.gnome.org
 
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
-
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.bz2
+%else
+Source: %name-%version.tar
+%endif
+Patch: libgnomeui-2.24.5-alt-gtk-doc.patch
 
 # From configure.in
 %define libxml_ver 2.4.20
@@ -114,9 +119,11 @@ if you just want to use the GNOME desktop environment.
 %define _gtk_docdir %_datadir/gtk-doc/html
 
 %prep
-%setup -q
+%setup
+%patch
 
 %build
+%autoreconf
 export DATADIRNAME=share
 %configure \
 	%{subst_enable static} \
@@ -125,7 +132,7 @@ export DATADIRNAME=share
 %make
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 bzip2 -9f ChangeLog
 
@@ -142,8 +149,10 @@ bzip2 -9f ChangeLog
 %_includedir/*
 %_pkgconfigdir/*.pc
 
+%if_enabled gtk_doc
 %files devel-doc
 %_gtk_docdir/*
+%endif
 
 %if_enabled static
 %files devel-static
@@ -154,6 +163,10 @@ bzip2 -9f ChangeLog
 %exclude %_libdir/libglade/*/*.la
 
 %changelog
+* Mon Nov 27 2017 Yuri N. Sedunov <aris@altlinux.org> 2.24.5-alt2
+- updated to LIBGNOMEUI_2_24_5-13-g30334c2
+- fixed doc build
+
 * Mon Jan 31 2011 Yuri N. Sedunov <aris@altlinux.org> 2.24.5-alt1
 - 2.24.5
 
