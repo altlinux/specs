@@ -5,7 +5,7 @@
 Summary: 389 Directory Server (base)
 Name: 	 389-ds-base
 Version: 1.3.7.1
-Release: alt1
+Release: alt2
 License: GPLv3+ with exceptions
 Url: 	 http://port389.org
 Group: 	 System/Servers
@@ -208,6 +208,15 @@ subst 's,%_bindir/systemctl,/bin/systemctl,' %buildroot%_sbindir/*-dirsrv
 echo "Upgrading 389-ds < 1.2.10.0, manual Offline upgrade is required!
 Turn 389-ds off and make 'setup-ds -u' then"
 
+%pre
+%define _dirsrv_user dirsrv
+%define _dirsrv_group dirsrv
+%define _dirsrv_home %_localstatedir/dirsrv
+/usr/sbin/groupadd -r -f %_dirsrv_group ||:
+/usr/sbin/useradd -g %_dirsrv_group -c 'user for 389-ds-base' \
+		  -d %_dirsrv_home -s /sbin/nologin -r %_dirsrv_user \
+		  > /dev/null 2>&1 ||:
+
 %post
 %post_service %pkgname
 %post_service %pkgname-snmp
@@ -217,6 +226,9 @@ Turn 389-ds off and make 'setup-ds -u' then"
 %preun_service %pkgname-snmp
 
 %changelog
+* Mon Nov 27 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.7.1-alt2
+- Add dirsrv user during pre install step (thanks slev@) (ALT #34240)
+
 * Wed Jul 05 2017 Andrey Cherepanov <cas@altlinux.org> 1.3.7.1-alt1
 - New version
 
