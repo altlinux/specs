@@ -7,6 +7,7 @@ BuildRequires: ca-certificates-java
 %set_verify_elf_method textrel=relaxed
 %endif
 %def_enable accessibility
+%def_disable jvmjardir
 %def_disable javaws
 %def_disable moz_plugin
 %def_disable systemtap
@@ -175,7 +176,9 @@ BuildRequires: jpackage-compat
 %global jredir          %{sdkdir}/jre
 %global sdkbindir       %{_jvmdir}/%{sdkdir}/bin
 %global jrebindir       %{_jvmdir}/%{jredir}/bin
+%if_enabled jvmjardir
 %global jvmjardir       %{_jvmjardir}/%{uniquesuffix}
+%endif
 
 #we can copy the javadoc to not arched dir, or made it not noarch
 %global uniquejavadocdir       %{fullversion}
@@ -205,7 +208,7 @@ BuildRequires: jpackage-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt4_2.5.5.0jpp7
+Release: alt5_2.5.5.0jpp7
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -826,6 +829,7 @@ mkdir -p $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/%{archinstall}/client/
     ln -sf $RELATIVE/cacerts .
   popd
 
+%if_enabled jvmjardir
   # Install extension symlinks.
   install -d -m 755 $RPM_BUILD_ROOT%{jvmjardir}
   pushd $RPM_BUILD_ROOT%{jvmjardir}
@@ -849,18 +853,21 @@ mkdir -p $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/%{archinstall}/client/
       ln -sf $jar $(echo $jar | sed "s|-%{version}.jar|.jar|g")
     done
   popd
+%endif
 
   # Install JCE policy symlinks.
-  install -d -m 755 $RPM_BUILD_ROOT%{_jvmprivdir}/%{uniquesuffix}/jce/vanilla
+  #install -d -m 755 $RPM_BUILD_ROOT%{_jvmprivdir}/%{uniquesuffix}/jce/vanilla
 
   # Install versioned symlinks.
   pushd $RPM_BUILD_ROOT%{_jvmdir}
     ln -sf %{jredir} %{jrelnk}
   popd
 
+%if_enabled jvmjardir
   pushd $RPM_BUILD_ROOT%{_jvmjardir}
     ln -sf %{sdkdir} %{jrelnk}
   popd
+%endif
 
   # Remove javaws man page
   rm -f man/man1/javaws*
@@ -1010,10 +1017,11 @@ install -m644 java-javadoc-buildreq-substitute \
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/%altname-javadoc<<EOF
 %{_javadocdir}/java	%{_javadocdir}/%{uniquejavadocdir}/api	%{priority}
 EOF
+
 # move soundfont to java
-grep /audio/default.sf2 java-1.7.0-openjdk.files-headless >> java-1.7.0-openjdk.files
-grep -v /audio/default.sf2 java-1.7.0-openjdk.files-headless > java-1.7.0-openjdk.files-headless-new
-mv java-1.7.0-openjdk.files-headless-new java-1.7.0-openjdk.files-headless
+grep /audio/default.sf2 %{name}.files-headless >> %{name}.files
+grep -v /audio/default.sf2 %{name}.files-headless > %{name}.files-headless-new
+mv %{name}.files-headless-new %{name}.files-headless
 
 
 ##################################################
@@ -1095,26 +1103,16 @@ done
 # ----- JPackage compatibility alternatives ------
 cat <<EOF >>%buildroot%_altdir/%name-java-headless
 %{_jvmdir}/jre	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
-%{_jvmjardir}/jre	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %{_jvmdir}/jre-%{origin}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
-%{_jvmjardir}/jre-%{origin}	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %{_jvmdir}/jre-%{javaver}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
+%{_jvmdir}/jre-%{javaver}-%{origin}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
+%if_enabled jvmjardir
+%{_jvmjardir}/jre	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
+%{_jvmjardir}/jre-%{origin}	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %{_jvmjardir}/jre-%{javaver}	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
-EOF
-# JPackage specific: alternatives for security policy
-cat <<EOF >>%buildroot%_altdir/%name-java-headless
-%{_jvmdir}/%{jrelnk}/lib/security/local_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar	%{priority}
-%{_jvmdir}/%{jrelnk}/lib/security/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar
+%endif
 EOF
 # ----- end: JPackage compatibility alternatives ------
-#if_enabled moz_plugin // not included in openjdk
-%if 0
-cat <<EOF >>%buildroot%_altdir/%name-java
-%{_bindir}/ControlPanel	%{_jvmdir}/%{jredir}/bin/ControlPanel	%{_jvmdir}/%{jredir}/bin/java
-%{_bindir}/jcontrol	%{_jvmdir}/%{jredir}/bin/jcontrol	%{_jvmdir}/%{jredir}/bin/java
-EOF
-%endif
-
 
 # Javac alternative
 cat <<EOF >%buildroot%_altdir/%name-javac
@@ -1144,14 +1142,15 @@ done
 # ----- JPackage compatibility alternatives ------
   cat <<EOF >>%buildroot%_altdir/%name-javac
 %{_jvmdir}/java	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
-%{_jvmjardir}/java	%{_jvmjardir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
 %{_jvmdir}/java-%{origin}	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
-%{_jvmjardir}/java-%{origin}	%{_jvmjardir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
 %{_jvmdir}/java-%{javaver}	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
+%{_jvmdir}/java-%{javaver}-%{origin}	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
+%if_enabled jvmjardir
+%{_jvmjardir}/java	%{_jvmjardir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
+%{_jvmjardir}/java-%{origin}	%{_jvmjardir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
 %{_jvmjardir}/java-%{javaver}	%{_jvmjardir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
+%endif
 EOF
-##### TODO --- 
-#%{_jvmdir}/java-%{javaver}-%{origin}	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
 
 # ----- end: JPackage compatibility alternatives ------
 
@@ -1201,10 +1200,6 @@ $java -Xshare:dump >/dev/null 2>/dev/null
 
 
 %files -f %{name}.files
-#if_enabled moz_plugin
-%if 0
-%_altdir/%altname-java
-%endif
 %_sysconfdir/buildreqs/packages/substitute.d/%name
 %{_datadir}/icons/hicolor/*x*/apps/java-%{javaver}.png
 
@@ -1223,9 +1218,11 @@ $java -Xshare:dump >/dev/null 2>/dev/null
 %dir %{_jvmdir}/%{sdkdir}/jre/lib/%{archinstall}/xawt
 %endif
 %{_jvmdir}/%{jrelnk}
+#%{_jvmprivdir}/*
+%if_enabled jvmjardir
 %{_jvmjardir}/%{jrelnk}
-%{_jvmprivdir}/*
 %{jvmjardir}
+%endif
 %dir %{_jvmdir}/%{jredir}/lib/security
 %{_jvmdir}/%{jredir}/lib/security/cacerts
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/US_export_policy.jar
@@ -1274,7 +1271,9 @@ $java -Xshare:dump >/dev/null 2>/dev/null
 %if_enabled systemtap
 %{_jvmdir}/%{sdkdir}/tapset/*.stp
 %endif
+%if_enabled jvmjardir
 %{_jvmjardir}/%{sdkdir}
+%endif
 %{_datadir}/applications/*jconsole.desktop
 %{_datadir}/applications/*policytool.desktop
 %{_mandir}/man1/appletviewer-%{uniquesuffix}.1*
@@ -1330,6 +1329,11 @@ $java -Xshare:dump >/dev/null 2>/dev/null
 %{_jvmdir}/%{jredir}/lib/accessibility.properties
 
 %changelog
+* Mon Nov 27 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.79-alt5_2.5.5.0jpp7
+- removed obsolete exports in jvmjardir
+- removed obsolete security policy alternatives in _jvmprivdir
+- added java-1.x.0-openjdk alternative in jvmdir
+
 * Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.79-alt4_2.5.5.0jpp7
 - fixed java-headless provides
 
