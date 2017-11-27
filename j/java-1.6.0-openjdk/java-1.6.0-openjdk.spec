@@ -5,6 +5,7 @@ BuildRequires: /usr/bin/xprop /usr/bin/xvfb-run libgif-devel pkgconfig(xproto) p
 # END SourceDeps(oneline)
 BuildRequires: ca-certificates-java
 %def_enable accessibility
+%def_disable jvmjardir
 %def_disable javaws
 %def_disable moz_plugin
 %def_disable systemtap
@@ -16,8 +17,6 @@ BuildRequires(pre): rpm-build-java
 BuildRequires: /proc
 BuildRequires: jpackage-1.6.0-compat
 %define fedora 15
-%define version 1.6.0.0
-%define name java-1.6.0-openjdk
 #and If gcjbootstrap is 1 IcedTea is bootstrapped against
 # java-1.6.0-sun-devel.  If gcjbootstrap is 0 IcedTea is built against
 # java-1.6.0-openjdk-devel.
@@ -26,9 +25,15 @@ BuildRequires: jpackage-1.6.0-compat
 # If runtests is 0 test suites will not be run.
 %define runtests 0
 
+# Standard JPackage naming and versioning defines.
+%define origin          openjdk
+%global updatever       41
+%define priority        160%{updatever}
+%define javaver         1.6.0
+
 %define icedteaver 1.13.13
 %define icedteasnapshot %{nil}
-%define openjdkver b41
+%define openjdkver b%{updatever}
 %define openjdkdate 04_jan_2017
 
 %define genurl http://cvs.fedoraproject.org/viewcvs/devel/java-1.6.0-openjdk/
@@ -103,41 +108,45 @@ BuildRequires: jpackage-1.6.0-compat
 %define script 'use File::Spec; print File::Spec->abs2rel($ARGV[0], $ARGV[1])'
 %define abs2rel %{__perl} -e %{script}
 
-# Hard-code libdir on 64-bit architectures to make the 64-bit JDK
-# simply be another alternative.
-%ifarch %{multilib_arches}
-# define syslibdir       %{_prefix}/lib64
-# define _libdir         %{_prefix}/lib
-%define archname        %{name}.%{_arch}
-%else
-# define syslibdir       %{_libdir}
-%define archname        %{name}
-%endif
+Name:    java-%{javaver}-%{origin}
+Version: %{javaver}.%{updatever}
+Release: alt1
+# java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
+# and this change was brought into RHEL-4.  java-1.5.0-ibm packages
+# also included the epoch in their virtual provides.  This created a
+# situation where in-the-wild java-1.5.0-ibm packages provided "java =
+# 1:1.5.0".  In RPM terms, "1.6.0 < 1:1.5.0" since 1.6.0 is
+# interpreted as 0:1.6.0.  So the "java >= 1.6.0" requirement would be
+# satisfied by the 1:1.5.0 packages.  Thus we need to set the epoch in
+# JDK package >= 1.6.0 to 1, and packages referring to JDK virtual
+# provides >= 1.6.0 must specify the epoch, "java >= 1:1.6.0".
+Epoch:   0
+Summary: OpenJDK Runtime Environment
+Group:   Development/Java
 
-# Standard JPackage naming and versioning defines.
-%define origin          openjdk
-%define priority        16000
-%define javaver         1.6.0
-%define buildver        0
+License:  GPLv2 with exceptions
+URL:      http://icedtea.classpath.org/
 
 # Standard JPackage directories and symbolic links.
 # Make 64-bit JDKs just another alternative on 64-bit architectures.
 %ifarch %{multilib_arches}
 %define sdklnk          java-%{javaver}-%{origin}.%{_arch}
 %define jrelnk          jre-%{javaver}-%{origin}.%{_arch}
-%define sdkdir          %{name}-%{version}.%{_arch}
+%define sdkdir          java-%{javaver}-%{origin}-%{version}.%{_arch}
 %else
 %define sdklnk          java-%{javaver}-%{origin}
 %define jrelnk          jre-%{javaver}-%{origin}
-%define sdkdir          %{name}-%{version}
+%define sdkdir          java-%{javaver}-%{origin}-%{version}
 %endif
 %define jredir          %{sdkdir}/jre
 %define sdkbindir       %{_jvmdir}/%{sdklnk}/bin
 %define jrebindir       %{_jvmdir}/%{jrelnk}/bin
+%if_enabled jvmjardir
 %ifarch %{multilib_arches}
-%define jvmjardir       %{_jvmjardir}/%{name}-%{version}.%{_arch}
+%define jvmjardir       %{_jvmjardir}/java-%{javaver}-%{origin}-%{version}.%{_arch}
 %else
-%define jvmjardir       %{_jvmjardir}/%{name}-%{version}
+%define jvmjardir       %{_jvmjardir}/java-%{javaver}-%{origin}-%{version}
+%endif
 %endif
 
 %ifarch %{jit_arches}
@@ -156,24 +165,6 @@ BuildRequires: jpackage-1.6.0-compat
 # Prevent brp-java-repack-jars from being run.
 %define __jar_repack 0
 
-Name:    java-%{javaver}-%{origin}
-Version: %{javaver}.%{buildver}
-Release: alt25.b41
-# java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
-# and this change was brought into RHEL-4.  java-1.5.0-ibm packages
-# also included the epoch in their virtual provides.  This created a
-# situation where in-the-wild java-1.5.0-ibm packages provided "java =
-# 1:1.5.0".  In RPM terms, "1.6.0 < 1:1.5.0" since 1.6.0 is
-# interpreted as 0:1.6.0.  So the "java >= 1.6.0" requirement would be
-# satisfied by the 1:1.5.0 packages.  Thus we need to set the epoch in
-# JDK package >= 1.6.0 to 1, and packages referring to JDK virtual
-# provides >= 1.6.0 must specify the epoch, "java >= 1:1.6.0".
-Epoch:   0
-Summary: OpenJDK Runtime Environment
-Group:   Development/Java
-
-License:  GPLv2 with exceptions
-URL:      http://icedtea.classpath.org/
 Source0:  %{url}download/source/icedtea6-%{icedteaver}%{icedteasnapshot}.tar.gz
 Source1:  %{fedorazip}
 Source2:  %{accessurl}%{accessmajorver}/java-access-bridge-%{accessver}.tar.bz2
@@ -254,26 +245,20 @@ Requires: fonts-type1-xorg
 Requires: fontconfig
 Requires: rhino
 #Requires: libjpeg = 6b
-%if 0%{?fedora} > 9
-# Require /etc/pki/java/cacerts.
-Requires: ca-certificates
-%else
-# Require /etc/pki/tls/certs/ca-bundle.crt instead of generating
-# cacerts.
-Requires: openssl
-%endif
-# Require jpackage-utils for ant.
-Requires: jpackage-utils >= 1.7.3-1jpp.2
-# Require zoneinfo data provided by tzdata-java subpackage.
-Requires: tzdata-java
-# Post requires alternatives to install tool alternatives.
-Requires(post):   alternatives
-# Postun requires alternatives to uninstall tool alternatives.
-Requires(postun): alternatives
 
-# java-1.6.0-openjdk replaces java-1.7.0-icedtea.
-#Provides: java-1.7.0-icedtea = 0:1.7.0.0-0.999
-#Obsoletes: java-1.7.0-icedtea < 0:1.7.0.0-0.999
+#requires rest of java
+Requires: %{name}-headless = %{epoch}:%{version}-%{release}
+
+# Hard-code libdir on 64-bit architectures to make the 64-bit JDK
+# simply be another alternative.
+%ifarch %{multilib_arches}
+# define syslibdir       %{_prefix}/lib64
+# define _libdir         %{_prefix}/lib
+%define archname        %{name}.%{_arch}
+%else
+# define syslibdir       %{_libdir}
+%define archname        %{name}
+%endif
 
 # Standard JPackage base provides.
 Provides: jre6-%{javaver}-%{origin} = %{epoch}:%{version}-%{release}
@@ -283,31 +268,12 @@ Provides: java6-%{javaver} = %{epoch}:%{version}-%{release}
 Provides: jre6 = %{javaver}
 Provides: java6-%{origin} = %{epoch}:%{version}-%{release}
 Provides: java6 = %{epoch}:%{javaver}
-# Standard JPackage extensions provides.
-Provides: jndi6 = %{epoch}:%{version}
-Provides: jndi6-ldap = %{epoch}:%{version}
-Provides: jndi6-cos = %{epoch}:%{version}
-Provides: jndi6-rmi = %{epoch}:%{version}
-Provides: jndi6-dns = %{epoch}:%{version}
-Provides: jaas6 = %{epoch}:%{version}
-Provides: jsse6 = %{epoch}:%{version}
-Provides: jce6 = %{epoch}:%{version}
-Provides: jdbc6-stdext = 3.0
-Provides: java6-sasl = %{epoch}:%{version}
-Provides: java6-fonts = %{epoch}:%{version}
 Source44: import.info
 # jpp provides
 Provides: java = %version
 Provides: java-1.6.0 = %version
 Provides: java-openjdk = %version
 Provides: java-sasl = %version
-# headless provides
-Provides: java-headless = %version
-Provides: java-1.6.0-headless = %version
-Provides: java-openjdk-headless = %version
-Provides: jre-headless = %version
-Provides: jre-1.6.0-headless = %version
-Provides: jre-openjdk-headless = %version
 #define mozilla_java_plugin_so %{_jvmdir}/%{jrelnk}/lib/%{archinstall}/gcjwebplugin.so
 %define mozilla_java_plugin_so %{_jvmdir}/%{jrelnk}/lib/%{archinstall}/IcedTeaPlugin.so
 %define altname %name
@@ -332,6 +298,53 @@ Provides: /usr/lib/jvm/java/jre/lib/%archinstall/client/libjvm.so(SUNWprivate_1.
 %endif
 Requires: java-common
 Requires: /proc
+
+%package headless
+Summary: The OpenJDK runtime environment without audio and video support
+Group:   Development/Java
+Conflicts: java-1.6.0-openjdk < 1.6.0.0-alt26.b41
+
+Requires: libjpeg
+# Require /etc/pki/java/cacerts.
+%if 0%{?fedora} > 9
+# Require /etc/pki/java/cacerts.
+Requires: ca-certificates
+%else
+# Require /etc/pki/tls/certs/ca-bundle.crt instead of generating
+# cacerts.
+Requires: openssl
+%endif
+# Require zoneinfo data provided by tzdata-java subpackage.
+Requires: tzdata-java
+# Require jpackage-utils for ant.
+Requires: jpackage-utils
+# Require zoneinfo data provided by tzdata-java subpackage.
+Requires: tzdata-java
+
+Provides: jre-%{javaver}-%{origin}-headless = %{epoch}:%{version}-%{release}
+Provides: jre-%{origin}-headless = %{epoch}:%{version}-%{release}
+Provides: jre-%{javaver}-headless = %{epoch}:%{version}-%{release}
+Provides: java-%{javaver}-headless = %{epoch}:%{version}-%{release}
+Provides: jre-headless = %{epoch}:%{javaver}
+Provides: java-%{origin}-headless = %{epoch}:%{version}-%{release}
+Provides: java-headless = %{epoch}:%{javaver}
+# Standard JPackage extensions provides.
+Provides: jndi6 = %{epoch}:%{version}
+Provides: jndi6-ldap = %{epoch}:%{version}
+Provides: jndi6-cos = %{epoch}:%{version}
+Provides: jndi6-rmi = %{epoch}:%{version}
+Provides: jndi6-dns = %{epoch}:%{version}
+Provides: jaas6 = %{epoch}:%{version}
+Provides: jsse6 = %{epoch}:%{version}
+Provides: jce6 = %{epoch}:%{version}
+Provides: jdbc6-stdext = 3.0
+Provides: java6-sasl = %{epoch}:%{version}
+Provides: java6-fonts = %{epoch}:%{version}
+Requires: java-common
+Requires: /proc
+
+%description headless
+The OpenJDK runtime environment without audio and video 
 
 %description
 The OpenJDK runtime environment.
@@ -537,6 +550,7 @@ pushd %{buildoutputdir}/j2sdk-image
   popd
 %endif
 
+%if_enabled jvmjardir
   # Install extension symlinks.
   install -d -m 755 $RPM_BUILD_ROOT%{jvmjardir}
   pushd $RPM_BUILD_ROOT%{jvmjardir}
@@ -560,6 +574,7 @@ pushd %{buildoutputdir}/j2sdk-image
       ln -sf $jar $(echo $jar | sed "s|-%{version}.jar|.jar|g")
     done
   popd
+%endif
 
   # Install JCE policy symlinks.
   install -d -m 755 $RPM_BUILD_ROOT%{_jvmprivdir}/%{archname}/jce/vanilla
@@ -570,10 +585,12 @@ pushd %{buildoutputdir}/j2sdk-image
     ln -sf %{sdkdir} %{sdklnk}
   popd
 
+%if_enabled jvmjardir
   pushd $RPM_BUILD_ROOT%{_jvmjardir}
     ln -sf %{sdkdir} %{jrelnk}
     ln -sf %{sdkdir} %{sdklnk}
   popd
+%endif
 
   # Install man pages.
   install -d -m 755 $RPM_BUILD_ROOT%{_mandir}/man1
@@ -602,7 +619,7 @@ cp -a %{buildoutputdir}/docs $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 for s in 16 24 32 48 ; do
   install -D -p -m 644 \
     openjdk/jdk/src/solaris/classes/sun/awt/X11/java-icon${s}.png \
-    $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/${s}x${s}/apps/java.png
+    $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/${s}x${s}/apps/java-%{javaver}.png
 done
 
 # Install desktop files.
@@ -620,12 +637,42 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/.java/.systemPrefs
 find $RPM_BUILD_ROOT%{_jvmdir}/%{jredir} -type d \
   | grep -v jre/lib/security \
   | sed 's|'$RPM_BUILD_ROOT'|%%dir |' \
-  > %{name}.files
+  > %{name}.files-headless
 # Find JRE files.
 find $RPM_BUILD_ROOT%{_jvmdir}/%{jredir} -type f -o -type l \
   | grep -v jre/lib/security \
   | sed 's|'$RPM_BUILD_ROOT'||' \
-  >> %{name}.files
+  >> %{name}.files.all
+#split %{name}.files to %{name}.files-headless and %{name}.files
+#see https://bugzilla.redhat.com/show_bug.cgi?id=875408
+NOT_HEADLESS=\
+"%{_jvmdir}/%{sdkdir}/jre/lib/%{archinstall}/libjsoundalsa.so 
+%{_jvmdir}/%{sdkdir}/jre/lib/%{archinstall}/libpulse-java.so 
+%{_jvmdir}/%{sdkdir}/jre/lib/%{archinstall}/libsplashscreen.so 
+%{_jvmdir}/%{sdkdir}/jre/lib/%{archinstall}/xawt/libmawt.so
+%{_jvmdir}/%{sdkdir}/jre/bin/policytool
+%{_jvmdir}/%{sdkdir}/jre-abrt/lib/%{archinstall}/libjsoundalsa.so 
+%{_jvmdir}/%{sdkdir}/jre-abrt/lib/%{archinstall}/libpulse-java.so 
+%{_jvmdir}/%{sdkdir}/jre-abrt/lib/%{archinstall}/libsplashscreen.so 
+%{_jvmdir}/%{sdkdir}/jre-abrt/lib/%{archinstall}/xawt/libmawt.so"
+#filter  %{name}.files from  %{name}.files.all to  %{name}.files-headless
+ALL=`cat %{name}.files.all`
+for file in $ALL ; do 
+  INLCUDE="NO" ; 
+  for blacklist in $NOT_HEADLESS ; do
+#we can not match normally, because rpmbuild will evaluate !0 result as script failure
+    q=`expr match "$file" "$blacklist"` || :
+    l=`expr length  "$blacklist"` || :
+    if [ $q -eq $l  ]; then 
+      INLCUDE="YES" ; 
+    fi;
+  done
+    if [ "x$INLCUDE" = "xNO"  ]; then 
+      echo "$file" >> %{name}.files-headless
+    else
+      echo "$file" >> %{name}.files
+    fi
+done
 # Find demo directories.
 find $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/demo \
   $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/sample -type d \
@@ -714,17 +761,20 @@ EOF
 
 # Install substitute rules for buildreq
 echo java >j2se-buildreq-substitute
+echo java-headless >j2se-headless-buildreq-substitute
 echo java-devel >j2se-devel-buildreq-substitute
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 install -m644 j2se-buildreq-substitute \
     %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
+install -m644 j2se-headless-buildreq-substitute \
+    %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-headless
 install -m644 j2se-devel-buildreq-substitute \
     %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-devel
 
 install -d %buildroot%_altdir
 
 # J2SE alternative
-cat <<EOF >%buildroot%_altdir/%altname-java
+cat <<EOF >%buildroot%_altdir/%altname-java-headless
 %{_bindir}/java	%{_jvmdir}/%{jredir}/bin/java	%priority
 %_man1dir/java.1.gz	%_man1dir/java%{label}.1.gz	%{_jvmdir}/%{jredir}/bin/java
 EOF
@@ -732,20 +782,23 @@ EOF
 for i in keytool policytool servertool pack200 unpack200 \
 orbd rmid rmiregistry tnameserv
 do
-  cat <<EOF >>%buildroot%_altdir/%altname-java
+  cat <<EOF >>%buildroot%_altdir/%altname-java-headless
 %_bindir/$i	%{_jvmdir}/%{jredir}/bin/$i	%{_jvmdir}/%{jredir}/bin/java
 %_man1dir/$i.1.gz	%_man1dir/${i}%{label}.1.gz	%{_jvmdir}/%{jredir}/bin/java
 EOF
 done
 
 # ----- JPackage compatibility alternatives ------
-cat <<EOF >>%buildroot%_altdir/%altname-java
+cat <<EOF >>%buildroot%_altdir/%altname-java-headless
 %{_jvmdir}/jre	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
-%{_jvmjardir}/jre	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %{_jvmdir}/jre-%{origin}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
-%{_jvmjardir}/jre-%{origin}	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %{_jvmdir}/jre-%{javaver}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
+%{_jvmdir}/jre-%{javaver}-%{origin}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
+%if_enabled jvmjardir
+%{_jvmjardir}/jre	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
+%{_jvmjardir}/jre-%{origin}	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %{_jvmjardir}/jre-%{javaver}	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
+%endif
 EOF
 %if_enabled moz_plugin
 cat <<EOF >>%buildroot%_altdir/%altname-java
@@ -753,13 +806,15 @@ cat <<EOF >>%buildroot%_altdir/%altname-java
 %{_bindir}/jcontrol	%{_jvmdir}/%{jredir}/bin/jcontrol	%{_jvmdir}/%{jredir}/bin/java
 EOF
 %endif
+%if 0
 # JPackage specific: alternatives for security policy
 if [ -e %buildroot%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar ]; then
-    cat <<EOF >>%buildroot%_altdir/%altname-java
+    cat <<EOF >>%buildroot%_altdir/%altname-java-headless
 %{_jvmdir}/%{jrelnk}/lib/security/local_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar	%{priority}
 %{_jvmdir}/%{jrelnk}/lib/security/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar
 EOF
 fi
+%endif
 # ----- end: JPackage compatibility alternatives ------
 
 
@@ -794,11 +849,14 @@ done
 # ----- JPackage compatibility alternatives ------
   cat <<EOF >>%buildroot%_altdir/%altname-javac
 %{_jvmdir}/java	%{_jvmdir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
-%{_jvmjardir}/java	%{_jvmjardir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
 %{_jvmdir}/java-%{origin}	%{_jvmdir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
-%{_jvmjardir}/java-%{origin}	%{_jvmjardir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
 %{_jvmdir}/java-%{javaver}	%{_jvmdir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
+%{_jvmdir}/java-%{javaver}-%{origin}	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
+%if_enabled jvmjardir
+%{_jvmjardir}/java	%{_jvmjardir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
+%{_jvmjardir}/java-%{origin}	%{_jvmjardir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
 %{_jvmjardir}/java-%{javaver}	%{_jvmjardir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
+%endif
 EOF
 # ----- end: JPackage compatibility alternatives ------
 
@@ -827,19 +885,25 @@ for i in $RPM_BUILD_ROOT%_man1dir/*.1; do
     [ -f $i ] && gzip -9 $i
 done
 
-%post
-%force_update_alternatives
-
 ##################################################
 # - END alt linux specific, shared with openjdk -#
 ##################################################
 
-
-
+%post headless
+# java should be available ASAP
+%force_update_alternatives
 
 %files -f %{name}.files
+#if_enabled moz_plugin
+%if 0
 %_altdir/%altname-java
+%endif
 %_sysconfdir/buildreqs/packages/substitute.d/%name
+%{_datadir}/icons/hicolor/*x*/apps/java-%{javaver}.png
+
+%files headless  -f %{name}.files-headless
+%_altdir/%altname-java-headless
+%_sysconfdir/buildreqs/packages/substitute.d/%name-headless
 %doc %{buildoutputdir}/j2sdk-image/jre/ASSEMBLY_EXCEPTION
 %doc %{buildoutputdir}/j2sdk-image/jre/LICENSE
 #%doc %{buildoutputdir}/j2sdk-image/jre/README.html
@@ -853,14 +917,15 @@ done
 %doc README
 %dir %{_jvmdir}/%{sdkdir}
 %{_jvmdir}/%{jrelnk}
-%{_jvmjardir}/%{jrelnk}
 %{_jvmprivdir}/*
+%if_enabled jvmjardir
+%{_jvmjardir}/%{jrelnk}
 %{jvmjardir}
+%endif
 %dir %{_jvmdir}/%{jredir}/lib/security
 %{_jvmdir}/%{jredir}/lib/security/cacerts
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/java.policy
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/java.security
-%{_datadir}/icons/hicolor/*x*/apps/java.png
 %{_mandir}/man1/java-%{name}.1*
 %{_mandir}/man1/keytool-%{name}.1*
 %{_mandir}/man1/orbd-%{name}.1*
@@ -898,7 +963,9 @@ done
 %{_jvmdir}/%{sdkdir}/tapset/*.stp
 %endif
 %{_jvmdir}/%{sdklnk}
+%if_enabled jvmjardir
 %{_jvmjardir}/%{sdklnk}
+%endif
 %{_datadir}/applications/*jconsole.desktop
 %{_datadir}/applications/*policytool.desktop
 %{_mandir}/man1/appletviewer-%{name}.1*
@@ -951,6 +1018,13 @@ done
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Nov 27 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.41-alt1
+- added headless package
+- changed version to match other jvms
+- removed obsolete exports in jvmjardir
+- removed obsolete security policy alternatives in _jvmprivdir
+- added java-1.x.0-openjdk alternative in jvmdir
+
 * Thu Nov 02 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.0-alt25.b41
 - fixed build
 
