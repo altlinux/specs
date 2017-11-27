@@ -1,9 +1,9 @@
 Name: control
 Version: 0.7.6
-Release: alt1
+Release: alt2
 
 Summary: A set of scripts to control installed system facilities
-License: GPL
+License: GPLv2+
 Group: System/Base
 BuildArch: noarch
 
@@ -29,10 +29,11 @@ from package installation.
 sed -i s/@VERSION@/%version-%release/ control
 
 %install
-mkdir -p %buildroot{%_controldir,%_sbindir,%_man8dir,/var/run/control}
+mkdir -p %buildroot{%_controldir,%_sbindir,%_man8dir,%_mandir/ru/man8,/var/run/control}
 install -p -m755 control{,-dump,-restore} %buildroot%_sbindir/
 install -p -m755 functions %buildroot%_sysconfdir/control.d/
 install -p -m644 control{,-dump,-restore}.8 %buildroot%_man8dir/
+install -p -m644 ru/control{,-dump,-restore}.8 %buildroot%_mandir/ru/man8/
 install -pD -m644 control.macros %buildroot%_rpmmacrosdir/control
 
 # Generate shell functions provides list.
@@ -49,9 +50,13 @@ install -pD -m644 control.macros %buildroot%_rpmmacrosdir/control
 %_rpmmacrosdir/control
 %config %_sysconfdir/control.d
 %attr(0700,root,root) %ghost /var/run/control/
-%_man8dir/*
+%_man8dir/*.8*
+%_mandir/ru/man8/*.8*
 
 %changelog
+* Mon Nov 27 2017 Dmitry V. Levin <ldv@altlinux.org> 0.7.6-alt2
+- Packaged translated manpages (from gremlin@; closes: #33920).
+
 * Thu May 05 2011 Dmitry V. Levin <ldv@altlinux.org> 0.7.6-alt1
 - control_subst: changed to use "sed -i --follow-symlinks"
   instead of plain "sed -i".
