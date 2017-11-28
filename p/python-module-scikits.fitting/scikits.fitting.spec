@@ -1,30 +1,27 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.git20121029.1.1
 %define mname scikits
 %define oname %mname.fitting
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5.1
-#Release: alt2.git20121029.1
+Version: 0.6
+Release: alt1
 Summary: Framework for fitting functions to data with SciPy
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/scikits.fitting/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/ludwigschwardt/scikits.fitting.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-scipy libnumpy-devel
-BuildPreReq: python-module-matplotlib python-module-nose
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-scipy libnumpy-devel
+BuildRequires: python-module-matplotlib python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-scipy libnumpy-py3-devel
-BuildPreReq: python3-module-matplotlib python3-module-nose
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-scipy libnumpy-py3-devel
+BuildRequires: python3-module-matplotlib python3-module-nose
 %endif
 
 %py_provides %oname
@@ -118,6 +115,7 @@ popd
 %doc *.txt
 %python_sitelibdir/%mname/fitting
 %python_sitelibdir/*.egg-info
+%python_sitelibdir/*-nspkg.pth
 %exclude %python_sitelibdir/%mname/fitting/tests
 
 %files tests
@@ -128,6 +126,7 @@ popd
 %doc *.txt
 %python3_sitelibdir/%mname/fitting
 %python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*-nspkg.pth
 %exclude %python3_sitelibdir/%mname/fitting/tests
 
 %files -n python3-module-%oname-tests
@@ -135,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6-alt1
+- Updated to upstream version 0.6.
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.1-alt2.git20121029.1.1
 - (AUTO) subst_x86_64.
 
