@@ -6,9 +6,10 @@
 Name: python-module-%oname
 URL:http://niftilib.sf.net/pynifti/
 Summary: Easy access to NIfTI images from within Python
-Version: 2.1.0
-Release: alt1.dev.git20141209.1.1
+Version: 2.2.1
+Release: alt1
 License: MIT
+BuildArch: noarch
 Group: Development/Python
 
 # https://github.com/nipy/nibabel.git
@@ -17,23 +18,18 @@ Source: %oname-%version.tar.gz
 Source1: nitest-balls1.tar
 # git://github.com/matthew-brett/nitest-minc2.git
 Source2: nitest-minc2.tar
-BuildArch: noarch
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: fontconfig python-base python-devel python-module-Pillow python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cssselect python-module-cycler python-module-dateutil python-module-docutils python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-matplotlib python-module-numpy python-module-pyparsing python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-tkinter python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-numpy
-BuildRequires: python-module-alabaster python-module-html5lib python-module-nose python-module-numpy-testing python-module-numpydoc python-module-objects.inv python-module-pydicom python-module-sphinx-pickles python-modules-sqlite3 python3-module-numpy-testing rpm-build-python3 time
-
-#BuildRequires: libnumpy-devel liblapack-devel python-module-nose
-#BuildRequires: python-devel swig libniftilib-devel zlib-devel
-#BuildRequires: gcc-c++ python-module-sphinx-devel python-module-Pygments
-#BuildPreReq: python-module-pydicom python-modules-sqlite3
-%setup_python_module %oname
+BuildRequires: python-module-numpy-testing python-module-nose
+BuildRequires: python-module-pydicom python-modules-sqlite3
+BuildRequires: python-module-alabaster python-module-html5lib python-module-numpydoc python-module-objects.inv python-module-sphinx-pickles
+BuildRequires: python2.7(matplotlib) python2.7(matplotlib.sphinxext.plot_directive) python2.7(texext)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel libnumpy-py3-devel python3-modules-sqlite3
+BuildRequires: python3-module-numpy-testing
 %endif
+
+%setup_python_module %oname
 
 %description
 NiBabel aims to provide easy access to NIfTI images from within Python.
@@ -220,6 +216,9 @@ rm -f %buildroot%python_sitelibdir/conf.py
 %endif
 
 %changelog
+* Tue Nov 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.1-alt1
+- Updated to upstream version 2.2.1.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.1.0-alt1.dev.git20141209.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
