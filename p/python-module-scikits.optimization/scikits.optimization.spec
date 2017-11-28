@@ -1,5 +1,3 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.git20130417.1.1
 %define mname scikits
 %define oname %mname.optimization
 
@@ -8,23 +6,22 @@ Release: alt2.git20130417.1.1
 Name: python-module-%oname
 Epoch: 1
 Version: 0.3
-#Release: alt2.git20130417.1
+Release: alt3.git20130417
 Summary: A python module for numerical optimization
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/scikits.optimization/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mbrucher/scikit-optimization.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-nose libnumpy-devel
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-nose libnumpy-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose libnumpy-py3-devel
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-nose libnumpy-py3-devel
+BuildRequires: python-tools-2to3
 %endif
 
 %py_provides %oname
@@ -101,11 +98,10 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %check
-python setup.py test
 nosetests -v
+
 %if_with python3
 pushd ../python3
-python3 setup.py test
 nosetests3 -v
 popd
 %endif
@@ -114,6 +110,7 @@ popd
 %doc *.md
 %python_sitelibdir/%mname/optimization
 %python_sitelibdir/*.egg-info
+%python_sitelibdir/*-nspkg.pth
 %exclude %python_sitelibdir/%mname/optimization/tests
 %exclude %python_sitelibdir/%mname/optimization/*/tests
 
@@ -126,6 +123,7 @@ popd
 %doc *.md
 %python3_sitelibdir/%mname/optimization
 %python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*-nspkg.pth
 %exclude %python3_sitelibdir/%mname/optimization/tests
 %exclude %python3_sitelibdir/%mname/optimization/*/tests
 
@@ -135,6 +133,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.3-alt3.git20130417
+- Fixed check.
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:0.3-alt2.git20130417.1.1
 - (AUTO) subst_x86_64.
 
