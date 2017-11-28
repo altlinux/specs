@@ -1,6 +1,6 @@
 Name:		boinc
-Version: 7.4.42
-Release: alt2
+Version: 7.8.4
+Release: alt1
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 License:	GPLv3+/LGPLv3+
 Group:		Sciences/Other
@@ -228,7 +228,7 @@ This package contains a set of server libraires of the BOINC software.
 %patch23 -p2
 %patch24 -p2
 %patch25 -p0
-%patch26 -p0
+#%patch26 -p0
 
 # Do not use /usr/bin/env in PHP scripts.
 grep -rHsl -m 1 -e 'bin/env' html/* |
@@ -285,7 +285,6 @@ esac
 # Make the manpages
 pushd doc/manpages
 %make DOCBOOK2X_MAN=db2x_docbook2man
-db2x_docbook2man appmgr.xml
 popd
 
 %install
@@ -506,6 +505,10 @@ getent group boincadm >/dev/null || groupadd -r boincadm
 
 
 %changelog
+
+* Tue Nov 28 2017 Ilya Mashkin <oddity@altlinux.ru> 7.8.4-alt1
+- update to 7.8.4 Build prepared by Oleg Solovyov (mcpain)
+
 * Fri Nov 24 2017 Ilya Mashkin <oddity@altlinux.ru> 7.4.42-alt2
 - fix build
 
