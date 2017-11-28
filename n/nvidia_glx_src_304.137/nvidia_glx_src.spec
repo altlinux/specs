@@ -14,8 +14,9 @@
 %define nv_version 304
 %define nv_release 137
 %define nv_minor %nil
-%define pkg_rel alt136%ubt
+%define pkg_rel alt137%ubt
 %def_enable kernelsource
+%def_disable package_wfb
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -208,8 +209,10 @@ if [ -f nvidia_drv.so ] ; then
     %__install -m 0644 nvidia_drv.so %buildroot/%nv_lib_dir/
 fi
 
+%if_enabled package_wfb
 [ -f libnvidia-wfb.so.%tbver ] && \
 %__install -m 0644 libnvidia-wfb.so.%tbver %buildroot/%nv_lib_dir/libwfb.so
+%endif
 
 %__install -m 0644 libglx.so.%tbver %buildroot/%nv_lib_dir/libglx.so
 %__ln_s libglx.so %buildroot/%nv_lib_dir/libglx.a
@@ -267,8 +270,10 @@ fi
 %nv_lib_dir/lib*XvMC*.so*
 %nv_lib_dir/libnvidia-cfg.so*
 %nv_lib_dir/libvdpau_nvidia.so*
+%if_enabled package_wfb
 %nv_lib_dir/libwfb.so
 %nv_lib_dir/libnvidia-wfb.so*
+%endif
 %nv_lib_dir/nvidia.xinf
 %xinf_dir/nvidia-%version.xinf
 
@@ -278,6 +283,9 @@ fi
 %endif
 
 %changelog
+* Tue Nov 28 2017 Sergey V Turchin <zerg@altlinux.org> 304.137-alt137%ubt
+- don't package wfb module
+
 * Tue Sep 26 2017 Sergey V Turchin <zerg@altlinux.org> 304.137-alt136%ubt
 - new version
 
