@@ -1,14 +1,14 @@
 %define modname pymediainfo
 
 Name: python-module-%modname
-Version: 2.1.9
+Version: 2.2.0
 Release: alt1
 
 Summary: A Python wrapper for the mediainfo library
 Group: Development/Python
 License: MIT
-Url: http://pypi.python.org/pypi/%modname
-Source: http://pypi.io/packages/source/p/%modname/%modname-%version.tar.gz
+Url: https://pypi.python.org/pypi/%modname
+Source: https://pypi.io/packages/source/p/%modname/%modname-%version.tar.gz
 
 BuildArch: noarch
 
@@ -60,6 +60,9 @@ popd
 %python3_sitelibdir_noarch/*.egg-info
 
 %changelog
+* Wed Nov 29 2017 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Thu Jul 06 2017 Yuri N. Sedunov <aris@altlinux.org> 2.1.9-alt1
 - first build for Sisyphus
 
