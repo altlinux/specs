@@ -18,9 +18,11 @@
 %define nv_version 384
 %define nv_release 90
 %define nv_minor %nil
-%define pkg_rel alt174%ubt
+%define pkg_rel alt176%ubt
 %def_enable kernelsource
 %def_disable glvnd
+%def_disable package_egl_wayland 1
+%def_disable package_wfb
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -195,8 +197,10 @@ soname()
 %__install -m 0644 libnvidia-glsi.so.%tbver %buildroot/%_libdir/
 %__install -m 0644 tls/libnvidia-tls.so.%tbver %buildroot/%_libdir/
 #
+%if_enabled package_egl_wayland
 %__install -m 0644 libnvidia-egl-wayland.so.%nvidia_egl_wayland_libver %buildroot/%_libdir/
 ln -s libnvidia-egl-wayland.so.%nvidia_egl_wayland_libver %buildroot/%_libdir/libnvidia-egl-wayland.so.%nvidia_egl_wayland_sover
+%endif
 
 %__ln_s %nv_lib_dir/nvidia.xinf %buildroot/%nv_lib_sym_dir/nvidia.xinf
 %__ln_s %nv_lib_dir/nvidia.xinf %buildroot/%xinf_dir/nvidia-%version.xinf
@@ -209,8 +213,10 @@ if [ -f nvidia_drv.so ] ; then
     %__install -m 0644 nvidia_drv.so %buildroot/%nv_lib_dir/
 fi
 
+%if_enabled package_wfb
 [ -f libnvidia-wfb.so.%tbver ] && \
 %__install -m 0644 libnvidia-wfb.so.%tbver %buildroot/%nv_lib_dir/libwfb.so
+%endif
 
 %__install -m 0644 libglx.so.%tbver %buildroot/%nv_lib_dir/libglx.so
 %__ln_s libglx.so %buildroot/%nv_lib_dir/libglx.a
@@ -307,8 +313,10 @@ fi
 %nv_lib_dir/libGLX.so*
 %nv_lib_dir/libnvidia-cfg.so*
 %nv_lib_dir/libvdpau_nvidia.so*
+%if_enabled package_wfb
 %nv_lib_dir/libwfb.so
 %nv_lib_dir/libnvidia-wfb.so*
+%endif
 %nv_lib_dir/nvidia.xinf
 %xinf_dir/nvidia-%version.xinf
 %_datadir/nvidia/nvidia-application-profiles-%version-rc
@@ -317,9 +325,11 @@ fi
 %_datadir/vulkan/icd.d/%{version}_nvidia_icd.json
 %_datadir/egl/egl_external_platform.d/%{version}_nvidia_wayland.json
 
+%if_enabled package_egl_wayland
 %files -n %libnvidia_egl_wayland
 %_libdir/libnvidia-egl-wayland.so.%{nvidia_egl_wayland_sover}
 %_libdir/libnvidia-egl-wayland.so.%{nvidia_egl_wayland_sover}.*
+%endif
 
 %if_enabled kernelsource
 %files -n kernel-source-%module_name-%module_version
@@ -327,6 +337,12 @@ fi
 %endif
 
 %changelog
+* Tue Nov 28 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt176%ubt
+- don't package wfb module
+
+* Tue Nov 28 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt175%ubt
+- don't package libnvidia-egl-wayland
+
 * Wed Sep 27 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt174%ubt
 - fix requires
 
