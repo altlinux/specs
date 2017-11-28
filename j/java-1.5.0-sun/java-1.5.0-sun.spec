@@ -50,13 +50,32 @@
 
 Name:           %jppname
 Version:        %{javaver}.%{buildver}
-Release:        alt5
+Release:        alt6
 Epoch:          0
 Summary:        Java 2 Runtime Environment, Standard Edition
 License:        Operating System Distributor License for Java version 1.1
 Group:          System/Base
 URL:            http://java.sun.com/j2se/%{javaver}
 Packager:       Igor Yu. Vlasenko <viy@altlinux.org>
+
+%def_enable headless
+%def_enable demo
+%def_disable fonts
+%def_disable jvmjardir
+%def_disable accessibility
+%def_disable alsa_subpackage
+%def_enable jdbc_subpackage
+%def_disable control_panel
+%ifarch x86_64
+%def_disable javaws
+%def_disable moz_plugin
+%def_disable desktop
+%else
+%def_disable javaws
+%def_disable moz_plugin
+%def_disable desktop
+%endif
+%def_with gcc32_abi
 
 %define sdklnk          java-%{javaver}-%{origin}
 %define jrelnk          jre-%{javaver}-%{origin}
@@ -65,27 +84,12 @@ Packager:       Igor Yu. Vlasenko <viy@altlinux.org>
 %define sdkbindir       %{_jvmdir}/%{sdklnk}/bin
 %define sdklibdir       %{_jvmdir}/%{sdklnk}/lib
 %define jrebindir       %{_jvmdir}/%{jrelnk}/bin
+%if_enabled jvmjardir
 %define jvmjardir       %{_jvmjardir}/%{jppname}-%{version}
+%endif
 
 %define cgibindir       %{_var}/www/cgi-bin
 # --- jpackage compatibility stuff ends here ---
-
-%def_enable headless
-%def_enable demo
-%def_enable fonts
-%def_disable accessibility
-%def_disable alsa_subpackage
-%def_enable jdbc_subpackage
-%ifarch x86_64
-%def_disable javaws
-%def_disable moz_plugin
-%def_disable desktop
-%else
-%def_enable javaws
-%def_enable moz_plugin
-%def_disable desktop
-%endif
-%def_with gcc32_abi
 
 %ifarch x86_64
 %define libarch	    amd64
@@ -136,7 +140,7 @@ Obsoletes: j2se%major-%origin
 %if_enabled headless
 Requires: %{name}-headless = %{?epoch:%epoch:}%version-%release
 %endif
-Requires: fonts-ttf-j2se-%origin >= %version-%release
+Requires: fonts-ttf-java-%{origin} >= %version-%release
 Requires: java-common
 Requires: /proc
 Requires(post,preun): alternatives >= 0.4
@@ -203,7 +207,7 @@ Java SDK, Standard Edition.
 %package        headless
 Summary:        Java Runtime Environment, without audio and video support
 Group:          Development/Java
-Requires: fonts-ttf-%name >= %version-%release
+Requires: fonts-ttf-java-%{origin} >= %version-%release
 Requires(post,preun): alternatives >= 0.4
 
 # --- fedora compatibility stuff starts here ---
@@ -407,6 +411,7 @@ Requires: fontconfig
 Provides: java_%origin-fonts = %version-%release
 Obsoletes: j2se-%origin-fonts
 Obsoletes: j2se%major-%origin-fonts
+Provides: fonts-ttf-java-%{origin} = %version
 Provides: fonts-ttf-j2se-%origin = %version-%release
 Obsoletes: fonts-ttf-j2se-%origin < %version-%release
 Obsoletes: fonts-ttf-java-1.4.2-sun
@@ -491,7 +496,7 @@ EOF
 
 ### jpackage ###
 
-%if_enabled moz_plugin
+%if_enabled control_panel
 # fix up ControlPanel APPHOME and bin locations
 sed -i 's|APPHOME=.*|APPHOME=%{_jvmdir}/%{jredir}|' jre/bin/ControlPanel
 sed -i 's|/usr/bin/||g' jre/bin/ControlPanel
@@ -502,7 +507,9 @@ ln -s ControlPanel jre/bin/jcontrol
 cat > bin/HtmlConverter << EOF
 %{jrebindir}/java -jar %{sdklibdir}/htmlconverter.jar $*
 EOF
+%endif
 
+%if_enabled moz_plugin
 # fix up java-rmi.cgi PATH
 sed -i 's|PATH=.*|PATH=%{jrebindir}|' bin/java-rmi.cgi
 
@@ -515,6 +522,7 @@ install -d -m 755 $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}
 cp -a bin include lib src.zip $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}
 install -d -m 755 $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}
 
+%if_enabled jvmjardir
 # extensions handling
 install -d -m 755 $RPM_BUILD_ROOT%{jvmjardir}
 pushd $RPM_BUILD_ROOT%{jvmjardir}
@@ -538,6 +546,7 @@ pushd $RPM_BUILD_ROOT%{jvmjardir}
       ln -fs ${jar} $(echo $jar | sed "s|-%{version}.jar|.jar|g")
    done
 popd
+%endif
 
 # rest of the jre
 cp -a jre/bin jre/lib $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}
@@ -549,25 +558,18 @@ cp -a jre/plugin $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}
 %endif
 install -d -m 755 $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/endorsed
 
-# jce policy file handling
-install -d -m 755 $RPM_BUILD_ROOT%{_jvmprivdir}/%{name}/jce/vanilla
-for file in local_policy.jar US_export_policy.jar; do
-  mv $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/security/$file \
-    $RPM_BUILD_ROOT%{_jvmprivdir}/%{name}/jce/vanilla
-  # for ghosts
-  touch $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/security/$file
-done
-
 # versionless symlinks
 pushd $RPM_BUILD_ROOT%{_jvmdir}
 ln -s %{jredir} %{jrelnk}
 ln -s %{sdkdir} %{sdklnk}
 popd
 
+%if_enabled jvmjardir
 pushd $RPM_BUILD_ROOT%{_jvmjardir}
 ln -s %{sdkdir} %{jrelnk}
 ln -s %{sdkdir} %{sdklnk}
 popd
+%endif
 
 # man pages
 install -d -m 755 $RPM_BUILD_ROOT%{_man1dir}
@@ -629,7 +631,7 @@ mv $RPM_BUILD_ROOT%{_jvmdir}/%{jrelnk}/lib/desktop/icons $RPM_BUILD_ROOT%{_datad
 #mv $RPM_BUILD_ROOT%{_jvmdir}/%{jrelnk}/lib/desktop/applications/%{oldorigin}-javaws.desktop $RPM_BUILD_ROOT%_desktopdir/
 %endif
 
-%if_enabled moz_plugin
+%if_enabled control_panel
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/pixmaps
 install -m 644 jre/plugin/desktop/%{origin}_java.png $RPM_BUILD_ROOT%{_datadir}/pixmaps/%{name}.png
 install -d -m 755 $RPM_BUILD_ROOT%{_niconsdir}
@@ -660,7 +662,7 @@ Categories=Development;Profiling;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%
 EOF
 fi
 
-%if_enabled moz_plugin
+%if_enabled control_panel
 # ControlPanel freedesktop.org menu entry
 cat >> $RPM_BUILD_ROOT%{_datadir}/applications/%{name}-control-panel.desktop << EOF
 [Desktop Entry]
@@ -689,10 +691,13 @@ EOF
 
 # Install substitute rules for buildreq
 echo java >j2se-buildreq-substitute
+echo java-headless >j2se-headless-buildreq-substitute
 echo java-devel >j2se-devel-buildreq-substitute
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 install -m644 j2se-buildreq-substitute \
     %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
+install -m644 j2se-headless-buildreq-substitute \
+    %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-headless
 install -m644 j2se-devel-buildreq-substitute \
     %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-devel
 
@@ -713,25 +718,22 @@ do
 EOF
 done
 
-# ----- JPackage compatibility alternatives ------
-cat <<EOF >>%buildroot%_altdir/%name-java
-%{_jvmdir}/jre	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
-%{_jvmjardir}/jre	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
-%{_jvmdir}/jre-%{origin}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
-%{_jvmjardir}/jre-%{origin}	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
-%{_jvmdir}/jre-%{javaver}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
-%{_jvmjardir}/jre-%{javaver}	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
-EOF
-%if_enabled moz_plugin
+%if_enabled control_panel
 cat <<EOF >>%buildroot%_altdir/%name-java
 %{_bindir}/ControlPanel	%{_jvmdir}/%{jredir}/bin/ControlPanel	%{_jvmdir}/%{jredir}/bin/java
 %{_bindir}/jcontrol	%{_jvmdir}/%{jredir}/bin/jcontrol	%{_jvmdir}/%{jredir}/bin/java
 EOF
 %endif
-# JPackage specific: alternatives for security policy
+# ----- JPackage compatibility alternatives ------
 cat <<EOF >>%buildroot%_altdir/%name-java
-%{_jvmdir}/%{jrelnk}/lib/security/local_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar	%{priority}
-%{_jvmdir}/%{jrelnk}/lib/security/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar
+%{_jvmdir}/jre	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
+%{_jvmdir}/jre-%{origin}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
+%{_jvmdir}/jre-%{javaver}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
+%if_enabled jvmjardir
+%{_jvmjardir}/jre	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
+%{_jvmjardir}/jre-%{origin}	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
+%{_jvmjardir}/jre-%{javaver}	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
+%endif
 EOF
 # ----- end: JPackage compatibility alternatives ------
 
@@ -763,11 +765,13 @@ done
 # ----- JPackage compatibility alternatives ------
   cat <<EOF >>%buildroot%_altdir/%name-javac
 %{_jvmdir}/java	%{_jvmdir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
-%{_jvmjardir}/java	%{_jvmjardir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
 %{_jvmdir}/java-%{origin}	%{_jvmdir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
-%{_jvmjardir}/java-%{origin}	%{_jvmjardir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
 %{_jvmdir}/java-%{javaver}	%{_jvmdir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
+%if_enabled jvmjardir
+%{_jvmjardir}/java	%{_jvmjardir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
+%{_jvmjardir}/java-%{origin}	%{_jvmjardir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
 %{_jvmjardir}/java-%{javaver}	%{_jvmjardir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
+%endif
 EOF
 # ----- end: JPackage compatibility alternatives ------
 
@@ -810,6 +814,11 @@ done
 
 
 %files
+%if_enabled control_panel
+# common between plugin and javaws (TODO: desktop)
+%{_datadir}/pixmaps/%{name}.png
+%{_niconsdir}/%{name}.png
+%endif
 %if_enabled headless
 %{_jvmdir}/%{jredir}/bin/policytool
 %{_jvmdir}/%{jredir}/lib/%libarch/awt_robot
@@ -823,14 +832,17 @@ done
 %exclude %{_jvmdir}/%{jredir}/lib/%libarch/libjsoundalsa.so
 %exclude %{_jvmdir}/%{jredir}/lib/%libarch/motif21/libmawt.so
 %exclude %{_jvmdir}/%{jredir}/lib/%libarch/xawt/libmawt.so
+%_sysconfdir/buildreqs/packages/substitute.d/%name-headless
 %endif
 %doc jre/CHANGES jre/COPYRIGHT jre/LICENSE jre/README jre/Welcome.html
 %doc jre/THIRDPARTYLICENSEREADME.txt
 %doc README.alt
 # jpackage links #
-%{jvmjardir}
 %{_jvmdir}/%{jrelnk}
+%if_enabled jvmjardir
+%{jvmjardir}
 %{_jvmjardir}/%{jrelnk}
+%endif
 # jpackage dirs
 %{_jvmdir}/%{jredir}/lib/endorsed
 %_altdir/%name-java
@@ -865,9 +877,6 @@ done
 %{_jvmdir}/%{jredir}/lib/images
 %{_jvmdir}/%{jredir}/lib/servicetag
 %if_enabled moz_plugin
-# common between plugin and javaws (TODO: desktop)
-%{_datadir}/pixmaps/%{name}.png
-%{_niconsdir}/%{name}.png
 %{_jvmdir}/%{jredir}/lib/locale
 %exclude %{_jvmdir}/%{jredir}/lib/locale/*/LC_MESSAGES/sunw_java_plugin.mo
 %exclude %{_jvmdir}/%{jredir}/lib/%libarch/libjavaplugin_jni.so
@@ -888,9 +897,8 @@ done
 %{_jvmdir}/%{jredir}/lib/fontconfig.*.bfc
 %{_jvmdir}/%{jredir}/lib/fontconfig.*.properties.src
 #%{_jvmdir}/%{jredir}/lib/security/*.jar
-%{_jvmprivdir}/*
-%ghost %{_jvmdir}/%{jredir}/lib/security/local_policy.jar
-%ghost %{_jvmdir}/%{jredir}/lib/security/US_export_policy.jar
+%{_jvmdir}/%{jredir}/lib/security/local_policy.jar
+%{_jvmdir}/%{jredir}/lib/security/US_export_policy.jar
 %_man1dir/java%label.1*
 %_man1dir/keytool%label.1*
 %_man1dir/kinit%label.1*
@@ -919,7 +927,9 @@ done
 %doc *README* LICENSE COPYRIGHT
 # jpackage short links #
 %{_jvmdir}/%{sdklnk}
+%if_enabled jvmjardir
 %{_jvmjardir}/%{sdklnk}
+%endif
 %_altdir/%name-javac
 %_sysconfdir/buildreqs/packages/substitute.d/%name-devel
 %{_jvmdir}/%{sdkdir}/bin
@@ -1001,7 +1011,7 @@ done
 %exclude %{_jvmdir}/%{jredir}/lib/desktop/applications/sun_java.desktop
 %exclude %{_jvmdir}/%{jredir}/lib/desktop/mime/packages/x-java-archive.xml
 %exclude %{_jvmdir}/%{jredir}/lib/desktop/mime/packages/x-java-jnlp-file.xml
-%if_enabled moz_plugin
+%if_enabled control_panel
 %exclude %{_niconsdir}/%{name}.png
 %endif
 %endif
@@ -1038,6 +1048,11 @@ done
 
 
 %changelog
+* Tue Nov 28 2017 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0.22-alt6
+- removed obsolete exports in jvmjardir
+- removed obsolete security policy alternatives in _jvmprivdir
+- better font sharing
+
 * Sat Oct 10 2015 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0.22-alt5
 - added headless subpackage
 
