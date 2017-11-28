@@ -1,19 +1,21 @@
 %define mname scikits
 %define oname %mname.pulsefit
+
+%def_disable check
+
 Name: python-module-%oname
 Version: 0.1.3
-Release: alt2.git20141230
+Release: alt3.git20141230
 Summary: Scikits pulse-fitting package
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/scikits.pulsefit
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/johnnylee/scikits.pulsefit.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: libnumpy-devel python-module-scipy
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: libnumpy-devel python-module-scipy
 
 %py_provides %oname
 %py_requires %mname
@@ -40,6 +42,9 @@ py.test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue Nov 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.3-alt3.git20141230
+- Disabled check.
+
 * Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt2.git20141230
 - Rebuilt with updated NumPy
 
