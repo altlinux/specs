@@ -1,5 +1,5 @@
 Name: volumes-profile-regular
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Volumes description for ALT Linux Regular builds
@@ -28,6 +28,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Nov 28 2017 Mikhail Efremov <sem@altlinux.org> 0.3-alt1
+- Fix profile for disks > 120Gb.
+
 * Fri Nov 17 2017 Mikhail Efremov <sem@altlinux.org> 0.2-alt1
 - Don't create separate /home if disk size <=120Gb.
 - Take in account disks in KVM too.
