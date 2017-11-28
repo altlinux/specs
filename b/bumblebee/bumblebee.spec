@@ -3,7 +3,7 @@
 
 Name: bumblebee
 Version: 3.2.1
-Release: alt3
+Release: alt4
 
 Summary: Bumblebee - support for NVidia Optimus laptops on Linux
 Group: System/Kernel and hardware
@@ -21,6 +21,7 @@ Patch3: nvidia_modeset-detection_bug699_02.patch
 Patch4: nvidia_umv_detection_bug699.patch
 # https://github.com/Bumblebee-Project/Bumblebee/issues/573
 Patch5: hexadicimal_bug573.patch
+Patch6: nvidia_modeset-detection_bug699_03.patch
 
 Requires: NVIDIA_GLX VirtualGL
 # see ALT #29213
@@ -47,6 +48,7 @@ kernel-modules-bbswitch package for your running kernel.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 cp %SOURCE1 scripts/sysvinit/
 
@@ -55,8 +57,8 @@ cp %SOURCE1 scripts/sysvinit/
 %configure CONF_GID=%bumblebeed_group \
 	CONF_DRIVER=nvidia \
 	CONF_DRIVER_MODULE_NVIDIA=nvidia \
-	CONF_LDPATH_NVIDIA=%_x11sysconfdir/lib_nvidia \
-	CONF_MODPATH_NVIDIA=%_x11sysconfdir/lib_nvidia,%_x11modulesdir \
+	CONF_LDPATH_NVIDIA=%_x11sysconfdir/lib_nvidia/current \
+	CONF_MODPATH_NVIDIA=%_x11sysconfdir/lib64_nvidia/current,%_x11modulesdir \
 	CONF_PM_METHOD=%pm_metod
 
 %make_build
@@ -97,6 +99,11 @@ groupadd -r -f %bumblebeed_group
 %exclude %_docdir/bumblebee
 
 %changelog
+* Tue Nov 28 2017 Sergey V Turchin <zerg@altlinux.org> 3.2.1-alt4
+- fix unload nvidia_drm
+- fix nvidia libs path
+- fix nvidia module path
+
 * Tue Apr 05 2016 Mikhail Efremov <sem@altlinux.org> 3.2.1-alt3
 - Add patches from upstream's bug tracker (closes: #31863).
 
