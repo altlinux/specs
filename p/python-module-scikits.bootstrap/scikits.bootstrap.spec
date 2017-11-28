@@ -1,31 +1,30 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20150327.1.1
 %define mname scikits
 %define oname %mname.bootstrap
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.2
-#Release: alt1.git20150327.1
+Version: 1.0.0
+Release: alt1
 Summary: Bootstrap confidence interval estimation routines for SciPy
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/scikits.bootstrap/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/cgevans/scikits-bootstrap.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-numpy python-module-scipy
-BuildPreReq: python-module-nose python-module-pandas
-BuildPreReq: python-modules-multiprocessing
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-numpy python-module-scipy
+BuildRequires: python-module-nose python-module-pandas
+BuildRequires: python-modules-multiprocessing
+BuildRequires: python2.7(pyerf)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-numpy python3-module-scipy
-BuildPreReq: python3-module-nose python3-module-pandas
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-numpy python3-module-scipy
+BuildRequires: python3-module-nose python3-module-pandas
+BuildRequires: python3(pyerf)
 %endif
 
 %py_provides %oname
@@ -128,6 +127,7 @@ popd
 %doc *.md
 %python_sitelibdir/%mname/*
 %python_sitelibdir/*.egg-info
+%python_sitelibdir/*-nspkg.pth
 %exclude %python_sitelibdir/%mname/*/test*
 
 %files tests
@@ -138,6 +138,7 @@ popd
 %doc *.md
 %python3_sitelibdir/%mname/*
 %python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*-nspkg.pth
 %exclude %python3_sitelibdir/%mname/*/test*
 %exclude %python3_sitelibdir/%mname/*/*/test*
 
@@ -147,6 +148,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt1
+- Updated to upstream version 1.0.0.
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.2-alt1.git20150327.1.1
 - (AUTO) subst_x86_64.
 
