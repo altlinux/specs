@@ -1,5 +1,5 @@
 Name: babeltrace
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 Summary: Trace conversion program
 License: LGPLv2
@@ -85,6 +85,9 @@ against libbabeltrace-ctf
 %_pkgconfigdir/%name-ctf.pc
 
 %changelog
+* Thu Sep 28 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.5.3-alt1
+- 1.5.3
+
 * Mon Jul 10 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.5.2-alt1
 - initial release
 
