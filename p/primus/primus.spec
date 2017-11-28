@@ -1,6 +1,6 @@
 Name: primus
 Version: 20150710
-Release: alt1
+Release: alt2%ubt
 
 Summary: Faster OpenGL offloading for Bumblebee
 License: Freely distributable
@@ -12,7 +12,8 @@ Packager: barssc <barssc@altlinux.org>
 Source0: primus-master.zip
 Source1: primusrun
 
-BuildRequires: unzip libGL-devel gcc4.7-c++ libX11-devel glibc-devel libstdc++4.7-devel
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: unzip gcc-c++ libGL-devel libX11-devel glibc-devel
 
 Requires: bumblebee xorg-dri-intel xorg-drv-intel
 
@@ -30,7 +31,7 @@ place.
 
 %build
 export PRIMUS_libGLd='/usr/$LIB/X11/libGL.so.1'
-export PRIMUS_libGLa='/usr/$LIB/libGL.so.1'
+export PRIMUS_libGLa='/etc/X11/${LIB}_nvidia/current/libGL.so.1'
 LIBDIR=lib make
 
 %install
@@ -44,6 +45,10 @@ install -pD -m755 %SOURCE1 %buildroot%_bindir/primusrun
 %_bindir/primusrun
 
 %changelog
+* Tue Nov 28 2017 Sergey V Turchin <zerg@altlinux.org> 20150710-alt2%ubt
+- fix path to nvidia libGL
+- fix build requires
+
 * Fri Jul 10 2015 barssc <barssc@altlinux.org> 20150710-alt1
 - new version
 - closed bug #31111
