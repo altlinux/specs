@@ -14,9 +14,10 @@
 %define nv_version 340
 %define nv_release 104
 %define nv_minor %nil
-%define pkg_rel alt151%ubt
+%define pkg_rel alt152%ubt
 %def_enable egl
 %def_enable kernelsource
+%def_disable package_wfb
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -214,8 +215,10 @@ if [ -f nvidia_drv.so ] ; then
     %__install -m 0644 nvidia_drv.so %buildroot/%nv_lib_dir/
 fi
 
+%if_enabled package_wfb
 [ -f libnvidia-wfb.so.%tbver ] && \
 %__install -m 0644 libnvidia-wfb.so.%tbver %buildroot/%nv_lib_dir/libwfb.so
+%endif
 
 %__install -m 0644 libglx.so.%tbver %buildroot/%nv_lib_dir/libglx.so
 %__ln_s libglx.so %buildroot/%nv_lib_dir/libglx.a
@@ -288,8 +291,10 @@ fi
 %endif
 %nv_lib_dir/libnvidia-cfg.so*
 %nv_lib_dir/libvdpau_nvidia.so*
+%if_enabled package_wfb
 %nv_lib_dir/libwfb.so
 %nv_lib_dir/libnvidia-wfb.so*
+%endif
 %nv_lib_dir/nvidia.xinf
 %xinf_dir/nvidia-%version.xinf
 %_datadir/nvidia/nvidia-application-profiles-%version-rc
@@ -301,6 +306,9 @@ fi
 %endif
 
 %changelog
+* Tue Nov 28 2017 Sergey V Turchin <zerg@altlinux.org> 340.104-alt152%ubt
+- don't package wfb module
+
 * Wed Sep 27 2017 Sergey V Turchin <zerg@altlinux.org> 340.104-alt151%ubt
 - fix to build module with recent kernels
 
