@@ -6,38 +6,33 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt2.git20120523.1.1
+Release: alt3.git20120523
 Summary: Light Scattering methods for Python
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/scikits.scattpy/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # git://github.com/ScattPy/scikits.scattpy.git
 Source: %name-%version.tar
 
-#BuildPreReq: gcc-fortran ipython
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-scipy libnumpy-devel
-#BuildPreReq: python-module-matplotlib
-#BuildPreReq: python-module-sphinx-devel python-module-numpydoc
-#BuildPreReq: python-module-matplotlib-sphinxext
-#BuildPreReq: python-module-sphinxtogithub
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: gcc-fortran
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-scipy libnumpy-devel
+BuildRequires: python-module-numpy-testing python-module-pytest
+BuildRequires: python-module-matplotlib-sphinxext
+BuildRequires: python-module-sphinxtogithub
+BuildRequires: python-module-alabaster python-module-html5lib python-module-ipyparallel python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-scipy libnumpy-py3-devel
-#BuildPreReq: python3-module-matplotlib
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-scipy libnumpy-py3-devel
+BuildRequires: python3-module-numpy-testing python3-module-pytest
 %endif
 
 %py_provides %oname
 Requires: libradial = %EVR
 %py_requires %mname scipy numpy
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils fontconfig ipython libgfortran-devel libnumpy-devel libquadmath-devel python-base python-devel python-module-Pillow python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-cycler python-module-dateutil python-module-decorator python-module-docutils python-module-enum34 python-module-functools32 python-module-future python-module-genshi python-module-greenlet python-module-ipykernel python-module-ipython_genutils python-module-jinja2 python-module-jinja2-tests python-module-jsonschema python-module-jupyter_client python-module-jupyter_core python-module-markupsafe python-module-matplotlib python-module-mpmath python-module-nbconvert python-module-nbformat python-module-ndg-httpsclient python-module-notebook python-module-ntlm python-module-numpy python-module-numpydoc python-module-path python-module-pexpect python-module-pickleshare python-module-ptyprocess python-module-pyasn1 python-module-pycares python-module-pycurl python-module-pygobject3 python-module-pyparsing python-module-pytz python-module-setuptools python-module-simplegeneric python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-terminado python-module-tornado_xstatic python-module-traitlets python-module-wx3.0 python-module-xstatic python-module-xstatic-term.js python-module-zmq python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-sqlite3 python-modules-unittest python-modules-wsgiref python-tools-2to3 python3 python3-base python3-dev python3-module-matplotlib python3-module-numpy python3-module-pyparsing python3-module-setuptools
-BuildRequires: gcc-fortran libnumpy-py3-devel python-module-alabaster python-module-html5lib python-module-ipyparallel python-module-matplotlib-sphinxext python-module-numpy-testing python-module-objects.inv python-module-pytest python-module-scipy python-module-sphinxtogithub python3-module-numpy-testing python3-module-pytest python3-module-scipy rpm-build-python3 time
 
 %description
 ScattPy is an open source Python package for light scattering
@@ -178,7 +173,7 @@ pushd ../python3
 python3 setup.py test
 FFLAGS="%optflags" python3 setup.py build_ext -i
 export PYTHONPATH=$PWD:$PWD/%mname/scattpy
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
@@ -186,6 +181,7 @@ popd
 %doc README
 %python_sitelibdir/%mname/*
 %python_sitelibdir/*.egg-info
+%python_sitelibdir/*-nspkg.pth
 
 %files -n libradial
 %_libdir/*.so.*
@@ -205,9 +201,13 @@ popd
 %doc README
 %python3_sitelibdir/%mname/*
 %python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*-nspkg.pth
 %endif
 
 %changelog
+* Tue Nov 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.2-alt3.git20120523
+- Updated build dependencies.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.2-alt2.git20120523.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
