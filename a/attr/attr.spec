@@ -1,6 +1,6 @@
 Name: attr
-Version: 2.4.47.0.44.315a
-Release: alt2
+Version: 2.4.48
+Release: alt1
 
 Summary: Utilities for managing filesystem extended attributes
 License: GPLv2+
@@ -76,12 +76,14 @@ done
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
 %find_lang %name
+%set_verify_elf_method strict
 
 %check
-if ./tools/setfattr -n user.name -v value .; then
-	make tests
+if ./setfattr -n user.name -v value .; then
+	%make_build -k check
 else
 	echo 'xattrs are probably not supported by the file system'
+	stat -f .
 fi
 
 %files -f %name.lang
@@ -105,6 +107,10 @@ fi
 %endif
 
 %changelog
+* Mon Nov 27 2017 Dmitry V. Levin <ldv@altlinux.org> 2.4.48-alt1
+- v2.4.47-44-g315af30 -> v2.4.48.
+- getfattr: fixed large-file support.
+
 * Wed Nov 08 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4.47.0.44.315a-alt2
 - Reenabled static subpackage (needed for static qemu-user to support *attr
   syscalls).
