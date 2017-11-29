@@ -5,7 +5,7 @@
 
 Name: kf5-%rname
 Version: 5.11.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -14,12 +14,14 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch: alt-%rname-tooltips.patch
 
 # Automatically added by buildreq on Thu Mar 05 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-gui libqt5-test libstdc++-devel python-base ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ python-module-google qt5-base-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
+BuildRequires: kf5-ki18n-devel
 
 %description
 KDecoration2 is a library to create window decorations. These window decorations can be used by
@@ -58,6 +60,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch -p1
 
 %build
 %K5build
@@ -84,6 +87,9 @@ KF5 library
 %_K5lib/libkdecorations2private.so.%sover.*
 
 %changelog
+* Fri Nov 24 2017 Oleg Solovyov <mcpain@altlinux.org> 5.11.3-alt2%ubt
+- add tooltips (KDEBUG: 383040)
+
 * Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1%ubt
 - new version
 
