@@ -3,7 +3,7 @@
 %define gitdate 20111225
 Name: rebar
 Version: 2.git%gitdate
-Release: alt1
+Release: alt1.1
 Summary: A sophisticated build-tool for Erlang projects that follows OTP principles.
 License: %asl
 Group: Development/Erlang
@@ -51,6 +51,9 @@ locations (git, hg, etc).
 
 
 %changelog
+* Mon Oct 23 2017 Denis Medvedev <nbr@altlinux.org> 2.git20111225-alt1.1
+- just a rebuild for OTP 19.
+
 * Tue Dec 27 2011 Sergey Shilov <hsv@altlinux.org> 2.git20111225-alt1
 - 2.git20111225:
   + Erlang R15B support

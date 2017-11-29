@@ -9,7 +9,7 @@
 
 Name: rabbitmq-server
 Version: 3.6.14
-Release: alt1
+Release: alt4
 Summary: The RabbitMQ server
 License: MPLv1.1
 BuildArch: noarch
@@ -36,28 +36,9 @@ BuildRequires(pre): rpm-build-erlang
 BuildRequires: erlang-devel erlang-otp-devel
 BuildRequires: python-module-simplejson python-modules-xml
 BuildRequires: xmlto zip unzip netcat rsync
-Requires: erlang
+Requires: erlang  >= 1:20.1.3
+Requires: tsung   >= 1.7.0-alt1
 
-# workaround for not find Provides in plugins/*.ez files
-Provides: erlang_app(ranch)
-Provides: erlang_app(rabbit_common) = %version
-Provides: erlang_mod(rabbit_amqqueue_common) = %version
-Provides: erlang_mod(rabbit_cert_info) = %version
-Provides: erlang_mod(rabbit_core_metrics) = %version
-Provides: erlang_mod(rabbit_data_coercion) = %version
-Provides: erlang_mod(rabbit_heartbeat) = %version
-Provides: erlang_mod(rabbit_log) = %version
-Provides: erlang_mod(rabbit_nodes_common) = %version
-Provides: erlang_mod(rabbit_pbe) = %version
-Provides: erlang_mod(rabbit_queue_collector_common) = %version
-Provides: erlang_mod(rabbit_resource_monitor_misc) = %version
-Provides: erlang_mod(rabbit_ssl_options) = %version
-Provides: erlang_mod(rabbit_writer) = %version
-Provides: erlang_mod(rabbit_auth_backend_dummy) = %version
-Provides: erlang_mod(rabbit_backing_queue) = %version
-Provides: erlang_mod(rabbit_control_misc) = %version
-Provides: erlang_mod(rabbit_event) = %version
-Provides: erlang_mod(rabbit_net) = %version
 
 %description
 RabbitMQ is an implementation of AMQP, the emerging standard for high
@@ -175,6 +156,15 @@ rm -f %buildroot%_erlanglibdir/rabbitmq_server-%version/{LICENSE,LICENSE-*,INSTA
 #%_datadir/%name
 
 %changelog
+* Mon Nov 27 2017 Denis Medvedev <nbr@altlinux.org> 3.6.14-alt4
+- added (Fixes: CVE-2016-9877).
+
+* Sun Nov 26 2017 Denis Medvedev <nbr@altlinux.org> 3.6.14-alt3
+- Added needed, but unusual dependencies
+
+* Thu Nov 16 2017 Denis Medvedev <nbr@altlinux.org> 3.6.14-alt2
+- recompilation with fixed rpm-build-utils
+
 * Fri Nov 10 2017 Alexey Shabalin <shaba@altlinux.ru> 3.6.14-alt1
 - 3.6.14
 

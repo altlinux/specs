@@ -1,5 +1,5 @@
 Name: rpm-build-erlang
-Version: 0.7.0.3
+Version: 0.7.10.1
 Release: alt1
 Summary: RPM helper scripts to calculate Erlang dependencies
 License: %gpl3plus
@@ -41,6 +41,15 @@ install -m 0755 erlang.* %buildroot%_rpmlibdir/
 
 
 %changelog
+* Sun Nov 26 2017 Denis Medvedev <nbr@altlinux.org> 0.7.10.1-alt1
+- finding app in ez files
+
+* Sun Nov 26 2017 Denis Medvedev <nbr@altlinux.org> 0.7.10.0-alt1
+- debugged version
+
+* Mon Oct 23 2017 Denis Medvedev <nbr@altlinux.org> 0.7.0.6-alt1
+- fixes buggy ez files detection.
+
 * Thu Jul 28 2011 Sergey Shilov <hsv@altlinux.org> 0.7.0.3-alt1
 - fix buggy erlang.prov.files result if *.app is ASCII text, with very long lines.
 
