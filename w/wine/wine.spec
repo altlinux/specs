@@ -4,7 +4,7 @@
 %define major 2.21
 
 Name: wine
-Version: %major.0
+Version: %major.1
 Release: alt1
 Epoch: 1
 
@@ -27,14 +27,8 @@ Source2: winetricks
 Source3: %name-%version-desktop.tar
 Source4: %name-%version-icons.tar
 
-Patch1:   0001-enable-linking-with-freetype-and-fontconfig-see-altb.patch
-Patch2:   0001-libs-wine-Fix-debug-output-to-use-utf8-encoding.patch
-Patch3:   0002-libs-wine-Output-unicode-strings-in-UTF-8-encoding.-.patch
-Patch4:   0001-Add-font-smoothing.patch
-Patch101: 0002-add-fast-hack-for-RegQueryValueEx-HKEY_PERFORMANCE_D.patch
-Patch200: t001-oleaut32-Make-OleLoadPicture-load-DIBs-using-WIC-decoder.patch
-Patch201: 0001-kerberos.patch
-Patch202: 0001-server-apc.patch
+# local patches
+Source5: %name-patches-%version.tar
 
 AutoReq: yes, noperl
 
@@ -253,19 +247,15 @@ develop programs which make use of Wine.
 
 
 %prep
-%setup -a 1
+%setup -a 1 -a 5
 # Apply wine-staging patches
 wine-staging-%version/patches/patchinstall.sh DESTDIR=$(pwd) --all --backend=patch
 
 # disable rpath using for executable
 %__subst "s|^\(LDRPATH_INSTALL =\).*|\1|" Makefile.in
 
-%patch1 -p2
-%patch2 -p1
-%patch3 -p1
-%patch4 -p2
-%patch201 -p1
-%patch202 -p1
+# Apply local patches
+wine-patches-%version/patchapply.sh
 
 %build
 # Workaround for https://bugzilla.altlinux.org/show_bug.cgi?id=31834
@@ -478,6 +468,12 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Thu Nov 30 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.21.1-alt1
+- update winetricks up to 20171018-next
+- remove obsoleted patches
+- use separated patch list and apply script
+- add local_build.sh script
+
 * Fri Nov 24 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.21.0-alt1
 - new version (2.21) with rpmgs script
 - update Kerberos patches against wine staging 2.21
