@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.0.5
+Version: 2.0.6
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -198,6 +198,13 @@ fi
 %_datadir/%myname/features/ucode
 
 %changelog
+* Wed Nov 29 2017 Alexey Gladkov <legion@altlinux.ru> 2.0.6-alt1
+- Fix rootonly cmdline parameter.
+- Fix handling of multiple mountpoints.
+- sort-lsb: Add X-Start-Before support.
+- luks:
+  + Fix the password request (ALT#34257).
+
 * Sat Nov 11 2017 Alexey Gladkov <legion@altlinux.ru> 2.0.5-alt1
 - Replace parser of /proc/cmdline parameters (ALT#33712).
 - Fix unbound variables cpu_vendor cpu_family (ALT#34117).
