@@ -1,10 +1,10 @@
 %def_enable printing
 %def_enable backup
-%define ver_micro -1
+%define ver_micro %nil
 
 Name: osmo
-Version: 0.4.0
-Release: alt2
+Version: 0.4.2
+Release: alt1
 
 Summary: Personal organizer
 License: GPLv2+
@@ -14,7 +14,7 @@ Source: http://downloads.sourceforge.net/%name-pim/%name-%version%ver_micro.tar.
 
 %define gtk_ver 3.10
 
-BuildRequires: libgtk+3-devel >= %gtk_ver libgtkspell3-devel libxml2-devel
+BuildRequires: libgtk+3-devel >= %gtk_ver libgspell-devel libxml2-devel
 BuildRequires: libnotify-devel libical-devel libicu-devel libwebkit2gtk-devel
 %{?_enable_backup:BuildRequires: libgringotts-devel libarchive-devel}
 
@@ -52,6 +52,9 @@ meet user preferences.
 %doc AUTHORS ChangeLog README TRANSLATORS
 
 %changelog
+* Wed Nov 29 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
+- 0.4.2
+
 * Thu Apr 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt2
 - updated to 0.4.0-1
 
