@@ -3,7 +3,7 @@
 
 Name: bumblebee
 Version: 3.2.1
-Release: alt5
+Release: alt6
 
 Summary: Bumblebee - support for NVidia Optimus laptops on Linux
 Group: System/Kernel and hardware
@@ -58,7 +58,7 @@ cp %SOURCE1 scripts/sysvinit/
 	CONF_DRIVER=nvidia \
 	CONF_DRIVER_MODULE_NVIDIA=nvidia \
 	CONF_LDPATH_NVIDIA=%_x11sysconfdir/lib_nvidia/current \
-	CONF_MODPATH_NVIDIA=%_x11sysconfdir/%{lib}_nvidia/current,%_x11modulesdir \
+	CONF_MODPATH_NVIDIA=%_x11sysconfdir/%{_lib}_nvidia/current,%_x11modulesdir \
 	CONF_PM_METHOD=%pm_metod
 
 %make_build
@@ -99,6 +99,12 @@ groupadd -r -f %bumblebeed_group
 %exclude %_docdir/bumblebee
 
 %changelog
+* Wed Nov 29 2017 Sergey V Turchin <zerg@altlinux.org> 3.2.1-alt6
+- fix nvidia module path on 32-bit systems
+
+* Wed Nov 29 2017 Sergey V Turchin <zerg@altlinux.org> 3.2.1-alt4.M80P.1
+- build for M80P
+
 * Wed Nov 29 2017 Sergey V Turchin <zerg@altlinux.org> 3.2.1-alt5
 - fix nvidia module path on 32-bit systems
 
