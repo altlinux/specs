@@ -7,7 +7,7 @@
 %def_disable default_binary
 
 %def_disable static
-%def_enable gtk_doc
+%def_disable gtk_doc
 
 %def_with mysql
 %def_with postgres
@@ -34,7 +34,7 @@
 
 Name: %{_name}5
 Version: %ver_major.4
-Release: alt5
+Release: alt6
 
 Summary: Library for writing gnome database programs
 Group: System/Libraries
@@ -46,6 +46,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %else
 Source: %_name-%version.tar
 %endif
+Patch: libgda-5.2.4-alt-utf-8.patch
 
 Obsoletes: libgda2 < %version
 Provides: libgda2 = %version-%release
@@ -54,7 +55,7 @@ Provides: libgda2 = %version-%release
 %define mdbtools_ver 0.7
 %define ldap_ver 2.2.27-alt1.1
 %define freetds_ver 0.63
-%define vala_ver 0.36
+%define vala_ver 0.38
 
 BuildPreReq: intltool >= 0.35.5
 BuildPreReq: gnome-common >= 2.8.0
@@ -405,6 +406,8 @@ databases.
 
 %prep
 %setup -n %_name-%version
+# convert headers from ISO-8559 to UTF-8
+%patch -p1
 touch config.rpath
 
 %if_enabled crypto
@@ -571,8 +574,10 @@ export VALA_API_VERSION=%vala_ver
 %{?_with_ldap:%_pkgconfigdir/libgda-ldap-%abi_ver.pc}
 %{?_enable_vala:%_vapidir/*.vapi}
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %files -n libgdaui5
 %_libdir/libgda-ui-%abi_ver.so.*
@@ -631,6 +636,11 @@ export VALA_API_VERSION=%vala_ver
 %exclude %_datadir/%_name-%abi_ver/php
 
 %changelog
+* Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 5.2.4-alt6
+- updated to LIBGDA_5_2_4-41-g7945516
+- fixed build with recent glib-mkenums
+- built with vala-0.38
+
 * Fri Mar 31 2017 Yuri N. Sedunov <aris@altlinux.org> 5.2.4-alt5
 - rebuilt with vala-0.36
 
