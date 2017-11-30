@@ -2,7 +2,7 @@
 
 Name: libldb
 Version: 1.1.29
-Release: alt2%ubt
+Release: alt3%ubt
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -114,6 +114,9 @@ make test
 %_pkgconfigdir/pyldb-util.pc
 
 %changelog
+* Sat Jul 15 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.1.29-alt3%ubt
+- Rebuild with universal build tag (aka ubt macros) for p7 and c7
+
 * Tue Jun 20 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.1.29-alt2%ubt
 - Remove hacks with ldb samba modules path search via LDB_LIBRARY_PATH
   by additional --with-samba-modulesdir configure option (closes: #33427)

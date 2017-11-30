@@ -3,7 +3,7 @@
 
 Name: libtdb
 Version: 1.3.12
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: A trivial database system
 License: GPL
@@ -137,6 +137,9 @@ make test
 %endif
 
 %changelog
+* Sat Jul 15 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.3.12-alt2%ubt
+- Rebuild with universal build tag (aka ubt macros) for p7 and c7
+
 * Tue Mar 07 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.3.12-alt1%ubt
 - Update to release for samba-4.6.0
 

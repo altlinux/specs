@@ -47,7 +47,7 @@
 
 Name:    samba-DC
 Version: 4.6.11
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -1360,6 +1360,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Thu Nov 23 2017 Evgeny Sinelnikov <sin@altlinux.org> 4.6.11-alt2%ubt
+- Backport from Heimdal upstream include/includedir directives for krb5.conf
+
 * Tue Nov 21 2017 Evgeny Sinelnikov <sin@altlinux.org> 4.6.11-alt1%ubt
 - Second autumn security release (Fixes: CVE-2017-14746, CVE-2017-15275)
 
