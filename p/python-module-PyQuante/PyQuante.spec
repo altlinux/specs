@@ -1,20 +1,19 @@
 %define version 1.6.4
-%define release alt1
+%define release alt2
 %setup_python_module PyQuante
 
 Summary: PyQuante: Quantum Chemistry in Python
 Name: %packagename
 Version: %version
 Release: %release
-Packager: Python Development Team <python@packages.altlinux.org>
-
-Source0: %modulename-%version.tar.gz
 License: BSD
 Group: Development/Python
 URL: http://pyquante.sourceforge.net
 
+Source: %modulename-%version.tar.gz
+
 Requires: python-module-gnuplot
-BuildPreReq: python-devel emacspeak python-module-distribute
+BuildRequires: python-devel python-module-distribute
 
 # Automatically added by buildreq on Mon May 15 2006
 BuildRequires: python-modules python-modules-compiler python-modules-encodings
@@ -61,16 +60,21 @@ This package contains tests for PyQuante.
 %python_build_debug
 
 %install
-%python_install --optimize=2 --record=INSTALLED_FILES
+%python_install --optimize=2
 
-%files -f INSTALLED_FILES
+%files
 %doc Doc LICENSE README Tests
+%python_sitelibdir/PyQuante
+%python_sitelibdir/PyQuante-%version-py*.egg-info
 %exclude %python_sitelibdir/PyQuante/test_*
 
 %files tests
 %python_sitelibdir/PyQuante/test_*
 
 %changelog
+* Thu Nov 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.4-alt2
+- Fixed build.
+
 * Fri Jan 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.4-alt1
 - Version 1.6.4
 
