@@ -2,26 +2,26 @@
 %define oname nose-detecthttp
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 0.1.3
+Version: 0.2.0
 Release: alt1
 Summary: A nose plugin to detect tests making http calls
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/nose-detecthttp
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/venmo/nose-detecthttp.git
-Source0: https://pypi.python.org/packages/c9/a0/e489bf2595218d63c790b406a72493412db6032657746b9c2672afceee16/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-nose python-module-vcrpy
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-nose python-module-vcrpy
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose python3-module-vcrpy
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-nose python3-module-vcrpy
 %endif
 
 %py_provides detecthttp
@@ -38,7 +38,7 @@ Group: Development/Python3
 A nose plugin that can detect tests making external http calls.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -64,6 +64,7 @@ popd
 
 %check
 python setup.py test
+
 %if_with python3
 pushd ../python3
 python3 setup.py test
@@ -81,6 +82,10 @@ popd
 %endif
 
 %changelog
+* Thu Nov 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.0-alt1
+- Updated to upstream version 0.2.0.
+- Disabled check phase due to no tests being present.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt1
 - automated PyPI update
 
