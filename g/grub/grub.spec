@@ -1,6 +1,6 @@
 Name: grub
 Version: 2.02
-Release: alt2
+Release: alt3
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -317,7 +317,7 @@ modprobe efivars
 grep -q '^GRUB_DISTRIBUTOR=' %_sysconfdir/sysconfig/grub2 ||
 	echo 'GRUB_DISTRIBUTOR="ALT Linux"' >> %_sysconfdir/sysconfig/grub2
 
-grep -q '^GRUB_BOOTLOADER_ID=' %_sysconfdir/sysconfig/%name ||
+grep -q '^GRUB_BOOTLOADER_ID=' %_sysconfdir/sysconfig/grub2 ||
 	echo 'GRUB_BOOTLOADER_ID="altlinux"' >> %_sysconfdir/sysconfig/grub2
 
 grub-efi-autoupdate || {
@@ -327,6 +327,10 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Thu Nov 30 2017 Anton Farygin <rider@altlinux.ru> 2.02-alt3
+- fixed sysconfig/grub2 usage in grub-efi post script (closes: #34258)
+- fixed Xen menu entry  (closes: #32811)
+
 * Tue Jul 18 2017 Anton Farygin <rider@altlinux.ru> 2.02-alt2
 - renamed from grub2 to grub
 - added strong requires to efibootmgr >= 15
