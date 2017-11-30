@@ -2,7 +2,7 @@
 %define api_ver 1.0
 
 Name: libgit2-glib
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Git library for GLib
@@ -103,6 +103,9 @@ This package contains documentation needed for developing Libgit2-glib applicati
 %_datadir/gtk-doc/*
 
 %changelog
+* Thu Nov 30 2017 Yuri N. Sedunov <aris@altlinux.org> 0.26.2-alt1
+- 0.26.2
+
 * Sun Jul 30 2017 Yuri N. Sedunov <aris@altlinux.org> 0.26.0-alt1
 - 0.26.0
 
