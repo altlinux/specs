@@ -9,7 +9,7 @@
 
 Name: bzr
 Version: 2.7.0
-Release: %branch_release alt2
+Release: %branch_release alt3.bzr20170317
 
 Summary: Bazaar is a decentralized revision control system
 License: %gpl2plus
@@ -126,6 +126,9 @@ mv %buildroot%_datadir/share/locale %buildroot%_datadir
 %bzr_docdir/contrib
 
 %changelog
+* Thu Nov 30 2017 Anatoly Kitaykin <cetus@altlinux.org> 2.7.0-alt3.bzr20170317
+- Bugfix upgrade to trunk
+
 * Wed Mar 02 2016 Anatoly Kitaykin <cetus@altlinux.org> 2.7.0-alt2
 - Restored branch_release
 
