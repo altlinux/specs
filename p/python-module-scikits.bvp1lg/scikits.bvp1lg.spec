@@ -4,29 +4,29 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.2.7
+Version: 0.2.8
 Release: alt1
 Summary: Boundary value problem (legacy) solvers for ODEs
 License: Noncommercial
 Group: Development/Python
 Url: https://pypi.python.org/pypi/scikits.bvp1lg/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 Source1: http://netlib.org/ode/colnew.f
 Source2: http://netlib.org/ode/mus1.f
 Source3: http://netlib.org/ode/mus2.f
 Source4: http://netlib.org/ode/mus3.f
+Patch1: %oname-%version-alt-build.patch
 
-BuildPreReq: gcc-fortran liblapack-devel
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-scipy libnumpy-devel
-BuildPreReq: python-module-nose
+BuildRequires: gcc-fortran liblapack-devel
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-scipy libnumpy-devel
+BuildRequires: python-module-nose python2.7(matplotlib)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-scipy libnumpy-py3-devel
-BuildPreReq: python3-module-nose
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-scipy libnumpy-py3-devel
+BuildRequires: python3-module-nose python3(matplotlib)
 %endif
 
 %py_provides %oname
@@ -80,6 +80,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 install -p -m644 %SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4 ./
 for i in *.f; do
@@ -130,6 +131,7 @@ popd
 %doc *.rst
 %python_sitelibdir/%mname/bvp1lg
 %python_sitelibdir/*.egg-info
+%python_sitelibdir/*-nspkg.pth
 %exclude %python_sitelibdir/%mname/bvp1lg/tests
 %exclude %python_sitelibdir/%mname/bvp1lg/examples.py*
 
@@ -142,6 +144,7 @@ popd
 %doc *.rst
 %python3_sitelibdir/%mname/bvp1lg
 %python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*-nspkg.pth
 %exclude %python3_sitelibdir/%mname/bvp1lg/tests
 %exclude %python3_sitelibdir/%mname/bvp1lg/examples.py
 %exclude %python3_sitelibdir/%mname/bvp1lg/__pycache__/examples.*
@@ -153,6 +156,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.8-alt1
+- Updated to upstream version 0.2.8.
+
 * Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.7-alt1
 - Version 0.2.7
 
