@@ -1,7 +1,7 @@
 %define oname bzr-fastimport
 Name: python-module-bzr-fastimport
 Version: 0.13.0
-Release: alt3%ubt
+Release: alt4%ubt
 Summary: Bazaar Fast Import is a plugin for loading of revision control data
 
 Packager: Ildar Mulyukov <ildar@altlinux.ru>
@@ -54,6 +54,9 @@ This package contain tools and test suites for testing bzr-fastimport.
 %python_sitelibdir/bzrlib/plugins/fastimport/tests
 
 %changelog
+* Fri Dec 01 2017 Anatoly Kitaykin <cetus@altlinux.org> 0.13.0-alt4%ubt
+- upstream snapshot (fixed work with python-module-fastimport-0.9.6)
+
 * Thu Sep 28 2017 Alexey Shabalin <shaba@altlinux.ru> 0.13.0-alt3%ubt
 - fixed lp bug 1607974
 - fixed lp bug 1295833
