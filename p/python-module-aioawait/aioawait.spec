@@ -5,33 +5,28 @@
 
 Name: python-module-%oname
 Version: 8
-Release: alt1
+Release: alt2
 Summary: Call asynchronous functions of asyncio infrastructure from synchronous code
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/aioawait/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://bitbucket.org/carlopires/aioawait.git
-Source0: https://pypi.python.org/packages/59/74/947%{version}068823434e5b2302a91e307f340d9fa7cfc79c76814506e9991301f7/%{oname}-8.tar.gz
-BuildArch: noarch
+Source: %{oname}-8.tar.gz
 
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-asyncio
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python2.7(asyncio)
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-asyncio
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3(asyncio)
 %endif
 
 %py_provides %oname
 %py_requires asyncio
-
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python3-module-asyncio python3-module-setuptools-tests rpm-build-python3
 
 %description
 This package implements two primitives (await and spawn) on top of
@@ -105,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 8-alt2
+- Updated build dependencies.
+
 * Tue Jan 10 2017 Igor Vlasenko <viy@altlinux.ru> 8-alt1
 - automated PyPI update
 
