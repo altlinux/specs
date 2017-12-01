@@ -1,5 +1,5 @@
 Name: distrodb-utils
-Version: 0.14
+Version: 0.15
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -8,11 +8,13 @@ Summary: utils for managing Distrodb databases
 Group: Development/Other
 License: GPL or Artistic
 Source: %name-%version.tar
-Url: http://altlinux.org/
+Url: http://www.altlinux.org/Packaging_Automation/DistroMap
 
 Requires: python-module-rpm
 
 BuildRequires: rpm-build-perl perl(DistroMap.pm)
+# for ProjectDB
+BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/RPM.pm)
 
 %description
 %summary
@@ -32,14 +34,17 @@ install -m 755 distrodb-helper-* \
 	pkglist2distrodb.py \
 	%buildroot%_bindir/
 mkdir -p %buildroot%perl_vendor_privlib
-install -m 644 D*.pm %buildroot%perl_vendor_privlib/
+install -m 644 *.pm %buildroot%perl_vendor_privlib/
 
 %files
 %doc README
 %_bindir/*
-%perl_vendor_privlib/D*
+%perl_vendor_privlib/*.pm
 
 %changelog
+* Fri Dec 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- new version
+
 * Mon Oct 30 2017 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - new distrodb format
 
