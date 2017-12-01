@@ -2,36 +2,30 @@
 
 %def_without python2
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.git20140222.1.1
+Release: alt2.git20140222
 Summary: Events for asyncio (PEP 3156)
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/aioevents/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/astronouth7303/aioevents.git
 Source: %name-%version.tar
-BuildArch: noarch
 
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-asyncio
+BuildRequires: python-devel python-module-setuptools-tests
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-asyncio
+BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
 %py_requires asyncio
-
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python3 python3-base python3-module-pluggy python3-module-py python3-module-setuptools xz
-BuildRequires: python3-module-pytest rpm-build-python3 time
 
 %description
 Events for asyncio (PEP 3156).
@@ -80,7 +74,7 @@ py.test -vv
 %endif
 %if_with python3
 pushd ../python3
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
@@ -97,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1-alt2.git20140222
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt1.git20140222.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
