@@ -6,7 +6,7 @@
 
 Name:     scilab
 Version:  6.0.0
-Release:  alt3
+Release:  alt3.1
 Summary:  A high-level language and system for numerical computations
 
 License:  CeCILL
@@ -28,6 +28,7 @@ Patch4:	 scilab-fix-make-doc-ja_JP.patch
 Patch5:  scilab-6.0.0-jogl-2.3.patch
 Patch8:  scilab-5.5.2-disable-doclint.patch
 Patch9:  scilab-alt-cxx-flags.patch
+Patch10: scilab-6.0.0-jgraph-3.patch
 
 Patch13: scilab-find-jrosetta-API.patch
 
@@ -160,6 +161,7 @@ tar xf %SOURCE1
 %patch5 -p1
 %patch8 -p2
 %patch9 -p2
+%patch10 -p2
 
 # Update saxon dependency
 # http://bugzilla.scilab.org/show_bug.cgi?id=8479
@@ -223,6 +225,9 @@ rm -f %buildroot%_xdgmimedir/packages/scilab.xml
 %_datadir/mime/packages/scilab.xml
 
 %changelog
+* Fri Dec 01 2017 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt3.1
+- NMU: fixed build with new jgraphx (ALT #34263)
+
 * Mon Nov 20 2017 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt3
 - Show scinotes menu only in Development section
 
