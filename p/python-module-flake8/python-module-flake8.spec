@@ -1,46 +1,31 @@
 %def_with python3
 
-%global modname flake8
+%global oname flake8
 
-Name:             python-module-%{modname}
-Version:          2.4.1
-Release:          alt1.git20150710.1.1
+Name:             python-module-%oname
+Version:          3.5.0
+Release:          alt1
 Summary:          Code checking using pep8 and pyflakes
 
 Group:            Development/Python
 License:          MIT
-URL:              http://pypi.python.org/pypi/%{modname}
-# https://gitlab.com/pycqa/flake8.git
-Source0:          %{name}-%{version}.tar
-#Patch0: flake8-2.4.0-alt-requirements.patch
-
 BuildArch:        noarch
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: pyflakes python-base python-devel python-module-funcsigs python-module-pbr python-module-setuptools python-module-six python-module-unittest2 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
-BuildRequires: python-module-mccabe python-module-mock python-module-nose python-tools-pep8 python3-module-html5lib python3-module-mccabe python3-module-nose python3-module-pbr python3-module-unittest2 python3-pyflakes python3-tools-pep8 rpm-build-python3
+URL:              http://pypi.python.org/pypi/flake8
 
-#BuildRequires:    python-devel python-modules-multiprocessing
-#BuildRequires:    python-module-nose
-#BuildRequires:    python-module-setuptools
-#BuildRequires:    python-module-mccabe >= 0.2
-#BuildRequires:    python-tools-pep8 >= 1.4.3
-#BuildRequires:    pyflakes >= 0.6.1
-#BuildRequires:    python-module-mock
-Requires:    python-module-mccabe >= 0.2
-Requires:    python-tools-pep8 >= 1.4.3
-Requires:    pyflakes >= 0.6.1
-Requires:    python-module-setuptools
+# https://gitlab.com/pycqa/flake8.git
+Source:           %name-%version.tar
+
+BuildRequires: python-module-mccabe python-module-mock python-module-nose
+BuildRequires: python-module-pytest-runner python2.7(pycodestyle) python2.7(pyflakes)
+BuildRequires: python2.7(configparser)
 %if_with python3
 BuildRequires(pre):    rpm-build-python3
-#BuildRequires:    python3-module-setuptools
-#BuildRequires:    python3-module-nose
-#BuildRequires:    python3-module-mccabe >= 0.2
-#BuildRequires:    python3-tools-pep8 >= 1.4.3
-#BuildRequires:    python3-pyflakes >= 0.6.1
-#BuildRequires:    python3-module-mock
+BuildRequires: python3-module-html5lib python3-module-mccabe python3-module-nose python3-module-pbr
+BuildRequires: python3-module-unittest2 python3-pyflakes
+BuildRequires: python3-module-pytest-runner python3(pycodestyle) python3(pyflakes)
 %endif
 
-%py_requires multiprocessing
+%py_requires multiprocessing setuptools mccabe pycodestyle pyflakes
 
 %description
 Flake8 is a wrapper around these tools:
@@ -64,16 +49,13 @@ warning. - a Mercurial hook.
 
 
 %if_with python3
-%package -n python3-module-%{modname}
+%package -n python3-module-%oname
 Summary:        Code checking using pep8 and pyflakes
 Group:          Development/Python
 
-Requires:    python3-module-setuptools
-Requires:    python3-module-mccabe >= 0.2
-Requires:    python3-tools-pep8 >= 1.4.3
-Requires:    python3-pyflakes >= 0.6.1
+%py3_requires setuptools mccabe pycodestyle pyflakes
 
-%description -n python3-module-%{modname}
+%description -n python3-module-%oname
 Flake8 is a wrapper around these tools:
 
 - PyFlakes - pep8 - Ned's McCabe script
@@ -100,7 +82,6 @@ This is version of the package running with Python 3.
 
 %prep
 %setup
-#patch0 -p2
 
 #sed -i -e '/^#!\s*\/.*bin\/.*python/d' flake8/pep8.py
 #chmod -x flake8/pep8.py
@@ -131,7 +112,7 @@ unset PYTHONPATH
 %if_with python3
 pushd ../python3
 %python3_install
-mv %{buildroot}%{_bindir}/flake8 %{buildroot}%{_bindir}/python3-flake8
+mv %buildroot%_bindir/flake8 %buildroot%_bindir/python3-flake8
 popd
 %endif
 
@@ -139,26 +120,30 @@ popd
 
 
 %check
-%{__python} setup.py nosetests --verbosity=2
+PYTHONPATH=%buildroot%python_sitelibdir py.test -vv
+
 %if_with python3
-%{__python3} setup.py nosetests --verbosity=2
+pushd ../python3
+PYTHONPATH=%buildroot%python3_sitelibdir py.test3 -vv
+popd
 %endif
 
 %files
 %doc README.rst CONTRIBUTORS.txt
-
-%{_bindir}/%{modname}
-%{python_sitelibdir}/%{modname}*
+%_bindir/%oname
+%python_sitelibdir/%{oname}*
 
 %if_with python3
-%files -n python3-module-%{modname}
+%files -n python3-module-%oname
 %doc README.rst CONTRIBUTORS.txt
-%{_bindir}/python3-flake8
-%{python3_sitelibdir}/%{modname}*
+%_bindir/python3-%oname
+%python3_sitelibdir/%{oname}*
 %endif
 
-
 %changelog
+* Fri Dec 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.0-alt1
+- Updated to upstream version 3.5.0.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.4.1-alt1.git20150710.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
