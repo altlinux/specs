@@ -11,21 +11,25 @@
 %def_enable	curl
 
 Name: syslog-ng
-Version: 3.8.1
-Release: alt2
+Version: 3.12.1
+Release: alt1
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
 License: %gpllgpl2only
-URL: http://www.balabit.com/products/syslog_ng/
+URL: https://syslog-ng.org
 Provides: syslogd-daemon
 Prereq:	syslog-common
 Conflicts: klogd < 1.4.1-alt7
 
-Packager: Sergey Alembekov <rt@altlinux.ru>
+Provides: libeventlog = %EVR
+Obsoletes: libeventlog < %EVR
 
-Source: http://www.balabit.com/downloads/files/syslog-ng/sources/%{version}/source/%{name}_%{version}.tar.gz
-Patch1: %name-%version-%release.patch
+Source: %name-%version.tar
+# VCS git
+#https://github.com/balabit/syslog-ng.git
+
+Patch1: %name-%version.patch
 
 BuildRequires: rpm-build-licenses
 
@@ -35,7 +39,11 @@ BuildRequires: rpm-build-licenses
 # + SSL/TLS
 # + PCRE
 # + SQL
-BuildRequires: flex autoconf-archive glib2-devel libcap-devel libdbi-devel libeventlog-devel >= 0.2.13 libnet2-devel libpcre-devel libpopt-devel libssl-devel libuuid-devel libwrap-devel libivykis-devel xsltproc docbook-style-xsl python-devel
+BuildRequires: flex autoconf-archive glib2-devel libcap-devel libdbi-devel
+BuildRequires: libnet2-devel libpcre-devel libpopt-devel
+BuildRequires: libssl-devel libuuid-devel libwrap-devel libivykis-devel
+BuildRequires: xsltproc docbook-style-xsl python-devel
+BuildRequires: libsystemd-devel
 
 %if_enabled geoip
 BuildRequires: libGeoIP-devel
@@ -118,12 +126,17 @@ This module supports the mongodb database via libmongoc
 %endif
 
 %if_enabled curl
-%package curl
-Summary: curl support for %{name}
+%package http
+Summary: http support for %{name}
 Group: System/Libraries
+Provides: %name-curl = %EVR
+Obsoletes: %name-curl < %EVR
 
-%description curl
-This module supports the curl.
+%description http
+The http destination can send the log as HTTP requests to an HTTP server.
+It supports setting url, method, headers, user\_agent, authentication
+and body. Only PUT and POST method is supported so far. If the method is
+not set, POST will be used.
 %endif
 
 %package python
@@ -147,7 +160,9 @@ collecting debug related information.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release libeventlog-devel libivykis-devel
+Requires: %name = %version-%release  libivykis-devel
+Provides: libeventlog-devel = %EVR
+Obsoletes: libeventlog-devel < %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -162,7 +177,7 @@ Requires: %name = %version-%release
 The %name-devel-test package contains library for testing modules
 
 %prep
-%setup -q -n %{name}_%{version}
+%setup -q
 %patch1 -p1
 %if_enabled amqp
 pushd modules/afamqp/rabbitmq-c
@@ -184,11 +199,11 @@ autoconf
 
 %build
 skip_submodules=1 ./autogen.sh
-%add_optflags -levtlog -livykis -lgmodule-2.0 -lglib-2.0 -lpcre
+#add_optflags -levtlog -livykis -lgmodule-2.0 -lglib-2.0 -lpcre
 
 # configure is searching libmongoc instead of libmongoc-1.0 via pkg-config
-export LIBMONGO_CFLAGS="-I%_includedir/libmongoc-1.0 -I%_includedir/libbson-1.0"
-export LIBMONGO_LIBS="-lsasl2 -lssl -lcrypto -lrt -lmongoc-1.0 -lbson-1.0"
+#export LIBMONGO_CFLAGS="-I%_includedir/libmongoc-1.0 -I%_includedir/libbson-1.0"
+#export LIBMONGO_LIBS="-lsasl2 -lssl -lcrypto -lrt -lmongoc-1.0 -lbson-1.0"
 
 %configure \
  --sbindir=/sbin \
@@ -199,6 +214,7 @@ export LIBMONGO_LIBS="-lsasl2 -lssl -lcrypto -lrt -lmongoc-1.0 -lbson-1.0"
  --with-ivykis=system \
  --with-pidfile-dir=/var/run \
  --with-module-dir=%_libdir/%name \
+ --with-systemdsystemunitdir=%_unitdir \
  --enable-ipv6 \
  --enable-dynamic-linking \
  --enable-tcp-wrapper \
@@ -231,6 +247,8 @@ make DESTDIR=%buildroot sbindir=/sbin sysconfdir=%_sysconfdir/%name \
 install -m755 -D -p altlinux/%name.init %buildroot%_initdir/%name
 install -m640 -D -p altlinux/%name.conf %buildroot%_sysconfdir/%name/%name.conf
 install -m640 -D -p altlinux/%name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
+install -m644 -D -p altlinux/%name.service %buildroot%_unitdir/%name.service
+rm -f %buildroot%_unitdir/%{name}@.service
 
 install -m644 -p config.h %buildroot%_includedir/%name
 
@@ -274,10 +292,12 @@ fi
 %config(noreplace) %_sysconfdir/%name/%name.conf
 %config(noreplace) %_sysconfdir/%name/scl.conf
 %config(noreplace) %_sysconfdir/sysconfig/%name
-%_initdir/syslog-ng*
+%_initdir/%name
+%_unitdir/%name.service
 
-/sbin/syslog-ng
-/sbin/syslog-ng-ctl
+/sbin/%name
+/sbin/%name-ctl
+/sbin/%name-debun
 %_bindir/loggen
 %_bindir/pdbtool
 %_bindir/update-patterndb
@@ -307,8 +327,16 @@ fi
 %_libdir/%name/libcef.so
 %_libdir/%name/libdate.so
 %_libdir/%name/libdisk-buffer.so
+# added in 3.12
+%_libdir/%name/libmap-value-pairs.so
+%_libdir/%name/libsnmptrapd-parser.so
+%_libdir/%name/libstardate.so
+%_libdir/%name/libtags-parser.so
+%_libdir/%name/libtfgetent.so
+%_libdir/%name/libxml.so
 
 %_libdir/lib%name-*.so.*
+%_libdir/libevtlog-*.so.*
 
 %dir %_datadir/%name
 %dir %_datadir/%name/include
@@ -351,8 +379,8 @@ fi
 %endif
 
 %if_enabled curl
-%files curl
-%_libdir/%name/libcurl.so
+%files http
+%_libdir/%name/libhttp.so
 %endif
 
 %files python
@@ -369,26 +397,32 @@ fi
 %files devel
 %dir %_includedir/%name
 #_includedir/%name/*.h
-%dir %_includedir/%name/*
-%dir %_includedir/%name/*/*
-%_includedir/%name/*/*.h
-%_includedir/%name/*/*/*.h
+%_includedir/%name/*
 
 %dir %_datadir/%name/tools
 %_datadir/%name/tools/*
 
 %_libdir/lib%name.so
-%_libdir/pkgconfig/%name.pc
+%_pkgconfigdir/%name.pc
 
-%_libdir/pkgconfig/%name-native-connector.pc
+%_libdir/libevtlog.so
+
+%_pkgconfigdir/%name-native-connector.pc
 %_libdir/libsyslog-ng-native-connector.a
+
+%_pkgconfigdir/%name-add-contextual-data.pc
 
 %files devel-test
 %dir %_libdir/%name/libtest
 %_libdir/%name/libtest/libsyslog-ng-test.a
-%_libdir/pkgconfig/%name-test.pc
+%_pkgconfigdir/%name-test.pc
 
 %changelog
+* Fri Dec 01 2017 Alexey Shabalin <shaba@altlinux.ru> 3.12.1-alt1
+- 3.12.1
+- build with new libmongoc-1.0 (1.8.2)
+- build with systemd support
+
 * Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.8.1-alt2
 - Rebuilt with libdbi-0.9.0.
 

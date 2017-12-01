@@ -11,7 +11,7 @@
 %def_enable elasticsearch
 
 Name: rsyslog
-Version: 8.30.0
+Version: 8.31.0
 Release: alt1%ubt
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -38,10 +38,10 @@ BuildRequires: libuuid-devel
 %{?_enable_liblogging_stdlog:BuildRequires: liblogging-devel >= 1.0.3}
 %{?_enable_rfc3195:BuildRequires: liblogging-devel >= 1.0.1}
 %{?_enable_guardtime:BuildRequires: libgt-devel >= 0.3.1}
-%{?_enable_ksi_ls12:BuildRequires: libksi-devel >= 3.13.0}
+%{?_enable_ksi_ls12:BuildRequires: libksi-devel >= 3.16.0}
 %{?_enable_omamqp1:BuildRequires: libqpid-proton-devel >= 0.9}
 BuildRequires: liblognorm-devel >= 2.0.3
-%{?_enable_ommongodb:BuildRequires: libmongo-client-devel >= 0.1.4}
+%{?_enable_ommongodb:BuildRequires: libmongoc-devel}
 %{?_enable_elasticsearch:BuildRequires: libcurl-devel}
 %{?_enable_omhttpfs:BuildRequires: libcurl-devel >= 7.0.0}
 %{?_enable_omhiredis:BuildRequires: libhiredis-devel >= 0.10.1}
@@ -429,6 +429,7 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_common.conf
 %config(noreplace) %_sysconfdir/sysconfig/rsyslogd
 %config %_initdir/rsyslogd
+%dir %_unitdir/rsyslog.service.d
 %_unitdir/*.service
 %_unitdir/syslog.target.wants/rsyslog.service
 %dir %mod_dir
@@ -558,6 +559,10 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/mmsnmptrapd.so
 
 %changelog
+* Fri Dec 01 2017 Alexey Shabalin <shaba@altlinux.ru> 8.31.0-alt1%ubt
+- 8.31.0
+- update systemd drop-in config (ALT#32812)
+
 * Wed Nov 08 2017 Alexey Shabalin <shaba@altlinux.ru> 8.30.0-alt1%ubt
 - 8.30.0
 
