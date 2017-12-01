@@ -1,11 +1,10 @@
 %define oname setuptools
 
 %def_with python3
-%def_with tests
 
 Name: python-module-%oname
 Epoch: 1
-Version: 36.6.0
+Version: 38.2.3
 Release: alt1%ubt
 
 Summary: Python Distutils Enhancements
@@ -13,7 +12,6 @@ License: PSF/ZPL
 Group: Development/Python
 URL: http://pypi.python.org/pypi/setuptools
 
-# Source-url: https://pypi.io/packages/source/s/%oname/%oname-%version.tar.gz
 Source: %oname.tar
 
 Patch0: 0001-Don-t-remove-setuptools.tests-from-the-installed-pac.patch
@@ -123,7 +121,6 @@ ln -s easy_install-%_python_version %buildroot%_bindir/easy_install
 ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
 %endif
 
-%if_with tests
 %check
 # TODO: fix or disable remaining failing tests
 PYTHONPATH=$(pwd) py.test -v ||:
@@ -132,7 +129,6 @@ PYTHONPATH=$(pwd) py.test -v ||:
 pushd ../python3
 PYTHONPATH=$(pwd) py.test3 -v ||:
 popd
-%endif
 %endif
 
 %files
@@ -166,6 +162,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:38.2.3-alt1%ubt
+- Updated to upstream version 38.2.3.
+
 * Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:36.6.0-alt1%ubt
 - Updated to upstream version 36.6.0.
 - Fixed issue with generated .pth files.

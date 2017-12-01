@@ -1,26 +1,26 @@
+%define _unpackaged_files_terminate_build 1
 %def_with python3
 
-%global modname mccabe
+%define oname mccabe
 
-Name:               python-module-mccabe
-Version:            0.3.1
-Release:            alt1.1.1.1
+Name:               python-module-%oname
+Version:            0.6.1
+Release:            alt1
 Summary:            McCabe complexity checker
 
 Group:              Development/Python
 License:            Expat
-URL:                http://pypi.python.org/pypi/mccabe
-Source0:            %{name}-%{version}.tar
-
 BuildArch:          noarch
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
+URL:                http://pypi.python.org/pypi/mccabe
 
-#BuildRequires:      python-devel, python-module-setuptools
+# https://github.com/pycqa/mccabe.git
+Source: %name-%version.tar
 
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-pytest-runner
 %if_with python3
-#BuildRequires:      rpm-build-python3, python3-module-setuptools
+BuildRequires: python3-module-setuptools rpm-build-python3
+BuildRequires: python3-module-pytest-runner
 %endif
 
 %description
@@ -30,11 +30,11 @@ This module provides a plugin for ``flake8``, the Python code
 checker.
 
 %if_with python3
-%package -n python3-module-mccabe
-Summary:            McCabe checker, plugin for flake8
-Group:              Development/Python
+%package -n python3-module-%oname
+Summary: McCabe checker, plugin for flake8
+Group: Development/Python3
 
-%description -n python3-module-mccabe
+%description -n python3-module-%oname
 Ned's script to check McCabe complexity.
 
 This module provides a plugin for ``flake8``, the Python code
@@ -44,11 +44,7 @@ checker.
 %prep
 %setup
 
-# Remove bundled egg-info in case it exists
-rm -rf %{modname}.egg-info
-
 %if_with python3
-rm -rf ../python3
 cp -a . ../python3
 %endif
 
@@ -70,29 +66,23 @@ popd
 
 %python_install
 
-# %check
-# %{__python} setup.py test
-# %if_with python3
-# pushd ../python3
-# %{__python3} setup.py test
-# popd
-# %endif
-
 %files
 %doc README.rst LICENSE
-%{python_sitelibdir}/%{modname}.py*
-%{python_sitelibdir}/%{modname}-%{version}*
+%python_sitelibdir/%{oname}.py*
+%python_sitelibdir/%{oname}-%{version}*
 
-%if_with python3 LICENSE
-%files -n python3-module-mccabe
-%doc README.rst
-%{python3_sitelibdir}/%{modname}.py*
-%{python3_sitelibdir}/%{modname}-%{version}-*
-%{python3_sitelibdir}/__pycache__/%{modname}.*
-
+%if_with python3
+%files -n python3-module-%oname
+%doc README.rst LICENSE
+%python3_sitelibdir/%{oname}.py*
+%python3_sitelibdir/%{oname}-%{version}-*
+%python3_sitelibdir/__pycache__/%{oname}.*
 %endif
 
 %changelog
+* Fri Dec 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.1-alt1
+- Updated to upstream version 0.6.1.
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.1-alt1.1.1.1
 - (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
   (it is meaningless because arbitrary packages package that dir).
