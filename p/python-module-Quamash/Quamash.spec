@@ -8,36 +8,33 @@ BuildRequires: unzip
 
 Name: python-module-%oname
 Version: 0.5.5
-Release: alt1
+Release: alt2
 Summary: Implementation of the PEP 3156 event-loop (tulip) api using the Qt Event-Loop
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/Quamash/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/harvimt/quamash.git
-Source0: https://pypi.python.org/packages/51/a3/dbead5b502aebc840c3672fc5e8ec7ecb2ea443d3e8638d14996600cd1cd/%{oname}-%{version}.zip
-BuildArch: noarch
+Source: %{oname}-%{version}.zip
 
-#BuildPreReq: xvfb-run
+BuildRequires: xvfb-run
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-asyncio python-module-pathlib
-#BuildPreReq: python-module-PyQt4 xvfb-run
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python2.7(asyncio) python-module-pathlib
+BuildRequires: python-module-pytest
+BuildRequires: python-module-PyQt4
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-asyncio python3-module-pathlib
-#BuildPreReq: python3-module-PyQt4
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3(asyncio) python3-module-pathlib
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-PyQt4
 %endif
 
 %py_provides quamash
 %py_requires asyncio
-
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: fontconfig libqt4-core libqt4-gui python-base python3 python3-base python3-module-setuptools python3-module-sip
-BuildRequires: python3-module-PyQt4 python3-module-asyncio python3-module-pathlib python3-module-pytest rpm-build-python3
 
 %description
 Implementation of the PEP 3156 Event-Loop with Qt.
@@ -89,10 +86,11 @@ popd
 xvfb-run py.test -vv
 python setup.py test
 %endif
+
 %if_with python3
 pushd ../python3
 python3 setup.py test
-xvfb-run py.test-%_python3_version -vv
+xvfb-run py.test3 -vv
 popd
 %endif
 
@@ -109,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.5-alt2
+- Updated build dependencies.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.5-alt1
 - automated PyPI update
 
