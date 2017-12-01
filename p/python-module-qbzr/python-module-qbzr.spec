@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: python-module-qbzr
-Version: 0.23.1
+Version: 0.23.2
 Release: alt1
 
 %setup_python_module qbzr
@@ -59,6 +59,9 @@ This package contain tools and test suites for testing qbzr plugin.
 %python_sitelibdir/bzrlib/plugins/%modulename/lib/tests
 
 %changelog
+* Fri Dec 01 2017 Anatoly Kitaykin <cetus@altlinux.org> 0.23.2-alt1
+- release 0.23.2
+
 * Wed Oct 02 2013 Anatoly Kitaykin <cetus@altlinux.org> 0.23.1-alt1
 - release 0.23.1
 - separate package for qbzr tests
