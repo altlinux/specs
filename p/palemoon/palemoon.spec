@@ -1,10 +1,10 @@
-%define git_commit 893b8cf
+%define git_commit ce6529f
 		    
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 27.6.1
+Version: 27.6.2
 
 # %%ifndef git_commit
 Release: alt1
@@ -15,7 +15,7 @@ Release: alt1
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 
-# git commit 893b8cfe9e12c5d2bc98af80e7dad373fe645a3d
+# git commit ce6529faeb2f0c11c832a34570c79d04707c3255
 Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
@@ -589,8 +589,12 @@ install -D -m 644 README.md ../
 %exclude %_includedir/*
 %exclude %_datadir/idl/*
 
-# git commit 893b8cfe9e12c5d2bc98af80e7dad373fe645a3d
+# git commit ce6529faeb2f0c11c832a34570c79d04707c3255
 %changelog
+* Sat Dec 02 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.6.2-alt1
+- New Version - Release 27.6.2
+- Fixed CVE-2017-7832, CVE-2017-7835, CVE-2017-7840. See Changelog 
+
 * Mon Nov 20 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.6.1-alt1
 - New Version - Release 27.6.1 width "fix Linux loading throbber to be properly encoded"
 
