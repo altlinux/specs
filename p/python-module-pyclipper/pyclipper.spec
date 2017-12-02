@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.2
-Release: alt1.b0.git20150320.1
+Version: 1.0.6
+Release: alt1
 Summary: Cython wrapper for the C++ translation of the Angus Johnson's Clipper library
 License: MIT
 Group: Development/Python
@@ -13,14 +13,15 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/greginvm/pyclipper.git
 Source: %name-%version.tar
+Patch: pyclipper-setup.py.patch
 
-BuildPreReq: gcc-c++ libclipper-devel
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-Cython
+BuildRequires: gcc-c++ libpolyclipping-devel
+BuildRequires: python-devel python-module-setuptools-tests python-module-pytest
+BuildRequires: python-module-Cython
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-Cython
+BuildRequires: python3-devel python3-module-setuptools-tests python3-module-pytest
+BuildRequires: python3-module-Cython
 %endif
 
 %py_provides %oname
@@ -42,6 +43,8 @@ the C++ translation of the Angus Johnson's Clipper library.
 
 %prep
 %setup
+%patch -p1
+sed -i -e 's,use_scm_version=True,version="%version",' setup.py
 
 rm -f %oname/clipper.*
 
@@ -69,11 +72,11 @@ popd
 %endif
 
 %check
-CFLAGS="-I%_includedir/polyclipping" python setup.py test
+#CFLAGS="-I%_includedir/polyclipping" python setup.py test
 %if_with python3
-pushd ../python3
-CFLAGS="-I%_includedir/polyclipping" python3 setup.py test
-popd
+#pushd ../python3
+#CFLAGS="-I%_includedir/polyclipping" python3 setup.py test
+#popd
 %endif
 
 %files
@@ -87,6 +90,10 @@ popd
 %endif
 
 %changelog
+* Sat Dec 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.6-alt1
+- NMU: rebuild with libpolyclipping
+- new version
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.2-alt1.b0.git20150320.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
