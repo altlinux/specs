@@ -6,7 +6,7 @@
 
 Name:     scilab
 Version:  6.0.0
-Release:  alt3.1
+Release:  alt3.2
 Summary:  A high-level language and system for numerical computations
 
 License:  CeCILL
@@ -29,6 +29,7 @@ Patch5:  scilab-6.0.0-jogl-2.3.patch
 Patch8:  scilab-5.5.2-disable-doclint.patch
 Patch9:  scilab-alt-cxx-flags.patch
 Patch10: scilab-6.0.0-jgraph-3.patch
+Patch11: scilab-6.0.0-batik-1.9.patch
 
 Patch13: scilab-find-jrosetta-API.patch
 
@@ -162,6 +163,7 @@ tar xf %SOURCE1
 %patch8 -p2
 %patch9 -p2
 %patch10 -p2
+%patch11 -p2
 
 # Update saxon dependency
 # http://bugzilla.scilab.org/show_bug.cgi?id=8479
@@ -225,6 +227,9 @@ rm -f %buildroot%_xdgmimedir/packages/scilab.xml
 %_datadir/mime/packages/scilab.xml
 
 %changelog
+* Sat Dec 02 2017 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt3.2
+- NMU: added batik 1.9 to supported batik versions (ALT #34263)
+
 * Fri Dec 01 2017 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt3.1
 - NMU: fixed build with new jgraphx (ALT #34263)
 
