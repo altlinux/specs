@@ -1,6 +1,6 @@
 Name: grub
 Version: 2.02
-Release: alt3
+Release: alt4
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -34,6 +34,7 @@ Patch7: grub-2.02-efibootmgr-check.patch
 Patch8: grub-2.02-debian-install_signed.patch
 Patch9: grub-2.00-fedora-unrestricted.patch
 Patch10: grub2-stfu.patch
+Patch11: grub-2.02-shift-interrupt-timeout.patch
 
 BuildRequires: flex fonts-bitmap-misc fonts-ttf-dejavu libfreetype-devel python-modules ruby autogen
 BuildRequires: liblzma-devel help2man zlib-devel
@@ -153,6 +154,7 @@ when one can't disable it easily, doesn't want to, or needs not to.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 sed -i 's,@GRUB_EFI_NAME@,%grubefiname,' %SOURCE10
 sed -i "/^AC_INIT(\[GRUB\]/ s/%version[^]]\+/%version-%release/" configure.ac
@@ -327,6 +329,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Sat Dec 02 2017 Anton Farygin <rider@altlinux.ru> 2.02-alt4
+- interaction between the user and the shift key at boot time interrupts the grub wait timeout (closes: #33655)
+
 * Thu Nov 30 2017 Anton Farygin <rider@altlinux.ru> 2.02-alt3
 - fixed sysconfig/grub2 usage in grub-efi post script (closes: #34258)
 - fixed Xen menu entry  (closes: #32811)
