@@ -2,7 +2,7 @@
 
 Name: alsa-tools
 Version: 1.1.5
-Release: alt1
+Release: alt2
 
 Summary: Advanced Linux Sound Architecture (ALSA) tools
 License: GPL
@@ -14,6 +14,7 @@ Source1: 90-alsa-tools-firmware.rules
 Patch: %name-%version-%release.patch
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
+Obsoletes: hda-verb < 0.4
 Obsoletes: alsa2-tools < 0.9.4
 Provides: alsa2-tools = %version
 Requires: libalsa >= %basever
@@ -167,6 +168,9 @@ install -pm644 %SOURCE1 %buildroot%_udevrulesdir/
 # - consider http://cvs.fedoraproject.org/viewvc/rpms/alsa-tools/devel/
 
 %changelog
+* Sat Dec 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.5-alt2
+- NMU: added Obsoletes: hda-verb
+
 * Wed Nov 22 2017 Michael Shigorin <mike@altlinux.org> 1.1.5-alt1
 - 1.1.5
 
