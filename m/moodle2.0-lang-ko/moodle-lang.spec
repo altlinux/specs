@@ -19,7 +19,7 @@
 #Name: %moodlepackagename-%packagetype-%packagename
 Name: moodle2.0-lang-ko
 Version: %packagversion.%packagedate
-Release: %branch_release alt1
+Release: %branch_release alt1.1
 
 Summary: Moodle %langname localization
 License: %gpl3plus
@@ -60,7 +60,7 @@ cp -rp * %buildroot%moodle_langdir/
 
 # Create symlink for default.ttf
 install -d %buildroot%default_ttfdir
-ln -s -f $(relative %buildroot%_ttffontsdir/nhn-nanum/NanumGothic.ttf \
+ln -s -f $(relative %buildroot%_ttffontsdir/naver-nanum/NanumGothic.ttf \
 	%buildroot%default_ttf) \
 	%buildroot%default_ttf
 
@@ -68,6 +68,9 @@ ln -s -f $(relative %buildroot%_ttffontsdir/nhn-nanum/NanumGothic.ttf \
 %moodle_langdir/*
 
 %changelog
+* Sun Dec 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.0.201601271115-alt1.1
+- NMU: use naver-nanum fonts instead of nhn-nanum
+
 * Sun Jan 31 2016 Cronbuild Service <cronbuild@altlinux.org> 2.0.0.201601271115-alt1
 - repocop cronbuild 20160131. At your service.
 - ko.zip build 2016-01-27 11:15 UTC
