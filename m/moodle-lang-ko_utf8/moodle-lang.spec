@@ -14,7 +14,7 @@
 #Name: %moodlepackagename-%packagetype-%packagename
 Name: moodle-lang-ko_utf8
 Version: %packagversion.%packagedate
-Release: %branch_release alt6
+Release: %branch_release alt6.1
 
 Summary: Moodle %langname localozation
 License: %gpl2plus
@@ -52,7 +52,7 @@ mkdir -p  %buildroot%moodle_langdir/
 cp -rp * %buildroot%moodle_langdir/
 
 %define default_ttf %moodle_langdir/%packagename/fonts/default.ttf
-ln -s -f $(relative %buildroot%_ttffontsdir/nhn-nanum/NanumGothic.ttf \
+ln -s -f $(relative %buildroot%_ttffontsdir/naver-nanum/NanumGothic.ttf \
 	%buildroot%default_ttf) \
 	%buildroot%default_ttf
 
@@ -60,6 +60,9 @@ ln -s -f $(relative %buildroot%_ttffontsdir/nhn-nanum/NanumGothic.ttf \
 %moodle_langdir/*
 
 %changelog
+* Sun Dec 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.10.20100526-alt6.1
+- NMU: use naver-nanum fonts instead of nhn-nanum
+
 * Mon Nov 14 2011 Aleksey Avdeev <solo@altlinux.ru> 1.9.10.20100526-alt6
 - Use moodle-lang-cronbuild for cronbuild
 
