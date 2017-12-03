@@ -7,7 +7,7 @@
 
 Name: bacula7
 Version: 7.4.7
-Release: alt2%ubt
+Release: alt3%ubt
 
 License: AGPLv3
 Summary: Network based backup program
@@ -538,6 +538,8 @@ fi
 %files
 
 %changelog
+* Sun Dec 03 2017 Boris Gulay <boresexpress@altlinux.org> 7.4.7-alt3%ubt
+- Fix bacula-dir cannot create PID-file (closes: 33645)
 * Thu May 18 2017 Boris Gulay <boresexpress@altlinux.org> 7.4.7-alt2%ubt
 - Use readline instead of conio.
 - Update initscripts to use common style and check config before load.
