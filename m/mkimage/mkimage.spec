@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.19.1
+Version: 0.2.19.2
 Release: alt1
 
 Summary: Simple image creator
@@ -83,6 +83,9 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Sun Dec 03 2017 Anton Farygin <rider@altlinux.ru> 0.2.19.2-alt1
+- mki-copy-efiboot: adjusted for refind-0.11.2
+
 * Wed Jan 11 2017 Michael Shigorin <mike@altlinux.org> 0.2.19.1-alt1
 - preinstall:
   + added 51- to 49- to encircle 50-default regardless of order
