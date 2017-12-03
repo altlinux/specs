@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Glorious MIME Utility Library
@@ -126,6 +126,9 @@ statically linked GMime-based software.
 %endif
 
 %changelog
+* Mon Dec 04 2017 Yuri N. Sedunov <aris@altlinux.org> 3.0.5-alt1
+- 3.0.5
+
 * Tue Nov 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.0.4-alt1
 - 3.0.4
 
