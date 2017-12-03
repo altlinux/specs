@@ -13,7 +13,7 @@ publisher is Naver Corporation.
 
 Name:       fonts-ttf-naver-nanum
 Version:    3.020
-Release:    alt1_18.20140930
+Release:    alt2_18.20140930
 Summary:    Nanum family of Korean TrueType fonts
 
 License:    OFL
@@ -51,8 +51,8 @@ Source44: import.info
 %package -n fonts-ttf-naver-nanum-common
 Group: System/Fonts/True type
 Summary:   Common files of %{oldname}
-Provides:  nhn-nanum-fonts-common = %{version}-%{release}
-Obsoletes: nhn-nanum-fonts-common < %{version}-%{release}
+Provides:  fonts-ttf-nhn-nanum-common = %{version}-%{release}
+Obsoletes: fonts-ttf-nhn-nanum-common < %{version}-%{release}
 
 %description -n fonts-ttf-naver-nanum-common
 %common_desc
@@ -104,8 +104,8 @@ This package consists of the Nanum fonts Barun Pen font faces.
 Group: System/Fonts/True type
 Summary:   Nanum fonts Brush font faces
 Requires:  fonts-ttf-naver-nanum-common = %{version}-%{release}
-Provides:  nhn-nanum-brush-fonts = %{version}-%{release}
-Obsoletes: nhn-nanum-brush-fonts < %{version}-%{release}
+Provides:  fonts-ttf-nhn-nanum-brush = %{version}-%{release}
+Obsoletes: fonts-ttf-nhn-nanum-brush < %{version}-%{release}
 
 %description -n fonts-ttf-naver-nanum-brush
 %common_desc
@@ -122,8 +122,8 @@ This package consists of the Nanum fonts Brush font faces.
 Group: System/Fonts/True type
 Summary:   Nanum fonts Gothic font faces
 Requires:  fonts-ttf-naver-nanum-common = %{version}-%{release}
-Provides:  nhn-nanum-gothic-fonts = %{version}-%{release}
-Obsoletes: nhn-nanum-gothic-fonts < %{version}-%{release}
+Provides:  fonts-ttf-nhn-nanum-gothic = %{version}-%{release}
+Obsoletes: fonts-ttf-nhn-nanum-gothic < %{version}-%{release}
 
 %description -n fonts-ttf-naver-nanum-gothic
 %common_desc
@@ -143,8 +143,8 @@ This package consists of the Nanum fonts Gothic font faces.
 Group: System/Fonts/True type
 Summary:   Nanum fonts Myeongjo font faces
 Requires:  fonts-ttf-naver-nanum-common = %{version}-%{release}
-Provides:  nhn-nanum-myeongjo-fonts = %{version}-%{release}
-Obsoletes: nhn-nanum-myeongjo-fonts < %{version}-%{release}
+Provides:  fonts-ttf-nhn-nanum-myeongjo = %{version}-%{release}
+Obsoletes: fonts-ttf-nhn-nanum-myeongjo < %{version}-%{release}
 
 %description -n fonts-ttf-naver-nanum-myeongjo
 %common_desc
@@ -163,8 +163,8 @@ This package consists of the Nanum fonts Myeongjo font faces.
 Group: System/Fonts/True type
 Summary:   Nanum fonts Pen font faces
 Requires:  fonts-ttf-naver-nanum-common = %{version}-%{release}
-Provides:  nhn-nanum-pen-fonts = %{version}-%{release}
-Obsoletes: nhn-nanum-pen-fonts < %{version}-%{release}
+Provides:  fonts-ttf-nhn-nanum-pen = %{version}-%{release}
+Obsoletes: fonts-ttf-nhn-nanum-pen < %{version}-%{release}
 
 %description -n fonts-ttf-naver-nanum-pen
 %common_desc
@@ -272,6 +272,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Sun Dec 03 2017 Igor Vlasenko <viy@altlinux.ru> 3.020-alt2_18.20140930
+- fixed provides/obsoletes
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 3.020-alt1_18.20140930
 - update to new release by fcimport
 
