@@ -1,50 +1,69 @@
-%define ver 2009-08-22
-Name: gnucap
-Version: 20090822
-Release: alt1.qa1
-
-Summary: GNU Circuit Analysis Package
-
-License: GPL
-Group: Video
-#Group: Applications/Engineering
-Url: http://www.gnucap.org/
-
+Epoch: 1
 Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-#Source: ftp://ftp.geda.seul.org/pub/geda/dist/%name-%ver.tar.bz2
-Source: http://www.gnucap.org/devel/%name-%ver.tar.bz2
-
-# manually removed: linux-libc-headers
-# Automatically added by buildreq on Fri Nov 28 2008
-BuildRequires: gcc-c++ libreadline-devel tetex-latex
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/dvipdfm /usr/bin/gnucap-modelgen /usr/bin/hacha /usr/bin/hevea /usr/bin/makeindex gcc-c++ texlive-latex-base
+# END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:           gnucap
+Version:        0.35
+Release:        alt1_23
+Summary:        The Gnu Circuit Analysis Package
+Group:          Engineering
+License:        GPLv2+
+URL:            http://www.gnu.org/software/gnucap/
+Source0:        http://www.gnucap.org/devel/gnucap-%{version}.tar.gz
+Patch0:         gnucap-0.34-debian.patch
+Patch1:         gnucap-0.35-gcc43.patch
+Patch2:         gnucap-0.35-gcc6.patch
+BuildRequires:  readline-devel
+Source44: import.info
 
 %description
-gnucap is a general purpose circuit simulator.  It performs nonlinear
-dc and transient analyses, fourier analysis, and ac analysis
-linearized at an operating point.  It is fully interactive and
-command driven.  It can also be run in batch mode or as a server.
-The output is produced as it simulates.  Spice compatible models
-for the MOSFET (level 1-7) and diode are included in this
-release.
+The primary component is a general purpose circuit simulator. It performs
+nonlinear dc and transient analyses, fourier analysis, and ac analysis. Spice
+compatible models for the MOSFET (level 1-7), BJT, and diode are included in
+this release. Gnucap is not based on Spice, but some of the models have been
+derived from the Berkeley models. Unlike Spice, the engine is designed to do
+true mixed-mode simulation. Most of the code is in place for future support of
+event driven analog simulation, and true multi-rate simulation.
+
 
 %prep
-%setup -q -n %name-%ver
+%setup -q
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+# use ncurses instead of termcap (bz 226771)
+sed -i 's/-ltermcap/-lncurses/g' configure
+
 
 %build
 %configure
-
 %make_build
+
 
 %install
 %makeinstall_std
 
+# for %%doc
+rm -r $RPM_BUILD_ROOT%{_datadir}/%{name}
+mv doc/acs-tutorial doc/gnucap-tutorial
+rm examples/Makefile*
+
+
 %files
-%_bindir/*
-%_datadir/%name/
-%_man1dir/*
+%doc doc/history doc/relnotes.* doc/gnucap-tutorial doc/whatisit
+%doc man/gnucap-man.pdf examples
+%doc doc/COPYING
+%{_bindir}/%{name}*
+%{_mandir}/man1/%{name}.1*
+
 
 %changelog
+* Mon Dec 04 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.35-alt1_23
+- new version (closes: #34274)
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20090822-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
