@@ -1,6 +1,6 @@
 Name: libXfont
-Version: 1.5.3
-Release: alt1
+Version: 1.5.4
+Release: alt1%ubt
 Summary: X.Org libXfont runtime library
 License: MIT/X11
 Group: System/Libraries
@@ -8,8 +8,9 @@ Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: bzlib-devel libfontenc-devel libfreetype-devel xorg-fontsproto-devel xmlto
 BuildRequires: xorg-xproto-devel xorg-xtrans-devel xorg-util-macros zlib-devel xorg-sgml-doctools
 
@@ -59,6 +60,10 @@ mkdir -p %buildroot%_sysconfdir/X11/fontpath.d
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Dec 04 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.5.4-alt1%ubt
+- fixes:
+ + CVE-2017-16611 Open files with O_NOFOLLOW
+
 * Fri Oct 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.5.3-alt1
 - 1.5.3
 
