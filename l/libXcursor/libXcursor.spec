@@ -1,6 +1,6 @@
 Name: libXcursor
-Version: 1.1.14
-Release: alt1
+Version: 1.1.15
+Release: alt1%ubt
 Summary: X Cursor Library
 License: MIT/X11
 Group: System/Libraries
@@ -8,8 +8,9 @@ Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: libXfixes-devel libXrender-devel xmlto xorg-util-macros xorg-sgml-doctools
 
 %description
@@ -47,6 +48,10 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Mon Dec 04 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.1.15-alt1%ubt
+- fixes:
+ + CVE-2017-16612 Fix heap overflows when parsing malicious files
+
 * Thu May 30 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.1.14-alt1
 - 1.1.14
 
