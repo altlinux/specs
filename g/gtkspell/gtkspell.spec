@@ -1,6 +1,6 @@
 Name: gtkspell
 Version: 2.0.16
-Release: alt2
+Release: alt3
 
 Summary: On-the-fly spell checking for GtkTextView widgets
 License: GPLv2+
@@ -49,6 +49,7 @@ applications which use GtkSpell.
 
 %prep
 %setup
+%__subst "s| docs | |g" Makefile*
 
 %build
 %configure %{subst_enable static}
@@ -66,7 +67,6 @@ applications which use GtkSpell.
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*
-%doc %_datadir/gtk-doc/html/*
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -74,6 +74,9 @@ applications which use GtkSpell.
 %endif
 
 %changelog
+* Mon Dec 04 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.16-alt3
+- fix build: build without docs
+
 * Tue May 24 2011 Alexey Shabalin <shaba@altlinux.ru> 2.0.16-alt2
 - rebuild for debuginfo
 
