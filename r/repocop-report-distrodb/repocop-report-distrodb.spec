@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.36
+Version: 0.37
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -39,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Mon Dec 04 2017 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
+- added requires.raw and added raw version 0
+
 * Fri Oct 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
 - added sourceurl.raw
 
