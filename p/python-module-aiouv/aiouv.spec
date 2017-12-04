@@ -5,35 +5,27 @@
 
 Name: python-module-%oname
 Version: 0.0.1
-Release: alt1.git20150213.1.1
+Release: alt2.git20150213
 Summary: A PEP-3156 compatible event loop
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/aiouv/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/saghul/aiouv.git
 Source: %name-%version.tar
-BuildArch: noarch
 
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-asyncio-tests python-module-pyuv
-#BuildPreReq: python-module-aiotest
+BuildRequires: python-devel python-module-setuptools-tests
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-asyncio-tests python3-module-pyuv
-#BuildPreReq: python3-module-aiotest
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-pyuv
 %endif
 
 %py_provides %oname
 %py_requires asyncio pyuv
-
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python3-module-setuptools-tests rpm-build-python3
 
 %description
 libuv based event loop for asyncio.
@@ -80,6 +72,7 @@ popd
 %if_with python2
 python setup.py test
 %endif
+
 %if_with python3
 pushd ../python3
 python3 setup.py test
@@ -99,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.1-alt2.git20150213
+- Updated build dependencies.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.1-alt1.git20150213.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
