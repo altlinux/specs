@@ -9,9 +9,10 @@
 %def_disable	amqp
 %def_enable	mongodb
 %def_enable	curl
+%def_enable	systemd
 
 Name: syslog-ng
-Version: 3.12.1
+Version: 3.13.1
 Release: alt1
 
 Summary: syslog-ng daemon
@@ -43,26 +44,14 @@ BuildRequires: flex autoconf-archive glib2-devel libcap-devel libdbi-devel
 BuildRequires: libnet2-devel libpcre-devel libpopt-devel
 BuildRequires: libssl-devel libuuid-devel libwrap-devel libivykis-devel
 BuildRequires: xsltproc docbook-style-xsl python-devel
-BuildRequires: libsystemd-devel
 
-%if_enabled geoip
-BuildRequires: libGeoIP-devel
-%endif
-%if_enabled json
-BuildRequires: libjson-c-devel
-%endif
-%if_enabled smtp
-BuildRequires: libesmtp-devel
-%endif
-%if_enabled amqp
-BuildRequires: librabbitmq-c-devel
-%endif
-%if_enabled mongodb
-BuildRequires: libmongoc-devel
-%endif
-%if_enabled curl
-BuildRequires: libcurl-devel
-%endif
+%{?_enable_geoip:BuildRequires: libGeoIP-devel}
+%{?_enable_json:BuildRequires: libjson-c-devel}
+%{?_enable_smtp:BuildRequires: libesmtp-devel}
+%{?_enable_amqp:BuildRequires: librabbitmq-c-devel}
+%{?_enable_mongodb:BuildRequires: libmongoc-devel}
+%{?_enable_curl:BuildRequires: libcurl-devel}
+%{?_enable_systemd:BuildRequires: libsystemd-devel}
 
 %description
 syslog-ng, as the name shows, is a syslogd replacement, but with new
@@ -80,52 +69,41 @@ Group: System/Libraries
 %description libdbi
 This module supports a large number of database systems via libdbi.
 
-%if_enabled geoip
 %package geoip
 Summary: GeoIP support for %{name}
 Group: System/Libraries
 
 %description geoip
 This module provides a function to get GeoIP info from an IPv4 address.
-%endif
 
-%if_enabled smtp
 %package smtp
 Summary: SMTP destination support for %{name}
 Group: System/Libraries
 
 %description smtp
 This module provides SMTP destination support for %{name}.
-%endif
 
-%if_enabled json
 %package json
 Summary: JSON support for %{name}
 Group: System/Libraries
 
 %description json
 This module provides JSON parsing & formatting support for %{name}.
-%endif
 
-%if_enabled amqp
 %package amqp
 Summary: AMQP support for %{name}
 Group: System/Libraries
 
 %description amqp
 This module provides AMQP destination support for %{name}.
-%endif
 
-%if_enabled mongodb
 %package mongodb
 Summary: mongodb support for %{name}
 Group: System/Libraries
 
 %description mongodb
 This module supports the mongodb database via libmongoc
-%endif
 
-%if_enabled curl
 %package http
 Summary: http support for %{name}
 Group: System/Libraries
@@ -137,7 +115,13 @@ The http destination can send the log as HTTP requests to an HTTP server.
 It supports setting url, method, headers, user\_agent, authentication
 and body. Only PUT and POST method is supported so far. If the method is
 not set, POST will be used.
-%endif
+
+%package journal
+Summary: Systemd journal support for %{name}
+Group: System/Libraries
+
+%description journal
+This module provides JSON parsing & formatting support for %{name}.
 
 %package python
 Summary: Python destination support for syslog-ng
@@ -225,6 +209,7 @@ skip_submodules=1 ./autogen.sh
  %{subst_enable smtp} \
  %{subst_enable json} \
  %{subst_enable amqp} \
+ %{subst_enable systemd} \
 %if_enabled mongodb
  %{subst_enable mongodb} \
  --with-mongoc=system
@@ -320,7 +305,6 @@ fi
 %_libdir/%name/libpseudofile.so
 %_libdir/%name/libsyslogformat.so
 %_libdir/%name/libsystem-source.so
-%_libdir/%name/libsdjournal.so
 %_libdir/%name/libkvformat.so
 # added in 3.8
 %_libdir/%name/libadd-contextual-data.so
@@ -334,7 +318,9 @@ fi
 %_libdir/%name/libtags-parser.so
 %_libdir/%name/libtfgetent.so
 %_libdir/%name/libxml.so
-
+# added in 3.13
+%_libdir/%name/libappmodel.so
+ 
 %_libdir/lib%name-*.so.*
 %_libdir/libevtlog-*.so.*
 
@@ -383,6 +369,11 @@ fi
 %_libdir/%name/libhttp.so
 %endif
 
+%if_enabled systemd
+%files journal
+%_libdir/%name/libsdjournal.so
+%endif
+
 %files python
 %_libdir/%name/libmod-python.so
 
@@ -418,6 +409,12 @@ fi
 %_pkgconfigdir/%name-test.pc
 
 %changelog
+* Mon Dec 04 2017 Alexey Shabalin <shaba@altlinux.ru> 3.13.1-alt1
+- 3.13.1
+- add condition for build with systemd journal support
+- split package for systemd journal support
+- simplify confitions for BR:
+
 * Fri Dec 01 2017 Alexey Shabalin <shaba@altlinux.ru> 3.12.1-alt1
 - 3.12.1
 - build with new libmongoc-1.0 (1.8.2)
