@@ -1,5 +1,5 @@
 Name: kernel-image-std-pae
-Release: alt1
+Release: alt1.1
 epoch:1 
 %define kernel_base_version	4.4
 %define kernel_sublevel .103
@@ -576,6 +576,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Tue Dec 05 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.103-alt1.1
+- temporary fix for HugeDirtyCowPOC (fixes CVE-2017-1000405)
+
 * Thu Nov 30 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.4.103-alt1
 - v4.4.103
 
