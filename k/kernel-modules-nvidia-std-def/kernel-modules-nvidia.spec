@@ -7,7 +7,7 @@
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
-%define module_version	384.90
+%define module_version	384.98
 %define module_release	alt1
 %define flavour		std-def
 
@@ -252,7 +252,10 @@ fi
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
-* Tue Aug 08 2017 Sergey V Turchin <zerg at altlinux dot org> 375.82-alt1
+* Mon Dec 04 2017 Sergey V Turchin <zerg at altlinux dot org> 384.98-alt1
+- new release (384.98)
+
+* Tue Aug 08 2017 Sergey V Turchin <zerg at altlinux dot org> 384.90-alt1
 - new releases (384.90, 340.104, 304.137)
 
 * Tue Aug 08 2017 Sergey V Turchin <zerg at altlinux dot org> 375.82-alt1
