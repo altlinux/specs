@@ -10,7 +10,7 @@
 
 
 Name:		grafana
-Version:	4.6.0
+Version:	4.6.2
 Release:	alt1%ubt
 Summary:	Metrics dashboard and graph editor
 
@@ -147,6 +147,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Mon Dec 04 2017 Alexey Shabalin <shaba@altlinux.ru> 4.6.2-alt1%ubt
+- 4.6.2
+
 * Mon Oct 30 2017 Alexey Shabalin <shaba@altlinux.ru> 4.6.0-alt1%ubt
 - 4.6.0
 
