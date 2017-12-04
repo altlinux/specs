@@ -4,24 +4,23 @@
 
 Name: python-module-%oname
 Version: 0.16.0
-Release: alt1.git20150617.1
+Release: alt2.git20150617
 Summary: ReST document generation tools for botocore
 License: ASLv2.0
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/bcdoc/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/boto/bcdoc.git
 # branch: develop
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-six python-module-docutils
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-six python-module-docutils
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-six python3-module-docutils
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-six python3-module-docutils
 %endif
 
 %py_provides %oname
@@ -65,10 +64,11 @@ popd
 %check
 python setup.py test
 py.test
+
 %if_with python3
 pushd ../python3
 python3 setup.py test
-py.test-%_python3_version
+py.test3
 popd
 %endif
 
@@ -83,6 +83,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.16.0-alt2.git20150617
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.16.0-alt1.git20150617.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
