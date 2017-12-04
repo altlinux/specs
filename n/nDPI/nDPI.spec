@@ -1,5 +1,5 @@
 Name: nDPI
-Version: 1.8.0
+Version: 2.2
 Release: alt1
 Summary: Open source deep packet inspection
 Group: System/Libraries
@@ -83,15 +83,15 @@ sh autogen.sh
 
 %install
 %makeinstall
-mv %buildroot%_includedir/libndpi-%version/libndpi %buildroot%_includedir
-rmdir %buildroot%_includedir/libndpi-%version
+mv %buildroot%_includedir/libndpi-%version.0/libndpi %buildroot%_includedir
+rmdir %buildroot%_includedir/libndpi-%version.0
 
 %files -n lib%name
 %_libdir/libndpi.so.*
 
 
 %files -n lib%name-devel
-%doc ChangeLog COPYING INSTALL README.md README.nDPI README.protocols
+%doc CHANGELOG.md COPYING INSTALL README.md README.nDPI README.protocols
 %_includedir/libndpi
 %_libdir/pkgconfig/libndpi.pc
 %_libdir/libndpi.so
@@ -100,6 +100,9 @@ rmdir %buildroot%_includedir/libndpi-%version
 %_bindir/ndpiReader
 
 %changelog
+* Mon Dec 04 2017 Alexei Takaseev <taf@altlinux.org> 2.2-alt1
+- 2.2
+
 * Wed Feb 15 2017 Alexei Takaseev <taf@altlinux.org> 1.8.0-alt1
 - 1.8.0
 
