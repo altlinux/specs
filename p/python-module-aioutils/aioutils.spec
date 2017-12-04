@@ -4,34 +4,29 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.0
-Release: alt1.git20150226.1.1
+Version: 0.3.10
+Release: alt1
 Summary: Python3 Asyncio Utils
 License: ASLv2.0
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/aioutils/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/observerss/aioutils.git
 Source: %name-%version.tar
-BuildArch: noarch
 
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-asyncio
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python2.7(asyncio)
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-asyncio
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3(asyncio) python3(nose)
 %endif
 
 %py_provides %oname
 %py_requires asyncio
-
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python3 python3-base python3-module-pluggy python3-module-py python3-module-pytest python3-module-setuptools xz
-BuildRequires: python3-module-asyncio python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 Python3 Asyncio implements an event loop, but in quite low level, it
@@ -102,11 +97,12 @@ python setup.py test
 export PYTHONPATH=$PWD
 py.test -vv
 %endif
+
 %if_with python3
 pushd ../python3
 python3 setup.py test
 export PYTHONPATH=$PWD
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
@@ -123,6 +119,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.10-alt1
+- Updated to upstream version 0.3.10.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.0-alt1.git20150226.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
