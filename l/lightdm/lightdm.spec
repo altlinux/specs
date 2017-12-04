@@ -7,7 +7,7 @@
 
 Name: lightdm
 Version: 1.16.7
-Release: alt10
+Release: alt16
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -24,8 +24,10 @@ Source7: %name-greeter.pam
 Source8: %name.rules
 Source9: %name.service
 Source10: %name-login-unknown.control
+Source11: %name-greeter-hide-users.control
 
 Patch1: %name-%version-%release.patch
+Patch2: %name-%version-%release-advanced.patch
 
 # Requires: %name-greeter
 # Requires: accountsservice
@@ -128,6 +130,8 @@ manager via D-Bus.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
+
 %ifarch e2k
 # until apx. lcc-1.23.01
 sed -i 's,-Werror=pointer-arith,,' configure.ac
@@ -189,6 +193,7 @@ install -m644 -p -D %SOURCE9 %buildroot%_unitdir/%name.service
 echo "GDK_CORE_DEVICE_EVENTS=true" > %buildroot%_localstatedir/lib/ldm/.pam_environment
 
 install -m0755 -p -D %SOURCE10 %buildroot%_controldir/%name-login-unknown
+install -m0755 -p -D %SOURCE11 %buildroot%_controldir/%name-greeter-hide-users.control
 
 %find_lang --with-gnome %name
 
@@ -274,6 +279,36 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Thu Nov 09 2017 Paul Wolneykien <manowar@altlinux.org> 1.16.7-alt16
+- Fix: Properly report the PAM result before exit the password
+  change session.
+
+* Tue Oct 31 2017 Paul Wolneykien <manowar@altlinux.org> 1.16.7-alt14
+- Fix: Don\'t try to authenticate a user without using a greeter
+  on switch-to-user.
+
+* Mon Oct 30 2017 Paul Wolneykien <manowar@altlinux.org> 1.16.7-alt13
+- Make use of 'default-username' when starting new login session.
+- Fixed syntax in lightdm-login-unknown.control.
+- Add 'default-username' to the global config too.
+- Add 'default-username' seat property.
+- Lookup 'login-unknown' first in the seat configuration, then in
+  the global section.
+- Added control for 'greeter-hide-users' configuration parameter.
+  
+* Tue Oct 24 2017 Paul Wolneykien <manowar@altlinux.org> 1.16.7-alt12
+- Support the 'reset' argument of the CHANGE_PASS message. Use
+  "reset-pass-envvar" configuration parameter to set the environment
+  variable or set "PAM_RESET_AUTHTOK=1" by default.
+- Add "in_chauthtok" property.
+- Fix: Clean the 'cancelling' state when the session is complete.
+- Fix: Don\'t disconnect signals on cancel before the session
+  actually ends.
+
+* Thu Oct 19 2017 Paul Wolneykien <manowar@altlinux.org> 1.16.7-alt11
+- Added 'lightdm_greeter_change_pass()' and 'CHANGE_PASS' greeter
+  message.
+
 * Wed Oct 04 2017 Michael Shigorin <mike@altlinux.org> 1.16.7-alt10
 - reverted last change, not needed anymore
 

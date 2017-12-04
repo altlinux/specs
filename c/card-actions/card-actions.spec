@@ -1,6 +1,6 @@
 Name: card-actions
-Version: 1.8
-Release: alt4
+Version: 1.10
+Release: alt7
 
 Summary: Smart card action handler scripts
 License: GPLv3+
@@ -8,11 +8,17 @@ Group: Monitoring
 
 Source0: card-inserted-default
 Source1: card-removed-default
-Source2: card-actions-default
+Source2: card-actions-default.alternatives
+
+Source3: card-inserted-terminate
+Source4: card-removed-terminate
+Source5: card-actions-terminate.alternatives
+
+Source100: card-actions.control
 
 BuildArch: noarch
 
-Requires: pam_pkcs11 >= 0.6.9-alt5
+Requires: pam_pkcs11 >= 0.6.9-alt23
 
 %description
 %summary
@@ -22,11 +28,54 @@ install -pDm755 %SOURCE0 %buildroot%_bindir/card-inserted-default
 install -pDm755 %SOURCE1 %buildroot%_bindir/card-removed-default
 install -pDm644 %SOURCE2 %buildroot%_altdir/card-actions-default
 
+install -pDm755 %SOURCE3 %buildroot%_bindir/card-inserted-terminate
+install -pDm755 %SOURCE4 %buildroot%_bindir/card-removed-terminate
+install -pDm644 %SOURCE5 %buildroot%_altdir/card-actions-terminate
+
+install -pDm755 %SOURCE100 %buildroot%_controldir/card-actions
+
+sed -i -e 's,/usr/bin,%_bindir,g' \
+    %buildroot%_bindir/card-inserted-terminate \
+    %buildroot%_bindir/card-removed-terminate \
+    %buildroot%_controldir/card-actions
+
 %files
-%_bindir/card-*-default
-%_altdir/*-default
+%_bindir/*
+%_altdir/*
+%_controldir/*
 
 %changelog
+* Fri Nov 03 2017 Paul Wolneykien <manowar@altlinux.org> 1.10-alt7
+- Fixed "terminate" profile.
+- Skip card identification on insert in the "terminate" mode.
+
+* Thu Nov 02 2017 Paul Wolneykien <manowar@altlinux.org> 1.10-alt6
+- Add the alternative remove handler that terminates a user
+  session.
+- Add the "card-actions" control to select it.
+
+* Tue Oct 31 2017 Paul Wolneykien <manowar@altlinux.org> 1.10-alt5
+- Fix: Need to query the card in order to have a chance to swith
+  to the existing session.
+
+* Tue Oct 31 2017 Paul Wolneykien <manowar@altlinux.org> 1.10-alt4
+- If a default user name is configured then use it instead of
+  querying the card when the latter is inserted.
+- Use "pam_pkcs11_query_config" to get the default user name when
+  the card is removed.
+
+* Mon Oct 30 2017 Paul Wolneykien <manowar@altlinux.org> 1.10-alt3
+- Fixed state query: catch the error output.
+
+* Thu Oct 26 2017 Paul Wolneykien <manowar@altlinux.org> 1.10-alt2
+- To be improved: explicitly pass 'nobody' to the DM.
+
+* Tue Oct 24 2017 Paul Wolneykien <manowar@altlinux.org> 1.10-alt1
+- Allow to pass username on the command line (card-inserted-default).
+
+* Fri Oct 20 2017 Paul Wolneykien <manowar@altlinux.org> 1.9-alt1
+- Reset the greeter when a token is removed.
+
 * Tue Aug 08 2017 Paul Wolneykien <manowar@altlinux.org> 1.8-alt4
 - Rebuild with separated "dm-tool" package.
 

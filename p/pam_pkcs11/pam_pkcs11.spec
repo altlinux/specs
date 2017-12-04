@@ -2,7 +2,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.9
-Release: alt17
+Release: alt30
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -10,36 +10,25 @@ License: LGPL
 Url: https://github.com/OpenSC/pam_pkcs11
 
 Source: %name-%version.tar
-Patch: %name-%version-alt-build.patch
-Patch1: %name-%version-docs.patch
-Patch2: %name-%version-option-global_ca.patch
-Patch3: %name-%version-ru.po.patch
-Patch4: %name-%version-buffer.patch
-Patch5: %name-%version-ask-pin-later.patch
-Patch6: %name-%version-option-ask_pin.patch
-Patch7: pam_pkcs11-0.6.9-eventmgr-init-from-token.patch
-Patch8: pam_pkcs11-0.6.9-ignore-no-card.patch
-Patch9: pam_pkcs11-0.6.9-config-control.patch
-Patch10: pam_pkcs11-0.6.9-systemd.patch
-Patch11: pam_pkcs11-0.6.9-gost-support.patch
-Patch12: pam_pkcs11-0.6.9-oid-mapper.patch
-Patch13: pam_pkcs11-0.6.9-oid-mapper-profiles.patch
-Patch14: pam_pkcs11-0.6.9-setpin.patch
-Patch15: pam_pkcs11-0.6.9-setpin-config.patch
-Patch16: pam_pkcs11-0.6.9-sslconf.patch
-Patch17: pam_pkcs11-0.6.9-blacklist.patch
+Patch: %name-%version-alt-cumulative.patch
+Patch1: pam_pkcs11-0.6.9-build-with-LibreSSL.patch
+Patch2: pam_pkcs11-0.6.9-elvis-gost-support.patch
 
 %add_findreq_skiplist %_sysconfdir/pam.d/*
 Requires: pam-config PAM(pam_mkhomedir.so) PAM(pam_pkcs11.so) PAM(pam_succeed_if.so)
 Requires: pcsc-lite pcsc-lite-ccid
 
-BuildRequires: docbook-style-xsl flex libldap-devel libpam-devel libpcsclite-devel libssl-devel xsltproc
+BuildRequires: docbook-style-xsl flex libldap-devel libpam-devel libpcsclite-devel LibreSSL-devel xsltproc
 BuildRequires: doxygen
 BuildRequires: docbook-dtds
+
+BuildRequires: libopensc-devel
 
 BuildPreReq: gcc-c++
 # SCARD_READERSTATE_A will change to SCARD_READERSTATE afterwards:
 BuildPreReq: libpcsclite-devel >= 1.7.4
+
+BuildRequires: libpwquality-devel
 
 %description
 This Linux-PAM login module allows a X.509 certificate based user login.
@@ -77,26 +66,19 @@ as a separate package.
 
 - ldap_mapper.so: LDAP-based mapper module.
 
+%package isbc
+Summary: ISBC (ESMART) low-level modules for pam_pkcs11
+Group: System/Base
+Requires: %name = %version-%release
+
+%description isbc
+This package contains ISBC (ESMART) low-level modules for pam_pkcs11
+
 %prep
 %setup
 %patch -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
+%patch2 -p2
 
 # fixup configs
 sed -i -e '
@@ -115,6 +97,7 @@ sed -i -e '
 	--enable-debug \
 	--with-ldap \
 	--with-confdir=%_sysconfdir/security/%name \
+    --with-pwquality \
 	#
 %make_build
 cd doc
@@ -134,8 +117,9 @@ rm %buildroot/%_lib/*/*.la
 %find_lang %name
 
 %post
-[ -e %_sysconfdir/security/%name/openssl.cnf ] || \
-    cp -a %_sysconfdir/openssl/openssl.cnf %_sysconfdir/security/%name/
+[ ! -e %_sysconfdir/security/%name/openssl.cnf ] || \
+    mv -v %_sysconfdir/security/%name/openssl.cnf \
+          %_sysconfdir/security/%name/openssl.cnf.rpmold
 
 %files -f %name.lang
 %doc AUTHORS README
@@ -148,12 +132,8 @@ rm %buildroot/%_lib/*/*.la
 %dir %_sysconfdir/security/%name/crls
 %config(noreplace) %_sysconfdir/security/%name/pam_pkcs11.conf
 %config(noreplace) %_sysconfdir/security/%name/pkcs11_eventmgr.conf
-%_bindir/pkcs11_eventmgr
-%_bindir/pklogin_finder
-%_bindir/pkcs11_inspect
-%_bindir/pkcs11_listcerts
-%_bindir/pkcs11_setup
-%_bindir/pkcs11_make_hash_link
+%_bindir/*
+%exclude %_bindir/card_eventmgr
 %dir /%_lib/%name
 /%_lib/%name/openssh_mapper.so
 /%_lib/%name/opensc_mapper.so
@@ -172,14 +152,6 @@ rm %buildroot/%_lib/*/*.la
 %_datadir/%name/mail_mapping.example
 %_datadir/%name/digest_mapping.example
 %_datadir/%name/pkcs11_eventmgr.conf.example
-%dir %_sysconfdir/security/%name/profiles
-%config(noreplace) %_sysconfdir/security/%name/profiles/*
-%dir %_sysconfdir/security/%name/modules.avail
-%config(noreplace) %_sysconfdir/security/%name/modules.avail/*
-%dir %_sysconfdir/security/%name/mapping.profiles
-%config(noreplace) %_sysconfdir/security/%name/mapping.profiles/*
-%_controldir/pam-*
-%_controldir/*event*
 %config(noreplace) %_sysconfdir/pam.d/*
 %_unitdir/*
 
@@ -194,7 +166,115 @@ rm %buildroot/%_lib/*/*.la
 %doc doc/README.ldap_mapper
 /%_lib/%name/ldap_mapper.so
 
+%files isbc
+/%_lib/%name/ll_isbc.so
+
 %changelog
+* Fri Nov 24 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt30
+- Move the control scripts and base profiles to the "pkcs11-profiles"
+  package.
+
+* Thu Nov 16 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt29
+- Don\'t show a welcome message when is asked by a screensaver.
+
+* Tue Nov 14 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt28
+- 'isbc': Set debug level on ititialization.
+- Call 'pin_status()' of a low-level module to check if PIN has
+  expired.
+- Add some Cryptoki API to pkcs11_lib module.
+- Split the lowlevel API onto public and private parts.
+- Implement 'pin_status()' for the 'isbc' low-level module.
+- Fixed 'force_pin_change' configuration option.
+- Fixed ISBC journal timestamp.
+- Fixed cleanup of the old password.
+
+* Mon Nov 13 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt27
+- Fix: Report password quality check error only when the return
+  code is less than zero.
+
+* Fri Nov 10 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt26
+- Output the modified info message for a user PIN change session
+  when the card is locked.
+
+* Thu Nov 09 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt25
+- Check and warn about PIN attempts in PIN change mode.
+- Reset the PIN only if card is locked, by default.
+
+* Wed Nov 08 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt24
+- Use libpwquality to check the PIN (optional, configurable).
+- Add option to automatically set PIN init mode for `pam_chauthtok`
+  if there were incorrect login attempts (false by default).
+- Implement ISBC (ESMART) APDUs to query the number of rest PIN attempts.
+- Fixed `init_pin` flag.
+
+* Tue Oct 31 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt23
+- Added "pam_pkcs11_query_config" helper tool.
+- Fresh/Fix the GOST support patch.
+
+* Tue Oct 24 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt22
+- Support "PAM_RESET_AUTHTOK" PAM env. var. known to be set by
+  LightDM.
+- Fix: Answer with INFO message and PAM_IGNORE code from
+  "pam_sm_chauthtok()" when no card present and we are not restricted
+  to card-only login.
+- Added info messages for user PIN change and reset.
+- Fixed double free() in refresh_slots().
+
+* Mon Oct 23 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt21
+- Automatically enable InitPIN mode for pam_sm_chauthtok() when
+  user PIN is locked.
+
+* Mon Oct 23 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt20
+- Remove the redudant "pam-pkcs11-gost" control.
+- Build with LibreSSL.
+
+* Mon Oct 23 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt19
+- Distinguish between welcome and welcome PIN locked.
+- Distinguish between wrong PIN and wrong PIN locked.
+- Fix: Exit quietly only if "card_only" is false.
+- Fix: Do not return error when there are no slots.
+- Return ignore or error when PKCS#11 module loading fails based
+  on config.
+- Use "default_username" configuration parameter to set the username
+  in PAM stack when it is unset.
+- Reorganize the sources: use cumulative patch.
+- Fail if no token found only when it is strictly required.
+- Fix/improve: Don\'t require the user to be loged-in to change the PIN.
+- Allow to configure the prompts on the per-service basis. Parse prompts
+  from the root conf, then "prompts default {}", then "prompts <service> {}".
+- Use C_InitPIN() to setup PIN in SO login mode.
+- Support PAM_CHANGE_EXPIRED_AUTHTOK flag in pam_sm_chauthtok().
+- Implement forced PIN change after login when it is expired.
+- Clean the password values more accurate.
+- Configurable messages for PIN checks, warnings and wrong PIN
+  attempts.
+- Add plural / singular pin low messages.
+- Fixed unloading of low-level modules and the PAM handle in
+  report_pkcs11_lib_error().
+- Add "pin_count_low" configuration option.
+- User PIN checks (low, final, locked).
+- Implement a describer returning an OID (optionally mapped).
+- Fix: Welcome the user only once.
+- Add support for user descriptions to the mapper interface and
+  the manager.
+- Skip empty prompts. Output a user welcome prompt with a description
+  (as returned by a mapper).
+- Make the 'quiet' config parameter affect syslog ouput only.
+- Output only the last certificate verification error.
+- Add support for \-escapes in the config file including \n\r\t\".
+- Fix: Return PAM_AUTH_ERR for login error.
+- Introduce new "verbose" config parameter.
+- Get rid of duplicate "no token" error.
+- Output "no token" errors only when wait-for-card mode is off.
+- Fix: Make wait-for-card work when the user is not logged in.
+- Add the default prompt message profile.
+- Off the debug mode by default.
+- Fix: Read the configuration before output any prompts.
+
+* Tue Oct 03 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt18
+- Add 'pam-pkcs11-messages' control.
+- Make PAM prompts configurable.
+
 * Wed Sep 06 2017 Paul Wolneykien <manowar@altlinux.org> 0.6.9-alt17
 - Skip soft slots by default. Also mask slots by manufacturer
   and description.
