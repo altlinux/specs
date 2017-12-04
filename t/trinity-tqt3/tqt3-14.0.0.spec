@@ -1,16 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildPreReq: rpm-build-suse-compat
-BuildPreReq: libXt-devel libfreetds-devel libjpeg-devel libpng-devel zlib-devel
-# END SourceDeps(oneline)
-BuildPreReq: libsqlite3-devel libunixODBC-devel libuuid-devel postgresql9.6-devel
-BuildPreReq: libXmu-devel libXrandr-devel libaudio-devel libcups-devel libmng-devel libmysqlclient-devel libpng-devel
-BuildPreReq: firebird-devel gcc-c++ glib2-devel glibc-devel-static libGLU-devel libXcursor-devel libXft-devel libXi-devel libXinerama-devel
-%define with_ibase 1
-BuildRequires: rpm-macros-trinity
-%define suse_version 1320
-BuildRequires:	rpm-macros-suse-compat
-BuildRequires:	rpm-macros-cmake
-#
 # spec file for package tqt3 (version R14)
 #
 # Copyright (c) 2014 Trinity Desktop Environment
@@ -27,6 +14,29 @@ BuildRequires:	rpm-macros-cmake
 # Please submit bugfixes or comments via http://www.trinitydesktop.org/
 #
 
+# BEGIN SourceDeps(oneline):
+BuildPreReq: rpm-build-suse-compat
+BuildPreReq: libXt-devel libfreetds-devel libjpeg-devel libpng-devel zlib-devel
+# END SourceDeps(oneline)
+BuildPreReq: libsqlite3-devel libunixODBC-devel libuuid-devel postgresql-devel
+BuildPreReq: libXmu-devel libXrandr-devel libaudio-devel libcups-devel libmng-devel libmysqlclient-devel libpng-devel
+BuildPreReq: firebird-devel gcc-c++ glib2-devel glibc-devel-static libGLU-devel libXcursor-devel libXft-devel libXi-devel libXinerama-devel
+
+%define with_ibase 1
+
+# Automatically added by buildreq on Sun Dec 03 2017
+# optimized out: fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libXt-devel libfreetype-devel libjpeg-devel libpq-devel libstdc++-devel libunixODBC-devel-compat pkg-config python-base python-modules xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: firebird-devel gcc-c++ glibc-devel-static libGLU-devel libXcursor-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXrandr-devel libaudio-devel libcups-devel libmng-devel libmysqlclient-devel libpng-devel libsqlite3-devel libunixODBC-devel libuuid-devel postgresql-devel
+
+Epoch: 2
+
+BuildRequires: rpm-macros-trinity
+%define suse_version 1320
+BuildRequires:	rpm-macros-suse-compat
+BuildRequires:	rpm-macros-cmake
+
+
+
 # TDE variables
 %if "%{?tde_version}" == ""
 %define tde_version 14.0.4
@@ -35,8 +45,8 @@ BuildRequires:	rpm-macros-cmake
 %define libtqt3 libtqt3
 
 Name: trinity-tqt3
-Version: 3.5.0
-Release: alt5_14.0.4_1
+Version: 3.5.14.0.4_1
+Release: alt1
 Summary: TQt GUI Library, Version 3
 Group: Graphical desktop/Other
 Url: http://www.trinitydesktop.org/
@@ -53,6 +63,8 @@ Source11: tqassistant.desktop
 Source12: tqdesigner.desktop
 Source13: tqlinguist.desktop
 Source14: tqtconfig.desktop
+
+
 
 # BuildRequires: glibc-devel
 # BuildRequires: gcc-c++
@@ -198,8 +210,7 @@ Source14: tqtconfig.desktop
 # GCC visibility stuff
 %define EXTRA_CFLAGS -fvisibility=hidden -fvisibility-inlines-hidden
 Source44: import.info
-Provides: libtqt3  = %version-%release
-Provides: %libtqt3-mt = %version-%release
+
 # FC
 Patch33: qt-3.0.5-nodebug.patch
 Patch34: qt-3.3.8d-xim.patch
@@ -268,6 +279,7 @@ Summary: TQt GUI Library (Threaded runtime version), Version 3
 Group: Graphical desktop/Other
 Provides: libtqt3-mt = %version-%release
 Provides: trinity-tqt3 = %version-%release
+Provides: tqt3 = %version-%release
 
 # Requires: coreutils
 # Requires: fontconfig >= 2.0
@@ -310,8 +322,10 @@ Provides: libtqt3-mt-devel = %version-%release
 Summary: TQt development files (Threaded)
 Group: Development/C++
 Provides: trinity-tqt3-devel = %version-%release
-Provides: libtqt3-mt-devel = %version-%release
-# Requires:	%libtqt3-mt = %version-%release
+Provides: tqt3-devel = %version-%release
+Provides: tqt3-mt-devel = %version-%release
+
+Requires:  tqt3 = %version-%release
 
 # Requires: glibc-devel
 # Requires: fontconfig-devel
@@ -353,6 +367,7 @@ before you send a bugreport.
 %_libdir/libtqui.so
 %_libdir/libtqui.prl
 %_libdir/pkgconfig/tqt-mt.pc
+
 %dir %_includedir/tqt3
 %_includedir/tqt3/ntqgl.h
 %_includedir/tqt3/ntqglcolormap.h
@@ -959,7 +974,9 @@ developer includes with his application.
 %package -n libtqt3-apps-devel
 Summary: TQt3 Developer applications development compilations  files
 Group: Development/C++
-# Requires:	%libtqt3-mt-devel = %version-%release
+Requires:    %libtqt3-devel = %version-%release
+Conflicts:   %libtqt3-devel < %version-%release
+
 
 %description -n libtqt3-apps-devel
 This package is intended librery for compilation  developers who want to develop applications
@@ -1483,6 +1500,12 @@ install -D -m644 "tqt3-examples.tar.gz" "%{?buildroot}%_docdir/tqt3-examples/tqt
 chmod 644 "%{?buildroot}%_datadir/tqt3/mkspecs/"*/*
 
 %changelog
+* Mon Dec 04 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:3.5.14.0.4_1-alt1
+- Correction number Version
+
+* Sun Dec 03 2017 Hihin Ruslan <ruslandh@altlinux.ru> 3.5.0-alt6_14.0.4_1
+- Fix Buildreq
+
 * Fri May 12 2017 Hihin Ruslan <ruslandh@altlinux.ru> 3.5.0-alt5_14.0.4_1
 - Rebuild version
 
