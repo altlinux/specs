@@ -1,10 +1,12 @@
 %define major 0.92
 %def_without gnome_vfs
+%def_without dbus
+%add_optflags -fpermissive -std=gnu++11
 
 %define pre %nil
 Name: inkscape
 Version: %major.2
-Release: alt1
+Release: alt2
 
 Summary: A Vector Drawing Application
 
@@ -22,12 +24,8 @@ Source: %name-%version.tar
 #Source1: %name-%version.ru.po
 Source2: tutorial-%version.tar
 
-Patch: %name.patch
-
-#fedora patches
-#Patch10:         inkscape-0.48.2-types.patch
-#Patch114:        0001-update-to-new-libwpg.patch
-#Patch20: 	 inkscape-alt-ScopedPtr.patch
+Patch: %name-dia.patch
+Patch1: inkscape-poppler-0.58.patch
 
 # Typical environment for GTK program
 Requires(post,postun): desktop-file-utils
@@ -41,12 +39,12 @@ BuildPreReq: desktop-file-utils
 # optimized out: fontconfig fontconfig-devel glib2-devel gnome-vfs libGConf-devel libX11-devel libatk-devel libatkmm-devel libavahi-glib libcairo-devel libcairomm-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglibmm-devel libgpg-error libgtk+2-devel libp11-kit libpango-devel libpangomm-devel libpng-devel libpoppler-devel libpoppler8-glib libsigc++2-devel libstdc++-devel  libxml2-devel perl-Encode perl-XML-Parser pkg-config python-base python-devel python-module-distribute python-module-peak python-module-zope python-modules xorg-xproto-devel zlib-devel
 BuildRequires: boost-devel-headers gcc-c++  intltool libImageMagick-devel libaspell-devel libgc-devel libgsl-devel libgtkmm2-devel libgtkspell-devel liblcms2-devel libpoppler-glib-devel libpopt-devel  libxslt-devel perl-devel python-module-paste zlib-devel
 %{?_with_gnome_vfs:BuildRequires: gnome-vfs-devel}
+%{?_with_dbus: BuildRequires: libdbus-devel}
 BuildRequires: libwpg-devel librevenge-devel libcdr-devel libvisio-devel
 BuildRequires: libpng-devel libexif-devel libjpeg-devel
 BuildRequires: libpoppler-devel libpotrace-devel
 BuildRequires: gcc-common libgomp6-devel
 BuildRequires: perl-podlators
-
 Requires: icc-profiles
 
 # For extensions
@@ -78,15 +76,11 @@ inkview is standalone viewer for Inkscape files (SVG)
 %prep
 %setup -n %name-%version%pre
 %patch
+%patch1 -p1
 
-# fedora patches
-#patch10 -p1 -b .types
-#patch114 -p1 -b .libwpg
-#patch20 -p2
 #cat %%SOURCE1 >po/ru.po
 
 %build
-%add_optflags -fpermissive -std=gnu++11
 %autoreconf
 subst "s|.*\(checkPYTHON_LIBS\)=.*|\1=-lpython%_python_version|" ./configure
 %configure \
@@ -134,6 +128,9 @@ rm -rf %buildroot%_mandir/zh_TW/
 %_man1dir/inkview*
 
 %changelog
+* Mon Dec 04 2017 Vitaly Lipatov <lav@altlinux.ru> 0.92.2-alt2
+- fix build with libpoppler >= 0.58
+
 * Sat Oct 07 2017 Vitaly Lipatov <lav@altlinux.ru> 0.92.2-alt1
 - new version 0.92.2 (with rpmrb script)
 
