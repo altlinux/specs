@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-BuildRequires: unzip
 %define oname asyncio_mongo
 
 %def_without python2
@@ -7,37 +6,34 @@ BuildRequires: unzip
 
 Name: python-module-%oname
 Version: 0.2.4
-Release: alt1
+Release: alt2
 Summary: Asynchronous Python 3.3+ driver for MongoDB
 License: ASLv2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/asyncio_mongo/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://bitbucket.org/mrdon/asyncio-mongo.git
-Source0: https://pypi.python.org/packages/55/d5/b49346cb293f03d26dfe4074e11d0b6cd59cf346b6ed6d4fe5dd7ee55be1/%{oname}-%{version}.zip
+Source: %oname-%version.zip
 
+BuildRequires: unzip
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-asyncio python-module-nose
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python2.7(asyncio) python-module-nose
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-asyncio python3-module-nose
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3(asyncio) python3-module-nose
 %endif
 
 %py_provides %oname
 %py_requires asyncio
 
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: elfutils python-base python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python3-devel python3-module-asyncio python3-module-nose python3-module-setuptools-tests rpm-build-python3
-
 %description
 An asynchronous Python driver for the Mongo database, based on Python's
 asyncio. This project is based on TxMongo.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Asynchronous Python 3.3+ driver for MongoDB
 Group: Development/Python3
@@ -47,6 +43,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 An asynchronous Python driver for the Mongo database, based on Python's
 asyncio. This project is based on TxMongo.
+%endif
 
 %prep
 %setup -q -n %{oname}-%{version}
@@ -89,17 +86,18 @@ popd
 
 %if_with python2
 %files
-%doc PKG-INFO
 %python_sitelibdir/*
 %endif
 
 %if_with python3
 %files -n python3-module-%oname
-%doc PKG-INFO
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Mon Dec 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.4-alt2
+- Updated build dependencies.
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.4-alt1
 - automated PyPI update
 
