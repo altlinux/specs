@@ -1,5 +1,5 @@
 Name: sakura
-Version: 3.4.0
+Version: 3.5.0
 Release: alt2
 
 Summary: Terminal emulator application
@@ -57,6 +57,9 @@ rm -f %buildroot/%_docdir/%name/INSTALL
 %_man1dir/*
 
 %changelog
+* Mon Dec 04 2017 Konstantin Artyushkin <akv@altlinux.org> 3.5.0-alt2
+- new version
+
 * Fri Sep 08 2017 Konstantin Artyushkin <akv@altlinux.org> 3.4.0-alt2
 - new version
 
