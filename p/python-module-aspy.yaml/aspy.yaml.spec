@@ -1,30 +1,27 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20150111.1.1
 %define mname aspy
 %define oname %mname.yaml
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.1
-#Release: alt1.git20150111.1
+Version: 1.0.0
+Release: alt1
 Summary: Some extensions to pyyaml
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/aspy.yaml/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/asottile/aspy.yaml.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-yaml python-module-coverage
-BuildPreReq: python-module-flake8 pylint
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-yaml python-module-coverage
+BuildRequires: python-module-flake8 pylint
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-yaml python3-module-coverage
-BuildPreReq: python3-module-flake8 pylint-py3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-yaml python3-module-coverage
+BuildRequires: python3-module-flake8 pylint-py3
 %endif
 
 %py_provides %oname
@@ -34,6 +31,7 @@ Requires: python-module-%mname = %EVR
 %description
 A few extensions to pyyaml.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Some extensions to pyyaml
 Group: Development/Python3
@@ -43,6 +41,7 @@ Requires: python3-module-%mname = %EVR
 
 %description -n python3-module-%oname
 A few extensions to pyyaml.
+%endif
 
 %package -n python-module-%mname
 Summary: Core files of %mname
@@ -52,6 +51,7 @@ Group: Development/Python
 %description -n python-module-%mname
 Core files of %mname.
 
+%if_with python3
 %package -n python3-module-%mname
 Summary: Core files of %mname
 Group: Development/Python3
@@ -59,6 +59,7 @@ Group: Development/Python3
 
 %description -n python3-module-%mname
 Core files of %mname.
+%endif
 
 %prep
 %setup
@@ -102,7 +103,7 @@ py.test -vv
 %if_with python3
 pushd ../python3
 python3 setup.py test
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
@@ -110,6 +111,7 @@ popd
 %doc *.md
 %python_sitelibdir/%mname/*
 %python_sitelibdir/*.egg-info
+%python_sitelibdir/*-nspkg.pth
 %exclude %python_sitelibdir/%mname/__init__.py*
 
 %files -n python-module-%mname
@@ -121,17 +123,21 @@ popd
 %doc *.md
 %python3_sitelibdir/%mname/*
 %python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*-nspkg.pth
 %exclude %python3_sitelibdir/%mname/__init__.py
-%exclude %python3_sitelibdir/%mname/__pycache__/__init__.*
+%exclude %python3_sitelibdir/%mname/__pycache__
 
 %files -n python3-module-%mname
 %dir %python3_sitelibdir/%mname
 %dir %python3_sitelibdir/%mname/__pycache__
 %python3_sitelibdir/%mname/__init__.py
-%python3_sitelibdir/%mname/__pycache__/__init__.*
+%python3_sitelibdir/%mname/__pycache__
 %endif
 
 %changelog
+* Mon Dec 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt1
+- Updated to upstream version 1.0.0.
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.1-alt1.git20150111.1.1
 - (AUTO) subst_x86_64.
 
