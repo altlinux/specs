@@ -5,33 +5,28 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.git20140129.1.1
+Release: alt2.git20140129
 Summary: AMP client and server library for asyncio
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://github.com/jonathanslenders/asyncio-amp
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/jonathanslenders/asyncio-amp.git
 Source: %name-%version.tar
-BuildArch: noarch
 
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-asyncio
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python2.7(asyncio)
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-asyncio
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3(asyncio)
 %endif
 
 %py_provides %oname
 %py_requires asyncio
-
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python3-module-asyncio python3-module-setuptools-tests rpm-build-python3
 
 %description
 AMP client and server library for asyncio.
@@ -40,6 +35,7 @@ AMP, short for asynchronous messaging protocol, is a protocol for
 asynchronous interprocess communication. You can call exposed functions
 in another process and receive the answer when it's ready.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: AMP client and server library for asyncio
 Group: Development/Python3
@@ -52,6 +48,7 @@ AMP client and server library for asyncio.
 AMP, short for asynchronous messaging protocol, is a protocol for
 asynchronous interprocess communication. You can call exposed functions
 in another process and receive the answer when it's ready.
+%endif
 
 %prep
 %setup
@@ -84,12 +81,11 @@ popd
 
 %check
 %if_with python2
-python setup.py test
 python tests.py -v
 %endif
+
 %if_with python3
 pushd ../python3
-python3 setup.py test
 python3 tests.py -v
 popd
 %endif
@@ -107,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1-alt2.git20140129
+- Updated build dependencies.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt1.git20140129.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
