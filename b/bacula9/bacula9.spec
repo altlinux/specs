@@ -10,8 +10,8 @@
 %endif
 
 Name: bacula9
-Version: 9.0.3
-Release: alt5%ubt
+Version: 9.0.6
+Release: alt1%ubt
 
 License: AGPLv3
 Summary: Network based backup program
@@ -555,8 +555,9 @@ ln -s $(relative %_cachedir/baculum/API-Config %_datadir/baculum/htdocs/protecte
 ln -s $(relative %_cachedir/baculum/Web-Config %_datadir/baculum/htdocs/protected/Web/Config) %buildroot%_datadir/baculum/htdocs/protected/Web/Config
 mv %buildroot%_sysconfdir/baculum/Config-api-apache %buildroot%_sysconfdir/baculum/Config-api-apache2
 mv %buildroot%_sysconfdir/baculum/Config-web-apache %buildroot%_sysconfdir/baculum/Config-web-apache2
-#ln -s $(relative %_sysconfdir/baculum/Config-api-apache2/baculum.users %_datadir/baculum/htdocs/protected/API/Config/baculum.users) %buildroot%_datadir/baculum/htdocs/protected/API/Config/baculum.users
-#ln -s $(relative %_sysconfdir/baculum/Config-web-apache2/baculum.users %_datadir/baculum/htdocs/protected/Web/Config/baculum.users) %buildroot%_datadir/baculum/htdocs/protected/Web/Config/baculum.users
+# Not using relative sylinks here since final location of symlink file is both at /usr/share/baculum/htdocs/... and at /var/cache/baculum/... at the same time.
+ln -s %_sysconfdir/baculum/Config-api-apache2/baculum.users %buildroot%_datadir/baculum/htdocs/protected/API/Config/baculum.users
+ln -s %_sysconfdir/baculum/Config-web-apache2/baculum.users %buildroot%_datadir/baculum/htdocs/protected/Web/Config/baculum.users
 
 # Logs support
 mkdir -p %buildroot%_logdir/httpd2/baculum-api
@@ -810,13 +811,20 @@ fi
 %attr(755,apache2,apache2) %_cachedir/baculum/
 %attr(755,apache2,apache2) %_cachedir/baculum/assets
 %attr(755,apache2,apache2) %_cachedir/baculum/runtime
-%attr(755,apache2,apache2) %_cachedir/baculum/API-Config
-%attr(755,apache2,apache2) %_cachedir/baculum/Web-Config
+%dir %attr(755,apache2,apache2) %_cachedir/baculum/API-Config
+%dir %attr(755,apache2,apache2) %_cachedir/baculum/Web-Config
+%config(noreplace) %_cachedir/baculum/API-Config/baculum.users
+%config(noreplace) %_cachedir/baculum/Web-Config/baculum.users
 %attr(755,apache2,apache2) %_logdir/httpd2/baculum-api
 %attr(755,apache2,apache2) %_logdir/httpd2/baculum-web
 %endif
 
 %changelog
+* Mon Dec 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.6-alt1%ubt
+- Updated to upstream version 9.0.6.
+- Reverted case change of VersionId for web-interface.
+- Added symlink to default baculum.users configurations.
+
 * Fri Nov 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 9.0.3-alt5%ubt
 - Added conflicts to bacula7 packages.
 
