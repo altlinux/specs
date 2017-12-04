@@ -12,7 +12,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        56.0
+Version:        57.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -75,6 +75,7 @@ BuildRequires: gstreamer%gst_version-devel gst-plugins%gst_version-devel
 BuildRequires: libopus-devel
 BuildRequires: libpulseaudio-devel
 #BuildRequires: libicu-devel
+BuildRequires: libdbus-devel libdbus-c++-devel
 
 # Python requires
 BuildRequires: /dev/shm
@@ -183,14 +184,16 @@ MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fno-delete-null-pointer-checks -fno-inline-small-
 
 # Mozilla builds with -Wall with exception of a few warnings which show up
 # everywhere in the code; so, don't override that.
-#
+MOZ_OPT_FLAGS=$(echo $MOZ_OPT_FLAGS | sed -e 's/-Wall//')
+
 # Disable C++ exceptions since Mozilla code is not exception-safe
-#
-MOZ_OPT_FLAGS=$(echo $MOZ_OPT_FLAGS | \
-                sed \
-                    -e 's/-Wall//' \
-                    -e 's/-fexceptions/-fno-exceptions/g'
-)
+MOZ_OPT_FLAGS=$(echo $MOZ_OPT_FLAGS | sed -e 's/-fexceptions/-fno-exceptions/g')
+
+# If MOZ_DEBUG_FLAGS is empty, firefox's build will default it to "-g" which
+# overrides the -g0 from line above and breaks building on s390
+# (OOM when linking, rhbz#1238225)
+MOZ_OPT_FLAGS="$(echo $MOZ_OPT_FLAGS | sed -e 's/-g/-g0/')"
+export MOZ_DEBUG_FLAGS=" "
 
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
@@ -201,6 +204,10 @@ export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export srcdir="$PWD"
 export SHELL=/bin/sh
 export RUST_BACKTRACE=1
+export BUILD_VERBOSE_LOG=1
+
+#export CC="clang"
+#export CXX="clang++"
 
 # On x86 architectures, Mozilla can build up to 4 jobs at once in parallel,
 # however builds tend to fail on other arches when building in parallel.
@@ -208,11 +215,11 @@ MOZ_SMP_FLAGS=-j1
 %ifarch %{ix86} x86_64
 [ "${NPROCS:-0}" -ge 2 ] && MOZ_SMP_FLAGS=-j2
 [ "${NPROCS:-0}" -ge 4 ] && MOZ_SMP_FLAGS=-j4
+[ "${NPROCS:-0}" -ge 8 ] && MOZ_SMP_FLAGS=-j8
 %endif
 
 make -f client.mk \
 	MAKENSISU= \
-	STRIP="/bin/true" \
 	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
 	mozappdir=%buildroot/%firefox_prefix \
 	libdir=%_libdir \
@@ -319,6 +326,28 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Mon Dec 04 2017 Alexey Gladkov <legion@altlinux.ru> 57.0.1-alt1
+- New release (57.0.1).
+
+* Tue Nov 21 2017 Alexey Gladkov <legion@altlinux.ru> 57.0-alt1
+- New release (57.0).
+- Fixed:
+  + CVE-2017-7828: Use-after-free of PressShell while restyling layout
+  + CVE-2017-7830: Cross-origin URL information leak through Resource Timing API
+  + CVE-2017-7831: Information disclosure of exposed properties on JavaScript proxy objects
+  + CVE-2017-7832: Domain spoofing through use of dotless 'i' character followed by accent markers
+  + CVE-2017-7833: Domain spoofing with Arabic and Indic vowel marker characters
+  + CVE-2017-7834: data: URLs opened in new tabs bypass CSP protections
+  + CVE-2017-7835: Mixed content blocking incorrectly applies with redirects
+  + CVE-2017-7836: Pingsender dynamically loads libcurl on Linux and OS X
+  + CVE-2017-7837: SVG loaded as <img> can use meta tags to set cookies
+  + CVE-2017-7838: Failure of individual decoding of labels in international domain names triggers punycode display of entire IDN
+  + CVE-2017-7839: Control characters before javascript: URLs defeats self-XSS prevention mechanism
+  + CVE-2017-7840: Exported bookmarks do not strip script elements from user-supplied tags
+  + CVE-2017-7842: Referrer Policy is not always respected for <link> elements
+  + CVE-2017-7827: Memory safety bugs fixed in Firefox 57
+  + CVE-2017-7826: Memory safety bugs fixed in Firefox 57 and Firefox ESR 52.5
+
 * Sun Oct 08 2017 Alexey Gladkov <legion@altlinux.ru> 56.0-alt1
 - New release (56.0).
 - Fixed:
