@@ -1,6 +1,6 @@
 Name: bro
 Version: 2.3.1
-Release: alt7
+Release: alt8
 
 Summary: A Network Intrusion Detection System and Analysis Framework
 
@@ -24,7 +24,7 @@ Patch3: bro-2.3-pygments-reST-alt.patch
 
 Provides: /var/spool/bro/broctl-config.sh
 
-BuildRequires: rpm-build-intro
+BuildRequires: rpm-macros-intro-conflicts
 
 BuildRequires: cmake
 BuildRequires: libpcap-devel
@@ -293,6 +293,9 @@ fi
 %doc build/doc/sphinx_output/html
 
 %changelog
+* Tue Dec 05 2017 Vitaly Lipatov <lav@altlinux.ru> 2.3.1-alt8
+- replace rpm-build-intro with rpm-macros-intro-conflicts
+
 * Sun Oct 22 2017 Vitaly Lipatov <lav@altlinux.ru> 2.3.1-alt7
 - add BuildRequires: rpm-build-intro (ALT bug 34025)
 
