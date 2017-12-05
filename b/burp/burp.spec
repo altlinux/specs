@@ -1,16 +1,17 @@
 %define soname      1
 
 Name: burp
-Version: 2.0.44
+Version: 2.1.24
 Release: alt1
 
 Summary: Backup and Restore
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sourceforge.net/burp/burp-%version.tar
+# Source-url: https://github.com/grke/burp/archive/%version.tar.gz
+Source: %name-%version.tar
 
-Url: http://burp.grke.net/
+Url: http://burp.grke.org
 Group: File tools
 License: Affero GNU General Public License version 3 (AGPL v3)
 
@@ -19,6 +20,9 @@ License: Affero GNU General Public License version 3 (AGPL v3)
 BuildRequires: gcc-c++ libacl-devel librsync-devel libssl-devel libuthash-devel  zlib-devel
 
 BuildPreReq: libncurses-devel
+
+# %_localstatedir
+BuildRequires: rpm-macros-intro-conflicts
 
 %description
 Burp is a backup and restore program. It uses librsync in order to save on the
@@ -59,9 +63,13 @@ Copy Service) to make snapshots when backing up Windows computers.
 %_sbindir/burp_ca
 %_sbindir/bedup
 %_sbindir/bsigs
+%_sbindir/bsparse
 %_man8dir/*
 
 %changelog
+* Tue Dec 05 2017 Vitaly Lipatov <lav@altlinux.ru> 2.1.24-alt1
+- new version 2.1.24 (with rpmrb script)
+
 * Wed Aug 10 2016 Vitaly Lipatov <lav@altlinux.ru> 2.0.44-alt1
 - initial build for ALT Linux Sisyphus
 
