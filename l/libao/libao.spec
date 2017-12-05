@@ -1,20 +1,24 @@
+%def_enable pulse
+
 Name: libao
 Version: 1.2.2
-Release: alt1
+Release: alt3
 Epoch: 1
+
 Summary: Cross Platform Audio Output Library
 License: GPL
 Group: System/Libraries
+
 Url: http://www.xiph.org/ao/
-
-Provides: %name-alsa = %version-%release
-Obsoletes: %name-alsa < %version-%release
-
 # https://git.xiph.org/libao.git
 Source0: %name-%version.tar
 Patch0: libao-1.0.0-alt-oss.patch
 
-BuildRequires: libalsa-devel libpulseaudio-devel
+BuildRequires: libalsa-devel
+%{?_enable_pulse:BuildRequires: libpulseaudio-devel}
+
+Provides: %name-alsa = %version-%release
+Obsoletes: %name-alsa < %version-%release
 
 %description
 Libao is a cross platform audio output library.
@@ -38,8 +42,9 @@ The %name-devel package contains the header files and documentation
 needed to develop applications with %name
 
 %prep
-%setup -q
-%patch0 -p1
+%setup
+%patch -p1
+sed -i 's,-O20,%optflags_optimization,g' configure*
 
 %build
 %autoreconf
@@ -55,7 +60,7 @@ needed to develop applications with %name
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 mkdir -p %buildroot%_sysconfdir
 cat <<__EOF__ >%buildroot%_sysconfdir/%name.conf
@@ -71,10 +76,10 @@ __EOF__
 %_libdir/ao/plugins-4/libalsa.so
 %_man5dir/*
 
+%if_enabled pulse
 %files pulse
-%dir %_libdir/ao
-%dir %_libdir/ao/plugins-4
 %_libdir/ao/plugins-4/libpulse.so
+%endif
 
 %files devel
 %doc AUTHORS CHANGES TODO doc/*.{html,css,c}
@@ -84,6 +89,15 @@ __EOF__
 %_datadir/aclocal/*
 
 %changelog
+* Fri Dec 01 2017 Michael Shigorin <mike@altlinux.org> 1:1.2.2-alt3
+- generalized optflags fixup (ldv@)
+
+* Fri Dec 01 2017 Michael Shigorin <mike@altlinux.org> 1:1.2.2-alt2
+- introduce pulse knob (on by default)
+- E2K: "-O20" is a bit too much!
+  + see also https://github.com/kripken/emscripten/issues/264
+- minor spec cleanup
+
 * Sun Nov 05 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.2.2-alt1
 - 1.2.2
 - fixed pulse plugin (ALT#33125)
