@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.17
-Release: alt1.dev0.git20150820.2
+Version: 0.19.1
+Release: alt1
 Summary: A set of python modules for machine learning and data mining
 License: BSD
 Group: Development/Python
@@ -13,14 +13,16 @@ Url: https://pypi.python.org/pypi/scikit-learn/
 
 # https://github.com/scikit-learn/scikit-learn.git
 Source: %name-%version.tar
+Patch1: %oname-%version-alt-build.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: gcc-c++ liblapack-devel python-module-numpy-testing python-module-objects.inv python-module-scipy
-BuildRequires: libnumpy-devel python-module-six python-module-joblib
+BuildRequires: libnumpy-devel python-module-six python-module-joblib python-module-Cython python2.7(nose)
+BuildRequires: python2.7(matplotlib) python-module-Pillow xvfb-run
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libnumpy-py3-devel python3-module-numpy-testing python3-module-scipy python3-module-zope python3-module-pytest
-BuildRequires: python3-module-six python3-module-joblib
+BuildRequires: python3-module-six python3-module-joblib python3-module-Cython python3(nose)
 %endif
 
 %py_provides sklearn
@@ -83,6 +85,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 # don't use bundled stuff
 rm -rf sklearn/externals
@@ -132,16 +135,16 @@ popd
 #make -C doc html
 
 %check
-#export PYTHONPATH=%buildroot%python_sitelibdir
+export PYTHONPATH=%buildroot%python_sitelibdir
 rm -fR build
 python setup.py build_ext -i
-py.test -vv
+xvfb-run py.test -vv
 %if_with python3
 pushd ../python3
-#export PYTHONPATH=%buildroot%python3_sitelibdir
+export PYTHONPATH=%buildroot%python3_sitelibdir
 rm -fR build
 python3 setup.py build_ext -i
-py.test-%_python3_version -vv
+xvfb-run py.test3 -vv
 popd
 %endif
 
@@ -158,7 +161,7 @@ popd
 %python_sitelibdir/*/*/*/test*
 
 %files docs
-%doc examples doc 
+%doc examples doc
 
 %if_with python3
 %files -n python3-module-%oname
@@ -177,6 +180,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.19.1-alt1
+- Updated to upstream version 0.19.1.
+
 * Mon Aug 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.17-alt1.dev0.git20150820.2
 - Updated build dependencies.
 
