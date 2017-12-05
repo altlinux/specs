@@ -1,13 +1,16 @@
 Name: gtkglext
 Version: 1.2.0
-Release: alt2.4
+Release: alt3
 
 Summary: An OpenGL extention to GTK2
+
 License: LGPLv2+
 Group: System/Libraries
 Url: http://gtkglext.sourceforge.net/
+
 Packager: Vitaly Lipatov <lav@altlinux.ru>
-# http://download.sourceforge.net/%name/%name-%version.tar.gz
+
+# Source-url: http://download.sourceforge.net/%name/%name-%version.tar.gz
 Source: %name-%version.tar
 
 Patch0: gtkglext-support-pango.patch
@@ -71,13 +74,14 @@ statically linked against GtkGLExt.
 
 %build
 %autoreconf
-%configure --enable-gtk-doc %{subst_enable static}
+%configure --disable-gtk-doc %{subst_enable static}
 
 %make_build
 #%make_build examples
 
 %install
 %makeinstall_std
+rm -rf %buildroot%_datadir/gtk-doc/html
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -89,7 +93,6 @@ statically linked against GtkGLExt.
 %_aclocaldir/*
 %_pkgconfigdir/*
 %_libdir/%name-1.0/
-%doc %_datadir/gtk-doc/html/*
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -97,6 +100,9 @@ statically linked against GtkGLExt.
 %endif
 
 %changelog
+* Wed Dec 06 2017 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt3
+- disable build doc
+
 * Wed Oct 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt2.4
 - Fixed build
 
