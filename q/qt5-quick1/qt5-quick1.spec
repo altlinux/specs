@@ -3,7 +3,7 @@
 %def_disable qtwebkit
 
 Name: qt5-quick1
-Version: 5.9.2
+Version: 5.9.3
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -12,9 +12,9 @@ License: LGPLv2 / GPLv3
 Url: http://qt.io/
 
 Source: %qt_module-opensource-src-%version.tar
-Patch1: alt-reverse-qrandomgenerator.patch
 
 BuildRequires(pre): rpm-build-ubt
+BuildRequires: rpm-build-qml
 BuildRequires: gcc-c++ glibc-devel
 BuildRequires: qt5-base-devel qt5-script-devel qt5-declarative-devel qt5-xmlpatterns-devel qt5-tools qt5-tools-devel
 %if_enabled qtwebkit
@@ -72,7 +72,6 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -qn %qt_module-opensource-src-%version
-%patch1 -p1
 syncqt.pl-qt5 -version %version -private
 
 # fix version
@@ -121,6 +120,9 @@ sed -i 's|^MODULE_VERSION[[:space:]]*=.*|MODULE_VERSION = %version|' .qmake.conf
 #%_qt5_docdir/*
 
 %changelog
+* Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
+- new version
+
 * Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
 - new version
 

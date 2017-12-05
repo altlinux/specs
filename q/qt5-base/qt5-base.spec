@@ -22,10 +22,10 @@
 %define libname  lib%gname
 %define major  5
 %define minor  9
-%define bugfix 2
+%define bugfix 3
 Name: qt5-base
-Version: 5.9.2
-Release: alt2%ubt
+Version: 5.9.3
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -40,6 +40,7 @@ Patch1: qtbase-opensource-src-5.7.1-QT_VERSION_CHECK.patch
 Patch2: qtbase-opensource-src-5.7.1-moc_macros.patch
 #
 Patch11: QTBUG-35459.patch
+Patch12: QTBUG-64742.patch
 # upstream
 # SuSE
 Patch100: disable-rc4-ciphers-bnc865241.diff
@@ -353,6 +354,7 @@ EGL integration library for the Qt%major toolkit
 %patch2 -p1
 #
 %patch11 -p1 -b .QTBUG
+%patch12 -p1 -b .QTBUG
 %patch100 -p1
 %patch101 -p1
 %patch1000 -p1 -b .ibase
@@ -509,7 +511,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.9.2
+Version: 5.9.3
 __EOF__
 
 # rpm macros
@@ -768,6 +770,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
+- new version
+
 * Mon Oct 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt2%ubt
 - build docs
 
