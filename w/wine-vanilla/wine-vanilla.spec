@@ -2,7 +2,7 @@
 %define mono_version 4.7.1
 
 Name: wine-vanilla
-Version: 2.21
+Version: 2.22
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -416,6 +416,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Sat Nov 25 2017 Vitaly Lipatov <lav@altlinux.ru> 2.22-alt1
+- new version 2.22
+
 * Sat Nov 11 2017 Vitaly Lipatov <lav@altlinux.ru> 2.21-alt1
 - new version 2.21
 
