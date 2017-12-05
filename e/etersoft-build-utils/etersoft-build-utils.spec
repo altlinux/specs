@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.7.6
+Version: 2.7.7
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,15 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue Dec 05 2017 Vitaly Lipatov <lav@altlinux.ru> 2.7.7-alt1
+- gitask: add get last [task], use it in rpmbs
+- gitask: add get subtask command, use it in rpmbs
+- rpmpub: rewrite check for target default, use BUILDFARMDIR from Korinf
+- alt: add c? branch/repo support
+- rpmgs: improve hack for inline macros
+- do not remove temp files when DEBUG is set
+- gitask: add find, show, ls, quota
+
 * Wed Nov 15 2017 Vitaly Lipatov <lav@altlinux.ru> 2.7.6-alt1
 - introduce gitask (aliased as gita)
 - add support for ga/galt in addition to git.alt (ge for git.eter)
