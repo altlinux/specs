@@ -1,8 +1,8 @@
 %def_enable webkit
 
 Name: psi-plus
-Version: 1.2.105
-Release: alt4
+Version: 1.2.109
+Release: alt1
 
 Summary: Psi+ Jabber client
 Summary(ru_RU.UTF-8): Jabber-клиент Psi+
@@ -1070,6 +1070,9 @@ rm -f %buildroot%_datadir/%name/plugins/*.pri
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Tue Dec 05 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.109-alt1
+- Version 1.2.109
+
 * Fri Nov 17 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.105-alt4
 - fix e2k build
 - fix unowned files
