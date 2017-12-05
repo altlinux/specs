@@ -1,6 +1,6 @@
 Name: iscan-free
 Version: 2.20.0
-Release: alt4
+Release: alt5
 
 Summary: Free Image Scan Version with epkowa Driver for Epson Scanners
 
@@ -44,6 +44,9 @@ Conflicts: iscan
 # manually removed: dpkg, gcc-fortran
 # Automatically added by buildreq on Fri Apr 01 2011
 BuildRequires: gcc-c++ libgtk+2-devel libjpeg-devel libltdl7-devel libpng-devel libsane-devel libtiff-devel libusb-compat-devel
+
+# %_localstatedir
+BuildRequires: rpm-macros-intro-conflicts
 
 %description
 This version of the Image Scan for Linux software contains only free
@@ -174,6 +177,9 @@ rm -f %buildroot%_datadir/iscan/fix-udev-rules
 
 
 %changelog
+* Tue Dec 05 2017 Vitaly Lipatov <lav@altlinux.ru> 2.20.0-alt5
+- fix /var/lib/lib/iscan (add rpm-macros-intro-conflicts)
+
 * Fri Jul 01 2016 Vitaly Lipatov <lav@altlinux.ru> 2.20.0-alt4
 - drop dpkg require
 
