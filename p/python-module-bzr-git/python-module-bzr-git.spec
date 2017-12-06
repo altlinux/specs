@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 Name: python-module-bzr-git
 Version: 0.6.12
-Release: alt2
+Release: alt3.bzr20150806
 
 %setup_python_module bzr-git
 
@@ -17,7 +17,7 @@ Source: %modulename-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires(Pre): rpm-build-licenses
-Provides: bzr-git
+Provides: bzr-git = %version
 
 %description
 Using Bazaar with Git.
@@ -38,12 +38,12 @@ GIT SHA1.
 
 This module is built for python %_python_version
 
-%package -n git-remote-bzr
+%package -n bzr-git-remote
 Summary: Remote helper for git to work with bzr repositories
 Group: Development/Other
 Requires: %name = %version-%release
 
-%description -n git-remote-bzr
+%description -n bzr-git-remote
 This command provides support for using bzr repositories as Git
 remotes, through the bzr-git plugin. At the moment it supports cloning
 from, fetching from and pushing into Bazaar repositories. Fetch support
@@ -75,20 +75,25 @@ install -dm0755 %buildroot%_man1dir
 install -m0644 git-remote-bzr.1 %buildroot%_man1dir
 
 %files
+%_bindir/bzr-receive-pack
+%_bindir/bzr-upload-pack
 %python_sitelibdir/bzrlib/plugins/git
 %exclude %python_sitelibdir/bzrlib/plugins/git/tests
 %python_sitelibdir/*.egg-info
 %doc HACKING INSTALL NEWS README TODO notes/*
 
-%files -n git-remote-bzr
-%_bindir/*
-%_man1dir/*
+%files -n bzr-git-remote
+%_bindir/git-remote-bzr
+%_man1dir/git-remote-bzr.1*
 
 %files -n python-module-bzr-git-tests
 %dir %python_sitelibdir/bzrlib/plugins/git
 %python_sitelibdir/bzrlib/plugins/git/tests
 
 %changelog
+* Wed Dec 06 2017 Anatoly Kitaykin <cetus@altlinux.org> 0.6.12-alt3.bzr20150806
+- Rename subpackage git-remote-bzr to bzr-git-remote
+
 * Thu Dec 01 2016 Anatoly Kitaykin <cetus@altlinux.org> 0.6.12-alt2
 - Update to current repository version
 
@@ -97,5 +102,3 @@ install -m0644 git-remote-bzr.1 %buildroot%_man1dir
 
 * Wed Oct 17 2012 Anatoly Kitaykin <cetus@altlinux.org> 0.6.9-alt1
 - initial build
-
-
