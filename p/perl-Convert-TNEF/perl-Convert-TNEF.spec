@@ -2,12 +2,12 @@
 
 Name: perl-%module
 Version: 0.18
-Release: alt1
+Release: alt2
 Summary: %module (module for perl)
 
 License: GPL or Artistic
 Group: Development/Perl
-Url: http://www.cpan.org/modules/by-module/Convert/
+Url: %CPAN %module
 
 BuildArch: noarch
 Source: http://www.cpan.org/authors/id/D/DO/DOUGW/Convert-TNEF-%{version}.tar.gz
@@ -33,6 +33,9 @@ attachment, you may want to use this module.
 %perl_vendor_privlib/Convert*
 
 %changelog
+* Wed Dec 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2
+- fixed url
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
 - automated CPAN update
 
