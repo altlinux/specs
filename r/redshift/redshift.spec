@@ -6,7 +6,7 @@
 
 Name: redshift
 Version: 1.11
-Release: alt2.1
+Release: alt3
 
 Summary: Redshift adjusts the color temperature of your screen
 Summary(ru_RU.UTF-8): Redshift изменяет температуру цвета вашего экрана для снижения утомляемости глаз
@@ -21,6 +21,7 @@ Patch: %name-%version-%release.patch
 Patch1: %name-geoclue-provider.patch
 
 Requires: geoclue2
+Requires: typelib(Gtk) = 3.0
 
 # use python3
 AutoReqProv: nopython
@@ -90,6 +91,9 @@ Redshift изменяет температуру цвета экрана ваш�
 %doc DESIGN NEWS* README* redshift.conf.sample
 
 %changelog
+* Thu Dec 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1.11-alt3
+- explicitly required typelib(Gtk) = 3.0 (ALT #34289)
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.11-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
