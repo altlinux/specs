@@ -1,5 +1,5 @@
 Name: shotcut
-Version: 17.11
+Version: 17.12
 Release: alt1
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платфоорменный видеоредактор
@@ -105,6 +105,9 @@ done
 %_liconsdir/%name.png
 
 %changelog
+* Wed Dec 06 2017 Cronbuild Service <cronbuild@altlinux.org> 17.12-alt1
+- new version (17.12) with rpmgs script
+
 * Tue Nov 07 2017 Cronbuild Service <cronbuild@altlinux.org> 17.11-alt1
 - repocop cronbuild 20171107. At your service.
 
