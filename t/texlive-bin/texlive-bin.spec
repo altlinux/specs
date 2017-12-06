@@ -1,6 +1,6 @@
 Name: texlive-bin
 Version: 2008.0
-Release: alt0.15.6
+Release: alt0.15.7
 
 Summary: Essential binaries
 License: Distributable
@@ -17,6 +17,8 @@ Source6: tlmgr
 Patch1: texlive-source-%version-%release.patch
 Patch2: texlive-source-2008.0-alt-mubyte_cswrite.patch
 Patch3: texlive-bin-2008-alt-perl522.patch
+Patch4: %name-2008-alt-parallel-build.patch
+Patch5: %name-2008-alt-gcc6.patch
 Source7: texlive-bin-texmf-dist-2008.0-alt-perl522.patch
 
 # Automatically added by buildreq on Mon Sep 22 2008
@@ -157,11 +159,17 @@ http://scripts.sil.org/xetex.
 %prep
 %setup -c -T -a2 -a3
 sed -e 's,@TEXMFSYSVAR@,%_cachedir/texmf,g' %SOURCE6 > alt-linux/tlmgr
+%ifarch e2k
+# just like with libzio
+sed -i 's,makecontext,makecontext_e2k,' `find -name lcoco.c`
+%endif
 
 cd source
 %patch1 -p1
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
+%patch5 -p0
 
 sed -i  -e 's,^TEXMFSYSCONFIG =.*,TEXMFSYSCONFIG = %_sysconfdir/texmf,g' \
 	-e 's,^TEXMFSYSVAR =.*,TEXMFSYSVAR = %_cachedir/texmf,g' \
@@ -177,6 +185,11 @@ find -type f -print0 |
 
 %build
 cd source
+%ifarch e2k
+# lcc 1.21: avoid that -std=gnu++11/-std=gnu11 kludges from rpm-build alt100.96.E2K.4
+export CXXFLAGS="%optflags"
+export CFLAGS="%optflags"
+%endif
 %configure \
 	--enable-shared \
 	--without-lcdf-typetools --without-dvipng --without-dvipdfmx \
@@ -666,6 +679,16 @@ ln -s %_sysconfdir/texmf/web2c/texmf.cnf %buildroot%_datadir/texmf/web2c/texmf.c
 %files -n texlive-xetex -f alt-linux/texlive-xetex.files
 
 %changelog
+* Tue Dec 05 2017 Andrew Savchenko <bircoph@altlinux.org> 2008.0-alt0.15.7
+- Fix parallel build.
+- Fix hbf2gf linking error: undefined reference to `read_row'.
+
+* Sun Nov 12 2017 Michael Shigorin <mike@altlinux.org> 2008.0-alt0.15.6.2
+- E2K: avoid -std=gnu++11
+
+* Fri Jan 27 2017 Michael Shigorin <mike@altlinux.org> 2008.0-alt0.15.6.1
+- E2K: use makecontext_e2k()
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 2008.0-alt0.15.6
 - bugfixes for perl 5.22
 
