@@ -1,22 +1,20 @@
 %define module_dir XML
-%define real_name  %module_dir-Entities
+%define module  XML-Entities
 
 
-Name: perl-XML-Entities
+Name: perl-%module
 Version: 1.0002
-Release: alt1
+Release: alt2
 
 Packager: Pavel Zilke <zidex at altlinux dot org>
 
 Summary: XML::Entities - Decode strings with XML entities
 License: Perl style license
 Group: Development/Perl
-URL: http://cpan.org/modules/by-module/%module_dir
+URL: http://cpan.org/modules/by-module/%module
 
 BuildArch: noarch
 Source: http://www.cpan.org/authors/id/S/SI/SIXTEASE/XML-Entities-%{version}.tar.gz
-
-AutoReqProv: perl, yes
 
 # Automatically added by buildreq on Thu Nov 26 2009
 BuildRequires: libnss-mdns perl-devel perl-libwww
@@ -32,7 +30,7 @@ decode( $entity_set, $string, ... )
 numify( $entity_set, $string, ... )
     
 %prep
-%setup -n %real_name
+%setup -n %module
 
 %build
 %__rm -rf LibXML
@@ -46,6 +44,9 @@ numify( $entity_set, $string, ... )
 %perl_vendor_privlib/%module_dir/*
 
 %changelog
+* Wed Dec 06 2017 Igor Vlasenko <viy@altlinux.ru> 1.0002-alt2
+- fixed broken URL
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.0002-alt1
 - automated CPAN update
 
