@@ -36,7 +36,7 @@ BuildRequires: libvorbis-devel
 #define wesdesktopsuffix %nil
 
 Name: wesnoth%wessuffix
-Version: 1.13.8
+Version: 1.13.10
 Release: alt1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
@@ -44,13 +44,14 @@ Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия
 License: %gpl2plus
 Url: http://www.%name.org
 Source0: wesnoth-%version.tar
-Patch: wesnoth-1.13.8-boost1.64.patch
+Patch0: wesnoth-1.13.8-sdl2.02.patch
+Patch1: wesnoth-1.13.8-sdl2.02-alt-hack.patch
 
 Requires: %name-data = %version-%release
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: ImageMagick-tools asciidoc boost-devel desktop-file-utils fribidi gcc-c++ hd2u imake libICE-devel libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_net-devel libSDL2_ttf-devel libfreetype-devel libfribidi-devel libpango-devel libpng-devel po4a subversion xorg-cf-files xsltproc liblua5-devel libpng-devel cmake boost-program_options-devel boost-filesystem-devel boost-locale-devel libdbus-devel boost-asio-devel libpixman-devel libXdmcp-devel libreadline-devel
+BuildRequires: ImageMagick-tools asciidoc boost-devel desktop-file-utils fribidi gcc-c++ hd2u imake libICE-devel libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_net-devel libSDL2_ttf-devel libfreetype-devel libfribidi-devel libpango-devel libpng-devel po4a subversion xorg-cf-files xsltproc liblua5-devel libpng-devel cmake boost-program_options-devel boost-filesystem-devel boost-locale-devel libdbus-devel boost-asio-devel libpixman-devel libXdmcp-devel libreadline-devel openssl-devel
 %if_with build_using_scons
 BuildRequires: scons
 %endif
@@ -220,6 +221,7 @@ This package contains python interface to Battle for Wesnoth.
 %prep
 %setup -n wesnoth-%version
 %patch -p1
+%patch1 -p1
 
 %build
 %define _optlevel 3
@@ -708,6 +710,9 @@ rm -rf %buildroot%_bindir/wesnoth_addon_manager \
 %endif
 
 %changelog
+* Wed Dec 06 2017 Igor Vlasenko <viy@altlinux.ru> 1.13.10-alt1
+- 1.14 Beta 2
+
 * Thu Oct 05 2017 Igor Vlasenko <viy@altlinux.ru> 1.13.8-alt1
 - 1.14 Beta 1
 
