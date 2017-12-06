@@ -1,6 +1,6 @@
 Name: sslh
 Version: 1.18
-Release: alt1
+Release: alt2
 
 Summary: A ssl/ssh multiplexer
 
@@ -37,6 +37,7 @@ Author: Yves Rutschle
 %makeinstall PREFIX=%buildroot%prefix
 install -D -m 644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -D -m 755 %SOURCE1 %buildroot%_initdir/%name
+install -D -m 644 scripts/systemd.sslh.service %buildroot%_unitdir/%name.service
 
 %post
 %post_service %name
@@ -48,10 +49,14 @@ install -D -m 755 %SOURCE1 %buildroot%_initdir/%name
 %doc README.md
 %_man8dir/sslh.8.*
 %_sbindir/sslh
+%_unitdir/%name.service
 %config(noreplace) %_initdir/sslh
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Wed Dec 06 2017 Vitaly Lipatov <lav@altlinux.ru> 1.18-alt2
+- pack .service file
+
 * Fri Apr 22 2016 Vitaly Lipatov <lav@altlinux.ru> 1.18-alt1
 - new version (1.18) with rpmgs script
 
