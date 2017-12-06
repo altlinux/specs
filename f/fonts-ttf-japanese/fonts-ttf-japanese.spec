@@ -1,46 +1,60 @@
-%define fname japanese
-%define _fontsdir %_datadir/fonts/ttf/%fname
+Epoch: 1
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%define src_version 20121001
+%define src_name    umeplus-fonts
 
-Name: fonts-ttf-japanese
-Version: 1.0
-Release: alt10
+Summary:	Japanese TrueType fonts
+Name:		fonts-ttf-japanese
+Version:	0.%{src_version}
+Release:	alt1_6
+License:	Distributable
+URL:		http://www.geocities.jp/ep3797/modified_fonts_01.html
+Group:		System/Fonts/True type
+Source0:	http://downloads.sourceforge.net/mdk-ut/%{src_name}-%{src_version}.tar.lzma
+Source3:	cidinst.japanese
+Source4:	cidunin.japanese
 
-Summary: Free Japanese TrueType fonts
-Summary (ru_RU.UTF-8): Японские TrueType шрифты
-License: Distributable
-Group: System/Fonts/True type
-Url: http://www.on.cs.keio.ac.jp/~yasu/linux/fonts/
-
-Source: xtt-fonts_0.19990222-3.tar.bz2
-
-Requires: fonts-ttf-sazanami-gothic
-Requires: fonts-ttf-sazanami-mincho
-
-PreReq: fontconfig >= 2.4.2
-Obsoletes: japanese-fonts-ttf
-Provides: japanese-fonts-ttf = %version
-
-BuildArch: noarch
-BuildRequires: rpm-build-fonts
+BuildArch:	noarch
+BuildRequires:	fontconfig
+BuildRequires:	ttmkfdir
+Obsoletes:	xtt-fonts
+Provides:	xtt-fonts
+Source44: import.info
 
 %description
-This Package provides free Japanese TrueType fonts.
+This Package provides Free Japanese TrueType fonts (umeplus-gothic, 
+umeplus-p-gothic)
 
 %description -l ru_RU.UTF-8
 Пакет предоставляет японские TrueType шрифты. 
 
 %prep
-%setup -n xtt-fonts-0.19990222
+%setup -q -n %{src_name}-%{src_version}
 
 %install
-#%%ttf_fonts_install %fname
-mkdir -p %buildroot
+mkdir -p %buildroot/%{_datadir}/fonts/TTF/japanese
+install -m 644 *.ttf %buildroot/%{_datadir}/fonts/TTF/japanese
+
+mkdir -p %{buildroot}%_sysconfdir/X11/fontpath.d/
+ln -s ../../..%_datadir/fonts/TTF/japanese \
+    %{buildroot}%_sysconfdir/X11/fontpath.d/ttf-japanese:pri=50
 
 %files
-#%_sysconfdir/X11/fontpath.d/*
-#%_fontsdir
+%doc ChangeLog README
+%doc docs-*/
+
+%dir %_datadir/fonts/TTF/japanese/
+%_datadir/fonts/TTF/japanese/*.ttf
+%_sysconfdir/X11/fontpath.d/ttf-japanese:pri=50
+
+
+
 
 %changelog
+* Wed Dec 06 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.20121001-alt1_6
+- added umeplus fonts from mageia
+
 * Wed Aug 24 2011 Igor Vlasenko <viy@altlinux.ru> 1.0-alt10
 - dropped original Wadalab font kit as Sazanami fonts succeed it.
 - made a virtual compat package
