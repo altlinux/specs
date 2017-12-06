@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
-Release: alt1.1
+Release: alt1
 epoch:1 
 %define kernel_base_version	4.9
-%define kernel_sublevel .66
+%define kernel_sublevel .67
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -145,6 +145,22 @@ for allowing direct access to graphics hardware in a safe and efficient
 manner.  It includes changes to the X server, to several client libraries,
 and to the kernel.  The first major use for the DRI is to create fast
 OpenGL implementations.
+
+These are modules for your ALT Linux system
+
+%package -n kernel-modules-drm-ancient-%flavour
+Summary: The Direct Rendering modules for ancient cards
+Group: System/Kernel and hardware
+Provides:  kernel-modules-drm-ancient-%kversion-%flavour-%krelease = %version-%release
+Conflicts: kernel-modules-drm-ancient-%kversion-%flavour-%krelease < %version-%release
+Conflicts: kernel-modules-drm-ancient-%kversion-%flavour-%krelease > %version-%release
+Prereq: coreutils
+Prereq: %name = %epoch:%version-%release
+Requires(postun): %name = %epoch:%version-%release
+
+%description -n kernel-modules-drm-ancient-%flavour
+The Direct Rendering Modules for ancient cards: mgag200.ko,
+sis.ko, tdfx.ko, savage.ko, r128.ko, mga.ko, via.ko
 
 These are modules for your ALT Linux system
 
@@ -557,6 +573,22 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/gpu/drm
 %exclude %modules_dir/kernel/drivers/gpu/drm/nouveau
 %exclude %modules_dir/kernel/drivers/gpu/drm/radeon
+%exclude %modules_dir/kernel/drivers/gpu/drm/mgag200
+%exclude %modules_dir/kernel/drivers/gpu/drm/sis
+%exclude %modules_dir/kernel/drivers/gpu/drm/savage
+%exclude %modules_dir/kernel/drivers/gpu/drm/tdfx
+%exclude %modules_dir/kernel/drivers/gpu/drm/r128
+%exclude %modules_dir/kernel/drivers/gpu/drm/mga
+%exclude %modules_dir/kernel/drivers/gpu/drm/via
+
+%files -n kernel-modules-drm-ancient-%flavour
+%modules_dir/kernel/drivers/gpu/drm/mgag200
+%modules_dir/kernel/drivers/gpu/drm/sis
+%modules_dir/kernel/drivers/gpu/drm/savage
+%modules_dir/kernel/drivers/gpu/drm/tdfx
+%modules_dir/kernel/drivers/gpu/drm/r128
+%modules_dir/kernel/drivers/gpu/drm/mga
+%modules_dir/kernel/drivers/gpu/drm/via
 
 %files -n kernel-modules-drm-nouveau-%flavour
 %modules_dir/kernel/drivers/gpu/drm/nouveau
@@ -572,6 +604,7 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 
 %files -n kernel-modules-v4l-%flavour
 %modules_dir/kernel/drivers/media/
+%dir %modules_dir/kernel/drivers/staging/media
 %modules_dir/kernel/drivers/staging/media/lirc/
 
 %files -n kernel-modules-staging-%flavour
@@ -579,6 +612,13 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed Dec 06 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.9.67-alt1
+- v4.9.67   (Fixes: CVE-2017-8824)
+
+* Tue Dec 05 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.9.66-alt1.1.1
+- separate drm modules for old cards into subpackage
+- package modules_dir/kernel/drivers/staging/media
+
 * Tue Dec 05 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.9.66-alt1.1
 - temporary fix for HugeDirtyCowPOC (fixes CVE-2017-1000405)
 
