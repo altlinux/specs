@@ -17,7 +17,7 @@ but some have also been improved by the project.
 
 Name:		fonts-ttf-vlgothic
 Version:	20141206
-Release:	alt1_8
+Release:	alt2_8
 Summary:	Japanese TrueType font
 
 License:	mplus and BSD
@@ -32,7 +32,7 @@ Patch1:		%{oldname}-p-1331050.patch
 
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
-BuildRequires:	python-module-fonttools
+BuildRequires:	fonttools
 
 Obsoletes:	%{oldname}-common < 20121230-2
 Provides:	%{oldname}-common = %{version}-%{release}
@@ -149,6 +149,9 @@ fi
 %{_datadir}/appdata/%{fontname}-proportional.metainfo.xml
 
 %changelog
+* Wed Dec 06 2017 Igor Vlasenko <viy@altlinux.ru> 20141206-alt2_8
+- fixed build
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 20141206-alt1_8
 - update to new release by fcimport
 
