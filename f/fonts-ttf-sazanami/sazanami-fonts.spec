@@ -12,12 +12,12 @@ They also contains some embedded Japanese bitmap fonts.
 
 Name:		fonts-ttf-sazanami
 Version:	0.20040629
-Release:	alt8_28
+Release:	alt9_28
 BuildArch:	noarch
 BuildRequires:	ttmkfdir >= 3.0.6
-BuildRequires:	bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils fonts-bitmap-misc
+BuildRequires:	mkfontdir fonts-bitmap-misc
 BuildRequires:	fontpackages-devel
-BuildRequires:	python-module-fonttools
+BuildRequires:	fonttools
 URL:		http://efont.sourceforge.jp/
 
 Source0:	http://globalbase.dl.sourceforge.jp/efont/10087/sazanami-20040629.tar.bz2
@@ -50,7 +50,7 @@ This package consists of files used by other %{oldname} packages.
 Summary:	Sazanami Gothic Japanese TrueType font
 License:	BSD
 Group:		System/Fonts/True type
-Conflicts:	fonts-bitmap-japanese <= 0.20061016-9.fc8
+Conflicts:	fonts-japanese <= 0.20061016-9.fc8
 Provides:	ttfonts-ja = 1.2-37, %{fontname}-fonts-gothic = %{version}-%{release}
 Obsoletes:	ttfonts-ja < 1.2-37, %{fontname}-fonts-gothic < 0.20040629-6.20061016
 Requires:	%{name}-common = %{version}-%{release}
@@ -64,7 +64,7 @@ This package contains Japanese TrueType font for Gothic type face.
 Summary:	Sazanami Mincho Japanese TrueType font
 License:	BSD
 Group:		System/Fonts/True type
-Conflicts:	fonts-bitmap-japanese <= 0.20061016-9.fc8
+Conflicts:	fonts-japanese <= 0.20061016-9.fc8
 Provides:	ttfonts-ja = 1.2-37, %{fontname}-fonts-mincho = %{version}-%{release}
 Obsoletes:	ttfonts-ja < 1.2-37, %{fontname}-fonts-mincho < 0.20040629-6.20061016
 Requires:	%{name}-common = %{version}-%{release}
@@ -188,6 +188,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Wed Dec 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.20040629-alt9_28
+- fixed build
+
 * Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 0.20040629-alt8_28
 - added appdata
 
