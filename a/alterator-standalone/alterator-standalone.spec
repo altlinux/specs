@@ -1,10 +1,13 @@
 Name: alterator-standalone
 Version: 7.2
-Release: alt1
+Release: alt2
 
 Summary: System Management center
 License: GPL
 Group: System/Configuration/Other
+
+# The UI modules aren't currently compiled
+BuildArch: noarch
 
 Requires: alterator >= 5.0
 Requires: alterator-l10n
@@ -66,7 +69,8 @@ install -Dpm644 acc.desktop %buildroot/%_desktopdir/acc.desktop
 
 %files
 %_sbindir/*
-%_alterator_libdir/ui/*
+# The UI modules aren't currently compiled
+#%_alterator_libdir/ui/*
 %_alterator_datadir/ui/*
 %_desktopdir/*
 %_man8dir/*
@@ -75,6 +79,9 @@ install -Dpm644 acc.desktop %buildroot/%_desktopdir/acc.desktop
 %_bindir/*
 
 %changelog
+* Thu Dec 07 2017 Paul Wolneykien <manowar@altlinux.org> 7.2-alt2
+- Fix: The UI modules aren\'t currently compiled.
+
 * Tue Apr 11 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.2-alt1
 - rebuilt with guile22
 
