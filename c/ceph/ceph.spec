@@ -13,8 +13,8 @@
 %def_with system_rocksdb
 
 Name: ceph
-Version: 12.2.1
-Release: alt2%ubt
+Version: 12.2.2
+Release: alt1%ubt
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -94,8 +94,7 @@ Group: System/Base
 Requires: ceph-common = %EVR
 Requires: ntp-server
 Requires: python-module-ceph_detect_init = %EVR
-Requires: python-module-ceph_disk = %EVR
-Requires: python-module-ceph_volume = %EVR
+%filter_from_requires /^\/usr\/sbin\/ceph-disk/d
 %description base
 Base is the package that includes all the files shared amongst ceph servers
 
@@ -176,7 +175,7 @@ of cluster membership, configuration, and state.
 Summary: Ceph Manager Daemon
 Group: System/Base
 Requires: ceph-base = %EVR
-%add_python_req_skip ceph_state
+%py_provides ceph_module
 Requires: python-module-mako
 
 %description mgr
@@ -246,6 +245,8 @@ Requires: ceph-base = %EVR
 # for sgdisk, used by ceph-disk
 Requires: gdisk
 Requires: parted
+Requires: python-module-ceph_disk = %EVR
+Requires: python-module-ceph_volume = %EVR
 %description osd
 ceph-osd is the object storage daemon for the Ceph distributed file
 system.  It is responsible for storing objects on a local file system
@@ -1055,6 +1056,7 @@ fi
 %_mandir/man8/ceph-clsinfo.8*
 %_mandir/man8/ceph-disk.8*
 %_mandir/man8/ceph-osd.8*
+%_mandir/man8/ceph-bluestore-tool.8*
 %_unitdir/ceph-osd@.service
 %_unitdir/ceph-osd.target
 %_unitdir/ceph-disk@.service
@@ -1235,6 +1237,9 @@ fi
 %endif
 
 %changelog
+* Thu Dec 07 2017 Alexey Shabalin <shaba@altlinux.ru> 12.2.2-alt1%ubt
+- 12.2.2
+
 * Tue Oct 03 2017 Alexey Shabalin <shaba@altlinux.ru> 12.2.1-alt2%ubt
 - backport influx plugin for mgr from upstream master
 - update requires for fix run mgr

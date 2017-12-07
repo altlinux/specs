@@ -7,8 +7,8 @@
 %def_with zstd
 
 Name: rocksdb
-Version: 5.7.4
-Release: alt1
+Version: 5.7.5
+Release: alt1%ubt
 Summary: A Persistent Key-Value Store for Flash and RAM Storage
 Group: Databases
 License: BSD
@@ -16,6 +16,7 @@ Url: https://github.com/facebook/rocksdb.git
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++
 #BuildRequires: libgtest-devel  cmake
 %{?_with_jemalloc:BuildRequires: libjemalloc-devel}
@@ -105,6 +106,9 @@ export PORTABLE="1"
 %_libdir/*.a
 
 %changelog
+* Thu Dec 07 2017 Alexey Shabalin <shaba@altlinux.ru> 5.7.5-alt1%ubt
+- 5.7.5
+
 * Mon Sep 25 2017 Alexey Shabalin <shaba@altlinux.ru> 5.7.4-alt1
 - 5.7.4
 
