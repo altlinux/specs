@@ -168,7 +168,7 @@
 
 Name: pve-%rname
 Version: 2.9.1
-Release: alt1
+Release: alt4
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -221,19 +221,31 @@ Patch34: 0025-qemu-img-dd-add-osize-and-read-from-to-stdin-stdout.patch
 Patch35: 0026-backup-modify-job-api.patch
 Patch36: 0027-backup-introduce-vma-archive-format.patch
 Patch37: 0028-adding-old-vma-files.patch
-Patch38: 0001-Revert-target-i386-disable-LINT0-after-reset.patch
-Patch39: 0002-virtio-serial-fix-segfault-on-disconnect.patch
-Patch40: 0003-megasas-always-store-SCSIRequest-into-MegasasCmd.patch
-Patch41: 0004-slirp-check-len-against-dhcp-options-array-end.patch
-Patch42: 0005-IDE-Do-not-flush-empty-CDROM-drives.patch
-Patch43: 0006-bitmap-add-bitmap_copy_and_clear_atomic.patch
-Patch44: 0007-memory-add-support-getting-and-using-a-dirty-bitmap-.patch
-Patch45: 0008-vga-add-vga_scanline_invalidated-helper.patch
-Patch46: 0009-vga-make-display-updates-thread-safe.patch
-Patch47: 0010-vga-fix-display-update-region-calculation.patch
-Patch48: 0011-vga-fix-display-update-region-calculation-split-scre.patch
-Patch49: 0012-vga-stop-passing-pointers-to-vga_draw_line-functions.patch
-Patch50: 0013-multiboot-validate-multiboot-header-address-values.patch
+Patch38: 0029-backup-fix-race-in-backup-stop-command.patch
+Patch39: 0001-Revert-target-i386-disable-LINT0-after-reset.patch
+Patch40: 0002-virtio-serial-fix-segfault-on-disconnect.patch
+Patch41: 0003-megasas-always-store-SCSIRequest-into-MegasasCmd.patch
+Patch42: 0004-slirp-check-len-against-dhcp-options-array-end.patch
+Patch43: 0005-IDE-Do-not-flush-empty-CDROM-drives.patch
+Patch44: 0006-bitmap-add-bitmap_copy_and_clear_atomic.patch
+Patch45: 0007-memory-add-support-getting-and-using-a-dirty-bitmap-.patch
+Patch46: 0008-vga-add-vga_scanline_invalidated-helper.patch
+Patch47: 0009-vga-make-display-updates-thread-safe.patch
+Patch48: 0010-vga-fix-display-update-region-calculation.patch
+Patch49: 0011-vga-fix-display-update-region-calculation-split-scre.patch
+Patch50: 0012-vga-stop-passing-pointers-to-vga_draw_line-functions.patch
+Patch51: 0013-multiboot-validate-multiboot-header-address-values.patch
+Patch52: 0014-virtio-fix-descriptor-counting-in-virtqueue_pop.patch
+Patch53: 0015-nbd-server-CVE-2017-15119-Reject-options-larger-than.patch
+Patch54: 0016-vga-migration-Update-memory-map-in-post_load.patch
+Patch55: 0017-vga-drop-line_offset-variable.patch
+Patch56: 0018-vga-handle-cirrus-vbe-mode-wraparounds.patch
+Patch57: 0019-vga-add-ram_addr_t-cast.patch
+Patch58: 0020-vga-fix-region-checks-in-wraparound-case.patch
+Patch59: 0021-io-monitor-encoutput-buffer-size-from-websocket-GSou.patch
+Patch60: 0022-9pfs-use-g_malloc0-to-allocate-space-for-xattr.patch
+Patch61: 0023-cirrus-fix-oob-access-in-mode4and5-write-functions.patch
+Patch62: 0024-virtio-check-VirtQueue-Vring-object-is-set.patch
 
 %set_verify_elf_method fhs=relaxed
 
@@ -453,6 +465,18 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch48 -p1
 %patch49 -p1
 %patch50 -p1
+%patch51 -p1
+%patch52 -p1
+%patch53 -p1
+%patch54 -p1
+%patch55 -p1
+%patch56 -p1
+%patch57 -p1
+%patch58 -p1
+%patch59 -p1
+%patch60 -p1
+%patch61 -p1
+%patch62 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -689,6 +713,16 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Thu Dec 07 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt4
+- fixes:
+ + CVE-2017-17381 fix and backup race condition fix
+
+* Mon Sep 25 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt0.M80C.1
+- backport to c8 branch
+
+* Fri Sep 08 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt0.M80P.1
+- backport to p8 branch
+
 * Fri Sep 08 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt1
 - 2.9.1-1
 
