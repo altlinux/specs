@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 %def_with mkpdf
 # our dblatex can't be --quiet
 %def_disable check
 
 Name: gtk-doc
-Version: 1.26.1
-Release: alt0.2
+Version: 1.27
+Release: alt1
 
 Summary: API documentation generation tool for GTK+ and GNOME
 Group: Development/Other
@@ -140,7 +140,7 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/TODO
 %pkgdocdir/*.txt
 %pkgdocdir/examples
-%pkgdocdir/gtkdoc.dot
+#%pkgdocdir/gtkdoc.dot
 
 %if_with mkpdf
 %files mkpdf
@@ -152,6 +152,9 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Thu Dec 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1.27-alt1
+- 1.27
+
 * Tue Oct 31 2017 Yuri N. Sedunov <aris@altlinux.org> 1.26.1-alt0.2
 - updated to GTK_DOC_1_26-23-g8ad03e1 (fixed BGO ##787862, 787768)
 
