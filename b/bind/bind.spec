@@ -1,7 +1,7 @@
 Name: bind
 Version: 9.11.2
 %define src_version 9.11.2
-Release: alt1
+Release: alt2
 
 Summary: ISC BIND - DNS server
 License: BSD-style
@@ -262,7 +262,7 @@ for n in localhost localdomain 127.in-addr.arpa empty; do
 done
 
 install -pm640 addon/rndc.key bind.keys %buildroot%_chrootdir%_sysconfdir/
-ln -snfr %buildroot%_sysconfdir/bind/{named.conf,bind.keys} \
+ln -snfr %buildroot%_sysconfdir/bind/{named.conf,bind.keys,rndc.key} \
 	%buildroot%_sysconfdir/
 
 # Create symlinks for unchrooted bind.
@@ -370,6 +370,7 @@ fi
 %_sysconfdir/bind
 %_sysconfdir/bind.keys
 %_sysconfdir/named.conf
+%_sysconfdir/rndc.key
 %config %_initdir/bind
 %config %_sysconfdir/sysconfig/bind
 %config(noreplace) %_sysconfdir/rndc.conf
@@ -433,6 +434,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Thu Dec 07 2017 Stanislav Levin <slev@altlinux.org> 9.11.2-alt2
+- Fix lack of rndc.key in non-chrooted bind (closes: #34292).
+
 * Fri Nov 03 2017 Stanislav Levin <slev@altlinux.org> 9.11.2-alt1
 - 9.10.6 -> 9.11.2.
 
