@@ -8,7 +8,7 @@
 %def_disable gtk_doc
 
 Name: %_name-base%api_ver
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: An essential set of GStreamer plugins
@@ -16,8 +16,10 @@ Group: System/Libraries
 License: LGPL
 URL: http://gstreamer.freedesktop.org/
 
+
 Requires: lib%_name%api_ver = %version-%release
 Requires: gstreamer%api_ver >= %ver_major
+Conflicts: gst-plugins-bad%api_ver < %ver_major
 
 Provides: gstreamer%api_ver(audio-hardware-sink) = %version
 Provides: gstreamer%api_ver(audio-hardware-source) = %version
@@ -169,6 +171,9 @@ GObject introspection devel data for the GStreamer library
 
 
 %changelog
+* Thu Dec 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.4-alt1
+- 1.12.4
+
 * Tue Sep 19 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.3-alt1
 - 1.12.3
 

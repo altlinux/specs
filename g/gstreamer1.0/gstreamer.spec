@@ -7,8 +7,8 @@
 %def_enable gtk_doc
 
 Name: %_name%api_ver
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: GStreamer streaming media framework runtime
 License: LGPL
@@ -162,6 +162,9 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_man1dir/*
 
 %changelog
+* Thu Dec 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.4-alt1
+- 1.12.4
+
 * Wed Sep 20 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.3-alt2
 - rebuilt --with-ptp-helper-permissions=capabilities (ALT #33909)
 
