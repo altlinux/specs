@@ -3,7 +3,7 @@
 
 Name: pinentry
 Version: 1.0.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: File tools
 Summary: Simple PIN or passphrase entry dialog
@@ -109,11 +109,12 @@ mv %name-%version gui
 
 cp -ar gui gui-qt5
 cp -ar gui tui
+mv gui gui-qt4
 
 install -m0644 %SOURCE1 pinentry-wrapper
 %patch10 -p0
 
-for d in gui-qt5 gui tui ; do
+for d in gui-qt5 gui-qt4 tui ; do
     pushd $d
     %autoreconf
     popd
@@ -129,6 +130,7 @@ pushd gui-qt5
     --disable-pinentry-tty \
     --disable-pinentry-gtk2 \
     --enable-pinentry-qt \
+    --enable-pinentry-qt5 \
     --enable-pinentry-qt-clipboard \
     --disable-pinentry-gnome3 \
     --enable-libsecret \
@@ -137,7 +139,7 @@ pushd gui-qt5
 %make_build
 popd
 
-pushd gui
+pushd gui-qt4
 %configure \
     --disable-rpath \
     --disable-pinentry-curses \
@@ -172,7 +174,7 @@ pushd gui-qt5
 %makeinstall_std
 popd
 mv %buildroot/%_bindir/%name-qt %buildroot/%_bindir/%name-qt5
-pushd gui
+pushd gui-qt4
 %makeinstall_std
 popd
 mv %buildroot/%_bindir/%name-qt %buildroot/%_bindir/%name-qt4
@@ -201,13 +203,16 @@ install -p -m0755 -D pinentry-wrapper %buildroot/%_bindir/pinentry
 %_bindir/%name-gnome3
 
 %files common
-%doc gui/AUTHORS gui/NEWS gui/README gui/THANKS
+%doc gui-qt5/AUTHORS gui-qt5/NEWS gui-qt5/README gui-qt5/THANKS
 %_bindir/%name
 %_bindir/%name-curses
 %_bindir/%name-tty
 %_infodir/*.info*
 
 %changelog
+* Thu Dec 07 2017 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt2%ubt
+- fix detect pinentry-qt5 (ALT#34290)
+
 * Mon Apr 17 2017 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt1%ubt
 - new version
 
