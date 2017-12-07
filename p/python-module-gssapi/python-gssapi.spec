@@ -3,7 +3,7 @@
 %define mname gssapi
 
 Name: python-module-%mname
-Version: 1.2.2
+Version: 1.3.0
 Release: alt1%ubt
 Summary: Python Bindings for GSSAPI (RFC 2743/2744 and extensions)
 
@@ -120,6 +120,9 @@ popd
 %exclude %python3_sitelibdir/%mname/tests/
 
 %changelog
+* Thu Dec 07 2017 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1%ubt
+- 1.2.2 -> 1.3.0
+
 * Thu Nov 16 2017 Stanislav Levin <slev@altlinux.org> 1.2.2-alt1%ubt
 - 1.2.0 -> 1.2.2
 - Build Python3 package
