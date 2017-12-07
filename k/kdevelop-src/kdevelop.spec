@@ -1,5 +1,5 @@
 Version: 4.7.3
-Release: alt1.git
+Release: alt2.git
 Serial: 3
 
 %define _unpackaged_files_terminate_build 1
@@ -564,6 +564,9 @@ done
 %_K4apps/kdevfiletemplates/templates/python_*.tar.bz2
 
 %changelog
+* Thu Dec 07 2017 Oleg Solovyov <mcpain@altlinux.org> 3:4.7.3-alt2.git
+- fix autocompletion crash
+
 * Wed Nov 22 2017 Oleg Solovyov <mcpain@altlinux.org> 3:4.7.3-alt1.git
 - post v4.7.2 release build (rev.934f5f6923034c685fa48d8e17a67bba1a77a8c5)
 
