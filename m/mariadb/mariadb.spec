@@ -21,7 +21,8 @@
 
 %ifarch x86_64
 %def_with tokudb
-%def_with mroonga
+%def_without mroonga
+#def_with mroonga
 %else
 %def_without tokudb
 %def_without mroonga
@@ -34,7 +35,7 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.1.28
+Version: 10.1.29
 Release: alt1%ubt
 
 Summary: A very fast and reliable SQL database engine
@@ -635,6 +636,9 @@ fi
 %if_with tokudb
 %_bindir/tokuftdump
 %_bindir/tokuft_logprint
+%endif
+
+%if_with mroonga
 %_datadir/mysql/mroonga
 %endif
 
@@ -688,7 +692,7 @@ fi
 %if_with common
 %files common
 %_datadir/mysql
-%if_with tokudb
+%if_with mroonga
 %exclude %_datadir/mysql/mroonga
 %endif
 %endif
@@ -787,6 +791,13 @@ fi
 %endif
 
 %changelog
+* Wed Dec 06 2017 Alexey Shabalin <shaba@altlinux.ru> 10.1.29-alt1%ubt
+- 10.1.29
+- Fixes for the following security vulnerabilities:
+  + CVE-2017-10378
+  + CVE-2017-10268
+  + MDEV-13819
+
 * Thu Nov 02 2017 Alexey Shabalin <shaba@altlinux.ru> 10.1.28-alt1%ubt
 - 10.1.28
 
