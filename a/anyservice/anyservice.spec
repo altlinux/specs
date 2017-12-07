@@ -1,5 +1,5 @@
 Name: anyservice
-Version: 1.0
+Version: 1.2
 Release: alt1
 
 Summary: Anyservice - scripts for making systemd like service from any programs
@@ -45,6 +45,15 @@ cp %name.sh %buildroot/%_bindir/%name
 %dir %_logdir/%name/
 
 %changelog
+* Fri Dec 08 2017 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt1
+- export environment variables like systemd does
+- mask functions used from /etc/init.d/functions
+
+* Wed Dec 06 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt1
+- drop SERVNAME before prestartd
+- precreate pid file and set owner
+- redhat: drop tee and fix status
+
 * Mon Nov 27 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - add RHEL/CentOS support
 - add statusd command
