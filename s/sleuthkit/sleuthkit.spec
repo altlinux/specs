@@ -1,6 +1,6 @@
 Name: sleuthkit
 Version: 4.4.2
-Release: alt1
+Release: alt2
 
 Summary: The Sleuth Kit
 
@@ -17,7 +17,7 @@ Patch: sleuthkit-unbundle.diff
 
 # Automatically added by buildreq on Sun Aug 04 2013
 # optimized out: bouncycastle bouncycastle-mail cppunit ecj gcc-java gnu-config libgcj4.7-jar libstdc++-devel python3-base zlib-devel
-BuildRequires: bouncycastle-tsp cppunit-devel gcc-c++ glibc-devel libaff-devel libewf-devel gcc-java
+BuildRequires: cppunit-devel gcc-c++ glibc-devel libaff-devel libewf-devel gcc-java
 
 %description
 The Sleuth Kit (previously known as TASK) is a collection of UNIX-based command
@@ -147,6 +147,9 @@ install -m755 mac-robber %buildroot%_bindir/
 %_includedir/tsk/
 
 %changelog
+* Thu Dec 07 2017 Vitaly Lipatov <lav@altlinux.ru> 4.4.2-alt2
+- drop BR:bouncycastle-tsp
+
 * Tue Nov 07 2017 Vitaly Lipatov <lav@altlinux.ru> 4.4.2-alt1
 - new version 4.4.2 (with rpmrb script)
 
