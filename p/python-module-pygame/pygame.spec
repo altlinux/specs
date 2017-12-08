@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 1.9.3
-Release: alt2
+Release: alt3
 
 Summary: A Python module for interfacing with the SDL multimedia library
 Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой SDL
@@ -148,37 +148,19 @@ touch version.py.in
 # remove due unliked dependences on MacOS modules
 rm -f lib/macosx.py lib/mac_scrap.py
 
-cat > Makefile <<@@@
-all: py2 py3
-
-py2:
-	%python_build_debug
-
-py3:
-	%python3_build_debug
-
-py2-docs:
-	python -m sphinx -j %__nprocs -b html -d build/.doctrees2 -D headers_dest=src/doc -D headers_mkdirs=0 docs/reST build/%_python_version
-
-py3-docs:
-	python3 -m sphinx -j %__nprocs -b html -d build/.doctrees3 -D headers_dest=src/doc -D headers_mkdirs=0 docs/reST build/%_python3_version
-
-@@@
-
 %build
 export LOCALBASE=%prefix
 python config.py
 #sed -i 's|\(lpthread\)|\1 -lm|g' Setup
 %add_optflags -fno-strict-aliasing
 
+%python_build_debug
 %if_with python3
-	%make_build
+	%python3_build_debug
 	2to3 -w -n -j %__nprocs build/lib*%_python3_version
-	make py2-docs
-	make py3-docs
-%else
-	%make_build py2
-	make py2-docs
+#	python3 -m sphinx -j %__nprocs -b html -d build/.doctrees3 -D headers_dest=src/doc -D headers_mkdirs=0 docs/reST build/%_python3_version
+#else
+#	python -m sphinx -j %__nprocs -b html -d build/.doctrees2 -D headers_dest=src/doc -D headers_mkdirs=0 docs/reST build/%_python_version
 %endif
 
 %install
@@ -195,7 +177,7 @@ python config.py
 %python_includedir/%oname/
 
 %files doc
-%doc WHATSNEW install.html readme* build/%_python_version/*
+%doc WHATSNEW install.html readme*
 
 %if_with python3
 %files -n python3-module-%oname
@@ -205,10 +187,13 @@ python config.py
 %python3_includedir/%oname
 
 %files -n python3-module-%oname-doc
-%doc WHATSNEW install.html readme* build/%_python3_version/*
+%doc WHATSNEW install.html readme*
 %endif
 
 %changelog
+* Fri Dec 08 2017 Vitaly Lipatov <lav@altlinux.ru> 1.9.3-alt3
+- disable doc build
+
 * Tue Jul 18 2017 Fr. Br. George <george@altlinux.ru> 1.9.3-alt2
 - Fix 2to3 overthinking issue
 
