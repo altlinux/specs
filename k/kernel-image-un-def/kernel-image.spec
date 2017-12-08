@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
-Release: alt1.1
+Release: alt1
 epoch:1 
-%define kernel_base_version	4.13
-%define kernel_sublevel .16
+%define kernel_base_version	4.14
+%define kernel_sublevel .4
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -145,6 +145,22 @@ for allowing direct access to graphics hardware in a safe and efficient
 manner.  It includes changes to the X server, to several client libraries,
 and to the kernel.  The first major use for the DRI is to create fast
 OpenGL implementations.
+
+These are modules for your ALT Linux system
+
+%package -n kernel-modules-drm-ancient-%flavour
+Summary: The Direct Rendering modules for ancient cards
+Group: System/Kernel and hardware
+Provides:  kernel-modules-drm-ancient-%kversion-%flavour-%krelease = %version-%release
+Conflicts: kernel-modules-drm-ancient-%kversion-%flavour-%krelease < %version-%release
+Conflicts: kernel-modules-drm-ancient-%kversion-%flavour-%krelease > %version-%release
+Prereq: coreutils
+Prereq: %name = %epoch:%version-%release
+Requires(postun): %name = %epoch:%version-%release
+
+%description -n kernel-modules-drm-ancient-%flavour
+The Direct Rendering Modules for ancient cards: mgag200.ko,
+sis.ko, tdfx.ko, savage.ko, r128.ko, mga.ko, via.ko
 
 These are modules for your ALT Linux system
 
@@ -375,7 +391,7 @@ install -Dp -m644 arch/%base_arch/boot/bzImage \
 install -Dp -m644 vmlinux %buildroot/boot/vmlinux-$KernelVer
 install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 
-make modules_install INSTALL_MOD_PATH=%buildroot INSTALL_FW_PATH=%buildroot/lib/firmware/$KernelVer
+make modules_install INSTALL_MOD_PATH=%buildroot
 
 mkdir -p %buildroot%kbuild_dir/arch/x86
 install -d %buildroot%kbuild_dir
@@ -517,7 +533,6 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 /boot/vmlinuz-%kversion-%flavour-%krelease
 /boot/System.map-%kversion-%flavour-%krelease
 /boot/config-%kversion-%flavour-%krelease
-/lib/firmware/*
 %dir %modules_dir/
 %defattr(0600,root,root,0700)
 %modules_dir/*
@@ -553,6 +568,22 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/gpu/drm
 %exclude %modules_dir/kernel/drivers/gpu/drm/nouveau
 %exclude %modules_dir/kernel/drivers/gpu/drm/radeon
+%exclude %modules_dir/kernel/drivers/gpu/drm/mgag200
+%exclude %modules_dir/kernel/drivers/gpu/drm/sis
+%exclude %modules_dir/kernel/drivers/gpu/drm/savage
+%exclude %modules_dir/kernel/drivers/gpu/drm/tdfx
+%exclude %modules_dir/kernel/drivers/gpu/drm/r128
+%exclude %modules_dir/kernel/drivers/gpu/drm/mga
+%exclude %modules_dir/kernel/drivers/gpu/drm/via
+
+%files -n kernel-modules-drm-ancient-%flavour
+%modules_dir/kernel/drivers/gpu/drm/mgag200
+%modules_dir/kernel/drivers/gpu/drm/sis
+%modules_dir/kernel/drivers/gpu/drm/savage
+%modules_dir/kernel/drivers/gpu/drm/tdfx
+%modules_dir/kernel/drivers/gpu/drm/r128
+%modules_dir/kernel/drivers/gpu/drm/mga
+%modules_dir/kernel/drivers/gpu/drm/via
 
 %files -n kernel-modules-drm-nouveau-%flavour
 %modules_dir/kernel/drivers/gpu/drm/nouveau
@@ -568,6 +599,7 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 
 %files -n kernel-modules-v4l-%flavour
 %modules_dir/kernel/drivers/media/
+%dir %modules_dir/kernel/drivers/staging/media
 %modules_dir/kernel/drivers/staging/media/lirc/
 
 %files -n kernel-modules-staging-%flavour
@@ -575,20 +607,14 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed Dec 06 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.14.4-alt1
+- v4.14.4   (Fixes: CVE-2011-1161, CVE-2017-8824)
+
 * Tue Dec 05 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.16-alt1.1
 - temporary fix for HugeDirtyCowPOC (fixes CVE-2017-1000405)
 
-* Fri Nov 24 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.16-alt1
-- v4.13.16   (Fixes: CVE-2011-1161)
-
-* Wed Nov 22 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.15-alt1
-- v4.13.15
-
-* Sat Nov 18 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.14-alt1
-- v4.13.14   (Fixes: CVE-2017-13080)
-
-* Wed Nov 15 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.13-alt1
-- v4.13.13
+* Mon Nov 13 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.14.0-alt1
+- v4.14.0
 
 * Wed Nov 08 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.13.12-alt1
 - v4.13.12
