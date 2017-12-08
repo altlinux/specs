@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.7.7
+Version: 2.7.8
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,10 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 2.7.8-alt1
+- mask korinf requires
+- add epm assure sisyphus_check if needed
+
 * Tue Dec 05 2017 Vitaly Lipatov <lav@altlinux.ru> 2.7.7-alt1
 - gitask: add get last [task], use it in rpmbs
 - gitask: add get subtask command, use it in rpmbs
