@@ -2,7 +2,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20170511
+Version: 20171208
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -37,6 +37,18 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Fri Dec 08 2017 Mikhail Efremov <sem@altlinux.org> 20171208-alt1
+- probing.c: added support for MMC devices when boot in LiveCD-mode
+  (by Leonid Krivoshein).
+- cdrom.c: fixed implicit declaration of function opendir warning
+  (by Leonid Krivoshein).
+- disk.c: Workaround race conditions during disks detection
+  (closes: #30315).
+- cdrom.c, network.c, tools.c: Fix memory leaks.
+- tools.c: Don't do useless comparisons during cmdline processing.
+- Use ramdisk_size from kernel cmdline.
+- Check that RAM size is enough for ramdisk.
+
 * Thu May 11 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 20170511-alt1
 - Fixed errors found by cppcheck.
 
