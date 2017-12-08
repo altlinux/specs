@@ -1,35 +1,38 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/flock /usr/bin/gunzip /usr/bin/less /usr/bin/renice /usr/bin/zcat perl(Text/ParseWords.pm)
+BuildRequires: %_bindir/flock %_bindir/gunzip %_bindir/less %_bindir/renice %_bindir/zcat perl(Text/ParseWords.pm)
 # END SourceDeps(oneline)
 
-# do not package fireqos due to bash4 bashisms (regexp in case)
-# TODO: backport rate2bps() function in fireqos from bash 4
-%def_without fireqos
+%def_with fireqos
+
+Name: firehol
+Version: 3.1.5
+Release: alt1
 
 Summary: An easy to use but powerfull iptables stateful firewall
-Name: firehol
-Version: 2.0.1
-Release: alt1
+
 License: GPL
 Group: System/Configuration/Networking
-Source0: %name-%version.tar
+Url: http://firehol.org/
+
+# Source0-url: https://github.com/firehol/firehol/releases/download/v%version/firehol-%version.tar.xz
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
+Source: %name-%version.tar
+
 Source1: ftp_ssl.conf
-Source2: firehol.service
-Source3: fireqos.service
+
 Patch1: firehol-sbin-alt-init.patch
 Patch2: firehol-sbin-alt-iptables.patch
-Url: http://firehol.org/
 
 BuildArch: noarch
 
-BuildRequires:  /sbin/insmod /sbin/modprobe
-BuildRequires:  coreutils
-BuildRequires:  iproute
-BuildRequires:  iptables
-BuildRequires:  procps-ng
-BuildRequires:  systemd
+%define iptools /sbin/insmod /sbin/modprobe iproute traceroute iptables ipset iprange
+BuildRequires: %iptools
+Requires: %iptools
 
-Requires: which
+%define tools which bash4 su curl procps-ng udev-rules
+BuildRequires: %tools
+Requires: %tools
 
 %description
 FireHOL uses an extremely simple but powerfull way to define firewall
@@ -48,35 +51,50 @@ interfaces.
 
 %prep
 %setup
-%patch1 -p2
+#patch1 -p2
 %patch2 -p2
 
+# wait for new bash4
+%__subst 's|+(\[0-9\])|[0-9]*|' sbin/fireqos
+
+# https://bugzilla.altlinux.org/show_bug.cgi?id=32663
+%if %_vendor == "alt"
+for i in sbin/firehol sbin/fireqos ; do
+	test -s "$i" || continue
+	%__subst "s|^#!%_bindir/env bash$|#!/bin/bash4|g" "$i"
+	%__subst "s|^#!/bin/bash$|#!/bin/bash4|g" "$i"
+done
+%endif
+
 %build
+# bash4 hack
+ln -s /bin/bash4 bash
+export PATH=$(pwd):$PATH
+
 %configure
 %make
 
 %install
-
 %makeinstall_std
 
 # Hack for documentation without crufts.
-rm -frv %{buildroot}%{_docdir}
+rm -frv %buildroot%_docdir
 find doc/ examples/ -name "Makefile*" -delete -print
 
 # Install systemd units.
-mkdir -p %{buildroot}%{_unitdir}
-install -pm644 %{S:2} %{S:3} %{buildroot}%{_unitdir}
+mkdir -p %buildroot%_unitdir
+install -pm644 contrib/firehol.service contrib/fireqos.service %buildroot%_unitdir
 
-mkdir -p %buildroot%_initdir
-install -m 750 sbin/firehol %buildroot%_initdir/firehol
+#mkdir -p %buildroot%_initdir
+#install -m 750 sbin/firehol %buildroot%_initdir/firehol
 
 # Install runtime directories.
-mkdir -p %{buildroot}%{_sysconfdir}/firehol/services
-mkdir -p %{buildroot}%{_var}/spool/firehol
+mkdir -p %buildroot%_sysconfdir/firehol/services
+mkdir -p %buildroot%_var/spool/firehol
 
 # Ghost configurations.
-touch %{buildroot}%{_sysconfdir}/firehol/firehol.conf \
-      %{buildroot}%{_sysconfdir}/firehol/fireqos.conf
+touch %buildroot%_sysconfdir/firehol/firehol.conf \
+%buildroot%_sysconfdir/firehol/fireqos.conf
 
 %if 0
 mkdir -p %buildroot%_sysconfdir/firehol/services
@@ -85,10 +103,11 @@ install -m 640 examples/client-all.conf %buildroot%_sysconfdir/firehol/firehol.c
 
 %if_without fireqos
 # TODO: backport fireqos to bash3
-rm -f %buildroot%_sbindir/fireqos %{buildroot}%{_unitdir}/fireqos.service
+rm -f %buildroot%_sbindir/fireqos %buildroot%_unitdir/fireqos.service
 %endif
 
 %pre
+
 %post
 if [ -f %_sysconfdir/firehol.conf -a ! -f %_sysconfdir/firehol/firehol.conf ]
 then
@@ -99,35 +118,39 @@ then
 	echo "Your existing configuration has been moved to its new place."
 	echo
 fi
-%post_service firehol
-%if_with fireqos
-%post_service fireqos
-%endif
-
-%preun
-%preun_service firehol
-%if_with fireqos
-%post_service fireqos
-%endif
 
 %files
-%doc AUTHORS COPYING NEWS README ChangeLog
+%doc COPYING THANKS README ChangeLog contrib
 %dir %_sysconfdir/firehol
 %dir %_sysconfdir/firehol/services
 %_sysconfdir/firehol/services/*
 %_sbindir/*
-%_initdir/firehol
-%{_unitdir}/*
+#_initdir/firehol
+%_unitdir/firehol.service
+%if_with fireqos
+%_unitdir/fireqos.service
+%endif
 %_man1dir/*
 %_man5dir/*
 %config(noreplace) %_sysconfdir/firehol/firehol.conf
 %config(noreplace) %_sysconfdir/firehol/fireqos.conf
 %_sysconfdir/firehol/firehol.conf.example
 %_sysconfdir/firehol/fireqos.conf.example
+%dir %_libexecdir/%name
+%_libexecdir/%name/%version/
+%_datadir/update-ipsets/
 %doc examples
 %doc doc/*
 
 %changelog
+* Wed Dec 06 2017 Vitaly Lipatov <lav@altlinux.ru> 3.1.5-alt1
+- new version 3.1.5 (with rpmrb script)
+- enable fireqos packing
+- drop direct sysvinit support (use epm + anyservice if needed)
+
+* Wed Dec 06 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt2
+- cleanup spec, set bash4 in all scripts
+
 * Tue Oct 18 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1
 - new version
 - still w/o fireqos due to bash4 bashisms
