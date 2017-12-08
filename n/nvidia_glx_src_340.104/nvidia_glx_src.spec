@@ -14,7 +14,7 @@
 %define nv_version 340
 %define nv_release 104
 %define nv_minor %nil
-%define pkg_rel alt152%ubt
+%define pkg_rel alt153%ubt
 %def_enable egl
 %def_enable kernelsource
 %def_disable package_wfb
@@ -83,6 +83,7 @@ Source2: nvidia.xinf
 Source100: nvidia_create_xinf
 
 Patch1: buildfix_kernel_4.11.patch
+Patch2: buildfix_kernel_4.14.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools rpm-macros-alternatives
@@ -160,6 +161,7 @@ cd %tbname-%tbver%dirsuffix
 
 pushd kernel/
 %patch1 -p1
+%patch2 -p1
 rm -rf precompiled
 popd
 
@@ -306,6 +308,9 @@ fi
 %endif
 
 %changelog
+* Fri Dec 08 2017 Sergey V Turchin <zerg@altlinux.org> 340.104-alt153%ubt
+- add fix against 4.14 kernel
+
 * Tue Nov 28 2017 Sergey V Turchin <zerg@altlinux.org> 340.104-alt152%ubt
 - don't package wfb module
 
