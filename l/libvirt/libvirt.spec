@@ -106,7 +106,7 @@
 
 
 Name: libvirt
-Version: 3.8.0
+Version: 3.10.0
 Release: alt1%ubt
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -1256,6 +1256,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Dec 08 2017 Alexey Shabalin <shaba@altlinux.ru> 3.10.0-alt1%ubt
+- 3.10.0
+
 * Mon Oct 30 2017 Alexey Shabalin <shaba@altlinux.ru> 3.8.0-alt1%ubt
 - 3.8.0
 - fixed CVE-2017-1000256
