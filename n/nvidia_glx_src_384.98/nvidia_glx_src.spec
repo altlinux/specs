@@ -18,7 +18,7 @@
 %define nv_version 384
 %define nv_release 98
 %define nv_minor %nil
-%define pkg_rel alt176%ubt
+%define pkg_rel alt177%ubt
 %def_enable kernelsource
 %def_disable glvnd
 %def_enable package_egl_wayland
@@ -87,6 +87,7 @@ Source100: nvidia_create_xinf
 
 Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
+Patch3: buildfix_kernel_4.14.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools rpm-macros-alternatives
@@ -154,6 +155,7 @@ cd %tbname-%tbver%dirsuffix
 pushd kernel
 #%patch1 -p1
 %patch2 -p1
+%patch3 -p1
 rm -rf precompiled
 popd
 
@@ -337,6 +339,9 @@ fi
 %endif
 
 %changelog
+* Fri Dec 08 2017 Sergey V Turchin <zerg@altlinux.org> 384.98-alt177%ubt
+- add fix against 4.14 kernel
+
 * Tue Nov 28 2017 Sergey V Turchin <zerg@altlinux.org> 384.98-alt176%ubt
 - don't package wfb module
 
