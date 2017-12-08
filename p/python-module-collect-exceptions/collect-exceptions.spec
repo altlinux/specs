@@ -4,22 +4,22 @@
 
 Name: python-module-%oname
 Version: 0.0.5
-Release: alt1.git20150209.1
+Release: alt2.git20150209
 Summary: Python exception collector
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/collect-exceptions/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/Yemsheng/collect-exceptions.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python-tools-2to3
 %endif
 
 %py_provides collect_exceptions
@@ -28,6 +28,7 @@ BuildPreReq: python-tools-2to3
 'collect-exceptions' is a python exception collector. It can collect
 django and celery exception.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python exception collector
 Group: Development/Python3
@@ -36,6 +37,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 'collect-exceptions' is a python exception collector. It can collect
 django and celery exception.
+%endif
 
 %prep
 %setup
@@ -63,14 +65,6 @@ pushd ../python3
 popd
 %endif
 
-%check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
-
 %files
 %doc *.md
 %python_sitelibdir/*
@@ -82,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.5-alt2.git20150209
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.5-alt1.git20150209.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
