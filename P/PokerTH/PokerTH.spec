@@ -1,8 +1,8 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: PokerTH
-Version: 1.1.1
-Release: alt4
+Version: 1.1.2
+Release: alt1
 
 Summary: Texas Hold'em poker game
 Group: Games/Cards
@@ -11,16 +11,6 @@ Url: http://www.pokerth.net/
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-
-# Patches form Fedora spec
-# (upstream patches actually)
-# https://github.com/pokerth/pokerth/pull/299
-Patch1:         pokerth-1.1.1-fstream-ambiguity.patch
-# https://github.com/zaphoyd/websocketpp/issues/457
-Patch2:         pokerth-1.1.1-ownerless.patch
-# Upstream patches for C++11 support
-Patch3:         pokerth-1.1.1-cxx11-build.patch
-Patch4:         pokerth-1.1.1-cxx11-fixes.patch
 
 BuildRequires(pre): rpm-build-licenses >= 2.0.5-alt1
 
@@ -42,6 +32,7 @@ play network games with people all over the world.
 Summary: Data files for %name
 Group: Games/Cards
 BuildArch: noarch
+Requires: %name = %version-%release
 
 %description data
 PokerTH is a poker game written in C++/Qt5. You can play the popular
@@ -53,17 +44,18 @@ This package contents data files for %name.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build
+%add_optflags -fno-strict-aliasing
 qmake-qt5 \
 	QMAKE_CFLAGS_RELEASE="%optflags" \
 	QMAKE_CXXFLAGS_RELEASE="%optflags" \
 	pokerth.pro
-sed -i 's|-pipe |%optflags -fno-strict-aliasing |g' Makefile*
+%make_build
+qmake-qt5 \
+	QMAKE_CFLAGS_RELEASE="%optflags" \
+	QMAKE_CXXFLAGS_RELEASE="%optflags" \
+	pokerth_game.pro
 %make_build
 
 %install
@@ -80,6 +72,12 @@ install -pm755 pokerth bin/pokerth_server %buildroot%_bindir
 %_pixmapsdir/pokerth.png
 
 %changelog
+* Fri Dec 08 2017 Mikhail Efremov <sem@altlinux.org> 1.1.2-alt1
+- Fix build.
+- Drop obsoleted patches.
+- Require PokerTH in PokerTH-data subpackage.
+- [1.1.2]
+
 * Mon Aug 28 2017 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt4
 - Fix build with boost-1.65.0.
 - Rebuilt with boost 1.65.0.
