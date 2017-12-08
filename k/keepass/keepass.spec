@@ -1,6 +1,6 @@
 Name: keepass
 Version: 2.37
-Release: alt2%ubt
+Release: alt3%ubt
 
 Summary: Password manager
 
@@ -34,6 +34,7 @@ BuildRequires: mono-web
 BuildRequires: python-devel
 BuildRequires: xorg-xvfb xvfb-run
 Requires: mono-winforms >= 5.0.0.0
+Requires: xdotool
 
 # The debuginfo package would be empty if created.
 %global debug_package %nil
@@ -118,6 +119,9 @@ cp -pr Docs/Chm %buildroot/%_docdir/%name/
 %doc %_docdir/%name/Chm/
 
 %changelog
+* Fri Dec 08 2017 Oleg Solovyov <mcpain@altlinux.org> 2.37-alt3%ubt
+- add xdotool for auto-type feature
+
 * Mon Nov 20 2017 Oleg Solovyov <mcpain@altlinux.org> 2.37-alt2%ubt
 - move appdata -> metainfo
 
