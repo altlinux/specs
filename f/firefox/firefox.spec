@@ -13,7 +13,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
 Version:        57.0.1
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -24,12 +24,12 @@ Source0:        firefox-source.tar
 Source1:        rpm-build.tar
 Source2:        searchplugins.tar
 Source4:        firefox-mozconfig
+Source5:        distribution.ini
 Source6:        firefox.desktop
 Source7:        firefox.c
 Source8:        firefox-prefs.js
 
 Patch6:         firefox-alt-disable-werror.patch
-#Patch7:         firefox-alt-disable-profiler.patch
 Patch14:        firefox-fix-install.patch
 Patch16:        firefox-cross-desktop.patch
 Patch17:        firefox-mediasource-crash.patch
@@ -38,10 +38,6 @@ Patch18:        firefox-alt-nspr-for-rust.patch
 # Upstream
 Patch200:       mozilla-bug-256180.patch
 Patch201:       mozilla-bug-1196777.patch
-
-# Red Hat
-Patch301:       rhbz-1291190-appchooser-crash.patch
-Patch302:       rhbz-966424.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -75,7 +71,7 @@ BuildRequires: gstreamer%gst_version-devel gst-plugins%gst_version-devel
 BuildRequires: libopus-devel
 BuildRequires: libpulseaudio-devel
 #BuildRequires: libicu-devel
-BuildRequires: libdbus-devel libdbus-c++-devel
+BuildRequires: libdbus-devel libdbus-glib-devel
 
 # Python requires
 BuildRequires: /dev/shm
@@ -138,7 +134,6 @@ tar -xf %SOURCE1
 tar -xf %SOURCE2
 
 %patch6  -p1
-#patch7  -p1
 %patch14 -p1
 %patch16 -p2
 %patch17 -p2
@@ -146,9 +141,6 @@ tar -xf %SOURCE2
 
 %patch200 -p1
 %patch201 -p1
-
-%patch301 -p1
-#patch302 -p1
 
 cp -f %SOURCE4 .mozconfig
 
@@ -166,13 +158,6 @@ cd mozilla
 %add_findprov_lib_path %firefox_prefix
 
 export MOZ_BUILD_APP=browser
-
-cat >> browser/confvars.sh <<EOF
-MOZ_UPDATER=
-MOZ_JAVAXPCOM=
-MOZ_EXTENSIONS_DEFAULT=' gio'
-MOZ_CHROME_FILE_FORMAT=jar
-EOF
 
 MOZ_OPT_FLAGS="$RPM_OPT_FLAGS"
 
@@ -228,7 +213,7 @@ make -f client.mk \
 %__cc %optflags \
 	-Wall -Wextra \
 	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
-	-DMOZ_PROGRAM=\"%firefox_prefix/firefox-bin\" \
+	-DMOZ_PROGRAM=\"%firefox_prefix/firefox\" \
 	-DMOZ_DIST_BIN=\"%firefox_prefix\"\
 	%SOURCE7 -o firefox
 
@@ -254,8 +239,8 @@ make -C objdir \
 install -D -m 644 %SOURCE8 %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
 
 cat > %buildroot/%firefox_prefix/browser/defaults/preferences/firefox-l10n.js <<EOF
-pref("intl.locale.matchOS",		true);
-pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
+pref("intl.locale.matchOS", true);
+pref("general.useragent.locale", "chrome://global/locale/intl.properties");
 EOF
 
 # icons
@@ -283,7 +268,9 @@ install -m755 firefox %buildroot/%_bindir/firefox
 
 cd %buildroot
 
-mv -f ./%firefox_prefix/application.ini ./%firefox_prefix/browser/application.ini
+# Add distribution.ini
+mkdir -p -- ./%firefox_prefix/distribution
+cp -- %SOURCE5 ./%firefox_prefix/distribution/distribution.ini
 
 # install menu file
 %__install -D -m 644 %SOURCE6 ./%_datadir/applications/firefox.desktop
@@ -293,7 +280,6 @@ mkdir -p ./%_altdir
 printf '%_bindir/xbrowser\t%_bindir/firefox\t100\n' >./%_altdir/firefox
 
 rm -f -- \
-	./%firefox_prefix/firefox \
 	./%firefox_prefix/removed-files
 
 # Remove devel files
@@ -326,6 +312,10 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Fri Dec 08 2017 Alexey Gladkov <legion@altlinux.ru> 57.0.1-alt2
+- Enable dbus support (ALT#34275).
+- Change chrome packaging format to omni (ALT#34285).
+
 * Mon Dec 04 2017 Alexey Gladkov <legion@altlinux.ru> 57.0.1-alt1
 - New release (57.0.1).
 
