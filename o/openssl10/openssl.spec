@@ -1,5 +1,7 @@
+%def_enable tsget
+
 Name: openssl10
-Version: 1.0.2m
+Version: 1.0.2n
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -50,6 +52,9 @@ Patch92: openssl-rh-system-cipherlist.patch
 %def_with krb
 
 BuildRequires: /usr/bin/pod2man bc zlib-devel
+%if_enabled tsget
+BuildRequires: perl-WWW-Curl
+%endif
 
 %package -n libcrypto%shlib_soversion
 Summary: OpenSSL libcrypto shared library
@@ -116,7 +121,6 @@ Summary: Time Stamping HTTP/HTTPS client
 Group: Security/Networking 
 BuildArch: noarch
 Requires: libssl%shlib_soversion = %version-%release
-BuildRequires: perl-WWW-Curl
 
 %description
 The OpenSSL toolkit provides support for secure communications between
@@ -278,6 +282,15 @@ ADD_ARGS=linux-generic32
 %ifarch x32
 ADD_ARGS=linux-x32
 %endif
+%ifarch s390x
+ADD_ARGS=linux64-s390x
+%endif
+%ifarch mips mipsel
+ADD_ARGS=linux-mips32
+%endif
+%ifarch mips64 mips64el
+ADD_ARGS=linux-mips64
+%endif
 
 if echo 'extern __uint128_t i;' |
    gcc %optflags -Werror -c -o/dev/null -xc -; then
@@ -386,7 +399,11 @@ ln -s -r %buildroot%_datadir/ca-certificates/ca-bundle.crt \
 mv %buildroot%openssldir/misc/CA{.sh,}
 rm %buildroot%openssldir/misc/CA.pl
 
+%if_enabled tsget
 mv %buildroot%openssldir/misc/tsget %buildroot%_sbindir/
+%else
+rm %buildroot%openssldir/misc/tsget
+%endif
 
 %define docdir %_docdir/openssl-%version
 mkdir -p %buildroot%docdir
@@ -446,8 +463,10 @@ fi
 %openssldir/certs
 %dir %attr(700,root,root) %openssldir/private
 %_mandir/man[157]/*
+%if_enabled tsget
 %exclude %_man1dir/tsget.*
 %exclude %_man1dir/openssl-tsget.*
+%endif
 
 %files -n openssl-doc
 %dir %docdir
@@ -457,12 +476,19 @@ fi
 %files -n openssl-engines
 %_libdir/openssl
 
+%if_enabled tsget
 %files -n tsget
 %_sbindir/tsget
 %_man1dir/tsget.*
 %_man1dir/openssl-tsget.*
+%endif
 
 %changelog
+* Thu Dec 07 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2n-alt1
+- Updated to v1.0.2n (fixes CVE-2017-3737, CVE-2017-3738).
+- Added --disable tsget knob.
+- Added support of s390x and mips* architectures.
+
 * Sat Nov 04 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2m-alt1
 - Updated to v1.0.2m (fixes CVE-2017-3735, CVE-2017-3736).
 
