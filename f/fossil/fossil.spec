@@ -1,7 +1,7 @@
 %def_enable Werror
 Name: fossil
-Version: 2.3
-Release: alt2
+Version: 2.4
+Release: alt1
 
 Summary: A distributed SCM with bug tracking and wiki
 License: %bsdstyle
@@ -59,8 +59,11 @@ install -pDm644 fossil.1 %buildroot%_man1dir/fossil.1
 #doc www
 
 %changelog
+* Fri Dec 08 2017 Grigory Ustinov <grenka@altlinux.org> 2.4-alt1
+- Updated to 2.4.
+
 * Thu Nov 09 2017 Grigory Ustinov <grenka@altlinux.org> 2.3-alt2
-- Add tcclib for passing 1 test, correct use -Werror flag.
+- Add tcllib for passing 1 test, correct use -Werror flag.
 
 * Sat Oct 28 2017 Grigory Ustinov <grenka@altlinux.org> 2.3-alt1
 - Updated to 2.3.
