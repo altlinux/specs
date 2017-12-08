@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.39
+Version: 1.8.40
 Release: alt1
 
 Summary: Installer common parts
@@ -110,6 +110,11 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Fri Dec 08 2017 Mikhail Efremov <sem@altlinux.org> 1.8.40-alt1
+- Remove DRM modules if Xorg server is not present.
+- Drop autofs4 from initrd.
+- Drop systemd feature in the initrd.mk.
+
 * Thu Nov 09 2017 Mikhail Efremov <sem@altlinux.org> 1.8.39-alt1
 - 10-xorg.sh: Set correct default.targer.
 - 10-xorg.sh: Add more DMs for check.
