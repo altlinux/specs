@@ -4,21 +4,20 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.0
+Version: 0.11.1
 Release: alt1
 Summary: Mustache templating language renderer
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/chevron/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/66/00/3649f47f2acb8d05ebe3d399a3f61b3d294404c3401ec0069aeea1d1426b/%{oname}-%{version}.tar.gz
 BuildArch: noarch
+Url: https://pypi.python.org/pypi/chevron/
 
-BuildPreReq: python-devel python-module-setuptools-tests
+Source: %oname-%version.tar
+
+BuildRequires: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
@@ -35,7 +34,7 @@ Group: Development/Python3
 A python implementation of the mustache templating language.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -n %oname-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -64,16 +63,7 @@ popd
 
 %python_install
 
-%check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
-
 %files
-%doc PKG-INFO
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -82,12 +72,14 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc PKG-INFO
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Fri Dec 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.11.1-alt1
+- Updated to upstream version 0.11.1.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1
 - automated PyPI update
 
