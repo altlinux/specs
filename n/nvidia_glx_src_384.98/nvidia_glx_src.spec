@@ -18,7 +18,7 @@
 %define nv_version 384
 %define nv_release 98
 %define nv_minor %nil
-%define pkg_rel alt177%ubt
+%define pkg_rel alt178%ubt
 %def_enable kernelsource
 %def_disable glvnd
 %def_enable package_egl_wayland
@@ -339,6 +339,9 @@ fi
 %endif
 
 %changelog
+* Fri Dec 08 2017 Sergey V Turchin <zerg@altlinux.org> 384.98-alt178%ubt
+- add fix against 4.14 kernel
+
 * Fri Dec 08 2017 Sergey V Turchin <zerg@altlinux.org> 384.98-alt177%ubt
 - add fix against 4.14 kernel
 
