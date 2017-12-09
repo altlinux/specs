@@ -3,8 +3,8 @@
 %define real_name Dist-Zilla-Plugin-CheckChangesHasContent
 
 Name: perl-Dist-Zilla-Plugin-CheckChangesHasContent
-Version: 0.010
-Release: alt2
+Version: 0.011
+Release: alt1
 
 Summary: Dist::Zilla plugin to ensure Changes has content before releasing
 
@@ -48,5 +48,8 @@ rm -f -- t/test_changeshascontent.t
 %perl_vendor_privlib/Dist/Zilla/Plugin/*
 
 %changelog
+* Sat Dec 09 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.011-alt1
+- New version
+
 * Mon Jan 23 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.010-alt2
 - Initial build for ALT Linux Sisyphus
