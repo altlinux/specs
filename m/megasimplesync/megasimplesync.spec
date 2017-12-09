@@ -1,6 +1,6 @@
 Name: megasimplesync
 Version: 2.5.0
-Release: alt1.2
+Release: alt1.3
 
 Summary: Megasimplesync console client for mega.co.nz
 
@@ -47,6 +47,9 @@ rm -f %buildroot/%_libdir/libmega.so
 %_libdir/libmega.so.500.0.0
 
 %changelog
+* Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1.3
+- NMU: autorebuild with libcryptopp-5.6.5
+
 * Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5.0-alt1.2
 - Updated build dependencies
 

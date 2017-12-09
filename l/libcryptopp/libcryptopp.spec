@@ -1,6 +1,8 @@
+%def_without autotools
+
 %define oname	cryptopp
 Name: libcryptopp
-Version: 5.6.3
+Version: 5.6.5
 Release: alt1
 
 # convert 5.6.2 -> 562 format
@@ -14,7 +16,9 @@ Group: System/Libraries
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://www.cryptopp.com/%oname%orig_version.tar
+# Source-url: http://www.cryptopp.com/%oname%orig_version.zip
+Source: %name-%version.tar
+
 Patch: %oname-autotools.patch
 
 Provides: libcrypto++ = %version-%release
@@ -58,13 +62,16 @@ Requires: %name = %version-%release
 Cryptopp programs.
 
 %prep
-%setup -c
+%setup
+%if_with autotools
 %patch -p1
 rm -f GNUmakefile
+%endif
 #touch NEWS README AUTHORS ChangeLog
 
 %build
 %add_optflags -fpermissive
+%if_with autotools
 %autoreconf
 %configure
 %ifnarch x86_64
@@ -72,16 +79,27 @@ rm -f GNUmakefile
 # http://groups.google.com/group/cryptopp-users/browse_thread/thread/d639907b0b1816b9
 %__subst '1 i #define CRYPTOPP_DISABLE_SSE2' config.h
 %endif
+ %make_build
+%else
+ %make_build CXXFLAGS="%optflags %optflags_shared" PREFIX=%prefix static dynamic cryptest.exe
+%endif
 
-%make_build
 
 # too long
 #%check
 #./cryptest v 2>&1 | tee cryptest.log
 #grep -qs '^FAILED' cryptest.log && exit 1 || :
 
+%check
+make test
+
 %install
+%if_with autotools
 %makeinstall_std
+%else
+make install DESTDIR=%buildroot PREFIX=%_prefix LIBDIR=%_libdir
+mv %buildroot%_bindir/cryptest.exe %buildroot%_bindir/cryptest
+%endif
 
 mkdir -p %buildroot%_pkgconfigdir/
 cat >%buildroot%_pkgconfigdir/libcrypto++.pc <<EOF
@@ -108,10 +126,15 @@ EOF
 
 %files progs
 %_bindir/cryptest
-%_bindir/cryptestcwd
-#%_datadir/cryptopp/
+#_bindir/cryptestcwd
+%_datadir/cryptopp/
 
 %changelog
+* Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 5.6.5-alt1
+- new version 5.6.5 (with rpmrb script)
+- return to native build
+- enable check during build
+
 * Sat Jan 30 2016 Vitaly Lipatov <lav@altlinux.ru> 5.6.3-alt1
 - new version 5.6.3 (with rpmrb script)
 

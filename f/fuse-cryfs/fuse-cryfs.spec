@@ -1,7 +1,7 @@
 %define oname cryfs
 Name: fuse-cryfs
 Version: 0.9.7
-Release: alt2
+Release: alt2.1
 
 Summary: Cryptographic filesystem for the cloud
 
@@ -56,6 +56,9 @@ rm -rf vendor/spdlog/
 %_bindir/cryfs
 
 %changelog
+* Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt2.1
+- NMU: autorebuild with libcryptopp-5.6.5
+
 * Sun Jul 23 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt2
 - fix build, build with external spdlog
 
