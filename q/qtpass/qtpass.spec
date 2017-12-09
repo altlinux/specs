@@ -4,7 +4,7 @@
 %define real_name    QtPass
 
 Name:     qtpass
-Version:  1.1.6
+Version:  1.2.0
 Release:  alt1
 
 Summary: a multi-platform GUI for pass, the standard unix password manager
@@ -21,6 +21,8 @@ Source0: %real_name-%version.tar
 Patch0:  %real_name-%version-%release.patch
 
 Patch1:  %name-1.1.6-alt-desktop.patch
+Patch2:  %name-1.2.0-alt-tests.patch
+Patch3:  %name-1.2.0-bug334_patch.patch
 
 Source1: %name-16.png
 Source2: %name-32.png
@@ -29,9 +31,9 @@ Source3: %name-48.png
 BuildRequires(pre): rpm-build-licenses desktop-file-utils
 
 
-# Automatically added by buildreq on Thu Jan 26 2017
-# optimized out: gcc-c++ libGL-devel libqt5-core libqt5-gui libqt5-network libqt5-widgets libqt5-xml libstdc++-devel python-base python-modules python3
-BuildRequires: qt5-base-devel qt5-tools
+# Automatically added by buildreq on Sun Dec 10 2017
+# optimized out: gcc-c++ libGL-devel libqt5-core libqt5-gui libqt5-network libqt5-widgets libqt5-xml libstdc++-devel python-base python-modules python3 python3-base qt5-base-common qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel
+BuildRequires: kf5-kwallet-devel python-module-google python3-module-zope qt5-multimedia-devel qt5-script-devel qt5-svg-devel qt5-tools-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel
 
 Requires: gnupg gnupg2 git-core pwgen
 
@@ -64,9 +66,12 @@ QtPass -  кроссплатформенный графический интер
 
 %prep
 %setup  -n %real_name-%version
-%patch0
+%patch0 -p1
 
 %patch1
+%patch2
+
+%patch3
 
 mv -- LICENSE LICENSE.orig
 ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/LICENSE) LICENSE
@@ -99,6 +104,9 @@ install -D -m0644 -- qtpass.appdata.xml %buildroot%_datadir/appdata/%name.appdat
 
 
 %changelog
+* Sat Dec 09 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.2.0-alt1
+- New version
+
 * Thu Jan 26 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.1.6-alt1
 - Initial build for ALT Linux Sisyphus
 
