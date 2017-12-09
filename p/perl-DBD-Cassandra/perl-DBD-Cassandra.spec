@@ -3,7 +3,7 @@
 %define real_name DBD-Cassandra
 
 Name: perl-DBD-Cassandra
-Version: 0.56
+Version: 0.57
 Release: alt1
 
 Summary: DBD database driver for Cassandra's CQL3
@@ -21,9 +21,9 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sun Sep 18 2016
-# optimized out: perl perl-Clone perl-Data-OptList perl-Encode perl-Params-Util perl-Pod-Escapes perl-Pod-Simple perl-Promises perl-Ref-Util perl-Sub-Exporter perl-Sub-Install perl-devel python-base python-modules python3
-BuildRequires: perl-Cassandra-Client perl-Compress-LZ4 perl-Compress-Snappy perl-DBI perl-Test-Pod
+# Automatically added by buildreq on Sat Dec 09 2017
+# optimized out: perl perl-Clone perl-Data-OptList perl-Devel-GlobalDestruction perl-Encode perl-Math-BigInt perl-Net-SSLeay perl-Params-Util perl-Promises perl-Ref-Util perl-Sub-Current perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Install perl-devel python-base python-modules python3 python3-base
+BuildRequires: perl-Cassandra-Client perl-Compress-LZ4 perl-Compress-Snappy perl-DBI perl-Ref-Util-XS
 
 %description
 Perl module DBD::Cassandra aids developers in connecting to
@@ -49,6 +49,9 @@ is not very good, so this might become XS some day.
 %perl_vendor_privlib/DBD/Cassandra*
 
 %changelog
+* Sat Dec 09 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.57-alt1
+- New version
+
 * Sun May 14 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.56-alt1
 - New version
 
