@@ -1,6 +1,6 @@
 Name: libfilteraudio
-Version: 0.0.0
-Release: alt0.612c5a102550
+Version: 0.0.1
+Release: alt1
 
 Summary: Lightweight audio filtering library made from webrtc code
 
@@ -50,5 +50,8 @@ rm -f %buildroot%_libdir/%name.a
 %_pkgconfigdir/filteraudio.pc
 
 %changelog
+* Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 0.0.1-alt1
+- new version 0.0.1 (with rpmrb script)
+
 * Sun Jun 07 2015 Vitaly Lipatov <lav@altlinux.ru> 0.0.0-alt0.612c5a102550
 - initial build for ALT Linux Sisyphus
