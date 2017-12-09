@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1%ubt
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -287,6 +287,13 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Sat Dec 09 2017 Anton Farygin <rider@altlinux.ru> 2.4.3-alt1%ubt
+- 2.4.3
+- fixes:
+     * wnpa-sec-2017-49 CIP Safety dissector crash CVE-2017-17085
+     * wnpa-sec-2017-48 NetBIOS dissector crash CVE-2017-17083
+     * wnpa-sec-2017-47 IWARP_MPA dissector crash CVE-2017-17084
+
 * Sun Oct 15 2017 Anton Farygin <rider@altlinux.ru> 2.4.2-alt1%ubt
 - 2.4.2
 - fixes:
