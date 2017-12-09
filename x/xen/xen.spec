@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.8.2
-Release: alt1%ubt
+Release: alt2%ubt
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -790,6 +790,24 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Sat Dec 09 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.2-alt2%ubt
+- upstream updates:
+  + p2m: Check return value of p2m_set_entry() when decreasing reservation (thx George Dunlap) (XSA-247).
+  + p2m: Always check to see if removing a p2m entry actually worked (thx George Dunlap). (XSA-247)
+  + x86/pod: prevent infinite loop when shattering large pages (thx Julien Grall). (XSA-246)
+  + x86/shadow: correct SH_LINEAR mapping detection in sh_guess_wrmap() (thx Andrew Cooper). (XSA-243)
+  + x86: don't wrongly trigger linear page table assertion (thx Jan Beulich). (XSA-240)
+  + x86/mm: fix race condition in modify_xen_mappings() (thx Yu Zhang).
+  + x86/mm: fix race conditions in map_pages_to_xen() (thx Min He).
+  + x86/hvm: do not register hpet mmio during s3 cycle (thx Eric Chanudet).
+  + x86/mm: Make PV linear pagetables optional (thx George Dunlap).
+  + x86: fix asm() constraint for GS selector update (thx Jan Beulich).
+  + x86: don't latch wrong (stale) GS base addresses (thx Jan Beulich).
+  + x86: also show FS/GS base addresses when dumping registers (thx Jan Beulich).
+  + x86: fix GS-base-dirty determination (thx Jan Beulich).
+  + ui/gtk: Fix deprecation of vte_terminal_copy_clipboard (thx Anthony PERARD).
+  + xen/pt: allow QEMU to request MSI unmasking at bind time (thx Roger Pau Monne).
+
 * Sun Oct 29 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.2-alt1%ubt
 - 4.8.2 release
 - upstream updates:
@@ -880,7 +898,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
  + arm: fix build with gcc 7 (thx Jan Beulich).
  + x86: fix build with gcc 7 (thx Jan Beulich).
  + x86/mm: fix incorrect unmapping of 2MB and 1GB pages (thx Igor Druzhinin).
- + x86/pv: Align %rsp before pushing the failsafe stack frame (thx Andrew Cooper).
+ + x86/pv: Align %%rsp before pushing the failsafe stack frame (thx Andrew Cooper).
  + x86/pv: Fix bugs with the handling of int80_bounce (thx Andrew Cooper).
  + x86/vpmu_intel: fix hypervisor crash by masking PC bit in
    MSR_P6_EVNTSEL (thx Mohit Gambhir).
