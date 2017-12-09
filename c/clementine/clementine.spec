@@ -2,18 +2,18 @@
 
 Name: clementine
 Version: 1.3.1
-Release: alt3
+Release: alt4
 Summary: A music player and library organiser
 
 Group: Sound
 License: %lgpl3only
 Url: http://code.google.com/p/clementine-player
-Packager: Pavel Maleev <rolland@altlinux.org>
 
 Source0: %name-%version.tar.gz
 Patch1: %name-1.3.0-alt-sqlite-fts3.patch
 Patch2: %name-1.3.1-alt-disable-vk.patch
 Patch3: %name-1.3.1-alt-gcc-compat.patch
+Patch4: clementine-1.3.1-chromaprint1.4.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: boost-devel-headers cmake gcc-c++ libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libgio-devel libglew-devel libgpod-devel liblastfm-devel libmtp-devel libqt4-opengl libqt4-sql libqt4-webkit libqt4-xmlpatterns libtag-devel libxkbfile-devel python-module-sip qt4-designer subversion
@@ -46,6 +46,7 @@ advantage of Qt4.
 %patch1 -p1
 %patch2 -p2
 %patch3 -p2
+%patch4 -p1
 
 %build
 %K4build -DSTATIC_SQLITE=on -DBUILD_WERROR=off
@@ -66,6 +67,9 @@ advantage of Qt4.
 
 
 %changelog
+* Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt4
+- apply fix build with chromaprint >= 1.4
+
 * Wed Jun 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.1-alt3
 - Fix build with gcc-6
 
