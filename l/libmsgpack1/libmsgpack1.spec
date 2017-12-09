@@ -1,7 +1,7 @@
 %define oname msgpack
 Name: libmsgpack1
-Version: 1.4.1
-Release: alt2
+Version: 1.4.2
+Release: alt1
 
 Summary: Binary-based efficient object serialization library
 
@@ -69,6 +69,9 @@ make check
 %_pkgconfigdir/msgpack.pc
 
 %changelog
+* Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt1
+- new version 1.4.2 (with rpmrb script)
+
 * Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt2
 - build as libmsgpack1 with soname 1.0.0 for autobahn-cpp build
 
