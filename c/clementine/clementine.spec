@@ -2,7 +2,7 @@
 
 Name: clementine
 Version: 1.3.1
-Release: alt4
+Release: alt4.1
 Summary: A music player and library organiser
 
 Group: Sound
@@ -67,6 +67,9 @@ advantage of Qt4.
 
 
 %changelog
+* Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt4.1
+- NMU: autorebuild with libcryptopp-5.6.5
+
 * Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt4
 - apply fix build with chromaprint >= 1.4
 
