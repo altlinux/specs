@@ -1,6 +1,6 @@
 Name: perl-Data-MessagePack
 Version: 1.00
-Release: alt1.1
+Release: alt2
 
 Summary: MessagePack serialising/deserialising
 License: Perl
@@ -8,6 +8,7 @@ Group: Development/Perl
 
 URL: %CPAN Data-MessagePack
 Source: %name-%version.tar
+Patch0: Data-MessagePack-1.00-Fix-building-on-Perl-without-dot-in-INC.patch
 
 BuildRequires: perl-devel perl-Encode perl-Test-Requires
 
@@ -20,6 +21,7 @@ But unlike JSON, it is very fast and small.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %perl_vendor_build
@@ -33,6 +35,9 @@ But unlike JSON, it is very fast and small.
 %perl_vendor_autolib/Data/MessagePack
 
 %changelog
+* Sun Dec 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.00-alt2
+- patch for perl 5.26
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1.1
 - rebuild with new perl 5.24.1
 
