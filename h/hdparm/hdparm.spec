@@ -1,13 +1,13 @@
 Name: hdparm
-Version: 9.48
+Version: 9.52
 Release: alt1
 
 Summary: An utility for displaying and/or setting hard disk parameters
 License: BSD-style
 Group: System/Kernel and hardware
-Url: http://sourceforge.net/projects/hdparm/
+Url: https://sourceforge.net/projects/hdparm/
 
-# http://download.sourceforge.net/%name/%name-%version.tar.gz
+# https://download.sourceforge.net/%name/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -39,6 +39,9 @@ mkdir -p %buildroot%_sysconfdir/sysconfig/harddisk
 %doc *.lsm Changelog LICENSE.TXT README* contrib wiper
 
 %changelog
+* Sun Dec 10 2017 Dmitry V. Levin <ldv@altlinux.org> 9.52-alt1
+- 9.48 -> 9.52.
+
 * Mon Jan 18 2016 Dmitry V. Levin <ldv@altlinux.org> 9.48-alt1
 - 9.45 -> 9.48.
 
