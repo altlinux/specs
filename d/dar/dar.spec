@@ -1,6 +1,6 @@
 Name: dar
 Version: 2.5.13
-Release: alt1
+Release: alt2
 
 Summary: DAR - Disk ARchive tool
 
@@ -44,6 +44,7 @@ This package contains header files for %name.
 %package doc
 Summary: Documentation files for %name
 Group: File tools
+BuildArch: noarch
 
 %description doc
 This package contains documentation files for %name.
@@ -89,6 +90,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 #%_libdir/*.a
 
 %changelog
+* Sun Dec 10 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5.13-alt2
+- make doc subpackage noarch
+
 * Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5.13-alt1
 - new version 2.5.13 (with rpmrb script)
 
