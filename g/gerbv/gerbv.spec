@@ -1,6 +1,6 @@
 Name: gerbv
 Version: 2.6.2
-Release: alt1
+Release: alt2
 
 Summary: Gerber file viewer
 
@@ -26,6 +26,7 @@ system and sent to PCB manufacturers as basis for the manufacturing process.
 Summary: Gerber file examples for gerbv
 Requires: gerbv
 Group: Graphics
+BuildArch: noarch
 
 %description examples
 Example files for gerbv.
@@ -93,6 +94,9 @@ rm -f %buildroot%_desktopdir/*.cache
 %_datadir/gerbv/example/*
 
 %changelog
+* Sun Dec 10 2017 Vitaly Lipatov <lav@altlinux.ru> 2.6.2-alt2
+- make examples subpackage noarch
+
 * Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 2.6.2-alt1
 - new version
 
