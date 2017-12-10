@@ -2,7 +2,7 @@
 %define dist Math-Pari
 Name: perl-%dist
 Version: 2.01080900
-Release: alt1.1
+Release: alt2
 Epoch: 1
 
 Summary: Perl interface to PARI
@@ -12,6 +12,13 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/I/IL/ILYAZ/modules/Math-Pari-%{version}.zip
 Source1: http://pari.math.u-bordeaux.fr/pub/pari/unix/OLD/pari-2.3.5.tar.gz
+# from fc perl-Math-Pari-2.010809-7
+Patch0:		Math-Pari-2.010809b-no-fake-version.patch
+Patch1:		Math-Pari-2.010802-docs-and-testsuite.patch
+Patch2:		Math-Pari-2.01080605-include-path.patch
+Patch3:		Math-Pari-2.010809b-utf8.patch
+Patch4:		Math-Pari-2.010809b-escape-left-braces-in-regex.patch
+Patch5:		Math-Pari-2.010809b-MP_NOGNUPLOT.patch
 
 # Automatically added by buildreq on Wed Oct 19 2011
 BuildRequires: perl-devel unzip
@@ -27,7 +34,25 @@ Math::libPARI).
 %prep
 %setup -q -n %dist-%version
 
+# We want to build the docs and test suite too
+%patch1 -p1
+
+# Use <pari/pari.h> as per pari upstream documentation
+#patch2
+
+# Recode Changes file as UTF-8
+%patch3
+
+# Escape left braces in regexes (#1452519)
+%patch4
+
+# Fix operation of MP_NOGNUPLOT
+%patch5
+
+
 %build
+# TODO: remove
+export PERL_USE_UNSAFE_INC=1
 %perl_vendor_build pari_tgz=%SOURCE1
 
 %install
@@ -39,6 +64,9 @@ Math::libPARI).
 %perl_vendor_autolib/Math
 
 %changelog
+* Sun Dec 10 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.01080900-alt2
+- added patches for perl 5.26
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.01080900-alt1.1
 - rebuild with new perl 5.24.1
 
