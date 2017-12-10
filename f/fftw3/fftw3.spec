@@ -1,6 +1,6 @@
 Name: fftw3
-Version: 3.3.3
-Release: alt2
+Version: 3.3.7
+Release: alt1
 
 Summary: Library for computing Fast Fourier Transforms
 License: GPLv2+
@@ -26,6 +26,7 @@ Patch: fftw-alt-link.patch
 %endif
 
 BuildRequires: gcc-fortran libgomp-devel %{?_enable_quad:libquadmath-devel}
+BuildRequires: makeinfo
 
 %description
 FFTW is a free collection of fast C routines for computing the Discrete
@@ -179,6 +180,7 @@ library in html and pdf formats.
 %setup -n fftw-%version
 rm m4/l*.m4
 %patch -p1
+rm doc/fftw3.info*
 
 %build
 sed -n 's/^[^X]*X(\([^[:space:])]\+\)).*/\1/p' threads/*.c |sort -u >threads-r
@@ -268,6 +270,7 @@ fi
 %_pkgconfigdir/*
 %_infodir/*.info*
 %_man1dir/*
+%_libdir/cmake/fftw3/
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -280,6 +283,9 @@ fi
 %docdir/*.pdf
 
 %changelog
+* Sun Dec 10 2017 Dmitry V. Levin <ldv@altlinux.org> 3.3.7-alt1
+- 3.3.3 -> 3.3.7.
+
 * Fri Nov 15 2013 Dmitry V. Levin <ldv@altlinux.org> 3.3.3-alt2
 - %%check: disabled quad check by default,
   it takes too much time to complete.
