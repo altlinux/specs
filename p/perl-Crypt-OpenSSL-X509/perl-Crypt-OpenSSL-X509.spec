@@ -1,14 +1,14 @@
 %define bname Crypt-OpenSSL-X509
 Name: perl-%bname
 Version: 1.808
-Release: alt1
+Release: alt2
 Summary: Perl interface to OpenSSL for X509
 License: Perl
 Group: Development/Perl
 URL: http://search.cpan.org/dist/%bname/
 Source0: http://www.cpan.org/authors/id/J/JO/JONASBN/Crypt-OpenSSL-X509-%{version}.tar.gz
 
-BuildRequires: rpm-build-perl perl-devel libssl-devel perl-Test-Pod
+BuildRequires: rpm-build-perl perl-devel libssl-devel perl-Test-Pod perl(inc/Module/Install.pm)
 
 %description
 Crypt::OpenSSL::X509 - Perl extension to OpenSSL's X509 API.
@@ -16,7 +16,8 @@ Crypt::OpenSSL::X509 - Perl extension to OpenSSL's X509 API.
 
 %prep
 %setup -q -n Crypt-OpenSSL-X509-%{version}
-
+# Remove bundled modules
+rm -rf ./inc
 
 %build
 %perl_vendor_build
@@ -37,6 +38,9 @@ Crypt::OpenSSL::X509 - Perl extension to OpenSSL's X509 API.
 
 
 %changelog
+* Sun Dec 10 2017 Igor Vlasenko <viy@altlinux.ru> 1.808-alt2
+- fix for perl 5.26
+
 * Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.808-alt1
 - automated CPAN update
 
