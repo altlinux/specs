@@ -1,7 +1,7 @@
 %define dist Authen-PAM
 Name: perl-%dist
 Version: 0.16
-Release: alt4.1.1.1
+Release: alt5
 
 Summary: Perl interface to PAM library
 License: GPL or Artistic
@@ -9,6 +9,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
+Patch0: Authen-PAM-0.16-Fix-building-on-Perl-without-dot-in-INC.patch
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: libpam-devel perl-devel
@@ -19,6 +20,7 @@ Authentication Modules, a flexible mechanism for authenticating users).
 
 %prep
 %setup -q -n %dist-%version
+%patch0 -p1
 sed -i- 's/die/warn/' test.pl
 
 %build
@@ -33,6 +35,9 @@ sed -i- 's/die/warn/' test.pl
 %perl_vendor_autolib/Authen
 
 %changelog
+* Sun Dec 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt5
+- support for perl 5.26
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt4.1.1.1
 - rebuild with new perl 5.24.1
 
