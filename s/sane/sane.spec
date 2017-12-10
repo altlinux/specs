@@ -3,7 +3,7 @@
 
 Name: sane
 Version: 1.0.27
-Release: alt2
+Release: alt3
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -179,10 +179,10 @@ rm -f backend/dll.conf
 %__subst "s|/path/to/your/firmware|%_libdir/hotplug/firmware|" %buildroot%_sysconfdir/sane.d/*.conf
 
 # install udev rules
-install -D -m0644 tools/udev/libsane.rules %buildroot%_sysconfdir/udev/rules.d/25-libsane.rules
+install -D -m0644 tools/udev/libsane.rules %buildroot%_udevrulesdir/25-libsane.rules
 # follow fix drops GROUP! (alt bug #29425)
 #remove ownership setup (was conflict with other services) see altbug #21808
-#sed 's/,[[:space:]]\+GROUP=\"[^"]\+\"[[:space:]]*//' -i %buildroot%_sysconfdir/udev/rules.d/25-libsane.rules
+#sed 's/,[[:space:]]\+GROUP=\"[^"]\+\"[[:space:]]*//' -i %buildroot%_udevrulesdir/25-libsane.rules
 
 install -D %SOURCE2 -m0644 %buildroot%_sysconfdir/xinetd.d/%name
 mkdir -p %buildroot%_lockdir/%name/
@@ -223,7 +223,7 @@ rm -f %buildroot%_libdir/%name/*.a
 %_libdir/*.so.1
 # to check we updated correctly
 %_libdir/*.so.%version
-%_sysconfdir/udev/rules.d/*
+%_udevrulesdir/*
 %_man5dir/*
 %dir %_sysconfdir/sane.d/
 %config(noreplace) %_sysconfdir/sane.d/*
@@ -255,6 +255,9 @@ rm -f %buildroot%_libdir/%name/*.a
 %endif
 
 %changelog
+* Sun Dec 10 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.27-alt3
+- cleanup spec
+
 * Mon Oct 09 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.27-alt2
 - revert bd0b0cd218504868f32962a5558449956c8ce242 (ALT bug 33993)
 
