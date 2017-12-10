@@ -2,7 +2,7 @@
 
 Name: rpm-build-perl
 Version: 0.84
-Release: alt12
+Release: alt13
 
 Summary: RPM helper scripts to calculate Perl dependencies
 License: GPL
@@ -75,6 +75,10 @@ install -pm644 macros.env %buildroot%_rpmmacrosdir/perl5.env
 %config %_rpmmacrosdir/perl5.env
 
 %changelog
+* Sun Dec 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.84-alt13
+- enabled '.' in INC for perl 5.26 for compatibility
+- still bootstrap for perl 5.26
+
 * Fri Nov 24 2017 Igor Vlasenko <viy@altlinux.ru> 0.84-alt12
 - bootstrap for perl 5.26
 
