@@ -1,6 +1,6 @@
 Name:    grass
 Version: 7.2.2
-Release: alt1
+Release: alt2
 
 %def_with mysql
 %def_with postgres
@@ -13,6 +13,7 @@ URL:     https://grass.osgeo.org
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
+# https://grass.osgeo.org/%name%shortver/source/%name-%version.tar.gz
 Source: %name-%version.tar
 Source1: %name.watch
 
@@ -31,7 +32,7 @@ Patch2: %name-soname.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: flex gcc-c++ python-devel
-BuildRequires: libfftw-devel libjpeg-devel libpng-devel libtiff-devel zlib-devel
+BuildRequires: libfftw3-devel libjpeg-devel libpng-devel libtiff-devel zlib-devel
 BuildRequires: libncurses-devel libtinfo-devel
 BuildRequires: libpq-devel postgresql-devel libMySQL-devel libsqlite3-devel
 BuildRequires: libqt4-core libXmu-devel swig libfreetype-devel readline-devel libGLU-devel
@@ -301,6 +302,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Sun Dec 10 2017 Dmitry V. Levin <ldv@altlinux.org> 7.2.2-alt2
+- Build with fftw3.
+
 * Sat Oct 28 2017 Andrey Cherepanov <cas@altlinux.org> 7.2.2-alt1
 - New version
 
