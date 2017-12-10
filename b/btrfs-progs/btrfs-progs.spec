@@ -1,5 +1,5 @@
 Name: btrfs-progs
-Version: 4.13.3
+Version: 4.14
 Release: alt1%ubt
 
 Summary: Utilities for managing the Btrfs filesystem
@@ -9,7 +9,7 @@ Url: http://btrfs.wiki.kernel.org/
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-BuildRequires: libacl-devel libe2fs-devel libuuid-devel zlib-devel libblkid-devel libattr-devel liblzo2-devel asciidoc xmlto
+BuildRequires: libacl-devel libe2fs-devel libuuid-devel zlib-devel libblkid-devel libattr-devel liblzo2-devel asciidoc xmlto libzstd-devel
 BuildRequires(pre): rpm-build-ubt
 
 %description
@@ -76,6 +76,9 @@ ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/libbtrfs.so
 %_includedir/btrfs
 
 %changelog
+* Sun Dec 10 2017 Anton Farygin <rider@altlinux.ru> 4.14-alt1%ubt
+- new version
+
 * Mon Oct 23 2017 Anton Farygin <rider@altlinux.ru> 4.13.3-alt1%ubt
 - new version
 
