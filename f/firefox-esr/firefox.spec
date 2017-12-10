@@ -13,7 +13,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        52.5.0
+Version:        52.5.2
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -73,6 +73,7 @@ BuildRequires: gstreamer%gst_version-devel gst-plugins%gst_version-devel
 BuildRequires: libopus-devel
 BuildRequires: libpulseaudio-devel
 #BuildRequires: libicu-devel
+BuildRequires: libdbus-devel libdbus-glib-devel
 
 # Python requires
 BuildRequires: python-module-distribute
@@ -325,6 +326,12 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Sun Dec 10 2017 Andrey Cherepanov <cas@altlinux.org> 52.5.2-alt1
+- New ESR version (52.5.2)
+- Fixes:
+  + CVE-2017-7843 Web worker in Private Browsing mode can write IndexedDB data
+- Build with DBUS support (ALT #34302)
+
 * Wed Nov 15 2017 Andrey Cherepanov <cas@altlinux.org> 52.5.0-alt1
 - New ESR version (52.5.0)
 - Fixes:
