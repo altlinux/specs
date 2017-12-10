@@ -1,14 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Wx
 Version: 0.9932
-Release: alt1
+Release: alt2
 
 Summary: wxPerl - Perl bindings for wxWindows
 License: GPL
-Group: System/Libraries
+Group: Development/Perl
 
 URL: http://wxperl.sourceforge.net/
 Source0: http://www.cpan.org/authors/id/M/MD/MDOOTSON/Wx-%{version}.tar.gz
+# Work around BOM_UTF8 clash between wxGTK and Perl. Should be fixed in newer
+# wxGTK, CPAN RT#121464, <http://trac.wxwidgets.org/ticket/13599>.
+Patch0:         Wx-0.9932-Undefine-BOM_UTF8.patch
 
 # Automatically added by buildreq on Wed Oct 19 2011
 BuildRequires: gcc-c++ libwxGTK-contrib-stc-devel libwxGTK-devel perl-Alien-wxWidgets perl-Encode perl-ExtUtils-CBuilder perl-ExtUtils-XSpp perl-IO-String perl-autodie perl-threads xvfb-run
@@ -27,6 +30,7 @@ Development files useful for building Perl applications depending on Wx.
 
 %prep
 %setup -q -n Wx-%{version}
+%patch0 -p1
 
 %ifdef __buildreqs
 # these tests open /usr/share/applications/*.desktop
@@ -68,6 +72,9 @@ xvfb-run -a make test
 %perl_vendor_archlib/Wx/typemap
 
 %changelog
+* Sun Dec 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.9932-alt2
+- added patch for perl 5.26
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.9932-alt1
 - automated CPAN update
 
