@@ -1,6 +1,6 @@
 Name: mpb
 Version: 1.5
-Release: alt1
+Release: alt2
 Summary: MIT Photonic Bands
 License: GPLv2+
 Group: Sciences/Physics
@@ -9,9 +9,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: libctl-devel liblapack-devel zlib-devel
-BuildPreReq: libreadline-devel libfftw-devel guile18 guile18-devel
-BuildPreReq: gcc-fortran gcc-c++ /proc libhdf5-devel libnlopt-devel
+BuildPreReq: /proc
+# Automatically added by buildreq on Sun Dec 10 2017
+# optimized out: glibc-kernheaders-generic guile18 guile18-devel indent libgfortran-devel libgmp-devel libhdf5-8-seq libltdl7-devel libopenblas-devel libquadmath-devel perl python-base zlib-devel
+BuildRequires: gcc-fortran libctl-devel libfftw3-devel libhdf5-devel liblapack-devel libnlopt-devel
 
 Requires: lib%name = %EVR
 
@@ -78,10 +79,10 @@ This package contains development files of MIT Photonic Bands (MPB).
 rm -fR autom4te.cache
 
 %build
+%autoreconf
+
 %add_optflags -I%_includedir/ctl -I%_libdir/hdf5-seq/include
 export CPPFLAGS="%optflags"
-
-%autoreconf
 
 %configure \
 	--enable-shared \
@@ -113,6 +114,9 @@ export CPPFLAGS="%optflags"
 %_libdir/*.so
 
 %changelog
+* Sun Dec 10 2017 Dmitry V. Levin <ldv@altlinux.org> 1.5-alt2
+- Rebuilt with fftw3.
+
 * Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1
 - Version 1.5
 
