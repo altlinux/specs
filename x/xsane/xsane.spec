@@ -1,6 +1,6 @@
 Name: xsane
 Version: 0.999
-Release: alt2
+Release: alt3
 
 Summary: XSane is a graphical frontend for scanners. It uses the library SANE
 Summary(ru_RU.UTF-8): Xsane -- это графическая программа для сканирования, использующая библиотеку SANE
@@ -67,6 +67,7 @@ installed to use this package.
 Summary: Documentation for XSANE
 Summary(ru_RU.UTF-8): Документация для XSANE
 Group: Graphics
+BuildArch: noarch
 Requires: %name = %version-%release
 
 %description doc
@@ -123,6 +124,9 @@ install -p -m644 -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_libdir/gimp/2.0/plug-ins/%name
 
 %changelog
+* Sun Dec 10 2017 Vitaly Lipatov <lav@altlinux.ru> 0.999-alt3
+- make do subpackage noarch
+
 * Thu Apr 03 2014 Vitaly Lipatov <lav@altlinux.ru> 0.999-alt2
 - build with liblcms2 (ALT bug #29938)
 
