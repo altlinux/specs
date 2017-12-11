@@ -12,7 +12,7 @@
 %def_enable	systemd
 
 Name: syslog-ng
-Version: 3.13.1
+Version: 3.13.2
 Release: alt1
 
 Summary: syslog-ng daemon
@@ -282,7 +282,8 @@ fi
 
 /sbin/%name
 /sbin/%name-ctl
-/sbin/%name-debun
+# Exclude package debug bundle generator for avoid many requirements
+%exclude /sbin/%name-debun
 %_bindir/loggen
 %_bindir/pdbtool
 %_bindir/update-patterndb
@@ -409,6 +410,10 @@ fi
 %_pkgconfigdir/%name-test.pc
 
 %changelog
+* Mon Dec 11 2017 Alexey Shabalin <shaba@altlinux.ru> 3.13.2-alt1
+- 3.13.2
+- Exclude package debug bundle generator for avoid many requirements (ATL #34311)
+
 * Mon Dec 04 2017 Alexey Shabalin <shaba@altlinux.ru> 3.13.1-alt1
 - 3.13.1
 - add condition for build with systemd journal support
