@@ -63,7 +63,7 @@
 
 Name:     subversion
 Version:  1.9.2
-Release:  alt3.1
+Release:  alt3.2
 
 Summary:  A version control system
 Group:    Development/Other
@@ -414,7 +414,9 @@ popd
 %endif
 
 %if_with javahl
-%make_build javahl
+# -j16: java.lang.OutOfMemoryError: unable to create new native thread
+#make_build javahl
+make javahl
 %endif
 
 %if_with doc
@@ -760,6 +762,9 @@ fi
 %endif
 
 %changelog
+* Mon Dec 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt3.2
+- NMU: a hack for 16-jobs nodes
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt3.1
 - rebuild with new perl 5.24.1
 
