@@ -1,14 +1,15 @@
 %define oname yakuake
 
 Name:    kde5-%oname
-Version: 3.0.2
-Release: alt2
+Version: 3.0.4
+Release: alt1
 
 Summary: Very powerful Quake style Konsole for KF5
 License: GPLv2, GPLv3 or any later version accepted by the membership of KDE e.V.
 Group: Terminals
 Url: http://extragear.kde.org/apps/yakuake/
 
+# Download from https://download.kde.org/stable/yakuake/
 Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-kf5
@@ -78,6 +79,9 @@ This version is built with KF5.
 %_K5notif/%oname.notifyrc
 
 %changelog
+* Sun Dec 10 2017 Andrey Cherepanov <cas@altlinux.org> 3.0.4-alt1
+- New version.
+
 * Thu Jun 30 2016 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt2
 - Rename package to kde5-yakuake (ALT #32098)
 
