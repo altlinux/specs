@@ -1,8 +1,10 @@
 %def_without smb
+%def_with    gpm
 
 Name: mc
-Version: 4.8.19
-Release: alt2
+Version: 4.8.20
+Release: alt1
+%define ver_date ''
 
 License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
@@ -24,7 +26,7 @@ Patch0: %name-%version-%release.patch
 
 Patch1: mc-4.8.16-alt-wrapper.patch
 Patch2: mc-4.7.5.1-alt-defaults.patch
-Patch3: mc-4.8.16-alt-menu.patch
+Patch3: mc-4.8.20-alt-menu.patch
 Patch4: mc-4.8.19-alt-rpm-select.patch
 
 # Misc
@@ -33,7 +35,7 @@ Patch4: mc-4.8.19-alt-rpm-select.patch
 Patch101: mc-4.7.0.2-savannah-edit-homekey.patch
 
 # http://www.midnight-commander.org/ticket/2496
-Patch102: mc-4.8.16-alt-forceexec.patch
+Patch102: mc-4.8.20-alt-forceexec.patch
 
 # http://www.midnight-commander.org/ticket/34
 Patch103: mc-4.8.6-alt-extfs-udar.patch
@@ -48,9 +50,12 @@ Obsoletes: %name-data
 Obsoletes: %name-locales
 Obsoletes: %name-doc
 
-BuildPreReq: glib2-devel libe2fs-devel libgpm-devel
+BuildPreReq: glib2-devel libe2fs-devel
 BuildPreReq: groff-base cvs libX11-devel unzip
 BuildPreReq: libslang2-devel libmount-devel
+%if_with gpm
+BuildPreReq: libgpm-devel
+%endif
 
 %add_findreq_skiplist %_sysconfdir/mc/edit.indent.rc
 %add_findreq_skiplist %_sysconfdir/mc/edit.spell.rc
@@ -86,7 +91,7 @@ needed for working additional components (some vfs for example).
 # ALT
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+%patch3 -p0
 %patch4 -p1
 
 # Misc
@@ -100,7 +105,7 @@ cat <<EOF > version.h
 #endif
 EOF
 
-sed 's|@@VERSION@@|%version-%release-20170306|' -i version.h
+sed 's|@@VERSION@@|%version-%release%ver_date|' -i version.h
 
 #%%autoreconf
 ./autogen.sh
@@ -127,9 +132,11 @@ install -m644 %SOURCE3 .
 # Install SynCE VFS ( http://www.midnight-commander.org/ticket/2905 )
 install -m755 synce-mcfs/src/synce* %buildroot%_libexecdir/%name/extfs.d/
 
-# .desktop
+# http://www.midnight-commander.org/ticket/2314
+# mc.desktop
 cat <<__EOF__>%name.desktop
 [Desktop Entry]
+Version=1.0
 Type=Application
 Name=Midnight Commander
 Comment=Visual shell and file manager
@@ -139,6 +146,22 @@ Terminal=true
 Categories=ConsoleOnly;System;FileTools;FileManager;
 __EOF__
 install -pD -m644 %name.desktop %buildroot%_desktopdir/%name.desktop
+# mcedit.desktop
+cat <<__EOF__>mcedit.desktop
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=mcedit
+GenericName=Text Editor
+GenericName[ru]=Текстовый редактор
+Comment=Internal file editor of GNU Midnight Commander
+Comment[ru]=Встроенный текстовый редактор GNU Midnight Commander
+Icon=mc
+Exec=mcedit
+Terminal=true
+Categories=ConsoleOnly;Utility;TextEditor;
+__EOF__
+install -pD -m644 mcedit.desktop %buildroot%_desktopdir/mcedit.desktop
 
 # icons
 install -pD -m644 %SOURCE4 %buildroot%_miconsdir/%name.png
@@ -168,6 +191,7 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 
 %_datadir/mc/
 %_desktopdir/%name.desktop
+%_desktopdir/mcedit.desktop
 %_niconsdir/%name.png
 %_miconsdir/%name.png
 
@@ -178,6 +202,13 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Mon Dec 11 2017 Sergey Y. Afonin <asy@altlinux.ru> 4.8.20-alt1
+- 4.8.20
+- added mcedit.desktop (ALT #32528)
+- updated patches:
+    alt-menu.patch
+    alt-forceexec.patch
+
 * Thu Mar 09 2017 Sergey Y. Afonin <asy@altlinux.ru> 4.8.19-alt2
 - added mc-4.8.19-alt-rpm-select.patch,
   removed "Requires: rpm >= 4.13"
