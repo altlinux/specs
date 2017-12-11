@@ -1,6 +1,6 @@
 Name: xar
 Version: 1.5.3
-Release: alt1
+Release: alt2
 
 Summary: The XAR project aims to provide an easily extensible archive format
 License: BSD
@@ -9,6 +9,7 @@ Url: http://code.google.com/p/%name/
 # http://xar.googlecode.com/svn/tags/xar-1.5.3
 Source: %name-%version.tar
 Patch: xar-1.5.3-alt-config.patch
+Patch1: xar-1.5.3-ext2.patch
 Requires: lib%name = %version-%release
 
 # Automatically added by buildreq on Sat Dec 17 2011
@@ -53,6 +54,7 @@ build XAR-based software.
 %prep
 %setup
 %patch -p1
+%patch1 -p2
 # get rid of RPATH.
 sed -ri 's/(RPATH=)".*/\1/' configure.ac
 
@@ -65,6 +67,12 @@ autoconf
 %makeinstall_std
 
 %check
+# prepare test data
+cp -a /bin test-bin || true
+%__subst "s|/bin$|$(pwd)/test-bin|g" test/*
+%__subst "s|bin |test-bin |g" test/*
+%__subst "s| bin$| test-bin|g" test/*
+
 cd test
 export "PATH=%buildroot%_bindir:$PATH"
 export LD_LIBRARY_PATH="%buildroot%_libdir"
@@ -87,6 +95,10 @@ export LD_LIBRARY_PATH="%buildroot%_libdir"
 %_libdir/*.so
 
 %changelog
+* Mon Dec 11 2017 Vitaly Lipatov <lav@altlinux.ru> 1.5.3-alt2
+- fix ext2 build
+- make copy of /bin for test purposes
+
 * Sat Dec 17 2011 Dmitry V. Levin <ldv@altlinux.org> 1.5.3-alt1
 - Updated to 1.5.3.
 - Made it actually work on x86.
