@@ -16,8 +16,8 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.11.3
-Release: alt3%ubt
+Version: 5.11.4
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -41,7 +41,6 @@ Patch104: alt-def-digital-clock.patch
 Patch105: alt-lock-widgets.patch
 Patch106: alt-digital-clock-date.patch
 Patch107: alt-freespacenotifier.patch
-#Patch108: alt-breeze-background.patch
 Patch108: alt-def-background.patch
 Patch109: alt-def-start-empty-session.patch
 Patch110: alt-breeze-loginscreen-focus.patch
@@ -50,7 +49,7 @@ Patch112: alt-breeze-pw-renew.patch
 Patch113: alt-breeze-autoupdate-username.patch
 Patch114: alt-dbus-service.patch
 Patch115: alt-dbus-sessionchange.patch
-Patch116: alt-refresh-menu.patch
+#Patch116: alt-refresh-menu.patch
 Patch117: alt-disable-ctrl-alt-r.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
@@ -165,7 +164,7 @@ popd
 %patch113 -p1
 %patch114 -p1
 %patch115 -p1
-%patch116 -p1
+#%patch116 -p1
 %patch117 -p1
 
 %build
@@ -314,6 +313,9 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Mon Dec 11 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.4-alt1%ubt
+- new version
+
 * Mon Dec 11 2017 Oleg Solovyov <mcpain@altlinux.org> 5.11.3-alt3%ubt
 - fix theme
 
