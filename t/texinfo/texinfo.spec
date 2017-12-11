@@ -1,6 +1,6 @@
 Name: texinfo
-Version: 6.0
-Release: alt3
+Version: 6.5
+Release: alt1
 
 Summary: Tools needed to create Texinfo format documentation files
 License: GPLv3+
@@ -24,7 +24,8 @@ Patch3: texinfo-alt-install-info-rpm.patch
 Patch4: texinfo-alt-texi2dvi-baroque-shells.patch
 Patch5: texinfo-alt-texi2any-version.patch
 Patch6: texinfo-alt-makeinfo-split-size.patch
-Patch7: texinfo-svn6390-index-deterministic.patch
+Patch7: texinfo-alt-perl_vendor_libdir.patch
+Patch8: texinfo-alt-tests.patch
 
 Requires: makeinfo = %version-%release
 Requires: texi2dvi = %version-%release
@@ -39,14 +40,9 @@ BuildRequires: perl(Unicode/EastAsianWidth.pm)
 BuildRequires: perl(Unicode/Normalize.pm)
 %{?!_without_check:%{?!_disable_check:BuildRequires: gzip-utils /dev/pts}}
 
-%define _perl_lib_path %perl_vendor_privlib:%_datadir/texinfo
-%{?filter_from_provides:%filter_from_provides /^perl(/d}
-%{?filter_from_requires:%filter_from_requires /^perl(\(\(Debug\)\?Texinfo\/\|Pod\/Simple\/Texinfo\)/d}
-
 %package -n makeinfo
 Summary: Utilities for translating texinfo source documentation to various other formats
 Group: Publishing
-BuildArch: noarch
 Requires: rpm-macros-info-install = %version-%release
 
 %package -n texi2dvi
@@ -111,22 +107,40 @@ This packages contains new RPM macros for packaging texinfo files.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 install -pm755 %_sourcedir/texi2pdf util/
 
 %build
 rm po/*.gmo po/stamp*
-%autoreconf
+find -name configure.ac -printf '%%h\n' |while read dir; do
+	pushd "$dir"
+	rm aclocal.m4
+	%autoreconf
+	popd
+done
 %configure \
 	--with-external-libintl-perl \
 	--with-external-Text-Unidecode \
 	--with-external-Unicode-EastAsianWidth \
+	--enable-perl-xs \
 	#
-%make_build MAKEINFOFLAGS=--no-split
+%make_build MAKEINFOFLAGS=--no-split \
+	perl_vendor_privlibdir=%perl_vendor_privlib \
+	perl_vendor_archlibdir=%perl_vendor_archlib \
+	#
 xz -k9 NEWS
 
 %install
-%makeinstall_std install-tex TEXMF=%_texmfmain MAKEINFOFLAGS=--no-split
+%makeinstall_std install-tex \
+	TEXMF=%_texmfmain MAKEINFOFLAGS=--no-split \
+	perl_vendor_privlibdir=%perl_vendor_privlib \
+	perl_vendor_archlibdir=%perl_vendor_archlib \
+	#
+
+# these files shouldn't be packaged
+rm %buildroot%perl_vendor_archlib/Texinfo/Convert/XSParagraph/*.{l,}a
+rm %buildroot%perl_vendor_privlib/Texinfo/Convert/XSParagraph/TestXS.pm
 
 # generic/epsf/epsf.tex is packaged in tetex and texlive
 rm -r %buildroot%_texmfmain/tex/generic
@@ -159,8 +173,9 @@ install -pm644 %_sourcedir/update-info-dir.8 %buildroot%_man8dir/
 %find_lang --output=texinfo.lang texinfo texinfo_document
 
 %check
-export ALL_TESTS=yes
-%make_build -k check
+export ALL_TESTS=yes LANG=en_US.utf8
+%make_build -k check VERBOSE=1
+unset ALL_TESTS LANG
 
 %files -f texinfo.lang
 %doc AUTHORS NEWS.* README TODO
@@ -175,6 +190,9 @@ export ALL_TESTS=yes
 %_man5dir/texinfo.*
 %_infodir/texinfo.*
 %_datadir/texinfo/
+%perl_vendor_archlib/Texinfo/
+%perl_vendor_privlib/*Texinfo/
+%perl_vendor_privlib/Pod/Simple/*
 
 %files -n texi2dvi
 %_bindir/*texi2dvi
@@ -203,6 +221,9 @@ export ALL_TESTS=yes
 %_rpmmacrosdir/*
 
 %changelog
+* Sat Dec 09 2017 Dmitry V. Levin <ldv@altlinux.org> 6.5-alt1
+- 6.0 -> 6.5 (closes: #34299).
+
 * Fri Dec 11 2015 Dmitry V. Levin <ldv@altlinux.org> 6.0-alt3
 - makeinfo: changed --version output to be compatible
   with earlier versions of makeinfo.
