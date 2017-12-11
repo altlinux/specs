@@ -17,7 +17,7 @@
 
 Name: kf5-%rname
 Version: 5.11.3
-Release: alt2%ubt
+Release: alt3%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -314,6 +314,9 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Mon Dec 11 2017 Oleg Solovyov <mcpain@altlinux.org> 5.11.3-alt3%ubt
+- fix theme
+
 * Mon Dec 04 2017 Oleg Solovyov <mcpain@altlinux.org> 5.11.3-alt2%ubt
 - remove redundnant Password*.qml
 
