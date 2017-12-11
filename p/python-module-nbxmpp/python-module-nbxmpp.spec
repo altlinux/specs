@@ -1,6 +1,6 @@
 %global modname nbxmpp
 Name: python-module-%modname
-Version: 0.5.6
+Version: 0.6.1
 Release: alt1
 Summary: Python library for non-blocking use of Jabber/XMPP
 License: GPLv3
@@ -9,7 +9,7 @@ Group: Development/Python
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-Source0: https://python-nbxmpp.gajim.org/downloads/python-%modname-%version.tar.bz2
+Source0: https://python-nbxmpp.gajim.org/downloads/%modname-%version.tar.gz
 BuildArch: noarch
 BuildRequires: python-devel
 Requires: python-module-OpenSSL
@@ -40,7 +40,7 @@ to use Jabber/XMPP networks in a non-blocking way.
 This sub-package contains the developer documentation for python-nbxmpp.
 
 %prep
-%setup -n python-%modname-%version
+%setup -n %modname-%version
 
 %build
 # let's have no executable files in doc/
@@ -59,6 +59,9 @@ find doc/ -type f -perm /111 -exec chmod -x {} +
 %doc COPYING doc/*
 
 %changelog
+* Tue Dec 12 2017 Ilya Mashkin <oddity@altlinux.ru> 0.6.1-alt1
+- 0.6.1 (Closes: #34321)
+
 * Sat Dec 09 2017 Ilya Mashkin <oddity@altlinux.ru> 0.5.6-alt1
 - 0.5.6
 
