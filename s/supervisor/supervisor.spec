@@ -1,6 +1,6 @@
 Name: supervisor
-Version: 3.3.1
-Release: alt2
+Version: 3.3.3
+Release: alt1
 
 Summary: A System for Allowing the Control of Process State on UNIX
 
@@ -42,7 +42,7 @@ number of processes on UNIX-like operating systems.
 
 mkdir -p %buildroot/%_sysconfdir
 mkdir -p %buildroot/%_sysconfdir/supervisord.d
-mkdir -p %buildroot/%_sysconfdir/logrotate.d/
+mkdir -p %buildroot/%_logrotatedir/
 mkdir -p %buildroot/%_unitdir
 mkdir -p %buildroot/%_logdir/%name
 mkdir -p %buildroot/%_runtimedir/supervisor
@@ -50,7 +50,7 @@ chmod 770 %buildroot/%_logdir/%name
 chmod 770 %buildroot/%_runtimedir/supervisor
 install -p -m 644 %SOURCE1 %buildroot/%_unitdir/supervisord.service
 install -p -m 644 %SOURCE2 %buildroot/%_sysconfdir/supervisord.conf
-install -p -m 644 %SOURCE3 %buildroot/%_sysconfdir/logrotate.d/supervisor
+install -p -m 644 %SOURCE3 %buildroot/%_logrotatedir/supervisor
 install -D -p -m 0644 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
 %__subst s'/^#!.*//' $( find %buildroot/%python_sitelibdir/supervisor/ -type f)
 mkdir -p %buildroot%_sysconfigdir/
@@ -62,7 +62,7 @@ rm -rf %buildroot/%python_sitelibdir/supervisor/meld3/
 rm -f %buildroot%prefix/doc/*.txt
 
 %files
-%doc CHANGES.txt COPYRIGHT.txt README.rst LICENSES.txt TODO.txt
+%doc CHANGES.txt COPYRIGHT.txt README.rst LICENSES.txt
 %dir %_logdir/%name
 %_unitdir/supervisord.service
 %python_sitelibdir/*
@@ -75,10 +75,13 @@ rm -f %buildroot%prefix/doc/*.txt
 
 %config(noreplace) %_sysconfdir/supervisord.conf
 %dir %_sysconfdir/supervisord.d/
-%config(noreplace) %_sysconfdir/logrotate.d/supervisor
+%config(noreplace) %_logrotatedir/supervisor
 %config(noreplace) %_sysconfigdir/supervisord
 
 %changelog
+* Mon Dec 11 2017 Vitaly Lipatov <lav@altlinux.ru> 3.3.3-alt1
+- new version 3.3.3 (with rpmrb script)
+
 * Tue Mar 21 2017 Lenar Shakirov <snejok@altlinux.ru> 3.3.1-alt2
 - systemd ready now
 - Move socket to /var/run/supervisor. Fedora bug #1247877
