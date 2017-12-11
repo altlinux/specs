@@ -1,6 +1,6 @@
 Name: woff2
 Version: 1.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: WOFF2 compress/decompress tools
 
@@ -36,6 +36,9 @@ cp -a woff2_compress woff2_decompress %buildroot%_bindir/
 %_bindir/woff2_decompress
 
 %changelog
+* Mon Dec 11 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1.1
+- autorebuild with libbrotli-1.0.2 (soname changes)
+
 * Mon Dec 11 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1
 - new version 1.0.2 (with rpmrb script)
 
