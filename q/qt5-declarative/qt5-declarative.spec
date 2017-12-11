@@ -3,8 +3,8 @@
 %def_disable bootstrap
 
 Name: qt5-declarative
-Version: 5.9.2
-Release: alt3%ubt
+Version: 5.9.3
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
@@ -240,6 +240,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %_bindir/rpmbqml-qmlinfo
 
 %changelog
+* Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
+- new version
+
 * Wed Oct 25 2017 Oleg Solovyov <mcpain@altlinux.org> 5.9.2-alt3%ubt
 - add rpm-build-qml package
 

@@ -5,8 +5,8 @@
 %def_disable bootstrap
 
 Name: qt5-webkit
-Version: 5.9.2
-Release: alt2%ubt
+Version: 5.9.3
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -94,7 +94,7 @@ Requires: %name-common = %EVR
 syncqt.pl-qt5 Source -version %version -private
 
 # fix version
-#sed -i 's|^MODULE_VERSION[[:space:]]*=.*|MODULE_VERSION = %version|' .qmake.conf
+sed -i 's|^MODULE_VERSION[[:space:]]*=.*|MODULE_VERSION = %version|' .qmake.conf
 
 # remove rpath
 find ./ -type f -name \*.pr\* | \
@@ -163,6 +163,9 @@ export QT_HASH_SEED=0
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
+- new version
+
 * Wed Oct 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt2%ubt
 - turn off multimedia support
 

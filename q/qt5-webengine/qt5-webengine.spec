@@ -13,7 +13,7 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.9.2
+Version: 5.9.3
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -23,19 +23,17 @@ License: GPLv2 / GPLv3 / LGPLv3
 
 Source: %qt_module-opensource-src-%version.tar
 # FC
-Patch2: qtwebengine-opensource-src-5.9.0-linux-pri.patch
+Patch2: qtwebengine-opensource-src-5.9.2-linux-pri.patch
 Patch3: qtwebengine-opensource-src-5.6.0-no-icudtl-dat.patch
 Patch4: qtwebengine-opensource-src-5.9.0-fix-extractcflag.patch
-Patch5: qtwebengine-opensource-src-5.9.0-no-neon.patch
-Patch6: qtwebengine-opensource-src-5.9.0-system-nspr-prtime.patch
-Patch7: qtwebengine-opensource-src-5.9.0-system-icu-utf.patch
-Patch8: qtwebengine-opensource-src-5.9.1-no-sse2.patch
-Patch9: qtwebengine-opensource-src-5.9.2-arm-fpu-fix.patch
-Patch10: qtwebengine-opensource-src-5.9.0-openmax-dl-neon.patch
-Patch11: qtwebengine-opensource-src-5.9.0-skia-neon.patch
-Patch12: qtwebengine-opensource-src-5.9.0-webrtc-neon-detect.patch
-Patch13: qtwebengine-opensource-src-5.9.0-gn-bootstrap-verbose.patch
-Patch14: qtwebengine-opensource-src-5.9.0-system-re2.patch
+Patch5: qtwebengine-opensource-src-5.9.0-system-nspr-prtime.patch
+Patch6: qtwebengine-opensource-src-5.9.0-system-icu-utf.patch
+Patch7: qtwebengine-opensource-src-5.9.1-no-sse2.patch
+Patch8: qtwebengine-opensource-src-5.9.2-arm-fpu-fix.patch
+Patch9: qtwebengine-opensource-src-5.9.0-openmax-dl-neon.patch
+Patch10: qtwebengine-opensource-src-5.9.0-webrtc-neon-detect.patch
+Patch11: qtwebengine-opensource-src-5.9.0-gn-bootstrap-verbose.patch
+Patch12: qtwebengine-opensource-src-5.9.0-system-re2.patch
 # ATL
 Patch100: alt-pepflashplayer.patch
 Patch101: alt-find-icu.patch
@@ -133,10 +131,7 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
-%patch11 -p1
 %patch12 -p1
-%patch13 -p1
-%patch14 -p1
 %patch100 -p1
 %patch101 -p1
 %if %is_ffmpeg
@@ -202,8 +197,8 @@ export PATH=$PWD/bin:$PATH
 mkdir -p %_target_platform/lib
 ln -s ../src/core/Release/lib/libv8.so %_target_platform/lib/libv8.so
 %endif
-NUM_PROCS=$NPROCS
-[ -n "$NUM_PROCS" ] || NUM_PROCS=%__nprocs
+NUM_PROCS="%__nprocs"
+[ -n "$NUM_PROCS" -a "$NUM_PROCS" != "1"  ] || NUM_PROCS=6
 export STRIP=strip
 export NINJAFLAGS="-v -j $NUM_PROCS"
 export NINJA_PATH=%_bindir/ninja-build
@@ -285,6 +280,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
+- new version
+
 * Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
 - new version
 

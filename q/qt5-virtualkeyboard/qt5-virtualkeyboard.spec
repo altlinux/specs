@@ -2,7 +2,7 @@
 %global qt_module qtvirtualkeyboard
 
 Name: qt5-virtualkeyboard
-Version: 5.9.2
+Version: 5.9.3
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -95,6 +95,9 @@ export QT_HASH_SEED=0
 %_qt5_docdir/*
 
 %changelog
+* Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
+- new version
+
 * Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
 - new version
 
