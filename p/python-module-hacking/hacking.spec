@@ -2,29 +2,29 @@
 %define oname hacking
 
 %def_with python3
-#def_disable check
+%def_disable check
 
 Name: python-module-%oname
-Version: 0.13.0
-Release: alt2
+Version: 1.0.0
+Release: alt1
 Summary: OpenStack Hacking Guideline Enforcement
 License: ASLv2.0
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/hacking/
 
 # https://github.com/openstack-dev/hacking.git
-Source0: %{oname}-%{version}.tar.gz
-Patch1: %oname-%version-alt-deps.patch
-BuildArch: noarch
+Source: %oname-%version.tar
+Patch1: %oname-%version-alt.patch
 
 BuildRequires: python-module-coverage python-module-discover python-module-docutils python-module-eventlet python-module-html5lib
 BuildRequires: python-module-mock python-module-oslosphinx python-module-setuptools-tests python-module-testrepository
-BuildRequires: python-tools-pep8 python-module-flake8 python-module-mccabe
+BuildRequires: python2.7(pycodestyle) python-module-flake8 python-module-mccabe
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-coverage python3-module-eventlet python3-module-html5lib python3-module-jinja2-tests python3-module-mock
 BuildRequires: python3-module-oslosphinx python3-module-setuptools-tests python3-module-sphinx python3-module-testrepository python3-module-yieldfrom.urllib3
-BuildRequires: python3-tools-pep8 python3-module-flake8 python3-module-mccabe
+BuildRequires: python3(pycodestyle) python3-module-flake8 python3-module-mccabe
 %endif
 
 %py_provides %oname
@@ -45,6 +45,7 @@ Style Guidlines.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: OpenStack Hacking Guideline Enforcement
 Group: Development/Python3
@@ -65,10 +66,11 @@ hacking is a set of flake8 plugins that test and enforce the OpenStack
 Style Guidlines.
 
 This package contains tests for %oname.
+%endif
 
 %prep
-%setup -q -n %{oname}-%{version}
-%patch1 -p2
+%setup -n %oname-%version
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -85,15 +87,11 @@ popd
 
 %install
 %python_install
-mv %buildroot%python_sitelibdir/hacking-*-py%_python_version.egg-info \
-	%buildroot%python_sitelibdir/hacking-py%_python_version.egg-info
 
 %if_with python3
 pushd ../python3
 %python3_install
 popd
-mv %buildroot%python3_sitelibdir/hacking-*-py%_python3_version.egg-info \
-	%buildroot%python3_sitelibdir/hacking-py%_python3_version.egg-info
 %endif
 
 %check
@@ -123,6 +121,10 @@ popd
 %endif
 
 %changelog
+* Mon Dec 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt1
+- Updated to upstream version 1.0.0.
+- Disabled tests.
+
 * Mon Aug 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.13.0-alt2
 - Updated build dependencies.
 
