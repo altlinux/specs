@@ -1,5 +1,5 @@
 Name: libbrotli
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Library implementing the Brotli compression algorithm
@@ -95,6 +95,8 @@ applications that want to make use of libcerror.
 
 %install
 %makeinstall_std
+# ignore static libs
+rm -f %buildroot%_libdir/*.a
 
 %check
 LD_LIBRARY_PATH=$(pwd) make test
@@ -103,12 +105,15 @@ LD_LIBRARY_PATH=$(pwd) make test
 %_bindir/brotli
 
 %files -n libbrotlicommon0
+%_libdir/libbrotlicommon.so.1
 %_libdir/libbrotlicommon.so.%version
 
 %files -n libbrotlidec0
+%_libdir/libbrotlidec.so.1
 %_libdir/libbrotlidec.so.%version
 
 %files -n libbrotlienc0
+%_libdir/libbrotlienc.so.1
 %_libdir/libbrotlienc.so.%version
 
 %files devel
@@ -118,6 +123,9 @@ LD_LIBRARY_PATH=$(pwd) make test
 %doc README.md LICENSE CONTRIBUTING.md
 
 %changelog
+* Mon Dec 11 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1
+- new version 1.0.2 (with rpmrb script)
+
 * Tue Oct 17 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
 - new version 1.0.1 (with rpmrb script)
 
