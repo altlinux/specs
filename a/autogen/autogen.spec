@@ -1,20 +1,21 @@
 Name: autogen
 Version: 5.18.12
-Release: alt1
+Release: alt2
 
 Summary: AutoGen - The Automated Program Generator
 License: %gpl3plus
 Group: Development/Other
 Url: http://www.gnu.org/software/autogen/
+Packager: Mikhail Efremov <sem@altlinux.org>
 
 Source: %name-%version.tar
 Patch1: autogen-5.18.4-masquerade-deps.patch
 
-BuildPreReq: rpm-build-licenses rpm-build-compat
+BuildPreReq: rpm-build-licenses
 
-BuildPreReq: texi2html guile22-devel libxml2-devel
-# explicitly added texinfo for info files
-BuildRequires: texinfo
+# Automatically added by buildreq on Sun Dec 10 2017
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 guile22 libgc-devel libgmp-devel perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl pkg-config python-base
+BuildRequires: guile22-devel libxml2-devel makeinfo texi2html
 
 %define _unpackaged_files_terminate_build 1
 
@@ -67,6 +68,7 @@ This package is needed to write programs that use AutoOpts API.
 %prep
 %setup
 %patch1 -p1
+rm doc/autogen.info*
 
 %build
 %autoreconf
@@ -106,6 +108,9 @@ This package is needed to write programs that use AutoOpts API.
 %_man3dir/*.3.*
 
 %changelog
+* Sun Dec 10 2017 Dmitry V. Levin <ldv@altlinux.org> 5.18.12-alt2
+- Regenerated texinfo documentation.
+
 * Mon Sep 04 2017 Mikhail Efremov <sem@altlinux.org> 5.18.12-alt1
 - Updated to 5.18.12.
 
