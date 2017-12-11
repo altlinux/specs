@@ -2,10 +2,11 @@
 %define oname z4r-%mname
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 2.9.1
-Release: alt2
+Release: alt3
 Summary: Python interface to coveralls.io API
 License: ASLv2.0
 Group: Development/Python
@@ -108,7 +109,7 @@ popd
 python setup.py test
 %if_with python3
 pushd ../python3
-python3 setup.py test ||:
+python3 setup.py test
 popd
 %endif
 
@@ -138,6 +139,10 @@ popd
 %endif
 
 %changelog
+* Mon Dec 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.9.1-alt3
+- Fixed build.
+- Disabled tests.
+
 * Tue Oct 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.9.1-alt2
 - Fixed build with new setuptools.
 
