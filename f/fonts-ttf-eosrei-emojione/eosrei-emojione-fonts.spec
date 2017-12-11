@@ -6,7 +6,7 @@ Group: System/Fonts/True type
 
 Name:           fonts-ttf-eosrei-emojione
 Version:        1.0
-Release:        alt1_5
+Release:        alt2_5
 Summary:        A color emoji font
 
 # Note, the link below is the last "Android" build of the EmijoOne font
@@ -84,11 +84,15 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %files
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/emojione-android.ttf
 %doc LICENSE-CC-BY.txt
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Mon Dec 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_5
+- added font dir (closes: #34316)
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_5
 - new version
 
