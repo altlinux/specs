@@ -7,8 +7,8 @@
 %define sddm_confdir %x11confdir/sddm
 
 Name: sddm
-Version: 0.16.0
-Release: alt2%ubt
+Version: 0.17.0
+Release: alt1%ubt
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -159,6 +159,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Mon Dec 11 2017 Sergey V Turchin <zerg@altlinux.org> 0.17.0-alt1%ubt
+- new version
+
 * Thu Nov 30 2017 Oleg Solovyov <mcpain@altlinux.org> 0.16.0-alt2%ubt
 - fix password renew for domain users
 
