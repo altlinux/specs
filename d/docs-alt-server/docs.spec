@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 8.2
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -19,6 +19,7 @@ BuildArch: noarch
 
 Source: %name-%version-%release.tar
 
+Obsoletes: docs-basealt-desktop <= 8.0-alt2
 Conflicts: %(for n in %variants ; do [ "$n" = %name ] || echo -n "$n "; done)
 
 BuildRequires(pre):rpm-build-licenses
@@ -43,6 +44,9 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Thu Dec 11 2017 Elena Mishina <lepata@altlinux.org> 8.2-alt2
+- fix conflict package
+
 * Thu Nov 30 2017 Elena Mishina <lepata@altlinux.org> 8.2-alt1
 - updated to latest public distr
 - fix typo
