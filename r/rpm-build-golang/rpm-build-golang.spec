@@ -1,6 +1,6 @@
 Name:      rpm-build-golang
 Version:   1.0
-Release:   alt5
+Release:   alt6
 Summary:   RPM build enviroment to build GO packages
 Group:     Development/Other
 License:   GPL
@@ -55,6 +55,9 @@ cp %SOURCE7 %buildroot%_rpmlibdir/golang.req.files
 %_rpmmacrosdir/golang
 
 %changelog
+* Mon Dec 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt6
+- NMU: added %gotest
+
 * Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5
 - NMU: moved macros to %%_rpmmacrosdir/
 - added rpm-macros-golang
