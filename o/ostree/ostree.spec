@@ -1,5 +1,5 @@
 Name: ostree
-Version: 2017.12
+Version: 2017.13
 Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
@@ -92,6 +92,10 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 %configure --disable-silent-rules \
 	   --without-dracut \
 	   --without-grub2-mkconfig-path
+
+# hack to fix missed dirname declaration
+echo "#include <libgen.h>" >>config.h
+
 %make_build
 
 %install
@@ -132,6 +136,9 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 2017.13-alt1
+- new version 2017.13 (with rpmrb script)
+
 * Sun Oct 08 2017 Vitaly Lipatov <lav@altlinux.ru> 2017.12-alt1
 - new version 2017.12 (with rpmrb script)
 
