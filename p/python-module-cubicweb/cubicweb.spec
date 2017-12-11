@@ -1,14 +1,15 @@
 %define oname cubicweb
 Name: python-module-%oname
-Version: 3.25.2
+Version: 3.25.3
 Release: alt1
 Summary: A repository of entities / relations for knowledge management
 License: LGPL
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/cubicweb/
 
 Source: %name-%version.tar
-BuildArch: noarch
+Patch1: %oname-%version-alt-build.patch
 
 BuildRequires: python-dev python-module-setuptools-tests
 BuildRequires: python-module-logilab-common python-module-logilab-mtconverter
@@ -24,6 +25,8 @@ BuildRequires: python-module-pycrypto python-module-fyzz
 BuildRequires: python-module-vobject python-module-rdflib
 BuildRequires: python-module-logilab-constraint
 BuildRequires: python-module-yapps2
+BuildRequires: python2.7(wsgicors) python2.7(pyramid.config) python2.7(webtest) python2.7(pyramid_multiauth)
+BuildRequires: python2.7(backports.tempfile)
 
 %py_requires twisted.internet twisted.web logilab.common docutils rdflib
 %py_requires logilab.mtconverter logilab.database PIL vobject
@@ -72,6 +75,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %python_build_debug
@@ -104,6 +108,9 @@ python setup.py test
 %doc doc/*
 
 %changelog
+* Mon Dec 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.25.3-alt1
+- Updated to upstream version 3.25.3.
+
 * Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.25.2-alt1
 - Updated to upstream version 3.25.2.
 
