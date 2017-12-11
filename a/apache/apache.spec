@@ -26,10 +26,12 @@
 %define suexec_docroot %apache_datadir
 
 %def_with mod_deflate
+# conflicts with apache2
+%def_without webserver_alias
 
 Name: apache
 Version: %apache_version
-Release: %branch_release alt8.1.1
+Release: %branch_release alt9
 
 Summary: The most widely used Web server on the Internet
 License: %asl
@@ -39,9 +41,15 @@ Url: http://httpd.apache.org
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: %name-base = %version-%release
+%if_with webserver_alias
 Requires: webserver-cgi-bin
 Requires: webserver-html
 Requires: webserver-icons
+%else
+Requires: apache-cgi-bin = %EVR
+Requires: apache-html = %EVR
+Requires: apache-icons = %EVR
+%endif
 
 # http://httpd.apache.org/dist/httpd/apache_%apache_vanilla_version.tar.gz
 # ftp://apache.lexa.ru/pub/apache-rus/patches_%apache_version.tar.gz
@@ -113,6 +121,7 @@ Patch97: mod_perl-1.29-CVE-2007-1349.patch
 Patch98: mp1+perl5.14.diff
 Patch99: mod_perl-perl-5.16.patch
 Patch100: mod_perl-perl-5.20.patch
+Patch101: mod_perl-perl-5.26.patch
 
 BuildRequires(pre): rpm-macros-branch
 BuildRequires(pre): rpm-macros-apache
@@ -312,9 +321,15 @@ Summary(uk_UA.KOI8-U): Веб-сервер Russian Apache з╕ вбудованим ╕нтерпретатором P
 Group: System/Servers
 Icon: mod_perl.gif
 Requires: %name-mod_perl-base = %version-%release
+%if_with webserver_alias
 Requires: webserver-cgi-bin
 Requires: webserver-html
 Requires: webserver-icons
+%else
+Requires: apache-cgi-bin = %EVR
+Requires: apache-html = %EVR
+Requires: apache-icons = %EVR
+%endif
 
 %description mod_perl
 Apache is a powerful, full-featured, efficient and freely-available
@@ -836,6 +851,7 @@ pushd ../mod_perl-%mod_perl_version
 %patch98 -p1
 %patch99 -p1
 %patch100 -p1
+%patch101 -p1
 popd
 
 chmod -x $(find htdocs -type f)
@@ -1461,6 +1477,12 @@ fi
 # - macro for %_cachedir/httpd/
 
 %changelog
+* Mon Dec 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.42rusPL30.24-alt9
+- NMU:
+- added mod_perl-perl-5.26.patch
+- added %def_without webserver_alias due to conflicts with apache2
+- NOTE: those conflicts pop up due to migration to rpm 4.13.
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.42rusPL30.24-alt8.1.1
 - rebuild with new perl 5.24.1
 
