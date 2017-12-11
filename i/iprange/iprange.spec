@@ -1,5 +1,5 @@
 Name: iprange
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Url: http://firehol.org
@@ -33,6 +33,9 @@ iprange - manage IP ranges.
 %_bindir/%name
 
 %changelog
+* Mon Dec 11 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.4-alt1
+- new version 1.0.4 (with rpmrb script)
+
 * Thu Jan 05 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt1
 - new version 1.0.3 (with rpmrb script)
 
