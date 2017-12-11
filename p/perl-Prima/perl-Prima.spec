@@ -1,3 +1,5 @@
+##define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_archlib -MPrima::Const'
+BuildRequires: perl(Text/Bidi.pm)
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -14,6 +16,8 @@ BuildRequires: /usr/bin/xvfb-run perl(AnyEvent.pm) perl(AnyEvent/Socket.pm) perl
 %add_findreq_skiplist */Prima/examples/*
 # -M Prima::Drawable
 %add_findreq_skiplist */Prima/Drawable/*
+%add_findreq_skiplist */Prima/Buttons.pm
+%add_findreq_skiplist */Prima/*
 
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
@@ -34,7 +38,7 @@ BuildRequires: /usr/bin/xvfb-run perl(AnyEvent.pm) perl(AnyEvent/Socket.pm) perl
 
 Name:           perl-Prima
 Version:        1.52
-Release:        alt1_3
+Release:        alt2_3
 Summary:        Perl graphic toolkit
 # img/codec_jpeg.c:     EXIF parser is based on io-jpeg.c from gdk-pixbuf
 #                       (LGPLv2+)
@@ -156,6 +160,9 @@ Prima-related code together with standard Perl Test:: suite.
 %prep
 %setup -q -n Prima-%{version}
 
+#sed -i -e '/use Prima /d' Prima/Const.pm
+#sed -i -e 's/use Prima::Const/require Prima::Const/' Prima/Classes.pm
+
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1 OPTIMIZE="$RPM_OPT_FLAGS" \
     CYGWIN_WINAPI=0 \
@@ -194,6 +201,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -delete
 %{perl_vendor_archlib}/Prima/Test.*
 
 %changelog
+* Mon Dec 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.52-alt2_3
+- hack; fixed build for perl 5.26
+
 * Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 1.52-alt1_3
 - new version
 
