@@ -4,17 +4,15 @@
 
 Name: python-module-%oname
 Version: 4.1.2
-Release: alt1
-
+Release: alt2
 Summary: OAuth 2.0 client library
 License: Apache Software License
 Group: Development/Python
-
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/oauth2client/
 
 # https://github.com/google/oauth2client.git
 Source: %name-%version.tar
-BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
 BuildRequires: python-module-docutils python-module-html5lib python-module-httplib2 python-module-keyring python-module-mox python-module-objects.inv python-module-pyasn1-modules python-module-rsa python-module-setuptools-tests 
@@ -24,6 +22,7 @@ BuildRequires: python-module-mock python-module-fasteners python-module-flask
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-httplib2 python3-module-keyring python3-module-mox python3-module-pyasn1-modules python3-module-rsa python3-module-setuptools-tests
 BuildRequires: python3-module-mock python3-module-fasteners python3-module-flask
+BuildRequires: python3(sqlalchemy)
 %endif
 
 %setup_python_module %oname
@@ -164,10 +163,12 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 #cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
-python setup.py test
+rm -rf tests/contrib/{django_util,appengine}
+py.test
 %if_with python3
 pushd ../python3
-python3 setup.py test ||:
+rm -rf tests/contrib/{django_util,appengine}
+py.test3
 popd
 %endif
 
@@ -215,6 +216,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.2-alt2
+- Fixed build.
+
 * Fri Aug 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.2-alt1
 - Updated to upstream release 4.1.2.
 
