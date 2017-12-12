@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 5.1.35
-Release: alt2
+Version: 5.1.39
+Release: alt3
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -52,7 +52,6 @@ Patch23: qemu-server-migrate-local-devices.patch
 Patch24: pve-manager-postfix-ntpd.patch
 Patch25: pve-manager-gettext.patch
 Patch26: pve-ha-manager-watchdog.patch
-Patch27: pve-manager-pve_ceph_pools.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -75,7 +74,7 @@ Tool to manage Linux Containers on PVE
 
 %package -n pve-firewall
 Summary: PVE Firewall
-Version: 3.0.3
+Version: 3.0.5
 Group: System/Servers
 Requires: ipset iptables iptables-ipv6 shorewall shorewall6 iproute2 >= 4.10.0
 
@@ -84,7 +83,7 @@ This package contains the PVE Firewall
 
 %package -n pve-ha-manager
 Summary: PVE HA Manager
-Version: 2.0.3
+Version: 2.0.4
 Group: System/Servers
 
 %description -n pve-ha-manager
@@ -111,7 +110,7 @@ This package contains a common code base used by pve-container and qemu-server
 
 %package -n pve-http-server
 Summary: PVE Asynchrounous HTTP Server Implementation
-Version: 2.0.6
+Version: 2.0.8
 Group: System/Servers
 Requires: fonts-font-awesome
 
@@ -148,7 +147,6 @@ This is used to implement the PVE REST API
 %patch24 -p0 -b .postfix-3
 %patch25 -p0 -b .gettext
 %patch26 -p0 -b .watchdog
-%patch27 -p0 -b .pve_ceph_pools
 
 install -m0644 %SOURCE5 pve-manager/po/ru.po
 
@@ -449,6 +447,15 @@ __EOF__
 %_datadir/libpve-http-server-perl
 
 %changelog
+* Tue Dec 12 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.1.39-alt3
+- pve-manager 5.1-39
+- pve-firewall 3.0-5
+- pve-ha-manager 2.0-4
+- pve-http-server 2.0-8
+
+* Tue Nov 28 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.1.35-alt1.M80P.1
+- backport to p8 branch
+
 * Mon Oct 23 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.1.35-alt2
 - pve-manager 5.1-35
 

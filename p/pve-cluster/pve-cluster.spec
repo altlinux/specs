@@ -1,7 +1,7 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
-Version: 5.0.15
-Release: alt2
+Version: 5.0.19
+Release: alt3
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -52,7 +52,7 @@ cd data
 
 %install
 install -pD -m644 debian/%name.service %buildroot%systemd_unitdir/%name.service
-install -pD -m644 debian/sysctl.conf %buildroot%_sysconfdir/sysctl.d/pve-cluster.conf
+install -pD -m644 debian/sysctl.d/pve.conf %buildroot%_sysconfdir/sysctl.d/pve-cluster.conf
 cd data
 %make DESTDIR=%buildroot install
 cd ../pve-access-control
@@ -107,7 +107,6 @@ fi
 %_sysconfdir/bash_completion.d/pvecm
 %dir %_sysconfdir/network
 %ghost %_sysconfdir/network/interfaces
-%config(noreplace) %_sysconfdir/sysconfig/%name
 %ghost %_sysconfdir/cron.d/vzdump
 %_sysconfdir/sysctl.d/pve-cluster.conf
 %_bindir/create_pmxcfs_db
@@ -143,6 +142,12 @@ fi
 %_man1dir/pveum.1*
 
 %changelog
+* Tue Dec 12 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.19-alt3
+- 5.0-19
+
+* Tue Nov 28 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.15-alt1.M80P.1
+- backport to p8 branch
+
 * Wed Nov 01 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.15-alt2
 - rebuild with rrd 1.7.0
 
