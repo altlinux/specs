@@ -1,6 +1,5 @@
 %define _unpackaged_files_terminate_build 1
 
-%define java_bin /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.144-1.b01.x86_64/jre/bin
 %define _libexecdir /usr/libexec
 %define plugin_dir %_libdir/dirsrv/plugins
 %define _localstatedir %_var
@@ -32,7 +31,7 @@
 
 Name: freeipa
 Version: 4.6.1
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -234,7 +233,7 @@ Requires: nss-utils >= 3.14.3
 Requires: krb5-kdc >= %krb5_version
 Requires: krb5-kinit >= %krb5_version
 Requires: libsasl2-plugin-gssapi
-Requires: ntp
+Requires: openntpd
 Requires: apache2-base >= 2.4.6
 %if 0%with_python3
 Requires: python3-mod_wsgi
@@ -431,7 +430,8 @@ Requires: python-module-ipaclient = %version-%release
 %endif
 Requires: python-module-pyldap
 Requires: libsasl2-plugin-gssapi
-Requires: ntp
+Requires: openntpd
+Requires: ntpdate
 Requires: curl
 # NIS domain name config: /usr/lib/systemd/system/*-domainname.service
 #Requires: initscripts
@@ -707,7 +707,6 @@ cp -r %_builddir/freeipa-%version %_builddir/freeipa-%version-python3
 # UI compilation segfaulted on some arches when the stack was lower (#1040576)
 export JAVA_STACK_SIZE="8m"
 # PATH is workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1005235
-export PATH=%java_bin:/usr/bin:/usr/sbin:$PATH
 export PYTHON=%__python
 # Workaround: make sure all shebangs are pointing to Python 2
 # This should be solved properly using setuptools
@@ -1022,15 +1021,6 @@ if [ $1 -gt 1 ] ; then
             mv -Z /etc/krb5.conf.ipanew /etc/krb5.conf
             cp /etc/ipa/ca.crt /var/lib/ipa-client/pki/kdc-ca-bundle.pem
             cp /etc/ipa/ca.crt /var/lib/ipa-client/pki/ca-bundle.pem
-        fi
-    fi
-
-    if [ -f '/etc/sysconfig/ntpd' -a $restore -ge 2 ]; then
-        if grep -E -q 'OPTIONS=.*-u ntp:ntp' /etc/sysconfig/ntpd 2>/dev/null; then
-            sed -r '/OPTIONS=/ { s/\s+-u ntp:ntp\s+/ /; s/\s*-u ntp:ntp\s*// }' /etc/sysconfig/ntpd >/etc/sysconfig/ntpd.ipanew
-            mv -Z /etc/sysconfig/ntpd.ipanew /etc/sysconfig/ntpd
-
-            /bin/systemctl condrestart ntpd.service 2>&1 ||:
         fi
     fi
 
@@ -1443,6 +1433,10 @@ fi
 %endif # with_ipatests
 
 %changelog
+* Tue Dec 12 2017 Stanislav Levin <slev@altlinux.org> 4.6.1-alt2%ubt
+- Add openntpd support (based on patches from Mikhail Efremov) (closes: #34307)
+- Save and restore state of apache modules during installation/uninstallation
+
 * Sat Oct 07 2017 Stanislav Levin <slev@altlinux.org> 4.6.1-alt1%ubt
 - 4.4.4 -> 4.6.1
 
