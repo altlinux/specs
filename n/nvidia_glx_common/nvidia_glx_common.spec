@@ -13,8 +13,8 @@
 %define nv_version 384
 %define nv_release 98
 %define nv_minor %nil
-%define pkg_rel alt185%ubt
-%define set_gl_nvidia_ver 0.20.2
+%define pkg_rel alt186%ubt
+%define set_gl_nvidia_ver 0.20.3
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -273,6 +273,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Tue Dec 12 2017 Sergey V Turchin <zerg@altlinux.org> 384.98-alt186%ubt
+- small code optimization
+
 * Wed Nov 29 2017 Sergey V Turchin <zerg@altlinux.org> 384.98-alt185%ubt
 - recognize VGA 3D controllers
 
