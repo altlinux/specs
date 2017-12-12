@@ -2,14 +2,14 @@
 %define oname WebGrid
 Name: python-module-%oname
 Version: 0.1.34
-Release: alt1
+Release: alt2
 Summary: A library for rendering HTML tables and Excel files from SQLAlchemy models
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/WebGrid/
 
-Source: %{oname}-%{version}.tar
-BuildArch: noarch
+Source: %oname-%version.tar
 
 BuildRequires: python-devel python-module-setuptools-tests
 BuildRequires: python-module-BlazeUtils python-module-FormEncode
@@ -22,9 +22,10 @@ BuildRequires: python-module-nose python-module-Flask-Bootstrap
 BuildRequires: python-module-flask_sqlalchemy python-module-Flask-WebTest
 BuildRequires: python-module-wrapt python-module-xlrd
 BuildRequires: python-module-xlwt python-module-PasteDeploy
+BuildRequires: python2.7(arrow) python2.7(sqlalchemy_utils)
 
 %py_provides webgrid
-%py_requires formencode blazeutils jinja2 sqlalchemy webhelpers wrapt
+%py_requires formencode blazeutils jinja2 sqlalchemy webhelpers2 wrapt
 %py_requires dateutil werkzeug blazeweb sqlalchemybwc flask xlwt
 
 %description
@@ -54,7 +55,7 @@ It also will export the grid to Excel.
 This package contains tests for %oname.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -n %oname-%version
 
 %build
 %python_build_debug
@@ -77,6 +78,9 @@ python setup.py test
 %python_sitelibdir/*/tests
 
 %changelog
+* Tue Dec 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.34-alt2
+- Fixed build.
+
 * Thu Oct 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.34-alt1
 - Updated to upstream version 0.1.34.
 
