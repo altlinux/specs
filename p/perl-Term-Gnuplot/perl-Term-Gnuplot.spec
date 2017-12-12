@@ -1,9 +1,7 @@
-%set_gcc_version 4.9
-BuildRequires: gcc4.9
 %define dist Term-Gnuplot
 Name: perl-%dist
 Version: 0.90380905
-Release: alt5.1.1
+Release: alt5.1.1.qa1
 
 Summary: Lowlevel graphics using gnuplot drawing routines
 License: GPL or Artistic
@@ -11,6 +9,8 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
+
+Patch: Term-Gnuplot-0.90380905-alt-fix-build-gnu11.patch
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: libX11-devel libfreetype-devel libgd2-devel libjpeg-devel libpng-devel perl-devel
@@ -21,6 +21,7 @@ using gnuplot low-level functions.
 
 %prep
 %setup -q -n %dist-%version
+%patch -p1
 sed -i- 's/-lvga//g' Makefile.PL
 
 %build
@@ -35,6 +36,9 @@ sed -i- 's/-lvga//g' Makefile.PL
 %perl_vendor_autolib/Term
 
 %changelog
+* Tue Dec 12 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.90380905-alt5.1.1.qa1
+- Fixed build with default gcc.
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.90380905-alt5.1.1
 - rebuild with new perl 5.24.1
 
