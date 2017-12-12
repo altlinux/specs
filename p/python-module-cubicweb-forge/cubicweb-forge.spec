@@ -1,29 +1,31 @@
 %define _unpackaged_files_terminate_build 1
 %define oname cubicweb-forge
+
+%def_disable check
+
 Name: python-module-%oname
 Version: 1.13.0
-Release: alt1
+Release: alt2
 Summary: Software forge component for the CubicWeb framework
 License: LGPL
 Group: Development/Python
-Url: https://pypi.python.org/pypi/cubicweb-forge/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/58/40/ce16de7de33e2cefb3330dfc458d43a3478248d7f66feb6ab52188c187cc/%{oname}-%{version}.tar.gz
 BuildArch: noarch
+Url: https://pypi.python.org/pypi/cubicweb-forge/
 
-BuildPreReq: python-module-setuptools-tests cubicweb
-BuildPreReq: python-module-Pillow python-module-markdown
-BuildPreReq: python-module-cubicweb-card
-BuildPreReq: python-module-cubicweb-comment
-BuildPreReq: python-module-cubicweb-email
-BuildPreReq: python-module-cubicweb-file
-BuildPreReq: python-module-cubicweb-folder
-BuildPreReq: python-module-cubicweb-mailinglist
-BuildPreReq: python-module-cubicweb-tag
-BuildPreReq: python-module-cubicweb-testcard
-BuildPreReq: python-module-cubicweb-tracker
-BuildPreReq: python-module-cubicweb-nosylist
+Source: %oname-%version.tar
+
+BuildRequires: python-module-setuptools-tests cubicweb
+BuildRequires: python-module-Pillow python-module-markdown
+BuildRequires: python-module-cubicweb-card
+BuildRequires: python-module-cubicweb-comment
+BuildRequires: python-module-cubicweb-email
+BuildRequires: python-module-cubicweb-file
+BuildRequires: python-module-cubicweb-folder
+BuildRequires: python-module-cubicweb-mailinglist
+BuildRequires: python-module-cubicweb-tag
+BuildRequires: python-module-cubicweb-testcard
+BuildRequires: python-module-cubicweb-tracker
+BuildRequires: python-module-cubicweb-nosylist
 
 Requires: cubicweb python-module-cubicweb-card
 Requires: python-module-cubicweb-comment
@@ -59,7 +61,7 @@ documentation page and so on.
 This package contains tests for %oname.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -n %oname-%version
 
 %build
 %python_build_debug
@@ -71,7 +73,7 @@ This package contains tests for %oname.
 python setup.py test
 
 %files
-%doc README PKG-INFO
+%doc README
 %python_sitelibdir/*
 %_datadir/cubicweb/*
 %exclude %python_sitelibdir/*/test*
@@ -80,6 +82,9 @@ python setup.py test
 %python_sitelibdir/*/test*
 
 %changelog
+* Tue Dec 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.13.0-alt2
+- Disabled tests.
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.13.0-alt1
 - automated PyPI update
 

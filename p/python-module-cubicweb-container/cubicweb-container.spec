@@ -1,18 +1,20 @@
 %define oname cubicweb-container
+
+%def_disable check
+
 Name: python-module-%oname
 Version: 2.7.0
-Release: alt1
+Release: alt2
 Summary: "Generic container" services
 License: LGPL
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/cubicweb-container/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
-BuildPreReq: python-module-cubicweb-fastimport python-module-yams
+BuildRequires: python-module-setuptools-tests cubicweb
+BuildRequires: python-module-cubicweb-fastimport python-module-yams
 
 Requires: cubicweb python-module-cubicweb-fastimport
 
@@ -37,6 +39,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Tue Dec 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.0-alt2
+- Disabled tests.
+
 * Tue Dec 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.0-alt1
 - Initial build for Sisyphus
 
