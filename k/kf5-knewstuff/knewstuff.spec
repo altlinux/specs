@@ -1,7 +1,7 @@
 %define rname knewstuff
 
 Name: kf5-%rname
-Version: 5.40.0
+Version: 5.41.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -92,6 +92,9 @@ KF5 library
 
 
 %changelog
+* Tue Dec 12 2017 Sergey V Turchin <zerg@altlinux.org> 5.41.0-alt1%ubt
+- new version
+
 * Tue Nov 21 2017 Sergey V Turchin <zerg@altlinux.org> 5.40.0-alt1%ubt
 - new version
 

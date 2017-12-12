@@ -1,7 +1,7 @@
 %define rname kconfigwidgets
 
 Name: kf5-%rname
-Version: 5.40.0
+Version: 5.41.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -67,8 +67,9 @@ mkdir -p %buildroot/%_K5data/kconfigwidgets/
 
 %files common -f %name.lang
 %doc COPYING.LIB README.md
+%dir %_K5data/kconfigwidgets/
+%config(noreplace) %_K5xdgconf/*.*categories
 %_K5i18n/*/kf5_entry.desktop
-%_K5data/kconfigwidgets/
 
 %files devel
 %_bindir/preparetips5
@@ -83,6 +84,9 @@ mkdir -p %buildroot/%_K5data/kconfigwidgets/
 %_K5lib/libKF5ConfigWidgets.so.*
 
 %changelog
+* Tue Dec 12 2017 Sergey V Turchin <zerg@altlinux.org> 5.41.0-alt1%ubt
+- new version
+
 * Tue Nov 21 2017 Sergey V Turchin <zerg@altlinux.org> 5.40.0-alt1%ubt
 - new version
 
