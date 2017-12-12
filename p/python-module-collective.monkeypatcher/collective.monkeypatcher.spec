@@ -1,20 +1,20 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20141210.1
+%define _unpackaged_files_terminate_build 1
 %define mname collective
 %define oname %mname.monkeypatcher
+
 Name: python-module-%oname
-Version: 1.1.1
-#Release: alt1.git20141210
+Version: 1.1.3
+Release: alt1
 Summary: Support for applying monkey patches late in the startup cycle
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/collective.monkeypatcher/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/plone/collective.monkeypatcher.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python2.7(zope.interface) python2.7(zope.schema) python2.7(zope.component) python2.7(zope.component.testing) python2.7(zope.configuration.xmlconfig)
 
 %py_provides %oname
 Requires: python-module-%mname = %EVR
@@ -81,6 +81,7 @@ python setup.py test
 %doc *.rst docs/*
 %python_sitelibdir/%mname/*
 %python_sitelibdir/*.egg-info
+%python_sitelibdir/*-nspkg.pth
 %exclude %python_sitelibdir/%mname/*/tests
 %exclude %python_sitelibdir/%mname/__init__.py*
 
@@ -92,6 +93,9 @@ python setup.py test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Tue Dec 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.3-alt1
+- Updated to upstream version 1.1.3.
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.1-alt1.git20141210.1
 - (AUTO) subst_x86_64.
 
