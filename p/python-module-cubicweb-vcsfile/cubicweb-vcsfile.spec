@@ -1,24 +1,27 @@
 %define _unpackaged_files_terminate_build 1
 %define oname cubicweb-vcsfile
+
+%def_disable check
+
 Name: python-module-%oname
-Version: 2.4.1
+Version: 2.4.2
 Release: alt1
 Summary: Component to integrate version control systems data into the CubicWeb framework
 License: LGPL
 Group: Development/Python
-Url: https://pypi.python.org/pypi/cubicweb-vcsfile/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/dc/f8/91e1abdd52bbfc9ce1b3f197f028a80b6a500f1265f32f64ff46c4a18edd/%{oname}-%{version}.tar.gz
 BuildArch: noarch
+Url: https://pypi.python.org/pypi/cubicweb-vcsfile/
 
-BuildPreReq: python-module-setuptools-tests cubicweb subversion-python
-BuildPreReq: python-module-cubicweb-localperms mercurial
-BuildPreReq: python-module-cubicweb-tag
-BuildPreReq: python-module-cubicweb-folder
-BuildPreReq: python-module-logilab-mtconverter
-BuildPreReq: python-module-logilab-common
-BuildPreReq: python-module-hglib
+Source: %oname-%version.tar
+
+BuildRequires: python-module-setuptools-tests cubicweb subversion-python
+BuildRequires: python-module-cubicweb-localperms mercurial
+BuildRequires: python-module-cubicweb-tag
+BuildRequires: python-module-cubicweb-folder
+BuildRequires: python-module-logilab-mtconverter
+BuildRequires: python-module-logilab-common
+BuildRequires: python-module-hglib
+BuildRequires: python2.7(tzlocal)
 
 Requires: cubicweb python-module-cubicweb-localperms
 Requires: python-module-cubicweb-tag
@@ -35,7 +38,7 @@ stored as entities, and thus queryable via RQL, while actual files
 content is kept in the repository and fetched from there on demand.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -n %oname-%version
 
 %build
 %python_build_debug
@@ -54,6 +57,9 @@ python setup.py test
 %_docdir/%oname
 
 %changelog
+* Tue Dec 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.2-alt1
+- Updated to upstream version 2.4.2.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1
 - automated PyPI update
 

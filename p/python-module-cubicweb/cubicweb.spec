@@ -1,7 +1,10 @@
 %define oname cubicweb
+
+%def_disable check
+
 Name: python-module-%oname
 Version: 3.25.3
-Release: alt1
+Release: alt2
 Summary: A repository of entities / relations for knowledge management
 License: LGPL
 Group: Development/Python
@@ -108,6 +111,9 @@ python setup.py test
 %doc doc/*
 
 %changelog
+* Tue Dec 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.25.3-alt2
+- Disabled tests.
+
 * Mon Dec 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.25.3-alt1
 - Updated to upstream version 3.25.3.
 
