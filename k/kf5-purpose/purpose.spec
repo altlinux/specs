@@ -1,7 +1,7 @@
 %define rname purpose
 
 Name: kf5-%rname
-Version: 1.1.0
+Version: 1.2.1
 Release: alt1%ubt
 %K5init altplace
 
@@ -13,7 +13,7 @@ License: LGPLv2.1+
 Requires: kde5-connect
 
 Source: %rname-%version.tar
-Patch1: alt-libreviewboardhelpers-static.patch
+Patch1: alt-libs-static.patch
 
 # Automatically added by buildreq on Tue Feb 16 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ gtk-update-icon-cache libEGL-devel libGL-devel libaccounts-glib libaccounts-qt51 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libsignon-qt51 libstdc++-devel libxcbutil-keysyms perl-Encode perl-XML-Parser pkg-config python-base python-module-google python-modules python3 python3-base qt5-base-devel ruby ruby-stdlibs
@@ -98,6 +98,9 @@ KF5 library
 %_K5lib/libKF5PurposeWidgets.so.*
 
 %changelog
+* Tue Dec 12 2017 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt1%ubt
+- new version
+
 * Mon Jun 19 2017 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt1%ubt
 - new version
 
