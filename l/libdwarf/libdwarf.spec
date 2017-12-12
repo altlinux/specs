@@ -1,5 +1,5 @@
 Name: libdwarf
-Version: 20160613
+Version: 20170709
 Release: alt1
 
 Summary: Library to access the DWARF Debugging file format
@@ -53,6 +53,8 @@ to access DWARF debug information.
 
 %prep
 %setup -n dwarf-%version
+# hack
+%__subst "s|@dwfzlib@|@dwfzlib@ -lelf|" libdwarf/Makefile.in
 
 %build
 %configure --enable-shared --disable-nonshared
@@ -85,6 +87,9 @@ install -pDm 0755 dwarfdump/dwarfdump     %buildroot%_bindir/dwarfdump
 %_bindir/dwarfdump
 
 %changelog
+* Wed Dec 13 2017 Vitaly Lipatov <lav@altlinux.ru> 20170709-alt1
+- new version 20170709 (with rpmrb script)
+
 * Sun Aug 14 2016 Vitaly Lipatov <lav@altlinux.ru> 20160613-alt1
 - new version 20160613 (with rpmrb script)
 
