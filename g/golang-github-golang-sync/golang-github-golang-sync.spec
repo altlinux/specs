@@ -44,16 +44,14 @@ BuildRequires: rpm-build-golang
 # https://github.com/golang/sync
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     golang.org/x/sync
-%global commit          f52d1811a62927559de87708c8913c1650ce4f26
+%global commit          fd80eb99c8f653c847d294a001bdf2a3a6f768f5
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global commitdate      20170517
+%global commitdate      20171101
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
 Release:        alt1_0.1.%{commitdate}git%{shortcommit}
 Summary:        Go concurrency primitives
-# Detected licences
-# - BSD (3 clause) at 'LICENSE'
 License:        BSD
 URL:            https://%{provider_prefix}
 Source0:        https://%{provider_prefix}/archive/%{commit}/%{repo}-%{shortcommit}.tar.gz
@@ -185,17 +183,20 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %if 0%{?with_devel}
 %files devel -f devel.file-list
 %doc LICENSE
-%doc README PATENTS CONTRIBUTORS CONTRIBUTING.md AUTHORS
+%doc README.md PATENTS CONTRIBUTORS CONTRIBUTING.md AUTHORS
 %dir %{go_path}/src/golang.org/x
 %endif
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
 %doc LICENSE
-%doc README PATENTS CONTRIBUTORS CONTRIBUTING.md AUTHORS
+%doc README.md PATENTS CONTRIBUTORS CONTRIBUTING.md AUTHORS
 %endif
 
 %changelog
+* Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.20171101gitfd80eb9
+- new version
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.20170517gitf52d181
 - new version
 
