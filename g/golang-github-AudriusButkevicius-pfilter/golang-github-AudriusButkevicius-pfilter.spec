@@ -29,15 +29,15 @@ BuildRequires: rpm-build-golang
 # https://github.com/AudriusButkevicius/pfilter
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          56143fe9cebe95636de1275acf30fcca36a1383d
+%global commit          9dca34a5b530bfc9843fa8aa2ff08ff9821032cb
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 %global commitdate      20171122
 
-# commit 56143fe9cebe95636de1275acf30fcca36a1383d == version 0.0.2
+# commit 9dca34a5b530bfc9843fa8aa2ff08ff9821032cb == version 0.0.3
 
 
 Name:           golang-%{provider}-%{project}-%{repo}
-Version:        0.0.2
+Version:        0.0.3
 Release:        alt1_1
 Summary:        Simple Packet Filtering package written in Go
 License:        MIT
@@ -165,6 +165,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 
 %changelog
+* Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.3-alt1_1
+- new version
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.2-alt1_1
 - new version
 
