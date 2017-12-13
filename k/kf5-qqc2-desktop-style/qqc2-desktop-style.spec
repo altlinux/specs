@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.40.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -37,13 +37,16 @@ developing applications that use %name.
 %K5install
 
 %files
-%_K5qml/QtQuick/Controls.2/org.kde.desktop
-%_K5qml/org/kde/qqc2desktopstyle
+%_K5qml/QtQuick/Controls.2/org.kde.desktop/
+%_K5qml/org/kde/qqc2desktopstyle/
 %_K5plug/kf5/kirigami/*.so
 
 %files devel
-%_libdir/cmake/
+%_libdir/cmake/KF5QQC2DeskopStyle/
 
 %changelog
+* Wed Dec 13 2017 Oleg Solovyov <mcpain@altlinux.org> 5.40.0-alt2%ubt
+- fix files
+
 * Tue Dec 12 2017 Oleg Solovyov <mcpain@altlinux.org> 5.40.0-alt1%ubt
 - initial
