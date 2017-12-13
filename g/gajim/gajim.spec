@@ -1,6 +1,6 @@
 Name: gajim
 Version: 0.16.9
-Release: alt1
+Release: alt2
 
 Summary: a Jabber client written in PyGTK
 License: GPLv3
@@ -13,10 +13,11 @@ AutoReqProv: yes, noshell
 Source: %url/downloads/%name-%version.tar.bz2
 
 #Requires: libgtk+2-gir-devel
+Requires: python2.7(pyasn)
 
 BuildRequires: rpm-build-gir
 BuildRequires: intltool libgtk+2-devel python-module-pygtk-devel python-modules-encodings xorg-cf-files
-BuildRequires: libfarstream0.2-devel gst-plugins-bad1.0-devel libnice-devel libgupnp-igd-devel
+BuildRequires: libfarstream0.2-devel gst-plugins-bad1.0-devel libnice-devel libgupnp-igd-devel python-module-pyasn
 
 BuildArch: noarch
 
@@ -54,6 +55,9 @@ it nicely.
 %_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Wed Dec 13 2017 Ilya Mashkin <oddity@altlinux.ru> 0.16.9-alt2
+- add pyasn to requires
+
 * Mon Dec 04 2017 Ilya Mashkin <oddity@altlinux.ru> 0.16.9-alt1
 - 0.16.9
 - Remove Requires: libgtk+2-gir-devel (Closes: #34276)
