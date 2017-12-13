@@ -2,16 +2,17 @@
 %def_disable static
 
 Name: libcacard
-Version: 2.5.2
-Release: alt2
+Version: 2.5.3
+Release: alt1%ubt
 Summary: Common Access Card (CAC) Emulation
 Group: System/Libraries
 License: LGPLv2.1+
 Url: http://www.spice-space.org/download
 # git://anongit.freedesktop.org/spice/libcacard
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: pkgconfig(glib-2.0) >= 2.22 pkgconfig(gthread-2.0)
 BuildRequires: pkgconfig(nss) >= 3.12.8
 %{?_enable_pcsc:BuildRequires: pkgconfig(libpcsclite)}
@@ -64,6 +65,9 @@ echo "%version" > .tarball-version
 %_bindir/vscclient
 
 %changelog
+* Wed Dec 13 2017 Alexey Shabalin <shaba@altlinux.ru> 2.5.3-alt1%ubt
+- 2.5.3
+
 * Wed Sep 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.5.2-alt2
 - Fixes:
   + CVE-2017-6414 Memory leak in the vcard_apdu_new function in card_7816.c
