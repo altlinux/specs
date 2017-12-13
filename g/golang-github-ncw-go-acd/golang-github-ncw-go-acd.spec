@@ -44,9 +44,9 @@ BuildRequires: rpm-build-golang
 # https://github.com/ncw/go-acd
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          96a49aad3fc3889629f2eceb004927386884bd92
+%global commit          887eb06ab6a255fbf5744b5812788e884078620a
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global commitdate      20170306
+%global commitdate      20171119
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
@@ -194,6 +194,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %endif
 
 %changelog
+* Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.20171119git887eb06
+- new version
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.20170306git96a49aa
 - new version
 
