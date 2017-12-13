@@ -1,6 +1,6 @@
 %define rname owncloudclient
 Name: owncloud-client
-Version: 2.3.3
+Version: 2.3.4
 Release: alt1%ubt
 
 Group: Networking/File transfer
@@ -32,6 +32,13 @@ Group: Graphical desktop/KDE
 Requires: %name
 %description kde5
 KDE5 %name integration
+
+%package nautilus
+Summary: Nautilus %name integration
+Group: Graphical desktop/GNOME
+Requires: %name
+%description nautilus
+Nautilus %name integration
 
 %prep
 %setup -qn %rname-%version
@@ -66,7 +73,6 @@ desktop-file-install \
 %_bindir/owncloudcmd
 %_desktopdir/%name.desktop
 #%_datadir/owncloud-client
-%_datadir/nautilus-python/extensions/
 %_iconsdir/hicolor/*/apps/owncloud.*
 %_iconsdir/hicolor/*/apps/ownCloud_*.*
 
@@ -76,7 +82,13 @@ desktop-file-install \
 %_K5plug/*owncloud*.so
 %_K5srv/*owncloud*.desktop
 
+%files nautilus
+%_datadir/nautilus-python/extensions/
+
 %changelog
+* Wed Dec 13 2017 Sergey V Turchin <zerg@altlinux.org> 2.3.4-alt1%ubt
+- new version
+
 * Mon Oct 09 2017 Sergey V Turchin <zerg@altlinux.org> 2.3.3-alt1%ubt
 - new version
 
