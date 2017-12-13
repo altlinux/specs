@@ -15,8 +15,8 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.6
-Release: alt41.1
+Version: 2.7
+Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -209,6 +209,14 @@ Requires: %name-extension-common = %version-%release
 
 %description extension-sqlite-devel
 Libraries needed to develop for uniset SQLite
+
+%package extension-logdb
+Group: Development/C++
+Summary: database for %name logs (sqlite)
+Requires: %name-extension-sqlite = %version-%release
+
+%description extension-logdb
+Database (sqlite) for logs for %name
 %endif
 
 %if_enabled pgsql
@@ -352,6 +360,7 @@ rm -f %buildroot%_libdir/*.la
 %_datadir/%oname/xslt/*.xsl
 %_datadir/%oname/xslt/skel*
 
+
 %files
 %_libdir/libUniSet2.so.*
 
@@ -384,6 +393,9 @@ rm -f %buildroot%_libdir/*.la
 %files extension-sqlite-devel
 %_pkgconfigdir/libUniSet2SQLite.pc
 %_includedir/%oname/extensions/sqlite/
+
+%files extension-logdb
+%_bindir/%oname-logdb*
 %endif
 
 %if_enabled pgsql
@@ -424,7 +436,6 @@ rm -f %buildroot%_libdir/*.la
 %_bindir/%oname-smviewer
 %_bindir/%oname-network
 %_bindir/%oname-unet*
-#%_bindir/%oname-smdbserver
 
 %_libdir/libUniSet2Extensions.so.*
 %_libdir/libUniSet2MB*.so.*
@@ -432,10 +443,6 @@ rm -f %buildroot%_libdir/*.la
 %_libdir/libUniSet2Shared*.so.*
 %_libdir/libUniSet2Network*.so.*
 %_libdir/libUniSet2UNetUDP*.so.*
-#%_libdir/libUniSet2SMDBServer*.so.*
-
-%files extension-smplus
-%_bindir/%oname-smemory-plus
 
 %if_enabled logicproc
 %files extension-logicproc
@@ -493,7 +500,6 @@ rm -f %buildroot%_libdir/*.la
 %_libdir/libUniSet2Shared*.so
 %_libdir/libUniSet2Network.so
 %_libdir/libUniSet2UNetUDP.so
-#%_libdir/libUniSet2SMDBServer.so
 %_pkgconfigdir/libUniSet2Extensions.pc
 %_pkgconfigdir/libUniSet2MB*.pc
 %_pkgconfigdir/libUniSet2RT*.pc
@@ -501,18 +507,30 @@ rm -f %buildroot%_libdir/*.la
 %_pkgconfigdir/libUniSet2Network*.pc
 %_pkgconfigdir/libUniSet2UNet*.pc
 
-#%_pkgconfigdir/libUniSet2SMDBServer.pc
 #%_pkgconfigdir/libUniSet2*.pc
 %exclude %_pkgconfigdir/libUniSet2.pc
         
 # history of current unpublished changes
 
 %changelog
+* Wed Dec 13 2017 Pavel Vainerman <pv@altlinux.ru> 2.7-alt1
+- new component 'logdb'
+- added 'const' for more functions
+- minor fixes
+- remove deprecated components
+
 * Sun Nov 12 2017 Alexei Takaseev <taf@altlinux.org> 2.6-alt41.1
 - Rebuild with poco 1.8.0.1
 
-* Thu Nov 02 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt41
-- build new version
+# * Thu Nov 02 2017 Pavel Vainerman <pv@altlinux.ru> 2.6-alt41
+#- build new version
+
+#* Mon Sep 25 2017 Pavel Vainerman <pv@altlinux.ru> 2.7-alt1
+#- change directory structure
+#- shared_ptr --> unique_ptr
+#- minor refactoring
+#- remote deprecated components
+#- added LogDB
 
 # * Thu Nov 02 2017 Vinogradov Aleksei <uzum@server> 2.6-alt40
 # - DBInterface: minor fix in method name
