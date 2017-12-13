@@ -2,8 +2,8 @@
 %def_disable openswan
 
 Name: kf5-%rname
-Version: 5.11.3
-Release: alt2%ubt
+Version: 5.11.4
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -245,6 +245,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Mon Dec 11 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.4-alt1%ubt
+- new version
+
 * Mon Dec 04 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt2%ubt
 - store passwords for all users by default
 
