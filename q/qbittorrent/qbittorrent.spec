@@ -1,8 +1,8 @@
 %define ltr libtorrent-rasterbar-devel
-%define rel alt3
+%define rel alt2
 
 Name: qbittorrent
-Version: 4.0.1
+Version: 4.0.2
 Epoch: 1
 Release: %rel
 
@@ -14,8 +14,6 @@ Group: Networking/File transfer
 Url: http://qbittorrent.org
 
 Source: %name-%version.tar.xz
-
-Patch0: QBT_fix_build_i386.patch
 
 BuildPreReq: desktop-file-utils
 
@@ -76,7 +74,6 @@ Default is to listen on tcp/8080 with admin/adminadmin credentials
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 ./bootstrap.sh
@@ -105,6 +102,12 @@ make clean
 %_datadir/appdata/*.xml
 
 %changelog
+* Thu Dec 14 2017 Motsyo Gennadi <drool@altlinux.ru> 1:4.0.2-alt2
+- cleanup
+
+* Mon Dec 11 2017 Motsyo Gennadi <drool@altlinux.ru> 1:4.0.2-alt1
+- 4.0.2
+
 * Fri Nov 24 2017 Motsyo Gennadi <drool@altlinux.ru> 1:4.0.1-alt3
 - fix
 
