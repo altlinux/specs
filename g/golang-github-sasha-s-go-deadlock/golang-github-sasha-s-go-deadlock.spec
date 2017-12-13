@@ -29,17 +29,18 @@ BuildRequires: rpm-build-golang
 # https://github.com/sasha-s/go-deadlock
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          565eb44395707143937a7e9f7015747585046643
+%global commit          03d40e5dbd5488667a13b3c2600b2f7c2886f02f
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
+%global commitdate      20171130
 
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0.1.0
-Release:        alt1_0.5.git%{shortcommit}
+Release:        alt1_1.%{commitdate}.git%{shortcommit}
 Summary:        Online deadlock detection in go
 License:        ASL 2.0
 URL:            https://%{provider_prefix}
-Source0:        https://%{provider_prefix}/archive/%{commit}/%{repo}-%{shortcommit}.tar.gz
+Source0:        https://%{provider_prefix}/archive/%{commit}/%{project}-%{repo}-%{shortcommit}.tar.gz
 
 # e.g. el6 has ppc64 arch without gcc-go, so EA tag is required
 ExclusiveArch:  %{?go_arches:%{go_arches}}%{!?go_arches:%{ix86} x86_64 aarch64 %{arm}}
@@ -176,6 +177,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 
 %changelog
+* Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt1_1.20171130.git03d40e5
+- new version
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt1_0.5.git565eb44
 - new version
 
