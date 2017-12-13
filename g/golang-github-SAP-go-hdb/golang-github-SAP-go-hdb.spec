@@ -47,7 +47,7 @@ BuildRequires: rpm-build-golang
 %global import_path     %{provider_prefix}
 
 Name:           golang-%{provider}-%{project}-%{repo}
-Version:        0.9.1
+Version:        0.9.5
 Release:        alt1_1
 Summary:        SAP HANA Database Client for Go (Golang)
 License:        ASL 2.0
@@ -193,6 +193,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %endif
 
 %changelog
+* Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.5-alt1_1
+- new version
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1_1
 - new version
 
