@@ -1,122 +1,118 @@
-%global commit 95c2af21db7fdda8c4324a923fa004859f6c5b9c
+%add_python3_compile_include %_libexecdir/cura
 
-Name:           cura
-Version:        15.04.4
-Release:        alt3
-Summary:        3D printer control software
+Name: cura
+Epoch: 1
+Version: 2.4.0
+Release: alt1
+Summary: 3D printer control software
+License: AGPLv3+
 
-Group:		Other
-# Code is AGPLv3
-# Icons AGPLv3 https://github.com/daid/Cura/issues/231#issuecomment-12209683
-# Example models are CC-BY-SA
-# TweakAtZ.py is CC-BY-SA
-License:        AGPLv3 and CC-BY-SA
+Group: Engineering
+Url: https://github.com/Ultimaker/Cura
+Packager: Anton Midyukov <antohami@altlinux.org>
 
-URL:            https://github.com/daid/Cura
+Source: %name-%version.tar
+# https://github.com/Ultimaker/Cura/issues/2664
+Patch: %name-fix-tests.patch
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/desktop-file-install
+BuildArch: noarch
 
-# I've stripped the source with the script in Source3
-# To remove CC BY-NC content
-# Upstream not willing to ship free package
-Source0:        Cura-%{commit}-fedora.tar.gz
-Source1:        %{name}
-Source2:        %{name}.desktop
-Source3:        %{name}-stripper.sh
+BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
+BuildRequires: cmake
+BuildRequires: desktop-file-utils
+BuildRequires: dos2unix
+BuildRequires: python3-devel
+BuildRequires: python3-module-pytest
+BuildRequires: Uranium = %version
 
-# UltimakerPlatforms STLs were stripped from the tarball, don't crash because of that
-Patch0:         %{name}-dont-show-nc-stls.patch
-
-# Use system paths
-Patch1:         %{name}-system-paths.patch
-
-# Rework the logic of determining the version (didn't work)
-Patch2:         %{name}-version.patch
-
-# Disable installation of firmwares Fedora doesn't ship
-Patch3:         %{name}-no-firmware.patch
-
-BuildArch:      noarch
-BuildRequires:  python-devel
-BuildRequires:  python-module-OpenGL
-BuildRequires:  python-module-numpy
-BuildRequires:  python-module-power
-BuildRequires:  python-module-serial
-BuildRequires:  python-module-wx-devel
-BuildRequires:  dos2unix
-BuildRequires:  desktop-file-utils
-BuildRequires:  gettext
-
-Requires: 	python-module-numpy-addons python-module-numpy-testing
-Requires:       CuraEngine >= 15.04
-# So that it just works
-Requires:	      3dprinter-udev-rules
+%py3_requires serial zeroconf
+#Requires: python3-module-savitar = %version
+Requires: Uranium = %version
+Requires: qt5-quickcontrols
+Requires: CuraEngine = %epoch:%version
+Requires: cura-fdm-materials = %version
+Requires: 3dprinter-udev-rules
 
 %description
-Cura is a project which aims to be an single software solution for 3D
-printing.  While it is developed to be used with the Ultimaker 3D
-printer, it can be used with other RepRap based designs.
+Cura is a project which aims to be an single software solution for 3D printing.
+While it is developed to be used with the Ultimaker 3D printer, it can be used
+with other RepRap based designs.
 
-Cura helps you to setup an Ultimaker, shows your 3D model, allows for
-scaling / positioning, can slice the model to G-Code, with sane editable
-configuration settings and send this G-Code to the 3D printer for
-printing.
+Cura prepares your model for 3D printing. For novices, it makes it easy to get
+great results. For experts, there are over 200 settings to adjust to your
+needs. As it's open source, our community helps enrich it even more.
 
 %prep
-%setup -qn Cura-%{commit}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%setup
+#%%patch -p1
 
-dos2unix resources/example/Attribution.txt
+# The setup.py is only useful for py2exe, remove it, so noone is tempted to use it
+rm setup.py
 
-sed -i 's/REPLACE_THIS_IN_SPEC/%{version}/' Cura/util/version.py
+# Upstream installs to lib/python3/dist-packages
+# We want to install to %%{python3_sitelib}
+%__subst 's|lib/python${PYTHON_VERSION_MAJOR}/dist-packages|%(echo %python3_sitelibdir | sed -e s@%prefix/@@)|g' CMakeLists.txt
+
+# Wrong end of line encoding
+#dos2unix docs/How_to_use_the_flame_graph_profiler.md
+
+# Wrong shebang
+%__subst '1s=^#!%_bindir/\(python\|env python\)3*=#!%__python3=' cura_app.py
 
 %build
+%cmake -DCURA_VERSION:STRING=%version
+%cmake_build
+
 # rebuild locales
-cd resources/locale
-rm *.in *.pot
-for FILE in *
-  do msgfmt $FILE/LC_MESSAGES/Cura.po -o $FILE/LC_MESSAGES/Cura.mo
-  rm $FILE/LC_MESSAGES/Cura.po
-done
-cd -
+#pushd resources/i18n
+#rm *.pot
+#for DIR in *; do
+#  pushd $DIR
+#  for FILE in *.po; do
+#    msgfmt $FILE.po -o LC_MESSAGES/${FILE}mo || :
+#  done
+#  popd
+#done
+#popd
 
 %install
-mkdir -p %{buildroot}%{python_sitelibdir_noarch}/Cura
-mkdir -p %{buildroot}%{_datadir}/%{name}/firmware
-mkdir -p %{buildroot}%{_datadir}/pixmaps
-mkdir -p %{buildroot}%{_datadir}/locale
-mkdir -p %{buildroot}%{_bindir}
+%cmakeinstall_std
 
-cp -apr Cura/* %{buildroot}%{python_sitelibdir_noarch}/Cura
-rm -rf %{buildroot}%{python_sitelibdir_noarch}/Cura/LICENSE
-cp -apr resources/* %{buildroot}%{_datadir}/%{name}
-cp -apr plugins %{buildroot}%{_datadir}/%{name}
-cp -ap %{SOURCE1} %{buildroot}%{_bindir}
-ln -s %{_datadir}/%{name} %{buildroot}%{python_sitelibdir_noarch}/Cura/resources
-ln -s %{_datadir}/%{name}/%{name}.ico %{buildroot}%{_datadir}/pixmaps
+# Sanitize the location of locale files
+#pushd %buildroot%_datadir
+#mv cura/resources/i18n locale
+#ln -s ../../locale cura/resources/i18n
+#rm locale/*/*.po
+#popd
 
-# locales
-cp -ar %{buildroot}%{_datadir}/%{name}/locale/* %{buildroot}%{_datadir}/locale
-rm -rf %{buildroot}%{_datadir}/%{name}/locale
-ln -s -f %{_datadir}/locale/ %{buildroot}%{_datadir}/%{name}/ # the app expects the locale folder in here
+# fix interpretator
+sed 's|python3|/usr/bin/python3|' %buildroot%_bindir/cura -i 
 
-desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
+%find_lang cura
+%find_lang fdmextruder.def.json
+%find_lang fdmprinter.def.json
 
-%{find_lang} Cura
+%check
+python3 -m pip freeze
+#python3 -m pytest -v
 
-%files -f Cura.lang
-%doc Cura/LICENSE resources/example/Attribution.txt
-%python_sitelibdir_noarch/Cura
-%_bindir/%name
+#desktop-file-validate %buildroot%_datadir/applications/%name.desktop
+
+%files -f cura.lang -f fdmextruder.def.json.lang -f fdmprinter.def.json.lang
+%doc LICENSE README.md
+%python3_sitelibdir/%name
 %_datadir/%name
-%_pixmapsdir/%name.ico
 %_desktopdir/%name.desktop
+%_datadir/appdata/%name.appdata.xml
+#%%_iconsdir/hicolor/*/apps/%name-icon.png
+%_datadir/mime/packages/%name.xml
+%_bindir/%name
+%_libexecdir/%name
 
 %changelog
+* Wed Dec 13 2017 Anton Midyukov <antohami@altlinux.org> 1:2.4.0-alt1
+- New version 2.4.0
+
 * Fri Jul 29 2016 Igor Vlasenko <viy@altlinux.ru> 15.04.4-alt3
 - NMU: sync with fc cura-15.04.4-4
 
