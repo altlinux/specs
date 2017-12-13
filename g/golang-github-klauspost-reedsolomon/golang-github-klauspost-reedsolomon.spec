@@ -29,15 +29,14 @@ BuildRequires: rpm-build-golang
 # https://github.com/klauspost/reedsolomon
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          6bb6130ff6a76a904c1841707d65603aec9cc288
+%global commit          e52c150f961e65ab9538bf1276b33bf469f919d8
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-
-# commit 6bb6130ff6a76a904c1841707d65603aec9cc288 == version 1.6
+%global commitdate      20171118
 
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        1.6
-Release:        alt1_1
+Release:        alt1_2.%{commitdate}.git%{shortcommit}
 Summary:        Reed-Solomon Erasure Coding in Go
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -176,6 +175,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 
 %changelog
+* Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_2.20171118.gite52c150
+- new version
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_1
 - new version
 
