@@ -44,16 +44,14 @@ BuildRequires: rpm-build-golang
 # https://github.com/nsf/termbox-go
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          4ed959e0540971545eddb8c75514973d670cf739
+%global commit          aa4a75b1c20a2b03751b1a9f7e41d58bd6f71c43
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global commitdate      20170710
+%global commitdate      20171104
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
 Release:        alt1_0.1.%{commitdate}git%{shortcommit}
 Summary:        A minimalistic API which allows programmers to write text-based user interfaces
-# Detected licences
-# - MIT/X11 (BSD like) at 'LICENSE'
 License:        MIT
 URL:            https://%{provider_prefix}
 Source0:        https://%{provider_prefix}/archive/%{commit}/%{repo}-%{shortcommit}.tar.gz
@@ -164,6 +162,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 
 %changelog
+* Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.20171104gitaa4a75b
+- new version
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.20170710git4ed959e
 - new version
 
