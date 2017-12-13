@@ -5,26 +5,27 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.7
+Version: 3.7.1
 Release: alt1
 Summary: Provides an API for communicating with HTTP 1.1 servers
 License: PSFLv2
 Group: Development/Python
-Url: https://pypi.python.org/pypi/dugong/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/96/fa/f51e468fd3229c296a742d2c7222bb66f0cb9226ce7f3282e9b1dede7dff/%{oname}-%{version}.tar.bz2
 BuildArch: noarch
+Url: https://pypi.python.org/pypi/dugong/
+
+Source: %oname-%version.tar
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-docutils python-module-asyncio
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-docutils python2.7(asyncio)
+BuildRequires: python2.7(pytest_catchlog)
 %endif
 BuildPreReq: python-module-sphinx-devel python3-module-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-docutils python3-module-asyncio
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-docutils python3(asyncio)
+BuildRequires: python3(pytest_catchlog)
 %endif
 
 %py_provides %oname
@@ -35,6 +36,7 @@ The Python Dugong module provides an API for communicating with HTTP 1.1
 servers. It is an alternative to the standard library's http.client
 (formerly httplib) module.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Provides an API for communicating with HTTP 1.1 servers
 Group: Development/Python3
@@ -45,9 +47,10 @@ Group: Development/Python3
 The Python Dugong module provides an API for communicating with HTTP 1.1
 servers. It is an alternative to the standard library's http.client
 (formerly httplib) module.
+%endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -n %oname-%version
 
 %prepare_sphinx .
 ln -s ../objects.inv rst/
@@ -83,10 +86,12 @@ popd
 %check
 %if_with python2
 python setup.py test
+py.test -vv
 %endif
 %if_with python3
 pushd ../python3
 python3 setup.py test
+py.test3 -vv
 popd
 %endif
 
@@ -103,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.7.1-alt1
+- Updated to upstream version 3.7.1.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.7-alt1
 - automated PyPI update
 
