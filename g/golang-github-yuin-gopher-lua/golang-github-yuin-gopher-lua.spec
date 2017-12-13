@@ -44,9 +44,9 @@ BuildRequires: rpm-build-golang
 # https://github.com/yuin/gopher-lua
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          eb1c7299435cc746b72514f37f74a5154dfe460f
+%global commit          609c9cd2697344dec90fe0543c6493e3b8da3435
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global commitdate      20170915
+%global commitdate      20171031
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
@@ -193,6 +193,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %endif
 
 %changelog
+* Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.20171031git609c9cd
+- new version
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.20170915giteb1c729
 - new version
 
