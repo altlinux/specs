@@ -29,14 +29,14 @@ BuildRequires: rpm-build-golang
 # https://github.com/ccding/go-stun
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          82abcd51cba61e48addeb1805dcbdcf8e87d6eb1
+%global commit          d9bbe8f8fa7bf7ed03e6cfc6a2796bb36139e1f4
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global commitdate      20171107
+%global commitdate      20171206
 
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0.1.0
-Release:        alt1_4.git%{commitdate}.git%{shortcommit}
+Release:        alt1_5.git%{commitdate}.git%{shortcommit}
 Summary:        STUN client (RFC 3489 and RFC 5389) implementation in Go
 License:        ASL 2.0
 URL:            https://%{provider_prefix}
@@ -166,6 +166,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 
 %changelog
+* Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt1_5.git20171206.gitd9bbe8f
+- new version
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt1_4.git20171107.git82abcd5
 - new version
 
