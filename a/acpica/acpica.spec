@@ -1,6 +1,6 @@
 
 Name: acpica
-Version: 20170929
+Version: 20171110
 Release: alt1%ubt
 Summary: ACPICA tools for the development and debug of ACPI tables
 
@@ -32,6 +32,8 @@ Patch6: free.patch
 Patch7: ppc64le.patch
 Patch8: arm7hl.patch
 Patch9: big-endian-v2.patch
+Patch10: simple-64bit.patch
+Patch11: be-tpm2.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: bison flex
@@ -92,6 +94,8 @@ This version of the tools is being released under GPLv2 license.
 %patch7 -p1 -b .ppc64le
 %patch8 -p1 -b .arm7hl
 %patch9 -p1 -b .big-endian-v2
+%patch10 -p1 -b .simple-64bit
+%patch11 -p1 -b .be-tpm2
 
 cp -p %SOURCE3 iasl.1
 cp -p %SOURCE4 acpibin.1
@@ -147,6 +151,12 @@ cd ..
 %_man1dir/*
 
 %changelog
+* Wed Dec 13 2017 Alexey Shabalin <shaba@altlinux.ru> 20171110-alt1%ubt
+- 20171110
+- Add patch for mips64el build, should it ever be needed; it also cleans
+  up all 64-bit arches, so nice to have regardless
+- Add new patch for a TPM2 big-endian issue.
+
 * Fri Nov 10 2017 Alexey Shabalin <shaba@altlinux.ru> 20170929-alt1%ubt
 - 20170929
 
