@@ -45,9 +45,9 @@ BuildRequires: rpm-build-golang
 # https://github.com/jlaffaye/ftp
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          769512c448b98e9efa243279a7e281248332aa98
+%global commit          299b7ff5b6096588cceca2edc1fc9f557002fb85
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global commitdate      20170721
+%global commitdate      20170927
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
@@ -193,6 +193,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %endif
 
 %changelog
+* Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.20170927git299b7ff
+- new version
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.20170721git769512c
 - new version
 
