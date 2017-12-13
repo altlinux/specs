@@ -29,17 +29,17 @@ BuildRequires: rpm-build-golang
 # https://github.com/minio/sha256-simd
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          f3ec2e4d36d43c3a899ed4b7d9f62188edcf5afd
+%global commit          96c8f86cdb67a92e859cd2c88e6f6e5e489711cb
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.4.git%{shortcommit}
+Release:        alt1_0.5.git%{shortcommit}
 Summary:        SHA256 implementation using SIMD instructions for Go
 License:        ASL 2.0
 URL:            https://%{provider_prefix}
-Source0:        https://%{provider_prefix}/archive/%{commit}/%{repo}-%{shortcommit}.tar.gz
+Source0:        https://%{provider_prefix}/archive/%{commit}/%{project}-%{repo}-%{shortcommit}.tar.gz
 
 # e.g. el6 has ppc64 arch without gcc-go, so EA tag is required
 ExclusiveArch:  %{?go_arches:%{go_arches}}%{!?go_arches:%{ix86} x86_64 aarch64 %{arm}}
@@ -135,13 +135,7 @@ sort -u -o devel.file-list devel.file-list
 
 %check
 %if 0%{?with_check} && 0%{?with_unit_test} && 0%{?with_devel}
-%if ! 0%{?with_bundled}
 export GOPATH=%{buildroot}/%{go_path}:%{go_path}
-%else
-# No dependency directories so far
-
-export GOPATH=%{buildroot}/%{go_path}:%{go_path}
-%endif
 
 %if ! 0%{?gotest:1}
 %global gotest go test
@@ -171,6 +165,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 
 %changelog
+* Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.5.git96c8f86
+- new version
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.4.gitf3ec2e4
 - new version
 
