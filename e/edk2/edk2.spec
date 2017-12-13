@@ -6,7 +6,7 @@
 # More subpackages to come once licensing issues are fixed
 Name: edk2
 Version: 20170720
-Release: alt2%ubt
+Release: alt3%ubt
 Summary: EFI Development Kit II
 
 #Vcs-Git: https://github.com/tianocore/edk2.git
@@ -168,6 +168,7 @@ CC_FLAGS="${CC_FLAGS} --cmd-len=65536"
 OVMF_FLAGS="${CC_FLAGS}"
 OVMF_FLAGS="${OVMF_FLAGS} -D HTTP_BOOT_ENABLE"
 OVMF_FLAGS="${OVMF_FLAGS} -D NETWORK_IP6_ENABLE"
+OVMF_FLAGS="${OVMF_FLAGS} -D FD_SIZE_2MB"
 
 # ovmf + secure boot features
 OVMF_SB_FLAGS="${OVMF_FLAGS}"
@@ -197,6 +198,9 @@ unset MAKEFLAGS
 # build ovmf
 export %{TOOL_CHAIN_TAG}_IA32_PREFIX="x86_64-linux-gnu-"
 export %{TOOL_CHAIN_TAG}_X64_PREFIX="x86_64-linux-gnu-"
+export %{TOOL_CHAIN_TAG}_AARCH64_PREFIX="aarch64-linux-gnu-"
+export %{TOOL_CHAIN_TAG}_ARM_PREFIX="arm-linux-gnu-"
+
 mkdir -p OVMF
 build ${OVMF_FLAGS} -a X64 -p OvmfPkg/OvmfPkgX64.dsc
 #build ${OVMF_FLAGS} -a IA32 -p OvmfPkg/OvmfPkgIa32.dsc
@@ -212,15 +216,12 @@ cp Build/Ovmf3264/*/FV/OVMF_CODE.fd OVMF/OVMF_CODE.secboot.fd
 build ${OVMF_FLAGS} -a X64 -p ShellPkg/ShellPkg.dsc
 %endif
 
-unset %{TOOL_CHAIN_TAG}_IA32_PREFIX
-unset %{TOOL_CHAIN_TAG}_X64_PREFIX
 unset %{TOOL_CHAIN_TAG}_BIN
 
 PATH_TEMP="$PATH"
 
 %if_enabled aarch64
 # build aarch64 firmware
-export %{TOOL_CHAIN_TAG}_AARCH64_PREFIX="aarch64-linux-gnu-"
 export PATH="%_libexecdir/aarch64-linux-gnu/bin:$PATH_TEMP"
 mkdir -p AAVMF
 build $ARM_FLAGS -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
@@ -228,20 +229,17 @@ cp Build/ArmVirtQemu-AARCH64/*/FV/*.fd AAVMF
 dd of="AAVMF/QEMU_EFI-pflash.raw" if="/dev/zero" bs=1M count=64
 dd of="AAVMF/QEMU_EFI-pflash.raw" if="AAVMF/QEMU_EFI.fd" conv=notrunc
 dd of="AAVMF/vars-template-pflash.raw" if="/dev/zero" bs=1M count=64
-unset %{TOOL_CHAIN_TAG}_AARCH64_PREFIX
 export PATH="$PATH_TEMP"
 %endif
 
 %if_enabled arm
 # build arm firmware
-export %{TOOL_CHAIN_TAG}_ARM_PREFIX="arm-linux-gnu-"
 mkdir -p AVMF
 build $ARM_FLAGS -a ARM -p ArmVirtPkg/ArmVirtQemu.dsc
 cp Build/ArmVirtQemu-ARM/DEBUG_*/FV/*.fd AVMF
 dd of="AVMF/QEMU_EFI-pflash.raw" if="/dev/zero" bs=1M count=64
 dd of="AVMF/QEMU_EFI-pflash.raw" if="AVMF/QEMU_EFI.fd" conv=notrunc
 dd of="AVMF/vars-template-pflash.raw" if="/dev/zero" bs=1M count=64
-unset %{TOOL_CHAIN_TAG}_ARM_PREFIX
 %endif
 
 %install
@@ -370,6 +368,9 @@ ln -r -s %buildroot%_datadir/AVMF %buildroot%_datadir/%name/arm
 %endif
 
 %changelog
+* Wed Dec 13 2017 Alexey Shabalin <shaba@altlinux.ru> 20170720-alt3%ubt
+- snapshot of UDK2017 branch
+
 * Mon Sep 18 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 20170720-alt2%ubt
 - added efi-shell subpackage
 
