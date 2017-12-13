@@ -1,7 +1,7 @@
 
 %define rname kaffeine
 Name: kde5-%rname
-Version: 2.0.13
+Version: 2.0.14
 Release: alt1%ubt
 %K5init
 
@@ -75,6 +75,9 @@ mv .gear/po ./
 %_K5xdgapp/org.kde.kaffeine.desktop
 
 %changelog
+* Wed Dec 13 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.14-alt1%ubt
+- new version
+
 * Thu Sep 28 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.13-alt1%ubt
 - new version
 
