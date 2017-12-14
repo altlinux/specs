@@ -1,7 +1,7 @@
 %define rname kitemmodels
 
 Name: kf5-%rname
-Version: 5.40.0
+Version: 5.41.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -40,7 +40,7 @@ developing applications that use %name.
 %package -n libkf5itemmodels
 Group: System/Libraries
 Summary: KF5 library
-#Requires: %name-common = %version-%release
+Requires: %name-common = %version-%release
 %description -n libkf5itemmodels
 KF5 library
 
@@ -53,8 +53,12 @@ KF5 library
 
 %install
 %K5install
+%find_lang %name --all-name
+%K5find_qtlang %name --all-name
 
-#%files common -f %name.lang
+%files common -f %name.lang
+%doc COPYING.LIB README.md
+%config(noreplace) %_K5xdgconf/*.*categories
 
 %files devel
 %_K5link/lib*.so
@@ -64,10 +68,12 @@ KF5 library
 %_K5archdata/mkspecs/modules/qt_KItemModels.pri
 
 %files -n libkf5itemmodels
-%doc COPYING.LIB README.md
 %_K5lib/libKF5ItemModels.so.*
 
 %changelog
+* Tue Dec 12 2017 Sergey V Turchin <zerg@altlinux.org> 5.41.0-alt1%ubt
+- new version
+
 * Tue Nov 21 2017 Sergey V Turchin <zerg@altlinux.org> 5.40.0-alt1%ubt
 - new version
 

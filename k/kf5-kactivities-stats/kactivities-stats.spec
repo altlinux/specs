@@ -4,7 +4,7 @@
 %define libkf5activitiesstats libkf5activitiesstats%sover
 
 Name: kf5-%rname
-Version: 5.40.0
+Version: 5.41.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -14,7 +14,6 @@ Url: http://www.kde.org
 License: LGPLv2+ / LGPLv3
 
 Source: %rname-%version.tar
-Patch1: alt-pkgconfig.patch
 
 # Automatically added by buildreq on Fri Apr 15 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ libgpg-error libqt5-core libqt5-dbus libqt5-sql libqt5-xml libstdc++-devel pkg-config python-base python-modules python3 python3-base rpm-build-python3 ruby ruby-stdlibs
@@ -57,7 +56,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K5build
@@ -83,6 +81,9 @@ KF5 library
 %_K5lib/libKF5ActivitiesStats.so.*
 
 %changelog
+* Tue Dec 12 2017 Sergey V Turchin <zerg@altlinux.org> 5.41.0-alt1%ubt
+- new version
+
 * Tue Nov 21 2017 Sergey V Turchin <zerg@altlinux.org> 5.40.0-alt1%ubt
 - new version
 
