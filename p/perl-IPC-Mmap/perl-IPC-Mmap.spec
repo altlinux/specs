@@ -1,7 +1,7 @@
 %define dist IPC-Mmap
 Name: perl-IPC-Mmap
 Version: 0.21
-Release: alt4.1.1.1
+Release: alt5
 
 Summary: Minimal unified mmap for POSIX and Win32
 License: GPL or Artistic
@@ -10,8 +10,7 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
 
-# Automatically added by buildreq on Sun Oct 09 2011
-BuildRequires: perl-IPC-SysV perl-devel perl-threads
+BuildRequires: perl-devel perl-threads perl(IPC/SysV.pm)
 
 %description
 Provides a minimal interface to POSIX mmap(), and its
@@ -32,6 +31,9 @@ the IPC::Mmap::POSIX and IPC::Mmap::Win32 implementations.
 %perl_vendor_autolib/IPC
 
 %changelog
+* Thu Dec 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt5
+- updated BR: for perl 5.26
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt4.1.1.1
 - rebuild with new perl 5.24.1
 
