@@ -1,5 +1,5 @@
 Name: elixir
-Version: 1.3.3
+Version: 1.5.2
 Release: alt1
 Summary: A modern approach to programming for the Erlang VM
 
@@ -54,5 +54,11 @@ ln -s %_datadir/%name/%version/bin/{elixir,elixirc,iex,mix} %buildroot/%_bindir/
 %_datadir/%name
 
 %changelog
+* Wed Nov 01 2017 Denis Medvedev <nbr@altlinux.org> 1.5.2-alt1
+- new version.
+
+* Wed Apr 12 2017 Denis Medvedev <nbr@altlinux.org> 1.4.2-alt1
+- new version 1.4.2
+
 * Mon Sep 19 2016 Denis Medvedev <nbr@altlinux.org> 1.3.3-alt1
 - initial build for ALT Linux Sisyphus
