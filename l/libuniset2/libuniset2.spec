@@ -11,12 +11,13 @@
 %def_disable mqtt
 %def_disable netdata
 %def_enable api
+%def_enable logdb
 
 %define oname uniset2
 
 Name: libuniset2
 Version: 2.7
-Release: alt1
+Release: alt2
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -210,6 +211,7 @@ Requires: %name-extension-common = %version-%release
 %description extension-sqlite-devel
 Libraries needed to develop for uniset SQLite
 
+%if_enabled logdb
 %package extension-logdb
 Group: Development/C++
 Summary: database for %name logs (sqlite)
@@ -217,6 +219,7 @@ Requires: %name-extension-sqlite = %version-%release
 
 %description extension-logdb
 Database (sqlite) for logs for %name
+%endif
 %endif
 
 %if_enabled pgsql
@@ -323,7 +326,7 @@ SharedMemoryPlus extension ('all in one') for libuniset
 
 %build
 %autoreconf
-%configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt} %{subst_enable api} %{subst_enable netdata}
+%configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt} %{subst_enable api} %{subst_enable netdata} %{subst_enable logdb}
 %make_build
 
 # fix for ALTLinux build (noarch)
@@ -394,8 +397,10 @@ rm -f %buildroot%_libdir/*.la
 %_pkgconfigdir/libUniSet2SQLite.pc
 %_includedir/%oname/extensions/sqlite/
 
+%if_enabled logdb
 %files extension-logdb
 %_bindir/%oname-logdb*
+%endif
 %endif
 
 %if_enabled pgsql
@@ -513,6 +518,9 @@ rm -f %buildroot%_libdir/*.la
 # history of current unpublished changes
 
 %changelog
+* Thu Dec 14 2017 Pavel Vainerman <pv@altlinux.ru> 2.7-alt2
+- minor fixes
+
 * Wed Dec 13 2017 Pavel Vainerman <pv@altlinux.ru> 2.7-alt1
 - new component 'logdb'
 - added 'const' for more functions
