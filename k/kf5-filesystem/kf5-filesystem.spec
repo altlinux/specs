@@ -6,7 +6,7 @@
 
 Name: kf5-filesystem
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2%ubt
 %K5init altplace
 
 Summary: The basic directory layout for KF5
@@ -19,7 +19,7 @@ Source1: kde5
 Source2: dbus-session-dir.conf
 Source3: dbus-system-dir.conf
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 
 %description
 The %name package is one of the basic KF5 packages that is installed on
@@ -109,6 +109,10 @@ install -m 0644 %SOURCE2 %buildroot/%_K5conf_dbus_sessd/kf5.conf
 %dir %_desktopdir/kf5
 
 %changelog
+* Thu Dec 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.19.0-alt2%ubt
+- Fixed processing arguments containing spaces.
+- Added %%ubt tag to release.
+
 * Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.19.0-alt1
 - use kde own dbus services dir
 
