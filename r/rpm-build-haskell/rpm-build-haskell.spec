@@ -1,19 +1,17 @@
 Name: rpm-build-haskell
-Version: 1
-Release: alt26
+Version: 1.1
+Release: alt1
 BuildArch: noarch
 
 Summary: RPM helpers to rebuild Haskell packages
 License: Public domain
 Group: Development/Haskell
-Packager: Alex V. Myltsev <avm@altlinux.ru>
 
 Source: scripts-%version.tar
 Source1: macros
 Source2: buildreq-ignore
 
 # Uses the modular reqprov subsystem
-#Requires: rpm-build >= 4.0.4-alt78
 Conflicts: rpm-build < 4.0.4-alt78
 
 %description
@@ -26,11 +24,11 @@ There is currently no support for compilers other than GHC.
 
 %install
 mkdir -p %buildroot%_rpmlibdir
-cp haskell.* %buildroot%_rpmlibdir/
+cp haskell.* -t %buildroot%_rpmlibdir/
 install -D %SOURCE1 %buildroot%_rpmmacrosdir/haskell
 install -D %SOURCE2 \
 	%buildroot%_sysconfdir/buildreqs/files/ignore.d/rpm-build-haskell
-install -D -m 755 hs_gen_filelist.sh %buildroot%_libexecdir/%name/hs_gen_filelist.sh
+install -D -m0755 hs_gen_filelist.sh %buildroot%_libexecdir/%name/hs_gen_filelist.sh
 
 %files
 %_rpmlibdir/haskell.*
@@ -39,9 +37,14 @@ install -D -m 755 hs_gen_filelist.sh %buildroot%_libexecdir/%name/hs_gen_filelis
 %_libexecdir/%name
 
 %changelog
+* Thu Dec 14 2017 Ivan Zakharyaschev <imz@altlinux.org> 1.1-alt1
+- correct/cleanup macro uses (they were introduced in 1-alt26
+  and they generate warnings)
+- discard %%hs_package_register (not used anywhere)
+
 * Thu Oct 22 2015 Ivan Zakharyaschev <imz@altlinux.org> 1-alt26
 - allow to build SRPMs which don't build-require ghc or
-  ghc%ghc_version-common (legacy ones).
+  ghc%%{ghc_version}-common (legacy ones).
 
 * Thu Oct 22 2015 Ivan Zakharyaschev <imz@altlinux.org> 1-alt25
 - .spec: do own our directory.
@@ -115,7 +118,7 @@ install -D -m 755 hs_gen_filelist.sh %buildroot%_libexecdir/%name/hs_gen_filelis
 - Fix errors when "depends:" lines contain commas or versionless items.
 
 * Mon Jan 14 2008 Alex V. Myltsev <avm@altlinux.ru> 1-alt3
-- More useful macros: %hs_package_register, %hs_setup etc.
+- More useful macros: %%hs_package_register, %%hs_setup etc.
 
 * Sat Jan 12 2008 Alex V. Myltsev <avm@altlinux.ru> 1-alt2
 - Fix bug with multiline values in *.pkg files.
