@@ -1,5 +1,5 @@
 Name: nginx-etersoft
-Version: 0.2.18
+Version: 0.2.19
 Release: alt1
 
 Summary: Additional Nginx templates and functions
@@ -63,6 +63,12 @@ install -m644 www/* %buildroot%webserver_htdocsdir/maintenance/
 %config(noreplace) %webserver_htdocsdir/maintenance/*
 
 %changelog
+* Thu Dec 14 2017 Vitaly Lipatov <lav@altlinux.ru> 0.2.19-alt1
+- static-fallback.conf: drop double fonts list
+- mediawiki: fix for trailing slash
+- fix duplicate $uri $uri/ in try_files
+- cors*.conf: drop if (https://trac.nginx.org/nginx/ticket/234)
+
 * Tue Oct 24 2017 Vitaly Lipatov <lav@altlinux.ru> 0.2.18-alt1
 - separate locations by file types
 - add CORS wide-open rules
