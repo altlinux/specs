@@ -46,13 +46,13 @@ BuildRequires: rpm-build-golang
 # https://github.com/billziss-gh/cgofuse
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-# commit b24eb346a94c3ba12c1da1e564dbac1b498a77ce == version 1.0.2
-%global commit          35bcf037030dcadcd247618c75c00c6cd17482d7
+# commit b24eb346a94c3ba12c1da1e564dbac1b498a77ce == version 1.0.4
+%global commit          487e2baa5611bab252a906d7f9b869f944607305
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global commitdate      20170616
+%global commitdate      20171118
 
 Name:           golang-%{provider}-%{project}-%{repo}
-Version:        1.0.2
+Version:        1.0.4
 Release:        alt1_1
 Summary:        Cross-platform FUSE library for Go
 # Detected licences
@@ -192,6 +192,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %endif
 
 %changelog
+* Thu Dec 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_1
+- new version
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_1
 - new version
 
