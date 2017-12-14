@@ -29,13 +29,13 @@ BuildRequires: rpm-build-golang
 # https://github.com/zillode/notify
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          54e3093eb7377fd139c4605f475cc78e83610b9d
+%global commit          8fff849a2026ce7a59f67ed9747dd9c7adc8bd0b
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-
+%global commitdate      20171210
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.5.git%{shortcommit}
+Release:        alt1_0.6.%{commitdate}.git%{shortcommit}
 Summary:        File system event notification library on steroids
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -174,6 +174,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 
 %changelog
+* Thu Dec 14 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.6.20171210.git8fff849
+- new version
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.5.git54e3093
 - new version
 
