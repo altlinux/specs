@@ -8,13 +8,14 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.05
-Release: alt1
+Release: alt2
 Summary: Punycode conversion of UTF-8 string.
 Group: Development/Perl
 License: gpl
 Url: %CPAN %module_name
 
 Source0: http://www.cpan.org/authors/id/T/TW/TWINKLE/%{module_name}-%{version}.tar.gz
+Patch: URI-UTF8-Punycode-1.05-perl5.26-add_test_dynamic.patch
 
 %description
 %summary
@@ -30,6 +31,7 @@ scripts for %name
 
 %prep
 %setup -q -n %{module_name}-%{version}
+%patch -p1
 
 %build
 %perl_vendor_build
@@ -48,6 +50,9 @@ scripts for %name
 
 
 %changelog
+* Thu Dec 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2
+- fix for perl5.26 (patch0)
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
 - automated CPAN update
 
