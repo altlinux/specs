@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 2.92.1
+Version: 3.0.0
 Release: alt1%ubt
 
 Source:%name-%version.tar
@@ -79,6 +79,9 @@ __EOF__
 
 
 %changelog
+* Thu Dec 14 2017 Sergey V Turchin <zerg at altlinux dot org> 3.0.0-alt1%ubt
+- enable High-DPI pixmaps by default
+
 * Fri Jun 16 2017 Sergey V Turchin <zerg at altlinux dot org> 2.92.1-alt1%ubt
 - fix to quit without confirmation
 
