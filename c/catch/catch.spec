@@ -1,6 +1,6 @@
 Name: catch
-Version: 1.9.7
-Release: alt2
+Version: 1.11.0
+Release: alt1
 
 Summary: C++ Unit Test framework ("all in one header")
 
@@ -24,8 +24,8 @@ but is packaged up as a single header for extra convenience.
 %package devel
 Summary: C++ Unit Test framework ("all in one header")
 Group: Development/C++
-Conflicts: catch < 1.9.7-alt2
-Obsoletes: catch < 1.9.7-alt2
+# Conflicts: catch < 1.9.7-alt2
+# Obsoletes: catch < 1.9.7-alt2
 Provides: catch = %EVR
 
 %description devel
@@ -48,6 +48,9 @@ mv -f catch.hpp %buildroot%_includedir
 %_includedir/*.hpp
 
 %changelog
+* Thu Dec 14 2017 Pavel Vainerman <pv@altlinux.ru> 1.11.0-alt1
+- build new version
+
 * Thu Dec 14 2017 Pavel Vainerman <pv@altlinux.ru> 1.9.7-alt2
 - returned version 1.x
 
