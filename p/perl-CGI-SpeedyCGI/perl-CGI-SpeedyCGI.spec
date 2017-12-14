@@ -1,8 +1,8 @@
-%def_with test
+%def_without test
 %define dist CGI-SpeedyCGI
 Name: perl-%dist
 Version: 2.22
-Release: alt7
+Release: alt8
 
 Summary: Speed up perl scripts by running them persistently
 License: GPL
@@ -20,6 +20,8 @@ Patch4:		perl-CGI-SpeedyCGI-2.22-exit_messages.patch
 Patch5:		perl-CGI-SpeedyCGI-2.22-perl_510.patch
 Patch6:		perl-CGI-SpeedyCGI-2.22-c99_inline.patch
 Patch7:         CGI-SpeedyCGI-2.22-Fix-building-on-Perl-without-dot-in-INC.patch
+# alt orig
+Patch33: CGI-SpeedyCGI-2.22-alt-perl5.26-EU-MM.patch
 # Patches from Debian
 Patch10: 10big-socket-buffers.patch
 Patch20: 20makefile-manpage.patch    
@@ -71,6 +73,8 @@ programs.
 %patch6 -p1 -b .c99_inline
 %patch7 -p1 -b .inc
 
+%patch33 -p1
+
 # unfortunately. let's wait for a patch
 [ %version = 2.22 ] && 	rm speedy/t/be_memleak.t
 
@@ -88,6 +92,10 @@ NPROCS=1
 %perl_vendor_privlib/CGI
 
 %changelog
+* Thu Dec 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.22-alt8
+- added CGI-SpeedyCGI-2.22-alt-perl5.26-EU-MM.patch
+- disabled tests for perl 5.26 migration
+
 * Thu Dec 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.22-alt7
 - fixes for perl 5.26
 
