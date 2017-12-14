@@ -42,7 +42,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.10.0
+Version: 1.10.2
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -725,6 +725,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Dec 14 2017 Mikhail Efremov <sem@altlinux.org> 1.10.2-alt1
+- etcnet-alt: Use nm_settings_connection_update();
+- Updated to 1.10.2.
+
 * Tue Nov 14 2017 Mikhail Efremov <sem@altlinux.org> 1.10.0-alt1
 - etcnet-alt: Fix nm_settings_connection_delete() call.
 - Enable teamd support.
