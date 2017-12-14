@@ -20,7 +20,7 @@
 
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
-Version: 5.4.4
+Version: 5.4.5
 Release: alt1%ubt
 License: Apache
 Group: System/Servers
@@ -249,7 +249,7 @@ Conflicts: %name-node-xen
 Requires: ruby ruby-stdlibs
 Requires: openssh-server
 Requires: openssh-clients
-Requires: libvirt-qemu
+Requires: libvirt-kvm
 Requires: qemu-kvm
 Requires: qemu-img
 Requires: nfs-utils
@@ -678,6 +678,11 @@ fi
 ################################################################################
 
 %changelog
+* Thu Dec 14 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.5-alt1%ubt
+- 5.4.5
+- fix install ALTLinux logo
+- update Requires: libvirt-qemu to libvirt-kvm in node-kvm package
+
 * Tue Dec 05 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.4-alt1%ubt
 - 5.4.4
 
