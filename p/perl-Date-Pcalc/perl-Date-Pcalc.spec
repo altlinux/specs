@@ -1,7 +1,7 @@
 %define dist Date-Pcalc
 Name: perl-%dist
 Version: 6.1
-Release: alt5.1.1
+Release: alt6
 
 Summary: Gregorian calendar date calculations
 License: GPL or Artistic
@@ -11,9 +11,11 @@ URL: %CPAN %dist
 Source: %dist-%version.tar.gz
 
 # Patch via https://rt.cpan.org/Public/Bug/Display.html?id=76442 
-Patch:  %name-6.1-boolean.patch
+Patch0:  %name-6.1-boolean.patch
 # Related: rt#101232
 Patch1:         Date-Pcalc-6.1-century.patch
+# Fixed error "Unescaped left brace in regex is deprecated"
+Patch2:         Date-Pcalc-6.1-Fix-unescaped-left-brace-in-regex.patch
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Bit-Vector perl-ExtUtils-CBuilder
@@ -29,9 +31,11 @@ to some extent, ISO 8601 (where applicable).
 %setup -q -n %dist-%version
 %patch0 -p2
 %patch1 -p1
+%patch2 -p1
 
 %build
 %perl_vendor_build
+#NO_PACKLIST=1 </dev/null
 
 %install
 %perl_vendor_install
@@ -42,6 +46,9 @@ to some extent, ISO 8601 (where applicable).
 %perl_vendor_autolib/Date
 
 %changelog
+* Thu Dec 14 2017 Igor Vlasenko <viy@altlinux.ru> 6.1-alt6
+- added patch2: Fix-unescaped-left-brace-in-regex
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 6.1-alt5.1.1
 - rebuild with new perl 5.24.1
 
