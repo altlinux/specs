@@ -14,7 +14,7 @@
 %define nv_version 304
 %define nv_release 137
 %define nv_minor %nil
-%define pkg_rel alt138%ubt
+%define pkg_rel alt139%ubt
 %def_enable kernelsource
 %def_disable package_wfb
 
@@ -285,6 +285,9 @@ fi
 %endif
 
 %changelog
+* Thu Dec 14 2017 Sergey V Turchin <zerg@altlinux.org> 304.137-alt139%ubt
+- add fix against 4.14 kernel
+
 * Fri Dec 08 2017 Sergey V Turchin <zerg@altlinux.org> 304.137-alt138%ubt
 - add fix against 4.14 kernel
 
