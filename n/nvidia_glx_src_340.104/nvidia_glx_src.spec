@@ -14,7 +14,7 @@
 %define nv_version 340
 %define nv_release 104
 %define nv_minor %nil
-%define pkg_rel alt153%ubt
+%define pkg_rel alt154%ubt
 %def_enable egl
 %def_enable kernelsource
 %def_disable package_wfb
@@ -308,6 +308,9 @@ fi
 %endif
 
 %changelog
+* Thu Dec 14 2017 Sergey V Turchin <zerg@altlinux.org> 340.104-alt154%ubt
+- add fix against 4.14 kernel
+
 * Fri Dec 08 2017 Sergey V Turchin <zerg@altlinux.org> 340.104-alt153%ubt
 - add fix against 4.14 kernel
 
