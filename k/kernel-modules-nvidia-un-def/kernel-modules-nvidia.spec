@@ -8,7 +8,7 @@
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
 %define module_version	384.98
-%define module_release	alt1
+%define module_release	alt2
 %define flavour		un-def
 
 %setup_kernel_module %flavour
@@ -251,6 +251,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Dec 14 2017 Sergey V Turchin <zerg at altlinux dot org> 384.98-alt2
+- add fixes for lagacy drivers
 
 * Mon Dec 04 2017 Sergey V Turchin <zerg at altlinux dot org> 384.98-alt1
 - new release (384.98)
