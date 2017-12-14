@@ -1,7 +1,7 @@
 %define  pkgname rbnacl-libsodium
 
 Name: 	 ruby-%pkgname
-Version: 1.0.15.1
+Version: 1.0.16
 Release: alt1
 
 Summary: RbNaCl + libsodium packaged as a gem
@@ -34,7 +34,7 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
-%patch -p0
+%patch -p1
 %update_setup_rb
 
 %build
@@ -58,6 +58,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Thu Dec 14 2017 Andrey Cherepanov <cas@altlinux.org> 1.0.16-alt1
+- New version.
+
 * Thu Nov 09 2017 Andrey Cherepanov <cas@altlinux.org> 1.0.15.1-alt1
 - New version
 
