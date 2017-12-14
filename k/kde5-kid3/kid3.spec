@@ -3,8 +3,8 @@
 
 %define rname kid3
 Name: kde5-%rname
-Version: 3.4.5
-Release: alt2%ubt
+Version: 3.5.1
+Release: alt1%ubt
 %K5init altplace
 
 Group: Sound
@@ -135,7 +135,7 @@ done
 %K5cmake \
     -DWITH_APPS="cli;qt;kde" \
     -DWITH_BINDIR=%_K5bin \
-    -DWITH_LIBDIR=%_libdir \
+    -DWITH_LIBDIR=%_lib \
     -DWITH_DATAROOTDIR=%_datadir \
     -DWITH_PLUGINSDIR=%_libdir/kid3-kf5/plugins \
     -DWITH_QMLDIR=%_datadir/kid3-kf5/qml \
@@ -198,6 +198,9 @@ done
 #%_K5dbus_iface/*id3*
 
 %changelog
+* Thu Dec 14 2017 Sergey V Turchin <zerg@altlinux.org> 3.5.1-alt1%ubt
+- new version
+
 * Thu Aug 10 2017 Sergey V Turchin <zerg@altlinux.org> 3.4.5-alt2%ubt
 - rebuild with new chromaprint
 
