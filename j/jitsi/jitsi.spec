@@ -3,7 +3,7 @@
 
 Name:           jitsi
 Version:        2.11.%rev
-Release:        alt1
+Release:        alt2
 
 Summary:        Multiprotocol (SIP, XMPP/Jabber, ecc.) VoIP and instant messaging software
 Group:          Networking/Instant messaging
@@ -43,6 +43,7 @@ BuildRequires:  xorg-xproto-devel
 BuildRequires:  xz
 
 Requires:	java
+Requires:	dnsjava
 
 %description
 Jitsi is an audio/video and chat communicator that supports protocols
@@ -86,6 +87,9 @@ done
 %_desktopdir/jitsi.desktop
 
 %changelog
+* Thu Dec 14 2017 Denis Medvedev <nbr@altlinux.org> 2.11.5553-alt2
+- add missing javadns library
+
 * Tue Feb 14 2017 Andrey Cherepanov <cas@altlinux.org> 2.11.5553-alt1
 - Set correct minor version for commit 5553
 
