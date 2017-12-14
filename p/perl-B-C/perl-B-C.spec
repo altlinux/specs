@@ -1,6 +1,8 @@
+# hack for perl 5.26.1 migration
+%def_without test
 Name: perl-B-C
-Version: 1.54
-Release: alt1.1.1
+Version: 1.55_04
+Release: alt1
 
 Summary: Perl compiler's C backend
 License: Perl
@@ -17,13 +19,10 @@ BuildRequires: perl-Pod-Parser perl-devel perl-IPC-Run libgdbm-devel libdb4-deve
 
 %prep
 %setup -q
-for t in issue305
-do
- mv t/$t.t t/$t.t.failed
-done
-
-# hack for perl 5.24.1 migration
-[ %version = 1.54 ] && rm t/*.t
+#for t in issue305
+#do
+# mv t/$t.t t/$t.t.failed
+#done
 
 %build
 %perl_vendor_build
@@ -42,6 +41,12 @@ done
 %perl_vendor_archlib/BcVersions.pod
 
 %changelog
+* Thu Dec 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.55_04-alt1
+- new version
+
+* Sun Feb 12 2017 Igor Vlasenko <viy@altlinux.ru> 1.55-alt1
+- new version
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.54-alt1.1.1
 - rebuild with new perl 5.24.1
 
