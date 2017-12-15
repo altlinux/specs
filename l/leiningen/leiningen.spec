@@ -1,6 +1,8 @@
+%define write_group users
+
 Name:           leiningen
 Version:        2.8.1
-Release:        alt1
+Release:        alt2
 Summary:        Leiningen is for automating Clojure projects without setting your hair on fire
 
 Group:          Development/Java
@@ -46,7 +48,7 @@ done
 cp -a %buildroot%_javadir/leiningen/.m2/.lein-classpath %buildroot%_localstatedir/%name/.m2/.lein-classpath
 
 # Make writeable pathes
-find %buildroot%_localstatedir/%name/.m2/repository -type d | sed 's|%buildroot|%%attr(771,root,users) /|' > writeable_files
+find %buildroot%_localstatedir/%name/.m2/repository -type d | sed 's|%buildroot|%%attr(775,root,%write_group) |' > writeable_files
 
 %files -f writeable_files
 %doc *.md
@@ -54,10 +56,12 @@ find %buildroot%_localstatedir/%name/.m2/repository -type d | sed 's|%buildroot|
 %_javadir/%name
 %dir %_localstatedir/%name
 %dir %_localstatedir/%name/.m2
-%config(noreplace) %_localstatedir/%name/.m2/.lein-classpath
-
-%post
+%attr(775,root,%write_group) %config(noreplace) %_localstatedir/%name/.m2/.lein-classpath
 
 %changelog
+* Fri Dec 15 2017 Andrey Cherepanov <cas@altlinux.org> 2.8.1-alt2
+- Fix repository directories and config file permissions.
+- Spec cleanup.
+
 * Wed Nov 29 2017 Andrey Cherepanov <cas@altlinux.org> 2.8.1-alt1
 - Initial build in Sisyphus
