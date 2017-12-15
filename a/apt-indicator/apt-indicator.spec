@@ -1,6 +1,6 @@
 Name: apt-indicator
-Version: 0.3.6
-Release: alt1.qa1
+Version: 0.3.7
+Release: alt1%ubt
 
 Summary: Applet for indication that newer packages are available
 License: GPL
@@ -14,6 +14,7 @@ Provides: egg = %version-%release, alt-update = %version-%release
 Obsoletes: egg < %version-%release, alt-update < %version-%release
 Requires: /usr/bin/xdg-su /usr/sbin/synaptic
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libstdc++-devel qt5-base-devel qt5-tools
 BuildRequires: docbook-dtds docbook-style-xsl help2man libapt-devel
 BuildRequires: xml-common xsltproc
@@ -50,7 +51,7 @@ for d in %_sysconfdir/xdg/autostart
 do
 mkdir -p %buildroot/$d/
 install -m644 %name.desktop %buildroot/$d/%name.desktop
-sed -i 's|\(^Exec=.*\)|\1 --autostart|' %buildroot/$d/%name.desktop
+sed -i 's|\(^Exec=.*\)|\1 --autostarted|' %buildroot/$d/%name.desktop
 done
 
 # docs
@@ -68,6 +69,9 @@ mkdir -p %buildroot/%_datadir/%name/pixmaps
 
 
 %changelog
+* Fri Dec 15 2017 Sergey V Turchin <zerg at altlinux dot org> 0.3.7-alt1%ubt
+- fix retrive update checker info
+
 * Tue Nov 22 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.6-alt1.qa1
 - Rebuilt with libapt-pkg-libc6.9-6.so.6.
 
