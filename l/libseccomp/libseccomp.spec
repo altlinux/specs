@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: lib%oname
-Version: 2.3.1
-Release: alt1
+Version: 2.3.2
+Release: alt1%ubt
 Summary: High level interface to the Linux Kernel's seccomp filter
 License: LGPLv2.1+
 Group: System/Libraries
@@ -12,13 +12,13 @@ Url: https://github.com/seccomp/libseccomp
 
 #https://github.com/seccomp/libseccomp.git
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 Patch100: 0001-Tune-config.patch
 
-BuildPreReq: python-devel python-module-Cython
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: python-devel python-module-Cython
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-Cython
+BuildRequires: python3-devel python3-module-Cython
 %endif
 
 %description
@@ -74,7 +74,6 @@ This package contains python bindings of %name.
 
 %prep
 %setup
-%patch -p1
 %patch100 -p1
 
 %if_with python3
@@ -122,7 +121,7 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 
 
 %files
-%doc CHANGELOG CREDITS README SUBMITTING_PATCHES
+%doc CHANGELOG CREDITS README.md SUBMITTING_PATCHES
 %_bindir/*
 /%_lib/lib*.so.*
 %_man1dir/*
@@ -142,6 +141,9 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %endif
 
 %changelog
+* Fri Dec 15 2017 Alexey Shabalin <shaba@altlinux.ru> 2.3.2-alt1%ubt
+- 2.3.2
+
 * Tue Jun 14 2016 Alexey Shabalin <shaba@altlinux.ru> 2.3.1-alt1
 - 2.3.1
 
