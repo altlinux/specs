@@ -7,24 +7,33 @@ BuildRequires: /usr/bin/desktop-file-validate gcc-c++ libGLU-devel libSDL2-devel
 #global extra_version -2
 
 Name:           cdogs-sdl
-Version:        0.6.5
-Release:        alt1_3
+Version:        0.6.6
+Release:        alt1
 Summary:        C-Dogs is an arcade shoot-em-up
 Group:          Games/Other
 # The game-engine is GPLv2+
 # The game art is CC
 License:        GPLv2+ and CC-BY and CC-BY-SA and CC0
 URL:            http://cxong.github.io/cdogs-sdl/
+
 Source0:        https://github.com/cxong/cdogs-sdl/archive/%{version}%{?extra_version}.tar.gz#/%{name}-%{version}%{?extra_version}.tar.gz
 Patch0:         cdogs-sdl-0.5.8-cmake.patch
-Patch1:         cdogs-sdl-0.6.2-system-enet.patch
+Patch1:         cdogs-sdl-0.6.6-alt-install-icons.patch
+Source44:       import.info
+
 BuildRequires:  ctest cmake libSDL2_mixer-devel libSDL2_image-devel libGL-devel
 BuildRequires:  libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel libphysfs-devel libenet-devel
 BuildRequires:  desktop-file-utils libicns-utils libappstream-glib
+
 Requires:       icon-theme-hicolor
 Obsoletes:      cdogs-data < 0.5
-Provides:       cdogs-data = %{version}-%{release}
-Source44: import.info
+Provides:       cdogs-data = %EVR
+
+# don't depend on blender just for helper scripts
+%add_findreq_skiplist %_datadir/%{name}/graphics/chars/*/render.py*
+%add_findreq_skiplist %_datadir/%{name}/graphics/chars/*/make_spritesheet.sh
+%add_findprov_skiplist %_datadir/%{name}/graphics/chars/*/render.py*
+%add_findprov_skiplist %_datadir/%{name}/graphics/chars/*/make_spritesheet.sh
 
 %description
 C-Dogs SDL is a port of the old DOS arcade game C-Dogs to modern operating
@@ -35,11 +44,10 @@ C-Dogs came with several built in missions and dogfight maps. This version
 does too. The author of the DOS version of C-Dogs was Ronny Wester. We would
 like to thank Ronny for releasing the C-Dogs sources to the public.
 
-
 %prep
 %setup -q -n %{name}-%{version}%{?extra_version}
 %patch0 -p1 -b .cmake
-%patch1 -p1
+%patch1 -p2
 # We use the system enet
 rm -r src/cdogs/enet
 # Misc. cleanups
@@ -49,36 +57,32 @@ chmod -x src/tinydir/tinydir.h
 
 
 %build
-%{fedora_cmake} -DCDOGS_DATA_DIR=/usr/share/cdogs-sdl/
+%{fedora_cmake} -DCDOGS_DATA_DIR=/usr/share/cdogs-sdl/ -DUSE_SHARED_ENET=1
 %make_build
 icns2png -x build/macosx/cdogs-icon.icns
-
 
 %install
 %makeinstall_std
 
-desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop
+desktop-file-validate %buildroot%_desktopdir/%{name}.desktop
 
 appstream-util validate-relax --nonet \
-  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
-
-# install 128x128 icon from build/macosx/cdogs-icon.icns
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
-install -m 644 cdogs-icon_128x128x32.png \
-  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
-
+  %buildroot%_datadir/appdata/%{name}.appdata.xml
 
 %files
 %doc doc/AUTHORS doc/CREDITS doc/original_readme.txt doc/README_DATA.md
 %doc doc/COPYING.BSD doc/COPYING.GPL doc/COPYING.MJSON.txt doc/COPYING.xgetopt.txt doc/COPYING.yajl.txt doc/LICENSE.nanopb.txt doc/license.rlutil.txt
-%{_bindir}/%{name}*
-%{_datadir}/%{name}
-%{_datadir}/appdata/%{name}.appdata.xml
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/*/apps/%{name}.png
-
+%_bindir/%{name}*
+%_datadir/%name
+%_datadir/appdata/%{name}.appdata.xml
+%_desktopdir/%{name}.desktop
+%_iconsdir/hicolor/*/apps/%{name}-icon.png
 
 %changelog
+* Thu Dec 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.6-alt1
+- Updated to upstream version 0.6.6.
+- Removed dependencies on blender.
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.5-alt1_3
 - update to new release by fcimport
 
