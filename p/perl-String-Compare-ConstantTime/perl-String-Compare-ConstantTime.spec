@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.312
-Release: alt2
+Release: alt2.1
 Summary: Timing side-channel protected string compare
 Group: Development/Perl
 License: perl
@@ -34,6 +34,9 @@ You should pass this function two strings of the same length. Just like perl's `
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.312-alt2.1
+- rebuild with new perl 5.26.1
+
 * Sat Oct 28 2017 Igor Vlasenko <viy@altlinux.ru> 0.312-alt2
 - updated summary
 

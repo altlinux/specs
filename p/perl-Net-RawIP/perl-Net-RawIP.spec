@@ -1,7 +1,7 @@
 %define dist Net-RawIP
 Name: perl-%dist
 Version: 0.25
-Release: alt3.1.1.1
+Release: alt3.1.1.1.1
 
 Summary: Perl extension to manipulate raw IP packets
 License: GPL or Artistic
@@ -40,6 +40,9 @@ mv t/iflist.t t/iflist.t.orig
 %perl_vendor_autolib/Net
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.25-alt3.1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.25-alt3.1.1.1
 - rebuild with new perl 5.24.1
 

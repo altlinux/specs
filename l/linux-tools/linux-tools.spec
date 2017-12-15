@@ -6,7 +6,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt2
+Release: alt2.1
 
 Summary: Performance analysis tools for Linux
 License: GPLv2
@@ -103,6 +103,9 @@ popd
 %python_sitelibdir/perf*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 4.12-alt2.1
+- rebuild with new perl 5.26.1
+
 * Wed Aug  2 2017 Terechkov Evgenii <evg@altlinux.org> 4.12-alt2
 - Build exclusively for x86_64 for now, waiting for upstream fix...
 

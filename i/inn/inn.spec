@@ -1,6 +1,6 @@
 Name: inn
 Version: 2.4.5
-Release: alt6.1.1.1
+Release: alt6.1.1.1.1
 
 Summary: The InterNetNews (INN) system, an Usenet news server
 License: GPL
@@ -386,6 +386,9 @@ fi
 %_man1dir/inews*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.5-alt6.1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.5-alt6.1.1.1
 - rebuild with new perl 5.24.1
 

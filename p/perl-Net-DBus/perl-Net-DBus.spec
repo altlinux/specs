@@ -2,7 +2,7 @@
 %define dist Net-DBus
 Name: perl-%dist
 Version: 1.1.0
-Release: alt1.1.1
+Release: alt1.1.1.1
 
 Summary: Perl extension for the DBus message system
 License: GPL or Artistic
@@ -38,6 +38,9 @@ have not been too drastic.
 %perl_vendor_autolib/Net
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1.1.1
 - rebuild with new perl 5.24.1
 

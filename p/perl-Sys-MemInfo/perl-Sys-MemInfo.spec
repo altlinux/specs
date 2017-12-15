@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Sys-MemInfo
 Version:        0.99
-Release:        alt3_5
+Release:        alt3_5.1
 Summary:        Memory information as Perl module
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -55,6 +55,9 @@ make test
 %{perl_vendor_archlib}/Sys*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.99-alt3_5.1
+- rebuild with new perl 5.26.1
+
 * Sun Oct 29 2017 Igor Vlasenko <viy@altlinux.ru> 0.99-alt3_5
 - to Sisyphus by requst of lex.shen@yandex (closes: #34089)
 

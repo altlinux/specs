@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-XML-SAX-ExpatXS
 Version:        1.33
-Release:        alt3_18
+Release:        alt3_18.1
 Summary:        Perl SAX 2 XS extension to Expat parser
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -72,6 +72,9 @@ fi
 %{perl_vendor_archlib}/XML*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.33-alt3_18.1
+- rebuild with new perl 5.26.1
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.33-alt3_18
 - update to new release by fcimport
 

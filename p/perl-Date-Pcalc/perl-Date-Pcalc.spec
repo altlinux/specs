@@ -1,7 +1,7 @@
 %define dist Date-Pcalc
 Name: perl-%dist
 Version: 6.1
-Release: alt6
+Release: alt6.1
 
 Summary: Gregorian calendar date calculations
 License: GPL or Artistic
@@ -46,6 +46,9 @@ to some extent, ISO 8601 (where applicable).
 %perl_vendor_autolib/Date
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 6.1-alt6.1
+- rebuild with new perl 5.26.1
+
 * Thu Dec 14 2017 Igor Vlasenko <viy@altlinux.ru> 6.1-alt6
 - added patch2: Fix-unescaped-left-brace-in-regex
 

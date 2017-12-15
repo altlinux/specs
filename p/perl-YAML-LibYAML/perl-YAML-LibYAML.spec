@@ -5,7 +5,7 @@ BuildRequires: perl(Test/Pod.pm) perl-podlators
 BuildRequires: perl-Filter
 Name:           perl-YAML-LibYAML
 Version:        0.71
-Release:        alt1_1.1.1
+Release:        alt1_1.1.1.1
 Summary:        Perl YAML Serialization using XS and libyaml
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -91,6 +91,9 @@ make test
 %{perl_vendor_archlib}/YAML/
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.71-alt1_1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.71-alt1_1.1.1
 - rebuild with new perl 5.24.1
 

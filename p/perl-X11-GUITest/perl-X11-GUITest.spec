@@ -1,7 +1,7 @@
 %define dist X11-GUITest
 Name: perl-%dist
 Version: 0.28
-Release: alt1.1.1.1
+Release: alt1.1.1.1.1
 
 Summary: Collection of functions for X11 GUI testing/interaction
 License: GPL
@@ -38,6 +38,9 @@ sed -i- '/CCFLAGS/d' Makefile.PL
 %perl_vendor_autolib/X11
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1.1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1.1.1.1
 - rebuild with new perl 5.24.1
 

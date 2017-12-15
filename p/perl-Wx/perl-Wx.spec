@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Wx
 Version: 0.9932
-Release: alt2
+Release: alt2.1
 
 Summary: wxPerl - Perl bindings for wxWindows
 License: GPL
@@ -72,6 +72,9 @@ xvfb-run -a make test
 %perl_vendor_archlib/Wx/typemap
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.9932-alt2.1
+- rebuild with new perl 5.26.1
+
 * Sun Dec 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.9932-alt2
 - added patch for perl 5.26
 

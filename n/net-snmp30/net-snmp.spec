@@ -8,7 +8,7 @@
 
 Name: %_name%abiversion
 Version: 5.7.3
-Release: alt3
+Release: alt3.1
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -597,6 +597,9 @@ echo "===== start test ====="
 %doc python/README
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 5.7.3-alt3.1
+- rebuild with new perl 5.26.1
+
 * Wed Feb 22 2017 Michael Shigorin <mike@altlinux.org> 5.7.3-alt3
 - fixed build without systemd, see also:
   https://bugs.mageia.org/show_bug.cgi?id=13761

@@ -3,7 +3,7 @@
 
 Name: perl-PPI-XS
 Version: 0.904
-Release: alt1
+Release: alt1.1
 
 Summary: Perl module with XS acceleration for PPI
 
@@ -43,6 +43,9 @@ faster C versions.
 %perl_vendor_autolib/PPI/XS*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.904-alt1.1
+- rebuild with new perl 5.26.1
+
 * Tue Apr 25 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.904-alt1
 - New version
 

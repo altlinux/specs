@@ -1,7 +1,7 @@
 %define dist Authen-PAM
 Name: perl-%dist
 Version: 0.16
-Release: alt5
+Release: alt5.1
 
 Summary: Perl interface to PAM library
 License: GPL or Artistic
@@ -35,6 +35,9 @@ sed -i- 's/die/warn/' test.pl
 %perl_vendor_autolib/Authen
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt5.1
+- rebuild with new perl 5.26.1
+
 * Sun Dec 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt5
 - support for perl 5.26
 

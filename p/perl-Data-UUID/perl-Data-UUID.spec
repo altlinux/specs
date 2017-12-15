@@ -2,7 +2,7 @@
 %define dist Data-UUID
 Name: perl-%dist
 Version: 1.221
-Release: alt1.1.1
+Release: alt1.1.1.1
 
 Summary: Perl extension for generating Globally/Universally Unique Identifiers (GUIDs/UUIDs)
 License: BSD
@@ -40,6 +40,9 @@ applications and components across network-connected systems.
 %perl_vendor_autolib/Data
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.221-alt1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.221-alt1.1.1
 - rebuild with new perl 5.24.1
 

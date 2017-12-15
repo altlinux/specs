@@ -2,7 +2,7 @@
 %define dist Data-Structure-Util
 Name: perl-%dist
 Version: 0.16
-Release: alt1.1.1
+Release: alt1.1.1.1
 
 Summary: Change nature of data within a structure
 License: GPL or Artistic
@@ -39,6 +39,9 @@ detect if there is a circular reference.
 %perl_vendor_autolib/Data
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1.1.1
 - rebuild with new perl 5.24.1
 

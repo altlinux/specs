@@ -2,7 +2,7 @@
 %define dist BSD-Resource
 Name: perl-%dist
 Version: 1.2911
-Release: alt1
+Release: alt1.1
 
 Summary: BSD process resource limit and priority functions
 License: GPL or Artistic
@@ -33,6 +33,9 @@ limits and priorities.
 %perl_vendor_autolib/BSD
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.2911-alt1.1
+- rebuild with new perl 5.26.1
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2911-alt1
 - automated CPAN update
 

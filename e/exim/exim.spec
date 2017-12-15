@@ -9,7 +9,7 @@
 
 Name: exim
 Version: 4.84
-Release: alt1.1.1.1
+Release: alt1.1.1.1.1
 
 Summary: Exim Mail Transport Agent
 License: GPLv2+
@@ -456,6 +456,9 @@ ln -sf /usr/sbin/exim-ldap /usr/sbin/exim
 %_bindir/exipick
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 4.84-alt1.1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 4.84-alt1.1.1.1
 - rebuild with new perl 5.24.1
 

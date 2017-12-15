@@ -7,7 +7,7 @@ BuildRequires: gcc4.9
 
 Name: owfs
 Version: 3.2p1
-Release: alt1
+Release: alt1.1
 
 Summary: 1-Wire Virtual File System
 License: GPL
@@ -343,6 +343,9 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 %python_sitelibdir/*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 3.2p1-alt1.1
+- rebuild with new perl 5.26.1
+
 * Mon Jul 24 2017 Grigory Milev <week@altlinux.ru> 3.2p1-alt1
 - New version released
 - Init.d scripts fixed

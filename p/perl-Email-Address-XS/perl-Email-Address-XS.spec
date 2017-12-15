@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.01
-Release: alt1
+Release: alt1.1
 Summary: Parse and format RFC 2822 email addresses and groups
 Group: Development/Perl
 License: perl
@@ -59,6 +59,9 @@ instead of the Email::Address::List module.
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1.1
+- rebuild with new perl 5.26.1
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1
 - automated CPAN update
 

@@ -1,6 +1,6 @@
 Name: razor
 Version: 2.85
-Release: alt4.1.1
+Release: alt4.1.1.1
 
 Summary: Spam detection and filtering network
 License: Artistic 2.0
@@ -48,6 +48,9 @@ Perl modules for Razor.
 %perl_vendor_autolib/Razor2
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.85-alt4.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.85-alt4.1.1
 - rebuild with new perl 5.24.1
 

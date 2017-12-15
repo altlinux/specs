@@ -2,7 +2,7 @@
 %define dist PerlIO-gzip
 Name: perl-%dist
 Version: 0.20
-Release: alt1
+Release: alt1.1
 
 Summary: A layer for the PerlIO system to transparently gzip/gunzip files
 License: GPL or Artistic
@@ -34,6 +34,9 @@ decompression are implemented, but not together.
 %perl_vendor_autolib/PerlIO
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1.1
+- rebuild with new perl 5.26.1
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - automated CPAN update
 

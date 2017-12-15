@@ -2,7 +2,7 @@
 %define dist Glib
 Name: perl-%dist
 Version: 1.326
-Release: alt1
+Release: alt1.1
 
 Summary: Perl module for the glib-2.x library
 License: LGPL
@@ -70,6 +70,9 @@ sed -i- '/MAN3PODS/d' Makefile.PL
 	%perl_vendor_archlib/Glib/Install/*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.326-alt1.1
+- rebuild with new perl 5.26.1
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.326-alt1
 - automated CPAN update
 

@@ -4,7 +4,7 @@
 
 Name: perl-EV-ADNS
 Version: 3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Perl module for lightweight asynchronous DNS queries using EV and libadns
 
@@ -50,6 +50,9 @@ into the EV event loop.
 
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1.1
+- rebuild with new perl 5.26.1
+
 * Sat Dec 09 2017 Nikolay A. Fetisov <naf@altlinux.org> 3.0-alt1
 - New version
 

@@ -4,7 +4,7 @@
 
 Name: perl-Tie-CArray
 Version: 0.15
-Release: alt3.1.1
+Release: alt3.1.1.1
 
 Summary: space-efficient, typed, external C Arrays
 
@@ -43,6 +43,9 @@ are provided.
 %perl_vendor_autolib/Tie/CArray*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt3.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt3.1.1
 - rebuild with new perl 5.24.1
 

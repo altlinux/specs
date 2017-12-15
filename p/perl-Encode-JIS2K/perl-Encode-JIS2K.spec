@@ -2,7 +2,7 @@
 %define dist Encode-JIS2K
 Name: perl-%dist
 Version: 0.03
-Release: alt1.1.1
+Release: alt1.1.1.1
 
 Summary: JIS X 0212 (aka JIS 2000) encodings
 License: GPL or Artistic
@@ -34,6 +34,9 @@ jis0213-1-raw, jis0213-2-raw.
 %perl_vendor_autolib/Encode
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1.1.1
 - rebuild with new perl 5.24.1
 

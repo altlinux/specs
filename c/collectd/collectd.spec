@@ -30,7 +30,7 @@
 
 Name: collectd
 Version: 5.7.2
-Release: alt3
+Release: alt3.1
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -837,6 +837,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 5.7.2-alt3.1
+- rebuild with new perl 5.26.1
+
 * Tue Oct 31 2017 Sergey Y. Afonin <asy@altlinux.ru> 5.7.2-alt3
 - cherry-pick from upstream 'apcups: allow to use plugin without explicit configuration'
   (ALT #33957)

@@ -7,7 +7,7 @@ BuildRequires: perl(AnyEvent/AIO.pm) perl(AnyEvent/BDB.pm) perl(BDB.pm) perl(IO/
 %define _localstatedir %{_var}
 Name:           perl-Coro
 Version:        6.514
-Release:        alt1_1
+Release:        alt1_1.1
 Summary:        The only real threads in perl
 # Coro/libcoro:    GPLv2 or BSD
 # Rest of package: GPL+ or Artistic
@@ -152,6 +152,9 @@ make test
 %{perl_vendor_archlib}/Coro*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 6.514-alt1_1.1
+- rebuild with new perl 5.26.1
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 6.514-alt1_1
 - update to new release by fcimport
 

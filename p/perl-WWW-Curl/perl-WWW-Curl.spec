@@ -1,7 +1,7 @@
 %define dist WWW-Curl
 Name: perl-%dist
 Version: 4.17
-Release: alt3
+Release: alt3.1
 
 Summary: Perl extension interface for libcurl 
 License: MPL
@@ -44,6 +44,9 @@ rm t/19multi.t
 %perl_vendor_autolib/WWW
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 4.17-alt3.1
+- rebuild with new perl 5.26.1
+
 * Sun Dec 10 2017 Igor Vlasenko <viy@altlinux.ru> 4.17-alt3
 - fix for perl 5.26
 

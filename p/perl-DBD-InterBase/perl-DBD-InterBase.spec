@@ -1,7 +1,7 @@
 %define dist DBD-InterBase
 Name: perl-%dist
 Version: 0.48
-Release: alt5.1.1.1
+Release: alt5.1.1.1.1
 
 Summary: DBI driver for Firebird and InterBase RDBMS server
 License: GPL or Artistic
@@ -43,6 +43,9 @@ sed -i '/CCFLAGS/d' Makefile.PL
 %perl_vendor_autolib/DBD
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.48-alt5.1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.48-alt5.1.1.1
 - rebuild with new perl 5.24.1
 

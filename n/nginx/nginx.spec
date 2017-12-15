@@ -5,7 +5,7 @@
 Name: nginx
 Summary: Fast HTTP server
 Version: 1.12.1
-Release: alt2%ubt
+Release: alt2%ubt.1
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel
@@ -354,6 +354,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt2%ubt.1
+- rebuild with new perl 5.26.1
+
 * Wed Jul 19 2017 Elvira Khabirova <lineprinter@altlinux.org> 1.12.1-alt2%ubt
 - Added ngx_http_auth_pam_module.
 - Fixed dependencies of module packages.

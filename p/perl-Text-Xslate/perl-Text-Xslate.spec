@@ -1,6 +1,6 @@
 Name: perl-Text-Xslate
 Version: 3.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: Text::Xslate - Scalable template engine for Perl5
 License: Perl
@@ -41,6 +41,9 @@ Xslate is a template engine for Perl5 with the following features:
 %doc Changes README.md HACKING
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 17 2017 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt1
 - automated CPAN update
 

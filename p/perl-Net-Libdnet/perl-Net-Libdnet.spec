@@ -1,7 +1,7 @@
 %define dist Net-Libdnet
 Name: perl-%dist
 Version: 0.98
-Release: alt2.1.1.1
+Release: alt2.1.1.1.1
 
 Summary: Binding for Dug Song's libdnet
 License: BSD
@@ -36,6 +36,9 @@ the functionality provided by libpcap.
 %perl_vendor_autolib/Net
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.98-alt2.1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.98-alt2.1.1.1
 - rebuild with new perl 5.24.1
 

@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.0003
-Release: alt3
+Release: alt3.1
 Summary: OO interface for the gnu regex engine
 Group: Development/Perl
 License: perl
@@ -33,6 +33,9 @@ Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/J/JE/JETTERO/%{module_n
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.0003-alt3.1
+- rebuild with new perl 5.26.1
+
 * Sat Oct 28 2017 Igor Vlasenko <viy@altlinux.ru> 1.0003-alt3
 - updated summary
 

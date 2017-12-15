@@ -1,7 +1,7 @@
 %define dist SDL
 Name: perl-%dist
 Version: 2.546
-Release: alt3.1
+Release: alt3.1.1
 
 Summary: Simple DirectMedia Layer for Perl
 License: LGPL
@@ -72,6 +72,9 @@ application/game into PAR archive.
 %perl_vendor_archlib/Module/Build/SDL.pm
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.546-alt3.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.546-alt3.1
 - rebuild with new perl 5.24.1
 

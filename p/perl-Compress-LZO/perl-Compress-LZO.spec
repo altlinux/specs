@@ -2,7 +2,7 @@
 %define dist Compress-LZO
 Name: perl-%dist
 Version: 1.09
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Perl interface to the LZO compression library
 License: GPL
@@ -32,6 +32,9 @@ This module provides a Perl interface to LZO compression library.
 %perl_vendor_autolib/Compress
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1.1
 - rebuild with new perl 5.24.1
 

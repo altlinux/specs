@@ -1,7 +1,7 @@
 %define dist Unicode-Map8
 Name: perl-%dist
 Version: 0.13
-Release: alt4.1.1.1
+Release: alt4.1.1.1.1
 
 Summary: Perl module to represent mapping tables between 8-bit chars and Unicode
 License: GPL
@@ -41,6 +41,9 @@ speed.  The 16-bit strings is assumed to use network byte order.
 %perl_vendor_autolib/Unicode*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt4.1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.13-alt4.1.1.1
 - rebuild with new perl 5.24.1
 

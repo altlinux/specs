@@ -1,6 +1,6 @@
 Name: rrd
 Version: 1.7.0
-Release: alt1
+Release: alt1.1
 
 
 %define native rrdtool
@@ -359,6 +359,9 @@ rm -f %buildroot/usr/share/locale/hu/LC_MESSAGES/rrdtool.mo
 #   (the tcl one looks broken too as of 1.5.4-alt2.1)
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1.1
+- rebuild with new perl 5.26.1
+
 * Sat Oct 28 2017 Sergey Y. Afonin <asy@altlinux.ru> 1.7.0-alt1
 - 1.7.0 (abiversion changed to 8)
 - added python-module-setuptools to BuildRequires

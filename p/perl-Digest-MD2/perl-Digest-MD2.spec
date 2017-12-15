@@ -1,7 +1,7 @@
 %define dist Digest-MD2
 Name: perl-%dist
 Version: 2.04
-Release: alt1.1.1.1
+Release: alt1.1.1.1.1
 
 Summary: Perl interface to the MD2 Algorithm
 License: GPL or Artistic
@@ -34,6 +34,9 @@ a 128-bit "fingerprint" or "message digest" of the input.
 %perl_vendor_autolib/Digest
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1.1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1.1.1.1
 - rebuild with new perl 5.24.1
 

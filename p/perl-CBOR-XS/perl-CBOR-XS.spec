@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.7
-Release: alt2
+Release: alt2.1
 Summary: Concise Binary Object Representation (CBOR, RFC7049)
 Group: Development/Perl
 License: GPL-3
@@ -64,6 +64,9 @@ vice versa.
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2:1.7-alt2.1
+- rebuild with new perl 5.26.1
+
 * Sat Oct 28 2017 Igor Vlasenko <viy@altlinux.ru> 2:1.7-alt2
 - updated summary
 

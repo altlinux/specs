@@ -5,7 +5,7 @@ BuildRequires: perl(Benchmark.pm) perl(Chart/Bars.pm) perl(Config.pm) perl(Test/
 # END SourceDeps(oneline)
 Name:           perl-Math-Random-ISAAC-XS
 Version:        1.004
-Release:        alt4_11.1.1.1
+Release:        alt4_11.1.1.1.1
 Summary:        C implementation of the ISAAC PRNG algorithm
 License:        MIT or GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Math-Random-ISAAC-XS/
@@ -53,6 +53,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.004-alt4_11.1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.004-alt4_11.1.1.1
 - rebuild with new perl 5.24.1
 

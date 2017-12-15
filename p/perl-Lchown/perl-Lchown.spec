@@ -1,7 +1,7 @@
 %define dist Lchown
 Name: perl-%dist
 Version: 1.01
-Release: alt3.1.1.1
+Release: alt3.1.1.1.1
 
 Summary: Perl interface to the lchown(2) system call
 License: GPL or Artistic
@@ -33,6 +33,9 @@ change the ownership and group of symbolic links.
 %perl_vendor_autolib/Lchown
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3.1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3.1.1.1
 - rebuild with new perl 5.24.1
 

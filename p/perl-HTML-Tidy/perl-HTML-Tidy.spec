@@ -1,7 +1,7 @@
 %define dist HTML-Tidy
 Name: perl-%dist
 Version: 1.60
-Release: alt1
+Release: alt1.1
 
 Summary: HTML validation in a Perl object
 
@@ -40,6 +40,9 @@ as a replacement for HTML::Lint.
 %perl_vendor_archlib/HTML
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.60-alt1.1
+- rebuild with new perl 5.26.1
+
 * Tue Sep 26 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.60-alt1
 - New version
 

@@ -1,6 +1,6 @@
 Name: perl-Pg
 Version: 2.1.1
-Release: alt4.1.1.1
+Release: alt4.1.1.1.1
 
 Summary: PostgreSQL database native Perl driver
 License: GPL or Artistic
@@ -36,6 +36,9 @@ export POSTGRES_INCLUDE POSTGRES_LIB
 %perl_vendor_autolib/Pg
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt4.1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt4.1.1.1
 - rebuild with new perl 5.24.1
 

@@ -1,7 +1,7 @@
 %define dist Text-Soundex
 Name: perl-%dist
 Version: 3.05
-Release: alt1.1.1
+Release: alt1.1.1.1
 
 Summary: Implementation of the Soundex algorithm as described by Knuth
 License: GPL or Artistic
@@ -36,6 +36,9 @@ an upper case letter and the remaining three being digits.
 %perl_vendor_autolib/Text
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 3.05-alt1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 3.05-alt1.1.1
 - rebuild with new perl 5.24.1
 

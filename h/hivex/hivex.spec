@@ -6,7 +6,7 @@
 
 Name: hivex
 Version: 1.3.14
-Release: alt1%ubt
+Release: alt1%ubt.1
 Summary: Read and write Windows Registry binary hive files
 
 Group: Development/Other
@@ -229,6 +229,9 @@ rm -f %buildroot%python_sitelibdir/libhivexmod.la
 %endif
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.14-alt1%ubt.1
+- rebuild with new perl 5.26.1
+
 * Thu May 04 2017 Anton Farygin <rider@altlinux.ru> 1.3.14-alt1%ubt
 - new version
 

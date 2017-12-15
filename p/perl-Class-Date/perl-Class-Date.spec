@@ -1,7 +1,7 @@
 %define dist Class-Date
 Name: perl-%dist
 Version: 1.1.15
-Release: alt1.1.1.1
+Release: alt1.1.1.1.1
 
 Summary: Class for easy date and time manipulation 
 License: GPL or Artistic
@@ -33,6 +33,9 @@ have a Class::Date::Rel class for relative dates.
 %perl_vendor_autolib/Class
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.15-alt1.1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.15-alt1.1.1.1
 - rebuild with new perl 5.24.1
 

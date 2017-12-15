@@ -5,7 +5,7 @@
 
 Name:    apache2-mod_perl
 Version: 2.0.10
-Release: alt4
+Release: alt4.1
 
 Summary: An embedded Perl interpreter for the Apache2 Web server
 Summary(ru_RU.UTF-8): Встроенный интерпретатор Perl для веб-сервера Apache2
@@ -257,6 +257,9 @@ install -p -m 644 -- xs/tables/current/ModPerl/FunctionTable.pm  %buildroot%perl
 %doc docs/*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt4.1
+- rebuild with new perl 5.26.1
+
 * Thu Jun 29 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.0.10-alt4
 - Fix tests for Apache >= 2.4.25 stricter HTTP RFC 7230 complience
 

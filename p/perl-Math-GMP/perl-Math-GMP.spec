@@ -2,7 +2,7 @@
 %define dist Math-GMP
 Name: perl-%dist
 Version: 2.15
-Release: alt1
+Release: alt1.1
 
 Summary: High speed arbitrary size integer math
 License: GPLv2+
@@ -35,6 +35,9 @@ Perl functions.  This can result in speed improvements.
 %perl_vendor_autolib/Math
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.15-alt1.1
+- rebuild with new perl 5.26.1
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.15-alt1
 - automated CPAN update
 

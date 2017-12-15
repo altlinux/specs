@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators unzip
 
 Name: perl-%module_name
 Version: 0.12
-Release: alt1.gitcf5e428.1
+Release: alt1.gitcf5e428.1.1
 Summary: A module for laying out graphs
 Group: Development/Perl
 License: perl
@@ -59,6 +59,9 @@ scripts for %module_name
 %_man1dir/*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1.gitcf5e428.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1.gitcf5e428.1
 - rebuild with new perl 5.24.1
 

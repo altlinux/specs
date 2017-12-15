@@ -1,6 +1,6 @@
 Name: perl-Mcrypt
 Version: 2.5.7.0
-Release: alt2.1.1.1
+Release: alt2.1.1.1.1
 
 Summary: Mcrypt - Perl extension for the Mcrypt cryptography library
 Group: Development/Perl
@@ -29,6 +29,9 @@ BuildRequires: libmcrypt-devel perl-devel
 %doc ChangeLog README 
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.5.7.0-alt2.1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.5.7.0-alt2.1.1.1
 - rebuild with new perl 5.24.1
 

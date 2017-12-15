@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.66
-Release: alt1
+Release: alt1.1
 Summary: A selection of utilities for data and data types
 Group: Development/Perl
 License: perl
@@ -41,6 +41,9 @@ There are many benchmarks in the DIST-DIR/benchmark/ directory.
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.66-alt1.1
+- rebuild with new perl 5.26.1
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.66-alt1
 - automated CPAN update
 
