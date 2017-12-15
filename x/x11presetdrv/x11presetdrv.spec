@@ -1,8 +1,8 @@
 %define drvpre_dir /usr/libexec/X11/drvpre.d
 
 Name: x11presetdrv
-Version: 2.1.1
-Release: alt1
+Version: 2.1.2
+Release: alt2%ubt
 
 Group: System/Configuration/Hardware
 Summary: X Window System drivers preparing utility
@@ -11,6 +11,7 @@ URL: http://www.altlinux.ru
 
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-ubt
 Source: %name-%version.tar.bz2
 
 %description
@@ -41,6 +42,12 @@ install -m 0644 %name.service %buildroot/%_unitdir/
 mkdir -p -m 0755 %buildroot/%_unitdir/graphical.target.wants
 ln -s `relative %_unitdir/%name.service %_unitdir/graphical.target.wants/%name.service` %buildroot/%_unitdir/graphical.target.wants/%name.service
 
+mkdir -p -m 0755 %buildroot/%_presetdir
+cat >%buildroot/%_presetdir/33-%name.preset <<__EOF__
+# Need to be enabled by default
+enable %name.service
+__EOF__
+
 %post
 %post_service %name
 %preun
@@ -54,8 +61,12 @@ ln -s `relative %_unitdir/%name.service %_unitdir/graphical.target.wants/%name.s
 %_sysconfdir/rc.d/init.d/%name
 %_unitdir/%name.service
 %_unitdir/graphical.target.wants/%name.service
+%_presetdir/??-%name.preset
 
 %changelog
+* Fri Dec 15 2017 Sergey V Turchin <zerg@altlinux.org> 2.1.2-alt2%ubt
+- turn on systemd service by default again
+
 * Fri Feb 13 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt1
 - turn on systemd service by default
 
