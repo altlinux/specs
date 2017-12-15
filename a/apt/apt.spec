@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt57
+Release: alt58
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -279,6 +279,18 @@ unset RPM_PYTHON
 # Probably %%doc with README.rsync?
 
 %changelog
+* Fri Dec 15 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt58
+- cherry-picked from Debian 0.7.22 (git://anonscm.debian.org/git/apt/apt.git)
+  some fixes for http download method (ALT: 18925)
+  * Fix pipeline handling on http.cc
+  (closes: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=413324)
+  (thx Otavio Salvador).
+  * show error details of failed methods
+  * if a process aborts with signal, show signal number
+  * in http method: ignore SIGPIPE, we deal with EPIPE elsewhere
+  (closes: https://bugs.launchpad.net/ubuntu/+source/apt/+bug/385144)
+  (thx Michael Vogt).
+
 * Mon Jul 03 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt57
 - Fixed script_slot variable (vseleznv@; ALT#32941).
 - Used recently restored librpm rpmRangesOverlap, and
