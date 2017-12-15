@@ -1,5 +1,5 @@
 Name: distrodb-utils
-Version: 0.19
+Version: 0.20
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -32,7 +32,7 @@ install -m 755 projectdb-helper-* \
 	distrodb-verify-newpkglist.pl \
 	distrodb-perl-health-checker.pl \
 	mkdistromap-*.pl \
-	pkglist2distrodb.py \
+	*list2distrodb.py \
 	%buildroot%_bindir/
 mkdir -p %buildroot%perl_vendor_privlib
 install -m 644 *.pm %buildroot%perl_vendor_privlib/
@@ -43,6 +43,9 @@ install -m 644 *.pm %buildroot%perl_vendor_privlib/
 %perl_vendor_privlib/*.pm
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- new version
+
 * Thu Dec 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - new version
 
