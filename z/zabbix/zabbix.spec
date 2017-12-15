@@ -5,6 +5,10 @@
 
 %def_with pgsql
 %def_enable java
+%def_with ssh2
+%def_with unixodbc
+
+%def_enable ipv6
 
 %ifndef _unitdir
 %define _unitdir %systemd_unitdir
@@ -12,7 +16,7 @@
 
 Name: zabbix
 Version: 3.4.4
-Release: alt1
+Release: alt2%ubt
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -26,16 +30,22 @@ Url: http://www.zabbix.com
 
 # http://heanet.dl.sourceforge.net/sourceforge/%name/%name-%version.tar.gz
 Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Patch0: %name-%version-alt.patch
 
 %{?_enable_java:BuildPreReq: java-devel-default}
 BuildPreReq: libelf-devel
-BuildRequires(pre): rpm-build-webserver-common
+BuildRequires(pre): rpm-build-webserver-common rpm-build-ubt
 
 # Automatically added by buildreq on Thu Nov 02 2017 (-bi)
 # optimized out: elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libkrb5-devel libnet-snmp30 libp11-kit libpq-devel libsasl2-3 libssl-devel net-snmp-config perl pkg-config python-base python3 rpm-build-python3 xz
 BuildRequires: libcurl-devel libelf-devel libevent-devel libiksemel-devel libldap-devel libmysqlclient-devel libnet-snmp-devel libopenipmi-devel libpcre-devel libsqlite3-devel libxml2-devel postgresql-devel python3-base
 BuildRequires: perl-Switch
+%if_with ssh2
+BuildRequires: libssh2-devel
+%endif
+%if_with unixodbc
+BuildRequires: libunixODBC-devel
+%endif
 
 %{?_enable_java:BuildRequires: java-devel rpm-build-java}
 
@@ -50,6 +60,23 @@ Provides: %_sysconfdir/%name
 Provides: %_logdir/%name
 BuildArch: noarch
 
+%package common-database-sqlite3
+Summary: %name common database stuff (for sqlite3)
+Group: Monitoring
+BuildArch: noarch
+
+%package common-database-mysql
+Summary: %name common database stuff (for mysql)
+Group: Monitoring
+BuildArch: noarch
+
+%if_with pgsql
+%package common-database-pgsql
+Summary: %name common database stuff (for postgresql)
+Group: Monitoring
+BuildArch: noarch
+%endif
+
 %package server-common
 Summary: %name network monitor (server common stuff)
 Group: Monitoring
@@ -59,6 +86,7 @@ Requires: %name-common >= 1:2.0.4-alt1
 Summary: %name network monitor (server, compiled with MySQL support)
 Group: Monitoring
 Requires: %name-server-common >= 1:2.0.4-alt1
+Requires: %name-common-database-mysql = %EVR
 Requires: %_sbindir/fping
 Obsoletes: %name-mysql < 1:1.1.7-alt1
 
@@ -67,6 +95,7 @@ Obsoletes: %name-mysql < 1:1.1.7-alt1
 Summary: %name network monitor (server, compiled with PostgreSQL support)
 Group: Monitoring
 Requires: %name-server-common >= 1:2.0.4-alt1
+Requires: %name-common-database-pgsql = %EVR
 Requires: %_sbindir/fping
 Obsoletes: %name-pgsql < 1:1.1.7-alt1
 %endif
@@ -83,7 +112,23 @@ BuildArch: noarch
 Requires: %name-agent
 
 %package proxy
-Summary: %name proxy
+Summary: %name proxy with Sqlite3 support
+Group: Monitoring
+Requires: %name-proxy-common = %EVR
+Requires: %name-common-database-sqlite3 = %EVR
+Conflicts: %name-proxy-pgsql
+
+%if_with pgsql
+%package proxy-pgsql
+Summary: %name proxy with PostgreSQL support
+Group: Monitoring
+Requires: %name-proxy-common = %EVR
+Requires: %name-common-database-pgsql = %EVR
+Conflicts: %name-proxy
+%endif
+
+%package proxy-common
+Summary: %name proxy common files
 Group: Monitoring
 Requires: %name-common >= 1:2.0.4-alt1
 Requires: %_sbindir/fping
@@ -155,6 +200,17 @@ ZABBIX supports both polling and trapping techniques to collect data from
 monitored hosts. A flexible notification mechanism allows easy and quickly
 configure different types of notifications for pre-defined events.
 
+%description common-database-sqlite3
+common stuff for zabbix sqlite3 databases.
+
+%description common-database-mysql
+common stuff for zabbix mysql databases.
+
+%if_with pgsql
+%description common-database-pgsql
+common stuff for zabbix postgresql databases.
+%endif
+
 %description server-common
 common stuff for zabbix server
 
@@ -172,6 +228,24 @@ zabbix server, compiled with PostgreSQL support
 %endif
 
 %description proxy
+zabbix network monitor proxy daemon.
+
+ZABBIX is software for monitoring of your applications, network and servers.
+ZABBIX supports both polling and trapping techniques to collect data from
+monitored hosts. A flexible notification mechanism allows easy and quickly
+configure different types of notifications for pre-defined events.
+
+%if_with pgsql
+%description proxy-pgsql
+zabbix network monitor proxy daemon with PostgreSQL support.
+
+ZABBIX is software for monitoring of your applications, network and servers.
+ZABBIX supports both polling and trapping techniques to collect data from
+monitored hosts. A flexible notification mechanism allows easy and quickly
+configure different types of notifications for pre-defined events.
+%endif
+
+%description proxy-common
 zabbix network monitor proxy daemon.
 
 ZABBIX is software for monitoring of your applications, network and servers.
@@ -235,13 +309,15 @@ sed -i -e "s,{ZABBIX_REVISION},%svnrev," include/version.h src/zabbix_java/src/c
 %configure --with-mysql \
 	--with-net-snmp \
 	--enable-server \
-	--enable-ipv6 \
+	%{subst_enable ipv6} \
 	--with-ldap \
 	--with-libcurl \
 	--with-libxml2 \
 	--with-jabber \
 	--with-openipmi \
 	--with-openssl \
+	%{subst_with ssh2} \
+	%{subst_with unixodbc} \
 	--with-libpcre-include=/usr/include/pcre \
 	--sysconfdir=/etc/zabbix
 %make dbschema
@@ -254,13 +330,15 @@ mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_mysql
 %configure --with-postgresql \
 	--with-net-snmp \
 	--enable-server \
-	--enable-ipv6 \
+	%{subst_enable ipv6} \
 	--with-ldap \
 	--with-libcurl \
 	--with-libxml2 \
 	--with-jabber \
 	--with-openipmi \
 	--with-openssl \
+	%{subst_with ssh2} \
+	%{subst_with unixodbc} \
 	--with-libpcre-include=/usr/include/pcre \
 	--sysconfdir=/etc/zabbix
 %make dbschema
@@ -268,11 +346,10 @@ mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_mysql
 
 mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_pgsql
 %make clean
-%endif
 
-%configure --with-sqlite3 \
+%configure --with-postgresql \
 	--enable-proxy \
-	--enable-ipv6 \
+	%{subst_enable ipv6} \
 	--enable-agent \
 	%{subst_enable java} \
 	--with-libcurl \
@@ -282,6 +359,30 @@ mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_pgsql
 	--with-jabber \
 	--with-openipmi \
 	--with-openssl \
+	%{subst_with ssh2} \
+	%{subst_with unixodbc} \
+	--with-libpcre-include=/usr/include/pcre \
+	--sysconfdir=/etc/zabbix
+%make
+
+mv src/%{name}_proxy/%{name}_proxy src/%{name}_proxy/%{name}_proxy_pgsql
+%make clean
+%endif
+
+%configure --with-sqlite3 \
+	--enable-proxy \
+	%{subst_enable ipv6} \
+	--enable-agent \
+	%{subst_enable java} \
+	--with-libcurl \
+	--with-libxml2 \
+	--with-net-snmp \
+	--with-ldap \
+	--with-jabber \
+	--with-openipmi \
+	--with-openssl \
+	%{subst_with ssh2} \
+	%{subst_with unixodbc} \
 	--with-libpcre-include=/usr/include/pcre \
 	--sysconfdir=/etc/zabbix
 %make
@@ -323,6 +424,7 @@ install -dm0755 %buildroot%_includedir/%name
 install -m0755 src/%{name}_*/%{name}_{mysql,agentd} %buildroot%_sbindir
 %if_with pgsql
 install -m0755 src/%{name}_server/%{name}_pgsql %buildroot%_sbindir
+install -m0755 src/%{name}_proxy/%{name}_proxy_pgsql %buildroot%_sbindir
 %endif
 
 # conf files
@@ -344,6 +446,8 @@ install -pDm0644 sources/zabbix_server %buildroot%_sysconfdir/sysconfig/zabbix_s
 %if_with pgsql
 install -pDm0755 sources/%{name}_pgsql.init %buildroot%_initdir/%{name}_pgsql
 install -pDm0644 sources/%{name}_pgsql.service %buildroot%_unitdir/%{name}_pgsql.service
+install -pDm0755 sources/%{name}_proxy_pgsql.init %buildroot%_initdir/%{name}_proxy_pgsql
+install -pDm0644 sources/%{name}_proxy_pgsql.service %buildroot%_unitdir/%{name}_proxy_pgsql.service
 %endif
 install -pDm0755 sources/%{name}_mysql.init %buildroot%_initdir/%{name}_mysql
 install -pDm0644 sources/%{name}_mysql.service %buildroot%_unitdir/%{name}_mysql.service
@@ -415,6 +519,14 @@ bzip2 ChangeLog
 %preun proxy
 %preun_service zabbix_proxy
 
+%if_with pgsql
+%post proxy-pgsql
+%post_service zabbix_proxy_pgsql
+
+%preun proxy-pgsql
+%preun_service zabbix_proxy_pgsql
+%endif
+
 %if_enabled java
 %post java-gateway
 %post_service zabbix_java_gateway
@@ -443,6 +555,19 @@ fi
 %dir %_sysconfdir/%name
 /lib/tmpfiles.d/*
 
+%files common-database-sqlite3
+%doc database/sqlite3/schema.sql database/sqlite3/data.sql database/sqlite3/images.sql
+
+%files common-database-mysql
+%doc database/mysql/schema.sql database/mysql/data.sql database/mysql/images.sql
+%doc upgrades-mysql
+
+%if_with pgsql
+%files common-database-pgsql
+%doc database/postgresql/schema.sql database/postgresql/data.sql database/postgresql/images.sql
+%doc upgrades-postgresql
+%endif
+
 %files server-common
 %_bindir/%{name}_get
 %config(noreplace) %_sysconfdir/sysconfig/zabbix_server
@@ -453,24 +578,33 @@ fi
 %_sbindir/%{name}_mysql
 %_initdir/%{name}_mysql
 %_unitdir/*mysql*
-%doc database/mysql/schema.sql database/mysql/data.sql database/mysql/images.sql
-%doc upgrades-mysql
 
 %if_with pgsql
 %files server-pgsql
 %_sbindir/%{name}_pgsql
 %_initdir/%{name}_pgsql
 %_unitdir/*pgsql*
-%doc database/postgresql/schema.sql database/postgresql/data.sql database/postgresql/images.sql
-%doc upgrades-postgresql
+%exclude %_unitdir/*proxy_pgsql*
 %endif
+
+%files proxy-common
+%config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/%name/%{name}_proxy.conf
+%_man8dir/%{name}_proxy.*
 
 %files proxy
 %_sbindir/%{name}_proxy
 %_initdir/%{name}_proxy
 %_unitdir/*proxy*
-%config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/%name/%{name}_proxy.conf
-%_man8dir/%{name}_proxy.*
+%if_with pgsql
+%exclude %_unitdir/*proxy_pgsql*
+%endif
+
+%if_with pgsql
+%files proxy-pgsql
+%_sbindir/%{name}_proxy_pgsql
+%_initdir/%{name}_proxy_pgsql
+%_unitdir/*proxy_pgsql*
+%endif
 
 %if_enabled java
 %files java-gateway
@@ -515,6 +649,10 @@ fi
 %_includedir/%name
 
 %changelog
+* Fri Dec 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.4-alt2%ubt
+- Added support for libssh2, unixODBC.
+- Built proxy with PostgreSQL support.
+
 * Wed Nov 08 2017 Alexei Takaseev <taf@altlinux.org> 1:3.4.4-alt1
 - 3.4.4
 
