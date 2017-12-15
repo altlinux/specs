@@ -4,45 +4,35 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.5
-Release: alt1.git20150112.1.1
+Version: 0.7.5
+Release: alt1
 Summary: REST API framework powered by Flask, MongoDB and good intentions
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/Eve/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/nicolaiarocci/eve.git
 Source: %name-%version.tar
-BuildArch: noarch
+Patch1: %oname-%version-alt-build.patch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-cerberus python-module-events
-#BuildPreReq: python-module-simplejson python-module-werkzeug
-#BuildPreReq: python-module-markupsafe python-module-jinja2
-#BuildPreReq: python-module-itsdangerous python-module-flask
-#BuildPreReq: python-module-pymongo python-module-flask-pymongo
-#BuildPreReq: python-module-redis-py
-#BuildPreReq: python-module-sphinx-devel python-module-alabaster
-#BuildPreReq: python-module-sphinxcontrib-embedly
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-cerberus python-module-events
+BuildRequires: python-module-pytest
+BuildRequires: python-module-flask-pymongo
+BuildRequires: python-module-alabaster python-module-html5lib python-module-objects.inv
+BuildRequires: python-module-sphinxcontrib-embedly
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-cerberus python3-module-events
-#BuildPreReq: python3-module-simplejson python3-module-werkzeug
-#BuildPreReq: python3-module-markupsafe python3-module-jinja2
-#BuildPreReq: python3-module-itsdangerous python3-module-flask
-#BuildPreReq: python3-module-pymongo python3-module-flask-pymongo
-#BuildPreReq: python3-module-redis-py
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-cerberus python3-module-events
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-flask-pymongo
 %endif
 
 %py_provides %oname
 %py_requires flask_pymongo
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-Embedly python-module-PyStemmer python-module-Pygments python-module-babel python-module-bson python-module-cssselect python-module-docutils python-module-flask python-module-genshi python-module-google python-module-httplib2 python-module-itsdangerous python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pymongo python-module-pymongo-gridfs python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-sphinxcontrib python-module-werkzeug python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-jinja2 python3-module-setuptools
-BuildRequires: python-module-alabaster python-module-cerberus python-module-events python-module-flask-pymongo python-module-html5lib python-module-objects.inv python-module-pytest python-module-sphinxcontrib-embedly python3-module-pytest rpm-build-python3 time
 
 %description
 Powered by Flask, MongoDB, Redis and good intentions Eve allows to
@@ -61,6 +51,7 @@ RESTful Web Services.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: REST API framework powered by Flask, MongoDB and good intentions
 Group: Development/Python3
@@ -83,6 +74,7 @@ effortlessly build and deploy highly customizable, fully featured
 RESTful Web Services.
 
 This package contains tests for %oname.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -109,6 +101,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -174,6 +167,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.5-alt1
+- Updated to upstream version 0.7.5.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5-alt1.git20150112.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
