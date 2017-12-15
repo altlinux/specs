@@ -1,5 +1,5 @@
 Name: apt-indicator
-Version: 0.3.7
+Version: 0.3.8
 Release: alt1%ubt
 
 Summary: Applet for indication that newer packages are available
@@ -69,6 +69,9 @@ mkdir -p %buildroot/%_datadir/%name/pixmaps
 
 
 %changelog
+* Fri Dec 15 2017 Sergey V Turchin <zerg at altlinux dot org> 0.3.8-alt1%ubt
+- remove "Run program" button from info window
+
 * Fri Dec 15 2017 Sergey V Turchin <zerg at altlinux dot org> 0.3.7-alt1%ubt
 - fix retrive update checker info
 
