@@ -1,16 +1,17 @@
 Name: vifm
-Version: 0.7.6
+Version: 0.9
 Release: alt1
 
-Summary: Two pane file manager with vi-like keybindings.
-License: GPL
-Group: File tools 
-Url: http://vifm.sourceforge.net/ 
+Summary: Two pane file manager with vi-like keybindings
+License: GPLv2
+Group: File tools
+Url: http://vifm.sourceforge.net/
 
-Source: %{name}-%{version}.tar.gz
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Thu Jul 21 2005
 BuildRequires: gcc-c++ libncursesw-devel libstdc++-devel libtinfo-devel samba-common
+BuildRequires: groff
 
 %description
 Vifm is a ncurses based file manager with vi like keybindings,
@@ -19,25 +20,35 @@ gives you complete keyboard control over your files without having
 to learn a new set of commands.
 
 %prep
-%setup -q -n %name
+%setup
 
 %build
-#autoreconf -fisv
+%autoreconf
 %configure
 %make_build
+# TODO: package with -Werror flag
+#%%make_build CFLAGS="$CFLAGS -Werror"
 
 %install
-%makeinstall
+%makeinstall_std
 
 %files
-
+%doc AUTHORS BUGS COPYING ChangeLog FAQ NEWS README TODO
+%exclude /usr/share/doc/vifm
 %_bindir/*
 %_datadir/vifm
+%_datadir/zsh/site-functions/_vifm
+%_datadir/bash-completion/completions/vifm
 %_man1dir/*
 %_pixmapsdir/%name.png
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Dec 15 2017 Grigory Ustinov <grenka@altlinux.org> 0.9-alt1
+- Build new version.
+  fix missing groff dependency.
+  (Closes: 27873)
+
 * Sat Dec 28 2013 Evgeny Sinelnikov <sin@altlinux.ru> 0.7.6-alt1
 - Update to lastest version with lots of improvements
 
@@ -46,5 +57,3 @@ to learn a new set of commands.
 
 * Thu Jul 21 2005 Nick S. Grechukh <gns@altlinux.ru> 0.3-alt0.1
 initial release for Sisyphus
-
-
