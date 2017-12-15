@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 # -*- coding: utf-8 -*-
-%define version    16.2.0
+%define version    17.5.0
 %define release    alt1
 
 %define source_version %version
@@ -13,9 +13,9 @@
 Summary: Python wrapper module around the OpenSSL library
 Summary(ru_RU.UTF-8): Модуль-обвязка библиотеки OpenSSL для python
 Name: %packagename
-Version: 16.2.0
+Version: 17.5.0
 Release: alt1
-Source0: https://pypi.python.org/packages/0c/d6/b1fe519846a21614fa4f8233361574eddb223e0bc36b182140d916acfb3b/pyOpenSSL-%{version}.tar.gz
+Source0: https://pypi.python.org/packages/3b/15/a5d90ab1a41075e8f0fae334f13452549528f82142b3b9d0c9d86ab7178c/pyOpenSSL-%{version}.tar.gz
 License: LGPL
 Group: Development/Python
 Url: http://pyopenssl.sourceforge.net/
@@ -142,6 +142,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 15 2017 Vladimir Didenko <cow@altlinux.org> 17.5.0-alt1
+- Version 17.5.0 (closes: #34328)
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 16.2.0-alt1
 - automated PyPI update
 
