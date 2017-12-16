@@ -1,7 +1,7 @@
 %define module Source-Repository-Mass
 
 Name: perl-%module
-Version: 0.406
+Version: 0.407
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,6 +36,9 @@ Conflicts: perl-Source-Repository < 0.391
 %perl_vendor_privlib/Source*
 
 %changelog
+* Sat Dec 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.407-alt1
+- bugfix release
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.406-alt1
 - added rosamass
 
