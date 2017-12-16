@@ -3,8 +3,8 @@
 %define ciddir 	%firefox_noarch_extensionsdir/%cid
 
 Name:		%firefox_name-%rname
-Version:	1.2.5
-Release:	alt3
+Version:	2.0.1
+Release:	alt1
 Summary:	The Web Developer extension for Mozilla Firefox
 
 License:	GPLv3
@@ -39,6 +39,9 @@ fi
 %ciddir
 
 %changelog
+* Sat Dec 16 2017 Nikolay A. Fetisov <naf@altlinux.org> 1:2.0.1-alt1
+- New version
+
 * Thu Jan 07 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1:1.2.5-alt3
 - Signed version to work with Firefox >= 43.x
 
