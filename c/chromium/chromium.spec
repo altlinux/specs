@@ -7,6 +7,10 @@
 %def_disable wayland
 %def_enable  google_api_keys
 
+%ifndef build_parallel_jobs
+%global build_parallel_jobs 5
+%endif
+
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
 
 #global gcc_version 5
@@ -25,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        62.0.3202.89
+Version:        63.0.3239.108
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -35,7 +39,7 @@ Url:            http://www.chromium.org
 
 Source0:        chromium.tar.zst
 Source1:        depot_tools.tar
-Source2:        libchromiumcontent.tar
+#Source2:        libchromiumcontent.tar
 
 Source30:       master_preferences
 Source31:       default_bookmarks.html
@@ -53,7 +57,7 @@ Patch001: 0001-OPENSUSE-enables-reading-of-the-master-preference.patch
 Patch002: 0002-OPENSUSE-Compile-the-sandbox-with-fPIE-settings.patch
 Patch003: 0003-ALT-Fix-krb5-includes-path.patch
 Patch004: 0004-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
-Patch005: 0005-DEBIAN-manpage-updates-fixes.patch
+Patch005: 0005-DEBIAN-manpage-fixes.patch
 Patch006: 0006-DEBIAN-change-icon.patch
 Patch007: 0007-ALT-gcc6-fixes.patch
 Patch008: 0008-DEBIAN-disable-third-party-cookies-by-default.patch
@@ -69,10 +73,9 @@ Patch017: 0017-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
 Patch018: 0018-ALT-gzip-does-not-support-the-rsyncable-option.patch
 Patch019: 0019-UBUNTU-Specify-max-resolution.patch
 Patch020: 0020-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch021: 0022-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-onl.patch
-Patch022: 0023-ARCH-gn-bootstrap.patch
+Patch021: 0021-ARCH-webrtc-fix.patch
+Patch022: 0022-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-only.patch
 Patch023: 0024-GENTOO-disable-safe_math_shared.patch
-Patch024: 0026-replace-struct-ucontext-with-ucontext_t.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -92,9 +95,11 @@ BuildRequires:  gperf
 BuildRequires:  libcups-devel
 BuildRequires:  libyasm-devel
 %if_enabled wayland
+BuildRequires:  libdrm-devel
 BuildRequires:  libwayland-server-devel
 BuildRequires:  libwayland-client-devel
 BuildRequires:  libwayland-cursor-devel
+BuildRequires:  libwayland-egl-devel
 %endif
 BuildRequires:  perl-Switch
 BuildRequires:  pkg-config
@@ -132,6 +137,7 @@ BuildRequires:  pkgconfig(xscrnsaver)
 BuildRequires:  pkgconfig(xt)
 BuildRequires:  python
 BuildRequires:  python-modules-json
+BuildRequires:  node
 BuildRequires:  yasm
 BuildRequires:  usbids
 BuildRequires:  xdg-utils
@@ -186,8 +192,8 @@ to Gnome's Keyring.
 %prep
 %setup -q -n chromium
 tar -xf %SOURCE1
-tar -xf %SOURCE2
-cp -a libchromiumcontent/chromiumcontent .
+#tar -xf %%SOURCE2
+#cp -a libchromiumcontent/chromiumcontent .
 
 ### Begin to apply patches
 %patch001 -p1
@@ -213,8 +219,13 @@ cp -a libchromiumcontent/chromiumcontent .
 %patch021 -p1
 %patch022 -p1
 %patch023 -p1
-%patch024 -p1
 ### Finish apply patches
+
+# Fix paths.
+sed \
+	-e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
+	-e 's|/usr/lib64/va/drivers|/usr/lib64/dri|g' \
+	-i content/common/sandbox_linux/bpf_gpu_policy_linux.cc
 
 # Enable support for the Widevine CDM plugin
 # libwidevinecdm.so is not included, but can be copied over from Chrome
@@ -227,6 +238,10 @@ echo > "third_party/adobe/flash/flapper_version.h"
 # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=68853#c2
 sed -i '/config("compiler")/ a cflags_cc = [ "-fno-delete-null-pointer-checks" ]' \
 	build/config/linux/BUILD.gn
+
+mkdir -p third_party/node/linux/node-linux-x64/bin
+ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin/
+
 
 %build
 %if_enabled clang
@@ -256,7 +271,6 @@ CHROMIUM_GN_DEFINES="\
  use_gold=false \
  use_pulseaudio=true \
  use_vaapi=true \
- use_vulcanize=false \
  use_system_freetype=false \
  use_system_harfbuzz=false \
  link_pulseaudio=true \
@@ -277,6 +291,7 @@ CHROMIUM_GN_DEFINES="\
  is_component_build=%{is_enabled shared_libraries} \
  enable_widevine=%{is_enabled widevine} \
  use_gtk3=%{is_enabled gtk3} \
+ use_ozone=%{is_enabled wayland} \
  enable_wayland_server=%{is_enabled wayland} \
 %if_enabled google_api_keys
  google_api_key=\"%api_key\" \
@@ -294,7 +309,7 @@ tools/gn/bootstrap/bootstrap.py -v \
 
 ninja \
 	-v \
-	-j 3 \
+	-j %build_parallel_jobs \
 	-C %target \
 	chrome \
 	chrome_sandbox \
@@ -311,6 +326,10 @@ mkdir -p -- \
 #
 install -m 755 %SOURCE100 %buildroot%_libdir/%name/%name-generic
 install -m 644 %SOURCE200 %buildroot%_sysconfdir/%name/default
+
+# manpage
+.rpm/scripts/make-manpage.sh > %buildroot/%_man1dir/%name.1
+ln -s %name.1  %buildroot/%_man1dir/chrome.1
 
 # x86_64 capable systems need this
 sed -i -e 's,/usr/lib/chromium,%_libdir/%name,g' %buildroot%_libdir/%name/%name-generic
@@ -333,9 +352,6 @@ cp -at %buildroot%_libdir/%name -- \
 
 # Remove garbage
 find -name '*.TOC' -delete
-
-cp -a chrome.1 %buildroot/%_man1dir/%name.1
-ln -s %name.1  %buildroot/%_man1dir/chrome.1
 
 # NaCl
 %if_enabled nacl
@@ -420,6 +436,11 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Sat Dec 16 2017 Alexey Gladkov <legion@altlinux.ru> 63.0.3239.108-alt1
+- New version (63.0.3239.108).
+- Security fixes:
+  - CVE-2017-15429: UXSS in V8.
+
 * Mon Nov 13 2017 Alexey Gladkov <legion@altlinux.ru> 62.0.3202.89-alt1
 - New version (62.0.3202.89).
 - Security fixes:
