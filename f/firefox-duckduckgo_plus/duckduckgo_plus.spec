@@ -1,7 +1,7 @@
 # SPEC file for the DuckDuckGo Plus Firefox extension
 
 %define rname	duckduckgo_plus
-%define version 1.1.22
+%define version 2017.12.7
 %define release alt1
 %define cid	jid1-ZAdIEUB7XOzOJw@jetpack
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -45,10 +45,7 @@ DuckDuckGo - поисковая система с открытым исходн�
 # RPM call unzip with -Lq keys, effectivly kills all mixed-case filenames in archive
 rm -rf -- ./*
 unzip -q %SOURCE0
-subst 's/20\./24./' install.rdf
 
-# Removing placeholder
-rm -f locale/.empty
 
 %install
 mkdir -p -- %buildroot/%ciddir
@@ -63,6 +60,9 @@ fi
 %ciddir
 
 %changelog
+* Sat Dec 16 2017 Nikolay A. Fetisov <naf@altlinux.org> 2017.12.7-alt1
+- New version
+
 * Sun Sep 10 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.1.22-alt1
 - New version
 
