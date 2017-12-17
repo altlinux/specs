@@ -29,7 +29,7 @@
 
 Name: glusterfs3
 Version: %major.3
-Release: alt1
+Release: alt2
 
 Summary: Cluster File System
 
@@ -358,12 +358,17 @@ mv %buildroot%_datadir/glusterfs/scripts/gsync-sync-gfid %buildroot%_bindir/
 #  mv ${file} `dirname ${file}`/`basename ${file} .sample`
 #done
 
+# Remove wrong placed confs
+for file in glusterfs-georep-logrotate glusterfs-logrotate; do
+  rm -v %buildroot%_sysconfdir/glusterfs/${file}
+done
+
 # Create working directory
 mkdir -p %buildroot%_sharedstatedir/glusterd/
 
 # Update configuration file to /var/lib working directory
 %__subst 's|option working-directory %_sysconfdir/glusterd|option working-directory %_sharedstatedir/glusterd|g' \
-%buildroot%_sysconfdir/glusterfs/glusterd.vol
+    %buildroot%_sysconfdir/glusterfs/glusterd.vol
 
 install -D -m644 extras/systemd/glusterd.service %buildroot/%_unitdir/glusterd.service
 install -D -m644 extras/systemd/glustereventsd.service %buildroot/%_unitdir/glustereventsd.service
@@ -410,7 +415,6 @@ rm -f %buildroot%_sharedstatedir/glusterd/hooks/1/create/post/S10selinux-label-b
 %_libexecdir/glusterfs/glusterfind/
 %_sbindir/gfind_missing_files
 %_libexecdir/glusterfs/gfind_missing_files/
-%_libexecdir/glusterfs/peer_mountbroker
 %_sbindir/gcron.py
 %_sbindir/snap_scheduler.py
 %exclude %glusterlibdir/xlator/mount/fuse*
@@ -442,6 +446,7 @@ rm -f %buildroot%_sharedstatedir/glusterd/hooks/1/create/post/S10selinux-label-b
 %_datadir/glusterfs/scripts/schedule_georep.py
 %_bindir/gsync-sync-gfid
 %_libexecdir/glusterfs/peer_georep-sshkey.py
+%_libexecdir/glusterfs/peer_mountbroker
 %_libexecdir/glusterfs/peer_mountbroker.py
 %_sbindir/gluster-georep-sshkey
 %_sbindir/gluster-mountbroker
@@ -479,7 +484,8 @@ rm -f %buildroot%_sharedstatedir/glusterd/hooks/1/create/post/S10selinux-label-b
 %_initdir/glusterd
 %_unitdir/glusterd.service
 %config(noreplace) %_sysconfdir/sysconfig/glusterd
-%config(noreplace) %_sysconfdir/glusterfs/
+%dir %_sysconfdir/glusterfs/
+%config(noreplace) %_sysconfdir/glusterfs/*
 %exclude %_sysconfdir/glusterfs/eventsconfig.json
 
 %_sharedstatedir/glusterd/
@@ -566,6 +572,10 @@ rm -f %buildroot%_sharedstatedir/glusterd/hooks/1/create/post/S10selinux-label-b
 %preun_service glusterd
 
 %changelog
+* Sun Dec 17 2017 Vitaly Lipatov <lav@altlinux.ru> 3.12.3-alt2
+- move peer_mountbroker to its place in georeplication subpackage
+- remove logrotate files from /etc/glusterd
+
 * Thu Nov 23 2017 Vitaly Lipatov <lav@altlinux.ru> 3.12.3-alt1
 - new version 3.12.3 (with rpmrb script)
 - drop ganesha subpackage
