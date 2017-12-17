@@ -13,7 +13,7 @@
 
 Name: nagios
 Version: 3.0.6
-Release: alt5
+Release: alt5.1
 
 Summary: Services and network monitoring system
 License: GPL
@@ -373,6 +373,9 @@ subst 's|# Nagios(R) web-interface settings||' /etc/lighttpd/lighttpd.conf
 %files full
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.6-alt5.1
+- rebuild with new perl 5.26.1
+
 * Thu Sep 28 2017 Denis Medvedev <nbr@altlinux.org> 3.0.6-alt5
 - (Fixes: CVE-2009-2288, CVE-2011-1523, CVE-2012-6096, CVE-2013-2214,
  CVE-2013-7108, CVE-2013-7205)

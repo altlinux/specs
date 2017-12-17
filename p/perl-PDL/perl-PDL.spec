@@ -31,7 +31,7 @@ BuildRequires: gcc-c++
 Name:           perl-PDL
 %global cpan_version 2.018
 Version:        2.18.0
-Release:        alt1_4
+Release:        alt1_4.1
 Summary:        The Perl Data Language
 Group:          Development/Other
 License:        GPL+ or Artistic
@@ -243,6 +243,9 @@ make test
 %{_mandir}/man1/*.1*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.18.0-alt1_4.1
+- rebuild with new perl 5.26.1
+
 * Mon Nov 06 2017 Igor Vlasenko <viy@altlinux.ru> 2.18.0-alt1_4
 - new version (closes: #34130)
 

@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.08
-Release: alt1
+Release: alt1.1
 Summary: boost Cookie::Baker's crush_cookie
 Group: Development/Perl
 License: perl
@@ -33,6 +33,9 @@ Source0: http://www.cpan.org/authors/id/K/KA/KAZEBURO/%{module_name}-%{version}.
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1.1
+- rebuild with new perl 5.26.1
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 

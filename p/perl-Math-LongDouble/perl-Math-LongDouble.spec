@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.19
-Release: alt1
+Release: alt1.1
 Summary: perl module %module_name
 Group: Development/Perl
 License: perl
@@ -33,6 +33,9 @@ Source0: http://www.cpan.org/authors/id/S/SI/SISYPHUS/%{module_name}-%{version}.
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1.1
+- rebuild with new perl 5.26.1
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - automated CPAN update
 

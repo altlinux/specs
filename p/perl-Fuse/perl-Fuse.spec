@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Fuse
 Version: 0.16
-Release: alt1
+Release: alt1.1
 
 Summary: Write filesystems in Perl using FUSE
 License: GPLv2, LGPLv2.1
@@ -36,6 +36,9 @@ write filesystems using perl.
 %perl_vendor_autolib/Fuse
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1.1
+- rebuild with new perl 5.26.1
+
 * Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - automated CPAN update
 

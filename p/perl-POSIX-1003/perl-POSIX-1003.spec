@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-POSIX-1003
 Version: 0.98
-Release: alt4
+Release: alt4.1
 
 Summary: POSIX::1003, alternative for POSIX in core
 
@@ -38,6 +38,9 @@ Source: http://cpan.org.ua/authors/id/M/MA/MARKOV/%module_name-%module_version.t
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.98-alt4.1
+- rebuild with new perl 5.26.1
+
 * Sun Oct 29 2017 Vitaly Lipatov <lav@altlinux.ru> 0.98-alt4
 - initial build for ALT Sisyphus
 

@@ -6,7 +6,7 @@
 
 Name: linux-tools-%kernel_base_version
 Version: %kernel_base_version
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Performance analysis tools for Linux
 License: GPLv2
@@ -83,6 +83,9 @@ popd
 %doc %_docdir/%name
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 4.4-alt1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 4.4-alt1.1
 - rebuild with new perl 5.24.1
 

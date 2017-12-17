@@ -1,7 +1,7 @@
 %define dist Perl-RPM
 Name: perl-RPM
 Version: 1.51
-Release: alt5
+Release: alt5.1
 
 Summary: Native bindings to the RPM Package Manager API
 License: Artistic
@@ -40,6 +40,9 @@ been done in C or C++.
 %perl_vendor_autolib/RPM*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.51-alt5.1
+- rebuild with new perl 5.26.1
+
 * Sat Apr 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.51-alt5
 - no error when opening RPM header with MISSING KEYS
 

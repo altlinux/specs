@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%def_without bootstrap
+%def_with bootstrap
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Find.pm) perl(JSON.pm) perl(Module/Build.pm) perl(Parse/CPAN/Meta.pm) perl(Scalar/Util.pm) perl(YAML/Tiny.pm) perl(base.pm) perl-devel perl-podlators
@@ -19,7 +19,7 @@ BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(ExtUtils/MM_Unix.pm) perl(E
 Name:		perl-Test-LeakTrace
 Summary:	Trace memory leaks
 Version:	0.16
-Release:	alt1
+Release:	alt1.1
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Test-LeakTrace/
@@ -122,6 +122,9 @@ mv ./JA.pod lib/Test/LeakTrace/
 %{perl_vendor_archlib}/Test/
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1.1
+- rebuild with new perl 5.26.1
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - automated CPAN update
 

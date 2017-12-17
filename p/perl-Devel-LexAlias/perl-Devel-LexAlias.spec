@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Devel-LexAlias
 Version:        0.05
-Release:        alt2_15
+Release:        alt2_15.1
 Summary:        Alias lexical variables
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -57,6 +57,9 @@ make test
 %{perl_vendor_archlib}/Devel/
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_15.1
+- rebuild with new perl 5.26.1
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_15
 - update to new release by fcimport
 

@@ -15,7 +15,7 @@
 
 Name: perl-Pg-PQ
 Version: 0.15
-Release: alt1
+Release: alt1.1
 
 Summary: Perl wrapper for PostgreSQL libpq
 
@@ -59,6 +59,9 @@ even the Coro manpage.
 %perl_vendor_autolib/Pg/*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1.1
+- rebuild with new perl 5.26.1
+
 * Thu Oct 12 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 

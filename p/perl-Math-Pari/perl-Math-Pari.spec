@@ -2,7 +2,7 @@
 %define dist Math-Pari
 Name: perl-%dist
 Version: 2.01080900
-Release: alt2
+Release: alt2.1
 Epoch: 1
 
 Summary: Perl interface to PARI
@@ -64,6 +64,9 @@ export PERL_USE_UNSAFE_INC=1
 %perl_vendor_autolib/Math
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.01080900-alt2.1
+- rebuild with new perl 5.26.1
+
 * Sun Dec 10 2017 Igor Vlasenko <viy@altlinux.ru> 1:2.01080900-alt2
 - added patches for perl 5.26
 

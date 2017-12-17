@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 2.4
-Release: alt1.1.1.1
+Release: alt1.1.1.1.1
 Summary: interface to FLAC header metadata.
 Group: Development/Perl
 License: perl
@@ -69,6 +69,9 @@ _fileSize                : file size, in bytes
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1.1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1.1.1.1
 - rebuild with new perl 5.24.1
 

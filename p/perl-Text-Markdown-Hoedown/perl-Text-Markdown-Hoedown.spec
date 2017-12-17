@@ -1,6 +1,6 @@
 Name: perl-Text-Markdown-Hoedown
 Version: 1.02
-Release: alt1
+Release: alt1.1
 
 Summary: hoedown for Perl5
 Group: Development/Perl
@@ -29,6 +29,9 @@ BuildRequires: perl(parent.pm) perl(File/pushd.pm) perl-devel perl(CPAN/Meta.pm)
 %doc Changes LICENSE README.md
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1.1
+- rebuild with new perl 5.26.1
+
 * Sun Oct 01 2017 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
 - automated CPAN update
 

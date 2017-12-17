@@ -1,7 +1,7 @@
 %define dist HTTP-Parser-XS
 Name: perl-%dist
 Version: 0.17
-Release: alt1.1.1
+Release: alt1.1.1.1
 
 Summary: A fast, primitive HTTP request parser
 License: Perl
@@ -34,6 +34,9 @@ server.
 %perl_vendor_autolib/HTTP
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1.1.1
 - rebuild with new perl 5.24.1
 

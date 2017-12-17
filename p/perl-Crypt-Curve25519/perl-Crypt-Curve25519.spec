@@ -3,7 +3,7 @@
 
 Name: perl-%dist
 Version: 0.06
-Release: alt1
+Release: alt1.1
 
 Summary: Generate shared secret using elliptic-curve Diffie-Hellman function
 License: %perl_license
@@ -36,6 +36,9 @@ Generate shared secret using elliptic-curve Diffie-Hellman function
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1.1
+- rebuild with new perl 5.26.1
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - automated CPAN update
 

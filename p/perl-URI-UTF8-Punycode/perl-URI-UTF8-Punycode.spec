@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.05
-Release: alt2
+Release: alt2.1
 Summary: Punycode conversion of UTF-8 string.
 Group: Development/Perl
 License: gpl
@@ -50,6 +50,9 @@ scripts for %name
 
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2.1
+- rebuild with new perl 5.26.1
+
 * Thu Dec 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2
 - fix for perl5.26 (patch0)
 

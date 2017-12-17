@@ -9,7 +9,7 @@ BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools gcc-c++ perl(Clas
 %define _localstatedir %{_var}
 Name:           slic3r
 Version:        1.2.9
-Release:        alt1_15
+Release:        alt1_15.1
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
@@ -186,6 +186,9 @@ SLIC3R_NO_AUTO=1 perl Build.PL installdirs=vendor
 %{_datadir}/%{name}
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.9-alt1_15.1
+- rebuild with new perl 5.26.1
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.9-alt1_15
 - update to new release by fcimport
 

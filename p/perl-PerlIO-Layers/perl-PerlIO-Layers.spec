@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-PerlIO-Layers
 Version:        0.011
-Release:        alt1_12
+Release:        alt1_12.1
 Summary:        Querying your file handle capabilities
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -61,6 +61,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/PerlIO*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_12.1
+- rebuild with new perl 5.26.1
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_12
 - update to new release by fcimport
 

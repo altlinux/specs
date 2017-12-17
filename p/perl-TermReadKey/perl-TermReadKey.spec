@@ -9,7 +9,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 2.37
-Release: alt2
+Release: alt2.1
 Summary: simple control over terminal driver modes
 Group: Development/Perl
 License: perl
@@ -42,6 +42,9 @@ Term::ReadKey" on any architecture and have a good likelihood of it working.
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.37-alt2.1
+- rebuild with new perl 5.26.1
+
 * Mon Sep 25 2017 Igor Vlasenko <viy@altlinux.ru> 2.37-alt2
 - fixed summary and description (closes: #33637)
 

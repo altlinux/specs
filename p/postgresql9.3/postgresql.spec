@@ -17,7 +17,7 @@
 
 Name: %prog_name%postgresql_major.%postgresql_minor
 Version: %postgresql_major.%postgresql_minor.%postgresql_subminor
-Release: alt%postgresql_altrel
+Release: alt%postgresql_altrel.1
 
 %define PGSQL pgsql
 %define ROOT %_localstatedir/%PGSQL-root
@@ -759,6 +759,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 9.3.20-alt1.1
+- rebuild with new perl 5.26.1
+
 * Thu Nov 09 2017 Alexei Takaseev <taf@altlinux.org> 9.3.20-alt1
 - 9.3.20
 - Remove conflicts to PG 9.1, 9.2

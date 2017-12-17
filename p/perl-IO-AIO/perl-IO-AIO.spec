@@ -4,7 +4,7 @@ Epoch: 1
 %define dist IO-AIO
 Name: perl-%dist
 Version: 4.34
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Asynchronous Input/Output
 License: GPL or Artistic
@@ -59,6 +59,9 @@ scripts for %name
 
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.34-alt1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.34-alt1.1
 - rebuild with new perl 5.24.1
 

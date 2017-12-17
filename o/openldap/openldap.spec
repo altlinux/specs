@@ -18,7 +18,7 @@
 
 Name: openldap
 Version: %_sover.45
-Release: alt2
+Release: alt2.1
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -697,6 +697,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.45-alt2.1
+- rebuild with new perl 5.26.1
+
 * Tue Oct 24 2017 Dmitry V. Levin <ldv@altlinux.org> 2.4.45-alt2
 - slapd:
   + dropped bogus chown from %%pre script;

@@ -2,7 +2,7 @@
 
 Name: perl-PerlIO-utf8_strict
 Version: 0.007
-Release: alt1
+Release: alt1.1
 
 Summary: fast and correct UTF-8 IO module
 
@@ -44,6 +44,9 @@ input for correctness.
 %perl_vendor_autolib/PerlIO*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.007-alt1.1
+- rebuild with new perl 5.26.1
+
 * Sun Apr 23 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.007-alt1
 - New version
 

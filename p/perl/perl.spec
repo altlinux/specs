@@ -1,6 +1,6 @@
 Name: perl
-Version: 5.24.3
-Release: alt2
+Version: 5.26.1
+Release: alt1
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -14,11 +14,11 @@ Source: perl-%version.tar
 Patch01: perl-5.22.0-alt-644-at-ExtUtils-Install.patch
 Patch02: perl-5.24.0-alt-644-at-installperl.patch
 Patch03: perl-5.22.0-alt-644-viy-ExtUtils-Install-fix-test.patch
-Patch04: perl-5.22.0-alt-at-MM_Unix-link-xs-with-libperl.patch
+Patch04: perl-5.26.1-alt-at-MM_Unix-link-xs-with-libperl.patch
 Patch05: perl-5.24.1-alt-at-MM_Unix-shabang.patch
 Patch06: perl-5.24.1-alt-at-Storable-no-early-dep-on-Log-Agent.patch
 Patch07: perl-5.24.0-alt-at-debian-Errno_pm.patch
-Patch08: perl-5.24.1-alt-at-disable-Cpan-Meta-under-rpm.patch
+Patch08: perl-5.26.1-alt-at-disable-Cpan-Meta-under-rpm.patch
 Patch09: perl-5.24.0-alt-at-libperl-soname.patch
 Patch10: perl-5.24.1-alt-at-no-rpath-for-std-libs.patch
 Patch11: perl-5.20.1-alt-at-perl5db-findreq-cleanup.patch
@@ -28,7 +28,7 @@ Patch14: perl-5.20.1-alt-crux-Cwd-use-realpath.patch
 # or hsh with --mountpoints=/proc
 Patch15: perl-5.20.1-alt-crux-fix-test-without-proc.patch
 Patch16: perl-5.20.1-alt-ldv-support-for-alt-gcc-wrapper.patch
-Patch17: perl-5.24.0-alt-viy-Unicode-Normalize-fix-deps.patch
+Patch17: perl-5.26.1-alt-viy-Unicode-Normalize-fix-deps.patch
 # hack - sensitive test can fail transaction - see maintainers notes for 5.24.1
 Patch18: perl-5.24.1-alt-viy-disable-Time-HiRes-itimer.t.patch
 Patch19: perl-5.24.1-alt-viy-no-check-sums-in-customized.t.patch
@@ -40,7 +40,6 @@ Patch21: perl-5.24.3-alt-solovyov.patch
 
 # cpan update patches here. use format below:
 #Patch50: cpan-update-Socket-2.013-to-Socket-2.016.diff
-Patch51: cpan-update-Scalar-List-Utils-1.42-to-Scalar-List-Utils-1.46.diff
 
 # ------ inserted with srpm-spec-inject-patches(1) -------
 # BeginPatches(fedora)[shift=300]: -----------------------
@@ -52,126 +51,62 @@ Patch322:        perl-5.18.1-Document-Math-BigInt-CalcEmu-requires-Math-BigInt.p
 # Make *DBM_File desctructors thread-safe, bug #1107543, RT#61912
 Patch326:        perl-5.18.2-Destroy-GDBM-NDBM-ODBM-SDBM-_File-objects-only-from-.patch
 
-# Fix a memory leak when compiling a regular expression with a POSIX class,
-# RT#128313, in upstream after 5.25.1
-Patch331:        perl-5.24.0-Fix-a-memory-leak-in-strict-regex-posix-classes.patch
+# Make File::Glob more resistant against degenerative matching, RT#131211,
+# in upstream after 5.27.0
+Patch331:        perl-5.27.0-perl-131211-fixup-File-Glob-degenerate-matching.patch
 
-# Do not mangle errno from failed socket calls, RT#128316,
-# in upstream after 5.25.1
-Patch332:        perl-5.25.1-perl-128316-preserve-errno-from-failed-system-calls.patch
+# Fix cloning :via handles on thread creation, RT#131221,
+# in upstream after 5.27.0
+Patch334:        perl-5.27.0-perl-131221-improve-duplication-of-via-handles.patch
+Patch335:        perl-5.27.0-perl-131221-sv_dup-sv_dup_inc-are-only-available-und.patch
 
-# Fix compiling regular expressions like /\X*(?0)/, RT#128109, in upstream
-# after 5.25.1
-Patch333:        perl-5.24.0-fix-128109-do-not-move-RExC_open_parens-0-in-reginse.patch
+# Fix glob UTF-8 flag on a glob reassignment, RT#131263,
+# in upstream after 5.27.0
+Patch336:        perl-5.26.0-perl-131263-clear-the-UTF8-flag-on-a-glob-if-it-isn-.patch
 
-# Do not use unitialized memory in $h{\const} warnings, RT#128189,
-# in upstream after 5.25.2
-Patch334:        perl-5.25.2-uninit-warning-from-h-const-coredumped.patch
+# Fix handling backslashes in PATH environment variable when executing
+# "perl -S", RT#129183, in upstream after 5.27.0
+Patch338:        perl-5.27.0-perl-129183-don-t-treat-as-an-escape-in-PATH-for-S.patch
 
-# Fix precedence in hv_ename_delete, RT#128086, in upstream after 5.25.0
-Patch335:        perl-5.25.0-Fix-precedence-in-hv_ename_delete.patch
+# Fix reporting malformed UTF-8 character, RT#131646, in upstream after 5.27.1
+Patch343:        perl-5.27.1-t-lib-warnings-utf8-Fix-test.patch
 
-# Do not treat %: as a stash, RT#128238, in upstream after 5.25.2
-Patch336:        perl-5.25.2-only-treat-stash-entries-with-.-as-sub-stashes.patch
+# Fix File::Glob rt131211.t test random failures, in upstream after 5.27.1
+Patch345:        perl-5.27.1-File-Glob-tweak-rt131211.t-to-be-less-sensitive-on-w.patch
 
-# Do not crash when inserting a non-stash into a stash, RT#128238,
-# in upstream after 5.25.2
-Patch337:        perl-5.25.2-perl-128238-Crash-with-non-stash-in-stash.patch
+# Fix t/op/hash.t test random failures, in upstream after 5.27.1
+Patch346:        perl-5.26.0-t-op-hash.t-fixup-intermittently-failing-test.patch
 
-# Fix line numbers with perl -x, RT#128508, in upstream after 5.25.2
-Patch338:        perl-5.25.2-perl-128508-Fix-line-numbers-with-perl-x.patch
+# Parse caret variables with subscripts as normal variables inside ${...}
+# escaping, RT#131664, in upstream after 5.27.1
+Patch347:        perl-5.27.1-Parse-caret-vars-with-subscripts-the-same-as-normal-.patch
+Patch348:        perl-5.27.1-add-an-additional-test-for-whitespace-tolerance-in-c.patch
 
-# Fix a crash when vivifying a stub in a deleted package, RT#128532,
-# in upstream after 5.25.2
-Patch340:        perl-5.25.2-perl-128532-Crash-vivifying-stub-in-deleted-pkg.patch
+# Do not display too many bytes when reporting malformed UTF-8 character,
+# in upstream after 5.27.1
+Patch349:        perl-5.27.1-utf8n_to_uvchr-Don-t-display-too-many-bytes-in-msg.patch
 
-# Fix a crash in "Subroutine redefined" warning, RT#128257,
-# in upstream after 5.25.2
-Patch341:        perl-5.25.2-SEGV-in-Subroutine-redefined-warning.patch
+# Fix error message for "our sub foo::bar", RT#131679, in upstream after 5.27.1
+Patch351:        perl-5.27.1-perl-131679-Fix-our-sub-foo-bar-message.patch
 
-# Fix a crash in lexical scope warnings, RT#128597, in upstream after 5.25.2
-Patch342:        perl-5.25.2-perl-128597-Crash-from-gp_free-ckWARN_d.patch
+# Fix executing arybase::_tie_it() in Safe compartement, RT#131588,
+# not yet accepted by upstream
+Patch352:        perl-5.26.0-perl-131588-be-a-little-more-careful-in-arybase-_tie.patch
 
-# Fix handling \N{} in tr for characters in range 128--255, RT#128734,
-# in upstream after 5.25.3
-Patch343:        perl-5.24.0-PATCH-perl-128734-tr-N-.-failing-for-128-255.patch
+# Fix splitting non-ASCII strings if unicode_strings feature is enabled,
+# RT#130907 in upstream after 5.27.1
+Patch354:        perl-5.27.1-RT-130907-Fix-the-Unicode-Bug-in-split.patch
 
-# Fix crash in "evalbytes S", RT#129196, in upstream after 5.25.4
-Patch345:        perl-5.25.4-perl-129196-Crash-bad-read-with-evalbytes-S.patch
-Patch346:        perl-5.24.0-Regression-test-for-RT-129196.patch
-Patch347:        perl-5.25.4-toke.c-fix-mswin32-builds.patch
+# Fix compiler warnings in code generated by ExtUtils::Constant, CPAN RT#63832,
+# in upstream after 5.27.2
+Patch355:        perl-5.27.2-Avoid-compiler-warnings-due-to-mismatched-types-in-p.patch
 
-# Fix crash in splice, RT#129164, RT#129166, RT#129167, in upstream after 5.25.4
-Patch348:        perl-5.24.0-perl-129164-Crash-with-splice.patch
+# Fix compiler warnings in code generated by ExtUtils::Constant, CPAN RT#101487,
+# in upstream after 5.27.2
+Patch356:        perl-5.27.2-EU-Constant-avoid-uninit-warning.patch
 
-# Fix string overrun in Perl_gv_fetchmethod_pvn_flags, RT#129267,
-# in upstream after 5.25.4
-Patch349:        perl-5.24.0-clean-up-gv_fetchmethod_pvn_flags-introduce-name_end.patch
-Patch350:        perl-5.25.4-clean-up-gv_fetchmethod_pvn_flags-move-origname-init.patch
-Patch351:        perl-5.25.4-clean-up-gv_fetchmethod_pvn_flags-rename-nsplit-to-l.patch
-Patch352:        perl-5.25.4-fix-129267-rework-gv_fetchmethod_pvn_flags-separator.patch
-Patch353:        perl-5.25.4-perl-129267-Test-for-gv_fetchmethod-buffer-overrun.patch
-
-# Fix crash when matching UTF-8 string with non-UTF-8 substrings, RT#129350,
-# in upstream after 5.25.5
-Patch354:        perl-5.24.0-perl-129350-anchored-floating-substrings-must-be-utf.patch
-
-# Fix parsing perl options in shell bang line, RT#129336,
-# in upstream after 5.25.5
-Patch355:        perl-5.24.0-rt-129336-perl-i-u-erroneously-interpreted-as-u.patch
-
-# Fix firstchar bitmap under UTF-8 with prefix optimization, RT#129950,
-# in upstream after 5.25.6
-Patch356:        perl-5.24.0-regcomp.c-fix-perl-129950-fix-firstchar-bitmap-under.patch
-
-# Avoid infinite loop in h2xs tool if enum and type have the same name,
-# RT#130001, in upstream after 5.25.6
-Patch357:        perl-5.25.6-perl-130001-h2xs-avoid-infinite-loop-for-enums.patch
-
-# Fix stack handling when calling chdir without an argument, RT#129130,
-# in upstream after 5.25.6
-Patch358:        perl-5.24.0-perl-129130-make-chdir-allocate-the-stack-it-needs.patch
-
-# Fix crash in Storable when deserializing malformed code reference, RT#68348,
-# RT130098
-Patch359:        perl-5.25.7-Fix-Storable-segfaults.patch
-
-# Fix assigning split() return values to an array, in upstream after 5.25.7
-Patch361:        perl-5.24.0-split-was-leaving-PL_sv_undef-in-unused-ary-slots.patch
-
-# Fix const correctness in hv_func.h, bug #1242980, RT#130169,
-# in upstream after 5.25.7
-Patch362:        perl-5.25.7-Fix-const-correctness-in-hv_func.h.patch
-
-# Fix a crash in optimized evaluation of "or ((0) x 0))", RT#130247,
-# in upsream after 5.25.7
-Patch363:        perl-5.24.0-assertion-failure-in-.-or-0-x-0.patch
-
-# Fix a memory leak in IO::Poll, RT#129788, in upstream after 5.25.7
-Patch364:        perl-5.24.0-perl-129788-IO-Poll-fix-memory-leak.patch
-
-# Fix regular expression matching, RT#130307, in upstream after 5.25.7
-Patch365:        perl-5.25.7-perl-130307-Correctly-unwind-on-cache-hit.patch
-
-# Fix a buffer overflow in split in scalar context, RT#130262,
-# in upstream after 5.25.8
-Patch366:        perl-5.24.1-perl-130262-split-scalar-context-stack-overflow-fix.patch
-
-# Fix a heap overflow with pack "W", RT129149, in upstream after 5.25.8
-Patch367:        perl-5.25.8-perl-129149-avoid-a-heap-buffer-overflow-with-pack-W.patch
-Patch368:        perl-5.25.8-perl-129149-fix-the-test-so-skip-has-a-SKIP-to-work-.patch
-
-# Fix a use-after-free when processing scalar variables in forms, RT#129125,
-# in upstream after 5.25.8
-Patch369:        perl-5.24.1-perl-129125-copy-form-data-if-it-might-be-freed.patch
-
-# Fix a heap overflow if invalid octal or hexadecimal number is used in
-# transliteration expression, RT#129342, in upstream after 5.25.8
-Patch370:        perl-5.24.1-perl-129342-ensure-range-start-is-set-after-error-in.patch
-
-# Fix out-of-bound read in case of unmatched regexp backreference, RT#129377,
-# in upstream after 5.25.8
-Patch371:        perl-5.24.1-perl-129377-don-t-read-past-start-of-string-for-unma.patch
+# Fix unreliable Time-HiRes tests, CPAN RT#122819, in Time-HiRes-1.9746
+Patch358:        perl-5.26.0-Time-HiRes-Fix-unreliable-t-usleep.t-and-t-utime.t.patch
 # EndPatches(fedora): --------------------------------------
 
 # there's a problem with strict.pm
@@ -204,12 +139,18 @@ Summary: Pathologically Eclectic Rubbish Lister
 Group: System/Base
 Provides: perl = %epoch:%version
 Obsoletes: perl < %epoch:%version
-Provides: perl-version = 0.99
-Obsoletes: perl-version < 0.99
 Provides: perl-PerlIO = %epoch:%version perl-Storable = %epoch:%version
 Obsoletes: perl-PerlIO < %epoch:%version perl-Storable < %epoch:%version
-Provides: perl-Digest-MD5 perl-Time-HiRes perl-MIME-Base64
-Obsoletes: perl-Digest-MD5 perl-Time-HiRes perl-MIME-Base64
+Provides: perl-version = 0.99
+Obsoletes: perl-version < 0.99
+Provides: perl-Digest-MD5 = 2.55
+Obsoletes: perl-Digest-MD5 < 2.55
+Provides: perl-Time-HiRes = 1.9741
+Obsoletes: perl-Time-HiRes < 1.9741
+Provides: perl-MIME-Base64 = 3.15
+Obsoletes: perl-MIME-Base64 < 3.15
+Provides: perl-IPC-SysV = 2.07
+Obsoletes: perl-IPC-SysV < 2.07-alt2
 
 %package devel
 Summary: Perl header files and development modules
@@ -221,6 +162,9 @@ Conflicts: perl-Test-Tester < 0.114
 Provides: perl-Test-use-ok = 0.12
 Obsoletes: perl-Test-use-ok < 0.12
 Conflicts: perl-Test-use-ok < 0.12
+Provides: perl-Test2 = 0.000045
+Obsoletes: perl-Test2 < 0.000045
+Conflicts: perl-Test2 < 0.000045
 
 %package pod
 Summary: Perl documentation
@@ -326,50 +270,28 @@ equivalent text will have identical binary representations.
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
-%patch51 -p1
 
 # ------ inserted with srpm-spec-inject-patches(1) -------
 # BeginPatches(fedora): ------------------------------------
 %patch322 -p1
 %patch326 -p1
-#patch331 -p1
-#patch332 -p1
-#patch333 -p1
+%patch331 -p1
 %patch334 -p1
-#patch335 -p1
+%patch335 -p1
 %patch336 -p1
-%patch337 -p1
-#patch338 -p1
-%patch340 -p1
-%patch341 -p1
-#patch342 -p1
-#patch343 -p1
-#patch345 -p1
-#patch346 -p1
-#patch347 -p1
+%patch338 -p1
+%patch343 -p1
+%patch345 -p1
+%patch346 -p1
+%patch347 -p1
 %patch348 -p1
 %patch349 -p1
-%patch350 -p1
 %patch351 -p1
 %patch352 -p1
-%patch353 -p1
 %patch354 -p1
-#patch355 -p1
+%patch355 -p1
 %patch356 -p1
-%patch357 -p1
 %patch358 -p1
-%patch359 -p1
-%patch361 -p1
-%patch362 -p1
-%patch363 -p1
-%patch364 -p1
-%patch365 -p1
-%patch366 -p1
-%patch367 -p1
-%patch368 -p1
-%patch369 -p1
-%patch370 -p1
-%patch371 -p1
 # EndPatches(fedora): --------------------------------------
 
 # .orig files can break some test
@@ -392,9 +314,7 @@ find -name '*.orig' -delete
 %endif
 
 sh Configure -ders \
-%ifarch %{ix86}
 	-Duse64bitint \
-%endif
 	-Dusethreads -Duseithreads -Duselargefiles \
 	-Duseshrplib -Dlibperl=libperl-%ver.so \
 	-Dcc=gcc -Doptimize="%optflags" -DDEBUGGING=maybe \
@@ -436,7 +356,6 @@ make test
 # use symlinks instead of hardlinks
 ln -snf perl%version %buildroot%_bindir/perl
 ln -snf perl%version %buildroot%_bindir/perl5
-ln -snf c2ph %buildroot%_bindir/pstruct
 
 # skeleton
 mkdir -p %buildroot%privlib/auto
@@ -477,7 +396,7 @@ rm -r %buildroot%privlib/IO/{Compress,Uncompress} %buildroot%privlib/File/GlobMa
 rm %buildroot%privlib/IO/Socket/IP.pm
 rm -r %buildroot%privlib/IO/Zlib.pm
 rm %buildroot%privlib/IPC/Cmd.pm
-rm -r %buildroot{%archlib,%autolib}/IPC/SysV* %buildroot%archlib/IPC/{Msg,Semaphore,SharedMem}.pm
+#rm -r %buildroot{%archlib,%autolib}/IPC/SysV* %buildroot%archlib/IPC/{Msg,Semaphore,SharedMem}.pm
 find %buildroot%privlib/Net/* -not -name '*ent.*' -print -delete
 rm %buildroot%_bindir/libnetcfg
 rm -r %buildroot%privlib/Locale
@@ -513,7 +432,7 @@ rm %buildroot%privlib/perlfaq.pm
 # cleanup Perl4-CoreLibs
 grep -lZ '^warn "Legacy library' %buildroot%privlib/*.pl |xargs -r0 rm -fv --
 
-# further cleanup
+# further cleanup #"
 rm %buildroot%archlib/File/Spec/{Cygwin,Epoc,Mac,OS2,VMS,Win32}.pm
 rm %buildroot%privlib/ExtUtils/MM_{AIX,BeOS,Cygwin,Darwin,DOS,MacOS,NW5,OS2,QNX,UWIN,VMS,VOS,Win32,Win95}.pm
 rm %buildroot%_bindir/perlivp
@@ -762,6 +681,15 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%archlib/Opcode.pm
 	%autolib/Opcode
 	%privlib/Safe.pm
+# IPC-SysV: required for Test-Simple in perl-devel
+%dir	%archlib/IPC
+	%archlib/IPC/Msg.pm
+	%archlib/IPC/Semaphore.pm
+	%archlib/IPC/SharedMem.pm
+	%archlib/IPC/SysV.pm
+%dir	%autolib/IPC
+%dir	%autolib/IPC/SysV
+	%autolib/IPC/SysV/SysV.so
 # rarely used but part of perl
 	%privlib/Benchmark.pm
 %doc	%privlib/CORE.pod
@@ -796,8 +724,6 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 # perl4-compat scripts
 	%_bindir/h2ph
 	%_bindir/pl2pm
-	%_bindir/c2ph
-	%_bindir/pstruct
 	%privlib/blib.pm
 	%privlib/diagnostics.pm
 	%privlib/dumpvar.pl
@@ -875,6 +801,52 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%privlib/Test/Tester/Capture.pm
 	%privlib/Test/Tester/CaptureRunner.pm
 	%privlib/Test/Tester/Delegate.pm
+	%privlib/Test2.pm
+%dir	%privlib/Test2
+	%privlib/Test2/API.pm
+%dir	%privlib/Test2/API
+	%privlib/Test2/API/Breakage.pm
+	%privlib/Test2/API/Context.pm
+	%privlib/Test2/API/Instance.pm
+	%privlib/Test2/API/Stack.pm
+	%privlib/Test2/Event.pm
+%dir	%privlib/Test2/Event
+	%privlib/Test2/Event/Bail.pm
+	%privlib/Test2/Event/Diag.pm
+	%privlib/Test2/Event/Encoding.pm
+	%privlib/Test2/Event/Exception.pm
+	%privlib/Test2/Event/Generic.pm
+	%privlib/Test2/Event/Info.pm
+	%privlib/Test2/Event/Note.pm
+	%privlib/Test2/Event/Ok.pm
+	%privlib/Test2/Event/Plan.pm
+	%privlib/Test2/Event/Skip.pm
+	%privlib/Test2/Event/Subtest.pm
+%dir	%privlib/Test2/Event/TAP
+	%privlib/Test2/Event/TAP/Version.pm
+	%privlib/Test2/Event/Waiting.pm
+	%privlib/Test2/Formatter.pm
+%dir	%privlib/Test2/Formatter
+	%privlib/Test2/Formatter/TAP.pm
+	%privlib/Test2/Hub.pm
+%dir	%privlib/Test2/Hub
+	%privlib/Test2/Hub/Interceptor.pm
+%dir	%privlib/Test2/Hub/Interceptor
+	%privlib/Test2/Hub/Interceptor/Terminator.pm
+	%privlib/Test2/Hub/Subtest.pm
+	%privlib/Test2/IPC.pm
+%dir	%privlib/Test2/IPC
+	%privlib/Test2/IPC/Driver.pm
+%dir	%privlib/Test2/IPC/Driver
+	%privlib/Test2/IPC/Driver/Files.pm
+%dir	%privlib/Test2/Tools
+	%privlib/Test2/Tools/Tiny.pm
+	%privlib/Test2/Transition.pod
+	%privlib/Test2/Util.pm
+%dir	%privlib/Test2/Util
+	%privlib/Test2/Util/ExternalMeta.pm
+	%privlib/Test2/Util/HashBase.pm
+	%privlib/Test2/Util/Trace.pm
 # Test-Harness pieces
 %dir	%privlib/App
 	%privlib/App/Prove*
@@ -888,6 +860,7 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 %exclude %privlib/pod/perldbmfilter.pod
 %doc	%privlib/Config.pod
 %doc	%privlib/POSIX.pod
+%doc	%privlib/Internals.pod
 
 %files	threads
 	%privlib/Thread*
@@ -960,6 +933,11 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%autolib/Unicode
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.26.1-alt1
+- 5.24.3 -> 5.26.1
+- build with -Duse64bitint
+- include IPC-SysV
+
 * Fri Nov 17 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.24.3-alt2
 - added patch21 from Oleg Solovyov
 

@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.02
-Release: alt1.1.1.1
+Release: alt1.1.1.1.1
 Summary: a Perl wrapper around F<libasyncns>
 Group: Development/Perl
 License: perl
@@ -34,6 +34,9 @@ Source: http://www.cpan.org/authors/id/P/PE/PEVANS/Net-LibAsyncNS-%{version}.tar
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1.1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1.1.1.1
 - rebuild with new perl 5.24.1
 

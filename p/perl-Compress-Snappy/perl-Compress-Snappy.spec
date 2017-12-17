@@ -2,7 +2,7 @@
 %define dist Compress-Snappy
 Name: perl-%dist
 Version: 0.24
-Release: alt1.1.1
+Release: alt1.1.1.1
 
 Summary: Perl interface to Google's Snappy (de)compressor
 License: GPL or Artistic
@@ -42,6 +42,9 @@ sed -i- '/CCFLAGS/d' Makefile.PL
 %perl_vendor_autolib/Compress
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1.1.1
 - rebuild with new perl 5.24.1
 

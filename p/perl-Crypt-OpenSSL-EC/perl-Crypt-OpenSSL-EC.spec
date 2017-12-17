@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.31
-Release: alt1
+Release: alt1.1
 Summary: Perl extension for OpenSSL EC (Elliptic Curves) library
 Group: Development/Perl
 License: perl
@@ -657,6 +657,9 @@ Verifies that a private and/or public key is valid.
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1.1
+- rebuild with new perl 5.26.1
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1
 - automated CPAN update
 

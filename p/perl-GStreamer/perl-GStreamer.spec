@@ -1,7 +1,7 @@
 %define dist GStreamer
 Name: perl-%dist
 Version: 0.20
-Release: alt1.1.1
+Release: alt1.1.1.1
 
 Summary: Perl interface to the GStreamer library
 License: GPL or Artistic
@@ -31,6 +31,9 @@ This module allows you to use the GStreamer library from Perl.
 %perl_vendor_autolib/GStreamer
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1.1.1
 - rebuild with new perl 5.24.1
 

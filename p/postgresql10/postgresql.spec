@@ -16,7 +16,7 @@
 
 Name: %prog_name%postgresql_major
 Version: %postgresql_major.%postgresql_minor
-Release: alt%postgresql_altrel
+Release: alt%postgresql_altrel.1
 
 %define PGSQL pgsql
 %define docdir %_docdir/%prog_name-%version
@@ -747,6 +747,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 10.1-alt1.1
+- rebuild with new perl 5.26.1
+
 * Thu Nov 09 2017 Alexei Takaseev <taf@altlinux.org> 10.1-alt1
 - 10.1
 - Remove conflicts to PG 9.1, 9.2

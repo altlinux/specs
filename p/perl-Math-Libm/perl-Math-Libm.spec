@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Math-Libm
 Version:        1.00
-Release:        alt3_20
+Release:        alt3_20.1
 Summary:        Perl extension for the C math library, libm
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -57,6 +57,9 @@ make test
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_20.1
+- rebuild with new perl 5.26.1
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_20
 - update to new release by fcimport
 

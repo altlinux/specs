@@ -2,7 +2,7 @@
 %define dist Compress-Raw-Bzip2
 Name: perl-%dist
 Version: 2.074
-Release: alt1
+Release: alt1.1
 
 Summary: Low-level interface to the bzip2 compression library
 License: GPL or Artistic
@@ -39,6 +39,9 @@ export BUILD_BZIP2=0 BZIP2_INCLUDE=%_includedir BZIP2_LIB=%_libdir
 %perl_vendor_autolib/Compress
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.074-alt1.1
+- rebuild with new perl 5.26.1
+
 * Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.074-alt1
 - automated CPAN update
 

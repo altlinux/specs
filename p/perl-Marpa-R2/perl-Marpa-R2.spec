@@ -10,7 +10,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 4.000000
-Release: alt1
+Release: alt1.1
 Summary: Release 2 of Marpa
 Group: Development/Perl
 License: open_source
@@ -43,6 +43,9 @@ cd engine/read_only
 %_bindir/*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 4.000000-alt1.1
+- rebuild with new perl 5.26.1
+
 * Wed Mar 15 2017 Igor Vlasenko <viy@altlinux.ru> 4.000000-alt1
 - automated CPAN update
 

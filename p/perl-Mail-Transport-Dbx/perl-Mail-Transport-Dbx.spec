@@ -1,7 +1,7 @@
 %define dist Mail-Transport-Dbx
 Name: perl-%dist
 Version: 0.07
-Release: alt5.1.1.1
+Release: alt5.1.1.1.1
 
 Summary: Parse Outlook Express mailboxes
 License: GPL or Artistic
@@ -39,6 +39,9 @@ fi
 %perl_vendor_autolib/Mail
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt5.1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt5.1.1.1
 - rebuild with new perl 5.24.1
 

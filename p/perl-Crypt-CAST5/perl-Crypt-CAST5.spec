@@ -1,7 +1,7 @@
 %define dist Crypt-CAST5
 Name: perl-%dist
 Version: 0.05
-Release: alt4.1.1.1
+Release: alt4.1.1.1.1
 
 Summary: CAST5 block cipher
 License: GPL or Artistic
@@ -34,6 +34,9 @@ S. Tavares.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt4.1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 0.05-alt4.1.1.1
 - rebuild with new perl 5.24.1
 

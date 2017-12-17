@@ -63,7 +63,7 @@
 
 Name:     subversion
 Version:  1.9.2
-Release:  alt3.2
+Release:  alt3.2.1
 
 Summary:  A version control system
 Group:    Development/Other
@@ -762,6 +762,9 @@ fi
 %endif
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt3.2.1
+- rebuild with new perl 5.26.1
+
 * Mon Dec 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt3.2
 - NMU: a hack for 16-jobs nodes
 

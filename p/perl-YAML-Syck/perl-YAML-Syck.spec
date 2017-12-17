@@ -3,7 +3,7 @@
 
 Name: perl-%module
 Version: 1.30
-Release: alt1
+Release: alt1.1
 
 Summary: Fast, lightweight YAML loader and dumper
 License: MIT
@@ -36,6 +36,9 @@ structures to YAML strings, and the other way around.
 %perl_vendor_autolib/YAML
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.30-alt1.1
+- rebuild with new perl 5.26.1
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.30-alt1
 - automated CPAN update
 

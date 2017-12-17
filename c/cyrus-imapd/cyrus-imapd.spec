@@ -12,7 +12,7 @@
 
 Name: cyrus-imapd
 Version: 2.5.11
-Release: alt3
+Release: alt3.1
 
 Summary: A high-performance mail store with IMAP and POP3 support
 License: CMU License
@@ -454,6 +454,9 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.5.11-alt3.1
+- rebuild with new perl 5.26.1
+
 * Wed Aug 23 2017 Sergey Y. Afonin <asy@altlinux.ru> 2.5.11-alt3
 - renamed httpd.8 to cyrus-httpd.8 (Closes: #33788)
 

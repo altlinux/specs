@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 1.01
-Release: alt3.1.1.1
+Release: alt3.1.1.1.1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -35,6 +35,9 @@ decode it using the encoder of the detected charset.
 %perl_vendor_autolib/Encode
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3.1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3.1.1.1
 - rebuild with new perl 5.24.1
 

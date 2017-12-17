@@ -6,7 +6,7 @@ BuildRequires: perl(Hash/Util/FieldHash/Compat.pm) perl(Mouse.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Hash-FieldHash
 Version:        0.15
-Release:        alt1_5
+Release:        alt1_5.1
 Summary:        Lightweight field hash implementation
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -85,6 +85,9 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 %{perl_vendor_archlib}/Hash/
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_5.1
+- rebuild with new perl 5.26.1
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_5
 - update to new release by fcimport
 

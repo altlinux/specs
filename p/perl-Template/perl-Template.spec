@@ -2,7 +2,7 @@
 %define dist Template-Toolkit
 Name: perl-Template
 Version: 2.27
-Release: alt2
+Release: alt2.1
 
 Summary: Perl Template Toolkit
 License: GPL or Artistic
@@ -65,6 +65,9 @@ LaTeX, and so on.
 	%_man1dir/ttree.*
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.27-alt2.1
+- rebuild with new perl 5.26.1
+
 * Sun Dec 10 2017 Igor Vlasenko <viy@altlinux.ru> 2.27-alt2
 - patch for perl 5.26' ExtUtils::MakeMaker
 

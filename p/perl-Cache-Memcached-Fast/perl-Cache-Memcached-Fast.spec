@@ -2,7 +2,7 @@
 
 Name: perl-Cache-Memcached-Fast
 Version: 0.25
-Release: alt2
+Release: alt2.1
 
 Summary: Perl client for memcached
 
@@ -52,6 +52,9 @@ export NPROCS=1
 %perl_vendor_archlib/Cache
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.25-alt2.1
+- rebuild with new perl 5.26.1
+
 * Thu Dec 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.25-alt2
 - NMU: set NPROCS=1 for multicore builds (preparing for perl 5.26)
 

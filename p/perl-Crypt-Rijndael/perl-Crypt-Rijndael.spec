@@ -2,7 +2,7 @@
 %define dist Crypt-Rijndael
 Name: perl-%dist
 Version: 1.13
-Release: alt1.1.1
+Release: alt1.1.1.1
 
 Summary: Crypt::CBC compliant Rijndael encryption module
 License: GPL or Artistic
@@ -33,6 +33,9 @@ as the Advanced Encryption Standard.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1.1.1.1
+- rebuild with new perl 5.26.1
+
 * Fri Feb 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1.1.1
 - rebuild with new perl 5.24.1
 

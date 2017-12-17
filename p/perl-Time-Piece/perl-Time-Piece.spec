@@ -2,7 +2,7 @@
 %define dist Time-Piece
 Name: perl-%dist
 Version: 1.3202
-Release: alt1
+Release: alt1.1
 
 Summary: Object Oriented time objects
 License: GPL or Artistic
@@ -39,6 +39,9 @@ http://www.xray.mpe.mpg.de/mailing-lists/perl5-porters/2000-01/msg00241.html
 %perl_vendor_autolib/Time
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.3202-alt1.1
+- rebuild with new perl 5.26.1
+
 * Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 1.3202-alt1
 - automated CPAN update
 

@@ -2,7 +2,7 @@
 
 Name: perl-%dist
 Version: 0.47
-Release: alt5
+Release: alt5.1
 
 Summary: Flexible and fast JSON converter for Perl
 License: GPL or Artistic
@@ -45,6 +45,9 @@ install -pm755 /usr/share/gnu-config/config.{sub,guess} libjsonevt/
 %perl_vendor_autolib/JSON
 
 %changelog
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.47-alt5.1
+- rebuild with new perl 5.26.1
+
 * Fri Sep 29 2017 Michael Shigorin <mike@altlinux.org> 0.47-alt5
 - E2K: update libjsonevt's config.* to build
 
