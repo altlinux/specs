@@ -28,8 +28,8 @@
 %{?_without_ocf:%global _without_ocf --without-ocf}
 
 Name: glusterfs3
-Version: %major.3
-Release: alt2
+Version: %major.4
+Release: alt1
 
 Summary: Cluster File System
 
@@ -394,8 +394,11 @@ rm -rf %buildroot%_libexecdir/ocf/
 
 rm -rf %buildroot%_sbindir/conf.py
 
+# TODO: selinux
 # rm HACK due S10selinux-label-brick.sh: line 46: syntax error near unexpected token `('
-rm -f %buildroot%_sharedstatedir/glusterd/hooks/1/create/post/S10selinux-label-brick.sh
+rm -fv %buildroot%_sharedstatedir/glusterd/hooks/1/create/post/S10selinux-label-brick.sh
+# drop req on policycoreutils (semanage)
+rm -fv %buildroot%_sharedstatedir/glusterd/hooks/1/delete/pre/S10selinux-del-fcontext.sh
 
 # TODO: move common part to -common?
 %files
@@ -572,6 +575,9 @@ rm -f %buildroot%_sharedstatedir/glusterd/hooks/1/create/post/S10selinux-label-b
 %preun_service glusterd
 
 %changelog
+* Sun Dec 17 2017 Vitaly Lipatov <lav@altlinux.ru> 3.12.4-alt1
+- new version 3.12.4 (with rpmrb script)
+
 * Sun Dec 17 2017 Vitaly Lipatov <lav@altlinux.ru> 3.12.3-alt2
 - move peer_mountbroker to its place in georeplication subpackage
 - remove logrotate files from /etc/glusterd
