@@ -1,6 +1,6 @@
 Name: tig
-Version: 2.3.0
-Release: alt2
+Version: 2.3.1
+Release: alt1
 
 Summary: text-mode interface for git
 License: GPL
@@ -48,6 +48,9 @@ install -pD -m644 doc/tigmanual.7 %buildroot%_man7dir/tigmanual.7
 %_man7dir/tigmanual.7*
 
 %changelog
+* Mon Dec 18 2017 Alexey Tourbin <at@altlinux.ru> 2.3.1-alt1
+- 2.3.0 -> 2.3.1
+
 * Thu Oct 05 2017 Alexey Tourbin <at@altlinux.ru> 2.3.0-alt2
 - built with readline
 
