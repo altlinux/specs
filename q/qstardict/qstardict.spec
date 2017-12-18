@@ -1,54 +1,86 @@
-Name: qstardict
-Version: 1.0.1
-Release: alt1.qa1
+%def_disable plasma
 
-Summary: QStarDict Qt4 clone of StarDict
+Name: qstardict
+Version: 1.2
+Release: alt1%ubt
+
+Summary: QStarDict Qt clone of StarDict
 License: GPLv2
 Group: System/Internationalization
 Url: http://qstardict.ylsoftware.com
 Source: %name-%version.tar
-Patch0: %name-1.0-alt-glib2-2.32.0.patch
 Packager: Evgenii Terechkov <evg@altlinux.ru>
 
-# Automatically added by buildreq on Fri Jun 13 2008
-BuildRequires: gcc-c++ glib2-devel libqt4-devel
-
+BuildRequires(pre): rpm-build-ubt
+# Automatically added by buildreq on Mon Dec 18 2017 (-bi)
+# optimized out: desktop-file-utils elfutils gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 kde5-kcalcore-devel kde5-kcontacts-devel kde5-kmime-devel kde5-libkleo-devel kf5-attica-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjs-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libGL-devel libX11-devel libdbusmenu-qt52 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base python3-module-yieldfrom qt5-base-common qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel rpm-build-python3 ruby ruby-stdlibs xorg-kbproto-devel xorg-xproto-devel
+#BuildRequires: kde5-akonadi-calendar-devel kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-notes-devel kde5-calendarsupport-devel kde5-eventviews-devel kde5-grantleetheme-devel kde5-incidenceeditor-devel kde5-kalarmcal-devel kde5-kcalutils-devel kde5-kdav-devel kde5-kdb-devel kde5-kholidays-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmailtransport-devel kde5-kmbox-devel kde5-kpimtextedit-devel kde5-ktnef-devel kde5-libgravatar-devel kde5-libkcddb-devel kde5-libkdepim-devel kde5-libksieve-devel kde5-mailcommon-devel kde5-mailimporter-devel kde5-marble-devel kde5-messagelib-devel kde5-pim-apps-libs-devel kde5-pimcommon-devel kde5-syndication-devel kf5-kactivities-devel kf5-kactivities-stats-devel kf5-karchive-devel kf5-kcmutils-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdesu-devel kf5-kdiagram-devel kf5-kdnssd-devel kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-khtml-devel kf5-kiconthemes-devel kf5-kidletime-devel kf5-kio-devel kf5-kirigami-devel kf5-kitemmodels-devel kf5-kjsembed-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kplotting-devel kf5-kpty-devel kf5-kreport-devel kf5-kross-devel kf5-krunner-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwayland-devel kf5-kxmlrpcclient-devel kf5-libkgapi-devel kf5-libkscreen-devel kf5-modemmanager-qt-devel kf5-networkmanager-qt-devel kf5-prison-devel kf5-syntax-highlighting-devel kf5-threadweaver-devel python-module-google python3-dev python3-module-zope qt5-connectivity-devel qt5-multimedia-devel qt5-phonon-devel qt5-quickcontrols2-devel qt5-script-devel qt5-sensors-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel rpm-build-ruby zlib-devel
+BuildRequires: kf5-kglobalaccel-devel kf5-kwindowsystem-devel kf5-knotifications-devel
+BuildRequires: glib2-devel qt5-base-devel qt5-tools zlib-devel
 BuildRequires: desktop-file-utils
 
 Provides: stardict = 2.4.5
 
 %description
-QStarDict Qt4 clone of StarDict.
+QStarDict Qt clone of StarDict.
+
+%package kde5
+Group: Graphical desktop/KDE
+Summary: QStarDict KDE Plasma integration
+Requires: %name
+%description kde5
+QStarDict KDE Plasma integration
 
 %prep
 %setup
-%patch0 -p2
-find . -type f -name '*.pro' |while read f; do
-echo 'QMAKE_CXXFLAGS += %optflags' >> $f
-done
+%if_enabled plasma
+sed -i 's|INCLUDE_DIRECTORIES(|INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR} |' kdeplasma/dataengine/CMakeLists.txt
+%endif
+%qmake_qt5 PLUGINS_DIR=%_libdir/qstardict/plugins "QMAKE_LFLAGS += -L%_libdir/kf5/devel"
 
 %build
-qmake-qt4 PLUGINS_DIR=%_libdir/%name/plugins
-make
+%make
+%if_enabled plasma
+pushd kdeplasma
+%K5build
+popd
+%endif
 
 %install
-make install INSTALL_ROOT=%buildroot
+%installqt5
+%if_enabled plasma
+pushd kdeplasma
+%K5install
+popd
+%endif
+
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Utility \
 	--add-category=TextTools \
 	--add-category=Office \
 	%buildroot%_desktopdir/qstardict.desktop
 
-%files
-%_bindir/%name
-%_datadir/%name
-%_libdir/%name
-%_desktopdir/*.desktop
-%_pixmapsdir/%name.png
+%find_lang %name --all-name --with-qt
 
-%doc AUTHORS ChangeLog README THANKS 
+%files -f %{name}.lang
+%doc AUTHORS ChangeLog README THANKS
+%_bindir/%name
+%dir %_datadir/%name/
+%dir %_datadir/%name/translations/
+%_desktopdir/*.desktop
+%_iconsdir/*/*/apps/%{name}.*
+%dir %_libdir/%name/
+%dir %_libdir/%name/plugins/
+%_libdir/%name/plugins/*.so
+%exclude %_libdir/%name/plugins/libkdeintegration.so
+
+%files kde5
+%_libdir/%name/plugins/libkdeintegration.so
 
 %changelog
+* Mon Dec 18 2017 Sergey V Turchin <zerg@altlinux.org> 1.2-alt1%ubt
+- new version
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.0.1-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
