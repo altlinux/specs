@@ -4,21 +4,21 @@
 
 Name: python-module-%oname
 Version: 0.5.5
-Release: alt2.dev.git20150124.1
+Release: alt3
 Summary: A module to work with countries and languages
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/babelfish/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/Diaoul/babelfish.git
 Source: %name-%version.tar
-BuildArch: noarch
+Patch1: %oname-%version-alt-build.patch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
@@ -36,6 +36,7 @@ BabelFish is a Python library to work with countries and languages.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A module to work with countries and languages
 Group: Development/Python3
@@ -53,10 +54,11 @@ Requires: python3-module-%oname = %EVR
 BabelFish is a Python library to work with countries and languages.
 
 This package contains tests for %oname.
-
+%endif
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -110,6 +112,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.5-alt3
+- Updated to upstream release version 0.5.5.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.5-alt2.dev.git20150124.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
