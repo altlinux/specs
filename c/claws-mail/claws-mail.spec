@@ -16,8 +16,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:   	claws-mail
-Version:	3.15.1
-Release: 	alt1.1
+Version:	3.16.0
+Release: 	alt1
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
@@ -577,6 +577,8 @@ echo 'echo "%version"' >./version
 %autoreconf
 
 %build
+%add_optflags -fpie
+export LDFLAGS=-pie
 %configure \
 		--disable-static \
 		--disable-rpath \
@@ -848,11 +850,19 @@ install -p -m644 %name.png %buildroot%_pixmapsdir/
 %_datadir/%name/tools/
 %exclude %_datadir/%name/tools/update-po
 %exclude %_datadir/%name/tools/check-appstream.sh
+%exclude %_datadir/%name/tools/ca-certificates.crt
 
 %exclude %_claws_plugins_path/*.la
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Mon Dec 18 2017 Mikhail Efremov <sem@altlinux.org> 3.16.0-alt1
+- tools: Don't package acient ca-certificates.crt.
+- Highest priority for /etc/pki/tls/certs/ca-bundle.crt.
+- Build with -pie.
+- tools: Don't pull wget.
+- tools: Don't pull ImageMagick-tools.
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 3.15.1-alt1.1
 - rebuild with new perl 5.26.1
 
