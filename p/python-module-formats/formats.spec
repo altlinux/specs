@@ -4,22 +4,21 @@
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt1.git20150211.1
+Release: alt2.git20150211
 Summary: Support multiple formats with ease
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/formats/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/redodo/formats.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-modules-json
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
@@ -32,6 +31,7 @@ data.
 You could of course use the register method to register your own parser,
 but decorators are much more fun!
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Support multiple formats with ease
 Group: Development/Python3
@@ -43,6 +43,7 @@ data.
 
 You could of course use the register method to register your own parser,
 but decorators are much more fun!
+%endif
 
 %prep
 %setup
@@ -72,10 +73,11 @@ popd
 %check
 python setup.py test
 py.test -vv
+
 %if_with python3
 pushd ../python3
 python3 setup.py test
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
@@ -90,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.1-alt2.git20150211
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.1-alt1.git20150211.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
