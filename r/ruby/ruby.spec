@@ -1,3 +1,4 @@
+%def_without bootstrap
 %def_enable shared
 %def_without valgrind
 %def_enable rubygems
@@ -13,7 +14,7 @@ Name: ruby
 %define ver_teeny 2
 #define _pl
 Version: %branch.%ver_teeny
-Release: alt2
+Release: alt3
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -21,6 +22,8 @@ URL: http://www.%name-lang.org/
 Source0: %name-%version.tar
 Source1: update-ri-cache.rb
 Source2: gems.tar
+Source3: fakeruby.sh
+Source4: miniruby.sh
 Patch: %name-%version-%release.patch
 Requires: %lname = %version-%release
 
@@ -35,9 +38,9 @@ done)
 
 BuildRequires: doxygen groff-base libdb4-devel libffi-devel
 BuildRequires: libgdbm-devel libncursesw-devel libreadline-devel libssl-devel
-BuildRequires: zlib-devel libyaml-devel
-BuildRequires: ruby ruby-stdlibs gcc-c++
-BuildRequires: rpm-build-ruby >= 1:0.1.3
+BuildRequires: zlib-devel libyaml-devel gcc-c++
+%{?!_with_bootstrap:BuildRequires: ruby ruby-stdlibs rpm-build-ruby >= 1:0.1.3}
+%{?_with_bootstrap:BuildRequires: ruby-miniruby-src = %ruby_version}
 %{?_with_valgrind:BuildRequires: valgrind-devel}
 
 %description
@@ -196,6 +199,19 @@ management tasks (as in Perl). It is simple, straight-forward, and extensible.
 This package contains Ruby documentation in ri format.
 
 
+%if_without bootstrap
+%package miniruby-src
+Summary: Preprocessed miniruby sources
+Group: Development/Ruby
+BuildArch: noarch
+
+%description miniruby-src
+Contains generated files for preprocessed miniruby sources in patch
+format. This files are required for ruby bootstrapping, especially
+on different arches.
+%endif
+
+
 %prep
 %setup -q %{?_pl:-n %name-%version-%_pl}
 %patch -p1
@@ -224,18 +240,59 @@ cp -a /usr/share/gnu-config/config.* tool
 %build
 %define ruby_arch %_target%([ -z "%_gnueabi" ] || echo "-eabi")
 %autoreconf
-%configure \
-	%{subst_enable shared} \
-	%{subst_with valgrind} \
-	%{subst_enable rubygems} \
-	--with-rubylibprefix=%libdir \
-	--with-rubyhdrdir=%includedir \
-	--with-sitearchdir=%libdir/site_ruby/%version/%ruby_arch \
-	--with-vendorarchdir=%libdir/vendor_ruby/%version/%ruby_arch \
-	--with-ridir=%ridir \
-	--docdir=%_docdir/%name-%version \
-	%{?ruby_version:--with-ruby-version=%ruby_version} \
-	--disable-rpath
+
+my_configure() {
+    %configure \
+        %{subst_enable shared} \
+        %{subst_with valgrind} \
+        %{subst_enable rubygems} \
+        --with-rubylibprefix=%libdir \
+        --with-rubyhdrdir=%includedir \
+        --with-sitearchdir=%libdir/site_ruby/%version/%ruby_arch \
+        --with-vendorarchdir=%libdir/vendor_ruby/%version/%ruby_arch \
+        --with-ridir=%ridir \
+        --docdir=%_docdir/%name-%version \
+        %{?ruby_version:--with-ruby-version=%ruby_version} \
+        --disable-rpath "$@"
+}
+
+%if_with bootstrap
+# *** 1st stage ***
+# Build miniruby with preprocessed files from miniruby-src in a
+# separate directory
+
+cd %_builddir
+cp -a %name-%version %name-%version-miniruby
+cd %name-%version-miniruby
+cp %SOURCE3 %SOURCE4 .
+
+my_configure --with-baseruby=$PWD/fakeruby.sh
+patch -p1 -l < %_datadir/%name-%version-miniruby/miniruby-src.patch
+%make_build miniruby
+
+# *** 2nd stage ***
+# Build ruby with host miniruby frome 1st stage as baseruby
+cd %_builddir/%name-%version
+my_configure --with-baseruby=%_builddir/%name-%version-miniruby/miniruby.sh
+
+%else #_with_bootstrap
+my_configure
+
+# Copy sources after configure, so that generated files for
+# miniruby can be extracted later to facilitate bootstrapping.
+cp -a %_builddir/%name-%version %_builddir/%name-%version-configured
+
+# Build miniruby only, so that we can diff only minimal generated data.
+%make_build miniruby
+
+# Create diff for changed sources files with non-essential filtered out.
+# For diff !0 exit status is normal.
+pushd %_builddir
+diff -Nur -x "*.o" -x miniruby -x "*.log" -x autom4te.cache \
+    %name-%version-configured %name-%version > miniruby-src.patch || :
+popd
+%endif #_with_bootstrap
+
 %make_build
 
 
@@ -266,6 +323,11 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/site_ruby/%version%
 
 %add_findreq_skiplist %libdir/gems/*/gems/*/bin/*
 %add_findreq_skiplist %libdir/*
+
+%if_without bootstrap
+mkdir -p %buildroot%_datadir/%name-%version-miniruby
+mv %_builddir/miniruby-src.patch %buildroot%_datadir/%name-%version-miniruby/
+%endif
 
 %check
 %make_build test
@@ -333,7 +395,17 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/site_ruby/%version%
 %ridir/*
 
 
+%if_without bootstrap
+%files miniruby-src
+%_datadir/%name-%version-miniruby/miniruby-src.patch
+%endif
+
+
 %changelog
+* Mon Dec 18 2017 Andrew Savchenko <bircoph@altlinux.org> 2.4.2-alt3
+- Add miniruby-src subpackage.
+- Bootstrap miniruby without ruby using miniruby-src.
+
 * Thu Oct 12 2017 Andrey Cherepanov <cas@altlinux.org> 2.4.2-alt2
 - Merge rubygems-2.6.14 changes
 - Fixes:
