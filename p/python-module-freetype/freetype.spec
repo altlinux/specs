@@ -1,47 +1,39 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20150409.1.1.1
 %define oname freetype
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.1
-#Release: alt1.git20150409.1.1
+Version: 1.1
+Release: alt1
 Summary: Freetype python bindings
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/freetype-py/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/rougier/freetype-py.git
 Source: %name-%version.tar
-BuildArch: noarch
+Patch1: %oname-%version-alt-build.patch
 
-#BuildPreReq: lib%oname xvfb-run
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-numpy python-module-matplotlib
-#BuildPreReq: python-module-OpenGL python-module-pygobject3
-#BuildPreReq: python-module-Pillow python-module-pycairo
-#BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-numpy python-module-numpy-testing python-module-matplotlib
+BuildRequires: python-module-OpenGL python-module-pygobject3
+BuildRequires: python-module-Pillow python-module-pycairo
+BuildRequires: python2.7(sphinx_rtd_theme)
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-numpy python3-module-matplotlib
-#BuildPreReq: python3-module-OpenGL python3-module-pygobject3
-#BuildPreReq: python3-module-Pillow python3-module-pycairo
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-matplotlib
+BuildRequires: python3-module-OpenGL python3-module-pygobject3
+BuildRequires: python3-module-Pillow python3-module-pycairo
+BuildRequires: python3-module-cffi
 %endif
 
 %py_provides %oname
 Requires: lib%oname
 %py_requires ctypes
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: at-spi2-atk at-spi2-core colord dbus dbus-tools-gui fakeroot fontconfig fonts-bitmap-misc glib-networking gobject-introspection gobject-introspection-x11 libat-spi2-core libatk-gir libcairo-gobject libcap-ng libgdk-pixbuf libgdk-pixbuf-gir libgpg-error libgtk+3-gir libpango-gir libwayland-client libwayland-cursor libwayland-egl libwayland-server python-base python-devel python-module-OpenGL_accelerate python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cssselect python-module-cycler python-module-dateutil python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-matplotlib-gtk3 python-module-numpy python-module-pluggy python-module-py python-module-pyparsing python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base python3-module-numpy python3-module-pluggy python3-module-py python3-module-pycparser python3-module-pyparsing python3-module-pytest python3-module-setuptools xauth xkbcomp xkeyboard-config xorg-server-common xorg-xvfb xz
-BuildRequires: python-module-OpenGL python-module-Pillow python-module-alabaster python-module-docutils python-module-html5lib python-module-matplotlib python-module-numpy-testing python-module-objects.inv python-module-pycairo python-module-pygobject3 python-module-setuptools-tests python3-module-cffi python3-module-matplotlib python3-module-pycairo python3-module-pygobject3 python3-module-setuptools-tests rpm-build-python3 time xvfb-run
-
-# optimized out: -=FIXES: python2.7(sphinx_rtd_theme)
-BuildRequires: python2.7(sphinx_rtd_theme)
 
 %description
 Freetype python provides bindings for the FreeType library. Only the
@@ -83,6 +75,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -117,15 +110,10 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 python setup.py test
-export PYTHONPATH=$PWD
-xvfb-run py.test -vv $(find %oname/ -name '*.py')
-xvfb-run py.test -vv $(find examples/ -name '*.py')
+
 %if_with python3
 pushd ../python3
 python3 setup.py test
-export PYTHONPATH=$PWD
-xvfb-run py.test-%_python3_version -vv $(find %oname/ -name '*.py')
-#xvfb-run py.test-%_python3_version -vv $(find examples/ -name '*.py')
 popd
 %endif
 
@@ -147,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1-alt1
+- Updated to upstream version 1.1.
+
 * Mon May 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.1-alt1.git20150409.1.1.1
 - BR: sphinx_rtd_theme (the theme is optional since sphinx-1.4.1).
 
