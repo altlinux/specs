@@ -4,26 +4,25 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.1
+Version: 0.5.0
 Release: alt1
 Summary: Pythonic interface to netCDF4 via h5py
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/h5netcdf
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/shoyer/h5netcdf.git
-Source0: https://pypi.python.org/packages/3a/d5/16a234cb6d1b80e7c015343f6c0ed545880122c54e36dabc0051212a8c41/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-h5py python-module-netCDF4
-BuildPreReq: python-module-Cython
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-h5py python-module-netCDF4
+BuildRequires: python-module-Cython
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-h5py python3-module-netCDF4
-BuildPreReq: python3-module-Cython
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-h5py python3-module-netCDF4
+BuildRequires: python3-module-Cython
 %endif
 
 %py_provides %oname
@@ -56,7 +55,7 @@ tested for compatibility with other netCDF4 interfaces.
 %endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -88,7 +87,7 @@ py.test -vv
 pushd ../python3
 python3 setup.py test -v
 export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
@@ -103,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.0-alt1
+- Updated to upstream version 0.5.0.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1
 - automated PyPI update
 
