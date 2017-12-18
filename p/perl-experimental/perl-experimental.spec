@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Module/Build/Tiny.pm) perl-podlators
@@ -5,7 +6,7 @@ BuildRequires: perl(Module/Build/Tiny.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-experimental
-Version:        0.017
+Version:        0.019
 Release:        alt1
 Summary:        Experimental features made easy
 License:        GPL+ or Artistic
@@ -57,6 +58,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Dec 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.019-alt1
+- automated CPAN update
+
 * Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.017-alt1
 - automated CPAN update
 
