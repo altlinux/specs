@@ -2,7 +2,7 @@
 
 Name: glibc
 Version: 2.25
-Release: alt3
+Release: alt4
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -720,6 +720,12 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Mon Dec 18 2017 Dmitry V. Levin <ldv@altlinux.org> 6:2.25-alt4
+- Updated to glibc-2.25-80-ga8920e6 from 2.25 branch.
+- Backported upstream fixes for sw bugs:
+  20831 21928 22505 22577 22606 22607 22625 22627.
+- Explicitly defined glibc_preinstall entry point (by Gleb F-Malinovskiy).
+
 * Thu Oct 26 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.25-alt3
 - Backported upstream fixes for sw bugs: 21209 21242 21265 21298 21386 21624
   21654 21778 21972 (fixes for CVE-2017-15670 CVE-2017-15804).
