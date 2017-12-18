@@ -3,47 +3,45 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.10.4
-Release: alt1.dev0.git20150427.1.1
+Version: 2.1.4
+Release: alt1
 Summary: GuessIt - a library for guessing information from video files
 License: LGPLv3
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/guessit/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/wackou/guessit.git
 Source: %name-%version.tar
-BuildArch: noarch
+Patch1: %oname-%version-alt-build.patch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-babelfish python-module-stevedore
-#BuildPreReq: python-module-requests python-module-dateutil
-#BuildPreReq: python-module-yaml python-module-guess-language
-#BuildPreReq: python-module-enzyme python-module-nose
-#BuildPreReq: python-module-mock python-module-argparse
-#BuildPreReq: python-module-pbr python-module-pip pylint
-#BuildPreReq: python-module-sphinx-devel python-module-Pygments
-#BuildPreReq: python-modules-json python-modules-logging
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-babelfish python-module-stevedore
+BuildRequires: python-module-requests python-module-dateutil
+BuildRequires: python-module-yaml python-module-guess-language
+BuildRequires: python-module-enzyme python-module-nose
+BuildRequires: python-module-pbr python-module-pip pylint
+BuildRequires: python-module-alabaster python-module-chardet python-module-html5lib python-module-ndg-httpsclient
+BuildRequires: python-module-objects.inv python-module-unittest2
+BuildRequires: python-module-pytest-runner python2.7(rebulk) python2.7(pytest_capturelog) python2.7(pytest_benchmark)
+BuildRequires: python2.7(guessit)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-babelfish python3-module-stevedore
-#BuildPreReq: python3-module-requests python3-module-dateutil
-#BuildPreReq: python3-module-yaml python3-module-guess-language
-#BuildPreReq: python3-module-enzyme python3-module-nose
-#BuildPreReq: python3-module-mock python3-module-argparse
-#BuildPreReq: python3-module-pbr python3-module-pip pylint-py3
-#BuildPreReq: python3-module-Pygments
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-babelfish python3-module-stevedore
+BuildRequires: python3-module-requests python3-module-dateutil
+BuildRequires: python3-module-yaml python3-module-guess-language
+BuildRequires: python3-module-enzyme python3-module-nose
+BuildRequires: python3-module-pbr python3-module-pip pylint-py3
+BuildRequires: python3-module-chardet python3-module-html5lib
+BuildRequires: python3-module-unittest2 python3-module-urllib3
+BuildRequires: python3-module-pytest-runner python3(rebulk) python3(pytest_capturelog) python3(pytest_benchmark)
 %endif
 
 %py_provides %oname
 %py_requires babelfish stevedore requests dateutil yaml guess_language
 %py_requires enzyme json logging
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-docutils python-module-egenix-mx-base python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-kerberos python-module-logilab-common python-module-markupsafe python-module-ntlm python-module-pluggy python-module-py python-module-pyasn1 python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-Pygments python3-module-babel python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-docutils python3-module-enum34 python3-module-genshi python3-module-jinja2 python3-module-logilab-common python3-module-ndg-httpsclient python3-module-ntlm python3-module-pip python3-module-pluggy python3-module-py python3-module-pycparser python3-module-pytest python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer python3-module-sphinx
-BuildRequires: pylint pylint-py3 python-module-alabaster python-module-babelfish python-module-chardet python-module-dateutil python-module-guess-language python-module-html5lib python-module-ndg-httpsclient python-module-nose python-module-objects.inv python-module-pbr python-module-pip python-module-setuptools-tests python-module-stevedore python-module-unittest2 python-module-yaml python3-module-babelfish python3-module-chardet python3-module-dateutil python3-module-guess-language python3-module-html5lib python3-module-nose python3-module-pbr python3-module-setuptools-tests python3-module-stevedore python3-module-unittest2 python3-module-urllib3 python3-module-yaml rpm-build-python3 time
 
 %description
 GuessIt is a python library that extracts as much information as
@@ -131,6 +129,11 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch1 -p1
+
+# remove mimetypes from test data, see https://github.com/guessit-io/guessit/pull/515
+# TODO: consider removing following line on next release after 2.1.4
+sed -i -e '/mimetype:/d' guessit/test/*.yml
 
 %if_with python3
 cp -fR . ../python3
@@ -213,6 +216,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.4-alt1
+- Updated to upstream version 2.1.4.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.4-alt1.dev0.git20150427.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
