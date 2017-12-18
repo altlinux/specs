@@ -2,8 +2,8 @@
 %define module Crypt-OpenSSL-Bignum
 
 Name: perl-%module
-Version: 0.08
-Release: alt1.1
+Version: 0.09
+Release: alt1
 
 Summary: Perl module for OpenSSL's multiprecision integer arithmetic
 License: Perl
@@ -34,6 +34,9 @@ arithmetic libraries.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Mon Dec 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1.1
 - rebuild with new perl 5.26.1
 
