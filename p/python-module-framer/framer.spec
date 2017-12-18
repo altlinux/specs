@@ -5,25 +5,24 @@
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt1
+Release: alt2
 Summary: Network Framer Library
 License: GPLv3
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/framer/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/klmitch/framer.git
-Source0: https://pypi.python.org/packages/19/11/b551fe240404fa52f2813a1e28210076acf5243079edb3efefa2fd2fb711/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %{oname}-%{version}.tar.gz
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-cobs python-module-six
-BuildPreReq: python-module-mock python-module-trollius
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-cobs python-module-six
+BuildRequires: python-module-mock python-module-trollius
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-cobs python3-module-six
-BuildPreReq: python3-module-mock python3-module-asyncio
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-cobs python3-module-six
+BuildRequires: python3-module-mock python3(asyncio)
 %endif
 
 %py_provides %oname
@@ -45,6 +44,7 @@ range from rather trivial--as in a text-oriented protocol like SMTP--all
 the way to a complex binary data transmission protocol such as some
 forms of RPC.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Network Framer Library
 Group: Development/Python3
@@ -66,6 +66,7 @@ to a sequence of bytes to transmit on the stream. These framers can
 range from rather trivial--as in a text-oriented protocol like SMTP--all
 the way to a complex binary data transmission protocol such as some
 forms of RPC.
+%endif
 
 %prep
 %setup -q -n %{oname}-%{version}
@@ -95,10 +96,11 @@ popd
 %check
 python setup.py test
 py.test -vv
+
 %if_with python3
 pushd ../python3
 python3 setup.py test
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
@@ -113,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.1-alt2
+- Fixed build.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt1
 - automated PyPI update
 
