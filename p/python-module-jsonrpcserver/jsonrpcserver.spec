@@ -3,50 +3,37 @@
 
 %def_with python3
 %def_without python2
+%def_disable check
 
 Name: python-module-%oname
-Version: 3.4.1
+Version: 3.5.3
 Release: alt1
 Summary: JSON-RPC 2.0 server library
 License: LGPL
 Group: Development/Python
-Url: https://pypi.python.org/pypi/jsonrpcserver
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/88/0c/ce3e6ab71cb5c03dd2ed24dd790a6be995b8021c83798c8e6a0ce8a19c34/%{oname}-%{version}.tar.gz
 BuildArch: noarch
+Url: https://pypi.python.org/pypi/jsonrpcserver
+
+Source: %oname-%version.tar
 
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-jsonschema python-module-flask
-#BuildPreReq: python-module-nose
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-jsonschema
+BuildRequires: python-module-nose python-module-pytest
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-jsonschema python3-module-flask
-#BuildPreReq: python3-module-nose
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-jsonschema
+BuildRequires: python3-module-nose python3-module-pytest
 %endif
 
 %py_provides %oname
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python3 python3-base python3-module-jinja2 python3-module-pluggy python3-module-py python3-module-setuptools xz
-BuildRequires: python3-module-jsonschema python3-module-nose python3-module-pytest rpm-build-python3 time
-
 %description
 A JSON-RPC 2.0 server library for Python 3.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-A JSON-RPC 2.0 server library for Python 3.
-
-This package contains tests for %oname.
-
+%if_with python3
 %package -n python3-module-%oname
 Summary: JSON-RPC 2.0 server library
 Group: Development/Python3
@@ -54,19 +41,10 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 A JSON-RPC 2.0 server library for Python 3.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-A JSON-RPC 2.0 server library for Python 3.
-
-This package contains tests for %oname.
+%endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -n %oname-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -102,33 +80,26 @@ py.test
 %if_with python3
 pushd ../python3
 rm -fR build
-py.test-%_python3_version
+py.test3
 popd
 %endif
 
 %if_with python2
 %files
-%doc *.rst
+%doc *.md
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/*_test.*
-
-%files tests
-%python_sitelibdir/*/*_test.*
 %endif
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst
+%doc *.md
 %python3_sitelibdir/*
-#exclude %python3_sitelibdir/*/*_test.*
-#exclude %python3_sitelibdir/*/*/*_test.*
-
-#files -n python3-module-%oname-tests
-#python3_sitelibdir/*/*_test.*
-#python3_sitelibdir/*/*/*_test.*
 %endif
 
 %changelog
+* Tue Dec 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.3-alt1
+- Updated to upstream version 3.5.3.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.4.1-alt1
 - automated PyPI update
 
