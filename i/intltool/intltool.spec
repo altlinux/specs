@@ -2,7 +2,7 @@
 
 Name: intltool
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Scripts and assorted auto* magic for i18nalizing various kinds of data files
 License: %gpl2plus
@@ -11,10 +11,12 @@ Url: http://www.freedesktop.org/wiki/Software/%name
 
 Source: https://launchpad.net/intltool/trunk/%version/+download/%name-%version.tar.gz
 Patch: %name-0.50.2-alt-intltoolize.patch
-Patch1: %name-0.51.0-perl-5.22.patch
 # https://bugs.launchpad.net/intltool/+bug/1505260
 # https://bugzilla.redhat.com/show_bug.cgi?id=1249051
 Patch2: intltool-merge-Create-cache-file-atomically.patch
+# Fix intltool-update to work with perl 5.26.
+# Patch taken from fedora
+Patch3: intltool-perl5.26-regex-fixes.patch
 
 Requires: perl-XML-Parser
 Obsoletes: xml-i18n-tools
@@ -41,8 +43,8 @@ The intltool collection can be used to do these things:
 %prep
 %setup
 %patch
-%patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %configure
@@ -62,6 +64,9 @@ The intltool collection can be used to do these things:
 %doc AUTHORS README TODO NEWS ChangeLog doc/*-HOWTO
 
 %changelog
+* Tue Dec 19 2017 Yuri N. Sedunov <aris@altlinux.org> 0.51.0-alt2
+- fixed incompatibility with perl-5.26
+
 * Thu Dec 17 2015 Yuri N. Sedunov <aris@altlinux.org> 0.51.0-alt1
 - updated to 0.51.0
 - fixed potential incompatibility with perl > 5.22
