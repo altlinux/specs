@@ -3,16 +3,14 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Config/General.pm) perl(Exporter.pm) perl(File/Spec/Functions.pm) perl(IO/File.pm) perl(Term/ANSIColor.pm) perl(Term/ReadLine.pm) perl(Term/Size.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           acheck
-Version:        0.5.1
-Release:        alt2_11
+Version:        0.5.4
+Release:        alt1_0
 Summary:        Check common localisation mistakes
 
 Group:          Text tools
 License:        GPLv2+
 URL:            http://packages.debian.org/etch/%{name}
-Source0:        http://ftp.de.debian.org/debian/pool/main/a/acheck/%{name}_%{version}.tar.gz
-Patch0:         acheck-0.5.1-man.patch
-Patch1:         acheck-0.5.1-Declare-documentation-encoding.patch
+Source0:        http://ftp.de.debian.org/debian/pool/main/a/acheck/%{name}_%{version}.tar
 BuildRequires:  gettext
 BuildRequires:  /usr/bin/pod2man
 BuildArch:      noarch
@@ -29,8 +27,6 @@ checks.
 
 %prep
 %setup -q -n acheck-%{version}
-%patch0 -p1
-%patch1 -p1
 
 %build
 #Empty build
@@ -69,7 +65,7 @@ install -p -m 644 po/sv.mo $RPM_BUILD_ROOT/%{_datadir}/locale/sv/LC_MESSAGES/%{n
 
 %files
 %doc debian/changelog debian/copyright
-%doc misc/bash_completion
+%doc bash_completion.d
 %{_bindir}/%{name}
 %{perl_vendor_privlib}/*
 %{_mandir}/man1/*.1*
@@ -81,6 +77,9 @@ install -p -m 644 po/sv.mo $RPM_BUILD_ROOT/%{_datadir}/locale/sv/LC_MESSAGES/%{n
 %{_datadir}/locale/sv/LC_MESSAGES/%{name}.mo
 
 %changelog
+* Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.4-alt1_0
+- manual update from debian
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_11
 - update to new release by fcimport
 
