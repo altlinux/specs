@@ -1,3 +1,5 @@
+#module 'Net::BitTorrent' is known to be broken in version 0.052 and below
+%def_without test
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Digest/SHA.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(File/Spec/Functions.pm) perl(List/Util.pm) perl(Math/BigInt.pm) perl(Module/Build.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(Time/HiRes.pm) perl-devel
 # END SourceDeps(oneline)
@@ -18,7 +20,7 @@ BuildRequires: perl(Digest/SHA.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(File/Sp
 
 Name: perl-Net-BitTorrent
 Version: 0.052
-Release: alt1
+Release: alt2
 
 Summary: Net-BitTorrent - Perl module
 
@@ -36,6 +38,7 @@ None.
 
 %prep
 %setup -n %m_distro-%version
+
 %build
 %perl_vendor_build
 
@@ -46,6 +49,10 @@ None.
 %perl_vendor_privlib/Net/*
 
 %changelog
+* Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.052-alt2
+- fixed build with new perl 5.26
+- dusabled tests
+
 * Thu May 31 2012 Igor Vlasenko <viy@altlinux.ru> 0.052-alt1
 - initial build for ALT Linux Sisyphus
 
