@@ -3,8 +3,8 @@
 %define pkgname ruby-prof
 
 Name: %pkgname
-Version: 0.16.2
-Release: alt2.2
+Version: 0.17.0
+Release: alt1
 
 Summary: Fast code profiler for Ruby
 Group: Development/Ruby
@@ -50,6 +50,9 @@ Documentation files for %name
 %ruby_ri_sitedir/RubyProf*
 
 %changelog
+* Tue Dec 19 2017 Andrey Cherepanov <cas@altlinux.org> 0.17.0-alt1
+- New version.
+
 * Mon Sep 25 2017 Andrey Cherepanov <cas@altlinux.org> 0.16.2-alt2.2
 - Rebuild with Ruby 2.4.2
 
