@@ -1,9 +1,11 @@
 %def_enable docs
 %def_disable tests
 
+%define _libexec %prefix/libexec
+
 Name: gnuradio
 Version: 3.7.11
-Release: alt2
+Release: alt3
 Summary: Software defined radio framework
 License: GPLv2+
 Group: Engineering
@@ -13,11 +15,12 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: cmake rpm-macros-cmake rpm-build-python rpm-build-gir
-BuildRequires: gcc-c++ boost-program_options-devel boost-filesystem-devel libSDL-devel libalsa-devel libcodec2-devel libgsl-devel libgsm-devel jackit-devel libportaudio2-devel libqt4-devel libqwt-devel libusb-compat-devel pkgconfig(comedilib) pkgconfig(fftw3f) python-devel thrift-devel libusb-devel libzeromq-cpp-devel libvolk-devel swig
+BuildRequires: gcc-c++ boost-program_options-devel boost-filesystem-devel pkgconfig(sdl) pkgconfig(alsa) pkgconfig(codec2) pkgconfig(gsl) libgsm-devel pkgconfig(jack) pkgconfig(portaudio-2.0) libqt4-devel libqwt-devel pkgconfig(libusb-1.0) pkgconfig(comedilib) pkgconfig(fftw3f) pkgconfig(thrift) libzeromq-cpp-devel pkgconfig(volk) swig pkgconfig(uhd)
+BuildRequires: python-devel python-module-lxml python-module-numpy python-module-cheetah python-module-pygtk python-module-PyQt4 python-module-wx
+# 
 %if_enabled tests
 BuildRequires: cppunit-devel
 %endif #tests
-BuildRequires: python-module-lxml python-module-numpy python-module-cheetah python-module-pygtk python-module-PyQt4 python-module-wx
 %if_enabled docs
 BuildRequires: doxygen python-module-sphinx
 %endif #docs
@@ -84,16 +87,17 @@ GNU Radio Headers.
         %else
         -DENABLE_TESTING=OFF
         %endif #tests
-%make_build -C BUILD
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmakeinstall_std
 
 # remove atsc example (bytecompilation problem)
 # the examples shouldn't be probably bytecompiled,
 # but selective bytecompilation would take a lot of time,
 # thus letting it as is
 rm -rf %buildroot%_datadir/%name/examples/atsc
+rm -rf %buildroot%_datadir/%name/examples/uhd/tags_demo
 
 # remove bundled cmake modules, upstream ticket 592
 pushd %buildroot%_libdir/cmake/gnuradio && rm -f `ls | sed '/^FindUHD.cmake\|^Gr.*\|^Gnuradio.*/ d'`
@@ -127,7 +131,7 @@ rm -f %buildroot%_datadir/%name/examples/fcd/fcd_nfm_rx
 %_iconsdir/hicolor/*/apps/*
 %_desktopdir/*.desktop
 %_datadir/mime/packages/*
-%prefix/libexec/gnuradio/grc_setup_freedesktop
+%_libexec/%name
 
 %files data
 %_datadir/%name
@@ -158,6 +162,10 @@ rm -f %buildroot%_datadir/%name/examples/fcd/fcd_nfm_rx
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Dec 17 2017 Anton Midyukov <antohami@altlinux.org> 3.7.11-alt3
+- fix build
+- enable support gr-uhd
+
 * Tue Oct 03 2017 Anton Farygin <rider@altlinux.ru> 3.7.11-alt2
 - rebuilt for libcodec2 0.7
 
