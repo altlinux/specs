@@ -1,5 +1,3 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1
 %define mname js
 %define oname %mname.mediaelement
 
@@ -7,21 +5,20 @@ Release: alt1.1.1
 
 Name: python-module-%oname
 Version: 2.13.1
-#Release: alt1.1
+Release: alt2
 Summary: Fanstatic packaging of MediaElement.js
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/js.mediaelement/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-fanstatic python-module-js.jquery
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-fanstatic python-module-js.jquery
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-fanstatic python3-module-js.jquery
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-fanstatic python3-module-js.jquery
 %endif
 
 %py_provides %oname
@@ -34,6 +31,7 @@ This requires integration between your web framework and fanstatic, and
 making sure that the original resources (shipped in the resources
 directory in js.mediaelement) are published to some URL.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Fanstatic packaging of MediaElement.js
 Group: Development/Python3
@@ -46,6 +44,7 @@ This library packages MediaElement.js for fanstatic.
 This requires integration between your web framework and fanstatic, and
 making sure that the original resources (shipped in the resources
 directory in js.mediaelement) are published to some URL.
+%endif
 
 %prep
 %setup
@@ -72,7 +71,7 @@ pushd ../python3
 popd
 %endif
 
-%if "%_libexecdir" != "%_libdir"
+%if "%_lib" == "lib64"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -84,7 +83,7 @@ py.test -vv
 pushd ../python3
 python3 setup.py test
 export PYTHONPATH=$PWD
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
@@ -92,15 +91,20 @@ popd
 %doc *.txt
 %python_sitelibdir/%mname/*
 %python_sitelibdir/*.egg-info
+%python_sitelibdir/*-nspkg.pth
 
 %if_with python3
 %files -n python3-module-%oname
 %doc *.txt
 %python3_sitelibdir/%mname/*
 %python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*-nspkg.pth
 %endif
 
 %changelog
+* Tue Dec 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.13.1-alt2
+- Fixed build.
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.13.1-alt1.1.1
 - (AUTO) subst_x86_64.
 
