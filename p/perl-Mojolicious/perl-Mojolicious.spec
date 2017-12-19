@@ -1,5 +1,5 @@
 Name: perl-Mojolicious
-Version: 7.46
+Version: 7.59
 Release: alt1
 Summary: Real-time web framework
 
@@ -12,7 +12,7 @@ Source1: hypnotoad.init
 Source2: hypnotoad.sysconfig
 
 BuildArch: noarch
-BuildRequires: perl-devel perl-EV perl-Digest-SHA perl-Encode perl-I18N-LangTags perl-Locale-Maketext perl-unicore perl-Encode-JP perl-Pod-Simple perl-IO-Socket-SSL perl-podlators perl-Compress-Raw-Zlib perl-IO-Compress perl(JSON/PP.pm)
+BuildRequires: perl-devel perl-EV perl-Digest-SHA perl-Encode perl-I18N-LangTags perl-Locale-Maketext perl-unicore perl-Encode-JP perl-Pod-Simple perl-IO-Socket-SSL perl-podlators perl-Compress-Raw-Zlib perl-IO-Compress perl(JSON/PP.pm) perl(experimental.pm)
 
 %description
 Mojolicious is a next generation web framework for the Perl programming
@@ -64,6 +64,9 @@ cp %SOURCE2 %buildroot/%_sysconfdir/sysconfig/hypnotoad
 %doc LICENSE Changes
 
 %changelog
+* Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 7.59-alt1
+- automated CPAN update
+
 * Sun Oct 01 2017 Igor Vlasenko <viy@altlinux.ru> 7.46-alt1
 - automated CPAN update
 
