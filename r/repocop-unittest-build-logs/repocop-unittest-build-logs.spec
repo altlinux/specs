@@ -4,7 +4,7 @@ BuildRequires: perl(Test/Repocop/ExternalTest.pm)
 %define testname build-logs
 
 Name: repocop-unittest-%testname
-Version: 0.06
+Version: 0.07
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -50,6 +50,9 @@ done
 %_datadir/repocop/srccollectors/*
 
 %changelog
+* Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- fixed build with perl 5.26
+
 * Fri Feb 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - dropped beehive-log-non-strict-dependency patch generator
 - TODO: drop collector
