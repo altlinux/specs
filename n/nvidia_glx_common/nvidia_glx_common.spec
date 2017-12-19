@@ -13,8 +13,8 @@
 %define nv_version 384
 %define nv_release 98
 %define nv_minor %nil
-%define pkg_rel alt186%ubt
-%define set_gl_nvidia_ver 0.20.3
+%define pkg_rel alt187%ubt
+%define set_gl_nvidia_ver 0.20.4
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -76,7 +76,7 @@ Source2: nvidia-install-driver
 Source3: nvidia-clean-driver
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: kernel-build-tools libsysfs-devel
+BuildRequires: libsysfs-devel
 ExclusiveArch: %ix86 x86_64
 
 
@@ -273,6 +273,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Tue Dec 19 2017 Sergey V Turchin <zerg@altlinux.org> 384.98-alt187%ubt
+- fix driver switching (ALT#34357)
+
 * Tue Dec 12 2017 Sergey V Turchin <zerg@altlinux.org> 384.98-alt186%ubt
 - small code optimization
 
