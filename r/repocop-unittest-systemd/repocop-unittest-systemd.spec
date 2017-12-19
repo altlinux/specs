@@ -1,5 +1,5 @@
 Name: repocop-unittest-systemd
-Version: 0.05
+Version: 0.06
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -43,6 +43,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- fixed build with new perl 5.26
+
 * Tue Apr 23 2013 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
 - bugfix release
 
