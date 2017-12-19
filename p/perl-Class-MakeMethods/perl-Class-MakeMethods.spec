@@ -1,7 +1,7 @@
 %define dist Class-MakeMethods
 Name: perl-%dist
 Version: 1.01
-Release: alt2
+Release: alt3
 
 Summary: Generate common types of methods
 License: GPL or Artistic
@@ -9,6 +9,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
+Patch0:         Class-MakeMethods-1.009-Fix-building-on-Perl-without-dot-in-INC.patch
 
 BuildArch: noarch
 
@@ -28,6 +29,7 @@ dynamically generated and installed in the calling package.
 
 %prep
 %setup -q -n %dist-%version
+%patch0 -p1
 
 %build
 %perl_vendor_build
@@ -43,6 +45,9 @@ rm %buildroot%perl_vendor_privlib/Class/benchmark.pl
 %perl_vendor_privlib/Class
 
 %changelog
+* Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3
+- fixed build with new perl 5.26
+
 * Mon Sep 26 2011 Alexey Tourbin <at@altlinux.ru> 1.01-alt2
 - do not package Class/benchmark.pl
 
