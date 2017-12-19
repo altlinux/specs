@@ -3,7 +3,7 @@
 
 Name: perl-%module
 Version: 0.96
-Release: alt2
+Release: alt3
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -15,6 +15,7 @@ Group: Development/Perl
 Url: http://www.dotandco.com/services/software/Net-DRI/
 #Source: http://www.cpan.org/modules/by-module/Net/%module-%version.tar.gz
 Source: http://www.dotandco.com/services/software/Net-DRI/Net-DRI-%version.tar.gz
+Patch: Net-DRI-0.96-bugfix.patch
 
 BuildArch: noarch
 
@@ -31,6 +32,7 @@ resellers. It can be used by anonyone to do whois or DAS queries.
 
 %prep
 %setup -n %module-%version
+%patch -p1
 
 %build
 %perl_vendor_build
@@ -42,6 +44,9 @@ resellers. It can be used by anonyone to do whois or DAS queries.
 %perl_vendor_privlib/Net
 
 %changelog
+* Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.96-alt3
+- fixed build with new perl 5.26
+
 * Fri Oct 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.96-alt2
 - fixed build
 
