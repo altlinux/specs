@@ -4,29 +4,32 @@
 %def_without python2
 
 Name: python-module-%oname
-Version: 1.1.2
-Release: alt2.1
+Version: 2.5.2
+Release: alt1
 Summary: JSON-RPC 2.0 client library for Python 3
 License: LGPL
 Group: Development/Python
-Url: https://pypi.python.org/pypi/jsonrpcclient/
-Source: %name-%version.tar
 BuildArch: noarch
+Url: https://pypi.python.org/pypi/jsonrpcclient/
+
+Source: %name-%version.tar
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-requests python-module-jsonschema
-BuildPreReq: python-module-nose python-module-rednose
-BuildPreReq: python-module-nose-cov python-module-responses
-BuildPreReq: python-module-cov-core python-module-coverage
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-requests python-module-jsonschema
+BuildRequires: python-module-nose python-module-rednose
+BuildRequires: python-module-nose-cov python-module-responses
+BuildRequires: python-module-cov-core python-module-coverage
+BuildRequires: python2.7(future) python2.7(testfixtures) python2.7(zmq) python2.7(tornado)
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-requests python3-module-jsonschema
-BuildPreReq: python3-module-nose python3-module-rednose
-BuildPreReq: python3-module-nose-cov python3-module-responses
-BuildPreReq: python3-module-cov-core python3-module-coverage
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-requests python3-module-jsonschema
+BuildRequires: python3-module-nose python3-module-rednose
+BuildRequires: python3-module-nose-cov python3-module-responses
+BuildRequires: python3-module-cov-core python3-module-coverage
+BuildRequires: python3(future) python3(testfixtures) python3(zmq) python3(tornado)
 %endif
 
 %py_provides %oname
@@ -34,16 +37,7 @@ BuildPreReq: python3-module-cov-core python3-module-coverage
 %description
 JSON-RPC 2.0 client library for Python 3.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-JSON-RPC 2.0 client library for Python 3.
-
-This package contains tests for %oname.
-
+%if_with python3
 %package -n python3-module-%oname
 Summary: JSON-RPC 2.0 client library for Python 3
 Group: Development/Python3
@@ -51,16 +45,7 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 JSON-RPC 2.0 client library for Python 3.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-JSON-RPC 2.0 client library for Python 3.
-
-This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -93,41 +78,34 @@ popd
 
 %check
 %if_with python2
-python setup.py test
+python setup.py build_ext -i
 rm -fR build
-py.test
+PYTHONPATH=%buildroot%python_sitelibdir py.test
 %endif
 %if_with python3
 pushd ../python3
-python3 setup.py test
+python3 setup.py build_ext -i
 rm -fR build
-py.test-%_python3_version
+PYTHONPATH=%buildroot%python3_sitelibdir py.test3
 popd
 %endif
 
 %if_with python2
 %files
-%doc *.rst
+%doc *.md
 %python_sitelibdir/*
-#exclude %python_sitelibdir/*/*_test.*
-
-#files tests
-#python_sitelibdir/*/*_test.*
 %endif
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst
+%doc *.md
 %python3_sitelibdir/*
-#exclude %python3_sitelibdir/*/*_test.*
-#exclude %python3_sitelibdir/*/*/*_test.*
-
-#files -n python3-module-%oname-tests
-#python3_sitelibdir/*/*_test.*
-#python3_sitelibdir/*/*/*_test.*
 %endif
 
 %changelog
+* Tue Dec 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5.2-alt1
+- Updated to upstream version 2.5.2.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.2-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
