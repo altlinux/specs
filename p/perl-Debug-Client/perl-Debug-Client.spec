@@ -1,6 +1,6 @@
 Name: perl-Debug-Client
-Version: 0.29
-Release: alt2
+Version: 0.31
+Release: alt1
 
 Summary: debugger client side code for Padre, The Perl IDE.
 Group: Development/Perl
@@ -27,10 +27,14 @@ BuildRequires: perl(PadWalker.pm) perl(Test/Requires.pm) perl(Test/CheckDeps.pm)
 %perl_vendor_install
 
 %files
+%doc Changes README.md README
 %perl_vendor_privlib/Debug/Client*
 %doc Changes README
 
 %changelog
+* Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
+- automated CPAN update
+
 * Mon Feb 01 2016 Vladimir Lettiev <crux@altlinux.ru> 0.29-alt2
 - Applied patch https://github.com/PadreIDE/Debug-Client/issues/2
 
