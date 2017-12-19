@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist List-MoreUtils
 Name: perl-%dist
-Version: 0.419
+Version: 0.428
 Release: alt1
 
 Summary: Provide the stuff missing in List::Util
@@ -13,7 +13,7 @@ Source0: http://www.cpan.org/authors/id/R/RE/REHSACK/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: perl-ExtUtils-CBuilder perl(Exporter/Tiny.pm)
+BuildRequires: perl-ExtUtils-CBuilder perl(Exporter/Tiny.pm) perl(List/MoreUtils/XS.pm) perl(Math/Trig.pm)
 
 %description
 List::MoreUtils provides some trivial but commonly needed functionality
@@ -34,6 +34,9 @@ on lists which is not going to go into List::Util.
 #%perl_vendor_autolib/List
 
 %changelog
+* Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.428-alt1
+- automated CPAN update
+
 * Wed May 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.419-alt1
 - automated CPAN update
 - changed to noarch
