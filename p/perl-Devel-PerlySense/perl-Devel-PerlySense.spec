@@ -11,13 +11,14 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.0218
-Release: alt1
+Release: alt2
 Summary: Perl IDE backend with Emacs frontend.
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
 Source: http://www.cpan.org/authors/id/J/JO/JOHANL/Devel-PerlySense-%{version}.tar.gz
+Patch: Devel-PerlySense-0.0218-perl5.26.patch
 BuildArch: noarch
 
 %description
@@ -33,6 +34,7 @@ scripts for %module_name
 
 %prep
 %setup -n %module_name-%module_version
+%patch -p1
 rm t/PerlySense-Editor-Emacs-class-overview.t
 
 %build
@@ -50,6 +52,9 @@ rm t/PerlySense-Editor-Emacs-class-overview.t
 %_bindir/*
 
 %changelog
+* Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.0218-alt2
+- fixed build with new perl 5.26
+
 * Fri Jul 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.0218-alt1
 - automated CPAN update
 
