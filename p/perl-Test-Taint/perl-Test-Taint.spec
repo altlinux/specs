@@ -1,9 +1,8 @@
-# disabled tests until perl 5.26 migration
-%def_without test
+%def_with test
 %define dist Test-Taint
 Name: perl-%dist
 Version: 1.06
-Release: alt3
+Release: alt4
 
 Summary: Checks for taintedness of variables
 License: GPL or Artistic
@@ -41,6 +40,9 @@ in standard the Test::More manpage style.
 %perl_vendor_autolib/Test
 
 %changelog
+* Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 1.06-alt4
+- enabled tests again
+
 * Sat Dec 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.06-alt3
 - disabled tests until perl 5.26 migration
 
