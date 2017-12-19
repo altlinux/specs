@@ -3,43 +3,43 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.0
-Release: alt1.git20150116.1.1
+Version: 0.9.5
+Release: alt1
 Summary: Python library for serializing any arbitrary object graph into JSON
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/jsonpickle/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # git://github.com/jsonpickle/jsonpickle.git
 Source: %name-%version.tar
-BuildArch: noarch
+Patch1: %oname-%version-alt-build.patch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-feedparser python-modules-json
-#BuildPreReq: python-module-demjson python-module-jsonlib
-#BuildPreReq: python-module-yajl python-module-ujson
-#BuildPreReq: python-module-nose python-module-coverage
-#BuildPreReq: python-module-sphinx-devel python-module-sphinxtogithub
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-feedparser
+BuildRequires: python-module-demjson python-module-jsonlib
+BuildRequires: python-module-yajl python-module-ujson
+BuildRequires: python-module-nose python-module-coverage
+BuildRequires: python-module-sphinxtogithub
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
+BuildRequires: python-module-numpy
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-demjson python3-module-jsonlib
-#BuildPreReq: python3-module-yajl python3-module-ujson
-#BuildPreReq: python3-module-nose python3-module-coverage
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-demjson python3-module-jsonlib
+BuildRequires: python3-module-yajl python3-module-ujson
+BuildRequires: python3-module-nose python3-module-coverage
+BuildRequires: python3-module-numpy
 %endif
 
 %py_provides %oname
 %py_requires json demjson jsonlib yajl ujson
 
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cjson python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pluggy python-module-py python-module-pytest python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-pluggy python3-module-py python3-module-pytest python3-module-setuptools xz
-BuildRequires: python-module-alabaster python-module-coverage python-module-demjson python-module-docutils python-module-feedparser python-module-html5lib python-module-jsonlib python-module-nose python-module-objects.inv python-module-setuptools-tests python-module-sphinxtogithub python-module-ujson python-module-yajl python3-module-coverage python3-module-demjson python3-module-jsonlib python3-module-nose python3-module-setuptools-tests python3-module-ujson python3-module-yajl rpm-build-python3 time
-
 %description
 jsonpickle converts complex Python objects to and from JSON.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python library for serializing any arbitrary object graph into JSON
 Group: Development/Python3
@@ -48,6 +48,7 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 jsonpickle converts complex Python objects to and from JSON.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -70,6 +71,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -110,7 +112,7 @@ py.test
 pushd ../python3
 python3 setup.py test
 export PYTHONPATH=$PWD
-py.test-%_python3_version
+py.test3
 popd
 %endif
 
@@ -132,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.5-alt1
+- Updated to upstream version 0.9.5.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.0-alt1.git20150116.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
