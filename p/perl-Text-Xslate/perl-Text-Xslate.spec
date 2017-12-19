@@ -1,6 +1,6 @@
 Name: perl-Text-Xslate
-Version: 3.4.0
-Release: alt1.1
+Version: 3.5.4
+Release: alt1
 
 Summary: Text::Xslate - Scalable template engine for Perl5
 License: Perl
@@ -11,7 +11,7 @@ Url: %CPAN Text-Xslate
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: perl-Any-Moose perl-Data-MessagePack perl-Devel-StackTrace perl-Encode-JP perl-File-Copy-Recursive perl-Module-Install-TestTarget perl-Module-Install-XSUtil perl-Mouse perl-Template perl-Test-Requires perl-autodie perl-unicore
+BuildRequires: perl-Any-Moose perl-Data-MessagePack perl-Devel-StackTrace perl-Encode-JP perl-File-Copy-Recursive perl-Mouse perl-Template perl-Test-Requires perl-autodie perl-unicore perl(Module/Build/XSUtil.pm)
 
 %description
 Xslate is a template engine for Perl5 with the following features:
@@ -41,6 +41,9 @@ Xslate is a template engine for Perl5 with the following features:
 %doc Changes README.md HACKING
 
 %changelog
+* Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 3.5.4-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt1.1
 - rebuild with new perl 5.26.1
 
