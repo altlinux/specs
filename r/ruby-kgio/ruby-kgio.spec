@@ -1,8 +1,8 @@
 %define pkgname kgio
 
 Name: ruby-%pkgname
-Version: 2.11.0
-Release: alt2.2
+Version: 2.11.1
+Release: alt1
 
 Summary: kinder, gentler I/O for Ruby
 Group: Development/Ruby
@@ -56,6 +56,9 @@ Documentation files for %name.
 %ruby_ri_sitedir/Kgio*
 
 %changelog
+* Tue Dec 19 2017 Andrey Cherepanov <cas@altlinux.org> 2.11.1-alt1
+- New version.
+
 * Mon Sep 25 2017 Andrey Cherepanov <cas@altlinux.org> 2.11.0-alt2.2
 - Rebuild with Ruby 2.4.2
 
