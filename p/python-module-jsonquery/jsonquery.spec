@@ -5,25 +5,24 @@
 
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt1
+Release: alt2
 Summary: Basic json -> sqlalchemy query builder
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/jsonquery/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/numberoverzero/jsonquery.git
-Source0: https://pypi.python.org/packages/f8/48/04c0806cce45c738cca20876fa733ca96b6179a9e5453c44f90836e72f9e/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %{oname}-%{version}.tar.gz
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-modules-json python-module-SQLAlchemy
-BuildPreReq: python-modules-sqlite3
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-modules-json python-module-SQLAlchemy
+BuildRequires: python-modules-sqlite3
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-SQLAlchemy
-BuildPreReq: python3-modules-sqlite3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-SQLAlchemy
+BuildRequires: python3-modules-sqlite3
 %endif
 
 %py_provides %oname
@@ -32,6 +31,7 @@ BuildPreReq: python3-modules-sqlite3
 %description
 Basic json -> sqlalchemy query builder.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Basic json -> sqlalchemy query builder
 Group: Development/Python3
@@ -40,6 +40,7 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 Basic json -> sqlalchemy query builder.
+%endif
 
 %prep
 %setup -q -n %{oname}-%{version}
@@ -68,13 +69,10 @@ popd
 
 %check
 python setup.py test
-export PYTHONPATH=$PWD
-py.test -vv
+
 %if_with python3
 pushd ../python3
 python3 setup.py test
-export PYTHONPATH=$PWD
-py.test-%_python3_version -vv
 popd
 %endif
 
@@ -89,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.2-alt2
+- Fixed build.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1
 - automated PyPI update
 
