@@ -1,8 +1,8 @@
 %define ltr libtorrent-rasterbar-devel
-%define rel alt2
+%define rel alt1
 
 Name: qbittorrent
-Version: 4.0.2
+Version: 4.0.3
 Epoch: 1
 Release: %rel
 
@@ -102,6 +102,9 @@ make clean
 %_datadir/appdata/*.xml
 
 %changelog
+* Tue Dec 19 2017 Motsyo Gennadi <drool@altlinux.ru> 1:4.0.3-alt1
+- 4.0.3
+
 * Thu Dec 14 2017 Motsyo Gennadi <drool@altlinux.ru> 1:4.0.2-alt2
 - cleanup
 
