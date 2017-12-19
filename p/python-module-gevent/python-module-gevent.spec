@@ -1,13 +1,12 @@
 %define oname gevent
 
 %def_with python3
+%def_disable embed
 
 Name: python-module-%oname
-Version: 1.1.2
-Release: alt2
-
+Version: 1.2.2
+Release: alt1
 Summary: Python network library that uses greenlet and libevent for easy and scalable concurrency
-
 Group: Development/Python
 License: MIT
 Url: http://pypi.python.org/pypi/gevent
@@ -17,18 +16,17 @@ Url: http://pypi.python.org/pypi/gevent
 
 # https://github.com/surfly/gevent.git
 Source: %oname-%version.tar
-Patch1: %oname-%version-alt-build.patch
-Patch2: %oname-%version-upstream-cython26.patch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildPreReq: libev-devel python-module-Cython python-module-alabaster python-module-html5lib python-module-objects.inv
-BuildPreReq: python-module-greenlet
+BuildRequires: libev-devel libcares-devel
+BuildRequires: python-module-Cython python-module-alabaster python-module-html5lib python-module-objects.inv
+BuildRequires: python-module-greenlet
 
 %setup_python_module %oname
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): python3-module-greenlet
-BuildRequires(pre): python3-module-OpenSSL python-tools-2to3
+BuildRequires: python3-module-greenlet
+BuildRequires: python3-module-OpenSSL
 BuildRequires: python3-module-Cython python3-module-cryptography python3-module-html5lib
 %endif
 
@@ -62,6 +60,7 @@ This package contains tests for %oname.
 Summary: Python 3 network library that uses greenlet and libevent for easy and scalable concurrency
 Group: Development/Python3
 %py3_requires greenlet
+%add_python3_req_skip gevent.libev._corecffi
 
 %description -n python3-module-%oname
 gevent is a coroutine-based Python networking library that uses greenlet
@@ -110,10 +109,10 @@ This package contains pickles for gevent.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p2
 
-rm -fR libev
+%if_disabled embed
+rm -rf deps
+%endif
 
 %if_with python3
 cp -a . ../python3
@@ -123,31 +122,52 @@ cp -a . ../python3
 
 %build
 %add_optflags -fno-strict-aliasing
+%if_disabled embed
+export GEVENT_NO_CFFI_BUILD=1
+export LIBEV_EMBED=0
+export CARES_EMBED=0
+%endif
 
-rm -fR greentest/3.*
+# remove all versions of greentest, leave only versions for current python version
+pushd src/greentest
+for i in * ; do
+	if [ -z "$(echo $i | grep ^%__python_version)" ] ; then
+ 		rm -fR $i
+	fi
+done
+popd
 %python_build_debug
 
 %if_with python3
 pushd ../python3
 export CYTHON=cython3
-sed -i 's|import mimetools|import email.message|' gevent/pywsgi.py
-sed -i 's|mimetools.Message|email.message.Message|' gevent/pywsgi.py
-sed -i 's|basestring|str|g' gevent/ares.pyx
-sed -i 's|test.script_helper|test.test_script_helper|g' greentest/*/test_threading.py
-rm -fR greentest/2.*
-find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
+rm -fR src/gevent/_util_py2.py*
+# remove all versions of greentest, leave only versions for current python3 version
+pushd src/greentest
+for i in * ; do
+	if [ -z "$(echo $i | grep ^%__python3_version)" ] ; then
+		rm -fR $i
+	fi
+done
+popd
 %python3_build_debug
 popd
 %endif
 
 %install
+%if_disabled embed
+export GEVENT_NO_CFFI_BUILD=1
+export LIBEV_EMBED=0
+export CARES_EMBED=0
+%endif
+
 %python_install
-cp -fR greentest %buildroot%python_sitelibdir/
+cp -fR src/greentest %buildroot%python_sitelibdir/
 
 %if_with python3
 pushd ../python3
 %python3_install
-cp -fR greentest %buildroot%python3_sitelibdir/
+cp -fR src/greentest %buildroot%python3_sitelibdir/
 popd
 %endif
 
@@ -188,6 +208,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt1
+- Updated to upstream version 1.2.2.
+
 * Fri Aug 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.2-alt2
 - Updated runtime dependencies.
 

@@ -4,33 +4,28 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.88
+Version: 1.1.111
 Release: alt1
 Summary: flask's style binary server framework
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/haven/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/dantezhu/haven.git
-Source0: https://pypi.python.org/packages/6e/37/cafac2c3b1a8ad24fb30b7866ac9198ac39c15c657c37b96a9ff14091ded/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-events python-module-netkit
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-events python-module-netkit python2.7(setproctitle)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-events python3-module-netkit
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-events python3-module-netkit python3(setproctitle)
+BuildRequires: python-tools-2to3 python3(gevent) python3(geventwebsocket)
 %endif
 
 %py_provides %oname
 %py_requires events netkit
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 flask's style binary server framework.
@@ -45,7 +40,7 @@ Group: Development/Python3
 flask's style binary server framework.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -79,16 +74,19 @@ popd
 %endif
 
 %files
-%doc PKG-INFO
+%doc *.md examples
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc PKG-INFO
+%doc *.md examples
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Mon Dec 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.111-alt1
+- Updated to upstream version 1.1.111.
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.88-alt1
 - automated PyPI update
 
