@@ -1,7 +1,7 @@
 %define dist Term-ReadLine-Gnu
 Name: perl-%dist
-Version: 1.31
-Release: alt1.1.1
+Version: 1.35
+Release: alt1
 
 Summary: Perl interface to the GNU Readline library
 License: GPL or Artistic
@@ -13,12 +13,10 @@ Source1: Term-ReadLine.tar
 Source2: Makefile.PL
 
 Patch1: perl-Term-ReadLine-Gnu-at-Gnu.pm-use-XSLoader.patch
-Patch2: perl-Term-ReadLine-Gnu-at-Gnu.pm-debian-20new.patch
 # two merged in one Patch3 file
 # hist/perl-Term-ReadLine-Gnu-at-Gnu.xs-use-curses.patch
 # hist/perl-Term-ReadLine-Gnu-at-dont-use-xmalloc.patch
-Patch3: perl-Term-ReadLine-Gnu-1.22-at-xmalloc-at-curses.patch
-Patch5: perl-Term-ReadLine-Gnu-at-Gnu_XS.pm-remove-AutoLoader.patch
+Patch3: perl-Term-ReadLine-Gnu-1.35-at-xmalloc-at-curses.patch
 Patch6: perl-Term-ReadLine-Gnu-at-Gnu_XS.pm-pass-syntax-check.patch
 Patch7: perl-Term-ReadLine-Gnu-at-Gnu_XS.pm-debian-10term.patch
 Patch8: perl-Term-ReadLine-Gnu-at-add-Term-Readline-to-MANIFEST.patch
@@ -41,9 +39,7 @@ mv Makefile.PL Makefile.PL.orig
 cp -f %{SOURCE2} Makefile.PL
 
 %patch1 -p1
-%patch2 -p1
 %patch3 -p1
-%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
@@ -59,11 +55,14 @@ cp -f %{SOURCE2} Makefile.PL
 %perl_vendor_install
 
 %files
-%doc README eg
+%doc README eg Changes
 %perl_vendor_archlib/Term
 %perl_vendor_autolib/Term
 
 %changelog
+* Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 1.35-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1.1.1
 - rebuild with new perl 5.26.1
 
