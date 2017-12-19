@@ -1,6 +1,6 @@
 Name: ceph-deploy
-Version: 1.5.34
-Release: alt4
+Version: 1.5.39
+Release: alt1
 Summary: Admin and deploy tool for Ceph
 Group: System/Base
 
@@ -51,6 +51,9 @@ export CEPH_DEPLOY_NO_VENDOR=1
 %python_sitelibdir/*
 
 %changelog
+* Tue Dec 19 2017 Lenar Shakirov <snejok@altlinux.ru> 1.5.39-alt1
+- 1.5.39
+
 * Mon Jan 09 2017 Lenar Shakirov <snejok@altlinux.ru> 1.5.34-alt4
 - Add all ALT distros with Simply and Regular
 - Revert adding "Requires: ceph > 0.94.7-alt2":
