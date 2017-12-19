@@ -2,7 +2,7 @@
 
 Name: aptitude
 Version: 0.4.5
-Release: alt9
+Release: alt10
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
@@ -85,6 +85,9 @@ rm -f %buildroot%_datadir/%name/function_*
 %doc doc/en/output-html/*
 
 %changelog
+* Thu Nov 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.5-alt10
+- NMU: fixed build with new libapt.
+
 * Mon Oct 23 2017 Andrew Savchenko <bircoph@altlinux.org> 0.4.5-alt9
 - Fix build with lcc.
 
