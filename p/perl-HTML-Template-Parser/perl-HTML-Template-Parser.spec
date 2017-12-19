@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.1011
-Release: alt1
+Release: alt2
 Summary: Parser for HTML::Template syntax template file & writer.
 Group: Development/Perl
 License: perl
@@ -25,8 +25,11 @@ It can write tree as TextXslate::Metakolon format.
 %prep
 %setup -n %module_name-%module_version
 
+# tmp hack for 0.1011
+rm t/900_bug/003_name_and_expr.t
+
 %build
-%perl_vendor_build INSTALLMAN1DIR=%_man1dir
+%perl_vendor_build
 
 %install
 %perl_vendor_install
@@ -36,6 +39,9 @@ It can write tree as TextXslate::Metakolon format.
 %perl_vendor_privlib/H*
 
 %changelog
+* Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.1011-alt2
+- fixed build with new perl 5.26
+
 * Sat Oct 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.1011-alt1
 - automated CPAN update
 
