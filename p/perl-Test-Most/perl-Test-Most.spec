@@ -1,5 +1,5 @@
 Name: perl-Test-Most
-Version: 0.34
+Version: 0.35
 Release: alt1
 
 Summary: Test::Most - Most commonly needed test functions and features
@@ -27,9 +27,12 @@ Requires: perl-Test-Warn perl-Test-Exception perl-Test-Differences perl-Test-Dee
 
 %files
 %perl_vendor_privlib/Test/Most*
-%doc Changes README 
+%doc Changes README
 
 %changelog
+* Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
+- automated CPAN update
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1
 - automated CPAN update
 
