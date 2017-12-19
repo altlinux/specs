@@ -4,21 +4,20 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.a.git20141215.1
+Release: alt2.a.git20141215
 Summary: Simple IOloop by epoll or kqueue
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/ioloop/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mengzhuo/ioloop.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
@@ -26,6 +25,7 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 %description
 Simple IOloop by epoll or kqueue.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Simple IOloop by epoll or kqueue
 Group: Development/Python3
@@ -33,6 +33,7 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 Simple IOloop by epoll or kqueue.
+%endif
 
 %prep
 %setup
@@ -64,8 +65,8 @@ python setup.py test
 python test.py
 %if_with python3
 pushd ../python3
-python3 setup.py test
 2to3 -w -n test.py
+python3 setup.py test
 python3 test.py
 popd
 %endif
@@ -81,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1-alt2.a.git20141215
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt1.a.git20141215.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
