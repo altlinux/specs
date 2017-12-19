@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.7.8
+Version: 2.7.9
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,14 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue Dec 19 2017 Vitaly Lipatov <lav@altlinux.ru> 2.7.9-alt1
+- major fix inc_release and inc_subrelease
+- commented out group replacement: do incorrect replacement for clean ALT packages
+- rpmbph: fix build src.rpm
+- rpmcs: add _sysconfigdir, _logrotatedir,_udevrulesdir support
+- rpmreqs: support ld-config-x86_64
+- fix log init
+
 * Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 2.7.8-alt1
 - mask korinf requires
 - add epm assure sisyphus_check if needed
