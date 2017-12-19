@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.19
+Version: %ver_major.20
 Release: alt1
 Epoch: 1
 
@@ -148,7 +148,7 @@ GObject introspection devel data for the %name library
 %_libdir/*.so.*
 %{?_enable_pixbuf_loader:%_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.so}
 %_datadir/thumbnailers/librsvg.thumbnailer
-%doc AUTHORS NEWS README TODO
+%doc AUTHORS NEWS README
 
 %files devel
 %_includedir/*
@@ -183,6 +183,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Tue Dec 19 2017 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.20-alt1
+- 2.40.20
+
 * Wed Oct 04 2017 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.19-alt1
 - 2.40.19
 

@@ -18,7 +18,7 @@
 %def_disable tests
 
 Name: gnome-software
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Software manager for GNOME
@@ -141,6 +141,9 @@ GNOME Software.
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Tue Dec 19 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.4-alt1
+- 3.26.4
+
 * Tue Nov 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt1
 - 3.26.3
 
