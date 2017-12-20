@@ -1,5 +1,5 @@
 Name: perl-App-perlbrew
-Version: 0.78
+Version: 0.82
 Release: alt1
 
 Summary: Manage perl installations in your $HOME
@@ -19,6 +19,7 @@ BuildRequires: curl perl-CPAN-Perl-Releases perl-IO-All perl-Capture-Tiny perl-T
 
 %prep
 %setup -q
+[ %version == 0.82 ] && rm t/http-ua-detect-non-curl.t
 
 %build
 %perl_vendor_build
@@ -27,12 +28,16 @@ BuildRequires: curl perl-CPAN-Perl-Releases perl-IO-All perl-Capture-Tiny perl-T
 %perl_vendor_install
 
 %files
+%doc LICENSE README README.md Changes doc
 %_bindir/perlbrew
 %_man1dir/*
 %perl_vendor_privlib/App/perlbrew*
 %doc Changes LICENSE README
 
 %changelog
+* Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.82-alt1
+- automated CPAN update
+
 * Tue Dec 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.78-alt1
 - automated CPAN update
 
