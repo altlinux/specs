@@ -3,24 +3,22 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.89
+Version: 0.93
 Release: alt1
 Summary: Universal Python binding for the LMDB 'Lightning' Database
 License: OpenLDAP BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/lmdb/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/dw/py-lmdb.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
-
-BuildPreReq: liblmdb-devel
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-memsink
+BuildRequires: liblmdb-devel
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-memsink
 %if_with python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
@@ -29,6 +27,7 @@ BuildPreReq: python3-devel python3-module-setuptools-tests
 %description
 Universal Python binding for the LMDB 'Lightning' Database.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Universal Python binding for the LMDB 'Lightning' Database
 Group: Development/Python3
@@ -36,6 +35,7 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 Universal Python binding for the LMDB 'Lightning' Database.
+%endif
 
 %prep
 %setup
@@ -66,14 +66,14 @@ popd
 
 %check
 export LMDB_FORCE_SYSTEM=1
-python setup.py test
+python setup.py build_ext -i
 export PYTHONPATH=%buildroot%python_sitelibdir
 py.test
 %if_with python3
 pushd ../python3
-python3 setup.py test
+python3 setup.py build_ext -i
 export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-%_python3_version
+py.test3
 popd
 %endif
 
@@ -88,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.93-alt1
+- Updated to upstream version 0.93.
+
 * Wed Jun 29 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.89-alt1
 - Updated to 0.89.
 
