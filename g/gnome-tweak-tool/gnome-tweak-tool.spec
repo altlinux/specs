@@ -4,7 +4,7 @@
 %define ver_major 3.26
 
 Name: %_name-tool
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A tool to customize advanced GNOME 3 options
@@ -70,6 +70,9 @@ Features:
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Dec 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.4-alt1
+- 3.26.4
+
 * Tue Oct 31 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt1
 - 3.26.3
 

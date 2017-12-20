@@ -1,10 +1,11 @@
 %define _name harfbuzz
 %define ver_major 1.7
 %def_with graphite2
+%def_with icu
 %def_disable introspection
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
@@ -15,9 +16,10 @@ Url: http://freedesktop.org/wiki/Software/HarfBuzz
 Source: http://www.freedesktop.org/software/%_name/release/%_name-%version.tar.bz2
 #Source: %_name-%version.tar
 
-BuildRequires: gtk-doc gcc-c++ glib2-devel libfreetype-devel libcairo-devel libicu-devel
+BuildRequires: gtk-doc gcc-c++ glib2-devel libfreetype-devel libcairo-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_with_graphite2:BuildRequires: libgraphite2-devel}
+%{?_with_icu:BuildRequires: libicu-devel}
 
 %description
 HarfBuzz is an implementation of the OpenType Layout engine.
@@ -36,7 +38,7 @@ This package provides shared HarfBuzz library with ICU support.
 Summary: Development files for %name
 Group: Development/C++
 Requires: %name = %version-%release
-Requires: %name-icu = %version-%release
+%{?_with_icu:Requires: %name-icu = %version-%release}
 
 %description devel
 The %name-devel package contains files for developing applications that
@@ -81,15 +83,19 @@ GObject introspection devel data for the HarfBuzz library
 %setup -n %_name-%version
 
 %build
+%ifarch e2k
+# until apx. lcc-1.23
+export LIBS=-lcxa
+export CXXFLAGS="${CXXFLAGS} -Dnullptr=0"
+%endif
 %autoreconf
 %configure --disable-static \
 	--with-glib \
 	--with-freetype \
 	--with-cairo \
-	--with-icu \
-	%{?_enable_introspection:--enable-introspection=yes} \
-	%{subst_with graphite2}
-
+	%{subst_with icu} \
+	%{subst_with graphite2} \
+	%{?_enable_introspection:--enable-introspection=yes}
 
 %make_build
 
@@ -105,7 +111,9 @@ GObject introspection devel data for the HarfBuzz library
 %files devel
 %_includedir/%_name/
 %_libdir/%name.so
+%if_with icu
 %_libdir/%name-icu.so
+%endif
 %_pkgconfigdir/%_name.pc
 %_pkgconfigdir/%_name-icu.pc
 %doc NEWS AUTHORS COPYING README
@@ -113,8 +121,10 @@ GObject introspection devel data for the HarfBuzz library
 %files devel-doc
 %_datadir/gtk-doc/html/*
 
+%if_with icu
 %files icu
 %_libdir/%name-icu.so.*
+%endif
 
 %files utils
 %_bindir/hb-view
@@ -131,6 +141,13 @@ GObject introspection devel data for the HarfBuzz library
 
 
 %changelog
+* Wed Dec 20 2017 Yuri N. Sedunov <aris@altlinux.org> 1.7.3-alt1
+- 1.7.3
+
+* Fri Dec 08 2017 Michael Shigorin <mike@altlinux.org> 1.7.2-alt2
+- introduced icu knob (on by default)
+- E2K: link against libcxa explicitly
+
 * Mon Dec 04 2017 Yuri N. Sedunov <aris@altlinux.org> 1.7.2-alt1
 - 1.7.2
 

@@ -1,7 +1,7 @@
 %def_enable x11
 
 Name: libxkbcommon
-Version: 0.7.2
+Version: 0.8.0
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -66,7 +66,6 @@ X.Org X11 XKB keymap creation library development package
 %meson \
 	-Ddefault_library=shared \
 	%{?_disable_x11:-Ddisable-x11}
-
 %meson_build
 
 %install
@@ -98,6 +97,9 @@ X.Org X11 XKB keymap creation library development package
 %endif
 
 %changelog
+* Wed Dec 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Sat Aug 19 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
 - 0.7.2
 
