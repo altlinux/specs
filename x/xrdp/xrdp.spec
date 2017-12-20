@@ -1,6 +1,6 @@
 Name: 	 xrdp
 Version: 0.9.4
-Release: alt1
+Release: alt2
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -31,7 +31,7 @@ Patch10: lfs.diff
 Patch12: xrdp-alt-startwm.patch
 Patch13: alt-add-russian-keyboard.patch
 
-BuildPreReq: rpm-build-intro
+BuildPreReq: rpm-build-intro rpm-macros-intro-conflicts
 BuildRequires: libjpeg-devel
 BuildRequires: libpam-devel
 BuildRequires: libssl-devel
@@ -175,6 +175,7 @@ install -Dp -m 644 keygen/openssl.conf %buildroot%_sysconfdir/xrdp/openssl.conf
 # Clean unnecessary files
 find %buildroot -name *.a -delete -o -name *.la -delete
 rm -rf %buildroot{/usr/local,%_includedir,%_pkgconfigdir}
+rm -f %buildroot%_sysconfdir/xrdp/{cert.pem,key.pem,rsakeys.ini}
 
 %pre
 /usr/sbin/groupadd -r -f tsusers 2>/dev/null ||:
@@ -208,7 +209,6 @@ fi
 %dir %_sysconfdir/xrdp/
 %_sysconfdir/xrdp/km*.ini
 %_sysconfdir/xrdp/*.sh
-%_sysconfdir/xrdp/xrdp.sh
 %dir %_sysconfdir/xrdp/pulse
 %_sysconfdir/xrdp/pulse/default.pa
 %_sysconfdir/xrdp/xrdp_keyboard.ini
@@ -236,6 +236,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Wed Dec 20 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.4-alt2
+- clean build
+
 * Thu Sep 28 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.4-alt1
 - New version
 
