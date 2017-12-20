@@ -8,7 +8,7 @@ BuildRequires: perl-podlators
 
 Name: perl-utf8-all
 Version: 0.023
-Release: alt2
+Release: alt3
 
 Summary: Turn on Unicode everywhere
 
@@ -21,7 +21,7 @@ Source: http://www.cpan.org/authors/id/H/HA/HAYOBAAN/utf8-all-%version.tar.gz
 BuildArch: noarch
 BuildRequires: su
 BuildRequires: findutils
-BuildRequires: perl-DBM perl-I18N-Collate perl-I18N-LangTags perl-NEXT perl-POSIX-1003 perl-Term-ReadLine-Gnu perl-Tie-File perl-Tie-RefHash perl-base perl-devel perl-encoding-warnings perl-threads perl-unicore
+BuildRequires: perl-DBM perl-I18N-Collate perl-I18N-LangTags perl-NEXT perl-POSIX-1003 perl-Term-ReadLine-Gnu perl-Tie-File perl-Tie-RefHash perl-base perl-devel perl-threads perl-unicore
 BuildRequires: rpm-build-perl
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(strict.pm)
@@ -85,6 +85,9 @@ make test
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.023-alt3
+- fixed build with new perl 5.26
+
 * Sun Oct 29 2017 Vitaly Lipatov <lav@altlinux.ru> 0.023-alt2
 - initial build for ALT Sisyphus
 
