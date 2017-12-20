@@ -4,28 +4,28 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.7
-Release: alt1.git20161010
+Version: 1.2.0
+Release: alt1
 Summary: Non-blocking MongoDB driver for Tornado
 License: ASLv2.0
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/motor/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mongodb/motor.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-tornado
-BuildPreReq: python-module-pymongo python-module-pymongo-gridfs
-BuildPreReq: python-module-sphinx-devel
-BuildPreReq: python-module-futures
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-tornado
+BuildRequires: python-module-pymongo python-module-pymongo-gridfs
+BuildRequires: python-module-futures
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-tornado
-BuildPreReq: python3-module-pymongo python3-module-gridfs
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-tornado
+BuildRequires: python3-module-pymongo python3-module-gridfs
+BuildRequires: python3-module-sphinx-devel
+BuildRequires: python3(aiohttp)
 %endif
 
 %py_provides %oname
@@ -35,6 +35,7 @@ BuildPreReq: python3-module-pymongo python3-module-gridfs
 Motor is a full-featured, non-blocking MongoDB driver for Python Tornado
 applications.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Non-blocking MongoDB driver for Tornado
 Group: Development/Python3
@@ -44,6 +45,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 Motor is a full-featured, non-blocking MongoDB driver for Python Tornado
 applications.
+%endif
 
 %package docs
 Summary: Documentation for %oname
@@ -63,7 +65,7 @@ This package contains documentation for %oname.
 cp -fR . ../python3
 %endif
 
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv doc/
 
 %build
@@ -84,7 +86,7 @@ pushd ../python3
 popd
 %endif
 
-%make -C doc html
+%make -C doc html SPHINXBUILD=py3_sphinx-build
 
 %check
 python setup.py test
@@ -108,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt1
+- Updated to upstream version 1.2.0.
+
 * Thu Oct 27 2016 Vladimir Didenko <cow@altlinux.org> 0.7-alt1.git20161010
 - New version (closes: #31269)
 
