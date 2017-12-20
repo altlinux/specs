@@ -1,5 +1,5 @@
 Name: anyservice
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: Anyservice - scripts for making systemd like service from any programs
@@ -45,6 +45,10 @@ cp %name.sh %buildroot/%_bindir/%name
 %dir %_logdir/%name/
 
 %changelog
+* Wed Dec 20 2017 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt1
+- check /etc/systemd first
+- remove PID file after stop
+
 * Fri Dec 08 2017 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt1
 - export environment variables like systemd does
 - mask functions used from /etc/init.d/functions
