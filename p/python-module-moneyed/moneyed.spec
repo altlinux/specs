@@ -4,24 +4,23 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.0
+Version: 0.7
 Release: alt1
 Summary: Provides Currency and Money classes for use in your Python code
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/py-moneyed/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/limist/py-moneyed.git
-Source0: https://pypi.python.org/packages/24/cc/536f70bb83ea96d9a2affa857d43cf988dddc959ec42655bf59423ba3113/py-%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-tox
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-tox
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-tox
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-tox
 %endif
 
 %py_provides %oname
@@ -49,6 +48,7 @@ stand-alone and easy to either use directly, or subclass further.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Provides Currency and Money classes for use in your Python code
 Group: Development/Python3
@@ -76,9 +76,10 @@ or ($DEITY forbid) the float primitive. The package is meant to be
 stand-alone and easy to either use directly, or subclass further.
 
 This package contains tests for %oname.
+%endif
 
 %prep
-%setup -q -n py-%{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -108,7 +109,7 @@ py.test -vv
 %if_with python3
 pushd ../python3
 rm -fR build
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
@@ -133,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7-alt1
+- Updated to upstream version 0.7.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1
 - automated PyPI update
 
