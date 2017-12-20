@@ -2,7 +2,7 @@
 BuildRequires: perl-podlators perl(Test/MockModule.pm)
 %define dist Archive-Zip
 Name: perl-%dist
-Version: 1.59
+Version: 1.60
 Release: alt1
 
 Summary: Perl module for manipulating Zip archives
@@ -10,7 +10,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/P/PH/PHRED/Archive-Zip-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PH/PHRED/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -31,7 +31,7 @@ scripts for %name
 
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -40,7 +40,7 @@ scripts for %name
 %perl_vendor_install
 
 %files
-%doc	Changes examples
+%doc	Changes examples README.md
 %dir	%perl_vendor_privlib/Archive
 	%perl_vendor_privlib/Archive/Zip.pm
 %dir	%perl_vendor_privlib/Archive/Zip
@@ -53,6 +53,9 @@ scripts for %name
 
 
 %changelog
+* Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.60-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.59-alt1
 - automated CPAN update
 
