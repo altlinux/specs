@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 17.12.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Networking/File transfer
@@ -71,7 +71,7 @@ sed -i '/^find_package(KF5Torrent/d' CMakeLists.txt
 %install
 %K5install
 %K5install_move data kget khtml kwebkitpart dolphinpart kconf_update
-%find_lang %name --with-kde --without-mo --all-name
+%find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
 %doc COPYING*
@@ -107,6 +107,9 @@ sed -i '/^find_package(KF5Torrent/d' CMakeLists.txt
 %_K5lib/libkgetcore.so.%sover
 
 %changelog
+* Wed Dec 20 2017 Sergey V Turchin <zerg@altlinux.org> 17.12.0-alt2%ubt
+- update translations
+
 * Wed Dec 20 2017 Sergey V Turchin <zerg@altlinux.org> 17.12.0-alt1%ubt
 - new version
 
