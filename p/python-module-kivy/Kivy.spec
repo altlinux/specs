@@ -1,11 +1,18 @@
 Name: python-module-kivy
 Version: 1.10.0
-Release: alt1
+Release: alt2
 Summary: Open source library for rapid development of applications
 License: LGPLv3
 Group: Development/Python
 Url: http://kivy.org
 Source: %version.tar.gz
+Patch1: kivy-1.10.0-upstream-cython-fix-1.patch
+Patch2: kivy-1.10.0-upstream-cython-fix-2.patch
+Patch3: kivy-1.10.0-upstream-cython-fix-3.patch
+Patch4: kivy-1.10.0-upstream-cython-fix-4.patch
+Patch5: kivy-1.10.0-upstream-cython-fix-5.patch
+Patch6: kivy-1.10.0-upstream-sdl-mixer-2.0.2-support.patch
+Patch10: kivy-1.10.0-alt-version.patch
 
 %setup_python_module kivy
 %add_python_req_skip AppKit
@@ -24,7 +31,6 @@ BuildRequires: ctags libGL-devel libGLES-devel python-module-Cython python-modul
 BuildRequires: xvfb-run
 BuildRequires(pre): gstreamer1.0-devel
 BuildRequires(pre): libSDL2_mixer-devel libSDL2_ttf-devel libSDL2-devel libSDL2_image-devel
-BuildRequires(pre): git
 
 %description
 Kivy - Open source library for rapid development of applications
@@ -40,8 +46,27 @@ BuildArch: noarch
 %description devel
 Example files, documentation and packaging tool for Kivy, %summary
 
+%package tests
+Summary: Tests for Kiby
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+Kivy - Open source library for rapid development of applications
+that make use of innovative user interfaces, such as multi-touch apps.
+
+This package contains tests for Kivy.
+
 %prep
 %setup -n Kivy-%version
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch10 -p2
+
 rm -rf kivy/tools/packaging/osx
 
 for f in `grep -rl '#!/usr/bin/kivy' examples`; do
@@ -80,13 +105,21 @@ mv %buildroot/%_datadir/kivy-examples %buildroot/%_docdir
 %doc doc/README.md
 %python_sitelibdir/kivy
 %python_sitelibdir/Kivy*
+%exclude %python_sitelibdir/kivy/tests
 
 %files devel
 %doc doc/build/html
 %_docdir/kivy-examples
 ## XXX garden binary is moved to separate module
 
+%files tests
+%python_sitelibdir/kivy/tests
+
 %changelog
+* Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.10.0-alt2
+- Fixed build.
+- Split tests into separate package.
+
 * Sun Jul 30 2017 Denis Medvedev <nbr@altlinux.org> 1.10.0-alt1
 - version bump to 1.10.0
 
