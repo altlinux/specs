@@ -5,40 +5,36 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.git20140220.1.1
+Release: alt2.git20140220
 Summary: Python terminal multiplexer (Pure Python tmux clone)
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/libpymux/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/jonathanslenders/libpymux.git
 Source: %name-%version.tar
-BuildArch: noarch
 
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-pyte python-module-docopt
-#BuildPreReq: python-module-asyncio
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-pyte python-module-docopt
+BuildRequires: python2.7(asyncio)
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-pyte python3-module-docopt
-#BuildPreReq: python3-module-asyncio
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-pyte python3-module-docopt
+BuildRequires: python3(asyncio)
 %endif
 
 %py_provides %oname
 %py_requires pyte docopt asyncio
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python3-module-asyncio python3-module-setuptools-tests rpm-build-python3
-
 %description
 Library for terminal multiplexing in Python. This is the library that's
 used by pymux, a pure Python tmux clone.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python terminal multiplexer (Pure Python tmux clone)
 Group: Development/Python3
@@ -48,6 +44,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 Library for terminal multiplexing in Python. This is the library that's
 used by pymux, a pure Python tmux clone.
+%endif
 
 %prep
 %setup
@@ -101,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1-alt2.git20140220
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt1.git20140220.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
