@@ -1,21 +1,20 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 3.015
 %define module_name Sereal
-Serial: 1
+Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Sereal/Decoder.pm) perl(Sereal/Encoder.pm) perl(Test/More.pm) perl(Test/Deep/NoTest.pm) perl(Test/LongString.pm) perl(Test/Warn.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 3.015
+Version: 4.004
 Release: alt1
 Summary: Fast, compact, powerful binary (de-)serialization
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/Y/YV/YVES/Sereal-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/Y/YV/YVES/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -43,7 +42,7 @@ https://github.com/Sereal/Sereal/wiki/Sereal-Comparison-Graphs.
 
 
 %prep
-%setup -q -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -56,6 +55,9 @@ https://github.com/Sereal/Sereal/wiki/Sereal-Comparison-Graphs.
 %perl_vendor_privlib/S*
 
 %changelog
+* Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.004-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.015-alt1
 - automated CPAN update
 
