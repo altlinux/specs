@@ -1,6 +1,7 @@
+%define post -28
 # nuget psrp module
 Name: 	  libpsrp
-Version:  1.1.0
+Version:  1.4.1
 Release:  alt1
 
 Summary:  PowerShell WS-Man PSRP Client for Linux
@@ -10,8 +11,10 @@ Url:      https://github.com/PowerShell/psl-omi-provider
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-git: https://github.com/PowerShell/psl-omi-provider.git
-Source:   %name-%version.tar
+# NSource-git: https://github.com/PowerShell/psl-omi-provider.git
+# Source-url: https://github.com/PowerShell/psl-omi-provider/archive/v%version%post.tar.gz
+Source:  %name-%version.tar
+Source1: .gear/CMakeLists.txt
 
 BuildRequires: cmake rpm-macros-cmake gcc-c++
 BuildRequires: libssl-devel libpam0-devel libomi-devel libomi-internal-devel
@@ -23,7 +26,7 @@ PSRP communication is tunneled through the Open Management Infrastructure (OMI) 
 %setup
 
 %build
-cp .gear/CMakeLists.txt src/
+cp %SOURCE1 src/
 cd src
 %cmake_insource -DULINUX_SSL=0
 %make_build
@@ -39,5 +42,8 @@ cp libpsrpclient.so %buildroot%_libdir/
 %_libdir/libpsrpclient.so
 
 %changelog
+* Wed Dec 20 2017 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
+- new version 1.4.1 (with rpmrb script)
+
 * Fri Jun 09 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
 - initial build for ALT Sisyphus

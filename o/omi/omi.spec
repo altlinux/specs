@@ -1,7 +1,7 @@
-%define post 35
+%define post 0
 Name: 	  omi
-Version:  1.2.0
-Release:  alt2
+Version:  1.4.1
+Release:  alt1
 
 Summary:  Open Management Infrastructure
 License:  MIT
@@ -82,14 +82,17 @@ cd Unix
 %install
 cd Unix
 %makeinstall_std
-mkdir -p %buildroot%_includedir/omi/{pal,base,sock,oi,nits/base}/
-cp base/*.h %buildroot%_includedir/omi/base/
-cp sock/*.h %buildroot%_includedir/omi/sock/
-cp oi/*.h %buildroot%_includedir/omi/oi/
+for i in pal base provreg sock oi ; do
+    mkdir -p %buildroot%_includedir/omi/$i/
+    cp $i/*.h %buildroot%_includedir/omi/$i/
+done
+
+mkdir -p %buildroot%_includedir/omi/nits/base/
 cp nits/base/nits.h %buildroot%_includedir/omi/nits/base/
 cp common/common.h %buildroot%_includedir/omi/
 cp common/localizestr.h %buildroot%_includedir/omi/
 cp output/include/config.h %buildroot%_includedir/omi/
+
 cp -a pal/*.h %buildroot%_includedir/omi/pal/
 subst "s|common/linux/sal.h|linux/sal.h|g" %buildroot%_includedir/omi/pal/palcommon.h
 rm -f %buildroot%_includedir/omi/pal/{strlcat.h,strlcpy.h}
@@ -133,11 +136,15 @@ cp output/lib/*.a %buildroot%_libdir/%name/lib/
 %_includedir/omi/linux/
 %_includedir/omi/pal/
 %_includedir/omi/base/
+%_includedir/omi/provreg/
 %_includedir/omi/sock/
 %_includedir/omi/oi/
 %_includedir/omi/nits/
 
 %changelog
+* Wed Dec 20 2017 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
+- new version 1.4.1 (with rpmrb script)
+
 * Fri Jun 09 2017 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt2
 - add internal pal headers
 
