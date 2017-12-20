@@ -1,7 +1,7 @@
 %def_with python3
 
 Name:           python-module-pymongo
-Version:        3.4.0
+Version:        3.6.0
 Release:        alt1
 Summary:        Python driver for MongoDB
 
@@ -14,18 +14,12 @@ Source0:        http://pypi.python.org/packages/source/p/pymongo/pymongo-%{versi
 Provides:       pymongo = %{version}-%{release}
 Obsoletes:      pymongo <= 2.1.1-4
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base
-BuildRequires: python-module-nose python3-devel python3-module-setuptools rpm-build-python3 time
-
-#BuildRequires:  python-devel
-#BuildRequires:  python-module-nose
-#BuildRequires:  python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-nose
 
 %if_with python3
-#BuildRequires: python-tools-2to3 python-tools-i18n python-tools-idle python-tools-pynche python-tools-smtpd
-#BuildRequires:  python3-devel
-#BuildRequires:  python3-module-distribute
+BuildRequires(pre): rpm-build-python3
+BuildRequires:  python3-devel python3-module-setuptools
 %endif
 
 %add_findprov_skiplist %{python_sitelibdir}.*\.so$
@@ -114,38 +108,41 @@ popd
 %endif
 
 %files
-%doc LICENSE PKG-INFO README.rst doc
+%doc LICENSE README.rst doc
 %{python_sitelibdir}/pymongo
 %{python_sitelibdir}/pymongo-%{version}-*.egg-info
 
 %if_with python3
 %files -n python3-module-pymongo
-%doc LICENSE PKG-INFO README.rst doc
+%doc LICENSE README.rst doc
 %{python3_sitelibdir}/pymongo
 %{python3_sitelibdir}/pymongo-%{version}-*.egg-info
 %endif
 
 %files -n python-module-pymongo-gridfs
-%doc LICENSE PKG-INFO README.rst doc
+%doc LICENSE README.rst doc
 %{python_sitelibdir}/gridfs
 
 %if_with python3
 %files -n python3-module-gridfs
-%doc LICENSE PKG-INFO README.rst doc
+%doc LICENSE README.rst doc
 %{python3_sitelibdir}/gridfs
 %endif
 
 %files -n python-module-bson
-%doc LICENSE PKG-INFO README.rst doc
+%doc LICENSE README.rst doc
 %{python_sitelibdir}/bson
 
 %if_with python3
 %files -n python3-module-bson
-%doc LICENSE PKG-INFO README.rst doc
+%doc LICENSE README.rst doc
 %{python3_sitelibdir}/bson
 %endif
 
 %changelog
+* Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.0-alt1
+- Updated to upstream version 3.6.0.
+
 * Mon Dec 19 2016 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt1
 - Version 3.4.0
 
