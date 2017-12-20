@@ -1,9 +1,10 @@
 # Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
 %define release_commit 89ed309252981ddd50f697fde4fe93019cb3e652
 
+%define netdatauser netdata
 Name: netdata
 Version: 1.8.0
-Release: alt1
+Release: alt2
 
 Summary: Real-time performance monitoring, done right!
 
@@ -16,15 +17,15 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-git: https://github.com/firehol/netdata.git
 Source: %name-%version.tar
 
-# manually removed: python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs 
+# manually removed: python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs
 # Automatically added by buildreq on Fri Aug 05 2016
 # optimized out: perl pkg-config python-base python-modules python3 python3-base
-BuildRequires: rpm-build-intro libuuid-devel zlib-devel bash4
+BuildRequires: libuuid-devel zlib-devel bash4
 
 Requires: bash4
 
-# FIXME: wait for new rpm-build-intro in p8
-%define _localstatedir /var
+BuildRequires: rpm-macros-intro-conflicts
+BuildRequires: rpm-build-intro >= 2.1.1
 
 %if_with nfacct
 BuildRequires: libmnl-devel
@@ -36,6 +37,9 @@ BuildRequires: libnetfilter_acct-devel
 
 # python.d/python_modules/pyyaml3/__init__.py: invalid syntax (line 284)
 %add_findreq_skiplist %_libexecdir/%name/python.d/python_modules/*/*.py
+%if %_vendor != "alt"
+%global __python %__python3
+%endif
 
 %description
 netdata is the fastest way to visualize metrics. It is a resource
@@ -55,16 +59,15 @@ Requires: %name = %EVR
 %description postgres
 PostgreSQL module for %name.
 
-
 %prep
 %setup
 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=32663
 %if %_vendor == "alt"
-for i in plugins.d/*.sh ; do
+for i in plugins.d/*.plugin plugins.d/*.sh charts.d/*.sh ; do
 	test -s "$i" || continue
-	grep -q "BASH version 4" "$i" || continue
-	%__subst "s|^#!/usr/bin/env bash|#!/bin/bash4|g" "$i"
+	%__subst "s|^#!/usr/bin/env bash$|#!/bin/bash4|g" "$i"
+	%__subst "s|^#!/bin/bash$|#!/bin/bash4|g" "$i"
 done
 %endif
 
@@ -99,13 +102,22 @@ install -m 644 -p system/netdata.service %buildroot%_unitdir/netdata.service
 echo "%release_commit" > %buildroot%_datadir/%name/web/version.txt
 
 %pre
-getent group netdata > /dev/null || groupadd -r netdata
-getent passwd netdata > /dev/null || useradd -r -g netdata -c netdata -s /sbin/nologin -d / netdata
+# TODO
+#groupadd %netdatauser
+#useradd %netdatauser -g %netdatauser -c netdata -s /sbin/nologin -d /
+getent group %netdatauser >/dev/null || groupadd -r %netdatauser
+getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdatauser user" -s /sbin/nologin -d / %netdatauser
+
+%post
+%post_service %name
+
+%preun
+%preun_service %name
 
 %files
-%attr(0700,netdata,netdata) %dir %_localstatedir/cache/%name/
-%attr(0770,root,netdata) %dir %_localstatedir/log/%name/
-%attr(0700,netdata,netdata) %dir %_localstatedir/lib/%name/
+%attr(0700,%netdatauser,%netdatauser) %dir %_localstatedir/cache/%name/
+%attr(0770,root,%netdatauser) %dir %_localstatedir/log/%name/
+%attr(0700,%netdatauser,%netdatauser) %dir %_localstatedir/lib/%name/
 %dir %_sysconfdir/%name/
 #config(noreplace) %_sysconfdir/%name/netdata.conf
 %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/*.conf
@@ -131,13 +143,17 @@ getent passwd netdata > /dev/null || useradd -r -g netdata -c netdata -s /sbin/n
 %dir %_datadir/%name
 
 # override defattr for web files (see netdata.conf for web access user/group)
-%defattr(644,root,netdata,755)
+%defattr(644,root,%netdatauser,755)
 %_datadir/%name/web/
 
 %files postgres
 %_libexecdir/%name/python.d/postgres.chart.py
 
 %changelog
+* Wed Dec 20 2017 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt2
+- use bash4 for all shells scripts
+- cleanup spec, change user/group to %netdatauser
+
 * Tue Oct 24 2017 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
 - new version 1.8.0 (with rpmrb script)
 
