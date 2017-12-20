@@ -4,27 +4,26 @@
 
 Name: python-module-%oname
 Version: 1.1.3
-Release: alt1.git20150525.1
+Release: alt2.git20150525
 Summary: Lightweight markup language-based html5 slideshow generator
 License: ASLv2.0
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/landslide
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/adamzap/landslide.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-jinja2 python-module-markdown
-BuildPreReq: python-module-Pygments python-module-docutils
-BuildPreReq: python-module-six
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-jinja2 python-module-markdown
+BuildRequires: python-module-Pygments python-module-docutils
+BuildRequires: python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-jinja2 python3-module-markdown
-BuildPreReq: python3-module-Pygments python3-module-docutils
-BuildPreReq: python3-module-six
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-jinja2 python3-module-markdown
+BuildRequires: python3-module-Pygments python3-module-docutils
+BuildRequires: python3-module-six
 %endif
 
 %py_provides %oname
@@ -77,11 +76,11 @@ popd
 %python_install
 
 %check
-python setup.py test -v
+python setup.py build_ext -i
 python tests.py -v
 %if_with python3
 pushd ../python3
-python3 setup.py test -v
+python3 setup.py build_ext -i
 python3 tests.py -v
 popd
 %endif
@@ -102,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.3-alt2.git20150525
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.3-alt1.git20150525.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
