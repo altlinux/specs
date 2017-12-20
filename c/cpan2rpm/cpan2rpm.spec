@@ -1,6 +1,6 @@
 Name: cpan2rpm
 Version: 2.028
-Release: alt4
+Release: alt5
 
 Summary: cpan2rpm - A Perl module packager
 
@@ -16,6 +16,8 @@ Patch: %name-%version-alt.patch
 Patch1: cpan2rpm-2.028-untar.patch
 Patch2: cpan2rpm-2.028-alt-viy-perl-version-check.patch
 Patch3: cpan2rpm-2.028-alt-viy-fix-for-named-sourcedir.patch
+# included in patch3
+Patch4: cpan2rpm-2.028-alt-viy-perl526.patch
 
 Requires: perl-Compress-Zlib perl-URI perl-devel perl-libwww sisyphus
 # Automatically added by buildreq on Sun Feb 27 2005
@@ -64,6 +66,8 @@ necessary for package creation.
 %patch -b .orig -p2
 %patch1 -p2
 %patch2 -p2
+%patch3 -p0
+#patch4 -p1
 sed -i "s|.*system.*||g" Makefile.PL
 sed -i 's/Pod::Text/Pod::PlainText/' cpan2rpm
 
@@ -81,6 +85,9 @@ echo Skipping >cpan2rpm.spec.PL
 %doc README Changes
 
 %changelog
+* Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 2.028-alt5
+- bugix: fixed build with perl 5.26
+
 * Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 2.028-alt4
 - NMU: added missing Pod dependencies
 
