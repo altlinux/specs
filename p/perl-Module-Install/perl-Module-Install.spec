@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-Install
 Name: perl-%dist
-Version: 1.18
+Version: 1.19
 Release: alt1
 
 Summary: Standalone, extensible Perl module installer
@@ -48,6 +48,9 @@ EOF
 /etc/buildreqs/files/ignore.d/%name
 
 %changelog
+* Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1
+- automated CPAN update
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
 - automated CPAN update
 
