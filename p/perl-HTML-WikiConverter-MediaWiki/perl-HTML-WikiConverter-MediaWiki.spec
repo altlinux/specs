@@ -15,7 +15,7 @@
 
 Name: perl-HTML-WikiConverter-MediaWiki
 Version: 0.59
-Release: alt1.1
+Release: alt2
 
 Summary: Convert HTML to MediaWiki markup
 
@@ -27,6 +27,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 Source: http://search.cpan.org//CPAN/authors/id/D/DI/DIBERRI/%m_distro-%version.tar
+Patch: HTML-WikiConverter-MediaWiki-0.59-alt-perl5.26.patch
 
 # Automatically added by buildreq on Thu Jan 03 2008
 BuildRequires: perl-HTML-WikiConverter perl-Test-Pod perl-Test-Pod-Coverage
@@ -37,6 +38,7 @@ markup. See HTML::WikiConverter for additional usage details.
 
 %prep
 %setup -n %m_distro-%version
+%patch -p1
 
 %build
 %perl_vendor_build
@@ -49,6 +51,9 @@ markup. See HTML::WikiConverter for additional usage details.
 %perl_vendor_privlib/HTML/
 
 %changelog
+* Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.59-alt2
+- fixed build with new perl 5.26
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.59-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
