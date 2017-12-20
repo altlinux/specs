@@ -1,28 +1,26 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev.git20140714.1.1
+
 %define oname mls.apiclient
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2
-#Release: alt1.dev.git20140714.1
+Version: 1.5
+Release: alt1
 Summary: Python client for the RESTful API of the Propertyshelf MLS
 License: GPL
 Group: Development/Python
 Url: https://pypi.python.org/pypi/mls.apiclient/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/propertyshelf/mls.apiclient.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests python-module-requests
-BuildPreReq: python-module-httpretty
+BuildRequires: python-module-setuptools-tests python-module-requests
+BuildRequires: python-module-httpretty python2.7(responses)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools-tests python3-module-requests
-BuildPreReq: python3-module-httpretty
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-module-setuptools-tests python3-module-requests
+BuildRequires: python3-module-httpretty python3(responses)
+BuildRequires: python-tools-2to3
 %endif
 
 %py_provides %oname
@@ -43,6 +41,7 @@ Propertyshelf MLS.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python client for the RESTful API of the Propertyshelf MLS
 Group: Development/Python3
@@ -63,6 +62,7 @@ mls.apiclient is a Python client for the RESTful API of the
 Propertyshelf MLS.
 
 This package contains tests for %oname.
+%endif
 
 %package -n python-module-mls
 Summary: Core files of mls
@@ -72,6 +72,7 @@ Group: Development/Python
 %description -n python-module-mls
 Core files of mls.
 
+%if_with python3
 %package -n python3-module-mls
 Summary: Core files of mls
 Group: Development/Python3
@@ -79,6 +80,7 @@ Group: Development/Python3
 
 %description -n python3-module-mls
 Core files of mls.
+%endif
 
 %prep
 %setup
@@ -89,6 +91,7 @@ find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
+export LC_ALL=en_US.UTF-8
 %python_build_debug
 
 %if_with python3
@@ -98,6 +101,7 @@ popd
 %endif
 
 %install
+export LC_ALL=en_US.UTF-8
 %python_install
 
 %if_with python3
@@ -106,7 +110,7 @@ pushd ../python3
 popd
 %endif
 
-%if "%_libexecdir" != "%_libdir"
+%if "%_lib" == "lib64"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -124,6 +128,7 @@ popd
 %endif
 
 %check
+export LC_ALL=en_US.UTF-8
 python setup.py test
 rm -fR build
 py.test
@@ -131,7 +136,7 @@ py.test
 pushd ../python3
 python3 setup.py test
 rm -fR build
-py.test-%_python3_version
+py.test3
 popd
 %endif
 
@@ -139,6 +144,7 @@ popd
 %doc *.rst docs/*
 %python_sitelibdir/mls/*
 %python_sitelibdir/*.egg-info
+%python_sitelibdir/*-nspkg.pth
 %exclude %python_sitelibdir/mls/*/tests
 %exclude %python_sitelibdir/mls/__init__.py*
 
@@ -154,6 +160,7 @@ popd
 %doc *.rst docs/*
 %python3_sitelibdir/mls/*
 %python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*-nspkg.pth
 %exclude %python3_sitelibdir/mls/*/tests
 %exclude %python3_sitelibdir/mls/__init__.py
 %exclude %python3_sitelibdir/mls/__pycache__/__init__.*
@@ -169,6 +176,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5-alt1
+- Updated to upstream version 1.5.
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2-alt1.dev.git20140714.1.1
 - (AUTO) subst_x86_64.
 
