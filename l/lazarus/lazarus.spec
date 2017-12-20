@@ -1,9 +1,9 @@
 %define cfg %_builddir/%name-%version/
-%define rev 54324
+%define rev 56591
 
 Name:       lazarus
-Version:    1.6.4
-Release:    alt3
+Version:    1.8.0
+Release:    alt1
 Epoch:      1
 
 Summary:    Lazarus Component Library and IDE
@@ -135,7 +135,6 @@ mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_datadir}/pixmaps
 mkdir -p %{buildroot}%{_datadir}/applications
 mkdir -p %{buildroot}%{_datadir}/mime/packages
-mkdir -p %{buildroot}%{_mandir}/man1
 mkdir -p %{buildroot}%{_sysconfdir}/lazarus
 cp -a * %{buildroot}$LAZARUSDIR/
 install -m 644 images/icons/lazarus128x128.png %{buildroot}%{_datadir}/pixmaps/lazarus.png
@@ -153,10 +152,9 @@ ln -sf $LAZARUSDIR/tools/lrstolfm %buildroot%_bindir/lrstolfm
 ln -sf $LAZARUSDIR/tools/svn2revisioninc %buildroot%_bindir/svn2revisioninc
 ln -sf $LAZARUSDIR/tools/updatepofiles %buildroot%_bindir/updatepofiles
 ln -sf $LAZARUSDIR/tools/lazdatadesktop/lazdatadesktop %buildroot%_bindir/lazdatadesktop
-cat install/man/man1/lazbuild.1 | gzip > %{buildroot}%{_mandir}/man1/lazbuild.1.gz
-cat install/man/man1/lazarus-ide.1 | gzip > %{buildroot}%{_mandir}/man1/lazarus-ide.1.gz
-cat install/man/man1/startlazarus.1 | gzip > %{buildroot}%{_mandir}/man1/startlazarus.1.gz
-install tools/install/linux/editoroptions.xml %{buildroot}%{_sysconfdir}/lazarus/editoroptions.xml
+install -Dm 0644 install/man/man1/lazbuild.1 %buildroot%_man1dir/lazbuild.1
+install -Dm 0644 install/man/man1/lazarus-ide.1 %buildroot%_man1dir/lazarus-ide.1
+install -Dm 0644 install/man/man1/startlazarus.1 %buildroot%_man1dir/startlazarus.1
 cat tools/install/linux/environmentoptions.xml | sed -e "s#__LAZARUSDIR__#$LAZARUSDIR/#" -e "s#__FPCSRCDIR__#%{_datadir}/fpcsrc/#" > %{buildroot}%{_sysconfdir}/lazarus/environmentoptions.xml
 
 # fix bug 13256
@@ -174,6 +172,7 @@ mv docs/index.html docs/index.en.html
 # cleanup installation
 rm -rf %buildroot$LAZARUSDIR/debian
 rm -rf %buildroot$LAZARUSDIR/tools/install
+rm -rf %buildroot$LAZARUSDIR/tools/find_merged_revisions.pas
 rm -rf %buildroot$LAZARUSDIR/localize.bat
 
 # generate correct compilertest.pas
@@ -193,6 +192,9 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 %dir %_datadir/fpcsrc/packages/fcl-base
 
 %changelog
+* Wed Dec 20 2017 Andrey Cherepanov <cas@altlinux.org> 1:1.8.0-alt1
+- New version.
+
 * Wed May 10 2017 Andrey Cherepanov <cas@altlinux.org> 1:1.6.4-alt3
 - Add Russian localization for desktop file
 

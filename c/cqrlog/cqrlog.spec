@@ -1,5 +1,5 @@
 Name:		cqrlog
-Version:	2.1.0
+Version:	2.2.0
 Release:	alt1
 Summary:	An amateur radio contact logging program
 
@@ -54,18 +54,24 @@ rm -rf %buildroot%_datadir/%name/cqrlog-apparmor-fix
 for i in 32 48 64 128 256; do
 	install -Dm 0644 %buildroot%_iconsdir/%name/${i}x${i}/%name.png %buildroot%_iconsdir/hicolor/${i}x${i}/apps/%name.png
 done
-rm -rf %buildroot%_iconsdir/%name
+
+rm -rf %buildroot%_iconsdir/%{name}*
 
 %files
 %doc README.md src/AUTHORS src/CHANGELOG src/README src/COPYING
 %_bindir/%name
 %_datadir/%name/
 %_desktopdir/%name.desktop
+%_datadir/appdata/%name.appdata.xml
 %_pixmapsdir/%name/
 %_man1dir/%name.1.*
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Wed Jan 17 2018 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt1
+- New version.
+- Package cqrlog.appdata.xml.
+
 * Sun Aug 06 2017 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1
 - New version
 

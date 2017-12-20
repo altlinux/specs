@@ -1,6 +1,6 @@
 %def_disable boostrap
 %def_with    sources
-%def_without doc
+%def_with    doc
 %def_without win32
 %def_with    tests
 # Help index is generated too long, package ready index
@@ -8,7 +8,7 @@
 
 Name: 	  fpc
 Epoch:    2
-Version:  3.0.2
+Version:  3.0.4
 Release:  alt1
 
 Summary:  Free Pascal Compiler -- Meta Package
@@ -46,7 +46,7 @@ Patch12: fpc-fix-FPCDIR-in-fpcmake.patch
 Patch13: fpc-fix-encoding-of-localization-files-to-be-utf8.patch
 Patch15: fpc-add_arm64_manpage.patch
 Patch16: fpc-add-arm64-support.patch
-Patch17: fpc-change-path-of-localization-files-to-fit-Debian-standar.patch
+Patch17: fpc-fix-path-of-localization-files.patch
 Patch18: fpc-disable_building_gnome1_and_gtk1.patch
 Patch19: fpc-fix_FTBFS_on_linux_not_amd64.patch
 Patch20: fpc-fix-IDE-data-file-location.patch
@@ -67,6 +67,8 @@ Patch31: fpc-docs-message.patch
 Patch32: fpc-auto-add-help-index.patch
 # Show progress in writeidx
 Patch33: fpc-writeidx-show-progress.patch
+# Fix missing examples in documentation
+Patch34: fpc-alt-fix-missing-examples-in-docs.patch
 
 ExclusiveArch: %ix86 amd64 x86_64
 
@@ -138,7 +140,7 @@ popd
 %patch13 -p1
 #patch15 -p1 TODO see patch16
 #patch16 -p1 TODO neew adapt
-%patch17 -p1
+%patch17 -p2
 %patch18 -p1
 #patch19 -p1 TODO need adapt
 %patch20 -p1
@@ -153,6 +155,7 @@ popd
 %patch31 -p0
 %patch32 -p2
 %patch33 -p2
+%patch34 -p2
 
 %if_with sources
 cp -a fpcsrc{,.orig}
@@ -198,7 +201,9 @@ popd
 # Make documentation
 # TODO PDF generation does not work
 %if_with doc
-make -C fpcdocs html #pdf
+# FIXME: -j1 as there is a race - seen on "missing" `rtl.xct'.
+#make -j1 -C fpcdocs pdf html FPC=$(pwd)/fpcsrc/compiler/%ppcname
+make -j1 -C fpcdocs html FPC=$(pwd)/fpcsrc/compiler/%ppcname
 
 # Generate help index to file fpctoc.htx
 %if_with help_index
@@ -538,6 +543,7 @@ Compiler.
 %fpc_unitdir/fcl-js
 %fpc_unitdir/fcl-json
 %fpc_unitdir/fcl-net
+%fpc_unitdir/fcl-pdf
 %fpc_unitdir/fcl-passrc
 %fpc_unitdir/fcl-process
 %fpc_unitdir/fcl-registry
@@ -692,10 +698,12 @@ This package contains Free Pascal units for creating network tools:
  - libasync: LibAsync unit for easy Asynchronous IO
  - libcurl
  - dbus: D-Bus
+ - googleapi
  - httpd-1.3
  - httpd-2.0
  - httpd-2.2
  - ldap
+ - libmicrohttpd
  - openssl: Open SSL
  - pcap
 
@@ -703,18 +711,23 @@ This package contains Free Pascal units for creating network tools:
 %doc %fpc_docdir/dbus
 %doc %fpc_docdir/httpd*
 %doc %fpc_docdir/libcurl
+%doc %fpc_docdir/libmicrohttpd
 %doc %fpc_docdir/openssl
 %fpc_unitdir/dbus
 %fpc_unitdir/fastcgi
+%fpc_unitdir/googleapi
 %fpc_unitdir/httpd*
 %fpc_unitdir/libcurl
+%fpc_unitdir/libmicrohttpd
 %fpc_unitdir/openssl
 %fpc_unitdir/pcap
 %fpc_unitdir/zorba
 %fpc_fpmdir/dbus.fpm
 %fpc_fpmdir/fastcgi.fpm
+%fpc_fpmdir/googleapi.fpm
 %fpc_fpmdir/httpd*.fpm
 %fpc_fpmdir/libcurl.fpm
+%fpc_fpmdir/libmicrohttpd.fpm
 %fpc_fpmdir/openssl.fpm
 %fpc_fpmdir/pcap.fpm
 %fpc_fpmdir/zorba.fpm
@@ -935,6 +948,11 @@ Free Pascal runtime library units cross-compiled for win32.
 %endif
 
 %changelog
+* Wed Dec 20 2017 Andrey Cherepanov <cas@altlinux.org> 2:3.0.4-alt1
+- New version.
+- Package new units libmicrohttpd, googleapi and fcl-pdf.
+- Fix build documentation.
+
 * Thu Mar 02 2017 Andrey Cherepanov <cas@altlinux.org> 2:3.0.2-alt1
 - New version
 - Build without documentation
