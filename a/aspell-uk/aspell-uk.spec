@@ -7,7 +7,7 @@
 Summary:	Ukrainian dictionaries for aspell
 Name:		aspell-%{languagecode}
 Version:	1.8.0
-Release:	alt1_1
+Release:	alt2_1
 
 URL:		http://ispell-uk.sourceforge.net/
 Source:		http://freefr.dl.sourceforge.net/project/ispell-uk/spell-uk/%{version}/spell-uk-%{version}.tgz
@@ -18,12 +18,14 @@ Requires:	aspell >= 0.60
 BuildRequires:	aspell >= 0.60
 BuildRequires:	perl-Encode
 Source44: import.info
+Patch: spell-uk-1.8.0-perl526.patch
 
 %description
 This is Ukrainian dictionary for spellchecking with aspell program
 
 %prep
 %setup -q -n spell-uk-%{version}
+%patch -p1
 
 %build
 make ASPELL_ENC=utf-8 ASPELL_ENC_NAME=utf-8 myspell aspell uk.cwl.gz ukrainian
@@ -39,6 +41,9 @@ rm -rf %{buildroot}%{_datadir}/doc/%{name}-%{version}
 %{_datadir}/aspell/*
 
 %changelog
+* Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt2_1
+- fixed build with new perl 5.26
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - new version
 
