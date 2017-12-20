@@ -1,19 +1,17 @@
 
 Name: qmergeinifiles
-Version: 2.0.0
-Release: alt1
+Version: 2.0.1
+Release: alt1%ubt
 
 
 Summary: Utility to merge INI-format files
 Group: Development/Other
 License: GPL
 
-Requires: libqt4-core >= %{get_version libqt4-core}
-
 Source: %name-%version.tar
 
-BuildRequires(pre): libqt4-core
-BuildRequires: gcc-c++ libqt4-devel libstdc++-devel
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: qt5-base-devel
 
 %description
 Utility to merge INI-format files
@@ -21,19 +19,25 @@ Utility to merge INI-format files
 
 %prep
 %setup -q
-qmake-qt4 -spec default
+%qmake_qt5
 
 %build
-%make_build CUSTOM_OPT_FLAGS="%optflags"
+%make_build
 
 %install
-%make INSTALL_ROOT=%buildroot install
+%installqt5
 
 
 %files
 %_bindir/*
 
 %changelog
+* Wed Dec 20 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.1-alt1%ubt
+- build with Qt5
+
+* Fri Feb 10 2012 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt0.M60P.1
+- built for M60P
+
 * Fri Feb 10 2012 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt1
 - new version
 
