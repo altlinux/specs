@@ -1,5 +1,5 @@
 Name: libiscsi
-Version: 1.15.0
+Version: 1.18.0
 Release: alt1
 
 Summary: iSCSI client library
@@ -8,12 +8,14 @@ Group: System/Libraries
 
 Url: https://github.com/sahlberg/libiscsi
 Source: %name-%version.tar
-# Patch: %name-%version-%release.patch
+Patch: %name-%version.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: bc
 BuildRequires: libgcrypt-devel
 BuildRequires: docbook-style-xsl xsltproc
+BuildRequires: libibverbs-devel
+BuildRequires: librdmacm-devel
 
 %description
 libiscsi is a library for attaching to iSCSI resources
@@ -38,7 +40,7 @@ The libiscsi-devel package includes the header files for libiscsi.
 
 %prep
 %setup
-# %patch -p1
+%patch -p1
 
 %build
 %autoreconf
@@ -63,6 +65,13 @@ The libiscsi-devel package includes the header files for libiscsi.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Dec 21 2017 Alexey Shabalin <shaba@altlinux.ru> 1.18.0-alt1
+- 1.18.0
+- build with iSER support
+
+* Mon Oct 09 2017 Alexey Shabalin <shaba@altlinux.ru> 1.17.0-alt1
+- 1.17.0
+
 * Fri Oct 02 2015 Alexey Shabalin <shaba@altlinux.ru> 1.15.0-alt1
 - 1.15.0
 
