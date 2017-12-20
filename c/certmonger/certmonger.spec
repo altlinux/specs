@@ -1,87 +1,80 @@
-%global systemd 1
-%global	sysvinit 0
-
-Name:		certmonger
-Version:	0.78.6
-Release:	alt2
-Summary:	Certificate status monitor and PKI enrollment client
-
-Group:		System/Base
-License:	GPLv3+
-URL:		http://certmonger.fedorahosted.org
-Source0:	%name-%version.tar
-Patch:      %name-%version-%release.patch
-
-BuildRequires:  libldap-devel
-BuildRequires:  libpopt-devel
-BuildRequires:	libdbus-devel, libnspr-devel, libnss-devel, libssl-devel, libidn-devel
-BuildRequires:  libuuid-devel
-BuildRequires:	libtalloc-devel, libtevent-devel
-BuildRequires:	libcurl-devel
-BuildRequires:	libxml2-devel, libxmlrpc-devel
-BuildRequires:	diffutils
-BuildRequires:	expect
-BuildRequires:	mktemp
-BuildRequires:	nss-tools
-BuildRequires:	openssl
-BuildRequires:	/usr/bin/dbus-launch
-BuildRequires:	/usr/bin/dos2unix
-BuildRequires:	/usr/bin/unix2dos
-BuildRequires:	/usr/bin/which
-
-Requires:	dbus
-
 %define _unpackaged_files_terminate_build 1
+%define _libexecdir /usr/libexec
+%define _localstatedir /var
 
-%if %{systemd}
-BuildRequires:	systemd-units
-%endif
+Name: certmonger
+Version: 0.79.5
+Release: alt1%ubt
+Summary: Certificate status monitor and PKI enrollment client
+
+Group: System/Base
+License: %gpl3plus
+Url: https://pagure.io/certmonger
+Source0: %name-%version.tar
+Patch: %name-%version-alt.patch
+
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-licenses
+BuildRequires: libldap-devel
+BuildRequires: libdbus-devel
+BuildRequires: libnspr-devel
+BuildRequires: libnss-devel
+BuildRequires: libssl-devel
+BuildRequires: libidn-devel
+BuildRequires: libuuid-devel
+BuildRequires: libtalloc-devel
+BuildRequires: libtevent-devel
+BuildRequires: libcurl-devel
+BuildRequires: libxml2-devel
+BuildRequires: libxmlrpc-devel
+BuildRequires: systemd-units
+BuildRequires: diffutils
+BuildRequires: expect
+BuildRequires: mktemp
+BuildRequires: nss-tools
+BuildRequires: openssl
+BuildRequires: /usr/bin/dbus-launch
+BuildRequires: dos2unix
+BuildRequires: which
+BuildRequires: python-module-dbus
+BuildRequires: libpopt-devel
+BuildRequires: libsystemd-devel
+
+Requires: dbus
+Requires(post): /usr/bin/dbus-send
+Requires(post): systemd-units
+Requires(preun): systemd-units, dbus, sed
+Requires(postun): systemd-units
 
 %description
 Certmonger is a service which is primarily concerned with getting your
 system enrolled with a certificate authority (CA) and keeping it enrolled.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
 %autoreconf
 %configure \
 	--localstatedir=/var \
-%if %{systemd}
 	--enable-systemd \
-%endif
-%if %{sysvinit}
-	--enable-sysvinit=%{_initdir} \
-%endif
 	--enable-tmpfiles \
 	--with-homedir=/var/run/certmonger \
-	--with-tmpdir=/var/run/certmonger --enable-now
+	--with-tmpdir=/var/run/certmonger --enable-pie --enable-now
 
 %make_build
 
 %install
 %makeinstall_std
 
-mkdir -p %buildroot/var/lib/certmonger/{cas,requests}
-install -m755 -d %buildroot/var/run/certmonger
-
-mkdir -p %buildroot%{_tmpfilesdir}
-mv %buildroot/usr%{_tmpfilesdir}/certmonger.conf %buildroot%{_tmpfilesdir}/certmonger.conf
-
-%if %{systemd}
-# why?
-mkdir -p %buildroot%{_unitdir}
-cp systemd/%{name}.service %buildroot%{_unitdir}/
-%endif
-
-%{find_lang} %{name}
+mkdir -p %buildroot%_sharedstatedir/%name/{cas,requests}
+install -m755 -d %buildroot%_runtimedir/%name
+mkdir -p %buildroot%_tmpfilesdir
+mv %buildroot/usr%_tmpfilesdir/%name.conf %buildroot%_tmpfilesdir/%name.conf
+%find_lang %name
 
 %check
-# ^M
-rm -rf tests/007-certsave
-rm -rf tests/018-pembase
 %make check
 
 %post
@@ -90,28 +83,26 @@ rm -rf tests/018-pembase
 %preun
 %preun_service %name
 
-%files -f %{name}.lang
-%doc README LICENSE STATUS doc/*.txt
-%config(noreplace) %{_sysconfdir}/dbus-1/system.d/*
-%{_datadir}/dbus-1/services/*
-%dir %{_sysconfdir}/certmonger
-%config(noreplace) %{_sysconfdir}/certmonger/certmonger.conf
-%dir /var/run/certmonger
-%{_bindir}/*
-%{_sbindir}/certmonger
-%{_mandir}/man*/*
-%{_libexecdir}/%{name}
-/var/lib/certmonger
-%if %{sysvinit}
-%{_initdir}/certmonger
-%endif
-%attr(0644,root,root) %config(noreplace) %{_tmpfilesdir}/certmonger.conf
-%if %{systemd}
-%{_unitdir}/*
-%{_datadir}/dbus-1/system-services/*
-%endif
+%files -f %name.lang
+%doc README.md LICENSE STATUS doc/*.txt
+%config(noreplace) %_sysconfdir/dbus-1/system.d/*
+%_datadir/dbus-1/services/*
+%dir %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name/%name.conf
+%dir %_runtimedir/%name
+%_bindir/*
+%_sbindir/%name
+%_mandir/man*/*
+%_libexecdir/%name
+%_sharedstatedir/%name
+%attr(0644,root,root) %config(noreplace) %_tmpfilesdir/certmonger.conf
+%_unitdir/*
+%_datadir/dbus-1/system-services/*
 
 %changelog
+* Wed Dec 20 2017 Stanislav Levin <slev@altlinux.org> 0.79.5-alt1%ubt
+- 0.78.6 -> 0.79.5
+
 * Fri Aug 11 2017 Mikhail Efremov <sem@altlinux.org> 0.78.6-alt2
 - Use _unpackaged_files_terminate_build.
 - Use post_service/preun_service.
