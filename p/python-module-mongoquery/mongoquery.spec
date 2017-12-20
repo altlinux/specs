@@ -1,20 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 %define oname mongoquery
 Name: python-module-%oname
-Version: 1.1.0
-Release: alt1
+Version: 1.3.2
+Release: alt1.git20170921
 Summary: A python implementation of mongodb queries
 License: Public domain
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/mongoquery/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/kapouille/mongoquery.git
-Source0: https://pypi.python.org/packages/bb/bf/f8fab11c73feccccf9fb1858b69a55fc2f7ff9cecdb8ae7b2c668bcfbf02/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-unittest2
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-unittest2
 
 %py_provides %oname
 
@@ -25,7 +24,7 @@ structured as fundamental types in a similar fashion to what is produced
 by JSON or YAML parsers.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %build
 %python_build_debug
@@ -43,6 +42,9 @@ py.test -vv
 %python_sitelibdir/*
 
 %changelog
+* Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.2-alt1.git20170921
+- Updated to current upstream version.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1
 - automated PyPI update
 
