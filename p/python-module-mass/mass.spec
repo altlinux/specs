@@ -1,30 +1,31 @@
 %define oname mass
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.dev4.git20150320.1
+Release: alt2.dev4.git20150320
 Summary: MASS is Music and Audio in Sample Sequences
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/music/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/ttm/mass.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests xvfb-run
-BuildPreReq: python-module-numpy python-module-matplotlib
-BuildPreReq: python-module-scipy python-module-pygobject3
-BuildPreReq: python-module-pycairo
+BuildRequires: xvfb-run
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-numpy python-module-matplotlib
+BuildRequires: python-module-scipy python-module-pygobject3
+BuildRequires: python-module-pycairo
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-numpy python3-module-matplotlib
-BuildPreReq: python3-module-scipy python3-module-pygobject3
-BuildPreReq: python3-module-pycairo
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-numpy python3-module-matplotlib
+BuildRequires: python3-module-scipy python3-module-pygobject3
+BuildRequires: python3-module-pycairo
 %endif
 
 %py_provides %oname
@@ -83,7 +84,7 @@ xvfb-run py.test -vv tests/*.py mass/*.py
 pushd ../python3
 python3 setup.py test
 export PYTHONPATH=$PWD
-xvfb-run py.test-%_python3_version -vv tests/*.py mass/*.py
+xvfb-run py.test3 -vv tests/*.py mass/*.py
 popd
 %endif
 
@@ -98,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1-alt2.dev4.git20150320
+- Disabled check.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt1.dev4.git20150320.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
