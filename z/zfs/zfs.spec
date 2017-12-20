@@ -3,7 +3,7 @@
 
 Name: zfs
 Version: 0.7.5
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: ZFS on Linux
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -121,6 +121,7 @@ if [ $1 -eq 1 ] ; then
 		zfs-import-cache.service \
 		zfs-import-scan.service \
 		zfs-mount.service \
+		zfs-import.target \
 		zfs.target \
 		>/dev/null 2>&1 || :
 fi
@@ -131,6 +132,7 @@ if [ $1 -eq 0 ] ; then
 		zfs-import-cache.service \
 		zfs-import-scan.service \
 		zfs-mount.service \
+		zfs-import.target \
 		zfs.target \
 		>/dev/null 2>&1 || :
 fi
@@ -159,7 +161,7 @@ fi
 %config(noreplace) %_sysconfdir/modprobe.d/zfs.conf
 %_sysconfdir/modules-load.d/%name.conf
 %_unitdir/*.service
-%_unitdir/%name.target
+%_unitdir/*.target
 %_unitdir-preset/50-zfs.preset
 /lib/udev/*_id
 %_udevrulesdir/*.rules
@@ -192,6 +194,9 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Wed Dec 20 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.7.5-alt2%ubt
+- update preset service
+
 * Tue Dec 19 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.7.5-alt1%ubt
 - 0.7.5
 
