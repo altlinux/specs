@@ -15,7 +15,7 @@
 
 Name: perl-SIL-Shoe
 Version: 1.37
-Release: alt2.2
+Release: alt3
 
 Summary: Shoebox support utilities
 
@@ -27,7 +27,8 @@ Packager: Kirill Maslinsky <kirill@altlinux.org>
 
 BuildArch: noarch
 Source: %m_distro-%version.tar
-Patch: SIL-Shoe-perl-522.patch
+Patch0: SIL-Shoe-perl-522.patch
+Patch1: SIL-Shoe-perl-526.patch
 
 # Automatically added by buildreq on Mon Mar 30 2009 (-bi)
 BuildRequires: perl-Algorithm-Merge perl-Encode-CN perl-Encode-JP perl-Encode-KR perl-Encode-Registry perl-Encode-TECkit perl-Encode-TW perl-Image-Size perl-OpenOffice-OODoc perl-Unicode-Collate perl-XML-XPath perl-devel
@@ -47,7 +48,8 @@ Scripts that come with the module are key programs: cvs2sh, sh2cvs, sh2sh, sh2xm
 
 %prep
 %setup -q -n %m_distro-%version
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -72,6 +74,9 @@ popd
 %doc readme.txt docs/* README.ALT.txt
 
 %changelog
+* Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.37-alt3
+- fixed build with new perl 5.26
+
 * Tue Dec 08 2015 Igor Vlasenko <viy@altlinux.ru> 1.37-alt2.2
 - bugfixes for perl 5.22 (SIL-Shoe-perl-522.patch)
 
