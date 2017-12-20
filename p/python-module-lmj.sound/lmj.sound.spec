@@ -1,35 +1,33 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20131028.1.1
 %define mname lmj
 %define oname %mname.sound
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 0.1.4
-#Release: alt1.git20131028.1
+Release: alt2.git20131028
 Summary: An assemblage of code for manipulating sound data
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/lmj.sound/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/lmjohns3/py-sound.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests xvfb-run
-BuildPreReq: python-module-scipy python-module-scikits.audiolab
-BuildPreReq: python-module-scikits.samplerate python-module-matplotlib
-BuildPreReq: python-module-numpy python-module-pygobject3
-BuildPreReq: python-module-pycairo
-BuildPreReq: python-modules-logging python-modules-multiprocessing
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-scipy python-module-scikits.audiolab
+BuildRequires: python-module-scikits.samplerate python-module-matplotlib
+BuildRequires: python-module-numpy python-module-pygobject3
+BuildRequires: python-module-pycairo
+BuildRequires: python-modules-logging python-modules-multiprocessing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-scipy python3-module-scikits.audiolab
-BuildPreReq: python3-module-scikits.samplerate python3-module-matplotlib
-BuildPreReq: python3-module-numpy python3-module-pygobject3
-BuildPreReq: python3-module-pycairo
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-scipy python3-module-scikits.audiolab
+BuildRequires: python3-module-scikits.samplerate python3-module-matplotlib
+BuildRequires: python3-module-numpy python3-module-pygobject3
+BuildRequires: python3-module-pycairo
 %endif
 
 %py_provides %oname
@@ -97,7 +95,7 @@ pushd ../python3
 popd
 %endif
 
-%if "%_libexecdir" != "%_libdir"
+%if "%_lib" == "lib64"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -116,7 +114,7 @@ xvfb-run py.test -vv %mname/sound/*.py
 %if_with python3
 pushd ../python3
 python3 setup.py test
-xvfb-run py.test-%_python3_version -vv %mname/sound/*.py
+xvfb-run py.test3 -vv %mname/sound/*.py
 popd
 %endif
 
@@ -124,6 +122,7 @@ popd
 %doc *.md
 %python_sitelibdir/%mname/sound
 %python_sitelibdir/*.egg-info
+%python_sitelibdir/*-nspkg.pth
 
 %files -n python-module-%mname
 %dir %python_sitelibdir/%mname
@@ -134,6 +133,7 @@ popd
 %doc *.md
 %python3_sitelibdir/%mname/sound
 %python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*-nspkg.pth
 
 %files -n python3-module-%mname
 %dir %python3_sitelibdir/%mname
@@ -143,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.4-alt2.git20131028
+- Disabled check.
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.4-alt1.git20131028.1.1
 - (AUTO) subst_x86_64.
 
