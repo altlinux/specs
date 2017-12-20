@@ -1,5 +1,5 @@
 Name: ca-certificates
-Version: 2017.04.04
+Version: 2017.11.22
 Release: alt1
 
 Summary: Common CA Certificates
@@ -10,7 +10,7 @@ BuildArch: noarch
 Source0: mozilla.tar
 Source1: alt.tar
 
-BuildRequires: openssl
+BuildRequires: openssl perl-Encode
 
 %description
 This package contains a bundle of X.509 certificates of public
@@ -52,6 +52,14 @@ ln -s %_datadir/%name/ca-bundle.crt %{buildroot}%_sysconfdir/pki/tls/certs
 %_datadir/%name
 
 %changelog
+* Thu Dec 14 2017 L.A. Kostis <lakostis@altlinux.ru> 2017.11.22-alt1
+- mozilla:
+    + updated to October 2017 batch of root CA changes.
+      (#bmo 1408080).
+    + added Certum CA Root certificate back (#bmo 1418678).
+- mozilla/mk-ca-bundle.pl: updated to v1.27.
+- update BR: added perl-Encode to handle utf8 cert data.
+
 * Mon May 22 2017 L.A. Kostis <lakostis@altlinux.ru> 2017.04.04-alt1
 - mozilla: updated to March 2017 batch of root CA changes.
   (#bmo 1350859).
