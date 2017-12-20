@@ -1,10 +1,10 @@
 # Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
-%define release_commit 89ed309252981ddd50f697fde4fe93019cb3e652
+%define release_commit 3bd41a09fccccbc6b095805556d3009b9ebf6213
 
 %define netdatauser netdata
 Name: netdata
-Version: 1.8.0
-Release: alt2
+Version: 1.9.0
+Release: alt1
 
 Summary: Real-time performance monitoring, done right!
 
@@ -35,11 +35,13 @@ BuildRequires: libnetfilter_acct-devel
 %add_findreq_skiplist %_libexecdir/%name/plugins.d/*.plugin
 %add_findreq_skiplist %_libexecdir/%name/charts.d/*.sh
 
+# FIXME netdata-postgres: Depends: python2.7(bases) but it is not installable
+%add_python_req_skip bases
 # python.d/python_modules/pyyaml3/__init__.py: invalid syntax (line 284)
-%add_findreq_skiplist %_libexecdir/%name/python.d/python_modules/*/*.py
-%if %_vendor != "alt"
-%global __python %__python3
-%endif
+#add_findreq_skiplist %_libexecdir/%name/python.d/python_modules/*/*.py
+#if %_vendor != "alt"
+#global __python %__python3
+#endif
 
 %description
 netdata is the fastest way to visualize metrics. It is a resource
@@ -83,7 +85,9 @@ done
 
 %install
 %makeinstall_std
-#rm -rf %buildroot%_libexecdir/netdata/python.d/python_modules/pyyaml{2,3}
+
+# drop python3 version
+rm -rf %buildroot%_libexecdir/netdata/python.d/python_modules/pyyaml3/
 
 mkdir -p %buildroot%_sysconfdir/%name/
 install -m 644 -p system/netdata.conf %buildroot%_sysconfdir/%name/netdata.conf
@@ -150,6 +154,9 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 %_libexecdir/%name/python.d/postgres.chart.py
 
 %changelog
+* Wed Dec 20 2017 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt1
+- new version 1.9.0 (with rpmrb script)
+
 * Wed Dec 20 2017 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt2
 - use bash4 for all shells scripts
 - cleanup spec, change user/group to %netdatauser
