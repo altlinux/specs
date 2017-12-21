@@ -2,7 +2,7 @@
 %define libtls_abi 16
 
 Name: LibreSSL
-Version: 2.6.3
+Version: 2.6.4
 Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
@@ -242,6 +242,9 @@ gzip -9 %buildroot%docdir/ChangeLog
 %_man1dir/netcat.*
 
 %changelog
+* Thu Dec 21 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.6.4-alt1
+- 2.6.4
+
 * Mon Nov 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.6.3-alt1
 - 2.6.3
 
