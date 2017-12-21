@@ -1,18 +1,16 @@
-%define _sbindir /sbin
-%define _libdir /%_lib
-%define _libmpathdir %_libdir/multipath
+%def_disable rados
+%def_enable libdmmp
 
-#verify-elf: ERROR: ./lib64/libmpathpersist.so.0: undefined symbol: put_multipath_config
-#verify-elf: ERROR: ./lib64/libmpathpersist.so.0: undefined symbol: get_multipath_config
-%add_verify_elf_skiplist %_libdir/libmpathpersist.so.*
-#verify-elf: ERROR: ./lib64/libmultipath.so.0: undefined symbol: udev
-#verify-elf: ERROR: ./lib64/libmultipath.so.0: undefined symbol: put_multipath_config
-#verify-elf: ERROR: ./lib64/libmultipath.so.0: undefined symbol: get_multipath_config
-%add_verify_elf_skiplist %_libdir/libmultipath.so.*
+%define syslibdir /%_lib
+%define libmpathdir %syslibdir/multipath
+%define systemd_ver %(pkg-config --modversion systemd 2> /dev/null)
+
+%add_verify_elf_skiplist /%_lib/libmpathpersist.so.*
+%add_verify_elf_skiplist /%_lib/libmultipath.so.*
 
 Name: multipath-tools
-Version: 0.6.4
-Release: alt1.1
+Version: 0.7.4
+Release: alt1
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPLv2+
@@ -24,18 +22,20 @@ Source2: multipath.rules
 Source3: multipathd.init
 Source4: multipath.modules
 Source5: multipath.conf
-Patch1: %name-snapshot.patch
-Patch2: %name-alt-patches.patch
+Patch1: %name-%version.patch
 
 # http://git.opensvc.com/multipath-tools/.git
 Packager: Konstantin Pavlov <thresh@altlinux.org>
 
-Requires: libmultipath = %version-%release
-Requires: kpartx = %version-%release
+Requires: libmultipath = %EVR
+Requires: kpartx = %EVR
 Requires: dmsetup
 
 BuildRequires: libaio-devel libdevmapper-devel libreadline-devel libudev-devel libsystemd-devel
-BuildRequires: libuserspace-rcu-devel ceph-devel
+BuildRequires: libuserspace-rcu-devel
+%{?_enable_rados:BuildRequires: ceph-devel}
+%{?_enable_libdmmp:BuildRequires: libjson-c-devel}
+
 %description
 This package provides the tools to manage multipath devices by
 instructing the device-mapper multipath module what to do.
@@ -55,6 +55,15 @@ The libmultipath provides the path checker
 and prioritizer modules. It also contains the multipath shared library,
 libmultipath.
 
+%package -n libmultipath-devel
+Summary: Development libraries and headers for %name
+Group: Development/C
+Requires: libmultipath = %EVR
+
+%description -n libmultipath-devel
+This package contains the files need to develop applications that use
+multipath-tools's libmpathpersist and libmpathcmd libraries.
+
 %package -n kpartx
 Summary: Partition device manager for device-mapper devices
 Group: System/Configuration/Hardware
@@ -63,26 +72,51 @@ Conflicts: multipath-tools <= 0.4.9-alt3
 %description -n kpartx
 kpartx manages partition creation and removal for device-mapper devices.
 
+%package -n libdmmp
+Summary: multipath-tools C API library
+Group: System/Libraries
+
+%description -n libdmmp
+This package contains the shared library for the multipath-tools
+C API library.
+
+%package -n libdmmp-devel
+Summary: device-mapper-multipath C API library headers
+Group: Development/C
+Requires: libdmmp = %EVR
+
+%description -n libdmmp-devel
+This package contains the files needed to develop applications that use
+device-mapper-multipath's libdmmp C API library
+
 %prep
 %setup -q
 %patch1 -p1
-%patch2 -p1
 
 %build
 unset RPM_OPT_FLAGS
-%make_build LIB=%_lib RUN=run SYSTEMDPATH=lib ENABLE_RADOS=0
-
-%install
-mkdir -p %buildroot{%_sbindir,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrulesdir,%_modulesloaddir,%_sysconfdir/multipath}
-%makeinstall_std \
-	DESTDIR=%buildroot \
-	SYSTEMDPATH=lib \
-	ENABLE_RADOS=0 \
+%make_build \
 	LIB=%_lib \
 	RUN=run \
-	bindir=%_sbindir \
-	syslibdir=%_libdir \
-	libdir=%_libmpathdir \
+	%{?_disable_rados: ENABLE_RADOS=0} \
+	%{?_disable_libdmmp: ENABLE_LIBDMMP=0} \
+	SYSTEMD=%systemd_ver \
+	SYSTEMDPATH=lib
+
+%install
+mkdir -p %buildroot{/sbin,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrulesdir,%_modulesloaddir,%_sysconfdir/multipath}
+%makeinstall_std \
+	DESTDIR=%buildroot \
+	SYSTEMD=%systemd_ver \
+	SYSTEMDPATH=lib \
+	%{?_disable_rados: ENABLE_RADOS=0} \
+	%{?_disable_libdmmp: ENABLE_LIBDMMP=0} \
+	LIB=%_lib \
+	RUN=run \
+	bindir=/sbin \
+	syslibdir=%syslibdir \
+	libdir=%libmpathdir \
+	usr_prefix=%_prefix \
 	rcdir=%_initrddir \
 	udevrulesdir=%_udevrulesdir \
 	unitdir=%_unitdir
@@ -100,10 +134,10 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 
 %files
 %doc README
-%_sbindir/multipath
-%_sbindir/multipathd
-#%_sbindir/mpathconf
-%_sbindir/mpathpersist
+/sbin/multipath
+/sbin/multipathd
+#/sbin/mpathconf
+/sbin/mpathpersist
 %_udevrulesdir/*
 %exclude %_udevrulesdir/*kpartx.rules
 %_modulesloaddir/*
@@ -116,11 +150,19 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %exclude %_man8dir/kpartx.8.*
 
 %files -n libmultipath
-%_libdir/libmultipath.so.*
-%_libdir/libmpathcmd.so.*
-%_libdir/libmpathpersist.so.*
-%dir %_libmpathdir
-%_libmpathdir/*
+/%_lib/libmultipath.so.*
+/%_lib/libmpathcmd.so.*
+/%_lib/libmpathpersist.so.*
+%dir %libmpathdir
+%libmpathdir/*
+
+%files -n libmultipath-devel
+/%_lib/libmultipath.so
+/%_lib/libmpathpersist.so
+/%_lib/libmpathcmd.so
+%_includedir/mpath_cmd.h
+%_includedir/mpath_persist.h
+%_man3dir/mpath_*
 
 %files -n kpartx
 %_udevrulesdir/*kpartx.rules
@@ -128,7 +170,22 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 /lib/udev/kpartx_id
 %_man8dir/kpartx.8.*
 
+%files -n libdmmp
+%_libdir/libdmmp.so.*
+
+%files -n libdmmp-devel
+%_libdir/libdmmp.so
+%dir %_includedir/libdmmp
+%_includedir/libdmmp/*
+%_man3dir/dmmp_*
+%_man3dir/libdmmp.h.3.*
+%_pkgconfigdir/libdmmp.pc
+
 %changelog
+* Fri Dec 15 2017 Alexey Shabalin <shaba@altlinux.ru> 0.7.4-alt1
+- 0.7.4
+- add devel packages
+
 * Sun Nov 12 2017 Vitaly Lipatov <lav@altlinux.ru> 0.6.4-alt1.1
 - autorebuild with libuserspace-rcu.git=0.10.0-alt1
 
