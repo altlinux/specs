@@ -4,31 +4,26 @@
 
 Name: python-module-%oname
 Version: 0.4.2
-Release: alt1.git20141201.1.1
+Release: alt2.git20141201
 Summary: pinocchio plugins for the nose testing framework
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/pinocchio/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mkwiatkowski/pinocchio.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-nose python-module-colorama
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-nose python-module-colorama
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-nose python3-module-colorama
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-nose python3-module-colorama
 %endif
 
 %py_provides %oname
 %py_requires nose colorama
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-nose python-module-setuptools-tests python3-module-nose python3-module-setuptools-tests rpm-build-python3
 
 %description
 Extra plugins for the nose testing framework. Provides tools for
@@ -37,6 +32,7 @@ their runtime, doing moderately sophisticated code coverage analysis of
 your unit tests, and making your test descriptions look like
 specifications.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: pinocchio plugins for the nose testing framework
 Group: Development/Python3
@@ -49,6 +45,7 @@ flexibly assigning decorator tags to tests, choosing tests based on
 their runtime, doing moderately sophisticated code coverage analysis of
 your unit tests, and making your test descriptions look like
 specifications.
+%endif
 
 %prep
 %setup
@@ -94,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.2-alt2.git20141201
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.2-alt1.git20141201.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
