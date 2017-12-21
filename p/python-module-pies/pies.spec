@@ -2,19 +2,19 @@
 %define oname pies
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 2.6.7
-Release: alt1
+Release: alt2
 Summary: The simplest way to write one program that runs on both Python 2 and Python 3
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/pies/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/timothycrosley/pies.git
-Source0: https://pypi.python.org/packages/54/d2/aab9e975477e75e47608417e9610a9e47721a7c889e42be5cc363280087f/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %oname-%version.tar
 
 BuildRequires: python-module-enum34 python-module-pytest
 %if_with python3
@@ -28,6 +28,7 @@ BuildRequires: python3-module-enum34 python3-module-pytest
 The simplest (and tastiest) way to write one program that runs on both
 Python 2 and Python 3.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: The simplest way to write one program that runs on both Python 2 and Python 3
 Group: Development/Python3
@@ -36,9 +37,10 @@ Group: Development/Python3
 %description -n python3-module-%oname
 The simplest (and tastiest) way to write one program that runs on both
 Python 2 and Python 3.
+%endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -n %oname-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -66,21 +68,22 @@ popd
 py.test
 %if_with python3
 pushd ../python3
-py.test-%_python3_version
+py.test3
 popd
 %endif
 
 %files
-%doc PKG-INFO
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc PKG-INFO
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.7-alt2
+- Fixed build.
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.6.7-alt1
 - automated PyPI update
 
