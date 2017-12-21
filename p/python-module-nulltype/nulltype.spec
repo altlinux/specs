@@ -4,30 +4,26 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.2.5
+Version: 2.2.11
 Release: alt1
 Summary: Null values and sentinels like, but not, None
 License: ASLv2.0
 Group: Development/Python
-Url: https://pypi.python.org/pypi/nulltype
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/51/97/f848c5f413c6c2cc65907a013b7f506f9cd8d09c4e3b04f5be11eadaeb59/%{oname}-%{version}.tar.gz
 BuildArch: noarch
+Url: https://pypi.python.org/pypi/nulltype
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-tox python-module-virtualenv
+Source: %oname-%version.tar
+
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-tox python-module-virtualenv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-tox python3-module-virtualenv
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-tox python3-module-virtualenv
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pluggy python-module-py python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pluggy python3-module-py python3-module-pytest python3-module-setuptools xz
-BuildRequires: python-module-tox python-module-virtualenv python3-module-tox python3-module-virtualenv rpm-build-python3 time python3-module-pytest
 
 %description
 Helps define "null" values and sentinels parallel to, but different
@@ -73,7 +69,7 @@ Prohibited, and Undefined.
 %endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -n %oname-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -103,7 +99,7 @@ py.test --assert=plain -vv
 %if_with python3
 pushd ../python3
 export PYTHONPATH=$PWD
-py.test-%_python3_version --assert=plain -vv
+py.test3 --assert=plain -vv
 popd
 %endif
 
@@ -118,6 +114,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.11-alt1
+- Updated to upstream version 2.2.11.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt1
 - automated PyPI update
 
