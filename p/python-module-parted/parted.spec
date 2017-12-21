@@ -4,27 +4,25 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.10.0
-Release: alt1.1.1
+Version: 3.11.1
+Release: alt1
 
 Summary: Python bindings for libparted
 
 Group: Development/Python
 License: GPL v2 or later
-URL: https://fedorahosted.org/pyparted/
-Source: %_upstream-%version.tar.gz
+URL: https://github.com/rhinstaller/pyparted
+
+# https://github.com/rhinstaller/pyparted.git
+Source: %name-%version.tar
+
 Provides: %_upstream
 
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python3 python3-base
-BuildRequires: libparted-devel python-devel python3-devel rpm-build-python3
-
-#BuildPreReq: python-module-decorator
-
+BuildRequires: libparted-devel
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-decorator
+BuildRequires: python3-devel python3-module-setuptools
 %endif
 
 %description
@@ -38,6 +36,7 @@ mapping of externally accessible libparted functions was written.  This
 mapping is provided in the _ped Python module.  You can use that module if
 you want to, but it's really just meant for the larger parted module.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python bindings for libparted
 Group: Development/Python3
@@ -52,9 +51,10 @@ is written in C without any real implementation of objects, a simple 1:1
 mapping of externally accessible libparted functions was written.  This
 mapping is provided in the _ped Python module.  You can use that module if
 you want to, but it's really just meant for the larger parted module.
+%endif
 
 %prep
-%setup -n %_upstream-%version
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -80,18 +80,23 @@ popd
 %endif
 
 %files
-%doc AUTHORS BUGS ChangeLog NEWS README TODO
+%doc AUTHORS NEWS README TODO
 %python_sitelibdir/parted
 %python_sitelibdir/*.so
+%python_sitelibdir/*.egg-info
 
 %if_with python3
 %files -n python3-module-%oname
-%doc AUTHORS BUGS ChangeLog NEWS README TODO
+%doc AUTHORS NEWS README TODO
 %python3_sitelibdir/parted
 %python3_sitelibdir/*.so
+%python3_sitelibdir/*.egg-info
 %endif
 
 %changelog
+* Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.11.1-alt1
+- Updated to upstream version 3.11.1.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.10.0-alt1.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
