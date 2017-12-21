@@ -4,30 +4,29 @@
 
 Name: python-module-%oname
 Version: 0.4.2
-Release: alt2.git20141120
+Release: alt3.git20141120
 Summary: A simple Python RPC system (ZeroMQ + Threading/Tornado/Gevent/Eventlet/Greenhouse)
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/netcall/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/aglyzov/netcall.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-zmq python-module-pebble
-BuildPreReq: python-module-tornado python-modules-multiprocessing
-BuildPreReq: python-module-ioloop python-module-gevent
-BuildPreReq: python-module-eventlet python-module-greenhouse
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-zmq python-module-pebble
+BuildRequires: python-module-tornado python-modules-multiprocessing
+BuildRequires: python-module-ioloop python-module-gevent
+BuildRequires: python-module-eventlet python-module-greenhouse
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-zmq python3-module-pebble
-BuildPreReq: python3-module-tornado
-BuildPreReq: python3-module-ioloop python3-module-gevent
-BuildPreReq: python3-module-eventlet
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-zmq python3-module-pebble
+BuildRequires: python3-module-tornado
+BuildRequires: python3-module-ioloop python3-module-gevent
+BuildRequires: python3-module-eventlet
+BuildRequires: python-tools-2to3
 %endif
 
 %py_provides %oname
@@ -90,14 +89,14 @@ popd
 %endif
 
 %check
-python setup.py test
+python setup.py build_ext -i
 rm -fR build
 py.test -vv
 %if_with python3
 pushd ../python3
-python3 setup.py test
+python3 setup.py build_ext -i
 rm -fR build
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
@@ -114,6 +113,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.2-alt3.git20141120
+- Fixed build.
+
 * Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt2.git20141120
 - Fixed build
 
