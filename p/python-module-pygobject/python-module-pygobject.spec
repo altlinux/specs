@@ -2,10 +2,12 @@
 %define oname pygobject
 %define gtk_api_ver 2.0
 %def_disable introspection
+# introspection required for tests
+%def_disable check
 
 Name: python-module-pygobject
-Version: %major.6
-Release: alt4
+Version: %major.7
+Release: alt1
 
 Summary: Python bindings for GObject
 
@@ -13,7 +15,7 @@ License: LGPL
 Group: Development/Python
 Url: http://www.pygtk.org/
 
-Source: http://ftp.gnome.org/pub/GNOME/sources/%oname/%major/%oname-%version.tar
+Source: http://ftp.gnome.org/pub/GNOME/sources/%oname/%major/%oname-%version.tar.xz
 
 %setup_python_module pygobject
 
@@ -31,8 +33,7 @@ BuildPreReq: glib2-devel >= %glib_ver libgio-devel libffi-devel
 BuildRequires(pre): rpm-build-python >= 0.36.6-alt1
 BuildRequires: python-devel python-modules-encodings python-module-pycairo-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.10.2}
-# for tests
-# BuildRequires: libcairo-gobject-devel dbus-tools-gui libgtk+3-gir-devel
+%{?_enable_check:BuildRequires: libcairo-gobject-devel dbus-tools-gui libgtk+3-gir-devel}
 
 %description
 This package provides Python bindings for the GLib, GObject and GIO,
@@ -70,24 +71,22 @@ PyGI is a module which aims to utilize GObject Introspection to
 facilitate the creation of Python bindings.
 
 %prep
-%setup -q -n %oname-%version
+%setup -n %oname-%version
 
 %build
 %autoreconf
 %configure --with-pic --disable-static \
 	%{subst_enable introspection}
-
 %make_build
 
-%check
-#%%make check
-
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 mkdir -p %buildroot%_includedir/python%__python_version
 mv %buildroot%_includedir/pygtk-%gtk_api_ver %buildroot%_includedir/python%__python_version/pygtk
 %__subst "s|\${includedir}/pygtk-%gtk_api_ver|\${includedir}/python%__python_version/pygtk|g" %buildroot/%_pkgconfigdir/*.pc
 
+%check
+%make check
 
 %files
 %_libdir/libpyglib-2.0-python.so.*
@@ -119,6 +118,9 @@ mv %buildroot%_includedir/pygtk-%gtk_api_ver %buildroot%_includedir/python%__pyt
 %endif
 
 %changelog
+* Thu Dec 21 2017 Yuri N. Sedunov <aris@altlinux.org> 2.28.7-alt1
+- 2.28.7
+
 * Thu Mar 31 2016 Denis Medvedev <nbr@altlinux.org> 2.28.6-alt4
 - Removed LD_PRELOAD, added macros needed for python3.5
 
