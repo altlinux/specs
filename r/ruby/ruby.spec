@@ -14,7 +14,7 @@ Name: ruby
 %define ver_teeny 2
 #define _pl
 Version: %branch.%ver_teeny
-Release: alt3
+Release: alt4
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -402,6 +402,9 @@ mv %_builddir/miniruby-src.patch %buildroot%_datadir/%name-%version-miniruby/
 
 
 %changelog
+* Thu Dec 21 2017 Andrew Savchenko <bircoph@altlinux.org> 2.4.2-alt4
+- Properly check for __uint128_t.
+
 * Mon Dec 18 2017 Andrew Savchenko <bircoph@altlinux.org> 2.4.2-alt3
 - Add miniruby-src subpackage.
 - Bootstrap miniruby without ruby using miniruby-src.
