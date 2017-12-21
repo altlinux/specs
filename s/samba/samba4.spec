@@ -38,8 +38,8 @@
 %def_with libcephfs
 
 Name: samba
-Version: 4.6.11
-Release: alt2%ubt
+Version: 4.6.12
+Release: alt1%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -56,6 +56,7 @@ Source9: smb.conf.default
 Source10: nmb.init
 Source11: pam_winbind.conf
 Source12: ctdb.init
+Source13: samba.limits
 
 Source200: README.dc
 Source201: README.downgrade
@@ -714,6 +715,10 @@ rm -rf %buildroot%python_sitelibdir/samba/{tests,external/subunit,external/testt
 # Install pidl/lib/Parse/Pidl/Samba3/Template.pm
 cp -a pidl/lib/Parse/Pidl/Samba3/Template.pm %buildroot%_datadir/perl5/Parse/Pidl/Samba3/
 
+# Install limits
+mkdir -p %buildroot%_sysconfdir/security/limits.d/
+install -m644 %SOURCE13 %buildroot%_sysconfdir/security/limits.d/90-samba.conf
+
 %find_lang pam_winbind
 %find_lang net
 
@@ -1011,6 +1016,7 @@ TDB_NO_FSYNC=1 %make_build test
 %files common
 %_tmpfilesdir/%name.conf
 %config(noreplace) %_sysconfdir/logrotate.d/samba
+%config(noreplace) %_sysconfdir/security/limits.d/90-samba.conf
 %attr(0700,root,root) %dir /var/log/samba
 %attr(0700,root,root) %dir /var/log/samba/old
 %dir /var/run/samba
@@ -1397,6 +1403,9 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Thu Dec 21 2017 Evgeny Sinelnikov <sin@altlinux.org> 4.6.12-alt1%ubt
+- Update to first winter release with common bugfixes (closes: 33210)
+
 * Wed Nov 29 2017 Evgeny Sinelnikov <sin@altlinux.org> 4.6.11-alt2%ubt
 - Backport from Heimdal upstream include/includedir directives for krb5.conf
 
