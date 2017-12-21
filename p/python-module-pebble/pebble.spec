@@ -3,36 +3,32 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.1.8
-Release: alt1.git20140910.1.1
+Version: 4.3.6
+Release: alt1.git20171213
 Summary: Threading and multiprocessing eye-candy
 License: LGPLv3
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/Pebble/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/noxdafox/pebble.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-modules-multiprocessing
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-futures
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
 %py_requires multiprocessing
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
-
 %description
 Pebble provides a neat API to manage threads and processes within an
 application.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Threading and multiprocessing eye-candy
 Group: Development/Python3
@@ -42,6 +38,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 Pebble provides a neat API to manage threads and processes within an
 application.
+%endif
 
 %prep
 %setup
@@ -69,26 +66,29 @@ popd
 %endif
 
 %check
-python setup.py test
+python setup.py build_ext -i
+PYTHONPATH=%buildroot%python_sitelibdir py.test -vv
 %if_with python3
 pushd ../python3
-python3 setup.py test
+python3 setup.py build_ext -i
+PYTHONPATH=%buildroot%python3_sitelibdir py.test3 -vv
 popd
 %endif
 
 %files
-%doc *.txt doc/*.rst
+%doc *.rst doc/*.rst
 %python_sitelibdir/*
-%exclude %python_sitelibdir/tests
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt doc/*.rst
+%doc *.rst doc/*.rst
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/tests
 %endif
 
 %changelog
+* Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.6-alt1.git20171213
+- Updated to upstream version 4.3.6.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.1.8-alt1.git20140910.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
