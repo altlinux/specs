@@ -1,7 +1,7 @@
 %def_without pgm
 
 Name: zeromq
-Version: 4.2.0
+Version: 4.2.3
 Release: alt1
 
 Summary: a software library that lets you quickly design and implement a fast message-based application
@@ -102,6 +102,9 @@ install -m644 -p %SOURCE1 %buildroot%_includedir/
 %doc LICENSE
 
 %changelog
+* Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.3-alt1
+- Updated to upstream version 4.2.3.
+
 * Fri Jan 27 2017 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
 - 4.2.0
 - new lib%%name-cpp-devel subpackage
