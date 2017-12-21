@@ -4,25 +4,24 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1.git20140911.1
+Release: alt2.git20140911
 Summary: Extension to paginate.Page that supports SQLAlchemy queries
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/paginate_sqlalchemy/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/Pylons/paginate_sqlalchemy.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-SQLAlchemy python-module-paginate
-BuildPreReq: python-module-nose python-modules-sqlite3
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-SQLAlchemy python-module-paginate
+BuildRequires: python-module-nose python-modules-sqlite3
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-SQLAlchemy python3-module-paginate
-BuildPreReq: python3-module-nose python3-modules-sqlite3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-SQLAlchemy python3-module-paginate
+BuildRequires: python3-module-nose python3-modules-sqlite3
 %endif
 
 %py_provides %oname
@@ -85,7 +84,7 @@ py.test
 pushd ../python3
 python3 setup.py test
 export PYTHONPATH=$PWD
-py.test-%_python3_version
+py.test3
 popd
 %endif
 
@@ -100,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.0-alt2.git20140911
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.0-alt1.git20140911.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

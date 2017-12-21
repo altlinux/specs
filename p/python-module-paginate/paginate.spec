@@ -5,23 +5,22 @@
 
 Name: python-module-%oname
 Version: 0.5.6
-Release: alt1
+Release: alt2
 Summary: Divides large result sets into pages for easier browsing
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/paginate/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/Pylons/paginate.git
-Source0: https://pypi.python.org/packages/68/58/e670a947136fdcece8ac5376b3df1369d29e4f6659b0c9b358605b115e9e/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %oname-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-nose
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-nose
 %endif
 
 %py_provides %oname
@@ -32,6 +31,7 @@ user gets displayed one page at a time and can navigate to other pages.
 It is especially useful when developing web interfaces and showing the
 users only a selection of information at a time.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Divides large result sets into pages for easier browsing
 Group: Development/Python3
@@ -42,9 +42,10 @@ This module helps divide up large result sets into pages or chunks. The
 user gets displayed one page at a time and can navigate to other pages.
 It is especially useful when developing web interfaces and showing the
 users only a selection of information at a time.
+%endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -n %oname-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -70,27 +71,26 @@ popd
 
 %check
 python setup.py test
-export PYTHONPATH=$PWD
-py.test
 %if_with python3
 pushd ../python3
 python3 setup.py test
-#export PYTHONPATH=$PWD
-#py.test-%_python3_version
 popd
 %endif
 
 %files
-%doc README.md CHANGELOG.txt PKG-INFO
+%doc README.md CHANGELOG.txt
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README.md CHANGELOG.txt PKG-INFO
+%doc README.md CHANGELOG.txt
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.6-alt2
+- Fixed build.
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.6-alt1
 - automated PyPI update
 
