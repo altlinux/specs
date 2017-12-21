@@ -1,6 +1,6 @@
 Name: ca-certificates
 Version: 2017.11.22
-Release: alt1
+Release: alt2
 
 Summary: Common CA Certificates
 License: MPL/GPL/LGPL
@@ -8,7 +8,6 @@ Group: System/Base
 BuildArch: noarch
 
 Source0: mozilla.tar
-Source1: alt.tar
 
 BuildRequires: openssl perl-Encode
 
@@ -23,7 +22,7 @@ compliance, and that full responsibility to assess them rests with the
 user.
 
 %prep
-%setup -c -a1
+%setup -c
 patch -p1 < mozilla/mk-ca-bundle.patch
 
 %build
@@ -31,14 +30,7 @@ export TZ=UTC
 pushd mozilla
 	./mk-ca-bundle.pl -t crt
 popd
-pushd alt
-	for t in alt; do
-		printf '#\n# %%s\n#\n\n' 'ALT CA'
-		openssl x509 -sha256 -in $t.crt -text -fingerprint
-		printf '\n\n'
-	done >crt
-popd
-cat {mozilla,alt}/crt >ca-bundle.crt
+cat mozilla/crt >ca-bundle.crt
 
 %install
 install -pDm644 ca-bundle.crt %buildroot%_datadir/%name/ca-bundle.crt
@@ -52,6 +44,9 @@ ln -s %_datadir/%name/ca-bundle.crt %{buildroot}%_sysconfdir/pki/tls/certs
 %_datadir/%name
 
 %changelog
+* Thu Dec 21 2017 L.A. Kostis <lakostis@altlinux.ru> 2017.11.22-alt2
+- Remove expired ALT CA cert: nobody cares.
+
 * Thu Dec 14 2017 L.A. Kostis <lakostis@altlinux.ru> 2017.11.22-alt1
 - mozilla:
     + updated to October 2017 batch of root CA changes.
