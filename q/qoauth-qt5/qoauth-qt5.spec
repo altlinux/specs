@@ -3,7 +3,7 @@
 
 Name:          qoauth-qt5
 Version:       2.0.1
-Release:       alt0.2%ubt
+Release:       alt0.3%ubt
 
 Group:         System/Libraries
 Summary:       Qt-based C++ library for OAuth authorization scheme
@@ -13,6 +13,7 @@ Packager: Sergey V Turchin <zerg@altlinux.org>
 
 Source0:       %name-%version.tar
 Patch1: alt-pcfile-qt5.patch
+Patch2: alt-linstall-lib.patch
 
 # Automatically added by buildreq on Fri Nov 18 2016 (-bi)
 # optimized out: ca-certificates elfutils gcc-c++ kde5-kcalcore-devel kde5-kcontacts-devel kde5-kmime-devel kde5-libkleo-devel kf5-attica-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjs-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libgpg-error libqca-qt5 libqt4-devel libqt5-core libqt5-dbus libqt5-network libqt5-test libssl-devel libstdc++-devel perl pkg-config python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-script-devel qt5-webchannel-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-python3 ruby ruby-stdlibs
@@ -52,6 +53,7 @@ based on %{name} .
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p1
 sed -i -e 's|/lib|/%{_lib}|g' src/pcfile.sh
 %qmake_qt5 qoauth.pro
 
@@ -84,6 +86,9 @@ make check || :
 %_qt5_archdatadir/mkspecs/features/oauth.prf
 
 %changelog
+* Thu Dec 21 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.1-alt0.3%ubt
+- fix library install path
+
 * Tue Dec 19 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.1-alt0.2%ubt
 - fix requires, url
 
