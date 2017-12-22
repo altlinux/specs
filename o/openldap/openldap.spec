@@ -18,7 +18,7 @@
 
 Name: openldap
 Version: %_sover.45
-Release: alt2.1
+Release: alt3
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -53,12 +53,16 @@ Source14: %_bname-slapd.service
 Source15: %_bname-ldap.all
 Source16: %_bname-ldap.conf
 Source17: %_bname-ldap.lib
-#This file we need to build from original dynamic
+# This file we need to build from original dynamic
 Source18: %_bname-slapd.conf
 Source19: %_bname-bdb-DB_CONFIG
 Source20: %_bname-slapd-access.conf
-Source21: %_bname-slapd-hdb-db01.conf
-Source22: %_bname-slapd-hdb-db02.conf
+Source21: %_bname-slapd-mdb-db01.conf
+Source22: %_bname-slapd-hdb-db01.conf
+Source23: %_bname-slapd-hdb-db02.conf
+# OLC config directory backup/restore scripts
+Source40: %_bname-olc-backup
+Source41: %_bname-olc-restore
 
 # Extended OpenLDAP schemas
 Source50: %_bname-addon-schemas.tar
@@ -165,7 +169,6 @@ BuildArch: noarch
 
 Provides: openldap2.4-doc = %version-%release
 Obsoletes: openldap2.4-doc < %version-%release
-
 %endif
 
 %description
@@ -309,7 +312,7 @@ libtoolize --force --install
 	--enable-hdb=mod \
 	--enable-dnssrv=mod \
 	--enable-ldap=mod \
-    --enable-relay=mod \
+	--enable-relay=mod \
     	--enable-memberof=mod \
 	--enable-meta=mod \
 	--enable-monitor=mod \
@@ -337,11 +340,11 @@ libtoolize --force --install
 	--disable-slp \
 %endif
 %if_enabled shell
-	--enable-shell=mod	\
-	  --without-threads \
+	--enable-shell=mod \
+	--without-threads \
 %else
 	--disable-shell \
-	  --with-threads \
+	--with-threads \
 %endif
 %if_enabled sql
 	--enable-sql=mod \
@@ -350,7 +353,7 @@ libtoolize --force --install
 %endif
 %if_enabled sasl
 	--with-cyrus-sasl \
-	  --enable-spasswd \
+	--enable-spasswd \
 %else
 	--without-cyrus-sasl \
 %endif
@@ -360,33 +363,33 @@ libtoolize --force --install
 	--disable-perl \
 %endif
 %if_enabled overlay
-     --enable-accesslog=mod \
-     --enable-auditlog=mod \
-	 --enable-dyngroup=mod \
-     --enable-dynlist=mod \
-     --enable-ppolicy=mod \
-	 --enable-proxycache=mod \
-     --enable-refint=mod \
-     --enable-retcode=mod \
-     --enable-rwm=mod \
-     --enable-syncprov=mod \
-     --enable-translucent=mod \
-     --enable-unique=mod \
-     --enable-valsort=mod \
+	--enable-accesslog=mod \
+	--enable-auditlog=mod \
+	--enable-dyngroup=mod \
+	--enable-dynlist=mod \
+	--enable-ppolicy=mod \
+	--enable-proxycache=mod \
+	--enable-refint=mod \
+	--enable-retcode=mod \
+	--enable-rwm=mod \
+	--enable-syncprov=mod \
+	--enable-translucent=mod \
+	--enable-unique=mod \
+	--enable-valsort=mod \
 %else
-    --disable-accesslog \
-    --disable-auditlog \
+	--disable-accesslog \
+	--disable-auditlog \
 	--disable-dyngroup \
-    --disable-dynlist \
-    --disable-ppolicy \
+	--disable-dynlist \
+	--disable-ppolicy \
 	--disable-proxycache \
-    --disable-refint \
-    --disable-retcode \
-    --disable-rwm \
-    --disable-syncprov \
-    --disable-translucent \
-    --disable-unique \
-    --disable-valsort \
+	--disable-refint \
+	--disable-retcode \
+	--disable-rwm \
+	--disable-syncprov \
+	--disable-translucent \
+	--disable-unique \
+	--disable-valsort \
 %endif
 %if_enabled debug
 	--enable-debug \
@@ -454,6 +457,10 @@ mksock %buildroot%ldap_dir/dev/log
 %__install -pD -m750 %SOURCE17 %buildroot/%_sysconfdir/chroot.d/ldap.lib
 %__install -pD -m644 %SOURCE14 %buildroot/%systemd_unitdir/slapd.service
 
+# Install OLC (cn=config) directory backup/restore scripts
+%__install -pD -m750 %SOURCE40 %buildroot%_sbindir/slapd-olc-backup
+%__install -pD -m750 %SOURCE41 %buildroot%_sbindir/slapd-olc-restore
+
 # log repository and logrotate config
 #__mkdir_p -m750 %buildroot/%_logdir/ldap
 #__install -pD -m644 %SOURCE13 %buildroot/%_sysconfdir/logrotate.d/ldap
@@ -462,14 +469,14 @@ mksock %buildroot%ldap_dir/dev/log
 mkdir -pm700 %buildroot%_sysconfdir/syslog.d
 ln -s %ldap_dir/dev/log %buildroot%_sysconfdir/syslog.d/ldap
 
-
 # config files
 %__mkdir_p -m750 %buildroot/%_sysconfdir/%_bname/ssl
 %__install -pD -m640 %SOURCE18 %buildroot/%_sysconfdir/%_bname/slapd.conf
 %__install -pD -m640 %SOURCE19 %buildroot%ldap_dir/bases/DB_CONFIG
 %__install -pD -m640 %SOURCE20 %buildroot/%_sysconfdir/%_bname/slapd-access.conf
-%__install -pD -m640 %SOURCE21 %buildroot/%_sysconfdir/%_bname/slapd-hdb-db01.conf
-%__install -pD -m640 %SOURCE22 %buildroot/%_sysconfdir/%_bname/slapd-hdb-db02.conf
+%__install -pD -m640 %SOURCE21 %buildroot/%_sysconfdir/%_bname/slapd-mdb-db01.conf
+%__install -pD -m640 %SOURCE22 %buildroot/%_sysconfdir/%_bname/slapd-hdb-db01.conf
+%__install -pD -m640 %SOURCE23 %buildroot/%_sysconfdir/%_bname/slapd-hdb-db02.conf
 %__install -pD -m644 %SOURCE51 %buildroot/%_sysconfdir/%_bname/rootdse.ldif
 
 # We don't need the default files - let's move it.
@@ -612,6 +619,7 @@ rm -f /var/lib/ldap/%_lib/*.so*
 
 %config(noreplace) %_sysconfdir/%_bname/rootdse.ldif
 %attr(-,root,ldap)%config(noreplace) %_sysconfdir/%_bname/slapd-access.conf
+%attr(-,root,ldap)%config(noreplace) %_sysconfdir/%_bname/slapd-mdb-db01.conf
 %attr(-,root,ldap)%config(noreplace) %_sysconfdir/%_bname/slapd-hdb-db01.conf
 %attr(-,root,ldap)%config(noreplace) %_sysconfdir/%_bname/slapd-hdb-db02.conf
 %attr(-,root,ldap)%config(noreplace) %_sysconfdir/%_bname/slapd.conf
@@ -630,6 +638,8 @@ rm -f /var/lib/ldap/%_lib/*.so*
 %_sbindir/slappasswd
 %_sbindir/slaptest
 %_sbindir/slapschema
+%_sbindir/slapd-olc-backup
+%_sbindir/slapd-olc-restore
 
 %_libexecdir/%_bname
 
@@ -697,6 +707,11 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Tue Dec 19 2017 Leonid Krivoshein <klark@altlinux.org> 2.4.45-alt3
+- added support OLC (cn=config or /etc/openldap/slapd.d);
+- added backup/restore scripts for slapd.d directory;
+- now used mdb backend by default.
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.4.45-alt2.1
 - rebuild with new perl 5.26.1
 
@@ -1718,5 +1733,4 @@ now EXPORTs
 * Wed Oct 28 1998 Preston Brown <pbrown@redhat.com>
 - initial cut.
 - patches for signal handling on the alpha
-
 
