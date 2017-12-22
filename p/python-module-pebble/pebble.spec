@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.3.6
-Release: alt1.git20171213
+Release: alt2.git20171213
 Summary: Threading and multiprocessing eye-candy
 License: LGPLv3
 Group: Development/Python
@@ -22,7 +22,7 @@ BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
-%py_requires multiprocessing
+%py_requires multiprocessing concurrent.futures
 
 %description
 Pebble provides a neat API to manage threads and processes within an
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.6-alt2.git20171213
+- Updated runtime dependencies.
+
 * Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.6-alt1.git20171213
 - Updated to upstream version 4.3.6.
 
