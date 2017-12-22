@@ -1,27 +1,27 @@
 %define oname python_utils
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
-Version: 1.6.2
-Release: alt1.git20150209
+Version: 2.2.0
+Release: alt1
 Summary: A module with some convenient utilities not included with the standard Python install
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/python-utils/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/WoLpH/python-utils.git
 Source: %name-%version.tar
-BuildArch: noarch
+Patch1: %oname-%version-alt-docs.patch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-nose
-BuildPreReq: python-module-sphinx-devel
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-nose python-module-pytest-runner python-module-pytest-cov python-module-pytest-pep8 python-module-pytest-flakes
+BuildRequires: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-nose python3-module-pytest-runner python3-module-pytest-cov python3-module-pytest-pep8 python3-module-pytest-flakes
 %endif
 
 %py_provides %oname
@@ -47,10 +47,10 @@ extending it.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %prepare_sphinx .
@@ -78,9 +78,11 @@ popd
 
 %check
 python setup.py test
+py.test -vv %oname tests
 %if_with python3
 pushd ../python3
 python3 setup.py test
+py.test3 -vv %oname tests
 popd
 %endif
 
@@ -95,6 +97,10 @@ popd
 %endif
 
 %changelog
+* Fri Dec 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.0-alt1
+- Updated to upstream version 2.2.0.
+- Enabled build for python-3.
+
 * Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.2-alt1.git20150209
 - Version 1.6.2
 
