@@ -1,18 +1,25 @@
 %define _unpackaged_files_terminate_build 1
 %define oname changelog
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 0.3.5
-Release: alt1
+Release: alt2
 Summary: Provides simple Sphinx markup to render changelog displays
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/changelog/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/73/4c/de965aaaff5fb3afbbd6fa5c96904d6bf204a5e35c181098761544861d4b/%{oname}-%{version}.tar.gz
 BuildArch: noarch
+Url: https://pypi.python.org/pypi/changelog/
 
-BuildPreReq: python-module-setuptools-tests
+Source: %oname-%version.tar
+
+BuildRequires: python-devel python-module-setuptools-tests
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-sphinx
+%endif
 
 %py_provides %oname
 
@@ -22,23 +29,66 @@ A Sphinx extension to generate changelog files.
 This is an experimental, possibly-not-useful extension that's used by
 the SQLAlchemy project and related projects.
 
+%if_with python3
+%package -n python3-module-%oname
+Summary: Provides simple Sphinx markup to render changelog displays
+Group: Development/Python3
+%py3_provides %oname
+
+%description -n python3-module-%oname
+A Sphinx extension to generate changelog files.
+
+This is an experimental, possibly-not-useful extension that's used by
+the SQLAlchemy project and related projects.
+%endif
+
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -n %{oname}-%{version}
+
+%if_with python3
+cp -fR . ../python3
+%endif
 
 %build
 %python_build_debug
 
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
 %install
 %python_install
 
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
 %check
 python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
 
 %files
 %doc *.rst
 %python_sitelibdir/*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.rst
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Fri Dec 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.5-alt2
+- Enabled build for python-3.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.5-alt1
 - automated PyPI update
 
