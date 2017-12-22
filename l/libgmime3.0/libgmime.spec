@@ -1,12 +1,12 @@
 %define _name gmime
-%define ver_major 3.0
+%define ver_major 3.2
 %define api_ver 3.0
 
 %def_disable static
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Glorious MIME Utility Library
@@ -107,7 +107,7 @@ statically linked GMime-based software.
 %files devel
 %_includedir/*
 %_libdir/lib%_name-%api_ver.so
-%_pkgconfigdir/%_name-%ver_major.pc
+%_pkgconfigdir/%_name-%api_ver.pc
 %_vapidir/%_name-%api_ver.vapi
 %_vapidir/%_name-%api_ver.deps
 
@@ -118,7 +118,7 @@ statically linked GMime-based software.
 %_girdir/GMime-%api_ver.gir
 
 %files devel-doc
-%_gtk_docdir/%_name-%api_ver/
+%_gtk_docdir/%_name-%ver_major/
 
 %if_enabled static
 %files devel-static
@@ -126,6 +126,9 @@ statically linked GMime-based software.
 %endif
 
 %changelog
+* Thu Dec 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Mon Dec 04 2017 Yuri N. Sedunov <aris@altlinux.org> 3.0.5-alt1
 - 3.0.5
 
