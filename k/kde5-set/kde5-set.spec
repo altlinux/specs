@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 17.04.0
+Version: 17.08.0
 Release: alt1%ubt
 
 Group: Graphical desktop/KDE
@@ -50,7 +50,7 @@ Summary: %summary
 Group: Graphical desktop/KDE
 Provides: kde5-normal = %EVR kde5-default = %EVR
 Obsoletes: kde5-normal < %EVR kde5-default < %EVR
-#Requires: pam0_kwallet5
+##Requires: pam0_kwallet5
 Requires: gtk3-theme-breeze
 Requires: gtk2-theme-breeze
 Requires: kde5-small
@@ -64,6 +64,8 @@ Requires: kde5-khelpcenter kde5-kolourpaint kde5-kio-audiocd
 Requires: kf5-kmenuedit kf5-solid kf5-kdbusaddons kf5-kgamma
 Requires: kde5-kfind kde5-filelight kde5-kcharselect kde5-kteatime kde5-ktimer kde5-spectacle
 Requires: kde5-kamera kde5-network-filesharing kde5-ktorrent
+##Requires: kde5-kget
+Requires: kde5-kio-zeroconf kde5-sweeper
 %description -n kde5
 %summary
 
@@ -78,7 +80,6 @@ Requires: kf5-kwrited
 Requires: kf5-user-manager kde5-ksystemlog
 Requires: kde5-konversation kde5-kate
 Requires: kde5-pim kde5-pim-addons kde5-kcron kde5-kruler kde5-ffmpegthumbs
-#Requires: kf5-plasma-mediacenter
 Requires: kde5-krfb
 Requires: kde5-kdf kde5-kfloppy
 Requires: kid3-ui-kde5 ring-client-kde5
@@ -92,6 +93,8 @@ Group: Graphical desktop/KDE
 # webclient
 Requires: kde5-konqueror kde5-keditbookmarks
 Requires: kde5-dragon kde5-kmail
+#Requires: kde5-kmousetool kde5-kmag
+Requires: kde5-juk kde5-kmouth
 Requires: kde5-big
 Requires: kde5-edu
 Requires: kde5-games
@@ -110,6 +113,8 @@ Requires: kde5-runtime
 Requires: kde5-dolphin-plugins
 Requires: kde5-lokalize kde5-okteta kde5-kapptemplate kde5-dev-scripts kde5-kompare
 Requires: kde5-sdk-thumbnailers kde5-poxml kde5-umbrello
+#Requires: kde5-kcachegrind
+Requires: kde5-kimagemapeditor
 %description -n kde5-somedevel
 %summary
 
@@ -130,6 +135,8 @@ Group: Graphical desktop/KDE
 Requires: kde5-runtime
 Requires: kde5-lskat kde5-kmines kde5-kshisen kde5-ktuberling kde5-bovo kde5-knetwalk
 Requires: kde5-katomic kde5-knavalbattle kde5-kpat kde5-kmahjongg
+#Requires: kde5-ksudoku kde5-kigo
+Requires: kde5-kolf kde5-ksirk kde5-palapeli
 %description -n kde5-games
 High quality gaming and entertainment software.
 
@@ -147,7 +154,6 @@ Summary: Set of image scanning support applications
 Group: Graphics
 Requires: kde5-runtime
 Requires: kde5-skanlite hplip-sane libsane-gphoto2 sane
-# kde5-ksaneplugin
 %description -n kde5-scanning
 KDE image scanning support applications.
 
@@ -176,6 +182,9 @@ Requires: kde5-mbox-importer kde5-pim-data-exporter kde5-pim-sieve-editor kde5-g
 %files -n kde5-pim
 
 %changelog
+* Fri Dec 22 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.0-alt1%ubt
+- update requires
+
 * Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
 - update PIM requires
 
