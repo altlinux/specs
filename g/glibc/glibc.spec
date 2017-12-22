@@ -1,8 +1,8 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.25
-Release: alt4
+Version: 2.26.0.124.98f244e
+Release: alt1
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -23,13 +23,15 @@ Url: http://www.gnu.org/software/glibc/
 %def_with locales
 %def_enable memusagestat
 
-%ifarch %ix86 x86_64
+%ifarch x86_64
 %def_enable multiarch
 %else
 %def_disable multiarch
 %endif
 
-%define enablekernel 2.6.32
+%define basever 2.26
+
+%define enablekernel 3.2
 
 %ifarch aarch64
 %define enablekernel 3.7.0
@@ -38,8 +40,6 @@ Url: http://www.gnu.org/software/glibc/
 %ifarch x32
 %define enablekernel 3.4.0
 %endif
-
-%define basever 2.5.1
 
 # http://git.altlinux.org/gears/g/glibc.git
 Source: glibc-%version-%release.tar
@@ -452,14 +452,14 @@ cp -pL LICENSES README* alt/README* NEWS \
 	crypt/README.ufc-crypt ChangeLog ChangeLog.?? \
 	%buildroot%docdir/
 find %buildroot%docdir/ -type f -size +8k -print0 |
-	xargs -r0 bzip2 -9
+	xargs -r0 xz -9
 
 >devel.files
 >devel-static.files
 for f in `ls %buildroot%_libdir/lib*.a |
 	  grep -v '_p.a$' |
 	  sed -e "s|%buildroot||g"`; do
-	if [ -e "%buildroot${f%%.a}.so" ] || [ -e "%buildroot${f%%-%version.a}.so" ]; then
+	if [ -e "%buildroot${f%%.a}.so" ] || [ -e "%buildroot${f%%-%basever.a}.so" ]; then
 		echo "$f" >>devel-static.files
 	else
 		echo "$f" >>devel.files
@@ -506,25 +506,26 @@ cat /proc/self/maps >/dev/null
 export TIMEOUTFACTOR=10
 
 cat > %buildtarget/xfail.mk <<@@@
-export test-xfail-tst-bug18665-tcp=yes
-export test-xfail-tst-res_use_inet6=yes
-export test-xfail-tst-resolv-basic=yes
-export test-xfail-tst-resolv-edns=yes
+export test-xfail-XPG4/unistd.h/linknamespace = yes
 export test-xfail-tst-resolv-search=yes
-export test-xfail-tst-getrandom=yes
 %ifarch x86_64
 export test-xfail-test-ildouble=yes
-export test-xfail-tst-malloc-thread-exit=yes
 %endif
 %ifarch %ix86
 export test-xfail-test-double-finite=yes
 export test-xfail-test-double=yes
 export test-xfail-test-idouble=yes
+export test-xfail-test-ildouble-acosh=yes
+export test-xfail-test-ildouble-clog10=yes
+export test-xfail-test-ildouble-lgamma=yes
 export test-xfail-test-ildouble=yes
+export test-xfail-test-ldouble-clog10=yes
+export test-xfail-test-ldouble-finite-clog10=yes
+export test-xfail-test-ldouble-finite-lgamma=yes
 export test-xfail-test-ldouble-finite=yes
+export test-xfail-test-ldouble-lgamma=yes
 export test-xfail-test-ldouble=yes
-export test-xfail-tst-cleanupx4=yes
-export test-xfail-tst-robust8=yes
+export test-xfail-tst-malloc-usable-tunables=yes
 %endif
 
 include Makefile
@@ -538,6 +539,7 @@ make %PARALLELMFLAGS -C %buildtarget -f xfail.mk -k check fast-check=yes LDFLAGS
     exit $rc
   fi
 }
+cat %buildtarget/tests.sum
 
 %pre core -p /sbin/glibc_preinstall
 %post core -p /sbin/glibc_post_upgrade
@@ -598,7 +600,7 @@ fi
 
 %files doc
 %_infodir/*.info*
-%docdir
+%docdir/
 
 %files preinstall
 /sbin/glibc_preinstall
@@ -720,6 +722,15 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Fri Dec 22 2017 Dmitry V. Levin <ldv@altlinux.org> 6:2.26.0.124.98f244e-alt1
+- Updated to glibc-2.26-124-g98f244e from 2.26 branch
+  with assorted backports from master.
+- The minimum Linux kernel version that this version of glibc
+  can be used with on x86_64 is 3.2.
+- The deprecated NIS(+) name service modules, libnss_nis and libnss_nisplus,
+  are not built and packaged by this version of glibc.
+- Added a C.UTF-8 locale from Fedora.
+
 * Mon Dec 18 2017 Dmitry V. Levin <ldv@altlinux.org> 6:2.25-alt4
 - Updated to glibc-2.25-80-ga8920e6 from 2.25 branch.
 - Backported upstream fixes for sw bugs:
