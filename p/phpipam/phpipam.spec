@@ -1,6 +1,6 @@
 
 Name: phpipam
-Version: 1.30.000
+Version: 1.31.000
 Release: alt1%ubt
 Summary: PHP-based virtual machine control tool
 Group: Networking/WWW
@@ -9,6 +9,7 @@ Url: http://phpipam.net
 Source: %name-%version.tar
 Source2: php-saml.tar
 Source3: PHPMailer.tar
+Source4: captcha.tar
 Source11: %name-apache.conf
 
 # Patch: %name-%version-%release.patch
@@ -81,6 +82,7 @@ Requires: php7-gmp php7-ldap php7-sockets php7-openssl php7-pdo php7-pdo_mysql p
 %setup
 tar -xf %SOURCE2 -C functions/php-saml
 tar -xf %SOURCE3 -C functions/PHPMailer
+tar -xf %SOURCE4 -C app/login/captcha
 #%patch -p1
 
 %install
@@ -123,6 +125,9 @@ rm -rf %buildroot%webserver_webappsdir/%name/functions/PHPMailer/test
 %files php7
 
 %changelog
+* Fri Dec 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1.31.000-alt1%ubt
+- 1.3.1 release
+
 * Thu Jun 15 2017 Alexey Shabalin <shaba@altlinux.ru> 1.30.000-alt1%ubt
 - 1.3 release
 
