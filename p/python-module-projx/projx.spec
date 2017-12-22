@@ -4,32 +4,26 @@
 
 Name: python-module-%oname
 Version: 0.3.6
-Release: alt1.git20150215.1.1
+Release: alt2.git20150215
 Summary: Graph transformations in Python
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/projx/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/davebshow/projx.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-networkx python-module-pyparsing
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-networkx-drawing python-module-numpy-testing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-networkx python3-module-pyparsing
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-networkx-drawing python3-module-numpy-testing
 %endif
 
 %py_provides %oname
 %py_requires networkx pyparsing
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-decorator python-module-future python-module-matplotlib python-module-mpmath python-module-networkx-core python-module-numpy python-module-pluggy python-module-py python-module-pydot python-module-pygraphviz python-module-pyparsing python-module-pytest python-module-scipy python-module-setuptools python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-decorator python3-module-matplotlib python3-module-networkx-core python3-module-numpy python3-module-pluggy python3-module-py python3-module-pydot python3-module-pygraphviz python3-module-pyparsing python3-module-pytest python3-module-scipy python3-module-setuptools python3-module-yaml xz
-BuildRequires: python-module-networkx-drawing python-module-numpy-testing python-module-setuptools-tests python3-module-networkx-drawing python3-module-numpy-testing python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 projx provides a simple and extensible API for interacting with graphs
@@ -40,6 +34,7 @@ uses JSON configuration (roughly modeled after orientdb-etl) to
 translate graph data between various persistent and in-memory
 representations.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Graph transformations in Python
 Group: Development/Python3
@@ -54,6 +49,7 @@ Cypher query language. It also provides an extensible ETL pipeline that
 uses JSON configuration (roughly modeled after orientdb-etl) to
 translate graph data between various persistent and in-memory
 representations.
+%endif
 
 %prep
 %setup
@@ -87,7 +83,7 @@ py.test -vv $(find projx -name '*.py')
 %if_with python3
 pushd ../python3
 python3 setup.py test
-py.test-%_python3_version -vv $(find projx -name '*.py')
+py.test3 -vv $(find projx -name '*.py')
 popd
 %endif
 
@@ -102,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.6-alt2.git20150215
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.6-alt1.git20150215.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
