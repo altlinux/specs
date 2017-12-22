@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 17.12.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Games/Arcade
@@ -65,7 +65,7 @@ Requires: %name-common = %version-%release
 %files common -f %name.lang
 %doc COPYING*
 
-%files devel
+%files
 %_K5bin/kolf
 %_K5icon/*/*/apps/kolf.*
 %_K5xdgapp/org.kde.kolf.desktop
@@ -77,5 +77,8 @@ Requires: %name-common = %version-%release
 %_K5lib/libkolfprivate.so.*
 
 %changelog
+* Fri Dec 22 2017 Sergey V Turchin <zerg@altlinux.org> 17.12.0-alt2%ubt
+- fix package
+
 * Wed Dec 20 2017 Sergey V Turchin <zerg@altlinux.org> 17.12.0-alt1%ubt
 - initial build
