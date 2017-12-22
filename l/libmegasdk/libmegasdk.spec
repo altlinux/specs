@@ -1,6 +1,6 @@
 Name: libmegasdk
 Version: 3.2.8
-Release: alt1
+Release: alt2
 
 Summary: MEGA SDK - Client Access Engine Coverity Scan Build Status
 
@@ -18,9 +18,11 @@ Source: %name-%version.tar
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Automatically added by buildreq on Mon May 25 2015
-# optimized out: gnu-config libcloog-isl4 libcom_err-devel libkrb5-devel libstdc++-devel python3-base texlive-base-bin texlive-latex-base
-BuildRequires: doxygen gcc5-c++ glibc-devel libcares-devel libcrypto10 libcryptopp-devel libcurl-devel libdb4-devel libfreeimage-devel libfuse-devel libreadline-devel libsqlite3-devel libssl-devel zlib-devel
+# manually removed: cppcheck glibc-devel-static glibc-kernheaders-generic 
+# manually removed: openssl-engines python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs selinux-policy sssd texlive-latex-base 
+# Automatically added by buildreq on Sat Dec 23 2017
+# optimized out: glibc-kernheaders-x86 libcom_err-devel libkrb5-devel libpcre-devel libstdc++-devel perl python-base python-module-google python-modules python3 python3-base sssd-client texlive-base-bin
+BuildRequires: doxygen gcc-c++ libcares-devel libcryptopp-devel libcurl-devel libfreeimage-devel libfuse-devel libpcrecpp-devel libreadline-devel libsodium-devel libsqlite3-devel libssl-devel libuv-devel zlib-devel
 
 %description
 MEGA SDK - Client Access Engine Coverity Scan Build Status.
@@ -43,12 +45,22 @@ Requires: libmegasdk = %EVR
 This package contains the header and object files necessary for developing with
 %name.
 
+%package devel-qt5
+Summary: Qt5 development binding files for %name
+Group: Development/C
+Requires: libmegasdk-devel = %EVR
+
+%description devel-qt5
+This package contains Qt5 development binding files for %name.
+
 %package tools
 Summary: Tools from MEGA SDK
 Group: File tools
 Requires: libmegasdk = %EVR
 
 Conflicts: megafuse
+Provides: megasymplesync = %EVR
+Obsoletes: megasymplesync
 
 %description tools
 Example tools from MEGA SDK - Client Access Engine
@@ -60,13 +72,29 @@ Example tools from MEGA SDK - Client Access Engine
 # hack against missed --tag=CXX during linking
 %__subst 's|ANDROID|TRUE|' Makefile.am
 
+%__subst 's|with_pcre/include|with_pcre|' configure.ac
+%__subst 's|with_db/include|with_db|' configure.ac
+
 %build
 %autoreconf
-%configure --disable-static --with-termcap=no
+%configure --disable-static --without-termcap --enable-gcc-hardening \
+           --disable-java \
+           --disable-php \
+           --disable-python \
+           --enable-chat \
+           --with-cares --with-cryptopp --with-curl --with-sodium --with-openssl --with-sqlite --with-zlib --with-readline \
+           --with-freeimage --with-pcre=%_includedir/pcre --with-fuse --with-libuv
+# only sqlite or db4
+#           --with-db=%_includedir/db4
+
 %make_build
 
 %install
 %makeinstall_std
+
+# just copy, no qt build here
+mkdir -p %buildroot/%_datadir/%name/qt5/
+cp -a bindings/qt/* %buildroot/%_datadir/%name/qt5/
 
 #mkdir -p %buildroot%_initdir/ %buildroot/lib/systemd/system/ %buildroot/etc/
 #cp %SOURCE1 %buildroot%_initdir/
@@ -84,12 +112,20 @@ Example tools from MEGA SDK - Client Access Engine
 %_libdir/pkgconfig/libmega.pc
 %_libdir/libmega.so
 
+%files devel-qt5
+%dir %_datadir/%name/
+%_datadir/%name/qt5/
+
 %files tools
 %_bindir/megacli
 %_bindir/megafuse
 %_bindir/megasimplesync
 
 %changelog
+* Sat Dec 23 2017 Vitaly Lipatov <lav@altlinux.ru> 3.2.8-alt2
+- build devel-qt5 subpackage with qt binding
+- build with all possible libs
+
 * Fri Dec 22 2017 Vitaly Lipatov <lav@altlinux.ru> 3.2.8-alt1
 - rename source package, cleanup spec
 - new version (3.2.8), change packager
