@@ -77,7 +77,7 @@
 %def_enable snappy
 %def_enable bzip2
 %def_disable xen
-
+%def_enable mpath
 
 %define power64 ppc64 ppc64p7 ppc64le
 %define mips32 mips mipsel mipsr6 mipsr6el
@@ -218,14 +218,15 @@
 # }}}
 
 Name: qemu
-Version: 2.10.1
-Release: alt3
+Version: 2.11.0
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
 Group: Emulators
 Url: http://www.nongnu.org/qemu/
 Source0: %name-%version.tar
+Source100: keycodemapdb-%name-%version.tar
 Source1: qemu.binfmt
 Source2: qemu-kvm.control.in
 Source4: qemu-kvm.rules
@@ -234,6 +235,9 @@ Source5: qemu-kvm.sh
 Source8: qemu-guest-agent.rules
 Source9: qemu-guest-agent.service
 Source10: qemu-guest-agent.init
+# PR manager service
+Source14: qemu-pr-helper.service
+Source15: qemu-pr-helper.socket
 
 Patch: qemu-alt.patch
 
@@ -250,7 +254,10 @@ BuildRequires: libxfs-devel
 BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
 BuildRequires: ipxe-roms-qemu >= 1:20161208-alt1.git26050fd seavgabios seabios >= 1.7.4-alt2 libfdt-devel >= 1.4.2
 BuildRequires: libpixman-devel >= 0.21.8
+# Upstream disables iasl for big endian and QEMU checks for this.
+%ifnarch s390 s390x ppc ppc64
 BuildRequires: iasl
+%endif
 BuildRequires: libpcre-devel-static
 %{?_enable_sdl:BuildRequires: libSDL2-devel}
 %{?_enable_curses:BuildRequires: libncurses-devel}
@@ -290,6 +297,7 @@ BuildRequires: libtasn1-devel
 %{?_enable_bzip2:BuildRequires: bzlib-devel}
 %{?_enable_xen:BuildRequires: libxen-devel}
 %{?_enable_vxhs:BuildRequires: libvxhs-devel}
+%{?_enable_mpath:BuildRequires: libudev-devel libmultipath-devel}
 
 
 %if_enabled rbd
@@ -1027,6 +1035,10 @@ This package provides the system emulator for NIOS2.
 
 %prep
 %setup
+
+mkdir -p ui/keycodemapdb
+tar -xf %SOURCE100 -C ui/keycodemapdb --strip-components 1
+
 %patch -p1
 cp -f %SOURCE2 qemu-kvm.control.in
 %ifarch armh aarch64
@@ -1042,6 +1054,7 @@ export buildldflags="VL_LDFLAGS=-Wl,--build-id"
 %if_enabled user_static
 # non-GNU configure
 ./configure \
+	--disable-git-update \
 	--target-list='%target_list_user' \
 	--prefix=%prefix \
 	--sysconfdir=%_sysconfdir \
@@ -1116,6 +1129,7 @@ find -regex '.*linux-user/qemu.*' -perm 755 -exec mv '{}' '{}'.static ';'
 
 # non-GNU configure
 ./configure \
+	--disable-git-update \
 	--target-list='%target_list_system %target_list_user' \
 	--prefix=%prefix \
 	--sysconfdir=%_sysconfdir \
@@ -1155,7 +1169,6 @@ find -regex '.*linux-user/qemu.*' -perm 755 -exec mv '{}' '{}'.static ';'
 	%{subst_enable virglrenderer} \
 	%{subst_enable tpm} \
 	%{subst_enable xen} \
-	--with-system-pixman \
 	%{?_enable_vhost_net:--enable-vhost-net} \
 	%{?_enable_vhost_scsi:--enable-vhost-scsi } \
 	%{?_enable_vhost_vsock:--enable-vhost-vsock} \
@@ -1220,6 +1233,10 @@ install -D -m 0755 %name-kvm.control.in %buildroot%_controldir/kvm
 install -D -m 0644 %SOURCE8 %buildroot/lib/udev/rules.d/%rulenum-%name-guest-agent.rules
 install -D -m 0644 %SOURCE9 %buildroot%_unitdir/%name-guest-agent.service
 install -D -m 0755 %SOURCE10 %buildroot%_initdir/%name-guest-agent
+
+# Install qemu-pr-helper service
+install -m 0644 %SOURCE14 %buildroot%_unitdir/qemu-pr-helper.service
+install -m 0644 %SOURCE15 %buildroot%_unitdir/qemu-pr-helper.socket
 
 %if_enabled vnc_sasl
 install -D -p -m 0644 qemu.sasl %buildroot%_sysconfdir/sasl2/%name.conf
@@ -1359,6 +1376,7 @@ fi
 %if_enabled vnc_sasl
 %config(noreplace) %_sysconfdir/sasl2/%name.conf
 %endif
+%_man7dir/qemu-block-drivers.*
 %_man7dir/qemu-ga-ref.*
 %_man7dir/qemu-qmp-ref.*
 
@@ -1366,6 +1384,11 @@ fi
 %_bindir/virtfs-proxy-helper
 %_man1dir/virtfs-proxy-helper.*
 %attr(4710,root,vmusers) %_libexecdir/qemu-bridge-helper
+%if_enabled mpath
+%_bindir/qemu-pr-helper
+%_unitdir/qemu-pr-helper.service
+%_unitdir/qemu-pr-helper.socket
+%endif
 
 %if_enabled have_kvm
 %files kvm
@@ -1376,6 +1399,9 @@ fi
 %_bindir/qemu-*
 %exclude %_bindir/qemu*system*
 %exclude %_bindir/qemu-kvm
+%if_enabled mpath
+%exclude %_bindir/qemu-pr-helper
+%endif
 %if_enabled user_static
 %exclude %_bindir/qemu-*.static
 %endif
@@ -1592,6 +1618,9 @@ fi
 %endif
 
 %changelog
+* Wed Dec 20 2017 Alexey Shabalin <shaba@altlinux.ru> 2.11.0-alt1
+- 2.11.0
+
 * Thu Nov 02 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.10.1-alt3
 - Enabled support of *attr syscalls in qemu-user static binaries.
 

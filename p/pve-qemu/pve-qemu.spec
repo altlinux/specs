@@ -168,7 +168,7 @@
 
 Name: pve-%rname
 Version: 2.9.1
-Release: alt4
+Release: alt4.1
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -713,6 +713,12 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Fri Dec 22 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt4.1
+- rebuild with libiscsi 1.18
+
+* Thu Dec 07 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt0.M80P.4
+- backport to p8 branch
+
 * Thu Dec 07 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt4
 - fixes:
  + CVE-2017-17381 fix and backup race condition fix
