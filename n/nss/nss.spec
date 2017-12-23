@@ -2,7 +2,7 @@
 
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.33.0
+Version:	3.34.1
 Release:	alt1
 License:	MPL/GPL/LGPL
 Group:		System/Libraries
@@ -12,7 +12,6 @@ Packager:	Alexey Gladkov <legion@altlinux.ru>
 Source0:	nss-%version.tar
 Source1:	nss.pc.in
 Source2:	nss-config.in
-Source3:	nss-alt-ssl-addon-certs.txt
 Source4:	nss-db-%version.tar
 Source5:	setup-nsssysinit.sh
 Source6:	system-pkcs11.txt
@@ -142,9 +141,6 @@ export XCFLAGS=$RPM_OPT_FLAGS
 export USE_64=1
 %endif
 
-# additional CA certificates
-cat %SOURCE3 >> nss/lib/ckfw/builtins/certdata.txt
-
 make -C nss/coreconf
 make -C nss/coreconf platform 2>/dev/null |grep '^Linux' >destdir
 make -C nss/lib/dbm
@@ -258,6 +254,10 @@ f="%_libdir/libnssckbi.so.alternatives_save"
 
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Sat Dec 23 2017 Alexey Gladkov <legion@altlinux.ru> 3.34.1-alt1
+- New version (3.34.1).
+- Remove obsolete nss-alt-ssl-addon-certs.txt.
+
 * Sun Oct 08 2017 Alexey Gladkov <legion@altlinux.ru> 3.33.0-alt1
 - New version (3.33).
 
