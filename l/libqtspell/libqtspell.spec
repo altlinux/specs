@@ -2,7 +2,7 @@
 
 %define oname qtspell
 Name: libqtspell
-Version: 0.8.2
+Version: 0.8.4
 Release: alt1
 
 Summary: Spell checking for Qt text widgets
@@ -13,7 +13,8 @@ Url: https://github.com/manisandro/qtspell
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: https://github.com/manisandro/qtspell/releases/download/%version/%oname-%version.tar
+# Source-url: https://github.com/manisandro/qtspell/archive/%version.tar.gz
+Source: %oname-%version.tar
 
 # manually removed: i586-libxcb libfreetype-infinality libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libqt4-webkit-devel phonon-devel python3 python3-module-zope qt4-designer qt5-imageformats qt5-tools-devel ruby ruby-stdlibs
 # Automatically added by buildreq on Sat Aug 15 2015
@@ -88,7 +89,7 @@ that use %name.
 %setup -n %oname-%version
 
 %build
-%cmake
+%cmake -DUSE_QT5=OFF
 %cmake_build
 %cmake_build doc
 mv BUILD build-qt4
@@ -135,6 +136,9 @@ cp -al build-qt5 BUILD
 %doc build-qt4/doc/html
 
 %changelog
+* Sun Dec 24 2017 Vitaly Lipatov <lav@altlinux.ru> 0.8.4-alt1
+- new version 0.8.4 (with rpmrb script)
+
 * Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 0.8.2-alt1
 - new version 0.8.2 (with rpmrb script)
 
