@@ -2,8 +2,8 @@
 ## Used in Dist::Zilla
 
 Name: perl-PPI-XS
-Version: 0.904
-Release: alt1.1
+Version: 0.910
+Release: alt1
 
 Summary: Perl module with XS acceleration for PPI
 
@@ -18,9 +18,9 @@ Source: %real_name-%version.tar
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sun Oct 25 2015
-# optimized out: perl-Clone perl-Exporter-Tiny perl-IO-String perl-List-MoreUtils perl-Params-Util
-BuildRequires: perl-PPI perl-Pod-Escapes perl-devel
+# Automatically added by buildreq on Sat Dec 23 2017
+# optimized out: perl perl-CPAN-Meta-Requirements perl-Clone perl-Encode perl-Exporter-Tiny perl-IO-String perl-JSON-PP perl-List-MoreUtils perl-List-MoreUtils-XS perl-Params-Util perl-Parse-CPAN-Meta perl-parent python-base python-modules python3 python3-base
+BuildRequires: perl-CPAN-Meta perl-PPI perl-Pod-Coverage perl-Sub-Name perl-YAML perl-autodie perl-devel
 
 %description
 This module  provides a (minor) XS acceleration of the core
@@ -43,6 +43,9 @@ faster C versions.
 %perl_vendor_autolib/PPI/XS*
 
 %changelog
+* Sat Dec 23 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.910-alt1
+- New version
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.904-alt1.1
 - rebuild with new perl 5.26.1
 
