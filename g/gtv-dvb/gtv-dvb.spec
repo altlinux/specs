@@ -1,8 +1,8 @@
 Name: gtv-dvb
-Version: 1.0
+Version: 1.1
 Release: alt1%ubt
 
-Summary: DVB-T/T2/S/S2/C player
+Summary: DVB player
 
 License: LGPLv2
 Group: Video
@@ -16,7 +16,9 @@ BuildRequires: pkgconfig(gtk+-3.0) pkgconfig(gstreamer-1.0) pkgconfig(gstreamer-
 Requires: v4l-utils
 
 %description
-DVB-T/T2/S/S2/C player
+DVB-T/T2, DVB-S/S2, DVB-C, ATSC, DTMB
+Graphical user interface - Gtk+3
+Audio & Video & Digital TV - Gstreamer 1.0
 
 %prep
 %setup
@@ -34,5 +36,8 @@ DVB-T/T2/S/S2/C player
 %doc README.md LICENSE
 
 %changelog
+* Sat Dec 23 2017 Anton Midyukov <antohami@altlinux.org> 1.1-alt1%ubt
+- New version 1.1
+
 * Sun Nov 26 2017 Anton Midyukov <antohami@altlinux.org> 1.0-alt1%ubt
 - Initial build for ALT Sisyphus.
