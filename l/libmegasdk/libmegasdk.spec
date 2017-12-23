@@ -1,6 +1,6 @@
 Name: libmegasdk
 Version: 3.2.8
-Release: alt2
+Release: alt3
 
 Summary: MEGA SDK - Client Access Engine Coverity Scan Build Status
 
@@ -96,11 +96,17 @@ Example tools from MEGA SDK - Client Access Engine
 mkdir -p %buildroot/%_datadir/%name/qt5/
 cp -a bindings/qt/* %buildroot/%_datadir/%name/qt5/
 
+mkdir -p %buildroot/%_datadir/%name/m4/
+cp -a m4/ax*.m4 %buildroot/%_datadir/%name/m4/
+
 #mkdir -p %buildroot%_initdir/ %buildroot/lib/systemd/system/ %buildroot/etc/
 #cp %SOURCE1 %buildroot%_initdir/
 #cp %SOURCE2 %buildroot/lib/systemd/system/
 #cp %SOURCE3 %buildroot/etc/
 #cp %SOURCE4 %buildroot%_bindir/
+
+# missed headers
+cp include/mega/{mega_glob.h,mega_http_parser.h} %buildroot/%_includedir/mega/
 
 %files
 %_libdir/libmega.so.*
@@ -111,9 +117,10 @@ cp -a bindings/qt/* %buildroot/%_datadir/%name/qt5/
 %_includedir/*.h
 %_libdir/pkgconfig/libmega.pc
 %_libdir/libmega.so
+%dir %_datadir/%name/
+%_datadir/%name/m4/
 
 %files devel-qt5
-%dir %_datadir/%name/
 %_datadir/%name/qt5/
 
 %files tools
@@ -122,6 +129,10 @@ cp -a bindings/qt/* %buildroot/%_datadir/%name/qt5/
 %_bindir/megasimplesync
 
 %changelog
+* Sat Dec 23 2017 Vitaly Lipatov <lav@altlinux.ru> 3.2.8-alt3
+- pack m4 subdir
+- pack missed mega_glob.h, mega_http_parser.h
+
 * Sat Dec 23 2017 Vitaly Lipatov <lav@altlinux.ru> 3.2.8-alt2
 - build devel-qt5 subpackage with qt binding
 - build with all possible libs
