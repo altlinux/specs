@@ -1,13 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name Math-MPFR
 # BEGIN SourceDeps(oneline):
-BuildRequires: libgmp-devel libmpfr-devel perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Math/BigInt.pm) perl(Math/Decimal64.pm) perl(Math/GMP.pm) perl(Math/GMPf.pm) perl(Math/GMPq.pm) perl(Math/GMPz.pm) perl(Math/LongDouble.pm) perl(Math/Trig.pm) perl(overload.pm) perl(subs.pm)
+BuildRequires: libgmp-devel libmpfr-devel perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Math/BigInt.pm) perl(Math/GMP.pm) perl(Math/GMPf.pm) perl(Math/GMPq.pm) perl(Math/GMPz.pm) perl(Math/LongDouble.pm) perl(Math/Trig.pm) perl(overload.pm) perl(subs.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
+%ifnarch e2k
+BuildRequires: perl(Math/Decimal64.pm)
+%endif
 
 Name: perl-%module_name
 Version: 3.36
-Release: alt1.1
+Release: alt2
 Summary: perl interface to the MPFR (floating point) library..
 Group: Development/Perl
 License: perl
@@ -26,7 +29,7 @@ A bigfloat module utilising the MPFR library. Basically.
 
 
 %prep
-%setup -q -n %{module_name}-%{version}
+%setup -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -40,6 +43,9 @@ A bigfloat module utilising the MPFR library. Basically.
 %perl_vendor_autolib/*
 
 %changelog
+* Sat Dec 23 2017 Michael Shigorin <mike@altlinux.org> 3.36-alt2
+- E2K: avoid gcc-specific BR: perl-Math-Decimal64 (closes: #34380)
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 3.36-alt1.1
 - rebuild with new perl 5.26.1
 
