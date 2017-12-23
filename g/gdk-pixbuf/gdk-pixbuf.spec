@@ -1,6 +1,8 @@
+%def_with gnome1
+
 Name: gdk-pixbuf
 Version: 0.22.0
-Release: alt10.2
+Release: alt11
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
@@ -32,9 +34,12 @@ Provides: %name-loaders = %version-%release
 Obsoletes: %name-loaders < %version-%release
 
 # Automatically added by buildreq on Fri Oct 17 2008
-BuildRequires: glib-devel gnome-libs-devel gtk+-devel
+BuildRequires: glib-devel gtk+-devel
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel zlib-devel
 BuildRequires: libXt-devel xorg-cf-files
+%if_with gnome1
+BuildRequires: gnome-libs-devel
+%endif
 
 %package gnomecanvas
 Summary: An image loading and rendering library for Gdk
@@ -49,7 +54,9 @@ Requires: %name = %version-%release
 %package devel
 Summary: Development tools for GdkPixBuf applications
 Group: Development/GNOME and GTK+
+%if_with gnome1
 Requires: %name-gnomecanvas = %version-%release
+%endif
 Requires: %name-xlib = %version-%release
 
 %description
@@ -80,7 +87,7 @@ applications. GdkPixBuf is an image loading and rendering library
 for Gdk.
 
 %prep
-%setup -q
+%setup
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -107,7 +114,7 @@ libtoolize -c -f
 aclocal
 # new gettext introduce new m4 macros which depend on fresh autoconf
 # and automake; hopefully glib doesn't use gettext and its m4 macros.
-%__subst -p 's,^AC_PREREQ(\[\?2\.5[0-9]\]\?),AC_PREREQ(2.13),' *.m4
+subst -p 's,^AC_PREREQ(\[\?2\.5[0-9]\]\?),AC_PREREQ(2.13),' *.m4
 autoheader
 automake
 autoconf
@@ -118,7 +125,7 @@ make
 %install
 %makeinstall libexecdir=$RPM_BUILD_ROOT%_libdir/%name/loaders
 install -pm755 %name/pixops/timescale $RPM_BUILD_ROOT%_bindir/
-%__subst 's,/lib$,/%_lib,g' $RPM_BUILD_ROOT%_bindir/*-config
+subst 's,/lib$,/%_lib,g' $RPM_BUILD_ROOT%_bindir/*-config
 
 %find_lang %name
 
@@ -133,13 +140,17 @@ install -pm755 %name/pixops/timescale $RPM_BUILD_ROOT%_bindir/
 %files xlib
 %_libdir/*xlib.so.*
 
+%if_with gnome1
 %files gnomecanvas
 %_libdir/*gnomecanvas*.so.*
+%endif
 
 %files devel
 %_bindir/*-config
 %_libdir/libgdk*.so
+%if_with gnome1
 %_libdir/libgnome*.so
+%endif
 %dir %_includedir/%name-1.0
 %_includedir/%name-1.0/%name
 %_datadir/aclocal/*
@@ -147,6 +158,9 @@ install -pm755 %name/pixops/timescale $RPM_BUILD_ROOT%_bindir/
 %doc %_datadir/gnome/html/*
 
 %changelog
+* Sat Dec 23 2017 Michael Shigorin <mike@altlinux.org> 0.22.0-alt11
+- introduce gnome1 knob (on by default)
+
 * Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.22.0-alt10.2
 - Rebuilt with libpng15
 
