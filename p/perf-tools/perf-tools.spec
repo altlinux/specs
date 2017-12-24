@@ -1,12 +1,15 @@
 Summary:A miscellaneous collection of in-development and unsupported performance analysis tools for Linux ftrace and perf_events (aka the "perf" command).
 Name: perf-tools
-Version: 0.1
-Release: alt3
+Version: 1.0
+Release: alt2
 License: GPLv2
 Group: Monitoring
 URL: https://github.com/brendangregg/perf-tools
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 BuildArch: noarch
+
+BuildRequires: sh4
 
 %description
 A miscellaneous collection of in-development and unsupported
@@ -31,6 +34,7 @@ see Warnings.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %install
@@ -63,6 +67,12 @@ done
 %doc README.md examples deprecated
 
 %changelog
+* Sun Dec 24 2017 Terechkov Evgenii <evg@altlinux.org> 1.0-alt2
+- Fix "iolatency -T" (https://github.com/brendangregg/perf-tools/issues/30)
+
+* Fri Dec 22 2017 Terechkov Evgenii <evg@altlinux.org> 1.0-alt1
+- v1.0-17-g98d42a2
+
 * Fri Jan 29 2016 Terechkov Evgenii <evg@altlinux.org> 0.1-alt3
 - git-20160129
 
