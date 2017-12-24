@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 Name: brisk-menu
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: An efficient menu for the MATE Desktop
@@ -10,11 +10,11 @@ License: GPLv2+
 Group: Graphical desktop/MATE
 Url: https://github.com/solus-project/brisk-menu
 
-Packager: Anton Midyukov <sample@altlinux.org>
+Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 
-BuildRequires: libgio-devel pkgconfig(gdk-x11-3.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-3.0) pkgconfig(x11) pkgconfig(libmate-menu) pkgconfig(libmatepanelapplet-4.0) intltool
+BuildRequires: libgio-devel pkgconfig(gdk-x11-3.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-3.0) pkgconfig(x11) pkgconfig(libmate-menu) pkgconfig(libmatepanelapplet-4.0) pkgconfig(libnotify) meson
 
 %description
 Modern, efficient menu for the MATE Desktop Environment.
@@ -50,12 +50,11 @@ Features:
 %setup
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -67,6 +66,10 @@ Features:
 %_libexecdir/%name
 
 %changelog
+* Sun Dec 24 2017 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt1
+- new version 0.5.0
+- switch to meson build
+
 * Tue May 23 2017 Anton Midyukov <antohami@altlinux.org> 0.4.0-alt1
 - new version 0.4.0
 
