@@ -1,5 +1,5 @@
 Name: re2c
-Version: 1.0.1
+Version: 1.0.3
 Release: alt1
 
 Summary: re2c - A tool for generating C-based recognizers from regular expressions
@@ -10,7 +10,8 @@ Url: http://sourceforge.net/projects/re2c/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sf.net/%name/%name-%version.tar.bz2
+# Source-url: https://github.com/skvadrik/re2c/archive/%version.tar.gz
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Sat Nov 11 2006
 BuildRequires: gcc-c++ linux-libc-headers
@@ -23,9 +24,11 @@ than a flex based scanner, and its input model is much more
 flexible.
 
 %prep
-%setup -q
+%setup
 
 %build
+cd re2c
+%autoreconf
 %configure
 %make_build
 #make re2c
@@ -36,6 +39,7 @@ flexible.
 #make
 
 %install
+cd re2c
 %makeinstall_std
 #mkdir -p %buildroot%_bindir/
 #install -m 0755 re2c %buildroot%_bindir/
@@ -46,9 +50,12 @@ flexible.
 %files
 %_bindir/re2c
 %_man1dir/re2c.1*
-%doc README examples
+%doc re2c/README re2c/examples
 
 %changelog
+* Sun Dec 24 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt1
+- new version 1.0.3 (with rpmrb script)
+
 * Sun Oct 08 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
 - new version 1.0.1 (with rpmrb script)
 
