@@ -1,6 +1,6 @@
 %define oname RemoteBox
 Name: remotebox
-Version: 2.3
+Version: 2.4
 Release: alt1
 
 Summary: Open Source VirtualBox Client with Remote Management
@@ -22,6 +22,8 @@ Autoreq: yes,noperl
 # Automatically added by buildreq on Tue Oct 26 2010 (-bi)
 BuildRequires: perl-Gtk2 perl-SOAP-Lite
 
+Requires: perl-Gtk2 perl-SOAP-Lite
+
 %description
 RemoteBox is a GUI tool which lets you administer guests or virtual
 machines running under VirtualBox on a remote server or even the same
@@ -32,7 +34,7 @@ installation of VirtualBox.
 
 %prep
 %setup -n %oname-%version
-
+%__subst "s|\(use File::Spec::Win32;\)|#\1|g" share/remotebox/rbox_gui_init.pl
 
 %install
 install -D %name %buildroot%_bindir/%name
@@ -48,6 +50,10 @@ cp -a share/remotebox/* %buildroot%_datadir/%name/
 %_datadir/%name/
 
 %changelog
+* Sun Dec 24 2017 Vitaly Lipatov <lav@altlinux.ru> 2.4-alt1
+- new version 2.4 (with rpmrb script)
+- fix requires
+
 * Sun Oct 08 2017 Vitaly Lipatov <lav@altlinux.ru> 2.3-alt1
 - new version 2.3 (with rpmrb script)
 
