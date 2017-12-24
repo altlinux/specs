@@ -1,7 +1,7 @@
 %define _userunitdir /usr/lib/systemd/user
 
 Name: flatpak
-Version: 0.10.1
+Version: 0.10.2.1
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -173,6 +173,12 @@ rm -rf %buildroot%_docdir/%name/
 %_libdir/libflatpak.so.*
 
 %changelog
+* Sun Dec 24 2017 Vitaly Lipatov <lav@altlinux.ru> 0.10.2.1-alt1
+- new version 0.10.2.1 (with rpmrb script)
+
+* Sun Dec 24 2017 Vitaly Lipatov <lav@altlinux.ru> 0.10.2-alt1
+- new version 0.10.2 (with rpmrb script)
+
 * Sat Nov 25 2017 Vitaly Lipatov <lav@altlinux.ru> 0.10.1-alt1
 - new version 0.10.1 (with rpmrb script)
 
