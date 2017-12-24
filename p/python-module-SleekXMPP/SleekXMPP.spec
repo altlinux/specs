@@ -3,16 +3,20 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.3.1
-Release: alt1.git20140609.1.1
+Version: 1.3.3
+Release: alt1
+
 Summary: Python 2.6+/3.1+ XMPP Library
+
 License: MIT
 Group: Development/Python
 Url: http://sleekxmpp.com/
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/fritzy/SleekXMPP.git
+# Source-git: https://github.com/fritzy/SleekXMPP.git
 Source: %name-%version.tar
+
 BuildArch: noarch
 
 #BuildPreReq: python-module-setuptools
@@ -78,6 +82,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%__subst "s|\(from sleekxmpp.thirdparty.suelta.util\)|#\1 (https://github.com/fritzy/SleekXMPP/issues/480)|" sleekxmpp/plugins/xep_0138.py
 
 %if_with python3
 cp -fR . ../python3
@@ -137,6 +142,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun Dec 24 2017 Vitaly Lipatov <lav@altlinux.ru> 1.3.3-alt1
+- build 1.3.3
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.1-alt1.git20140609.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
