@@ -3,15 +3,18 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 5.0
-Release: alt1.dev.git20150808.1.1
+Version: 6.7
+Release: alt1
+
 Summary: A simple wrapper around optparse for powerful command line utilities
+
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/click/
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/mitsuhiko/click.git
+# Source-git: https://github.com/mitsuhiko/click.git
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -123,6 +126,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+rm -fv click/_winconsole.py
 
 %if_with python3
 cp -fR . ../python3
@@ -190,6 +194,9 @@ popd
 %endif
 
 %changelog
+* Sun Dec 24 2017 Vitaly Lipatov <lav@altlinux.ru> 6.7-alt1
+- new version 6.7 (with rpmrb script)
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.0-alt1.dev.git20150808.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
