@@ -2,7 +2,7 @@
 
 Name: flatpak
 Version: 0.10.2.1
-Release: alt1
+Release: alt2
 
 Summary: Application deployment framework for desktop apps
 
@@ -125,9 +125,6 @@ rm -rf %buildroot%_docdir/%name/
 %doc COPYING NEWS README.md
 %_bindir/flatpak
 %_datadir/bash-completion
-%_datadir/dbus-1/interfaces/org.freedesktop.Flatpak.xml
-%_datadir/dbus-1/interfaces/org.freedesktop.portal.Documents.xml
-%_datadir/dbus-1/interfaces/org.freedesktop.impl.portal.PermissionStore.xml
 %_datadir/dbus-1/services/org.freedesktop.Flatpak.service
 %_datadir/dbus-1/services/org.freedesktop.impl.portal.PermissionStore.service
 %_datadir/dbus-1/services/org.freedesktop.portal.Documents.service
@@ -166,6 +163,9 @@ rm -rf %buildroot%_docdir/%name/
 %_includedir/%name/
 %_libdir/libflatpak.so
 %_pkgconfigdir/%name.pc
+%_datadir/dbus-1/interfaces/org.freedesktop.Flatpak.xml
+%_datadir/dbus-1/interfaces/org.freedesktop.portal.Documents.xml
+%_datadir/dbus-1/interfaces/org.freedesktop.impl.portal.PermissionStore.xml
 
 %files -n lib%name
 %doc COPYING
@@ -173,6 +173,9 @@ rm -rf %buildroot%_docdir/%name/
 %_libdir/libflatpak.so.*
 
 %changelog
+* Tue Dec 26 2017 Vitaly Lipatov <lav@altlinux.ru> 0.10.2.1-alt2
+- move dbus-1/interfaces to libflatpak-devel
+
 * Sun Dec 24 2017 Vitaly Lipatov <lav@altlinux.ru> 0.10.2.1-alt1
 - new version 0.10.2.1 (with rpmrb script)
 
