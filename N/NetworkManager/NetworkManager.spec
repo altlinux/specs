@@ -43,7 +43,7 @@
 
 Name: NetworkManager
 Version: 1.10.2
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -725,6 +725,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Dec 25 2017 Mikhail Efremov <sem@altlinux.org> 1.10.2-alt2
+- Workaround 'deprecated structs' issue.
+- Patches from upstream: bug fixes found via coverity.
+
 * Thu Dec 14 2017 Mikhail Efremov <sem@altlinux.org> 1.10.2-alt1
 - etcnet-alt: Use nm_settings_connection_update();
 - Updated to 1.10.2.
