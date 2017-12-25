@@ -1,7 +1,7 @@
 %define module_name	virtualbox
 %define module_version	5.1.30
 
-%define module_release	alt1
+%define module_release	alt2
 
 %define drv_module_name	vboxdrv
 %define pci_module_name	vboxpci
@@ -97,6 +97,9 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Dec 26 2017 Denis Medvedev <nbr@altlinux.org> 5.1.30-alt2
+- updated for correct building on un-def
 
 * Tue Nov 14 2017 Denis Medvedev <nbr@altlinux.org> 5.1.30-alt1
 - Updated template for virtualbox 5.1.30

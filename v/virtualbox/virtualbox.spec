@@ -57,7 +57,7 @@
 
 Name: virtualbox
 Version: 5.1.30
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -779,6 +779,9 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Mon Dec 25 2017 Denis Medvedev <nbr@altlinux.org> 5.1.30-alt2
+- patch for kernel 4.14
+
 * Mon Nov 13 2017 Denis Medvedev <nbr@altlinux.org> 5.1.30-alt1
 - new version 5.1.30
 No more %ubt - too much changes between branches.

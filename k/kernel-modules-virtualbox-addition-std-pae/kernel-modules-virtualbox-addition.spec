@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
 %define module_version  5.1.30
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		std-pae
 BuildRequires(pre): rpm-build-kernel >= 0.100-alt1
@@ -101,6 +101,9 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Dec 26 2017 Denis Medvedev <nbr@altlinux.org> 5.1.30-alt2
+- Fixed build for un-def
 
 * Tue Nov 14 2017 Denis Medvedev <nbr@altlinux.org> 5.1.30-alt1
 - Updated template for virtualbox 5.1.30
