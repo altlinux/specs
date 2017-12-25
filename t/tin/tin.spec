@@ -1,5 +1,5 @@
 Name: tin
-Version: 2.4.1
+Version: 2.4.2
 Release: alt1
 
 Summary: A basic Internet news reader
@@ -70,6 +70,9 @@ install -pD -m644 %_sourcedir/tin.attributes %buildroot%_sysconfdir/tin/attribut
 %exclude %_man5dir/mmdf.*
 
 %changelog
+* Mon Dec 25 2017 Michael Shigorin <mike@altlinux.org> 2.4.2-alt1
+- new version (watch file uupdate)
+
 * Sat Dec 24 2016 Michael Shigorin <mike@altlinux.org> 2.4.1-alt1
 - new version (watch file uupdate)
 
