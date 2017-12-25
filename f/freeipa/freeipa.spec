@@ -31,7 +31,7 @@
 
 Name: freeipa
 Version: 4.6.1
-Release: alt2%ubt
+Release: alt3%ubt
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -259,8 +259,7 @@ Requires: python-module-systemd
 Requires: policycoreutils >= 2.1.5
 Requires: tar
 # certmonger-0.79.4-2 fixes newlines in PEM files
-#Requires(pre): certmonger >= 0.79.4
-Requires(pre): certmonger
+Requires(pre): certmonger >= 0.79.5
 Requires: 389-ds-base >= 1.3.5.14
 Requires: fonts-font-awesome
 Requires: fonts-ttf-open-sans
@@ -306,7 +305,7 @@ Requires: python-module-pyasn1 >= 0.3.2
 Requires: python-module-dbus
 Requires: python-module-dns >= 1.15
 Requires: python-module-kdcproxy >= 0.3
-#Requires: rpm-libs
+Requires: librpm
 Requires: pki-base
 Requires: python-module-augeas
 
@@ -337,7 +336,7 @@ Requires: python3-module-dbus
 Requires: python3-module-dns >= 1.15
 #Requires: python3-module-kdcproxy >= 0.3
 Requires: python3-module-augeas
-#Requires: rpm-libs
+Requires: librpm
 #Requires: pki-base-python3
 
 %description -n python3-module-ipaserver
@@ -443,8 +442,7 @@ Requires: sssd-ipa
 Requires: libsss_sudo
 Requires: python-module-sssdconfig
 # certmonger-0.79.4-2 fixes newlines in PEM files
-#Requires: certmonger >= 0.79.4
-Requires: certmonger
+Requires: certmonger >= 0.79.5
 Requires: nss-utils
 Requires: bind-utils
 Requires: oddjob-mkhomedir
@@ -1433,6 +1431,9 @@ fi
 %endif # with_ipatests
 
 %changelog
+* Mon Dec 25 2017 Stanislav Levin <slev@altlinux.org> 4.6.1-alt3%ubt
+- Fix ipa-cacert-manage renew scenario
+
 * Tue Dec 12 2017 Stanislav Levin <slev@altlinux.org> 4.6.1-alt2%ubt
 - Add openntpd support (based on patches from Mikhail Efremov) (closes: #34307)
 - Save and restore state of apache modules during installation/uninstallation
