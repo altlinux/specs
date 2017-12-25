@@ -1,7 +1,7 @@
 %define bname qaccessibilityclient
 Name: lib%bname-qt5
 Version: 0.2.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: This library is used when writing accessibility clients
 License: %lgpl21only
@@ -24,11 +24,11 @@ Conflicts: libqaccessibilityclient-devel
 %prep
 %setup
 #exclude tests and examples from build
-sed -i '/add_subdirectory(tests)\|add_subdirectory(examples)/d' ./CMakeLists.txt
+sed -i '/add_subdirectory.*tests\|add_subdirectory.*examples/d' ./CMakeLists.txt
 
 %build
 %cmake \
-	-DKDE4_BUILD_TESTS=OFF \
+	-DQT4_BUILD=OFF \
 	#
 %cmake_build
 
@@ -37,6 +37,7 @@ sed -i '/add_subdirectory(tests)\|add_subdirectory(examples)/d' ./CMakeLists.txt
 
 %files
 %doc COPYING* AUTHORS ChangeLog README
+%_libdir/%{name}.so.0
 %_libdir/%{name}.so.*
 
 %files devel
@@ -45,5 +46,8 @@ sed -i '/add_subdirectory(tests)\|add_subdirectory(examples)/d' ./CMakeLists.txt
 %_libdir/%{name}.so
 
 %changelog
+* Mon Dec 25 2017 Sergey V Turchin <zerg@altlinux.org> 0.2.0-alt2%ubt
+- track library soname
+
 * Fri Aug 25 2017 Stanislav Levin <slev@altlinux.org> 0.2.0-alt1%ubt
 - Initial build
