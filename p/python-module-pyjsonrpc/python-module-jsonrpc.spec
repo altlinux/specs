@@ -5,26 +5,25 @@
 
 Name: python-module-%module_name
 Version: 0.10.0
-Release: alt1
-
+Release: alt2
 Summary: json-rpc package which implements JSON-RPC over HTTP
-
 License: LGPL
 Group: Development/Python
+BuildArch: noarch
 Url: http://json-rpc.org/wiki/python-json-rpc
 
 # https://github.com/gerold-penz/python-jsonrpc.git
-Source0: https://pypi.python.org/packages/94/e7/24a062667e4e585529edacdac5fd05ae28d6a67491e737cca7fdfb7a6d17/python-jsonrpc-%{version}.tar.gz
+Source: python-jsonrpc-%{version}.tar.gz
 
-BuildArch: noarch
 
 %setup_python_module %module_name
-BuildPreReq: python-module-setuptools-tests python-module-bunch
-BuildPreReq: python-modules-json
+BuildRequires: python-module-setuptools-tests python-module-bunch
+BuildRequires: python-modules-json
+BuildRequires: python-module-munch
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools-tests python3-module-bunch
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-module-setuptools-tests python3-module-bunch
+BuildRequires: python-tools-2to3
 %endif
 
 Obsoletes: python-module-jsonrpc < %EVR
@@ -76,16 +75,19 @@ popd
 %endif
 
 %files
-%doc *.rst examples PKG-INFO version.txt
+%doc *.rst examples version.txt
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%module_name
-%doc *.rst examples PKG-INFO version.txt
+%doc *.rst examples version.txt
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Mon Dec 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.0-alt2
+- Updated build dependencies.
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt1
 - automated PyPI update
 
