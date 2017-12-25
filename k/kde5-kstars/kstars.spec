@@ -1,8 +1,9 @@
 %define rname kstars
 
 Name: kde5-%rname
-Version: 17.08.3
+Version: 2.8.9
 Release: alt1%ubt
+Epoch: 1
 %K5init
 
 Group: Education
@@ -63,6 +64,9 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 %_K5dbus_sys_srv/*kstars*.service
 
 %changelog
+* Mon Dec 25 2017 Sergey V Turchin <zerg@altlinux.org> 1:2.8.9-alt1%ubt
+- new version
+
 * Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 
