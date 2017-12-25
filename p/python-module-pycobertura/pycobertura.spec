@@ -3,41 +3,37 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.1
-Release: alt1.git20150106.1.1
+Version: 0.10.0
+Release: alt1
 Summary: A Cobertura coverage report parser written in Python
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/pycobertura/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/SurveyMonkey/pycobertura.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-click-tests python-module-colorama
-#BuildPreReq: python-module-tabulate python-module-mock
-#BuildPreReq: python-module-pytest-cov python-module-jinja2
-#BuildPreReq: python-module-lxml
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-click-tests python-module-colorama
+BuildRequires: python-module-tabulate python-module-mock
+BuildRequires: python-module-pytest-cov python-module-jinja2
+BuildRequires: python-module-html5lib
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-click-tests python3-module-colorama
-#BuildPreReq: python3-module-tabulate python3-module-mock
-#BuildPreReq: python3-module-pytest-cov python3-module-jinja2
-#BuildPreReq: python3-module-lxml
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-click-tests python3-module-colorama
+BuildRequires: python3-module-tabulate python3-module-unittest2
+BuildRequires: python3-module-pytest-cov python3-module-jinja2
+BuildRequires: python3-module-html5lib python3-module-pbr
 %endif
 
 %py_provides %oname
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: libgpg-error python-base python-devel python-module-click python-module-coverage python-module-cssselect python-module-funcsigs python-module-genshi python-module-jinja2-tests python-module-lxml python-module-markupsafe python-module-pbr python-module-pluggy python-module-py python-module-pytest python-module-setuptools python-module-six python-module-unittest2 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-cffi python3-module-coverage python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-jinja2 python3-module-lxml python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-click-tests python-module-colorama python-module-html5lib python-module-jinja2 python-module-mock python-module-pytest-cov python-module-setuptools-tests python-module-tabulate python3-module-html5lib python3-module-pbr python3-module-pytest-cov python3-module-setuptools-tests python3-module-tabulate python3-module-unittest2 rpm-build-python3 time
-
 %description
 A Cobertura coverage report parser written in Python.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A Cobertura coverage report parser written in Python
 Group: Development/Python3
@@ -45,9 +41,12 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 A Cobertura coverage report parser written in Python.
+%endif
 
 %prep
 %setup
+
+sed -i -e 's|setuptools_git|setuptools|g' setup.py
 
 %if_with python3
 cp -fR . ../python3
@@ -77,12 +76,13 @@ popd
 %python_install
 
 %check
+export LC_ALL=en_US.UTF-8
 python setup.py test
 py.test
 %if_with python3
 pushd ../python3
 python3 setup.py test
-#py.test-%_python3_version
+py.test3
 popd
 %endif
 
@@ -102,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.0-alt1
+- Updated to upstream version 0.10.0.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.1-alt1.git20150106.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
