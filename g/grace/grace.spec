@@ -4,7 +4,7 @@
 
 Name: grace
 Version: 5.1.25
-Release: alt3
+Release: alt4
 
 Summary: WYSIWYG tool to make two-dimensional plots of scientific data
 License: GPL
@@ -32,7 +32,7 @@ BuildPreReq: libXext-devel
 
 # Automatically added by buildreq on Sun Aug 31 2014
 # optimized out: fontconfig gnu-config groff-base libICE-devel libSM-devel libX11-devel libXau-devel libXt-devel libcloog-isl4 libhdf5-8-seq libnetcdf7-seq libopenmotif-devel sgml-common t1lib tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended texlive-xetex xorg-printproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: OpenSP imake libXbae-devel libXext-devel libXmu-devel libXp-devel libXpm-devel libfftw-devel libjpeg-devel libnetcdf-devel libpng-devel linuxdoc-tools t1lib-devel xorg-cf-files
+BuildRequires: OpenSP imake libXbae-devel libXext-devel libXmu-devel libXp-devel libXpm-devel libfftw3-devel libjpeg-devel libnetcdf-devel libpng-devel linuxdoc-tools t1lib-devel xorg-cf-files
 
 BuildRequires: sgml-tools texlive-latex-recommended
 
@@ -145,6 +145,9 @@ GRACE_HOME=%_datadir/grace %_datadir/grace/auxiliary/set_default_enc
 # - look into printing support
 
 %changelog
+* Mon Dec 25 2017 Michael Shigorin <mike@altlinux.org> 5.1.25-alt4
+- build against fftw3 instead of fftw
+
 * Tue Aug 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.25-alt3
 - Rebuilt with libnetcdf11.
 
