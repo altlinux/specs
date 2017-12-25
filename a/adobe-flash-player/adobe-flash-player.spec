@@ -1,9 +1,9 @@
 
 Name: adobe-flash-player
 %define bin_name mozilla-plugin-adobe-flash
-%define ver_fake   27
-%define ver_ix86   27.0.0.0
-%define ver_x86_64 27.0.0.0
+%define ver_fake   28
+%define ver_ix86   28.0.0.0
+%define ver_x86_64 28.0.0.0
 Release: alt1%ubt
 Serial: 3
 
@@ -59,6 +59,9 @@ fake
 %files -n %bin_name
 
 %changelog
+* Mon Dec 25 2017 Sergey V Turchin <zerg@altlinux.org> 3:28-alt1%ubt
+- bump version
+
 * Thu Sep 21 2017 Sergey V Turchin <zerg@altlinux.org> 3:27-alt1%ubt
 - bump version
 
