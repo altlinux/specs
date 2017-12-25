@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: upower
-Version: 0.99.6
+Version: 0.99.7
 Release: alt1
 
 Summary: Power Management Service
@@ -124,6 +124,9 @@ rm -f acinclude.m4
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Mon Dec 25 2017 Yuri N. Sedunov <aris@altlinux.org> 0.99.7-alt1
+- 0.99.7
+
 * Mon Sep 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.99.6-alt1
 - 0.99.6
 

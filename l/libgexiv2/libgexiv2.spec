@@ -4,7 +4,7 @@
 %def_enable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: GObject-based Exiv2 wrapper
@@ -123,6 +123,9 @@ subst 's/\(typelibdir[[:space:]]*=[[:space:]]*\).*/\1$(INTROSPECTION_TYPELIBDIR)
 %endif
 
 %changelog
+* Sun Dec 24 2017 Yuri N. Sedunov <aris@altlinux.org> 0.10.7-alt1
+- 0.10.7
+
 * Fri May 12 2017 Yuri N. Sedunov <aris@altlinux.org> 0.10.6-alt1
 - 0.10.6
 
