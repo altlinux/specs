@@ -1,46 +1,53 @@
+%define _unpackaged_files_terminate_build 1
 %define oname paramiko
+
 %def_with python3
 
 Summary: SSH2 protocol for python
-Packager: Andriy Stepanov <stanv@altlinux.ru>
 Name: python-module-%oname
-Version: 2.2.1
+Version: 2.4.0
 Release: alt1
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
-
 License: GPL
 Group: Development/Python
-Url: http://www.lag.net/%oname
 BuildArch: noarch
+Url: http://www.lag.net/%oname
 
-BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-ecdsa python-module-pycrypto python-module-pyasn1
-BuildPreReq: python-module-cryptography python-module-bcrypt python-module-pynacl
+Source: %name-%version.tar
+
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-ecdsa python-module-pycrypto python-module-pyasn1
+BuildRequires: python-module-cryptography python-module-bcrypt python-module-pynacl
+BuildRequires: python-module-pytest-relaxed
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-ecdsa python3-module-pycrypto python3-module-pyasn1
-BuildPreReq: python3-module-cryptography python3-module-bcrypt python3-module-pynacl
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-ecdsa python3-module-pycrypto python3-module-pyasn1
+BuildRequires: python3-module-cryptography python3-module-bcrypt python3-module-pynacl
+BuildRequires: python3-module-pytest-relaxed
 %endif
+
+Requires: python-module-bcrypt
 
 %description
 paramiko is a module for python that implements the SSH2 protocol for secure
 (encrypted and authenticated) connections to remote machines. It is written
 entirely in python (no C or platform-dependent code).
 
-This module is built for python %_python_version.
+This module is built for python 2
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: SSH2 protocol for python
 Group: Development/Python3
+Requires: python3-module-bcrypt
 
 %description -n python3-module-%oname
 paramiko is a module for python that implements the SSH2 protocol for secure
 (encrypted and authenticated) connections to remote machines. It is written
 entirely in python (no C or platform-dependent code).
 
-This module is built for python %_python3_version.
+This module is built for python 3
+%endif
 
 %package doc
 Summary: %oname documentation and example programs
@@ -53,7 +60,6 @@ package contain API documentation and examples for python-%oname module.
 
 %prep
 %setup
-%patch -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -78,27 +84,36 @@ popd
 %endif
 
 %check
-python ./test.py --no-sftp --no-big-file
+rm -fv tests/test_sftp.py
+rm -fv tests/test_sftp_big.py
+python setup.py build_ext -i
+PYTHONPATH=%buildroot%python_sitelibdir py.test -vv
 %if_with python3
 pushd ../python3
-python3 ./test.py --no-sftp --no-big-file
+rm -fv tests/test_sftp.py
+rm -fv tests/test_sftp_big.py
+python3 setup.py build_ext -i
+PYTHONPATH=%buildroot%python3_sitelibdir py.test3 -vv
 popd
 %endif
 
 %files
-%python_sitelibdir/*
 %doc README.rst LICENSE
+%python_sitelibdir/*
 
 %files doc
 %doc demos
 
 %if_with python3
 %files -n python3-module-%oname
-%python3_sitelibdir/*
 %doc README.rst LICENSE
+%python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Dec 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.0-alt1
+- Updated to upstream version 2.4.0.
+
 * Tue Aug 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.1-alt1
 - Updated to upstream version 2.2.1.
 
