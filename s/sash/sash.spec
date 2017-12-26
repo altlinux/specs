@@ -1,6 +1,6 @@
 Name: sash
 Version: 3.4
-Release: alt2.qa1
+Release: alt2.qa2
 Epoch: 1
 
 Summary: A statically linked shell, including some built-in basic commands
@@ -42,6 +42,11 @@ fgrep -C1 Permission sash.h >copyright
 %doc copyright
 
 %changelog
+* Tue Dec 26 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.4-alt2.qa2
+- Fixed build:
+  + with glibc 2.26;
+  + on architectures without SIGSTKFLT signal (e.g. mips*).
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:3.4-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
