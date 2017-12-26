@@ -1,7 +1,7 @@
 %define py_name youtube_dl
 
 Name: youtube-dl
-Version: 2017.09.11
+Version: 2017.12.23
 Release: alt1
 
 Summary: Download videos from YouTube
@@ -13,7 +13,7 @@ Source0: %name-%version.tar
 
 BuildArch: noarch
 
-Requires: python-module-youtube_dl = %EVR
+Requires: python3-module-%py_name = %EVR
 
 # Automatically added by buildreq on Fri Apr 08 2016
 # optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python3 python3-base
@@ -61,12 +61,12 @@ cd py3
 cd -
 
 %install
-cd py2
-	%python3_install
-cd -
-
 cd py3
 	%python_install
+cd -
+
+cd py2
+	%python3_install
 cd -
 
 %files
@@ -82,6 +82,10 @@ cd -
 %python3_sitelibdir/%py_name-*.egg-info
 
 %changelog
+* Tue Dec 26 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2017.12.23-alt1
+- Updated to 2017.12.23.
+- Switched %_bindir/youtube-dl to use python3 (ALT#34394).
+
 * Wed Sep 13 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2017.09.11-alt1
 - Updated to 2017.09.11.
 
