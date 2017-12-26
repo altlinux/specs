@@ -8,8 +8,8 @@
 %define libusbguard libusbguard%sover
 
 Name: usbguard
-Version: 0.7.0
-Release: alt2%ubt
+Version: 0.7.1
+Release: alt1%ubt
 
 Group: System/Servers
 Summary: A tool for implementing USB device usage policy
@@ -33,8 +33,8 @@ Patch1: alt-linking.patch
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: glibc-devel libcap-ng-devel libgcrypt-devel libseccomp-devel
 BuildRequires: catch
-BuildRequires: xsltproc
-BuildRequires: libsystemd-devel
+BuildRequires: xsltproc asciidoctor
+BuildRequires: libsystemd-devel libaudit-devel
 BuildRequires: qt5-svg-devel qt5-tools
 BuildRequires: libprotobuf-devel protobuf-compiler libqb-devel pegtl-devel
 %if_enabled dbus
@@ -105,10 +105,10 @@ a D-Bus interface to the USBGuard daemon component.
 rm -rf src/ThirdParty/{Catch,PEGTL}
 %autoreconf
 
-for f in src/GUI.Qt/*.cpp; do
-    sed -i '/systray->setIcon(/s/QIcon(/QPixmap(/' $f
-    sed -i '/QSystemTrayIcon(/s/QIcon(/QPixmap(/' $f
-done
+#for f in src/GUI.Qt/*.cpp; do
+#    sed -i '/systray->setIcon(/s/QIcon(/QPixmap(/' $f
+#    sed -i '/QSystemTrayIcon(/s/QIcon(/QPixmap(/' $f
+#done
 
 %build
 %configure \
@@ -129,6 +129,7 @@ done
     --with-crypto-library=gcrypt \
     #
 %make_build
+asciidoctor -v -b html README.adoc -o README.html
 
 %install
 %make INSTALL='install -p' DESTDIR=%buildroot install-am
@@ -140,7 +141,7 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/usbguard/usbguard-daemon.conf
 %files common
 
 %files
-%doc README.md CHANGELOG.md
+%doc README.html CHANGELOG.*
 %_sbindir/usbguard-daemon
 %_bindir/usbguard
 %dir %_localstatedir/log/usbguard
@@ -184,6 +185,9 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/usbguard/usbguard-daemon.conf
 %endif
 
 %changelog
+* Tue Dec 26 2017 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt1%ubt
+- new version
+
 * Mon Aug 07 2017 Sergey V Turchin <zerg@altlinux.org> 0.7.0-alt2%ubt
 - fix configs permissions
 
