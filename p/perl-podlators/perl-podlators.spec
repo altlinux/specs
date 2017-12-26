@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist podlators
 Name: perl-%dist
-Version: 4.09
+Version: 4.10
 Release: alt1
 
 Summary: Convert POD data to various other formats
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RR/RRA/podlators-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RR/RRA/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -25,7 +25,7 @@ the POD parsing themselves, and are designed to be object-oriented and
 to subclass.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,7 +34,7 @@ to subclass.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README README.md docs
 %_bindir/pod2man
 %_bindir/pod2text
 %_man1dir/perlpodstyle.*
@@ -43,6 +43,9 @@ to subclass.
 %perl_vendor_privlib/Pod*
 
 %changelog
+* Tue Dec 26 2017 Igor Vlasenko <viy@altlinux.ru> 4.10-alt1
+- automated CPAN update
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 4.09-alt1
 - automated CPAN update
 
