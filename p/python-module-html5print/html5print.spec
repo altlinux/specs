@@ -4,15 +4,18 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.1
-Release: alt2.git20140927.1
+Version: 0.1.2
+Release: alt1.git20161101.1
+
 Summary: HTML5, CSS, Javascript Pretty Print
+
 License: ASLv2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/html5print/
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/berniey/html5print.git
+# Source-git: https://github.com/berniey/html5print.git
 Source: %name-%version.tar
 BuildArch: noarch
 BuildRequires: python-module-chardet python-module-html5lib python-module-ndg-httpsclient python-module-ntlm python-module-setuptools-tests python-module-slimit
@@ -107,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 26 2017 Vitaly Lipatov <lav@altlinux.ru> 0.1.2-alt1.git20161101.1
+- build latest code from 489e8b6046a7332405d4d8025c783018f5025faf commit
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt2.git20140927.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
