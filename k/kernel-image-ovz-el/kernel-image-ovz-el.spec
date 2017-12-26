@@ -1,8 +1,9 @@
 Name: kernel-image-ovz-el
-Version: 2.6.32
-Release: alt158
+Version: 3.2.0
+Release: alt160
 
 %define kernel_base_version	%version
+%define kernel_real_version	2.6.32
 %define kernel_extra_version	%nil
 # Numeric extra version scheme developed by Alexander Bokovoy:
 # 0.0.X -- preX
@@ -47,7 +48,7 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Source11: config-x86
 Source12: config-x86_64
-Patch0: patch-042stab126.1-combined
+Patch0: patch-042stab126.2-combined
 Patch1: %name-%version-%release.patch
 
 ExclusiveArch: i586 i686 x86_64
@@ -58,7 +59,7 @@ BuildRequires(pre): rpm-build-kernel
 BuildRequires: dev86 flex
 BuildRequires: libdb4-devel
 BuildRequires: gcc%kgcc_version
-BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeric
+BuildRequires: kernel-source-%kernel_real_version = %kernel_extra_version_numeric
 BuildRequires: module-init-tools >= 3.1
 BuildRequires: lzma-utils
 Provides: kernel-modules-eeepc-%flavour
@@ -316,9 +317,9 @@ in the kernel and update the documentation to reflect these changes.
 
 %prep
 %setup -cT -n kernel-image-%flavour-%kversion-%krelease
-rm -rf kernel-source-%kernel_base_version
-tar -xf %kernel_src/kernel-source-%kernel_base_version.tar.*
-%setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
+rm -rf kernel-source-%kernel_real_version
+tar -xf %kernel_src/kernel-source-%kernel_real_version.tar.*
+%setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_real_version
 %patch0 -p1
 %patch1 -p1
 
@@ -617,6 +618,14 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?(reboot: )?Power down' boot.log || {
 %endif # staging
 
 %changelog
+* Tue Dec 26 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2.0-alt160
+- Backported support of prlimit64 syscall.
+- Faked version reported by kernel to fix work of glibc 2.26
+  with openvz kernel.
+
+* Thu Dec 21 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt159
+- Updated to 042stab126.2.
+
 * Tue Nov 21 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt158
 - Updated to 042stab126.1.
 
