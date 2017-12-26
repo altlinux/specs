@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 2.1.1
+Version: 2.1.3
 Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
@@ -128,6 +128,12 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Tue Dec 26 2017 Vitaly Lipatov <lav@altlinux.ru> 2.1.3-alt1
+- add _pypi_url
+
+* Thu Dec 14 2017 Vitaly Lipatov <lav@altlinux.ru> 2.1.2-alt1
+- add add_verify_elf_skiplist to other platforms
+
 * Sat Oct 28 2017 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
 - spread _rundir, _logdir to other platforms
 
