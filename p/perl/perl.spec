@@ -1,6 +1,6 @@
 Name: perl
 Version: 5.26.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -933,6 +933,9 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%autolib/Unicode
 
 %changelog
+* Tue Dec 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.26.1-alt2
+- Rebuilt with new glibc.
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.26.1-alt1
 - 5.24.3 -> 5.26.1
 - build with -Duse64bitint
