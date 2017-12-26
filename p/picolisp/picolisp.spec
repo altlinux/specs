@@ -1,5 +1,5 @@
 Name: picolisp
-Version: 17.6
+Version: 17.12
 Release: alt1
 
 Summary: Interpreted Lisp
@@ -53,6 +53,9 @@ ln -s ../lib/%name %buildroot%_datadir/%name
 %_datadir/%name/
 
 %changelog
+* Tue Dec 26 2017 Michael Shigorin <mike@altlinux.org> 17.12-alt1
+- new version (watch file uupdate)
+
 * Thu Jun 29 2017 Michael Shigorin <mike@altlinux.org> 17.6-alt1
 - new version (watch file uupdate)
 
