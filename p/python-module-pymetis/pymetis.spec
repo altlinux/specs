@@ -3,22 +3,22 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2011.1.1
-Release: alt5.git20120417.1.1
+Version: 2016.1
+Release: alt1
 Summary: Python wrapper for the Metis graph partititioning software
 License: MIT
 Group: Development/Python
 Url: http://mathema.tician.de/software/pymetis
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# http://git.tiker.net/trees/pymetis.git
+# https://github.com/inducer/pymetis.git
 Source: %oname-%version.tar
+Patch1: %oname-%version-alt-build.patch
 
-BuildPreReq: python-module-setuptools gcc-c++ boost-python-devel
+BuildRequires: python-module-setuptools gcc-c++ boost-python-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools boost-python3-devel
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools boost-python3-devel
+BuildRequires: python-tools-2to3
 %endif
 
 %description
@@ -31,6 +31,7 @@ Using PyMetis to partition your meshes is really easy--essentially all
 you need to pass into PyMetis is an adjacency list for the graph and the
 number of parts you would like.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python wrapper for the Metis graph partititioning software
 Group: Development/Python3
@@ -44,9 +45,11 @@ but extending it in case you need more should be quite straightforward.
 Using PyMetis to partition your meshes is really easy--essentially all
 you need to pass into PyMetis is an adjacency list for the graph and the
 number of parts you would like.
+%endif
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -83,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2016.1-alt1
+- Updated to upstream version 2016.1.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2011.1.1-alt5.git20120417.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
