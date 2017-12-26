@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Test-Object
 Name: perl-%dist
-Version: 0.07
-Release: alt3
+Version: 0.08
+Release: alt1
 
 Summary: Thoroughly testing objects via registered handlers
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +22,7 @@ what you believe is a valid object against the expected behaviour of all
 of the classes in its inheritance tree in one single call.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +35,9 @@ of the classes in its inheritance tree in one single call.
 %perl_vendor_privlib/Test
 
 %changelog
+* Tue Dec 26 2017 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 0.07-alt3
 - disabled build dependency on perl-Module-Install
 
