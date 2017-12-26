@@ -8,7 +8,7 @@
 %def_enable jack_version
 
 Name: qjackctl
-Version: 0.4.5
+Version: 0.5.0
 %ifdef cvsbuild
 Release: alt0.cvs%cvsdate
 %else
@@ -72,7 +72,7 @@ export PATH=%_qt4dir/bin:$PATH
 %install
 %makeinstall_std
 
-%find_lang --with-qt %name
+%find_lang --with-qt --with-man %name
 
 %files -f %name.lang
 %_bindir/%name
@@ -81,10 +81,13 @@ export PATH=%_qt4dir/bin:$PATH
 %dir %_datadir/%name/translations
 %_iconsdir/hicolor/*/*/*.*
 %_man1dir/*
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Tue Dec 26 2017 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Thu Apr 27 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.5-alt1
 - 0.4.5
 
