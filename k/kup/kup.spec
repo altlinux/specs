@@ -1,10 +1,11 @@
 Name:       kup
-Version:    0.3.4
+Version:    0.3.6
 Release:    alt1
 Summary:    Kernel.org Uploader
 
 Group:      Development/Tools
 License:    GPLv2
+Packager:   Alexey Gladkov <legion@altlinux.ru>
 URL:        https://git.kernel.org/?p=utils/kup/kup.git;a=summary
 Source0:    https://www.kernel.org/pub/software/network/kup/kup-%{version}.tar.xz
 Source1:    kup-server-tmpfiles.conf
@@ -56,7 +57,8 @@ mkdir -p -- \
 	%buildroot/%_bindir \
 	%buildroot/%_man1dir \
 	%buildroot/%_sysconfdir/kup \
-	%buildroot/%_localstatedir/run/kup
+	%buildroot/%_sharedstatedir/kup \
+	%buildroot/%_runtimedir/kup
 
 install -pm 0755 kup gpg-sign-all genrings kup-server %buildroot/%_bindir
 install -pm 0644 kup.1 %buildroot/%_man1dir/
@@ -64,11 +66,11 @@ install -pm 0644 kup-server.cfg %buildroot/%_sysconfdir/kup/kup-server.cfg
 
 # Runtime directories and files
 mkdir -pm 0755 \
-	%buildroot/%_localstatedir/kup/{pub,tmp,pgp} \
+	%buildroot/%_sharedstatedir/kup/{pub,tmp,pgp} \
 	%buildroot/%_tmpfilesdir
 
 install -pm 0644 %SOURCE1 %buildroot/%_tmpfilesdir/kup-server.conf
-touch %buildroot/%_localstatedir/run/kup/lock
+touch %buildroot/%_runtimedir/kup/lock
 
 %files
 %doc COPYING
@@ -81,18 +83,22 @@ touch %buildroot/%_localstatedir/run/kup/lock
 %config %dir %_sysconfdir/kup
 %config(noreplace) %_sysconfdir/kup/kup-server.cfg
 %_bindir/kup-server
-%dir %attr(1777,root,root) %_localstatedir/kup/tmp
-%dir %_localstatedir/kup
-%dir %_localstatedir/kup/pgp
-%dir %_localstatedir/kup/pub
-%dir %_localstatedir/run/kup
-%_localstatedir/run/kup/lock
+%dir %_sharedstatedir/kup
+%dir %_sharedstatedir/kup/pgp
+%dir %_sharedstatedir/kup/pub
+%dir %attr(1777,root,root) %_sharedstatedir/kup/tmp
+%dir %_runtimedir/kup
+%_runtimedir/kup/lock
 
 %files server-utils
 %_bindir/gpg-sign-all
 %_bindir/genrings
 
 %changelog
+* Sun Dec 24 2017 Alexey Gladkov <legion@altlinux.ru> 0.3.6-alt1
+- New version (0.3.6)
+- Use _runtimedir (ALT#34042).
+
 * Wed Apr 24 2013 Alexey Gladkov <legion@altlinux.ru> 0.3.4-alt1
 - Upstream 0.3.4
 - Move kup-server.conf to /lib/tmpfiles.d.
