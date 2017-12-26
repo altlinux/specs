@@ -1,6 +1,6 @@
 Name:    msd_lite
 Version: 1.08
-Release: alt1
+Release: alt2
 License: BSD
 Group:	 Networking/Other
 URL: http://www.netlab.linkpc.net/wiki/ru:software:msd:lite
@@ -51,5 +51,8 @@ install -pDm0644 %name.service		%buildroot%_unitdir/%name.service
 %doc AUTHORS COPYING README
 
 %changelog
+* Tue Dec 26 2017 Alexei Takaseev <taf@altlinux.org> 1.08-alt2
+- Fix build with glibc-2.26
+
 * Sat Dec 02 2017 Alexei Takaseev <taf@altlinux.org> 1.08-alt1
 - Initial build for ALT Sisyphus
