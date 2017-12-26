@@ -1,12 +1,12 @@
 %def_with	enigmail
 %define 	r_name thunderbird
 
-%define enigmail_version  1.9.8.3
+%define enigmail_version  1.9.9
 %define gdata_version     2.6
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	52.5.0
+Version:	52.5.2
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -424,6 +424,15 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Mon Dec 25 2017 Andrey Cherepanov <cas@altlinux.org> 52.5.2-alt1
+- New version (52.5.2)
+- Enigmail 1.9.9
+- Fixes:
+  + CVE-2017-7846 JavaScript Execution via RSS in mailbox:// origin
+  + CVE-2017-7847 Local path string can be leaked from RSS feed
+  + CVE-2017-7848 RSS Feed vulnerable to new line Injection
+  + CVE-2017-7829 Mailsploit part 1: From address with encoded null character is cut off in message header display
+
 * Fri Nov 24 2017 Andrey Cherepanov <cas@altlinux.org> 52.5.0-alt1
 - New version (52.5.0)
 - Fixes:
