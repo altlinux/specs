@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 17.08.0
+Version: 17.08.1
 Release: alt1%ubt
 
 Group: Graphical desktop/KDE
@@ -160,7 +160,8 @@ KDE image scanning support applications.
 %package -n kde5-pim
 Summary: %summary
 Group: Graphical desktop/KDE
-Requires: kde5-akonadiconsole kde5-akonadi-calendar-tools kde5-akonadi-import-wizard kde5-kmail-account-wizard
+##Requires: kde5-akonadiconsole
+Requires: kde5-akonadi-calendar-tools kde5-akonadi-import-wizard kde5-kmail-account-wizard
 Requires: kde5-akregator kde5-blogilo kde5-kaddressbook kde5-kalarm kde5-kmail kde5-knotes kde5-kontact kde5-korganizer
 Requires: kde5-mbox-importer kde5-pim-data-exporter kde5-pim-sieve-editor kde5-grantlee-editor
 %description -n kde5-pim
@@ -182,6 +183,9 @@ Requires: kde5-mbox-importer kde5-pim-data-exporter kde5-pim-sieve-editor kde5-g
 %files -n kde5-pim
 
 %changelog
+* Tue Dec 26 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.1-alt1%ubt
+- update PIM requires
+
 * Fri Dec 22 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.0-alt1%ubt
 - update requires
 
