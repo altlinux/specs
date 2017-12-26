@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist PPIx-EditorTools
 Name: perl-PPIx-EditorTools
-Version: 0.20
+Version: 0.21
 Release: alt1
 
 Summary: PPIx::EditorTools - Utility methods and base class for manipulating Perl
@@ -31,6 +32,9 @@ BuildArch: noarch
 %doc Changes README
 
 %changelog
+* Tue Dec 26 2017 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- automated CPAN update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - automated CPAN update
 
