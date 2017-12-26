@@ -7,7 +7,7 @@
 
 Name: libgcrypt
 Version: 1.7.9
-Release: alt1%ubt
+Release: alt2%ubt
 
 %define soname %{name}%{soversion}
 
@@ -29,16 +29,26 @@ BuildRequires: libpth-devel
 # explicitly added texinfo for info files
 BuildRequires: texinfo
 
+%description
+Libgcrypt is a general purpose cryptographic library
+based on the code from GNU Privacy Guard.
+
 %package -n %soname
 Summary: The GNU crypto library
 Group: System/Libraries
 Requires: libgpg-error >= %req_gpgerror_ver
 Provides: %name = %version-%release
+%description -n %soname
+Libgcrypt is a general purpose cryptographic library
+based on the code from GNU Privacy Guard.
 
 %package -n %soname-pth
 Summary: GNU Crypto library with GNU Pth user-space thread support
 Group: System/Libraries
 Requires: libgpg-error >= %req_gpgerror_ver
+%description -n %soname-pth
+This is a portion of Libgcrypt supporting user-space
+threads provided by the GNU Pth library.
 
 %package -n gcrypt-utils
 Group: Networking/Other
@@ -46,6 +56,8 @@ Summary: Utilities for the %name package
 Conflicts: %name-devel <= 1.4.2
 Provides: %name-utils = %version-%release
 Obsoletes: %name-utils < %version-%release
+%description -n gcrypt-utils
+This package contains %name utilities.
 
 %package devel
 Group: Development/Other
@@ -56,6 +68,11 @@ Requires: libgpg-error-devel  >= %req_gpgerror_ver
 Requires: %soname-pth = %version-%release
 %endif
 Conflicts: %{name}0-devel
+%description devel
+Libgcrypt is a general purpose cryptographic library
+based on the code from GNU Privacy Guard.
+This package contains files needed to develop
+applications using libgcrypt (e.g. Aegypten project).
 
 %package devel-static
 Summary: Static libraries for the %name-devel package
@@ -63,42 +80,9 @@ Group: Development/Other
 Requires: %name-devel = %version-%release
 Requires: libgpg-error-devel-static  >= %req_gpgerror_ver
 Conflicts: %{name}0-devel-static
-
-%description
-Libgcrypt is a general purpose cryptographic library
-based on the code from GNU Privacy Guard.  It provides functions for all
-cryptograhic building blocks: symmetric ciphers
-(AES,DES,Blowfish,CAST5,Twofish,Arcfour), hash algorithms (MD5,
-RIPE-MD160, SHA-1, TIGER-192), MACs (HMAC for all hash algorithms),
-public key algorithms (RSA, ElGamal, DSA), large integer functions,
-random numbers and a lot of supporting functions.
-
-%description -n %soname
-Libgcrypt is a general purpose cryptographic library
-based on the code from GNU Privacy Guard.  It provides functions for all
-cryptograhic building blocks: symmetric ciphers
-(AES,DES,Blowfish,CAST5,Twofish,Arcfour), hash algorithms (MD5,
-RIPE-MD160, SHA-1, TIGER-192), MACs (HMAC for all hash algorithms),
-public key algorithms (RSA, ElGamal, DSA), large integer functions,
-random numbers and a lot of supporting functions.
-
-%description -n %soname-pth
-This is a portion of Libgcrypt supporting user-space
-threads provided by the GNU Pth library.
-
-%description -n gcrypt-utils
-This package contains %name utilities:
-* dumpsexp - debug tool for S-expressions
-* hmac256 - standalone HMAC-SHA-256 implementation
-
-%description devel
-Libgcrypt is a general purpose cryptographic library
-based on the code from GNU Privacy Guard.
-This package contains files needed to develop
-applications using libgcrypt (e.g. Aegypten project).
-
 %description devel-static
 Static libraries for the %name-devel package
+
 
 %prep
 %setup -q
@@ -169,6 +153,9 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 %endif
 
 %changelog
+* Tue Dec 26 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.9-alt2%ubt
+- clean description (ALT#34383)
+
 * Mon Sep 18 2017 Sergey V Turchin <zerg@altlinux.org> 1.7.9-alt1%ubt
 - new version
 - security fixes: CVE-2017-0379
