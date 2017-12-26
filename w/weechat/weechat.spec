@@ -1,6 +1,6 @@
 Name: weechat
-Version: 1.9.1
-Release: alt2.1
+Version: 2.0.1
+Release: alt1
 
 Summary: fast, light & extensible IRC client
 License: GPLv3
@@ -135,6 +135,7 @@ find %buildroot -name '*.a' -delete
 %_libdir/%name/plugins/buflist.so
 %_libdir/%name/plugins/charset.so
 %_libdir/%name/plugins/fifo.so
+%_libdir/%name/plugins/fset.so
 %_libdir/%name/plugins/exec.so
 %_libdir/%name/plugins/script.so
 %_libdir/%name/plugins/irc.so
@@ -164,6 +165,9 @@ find %buildroot -name '*.a' -delete
 %_libdir/%name/plugins/tcl.so
 
 %changelog
+* Tue Dec 26 2017 Alexey Gladkov <legion@altlinux.ru> 2.0.1-alt1
+- New version (2.0.1)
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.9.1-alt2.1
 - rebuild with new perl 5.26.1
 
