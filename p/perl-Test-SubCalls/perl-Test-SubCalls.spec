@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Test-SubCalls
 Name: perl-%dist
-Version: 1.09
-Release: alt2
+Version: 1.10
+Release: alt1
 
 Summary: Track the number of times subs are called
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +23,7 @@ that some underlying subroutine deep within the code was called a
 specific number of times.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +36,9 @@ specific number of times.
 %perl_vendor_privlib/Test
 
 %changelog
+* Tue Dec 26 2017 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 1.09-alt2
 - disabled build dependency on perl-Module-Install
 
