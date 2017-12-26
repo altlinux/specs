@@ -1,12 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Date/Format.pm) perl(Date/Parse.pm) perl(Email/Simple.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.pm) perl(Encode/KR.pm) perl(Encode/TW.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(Font/Metrics/TimesRoman.pm) perl(HTML/FormatPS.pm) perl(HTML/FormatText.pm) perl(HTML/TreeBuilder.pm) perl(IO/Scalar.pm) perl(MIME/Base64.pm) perl(MIME/Entity.pm) perl(MIME/Parser.pm) perl(MIME/Types.pm) perl(Mail/Address.pm) perl(Scalar/Util.pm) perl(Sys/Hostname.pm) perl(Test/More.pm) perl(Text/Autoformat.pm) perl(Time/Zone.pm) perl(URI.pm) perl(User/Identity.pm)
 # END SourceDeps(oneline)
 %define module_name Mail-Message
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 3.003
+Version: 3.005
 Release: alt1
 Summary: MIME message handling
 Group: Development/Perl
@@ -45,6 +45,9 @@ There are various ways to install this module:
 %perl_vendor_privlib/M*
 
 %changelog
+* Tue Dec 26 2017 Igor Vlasenko <viy@altlinux.ru> 3.005-alt1
+- automated CPAN update
+
 * Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 3.003-alt1
 - automated CPAN update
 
