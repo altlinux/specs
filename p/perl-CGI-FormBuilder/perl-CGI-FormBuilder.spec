@@ -4,7 +4,7 @@
 Name: perl-CGI-FormBuilder
 Epoch:   1
 Version: 3.10
-Release: alt1
+Release: alt2
 
 Summary: Perl module for easily generation and processing stateful forms
 
@@ -18,6 +18,7 @@ BuildArch: noarch
 %define real_name CGI-FormBuilder
 Source: %real_name-%version.tar
 Patch0: %name-3.90-alt-test_fix.patch
+Patch1: %name-3.10-alt-fix_encoding.patch
 
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
@@ -39,6 +40,7 @@ The native HTML generated is valid XHTML 1.0 Transitional.
 %prep
 %setup  -n %real_name-%version
 %patch0
+%patch1
 
 %build
 %perl_vendor_build
@@ -52,6 +54,9 @@ The native HTML generated is valid XHTML 1.0 Transitional.
 %perl_vendor_privlib/CGI/FormBuilder*
 
 %changelog
+* Tue Dec 26 2017 Nikolay A. Fetisov <naf@altlinux.org> 1:3.10-alt2
+- Fix build: convert Spanish message files to UTF-8
+
 * Fri Sep 09 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1:3.10-alt1
 - New version
 
