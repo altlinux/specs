@@ -4,31 +4,26 @@
 
 Name: python-module-%oname
 Version: 1.6.2
-Release: alt1.git20150203.1.1
+Release: alt2.git20150203
 Summary: Pure-Python implementation of Scrypt PBKDF and scrypt file format library
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/pyscrypt/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/ricmoo/pyscrypt.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-pycrypto
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-pycrypto python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-pycrypto
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-pycrypto python3-module-pytest
 %endif
 
 %py_provides %oname
 %py_requires Crypto
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pluggy python-module-py python-module-setuptools python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pluggy python3-module-py python3-module-setuptools xz
-BuildRequires: python-module-pycrypto python-module-pytest python3-module-pycrypto python3-module-pytest rpm-build-python3 time
 
 %description
 A very simple, pure-Python implementation of the scrypt password-based
@@ -36,6 +31,7 @@ key derivation function and scrypt file format library with no
 dependencies beyond standard Python libraries. See README.md for API
 reference and details.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Pure-Python implementation of Scrypt PBKDF and scrypt file format library
 Group: Development/Python3
@@ -47,6 +43,7 @@ A very simple, pure-Python implementation of the scrypt password-based
 key derivation function and scrypt file format library with no
 dependencies beyond standard Python libraries. See README.md for API
 reference and details.
+%endif
 
 %prep
 %setup
@@ -74,10 +71,13 @@ popd
 %endif
 
 %check
-py.test -vv
+PYTHONPATH=%buildroot%python_sitelibdir python tests/run-tests-file.py
+PYTHONPATH=%buildroot%python_sitelibdir python tests/run-tests-hash.py
+
 %if_with python3
 pushd ../python3
-py.test-%_python3_version -vv
+PYTHONPATH=%buildroot%python3_sitelibdir python3 tests/run-tests-file.py
+PYTHONPATH=%buildroot%python3_sitelibdir python3 tests/run-tests-hash.py
 popd
 %endif
 
@@ -92,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Tue Dec 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.2-alt2.git20150203
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.6.2-alt1.git20150203.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
