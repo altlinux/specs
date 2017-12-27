@@ -6,35 +6,32 @@
 
 Name: python-module-%oname
 Version: 0.1.6
-Release: alt1
+Release: alt2
 Summary: Redis data structures wrapped with Python 3
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/redis_structures/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/jaredlunde/redis_structures.git
-Source0: https://pypi.python.org/packages/14/ac/6b0b0a4a317683ed79ebdd089a294ee689415bf24457ec801bfb45a0fac1/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %oname-%version.tar
 
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-redis-py python-module-ujson
-#BuildPreReq: python-module-pip
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-redis-py python-module-ujson
+BuildRequires: python-module-pip
+BuildRequires: python-modules-compiler python-modules-encodings
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-redis-py python3-module-ujson
-#BuildPreReq: python3-module-pip python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-redis-py python3-module-ujson
+BuildRequires: python3-module-pip python-tools-2to3
+BuildRequires: python3-module-html5lib python3-module-pytest
 %endif
 
 %py_provides %oname
 %py_requires redis ujson
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-modules python-modules-logging python3 python3-base python3-module-OpenSSL python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-idna python3-module-lxml python3-module-ntlm python3-module-pluggy python3-module-py python3-module-pyasn1 python3-module-pycparser python3-module-setuptools python3-module-six xz
-BuildRequires: python-modules-compiler python-modules-encodings python-tools-2to3 python3-module-html5lib python3-module-pip python3-module-pytest python3-module-redis-py python3-module-ujson rpm-build-python3 time
 
 %description
 Pythonic data structures backed by Redis.
@@ -82,11 +79,11 @@ popd
 
 %check
 %if_with python2
-py.test -vv $(find %oname -name '*.py')
+python setup.py test
 %endif
 %if_with python3
 pushd ../python3
-py.test-%_python3_version -vv $(find %oname -name '*.py')
+python3 setup.py test
 popd
 %endif
 
@@ -101,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.6-alt2
+- Fixed build.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.6-alt1
 - automated PyPI update
 
