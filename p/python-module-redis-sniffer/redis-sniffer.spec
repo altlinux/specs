@@ -4,24 +4,23 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt2.git20150318
+Release: alt3.git20150318
 Summary: A redis sniffing & event logging utility
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/redis-sniffer/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/eternalprojects/redis-sniffer.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-pcap python-module-dpkt
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-pcap python-module-dpkt
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-pcap
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-pcap
+BuildRequires: python-tools-2to3
 %endif
 
 %py_provides redis_sniffer
@@ -86,11 +85,9 @@ popd
 
 %check
 python setup.py test
-py.test -vv redis_sniffer/*.py
 %if_with python3
 pushd ../python3
 python3 setup.py test
-py.test-%_python3_version -vv redis_sniffer/*.py
 popd
 %endif
 
@@ -110,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt3.git20150318
+- Fixed build.
+
 * Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt2.git20150318
 - Fixed build
 
