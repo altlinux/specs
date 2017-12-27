@@ -5,37 +5,33 @@
 
 Name: python-module-%oname
 Version: 0.1.6
-Release: alt1
+Release: alt2
 Summary: Makes it easy to respect rate limits
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/ratelim/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/themiurgo/ratelim.git
-Source0: https://pypi.python.org/packages/c5/5a/e1440017bccb14523bb76356e6f3a5468386b8a9192bd901e98babd1a1ea/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %oname-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-decorator
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-decorator
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-decorator
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-decorator
 %endif
 
 %py_provides %oname
 %py_requires decorator
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
 
 %description
 Ratelim is a simple Python library that limits the number of times a
 function can be called in during a time interval. It is particularly
 useful when using online APIs, which commonly enforce rate limits.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Makes it easy to respect rate limits
 Group: Development/Python3
@@ -46,6 +42,7 @@ Group: Development/Python3
 Ratelim is a simple Python library that limits the number of times a
 function can be called in during a time interval. It is particularly
 useful when using online APIs, which commonly enforce rate limits.
+%endif
 
 %prep
 %setup -q -n %{oname}-%{version}
@@ -91,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.6-alt2
+- Updated build dependencies.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.6-alt1
 - automated PyPI update
 
