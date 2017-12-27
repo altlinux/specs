@@ -21,7 +21,7 @@
 
 %if 0%{?altlinux}
 %define _perl_lib_path %buildroot%_libexecdir/%name
-Epoch: 1
+Epoch: 2
 %endif
  
 Name:           obs-build
@@ -29,7 +29,7 @@ License:        GPLv2+
 Group:          Development/Tools
 #AutoReqProv:    on
 Summary:        A Script to Build SUSE Linux RPMs
-Version:        2.5.0
+Version:        20171227
 Release:        alt1
 
 Packager: Denis Pynkin <dans@altlinux.org>
@@ -144,7 +144,7 @@ test -e default.conf
 /usr/bin/buildvc
 /usr/bin/unrpm
 /usr/lib/build
-%{_mandir}/man1/build.1*
+%{_man1dir}/*
 
 %if 0%{?suse_version} > 1120 || ! 0%{?suse_version}
 %exclude /usr/lib/build/mkbaselibs
@@ -168,6 +168,9 @@ test -e default.conf
 %endif
 
 %changelog
+* Wed Dec 27 2017 Denis Pynkin <dans@altlinux.org> 2:20171227-alt1
+- New version
+
 * Mon Sep 08 2014 Denis Pynkin <dans@altlinux.org> 1:2.5.0-alt1
 - New version
 
