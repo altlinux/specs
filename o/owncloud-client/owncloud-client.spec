@@ -1,7 +1,7 @@
 %define rname owncloudclient
 Name: owncloud-client
-Version: 2.3.4
-Release: alt2%ubt
+Version: 2.4.0
+Release: alt1%ubt
 
 Group: Networking/File transfer
 Summary: ownCloud Desktop Client
@@ -46,7 +46,7 @@ Nautilus %name integration
 %patch1 -p1
 #%patch2 -p1
 %patch3 -p1
-%patch4 -p2
+%patch4 -p1
 
 %build
 %add_optflags %optflags_shared
@@ -88,6 +88,9 @@ desktop-file-install \
 %_datadir/nautilus-python/extensions/
 
 %changelog
+* Wed Dec 27 2017 Oleg Solovyov <mcpain@altlinux.org> 2.4.0-alt1%ubt
+- new version
+
 * Mon Dec 18 2017 Oleg Solovyov <mcpain@altlinux.org> 2.3.4-alt2%ubt
 - move remote-deleted files to trash
 
