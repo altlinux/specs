@@ -6,29 +6,28 @@
 
 Name: python-module-%oname
 Version: 0.8.3
-Release: alt1.git20141217.1
+Release: alt2.git20141217
 Summary: Micro web framework around asyncio (ex tulip)
 License: ASLv2.0
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/rainfall/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/mind1master/rainfall.git
 Source: %name-%version.tar
-BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio python-module-jinja2
-BuildPreReq: python-module-websockets
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python2.7(asyncio) python-module-jinja2
+BuildRequires: python-module-websockets
 %endif
-BuildPreReq: python-module-sphinx-devel python3-module-sphinx
+BuildRequires: python-module-sphinx-devel python3-module-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio python3-module-jinja2
-BuildPreReq: python3-module-websockets
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3(asyncio) python3-module-jinja2
+BuildRequires: python3-module-websockets
+BuildRequires: python-tools-2to3
 %endif
 
 %py_provides %oname
@@ -39,6 +38,7 @@ To start off, rainfall is a micro web framework around asyncio (ex
 tulip), similiar to the cyclone or tornado. Since it is asyncio based,
 rainfall is fully asyncronous.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Micro web framework around asyncio (ex tulip)
 Group: Development/Python3
@@ -49,6 +49,7 @@ Group: Development/Python3
 To start off, rainfall is a micro web framework around asyncio (ex
 tulip), similiar to the cyclone or tornado. Since it is asyncio based,
 rainfall is fully asyncronous.
+%endif
 
 %prep
 %setup
@@ -110,6 +111,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.3-alt2.git20141217
+- Updated build dependencies.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.3-alt1.git20141217.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
