@@ -1,6 +1,6 @@
 Name: alterator-standalone
-Version: 7.2
-Release: alt2
+Version: 7.3
+Release: alt1
 
 Summary: System Management center
 License: GPL
@@ -21,7 +21,8 @@ Obsoletes: acc, alterator-profile, %name-usermode
 
 Source: %name-%version.tar
 
-BuildPreReq: alterator >= 5.0 guile22-devel
+BuildPreReq: alterator >= 5.0
+BuildPreReq: guile
 
 %description
 ALTLinux Control Center
@@ -79,6 +80,13 @@ install -Dpm644 acc.desktop %buildroot/%_desktopdir/acc.desktop
 %_bindir/*
 
 %changelog
+* Thu Dec 28 2017 Paul Wolneykien <manowar@altlinux.org> 7.3-alt1
+- Fix: Load lookout AJAX module instead of the default (HTTP).
+
+* Wed Dec 20 2017 Paul Wolneykien <manowar@altlinux.org> 7.2-alt3
+- E2K fix: Require "guile" instead of "guileXX-devel" that is enough
+  for noarch package.
+
 * Thu Dec 07 2017 Paul Wolneykien <manowar@altlinux.org> 7.2-alt2
 - Fix: The UI modules aren\'t currently compiled.
 
