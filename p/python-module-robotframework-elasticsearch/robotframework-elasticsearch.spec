@@ -4,26 +4,25 @@
 
 Name: python-module-%oname
 Version: 1.1
-Release: alt1.git20150114.1
+Release: alt2.git20150114
 Summary: ElasticSearch library for Robot Framework
 License: GPLv2
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/robotframework-elasticsearch/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/pagesjaunes/robotframework-elasticsearch.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-modules-json
-BuildPreReq: python-module-robotframework
-BuildPreReq: python-module-elasticsearch
+BuildRequires: python-module-setuptools-tests python-modules-json
+BuildRequires: python-module-robotframework
+BuildRequires: python-module-elasticsearch
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools-tests
-BuildPreReq: python3-module-robotframework
-BuildPreReq: python3-module-elasticsearch
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-robotframework
+BuildRequires: python3-module-elasticsearch
+BuildRequires: python-tools-2to3
 %endif
 
 %py_provides ElasticSearchLib
@@ -74,10 +73,10 @@ popd
 %endif
 
 %check
-python setup.py test
+python setup.py build_ext -i
 %if_with python3
 pushd ../python3
-python3 setup.py test
+python3 setup.py build_ext -i
 popd
 %endif
 
@@ -92,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1-alt2.git20150114
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1-alt1.git20150114.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
