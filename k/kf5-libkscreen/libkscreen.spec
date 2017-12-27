@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.11.4
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -12,6 +12,7 @@ License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
 Patch1: alt-pnp-ids-path.patch
+Patch2: alt-fix-multiscreen.patch
 
 # Automatically added by buildreq on Wed Feb 25 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-test libqt5-x11extras libstdc++-devel libxcb-devel libxkbfile-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -56,6 +57,7 @@ Requires: %name-common = %version-%release
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p3
 
 %build
 %K5build
@@ -85,6 +87,9 @@ Requires: %name-common = %version-%release
 %_K5dbus_srv/org.kde.kscreen.service
 
 %changelog
+* Wed Dec 27 2017 Oleg Solovyov <mcpain@altlinux.org> 5.11.4-alt2%ubt
+- fix multiscreen suspending
+
 * Mon Dec 11 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.4-alt1%ubt
 - new version
 
