@@ -3,51 +3,37 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.5
-Release: alt1.git20150714.1.1
+Version: 1.1.1
+Release: alt1
 Summary: RadSSH Module
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/radssh/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/radssh/radssh.git
 Source: %name-%version.tar
-BuildArch: noarch
+Patch1: %oname-%version-alt-docs.patch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-paramiko python-module-netaddr
-#BuildPreReq: python-module-sphinx-devel
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-paramiko python-module-netaddr
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-paramiko python3-module-netaddr
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-paramiko python3-module-netaddr
 %endif
 
 %py_provides %oname
 %py_requires paramiko netaddr
 %add_python_req_skip genders
 
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-ecdsa python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pycrypto python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-ecdsa python3-module-pycrypto python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-netaddr python-module-objects.inv python-module-paramiko python-module-setuptools-tests python3-module-netaddr python3-module-paramiko python3-module-setuptools-tests rpm-build-python3 time
-
 %description
 High level Paramiko-based toolkit, with an extensible parallel cluster
 "shell".
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-High level Paramiko-based toolkit, with an extensible parallel cluster
-"shell".
-
-This package contains tests for %oname.
-
+%if_with python3
 %package -n python3-module-%oname
 Summary: RadSSH Module
 Group: Development/Python3
@@ -58,17 +44,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 High level Paramiko-based toolkit, with an extensible parallel cluster
 "shell".
-
-%package -n python3-module-%oname-tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description -n python3-module-%oname-tests
-High level Paramiko-based toolkit, with an extensible parallel cluster
-"shell".
-
-This package contains tests for %oname.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -93,6 +69,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -126,10 +103,10 @@ export PYTHONPATH=$PWD
 cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
-python setup.py test
+PYTHONPATH=%buildroot%python_sitelibdir python tests/dispatcher.py
 %if_with python3
 pushd ../python3
-python3 setup.py test
+PYTHONPATH=%buildroot%python3_sitelibdir python3 tests/dispatcher.py
 popd
 %endif
 
@@ -137,10 +114,6 @@ popd
 %doc README *.md api_sample
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
-%exclude %python_sitelibdir/*/*/test*
-
-%files tests
-%python_sitelibdir/*/*/test*
 
 %files pickles
 %python_sitelibdir/*/pickle
@@ -152,15 +125,12 @@ popd
 %files -n python3-module-%oname
 %doc README *.md api_sample
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/*/test*
-%exclude %python3_sitelibdir/*/*/*/test*
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/*/test*
-%python3_sitelibdir/*/*/*/test*
 %endif
 
 %changelog
+* Tue Dec 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt1
+- Updated to upstream version 1.1.1.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.5-alt1.git20150714.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
