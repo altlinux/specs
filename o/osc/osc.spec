@@ -1,5 +1,5 @@
 Name: osc
-Version: 0.154.0
+Version: 0.162.1
 Release: alt1
 Summary: Open Build Service Commander
 License: GPLv2+
@@ -45,6 +45,9 @@ install -Dpm0644 dist/complete.sh %buildroot/etc/bash_completion.d/osc.sh
 %doc AUTHORS README TODO NEWS
 
 %changelog
+* Wed Dec 27 2017 Denis Pynkin <dans@altlinux.org> 0.162.1-alt1
+- New version
+
 * Wed Jun 08 2016 Dmitry V. Levin <ldv@altlinux.org> 0.154.0-alt1
 - 0.149.0 -> 0.154.0.
 
