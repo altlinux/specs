@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		74338
+%define svnrev		76340
 
 %def_with pgsql
 %def_enable java
@@ -15,8 +15,8 @@
 %endif
 
 Name: zabbix
-Version: 3.4.4
-Release: alt2%ubt
+Version: 3.4.5
+Release: alt1%ubt
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -649,6 +649,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Wed Dec 27 2017 Alexei Takaseev <taf@altlinux.org> 1:3.4.5-alt1.S1
+- 3.4.5
+
 * Fri Dec 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.4-alt2%ubt
 - Added support for libssh2, unixODBC.
 - Built proxy with PostgreSQL support.
