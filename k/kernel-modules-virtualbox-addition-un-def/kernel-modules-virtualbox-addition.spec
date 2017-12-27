@@ -2,9 +2,9 @@
 %define module_version  5.1.30
 %define module_release	alt2
 
-%define flavour		std-def
+%define flavour		un-def
 BuildRequires(pre): rpm-build-kernel >= 0.100-alt1
-BuildRequires(pre): kernel-headers-modules-std-def
+BuildRequires(pre): kernel-headers-modules-un-def
 
 %setup_kernel_module %flavour
 
