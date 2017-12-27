@@ -1,43 +1,35 @@
 %define _unpackaged_files_terminate_build 1
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1
 %define oname repoze.catalog
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
 Version: 0.8.3
-#Release: alt2.git20130426.1.1
+Release: alt2
 Summary: Python indexing and searching framework, useful outside Zope ecosystem
 License: BSD
 Group: Development/Python
 Url: https://github.com/repoze/repoze.catalog
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/repoze/repoze.catalog.git
-Source0: https://pypi.python.org/packages/cb/14/c0ba31d32f5c21dcc7bc807cd6690f668cb904550def2f734939658ba1b4/%{oname}-%{version}.tar.gz
+Source: %oname-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools
-#BuildPreReq: python-module-sphinx-devel python-module-zope.component
-#BuildPreReq: python-module-zope.interface python-module-ZODB3
-#BuildPreReq: python-module-zope.event python-module-zdaemon
-#BuildPreReq: python-module-zconfig python-module-zc.lockfile
-#BuildPreReq: python-module-transaction python-module-nose
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-zope.component
+BuildRequires: python-module-nose
+BuildRequires: python-module-ZEO python-module-docutils python-module-html5lib
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python-tools-2to3
 %endif
 
 %py_requires repoze zope.component zope.index
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-BTrees python-module-PyStemmer python-module-Pygments python-module-ZODB python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-persistent python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-module-transaction python-module-zc.lockfile python-module-zdaemon python-module-zope.event python-module-zope.hookable python-module-zope.interface python-module-zope.proxy python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
-BuildRequires: python-module-ZEO python-module-docutils python-module-html5lib python-module-nose python-module-zope.component python3-module-setuptools rpm-build-python3 time
-
 %description
 A Python indexing and searching system based on `zope.index`.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python indexing and searching framework, useful outside Zope ecosystem
 Group: Development/Python3
@@ -56,6 +48,7 @@ Requires: python3-module-%oname = %version-%release
 A Python indexing and searching system based on `zope.index`.
 
 This package contains tests for repoze.catalog.
+%endif
 
 %package tests
 Summary: Tests for repoze.catalog
@@ -136,7 +129,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 #cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%oname/
 
 %files
-%doc *.txt
+%doc *.txt README.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/benchmark
@@ -156,7 +149,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt README.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/benchmark
@@ -169,6 +162,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Dec 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.3-alt2
+- Disabled build for python-3.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt1
 - automated PyPI update
 
