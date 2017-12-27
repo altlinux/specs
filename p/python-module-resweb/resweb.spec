@@ -4,33 +4,28 @@
 
 Name: python-module-%oname
 Version: 0.1.7
-Release: alt1.git20130813.1.1
+Release: alt2.git20130813
 Summary: Pyres web interface
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/resweb/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/Pyres/resweb.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-pyres python-module-flask
-#BuildPreReq: python-module-setproctitle python-module-simplejson
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-pyres python-module-flask
+BuildRequires: python-module-setproctitle python-module-simplejson
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-pyres python3-module-flask
-#BuildPreReq: python3-module-setproctitle python3-module-simplejson
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-pyres python3-module-flask
+BuildRequires: python3-module-setproctitle python3-module-simplejson
+BuildRequires: python-tools-2to3
 %endif
 
 %py_provides %oname
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-jinja2 python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-jinja2 python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-flask python-module-pyres python-module-setproctitle python-module-setuptools-tests python3-module-flask python3-module-pyres python3-module-setproctitle python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 Resweb originally started as part of the pyres project. However, I
@@ -38,6 +33,7 @@ realized that for many reasons, both it and pyres would benefit from
 being their own projects. Hopefully this will help the release schedule
 of both pyres and resweb.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Pyres web interface
 Group: Development/Python3
@@ -48,6 +44,7 @@ Resweb originally started as part of the pyres project. However, I
 realized that for many reasons, both it and pyres would benefit from
 being their own projects. Hopefully this will help the release schedule
 of both pyres and resweb.
+%endif
 
 %prep
 %setup
@@ -104,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.7-alt2.git20130813
+- Fixed build dependencies.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.7-alt1.git20130813.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

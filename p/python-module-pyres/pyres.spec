@@ -5,35 +5,31 @@
 
 Name: python-module-%oname
 Version: 1.5
-Release: alt1.git20140901.1.1
+Release: alt2.git20140901
 Summary: Python resque clone
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/pyres/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/binarydud/pyres.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-nose python-module-simplejson
-#BuildPreReq: python-module-redis-py python-module-setproctitle
-#BuildPreReq: python-module-sphinx-devel
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-nose python-module-simplejson
+BuildRequires: python-module-redis-py python-module-setproctitle
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-nose python3-module-simplejson
-#BuildPreReq: python3-module-redis-py python3-module-setproctitle
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-nose python3-module-simplejson
+BuildRequires: python3-module-redis-py python3-module-setproctitle
+BuildRequires: python-tools-2to3
 %endif
 
 %py_provides %oname
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-redis-py python-module-setproctitle python-module-setuptools-tests python3-module-nose python3-module-setproctitle python3-module-setuptools-tests rpm-build-python3 time
+%py_requires redis
 
 %description
 Resque is a great implementation of a job queue by the people at github.
@@ -41,16 +37,19 @@ It's written in ruby, which is great, but I primarily work in python. So
 I took on the task of porting over the code to python and PyRes was the
 result.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python resque clone
 Group: Development/Python3
 %py3_provides %oname
+%py3_requires redis
 
 %description -n python3-module-%oname
 Resque is a great implementation of a job queue by the people at github.
 It's written in ruby, which is great, but I primarily work in python. So
 I took on the task of porting over the code to python and PyRes was the
 result.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -116,10 +115,6 @@ popd
 
 cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 
-%if_disabled check
-rm -f requirements*
-%endif
-
 %check
 python setup.py test
 %if_with python3
@@ -127,10 +122,9 @@ pushd ../python3
 python3 setup.py test
 popd
 %endif
-rm -f requirements*
 
 %files
-%doc *.md *.txt *.markdown
+%doc *.md *.markdown LICENSE CHANGES.txt
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -146,12 +140,15 @@ rm -f requirements*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md *.txt *.markdown
+%doc *.md *.markdown LICENSE CHANGES.txt
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Wed Dec 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5-alt2.git20140901
+- Updated runtime dependencies.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5-alt1.git20140901.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
