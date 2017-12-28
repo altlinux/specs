@@ -3,43 +3,38 @@
 
 %def_without python2
 %def_with python3
-%def_disable check
+%def_enable check
 
 Name: python-module-%oname
-Version: 0.5.0
+Version: 1.0.0
 Release: alt1
 Summary: Telnet server and client Protocol library using asyncio
 License: ISC
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/telnetlib3/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/jquast/telnetlib3.git
-Source0: https://pypi.python.org/packages/5c/30/da58a2152561a7a6b6d49beee1bb14f292e1a3f4aab78ac1466a31909d3e/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %name-%version.tar
 
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-asyncio python-module-pip
-#BuildPreReq: python-module-pep257
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python2.7(asyncio)
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-asyncio python3-module-pip
-#BuildPreReq: python3-module-pep257
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3(asyncio)
+BuildRequires: python3-module-html5lib
 %endif
 
 %py_provides %oname
 %py_requires asyncio
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python3 python3-base python3-module-OpenSSL python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-idna python3-module-lxml python3-module-ntlm python3-module-pluggy python3-module-py python3-module-pyasn1 python3-module-pycparser python3-module-pytest python3-module-setuptools python3-module-six
-BuildRequires: python3-module-asyncio python3-module-html5lib python3-module-pep257 python3-module-pip python3-module-setuptools-tests rpm-build-python3
-
 %description
 telnetlib3 is a Telnet Client and Server Protocol library for python.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Telnet server and client Protocol library using asyncio
 Group: Development/Python3
@@ -48,9 +43,10 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 telnetlib3 is a Telnet Client and Server Protocol library for python.
+%endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -83,8 +79,6 @@ popd
 %python_install
 %endif
 
-rm -f requirements.txt
-
 %check
 %if_with python2
 python setup.py test
@@ -97,7 +91,7 @@ popd
 
 %if_with python2
 %files
-%doc *.txt *.rst docs/*.rst
+%doc LICENSE.txt *.rst docs/*.rst
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -107,12 +101,15 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt *.rst docs/*.rst
+%doc LICENSE.txt *.rst docs/*.rst
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt1
+- Updated to upstream version 1.0.0.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1
 - automated PyPI update
 
