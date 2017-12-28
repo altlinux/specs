@@ -4,22 +4,21 @@
 
 Name: python-module-%oname
 Version: 0.0.1
-Release: alt1.git20150217.1
+Release: alt2.git20150217
 Summary: A devious little programming language
 License: GPLv3+
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/rogue/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://bitbucket.org/johannestaas/rogue.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python-tools-2to3
 %endif
 
 %py_provides %oname
@@ -37,6 +36,7 @@ A devious little programming language.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A devious little programming language
 Group: Development/Python3
@@ -54,6 +54,7 @@ Requires: python3-module-%oname = %EVR
 A devious little programming language.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -89,11 +90,11 @@ popd
 install -p -m644 %oname/*.rg %buildroot%python_sitelibdir/%oname/
 
 %check
-python setup.py test
+python setup.py build_ext -i
 python test_parser.py
 %if_with python3
 pushd ../python3
-python3 setup.py test
+python3 setup.py build_ext -i
 python3 test_parser.py
 popd
 %endif
@@ -124,6 +125,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.1-alt2.git20150217
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.1-alt1.git20150217.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
