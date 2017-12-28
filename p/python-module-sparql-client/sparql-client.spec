@@ -1,31 +1,29 @@
 %define _unpackaged_files_terminate_build 1
-BuildRequires: unzip
 %define oname sparql-client
 
 %def_without python3
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.6
+Version: 3.0
 Release: alt1
 Summary: Python API to query a SPARQL endpoint
 License: MPLv1.1
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/sparql-client/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/eea/sparql-client.git
-Source0: https://pypi.python.org/packages/cc/ab/e6eeaeebc171492eafb458ac0f1b3605fbe373e782e5950a63dfaa109399/%{oname}-%{version}.zip
-BuildArch: noarch
+Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-dateutil python-module-pycurl2
-BuildPreReq: python-module-mock
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-dateutil python-module-eventlet
+BuildRequires: python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-dateutil python3-module-pycurl2
-BuildPreReq: python3-module-mock
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-dateutil python3-module-eventlet
+BuildRequires: python3-module-mock
 %endif
 
 %py_provides sparql
@@ -48,7 +46,7 @@ automatically convert literals to the coresponding Python types.
 %endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -103,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0-alt1
+- Updated to upstream version 3.0.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1
 - automated PyPI update
 
