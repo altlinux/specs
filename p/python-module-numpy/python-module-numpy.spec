@@ -1,7 +1,7 @@
 %define oname numpy
-%define majver 1.12
+%define majver 1.13
 %def_without latex
-%def_with doc
+%def_without doc
 %def_with addons
 %def_without tests
 %def_with python3
@@ -12,7 +12,7 @@
 %define py3sover %somver.7
 
 Name: python-module-%oname
-Version: %majver.1
+Version: %majver.3
 Release: alt1
 Epoch: 1
 
@@ -20,7 +20,6 @@ Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
 Group: Development/Python
 Url: http://numpy.scipy.org/
-
 
 %setup_python_module %oname
 
@@ -39,36 +38,17 @@ Conflicts: libsyfi-devel < 0.6.1-alt3.hg20090822
 Conflicts: lib%oname-devel < %version-%release
 Obsoletes: libsyfi-devel < 0.6.1-alt3.hg20090822
 
-BuildPreReq: /proc git
-BuildPreReq: python-devel
-
-#BuildPreReq: gcc-fortran liblapack-devel python-module-Pyrex
-#BuildPreReq: python-modules-compiler python-modules-encodings
-#BuildPreReq: libfftw3-devel scons gcc-c++ python-module-numpydoc
-#BuildPreReq: libsuitesparse-devel swig python-module-distribute
-#BuildPreReq: python-module-scipy
-#BuildPreReq: python-module-sphinx-devel python-module-Pygments
-#BuildPreReq: python-module-matplotlib
-#BuildPreReq: dvipng doxygen ghostscript-classic ImageMagick-tools
-#BuildPreReq: texlive-latex-base texlive-latex-extra
-#BuildPreReq: texmf-latex-preview python-module-matplotlib-sphinxext
-#BuildPreReq: python-module-Cython boost-python-devel
-#%if_with tests
-#BuildPreReq: libnumpy-devel
-#%endif
-#BuildPreReq: python-module-stsci
-%if_with python3
 BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: /proc
+BuildRequires: python-devel
+BuildRequires: doxygen gcc-c++ gcc-fortran liblapack-devel
+BuildRequires: swig texmf-latex-preview
+BuildRequires: python-module-Cython python-module-Pyrex
+BuildRequires: python-module-alabaster python-module-html5lib python-module-matplotlib-sphinxext python-module-notebook python-module-numpydoc python-module-objects.inv
+%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: dvipng elfutils fontconfig fonts-type1-urw ipython libgfortran-devel libopenblas-devel libquadmath-devel libstdc++-devel pkg-config python-base python-devel python-module-Pillow python-module-PyStemmer python-module-Pygments python-module-Pyrex-pickles python-module-babel python-module-cffi python-module-cssselect python-module-cycler python-module-dateutil python-module-decorator python-module-docutils python-module-enum34 python-module-functools32 python-module-future python-module-greenlet python-module-ipykernel python-module-ipyparallel python-module-ipython_genutils python-module-jinja2 python-module-jinja2-tests python-module-jupyter_client python-module-jupyter_core python-module-markupsafe python-module-matplotlib python-module-nbconvert python-module-nbformat python-module-ndg-httpsclient python-module-numpy python-module-path python-module-pexpect python-module-pickleshare python-module-ptyprocess python-module-pyasn1 python-module-pycares python-module-pycurl python-module-pygobject3 python-module-pyparsing python-module-pytz python-module-setuptools python-module-simplegeneric python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-terminado python-module-tornado_xstatic python-module-traitlets python-module-xstatic python-module-xstatic-term.js python-module-zmq python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-sqlite3 python-modules-unittest python-modules-wsgiref python-modules-xml python-tools-2to3 python3 python3-base python3-dev python3-module-zope swig-data t1lib tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended
-BuildRequires: doxygen gcc-c++ gcc-fortran git-core liblapack-devel python-module-Cython python-module-Pyrex python-module-alabaster python-module-html5lib python-module-matplotlib-sphinxext python-module-notebook python-module-numpydoc python-module-objects.inv python3-module-Cython rpm-build-python3 subversion swig texmf-latex-preview time
-
-#BuildRequires: python3-devel python3-module-distribute
-#BuildPreReq: python3-module-sphinx-devel python3-module-Pygments
-#BuildPreReq: python-tools-2to3
-#BuildPreReq: python3-module-Cython boost-python-devel
+BuildRequires: python3-devel
+BuildRequires: python3-module-Cython
 %endif
 
 Provides: python-module-numpy-addons = %EVR
@@ -106,21 +86,6 @@ create arrays of arbitrary type.
 There are also basic facilities for discrete fourier transform,
 basic linear algebra and random number generation.
 
-#package -n python3-module-%oname-addons
-#Summary: Addons for NumPy (Python 3)
-#Group: Development/Python3
-#Requires: python3-module-%oname = %version-%release
-
-#description -n python3-module-%oname-addons
-#NumPy is a general-purpose array-processing package designed to
-#efficiently manipulate large multi-dimensional arrays of arbitrary
-#records without sacrificing too much speed for small multi-dimensional
-#arrays.  NumPy is built on the Numeric code base and adds features
-#introduced by numarray as well as an extended C-API and the ability to
-#create arrays of arbitrary type.
-#
-#This package contains addons NumPy for matplotlib and scipy.
-
 %package -n python3-module-%oname-testing
 Summary: Testing part of NumPy (Python 3)
 Group: Development/Python3
@@ -157,7 +122,7 @@ This package contains tests NumPy.
 Summary: Shared libraries of NumPy (Python 3)
 Group: System/Libraries
 %add_python3_req_skip numscons
-%ifarch x86_64
+%if "%_lib" == "lib64"
 Provides: libnpymath3.so.%py3somver()(64bit)
 %else
 Provides: libnpymath3.so.%py3somver
@@ -178,16 +143,9 @@ Summary: Development files of NumPy (Python 3)
 Group: Development/Python3
 Requires: lib%oname-py3 = %version-%release
 Requires: python3-module-%oname = %version-%release
-#Requires: python3-module-%oname-addons = %version-%release
 Requires: python3-devel
 # numpydoc
 %add_python3_req_skip numscons
-# temporarily providing before rebuild client packages
-%ifarch x86_64
-Provides: libnpymath3.so()(64bit)
-%else
-Provides: libnpymath3.so
-%endif
 
 %description -n lib%oname-py3-devel
 NumPy is a general-purpose array-processing package designed to
@@ -213,22 +171,6 @@ introduced by numarray as well as an extended C-API and the ability to
 create arrays of arbitrary type.
 
 This package contains pickles for NumPy.
-
-#package addons
-#Summary: Addons for NumPy
-#Group: Development/Python
-#Requires: %name = %version-%release
-#Conflicts: %name < %version-%release
-#
-#description addons
-#NumPy is a general-purpose array-processing package designed to
-#efficiently manipulate large multi-dimensional arrays of arbitrary
-#records without sacrificing too much speed for small multi-dimensional
-#arrays.  NumPy is built on the Numeric code base and adds features
-#introduced by numarray as well as an extended C-API and the ability to
-#create arrays of arbitrary type.
-#
-#This package contains addons NumPy for matplotlib and scipy.
 
 %package testing
 Summary: Testing part of NumPy
@@ -268,7 +210,7 @@ This package contains tests NumPy.
 Summary: Shared libraries of NumPy
 Group: System/Libraries
 %add_python_req_skip numscons
-%ifarch x86_64
+%if "%_lib" == "lib64"
 Provides: libnpymath.so.%somver()(64bit)
 %else
 Provides: libnpymath.so.%somver
@@ -295,12 +237,6 @@ Requires: python-devel
 %py_requires SCons
 # numpydoc
 %add_python_req_skip numscons
-# temporarily providing before rebuild client packages
-%ifarch x86_64
-Provides: libnpymath.so()(64bit)
-%else
-Provides: libnpymath.so
-%endif
 
 %description -n lib%oname-devel
 NumPy is a general-purpose array-processing package designed to
@@ -364,10 +300,6 @@ This package contains documentation for NumPy in PDF format.
 %prep
 %setup
 
-git config --global user.email "python@packages.altlinux.org"
-git config --global user.name "Python Development Team>"
-git init-db
-
 install -m644 %SOURCE1 %SOURCE2 .
 tar xf %SOURCE3
 sed -i 's|@LIBDIR@|%_libdir|g' site.cfg
@@ -380,8 +312,6 @@ sed -i 's|^prefix.*|prefix=%python_sitelibdir/%oname/core|' \
 	%oname/core/npymath.ini.in
 sed -i 's|^includedir.*|includedir=%_includedir/%oname|' \
 	%oname/core/npymath.ini.in
-
-git add . -A
 
 %if_with python3
 rm -rf ../python3
@@ -406,14 +336,8 @@ sed -i 's|^includedir.*|includedir=%_includedir/%oname-py3|' \
 # delete unnecessary files
 
 rm -f numpy/distutils/mingw32ccompiler.py
-
-git commit -a -m "%version"
-git tag -m "%version" %version
 popd
 %endif
-
-git commit -a -m "%version"
-git tag -m "%version" %version
 
 %if_with doc
 # Sphinx
@@ -421,6 +345,7 @@ git tag -m "%version" %version
 sed -i "s|@TOP@|$PWD|" \
 	doc/source/conf.py
 %prepare_sphinx doc
+ln -s ../objects.inv doc/source/objects.inv
 %endif
 
 %install
@@ -689,7 +614,6 @@ install -p -m644 %oname/core/code_generators/genapi.py \
 	%buildroot%python_sitelibdir/%oname
 install -p -m644 %oname/core/src/private/npy_config.h \
 	%buildroot%_includedir/%oname
-touch %buildroot%python_sitelibdir/floatint/__init__.py
 
 # delete unnecessary files
 
@@ -714,7 +638,6 @@ install -p -m644 %oname/core/code_generators/genapi.py \
 	%buildroot%python3_sitelibdir/%oname
 install -p -m644 %oname/core/src/private/npy_config.h \
 	%buildroot%_includedir/%oname-py3
-#touch %buildroot%python3_sitelibdir/floatint/__init__.py
 
 # delete unnecessary files
 
@@ -800,7 +723,6 @@ fi
 #exclude %python_sitelibdir/%oname/linalg/*.h
 #python_sitelibdir/numpyx*
 %endif #if_with tests
-%python_sitelibdir/floatint*
 %python_sitelibdir/%oname-*.egg-info
 %python_sitelibdir/code_generators
 
@@ -850,7 +772,6 @@ fi
 #exclude %python3_sitelibdir/%oname/linalg/*.h
 #python3_sitelibdir/numpyx*
 %endif #if_with tests
-#python3_sitelibdir/floatint*
 %python3_sitelibdir/%oname-*.egg-info
 %python3_sitelibdir/code_generators
 %endif #if_with python3
@@ -996,8 +917,6 @@ fi
 %python_sitelibdir/%oname/doc
 #python_sitelibdir/%oname/f2py/docs
 
-%if_with doc
-
 %files doc-html
 %dir %_docdir/%name
 %_docdir/%name/html
@@ -1012,11 +931,15 @@ fi
 %files pickles
 %dir %python_sitelibdir/%oname
 %python_sitelibdir/%oname/pickle
-
-%endif
 %endif
 
 %changelog
+* Wed Nov 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.13.3-alt1
+- Updated to upstream version 1.13.3.
+- Removed git from build dependencies.
+- Cleaned up spec.
+- Disabled generation of docs.
+
 * Mon Apr 17 2017 Anton Midyukov <antohami@altlinux.org> 1:1.12.1-alt1
 - New version 1.12.1
 - Remove __svn_version__.py

@@ -74,8 +74,8 @@
 
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
-Version: %{pybasever}.1
-Release: alt10
+Version: %{pybasever}.4
+Release: alt2
 License: Python
 Group: Development/Python3
 
@@ -122,6 +122,12 @@ Source: %name-%version.tar
 # Was Patch0 in ivazquez' python3000 specfile:
 Patch1:         Python-3.1.1-rpath.patch
 
+# 00055 #
+# Systemtap support: add statically-defined probe points
+# Patch sent upstream as http://bugs.python.org/issue14776
+# with some subsequent reworking to cope with LANG=C in an rpmbuild
+# (where sys.getfilesystemencoding() == 'ascii')
+Patch55: 00055-systemtap.patch
 
 # The lib64 patch
 # on top of ALT's python3-site-packages.patch (Patch1005)
@@ -131,7 +137,6 @@ Patch102: python3-site-packages-lib64.patch
 # Only used when "%_lib" == "lib64"
 # Another lib64 fix, for distutils/tests/test_install.py; not upstream:
 Patch104: 00104-lib64-fix-for-test_install.patch
-
 
 # 00131 #
 # The four tests in test_io built on top of check_interrupted_write_retry
@@ -351,6 +356,13 @@ Patch206: 00206-remove-hf-from-arm-triplet.patch
 # rhbz#1292461
 Patch207: 00207-math-once.patch
 
+# 00243 #
+# Fix the triplet used on 64-bit MIPS
+# rhbz#1322526: https://bugzilla.redhat.com/show_bug.cgi?id=1322526
+# Upstream uses Debian-like style mips64-linux-gnuabi64
+# Fedora needs the default mips64-linux-gnu
+Patch243: 00243-fix-mips64-triplet.patch
+
 
 # (New patches go here ^^^)
 #
@@ -397,6 +409,10 @@ Patch1005: python3-site-packages.patch
 Patch1006: python-3.5.1-glibc-2.25-getentropy.patch
 
 Patch1007: python-3.5.1-upstream-expat-compat.patch
+
+# add correct arch for ppc64/ppc64le
+# it should be ppc64le-linux-gnu/ppc64-linux-gnu instead powerpc64le-linux-gnu/powerpc64-linux-gnu
+Patch5001: python3-powerppc-arch.patch
 
 # ======================================================
 # Additional metadata, and subpackages
@@ -543,6 +559,7 @@ Requires: %name-modules-tkinter = %EVR
 Requires: %name-modules-curses = %EVR
 Requires: %name-modules-sqlite3 = %EVR
 Requires: %name-tools = %EVR
+%add_python3_req_skip test.test_warnings.data
 
 %description test
 The test modules from the main %name package.
@@ -594,7 +611,6 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 < %PATCH102 sed -e 's:lib64:%_lib:g' | patch -p1
 < %PATCH104 sed -e 's:lib64:%_lib:g' | patch -p1
 %endif
-
 %ifarch ppc ppc64
 %patch131 -p1
 %endif
@@ -616,7 +632,7 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 %patch178 -p1
 %patch179 -p1
 %patch180 -p1
-%patch184  -p1
+##patch184 -p1
 %patch186 -p1
 %patch188 -p1
 
@@ -629,7 +645,8 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 %patch203 -p1
 %patch205 -p1
 %patch206 -p1
-%patch207 -p1
+##patch207 -p1
+%patch243 -p1
 
 # ALT Linux patches
 %if_enabled test_posix_fadvise
@@ -638,8 +655,8 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 %patch1003 -p2
 %patch1004 -p1
 
-%patch1006 -p1
-%patch1007 -p1
+##patch1006 -p1
+##patch1007 -p1
 
 # Currently (2010-01-15), http://docs.python.org/library is for 2.6, and there
 # are many differences between 2.6 and the Python 3 library.
@@ -651,6 +668,9 @@ sed --in-place \
     --expression="s|http://docs.python.org/library|http://docs.python.org/%pybasever/library|g" \
     Lib/pydoc.py || exit 1
 
+%patch5001 -p1
+
+rm -fr ../build-shared
 mkdir ../build-shared
 %autoreconf
 cp -rl * ../build-shared/
@@ -717,9 +737,6 @@ cp -ar Doc/tools %buildroot%pylibdir/Doc/
 
 # Demo scripts
 cp -ar Tools/demo %buildroot%tool_dir/
-
-# Fix for bug #136654
-rm %buildroot%pylibdir/test/test_email/data/audiotest.au %buildroot%pylibdir/test/audiotest.au
 
 install -d -m 0755 %buildroot%python3_sitelibdir/__pycache__
 %if "%_lib" != "lib"
@@ -832,9 +849,8 @@ rm %buildroot%pylibdir/test/test_asyncio/{,__pycache__/}test_windows_utils*.py*
 %add_findprov_skiplist %pylibdir/test/bad*.py
 
 # Get rid of windows-related stuff
-rm %buildroot%pylibdir/distutils/{,__pycache__/}msvccompiler*.py*
-rm %buildroot%pylibdir/distutils/{,__pycache__/}msvc9compiler*.py*
-rm %buildroot%pylibdir/distutils/{,__pycache__/}_msvccompiler*.py*
+%add_findreq_skiplist %pylibdir/distutils/*msvc*compiler*.py*
+%add_findprov_skiplist %pylibdir/distutils/*msvc*compiler*.py*
 rm %buildroot%pylibdir/distutils/command/{,__pycache__/}bdist_msi*.py*
 rm %buildroot%pylibdir/distutils/command/*.exe
 rm %buildroot%tool_dir/scripts/win_add2path.py
@@ -990,7 +1006,6 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %dynload_dir/grp.cpython-%pyshortver%pyabi.so
 %dynload_dir/math.cpython-%pyshortver%pyabi.so
 %dynload_dir/mmap.cpython-%pyshortver%pyabi.so
-%dynload_dir/nis.cpython-%pyshortver%pyabi.so
 %dynload_dir/ossaudiodev.cpython-%pyshortver%pyabi.so
 %dynload_dir/parser.cpython-%pyshortver%pyabi.so
 %dynload_dir/pyexpat.cpython-%pyshortver%pyabi.so
@@ -1185,6 +1200,14 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %tool_dir/scripts/run_tests.py
 
 %changelog
+* Wed Dec 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.4-alt2
+- Packed audiotest.au files required by tests.
+- Returned some distutils submodules required by setup scripts of numpy.
+- Nis module no longer builds with new glibc.
+
+* Sun Oct 29 2017 Anton Midyukov <antohami@altlinux.org> 3.5.4-alt1
+- New version 3.5.4
+
 * Mon Sep 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.1-alt10
 - Fixed tests with new libexpat.
 
