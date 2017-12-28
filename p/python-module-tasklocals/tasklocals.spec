@@ -6,38 +6,34 @@
 
 Name: python-module-%oname
 Version: 0.2
-Release: alt1
+Release: alt2
 Summary: Task locals support for tulip/asyncio
 License: Free
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/tasklocals/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/vkryachko/tasklocals.git
-Source0: https://pypi.python.org/packages/06/38/c228770a8c8cfab3b99ec3d9b8d84dc9f0736c2e18a6642000789767a968/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %oname-%version.tar
 
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-asyncio-tests python-module-nose
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python2.7(asyncio) python-module-nose
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-asyncio-tests python3-module-nose
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3(asyncio) python3-module-nose
 %endif
 
 %py_provides %oname
 %py_requires asyncio
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python3 python3-base python3-module-asyncio python3-module-pytest python3-module-setuptools
-BuildRequires: python3-module-asyncio-tests python3-module-nose python3-module-setuptools-tests rpm-build-python3
-
 %description
 It provides Task local storage similar to python's threading.local
 but for Tasks in asyncio.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Task locals support for tulip/asyncio
 Group: Development/Python3
@@ -47,9 +43,10 @@ Group: Development/Python3
 %description -n python3-module-%oname
 It provides Task local storage similar to python's threading.local
 but for Tasks in asyncio.
+%endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -n %oname-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -100,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2-alt2
+- Updated build dependencies.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.2-alt1
 - automated PyPI update
 
