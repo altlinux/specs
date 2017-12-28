@@ -5,25 +5,24 @@
 
 Name: python-module-%oname
 Version: 0.0.3
-Release: alt1
+Release: alt2
 Summary: Use ElasticSearch query search in SQLAlchemy
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/sqlalchemy-elasticquery/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/loverajoel/sqlalchemy-elasticquery.git
-Source0: https://pypi.python.org/packages/13/3b/a94b464f877e5e303bf5acd6653bc4443e7241e62605f3c6a55127259fe0/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %oname-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-SQLAlchemy python-modules-json
-BuildPreReq: python-module-flask_sqlalchemy python-modules-sqlite3
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-SQLAlchemy python-modules-json
+BuildRequires: python-module-flask_sqlalchemy python-modules-sqlite3
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-SQLAlchemy python-tools-2to3
-BuildPreReq: python3-module-flask_sqlalchemy python3-modules-sqlite3
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-SQLAlchemy python-tools-2to3
+BuildRequires: python3-module-flask_sqlalchemy python3-modules-sqlite3
 %endif
 
 %py_provides sqlalchemy_elasticquery
@@ -42,7 +41,7 @@ This extension allow you use the ElasticSearch syntax for search in
 SQLAlchemy.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -n %oname-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -68,28 +67,29 @@ popd
 %endif
 
 %check
-python setup.py test
+python setup.py build_ext -i
 export PYTHONPATH=%buildroot%python_sitelibdir
 python test/test.py
 %if_with python3
 pushd ../python3
-python3 setup.py test
+python3 setup.py build_ext -i
 export PYTHONPATH=%buildroot%python3_sitelibdir
 python3 test/test.py
 popd
 %endif
 
 %files
-%doc PKG-INFO
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc PKG-INFO
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.3-alt2
+- Fixed build.
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.3-alt1
 - automated PyPI update
 
