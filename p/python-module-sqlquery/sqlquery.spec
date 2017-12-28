@@ -3,26 +3,25 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.4
-Release: alt1.git20150122.1
+Version: 1.0.1
+Release: alt1
 Summary: SQL query translation
 License: ASLv2.0
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/sqlquery/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/coldeasy/py-sql-query.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-mock python-module-six
-BuildPreReq: python-module-wheel
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-mock python-module-six
+BuildRequires: python-module-wheel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-mock python3-module-six
-BuildPreReq: python3-module-wheel
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-mock python3-module-six
+BuildRequires: python3-module-wheel
 %endif
 
 %py_provides %oname
@@ -33,6 +32,7 @@ py-sql-query is a basic and pre-alpha SQL translation layer in python.
 You construct queries using mainly python constructs which later can be
 serialized to a SQL query.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: SQL query translation
 Group: Development/Python3
@@ -43,6 +43,7 @@ Group: Development/Python3
 py-sql-query is a basic and pre-alpha SQL translation layer in python.
 You construct queries using mainly python constructs which later can be
 serialized to a SQL query.
+%endif
 
 %prep
 %setup
@@ -75,7 +76,7 @@ py.test -vv
 %if_with python3
 pushd ../python3
 python3 setup.py test
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
@@ -90,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt1
+- Updated to upstream version 1.0.1.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.4-alt1.git20150122.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
