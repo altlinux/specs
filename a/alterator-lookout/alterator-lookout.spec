@@ -1,18 +1,26 @@
 Name: alterator-lookout
 Version: 2.6
-Release: alt1
+Release: alt4
 
 Source:%name-%version.tar
 
 Summary: dialog based interface for alterator
 License: GPL
 Group: System/Configuration/Other
-Requires: alterator >= 5.1-alt1
+Requires: alterator >= 5.1-alt7
 Requires: alterator-l10n >= 1.5-alt1
 Conflicts: alterator-browser-qt < 2.17.0-alt1
 Conflicts: alterator-wizardface < 1.1-alt3
 
-BuildPreReq: alterator >= 5.0-alt1 guile22-devel
+Patch: alterator-lookout-2.6-shift-reset.patch
+Patch1: alterator-lookout-2.6-register-fluids.patch
+
+BuildPreReq: alterator >= 5.1-alt7
+%ifarch e2k
+BuildRequires: guile20-devel libguile20-devel
+%else
+BuildPreReq: guile22-devel
+%endif
 
 %description
 dialog based interface for alterator
@@ -23,6 +31,10 @@ dialog based interface for alterator
 
 %prep
 %setup
+%ifarch e2k
+%patch -p2
+%patch1 -p2
+%endif
 
 %build
 %make_build libdir=%_libdir
@@ -42,6 +54,15 @@ export GUILE_LOAD_PATH="lookout"
 %_alterator_datadir/ui/*
 
 %changelog
+* Wed Dec 20 2017 Paul Wolneykien <manowar@altlinux.org> 2.6-alt4
+- Use registered fluids with shift/reset-based call/cc (patch).
+
+* Fri Dec 15 2017 Paul Wolneykien <manowar@altlinux.org> 2.6-alt3
+- Delimit shift-based continuation with reset (e2k, patch).
+
+* Thu Dec 07 2017 Paul Wolneykien <manowar@altlinux.org> 2.6-alt2
+- Build with guile 2.0 for E2K arch.
+
 * Thu Aug 03 2017 Paul Wolneykien <manowar@altlinux.org> 2.6-alt1
 - Added "groupbox" to the set of supported interactive widgets.
 - Put the document URI query part in the \'document:query global.

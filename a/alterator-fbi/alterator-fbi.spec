@@ -2,9 +2,10 @@
 
 Name: alterator-fbi
 Version: 5.39
-Release: alt1
+Release: alt3
 
-Source:%name-%version.tar
+Source: %name-%version.tar
+Patch: alterator-fbi-5.39-call-cc-via-reset.patch
 
 Summary: alterator on rails
 License: GPL
@@ -26,7 +27,14 @@ Requires: alterator-l10n >= 0.15
 Requires(pre): libguile-vhttpd >= 0.7.7-alt1
 Requires(pre): shadow-utils
 
-BuildPreReq: alterator >= 5.0-alt1, libguile-vhttpd, guile22-devel, libexpat-devel
+BuildPreReq: alterator >= 5.0-alt1, libguile-vhttpd, libexpat-devel
+
+%ifarch e2k
+BuildRequires: guile20-devel libguile20-devel
+BuildRequires: alterator >= 5.1-alt7
+%else
+BuildPreReq: guile22-devel
+%endif
 
 Provides: alterator-etcgit-bar
 
@@ -39,6 +47,9 @@ this is an alterator based engine (form based interface) to create a simple form
 
 %prep
 %setup
+%ifarch e2k
+%patch -p2
+%endif
 
 %build
 %make_build
@@ -104,7 +115,7 @@ fi ||:
 %files
 #common
 %_bindir/*
-%_libdir/guile/2.2/extensions/*.so
+%_libdir/guile/*.*/extensions/*.so
 %_alterator_libdir/interfaces/guile/*
 %_alterator_libdir/type/*
 %_alterator_libdir/ui/*
@@ -141,6 +152,17 @@ fi ||:
 
 
 %changelog
+* Tue Dec 26 2017 Paul Wolneykien <manowar@altlinux.org> 5.39-alt3
+- Require alterator >= 5.1-alt7 (e2k).
+- Delimit a partial continuation with "with-ahttpd-session"
+  (patch, e2k).
+- Register the session fluid (patch, e2k).
+- Fixed the double-anchored URL query parsing regexp.
+
+* Wed Dec 20 2017 Paul Wolneykien <manowar@altlinux.org> 5.39-alt2
+- Adapd build for the E2K platform.
+- Support 'raw-href' attribute for 'alterator-href' links.
+
 * Sat Nov 04 2017 Ivan Zakharyaschev <imz@altlinux.org> 5.39-alt1
 - backend3/ahttpd-server (do_reload): fix for systemd.
 

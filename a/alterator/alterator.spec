@@ -1,6 +1,6 @@
 Name: alterator
 Version: 5.1
-Release: alt2
+Release: alt7
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -8,6 +8,10 @@ Group: System/Configuration/Other
 Url: http://wiki.sisyphus.ru/Alterator
 
 Source: %name-%version.tar
+Patch: alterator-5.1-compilation-workaround.patch
+Patch1: alterator-guile20.patch
+Patch2: alterator-5.1-call-cc-via-shift.patch
+Patch3: alterator-5.1-eval-set-fix.patch
 
 #backward compatibility
 Provides: %name-common = %version , %name-menu = %version, %name-help = %version, %name-sdk = %version, %name-autoinstall = %version
@@ -15,7 +19,13 @@ Obsoletes: %name-common, %name-menu, %name-help, %name-sdk, %name-autoinstall
 
 Requires: rpm-macros-%name = %version-%release
 Requires: alterator-l10n >= 2.0-alt2
+Requires: alterator-sh-functions
+%ifarch e2k
+Requires: guile20 libguile20
+%else
 Requires: guile22
+%endif
+%{?!_with_bootstrap:Requires: alterator-lookout}
 
 Requires(pre): libguile-vhttpd >= 0.7.7-alt1
 Requires(pre): shadow-utils
@@ -28,8 +38,12 @@ Conflicts: alterator-vm <= 0.3-alt31
 Conflicts: installer-stage2 <= 0.8-alt1
 
 BuildRequires: /proc
+%ifarch e2k
+BuildRequires: guile20-devel libguile20-devel libexpat-devel pam_userpass-devel
+%else
 BuildRequires: guile22-devel >= 2.2.0-alt2 libexpat-devel pam_userpass-devel
-BuildRequires: alterator-lookout
+%endif
+BuildRequires: libguile-vhttpd
 
 %define _alterator_datadir %_datadir/%name
 %define _alterator_libdir %_libexecdir/%name
@@ -62,6 +76,13 @@ Install this package if you want to create RPM packages that use %name.
 
 %prep
 %setup
+%patch -p2
+%ifarch e2k
+sed -i "s:guile/2.2:guile/2.0:g" build/guile-ext.mak
+%patch1 -p2
+%patch2 -p2
+%endif
+%patch3 -p2
 
 %build
 %make_build GUILE_VERSION=%guile_version
@@ -70,6 +91,7 @@ Install this package if you want to create RPM packages that use %name.
 %make check-api
 
 %install
+export LTDL_LIBRARY_PATH=src/libguile-gettext:src/libguile-pipe:%_libdir/guile/%guile_version
 %makeinstall GUILE_VERSION=%guile_version unitdir=%buildroot%_unitdir \
 	     GUILE_LOAD_PATH=%_alterator_datadir/lookout
 ln -s ../bin/alterator-cmdline %buildroot%_sbindir/
@@ -112,7 +134,7 @@ EOF
 %_alterator_libdir/backend3
 %attr(700,root,root) %dir %_alterator_libdir/hooks
 %_alterator_libdir/interfaces
-%_alterator_libdir/lookout
+%{?!_with_bootstrap:%_alterator_libdir/lookout}
 %_alterator_libdir/type
 %_alterator_libdir/ui
 
@@ -145,6 +167,26 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Wed Dec 20 2017 Paul Wolneykien <manowar@altlinux.org> 5.1-alt7
+- Use with-fluids* to restore the fluid-values just bofore
+  entering the suspended context (patch).
+
+* Mon Dec 18 2017 Paul Wolneykien <manowar@altlinux.org> 5.1-alt6
+- Modify the evaluation wrapper: make it skip the (set! a b) result
+  value that is undefined (patch).
+
+* Fri Dec 15 2017 Paul Wolneykien <manowar@altlinux.org> 5.1-alt5
+- Modify the evaluation wrapper: make it skip the (set! a b) result
+  value (that is undefined).
+
+* Thu Dec 07 2017 Paul Wolneykien <manowar@altlinux.org> 5.1-alt4
+- Implement call/cc in terms of shift (patch, e2k).
+
+* Mon Dec 04 2017 Paul Wolneykien <manowar@altlinux.org> 5.1-alt3
+- Get rid of the circular build dependency on alterator-lookout:
+  load its modules at run-time.
+- Backport to guile20 for e2k (thx bircoph@).
+
 * Wed Sep 20 2017 Andrey Cherepanov <cas@altlinux.org> 5.1-alt2
 - Compile module only if guild is available
 
