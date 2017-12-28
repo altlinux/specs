@@ -5,21 +5,22 @@
 
 Name: python-module-%oname
 Version: 0.2.1
-Release: alt1
+Release: alt2
 Summary: The third-part package of kennethreitz/kr-sphinx-themes
 License: MIT
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/sphinx-kr-theme/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/tonyseek/sphinx-kr-theme.git
-Source0: https://pypi.python.org/packages/c6/eb/af442b97fb8dc2c2cdb3ca48b7ff93e638e9d7d795dbb3c2250eb6ff7b44/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %oname-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python2.7(pygments)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3(pygments)
 %endif
 
 %py_provides sphinx_kr_theme
@@ -29,6 +30,7 @@ This is the third-part package of Kenneth Reitz's krTheme. You will not
 have to copy the theme files into VCS or register it as submodule
 anymore.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: The third-part package of kennethreitz/kr-sphinx-themes
 Group: Development/Python3
@@ -38,9 +40,10 @@ Group: Development/Python3
 This is the third-part package of Kenneth Reitz's krTheme. You will not
 have to copy the theme files into VCS or register it as submodule
 anymore.
+%endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -n %oname-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -83,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.1-alt2
+- Fixed build.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1
 - automated PyPI update
 
