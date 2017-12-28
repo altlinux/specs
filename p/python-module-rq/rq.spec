@@ -4,40 +4,34 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7.1
+Version: 0.9.2
 Release: alt1
 Summary: Simple job queues for Python
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/rq/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/nvie/rq.git
-Source0: https://pypi.python.org/packages/4a/ee/30024f604d33b18e9e15e5780f20e1dc51a96f1a1162889694939a390593/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %oname-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-redis-py redis
-#BuildPreReq: python-module-click
-#BuildPreReq: python-module-argparse
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-redis-py
+BuildRequires: python-module-click
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-redis-py
-#BuildPreReq: python3-module-click
-#BuildPreReq: python3-module-argparse
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-redis-py
+BuildRequires: python3-module-click
 %endif
 
 %py_provides %oname
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
 
 %description
 RQ is a simple, lightweight, library for creating background jobs, and
 processing them.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Simple job queues for Python
 Group: Development/Python3
@@ -46,9 +40,10 @@ Group: Development/Python3
 %description -n python3-module-%oname
 RQ is a simple, lightweight, library for creating background jobs, and
 processing them.
+%endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -n %oname-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -86,7 +81,7 @@ popd
 %endif
 
 %files
-%doc *.md examples
+%doc *.md
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -95,12 +90,15 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.md examples
+%doc *.md
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.2-alt1
+- Updated to upstream version 0.9.2.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1
 - automated PyPI update
 
