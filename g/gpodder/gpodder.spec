@@ -1,5 +1,5 @@
 Name: gpodder
-Version: 3.9.3
+Version: 3.9.5
 Release: alt1
 
 Summary: podcast receiver/catcher in PyGTK
@@ -56,6 +56,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/%name/extensions/sonos.py*
 
 %changelog
+* Thu Dec 28 2017 Yuri N. Sedunov <aris@altlinux.org> 3.9.5-alt1
+- 3.9.5
+
 * Sat Jan 07 2017 Yuri N. Sedunov <aris@altlinux.org> 3.9.3-alt1
 - 3.9.3
 

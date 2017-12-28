@@ -1,4 +1,4 @@
-%define ver_major 1.3
+%define ver_major 1.4
 %def_enable video
 %define xdg_name org.gnome.frogr
 
@@ -15,11 +15,13 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %{?_enable_video:Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav}
 
-%define gtk_ver 3.14.0
+%define gtk_ver 3.16.0
+%define json_glib_ver 1.2
 
+BuildRequires: meson yelp-tools libappstream-glib-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: gnome-common yelp-tools libappstream-glib-devel
-BuildRequires: libjson-glib-devel libsoup-devel libexif-devel libxml2-devel libgcrypt-devel
+BuildRequires: libjson-glib-devel >= %json_glib_ver
+BuildRequires: libsoup-devel libexif-devel libxml2-devel libgcrypt-devel
 %{?_enable_video:BuildRequires: gstreamer1.0-devel}
 
 %description
@@ -30,12 +32,11 @@ a flickr account from the desktop.
 %setup
 
 %build
-%autoreconf
-%configure %{subst_enable video}
-%make_build V=1
+%meson %{?_enable_video:-Denable-video=true}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %name
 
@@ -50,9 +51,11 @@ a flickr account from the desktop.
 %_man1dir/%name.1.*
 %doc AUTHORS NEWS README
 
-%exclude %_datadir/pixmaps/%name.xpm
 
 %changelog
+* Thu Dec 28 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt1
+- 1.4
+
 * Mon May 22 2017 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
 - 1.3
 
