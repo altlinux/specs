@@ -1,11 +1,12 @@
 %define _libexecdir %_prefix/libexec
 %define so_ver 3
+%define gir_version 1.5
 
 %def_enable xps
 %def_enable introspection
 
 Name: xreader
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 
 Summary: A document viewer
@@ -148,12 +149,12 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 
 %if_enabled introspection
 %files -n lib%name-gir
-%_libdir/girepository-1.0/XreaderDocument-1.5.0.typelib
-%_libdir/girepository-1.0/XreaderView-1.5.0.typelib
+%_libdir/girepository-1.0/XreaderDocument-%gir_version.typelib
+%_libdir/girepository-1.0/XreaderView-%gir_version.typelib
 
 %files -n lib%name-gir-devel
-%_datadir/gir-1.0/XreaderDocument-1.5.0.gir
-%_datadir/gir-1.0/XreaderView-1.5.0.gir
+%_datadir/gir-1.0/XreaderDocument-%gir_version.gir
+%_datadir/gir-1.0/XreaderView-%gir_version.gir
 %endif
 
 %files -n nemo-xreader
@@ -162,6 +163,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nemo/extensions-3.0/*.la
 
 %changelog
+* Wed Dec 27 2017 Vladimir Didenko <cow@altlinux.org> 1.6.2-alt1
+- New version
+
 * Thu Nov 23 2017 Vladimir Didenko <cow@altlinux.org> 1.6.1-alt1
 - New version
 

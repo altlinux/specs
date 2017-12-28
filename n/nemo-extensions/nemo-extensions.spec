@@ -1,7 +1,7 @@
 %define api_ver 3.0
 
 Name: nemo-extensions
-Version: 3.6.1
+Version: 3.6.2
 Release: alt1
 Summary: Extensions for Nemo
 
@@ -38,6 +38,7 @@ BuildRequires: perl(XML/Parser.pm)
 BuildRequires: libcogl-gir-devel
 BuildRequires: libxreader-gir-devel
 BuildRequires: libcinnamon-desktop-devel
+BuildRequires: libxreader-gir-devel
 
 %description
 Extensions for Nemo
@@ -296,6 +297,9 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_bindir/nemo-compare-preferences
 
 %changelog
+* Wed Dec 27 2017 Vladimir Didenko <cow@altlinux.org> 3.6.2-alt1
+- 3.6.2-2-g5e72842
+
 * Mon Oct 30 2017 Vladimir Didenko <cow@altlinux.org> 3.6.1-alt1
 - 3.6.1
 
