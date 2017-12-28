@@ -1,5 +1,5 @@
 Name: service
-Version: 0.5.27
+Version: 0.5.28
 Release: alt1
 
 Summary: The service start/stop scripts
@@ -118,6 +118,12 @@ fi
 %config(noreplace) %_sysconfdir/sysconfig/limits
 
 %changelog
+* Wed Dec 27 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.5.28-alt1
+- use "start-stop-daemon --chuid USER" instead of "su"
+  if WITHOUT_RC_COMPAT >= 2 or --make-pidfile is used, which
+  is better because the saved PID belongs to the started program then
+  (rather than "su"), but worse -- because PAM limits are not set.
+
 * Thu Jul 27 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.5.27-alt1
 - functions: new *warning() funcs (as in Fedora).
 - Drop functions-compat from our pkg; it'll be external.
