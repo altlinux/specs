@@ -1,18 +1,31 @@
 %define _unpackaged_files_terminate_build 1
-%define oname nss
-Name: python-module-%oname
-Version: 1.0.0
-Release: alt1
-Summary: Python binding for NSS
-License: MPL 1.1/GPL 2.0/LGPL 2.1
+
+%define mname nss
+Name: python-module-%mname
+Version: 1.0.1
+Release: alt1%ubt
+Summary: Python binding for NSS (Network Security Services) and NSPR (Netscape Portable Runtime)
+License: MPLv2.0 or GPLv2+ or LGPLv2+
 Group: Development/Python
-Url: http://www.mozilla.org/projects/security/pki/python-nss/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: http://www.mozilla.org/projects/security/pki/python-nss
 
 # hg clone https://hg.mozilla.org/projects/python-nss
-Source0: https://pypi.python.org/packages/44/cb/c67a613c26beffbfdf58cb4a6b6a5a35c27085c666227f384a7fb1375cb8/python-%{oname}-%{version}.tar.bz2
+Source: %name-%version.tar
 
-BuildPreReq: python-devel gcc-c++ libnss-devel python-module-epydoc
+%py_provides %mname
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
+BuildRequires: gcc-c++
+BuildRequires: libnss-devel
+BuildRequires: libnspr-devel
+BuildRequires: python-devel
+BuildRequires: python3-devel
+BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
+# for tests
+BuildRequires: nss-utils
+#
 
 %description
 python-nss is a Python binding for NSS (Network Security Services) and
@@ -21,23 +34,70 @@ supporting SSL, TLS, PKI, PKIX, X509, PKCS*, etc. NSS is an alternative
 to OpenSSL and used extensively by major software projects. NSS is
 FIPS-140 certified.
 
+NSS is built upon NSPR because NSPR provides an abstraction of common
+operating system services, particularly in the areas of networking and
+process management. Python also provides an abstraction of common
+operating system services but because NSS and NSPR are tightly bound
+python-nss exposes elements of NSPR.
+
+%package -n python3-module-%mname
+Summary: Python3 binding for NSS (Network Security Services) and NSPR (Netscape Portable Runtime)
+Group: Development/Python3
+%py3_provides %mname
+
+%description -n python3-module-%mname
+python-nss is a Python3 binding for NSS (Network Security Services) and
+NSPR (Netscape Portable Runtime). NSS provides cryptography services
+supporting SSL, TLS, PKI, PKIX, X509, PKCS*, etc. NSS is an alternative
+to OpenSSL and used extensively by major software projects. NSS is
+FIPS-140 certified.
+
+NSS is built upon NSPR because NSPR provides an abstraction of common
+operating system services, particularly in the areas of networking and
+process management. Python also provides an abstraction of common
+operating system services but because NSS and NSPR are tightly bound
+python-nss exposes elements of NSPR.
+
 %prep
-%setup -q -n python-%{oname}-%{version}
+%setup
+rm -rf ../python3
+cp -a . ../python3
 
 %build
+%add_optflags -fno-strict-aliasing
 %python_build_debug
 
-python setup.py build_api_doc -a html
-mv build/doc/html api
+pushd ../python3
+%python3_build_debug
+popd
 
 %install
 %python_install
 
+pushd ../python3
+%python3_install
+popd
+
+%check
+export PYTHONPATH=%buildroot%python_sitelibdir
+python test/run_tests -i
+export PYTHONPATH=%buildroot%python3_sitelibdir
+pushd ../python3
+python3 test/run_tests -i
+popd
+
 %files
-%doc LICENSE* README doc/ChangeLog doc/examples api
+%doc LICENSE* README doc/ChangeLog
 %python_sitelibdir/*
 
+%files -n python3-module-%mname
+%doc LICENSE* README doc/ChangeLog
+%python3_sitelibdir/*
+
 %changelog
+* Thu Dec 28 2017 Stanislav Levin <slev@altlinux.org> 1.0.1-alt1%ubt
+- 1.0.0 -> 1.0.1
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1
 - automated PyPI update
 
