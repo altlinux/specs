@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.41.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -62,6 +62,17 @@ KF5 library
 %prep
 %setup -n %rname-%version
 
+# clean kmoretools menu
+for app in \
+    disk \
+    org.kde.partitionmanager \
+    org.gnome.clocks \
+    gnome-search-tool \
+    #
+do
+    rm -f data/kmoretools-desktopfiles/"$app".desktop
+done
+
 %build
 %K5build
 
@@ -92,6 +103,9 @@ KF5 library
 
 
 %changelog
+* Thu Dec 28 2017 Sergey V Turchin <zerg@altlinux.org> 5.41.0-alt2%ubt
+- clean kmoretools menu
+
 * Tue Dec 12 2017 Sergey V Turchin <zerg@altlinux.org> 5.41.0-alt1%ubt
 - new version
 
