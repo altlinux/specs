@@ -1,5 +1,5 @@
 Name: mediainfo
-Version: 17.10
+Version: 17.12
 Release: alt1
 
 Group: File tools
@@ -12,6 +12,7 @@ Source: https://mediaarea.net/download/source/%name/%version/%{name}_%{version}.
 Requires: lib%name >= %version
 
 BuildRequires(pre): rpm-macros-kde-common-devel
+BuildRequires(pre): rpm-build-kf5
 
 BuildRequires: gcc-c++
 BuildRequires: dos2unix
@@ -33,6 +34,12 @@ Summary: KDE4 related MediaInfo files
 BuildArch: noarch
 Requires: %name-gui = %version-%release
 Requires: kde4libs
+
+%package gui-KDE5
+Group: File tools
+Summary: KDE5 related MediaInfo files
+BuildArch: noarch
+Requires: %name-gui = %version-%release
 
 %description
 MediaInfo supplies technical and tag information about a video or audio file
@@ -76,6 +83,9 @@ To combine with KDE install KDE-related package
 
 %description gui-KDE4
 This package contains KDE4 related MediaInfo files for konqueror
+
+%description gui-KDE5
+This package contains KDE5 related MediaInfo files
 
 %prep
 %setup -q -T -b 0 -n MediaInfo
@@ -128,7 +138,14 @@ grep -v '^Encoding=' Project/GNU/GUI/mediainfo-gui.kde4.desktop >%buildroot%_K4s
 %files gui-KDE4
 %_K4srv/ServiceMenus/%name-gui.desktop
 
+%files gui-KDE5
+%_K5srv/ServiceMenus/%name-gui.desktop
+
 %changelog
+* Thu Dec 28 2017 Yuri N. Sedunov <aris@altlinux.org> 17.12-alt1
+- 17.12
+- new gui-KDE5 subpackage
+
 * Sat Nov 04 2017 Yuri N. Sedunov <aris@altlinux.org> 17.10-alt1
 - 17.10
 

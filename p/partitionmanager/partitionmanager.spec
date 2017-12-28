@@ -1,7 +1,7 @@
 %define xdg_name org.kde.partitionmanager
 
 Name: partitionmanager
-Version: 3.2.1
+Version: 3.3.0
 Release: alt1
 
 Summary: KDE Partition Manager
@@ -16,7 +16,7 @@ Source: http://download.kde.org/stable/partitionmanager/%version/src/%name-%vers
 Requires: lvm2 cryptsetup
 
 %define qt_ver 5.7.0
-%define kpmcore_ver 3.2.0
+%define kpmcore_ver 3.3.0
 
 BuildRequires: gcc-c++ extra-cmake-modules rpm-build-kf5 qt5-base-devel >= %qt_ver
 BuildRequires: kf5-kcrash-devel kf5-kdoctools-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel
@@ -55,6 +55,9 @@ file systems.
 %doc README* TODO
 
 %changelog
+* Thu Dec 28 2017 Yuri N. Sedunov <aris@altlinux.org> 3.3.0-alt1
+- 3.3.0
+
 * Mon Oct 16 2017 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
 - 3.2.1
 

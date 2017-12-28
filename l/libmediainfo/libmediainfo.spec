@@ -1,5 +1,5 @@
 Name: libmediainfo
-Version: 17.10
+Version: 17.12
 Release: alt1
 
 Group: System/Libraries
@@ -9,14 +9,12 @@ Url: http://mediainfo.sourceforge.net
 
 Source: https://mediaarea.net/download/source/%name/%version/%{name}_%{version}.tar.xz
 
-# Automatically added by buildreq on Sat Dec 03 2005
-BuildRequires: gcc-c++ automake autoconf libtool
+BuildRequires: gcc-c++
 BuildRequires: dos2unix
 BuildRequires: doxygen
 BuildRequires: zlib-devel
 BuildRequires: libmms-devel
 BuildRequires: id3lib-devel
-BuildRequires: pkg-config
 BuildRequires: libflac-devel
 BuildRequires: libmatroska-devel
 BuildRequires: libfaad-devel
@@ -87,6 +85,9 @@ popd
 %_libdir/%name.so
 
 %changelog
+* Thu Dec 28 2017 Yuri N. Sedunov <aris@altlinux.org> 17.12-alt1
+- 17.12
+
 * Sat Nov 04 2017 Yuri N. Sedunov <aris@altlinux.org> 17.10-alt1
 - 17.10
 
