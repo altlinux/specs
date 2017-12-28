@@ -4,32 +4,27 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.0
+Version: 1.0.2
 Release: alt1
 Summary: Provides methods to connect to multiple databases easily
 License: ASLv2.0
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/sqlalchemy-multidb/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/viniciuschiele/sqlalchemy-multidb.git
-Source0: https://pypi.python.org/packages/71/38/d32d8194d47d1317eeb7cc9b358db7fc9fc1d707d62e7f910fe7226c7f27/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-SQLAlchemy
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-SQLAlchemy
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-SQLAlchemy
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-SQLAlchemy
 %endif
 
 %py_provides sqlalchemy_multidb
 %py_requires sqlalchemy
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
 
 %description
 Provides methods to load the database configurations from a config file
@@ -48,7 +43,7 @@ and access multiple databases easily.
 %endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -81,16 +76,19 @@ popd
 %endif
 
 %files
-%doc *.rst PKG-INFO
+%doc *.rst examples
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst PKG-INFO
+%doc *.rst examples
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.2-alt1
+- Updated to upstream version 1.0.2.
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1
 - automated PyPI update
 
