@@ -1,6 +1,6 @@
 Name: psutils
 Version: p17
-Release: alt2.qa1
+Release: alt3
 Epoch: 1
 
 Summary: PostScript utilities
@@ -13,6 +13,7 @@ Patch1: psutils-maketext.patch
 Patch2: psutils-p17-paper.patch
 Patch3: psutils-manpage.patch
 Patch4: psutils-flip.patch
+Patch5: psutils-perl-unescaped-regexp.patch
 Packager: Fr. Br. George <george@altlinux.ru>
 
 %description
@@ -27,6 +28,7 @@ into signatures for booklet printing, and page merging for n-up printing.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p2
 
 %build
 make -f Makefile.unix RPM_OPT_FLAGS="%optflags" \
@@ -43,6 +45,9 @@ make -f Makefile.unix install BUILDROOT="%buildroot"
 %_man1dir/*
 
 %changelog
+* Thu Dec 28 2017 Anton Farygin <rider@altlinux.ru> 1:p17-alt3
+- fixed build with  perl-5.26
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:p17-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
