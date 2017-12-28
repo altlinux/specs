@@ -1,7 +1,7 @@
 Summary: The EXTLINUX bootloader, for booting the local system.
 Name: extlinux
-Version: 4.05
-Release: alt3
+Version: 6.03
+Release: alt1
 License: GPL2
 Group: System/Base
 Url: http://www.syslinux.org/wiki/index.php/The_Syslinux_Project
@@ -13,18 +13,17 @@ Source2: extlinux.sysconfig
 Source3: extlinux-config
 Source4: extlinux.filetrigger
 
-Patch0:  syslinux-global-append.patch
-Patch1:  syslinux-addappend-directive.patch
-Patch2:  syslinux-use-ext2fs.patch
-Patch3:  syslinux-fix-isohybrid.patch
-
-BuildRequires: libe2fs-devel libuuid-devel nasm python-module-distribute
+BuildRequires: libe2fs-devel libuuid-devel nasm
 
 Requires: libshell util-linux parted
 
 Conflicts: syslinux-extlinux
 Obsoletes: syslinux4-extlinux
 Provides: syslinux4-extlinux = %version-%release
+
+%global _unpackaged_files_terminate_build 1
+%add_verify_elf_skiplist /boot/extlinux/*
+%add_findreq_skiplist /boot/extlinux/*
 
 %description
 The EXTLINUX bootloader, for booting the local system, as well as all
@@ -39,33 +38,33 @@ Extlinux documentation.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 rm -rf mk/devel.mk
-make
+
+sed -i \
+	-e 's,\(strip tidy clean dist install installer netinstall\):$,\1 extbootinstall:,' \
+	Makefile
+
+make bios
 
 %install
-make extbootinstall \
+make bios extbootinstall \
 	INSTALLROOT="%buildroot" \
 	EXTLINUXDIR=/boot/extlinux
-
-cp -a mbr/*mbr.bin %buildroot/boot/extlinux/
 
 mkdir -p -- %buildroot/%_sysconfdir/sysconfig \
             %buildroot/%_rpmlibdir \
             %buildroot/%_man1dir \
-            %buildroot/sbin \
-            %buildroot/boot
+            %buildroot/sbin
+
+cp -a         bios/mbr/*mbr.bin      %buildroot/boot/extlinux/
+install -m755 bios/extlinux/extlinux %buildroot/sbin/
 
 install -m644 man/extlinux.1 %buildroot/%_man1dir/
-install -m644 %SOURCE2 %buildroot/%_sysconfdir/sysconfig/extlinux
-install -m755 extlinux/extlinux %buildroot/sbin/
-install -m755 %SOURCE3 %buildroot/sbin/
-install -m755 %SOURCE4 %buildroot/%_rpmlibdir/
+install -m644 %SOURCE2       %buildroot/%_sysconfdir/sysconfig/extlinux
+install -m755 %SOURCE3       %buildroot/sbin/
+install -m755 %SOURCE4       %buildroot/%_rpmlibdir/
 
 tar -C %buildroot/boot/extlinux -xf %SOURCE1
 
@@ -80,23 +79,30 @@ ln -s ../boot/extlinux/extlinux.conf.d .
 [ ! -L /sbin/extlinux-config ] || rm -f -- /sbin/extlinux-config
 
 %files
+%dir /boot/extlinux/extlinux.conf.d
 %config(noreplace) /boot/extlinux/extlinux.conf
+%config(noreplace) /boot/extlinux/extlinux.conf.d/.*.conf
 %config(noreplace) /boot/extlinux/extlinux.conf.d/*.conf
 %config(noreplace) %_sysconfdir/sysconfig/extlinux
 %_sysconfdir/extlinux.conf
 %_sysconfdir/extlinux.conf.d
 /boot/boot
-/boot/extlinux
+/boot/extlinux/memdisk
+/boot/extlinux/*.bin
+/boot/extlinux/*.c32
 /sbin/extlinux
 /sbin/extlinux-config
 %_rpmlibdir/*
-%_man1dir/*
+%_man1dir/extlinux.1*
 
 %files doc
 %doc COPYING NEWS doc/*
 %doc sample
 
 %changelog
+* Tue Dec 26 2017 Alexey Gladkov <legion@altlinux.ru> 6.03-alt1
+- New release (6.03).
+
 * Wed Sep 12 2012 Alexey Gladkov <legion@altlinux.ru> 4.05-alt3
 - Remove obsolete %%postinstall script.
 - Filetrigger only updates the configuration.
