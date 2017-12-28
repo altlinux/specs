@@ -1,5 +1,5 @@
 Name: projectdb
-Version: 0.0.20171207
+Version: 0.0.20171227
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -30,5 +30,8 @@ done
 /usr/share/projectdb
 
 %changelog
+* Fri Dec 29 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.20171227-alt1
+- db update
+
 * Thu Dec 07 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.20171207-alt1
 - first release
