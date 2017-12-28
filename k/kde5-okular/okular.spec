@@ -7,7 +7,7 @@
 
 Name: kde5-%rname
 Version: 17.08.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Office
@@ -83,6 +83,7 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 
 %build
 %K5build \
@@ -142,6 +143,9 @@ KF5 library
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Thu Dec 28 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt2%ubt
+- exclude internal ooo generator
+
 * Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 
