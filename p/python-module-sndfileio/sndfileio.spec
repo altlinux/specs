@@ -2,38 +2,33 @@
 %define oname sndfileio
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 0.7.1
-Release: alt1
+Release: alt2
 Summary: Provides a unified API to read and write sound-files to and from numpy arrays
 License: Free
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/sndfileio/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/gesellkammer/sndfileio.git
-Source0: https://pypi.python.org/packages/10/a5/b73fbef06657f54b17373972ee4037fae1e1a110ad3d047ebd03c4878da9/%{oname}-%{version}.tar.gz
-BuildArch: noarch
+Source: %oname-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-scikits.audiolab libnumpy-devel
-#BuildPreReq: python-module-scikits.samplerate python-module-scipy
-#BuildPreReq: python-module-matplotlib
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-scikits.samplerate python-module-scipy
+BuildRequires: python-module-matplotlib
+BuildRequires: python-module-docutils python-module-html5lib
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-scikits.audiolab libnumpy-py3-devel
-#BuildPreReq: python3-module-scikits.samplerate python3-module-scipy
-#BuildPreReq: python3-module-matplotlib
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-scikits.samplerate python3-module-scipy
+BuildRequires: python3-module-matplotlib
 %endif
 
 %py_provides %oname
 %py_requires numpy scikits.audiolab scikits.samplerate scipy matplotlib
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-future python-module-genshi python-module-jinja2 python-module-mpmath python-module-numpy python-module-pyparsing python-module-pytest python-module-pytz python-module-scikits.eartho python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-gdal python3-module-matplotlib python3-module-numpy python3-module-pyparsing python3-module-pytest python3-module-scikits.eartho python3-module-setuptools
-BuildRequires: python-module-docutils python-module-html5lib python-module-matplotlib python-module-scikits.samplerate python-module-scipy python-module-setuptools-tests python3-module-scikits.samplerate python3-module-scipy python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 Common API for reading and writing soundfiles.
@@ -62,7 +57,7 @@ Common API for reading and writing soundfiles.
 %endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -n %oname-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -96,16 +91,19 @@ popd
 %endif
 
 %files
-%doc *.rst PKG-INFO
+%doc *.rst
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst PKG-INFO
+%doc *.rst
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.1-alt2
+- Fixed build.
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1
 - automated PyPI update
 
