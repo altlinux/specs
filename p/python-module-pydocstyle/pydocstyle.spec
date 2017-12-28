@@ -1,19 +1,19 @@
-%define oname pep257
+%define oname pydocstyle
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 2.1.1
-Release: alt1
+Release: alt2
 Summary: Python docstring style checker
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/pep257/
+BuildArch: noarch
+Url: https://pypi.python.org/pypi/pydocstyle
 
-# https://github.com/GreenSteam/pep257.git
+# https://github.com/PyCQA/pydocstyle.git
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-docs.patch
-BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-alabaster python-module-objects.inv python-module-sphinxcontrib-issuetracker
@@ -22,30 +22,26 @@ BuildRequires: python2.7(backports.configparser)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-html5lib python3-module-mock python3-module-pytest python3-module-pathlib
-BuildRequires: python3(backports.configparser)
+BuildRequires: python3(backports.configparser) python3(snowballstemmer)
 %endif
 
-%py_provides %oname
-
 %description
-pep257 is a static analysis tool for checking compliance with Python PEP
-257.
+pydocstyle is a static analysis tool for checking
+compliance with Python docstring conventions.
 
-The framework for checking docstring style is flexible, and custom
-checks can be easily added, for example to cover NumPy docstring
-conventions.
+pydocstyle supports most of PEP 257 out of the box,
+but it should not be considered a reference implementation.
 
 %package pickles
 Summary: Pickles for %oname
 Group: Development/Python
 
 %description pickles
-pep257 is a static analysis tool for checking compliance with Python PEP
-257.
+pydocstyle is a static analysis tool for checking
+compliance with Python docstring conventions.
 
-The framework for checking docstring style is flexible, and custom
-checks can be easily added, for example to cover NumPy docstring
-conventions.
+pydocstyle supports most of PEP 257 out of the box,
+but it should not be considered a reference implementation.
 
 This package contains pickles for %oname.
 
@@ -55,27 +51,26 @@ Group: Development/Documentation
 BuildArch: noarch
 
 %description docs
-pep257 is a static analysis tool for checking compliance with Python PEP
-257.
+pydocstyle is a static analysis tool for checking
+compliance with Python docstring conventions.
 
-The framework for checking docstring style is flexible, and custom
-checks can be easily added, for example to cover NumPy docstring
-conventions.
+pydocstyle supports most of PEP 257 out of the box,
+but it should not be considered a reference implementation.
 
 This package contains documentation for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Python docstring style checker
 Group: Development/Python3
-%py3_provides %oname
 
 %description -n python3-module-%oname
-pep257 is a static analysis tool for checking compliance with Python PEP
-257.
+pydocstyle is a static analysis tool for checking
+compliance with Python docstring conventions.
 
-The framework for checking docstring style is flexible, and custom
-checks can be easily added, for example to cover NumPy docstring
-conventions.
+pydocstyle supports most of PEP 257 out of the box,
+but it should not be considered a reference implementation.
+%endif
 
 %prep
 %setup
@@ -119,10 +114,14 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 export LC_ALL=en_US.UTF-8
-PYTHONPATH=%buildroot%python_sitelibdir py.test -vv ||:
+# those tests are known to fail
+rm -f src/tests/test_integration.py
+PYTHONPATH=%buildroot%python_sitelibdir py.test -vv
 %if_with python3
 pushd ../python3
-PYTHONPATH=%buildroot%python3_sitelibdir py.test3 -vv ||:
+# those tests are known to fail
+rm -f src/tests/test_integration.py
+PYTHONPATH=%buildroot%python3_sitelibdir py.test3 -vv
 popd
 %endif
 
@@ -149,6 +148,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.1-alt2
+- Upstream renamed package to pydocstyle from pep257.
+
 * Thu Oct 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.1-alt1
 - Updated to upstream version 2.1.1.
 
