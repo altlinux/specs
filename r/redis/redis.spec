@@ -1,16 +1,18 @@
 Name: redis
-Version: 3.2.9
+Version: 4.0.6
 Release: alt1
 
 Summary: Redis is an advanced key-value store
 
 Group: System/Libraries
 License: New BSD License
-Url: http://redis.io/
+URL: http://redis.io/
+#URL: https://github.com/antirez/redis
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://redis.googlecode.com/files/%name-%version.tar
+Source0: %name-%version.tar
+Patch0:  %name-%version-%release.patch
 
 Source1: %name.conf
 Source2: redis-benchmark.1
@@ -57,6 +59,8 @@ for Windows currently.
 
 %prep
 %setup
+%patch0 -p1 
+
 sed -e 's|\$(CCOPT) \$(DEBUG) \$(OBJ)|\$(OBJ) \$(CCOPT) \$(DEBUG)|g' -i src/Makefile
 
 %build
@@ -135,6 +139,9 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.
 
 
 %changelog
+* Wed Dec 27 2017 Nikolay A. Fetisov <naf@altlinux.org> 4.0.6-alt1
+- New version
+
 * Sun Jun 04 2017 Nikolay A. Fetisov <naf@altlinux.org> 3.2.9-alt1
 - New version
 
