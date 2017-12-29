@@ -1,5 +1,8 @@
+
+%define _localstatedir /var
+
 Name: gnupg2
-Version: 2.0.30
+Version: 2.1.23
 Release: alt1%ubt
 
 Group: Text tools
@@ -12,17 +15,12 @@ Source0: gnupg-%version.tar
 Source1: gnupg-agent.sh
 Source2: gnupg-agent-wrapper.sh
 
-Patch1: gnupg-1.6.9-xloadimage.patch
-Patch2: gnupg-1.9.20-alt-libpcsclite.patch
-Patch3: gnupg-2.0.29-alt-agent-fix-password-request.patch
-Patch4: gnupg-2.0.19-alt-texinfo.patch
-Patch11: gnupg-2.0.20-rh-ocsp-keyusage.patch
-
 %define docdir %_docdir/gnupg-%version
 
 Provides: newpg = %version-%release
 Obsoletes: newpg < %version-%release
-
+Provides: dirmngr = %version-%release
+Obsoletes: dirmngr < %version-%release
 Provides: gnupg-agent = %version-%release
 Provides: %name-agent = %version-%release
 Provides: %name-gpg = %version-%release
@@ -33,11 +31,24 @@ Obsoletes: %name-common < %version-%release
 # due to "enable -f /usr/lib/bash/lockf lockf"
 Requires: bash-builtin-lockf >= 0:0.2
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires: libgcrypt-devel >= 1.4, libksba-devel >= 0.9.13
 
-# Automatically added by buildreq on Fri Apr 08 2011
-BuildRequires: bzlib-devel libassuan-devel libcurl-devel libgcrypt-devel libksba-devel libldap-devel libpth-devel libreadline-devel zlib-devel
+# FC
+Patch11: gnupg-2.1.21-insttools.patch
+Patch12: gnupg-2.1.19-exponential.patch
+Patch13: gnupg-2.1.10-secmem.patch
+Patch14: gnupg-2.1.1-ocsp-keyusage.patch
+Patch15: gnupg-2.1.1-fips-algo.patch
+Patch16: gnupg-2.1.21-large-rsa.patch
+# ALT
+Patch101: alt-xloadimage.patch
+Patch102: alt-agent-fix-password-request.patch
+Patch103: alt-texinfo.patch
+
+BuildRequires(pre): rpm-build-ubt
+BuildRequires: libgcrypt-devel libksba-devel libassuan-devel libksba-devel
+BuildRequires: libgnutls-devel libnpth-devel
+BuildRequires: bzlib-devel libcurl-devel libldap-devel
+BuildRequires: libreadline-devel zlib-devel libusb-devel pkgconfig(sqlite3)
 # explicitly added texinfo for info files
 BuildRequires: texinfo
 
@@ -54,16 +65,23 @@ functionality up into several modules.
 
 %prep
 %setup -n gnupg-%version
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 %patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch101 -p1
+#%patch102 -p1
+%patch103 -p1
 rm doc/*.info*
 
 %build
 %add_optflags -fno-strict-aliasing
 %configure \
+	--enable-gpg-is-gpg2 \
+	--enable-g13 \
+	--enable-large-secmem \
 	--disable-rpath \
 	--with-capabilities \
 	--enable-symcryptrun \
@@ -95,6 +113,8 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %files -f %name.lang
 %config %_sysconfdir/profile.d/gnupg-agent.sh
 %_bindir/*
+%exclude %_bindir/gpg-zip
+%exclude %_bindir/gpgsplit
 %_sbindir/*
 %_libexecdir/gnupg/
 %_datadir/gnupg/
@@ -104,6 +124,9 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Fri Dec 29 2017 Sergey V Turchin <zerg@altlinux.org> 2.1.23-alt1%ubt
+- new version
+
 * Thu Mar 02 2017 Sergey V Turchin <zerg@altlinux.org> 2.0.30-alt1%ubt
 - new version
 
