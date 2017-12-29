@@ -3,7 +3,7 @@
 
 Name: gnupg2
 Version: 2.1.23
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -88,6 +88,7 @@ rm doc/*.info*
 	--with-mailprog=%_sbindir/sendmail \
 	--with-pinentry-pgm=%_bindir/pinentry \
 	--libexecdir=%_libexecdir/gnupg \
+	--with-default-trust-store-file=%_datadir/ca-certificates/ca-bundle.crt \
 	--docdir=%docdir
 %make_build MAKEINFOFLAGS=--no-split
 
@@ -124,6 +125,9 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Fri Dec 29 2017 Sergey V Turchin <zerg@altlinux.org> 2.1.23-alt2%ubt
+- specify path to ca-bundle.crt
+
 * Fri Dec 29 2017 Sergey V Turchin <zerg@altlinux.org> 2.1.23-alt1%ubt
 - new version
 
