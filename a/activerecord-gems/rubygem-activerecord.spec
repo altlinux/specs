@@ -5,8 +5,8 @@
 %global gem_cache %gem_dir/cache
 
 Name: activerecord-gems
-Version: 5.0.2
-Release: alt2
+Version: 5.1.4
+Release: alt1
 Summary: ActiveRecord
 Group: Development/Ruby
 License: MIT,Apache2.0
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 BuildRequires: ruby  ruby-tools libruby-devel 
 BuildRequires: activesupport-gems
 BuildArch: noarch
-Obsoletes: ruby-activerecord < 5.0.2
+Obsoletes: ruby-activerecord < 5.1.4
 
 %description
 ActiveRecord ruby gem
@@ -74,6 +74,9 @@ rm -f gems/thread_safe-0.3.6/examples/bench_cache.rb
 %doc %gem_docdir
 
 %changelog
+* Fri Dec 29 2017 Denis Medvedev <nbr@altlinux.org> 5.1.4-alt1
+- new versions of included gems
+
 * Sun Nov 12 2017 Denis Medvedev <nbr@altlinux.org> 5.0.2-alt2
 - Fixed gem dir. Added needed obsoletes.
 
