@@ -1,25 +1,22 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt3.1.1
 %define oname zope.app.sqlscript
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
 Version: 3.5.0
-#Release: alt3.1
+Release: alt4
 Summary: SQL Script -- Zope 3 Content Component
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.app.sqlscript/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python-tools-2to3
 %endif
 
 %py_requires zope.app ZODB3 zope.annotation zope.app.cache
@@ -32,6 +29,7 @@ This package provides the SQL Script content type for Zope 3
 applications. SQL Scripts are connected to execute SQL statements and
 the result is return in an object-oriented data structure.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: SQL Script -- Zope 3 Content Component
 Group: Development/Python3
@@ -58,6 +56,7 @@ applications. SQL Scripts are connected to execute SQL statements and
 the result is return in an object-oriented data structure.
 
 This package contains tests for zope.app.sqlscript.
+%endif
 
 %package tests
 Summary: Tests for zope.app.sqlscript
@@ -136,6 +135,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Dec 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.0-alt4
+- Rebuilt without python-3.
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.0-alt3.1.1
 - (AUTO) subst_x86_64.
 

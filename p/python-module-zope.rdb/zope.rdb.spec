@@ -1,23 +1,22 @@
 %define oname zope.rdb
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
 Version: 3.5.0
-Release: alt3.1
+Release: alt4
 Summary: Zope RDBMS transaction integration
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.rdb/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python-tools-2to3
 %endif
 
 %py_requires zope transaction ZODB3 zope.container zope.interface
@@ -31,6 +30,7 @@ Provides a proxy for interaction between the zope transaction framework
 and the db-api connection. Databases which want to support sub
 transactions need to implement their own proxy.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Zope RDBMS transaction integration
 Group: Development/Python3
@@ -58,6 +58,7 @@ and the db-api connection. Databases which want to support sub
 transactions need to implement their own proxy.
 
 This package contains tests for Zope RDBMS transaction integration.
+%endif
 
 %package tests
 Summary: Tests for Zope RDBMS transaction integration
@@ -92,7 +93,7 @@ popd
 
 %install
 %python_install
-%ifarch x86_64
+%if "%_lib" == "lib64"
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
@@ -102,7 +103,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 pushd ../python3
 %python3_install
 popd
-%ifarch x86_64
+%if "%_lib" == "lib64"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
@@ -130,6 +131,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Dec 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.0-alt4
+- Rebuilt without python-3.
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.0-alt3.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
