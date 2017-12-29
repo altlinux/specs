@@ -4,9 +4,11 @@
 %def_enable introspection
 %def_enable x11
 %def_disable xevie
+%def_enable docs
+%def_disable check
 
 Name: at-spi2-core
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -19,6 +21,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Requires: lib%name = %version-%release
 Requires: dbus-tools-gui
 
+BuildRequires(pre): meson
 BuildRequires: libgio-devel >= 2.36.0 libdbus-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_x11:BuildRequires: libXtst-devel libXext-devel libXi-devel libICE-devel libSM-devel}
@@ -83,21 +86,20 @@ This package contains documentation for developing applications that use
 %setup
 
 %build
-%autoreconf
-%configure \
-    --with-dbus-daemondir=/bin \
-    %{subst_enable x11} \
-    %{subst_enable xevie} \
-    %{?_disable_introspection:--enable-introspection=no}
+%meson \
+    -Ddbus_daemon=/bin \
+    %{?_disable_x11:-Denable-x11=false} \
+    %{?_disable_introspection:-Denable-introspection=false} \
+    %{?_enable_docs:-Denable_docs=true}
 
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %check
-#%make check
+%meson_test
 
 %files -f %name.lang
 %_libexecdir/at-spi2-registryd
@@ -129,6 +131,9 @@ This package contains documentation for developing applications that use
 %_datadir/gtk-doc/html/libatspi
 
 %changelog
+* Fri Dec 29 2017 Yuri N. Sedunov <aris@altlinux.org> 2.26.2-alt1
+- 2.26.2
+
 * Mon Oct 30 2017 Yuri N. Sedunov <aris@altlinux.org> 2.26.1-alt1
 - 2.26.1
 

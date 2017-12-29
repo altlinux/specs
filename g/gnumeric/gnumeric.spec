@@ -11,8 +11,8 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.37
-Release: alt1.1
+Version: %ver_major.38
+Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
 License: GPLv2+ GPLv3+
@@ -24,14 +24,13 @@ Patch: gnumeric-desktop-alt.patch
 Patch1: gnumeric-1.12.1-alt-locale_dir.patch
 Patch2: gnumeric-1.12.33-docbook.patch
 
-
 Obsoletes: %name-light
 Provides: %name-light = %version-%release
 
 %define gsf_ver 1.14.42
 %define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.37
+%define goffice_ver 0.10.38
 %if_with python
 # Provided by python_loader.so
 Provides: python%__python_version(Gnumeric)
@@ -180,6 +179,9 @@ subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 %_pkgconfigdir/*
 
 %changelog
+* Fri Dec 29 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.38-alt1
+- 1.12.38
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.12.37-alt1.1
 - rebuild with new perl 5.26.1
 
