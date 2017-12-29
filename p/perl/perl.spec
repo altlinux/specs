@@ -1,6 +1,6 @@
 Name: perl
 Version: 5.26.1
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -40,6 +40,7 @@ Patch21: perl-5.24.3-alt-solovyov.patch
 
 # cpan update patches here. use format below:
 #Patch50: cpan-update-Socket-2.013-to-Socket-2.016.diff
+Patch51: cpan-update-Test-Simple-1.302073-to-Test-Simple-1.302120.patch
 
 # ------ inserted with srpm-spec-inject-patches(1) -------
 # BeginPatches(fedora)[shift=300]: -----------------------
@@ -270,6 +271,7 @@ equivalent text will have identical binary representations.
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
+%patch51 -p1
 
 # ------ inserted with srpm-spec-inject-patches(1) -------
 # BeginPatches(fedora): ------------------------------------
@@ -815,16 +817,29 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%privlib/Test2/Event/Diag.pm
 	%privlib/Test2/Event/Encoding.pm
 	%privlib/Test2/Event/Exception.pm
+	%privlib/Test2/Event/Fail.pm
 	%privlib/Test2/Event/Generic.pm
-	%privlib/Test2/Event/Info.pm
 	%privlib/Test2/Event/Note.pm
 	%privlib/Test2/Event/Ok.pm
+	%privlib/Test2/Event/Pass.pm
 	%privlib/Test2/Event/Plan.pm
 	%privlib/Test2/Event/Skip.pm
 	%privlib/Test2/Event/Subtest.pm
 %dir	%privlib/Test2/Event/TAP
 	%privlib/Test2/Event/TAP/Version.pm
 	%privlib/Test2/Event/Waiting.pm
+	%privlib/Test2/EventFacet.pm
+%dir	%privlib/Test2/EventFacet
+	%privlib/Test2/EventFacet/About.pm
+	%privlib/Test2/EventFacet/Amnesty.pm
+	%privlib/Test2/EventFacet/Assert.pm
+	%privlib/Test2/EventFacet/Control.pm
+	%privlib/Test2/EventFacet/Error.pm
+	%privlib/Test2/EventFacet/Info.pm
+	%privlib/Test2/EventFacet/Meta.pm
+	%privlib/Test2/EventFacet/Parent.pm
+	%privlib/Test2/EventFacet/Plan.pm
+	%privlib/Test2/EventFacet/Trace.pm
 	%privlib/Test2/Formatter.pm
 %dir	%privlib/Test2/Formatter
 	%privlib/Test2/Formatter/TAP.pm
@@ -845,6 +860,7 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%privlib/Test2/Util.pm
 %dir	%privlib/Test2/Util
 	%privlib/Test2/Util/ExternalMeta.pm
+	%privlib/Test2/Util/Facets2Legacy.pm
 	%privlib/Test2/Util/HashBase.pm
 	%privlib/Test2/Util/Trace.pm
 # Test-Harness pieces
@@ -933,6 +949,9 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%autolib/Unicode
 
 %changelog
+* Fri Dec 29 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.26.1-alt3
+- cpan update Test-Simple-1.302073 to Test-Simple-1.302120
+
 * Tue Dec 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:5.26.1-alt2
 - Rebuilt with new glibc.
 
