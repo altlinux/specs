@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-BuildRequires: unzip
 %define mname yieldfrom
 %define oname %mname.urllib3
 
@@ -8,38 +7,35 @@ BuildRequires: unzip
 
 Name: python-module-%oname
 Version: 0.1.4
-Release: alt1
+Release: alt2
 Summary: Asyncio HTTP library with thread-safe connection pooling, file post, and more
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/yieldfrom.urllib3/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/rdbhost/yieldfromUrllib3.git
-Source0: https://pypi.python.org/packages/40/1c/3417ef77d7b045441e7105dd2e344102a73c025fae1f2ddd8c0926ab982c/%{oname}-%{version}.zip
+Source: %oname-%version.zip
 
+BuildRequires: unzip
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-asyncio python-module-nose
-#BuildPreReq: python-module-yieldfrom.http.client
-#BuildPreReq: python-module-tornado
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python2.7(asyncio) python-module-nose
+BuildRequires: python-module-yieldfrom.http.client
+BuildRequires: python-module-tornado
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-asyncio python3-module-nose
-#BuildPreReq: python3-module-yieldfrom.http.client
-#BuildPreReq: python3-module-tornado
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3(asyncio) python3-module-nose
+BuildRequires: python3-module-yieldfrom.http.client
+BuildRequires: python3-module-tornado
+BuildRequires: python3-module-pycares python3-module-zope
 %endif
 
 %py_provides %oname
 Requires: python-module-%mname = %EVR
 %py_requires asyncio
 %py_requires yieldfrom.http.client
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python3 python3-base python3-module-pytest python3-module-setuptools python3-module-zope.interface
-BuildRequires: python3-module-nose python3-module-pycares python3-module-setuptools-tests python3-module-yieldfrom.http.client python3-module-zope rpm-build-python3
 
 %description
 Yieldfrom is a project to port various useful Python 3 libraries, both
@@ -50,6 +46,7 @@ as possible.
 
 This package is a port of the Urllib3 package.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Asyncio HTTP library with thread-safe connection pooling, file post, and more
 Group: Development/Python3
@@ -64,6 +61,7 @@ learning curve is minimal, and to make porting dependent modules as easy
 as possible.
 
 This package is a port of the Urllib3 package.
+%endif
 
 %package -n python-module-%mname
 Summary: Core files of %mname
@@ -74,12 +72,14 @@ Group: Development/Python
 %description -n python-module-%mname
 Core files of %mname.
 
+%if_with python3
 %package -n python3-module-%mname
 Summary: Core files of %mname
 Group: Development/Python3
 
 %description -n python3-module-%mname
 Core files of %mname.
+%endif
 
 %prep
 %setup -q -n %{oname}-%{version}
@@ -163,6 +163,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.4-alt2
+- Fixed build.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.4-alt1
 - automated PyPI update
 
