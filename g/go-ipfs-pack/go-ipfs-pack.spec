@@ -1,7 +1,7 @@
 # TODO: build from source
 
 Name: go-ipfs-pack
-Version: 0.4.0
+Version: 0.6.0
 Release: alt1
 
 Summary: ipfs-pack filesystem packing tool
@@ -46,5 +46,8 @@ install -m755 -D ipfs-pack %buildroot%_bindir/ipfs-pack
 %_bindir/ipfs-pack
 
 %changelog
+* Fri Dec 29 2017 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt1
+- new version 0.6.0 (with rpmrb script)
+
 * Mon Jun 12 2017 Vitaly Lipatov <lav@altlinux.ru> 0.4.0-alt1
 - initial build for ALT Sisyphus
