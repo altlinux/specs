@@ -1,15 +1,19 @@
 Name: ca-certificates
 Version: 2017.11.22
-Release: alt2
+Release: alt3
 
 Summary: Common CA Certificates
-License: MPL/GPL/LGPL
+License: MPL
 Group: System/Base
 BuildArch: noarch
 
 Source0: mozilla.tar
+Source1: ca-bundle.trust.p11-kit
 
-BuildRequires: openssl perl-Encode
+BuildRequires: openssl
+BuildRequires: python-modules
+
+Requires: ca-trust
 
 %description
 This package contains a bundle of X.509 certificates of public
@@ -23,27 +27,26 @@ user.
 
 %prep
 %setup -c
-patch -p1 < mozilla/mk-ca-bundle.patch
 
 %build
 export TZ=UTC
 pushd mozilla
-	./mk-ca-bundle.pl -t crt
+	./certdata2pem.py >c2p.log 2>c2p.err
 popd
-cat mozilla/crt >ca-bundle.crt
+cat %SOURCE1 mozilla/*.tmp-p11-kit > ca-bundle.trust.p11-kit
 
 %install
-install -pDm644 ca-bundle.crt %buildroot%_datadir/%name/ca-bundle.crt
-mkdir -p %{buildroot}%_sysconfdir/pki/tls/certs
-ln -s %_datadir/%name/ca-bundle.crt %{buildroot}%_sysconfdir/pki/tls/certs
+install -pD -m 644 ca-bundle.trust.p11-kit \
+	%buildroot%_datadir/pki/ca-trust-source/ca-bundle.trust.p11-kit
 
 %files
-%dir %_sysconfdir/pki/tls
-%dir %_sysconfdir/pki/tls/certs
-%_sysconfdir/pki/tls/certs/*
-%_datadir/%name
+%_datadir/pki/ca-trust-source/ca-bundle.trust.p11-kit
 
 %changelog
+* Thu Dec 28 2017 Mikhail Efremov <sem@altlinux.org> 2017.11.22-alt3
+- Split all but CA bundle itself to separate ca-trust package.
+- Use p11-kit for certificates bundle.
+
 * Thu Dec 21 2017 L.A. Kostis <lakostis@altlinux.ru> 2017.11.22-alt2
 - Remove expired ALT CA cert: nobody cares.
 
