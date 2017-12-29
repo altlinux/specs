@@ -1,25 +1,22 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt3.1.1
 %define oname z3c.formdemo
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
 Version: 2.1.1
-#Release: alt3.1
+Release: alt4
 Summary: A set of demo applications for z3c.form and z3c.formui
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/z3c.formdemo/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python-tools-2to3
 %endif
 
 %py_requires z3c.csvvocabulary z3c.form z3c.formui z3c.layer.pagelet
@@ -46,6 +43,7 @@ and z3c.formui packages.
   content object. This demo also shows the usage of forms and zc.table
   at the same time.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A set of demo applications for z3c.form and z3c.formui
 Group: Development/Python3
@@ -84,6 +82,7 @@ This package contains several small demo applications for the z3c.form
 and z3c.formui packages.
 
 This package contains tests for z3c.formdemo.
+%endif
 
 %package tests
 Summary: Tests for z3c.formdemo
@@ -156,6 +155,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Dec 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.1-alt4
+- Rebuilt without python-3.
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.1.1-alt3.1.1
 - (AUTO) subst_x86_64.
 

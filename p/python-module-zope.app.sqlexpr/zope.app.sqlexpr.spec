@@ -1,25 +1,22 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt3.1.1
 %define oname zope.app.sqlexpr
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
 Version: 0.1
-#Release: alt3.1
+Release: alt4
 Summary: allow quick SQL queries in TALES expressions and Zope Page Templates
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.app.sqlexpr/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python-tools-2to3
 %endif
 
 %py_requires zope.app zope.component zope.interface zope.tales
@@ -31,6 +28,7 @@ out of TALES expressions and Zope Page Templates. While this is
 certainly not the Zopeish way of doing things, it allows the newbie Web
 scripter an easier entrance to the world of Zope 3.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: allow quick SQL queries in TALES expressions and Zope Page Templates
 Group: Development/Python3
@@ -56,6 +54,7 @@ certainly not the Zopeish way of doing things, it allows the newbie Web
 scripter an easier entrance to the world of Zope 3.
 
 This package contains tests for zope.app.sqlexpr.
+%endif
 
 %package tests
 Summary: Tests for zope.app.sqlexpr
@@ -130,6 +129,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Dec 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1-alt4
+- Rebuilt without python-3.
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt3.1.1
 - (AUTO) subst_x86_64.
 
