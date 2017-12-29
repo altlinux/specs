@@ -4,23 +4,22 @@
 
 Name: python-module-%oname
 Version: 2.4.18
-Release: alt1.git20141002.1
+Release: alt2.git20141002
 Summary: Asynchronous Redis client that works within Tornado IO loop
 License: ASLv2.0
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/tornado-redis/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/leporo/tornado-redis.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-tornado
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-module-tornado
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-tornado
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-tornado
 %endif
 
 %py_provides tornadoredis
@@ -31,6 +30,7 @@ Asynchronous Redis client for the Tornado Web Server.
 This is a fork of brukva redis client modified to be used via Tornado's
 native 'tornado.gen' interface instead of 'adisp' call dispatcher.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Asynchronous Redis client that works within Tornado IO loop
 Group: Development/Python3
@@ -41,6 +41,7 @@ Asynchronous Redis client for the Tornado Web Server.
 
 This is a fork of brukva redis client modified to be used via Tornado's
 native 'tornado.gen' interface instead of 'adisp' call dispatcher.
+%endif
 
 %prep
 %setup
@@ -68,11 +69,11 @@ popd
 %endif
 
 %check
-python setup.py test
+python setup.py build_ext -i
 python runtests.py
 %if_with python3
 pushd ../python3
-python3 setup.py test
+python3 setup.py build_ext -i
 python3 runtests.py
 popd
 %endif
@@ -88,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.18-alt2.git20141002
+- Fixed build.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.4.18-alt1.git20141002.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
