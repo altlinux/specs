@@ -1,6 +1,6 @@
 Name: make
-Version: 3.82
-Release: alt6
+Version: 4.2.1
+Release: alt1
 Epoch: 2
 
 Summary: A GNU tool which simplifies the build process for users
@@ -10,46 +10,10 @@ Url: http://www.gnu.org/software/make/
 
 # ftp://ftp.gnu.org/gnu/make/make-%version.tar.bz2
 Source: make-%version.tar
-Patch00: make-3.82-cvs-00.patch
-Patch01: make-3.82-cvs-01.patch
-Patch02: make-3.82-cvs-02.patch
-Patch03: make-3.82-cvs-03.patch
-Patch04: make-3.82-cvs-04.patch
-Patch05: make-3.82-cvs-05.patch
-Patch06: make-3.82-cvs-06.patch
-Patch07: make-3.82-cvs-07.patch
-Patch08: make-3.82-cvs-08.patch
-Patch09: make-3.82-cvs-09.patch
-Patch10: make-3.82-cvs-10.patch
-Patch11: make-3.82-cvs-11.patch
-Patch12: make-3.82-cvs-12.patch
-Patch13: make-3.82-cvs-13.patch
-Patch14: make-3.82-cvs-14.patch
-Patch15: make-3.82-cvs-15.patch
-Patch16: make-3.82-cvs-16.patch
-Patch17: make-3.82-cvs-17.patch
-Patch18: make-3.82-cvs-18.patch
-Patch19: make-3.82-cvs-19.patch
-Patch20: make-3.82-cvs-20.patch
-Patch21: make-3.82-cvs-21.patch
-Patch22: make-3.82-cvs-22.patch
-Patch23: make-3.82-cvs-23.patch
-Patch24: make-3.82-cvs-24.patch
-Patch25: make-3.82-cvs-25.patch
-Patch26: make-3.82-cvs-26.patch
-Patch27: make-3.82-cvs-27.patch
-Patch28: make-3.82-cvs-28.patch
-Patch29: make-3.82-cvs-29.patch
-Patch30: make-3.82-cvs-30.patch
-Patch101: make-3.82-alt-getcwd.patch
-Patch102: make-3.82-alt-job_slots.patch
-Patch103: make-3.82-alt-tests-fixes.patch
-Patch104: make-3.82-Ralf.Wildenhues-alt-command-line-length-limit.patch
-Patch111: make-3.82-rh-err-reporting.patch
-Patch112: make-3.82-rh-jobserver.patch
-Patch113: make-3.82-rh-warn_undefined_function.patch
-Patch114: make-3.82-rh-trace.patch
-Patch115: make-3.81-fix-itemx-must-follow-item.patch
+Patch01: make-4.2.1-alt-getcwd.patch
+Patch02: make-4.2.1-alt-job_slots.patch
+Patch03: make-4.0-rh-newlines.patch
+Patch04: make-4.0-rh-weird-shell.patch
 
 BuildRequires: makeinfo
 
@@ -63,46 +27,15 @@ makefile.
 
 %prep
 %setup
-%patch00 -p1
 %patch01 -p1
 %patch02 -p1
 %patch03 -p1
 %patch04 -p1
-%patch05 -p1
-%patch06 -p1
-%patch07 -p1
-%patch08 -p1
-%patch09 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
-%patch26 -p1
-%patch27 -p1
-%patch28 -p1
-%patch29 -p1
-%patch30 -p1
-%patch101 -p1
-%patch102 -p1
-%patch103 -p1
-%patch104 -p1
-%patch111 -p1
-%patch112 -p1
-%patch113 -p1
-%patch114 -p1
-%patch115 -p1
+
+sed -i \
+	-e 's,^AM_INIT_AUTOMAKE(\[1\.15 ,AM_INIT_AUTOMAKE([1.14.1 ,' \
+	configure.ac
+
 find -type f -name \*.orig -delete -print
 rm doc/*.info*
 
@@ -130,6 +63,10 @@ ln -sf make %buildroot%_bindir/gmake
 %doc AUTHORS NEWS README
 
 %changelog
+* Sat Dec 30 2017 Alexey Gladkov <legion@altlinux.ru> 2:4.2.1-alt1
+- New version (4.2.1).
+- Sync with make-4.2.1-4 from fedora.
+
 * Sat Feb 06 2016 Michael Shigorin <mike@altlinux.org> 2:3.82-alt6
 - Fixed FTBFS:
   + BR: makeinfo;
