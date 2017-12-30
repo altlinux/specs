@@ -9,7 +9,7 @@
 
 Name: at-spi2-core
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
 Group: System/Libraries
@@ -87,7 +87,7 @@ This package contains documentation for developing applications that use
 
 %build
 %meson \
-    -Ddbus_daemon=/bin \
+    -Ddbus_daemon=/bin/dbus-daemon \
     %{?_disable_x11:-Denable-x11=false} \
     %{?_disable_introspection:-Denable-introspection=false} \
     %{?_enable_docs:-Denable_docs=true}
@@ -131,6 +131,9 @@ This package contains documentation for developing applications that use
 %_datadir/gtk-doc/html/libatspi
 
 %changelog
+* Sun Dec 31 2017 Yuri N. Sedunov <aris@altlinux.org> 2.26.2-alt2
+- fixed dbus-daemon path
+
 * Fri Dec 29 2017 Yuri N. Sedunov <aris@altlinux.org> 2.26.2-alt1
 - 2.26.2
 
