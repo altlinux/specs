@@ -1,5 +1,5 @@
 Name: libArcus
-Version: 2.4.0
+Version: 3.0.3
 Release: alt1%ubt
 
 Summary: Communication library between internal components for Ultimaker software
@@ -62,5 +62,8 @@ sed -i 's|PYTHON_SITE_PACKAGES_DIR lib|PYTHON_SITE_PACKAGES_DIR %_lib|g' CMakeLi
 %python3_sitelibdir/*
 
 %changelog
+* Sun Dec 31 2017 Anton Midyukov <antohami@altlinux.org> 3.0.3-alt1%ubt
+- New version 3.0.3
+
 * Wed Nov 22 2017 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1%ubt
 - Initial build for ALT Sisyphus.

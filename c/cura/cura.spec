@@ -2,7 +2,7 @@
 
 Name: cura
 Epoch: 1
-Version: 2.4.0
+Version: 3.0.3
 Release: alt1
 Summary: 3D printer control software
 License: AGPLv3+
@@ -26,7 +26,7 @@ BuildRequires: python3-module-pytest
 BuildRequires: Uranium = %version
 
 %py3_requires serial zeroconf
-#Requires: python3-module-savitar = %version
+Requires: python3-module-savitar = %version
 Requires: Uranium = %version
 Requires: qt5-quickcontrols
 Requires: CuraEngine = %epoch:%version
@@ -44,7 +44,7 @@ needs. As it's open source, our community helps enrich it even more.
 
 %prep
 %setup
-#%%patch -p1
+%patch -p1
 
 # The setup.py is only useful for py2exe, remove it, so noone is tempted to use it
 rm setup.py
@@ -54,7 +54,7 @@ rm setup.py
 %__subst 's|lib/python${PYTHON_VERSION_MAJOR}/dist-packages|%(echo %python3_sitelibdir | sed -e s@%prefix/@@)|g' CMakeLists.txt
 
 # Wrong end of line encoding
-#dos2unix docs/How_to_use_the_flame_graph_profiler.md
+dos2unix docs/How_to_use_the_flame_graph_profiler.md
 
 # Wrong shebang
 %__subst '1s=^#!%_bindir/\(python\|env python\)3*=#!%__python3=' cura_app.py
@@ -64,52 +64,53 @@ rm setup.py
 %cmake_build
 
 # rebuild locales
-#pushd resources/i18n
-#rm *.pot
-#for DIR in *; do
-#  pushd $DIR
-#  for FILE in *.po; do
-#    msgfmt $FILE.po -o LC_MESSAGES/${FILE}mo || :
-#  done
-#  popd
-#done
-#popd
+pushd resources/i18n
+rm *.pot
+for DIR in *; do
+  pushd $DIR
+  for FILE in *.po; do
+    msgfmt $FILE.po -o LC_MESSAGES/${FILE}mo || :
+  done
+  popd
+done
+popd
 
 %install
 %cmakeinstall_std
 
 # Sanitize the location of locale files
-#pushd %buildroot%_datadir
-#mv cura/resources/i18n locale
-#ln -s ../../locale cura/resources/i18n
-#rm locale/*/*.po
-#popd
+pushd %buildroot%_datadir
+mv cura/resources/i18n locale
+ln -s ../../locale cura/resources/i18n
+rm locale/*/*.po
+popd
 
 # fix interpretator
 sed 's|python3|/usr/bin/python3|' %buildroot%_bindir/cura -i 
 
-%find_lang cura
-%find_lang fdmextruder.def.json
-%find_lang fdmprinter.def.json
+%find_lang cura fdmextruder.def.json fdmprinter.def.json --output=%name.lang
 
 %check
 python3 -m pip freeze
-#python3 -m pytest -v
+python3 -m pytest -v
 
-#desktop-file-validate %buildroot%_datadir/applications/%name.desktop
+desktop-file-validate %buildroot%_datadir/applications/%name.desktop
 
-%files -f cura.lang -f fdmextruder.def.json.lang -f fdmprinter.def.json.lang
+%files -f %name.lang
 %doc LICENSE README.md
 %python3_sitelibdir/%name
 %_datadir/%name
 %_desktopdir/%name.desktop
 %_datadir/appdata/%name.appdata.xml
-#%%_iconsdir/hicolor/*/apps/%name-icon.png
+%_iconsdir/hicolor/*/apps/%name-icon.png
 %_datadir/mime/packages/%name.xml
 %_bindir/%name
 %_libexecdir/%name
 
 %changelog
+* Sun Dec 31 2017 Anton Midyukov <antohami@altlinux.org> 1:3.0.3-alt1
+- New version 3.0.3
+
 * Wed Dec 13 2017 Anton Midyukov <antohami@altlinux.org> 1:2.4.0-alt1
 - New version 2.4.0
 
