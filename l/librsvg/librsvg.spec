@@ -1,5 +1,5 @@
 %define bname librsvg
-%define ver_major 2.40
+%define ver_major 2.41
 %define api_ver 2.0
 %define gtk_api_ver 2.0
 %define gtk3_api_ver 3.0
@@ -9,11 +9,10 @@
 %def_enable pixbuf_loader
 %def_enable introspection
 %def_enable vala
-# 2.40.19 -- FAIL:  13
 %def_disable check
 
 Name: %bname
-Version: %ver_major.20
+Version: %ver_major.2
 Release: alt1
 Epoch: 1
 
@@ -25,17 +24,16 @@ Url: https://wiki.gnome.org/action/show/Projects/LibRsvg
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.tar.xz
 
 # From configure.ac
-%define glib_ver 2.24.0
-%define pango_ver 1.38
+%define glib_ver 2.52.0
 %define gtk3_ver 3.10.0
-%define libxml2_ver 2.9.0
+%define libxml2_ver 2.7.0
 %define cairo_ver 1.2.0
 %define croco_ver 0.6.7
 %define vala_ver 0.18
 
 PreReq: libcroco >= %croco_ver
 
-BuildPreReq: libpango-devel >= %pango_ver
+# From configure.in
 BuildPreReq: libgtk+3-devel >= %gtk3_ver
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libxml2-devel >= %libxml2_ver
@@ -45,6 +43,8 @@ BuildPreReq: libcroco-devel >= %croco_ver
 BuildRequires: libX11-devel libXt-devel
 BuildRequires: gcc-c++ gtk-doc intltool sgml-common zlib-devel
 %{?_enable_vala:BuildRequires: vala-tools >= %vala_ver rpm-build-vala}
+# sinc 2.41.0
+BuildRequires: /proc rust rust-cargo
 
 %description
 A high performance SVG rendering library associated with the Gnome Project.
@@ -148,7 +148,7 @@ GObject introspection devel data for the %name library
 %_libdir/*.so.*
 %{?_enable_pixbuf_loader:%_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.so}
 %_datadir/thumbnailers/librsvg.thumbnailer
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README*
 
 %files devel
 %_includedir/*
@@ -166,7 +166,8 @@ GObject introspection devel data for the %name library
 %endif
 
 %files utils
-%_bindir/rsvg-convert
+%_bindir/*
+%exclude %_bindir/rsvg-view-3
 %_man1dir/*
 
 %files utils-gtk3
@@ -183,6 +184,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Sat Dec 30 2017 Yuri N. Sedunov <aris@altlinux.org> 1:2.41.2-alt1
+- 2.41.2
+
 * Tue Dec 19 2017 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.20-alt1
 - 2.40.20
 
