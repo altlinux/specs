@@ -1,7 +1,9 @@
+%global with_check 0
+
 %add_python3_compile_include %_libexecdir/uranium
 
 Name:    Uranium
-Version: 2.4.0
+Version: 3.0.3
 Release: alt1
 
 Summary:  A Python framework for building Desktop applications.
@@ -12,19 +14,21 @@ URL:     https://github.com/Ultimaker/Uranium
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
-BuildRequires: python3-dev cmake
+BuildRequires: python3-devel cmake
 BuildRequires:  %_bindir/doxygen
 BuildRequires:  %_bindir/msgmerge
 
 # Tests
+%if 0%{?with_check}
 BuildRequires:  python3-module-Arcus = %version
 BuildRequires:  python3-module-numpy
 BuildRequires:  python3-module-scipy
 BuildRequires:  python3-module-PyQt5
 BuildRequires:  python3-module-pytest
 BuildRequires:  python3-module-typing
+%endif
 
-Requires: python3-module-typing
+#Requires: python3-module-typing
 
 BuildArch: noarch
 
@@ -71,11 +75,13 @@ popd
 %find_lang uranium
 
 %check
+%if 0%{?with_check}
 pip3 freeze
 # The failing tests are reported at:
 # https://github.com/Ultimaker/Uranium/issues/225
 # Skipping
-#_bindir/python3 -m pytest -v -k "not getMimeTypeForFile"
+%_bindir/python3 -m pytest -v -k "not getMimeTypeForFile"
+%endif
 
 %files -f uranium.lang
 %doc LICENSE README.md
@@ -88,5 +94,8 @@ pip3 freeze
 %doc html LICENSE
 
 %changelog
+* Sun Dec 31 2017 Anton Midyukov <antohami@altlinux.org> 3.0.3-alt1
+- New version 3.0.3
+
 * Wed Nov 22 2017 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - Initial build for Sisyphus
