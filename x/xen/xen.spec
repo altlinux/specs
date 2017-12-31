@@ -11,8 +11,8 @@
 
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
-Version: 4.8.2
-Release: alt2%ubt
+Version: 4.10.0
+Release: alt1%ubt
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -605,19 +605,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_sbindir/flask-set-bool
 %_sbindir/flask-setenforce
 %_sbindir/gdbsx
-%_sbindir/img2qcow
 %_sbindir/kdd
-%_sbindir/lock-util
-%_sbindir/qcow-create
-%_sbindir/qcow2raw
-%_sbindir/tap-ctl
-%_sbindir/tapdisk-client
-%_sbindir/tapdisk-diff
-%_sbindir/tapdisk-stream
-%_sbindir/tapdisk2
-%_sbindir/td-util
-%_sbindir/vhd-update
-%_sbindir/vhd-util
 %_sbindir/xen-hptool
 %_sbindir/xen-hvmcrash
 %_sbindir/xen-hvmctx
@@ -642,15 +630,28 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_sbindir/xenwatchdogd
 %_sbindir/xl
 
+%_sbindir/img2qcow
+%_sbindir/lock-util
+%_sbindir/qcow-create
+%_sbindir/qcow2raw
+%_sbindir/tap-ctl
+%_sbindir/tapdisk-client
+%_sbindir/tapdisk-diff
+%_sbindir/tapdisk-stream
+%_sbindir/tapdisk2
+%_sbindir/td-util
+%_sbindir/vhd-update
+%_sbindir/vhd-util
+
 # man pages
 %_man1dir/xenstore*
 %_man1dir/xentop.*
 %_man1dir/xentrace_format.*
-%_man8dir/xentrace.*
 %_man1dir/xl.*
 %_man5dir/xl.cfg.*
 %_man5dir/xl.conf.*
 %_man5dir/xlcpupool.cfg.*
+%_man8dir/xentrace.*
 
 # Xen logfiles
 %dir %attr(0700,root,root) %_localstatedir/xen
@@ -670,7 +671,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_includedir/%name
 %_includedir/%{name}store-compat
 
-%_datadir/pkgconfig/xenlight.pc
+%_datadir/pkgconfig/xen*.pc
 %_datadir/pkgconfig/xlutil.pc
 
 
@@ -729,7 +730,6 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_datadir/qemu-%name
 
 %exclude %_datadir/qemu-%name/qemu/s390-ccw.img
-
 
 %if_with hypervisor
 %files hypervisor
@@ -790,6 +790,9 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Sat Dec 30 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt1%ubt
+- 4.10.0 release
+
 * Sat Dec 09 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.8.2-alt2%ubt
 - upstream updates:
   + p2m: Check return value of p2m_set_entry() when decreasing reservation (thx George Dunlap) (XSA-247).
