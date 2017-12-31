@@ -6,8 +6,8 @@
 %def_enable deprecated
 
 Name: bluez
-Version: 5.46
-Release: alt1.1
+Version: 5.48
+Release: alt1
 
 Summary: Bluetooth utilities
 License: GPLv2+
@@ -80,6 +80,7 @@ export CFLAGS="$CFLAGS -D_FILE_OFFSET_BITS=64"
 %install
 %makeinstall_std
 %{?_enable_deprecated:install -m755 attrib/gatttool %buildroot%_bindir/}
+install -m755 tools/bneptest %buildroot%_bindir/
 install -pD -m755 scripts/bluetooth.alt.init %buildroot%_initdir/bluetoothd
 ln -s bluetooth.service %buildroot%_unitdir/bluetoothd.service
 mkdir -p %buildroot%_libdir/bluetooth/plugins %buildroot%_localstatedir/bluetooth
@@ -122,6 +123,7 @@ chkconfig bluetoothd on
 %_bindir/l2test
 %_bindir/mpris-proxy
 %_bindir/rctest
+%_bindir/bneptest
 
 %if_enabled deprecated
 %_bindir/ciptool
@@ -154,6 +156,12 @@ chkconfig bluetoothd on
 %_prefix/lib/cups/backend/bluetooth
 
 %changelog
+* Sun Dec 31 2017 L.A. Kostis <lakostis@altlinux.ru> 5.48-alt1
+- 5.48.
+
+* Fri Sep 08 2017 L.A. Kostis <lakostis@altlinux.ru> 5.46-alt1.2
+- Added bneptest (might be useful to debug BNEP issues).
+
 * Wed Aug 30 2017 L.A. Kostis <lakostis@altlinux.ru> 5.46-alt1.1
 - unit tests: disable gatt test (doesn't work in VM).
 
