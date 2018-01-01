@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Tk-HistEntry
 Name: perl-%dist
-Version: 0.44
+Version: 0.45
 Release: alt1
 
 Summary: Entry widget with history capability
@@ -9,7 +9,7 @@ Group: Development/Perl
 License: GPL or Artistic
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SR/SREZIC/Tk-HistEntry-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SR/SREZIC/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +21,7 @@ Tk::HistEntry implements an entry widget with history. You may use the
 up and down keys to select older entries (or use the associated listbox).
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %ifndef _build_display
@@ -35,11 +35,14 @@ xvfb-run -a make test
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README examples
 %dir %perl_vendor_privlib/Tk
 %perl_vendor_privlib/Tk/HistEntry.pm
 
 %changelog
+* Mon Jan 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.45-alt1
+- automated CPAN update
+
 * Wed Nov 30 2016 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
 - automated CPAN update
 
