@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Perl-Tidy
 Name: perl-%dist
-Version: 20171214
+Version: 20180101
 Release: alt1
 
 Summary: Parses and beautifies perl source
@@ -10,7 +10,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/S/SH/SHANCOCK/%{dist}-%{version}.tar.gz
-Patch: perl-Perl-Tidy-20120714-alt-deps.patch
+Patch: perl-Perl-Tidy-20180101-alt-deps.patch
 
 BuildArch: noarch
 
@@ -41,6 +41,9 @@ write scripts in html format.
 %_man1dir/*
 
 %changelog
+* Mon Jan 01 2018 Igor Vlasenko <viy@altlinux.ru> 20180101-alt1
+- automated CPAN update
+
 * Mon Dec 18 2017 Igor Vlasenko <viy@altlinux.ru> 20171214-alt1
 - automated CPAN update
 
