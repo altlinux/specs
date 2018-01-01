@@ -1,7 +1,7 @@
 %define  pkgname azure-core
 
 Name: 	 ruby-%pkgname
-Version: 0.1.12
+Version: 0.1.14
 Release: alt1
 
 Summary: Azure Ruby SDK Service Management Core HTTP
@@ -56,6 +56,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Jan 01 2018 Andrey Cherepanov <cas@altlinux.org> 0.1.14-alt1
+- New version.
+
 * Wed Sep 13 2017 Andrey Cherepanov <cas@altlinux.org> 0.1.12-alt1
 - New version
 
