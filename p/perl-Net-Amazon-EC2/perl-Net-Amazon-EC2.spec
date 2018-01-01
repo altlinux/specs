@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Net-Amazon-EC2
 Name: perl-%dist
-Version: 0.33
+Version: 0.35
 Release: alt1
 
 Summary: Perl interface to the Amazon Elastic Compute Cloud (EC2)
@@ -32,10 +32,13 @@ rm -rf inc
 %perl_vendor_install
 
 %files
-%doc README Changelog
+%doc Changelog
 %perl_vendor_privlib/Net
 
 %changelog
+* Mon Jan 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
+- automated CPAN update
+
 * Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
 - automated CPAN update
 
