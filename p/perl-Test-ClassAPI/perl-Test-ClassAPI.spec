@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Test-ClassAPI
 Name: perl-%dist
-Version: 1.06
-Release: alt2
+Version: 1.07
+Release: alt1
 
 Summary: Provides basic first-pass API testing for large class trees
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +23,7 @@ inheritance is correct, before doing more comprehensive testing. This
 module aims to provide such a capability.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +36,9 @@ module aims to provide such a capability.
 %perl_vendor_privlib/Test
 
 %changelog
+* Mon Jan 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 1.06-alt2
 - disabled build dependency on perl-Module-Install
 
