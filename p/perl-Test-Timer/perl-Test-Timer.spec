@@ -6,7 +6,7 @@ BuildRequires: perl(Benchmark.pm) perl(Carp.pm) perl(English.pm) perl(Error.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators perl(JSON/PP.pm)
 
 Name: perl-%module_name
-Version: 2.04
+Version: 2.09
 Release: alt1
 Summary: a test module to test/assert response times
 Group: Development/Perl
@@ -29,10 +29,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc README LICENSE Changes CONTRIBUTING.md
+%doc README LICENSE Changes
 %perl_vendor_privlib/T*
 
 %changelog
+* Mon Jan 01 2018 Igor Vlasenko <viy@altlinux.ru> 2.09-alt1
+- automated CPAN update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1
 - automated CPAN update
 
