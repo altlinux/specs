@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/CPAN/Changes.pm) perl(Test/CPAN/Meta.pm) perl(Test/CPAN/Meta/JSON.pm) perl(Test/EOL.pm) perl(Test/Kwalitee.pm) perl(Test/Mojibake.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(Test/Synopsis.pm) perl(Test/Version.pm) perl-podlators
@@ -8,8 +9,8 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/CPAN/Changes.pm) perl(Te
 %global old_test_more %(perl -MTest::More -e 'print (($Test::More::VERSION < 0.88) ? 1 : 0);' 2>/dev/null || echo 0)
 
 Name:           perl-Test-Portability-Files
-Version:        0.07
-Release:        alt1_4
+Version:        0.09
+Release:        alt1
 Summary:        Check file names portability
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -72,6 +73,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Jan 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_4
 - update to new release by fcimport
 
