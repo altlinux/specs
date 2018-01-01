@@ -1,6 +1,6 @@
 Name: dictd
 Version: 1.12.1
-Release: alt3
+Release: alt4
 Serial: 1
 
 Url: http://www.dict.org/
@@ -12,11 +12,11 @@ Source3: dictdconfig
 Source4: dictd.conf
 Source5: dict.conf
 Source6: dictd-control
-Source7: dictd-README.ALT
+Source7: dictd-README.ALT-ru_RU.UTF-8
 Source8: dictd.service
 Source9: dictd.filetrigger
 
-Patch: %name-1.9.15-natspec.patch
+Patch: %name-1.12.1-natspec.patch
 
 Patch10: dict-1.9.15-alt-utf8.patch
 Patch11: dict-1.9.11-alt-fix_utf.patch
@@ -31,6 +31,7 @@ Group: System/Servers
 # Automatically added by buildreq on Thu Sep 22 2005
 BuildRequires: flex groff-base tetex-core tetex-dvips tetex-latex transfig zlib-devel
 BuildRequires: libnatspec-devel >= 0.2.3
+BuildRequires: libmaa-devel
 
 %description
 This package contains dictionary server that supports DICT clients
@@ -100,11 +101,11 @@ easy to use.
 
 %prep
 %setup
-%patch
+%patch -p2
 #%patch10 -p0
 #%patch11 -p1
 #%patch12 -p1
-cp %SOURCE7 README.ALT
+cp %SOURCE7 README.ALT-ru_RU.UTF-8
 
 %build
 %autoreconf
@@ -171,7 +172,7 @@ fi
 %preun_service %name
 
 %files
-%doc doc/rfc.txt README README.ALT
+%doc doc/rfc.txt README README.ALT-ru_RU.UTF-8
 %config(noreplace) %_sysconfdir/dictd.conf
 %config(noreplace) %_sysconfdir/dictd.order
 %config(noreplace) %_sysconfdir/sysconfig/dictd
@@ -186,13 +187,13 @@ fi
 %_rpmlibdir/dictd.filetrigger
 
 %files -n dict-tools
+%_bindir/dict_lookup
 %_bindir/dictfmt
 %_bindir/dictunformat
 %_bindir/dictzip
 %_bindir/dictfmt_index2suffix
 %_bindir/dictfmt_index2word
-%_bindir/dictfmt_plugin
-%_bindir/dictfmt_virtual
+%_man1dir/dict_lookup.1*
 %_man1dir/dictfmt.1*
 %_man1dir/dictunformat.1*
 %_man1dir/dictzip.1*
@@ -214,6 +215,9 @@ fi
 %_man1dir/colorit.1*
 
 %changelog
+* Mon Jan 01 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.12.1-alt4
+- NMU: built actual dictd 1.12.1
+
 * Mon Jan 09 2017 Michael Shigorin <mike@altlinux.org> 1:1.12.1-alt3
 - NMU:
   + fixed FTBFS by turning the rest of manpage paths to globs
