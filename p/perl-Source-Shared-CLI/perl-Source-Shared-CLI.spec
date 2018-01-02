@@ -1,7 +1,7 @@
 %define module Source-Shared-CLI
 
 Name: perl-%module
-Version: 0.007
+Version: 0.008
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -33,6 +33,9 @@ BuildRequires: perl-devel perl(Module/Build/Tiny.pm)
 %perl_vendor_privlib/S*
 
 %changelog
+* Tue Jan 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1
+- new version
+
 * Sat May 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.007-alt1
 - new version
 
