@@ -1,10 +1,9 @@
-%filter_from_requires /^perl.Alien.cmake3.pm/d
 %filter_from_requires /^perl.Alien.gmake.pm/d
 %filter_from_requires /^perl.PkgConfig.pm/d
 %filter_from_requires /^perl.PkgConfig.LibPkgConf.Client.pm/d
 %filter_from_requires /^perl.PkgConfig.LibPkgConf.Util.pm/d
 
-%define perl_bootstrap 1
+%define perl_bootstrap 0
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -20,11 +19,11 @@ BuildRequires: gcc-c++ perl(AnyEvent.pm) perl(Inline.pm) perl(Module/Build.pm) p
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Run optional test
-%{bcond_with perl_Alien_Build_enables_optional_test}
+%{bcond_without perl_Alien_Build_enables_optional_test}
 
 Name:           perl-Alien-Build
 Version:        1.32
-Release:        alt0_1
+Release:        alt1_1
 Summary:        Build external dependencies for use in CPAN
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Alien-Build/
@@ -195,6 +194,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jan 02 2018 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1_1
+- non-bootstrap build
+
 * Thu Dec 28 2017 Igor Vlasenko <viy@altlinux.ru> 1.32-alt0_1
 - use pkg-config by default (dropped fedora patches)
 - first bootstrap build
