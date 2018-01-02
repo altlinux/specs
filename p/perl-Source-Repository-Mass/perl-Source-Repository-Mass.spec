@@ -1,7 +1,7 @@
 %define module Source-Repository-Mass
 
 Name: perl-%module
-Version: 0.407
+Version: 0.408
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -14,7 +14,7 @@ Url: http://search.cpan.org/dist/%module
 
 # Automatically added by buildreq on Wed Nov 06 2002
 BuildRequires: perl-devel perl-RPM-Source-Editor perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-String-ShellQuote perl-RPM-Source-Convert perl-Source-Package perl-RPM-Source-BundleImport perl-Source-Repository perl-Source-Shared-Resource perl(Source/Shared/Utils/GlobList.pm)
-Requires: perl-RPM-Source-Editor > 0.912
+Requires: perl-RPM-Source-Editor > 0.9200
 Conflicts: perl-Source-Repository < 0.391
 
 %description
@@ -36,6 +36,9 @@ Conflicts: perl-Source-Repository < 0.391
 %perl_vendor_privlib/Source*
 
 %changelog
+* Tue Jan 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.408-alt1
+- new version
+
 * Sat Dec 16 2017 Igor Vlasenko <viy@altlinux.ru> 0.407-alt1
 - bugfix release
 
