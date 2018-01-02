@@ -2,7 +2,7 @@
 
 Name: proftpd
 Version: %ver
-Release: alt3.rel.a.1
+Release: alt4.rel.e
 
 %define _libexecdir %{expand:%_libdir}
 %def_disable tests
@@ -404,7 +404,7 @@ See control(8) for details.
         --with-modules=%mod_static_list \
         --with-shared=%mod_shared_list
 
-%__subst 's|^\(/var/tmp/proftpd-buildroot\)=.*$|\1=no|' libtool
+subst 's|^\(/var/tmp/proftpd-buildroot\)=.*$|\1=no|' libtool
 
 %make
 
@@ -414,17 +414,17 @@ mygroup=`id -gn`
 
 %make_install install DESTDIR=%buildroot INSTALL_USER=$myname INSTALL_GROUP=$mygroup
 
-%__install -pD -m640 %SOURCE4 %buildroot%_sysconfdir/pam.d/%name
-%__install -p -m644 -D %SOURCE6 %buildroot%_sysconfdir/%name.conf
-%__install -p -m644 -D %SOURCE1 %buildroot%_sysconfdir/logrotate.d/%name
-%__install -p -m644 -D %SOURCE2 %buildroot%_sysconfdir/xinetd.d/%name
-%__install -p -m755 -D %SOURCE3 %buildroot%_initdir/%name
-%__install -m755 contrib/xferstats.holger-preiss %buildroot%_sbindir
+install -pD -m640 %SOURCE4 %buildroot%_sysconfdir/pam.d/%name
+install -p -m644 -D %SOURCE6 %buildroot%_sysconfdir/%name.conf
+install -p -m644 -D %SOURCE1 %buildroot%_sysconfdir/logrotate.d/%name
+install -p -m644 -D %SOURCE2 %buildroot%_sysconfdir/xinetd.d/%name
+install -p -m755 -D %SOURCE3 %buildroot%_initdir/%name
+install -m755 contrib/xferstats.holger-preiss %buildroot%_sbindir
 
-%__chmod 711 %buildroot%_sbindir/%name
+chmod 711 %buildroot%_sbindir/%name
 
-%__ln_s -f %name %buildroot%_sbindir/in.%name
-%__ln_s -f %name %buildroot%_sbindir/in.ftpd
+ln -s -f %name %buildroot%_sbindir/in.%name
+ln -s -f %name %buildroot%_sbindir/in.ftpd
 
 install -pD -m755 %SOURCE5 %buildroot%_controldir/%name
 
@@ -445,9 +445,8 @@ games
 nobody
 EOF
 
-%__mkdir_p %buildroot/var/log/%name
-%__rm -f %buildroot%_libexecdir/%name/*.a
-#%%__rm -f %buildroot%_libexecdir/%name/*.la
+mkdir -p %buildroot/var/log/%name
+rm -f %buildroot%_libexecdir/%name/*.a
 
 %find_lang %name
 
@@ -461,8 +460,8 @@ if grep -qe '^[[:blank:]]*CharsetLocal' %_sysconfdir/%name.conf; then
    echo "WARNING: iconv patch is disabled, do not use CharsetLocal/CharsetRemote" >&2
    echo "WARNING: see doc/modules/mod_lang.html for details" >&2
    echo "WARNING: autocommenting corresponding Options, please check" >&2
-   %__subst 's/^\([[:blank:]]*CharsetLocal .*\)/# \1/' %_sysconfdir/%name.conf
-   %__subst 's/^\([[:blank:]]*CharsetRemote .*\)/# \1/' %_sysconfdir/%name.conf
+   subst 's/^\([[:blank:]]*CharsetLocal .*\)/# \1/' %_sysconfdir/%name.conf
+   subst 's/^\([[:blank:]]*CharsetRemote .*\)/# \1/' %_sysconfdir/%name.conf
 fi
 if [ -e "%_controldir/%name" ]; then
     %post_control -s standalone %name
@@ -665,6 +664,12 @@ fi
 %_controldir/%name
 
 %changelog
+* Tue Jan 02 2018 L.A. Kostis <lakostis@altlinux.ru> 1.3.5-alt4.rel.e
+- 1.3.5e release:
+  + Backported fix for "AllowChrootSymlinks off" checking each component
+      for symlinks (CVE-2017-7418).
+- minor .spec cleanup.
+
 * Wed Dec 02 2015 Andrey Cherepanov <cas@altlinux.org> 1.3.5-alt3.rel.a.1
 - Rebuild with new libmemcached 1.0.18
 
