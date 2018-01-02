@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.58
+Version: 0.59
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -79,6 +79,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Tue Jan 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.59-alt1
+- new shared cli api
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.58-alt1
 - e2k support
 
