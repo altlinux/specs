@@ -1,7 +1,7 @@
 %define module Source-Shared-Resource
 
 Name: perl-%module
-Version: 0.004
+Version: 0.005
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -32,6 +32,9 @@ BuildRequires: perl-devel perl(Module/Build/Tiny.pm) perl-Source-Shared-CLI perl
 %perl_vendor_privlib/S*
 
 %changelog
+* Tue Jan 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.005-alt1
+- run debug first
+
 * Sat May 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1
 - shared verbose for containers
 
