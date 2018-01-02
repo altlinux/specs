@@ -1,7 +1,7 @@
 %define  pkgname amqp
 
 Name: 	 ruby-%pkgname
-Version: 1.7.0 
+Version: 1.8.0
 Release: alt1
 
 Summary: EventMachine-based RabbitMQ client. Prefer Bunny: http://rubybunny.info. See documentation guides at http://rubyamqp.info.
@@ -55,5 +55,8 @@ rm -rf %buildroot%_bindir
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Jan 02 2018 Andrey Cherepanov <cas@altlinux.org> 1.8.0-alt1
+- New version.
+
 * Tue Sep 19 2017 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt1
 Initial build for Sisyphus
