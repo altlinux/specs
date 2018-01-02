@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.10.0
-Release: alt1%ubt
+Release: alt2%ubt
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -606,6 +606,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_sbindir/flask-setenforce
 %_sbindir/gdbsx
 %_sbindir/kdd
+%_sbindir/xen-diag
 %_sbindir/xen-hptool
 %_sbindir/xen-hvmcrash
 %_sbindir/xen-hvmctx
@@ -630,19 +631,6 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_sbindir/xenwatchdogd
 %_sbindir/xl
 
-%_sbindir/img2qcow
-%_sbindir/lock-util
-%_sbindir/qcow-create
-%_sbindir/qcow2raw
-%_sbindir/tap-ctl
-%_sbindir/tapdisk-client
-%_sbindir/tapdisk-diff
-%_sbindir/tapdisk-stream
-%_sbindir/tapdisk2
-%_sbindir/td-util
-%_sbindir/vhd-update
-%_sbindir/vhd-util
-
 # man pages
 %_man1dir/xenstore*
 %_man1dir/xentop.*
@@ -651,7 +639,16 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_man5dir/xl.cfg.*
 %_man5dir/xl.conf.*
 %_man5dir/xlcpupool.cfg.*
+%_man5dir/xl-disk-configuration.*
+%_man5dir/xl-network-configuration.5.xz
+%_man7dir/xen-pci-device-reservations.*
+%_man7dir/xen-pv-channel.7.xz
+%_man7dir/xen-tscmode.*
+%_man7dir/xen-vtpm.*
+%_man7dir/xen-vtpmmgr.*
 %_man8dir/xentrace.*
+%_man7dir/xl-numa-placement.7.xz
+
 
 # Xen logfiles
 %dir %attr(0700,root,root) %_localstatedir/xen
@@ -730,6 +727,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 %_datadir/qemu-%name
 
 %exclude %_datadir/qemu-%name/qemu/s390-ccw.img
+%exclude %_datadir/qemu-%name/qemu/s390-netboot.img
 
 %if_with hypervisor
 %files hypervisor
@@ -790,6 +788,10 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Tue Jan 02 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt2.S1
+- fix gear rules: previous (4.10.0-alt2.S1) build was actually 4.8.2-alt2.S1
+- 4.10.0 release
+
 * Sat Dec 30 2017 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt1%ubt
 - 4.10.0 release
 
