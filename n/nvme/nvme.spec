@@ -1,6 +1,8 @@
+%define git 0b78004
+
 Name: nvme
 Version: 1.4
-Release: alt3
+Release: alt4.g%git
 Summary: Core nvme tools
 License: GPL
 Group: System/Configuration/Hardware
@@ -42,6 +44,9 @@ if [ $1 = 1 ]; then # 1 : This package is being installed for the first time
 fi
 
 %changelog
+* Tue Jan 02 2018 L.A. Kostis <lakostis@altlinux.ru> 1.4-alt4.g0b78004
+- GIT 0b78004.
+
 * Thu Oct 05 2017 L.A. Kostis <lakostis@altlinux.ru> 1.4-alt3
 - Remove invasive postun cmds, use %%ghost for configuration.
 
