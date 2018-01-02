@@ -1,4 +1,4 @@
-%define perl_bootstrap 1
+%define perl_bootstrap 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(autodie.pm) perl-podlators
@@ -18,7 +18,7 @@ BuildRequires: perl(autodie.pm) perl-podlators
 
 Name:           perl-Alien-Base-ModuleBuild
 Version:        1.00
-Release:        alt1_1
+Release:        alt2_1
 Summary:        Perl framework for building Alien:: modules and their libraries
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -161,6 +161,9 @@ perl Build.PL --installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jan 02 2018 Igor Vlasenko <viy@altlinux.ru> 1.00-alt2_1
+- non-bootstrap build
+
 * Fri Dec 29 2017 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_1
 - to Sisyphus
 
