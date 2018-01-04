@@ -1,23 +1,33 @@
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
+# ffmpegthumbnailer code is broken
+%def_enable ffmpegthumbnailer
+
 Name: geeqie
-Version: 1.3
-Release: alt2
+Version: 1.4
+Release: alt1
 
 Summary: Graphics file browser utility
 License: GPLv2+
 Group: Graphics
 
 Url: http://%name.org
+%if_disabled snapshot
 Source: %url/%name-%version.tar.xz
+%else
+# VCS: http://www.geeqie.org/git/geeqie.git
+Source: %name-%version.tar
+%endif
 
 Patch: %name-1.3-alt-lfs.patch
 Patch1: %name-1.3-libdir-fix.patch
-# in upstream bug tracker
-Patch4: geeqie-1.0-fix-fullscreen.patch
 
 BuildRequires: gcc-c++ gnome-doc-utils intltool libgtk+2-devel libjpeg-devel
 BuildRequires: liblcms2-devel liblirc-devel libtiff-devel libexiv2-devel
+%{?_enable_ffmpegthumbnailer:BuildRequires: libffmpegthumbnailer-devel}
+# while gtk+2 is a default
+#BuildRequires: libchamplain-gtk3-devel
 
 %description
 Geeqie is a lightweight image viewer. It was forked from GQview. The development
@@ -29,13 +39,18 @@ ExifTool.
 %setup
 %patch -p1
 %patch1 -p1 -b .libdir
-#%patch4 -p1 -b .fix-fullscreen
+
+subst 's/ChangeLog//
+       s/ChangeLog\.html//' Makefile.am
 
 %build
+%add_optflags -Wno-error=unused-but-set-variable
+%{?_enable_ffmpegthumbnailer:%add_optflags -Wno-error=unused-function}
 %autoreconf
 %configure --enable-lirc \
 	--enable-largefile \
-	--with-readmedir=%_datadir/%name
+	--with-readmedir=%_datadir/%name \
+	%{subst_enable ffmpegthumbnailer}
 %make_build
 
 %install
@@ -52,8 +67,12 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %_pixmapsdir/%name.png
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_man1dir/%name.1.*
+%doc NEWS README.*
 
 %changelog
+* Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt1
+- 1.4
+
 * Sun May 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt2
 - rebuilt against libexiv2.so.26
 
