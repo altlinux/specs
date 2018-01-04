@@ -1,7 +1,7 @@
 %define  pkgname em-socksify
  
 Name: 	 ruby-%pkgname
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
  
 Summary: EventMachine SOCKSify shim: adds SOCKS support to any protocol
@@ -59,6 +59,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Thu Jan 04 2018 Andrey Cherepanov <cas@altlinux.org> 0.3.2-alt1
+- New version.
+
 * Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 0.3.1-alt1
 - New version
 
