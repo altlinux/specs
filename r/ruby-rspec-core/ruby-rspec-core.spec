@@ -1,7 +1,7 @@
 %define  pkgname rspec-core
  
 Name: 	 ruby-%pkgname
-Version: 3.7.0
+Version: 3.7.1
 Release: alt1
  
 Summary: RSpec runner and formatters
@@ -58,6 +58,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Thu Jan 04 2018 Andrey Cherepanov <cas@altlinux.org> 3.7.1-alt1
+- New version.
+
 * Tue Oct 17 2017 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt1
 - New version
 
