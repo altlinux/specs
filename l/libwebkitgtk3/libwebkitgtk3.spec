@@ -18,7 +18,7 @@
 
 Name: libwebkitgtk3
 Version: 2.4.11
-Release: alt3
+Release: alt4
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -29,6 +29,8 @@ Url: http://www.webkitgtk.org
 Source: %url/releases/%_name-%version.tar.xz
 Patch1: webkitgtk-2.4.0-alt-link.patch
 Patch2: webkitgtk-2.4.9-fc-abs.patch
+# https://bugs.webkit.org/show_bug.cgi?id=171612
+Patch3: webkitgtk-2.4.11-icu59.patch
 
 Obsoletes: %name-webinspector
 Provides: %name-webinspector = %EVR
@@ -214,6 +216,7 @@ GObject introspection data for the Webkit2 library
 %setup -n %_name-%version
 %patch1
 %patch2 -p1
+%patch3
 
 # fix build translations
 %__subst 's|^all-local:|all-local: stamp-po|' GNUmakefile.am
@@ -335,6 +338,9 @@ chrpath --delete %buildroot%_libexecdir/%_name/MiniBrowser
 
 
 %changelog
+* Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt4
+- rebuilt against libicu*.so.60
+
 * Tue Jun 20 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt3
 - rebuilt against libwebp.so.7
 
