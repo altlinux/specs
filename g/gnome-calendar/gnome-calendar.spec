@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define xdg_name org.gnome.Calendar
 %define ver_major 3.26
 %define _libexecdir %_prefix/libexec
@@ -6,14 +8,19 @@
 
 Name: gnome-calendar
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Calendar application for GNOME
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Calendar
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
+Patch: gnome-calendar-3.26.2-fc-libical-3.0.patch
 
 BuildPreReq: rpm-build-licenses rpm-build-gnome
 
@@ -47,6 +54,7 @@ This package provides Calendar reference manual.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson \
@@ -78,6 +86,10 @@ This package provides Calendar reference manual.
 %endif
 
 %changelog
+* Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt2
+- updated to 3.26.2-19-g954c48d
+- built against libical.so.3
+
 * Thu Oct 05 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 

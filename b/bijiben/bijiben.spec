@@ -7,7 +7,7 @@
 
 Name: bijiben
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Note editor for GNOME
 License: LGPLv3+
@@ -70,6 +70,9 @@ desktop integration.
 %doc README AUTHORS NEWS
 
 %changelog
+* Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt2
+- rebuilt against libical.so.3/libicu*.so.60
+
 * Mon Oct 30 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 

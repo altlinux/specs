@@ -23,7 +23,7 @@
 
 Name: evolution
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Integrated GNOME mail client, calendar and address book
 License: GPLv2+
@@ -270,6 +270,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt2
+- rebuilt against libical.so.3
+
 * Wed Dec 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt1
 - 3.26.3
 

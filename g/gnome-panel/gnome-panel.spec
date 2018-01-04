@@ -10,7 +10,7 @@
 
 Name: gnome-panel
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: The core programs for the GNOME GUI desktop environment
 License: GPLv2+ and LGPLv2+ and GFDL+
@@ -199,6 +199,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt2
+- rebuilt against libical.so.3
+
 * Sun Oct 08 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

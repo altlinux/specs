@@ -5,7 +5,7 @@
 
 Name: evolution-ews
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Group: Networking/Mail
 Summary: Evolution extension for Exchange Web Services
@@ -81,6 +81,9 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_datadir/appdata/%xdg_name-ews.metainfo.xml
 
 %changelog
+* Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt2
+- rebuilt against libical.so.3
+
 * Wed Dec 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt1
 - 3.26.3
 

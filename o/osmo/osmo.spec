@@ -4,7 +4,7 @@
 
 Name: osmo
 Version: 0.4.2
-Release: alt1
+Release: alt2
 
 Summary: Personal organizer
 License: GPLv2+
@@ -52,6 +52,9 @@ meet user preferences.
 %doc AUTHORS ChangeLog README TRANSLATORS
 
 %changelog
+* Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt2
+- rebuilt against libical.so.3
+
 * Wed Nov 29 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
 - 0.4.2
 

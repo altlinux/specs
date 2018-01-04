@@ -7,7 +7,7 @@
 
 Name: bluez
 Version: 5.48
-Release: alt1
+Release: alt2
 
 Summary: Bluetooth utilities
 License: GPLv2+
@@ -156,6 +156,9 @@ chkconfig bluetoothd on
 %_prefix/lib/cups/backend/bluetooth
 
 %changelog
+* Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 5.48-alt2
+- rebuilt against libical.so.3
+
 * Sun Dec 31 2017 L.A. Kostis <lakostis@altlinux.ru> 5.48-alt1
 - 5.48.
 
