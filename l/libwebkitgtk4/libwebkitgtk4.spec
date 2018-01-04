@@ -16,7 +16,7 @@
 
 Name: libwebkitgtk4
 Version: 2.18.4
-Release: alt1
+Release: alt2
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -291,6 +291,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 2.18.4-alt2
+- rebuilt against libicu*.so.60
+
 * Wed Dec 20 2017 Yuri N. Sedunov <aris@altlinux.org> 2.18.4-alt1
 - 2.18.4 (fixed CVE-2017-13866, CVE-2017-13870, CVE-2017-7156, CVE-2017-13856)
 

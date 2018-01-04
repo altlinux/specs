@@ -9,7 +9,7 @@
 
 Name: gnome-todo
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Todo manager for GNOME
 Group: Graphical desktop/GNOME
@@ -21,6 +21,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+Patch: gnome-todo-3.26.2-fc-libical-3.0.patch
 
 %define gtk_ver 3.22.0
 %define eds_ver 3.18.0
@@ -70,6 +71,7 @@ GObject introspection devel data for the GNOME Todo.
 
 %prep
 %setup
+%patch -p1
 ##subst 's/\(install_dir: doc_path\)/\1,/' doc/reference/meson.build
 
 %build
@@ -111,6 +113,9 @@ GObject introspection devel data for the GNOME Todo.
 %_girdir/Gtd-%api_ver.gir
 
 %changelog
+* Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt2
+- rebuilt against libical.so.3
+
 * Tue Oct 31 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 

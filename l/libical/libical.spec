@@ -1,11 +1,16 @@
-%def_enable snapshot
+%def_disable snapshot
+
+%define api_ver 3.0
 
 %def_with bdb
-%def_disable introspection
+%def_enable ical_glib
+%def_enable introspection
+%def_enable check
+%def_with cxx
 
 Name: libical
-Version: 2.0.1
-Release: alt0.4
+Version: 3.0.1
+Release: alt1
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
@@ -19,9 +24,12 @@ Source: %name-%version.tar
 %endif
 Patch: %name-1.0.1-alt-libdir.patch
 
-BuildRequires: cmake gcc-c++ ctest libicu-devel
+Requires: tzdata
+
+BuildRequires: cmake gcc-c++ ctest gtk-doc libicu-devel icu-utils tzdata
 %{?_with_bdb:BuildRequires: libdb4-devel}
-%{?_enable introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_ical_glib:BuildRequires: libgio-devel libxml2-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 
 %description
 Libical is an Open Source implementation of the IETF's iCalendar
@@ -37,8 +45,8 @@ Requires: %name = %version-%release
 Requires: libicu-devel
 
 %description devel
-The header files and libtool library  for developing applications that
-use libical.
+The header files and libtool library for developing applications that use
+libical.
 
 %package gir
 Summary: GObject introspection data for the Libical
@@ -58,6 +66,52 @@ Requires: %name-devel = %version-%release
 %description gir-devel
 GObject introspection devel data for the Libical library.
 
+%package -n %name-glib
+Summary: A GObject interface of the libical library
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description -n %name-glib
+This package provides Libical-Glib library with GObject bindings to
+libical library.
+
+%package -n %name-glib-devel
+Summary: Files for developing applications that use Libical-Glib
+Group: Development/C
+Requires: %name-glib = %version-%release
+Requires: %name-devel = %version-%release
+
+%description -n %name-glib-devel
+The header files and libtool library for developing applications that use
+Libical-Glib.
+
+%package -n %name-glib-gir
+Summary: GObject introspection data for the Libical-Glib
+Group: System/Libraries
+Requires: %name-glib = %version-%release
+
+%description -n %name-glib-gir
+GObject introspection data for the Libical-Glib library.
+
+%package -n %name-glib-gir-devel
+Summary: GObject introspection devel data for the Libical-Glib
+Group: Development/Other
+BuildArch: noarch
+Requires: %name-glib-gir = %version-%release
+Requires: %name-glib-devel = %version-%release
+
+%description -n %name-glib-gir-devel
+GObject introspection devel data for the Libical-Glib library.
+
+%package -n %name-glib-devel-doc
+Summary: Development documentation for Libical-Glib
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: %name-gloib-devel < %version-%release
+
+%description -n %name-glib-devel-doc
+This package contains development documentation for the Libical-Glib
+library.
 
 %prep
 %setup
@@ -66,9 +120,9 @@ GObject introspection devel data for the Libical library.
 %build
 %cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
 	-DSHARED_ONLY:BOOL=ON \
-	%{?_with_bdb:-DWITH_BDB:BOOL=ON} \
-	%{?_enable_introspection:-DGOBJECT_INTROSPECTION:BOOL=ON} \
-	-DUSE_INTEROPERABLE_VTIMEZONES:BOOL=ON
+	%{?_with_cxx:-DWITH_CXX_BINDINGS:BOOL=ON} \
+	%{?_enable_ical_glib:-DICAL_GLIB:BOOL=ON} \
+	%{?_enable_introspection:-DGOBJECT_INTROSPECTION:BOOL=ON}
 %cmake_build
 
 %install
@@ -79,24 +133,58 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 
 %files
 %doc TODO TEST THANKS
-%_libdir/*.so.*
+%_libdir/libical.so.*
+%_libdir/libicalss.so.*
+%_libdir/libicalvcal.so.*
+%if_with cxx
+%_libdir/libical_cxx.so.*
+%_libdir/libicalss_cxx.so.*
+%endif
 
 %files devel
 %doc doc/UsingLibical*
-%_includedir/*
-%_libdir/*.so
-%_pkgconfigdir/*.pc
+%_includedir/%name/
+%_libdir/libical.so
+%_libdir/libicalss.so
+%_libdir/libicalvcal.so
+%if_with cxx
+%_libdir/libical_cxx.so
+%_libdir/libicalss_cxx.so
+%endif
+%_pkgconfigdir/%name.pc
 %_libdir/cmake/LibIcal/
+
+%files -n %name-glib
+%_libdir/%name-glib.so.*
+
+%files -n %name-glib-devel
+%_includedir/%name-glib/
+%_libdir/%name-glib.so
+%_pkgconfigdir/%name-glib.pc
 
 %if_enabled introspection
 %files gir
-%_typelibdir/*.typelib
+%_typelibdir/%name-%version.typelib
 
 %files gir-devel
-%_girdir/*.gir
+%_girdir/%name-%version.gir
+
+%files -n %name-glib-gir
+%_typelibdir/ICalGLib-%api_ver.typelib
+
+%files -n %name-glib-gir-devel
+%_girdir/ICalGLib-%api_ver.gir
 %endif
 
+%files -n %name-glib-devel-doc
+%_datadir/gtk-doc/html/%name-glib/
+
+
 %changelog
+* Mon Nov 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
+- 3.0.1
+- new libical-glib-* subpackages
+
 * Mon Jun 20 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt0.4
 - updated to v2.0.0-8-g6feb01a
 - used interoperable rather than exact vtimezones

@@ -1,7 +1,7 @@
 %define ver_major 52
 
 %def_disable optimize
-%def_without system_icu
+%def_with system_icu
 %def_without system_nspr
 %if_without system_nspr
 %def_enable posix_nspr_emulation
@@ -13,7 +13,7 @@
 
 Name: libmozjs%ver_major
 Version: %ver_major.2.1
-Release: alt1
+Release: alt2
 
 Summary: JavaScript interpreter and libraries
 Group: System/Libraries
@@ -83,7 +83,7 @@ cd js/src
 %add_optflags %optflags_shared
 
 export CFLAGS="%optflags"
-##export CXXFLAGS="$CFLAGS -fno-tree-vrp -fno-strict-aliasing -fno-delete-null-pointer-checks"
+export CXXFLAGS="$CFLAGS -fno-tree-vrp -fno-strict-aliasing -fno-delete-null-pointer-checks"
 export SHELL=/bin/sh
 export PYTHON=/usr/bin/python
 
@@ -92,6 +92,7 @@ export PYTHON=/usr/bin/python
 	--libdir=%_libdir \
 	--disable-strip \
 	--enable-pie \
+	--disable-jemalloc \
 	--enable-readline \
 	--enable-shared-js \
 	%{?_with_system_nspr:--with-system-nspr} \
@@ -144,6 +145,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 
 
 %changelog
+* Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 52.2.1-alt2
+- rebuilt with system libicu60-60.2
+
 * Fri Aug 04 2017 Yuri N. Sedunov <aris@altlinux.org> 52.2.1-alt1
 - first build for Sisyphus
 

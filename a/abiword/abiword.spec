@@ -10,7 +10,7 @@
 
 Name: abiword
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -23,6 +23,8 @@ Source: http://www.abisource.com/downloads/abiword/%version/source/%name-%versio
 Source11: abiword.mime
 Source12: abiword.keys
 Source13: abiword.xml
+
+Patch: abiword-3.0.2-deb-libical-3.0.patch
 
 Patch11: abiword-2.8.3-desktop.patch
 Patch12: abiword-2.6.0-boolean.patch
@@ -127,6 +129,7 @@ Python bindings for developing with AbiWord library
 %setup
 
 # fedora patches
+%patch -p1 -b .libical
 %patch11 -p1 -b .desktop
 %patch12 -p1 -b .boolean
 %patch13 -p0 -b .librevenge
@@ -189,6 +192,9 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python_sitelibdir/gi/overrides/*
 
 %changelog
+* Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt3
+- rebuilt against libical.so.3
+
 * Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt2
 - fixed buildreqs
 
