@@ -3,7 +3,7 @@
 
 Name: firmware-intel-ucode
 Version: 3
-Release: alt0.%orig_timestamp
+Release: alt1.20171121
 Epoch: 1
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
@@ -48,6 +48,13 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Thu Jan 04 2018 L.A. Kostis <lakostis@altlinux.ru> 1:3-alt1.20171121
+- Added new CPU microcodes (microcode counterpart of the CVE-2017-5715
+  kernel mitigation):
+  + sig 0x000306f2, pf_mask 0x6f, 2017-11-17, rev 0x003b, size 33792
+  + sig 0x000406f1, pf_mask 0xef, 2017-11-18, rev 0xb000025, size 27648
+  + sig 0x00050654, pf_mask 0xb7, 2017-11-21, rev 0x200003a, size 27648
+
 * Fri Nov 24 2017 L.A. Kostis <lakostis@altlinux.ru> 1:3-alt0.20171117.1
 - Update to 20171117.1 (debian changelog below):
   * New upstream microcode data file 20171117
