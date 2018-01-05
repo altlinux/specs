@@ -1,5 +1,5 @@
 Name: flacon
-Version: 3.1.1
+Version: 4.0.0
 Release: alt1%ubt
 
 Summary: Audio File Encoder
@@ -13,7 +13,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source: https://github.com/%name/%name/archive/v%version/%name-%version.tar.gz
 
-BuildPreReq: rpm-build-ubt
+BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: cmake
 BuildRequires: libuchardet-devel
@@ -47,7 +47,7 @@ cmake .. \
 popd
 
 %make_build -C %_target_platform
-	
+
 %install
 %makeinstall_std -C %_target_platform
 
@@ -58,10 +58,18 @@ popd
 %_miconsdir/%name.png
 %_liconsdir/%name.png
 %_niconsdir/%name.png
+%_iconsdir/hicolor/128x128/apps/%name.png
+%_iconsdir/hicolor/256x256/apps/%name.png
+%_iconsdir/hicolor/512x512/apps/%name.png
+%_iconsdir/hicolor/64x64/apps/%name.png
+%_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/%name
 %_man1dir/%name.1.*
 
 %changelog
+* Fri Jan 05 2018 Nazarov Denis <nenderus@altlinux.org> 4.0.0-alt1%ubt
+- Version 4.0.0
+
 * Sun Sep 10 2017 Nazarov Denis <nenderus@altlinux.org> 3.1.1-alt1%ubt
 - Version 3.1.1
 
