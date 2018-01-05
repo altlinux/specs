@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        63.0.3239.108
+Version:        63.0.3239.132
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -436,6 +436,10 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Fri Jan 05 2018 Alexey Gladkov <legion@altlinux.ru> 63.0.3239.132-alt1
+- New version (63.0.3239.132).
+- Build contains a number of bug fixes and security updates.
+
 * Sat Dec 16 2017 Alexey Gladkov <legion@altlinux.ru> 63.0.3239.108-alt1
 - New version (63.0.3239.108).
 - Security fixes:

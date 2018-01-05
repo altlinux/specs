@@ -12,8 +12,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        57.0.1
-Release:        alt2
+Version:        57.0.4
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -312,6 +312,12 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Sat Jan 06 2018 Alexey Gladkov <legion@altlinux.ru> 57.0.4-alt1
+- New release (57.0.4).
+- Fixed:
+  + Speculative execution side-channel attack ("Spectre")
+  + CVE-2017-7845: Buffer overflow when drawing and validating elements with ANGLE library using Direct 3D 9
+
 * Fri Dec 08 2017 Alexey Gladkov <legion@altlinux.ru> 57.0.1-alt2
 - Enable dbus support (ALT#34275).
 - Change chrome packaging format to omni (ALT#34285).
