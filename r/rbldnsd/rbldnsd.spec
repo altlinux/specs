@@ -1,10 +1,11 @@
 Summary: Small, fast daemon to serve DNSBLs
 Name: rbldnsd
-Version: 0.996b
+Version: 0.998
 Release: alt1
 License: GPLv2+
 Group: System/Servers
 Url: http://www.corpit.ru/mjt/rbldnsd.html
+# http://git.corpit.ru/?p=rbldnsd.git
 Source0: http://www.corpit.ru/mjt/rbldnsd/rbldnsd_%version.tar.gz
 Source1: rbldnsd.init
 
@@ -19,7 +20,7 @@ blocklists.
 
 %prep
 %setup -n %name-%version
-%__sed -i	-e 's@/var/lib/rbldns\([/ ]\)@%_localstatedir/lib/rbldnsd\1@g' \
+sed -i	-e 's@/var/lib/rbldns\([/ ]\)@%_localstatedir/rbldnsd\1@g' \
 		-e 's@\(-r/[a-z/]*\) -b@\1 -q -b@g' debian/rbldnsd.default
 
 %build
@@ -55,6 +56,10 @@ install -m 755 %SOURCE1			%buildroot%_initdir/rbldnsd
 %_initdir/rbldnsd
 
 %changelog
+* Fri Jan 05 2018 L.A. Kostis <lakostis@altlinux.ru> 0.998-alt1
+- updated to 0.998.
+- added LSB header to ease systemd transition.
+
 * Fri Jan 20 2012 L.A. Kostis <lakostis@altlinux.ru> 0.996b-alt1
 - fix init.d/rbldnsd (add condstop/condstart).
 
