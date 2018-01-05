@@ -1,6 +1,6 @@
 Name: firmware-linux
 Version: 20180104
-Release: alt1
+Release: alt1.1
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -63,6 +63,9 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 %exclude /lib/firmware/carl9170fw
 
 %changelog
+* Fri Jan 05 2018 L.A. Kostis <lakostis@altlinux.ru> 20180104-alt1.1
+- amd-ucode: Add microcode_amd_fam17h.bin (bsc#1068032 CVE-2017-5715)
+
 * Fri Jan 05 2018 L.A. Kostis <lakostis@altlinux.ru> 20180104-alt1
 - Updated to 65b1c68 GIT.
 
