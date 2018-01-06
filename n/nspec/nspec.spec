@@ -1,8 +1,8 @@
-%set_gcc_version 4.7
+%set_gcc_version 5
 
 Name: nspec
-Version: 14.5437
-Release: alt1
+Version: 15.5547
+Release: alt2
 Summary: Nspec Universal SPM & Spectroscopy Software - Nano Scan Technologies Ltd.
 Summary(ru_RU.UTF-8): Nspec - универсальная программа для СЗМ и спектроскопии для приборов фирмы НСТ
 License: BSD 4-clause: Nano Scan Technologies Ltd., 2008-2016
@@ -13,17 +13,18 @@ Vendor: ALT Linux Team
 
 Source: %name-%version.tar.gz
 
-BuildPreReq: gcc4.7 gcc4.7-c++
-
-# Automatically added by buildreq on Fri Feb 05 2016
-# optimized out: fontconfig glib2-devel libGL-devel libGLU-devel libatk-devel libcairo-devel libgdk-pixbuf-devel libgio-devel libgtk+2-devel libgtkglext-devel libnss-mymachines libpango-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-script libqt4-svg libqt4-webkit-devel libstdc++-devel libusb-compat ruby zlib-devel
-BuildRequires: gcc-c++ libgwyddion-devel libusb-compat-devel libusb-devel phonon-devel ruby-stdlibs
+BuildPreReq: gcc5 gcc5-c++ 
+BuildRequires(pre): rpm-macros-qt4
 
 
-%package  gwyddion-plugin
-Summary: Plugin for easy data transfer from NSpec to Gwyddion
-Requires: gwyddion
-Group: Sciences/Other
+# Automatically added by buildreq on Fri Dec 15 2017
+# optimized out: fontconfig fontconfig-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libgtkglext-devel libpango-devel libpangox-compat libpangox-compat-devel libqt5-concurrent libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-script libqt5-widgets libstdc++-devel libusb-compat pkg-config python-base python-modules python3 python3-base python3-module-yieldfrom qt5-base-devel zlib-devel
+## QT5 deps
+##BuildRequires: bzlib-devel i586-libxcb kf5-kimageformats libgwyddion-devel libqt5-svg libusb-compat-devel libusb-devel qt5-declarative-devel qt5-imageformats qt5-script-devel ruby ruby-stdlibs selinux-policy
+
+## QT4 deps
+BuildRequires: gcc-c++ glibc-devel-static libgwyddion-devel libqt4-webkit-devel libusb-compat-devel libusb-devel phonon-devel ruby ruby-stdlibs selinux-policy
+
 
 %description
 Nspec is a control program for Scanning Probe Microscopes and Spectroscopy Systems
@@ -33,11 +34,28 @@ by Nano Scan Technologies Ltd.
 Nspec это программа управления Сканирующими Зондовыми Микроскопами и Спектроскопическими системами
 фирмы Нано Скан Технология.
 
+%package  gwyddion-plugin
+Summary: Plugin for easy data transfer from NSpec to Gwyddion
+Requires: gwyddion
+Group: Sciences/Other
+
 %description gwyddion-plugin
 This plugin enables transfer of the current data frame from Nspec to Gwyddion in one click.
 
 %description -l ru_RU.UTF-8  gwyddion-plugin
 Этот плагин позволяет передавать данные из Nspec в Gwyddion в одно нажатие кнопки.
+
+
+%package plugin-lithography
+Summary: Probe lithography support
+Requires: nspec
+Group: Sciences/Other
+
+%description plugin-lithography
+This plugin adds probe lithography support to Nspec software.
+
+%description -l ru_RU,UTF-8 plugin-lithography
+Пдлагин добавляет поддержку зондовой литографии в программу Nspec.
 
 
 %prep
@@ -55,6 +73,7 @@ make -f Makefile.linux
 install -D -m0644 lib/linux/nst-udev.rules %buildroot/%_sysconfdir/udev/rules.d/99-nst.rules
 install -D -m0644 lib/linux/99-shuttle_ignore_xorg.conf %buildroot/%_sysconfdir/X11/xorg.conf.d/99-shuttle_ignore_xorg.conf
 install -m 755 -d %buildroot/%_bindir/
+install -m 755 -d %buildroot/%_libdir/nspec
 install -m 755 -d %buildroot/%_pixmapsdir/
 install -m 755 -d %buildroot/%_desktopdir/
 install -m 755 -d %buildroot/%_datadir/mime/packages/
@@ -62,9 +81,11 @@ install -m 644 lib/linux/ALT_RPM/%name.svg %buildroot/%_pixmapsdir/
 install -m 644 lib/linux/%name.desktop %buildroot/%_desktopdir/
 install -m 644 lib/linux/ALT_RPM/%name.xml %buildroot/%_datadir/mime/packages/
 
-##install -m 777 -d %buildroot/opt/nspec
+## install main binary
 cp bin/nspec %buildroot/%_bindir
-##ln -sr %buildroot/opt/nspec/nspec %buildroot/%_bindir/nspec
+
+## install litho plugin
+cp bin/liblitho* %buildroot/%_libdir/nspec
 
 # gwy proxy install
 install -m 755 -d %buildroot/%_libdir/gwyddion/modules/
@@ -85,8 +106,28 @@ cp gwy_proxy/gcc_make/nst_proxy.so %buildroot/%_libdir/gwyddion/modules
 %files gwyddion-plugin
 %_libdir/gwyddion/modules/*.so
 
+%files plugin-lithography
+%_libdir/nspec/*
 
 %changelog
+* Sat Jan 06 2018 Alexei Mezin <alexvm@altlinux.org> 15.5547-alt2
+- spec file fixes
+
+* Sat Jan 06 2018 Alexei Mezin <alexvm@altlinux.org> 15.5547-alt1
+- Update to new version
+- Lithography plugin build
+
+* Fri Dec 15 2017 Alexei Mezin <alexvm@altlinux.org> 15.5540-alt1
+- Back to qt4
+- Code fixes
+
+* Fri Dec 15 2017 Alexei Mezin <alexvm@altlinux.org> 15.5537-alt1
+- Some minor bugs fixed.
+- Switch to qt5
+
+* Thu Dec 14 2017 Alexei Mezin <alexvm@altlinux.org> 15.5536-alt1
+- Update to new non-LTS version
+
 * Sat Mar 04 2017 Alexei Mezin <alexvm@altlinux.org> 14.5437-alt1
 - Update to new version
 
