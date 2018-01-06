@@ -3,7 +3,7 @@
 Name: cura
 Epoch: 1
 Version: 3.0.3
-Release: alt1
+Release: alt2
 Summary: 3D printer control software
 License: AGPLv3+
 
@@ -14,6 +14,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 # https://github.com/Ultimaker/Cura/issues/2664
 Patch: %name-fix-tests.patch
+Patch1: fix-nvidia-fail-start.patch
 
 BuildArch: noarch
 
@@ -45,6 +46,7 @@ needs. As it's open source, our community helps enrich it even more.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 # The setup.py is only useful for py2exe, remove it, so noone is tempted to use it
 rm setup.py
@@ -108,6 +110,9 @@ desktop-file-validate %buildroot%_datadir/applications/%name.desktop
 %_libexecdir/%name
 
 %changelog
+* Sat Jan 06 2018 Anton Midyukov <antohami@altlinux.org> 1:3.0.3-alt2
+- Fix fail start with nvidia proprietary driver.
+
 * Sun Dec 31 2017 Anton Midyukov <antohami@altlinux.org> 1:3.0.3-alt1
 - New version 3.0.3
 
