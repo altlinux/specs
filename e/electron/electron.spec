@@ -1,12 +1,12 @@
 # TODO: build from sources
 Name: electron
-Version: 1.6.11
+Version: 1.7.10
 Release: alt1
 
 Summary: Build cross platform desktop apps with JavaScript, HTML, and CSS
 
 License: MIT License
-Url: https://electron.atom.io
+Url: https://electronjs.org/
 Group: Development/Other
 
 # Source-url: https://github.com/electron/electron/releases/download/v%version/electron-v%version-linux-x64.zip
@@ -52,5 +52,8 @@ ln -rs %buildroot%_libdir/%name/%name %buildroot/%_bindir/%name
 %_libdir/%name/
 
 %changelog
+* Sat Jan 06 2018 Vitaly Lipatov <lav@altlinux.ru> 1.7.10-alt1
+- new version 1.7.10 (with rpmrb script)
+
 * Thu Jul 13 2017 Vitaly Lipatov <lav@altlinux.ru> 1.6.11-alt1
 - initial release for ALT Sisyphus (just pack binaries)
