@@ -1,5 +1,5 @@
 Name: wammu
-Version: 0.43
+Version: 0.44
 Release: alt1
 
 Summary: Mobile phone manager
@@ -19,6 +19,7 @@ Requires: python-module-pybluez
 BuildRequires: python-devel >= %_python_version
 BuildRequires: python-module-gammu >= 0.10
 BuildRequires: python-module-pybluez
+BuildRequires: python-module-setuptools
 
 # wxGTK 2.8 is _the_ officially supported version as of 0.38
 #py_requires wx	### yields python-module-wx3.0 currently => breaks
@@ -49,6 +50,9 @@ subst '/man1/ D' INSTALLED_FILES
 %_mandir/*/man1/*
 
 %changelog
+* Fri Jan 05 2018 Michael Shigorin <mike@altlinux.org> 0.44-alt1
+- new version (watch file uupdate)
+
 * Wed Dec 14 2016 Michael Shigorin <mike@altlinux.org> 0.43-alt1
 - new version (watch file uupdate)
 

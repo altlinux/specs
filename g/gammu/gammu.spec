@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: gammu
-Version: 1.38.5
-Release: alt2
+Version: 1.39.0
+Release: alt1
 
 Summary: Mobile phones management utility
 License: GPL
@@ -184,6 +184,9 @@ cp -R contrib/bash-completion %buildroot%_gammu_docdir/other/
 %_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Fri Jan 05 2018 Michael Shigorin <mike@altlinux.org> 1.39.0-alt1
+- new version (watch file uupdate)
+
 * Mon Oct 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.38.5-alt2
 - Rebuilt with libdbi-0.9.0.
 
