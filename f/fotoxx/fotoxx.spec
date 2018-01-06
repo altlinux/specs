@@ -1,5 +1,5 @@
 Name: fotoxx
-Version: 17.08.3
+Version: 18.01.1
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
@@ -50,6 +50,7 @@ This package provides noarch data needed for Fotox to work.
 
 %prep
 %setup
+chmod -x doc/*
 
 %build
 %make_build PREFIX=/usr CXXFLAGS="%optflags -D_FILE_OFFSET_BITS=64"
@@ -60,13 +61,12 @@ install -d %buildroot%_man1dir
 
 install -pD -m644 %SOURCE1 %buildroot%_desktopdir/fotoxx.desktop
 install -pD -m644 doc/fotoxx.man %buildroot%_man1dir/fotoxx.1
-install -pD -m644 icons/fotoxx.png %buildroot%_liconsdir/fotoxx.png
+install -pD -m644 images/fotoxx.png %buildroot%_liconsdir/fotoxx.png
 install -pD %_sourcedir/fotoxx32.png %buildroot%_niconsdir/fotoxx.png
 install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 
 %files
 %_bindir/%name
-%_bindir/%name-snap
 
 %files data
 %_desktopdir/*
@@ -79,6 +79,9 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %doc doc/README* doc/changelog doc/copyright
 
 %changelog
+* Sat Jan 06 2018 Yuri N. Sedunov <aris@altlinux.org> 18.01.1-alt1
+- 18.01.1
+
 * Thu Sep 07 2017 Yuri N. Sedunov <aris@altlinux.org> 17.08.3-alt1
 - 17.08.3
 
