@@ -1,29 +1,41 @@
 %define _unpackaged_files_terminate_build 1
 Name: autorepo-altnode-config
-Version: 0.12
+Version: 0.13
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
-Summary: common configs for an automated packaging node
+Summary: automated packaging node common configs
 Group: System/Configuration/Other
 License: GPL2+
-#Url: 
+# TODO: change to appropriate page when ready
+# Url: https://www.altlinux.org/Autorepo
+Url: https://watch.altlinux.org
 Source: %name-%version.tar
 
 Requires(pre): postfix rsync-server anonftp vsftpd
-Requires: monit
+Requires: autorepo-altnode-config-apt = %EVR
 
 %description
 %summary
 
 %package nginx
 Group: System/Configuration/Other
-Summary: generic nginx config for an automated packaging node
+Summary: generic nginx config for the automated packaging node
 Requires(pre): nginx
+Requires: autorepo-altnode-config = %EVR
 
 %description nginx
 %summary nginx
+
+%package apt
+Group: System/Configuration/Other
+Summary: generic apt config for the automated packaging node
+Requires: apt
+Conflicts: autorepo-altnode-config < 0.13
+
+%description apt
+%summary apt
 
 %prep
 %setup
@@ -87,8 +99,6 @@ if [ "$RPM_INSTALL_ARG1" -eq 1 ]; then
 fi
 
 %files
-%_sysconfdir/autorepo/apt/apt.conf.*
-%_sysconfdir/autorepo/apt/sources.list.*
 %config %_sysconfdir/monitrc.d/00base.conf
 %config %_sysconfdir/monitrc.d/10mail.conf
 %config %_sysconfdir/monitrc.d/20httpd.conf
@@ -105,7 +115,14 @@ fi
 %_sysconfdir/nginx/sites-enabled.d/autorepo.conf
 %config %_sysconfdir/monitrc.d/nginx.conf
 
+%files apt
+%_sysconfdir/autorepo/apt/apt.conf.*
+%_sysconfdir/autorepo/apt/sources.list.*
+
 %changelog
+* Sat Jan 06 2018 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- apt configs moved out to apt subpackage
+
 * Tue Apr 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - added support for t8/p8
 
