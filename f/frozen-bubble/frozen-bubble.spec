@@ -1,12 +1,12 @@
 Name: frozen-bubble
 Version: 2.2.0
-Release: alt3.2.1.1
+Release: alt4
 
 Summary: Frozen Bubble arcade game
 License: GPL
 Group: Games/Arcade
 
-URL: http://www.frozen-bubble.org/
+Url: http://www.frozen-bubble.org/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -15,6 +15,8 @@ Requires: %name-data = %version
 # Automatically added by buildreq on Sun Oct 16 2011 (-bi)
 BuildRequires: libSDL_mixer-devel libSDL_pango-devel perl-Locale-gettext perl-Math-Complex perl-SDL_Perl perl-devel
 
+Summary(ru_RU.UTF-8): игра Frozen Bubble
+
 %description
 Colorful 3D rendered penguin animations, 100 levels of 1p game,
 hours and hours of 2p game, nights and nights of 2p/3p/4p/5p game
@@ -22,8 +24,15 @@ over LAN or Internet, a level-editor, 3 professional quality
 digital soundtracks, 15 stereo sound effects, 8 unique graphical
 transition effects, 8 unique logo eye-candies.
 
+%description -l ru_RU.UTF-8
+Цветные мультяшные пингвины, 100 уровней однопользовательской игры,
+многие часы игры вдвоём, долгие ночи двух-пятипользовательской игры
+по локальной сети или через интернет, редактор уровней, три дорожки
+звукового сопровождения профессионального качества, 15 стереоэффектов,
+8 уникальных эффектов графического перехода и 8 просто красивостей.
+
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
@@ -31,19 +40,13 @@ cd c_stuff
 %perl_vendor_build MAKEFILE=Makefile
 
 %install
-mkdir -p %buildroot%_bindir
-install -p -m755 %name %name-editor %buildroot%_bindir
-
-mkdir -p %buildroot%_man6dir
-install -p -m644 doc/%name.6 doc/%name-editor.6 %buildroot%_man6dir
-
-mkdir -p %buildroot%_datadir/%name
+mkdir -p %buildroot{%_bindir,%_man6dir,%_datadir/%name,%_desktopdir}
+install -pm755 %name %name-editor %buildroot%_bindir
+install -pm644 doc/%name.6 doc/%name-editor.6 %buildroot%_man6dir
 cp -a data gfx snd %buildroot%_datadir/%name
 
-mkdir -p %buildroot%_desktopdir
 cat <<EOF >%buildroot%_desktopdir/%name.desktop
 [Desktop Entry]
-Version=2.0.0
 Type=Application
 Encoding=UTF-8
 Name=Frozen Bubble
@@ -52,11 +55,12 @@ Exec=frozen-bubble
 Categories=Application;Game;ArcadeGame
 Icon=/usr/share/icons/hicolor/48x48/apps/frozen-bubble.png
 Comment=Frozen Bubble Arcade Game
+Comment[ru]=Игра Frozen Bubble
 EOF
 
-install -pD -m644 icons/%name-icon-16x16.png %buildroot%_miconsdir/%name.png
-install -pD -m644 icons/%name-icon-32x32.png %buildroot%_niconsdir/%name.png
-install -pD -m644 icons/%name-icon-48x48.png %buildroot%_liconsdir/%name.png
+install -pDm644 icons/%name-icon-16x16.png %buildroot%_miconsdir/%name.png
+install -pDm644 icons/%name-icon-32x32.png %buildroot%_niconsdir/%name.png
+install -pDm644 icons/%name-icon-48x48.png %buildroot%_liconsdir/%name.png
 
 cd c_stuff
 %perl_vendor_install
@@ -98,6 +102,11 @@ transition effects, 8 unique logo eye-candies.
 # - package locales
 
 %changelog
+* Mon Jan 08 2018 Michael Shigorin <mike@altlinux.org> 2.2.0-alt4
+- E2K: added openbsd clang patch
+- added Russian descriptions (closes: #33776)
+- minor spec cleanup
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt3.2.1.1
 - rebuild with new perl 5.26.1
 
