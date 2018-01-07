@@ -1,5 +1,5 @@
 Name: speech-dispatcher
-Version: 0.8.7
+Version: 0.8.8
 Release: alt1
 
 Summary: A speech output processing service
@@ -10,8 +10,7 @@ URL: http://www.freebsoft.org/speechd
 Source: http://devel.freebsoft.org/pub/projects/speechd/%name-%version.tar
 # fc
 Source1: %{name}d.service
-Patch: pkgconfig.patch
-Patch1: speech-dispatcher-0.8-alt-flite.patch
+Patch: speech-dispatcher-0.8-alt-flite.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libdotconf-devel >= 0.3
@@ -106,8 +105,7 @@ This python module allows programmsaccess speech-dispatcher service.
 
 %prep
 %setup
-%patch -p2
-%patch1 -p1
+%patch -p1
 
 %build
 %autoreconf
@@ -180,6 +178,10 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%{name}d.service
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Sun Jan 07 2018 Yuri N. Sedunov <aris@altlinux.org> 0.8.8-alt1
+- 0.8.8
+- removed obsolete pkgconfig.patch (ALT #34372)
+
 * Fri Jun 02 2017 Yuri N. Sedunov <aris@altlinux.org> 0.8.7-alt1
 - 0.8.7
 
