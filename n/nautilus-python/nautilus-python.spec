@@ -1,7 +1,10 @@
-%define major 1.1
+%def_disable snapshot
+%define ver_major 1.2
+
+%def_enable gtk_doc
 
 Name: nautilus-python
-Version: %major.0
+Version: %ver_major
 Release: alt1
 
 Summary: Python bindings for Nautilus
@@ -12,18 +15,22 @@ Url: http://www.gnome.org/
 Provides: python-module-nautilus = %version-%release
 Obsoletes: python-module-nautilus
 
+%if_disabled snapshot
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
 Source: %name-%version.tar
+%endif
 
 %setup_python_module nautilus
-%add_python_lib_path %_libdir/%name
+%add_python_lib_path %nautilus_extdir
 
-%define nautilus_ver 2.91.0
+%define nautilus_ver 3.0.0
 %define pygobject_ver 3.0
 
-BuildPreReq: rpm-build-gnome gnome-common
-BuildPreReq: libnautilus-devel >= %nautilus_ver libnautilus-gir-devel
-BuildPreReq: python-module-pygobject3-devel >= %pygobject_ver
-BuildRequires: gtk-doc
+BuildRequires(pre): rpm-build-gnome
+BuildRequires: libnautilus-devel >= %nautilus_ver libnautilus-gir-devel
+BuildRequires: python-module-pygobject3-devel >= %pygobject_ver
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 
 %description
 This package provides Python bindings for the Nautilus extension library.
@@ -50,17 +57,18 @@ Obsoletes: python-module-nautilus-devel-doc
 Development documentation for %name.
 
 %prep
-%setup -q
+%setup
 
 %build
-./autogen.sh
-%configure --disable-static \
-    --enable-gtk-doc
-
+%autoreconf
+%configure \
+	--disable-static \
+	%{?_enable_gtk_doc:--enable-gtk-doc} \
+	LIBS="$(python-config --libs)"
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 mkdir -p %buildroot%_datadir/nautilus-python/extensions
 rm -f examples/{Makefile*,README.in}
 
@@ -70,7 +78,7 @@ rm -f examples/{Makefile*,README.in}
 
 %files devel
 %_pkgconfigdir/*
-%doc README AUTHORS NEWS ChangeLog examples
+%doc README AUTHORS NEWS examples
 
 %files devel-doc
 %_datadir/gtk-doc/html/*
@@ -79,6 +87,12 @@ rm -f examples/{Makefile*,README.in}
 %exclude %_docdir/%name
 
 %changelog
+* Sat Jan 06 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2-alt1
+- 1.2
+
+* Sun Jul 06 2014 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt2
+- fixed %%add_python_lib_path
+
 * Mon Mar 12 2012 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt1
 - 1.1.0
 - build with pygobject3
