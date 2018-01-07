@@ -3,7 +3,7 @@
 
 Name: noise
 %define xdg_name org.pantheon.%name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The official elementary music player
@@ -11,6 +11,7 @@ Group: Sound
 License: GPLv3
 Url: https://launchpad.net/noise
 
+#VCS: https://github.com/elementary/music.git
 Source: https://launchpad.net/%name/%{ver_major}.x/%version/+download/%name-%version.tar.xz
 
 Requires: elementary-icon-theme
@@ -115,6 +116,9 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 #    /usr/share/vala/vapi/%name-core.vapi
 
 %changelog
+* Thu Nov 30 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
+- 0.4.2
+
 * Wed Aug 02 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
 - 0.4.1
 

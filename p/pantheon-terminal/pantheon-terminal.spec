@@ -3,12 +3,11 @@
 
 Name: pantheon-terminal
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Pantheon Terminal
 Group: Terminals
 License: GPLv3
-
 Url: https://github.com/elementary/terminal
 
 Source: %url/archive/%version/terminal-%version.tar.gz
@@ -63,6 +62,9 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Sat Jan 06 2018 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt2
+- rebuilt against libgranite.so.4
+
 * Mon Jul 31 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
 - 0.4.3
 

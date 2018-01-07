@@ -4,7 +4,7 @@
 Name: audience
 %define xdg_name org.pantheon.%name
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: A modern media player
 License: GPLv3
@@ -12,6 +12,7 @@ Group: Video
 Url: https://launchpad.net/audience
 
 Source: https://launchpad.net/%name/0.4-loki/%version/+download/%name-%version.tar.xz
+Patch: %name-0.2.4-up-vala_0.38.patch
 
 Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-good%gst_api_ver
@@ -33,6 +34,7 @@ hardware acceleration than most players out there.
 
 %prep
 %setup
+%patch -p1
 # fix libdir
 find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINATION}/|g' --
 
@@ -52,6 +54,9 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %_datadir/appdata/%xdg_name.appdata.xml
 
 %changelog
+* Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt2
+- rebuild against libgranite.so.4
+
 * Mon Aug 21 2017 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt1
 - 0.2.4
 

@@ -15,7 +15,7 @@
 %define xdg_name com.github.philip-scott.spice-up
 
 Name: spice-up
-Version: 1.0.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Desktop presentation application
@@ -26,6 +26,7 @@ Url: https://github.com/Philip-Scott/Spice-up
 Source: https://github.com/Philip-Scott/Spice-up/archive/%version.tar.gz#/Spice-up-%version.tar.gz
 BuildRequires: cmake gcc-c++
 BuildRequires: desktop-file-utils
+BuildRequires: libappstream-glib-devel
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(granite) >= 0.3
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.18.0
@@ -53,26 +54,27 @@ based upon SpiceOfDesign's presentation concept.
 
 %install
 %makeinstall_std
-mkdir -p %buildroot%_datadir/appdata
-mv %buildroot%_datadir/{metainfo,appdata}/%xdg_name.appdata.xml
 ln -s %xdg_name %buildroot%_bindir/%name
 
 %find_lang --output=%name.lang %xdg_name
 
 %files -f %name.lang
-%doc COPYING README.md
+%doc README.md
 %_bindir/%name
 %_bindir/%xdg_name
-%_datadir/%xdg_name
+%_datadir/%xdg_name/
 %_datadir/applications/*.%name.desktop
 %_datadir/icons/hicolor/*/apps/*%name.??g
 %_datadir/icons/hicolor/*/mimetypes/*spiceup.??g
 %_datadir/glib-2.0/schemas/*.%name.gschema.xml
-%_datadir/appdata/*.%name.appdata.xml
+%_datadir/metainfo/*.%name.appdata.xml
 %_datadir/mime/packages/*%name.mime.xml
 
 
 %changelog
+* Sun Jan 07 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
 * Wed Sep 20 2017 Michael Shigorin <mike@altlinux.org> 1.0.0-alt1
 - built for sisyphus (based on opensuse package by avvissu@yandex.by)
   + special thanks to aris@ for finishing the spec nicely
