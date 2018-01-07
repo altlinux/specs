@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt106
+Release: alt107
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -509,6 +509,14 @@ mv %buildroot%_rpmlibdir/{,build}macros
 %endif #with python
 
 %changelog
+* Sun Jan 07 2018 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt107
+- compare_deps: fixed a bug in handling epochs.
+- platform.in:
+  + %%optflags_core: added -frecord-gcc-switches (see: #34162);
+  + %%make_build: implemented as a simple command (closes: #34237).
+- genCpioListAndHeader: implemented remapping of device and inode numbers
+  (by Vladimir D. Seleznev and me; closes: #34398).
+
 * Mon Nov 20 2017 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt106
 - Added support for SOURCE_DATE_EPOCH environment variable
   (by Vladimir D. Seleznev; closes: #34200).
