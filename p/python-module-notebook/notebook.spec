@@ -6,17 +6,18 @@
 
 Name: python-module-%oname
 Version: 5.2.2
-Release: alt1
+Release: alt2
+
 Summary: Jupyter Interactive Notebook
 License: BSD
 Group: Development/Python
-BuildArch: noarch
-Url: https://pypi.python.org/pypi/notebook/
 
+Url: https://pypi.python.org/pypi/notebook/
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-build.patch
 
-BuildRequires: pandoc
+BuildArch: noarch
+
 BuildRequires: python-module-pathlib
 BuildRequires: python-devel python-module-setuptools-tests
 BuildRequires: python-module-zmq python-module-jinja2
@@ -27,7 +28,10 @@ BuildRequires: python-module-nbconvert python-module-ipykernel
 BuildRequires: python-module-mock python-module-terminado
 BuildRequires: python-module-nose python-module-requests
 BuildRequires: python-module-coverage
-BuildRequires: python2.7(pandocfilters) python2.7(nose_warnings_filters)
+%{?!_without_check:%{?!_disable_check:BuildRequires: python2.7(pandocfilters) python2.7(nose_warnings_filters)}}
+%if_with doc
+BuildRequires: pandoc
+%endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools-tests
@@ -39,7 +43,7 @@ BuildRequires: python3-module-nbconvert python3-module-ipykernel
 BuildRequires: python3-module-mock python3-module-terminado
 BuildRequires: python3-module-nose python3-module-requests
 BuildRequires: python3-module-coverage
-BuildRequires: python3(pandocfilters) python3(nose_warnings_filters)
+%{?!_without_check:%{?!_disable_check:BuildRequires: python3(pandocfilters) python3(nose_warnings_filters)}}
 %if_with doc
 BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3(nbsphinx) python3-module-sphinx_rtd_theme
@@ -116,9 +120,10 @@ This package contains documentation for %oname.
 
 %if_with python3
 cp -fR . ../python3
-
+%if_with doc
 %prepare_sphinx3 docs
 ln -s ../objects.inv ../python3/docs/source/
+%endif
 %endif
 
 %build
@@ -205,6 +210,11 @@ popd
 %endif
 
 %changelog
+* Mon Jan 08 2018 Michael Shigorin <mike@altlinux.org> 5.2.2-alt2
+- Avoid BR: pandoc when --without doc (e2k: no ghc so far)
+- Move %%check BRs under corresponding knob as well
+- Spec tags prettified a bit
+
 * Wed Nov 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.2-alt1
 - Updated to upstream version 5.2.2.
 
