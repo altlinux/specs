@@ -4,7 +4,7 @@
 %define real_name    QtPass
 
 Name:     qtpass
-Version:  1.2.0
+Version:  1.2.1
 Release:  alt1
 
 Summary: a multi-platform GUI for pass, the standard unix password manager
@@ -22,7 +22,6 @@ Patch0:  %real_name-%version-%release.patch
 
 Patch1:  %name-1.1.6-alt-desktop.patch
 Patch2:  %name-1.2.0-alt-tests.patch
-Patch3:  %name-1.2.0-bug334_patch.patch
 
 Source1: %name-16.png
 Source2: %name-32.png
@@ -71,7 +70,6 @@ QtPass -  кроссплатформенный графический интер
 %patch1
 %patch2
 
-%patch3
 
 mv -- LICENSE LICENSE.orig
 ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/LICENSE) LICENSE
@@ -104,6 +102,10 @@ install -D -m0644 -- qtpass.appdata.xml %buildroot%_datadir/appdata/%name.appdat
 
 
 %changelog
+* Mon Jan 08 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.2.1-alt1
+- New version
+  - Insecure password generation fixed
+
 * Sat Dec 09 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.2.0-alt1
 - New version
 
