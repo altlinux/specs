@@ -3,7 +3,7 @@
 
 Name: gvpe
 Version: 3.0
-Release: alt1
+Release: alt2
 
 Summary: virtual ethernet SSL VPN
 
@@ -22,6 +22,7 @@ Source5: README.ALT.utf-8
 Source6: %name.service
 
 Patch0:  %name-2.22-alt-using_ip.patch
+Patch1:  %name-3.0-alt-getopt.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -44,6 +45,10 @@ in effect implementing an ethernet bus over public networks.
 
 mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING) COPYING
+
+# Removing built-in getopt
+%patch1
+rm -f -- lib/getopt*
 
 %build
 %autoreconf
@@ -104,6 +109,9 @@ install -D -m 0644 -- %SOURCE6 %buildroot%_unitdir/%name.service
 %_unitdir/%{name}*.service
 
 %changelog
+* Mon Jan 08 2018 Nikolay A. Fetisov <naf@altlinux.org> 3.0-alt2
+- Fix build with glibc-2.26
+
 * Thu May 18 2017 Nikolay A. Fetisov <naf@altlinux.org> 3.0-alt1
 - New version
   + UNCOMPATIBLE changes: new protocol version
