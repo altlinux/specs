@@ -1,4 +1,6 @@
-%define ver_major 0.4
+%define ver_major 0.6
+%define gegl_ver_major 0.3
+
 Name: dibuja
 Version: %ver_major.0
 Release: alt1
@@ -10,7 +12,7 @@ Url: https://launchpad.net/%name
 
 Source: %url/trunk/%version/+download/%name-%version.tar.gz
 
-BuildRequires: intltool libgtk+2-devel libgegl-devel
+BuildRequires: intltool libgtk+2-devel libgegl%gegl_ver_major-devel
 
 %description
 Dibuja is a program for quick small editing and drawing.
@@ -19,7 +21,7 @@ Dibuja is a program for quick small editing and drawing.
 %setup
 
 %build
-%configure
+%configure --with-gegl-%gegl_ver_major
 %make_build
 
 %install
@@ -29,16 +31,20 @@ Dibuja is a program for quick small editing and drawing.
 
 %files -f %name.lang
 %_bindir/%name
-%_libdir/gegl-0.2/*.so
+%_libdir/gegl-%gegl_ver_major/*.so
 %_desktopdir/%name.desktop
 %_datadir/%name/
 %_defaultdocdir/%name/
-%_datadir/pixmaps/dibuja.*
+%_datadir/pixmaps/%name.*
+%doc README
 
-%exclude %_libdir/gegl-0.2/*.la
+%exclude %_libdir/gegl-%gegl_ver_major/*.la
 
 
 %changelog
+* Mon Jan 08 2018 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Sun Apr 02 2017 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
