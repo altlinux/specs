@@ -1,5 +1,5 @@
 Name:     genspec
-Version:  1.2.14
+Version:  1.2.15
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
@@ -32,6 +32,11 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_datadir/spectemplates
 
 %changelog
+* Mon Jan 08 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.15-alt1
+- Add readline
+- Create golang-bin spectemplate
+- Add owner option
+
 * Fri Oct 20 2017 Mikhail Gordeev <obirvalger@altlinux.org> 1.2.14-alt1
 - Fix interactive mode broken with last update
 
