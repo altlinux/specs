@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
-Release: alt1.1
+Release: alt1
 epoch:1 
 %define kernel_base_version	4.14
-%define kernel_sublevel .8
+%define kernel_sublevel .12
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -69,6 +69,7 @@ BuildRequires: gcc%kgcc_version-plugin-devel libgmp-devel libmpc-devel
 BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeric
 BuildRequires: module-init-tools >= 3.16
 BuildRequires: lzma-utils
+BuildRequires: libelf-devel
 BuildRequires: bc
 BuildRequires: openssl-devel 
 # for check
@@ -358,6 +359,8 @@ subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+c
 # get rid of unwanted files resulting from patch fuzz
 find . -name "*.orig" -delete -or -name "*~" -delete
 
+chmod +x tools/objtool/sync-check.sh
+
 %build
 export ARCH=%base_arch
 export NPROCS=%nprocs
@@ -462,6 +465,7 @@ KbuildFiles="
 	scripts/module-common.lds
 	scripts/depmod.sh
 	scripts/gcc-plugins/*.so
+	tools/objtool/objtool
 
 
 	.config
@@ -607,6 +611,15 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Tue Jan 09 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.12-alt1
+- v4.14.12
+
+* Fri Dec 29 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.14.10-alt1
+- v4.14.10
+
+* Mon Dec 25 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.14.9-alt1
+- v4.14.9  (Fixes: CVE-2017-16995, CVE-2017-16996)
+
 * Mon Dec 25 2017 Kernel Bot <kernelbot@altlinux.org> 1:4.14.8-alt1.1
 - SMACK enabled
 - kernel.unprivileged_bpf_disabled set by default  (Fixes: CVE-2017-16995, CVE-2017-16996)
