@@ -1,11 +1,12 @@
 Name: isync
-Version: 1.1.2
-Release: alt2.git20140712
+Version: 1.3.0
+Release: alt1
 
 Summary: Utility to synchronize IMAP mailboxes with local maildir folders
 License: GPLv2+
 Group: Networking/Mail
 Url: http://isync.sourceforge.net/
+Packager: Kirill Maslinsky <kirill@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -38,6 +39,12 @@ touch ChangeLog
 %doc AUTHORS NEWS README TODO src/mbsyncrc.sample src/compat/isyncrc.sample
 
 %changelog
+* Tue Jan 09 2018 Kirill Maslinsky <kirill@altlinux.org> 1.3.0-alt1
+- version up
+
+* Tue Aug 02 2016 Lenar Shakirov <snejok@altlinux.ru> 1.2.1-alt1
+- New version
+
 * Wed Sep 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt2.git20140712
 - Built with libdb6.1 instead of libdb4.8
 
