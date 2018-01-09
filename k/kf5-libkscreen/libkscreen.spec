@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.11.4
-Release: alt2%ubt
+Release: alt3%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -57,7 +57,7 @@ Requires: %name-common = %version-%release
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch2 -p3
+#%patch2 -p3
 
 %build
 %K5build
@@ -87,6 +87,9 @@ Requires: %name-common = %version-%release
 %_K5dbus_srv/org.kde.kscreen.service
 
 %changelog
+* Tue Jan 09 2018 Oleg Solovyov <mcpain@altlinux.org> 5.11.4-alt3%ubt
+- fix screen shutdown
+
 * Wed Dec 27 2017 Oleg Solovyov <mcpain@altlinux.org> 5.11.4-alt2%ubt
 - fix multiscreen suspending
 
