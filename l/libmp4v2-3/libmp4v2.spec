@@ -1,12 +1,13 @@
 Summary: This library provides functions to read, create, and modify mp4 files
 Name: libmp4v2-3
 Version: 2.0
-Release: alt2
+Release: alt3
 License: MPLv1.1
 Group: System/Libraries
 Url: http://code.google.com/p/mp4v2/
 
 Source: %name-%version.tar
+Patch1: %name-%version-alt.patch
 
 BuildRequires: gcc-c++ help2man texinfo
 
@@ -46,6 +47,7 @@ This contains the command line example utilities.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %autoreconf
@@ -74,6 +76,9 @@ mkdir -p doc/articles/txt
 %_man1dir/*
 
 %changelog
+* Tue Jan 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0-alt3
+- Fixed build.
+
 * Fri Jan  1 2016 Terechkov Evgenii <evg@altlinux.org> 2.0-alt2
 - Fix FTBFS
 
