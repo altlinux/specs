@@ -1,10 +1,10 @@
 Name: pthread_workqueue
-Version: 0.9
+Version: 0.9.1
 Release: alt1
 Summary: Thread pool for libdispatch
 License: BSD
-Group: Development/Tools
-Url: https://sourceforge.net/projects/libpwq/
+Group: Development/C
+Url: https://github.com/mheily/libpwq
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
@@ -59,6 +59,9 @@ This package contains development files of libpthread_workqueue.
 %_man3dir/*
 
 %changelog
+* Sun Apr 07 2019 Anton Farygin <rider@altlinux.ru> 0.9.1-alt1
+- 0.9.1
+
 * Wed Feb 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt1
 - Initial build for Sisyphus
 
