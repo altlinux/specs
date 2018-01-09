@@ -1,7 +1,7 @@
 %define  pkgname amq-protocol
 
 Name: 	 ruby-%pkgname
-Version: 2.2.0 
+Version: 2.3.0
 Release: alt1
 
 Summary: AMQP 0.9.1 protocol serialization and deserialization implementation for Ruby (2.0+)
@@ -54,5 +54,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Jan 09 2018 Andrey Cherepanov <cas@altlinux.org> 2.3.0-alt1
+- New version.
+
 * Tue Sep 19 2017 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt1
 Initial build for Sisyphus
