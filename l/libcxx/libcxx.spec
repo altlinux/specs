@@ -4,7 +4,7 @@
 
 Name: libcxx
 Version: 5.0.0
-Release: alt1
+Release: alt2
 
 Summary: C++ standard library targeting C++11
 
@@ -55,6 +55,9 @@ Requires: %name-devel = %EVR
 
 %build
 
+# Clang doesn't support these options
+%remove_optflags -frecord-gcc-switches
+
 %if_with bootstrap
 export LDFLAGS="-Wl,--build-id"
 %else
@@ -97,6 +100,9 @@ export LDFLAGS="-Wl,--build-id -stdlib=libc++"
 %_libdir/libc++*.a
 
 %changelog
+* Tue Jan 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.0-alt2
+- Removed unsupported compiler flags.
+
 * Wed Dec 20 2017 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt1
 - initial build for ALT Sisyphus
 
