@@ -1,11 +1,11 @@
 %define foomatic_version 4.0.3
-%define snapshot 20170906
+%define snapshot 20180109
 
 %def_disable foo2zjs
 
 Name: foomatic-db
 Version: 4.0.%snapshot
-Release: alt1.1
+Release: alt1
 
 Summary: Foomatic printer database
 License: GPL
@@ -160,6 +160,9 @@ comm -23 foomatic-db-all.ls foomatic-db-foo2zjs.ls > foomatic-db-main.ls
 %doc README ChangeLog.xz
 
 %changelog
+* Tue Jan 09 2018 Cronbuild Service <cronbuild@altlinux.org> 4.0.20180109-alt1
+- repocop cronbuild 20180109. At your service.
+
 * Tue Nov 07 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.20170906-alt1.1
 - compressed changelog (repocop warning)
 
