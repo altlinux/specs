@@ -1,13 +1,13 @@
 %define _localstatedir /var
 
 Name: sanlock
-Version: 3.4.0
+Version: 3.6.0
 Release: alt1
 Summary: A shared storage lock manager
 
 Group: System/Configuration/Other
 License: GPLv2 and GPLv2+ and LGPLv2+
-Url: https://fedorahosted.org/sanlock/
+Url: https://pagure.io/sanlock
 
 Source: %name-%version.tar
 Patch1: %name-%version-%release.patch
@@ -200,6 +200,9 @@ install -Dd -m 0775 %buildroot%_localstatedir/run/fence_sanlockd
 %_man8dir/sanlk-reset*
 
 %changelog
+* Tue Jan 09 2018 Alexey Shabalin <shaba@altlinux.ru> 3.6.0-alt1
+- 3.6.0
+
 * Fri Jun 17 2016 Alexey Shabalin <shaba@altlinux.ru> 3.4.0-alt1
 - 3.4.0
 
