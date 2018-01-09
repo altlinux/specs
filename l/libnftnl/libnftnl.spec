@@ -1,5 +1,5 @@
 Name:           libnftnl
-Version:        1.0.8
+Version:        1.0.9
 Release:        alt1
 Summary:        Netfilter nf_tables infrastructure library
 Group:          System/Libraries
@@ -13,7 +13,7 @@ libnftnl is a userspace library providing a low-level netlink programming interf
 in-kernel nf_tables subsystem. The library libnftnl has been previously known as libnftables.
 This library is currently used by nftables.
 
-%package	devel
+%package        devel
 Summary:        Development files for %name
 Group:          System/Libraries
 Requires:       pkgconfig, %name = %version-%release
@@ -22,7 +22,7 @@ Requires:       pkgconfig, %name = %version-%release
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package	devel-static
+%package        devel-static
 Summary:        Development files for %name
 Group:          System/Libraries
 Requires:       pkgconfig, %name = %version-%release
@@ -31,11 +31,11 @@ Requires:       pkgconfig, %name = %version-%release
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package	examples
+%package        examples
 Summary:        Examples for %name
 Group:          System/Libraries
 
-%description	examples
+%description    examples
 The %name-examples package contains examples files for %name.
 
 
@@ -75,6 +75,9 @@ cp examples/.libs/* %buildroot%_sbindir/
 %_sbindir/*
 
 %changelog
+* Tue Jan 09 2018 Alexei Takaseev <taf@altlinux.org> 1.0.9-alt1
+- Version 1.0.9
+
 * Fri Oct 13 2017 Alexei Takaseev <taf@altlinux.org> 1.0.8-alt1
 - Version 1.0.8
 
