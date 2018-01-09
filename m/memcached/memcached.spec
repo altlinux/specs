@@ -1,9 +1,10 @@
 %def_enable seccomp
+%def_disable extstore
 %def_enable sasl
 
 Name: memcached
-Version: 1.5.3
-Release: alt1
+Version: 1.5.4
+Release: alt1%ubt
 
 Summary: memcached - memory caching daemon
 License: BSD
@@ -15,6 +16,7 @@ Source: %name-%version.tar
 %define pkg_user memcached
 %define pkg_group memcached
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: libevent-devel perl-devel perl-AnyEvent perl-YAML perl-Term-ReadKey
 %{?_enable_seccomp:BuildRequires: libseccomp-devel}
 %{?_enable_sasl:BuildRequires: libsasl2-devel}
@@ -52,6 +54,7 @@ sed -i 's,`git describe`,"%version-%release",g' version.pl
 %build
 %configure \
 	%{subst_enable seccomp} \
+	%{subst_enable extstore} \
 	%{subst_enable sasl}
 
 %make_build
@@ -99,6 +102,9 @@ fi
 %exclude %_datadir/%name/scripts/memcached.sysv
 
 %changelog
+* Tue Jan 09 2018 Alexey Shabalin <shaba@altlinux.ru> 1.5.4-alt1%ubt
+- 1.5.4
+
 * Tue Nov 07 2017 Alexey Shabalin <shaba@altlinux.ru> 1.5.3-alt1
 - 1.5.3
 - build with sasl
