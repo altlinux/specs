@@ -2,7 +2,7 @@
 
 Name: nvme
 Version: 1.4
-Release: alt4.g%git
+Release: alt5.g%git
 Summary: Core nvme tools
 License: GPL
 Group: System/Configuration/Hardware
@@ -20,7 +20,7 @@ cli rpm installs core management tools with minimal dependencies.
 %setup
 
 %build
-CFLAGS=%optflags \
+CFLAGS="%optflags" \
 %make_build
 
 %install
@@ -44,6 +44,9 @@ if [ $1 = 1 ]; then # 1 : This package is being installed for the first time
 fi
 
 %changelog
+* Tue Jan 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4-alt5.g0b78004
+- Fixed build.
+
 * Tue Jan 02 2018 L.A. Kostis <lakostis@altlinux.ru> 1.4-alt4.g0b78004
 - GIT 0b78004.
 
