@@ -1,6 +1,6 @@
 Name: libsocket
 Version: 2.4.1
-Release: alt2.git20140508
+Release: alt3.git20140508
 
 Summary: The ultimate socket library, supporting TCP, UDP and Unix sockets (DGRAM and STREAM)
 License: BSD
@@ -8,7 +8,6 @@ Group: System/Libraries
 
 Url: https://github.com/dermesser/libsocket
 Source: %name-%version.tar
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildRequires: gcc-c++ cmake
 %ifnarch e2k
@@ -40,6 +39,11 @@ This package contains development files of %name.
 %setup
 
 %build
+%ifnarch e2k
+# Clang doesn't support these options
+%remove_optflags -frecord-gcc-switches
+%endif
+
 cmake \
 %if %_lib == lib64
 	-DLIB_SUFFIX=64 \
@@ -68,6 +72,9 @@ cmake \
 %_includedir/*
 
 %changelog
+* Tue Jan 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.1-alt3.git20140508
+- Removed unsupported compiler flags.
+
 * Wed Aug 23 2017 Michael Shigorin <mike@altlinux.org> 2.4.1-alt2.git20140508
 - E2K: avoid clang
 - minor spec cleanup
