@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: libfastjson
-Version: 0.99.7
+Version: 0.99.8
 Release: alt1%ubt
 
 Summary: A JSON implementation in C
@@ -65,6 +65,9 @@ Static libs for building statically linked software that uses %name
 %endif
 
 %changelog
+* Tue Jan 09 2018 Alexey Shabalin <shaba@altlinux.ru> 0.99.8-alt1%ubt
+- 0.99.8
+
 * Wed Nov 08 2017 Alexey Shabalin <shaba@altlinux.ru> 0.99.7-alt1%ubt
 - 0.99.7
 

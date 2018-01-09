@@ -2,16 +2,17 @@
 %def_enable liblogging_stdlog
 %def_enable rfc3195
 %def_disable mmcount
-%def_disable guardtime
 %def_disable ksi_ls12
 %def_disable omamqp1
 %def_enable omhiredis
 %def_enable ommongodb
 %def_enable omhttpfs
 %def_enable elasticsearch
+%def_enable libsystemd
+%def_enable libcurl
 
 Name: rsyslog
-Version: 8.31.0
+Version: 8.32.0
 Release: alt1%ubt
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -33,11 +34,10 @@ BuildRequires: libgnutls-devel libgcrypt-devel
 BuildRequires: libnet-snmp-devel
 BuildRequires: libnet-devel
 BuildRequires: libestr-devel >= 0.1.9
-BuildRequires: libfastjson-devel >= 0.99.7
+BuildRequires: libfastjson-devel >= 0.99.8
 BuildRequires: libuuid-devel
 %{?_enable_liblogging_stdlog:BuildRequires: liblogging-devel >= 1.0.3}
 %{?_enable_rfc3195:BuildRequires: liblogging-devel >= 1.0.1}
-%{?_enable_guardtime:BuildRequires: libgt-devel >= 0.3.1}
 %{?_enable_ksi_ls12:BuildRequires: libksi-devel >= 3.16.0}
 %{?_enable_omamqp1:BuildRequires: libqpid-proton-devel >= 0.9}
 BuildRequires: liblognorm-devel >= 2.0.3
@@ -45,7 +45,8 @@ BuildRequires: liblognorm-devel >= 2.0.3
 %{?_enable_elasticsearch:BuildRequires: libcurl-devel}
 %{?_enable_omhttpfs:BuildRequires: libcurl-devel >= 7.0.0}
 %{?_enable_omhiredis:BuildRequires: libhiredis-devel >= 0.10.1}
-BuildRequires: libsystemd-devel >= 209
+%{?_enable_libsystemd:BuildRequires: libsystemd-devel >= 209}
+%{?_enable_libcurl:BuildRequires: libcurl-devel}
 BuildRequires: iproute2
 BuildRequires: /usr/bin/rst2man
 BuildRequires: /usr/bin/lsb_release
@@ -353,7 +354,6 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-kmsg \
 	--enable-largefile \
 	--enable-libdbi \
-	%{subst_enable guardtime} \
 	%{?_enable_ksi_ls12:--enable-ksi-ls12} \
 	%{?_enable_liblogging_stdlog:--enable-liblogging-stdlog} \
 	%{subst_enable rfc3195} \
@@ -389,6 +389,8 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-unlimited-select \
 	--enable-usertools \
 	--enable-generate-man-pages \
+	%{subst_enable libcurl} \
+	%{subst_enable libsystemd} \
 	--with-systemdsystemunitdir=%_unitdir
 
 %make_build
@@ -559,6 +561,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/mmsnmptrapd.so
 
 %changelog
+* Tue Jan 09 2018 Alexey Shabalin <shaba@altlinux.ru> 8.32.0-alt1%ubt
+- 8.32.0
+
 * Fri Dec 01 2017 Alexey Shabalin <shaba@altlinux.ru> 8.31.0-alt1%ubt
 - 8.31.0
 - update systemd drop-in config (ALT#32812)
