@@ -17,7 +17,7 @@
 %def_enable introspection
 
 Name: libgtk+2
-Version: %ver_major.31
+Version: %ver_major.32
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs
@@ -169,6 +169,7 @@ Summary: GObject introspection devel data for the GTK+ library
 Group: System/Libraries
 BuildArch: noarch
 Requires: %name-gir = %version-%release
+Requires: %name-devel = %version-%release
 
 %description gir-devel
 GObject introspection devel data for the GTK+ library
@@ -377,6 +378,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cach
 %endif
 
 %changelog
+* Tue Jan 09 2018 Yuri N. Sedunov <aris@altlinux.org> 2.24.32-alt1
+- 2.24.32
+
 * Wed Sep 07 2016 Yuri N. Sedunov <aris@altlinux.org> 2.24.31-alt1
 - 2.24.31 (CVE-2013-7447)
 
