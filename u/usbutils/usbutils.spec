@@ -1,5 +1,5 @@
 Name: usbutils
-Version: 008
+Version: 009
 Release: alt1
 
 Summary: Linux USB utilities
@@ -39,6 +39,9 @@ rm -f %buildroot%_bindir/lsusb.py
 %doc AUTHORS NEWS
 
 %changelog
+* Tue Jan 09 2018 Alexey Shabalin <shaba@altlinux.ru> 009-alt1
+- 009
+
 * Thu Aug 13 2015 Alexey Shabalin <shaba@altlinux.ru> 008-alt1
 - 008
 
