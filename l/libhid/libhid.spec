@@ -3,19 +3,19 @@
 
 Name: libhid
 Version: 0.2.16
-Release: alt2.2
+Release: alt3
 
 Summary: A user-space USB HID access library
 License: GPL
 Group: System/Libraries
 Url: http://libhid.alioth.debian.org/
-Packager: Michael A. Kangin <prividen@altlinux.org>
 
-Source0: %name-%version.tar.gz
+Source: %name-%version.tar
+Patch1: %name-%version-alt.patch
 
-BuildPreReq: libusb-compat-devel 
+BuildRequires: libusb-compat-devel
 %if_enabled swig
-BuildPreReq: swig python-dev
+BuildRequires: swig python-dev
 %endif
 
 %description
@@ -55,8 +55,10 @@ Python bindings for %name
 
 %prep
 %setup
+%patch1 -p1
 
 %build
+%autoreconf
 %__subst "s/get_config_vars('LIBPL',/get_config_vars('LIBDIR',/" configure
 %configure %{subst_enable static} --enable-werror=no
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
@@ -88,6 +90,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Tue Jan 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.16-alt3
+- Fixed build.
+
 * Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.16-alt2.2
 - Fixed build
 
