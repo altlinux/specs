@@ -1,6 +1,6 @@
 Name: snes9x
-Version: 1.53
-Release: alt1
+Version: 1.55
+Release: alt1%ubt
 
 Summary: Super Nintendo Entertainment System emulator
 License: Distributable
@@ -9,18 +9,23 @@ Group: Emulators
 Url: http://www.snes9x.com/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source0: http://%name-gtk.googlecode.com/files/%name-%version-src.tar.bz2
+Source: https://github.com/snes9xgit/%name/archive/%version/%name-%version.tar.gz
 
-BuildRequires: gcc-c++ intltool
-BuildRequires: libSDL-devel >= 1.2.12
+BuildRequires(pre): rpm-build-ubt
+
+BuildRequires: gcc-c++
+BuildRequires: intltool
+BuildRequires: libSDL-devel
 BuildRequires: libSM-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libXv-devel
 BuildRequires: libalsa-devel
-BuildRequires: libgtk+2-devel >= 2.10
+BuildRequires: libgtk+2-devel
+BuildRequires: libgtk+3-devel
+BuildRequires: libminizip-devel
 BuildRequires: libportaudio2-devel
 BuildRequires: libpulseaudio-devel
-BuildRequires: libxml2-devel >= 2.0
+BuildRequires: libxml2-devel
 
 %description
 Snes9x is a portable, freeware Super Nintendo Entertainment System (SNES) emulator.
@@ -51,29 +56,21 @@ real gems that were only ever released in Japan.
 This package contains a graphical user interface using GTK+.
 
 %prep
-%setup -n %name-%version-src
+%setup
 
 %build
-CFLAGS="%optflags"; export CFLAGS;
-CXXFLAGS="%optflags"; export CXXFLAGS;
-
 # Build CLI version
 pushd unix
 ./configure \
-	--prefix=%prefix \
-	--bindir=%_bindir \
+	--prefix=%_bindir \
 	--enable-netplay
 %make_build
 popd
 
 #build GTK version
 pushd gtk
-./configure \
-	--prefix=%prefix \
-	--bindir=%_bindir \
-	--datadir=%_datadir \
-	--localedir=%_datadir/locale \
-	--with-netplay
+./autogen.sh
+%configure --with-netplay
 %make_build
 popd
 
@@ -88,11 +85,11 @@ pushd gtk
 popd
 
 %files cli
-%doc docs/*.txt docs/porting.html unix/docs/readme_unix.html
+%doc docs/*.txt unix/docs/readme_unix.html
 %_bindir/%name
 
 %files gtk -f gtk/%name-gtk.lang
-%doc docs/*.txt docs/porting.html gtk/doc/lgpl.txt gtk/doc/LICENSE gtk/doc/README
+%doc docs/*.txt gtk/doc/lgpl.txt gtk/doc/LICENSE gtk/doc/README
 %_bindir/%name-gtk
 %_desktopdir/%name.desktop
 %_miconsdir/%name.png
@@ -101,5 +98,14 @@ popd
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Tue Jan 09 2018 Nazarov Denis <nenderus@altlinux.org> 1.55-alt1%ubt
+- Version 1.55
+
+* Sat Feb 01 2014 Nazarov Denis <nenderus@altlinux.org> 1.53-alt0.M70P.1
+- Build for branch p7
+
+* Wed Oct 16 2013 Nazarov Denis <nenderus@altlinux.org> 1.53-alt0.M70T.1
+- Build for branch t7
+
 * Sun Oct 06 2013 Nazarov Denis <nenderus@altlinux.org> 1.53-alt1
 - Initial build for ALT Linux
