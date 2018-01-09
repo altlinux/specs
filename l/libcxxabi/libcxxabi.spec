@@ -2,7 +2,7 @@
 
 Name: libcxxabi
 Version: 5.0.0
-Release: alt1
+Release: alt2
 
 Summary: Low level support for a standard C++ library
 
@@ -54,6 +54,9 @@ Requires: %name-devel = %EVR
 %__subst 's|LIBCXXABI_ARM_EHABI 1|LIBCXXABI_ARM_EHABI 0|g' include/__cxxabi_config.h
 %endif
 
+# Clang doesn't support these options
+%remove_optflags -frecord-gcc-switches
+
 %if_with bootstrap
 export LDFLAGS="-Wl,--build-id"
 %else
@@ -92,6 +95,9 @@ cp -a include/* %buildroot%_includedir
 %_libdir/libc++abi.a
 
 %changelog
+* Tue Jan 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.0-alt2
+- Removed unsupported compiler flags.
+
 * Wed Dec 20 2017 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt1
 - new version (5.0.0) with rpmgs script
 
