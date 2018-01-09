@@ -1,22 +1,19 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt3.git20140226.1
 %set_verify_elf_method unresolved=strict
 
 Name: libdispatch-objc2
 Version: 1.2
-#Release: alt3.git20140226
+Release: alt4.git20140226
 Summary: Linux port of Apple's open-source concurrency library
 License: Apache License v2
 Group: System/Libraries
 Url: http://etoileos.com/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/etoile/libdispatch-objc2.git
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel libBlocksRuntime-devel cmake
-BuildPreReq: libpthread_workqueue-devel libkqueue-devel
-BuildPreReq: gcc-c++ gnustep-corebase-devel
+BuildRequires: clang-devel libBlocksRuntime-devel cmake
+BuildRequires: libpthread_workqueue-devel libkqueue-devel
+BuildRequires: gcc-c++ gnustep-corebase-devel
 
 %description
 libdispatch, aka Grand Central Dispatch (GCD) is Apple's
@@ -45,6 +42,9 @@ This package contains development files for libdispatch-objc2.
 %setup
 
 %build
+# Clang doesn't support these options
+%remove_optflags -frecord-gcc-switches
+
 %add_optflags -I%_includedir/kqueue
 cd libdispatch
 cmake \
@@ -76,6 +76,9 @@ mv %buildroot%_libexecdir/*.so* %buildroot%_libdir/
 %_man3dir/*
 
 %changelog
+* Tue Jan 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2-alt4.git20140226
+- Removed unsupported compiler flags.
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2-alt3.git20140226.1
 - (AUTO) subst_x86_64.
 
