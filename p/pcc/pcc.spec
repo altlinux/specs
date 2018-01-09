@@ -18,9 +18,9 @@
 Name: pcc
 Version: 1.0.0
 %if %usepcc
-Release: alt1
+Release: alt2
 %else
-Release: alt1
+Release: alt2
 %endif
 Summary: The Portable C Compiler
 Group: Development/C
@@ -88,7 +88,7 @@ export CPP="gcc -E"
 %endif
 
 # Flags for files that can't be built as debug
-export CFLAGS_NODEBUG=`echo ${FLAGS}|sed "s|-g||g"`
+export CFLAGS_NODEBUG=$(echo ${FLAGS} | sed -e 's/\(^\| \)-g\($\| \)/ /g')
 
 # First, build the library.
 cd pcc-libs
@@ -127,6 +127,9 @@ mkdir -p %buildroot%_includedir/pcc
 %_mandir/man1/pcc.1.*
 
 %changelog
+* Tue Jan 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt2
+- Fixed regex removing debug flags.
+
 * Sat Apr 09 2011 Ilya Mashkin <oddity@altlinux.ru> 1.0.0-alt1
 - Initial build for ALT Linux
 
