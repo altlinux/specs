@@ -1,5 +1,5 @@
 Name: libbson
-Version: 1.8.2
+Version: 1.9.0
 Release: alt1%ubt
 Summary: A BSON utility library
 License: ASLv2.0
@@ -70,6 +70,9 @@ rm -rf doc/html/_static doc/html/*.{html,inv,js} doc/man/*.3
 %_man3dir/*
 
 %changelog
+* Tue Jan 09 2018 Alexey Shabalin <shaba@altlinux.ru> 1.9.0-alt1%ubt
+- 1.9.0
+
 * Fri Dec 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1.8.2-alt1%ubt
 - 1.8.2
 - drop docs package
