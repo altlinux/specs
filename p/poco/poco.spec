@@ -1,5 +1,5 @@
 Name: poco
-Version: 1.8.0.1
+Version: 1.8.1
 Release: alt1
 Summary: POrtable COmponents C++ Libraries
 License: Boost Software License v1.0
@@ -260,6 +260,9 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 #files -n lib%name-devel-docs
 
 %changelog
+* Wed Jan 10 2018 Alexei Takaseev <taf@altlinux.org> 1.8.1-alt1
+- 1.8.0
+
 * Sun Nov 12 2017 Alexei Takaseev <taf@altlinux.org> 1.8.0.1-alt1
 - 1.8.0.1
 - Add subpackage redis
