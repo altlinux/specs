@@ -1,12 +1,11 @@
-%def_enable libnotify
 
 Name: liferea
-Version: 1.10.19
+Version: 1.12.1
 Release: alt1
 Summary: A RSS News Reader for GNOME
 License: GPLv2
 Group: Networking/News
-Url: http://lzone.de/liferea
+Url: https://lzone.de/liferea
 
 Obsoletes: %name-gtkhtml < %version-%release %name-xulrunner < %version-%release
 Provides: %name-backend = %version-%release %name-gtkhtml = %version-%release %name-xulrunner = %version-%release
@@ -14,29 +13,35 @@ Provides: %name-backend = %version-%release %name-gtkhtml = %version-%release %n
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+Requires: libpeas-python3-loader
+Requires: dconf gnome-icon-theme
+
+# use python3
+AutoReqProv: nopython
+%define __python %nil
+%add_python3_compile_include %_libdir/%name/plugins
+
 BuildRequires(pre): gobject-introspection-devel
+BuildRequires(pre): rpm-build-python3 python3-devel
+BuildRequires: python3-module-pygobject3-devel
 BuildRequires: gcc-c++ intltool
-BuildRequires: pkgconfig(gtk+-3.0) >= 3.4.0
-BuildRequires: pkgconfig(glib-2.0) >= 2.28.0 pkgconfig(gio-2.0) >= 2.26.0 pkgconfig(gmodule-2.0) >= 2.0.0 pkgconfig(gthread-2.0)
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.14.0
+BuildRequires: pkgconfig(glib-2.0) >= 2.40.0 pkgconfig(gio-2.0) >= 2.26.0 pkgconfig(gmodule-2.0) >= 2.0.0 pkgconfig(gthread-2.0)
 BuildRequires: pkgconfig(pango) >= 1.4.0
 BuildRequires: pkgconfig(libxml-2.0) >= 2.6.27 pkgconfig(libxslt) >= 1.1.19
 BuildRequires: pkgconfig(sqlite3) >= 3.7.0
-BuildRequires: pkgconfig(libsoup-2.4) >= 2.28.2 pkgconfig(webkitgtk-3.0) pkgconfig(json-glib-1.0)
+BuildRequires: pkgconfig(libsoup-2.4) >= 2.42 pkgconfig(webkit2gtk-4.0) pkgconfig(json-glib-1.0) pkgconfig(webkit2gtk-web-extension-4.0)
 BuildRequires: pkgconfig(gobject-introspection-1.0) gir(Gtk) = 3.0
 BuildRequires: pkgconfig(gsettings-desktop-schemas)
 BuildRequires: pkgconfig(libpeas-1.0) >= 1.0.0 pkgconfig(libpeas-gtk-1.0) >= 1.0.0
-%{?_enable_libnotify:BuildRequires: pkgconfig(libnotify) >= 0.7}
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
 %description
-Liferea is a simple FeedReader clone for Unix distributions with GTK3
-(GNOME3 is optional). It is a news aggregator for RSS/RDF feeds which
-also supports CDF channels, Atom/Echo/PIE feeds and OCS or OPML
-directories. The problem with FeedReader: for now its only available
-for Windows. There are some projects for GNU/Linux, but no solution for
-GTK/GNOME, which does not require Python or Perl. Liferea tries to fill
-this gap. Liferea is an abbreviation for Linux Feed Reader.
+Liferea is a desktop feed reader/news aggregator that brings together
+all of the content from your favorite subscriptions into a simple interface
+that makes it easy to organize and browse feeds.
+Its GUI is similar to a desktop mail/newsclient, with an embedded graphical browser.
 
 %package plugins-gnome-keyring
 Summary: GNOME Keyring Support for the %name
@@ -62,7 +67,6 @@ Play music and videos directly from Liferea
 %autoreconf
 %configure \
 	--enable-introspection \
-	%{subst_enable libnotify} \
 	--disable-static
 %make_build
 
@@ -80,17 +84,36 @@ Play music and videos directly from Liferea
 %_datadir/glib-2.0/schemas/*.xml
 %_datadir/GConf/gsettings/%name.convert
 %_datadir/appdata/%name.appdata.xml
-%_datadir/applications/%name.desktop
+%_datadir/applications/net.sourceforge.liferea.desktop
+%_datadir/dbus-1/services/net.sourceforge.liferea.service
 %_datadir/icons/hicolor/*/apps/*
 %_man1dir/%name.*
+%_libdir/%name/web-extension/*.so
+
+
+%dir %_libdir/%name/plugins
+%dir %_libdir/%name/plugins/__pycache__
+
+# plugins. may be separated packages?
+%_libdir/%name/plugins/bold-unread.*
+%_libdir/%name/plugins/__pycache__/bold-unread.*
+%_libdir/%name/plugins/libnotify.*
+%_libdir/%name/plugins/__pycache__/libnotify.*
+%_libdir/%name/plugins/trayicon.*
+%_libdir/%name/plugins/__pycache__/trayicon.*
 
 %files plugins-gnome-keyring
 %_libdir/%name/plugins/gnome-keyring.*
+%_libdir/%name/plugins/__pycache__/gnome-keyring.*
 
 %files plugins-media-player
 %_libdir/%name/plugins/media-player.*
+%_libdir/%name/plugins/__pycache__/media-player.*
 
 %changelog
+* Wed Jan 10 2018 Alexey Shabalin <shaba@altlinux.ru> 1.12.1-alt1
+- 1.12.1
+
 * Mon Apr 25 2016 Alexey Shabalin <shaba@altlinux.ru> 1.10.19-alt1
 - 1.10.19
 
