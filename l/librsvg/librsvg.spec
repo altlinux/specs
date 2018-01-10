@@ -1,5 +1,5 @@
 %define bname librsvg
-%define ver_major 2.41
+%define ver_major 2.42
 %define api_ver 2.0
 %define gtk_api_ver 2.0
 %define gtk3_api_ver 3.0
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -184,6 +184,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Wed Jan 10 2018 Yuri N. Sedunov <aris@altlinux.org> 1:2.42.0-alt1
+- 2.42.0
+
 * Sat Dec 30 2017 Yuri N. Sedunov <aris@altlinux.org> 1:2.41.2-alt1
 - 2.41.2
 

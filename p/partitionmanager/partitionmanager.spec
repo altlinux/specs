@@ -1,7 +1,7 @@
 %define xdg_name org.kde.partitionmanager
 
 Name: partitionmanager
-Version: 3.3.0
+Version: 3.3.1
 Release: alt1
 
 Summary: KDE Partition Manager
@@ -55,6 +55,9 @@ file systems.
 %doc README* TODO
 
 %changelog
+* Wed Jan 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.3.1-alt1
+- 3.3.1
+
 * Thu Dec 28 2017 Yuri N. Sedunov <aris@altlinux.org> 3.3.0-alt1
 - 3.3.0
 
