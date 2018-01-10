@@ -7,7 +7,7 @@
 
 Name: recoll
 Version: 1.23.7
-Release: alt1
+Release: alt2
 
 Summary: A personal full text search package
 License: %gpl2plus
@@ -20,8 +20,6 @@ Source2: recoll_ru.qm
 Source3: recoll_uk.ts
 Source4: recoll_uk.qm
 Source100: recoll.watch
-Patch0: recoll-qtextbrowser.patch
-Patch1: recoll-1.23.3-alt-webkit.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ libaspell-devel ImageMagick
@@ -81,11 +79,6 @@ that might be of use with Recoll.
 
 %prep
 %setup -n %name-%version%pre
-%if_disabled webkit
-# upstream patch for 1.23.3
-%patch0 -p2
-%patch1 -p1
-%endif
 subst 's/openoffice/ooffice/' sampleconf/mimeview
 subst '/^Categories=/s/=/=Qt;/' desktop/*.desktop
 # updated translations
@@ -146,6 +139,9 @@ sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 #  ("small recoll integration and extension hacks")
 
 %changelog
+* Wed Jan 10 2018 Michael Shigorin <mike@altlinux.org> 1.23.7-alt2
+- fix build with webkit disabled: both patches already in release
+
 * Tue Jan 09 2018 Michael Shigorin <mike@altlinux.org> 1.23.7-alt1
 - new version (watch file uupdate)
 
