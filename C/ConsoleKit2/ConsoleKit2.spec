@@ -2,8 +2,8 @@
 %define systemdsystemunitdir /lib/systemd/system
 %define oname ConsoleKit
 Name: ConsoleKit2
-Version: 1.2.0
-Release: alt2
+Version: 1.2.1
+Release: alt1
 Summary: System daemon for tracking users, sessions and seats
 License: GPL
 Group: System/Libraries
@@ -151,6 +151,9 @@ done
 %_man1dir/*.1*
 
 %changelog
+* Wed Jan 10 2018 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt1
+- new version 1.2.1
+
 * Thu Sep 07 2017 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt2
 - Fix obsoletes (Closes: 33859)
 
