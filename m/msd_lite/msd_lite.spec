@@ -1,6 +1,6 @@
 Name:    msd_lite
 Version: 1.08
-Release: alt2
+Release: alt3
 License: BSD
 Group:	 Networking/Other
 URL: http://www.netlab.linkpc.net/wiki/ru:software:msd:lite
@@ -51,6 +51,9 @@ install -pDm0644 %name.service		%buildroot%_unitdir/%name.service
 %doc AUTHORS COPYING README
 
 %changelog
+* Wed Jan 10 2018 Alexei Takaseev <taf@altlinux.org> 1.08-alt3
+- Fix crash with non-multicast address in request
+
 * Tue Dec 26 2017 Alexei Takaseev <taf@altlinux.org> 1.08-alt2
 - Fix build with glibc-2.26
 
