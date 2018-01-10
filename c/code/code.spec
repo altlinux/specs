@@ -1,5 +1,5 @@
 Name: code
-Version: 1.18.1
+Version: 1.19.1
 Release: alt1
 
 Summary: Visual Studio Code
@@ -63,6 +63,9 @@ install -m644 -D %SOURCE3 %buildroot%_pixmapsdir/code.png
 %_pixmapsdir/code.png
 
 %changelog
+* Wed Jan 10 2018 Vitaly Lipatov <lav@altlinux.ru> 1.19.1-alt1
+- new version 1.19.1
+
 * Fri Dec 08 2017 Vitaly Lipatov <lav@altlinux.ru> 1.18.1-alt1
 - new version 1.18.1
 
