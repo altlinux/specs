@@ -28,8 +28,8 @@
 %def_disable check
 
 Name:    golang
-Version: 1.9
-Release: alt2
+Version: 1.9.2
+Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -279,6 +279,9 @@ mkdir -p -- \
 
 
 %changelog
+* Wed Jan 10 2018 Alexey Gladkov <legion@altlinux.ru> 1.9.2-alt1
+- New version (1.9.2).
+
 * Tue Aug 29 2017 Alexey Gladkov <legion@altlinux.ru> 1.9-alt2
 - Enable build for aarch64.
 
