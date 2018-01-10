@@ -2,9 +2,9 @@
 %define orig_timestamp 20180108
 
 Name: firmware-intel-ucode
-Version: 3.%orig_timestamp
-Release: alt1
-Epoch: 1
+Version: 3
+Release: alt2.%orig_timestamp
+Epoch: 2
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
@@ -48,6 +48,13 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Wed Jan 10 2018 L.A. Kostis <lakostis@altlinux.ru> 2:3-alt2.20180108
+- bump epoch (again) and restore old versioning.
+- removed external microcode files:
+  + sig 0x000306f2, pf_mask 0x6f, 2017-11-17, rev 0x003b (merged)
+  + sig 0x000406f1, pf_mask 0xef, 2017-11-18, rev 0xb000025 (downgraded)
+  + sig 0x00050654, pf_mask 0xb7, 2017-11-21, rev 0x200003a (obsoleted).
+
 * Wed Jan 10 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:3.20180108-alt1
 - Update to 20180108 (adapted debian changelog is below):
   * New upstream microcode data file 20180108
