@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20171117.1
+%define orig_timestamp 20180108
 
 Name: firmware-intel-ucode
-Version: 3
-Release: alt1.20171121
+Version: 3.%orig_timestamp
+Release: alt1
 Epoch: 1
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
@@ -48,6 +48,42 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Wed Jan 10 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:3.20180108-alt1
+- Update to 20180108 (adapted debian changelog is below):
+  * New upstream microcode data file 20180108
+    + Updated Microcodes:
+      sig 0x000306c3, pf_mask 0x32, 2017-11-20, rev 0x0023, size 23552
+      sig 0x000306d4, pf_mask 0xc0, 2017-11-17, rev 0x0028, size 18432
+      sig 0x000306e4, pf_mask 0xed, 2017-12-01, rev 0x042a, size 15360
+      sig 0x000306f2, pf_mask 0x6f, 2017-11-17, rev 0x003b, size 33792
+      sig 0x000306f4, pf_mask 0x80, 2017-11-17, rev 0x0010, size 17408
+      sig 0x00040651, pf_mask 0x72, 2017-11-20, rev 0x0021, size 22528
+      sig 0x00040661, pf_mask 0x32, 2017-11-20, rev 0x0018, size 25600
+      sig 0x00040671, pf_mask 0x22, 2017-11-17, rev 0x001b, size 13312
+      sig 0x000406e3, pf_mask 0xc0, 2017-11-16, rev 0x00c2, size 99328
+      sig 0x00050654, pf_mask 0xb7, 2017-12-08, rev 0x200003c, size 27648
+      sig 0x00050662, pf_mask 0x10, 2017-12-16, rev 0x0014, size 31744
+      sig 0x00050663, pf_mask 0x10, 2017-12-16, rev 0x7000011, size 22528
+      sig 0x000506e3, pf_mask 0x36, 2017-11-16, rev 0x00c2, size 99328
+      sig 0x000706a1, pf_mask 0x01, 2017-12-26, rev 0x0022, size 73728
+      sig 0x000806e9, pf_mask 0xc0, 2018-01-04, rev 0x0080, size 98304
+      sig 0x000806ea, pf_mask 0xc0, 2018-01-04, rev 0x0080, size 98304
+      sig 0x000906e9, pf_mask 0x2a, 2018-01-04, rev 0x0080, size 98304
+      sig 0x000906ea, pf_mask 0x22, 2018-01-04, rev 0x0080, size 97280
+      sig 0x000906eb, pf_mask 0x02, 2018-01-04, rev 0x0080, size 98304
+    + Implements IBRS/IBPB support and enhances LFENCE: mitigation
+      against Spectre (fixes CVE-2017-5715)
+    + Very likely fixes several other errata on some of the processors
+  * supplementary-ucode-CVE-2017-5715.d/: remove.
+    + Downgraded microcodes:
+      sig 0x000406f1, pf_mask 0xef, 2017-03-01, rev 0xb000021, size 26624
+      sig 0x000506c9, pf_mask 0x03, 2017-03-25, rev 0x002c, size 16384
+    + This removes IBRS/IBPB support for these two platforms when compared
+      with the previous (and unofficial) release, 20171215.  We don't know
+      why Intel declined to include these microcode updates (as well as
+      several others) in the release.
+  * source: remove superseded upstream data file: 20171117
+
 * Thu Jan 04 2018 L.A. Kostis <lakostis@altlinux.ru> 1:3-alt1.20171121
 - Added new CPU microcodes (microcode counterpart of the CVE-2017-5715
   kernel mitigation):
