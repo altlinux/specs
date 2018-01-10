@@ -1,29 +1,30 @@
+%def_without system_celt
+
 %define _pseudouser_user     _mumble
 %define _pseudouser_group    _mumble
-%define _pseudouser_home     %_localstatedir/mumble-server
+%define _pseudouser_home     %_localstatedir/murmur
+%define _pidfile_dir         /run/
 
 Name: mumble
-Version: 1.2.8
-Release: alt3
+Version: 1.2.19
+Release: alt1
 
-Summary: Voice chat software primarily intended for use while gaming
-License: BSD
+Summary: Low latency encrypted VoIP client
+
 Group: Networking/Chat
+License: BSD
+Url: http://mumble.info/
 
-Url: http://%name.sourceforge.net/
-
+# VCS0: git://github.com/mumble-voip/mumble.git
 Source0: %name-%version.tar
-Source1: altlinux.tar
-Source2: celt-0.7.0-src.tar
+# VCS1: git://github.com/mumble-voip/celt-0.7.0-src.git
+Source1: celt-0.7.0-src.tar
+# VCS2: git://github.com/mumble-voip/celt-0.11.0-src.git
+Source2: celt-0.11.0-src.tar
 
-Patch0: configure-libs.patch
-Patch1: overlay_gl.patch
-Patch2: mumble-overlay.patch
-Patch3: mumble-fix-ftbfs.patch
+Patch: %name-%version-%release.patch
 
-%def_without sys_celt
-
-%if_with sys_celt
+%if_with system_celt
 %define celtopts celt no-bundled-celt
 %else
 %define celtopts celt bundled-celt
@@ -33,68 +34,68 @@ BuildRequires: boost-python-devel gcc-c++ libGL-devel libX11-devel libXi-devel l
 BuildRequires: libspeex-devel libspeexdsp-devel
 BuildRequires: libopus-devel
 
-%if_with sys_celt
+%if_with system_celt
 BuildRequires: libcelt-devel
 Requires: libcelt >= 0:0.7.0-alt1
 %endif
 
-Requires: libqt4-sql-sqlite
-
 %description
-Low-latency, high-quality voice communication for gamers.
-Includes game linking, so voice from other players comes
-from the direction of their characters, and has echo
-cancellation so the sound from your loudspeakers
-won't be audible to other players.
+Mumble is a low-latency, high quality voice chat program primarily intended
+for gaming. It features noise suppression, encrypted connections for both voice
+and instant messaging, automatic gain control and low latency audio
+with support for multiple audio standards. Mumble includes an in-game
+overlay compatible with most open-source and commercial 3D applications.
 
 %package -n murmur
 Summary: Mumble voice chat server
 Group: System/Servers
 Provides: %name-server = %version-%release
 
+Requires: libqt4-sql-sqlite
+
 %description -n murmur
-Murmur (also called mumble-server) is part of VoIP suite Mumble
-primarily intended for gamers. Murmur is server part of suite.
+Murmur is the VoIP server component for Mumble. Murmur is installed
+in a system-wide fashion, but can also be run by individual users.
+Each murmur process supports multiple virtual servers, each with their
+own user base and channel list.
 
 %package plugins
-Summary: Plugins for VoIP program Mumble
+Summary: Application helper plugins for Mumble
 Group: System/Libraries
 Requires: %name = %version-%release
 
 %description plugins
-Mumble-plugins is part of VoIP suite Mumble primarily intended
-for gamers. This plugin allows game linking so the voice of
-players will come from the direction of their characters.
+This package is part of Mumble, a low-latency, high quality VoIP suite
+primarily intended for gaming. Applications linked to these plugins can
+augment the voices of chat participants; for example, a game can make
+every chat participant sound as if their voice came from their character.
 
 %package overlay
 Summary: Start Mumble with overlay
 Group: Networking/Chat
+BuildArch: noarch
 Requires: %name = %version-%release
 
 %description overlay
-Mumble-overlay is part of VoIP suite Mumble primarily intended
-for gamers. Mumble-overlay shows players in current channel and linked channels
-in game so you don't need to quit the game to see who is in your channel.
+This package is part of Mumble, a low-latency, high quality VoIP suite
+primarily intended for gaming. Mumble's interactive overlay shows players
+in current channel and linked channels in-game so the player needs not quit
+the game to control Mumble.
 
 %package protocol
-Summary: Package to support mumble protocol
+Summary: Mumble protocol support for KIO
 Group: Networking/Chat
+BuildArch: noarch
 Requires: %name = %version-%release
 #Requires: kde-filesystem
 
 %description protocol
-Low-latency, high-quality voice communication for gamers.
-Includes game linking, so voice from other players comes
-from the direction of their characters, and has echo
-cancellation so the sound from your loudspeakers
-won't be audible to other players.
+This package is part of Mumble, a low-latency, high quality VoIP suite
+primarily intended for gaming. It provides a KIO protocol description.
 
 %prep
 %setup -a1 -a2
-%patch0 -p2
-%patch1 -p2
-%patch2 -p2
-%patch3 -p2
+%patch -p1
 
 %build
 %add_optflags -fpermissive
@@ -113,16 +114,17 @@ install -pD -m0755 release/murmurd %buildroot%_sbindir/murmurd
 
 install -d %buildroot%_libdir/%name/
 cp -a release/libmumble.so* %buildroot%_libdir/
-%if_without sys_celt
+%if_without system_celt
 cp -a release/libcelt*.so* %buildroot%_libdir/%name/
 %endif
 install -p release/plugins/*.so %buildroot%_libdir/%name/
 
 # murmur config
 mkdir -p %buildroot%_sysconfdir/murmur/
-install -pD scripts/murmur.ini %buildroot%_sysconfdir/murmur/murmur.ini
+install -pD altlinux/murmur.ini %buildroot%_sysconfdir/murmur/murmur.ini
 
 # murmur initscript
+install -pDm0755 altlinux/murmur.service %buildroot%_unitdir/murmur.service
 install -pDm0755 altlinux/murmur.init %buildroot%_initdir/murmur
 install -pDm0644 altlinux/murmur.sysconfig %buildroot%_sysconfdir/sysconfig/murmur
 
@@ -142,26 +144,26 @@ install -pD -m0644 man/mumble* %buildroot%_man1dir/
 install -pD icons/%name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 
 # desktop file
-install -pD scripts/mumble.desktop %buildroot%_desktopdir/mumble.desktop
+install -pD altlinux/mumble.desktop %buildroot%_desktopdir/mumble.desktop
 
 # install the mumble protocol
 install -pD -m0644 scripts/%name.protocol %buildroot%_datadir/kde4/services/%name.protocol
 
 # dbus murmur.conf
-install -pD -m0644 scripts/murmur.conf %buildroot%_sysconfdir/dbus-1/system.d/murmur.conf
+install -pD -m0644 altlinux/dbus-net.sourceforge.mumble.murmur.conf %buildroot%_sysconfdir/dbus-1/system.d/murmur.conf
 
 # dir for mumble-server.sqlite
-mkdir -p %buildroot%_var/lib/mumble-server/
+mkdir -p %buildroot%_pseudouser_home/
 
 # log dir
-mkdir -p %buildroot%_logdir/mumble-server/
+mkdir -p %buildroot%_logdir/murmur/
 
 # pid dir
-mkdir -p %buildroot%_var/run/mumble-server/
+#mkdir -p %buildroot%_pidfile_dir/murmur/
 
 %pre -n murmur
 /usr/sbin/groupadd -r -f %_pseudouser_group ||:
-/usr/sbin/useradd -g %_pseudouser_group -c 'Mumble-server(murmur) user' \
+/usr/sbin/useradd -g %_pseudouser_group -c 'Mumble-server (Murmur)' \
 	-d %_pseudouser_home -s /dev/null -r %_pseudouser_user >/dev/null 2>&1 ||:
 
 %preun -n murmur
@@ -175,7 +177,7 @@ mkdir -p %buildroot%_var/run/mumble-server/
 %doc scripts/*.pl
 #%doc scripts/*php scripts/qt.conf
 %_libdir/libmumble.so*
-%if_without sys_celt
+%if_without system_celt
 %_libdir/%name/libcelt*.so*
 %endif
 %_bindir/%name
@@ -187,7 +189,9 @@ mkdir -p %buildroot%_var/run/mumble-server/
 
 %files -n murmur
 %doc README README.Linux CHANGES
+%doc altlinux/doc/murmur*
 %_sbindir/murmurd
+%_unitdir/murmur.service
 %_initdir/murmur
 %config(noreplace) %_sysconfdir/sysconfig/murmur
 %dir %attr(0770,root,%_pseudouser_group) %_sysconfdir/murmur/
@@ -196,12 +200,12 @@ mkdir -p %buildroot%_var/run/mumble-server/
 %_sysconfdir/logrotate.d/murmur
 %_sysconfdir/dbus-1/system.d/murmur.conf
 %dir %attr(0770,root,%_pseudouser_group) %_pseudouser_home/
-%dir %attr(0770,root,%_pseudouser_group) %_logdir/mumble-server/
-%dir %attr(0775,root,%_pseudouser_group) %_var/run/mumble-server/
+%dir %attr(0770,root,%_pseudouser_group) %_logdir/murmur/
+#ghost %attr(0775,root,%_pseudouser_group) %_pidfile_dir/murmur/
 
 %files plugins
 %_libdir/%name
-%if_without sys_celt
+%if_without system_celt
 %exclude %_libdir/%name/libcelt*.so*
 %endif
 
@@ -212,6 +216,18 @@ mkdir -p %buildroot%_var/run/mumble-server/
 %_datadir/kde4/services/mumble.protocol
 
 %changelog
+* Wed Jan 10 2018 Arseny Maslennikov <arseny@altlinux.org> 1.2.19-alt1
+- Arch-independent subpackages are now properly considered noarch.
+- Moved a Murmur dependency away from Mumble package.
+- "/var/run" -> "/run" to adhere to FHS 3.0.
+- "mumble-server" -> "murmur".
+- Added a disclaimer to /etc/sysconfig/murmur.
+- Added an XDG desktop entry for Mumble client.
+- Added a dbus compatibility service file.
+- Added a systemd-compatible service unit.
+- Added a default config for a Murmur system instance.
+- 1.2.8 -> 1.2.19.
+
 * Fri Nov 17 2017 Oleg Solovyov <mcpain@altlinux.org> 1.2.8-alt3
 - fix build
 
