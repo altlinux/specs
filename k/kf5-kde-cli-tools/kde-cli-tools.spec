@@ -5,7 +5,7 @@
 %add_findreq_skiplist %_K5exec/kdeeject
 
 Name: kf5-%rname
-Version: 5.11.4
+Version: 5.11.5
 Release: alt1%ubt
 %K5init altplace
 
@@ -81,6 +81,9 @@ KF5 library
 %_K5srv/*.desktop
 
 %changelog
+* Wed Jan 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.5-alt1%ubt
+- new version
+
 * Mon Dec 11 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.4-alt1%ubt
 - new version
 

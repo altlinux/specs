@@ -1,8 +1,8 @@
 %define rname libkscreen
 
 Name: kf5-%rname
-Version: 5.11.4
-Release: alt3%ubt
+Version: 5.11.5
+Release: alt1%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -87,6 +87,9 @@ Requires: %name-common = %version-%release
 %_K5dbus_srv/org.kde.kscreen.service
 
 %changelog
+* Wed Jan 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.5-alt1%ubt
+- new version
+
 * Tue Jan 09 2018 Oleg Solovyov <mcpain@altlinux.org> 5.11.4-alt3%ubt
 - fix screen shutdown
 
