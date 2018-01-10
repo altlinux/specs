@@ -1,7 +1,7 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
 Version: 5.0.19
-Release: alt3
+Release: alt3%ubt
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -16,9 +16,11 @@ Source1: pve-access-control.tar.xz
 Patch0: %name.patch
 Patch1: pve-access-control.patch
 Patch2: pve-cluster-install_vzdump_cron_config.patch
+Patch3: pve-cluster-corosync.patch
 
 Source2: pve-firsttime
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: pve-common pve-doc-generator libcheck-devel librrd-devel glib2-devel libfuse-devel libcorosync2-devel libsqlite3-devel xmlto
 BuildRequires: perl(ExtUtils/Embed.pm) perl(Term/ReadLine.pm) perl(Digest/HMAC_SHA1.pm) perl(XML/Parser.pm) perl(RRDs.pm)
 BuildRequires: perl(Crypt/OpenSSL/Random.pm) perl(Crypt/OpenSSL/RSA.pm) perl(Net/SSLeay.pm)
@@ -43,6 +45,7 @@ control function used by PVE.
 %patch0 -p1
 %patch1 -p0
 %patch2 -p1
+%patch3 -p1
 
 %build
 cd data
@@ -142,6 +145,12 @@ fi
 %_man1dir/pveum.1*
 
 %changelog
+* Wed Jan 10 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.0.19-alt3%ubt
+- fixed corosync.conf parce
+
+* Thu Dec 14 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.19-alt1.M80P.3
+- backport to p8 branch
+
 * Tue Dec 12 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.0.19-alt3
 - 5.0-19
 
