@@ -3,7 +3,7 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
 Version:	3.34.1
-Release:	alt1
+Release:	alt2
 License:	MPL/GPL/LGPL
 Group:		System/Libraries
 Url:		http://www.mozilla.org/projects/security/pki/nss
@@ -88,6 +88,17 @@ Provides:	%name-devel-static = %version-%release
 
 %description -n lib%name-devel-static
 NSS development kit (static libs)
+
+%package -n lib%name-nssckbi-checkinstall
+Summary: Check p11-kit-trust.so and libnssckbi.so compatibility
+Group: Security/Networking
+Requires: p11-kit-checkinstall
+
+%description -n lib%name-nssckbi-checkinstall
+During installation check that p11-kit-trust.so and libnssckbi.so are
+compatible with each other.
+This package intedent to be used in the install check step in the build
+system only and should not be installed in the real systems.
 
 %package -n %name-utils
 Summary:	Netscape Network Security Services Utilities
@@ -209,9 +220,14 @@ done
 install -p -m755 %SOURCE5 %buildroot/%_bindir/setup-nsssysinit.sh
 install -p -m644 %SOURCE6 %buildroot/%_sysconfdir/pki/nssdb/pkcs11.txt
 
-%post
-f="%_libdir/libnssckbi.so.alternatives_save"
-[ ! -e "$f" ] || rm -f -- "$f"
+# alternatives
+mkdir -p -- %buildroot/%_libdir/nss
+mv -- %buildroot/%_libdir/libnssckbi.so %buildroot/%_libdir/nss/libnssckbi.so
+
+mkdir -p -- %buildroot/%_altdir
+cat >%buildroot/%_altdir/libnssckbi-%name <<EOF
+%_libdir/libnssckbi.so %_libdir/nss/libnssckbi.so 10
+EOF
 
 %files -n %name-utils
 %_bindir/*
@@ -227,9 +243,10 @@ f="%_libdir/libnssckbi.so.alternatives_save"
 %exclude %_bindir/shlibsign
 
 %files -n lib%name
+%_altdir/libnssckbi-%name
 %_libdir/*.so*
 %_libdir/*.chk
-%dir %_sysconfdir/pki
+%_libdir/nss
 %dir %_sysconfdir/pki/nssdb
 %config(noreplace) %_sysconfdir/pki/nssdb/cert8.db
 %config(noreplace) %_sysconfdir/pki/nssdb/key3.db
@@ -252,8 +269,14 @@ f="%_libdir/libnssckbi.so.alternatives_save"
 %files -n lib%name-devel-static
 %_libdir/*.a
 
+%files -n lib%name-nssckbi-checkinstall
+
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Fri Dec 29 2017 Alexey Gladkov <legion@altlinux.ru> 3.34.1-alt2
+- Add the alteranatives file for libnssckbi.so.
+- Add libnss-nssckbi-checkinstall subpackage.
+
 * Sat Dec 23 2017 Alexey Gladkov <legion@altlinux.ru> 3.34.1-alt1
 - New version (3.34.1).
 - Remove obsolete nss-alt-ssl-addon-certs.txt.
