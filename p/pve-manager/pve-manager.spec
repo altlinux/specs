@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 5.1.39
-Release: alt3
+Release: alt3%ubt
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -53,6 +53,11 @@ Patch24: pve-manager-postfix-ntpd.patch
 Patch25: pve-manager-gettext.patch
 Patch26: pve-ha-manager-watchdog.patch
 
+Patch100: 0001-add-flags-property-to-cpu-option.patch
+Patch101: 0001-add-PCID-checkbox-to-ProcessorEdit.patch
+Patch102: 0002-readability-fixup.patch
+
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
 BuildRequires: perl-IO-Multiplex perl-Locale-PO perl-UUID unzip xmlto
@@ -147,6 +152,10 @@ This is used to implement the PVE REST API
 %patch24 -p0 -b .postfix-3
 %patch25 -p0 -b .gettext
 %patch26 -p0 -b .watchdog
+
+%patch100 -p0
+%patch101 -p0
+%patch102 -p0
 
 install -m0644 %SOURCE5 pve-manager/po/ru.po
 
@@ -447,6 +456,12 @@ __EOF__
 %_datadir/libpve-http-server-perl
 
 %changelog
+* Wed Jan 10 2018 Valery Inozemtsev <shrek@altlinux.ru> 5.1.39-alt3%ubt
+- merged patches PCID flags from upstream
+
+* Thu Dec 14 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.1.39-alt1.M80P.3
+- backport to p8 branch
+
 * Tue Dec 12 2017 Valery Inozemtsev <shrek@altlinux.ru> 5.1.39-alt3
 - pve-manager 5.1-39
 - pve-firewall 3.0-5
