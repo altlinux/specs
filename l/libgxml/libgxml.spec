@@ -1,10 +1,10 @@
 %define _name gxml
-%define ver_major 0.14
-%define api_ver 0.14
+%define ver_major 0.16
+%define api_ver 0.16
 %def_enable docs
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GXml provides a GObject API for manipulating XML
@@ -26,7 +26,7 @@ BuildRequires: libxml2-devel >= %xml2_ver
 BuildRequires: libvala-devel >= %vala_ver vala-tools
 BuildRequires: gobject-introspection-devel libgee0.8-gir-devel
 BuildRequires: intltool gtk-doc
-%{?_enable_docs:BuildRequires: valadoc yelp-tools}
+%{?_enable_docs:BuildRequires: valadoc yelp-tools graphviz}
 
 %description
 GXml provides a GObject API for manipulating XML. Most functionality
@@ -76,7 +76,8 @@ find ./ -type f -print0| xargs -r0 subst 's|gxml//xlibxml.h|gxml/xlibxml.h|' --
 
 %build
 %autoreconf
-%configure --disable-static
+%configure --disable-static \
+	%{subst_enable docs}
 %make_build
 
 %install
@@ -106,11 +107,14 @@ find ./ -type f -print0| xargs -r0 subst 's|gxml//xlibxml.h|gxml/xlibxml.h|' --
 
 %if_enabled docs
 %files devel-doc
-%_datadir/gtk-doc/html/%_name/
+#%_datadir/gtk-doc/html/%_name/
 %_datadir/devhelp/books/GXml-%api_ver/
 %endif
 
 %changelog
+* Wed Jan 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
+- 0.16.0
+
 * Sat Apr 08 2017 Yuri N. Sedunov <aris@altlinux.org> 0.14.3-alt1
 - 0.14.3
 
