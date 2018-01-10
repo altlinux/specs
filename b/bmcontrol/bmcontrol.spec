@@ -1,16 +1,14 @@
 Name: bmcontrol
 Version: 1.1
-Release: alt2
+Release: alt3
 
-Summary: Control tool for MP707x controllers
 License: GNU GPLv3
 Group: System/Kernel and hardware
 Url: https://code.google.com/p/bmcontrol/
-# git clone https://code.google.com/p/bmcontrol/
 
 Packager: Pavel Isopenko <pauli@altlinux.org>
-Summary: Control tool for MP707x controllers
-Summary(ru_RU.UTF-8): Инструмент управления для контроллеров семейства MP707x
+Summary: Control tool for MP707x, BM1707 controllers
+Summary(ru_RU.UTF-8): Инструмент управления для контроллеров MP707x, BM1707
 Source: %name-%version.tar
 BuildRequires: gcc-c++ libstdc++-devel libhid-devel
 
@@ -26,16 +24,21 @@ Control tool for MP707x controllers
 
 %build
 %make_build
-# %makeinstall_std
 
 %install
 install -d -m0755 %buildroot%_bindir
 install -m0755 bmcontrol %buildroot%_bindir
+install -D -m0644 bmcontrol.rules %buildroot%_udevrulesdir/40-bmcontrol.rules
+
 
 %files
+%_udevrulesdir/*
 %attr(4711, root, root) %_bindir/bmcontrol
 
 %changelog
+* Wed Jan 10 2018 Pavel Isopenko <pauli@altlinux.org> 1.1-alt3
+- add udev rule for BM1707 - MP707, RODOS-5(6) devices
+
 * Thu Jun 04 2015 Pavel Isopenko <pauli@altlinux.org> 1.1-alt2
 - change executable destination to %_bindir
 
