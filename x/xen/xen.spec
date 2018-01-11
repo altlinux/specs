@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.10.0
-Release: alt2%ubt
+Release: alt3%ubt
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -788,7 +788,24 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
-* Tue Jan 02 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt2.S1
+* Thu Jan 11 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt3%ubt
+- upstream updates:
+  + x86/msr: Free msr_vcpu_policy during vcpu destruction (thx Andrew Cooper).
+  + x86/vmx: Don't use hvm_inject_hw_exception() in
+    long_mode_do_msr_write() (thx Andrew Cooper).
+  + xen/efi: Fix build with clang-5.0 (thx Andrew Cooper).
+  + gnttab: improve GNTTABOP_cache_flush locking (thx Jan Beulich).
+  + gnttab: correct GNTTABOP_cache_flush empty batch handling (thx Jan Beulich).
+  + x86/microcode: Add support for fam17h microcode loading (thx Tom Lendacky).
+  + x86/mm: drop bogus paging mode assertion (thx Jan Beulich).
+  + x86/mb2: avoid Xen image when looking for module/crashkernel
+    position (thx Daniel Kiper).
+  + x86/vvmx: don't enable vmcs shadowing for nested guests (thx Sergey Dyasli).
+  + xen/pv: Construct d0v0's GDT properly (thx Andrew Cooper).
+  + update Xen version to 4.10.1-pre (thx Jan Beulich).
+  + migration, xen: Fix block image lock issue on live migration (thx Anthony PERARD).
+
+* Tue Jan 02 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt2%ubt
 - fix gear rules: previous (4.10.0-alt2.S1) build was actually 4.8.2-alt2.S1
 - 4.10.0 release
 
