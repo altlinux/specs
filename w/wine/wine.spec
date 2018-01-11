@@ -5,7 +5,7 @@
 
 Name: wine
 Version: %major.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: WINE Is Not An Emulator - environment for running MS Windows 16/32/64 bit applications
@@ -468,6 +468,10 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Thu Jan 11 2018 Vitaly Lipatov <lav@altlinux.ru> 1:2.21.1-alt2
+- add the font replacement for Microsoft Sans Serif as Tahoma
+- update and rewrite Kerberos related patches
+
 * Thu Nov 30 2017 Vitaly Lipatov <lav@altlinux.ru> 1:2.21.1-alt1
 - update winetricks up to 20171018-next
 - remove obsoleted patches
