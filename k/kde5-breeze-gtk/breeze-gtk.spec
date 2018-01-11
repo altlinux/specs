@@ -1,7 +1,7 @@
 %define rname breeze-gtk
 
 Name: kde5-%rname
-Version: 5.11.4
+Version: 5.11.5
 Release: alt1%ubt
 %K5init no_altplace
 
@@ -53,6 +53,9 @@ Provides: gtk3-theme-breeze = %version-%release
 %_datadir/themes/Breeze*
 
 %changelog
+* Wed Jan 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.5-alt1%ubt
+- new version
+
 * Mon Dec 11 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.4-alt1%ubt
 - new version
 
