@@ -1,6 +1,6 @@
 Summary: Free firewire audio driver library
 Name: libffado
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 License: GPLv2+
 Group: Sound
@@ -11,6 +11,7 @@ Patch1: libffado-2.0.0-ffado-diag-path.patch
 Patch2: libffado-2.0-rc1-includes.patch
 Patch3: libffado-2.0-alt.patch
 Patch4: libffado-2.0.1-alt.DSO.patch
+Patch5: libffado-2.0-alt-2.patch
 %setup_python_module ffado
 
 # Automatically added by buildreq on Fri Sep 10 2010
@@ -53,7 +54,8 @@ rm support/mixer-qt4/ffado/mixer/nodevice.py
 %patch1
 #patch2 -p1
 %patch3 -p2
-%patch4 -p1
+%patch4 -p2
+%patch5 -p2
 
 %build
 [ -n "$NPROCS" ] || NPROCS=%__nprocs; scons -j$NPROCS PREFIX=%prefix LIBDIR=%_libdir WILL_DEAL_WITH_XDG_MYSELF=YES COMPILE_FLAGS='%optflags' MANDIR=%_mandir
@@ -92,6 +94,9 @@ rm -rf %buildroot
 %python_sitelibdir_noarch/%modulename
 
 %changelog
+* Thu Jan 11 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.0-alt1
+- Updated to upstream version 2.4.0
+
 * Tue Jul 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt1
 - Updated to upstream version 2.3.0
 
