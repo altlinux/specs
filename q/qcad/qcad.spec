@@ -1,5 +1,5 @@
 Name: 	 qcad
-Version: 3.19.2.0
+Version: 3.19.2.2
 Release: alt1
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
@@ -122,8 +122,17 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Tue Jan 09 2018 Andrey Cherepanov <cas@altlinux.org> 3.19.2.2-alt1
+- New version.
+
+* Thu Dec 21 2017 Andrey Cherepanov <cas@altlinux.org> 3.19.2.0-alt0.M80P.1
+- Backport new version to p8 branch
+
 * Wed Dec 20 2017 Andrey Cherepanov <cas@altlinux.org> 3.19.2.0-alt1
 - New version.
+
+* Wed Nov 29 2017 Anton Midyukov <antohami@altlinux.org> 3.19.1.0-alt1.M80P.1
+- Backport new version to p8 branch
 
 * Wed Nov 29 2017 Anton Midyukov <antohami@altlinux.org> 3.19.1.0-alt2
 - Fix icon name in desktop file
@@ -143,11 +152,17 @@ done
 * Mon Oct 02 2017 Andrey Cherepanov <cas@altlinux.org> 3.18.0.2-alt1
 - New version
 
+* Sat Sep 23 2017 Andrey Cherepanov <cas@altlinux.org> 3.18.0.0-alt0.M80P.1
+- Backport new version to p8 branch
+
 * Sat Sep 23 2017 Andrey Cherepanov <cas@altlinux.org> 3.18.0.0-alt1
 - New version
 
 * Thu Sep 07 2017 Andrey Cherepanov <cas@altlinux.org> 3.17.3.8-alt1
 - New version
+
+* Tue Aug 15 2017 Andrey Cherepanov <cas@altlinux.org> 3.17.3.7-alt0.M80P.1
+- Backport new version to p8 branch (ALT #33767)
 
 * Tue Aug 15 2017 Andrey Cherepanov <cas@altlinux.org> 3.17.3.7-alt1
 - New version
@@ -164,6 +179,9 @@ done
 * Tue Jul 11 2017 Andrey Cherepanov <cas@altlinux.org> 3.17.3.1-alt1
 - New version
 
+* Wed Jul 05 2017 Sergey V Turchin <zerg@altlinux.org> 3.17.1.1-alt0.M80P.2
+- Rebuild with new Qt
+
 * Sat Jul 01 2017 Andrey Cherepanov <cas@altlinux.org> 3.17.3.0-alt1
 - New version
 
@@ -176,8 +194,14 @@ done
 * Fri Jun 09 2017 Andrey Cherepanov <cas@altlinux.org> 3.17.1.4-alt1
 - New version
 
+* Tue May 23 2017 Andrey Cherepanov <cas@altlinux.org> 3.17.1.1-alt0.M80P.1
+- Backport new version to p8 branch
+
 * Tue May 23 2017 Andrey Cherepanov <cas@altlinux.org> 3.17.1.1-alt1
 - New version
+
+* Fri May 19 2017 Andrey Cherepanov <cas@altlinux.org> 3.17.0.0-alt0.M80P.1
+- Backport new version to p8 branch
 
 * Fri May 19 2017 Andrey Cherepanov <cas@altlinux.org> 3.17.0.0-alt1
 - New version
@@ -208,6 +232,12 @@ done
 
 * Thu Oct 27 2016 Andrey Cherepanov <cas@altlinux.org> 3.15.5.7-alt1
 - new version 3.15.5.7
+
+* Thu Oct 06 2016 Andrey Cherepanov <cas@altlinux.org> 3.15.5.3-alt0.M80P.1
+- Backport new version to p8 branch
+
+* Thu Oct 06 2016 Andrey Cherepanov <cas@altlinux.org> 3.15.5.3-alt1
+- new version 3.15.5.3
 
 * Sun Aug 14 2016 Andrey Cherepanov <cas@altlinux.org> 3.15.4.3-alt1
 - new version 3.15.4.3
