@@ -57,7 +57,7 @@
 
 Name: virtualbox
 Version: 5.1.30
-Release: alt2
+Release: alt3
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -779,6 +779,9 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Thu Jan 11 2018 Denis Medvedev <nbr@altlinux.org> 5.1.30-alt3
+- add missed altlinux type handling routines
+
 * Mon Dec 25 2017 Denis Medvedev <nbr@altlinux.org> 5.1.30-alt2
 - patch for kernel 4.14
 
