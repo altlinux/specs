@@ -1,6 +1,6 @@
 Name: keepass
-Version: 2.37
-Release: alt3%ubt
+Version: 2.38
+Release: alt1%ubt
 
 Summary: Password manager
 
@@ -119,6 +119,9 @@ cp -pr Docs/Chm %buildroot/%_docdir/%name/
 %doc %_docdir/%name/Chm/
 
 %changelog
+* Thu Jan 11 2018 Oleg Solovyov <mcpain@altlinux.org> 2.38-alt1%ubt
+- new version: 2.38
+
 * Fri Dec 08 2017 Oleg Solovyov <mcpain@altlinux.org> 2.37-alt3%ubt
 - add xdotool for auto-type feature
 
