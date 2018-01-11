@@ -12,7 +12,7 @@
 %def_without autotools_templates
 
 Name: gnome-builder
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -42,6 +42,7 @@ Source: %name-%version.tar
 %define gspell_ver 1.2.0
 %define peas_ver 1.21.0
 %define json_glib_ver 1.2.0
+%define dazzle_ver 3.26.2
 
 # use python3
 AutoReqProv: nopython
@@ -73,7 +74,7 @@ BuildRequires: libgtksourceview3-gir-devel libgit2-glib-gir-devel libpeas-gir-de
 BuildRequires: libjson-glib-gir-devel
 BuildRequires: libvala-devel >= %vala_ver vala-tools
 BuildRequires: libgspell-devel >= %gspell_ver libenchant-devel
-BuildRequires: libdazzle-devel libtemplate-glib-devel libjsonrpc-glib-devel
+BuildRequires: libdazzle-devel >= %dazzle_ver libtemplate-glib-devel libjsonrpc-glib-devel
 BuildRequires: libdazzle-gir-devel libtemplate-glib-gir-devel  libjsonrpc-glib-gir-devel
 BuildRequires: python-module-sphinx python-module-sphinx_rtd_theme
 %{?_with_flatpak:BuildRequires: libflatpak-devel libostree-devel}
@@ -223,6 +224,9 @@ This package provides noarch data needed for Gnome Builder to work.
 
 
 %changelog
+* Thu Jan 11 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt1
+- 3.26.3
+
 * Wed Nov 01 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 

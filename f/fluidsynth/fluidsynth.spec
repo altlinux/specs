@@ -9,8 +9,8 @@
 %def_enable dbus
 
 Name: fluidsynth
-Version: 1.1.8
-Release: alt1.1
+Version: 1.1.9
+Release: alt1
 
 Summary: Software real-time synthesizer
 Summary(ru_RU.UTF-8): Программный синтезатор, работающий в режиме реального времени
@@ -185,6 +185,9 @@ cp -r BUILD/doc/api/html ./
 %endif
 
 %changelog
+* Thu Jan 11 2018 Yuri N. Sedunov <aris@altlinux.org> 1.1.9-alt1
+- 1.1.9
+
 * Thu Nov 23 2017 Fr. Br. George <george@altlinux.ru> 1.1.8-alt1.1
 - fix sf2 path (Closes: #32137)
 
