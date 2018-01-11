@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.66
-Release: alt1.1
+Release: alt3
 Summary: A selection of utilities for data and data types
 Group: Development/Perl
 License: perl
@@ -30,6 +30,10 @@ There are many benchmarks in the DIST-DIR/benchmark/ directory.
 %setup -q -n %{module_name}-%{version}
 
 %build
+%ifarch e2k
+# until lcc-1.23+
+export CFLAGS="-std=c99 $CFLAGS"
+%endif
 %perl_vendor_build
 
 %install
@@ -41,6 +45,12 @@ There are many benchmarks in the DIST-DIR/benchmark/ directory.
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Jan 11 2018 Igor Vlasenko <viy@altlinux.ru> 0.66-alt3
+- e2k support to Sisyphus
+
+* Tue Jan 09 2018 Michael Shigorin <mike@altlinux.org> 0.66-alt2
+- E2K: explicit C99
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.66-alt1.1
 - rebuild with new perl 5.26.1
 
