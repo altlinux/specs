@@ -10,7 +10,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 4.000000
-Release: alt1.1
+Release: alt2
 Summary: Release 2 of Marpa
 Group: Development/Perl
 License: open_source
@@ -23,7 +23,7 @@ From summary: %summary
 
 %prep
 %setup -q -n %{module_name}-%{version}
-%if_with bootstrap
+%ifarch e2k
 cd engine/read_only
 %autoreconf
 %endif
@@ -43,6 +43,9 @@ cd engine/read_only
 %_bindir/*
 
 %changelog
+* Thu Jan 11 2018 Michael Shigorin <mike@altlinux.org> 4.000000-alt2
+- E2K: autoreconf first (it's not about bootstrap at all)
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 4.000000-alt1.1
 - rebuild with new perl 5.26.1
 
