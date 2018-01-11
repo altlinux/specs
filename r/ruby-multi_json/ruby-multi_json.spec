@@ -1,7 +1,7 @@
 %define  pkgname multi_json
  
 Name: 	 ruby-%pkgname
-Version: 1.13.0
+Version: 1.13.1
 Release: alt1
  
 Summary: A common interface to multiple JSON libraries
@@ -61,6 +61,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Thu Jan 11 2018 Andrey Cherepanov <cas@altlinux.org> 1.13.1-alt1
+- New version.
+
 * Tue Jan 09 2018 Andrey Cherepanov <cas@altlinux.org> 1.13.0-alt1
 - New version.
 
