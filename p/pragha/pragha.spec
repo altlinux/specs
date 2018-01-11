@@ -1,19 +1,27 @@
+%def_enable snapshot
+
+%define rdnn_name io.github.pragha-music-player
+
 %def_disable libxfce4ui
-# only grilo-0.2 supported
-%def_disable grilo
+%def_enable grilo
 # works only with rygel-2.2
 %def_disable rygel
 
 Name: pragha
-Version: 1.3.3
-Release: alt3
+Version: 1.3.90
+Release: alt1
 
 Summary: Pragha is a "Fork" of consonance Music manager
 License: GPLv3
 Group: Sound
-Url: http://pragha.wikispaces.com/
+Url: http://pragha-music-player.github.io/
 
+%if_disabled snapshot
 Source: %name-%version.tar.gz
+%else
+# VCS: https://github.com/pragha-music-player/pragha.git
+Source: %name-%version.tar
+%endif
 # adapt to newer keybinder
 Patch: pragha-1.3.3-alt-configure.patch
 
@@ -42,6 +50,7 @@ light, and simultaneously complete without obstructing the daily work.
 %prep
 %setup
 %patch
+subst 's/%name.appdata/%rdnn_name.metainfo/' data/Makefile.am
 
 %build
 . autogen.sh
@@ -54,17 +63,21 @@ light, and simultaneously complete without obstructing the daily work.
 %find_lang %name
 
 %files -f %name.lang
-%_datadir/appdata/*
+
 %_bindir/*
+%_libdir/%name/
 %_desktopdir/%name.desktop
-%_iconsdir/hicolor/*x*/apps/pragha.png
+%_iconsdir/hicolor/*/*/pragha*
 %_man1dir/%name.1.*
 %_pixmapsdir/%name
-%_libdir/%name
+%_datadir/metainfo/*
 %doc ChangeLog FAQ NEWS README
 
 
 %changelog
+* Fri Jan 12 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.90-alt1
+- updated to V1.3.90-16-g8ecf44b
+
 * Sun Mar 20 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3.3-alt3
 - rebuilt for new gnome-3.20 without grilo support
 

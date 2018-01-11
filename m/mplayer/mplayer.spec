@@ -296,7 +296,7 @@
 
 Name: %lname
 Version: 1.3.0
-Release: alt1
+Release: alt1.1
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -1091,6 +1091,9 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Sun Jan 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1.1
+- rebuild against libcdio.so.18
+
 * Fri Mar 17 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.3.0-alt1
 - 1.3.0 (ALT#32975)
 - rebuilt with live555 (ALT#30778)

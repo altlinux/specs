@@ -9,7 +9,7 @@
 
 Name: %name
 Version: %version
-Release: %release
+Release: alt1.1
 Summary: CMus - C* Music Player
 License: GPL
 Group: Sound
@@ -564,6 +564,9 @@ mv cmus-status-display examples
 
 
 %changelog
+* Sun Jan 14 2018 Yuri N. Sedunov <aris@altlinux.org> 2.7.1-alt1.1
+- rebuild against libcdio.so.18
+
 * Tue Aug  4 2015 Terechkov Evgenii <evg@altlinux.org> 2.7.1-alt1
 - New version
 - Build VTX input plugin

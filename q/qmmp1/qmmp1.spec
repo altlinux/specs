@@ -6,7 +6,7 @@
 %define rname qmmp
 Name: qmmp1
 Version: 1.2.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: Sound
 Summary: Qmmp - Qt-based multimedia player
@@ -274,6 +274,9 @@ ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/
 %_libdir/lib*.so
 
 %changelog
+* Fri Jan 12 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt2%ubt
+- rebuild with new libcdio
+
 * Mon Nov 27 2017 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt1%ubt
 - new version
 

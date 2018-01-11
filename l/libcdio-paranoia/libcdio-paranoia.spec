@@ -1,8 +1,8 @@
-%define _version 10.2+0.93+1
+%define _version 10.2+0.94+2
 
 Name: libcdio-paranoia
 Version: %(echo %_version |sed -e 's|\+|.|g')
-Release: alt2
+Release: alt1
 
 Summary: CD paranoia library from libcdio
 Group: System/Libraries
@@ -50,7 +50,7 @@ rm -rf %buildroot%_mandir/jp
 %_bindir/*
 %_libdir/*.so.*
 %_man1dir/*
-%doc AUTHORS NEWS README THANKS
+%doc AUTHORS NEWS README* THANKS
 
 %files devel
 %_includedir/cdio/*
@@ -58,6 +58,9 @@ rm -rf %buildroot%_mandir/jp
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Jan 13 2018 Yuri N. Sedunov <aris@altlinux.org> 10.2.0.94.2-alt1
+- 10.2.0.94.2
+
 * Wed Nov 16 2016 Yuri N. Sedunov <aris@altlinux.org> 10.2.0.93.1-alt2
 - rebuild with libcdio-0.94
 

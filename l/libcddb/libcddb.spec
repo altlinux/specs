@@ -1,14 +1,12 @@
 Name: libcddb
 Version: 1.3.2
-Release: alt4
-
-Packager: Victor Forsiuk <force@altlinux.org>
+Release: alt5
 
 Summary: Libcddb is a C library to access data on a CDDB server
 License: LGPLv2+
 Group: System/Libraries
-
 Url: http://libcddb.sourceforge.net/
+
 Source: http://prdownloads.sourceforge.net/libcddb/libcddb-%version.tar.bz2
 
 # Automatically added by buildreq on Mon Nov 23 2009
@@ -65,6 +63,9 @@ This package contains the cddb_query is a simple app that use %name.
 %doc examples
 
 %changelog
+* Fri Jan 12 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt5
+- rebuilt against libcdio.so.18
+
 * Mon Jul 20 2015 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt4
 - rebuilt against libcdio.so.16
 

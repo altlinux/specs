@@ -3,7 +3,7 @@
 Summary: Base library for gmerlin applications
 Name: gmerlin
 Version: 1.2.0
-Release: alt1.4
+Release: alt1.4.1
 License: GPL
 Group: Development/C++
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
@@ -690,6 +690,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_liconsdir/%name-plugincfg.png
 
 %changelog
+* Sun Jan 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1.4.1
+- rebuild against libcdio.so.18
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1.4
 - NMU: added BR: texinfo
 

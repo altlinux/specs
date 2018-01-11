@@ -1,7 +1,7 @@
 Name: kover
 Summary: WYSIWYG CD cover printer with CDDB support
 Version: 6
-Release: alt2
+Release: alt2.1
 Source: %name-%version.tar.bz2
 Source1: %name.desktop
 Patch0: %name-fix-mimetypes.patch
@@ -47,6 +47,9 @@ mkdir -p build
 %_desktopdir/kde4/%name.desktop
 
 %changelog
+* Fri Jan 12 2018 Fr. Br. George <george@altlinux.ru> 6-alt2.1
+- Rebuild for libcdio-2.0.0
+
 * Mon Sep 14 2015 Fr. Br. George <george@altlinux.ru> 6-alt2
 - Rebuild for new libcdio
 
@@ -172,7 +175,7 @@ mkdir -p build
 * Fri Jan 04 2002 Laurent MONTEL <lmontel@mandrakesoft.com> 0.8.3-2mdk
 - Fix spec file
 
-* Thu Nov 20 2001 Laurent MONTEL <lmontel@mandrakesoft.com> 0.8.3-1mdk
+* Tue Nov 20 2001 Laurent MONTEL <lmontel@mandrakesoft.com> 0.8.3-1mdk
 - Update code (0.8.3)
 
 * Tue Oct 23 2001 Lenny Cartier <lenny@mandrakesoft.com> 0.8-2mdk

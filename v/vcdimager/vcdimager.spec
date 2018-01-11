@@ -1,37 +1,25 @@
-%define cvsdate 20040107
-%undefine cvsdate
-%define ver_major 0.7
+%define ver_major 2.0
 %def_disable static
 
 Name: vcdimager
-Version: %ver_major.24
-%define release alt1.1
-
-%ifdef cvsdate
-Release: %{release}cvs%cvsdate
-%else
-Release: %release
-%endif
+Version: %ver_major.1
+Release: alt1
 
 Summary: VideoCD (pre-)mastering and ripping tool
 Group: Video
 License: GPL
 Url: http://%name.org
 
-%ifdef cvsdate
-Source: %url/pub/%name/%name%{ver_major}_UNSTABLE/%name-%version-%cvsdate.tar.gz
-%else
 Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
-%endif
 
-%define libcdio_ver 0.72
+%define libcdio_ver 2.0.0
 
 Requires: libvcd = %version-%release
 
 BuildPreReq: help2man makeinfo
 BuildPreReq: libcdio-devel >= %libcdio_ver
 
-BuildRequires: gcc-c++ libcdio-devel libpopt-devel
+BuildRequires: gcc-c++ libcdio-devel >= %libcdio_ver libpopt-devel
 BuildRequires: libxml2-devel zlib-devel
 #BuildRequires: tetex-core tetex-latex
 
@@ -84,43 +72,15 @@ This package provides libraries to use for development programs
 statically linked against libvcd.
 
 %prep
-%ifndef cvsdate
 %setup
-%else
-%setup -n %name
-pushd docs
-%__cp  version.texi version-vcd-info.texi
-%__cp  version.texi version-vcdxrip.texi
-popd
-%endif
-
-# hack to fix version-script generation
-%__sed -i 's|\(\$(patsubst %%lo,%%o,\)\(\$(lib.*_la_OBJECTS))\)|\1$(patsubst %%,.libs/%%,\2)|' lib/Makefile*
 
 %build
-%ifdef cvsdate
-NOCONFIGURE=1 ./autogen.sh
-%endif
 %autoreconf
-%configure \
-    %{subst_enable static}
-
+%configure %{subst_enable static}
 %make_build
-#%make_build -C docs pdf
 
 %install
-%makeinstall
-
-%if 0
-# build actual man pages.
-export LD_LIBRARY_PATH=lib/.libs
-
-for f in %buildroot%_bindir/*; do
-    help2man -N \
-    --manual="VCDIMAGER CDIO Branch" \
-    "$f" > %buildroot%_man1dir/`basename "$f"`.1
-done
-%endif
+%makeinstall_std
 
 # remove non-packaged files
 %__rm -f %buildroot%_infodir/dir
@@ -146,6 +106,9 @@ done
 %endif
 
 %changelog
+* Thu Jan 11 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Mon Nov 30 2015 Yuri N. Sedunov <aris@altlinux.org> 0.7.24-alt1.1
 - buildreqs: added makeinfo
 
