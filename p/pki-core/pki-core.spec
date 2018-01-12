@@ -23,7 +23,7 @@
 
 Name: pki-core
 Version: 10.4.8
-Release: alt4%ubt
+Release: alt5%ubt
 Summary: Certificate System - PKI Core Components
 Url: http://pki.fedoraproject.org/
 License: GPLv2
@@ -702,13 +702,11 @@ fi
 %doc base/common/LICENSE
 %doc base/common/LICENSE.LESSER
 %doc %_datadir/doc/pki-base/html
-%dir %_datadir/pki
 %_datadir/pki/VERSION
 %_datadir/pki/etc/
 %_datadir/pki/upgrade/
 %dir %_datadir/pki/key
 %_datadir/pki/key/templates
-%dir %_sysconfdir/pki
 %config(noreplace) %_sysconfdir/pki/pki.conf
 %exclude %python_sitelibdir_noarch/pki/server
 %python_sitelibdir_noarch/pki
@@ -882,6 +880,11 @@ fi
 %_javadocdir/pki-%version/
 
 %changelog
+* Fri Jan 12 2018 Stanislav Levin <slev@altlinux.org> 10.4.8-alt5%ubt
+- Fix package build broken due to new ca-certificates system
+  Directory /etc/pki and /usr/share/pki belong to
+  filesystem package
+
 * Mon Oct 02 2017 Stanislav Levin <slev@altlinux.org> 10.4.8-alt4%ubt
 - Fix Java CLASSPATH on RPM package upgrade
 
