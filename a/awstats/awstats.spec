@@ -4,8 +4,8 @@
 %define	docdir %_docdir/%name-%version
 
 Name: awstats
-Version: 7.4
-Release: alt0.10.20150714
+Version: 7.7
+Release: alt0.2.20180105
 
 Summary: Real-time logfile analyzer to get advanced web statistics
 Summary(ru_RU.KOI8-R):	Анализатор логов Web-сервера в режиме реального времени
@@ -15,6 +15,7 @@ Group: Monitoring
 Url: http://www.awstats.org
 BuildArch: noarch
 
+# https://github.com/eldy/awstats
 Source: %name-%version.tar
 Source1: awstats.cron
 Source2: apache.modconfdir
@@ -31,7 +32,7 @@ BuildRequires(pre): rpm-build-apache
 BuildRequires(pre): rpm-build-apache2
 
 # Automatically added by buildreq on Wed Jul 21 2010 (-bi)
-BuildRequires: apache2-common java-devel perl-libwww tzdata perl-Switch perl-CGI
+BuildRequires: apache2-common perl-libwww tzdata perl-Switch perl-CGI
 
 %description
 AWStats is a short for Advanced Web Statistics. It's a free tool that generates
@@ -173,6 +174,17 @@ install -p -m644 %SOURCE6 %buildroot%apache2_ports_start/%name.conf
 %config(noreplace) %apache2_ports_start/%name.conf
 
 %changelog
+* Fri Jan 12 2018 L.A. Kostis <lakostis@altlinux.ru> 7.7-alt0.2.20180105
+- Updated to GIT f316b1f (7.7 20180105).
+- Rediffed all alt- patches:
+  + tools: fix defaults paths.
+  + lib/search_engines.pm: update russian search.
+  + maxmind plugin: update asnum URLs.
+  + lang/awstats-ru.txt: fix translation.
+  + lib/operating_systems.pm: add ALTLinux.
+  + awstats.pl: improve Opera detection.
+  + lib/browsers.pm: Add Yandex Browser detection.
+
 * Sat Aug 22 2015 L.A. Kostis <lakostis@altlinux.ru> 7.4-alt0.10.20150714
 - lib/search_engines.pm: disable keywords decoding for google/yandex due
   result encryption.
