@@ -1,18 +1,15 @@
 Name: libtomcrypt
-Version: 1.17
+Version: 1.18.0
 Release: alt1
 Summary: A comprehensive, portable cryptographic toolkit
 Group: System/Libraries
 License: WTFPL
-Url: http://libtom.org/
-Source0: http://www.libtom.org/files/crypt-%version.tar.bz2
+Url: http://www.libtom.net/
 
-Patch0: libtomcrypt-makefile.patch
+# https://github.com/libtom/libtomcrypt.git
+Source: crypt-%version.tar
 
 BuildRequires: texlive-latex-recommended
-
-# Automatically added by buildreq on Wed Sep 14 2011
-# optimized out: fontconfig ghostscript-classic ghostscript-common tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended texlive-xetex
 BuildRequires: ghostscript-utils libtommath-devel
 
 %description
@@ -55,19 +52,18 @@ The %name-doc package contains documentation for use with %name.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 # no configure script ships with libtomcrypt.  Its only requirement is
 # ANSI C. And libtommath.  Explicitly force it to be built against libtommath
-export CFLAGS="$RPM_OPT_FLAGS -DLTM_DESC -I%_includedir/tommath"
-%make_build LIBPATH=%_libdir EXTRALIBS="-ltommath" -f makefile.shared
-%make_build LIBPATH=%_libdir -f makefile docs
+export CFLAGS="%optflags -DLTM_DESC -I%_includedir/tommath"
+%make_build V=1 LIBPATH=%_libdir EXTRALIBS="-ltommath" -f makefile.shared library
+%make_build V=1 LIBPATH=%_libdir -f makefile docs
 
 %check
-export CFLAGS="$RPM_OPT_FLAGS -DLTM_DESC -DUSE_LTM -I%_includedir/tommath -I testprof"
-%make_build LIBPATH=%_libdir EXTRALIBS="-L.libs -Ltestprof/.libs -ltommath" test -f makefile.shared
-LD_LIBRARY_PATH=.libs:testprof/.libs ./test
+export CFLAGS="%optflags -DLTM_DESC -DUSE_LTM -I%_includedir/tommath -I testprof"
+%make_build V=1 LIBPATH=%_libdir EXTRALIBS="-L.libs -ltommath" -f makefile.shared test
+LD_LIBRARY_PATH=.libs ./test
 
 %install
 # There is no configure script that ships with libtomcrypt but it does
@@ -76,9 +72,9 @@ LD_LIBRARY_PATH=.libs:testprof/.libs ./test
 
 export INSTALL_USER=$(id -un)
 export INSTALL_GROUP=$(id -gn)
-export CFLAGS="$RPM_OPT_FLAGS -DLTM_DESC -DUSE_LTM"
+export CFLAGS="%optflags -DLTM_DESC -DUSE_LTM"
 
-make install INCPATH=%_includedir/tomcrypt DESTDIR=%buildroot LIBPATH=%_libdir EXTRALIBS="-ltommath" -f makefile.shared
+%makeinstall_std INCPATH=%_includedir/tomcrypt LIBPATH=%_libdir EXTRALIBS="-ltommath" -f makefile.shared
 find %buildroot -name '*.h' -exec chmod 644 {} ';'
 
 # remove unneeded files
@@ -93,6 +89,7 @@ find %buildroot -name 'libtomcrypt_prof*' -exec rm -f {} ';'
 %doc LICENSE
 %_includedir/tomcrypt
 %_libdir/*.so
+%_pkgconfigdir/*.pc
 
 %files devel-static
 %_libdir/*.a
@@ -101,6 +98,9 @@ find %buildroot -name 'libtomcrypt_prof*' -exec rm -f {} ';'
 %doc LICENSE doc/crypt.pdf
 
 %changelog
+* Fri Jan 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.18.0-alt1
+- Updated to upstream version 1.18.0.
+
 * Wed Sep 14 2011 Fr. Br. George <george@altlinux.ru> 1.17-alt1
 - Initial build from FC
 
