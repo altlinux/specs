@@ -1,18 +1,21 @@
 %define ver_major 0.2
 %define gst_api_ver 1.0
+%define _name videos
+%define rdnn_name io.elementary.%_name
 
 Name: audience
 %define xdg_name org.pantheon.%name
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.5
+Release: alt1
 
 Summary: A modern media player
 License: GPLv3
 Group: Video
 Url: https://launchpad.net/audience
 
-Source: https://launchpad.net/%name/0.4-loki/%version/+download/%name-%version.tar.xz
-Patch: %name-0.2.4-up-vala_0.38.patch
+#VCS: https://github.com/elementary/videos.git
+Source: %_name-%version.tar.gz
+#Source: https://launchpad.net/%name/0.4-loki/%version/+download/%name-%version.tar.xz
 
 Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-good%gst_api_ver
@@ -33,8 +36,7 @@ Audience is a simple, modern media player that makes greater use of
 hardware acceleration than most players out there.
 
 %prep
-%setup
-%patch -p1
+%setup -n %_name-%version
 # fix libdir
 find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINATION}/|g' --
 
@@ -45,15 +47,18 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %install
 %cmakeinstall_std
 
-%find_lang %name
+%find_lang %rdnn_name
 
-%files -f %name.lang
-%_bindir/%name
+%files -f %rdnn_name.lang
+%_bindir/%rdnn_name
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/appdata/%rdnn_name.appdata.xml
 
 %changelog
+* Fri Jan 12 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt1
+- 0.2.5
+
 * Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt2
 - rebuild against libgranite.so.4
 
