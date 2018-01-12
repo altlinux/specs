@@ -1,19 +1,16 @@
 Name: libtommath
-Version: 0.42.0
+Version: 1.0.1
 Release: alt1
 Summary: A portable number theoretic multiple-precision integer library
 Group: System/Libraries
 License: WTFPL
-Url: http://libtom.org/
-Source0: http://www.libtom.org/files/ltm-%version.tar.bz2
+Url: http://www.libtom.net/
+
+# https://github.com/libtom/libtommath.git
+Source: ltm-%version.tar
 
 BuildRequires: texlive-latex-recommended
-
-# Automatically added by buildreq on Wed Sep 14 2011
-# optimized out: fontconfig ghostscript-classic ghostscript-common tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended texlive-xetex
 BuildRequires: ghostscript-utils libtiff-utils
-
-Patch0: libtommath-makefile.patch
 
 %description
 A free open source portable number theoretic multiple-precision integer
@@ -24,7 +21,7 @@ routines that build out of the box without configuration.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -33,7 +30,7 @@ developing applications that use %name.
 %package devel-static
 Summary: Static development files for %name
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 The %name-devel-static package contains static libraries for
@@ -42,7 +39,7 @@ developing applications that use %name.
 %package doc
 Summary: Documentation files for %name
 Group: Documentation
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description doc
 The %name-doc package contains PDF documentation for
@@ -50,11 +47,19 @@ using %name.
 
 %prep
 %setup
-%patch0 -p1 -b .makefile
+# Fix permissions on installed library
+sed -i -e 's/644 $(LIBNAME)/755 $(LIBNAME)/g' makefile.shared
+
+# Fix pkgconfig path
+sed -i \
+    -e 's|^prefix=.*|prefix=%{_prefix}|g' \
+    -e 's|^libdir=.*|libdir=%{_libdir}|g' \
+    -e 's|^includedir=.*|includedir=%{_includedir}|g' \
+    %{name}.pc.in
 
 %build
-%make_build LIBPATH=%_libdir -f makefile.shared
-%make_build -f makefile poster manual docs
+%make_build V=1 LIBPATH=%_libdir CFLAGS="%{optflags} -I./" -f makefile.shared
+%make_build V=1 -f makefile poster manual docs
 
 %install
 # There is no configure script that ships with libtommath but it does
@@ -75,15 +80,19 @@ find %buildroot -name '*.h' -exec chmod 644 {} ';'
 %doc LICENSE
 %_includedir/tommath
 %_libdir/*.so
+%_pkgconfigdir/*.pc
 
 %files devel-static
 %_libdir/*.a
 
 %files doc
 %doc LICENSE
-%doc bn.pdf poster.pdf tommath.pdf
+%doc doc/bn.pdf doc/poster.pdf doc/tommath.pdf
 
 %changelog
+* Fri Jan 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt1
+- Updated to upstream version 1.0.1.
+
 * Wed Sep 14 2011 Fr. Br. George <george@altlinux.ru> 0.42.0-alt1
 - Autobuild version bump to 0.42.0
 

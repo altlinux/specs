@@ -1,7 +1,7 @@
 Name: dropbear
 Summary: Relatively small SSH 2 server
 Version: 2017.75
-Release: alt1
+Release: alt2
 License: MIT-style
 Group: System/Servers
 Url: http://matt.ucc.asn.au/dropbear/dropbear.html
@@ -76,6 +76,9 @@ install -D dropbearconvert.1 %buildroot%_man1dir/dropbearconvert.1
 %_bindir/scp
 
 %changelog
+* Fri Jan 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2017.75-alt2
+- Rebuilt with new libtommath and libtomcrypt.
+
 * Fri May 19 2017 Fr. Br. George <george@altlinux.ru> 2017.75-alt1
 - Autobuild version bump to 2017.75
 

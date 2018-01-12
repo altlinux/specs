@@ -10,7 +10,7 @@
 
 Name: firebird
 Version: %major.%minor
-Release: alt3
+Release: alt4
 Summary: Firebird SQL Database, fork of InterBase
 Group: Databases
 License: IPL
@@ -345,6 +345,9 @@ fi
 %_datadir/%name/examples/*
 
 %changelog
+* Fri Jan 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.2.32703.0-alt4
+- Rebuilt with new libtommath.
+
 * Wed Oct 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.2.32703.0-alt3
 - Fixed init script once more (closes: #34060).
 - Fixed issue with firebird not finding INTL module.
