@@ -1,6 +1,6 @@
 Name: dumb
 Version: 0.9.3
-Release: alt3
+Release: alt4
 Summary: IT, XM, S3M and MOD player library
 Group: System/Libraries
 License: zlib
@@ -42,7 +42,7 @@ cp %SOURCE2 .
 #touch INSTALL NEWS README AUTHORS ChangeLog COPYING
 #autoreconf
 %configure
-make %{?_smp_mflags}
+make
 
 %install
 make install DESTDIR=%buildroot
@@ -64,10 +64,13 @@ ln -s  libaldmb-%version.so %buildroot%_libdir/libaldmb.so.1
 %_libdir/libaldmb.so
 
 %changelog
+* Fri Jan 12 2018 Fr. Br. George <george@altlinux.ru> 0.9.3-alt4
+- Fix build
+
 * Tue Mar 22 2011 Fr. Br. George <george@altlinux.ru> 0.9.3-alt3
 - Rebuild with allegro-4.4
 
-* Tue Feb 19 2010 Fr. Br. George <george@altlinux.ru> 0.9.3-alt2
+* Fri Feb 19 2010 Fr. Br. George <george@altlinux.ru> 0.9.3-alt2
 - veird soname workaround
 
 * Sat Nov 14 2009 Repocop Q. A. Robot <repocop@altlinux.org> 0.9.3-alt1.qa1
