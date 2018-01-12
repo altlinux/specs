@@ -3,7 +3,7 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
 Version:	3.34.1
-Release:	alt2
+Release:	alt3
 License:	MPL/GPL/LGPL
 Group:		System/Libraries
 Url:		http://www.mozilla.org/projects/security/pki/nss
@@ -226,7 +226,7 @@ mv -- %buildroot/%_libdir/libnssckbi.so %buildroot/%_libdir/nss/libnssckbi.so
 
 mkdir -p -- %buildroot/%_altdir
 cat >%buildroot/%_altdir/libnssckbi-%name <<EOF
-%_libdir/libnssckbi.so %_libdir/nss/libnssckbi.so 10
+%_libdir/libnssckbi.so	%_libdir/nss/libnssckbi.so	10
 EOF
 
 %files -n %name-utils
@@ -273,6 +273,9 @@ EOF
 
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Fri Jan 12 2018 Alexey Gladkov <legion@altlinux.ru> 3.34.1-alt3
+- Fix the alteranatives file.
+
 * Fri Dec 29 2017 Alexey Gladkov <legion@altlinux.ru> 3.34.1-alt2
 - Add the alteranatives file for libnssckbi.so.
 - Add libnss-nssckbi-checkinstall subpackage.
