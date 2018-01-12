@@ -4,16 +4,18 @@
 %def_without docs
 
 Name: python-module-%oname
-Version: 2.0.13
+Version: 2.0.17
 Release: alt1
 Summary: Filesystem abstraction layer
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/fs/
 
-# https://github.com/PyFilesystem/pyfilesystem2.git
-Source: %name-%version.tar.gz
 BuildArch: noarch
+
+# https://github.com/PyFilesystem/pyfilesystem2.git
+Source: %name-%version.tar
+Patch1: fs-alt-tests.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-chardet python-module-django python-module-ecdsa python-module-html5lib
@@ -36,6 +38,7 @@ PyFilesystem provides a common way of accessing entire filesystems. You
 can write platform-independent code to work with local files, that also
 works with any of the supported filesystems (zip, ftp, S3 etc.).
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Filesystem abstraction layer
 Group: Development/Python3
@@ -48,6 +51,7 @@ that Python's file-like objects provide a common way of accessing files,
 PyFilesystem provides a common way of accessing entire filesystems. You
 can write platform-independent code to work with local files, that also
 works with any of the supported filesystems (zip, ftp, S3 etc.).
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -78,6 +82,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -144,6 +149,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.17-alt1
+- Updated to upstream release 2.0.17.
+
 * Thu Nov 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.13-alt1
 - Updated to upstream release 2.0.13.
 
