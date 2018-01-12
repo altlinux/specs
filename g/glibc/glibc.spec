@@ -1,7 +1,7 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.26.0.124.98f244e
+Version: 2.26.0.131.fabef2e
 Release: alt1
 Epoch: 6
 
@@ -722,6 +722,10 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Fri Jan 12 2018 Dmitry V. Levin <ldv@altlinux.org> 6:2.26.0.131.fabef2e-alt1
+- Updated to glibc-2.26-131-gfabef2e from 2.26 branch
+  with assorted backports from master (fixes CVE-2018-1000001).
+
 * Fri Dec 22 2017 Dmitry V. Levin <ldv@altlinux.org> 6:2.26.0.124.98f244e-alt1
 - Updated to glibc-2.26-124-g98f244e from 2.26 branch
   with assorted backports from master.
