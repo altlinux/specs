@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %set_verify_elf_method strict
 
+%define dbdir %_localstatedir/%name
+
 Name: dhcpcd
 Epoch: 1
-Version: 6.11.5
+Version: 7.0.0
 Release: alt1
 
 Summary: DHCP Client
@@ -14,6 +16,14 @@ URL: http://roy.marples.name/projects/%name
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
+# Patches from upstream git
+# Should be dropped when new version will be released
+Patch1: dhcp-don-t-bind-when-we-ve-just-probed-an-address-to.patch
+Patch2: eloop-bench-fix-reading-the-last-write.patch
+Patch3: eloop-bench-use-calloc.patch
+Patch4: if-don-t-activate-non-matching-interfaces-to-command.patch
+Patch5: dhcp-don-t-loop-needlessly-when-handling-an-interfac.patch
+
 AutoReq: yes, noshell
 
 BuildRequires: rpm-build-licenses
@@ -22,6 +32,7 @@ Conflicts: etcnet < 0.9.10-alt6
 
 # NetworkManager can use dhcpcd
 Provides: nm-dhcp-client
+
 
 %description
 dhcpcd is an implementation of the DHCP client specified in RFC2131.
@@ -33,13 +44,20 @@ which it is running. It also tries to renew the lease time according to RFC2131.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
+%add_optflags -fpie
+export LDFLAGS=-pie
 %configure \
         --sbindir=/sbin \
         --rundir=/var/run \
         --libexecdir=/lib/%name \
-        --dbdir=%_localstatedir/%name \
+        --dbdir=%dbdir \
         --serviceexists='[ -x %_initdir/"$1" ]' \
         --servicecmd='/sbin/service "$1" >/dev/null 2>&1' \
         --with-hook=ntp.conf \
@@ -62,6 +80,20 @@ if grep -qs '^[[:blank:]]*clientid' %_sysconfdir/%name.conf; then
 	echo "Now it means TO SEND clientid to the server."
 fi
 
+# These files changed their name/location since 7.0.0.
+# Don't move lease files, they can be used and often removed when dhcpcd
+# is exited.
+%triggerpostun -- %name < 1:7.0.0
+for f in duid secret; do
+	if [ -e %_sysconfdir/dhcpcd.$f ] && [ ! -e %dbdir/$f ]; then
+		echo "%_sysconfdir/dhcpcd.$f found, moving to %dbdir/$f"
+		mv "%_sysconfdir/dhcpcd.$f" "%dbdir/$f"
+	fi
+done
+if [ ! -e %dbdir/rdm_monotonic ] && [ -e %dbdir/dhcpcd-rdm.monotonic ]; then
+	mv %dbdir/dhcpcd-rdm.monotonic %dbdir/rdm_monotonic
+fi
+
 %files
 /sbin/*
 %_man8dir/*
@@ -79,6 +111,14 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Fri Jan 12 2018 Mikhail Efremov <sem@altlinux.org> 1:7.0.0-alt1
+- During update move files to new location.
+- Add patches from upstream git.
+- Enable ntp_servers option again.
+- Build with -pie.
+- Fix build with make-3.x.
+- Updated to 7.0.0.
+
 * Mon Oct 10 2016 Mikhail Efremov <sem@altlinux.org> 1:6.11.5-alt1
 - Updated to 6.11.5.
 
