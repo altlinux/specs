@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd
-Version: 2.0.6
+Version: 2.0.7
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -15,6 +15,7 @@ BuildRequires: libkmod-devel
 BuildRequires: zlib-devel
 BuildRequires: bzlib-devel
 BuildRequires: liblzma-devel
+BuildRequires: libzstd-devel
 
 Provides: mkinitrd = 2:%version-%release
 Provides: make-initrd2 = %version-%release
@@ -133,6 +134,7 @@ Summary: CPU microcode module for %name
 Group: System/Base
 Requires: %name = %version-%release
 Requires: iucode_tool, firmware-intel-ucode, linux-firmware
+Requires: cpio
 AutoReq: noshell, noshebang
 
 %description ucode
@@ -198,6 +200,16 @@ fi
 %_datadir/%myname/features/ucode
 
 %changelog
+* Fri Jan 12 2018 Alexey Gladkov <legion@altlinux.ru> 2.0.7-alt1
+- Add initrd-extract to split initramfs.
+- Add feature to save information about generated initramfs.
+- Feature make-initrd-ucode requires cpio (ALT#34270).
+- LUKS feature changes:
+  + Add luks-ignore option (thx Vladimir D. Seleznev).
+  + Add luks-discard option (thx Vladimir D. Seleznev).
+  + Add support for xts blockcipher (thx Vladimir D. Seleznev).
+  + Add luks-key-format option.
+
 * Wed Nov 29 2017 Alexey Gladkov <legion@altlinux.ru> 2.0.6-alt1
 - Fix rootonly cmdline parameter.
 - Fix handling of multiple mountpoints.
