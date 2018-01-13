@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-%module
-Version: 0.061
+Version: 0.062
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -15,7 +15,7 @@ Url: http://search.cpan.org/dist/%module
 
 BuildRequires: perl-devel perl-RPM-Source-Editor perl-Source-Bundle perl-Source-Package perl-RPM-Source-Dependency-Analyzer perl(Pod/PlainText.pm)
 Requires: perl-Source-Package > 0.164
-Requires: perl-RPM-Source-Editor > 0.914
+Requires: perl-RPM-Source-Editor > 0.920
 
 %description
 %summary
@@ -55,6 +55,9 @@ RPM-Source-BundleImport plugin for Perl source code
 %perl_vendor_privlib/RPM/Source/BundleImport/Perl
 
 %changelog
+* Sat Jan 13 2018 Igor Vlasenko <viy@altlinux.ru> 0.062-alt1
+- TeXlive support
+
 * Sun Oct 29 2017 Igor Vlasenko <viy@altlinux.ru> 0.061-alt1
 - stable release
 
