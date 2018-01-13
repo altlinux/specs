@@ -1,40 +1,42 @@
 %define rname mozplugger
 %define name mozilla-plugin-%rname
-%define version 2.1.3
+%define version 2.1.6
 %define release alt1
 
-Summary: A generic mozilla plug-in
-Summary(ru_RU.KOI8-R): Универсальный плагин к mozilla
 Name: %name
 Version: %version
 Release: %release
-Source0: %rname-%version.tar
-Url: http://mozplugger.mozdev.org
+
+Summary: A generic mozilla plug-in
 License: GPL
 Group: Networking/WWW
+
+Url: http://mozplugger.mozdev.org
+Source: %rname-%version.tar
+Patch: %rname-alt-install.patch
+Packager: L.A. Kostis <lakostis@altlinux.org>
+
 Requires: browser-plugins-npapi, m4
 Obsoletes: %rname
 
 BuildRequires: libX11-devel libXt-devel 
 
-Patch: %rname-alt-install.patch
-
 # Added by hand
 BuildRequires(pre): browser-plugins-npapi-devel
 
-Packager: L.A. Kostis <lakostis@altlinux.org>
+Summary(ru_RU.UTF-8): пёп╫п╦п╡п╣я─я│п╟п╩я▄п╫я▀п╧ п©п╩п╟пЁп╦п╫ п╨ mozilla
 
 %description
 MozPlugger is a generic Mozilla plug-in that allows the use of standard Linux
 programs as plug-ins for media types on the Internet.
 
-%description -l ru_RU.KOI8-R
-MozPlugger - это универсальный плагин для браузеров семейства mozilla,
-позволяющий использовать стандартные программы Linux (и не только) как
-плагины для различных мультимедиа файлов из сети Internet.
+%description -l ru_RU.UTF-8
+MozPlugger - я█я┌п╬ я┐п╫п╦п╡п╣я─я│п╟п╩я▄п╫я▀п╧ п©п╩п╟пЁп╦п╫ п╢п╩я▐ п╠я─п╟я┐п╥п╣я─п╬п╡ я│п╣п╪п╣п╧я│я┌п╡п╟ Mozilla,
+п©п╬п╥п╡п╬п╩я▐я▌я┴п╦п╧ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ я│я┌п╟п╫п╢п╟я─я┌п╫я▀п╣ п©я─п╬пЁя─п╟п╪п╪я▀ Linux (п╦ п╫п╣ я┌п╬п╩я▄п╨п╬) п╨п╟п╨
+п©п╩п╟пЁп╦п╫я▀ п╢п╩я▐ я─п╟п╥п╩п╦я┤п╫я▀я┘ п╪я┐п╩я▄я┌п╦п╪п╣п╢п╦п╟ я└п╟п╧п╩п╬п╡ п╦п╥ я│п╣я┌п╦ Internet.
 
 %prep
-%setup -q -n %rname-%version
+%setup -n %rname-%version
 %patch -p2
 
 %build
@@ -52,6 +54,10 @@ MozPlugger - это универсальный плагин для браузеров семейства mozilla,
 %doc README ChangeLog COPYING
 
 %changelog
+* Sun Jan 14 2018 Michael Shigorin <mike@altlinux.org> 2.1.6-alt1
+- 2.1.6
+- spec cleanup
+
 * Thu Mar 28 2013 L.A. Kostis <lakostis@altlinux.ru> 2.1.3-alt1
 - 2.1.3.
 
