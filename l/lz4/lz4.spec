@@ -1,6 +1,6 @@
 Name: lz4
 Epoch: 1
-Version: 1.8.0
+Version: 1.8.1.2
 Release: alt1
 Summary: Fast LZ compression algorithm library and tools
 License: GPLv2+ and BSD
@@ -69,7 +69,7 @@ sed -i 's/^\([[:space:]]*\)@\$/\1\$/' */Makefile
 # ensure that lz4.1 is recognized by file as a troff input
 sed -i '1 i.\\"' programs/lz4.1
 # skip recompilation attempts during check
-sed -i '/ clean \$@ / s/^\([[:space:]]*\)\(.*\)/\1: SKIP: \2/' tests/Makefile
+sed -i 's/\$(MAKE) -C \$(PRGDIR) /: SKIP: &/' tests/Makefile
 
 %build
 export CFLAGS='%optflags'
@@ -95,7 +95,7 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
 %check
 export CC=false CXX=false # nothing should be compiled or linked during check
-make test -C tests # these tests don't run in parallel
+%make_build -k test -C tests
 
 %files
 %_bindir/*
@@ -117,6 +117,9 @@ make test -C tests # these tests don't run in parallel
 %endif
 
 %changelog
+* Sun Jan 14 2018 Dmitry V. Levin <ldv@altlinux.org> 1:1.8.1.2-alt1
+- v1.8.0 -> v1.8.1.2.
+
 * Sun Oct 29 2017 Dmitry V. Levin <ldv@altlinux.org> 1:1.8.0-alt1
 - v1.7.5-84-g84246b9 -> v1.8.0.
 
