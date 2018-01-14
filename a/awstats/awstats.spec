@@ -5,7 +5,7 @@
 
 Name: awstats
 Version: 7.7
-Release: alt0.2.20180105
+Release: alt0.4.20180105
 
 Summary: Real-time logfile analyzer to get advanced web statistics
 Summary(ru_RU.KOI8-R):	Анализатор логов Web-сервера в режиме реального времени
@@ -174,6 +174,14 @@ install -p -m644 %SOURCE6 %buildroot%apache2_ports_start/%name.conf
 %config(noreplace) %apache2_ports_start/%name.conf
 
 %changelog
+* Sat Jan 13 2018 L.A. Kostis <lakostis@altlinux.ru> 7.7-alt0.4.20180105
+- Rediffed browser versions list:
+  - replace netscape by yandex browser;
+  - replace svn by seamonkey;
+  - replace konqueror by palemoon.
+  - lib/browsers.pm: Add Palemoon.
+  - awstats.pl{yabrowser,chrome}: Round version num.
+
 * Fri Jan 12 2018 L.A. Kostis <lakostis@altlinux.ru> 7.7-alt0.2.20180105
 - Updated to GIT f316b1f (7.7 20180105).
 - Rediffed all alt- patches:
