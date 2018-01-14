@@ -1,6 +1,6 @@
 Name: qastools
 Version: 0.21.0
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Collection of desktop applications for ALSA
 License: GPLv3
 
@@ -9,6 +9,7 @@ Url: http://xwmw.org/qastools
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+Patch: disabled-tray-icon-at-startup.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-ubt
 BuildRequires: cmake
@@ -29,6 +30,7 @@ QasTools is a collection of desktop applications for the ALSA sound system.
 %package -n qascommon
 Summary: Common part of QasTools
 Group: Sound
+BuildArch: noarch
 
 %description -n qascommon
 Common part of QasTools.
@@ -62,6 +64,7 @@ Desktop mixer for ALSA's "Simple Mixer Interface" (alsamixer).
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake -DSKIP_LICENSE_INSTALL:BOOL=ON
@@ -77,8 +80,7 @@ done
 # meta package
 
 %files -n qascommon
-%doc COPYING
-%doc CHANGELOG README TODO
+%doc COPYING CHANGELOG README TODO
 %_datadir/%name
 
 %files -n qasconfig
@@ -95,11 +97,13 @@ done
 
 %files -n qasmixer
 %_bindir/qasmixer
-%_datadir/%name/icons/
 %_desktopdir/qasmixer.desktop
 %_iconsdir/hicolor/*/apps/qasmixer.*
 %_man1dir/qasmixer.1.*
 
 %changelog
+* Sun Jan 14 2018 Anton Midyukov <antohami@altlinux.org> 0.21.0-alt2%ubt
+- Disabled tray icon at startup
+
 * Thu Dec 21 2017 Anton Midyukov <antohami@altlinux.org> 0.21.0-alt1%ubt
 - Initial build for ALT Sisyphus.
