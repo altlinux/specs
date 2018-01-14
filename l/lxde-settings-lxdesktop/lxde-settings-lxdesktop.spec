@@ -2,7 +2,7 @@
 %define theme_virt_dir lxde
 %define theme_fullname lxde-settings-%theme_name
 Name: %theme_fullname
-Version: 0.1
+Version: 0.2
 Release: alt1
 Packager: LXDE Development Team <lxde at packages.altlinux.org>
 BuildArch: noarch
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 Provides: lxde-settings
 Requires: icon-theme-faenza-blue gtk3-theme-clearlooks-phenix
 Requires: fonts-ttf-google-droid-sans-mono fonts-ttf-google-droid-sans fonts-ttf-google-droid-serif
-Requires: pulseaudio pavucontrol
+Requires: qasmixer
 Requires: screengrab
 Requires: xdg-user-dirs-gtk
 
@@ -52,5 +52,8 @@ cp -r * %buildroot%_datadir/%theme_fullname
 %_sysconfdir/X11/profile.d/*.sh
 
 %changelog
+* Sun Jan 14 2018 Anton Midyukov <antohami@altlinux.org> 0.2-alt1
+- version 0.2
+
 * Fri Aug 25 2017 Anton Midyukov <antohami@altlinux.org> 0.1-alt1
 - Initial build for ALT Linux Sisyphus.
