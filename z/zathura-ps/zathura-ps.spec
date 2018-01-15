@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura-ps
-Version: 0.2.4
+Version: 0.2.5
 Release: alt1
 
 Summary: PostScript support for zathura
@@ -42,6 +42,9 @@ export CFLAGS="%optflags"
 %_desktopdir/*.desktop
 
 %changelog
+* Mon Jan 15 2018 Mikhail Efremov <sem@altlinux.org> 0.2.5-alt1
+- Updated to 0.2.5.
+
 * Tue Jan 24 2017 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt1
 - Updated to 0.2.4.
 

@@ -1,9 +1,9 @@
 %define _name girara
-%define _soname 2
+%define _soname 3
 %define _unpackaged_files_terminate_build 1
 
 Name: lib%_name
-Version: 0.2.7
+Version: 0.2.8
 Release: alt1
 
 Summary: GTK-based minimalistic user interface library
@@ -59,6 +59,9 @@ export CFLAGS="%optflags"
 %exclude %_libdir/*.a
 
 %changelog
+* Mon Jan 15 2018 Mikhail Efremov <sem@altlinux.org> 0.2.8-alt1
+- Updated to 0.2.8.
+
 * Tue Jan 24 2017 Mikhail Efremov <sem@altlinux.org> 0.2.7-alt1
 - Updated to 0.2.7.
 

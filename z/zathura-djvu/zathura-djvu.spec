@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura-djvu
-Version: 0.2.6
+Version: 0.2.7
 Release: alt1
 
 Summary: DjVU support for zathura
@@ -42,6 +42,9 @@ export CFLAGS="%optflags"
 %_desktopdir/*.desktop
 
 %changelog
+* Mon Jan 15 2018 Mikhail Efremov <sem@altlinux.org> 0.2.7-alt1
+- Updated to 0.2.7.
+
 * Tue Jan 24 2017 Mikhail Efremov <sem@altlinux.org> 0.2.6-alt1
 - Updated to 0.2.6.
 
