@@ -1,6 +1,6 @@
 Name: xfce4-hardware-monitor-plugin
-Version: 1.5.0
-Release: alt2
+Version: 1.6.0
+Release: alt1
 
 Summary: Display various hardware stats graphically or with text
 License: %gpl3plus
@@ -55,6 +55,9 @@ mv %buildroot/usr/share/locale/sr@Latn/ %buildroot/usr/share/locale/sr@latin/
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Jan 15 2018 Mikhail Efremov <sem@altlinux.org> 1.6.0-alt1
+- Updated to 1.6.0.
+
 * Tue Sep 19 2017 Mikhail Efremov <sem@altlinux.org> 1.5.0-alt2
 - Rebuild with libgtop-2.0.so.11.
 
