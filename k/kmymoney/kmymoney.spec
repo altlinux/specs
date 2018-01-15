@@ -1,5 +1,5 @@
 Name:    kmymoney
-Version: 4.8.1
+Version: 4.8.1.1
 Release: alt1
 
 Summary: A Personal Finance Manager for KDE4
@@ -36,6 +36,7 @@ BuildRequires: libgmp_cxx-devel
 BuildRequires: libgpgme-devel
 BuildRequires: libgwenhywfar-devel >= 4.0.0
 BuildRequires: libical-devel
+BuildRequires: libical-glib
 BuildRequires: libicu-devel
 BuildRequires: libofx-devel >= 0.9.4
 BuildRequires: libspeex-devel
@@ -307,6 +308,9 @@ mv %buildroot%_K4apps/appdata/org.kde.kmymoney.appdata.xml %buildroot%_datadir/a
 %exclude %_K4doc/en
 
 %changelog
+* Mon Jan 15 2018 Andrey Cherepanov <cas@altlinux.org> 4.8.1.1-alt1
+- New version.
+
 * Sun Oct 01 2017 Andrey Cherepanov <cas@altlinux.org> 4.8.1-alt1
 - New version
 
