@@ -16,12 +16,12 @@
 
 # version-release
 %define nv_version 384
-%define nv_release 98
+%define nv_release 111
 %define nv_minor %nil
 %define pkg_rel alt179%ubt
 %def_enable kernelsource
 %def_disable glvnd
-%def_disable package_egl_wayland
+%def_enable package_egl_wayland
 %def_disable package_wfb
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -87,7 +87,6 @@ Source100: nvidia_create_xinf
 
 Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
-Patch3: buildfix_kernel_4.14.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: kernel-build-tools rpm-macros-alternatives
@@ -155,7 +154,6 @@ cd %tbname-%tbver%dirsuffix
 pushd kernel
 #%patch1 -p1
 %patch2 -p1
-%patch3 -p1
 rm -rf precompiled
 popd
 
@@ -339,8 +337,8 @@ fi
 %endif
 
 %changelog
-* Mon Jan 15 2018 Sergey V Turchin <zerg@altlinux.org> 384.98-alt179%ubt
-- don't package libnvidia-egl-wayland
+* Thu Jan 11 2018 Sergey V Turchin <zerg@altlinux.org> 384.111-alt179%ubt
+- new version
 
 * Fri Dec 08 2017 Sergey V Turchin <zerg@altlinux.org> 384.98-alt178%ubt
 - add fix against 4.14 kernel

@@ -11,9 +11,9 @@
 # version-release
 
 %define nv_version 384
-%define nv_release 98
+%define nv_release 111
 %define nv_minor %nil
-%define pkg_rel alt187%ubt
+%define pkg_rel alt188%ubt
 %define set_gl_nvidia_ver 0.20.4
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -273,6 +273,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Fri Jan 12 2018 Sergey V Turchin <zerg@altlinux.org> 384.111-alt188%ubt
+- new version
+
 * Tue Dec 19 2017 Sergey V Turchin <zerg@altlinux.org> 384.98-alt187%ubt
 - fix driver switching (ALT#34357)
 
