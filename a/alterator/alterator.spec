@@ -1,6 +1,6 @@
 Name: alterator
 Version: 5.1
-Release: alt7
+Release: alt8
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -167,6 +167,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Jan 12 2018 Paul Wolneykien <manowar@altlinux.org> 5.1-alt8
+- Use UTF-8 I/O by default for all ports here and then.
+
 * Wed Dec 20 2017 Paul Wolneykien <manowar@altlinux.org> 5.1-alt7
 - Use with-fluids* to restore the fluid-values just bofore
   entering the suspended context (patch).
