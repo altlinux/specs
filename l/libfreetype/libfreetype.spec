@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: libfreetype
-Version: 2.8
-Release: alt4
+Version: 2.9
+Release: alt1%ubt
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
 Group: System/Libraries
@@ -26,6 +26,7 @@ Patch11: freetype-2.4.10-rh-enable-subpixel-rendering.patch
 Patch12: freetype-2.7-rh-enable-valid.patch
 Patch13: ft2demos-2.4.10-rh-more-demos.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: bzlib-devel libX11-devel libharfbuzz-devel libpng-devel zlib-devel
 
 %description
@@ -153,6 +154,9 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Mon Jan 15 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.9-alt1%ubt
+- 2.9
+
 * Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8-alt4
 - Updated runtime dependencies of devel package.
 
