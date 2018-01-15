@@ -7,7 +7,7 @@
 
 Name: transmission
 Version: 2.92
-Release: alt4
+Release: alt5%ubt
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -27,14 +27,15 @@ Requires: %name-daemon = %version-%release
 Requires(post,postun): desktop-file-utils
 
 Source: http://download.m0k.org/%name/files/%name-%version.tar
-Patch0: %name-%version-%release.patch
+Patch0: %name-%version-alt.patch
 Source1: %dname.init
 Source2: %dname.logrotate
+Patch1: transmission-2.92-fix_dns_rebinding_vuln.patch
 
 BuildPreReq: desktop-file-utils
 
 BuildRequires: gcc-c++ glibc-devel intltool libcurl-devel libevent-devel libnotify-devel libcanberra-devel libdbus-glib-devel libgtk+3-devel
-BuildRequires(pre): rpm-utils desktop-file-utils libalternatives-devel
+BuildRequires(pre): rpm-utils desktop-file-utils libalternatives-devel rpm-build-ubt
 %if "%(rpmvercmp '%{get_version glibc-core}' '2.9')" >= "0"
 BuildRequires: libgio-devel
 %endif
@@ -121,8 +122,11 @@ Daemonised BitTorrent client
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p0
 sed -i "s|\(^CONFIG.*\+=.*[[:space:]]\)debug\([[:space:]].*$\)|\1release\2|" qt/qtr.pro
 sed -i "s|^LIBS.*\+=.*libevent\.a$|LIBS += -levent|" qt/qtr.pro
+rm -f m4/glib-gettext.m4
+
 
 %if "%(rpmvercmp '%{get_version glib2}' '2.48.0')" >= "0"
 rm -f m4/glib-gettext.m4
@@ -271,6 +275,9 @@ fi
 %attr(770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Mon Jan 15 2018 Anton Farygin <rider@altlinux.ru> 2.92-alt5%ubt
+- added fix for security flaw in RPC (closes: #34459)
+
 * Mon Jul 04 2016 Yuri N. Sedunov <aris@altlinux.org> 2.92-alt4
 - fixed build with glib2 >= 2.48
 
