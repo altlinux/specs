@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura-pdf-poppler
-Version: 0.2.7
+Version: 0.2.8
 Release: alt1
 
 Summary: PDF support for zathura (poppler)
@@ -40,9 +40,13 @@ export CFLAGS="%optflags"
 %doc AUTHORS LICENSE
 %_desktopdir/*.desktop
 %_libdir/zathura/*.so
-%_datadir/appdata/*.xml
+%_datadir/metainfo/*.xml
 
 %changelog
+* Mon Jan 15 2018 Mikhail Efremov <sem@altlinux.org> 0.2.8-alt1
+- Fixed appdata location.
+- Updated to 0.2.8.
+
 * Tue Jan 24 2017 Mikhail Efremov <sem@altlinux.org> 0.2.7-alt1
 - Updated to 0.2.7.
 

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura
-Version: 0.3.7
+Version: 0.3.8
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -55,7 +55,7 @@ mkdir -p %buildroot%_libdir/zathura
 %_bindir/%name
 %dir %_libdir/%name
 %_desktopdir/*
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %_man1dir/*
 %_man5dir/*
 %_datadir/dbus-1/interfaces/org.pwmt.*
@@ -65,6 +65,10 @@ mkdir -p %buildroot%_libdir/zathura
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Jan 15 2018 Mikhail Efremov <sem@altlinux.org> 0.3.8-alt1
+- Fixed appdata location.
+- Updated to 0.3.8.
+
 * Tue Jan 24 2017 Mikhail Efremov <sem@altlinux.org> 0.3.7-alt1
 - Updated to 0.3.7.
 
