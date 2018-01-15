@@ -10,7 +10,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.6.10
+Version: 1.6.12
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -242,6 +242,9 @@ fi
 %endif
 
 %changelog
+* Mon Jan 15 2018 Mikhail Efremov <sem@altlinux.org> 1.6.12-alt1
+- Updated to 1.6.12.
+
 * Fri Oct 20 2017 Mikhail Efremov <sem@altlinux.org> 1.6.10-alt1
 - Updated to 1.6.10.
 
