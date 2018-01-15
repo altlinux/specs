@@ -4,7 +4,7 @@
 %def_enable gtk_doc
 
 Name: nautilus-python
-Version: %ver_major
+Version: %ver_major.2
 Release: alt1
 
 Summary: Python bindings for Nautilus
@@ -87,6 +87,9 @@ rm -f examples/{Makefile*,README.in}
 %exclude %_docdir/%name
 
 %changelog
+* Mon Jan 15 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
+- 1.2.2
+
 * Sat Jan 06 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2-alt1
 - 1.2
 
