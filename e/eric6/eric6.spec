@@ -1,12 +1,13 @@
 Name: eric6
 Summary: Python IDE
 Version: 17.11
-Release: alt1%ubt
+Release: alt2%ubt
 
 License: GPLv3+
 Group: Development/Python
 Url: http://eric-ide.python-projects.org
 Packager: Anton Midyukov <antohami@altlinux.org>
+BuildArch: noarch
 
 Source: http://downloads.sourceforge.net/sourceforge/eric-ide/%name-%version.tar.gz
 Source1: http://downloads.sourceforge.net/sourceforge/eric-ide/%name-i18n-cs-%version.tar.gz
@@ -19,7 +20,6 @@ Source7: http://downloads.sourceforge.net/sourceforge/eric-ide/%name-i18n-pt-%ve
 Source8: http://downloads.sourceforge.net/sourceforge/eric-ide/%name-i18n-ru-%version.tar.gz
 Source9: http://downloads.sourceforge.net/sourceforge/eric-ide/%name-i18n-tr-%version.tar.gz
 Source10: http://downloads.sourceforge.net/sourceforge/eric-ide/%name-i18n-zh_CN-%version.tar.gz
-BuildArch: noarch
 
 Source30: eric-32.png
 Source31: eric-48.png
@@ -34,6 +34,7 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-PyQt5
 BuildRequires: python3-module-qscintilla2-qt5
 BuildRequires: libappstream-glib
+%py3_requires PyQt5.Qsci
 
 # ???
 %add_python3_req_skip __builtin__ mod_python
@@ -104,5 +105,8 @@ desktop-file-validate %buildroot%_desktopdir/eric6_webbrowser.desktop
 %_datadir/qt5/qsci/api/ruby/*
 
 %changelog
+* Mon Jan 15 2018 Anton Midyukov <antohami@altlinux.org> 17.11-alt2%ubt
+- Added missing requires python3(PyQt5.Qsci)
+
 * Mon Nov 13 2017 Anton Midyukov <antohami@altlinux.org> 17.11-alt1%ubt
 - Initial build for ALT Sisyphus (Closes: 33933).
