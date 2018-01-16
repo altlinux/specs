@@ -1,6 +1,6 @@
 Name: alterator
 Version: 5.1
-Release: alt8
+Release: alt9
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -167,6 +167,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Tue Jan 16 2018 Paul Wolneykien <manowar@altlinux.org> 5.1-alt9
+- Always use UTF-8 for gettext to/from alterator I/O.
+
 * Fri Jan 12 2018 Paul Wolneykien <manowar@altlinux.org> 5.1-alt8
 - Use UTF-8 I/O by default for all ports here and then.
 
