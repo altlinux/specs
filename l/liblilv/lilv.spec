@@ -17,7 +17,7 @@ Group: System/Libraries
 
 Name:       liblilv
 Version:    0.24.2
-Release:    alt1_4
+Release:    alt2_4
 Summary:    An LV2 Resource Description Framework Library
 
 License:    MIT
@@ -30,7 +30,7 @@ BuildRequires:  libsratom-devel >= 0.4.4
 BuildRequires:  lv2-devel >= 1.14.0
 BuildRequires:  python-devel
 BuildRequires:  swig
-BuildRequires:  python-module-numpy python-module-numpy-doc python-module-numpy-testing
+BuildRequires:  python-module-numpy python-module-numpy-testing
 BuildRequires:  libserd-devel >= 0.14.0
 Source44: import.info
 Provides: lilv = %{version}-%{release}
@@ -112,6 +112,9 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{python_sitelibdir_noarch}/%{oldname}.*
 
 %changelog
+* Tue Jan 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.24.2-alt2_4
+- Updated build dependencies.
+
 * Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.24.2-alt1_4
 - update to new release by fcimport
 
