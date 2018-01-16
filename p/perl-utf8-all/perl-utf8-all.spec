@@ -7,8 +7,8 @@ BuildRequires: perl-podlators
 %define _localstatedir %_var
 
 Name: perl-utf8-all
-Version: 0.023
-Release: alt3
+Version: 0.024
+Release: alt1
 
 Summary: Turn on Unicode everywhere
 
@@ -16,7 +16,7 @@ License: GPL+ or Artistic
 Url: http://search.cpan.org/dist/utf8-all/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://www.cpan.org/authors/id/H/HA/HAYOBAAN/utf8-all-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/H/HA/HAYOBAAN/utf8-all-%{version}.tar.gz
 
 BuildArch: noarch
 BuildRequires: su
@@ -65,7 +65,7 @@ based on names. If you don't want UTF-8 for a particular file handle, you'll
 have to set binmode $filehandle.
 
 %prep
-%setup -n utf8-all-%version
+%setup -q -n utf8-all-%{version}
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -80,11 +80,14 @@ find %buildroot -type f -name .packlist -delete
 make test
 
 %files
-%doc LICENSE
+%doc LICENSE README
 %doc Changes README.mkdn
 %perl_vendor_privlib/*
 
 %changelog
+* Tue Jan 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.024-alt1
+- automated CPAN update
+
 * Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.023-alt3
 - fixed build with new perl 5.26
 
