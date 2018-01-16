@@ -1,5 +1,5 @@
 Name: nasm
-Version: 2.12.02
+Version: 2.13.02
 Release: alt1
 
 Summary: The Netwide Assembler, a portable x86 assembler with Intel-like syntax
@@ -11,7 +11,11 @@ URL: http://www.nasm.us/
 Source: http://www.nasm.us/pub/nasm/releasebuilds/%version/nasm-%version.tar.bz2
 #Source: http://dl.sourceforge.net/nasm/nasm-%version.tar.bz2
 
-BuildRequires: ghostscript-utils groff-base xmlto asciidoc-a2x texinfo
+BuildRequires: ghostscript-utils groff-base xmlto asciidoc-a2x
+BuildRequires: texinfo
+BuildRequires: perl-Font-TTF perl-Sort-Versions
+# some fonts required, see doc/psfonts.ph
+BuildRequires: fonts-otf-adobe-source-code-pro fonts-otf-adobe-source-sans-pro fonts-ttf-liberation
 
 %package doc
 Summary: Extensive documentation for NASM
@@ -38,7 +42,7 @@ include linker, library manager, loader, and information dump.
 
 %prep
 %setup
-subst '/mv -f \*.info \*.info-\* info/d' doc/Makefile.in
+#subst '/mv -f \*.info \*.info-\* info/d' doc/Makefile.in
 
 %build
 %configure
@@ -48,8 +52,9 @@ subst '/mv -f \*.info \*.info-\* info/d' doc/Makefile.in
 make INSTALLROOT="%buildroot" INSTALL="install -pD" install install_rdf
 
 cd doc
-install -d %buildroot%_infodir
-install nasm.info %buildroot%_infodir/
+# no more nasm.info since 2.13
+#install -d %buildroot%_infodir
+#install nasm.info %buildroot%_infodir/
 gzip -9f *.txt *.ps || true
 cd html
 ln -sf nasmdoc0.html index.html
@@ -60,7 +65,7 @@ ln -sf nasmdoc0.html index.html
 %_bindir/ndisasm
 %_man1dir/nasm.1*
 %_man1dir/ndisasm.1*
-%_infodir/nasm.info*
+#%_infodir/nasm.info*
 
 %files doc
 %doc doc/nasmdoc.pdf doc/nasmdoc.txt.gz doc/html
@@ -80,6 +85,9 @@ ln -sf nasmdoc0.html index.html
 %_man1dir/rdx*
 
 %changelog
+* Tue Jan 16 2018 Yuri N. Sedunov <aris@altlinux.org> 2.13.02-alt1
+- 2.13.02
+
 * Mon Jul 25 2016 Yuri N. Sedunov <aris@altlinux.org> 2.12.02-alt1
 - 2.12.02
 
