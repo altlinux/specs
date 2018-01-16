@@ -1,7 +1,7 @@
 %define modname colour
 
 Name: python-module-%modname
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: Python module to convert and manipulate various color representations
@@ -60,6 +60,9 @@ popd
 %python3_sitelibdir_noarch/*.egg-info
 
 %changelog
+* Tue Jan 16 2018 Yuri N. Sedunov <aris@altlinux.org> 0.1.5-alt1
+- 0.1.5
+
 * Thu Jul 06 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.4-alt1
 - first build for Sisyphus
 
