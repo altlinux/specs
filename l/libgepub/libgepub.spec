@@ -6,7 +6,7 @@
 %def_disable gtk_doc
 
 Name: libgepub
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Simple library to read epub files using glib
@@ -100,6 +100,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Tue Jan 16 2018 Yuri N. Sedunov <aris@altlinux.org> 0.5.3-alt1
+- 0.5.3
+
 * Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 0.5.2-alt1
 - 0.5.2
 
