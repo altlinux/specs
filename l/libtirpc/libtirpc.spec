@@ -1,6 +1,6 @@
 Name: libtirpc
 Version: 1.0.2
-Release: alt1
+Release: alt2
 
 Summary: transport-independent RPC library
 License: BSD
@@ -56,6 +56,9 @@ done
 %_man3dir/*
 
 %changelog
+* Tue Jan 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.2-alt2
+- Fixed build.
+
 * Thu Jul 06 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.2-alt1
 - 1.0.2 released
 
