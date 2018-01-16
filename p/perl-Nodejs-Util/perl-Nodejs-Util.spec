@@ -1,27 +1,26 @@
-%define module_version 0.006
+%define _unpackaged_files_terminate_build 1
 %define module_name Nodejs-Util
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(File/Which.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(IPC/System/Options.pm) perl(Pod/Coverage/TrustPod.pm) perl(Test/More.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(strict.pm) perl(warnings.pm)
+BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(File/Which.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(IPC/System/Options.pm) perl(Pod/Coverage/TrustPod.pm) perl(Test/More.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(strict.pm) perl(warnings.pm) perl(File/chdir.pm) perl(File/Slurper.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.006
-Release: alt2
+Version: 0.009
+Release: alt1
 Summary: Utilities related to Node.js
 Group: Development/Perl
 License: perl
 URL: https://metacpan.org/release/Nodejs-Util
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PE/PERLANCAR/%{module_name}-%{module_version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PERLANCAR/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 From summary: %summary
 
 %prep
-%setup -q -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +33,9 @@ From summary: %summary
 %perl_vendor_privlib/N*
 
 %changelog
+* Tue Jan 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.009-alt1
+- automated CPAN update
+
 * Thu Jul 28 2016 Igor Vlasenko <viy@altlinux.ru> 0.006-alt2
 - to Sisyphus
 
