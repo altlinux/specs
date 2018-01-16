@@ -1,5 +1,5 @@
 Name: libdrm
-Version: 2.4.83
+Version: 2.4.89
 Release: alt1
 Epoch: 1
 Summary: Userspace interface to kernel DRM service
@@ -57,6 +57,9 @@ develop programs which make use of %name
 %_man7dir/*.7*
 
 %changelog
+* Tue Jan 16 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.89-alt1
+- 2.4.89
+
 * Tue Sep 05 2017 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.83-alt1
 - 2.4.83
 
