@@ -3,7 +3,7 @@
 
 Name: alterator-wizardface
 Version: 2.1
-Release: alt2
+Release: alt3
 
 Url: http://altlinux.org/alterator
 Source: %name-%version.tar
@@ -25,7 +25,8 @@ Summary: alterator's wizard like module aggregator
 License: GPL
 Group: System/Configuration/Other
 
-BuildPreReq: alterator >= 5.0 guile22-devel
+BuildArch: noarch
+BuildPreReq: alterator >= 5.0 guile
 
 # Automatically added by buildreq on Mon Jul 11 2005 (-bi)
 BuildRequires: alterator
@@ -82,7 +83,7 @@ EOF
 
 %files
 %_sbindir/*
-%_alterator_libdir/ui/*
+#%_alterator_libdir/ui/*
 %_alterator_datadir/ui/*
 %_alterator_backend3dir/*
 %_datadir/install2/initinstall.d/*
@@ -94,6 +95,10 @@ EOF
 %_bindir/*
 
 %changelog
+* Wed Jan 17 2018 Paul Wolneykien <manowar@altlinux.org> 2.1-alt3
+- Fix: Load lookout AJAX module instead of the default (HTTP).
+- Adapd build for the E2K platform.
+
 * Tue Apr 18 2017 Michael Shigorin <mike@altlinux.org> 2.1-alt2
 - no more noarch
 

@@ -1,6 +1,6 @@
 Name: alterator-vm
 Version: 0.4.5
-Release: alt1
+Release: alt2
 
 Summary: Alterator module for volume management
 License: GPL
@@ -8,7 +8,13 @@ Group: System/Configuration/Other
 
 Source0: %name.tar
 
-BuildRequires: alterator >= 5.0 guile22-devel guile-evms >= 0.5
+BuildRequires: alterator >= 5.0 guile-evms >= 0.5
+
+%ifarch e2k
+BuildRequires: guile20-devel libguile20-devel
+%else
+BuildPreReq: guile22-devel
+%endif
 
 Requires: alterator >= 4.10-alt6
 Requires: alterator-l10n >= 2.2-alt1
@@ -38,6 +44,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Tue Jan 16 2018 Paul Wolneykien <manowar@altlinux.org> 0.4.5-alt2
+- Adapt for the E2K arch build.
+
 * Wed Apr 19 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.5-alt1
 - rebuilt with alterator 5.0
 
