@@ -1,29 +1,6 @@
-# vim: set ft=spec
-# vim600: set fdm=marker:
-
 %define rname qemu
 
-# {{{ macros define
 %def_disable binfmt_misc
-
-%def_without alpha
-%def_without aarch64
-%def_without arm
-%def_without cris
-%def_with x86
-%def_without m68k
-%def_without microblaze
-%def_without mips
-%def_without ppc
-%def_without sh4
-%def_without sparc
-%def_without s390x
-%def_without lm32
-%def_without xtensa
-%def_without moxie
-%def_without tilegx
-%def_without tricore
-%def_without unicore32
 
 %def_disable werror
 %def_enable sdl
@@ -76,118 +53,21 @@
 %define _libexecdir /usr/libexec
 %define _localstatedir /var
 
-%global target_list_system %nil
-%global target_list_user %nil
-
-%if_with alpha
-%global target_list_system %target_list_system alpha-softmmu
-%global target_list_user %target_list_user alpha-linux-user
-%endif
-
-%if_with aarch64
-%global target_list_system %target_list_system aarch64-softmmu
-%global target_list_user %target_list_user aarch64-linux-user
-%endif
-
-%if_with arm
-%global target_list_system %target_list_system arm-softmmu
-%global target_list_user %target_list_user arm-linux-user armeb-linux-user
-%endif
-
-%if_with cris
-%global target_list_system %target_list_system cris-softmmu
-%global target_list_user %target_list_user cris-linux-user
-%endif
-
-%if_with x86
-%global target_list_system %target_list_system i386-softmmu x86_64-softmmu
-%global target_list_user %target_list_user i386-linux-user x86_64-linux-user
-%endif
-
-%if_with m68k
-%global target_list_system %target_list_system m68k-softmmu
-%global target_list_user %target_list_user m68k-linux-user
-%endif
-
-%if_with microblaze
-%global target_list_system %target_list_system microblaze-softmmu microblazeel-softmmu
-%global target_list_user %target_list_user microblaze-linux-user microblazeel-linux-user
-%endif
-
-%if_with mips
-%global target_list_system %target_list_system mips-softmmu mipsel-softmmu mips64-softmmu mips64el-softmmu
-%global target_list_user %target_list_user mips-linux-user mipsel-linux-user mips64-linux-user mips64el-linux-user mipsn32-linux-user mipsn32el-linux-user
-%endif
-
-%if_with ppc
-%global target_list_system %target_list_system ppc-softmmu ppcemb-softmmu ppc64-softmmu
-%global target_list_user %target_list_user ppc-linux-user ppc64-linux-user ppc64le-linux-user ppc64abi32-linux-user
-%endif
-
-%if_with sh4
-%global target_list_system %target_list_system sh4-softmmu sh4eb-softmmu
-%global target_list_user %target_list_user sh4-linux-user sh4eb-linux-user
-%endif
-
-%if_with sparc
-%global target_list_system %target_list_system sparc-softmmu sparc64-softmmu
-%global target_list_user %target_list_user sparc-linux-user sparc64-linux-user sparc32plus-linux-user
-%endif
-
-%if_with s390x
-%global target_list_system %target_list_system s390x-softmmu
-%global target_list_user %target_list_user s390x-linux-user
-%endif
-
-%if_with lm32
-%global target_list_system %target_list_system lm32-softmmu
-%endif
-
-%if_with unicore32
-%global target_list_system %target_list_system unicore32-softmmu
-%global target_list_user %target_list_user unicore32-linux-user
-%endif
-
-%if_with xtensa
-%global target_list_system %target_list_system xtensa-softmmu xtensaeb-softmmu
-%global target_list_user %target_list_user xtensaeb-linux-user
-%endif
-
-%if_with moxie
-%global target_list_system %target_list_system moxie-softmmu
-%endif
-
-%if_with tricore
-%global target_list_system %target_list_system tricore-softmmu
-%endif
-
-%if_with tilegx
-%global target_list_user %target_list_user tilegx-linux-user
-%endif
-# }}}
-
 Name: pve-%rname
 Version: 2.9.1
-Release: alt4.1
-
+Release: alt6%ubt
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
 Group: Emulators
 Requires: %name-system = %version-%release, %name-user = %version-%release
 Conflicts: %rname
-
 URL: http://www.nongnu.org/qemu/
+
 Source0: qemu-%version.tar.xz
-Source1: qemu.binfmt
 Source2: qemu-kvm.control.in
 Source4: qemu-kvm.rules
 # qemu-kvm back compat wrapper
 Source5: qemu-kvm.sh
-Source8: qemu-guest-agent.rules
-Source9: qemu-guest-agent.service
-Source10: qemu-guest-agent.init
-Source11: OVMF_CODE-pure-efi.fd
-Source12: OVMF_VARS-pure-efi.fd
 
 Source100: Logo.bmp
 
@@ -246,10 +126,19 @@ Patch59: 0021-io-monitor-encoutput-buffer-size-from-websocket-GSou.patch
 Patch60: 0022-9pfs-use-g_malloc0-to-allocate-space-for-xattr.patch
 Patch61: 0023-cirrus-fix-oob-access-in-mode4and5-write-functions.patch
 Patch62: 0024-virtio-check-VirtQueue-Vring-object-is-set.patch
+Patch63: 0025-block-gluster-glfs_lseek-workaround.patch
+Patch64: 0026-gluster-add-support-for-PREALLOC_MODE_FALLOC.patch
+Patch65: 0027-target-i386-Use-host_vendor_fms-in-max_x86_cpu_initf.patch
+Patch66: 0028-target-i386-Define-CPUID_MODEL_ID_SZ-macro.patch
+Patch67: 0029-target-i386-Don-t-use-x86_cpu_load_def-on-max-CPU-mo.patch
+Patch68: 0030-i386-Change-X86CPUDefinition-model_id-to-const-char.patch
+Patch69: 0031-i386-Add-support-for-SPEC_CTRL-MSR.patch
+Patch70: 0032-i386-Add-spec-ctrl-CPUID-bit.patch
+Patch71: 0033-i386-Add-FEAT_8000_0008_EBX-CPUID-feature-word.patch
+Patch72: 0034-i386-Add-new-IBRS-versions-of-Intel-CPU-models.patch
 
-%set_verify_elf_method fhs=relaxed
-
-#set_gcc_version 4.7
+ExclusiveArch: x86_64
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static
 BuildRequires: texinfo perl-podlators libattr-devel libcap-devel libcap-ng-devel
 BuildRequires: libxfs-devel
@@ -315,7 +204,6 @@ to use.
 %package common
 Summary: QEMU CPU Emulator - common files
 Group: Emulators
-BuildArch: noarch
 Requires(pre): control >= 0.7.2
 Requires(pre): shadow-utils sysvinit-utils
 Requires: seavgabios
@@ -420,6 +308,8 @@ Group: Emulators
 %description -n ivshmem-tools
 This package provides client and server tools for QEMU's ivshmem device.
 
+%set_verify_elf_method fhs=relaxed
+
 %prep
 %setup -n %rname-%version
 %patch -p1
@@ -477,6 +367,16 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch60 -p1
 %patch61 -p1
 %patch62 -p1
+%patch63 -p1
+%patch64 -p1
+%patch65 -p1
+%patch66 -p1
+%patch67 -p1
+%patch68 -p1
+%patch69 -p1
+%patch70 -p1
+%patch71 -p1
+%patch72 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -484,7 +384,7 @@ cp -f %SOURCE2 qemu-kvm.control.in
 export CFLAGS="%optflags"
 # non-GNU configure
 ./configure \
-	--target-list='%target_list_system %target_list_user' \
+	--target-list=x86_64-softmmu \
 	--prefix=%_prefix \
 	--sysconfdir=%_sysconfdir \
 	--libdir=%_libdir \
@@ -571,25 +471,22 @@ rm -f %buildroot%_sysconfdir/udev/rules.d/*
 install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/udev/rules.d/%rulenum-%rname-kvm.rules
 install -D -m 0755 %rname-kvm.control.in %buildroot%_controldir/kvm
 
-install -D -m 0644 %SOURCE8 %buildroot/lib/udev/rules.d/%rulenum-%rname-guest-agent.rules
-install -D -m 0644 %SOURCE9 %buildroot%_unitdir/%rname-guest-agent.service
-install -D -m 0755 %SOURCE10 %buildroot%_initdir/%rname-guest-agent
-
 %if_enabled vnc_sasl
 install -D -p -m 0644 qemu.sasl %buildroot%_sysconfdir/sasl2/%rname.conf
 %endif
 
 %find_lang %rname
 
-rm -f %buildroot%_datadir/%rname/slof.bin
-rm -f %buildroot%_datadir/%rname/pxe-{e1000,ne2k_pci,pcnet,rtl8139,virtio}.rom
-rm -f %buildroot%_datadir/%rname/efi-{e1000,ne2k_pci,pcnet,rtl8139,virtio}.rom
+rm -f %buildroot%_datadir/%rname/pxe*rom
+rm -f %buildroot%_datadir/%rname/efi*rom
 rm -f %buildroot%_datadir/%rname/vgabios*bin
 rm -f %buildroot%_datadir/%rname/bios.bin
 rm -f %buildroot%_datadir/%rname/bios-256k.bin
 rm -f %buildroot%_datadir/%rname/s390-ccw.img
+rm -f %buildroot%_datadir/%rname/openbios*
+rm -f %buildroot%_datadir/%rname/u-boot*
 
-for rom in e1000 ne2k_pci pcnet rtl8139 virtio ; do
+for rom in e1000 ne2k_pci pcnet rtl8139 virtio eepro100 e1000e vmxnet3 ; do
   ln -r -s %buildroot%_datadir/ipxe/pxe-${rom}.rom %buildroot%_datadir/%rname/pxe-${rom}.rom
   ln -r -s %buildroot%_datadir/ipxe.efi/efi-${rom}.rom %buildroot%_datadir/%rname/efi-${rom}.rom
 done
@@ -600,50 +497,9 @@ done
 
 ln -r -s %buildroot%_datadir/seabios/{bios,bios-256k}.bin %buildroot%_datadir/%rname/
 
-install -Dp -m 0644 %SOURCE11 %buildroot%_datadir/kvm/OVMF_CODE-pure-efi.fd
-install -m 0644 %SOURCE12 %buildroot%_datadir/kvm/OVMF_VARS-pure-efi.fd
-
-mkdir -p %buildroot/lib/binfmt.d
-for i in dummy \
-%ifnarch %{ix86} x86_64
-    qemu-i386 \
-%endif
-%ifnarch alpha
-    qemu-alpha \
-%endif
-%ifnarch %{arm}
-    qemu-arm \
-%endif
-    qemu-armeb \
-    qemu-cris \
-    qemu-microblaze qemu-microblazeel \
-%ifnarch mips
-    qemu-mips qemu-mips64 \
-%endif
-%ifnarch mipsel
-    qemu-mipsel qemu-mips64el \
-%endif
-%ifnarch m68k
-    qemu-m68k \
-%endif
-%ifnarch ppc ppc64
-    qemu-ppc qemu-ppc64abi32 qemu-ppc64 \
-%endif
-%ifnarch sparc sparc64
-    qemu-sparc qemu-sparc32plus qemu-sparc64 \
-%endif
-%ifnarch s390 s390x
-    qemu-s390x \
-%endif
-%ifnarch sh4
-    qemu-sh4 \
-%endif
-    qemu-sh4eb \
-; do
-  test $i = dummy && continue
-  grep /$i:\$ %SOURCE1 > %buildroot/lib/binfmt.d/$i.conf
-  chmod 644 %buildroot/lib/binfmt.d/$i.conf
-done < %SOURCE1
+mkdir -p %buildroot%_datadir/kvm/
+ln -sf ../OVMF/OVMF_CODE.fd %buildroot%_datadir/kvm/OVMF_CODE-pure-efi.fd
+ln -sf ../OVMF/OVMF_VARS.fd %buildroot%_datadir/kvm/OVMF_VARS-pure-efi.fd
 
 %check
 # Disabled on aarch64 where it fails with several errors.  Will
@@ -682,16 +538,6 @@ fi
 %_bindir/qemu*system*
 %_bindir/vma
 
-#%files user
-#%_bindir/qemu-*
-#/lib/binfmt.d/qemu-*.conf
-#%exclude %_bindir/qemu*system*
-#%exclude %_bindir/qemu-kvm
-#%exclude %_bindir/qemu-img
-#%exclude %_bindir/qemu-io
-#%exclude %_bindir/qemu-nbd
-#%exclude %_bindir/qemu-ga
-
 %files img
 %_bindir/qemu-img
 %_bindir/qemu-io
@@ -700,19 +546,14 @@ fi
 %_man1dir/virtfs-proxy-helper.*
 %_libexecdir/qemu-bridge-helper
 
-%if_enabled guest_agent
-%files guest-agent
-%_bindir/qemu-ga
-/lib/udev/rules.d/%rulenum-%rname-guest-agent.rules
-%_unitdir/%rname-guest-agent.service
-%_initdir/%rname-guest-agent
-%endif
-
 %files aux
 %dir %docdir/
 %docdir/LICENSE
 
 %changelog
+* Wed Jan 17 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt6%ubt
+- 2.9.1-6
+
 * Fri Dec 22 2017 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt4.1
 - rebuild with libiscsi 1.18
 
