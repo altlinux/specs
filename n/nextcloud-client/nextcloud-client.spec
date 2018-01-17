@@ -2,7 +2,7 @@
 %define theme client_theming
 Name: nextcloud-client
 Version: 2.3.3
-Release: alt3%ubt
+Release: alt4%ubt
 
 Group: Networking/File transfer
 Summary: Nextcloud Desktop Client
@@ -21,6 +21,7 @@ Patch1: alt-dont-check-updates.patch
 Patch2: alt-confdir.patch
 Patch3: alt-static-libs.patch
 Patch4: %name-%version-alt-fix-help-url.patch
+Patch5: alt-move-deleted-to-trash.patch
 
 # Automatically added by buildreq on Mon Oct 24 2016 (-bi)
 # optimized out: cmake cmake-modules desktop-file-utils elfutils gcc-c++ kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libgpg-error libgst-plugins1.0 libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-sensors libqt5-sql libqt5-svg libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libqtkeychain-qt5 libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-module-google python-module-sphinx python-modules python3 python3-base qt5-base-devel qt5-tools rpm-build-gir rpm-build-python3 texlive-latex-base zlib-devel
@@ -48,6 +49,7 @@ cd client
 %patch1 -p1
 #%patch2 -p1
 %patch3 -p1
+%patch5 -p1
 
 %build
 %add_optflags %optflags_shared
@@ -90,6 +92,9 @@ desktop-file-install \
 %_K5srv/*nextcloud*.desktop
 
 %changelog
+* Wed Jan 17 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.3.3-alt4%ubt
+- move remote-deleted files to trash (patch from owncloud-client 2.3.4-alt2)
+
 * Wed Nov 22 2017 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.3.3-alt3%ubt
 - updated "client_theming" (beta1->release)
 
