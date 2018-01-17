@@ -1,6 +1,6 @@
 Name: clanlib0.8
 Version: 0.8.1
-Release: alt5
+Release: alt6
 
 Summary: The ClanLib Game SDK
 License: LGPL
@@ -18,6 +18,7 @@ Patch3: ClanLib-0.8.0-gcc43.patch
 Patch4: clanlib-0.8.1-alt-glibc-2.16.patch
 Patch5: clanlib-0.8.1-alt-libpng15.patch
 Patch6: clanlib-0.8.1-alt-gcc6.patch
+Patch7: clanlib-0.8.1-alt-perl.patch
 
 
 Obsoletes: clanLib, lib%name
@@ -157,6 +158,7 @@ work for game developers. This package contains the documentation.
 %patch4 -p2
 %patch5 -p2
 %patch6 -p2
+%patch7 -p2
 
 %build
 echo >> acinclude.m4
@@ -229,6 +231,9 @@ autoreconf -fisv
 %_libdir/libclanGUIStyleSilver-*.so.*
 
 %changelog
+* Wed Jan 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.1-alt6
+- Fixed build with new perl.
+
 * Wed Oct 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.1-alt5
 - Fixed build with new toolchain.
 
