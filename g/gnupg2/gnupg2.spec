@@ -3,7 +3,7 @@
 
 Name: gnupg2
 Version: 2.1.23
-Release: alt2%ubt
+Release: alt3%ubt
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -125,6 +125,9 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Tue Jan 16 2018 Sergey V Turchin <zerg@altlinux.org> 2.1.23-alt3%ubt
+- fix to export GPG_AGENT_INFO
+
 * Fri Dec 29 2017 Sergey V Turchin <zerg@altlinux.org> 2.1.23-alt2%ubt
 - specify path to ca-bundle.crt
 
