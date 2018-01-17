@@ -4,13 +4,12 @@
 Name: libtorrent%{abiversion}
 Epoch: 3
 Version: 0.13.6
-Release: alt1
+Release: alt2
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
 License: GPLv2+
-Url: http://libtorrent.rakshasa.no/
-Packager: Alexey Morsov <swi@altlinux.ru>
+Url: https://github.com/rakshasa/libtorrent
 
 %define full_version %version
 Source0: %name-%version.tar
@@ -71,6 +70,9 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %makeinstall_std
 rm %buildroot%_libdir/*.la
 
+%check
+%make_build check
+
 %files
 %doc AUTHORS ChangeLog NEWS README
 %doc --no-dereference COPYING
@@ -83,6 +85,10 @@ rm %buildroot%_libdir/*.la
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Jan 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3:0.13.6-alt2
+- Fixed build with new cppunit.
+- Enabled tests.
+
 * Mon Nov 09 2015 Afanasov Dmitry <ender@altlinux.org> 3:0.13.6-alt1
 - 0.13.6
 
