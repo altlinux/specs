@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%modulename
-Version: 1.9.2
-Release: alt1.1
+Version: 2.0.2
+Release: alt1
 
 %setup_python_module %modulename
 
@@ -13,7 +13,6 @@ License: ISC-style
 Group: Development/Python
 
 Url: http://pyicu.osafoundation.org/
-Packager: Kirill Maslinsky <kirill@altlinux.org>
 
 %define srcname PyICU-%version
 # http://pypi.python.org/packages/source/P/PyICU/%srcname.tar.gz
@@ -21,21 +20,23 @@ Packager: Kirill Maslinsky <kirill@altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++ libicu-devel python-devel
-BuildPreReq: python-module-setuptools
+BuildRequires: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools
 %endif
 
 %description
 PyICU - Python extension wrapping the ICU C++ API.
 
+%if_with python3
 %package -n python3-module-%modulename
 Summary: Python extension wrapping the ICU C++ API
 Group: Development/Python3
 
 %description -n python3-module-%modulename
 PyICU - Python extension wrapping the ICU C++ API.
+%endif
 
 %prep
 %setup
@@ -75,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt1
+- Updated to upstream version 2.0.2.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.9.2-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
