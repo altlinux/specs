@@ -1,10 +1,10 @@
 Name: bind
-Version: 9.11.2
-%define src_version 9.11.2
-Release: alt2
+Version: 9.11.2.P1
+%define src_version 9.11.2-P1
+Release: alt1
 
 Summary: ISC BIND - DNS server
-License: BSD-style
+License: MPLv2.0
 Group: System/Servers
 Url: http://www.isc.org/products/BIND/
 
@@ -434,6 +434,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Wed Jan 17 2018 Stanislav Levin <slev@altlinux.org> 9.11.2.P1-alt1
+- 9.11.2 -> 9.11.2-P1 (fixes: CVE-2017-3145).
+
 * Thu Dec 07 2017 Stanislav Levin <slev@altlinux.org> 9.11.2-alt2
 - Fix lack of rndc.key in non-chrooted bind (closes: #34292).
 
