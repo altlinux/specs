@@ -3,7 +3,7 @@ Name: sendmail
 %define tarbolversion 8.15.2
 
 Version: %tarbolversion
-Release: alt4
+Release: alt5
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -500,6 +500,9 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Wed Jan 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 8.15.2-alt5
+- Rebuilt without NIS support.
+
 * Sun Feb 12 2017 Sergey Y. Afonin <asy@altlinux.ru> 8.15.2-alt4
 - added to *.mc of ALT (except submit.mc) confMILTER_MACROS_ENVRCPT
   definition for mailfromd
