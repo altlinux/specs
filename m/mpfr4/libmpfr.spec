@@ -1,6 +1,6 @@
-Name: mpfr
-Version: 4.0.1
-Release: alt1
+Name: mpfr4
+Version: 3.1.5
+Release: alt2
 
 Summary: Multiple Precision Floating-Point library
 License: LGPLv2.1+
@@ -9,6 +9,8 @@ Url: http://www.mpfr.org/
 
 # Don't build static library by default
 %def_disable static
+
+%def_disable devel
 
 # Automatically added by buildreq on Wed Dec 16 2015
 # optimized out: elfutils perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore python-base xz
@@ -20,12 +22,14 @@ Source1: mpfrxx.h
 
 Patch: mpfr-%version-%release.patch
 
-%define libmpfr libmpfr6
+%define libmpfr libmpfr4
 
 %package -n %libmpfr
 Summary: Multiple Precision Floating-Point library
 License: LGPLv2.1+
-Group: System/Libraries
+Group: System/Legacy libraries
+Provides: libmpfr = %version
+Obsoletes: libmpfr
 
 %package -n libmpfr-devel
 Summary: Development MPFR library, header files and documentation
@@ -65,14 +69,12 @@ This package provides static library necessary to allow static linking
 of MPFR-based programs.
 
 %prep
-%setup
+%setup -n mpfr-%version
 rm m4/l*.m4
 %patch -p1
-{
-	sed -n 's/^[[:space:]]*#[[:space:]]*define[[:space:]]\+[^[:space:]]\+[[:space:]]\+\(__gmp[^[:space:]]\+\)$/\1/p' src/mpfr.h
-	awk '/^__MPFR_DECLSPEC/{decl=1}decl&&/\(/{decl=0;print}' src/mpfr.h |
-		sed -n 's/^.*[[:space:]*]\+\([^[:space:]*]\+\)[[:space:]]\+(.*/\1/p'
-} >> src/libmpfr.sym
+awk '/__MPFR_DECLSPEC/{decl=1}decl&&/_MPFR_PROTO/{decl=0;print}' src/mpfr.h |
+	sed -n 's/^.*[[:space:]*]\+\([^[:space:]*]\+\)[[:space:]]\+_MPFR_PROTO.*/\1/p' \
+	>>src/libmpfr.sym
 sort -u -o src/libmpfr.sym{,}
 
 %build
@@ -94,11 +96,11 @@ install -pm644 %_sourcedir/mpfrxx.h %buildroot%_includedir/
 %docdir/[ABN]*
 %exclude %docdir/COPYING*
 
+%if_enabled devel
 %files -n libmpfr-devel
 %_libdir/*.so
 %_includedir/*
 %_infodir/*
-%_pkgconfigdir/mpfr.pc
 %dir %docdir
 %docdir/[FTe]*
 
@@ -106,13 +108,11 @@ install -pm644 %_sourcedir/mpfrxx.h %buildroot%_includedir/
 %files -n libmpfr-devel-static
 %_libdir/*.a
 %endif
+%endif
 
 %changelog
-* Fri Feb 16 2018 Dmitry V. Levin <ldv@altlinux.org> 4.0.1-alt1
-- v4.0.0 -> v4.0.1.
-
-* Wed Jan 17 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.0-alt1
-- Updated to v4.0.0.
+* Wed Jan 17 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.5-alt2
+- Packaged libmpfr4 compatibility library.
 
 * Wed Nov 30 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.5-alt1
 - Updated to v3.1.5.
