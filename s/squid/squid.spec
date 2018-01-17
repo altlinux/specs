@@ -9,7 +9,7 @@
 
 Name: squid
 Version: 3.5.26
-Release: alt2
+Release: alt3
 %define langpack_ver 20150704
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -163,7 +163,7 @@ sed -i -e "s|squid_curtime|$RELEASE_TIME|" include/version.h
 	--enable-cache-digests \
 	--enable-x-accelerator-vary \
 	--enable-auth \
-	--enable-auth-basic="DB LDAP NCSA NIS PAM RADIUS SASL SMB SMB_LM fake getpwnam" \
+	--enable-auth-basic="DB LDAP NCSA PAM RADIUS SASL SMB SMB_LM fake getpwnam" \
 	--enable-auth-ntlm="fake smb_lm" \
 	--enable-auth-digest="LDAP eDirectory file" \
 	--enable-auth-negotiate="kerberos wrapper" \
@@ -305,6 +305,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Wed Jan 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.26-alt3
+- Rebuilt without NIS support.
+
 * Fri Jul 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.26-alt2
 - Fixed build with new cppunit
 
