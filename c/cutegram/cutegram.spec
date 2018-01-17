@@ -2,7 +2,7 @@
 
 Name: cutegram
 Version: 2.99
-Release: alt1.git_1_e489812
+Release: alt1.git_2_e489812
 Summary: Cutegram is a telegram client by Aseman Land
 
 # Bundled JS stuff:
@@ -35,6 +35,7 @@ BuildRequires:qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-deve
 
 Requires: aseman-qt-tools
 Requires: telegramqml
+Requires: qt5-graphicaleffects
 
 %description
 A different telegram client from Aseman team. Cutegram forked from Sigram
@@ -67,6 +68,10 @@ INSTALL_ROOT=%buildroot %makeinstall_std
 %_desktopdir/%origname.desktop
 
 %changelog
+* Wed Jan 17 2018 Hihin Ruslan <ruslandh@altlinux.ru> 2.99-alt1.git_2_e489812
+- Add requires qt5-graphicaleffects
+- Closes: #34432
+
 * Sat Apr 22 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2.99-alt1.git_1_e489812
 - New version from git e489812
 
