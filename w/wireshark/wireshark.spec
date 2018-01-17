@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.4.3
+Version: 2.4.4
 Release: alt1%ubt
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -287,6 +287,13 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Wed Jan 17 2018 Anton Farygin <rider@altlinux.ru> 2.4.4-alt1%ubt
+- 2.4.4
+- fixes:
+    * wnpa-sec-2018-01  Multiple dissectors could crash. CVE-2018-5336
+    * wnpa-sec-2018-03  The IxVeriWave file parser could crash.  CVE-2018-5334
+    * wnpa-sec-2018-04  The WCP dissector could crash. CVE-2018-5335
+
 * Sat Dec 09 2017 Anton Farygin <rider@altlinux.ru> 2.4.3-alt1%ubt
 - 2.4.3
 - fixes:
