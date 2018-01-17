@@ -1,5 +1,5 @@
 Name: tnef
-Version: 1.4.16
+Version: 1.4.17
 Release: alt1
 
 Summary: MS-TNEF attachments decoder
@@ -37,6 +37,9 @@ view the attachment.
 %doc AUTHORS BUGS NEWS README* doc/FAQ
 
 %changelog
+* Wed Jan 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.17-alt1
+- 1.4.17
+
 * Thu Jan 11 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.16-alt1
 - 1.4.16
 
