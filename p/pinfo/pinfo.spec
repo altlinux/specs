@@ -1,6 +1,6 @@
 Name: pinfo
 Version: 0.6.10
-Release: alt1
+Release: alt2
 
 Summary: Przemek's Info Viewer - a (much) better info
 Group: System/Base
@@ -14,11 +14,9 @@ Patch2: pinfo-0.6.10-xz.patch
 
 Requires: url_handler
 
-# Automatically added by buildreq on Tue Oct 28 2003
-BuildRequires: libncursesw-devel libtinfo-devel libncursesxx-devel
-# explicitly added texinfo for info files
-BuildRequires: texinfo
-
+# Automatically added by buildreq on Wed Jan 17 2018
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-mips libncurses-devel libtinfo-devel perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl python-base xz
+BuildRequires: libncursesw-devel makeinfo
 
 %description
 Hypertext info file viewer. User interface similar to lynx.
@@ -50,6 +48,9 @@ ln -s %name %buildroot%_bindir/pman
 %_infodir/*.info*
 
 %changelog
+* Wed Jan 17 2018 Fr. Br. George <george@altlinux.ru> 0.6.10-alt2
+- Optimizing buildreq
+
 * Fri Oct 13 2017 Fr. Br. George <george@altlinux.ru> 0.6.10-alt1
 - Upstream switch to GH
 - Freshen (version is 0.6.10 sitll)
