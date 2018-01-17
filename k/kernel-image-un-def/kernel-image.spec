@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	4.14
-%define kernel_sublevel .13
+%define kernel_sublevel .14
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -20,7 +20,7 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define nprocs 12
 # Build options
 # You can change compiler version by editing this line:
-%define kgcc_version	5
+%define kgcc_version	6
 
 # Enable/disable SGML docs formatting
 %if "%sub_flavour" == "def"
@@ -611,6 +611,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed Jan 17 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.14-alt1
+- v4.14.14  (Fixes: CVE-2017-1000410, CVE-2017-17741, CVE-2017-5753)
+
 * Wed Jan 10 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.14.13-alt1
 - v4.14.13
 
