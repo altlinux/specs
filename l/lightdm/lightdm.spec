@@ -7,7 +7,7 @@
 
 Name: lightdm
 Version: 1.16.7
-Release: alt16
+Release: alt17
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -32,7 +32,7 @@ Patch2: %name-%version-%release-advanced.patch
 # Requires: %name-greeter
 # Requires: accountsservice
 Requires: dbus-tools-gui
-Requires: dm-tool = %version-%release
+Requires: dm-tool = %EVR
 
 BuildRequires: gcc-c++ intltool
 BuildRequires: pkgconfig(glib-2.0) >= 2.30 pkgconfig(gio-2.0) >= 2.26  pkgconfig(gio-unix-2.0)  pkgconfig(xdmcp)  pkgconfig(xcb)
@@ -60,6 +60,8 @@ several toolkits, including HTML/CSS/Javascript.
 Group: System/Libraries
 Summary: LightDM GObject Greeter Library
 License: LGPLv2+
+Conflicts: %name < %EVR
+Conflicts: %name > %EVR
 
 %description -n liblightdm-gobject
 A library for LightDM greeters based on GObject which interfaces with LightDM
@@ -69,6 +71,8 @@ and provides common greeter functionality.
 Group: System/Libraries
 Summary: LightDM Qt Greeter Library
 License: LGPLv2+
+Conflicts: %name < %EVR
+Conflicts: %name > %EVR
 
 %description -n liblightdm-qt
 A library for LightDM greeters based on Qt which interfaces with LightDM and
@@ -78,6 +82,8 @@ provides common greeter functionality.
 Group: System/Libraries
 Summary: LightDM Qt5 Greeter Library
 License: LGPLv2+
+Conflicts: %name < %EVR
+Conflicts: %name > %EVR
 
 %description -n liblightdm-qt5
 A library for LightDM greeters based on Qt5 which interfaces with LightDM and
@@ -86,7 +92,7 @@ provides common greeter functionality.
 %package devel
 Group: Development/C
 Summary: Development Files for LightDM
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package provides all necessary files for developing plugins, greeters, and
@@ -97,6 +103,7 @@ Summary: Development package for %name
 Group: Development/Documentation
 BuildArch: noarch
 Conflicts: %name < %version
+Conflicts: %name > %version
 
 %description devel-doc
 Contains developer documentation for %name.
@@ -104,7 +111,7 @@ Contains developer documentation for %name.
 %package gir
 Summary: GObject introspection data for the %name
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the %name
@@ -113,7 +120,7 @@ GObject introspection data for the %name
 Summary: GObject introspection devel data for the %name
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the %name
@@ -122,6 +129,8 @@ GObject introspection devel data for the %name
 Summary: Display Manager control utility
 Group: Graphical desktop/Other
 License: GPLv3+
+Conflicts: %name < %EVR
+Conflicts: %name > %EVR
 
 %description -n dm-tool
 dm-tool utility controls a FreeDesktop.org-compatible display
@@ -279,6 +288,10 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Fri Dec 22 2017 Ivan Zakharyaschev <imz@altlinux.org> 1.16.7-alt17
+- Show the messages from PAM translated.
+- Stricter compatibility requirements for client libs.
+
 * Thu Nov 09 2017 Paul Wolneykien <manowar@altlinux.org> 1.16.7-alt16
 - Fix: Properly report the PAM result before exit the password
   change session.
