@@ -1,10 +1,10 @@
-%define git_commit ce6529f
+%define git_commit 8984814
 		    
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 27.6.2
+Version: 27.7.0
 
 # %%ifndef git_commit
 Release: alt1
@@ -15,7 +15,7 @@ Release: alt1
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 
-# git commit ce6529faeb2f0c11c832a34570c79d04707c3255
+# git commit 89848140a721cde16c96465b4f3b70c75d5cbb9a
 Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
@@ -68,6 +68,8 @@ Patch22: palemoon_rpath-27.5.0_v2.patch
 Patch23: palemoon_version-27.5.0.patch
 Patch24: palemoon-27.0.2-ui_picker_false.patch
 #Patch25: palemoon-27.4.0-blocklist.patch
+
+#Patch26: palemoon-sqlite3-27.7.0.patch
 
 # Patch from Rosa
 # Patch101: palemoon-27.4.0-lang.patch
@@ -194,7 +196,6 @@ export RPATH_PATH="$rpath"
 
 %patch20 -p1
 %patch24 -p1
-#patch26 -p1
 
 %patch21 -p1
 
@@ -589,8 +590,11 @@ install -D -m 644 README.md ../
 %exclude %_includedir/*
 %exclude %_datadir/idl/*
 
-# git commit ce6529faeb2f0c11c832a34570c79d04707c3255
+# git commit 89848140a721cde16c96465b4f3b70c75d5cbb9a
 %changelog
+* Tue Jan 16 2018 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.7.0-alt1
+- New Version - Release 27.7.0
+
 * Sat Dec 02 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.6.2-alt1
 - New Version - Release 27.6.2
 - Fixed CVE-2017-7832, CVE-2017-7835, CVE-2017-7840. See Changelog 
@@ -913,3 +917,4 @@ install -D -m 644 README.md ../
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
+
