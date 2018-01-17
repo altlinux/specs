@@ -4,8 +4,8 @@
 %define cid_dict       uk@dictionaries.addons.mozilla.org
 %define cid_dict_dir   %palemoon_noarch_extensionsdir/%cid_dict
 
-%define min_version	27.3.99
-%define max_version	27.*
+%define min_version	27.7.0
+%define max_version	27.7.*
 
 %define bname		newmoon
 %define sdir		searchplugins
@@ -20,7 +20,7 @@ Name: palemoon-uk
 #
 #    Locales update (27.6.0 RC3)
 
-Version: 27.6.0
+Version: 27.7.0
 Release: alt1
 
 Summary: Ukrainian (UA) Language Pack for Pale Moon
@@ -35,7 +35,7 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 Source: uk_palemoon_%version.xpi
 Source2: searchplugins.tar
 
-Requires: palemoon >= 27.6.0
+Requires: palemoon >= 27.7.0
 Requires: hunspell-uk
 BuildArch: noarch
 
@@ -47,10 +47,10 @@ BuildRequires: libdb4-devel unzip
 The Palemoon Ukrainian translation and dictionary.
 
 %package palemoon-searchplugins
-Summary: The Palemoon Russian translation and dictionary.
+Summary: The Palemoon Ukrainian translation and dictionary.
 Group:   Networking/WWW
 BuildArch: noarch
-Conflicts:  palemoon-uk < 27.4.0
+Conflicts:  palemoon-uk < 27.7.0
 
 %description palemoon-searchplugins
 The set of Ukrainian search plugins for Palemoon
@@ -114,6 +114,9 @@ ln -s %_datadir/myspell/uk_UA.dic %buildroot/%cid_dict_dir/dictionaries/uk.dic
 %search_dir
 
 %changelog
+* Wed Jan 17 2018 Hihin Ruslan <ruslandh@altlinux.ru> 27.7.0-alt1
+- Update for release 27.7.0-RC6
+
 * Tue Nov 21 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.6.0-alt1
 - Update for release 27.6.0-RC3
 

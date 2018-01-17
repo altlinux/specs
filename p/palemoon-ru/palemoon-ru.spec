@@ -4,8 +4,8 @@
 %define cid_dict       ru@dictionaries.addons.mozilla.org
 %define cid_dict_dir   %palemoon_noarch_extensionsdir/%cid_dict
 
-%define min_version	27.3.99
-%define max_version	27.6.*
+%define min_version	27.7.0
+%define max_version	27.7.*
 
 %define bname		newmoon
 %define sdir		searchplugins
@@ -21,7 +21,7 @@ Name: palemoon-ru
 #    Locales update (27.6.0 RC3)
 
 
-Version: 27.6.0
+Version: 27.7.0
 Release: alt1
 
 Summary: Russian (RU) Language Pack for Pale Moon
@@ -39,7 +39,7 @@ Source2: searchplugins.tar
 Patch:   %name-27.1.1-search.patch
 #Patch2:	 %name-27.3.0-advanced.patch
 
-Requires: palemoon >= 27.4.0
+Requires: palemoon >= 27.7.0
 Requires: hunspell-ru
 Obsoletes: palemoon-ru_yo-dictionary palemoon-ru_ie-dictionary
 Provides: palemoon-ru_yo-dictionary palemoon-ru_ie-dictionary
@@ -55,7 +55,7 @@ The Palemoon Russian translation and dictionary.
 Summary: The Palemoon Russian translation and dictionary.
 Group:   Networking/WWW
 BuildArch: noarch
-Conflicts:  palemoon-ru < 27.4.0
+Conflicts:  palemoon-ru < 27.7.0
 
 %description -n palemoon-searchplugins
 The set of search plugins for Palemoon
@@ -132,13 +132,11 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %search_dir
 
 
-#commit f353aabc21603a0a919202c32010b4b9a9c7bc9c
-#Author: JustOff <Off.Just.Off@gmail.com>
-#Date:   Sun Nov 5 22:51:34 2017 +0200
-#
-#    Locales update (27.6.0 RC3)
 
 %changelog
+* Wed Jan 17 2018 Hihin Ruslan <ruslandh@altlinux.ru> 27.7.0-alt1
+- Update for release 27.7.0-RC6
+
 * Tue Nov 21 2017 Hihin Ruslan <ruslandh@altlinux.ru> 27.6.0-alt1
 - Update for release 27.6.0-RC3
 
