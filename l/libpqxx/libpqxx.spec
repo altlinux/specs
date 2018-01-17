@@ -10,7 +10,7 @@ Name:           libpqxx
 Summary:        C++ client API for PostgreSQL
 Epoch:          1
 Version:        4.0.1
-Release:        alt1_10
+Release:        alt2_10
 
 License:        BSD
 URL:            http://pqxx.org/
@@ -20,7 +20,7 @@ Source1:        http://pqxx.org/download/software/libpqxx/libpqxx-%{version}.tar
 Patch3:         libpqxx-2.6.8-multilib.patch
 Patch4:         libpqxx_configure.patch
 
-BuildRequires:  libecpg6.8-devel libpq5.9-devel postgresql9.6-devel
+BuildRequires:  libecpg6-devel libpq5-devel postgresql10-devel
 BuildRequires:  python
 Source44: import.info
 
@@ -87,6 +87,9 @@ make %{?_smp_mflags} check ||:
 
 
 %changelog
+* Wed Jan 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.0.1-alt2_10
+- Updated build dependencies.
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.0.1-alt1_10
 - update to new release by fcimport
 
