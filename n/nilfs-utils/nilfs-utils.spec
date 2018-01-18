@@ -7,15 +7,19 @@
 
 %define bname nilfs
 %define lname lib%bname
+
 Name: %bname-utils
-Version: 2.2.0
-Release: alt2
+Version: 2.2.7
+Release: alt1
+
 Summary: Utilities for managing NILFS v2 filesystems
 License: GPLv2+
 Group: System/Kernel and hardware
+
 Url: http://www.%bname.org
 Source: http://www.%bname.org/download/%name-%version.tar
 Patch: %name-%version-%release.patch
+
 Provides: %{bname}2-utils = %version-%release
 %{!?_disable_shared:Requires: %lname = %version-%release}
 
@@ -26,7 +30,6 @@ BuildRequires: libuuid-devel
 
 %description
 Utilities to work with NILFS v2 filesystems.
-
 
 %if_enabled shared
 %package -n %lname
@@ -39,7 +42,6 @@ This package contains shared code for %name and other utilities dealing
 with NILFS v2 filesystems.
 %endif
 
-
 %package -n %lname-devel
 Summary: NILFS v2 filesystem-specific headers
 Group: Development/C
@@ -49,7 +51,6 @@ License: LGPLv2
 %description -n %lname-devel
 This package contains the header files needed to develop NILFS v2
 filesystem-specific programs.
-
 
 %if_enabled static
 %package -n %lname-devel-static
@@ -62,11 +63,9 @@ License: LGPLv2+
 This package contains NILFS v2 static libraries.
 %endif
 
-
 %prep
-%setup -q
+%setup
 %patch -p1
-
 
 %build
 %autoreconf
@@ -82,11 +81,10 @@ This package contains NILFS v2 static libraries.
 %make_build
 gzip -9c ChangeLog > ChangeLog.gz
 
-
 %install
 %makeinstall_std
 %if "%libdir" != "%_libdir"
-install -d -m 0755 %buildroot%_libdir
+install -dm755 %buildroot%_libdir
 %if_enabled shared
 for f in %buildroot%libdir/*.so; do
 	ln -sf %libdir/$(readlink $f) %buildroot%_libdir/$(basename $f)
@@ -95,7 +93,6 @@ done
 %endif
 %{?_enable_static:mv %buildroot%libdir/*.a %buildroot%_libdir/}
 %endif
-
 
 %files
 %doc AUTHORS ChangeLog.*
@@ -107,25 +104,25 @@ done
 %_man5dir/*
 %_man8dir/*
 
-
 %if_enabled shared
 %files -n %lname
 %libdir/*.so.*
 %endif
 
-
 %files -n %lname-devel
 %{?_enable_shared:%_libdir/*.so}
 %_includedir/*
-
 
 %if_enabled static
 %files -n %lname-devel-static
 %_libdir/*.a
 %endif
 
-
 %changelog
+* Thu Jan 18 2018 Michael Shigorin <mike@altlinux.org> 2.2.7-alt1
+- 2.2.7
+- minor spec cleanup
+
 * Wed Apr 23 2014 Led <led@altlinux.ru> 2.2.0-alt2
 - upstream fixes
 
