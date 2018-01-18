@@ -5,7 +5,7 @@
 
 Name: qt5-multimedia
 Version: 5.9.3
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Libraries
 Summary: Qt5 - Multimedia support
@@ -32,6 +32,9 @@ BuildRequires: pkgconfig(xv)
 %if_disabled bootstrap
 BuildRequires: qt5-tools
 %endif
+
+# gstreamer plugins may be required for proper audio and video playback
+Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-plugins-ugly1.0 gst-libav
 
 %description
 The Qt Multimedia module provides a rich feature set that enables you to
@@ -128,6 +131,9 @@ export QT_HASH_SEED=0
 %endif
 
 %changelog
+* Thu Jan 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.9.3-alt2%ubt
+- Added runtime dependencies on gstreamer plugins.
+
 * Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
 - new version
 
