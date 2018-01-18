@@ -1,7 +1,7 @@
 %define rname sweeper
 
 Name: kde5-%rname
-Version: 17.12.0
+Version: 17.12.1
 Release: alt1%ubt
 %K5init
 
@@ -63,5 +63,8 @@ Requires: %name-common = %version-%release
 %_K5xmlgui/sweeper/
 
 %changelog
+* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.1-alt1%ubt
+- new version
+
 * Wed Dec 20 2017 Sergey V Turchin <zerg@altlinux.org> 17.12.0-alt1%ubt
 - initial build

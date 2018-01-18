@@ -4,8 +4,8 @@
 %define libkolfprivate libkolfprivate%sover
 
 Name: kde5-%rname
-Version: 17.12.0
-Release: alt2%ubt
+Version: 17.12.1
+Release: alt1%ubt
 %K5init
 
 Group: Games/Arcade
@@ -77,6 +77,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkolfprivate.so.*
 
 %changelog
+* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.1-alt1%ubt
+- new version
+
 * Fri Dec 22 2017 Sergey V Turchin <zerg@altlinux.org> 17.12.0-alt2%ubt
 - fix package
 

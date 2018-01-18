@@ -2,7 +2,7 @@
 %def_disable tunepimp
 
 Name: kde5-%rname
-Version: 17.12.0
+Version: 17.12.1
 Release: alt1%ubt
 %K5init
 
@@ -75,5 +75,8 @@ sed -i '/^find_package.*TunePimp/d' CMakeLists.txt
 %_K5srv/ServiceMenus/*juk*
 
 %changelog
+* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.1-alt1%ubt
+- new version
+
 * Wed Dec 20 2017 Sergey V Turchin <zerg@altlinux.org> 17.12.0-alt1%ubt
 - initial build

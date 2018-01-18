@@ -4,8 +4,8 @@
 %define libiris_ksirk libiris_ksirk%iris_ksirk_sover
 
 Name: kde5-%rname
-Version: 17.12.0
-Release: alt2%ubt
+Version: 17.12.1
+Release: alt1%ubt
 %K5init
 
 Group: Games/Strategy
@@ -84,6 +84,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libiris_ksirk.so.*
 
 %changelog
+* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.1-alt1%ubt
+- new version
+
 * Mon Dec 25 2017 Sergey V Turchin <zerg@altlinux.org> 17.12.0-alt2%ubt
 - fix conflict with KDE4 (ALT#34385)
 

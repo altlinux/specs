@@ -4,8 +4,8 @@
 %define libkgetcore libkgetcore%sover
 
 Name: kde5-%rname
-Version: 17.12.0
-Release: alt2%ubt
+Version: 17.12.1
+Release: alt1%ubt
 %K5init
 
 Group: Networking/File transfer
@@ -107,6 +107,9 @@ sed -i '/^find_package(KF5Torrent/d' CMakeLists.txt
 %_K5lib/libkgetcore.so.%sover
 
 %changelog
+* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.1-alt1%ubt
+- new version
+
 * Wed Dec 20 2017 Sergey V Turchin <zerg@altlinux.org> 17.12.0-alt2%ubt
 - update translations
 
