@@ -14,8 +14,8 @@
 # published by the Open Source Initiative.
 
 Name: neard
-Version: 0.15
-Release: alt3
+Version: 0.16
+Release: alt1
 
 Summary: NFC for Linux
 License: GPLv2
@@ -92,6 +92,9 @@ install -pDm755 %SOURCE3 %buildroot%_initdir/neard
 %_libdir/%name/test/
 
 %changelog
+* Thu Jan 18 2018 Michael Shigorin <mike@altlinux.org> 0.16-alt1
+- 0.16
+
 * Thu Jan 07 2016 Michael Shigorin <mike@altlinux.org> 0.15-alt3
 - mark compressed manpages properly
 
