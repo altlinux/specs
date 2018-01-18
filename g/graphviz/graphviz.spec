@@ -13,7 +13,7 @@
 
 Name: graphviz
 Version: 2.40.1
-Release: alt1.1.1.1
+Release: alt1.1.1.2
 
 Summary: Graphs visualization tools
 License: Common Public License 1.0
@@ -168,6 +168,11 @@ sed -i 's,-Wmissing-include-dirs ,,' \
 
 %build
 %add_optflags -DNDEBUG %optflags_fastmath
+# Some plugins use C++ and need lcxa. It can't be loaded
+# dynamically, so all binaries should be linked with it.
+%ifarch e2k
+export LIBS+=" -lcxa"
+%endif
 %configure \
 	--disable-static \
 	--with-pangocairo \
@@ -335,6 +340,10 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 # - enable/fix/test language bindings
 
 %changelog
+* Fri Jan 12 2018 Andrew Savchenko <bircoph@altlinux.org> 2.40.1-alt1.1.1.2
+- E2K: binaries must be compiled with -lcxa, because plugins use
+  C++ and may engage cxa.
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.40.1-alt1.1.1.1
 - rebuild with new perl 5.26.1
 
