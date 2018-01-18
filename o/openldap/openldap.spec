@@ -18,7 +18,7 @@
 
 Name: openldap
 Version: %_sover.45
-Release: alt3
+Release: alt4
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -81,7 +81,6 @@ Patch2: %_bname-2.3.34-alt-pid.patch
 Patch3: %_bname-2.3.12-autoconf-2.5-alt.patch
 
 Patch4: %_bname-2.3.20-alt-makefile.patch
-Patch5: %_bname-2.3.20-alt-ldapconf.patch
 
 Patch7: %_bname-2.3.34-alt-meta-backend.patch
 
@@ -258,7 +257,6 @@ HTML and TXT versions
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 #%%patch7 -p1
 
 %if_enabled ntlm
@@ -707,6 +705,11 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Thu Jan 18 2018 Stanislav Levin <slev@altlinux.org> 2.4.45-alt4
+- fix default value of TLS_REQCERT (NEVER -> DEMAND) in ldap.conf
+  accoding to upstream. Some of applications expect to use the default
+  DEMAND behavior.
+
 * Tue Dec 19 2017 Leonid Krivoshein <klark@altlinux.org> 2.4.45-alt3
 - added support OLC (cn=config or /etc/openldap/slapd.d);
 - added backup/restore scripts for slapd.d directory;
