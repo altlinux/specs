@@ -3,7 +3,7 @@
 %add_findreq_skiplist %_K5data/plasma/plasma_scriptengine_ruby/*.rb
 
 Name: kf5-%rname
-Version: 5.41.0
+Version: 5.42.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -31,6 +31,7 @@ BuildRequires: kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-k
 BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kpackage-devel
 BuildRequires: kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel kf5-kwayland-devel
+BuildRequires: kf5-kirigami-devel
 
 %description
 The plasma framework provides the foundations that can be used to build a primary user interface, from graphical to logical components.
@@ -117,11 +118,15 @@ KF5 library
 %exclude %_K5data/plasma/desktoptheme
 %_K5qml/QtQuick/
 %_K5qml/org/kde/plasma/*/
+%_K5qml/org/kde/kirigami.2/*/
 #%_K5srv/kded/*.desktop
 %_K5srv/*.desktop
 %_K5srvtyp/*.desktop
 
 %changelog
+* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt1%ubt
+- new version
+
 * Tue Dec 12 2017 Sergey V Turchin <zerg@altlinux.org> 5.41.0-alt1%ubt
 - new version
 
