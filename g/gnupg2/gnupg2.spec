@@ -3,7 +3,7 @@
 
 Name: gnupg2
 Version: 2.1.23
-Release: alt3%ubt
+Release: alt5%ubt
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -95,6 +95,15 @@ rm doc/*.info*
 %install
 %makeinstall_std
 
+mkdir -p %buildroot/usr/lib/systemd/user/
+install -m 0644 doc/examples/systemd-user/dirmngr.service %buildroot/usr/lib/systemd/user
+install -m 0644 doc/examples/systemd-user/dirmngr.socket  %buildroot/usr/lib/systemd/user
+install -m 0644 doc/examples/systemd-user/gpg-agent-browser.socket  %buildroot/usr/lib/systemd/user/
+install -m 0644 doc/examples/systemd-user/gpg-agent-extra.socket    %buildroot/usr/lib/systemd/user/
+install -m 0644 doc/examples/systemd-user/gpg-agent-ssh.socket      %buildroot/usr/lib/systemd/user/
+install -m 0644 doc/examples/systemd-user/gpg-agent.service         %buildroot/usr/lib/systemd/user/
+install -m 0644 doc/examples/systemd-user/gpg-agent.socket          %buildroot/usr/lib/systemd/user/
+
 install -pDm755 %_sourcedir/gnupg-agent.sh \
 	%buildroot%_sysconfdir/profile.d/gnupg-agent.sh
 sed -i 's|@LIBEXECDIR@|%_libexecdir|g' \
@@ -118,6 +127,7 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %exclude %_bindir/gpgsplit
 %_sbindir/*
 %_libexecdir/gnupg/
+/usr/lib/systemd/user/*.*
 %_datadir/gnupg/
 %_infodir/*.info*
 %_mandir/man?/*
@@ -125,6 +135,12 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 2.1.23-alt5%ubt
+- package dirmngr systemd units
+
+* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 2.1.23-alt4%ubt
+- package systemd units
+
 * Tue Jan 16 2018 Sergey V Turchin <zerg@altlinux.org> 2.1.23-alt3%ubt
 - fix to export GPG_AGENT_INFO
 
