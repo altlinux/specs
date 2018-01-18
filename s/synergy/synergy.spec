@@ -1,6 +1,6 @@
 Summary:	Mouse and keyboard sharing utility
 Name:		synergy
-Version:	1.7.6
+Version:	2.0.0
 Release:	alt1
 License:	GPL
 Group:		Accessibility
@@ -8,17 +8,13 @@ URL:		http://synergy-project.org/
 Source0:	%name-%version.tar
 Patch0:		%name-%version-%release.patch
 
+%define githash 0bd448d5
+
 Packager:	Evgeny Sinelnikov <sin@altlinux.ru>
 
 # Automatically added by buildreq on Fri Sep 28 2007
-BuildRequires: gcc-c++ libXtst-devel
-BuildRequires: libcurl-devel
-BuildRequires: libcryptopp-devel
-BuildRequires: libssl-devel
-BuildRequires: rpm-macros-cmake
-BuildRequires: cmake
-
-%def_without test
+BuildRequires: cmake gcc-c++
+BuildRequires: libcurl-devel libssl-devel libXtst-devel
 
 %description
 Synergy lets you easily share a single mouse and keyboard between
@@ -28,41 +24,25 @@ multiple computers on their desk since each system uses its own
 display.
 
 %prep
-%setup -q
+%setup
 %patch0 -p1
 
-%if_with test
-unzip ext/gtest-1.6.0.zip -d ext/gtest-1.6.0
-unzip ext/gmock-1.6.0.zip -d ext/gmock-1.6.0
-%endif
-
 %build
-./configure \
-%if_with test
-    -DWITH_TEST=1
-%endif
-    #
-
-%make_build -j1 VERBOSE=1
+cmake . -DSYNERGY_REVISION=%githash
+%make_build
 
 %install
 install -D bin/synergyc %buildroot%_bindir/synergyc
 install -D bin/synergys %buildroot%_bindir/synergys
+install -D bin/synergy-core %buildroot%_bindir/synergy-core
 install -D -m0644 doc/synergy.conf.example %buildroot%_sysconfdir/synergy.conf
 install -D -m0644 doc/synergys.man %buildroot/%_man1dir/synergys.1
 install -D -m0644 doc/synergyc.man %buildroot/%_man1dir/synergyc.1
 
-#%if_with test
-#install -D bin/synergyd %buildroot%_bindir/synergyd
-#install -D bin/usynergy %buildroot%_bindir/usynergy
-#install -D bin/syntool %buildroot%_bindir/syntool
-#install -D bin/integtests %buildroot%_bindir/integtests
-#install -D bin/unittests %buildroot%_bindir/unittests
-#%endif
-
 %files
-%doc ChangeLog LICENSE README
+%doc ChangeLog LICENSE
 %doc doc/synergy.conf*
+%_bindir/synergy-core
 %_bindir/synergyc
 %_bindir/synergys
 %config(noreplace) %_sysconfdir/synergy.conf
@@ -70,6 +50,9 @@ install -D -m0644 doc/synergyc.man %buildroot/%_man1dir/synergyc.1
 %_man1dir/synergyc*
 
 %changelog
+* Thu Jan 18 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.0-alt1
+- 2.0.0 released
+
 * Mon Mar 28 2016 Anton Farygin <rider@altlinux.ru> 1.7.6-alt1
 - new version
 
@@ -100,4 +83,3 @@ install -D -m0644 doc/synergyc.man %buildroot/%_man1dir/synergyc.1
 
 * Fri Sep 28 2007 Eugene V. Horohorin <genix@altlinux.ru> 1.3.1-alt1
 - initial build
-
