@@ -2,7 +2,7 @@
 
 Name: collection4
 Version: 4.0.0
-Release: alt1.git20130220
+Release: alt2.git20130220
 
 Summary: Web-based front-end to the RRD files updated by collectd
 
@@ -15,6 +15,7 @@ Source1: collection4-apache.conf
 
 Patch0: collection4-conf.diff
 Patch1: collection4-pkglibexec.patch
+Patch2: collection4-rrd.patch
 
 # Automatically added by buildreq on Tue Jul 24 2012
 # optimized out: fontconfig pkg-config
@@ -34,33 +35,23 @@ BuildArch: noarch
 apache2 stuff for collection 4
 
 %prep
-
 %setup -q
-
 %patch0 -p1
-mv $RPM_BUILD_DIR/%name-%version/share/collection.conf $RPM_BUILD_DIR/%name-%version/share/collection4.conf
-
 %patch1 -p1
+%patch2 -p1
 
-aclocal
-autoupdate
-autoconf --force --warnings=all
-autoheader --force --warnings=all
-automake --add-missing --copy --foreign --warnings=all
-
-%configure LIBS="-lm" \
-    --libexecdir=%_libexecdir
+mv share/collection.conf share/collection4.conf
 
 %build
-
+%autoreconf
+%configure LIBS="-lm" --libexecdir=%_libexecdir
 %make_build
 
 %install
-
 %makeinstall
 
-mkdir -p $RPM_BUILD_ROOT%_sysconfdir/httpd2/conf/sites-available
-sed -e 's|@@LIBEXECDIR@@|%{_libexecdir}|' < %SOURCE1 > $RPM_BUILD_ROOT%_sysconfdir/httpd2/conf/sites-available/c4.conf
+mkdir -p %buildroot%_sysconfdir/httpd2/conf/sites-available
+sed -e 's|@@LIBEXECDIR@@|%_libexecdir|' < %SOURCE1 > %buildroot%_sysconfdir/httpd2/conf/sites-available/c4.conf
 
 %post
 
@@ -78,6 +69,9 @@ sed -e 's|@@LIBEXECDIR@@|%{_libexecdir}|' < %SOURCE1 > $RPM_BUILD_ROOT%_sysconfd
 %config(noreplace) %_sysconfdir/httpd2/conf/sites-available/c4.conf
 
 %changelog
+* Thu Jan 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.0-alt2.git20130220
+- Fixed build with new librrd.
+
 * Tue Jun 04 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.0.0-alt1.git20130220
 - added -lm to LIBS
 - moved collection/collection.fcgi to /usr/libexec
