@@ -1,12 +1,18 @@
 Name: guile-evms
 Version: 0.5
-Release: alt5
+Release: alt6
 
 Summary: Guile bindings for EVMS
 License: GPL
 Group: Development/Scheme
 
-BuildRequires: guile22-devel libblkid-devel libe2fs-devel libevms-devel swig >= 3.0.12-alt2
+BuildRequires: libblkid-devel libe2fs-devel libevms-devel swig >= 3.0.12-alt2
+
+%ifarch e2k
+BuildRequires: guile20-devel libguile20-devel
+%else
+BuildPreReq: guile22-devel
+%endif
 
 Source: %name-%version-%release.tar
 
@@ -19,6 +25,11 @@ http://evms.sourceforge.net
 
 %prep
 %setup
+%ifarch e2k
+sed -i -e 's/^SWIGOPT[[:space:]]*=.*$/& -D__ptr64__/'          \
+       -e 's,guile\([/-]\)[0-9]\+\(\.[0-9]\+\)\+,guile\12.0,g' \
+    Makefile
+%endif
 
 %build
 make
@@ -31,6 +42,9 @@ make install DESTDIR=%buildroot
 %guile_godir/evms.go
 
 %changelog
+* Tue Jan 16 2018 Paul Wolneykien <manowar@altlinux.org> 0.5-alt6
+- Adapt for the E2K arch build.
+
 * Thu Apr 27 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5-alt5
 - fixed crash in alterator-vm (closes: #33401)
 

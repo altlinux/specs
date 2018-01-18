@@ -4,7 +4,7 @@
 
 Name: alterator-datetime
 Version: 4.0
-Release: alt1
+Release: alt2
 
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
 
@@ -33,7 +33,12 @@ BuildPreReq: alterator >= 4.7-alt1
 
 BuildPreReq: alterator >= 5.0
 BuildRequires: alterator-fbi
+
+%ifarch e2k
+BuildRequires: guile20-devel libguile20-devel
+%else
 BuildRequires: guile22-devel
+%endif
 
 %define _unpackaged_files_terminate_build 1
 
@@ -59,6 +64,9 @@ alterator module for date/time setup
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Tue Jan 16 2018 Paul Wolneykien <manowar@altlinux.org> 4.0-alt2
+- Adapt for the E2K arch build.
+
 * Fri May 05 2017 Mikhail Efremov <sem@altlinux.org> 4.0-alt1
 - Update spec for guile22.
 - functions: Ensure that guessed timezone is valid.
