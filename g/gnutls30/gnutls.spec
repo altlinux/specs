@@ -4,7 +4,7 @@
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.5.16
+Version: 3.5.17
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -24,7 +24,7 @@ Patch1: gnutls-patch-test-hash-large.patch
 
 # Automatically added by buildreq on Thu Dec 08 2011
 BuildRequires: gcc-c++ gtk-doc libgcrypt-devel libp11-kit-devel libreadline-devel libtasn1-devel makeinfo zlib-devel
-BuildRequires: libnettle-devel autogen libopts-devel libidn-devel libunistring-devel
+BuildRequires: libnettle-devel autogen libopts-devel libidn2-devel libunistring-devel
 %if_enabled guile
 BuildRequires: guile-devel
 %endif
@@ -213,7 +213,7 @@ sed -i -r 's/^DOMAIN = [^[:blank:]#]+/&%libgnutls_soname/' po/Makevars
 	--disable-local-libopts \
 	--with-included-libtasn1=no \
 	--enable-openssl-compatibility \
-	--with-idn \
+	--with-libidn2 \
 	--docdir=%_docdir/gnutls-%version/
 make MAKEINFOFLAGS=--no-split
 
@@ -293,6 +293,10 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %endif
 
 %changelog
+* Thu Jan 18 2018 Mikhail Efremov <sem@altlinux.org> 3.5.17-alt1
+- Build with libidn2 instead if libidn.
+- Updated to 3.5.17.
+
 * Mon Oct 23 2017 Mikhail Efremov <sem@altlinux.org> 3.5.16-alt1
 - Updated to 3.5.16.
 
