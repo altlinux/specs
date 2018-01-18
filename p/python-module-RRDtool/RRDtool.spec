@@ -3,30 +3,25 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.1
-Release: alt1.git20141011.1.1
+Version: 0.1.12
+Release: alt1
 Summary: rrdtool bindings for Python
 License: LGPLv3
 Group: Development/Python
 Url: https://pypi.python.org/pypi/rrdtool/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/commx/python-rrdtool.git
 Source: %name-%version.tar
 
-#BuildPreReq: librrd-devel
-#BuildPreReq: python-devel python-module-setuptools-tests
+BuildRequires: librrd-devel
+BuildRequires: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname rrdtool
 Conflicts: python-module-rrd python-module-rrdtool
-
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: elfutils fontconfig libwayland-client libwayland-server python-base python-modules python-modules-compiler python-modules-email python3 python3-base
-BuildRequires: librrd-devel python-devel python3-devel rpm-build-python3
 
 %description
 rrdtool binding for Python 2.6+ and 3.3+.
@@ -35,6 +30,7 @@ This bindings are based on the original Python rrdtool bindings from
 Hye-Shik Chang and are slightly modified to support Python 3.3+ and 2.6+
 in the same code base.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: rrdtool bindings for Python
 Group: Development/Python3
@@ -47,6 +43,7 @@ rrdtool binding for Python 2.6+ and 3.3+.
 This bindings are based on the original Python rrdtool bindings from
 Hye-Shik Chang and are slightly modified to support Python 3.3+ and 2.6+
 in the same code base.
+%endif
 
 %prep
 %setup
@@ -84,6 +81,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.12-alt1
+- Updated to upstream version 0.1.12.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.1-alt1.git20141011.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
