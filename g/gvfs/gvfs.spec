@@ -30,7 +30,7 @@
 
 Name: gvfs
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -184,6 +184,7 @@ Summary: NFS backend for gvfs
 Group: System/Libraries
 Requires: %name = %version-%release
 Requires: nfs-clients
+Requires(post): libcap-utils
 
 %package backend-google
 Summary: Google drive backend for gvfs
@@ -335,6 +336,9 @@ export ac_cv_path_SSH_PROGRAM=%_bindir/ssh
 %post
 killall -USR1 gvfsd >&/dev/null || :
 
+%post backend-nfs
+# for privileged ports
+setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 %files -f %name.lang
 %doc AUTHORS NEWS README monitor/udisks2/what-is-shown.txt
@@ -532,6 +536,9 @@ killall -USR1 gvfsd >&/dev/null || :
 
 
 %changelog
+* Fri Jan 12 2018 Yuri N. Sedunov <aris@altlinux.org> 1.34.1-alt2
+- rebuilt against libcdio.so.18
+
 * Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 1.34.1-alt1
 - 1.34.1
 

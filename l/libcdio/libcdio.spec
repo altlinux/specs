@@ -1,7 +1,7 @@
 %def_enable cddb
 
 Name: libcdio
-Version: 0.94
+Version: 2.0.0
 Release: alt1.1
 
 Summary: CD-ROM/CD-image access library
@@ -10,7 +10,7 @@ Group: System/Libraries
 Url: http://www.gnu.org/software/%name/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-# ftp://ftp.gnu.org/gnu/libcdio/%name-%version.tar.gz
+#Source: ftp://ftp.gnu.org/gnu/libcdio/%name-%version.tar.gz
 # git://git.sv.gnu.org/libcdio.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -98,6 +98,12 @@ info.
 %_man1dir/*.1*
 
 %changelog
+* Mon Jan 15 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1.1
+- merged lost changes
+
+* Fri Jan 12 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Thu Mar 16 2017 Michael Shigorin <mike@altlinux.org> 0.94-alt1.1
 - BOOTSTRAP: introduce cddb knob (on by default);
   breaks libcdio <-> libcddb BR loop

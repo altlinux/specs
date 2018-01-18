@@ -2,7 +2,7 @@
 %define gtkver 3
 Name:		deadbeef
 Version:	0.7.1
-Release:	alt3.20160419.1
+Release:	alt3.20160419.1.1
 Summary:	DeaDBeeF is an audio player
 Url:		http://deadbeef.sf.net
 #https://github.com/Alexey-Yakovenko/deadbeef
@@ -660,6 +660,9 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-incomplete
 
 %changelog
+* Sun Jan 14 2018 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt3.20160419.1.1
+- rebuild against libcdio.so.18
+
 * Mon Aug 14 2017 Anton Midyukov <antohami@altlinux.org> 0.7.1-alt3.20160419.1
 - Added missing requires for deadbeef-converter (Closes: 33755)
 

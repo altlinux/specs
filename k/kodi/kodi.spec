@@ -1,6 +1,6 @@
 Name: kodi
 Version: 17.6
-Release: alt1
+Release: alt2
 
 Summary: Kodi Media Center
 License: GPL
@@ -137,6 +137,9 @@ E_O_F
 %_libdir/kodi/*.cmake
 
 %changelog
+* Fri Jan 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.6-alt2
+- rebuilt with recent libcdio
+
 * Thu Nov 16 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.6-alt1
 - 17.6 Krypton released
 

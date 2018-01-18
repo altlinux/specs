@@ -31,7 +31,7 @@
 Version: %branch.0
 Epoch: 1
 Name: qmmp
-Release: %rel.%svn
+Release: %rel.%svn.1
 Summary: QMMP - Qt-based multimedia player
 Summary(ru_RU.UTF8): Qmmp - мультимедиа проигрыватель на базе Qt
 Summary(uk_UA.UTF8): Qmmp - мультимедіа програвач на базі Qt
@@ -954,6 +954,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Sun Jan 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1:0.11.0-alt1.svn7463.1
+- rebuild against libcdio.so.18
+
 * Tue Sep 12 2017 Motsyo Gennadi <drool@altlinux.ru> 1:0.11.0-alt1.svn7463
 - 0.11.0 svn7463 version
 
