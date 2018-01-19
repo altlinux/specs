@@ -3,7 +3,7 @@
 
 Name: gnupg2
 Version: 2.1.23
-Release: alt5%ubt
+Release: alt6%ubt
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -31,6 +31,9 @@ Obsoletes: %name-common < %version-%release
 # due to "enable -f /usr/lib/bash/lockf lockf"
 Requires: bash-builtin-lockf >= 0:0.2
 
+# due to passing OPTION allow-external-password-cache
+Conflicts: pinentry < 0.9.2
+Conflicts: pinentry-common < 0.9.2
 
 # FC
 Patch11: gnupg-2.1.21-insttools.patch
@@ -135,6 +138,10 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Thu Jan 18 2018 Ivan Zakharyaschev <imz@altlinux.org> 2.1.23-alt6%ubt
+- Conflicts: pinentry < 0.9.2 (due to passing OPTION
+  allow-external-password-cache).
+
 * Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 2.1.23-alt5%ubt
 - package dirmngr systemd units
 
