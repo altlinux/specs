@@ -1,22 +1,13 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gtkdocize texinfo
-# END SourceDeps(oneline)
-%add_optflags %optflags_shared
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Summary:          Library to support IDNA2008 internationalized domain names
 Name:             libidn2
 Version:          2.0.4
-Release:          alt1_1
+Release:          alt2
 License:          (GPLv2+ or LGPLv3+) and GPLv3+
 Group:            System/Libraries
 URL:              https://www.gnu.org/software/libidn/#libidn2
-Source0:          https://ftp.gnu.org/gnu/libidn/%{name}-%{version}.tar.gz
-Source1:          https://ftp.gnu.org/gnu/libidn/%{name}-%{version}.tar.gz.sig
-Patch0:           libidn2-2.0.0-rpath.patch
+Source0:          %name-%version.tar
 BuildRequires:    libunistring-devel
-Provides:         bundled(gnulib)
-Source44: import.info
+BuildRequires: /usr/bin/gtkdocize texinfo
 
 %description
 Libidn2 is an implementation of the IDNA2008 specifications in RFC
@@ -26,56 +17,68 @@ Libidn2 is an implementation of the IDNA2008 specifications in RFC
 %package devel
 Summary:          Development files for libidn2
 Group:            Development/Other
-Requires:         %{name} = %{version}-%{release}, pkg-config
+Requires:         %name = %version-%release
 
 %description devel
 The libidn2-devel package contains libraries and header files for
 developing applications that use libidn2.
 
+%package -n idn2
+Summary:          Libidn2 Internationalized Domain Names conversion tool
+Group:            Networking/DNS
+
+%description -n idn2
+idn2 tool converts DNS domains from UTF-8 to ASCII compatibile encoding (ACE)
+form, as used in the DNS protocol. The encoding format is the Internationalized
+Domain Name (IDNA2008/TR46) format.
+
 %prep
-%setup -q
-%patch0 -p1 -b .rpath
-touch -c -r configure.rpath configure
-touch -c -r m4/libtool.m4.rpath m4/libtool.m4
+%setup
 
 %build
-%configure --disable-static
+%autoreconf
+%configure \
+	--disable-static \
+	--disable-silent-rules
 %make_build
 
 %install
-make DESTDIR=$RPM_BUILD_ROOT INSTALL='install -p' install
+%makeinstall_std
 
 # Clean-up examples for documentation
-make %{?_smp_mflags} -C examples distclean
+%make_build -C examples distclean
 rm -f examples/Makefile*
 
-# Don't install any libtool .la files
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
-
-# Some file cleanups
-rm -f $RPM_BUILD_ROOT%{_datadir}/info/dir
-
 %check
-make %{?_smp_mflags} -C tests check
+%make_build -C tests check
 
 %files
-%{!?_licensedir:%global license %%doc}
 %doc COPYING COPYING.LESSERv3 COPYING.unicode COPYINGv2
 %doc AUTHORS NEWS README.md
-%{_bindir}/idn2
-%{_mandir}/man1/idn2.1*
-%{_libdir}/%{name}.so.*
-%{_infodir}/%{name}.info*
+%_libdir/%name.so.*
+%_infodir/%name.info*
 
 %files devel
-%doc doc/%{name}.html examples
-%{_libdir}/%{name}.so
-%{_libdir}/pkgconfig/%{name}.pc
-%{_includedir}/*.h
-%{_mandir}/man3/*
-%{_datadir}/gtk-doc/
+%doc doc/%name.html examples
+%_libdir/%name.so
+%_libdir/pkgconfig/%name.pc
+%_includedir/*.h
+%_man3dir/*
+%_datadir/gtk-doc/
+
+%files -n idn2
+%_bindir/idn2
+%_man1dir/idn2.1*
 
 %changelog
+* Fri Jan 19 2018 Mikhail Efremov <sem@altlinux.org> 2.0.4-alt2
+- Disable silent rules.
+- Split idn2 tool to separate subpackage.
+- Drop rpath.patch and use autoreconf.
+- Spec cleanup.
+- Don't compress tarball.
+- Drop unused libidn2-2.0.4.tar.gz.sig.
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.4-alt1_1
 - update to new release by fcimport
 
