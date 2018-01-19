@@ -3,14 +3,19 @@
 %global provider        github
 %global provider_tld    com
 %global project         docker
-%global repo            %{project}
+%global repo_engine     docker
+%global repo_cli        cli
 
-%global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      4845c567eb35d68f35b0b1713a09b0c8d47fe67e
+%global import_path_engine %{provider}.%{provider_tld}/%{project}/%{repo_engine}
+%global import_path_cli %{provider}.%{provider_tld}/%{project}/%{repo_cli}
+%global build_dir ./_build
+%global build_dir_cli %build_dir/src/%import_path_cli
+%global build_dir_engine %build_dir/src/%import_path_engine
+%global commit      1caf76ce6baa889133ece59fab3c36aaf143d4ef
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
-Name:       %{repo}-io
-Version:    17.05.0
+Name:       docker-ce
+Version:    18.01.0
 Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
@@ -19,18 +24,27 @@ Group: System/Configuration/Other
 %global versuffix ce
 %global fullversion %{version}-%{versuffix}
 
-Url: http://www.docker.io
+Url: https://github.com/docker/docker-ce
 # only x86_64 for now: https://github.com/docker/docker/issues/136
 ExclusiveArch: x86_64
 Conflicts: docker
 
-# https://github.com/crosbymichael/docker
 Source0: %name-%version.tar
+Source1: %repo_engine.service
+Source2: %repo_engine.init
+Source3: %repo_engine.sysconf
+Source4: %repo_engine-storage.sysconf
+
+Patch1: %name-17.12.0-bash-completion.patch
 
 BuildRequires: /proc gcc golang >= 1.3 systemd-devel libdevmapper-devel-static libsqlite3-devel-static libbtrfs-devel
 BuildRequires: python-module-sphinx-devel python-module-sphinxcontrib-httpdomain pandoc
+BuildRequires: golang-github-cpuguy83-go-md2man
 Requires: tar lxc xz
 Provides: lxc-docker
+Provides: docker-io = %version-%release
+Obsoletes: docker-io <= 17.05.0
+Obsoletes: docker-io-devel <= 17.05.0
 Requires: /usr/bin/docker-proxy
 Requires: docker-containerd
 Requires: docker-runc
@@ -54,84 +68,67 @@ and between virtually any server. The same container that a developer builds
 and tests on a laptop will run at scale, in production*, on VMs, bare-metal
 servers, OpenStack clusters, public instances, or combinations of the above.
 
-%package devel
-Group: Development/Other
-Requires: golang
-Provides: docker-io-pkg-devel = %{version}-%{release}
-Obsoletes: docker-io-pkg-devel <= 1.9.1
-Summary: A golang registry for global request variables (source libraries)
-
-%description devel
-This is the source libraries for docker.
-
 %prep
 %setup
-#rm -rf vendor
-find . -name "*.go" \
-        -print |\
-        xargs sed -i 's/github.com\/docker\/docker\/vendor\/src\/code.google.com\/p\/go\/src\/pkg\///g'
-sed -i 's/\!bash//g' contrib/completion/bash/docker
-sed -i 's/go-md2man -in "$FILE" -out/pandoc -s -t man "$FILE" -o/g' man/md2man-all.sh
+%patch1 -p1
 
 %build
-# set up temporary build gopath, and put our directory there
-mkdir -p ./_build/src/github.com/docker
-ln -s $(pwd) ./_build/src/%{import_path}
 
+mkdir -p %{build_dir}
+export GOPATH="$(pwd)/%{build_dir}:%{gopath}"
+
+# build cli
+mkdir -p %{build_dir_cli}
+cp -alv -- components/cli/* %{build_dir_cli}
+DISABLE_WARN_OUTSIDE_CONTAINER=1 make -C %{build_dir_cli} VERSION=%{fullversion}
+DISABLE_WARN_OUTSIDE_CONTAINER=1 make -C %{build_dir_cli} manpages
+
+# build daemon
 export DOCKER_GITCOMMIT="%{shortcommit}/%{version}"
 export DOCKER_BUILDTAGS='selinux journald'
-export GOPATH=$(pwd)/_build:%{gopath}:$(pwd)/vendor
-
+mkdir -p %{build_dir_engine}
+cp -alv -- components/engine/* %{build_dir_engine}
+pushd %{build_dir_engine}
 hack/make.sh dynbinary
-man/md2man-all.sh
-cp contrib/syntax/vim/LICENSE LICENSE-vim-syntax
-cp contrib/syntax/vim/README.md README-vim-syntax.md
+popd
 
 %install
 # install binary
 install -d %{buildroot}%{_bindir}
-install -p -m 755 bundles/%{fullversion}/dynbinary-client/docker-%{fullversion} %{buildroot}%{_bindir}/docker
-install -p -m 755 bundles/%{fullversion}/dynbinary-daemon/dockerd-%{fullversion} %{buildroot}%{_bindir}/dockerd
+install -p -m 755 %{build_dir_cli}/build/docker %{buildroot}%{_bindir}/docker
+install -p -m 755 %{build_dir_engine}/bundles/dynbinary-daemon/dockerd-dev %{buildroot}%{_bindir}/dockerd
 
 install -d %{buildroot}%{_libexecdir}/docker
 
 # install manpages
 install -d %{buildroot}%{_mandir}/man1
-install -p -m 644 man/man1/docker*.1 %{buildroot}%{_mandir}/man1
+install -p -m 644 %{build_dir_cli}/man/man1/*.1 %{buildroot}%{_mandir}/man1
 install -d %{buildroot}%{_mandir}/man5
-install -p -m 644 man/man5/Dockerfile.5 %{buildroot}%{_mandir}/man5
+install -p -m 644 %{build_dir_cli}/man/man5/*.5 %{buildroot}%{_mandir}/man5
+install -d %{buildroot}%{_mandir}/man8
+install -p -m 644 %{build_dir_cli}/man/man8/*.8 %{buildroot}%{_mandir}/man8
 
 # install bash completion
 install -dp %{buildroot}%{_datadir}/bash-completion/completions
-install -p -m 644 contrib/completion/bash/docker %{buildroot}%{_datadir}/bash-completion/completions
+install -p -m 644 %{build_dir_cli}/contrib/completion/bash/docker %{buildroot}%{_datadir}/bash-completion/completions
 
 # install vim syntax highlighting
 # (in process of being included in default vim)
 install -d %{buildroot}%{_datadir}/vim/vimfiles/{doc,ftdetect,syntax}
-install -p -m 644 contrib/syntax/vim/doc/dockerfile.txt %{buildroot}%{_datadir}/vim/vimfiles/doc
-install -p -m 644 contrib/syntax/vim/ftdetect/dockerfile.vim %{buildroot}%{_datadir}/vim/vimfiles/ftdetect
-install -p -m 644 contrib/syntax/vim/syntax/dockerfile.vim %{buildroot}%{_datadir}/vim/vimfiles/syntax
+install -p -m 644 %{build_dir_engine}/contrib/syntax/vim/doc/dockerfile.txt %{buildroot}%{_datadir}/vim/vimfiles/doc
+install -p -m 644 %{build_dir_engine}/contrib/syntax/vim/ftdetect/dockerfile.vim %{buildroot}%{_datadir}/vim/vimfiles/ftdetect
+install -p -m 644 %{build_dir_engine}/contrib/syntax/vim/syntax/dockerfile.vim %{buildroot}%{_datadir}/vim/vimfiles/syntax
 
 # install udev rules
 install -d %{buildroot}%{_sysconfdir}/udev/rules.d
-install -p contrib/udev/80-docker.rules %{buildroot}%{_sysconfdir}/udev/rules.d
+install -p %{build_dir_engine}/contrib/udev/80-docker.rules %{buildroot}%{_sysconfdir}/udev/rules.d
 
 # install storage dir
-install -d %{buildroot}%{_sharedstatedir}/%{repo}
+install -d %{buildroot}%{_sharedstatedir}/%{repo_engine}
 
 # install systemd/init scripts
-install -d %{buildroot}%{_unitdir}
-install -p -m 644 altlinux/%{repo}.service %{buildroot}%{_unitdir}
-install -p -D -m 755 altlinux/%{repo}.init %{buildroot}%{_initddir}/%{repo}
-
-# sources
-install -d -p %{buildroot}/%{gopath}/src/%{import_path}/
-echo "%%dir %%{gopath}/src/%%{import_path}/." >> devel.file-list
-# find all *.go but no *_test.go files and generate devel.file-list
-for file in $(find . -iname "*.go" \! -iname "*_test.go") ; do
-    install -d -p %{buildroot}/%{gopath}/src/%{import_path}/$(dirname $file)
-    cp -pav $file %{buildroot}/%{gopath}/src/%{import_path}/$file
-done
+install -p -D -m 644 altlinux/%{repo_engine}.service %{buildroot}%{_unitdir}/%{repo_engine}.service
+install -p -D -m 755 altlinux/%{repo_engine}.init %{buildroot}%{_initddir}/%{repo_engine}
 
 install -d %buildroot%_sysconfdir/sysconfig
 install -p -m 644 altlinux/docker.sysconf %buildroot%_sysconfdir/sysconfig/docker
@@ -148,12 +145,16 @@ exit 0
 %preun_service docker
 
 %files
-%doc AUTHORS CHANGELOG.md CONTRIBUTING.md LICENSE MAINTAINERS NOTICE README.md
-%doc LICENSE-vim-syntax README-vim-syntax.md
+%doc components/engine/AUTHORS components/engine/LICENSE
+%doc components/engine/MAINTAINERS components/engine/NOTICE
+%doc CHANGELOG.md CONTRIBUTING.md README.md
+%doc components/engine/contrib/syntax/vim/LICENSE
+%doc components/engine/contrib/syntax/vim/README.md
 %config(noreplace) %{_sysconfdir}/sysconfig/docker
 %config(noreplace) %{_sysconfdir}/sysconfig/docker-storage
-%{_mandir}/man1/docker*.1.*
-%{_mandir}/man5/Dockerfile.5.*
+%{_mandir}/man1/*
+%{_mandir}/man5/*
+%{_mandir}/man8/*
 %{_bindir}/docker
 %{_bindir}/dockerd
 %dir %{_libexecdir}/docker
@@ -166,12 +167,14 @@ exit 0
 %{_datadir}/vim/vimfiles/ftdetect/dockerfile.vim
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
-%files devel
-%doc AUTHORS CHANGELOG.md CONTRIBUTING.md LICENSE MAINTAINERS NOTICE README.md
-%dir %{gopath}/src/%{provider}.%{provider_tld}/%{project}
-%{gopath}/src/%{import_path}/
-
 %changelog
+* Mon Jan 15 2018 Vladimir Didenko <cow@altlinux.org> 18.01.0-alt1
+- New version
+
+* Tue Jan 9 2018 Vladimir Didenko <cow@altlinux.org> 17.12.0-alt1
+- New version
+- Remove devel package (seems useless)
+
 * Tue May 16 2017 Vladimir Didenko <cow@altlinux.org> 17.05.0-alt1
 - New version
 
