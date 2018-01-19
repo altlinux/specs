@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		76340
+%define svnrev		76823
 
 %def_with pgsql
 %def_enable java
@@ -15,7 +15,7 @@
 %endif
 
 Name: zabbix
-Version: 3.4.5
+Version: 3.4.6
 Release: alt1%ubt
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -132,6 +132,7 @@ Summary: %name proxy common files
 Group: Monitoring
 Requires: %name-common >= 1:2.0.4-alt1
 Requires: %_sbindir/fping
+BuildArch: noarch
 
 %if_enabled java
 %package java-gateway
@@ -649,7 +650,10 @@ fi
 %_includedir/%name
 
 %changelog
-* Wed Dec 27 2017 Alexei Takaseev <taf@altlinux.org> 1:3.4.5-alt1.S1
+* Fri Jan 19 2018 Alexei Takaseev <taf@altlinux.org> 1:3.4.6-alt1%ubt
+- 3.4.6
+
+* Wed Dec 27 2017 Alexei Takaseev <taf@altlinux.org> 1:3.4.5-alt1%ubt
 - 3.4.5
 
 * Fri Dec 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.4-alt2%ubt
