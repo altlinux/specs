@@ -1,14 +1,14 @@
 Summary: A text formatting package based on SGML
 Name: linuxdoc-tools
 Version: 0.9.69
-Release: alt1
+Release: alt2
 License: GPL
 Group: Publishing
 Source: http://http.us.debian.org/debian/pool/main/l/linuxdoc-tools/%{name}_%version.tar.gz
 Patch0: linuxdoc-tools-0.9.13-letter.patch
 Patch1: linuxdoc-tools-0.9.20-lib64.patch
+Patch2: linuxdoc-tools-0.9.69-upstream-perl-compat.patch
 Url: http://packages.qa.debian.org/l/linuxdoc-tools.html
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildRequires: flex sgml-common jade groff texinfo OpenSP
 BuildPreReq: texlive-latex-recommended
@@ -30,6 +30,7 @@ documentation.
 %setup
 %patch0 -p1
 %patch1 -p1 -b .lib64
+%patch2 -p2
 
 %build
 %configure --with-installed-nsgmls --with-installed-iso-entities
@@ -86,6 +87,9 @@ mv %buildroot%_datadir/%name/*.sty \
 %_mandir/*/*
 
 %changelog
+* Fri Jan 19 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.69-alt2
+- Fixed build with new perl.
+
 * Thu Jul 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.69-alt1
 - Version 0.9.69
 
