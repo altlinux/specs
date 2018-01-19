@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: xfsprogs
-Version: 4.10.0
+Version: 4.14.0
 Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
@@ -138,6 +138,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Fri Jan 19 2018 Michael Shigorin <mike@altlinux.org> 4.14.0-alt1
+- 4.14.0
+
 * Sat Apr  1 2017 Terechkov Evgenii <evg@altlinux.org> 4.10.0-alt1
 - 4.10.0 (ALT#33290)
 - Drop libxfs-qa-devel subpackage (all header now in libxfs-devel)
