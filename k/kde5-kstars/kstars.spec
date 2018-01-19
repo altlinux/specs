@@ -1,7 +1,7 @@
 %define rname kstars
 
 Name: kde5-%rname
-Version: 2.8.9
+Version: 2.9.1
 Release: alt1%ubt
 Epoch: 1
 %K5init
@@ -11,7 +11,7 @@ Summary: Desktop Planetarium
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-#Requires: indi
+Requires: indi
 
 Source: %rname-%version.tar
 
@@ -64,6 +64,9 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 %_K5dbus_sys_srv/*kstars*.service
 
 %changelog
+* Fri Jan 19 2018 Sergey V Turchin <zerg@altlinux.org> 1:2.9.1-alt1%ubt
+- new version
+
 * Mon Dec 25 2017 Sergey V Turchin <zerg@altlinux.org> 1:2.8.9-alt1%ubt
 - new version
 
