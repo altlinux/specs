@@ -2,7 +2,7 @@
 %define mono_version 4.7.1
 
 Name: wine-vanilla
-Version: 2.22
+Version: 3.0
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -44,7 +44,7 @@ BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libtiff-devel
 BuildRequires: libgphoto2-devel libsane-devel libcups-devel
 BuildRequires: libalsa-devel jackit-devel libgsm-devel libmpg123-devel libpulseaudio-devel
 BuildRequires: libopenal-devel libGLU-devel
-BuildRequires: libusb-devel libieee1284-devel
+BuildRequires: libusb-devel libieee1284-devel libkrb5-devel
 BuildRequires: libv4l-devel
 BuildRequires: libunixODBC-devel
 #BuildRequires: gstreamer-devel gst-plugins-devel
@@ -416,6 +416,10 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Fri Jan 19 2018 Vitaly Lipatov <lav@altlinux.ru> 3.0-alt1
+- new version 3.0
+- update winetricks up to 20171222
+
 * Sat Nov 25 2017 Vitaly Lipatov <lav@altlinux.ru> 2.22-alt1
 - new version 2.22
 
