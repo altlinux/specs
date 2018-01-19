@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 1.80
-Release: alt1
+Version: 1.82
+Release: alt1_git_de7aa8f
 
 Summary: A tool for static C/C++ code analysis
 
@@ -14,14 +14,14 @@ Url: git://github.com/danmar/cppcheck.git
 Source: %name-%version.tar.bz2
 Patch1: cppcheck-makefile-docbook_xsl-1.70.patch
 Patch2: cppcheck-1.78-norebuild.patch
-Patch3: cppcheck-1.67-appPath.patch
+Patch3: cppcheck-1.82-appPath.patch
 Patch4: cppcheck-1.72-test_32.patch
 
-BuildRequires(pre): rpm-macros-qt4
+BuildRequires(pre): rpm-macros-qt5
 
-# Automatically added by buildreq on Sun Nov 01 2015
-# optimized out: docbook-dtds fontconfig libgpg-error libqt4-core libqt4-devel libqt4-gui libstdc++-devel phonon-devel pkg-config python-base python-modules xml-common
-BuildRequires: ImageMagick-tools docbook-style-xsl gcc-c++ gdb libpcre-devel libqt4-webkit-devel python-modules-compiler xsltproc
+# Automatically added by buildreq on Thu Jan 18 2018
+# optimized out: docbook-dtds fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libgpg-error libqt5-core libqt5-gui libqt5-printsupport libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python-modules qt5-base-common xml-common
+BuildRequires: ImageMagick-tools docbook-style-xsl libpcre-devel python-modules-compiler python-modules-encodings qt5-base-devel qt5-tools xsltproc
 
 %description
 Static analysis of C/C++ code. Checks for: memory leaks, mismatching
@@ -67,8 +67,8 @@ done
 %define dirs SRCDIR=build CFGDIR=%_datadir/%name/cfg HAVE_RULES=yes INCLUDEPATH="%_includedir/pcre"
 %make_build %dirs CPPFLAGS="$(pkg-config --cflags libpcre)"
 cd gui
-%qmake_qt4 %dirs
-lrelease-qt4 gui.pro
+%qmake_qt5 %dirs
+lrelease-qt5 gui.pro
 %make_build %dirs
 cd ..
 
@@ -119,6 +119,9 @@ install -D gui/%name-gui.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name-gu
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Thu Jan 18 2018 Hihin Ruslan <ruslandh@altlinux.ru> 1.82-alt1_git_de7aa8f
+- Update from git commit  de7aa8f5134a4b666ce642f3108ae3121f77905b
+
 * Sun Aug 20 2017 Hihin Ruslan <ruslandh@altlinux.ru> 1.80-alt1
 - Version 1.80
 
