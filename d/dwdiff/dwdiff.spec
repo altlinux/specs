@@ -1,14 +1,12 @@
 Name: dwdiff
-Version: 2.1.0
-Release: alt2
+Version: 2.1.1
+Release: alt1
 
 Summary: front-end for the diff program that operates at the word level
 
 License: OSL
 Group: Text tools
 Url: http://os.ghalkes.nl/dwdiff.html
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://os.ghalkes.nl/dist/%name-%version.tar
 
@@ -28,6 +26,8 @@ is mostly commandline compatible with wdiff.
 %setup
 
 %build
+export CC=gcc
+export CXX=g++
 ./configure
 %make_build
 
@@ -43,6 +43,9 @@ rm -rf %buildroot%_mandir/nl*
 %_docdir/%name-%version/
 
 %changelog
+* Fri Jan 19 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.1-alt1
+- Updated to upstream version 2.1.1.
+
 * Wed Feb 24 2016 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt2
 - rebuild with libicu 5.6.1
 
