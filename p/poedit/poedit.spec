@@ -2,11 +2,11 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
-%def_without cpprest
+%def_with cpprest
 %def_without cld2
 
 Name: poedit
-Version: 2.0.5
+Version: 2.0.6
 Release: alt1
 
 Summary: Cross-platform translation files editor
@@ -25,14 +25,15 @@ Requires: gettext-tools
 
 %define cpprest_ver 2.5
 %define wxgtk_ver 3.0.3-alt9
+%define boost_ver 1.60
 
 Requires: libwxGTK3.0 >= %wxgtk_ver
 
 BuildPreReq: desktop-file-utils libappstream-glib-devel
 BuildRequires: gcc-c++ libwxGTK3.0-devel >= %wxgtk_ver libdb4_cxx-devel libgtkspell3-devel
 BuildRequires: libicu-devel liblucene++-devel libexpat-devel
-BuildRequires: boost-locale-devel zlib-devel
-%{?_with_cpprest:BuildRequires: libcpprest-devel >= %cpprest_ver}
+BuildRequires: boost-locale-devel >= %boost_ver zlib-devel
+%{?_with_cpprest:BuildRequires: libcpprest-devel >= %cpprest_ver libsecret-devel}
 %{?_with_cld2:BuildRequires: libcld2-devel}
 
 %description
@@ -73,6 +74,9 @@ wxLocale библиотеки wxWindows.
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Fri Jan 19 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.6-alt1
+- 2.0.6 with cpprest support
+
 * Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.5-alt1
 - 2.0.5
 
