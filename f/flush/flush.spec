@@ -1,7 +1,7 @@
 Name:		flush
 Summary:	GTK-based BitTorrent client
 Version:	0.9.12
-Release:	alt1.5
+Release:	alt1.6
 License:	GPLv3+
 Group:		Networking/File transfer
 Url:		http://flush.sourceforge.net/
@@ -72,6 +72,9 @@ cd ../..
 %_pixmapsdir/*
 
 %changelog
+* Fri Jan 19 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.12-alt1.6
+- Fixed build.
+
 * Tue Aug 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.12-alt1.5
 - Rebuilt with new libtorrent-rasterbar.
 
