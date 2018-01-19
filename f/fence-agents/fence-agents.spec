@@ -4,7 +4,7 @@
 Name: fence-agents
 Summary: Fence Agents
 Version: 4.0.24
-Release: alt2%ubt
+Release: alt3%ubt
 License: GPLv2+ and LGPLv2+
 Group: System/Base
 URL: http://sourceware.org/cluster/wiki/
@@ -29,7 +29,7 @@ rm -fr fence/agents/{amt_ws,sbd}
 %build
 %autoreconf
 export PYTHON="/usr/bin/python"
-%configure
+%configure --localstatedir=%_var
 %make_build
 
 %install
@@ -751,6 +751,9 @@ The fence-agents-zvm package contains a fence agent for IBM z/VM over IP.
 %_man8dir/fence_zvmip.8*
 
 %changelog
+* Fri Jan 19 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0.24-alt3%ubt
+- Fixed localstatedir location.
+
 * Wed Apr 19 2017 Sergey Novikov <sotor@altlinux.org> 4.0.24-alt2%ubt
 - fix fence-pve
 
