@@ -4,7 +4,7 @@
 %define gimpdatadir %(gimptool-2.0 --gimpdatadir)
 
 Name: gimp-plugin-%_name
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Summary: Gimp plug-in for manipulating textures
@@ -46,6 +46,9 @@ painted).
 %_datadir/%_name
 
 %changelog
+* Fri Jan 19 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
+- 2.0.3
+
 * Sun Jan 07 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
 - 2.0.2
 
