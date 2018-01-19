@@ -1,18 +1,18 @@
 Name: winff
 Version: 1.5.5
-Release: alt1
+Release: alt2.20171210%ubt
 Summary: A cross platform batch GUI for FFmpeg
 Summary(ru_RU.UTF-8): Кроссплатформенный графический интерфейс для FFmpeg
 License: GPLv3
 Group: Video
 Url: http://winff.org
 Packager: Anton Midyukov <antohami@altlinux.org>
-Source: http://winff.org/docs/source/%name-%version-source.tar.gz
+Source: %name-%version.tar
 Source1: winff.desktop
-# Automatically added by buildreq on Fri Sep 04 2015
-# optimized out: alternatives cpio crontabs ed elfutils fontconfig fpc-compiler fpc-ide fpc-src fpc-units-base fpc-units-db fpc-units-fcl fpc-units-fv fpc-units-gfx fpc-units-gnome1 fpc-units-gtk fpc-units-gtk2 fpc-units-math fpc-units-misc fpc-units-multimedia fpc-units-net fpc-units-rtl fpc-utils gdb glib-devel glib2-devel gtk-builder-convert gtk-update-icon-cache hwclock libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgtk+2-devel libncurses-devel libode-devel libpango-devel libpng12-devel libwayland-client libwayland-server logrotate makeinfo mariadb-client mkfontdir mkfontscale nfs-utils pkg-config postfix procmail python-base python-devel rpcbind sendmail-common setarch shared-mime-info strace subversion sysvinit-utils termutils texi2dvi time vim-minimal vitmp vixie-cron xauth xkbcomp xmessage xml-utils xorg-rgb xterm xz
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: lazarus desktop-file-utils dos2unix
 Requires: ffmpeg
+Requires: ffplay
 Requires: xterm
 
 %description
@@ -29,7 +29,7 @@ FFMPEG или его форк LibAV. Позволяет конвертивров
 WinFF может одновременно конвертировать видео в разные форматы.
 
 %prep
-%setup -n %name-%version-source
+%setup
 dos2unix *.txt
 chmod 644 *.txt docs/*.pdf docs/*.odg docs/*.odt docs/*.txt winff-icons/*.txt
 
@@ -64,6 +64,9 @@ install -m644 -t %buildroot/%_docdir/%name AUTHORS *.txt docs/*.pdf docs/*.odg d
 %_docdir/%name
 
 %changelog
+* Fri Jan 19 2018 Anton Midyukov <antohami@altlinux.org> 1.5.5-alt2.20171210%ubt
+- New snapshot
+
 * Tue Jun 06 2017 Anton Midyukov <antohami@altlinux.org> 1.5.5-alt1
 - Remove requires avplay, avconv. Added requires ffmpeg, xterm.
 - Remove patch's.
