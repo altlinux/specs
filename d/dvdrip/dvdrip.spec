@@ -3,13 +3,12 @@
 
 Name: dvdrip
 Version: 0.98.11
-Release: alt1.qa2
+Release: alt1.qa3
 
 Summary: DVD ripping graphical tool using transcode
 License: GPL/Artistic
 Group: Video
 Url: http://www.exit1.org/dvdrip
-Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 Source: %url/dist/pre/%name-%version.tar.gz
 Source1: %name.png
@@ -36,7 +35,7 @@ Requires: vcdimager
 Requires: subtitleripper
 
 # Automatically added by buildreq on Tue Jan 03 2006 (-bi)
-BuildRequires: ImageMagick MPlayer cdrdao cdrecord fontconfig fping freetype2 lsdvd mjpegtools mkisofs ogmtools perl-Encode perl-Event-RPC perl-Glib perl-Gtk2-Ex-FormFactory perl-Log-Agent perl-Storable perl-devel perl-libintl subtitleripper transcode vcdimager xine-ui perl-AnyEvent perl-Event-ExecFlow
+BuildRequires: ImageMagick MPlayer cdrdao cdrecord fontconfig fping freetype2 lsdvd mjpegtools mkisofs ogmtools perl-Encode perl-Event-RPC perl-Glib perl-Gtk2-Ex-FormFactory perl-Log-Agent perl-Storable perl-devel perl-libintl subtitleripper transcode vcdimager perl-AnyEvent perl-Event-ExecFlow
 
 
 %add_findreq_skiplist */Video/DVDRip/Term/*.pm
@@ -92,10 +91,15 @@ bzip2 -f9 Changes
 %perl_vendor_privlib/%module_dir/*
 %_man1dir/*
 %_liconsdir/%name.png
+%_desktopdir/%name.desktop
 
 %doc Changes* Credits README TODO
 
 %changelog
+* Fri Jan 19 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.98.11-alt1.qa3
+- Updated build dependencies.
+- Added desktop file.
+
 * Fri Apr 22 2011 Igor Vlasenko <viy@altlinux.ru> 0.98.11-alt1.qa2
 - NMU: converted menu to desktop file
 
