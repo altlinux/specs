@@ -1,6 +1,6 @@
 Name:		smtube
-Version:	17.5.0
-Release:	alt2
+Version:	18.1.0
+Release:	alt1
 Summary:	Youtube Browser for SMPlayer
 Summary(ru_RU.UTF8):	Браузер YouTube для SMPlayer
 Summary(uk_UA.UTF8):	Переглядач YouTube для SMPlayer
@@ -58,6 +58,9 @@ cd ./src && qmake "QMAKE_CXXFLAGS+=%optflags -DTRANSLATION_PATH=%_datadir/%name/
 %_datadir/%name/translations/*.qm
 
 %changelog
+* Sat Jan 20 2018 Motsyo Gennadi <drool@altlinux.ru> 18.1.0-alt1
+- 18.1.0 (#34436)
+
 * Sat Jun 17 2017 Motsyo Gennadi <drool@altlinux.ru> 17.5.0-alt2
 - (#33552) fixed trash in the title of the mpv ON SCREEN CONTROLLER
 
