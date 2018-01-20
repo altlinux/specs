@@ -5,7 +5,7 @@
 %def_disable debug
 
 Name: dovecot
-Version: 2.2.30.2
+Version: 2.2.33.2
 Release: alt1
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
@@ -71,7 +71,6 @@ sed -i 's@/usr/local@/usr@g' doc/example-config/conf.d/90-quota.conf
 
 %build
 export ACLOCAL='aclocal -I .'
-mkdir m4
 %autoreconf
 %configure \
 	    --localstatedir=%_var                   \
@@ -190,6 +189,9 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Thu Jan 18 2018 Fr. Br. George <george@altlinux.ru> 2.2.33.2-alt1
+- Manual vwersion bump to 2.2.33.2
+
 * Wed Jun 07 2017 Fr. Br. George <george@altlinux.ru> 2.2.30.2-alt1
 - Autobuild version bump to 2.2.30.2
 
@@ -327,7 +329,7 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 * Mon Nov 17 2008 Sergey Ivanov <seriv@altlinux.ru> v1.2-alt2_alpha3
 - upstream fixes ManageSieve SECURITY hole: virtual users can edit scripts of other virtual users
 
-* Sun Oct 27 2008 Sergey Ivanov <seriv@altlinux.ru> v1.2-alt1_alpha3
+* Mon Oct 27 2008 Sergey Ivanov <seriv@altlinux.ru> v1.2-alt1_alpha3
 - dovecot-1.2 (alpha3) for Sisyphus
 
 * Sun Jul 06 2008 Sergey Ivanov <seriv@altlinux.ru> 1.2.rc8-alt1
@@ -366,7 +368,7 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 - 1.0.6 with many changes, among them compressed with zlib mailboxes support,
   see Changelog
 
-* Tue Aug 01 2007 Sergey Ivanov <seriv@altlinux.ru> 1.0.3.hg20070801-alt1
+* Wed Aug 01 2007 Sergey Ivanov <seriv@altlinux.ru> 1.0.3.hg20070801-alt1
 - updated to 1.0.3, with security fix: If user was given i (insert) right
   for a mailbox, but not all s/t/w (seen, deleted, other flags) rights,
   COPY and APPEND commands weren't supposed to allow saving those flags.
@@ -568,10 +570,10 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 * Mon Apr 16 2007 Sergey Ivanov <seriv@altlinux.org> 1.0-alt12
 - clean-up (mostly rm .cvsignore files); update wikies.
 
-* Sun Apr 14 2007 Sergey Ivanov <seriv@altlinux.org> 1.0-alt11
+* Sat Apr 14 2007 Sergey Ivanov <seriv@altlinux.org> 1.0-alt11
 - fix errors in -alt10 release of dovecot: by my mistake there were not applied recent patches.
 
-* Thu Apr 13 2007 Sergey Ivanov <seriv@altlinux.org> 1.0-alt10
+* Fri Apr 13 2007 Sergey Ivanov <seriv@altlinux.org> 1.0-alt10
 - release 1.0.rc32 renamed to be 1.0; updated wiki to current state
 
 * Thu Apr 12 2007 Sergey Ivanov <seriv@altlinux.org> 1.0-alt9.rc32
