@@ -2,7 +2,7 @@
 %define rname lcms2
 
 Name: lib%rname
-Version: 2.8
+Version: 2.9
 Release: alt1
 
 Summary: Little cms color engine, version 2
@@ -10,6 +10,7 @@ License: %mit
 Group: System/Libraries
 Url: http://www.littlecms.com
 
+# VCS: https://github.com/mm2/Little-CMS.git
 #Source: http://downloads.sourceforge.net/lcms/%rname-%version.tar.gz
 Source: %rname-%version.tar
 Patch: %rname-2.5-alt-link.patch
@@ -65,6 +66,7 @@ This package contains various %name-based utilities
 %patch
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
 	%{subst_enable static} \
@@ -93,6 +95,9 @@ This package contains various %name-based utilities
 %endif
 
 %changelog
+* Wed Nov 08 2017 Yuri N. Sedunov <aris@altlinux.org> 2.9-alt1
+- 2.9
+
 * Fri Aug 19 2016 Yuri N. Sedunov <aris@altlinux.org> 2.8-alt1
 - 2.8
 
@@ -205,8 +210,8 @@ This package contains various %name-based utilities
 * Tue Feb 06 2001 Dmitry V. Levin <ldv@fandra.org> 1.06-ipl2mdk
 - RE adaptions.
 
-* Sun Jan 14 2001 Giuseppe Ghibò <ghibo@mandrakesoft.com> 1.06-2mdk
+* Sun Jan 14 2001 Giuseppe Ghib`o <ghibo@mandrakesoft.com> 1.06-2mdk
 - reverted %%make to make.
 
-* Tue Dec 26 2000 Giuseppe Ghibò <ghibo@mandrakesoft.com> 1.06-1mdk
+* Tue Dec 26 2000 Giuseppe Ghib`o <ghibo@mandrakesoft.com> 1.06-1mdk
 - initial release.
