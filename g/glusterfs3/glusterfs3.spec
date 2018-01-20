@@ -28,7 +28,7 @@
 %{?_without_ocf:%global _without_ocf --without-ocf}
 
 Name: glusterfs3
-Version: %major.4
+Version: %major.5
 Release: alt1
 
 Summary: Cluster File System
@@ -575,6 +575,9 @@ rm -fv %buildroot%_sharedstatedir/glusterd/hooks/1/delete/pre/S10selinux-del-fco
 %preun_service glusterd
 
 %changelog
+* Sat Jan 20 2018 Vitaly Lipatov <lav@altlinux.ru> 3.12.5-alt1
+- new version 3.12.5 (with rpmrb script)
+
 * Sun Dec 17 2017 Vitaly Lipatov <lav@altlinux.ru> 3.12.4-alt1
 - new version 3.12.4 (with rpmrb script)
 
