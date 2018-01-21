@@ -1,10 +1,12 @@
 Name: make-initrd-propagator
-Version: 0.31
-Release: alt3
+Version: 0.32
+Release: alt1
 
 Summary: Put propagator into make-initrd generated image
+
 License: GPL
 Group: System/Base
+URL: https://www.altlinux.org/Make-initrd-propagator
 
 Source0: %name-%version.tar 
 
@@ -37,6 +39,14 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Sun Jan 21 2018 Arseny Maslennikov <arseny@altlinux.org> 0.32-alt1
+- netboot: Allowed use of different overlay storage locations.
+- netboot: Forbade mounting overlays with unspecified profile.
+  To continue using overlays stored without a profile name:
+  + pick a profile name;
+  + put them into a subdirectory of the same name;
+  + add `profile=$name' to kernel command line.
+
 * Sun Apr 02 2017 Alexey Gladkov <legion@altlinux.ru> 0.31-alt3
 - Enforce use system sed.
 
