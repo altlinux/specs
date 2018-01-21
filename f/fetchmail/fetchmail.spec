@@ -1,6 +1,6 @@
 Name: fetchmail
 Version: 6.3.26
-Release: alt3
+Release: alt4
 
 Summary: Full-featured POP/IMAP/ETRN mail retrieval daemon
 Group: Networking/Mail
@@ -24,6 +24,7 @@ Patch3: %name-6.3.3-nopermcheck.patch
 
 Requires: %_sbindir/sendmail
 Requires: setup >= 2.1.9-ipl15mdk
+Requires: service >= 0.5.28-alt1
 
 BuildPreReq: rpm-build-python
 %_python_set_noarch
@@ -187,6 +188,9 @@ usermod -d %rtdir %name ||:
 
 %files -f %name.lang locales
 %changelog
+* Mon Jan 22 2018 Terechkov Evgenii <evg@altlinux.org> 6.3.26-alt4
+- Fix fetchmail-daemon startup with service-0.5.28-alt1
+
 * Wed May  4 2016 Terechkov Evgenii <evg@altlinux.org> 6.3.26-alt3
 - Drop etcnet requirement for fetchmail-daemon (i.e. for systemd-networkd-only setups)
 
