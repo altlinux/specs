@@ -1,56 +1,80 @@
 Name: webtorrent-desktop
-Version: 0.18.0
-Release: alt1
+Version: 0.19.0
+Release: alt2
 
 Summary: Streaming torrent app for Mac, Windows, and Linux
 
 License: Apache 2.0
-Url: https://riot.im/desktop.html
+Url: https://webtorrent.io
 Group: Networking/Instant messaging
 
-ExclusiveArch: x86_64
-# Source-url: https://github.com/webtorrent/webtorrent-desktop/releases/download/v%version/webtorrent-desktop_%version-1_amd64.deb
+# BINSource-url: https://github.com/webtorrent/webtorrent-desktop/releases/download/v%version/webtorrent-desktop_%version-1_amd64.deb
+# Source-url: https://github.com/webtorrent/webtorrent-desktop/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-AutoReq:yes,nonodejs,nonodejs_native,nomono,nopython,nomingw32,nomingw64,noshebang
-AutoProv: no
+Source1: %name-preloaded-%version.tar
+Source2: %name-production-%version.tar
 
-# electron based requiries
-BuildRequires: libgtk+2 libxkbfile libnss libnspr libXtst libalsa libcups libXScrnSaver libGConf
+BuildArch: noarch
+
+AutoReq:yes,nonodejs,nonodejs_native,nomono,nopython,nomingw32,nomingw64
+Requires: electron
+
+BuildRequires: npm node-asar
 
 %description
 Streaming torrent app for Mac, Windows, and Linux.
 
 %prep
-%setup
-# replace strange missed functions with exit function
-sed -E -i -e "s@(_ZN10crash_keys17SetVari|_ZN15MersenneTwister12in|_ZN15MersenneTwister13ge|_ZN15MersenneTwisterC1Ev|_ZN15MersenneTwisterD1Ev)@exit\x0MersenneTwisterD1Ev@g" opt/%name/WebTorrent
-# strange
-sed -E -i -e "s@_ZN2pp6Module3GetEv@exit\x0p6Module3GetEv@g" opt/%name/WebTorrent
-sed -E -i -e "s@_ZNK2ui17WebDialogDelegate13GetDialogNameEv@exit\x0ui17WebDialogDelegate13GetDialogNameEv@g" opt/%name/WebTorrent
+%setup -a1
 
-%__subst "s|/opt/%name/WebTorrent|%_bindir/%name|g" usr/share/applications/%name.desktop
-%__subst "s|Path=/opt/%name||g" usr/share/applications/%name.desktop
-chmod a+x opt/%name/WebTorrent
+%build
+npm run build
+
+# replace node_modules with got after npm install --production
+rm -rf node_modules
+tar xf %SOURCE2
+
+cat <<EOF >%name
+#!/bin/sh
+electron %_datadir/%name/resources/app.asar
+EOF
+
+asar pack --unpack-dir static . resources/app.asar
+#asar pack . resources/app.asar
+
+%__subst "s|/opt/%name/WebTorrent|%_bindir/%name|g" static/linux/share/applications/%name.desktop
+%__subst "s|Path=/opt/%name||g" static/linux/share/applications/%name.desktop
 
 %install
-mkdir -p %buildroot%_libdir/%name/
-cp -a opt/%name/* %buildroot%_libdir/%name/
-mkdir -p %buildroot%_bindir/
-ln -rs %buildroot%_libdir/%name/WebTorrent %buildroot/%_bindir/%name
-ln -rs %buildroot%_libdir/%name/WebTorrent %buildroot/%_bindir/WebTorrent
+install -m755 -D %name %buildroot%_bindir/%name
+install -m644 -D resources/app.asar %buildroot%_datadir/%name/resources/app.asar
+cp -a resources/app.asar.unpacked/ %buildroot%_datadir/%name/resources/
+
+ln -s %name %buildroot/%_bindir/WebTorrent
+
 mkdir -p %buildroot%_iconsdir/
-cp -a usr/share/icons/hicolor/ %buildroot%_iconsdir/
+cp -a static/linux/share/icons/hicolor/ %buildroot%_iconsdir/
 mkdir -p %buildroot%_desktopdir/
-cp -a usr/share/applications/%name.desktop %buildroot%_desktopdir/%name.desktop
+cp -a static/linux/share/applications/%name.desktop %buildroot%_desktopdir/%name.desktop
 
 %files
 %_bindir/%name
 %_bindir/WebTorrent
-%_libdir/%name/
+%_datadir/%name/
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Jan 21 2018 Vitaly Lipatov <lav@altlinux.ru> 0.19.0-alt2
+- build with external electron
+
+* Sat Nov 11 2017 Vitaly Lipatov <lav@altlinux.ru> 0.19.0-alt1
+- new version (0.19.0) with rpmgs script
+- build from sources
+
+* Sat Jul 29 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18.0-alt2
+- build with external electron
+
 * Sat Jun 10 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18.0-alt1
 - initial release for ALT Sisyphus
