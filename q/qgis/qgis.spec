@@ -3,7 +3,7 @@
 %define grass_version 7.2.2
 
 Name:    qgis
-Version: 2.18.15
+Version: 2.18.16
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -330,11 +330,20 @@ echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
 %_libexecdir/%name
 
 %changelog
+* Sun Jan 21 2018 Andrey Cherepanov <cas@altlinux.org> 2.18.16-alt1
+- New version.
+
+* Mon Dec 11 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.15-alt0.M80P.1
+- Backport new version to p8 branch
+
 * Mon Dec 11 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.15-alt1
 - New version.
 
 * Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 2.18.14-alt1.1
 - rebuild with new spatialindex
+
+* Mon Oct 30 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.14-alt0.M80P.1
+- Backport new version to p8 branch
 
 * Sat Oct 28 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.14-alt1
 - New version
@@ -342,14 +351,23 @@ echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
 * Wed Oct 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.18.13-alt2
 - Rebuilt with qscintilla2 2.10.1.
 
+* Sat Sep 16 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.13-alt0.M80P.1
+- Backport new version to p8 branch
+
 * Sat Sep 16 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.13-alt1
 - New version
+
+* Tue Aug 22 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.12-alt0.M80P.1
+- Backport new version to p8 branch
 
 * Fri Aug 18 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.12-alt1
 - New version
 
 * Wed Aug 16 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.11-alt2
 - Rebuild with geos 3.6.2
+
+* Wed Aug 02 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.11-alt0.M80P.1
+- Backport new version to p8 branch
 
 * Sun Jul 23 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.11-alt1
 - New version
@@ -360,17 +378,32 @@ echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
 * Fri May 26 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.9-alt1
 - New version
 
+* Sun May 21 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.8-alt0.M80P.1
+- Backport new version to p8 branch
+
 * Sat May 20 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.8-alt1
 - New version
+
+* Mon Apr 24 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.7-alt0.M80P.1
+- Backport new version to p8 branch
 
 * Sat Apr 22 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.7-alt1
 - New version
 
+* Sun Apr 09 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.6-alt0.M80P.1
+- Backport new version to p8 branch
+
 * Sat Apr 08 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.6-alt1
 - New version
 
+* Fri Mar 24 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.5-alt0.M80P.1
+- Backport new version to p8 branch
+
 * Fri Mar 24 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.5-alt1
 - New version
+
+* Tue Mar 07 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.4-alt0.M80P.1
+- Backport new version to p8 branch
 
 * Tue Mar 07 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.4-alt1
 - New version
@@ -379,6 +412,9 @@ echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
 
 * Fri Jan 27 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.3-alt1
 - new version 2.18.3
+
+* Wed Nov 02 2016 Andrey Cherepanov <cas@altlinux.org> 2.18.0-alt0.M80P.1
+- Backport new version to p8 branch
 
 * Fri Oct 28 2016 Andrey Cherepanov <cas@altlinux.org> 2.18.0-alt1
 - New version
