@@ -4,7 +4,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 17.3.2
+Version: 17.3.3
 Release: alt1
 Epoch: 4
 License: MIT
@@ -381,7 +381,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_libdir/X11/modules/dri/i9?5_dri.so
 %ifarch x86_64
 %_libdir/libvulkan_intel.so
-%_datadir/vulkan
+%dir %_datadir/vulkan
+%dir %_datadir/vulkan/icd.d
+%_datadir/vulkan/icd.d/intel_icd*
 %endif
 
 %files -n xorg-dri-nouveau
@@ -402,6 +404,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_libdir/libXvMCgallium.so.*
 %ifarch x86_64
 %_libdir/libvulkan_radeon.so
+%dir %_datadir/vulkan
+%dir %_datadir/vulkan/icd.d
+%_datadir/vulkan/icd.d/radeon_icd*
 %endif
 %endif
 %endif
@@ -418,6 +423,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Sun Jan 21 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:17.3.3-alt1
+- 17.3.3
+
 * Tue Jan 16 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:17.3.2-alt1
 - 17.3.2
 
