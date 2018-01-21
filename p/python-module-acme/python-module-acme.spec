@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-acme
-Version: 0.19.0
+Version: 0.21.0
 Release: alt1
 
 Summary: Python library for the ACME protocol
@@ -167,14 +167,11 @@ Documentation for the ACME python libraries
 #if_with python3
 #__python3 setup.py test
 #endif
-# Make sure the script uses the expected python version
-grep -q python %buildroot%_bindir/jws
 
 %files
 %doc LICENSE.txt
 %python_sitelibdir/%modulename/
 %python_sitelibdir/%modulename-%{version}*.egg-info
-%_bindir/jws
 
 %if_with python3
 %files -n python3-module-acme
@@ -189,6 +186,9 @@ grep -q python %buildroot%_bindir/jws
 #%doc docs/_build/html
 
 %changelog
+* Sun Jan 21 2018 Vitaly Lipatov <lav@altlinux.ru> 0.21.0-alt1
+- new version 0.21.0 (with rpmrb script)
+
 * Fri Oct 06 2017 Vitaly Lipatov <lav@altlinux.ru> 0.19.0-alt1
 - new version 0.19.0 (with rpmrb script)
 
