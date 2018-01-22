@@ -13,7 +13,7 @@
 
 Name: python-module-%oname
 Version: %majver.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
@@ -51,6 +51,10 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-Cython
 %endif
 
+%if_without doc
+# closes unmets in autoimports
+Provides: python-module-numpy-doc = %EVR
+%endif
 Provides: python-module-numpy-addons = %EVR
 %py_provides %oname.addons
 
@@ -934,6 +938,9 @@ fi
 %endif
 
 %changelog
+* Mon Jan 22 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.13.3-alt2
+- added optional Provides: python-module-numpy-doc for autoimports
+
 * Wed Nov 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.13.3-alt1
 - Updated to upstream version 1.13.3.
 - Removed git from build dependencies.
