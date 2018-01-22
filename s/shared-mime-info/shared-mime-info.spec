@@ -1,10 +1,10 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %def_enable updatedb
 
 Name: shared-mime-info
 Version: 1.9
-Release: alt1
+Release: alt2
 
 Summary: Shared MIME-Info Specification
 Group: System/Libraries
@@ -110,6 +110,9 @@ multipart,text,video,XMLnamespaces}
 %exclude %_datadir/locale
 
 %changelog
+* Mon Jan 22 2018 Yuri N. Sedunov <aris@altlinux.org> 1.9-alt2
+- updated to 1-9-4-gc8153d0 (fixes for DjVu, MJPEG, QML, XPS)
+
 * Thu Sep 21 2017 Yuri N. Sedunov <aris@altlinux.org> 1.9-alt1
 - 1.9
 
