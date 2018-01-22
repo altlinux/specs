@@ -1,7 +1,7 @@
 %define beta %nil
 
 Name: wget
-Version: 1.19.3
+Version: 1.19.4
 Release: alt1
 
 Summary: An utility for retrieving files using the HTTP, HTTPS or FTP protocols
@@ -135,6 +135,9 @@ find doc -type f -print0 |
 %doc AUTHORS MAILING-LIST NEWS README*
 
 %changelog
+* Mon Jan 22 2018 Michael Shigorin <mike@altlinux.org> 1.19.4-alt1
+- 1.19.4
+
 * Sat Jan 20 2018 Michael Shigorin <mike@altlinux.org> 1.19.3-alt1
 - 1.19.3
 
