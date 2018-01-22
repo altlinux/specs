@@ -3,30 +3,28 @@
 %def_with python3
 
 Name: h5py
-Version: 2.5.0
-Release: alt2.git20150720.1
+Version: 2.7.1
+Release: alt1
 Summary: Python interface to the Hierarchical Data Format library, version 5
 License: MIT
 Group: Development/Python
 Url: http://www.h5py.org/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/h5py/h5py.git
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
+Patch1: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel libnumpy-devel libhdf5-devel
-BuildPreReq: libsz2-devel python-module-Cython python-module-Pyrex
-BuildPreReq: python-module-sphinx-devel python-module-Pygments
-BuildPreReq: python-module-setuptools-tests python-module-six
-BuildPreReq: python-module-pkgconfig
-#BuildPreReq: texlive-latex-recommended
+BuildRequires: python-devel libnumpy-devel libhdf5-devel
+BuildRequires: libsz2-devel python-module-Cython python-module-Pyrex
+BuildRequires: python-module-sphinx-devel python-module-Pygments
+BuildRequires: python-module-setuptools-tests python-module-six
+BuildRequires: python-module-pkgconfig
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel libnumpy-py3-devel
-BuildPreReq: python3-module-setuptools-tests
-BuildPreReq: python3-module-Cython python3-module-six
-BuildPreReq: python3-module-pkgconfig
+BuildRequires: python3-devel libnumpy-py3-devel
+BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-Cython python3-module-six
+BuildRequires: python3-module-pkgconfig
 %endif
 
 %description
@@ -74,6 +72,7 @@ for example, datasets on disk are represented by a proxy class that
 supports slicing, and has dtype and shape attributes. HDF5 groups are
 presented using a dictionary metaphor, indexed by name.
 
+%if_with python3
 %package -n python3-module-%name
 Summary: Python interface to the Hierarchical Data Format library, version 5
 Group: Development/Python3
@@ -97,6 +96,7 @@ Python. Existing Python and Numpy concepts are used for the interface;
 for example, datasets on disk are represented by a proxy class that
 supports slicing, and has dtype and shape attributes. HDF5 groups are
 presented using a dictionary metaphor, indexed by name.
+%endif
 
 %package -n python-module-%name-doc
 Summary: Documentation for Python interface to the HDF5
@@ -175,6 +175,7 @@ presented using a dictionary metaphor, indexed by name.
 
 This package contains tests for H5PY.
 
+%if_with python3
 %package -n python3-module-%name-tests
 Summary: Tests for Python interface to the HDF5
 Group: Development/Python3
@@ -200,9 +201,11 @@ supports slicing, and has dtype and shape attributes. HDF5 groups are
 presented using a dictionary metaphor, indexed by name.
 
 This package contains tests for H5PY.
+%endif
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -216,7 +219,6 @@ ln -s ../objects.inv docs_api/
 
 %build
 %add_optflags -fno-strict-aliasing
-#python setup.py cython
 python setup.py configure --hdf5=%hdf5dir
 python api_gen.py
 %python_build_debug
@@ -296,6 +298,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.1-alt1
+- Updated to upstream version 2.7.1.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.5.0-alt2.git20150720.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
