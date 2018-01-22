@@ -2,28 +2,28 @@
 %define mpidir %_libdir/%mpiimpl
 
 %define somver 0
-%define sover %somver.2.9
+%define sover %somver.2.13
 Name: hypre
-Version: 2.9.0b
+Version: 2.13.0
 Release: alt1
 Summary: Scalable algorithms for solving linear systems of equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
 Url: http://www.llnl.gov/casc/hypre/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar.gz
-Source1: babel_files
+# https://github.com/LLNL/hypre.git
+Source: %name-%version.tar
+Patch1: %name-%version-alt.patch
 
 Requires: lib%name-devel = %version-%release
 
 BuildRequires(pre): rpm-build-python rpm-build-java /proc
-BuildPreReq: gcc-fortran gcc-c++ %mpiimpl-devel emacs24-nox
-BuildPreReq: liblapack-devel w3c-libwww-devel doc++ netpbm
-BuildPreReq: libsuperlu-devel babel cmake texlive-base-bin
-BuildPreReq: java-devel-default libchasm-devel chasm python-devel
-BuildPreReq: libnumpy-devel libxml2-devel python-module-libxml2
-BuildPreReq: libltdl-devel ghostscript-classic
+BuildRequires: gcc-fortran gcc-c++ %mpiimpl-devel emacs24-nox
+BuildRequires: liblapack-devel w3c-libwww-devel doc++ netpbm
+BuildRequires: libsuperlu-devel babel cmake texlive-base-bin
+BuildRequires: java-devel-default libchasm-devel chasm python-devel
+BuildRequires: libnumpy-devel libxml2-devel python-module-libxml2
+BuildRequires: libltdl-devel ghostscript-classic
 
 %description
 The goal of the Scalable Linear Solvers project is to develop scalable
@@ -86,6 +86,7 @@ This package contains development documentation for Hepre.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 mpi-selector --set %mpiimpl
@@ -98,31 +99,22 @@ export JNI_INCLUDES="%_libexecdir/jvm/java/include"
 export MPIDIR=%mpidir
 cd src
 
-FLAGS="%optflags %optflags_shared -I%_includedir/numpy"
-%add_optflags $FLAGS
+%add_optflags %optflags %optflags_shared -I%_includedir/numpy
 
-mkdir BUILD
-pushd BUILD
-cmake \
-%ifarch x86_64
-	-DLIB_SUFFIX=64 \
-%endif
+%cmake \
 	-DHYPRE_SHARED:BOOL=ON \
-	-DCMAKE_INSTALL_PREFIX=%prefix \
-	-DCMAKE_C_FLAGS="%optflags" \
-	-DCMAKE_CXX_FLAGS="%optflags" \
-	-DCMAKE_Fortran_FLAGS="%optflags" \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	-DHYPRE_INSTALL_PREFIX:PATH=%buildroot%prefix \
 	-DMPIDIR=%mpidir \
 	-DSOMVER=%somver \
 	-DSOVER=%sover \
+	-DHYPRE_SHARED:BOOL=ON \
+	-DHYPRE_USING_HYPRE_BLAS:BOOL=OFF \
+	-DHYPRE_USING_HYPRE_LAPACK:BOOL=OFF \
 	..
-%make_build
-popd
 
-%make_build -C docs html
+%cmake_build
 
 %install
 source %mpidir/bin/mpivars.sh
@@ -137,7 +129,6 @@ mv %buildroot%_includedir/*.h %buildroot%_includedir/%name/
 
 install -d %buildroot%_docdir/lib%name-devel-doc
 cp -fR ../../docs/* %buildroot%_docdir/lib%name-devel-doc/
-cp -fR ../docs/HYPRE_ref_manual %buildroot%_docdir/lib%name-devel-doc/
 rm -f %buildroot%_libdir/libsidl*
 popd
 
@@ -150,14 +141,14 @@ popd
 %files -n lib%name-devel
 %_libdir/*.so
 %_includedir/*
-%exclude %_includedir/%name/Cnames.h
-%exclude %_includedir/%name/supermatrix.h
-%exclude %_includedir/%name/slu_*.h
 
 %files -n lib%name-devel-doc
 %_docdir/lib%name-devel-doc
 
 %changelog
+* Mon Jan 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.13.0-alt1
+- Updated to upstream version 2.13.0.
+
 * Thu Feb 21 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9.0b-alt1
 - Version 2.9.0b
 
