@@ -1,6 +1,6 @@
 Name: libdrm
 Version: 2.4.89
-Release: alt1
+Release: alt1%ubt
 Epoch: 1
 Summary: Userspace interface to kernel DRM service
 License: GPL
@@ -9,8 +9,9 @@ Url: http://dri.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: docbook-style-xsl libudev-devel libpciaccess-devel xorg-util-macros xsltproc
 
 %description
@@ -57,6 +58,9 @@ develop programs which make use of %name
 %_man7dir/*.7*
 
 %changelog
+* Mon Jan 22 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.89-alt1%ubt
+- added ubt tag
+
 * Tue Jan 16 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.89-alt1
 - 2.4.89
 
