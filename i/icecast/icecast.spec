@@ -1,11 +1,10 @@
 # Spec file for Icecast streaming server
 
 Name: icecast
-Version: 2.3.2
-Release: alt4
+Version: 2.4.3
+Release: alt1
 
 Summary: Streaming Media Server
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 License: %gpl2only
 Group: System/Servers
 Url: http://www.icecast.org
@@ -20,8 +19,7 @@ Source5: %name.chroot.conf
 Source6: %name.chroot.all
 
 Source7: xspf.xsl
-Patch1: icecast-2.3.0-alt.patch
-Patch2: icecast-2.3.2-alt-gold.patch
+Patch1: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Mon Jul 06 2009
@@ -33,14 +31,13 @@ streaming technology. It is, however, not limited to streaming mp3 files.
 
 %prep
 %setup -q
-
 %patch1 -p1
-%patch2
 
 %build
 %autoreconf
 %configure \
-	--datadir=%_localstatedir 
+	--datadir=%_localstatedir \
+	--localstatedir=%_var
 
 %make_build
 
@@ -54,8 +51,10 @@ install -p -m644 -D %SOURCE7 %buildroot%_localstatedir/%name/admin/xspf.xsl
 mkdir -p %buildroot/var/run/%name
 mkdir -p -m750 %buildroot%_localstatedir/%name/logs
 
-mkdir -p %buildroot%_datadir
-mv %buildroot%_localstatedir/doc %buildroot%_datadir
+mkdir -p %buildroot%_datadir/doc
+mv %buildroot%_localstatedir/doc/%name-%version %buildroot%_datadir/doc/%name-%version
+mv %buildroot%_datadir/doc/%name/* %buildroot%_datadir/doc/%name-%version/
+rmdir %buildroot%_datadir/doc/%name
 
 install -m 0755 -d -- %buildroot%_localstatedir/%name/etc
 install -m 0755 -d -- %buildroot%_localstatedir/%name/%_lib
@@ -91,6 +90,10 @@ install -p -m 0750 -D -- %SOURCE6 %buildroot%_sysconfdir/chroot.d/%name.all
 %_localstatedir/%name
 
 %changelog
+* Mon Jan 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.3-alt1
+- Updated to upstream version 2.4.3 (Fixes: CVE-2011-4612).
+- Fixed localstatedir.
+
 * Sat May 26 2012 Nikolay A. Fetisov <naf@altlinux.ru> 2.3.2-alt4
 - Fix build with --no-copy-dt-needed-entries
 
