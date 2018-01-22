@@ -1,6 +1,6 @@
 Name: gpm
 Version: 1.20.1
-Release: alt17
+Release: alt18
 
 Summary: A mouse server for the Linux console
 License: GPLv2+
@@ -33,6 +33,7 @@ Patch19: gpm-1.20.1-alt-AC_GNU_SOURCE.patch
 Patch20: gpm-1.20.1-alt-mice.patch
 Patch21: 0001-Un-nest-wacom-helpers-in-src-mice.c-for-Clang-compat.patch
 Patch22: 0002-Un-nest-summa-helpers-in-src-mice.c-for-Clang-compat.patch
+Patch23: gpm-1.20.1-alt-sigemptyset.patch
 
 Requires: lib%name = %version-%release
 
@@ -108,6 +109,7 @@ at the click of a mouse button.
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
+%patch23 -p2
 
 find -type f -name \*.orig -delete
 
@@ -177,6 +179,9 @@ bzip2 -9 Changelog ||:
 %_man1dir/gpm-root.1*
 
 %changelog
+* Mon Jan 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.20.1-alt18
+- Fixed build.
+
 * Thu Apr 27 2017 Dmitry V. Levin <ldv@altlinux.org> 1.20.1-alt17
 - Replaced the patch introduced in 1.20.1-alt15 with upstream patches.
 - Fixed a bug uncovered by gcc -Wmisleading-indentation.
