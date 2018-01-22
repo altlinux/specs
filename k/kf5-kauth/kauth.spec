@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.42.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -61,6 +61,7 @@ KF5 library
 
 %files common -f %name.lang
 %doc COPYING.LIB README.md
+%config(noreplace) %_K5xdgconf/*.*categories
 %dir %_K5libexecdir/kauth/
 
 %files devel
@@ -78,6 +79,9 @@ KF5 library
 %_K5plug/kauth/
 
 %changelog
+* Mon Jan 22 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt2%ubt
+- package categories config
+
 * Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt1%ubt
 - new version
 

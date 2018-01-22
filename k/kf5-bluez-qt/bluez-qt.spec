@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.42.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -55,6 +55,7 @@ KF5 library
 
 %files common -f %name.lang
 %doc COPYING.LIB README.md
+%config(noreplace) %_K5xdgconf/*.*categories
 /lib/udev/rules.d/*-kde-bluetooth-*.rules
 
 %files devel
@@ -69,6 +70,9 @@ KF5 library
 %_K5qml/org/kde/bluezqt/
 
 %changelog
+* Mon Jan 22 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt2%ubt
+- package categories config
+
 * Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt1%ubt
 - new version
 
