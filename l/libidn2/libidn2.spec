@@ -1,13 +1,15 @@
 Summary:          Library to support IDNA2008 internationalized domain names
 Name:             libidn2
 Version:          2.0.4
-Release:          alt2
+Release:          alt3
 License:          (GPLv2+ or LGPLv3+) and GPLv3+
 Group:            System/Libraries
 URL:              https://www.gnu.org/software/libidn/#libidn2
 Source0:          %name-%version.tar
 BuildRequires:    libunistring-devel
 BuildRequires: /usr/bin/gtkdocize texinfo
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Libidn2 is an implementation of the IDNA2008 specifications in RFC
@@ -49,14 +51,21 @@ Domain Name (IDNA2008/TR46) format.
 %make_build -C examples distclean
 rm -f examples/Makefile*
 
+# Relocate shared libraries from %%_libdir/ to /%%_lib/.
+mkdir -p %buildroot/%_lib
+for f in %buildroot%_libdir/*.so; do
+	t=$(readlink -v "$f")
+	ln -fnrs %buildroot/%_lib/"$t" "$f"
+done
+mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
+
 %check
 %make_build -C tests check
 
 %files
 %doc COPYING COPYING.LESSERv3 COPYING.unicode COPYINGv2
 %doc AUTHORS NEWS README.md
-%_libdir/%name.so.*
-%_infodir/%name.info*
+/%_lib/%name.so.*
 
 %files devel
 %doc doc/%name.html examples
@@ -65,12 +74,18 @@ rm -f examples/Makefile*
 %_includedir/*.h
 %_man3dir/*
 %_datadir/gtk-doc/
+%_infodir/%name.info*
 
 %files -n idn2
 %_bindir/idn2
 %_man1dir/idn2.1*
 
 %changelog
+* Mon Jan 22 2018 Mikhail Efremov <sem@altlinux.org> 2.0.4-alt3
+- Use _unpackaged_files_terminate_build.
+- Move library %_libdir -> /%_lib (closes: #34449).
+- Move info to devel subpackage.
+
 * Fri Jan 19 2018 Mikhail Efremov <sem@altlinux.org> 2.0.4-alt2
 - Disable silent rules.
 - Split idn2 tool to separate subpackage.
