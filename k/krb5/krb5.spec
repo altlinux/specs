@@ -1,7 +1,7 @@
 
 Name: krb5
-Version: 1.15.2
-Release: alt2%ubt
+Version: 1.16
+Release: alt1%ubt
 
 %define _docdir %_defaultdocdir/%name-%version
 
@@ -12,9 +12,6 @@ Url: http://web.mit.edu/kerberos/www/
 
 Source0: %name-%version.tar
 Source2: %name-alt.tar
-# due git binary diffs are not supported by current version patch
-Source3: fedora-Add-test-cert-generation-to-make-certs.sh.patch.tar
-Source4: fedora-Add-test-cert-with-no-extensions.patch.tar
 
 # Tex style for new sphinx pdf builder
 Source11: ltxcmds.sty
@@ -35,42 +32,10 @@ Patch71: krb5-1.13-fedora-dirsrv-accountlock.patch
 Patch86: krb5-1.9-fedora-debuginfo.patch
 Patch129: krb5-1.11-fedora-run_user_0.patch
 Patch134: krb5-1.11-fedora-kpasswdtest.patch
-# additional fedora patches:
-Patch137: fedora-Build-with-Werror-implicit-int-where-supported.patch
-Patch138: fedora-Add-PKINIT-UPN-tests-to-t_pkinit.py.patch
-Patch139: fedora-Add-test-case-for-PKINIT-DH-renegotiation.patch
-Patch140: fedora-Use-expected_trace-in-test-scripts.patch
-Patch141: fedora-Use-expected_msg-in-test-scripts.patch
-Patch142: fedora-Use-fallback-realm-for-GSSAPI-ccache-selection.patch
-Patch143: fedora-Use-GSSAPI-fallback-skiptest.patch
-Patch144: fedora-Improve-PKINIT-UPN-SAN-matching.patch
-Patch145: fedora-Add-test-cert-generation-to-make-certs.sh.patch
-Patch146: fedora-Deindent-crypto_retrieve_X509_sans.patch
-Patch147: fedora-Add-the-client_name-kdcpreauth-callback.patch
-Patch148: fedora-Use-the-canonical-client-principal-name-for-OTP.patch
-Patch149: fedora-Add-certauth-pluggable-interface.patch
-Patch150: fedora-Correct-error-handling-bug-in-prior-commit.patch
-Patch151: fedora-Add-k5test-expected_msg-expected_trace.patch
-Patch153: fedora-Add-support-to-query-the-SSF-of-a-GSS-context.patch
-Patch155: fedora-Remove-incomplete-PKINIT-OCSP-support.patch
-Patch157: fedora-Fix-in_clock_skew-and-use-it-in-AS-client-code.patch
-Patch158: fedora-Add-timestamp-helper-functions.patch
-Patch159: fedora-Make-timestamp-manipulations-y2038-safe.patch
-Patch160: fedora-Add-timestamp-tests.patch
-Patch161: fedora-Add-y2038-documentation.patch
-Patch162: fedora-Fix-more-time-manipulations-for-y2038.patch
-Patch163: fedora-Use-krb5_timestamp-where-appropriate.patch
-Patch164: fedora-Add-KDC-policy-pluggable-interface.patch
-Patch165: fedora-Fix-bugs-in-kdcpolicy-commit.patch
-Patch166: fedora-Convert-some-pkiDebug-messages-to-TRACE-macros.patch
-Patch167: fedora-Fix-certauth-built-in-module-returns.patch
-Patch168: fedora-Add-test-cert-with-no-extensions.patch
-Patch169: fedora-Add-PKINIT-test-case-for-generic-client-cert.patch
-Patch170: fedora-Add-hostname-based-ccselect-module.patch
 
 
 # alt patches:
-Patch200: krb5-1.14.4-alt-default_keytab_group.patch
+Patch200: krb5-1.16-alt-default_keytab_group.patch
 Patch201: alt-Fix-test-with-fallback-realm-ccache-selection.patch
 
 
@@ -211,44 +176,19 @@ MIT Kerberos.
 %patch129 -p1 -b .run_user_0
 %patch134 -p1 -b .kpasswdtest
 
-# Special patches from fedora changes ABI
-%patch137 -p1
-%patch138 -p1
-%patch139 -p1
-%patch140 -p1
-%patch141 -p1
-%patch142 -p1
-%patch143 -p1
-%patch144 -p1
-%patch145 -p1
-tar -xf %SOURCE3
-%patch146 -p1
-%patch147 -p1
-%patch148 -p1
-%patch149 -p1
-%patch150 -p1
-%patch151 -p1
-%patch153 -p1
-%patch155 -p1
-%patch157 -p1
-%patch158 -p1
-%patch159 -p1
-%patch160 -p1
-%patch161 -p1
-%patch162 -p1
-%patch163 -p1
-%patch164 -p1
-%patch165 -p1
-%patch166 -p1
-%patch167 -p1
-#patch168 -p1
-#tar -xf %SOURCE4
-#rm -f src/tests/dejagnu/pkinit-certs/user-upn3.csr
-#patch169 -p1
-%patch170 -p1
-
 %patch200 -p2 -b .default_keytab_group
 %patch201 -p1
+
+# Generate an FDS-compatible LDIF file.
+inldif=src/plugins/kdb/ldap/libkdb_ldap/kerberos.ldif
+cat > '60kerberos.ldif' << EOF
+# This is a variation on kerberos.ldif which 389 Directory Server will like.
+dn: cn=schema
+EOF
+egrep -iv '(^$|^dn:|^changetype:|^add:)' $inldif | \
+sed -r 's,^		,                ,g' | \
+sed -r 's,^	,        ,g' >> 60kerberos.ldif
+touch -r $inldif 60kerberos.ldif
 
 %build
 # Go ahead and supply tcl info, because configure doesn't know how to find it.
@@ -530,6 +470,9 @@ fi
 # {{{ changelog
 
 %changelog
+* Mon Jan 22 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16-alt1%ubt
+- Update to latest stable release 1.16
+
 * Fri Nov 03 2017 Evgeny Sinelnikov <sin@altlinux.org> 1.15.2-alt2%ubt
 - Fix build-pdf on Sisyphus
 - Add noport, nss_wrapper and socket_wrapper for tests running
