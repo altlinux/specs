@@ -1,8 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+
 %define cfgdir		%_sysconfdir/%name
 
 Name: kismet
-Version: 2010.07.R1
-Release: alt1.1.qa1
+Version: 2014.02.R1
+Release: alt1
 
 Summary: Kismet wireless tools
 License: GPLv2+
@@ -10,21 +12,17 @@ Group: Security/Networking
 
 Url: http://www.kismetwireless.net/
 
-Packager: Andrey Rahmatullin <wrar@altlinux.ru>
-
+# https://github.com/kismetwireless/kismet.git
 Source: %name-%version.tar
 
-BuildPreReq: control gcc-c++ libcap-devel libncurses-devel libnl-devel
-BuildPreReq: libpcap-devel libpcre-devel libssl-devel setproctitle-devel
-BuildPreReq: libbluez-devel
+BuildRequires: control gcc-c++ libcap-devel libncurses-devel libnl-devel
+BuildRequires: libpcap-devel libpcre-devel libssl-devel setproctitle-devel
+BuildRequires: libbluez-devel
 
 Requires: kismet-client = %version-%release
 Requires: kismet-server = %version-%release
 Requires: kismet-drone = %version-%release
 Requires: kismet-plugins = %version-%release
-
-%define _unpackaged_files_terminate_build 1
-
 
 %description
 Kismet is an 802.11 layer2 wireless network detector, sniffer, and
@@ -113,6 +111,9 @@ sed -i \
     		conf/kismet.conf.in conf/kismet_drone.conf
 
 bzip2 CHANGELOG
+
+%add_optflags -I%_includedir/pcre -fPIC
+
 %autoreconf
 
 %build
@@ -124,16 +125,15 @@ export ac_cv_lib_uClibcpp_main=no	# we do not want to build against uClibc++, ev
 %make_build dep
 %make_build HOME="$HOME"
 
-for i in plugin-{autowep,btscan,ptw,spectools}; do
-	%make_build -C $i KIS_SRC_DIR=`pwd` \
-		CFLAGS="-I\$(KIS_SRC_DIR) -I%_includedir/pcre -fPIC %optflags"
+for i in plugin-{alertsyslog,btscan,spectools,syslog}; do
+	%make_build -C $i KIS_SRC_DIR=`pwd`
 done
 
 %install
 %makeinstall_std \
 	INSTUSR="$(id -un)" INSTGRP="$(id -gn)" MANGRP="$(id -gn)"
 
-for i in plugin-{autowep,btscan,ptw,spectools}; do
+for i in plugin-{alertsyslog,btscan,spectools,syslog}; do
 	%make install -C $i \
 		INSTUSR="$(id -un)" INSTGRP="$(id -gn)" \
 		KIS_SRC_DIR=`pwd` DESTDIR=`pwd`/_tmp
@@ -141,8 +141,8 @@ for i in plugin-{autowep,btscan,ptw,spectools}; do
 done
 
 mkdir -p %buildroot%_libdir/kismet{,_client}
-install -pD -m755 _tmp/usr/lib/kismet/* %buildroot%_libdir/kismet/
-install -pD -m755 _tmp/usr/lib/kismet_client/* %buildroot%_libdir/kismet_client/
+install -pD -m755 _tmp/%_libdir/kismet/* %buildroot%_libdir/kismet/
+install -pD -m755 _tmp/%_libdir/kismet_client/* %buildroot%_libdir/kismet_client/
 
 install -pD -m755 %name-capture.control %buildroot%_controldir/%name-capture
 install -pD -m755 kismet_capture %buildroot%_bindir/
@@ -190,6 +190,9 @@ rm -f %buildroot%_bindir/%name
 %_docdir/%name-plugins-%version/
 
 %changelog
+* Tue Jan 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2014.02.R1-alt1
+- Updated to upstream version 2014.02.R1.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2010.07.R1-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
