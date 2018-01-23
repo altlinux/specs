@@ -1,18 +1,19 @@
 Name: kmscon
 Version: 8
-Release: alt1
+Release: alt2
 Summary: KMS/DRM based System Console
 Group: Terminals
 
 License: MIT and LGPLv2+
 Url: http://www.freedesktop.org/wiki/Software/kmscon/
 Source: %name-%version.tar
+Patch1: %name-%version-alt.patch
 
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libtsm)
 BuildRequires: pkgconfig(libudev) >= 172
 BuildRequires: pkgconfig(libdrm)
-BuildRequires: pkgconfig(libsystemd-login) pkgconfig(libsystemd-daemon)
+BuildRequires: libsystemd-devel
 BuildRequires: pkgconfig(gbm)
 BuildRequires: pkgconfig(egl)
 BuildRequires: pkgconfig(glesv2)
@@ -27,6 +28,7 @@ console. See kmscon(1) man-page for usage information.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 mkdir -p m4
@@ -67,5 +69,8 @@ install -pm 0644 docs/kmsconvt@.service %buildroot%_unitdir
 %_man1dir/%name.1*
 
 %changelog
+* Tue Jan 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 8-alt2
+- Fixed build with new systemd and glibc.
+
 * Tue Jun 17 2014 Alexey Shabalin <shaba@altlinux.ru> 8-alt1
 - initial build
