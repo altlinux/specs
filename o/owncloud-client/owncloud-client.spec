@@ -1,7 +1,7 @@
 %define rname owncloudclient
 Name: owncloud-client
 Version: 2.4.0
-Release: alt2%ubt
+Release: alt3%ubt
 
 Group: Networking/File transfer
 Summary: ownCloud Desktop Client
@@ -88,6 +88,9 @@ desktop-file-install \
 %_datadir/nautilus-python/extensions/
 
 %changelog
+* Tue Jan 23 2018 Oleg Solovyov <mcpain@altlinux.org> 2.4.0-alt3%ubt
+- fix for moving more than two files with identical names
+
 * Tue Jan 16 2018 Oleg Solovyov <mcpain@altlinux.org> 2.4.0-alt2%ubt
 - fix moving single files to trash
 
