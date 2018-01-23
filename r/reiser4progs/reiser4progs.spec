@@ -1,7 +1,7 @@
 %def_enable minimal
 
 Name: reiser4progs
-Version: 1.1.0
+Version: 1.2.1
 Release: alt1
 Summary: Utilities for reiser4 filesystems
 License: GPLv2
@@ -11,8 +11,8 @@ URL: http://reiser4.sourceforge.net/
 %define reiser_libver %(echo %version | cut -d . -f 1-2)
 
 Source: %name-%version.tar
-Patch1: %name-%version-alt-format.patch
-Patch2: %name-%version-alt-linking.patch
+Patch1: %name-1.1.0-alt-format.patch
+Patch2: %name-1.1.0-alt-linking.patch
 
 # Automatically added by buildreq on Wed Mar 17 2010
 BuildRequires: libaal-devel-static libaal-minimal-devel libncurses-devel libreadline-devel libuuid-devel
@@ -144,6 +144,9 @@ mv %buildroot{/%_lib/*.{so,a},%_libdir/}
 %endif
 
 %changelog
+* Tue Jan 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.1-alt1
+- Updated to upstream version 1.2.1.
+
 * Wed Nov 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt1
 - Updated to upstream version 1.1.0.
 
