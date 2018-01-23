@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.10.0
-Release: alt3%ubt
+Release: alt4%ubt
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -788,6 +788,89 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Tue Jan 23 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt4%ubt
+- upstream updates (Xen hypervisor):
+  + x86: allow Meltdown band-aid to be disabled (thx Jan Beulich).
+  + x86: Meltdown band-aid against malicious 64-bit PV guests (thx Jan Beulich).
+  + x86/mm: Always set _PAGE_ACCESSED on L4e updates (thx Andrew Cooper).
+  + x86: Don't use potentially incorrect CPUID values for topology
+    information (thx Jan H. Schonherr).
+  + x86/entry: Remove support for partial cpu_user_regs frames (thx Andrew Cooper).
+  + x86/upcall: inject a spurious event after setting upcall vector (thx Roger Pau Monne).
+  + x86/E820: don't overrun array (thx Jan Beulich).
+  + x86/IRQ: conditionally preserve access permission on map
+    error paths (thx Jan Beulich).
+  + xen/arm: bootfdt: Use proper default for #address-cells and
+    #size-cells (thx Julien Grall).
+  + xen/arm: gic-v3: Bail out if gicv3_cpu_init fail (thx Julien Grall).
+- upstream updates (Qemu-xen device-model):
+  + Update version for 2.10.2 release (thx Michael Roth).
+  + spapr: don't initialize PATB entry if max-cpu-compat < power9 (thx Laurent Vivier).
+  + target/ppc: Update setting of cpu features to account for
+    compat modes (thx Suraj Jitindar Singh).
+  + vfio: Fix vfio-kvm group registration (thx Alex Williamson).
+  + spapr: Include "pre-plugged" DIMMS in ram size calculation
+    at reset (thx David Gibson).
+  + vga: handle cirrus vbe mode wraparounds. (thx Gerd Hoffmann).
+  + vga: drop line_offset variable (thx Gerd Hoffmann).
+  + nbd/client: Don't hard-disconnect on ESHUTDOWN from server (thx Eric Blake).
+  + nbd-client: Refuse read-only client with BDRV_O_RDWR (thx Eric Blake).
+  + nbd/server: fix nbd_negotiate_handle_info (thx Vladimir Sementsov-Ogievskiy).
+  + vhost: fix error check in vhost_verify_ring_mappings() (thx Greg Kurz).
+  + nbd/server: CVE-2017-15118 Stack smash on large export name (thx Eric Blake).
+  + nbd/server: CVE-2017-15119 Reject options larger than 32M (thx Eric Blake).
+  + virtio-net: don't touch virtqueue if vm is stopped (thx Jason Wang).
+  + block/nfs: fix nfs_client_open for filesize greater than 1TB (thx Peter Lieven).
+  + scripts/make-release: ship u-boot source as a tarball (thx Michael Roth).
+  + spapr: reset DRCs after devices (thx Greg Kurz).
+  + hw/ppc: clear pending_events on machine reset (thx Daniel Henrique Barboza).
+  + vhost: restore avail index from vring used index on disconnection (thx Maxime Coquelin).
+  + virtio: Add queue interface to restore avail index from vring
+    used index (thx Maxime Coquelin).
+  + util/stats64: Fix min/max comparisons (thx Max Reitz).
+  + nbd/client: Use error_prepend() correctly (thx Eric Blake).
+  + net: fix check for number of parameters to -netdev socket (thx Jens Freimann).
+  + net/socket: fix coverity issue (thx Jens Freimann).
+  + hw/intc/arm_gicv3_its: Don't abort on table save failure (thx Eric Auger).
+  + translate.c: Fix usermode big-endian AArch32 LDREXD and STREXD (thx Peter Maydell).
+  + ppc: fix setting of compat mode (thx Greg Kurz).
+  + io: monitor encoutput buffer size from websocket GSource (thx Daniel P. Berrange).
+  + nios2: define tcg_env (thx Paolo Bonzini).
+  + iotests: Add cluster_size=64k to 125 (thx Max Reitz).
+  + qcow2: Always execute preallocate() in a coroutine (thx Max Reitz).
+  + qcow2: Fix unaligned preallocated truncation (thx Max Reitz).
+  + hw/sd: fix out-of-bounds check for multi block reads (thx Michael Olbrich).
+  + memory: fix off-by-one error in memory_region_notify_one() (thx Maxime Coquelin).
+  + exec: simplify address_space_get_iotlb_entry (thx Peter Xu).
+  + exec: add page_mask for flatview_do_translate (thx Peter Xu).
+  + memory: Share special empty FlatView (thx Alexey Kardashevskiy).
+  + memory: seek FlatView sharing candidates among children
+    subregions (thx Paolo Bonzini).
+  + memory: trace FlatView creation and destruction (thx Paolo Bonzini).
+  + memory: Create FlatView directly (thx Alexey Kardashevskiy).
+  + memory: Get rid of address_space_init_shareable (thx Alexey Kardashevskiy).
+  + memory: Do not allocate FlatView in address_space_init (thx Alexey Kardashevskiy).
+  + memory: Share FlatView's and dispatch trees between address
+    spaces (thx Alexey Kardashevskiy).
+  + memory: Move address_space_update_ioeventfds (thx Alexey Kardashevskiy).
+  + memory: Alloc dispatch tree where topology is generared (thx Alexey Kardashevskiy).
+  + memory: Store physical root MR in FlatView (thx Alexey Kardashevskiy).
+  + memory: Rename mem_begin/mem_commit/mem_add helpers (thx Alexey Kardashevskiy).
+  + memory: Cleanup after switching to FlatView (thx Alexey Kardashevskiy).
+  + memory: Switch memory from using AddressSpace to FlatView (thx Alexey Kardashevskiy).
+  + memory: avoid "resurrection" of dead FlatViews (thx Paolo Bonzini).
+  + memory: Remove AddressSpace pointer from AddressSpaceDispatch (thx Alexey Kardashevskiy).
+  + memory: Move AddressSpaceDispatch from AddressSpace to FlatView (thx Alexey Kardashevskiy).
+  + memory: Move FlatView allocation to a helper (thx Alexey Kardashevskiy).
+  + memory: Open code FlatView rendering (thx Alexey Kardashevskiy).
+  + exec: Explicitly export target AS from
+    address_space_translate_internal (thx Alexey Kardashevskiy).
+  + block: Perform copy-on-read in loop (thx Eric Blake).
+  + kvmclock: use the updated system_timer_msr (thx Jim Somerville).
+  + block/mirror: check backing in bdrv_mirror_top_flush (thx Vladimir Sementsov-Ogievskiy).
+  + hw/usb/bus: Remove bad object_unparent() from
+    usb_try_create_simple() (thx Thomas Huth).
+
 * Thu Jan 11 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt3%ubt
 - upstream updates:
   + x86/msr: Free msr_vcpu_policy during vcpu destruction (thx Andrew Cooper).
