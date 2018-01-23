@@ -1,6 +1,6 @@
 Name: firmware-linux
-Version: 20180104
-Release: alt1.1
+Version: 20180118
+Release: alt1
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -8,6 +8,7 @@ Group: System/Kernel and hardware
 
 Url: git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 Provides: linux-firmware
@@ -34,6 +35,7 @@ required for some devices to operate.
 
 %prep
 %setup -n %name-%version 
+%patch -p1
 
 %build
 # Remove firmware shipped in separate packages already
@@ -63,6 +65,25 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 %exclude /lib/firmware/carl9170fw
 
 %changelog
+* Tue Jan 23 2018 Konstantin A. Lepikhov <lakostis@altlinux.ru> 20180118-alt1
+- Update 65b1c68 GIT:
+  + amdgpu: update uvd firmware for polaris asics (thx Alex Deucher).
+  + amdgpu: update vce firmware for Fiji (thx Alex Deucher).
+  + amdgpu: update vcn firmware for raven (thx Alex Deucher).
+  + amdgpu: update vce and uvd firmware for Vega10 (thx Alex Deucher).
+  + mediatek: update MT8173 VPU firmware to 1.0.8 [decoder h264]
+    Fix h264 decoder output delay for some low latency bitstreams
+    (thx pochun.lin).
+  + cxgb4: update firmware to revision 1.17.14.0 (thx Ganesh Goudar).
+  + linux-firmware: update Marvell PCIe-USB8897/8997 firmware image
+    to add WPA2 vulnerability fix (thx Xinming Hu).
+  + LICENSE.nouveau-firmware: added.
+  + linux-firmware: intel: Update Geminilake audio firmware
+    (thx Pradeep Tewani).
+
+* Sat Jan 13 2018 L.A. Kostis <lakostis@altlinux.ru> 20180104-alt1.2
+- prepare .spec for cronbuild.
+
 * Fri Jan 05 2018 L.A. Kostis <lakostis@altlinux.ru> 20180104-alt1.1
 - amd-ucode: Add microcode_amd_fam17h.bin (bsc#1068032 CVE-2017-5715)
 
