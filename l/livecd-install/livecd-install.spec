@@ -1,6 +1,6 @@
 Name: livecd-install
 Version: 0.9.10
-Release: alt1
+Release: alt3
 
 Summary: Permanently install Live system
 License: GPLv2
@@ -16,7 +16,7 @@ Packager: Andriy Stepanov <stanv@altlinux.ru>
 BuildArch: noarch
 Requires: alterator-wizardface
 Requires: alterator-livecd >= 0.5-alt1
-Requires: alterator-vm alterator-grub alterator-users >= 10.2-alt1 alterator-root >= 0.9-alt1 alterator-datetime >= 2.6
+Requires: alterator-vm alterator-users >= 10.2-alt1 alterator-root >= 0.9-alt1 alterator-datetime >= 2.6 alterator-notes
 Requires: alterator-service-functions
 Requires: installer-scripts-remount-stage2 >= 0.3-alt1
 Requires: livecd-evms
@@ -62,6 +62,12 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Tue Jan 23 2018 Paul Wolneykien <manowar@altlinux.org> 0.9.10-alt3
+- Fix: Depend on alterator-notes.
+
+* Tue Jan 16 2018 Paul Wolneykien <manowar@altlinux.org> 0.9.10-alt2
+- Adapt for the multi-arch build: do not require alterator-grub any more.
+
 * Thu Aug 17 2017 Paul Wolneykien <manowar@altlinux.org> 0.9.10-alt1
 - Use /etc/alternatives for the installer steps configuration.
 
