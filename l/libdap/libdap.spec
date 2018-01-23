@@ -9,7 +9,7 @@ BuildRequires: chrpath
 Name: libdap
 Summary: The C++ DAP2 library from OPeNDAP
 Version: 3.18.3
-Release: alt2_4
+Release: alt3_4
 
 License: LGPLv2+
 Group: Development/Other
@@ -17,6 +17,7 @@ URL: http://www.opendap.org/
 Source0: http://www.opendap.org/pub/source/libdap-%{version}.tar.gz
 #Don't run HTTP tests - builders don't have network connections
 Patch0: libdap-offline.patch
+Patch1: libdap-alt-cppunit-pkgconfig.patch
 
 # For autoreconf
 BuildRequires: libtool
@@ -32,6 +33,7 @@ BuildRequires: libssl-devel
 %ifnarch s390 %{mips}
 BuildRequires: valgrind
 %endif
+BuildRequires: /usr/bin/groff
 
 Provides: bundled(gnulib)
 Source44: import.info
@@ -70,6 +72,7 @@ Documentation of the libdap library.
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .offline
+%patch1 -p2
 iconv -f latin1 -t utf8 < COPYRIGHT_W3C > COPYRIGHT_W3C.utf8
 touch -r COPYRIGHT_W3C COPYRIGHT_W3C.utf8
 mv COPYRIGHT_W3C.utf8 COPYRIGHT_W3C
@@ -77,7 +80,7 @@ mv COPYRIGHT_W3C.utf8 COPYRIGHT_W3C
 
 %build
 # To fix rpath
-autoreconf -f -i
+%autoreconf
 %configure --disable-static --disable-dependency-tracking
 # --enable-valgrind - missing valgrind exclusions file
 %make_build
@@ -86,7 +89,7 @@ make docs
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+%makeinstall_std
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/libdap
 mv $RPM_BUILD_ROOT%{_libdir}/libtest-types.a $RPM_BUILD_ROOT%{_libdir}/libdap/
 rm $RPM_BUILD_ROOT%{_libdir}/*.la
@@ -133,6 +136,9 @@ done
 
 
 %changelog
+* Tue Jan 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.18.3-alt3_4
+- Fixed build.
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 3.18.3-alt2_4
 - set doc to noarch
 
