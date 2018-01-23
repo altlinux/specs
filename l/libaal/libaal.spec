@@ -8,7 +8,7 @@
 
 %define bname aal
 Name: lib%bname
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 Summary: Abstraction library for ReiserFS utilities
 License: GPLv2
@@ -120,6 +120,9 @@ install -m 0644 AUTHORS COPYING CREDITS ChangeLog THANKS %buildroot%_docdir/%nam
 %endif
 
 %changelog
+* Tue Jan 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.7-alt1
+- Updated to upstream version 1.0.7.
+
 * Wed Nov 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.6-alt1
 - Updated to upstream version 1.0.6.
 
