@@ -1,7 +1,7 @@
 %define destname gear-uupdate
 Name: %destname
 Version: 0.23
-Release: alt1
+Release: alt2
 
 Summary: Helper utility to be called by uscan for gear repository update
 Source: %name-%version.tar
@@ -25,7 +25,7 @@ Requires: gear /usr/bin/srpmnmu perl-Gear-Rules perl-RPM-Source-Editor > 0.900
 
 %install
 mkdir -p %buildroot%_bindir
-install -Dm755 gear-uupdate* %buildroot%_bindir/
+install -Dm755 gear-uupdate gear-uupdate-* %buildroot%_bindir/
 
 for i in gear-uupdate-prepare gear-uupdate-execute; do
     pod2man  --name $i --center $i --section 1 --release %version $i > $i.1
@@ -39,6 +39,9 @@ install -m 644 gear-*.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Tue Jan 23 2018 Igor Vlasenko <viy@altlinux.ru> 0.23-alt2
+- cleaned up install garbage (closes: 34475)
+
 * Thu Apr 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
 - new version
 
