@@ -56,8 +56,8 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	3.3.5
-Release:	alt1.1
+Version:	3.3.6
+Release:	alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -648,6 +648,9 @@ xz Changelog
 %endif
 
 %changelog
+* Tue Jan 23 2018 Anton Farygin <rider@altlinux.ru> 2:3.3.6-alt1
+- new version
+
 * Sun Jan 14 2018 Yuri N. Sedunov <aris@altlinux.org> 2:3.3.5-alt1.1
 - rebuild against libcdio.so.18
 
