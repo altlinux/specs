@@ -1,22 +1,32 @@
-%define ver_major 0.7
+%def_disable snapshot
+
+%define ver_major 1.0
 %define api_ver 1.0
+
+%def_enable docs
+%def_enable introspection
 
 Name: gcab
 Version: %ver_major
-Release: alt2
+Release: alt1
 
-Summary: M$ Cabinet archive tool
+Summary: M$ Cabinet archive library and tool
 Group: File tools
 License: LGPLv2+
-Url: http://ftp.gnome.org/pub/gnome/sources/gcab
+Url: https://wiki.gnome.org/msitools
 
+#VCS: git://git.gnome.org/gcab
+%if_disabled snapshot
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 
 Requires: lib%name = %version-%release
 
-BuildRequires: intltool gtk-doc vala-tools glib2-devel
+BuildRequires: meson gtk-doc glib2-devel
 BuildRequires: gobject-introspection-devel zlib-devel
+BuildRequires: vala-tools
 
 %description
 gcab is a tool to manipulate Cabinet archive.
@@ -72,22 +82,20 @@ GObject introspection devel data for the gcab library
 %setup
 
 %build
-%autoreconf
-%configure \
-	--disable-static \
-	--enable-gtk-doc \
-	--enable-fast-install
-%make_build VERSION=%version
+%meson \
+	%{?_enable_docs:-Ddocs=true} \
+	%{?_enable_introspection:-Dintrospection=true}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/%name
 %_man1dir/%name.1*
-%doc NEWS
+%doc NEWS README*
 
 %files -n lib%name
 %_libdir/lib%name-%api_ver.so.*
@@ -97,6 +105,7 @@ GObject introspection devel data for the gcab library
 %_libdir/lib%name-%api_ver.so
 %_pkgconfigdir/lib%name-%api_ver.pc
 %_vapidir/lib%name-%api_ver.vapi
+%_vapidir/lib%name-%api_ver.deps
 
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/%name/
@@ -108,6 +117,9 @@ GObject introspection devel data for the gcab library
 %_girdir/GCab-%api_ver.gir
 
 %changelog
+* Tue Jan 23 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
+- 1.0 (fixed CVE-2018-5345)
+
 * Thu Mar 10 2016 Yuri N. Sedunov <aris@altlinux.org> 0.7-alt2
 - rebuilt for broken rpm-4.0.4-alt100.89
 
