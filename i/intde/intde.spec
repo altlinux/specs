@@ -1,17 +1,16 @@
 Name: intde
 Version: 1
-Release: alt1
+Release: alt2
 Summary: Numerical Automatic Integrator for Improper Integral
 License: BSD
 Group: Sciences/Mathematics
 Url: http://crd.lbl.gov/~dhbailey/mpdist/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
 Requires: lib%name = %version-%release
 
-BuildPreReq: gcc-fortran gcc-c++
+BuildRequires: gcc-fortran gcc-c++
 
 %description
 Numerical Automatic Integrator for Improper Integral
@@ -70,7 +69,7 @@ install -m644 lib*.so %buildroot%_libdir/
 %check
 export LD_LIBRARY_PATH=$PWD
 for i in t1/*.o t2/*.o; do
-	g++ -o $i.out $i -lgfortranbegin -L. -l%{name}1 -l%{name}1f -lgfortran
+	g++ -o $i.out $i -L. -l%{name}1 -l%{name}1f -lgfortran
 	echo test $i:
 	./$i.out
 done
@@ -81,6 +80,9 @@ done
 %doc *.doc *.c f/*.f
 
 %changelog
+* Tue Jan 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1-alt2
+- Fixed build with new toolchain.
+
 * Wed Sep 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1-alt1
 - Initial build for Sisyphus
 
