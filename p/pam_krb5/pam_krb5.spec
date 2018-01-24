@@ -1,6 +1,6 @@
 Summary: A Pluggable Authentication Module for Kerberos 5.
 Name: pam_krb5
-Version: 4.7
+Version: 4.8
 Release: alt1
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
@@ -21,7 +21,7 @@ The included pam_krb5afs module also gets AFS tokens if so configured.
 %patch -p1
 
 %build
-./autogen
+./bootstrap
 %add_optflags -fPIC
 %configure --libdir=/%_lib LDFLAGS='-lpam' \
 	--with-default-use-shmem=sshd --with-default-external=sshd
@@ -38,6 +38,9 @@ make install DESTDIR=%buildroot
 %doc README* LICENSE NEWS
 
 %changelog
+* Wed Jan 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.8-alt1
+- Update to latest 4.x release
+
 * Fri Oct 28 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.7-alt1
 - Upgrade to new 4.x release
 
