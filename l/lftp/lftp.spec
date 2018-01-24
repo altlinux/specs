@@ -1,5 +1,5 @@
 Name: lftp
-Version: 4.6.5
+Version: 4.8.3
 Release: alt1
 
 Summary: Sophisticated command line file transfer program
@@ -55,7 +55,7 @@ export CXX=%__cxx
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std MKDIR_P='mkdir -p'
 %{?_with_modules:find %buildroot%_libdir/lftp/ -type f -name \*.la -delete}
 
 install -pm644 %_sourcedir/lftpget.1 %buildroot%_man1dir/
@@ -82,9 +82,12 @@ desktop-file-install --dir %buildroot%_desktopdir %_sourcedir/lftp.desktop
 %_miconsdir/*.xpm
 %_niconsdir/*.xpm
 %doc src/ChangeLog.bz2 F* MIRRORS NEWS.bz2
-%doc AUTHORS README.* THANKS TODO lftp.lsm BUGS
+%doc AUTHORS README.* THANKS TODO BUGS
 
 %changelog
+* Tue Jan 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.3-alt1
+- Updated to upstream version 4.8.3.
+
 * Mon Jan 18 2016 Dmitry V. Levin <ldv@altlinux.org> 4.6.5-alt1
 - 4.6.4 -> 4.6.5.
 
