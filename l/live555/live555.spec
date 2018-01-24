@@ -1,6 +1,6 @@
 Name: live555
 Version: 20140725
-Release: alt1
+Release: alt2
 
 Summary: Live555.com Streaming Media Library Utilities
 License: LGPL
@@ -85,6 +85,9 @@ done
 %_includedir/liveMedia
 
 %changelog
+* Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 20140725-alt2
+- Fixed build with new glibc.
+
 * Sat Jun 06 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 20140725-alt1
 - 20140725 snapshot
 
