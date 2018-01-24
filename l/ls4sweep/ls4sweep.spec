@@ -1,6 +1,6 @@
 Name: ls4sweep
 Version: 0.3.0
-Release: alt1.qa1
+Release: alt2
 
 Summary: Policy-based listing old backups for sweeping
 License: GPL
@@ -75,11 +75,14 @@ after creation.
 
 %files
 %_bindir/%name
-%_man1dir/%name.1.gz
+%_man1dir/%name.1*
 #rman1dir/%name.1.gz
 %doc %name.html TODO LICENSE
 
 %changelog
+* Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.0-alt2
+- Updated spec to allow any man page compression.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
