@@ -1,6 +1,6 @@
 Name: libgc
 Version: 7.6.0
-Release: alt1
+Release: alt2
 
 Summary: The Boehm-Demers-Weiser conservative garbage collector
 
@@ -11,6 +11,8 @@ Url: http://www.hboehm.info/gc/
 # Source-url: http://www.hboehm.info/gc/gc_source/gc-%version.tar.gz
 Source: gc-%version.tar
 Patch: gc-aarch64.patch
+# https://github.com/ivmai/bdwgc/issues/87
+Patch1: libgc-7.6.0-upstream-c++.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libatomic_ops-devel-static
@@ -49,6 +51,7 @@ This package contains static libgc library.
 %prep
 %setup -n gc-%version
 #patch -p1
+%patch1 -p1
 
 %build
 # see bugzilla.redhat.com/689877
@@ -100,6 +103,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$PWD/.libs
 %endif
 
 %changelog
+* Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 7.6.0-alt2
+- Fixed build with new toolchain.
+
 * Wed Aug 24 2016 Vitaly Lipatov <lav@altlinux.ru> 7.6.0-alt1
 - new version 7.6.0 (with rpmrb script)
 
