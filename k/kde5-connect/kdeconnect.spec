@@ -6,7 +6,7 @@
 %define libkdeconnectinterfaces libkdeconnectinterfaces%sover
 
 Name: kde5-connect
-Version: 1.0.3
+Version: 1.2.1
 Release: alt1%ubt
 %K5init
 
@@ -20,6 +20,7 @@ Provides: kde-connect = %version kdeconnect-kde = %version
 Requires: /usr/bin/sshfs qca-qt5-ossl
 
 Source: %rname-%version.tar
+Patch1: alt-kf5-req-ver.patch
 
 # Automatically added by buildreq on Fri Feb 05 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ gtk-update-icon-cache libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbusmenu-qt52 libgpg-error libjson-c libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libxcbutil-keysyms libxkbfile-devel pkg-config python-base python-modules python3 python3-base qt5-base-devel ruby ruby-stdlibs xorg-inputproto-devel xorg-kbproto-devel xorg-xextproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -78,6 +79,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build \
@@ -93,7 +95,7 @@ KF5 library
 %doc COPYING*
 
 %files
-%_K5bin/kdeconnect-cli
+%_K5bin/kdeconnect-*
 %_K5exec/kdeconnectd
 %_K5start/kdeconnectd.desktop
 %_K5xdgapp/org.kde.kdeconnect.*.desktop
@@ -103,7 +105,7 @@ KF5 library
 %_K5dbus_srv/org.kde.kdeconnect.service
 %_K5notif/kdeconnect.notifyrc
 %_K5icon/hicolor/*/apps/kdeconnect.*
-%_K5icon/hicolor/*/status/*-*ted.*
+%_K5icon/hicolor/*/status/*ted.*
 %_K5srv/*kdeconnect*.*
 %_K5srvtyp/*kdeconnect*.*
 %_K5data/plasma/plasmoids/org.kde.kdeconnect/
@@ -120,6 +122,9 @@ KF5 library
 %_K5lib/libkdeconnectinterfaces.so.*
 
 %changelog
+* Wed Jan 24 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt1%ubt
+- new version
+
 * Thu Jun 29 2017 Sergey V Turchin <zerg@altlinux.org> 1.0.3-alt1%ubt
 - new version
 
