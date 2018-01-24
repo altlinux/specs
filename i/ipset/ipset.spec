@@ -1,8 +1,9 @@
 %define prefix /
 %define exec_prefix /
 %define _prefix /
+%define soname 11
 Name: ipset
-Version: 6.32
+Version: 6.35
 Release: alt1%ubt
 
 Summary: Tools for managing sets of IP or ports with iptables
@@ -29,20 +30,20 @@ ipset may be the proper tool for you, if you want to
  * express complex IP address and ports based rulesets with one single
    iptables rule and benefit from the speed of IP sets
 
-%package -n lib%{name}6
+%package -n lib%{name}%{soname}
 Summary: Dynamic library for %name
 License: LGPLv2+
 Group: Development/C
 
-%description -n lib%{name}6
-The lib%{name}6 package contains the dynamic libraries needed for 
+%description -n lib%{name}%{soname}
+The lib%{name}%{soname} package contains the dynamic libraries needed for 
 applications to use the %name framework.
 
 %package -n lib%{name}-devel
 Summary: Header files for lin%name
 License: LGPLv2+
 Group: Development/C
-Requires: lib%{name}6 = %version-%release
+Requires: lib%{name}%{soname} = %version-%release
 
 %description -n lib%{name}-devel
 The lib%{name}6 package contains the header files needed for
@@ -71,7 +72,7 @@ autoreconf -fisv
 %makeinstall prefix=%buildroot/ exec_prefix=%buildroot/ sbindir=%buildroot/sbin libdir=%buildroot/%_lib pkgconfigdir=%buildroot/%_pkgconfigdir
 mkdir -p $RPM_BUILD_ROOT/%_libdir
 pushd $RPM_BUILD_ROOT/%_libdir
-LIBNAME=`basename \`ls $RPM_BUILD_ROOT/%{_lib}/libipset.so.3.*.*\``
+LIBNAME=`basename \`ls $RPM_BUILD_ROOT/%{_lib}/libipset.so.%{soname}.*.*\``
 ln -s ../../%{_lib}/$LIBNAME libipset.so
 popd
 
@@ -86,8 +87,8 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 /sbin/*
 %_man8dir/*
 
-%files -n lib%{name}6
-%attr(755,root,root) /%{_lib}/libipset.so.3*
+%files -n lib%{name}%{soname}
+%attr(755,root,root) /%{_lib}/libipset.so.%{soname}*
 
 %files -n lib%{name}-devel
 %_includedir/lib%name/*.h
@@ -98,6 +99,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Tue Jan 23 2018 Anton Farygin <rider@altlinux.ru> 6.35-alt1%ubt
+- new version
+
 * Mon Mar 13 2017 Anton Farygin <rider@altlinux.ru> 6.32-alt1%ubt
 - new version
 
