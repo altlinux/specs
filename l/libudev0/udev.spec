@@ -3,7 +3,7 @@
 
 Name: libudev0
 Version: 181
-Release: alt6
+Release: alt7
 Summary: Shared library to access udev device information
 License: LGPLv2.1+
 Group: System/Legacy libraries
@@ -13,7 +13,7 @@ Provides: libudev = %version-%release
 Obsoletes: libudev < %version-%release
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version-alt.patch
 
 BuildRequires: glib2-devel gobject-introspection-devel gperf gtk-doc pciids usbids
 BuildRequires: libacl-devel libusb-compat-devel usbutils libselinux-devel
@@ -54,6 +54,9 @@ This package provides shared library to access udev device information
 /%_lib/libudev.so.*
 
 %changelog
+* Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 181-alt7
+- Fixed build.
+
 * Thu Jun 05 2014 Alexey Shabalin <shaba@altlinux.ru> 181-alt6
 - build to sisyphus
 
