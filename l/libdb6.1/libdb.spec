@@ -1,7 +1,7 @@
 %define _sover 6.1
 Name: libdb%_sover
 Version: %_sover.19
-Release: alt4
+Release: alt5
 %define srcname db-%version
 
 Summary: Berkeley database library
@@ -10,6 +10,7 @@ Group: System/Libraries
 Url: http://www.oracle.com/us/products/database/berkeley-db/overview/
 
 Source:  %srcname.tar.gz
+Patch1: java8-fix.patch
 
 %def_enable compat185
 %def_enable cxx
@@ -34,7 +35,7 @@ Source:  %srcname.tar.gz
 
 %{?_enable_cxx:BuildPreReq: gcc-c++}
 %{?_enable_dump185:BuildPreReq: libdb1-devel}
-%{?_enable_java:BuildPreReq: jdkgcj, sharutils, /proc}
+%{?_enable_java:BuildPreReq: java-devel-default, sharutils, /proc}
 %{?_enable_tcl:BuildPreReq: tcl-devel >= 8.4.0-alt1}
 
 BuildRequires: libsocket-devel
@@ -229,6 +230,7 @@ This package contains documentation for developers.
 
 %prep
 %setup -n %srcname
+%patch1 -p1
 
 %build
 %add_optflags -fno-strict-aliasing -DBDBSQL_FILE_PER_TABLE=1
@@ -402,6 +404,9 @@ done
 %endif
 
 %changelog
+* Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.19-alt5
+- Updated java build dependencies.
+
 * Tue Oct 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.19-alt4
 - Fixed provides.
 
