@@ -5,12 +5,18 @@
 %define mgkdir		ImageMagick
 %define soname		4
 
-%def_enable librsvg
+%def_enable rsvg
 %def_enable x
+%ifarch e2k
+# lcc's openmp implementation is way too old
+%def_disable openmp
+%else
+%def_enable openmp
+%endif
 
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt1
+Release: alt2
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -35,10 +41,14 @@ BuildPreReq: libpng-devel
 BuildRequires(pre): rpm-build-ubt
 
 # Automatically added by buildreq on Wed Nov 03 2010
-BuildRequires: bzlib-devel curl gcc-c++ glibc-devel-static graphviz groff-base imake libXext-devel libXt-devel libdjvu-devel libjasper-devel libjbig-devel liblcms-devel liblqr-devel librsvg-devel libtiff-devel libwmf-devel libxml2-devel openexr-devel perl-devel transfig xdg-utils xorg-cf-files 
+BuildRequires: bzlib-devel curl gcc-c++ glibc-devel-static graphviz groff-base imake libXext-devel libXt-devel libjasper-devel libjbig-devel liblcms-devel liblqr-devel libtiff-devel libwmf-devel libxml2-devel perl-devel xdg-utils xorg-cf-files
 
-BuildRequires: libjpeg-devel liblcms2-devel liblzma-devel libwebp-devel libgraphviz-devel libjasper-devel libjbig-devel liblcms-devel libtiff-devel libwmf-devel libxml2-devel perl-devel chrpath openexr-devel liblqr-devel libdjvu-devel libltdl-devel perl-parent libopenjpeg2.0-devel
-%if_enabled librsvg
+BuildRequires: libjpeg-devel liblcms2-devel liblzma-devel libwebp-devel libgraphviz-devel libjasper-devel libjbig-devel liblcms-devel libtiff-devel libwmf-devel libxml2-devel perl-devel chrpath liblqr-devel libltdl-devel perl-parent
+
+%{?!_with_bootstrap:BuildRequires: libdjvu-devel openexr-devel transfig libopenjpeg2.0-devel}
+%{?_enable_openmp:BuildRequires: libgomp-devel}
+
+%if_enabled rsvg
 BuildRequires: librsvg-devel libpixman-devel
 %endif
 
@@ -137,12 +147,13 @@ subst 's,2.69,2.68,' configure.ac
 	--with-fontpath=%_datadir/fonts/type1/urw \
 	--with-gs-font-dir=%_datadir/fonts/type1/urw \
 	--with-gvc=yes \
-	--with-rsvg=yes \
+	%{subst_with rsvg} \
 	--with-lqr=yes \
 	--disable-hdri \
 	--with-gcc-arch=no \
 	--with-perl \
 	%{subst_enable x} \
+	%{subst_enable openmp} \
 	--with-perl-options="PREFIX=%_prefix INSTALLDIRS=vendor" \
 	%{subst_enable static}
 subst 's|^\(hardcode_into_libs\)=.*$|\1=no|' libtool
@@ -157,12 +168,12 @@ popd
 %make transform='' DESTDIR=%buildroot INSTALLDIRS=vendor install
 
 
-%__subst "s,%_libdir/libMagickCore.la,-L%_libdir -lMagickCore," %buildroot%_libdir/%mgkdir-%dversion/modules-%qlev/*/*.la
+sed -i "s,%_libdir/libMagickCore.la,-L%_libdir -lMagickCore," %buildroot%_libdir/%mgkdir-%dversion/modules-%qlev/*/*.la
 
-%__install -pD -m644 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
-%__install -pD -m644 %SOURCE2 %buildroot%_miconsdir/%name.png
-%__install -pD -m644 %SOURCE3 %buildroot%_niconsdir/%name.png
-%__install -pD -m644 %SOURCE4 %buildroot%_liconsdir/%name.png
+install -pDm644 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
+install -pDm644 %SOURCE2 %buildroot%_miconsdir/%name.png
+install -pDm644 %SOURCE3 %buildroot%_niconsdir/%name.png
+install -pDm644 %SOURCE4 %buildroot%_liconsdir/%name.png
 
 chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick/Q16/Q16.so
 
@@ -224,6 +235,12 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Wed Jan 24 2018 Andrew Savchenko <bircoph@altlinux.org> 6.9.9.28-alt2
+- Add openmp control flag (disable on e2k, enable on other arches).
+- Fix rsvg def flag.
+- spec: avoid internal macros use (thx Michael Shigorin).
+- spec: avoid hairy BRs during bootstrap (thx Michael Shigorin).
+
 * Wed Dec 27 2017 Anton Farygin <rider@altlinux.ru> 6.9.9.28-alt1
 - new version
 
