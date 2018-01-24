@@ -2,7 +2,7 @@
 %define theme_virt_dir lxde
 %define theme_fullname lxde-settings-%theme_name
 Name: %theme_fullname
-Version: 0.2
+Version: 0.3
 Release: alt1
 Packager: LXDE Development Team <lxde at packages.altlinux.org>
 BuildArch: noarch
@@ -52,6 +52,9 @@ cp -r * %buildroot%_datadir/%theme_fullname
 %_sysconfdir/X11/profile.d/*.sh
 
 %changelog
+* Wed Jan 24 2018 Anton Midyukov <antohami@altlinux.org> 0.3-alt1
+- version 0.3
+
 * Sun Jan 14 2018 Anton Midyukov <antohami@altlinux.org> 0.2-alt1
 - version 0.2
 
