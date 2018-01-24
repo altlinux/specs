@@ -1,6 +1,6 @@
 %define mversion	6
 %define dversion	%mversion.9.9
-%define drelease	28
+%define drelease	34
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		4
@@ -16,7 +16,7 @@
 
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt2
+Release: alt1
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -235,6 +235,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Wed Jan 24 2018 Anton Farygin <rider@altlinux.ru> 6.9.9.34-alt1
+- new version 6.9.9.34
+
 * Wed Jan 24 2018 Andrew Savchenko <bircoph@altlinux.org> 6.9.9.28-alt2
 - Add openmp control flag (disable on e2k, enable on other arches).
 - Fix rsvg def flag.
