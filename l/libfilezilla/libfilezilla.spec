@@ -1,5 +1,5 @@
 Name: libfilezilla
-Version: 0.9.2
+Version: 0.11.2
 Release: alt1
 Summary: Small and modern C++ library
 License: GPLv2+
@@ -7,8 +7,6 @@ Group: System/Libraries
 Url: https://lib.filezilla-project.org/
 # Repacked http://download.filezilla-project.org/libfilezilla/%name-%version.tar.bz2
 Source: %name-%version.tar
-
-Patch0: libfilezilla-0.9.2-alt-export-fz::random_bytes-symbol.patch
 
 # Automatically added by buildreq on Wed Mar 30 2016
 # optimized out: fontconfig fonts-bitmap-misc gnu-config libstdc++-devel libwayland-client libwayland-server
@@ -56,7 +54,6 @@ Header files for development with %name.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %configure \
@@ -88,6 +85,9 @@ LC_ALL=en_US.UTF-8 make check
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.11.2-alt1
+- Updated to upstream version 0.11.2.
+
 * Thu Jun 08 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.2-alt1
 - Updated to 0.9.2.
 
