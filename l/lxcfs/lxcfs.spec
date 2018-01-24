@@ -1,6 +1,6 @@
 Name:		lxcfs
 Version:	2.0.7
-Release:	alt1
+Release:	alt2
 Summary:	FUSE filesystem for LXC
 
 Group:		Development/Other
@@ -43,8 +43,8 @@ management using cgroup process tracking.
 %setup
 
 %build
-/bin/bash bootstrap.sh
-%configure --disable-static --with-init-script=systemd
+./bootstrap.sh
+%configure --disable-static --with-init-script=systemd --localstatedir=%_var
 %make_build
 
 %install
@@ -74,6 +74,9 @@ mkdir -p %buildroot%_localstatedir/%name
 %_pam_modules_dir/*
 
 %changelog
+* Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.7-alt2
+- Fixed localstatedir location.
+
 * Fri Jun 30 2017 Denis Pynkin <dans@altlinux.org> 2.0.7-alt1
 - Update
 
