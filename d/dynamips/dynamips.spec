@@ -1,13 +1,12 @@
 Name: dynamips
-Version: 0.2.16
+Version: 0.2.17
 Release: alt1
 
 Summary: Cisco 7200 Simulator
 License: GPLv2
 Group: Emulators
 
-Url: http://www.gns3.net
-#Url: https://github.com/GNS3/dynamips
+Url: https://github.com/GNS3/dynamips
 
 Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake cmake 
@@ -36,12 +35,12 @@ The goals of this emulator are mainly:
 
 %build
 %cmake
-%make_build -C BUILD
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmakeinstall_std
 install -d %buildroot%_localstatedir/%name/{labs,images}
-rm -fR %buildroot%_datadir/doc/%name
+rm -fR %buildroot%_docdir/%name
 
 %files
 %doc COPYING README* TODO ChangeLog RELEASE-NOTES
@@ -53,6 +52,9 @@ rm -fR %buildroot%_datadir/doc/%name
 %dir %_localstatedir/%name/labs
 
 %changelog
+* Wed Jan 24 2018 Anton Midyukov <antohami@altlinux.org> 0.2.17-alt1
+- 0.2.17
+
 * Sun Aug 07 2016 Anton Midyukov <antohami@altlinux.org> 0.2.16-alt1
 - 0.2.16
 

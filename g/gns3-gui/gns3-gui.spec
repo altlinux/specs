@@ -1,5 +1,5 @@
 Name: gns3-gui
-Version: 2.1.0
+Version: 2.1.3
 Release: alt1
 
 Summary: GNS3 Graphical User Interface
@@ -25,8 +25,6 @@ Requires: gns3-net-converter >= 1.3.0
 Requires: python3-module-jsonschema >= 2.4.0
 Requires: python3-module-raven >= 5.23.0
 Requires: python3-module-psutil >= 2.2.1
-Conflicts: gns3 < 1.0.0
-Obsoletes: gns3
 Provides: gns3 == %version
 
 %description
@@ -67,6 +65,9 @@ install -Dp -m0644 %SOURCE5 %buildroot%_desktopdir/gns3.desktop
 %_datadir/mime/packages/gns3.xml
 
 %changelog
+* Wed Jan 24 2018 Anton Midyukov <antohami@altlinux.org> 2.1.3-alt1
+- new version 2.1.3
+
 * Sat Nov 18 2017 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
 - new version 2.1.0
 
