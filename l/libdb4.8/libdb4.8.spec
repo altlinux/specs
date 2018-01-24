@@ -1,7 +1,7 @@
 %define _sover 4.8
 Name: libdb%_sover
 Version: %_sover.30
-Release: alt2
+Release: alt3
 %define srcname db-%version
 
 Summary: Berkeley database library
@@ -41,7 +41,7 @@ BuildConflicts: %name-devel, libdb4.0-devel, libdb4.1-devel, libdb4.2-devel, lib
 BuildPreReq: rpm-build >= 4.0.4-alt1
 %{?_enable_cxx:BuildPreReq: gcc-c++}
 %{?_enable_dump185:BuildPreReq: libdb1-devel}
-%{?_enable_java:BuildPreReq: jdkgcj, sharutils, /proc}
+%{?_enable_java:BuildPreReq: java-devel-default, sharutils, /proc}
 %{?_enable_tcl:BuildPreReq: tcl-devel >= 8.4.0-alt1}
 
 %package -n db%_sover-utils
@@ -432,6 +432,9 @@ done
 %_libdir/libdb-[0-9]*.a
 
 %changelog
+* Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.30-alt3
+- Updated java build dependencies.
+
 * Thu Aug 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.30-alt2
 - Rebuilt with gcc-6.
 
