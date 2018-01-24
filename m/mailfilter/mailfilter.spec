@@ -2,18 +2,16 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mailfilter
-Version: 0.8.2
-Release: alt1.1
+Version: 0.8.6
+Release: alt1
 
 Summary: A program that filters your incoming e-mail to help remove spam
 License: GPLv2+
 Group: Networking/Mail
 Url: http://mailfilter.sourceforge.net/
-Packager: Artem Zolochevskiy <azol@altlinux.ru>
 
-Source: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
-Patch1: mailfilter-0.8.2-svn-r18.patch
-Patch2: mailfilter-0.8.2-alt-fixes.patch
+Source: %name-%version.tar
+Patch1: %name-%version-alt.patch
 
 BuildRequires: flex gcc-c++ libssl-devel
 
@@ -27,12 +25,11 @@ like to remove spam from your POP mail accounts.
 
 %prep
 %setup
-%patch1
-%patch2
+%patch1 -p1
 sed -n '/^3\./,/^4\./p' INSTALL | grep -v '^[34]\.' > doc/rcfile.example
 
 %build
-%add_optflags -fpermissive
+%add_optflags
 %configure
 %make_build
 
@@ -51,6 +48,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %_mandir/*/*
 
 %changelog
+* Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.6-alt1
+- Updated to upstream version 0.8.6.
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.1
 - Fixed build
 
