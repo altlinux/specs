@@ -4,7 +4,7 @@
 %define xdg_name com.github.wwmm.pulseeffects
 
 Name: pulseeffects
-Version: 3.0.8
+Version: 3.1.7
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -20,7 +20,9 @@ Requires: libgtk+3-gir >= %gtk_ver
 Requires: pulseaudio-daemon dconf
 Requires: gst-plugins-good%gst_api_ver >= %gst_ver
 Requires: gst-plugins-bad%gst_api_ver >= %gst_ver
-Requires: ladspa-swh-plugins
+Requires: ladspa-swh-plugins ladspa-rubberband
+#Requires: liblilv calf-plugins zam-plugins
+
 # for CubicSpline
 Requires: python3-module-scipy >= 0.19
 
@@ -34,6 +36,7 @@ BuildRequires: python3-module-pycairo-devel
 BuildRequires: libgtk+3-devel libgtk+3-gir-devel
 BuildRequires: gst-plugins-bad%gst_api_ver-devel
 BuildRequires: libpulseaudio-devel
+#BuildRequires: liblilv-devel
 
 %description
 PulseEffects is a limiter, compressor, reverberation, stereo equalizer and auto volume
@@ -64,6 +67,9 @@ effects for Pulseaudio applications.
 %doc README*
 
 %changelog
+* Wed Jan 24 2018 Yuri N. Sedunov <aris@altlinux.org> 3.1.7-alt1
+- 3.1.7
+
 * Sun Nov 19 2017 Yuri N. Sedunov <aris@altlinux.org> 3.0.8-alt1
 - 3.0.8
 
