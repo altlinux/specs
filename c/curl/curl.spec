@@ -1,5 +1,5 @@
 Name: curl
-Version: 7.57.0
+Version: 7.58.0
 Release: alt1%ubt
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -144,6 +144,12 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Jan 24 2018 Anton Farygin <rider@altlinux.ru> 7.58.0-alt1%ubt
+- new version
+- fixes:
+  * CVE-2018-1000005 HTTP/2 trailer out-of-bounds read
+  * CVE-2018-1000007 HTTP authentication leak in redirects
+
 * Fri Dec 01 2017 Anton Farygin <rider@altlinux.ru> 7.57.0-alt1%ubt
 - new version
 - fixes:
