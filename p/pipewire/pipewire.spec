@@ -5,23 +5,24 @@
 %define api_ver 0.1
 %define gst_api_ver 1.0
 
+%def_enable gstreamer
 %def_enable systemd
 %def_enable docs
 %def_enable man
 
 Name: pipewire
-Version: %ver_major.6
+Version: %ver_major.8
 Release: alt1
 
 Summary: Media Sharing Server
 Group: System/Servers
 License: LGPLv2.1
-Url: http://www.freedesktop.org/wiki/Software/PipeWire
+Url: https://pipewire.org/
 
 %if_disabled snapshot
 Source: http://freedesktop.org/software/%name/releases/%name-%version.tar.gz
 %else
-# VCS:  https://github.com/wtay/pipewire.git
+# VCS: https://github.com/PipeWire/pipewire.git
 Source: %name-%version.tar
 %endif
 
@@ -32,15 +33,18 @@ Requires: rtkit
 
 BuildRequires: meson >= 0.35.0
 BuildRequires: libgio-devel libudev-devel libdbus-devel
+BuildRequires: libalsa-devel libv4l-devel
+BuildRequires: libavformat-devel libavcodec-devel libavfilter-devel
+BuildRequires: libjack-devel
+BuildRequires: libsbc-devel
+%if_enabled gstreamer
 BuildRequires: pkgconfig(gstreamer-%gst_api_ver) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-base-%gst_api_ver)
 BuildRequires: pkgconfig(gstreamer-plugins-base-%gst_api_ver)
 BuildRequires: pkgconfig(gstreamer-net-%gst_api_ver)
 BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
+%endif
 %{?_enable_systemd:BuildRequires: libsystemd-devel}
-BuildRequires: libalsa-devel libv4l-devel
-BuildRequires: libavformat-devel libavcodec-devel libavfilter-devel
-BuildRequires: libjack-devel
 %{?_enable_docs:BuildRequires: doxygen graphviz fonts-type1-urw}
 %{?_enable_man:BuildRequires: xmltoman}
 
@@ -89,7 +93,8 @@ This package contains command line utilities for the PipeWire media server.
 %build
 %meson \
 	%{?_enable_docs:-Denable_docs=true} \
-	%{?_enable_man:-Denable_man=true}
+	%{?_enable_man:-Denable_man=true} \
+	%{?_enable_gstreamer:-Denable_gstreamer=true}
 %meson_build
 
 %install
@@ -105,7 +110,7 @@ This package contains command line utilities for the PipeWire media server.
 
 %files
 %_bindir/%name
-%_libdir/gstreamer-%gst_api_ver/libgst%name.so
+%{?_enable_gstreamer:%_libdir/gstreamer-%gst_api_ver/libgst%name.so}
 %dir %_sysconfdir/%name/
 %_sysconfdir/%name/%name.conf
 %if_enabled systemd
@@ -141,6 +146,12 @@ This package contains command line utilities for the PipeWire media server.
 %_man1dir/%name-cli.1*
 
 %changelog
+* Thu Jan 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.1.8-alt1
+- 0.1.8
+
+* Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.7-alt1
+- 0.1.7
+
 * Mon Nov 06 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.6-alt1
 - 0.1.6
 
