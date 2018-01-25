@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        63.0.3239.132
+Version:        64.0.3282.119
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -71,11 +71,12 @@ Patch015: 0015-FEDORA-Enable-ARM-CPU-detection-for-webrtc-from-arch.patch
 Patch016: 0016-FEDORA-Fix-last-commit-position-issue.patch
 Patch017: 0017-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
 Patch018: 0018-ALT-gzip-does-not-support-the-rsyncable-option.patch
-Patch019: 0019-UBUNTU-Specify-max-resolution.patch
-Patch020: 0020-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch021: 0021-ARCH-webrtc-fix.patch
-Patch022: 0022-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-only.patch
-Patch023: 0024-GENTOO-disable-safe_math_shared.patch
+Patch019: 0019-ALT-Use-rpath-link-and-absolute-rpath.patch
+Patch020: 0020-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-only.patch
+Patch021: 0021-GENTOO-disable-safe_math_shared.patch
+Patch022: 0022-FEDORA-Fix-gcc-constexpr.patch
+Patch023: 0023-FEDORA-Fix-gcc-round.patch
+Patch024: 0024-FEDORA-Fix-memcpy.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -105,6 +106,7 @@ BuildRequires:  perl-Switch
 BuildRequires:  pkg-config
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(atk)
+BuildRequires:  pkgconfig(atk-bridge-2.0)
 BuildRequires:  pkgconfig(cairo) >= 1.6
 BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  pkgconfig(dbus-glib-1)
@@ -219,13 +221,8 @@ tar -xf %SOURCE1
 %patch021 -p1
 %patch022 -p1
 %patch023 -p1
+%patch024 -p1
 ### Finish apply patches
-
-# Fix paths.
-sed \
-	-e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
-	-e 's|/usr/lib64/va/drivers|/usr/lib64/dri|g' \
-	-i content/common/sandbox_linux/bpf_gpu_policy_linux.cc
 
 # Enable support for the Widevine CDM plugin
 # libwidevinecdm.so is not included, but can be copied over from Chrome
@@ -247,6 +244,9 @@ ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin/
 %if_enabled clang
 export CC="clang"
 export CXX="clang++"
+%else
+export CC="gcc"
+export CXX="g++"
 %endif
 
 export AR="ar"
@@ -271,6 +271,7 @@ CHROMIUM_GN_DEFINES="\
  use_gold=false \
  use_pulseaudio=true \
  use_vaapi=true \
+ optimize_webui=false \
  use_system_freetype=false \
  use_system_harfbuzz=false \
  link_pulseaudio=true \
@@ -284,6 +285,7 @@ CHROMIUM_GN_DEFINES="\
  system_libdir=\"%_lib\" \
  use_allocator=\"tcmalloc\" \
  symbol_level=0 \
+ exclude_unwind_tables=true \
  remove_webcore_debug_symbols=true \
  is_clang=%{is_enabled clang} \
  enable_nacl=%{is_enabled nacl} \
@@ -308,14 +310,15 @@ tools/gn/bootstrap/bootstrap.py -v \
 	--args="$CHROMIUM_GN_DEFINES"
 
 ninja \
-	-v \
+	-vvv \
 	-j %build_parallel_jobs \
 	-C %target \
 	chrome \
 	chrome_sandbox \
 	chromedriver \
 	clearkeycdm \
-	widevinecdmadapter
+	widevinecdmadapter \
+	policy_templates
 
 %install
 mkdir -p -- \
@@ -436,6 +439,34 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Thu Jan 25 2018 Alexey Gladkov <legion@altlinux.ru> 64.0.3282.119-alt1
+- - New version (64.0.3282.119).
+- Security fixes:
+  - CVE-2018-6031: Use after free in PDFium.
+  - CVE-2018-6032: Same origin bypass in Shared Worker.
+  - CVE-2018-6033: Race when opening downloaded files.
+  - CVE-2018-6034: Integer overflow in Blink.
+  - CVE-2018-6035: Insufficient isolation of devtools from extensions.
+  - CVE-2018-6036: Integer underflow in WebAssembly.
+  - CVE-2018-6037: Insufficient user gesture requirements in autofill.
+  - CVE-2018-6038: Heap buffer overflow in WebGL.
+  - CVE-2018-6039: XSS in DevTools.
+  - CVE-2018-6040: Content security policy bypass.
+  - CVE-2018-6041: URL spoof in Navigation.
+  - CVE-2018-6042: URL spoof in OmniBox.
+  - CVE-2018-6043: Insufficient escaping with external URL handlers.
+  - CVE-2018-6045: Insufficient isolation of devtools from extensions.
+  - CVE-2018-6046: Insufficient isolation of devtools from extensions.
+  - CVE-2018-6047: Cross origin URL leak in WebGL.
+  - CVE-2018-6048: Referrer policy bypass in Blink.
+  - CVE-2017-15420: URL spoofing in Omnibox.
+  - CVE-2018-6049: UI spoof in Permissions.
+  - CVE-2018-6050: URL spoof in OmniBox.
+  - CVE-2018-6051: Referrer leak in XSS Auditor.
+  - CVE-2018-6052: Incomplete no-referrer policy implementation.
+  - CVE-2018-6053: Leak of page thumbnails in New Tab Page.
+  - CVE-2018-6054: Use after free in WebUI.
+
 * Fri Jan 05 2018 Alexey Gladkov <legion@altlinux.ru> 63.0.3239.132-alt1
 - New version (63.0.3239.132).
 - Build contains a number of bug fixes and security updates.
