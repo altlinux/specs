@@ -2,7 +2,7 @@
 
 Name: nitrokey-app
 Version: 0.6.3
-Release: alt1
+Release: alt2
 License: %gpl3only
 Summary: Nitrokey's Application
 Url: https://www.nitrokey.com/
@@ -12,7 +12,7 @@ Group: System/Configuration/Other
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses rpm-macros-cmake
+BuildRequires(pre): rpm-build-licenses rpm-macros-cmake rpm-build-xdg
 
 # Automatically added by buildreq on Wed Oct 19 2016
 # optimized out: cmake-modules gcc-c++ libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-widgets libstdc++-devel perl pkg-config python-base python-modules
@@ -77,6 +77,9 @@ groupadd -r _cryptodev ||:
 %doc OTP_full_specification.txt README.md
 
 %changelog
+* Thu Jan 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.3-alt2
+- Updated build dependencies.
+
 * Mon Feb 06 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.3-alt1
 - Updated to 0.6.3.
 
