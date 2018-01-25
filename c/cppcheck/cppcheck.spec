@@ -3,7 +3,7 @@
 
 Name: cppcheck
 Version: 1.82
-Release: alt1_git_de7aa8f
+Release: alt1_git_de7aa8f.1
 
 Summary: A tool for static C/C++ code analysis
 
@@ -11,7 +11,7 @@ License: GPLv3
 Group: Development/Tools
 Url: git://github.com/danmar/cppcheck.git
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar
 Patch1: cppcheck-makefile-docbook_xsl-1.70.patch
 Patch2: cppcheck-1.78-norebuild.patch
 Patch3: cppcheck-1.82-appPath.patch
@@ -119,6 +119,9 @@ install -D gui/%name-gui.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name-gu
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Thu Jan 25 2018 Hihin Ruslan <ruslandh@altlinux.ru> 1.82-alt1_git_de7aa8f.1
+- Fix cppcheck-1.82-appPath.patch
+
 * Thu Jan 18 2018 Hihin Ruslan <ruslandh@altlinux.ru> 1.82-alt1_git_de7aa8f
 - Update from git commit  de7aa8f5134a4b666ce642f3108ae3121f77905b
 
