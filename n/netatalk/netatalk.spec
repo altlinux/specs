@@ -2,7 +2,7 @@
 
 Name: netatalk
 Version: 2.2.4
-Release: alt1.qa1
+Release: alt2
 
 Summary: AppleTalk networking programs
 License: GPL, BSD
@@ -70,6 +70,7 @@ sed -i "s|uniconv|uniconv_netatalk|" man/man1/uniconv.1.tmpl
 	--with-cnid-last-backend \
 	--enable-acl \
 	--libexecdir=%_bindir \
+	--localstatedir=%_var \
 %if %build_static
 	--enable-static
 %else
@@ -130,6 +131,9 @@ mv %buildroot%_man1dir/uniconv.1 %buildroot%_man1dir/uniconv_netatalk.1
 
 
 %changelog
+* Thu Jan 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.4-alt2
+- Fixed localstatedir location.
+
 * Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.4-alt1.qa1
 - NMU: rebuilt with libgcrypt.so.11 -> libgcrypt.so.20.
 
