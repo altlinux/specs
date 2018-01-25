@@ -1,17 +1,31 @@
 %define gimpplugindir %(gimptool-2.0 --gimpplugindir)
-%def_disable zart
+%def_enable zart
+
+%define gmic_git_ver v.219
+# https://github.com/c-koi/zart
+# no tags
+%define zart_ver 20171127git54bc6ec
+# https://github.com/c-koi/gmic-qt
+# v.219-1-g3784863
+%define gmic_qt_ver 20180123git3784863
+# https://github.com/dtschump/gmic-community.git
+# 1.6.3.2-732-gd5c7572
+%define gmic_comm_ver 20180118gitd5c7572
 
 Name: gmic
-Version: 1.7.9.1
+Version: 2.1.9
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
-License: CeCILL v.2.0
+License: CeCILL v.2.0, GPLv3
 Group: Graphics
 Url: http://gmic.sourceforge.net/
 
 # VCS: https://github.com/dtschump/gmic.git
 Source: http://gmic.eu/files/source/%{name}_%version.tar.gz
+Source1: zart-%zart_ver.tar
+Source2: gmic-qt-%gmic_qt_ver.tar
+Source3: gmic-community-%gmic_comm_ver.tar
 
 Requires: lib%name = %version-%release
 
@@ -20,8 +34,9 @@ BuildRequires: gcc-c++ imake libGraphicsMagick-c++-devel libImageMagick-devel li
 BuildRequires: libavformat-devel libfftw3-devel libgimp-devel libjpeg-devel libopencv-devel libpng-devel
 BuildRequires: libswscale-devel libtiff-devel openexr-devel xorg-cf-files zlib-devel libgomp-devel
 BuildRequires: libcurl-devel
+BuildRequires: bash-completion
 # for zart
-BuildRequires: libqt4-devel
+BuildRequires: qt5-base-devel
 
 %description
 G'MIC (GREYC's Magic Image Converter) is an interpreter of image processing
@@ -62,6 +77,16 @@ the G'MIC image processing language by offering the choice of several
 manipulations on a video stream acquired from a webcam. In other words, ZArt is
 a GUI for G'MIC real-time manipulations on the output of a webcam.
 
+%package qt
+Summary: Qt-based frontend for G'MIC
+Group: Graphics
+Requires: %name = %version-%release
+
+%description qt
+G'MIC-Qt is a versatile front-end to the image processing framework
+G'MIC. It is in fact a plugin for GIMP and Krita, as well as a standalone
+application.
+
 %package -n gimp-plugin-gmic
 Summary: Image denoising and interpolation plugin for GIMP
 Group: Graphics
@@ -73,24 +98,43 @@ macros whose goal is to convert, manipulate and visualize generic 1D/2D/3D
 multi-spectral image datasets.
 
 %prep
-%setup -n gmic-%version
+%setup -n gmic-%version -a1 -a2 -a3
 dos2unix src/Makefile
+# fix libdir
 subst 's|\$(USR)/\$(LIB)/|$(USR)/%_lib/|' src/Makefile
+# fix libcgmic path
+subst 's| \.\.\/\(\.\.\/gmic-community/libcgmic\)| \1|' src/Makefile
 %ifnarch %ix86 x86_64
 subst 's|-mtune=generic||' src/Makefile
 %endif
 
 %build
-%if_enabled zart
-export QTDIR=%_qt4dir
-export PATH=%_qt4dir/bin:$PATH
-%endif
 pushd src
-%make_build NOSTRIP=1
+%make_build NOSTRIP=1 OPT_CFLAGS="%optflags_default" cli lib libc
 popd
 
+pushd %name-qt
+%qmake_qt5 CONFIG+=release GMIC_PATH=../src HOST=gimp gmic_qt.pro
+%make_build
+%qmake_qt5 CONFIG+=release GMIC_PATH=../src HOST=none gmic_qt.pro
+%make_build
+popd
+
+%if_enabled zart
+pushd zart
+%qmake_qt5 CONFIG+=release GMIC_PATH=../src zart.pro
+%make_build
+popd
+%endif
+
 %install
+cp -f gmic-community/libcgmic/COPYING COPYING-libcgmic
+
 pushd src
+%makeinstall_std
+popd
+
+pushd %name-qt
 %makeinstall_std
 popd
 
@@ -105,14 +149,23 @@ popd
 %files -f %name.lang
 %_bindir/%name
 %_man1dir/%name.1.*
+%_sysconfdir/bash_completion.d/%name
 %doc README COPYING
+
+%files qt
+%_bindir/%{name}_qt
+%doc %name-qt/README*
 
 %files -n lib%name
 %_libdir/lib%name.so.*
+%_libdir/libc%name.so.*
+%doc COPYING COPYING-libcgmic
 
 %files -n lib%name-devel
 %_includedir/gmic.h
+%_includedir/gmic_libc.h
 %_libdir/lib%name.so
+%_libdir/libc%name.so
 
 %if_enabled zart
 %files zart
@@ -124,6 +177,9 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Thu Jan 25 2018 Yuri N. Sedunov <aris@altlinux.org> 2.1.9-alt1
+- 2.1.9
+
 * Fri May 12 2017 Yuri N. Sedunov <aris@altlinux.org> 1.7.9.1-alt1
 - 1.7.9.1
 
