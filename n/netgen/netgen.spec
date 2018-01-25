@@ -8,12 +8,11 @@
 %define oname netgen
 Name: %oname
 Version: 6.1
-Release: alt1.dev.git20150306.qa3
+Release: alt1.dev.git20150306.qa4
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPL
 Group: Graphics
 Url: http://www.hpfem.jku.at/netgen/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # svn://svn.code.sf.net/p/netgen-mesher/code/netgen
 Source: %name-%version.tar
@@ -22,17 +21,17 @@ Source: %name-%version.tar
 
 Requires: lib%oname = %version-%release tcl-tix
 BuildRequires(pre): rpm-build-tcl
-BuildPreReq: %mpiimpl-devel libjpeg-devel libavcodec-devel tcl-devel tk-devel
-BuildPreReq: tcl-togl-devel libGL-devel libGLU-devel libparmetis-devel
-BuildPreReq: libavformat-devel libswscale-devel bzlib-devel zlib-devel
-BuildPreReq: libopencascade-devel
-BuildPreReq: libXmu-devel chrpath
+BuildRequires: %mpiimpl-devel libjpeg-devel libavcodec-devel tcl-devel tk-devel
+BuildRequires: tcl-togl-devel libGL-devel libGLU-devel libparmetis-devel
+BuildRequires: libavformat-devel libswscale-devel bzlib-devel zlib-devel
+BuildRequires: libopencascade-devel
+BuildRequires: libXmu-devel chrpath
 %if_with python2
-BuildPreReq: python-devel boost-python-devel
+BuildRequires: python-devel boost-python-devel
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel boost-python3-devel
+BuildRequires: python3-devel boost-python3-devel
 %endif
 
 Conflicts: %oname-py3
@@ -441,6 +440,9 @@ done
 %endif
 
 %changelog
+* Thu Jan 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1-alt1.dev.git20150306.qa4
+- Fixed build.
+
 * Fri Jul 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1-alt1.dev.git20150306.qa3
 - Fixed build with new ffmpeg
 
