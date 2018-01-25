@@ -6,7 +6,7 @@
 Name: dhcpcd
 Epoch: 1
 Version: 7.0.0
-Release: alt1
+Release: alt2
 
 Summary: DHCP Client
 License: %bsd
@@ -73,13 +73,6 @@ export LDFLAGS=-pie
 %install
 %makeinstall_std BINMODE=0755
 
-%triggerpostun -- %name < 1:5.0.0
-if grep -qs '^[[:blank:]]*clientid' %_sysconfdir/%name.conf; then
-	echo "WARNING: *clientid* option is detected in %_sysconfdir/%name.conf."
-	echo "The behavior of this option was changed since dhcpcd-5."
-	echo "Now it means TO SEND clientid to the server."
-fi
-
 # These files changed their name/location since 7.0.0.
 # Don't move lease files, they can be used and often removed when dhcpcd
 # is exited.
@@ -111,6 +104,12 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Thu Jan 25 2018 Mikhail Efremov <sem@altlinux.org> 1:7.0.0-alt2
+- Drop trigger for updating dhcpcd from version < 5.0.0.
+- Don't disable kernel RA if IPv6 in the dhcpcd is disabled
+  (closes: #34472).
+- Don't use netlink's IFA_FLAGS on kernels that doesn't support them.
+
 * Fri Jan 12 2018 Mikhail Efremov <sem@altlinux.org> 1:7.0.0-alt1
 - During update move files to new location.
 - Add patches from upstream git.
