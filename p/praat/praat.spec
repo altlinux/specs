@@ -1,16 +1,15 @@
-%define origver 5313
-
 Name: praat
-Version: 5.3.13
-Release: alt1.1
+Version: 6.0.36
+Release: alt1
 
 Summary: A program for speech analysis and synthesis
 License: GPL (and others for libraries used)
 Group: Sound
 
 Url: http://www.praat.org
-Source: http://www.fon.hum.uva.nl/praat/praat%{origver}_sources.tar.gz
-Packager: Michael Shigorin <mike@altlinux.org>
+
+# https://github.com/praat/praat.git
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Sun Sep 25 2011
 # optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel pkg-config xorg-xproto-devel
@@ -36,12 +35,10 @@ programs.
 Recommends: fonts-bitmap-100dpi fonts-bitmap-75dpi
 
 %prep
-%setup -n sources_%origver
+%setup
 
 %build
-cp -a makefiles/makefile.defs.linux makefile.defs
-echo "CC += `pkg-config --cflags gtk+-2.0`" >> makefile.defs
-echo "LIBS += `pkg-config --libs gtk+-2.0` -lpthread" >> makefile.defs
+cp -a makefiles/makefile.defs.linux.alsa makefile.defs
 %make_build
 
 %install
@@ -59,6 +56,9 @@ install -pDm755 %name %buildroot%_bindir/%name
 #  http://www.fon.hum.uva.nl/praat/download_sources.html praat(\d)(\d)(\d+)_sources.tar.gz debian
 
 %changelog
+* Thu Jan 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.36-alt1
+- Updated to upstream version 6.0.36.
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3.13-alt1.1
 - Fixed build
 
