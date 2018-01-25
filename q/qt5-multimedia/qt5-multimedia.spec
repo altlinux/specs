@@ -4,8 +4,8 @@
 %def_enable pulse
 
 Name: qt5-multimedia
-Version: 5.9.3
-Release: alt3%ubt
+Version: 5.9.4
+Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - Multimedia support
@@ -130,6 +130,9 @@ export QT_HASH_SEED=0
 %endif
 
 %changelog
+* Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
+- new version
+
 * Fri Jan 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt3%ubt
 - fix requires
 

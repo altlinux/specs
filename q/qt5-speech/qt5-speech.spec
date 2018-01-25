@@ -2,7 +2,7 @@
 %global qt_module qtspeech
 
 Name: qt5-speech
-Version: 5.9.3
+Version: 5.9.4
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -59,10 +59,10 @@ Summary: Qt5 library
 Group: System/Libraries
 Requires: %name-common = %EVR
 %description -n libqt5-texttospeech
-%summary
+%summary.
 
 %prep
-%setup -qn %qt_module-opensource-src-%version
+%setup -n %qt_module-opensource-src-%version
 syncqt.pl-qt5 -version %version -private
 
 ln -s /usr/include config.tests/flite/flite
@@ -99,6 +99,9 @@ ln -s /usr/include src/plugins/tts/flite/flite
 %_qt5_docdir/*
 
 %changelog
+* Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
+- new version
+
 * Thu Dec 21 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
 - new version
 

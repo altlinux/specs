@@ -13,7 +13,7 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.9.3
+Version: 5.9.4
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -34,6 +34,8 @@ Patch9: qtwebengine-opensource-src-5.9.0-openmax-dl-neon.patch
 Patch10: qtwebengine-opensource-src-5.9.0-webrtc-neon-detect.patch
 Patch11: qtwebengine-opensource-src-5.9.0-gn-bootstrap-verbose.patch
 Patch12: qtwebengine-opensource-src-5.9.0-system-re2.patch
+# Gentoo
+Patch20: qtwebengine-5.9.3-icu-60.1.patch
 # ATL
 Patch100: alt-pepflashplayer.patch
 Patch101: alt-find-icu.patch
@@ -132,6 +134,9 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch9 -p1
 %patch10 -p1
 %patch12 -p1
+#
+%patch20 -p1
+#
 %patch100 -p1
 %patch101 -p1
 %if %is_ffmpeg
@@ -280,6 +285,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
+- new version
+
 * Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
 - new version
 
