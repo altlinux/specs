@@ -1,7 +1,7 @@
 %define _sover 6.1
 Name: libdb%_sover
 Version: %_sover.19
-Release: alt5
+Release: alt6
 %define srcname db-%version
 
 Summary: Berkeley database library
@@ -231,6 +231,7 @@ This package contains documentation for developers.
 %prep
 %setup -n %srcname
 %patch1 -p1
+cp -pvf /usr/share/gnu-config/config.{sub,guess} lang/sql/sqlite/
 
 %build
 %add_optflags -fno-strict-aliasing -DBDBSQL_FILE_PER_TABLE=1
@@ -404,6 +405,9 @@ done
 %endif
 
 %changelog
+* Thu Jan 25 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.1.19-alt6
+- fixed build on armh
+
 * Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.19-alt5
 - Updated java build dependencies.
 
