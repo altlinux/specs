@@ -2,7 +2,7 @@
 %define beta %nil
 
 Name: darktable
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
@@ -18,6 +18,9 @@ Source: https://github.com/darktable-org/darktable/releases/download/release-%ve
 %define gtk_ver 3.14
 %define exiv2_ver 0.24
 %define llvm_ver 3.9
+%define iso_codes_ver 3.66
+
+Requires: iso-codes >= %iso_codes_ver
 
 BuildRequires: gcc-c++ libgomp-devel
 #BuildRequires: llvm-devel >= %llvm_ver
@@ -40,6 +43,7 @@ BuildRequires: libharfbuzz-devel libwebp-devel libxshmfence-devel
 BuildRequires: libpugixml-devel libcups-devel
 BuildRequires: libosm-gps-map1.0-devel
 BuildRequires: python-module-jsonschema
+BuildRequires: iso-codes-devel >= %iso_codes_ver
 # for build from git tree
 #BuildRequires: gnome-doc-utils fop saxon ...
 
@@ -79,6 +83,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/%name/
 
 %changelog
+* Thu Jan 25 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt1
+- 2.4.1
+
 * Mon Dec 25 2017 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
 - 2.4.0
 
