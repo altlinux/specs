@@ -1,11 +1,10 @@
 Name: opencascade
 Version: 6.8.0
-Release: alt1.qa1
+Release: alt2
 Summary: Development platform for 3D modeling and numerical simulation
 License: BSD-like
 Group: Development/Tools
 Url: http://www.opencascade.org
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: OpenCASCADE_src.tar
 Source1: LICENSE_LGPL_21.txt
@@ -14,12 +13,12 @@ Source2: OSD_Common.hxx
 Requires: lib%name = %version-%release
 Requires: %name-common = %version-%release
 
-BuildPreReq: gcc-c++ libX11-devel libGL-devel libGLU-devel
-BuildPreReq: tcl-devel tcl-tix libfltk-devel tk-devel libXmu-devel
-BuildPreReq: java-devel-default libcoin3d-devel libfreetype-devel
-BuildPreReq: python-module-gist libtbb-devel libftgl-devel
-BuildPreReq: libgl2ps-devel zlib-devel libfreeimage-devel
-BuildPreReq: libXext-devel libvtk6.2-devel libqt4-devel
+BuildRequires: gcc-c++ libX11-devel libGL-devel libGLU-devel
+BuildRequires: tcl-devel tcl-tix libfltk-devel tk-devel libXmu-devel
+BuildRequires: java-devel-default libcoin3d-devel libfreetype-devel
+BuildRequires: python-module-gist libtbb-devel libftgl-devel
+BuildRequires: libgl2ps-devel zlib-devel libfreeimage-devel
+BuildRequires: libXext-devel libvtk6.2-devel libqt4-devel
 
 %description
 Open CASCADE Technology version 6.3., a minor release, which introduces quite a
@@ -174,6 +173,9 @@ mv %buildroot%prefix/*.sh %buildroot%_bindir/
 %_datadir/%name/src
 
 %changelog
+* Thu Jan 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.8.0-alt2
+- Fixed build with new glibc.
+
 * Fri Mar 24 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.8.0-alt1.qa1
 - Rebuilt against Tcl/Tk 8.6
 
