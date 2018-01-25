@@ -1,6 +1,6 @@
 Name: nomacs
 Version: 2.4.6
-Release: alt4
+Release: alt5
 
 License: GPLv3
 Group: Graphics
@@ -47,6 +47,9 @@ or via LAN is possible. It allows to compare images and spot the differences
 %_pixmapsdir/%name.png
 
 %changelog
+* Thu Jan 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.6-alt5
+- Fixed build.
+
 * Wed Jul 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.6-alt4
 - Updated build dependencies
 
