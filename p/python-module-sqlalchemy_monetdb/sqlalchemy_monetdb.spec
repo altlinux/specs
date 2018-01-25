@@ -5,35 +5,30 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.9.3
+Version: 1.0.0
 Release: alt1
 Summary: SQLAlchemy dialect for MonetDB
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/sqlalchemy_monetdb/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-Source0: https://pypi.python.org/packages/b0/68/a5ab95d99b50895ea37dec364d41b85afbeeff97b455c48510aaa62608b2/%{oname}-%{version}.tar.gz
 BuildArch: noarch
+Url: https://pypi.python.org/pypi/sqlalchemy_monetdb/
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-monetdb python-module-SQLAlchemy-tests
-#BuildPreReq: python-module-nose python-module-mock
-#BuildPreReq: python-module-coverage
+Source: %oname-%version.tar
+
+BuildRequires: python-devel python-module-setuptools-tests python-module-pytest-runner
+BuildRequires: python-module-monetdb python-module-SQLAlchemy-tests
+BuildRequires: python-module-nose python-module-mock
+BuildRequires: python-module-coverage python-module-pbr python-module-pytest python-module-unittest2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-monetdb python3-module-SQLAlchemy-tests
-#BuildPreReq: python3-module-nose python3-module-mock
-#BuildPreReq: python3-module-coverage
+BuildRequires: python3-devel python3-module-setuptools-tests python3-module-pytest-runner
+BuildRequires: python3-module-monetdb python3-module-SQLAlchemy-tests
+BuildRequires: python3-module-nose python3-module-mock
+BuildRequires: python3-module-coverage python3-module-html5lib python3-module-pbr python3-module-pytest python3-module-unittest2
 %endif
 
 %py_provides %oname
-%py_requires monetdb sqlalchemy
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
-BuildRequires: python-module-coverage python-module-monetdb python-module-nose python-module-pbr python-module-pytest python-module-unittest2 python3-module-coverage python3-module-html5lib python3-module-monetdb python3-module-nose python3-module-pbr python3-module-pytest python3-module-unittest2 rpm-build-python3
+%py_requires pymonetdb sqlalchemy
 
 %description
 MonetDB dialect for SQLAlchemy.
@@ -42,7 +37,7 @@ MonetDB dialect for SQLAlchemy.
 Summary: SQLAlchemy dialect for MonetDB
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires monetdb sqlalchemy
+%py3_requires pymonetdb sqlalchemy
 
 %description -n python3-module-%oname
 MonetDB dialect for SQLAlchemy.
@@ -93,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt1
+- Updated to upstream version 1.0.0.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1
 - automated PyPI update
 

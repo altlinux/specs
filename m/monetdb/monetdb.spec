@@ -1,12 +1,11 @@
 Name: monetdb
-Version: 11.19.7
-Release: alt1.qa3
+Version: 11.27.11
+Release: alt1
 
 Summary: MonetDB is an open source column-oriented database management system
 License: MonetDB Public License v1.1
 Group: Databases
 URL: http://monetdb.org
-Packager: Eugene Prokopiev <enp@altlinux.ru>
 
 Source0: %name-%version.tar
 Source1: %name.init
@@ -14,9 +13,9 @@ Source2: %name.logrotate
 Patch: monetdb-11.5.3-atl-gcc4.7.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libssl-devel libpcre-devel libxml2-devel zlib-devel libreadline-devel libgeos-devel libcfitsio-devel python-module-setuptools-tests
-BuildRequires: python-devel perl-devel perl-DBI swig perl-Digest-SHA
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: libssl-devel libpcre-devel libxml2-devel zlib-devel libreadline-devel libgeos-devel libcfitsio-devel
+BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools-tests
 
 Requires: %name-common %name-server %name-client
 
@@ -46,30 +45,6 @@ Group: Databases
 %description client
 %summary
 
-%package -n python-module-%name
-Summary: MonetDB python interface
-Group: Development/Python
-BuildArch: noarch
-
-%description -n python-module-%name
-%summary
-
-%package -n python3-module-%name
-Summary: MonetDB python interface
-Group: Development/Python3
-BuildArch: noarch
-
-%description -n python3-module-%name
-%summary
-
-%package perl
-Summary: MonetDB perl interface
-Group: Development/Perl
-Requires: perl-DBI
-
-%description perl
-%summary
-
 %prep
 %setup
 #patch -p2
@@ -79,7 +54,8 @@ Requires: perl-DBI
 	--with-python2=python \
 	--with-python3=python3 \
 	--with-python2-libdir=%python_sitelibdir_noarch \
-	--with-python3-libdir=%python3_sitelibdir_noarch
+	--with-python3-libdir=%python3_sitelibdir_noarch \
+	--localstatedir=%_var
 %make_build
 
 %install
@@ -95,7 +71,7 @@ cp %buildroot/%_bindir/malsample.* .
 
 %pre server
 %_sbindir/groupadd -r -f _monetdb
-%_sbindir/useradd -r -g _monetdb -r -c "MonetDB database management system" -s /sbin/nologin -d /var/lib/monetdb5 -n _monetdb > /dev/null 2>&1 ||:
+%_sbindir/useradd -r -g _monetdb -r -c "MonetDB database management system" -s /sbin/nologin -d %_localstatedir/monetdb5 -n _monetdb > /dev/null 2>&1 ||:
 
 %post server
 %post_service %name
@@ -108,7 +84,7 @@ cp %buildroot/%_bindir/malsample.* .
 %files common
 %_libdir/libmapi.so*
 %_libdir/libstream.so*
-%doc README COPYING
+%doc README.rst COPYING
 
 %files server
 %_bindir/monetdb
@@ -126,7 +102,7 @@ cp %buildroot/%_bindir/malsample.* .
 %_initdir/%name
 %_sysconfdir/logrotate.d/%name
 %_sysconfdir/tmpfiles.d/*
-/var/lib/monetdb5
+%_localstatedir/monetdb5
 
 %files client
 %_bindir/mclient
@@ -137,27 +113,10 @@ cp %buildroot/%_bindir/malsample.* .
 %_man1dir/msqldump.1.*
 %doc sql/dump-restore.*
 
-%files -n python-module-%name
-%dir %python_sitelibdir_noarch/%name
-%python_sitelibdir_noarch/%name/*
-%python_sitelibdir_noarch/*.egg-info
-%doc clients/examples/python
-%doc clients/python2/README.rst
-#doc sqlsample.py
-
-%files -n python3-module-%name
-%dir %python3_sitelibdir_noarch/%name
-%python3_sitelibdir_noarch/%name/*
-%python3_sitelibdir_noarch/*.egg-info
-%doc clients/examples/python
-%doc clients/python3/README.rst
-#doc sqlsample.py
-
-%files perl
-%perl_vendor_archlib/*
-%doc sqlsample.pl malsample.pl
-
 %changelog
+* Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 11.27.11-alt1
+- Updated to upstream version 11.27.11.
+
 * Wed Aug 16 2017 Andrey Cherepanov <cas@altlinux.org> 11.19.7-alt1.qa3
 - Rebuild with geos 3.6.2
 
