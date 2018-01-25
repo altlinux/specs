@@ -1,31 +1,30 @@
 Name: latex2html
-Version: 2012
+Version: 2017.2
 Release: alt1
-
 Summary: LaTeX to HTML converter
 License: GPLv2
 Group: Publishing
 Url: http://saftsack.fs.uni-bayreuth.de/~latex2ht
 BuildArch: noarch
 
-Source: %url/current/%name-%version.tar
+# https://github.com/latex2html/latex2html.git
+Source: %name-%version.tar
 Patch0: latex2html-2002-gsfonts.patch
 Patch3: latex2html-2002-path.patch
 Patch4: latex2html-2002-alt-perl-path.patch
 Patch5: latex2html-2002-alt-perl-syntax.patch
-Patch6: latex2html-2002-alt-manual-tex.patch
 Patch7: latex2html-2002-alt-perlpath.patch
-Patch8: latex2html-2002-rh-grayimg.patch
 Patch9: latex2html-2002-rh-tabularx.patch
 
 Patch30: latex2html-2012-alt-perl522.patch
+Patch31: latex2html-2017.2-alt-perl-compat.patch
 
 Requires: /usr/bin/latex /usr/bin/dvips
 Requires: netpbm
 
 # note that gs is required by tetex-dvips
 Requires: %_bindir/gs
-BuildRequires: %_bindir/gs
+BuildRequires: %_bindir/gs %_bindir/dvipdf
 
 BuildRequires(pre): rpm-build-texmf
 # Automatically added by buildreq on Thu Mar 27 2008
@@ -41,11 +40,10 @@ using LaTeX to process images and equations.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 %patch7 -p1
-%patch8 -p1
 %patch9 -p1
 %patch30 -p1
+%patch31 -p1
 
 %build
 %define _perl_lib_path %_datadir/%name
@@ -66,6 +64,7 @@ cd ./docs
 TEXINPUTS=.:../texinputs: latex manual
 TEXINPUTS=.:../texinputs: latex manual
 make
+make manual.ps
 bzip2 -9f manual.ps
 
 %install
@@ -83,9 +82,6 @@ cp -avRf \
 mkdir -p %buildroot%_datadir/texmf/tex/latex/html
 cp -avRf texinputs/* %buildroot%_datadir/texmf/tex/latex/html
 
-# url.sty is part of latex (#10698)
-rm %buildroot%_datadir/texmf/tex/latex/html/url.sty
-
 # this russian style is subject to bNOPNYA
 rm %buildroot%_datadir/%name/styles/russian.perl
 
@@ -99,9 +95,12 @@ sed -i '1s|/usr/local/bin/|/usr/bin/|' \
 %_bindir/*
 %_datadir/%name/
 %_datadir/texmf/tex/latex/html
-%doc Changes FAQ LICENSE LICENSE.orig README readme.hthtml TODO BUGS INSTALL dot.latex2html-init example docs/manual.ps.bz2
+%doc Changes FAQ LICENSE LICENSE.orig README.md readme.hthtml TODO BUGS INSTALL dot.latex2html-init example docs/manual.ps.bz2
 
 %changelog
+* Thu Jan 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2017.2-alt1
+- Updated to upstream version 2017.2.
+
 * Thu Dec 17 2015 Igor Vlasenko <viy@altlinux.ru> 2012-alt1
 - QA NMU: new version && perl 522 patch
 - Note, everyone: Kirill wants to give this package away.
