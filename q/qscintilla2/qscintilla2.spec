@@ -1,6 +1,7 @@
 %def_with python
 %def_without python-qt3
 %def_without qt3
+%def_with qt4
 %def_with python3
 %def_with python3qt5
 
@@ -9,7 +10,7 @@ Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 %define suff 13
 Name: %oname
 Version: 2.10.1
-Release: alt4%ubt
+Release: alt5%ubt
 License: GPL
 Group: Development/KDE and QT
 
@@ -22,19 +23,29 @@ Url: http://www.riverbankcomputing.co.uk/software/qscintilla/
 
 BuildRequires(pre): rpm-build-ubt python-module-sip-devel
 %define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
-BuildRequires: gcc-c++ libqt4-devel
+BuildRequires: gcc-c++
 %if_with qt3
 BuildRequires: libqt3-devel python-module-qt-devel
 %endif
+%if_with qt4
+Buildrequires: libqt4-devel
+%endif
+%if_with python
+%if_with qt4
 BuildRequires: python-module-PyQt4-devel
+%endif
+BuildRequires: python-module-PyQt5-devel
 BuildRequires: python-module-sip-devel
+%endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3 python3-module-sip-devel
 %define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
 BuildRequires: python3-devel python3-module-sip-devel
+%if_with qt4
 BuildPreReq: python3-module-PyQt4-devel
 %endif
-BuildRequires: chrpath qt5-base-devel python-module-PyQt5-devel
+%endif
+BuildRequires: chrpath qt5-base-devel
 %if_with python3qt5
 BuildRequires: python3-module-PyQt5-devel
 %endif
@@ -74,6 +85,7 @@ fonts, bold and italics, multiple foreground and background colours and
 multiple fonts.
 %endif
 
+%if_with qt4
 %package -n %libname-qt4
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class.
 Group: Development/KDE and QT
@@ -97,6 +109,7 @@ used in debuggers to indicate breakpoints and the current line. Styling
 choices are more open than with many editors, allowing the use of proportional
 fonts, bold and italics, multiple foreground and background colours and
 multiple fonts.
+%endif
 
 %package -n %libname-qt5
 Summary: QScintilla is a port to Qt5 of Neil Hodgson's Scintilla C++ editor class.
@@ -130,6 +143,7 @@ Group: Development/KDE and QT
 Header files for %oname
 %endif
 
+%if_with qt4
 %package -n lib%oname-qt4-devel
 Requires: %libname-qt4 = %version-%release
 Requires: libqt4-devel
@@ -138,6 +152,7 @@ Group: Development/KDE and QT
 
 %description -n lib%oname-qt4-devel
 Header files for %oname
+%endif
 
 %package -n lib%oname-qt5-devel
 Requires: %libname-qt5 = %version-%release
@@ -158,6 +173,7 @@ Group: Development/KDE and QT
 QScintillla designer plugin.
 %endif
 
+%if_with qt4
 %package -n lib%oname-qt4-designer
 Requires: %libname-qt4 = %version-%release
 Summary: QScintilla designer plugin
@@ -165,8 +181,10 @@ Group: Development/KDE and QT
 
 %description -n lib%oname-qt4-designer
 QScintillla designer plugin.
+%endif
 
 %if_with python
+%if_with qt4
 %package -n python-module-%oname-qt4
 Requires: %libname-qt4 = %version-%release
 Summary: Python bindings for %oname
@@ -189,6 +207,7 @@ Obsoletes: lib%oname-qt4-python-devel
 
 %description -n python-module-%oname-qt4-devel
 Devel files for Python bindings for %oname
+%endif
 
 %package -n python-module-%oname-qt5
 Requires: %libname-qt5 = %version-%release
@@ -212,6 +231,7 @@ Provides: lib%oname-qt5-python-devel = %version-%release
 Devel files for Python bindings for %oname
 
 %if_with python3
+%if_with qt4
 %package -n python3-module-%oname-qt4
 Requires: %libname-qt4 = %version-%release
 Summary: Python 3 bindings for %oname
@@ -230,6 +250,7 @@ BuildArch: noarch
 
 %description -n python3-module-%oname-qt4-devel
 Devel files for Python bindings for %oname
+%endif
 
 %if_with python3qt5
 %package -n python3-module-%oname-qt5
@@ -288,14 +309,18 @@ Documentation for %oname
 %prep
 %setup -n QScintilla-gpl-%version
 %patch1 -p2
+%if_with qt4
 ln -s Qt4Qt5 Qt4
+%endif
 cp -fR Qt4Qt5 Qt5
+%if_with qt4
 cp -a Python Python-qt4
 sed -i \
 	-e "s|@Q5CFLAGS@||g" \
 	-e "s|-lQt5PrintSupport -lQt5Widgets||g" \
 	-e "s|@QSCINTILLALIB@|qscintilla2_qt4|g" \
 	Python-qt4/configure.py
+%endif
 cp -a Python Python-qt5
 Q5CFLAGS="$(pkg-config --cflags Qt5Widgets)"
 Q5CFLAGS="$Q5CFLAGS $(pkg-config --cflags Qt5PrintSupport)"
@@ -304,7 +329,9 @@ sed -i \
 	-e "s|@QSCINTILLALIB@|qscintilla2_qt5|g" \
 	Python-qt5/configure.py
 %if_with python3
+%if_with qt4
 cp -fR Python-qt4 ../python3
+%endif
 %endif
 %if_with python3qt5
 cp -fR Python-qt5 ../python3qt5
@@ -339,12 +366,14 @@ popd
 %endif
 
 # Qt4
+%if_with qt4
 pushd Qt4Qt5
 qmake-qt4 QMAKE_CFLAGS_RELEASE="%optflags" \
 	QMAKE_CXXFLAGS_RELEASE="%optflags" qscintilla.pro
 forDebug
 %make_build
 popd
+%endif
 
 # Qt5
 pushd Qt5
@@ -355,12 +384,14 @@ forDebug
 popd
 
 # Designer for Qt4
+%if_with qt4
 pushd designer-Qt4Qt5
 qmake-qt4 QMAKE_CFLAGS_RELEASE="%optflags" \
 	QMAKE_CXXFLAGS_RELEASE="%optflags" designer.pro
 forDebug
 %make_build
 popd
+%endif
 
 %if_with python
 # Python bindings
@@ -378,11 +409,13 @@ cp -fR Qt4Qt5 ../
 cp -fR Qt5 ../Qt5
 
 # Python bindings for PyQt4
+%if_with qt4
 pushd Python-qt4
 python configure.py --debug -n ../Qt4Qt5 -o ../Qt4Qt5 \
 	--qmake=%_qt4dir/bin/qmake
 %make_build
 popd
+%endif
 
 # Python bindings for PyQt5
 pushd Python-qt5
@@ -393,6 +426,7 @@ python configure.py --debug -n ../Qt5 -o ../Qt5 \
 popd
 
 %if_with python3
+%if_with qt4
 OLDPATH=$PATH
 export PATH=$PATH:%_qt4dir/bin
 pushd ../python3
@@ -407,6 +441,7 @@ sed -i \
 %make_build
 popd
 export PATH=$OLDPATH
+%endif
 %endif
 
 %if_with python3qt5
@@ -440,6 +475,7 @@ popd
 %endif
 
 # Python bindings for PyQt4
+%if_with qt4
 %if_with python3
 pushd ../python3
 mkdir -p %buildroot%python3_sitelibdir/PyQt4
@@ -449,6 +485,7 @@ popd
 pushd Python-qt4
 %makeinstall_std INSTALL_ROOT=%buildroot
 popd
+%endif
 # Python bindings for PyQt5
 pushd Python-qt5
 %makeinstall_std INSTALL_ROOT=%buildroot
@@ -461,18 +498,22 @@ popd
 %endif
 %endif
 
+%if_with qt4
 mkdir -p %buildroot%python_sitelibdir/PyQt4
-mkdir -p %buildroot%python_sitelibdir/PyQt5
-mkdir -p %buildroot%python3_sitelibdir/PyQt5
 mkdir -p %buildroot%python3_sitelibdir/PyQt4
 mkdir -p %buildroot%_includedir/qt4/Qsci
+mkdir -p %buildroot%_libdir/qt4/{lib,translations,plugins/designer}
+mkdir -p %buildroot%_datadir/qt4/qsci3/api/python
+mkdir -p %buildroot%_datadir/qt4/qsci/api/python
+%endif
+mkdir -p %buildroot%python_sitelibdir/PyQt5
+mkdir -p %buildroot%python3_sitelibdir/PyQt5
 mkdir -p %buildroot%_includedir/qt5/Qsci
-mkdir -p %buildroot%_libdir/{qt4,qt5}/{lib,translations,plugins/designer}
+mkdir -p %buildroot%_libdir/qt5/{lib,translations,plugins/designer}
 mkdir -p %buildroot%_qt5_libdatadir
 mkdir -p %buildroot%_qt5_translationdir
 mkdir -p %buildroot%_datadir/sip/qsci
-mkdir -p %buildroot%_datadir/{qt4,qt5}/qsci/api/python
-mkdir -p %buildroot%_datadir/qt4/qsci3/api/python
+mkdir -p %buildroot%_datadir/qt5/qsci/api/python
 %if_with qt3
 mkdir -p %buildroot%_qt3dir/include/Qsci
 mkdir -p %buildroot%_libdir/qt3/{lib,translations,plugins/designer}
@@ -492,6 +533,7 @@ popd
 %endif
 
 # Qt4 library
+%if_with qt4
 install Qt4Qt5/lib%{oname}_qt4.so.*.*.* %buildroot%_libdir
 install Qt4Qt5/*.qm %buildroot%_qt4dir/translations
 pushd %buildroot%_libdir
@@ -506,6 +548,7 @@ for libname in ../../lib%{oname}_qt4.*; do
 ln -s $libname ./
 done
 popd
+%endif
 
 # Qt5 library
 install Qt5/lib%{oname}_qt5.so.*.*.* %buildroot%_libdir
@@ -527,7 +570,9 @@ install designer-Qt3/libqscintillaplugin.so %buildroot%_qt3dir/plugins/designer
 %endif
 
 # Qt4 designer
+%if_with qt4
 install designer-Qt4Qt5/libqscintillaplugin.so %buildroot%_qt4dir/plugins/designer
+%endif
 
 # Qt3 headers
 %if_with qt3
@@ -536,8 +581,10 @@ install -m644 Qt3/Qsci/*.h %buildroot%_qt3dir/include/Qsci
 %endif
 
 # Qt4 headers
+%if_with qt4
 install -m644 Qt4Qt5/*.h %buildroot%_includedir/qt4
 install -m644 Qt4Qt5/Qsci/*.h %buildroot%_includedir/qt4/Qsci
+%endif
 
 # Qt5 headers
 install -m644 Qt5/*.h %buildroot%_qt5_headerdir/
@@ -551,7 +598,9 @@ cp -a doc/html-Qt4Qt5 %buildroot%_docdir/%libname-%version
 cp ChangeLog NEWS README %buildroot%_docdir/%libname-%version
 
 # Quick fix RPATH
+%if_with qt4
 chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so 
+%endif
 
 %if_with qt3
 %files -n %libname-qt3
@@ -559,10 +608,12 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_qt3dir/translations/*
 %endif
 
+%if_with qt4
 %files -n %libname-qt4
 %_qt4dir/lib/*.so.*
 %_libdir/*_qt4.so.*
 %_qt4dir/translations/*
+%endif
 
 %files -n %libname-qt5
 %_qt5_libdatadir/*.so.*
@@ -576,12 +627,14 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_qt3dir/lib/*.so
 %endif
 
+%if_with qt4
 %files -n lib%oname-qt4-devel
 %_includedir/qt4/*.h
 %_includedir/qt4/Qsci
 %_qt4dir/lib/*.so
 %_libdir/*_qt4.so
 %_libdir/lib%{oname}.so
+%endif
 
 %files -n lib%oname-qt5-devel
 %_includedir/qt5/*.h
@@ -594,8 +647,10 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_qt3dir/plugins/designer/*.so
 %endif
 
+%if_with qt4
 %files -n lib%oname-qt4-designer
 %_qt4dir/plugins/designer/*.so
+%endif
 
 %if_with python
 %if_with python-qt3
@@ -607,6 +662,7 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_datadir/sip/qsci
 %endif
 
+%if_with qt4
 %files -n python-module-%oname-qt4
 %python_sitelibdir/PyQt4/Qsci.so
 %python_sitelibdir/PyQt4/Qsci.pyi
@@ -614,6 +670,7 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 
 %files -n python-module-%oname-qt4-devel
 %_datadir/sip/PyQt4/Qsci
+%endif
 
 %files -n python-module-%oname-qt5
 %python_sitelibdir/PyQt5/Qsci.so
@@ -624,6 +681,7 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_datadir/sip/PyQt5/Qsci
 
 %if_with python3
+%if_with qt4
 %files -n python3-module-%oname-qt4
 %python3_sitelibdir/PyQt4/Qsci.so
 %python3_sitelibdir/PyQt4/Qsci.pyi
@@ -631,6 +689,7 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 
 %files -n python3-module-%oname-qt4-devel
 %_datadir/sip3/PyQt4/Qsci
+%endif
 
 %if_with python3qt5
 %files -n python3-module-%oname-qt5
@@ -649,6 +708,9 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_docdir/%libname-%version
 
 %changelog
+* Thu Jan 25 2018 Andrew Savchenko <bircoph@altlinux.org> 2.10.1-alt5%ubt
+- Make qt4 support optional (needed on e2k arch)
+
 * Mon Nov 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10.1-alt4%ubt
 - Fix provides.
 
