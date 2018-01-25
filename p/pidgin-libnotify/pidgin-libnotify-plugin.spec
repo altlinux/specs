@@ -2,7 +2,7 @@
 
 Name: pidgin-libnotify
 Version: 0.14
-Release: alt5
+Release: alt6
 Summary: Libnotify Pidgin plugin
 Summary (ru_RU.UTF8): Дополнение к интернет пейджеру Pidgin позволяющее отображать всплывающие сообщения
 
@@ -10,12 +10,11 @@ Group: Networking/Instant messaging
 License: GPLv2
 Url: http://gaim-libnotify.sourceforge.net/
 
-Source0: http://downloads.sourceforge.net/gaim-libnotify/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch: show_button_fix.patch
 Patch2: pidgin-libnotify-0.14-libnotify-0.7.0.patch
-Packager: Denis Koryavov <dkoryavov@altlinux.org>
 
-BuildRequires: gettext, gettext-tools, gettext-tools-java
+BuildRequires: gettext gettext-tools
 BuildRequires: libnotify-devel >= 0.3.2
 BuildRequires: perl-XML-Parser
 BuildRequires: pidgin-devel >= %pidgin_version
@@ -52,6 +51,9 @@ such as a buddy signing on or off.
 %_libdir/purple-2/%name.so
 
 %changelog
+* Thu Jan 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.14-alt6
+- Updated build dependencies.
+
 * Wed Jun 08 2011 Alexey Shabalin <shaba@altlinux.ru> 0.14-alt5
 - fix for libnotify 0.7
 
