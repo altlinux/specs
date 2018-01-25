@@ -6,7 +6,7 @@
 
 Name: kde5-%rname
 Version: 17.08.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Sound
@@ -21,7 +21,7 @@ Source: %rname-%version.tar
 #BuildRequires: ImageMagick-tools dconf doxygen extra-cmake-modules kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools-devel-static kf5-kiconthemes-devel kf5-kio-devel kf5-ktextwidgets-devel libGConf libalsa-devel libaudiofile-devel libfftw3-devel libflac++-devel libopus-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel python-module-google python3-dev qt5-multimedia-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-multimedia-devel
-BuildRequires: ImageMagick-tools dconf doxygen
+BuildRequires: GraphicsMagick-ImageMagick-compat dconf doxygen
 BuildRequires: libGConf libalsa-devel libaudiofile-devel libfftw3-devel libflac++-devel libopus-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel
 BuildRequires: kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools-devel-static kf5-kiconthemes-devel kf5-kio-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-karchive-devel
@@ -96,6 +96,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkwavegui.so.*
 
 %changelog
+* Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt2%ubt
+- fix build requires
+
 * Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 
