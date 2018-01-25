@@ -3,7 +3,7 @@
 %define lname     libmosquitto
 
 Name: mosquitto
-Version: 1.4.12
+Version: 1.4.14
 Release: alt1
 
 Summary: Mosquitto is an open source implementation of a server for version 3.1 and 3.1.1 of the MQTT protocol
@@ -33,7 +33,6 @@ applications for Machine-to-Machine (M2M) and Internet of Things (IoT).
 %package -n %lname
 Group: Development/C
 Summary: Libraries for mosquitto
-Requires: %name = %version-%release
 
 %description -n %lname
 Libraries for mosquitto
@@ -103,6 +102,11 @@ cp %SOURCE3 %buildroot%_sysconfdir/%name
 %_libdir/*.so
 
 %changelog
+* Thu Jan 25 2018 Pavel Vainerman <pv@altlinux.ru> 1.4.14-alt1
+- new version (1.4.14) with rpmgs script
+- add LSB headers to init-scipt
+- fix bug #34480
+
 * Thu Jun 01 2017 Pavel Vainerman <pv@altlinux.ru> 1.4.12-alt1
 - new version (1.4.12) with rpmgs script
 
