@@ -4,20 +4,23 @@
 # package are under the same license as the package itself.
 
 Name: kuzya
-Version: 2.1.10
-Release: alt2.5
+Version: 2.1.12_rc20170720
+Release: alt1
 
 Summary: Integrated Development Environment for students
 License: GPL
 Group: Education
 
 Url: http://sourceforge.net/projects/kuzya/
-Source: %name-%version.tar.gz
-Patch1: %name-%version-alt-build.patch
+Source: %name-%version.tar
+Patch1: %name-2.1.12-qscintilla.patch
+Patch2: %name-2.1.12-e2k.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: libqt4-devel libqscintilla2-qt4-devel gcc-c++
+BuildRequires: qt5-base-devel rpm-macros-qt5 libqscintilla2-qt5-devel gcc-c++
 BuildRequires: desktop-file-utils
+# for generate.py (version.h generator)
+BuildRequires: python-base python-modules
 
 %description
 Kuzya is simple crossplatform IDE for people who study
@@ -41,41 +44,21 @@ Developers:
 
 %prep
 %setup
-%patch1 -p2
+%patch1 -p1
+%ifarch e2k
+%patch2 -p1
+%endif
 
 %build
-qmake-qt4
-make
+pushd src
+python generate.py -v 2.1.12
+popd
+
+%qmake_qt5
+%make_build
 
 %install
-mkdir -p %buildroot%_datadir/%name/doc/
-mkdir -p %buildroot%_includedir
-mkdir -p %buildroot%_iconsdir/
-mkdir -p %buildroot%_desktopdir/
-mkdir -p %buildroot%_datadir/%name/
-mkdir -p %buildroot%_datadir/%name/resources/translations
-mkdir -p %buildroot/usr/lib64/fpc/2.2.4/units/x86_64-linux/graph/
-mkdir -p %buildroot/usr/bin
-
-cp -fr doc/Kuzya_Help/* %buildroot%_datadir/%name/doc/
-cp -f graphics/c/graphics.h %buildroot%_includedir/
-cp -fr profiles %buildroot%_datadir/%name/
-cp -fr resources %buildroot%_datadir/%name/
-cp -f resources/icon/kuzya.png %buildroot%_iconsdir/
-cp -f resources/linux/kuzya.desktop %buildroot%_desktopdir/
-cp -fr src/images %buildroot%_datadir/%name/src/
-cp -fr resources/qss %buildroot%_datadir/%name/resources/
-cp -fr src/images/kuzya.png %buildroot%_datadir/%name/
-cp -f graphics/fpc/unit/graph.o		%buildroot%_bindir/
-cp -f graphics/fpc/unit/graph.ppu 	%buildroot%_bindir/
-
-install -pDm755 bin/%{name}graph %buildroot%_bindir/%{name}graph
-install -pDm755 bin/%name      %buildroot%_bindir/%name
-install -pDm755 resources/translations/*.qm %buildroot%_datadir/%name/resources/translations
-desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=IDE \
-	--add-category=ComputerScience \
-	%buildroot%_desktopdir/kuzya.desktop
+%makeinstall_std INSTALL_ROOT=%buildroot
 
 %files
 %_bindir/*
@@ -86,6 +69,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/*
 
 %changelog
+* Thu Jan 25 2018 Andrew Savchenko <bircoph@altlinux.org> 2.1.12_rc20170720-alt1
+- Update to latest git with qt5 support (mandatory for e2k).
+- Simplify spec, use upstream tracking branch.
+
 * Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.10-alt2.5
 - Rebuilt with qscintilla2 2.10.1.
 
