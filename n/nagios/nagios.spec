@@ -13,7 +13,7 @@
 
 Name: nagios
 Version: 3.0.6
-Release: alt5.1
+Release: alt6
 
 Summary: Services and network monitoring system
 License: GPL
@@ -178,6 +178,7 @@ PATH=$PATH:/usr/sbin
 	--with-cgiurl=/%name/cgi-bin \
 	--with-htmurl=/%name \
 	--with-init-dir=%_initdir \
+	--localstatedir=%_var \
 	--with-lockfile=/var/run/%name/%name.pid \
 	--with-mail=/bin/mail \
 	--with-perlcache \
@@ -329,6 +330,7 @@ subst 's|# Nagios(R) web-interface settings||' /etc/lighttpd/lighttpd.conf
 %_sysconfdir/%name/examples/*
 %dir %_docdir/%name-%version
 %_docdir/%name-%version/*
+%exclude %_docdir/%name-%version/html
 
 %files common
 %dir %_sysconfdir/%name
@@ -373,6 +375,9 @@ subst 's|# Nagios(R) web-interface settings||' /etc/lighttpd/lighttpd.conf
 %files full
 
 %changelog
+* Thu Jan 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.6-alt6
+- Fixed localstatedir location.
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.6-alt5.1
 - rebuild with new perl 5.26.1
 
