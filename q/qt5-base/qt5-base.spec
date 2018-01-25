@@ -19,13 +19,11 @@
 
 %define rname  qtbase
 %define gname  qt5
-%define libname  lib%gname
-%define major  5
-%define minor  9
-%define bugfix 3
 Name: qt5-base
-Version: 5.9.3
+%define major  5
+Version: 5.9.4
 Release: alt1%ubt
+%define libname  lib%gname
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -38,9 +36,9 @@ Source2: rpm-macros-addon
 # FC
 Patch1: qtbase-opensource-src-5.7.1-QT_VERSION_CHECK.patch
 Patch2: qtbase-opensource-src-5.7.1-moc_macros.patch
-#
+# bugreports.qt.io
 Patch11: QTBUG-35459.patch
-Patch12: QTBUG-64742.patch
+Patch12: xcberror_filter.patch
 # upstream
 # SuSE
 Patch100: disable-rc4-ciphers-bnc865241.diff
@@ -60,13 +58,15 @@ Patch1008: alt-mkspecs-features.patch
 %define _qt5 %gname
 %include %SOURCE1
 
-%add_findreq_skiplist %_qt5_plugindir/platformthemes/libqgtk*.so
+# dynamically probing plugins
+%add_findreq_skiplist %_qt5_plugindir/platformthemes/*.so
 
 # Automatically added by buildreq on Fri Sep 20 2013 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static gstreamer-devel libEGL-devel libGL-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcom_err-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins libkrb5-devel libpango-devel libpng-devel libpq-devel libssl-devel libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxml2-devel pkg-config python-base python3 python3-base ruby ruby-stdlibs xorg-fixesproto-devel xorg-inputproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: firebird-devel gcc-c++ gst-plugins-devel libXi-devel libalsa-devel libcups-devel libdbus-devel libfreetds-devel libgtk+2-devel libicu-devel libjpeg-devel libmysqlclient-devel libpcre-devel libpulseaudio-devel libsqlite3-devel libudev-devel libunixODBC-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel postgresql-devel python-module-distribute rpm-build-python3 rpm-build-ruby zlib-devel-static
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++ libcups-devel libdbus-devel libicu-devel libjpeg-devel libpng-devel libharfbuzz-devel
+BuildRequires: libproxy-devel
 BuildRequires: libpcre2-devel libudev-devel libEGL-devel libdrm-devel libgbm-devel zlib-devel libgtk+3-devel
 BuildRequires: libmtdev-devel libinput-devel libts-devel
 BuildRequires: pkgconfig(gl) pkgconfig(glesv2) pkgconfig(egl)
@@ -354,7 +354,8 @@ EGL integration library for the Qt%major toolkit
 %patch2 -p1
 #
 %patch11 -p1 -b .QTBUG
-%patch12 -p1 -b .QTBUG
+%patch12 -p1
+#
 %patch100 -p1
 %patch101 -p1
 %patch1000 -p1 -b .ibase
@@ -481,6 +482,7 @@ mkdir -p %buildroot/%_sysconfdir/qt5/
 cat >%buildroot/%_sysconfdir/qt5/qtlogging.ini <<__EOF__
 [Rules]
 *.debug=false
+qt.qpa.xcb.xcberror.warning=false
 __EOF__
 ln -s `relative %_sysconfdir/qt5/qtlogging.ini %_qt5_datadir/qtlogging.ini` %buildroot/%_qt5_datadir/qtlogging.ini
 
@@ -511,7 +513,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.9.3
+Version: 5.9.4
 __EOF__
 
 # rpm macros
@@ -770,6 +772,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
+- new version
+
 * Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
 - new version
 

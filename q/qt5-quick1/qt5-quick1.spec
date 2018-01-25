@@ -3,7 +3,7 @@
 %def_disable qtwebkit
 
 Name: qt5-quick1
-Version: 5.9.3
+Version: 5.9.4
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -120,6 +120,9 @@ sed -i 's|^MODULE_VERSION[[:space:]]*=.*|MODULE_VERSION = %version|' .qmake.conf
 #%_qt5_docdir/*
 
 %changelog
+* Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
+- new version
+
 * Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
 - new version
 

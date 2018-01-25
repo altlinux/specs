@@ -2,7 +2,7 @@
 %global qt_module qtdatavis3d
 
 Name: qt5-datavis3d
-Version: 5.9.3
+Version: 5.9.4
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -96,5 +96,8 @@ syncqt.pl-qt5 -version %version -private
 %_qt5_docdir/*
 
 %changelog
+* Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
+- new version
+
 * Fri Jan 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
 - initial build
