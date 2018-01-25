@@ -1,62 +1,46 @@
+%define _unpackaged_files_terminate_build 1
 %define shortname winrm
 %define origname py%shortname
-Name: python-module-%shortname
-Version: 0.2.0
-Release: alt3.git
 
-%if "" == ""
-%define pyver 2
-%else
-%define pyver 
-%endif
-Summary: Python%pyver library for Windows Remote Management
+Name: python-module-%shortname
+Version: 0.3.0
+Release: alt1%ubt
+
+Summary: Python library for Windows Remote Management
 
 License: MIT
 Group: Networking/Remote access
-Url: https://github.com/diyan/%origname.git
+# Source-git: https://github.com/diyan/%origname.git
+Url: https://pypi.python.org/pypi/pywinrm
 
-# Repeat the install_requires from setup.py (TODO: autoreqs)
-# (particularly useful because of the version constraints):
-Requires: python-module-xmltodict
-Requires: python-module-requests >= 2.9.1
-# not packaged yet (and optional according to the actual code):
-#Requires: python-module-requests_ntlm >= 0.3.0
-Requires: python-module-six
-# not packaged yet (and optional):
-#Requires: python-module-requests-kerberos >= 0.10.0
+Source0: %name-%version.tar
+# A simple wrapper around pywinrm with a command-line interface
+# similar to winexe based on Samba <https://sourceforge.net/projects/winexe/>
+Source1: winexe_py3winrm
 
-# https://github.com/diyan/pywinrm.git
-Source: %origname-%version.tar
-
-%define python3_buildtweaks %python3_req_hier
-%define python_buildtweaks %python_req_hier
-%python_buildtweaks
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-xmltodict
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-xmltodict
+# for tests
+BuildRequires: python-module-pytest-cov
+BuildRequires: python-module-pytest-pep8
+BuildRequires: python-module-mock
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-pep8
+BuildRequires: python3-module-mock
+#
 
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python
-# For the long description (i.e., useless):
-# (Well, consider this to be just a test for pypandoc.)
-BuildPreReq: python-module-pypandoc
-BuildRequires: python-module-setuptools
-
-%package tests
-Summary: Tests for the Python library for Windows Remote Management
-Group: Networking/Remote access
-
-%package checkpkg
-Summary: Immediately test the Python library for Windows Remote Management
-Group: Networking/Remote access
-Requires(post): %name-tests = %EVR
-Requires(post): python-module-setuptools-tests
 
 %description
 %origname is a Python client for the Windows Remote Management (WinRM)
 service. WinRM allows you to perform various management tasks
 remotely. These include, but are not limited to: running batch
 scripts, powershell scripts, and fetching WMI variables.
-
-This package is for Python%pyver.
 
 To try it out, you can run the included winexe_py3winrm script
 (needs Python3) or consider the following usage example:
@@ -66,63 +50,69 @@ import winrm
 s = winrm.Session('windows-host.example.com', auth=('john.smith', 'secret'))
 r = s.run_cmd('ipconfig', ['/all'])
 
-%description tests
-%origname is a Python client for the Windows Remote Management (WinRM)
-service.
+%package -n python3-module-%shortname
+Summary: Python3 library for Windows Remote Management
+Group: Development/Python3
 
-This package contains tests for %name.
+%description -n python3-module-%shortname
+%origname is a Python3 client for the Windows Remote Management (WinRM)
+service. WinRM allows you to perform various management tasks
+remotely. These include, but are not limited to: running batch
+scripts, powershell scripts, and fetching WMI variables.
 
-%description checkpkg
-%origname is a Python client for the Windows Remote Management (WinRM)
-service.
+To try it out, you can run the included winexe_py3winrm script
+(needs Python3) or consider the following usage example:
 
-This package runs %name's tests immediately at install time.
-(This is a way to test a Python package in ALT Sisyphus Girar.)
+import winrm
+
+s = winrm.Session('windows-host.example.com', auth=('john.smith', 'secret'))
+r = s.run_cmd('ipconfig', ['/all'])
 
 %prep
-%setup -n %origname-%version
+%setup
+
+rm -rf ../python3
+cp -a . ../python3
 
 %build
-%python_build
+%python_build_debug
+
+pushd ../python3
+%python3_build_debug
+popd
 
 %install
 %python_install
 
-%if "" == "3"
+pushd ../python3
+%python3_install
+popd
+
 mkdir -p %buildroot%_bindir
-install -m755 winexe_py3winrm -t %buildroot%_bindir
-%endif
+install -m755 %SOURCE1 -t %buildroot%_bindir
 
-mkdir -p %buildroot%_usrsrc/%name
-{
-  echo '#!/usr/bin/python'
-  cat setup.py
-} > %buildroot%_usrsrc/%name/setup.py
-chmod a+x %buildroot%_usrsrc/%name/setup.py
-# It is being read by setup.py:
-ln -s %_docdir/%name-%version/README.md -t %buildroot%_usrsrc/%name/
+%check
+py.test -v --pep8 --cov=winrm --cov-report=term-missing winrm/tests/
 
-%post checkpkg
-cd %_usrsrc/%name/
-# RPM_BUILD_DIR is needed until all reqs are packaged:
-su nobody -s /bin/sh \
--c 'RPM_BUILD_DIR="$PWD" ./setup.py test'
+pushd ../python3
+py.test3 -v --pep8 --cov=winrm --cov-report=term-missing winrm/tests/
+popd
 
 %files
-%python_sitelibdir/*
-%exclude %python_sitelibdir/winrm/tests
-%if "" == "3"
-%_bindir/*py3*
-%endif
 %doc README.md LICENSE CHANGELOG.md
+%python_sitelibdir/%shortname
+%python_sitelibdir/%origname-%version-*.egg-info
 
-%files tests
-%python_sitelibdir/winrm/tests
-
-%files checkpkg
-%_usrsrc/%name
+%files -n python3-module-%shortname
+%doc README.md LICENSE CHANGELOG.md
+%python3_sitelibdir/%shortname
+%python3_sitelibdir/%origname-%version-*.egg-info
+%_bindir/*py3*
 
 %changelog
+* Fri Jan 26 2018 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1%ubt
+- 0.2.0 -> 0.3.0
+
 * Fri Jul 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.0-alt3.git
 - winexe_py3winrm -- simple wrapper around pywinrm with a command-line interface
   similar to winexe based on Samba <https://sourceforge.net/projects/winexe/>.

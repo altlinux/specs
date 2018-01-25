@@ -1,47 +1,52 @@
-%define oname setuptools
+%define _unpackaged_files_terminate_build 1
+%define mname setuptools
 
-%def_with python3
-
-Name: python-module-%oname
+Name: python-module-%mname
 Epoch: 1
-Version: 38.2.3
+Version: 38.4.0
 Release: alt1%ubt
 
-Summary: Python Distutils Enhancements
-License: PSF/ZPL
+Summary: Easily download, build, install, upgrade, and uninstall Python packages
+License: MIT
 Group: Development/Python
-URL: http://pypi.python.org/pypi/setuptools
+# Source-git: https://github.com/pypa/setuptools.git
+Url: http://pypi.python.org/pypi/setuptools
 
-Source: %oname.tar
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
-Patch0: 0001-Don-t-remove-setuptools.tests-from-the-installed-pac.patch
-Patch1: 0002-dist.py-skip-checking-the-existence-of-system-PKG-IN.patch
-Patch2: %oname-%version-alt-pth-generator.patch
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python-module-six
+BuildRequires: python3-module-six
+# for test
+BuildRequires: git-core
+BuildRequires: python-module-pytest
+BuildRequires: python-module-virtualenv
+BuildRequires: python-module-path
+BuildRequires: python-module-mock
+BuildRequires: python-module-pip
+BuildRequires: python-module-wheel
+BuildRequires: python-module-contextlib2
+BuildRequires: python-module-pytest-fixture-config
+BuildRequires: python-module-tox
+BuildRequires: python-module-pytest-flake8
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-virtualenv
+BuildRequires: python3-module-path
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-pip
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-contextlib2
+BuildRequires: python3-module-pytest-fixture-config
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-pytest-flake8
+#
 
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python rpm-build-ubt
-BuildRequires: python-devel
-BuildRequires: python2.7(packaging) python2.7(pyparsing) python2.7(six) python2.7(appdirs)
-BuildRequires: python-module-pytest python2.7(mock) python2.7(pytest_fixture_config) python2.7(pytest_virtualenv)
-BuildRequires: python2.7(path) python2.7(contextlib2) python-module-virtualenv python-module-pip
-# For more precise reqs:
-%python_req_hier
-
 Provides: python-module-distribute = %EVR
-
-Provides: %name-tests = %EVR
-Obsoletes: %name-tests <= 1:18.1-alt4
 Obsoletes: python-module-distribute <= 0.6.35-alt1
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3(packaging) python3(pyparsing) python3(six) python3(appdirs)
-BuildRequires: python3-module-pytest python3(mock) python3(pytest_fixture_config) python3(pytest_virtualenv)
-BuildRequires: python3(path) python3(contextlib2) python3-module-virtualenv python3-module-pip
-# For more precise reqs:
-%python3_req_hier
-%endif
 
 %description
 Setuptools is a collection of enhancements to the Python distutils
@@ -59,109 +64,95 @@ working with Python module distributions.
 
 This package contains documentation for Distribute.
 
-%if_with python3
-%package -n python3-module-%oname
+%package -n python3-module-%mname
 Summary: Python Distutils Enhancements
 Group: Development/Python3
 Provides: python3-module-distribute = %EVR
+# skip self requires
+%add_python3_req_skip pkg_resources.extern.pyparsing
+%add_python3_req_skip pkg_resources.extern.packaging.markers
+%add_python3_req_skip pkg_resources.extern.packaging.requirements
+%add_python3_req_skip pkg_resources.extern.packaging.specifiers
+%add_python3_req_skip pkg_resources.extern.packaging.version
+%add_python3_req_skip pkg_resources.extern.six
+%add_python3_req_skip pkg_resources.extern.six.moves
+%add_python3_req_skip pkg_resources.extern.six.moves.urllib
+%add_python3_req_skip %mname.extern.six
+%add_python3_req_skip %mname.extern.six.moves
 
-Provides: python3-module-%oname-tests = %EVR
-Obsoletes: python3-module-%oname-tests <= 1:18.1-alt4
-
-%description -n python3-module-%oname
-Setuptools is a collection of enhancements to the Python distutils
-that allow you to more easily build and distribute Python packages,
+%description -n python3-module-%mname
+Setuptools is a collection of enhancements to the Python3 distutils
+that allow you to more easily build and distribute Python3 packages,
 especially ones that have dependencies on other packages.
-%endif
 
 %prep
-%setup -n %oname
-%patch0
-%patch1 -p2
-%patch2 -p2
+%setup
+%patch0 -p1
 
-# don't use bundled packages
-rm -rf pkg_resources/extern pkg_resources/_vendor setuptools/extern
+# Remove bundled exes
+rm -f setuptools/*.exe
 
-find . -name '*.py' -type f | xargs sed -i \
-	-e "s:from pkg_resources\.extern ::g" \
-	-e "s:from pkg_resources\.extern\.:from :g" \
-	-e "s:'pkg_resources\.extern\.:':g" \
-	-e "s:from setuptools\.extern ::g" \
-	-e "s:from setuptools\.extern\.:from :g"
+# do not generate version like release.postdate, we need release one
+sed -i '/^tag_build =.*/d;/^tag_date = 1/d' setup.cfg
 
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
-%python_build
-#python setup.py test
+python bootstrap.py
+%python_build_debug
 
-%if_with python3
 pushd ../python3
-%python3_build
+python3 bootstrap.py
+%python3_build_debug
 popd
-%endif
 
 %install
-mkdir -p %buildroot%python_sitelibdir
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 rm -f %buildroot%_bindir/easy_install
 ln -s easy_install-%_python_version %buildroot%_bindir/easy_install
-%if_with python3
 ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
-%endif
 
 %check
-# TODO: fix or disable remaining failing tests
-PYTHONPATH=$(pwd) py.test -v ||:
+export PIP_INDEX_URL=http://host.invalid./
+export PYTHONPATH=`pwd`:%python_sitelibdir_noarch:%_libdir/python%_python_version/site-packages
+TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py27 -v -- -v
 
-%if_with python3
 pushd ../python3
-PYTHONPATH=$(pwd) py.test3 -v ||:
+export PYTHONPATH=`pwd`:%python3_sitelibdir_noarch:%_libdir/python%_python3_version/site-packages
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py35 -v -- -v
 popd
-%endif
 
 %files
-%doc *.rst
+%doc LICENSE *.rst
 %_bindir/easy_install
 %_bindir/easy_install-%_python_version
-%python_sitelibdir/pkg_resources/
-%dir %python_sitelibdir/%oname/
-%python_sitelibdir/%oname/*.*
-%python_sitelibdir/%oname/command/
-%python_sitelibdir/%oname/tests/
+%python_sitelibdir/pkg_resources
+%python_sitelibdir/%mname
 %python_sitelibdir/easy_install.*
-%python_sitelibdir/%oname-%version-*.egg-info
+%python_sitelibdir/%mname-%version-*.egg-info
 
 %files docs
 %doc docs/*.txt
 
-%if_with python3
-%files -n python3-module-%oname
+%files -n python3-module-%mname
 %_bindir/easy_install3
 %_bindir/easy_install-%_python3_version
 %python3_sitelibdir/__pycache__/*
-%python3_sitelibdir/pkg_resources/
-%dir %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname/__pycache__/
-%python3_sitelibdir/%oname/*.*
-%python3_sitelibdir/%oname/command/
-%python3_sitelibdir/%oname/tests/
+%python3_sitelibdir/pkg_resources
+%python3_sitelibdir/%mname
 %python3_sitelibdir/easy_install.*
-%python3_sitelibdir/%oname-%version-*.egg-info
-%endif
+%python3_sitelibdir/%mname-%version-*.egg-info
 
 %changelog
+* Mon Jan 22 2018 Stanislav Levin <slev@altlinux.org> 1:38.4.0-alt1%ubt
+- 38.2.3 -> 38.4.0
+
 * Fri Dec 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:38.2.3-alt1%ubt
 - Updated to upstream version 38.2.3.
 

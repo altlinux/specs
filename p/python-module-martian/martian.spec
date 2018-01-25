@@ -1,27 +1,34 @@
-%define oname martian
+%define _unpackaged_files_terminate_build 1
+%define mname martian
 
-%def_with python3
+Name: python-module-%mname
+Version: 1.1
+Release: alt1%ubt
 
-Name: python-module-%oname
-Version: 0.14
-Release: alt3.1
 Summary: A library to grok configuration from Python code
-License: ZPL
+License: ZPLv2.1
 Group: Development/Python
-Url: http://pypi.python.org/pypi/martian/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+# Source-git: https://github.com/zopefoundation/martian.git
+Url: http://pypi.python.org/pypi/martian
 
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
-%endif
-
-%py_requires zope.interface
+BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
+#for tests
+BuildRequires: python-module-tox
+BuildRequires: python-module-virtualenv
+BuildRequires: python-module-zope.testrunner
+BuildRequires: python-module-coverage
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-virtualenv
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-coverage
+#
+BuildArch: noarch
 
 %description
 Martian is a library that allows the embedding of configuration
@@ -30,95 +37,67 @@ appropriate configuration registrations. One example of a system that
 uses Martian is the system where it originated: Grok
 (http://grok.zope.org)
 
-%package -n python3-module-%oname
-Summary: A library to grok configuration from Python code
+%package -n python3-module-%mname
+Summary: A library to grok configuration from Python3 code
 Group: Development/Python3
-%py3_requires zope.interface
 
-%description -n python3-module-%oname
+%description -n python3-module-%mname
 Martian is a library that allows the embedding of configuration
-information in Python code. Martian can then grok the system and do the
+information in Python3 code. Martian can then grok the system and do the
 appropriate configuration registrations. One example of a system that
 uses Martian is the system where it originated: Grok
 (http://grok.zope.org)
-
-%package -n python3-module-%oname-tests
-Summary: Tests for martian
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-%py3_requires zope.testing setuptools.tests
-
-%description -n python3-module-%oname-tests
-Martian is a library that allows the embedding of configuration
-information in Python code. Martian can then grok the system and do the
-appropriate configuration registrations. One example of a system that
-uses Martian is the system where it originated: Grok
-(http://grok.zope.org)
-
-This package contains tests for martian.
-
-%package tests
-Summary: Tests for martian
-Group: Development/Python
-Requires: %name = %version-%release
-%py_requires zope.testing setuptools.tests
-
-%description tests
-Martian is a library that allows the embedding of configuration
-information in Python code. Martian can then grok the system and do the
-appropriate configuration registrations. One example of a system that
-uses Martian is the system where it originated: Grok
-(http://grok.zope.org)
-
-This package contains tests for martian.
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+rm -rf ../python3
+cp -a . ../python3
+
+# from src/martian/testing_compat3.py :
+# """ Just python classes that only work in
+#     python3. In python < 3 you will get a syntax error.
+# """
+rm -f src/%mname/testing_compat3.py
 
 %build
-%python_build
+%python_build_debug
 
-%if_with python3
 pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%python3_build
+%python3_build_debug
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
+
+%check
+export PIP_INDEX_URL=http://host.invalid./
+export PYTHONPATH=%buildroot%python_sitelibdir_noarch:%python_sitelibdir_noarch:%_libdir/python%_python_version/site-packages
+TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py27 -v
+
+pushd ../python3
+export PYTHONPATH=%buildroot%python3_sitelibdir_noarch:%python3_sitelibdir_noarch:%_libdir/python3/site-packages
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py35 -v
+popd
 
 %files
-%doc *.txt
-%python_sitelibdir/*
-%exclude %python_sitelibdir/*/test*
+%doc *.txt *.rst
+%python_sitelibdir/%mname
+%python_sitelibdir/%mname-%version-*.egg-info
 
-%files tests
-%python_sitelibdir/*/test*
-
-%if_with python3
-%files -n python3-module-%oname
-%doc *.txt
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test*
-%exclude %python3_sitelibdir/*/*/test*
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/test*
-%python3_sitelibdir/*/*/test*
-%endif
+%files -n python3-module-%mname
+%doc *.txt *.rst
+%python3_sitelibdir/%mname
+%python3_sitelibdir/%mname-%version-*.egg-info
 
 %changelog
+* Thu Jan 25 2018 Stanislav Levin <slev@altlinux.org> 1.1-alt1%ubt
+- 0.14 -> 1.1
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.14-alt3.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
