@@ -1,5 +1,5 @@
 %define module_name	ipset
-%define module_version	6.32
+%define module_version	6.35
 %define module_release	alt1
 
 %define flavour		std-pae
