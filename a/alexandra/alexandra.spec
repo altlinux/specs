@@ -1,5 +1,5 @@
 Name:		alexandra
-Version:	1.5.0
+Version:	1.5.1
 Release:	alt1
 Summary:	A small and user friendly opensource video library with great potential
 License:	GPLv2
@@ -31,12 +31,15 @@ written in C++ using Qt5 framework.
 make INSTALL_ROOT=%buildroot install
 
 %files
-%doc LICENSE README.md
+%doc LICENSE README.md CHANGELOG
 %_bindir/%name
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Jan 26 2018 Motsyo Gennadi <drool@altlinux.ru> 1.5.1-alt1
+- 1.5.1
+
 * Thu Apr 14 2016 Motsyo Gennadi <drool@altlinux.ru> 1.5.0-alt1
 - 1.5.0
 
@@ -54,9 +57,6 @@ make INSTALL_ROOT=%buildroot install
 
 * Sun Aug 23 2015 Motsyo Gennadi <drool@altlinux.ru> 1.2.3-alt2
 - fix build for Sisyphus (build with gcc4.7, tnx to Michael Shigorin)
-
-* Mon Aug 17 2015 Motsyo Gennadi <drool@altlinux.ru> 1.2.3-alt0.M70T.1
-- build for t7
 
 * Fri Aug 14 2015 Motsyo Gennadi <drool@altlinux.ru> 1.2.3-alt1
 - initial build for ALT Linux
