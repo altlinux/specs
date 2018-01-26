@@ -2,7 +2,7 @@
 %def_with python3
 
 Name:    python-module-%modulename
-Version: 5.3.1
+Version: 5.4.0
 Release: alt1
 
 Summary: A collection of helpers and mock objects for unit tests and doc tests
@@ -101,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 26 2018 Andrey Cherepanov <cas@altlinux.org> 5.4.0-alt1
+- New version.
+
 * Wed Nov 22 2017 Andrey Cherepanov <cas@altlinux.org> 5.3.1-alt1
 - New version.
 
