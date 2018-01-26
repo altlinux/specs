@@ -1,16 +1,22 @@
+%def_enable snapshot
+
 %define _name seahorse
 %define ver_major 3.8
 
 Name: %_name-sharing
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: PGP public key sharing using DNS-SD and HKP
 License: LGPLv2+
 Group: Graphical desktop/GNOME
+Url: https://wiki.gnome.org/Apps/Seahorse
 
-URL: https://live.gnome.org/Seahorse
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 BuildRequires: rpm-build-gnome intltool
 BuildRequires: libgtk+3-devel libsoup-devel libgpgme-devel libavahi-glib-devel
@@ -25,6 +31,7 @@ and decryption of OpenPGP files using GnuPG.
 
 %build
 export GNUPG=/usr/bin/gpg2
+%autoreconf
 %configure --disable-static
 
 %make_build
@@ -42,6 +49,9 @@ export GNUPG=/usr/bin/gpg2
 %doc AUTHORS NEWS README
 
 %changelog
+* Fri Jan 26 2018 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt2
+- updated to 3.8.0-22-g0370fb3
+
 * Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

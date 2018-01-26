@@ -3,7 +3,7 @@
 
 Name: gimp-plugin-%shortname
 Version: 3.2.6
-Release: alt2
+Release: alt3
 
 Summary: Focus Blur plug-in is blurring effect, a kind of called DoF
 License: GPLv2+
@@ -15,6 +15,9 @@ Source1: focusblur-model-inverse.png
 Source2: ru.po
 # This patch was included in source rpm, but not applied...
 Patch0: %name-3.2.2-inversemodel-alt.patch.bz2
+# fc
+Patch1: gimp-focusblur-plugin-fix-gettext.patch
+Patch2: gimp-focusblur-plugin-include-main-glib.patch
 
 Requires: gimp
 
@@ -31,14 +34,12 @@ as simple and applicable blur.
 %setup -n %shortname-%version
 cp %SOURCE1 pixmaps/
 cp -f %SOURCE2 po/
-
-# Yes, I know, this is lazy, not proper way of fixing. But it works :)
-subst 's~glib/gtypes.h~glib.h~' src/*.h
-subst 's~glib/gmacros.h~glib.h~' src/*.h
-# In some files it leads to double inclusion of glib.h, but this is harmless.
+%patch1 -p1
+%patch2 -p1
 
 %build
-%configure
+%autoreconf
+%configure LIBS=-lm
 %make_build
 
 %install
@@ -50,6 +51,9 @@ subst 's~glib/gmacros.h~glib.h~' src/*.h
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Fri Jan 26 2018 Yuri N. Sedunov <aris@altlinux.org> 3.2.6-alt3
+- fixed build
+
 * Fri Apr 06 2012 Victor Forsiuk <force@altlinux.org> 3.2.6-alt2
 - Fix glib include compile problem.
 

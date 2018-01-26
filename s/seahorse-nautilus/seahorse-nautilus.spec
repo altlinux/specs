@@ -1,19 +1,25 @@
+%def_enable snapshot
+
 %define _name seahorse
 %define ver_major 3.11
 %def_enable libnotify
 
 Name: %_name-nautilus
 Version: %ver_major.92
-Release: alt1
+Release: alt2
 
 Summary: PGP encryption and signing for Nautilus
 License: LGPLv2+
 Group: Graphical desktop/GNOME
+Url: https://wiki.gnome.org/Apps/Seahorse
 
-URL: https://live.gnome.org/Seahorse
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
-BuildRequires: rpm-build-gnome intltool
+BuildRequires: meson rpm-build-gnome
 BuildRequires: libgtk+3-devel libnautilus-devel libcryptui-devel libgpgme-devel
 BuildRequires: libgnome-keyring-devel libdbus-glib-devel gnupg2-gpg gcr-libs-devel
 %{?_enable_libnotify:BuildPreReq: libnotify-devel >= 0.7.2}
@@ -26,15 +32,12 @@ and decryption of OpenPGP files using GnuPG.
 %setup
 
 %build
-export GNUPG=/usr/bin/gpg2
-%configure --disable-static \
-	--disable-schemas-compile \
-	%{subst_enable libnotify}
-
-%make_build
+%meson \
+    %{?_enable_libnotify:-Dlibnotify=true}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %name
 
@@ -44,16 +47,15 @@ export GNUPG=/usr/bin/gpg2
 %_desktopdir/seahorse-pgp-encrypted.desktop
 %_desktopdir/seahorse-pgp-keys.desktop
 %_desktopdir/seahorse-pgp-signature.desktop
-%_datadir/%name/
-%_datadir/GConf/gsettings/org.gnome.seahorse.nautilus.convert
 %_datadir/glib-2.0/schemas/org.gnome.seahorse.nautilus.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.seahorse.nautilus.window.gschema.xml
 %_man1dir/%_name-tool.1.*
-%doc AUTHORS NEWS README
-
-%exclude %nautilus_extdir/*.la
+%doc AUTHORS NEWS README*
 
 %changelog
+* Fri Jan 26 2018 Yuri N. Sedunov <aris@altlinux.org> 3.11.92-alt2
+- updated to 3.11.92-42-g0b57f04
+
 * Sun Mar 16 2014 Yuri N. Sedunov <aris@altlinux.org> 3.11.92-alt1
 - 3.11.92
 
