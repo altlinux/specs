@@ -11,7 +11,7 @@
 
 Name: tor
 Version: 0.3.2.9
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Anonymizing overlay network for TCP (The onion router)
 Group: System/Servers
@@ -22,6 +22,7 @@ Packager: Sviatoslav Sviridov <svd@altlinux.ru>
 Source0: http://tor.eff.org/dist/%name-%version.tar
 Source1: %name.init
 Source2: %name.systemd.service
+Source3: %name.tmpfiles
 
 # Automatically added by buildreq on Fri Jun 24 2011
 # optimized out: fontconfig fonts-type1-urw ghostscript-classic libcom_err-devel libkrb5-devel tex-common texlive-base texlive-base-bin texlive-common texlive-latex-base texlive-latex-recommended
@@ -67,8 +68,10 @@ install -pD -m755 %SOURCE1 %buildroot/%_initdir/%name
 mv %buildroot/%_sysconfdir/%name/torrc.sample %buildroot/%_sysconfdir/%name/torrc
 mkdir -p %buildroot%_tor_root
 mkdir -p %buildroot%_var/{cache/%name,log/%name,run/%name}
+mkdir -p %buildroot%_tmpfilesdir
 
 install -D -p -m 0644 %SOURCE2 %buildroot/%_unitdir/%{name}.service
+sed 's/@TOR_USER@/%toruser/g' %SOURCE3 > %buildroot%_tmpfilesdir/%name.conf
 
 mkdir -p %buildroot%_sysconfdir/logrotate.d
 cat >%buildroot%_sysconfdir/logrotate.d/%name <<__EOF__
@@ -121,6 +124,7 @@ fi
 %_bindir/tor-gencert
 %_man1dir/*.1.*
 %_initdir/%name
+%_tmpfilesdir/%name.conf
 %dir %_datadir/%name
 %_datadir/%name/geoip
 %_datadir/%name/geoip6
@@ -139,6 +143,9 @@ fi
 %_var/cache/%name
 
 %changelog
+* Fri Jan 26 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.3.2.9-alt2%ubt
+- add tmpfiles.d conf (fix service startup)
+
 * Fri Jan 12 2018 Vladimir Didenko <cow@altlinux.ru> 0.3.2.9-alt1%ubt
 - new version
 
