@@ -2,7 +2,7 @@
 
 Name: volume_key
 Version: 0.3.9
-Release: alt1
+Release: alt2
 
 Summary: An utility for manipulating storage encryption keys and passphrases
 License: GPLv2
@@ -15,6 +15,8 @@ Source: https://fedorahosted.org/releases/v/o/%name/%name-%version.tar.xz
 # VCS: https://git.fedorahosted.org/git/volume_key.git
 Source: %name-%version.tar
 %endif
+# fc
+Patch: volume_key-0.3.9-crypt_get_error.patch
 
 Requires: lib%name = %version-%release
 
@@ -83,6 +85,7 @@ for other formats is possible, some formats are planned for future releases.
 
 %prep
 %setup
+%patch -p1 -b .crypt_get_error
 
 %build
 %autoreconf
@@ -113,6 +116,9 @@ for other formats is possible, some formats are planned for future releases.
 %exclude %python_sitelibdir/_%name.la
 
 %changelog
+* Mon Jan 29 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.9-alt2
+- rebuilt against libcryptsetup.so.12
+
 * Tue Oct 18 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.9-alt1
 - 0.3.9 (0.3.9-8-gd4b00ce)
 

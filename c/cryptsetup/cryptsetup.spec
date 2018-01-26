@@ -5,8 +5,8 @@
 %define _root_sbindir /sbin
 
 Name: cryptsetup
-Version: 1.7.3
-Release: alt1.1
+Version: 2.0.1
+Release: alt1
 
 Summary: utility to setup a encrypted disks with LUKS support
 Summary(ru_RU.UTF-8): утилита управления зашифрованными дисковыми разделами с поддержкой LUKS
@@ -29,6 +29,9 @@ BuildRequires: libdevmapper-devel libpopt-devel libuuid-devel
 BuildRequires: libudev-devel
 BuildRequires: python-devel
 BuildRequires: libpasswdqc-devel
+BuildRequires: libjson-c-devel >= 0.12.1-alt2
+BuildRequires: libargon2-devel
+BuildRequires: libsystemd-devel
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 
 # Need support for fixed gcrypt PBKDF2 and fixed Whirlpool hash.
@@ -37,6 +40,10 @@ BuildRequires: libgcrypt-devel  >= 1.6.1
 # Rename package from cryptsetup-luks-1.0.6-alt0.pre2 to cryptsetup-1.0.6-alt1
 Provides:  cryptsetup-luks = %version
 Obsoletes: cryptsetup-luks < %version-%release
+Provides:  cryptsetup-veritysetup = %version
+Obsoletes: cryptsetup-veritysetup
+Provides:  cryptsetup-reencrypt = %version
+Obsoletes: cryptsetup-reencrypt < %version-%release
 
 %description
 LUKS ( Linux Unified Key Setup ) is the upcoming standard for
@@ -118,24 +125,6 @@ LUKS ( Linux Unified Key Setup ) - разрабатываемый стандар
 необходим Вам  только  если Вы планируете  разрабатывать или
 компилировать какие-либо приложения с поддержкой LUKS.
 
-%package veritysetup
-Group: System/Kernel and hardware
-Summary: A utility for setting up dm-verity volumes
-Requires: lib%name = %version-%release
-
-%description veritysetup
-The veritysetup package contains a utility for setting up
-disk verification using dm-verity kernel module.
-
-%package reencrypt
-Group: System/Kernel and hardware
-Summary: A utility for offline reencryption of LUKS encrypted disks.
-Requires: lib%name = %version-%release
-
-%description reencrypt
-This package contains cryptsetup-reencrypt utility which
-can be used for offline reencryption of disk in situ.
-
 %package -n python-module-%name
 Group: Development/Python
 Summary: Python bindings for libcryptsetup
@@ -157,7 +146,14 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %build
 %autoreconf
-%configure --sbindir=%_root_sbindir --libdir=/%_lib --enable-cryptsetup-reencrypt --enable-python --enable-passwdqc=/etc/passwdqc.conf
+%configure \
+	--sbindir=%_root_sbindir \
+	--libdir=/%_lib \
+	--disable-internal-argon2 \
+	--enable-libargon2 \
+	--enable-python \
+	--enable-passwdqc=/etc/passwdqc.conf
+
 %make
 
 gcc debian/askpass.c -o debian/askpass
@@ -165,14 +161,15 @@ gcc debian/askpass.c -o debian/askpass
 %install
 %make DESTDIR=%buildroot install
 # move libcryptsetup.so to %%_libdir
-pushd %buildroot/%_lib
-rm libcryptsetup.so
-mkdir -p %buildroot/%_libdir
-ln -s ../../%_lib/$(ls libcryptsetup.so.?.?.?) %buildroot/%_libdir/libcryptsetup.so
+rm %buildroot/%_lib/libcryptsetup.so
+mkdir -p %buildroot%_libdir
+for f in %buildroot/%_lib/libcryptsetup.so.??; do
+    ln -fnrs "$f" %buildroot/%_libdir/libcryptsetup.so
+done
 mv %buildroot/%_lib/pkgconfig %buildroot/%_libdir
-popd
+
 mkdir -p %buildroot/%_sbindir
-ln -s ../../sbin/%name %buildroot/%_sbindir/%name
+ln -fnrs %buildroot/%_root_sbindir/%name %buildroot/%_sbindir/%name
 
 install -Dpm 755 debian/cryptdisks-early.init %buildroot%_sysconfdir/rc.d/scripts/cryptdisks-early
 install -Dpm 755 debian/cryptdisks.init %buildroot%_sysconfdir/rc.d/scripts/cryptdisks
@@ -191,9 +188,9 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 %doc AUTHORS FAQ README
 %doc --no-dereference COPYING COPYING.LGPL
 %doc README.ALT.utf-8
-%_root_sbindir/%name
+%_root_sbindir/*
 %_sbindir/%name
-%_man8dir/%name.*
+%_man8dir/*
 %attr(600,root,root) %config(noreplace) %_sysconfdir/sysconfig/cryptdisks
 %_sysconfdir/rc.d/scripts/cryptdisks-early
 %_sysconfdir/rc.d/scripts/cryptdisks
@@ -202,6 +199,7 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 /lib/%name/askpass
 %dir /lib/%name/checks
 /lib/%name/checks/*
+%_tmpfilesdir/cryptsetup.conf
 
 %files -n lib%name
 /%_lib/lib%name.so.*
@@ -211,19 +209,16 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 %_libdir/lib%name.so
 %_pkgconfigdir/*
 
-%files veritysetup
-%_man8dir/veritysetup.*
-%_root_sbindir/veritysetup
-
-%files reencrypt
-%_man8dir/cryptsetup-reencrypt.*
-%_root_sbindir/cryptsetup-reencrypt
-
 %files -n python-module-%name
 %python_sitelibdir/*.so
 %exclude %python_sitelibdir/*.la
 
 %changelog
+* Fri Jan 26 2018 Alexey Shabalin <shaba@altlinux.ru> 2.0.1-alt1
+- 2.0.1
+- build with system libargon2
+- merge all bynary files to main package
+
 * Mon Apr 03 2017 Michael Shigorin <mike@altlinux.org> 1.7.3-alt1.1
 - BOOTSTRAP: introduce selinux knob (on by default).
 

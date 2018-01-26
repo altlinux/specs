@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt36
+Release: alt36.1
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -168,6 +168,9 @@ EOF
 %endif
 
 %changelog
+* Mon Jan 29 2018 Alexey Shabalin <shaba@altlinux.ru> 2.5.5-alt36.1
+- rebuild with libcryptsetup.so.12
+
 * Wed Nov 02 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.5.5-alt36
 - GPT: if the requested END < our calculated START, then make END = START.
 - GPT: if after rounding END<START, then leave END unrounded.
