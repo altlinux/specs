@@ -1,7 +1,7 @@
-%def_enable session
+%def_disable session
 Name: cairo-dock
 Version: 3.4.1
-Release: alt4
+Release: alt5%ubt
 
 Summary: A light and eye-candy dock to launch your programs easily
 Summary(ru_RU.UTF-8): Приятный глазу док для простого запуска ваших программ
@@ -12,15 +12,46 @@ Url: https://launchpad.net/cairo-dock-core
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
-BuildPreReq: cmake rpm-macros-cmake
-# Automatically added by buildreq on Wed Sep 09 2015 (-bi)
-# optimized out: at-spi2-atk cmake-modules elfutils fontconfig glib-networking glib2-devel libGL-devel libX11-devel libXfixes-devel libXrender-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libdbus-devel libdbus-glib libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl libwayland-server pkg-config python-base wayland-devel xorg-compositeproto-devel xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xproto-devel
-BuildRequires: ImageMagick-tools cmake desktop-file-utils gcc-c++ libGConf libGLU-devel libXcomposite-devel libcurl-devel libdbus-glib-devel libgtk+3-devel librsvg-devel libxml2-devel
+Source1: cairo-dock-16x16.png
+Source2: cairo-dock-32x32.png
+Source3: cairo-dock-48x48.png
+
+Buildrequires(pre): rpm-build-ubt
+Buildrequires(pre): rpm-macros-cmake
+BuildRequires: cmake
+BuildRequires: desktop-file-utils
+BuildRequires: gcc-c++
+BuildRequires: pkgconfig(gconf-2.0)
+BuildRequires: pkgconfig(glu)
+BuildRequires: pkgconfig(xcomposite)
+BuildRequires: pkgconfig(libcurl)
+BuildRequires: pkgconfig(dbus-glib-1)
+BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(librsvg-2.0)
+BuildRequires: pkgconfig(libxml-2.0)
+
 %if_enabled session
-BuildRequires: libpixman-devel libXtst-devel libXrandr-devel libXdmcp-devel libwayland-egl-devel 	libharfbuzz-devel libexpat-devel libdrm-devel libXdamage-devel libXxf86vm-devel libpng-devel libXinerama-devel libXcursor-devel 	libxkbcommon-x11-devel libwayland-cursor-devel libepoxy-devel at-spi2-atk-devel libat-spi2-core-devel
+BuildRequires: pkgconfig(pixman-1)
+BuildRequires: pkgconfig(xtst)
+BuildRequires: pkgconfig(xrandr)
+BuildRequires: pkgconfig(xdmcp)
+BuildRequires: pkgconfig(wayland-egl)
+BuildRequires: pkgconfig(harfbuzz)
+BuildRequires: pkgconfig(expat)
+BuildRequires: pkgconfig(libdrm)
+BuildRequires: pkgconfig(xdamage)
+BuildRequires: pkgconfig(xxf86vm)
+BuildRequires: pkgconfig(libpng)
+BuildRequires: pkgconfig(xinerama)
+BuildRequires: pkgconfig(xcursor)
+BuildRequires: pkgconfig(xkbcommon-x11)
+BuildRequires: pkgconfig(wayland-cursor)
+BuildRequires: pkgconfig(epoxy)
+BuildRequires: pkgconfig(atk-bridge-2.0)
+BuildRequires: pkgconfig(atspi-2)
 %endif
 
-Requires: %name-data = %version
+Requires: %name-data = %EVR
 
 %description
 Cairo-dock uses cairo to render nice graphics, and Glitz to use hardware
@@ -45,7 +76,7 @@ Data files for %name
 Summary: Session for %name
 Group: Graphical desktop/Other
 BuildArch: noarch
-Requires: %name = %version
+Requires: %name = %EVR
 
 %description session
 Session for %name
@@ -54,7 +85,7 @@ Session for %name
 %package devel
 Summary: Development files for cairo-dock
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 cairo-dock uses cairo to render nice graphics, and Glitz to use hardware
@@ -68,30 +99,30 @@ This package provides the include files and library for cairo-dock functions.
 
 %build
 %cmake %{?_enable_session:-Denable-desktop-manager=ON}
-%make_build -C BUILD
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmakeinstall_std
 
 %find_lang %name
 
 mkdir -p %buildroot{%_niconsdir,%_miconsdir,%_liconsdir}
-convert data/cairo-dock.svg -resize 48x48 %buildroot%_liconsdir/%name.png
-convert data/cairo-dock.svg -resize 16x16 %buildroot%_miconsdir/%name.png
-convert data/cairo-dock.svg -resize 32x32 %buildroot%_niconsdir/%name.png
+install -m644 %SOURCE1 %buildroot%_miconsdir/%name.png
+install -m644 %SOURCE2 %buildroot%_niconsdir/%name.png
+install -m644 %SOURCE3 %buildroot%_liconsdir/%name.png
 desktop-file-install --dir %buildroot%_desktopdir \
-	--remove-category=System \
-	--add-category="GNOME;GTK;Utility;X-Desktop" \
-	%buildroot%_desktopdir/cairo-dock.desktop
+    --remove-category=System \
+    --add-category="GNOME;GTK;Utility;X-Desktop" \
+    %buildroot%_desktopdir/cairo-dock.desktop
 desktop-file-install --dir %buildroot%_desktopdir \
-	--remove-category=System \
-	--add-category="GNOME;GTK;Utility;X-Desktop" \
-	%buildroot%_desktopdir/cairo-dock-cairo.desktop
+    --remove-category=System \
+    --add-category="GNOME;GTK;Utility;X-Desktop" \
+    %buildroot%_desktopdir/cairo-dock-cairo.desktop
 
 %files -f %name.lang
 %_bindir/%name
 %_libdir/*.so.*
-%_libdir/%name/libcd-Help.so
+%_libdir/%name
 
 %files data
 %_datadir/%name
@@ -115,6 +146,11 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jan 26 2018 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt5%ubt
+- Fix FTBFS
+- Update buildrequires
+- Disabled session.
+
 * Mon May 02 2016 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt4
 - New package cairo-dock-data
 - New package cairo-dock-session.
