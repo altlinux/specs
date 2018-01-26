@@ -1,10 +1,10 @@
 %define		php7_extension	apcu
 %define 	real_name	APCu
-%define		real_version	5.1.8
+%define		real_version	5.1.9
 
 Name:	 	php7-%{php7_extension}
 Version:	%php7_version
-Release:	%php7_release.1
+Release:	%php7_release.2
 
 Summary:	PHP7 extension APCu - APC User Cache
 
@@ -75,6 +75,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php7_extconf/%php7_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php7-%version-%release
+
+* Fri Jan 26 2018 Nikolay A. Fetisov <naf@altlinux.org> 7.1.12-alt1.S1
+- New externsion version 5.1.9
 
 * Tue Jun 13 2017 Nikolay A. Fetisov <naf@altlinux.org> 7.1.6-alt1.S1
 - Initial build for ALT Linux Sisyphus
