@@ -16,7 +16,7 @@
 
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt1
+Release: alt2
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -74,6 +74,7 @@ Obsoletes: %name-lib < %version
 Summary: Header files for %name app development
 Group: Development/C
 Requires: lib%name = %version-%release
+%{?_enable_openmp:Requires: libgomp-devel} 
 Provides: %name-devel = %version
 Obsoletes: %name-devel < %version
 
@@ -235,6 +236,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Fri Jan 26 2018 Anton Farygin <rider@altlinux.ru> 6.9.9.34-alt2
+- added openmp-devel requires to libImageMagick-devel (disabled on e2k)
+
 * Wed Jan 24 2018 Anton Farygin <rider@altlinux.ru> 6.9.9.34-alt1
 - new version 6.9.9.34
 
