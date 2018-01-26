@@ -1,7 +1,8 @@
 %define _name libmbim
+%define _libexecdir %prefix/libexec
 
 Name: %_name-glib
-Version: 1.14.2
+Version: 1.16.0
 Release: alt1
 
 Summary: MBIM modem protocol helper library
@@ -63,13 +64,19 @@ This package contains development documentation for %name
 %patch -p1
 touch README ChangeLog
 
-
 %build
+%ifarch e2k
+%define more_warnings no
+%else
+%define more_warnings error
+%endif
+
 %autoreconf
 %configure \
 	--disable-static \
 	--with-udev \
-	--enable-gtk-doc
+	--enable-gtk-doc \
+	--enable-more-warnings=%more_warnings
 %make_build
 
 # Fix mbimcli name in the man page
@@ -100,6 +107,14 @@ make check
 
 
 %changelog
+* Fri Jan 26 2018 Mikhail Efremov <sem@altlinux.org> 1.16.0-alt1
+- Move mbim-proxy to %prefix/libexec.
+- Updated to 1.16.0.
+
+* Thu Jan 25 2018 Mikhail Efremov <sem@altlinux.org> 1.14.4-alt1
+- Fix build on e2k.
+- Updated to 1.14.4.
+
 * Mon Aug 14 2017 Mikhail Efremov <sem@altlinux.org> 1.14.2-alt1
 - Updated to 1.14.2.
 

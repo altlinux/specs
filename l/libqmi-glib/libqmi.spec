@@ -1,8 +1,9 @@
 %define _name libqmi
+%define _libexecdir %prefix/libexec
 
 Name: %_name-glib
-Version: 1.18.0
-Release: alt2
+Version: 1.20.0
+Release: alt1
 
 Summary: QMI modem protocol helper library
 License: %lgpl2plus
@@ -61,13 +62,20 @@ This package contains development documentation for %name
 touch README ChangeLog
 
 %build
+%ifarch e2k
+%define more_warnings no
+%else
+%define more_warnings error
+%endif
+
 %autoreconf
 %configure \
 	--disable-static \
 	--enable-mbim-qmux \
 	--enable-firmware-update \
 	--with-udev \
-	--enable-gtk-doc
+	--enable-gtk-doc \
+	--enable-more-warnings=%more_warnings
 %make_build
 
 # Fix names in the man pages
@@ -99,6 +107,14 @@ make check
 
 
 %changelog
+* Fri Jan 26 2018 Mikhail Efremov <sem@altlinux.org> 1.20.0-alt1
+- Move qmi-proxy to %prefix/libexec.
+- Updated to 1.20.0.
+
+* Thu Jan 25 2018 Mikhail Efremov <sem@altlinux.org> 1.18.2-alt1
+- Fix build on e2k.
+- Updated to 1.18.2.
+
 * Wed Apr 12 2017 Mikhail Efremov <sem@altlinux.org> 1.18.0-alt2
 - utils: drop useless g_file_test() call.
 

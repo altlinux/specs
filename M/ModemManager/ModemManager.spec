@@ -10,7 +10,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.6.12
+Version: 1.7.990
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -138,7 +138,9 @@ Requires: libmm-glib-devel = %version-%release
 	--with-udev-base-dir=/lib/udev \
 	--with-polkit \
 	--with-systemdsystemunitdir=%_unitdir \
-	--with-suspend-resume=systemd \
+	--with-systemd-suspend-resume=yes \
+	--with-systemd-journal=yes \
+	--with-udev \
 	%{subst_with qmi} \
 	%{subst_with mbim} \
 	%{subst_enable introspection} \
@@ -192,7 +194,7 @@ if [ "$1" -eq 0 ]; then
 fi
 
 %files -f %name.lang
-%doc ChangeLog NEWS AUTHORS README
+%doc NEWS AUTHORS README
 %_datadir/dbus-1/system-services/*.service
 %dir %_libdir/ModemManager/
 %_libdir/ModemManager/*.so
@@ -242,6 +244,9 @@ fi
 %endif
 
 %changelog
+* Fri Jan 26 2018 Mikhail Efremov <sem@altlinux.org> 1.7.990-alt1
+- Updated to 1.7.990 (1.8-rc1).
+
 * Mon Jan 15 2018 Mikhail Efremov <sem@altlinux.org> 1.6.12-alt1
 - Updated to 1.6.12.
 
