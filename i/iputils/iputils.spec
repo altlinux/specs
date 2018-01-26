@@ -1,7 +1,7 @@
 Name: iputils
 %define timestamp 20161105
 Version: %timestamp
-Release: alt2
+Release: alt3
 
 Summary: Utilities for IPv4/IPv6 networking
 License: %bsdstyle, %gpl2plus
@@ -14,14 +14,15 @@ Patch: %name-%version-%release.patch
 
 Conflicts: netkit-base
 
-PreReq: shadow-utils, control
+PreReq: shadow-utils
+PreReq: control >= 0.8.0-alt1
 Requires: /var/resolv
 
 BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: OpenSP docbook-style-dsssl libcap-devel perl-SGMLSpm
 BuildRequires: libsysfs-devel libssl-devel
-BuildRequires: libidn-devel
+BuildRequires: libidn2-devel
 
 %define _unpackaged_files_terminate_build 1
 
@@ -138,6 +139,12 @@ fi
 %_man8dir/ninfod.*
 
 %changelog
+* Fri Jan 26 2018 Mikhail Efremov <sem@altlinux.org> 20161105-alt3
+- Add {public,netadmin}_caps facilities (closes: #34163).
+- Patches from upstream:
+  + Use libidn2 instead of libidn.
+  + Fix ping to local IPv6 interfaces.
+
 * Thu Sep 21 2017 Mikhail Efremov <sem@altlinux.org> 20161105-alt2
 - Add /bin/* symlinks.
 
