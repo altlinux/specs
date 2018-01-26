@@ -5,81 +5,102 @@ Summary: Plugins for cairo-dock
 Summary(ru_RU.UTF-8): Плагины для cairo-dock
 Name: cairo-dock-plugins
 Version: 3.4.1
-Release: alt8
+Release: alt9%ubt
 License: GPLv3+
 Group: Graphical desktop/Other
 Packager: Anton Midyukov <antohami@altlinux.org>
 Url: https://launchpad.net/cairo-dock-plug-ins
 
-Source: cairo-dock-plug-ins-%version.tar.gz
+Source: %packagename-plug-ins-%version.tar
 Patch1: netspeed.patch
 Patch2: cairo-dock-plugins-3.4.1-time_h-confict.patch
 Patch3: cairo-dock-plugins-3.4.1-Default-to-xdg-screensaver-for-lock_screen.patch
 Patch4: cairo-dock-plugins-3.4.1-lock-screen.sh-used-xdg-screensaver-if-available.patch
 Patch5: cairo-dock-plugins-3.4.1-weather-update-URL.patch
 
-Requires: cairo-dock >= %version
-BuildPreReq: cmake rpm-macros-cmake rpm-build-python3 python3-devel
-# Automatically added by buildreq on Fri Mar 18 2016
-# optimized out: cmake-modules glib2-devel libGL-devel libGLU-devel libX11-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcurl-devel libdb4-devel libdbus-devel libdbus-glib libdbus-glib-devel libdbusmenu-devel libdbusmenu-gtk3 libgcrypt-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgnome-menus libgnutls-devel libgpg-error libgpg-error-devel libgtk+3-devel libindicator-gtk3 libjavascriptcoregtk3-devel liblockfile-devel libpango-devel librsvg-devel libsasl2-3 libsasl2-devel libsoup-devel libstdc++-devel libwayland-client libwayland-client-devel libxml2-devel pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email python3 vala xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: cairo-dock-devel cmake gcc-c++ libXrandr-devel libXxf86vm-devel libalsa-devel libdbusmenu-gtk3-devel libetpan-devel libexif-devel libfftw3-devel libgnome-menus-devel libical-devel libindicator-gtk3-devel libpulseaudio-devel libsensors3-devel libupower-devel libvte3-devel libwebkitgtk3-devel libxklavier-devel libzeitgeist2.0-devel lsb-release python3-base
+Buildrequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: libetpan-devel
+BuildRequires: libsensors3-devel
+BuildRequires: libvte3-devel
+BuildRequires: lsb-release
+BuildRequires: python3-base
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(xrandr)
+BuildRequires: pkgconfig(xxf86vm)
+BuildRequires: pkgconfig(dbusmenu-gtk3-0.4)
+BuildRequires: pkgconfig(libexif)
+BuildRequires: pkgconfig(fftw3f)
+BuildRequires: pkgconfig(libgnome-menu-3.0)
+BuildRequires: pkgconfig(libical)
+BuildRequires: pkgconfig(indicator3-0.4)
+BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(upower-glib)
+BuildRequires: pkgconfig(webkitgtk-3.0)
+BuildRequires: pkgconfig(libxklavier)
+BuildRequires: pkgconfig(zeitgeist-2.0)
 BuildRequires: cairo-dock-devel >= %version
-Requires: %packagename-common
-Requires: %packagename-clock
-Requires: %packagename-composite-manager
-Requires: %packagename-dustbin
-Requires: %packagename-logout
-Requires: %packagename-rendering
-Requires: %packagename-musicplayer
-Requires: %packagename-scooby-do
-Requires: %packagename-terminal
-Requires: %packagename-powermanager
-Requires: %packagename-shortcuts
-Requires: %packagename-systray
-Requires: %packagename-weather
-Requires: %packagename-xgamma
-Requires: %packagename-alsamixer
-Requires: %packagename-cairo-penguin
-Requires: %packagename-tomboy
-Requires: %packagename-wifi
-Requires: %packagename-netspeed
-Requires: %packagename-switcher
-Requires: %packagename-dbus
-Requires: %packagename-showdesktop
-Requires: %packagename-slider
-Requires: %packagename-stack
-Requires: %packagename-clipper
-Requires: %packagename-animated-icons
-Requires: %packagename-desklet-rendering
-Requires: %packagename-dialog-rendering
-Requires: %packagename-disks
-Requires: %packagename-drop_indicator
-Requires: %packagename-icon-effect
-Requires: %packagename-illusion
-Requires: %packagename-impulse
-Requires: %packagename-motion_blur
-Requires: %packagename-quick-browser
-Requires: %packagename-show_mouse
-Requires: %packagename-toons
-Requires: %packagename-keyboard-indicator
-Requires: %packagename-weblets
-Requires: %packagename-network-monitor
-Requires: %packagename-system-monitor
-Requires: %packagename-mail
-Requires: %packagename-dnd2share
-Requires: %packagename-rssreader
-Requires: %packagename-folders
-Requires: %packagename-Screenshot
-Requires: %packagename-Sound-Effects
-Requires: %packagename-Global-Menu
-Requires: %packagename-GMenu
-Requires: %packagename-Indicator-Generic
-Requires: %packagename-Messaging-Menu
-Requires: %packagename-Recent-Events
-Requires: %packagename-Status-Notifier
-Requires: %packagename-launcher-API-daemon
-Requires: %packagename-doncky
-Requires: %packagename-remote-control
+Requires: cairo-dock >= %version
+Requires: %packagename-common = %EVR
+Requires: %packagename-clock = %EVR
+Requires: %packagename-composite-manager = %EVR
+Requires: %packagename-dustbin = %EVR
+Requires: %packagename-logout = %EVR
+Requires: %packagename-rendering = %EVR
+Requires: %packagename-musicplayer = %EVR
+Requires: %packagename-scooby-do = %EVR
+Requires: %packagename-terminal = %EVR
+Requires: %packagename-powermanager = %EVR
+Requires: %packagename-shortcuts = %EVR
+Requires: %packagename-systray = %EVR
+Requires: %packagename-weather = %EVR
+Requires: %packagename-xgamma = %EVR
+Requires: %packagename-alsamixer = %EVR
+Requires: %packagename-cairo-penguin = %EVR
+Requires: %packagename-tomboy = %EVR
+Requires: %packagename-wifi = %EVR
+Requires: %packagename-netspeed = %EVR
+Requires: %packagename-switcher = %EVR
+Requires: %packagename-dbus = %EVR
+Requires: %packagename-showdesktop = %EVR
+Requires: %packagename-slider = %EVR
+Requires: %packagename-stack = %EVR
+Requires: %packagename-clipper = %EVR
+Requires: %packagename-animated-icons = %EVR
+Requires: %packagename-desklet-rendering = %EVR
+Requires: %packagename-dialog-rendering = %EVR
+Requires: %packagename-disks = %EVR
+Requires: %packagename-drop_indicator = %EVR
+Requires: %packagename-icon-effect = %EVR
+Requires: %packagename-illusion = %EVR
+Requires: %packagename-impulse = %EVR
+Requires: %packagename-motion_blur = %EVR
+Requires: %packagename-quick-browser = %EVR
+Requires: %packagename-show_mouse = %EVR
+Requires: %packagename-toons = %EVR
+Requires: %packagename-keyboard-indicator = %EVR
+Requires: %packagename-weblets = %EVR
+Requires: %packagename-network-monitor = %EVR
+Requires: %packagename-system-monitor = %EVR
+Requires: %packagename-mail = %EVR
+Requires: %packagename-dnd2share = %EVR
+Requires: %packagename-rssreader = %EVR
+Requires: %packagename-folders = %EVR
+Requires: %packagename-Screenshot = %EVR
+Requires: %packagename-Sound-Effects = %EVR
+Requires: %packagename-Global-Menu = %EVR
+Requires: %packagename-GMenu = %EVR
+Requires: %packagename-Indicator-Generic = %EVR
+Requires: %packagename-Messaging-Menu = %EVR
+Requires: %packagename-Recent-Events = %EVR
+Requires: %packagename-Status-Notifier = %EVR
+Requires: %packagename-launcher-API-daemon = %EVR
+Requires: %packagename-doncky = %EVR
+Requires: %packagename-remote-control = %EVR
 
 %description
 cairo-dock uses cairo to render nice graphics, and Glitz to use hardware
@@ -116,7 +137,7 @@ This plug-in provides many different animations for your icons.
 Summary: That package provides plugin "Animated icons"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-animated-icons
 This plug-in provides many different animations for your icons.
@@ -130,7 +151,7 @@ This plug-in provides many different animations for your icons.
 Summary: That package provides plugin "clock"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-clock
 Display rime and date in your dock with the clock applet!
@@ -148,7 +169,7 @@ allow you to setup time and date.
 Summary: That package provides plugin "Composite-Manager"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-composite-manager
 This applet allows you to toggle the composite ON/OFF.
@@ -165,7 +186,7 @@ The applet also lets you acces to some actions of the Window-Manager.
 Summary: That package provides plugin "desklet-rendering"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-desklet-rendering
 This module provides different views for your desklets.
@@ -179,7 +200,7 @@ This module provides different views for your desklets.
 Summary: That package provides plugin "dialog-rendering"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-dialog-rendering
 This plug-in provides some dialog decorators for dialog bubbles.
@@ -193,7 +214,7 @@ This plug-in provides some dialog decorators for dialog bubbles.
 Summary: That package provides plugin "Disks"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-disks
 Monitors disks speed and space.
@@ -209,7 +230,7 @@ once, but they're better separated in 2 or more instances of the applet.
 Summary: That package provides plugin "drop_indicator"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-drop_indicator
 This plug-in displays an animated indicator when you drop something in the dock.
@@ -223,7 +244,7 @@ This plug-in displays an animated indicator when you drop something in the dock.
 Summary: That package provides plugin "dustbin"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-dustbin
 Manage your disks space with this trash applet!
@@ -241,7 +262,7 @@ and display usefull info about your dustbins.
 Summary: That package provides plugin "icon-effect"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-icon-effect
 This plug-in adds many special effects to your icons.
@@ -255,7 +276,7 @@ This plug-in adds many special effects to your icons.
 Summary: That package provides plugin "illusion"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-illusion
 This plug-in provides animations for appearance & disappearance of icons.
@@ -269,7 +290,7 @@ This plug-in provides animations for appearance & disappearance of icons.
 Summary: That package provides plugin "Impulse"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-impulse
 Did you know that your dock can dance? :)
@@ -286,7 +307,7 @@ It will analyse the signal given by PulseAudio.
 Summary: That package provides plugin "logout"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-logout
 A very simple applet that adds an icon to log out
@@ -301,7 +322,7 @@ from your session.
 Summary: That package provides plugin "motion_blur"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-motion_blur
 This plug-in adds a motion blur effect on docks.
@@ -315,7 +336,7 @@ This plug-in adds a motion blur effect on docks.
 Summary: That package provides plugin "quick-browser"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-quick-browser
 This applet lets you browse a folder and its sub-folders very quickly.
@@ -333,7 +354,7 @@ different folders.
 Summary: That package provides plugin "rendering"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-rendering
 This module adds different views to your dock.
@@ -350,7 +371,7 @@ Parabolic and Rainbow views are provided
 Summary: That package provides plugin "musicPlayer"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-musicplayer
 Control your Rhythmbox player directly in the dock!
@@ -365,7 +386,7 @@ Play/pause with left click, next song with middle click.
 Summary: That package provides plugin "Scooby-Do"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-scooby-do
 This plug-in allows you to make different actions directly from the keyboard.
@@ -390,7 +411,7 @@ Escape or the same shortkey will cancel.
 Summary: That package provides plugin "terminal"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-terminal
 Add a terminal to your dock!
@@ -406,7 +427,7 @@ and select an action
 Summary: That package provides a powermanager plugins
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-powermanager
 A power manager for laptop's battery
@@ -421,7 +442,7 @@ It works with ACPI and DBus.
 Summary: That package provides a shortcuts plugins
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-shortcuts
 An applets thatlet you acces quickly to all of your shortcuts.
@@ -438,7 +459,7 @@ don't have Nautilus. Middle-click to acces your desktop easily
 Summary: That package provides plugin "show_mouse"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-show_mouse
 This plug-in draw some animation around the cursor when it's inside a dock
@@ -453,7 +474,7 @@ desklet.
 Summary: That package provides a systray plugins
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-systray
 Add a systray to your dock!
@@ -467,7 +488,7 @@ Add a systray to your dock!
 Summary: That package provides plugin "toons"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-toons
 This plug-in draw some animation around the cursor when it's inside a dock
@@ -482,7 +503,7 @@ desklet.
 Summary: That package provides a weather plugins
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-weather
 This applet displyas weather into your dock.
@@ -499,7 +520,7 @@ the icons. Data are provided by www.weather.com
 Summary: That package provides a Xgamma plugins
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-xgamma
 Setup the gama of your screen directly from the dock.
@@ -515,7 +536,7 @@ left click, or more accurately with middle click.
 Summary: That package provides a alsaMixer plugins
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-alsamixer
 This applet let you set up the sound volume from the dock.
@@ -533,7 +554,7 @@ the Alsa sound drivers.
 Summary: That package provides a Cairo-Penguin plugins
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-cairo-penguin
 Add a lively Penguin in your dock! Left click to change animation,
@@ -549,7 +570,7 @@ Images are from Pingus, Inspiration is from xpenguins.
 Summary: That package provides a slider plugins
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-slider
 The slider applet is a basic image slider.
@@ -563,7 +584,7 @@ The slider applet is a basic image slider.
 Summary: That package provides a stack plugins
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-stack
 This applet allows you to build a stack of items, just like the Stack
@@ -579,7 +600,7 @@ text.
 Summary: That package provides a wifi plugins
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-wifi
 The wifi applet show you the signal strenght of
@@ -594,7 +615,7 @@ the first active connection.
 Summary: That package provides a tomboy plugins
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-tomboy
 Control your TomBoy's notes directly in the dock!
@@ -608,7 +629,7 @@ Control your TomBoy's notes directly in the dock!
 Summary: That package provides a netspeed plugins
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-netspeed
 the netspeed applet show you the bit rate of your internet connection
@@ -623,7 +644,7 @@ and make some stats on it.
 Summary: That package provides a switcher plugins
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-switcher
 The new and soon wonderful switcher applet
@@ -637,7 +658,7 @@ The new and soon wonderful switcher applet
 Summary: That package provides a Dbus plugins
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-dbus
 This plug-in lets extern pllication interact on the dock.
@@ -652,7 +673,7 @@ The communication between both sides is based on Dbus.
 Summary: That package provides a showDesktop plugins
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-showdesktop
 This applet let you acces quickly to your desktop.
@@ -666,7 +687,7 @@ This applet let you acces quickly to your desktop.
 Summary: That package provides a gnome-integration plugins
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-gnome-integration
 This applet provides functions for a better integration into GNOME.
@@ -680,7 +701,7 @@ This applet provides functions for a better integration into GNOME.
 Summary: That package provides a kde-integration plugins
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-kde-integration
 This applet provides functions for a better integration into KDE.
@@ -694,7 +715,7 @@ This applet provides functions for a better integration into KDE.
 Summary: That package provides a xfce-integration plugins
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-xfce-integration
 This applet provides functions for a better integration into XFCE.
@@ -708,7 +729,7 @@ This applet provides functions for a better integration into XFCE.
 Summary: That package provides plugin "clipper"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-clipper
 This applet keeps a trace of the clipboard and mouse selection, so that
@@ -737,7 +758,7 @@ This applet lets you control the keyboard layout.
 Summary: That package provides plugin "weblets"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-weblets
 The weblets applet allows you to show an interactive web page on your desktop.
@@ -752,7 +773,7 @@ The weblets applet allows you to show an interactive web page on your desktop.
 Summary: That package provides plugin "Network-Monitor"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-network-monitor
 This applet shows you a monitor of your active connections.
@@ -767,7 +788,7 @@ This applet shows you a monitor of your active connections.
 Summary: That package provides plugin "System-monitor"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-system-monitor
 This applet shows you the CPU load, RAM usage, graphic card temperature, etc.
@@ -782,7 +803,7 @@ This applet shows you the CPU load, RAM usage, graphic card temperature, etc.
 Summary: That package provides plugin "mail"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-mail
 This applet is very useful to warn you when you get new e-mails.
@@ -798,7 +819,7 @@ It can check in any kind of mailbox (yahoo, gmail, etc).
 Summary: That package provides plugin "dnd2share"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 Requires: curl wget
 
 %description -n %packagename-dnd2share
@@ -817,7 +838,7 @@ You can upload text, image, video, and files.
 Summary: That package provides plugin "RSSreader"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-rssreader
 This applet is an RSS/Atom feed reader
@@ -832,7 +853,7 @@ This applet is an RSS/Atom feed reader
 Summary: That package provides plugin "Folders"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-folders
 This applet imports folders inside the Dock
@@ -847,7 +868,7 @@ This applet imports folders inside the Dock
 Summary: That package provides plugin "Remote-Control"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-remote-control
 This plug-in lets you control your dock from the keyboard or even a remote controller.
@@ -862,7 +883,7 @@ This plug-in lets you control your dock from the keyboard or even a remote contr
 Summary: That package provides plugin "Doncky"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-doncky
 This applet allows you to write texts and monitor your system with a "text style desklet".
@@ -877,7 +898,7 @@ This applet allows you to write texts and monitor your system with a "text style
 Summary: That package provides plugin "Screenshot"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-Screenshot
 This applet allows you to create screenshots of your screen.
@@ -892,7 +913,7 @@ This applet allows you to create screenshots of your screen.
 Summary: That package provides plugin "Sound-Effects"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-Sound-Effects
 This applet allows you to adjust sound notifications.
@@ -907,7 +928,7 @@ This applet allows you to adjust sound notifications.
 Summary: That package provides plugin "GMenu"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-GMenu
 This applet allows you to adjust gmenu.
@@ -922,7 +943,7 @@ This applet allows you to adjust gmenu.
 Summary: That package provides plugin "Global-Menu"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-Global-Menu
 This applet allows you to adjust global menu.
@@ -938,7 +959,7 @@ This applet allows you to adjust global menu.
 Summary: That package provides plugin "Indicator-Generic"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-Indicator-Generic
 This applet allows you to adjust indicator generic.
@@ -953,7 +974,7 @@ This applet allows you to adjust indicator generic.
 Summary: That package provides plugin "Messaging-Menu"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-Messaging-Menu
 This applet allows you to adjust messaging menu.
@@ -968,7 +989,7 @@ This applet allows you to adjust messaging menu.
 Summary: That package provides plugin "Recent-Events"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-Recent-Events
 This applet allows you to adjust recent events.
@@ -983,7 +1004,7 @@ This applet allows you to adjust recent events.
 Summary: That package provides plugin "Status-Notifier"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-Status-Notifier
 This applet allows you to adjust status notifier.
@@ -999,7 +1020,7 @@ This applet allows you to adjust status notifier.
 Summary: That package provides plugin "launcher-API-daemon"
 Group: Graphical desktop/Other
 Requires: %packagename = %version
-Requires: %packagename-common
+Requires: %packagename-common = %EVR
 
 %description -n %packagename-launcher-API-daemon
 This applet allows you to adjust status notifier.
@@ -1013,8 +1034,8 @@ This applet allows you to adjust status notifier.
 Summary: Python2 binding for Cairo-Dock
 Group:Development/Python
 Requires: %packagename = %version
-Requires: %packagename-common
-Requires: %packagename-dbus = %version
+Requires: %packagename-common = %EVR
+Requires: %packagename-dbus = %EVR
 BuildArch: noarch
 
 %description -n python-module-cairo-dock
@@ -1031,9 +1052,9 @@ This package contains Python2 binding files for Cairo-Dock
 %package -n python3-module-cairo-dock
 Summary: Python3 binding for Cairo-Dock
 Group:Development/Python3
-Requires: %packagename
-Requires: %packagename-common = %version
-Requires: %packagename-dbus = %version
+Requires: %packagename = %version
+Requires: %packagename-common = %EVR
+Requires: %packagename-dbus = %EVR
 BuildArch: noarch
 
 %description -n python3-module-cairo-dock
@@ -1052,8 +1073,8 @@ This package contains Python3 binding files for Cairo-Dock
 Summary: Vala binding for Cairo-Dock
 Group: Development/Other
 Requires: %packagename = %version
-Requires: %packagename-common
-Requires: %packagename-dbus
+Requires: %packagename-common = %EVR
+Requires: %packagename-dbus = %EVR
 Requires: vala
 
 %description -n cairo-dock-vala
@@ -1068,8 +1089,8 @@ This package contains Vala binding files for Cairo-Dock
 Summary: Development files for Vala binding for Cairo-Dock
 Group: Development/Other
 Requires: %packagename = %version
-Requires: %packagename-common
-Requires: cairo-dock-vala
+Requires: %packagename-common = %EVR
+Requires: %packagename-vala = %EVR
 
 %description -n cairo-dock-vala-devel
 This package contains development files for Vala
@@ -1082,7 +1103,7 @@ binding for Cairo-Dock.
 #---------------------------------------------------------------------
 
 %prep
-%setup -n cairo-dock-plug-ins-%version
+%setup -n %packagename-plug-ins-%version
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -1092,21 +1113,24 @@ binding for Cairo-Dock.
 %build
 # Need dbusmenu-* for extra plugins
 %cmake \
-	-Denable-disks=yes \
-	-Denable-doncky=yes \
-	-Denable-network-monitor=yes \
-	-Denable-old-gnome-integration=no \
-	-Denable-scooby-do=yes \
-	-Denable-global-menu=yes
+    -Denable-disks=yes \
+    -Denable-doncky=yes \
+    -Denable-network-monitor=yes \
+    -Denable-old-gnome-integration=no \
+    -Denable-scooby-do=yes \
+    -Denable-global-menu=yes
 
-%make_build -C BUILD
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmakeinstall_std
 
 %find_lang %name
 
 %changelog
+* Fri Jan 26 2018 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt9%ubt
+- Update buildrequires
+
 * Tue Jul 25 2017 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt8
 - Rebuilt without mono-mcs.
 
