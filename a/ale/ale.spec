@@ -1,6 +1,6 @@
 Name: ale
 Version: 0.9.0.3
-Release: alt7
+Release: alt8
 
 Summary: Combining multiple inputs representing the same scene
 License: GPLv3+
@@ -13,6 +13,7 @@ Patch1: alt-0.9.0.3-debian-fix-string-issue.patch
 
 # Automatically added by buildreq on Tue Mar 08 2011
 BuildRequires: bzlib-devel fontconfig-devel gcc-c++ libGraphicsMagick-devel libImageMagick-devel libXext-devel libXt-devel libfftw3-devel libfreetype-devel libjpeg-devel liblcms-devel liblqr-devel libtiff-devel zlib-devel
+BuildRequires: libgomp-devel
 
 %description
 ALE (Anti-Lamenessing Engine) is an image-processing program used for
@@ -38,6 +39,9 @@ capture: combining multiple inputs representing the same scene.
 %_man1dir/*
 
 %changelog
+* Fri Jan 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.0.3-alt8
+- Updated build dependencies.
+
 * Thu Aug 17 2017 Anton Farygin <rider@altlinux.ru> 0.9.0.3-alt7
 - rebuild with new ImageMagick
 - add patch from debian with fixes for fprintf
