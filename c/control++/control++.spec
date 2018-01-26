@@ -1,10 +1,11 @@
 Name: control++
-Version: 0.4.2
+Version: 0.5.1
 Release: alt1
 
 Summary: System configuration tool
 License: GPLv3
 Group: System/Configuration/Other
+Url: https://www.altlinux.org/Control%2B%2B
 
 Packager: Alexey Appolonov <alexey@altlinux.org>
 
@@ -42,6 +43,13 @@ cp usage.txt %buildroot%_defaultdocdir/%name/
 %_defaultdocdir/%name/
 
 %changelog
+* Fri Jan 26 2018 Alexey Appolonov <alexey@altlinux.org> 0.5.1-alt1
+- Code restyling.
+- Minor changes in units handling.
+
+* Mon Dec 11 2017 Alexey Appolonov <alexey@altlinux.org> 0.5.0-alt1
+- New unit, that runs script stated in configuration file.
+
 * Mon Dec 4 2017 Alexey Appolonov <alexey@altlinux.org> 0.4.2-alt1
 - Handling of values in quotes in configuration files.
 - Verbose output with -v param when setting mode.
