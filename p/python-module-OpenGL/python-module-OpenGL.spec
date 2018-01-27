@@ -3,19 +3,17 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.1.0
-Release: alt2.1.1
+Version: 3.1.1a1
+Release: alt1%ubt
 
 Summary: A Python module for interfacing with the OpenGL library
-Summary(ru_RU.KOI8-R): Расширение языка Python для работы с библиотекой OpenGL
+Summary(ru_RU.UTF-8): п═п╟я│я┬п╦я─п╣п╫п╦п╣ я▐п╥я▀п╨п╟ Python п╢п╩я▐ я─п╟п╠п╬я┌я▀ я│ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╬п╧ OpenGL
 
 Group: Development/Python
 License: see license.txt
 Url: http://pyopengl.sourceforge.net
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: PyOpenGL-%version.tar.gz
+Source: PyOpenGL-%version.tar
 Patch: PyOpenGL-swig.patch
 Patch1: %name.patch
 
@@ -26,11 +24,11 @@ BuildArch: noarch
 #add_python_req_skip WGL__init__
 %py_requires OpenGL_accelerate
 
+BuildRequires(pre): rpm-build-ubt
 BuildPreReq: python-module-setuptools python-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-setuptools python3-devel
-BuildPreReq: python-tools-2to3
 %endif
 
 %description
@@ -41,6 +39,7 @@ GLU, WGL, GLUT, GLE, and Tk
 Summary: A Python module for interfacing with the OpenGL library
 Group: Development/Python3
 %py3_requires OpenGL_accelerate
+%add_python3_req_skip OpenGL.GLES3.OES
 
 %description -n python3-module-%oname
 OpenGL bindings for Python including support for GL extensions,
@@ -49,7 +48,7 @@ GLU, WGL, GLUT, GLE, and Tk
 %package -n python3-module-%oname-tests
 Summary: PyOpenGL tests
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
+Requires: python3-module-%oname =  %EVR
 %add_python3_req_skip pygame
 
 %description -n python3-module-%oname-tests
@@ -58,7 +57,7 @@ PyOpenGL tests.
 %package demo
 Summary: PyOpenGL demo files
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 %add_python_req_skip items win32ui
 
 %description demo
@@ -67,7 +66,7 @@ Demo for PyOpenGL
 %package doc
 Summary: PyOpenGL documentation
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description doc
 PyOpenGL documentation
@@ -75,21 +74,39 @@ PyOpenGL documentation
 %package tests
 Summary: PyOpenGL tests
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 PyOpenGL tests.
 
+%package tk
+Summary: %oname Python 2.x Tk widget
+Group: Development/Python
+Requires: %name = %EVR
+%py_requires tkinter
+
+%description tk
+%oname Togl (Tk OpenGL widget) 1.6 support for Python 2.x.
+
+%package -n python3-module-%oname-tk
+Summary: %oname Python 3.x Tk widget
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+%py3_requires tkinter
+
+%description -n python3-module-%oname-tk
+%oname Togl (Tk OpenGL widget) 1.6 support for Python 3.x.
+
 %prep
 %setup -n PyOpenGL-%version
 
+find tests/ -type f -name '*.py' -exec \
+	sed -i 's|#! %_bindir/env python|#!%_bindir/python|' '{}' +
 %if_with python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec \
+find ../python3/tests -type f -name '*.py' -exec \
 	sed -i 's|#!%_bindir/python|#!%_bindir/python3|' '{}' +
-find ../python3 -type f -name '*.py' -exec \
-	sed -i 's|#! %_bindir/env python|#!%_bindir/python3|' '{}' +
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+find ../python3/tests -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -118,21 +135,33 @@ popd
 %python_sitelibdir/*.egg-info
 %python_sitelibdir/%modulename/
 %exclude %python_sitelibdir/%modulename/tests
+%exclude %python_sitelibdir/OpenGL/Tk
 
 %files tests
 %python_sitelibdir/%modulename/tests
+
+%files tk
+%python_sitelibdir/OpenGL/Tk
 
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*.egg-info
 %python3_sitelibdir/%modulename/
 %exclude %python3_sitelibdir/%modulename/tests
+%exclude %python3_sitelibdir/OpenGL/Tk
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%modulename/tests
+
+%files -n python3-module-%oname-tk
+%python3_sitelibdir/OpenGL/Tk
 %endif
 
 %changelog
+* Sat Jan 27 2018 Anton Midyukov <antohami@altlinux.org> 3.1.1a1-alt1%ubt
+- New version 3.1.1a1 (Closes: 34485)
+- New subpackages python-module-tk and python3-module-tk
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.1.0-alt2.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
