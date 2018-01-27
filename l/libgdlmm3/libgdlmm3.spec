@@ -1,7 +1,7 @@
 %define _name gdlmm
 %define ver_major 3.7
 %define api_ver 3.0
-%def_disable snapshot
+%def_enable snapshot
 %def_enable doc
 
 %if_enabled snapshot
@@ -10,15 +10,18 @@
 
 Name: lib%{_name}3
 Version: %ver_major.3
-Release: alt2
+Release: alt3
 
 Summary: C++ bindings for the gdl library
 Group: System/Libraries
 License: LGPLv2+
 Url: http://www.gtkmm.org/
 
-#Source: %_name-%version.tar
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
 Patch: gdlmm-3.7.3-cxx11.patch
 
 BuildRequires: gcc-c++ mm-common >= 0.9.8
@@ -83,6 +86,9 @@ mm-common-prepare
 %endif
 
 %changelog
+* Sat Jan 27 2018 Yuri N. Sedunov <aris@altlinux.org> 3.7.3-alt3
+- updated to gdlmm-3.7.3-1-gbc271a7
+
 * Wed Sep 30 2015 Yuri N. Sedunov <aris@altlinux.org> 3.7.3-alt2
 - rebuilt with newer *mm libraries
 
