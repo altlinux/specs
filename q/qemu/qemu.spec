@@ -33,6 +33,7 @@
 %def_enable vnc_sasl
 %def_enable vnc_jpeg
 %def_enable vnc_png
+%def_enable xkbcommon
 %def_enable vde
 %def_enable alsa
 %def_enable pulseaudio
@@ -219,7 +220,7 @@
 
 Name: qemu
 Version: 2.11.0
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -232,9 +233,13 @@ Source2: qemu-kvm.control.in
 Source4: qemu-kvm.rules
 # qemu-kvm back compat wrapper
 Source5: qemu-kvm.sh
+# guest agent service
 Source8: qemu-guest-agent.rules
 Source9: qemu-guest-agent.service
 Source10: qemu-guest-agent.init
+Source11: qemu-ga.sysconfig
+# /etc/qemu/bridge.conf
+Source12: bridge.conf
 # PR manager service
 Source14: qemu-pr-helper.service
 Source15: qemu-pr-helper.socket
@@ -267,6 +272,7 @@ BuildRequires: libpcre-devel-static
 %{?_enable_vnc_sasl:BuildRequires: libsasl2-devel}
 %{?_enable_vnc_jpeg:BuildRequires: libjpeg-devel}
 %{?_enable_vnc_png:BuildRequires: libpng-devel}
+%{?_enable_xkbcommon:BuildRequires: libxkbcommon-devel}
 %{?_enable_vde:BuildRequires: libvde-devel}
 %{?_enable_aio:BuildRequires: libaio-devel}
 %{?_enable_spice:BuildRequires: libspice-server-devel >= 0.12.0 spice-protocol >= 0.12.3}
@@ -353,6 +359,7 @@ This package contains common files for qemu.
 Summary: QEMU CPU Emulator - full system emulation
 Group: Emulators
 Requires: %name-common = %EVR
+Requires: %name-tools = %EVR
 Conflicts: %name-img < %EVR
 
 %{?_with_alpha:Requires: %name-system-alpha = %EVR}
@@ -468,6 +475,17 @@ Requires: %name-aux = %EVR
 
 %description img
 This package provides a command line tool for manipulating disk images
+
+%package tools
+Summary: Tools for QEMU
+Group: Emulators
+Requires: %name-img = %EVR
+Requires: %name-aux = %EVR
+Conflicts: %name-system < 2.11.0-alt2
+
+%description tools
+This package contains various QEMU related tools, including a bridge helper,
+a virtfs helper.
 
 %package  block-curl
 Summary: QEMU CURL block driver
@@ -1153,6 +1171,7 @@ find -regex '.*linux-user/qemu.*' -perm 755 -exec mv '{}' '{}'.static ';'
 	%{?_disable_vnc_sasl:--disable-vnc-sasl} \
 	%{?_disable_vnc_jpeg:--disable-vnc-jpeg} \
 	%{?_disable_vnc_png:--disable-vnc-png} \
+	%{?_disable_xkbcommon:--disable-xkbcommon} \
 	%{?_disable_vde:--disable-vde} \
 	%{?_disable_aio:--disable-linux-aio} \
 	%{?_disable_blobs: --disable-blobs} \
@@ -1230,13 +1249,22 @@ rm -f %buildroot%_sysconfdir/udev/rules.d/*
 install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/udev/rules.d/%rulenum-%name-kvm.rules
 install -D -m 0755 %name-kvm.control.in %buildroot%_controldir/kvm
 
-install -D -m 0644 %SOURCE8 %buildroot/lib/udev/rules.d/%rulenum-%name-guest-agent.rules
+# Install qemu-guest-agent service and udev rules
+install -D -m 0644 %SOURCE8 %buildroot%_udevrulesdir/%rulenum-%name-guest-agent.rules
 install -D -m 0644 %SOURCE9 %buildroot%_unitdir/%name-guest-agent.service
 install -D -m 0755 %SOURCE10 %buildroot%_initdir/%name-guest-agent
+install -D -m 0644 %SOURCE11 %buildroot%_sysconfdir/sysconfig/qemu-ga
+mkdir -p %buildroot%_sysconfdir/%name/fsfreeze-hook.d
+install -D -m 0755 scripts/qemu-guest-agent/fsfreeze-hook %buildroot%_sysconfdir/%name/
+install -D -m 0644 scripts/qemu-guest-agent/fsfreeze-hook.d/*.sample %buildroot%_sysconfdir/%name/fsfreeze-hook.d/
+mkdir -p %buildroot%_logdir
+touch %buildroot%_logdir/qga-fsfreeze-hook.log
 
 # Install qemu-pr-helper service
 install -m 0644 %SOURCE14 %buildroot%_unitdir/qemu-pr-helper.service
 install -m 0644 %SOURCE15 %buildroot%_unitdir/qemu-pr-helper.socket
+# Install rules to use the bridge helper with libvirt's virbr0
+install -m 0644 %SOURCE12 %buildroot%_sysconfdir/%name
 
 %if_enabled vnc_sasl
 install -D -p -m 0644 qemu.sasl %buildroot%_sysconfdir/sasl2/%name.conf
@@ -1275,7 +1303,7 @@ done
 
 ln -r -s %buildroot%_datadir/seabios/{bios,bios-256k}.bin %buildroot%_datadir/%name/
 
-mkdir -p %buildroot/lib/binfmt.d
+mkdir -p %buildroot%_binfmtdir
 for i in dummy \
 %ifnarch %ix86 x86_64
     qemu-i386 \
@@ -1320,14 +1348,14 @@ for i in dummy \
 ; do
   test $i = dummy && continue
 
-  grep /$i:\$ %SOURCE1 > %buildroot/lib/binfmt.d/$i-dynamic.conf
-  chmod 644 %buildroot/lib/binfmt.d/$i-dynamic.conf
+  grep /$i:\$ %SOURCE1 > %buildroot%_binfmtdir/$i-dynamic.conf
+  chmod 644 %buildroot%_binfmtdir/$i-dynamic.conf
 
 %if user_static
-  grep /$i:\$ %SOURCE1 | tr -d '\n' > %buildroot/lib/binfmt.d/$i-static.conf
-  echo "F" >> %buildroot/lib/binfmt.d/$i-static.conf
-  perl -i -p -e "s/$i:F/$i-static:F/" %buildroot/lib/binfmt.d/$i-static.conf
-  chmod 644 %buildroot/lib/binfmt.d/$i-static.conf
+  grep /$i:\$ %SOURCE1 | tr -d '\n' > %buildroot%_binfmtdir/$i-static.conf
+  echo "F" >> %buildroot%_binfmtdir/$i-static.conf
+  perl -i -p -e "s/$i:F/$i-static:F/" %buildroot%_binfmtdir/$i-static.conf
+  chmod 644 %buildroot%_binfmtdir/$i-static.conf
 %endif
 
 done < %SOURCE1
@@ -1381,14 +1409,6 @@ fi
 %_man7dir/qemu-qmp-ref.*
 
 %files system -f %name.lang
-%_bindir/virtfs-proxy-helper
-%_man1dir/virtfs-proxy-helper.*
-%attr(4710,root,vmusers) %_libexecdir/qemu-bridge-helper
-%if_enabled mpath
-%_bindir/qemu-pr-helper
-%_unitdir/qemu-pr-helper.service
-%_unitdir/qemu-pr-helper.socket
-%endif
 
 %if_enabled have_kvm
 %files kvm
@@ -1409,16 +1429,17 @@ fi
 %exclude %_bindir/qemu-io
 %exclude %_bindir/qemu-nbd
 %exclude %_bindir/qemu-ga
+%exclude %_bindir/qemu-keymap
 
 %files user-binfmt
-/lib/binfmt.d/qemu-*-dynamic.conf
+%_binfmtdir/qemu-*-dynamic.conf
 
 %if_enabled user_static
 %files user-static
 %_bindir/qemu-*.static
 
 %files user-static-binfmt
-/lib/binfmt.d/qemu-*-static.conf
+%_binfmtdir/qemu-*-static.conf
 %endif
 
 %files img
@@ -1427,6 +1448,18 @@ fi
 %_bindir/qemu-nbd
 %_man1dir/qemu-img.1*
 %_man8dir/qemu-nbd.8*
+
+%files tools
+%_bindir/virtfs-proxy-helper
+%_man1dir/virtfs-proxy-helper.*
+%attr(4710,root,vmusers) %_libexecdir/qemu-bridge-helper
+%if_enabled mpath
+%_bindir/qemu-pr-helper
+%_unitdir/qemu-pr-helper.service
+%_unitdir/qemu-pr-helper.socket
+%endif
+%_bindir/qemu-keymap
+%config(noreplace) %_sysconfdir/%name/bridge.conf
 
 %files block-curl
 %_libdir/qemu/block-curl.so
@@ -1448,15 +1481,21 @@ fi
 %files guest-agent
 %_bindir/qemu-ga
 %_man8dir/qemu-ga.8*
-/lib/udev/rules.d/%rulenum-%name-guest-agent.rules
+%_udevrulesdir/%rulenum-%name-guest-agent.rules
 %_unitdir/%name-guest-agent.service
 %_initdir/%name-guest-agent
+%config(noreplace) %_sysconfdir/sysconfig/qemu-ga
+%_sysconfdir/%name/fsfreeze-hook
+%dir %_sysconfdir/%name/fsfreeze-hook.d
+%config(noreplace) %_sysconfdir/%name/fsfreeze-hook.d/*
+%ghost %_logdir/qga-fsfreeze-hook.log
 
 %files doc
 %docdir/
 %exclude %docdir/LICENSE
 
 %files aux
+%dir %_sysconfdir/%name
 %dir %docdir/
 %docdir/LICENSE
 
@@ -1618,6 +1657,11 @@ fi
 %endif
 
 %changelog
+* Wed Jan 31 2018 Alexey Shabalin <shaba@altlinux.ru> 2.11.0-alt2
+- backport patch for fix configure test memfd
+- add support fsfreeze-hook for qemu guest agent
+- move helpers from system to tools package
+
 * Wed Dec 20 2017 Alexey Shabalin <shaba@altlinux.ru> 2.11.0-alt1
 - 2.11.0
 
