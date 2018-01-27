@@ -1,4 +1,4 @@
-%define major 3.18
+%define major 3.26
 %define _unpackaged_files_terminate_build 1
 
 Name: libgdl3
@@ -14,6 +14,7 @@ Url: http://www.gnome.org
 Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
 Source: %name-%version.tar
+#Patch: %name-%version-%release.patch
 
 Provides: gdl = %version
 
@@ -55,7 +56,6 @@ Requires: %name-gir = %version-%release
 %description gir-devel
 GObject introspection devel data for the gdl library
 
-
 %package devel
 Summary: Gnome Devtool Libraries
 Group: Development/GNOME and GTK+
@@ -82,16 +82,16 @@ This package provides development documentation for gdl.
 %define _gtk_docdir %_datadir/gtk-doc/html
 
 %prep
-%setup -q
+%setup
+#%patch -p1
 
 %build
-# NOCONFIGURE=1 ./autogen.sh
 %autoreconf
 %configure --enable-gtk-doc --disable-static
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang gdl-3
 
@@ -100,9 +100,6 @@ This package provides development documentation for gdl.
 
 %files -f gdl-3.lang
 %doc README
-#%dir %_datadir/gdl-3
-#%dir %_datadir/gdl-3/ui
-#%_datadir/gdl-3/ui/*.ui
 %_libdir/lib*.so.*
 
 %files gir
@@ -123,6 +120,9 @@ This package provides development documentation for gdl.
 %_gtk_docdir/*
 
 %changelog
+* Sat Jan 27 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Sun Sep 20 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 
