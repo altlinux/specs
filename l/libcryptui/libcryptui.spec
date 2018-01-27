@@ -1,27 +1,33 @@
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define ver_major 3.12
 %define api_ver 0.0
 %def_disable static
 %def_enable introspection
+%def_enable gtk_doc
 
 Name: libcryptui
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 Summary: Library for OpenPGP prompts
 
 Group: System/Libraries
 License: GPLv3
 Url: http://www.gnome.org
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 Obsoletes: seahorse-agent
 Provides:  seahorse-agent = %version-%release
 Obsoletes: libseahorse
 Provides: libseahorse = %version-%release
 
-# From configure.in
+# From configure.ac
 %define glib_ver 2.32.0
 %define gtk_ver 3.0.0
 %define intltool_ver 0.40.0
@@ -29,8 +35,8 @@ Provides: libseahorse = %version-%release
 
 BuildRequires: rpm-build-gnome gtk-doc
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libdbus-glib-devel
-BuildRequires: gnupg2-gpg libgpgme-devel >= 1.0.0 libgnome-keyring-devel libSM-devel
-BuildRequires: libnotify-devel >= 0.7.3 intltool >= %intltool_ver xsltproc
+BuildRequires: gnupg2-gpg libgpgme-devel >= 1.0.0 gcr-libs-devel libgnome-keyring-devel
+BuildRequires: libSM-devel libnotify-devel >= 0.7.3 intltool >= %intltool_ver xsltproc
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 # for check
 BuildRequires: /proc dbus-tools-gui xvfb-run
@@ -83,16 +89,18 @@ Requires: %name-gir = %version-%release
 GObject introspection devel data for the %name library
 
 %prep
-%setup -q
+%setup
 
 %build
+export GNUPG=/usr/bin/gpg2
+%autoreconf
 %configure \
-    %{subst_enable static}
-
+    %{subst_enable static} \
+    %{?_enable_gtk_doc:--enable-gtk-doc}
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --output=%name.lang cryptui
 
@@ -115,8 +123,10 @@ xvfb-run %make check
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_enabled introspection
 %files gir
@@ -127,6 +137,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Sat Jan 27 2018 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt2
+- updated to 3.12.2-39-gb05e301
+
 * Tue May 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 
