@@ -1,5 +1,5 @@
 Name: redis
-Version: 4.0.6
+Version: 4.0.7
 Release: alt1
 
 Summary: Redis is an advanced key-value store
@@ -59,7 +59,7 @@ for Windows currently.
 
 %prep
 %setup
-%patch0 -p1 
+%patch0 -p1
 
 sed -e 's|\$(CCOPT) \$(DEBUG) \$(OBJ)|\$(OBJ) \$(CCOPT) \$(DEBUG)|g' -i src/Makefile
 
@@ -139,6 +139,9 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.
 
 
 %changelog
+* Sat Jan 27 2018 Nikolay A. Fetisov <naf@altlinux.org> 4.0.7-alt1
+- New version
+
 * Wed Dec 27 2017 Nikolay A. Fetisov <naf@altlinux.org> 4.0.6-alt1
 - New version
 
