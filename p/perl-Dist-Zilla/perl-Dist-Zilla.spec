@@ -2,7 +2,7 @@
 
 Name: perl-Dist-Zilla
 Version: 6.010
-Release: alt1
+Release: alt2
 
 Summary: scary tools for building CPAN distributions
 
@@ -60,6 +60,9 @@ export TZ=UTC
 #sed -e 's/1.66/1.63/' -i META.json META.yml Makefile.PL cpanfile t/00-report-prereqs.dd 
 #rm -f -- t/plugins/manifest.t
 
+# Fails with File::Copy::Recursive 0.39
+rm -f --  t/plugins/filefinders.t
+
 %perl_vendor_build
 
 %install
@@ -76,6 +79,9 @@ export TZ=UTC
 
 
 %changelog
+* Sun Jan 28 2018 Nikolay A. Fetisov <naf@altlinux.org> 6.010-alt2
+- Fix build with File::Copy::Recursive 0.39
+
 * Sat Jul 15 2017 Nikolay A. Fetisov <naf@altlinux.org> 6.010-alt1
 - New version
 
