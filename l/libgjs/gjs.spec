@@ -9,7 +9,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
@@ -116,6 +116,9 @@ cp %SOURCE1 m4/
 
 
 %changelog
+* Sun Jan 28 2018 Yuri N. Sedunov <aris@altlinux.org> 1.50.4-alt1
+- 1.50.4
+
 * Thu Jan 18 2018 Yuri N. Sedunov <aris@altlinux.org> 1.50.3-alt1
 - 1.50.3
 
