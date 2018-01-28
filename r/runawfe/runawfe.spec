@@ -1,6 +1,6 @@
 Name: runawfe
 Version: 4.3.0
-Release: alt3
+Release: alt4
 
 Summary: Runawfe
 
@@ -32,14 +32,24 @@ Requires: jboss-as-vanilla >= 7.1.1-alt9
 # Automatically added by buildreq on Fri Sep 06 2013
 # optimized out: apache-commons-cli atinject google-guice guava java java-devel jpackage-utils maven maven-wagon nekohtml plexus-cipher plexus-classworlds plexus-containers-component-annotations plexus-interpolation plexus-sec-dispatcher plexus-utils python3-base sisu tzdata tzdata-java xbean xerces-j2 xml-commons-jaxp-1.4-apis
 AutoReq: yes,noperl,nopython
-BuildPreReq: rpm-build-compat maven
+BuildPreReq: rpm-build-java
 
-BuildRequires: aether rpm-build-compat guava
-BuildRequires: xmvn maven maven-local maven-clean-plugin maven-install-plugin maven-deploy-plugin maven-site-plugin maven-antrun-plugin maven-assembly-plugin maven-dependency-plugin maven-release-plugin
+BuildRequires: rpm-build-java
+BuildRequires: maven-local
 BuildRequires: mvn(com.google.guava:guava)
+BuildRequires: mvn(org.apache.maven.plugins:maven-clean-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-install-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-deploy-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-site-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-ejb-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-war-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-ear-plugin)
 BuildRequires: chrpath
 BuildRequires: jboss-as-vanilla
-BuildRequires: java-devel maven maven-local xmvn maven-clean-plugin maven-install-plugin maven-deploy-plugin maven-site-plugin maven-dependency-plugin maven-release-plugin
 
 %define jbossuser jboss-as
 %define runauser _runa
@@ -347,6 +357,9 @@ useradd -d %runadir -r -s %_sbindir/%name %runauser >/dev/null 2>&1 || :
 %attr(755,root,root) %_bindir/runawfe-notifier
 
 %changelog
+* Mon Dec 18 2017 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt4
+- Updated to 4.3.0 code 
+
 * Sat Oct 07 2017 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt3
 - Updated to 4.3.0 code 
 
