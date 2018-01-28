@@ -1,6 +1,6 @@
 ## SPEC file for Perl module B::Keywords
 
-%define version    1.15
+%define version    1.16
 %define release    alt1
 
 Name: perl-B-Keywords
@@ -23,9 +23,9 @@ BuildArch: noarch
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Sat May 30 2015
-# optimized out: perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-devel
-BuildRequires: perl-Test-Pod
+# Automatically added by buildreq on Sun Jan 28 2018
+# optimized out: perl perl-CPAN-Meta-Requirements perl-Encode perl-JSON-PP perl-Parse-CPAN-Meta perl-Pod-Escapes perl-Pod-Simple perl-devel perl-parent python-base python-modules python3 python3-base
+BuildRequires: perl-CPAN-Meta perl-Test-Pod
 
 %description
 Perl module B::Keywords supplies seven arrays of keywords: @Scalars, 
@@ -49,6 +49,9 @@ non-function keywords (like __DATA__, NULL) to the @Functions array.
 %perl_vendor_privlib/B/Keywords*
 
 %changelog
+* Sun Jan 28 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.16-alt1
+- New version
+
 * Sun Nov 15 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.15-alt1
 - New version
 
