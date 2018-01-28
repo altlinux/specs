@@ -12,8 +12,8 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.99.2
-Release: alt4
+Version: 0.99.3
+Release: alt1
 %define abiversion 7
 
 Summary: Clam Antivirus scanner
@@ -50,8 +50,6 @@ Patch2: freshclam-config.patch
 
 Patch20: clamav-0.99-pkgconfig.patch
 Patch21: clamav-AC_SYS_LARGEFILE.patch
-Patch6418: cve-2017-6418.patch
-Patch6420: cve-2017-6420.patch
 
 BuildRequires: rpm-build-licenses
 
@@ -140,8 +138,6 @@ database automatically. It uses the freshclam(1) utility for this task.
 
 %patch20 -p1
 %patch21 -p0
-%patch6418 -p1
-%patch6420 -p1
 
 %build
 # fixed RPATH issue (0.97.3 tarball built with wrong libtool)
@@ -262,7 +258,7 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %files
 %doc docs/signatures.*
 %doc virusstat*
-%doc COPYING COPYING.*
+%doc COPYING COPYING.* README
 
 %_bindir/clamdscan
 %_bindir/clamscan
@@ -327,6 +323,10 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Sun Jan 28 2018 Sergey Y. Afonin <asy@altlinux.ru> 0.99.3-alt1
+- 0.99.3 (multiple CVE's, look to README)
+- removed cve-2017-6418.patch and cve-2017-6420.patch (in upstream now)
+
 * Sun Oct 29 2017 Sergey Y. Afonin <asy@altlinux.ru> 0.99.2-alt4
 - used AC_SYS_LARGEFILE (ALT #34085)
 - removed "Packager" field
@@ -356,7 +356,7 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 - renamed libclamav to libclamav7 (according SharedLibsPolicy)
 
 * Thu Apr 30 2015 Sergey Y. Afonin <asy@altlinux.ru> 0.98.7-alt1
-- 0.98.7 (multiple CVEs)
+- 0.98.7 (multiple CVE's)
 - viruses database is not deleted during update anymore
   (hope to stable format)
 
