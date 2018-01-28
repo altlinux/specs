@@ -7,7 +7,7 @@
 %def_enable lua
 
 Name: haproxy
-Version: 1.7.9
+Version: 1.8.3
 Release: alt1%ubt
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
@@ -21,7 +21,7 @@ Source2: %name.init
 Source3: %name.logrotate
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: libpcre-devel zlib-devel libssl-devel
+BuildRequires: libpcre2-devel zlib-devel libssl-devel
 %{?_enable_lua:BuildRequires: liblua5-devel >= 5.3}
 
 %description
@@ -50,8 +50,8 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-%make_build CPU="generic" TARGET="linux2628" USE_OPENSSL=1 USE_PCRE=1 USE_ZLIB=1 USE_NS=1 %{?_enable_lua:USE_LUA=1} \
-	${regparm_opts} PREFIX="%_prefix" ADDINC="$(pcre-config --cflags)" CFLAGS="%optflags"
+%make_build CPU="generic" TARGET="linux2628" USE_OPENSSL=1 USE_PCRE2=1 USE_ZLIB=1 USE_NS=1 %{?_enable_lua:USE_LUA=1} \
+	${regparm_opts} PREFIX="%_prefix" ADDINC="$(pcre2-config --cflags)" CFLAGS="%optflags"
 
 pushd contrib/halog
 %make halog OPTIMIZE="%optflags"
@@ -107,6 +107,10 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Mon Jan 29 2018 Alexey Shabalin <shaba@altlinux.ru> 1.8.3-alt1%ubt
+- 1.8.3
+- build with pcre2
+
 * Wed Sep 27 2017 Alexey Shabalin <shaba@altlinux.ru> 1.7.9-alt1%ubt
 - 1.7.9
 
