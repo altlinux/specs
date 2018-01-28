@@ -1,6 +1,6 @@
 Name: shotcut
 Version: 18.01
-Release: alt1
+Release: alt2
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платфоорменный видеоредактор
 License: GPL-3.0+
@@ -13,6 +13,8 @@ Source1: %name.desktop
 BuildRequires: gcc-c++ qt5-base-devel >= 5.5.0 qt5-multimedia-devel qt5-quick1-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel libmlt-devel libmlt++-devel qt5-tools ImageMagick-tools libX11-devel
 
 Requires: %name-data = %version
+# https://bugzilla.altlinux.org/show_bug.cgi?id=34444
+Requires: libSDL2
 
 %description
 These are all currently implemented features:
@@ -69,29 +71,23 @@ Data files for %name
 
 %prep
 %setup
-for i in 16 32 48; do
-    convert icons/%name-logo-64.png -resize "$i"x"$i" icons/%name-logo-$i.png
-done
-
 
 %build
-%qmake_qt5
-%make_build
 lrelease-qt5 translations/*.ts
+%qmake_qt5 PREFIX=%buildroot%_prefix
+%make_build
 
 %install
-install -Dp -m0755 src/%name %buildroot%_bindir/%name
-install -d -m0755 %buildroot/%_datadir/%name
-cp -a src/qml %buildroot%_datadir/%name/
+%makeinstall_std
 install -d -m0755 %buildroot/%_datadir/%name/translations
 cp -a translations/*.qm %buildroot/%_datadir/%name/translations/
 install -Dp -m0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
-for i in 16 32 48; do
-    install -d -m755 %buildroot/%_iconsdir/hicolor/"$i"x"$i"/apps
-    install -m644 icons/%name-logo-"$i".png %buildroot/%_iconsdir/hicolor/"$i"x"$i"/apps/%name.png
-done
-#make_install
 
+for i in 16 32 48; do
+    mkdir -p %buildroot/%_iconsdir/hicolor/"$i"x"$i"/apps
+    convert icons/%name-logo-64.png -resize "$i"x"$i" \
+    %buildroot/%_iconsdir/hicolor/"$i"x"$i"/apps/%name.png
+done
 
 %files
 %_bindir/%name
@@ -105,6 +101,10 @@ done
 %_liconsdir/%name.png
 
 %changelog
+* Sun Jan 28 2018 Anton Midyukov <antohami@altlinux.org> 18.01-alt2
+- Added missing requires libSDL2
+- Fix make install
+
 * Tue Jan 02 2018 Cronbuild Service <cronbuild@altlinux.org> 18.01-alt1
 - new version (18.01) with rpmgs script
 
