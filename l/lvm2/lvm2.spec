@@ -15,6 +15,8 @@
 %def_enable blkid_wiping
 %def_disable lvmdbusd
 %def_enable dmfilemapd
+%def_enable systemd
+%def_enable thin
 
 %if_enabled lvmlockd
  %def_enable lvmlockd_sanlock
@@ -26,7 +28,7 @@
 Summary: Userland logical volume management tools
 Name: lvm2
 Version: %lvm2version
-Release: alt1
+Release: alt2
 License: GPL
 
 Group: System/Base
@@ -47,16 +49,21 @@ Requires: dmsetup  >= %{dmversion}-%{release}
 Requires: dmeventd >= %{dmversion}-%{release}
 Requires: liblvm2  = %{lvm2version}-%{release}
 
-
 BuildRequires: gcc-c++
 BuildRequires: libreadline-devel libtinfo-devel libudev-devel CUnit-devel
+%if_enabled systemd
+# libudev-devel >= 205 required for udev-systemd-background-jobs
 BuildRequires: libudev-devel >= 205
 BuildRequires: systemd-devel
 BuildRequires: thin-provisioning-tools >= 0.7.0
+%else
+BuildRequires: libudev-devel
+%endif
 BuildRequires: python-devel python-module-setuptools
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: autoconf-archive
+%{?_enable_thin:BuildRequires: thin-provisioning-tools >= 0.5.4}
 %{?_enable_lvmdbusd:BuildRequires: python-module-dbus python-module-pyudev python3-module-dbus python3-module-pyudev}
 %{?_enable_static:BuildRequires: libreadline-devel-static libtinfo-devel-static}
 %{?_enable_cluster:BuildRequires: libcorosync2-devel libdlm-devel}
@@ -228,7 +235,6 @@ logical volumes, physical volumes, and volume groups.
 
 %prep
 %setup
-
 %patch -p1
 
 %build
@@ -259,12 +265,12 @@ export ac_cv_path_MODPROBE_CMD=%_sbindir/modprobe
 	--with-default-locking-dir=%_lockdir/lvm
 
 	#
-%__make libdm
-%__make lib
-%__make -C tools lvm.static
+%make libdm
+%make lib
+%make -C tools lvm.static
 mv tools/lvm.static .
 mv libdm/ioctl/libdevmapper.a .
-%__make clean
+%make clean
 %endif # static
 
 # dynamic
@@ -302,7 +308,7 @@ mv libdm/ioctl/libdevmapper.a .
 	%{?_enable_lvmlockd_sanlock:--enable-lvmlockd-sanlock} \
 	%{?_enable_lvmdbusd:--enable-dbus-service} \
 	--with-dmeventd-path="%_sbindir/dmeventd" \
-	--with-systemdsystemunitdir=%_unitdir \
+	%{?_enable_systemd:--with-systemdsystemunitdir=%_unitdir} \
 	--with-tmpfilesdir=%_tmpfilesdir \
 	--with-default-pid-dir=%_runtimedir \
 	--with-default-dm-run-dir=%_runtimedir \
@@ -318,21 +324,25 @@ mv libdm/ioctl/libdevmapper.a .
 	--with-cache-dump=/usr/sbin/cache_dump \
 	--with-cache-repair=/usr/sbin/cache_repair \
 	--with-cache-restore=/usr/sbin/cache_restore \
+%if_enabled thin
 	--with-thin=internal \
 	--with-thin-check=/usr/sbin/thin_check \
 	--with-thin-dump=/usr/sbin/thin_dump \
 	--with-thin-repair=/usr/sbin/thin_repair \
 	--with-thin-restore=/usr/sbin/thin_restore \
+%endif
 	--enable-python2-bindings \
 	--enable-python3-bindings
 
-%__make
+%make
 
 %install
 %makeinstall_std
 %makeinstall_std install_system_dirs
+%if_enabled systemd
 %makeinstall_std install_systemd_units
 %makeinstall_std install_systemd_generators
+%endif
 %makeinstall_std install_tmpfiles_configuration
 
 chmod -R u+rwX %buildroot
@@ -364,7 +374,7 @@ ln -sf ../../%_lib/liblvm2app.so.2.2 ./liblvm2app.so
 popd
 
 # Fix pkgconfig file.
-%__subst '/^Version:/ s/"\([^[:space:]]\+\)[^"]*"/\1/' %buildroot%_pkgconfigdir/*
+subst '/^Version:/ s/"\([^[:space:]]\+\)[^"]*"/\1/' %buildroot%_pkgconfigdir/*
 
 # provide a symlink for devmapper.pc
 ln -sf devmapper.pc %buildroot%_pkgconfigdir/libdevmapper.pc
@@ -379,7 +389,10 @@ install -m 0755 %SOURCE4 %buildroot%_initdir/lvm2-lvmetad
 install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 
-mv %buildroot%_prefix/sbin/clvmd %buildroot%_sbindir/
+%if_enabled cluster
+mv %buildroot%_prefix/sbin/clvmd %buildroot%_sbindir/clvmd
+ln -r -s %buildroot%_sbindir/clvmd %buildroot%_prefix/sbin/clvmd
+%endif
 mkdir -p %buildroot%_sysconfdir/sysconfig
 cat << __EOF__ > %buildroot%_sysconfdir/sysconfig/clvmd
 START_CLVM=yes
@@ -440,20 +453,28 @@ __EOF__
 %config(noreplace) %_sysconfdir/lvm/lvmlocal.conf
 %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/lvm/profile/*.profile
 %_initdir/lvm2-monitor
+%if_enabled systemd
 %_unitdir/lvm2-monitor.service
-%_initdir/blk-availability
 %_unitdir/blk-availability.service
+%endif
+%_initdir/blk-availability
 %if_enabled lvmetad
 %_initdir/lvm2-lvmetad
+%if_enabled systemd
 %_unitdir/lvm2-lvmetad*
 %_unitdir/lvm2-pvscan@.service
+%endif
 %_udevrulesdir/69-dm-lvm-metad.rules
 %endif
 %if_enabled lvmpolld
 %_initdir/lvm2-lvmpolld
+%if_enabled systemd
 %_unitdir/lvm2-lvmpolld*
 %endif
+%endif
+%if_enabled systemd
 /lib/systemd/system-generators/lvm2-activation-generator
+%endif
 %_tmpfilesdir/%name.conf
 %dir %_sysconfdir/lvm
 %dir %_sysconfdir/lvm/profile
@@ -472,9 +493,12 @@ __EOF__
 %if_enabled cluster
 %files -n clvm
 %config(noreplace) %_sysconfdir/sysconfig/clvmd
+%if_enabled systemd
 %_unitdir/lvm2-c*.service
 /lib/systemd/lvm2-cluster-activation
+%endif
 %_sbindir/clvmd
+%_prefix/sbin/clvmd
 %_man8dir/clvmd*
 %endif
 
@@ -517,8 +541,10 @@ __EOF__
 
 %files -n dmeventd
 %_sbindir/dmeventd
+%if_enabled systemd
 %_unitdir/dm-event.service
 %_unitdir/dm-event.socket
+%endif
 
 %files -n libdevmapper-event
 /%_lib/libdevmapper-event.so.*
@@ -536,7 +562,9 @@ __EOF__
 %_sbindir/lvmlockd
 %_sbindir/lvmlockctl
 %_man8dir/lvmlockd*
+%if_enabled systemd
 %_unitdir/lvm2-lvmlock*
+%endif
 %_initdir/lvm2-lvmlock*
 %endif
 
@@ -545,7 +573,9 @@ __EOF__
 %_sysconfdir/dbus-1/system.d/com.redhat.lvmdbus1.conf
 %_datadir/dbus-1/system-services/com.redhat.lvmdbus1.service
 %_man8dir/lvmdbusd.*
+%if_enabled systemd
 %_unitdir/lvm2-lvmdbusd.service
+%endif
 %python3_sitelibdir/lvmdbusd/*
 %endif
 
@@ -556,6 +586,13 @@ __EOF__
 %python3_sitelibdir/*
 
 %changelog
+* Sun Jan 28 2018 Alexey Shabalin <shaba@altlinux.ru> 2.02.177-alt2
+- BOOTSTRAP: introduce systemd, thin knobs (on by default)
+  + conditionally loosen BR: libudev-devel as 205+ isn't
+    a strict requirement for a build without systemd support
+- internal macros cleaned up
+- add symlink /usr/sbin/clvmd -> /sbin/clvmd (fixed bug #33362)
+
 * Wed Dec 20 2017 Alexey Shabalin <shaba@altlinux.ru> 2.02.177-alt1
 - 2.02.177
 
