@@ -6,7 +6,7 @@ Name:         sogo3
 # Use the same version as in the "nightly" packages at
 # http://v2.sogo.nu/downloads/backend_v3_nightly.html:
 Version:      3.2.10.20171010
-Release:      alt1
+Release:      alt2
 
 License:      GPL
 URL:          https://sogo.nu/
@@ -18,9 +18,17 @@ Source:       SOGo-%version.tar.gz
 Source1:      sogo.init
 Patch:        %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ubt
+Requires:      stmpclean
+Requires:      tzdata
+Requires:      zip
+Conflicts:     sogo2
+
+%filter_from_requires /^\/usr\/%_lib\/samba-dc\/lib/d
+%{!?sogo_major_version: %global sogo_major_version %(/bin/echo %version | /bin/cut -f 1 -d .)}
 
 BuildPreReq:   gnustep-make-devel rpm-build-apache2
+# To ignore a patched submodule:
+BuildPreReq: patchutils
 BuildRequires: gcc-objc
 BuildRequires: gnustep-base-devel
 BuildRequires: sope-appserver-devel sope-core-devel sope-ldap-devel sope-mime-devel sope-xml-devel sope-gdl1-devel sope-sbjson-devel
@@ -39,14 +47,6 @@ BuildRequires: libwbxml-devel
 BuildRequires: openchange-devel
 BuildRequires: zlib-devel
 BuildRequires: python-module-samba-DC
-
-Requires:      stmpclean
-Requires:      tzdata
-Requires:      zip
-Conflicts:     sogo2
-
-%filter_from_requires /^\/usr\/%_lib\/samba-dc\/lib/d
-%{!?sogo_major_version: %global sogo_major_version %(/bin/echo %version | /bin/cut -f 1 -d .)}
 
 %description
 SOGo is a groupware server built around OpenGroupware.org (OGo) and
@@ -224,7 +224,7 @@ SOGo backend for OpenChange
 
 %prep
 %setup -q -n SOGo-%version
-%patch -p1
+< %PATCH0 filterdiff -p1 -x UI/WebServerResources/angular-material | patch -p1
 # Workaround for wrong beahaviour call of timeZoneWithAbbreviation with GMT or UTC
 subst 's/timeZoneWithAbbreviation/timeZoneWithName/g' $(grep -Rl timeZoneWithAbbreviation *)
 
@@ -403,6 +403,14 @@ fi
 %preun_service sogo
 
 %changelog
+* Thu Jan 25 2018 Ivan Zakharyaschev <imz@altlinux.org> 3.2.10.20171010-alt2
+- Fixed entering some letters (for example, Cyrillic Be or Zhe) in the
+  address fields (like To:) of the message editor so that they do not act as
+  "separator" keys (like comma or semicolon) any more; this error's cause
+  was that these letters and the separators are on the same physical keys.
+  (Thanks Volker Braun for implementing the underlying feature
+  for this fix in the old angular-material.) (ALT#34336)
+
 * Wed Oct 11 2017 Ivan Zakharyaschev <imz@altlinux.org> 3.2.10.20171010-alt1
 - Build the current "nightly" revision to correctly handle top-level
   non-ASCII folder names in ActiveSync (ALT: #33721) as suggested
