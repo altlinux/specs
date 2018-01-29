@@ -1,33 +1,33 @@
-Packager: Repocop Q. A. Robot <repocop@altlinux.org>
-%def_enable shared
-%def_enable static
+%def_enable snapshot
 
-%define _name linux-udf
-%define prerel %nil
-%define cvsdate 20080518
+%define ver_major 2.0
+# no rules to make shared libudffs now
+%def_disable shared
 
 Name: udftools
-Version: 1.0.0
-Release: alt3
-Summary: Tools for work with UDF filesystems and CD-R(W)/DVD packet writing drives
+Version: %ver_major
+Release: alt1
+
+Summary: Linux tools for UDF filesystems and DVD/CD-R(W) drives
 Group: Archiving/Cd burning
 License: %gpl2plus
-Url: http://%_name.sourceforge.net
-%ifdef cvsdate
-Source: %name-cvs-%cvsdate.tar
+Url: https://github.com/pali/udftools
+
+%if_disabled snapshot
+Source: %url/releases/download/%ver_major/%name-%version.tar.gz
 %else
-Source: %name-%version%prerel.tar
+# VCS: https://github.com/pali/udftools.git
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 %endif
-Patch: %name-cvs-20080518-shared.patch
-Patch1: build-with-gcc5.patch
 
 BuildRequires: libncurses-devel libreadline-devel
 BuildRequires: rpm-build-licenses
 
 %description
 %name includes:
-- mkudffs is a tool to create a UDF(Universal Disk Format) filesystem
-  on a device.
+- mkudffs (mkfs.udf) is a tool to create a UDF (Universal Disk Format)
+  filesystem   on a device.
 - pktsetup to associate packet devices with CD or DVD block devices, so
   that the packet device can then be mounted and potentially used as a
   read/write filesystem. This requires kernel support for the packet
@@ -36,36 +36,44 @@ BuildRequires: rpm-build-licenses
   DVD-R device. Mainly these are blanking the media, formating it for
   use with the packet-cd device, and applying an UDF filesystem.
 - wrudf to maintain a UDF filesystem
-
+- udfinfo which shows various information about UDF (incuding label,
+  uuid, free space).
+- udflabel which shows or changes UDF label or UDF uuid.
 
 %prep
-%ifdef cvsdate
-%setup -n %name-cvs-%cvsdate
-%else
-%setup -n %name-%version%prerel
-%endif
+%setup
 %patch -p1
-%patch1 -p1
 
 %build
 %autoreconf
-%configure %{subst_enable shared} %{subst_enable static}
+%configure %{subst_enable shared}
 %make_build
 
-
 %install
-%make_install DESTDIR=%buildroot install
-
+%makeinstall_std
 
 %files
-%doc AUTHORS
-%_bindir/*
+%_bindir/cdrwtool
+%_bindir/udfinfo
+%_bindir/wrudf
+%_sbindir/mkfs.udf
+%_sbindir/mkudffs
+%_sbindir/pktsetup
+%_sbindir/udflabel
+%_udevrulesdir/80-pktsetup.rules
 %_man1dir/*
 %_man8dir/*
 %{?_enable_shared:%_libdir/*.so.*}
+%doc AUTHORS NEWS README
+%doc doc/HOWTO.udf doc/UDF-Specifications
 
+%exclude %_datadir/doc/%name/
 
 %changelog
+* Mon Jan 29 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt1
+- switched to upstream git
+- updated to 2.0-24-g7e85bc
+
 * Tue Oct 06 2015 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt3
 - Fix build with gcc5
 
@@ -110,7 +118,7 @@ BuildRequires: rpm-build-licenses
 - adjust udftools.default for proper node names.
 - changed group to Archiving/Cd burning cause it more realistic.
 
-* Sun Aug 26 2004 LAKostis <lakostis at altlinux dot ru> 1.0.0-alt0.3b3cvs20040826
+* Thu Aug 26 2004 LAKostis <lakostis at altlinux dot ru> 1.0.0-alt0.3b3cvs20040826
 - update from cvs.
 
 * Sun Aug 15 2004 LAKostis <lakostis at altlinux dot ru> 1.0.0-alt0.3b3cvs20031102
