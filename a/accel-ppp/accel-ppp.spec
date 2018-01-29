@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.11.2
-Release: alt5
+Release: alt6
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -103,6 +103,10 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Mon Jan 29 2018 Alexei Takaseev <taf@altlinux.org> 1.11.2-alt6
+- update upstream to git:435c18ba35f9515727e63b4de92912d7567b5534
+    * ppp: fixed bug in ppp_terminate
+
 * Tue Dec 26 2017 Alexei Takaseev <taf@altlinux.org> 1.11.2-alt5
 - update upstream to git:cb9cf0a9c1e88e5fea156b5048be439d9763dc70
     * shaper: define UINT16_MAX if not set
