@@ -1,6 +1,6 @@
 Name: xz
 Version: 5.2.3
-Release: alt1
+Release: alt2
 
 Summary: LZMA/XZ compression programs
 # We don't package scripts to grep, diff, and view compressed files here
@@ -68,20 +68,22 @@ cflags=$(sed -n 's/^CFLAGS = //p' src/liblzma/Makefile)
 
 %def_enable profile
 %if_enabled profile
+tar cf .tar */*/*.o */*.[ch] */*/*.[ch] */*/*/*.[ch] */*/*/*/*.[ch] \
+	*/*.txt tests/files */*/.libs/*.{o,so*} --sort=name --mtime=@2718281828
+md5sum .tar
 rm src/liblzma/*.lo src/liblzma/liblzma.la
 %make_build -C src/liblzma CFLAGS="$cflags -fprofile-generate %{!?_enable_debug:-O3}" liblzma_la-lzma_decoder.lo
 %make_build -C src/liblzma CFLAGS="$cflags -fprofile-generate"
 ./libtool --tag=CC --mode=link gcc %optflags -fprofile-generate -static src/xz/xz-*.o src/liblzma/liblzma.la -o xz.static
-for i in 0 2 6; do
-	tar cf - . |./src/xz/xz -$i |./xz.static -d >/dev/null
-	tar cf - . |./xz.static -$i |./src/xz/xz -d >/dev/null
-	tar cf - . |./src/xz/xz --format=lzma -$i |./xz.static -d >/dev/null
-	tar cf - . |./xz.static --format=lzma -$i |./src/xz/xz -d >/dev/null
+for i in '0 -C none' '2 -C crc32' '6 --arm --lzma2 -C crc64' '6 --x86 --lzma2=lc=4 -C sha256' '7e --format=lzma'; do
+	./src/xz/xz -$i <.tar |./xz.static -d >/dev/null
+	./xz.static -$i <.tar |./src/xz/xz -d >/dev/null
 done
 rm src/liblzma/*.lo src/liblzma/liblzma.la
 %make_build -C src/liblzma CFLAGS="$cflags -fprofile-use %{!?_enable_debug:-O3}" liblzma_la-lzma_decoder.lo
 %make_build -C src/liblzma CFLAGS="$cflags -fprofile-use"
 %make_build
+readelf -n src/liblzma/.libs/*.so
 %endif
 
 %install
@@ -112,7 +114,7 @@ make -k check
 %files -n liblzma
 /%_lib/liblzma.so.*
 %docdir
-%exclude %docdir/examples
+%exclude %docdir/examples*
 %exclude %docdir/*-file-format.txt
 
 %files -n liblzma-devel
@@ -121,13 +123,16 @@ make -k check
 %_libdir/liblzma.so
 %_pkgconfigdir/liblzma.pc
 %dir %docdir
-%docdir/examples
+%docdir/examples*
 %docdir/*-file-format.txt
 
 %files -n liblzma-devel-static
 %_libdir/liblzma.a
 
 %changelog
+* Sat Jan 27 2018 Alexey Tourbin <at@altlinux.ru> 5.2.3-alt2
+- Fixed liblzma.so non-reproducible build due to -fprofile-* options.
+
 * Sat Jul 15 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.2.3-alt1
 - 5.0.7 -> 5.2.3.
 
