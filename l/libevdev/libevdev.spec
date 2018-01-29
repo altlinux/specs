@@ -1,8 +1,10 @@
 %define api_ver 1.0
 %def_disable doc
+# root privoledges required
+%def_disable check
 
 Name: libevdev
-Version: 1.5.7
+Version: 1.5.8
 Release: alt1
 
 Summary: kernel evdev device wrapper library
@@ -41,8 +43,7 @@ that are needed to write applications that use %name.
 %makeinstall_std
 
 %check
-# root privoledges required
-#%make check
+%make check
 
 %files
 %_bindir/mouse-dpi-tool
@@ -58,6 +59,9 @@ that are needed to write applications that use %name.
 %_man3dir/%name.3.*
 
 %changelog
+* Mon Jan 29 2018 Yuri N. Sedunov <aris@altlinux.org> 1.5.8-alt1
+- 1.5.8
+
 * Thu May 04 2017 Yuri N. Sedunov <aris@altlinux.org> 1.5.7-alt1
 - 1.5.7
 
