@@ -2,7 +2,7 @@
 
 Name: pcre2
 Version: 10.30
-Release: alt1
+Release: alt2
 
 Summary: Perl-compatible regular expression library
 Group: System/Libraries
@@ -63,8 +63,10 @@ Utilities demonstrating PCRE2 capabilities like pcre2grep or pcre2test.
 %build
 %autoreconf
 %configure \
+%ifnarch e2k
     --enable-jit \
     --enable-pcre2grep-jit \
+%endif
     --disable-bsr-anycrlf \
     --disable-coverage \
     --disable-ebcdic \
@@ -88,14 +90,24 @@ Utilities demonstrating PCRE2 capabilities like pcre2grep or pcre2test.
 %install
 %makeinstall_std
 
+# relocate shared libraries to /%_lib for journalctl
+mkdir -p %buildroot/%_lib
+for f in %buildroot%_libdir/lib%name-{8,16,32,posix}.so; do
+	if t=$(readlink "$f"); then
+		ln -sf ../../%_lib/"$t" "$f"
+	fi
+done
+
+mv %buildroot%_libdir/lib%name-{8,16,32,posix}.so.* %buildroot/%_lib/
+
 %check
 %make check
 
 %files -n lib%name
-%_libdir/lib%name-16.so.*
-%_libdir/lib%name-32.so.*
-%_libdir/lib%name-8.so.*
-%_libdir/lib%name-posix.so.*
+/%_lib/lib%name-16.so.*
+/%_lib/lib%name-32.so.*
+/%_lib/lib%name-8.so.*
+/%_lib/lib%name-posix.so.*
 %doc LICENCE AUTHORS ChangeLog NEWS README
 
 %files -n lib%name-devel
@@ -122,6 +134,11 @@ Utilities demonstrating PCRE2 capabilities like pcre2grep or pcre2test.
 %exclude %_docdir/%name
 
 %changelog
+* Mon Jan 29 2018 Yuri N. Sedunov <aris@altlinux.org> 10.30-alt2
+- relocated shared libraries from %%_libdir to /%%_lib for systemd
+- mike@:
+  E2K: disable jit
+
 * Thu Nov 02 2017 Yuri N. Sedunov <aris@altlinux.org> 10.30-alt1
 - 10.30
 
