@@ -1,5 +1,5 @@
 Name: oniguruma
-Version: 6.6.1
+Version: 6.7.1
 Release: alt1%ubt
 Summary: Regular expressions library
 
@@ -79,6 +79,9 @@ find $RPM_BUILD_ROOT -name '*.la' \
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Mon Jan 29 2018 Anton Farygin <rider@altlinux.ru> 6.7.1-alt1%ubt
+- new version
+
 * Mon Oct 02 2017 Anton Farygin <rider@altlinux.ru> 6.6.1-alt1%ubt
 - new version
 
