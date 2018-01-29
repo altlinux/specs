@@ -5,8 +5,8 @@
 
 Name: dhcpcd
 Epoch: 1
-Version: 7.0.0
-Release: alt2
+Version: 7.0.1
+Release: alt1
 
 Summary: DHCP Client
 License: %bsd
@@ -15,14 +15,6 @@ Group: System/Servers
 URL: http://roy.marples.name/projects/%name
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-
-# Patches from upstream git
-# Should be dropped when new version will be released
-Patch1: dhcp-don-t-bind-when-we-ve-just-probed-an-address-to.patch
-Patch2: eloop-bench-fix-reading-the-last-write.patch
-Patch3: eloop-bench-use-calloc.patch
-Patch4: if-don-t-activate-non-matching-interfaces-to-command.patch
-Patch5: dhcp-don-t-loop-needlessly-when-handling-an-interfac.patch
 
 AutoReq: yes, noshell
 
@@ -44,11 +36,6 @@ which it is running. It also tries to renew the lease time according to RFC2131.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %build
 %add_optflags -fpie
@@ -104,6 +91,11 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Mon Jan 29 2018 Mikhail Efremov <sem@altlinux.org> 1:7.0.1-alt1
+- Drop obsoleted patches.
+- Use local variables in scripts.
+- Updated to 7.0.1.
+
 * Thu Jan 25 2018 Mikhail Efremov <sem@altlinux.org> 1:7.0.0-alt2
 - Drop trigger for updating dhcpcd from version < 5.0.0.
 - Don't disable kernel RA if IPv6 in the dhcpcd is disabled
