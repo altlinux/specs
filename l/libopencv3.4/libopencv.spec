@@ -16,6 +16,12 @@
 %def_without imageio
 %def_without quicktime
 %def_with pic
+%def_with gdcm
+%ifarch %{ix86} x86_64 %{arm}
+%def_with openni
+%else
+%def_without openni
+%endif
 #----------------------------------------------------------------------
 %define set_without() %{expand:%%force_without %{1}} %{expand:%%undefine _with_%{1}}
 
@@ -27,18 +33,23 @@
 
 %define bname opencv
 %define Name OpenCV
-%define sover 2.4
+%define sover 3.4
 Name: lib%bname%sover
-Version: 2.4.13.3
-Release: alt2
+Version: 3.4.0
+Release: alt1
 Epoch: 1
 Summary: Open Source Computer Vision Library
 License: Distributable
-Group: System/Legacy libraries
+Group: System/Libraries
 URL: http://opencv.org
 
 # https://github.com/opencv/opencv.git
 Source: %bname-%version.tar
+# https://github.com/opencv/opencv_contrib.git
+Source1: %bname-contrib-%version.tar
+# https://github.com/opencv/opencv_3rdparty.git
+Source2: %bname-xfeatures2d-boostdesc-%version.tar
+Source3: %bname-xfeatures2d-vgg-%version.tar
 
 BuildPreReq: chrpath libcvmser
 BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
@@ -50,9 +61,11 @@ BuildPreReq: pkgconfig(xdamage) pkgconfig(xxf86vm)
 BuildPreReq: libGLU-devel libXau-devel libXdmcp-devel libgtkglext-devel
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
 BuildPreReq: texlive-latex-base
+BuildRequires: libprotobuf-devel protobuf-compiler libwebp-devel
+BuildRequires: ceres-solver-devel libgflags-devel libglog-devel
 %{?_enable_openmp:BuildRequires: libgomp-devel}
 %{?_with_unicap:BuildRequires: libunicap-devel}
-%{?_with_ffmpeg:BuildRequires: libavformat-devel libswscale-devel}
+%{?_with_ffmpeg:BuildRequires: libavformat-devel libswscale-devel libavresample-devel}
 %{?_with_gstreamer:BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel}
 %{?_with_gtk:BuildRequires: libgtk+2-devel}
 %{?_with_xine:BuildRequires: libxine-devel}
@@ -60,6 +73,11 @@ BuildPreReq: texlive-latex-base
 %{?_with_octave:BuildRequires: octave-devel}
 %{?_with_swig:BuildRequires: swig}
 %{?_with_1394libs:BuildRequires: libdc1394-devel}
+%{?_with_gdcm:BuildRequires: gdcm-devel}
+%{?_with_openni:
+BuildRequires: openni-devel
+BuildRequires: openni-primesense
+}
 
 %description
 %Name means Intel(R) Open Source Computer Vision Library. It is a
@@ -191,12 +209,15 @@ improving Python bindings to %Name.
 This package contains %Name examples.
 
 %prep
-%setup
+%setup -b 1 -b 2 -b 3
 
-rm -fR 3rdparty/{ffmpeg,lib,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib}
+rm -fR 3rdparty/{ffmpeg,lib,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib,protobuf,libwebp}
+
+mkdir -pv BUILD/downloads/xfeatures2d
+cp %_builddir/%bname-xfeatures2d-boostdesc-%version/* BUILD/downloads/xfeatures2d/
+cp %_builddir/%bname-xfeatures2d-vgg-%version/* BUILD/downloads/xfeatures2d/
 
 %prepare_sphinx .
-cp -f doc/conf.py ./
 cp doc/opencv-logo2.png ./
 
 %build
@@ -222,7 +243,16 @@ cp doc/opencv-logo2.png ./
 	-DINSTALL_PYTHON_EXAMPLES:BOOL=ON \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	-DBUILD_opencv_ts:BOOL=OFF \
+	-DBUILD_PROTOBUF:BOOL=OFF \
+	-DPROTOBUF_UPDATE_FILES:BOOL=ON \
+	-DOPENCV_ENABLE_NONFREE:BOOL=ON \
+	-DWITH_LIBV4L:BOOL=%{?_with_v4l:ON}%{!?_with_v4l:OFF} \
+	-DOPENCV_EXTRA_MODULES_PATH=%_builddir/%bname-contrib-%version/modules \
+	%{?_with_openni: -DWITH_OPENNI=ON } \
+	%{?_with_gdcm: -DWITH_GDCM=ON} \
 
+# https://github.com/opencv/opencv/issues/10474
+%cmake_build VERBOSE=1 opencv_dnn
 %cmake_build VERBOSE=1
 
 %install
@@ -233,14 +263,9 @@ mv %buildroot%_datadir/%Name/doc/* %buildroot%_docdir/%name/
 
 cp -fR samples/python* %buildroot%_datadir/%Name/samples/
 
-sed -i \
-	's|\(Libs:\)\(.*\)|\1 ${exec_prefix}/%_lib/libopencv_legacy.so \2|' \
-	%buildroot%_pkgconfigdir/opencv.pc
-
 %files
 %doc README.md
 %_libdir/*.so.*
-%if 0
 # %dir %_datadir/%bname
 %dir %_datadir/%Name
 %_datadir/%Name/haarcascades
@@ -251,9 +276,9 @@ sed -i \
 %_includedir/*
 %_pkgconfigdir/*
 %_datadir/%Name/*.cmake
+%_datadir/%Name/*.supp
 
 %files doc
-%doc doc/vidsurv
 %_docdir/%name
 
 %files utils
@@ -266,11 +291,10 @@ sed -i \
 # %dir %_datadir/%bname
 %dir %_datadir/%Name
 %_datadir/*/samples
-%endif
 
 %changelog
-* Tue Jan 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.4.13.3-alt2
-- Rebuilt as legacy library.
+* Tue Jan 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.0-alt1
+- Updated to upstream version 3.4.0.
 
 * Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.4.13.3-alt1
 - Updated to version 2.4.13.3.
