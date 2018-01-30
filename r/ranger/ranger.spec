@@ -1,5 +1,5 @@
 Name: ranger
-Version: 1.8.1
+Version: 1.9.0
 Release: alt1
 
 Summary(ru_RU.UTF-8): Консольный файл-менеджер
@@ -48,11 +48,16 @@ sed -i 's@#!/usr/bin/python -O@#!/usr/bin/python@' ranger.py
 %_bindir/*
 %doc %_defaultdocdir/%name
 %_man1dir/*
+%_desktopdir/%name.desktop
 
 %files -n %packagename
 %python_sitelibdir/*
 
 %changelog
+* Tue Jan 30 2018 Grigory Ustinov <grenka@altlinux.org> 1.9.0-alt1
+- NMU: Build new version (Closes: #31346).
+- Add desktop file packaging to spec.
+
 * Mon May 22 2017 Fr. Br. George <george@altlinux.ru> 1.8.1-alt1
 - Autobuild version bump to 1.8.1
 
