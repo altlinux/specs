@@ -1,6 +1,6 @@
 Name:		xmrig
-Version:	2.4.3
-Release:	alt2
+Version:	2.4.4
+Release:	alt1
 Summary:	Monero (XMR) CPU miner
 Url:		https://github.com/xmrig/xmrig
 Group:		Office
@@ -34,6 +34,9 @@ install -Dp -m 0755 ./%name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Tue Jan 30 2018 Motsyo Gennadi <drool@altlinux.ru> 2.4.4-alt1
+- 2.4.4
+
 * Tue Nov 07 2017 Motsyo Gennadi <drool@altlinux.ru> 2.4.3-alt2
 - added config.json as example
 
