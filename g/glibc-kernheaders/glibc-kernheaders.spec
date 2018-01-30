@@ -1,4 +1,4 @@
-%define kernel_base_version 4.14
+%define kernel_base_version 4.15
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -33,8 +33,6 @@ Patch17: 0017-uapi-fix-linux-kexec.h-userspace-compilation-errors.patch
 Patch18: 0018-uapi-fix-linux-ncp_fs.h-userspace-compilation-errors.patch
 Patch19: 0019-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
 Patch20: 0020-uapi-fix-linux-fsmap.h-userspace-compilation-error.patch
-Patch21: 0021-uapi-fix-linux-kfd_ioctl.h-userspace-compilation-err.patch
-Patch22: 0022-uapi-fix-linux-rxrpc.h-userspace-compilation-errors.patch
 
 BuildRequires: rpm-build-kernel
 BuildRequires: %kernel_source = 1.0.0
@@ -114,10 +112,8 @@ cd %kernel_source
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
-%patch21 -p1
-%patch22 -p1
 
-sed -i 's/^headers_install:.*/&\n\t@echo hdr-arch=$(hdr-arch)/' Makefile
+sed -i 's/^headers_install:.*/&\n\t@echo SRCARCH=$(SRCARCH)/' Makefile
 
 %install
 %define hdr_dir %_includedir/linux-default
@@ -125,13 +121,13 @@ make -C %kernel_source headers_install \
 	INSTALL_HDR_PATH=%buildroot%hdr_dir > out && rc= || rc=$?
 cat out
 [ -z "$rc" ] || exit $rc
-hdr_arch="$(sed '/^hdr-arch=/!d;s///;q' out)"
-[ %base_arch = "$hdr_arch" ] || {
-	echo >&2 "%%base_arch=%base_arch != \$hdr_arch=$hdr_arch"
+SRCARCH="$(sed '/^SRCARCH=/!d;s///;q' out)"
+[ %base_arch = "$SRCARCH" ] || {
+	echo >&2 "%%base_arch=%base_arch != \$SRCARCH=$SRCARCH"
 	exit 1
 }
-mv %buildroot%hdr_dir/include/asm{,-$hdr_arch}
-ln -s asm-$hdr_arch %buildroot%hdr_dir/include/asm
+mv %buildroot%hdr_dir/include/asm{,-$SRCARCH}
+ln -s asm-$SRCARCH %buildroot%hdr_dir/include/asm
 find %buildroot%_includedir -name "*.install*" -delete
 
 %check
@@ -167,6 +163,9 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Tue Jan 30 2018 Dmitry V. Levin <ldv@altlinux.org> 4.15-alt1
+- v4.14 -> v4.15.
+
 * Sun Nov 12 2017 Dmitry V. Levin <ldv@altlinux.org> 4.14-alt1
 - v4.13 -> v4.14.
 
