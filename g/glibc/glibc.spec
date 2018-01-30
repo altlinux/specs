@@ -1,7 +1,7 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.26.0.131.fabef2e
+Version: 2.26.9000.0.1248.407552c
 Release: alt1
 Epoch: 6
 
@@ -335,8 +335,6 @@ export CC=%__cc CXX=%__cxx \
 	ac_cv_path_KSH=/bin/sh \
 	#
 
-AddOns=libidn
-
 rm -rf %buildtarget
 mkdir %buildtarget
 pushd %buildtarget
@@ -344,7 +342,6 @@ pushd %buildtarget
 %configure \
 	--disable-profile \
 	--enable-bind-now \
-	--enable-add-ons=$AddOns \
 	%{?_enable_multiarch:--enable-multi-arch} \
 	--enable-obsolete-rpc \
 	--enable-kernel=%enablekernel \
@@ -449,7 +446,7 @@ rm %buildroot{%_infodir/dir,%_datadir/locale/locale.alias}
 rm -rf %buildroot%docdir
 mkdir -p %buildroot%docdir
 cp -pL LICENSES README* alt/README* NEWS \
-	crypt/README.ufc-crypt ChangeLog ChangeLog.?? \
+	crypt/README.ufc-crypt ChangeLog \
 	%buildroot%docdir/
 find %buildroot%docdir/ -type f -size +8k -print0 |
 	xargs -r0 xz -9
@@ -514,7 +511,19 @@ export test-xfail-test-ildouble=yes
 %ifarch %ix86
 export test-xfail-test-double-finite=yes
 export test-xfail-test-double=yes
+export test-xfail-test-float-finite-y0=yes
+export test-xfail-test-float-y0=yes
+export test-xfail-test-float32-finite-y0=yes
+export test-xfail-test-float32-y0=yes
+export test-xfail-test-float64x-clog10=yes
+export test-xfail-test-float64x-finite-clog10=yes
+export test-xfail-test-float64x-finite-lgamma=yes
+export test-xfail-test-float64x-lgamma=yes
 export test-xfail-test-idouble=yes
+export test-xfail-test-ifloat-y0=yes
+export test-xfail-test-ifloat32-y0=yes
+export test-xfail-test-ifloat64x-clog10=yes
+export test-xfail-test-ifloat64x-lgamma=yes
 export test-xfail-test-ildouble-acosh=yes
 export test-xfail-test-ildouble-clog10=yes
 export test-xfail-test-ildouble-lgamma=yes
@@ -722,6 +731,15 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Tue Jan 30 2018 Dmitry V. Levin <ldv@altlinux.org> 6:2.26.9000.0.1248.407552c-alt1
+- Updated to glibc-2.26.9000-1248-g407552c.
+- Switched IDNA implementation to libidn2 (by Florian Weimer;
+  fixes: CVE-2016-6261, CVE-2016-6263, CVE-2017-14062).
+
+* Tue Jan 23 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.26.0.131.fabef2e-alt2
+- Added workaround needed to execute statically linked binaries on ovz-el
+  kernel flavour (ALT#34433).
+
 * Fri Jan 12 2018 Dmitry V. Levin <ldv@altlinux.org> 6:2.26.0.131.fabef2e-alt1
 - Updated to glibc-2.26-131-gfabef2e from 2.26 branch
   with assorted backports from master (fixes CVE-2018-1000001).
