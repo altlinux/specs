@@ -1,9 +1,8 @@
-%def_without rtai
 %def_with docs
 %def_without static
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
-Version: 2.7.11
+Version: 2.7.12
 Release: alt1
 
 Summary: LinuxCNC controls CNC machines
@@ -15,20 +14,26 @@ Url: https://github.com/LinuxCNC/linuxcnc
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 Patch: fix_build_with_libmodbus3.1.4.patch
+Patch1: fix-dir-path.patch
 Buildrequires(pre): rpm-build-tcl rpm-build-python
 # Automatically added by buildreq on Thu Feb 02 2017
 # optimized out: ImageMagick-tools asciidoc boost-python-headers dblatex docbook-dtds fontconfig fontconfig-devel fonts-type1-urw ghostscript-classic glib2-devel groff-base libGL-devel libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel libart_lgpl-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgnomecanvas-devel libgnomeprint-devel libgpg-error libgtk+2-devel libncurses-devel libpango-devel libstdc++-devel libtinfo-devel libwayland-client libwayland-server libxml2-devel perl pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python-modules-xml sysvinit-utils tcl tcl-devel tex-common texlive-base texlive-base-bin texlive-bibtex-extra texlive-common texlive-fonts-recommended texlive-generic-recommended texlive-latex-base texlive-latex-extra texlive-latex-recommended texlive-pictures texlive-xetex tk xml-common xorg-xproto-devel xsltproc zlib-devel
 BuildRequires: boost-devel-headers boost-python-devel bwidget gcc-c++ libstdc++-devel imake kmod libGLU-devel libXaw-devel libXinerama-devel libgnomeprintui-devel libmodbus-devel libreadline-devel libudev-devel libusb-devel python-modules-tkinter python-modules-unittest tcl-img tclx time tk-devel xorg-cf-files
+BuildRequires: pkgconfig(pygtk-2.0)
+BuildRequires: intltool
 %if_with docs
 BuildPreReq: asciidoc-a2x ghostscript-common ghostscript-utils source-highlight graphviz groff-ps
 %endif
 BuildPreReq: desktop-file-utils ImageMagick-tools 
 
+%if_with docs
 Requires: %name-doc = %version
+%endif
+
 Requires: %name-data = %version
 Requires: lib%name = %version
 %py_requires gtk.glade
-%add_tcl_req_skip Hal 
+%add_tcl_req_skip Hal
 %add_tcl_req_skip Linuxcnc
 %add_tcl_req_skip Ngcgui
 %add_python_req_skip emccanon
@@ -68,6 +73,7 @@ Static version of linuxcnc libraries
 Summary: Data files for %name
 Buildarch: noarch
 Group: Engineering
+Conflicts: linuxcnc-doc < 2.7.12
 
 %description data
 Data files for %name
@@ -108,6 +114,8 @@ Spanish documementation for %name
 %prep
 %setup
 %patch -p1
+%patch1 -p1
+
 #fix make install
 sed 's/ -o root//g' -i src/Makefile
 
@@ -115,27 +123,18 @@ sed 's/ -o root//g' -i src/Makefile
 pushd src
 %autoreconf
 %configure  --enable-non-distributable=yes \
+            --with-realtime=uspace \
             %if_with docs
             --enable-build-documentation=pdf \
             %endif
-            %if_with rtai
-            --with-realtime=/patch/to/rtai
-            %else
-            --with-realtime=uspace
-            %endif
-           
+
 %make_build
 popd
 
 %install
 pushd src
-%makeinstall_std SITEPY=%python_sitelibdir
+%makeinstall_std
 popd
-
-#fix patch/to/initdir
-mkdir -p %buildroot%_initdir
-mv %buildroot%_sysconfdir/init.d/* %buildroot%_initdir
-rm -fr %buildroot%_sysconfdir/init.d
 
 install -d -m755 %buildroot%_desktopdir
 cp debian/extras/usr/share/applications/linuxcnc.desktop %buildroot%_desktopdir
@@ -176,8 +175,8 @@ cp debian/extras/lib/udev/rules.d/* %buildroot%_udevrulesdir
 # convert and install icon files
 for x in 16 32 48; do
     mkdir -p %buildroot%_iconsdir/hicolor/$x'x'$x/apps
-	convert linuxcncicon.png -resize $x'x'$x \
-	        %buildroot%_iconsdir/hicolor/$x'x'$x/apps/linuxcncicon.png
+    convert linuxcncicon.png -resize $x'x'$x \
+            %buildroot%_iconsdir/hicolor/$x'x'$x/apps/linuxcncicon.png
 done
 
 #fix uncompressed manual pages
@@ -194,12 +193,12 @@ popd
 %_initdir/realtime
 %_udevrulesdir/*.rules
 %_desktopdir/*.desktop
-%exclude %_desktopdir/%name-documentation.desktop
 %_sysconfdir/X11/app-defaults/*
 %_datadir/axis
 %exclude %_datadir/axis/images
 %_datadir/%name/hallib
 %_datadir/%name/ncfiles
+%dir %_libexecdir/tcltk
 %_libexecdir/tcltk/%name
 %python_sitelibdir/*
 
@@ -230,11 +229,14 @@ popd
 %_niconsdir/*
 %_miconsdir/*
 %_mandir/man?/*
-
-%files doc
-%_desktopdir/%name-documentation.desktop
 %_docdir/%name
 %if_with docs
+%exclude %_docdir/%name/*.pdf
+%endif
+
+%if_with docs
+%files doc
+%_docdir/%name/*.pdf
 %exclude %_docdir/%name/*_??.pdf
 
 %files doc-fr
@@ -245,6 +247,10 @@ popd
 %endif
 
 %changelog
+* Tue Jan 30 2018 Anton Midyukov <antohami@altlinux.org> 2.7.12-alt1
+- new version 2.7.12
+- Fix pathdir
+
 * Wed Aug 30 2017 Anton Midyukov <antohami@altlinux.org> 2.7.11-alt1
 - New version 2.7.11
 - Added missing requires 
