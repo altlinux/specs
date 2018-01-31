@@ -6,7 +6,7 @@
 %add_findreq_skiplist %_libexecdir/installed-tests/%_name/test/*.py
 
 Name: python-module-dbus
-Version: 1.2.4
+Version: 1.2.6
 Release: alt1
 
 Summary: Python bindings for D-BUS library
@@ -24,12 +24,12 @@ Provides: %_name = %version-%release
 Provides: %name-data = %version-%release
 Obsoletes: %name-data < %version-%release
 
-BuildRequires: autoconf-archive libdbus-devel >= 1.6 libdbus-glib-devel
-BuildRequires: python-devel python3-devel python-modules-unittest
-BuildRequires: python-module-pygobject3
+BuildRequires: autoconf-archive libdbus-devel >= 1.8 libgio-devel >= 2.40
+BuildRequires: python-devel >= 2.7 python3-devel >= 3.4 python-modules-unittest
+BuildRequires: python-module-pygobject3 python-module-tappy
 # for python3
 BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3
-%{?_enable_check:BuildRequires: /proc dbus-tools dbus-tools-gui glibc-i18ndata}
+%{?_enable_check:BuildRequires: /proc dbus-tools dbus-tools-gui glibc-i18ndata python3-module-tappy}
 
 %description
 D-Bus python bindings for use with python programs.
@@ -133,6 +133,9 @@ done
 %exclude %_docdir/%_name
 
 %changelog
+* Wed Jan 31 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.6-alt1
+- 1.2.6
+
 * Wed Jun 01 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
 - 1.2.4
 - removed obsolete patches
