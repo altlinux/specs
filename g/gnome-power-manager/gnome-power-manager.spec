@@ -1,8 +1,8 @@
-%define ver_major 3.25
+%define ver_major 3.26
 %define xdg_name org.gnome.PowerStats
 
 Name: gnome-power-manager
-Version: %ver_major.90
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Power management tools
@@ -63,13 +63,16 @@ ln -sf %_licensedir/GPL-2 COPYING
 %_iconsdir/hicolor/*/*/*.svg
 %config %_datadir/glib-2.0/schemas/org.gnome.power-manager.gschema.xml
 %_man1dir/*.1.*
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %doc --no-dereference COPYING
 %doc README AUTHORS
 
 
 %changelog
+* Wed Jan 31 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Sun Sep 17 2017 Yuri N. Sedunov <aris@altlinux.org> 3.25.90-alt1
 - 3.25.90
 
