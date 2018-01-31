@@ -1,7 +1,7 @@
 %define oname eigen
 Name: %{oname}3
 Version: 3.3.4
-Release: alt3
+Release: alt4
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
 Group: Development/C++
@@ -9,6 +9,14 @@ Url: http://eigen.tuxfamily.org/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+
+# Install FindEigen3.cmake
+# Adapted from Debian eigen3 package
+Patch0:         01_install_FindEigen3.patch
+# Fix pkg-config file
+Patch1:         eigen_pkgconfig.patch
+# Fix the include paths in the new Eigen3Config.cmake file
+Patch2:         eigen3-3.3.1-fixcmake.patch
 
 BuildPreReq: gcc-c++ cmake doxygen libqt4-devel libsuitesparse-devel
 BuildPreReq: libsuperlu-devel libmpfr-devel libgmp-devel
@@ -19,6 +27,10 @@ BuildPreReq: libXcomposite-devel libXdamage-devel libXdmcp-devel
 BuildPreReq: libXft-devel libxkbfile-devel libXpm-devel
 BuildPreReq: libXScrnSaver-devel libXxf86misc-devel libXxf86vm-devel
 BuildPreReq: libscotch-devel libgoogle-sparsehash
+
+# TODO: add devel subpackage and move stuff
+Provides: %{name}-devel = %EVR
+Provides: %{oname}-devel = %EVR
 
 %description
 Eigen is a C++ template library for linear algebra: matrices, vectors,
@@ -47,6 +59,9 @@ This package contains examples for Eigen.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
+%patch2 -p0 -b .fixcmake
 
 %build
 mkdir -p BUILD
@@ -90,6 +105,7 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %files
 %_includedir/*
 %_pkgconfigdir/*
+%_datadir/cmake/Modules/FindEigen3.cmake
 %_datadir/%name/cmake/*.cmake
 
 %files examples
@@ -100,6 +116,10 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %doc BUILD/doc/html/*
 
 %changelog
+* Wed Jan 31 2018 Igor Vlasenko <viy@altlinux.ru> 3.3.4-alt4
+- NMU: fixed FindEigen3.cmake (added fedora patches)
+- added -devel provides (TODO: eigen3 should be renamed to eigen3-devel)
+
 * Fri Nov 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.4-alt3
 - Updated build dependencies.
 
