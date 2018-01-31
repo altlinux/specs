@@ -1,19 +1,25 @@
+%def_enable snapshot
+
 %define _name org.gnome.Characters
 %define ver_major 3.26
 %define _libexecdir %_prefix/libexec
-%def_with included_libunistring
+%def_without included_libunistring
 
 Name: gnome-characters
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Character map application for GNOME
 Group: Text tools
 License: BSD and GPLv2+
 Url: https://wiki.gnome.org/Design/Apps/CharacterMap
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+#VCS: https://gitlab.gnome.org/GNOME/gnome-characters
+Source: %name-%version.tar
+%endif
 
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
@@ -68,12 +74,16 @@ characters.
 %_datadir/gnome-shell/search-providers/%_name.search-provider.ini
 %_iconsdir/*/*/*/*.svg
 %_iconsdir/*/*/*/*.png
-%_datadir/appdata/%_name.appdata.xml
+%_datadir/metainfo/%_name.appdata.xml
 %doc NEWS COPYING README
 
 %exclude %_libdir/%_name/libgc.la
 
 %changelog
+* Wed Jan 31 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt2
+- updated to v3.26.2-8-gc1b4f79
+- build with system libunistring2-0.9.8
+
 * Mon Oct 30 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 
