@@ -1,3 +1,5 @@
+%def_disable snapshot
+
 %define _name harfbuzz
 %define ver_major 1.7
 %def_with graphite2
@@ -5,16 +7,20 @@
 %def_disable introspection
 
 Name: lib%_name
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.5
+Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
 Group: System/Libraries
 License: MIT
 Url: http://freedesktop.org/wiki/Software/HarfBuzz
 
+%if_disabled snapshot
 Source: http://www.freedesktop.org/software/%_name/release/%_name-%version.tar.bz2
-#Source: %_name-%version.tar
+%else
+# VCS: git://anongit.freedesktop.org/harfbuzz
+Source: %_name-%version.tar
+%endif
 
 BuildRequires: gtk-doc gcc-c++ glib2-devel libfreetype-devel libcairo-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
@@ -141,6 +147,9 @@ export CXXFLAGS="${CXXFLAGS} -Dnullptr=0"
 
 
 %changelog
+* Wed Jan 31 2018 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt1
+- 1.7.5
+
 * Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1.7.4-alt2
 - rebuilt against libicu*.so.60
 
