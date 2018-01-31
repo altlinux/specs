@@ -1,11 +1,10 @@
-%def_with test
 %define libgnutls_soname 30
 %define libgnutlsxx28_soname 28
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
 Version: 3.5.17
-Release: alt1
+Release: alt2
 
 Summary: A TLS protocol implementation
 # The libgnutls library is LGPLv2.1+, utilities and remaining libraries are GPLv3+
@@ -19,24 +18,34 @@ Source: gnutls-%version.tar
 Patch1: gnutls-patch-test-hash-large.patch
 %define libcxx libgnutlsxx%libgnutlsxx28_soname
 %define libssl libgnutls%{libgnutls_openssl_soname}-openssl
-%def_disable guile
+%def_enable guile
 #set_automake_version 1.11
 
 # Automatically added by buildreq on Thu Dec 08 2011
 BuildRequires: gcc-c++ gtk-doc libgcrypt-devel libp11-kit-devel libreadline-devel libtasn1-devel makeinfo zlib-devel
 BuildRequires: libnettle-devel autogen libopts-devel libidn2-devel libunistring-devel
 %if_enabled guile
-BuildRequires: guile-devel
+# Unfortunately we have different version
+# on e2k and don't have guile-devel.
+# See https://bugzilla.altlinux.org/34496
+%ifarch e2k
+BuildRequires: guile20-devel
+%else
+BuildRequires: guile22-devel
+%endif
 %endif
 
 # For tests
-%if_with test
-BuildRequires: net-tools
-BuildRequires: /proc
-BuildRequires: datefudge
-BuildRequires: softhsm
-BuildRequires: openssl
-%endif
+%{?!_without_check:%{?!_disable_check:BuildRequires: net-tools}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: datefudge}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: softhsm}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: openssl}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: libssl-devel}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: socat}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: ppp}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: libseccomp-devel}}
 
 %description
 GnuTLS is a project that aims to develop a library which provides a
@@ -234,6 +243,11 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %define _unpackaged_files_terminate_build 1
 
 %check
+%ifarch e2k
+# This library can't be dlopened for some reason.
+# Just preload it for pksc11 tests.
+export LD_PRELOAD=libcxa.so.2
+%endif
 %make_build -k check
 
 %files -n lib%name -f gnutls%libgnutls_soname.lang
@@ -282,17 +296,22 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %docdir/*.cfg
 
 %if_enabled guile
-# %%_datadir/guile belongs to guile package
-# %%_datadir/guile/site may contain not only gnutls guile files.
-# therefore %%_datadir/guile and %%_datadir/guile/site are not packaged. 
-# is there some package using 'site' directory?
 %files -n libgnutls-guile
-%_libdir/libguile*
-%_datadir/guile/site/gnutls
-%_datadir/guile/site/gnutls.scm
+%_libdir/guile/*/guile*.so*
+%_libdir/guile/*/site-ccache/*
+%_datadir/guile/site/*/*
+%exclude %_libdir/guile/*/*.la
 %endif
 
 %changelog
+* Wed Jan 31 2018 Mikhail Efremov <sem@altlinux.org> 3.5.17-alt2
+- Fix privkey-verify-broken test.
+- Use guile20-devel on e2k.
+- Fix tests on e2k.
+- Build with guile22 support (closes: #34317).
+- Enable more tests.
+- Fix build cipher-openssl-compat test.
+
 * Thu Jan 18 2018 Mikhail Efremov <sem@altlinux.org> 3.5.17-alt1
 - Build with libidn2 instead if libidn.
 - Updated to 3.5.17.
