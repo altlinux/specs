@@ -13,7 +13,7 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.9.4
+Version: 5.10.0
 Release: alt1%ubt
 
 Group: System/Libraries
@@ -23,24 +23,22 @@ License: GPLv2 / GPLv3 / LGPLv3
 
 Source: %qt_module-opensource-src-%version.tar
 # FC
-Patch2: qtwebengine-opensource-src-5.9.2-linux-pri.patch
-Patch3: qtwebengine-opensource-src-5.6.0-no-icudtl-dat.patch
-Patch4: qtwebengine-opensource-src-5.9.0-fix-extractcflag.patch
-Patch5: qtwebengine-opensource-src-5.9.0-system-nspr-prtime.patch
-Patch6: qtwebengine-opensource-src-5.9.0-system-icu-utf.patch
-Patch7: qtwebengine-opensource-src-5.9.1-no-sse2.patch
-Patch8: qtwebengine-opensource-src-5.9.2-arm-fpu-fix.patch
-Patch9: qtwebengine-opensource-src-5.9.0-openmax-dl-neon.patch
-Patch10: qtwebengine-opensource-src-5.9.0-webrtc-neon-detect.patch
-Patch11: qtwebengine-opensource-src-5.9.0-gn-bootstrap-verbose.patch
-Patch12: qtwebengine-opensource-src-5.9.0-system-re2.patch
-# Gentoo
-Patch20: qtwebengine-5.9.3-icu-60.1.patch
-# ATL
+Patch1:  qtwebengine-everywhere-src-5.10.0-linux-pri.patch
+Patch2:  qtwebengine-opensource-src-5.6.0-no-icudtl-dat.patch
+Patch3:  qtwebengine-opensource-src-5.9.0-fix-extractcflag.patch
+Patch4:  qtwebengine-everywhere-src-5.10.0-system-nspr-prtime.patch
+Patch5:  qtwebengine-everywhere-src-5.10.0-system-icu-utf.patch
+Patch6:  qtwebengine-everywhere-src-5.10.0-no-sse2.patch
+Patch7:  qtwebengine-opensource-src-5.9.2-arm-fpu-fix.patch
+Patch8: qtwebengine-opensource-src-5.9.0-openmax-dl-neon.patch
+Patch9: qtwebengine-opensource-src-5.9.0-webrtc-neon-detect.patch
+Patch10: qtwebengine-everywhere-src-5.10.0-gn-bootstrap-verbose.patch
+Patch11: qtwebengine-everywhere-src-5.10.0-icu59.patch
+Patch12: qtwebengine-everywhere-src-5.10.0-no-aspirational-scripts.patch
+# ALT
 Patch100: alt-pepflashplayer.patch
-Patch101: alt-find-icu.patch
-Patch102: alt-find-ffmpeg.patch
-Patch103: alt-codecs.patch
+Patch101: alt-codecs.patch
+Patch102: alt-find-vpx.patch
 
 # Automatically added by buildreq on Sun Apr 03 2016
 # optimized out: fontconfig fontconfig-devel gcc-c++ glib2-devel kf5-attica-devel kf5-kjs-devel libEGL-devel libGL-devel libX11-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXext-devel libXfixes-devel libXi-devel libXrandr-devel libXrender-devel libXtst-devel libfreetype-devel libgpg-error libharfbuzz-devel libharfbuzz-icu libicu-devel libnspr-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-positioning libqt5-qml libqt5-quick libqt5-sql libqt5-webchannel libqt5-widgets libstdc++-devel libxml2-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-multiprocessing python-modules-xml python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-phonon-devel qt5-tools qt5-webchannel-devel qt5-webkit-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
@@ -51,10 +49,10 @@ BuildRequires(pre): libavformat-devel
 BuildRequires: libavcodec-devel libavutil-devel libavformat-devel libopus-devel libvpx-devel
 %endif
 BuildRequires: /proc
-BuildRequires: libicu-devel libEGL-devel
+BuildRequires: flex libicu-devel libEGL-devel
 BuildRequires: git-core gperf libalsa-devel libcap-devel libdbus-devel libevent-devel libexpat-devel libjpeg-devel libminizip-devel libnss-devel
-BuildRequires: fontconfig-devel libdrm-devel yasm gyp libudev-devel libxml2-devel libXNVCtrl-devel jsoncpp-devel
-BuildRequires: libopus-devel libpci-devel libpng-devel libprotobuf-devel libpulseaudio-devel libre2-devel libsnappy-devel libsrtp-devel
+BuildRequires: fontconfig-devel libdrm-devel yasm gyp libudev-devel libxml2-devel libXNVCtrl-devel jsoncpp-devel liblcms2-devel
+BuildRequires: libopus-devel libpci-devel libpng-devel libprotobuf-devel libpulseaudio-devel libre2-devel libsnappy-devel libsrtp2-devel
 BuildRequires: libvpx-devel libwebp-devel libxslt-devel ninja-build protobuf-compiler libva-devel libvdpau-devel
 BuildRequires: python-devel python-module-simplejson python-modules-json
 BuildRequires: qt5-connectivity-devel qt5-multimedia-devel qt5-script-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel
@@ -124,6 +122,7 @@ Requires: qt5-quickcontrols2
 %setup -n %qt_module-opensource-src-%version
 mv .gear/chromium src/3rdparty/
 ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -133,16 +132,12 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 %patch12 -p1
-#
-%patch20 -p1
 #
 %patch100 -p1
 %patch101 -p1
-%if %is_ffmpeg
 %patch102 -p1
-%endif
-%patch103 -p1
 syncqt.pl-qt5 -version %version -private
 
 # fix // in #include in content/renderer/gpu to avoid debugedit failure
@@ -204,6 +199,7 @@ ln -s ../src/core/Release/lib/libv8.so %_target_platform/lib/libv8.so
 %endif
 NUM_PROCS="%__nprocs"
 [ -n "$NUM_PROCS" -a "$NUM_PROCS" != "1"  ] || NUM_PROCS=6
+export NPROCS=$NUM_PROCS
 export STRIP=strip
 export NINJAFLAGS="-v -j $NUM_PROCS"
 export NINJA_PATH=%_bindir/ninja-build
@@ -220,7 +216,16 @@ export CFLAGS="$OPTFLAGS"
 
 mkdir -p %_target_platform
 pushd %_target_platform
-%_qt5_qmake QMAKE_CXXFLAGS="$CXXFLAGS" CONFIG+="webcore_debug v8base_debug force_debug_info pulseaudio system-icu system-opus system-webp proprietary-codecs %qt_ffmpeg_type" WEBENGINE_CONFIG+=" use_proprietary_codecs use_spellchecker" ..
+%_qt5_qmake \
+    QMAKE_CXXFLAGS="$CXXFLAGS" \
+    CONFIG+="webcore_debug v8base_debug force_debug_info pulseaudio system-icu system-opus system-webp proprietary-codecs %qt_ffmpeg_type" \
+    WEBENGINE_CONFIG+=" use_proprietary_codecs use_spellchecker" \
+    QMAKE_EXTRA_ARGS+="-system-webengine-icu" \
+%if %is_ffmpeg
+    QMAKE_EXTRA_ARGS+="-system-webengine-ffmpeg" \
+%endif
+    ..
+(while true; do date; sleep 7m; done) &
 %make_build
 export QT_HASH_SEED=0
 make docs
@@ -285,6 +290,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Wed Jan 31 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.0-alt1%ubt
+- new version
+
 * Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
 - new version
 
