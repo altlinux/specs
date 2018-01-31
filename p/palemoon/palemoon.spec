@@ -1,10 +1,10 @@
-%define git_commit b2444e8
+%define git_commit 4384376
 		    
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 27.7.1
+Version: 27.7.2
 
 # %%ifndef git_commit
 Release: alt1
@@ -15,7 +15,7 @@ Release: alt1
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 
-# git commit b2444e8e768fcbafb88087fabdcbd752f7433958
+# git commit 4384376a287a8d28b6750d86b29b290bb62da61b
 Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
@@ -87,7 +87,7 @@ Patch113: mozilla-kde-background.patch
 %set_autoconf_version 2.13
 
 # Automatically added by buildreq on Thu Jun 15 2017
-# optimized out: alternatives ca-certificates fontconfig fontconfig-devel glib2-devel libICE-devel libSM-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcloog-isl4 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstartup-notification libstdc++-devel libxcb-devel perl pkg-config python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-xml python3 xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
+# optimized out: alternatives ca-certificates fontconfig fontconfig-devel glib2-devel libICE-devel libSM-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcloog-isl4 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstartup-notification libstdc++-devel libxcb-devel perl pkg-config python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-xml python xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
 BuildRequires: doxygen gcc-c++ glibc-devel-static imake java-devel libGConf-devel libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel libjpeg-devel libnspr-devel
 BuildRequires: libpixman-devel libproxy-devel libpulseaudio-devel libsocket libsqlite3-devel libstartup-notification-devel libvpx-devel
 BuildRequires: python-module-future python-module-yaml python-modules-wsgiref python3-base 
@@ -96,6 +96,8 @@ BuildRequires: libpulseaudio-devel
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
+
+BuildPreReq: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-xml
 
 BuildPreReq:  libsocket 
 
@@ -425,10 +427,11 @@ install -D -m 644 %SOURCE8 %buildroot/%palemoon_prefix/browser/defaults/preferen
 
 mv -f %buildroot%palemoon_prefix/application.ini %buildroot%palemoon_prefix/browser/application.ini
 
-# cat > %buildroot/%palemoon_prefix/browser/defaults/preferences/%sname-l10n.js <<EOF
-# pref("intl.locale.matchOS",		true);
-# pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
-#EOF
+cat > %buildroot/%palemoon_prefix/browser/defaults/preferences/%sname-l10n.js <<EOF
+pref("intl.locale.matchOS",		true);
+pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
+pref("extensions.getAddons.cache.enabled", false);
+EOF
 
 #install -D -m644 browser/app/profile/prefs.js %buildroot%palemoon_datadir/browser/defaults/profile/prefs.js
 
@@ -590,8 +593,11 @@ install -D -m 644 README.md ../
 %exclude %_includedir/*
 %exclude %_datadir/idl/*
 
-# git commit b2444e8e768fcbafb88087fabdcbd752f7433958
+# git commit 4384376a287a8d28b6750d86b29b290bb62da61b
 %changelog
+* Wed Jan 31 2018 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.7.2-alt1
+- New Version - Release 27.7.2
+
 * Thu Jan 18 2018 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.7.1-alt1
 - New Version - Release 27.7.1
 
