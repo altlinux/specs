@@ -1,6 +1,6 @@
 Name: libxslt
 Version: 1.1.32
-Release: alt1
+Release: alt2
 
 Summary: Library providing XSLT support
 License: MIT
@@ -8,7 +8,7 @@ Group: System/Libraries
 Url: http://xmlsoft.org/
 
 %def_disable static
-%define srcname %name-v1.1.28-46-g7ca19df
+%define srcname %name-%version
 
 # git://git.gnome.org/libxslt.git
 Source: %srcname.tar
@@ -175,14 +175,17 @@ make check
 %pkgdocdir/python/examples/*.xsl
 
 %changelog
-* Wed Nov 15 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.32-alt1
-- Updated to 1.1.32.
+* Wed Jan 31 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.32-alt2
+- Actually updated source to 1.1.32.
 - Upstream support for SOURCE_DATE_EPOCH (ALT#32814).
 - Fixes:
   + CVE-2017-5029 generation of text nodes integer overflow,
   + CVE-2016-1684 integer overflow (mishandle the i format token for
     xsl:number),
   + CVE-2016-1683 out-of-bounds heap memory access (mishandle namespace nodes).
+
+* Wed Nov 15 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.32-alt1
+- Updated to 1.1.32.
 
 * Sun Nov 22 2015 Dmitry V. Levin <ldv@altlinux.org> 1.1.28-alt4
 - Updated to v1.1.28-46-g7ca19df.
