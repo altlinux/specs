@@ -5,19 +5,17 @@
 %def_disable bootstrap
 
 Name: qt5-webkit
-Version: 5.9.4
+Version: 5.212.0
 Release: alt1%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
-License: LGPLv2 / GPLv3
+License: LGPLv2 / BSD
 Url: http://qt.io/
 Source: %qt_module-opensource-src-%version.tar
 
 # FC
-Patch1: 0001-Add-ARM-64-support.patch
-Patch2: qtwebkit-opensource-src-5.2.0-save_memory.patch
-Patch3: qtwebkit-opensource-src-5.0.1-debuginfo.patch
+Patch1: qtwebkit-5.212.0_cmake_cmp0071.patch 
 # ALT
 Patch10: alt-flags.patch
 
@@ -25,13 +23,14 @@ Patch10: alt-flags.patch
 # optimized out: elfutils fontconfig glib2-devel glibc-devel-static gstreamer-devel libGL-devel libX11-devel libXfixes-devel libfreetype-devel libgst-plugins libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-widgets libstdc++-devel libxml2-devel pkg-config python-base python-modules python-modules-compiler python-modules-encodings python-modules-xml python3 python3-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs xorg-compositeproto-devel xorg-fixesproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: flex fontconfig-devel gcc-c++ gperf gst-plugins-devel libXcomposite-devel libXext-devel libXrender-devel libgio-devel libicu-devel libjpeg-devel libpng-devel libsqlite3-devel libudev-devel libwebp-devel libxslt-devel perl-Term-ANSIColor python-module-distribute python-module-simplejson qt5-webkit-devel rpm-build-python3 rpm-build-ruby zlib-devel-static
 BuildRequires(pre): rpm-build-ubt
+BuildRequires: cmake
 BuildRequires: flex fontconfig-devel gcc-c++ libicu-devel libjpeg-devel libpng-devel
 BuildRequires: libsqlite3-devel libudev-devel libwebp-devel libxslt-devel libpcre-devel gperf
 BuildRequires: pkgconfig(glib-2.0) pkgconfig(gio-2.0)
 # pkgconfig(gstreamer-1.0) pkgconfig(gstreamer-plugins-base-1.0) pkgconfig(gstreamer-app-1.0)
 BuildRequires: libXcomposite-devel libXext-devel libXrender-devel
 # libGL-devel
-BuildRequires: python-module-distribute python-module-simplejson rpm-build-python
+BuildRequires: python-module-distribute python-module-simplejson python-module-json rpm-build-python
 BuildRequires: rpm-build-ruby
 BuildRequires: perl(Term/ANSIColor.pm) perl(Perl/Version.pm) perl(Digest/Perl/MD5.pm)
 BuildRequires: zlib-devel libxml2-devel
@@ -88,55 +87,80 @@ Requires: %name-common = %EVR
 %prep
 %setup -n %qt_module-opensource-src-%version
 %patch1 -p1
-%patch2 -p1 -b .save_memory
-%patch3 -p1 -b .debuginfo
+#
 %patch10 -p1
 syncqt.pl-qt5 Source -version %version -private
 
-# fix version
-sed -i 's|^MODULE_VERSION[[:space:]]*=.*|MODULE_VERSION = %version|' .qmake.conf
-
 # remove rpath
-find ./ -type f -name \*.pr\* | \
-while read f; do
-    sed -i 's|\(^CONFIG[[:space:]][[:space:]]*+=[[:space:]].*\)rpath|\1|' $f
-    sed -i 's|\([[:space:]]CONFIG[[:space:]][[:space:]]*+=[[:space:]].*\)rpath|\1|' $f
-done
+#find ./ -type f -name \*.pr\* | \
+#while read f; do
+#    sed -i 's|\(^CONFIG[[:space:]][[:space:]]*+=[[:space:]].*\)rpath|\1|' $f
+#    sed -i 's|\([[:space:]]CONFIG[[:space:]][[:space:]]*+=[[:space:]].*\)rpath|\1|' $f
+#done
 
 # fix linking
-echo 'QMAKE_LIBS_OPENGL += -lpthread' >> Source/api.pri
-
-echo "nuke bundled code..."
-# nuke bundled code
-mkdir Source/ThirdParty/orig
-mv Source/ThirdParty/{gtest/,qunit/} \
-   Source/ThirdParty/orig/
+#echo 'QMAKE_LIBS_OPENGL += -lpthread' >> Source/api.pri
 
 %build
 %remove_optflags '-g'
-export LDFLAGS="$LDFLAGS -Wl,--reduce-memory-overheads -Wl,--no-keep-memory"
-%qmake_qt5 \
+%add_optflags -g1
+export LDFLAGS="$LDFLAGS -Wl,--no-keep-memory"
+%if_disabled bootstrap
+export QT_HASH_SEED=0
+%endif
+export QT_INSTALL_DOCS="%_qt5_docdir"
+export QT_VER="%_qt5_version" QT_VERSION="%_qt5_version"
+export QT_VERSION_TAG=`echo "%_qt5_version" | sed 's|\.||g'`
+export BUILDDIR="$PWD"
+#    -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
+cmake \
+    -DCMAKE_INSTALL_PREFIX=%_qt5_prefix \
+    -DCMAKE_SKIP_RPATH:BOOL=ON \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON \
+    -DKDE_INSTALL_INCLUDEDIR:PATH=%_qt5_headerdir \
+    -DKDE_INSTALL_LIBEXECDIR:PATH=%_qt5_libexecdir \
+    -DKDE_INSTALL_LIBDIR:PATH=%_qt5_libdir \
+    -DKDE_INSTALL_QMLDIR=%_qt5_qmldir \
+    -DPORT=Qt \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DENABLE_TOOLS=OFF \
+    -DCMAKE_C_FLAGS_RELEASE:STRING="%optflags -DNDEBUG" \
+    -DCMAKE_CXX_FLAGS_RELEASE:STRING="%optflags -DNDEBUG" \
+    \
+    -DUSE_GSTREAMER=OFF \
+    -DUSE_QT_MULTIMEDIA=OFF \
+    -DENABLE_GEOLOCATION=OFF \
+    -DENABLE_DEVICE_ORIENTATION=OFF \
+    -DENABLE_NETSCAPE_PLUGIN_API=OFF \
+    -DUSE_LIBHYPHEN=OFF \
+    -DUSE_WOFF2=OFF \
+    -DENABLE_INSPECTOR_UI=OFF \
+    -DENABLE_LINK_PREFETCH=OFF \
+    \
 %ifnarch %arm %ix86 x86_64
-    DEFINES+=ENABLE_JIT=0 DEFINES+=ENABLE_YARR_JIT=0 \
+    -DENABLE_JIT=OFF \
+%endif
+%ifnarch %arm %ix86 x86_64
+    -DUSE_SYSTEM_MALLOC=ON \
+%endif
+%if_disabled bootstrap
+    -DGENERATE_DOCUMENTATION=ON \
 %endif
     #
 [ "%__nprocs" != 1 ] || export NPROCS=3
 %make_build
-%if_disabled bootstrap
-export QT_HASH_SEED=0
-%make docs
-%endif
 
 %install
-%install_qt5
-%if_disabled bootstrap
-%make INSTALL_ROOT=%buildroot install_docs ||:
-%endif
-
+export QT_INSTALL_DOCS="%_qt5_docdir"
+export QT_VER="%_qt5_version" QT_VERSION="%_qt5_version"
+export QT_VERSION_TAG=`echo "%_qt5_version" | sed 's|\.||g'`
+export BUILDDIR="$PWD"
+%make install DESTDIR=%buildroot
+%install_qt5_post_qt
+%install_qt5_post_common
 
 %files common
 %doc Source/WebCore/LICENSE*
-%doc VERSION
 
 %files doc
 %if_disabled bootstrap
@@ -145,7 +169,7 @@ export QT_HASH_SEED=0
 
 %files -n libqt5-webkit
 %_qt5_libdir/libQt5WebKit.so.*
-%_qt5_libexecdir/QtWebPluginProcess
+%_qt5_libexecdir/QtWeb?*Process
 %_qt5_archdatadir/qml/QtWebKit/
 
 %files -n libqt5-webkitwidgets
@@ -156,13 +180,16 @@ export QT_HASH_SEED=0
 %_qt5_headerdir/Qt*/
 %_qt5_libdir/libQt*.so
 %_qt5_libdatadir/libQt*.so
-%_qt5_libdir/libQt*.prl
-%_qt5_libdatadir/libQt*.prl
+#%_qt5_libdir/libQt*.prl
+#%_qt5_libdatadir/libQt*.prl
 %_qt5_libdir/cmake/Qt*/
 %_qt5_archdatadir/mkspecs/modules/*.pri
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Tue Jan 30 2018 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt1%ubt
+- update to 5.212
+
 * Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
 - new version
 
