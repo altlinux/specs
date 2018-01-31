@@ -6,7 +6,7 @@ BuildRequires: boost-python-devel
 %define _localstatedir %{_var}
 Name:           vegastrike
 Version:        0.5.1
-Release:        alt5_31.r1
+Release:        alt6_31.r1
 Summary:        3D OpenGL spaceflight simulator
 Group:          Games/Other
 License:        GPLv2+
@@ -44,6 +44,7 @@ Requires:       %{name}-data = %{version}, xdg-utils, opengl-games-utils
 Source44: import.info
 Patch33: vegastrike-0.5.1-alt-SharedPool.patch
 Patch34: vegastrike-0.5.1.r1-alt-perl522.patch
+Patch35: vegastrike-0.5.1-alt-flags.patch
 
 %description
 Vega Strike is a GPL 3D OpenGL Action RPG space sim that allows a player to
@@ -78,11 +79,13 @@ sed -i 's/-lboost_python-st/-lboost_python/g' Makefile.in
 rm objconv/mesher/expat.h
 %patch33 -p2
 %patch34 -p1
+%patch35 -p2
 
 
 %build
 export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
 export CXXFLAGS="$RPM_OPT_FLAGS -fsigned-char"
+%autoreconf
 %configure --with-data-dir=%{_datadir}/%{name} --with-boost=system \
   --enable-release --enable-flags="-DBOOST_PYTHON_NO_PY_SIGNATURES $RPM_OPT_FLAGS -fsigned-char" --disable-ffmpeg \
   --enable-stencil-buffer
@@ -127,6 +130,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Wed Jan 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.1-alt6_31.r1
+- Fixed build with new compiler flags.
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt5_31.r1
 - update to new release by fcimport
 
