@@ -13,8 +13,8 @@
 %def_enable microhttpd
 %def_enable gnutls
 %def_enable libcurl
-%def_enable libidn
-%def_disable libidn2
+%def_disable libidn
+%def_enable libidn2
 %def_enable libiptc
 %def_enable polkit
 %def_enable efi
@@ -56,8 +56,8 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 235
-Release: alt3
+Version: 237
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -72,6 +72,7 @@ Source5: altlinux-openresolv.service
 Source6: altlinux-libresolv.path
 Source7: altlinux-libresolv.service
 Source8: altlinux-clock-setup.service
+Source10: systemd-udev-trigger-no-reload.conf
 Source14: systemd-user.pam
 Source15: systemd-logind-launch
 Source16: altlinux-kmsg-loglevel.service
@@ -159,6 +160,7 @@ BuildRequires: pkgconfig(blkid) >= 2.24
 BuildRequires: libmount-devel >= 2.30
 BuildRequires: pkgconfig(mount) >= 2.27
 BuildRequires: pkgconfig(xkbcommon) >= 0.3.0
+BuildRequires: pkgconfig(libpcre2-8)
 BuildRequires: libkeyutils-devel
 
 %{?_enable_libcryptsetup:BuildRequires: libcryptsetup-devel >= 1.6.0}
@@ -183,14 +185,16 @@ Requires: filesystem >= 2.3.10-alt1
 Requires: agetty
 Requires: acl
 Requires: util-linux >= 2.27.1
-Requires: libidn >= 1.33-alt2
+%{?_enable_libidn:Requires: libidn >= 1.33-alt2}
+%{?_enable_libidn2:Requires: libidn2 >= 2.0.4-alt4}
+
 
 # Requires: selinux-policy >= 3.8.5
-Requires: libsystemd-shared = %EVR
-Requires: %name-utils = %EVR
-Requires: %name-services = %EVR
-Requires: pam_%name = %EVR
-Requires: journalctl = %EVR
+PreReq: libsystemd-shared = %EVR
+PreReq: %name-utils = %EVR
+PreReq: %name-services = %EVR
+PreReq: pam_%name = %EVR
+PreReq: journalctl = %EVR
 
 Requires: libnss-myhostname = %EVR
 
@@ -428,6 +432,7 @@ Group: System/Configuration/Other
 Summary: Network Time Synchronization
 Conflicts: %name < 1:214-alt13
 Requires: %name-networkd = %EVR
+Requires: libnss-systemd = %EVR
 Provides: ntp-client
 Provides: ntp-server
 
@@ -456,12 +461,15 @@ Requires: %name = %EVR
 %description analyze
 Analyze tool for systemd.
 
-%package journal-gateway
+%package journal-remote
 Group: System/Servers
 Summary: Journal Gateway Daemon
 Requires: %name = %EVR
+Requires: libnss-systemd  = %EVR
+Provides: systemd-journal-gateway = %EVR
+Obsoletes: systemd-journal-gateway < %EVR
 
-%description journal-gateway
+%description journal-remote
 This service provides access to the journal via HTTP and JSON.
 
 %package -n journalctl
@@ -683,7 +691,7 @@ Shared library and headers for libudev
 %build
 
 %meson \
-	-Drootprefix="/" \
+	-Drpmmacrosdir=no \
 	-Drootlibdir=/%_lib \
 	-Dpamlibdir=/%_lib/security \
 	-Dsplit-usr=true \
@@ -706,6 +714,7 @@ Shared library and headers for libudev
 	-Dsystem-uid-max=499 \
 	-Dsystem-gid-max=499 \
 	-Dtty-gid=5 \
+	-Dusers-gid=100 \
 	%{?_enable_elfutils:-Delfutils=true} \
 	%{?_enable_xz:-Dxz=true} \
 	%{?_enable_zlib:-Dzlib=true} \
@@ -724,6 +733,7 @@ Shared library and headers for libudev
 	%{?_enable_gnutls:-Dgnutls=true} \
 	%{?_enable_libcurl:-Dlibcurl=true} \
 	%{?_enable_libidn:-Dlibidn=true} \
+	%{?_enable_libidn2:-Dlibidn2=true} \
 	%{?_enable_libiptc:-Dlibiptc=true} \
 	%{?_enable_polkit:-Dpolkit=true} \
 	%{?_enable_efi:-Defi=true} \
@@ -743,7 +753,8 @@ Shared library and headers for libudev
 	%{?_enable_utmp:-Dutmp=true} \
 	-Ddefault-kill-user-processes=false \
 	-Ddefault-hierarchy=%hierarchy \
-	-Db_lto=true
+	-Db_lto=true \
+	-Dcertificate-root=/etc/pki/tls
 
 %meson_build
 
@@ -1009,6 +1020,9 @@ echo ".so man8/systemd-udevd.8" > %buildroot%_man8dir/udevd.8
 
 install -p -m644 %SOURCE31 %buildroot%_sysconfdir/udev/rules.d/
 
+# https://bugzilla.redhat.com/show_bug.cgi?id=1378974
+install -D -m644 -t %buildroot%_unitdir/systemd-udev-trigger.service.d/ %SOURCE10
+
 %check
 # %make check VERBOSE=1 || { cat test-suite.log; exit 1; }
 
@@ -1116,11 +1130,6 @@ fi
 %endif
 
 %if_enabled timesyncd
-%pre timesyncd
-%_sbindir/groupadd -r -f systemd-timesync >/dev/null 2>&1 ||:
-%_sbindir/useradd -g systemd-timesync -c 'systemd Time Synchronization' \
-    -d /var/empty -s /dev/null -r -l -M systemd-timesync >/dev/null 2>&1 ||:
-
 %post timesyncd
 if [ $1 -eq 1 ] ; then
         # Enable the services we install by default
@@ -1134,6 +1143,12 @@ if [ $1 -eq 0 ] ; then
         /bin/systemctl disable \
                 systemd-timesyncd.service \
                  >/dev/null 2>&1 || :
+fi
+if [ $1 -eq 1 ] ; then
+    if [ -f %_localstatedir/lib/systemd/clock ] ; then
+        mkdir -p %_localstatedir/lib/private/systemd/timesync
+        mv %_localstatedir/lib/systemd/clock %_localstatedir/lib/private/systemd/timesync/
+     fi
 fi
 %endif
 
@@ -1223,35 +1238,32 @@ fi
 update_chrooted all
 
 %if_enabled microhttpd
-%pre journal-gateway
-%_sbindir/groupadd -r -f systemd-journal-gateway ||:
-%_sbindir/useradd -g systemd-journal-gateway -c 'Journal Gateway' \
-    -d %_logdir/journal -s /dev/null -r -l systemd-journal-gateway >/dev/null 2>&1 ||:
-
+%pre journal-remote
 %_sbindir/groupadd -r -f systemd-journal-remote ||:
 %_sbindir/useradd -g systemd-journal-remote -c 'Journal Remote' \
     -d %_logdir/journal/remote -s /dev/null -r -l systemd-journal-remote >/dev/null 2>&1 ||:
 
-%if_enabled libcurl
-%_sbindir/groupadd -r -f systemd-journal-upload ||:
-%_sbindir/useradd -g systemd-journal-upload -G systemd-journal -c 'Journal Upload' \
-    -d %_logdir/journal/upload -s /dev/null -r -l systemd-journal-upload >/dev/null 2>&1 ||:
-%endif
-
-%post journal-gateway
+%post journal-remote
 %post_service systemd-journal-gatewayd
 %post_service systemd-journal-remote
 %if_enabled libcurl
 %post_service systemd-journal-upload
 %endif
 
-%preun journal-gateway
+%preun journal-remote
 %preun_service systemd-journal-gatewayd
 %preun_service systemd-journal-remote
 %if_enabled libcurl
 %preun_service systemd-journal-upload
 %endif
 
+if [ $1 -eq 1 ] ; then
+    if [ -f %_localstatedir/lib/systemd/journal-upload/state -a ! -L %_localstatedir/lib/systemd/journal-upload ] ; then
+        mkdir -p %_localstatedir/lib/private/systemd/journal-upload
+        mv %_localstatedir/lib/systemd/journal-upload/state %_localstatedir/lib/private/systemd/journal-upload/
+        rmdir %_localstatedir/lib/systemd/journal-upload || :
+     fi
+fi
 %endif
 
 %pre -n udev
@@ -1332,9 +1344,11 @@ fi
 %_man8dir/systemd-veritysetup*
 %endif
 /lib/systemd/systemd-fsck
+/lib/systemd/systemd-growfs
 /lib/systemd/systemd-hibernate-resume
 /lib/systemd/systemd-initctl
 /lib/systemd/systemd-journald
+/lib/systemd/systemd-makefs
 /lib/systemd/systemd-quotacheck
 /lib/systemd/systemd-random-seed
 /lib/systemd/systemd-remount-fs
@@ -1369,6 +1383,7 @@ fi
 %endif
 %if_enabled microhttpd
 %exclude %_unitdir/systemd-journal-gatewayd*
+%exclude %_unitdir/systemd-journal-remote*
 %endif
 %if_enabled libcurl
 %exclude %_unitdir/systemd-journal-upload*
@@ -1440,13 +1455,17 @@ fi
 %_man8dir/systemd-fstab-generator*
 %_man8dir/systemd-getty-generator*
 %_man8dir/systemd-gpt-auto-generator*
+%_man8dir/systemd-growfs*
 %_man8dir/systemd-sysv-generator*
 %_man8dir/systemd-hibernate*
 %_man8dir/*sleep*
 %_man8dir/systemd-initctl*
 %_man8dir/systemd-kexec*
+%_man8dir/systemd-makefs*
+%_man8dir/systemd-makeswap*
 %_man8dir/systemd-quota*
 %_man8dir/systemd-random-seed*
+%_man8dir/systemd-rc-local-generator*
 %_man8dir/systemd-remount*
 %_man8dir/systemd-rfkill*
 %_man8dir/systemd-socket-proxyd*
@@ -1689,6 +1708,7 @@ fi
 %_mandir/*/*network*
 %_mandir/*/*netdev*
 %_mandir/*/*resolved*
+%_mandir/*/*dnssd*
 %_man1dir/systemd-resolve.*
 %_man5dir/dnssec-trust-anchors.d.*
 %_man5dir/systemd.negative.*
@@ -1746,13 +1766,14 @@ fi
 %_man1dir/systemd-analyze.*
 
 %if_enabled microhttpd
-%files journal-gateway
+%files journal-remote
 %dir %attr(2755,systemd-journal-remote,systemd-journal-remote) %_logdir/journal/remote
 %config(noreplace) %_sysconfdir/systemd/journal-remote.conf
 %dir %attr(0755,systemd-journal-upload,systemd-journal-upload) %_var/lib/systemd/journal-upload
 /lib/systemd/systemd-journal-gatewayd
 /lib/systemd/systemd-journal-remote
 %_unitdir/systemd-journal-gatewayd.*
+%_unitdir/systemd-journal-remote*
 %_datadir/systemd/gatewayd
 %_man8dir/systemd-journal-gatewayd.*
 %_man8dir/systemd-journal-remote.*
@@ -1912,6 +1933,13 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Mon Jan 29 2018 Alexey Shabalin <shaba@altlinux.ru> 1:237-alt1
+- 237
+- build with libidn2
+
+* Tue Jan 23 2018 Alexey Shabalin <shaba@altlinux.ru> 1:236-alt1
+- 236
+
 * Tue Nov 14 2017 Alexey Shabalin <shaba@altlinux.ru> 1:235-alt3
 - fixed udevadm path in units
 

@@ -1,6 +1,6 @@
 Name: json-c
 Version: 0.12.1
-Release: alt1
+Release: alt2
 
 Summary: JSON implementation in C
 License: MIT
@@ -52,11 +52,19 @@ This package contains development part of JSON-C
 %install
 %makeinstall_std
 
+# Relocate shared libraries from %%_libdir/ to /%%_lib/.
+mkdir -p %buildroot/%_lib
+for f in %buildroot%_libdir/*.so; do
+        t=$(readlink -v "$f")
+        ln -fnrs %buildroot/%_lib/"$t" "$f"
+done
+mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
+
 %check
 %make check
 
 %files -n lib%name
-%_libdir/*.so.*
+/%_lib/*.so.*
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -64,6 +72,9 @@ This package contains development part of JSON-C
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jan 26 2018 Alexey Shabalin <shaba@altlinux.ru> 0.12.1-alt2
+- move library /usr/lib -> /lib
+
 * Fri May 05 2017 Alexey Shabalin <shaba@altlinux.ru> 0.12.1-alt1
 - 0.12.1
 

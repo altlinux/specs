@@ -4,7 +4,7 @@
 
 Name: lib%_name
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: A library for low-level manipulation with block devices
 Group: System/Libraries
@@ -536,6 +536,9 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 
 
 %changelog
+* Mon Jan 29 2018 Yuri N. Sedunov <aris@altlinux.org> 2.15-alt2
+- rebuilt against libcryptsetup.so.12
+
 * Wed Dec 06 2017 Yuri N. Sedunov <aris@altlinux.org> 2.15-alt1
 - 2.15
 
