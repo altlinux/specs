@@ -1,10 +1,10 @@
 %def_disable static
 %def_without bootstrap
 %def_with ldap
-%def_with prelude
+%def_without prelude
 
 Name: audit
-Version: 2.8.1
+Version: 2.8.2
 Release: alt1%ubt
 
 Packager: Anton Farygin <rider@altlinux.com>
@@ -203,6 +203,10 @@ install -pD -m644 rules/10-base-config.rules %buildroot%_sysconfdir/%name/rules.
 %endif
 
 %changelog
+* Fri Jan 26 2018 Anton Farygin <rider@altlinux.ru> 2.8.2-alt1%ubt
+- new version
+- disabled prelude support (code is outdated and needs to be revised)
+
 * Sun Oct 15 2017 Anton Farygin <rider@altlinux.ru> 2.8.1-alt1%ubt
 - new version
 
