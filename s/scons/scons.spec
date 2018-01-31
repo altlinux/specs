@@ -1,5 +1,5 @@
 Name: scons
-Version: 2.3.3
+Version: 3.0.1
 Release: alt1
 
 Summary: an Open Source software construction tool
@@ -13,10 +13,11 @@ BuildArch: noarch
 BuildRequires: python-devel
 
 Source: http://dl.sf.net/scons/%name-src-%version.tar.gz
-Patch: %name-%version-%release.patch
+#Patch: %name-%version-%release.patch
 
 Obsoletes: scons-doc < %version-%release
 Provides: scons-doc = %version-%release
+Requires: python-module-setuptools
 
 %add_python_req_skip builtins
 
@@ -52,15 +53,8 @@ Carpentry в августе 2000г.
 
 %prep
 %setup -n %name-src-%version
-%patch -p1
+#%patch -p1
 sed -i 's|/usr/bin/env python|/usr/bin/python|' script/*
-
-# Convert to utf-8
-for file in *.txt; do
-    iconv -f ISO-8859-1 -t UTF-8 -o $file.new $file && \
-    touch -r $file $file.new && \
-    mv $file.new $file
-done
 
 %build
 python setup.py build
@@ -79,9 +73,13 @@ python setup.py install -O1 --skip-build \
 %_man1dir/*
 %_bindir/*
 %python_sitelibdir_noarch/SCons
+%python_sitelibdir_noarch/*.egg-info
 %_mandir/man?/*
 
 %changelog
+* Mon Jan 29 2018 Vladimir Didenko <cow@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
 * Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.3-alt1
 - Version 2.3.3
 

@@ -20,7 +20,7 @@
 %global import_path     %{provider_prefix}
 
 Name: mongo-tools
-Version: 3.4.3
+Version: 3.6.2
 Release: alt1
 Summary: mongo client shell and tools
 License: ASL 2.0
@@ -33,7 +33,7 @@ Source: %name-%version.tar
 
 BuildRequires: golang >= 1.3
 BuildRequires: golang-tools-devel
-BuildRequires: libssl-devel
+BuildRequires: libssl-devel libpcap-devel
 
 Conflicts:      mongo < 3.0.0
 
@@ -86,7 +86,7 @@ ln -s ../../../  src/github.com/mongodb/mongo-tools
 export GOPATH=$(pwd):$(pwd)/vendor:%{gopath}
 
 mkdir bin
-binaries=(bsondump mongostat mongofiles mongoexport mongoimport mongorestore mongodump mongotop mongooplog)
+binaries=(bsondump mongostat mongofiles mongoexport mongoimport mongorestore mongodump mongotop mongoreplay)
 for bin in "${binaries[@]}"; do
     go build -o bin/${bin} \-tags ssl ${bin}/main/${bin}.go
 done
@@ -120,6 +120,9 @@ sort -u -o devel.file-list devel.file-list
 %{gopath}/src/%{import_path}
 
 %changelog
+* Wed Jan 31 2018 Vladimir Didenko <cow@altlinux.org> 3.6.2-alt1
+- 3.6.2
+
 * Mon Apr 10 2017 Vladimir Didenko <cow@altlinux.org> 3.4.3-alt1
 - 3.4.3
 
