@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define _name httpseverywhere
-%define ver_major 0.6
-%define api_ver 0.6
+%define ver_major 0.8
+%define api_ver 0.8
 
 %def_enable introspection
 %def_enable valadoc
 
 Name: lib%_name
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library to use HTTPSEverywhere in desktop applications
@@ -113,6 +113,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Wed Jan 31 2018 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Thu Jan 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.6.6-alt1
 - 0.6.6
 
