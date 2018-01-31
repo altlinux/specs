@@ -1,5 +1,3 @@
-%add_optflags -fpermissive
-
 %def_disable debug
 %def_disable prof
 %def_disable werror
@@ -37,7 +35,7 @@
 %def_enable mms
 %def_enable bzip2
 %def_enable zip
-%def_enable iso9660
+%def_disable iso9660
 %def_enable sqlite
 %def_disable sidplay
 %def_enable doc
@@ -59,7 +57,7 @@
 
 %define  Name MPD
 Name: 	 mpd
-Version: 0.20.6
+Version: 0.20.15
 Release: alt1
 Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
 
@@ -67,15 +65,13 @@ License: %gpl2plus
 Group:   Sound
 URL:     http://musicpd.org
 
-Source0: %name-%version.tar
+Source: %name-%version.tar
 # VCS:   git://git.musicpd.org/master/mpd.git
 Source1: %name.conf
 Source2: %name.sys.conf.in
 Source3: %name.init.in
 Source4: %name.logrotate
 Source5: %name.tmpfile
-Patch:   %name-%version-%release.patch
-Packager: Alexey Rusakov <ktirf@altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: zlib-devel gcc-c++
@@ -109,11 +105,13 @@ BuildRequires: zlib-devel gcc-c++
 %{?_enable_sqlite:BuildRequires: libsqlite3-devel}
 %{?_enable_fluidsynth:BuildRequires: libfluidsynth-devel}
 %{?_enable_mpg123:BuildRequires: libmpg123-devel}
-%{?_enable_doc:BuildRequires: docbook-dtds doxygen xmlto >= 0.0.21-alt2}
+%{?_enable_doc:BuildRequires: docbook-dtds doxygen xmlto >= 0.0.21-alt2 /usr/bin/dot}
 BuildRequires: systemd-devel
 %if %zeroconf == avahi
-BuildRequires: libavahi-glib-devel
+BuildRequires: libavahi-glib-devel libdbus-devel
 %endif
+
+BuildRequires: boost-devel libicu-devel
 
 %description
 Music Player Daemon (%Name) allows remote access for playing music
@@ -159,11 +157,9 @@ This package contains %Name's API documentation.
 
 %prep
 %setup
-%patch -p1
 [ $(rpmvercmp %{get_version libflac-devel} 1.1.3) -lt 0 ] || sed -i 's/AM_PATH_LIBOGGFLAC/AM_PATH_LIBFLAC/' configure.ac
 # libmad.pc describes 'libmad', not 'mad'
 sed -i 's/\[mad\]/[libmad]/' configure.ac
-
 
 %build
 %define _optlevel 3
@@ -224,7 +220,8 @@ bzip2 --best --keep --force NEWS
 %makeinstall_std protocoldir=%_docdir/%name-%version/html
 ln -s html %buildroot%_docdir/%name-%version/protocol
 install -d %buildroot{%_localstatedir/%name/playlists,{%_runtimedir,%_logdir}/%name,%_sysconfdir,%_initdir,%_tmpfilesdir}
-install -m 0644 %SOURCE1 %buildroot%_sysconfdir/%name.conf
+sed -e "s|@localstatedir@|%_localstatedir|g" -e "s|@logdir@|%_logdir|g" %SOURCE1 > %buildroot%_sysconfdir/%name.conf
+chmod 644 %buildroot%_sysconfdir/%name.conf
 sed 's/@MPD_USER@/%mpd_user/g' %SOURCE2 > %buildroot%_sysconfdir/%name.sys.conf
 chmod 640 %buildroot%_sysconfdir/%name.sys.conf
 sed 's/@MPD_USER@/%mpd_user/g' %SOURCE3 > %buildroot%_initdir/%name
@@ -252,12 +249,11 @@ bzip2 --best %buildroot%_docdir/%name-%version/NEWS
 %files
 %doc %dir %_docdir/%name-%version
 %doc %_docdir/%name-%version/AUTHORS
-%doc %_docdir/%name-%version/README
+%doc %_docdir/%name-%version/README.md
 %doc %_docdir/%name-%version/COPYING
 %doc %_docdir/%name-%version/%{name}conf.example
 %if_disabled doc
 %doc %_docdir/%name-%version/NEWS.*
-%doc %_docdir/%name-%version/UPGRADING
 %endif
 %config(noreplace) %_sysconfdir/%name.conf
 %config(noreplace) %_sysconfdir/%name.sys.conf
@@ -270,7 +266,6 @@ bzip2 --best %buildroot%_docdir/%name-%version/NEWS
 %_tmpfilesdir/*
 %attr(775,root,%mpd_group) %dir %_localstatedir/%name
 %attr(775,root,%mpd_group) %dir %_localstatedir/%name/playlists
-%attr(775,root,%mpd_group) %dir %_runtimedir/%name
 %attr(775,root,%mpd_group) %dir %_logdir/%name
 
 
@@ -278,7 +273,6 @@ bzip2 --best %buildroot%_docdir/%name-%version/NEWS
 %files doc
 %doc %dir %_docdir/%name-%version
 %doc %_docdir/%name-%version/NEWS.*
-%doc %_docdir/%name-%version/UPGRADING
 %doc %_docdir/%name-%version/html
 %doc %_docdir/%name-%version/protocol
 %doc %_docdir/%name-%version/user
@@ -292,6 +286,10 @@ bzip2 --best %buildroot%_docdir/%name-%version/NEWS
 
 
 %changelog
+* Wed Jan 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.20.15-alt1
+- Updated to upstream version 0.20.15.
+- Disabled iso9660 support since it isn't ported yet to new libcdio.
+
 * Thu Apr 06 2017 Denis Smirnov <mithraen@altlinux.ru> 0.20.6-alt1
 - update to 0.20.6
 
