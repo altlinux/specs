@@ -1,31 +1,34 @@
 %define name 		Xaw95
 %define version 	1.1
-%define release 	alt2
+%define release 	alt3
 
-Summary: 3D Athena Widgets with W95 look and feel
 Name: %name
 Version: %version
-Release: alt2.qa2
-Url: http://www.netsw.org/x11/libs/xaw95/
+Release: %release
+
+Summary: 3D Athena Widgets with Win95 look and feel
+License: GPL
+Group: System/Libraries
+
+#Url: http://www.netsw.org/x11/libs/xaw95/
+Url: http://ibiblio.org/pub/linux/libs/X/
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 Source: %name-%version-src.tar.gz
 Patch0: %name-%version.dif
 Patch1: %name-%version-nocrash.patch
 Patch2: %name-%version-secure.patch
-License: GPL
-Group: System/Libraries
 
-%define libname 	lib%name
+%define libname lib%name
 
 # Automatically added by buildreq on Mon Dec 01 2008
-BuildRequires: flex gccmakedep imake libXext-devel libXmu-devel libXp-devel libXpm-devel rpm-build-java xorg-cf-files
+BuildRequires: flex gccmakedep imake libXext-devel libXmu-devel libXp-devel libXpm-devel xorg-cf-files
 
 %description
 Written by Eddie Hiu-Fung Lau, this widget set approximates
-the look and feel of windows 95.
+the look and feel of Windows 95.
 
 Differences between Xaw3d and Xaw95 are primarily minor
-changes in appearance to make widgets look more like Windows '95:
+changes in appearance to make widgets look more like Windows 95:
 
     * AsciiSink seems to handle clipping better.
     * Many widgets have different defaults for background
@@ -40,7 +43,7 @@ Summary: Widget based on Xaw3d
 Group: System/Libraries
 
 %description -n %libname
-3D Athena Widgets with W95 look and feel
+3D Athena Widgets with Win95 look and feel
 
 %package -n %libname-devel
 Summary: Widget based on Xaw3d
@@ -53,15 +56,15 @@ Group: Development/C
 Requires: %libname = %version
 
 %description -n %libname-devel
-3D Athena Widgets with W95 look and feel
+3D Athena Widgets with Win95 look and feel
 
 %description -n %libname-devel-static
-3D Athena Widgets with W95 look and feel
+3D Athena Widgets with Win95 look and feel
 
 %prep
 %setup -n %name-%version
-%patch1 -p0 -b .secure
 %patch2 -p0 -b .nocrash
+%patch1 -p0 -b .secure
 %patch0
 rm -rf laylex.c laygram.h laygram.c
 rm -rf exports/
@@ -74,9 +77,8 @@ xmkmf -a
 %make
 
 %install
-%make DESTDIR=%buildroot install
-rm -rf %buildroot/%_x11libdir/Xaw95/*so*
-
+%makeinstall_std
+rm -f %buildroot/%_x11libdir/Xaw95/*so*
 
 %files -n %libname
 %doc README.XAW3D
@@ -90,6 +92,11 @@ rm -rf %buildroot/%_x11libdir/Xaw95/*so*
 %_x11libdir/libXaw95.a
 
 %changelog
+* Wed Jan 31 2018 Michael Shigorin <mike@altlinux.org> 1.1-alt3
+- *correct* BuildRequires
+- updated Url:
+- minor spec cleanup
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt2.qa2
 - NMU: rebuilt for debuginfo.
 
