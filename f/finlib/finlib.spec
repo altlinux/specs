@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: finlib
-Version: 2.35.2
+Version: 2.36.5
 Release: alt1
 
 Summary: Fast indexing library
@@ -63,6 +63,9 @@ autoreconf -iv
 %endif
 
 %changelog
+* Wed Jan 31 2018 Kirill Maslinsky <kirill@altlinux.org> 2.36.5-alt1
+- 2.36.5
+
 * Tue Oct 18 2016 Kirill Maslinsky <kirill@altlinux.org> 2.35.2-alt1
 - 2.35.2
 
