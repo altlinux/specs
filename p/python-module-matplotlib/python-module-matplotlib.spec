@@ -13,7 +13,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt6
+Release: alt7
 
 Summary: Matlab(TM) style python plotting package
 
@@ -31,7 +31,7 @@ Source1: setup.cfg
 BuildRequires(pre): rpm-build-gir
 BuildRequires: gcc-c++ git-core libnumpy-devel time tk-devel libgtk+3-gir-devel libpng-devel libfreetype-devel
 BuildRequires: python-module-pycairo python-module-pygobject3 python-modules-tkinter python-module-cycler python-module-pyparsing python-module-pytz python-module-dateutil
-%{?!_without_check:BuildRequires: python-module-setuptools-tests python-module-numpy-testing python-module-setuptools-tests}
+%{?!_without_check:BuildRequires: python-module-numpy-testing}
 %{?_with_qt4:BuildRequires: python-module-PyQt4}
 %{?_with_qt5:BuildRequires: python-module-PyQt5}
 %{?_with_wx:BuildRequires: python-module-wx}
@@ -44,7 +44,7 @@ BuildRequires: python-module-html5lib
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3 python3-devel 
-BuildRequires: python3-module-setuptools-tests python3-module-numpy-testing python3-module-pycairo python3-module-pygobject3 python3-module-setuptools-tests python3-modules-tkinter python3-module-cycler python3-module-pyparsing python3-module-pytz python3-module-dateutil
+BuildRequires: python3-module-numpy-testing python3-module-pycairo python3-module-pygobject3 python3-modules-tkinter python3-module-cycler python3-module-pyparsing python3-module-pytz python3-module-dateutil
 %{?_with_qt4:BuildRequires: python3-module-PyQt4}
 %{?_with_qt5:BuildRequires: python3-module-PyQt5}
 %endif #python3
@@ -71,6 +71,7 @@ Summary: Matlab(TM) style python 3 plotting package
 Group: Development/Python3
 Requires: dvipng
 Requires: python3-module-%oname-gtk3
+Requires: python3-module-mpl_toolkits = %EVR
 %add_python3_req_skip AppKit Foundation PyObjCTools numarray paint _Py
 %add_python3_req_skip _winreg builtins distutils
 #add_python3_req_skip IPython.display  #needed matplotlib.backends.backend_nbagg
@@ -797,6 +798,10 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Mon Jan 29 2018 Stanislav Levin <slev@altlinux.org> 2.0.0-alt7
+- Fix Requires of python3-module-matplotlib
+  (mpl_toolkits is needed for namespace package import)
+
 * Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt6
 - Rebuilt with updated setuptools.
 
