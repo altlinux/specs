@@ -2,7 +2,7 @@ Name: kernel-image-std-pae
 Release: alt1
 epoch:1 
 %define kernel_base_version	4.4
-%define kernel_sublevel .113
+%define kernel_sublevel .114
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -390,6 +390,7 @@ install -Dp -m644 vmlinux %buildroot/boot/vmlinux-$KernelVer
 install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 
 make modules_install INSTALL_MOD_PATH=%buildroot INSTALL_FW_PATH=%buildroot/lib/firmware/$KernelVer
+find %buildroot -name '*.ko' | xargs gzip
 
 mkdir -p %buildroot%kbuild_dir/arch/x86
 install -d %buildroot%kbuild_dir
@@ -543,7 +544,8 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %exclude %modules_dir/kernel/drivers/ide/
 %exclude %modules_dir/kernel/arch/x86/kvm
 %exclude %modules_dir/kernel/net/netfilter/ipset
-%exclude %modules_dir/kernel/net/netfilter/xt_set.ko
+/lib/firmware/*
+%exclude %modules_dir/kernel/net/netfilter/xt_set.ko*
 %ghost %modules_dir/modules.alias.bin
 %ghost %modules_dir/modules.dep.bin
 %ghost %modules_dir/modules.symbols.bin
@@ -609,6 +611,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed Jan 31 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.114-alt1
+- v4.4.114
+
 * Wed Jan 24 2018 Kernel Bot <kernelbot@altlinux.org> 1:4.4.113-alt1
 - v4.4.113
 
