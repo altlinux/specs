@@ -1,13 +1,15 @@
 Summary:          Library to support IDNA2008 internationalized domain names
 Name:             libidn2
 Version:          2.0.4
-Release:          alt3
+Release:          alt4
 License:          (GPLv2+ or LGPLv3+) and GPLv3+
 Group:            System/Libraries
 URL:              https://www.gnu.org/software/libidn/#libidn2
 Source0:          %name-%version.tar
 BuildRequires:    libunistring-devel
 BuildRequires: /usr/bin/gtkdocize texinfo
+
+Requires: libunistring2 >= 0.9.8-alt1
 
 %define _unpackaged_files_terminate_build 1
 
@@ -81,6 +83,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_man1dir/idn2.1*
 
 %changelog
+* Wed Jan 31 2018 Alexey Shabalin <shaba@altlinux.ru> 2.0.4-alt4
+- Add R: libunistring2 >= 0.9.8-alt1 (library in /%_lib)
+
 * Mon Jan 22 2018 Mikhail Efremov <sem@altlinux.org> 2.0.4-alt3
 - Use _unpackaged_files_terminate_build.
 - Move library %_libdir -> /%_lib (closes: #34449).

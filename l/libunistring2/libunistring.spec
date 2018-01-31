@@ -1,5 +1,5 @@
 Name: libunistring2
-Version: 0.9.7
+Version: 0.9.8
 Release: alt1
 
 Summary: GNU Unicode string library
@@ -41,8 +41,16 @@ subst --preserve 's/gl_printf_safe=yes/gl_printf_safe=/' \
 %install
 %makeinstall_std
 
+# Relocate shared libraries from %%_libdir/ to /%%_lib/.
+mkdir -p %buildroot/%_lib
+for f in %buildroot%_libdir/*.so; do
+        t=$(readlink -v "$f")
+        ln -fnrs %buildroot/%_lib/"$t" "$f"
+done
+mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
+
 %files
-%_libdir/*.so.*
+/%_lib/*.so.*
 %doc AUTHORS BUGS NEWS THANKS
 %exclude %_docdir/libunistring/libunistring*
 
@@ -55,6 +63,10 @@ subst --preserve 's/gl_printf_safe=yes/gl_printf_safe=/' \
 %endif
 
 %changelog
+* Wed Jan 31 2018 Alexey Shabalin <shaba@altlinux.ru> 0.9.8-alt1
+- 0.9.7 -> 0.9.8
+- Move library %_libdir -> /%_lib (for libidn2)
+
 * Sat Oct 28 2017 Dmitry V. Levin <ldv@altlinux.org> 0.9.7-alt1
 - 0.9.4 -> 0.9.7 (closes: #30746).
 
