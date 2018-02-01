@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Tree-DAG_Node
-Version: 1.29
+Version: 1.30
 Release: alt1
 
 Summary: (super)class for representing nodes in a tree
@@ -27,7 +27,7 @@ Url: http://search.cpan.org/dist/Tree-DAG_Node/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RS/RSAVAGE/Tree-DAG_Node-%{version}.tgz
+Source0: http://www.cpan.org/authors/id/R/RS/RSAVAGE/%{module}-%{version}.tgz
 
 # Automatically added by buildreq on Wed Sep 17 2008 (-bi)
 BuildRequires: perl-devel perl(Module/Build.pm) perl(File/Slurp.pm) perl(File/Slurp/Tiny.pm)
@@ -42,7 +42,7 @@ which are not allowed in a tree (such as having a node be its own
 mother or ancestor, or having a node have two mothers).
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -50,10 +50,14 @@ mother or ancestor, or having a node have two mothers).
 %perl_vendor_install
 
 %files
+%doc README Changes Changelog.ini LICENSE
 %perl_vendor_privlib/Tree*
-%doc Changes README 
+%doc Changes README
 
 %changelog
+* Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.30-alt1
+- automated CPAN update
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1
 - automated CPAN update
 
