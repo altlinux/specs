@@ -106,7 +106,7 @@
 
 
 Name: libvirt
-Version: 3.10.0
+Version: 4.0.0
 Release: alt1%ubt
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -176,7 +176,13 @@ BuildRequires: python python-devel
 BuildRequires: zlib-devel
 BuildRequires: iproute2 perl-Pod-Parser
 BuildRequires: dmidecode
+BuildRequires: libtirpc-devel
+BuildRequires: glibc-utils
 BuildRequires: /sbin/rmmod
+BuildRequires: openvswitch
+BuildRequires: radvd
+BuildRequires: dnsmasq
+
 
 %description
 Libvirt is a C toolkit to interact with the virtualization capabilities
@@ -854,6 +860,16 @@ ln -sf ../../%_lib/libnss_libvirt.so.2 %buildroot%_libdir/libnss_libvirt.so
 mv %buildroot%_libdir/libnss_libvirt_guest.so.2 %buildroot/%_lib/
 ln -sf ../../%_lib/libnss_libvirt_guest.so.2 %buildroot%_libdir/libnss_libvirt_guest.so
 
+# filetrigger that restart libvirtd after install any plugin
+cat <<EOF > filetrigger
+#!/bin/sh -e
+
+dir=%_libdir/libvirt/
+grep -qs '^'\$dir'' && /sbin/service libvirtd condrestart ||:
+EOF
+
+install -pD -m 755 filetrigger %buildroot%_rpmlibdir/%name.filetrigger
+
 %find_lang %name
 
 %check
@@ -969,6 +985,7 @@ fi
 %config(noreplace) %_sysconfdir/libvirt/libvirtd.conf
 /lib/sysctl.d/*
 %config(noreplace) %_sysconfdir/logrotate.d/libvirtd
+%_rpmlibdir/%name.filetrigger
 
 #virtlockd
 %config(noreplace) %_sysconfdir/libvirt/qemu-lockd.conf
@@ -1256,6 +1273,10 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Sat Jan 27 2018 Alexey Shabalin <shaba@altlinux.ru> 4.0.0-alt1%ubt
+- 4.0.0
+- add filetrigger that restart libvirtd after install any plugin
+
 * Fri Dec 08 2017 Alexey Shabalin <shaba@altlinux.ru> 3.10.0-alt1%ubt
 - 3.10.0
 
