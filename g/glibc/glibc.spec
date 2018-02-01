@@ -1,7 +1,7 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.26.9000.0.1248.407552c
+Version: 2.27
 Release: alt1
 Epoch: 6
 
@@ -29,7 +29,7 @@ Url: http://www.gnu.org/software/glibc/
 %def_disable multiarch
 %endif
 
-%define basever 2.26
+%define basever 2.27
 
 %define enablekernel 3.2
 
@@ -121,6 +121,12 @@ Requires: libgcc_s.so.1%lib_suffix
 Summary: The GNU libc Name Service Switch subsystem
 Group: System/Libraries
 PreReq: %name-pthread = %epoch:%version-%release
+Conflicts: %name < %epoch:%version-%release
+
+%package -n libnsl1
+Summary: Legacy NIS support library
+Group: System/Legacy libraries
+PreReq: %name-core = %epoch:%version-%release
 Conflicts: %name < %epoch:%version-%release
 
 %package locales
@@ -276,6 +282,13 @@ NSS is a Name Service Switch subsystem.  The basic idea is to put the
 implementation of the different services offered to access the databases
 in separate modules.
 
+%description -n libnsl1
+This package provides the legacy version of libnsl library, for
+accessing NIS services.
+
+This library is provided for backwards compatibility only;
+applications should use libnsl2 instead to gain IPv6 support.
+
 %description devel
 This package contains the header and object files necessary for developing
 programs which use the standard C libraries (which are used by nearly all
@@ -299,10 +312,8 @@ including:
 + xtrace
 
 %description -n nscd
-Nscd caches name service lookups and can dramatically improve performance
-with NIS+, and may help with DNS as well.  Note that you can't use nscd
-with 2.0 kernels because of bugs in the kernel-side thread support.
-Unfortunately, nscd happens to hit these bugs particularly hard.
+The nscd daemon caches name service lookups and can improve
+performance with LDAP, and may help with DNS as well.
 
 %description source
 This package contains source code of GNU libc.
@@ -372,6 +383,9 @@ mkdir -p %buildroot%_cachedir/ldconfig
 # Relocate shared libraries used by catchsegv, memusage and xtrace.
 mv %buildroot/%_lib/lib{memusage,pcprofile,SegFault}.so \
 	%buildroot%_libdir/ ||:
+
+# Relocate libnsl.
+mv %buildroot/%_lib/libnsl{-*.so,.so.1} %buildroot%_libdir/
 
 # Install upgrade programs.
 make -C alt install
@@ -646,6 +660,10 @@ fi
 /%_lib/libnss_*.so*
 %exclude /%_lib/libnss_f*
 
+%files -n libnsl1
+%_libdir/libnsl-*.so
+%_libdir/libnsl.so.1
+
 %if_with locales
 %files locales -f libc.lang
 %_bindir/locale*
@@ -687,6 +705,7 @@ fi
 
 %files devel -f devel.files
 %_libdir/lib*.so
+%exclude %_libdir/libnsl-*.so
 %exclude %_libdir/libmemusage.so
 %exclude %_libdir/libpcprofile.so
 %_libdir/*.o
@@ -731,6 +750,10 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Thu Feb 01 2018 Dmitry V. Levin <ldv@altlinux.org> 6:2.27-alt1
+- Updated to glibc-2.27.
+- Moved legacy libnsl to a separate subpackage.
+
 * Tue Jan 30 2018 Dmitry V. Levin <ldv@altlinux.org> 6:2.26.9000.0.1248.407552c-alt1
 - Updated to glibc-2.26.9000-1248-g407552c.
 - Switched IDNA implementation to libidn2 (by Florian Weimer;
