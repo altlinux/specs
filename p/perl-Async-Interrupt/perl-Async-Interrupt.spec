@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module Async-Interrupt
 
 Name: perl-%module
-Version: 1.21
-Release: alt1.1.1.1
+Version: 1.22
+Release: alt1
 Epoch: 1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -12,7 +13,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/Async-Interrupt-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-common-sense perl-devel
@@ -23,7 +24,7 @@ running perl code from another thread, asynchronously, and sometimes even
 without using a single syscall.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -37,6 +38,9 @@ without using a single syscall.
 %perl_vendor_autolib/Async
 
 %changelog
+* Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.22-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.21-alt1.1.1.1
 - rebuild with new perl 5.26.1
 
