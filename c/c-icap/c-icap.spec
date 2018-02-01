@@ -1,6 +1,6 @@
 Name: 	 c-icap
 Version: 0.5.2
-Release: alt2
+Release: alt3
 Epoch:	 1
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -48,7 +48,7 @@ ICAP module for scanning content with ClamAV.
 %build
 %autoreconf
 %undefine _configure_gettext
-%configure
+%configure --localstatedir=%_var
 %make_build
 
 %install
@@ -113,6 +113,9 @@ install -Dm 0644 %SOURCE3 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
 %_libdir/libicapapi.so
 
 %changelog
+* Thu Feb 01 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.5.2-alt3
+- Fixed localstatedir location.
+
 * Mon Oct 16 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.5.2-alt2
 - Fix missing /var/run/c-icap after reboot
 
