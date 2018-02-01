@@ -1,13 +1,13 @@
 Name: perl
 Version: 5.26.1
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
 License: GPL or Artistic
 Group: Development/Perl
 URL: http://www.perl.org
-Packager: Perl Maintainers Team <cpan@altlinux.ru>
+Packager: Perl Maintainers Team <cpan@packages.altlinux.org>
 
 Source: perl-%version.tar
 
@@ -949,6 +949,9 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%autolib/Unicode
 
 %changelog
+* Thu Feb 01 2018 Dmitry V. Levin <ldv@altlinux.org> 1:5.26.1-alt4
+- Rebuilt with new glibc (without -lnsl).
+
 * Fri Dec 29 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.26.1-alt3
 - cpan update Test-Simple-1.302073 to Test-Simple-1.302120
 
