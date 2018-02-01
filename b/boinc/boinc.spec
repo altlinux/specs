@@ -1,6 +1,6 @@
 Name:		boinc
 Version: 7.8.4
-Release: alt1
+Release: alt2
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 License:	GPLv3+/LGPLv3+
 Group:		Sciences/Other
@@ -32,6 +32,7 @@ Patch24:  boinc-7.0.31-alt-glibc-2.16.patch
 
 Patch25: boinc-7.4.42-alt-wxGTK3.1.patch
 Patch26: boinc-7.4.42-alt-gtk3.patch
+Patch27: boinc-7.8.4-alt-glibc.patch
 
 # Use def_with server to enable it
 %def_without server
@@ -229,6 +230,7 @@ This package contains a set of server libraires of the BOINC software.
 %patch24 -p2
 %patch25 -p0
 #%patch26 -p0
+%patch27 -p2
 
 # Do not use /usr/bin/env in PHP scripts.
 grep -rHsl -m 1 -e 'bin/env' html/* |
@@ -505,6 +507,8 @@ getent group boincadm >/dev/null || groupadd -r boincadm
 
 
 %changelog
+* Thu Feb 01 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 7.8.4-alt2
+- Fixed build with new glibc.
 
 * Tue Nov 28 2017 Ilya Mashkin <oddity@altlinux.ru> 7.8.4-alt1
 - update to 7.8.4 Build prepared by Oleg Solovyov (mcpain)
