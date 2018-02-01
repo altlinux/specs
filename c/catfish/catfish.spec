@@ -1,5 +1,5 @@
 Name: catfish
-Version: 1.4.2
+Version: 1.4.4
 Release: alt1
 Summary: A handy file search tool
 %setup_python_module catfish
@@ -74,7 +74,7 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_bindir/*
 %_desktopdir/%name.desktop
 %_datadir/%name
-%_datadir/appdata/%name.*
+%_datadir/metainfo/%name.*
 %_datadir/icons/hicolor/scalable/apps/%name.svg
 %_man1dir/*
 
@@ -83,6 +83,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 
 #files engines
 %changelog
+* Thu Feb 01 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.4-alt1
+- Updated to upstream version 1.4.4.
+
 * Thu Nov 17 2016 Fr. Br. George <george@altlinux.ru> 1.4.2-alt1
 - Autobuild version bump to 1.4.2
 - Separate supplemental module
