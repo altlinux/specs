@@ -3,7 +3,7 @@
 
 Name: python-module-dbusmock
 Version: 0.17
-Release: alt1
+Release: alt2
 
 Summary: mock D-Bus objects for tests
 License: LGPLv3
@@ -24,8 +24,9 @@ BuildRequires: python-devel python-module-setuptools
 BuildRequires: rpm-build-python3 python3-devel python3-module-setuptools
 %if_enabled check
 BuildRequires: /proc dbus-tools-gui
-BuildRequires: python-module-setuptools-tests python-module-nose python-module-dbus python-modules-json
-BuildRequires: python3-module-setuptools-tests python3-module-nose python3-module-dbus
+BuildRequires: python-module-setuptools python-module-nose python-module-dbus python-modules-json
+BuildRequires: python3-module-setuptools python3-module-nose python3-module-dbus
+BuildRequires: polkit
 %endif
 
 %description
@@ -84,6 +85,9 @@ popd
 
 
 %changelog
+* Thu Feb 01 2018 Yuri N. Sedunov <aris@altlinux.org> 0.17-alt2
+- fixed buildreqs
+
 * Mon Nov 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.17-alt1
 - 0.17
 
