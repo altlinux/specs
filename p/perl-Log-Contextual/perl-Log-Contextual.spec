@@ -6,7 +6,7 @@ BuildRequires: perl(Test/PerlTidy.pm) perl(Test/Pod.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Log-Contextual
-Version:        0.008000
+Version:        0.008001
 Release:        alt1
 Summary:        Simple logging interface with a contextual log
 License:        GPL+ or Artistic
@@ -77,6 +77,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.008001-alt1
+- automated CPAN update
+
 * Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.008000-alt1
 - automated CPAN update
 
