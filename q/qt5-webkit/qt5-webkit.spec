@@ -6,7 +6,7 @@
 
 Name: qt5-webkit
 Version: 5.212.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -159,6 +159,11 @@ export BUILDDIR="$PWD"
 %install_qt5_post_qt
 %install_qt5_post_common
 
+find %buildroot/%_libdir/cmake/ -type f -name \*.cmake | \
+while read f ; do
+    sed -i 's|${_IMPORT_PREFIX}/../../\([[:alpha:]]\)|/usr/\1|g' $f
+done
+
 %files common
 %doc Source/WebCore/LICENSE*
 
@@ -187,6 +192,9 @@ export BUILDDIR="$PWD"
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Thu Feb 01 2018 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt2%ubt
+- fix cmake-files
+
 * Tue Jan 30 2018 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt1%ubt
 - update to 5.212
 
