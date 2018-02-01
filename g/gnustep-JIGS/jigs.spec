@@ -2,7 +2,7 @@
 
 Name: gnustep-JIGS
 Version: 1.6.2
-Release: alt1.3
+Release: alt1.4
 Summary: Java Interface for GnuStep
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -15,7 +15,7 @@ BuildRequires: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildRequires: gnustep-gui-devel
 BuildRequires: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildRequires: libxslt-devel libffi-devel libicu-devel zlib-devel
-BuildRequires: java-1.6.0-devel texlive-latex-base
+BuildRequires: java-devel-default texlive-latex-base
 
 Requires: lib%name = %EVR
 Requires: gnustep-back
@@ -96,7 +96,7 @@ This package contains documentation for JIGS.
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh 
 
-export JAVA_HOME=/usr/lib/jvm/java-1.6.0
+export JAVA_HOME=/usr/lib/jvm/java
 
 %ifarch x86_64
 JAVA_SERVER=$JAVA_HOME/jre/lib/amd64/server
@@ -135,6 +135,9 @@ cp -fR Examples Testing %buildroot%_docdir/GNUstep/Developer/JIGS/
 %_docdir/GNUstep
 
 %changelog
+* Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1.4
+- nmu: rebuild with new openjdk java
+
 * Fri Feb 26 2016 Andrey Cherepanov <cas@altlinux.org> 1.6.2-alt1.3
 - Rebuild with new icu
 
