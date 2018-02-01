@@ -13,7 +13,7 @@
 Name:         lsb
 Summary:      The skeleton package defining packages needed for LSB compliance
 Version:      4.0
-Release:      alt5
+Release:      alt6
 License:      GPL
 Url:          http://www.linuxbase.org/
 Group:        System/Base
@@ -502,7 +502,7 @@ Provides: lsb-trialuse-noarch = %{compat_version}
 # Submodule Java
 # http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_Java
 Requires: /usr/bin/java
-Requires: java = 1.6.0
+Requires: java >= 1.8.0
 
 # Submodule Multimedia
 # http://dev.linuxfoundation.org/navigator/browse/module.php?cmd=display_module&module=LSB_Multimedia
@@ -659,6 +659,9 @@ touch %buildroot%{_sysconfdir}/lsb-release.d/trialuse-%{version}-noarch
 %{_sysconfdir}/lsb-release.d/trialuse-%{version}-noarch
 
 %changelog
+* Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 4.0-alt6
+- NMU: bumped java version to 1.8
+
 * Tue Jul 12 2011 Andriy Stepanov <stanv@altlinux.ru> 4.0-alt5
 - #25877
 
