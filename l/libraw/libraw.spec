@@ -1,18 +1,24 @@
+%def_disable snapshot
 %define _name LibRaw
 
 Name: libraw
 Version: 0.18.7
-Release: alt1
+Release: alt1.1
 
 Summary: library for reading RAW files obtained from digital photo cameras
 Group: System/Libraries
 License: LGPLv2.1 or CDDL-1.0; GPLv2, GPLv3 - demosaic packs
-
 Url: http://www.libraw.org
 
+%if_disabled snapshot
 Source: %url/data/%_name-%version.tar.gz
+%else
+# VCS: https://github.com/LibRaw/LibRaw.git
+Source: %_name-%version.tar
+%endif
 Source1: %url/data/%_name-demosaic-pack-GPL2-%version.tar.gz
 Source2: %url/data/%_name-demosaic-pack-GPL3-%version.tar.gz
+Patch: LibRaw-0.18.7-ambiguous.patch
 
 BuildRequires: gcc-c++ libjasper-devel liblcms2-devel libjpeg-devel libgomp-devel
 
@@ -61,6 +67,7 @@ This package contains static library.
 
 %prep
 %setup -n %_name-%version -a1 -a2
+%patch
 
 %build
 %autoreconf
@@ -89,6 +96,9 @@ This package contains static library.
 %_libdir/libraw_r.a
 
 %changelog
+* Thu Feb 01 2018 Yuri N. Sedunov <aris@altlinux.org> 0.18.7-alt1.1
+- fix for for ambiguous function call
+
 * Sat Jan 20 2018 Yuri N. Sedunov <aris@altlinux.org> 0.18.7-alt1
 - 0.18.7
 
