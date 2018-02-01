@@ -1,7 +1,7 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
 Version: 2.4.0.0
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 License: GPLv3
@@ -14,7 +14,7 @@ Url: http://www.ansible.com
 Packager: Evgenii Terechkov <evg@altlinux.org>
 
 BuildArch: noarch
-BuildRequires: python-module-setuptools asciidoc-a2x python-module-jinja2 python-module-yaml
+BuildRequires: python-module-setuptools asciidoc-a2x python-module-jinja2 python-module-yaml python-modules-json
 
 Requires: ca-certificates >= 2015.10.29
 %py_requires yaml
@@ -56,6 +56,9 @@ cp -v docs/man/man1/*.1 %buildroot/%_man1dir/
 %doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt CODING_GUIDELINES.md MODULE_GUIDELINES.md
 
 %changelog
+* Thu Feb  1 2018 Terechkov Evgenii <evg@altlinux.org> 2.4.0.0-alt2
+- Fix build (lost json module)
+
 * Sun Oct  8 2017 Terechkov Evgenii <evg@altlinux.org> 2.4.0.0-alt1
 - 2.4.0.0-1 (ALT#33908)
 
