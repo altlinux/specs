@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist MailTools
 Name: perl-%dist
-Version: 2.19
+Version: 2.20
 Release: alt1
 
 Summary: Perl modules related to mail applications
@@ -29,7 +29,7 @@ This is MailTools, a set of perl modules related to mail applications.
 %perl_vendor_install
 
 %files
-%doc	ChangeLog README README.demos examples
+%doc	ChangeLog README README.demos examples README.md
 %dir	%perl_vendor_privlib/Mail
 	%perl_vendor_privlib/Mail/*.pm
 %doc	%perl_vendor_privlib/Mail/*.pod
@@ -42,6 +42,9 @@ This is MailTools, a set of perl modules related to mail applications.
 	%perl_vendor_privlib/MailTools.pod
 
 %changelog
+* Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 2.20-alt1
+- automated CPAN update
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.19-alt1
 - automated CPAN update
 
