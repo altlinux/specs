@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Lingua-EN-Inflect-Phrase
 Name: perl-%dist
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Summary: Inflect short English Phrases
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RK/RKITOVER/Lingua-EN-Inflect-Phrase-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RK/RKITOVER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -20,7 +20,7 @@ BuildRequires: perl-Lingua-EN-Inflect-Number perl-Lingua-EN-Tagger perl-Pod-Esca
 Attempts to pluralize or singularize short English phrases.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,6 +33,9 @@ Attempts to pluralize or singularize short English phrases.
 %perl_vendor_privlib/Lingua
 
 %changelog
+* Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
 - automated CPAN update
 
