@@ -2,7 +2,7 @@
 %define module_name Module-ExtractUse
 
 Name: perl-%module_name
-Version: 0.341
+Version: 0.342
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -12,7 +12,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module_name
-Source: http://www.cpan.org/authors/id/D/DO/DOMM/Module-ExtractUse-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DO/DOMM/%{module_name}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -25,7 +25,7 @@ It tries very hard to find all modules (whether pragmas, Core, or from CPAN)
 used by the parsed code.
 
 %prep
-%setup -n %module_name-%version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,9 +34,13 @@ used by the parsed code.
 %perl_vendor_install
 
 %files
+%doc README Changes LICENSE example
 %perl_vendor_privlib/Module/
 
 %changelog
+* Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.342-alt1
+- automated CPAN update
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.341-alt1
 - automated CPAN update
 
