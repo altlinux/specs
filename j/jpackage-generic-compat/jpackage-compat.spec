@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.26
+Version: 0.27
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -115,15 +115,18 @@ Provides JPackage build environment with java-1.8.0.
 install -d $RPM_BUILD_ROOT%_javadir
 
 %files
-%ifarch %ix86 x86_64 
-%files -n jpackage-1.5.0-compat
-%files -n jpackage-1.6.0-compat
+%ifarch %ix86 x86_64
+#files -n jpackage-1.5.0-compat
+#files -n jpackage-1.6.0-compat
 %endif
 
 %files -n jpackage-1.7.0-compat
 %files -n jpackage-1.8-compat
 
 %changelog
+* Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
+- removed java 5/6 support
+
 * Thu Jan 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - selected java8 as default
 
