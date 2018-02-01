@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist BDB
 Name: perl-%dist
-Version: 1.91
-Release: alt1.1.1.1.1
+Version: 1.92
+Release: alt1
 Epoch: 1
 
 Summary: Asynchronous Berkeley DB access
@@ -9,7 +10,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/BDB-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: libdb4-devel perl-common-sense perl-devel
@@ -21,7 +22,7 @@ The BDB API is very similar to the C API (the translation has been very
 faithful).
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +36,9 @@ faithful).
 %perl_vendor_autolib/BDB
 
 %changelog
+* Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.92-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1:1.91-alt1.1.1.1.1
 - rebuild with new perl 5.26.1
 
