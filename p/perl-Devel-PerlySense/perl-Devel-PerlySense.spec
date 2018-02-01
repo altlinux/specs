@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 0.0218
 %define module_name Devel-PerlySense
 %add_findreq_skiplist %perl_vendor_privlib/Devel/PerlySense.pm
 %add_findreq_skiplist %perl_vendor_privlib/Devel/PerlySense*.pm
@@ -10,15 +9,14 @@ BuildRequires: perl(App/Ack.pm) perl(Cache/Cache.pm) perl(Cache/FileCache.pm) pe
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.0218
-Release: alt2
+Version: 0.0219
+Release: alt1
 Summary: Perl IDE backend with Emacs frontend.
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/J/JO/JOHANL/Devel-PerlySense-%{version}.tar.gz
-Patch: Devel-PerlySense-0.0218-perl5.26.patch
+Source0: http://www.cpan.org/authors/id/J/JO/JOHANL/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -33,8 +31,7 @@ Requires: %{?epoch:%epoch:}%name = %version-%release
 scripts for %module_name
 
 %prep
-%setup -n %module_name-%module_version
-%patch -p1
+%setup -q -n %{module_name}-%{version}
 rm t/PerlySense-Editor-Emacs-class-overview.t
 
 %build
@@ -52,6 +49,9 @@ rm t/PerlySense-Editor-Emacs-class-overview.t
 %_bindir/*
 
 %changelog
+* Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.0219-alt1
+- automated CPAN update
+
 * Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.0218-alt2
 - fixed build with new perl 5.26
 
