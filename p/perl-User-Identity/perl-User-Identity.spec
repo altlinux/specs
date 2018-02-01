@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-User-Identity
-Version: 0.98
+Version: 0.99
 Release: alt1
 
 Summary: Define a user
@@ -54,11 +54,14 @@ or whatever. Extension to simplify this task are still to be developed.
 rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
-%doc Changes README
+%doc Changes README ChangeLog README.md
 %perl_vendor_privlib/User/*
 %perl_vendor_privlib/Mail/*
 
 %changelog
+* Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1
+- automated CPAN update
+
 * Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1
 - automated CPAN update
 
