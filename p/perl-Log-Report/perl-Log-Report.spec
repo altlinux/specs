@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Log-Report
 Name: perl-%dist
-Version: 1.25
+Version: 1.26
 Release: alt1
 
 Summary: Report a problem, pluggable handlers and language support
@@ -56,7 +56,7 @@ Summary: %dist plugin for Dancer2
 %add_findreq_skiplist */Dancer2/Plugin/LogReport*
 
 %files
-%doc ChangeLog README examples
+%doc ChangeLog README examples README.md
 %perl_vendor_privlib/Log
 %perl_vendor_privlib/MojoX/Log
 
@@ -73,6 +73,9 @@ Summary: %dist plugin for Dancer2
 %perl_vendor_privlib/Dancer2/Plugin/LogReport/Message.pod
 
 %changelog
+* Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1
+- automated CPAN update
+
 * Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.25-alt1
 - automated CPAN update
 
