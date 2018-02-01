@@ -1,16 +1,14 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-DBIx-Class
-Version: 0.082840
-Release: alt2
+Version: 0.082841
+Release: alt1
 
 Summary: Extensible and flexible object <-> relational mapper
 License: Artistic
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/DBIx-Class/
-Source: http://www.cpan.org/authors/id/R/RI/RIBASUSHI/DBIx-Class-%{version}.tar.gz
-# Fix missing ORDER BY leading to failures of t/prefetch/grouped.t under
-# upcoming libsqlite (RT#117271)
-Patch0:         DBIx-Class-0.082840-Fix-test-RT117271.patch
+Source0: http://www.cpan.org/authors/id/R/RI/RIBASUSHI/DBIx-Class-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,8 +33,7 @@ single query, JOIN, LEFT JOIN, COUNT, DISTINCT, GROUP BY and
 HAVING support.
 
 %prep
-%setup -q -n DBIx-Class-%version
-%patch0 -p1
+%setup -q -n DBIx-Class-%{version}
 
 [ %version = 0.082840 ] && rm t/resultset/update_delete.t
 
@@ -47,13 +44,16 @@ HAVING support.
 %perl_vendor_install
 
 %files
-%doc Changes README 
+%doc Changes README AUTHORS examples
 %_bindir/dbic*
 %_man1dir/dbic*.1*
 %perl_vendor_privlib/DBIx*
 %perl_vendor_privlib/SQL*
 
 %changelog
+* Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.082841-alt1
+- automated CPAN update
+
 * Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.082840-alt2
 - added Patch0: DBIx-Class-0.082840-Fix-test-RT117271.patch
 
