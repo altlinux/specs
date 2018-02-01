@@ -12,7 +12,7 @@
 %def_without autotools_templates
 
 Name: gnome-builder
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -42,7 +42,7 @@ Source: %name-%version.tar
 %define gspell_ver 1.2.0
 %define peas_ver 1.21.0
 %define json_glib_ver 1.2.0
-%define dazzle_ver 3.26.2
+%define dazzle_ver 3.26.3
 
 # use python3
 AutoReqProv: nopython
@@ -224,6 +224,9 @@ This package provides noarch data needed for Gnome Builder to work.
 
 
 %changelog
+* Thu Feb 01 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.4-alt1
+- 3.26.4
+
 * Thu Jan 11 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt1
 - 3.26.3
 
