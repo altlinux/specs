@@ -3,7 +3,7 @@ Name: appliance-ve-ibank
 Summary: Simple VE for iBank
 BuildArch: noarch
 Version: 4.0.1
-Release: alt2
+Release: alt3
 License: GPL
 Group: System/Base
 
@@ -14,7 +14,7 @@ Requires: cpio
 Requires: dev
 Requires: fuse-encfs
 Requires: iptables
-Requires: java-sdk-1.5.0-sun
+Requires: java-devel-default
 Requires: mc
 Requires: perl-Git
 Requires: syskeeper-ve
@@ -25,6 +25,9 @@ Requires: syskeeper-ve
 %files
 
 %changelog
+* Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 4.0.1-alt3
+- NMU: java 1.5 no more, using default java sdk.
+
 * Sun Jun 16 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.1-alt2
 - add Url tag
 
