@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.716
-Release: alt1
+Release: alt1.1
 Summary: Toolkit for safe and simple cryptography
 License: Apache 2.0
 Group: Development/Python
@@ -14,13 +14,15 @@ Url: https://github.com/google/keyczar
 Source: python-%oname-%version.tar
 Patch1: %oname-%version-alt-build.patch
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-pycrypto python-module-pyasn1
 BuildRequires: python-modules-json
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pycrypto python3-module-pyasn1
+BuildRequires: python3-module-pytest
 %endif
 
 %setup_python_module %oname
@@ -106,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.716-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Nov 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.716-alt1
 - Updated to upstream version 0.716.
 - Fixed compatibility issues with pyasn1-0.3.7.
