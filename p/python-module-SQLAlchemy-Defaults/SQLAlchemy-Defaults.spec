@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.4
-Release: alt2.git20141230.2
+Release: alt2.git20141230.2.1
 Summary: Smart SQLAlchemy defaults for lazy guys, like me
 License: BSD
 Group: Development/Python
@@ -15,7 +15,7 @@ Packager: Python Development Team <python@packages.altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-six python-module-SQLAlchemy
 #BuildPreReq: python-module-Pygments python-module-jinja2
 #BuildPreReq: python-module-docutils python-module-flexmock
@@ -23,7 +23,7 @@ BuildArch: noarch
 #BuildPreReq: python-modules-sqlite3
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-six python3-module-SQLAlchemy
 #BuildPreReq: python3-module-Pygments python3-module-jinja2
 #BuildPreReq: python3-module-docutils python3-module-flexmock
@@ -35,7 +35,9 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-pluggy python-module-py python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python3 python3-base python3-module-Pygments python3-module-SQLAlchemy python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pluggy python3-module-py python3-module-pytest python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer xz
-BuildRequires: python-module-SQLAlchemy python-module-docutils python-module-flexmock python-module-html5lib python-module-psycopg2 python-module-setuptools-tests python-modules-sqlite3 python3-module-flexmock python3-module-html5lib python3-module-psycopg2 python3-module-setuptools-tests python3-module-sphinx python3-modules-sqlite3 rpm-build-python3 time
+BuildRequires: python-module-SQLAlchemy python-module-docutils python-module-flexmock python-module-html5lib python-module-psycopg2 python-module-setuptools python-modules-sqlite3 python3-module-flexmock python3-module-html5lib python3-module-psycopg2 python3-module-setuptools python3-module-sphinx python3-modules-sqlite3 rpm-build-python3 time
+BuildRequires: python-module-pytest
+BuildRequires: python3-module-pytest
 
 %description
 Smart SQLAlchemy defaults for lazy guys, like me.
@@ -95,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.4.4-alt2.git20141230.2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jun 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.4-alt2.git20141230.2
 - Fix build with new python3-module-pytest
 
