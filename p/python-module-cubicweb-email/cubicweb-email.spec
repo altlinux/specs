@@ -1,7 +1,7 @@
 %define oname cubicweb-email
 Name: python-module-%oname
 Version: 1.10.0
-Release: alt1
+Release: alt1.1
 Summary: Email component for the CubicWeb framework
 License: LGPL
 Group: Development/Python
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 BuildPreReq: python-module-cubicweb-file python-module-markdown
 BuildPreReq: python-module-logilab-common
 BuildPreReq: python-module-cubicweb-comment
@@ -44,6 +44,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.10.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.0-alt1
 - Initial build for Sisyphus
 
