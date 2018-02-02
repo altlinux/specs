@@ -1,6 +1,6 @@
 Name: bumper
 Version: 0.1.8
-Release: alt1.git20150215
+Release: alt1.git20150215.1
 Summary: Bump (pin/manage) your dependency requirements with ease
 License: MIT
 Group: Development/Python
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-bumper-lib
+BuildPreReq: python-module-setuptools python-module-bumper-lib
 BuildPreReq: python-module-requests python-module-simplejson
 
 %py_requires bumper requests simplejson
@@ -46,6 +46,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.8-alt1.git20150215.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.8-alt1.git20150215
 - Initial build for Sisyphus
 
