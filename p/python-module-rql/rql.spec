@@ -2,7 +2,7 @@
 %define oname rql
 Name: python-module-%oname
 Version: 0.34.1
-Release: alt1
+Release: alt1.1
 Summary: Relationship query language (RQL) utilities
 License: LGPL
 Group: Development/Python
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source0: https://pypi.python.org/packages/2f/b9/72b37bb153c150521acfe49168b4e404cad93546feabd4e2c680f6dd6ad9/%{oname}-%{version}.tar.gz
 
-BuildPreReq: python-module-setuptools-tests python-module-yapps2
+BuildPreReq: python-module-setuptools python-module-yapps2
 BuildPreReq: python-module-logilab-common python-module-logilab-database
 BuildPreReq: python-module-logilab-constraint gcc-c++ libgecode-devel
 BuildPreReq: python-module-sphinx-devel
@@ -73,6 +73,9 @@ python setup.py test
 %doc doc/build/html/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.34.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.34.1-alt1
 - automated PyPI update
 
