@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBIx-Class-Schema-Loader
 Name: perl-%dist
-Version: 0.07047
+Version: 0.07048
 Release: alt1
 
 Summary: Dynamic definition of a DBIx::Class::Schema
@@ -14,7 +14,7 @@ Source0: http://www.cpan.org/authors/id/I/IL/ILMARI/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Nov 15 2011
-BuildRequires: perl-Carp-Clan perl-Class-Unload perl-DBD-SQLite perl-Data-Dump perl-Pod-Parser perl-SQL-Abstract perl-String-CamelCase perl-String-ToIdentifier-EN perl-Task-Weaken perl-Test-Exception perl-Test-Pod perl-Test-Warn perl(DBIx/Class/IntrospectableM2M.pm) perl(Test/Differences.pm)
+BuildRequires: perl-Carp-Clan perl-Class-Unload perl-DBD-SQLite perl-Data-Dump perl-Pod-Parser perl-SQL-Abstract perl-String-CamelCase perl-String-ToIdentifier-EN perl-Task-Weaken perl-Test-Exception perl-Test-Pod perl-Test-Warn perl(DBIx/Class/IntrospectableM2M.pm) perl(Test/Differences.pm) perl(curry.pm)
 
 %description
 DBIx::Class::Schema::Loader automates the definition of a
@@ -37,6 +37,9 @@ setting up the columns, primary keys, and relationships.
 %perl_vendor_privlib/DBIx
 
 %changelog
+* Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.07048-alt1
+- automated CPAN update
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.07047-alt1
 - automated CPAN update
 
