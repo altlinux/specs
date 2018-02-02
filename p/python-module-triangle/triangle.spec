@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2017.04.29
-Release: alt1
+Release: alt1.1
 Summary: Python wrapper for libtriangle
 License: LGPL
 Group: Development/Python
@@ -17,14 +17,14 @@ Patch2: %oname-alt-reqs.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: libtriangle-devel
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-Cython libnumpy-devel
 BuildRequires: python-module-nose
 BuildRequires: python-module-matplotlib-sphinxext
 BuildRequires: python-module-alabaster python-module-html5lib python-module-ipyparallel python-module-numpy-testing python-module-objects.inv python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-Cython libnumpy-py3-devel
 BuildRequires: python3-module-nose
 BuildRequires: python3-module-html5lib python3-module-notebook python3-module-numpy-testing
@@ -141,6 +141,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2017.04.29-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2017.04.29-alt1
 - Updated to upstream version 20170429.
 - Updated build dependencies.
