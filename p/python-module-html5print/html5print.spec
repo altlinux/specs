@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt1.git20161101.1
+Release: alt1.git20161101.1.1
 
 Summary: HTML5, CSS, Javascript Pretty Print
 
@@ -18,19 +18,19 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # Source-git: https://github.com/berniey/html5print.git
 Source: %name-%version.tar
 BuildArch: noarch
-BuildRequires: python-module-chardet python-module-html5lib python-module-ndg-httpsclient python-module-ntlm python-module-setuptools-tests python-module-slimit
+BuildRequires: python-module-chardet python-module-html5lib python-module-ndg-httpsclient python-module-ntlm python-module-setuptools python-module-slimit
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-BeautifulSoup4 python-module-chardet
 #BuildPreReq: python-module-html5lib python-module-requests
 #BuildPreReq: python-module-slimit python-module-tinycss2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-BeautifulSoup4 python3-module-chardet
 #BuildPreReq: python3-module-html5lib python3-module-requests
 #BuildPreReq: python3-module-slimit python3-module-tinycss2
-BuildRequires: python3-module-chardet python3-module-html5lib python3-module-setuptools-tests python3-module-slimit python3-module-urllib3
+BuildRequires: python3-module-chardet python3-module-html5lib python3-module-setuptools python3-module-slimit python3-module-urllib3
 %endif
 
 %py_provides %oname
@@ -110,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.2-alt1.git20161101.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 26 2017 Vitaly Lipatov <lav@altlinux.ru> 0.1.2-alt1.git20161101.1
 - build latest code from 489e8b6046a7332405d4d8025c783018f5025faf commit
 
