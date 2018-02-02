@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.1
-Release: alt2.git20140108.1
+Release: alt2.git20140108.1.1
 Summary: Generic support library for signed-token-based auth schemes
 License: MPLv2.0
 Group: Development/Python
@@ -14,10 +14,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/mozilla-services/tokenlib.git
 Source: %name-%version.tar
 BuildArch: noarch
-BuildRequires: python-module-setuptools-tests python-modules-json
+BuildRequires: python-module-setuptools python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -113,6 +113,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.1-alt2.git20140108.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.1-alt2.git20140108.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
