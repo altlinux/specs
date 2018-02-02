@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.3
-Release: alt3.git20150226
+Release: alt3.git20150226.1
 Summary: Thin wrapper for pandoc
 License: MIT
 Group: Development/Python
@@ -15,10 +15,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests pandoc
+BuildPreReq: python-devel python-module-setuptools pandoc
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -80,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.3-alt3.git20150226.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Mar 31 2016 Denis Medvedev <nbr@altlinux.org> 0.9.3-alt3.git20150226
 - Recompile for changed site-packages for python3.5
 
