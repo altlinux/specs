@@ -1,7 +1,7 @@
 
 Name:           python-module-django-openstack-auth
 Version:        3.1.1
-Release:        alt1
+Release:        alt1.1
 Summary:        Django authentication backend for OpenStack Keystone
 Group:          Development/Python
 
@@ -12,7 +12,7 @@ Source0:        django_openstack_auth-%version.tar.gz
 BuildArch:      noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-pbr >= 1.8
@@ -86,6 +86,9 @@ cp -r openstack_auth/locale %buildroot%python_sitelibdir/openstack_auth
 %python_sitelibdir/*/tests
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.1.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Jun 01 2017 Alexey Shabalin <shaba@altlinux.ru> 3.1.1-alt1
 - 3.1.1
 - add tests package
