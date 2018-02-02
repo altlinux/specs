@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.2
-Release: alt1.git20110902.2
+Release: alt1.git20110902.2.1
 Summary: Docblock manipulation utilities
 License: BSD3
 Group: Development/Python
@@ -14,11 +14,11 @@ Url: https://pypi.python.org/pypi/doctools/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-pytest-cov
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-pytest-cov
 %endif
 
@@ -82,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.2-alt1.git20110902.2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Aug 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.2-alt1.git20110902.2
 - Fixed build.
 
