@@ -4,7 +4,7 @@
 
 Name: python-module-ninja_syntax
 Version: 1.7.2
-Release: alt1
+Release: alt1.1
 
 Summary: Python module for generating .ninja files
 
@@ -23,7 +23,7 @@ BuildRequires: python-devel python-module-setuptools
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools python3-module-setuptools
 %endif
 
 %description
@@ -65,6 +65,9 @@ Python module for generating .ninja files.
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.7.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon May 08 2017 Vitaly Lipatov <lav@altlinux.ru> 1.7.2-alt1
 - initial build for ALT Sisyphus
 
