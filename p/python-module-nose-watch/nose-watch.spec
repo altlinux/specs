@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.2
-Release: alt1
+Release: alt1.1
 Summary: A nose plugin that re-runs test suite on filesystem event
 License: MIT
 Group: Development/Python
@@ -14,15 +14,17 @@ Url: https://pypi.python.org/pypi/nose-watch/
 # https://github.com/lukaszb/nose-watch.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-nose python-module-watchdog
 BuildRequires: python-module-mock
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-nose python3-module-watchdog
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-html5lib
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides nosewatch
@@ -95,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Nov 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.2-alt1
 - Updated to upstream version 0.9.2.
 
