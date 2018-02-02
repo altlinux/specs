@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.6
-Release: alt1
+Release: alt1.1
 Summary: Framework for fitting functions to data with SciPy
 License: BSD
 Group: Development/Python
@@ -14,12 +14,12 @@ Url: https://pypi.python.org/pypi/scikits.fitting/
 # https://github.com/ludwigschwardt/scikits.fitting.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-scipy libnumpy-devel
 BuildRequires: python-module-matplotlib python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-scipy libnumpy-py3-devel
 BuildRequires: python3-module-matplotlib python3-module-nose
 %endif
@@ -134,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.6-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Nov 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6-alt1
 - Updated to upstream version 0.6.
 
