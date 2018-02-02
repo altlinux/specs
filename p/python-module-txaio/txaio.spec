@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.8.1
-Release: alt1
+Release: alt1.1
 Summary: Compatibility API between asyncio/Twisted/Trollius
 License: MIT
 Group: Development/Python
@@ -18,11 +18,11 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-pytest-cov
-BuildRequires: python-module-setuptools-tests python-module-trollius python-module-twisted-logger python-tools-pep8
+BuildRequires: python-module-setuptools python-module-trollius python-module-twisted-logger python-tools-pep8
 BuildRequires: python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-html5lib python3-module-pytest-cov python3-module-setuptools-tests python3-module-sphinx
+BuildRequires: python3-module-html5lib python3-module-pytest-cov python3-module-setuptools python3-module-sphinx
 BuildRequires: python3-module-twisted-core python3-tools-pep8
 BuildRequires: python3-module-mock
 %endif
@@ -182,6 +182,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.8.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8.1-alt1
 - Updated to upstream version 2.8.1.
 
