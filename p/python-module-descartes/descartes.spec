@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 Summary: Use geometric objects as matplotlib paths and patches
 License: BSD
 Group: Development/Python
@@ -15,12 +15,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/1d/6f/81735a30432b74f41db6754dd13869021ccfed3088d1cf7a6cfc0af9ac49/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: libnumpy-devel python-module-shapely python-module-nose
 #BuildPreReq: python-module-matplotlib
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: libnumpy-py3-devel python3-module-shapely
 #BuildPreReq: python3-module-nose python3-module-matplotlib
 %endif
@@ -29,7 +29,7 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-cycler python-module-dateutil python-module-genshi python-module-jinja2 python-module-numpy python-module-pyparsing python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-cycler python3-module-dateutil python3-module-numpy python3-module-pyparsing python3-module-pytest python3-module-setuptools python3-module-six xz
-BuildRequires: python-module-docutils python-module-html5lib python-module-matplotlib python-module-nose python-module-numpy-testing python-module-setuptools-tests python-module-shapely python3-module-matplotlib python3-module-nose python3-module-numpy-testing python3-module-setuptools-tests python3-module-shapely rpm-build-python3 time
+BuildRequires: python-module-docutils python-module-html5lib python-module-matplotlib python-module-nose python-module-numpy-testing python-module-setuptools python-module-shapely python3-module-matplotlib python3-module-nose python3-module-numpy-testing python3-module-setuptools python3-module-shapely rpm-build-python3 time
 
 %description
 Use Shapely or GeoJSON-like geometric objects as matplotlib paths and
@@ -122,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1
 - automated PyPI update
 
