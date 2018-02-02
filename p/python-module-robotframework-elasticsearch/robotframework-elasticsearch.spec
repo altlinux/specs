@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1
-Release: alt2.git20150114
+Release: alt2.git20150114.1
 Summary: ElasticSearch library for Robot Framework
 License: GPLv2
 Group: Development/Python
@@ -14,12 +14,12 @@ Url: https://pypi.python.org/pypi/robotframework-elasticsearch/
 # https://github.com/pagesjaunes/robotframework-elasticsearch.git
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools-tests python-modules-json
+BuildRequires: python-module-setuptools python-modules-json
 BuildRequires: python-module-robotframework
 BuildRequires: python-module-elasticsearch
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-robotframework
 BuildRequires: python3-module-elasticsearch
 BuildRequires: python-tools-2to3
@@ -91,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1-alt2.git20150114.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Dec 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1-alt2.git20150114
 - Fixed build.
 
