@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.16.0
-Release: alt1
+Release: alt1.1
 Summary: OpenStack oslo.serialization library
 Group: Development/Python
 License: ASL 2.0
@@ -16,7 +16,7 @@ BuildArch: noarch
 Provides: python-module-oslo-serialization = %EVR
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-msgpack >= 0.4.0
@@ -29,7 +29,7 @@ BuildRequires: python-module-reno >= 1.8.0
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-msgpack >= 0.4.0
@@ -128,6 +128,9 @@ popd
 %doc html
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.16.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu May 25 2017 Alexey Shabalin <shaba@altlinux.ru> 2.16.0-alt1
 - 2.16.0
 - add test packages
