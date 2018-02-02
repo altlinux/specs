@@ -1,6 +1,6 @@
 Name: cplay-ng
 Version: 2.0.3
-Release: alt1.git20150320
+Release: alt1.git20150320.1
 Summary: A curses front-end for various audio players
 License: GPLv2+
 Group: Sound
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-modules-curses
+BuildPreReq: python-module-setuptools python-modules-curses
 BuildPreReq: python-module-babel python-module-libmagic
 BuildPreReq: python-module-alsaaudio python-module-mutagen
 BuildPreReq: python-module-nose python-module-coverage
@@ -54,6 +54,9 @@ nosetests -v
 %_man1dir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.0.3-alt1.git20150320.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Mar 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt1.git20150320
 - Initial build for Sisyphus
 
