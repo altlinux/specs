@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.0
-Release: alt2.beta
+Release: alt2.beta.1
 Summary: Fanstatic packaging of angular-ui ui-calendar
 License: BSD
 Group: Development/Python
@@ -12,14 +12,16 @@ Url: https://pypi.python.org/pypi/js.angular_ui_calendar/
 
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-js.angular
 BuildRequires: python-module-js.fullcalendar
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-js.angular
 BuildRequires: python3-module-js.fullcalendar
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -95,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.0-alt2.beta.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.0-alt2.beta
 - Fixed build.
 
