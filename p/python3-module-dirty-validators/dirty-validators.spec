@@ -1,7 +1,7 @@
 %define oname dirty-validators
 Name: python3-module-%oname
 Version: 0.3.2
-Release: alt1
+Release: alt1.1
 Summary: Validate library for python 3
 License: MIT
 Group: Development/Python3
@@ -13,7 +13,7 @@ Source0: https://pypi.python.org/packages/52/90/7f9352d176272fcdf7f619065755f84e
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-nose python3-module-coverage
 BuildPreReq: python3-module-dirty-models
 
@@ -51,6 +51,9 @@ nosetests3 -v --with-coverage -d --cover-package=dirty_validators
 %python3_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1
 - automated PyPI update
 
