@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.1
-Release: alt1
+Release: alt1.1
 Summary: Modern CSS parser for Python
 License: BSD
 Group: Development/Python
@@ -14,12 +14,12 @@ Url: https://pypi.python.org/pypi/tinycss2/
 # https://github.com/Kozea/tinycss2.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-webencodings
 BuildRequires: python-module-pytest-runner python-module-pytest-isort python-module-pytest-flake8 python-module-pytest-cov
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-webencodings
 BuildRequires: python3-module-pytest-runner python3-module-pytest-isort python3-module-pytest-flake8 python3-module-pytest-cov
 %endif
@@ -126,6 +126,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.6.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.1-alt1
 - Updated to upstream version 0.6.1.
 
