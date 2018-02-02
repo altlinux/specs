@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 5.3.0
-Release: alt1
+Release: alt1.1
 Summary: Zope Object Database: object database and persistence
 License: ZPL
 Group: Development/Python
@@ -16,16 +16,18 @@ Url: https://pypi.python.org/pypi/ZODB
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-build.patch
 
-BuildRequires: python-dev python-module-setuptools-tests
+BuildRequires: python-dev python-module-setuptools
 BuildRequires: python2.7(persistent) python2.7(BTrees) python2.7(ZConfig) python2.7(transaction)
 BuildRequires: python2.7(six) python2.7(zc.lockfile) python2.7(zope.interface) python2.7(zodbpickle)
 BuildRequires: python-module-manuel-tests python2.7(zope.testing) python2.7(zope.testrunner)
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools-tests
+BuildRequires: python3-dev python3-module-setuptools
 BuildRequires: python3(persistent) python3(BTrees) python3(ZConfig) python3(transaction)
 BuildRequires: python3(six) python3(zc.lockfile) python3(zope.interface) python3(zodbpickle)
 BuildRequires: python3-module-manuel-tests python3(zope.testing) python3(zope.testrunner)
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname %oname.TimeStamp
@@ -174,6 +176,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 5.3.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.3.0-alt1
 - Updated to upstream version 5.3.0.
 
