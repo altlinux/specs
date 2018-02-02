@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.4
-Release: alt2
+Release: alt2.1
 Summary: Tools to allow developers to cleanup web objects (HTML, JSON, XHTML)
 License: MIT
 Group: Development/Python
@@ -13,13 +13,15 @@ Url: https://pypi.python.org/pypi/strainer/
 
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-simplejson python-module-nose
+BuildRequires: python-module-lxml
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-simplejson python3-module-nose
 BuildRequires: python-tools-2to3
+BuildRequires: python3-module-lxml
 %endif
 
 %py_provides %oname
@@ -87,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.4-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.4-alt2
 - Updated build dependencies.
 
