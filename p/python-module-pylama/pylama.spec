@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 6.1.1
-Release: alt3.git20141029
+Release: alt3.git20141029.1
 Summary: pylama -- Code audit tool for python
 License: LGPL
 Group: Development/Python
@@ -14,12 +14,12 @@ Url: https://pypi.python.org/pypi/pylama/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-ipdb python-tools-pep8 pyflakes
 BuildPreReq: pylint python-module-nose git
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-ipdb python3-tools-pep8 python3-pyflakes
 BuildPreReq: pylint-py3 python3-module-nose
 %endif
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 6.1.1-alt3.git20141029.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Mar 31 2016 Denis Medvedev <nbr@altlinux.org> 6.1.1-alt3.git20141029
 - Recompile for python3.5 changed place of site-packages.
 
