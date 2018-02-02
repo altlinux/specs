@@ -9,7 +9,7 @@ BuildRequires: python-devel python3-devel rpm-build-java
 %filter_from_requires /^objectweb-asm/d
 %define _unpackaged_files_terminate_build 1
 
-BuildRequires: source-highlight python3-module-nose python3-module-setuptools-tests
+BuildRequires: source-highlight python3-module-nose python3-module-setuptools
 %add_python3_path /usr/share/java-utils/
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -45,7 +45,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javapackages-tools
 Version:        5.0.0
-Release:        alt1_9jpp8
+Release:        alt1_9jpp8.1
 
 Summary:        Macros and scripts for Java packaging support
 
@@ -331,6 +331,9 @@ popd
 %doc LICENSE
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:5.0.0-alt1_9jpp8.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Nov 21 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.0.0-alt1_9jpp8
 - full version for xmvn 3
 
