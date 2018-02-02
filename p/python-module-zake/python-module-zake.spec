@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.2.2
-Release: alt1
+Release: alt1.1
 Summary: Testing utilities for the kazoo library
 License: ASLv2.0
 Group: Development/Python
@@ -15,7 +15,7 @@ Url: https://github.com/yahoo/Zake
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-kazoo >= 1.3.1
 BuildRequires: python-module-six
 BuildRequires: python-module-nose
@@ -25,7 +25,7 @@ BuildRequires: python-module-flake8
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-kazoo >= 1.3.1
 BuildRequires: python3-module-six
 BuildRequires: python3-module-nose
@@ -122,5 +122,8 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Apr 13 2016 Alexey Shabalin <shaba@altlinux.ru> 0.2.2-alt1
 - Initial build for Sisyphus
