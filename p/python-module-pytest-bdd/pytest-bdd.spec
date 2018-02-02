@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.19.0
-Release: alt1
+Release: alt1.1
 Summary: BDD library for the py.test runner
 License: MIT
 Group: Development/Python
@@ -15,7 +15,7 @@ Url: https://pypi.python.org/pypi/pytest-bdd/
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-tests.patch
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-glob2 python-module-mako
 BuildRequires: python-module-detox python-module-mock
 BuildRequires: python-module-pytest-pep8 python-module-pytest-cov
@@ -24,7 +24,7 @@ BuildRequires: python-module-markupsafe python-module-greenlet
 BuildRequires: python-module-virtualenv python-module-parse_type
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-glob2 python3-module-mako
 BuildRequires: python3-module-detox python3-module-mock
 BuildRequires: python3-module-pytest-pep8 python3-module-pytest-cov
@@ -127,6 +127,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.19.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Nov 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.19.0-alt1
 - Updated to upstream version 2.19.0.
 
