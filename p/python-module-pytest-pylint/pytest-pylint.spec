@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.7.1
-Release: alt1
+Release: alt1.1
 Summary: pytest plugin to check source code with pylint
 License: MIT
 Group: Development/Python
@@ -14,11 +14,11 @@ Url: https://pypi.python.org/pypi/pytest-pylint/
 # https://github.com/carsongee/pytest-pylint.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests pylint
+BuildRequires: python-devel python-module-setuptools pylint
 BuildRequires: python-module-pytest-pep8
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests pylint-py3
+BuildRequires: python3-devel python3-module-setuptools pylint-py3
 BuildRequires: python3-module-pytest-pep8
 %endif
 
@@ -87,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.7.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Nov 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.1-alt1
 - Updated to upstream version 0.7.1.
 
