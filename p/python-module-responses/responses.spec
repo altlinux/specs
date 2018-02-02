@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.3.0
-Release: alt3
+Release: alt3.1
 Summary: A utility library for mocking out the requests Python library
 License: ASLv2.0
 Group: Development/Python
@@ -15,13 +15,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-requests python-module-mock
 BuildPreReq: python-module-six python-module-pytest-cov
 BuildPreReq: python-module-flake8
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-requests python3-module-mock
 BuildPreReq: python3-module-six python3-module-pytest-cov
 BuildPreReq: python3-module-flake8
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.0-alt3.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Mar 31 2016 Denis Medvedev <nbr@altlinux.org> 0.3.0-alt3
 - Rebuild with changed site-packages in sisyphus
 
