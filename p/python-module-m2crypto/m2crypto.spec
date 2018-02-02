@@ -5,7 +5,7 @@
 
 Summary: Support for using OpenSSL in python scripts.
 Version: 0.22
-Release: alt2.git20140728
+Release: alt2.git20140728.1
 %setup_python_module %oname
 Name: python-module-%oname
 # https://github.com/tempbottle/M2Crypto.git
@@ -16,7 +16,7 @@ URL: http://wiki.osafoundation.org/bin/view/Projects/MeTooCrypto
 # Automatically added by buildreq on Thu Aug 26 2010
 BuildRequires: libssl-devel python-module-py python-module-setuptools swig
 
-BuildPreReq: python-module-setuptools-tests libnumpy-devel
+BuildPreReq: python-module-setuptools libnumpy-devel
 Requires: python
 %add_findreq_skiplist %python_sitelibdir/M2Crypto/SSL/TwistedProtocolWrapper.py
 Packager: Fr. Br. George <george@altlinux.ru>
@@ -25,7 +25,7 @@ Packager: Fr. Br. George <george@altlinux.ru>
 BuildRequires: python-module-setuptools openssl
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-py python-tools-2to3 libnumpy-py3-devel
 %endif
 
@@ -114,6 +114,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.22-alt2.git20140728.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Aug 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.22-alt2.git20140728
 - Snapthot from git
 
