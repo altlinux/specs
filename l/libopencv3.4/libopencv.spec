@@ -36,7 +36,7 @@
 %define sover 3.4
 Name: lib%bname%sover
 Version: 3.4.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Open Source Computer Vision Library
 License: Distributable
@@ -114,6 +114,21 @@ improving Python bindings to %Name.
 This package contains header files and documentation needed to develop
 applications with %name.
 
+%package -n lib%bname-devel-static
+Group: Development/C++
+Summary: Development files for %name
+Requires: lib%bname-devel = %version-%release
+
+%description -n lib%bname-devel-static
+%Name means Intel(R) Open Source Computer Vision Library. It is a
+collection of C functions and a few C++ classes that implement many
+popular Image Processing and Computer Vision algorithms.
+%Name provides cross-platform middle-to-high level API that includes
+about 300 C functions and a few C++ classes. Also there are constantly
+improving Python bindings to %Name.
+
+This package contains static libraries needed to develop
+applications with %name.
 
 %package doc
 Summary: %name documentation
@@ -275,8 +290,11 @@ cp -fR samples/python* %buildroot%_datadir/%Name/samples/
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*
-%_datadir/%Name/*.cmake
 %_datadir/%Name/*.supp
+
+%files -n lib%bname-devel-static
+%_datadir/%Name/*.cmake
+%_datadir/%Name/3rdparty/%_lib/*.a
 
 %files doc
 %_docdir/%name
@@ -293,6 +311,9 @@ cp -fR samples/python* %buildroot%_datadir/%Name/samples/
 %_datadir/*/samples
 
 %changelog
+* Fri Feb 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.0-alt2
+- Packaged static libraries (Closes: #34504).
+
 * Tue Jan 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.0-alt1
 - Updated to upstream version 3.4.0.
 
