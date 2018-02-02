@@ -1,8 +1,8 @@
 Name:		netinst-overlays
 Version:	0.02
-Release:	alt1
+Release:	alt2
 License:	BSD
-Summary:	Managing ALT Linux netinst-style ISO patches
+Summary:	Managing ALT Linux netinst-style filesystem patches
 Group:		System/Configuration/Networking
 BuildArch:	noarch
 Source:		%name-%version.tar
@@ -22,6 +22,9 @@ install overlays-* %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Fri Feb 02 2018 Arseny Maslennikov <arseny@altlinux.org> 0.02-alt2
+- livecd-save-nfs is now run as a simple service on systemd systems.
+
 * Tue Jan 30 2018 Arseny Maslennikov <arseny@altlinux.org> 0.02-alt1
 - Added dependency on libshell(shell-getopt).
 - Added some configuration command-line options.
