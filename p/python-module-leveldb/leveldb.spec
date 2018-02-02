@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.193
-Release: alt1.1.1
+Release: alt1.1.1.1
 Summary: Python bindings for leveldb database library
 License: BSD
 Group: Development/Python
@@ -14,11 +14,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 #BuildPreReq: libleveldb-devel
-#BuildPreReq: python-devel python-module-setuptools-tests gcc-c++
+#BuildPreReq: python-devel python-module-setuptools gcc-c++
 #BuildPreReq: python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-nose
 %endif
 
@@ -26,7 +26,7 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: elfutils libstdc++-devel python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-pytest python3-module-setuptools xz
-BuildRequires: gcc-c++ python-module-nose python-module-setuptools-tests python3-devel python3-module-nose python3-module-setuptools-tests rpm-build-python3 time
+BuildRequires: gcc-c++ python-module-nose python-module-setuptools python3-devel python3-module-nose python3-module-setuptools rpm-build-python3 time
 
 %description
 Python bindings for leveldb database library.
@@ -87,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.193-alt1.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.193-alt1.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
