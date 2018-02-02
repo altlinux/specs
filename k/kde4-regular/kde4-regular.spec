@@ -1,6 +1,6 @@
 Name:    kde4-regular
 Version: 4.14
-Release: alt6
+Release: alt7
 
 Group: Graphical desktop/KDE
 Summary: KDE4 common collection
@@ -56,7 +56,7 @@ Requires: kde4-kid3
 Requires: kde4-krusader
 Requires: kde4-synaptiks
 Requires: kde4-soundkonverter
-Requires: kde4-digikam kde4-digikam-image-plugins kde4-digikam-utils kde4-digikam-i18n
+#Requires: kde4-digikam kde4-digikam-image-plugins kde4-digikam-utils kde4-digikam-i18n
 Requires: kde4-kipi-plugins-core
 #Requires: kdenlive
 Requires: skanlite
@@ -81,6 +81,9 @@ K Desktop Environment 4 сборный пакет,
 %files
 
 %changelog
+* Fri Feb 02 2018 Sergey V Turchin <zerg@altlinux.org> 4.14-alt7
+- exclude kde4-digikam
+
 * Wed Nov 08 2017 Sergey V Turchin <zerg@altlinux.org> 4.14-alt6
 - remove kde4-kio-upnp-ms
 
