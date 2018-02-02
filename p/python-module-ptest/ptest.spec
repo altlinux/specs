@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.7.4
-Release: alt1
+Release: alt1.1
 Summary: Light testing framework for Python
 License: ASLv2.0
 Group: Development/Python
@@ -16,10 +16,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/60/ba/c8b04e9bb9ca7fe92acf369c2004fa1cf20f3c0c5ece62b8a36abee431e4/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -95,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.7.4-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.4-alt1
 - automated PyPI update
 
