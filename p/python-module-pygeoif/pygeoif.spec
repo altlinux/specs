@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.6
-Release: alt1
+Release: alt1.1
 Summary: A basic implementation of the __geo_interface__
 License: LGPLv2.1+
 Group: Development/Python
@@ -16,10 +16,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/be/33/ebda098a7f1f59593d1d5b842c2917a815e9ca09af684738cd8f4b3c151a/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -115,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.6-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.6-alt1
 - automated PyPI update
 
