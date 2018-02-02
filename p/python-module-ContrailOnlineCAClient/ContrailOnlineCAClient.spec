@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20150320.1
+Release: alt1.git20150320.1.1
 %define oname ContrailOnlineCAClient
 
 %def_disable check
@@ -16,7 +16,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/cedadev/online_ca_client.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests python-module-epydoc
+BuildPreReq: python-module-setuptools python-module-epydoc
 BuildPreReq: python-module-ndg-httpsclient graphviz
 BuildPreReq: python-modules-logging
 
@@ -90,6 +90,9 @@ python setup.py test
 %doc documentation/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.1-alt1.git20150320.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.1-alt1.git20150320.1
 - (AUTO) subst_x86_64.
 
