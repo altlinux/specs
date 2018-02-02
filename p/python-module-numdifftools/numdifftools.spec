@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20150828.1.1
+Release: alt1.git20150828.1.1.1
 %define oname numdifftools
 
 %def_with python3
@@ -21,7 +21,7 @@ Source: Numdifftools-%version.tar
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel python-module-scipy git xvfb-run
 BuildPreReq: python-module-numpy-addons python-module-matplotlib
-BuildPreReq: python-module-coverage python-module-setuptools-tests
+BuildPreReq: python-module-coverage python-module-setuptools
 BuildPreReq: python-module-setuptools_scm python-module-six
 BuildPreReq: python-module-algopy python-module-numpydoc
 BuildPreReq: python-module-pytest-runner python-module-pycairo
@@ -32,7 +32,7 @@ BuildPreReq: python-module-sphinx_rtd_theme texlive-latex-recommended
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-scipy
 BuildPreReq: python3-module-numpy-addons python3-module-matplotlib
-BuildPreReq: python3-module-coverage python3-module-setuptools-tests
+BuildPreReq: python3-module-coverage python3-module-setuptools
 BuildPreReq: python3-module-setuptools_scm python3-module-six
 BuildPreReq: python3-module-algopy python3-module-nose
 BuildPreReq: python3-module-pytest-runner
@@ -195,6 +195,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.12-alt1.git20150828.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.12-alt1.git20150828.1.1
 - (AUTO) subst_x86_64.
 
