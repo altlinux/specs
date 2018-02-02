@@ -36,7 +36,7 @@
 %define sover 3.4
 Name: lib%bname%sover
 Version: 3.4.0
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Open Source Computer Vision Library
 License: Distributable
@@ -294,7 +294,7 @@ cp -fR samples/python* %buildroot%_datadir/%Name/samples/
 
 %files -n lib%bname-devel-static
 %_datadir/%Name/*.cmake
-%_datadir/%Name/3rdparty/%_lib/*.a
+%_libdir/%Name/3rdparty/%_lib/*.a
 
 %files doc
 %_docdir/%name
@@ -311,6 +311,9 @@ cp -fR samples/python* %buildroot%_datadir/%Name/samples/
 %_datadir/*/samples
 
 %changelog
+* Fri Feb 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.0-alt3
+- Updated static libraries location.
+
 * Fri Feb 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.4.0-alt2
 - Packaged static libraries (Closes: #34504).
 
