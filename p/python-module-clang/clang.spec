@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.8
-Release: alt1
+Release: alt1.1
 Summary: libclang python bindings
 License: MIT
 Group: Development/Python
@@ -15,11 +15,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/5a/aa/22c42abe5bc0d6396f0fc7c24b4be793011c7bd6456ba78a4aca23e9cdb7/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests clang
+#BuildPreReq: python-devel python-module-setuptools clang
 #BuildPreReq: python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-nose
 #BuildPreReq: python-tools-2to3
 %endif
@@ -29,7 +29,7 @@ Requires: clang
 
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-nose python-module-setuptools-tests python3-module-nose python3-module-setuptools-tests rpm-build-python3 time
+BuildRequires: python-module-nose python-module-setuptools python3-module-nose python3-module-setuptools rpm-build-python3 time
 
 %description
 This is the python bindings subdir of llvm clang repository.
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.8-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.8-alt1
 - automated PyPI update
 
