@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.74
-Release: alt1.git20150315.1.1
+Release: alt1.git20150315.1.1.1
 Summary: Library providing Matrix, Vector, Quaternion, Euler and Color classes
 License: GPLv2+
 Group: Development/Python
@@ -16,18 +16,18 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests cmake gcc-c++
+#BuildPreReq: python-devel python-module-setuptools cmake gcc-c++
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests cmake gcc-c++
+#BuildPreReq: python3-devel python3-module-setuptools cmake gcc-c++
 %endif
 
 %py_provides %oname
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: cmake-modules elfutils libstdc++-devel python-base python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: cmake gcc-c++ python3-devel python3-module-setuptools-tests rpm-build-python3
+BuildRequires: cmake gcc-c++ python3-devel python3-module-setuptools rpm-build-python3
 
 %description
 A general math utilities library providing Matrix, Vector, Quaternion,
@@ -117,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.74-alt1.git20150315.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.74-alt1.git20150315.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
