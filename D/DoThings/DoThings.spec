@@ -1,6 +1,6 @@
 Name: DoThings
 Version: 0.2
-Release: alt1.git20150320
+Release: alt1.git20150320.1
 Summary: Simple To-Do-List in Termial
 License: BSD
 Group: Toys
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-docopt
+BuildPreReq: python-module-setuptools python-module-docopt
 
 %py_provides things
 %py_requires docopt
@@ -43,6 +43,9 @@ things all
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2-alt1.git20150320.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Mar 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.git20150320
 - Initial build for Sisyphus
 
