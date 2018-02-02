@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.git20140303.1.1.1
+Release: alt2.git20140303.1.1.1.1
 %define mname scikits
 %define oname %mname.datasmooth
 
@@ -17,13 +17,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/jjstickel/scikit-datasmooth.git
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests xvfb-run
+#BuildPreReq: python-devel python-module-setuptools xvfb-run
 #BuildPreReq: libnumpy-devel python-module-scipy
 #BuildPreReq: python-module-pygobject3 python-module-pycairo
 #BuildPreReq: python-module-cvxopt python-module-matplotlib
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: libnumpy-py3-devel python3-module-scipy
 #BuildPreReq: python3-module-pygobject3 python3-module-pycairo
 #BuildPreReq: python3-module-cvxopt python3-module-matplotlib
@@ -34,7 +34,7 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: libnumpy-devel python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-future python-module-genshi python-module-jinja2 python-module-matplotlib python-module-mpmath python-module-numpy python-module-pyparsing python-module-pytest python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-numpy python3-module-pyparsing python3-module-pytest python3-module-setuptools
-BuildRequires: libnumpy-py3-devel python-module-html5lib python-module-numpy-testing python-module-pygobject3 python-module-scipy python-module-setuptools-tests python3-module-cvxopt python3-module-matplotlib python3-module-numpy-testing python3-module-pycairo python3-module-pygobject3 python3-module-scipy python3-module-setuptools-tests rpm-build-python3 time
+BuildRequires: libnumpy-py3-devel python-module-html5lib python-module-numpy-testing python-module-pygobject3 python-module-scipy python-module-setuptools python3-module-cvxopt python3-module-matplotlib python3-module-numpy-testing python3-module-pycairo python3-module-pygobject3 python3-module-scipy python3-module-setuptools rpm-build-python3 time
 
 %description
 This is a scikit intended to include numerical methods for smoothing
@@ -103,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.61-alt2.git20140303.1.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.61-alt2.git20140303.1.1.1
 - (AUTO) subst_x86_64.
 
