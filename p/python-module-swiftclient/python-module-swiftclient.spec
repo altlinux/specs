@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 3.3.0
-Release: alt1
+Release: alt1.1
 Summary: Client Library for OpenStack Object Storage API
 License: ASL 2.0
 Url: http://docs.openstack.org/developer/python-%oname
@@ -16,7 +16,7 @@ Requires: python-module-futures
 Requires: python-module-requests
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 0.6
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
@@ -28,7 +28,7 @@ BuildRequires: python-module-keystoneclient >= 0.7.0
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 0.6
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
@@ -141,6 +141,9 @@ rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon May 29 2017 Alexey Shabalin <shaba@altlinux.ru> 3.3.0-alt1
 - 3.3.0
 
