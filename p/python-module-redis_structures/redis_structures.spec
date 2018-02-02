@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.6
-Release: alt2
+Release: alt2.1
 Summary: Redis data structures wrapped with Python 3
 License: MIT
 Group: Development/Python
@@ -17,14 +17,14 @@ Url: https://pypi.python.org/pypi/redis_structures/
 Source: %oname-%version.tar
 
 %if_with python2
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-redis-py python-module-ujson
 BuildRequires: python-module-pip
 BuildRequires: python-modules-compiler python-modules-encodings
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-redis-py python3-module-ujson
 BuildRequires: python3-module-pip python-tools-2to3
 BuildRequires: python3-module-html5lib python3-module-pytest
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.6-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Dec 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.6-alt2
 - Fixed build.
 
