@@ -1,7 +1,7 @@
 %define oname atelier
 Name: python-module-%oname
 Version: 0.0.14
-Release: alt1.git20150315
+Release: alt1.git20150315.1
 Summary: A collection of tools for software artists
 License: BSD
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-Fabric
+BuildPreReq: python-module-setuptools python-module-Fabric
 BuildPreReq: python-module-babel python-module-unipath
 BuildPreReq: python-module-dateutil
 BuildPreReq: python-modules-logging
@@ -121,6 +121,9 @@ python setup.py test
 %doc docs/_build/html/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.0.14-alt1.git20150315.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.14-alt1.git20150315
 - Initial build for Sisyphus
 
