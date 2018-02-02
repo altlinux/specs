@@ -1,7 +1,7 @@
 %define oname tkform
 Name: python-module-%oname
 Version: 0.9
-Release: alt1.git20150220
+Release: alt1.git20150220.1
 Summary: A tkinter form-based GUI that wraps python scripts
 License: BSD
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-modules-tkinter
 
 %py_provides %oname
@@ -39,6 +39,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9-alt1.git20150220.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt1.git20150220
 - Initial build for Sisyphus
 
