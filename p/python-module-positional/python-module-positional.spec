@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.1
-Release: alt1
+Release: alt1.1
 
 %setup_python_module %oname
 
@@ -18,13 +18,13 @@ BuildArch: noarch
 Source: %oname-%version.tar.gz
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-wrapt
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-wrapt
 %endif
@@ -105,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu May 25 2017 Alexey Shabalin <shaba@altlinux.ru> 1.1.1-alt1
 - 1.1.1
 - add test packages
