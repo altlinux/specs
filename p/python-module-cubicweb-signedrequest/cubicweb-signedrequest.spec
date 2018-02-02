@@ -1,7 +1,7 @@
 %define oname cubicweb-signedrequest
 Name: python-module-%oname
 Version: 0.1.3
-Release: alt1
+Release: alt1.1
 Summary: Rest api for cubicweb
 License: LGPL
 Group: Development/Python
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 
 Requires: cubicweb
 
@@ -40,6 +40,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.3-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1
 - Initial build for Sisyphus
 
