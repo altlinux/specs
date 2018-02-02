@@ -4,7 +4,7 @@
 
 Name:    python-module-%oname
 Version: 2.4.1
-Release: alt2
+Release: alt2.1
 Summary: A Python library to read/write Excel 2007 xlsx/xlsm files
 License: MIT/Expat
 Group:   Development/Python
@@ -19,7 +19,7 @@ BuildArch: noarch
 %py_requires jdcal json et_xmlfile
 
 BuildRequires: python-module-jdcal
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-modules-json
 BuildRequires: python-module-memory_profiler
 BuildRequires: python-module-et_xmlfile
@@ -30,7 +30,7 @@ BuildRequires: python-module-pandas
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-test
 BuildRequires: python3-module-jdcal
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-memory_profiler
 BuildRequires: python3-module-et_xmlfile
 BuildRequires: python3-module-numpy
@@ -102,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.4.1-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.1-alt2
 - Updated build dependencies.
 
