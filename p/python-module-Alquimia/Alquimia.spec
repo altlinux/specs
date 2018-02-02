@@ -1,7 +1,7 @@
 %define oname Alquimia
 Name: python-module-%oname
 Version: 0.7.1
-Release: alt1.git20150718
+Release: alt1.git20150718.1
 Summary: An API to work with JSON schemas in SQLAlchemy
 License: LGPLv3+
 Group: Development/Python
@@ -12,7 +12,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-module-pytest
 BuildPreReq: python-module-jsonschema python-module-SQLAlchemy
 
 %py_provides alquimia
@@ -38,6 +39,9 @@ python setup.py test -v
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.7.1-alt1.git20150718.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jul 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt1.git20150718
 - Initial build for Sisyphus
 
