@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180118
+Version: 20180201
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -65,6 +65,18 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 %exclude /lib/firmware/carl9170fw
 
 %changelog
+* Fri Feb 02 2018 L.A. Kostis <lakostis@altlinux.ru> 20180201-alt1
+- configuration changes:
+  + changelog.sh: get pkg name from specfile
+  + cronbuild: initial config
+- upstream changes (GIT 2aa2ac2):
+  + linux-firmware: Add firmware file for Intel Bluetooth,9560 (thx Amit K Bag)
+  + linux-firmware: Add firmware file for Intel Bluetooth,9260 (thx Amit K Bag)
+  + linux-firmware: Update firmware file for Intel Bluetooth,8265 (thx Amit K Bag)
+  + wl127x/wl128x: update PLT firmwares (thx Guy Mishol)
+  + linux-firmware: intel: Update Kabylake audio firmware (thx Guneshwor Singh)
+  + .gear: simplify cronbuild scripts
+
 * Tue Jan 23 2018 Konstantin A. Lepikhov <lakostis@altlinux.ru> 20180118-alt1
 - Update 65b1c68 GIT:
   + amdgpu: update uvd firmware for polaris asics (thx Alex Deucher).
