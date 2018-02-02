@@ -1,7 +1,7 @@
 %define oname sphinxtogithub
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1.dev.git20131026
+Release: alt1.dev.git20131026.1
 Summary: Script to prepare Sphinx html output for github pages
 License: BSD
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools
 
 %py_provides %oname
 
@@ -39,6 +39,9 @@ python setup.py test
 %exclude %python_sitelibdir/*/tests
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1.dev.git20131026.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Nov 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.dev.git20131026
 - Initial build for Sisyphus
 
