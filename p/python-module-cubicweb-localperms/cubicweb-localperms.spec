@@ -2,7 +2,7 @@
 %define oname cubicweb-localperms
 Name: python-module-%oname
 Version: 0.3.2
-Release: alt1
+Release: alt1.1
 Summary: Allow definition of local permissions
 License: LGPL
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/e7/21/3223f3755b695ea68ea3247219f450561c9b0544488487e06da539a939ce/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 
 Requires: cubicweb
 
@@ -45,6 +45,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1
 - automated PyPI update
 
