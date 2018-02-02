@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.7
-Release: alt1
+Release: alt1.1
 Summary: Static analysis tool for robotframework plain text files
 License: ASLv2.0
 Group: Development/Python
@@ -16,11 +16,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/27/bf/9caeefff91e49aab3ed8262172251b623fe529674424c86bf2a1345aa801/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-robotframework
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-robotframework
 BuildPreReq: python-tools-2to3
 %endif
@@ -99,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.7-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1
 - automated PyPI update
 
