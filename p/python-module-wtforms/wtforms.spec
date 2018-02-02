@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.1
-Release: alt1
+Release: alt1.1
 Summary: A flexible forms validation and rendering library for python web development
 License: BSD
 Group: Development/Python
@@ -15,13 +15,13 @@ Source: %name-%version.tar
 Patch1: %oname-%version-alt-docs.patch
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-ordereddict python-module-babel
 BuildRequires: python-module-sphinx-devel python-module-dateutil
 BuildRequires: python-module-pysqlite2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-babel python3-module-dateutil
 %endif
 
@@ -115,6 +115,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Aug 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1-alt1
 - Updated to upstream version 2.1.
 
