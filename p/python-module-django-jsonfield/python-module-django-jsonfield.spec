@@ -4,7 +4,7 @@
 
 Name:           python-module-django-%pypi_name
 Version:        1.0.1
-Release:        alt1
+Release:        alt1.1
 Epoch:          1
 Summary:        A reusable Django field that allows you to store validated JSON in your model
 Group:          Development/Python
@@ -16,11 +16,11 @@ Source0:        %name-%version.tar
 BuildArch:      noarch
 
 BuildRequires:  python-devel
-BuildRequires:  python-module-setuptools python-module-setuptools-tests
+BuildRequires:  python-module-setuptools python-module-setuptools
 BuildRequires:  python-module-django
 %if_with python3
 BuildRequires:  python3-devel rpm-build-python3
-BuildRequires:  python3-module-setuptools python3-module-setuptools-tests
+BuildRequires:  python3-module-setuptools python3-module-setuptools
 BuildRequires:  python3-module-django
 %endif
 
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:1.0.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 30 2017 Lenar Shakirov <snejok@altlinux.ru> 1:1.0.1-alt1
 - Build correct source (Epoch version up)
 
