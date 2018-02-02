@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1
+Release: alt1.1.1
 %define mname gocept
 %define oname %mname.testing
 Name: python-module-%oname
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests python-module-mock
+BuildPreReq: python-module-setuptools python-module-mock
 BuildPreReq: python-module-six python-module-pytest-cov
 
 %py_provides %oname
@@ -45,6 +45,9 @@ py.test -vv
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.10.1-alt1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.10.1-alt1.1
 - (AUTO) subst_x86_64.
 
