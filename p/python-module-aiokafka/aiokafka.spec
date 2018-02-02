@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt2
+Release: alt2.1
 Summary: asyncio client for kafka
 License: ASLv2.0
 Group: Development/Python
@@ -17,14 +17,14 @@ Patch1: %oname-%version-alt-deps.patch
 BuildArch: noarch
 
 %if_with python2
-BuildRequires: python-dev python-module-setuptools-tests
+BuildRequires: python-dev python-module-setuptools
 BuildRequires: python2.7(asyncio) python2.7(kafka)
 BuildRequires: python2.7(snappy) python2.7(flake8)
 BuildRequires: python2.7(nose)
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools-tests
+BuildRequires: python3-dev python3-module-setuptools
 BuildRequires: python3(asyncio) python3(kafka)
 BuildRequires: python3(snappy) python3(flake8)
 BuildRequires: python3(nose)
@@ -104,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.0-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.0-alt2
 - Fixed build.
 
