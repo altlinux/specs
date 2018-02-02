@@ -5,7 +5,7 @@
 
 Name:		python-module-%pypi_name
 Version:	3.1.1
-Release:	alt1
+Release:	alt1.1
 Summary:	Python Build Reasonableness
 Group:		Development/Python
 BuildArch:	noarch
@@ -16,13 +16,13 @@ URL:		http://pypi.python.org/pypi/pbr
 # git://git.openstack.org/openstack-dev/pbr
 Source:	%name-%version.tar
 
-BuildRequires: python-module-setuptools-tests python-module-unittest2 python-module-d2to1
+BuildRequires: python-module-setuptools python-module-unittest2 python-module-d2to1
 BuildRequires: python-module-pbr
 BuildRequires: python-module-html5lib python-module-mimeparse
 BuildRequires: python-module-alabaster python-module-docutils python-module-subunit-tests python-module-oslosphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests python3-module-unittest2 python3-module-d2to1
+BuildRequires: python3-module-setuptools python3-module-unittest2 python3-module-d2to1
 BuildRequires: python3-module-pbr
 BuildRequires: python3-module-html5lib python3-module-mimeparse
 %endif
@@ -143,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.1.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Oct 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.1-alt1
 - Updated to upstream version 3.1.1.
 
