@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.18
-Release: alt1
+Release: alt1.1
 Summary: IPv4/IPv6 manipulation library
 License: Python
 Group: Development/Python
@@ -16,10 +16,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/4e/13/774faf38b445d0b3a844b65747175b2e0500164b7c28d78e34987a5bfe06/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -81,6 +81,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.18-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.18-alt1
 - automated PyPI update
 
