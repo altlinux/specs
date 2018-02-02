@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.4.3
-Release: alt1
+Release: alt1.1
 Summary: Regularized Logistic Regression
 License: MIT
 Group: Development/Python
@@ -14,13 +14,13 @@ Url: https://pypi.python.org/pypi/rlr/
 # https://github.com/datamade/rlr.git
 Source: %oname-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-Cython libnumpy-devel python-module-nose python-module-numpy-testing
 BuildRequires: python-module-pylbfgs python2.7(future)
 BuildRequires: python-module-html5lib python-module-notebook
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-Cython libnumpy-py3-devel python3-module-nose python3-module-numpy-testing
 BuildRequires: python3-module-pylbfgs python3(future)
 BuildRequires: python3-module-html5lib python3-module-notebook
@@ -91,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.4.3-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Dec 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.3-alt1
 - Updated to upstream version 2.4.3.
 
