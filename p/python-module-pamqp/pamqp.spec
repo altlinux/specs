@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.6.1
-Release: alt1
+Release: alt1.1
 Summary: RabbitMQ Focused AMQP low-level library
 License: BSD
 Group: Development/Python
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 Patch1: %oname-%version-alt-docs.patch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-nose python-module-pbr python-module-pytest python-module-unittest2
 BuildRequires: pylint python-tools-pep8
 BuildRequires: python-module-z4r-coveralls
@@ -25,7 +25,7 @@ BuildRequires: python-module-html5lib
 BuildRequires: python-module-alabaster python-module-docutils python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-nose python3-module-pbr python3-module-unittest2
 BuildRequires: pylint-py3 python3-tools-pep8
 BuildRequires: python3-module-z4r-coveralls
@@ -132,6 +132,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.6.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Nov 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.1-alt1
 - Updated to upstream version 1.6.1.
 
