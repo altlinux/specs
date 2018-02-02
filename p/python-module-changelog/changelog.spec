@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.3.5
-Release: alt2
+Release: alt2.1
 Summary: Provides simple Sphinx markup to render changelog displays
 License: MIT
 Group: Development/Python
@@ -14,10 +14,10 @@ Url: https://pypi.python.org/pypi/changelog/
 
 Source: %oname-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-sphinx
 %endif
 
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.5-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Dec 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.5-alt2
 - Enabled build for python-3.
 
