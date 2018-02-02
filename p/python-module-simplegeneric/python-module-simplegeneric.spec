@@ -4,7 +4,7 @@
 
 Name:           python-module-%{modname}
 Version:        0.8.1
-Release:        alt1.1.1
+Release:        alt1.1.1.1
 Summary:        Simple generic functions (similar to Python's own len(), pickle.dump(), etc.)
 
 Group:          Development/Python
@@ -15,7 +15,7 @@ Source0:        %{name}-%{version}.zip
 BuildArch:      noarch
 BuildRequires:  python-devel unzip
 BuildRequires:  python-module-setuptools
-BuildRequires:  python-module-setuptools-tests
+BuildRequires:  python-module-setuptools
 
 %description
 The simplegeneric module lets you define simple single-dispatch generic
@@ -34,7 +34,7 @@ License:        Python or ZPLv2.1
 
 BuildRequires:  rpm-build-python3
 BuildRequires:  python3-module-setuptools
-BuildRequires:  python3-module-setuptools-tests
+BuildRequires:  python3-module-setuptools
 BuildRequires:  python-tools-2to3
 
 %description -n python3-module-%{modname}
@@ -102,6 +102,9 @@ PYTHONPATH=$(pwd) %{__python} setup.py test
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.1-alt1.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.1-alt1.1.1
 - (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
   (it is meaningless because arbitrary packages package that dir).
