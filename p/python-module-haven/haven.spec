@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1.111
-Release: alt1
+Release: alt1.1
 Summary: flask's style binary server framework
 License: MIT
 Group: Development/Python
@@ -15,11 +15,11 @@ Url: https://pypi.python.org/pypi/haven/
 # https://github.com/dantezhu/haven.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-events python-module-netkit python2.7(setproctitle)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-events python3-module-netkit python3(setproctitle)
 BuildRequires: python-tools-2to3 python3(gevent) python3(geventwebsocket)
 %endif
@@ -84,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.111-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Dec 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.111-alt1
 - Updated to upstream version 1.1.111.
 
