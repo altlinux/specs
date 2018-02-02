@@ -2,7 +2,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 0.2.1
-Release: alt1
+Release: alt1.1
 Summary: Protocol buffers library for Python 3
 License: MIT
 Group: Development/Python3
@@ -16,10 +16,11 @@ Patch1: %oname-%version-alt-docs.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-enum34 protobuf-compiler
 BuildRequires: python-module-sphinx-devel
 BuildRequires: python-module-sphinx_rtd_theme
+BuildRequires: python3-module-pytest
 
 %py3_provides %oname
 %py3_requires enum34
@@ -54,6 +55,9 @@ py.test3
 %python3_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:0.2.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Aug 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.2.1-alt1
 - Updated to upstream release version 0.2.1.
 
