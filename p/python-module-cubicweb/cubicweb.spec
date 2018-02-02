@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.25.3
-Release: alt2
+Release: alt2.1
 Summary: A repository of entities / relations for knowledge management
 License: LGPL
 Group: Development/Python
@@ -14,7 +14,7 @@ Url: https://pypi.python.org/pypi/cubicweb/
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-build.patch
 
-BuildRequires: python-dev python-module-setuptools-tests
+BuildRequires: python-dev python-module-setuptools
 BuildRequires: python-module-logilab-common python-module-logilab-mtconverter
 BuildRequires: python-module-rql python-module-yams
 BuildRequires: python-module-lxml python-module-logilab-database
@@ -111,6 +111,9 @@ python setup.py test
 %doc doc/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.25.3-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.25.3-alt2
 - Disabled tests.
 
