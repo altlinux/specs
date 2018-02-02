@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt3
+Release: alt3.1
 Summary: Sphinx extension for adding asyncio-specific markups
 
 License: MIT
@@ -17,9 +17,9 @@ BuildArch: noarch
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 %py_provides %mname.asyncio
 %py_requires %mname
 
@@ -77,6 +77,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.0-alt3.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Jan 22 2017 Anton Midyukov <antohami@altlinux.org> 0.2.0-alt3
 - srpm build
 
