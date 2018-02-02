@@ -1,7 +1,7 @@
 %define oname robotframework-ride
 Name: python-module-%oname
 Version: 1.3
-Release: alt1.git20140627
+Release: alt1.git20140627.1
 Summary: RIDE :: Robot Framework Test Data Editor
 License: ASLv2.0
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-Paver python-module-setuptools-tests
+BuildPreReq: python-module-Paver python-module-setuptools
 BuildPreReq: python-module-Pygments
 
 %add_python_req_skip java javax org
@@ -41,6 +41,9 @@ paver install --root=%buildroot
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3-alt1.git20140627.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.git20140627
 - Initial build for Sisyphus
 
