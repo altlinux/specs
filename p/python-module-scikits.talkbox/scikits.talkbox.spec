@@ -3,7 +3,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.2.3
-Release: alt2.git20091014
+Release: alt2.git20091014.1
 Summary: Talkbox, a set of python modules for speech/signal processing
 License: MIT
 Group: Development/Python
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # git://github.com/cournape/talkbox.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests libnumpy-devel
+BuildPreReq: python-module-setuptools libnumpy-devel
 BuildPreReq: python-module-scipy python-module-Cython
 BuildPreReq: python-module-lxml python-module-sphinx-devel
 BuildPreReq: python-module-numpydoc python-module-Paver
@@ -116,6 +116,9 @@ python setup.py test
 %doc docs/build/html docs/src/examples
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:0.2.3-alt2.git20091014.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.2.3-alt2.git20091014
 - Rebuilt with updated NumPy
 
