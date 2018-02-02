@@ -11,7 +11,7 @@
 Summary: CPU frequency scaling daemon
 Name: cpufreqd
 Version: 2.4.3
-Release: alt2
+Release: alt3
 Url: http://sourceforge.net/projects/cpufreqd/
 License: GPLv2
 Group: System/Kernel and hardware
@@ -64,6 +64,7 @@ simple Perl script could do it, I'll try to prepare one soon).
 	%{subst_enable exec} \
 	--enable-governor-parameters \
 	%{subst_enable tau} \
+	--localstatedir=%_var \
 	--libdir=%_libdir/%name
 # libdir need only for plugins
 
@@ -97,6 +98,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_mandir/man?/*
 
 %changelog
+* Fri Feb 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.3-alt3
+- Fixed localstatedir location.
+
 * Fri Apr 06 2012 Alexey Shabalin <shaba@altlinux.ru> 2.4.3-alt2
 - fix for kernel >= 2.6.36
 - add systemd service
