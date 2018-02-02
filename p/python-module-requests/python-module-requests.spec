@@ -5,7 +5,7 @@
 
 Name:           python-module-requests
 Version:        2.18.4
-Release:        alt1
+Release:        alt1.1
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python
 
@@ -29,7 +29,7 @@ BuildRequires:  python-module-chardet
 BuildRequires:  python-module-urllib3 >= 1.13.1
 BuildRequires:  python-module-idna
 %{?_enable_check:BuildRequires: python-module-httpbin}
-BuildRequires:  python-module-setuptools-tests
+BuildRequires:  python-module-setuptools
 
 Requires:       ca-certificates
 Requires:       python-module-chardet
@@ -52,7 +52,7 @@ BuildRequires:  python3-module-chardet
 BuildRequires:  python3-module-urllib3 >= 1.13.1
 BuildRequires:  python3-module-idna
 %{?_enable_check:BuildRequires: python3-module-httpbin}
-BuildRequires:  python3-module-setuptools-tests
+BuildRequires:  python3-module-setuptools
 Requires:       ca-certificates
 Requires:       python3-module-chardet
 Requires:       python3-module-urllib3 >= 1.13.1
@@ -107,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.18.4-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Sep 27 2017 Andrey Cherepanov <cas@altlinux.org> 2.18.4-alt1
 - New version
 
