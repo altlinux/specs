@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20130514.1
+Release: alt1.git20130514.1.1
 %define mname lovely
 %define oname %mname.memcached
 Name: python-module-%oname
@@ -14,7 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/lovelysystems/lovely.memcached.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools
 BuildPreReq: python-module-memcached
 BuildPreReq: python-module-zope.site
 BuildPreReq: python-module-zope.intid
@@ -100,6 +100,9 @@ python setup.py test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.2-alt1.git20130514.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.2-alt1.git20130514.1
 - (AUTO) subst_x86_64.
 
