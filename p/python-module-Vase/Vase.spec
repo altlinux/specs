@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.4
-Release: alt2.git20140811
+Release: alt2.git20140811.1
 Summary: Async Web framework based on Tulip/asyncio
 License: BSD
 Group: Development/Python
@@ -16,12 +16,12 @@ Url: https://pypi.python.org/pypi/Vase/
 Source: %name-%version.tar
 
 %if_with python2
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-enum34 python2.7(asyncio)
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-enum34 python3(asyncio)
 %endif
 
@@ -103,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.4-alt2.git20140811.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Dec 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.4-alt2.git20140811
 - Updated build dependencies.
 
