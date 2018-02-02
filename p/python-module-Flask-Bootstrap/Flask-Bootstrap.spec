@@ -1,7 +1,7 @@
 %define oname Flask-Bootstrap
 Name: python-module-%oname
 Version: 3.3.0.2
-Release: alt2.dev1.git20141109
+Release: alt2.dev1.git20141109.1
 Summary: Ready-to-use Twitter-bootstrap for use in Flask
 License: BSD
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-module-setuptools-tests python-module-flask
+BuildRequires: python-module-setuptools python-module-flask
 BuildRequires: python-module-sphinx-devel
 BuildRequires: python-module-sphinx_readable_theme
 
@@ -84,6 +84,9 @@ python setup.py test
 %doc run_sample_app.py sample_application docs/_build/html
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.3.0.2-alt2.dev1.git20141109.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sat May 28 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.0.2-alt2.dev1.git20141109
 - NMU: rebuild with python-module-sphinx_readable_theme
 
