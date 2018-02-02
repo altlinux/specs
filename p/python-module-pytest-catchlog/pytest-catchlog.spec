@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.2.2
-Release: alt1
+Release: alt1.1
 Summary: py.test plugin to catch log messages. This is a fork of pytest-capturelog.
 License: MIT
 Group: Development/Python
@@ -14,10 +14,12 @@ Url: https://pypi.python.org/pypi/pytest-catchlog
 
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -76,5 +78,8 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.2.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Dec 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt1
 - Initial build for ALT.
