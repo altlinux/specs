@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 3.7.1
-Release: alt1
+Release: alt1.1
 Summary: Provides an API for communicating with HTTP 1.1 servers
 License: PSFLv2
 Group: Development/Python
@@ -16,14 +16,14 @@ Url: https://pypi.python.org/pypi/dugong/
 Source: %oname-%version.tar
 
 %if_with python2
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-docutils python2.7(asyncio)
 BuildRequires: python2.7(pytest_catchlog)
 %endif
 BuildPreReq: python-module-sphinx-devel python3-module-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-docutils python3(asyncio)
 BuildRequires: python3(pytest_catchlog)
 %endif
@@ -108,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.7.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Dec 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.7.1-alt1
 - Updated to upstream version 3.7.1.
 
