@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.2.0
-Release: alt1
+Release: alt1.1
 Summary: Zope 3 Template Application Languate (TAL)
 License: ZPL
 Group: Development/Python
@@ -14,13 +14,13 @@ Url: http://pypi.python.org/pypi/zope.tal/
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-fix-test-for-unicode-for-python3.patch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-zope.testing
 BuildPreReq: python-module-zope.testrunner
 BuildPreReq: python-module-zope.i18nmessageid
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-zope.testing
 BuildPreReq: python3-module-zope.testrunner
 BuildPreReq: python3-module-zope.i18nmessageid
@@ -165,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Aug 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.0-alt1
 - Updated to upstream version 4.2.0.
 
