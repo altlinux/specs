@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.11.0
-Release: alt3.git20130116
+Release: alt3.git20130116.1
 Summary: A python module to make noise from numpy arrays
 License: LGPLv2.1+
 Group: Development/Python
@@ -19,14 +19,14 @@ Patch1: %oname-%version-alt-build.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: libsndfile-devel libvorbis-devel libflac-devel xvfb-run
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-pytest python-module-numpy-testing
 BuildRequires: python-module-nose libnumpy-devel
 BuildRequires: python-module-Cython python-module-html5lib python-module-notebook
 BuildRequires: python-module-alabaster python-module-matplotlib-sphinxext python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-nose libnumpy-py3-devel
 BuildRequires: python3-module-Cython python3-module-html5lib python3-module-notebook
@@ -204,6 +204,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:0.11.0-alt3.git20130116.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Nov 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.11.0-alt3.git20130116
 - Fixed build.
 
