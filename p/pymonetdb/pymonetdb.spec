@@ -6,7 +6,7 @@
 Name: pymonetdb
 Epoch: 1
 Version: 1.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: MonetDB is an open source column-oriented database management system
 License: Mozilla Public License 2.0
@@ -17,10 +17,10 @@ URL: http://monetdb.org
 Source: %name-%version.tar
 
 BuildRequires: monetdb
-BuildRequires: python-devel python-module-setuptools-tests python-module-pytest-runner
+BuildRequires: python-devel python-module-setuptools python-module-pytest-runner
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests python3-module-pytest-runner
+BuildRequires: python3-devel python3-module-setuptools python3-module-pytest-runner
 %endif
 
 %description
@@ -92,5 +92,8 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:1.1.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Jan 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.1.1-alt1
 - Initial build for ALT.
