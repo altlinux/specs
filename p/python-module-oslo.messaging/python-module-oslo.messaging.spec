@@ -5,7 +5,7 @@
 Name:       python-module-%oname
 Epoch:      1
 Version:    5.17.2
-Release:    alt1
+Release:    alt1.1
 Summary:    OpenStack common messaging library
 
 Group:      Development/Python
@@ -18,7 +18,7 @@ Obsoletes: python-module-oslo-messaging < %EVR
 BuildArch:  noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-futurist >= 0.11.0
 BuildRequires: python-module-oslo.config >= 3.14.0
@@ -51,7 +51,7 @@ BuildRequires: python-module-reno >= 1.8.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
@@ -192,6 +192,9 @@ popd
 %doc html LICENSE
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:5.17.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 1:5.17.2-alt1
 - 5.17.2
 
