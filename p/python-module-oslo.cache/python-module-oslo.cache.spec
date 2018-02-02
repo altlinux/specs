@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.17.0
-Release: alt1
+Release: alt1.1
 Summary: Cache storage for Openstack projects
 
 Group: Development/Python
@@ -18,7 +18,7 @@ BuildArch: noarch
 %py_requires dogpile.cache
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
@@ -35,7 +35,7 @@ BuildRequires: python-module-reno >= 1.8.0
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
@@ -140,6 +140,9 @@ popd
 %doc README.rst LICENSE
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.17.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri May 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.17.0-alt1
 - 1.17.0
 - add test packages
