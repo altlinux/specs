@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.8.1
-Release: alt2
+Release: alt2.1
 Summary: Scalable web scraper framework for finding documents on websites
 License: GPLv3
 Group: Development/Python
@@ -17,7 +17,7 @@ Patch1: %oname-%version-alt-build.patch
 
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-BeautifulSoup4 python-module-libmagic
 BuildRequires: python-module-pika python-module-six
 BuildRequires: python-module-tldextract python-modules-wsgiref
@@ -25,7 +25,7 @@ BuildRequires: python-module-requests python-modules-json
 BuildRequires: python2.7(daemon) python2.7(pymongo) python2.7(sqlalchemy) python2.7(docutils)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-BeautifulSoup4 python3-module-libmagic
 BuildRequires: python3-module-pika python3-module-six
 BuildRequires: python3-module-tldextract python3-module-requests
@@ -134,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.1-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Oct 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.1-alt2
 - Fixed build.
 
