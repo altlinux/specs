@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5
-Release: alt2.git20121017
+Release: alt2.git20121017.1
 Summary: Module that emits CEF logs
 License: MPL
 Group: Development/Python
@@ -15,10 +15,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python-tools-2to3
 %endif
 
@@ -92,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5-alt2.git20121017.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt2.git20121017
 - Fixed build
 
