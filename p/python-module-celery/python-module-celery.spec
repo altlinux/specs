@@ -9,7 +9,7 @@
 
 Name: python-module-%module_name
 Version: 4.1.0
-Release: alt1
+Release: alt1.1
 Group: Development/Python
 License: BSD License
 Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
@@ -20,7 +20,8 @@ Source: %name-%version.tar
 BuildRequires: dvipng
 # /proc is required for some tests
 BuildRequires: /proc
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-mock
 BuildRequires: python-module-alabaster python-module-billiard python-module-kombu python-module-objects.inv python2.7(sphinx_celery)
 BuildRequires: python-module-html5lib python-module-nose python-module-pbr
 BuildRequires: python-module-sphinxcontrib-issuetracker python-module-unittest2
@@ -28,7 +29,8 @@ BuildRequires: python2.7(case) python2.7(eventlet)
 BuildRequires(pre): rpm-macros-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-html5lib python3-module-nose python3-module-pbr
 BuildRequires: python3-module-pycrypto
 BuildRequires: python3-module-django python3-module-ecdsa python3-module-pytz python3-module-unittest2 python3(requests)
@@ -151,6 +153,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Nov 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.0-alt1
 - Updated to upstream version 4.1.0.
 - Enabled tests.
