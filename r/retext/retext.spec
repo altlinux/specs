@@ -2,7 +2,7 @@
 
 Name:           retext
 Version:        6.0.2
-Release:        alt1
+Release:        alt1.1
 License:        GPLv3+
 Summary:        Text editor for Markdown and reStructuredText
 Summary(de):    Texteditor für Markdown und reStructuredText
@@ -15,7 +15,7 @@ Source1:        %name.1
 BuildArch:      noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): python3-devel python3-module-setuptools-tests /dev/pts
+BuildRequires(pre): python3-devel python3-module-setuptools /dev/pts
 BuildRequires:  python3-module-markups
 BuildRequires:  python3-module-docutils
 BuildRequires:  python3-module-enchant
@@ -84,6 +84,9 @@ python3 setup.py test
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 6.0.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Oct 10 2016 Andrey Cherepanov <cas@altlinux.org> 6.0.2-alt1
 - new version 6.0.2
 
