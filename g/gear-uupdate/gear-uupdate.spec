@@ -1,7 +1,8 @@
+%def_without bootstrap
 %define destname gear-uupdate
 Name: %destname
-Version: 0.23
-Release: alt2
+Version: 0.24
+Release: alt1
 
 Summary: Helper utility to be called by uscan for gear repository update
 Source: %name-%version.tar
@@ -13,7 +14,10 @@ URL: http://www.altlinux.org/Gear/gear-uupdate
 BuildArch: noarch
 
 BuildRequires: perl-devel perl(Pod/Usage.pm) /usr/bin/pod2man perl-Gear-Rules perl-Source-Bundle perl-RPM-Source-Editor perl-String-ShellQuote
-Requires: gear /usr/bin/srpmnmu perl-Gear-Rules perl-RPM-Source-Editor > 0.900
+Requires: gear /usr/bin/srpmnmu perl-Gear-Rules perl-RPM-Source-Editor > 0.9200
+%if_without bootstrap
+Requires: /usr/bin/gear-remotes-fetch
+%endif
 
 %description
 %summary
@@ -39,6 +43,9 @@ install -m 644 gear-*.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Fri Feb 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
+- initial submodules support
+
 * Tue Jan 23 2018 Igor Vlasenko <viy@altlinux.ru> 0.23-alt2
 - cleaned up install garbage (closes: 34475)
 
