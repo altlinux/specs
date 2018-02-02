@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5
-Release: alt1.git20150717.2
+Release: alt1.git20150717.2.1
 Summary: Terminals served by tornado websockets
 License: BSD
 Group: Development/Python
@@ -15,15 +15,17 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests /dev/pts
+BuildPreReq: python-devel python-module-setuptools /dev/pts
 BuildPreReq: python-module-tornado_xstatic python-module-ptyprocess
 BuildPreReq: python-module-xstatic-term.js
 BuildPreReq: python-module-sphinx-devel
+BuildRequires: python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-tornado_xstatic python3-module-ptyprocess
 BuildPreReq: python3-module-xstatic-term.js
+BuildRequires: python3-module-nose
 %endif
 
 %py_provides %oname
@@ -148,11 +150,11 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 rm -fR build
-py.test -vv
+nosetests -v
 %if_with python3
 pushd ../python3
 rm -fR build
-py.test3 -vv
+nosetests3 -v
 popd
 %endif
 
@@ -182,6 +184,10 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5-alt1.git20150717.2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+- Fix tests
+
 * Thu Jul 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5-alt1.git20150717.2
 - Fixed build spec with py.test3
 
