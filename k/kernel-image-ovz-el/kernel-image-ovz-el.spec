@@ -1,6 +1,7 @@
 Name: kernel-image-ovz-el
-Version: 3.2.0
-Release: alt160
+Epoch: 1
+Version: 2.6.32
+Release: alt162
 
 %define kernel_base_version	%version
 %define kernel_real_version	2.6.32
@@ -122,8 +123,8 @@ Conflicts: kernel-modules-oss-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-oss-%kversion-%flavour-%krelease > %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
-Prereq: %name = %version-%release
-Requires(postun): %name = %version-%release
+Prereq: %name = %EVR
+Requires(postun): %name = %EVR
 
 %description -n kernel-modules-oss-%flavour
 This package contains OSS sound driver modules for the Linux kernel
@@ -144,8 +145,8 @@ Conflicts: kernel-modules-ide-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-ide-%kversion-%flavour-%krelease > %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
-Prereq: %name = %version-%release
-Requires(postun): %name = %version-%release
+Prereq: %name = %EVR
+Requires(postun): %name = %EVR
 
 %description -n kernel-modules-ide-%flavour
 This package contains  IDE driver modules for the Linux kernel
@@ -166,8 +167,8 @@ Conflicts: kernel-modules-alsa-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-alsa-%kversion-%flavour-%krelease > %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
-Prereq: %name = %version-%release
-Requires(postun): %name = %version-%release
+Prereq: %name = %EVR
+Requires(postun): %name = %EVR
 
 %description -n kernel-modules-alsa-%flavour
 The Advanced Linux Sound Architecture (ALSA) provides audio and MIDI
@@ -197,8 +198,8 @@ Provides:  kernel-modules-drm-radeon-%flavour = %version-%release
 Provides:  kernel-modules-drm-radeon-%kversion-%flavour-%krelease = %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
-Prereq: %name = %version-%release
-Requires(postun): %name = %version-%release
+Prereq: %name = %EVR
+Requires(postun): %name = %EVR
 
 %description -n kernel-modules-drm-%flavour
 The Direct Rendering Infrastructure, also known as the DRI, is a framework
@@ -218,8 +219,8 @@ Conflicts: kernel-modules-kvm-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-kvm-%kversion-%flavour-%krelease > %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
-Prereq: %name = %version-%release
-Requires(postun): %name = %version-%release
+Prereq: %name = %EVR
+Requires(postun): %name = %EVR
 
 %description -n kernel-modules-kvm-%flavour
 Linux kernel module for Kernel Virtual Machine virtualization
@@ -237,8 +238,8 @@ Provides:  kernel-modules-uvcvideo-%kversion-%flavour-%krelease = %version-%rele
 Provides:  kernel-modules-gspca-%kversion-%flavour-%krelease = %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
-Prereq: %name = %version-%release
-Requires(postun): %name = %version-%release
+Prereq: %name = %EVR
+Requires(postun): %name = %EVR
 
 %description -n kernel-modules-v4l-%flavour
 Video for linux drivers
@@ -253,8 +254,8 @@ Conflicts: kernel-modules-staging-%kversion-%flavour-%krelease < %version-%relea
 Conflicts: kernel-modules-staging-%kversion-%flavour-%krelease > %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
-Prereq: %name = %version-%release
-Requires(postun): %name = %version-%release
+Prereq: %name = %EVR
+Requires(postun): %name = %EVR
 
 %description -n kernel-modules-staging-%flavour
 Drivers and filesystems that are not ready to be merged into the main
@@ -267,7 +268,6 @@ Summary: Header files for the Linux kernel
 Group: Development/Kernel
 Requires: kernel-headers-common >= 1.1.5
 Provides: kernel-headers = %version
-#Provides: kernel-headers-%base_flavour = %version-%release
 
 %description -n kernel-headers-%flavour
 This package makes Linux kernel headers corresponding to the Linux
@@ -618,6 +618,11 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?(reboot: )?Power down' boot.log || {
 %endif # staging
 
 %changelog
+* Thu Feb 01 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.6.32-alt162
+- Updated to 042stab127.2.
+- Changed kernel version back to 2.6.32 and changed version visible
+  through vdso(7) to 3.2.0 (ALT#34433).
+
 * Tue Dec 26 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2.0-alt160
 - Backported support of prlimit64 syscall.
 - Faked version reported by kernel to fix work of glibc 2.26
