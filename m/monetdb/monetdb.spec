@@ -1,6 +1,6 @@
 Name: monetdb
 Version: 11.27.11
-Release: alt1
+Release: alt1.1
 
 Summary: MonetDB is an open source column-oriented database management system
 License: MonetDB Public License v1.1
@@ -14,8 +14,8 @@ Patch: monetdb-11.5.3-atl-gcc4.7.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libssl-devel libpcre-devel libxml2-devel zlib-devel libreadline-devel libgeos-devel libcfitsio-devel
-BuildRequires: python-devel python-module-setuptools-tests
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools
 
 Requires: %name-common %name-server %name-client
 
@@ -114,6 +114,9 @@ cp %buildroot/%_bindir/malsample.* .
 %doc sql/dump-restore.*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 11.27.11-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 24 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 11.27.11-alt1
 - Updated to upstream version 11.27.11.
 
