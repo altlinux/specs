@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0
-Release: alt1.a3
+Release: alt1.a3.1
 Summary: Provides a restricted execution environment for Python, e.g. for running untrusted code
 License: ZPLv2.1
 Group: Development/Python
@@ -21,11 +21,11 @@ BuildArch: noarch
 %add_findreq_skiplist %python_sitelibdir/%oname/tests/unpack.py
 %add_findreq_skiplist %python3_sitelibdir/%oname/tests/unpack.py
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildRequires: python-module-pytest python-module-pytest-mock python-module-pytest-runner python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pytest python3-module-pytest-mock python3-module-pytest-runner python3-module-mock
 %endif
 
@@ -122,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.0-alt1.a3.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Aug 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.0-alt1.a3
 - Updated to upstream version 4.0a3.
 - Enabled build with python-3.
