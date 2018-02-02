@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.23
-Release: alt1
+Release: alt1.1
 Summary: Serializer for literal Python expressions
 License: MIT
 Group: Development/Python
@@ -14,10 +14,10 @@ Url: https://pypi.python.org/pypi/serpent
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-module-flake8 python-module-pytz python-module-setuptools-tests
+BuildRequires: python-module-flake8 python-module-pytz python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flake8 python3-module-pytz python3-module-setuptools-tests
+BuildRequires: python3-module-flake8 python3-module-pytz python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -88,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.23-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Oct 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.23-alt1
 - Updated to upstream version 1.23.
 
