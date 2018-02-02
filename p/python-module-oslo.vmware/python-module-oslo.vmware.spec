@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 2.17.1
-Release: alt1
+Release: alt1.1
 Summary: Oslo VMware library for OpenStack projects
 Group: Development/Python
 License: ASL 2.0
@@ -15,7 +15,7 @@ Provides: python-module-oslo-vmware = %EVR
 BuildArch: noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-stevedore >= 1.17.1
 BuildRequires: python-module-netaddr >= 0.7.13
@@ -36,7 +36,7 @@ BuildRequires: python-module-reno >= 1.8.0
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-stevedore >= 1.17.1
@@ -148,6 +148,9 @@ popd
 %doc html
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.17.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jul 18 2017 Alexey Shabalin <shaba@altlinux.ru> 2.17.1-alt1
 - 2.17.1
 
