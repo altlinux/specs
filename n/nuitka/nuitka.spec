@@ -2,7 +2,7 @@
 
 Name: nuitka
 Version: 0.5.11
-Release: alt1.git20150318.1
+Release: alt1.git20150318.1.1
 Summary: Python compiler with full language support and CPython compatibility
 License: ASLv2.0
 Group: Development/Python
@@ -13,13 +13,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests gcc-c++
+BuildPreReq: python-devel python-module-setuptools gcc-c++
 BuildPreReq: python-module-lxml
 BuildPreReq: python-modules-json python-modules-logging
 BuildPreReq: python-modules-multiprocessing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-lxml
 BuildPreReq: python-tools-2to3
 %endif
@@ -117,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.11-alt1.git20150318.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.11-alt1.git20150318.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
