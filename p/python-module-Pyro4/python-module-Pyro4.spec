@@ -5,7 +5,7 @@
 
 Name:           python-module-%oname
 Version:        4.62
-Release:        alt1
+Release:        alt1.1
 Summary:        Python Remote Objects
 Group:          Development/Python
 License:        LGPLv2+
@@ -17,14 +17,14 @@ Source: %oname-%version.tar
 Patch1: %oname-alt-tune-docs.patch
 
 BuildRequires: python-devel python-module-sphinx-devel
-BuildRequires: python-module-setuptools-tests python-module-serpent python2.7(selectors34) python2.7(wsgiref) python2.7(wsgiref.util)
+BuildRequires: python-module-setuptools python-module-serpent python2.7(selectors34) python2.7(wsgiref) python2.7(wsgiref.util)
 BuildRequires: python2.7(cloudpickle) python2.7(msgpack) python2.7(dill)
 %if_with docs
 BuildRequires: python3-module-sphinx-devel
 %endif #docs
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests python3-module-serpent python3(wsgiref) python3(wsgiref.util)
+BuildRequires: python3-devel python3-module-setuptools python3-module-serpent python3(wsgiref) python3(wsgiref.util)
 BuildRequires: python3(cloudpickle) python3(msgpack) python3(dill)
 %endif
 
@@ -239,6 +239,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.62-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Oct 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.62-alt1
 - Updated to upstream version 4.62.
 
