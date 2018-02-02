@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.7.5
-Release: alt1
+Release: alt1.1
 Summary: REST API framework powered by Flask, MongoDB and good intentions
 License: BSD
 Group: Development/Python
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 Patch1: %oname-%version-alt-build.patch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-cerberus python-module-events
 BuildRequires: python-module-pytest
 BuildRequires: python-module-flask-pymongo
@@ -25,7 +25,7 @@ BuildRequires: python-module-alabaster python-module-html5lib python-module-obje
 BuildRequires: python-module-sphinxcontrib-embedly
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-cerberus python3-module-events
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-flask-pymongo
@@ -167,6 +167,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.7.5-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Dec 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.5-alt1
 - Updated to upstream version 0.7.5.
 
