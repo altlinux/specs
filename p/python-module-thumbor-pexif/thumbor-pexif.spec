@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.14.1
-Release: alt2.git20141001
+Release: alt2.git20141001.1
 Summary: A module for editing JPEG EXIF data
 License: MIT
 Group: Development/Python
@@ -15,11 +15,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-nose
 BuildPreReq: python-tools-2to3
 %endif
@@ -96,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.14.1-alt2.git20141001.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.1-alt2.git20141001
 - Fixed build
 
