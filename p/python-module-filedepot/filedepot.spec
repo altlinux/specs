@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.5.0
-Release: alt1
+Release: alt1.1
 Summary: Toolkit for storing files and attachments in web applications
 License: MIT
 Group: Development/Python
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 Patch1: %oname-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-pytest python-module-unittest2
 BuildRequires: python-module-Pillow
 BuildRequires: python-module-TurboGears2
@@ -27,7 +27,7 @@ BuildRequires: python-module-alabaster
 BuildRequires: python-module-docutils python-module-objects.inv python-module-pbr
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pytest python3-module-unittest2
 BuildRequires: python3-module-TurboGears2
 BuildRequires: python3-module-webtest
@@ -138,6 +138,9 @@ exit 1
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Dec 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.0-alt1
 - Updated to upstream version 0.5.0.
 
