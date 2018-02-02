@@ -5,7 +5,7 @@
 
 Name: python-module-%module_name
 Version: 0.10.0
-Release: alt2
+Release: alt2.1
 Summary: json-rpc package which implements JSON-RPC over HTTP
 License: LGPL
 Group: Development/Python
@@ -17,12 +17,13 @@ Source: python-jsonrpc-%{version}.tar.gz
 
 
 %setup_python_module %module_name
-BuildRequires: python-module-setuptools-tests python-module-bunch
+BuildRequires: python-module-setuptools python-module-bunch
 BuildRequires: python-modules-json
 BuildRequires: python-module-munch
+BuildRequires: python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests python3-module-bunch
+BuildRequires: python3-module-setuptools python3-module-bunch
 BuildRequires: python-tools-2to3
 %endif
 
@@ -85,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.10.0-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Dec 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.0-alt2
 - Updated build dependencies.
 
