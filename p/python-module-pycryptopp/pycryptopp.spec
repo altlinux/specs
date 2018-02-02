@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt3.git20130916.2
+Release: alt3.git20130916.2.1
 
 Summary: Python wrappers for a few algorithms from the Crypto++ library
 License: GPLv2+ or other (see copyright)
@@ -14,7 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: gcc-c++ libcryptopp-devel git-core
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-ecdsa python-module-ed25519
 
 %py_provides %oname
@@ -67,6 +67,9 @@ python setup.py test
 %python_sitelibdir/*/bench
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.6.0-alt3.git20130916.2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt3.git20130916.2
 - NMU: autorebuild with libcryptopp-5.6.5
 
