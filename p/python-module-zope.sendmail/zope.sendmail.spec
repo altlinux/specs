@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.git20150613.1.1
+Release: alt1.dev0.git20150613.1.1.1
 %define oname zope.sendmail
 
 %def_with python3
@@ -16,14 +16,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/zopefoundation/zope.sendmail.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-transaction python-module-zope.i18nmessageid
 BuildPreReq: python-module-zope.schema python-module-zope.configuration
 BuildPreReq: python-module-zope.security python-module-zope.testing
 BuildPreReq: python-module-zope.component-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-transaction python3-module-zope.i18nmessageid
 BuildPreReq: python3-module-zope.schema python3-module-zope.configuration
 BuildPreReq: python3-module-zope.security python3-module-zope.testing
@@ -141,6 +141,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.0.2-alt1.dev0.git20150613.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.2-alt1.dev0.git20150613.1.1
 - (AUTO) subst_x86_64.
 
