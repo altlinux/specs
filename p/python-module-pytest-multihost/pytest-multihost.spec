@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1
-Release: alt1
+Release: alt1.1
 Summary: Utility for writing multi-host tests for pytest
 License: GPLv3
 Group: Development/Python
@@ -17,11 +17,11 @@ Source0: https://pypi.python.org/packages/6b/ad/d71a4e8cbcd0d5dfcca90562e17dddb0
 BuildArch: noarch
 
 #BuildPreReq: python-modules-json
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-yaml python-module-paramiko
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-yaml python3-module-paramiko
 %endif
 
@@ -30,7 +30,9 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-ecdsa python-module-pycrypto python-module-setuptools-tests python-module-yaml python3-module-ecdsa python3-module-pycrypto python3-module-setuptools-tests python3-module-yaml rpm-build-python3
+BuildRequires: python-module-ecdsa python-module-pycrypto python-module-setuptools python-module-yaml python3-module-ecdsa python3-module-pycrypto python3-module-setuptools python3-module-yaml rpm-build-python3
+BuildRequires: python-module-pytest
+BuildRequires: python3-module-pytest
 
 %description
 A pytest plugin for multi-host testing.
@@ -88,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1
 - automated PyPI update
 
