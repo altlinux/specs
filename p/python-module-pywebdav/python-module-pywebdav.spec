@@ -2,7 +2,7 @@
 
 Name:           python-module-pywebdav
 Version:        0.9.11
-Release:        alt1
+Release:        alt1.1
 Summary:        PyWebDAV is a standards compliant WebDAV server and library written in Python
 
 Group:          Development/Python
@@ -14,10 +14,11 @@ BuildArch:      noarch
 BuildRequires(pre): rpm-build-python
 BuildRequires:  python-devel
 BuildRequires:  python-module-distribute
+BuildRequires:  python-module-six
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-devel
 BuildRequires:  python3-module-distribute
-BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests time
+BuildRequires: python-module-setuptools python3-module-setuptools time
 
 Provides:       pywebdav = %version-%release
 Provides:       pywebdav3 = %version-%release
@@ -103,6 +104,9 @@ popd
 %python3_sitelibdir/%{srcname}*.egg-info
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.11-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sat Aug 13 2016 Andrey Cherepanov <cas@altlinux.org> 0.9.11-alt1
 - New version
 
