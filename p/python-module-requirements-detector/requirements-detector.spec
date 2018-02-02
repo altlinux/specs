@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.5.2
-Release: alt1
+Release: alt1.1
 Summary: Python tool to find and list requirements of a Python project
 License: MIT
 Group: Development/Python
@@ -16,12 +16,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/49/b2/375f6fb3544037089468f217f7ccfcd1cabc4ef88316ec74e602063f3da2/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-astroid python-module-nose
 BuildPreReq: python-module-coverage
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-astroid python3-module-nose
 BuildPreReq: python3-module-coverage
 %endif
@@ -114,6 +114,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt1
 - automated PyPI update
 
