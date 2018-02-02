@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.5.6
-Release: alt2
+Release: alt2.1
 Summary: Divides large result sets into pages for easier browsing
 License: MIT
 Group: Development/Python
@@ -15,11 +15,11 @@ Url: https://pypi.python.org/pypi/paginate/
 # https://github.com/Pylons/paginate.git
 Source: %oname-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-nose
 %endif
 
@@ -88,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.6-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.6-alt2
 - Fixed build.
 
