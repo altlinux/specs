@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.7
-Release: alt3.git20150811.1
+Release: alt3.git20150811.1.1
 Summary: The fastest markdown parser in pure Python
 License: BSD
 Group: Development/Python
@@ -14,13 +14,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/lepture/mistune.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-wheel
 BuildPreReq: python-module-nose python-modules-multiprocessing
 BuildPreReq: python-module-Cython
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-wheel
 BuildPreReq: python3-module-nose
 BuildPreReq: python3-module-Cython
@@ -104,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.7-alt3.git20150811.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Mar 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7-alt3.git20150811.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
