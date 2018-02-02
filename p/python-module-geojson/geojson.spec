@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.3.3
-Release: alt1
+Release: alt1.1
 Summary: Python bindings and utilities for GeoJSON
 License: BSD
 Group: Development/Python
@@ -16,12 +16,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/56/2d/44abe5d3fda94b524e93a8e0f8c83d1e890a9e97e3791f40483a28ccb971/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-modules-json
 BuildPreReq: python-modules-multiprocessing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -129,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.3-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt1
 - automated PyPI update
 
