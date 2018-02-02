@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 3.16
-Release: alt1
+Release: alt1.1
 Summary: Python Remote Objects
 Group: Development/Python
 License: MIT
@@ -11,7 +11,7 @@ Source: Pyro-%version.tar.gz
 BuildArch: noarch
 
 BuildPreReq: python-devel
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools
 %py_requires json wsgiref
 
 %description
@@ -118,5 +118,8 @@ python setup.py test
 %doc docs/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.16-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Jun 11 2017 Anton Midyukov <antohami@altlinux.org> 3.16-alt1
 - Initial build for Sisyphus.
