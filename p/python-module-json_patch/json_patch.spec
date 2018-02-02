@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.2
+Release: alt1.2.1
 Summary: Implementation of the json-patch spec
 License: Free
 Group: Development/Python
@@ -13,10 +13,12 @@ Url: https://pypi.python.org/pypi/json_patch/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-module-setuptools-tests python-module-json_pointer
+BuildRequires: python-module-setuptools python-module-json_pointer
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests python3-module-json_pointer
+BuildRequires: python3-module-setuptools python3-module-json_pointer
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -112,6 +114,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1-alt1.2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Aug 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1-alt1.2
 - Fixed build.
 
