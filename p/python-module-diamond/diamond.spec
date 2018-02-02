@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.14
-Release: alt2.git20150101
+Release: alt2.git20150101.1
 Summary: Smart data producer for graphite graphing package
 License: MIT
 Group: Development/Python
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 Source1: Diamond.wiki.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-configobj python-module-psutil
 BuildPreReq: python-module-mock
 BuildPreReq: python-module-sphinx-devel /proc
@@ -86,6 +86,9 @@ python test.py
 %doc doc/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.0.14-alt2.git20150101.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.14-alt2.git20150101
 - Set %_sysconfigdir/%oname as config file
 
