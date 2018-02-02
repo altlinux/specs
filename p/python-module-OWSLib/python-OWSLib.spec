@@ -2,7 +2,7 @@
 
 Name:           python-module-%modulename
 Version:        0.16.0
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Client library for OGC web services
 License:        BSD
@@ -13,7 +13,7 @@ Packager:	Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python
 BuildRequires:  python-module-distribute
-BuildRequires:  python-module-setuptools-tests
+BuildRequires:  python-module-setuptools
 
 Provides:	python-%modulename = %version-%release
 
@@ -42,6 +42,9 @@ models.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.16.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Dec 24 2017 Andrey Cherepanov <cas@altlinux.org> 0.16.0-alt1
 - New version.
 
