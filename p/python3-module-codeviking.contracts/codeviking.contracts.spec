@@ -2,7 +2,7 @@
 %define oname %mname.contracts
 Name: python3-module-%oname
 Version: 0.17.0
-Release: alt3
+Release: alt3.1
 Summary: Function and method call contracts
 License: MIT
 Group: Development/Python3
@@ -11,7 +11,7 @@ Url: https://pypi.python.org/pypi/CodeViking.contracts/
 Source0: https://pypi.python.org/packages/32/d2/a2b70df673dc1132e359f13eea00cd1d36c17cf7b6a6c7715a8b4c533045/CodeViking.contracts-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests python3-module-pytest
+BuildPreReq: python3-devel python3-module-setuptools python3-module-pytest
 
 %py3_provides %oname
 
@@ -48,6 +48,9 @@ PYTHONPATH=$(pwd) py.test3 -vv
 %python3_sitelibdir/CodeViking.contracts-*.pth
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.17.0-alt3.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Aug 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.17.0-alt3
 - Updated dependencies.
 
