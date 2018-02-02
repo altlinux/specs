@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.4.5
-Release: alt2
+Release: alt2.1
 Summary: Fixtures and markers to simplify testing of asynchronous tornado applications
 License: ASLv2.0
 Group: Development/Python
@@ -15,12 +15,14 @@ Url: https://pypi.python.org/pypi/pytest-tornado/
 # https://github.com/eugeniy/pytest-tornado.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-tornado
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-tornado
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides pytest_tornado
@@ -87,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.4.5-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Nov 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.5-alt2
 - Fixed build.
 
