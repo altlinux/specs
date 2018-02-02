@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.8
-Release: alt1
+Release: alt1.1
 Summary: Bio-Informatics sam file libraries
 License: BSD
 Group: Development/Python
@@ -16,10 +16,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/2e/19/ac09eee4abd444761eec581941a35b93c0597ba79643dcb5079398be5ac7/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -85,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.8-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.8-alt1
 - automated PyPI update
 
