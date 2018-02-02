@@ -1,7 +1,7 @@
 %define oname yams
 Name: python-module-%oname
 Version: 0.45.1
-Release: alt1
+Release: alt1.1
 Summary: Entity / relation schema
 License: LGPL
 Group: Development/Python
@@ -10,7 +10,7 @@ Url: https://pypi.python.org/pypi/yams/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-module-setuptools-tests python-module-logilab-common
+BuildRequires: python-module-setuptools python-module-logilab-common
 BuildRequires: python-module-logilab-database python-module-six
 
 %py_provides %oname
@@ -38,6 +38,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.45.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Oct 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.45.1-alt1
 - Updated to upstream version 0.45.1.
 
