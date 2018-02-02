@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.4
-Release: alt2.git20131028
+Release: alt2.git20131028.1
 Summary: An assemblage of code for manipulating sound data
 License: MIT
 Group: Development/Python
@@ -15,7 +15,7 @@ Url: https://pypi.python.org/pypi/lmj.sound/
 # https://github.com/lmjohns3/py-sound.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-scipy python-module-scikits.audiolab
 BuildRequires: python-module-scikits.samplerate python-module-matplotlib
 BuildRequires: python-module-numpy python-module-pygobject3
@@ -23,7 +23,7 @@ BuildRequires: python-module-pycairo
 BuildRequires: python-modules-logging python-modules-multiprocessing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-scipy python3-module-scikits.audiolab
 BuildRequires: python3-module-scikits.samplerate python3-module-matplotlib
 BuildRequires: python3-module-numpy python3-module-pygobject3
@@ -143,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.4-alt2.git20131028.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.4-alt2.git20131028
 - Disabled check.
 
