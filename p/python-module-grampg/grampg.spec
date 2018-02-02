@@ -2,7 +2,7 @@
 %define oname grampg
 Name: python-module-%oname
 Version: 0.3.0
-Release: alt1
+Release: alt1.1
 Summary: Simple and flexible password generation library
 License: AGPLv3
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/84/6f/63cee4b51ee20b737606c3e682673f3d4c9697fae7147e9bc5beefa42e58/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools
 BuildPreReq: python-module-sphinx-devel
 
 %py_provides %oname
@@ -75,6 +75,9 @@ python setup.py test
 %python_sitelibdir/*/tests
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1
 - automated PyPI update
 
