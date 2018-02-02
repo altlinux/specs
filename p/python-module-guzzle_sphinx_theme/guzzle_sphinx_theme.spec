@@ -2,7 +2,7 @@
 %define oname guzzle_sphinx_theme
 Name: python-module-%oname
 Version: 0.7.11
-Release: alt1
+Release: alt1.1
 Summary: Sphinx theme used by Guzzle
 License: MIT
 Group: Development/Python
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/f4/7d/aed8cd5e4ca52bb8550d2c33fcbb8d6dbd5c2cf5e1694202d2135b374eba/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-sphinx
 
 %py_provides %oname
@@ -38,6 +38,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.7.11-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.11-alt1
 - automated PyPI update
 
