@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.4.2
-Release: alt2
+Release: alt2.1
 Summary: Scikits sparse matrix package
 License: GPL
 Group: Development/Python
@@ -17,13 +17,13 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: libsuitesparse-devel gcc-c++
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-Cython libnumpy-devel
 BuildRequires: python-module-scipy python-module-nose
 BuildRequires: python-module-alabaster python-module-html5lib python-module-notebook python-module-numpy-testing python-module-objects.inv python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-Cython libnumpy-py3-devel
 BuildRequires: python3-module-scipy python3-module-nose
 BuildRequires: python3-module-html5lib python3-module-notebook python3-module-numpy-testing
@@ -180,6 +180,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.4.2-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Oct 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.2-alt2
 - Fixed version in egg-info.
 
