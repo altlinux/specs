@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.2.1
-Release: alt1
+Release: alt1.1
 Summary: A simple statsd client
 License: MIT
 Group: Development/Python
@@ -15,13 +15,13 @@ Patch: statsd-fix-sphinx.patch
 
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-nose python-module-mock
 BuildPreReq: python-module-flake8
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-nose python3-module-mock
 BuildPreReq: python3-module-flake8
 %endif
@@ -142,6 +142,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.2.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu May 25 2017 Alexey Shabalin <shaba@altlinux.ru> 3.2.1-alt1
 - 3.2.1
 
