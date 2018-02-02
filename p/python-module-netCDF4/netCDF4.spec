@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.2.9
-Release: alt2
+Release: alt2.1
 Summary: Python/numpy interface to netCDF library (versions 3 and 4)
 License: BSD / MIT
 Group: Development/Python
@@ -17,13 +17,13 @@ Source1: setup.cfg
 Patch1: %oname-%version-alt-docs.patch
 
 BuildRequires: libnetcdf-devel zlib-devel libjpeg-devel libcurl-devel
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-Cython libnumpy-devel
 BuildRequires: python-module-epydoc
 BuildRequires: python-module-html5lib python-module-notebook python-module-numpy-testing python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-Cython libnumpy-py3-devel
 BuildRequires: python3-module-html5lib
 BuildRequires: python3-module-notebook python3-module-numpy-testing
@@ -170,6 +170,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.2.9-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.9-alt2
 - Rebuilt with new libnetcdf11.
 
