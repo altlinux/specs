@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.17
-Release: alt1
+Release: alt1.1
 Summary: Python debugger (pdb) build on top of prompt_toolkit
 License: Free
 Group: Development/Python
@@ -14,11 +14,11 @@ Url: https://pypi.python.org/pypi/ptpdb
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: ptpython python-module-prompt_toolkit
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: ptpython3 python3-module-prompt_toolkit
 %endif
 
@@ -85,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.17-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.17-alt1
 - Updated to upstream version 0.17.
 
