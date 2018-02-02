@@ -19,7 +19,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -87,22 +87,20 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %setup -n %_name-bad-%version
 %patch -p1
 
-%build
-%autoreconf
-
 %if_enabled opencv
-# broken opencv.pc
-%define opencv_libs %(pkg-config --libs opencv |sed -e 's|%_libdir/lib|-l|g' |sed -e 's|\.so||g')
+# allow build against 3.4.0
+subst 's/\(opencv <= 3\.\)3.0/\14.0/' configure.ac
 %endif
 
+%build
+%autoreconf
+%autoreconf
 %configure \
     --disable-examples \
     --enable-experimental \
     %{subst_enable gtk_doc} \
     --disable-static \
-    --with-html-dir=%_gtk_docdir \
-    %{?_enable_opencv:OPENCV_LIBS="%opencv_libs"}
-
+    --with-html-dir=%_gtk_docdir
 %make_build
 
 %install
@@ -150,6 +148,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Fri Feb 02 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.4-alt2
+- rebuild against libopencv_*.so.3
+
 * Thu Dec 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.4-alt1
 - 1.12.4
 
