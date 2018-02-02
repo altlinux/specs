@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.1
-Release: alt1.git20150130
+Release: alt1.git20150130.1
 Summary: A library for dealing with JSON as python objects
 License: BSD
 Group: Development/Python
@@ -15,12 +15,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-couchdbkit python-module-unittest2
 BuildPreReq: python-module-argparse python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-couchdbkit python3-module-unittest2
 BuildPreReq: python3-module-argparse python3-module-six
 %endif
@@ -91,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.6.1-alt1.git20150130.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1.git20150130
 - New snapshot
 
