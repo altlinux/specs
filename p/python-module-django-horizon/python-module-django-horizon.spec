@@ -4,7 +4,7 @@
 
 Name: python-module-django-%oname
 Version: 11.0.3
-Release: alt1
+Release: alt1.1
 Epoch: 1
 Summary: Django application for talking to Openstack
 
@@ -47,7 +47,7 @@ BuildRequires: python-module-django-pyscss >= 2.0.2
 BuildRequires: python-module-babel >= 2.3.4
 BuildRequires: gettext-tools
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-django-nose
@@ -368,6 +368,9 @@ sed -i "/^SECRET_KEY.*$/{N;s/^.*$/SECRET_KEY='`openssl rand -hex 10`'/}" /etc/op
 %doc html
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:11.0.3-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jul 18 2017 Alexey Shabalin <shaba@altlinux.ru> 1:11.0.3-alt1
 - 11.0.3
 
