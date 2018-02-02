@@ -1,7 +1,7 @@
 %define oname sqlauth
 Name: python-module-%oname
 Version: 0.2.12
-Release: alt1.git20141223
+Release: alt1.git20141223.1
 Summary: Authentication and Authorization via SQL for Autobahn
 License: ASLv2.0
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-autobahn python-module-sqlbridge
 BuildPreReq: python-module-six python-module-taskforce
 BuildPreReq: python-module-inotifyx python-module-yaml
@@ -47,6 +47,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.12-alt1.git20141223.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.12-alt1.git20141223
 - Version 0.2.12
 
