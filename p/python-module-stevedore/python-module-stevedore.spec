@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.20.1
-Release: alt1
+Release: alt1.1
 Summary: Manage dynamic plugins for Python applications
 Group: Development/Python
 License: ASL 2.0
@@ -15,7 +15,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-macros-sphinx
 
 BuildRequires: python-devel python-module-argparse
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8 python-module-six >= 1.9
 BuildRequires: python-module-argparse
 BuildRequires: python-module-Pillow python-module-oslotest
@@ -28,7 +28,7 @@ BuildRequires: python-module-reno
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-argparse
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8 python3-module-six >= 1.9
 BuildRequires: python3-module-argparse
 BuildRequires: python3-module-Pillow python3-module-oslotest
@@ -169,6 +169,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.20.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jul 18 2017 Alexey Shabalin <shaba@altlinux.ru> 1.20.1-alt1
 - 1.20.1
 
