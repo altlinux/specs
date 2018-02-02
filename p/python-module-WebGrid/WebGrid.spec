@@ -2,7 +2,7 @@
 %define oname WebGrid
 Name: python-module-%oname
 Version: 0.1.34
-Release: alt2
+Release: alt2.1
 Summary: A library for rendering HTML tables and Excel files from SQLAlchemy models
 License: BSD
 Group: Development/Python
@@ -11,7 +11,7 @@ Url: https://pypi.python.org/pypi/WebGrid/
 
 Source: %oname-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-BlazeUtils python-module-FormEncode
 BuildRequires: python-module-jinja2 python-module-SQLAlchemy
 BuildRequires: python-module-webhelpers2 python-module-dateutil
@@ -78,6 +78,9 @@ python setup.py test
 %python_sitelibdir/*/tests
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.34-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.34-alt2
 - Fixed build.
 
