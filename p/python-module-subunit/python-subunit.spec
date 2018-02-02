@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 1.2.0
-Release: alt3
+Release: alt3.1
 Summary: Python implementation of subunit test streaming protocol
 License: Apache or BSD
 Group: Development/Python
@@ -15,13 +15,13 @@ Url: http://pypi.python.org/pypi/python-subunit/
 
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-testtools python-module-mimeparse
 BuildRequires: python-module-testscenarios
 BuildRequires: python2.7(hypothesis) python2.7(fixtures)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-testtools python-tools-2to3
 BuildRequires: python3-module-mimeparse
 BuildRequires: python3-module-testscenarios
@@ -158,6 +158,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.2.0-alt3.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Oct 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt3
 - Updated build dependencies.
 
