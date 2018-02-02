@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.3.10
-Release: alt1
+Release: alt1.1
 Summary: Python3 Asyncio Utils
 License: ASLv2.0
 Group: Development/Python
@@ -16,13 +16,14 @@ Url: https://pypi.python.org/pypi/aioutils/
 Source: %name-%version.tar
 
 %if_with python2
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(asyncio)
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(asyncio) python3(nose)
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -119,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.10-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Dec 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.10-alt1
 - Updated to upstream version 0.3.10.
 
