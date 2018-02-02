@@ -7,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 3.5.3
-Release: alt1
+Release: alt1.1
 Summary: Web APIs for Django, made easy
 License: BSD
 Group: Development/Python
@@ -18,9 +18,9 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-defusedxml python-module-docutils python-module-flake8 python-module-html5lib python-module-httplib2 python-module-mkdocs python-module-pytest-cov python-module-pytest-django python-module-setuptools-tests python-module-tornado python-module-livereload
+BuildPreReq: python-module-defusedxml python-module-docutils python-module-flake8 python-module-html5lib python-module-httplib2 python-module-mkdocs python-module-pytest-cov python-module-pytest-django python-module-setuptools python-module-tornado python-module-livereload
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-django-tests python-module-pytest-django
 #BuildPreReq: python-module-pytest-cov python-module-flake8
 #BuildPreReq: python-module-markdown python-module-yaml
@@ -31,7 +31,7 @@ BuildPreReq: python-module-defusedxml python-module-docutils python-module-flake
 #BuildPreReq: python-module-argh
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-django-tests python3-module-pytest-django
 #BuildPreReq: python3-module-pytest-cov python3-module-flake8
 #BuildPreReq: python3-module-markdown python3-module-yaml
@@ -39,7 +39,7 @@ BuildRequires(pre): rpm-build-python3
 #BuildPreReq: python3-module-django-filter python3-module-django-oauth-plus
 #BuildPreReq: python3-module-oauth2 python3-module-django-oauth2-provider
 #BuildPreReq: python3-module-django-dbbackend-sqlite3
-BuildRequires: python3-module-defusedxml python3-module-flake8 python3-module-html5lib python3-module-httplib2 python3-module-markdown python3-module-pytest-cov python3-module-pytest-django python3-module-setuptools-tests python3-module-sphinx python3-module-tornado python3-module-livereload
+BuildRequires: python3-module-defusedxml python3-module-flake8 python3-module-html5lib python3-module-httplib2 python3-module-markdown python3-module-pytest-cov python3-module-pytest-django python3-module-setuptools python3-module-sphinx python3-module-tornado python3-module-livereload
 %endif
 
 
@@ -152,6 +152,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.5.3-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon May 29 2017 Lenar Shakirov <snejok@altlinux.ru> 3.5.3-alt1
 - Version 3.6.3
 
