@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 8
-Release: alt2
+Release: alt2.1
 Summary: Call asynchronous functions of asyncio infrastructure from synchronous code
 License: MIT
 Group: Development/Python
@@ -16,12 +16,12 @@ Url: https://pypi.python.org/pypi/aioawait/
 Source: %{oname}-8.tar.gz
 
 %if_with python2
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(asyncio)
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(asyncio)
 %endif
 
@@ -100,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 8-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Dec 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 8-alt2
 - Updated build dependencies.
 
