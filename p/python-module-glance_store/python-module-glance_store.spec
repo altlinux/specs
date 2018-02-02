@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 0.20.0
-Release: alt1
+Release: alt1.1
 Summary: OpenStack Image Service Store Library
 Group: Development/Python
 License: ASL 2.0
@@ -11,7 +11,7 @@ Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
@@ -44,7 +44,7 @@ BuildRequires: python-module-requests-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-oslo.config >= 3.7.0
@@ -165,6 +165,9 @@ popd
 %doc doc/build/html
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.20.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon May 29 2017 Alexey Shabalin <shaba@altlinux.ru> 0.20.0-alt1
 - 0.20.0
 - add test packages
