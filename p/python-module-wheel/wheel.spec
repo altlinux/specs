@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.29.0
-Release: alt1
+Release: alt1.1
 Summary: A built-package format for Python
 License: MIT
 Group: Development/Python
@@ -14,8 +14,8 @@ Packager: Python Development Team <python@packages.altlinux.org>
 # Source-url: https://bitbucket.org/pypa/wheel/get/%version.tar.gz
 Source: %name-%version.tar
 BuildArch: noarch
-BuildRequires: python-module-jsonschema python-module-keyring python-module-pytest-cov python-module-pyxdg python-module-setuptools-tests
-#BuildPreReq: python-devel python-module-setuptools-tests
+BuildRequires: python-module-jsonschema python-module-keyring python-module-pytest-cov python-module-pyxdg python-module-setuptools
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-keyring python-module-pyxdg
 #BuildPreReq: python-module-jsonschema
 #python-module-ed25519ll
@@ -23,8 +23,8 @@ BuildRequires: python-module-jsonschema python-module-keyring python-module-pyte
 #BuildPreReq: python-module-pytest-cov python-module-py
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-jsonschema python3-module-keyring python3-module-pytest-cov python3-module-pyxdg python3-module-setuptools-tests
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-jsonschema python3-module-keyring python3-module-pytest-cov python3-module-pyxdg python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-keyring python3-module-pyxdg
 #BuildPreReq: python3-module-ed25519ll python3-module-jsonschema
 #BuildPreReq: python3-module-jsonschema
@@ -151,6 +151,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.29.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Jan 02 2017 Anton Midyukov <antohami@altlinux.org> 0.29.0-alt1
 - New version 0.29.0
 
