@@ -2,7 +2,7 @@
 %define oname mongoquery
 Name: python-module-%oname
 Version: 1.3.2
-Release: alt1.git20170921
+Release: alt1.git20170921.1
 Summary: A python implementation of mongodb queries
 License: Public domain
 Group: Development/Python
@@ -12,8 +12,9 @@ Url: https://pypi.python.org/pypi/mongoquery/
 # https://github.com/kapouille/mongoquery.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-unittest2
+BuildRequires: python-module-pytest
 
 %py_provides %oname
 
@@ -42,6 +43,9 @@ py.test -vv
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.2-alt1.git20170921.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.2-alt1.git20170921
 - Updated to current upstream version.
 
