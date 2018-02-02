@@ -2,7 +2,7 @@
 %define mono_version 4.7.1
 
 Name: wine-vanilla
-Version: 3.0
+Version: 3.1
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -416,6 +416,9 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Fri Feb 02 2018 Vitaly Lipatov <lav@altlinux.ru> 3.1-alt1
+- new version 3.1
+
 * Fri Jan 19 2018 Vitaly Lipatov <lav@altlinux.ru> 3.0-alt1
 - new version 3.0
 - update winetricks up to 20171222
