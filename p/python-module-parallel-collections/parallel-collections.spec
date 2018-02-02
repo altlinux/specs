@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.2.3
-Release: alt1.git20141027
+Release: alt1.git20141027.1
 Summary: Parallel implementations of collections with support for map/reduce style operations
 License: BSD
 Group: Development/Python
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-futures python-modules-wsgiref
 BuildPreReq: python-module-nose
 
@@ -68,6 +68,9 @@ nosetests
 %python_sitelibdir/*/tests.*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.3-alt1.git20141027.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Oct 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.3-alt1.git20141027
 - Initial build for Sisyphus
 
