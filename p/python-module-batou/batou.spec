@@ -1,7 +1,7 @@
 %define oname batou
 Name: python-module-%oname
 Version: 1.0
-Release: alt1.b31
+Release: alt1.b31.1
 Summary: Automating multi-host, multi-environment software builds and deployments
 License: BSD
 Group: Development/Python
@@ -11,9 +11,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-jinja2
+BuildPreReq: python-module-setuptools python-module-jinja2
 BuildPreReq: python-module-requests python-module-execnet
 BuildPreReq: python-module-mock
+BuildPreReq: python-module-pytest
 
 %py_provides %oname
 %py_requires jinja2 requests execnet
@@ -64,6 +65,9 @@ python setup.py test
 %python_sitelibdir/*/*/*/example
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0-alt1.b31.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.b31
 - Initial build for Sisyphus
 
