@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.4.2
-Release: alt1
+Release: alt1.1
 Summary: Windows Hyper-V library for OpenStack projects
 Group: Development/Python
 License: ASL 2.0
@@ -14,7 +14,7 @@ Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
@@ -31,7 +31,7 @@ BuildRequires: python-module-oslo.i18n >= 2.1.0
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-sphinx
@@ -136,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jul 18 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.2-alt1
 - 1.4.2
 
