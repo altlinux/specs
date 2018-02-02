@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.7
-Release: alt1
+Release: alt1.1
 Summary: Provides Currency and Money classes for use in your Python code
 License: BSD
 Group: Development/Python
@@ -15,11 +15,11 @@ Url: https://pypi.python.org/pypi/py-moneyed/
 # https://github.com/limist/py-moneyed.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-tox
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-tox
 %endif
 
@@ -134,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.7-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7-alt1
 - Updated to upstream version 0.7.
 
