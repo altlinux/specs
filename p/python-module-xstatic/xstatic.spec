@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt2
+Release: alt2.1
 Summary: XStatic base package with minimal support code
 License: MIT
 Group: Development/Python
@@ -13,10 +13,10 @@ Url: https://pypi.python.org/pypi/%pypi_name/
 Source: %pypi_name-%version.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -92,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.1-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jun 13 2017 Alexey Shabalin <shaba@altlinux.ru> 1.0.1-alt2
 - build as noarch
 
