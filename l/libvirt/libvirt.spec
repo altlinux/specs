@@ -12,7 +12,7 @@
 # the generic RPC driver, and test driver and no libvirtd
 # Default to a full server + client build
 
-%ifarch %ix86 x86_64 ia64
+%ifarch %ix86 x86_64 ia64 armh aarch64
 %def_enable server_drivers
 %else
 %def_disable server_drivers
@@ -32,14 +32,26 @@
 %def_with openvz
 %def_with lxc
 %def_with login_shell
+%ifarch %ix86 x86_64
 %def_with vbox
+%else
+%def_without vbox
+%endif
 %def_without uml
 %def_without libxl
+%ifarch %ix86 x86_64
 %def_with vmware
+%else
+%def_without vmware
+%endif
 
 # Then the hypervisor drivers that talk via a native remote protocol
 %def_with phyp
+%ifarch %ix86 x86_64
 %def_with esx
+%else
+%def_without esx
+%endif
 %def_without hyperv
 %def_without xenapi
 
@@ -57,7 +69,11 @@
 %def_with storage_zfs
 %def_without storage_sheepdog
 %def_without storage_vstorage
+%ifarch %ix86 x86_64 aarch64
 %def_with numactl
+%else
+%def_without numactl
+%endif
 %def_with selinux
 
 # A few optional bits
@@ -74,7 +90,7 @@
 %if_with  qemu
 %def_with qemu_tcg
 
-%ifarch %ix86 x86_64
+%ifarch %ix86 x86_64 armh aarch64
 %def_with qemu_kvm
 %endif
 %endif
@@ -107,7 +123,7 @@
 
 Name: libvirt
 Version: 4.0.0
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -1273,6 +1289,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Feb 02 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.0-alt2%ubt
+- enabled server part on arm arches
+
 * Sat Jan 27 2018 Alexey Shabalin <shaba@altlinux.ru> 4.0.0-alt1%ubt
 - 4.0.0
 - add filetrigger that restart libvirtd after install any plugin
