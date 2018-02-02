@@ -1,7 +1,7 @@
 Group: Publishing
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python rpm-build-python3
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -10,7 +10,7 @@ BuildRequires: python3-module-setuptools-tests
 
 Name:           %{srcname}
 Version:        1.3.0
-Release:        alt1_9
+Release:        alt1_9.1
 Summary:        %{sum}
 
 License:        MIT
@@ -90,6 +90,9 @@ sed -i -e '/^#!\//, 1d' fontdump/*.py
 %{python3_sitelibdir_noarch}/%{srcname}-%{version}-py3.*.egg-info
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1_9.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_9
 - update to new release by fcimport
 
