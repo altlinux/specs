@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.8.1
-Release: alt1
+Release: alt1.1
 Summary: DjVu encoder with foreground/background separation
 License: GPLv2
 Group: Development/Python
@@ -16,7 +16,7 @@ Source0: https://pypi.python.org/packages/d1/4c/5ceedb3d8fcdd4a886e7e6344e6a0c31
 BuildArch: noarch
 
 BuildPreReq: xsltproc docbook-style-xsl djvu-utils exiv2
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-nose python-module-gamera
 BuildPreReq: python-module-Pillow python-module-pyexiv2
 BuildPreReq: python-module-libxmp
@@ -50,6 +50,9 @@ python setup.py test -v
 %_man1dir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1
 - automated PyPI update
 
