@@ -3,7 +3,7 @@
 %define oname robotsuite
 Name: python-module-%oname
 Version: 2.0.0
-Release: alt1
+Release: alt1.1
 Summary: Robot Framework test suite for Python unittest framework
 License: GPL
 Group: Development/Python
@@ -14,7 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/8c/b2/b035fc0b3cbf73c97b1384f996cfd620f28f17ce272aed08ff712bd9b026/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-lxml
+BuildPreReq: python-module-setuptools python-module-lxml
 BuildPreReq: python-module-six python-module-unittest2
 BuildPreReq: python-module-robotframework
 
@@ -40,6 +40,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1
 - automated PyPI update
 
