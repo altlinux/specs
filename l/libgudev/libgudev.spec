@@ -1,15 +1,19 @@
+%def_enable snapshot
+
 %define _name gudev
 %define ver_major 232
 %define api_ver 1.0
 
-%def_enable umockdev
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
+# https://github.com/martinpitt/umockdev/issues/69
+%def_disable umockdev
+%def_disable check
 
 Name: lib%_name
 Version: %ver_major
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: UDev GObject bindings
@@ -17,7 +21,11 @@ Group: System/Libraries
 License: LGPLv2
 Url: https://wiki.gnome.org/Projects/%name
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %define udev_ver 199
 %define glib_ver 2.30
@@ -88,7 +96,6 @@ GObject introspection devel data for %name.
 
 %install
 %makeinstall_std
-
 %find_lang %name
 
 %check
@@ -118,6 +125,10 @@ GObject introspection devel data for %name.
 
 
 %changelog
+* Fri Feb 02 2018 Yuri N. Sedunov <aris@altlinux.org> 1:232-alt2
+- updated to 232-4-gbf8664a (fixed BGO ##792845, 787314)
+- disabled check while umockdev not fixed for systemd-237
+
 * Fri Sep 01 2017 Yuri N. Sedunov <aris@altlinux.org> 1:232-alt1
 - 232
 
