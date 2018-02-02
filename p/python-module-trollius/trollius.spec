@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 2.1
-Release: alt2
+Release: alt2.1
 Summary: Port of the Tulip project (asyncio module, PEP 3156) on Python 2
 License: ASLv2.0
 Group: Development/Python
@@ -15,12 +15,12 @@ Url: https://pypi.python.org/pypi/trollius/
 Source: %oname-%version.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests /dev/pts
+BuildPreReq: python-devel python-module-setuptools /dev/pts
 BuildPreReq: python-module-futures python-module-sphinx-devel
 BuildPreReq: python-modules-wsgiref python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-mock
 %endif
 
@@ -169,6 +169,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.1-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1-alt2
 - Fixed build dependencies.
 
