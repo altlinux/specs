@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.9.4
-Release: alt1.git20141109.1
+Release: alt1.git20141109.1.1
 Summary: unittest-based test runner with Ant/JUnit like XML reporting
 License: BSD
 Group: Development/Python
@@ -15,11 +15,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-six
 %endif
 
@@ -116,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.9.4-alt1.git20141109.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.9.4-alt1.git20141109.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
