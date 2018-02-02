@@ -2,7 +2,7 @@
 %define oname taschenmesser
 Name: python-module-%oname
 Version: 0.1.11
-Release: alt1
+Release: alt1.1
 Summary: Taschenmesser, a toolbelt with plugins for SCons
 License: ASLv2.0
 Group: Development/Python
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/87/d3/733fd375150196bea8cc89c4bc41b7d00460bcde6891240e80107c671315/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-boto
+BuildPreReq: python-module-setuptools python-module-boto
 BuildPreReq: python-module-scour scons
 
 %py_provides %oname
@@ -39,6 +39,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.11-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.11-alt1
 - automated PyPI update
 
