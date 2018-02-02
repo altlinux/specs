@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.2.0
-Release: alt1
+Release: alt1.1
 Summary: Non-blocking MongoDB driver for Tornado
 License: ASLv2.0
 Group: Development/Python
@@ -15,13 +15,13 @@ Url: https://pypi.python.org/pypi/motor/
 # https://github.com/mongodb/motor.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-tornado
 BuildRequires: python-module-pymongo python-module-pymongo-gridfs
 BuildRequires: python-module-futures
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-tornado
 BuildRequires: python3-module-pymongo python3-module-gridfs
 BuildRequires: python3-module-sphinx-devel
@@ -110,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt1
 - Updated to upstream version 1.2.0.
 
