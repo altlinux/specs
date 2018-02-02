@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.8.0
-Release: alt1.git20141127.1
+Release: alt1.git20141127.1.1
 Summary: Databases fixtures plugin for py.test
 License: LGPLv3
 Group: Development/Python
@@ -15,7 +15,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-mirakuru python-module-pyaml
 BuildPreReq: python-module-pymlconf python-module-path
 BuildPreReq: python-module-mysqlclient python-module-psycopg2
@@ -27,7 +27,7 @@ BuildPreReq: python-module-port-for
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-mirakuru
 BuildPreReq: python3-module-pymlconf python3-module-path
 BuildPreReq: python3-module-mysqlclient python3-module-psycopg2
@@ -142,6 +142,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1.git20141127.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.0-alt1.git20141127.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
