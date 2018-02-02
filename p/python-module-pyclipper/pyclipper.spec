@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.6
-Release: alt1
+Release: alt1.1
 Summary: Cython wrapper for the C++ translation of the Angus Johnson's Clipper library
 License: MIT
 Group: Development/Python
@@ -16,11 +16,11 @@ Source: %name-%version.tar
 Patch: pyclipper-setup.py.patch
 
 BuildRequires: gcc-c++ libpolyclipping-devel
-BuildRequires: python-devel python-module-setuptools-tests python-module-pytest
+BuildRequires: python-devel python-module-setuptools python-module-pytest
 BuildRequires: python-module-Cython
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests python3-module-pytest
+BuildRequires: python3-devel python3-module-setuptools python3-module-pytest
 BuildRequires: python3-module-Cython
 %endif
 
@@ -90,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.6-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sat Dec 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.6-alt1
 - NMU: rebuild with libpolyclipping
 - new version
