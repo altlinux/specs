@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name: python-module-%oname
 Version: 0.4.0
-Release: alt2
+Release: alt2.1
 Summary: A HTTPS/SOCKS4/SOCKS5 tunnel for AsyncIO
 License: MIT
 Group: Development/Python
@@ -19,12 +19,12 @@ Source: %{oname}-%{version}.zip
 Patch1: %oname-%version-alt-python3-build.patch
 
 %if_with python2
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(asyncio)
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(asyncio)
 %endif
 
@@ -108,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.4.0-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Oct 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.0-alt2
 - Updated build dependencies.
 
