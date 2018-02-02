@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1
+Release: alt1.1.1
 %define ocore backports
 %define oname %ocore.ssl_match_hostname
 
@@ -16,14 +16,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 
 %py_provides %oname
 %py_requires %ocore
 
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools
-BuildRequires: python-module-setuptools-tests python3-module-pytest rpm-build-python3
+BuildRequires: python-module-setuptools python3-module-pytest rpm-build-python3
 
 %description
 The Secure Sockets layer is only actually secure if you check the
@@ -69,6 +69,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %python_sitelibdir/%ocore/__init__.py*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.5.0.1-alt1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.0.1-alt1.1
 - (AUTO) subst_x86_64.
 
