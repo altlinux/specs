@@ -1,7 +1,7 @@
 %define oname sphinx-argparse
 Name: python-module-%oname
 Version: 0.1.13
-Release: alt1.git20140818
+Release: alt1.git20140818.1
 Summary: Sphinx extension that automatically document argparse commands and options
 License: MIT
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-sphinx-devel
+BuildPreReq: python-module-setuptools python-module-sphinx-devel
 BuildPreReq: python-module-sphinx_rtd_theme
 
 %py_provides sphinxarg
@@ -77,6 +77,9 @@ py.test
 %doc docs/_build/html/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.13-alt1.git20140818.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.13-alt1.git20140818
 - Initial build for Sisyphus
 
