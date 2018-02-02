@@ -6,7 +6,7 @@ BuildRequires: unzip
 
 Name: python-module-%oname
 Version: 2.1
-Release: alt1
+Release: alt1.1
 Summary: py.test plugin to remove stale byte code files
 License: ZPL
 Group: Development/Python
@@ -16,10 +16,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/3d/29/8389e329a55beb7b752d94fc28e9acaf6c3e6791f17cec86736a47853294/%{oname}-%{version}.zip
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -80,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1
 - automated PyPI update
 
