@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.11.2
-Release: alt1.git20141228
+Release: alt1.git20141228.1
 Summary: A collection of network utilities used by pathod and mitmproxy
 License: MIT
 Group: Development/Python
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: libssl-devel
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-pyasn1 python-module-OpenSSL
 BuildPreReq: python-module-passlib python-module-mock
 BuildPreReq: python-module-nose python-module-nose-cov
@@ -72,6 +72,9 @@ py.test
 %python_sitelibdir/*/test.*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.11.2-alt1.git20141228.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.2-alt1.git20141228
 - Version 0.11.2
 
