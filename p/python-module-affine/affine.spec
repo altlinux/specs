@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.0.0.post1
-Release: alt2
+Release: alt2.1
 Summary: Affine transformation matrices
 License: BSD
 Group: Development/Python
@@ -16,12 +16,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-nose
+BuildPreReq: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-nose
+BuildPreReq: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -115,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.0.0.post1-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jun 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0.post1-alt2
 - Import upstream sources and updated spec
 - Fix build with new python3-module-pytest
