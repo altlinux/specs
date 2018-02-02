@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.18.4
-Release: alt1
+Release: alt1.1
 Summary: Highly concurrent networking library
 License: MIT
 Group: Development/Python
@@ -16,7 +16,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-greenlet >= 0.3
 BuildRequires: python-module-nose
 BuildRequires: python-module-OpenSSL python-module-six
@@ -25,7 +25,7 @@ BuildRequires: python-modules-json
 BuildRequires: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-greenlet python3-module-nose
 BuildRequires: python3-module-OpenSSL python3-module-six
 BuildRequires: python3-module-mysqlclient
@@ -51,6 +51,7 @@ Summary: Highly concurrent networking library
 Group: Development/Python3
 %py3_requires greenlet six json OpenSSL MySQLdb
 %add_python3_req_skip stackless
+%add_python3_req_skip eventlet.support.six.moves
 
 %description -n python3-module-%oname
 Eventlet is a concurrent networking library for Python that allows you
@@ -159,6 +160,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.18.4-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Apr 11 2016 Alexey Shabalin <shaba@altlinux.ru> 0.18.4-alt1
 - 0.18.4
 
