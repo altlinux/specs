@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.5.1
-Release: alt1
+Release: alt1.1
 Summary: A Python wrapper for the extremely fast Blosc compression library
 License: MIT / BSD
 Group: Development/Python
@@ -16,12 +16,12 @@ Patch1: %oname-%version-alt-docs.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: libblosc-devel
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-nose python-module-numpy-testing python-module-pytest
 BuildRequires: python-module-alabaster python-module-html5lib python-module-objects.inv python-module-numpydoc
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-nose python3-module-numpy-testing python3-module-pytest
 %endif
 
@@ -186,6 +186,9 @@ nosetests3 -v --with-doctest %oname
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.5.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Dec 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.1-alt1
 - Updated to upstream version 1.5.1.
 
