@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.4.8
-Release: alt1.1.1
+Release: alt1.1.1.1
 Summary: YUI Compressor packaged for Python
 License: BSD
 Group: Development/Python
@@ -14,10 +14,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests jre /proc
+#BuildPreReq: python-devel python-module-setuptools jre /proc
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -25,7 +25,7 @@ Requires: jre /proc
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
 
 %description
 YUI Compressor is a JavaScript and CSS minifier written in Java. This
@@ -97,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.4.8-alt1.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.4.8-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
