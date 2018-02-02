@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3.0
-Release: alt1
+Release: alt1.1
 Summary: OpenStackClient (aka OSC) is a command-line client for OpenStack
 Group: Development/Python
 License: ASL 2.0
@@ -14,7 +14,7 @@ Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
@@ -33,7 +33,7 @@ BuildRequires: python-module-requests-mock >= 1.1
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-babel >= 2.3.4
@@ -134,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 30 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.0-alt1
 - 1.3.0
 - add test packages
