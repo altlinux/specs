@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20141211.1
+Release: alt1.git20141211.1.1
 %define oname ContrailOnlineCAService
 
 %def_disable check
@@ -16,7 +16,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/cedadev/online_ca_service.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests python-module-ContrailCA
+BuildPreReq: python-module-setuptools python-module-ContrailCA
 BuildPreReq: python-module-PasteScript python-module-webob
 BuildPreReq: python-module-repoze.who python-module-epydoc
 BuildPreReq: python-module-PasteDeploy
@@ -87,6 +87,9 @@ python setup.py test
 %python_sitelibdir/contrail/security/onlineca/__init__.py*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.1-alt1.git20141211.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.1-alt1.git20141211.1
 - (AUTO) subst_x86_64.
 
