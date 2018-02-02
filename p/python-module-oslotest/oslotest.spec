@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.10.0
-Release: alt1
+Release: alt1.1
 Summary: OpenStack test framework
 License: ASLv2.0
 Group: Development/Python
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools-tests git-core
+BuildRequires: python-devel python-module-setuptools git-core
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-fixtures >= 3.0.0
 BuildRequires: python-module-subunit >= 0.0.18
@@ -36,7 +36,7 @@ BuildRequires: python-module-debtcollector >= 1.2.0
 BuildRequires: python-module-oslo.config >= 3.14.0
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-fixtures python3-module-subunit
 BuildRequires: python3-module-six python3-module-testrepository
@@ -174,6 +174,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.10.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 2.10.0-alt1
 - 2.10.0
 
