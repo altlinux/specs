@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.7.5
-Release: alt1
+Release: alt1.1
 Summary: Python Bindings for the EVE Online API
 License: MIT
 Group: Development/Python
@@ -14,14 +14,14 @@ Url: https://pypi.python.org/pypi/EVELink/
 # https://github.com/eve-val/evelink.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-z4r-coveralls python-module-mock
 BuildRequires: python-module-nose
 BuildRequires: python-modules-wsgiref python-modules-sqlite3
 BuildRequires: python3-module-html5lib
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-z4r-coveralls python3-module-mock
 BuildRequires: python3-module-nose
 BuildRequires: python3-modules-sqlite3
@@ -106,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.7.5-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Dec 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.5-alt1
 - Updated to upstream version 0.7.5.
 
