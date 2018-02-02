@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.1
-Release: alt2.git20140614.1
+Release: alt2.git20140614.1.1
 Summary: Binary protocol of Kyoto Tycoon with asyncio for io batching
 License: MIT
 Group: Development/Python
@@ -17,14 +17,14 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-trollius 
 BuildPreReq: python-module-nose python-tools-pep8
 BuildPreReq: pyflakes python-module-coverage
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-coverage python3-module-nose python3-module-setuptools-tests python3-pyflakes python3-tools-pep8
+BuildRequires: python3-module-coverage python3-module-nose python3-module-setuptools python3-pyflakes python3-tools-pep8
 %endif
 
 %py_provides %oname
@@ -134,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.0.1-alt2.git20140614.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.1-alt2.git20140614.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
