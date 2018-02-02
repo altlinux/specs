@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.1.2.1
-Release: alt4
+Release: alt4.1
 Summary: A libarchive wrapper for Python
 License: BSD
 Group: Development/Python
@@ -14,10 +14,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: swig libarchive-devel zip
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python-tools-2to3
 %endif
 
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.1.2.1-alt4.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Jul 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.2.1-alt4
 - Fixed build with new libarchive
 
