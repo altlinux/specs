@@ -1,6 +1,6 @@
 Name: gns3-net-converter
 Version: 1.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: GNS3 Topology Converter
 License: GPLv3
@@ -14,7 +14,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires(pre): rpm-build-python3
 
 %description
@@ -45,5 +45,8 @@ sed "s/name='gns3-converter'/name='gns3-net-converter'/" setup.py -i
 %python3_sitelibdir/gns3_net_converter-*.egg-info
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Aug 04 2016 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - Initial build for ALT Linux Sisyphus.
