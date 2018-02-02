@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.1
-Release: alt2.git20141127
+Release: alt2.git20141127.1
 Summary: Logging nose plugin to create log per test
 License: ASLv2.0
 Group: Development/Python
@@ -14,11 +14,11 @@ Url: https://pypi.python.org/pypi/nose-logpertest
 # https://github.com/taykey/nose-logpertest.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-nose
 BuildRequires: python-tools-2to3
 %endif
@@ -88,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.0.1-alt2.git20141127.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Nov 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.1-alt2.git20141127
 - Fixed build.
 
