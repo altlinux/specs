@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.2
-Release: alt2
+Release: alt2.1
 Summary: Task locals support for tulip/asyncio
 License: Free
 Group: Development/Python
@@ -17,12 +17,12 @@ Url: https://pypi.python.org/pypi/tasklocals/
 Source: %oname-%version.tar
 
 %if_with python2
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(asyncio) python-module-nose
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(asyncio) python3-module-nose
 %endif
 
@@ -97,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2-alt2
 - Updated build dependencies.
 
