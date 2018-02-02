@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.3
-Release: alt1.git20140923.1
+Release: alt1.git20140923.1.1
 Summary: Fast drop-in replacement for decimal.py
 License: BSD
 Group: Development/Python
@@ -15,12 +15,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/midlgxdev/cdecimal-2.3.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: libgmp-devel dejagnu python-test
 BuildPreReq: python-module-coverage python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-coverage python3-module-nose
 BuildPreReq: python3-test
 %endif
@@ -152,6 +152,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.3-alt1.git20140923.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.3-alt1.git20140923.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
