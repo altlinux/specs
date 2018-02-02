@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.9
-Release: alt1
+Release: alt1.1
 
 Summary: Setup scripts can use pytest-runner to add setup.py test support for pytest runner
 License: ISC
@@ -19,9 +19,11 @@ BuildArch: noarch
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests python3-module-setuptools_scm
+BuildPreReq: python3-devel python3-module-setuptools python3-module-setuptools_scm
+BuildRequires: python3-module-pytest
 %endif
-BuildPreReq: python-devel python-module-setuptools-tests python-module-setuptools_scm
+BuildPreReq: python-devel python-module-setuptools python-module-setuptools_scm
+BuildRequires: python-module-pytest
 
 %py_provides ptr
 
@@ -80,6 +82,9 @@ python3 setup.py test
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.9-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sat Jan 21 2017 Anton Midyukov <antohami@altlinux.org> 2.9-alt1
 - New version 2.9
 - srpm build
