@@ -1,7 +1,7 @@
 %define oname StoneageHTML
 Name: python-module-%oname
 Version: 0.2.1
-Release: alt1.dev.git20101119
+Release: alt1.dev.git20101119.1
 Summary: Stone-Age HTML Filter: prepare documents for e-mail distribution
 License: LGPLv2.1
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools
 BuildPreReq: python-module-BeautifulSoup python-module-cssutils
 
 %py_provides stoneagehtml
@@ -39,6 +39,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.1-alt1.dev.git20101119.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Dec 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1.dev.git20101119
 - Initial build for Sisyphus
 
