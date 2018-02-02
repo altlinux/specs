@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.8.0
-Release: alt1.git20141130.2
+Release: alt1.git20141130.2.1
 Summary: Command line interface designer
 License: MIT
 Group: Development/Python3
@@ -15,7 +15,7 @@ Url: https://pypi.python.org/pypi/clyde/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-coverage python3-module-jinja2-tests python3-module-nose
 BuildRequires: python3(sugarbowl)
 %if_with docs
@@ -55,6 +55,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1.git20141130.2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Nov 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.0-alt1.git20141130.2
 - Rebuilt without docs since doc generation config is incompatible with python-module-sphinx-1.6.5.
 
