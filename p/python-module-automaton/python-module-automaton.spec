@@ -4,7 +4,7 @@
 
 Name: python-module-%sname
 Version: 1.4.0
-Release: alt1
+Release: alt1.1
 Summary: Friendly state machines for python
 Group: Development/Python
 License: ASL 2.0
@@ -20,7 +20,7 @@ BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-debtcollector >= 1.2.0
 BuildRequires: python-module-prettytable >= 0.7
 
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-oslotest >= 1.10.0
 BuildRequires: python-module-testrepository >= 0.0.18
 BuildRequires: python-module-testscenarios >= 0.4
@@ -113,6 +113,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html README.rst
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Mar 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.0-alt1
 - 1.4.0
 
