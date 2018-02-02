@@ -2,7 +2,7 @@
 %define oname cubicweb-postgis
 Name: python-module-%oname
 Version: 0.5.0
-Release: alt1
+Release: alt1.1
 Summary: Cube for GIS data support using PostGIS
 License: LGPL
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/7e/25/47e5cfd0af48541f0cd166361cd2417d055d81c33f51a2231ec4f912ac87/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 BuildPreReq: python-module-cwtags
 
 Requires: cubicweb
@@ -39,6 +39,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1
 - automated PyPI update
 
