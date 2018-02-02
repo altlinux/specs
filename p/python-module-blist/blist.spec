@@ -2,7 +2,7 @@
 
 Name: python-module-blist
 Version: 1.3.6
-Release: alt1.1
+Release: alt1.1.1
 Summary: A list-like type with better asymptotic performance and similar performance on small lists
 License: BSD
 Group: Development/Python
@@ -19,9 +19,9 @@ BuildPreReq: python3-devel
 # optimized out: libcloog-isl4 python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python3 python3-base python3-module-setuptools
 BuildRequires: python-module-pytest python3-dev python3-module-pytest
 
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 %if_with python3
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 %endif
 
 %description
@@ -67,6 +67,9 @@ python setup.py test
 python3 setup.py test
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.6-alt1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.6-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
