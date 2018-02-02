@@ -4,7 +4,7 @@
 
 Name: h5py
 Version: 2.7.1
-Release: alt1
+Release: alt1.1
 Summary: Python interface to the Hierarchical Data Format library, version 5
 License: MIT
 Group: Development/Python
@@ -17,12 +17,12 @@ Patch1: %name-%version-alt.patch
 BuildRequires: python-devel libnumpy-devel libhdf5-devel
 BuildRequires: libsz2-devel python-module-Cython python-module-Pyrex
 BuildRequires: python-module-sphinx-devel python-module-Pygments
-BuildRequires: python-module-setuptools-tests python-module-six
+BuildRequires: python-module-setuptools python-module-six
 BuildRequires: python-module-pkgconfig
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-Cython python3-module-six
 BuildRequires: python3-module-pkgconfig
 %endif
@@ -298,6 +298,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.7.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Jan 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.1-alt1
 - Updated to upstream version 2.7.1.
 
