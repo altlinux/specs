@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.12
-Release: alt1
+Release: alt1.1
 Summary: Javascript Minifier
 License: ASLv2.0
 Group: Development/Python
@@ -14,12 +14,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/ndparker/rjsmin.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-epydoc python-modules-xml
 BuildPreReq: python-modules-logging python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.12-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Oct 24 2016 Alexey Shabalin <shaba@altlinux.ru> 1.0.12-alt1
 - 1.0.12
 
