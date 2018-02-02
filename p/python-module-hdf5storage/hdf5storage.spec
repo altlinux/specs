@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.14
-Release: alt1
+Release: alt1.1
 Summary: Utilities to read/write Python types to/from HDF5 files, including MATLAB v7.3 MAT files
 License: BSD
 Group: Development/Python
@@ -18,14 +18,14 @@ Patch1: %oname-%version-upstream-docs.patch
 Patch2: %oname-%version-alt-build.patch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-numpy-testing python-module-h5py-tests
 BuildRequires: python-module-scipy python-module-nose
 BuildRequires: python-module-pytest
 BuildRequires: python-module-numpydoc python-module-alabaster python-module-html5lib python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-scipy python3-module-nose
 BuildRequires: python3-module-pytest
 %endif
@@ -144,6 +144,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.14-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.14-alt1
 - Updated to upstream version 0.1.14.
 
