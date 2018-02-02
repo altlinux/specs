@@ -2,7 +2,7 @@
 %define oname cubicweb-dataio
 Name: python-module-%oname
 Version: 0.7.0
-Release: alt1
+Release: alt1.1
 Summary: Cube for data input/output, import and export
 License: LGPL
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/c7/4a/31f5b219df3c07dc89f64c240e8d5dd12a4cb1e367041ba5805fecf6135e/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 BuildPreReq: python-module-rdflib
 
 Requires: cubicweb
@@ -39,6 +39,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.7.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1
 - automated PyPI update
 
