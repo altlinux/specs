@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.4.0
-Release: alt1
+Release: alt1.1
 Summary: Command Line Interface Formulation Framework
 
 Group: Development/Python
@@ -20,7 +20,7 @@ Requires: python-module-prettytable >= 0.7.1
 Requires: python-module-yaml >= 3.10.0
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-prettytable >= 0.7.1
 BuildRequires: python-module-pyparsing >= 2.0.7
@@ -40,7 +40,7 @@ BuildRequires: python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-prettytable >= 0.7.1
 BuildRequires: python3-module-pyparsing >= 2.0.7
@@ -161,6 +161,9 @@ PYTHONPATH=. nosetests
 %doc html
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.4.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon May 29 2017 Alexey Shabalin <shaba@altlinux.ru> 2.4.0-alt1
 - 2.4.0
 - add test packages
