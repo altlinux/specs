@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt1
+Release: alt1.1
 Summary: Python function signatures from PEP362 for Python 2.6, 2.7 and 3.2+
 License: ASLv2.0
 Group: Development/Python
@@ -16,12 +16,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/94/4a/db842e7a0545de1cdb0439bb80e6e42dfe82aaeaadd4072f2263a4fbed23/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-unittest2 python-module-coverage
 BuildPreReq: python-module-flake8 python-module-wheel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-unittest2 python3-module-coverage
 BuildPreReq: python3-module-flake8 python3-module-wheel
 %endif
@@ -89,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1
 - automated PyPI update
 
