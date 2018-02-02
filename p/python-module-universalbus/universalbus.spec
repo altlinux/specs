@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.10
-Release: alt1
+Release: alt1.1
 Summary: Universal Bus over rabbitmq
 License: Free
 Group: Development/Python
@@ -16,11 +16,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/b4/5e/d7f498992f115136331f10f0051cf9bce43a1f4fcd9a5296b51a4400d8f8/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-pika python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-pika
 %endif
 
@@ -28,7 +28,7 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-enum34 python-module-pyasn1 python-module-pycares python-module-pycurl python-module-pyev python-module-pytest python-module-serial python-module-setuptools python-module-twisted-core python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-cffi python3-module-cryptography python3-module-enum34 python3-module-pycares python3-module-pycparser python3-module-pyev python3-module-pygobject3 python3-module-pytest python3-module-serial python3-module-setuptools python3-module-zope python3-module-zope.interface
-BuildRequires: python-module-pika python-module-setuptools-tests python3-module-pika python3-module-setuptools-tests rpm-build-python3
+BuildRequires: python-module-pika python-module-setuptools python3-module-pika python3-module-setuptools rpm-build-python3
 
 %description
 Universal Bus over rabbitmq.
@@ -85,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.0.10-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.10-alt1
 - automated PyPI update
 
