@@ -1,7 +1,7 @@
 %define oname ExtensionClass
 Name: python-module-%oname
 Version: 4.3.0
-Release: alt1
+Release: alt1.1
 Summary: Metaclass for subclassable extension types
 License: ZPLv2.1
 Group: Development/Python
@@ -10,7 +10,7 @@ Url: http://pypi.python.org/pypi/ExtensionClass/
 # https://github.com/zopefoundation/ExtensionClass.git
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-nose
 
 %description
@@ -67,6 +67,9 @@ nosetests
 %python_sitelibdir/*/tests.*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.3.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Nov 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.0-alt1
 - Updated to upstream version 4.3.0.
 
