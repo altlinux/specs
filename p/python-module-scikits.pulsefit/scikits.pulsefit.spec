@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.3
-Release: alt3.git20141230
+Release: alt3.git20141230.1
 Summary: Scikits pulse-fitting package
 License: MIT
 Group: Development/Python
@@ -14,7 +14,7 @@ Url: https://pypi.python.org/pypi/scikits.pulsefit
 # https://github.com/johnnylee/scikits.pulsefit.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: libnumpy-devel python-module-scipy
 
 %py_provides %oname
@@ -42,6 +42,9 @@ py.test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.3-alt3.git20141230.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Nov 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.3-alt3.git20141230
 - Disabled check.
 
