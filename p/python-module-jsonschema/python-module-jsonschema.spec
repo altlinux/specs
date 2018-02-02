@@ -4,7 +4,7 @@
 
 Name:		python-module-%oname
 Version:	2.6.0
-Release:	alt1
+Release:	alt1.1
 Summary:	An implementation of JSON Schema validation for Python
 
 License:	MIT
@@ -13,12 +13,12 @@ URL:		http://pypi.python.org/pypi/jsonschema/
 Source0:	%name-%version.tar.gz
 BuildArch:	noarch
 
-BuildRequires:	python-devel python-module-setuptools-tests
+BuildRequires:	python-devel python-module-setuptools
 BuildPreReq: python-modules-json python-module-nose python-module-mock
 BuildPreReq: python-module-vcversioner python-module-functools32
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-nose python3-module-mock
 BuildPreReq: python3-module-vcversioner
 %endif
@@ -123,6 +123,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Aug 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.6.0-alt1
 - Updated to upstream release 2.6.0.
 
