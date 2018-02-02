@@ -11,7 +11,7 @@
 
 Name: python-module-%oname
 Version: %version
-Release: %release
+Release: alt2.1
 BuildArch: noarch
 
 Summary: Migrations for Django
@@ -25,10 +25,10 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: time python-module-alabaster python-module-django python-module-docutils python-module-html5lib
-BuildRequires: python-module-objects.inv python-module-setuptools-tests
+BuildRequires: python-module-objects.inv python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-django python3-module-setuptools-tests
+BuildRequires: python3-module-django python3-module-setuptools
 %endif
 
 %description
@@ -164,6 +164,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.2-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Aug 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.2-alt2
 - Fixed build.
 
