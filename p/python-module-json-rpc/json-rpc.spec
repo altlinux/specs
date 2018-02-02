@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.9.0
-Release: alt1.git20150324.1.1
+Release: alt1.git20150324.1.1.1
 Summary: JSON-RPC transport realisation
 License: MIT
 Group: Development/Python
@@ -15,7 +15,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-nose python-module-mock
 #BuildPreReq: python-module-coverage
 #BuildPreReq: python-modules-multiprocessing python-modules-json
@@ -23,7 +23,7 @@ BuildArch: noarch
 #BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(Pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-nose python3-module-mock
 #BuildPreReq: python3-module-coverage
 %endif
@@ -35,7 +35,7 @@ BuildRequires(Pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-funcsigs python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pbr python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-unittest2 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pbr python3-module-pip python3-module-pycparser python3-module-pytest python3-module-setuptools python3-module-six python3-module-unittest2
-BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-mock python-module-nose python-module-objects.inv python-module-setuptools-tests python3-module-coverage python3-module-html5lib python3-module-mock python3-module-nose python3-module-setuptools-tests rpm-build-python3 time
+BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-mock python-module-nose python-module-objects.inv python-module-setuptools python3-module-coverage python3-module-html5lib python3-module-mock python3-module-nose python3-module-setuptools rpm-build-python3 time
 
 %description
 JSON-RPC2.0 and JSON-RPC1.0 transport specification implementation.
@@ -163,6 +163,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.9.0-alt1.git20150324.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.9.0-alt1.git20150324.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
