@@ -1,7 +1,7 @@
 %define oname pyee
 Name: python-module-%oname
 Version: 0.0.8
-Release: alt1.git20130806
+Release: alt1.git20130806.1
 Summary: A port of node.js's EventEmitter to python
 License: MIT
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-nose
+BuildPreReq: python-module-setuptools python-module-nose
 
 %py_provides %oname
 
@@ -37,6 +37,9 @@ EventEmitter that comes with node.js.
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.0.8-alt1.git20130806.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Oct 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.8-alt1.git20130806
 - Initial build for Sisyphus
 
