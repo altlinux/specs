@@ -3,7 +3,7 @@
 
 Name: connman
 Version: 1.35
-Release: alt2%ubt
+Release: alt3%ubt
 
 Summary: ConnMan is a daemon for managing internet connections.
 License: %gpl2only
@@ -21,6 +21,7 @@ Patch0: add-options-file.patch
 Patch1: connman-add-libs.patch
 Patch2: connman-main-conf.patch
 Patch3: connman.tmpfiles.patch
+Patch4: connman-upstream-headers.patch
 
 BuildRequires(pre): rpm-build-ubt rpm-build-licenses
 BuildRequires: gcc-c++ glib2-devel iptables iptables-devel libdbus-devel wpa_supplicant
@@ -67,6 +68,7 @@ This package contains include files required for development %name-based softwar
 %patch1 -p2
 %patch2 -p2
 %patch3 -p1
+%patch4 -p1
 
 %build
 %autoreconf
@@ -161,6 +163,9 @@ ln -s ../connman-openresolv.path %buildroot%_unitdir/multi-user.target.wants
 %_includedir/*
 
 %changelog
+* Fri Feb 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.35-alt3%ubt
+- Fixed build with new kernel headers.
+
 * Mon Sep 11 2017 Paul Wolneykien <manowar@altlinux.org> 1.35-alt2%ubt
 - Fix: Explicitly set runstatedir=/run (closes: #33848).
 
