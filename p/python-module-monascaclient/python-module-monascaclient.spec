@@ -3,7 +3,7 @@
 
 Name:       python-module-%oname
 Version:    1.5.0
-Release:    alt1
+Release:    alt1.1
 Summary:    Python API and CLI for OpenStack Monasca
 License:    ASL 2.0
 Url: http://docs.openstack.org/developer/python-%oname
@@ -13,7 +13,7 @@ Group:      Development/Python
 BuildArch:  noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
@@ -37,7 +37,7 @@ BuildRequires: python-module-yaml >= 3.10.0
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr
 BuildRequires: python3-module-d2to1
 BuildRequires: python3-module-argparse
@@ -159,6 +159,9 @@ mv %buildroot%_bindir/monasca %buildroot%_bindir/python3-monasca
 #%doc LICENSE html
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.5.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed May 31 2017 Alexey Shabalin <shaba@altlinux.ru> 1.5.0-alt1
 - 1.5.0
 - add test packages
