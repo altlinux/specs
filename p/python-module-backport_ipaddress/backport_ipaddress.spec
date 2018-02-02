@@ -1,7 +1,7 @@
 %define oname backport_ipaddress
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.git20140816
+Release: alt1.git20140816.1
 Summary: Backport of Python 3's ipaddress module
 License: Python
 Group: Development/Python
@@ -12,7 +12,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools
+BuildPreReq: python-module-pytest
 BuildPreReq: python-module-unittest2 python-module-nose
 
 %py_provides %oname
@@ -47,6 +48,9 @@ py.test
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1-alt1.git20140816.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20140816
 - Initial build for Sisyphus
 
