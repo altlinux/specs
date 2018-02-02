@@ -2,7 +2,7 @@
 
 Name: pylint
 Version: 1.7.4
-Release: alt2%ubt
+Release: alt2%ubt.1
 
 Summary: Python code static checker
 License: GPLv2+
@@ -20,15 +20,17 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: python-module-singledispatch python-module-astroid-tests
+BuildRequires: python-module-pytest
 BuildRequires: python-module-pytest-runner
 BuildRequires: python2.7(configparser) python2.7(backports.functools_lru_cache)
 BuildRequires: python2.7(isort) python2.7(mccabe) python2.7(six)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-astroid
 BuildRequires: python3-module-unittest2
 BuildRequires: python3-module-astroid-tests
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-runner
 BuildRequires: python3(isort) python3(mccabe) python3(six)
 %endif
@@ -127,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.7.4-alt2%ubt.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Nov 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.4-alt2%ubt
 - Updated runtime dependencies.
 
