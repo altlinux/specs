@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 Summary: Kalman filtering and optimal estimation library
 License: MIT
 Group: Development/Python
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 Patch1: %oname-%version-alt-build.patch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-scipy python-module-matplotlib
 BuildRequires: python-module-mock
 BuildRequires: python-module-nose
@@ -24,7 +24,7 @@ BuildRequires: python-module-pygobject3
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python2.7(numpydoc) xvfb-run
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-scipy python3-module-matplotlib
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-nose python3-module-pytz
@@ -152,6 +152,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Dec 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt1
 - Updated to upstream version 1.1.0.
 
