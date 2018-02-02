@@ -2,7 +2,7 @@
 %define oname cubicweb-calendar
 Name: python-module-%oname
 Version: 0.9.0
-Release: alt1
+Release: alt1.1
 Summary: calendar component for the CubicWeb framework
 License: LGPL
 Group: Development/Python
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/d6/9d/34dff27c1d4f634a486174aabe246f5b159eaba73a991ffd33d9d424cb15/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 BuildPreReq: python-module-yams
 
 Requires: cubicweb
@@ -42,6 +42,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1
 - automated PyPI update
 
