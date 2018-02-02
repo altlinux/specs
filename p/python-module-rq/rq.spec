@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.9.2
-Release: alt1
+Release: alt1.1
 Summary: Simple job queues for Python
 License: BSD
 Group: Development/Python
@@ -15,12 +15,12 @@ Url: https://pypi.python.org/pypi/rq/
 # https://github.com/nvie/rq.git
 Source: %oname-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-redis-py
 BuildRequires: python-module-click
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-redis-py
 BuildRequires: python3-module-click
 %endif
@@ -96,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.2-alt1
 - Updated to upstream version 0.9.2.
 
