@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.8.0
-Release: alt1
+Release: alt1.1
 Summary: Web testing library for Robot Framework
 License: ASLv2.0
 Group: Development/Python
@@ -14,15 +14,17 @@ Url: https://pypi.python.org/pypi/robotframework-selenium2library/
 # https://github.com/rtomac/robotframework-selenium2library.git
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools-tests python-module-decorator
+BuildRequires: python-module-setuptools python-module-decorator
 BuildRequires: python-module-selenium python-module-robotframework
 BuildRequires: python-module-docutils python-module-html5lib
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests python3-module-decorator
+BuildRequires: python3-module-setuptools python3-module-decorator
 BuildRequires: python3-module-selenium python3-module-robotframework
 BuildRequires: python3-module-docutils python3-module-html5lib
 BuildRequires: python-tools-2to3 python3-module-sphinx
+BuildRequires: python3-module-pytest
 %endif
 
 %py_requires decorator
@@ -91,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.8.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Oct 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.0-alt1
 - Updated to upstream version 1.8.0.
 
