@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.7.2
-Release: alt2
+Release: alt2.1
 Summary: Robot Framework keyword library for capturing annotated screenshots with Selenium2Library
 License: GPL
 Group: Development/Python
@@ -16,13 +16,13 @@ Url: https://pypi.python.org/pypi/robotframework-selenium2screenshots/
 Source: %{oname}-%{version}.tar.gz
 Patch1: %oname-%version-alt-build.patch
 
-BuildRequires: python-module-setuptools-tests python-module-robotframework
+BuildRequires: python-module-setuptools python-module-robotframework
 BuildRequires: python-module-robotframework-selenium2library
 BuildRequires: python-module-docutils python-module-cffi
 BuildRequires: python-module-html5lib
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests python3-module-robotframework
+BuildRequires: python3-module-setuptools python3-module-robotframework
 BuildRequires: python3-module-robotframework-selenium2library
 BuildRequires: python3-module-docutils python3-module-cffi
 BuildRequires: python3-module-html5lib
@@ -90,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.7.2-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Oct 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.2-alt2
 - Fixed build.
 
