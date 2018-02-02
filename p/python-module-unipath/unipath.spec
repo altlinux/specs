@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1
-Release: alt1.git20150214.2
+Release: alt1.git20150214.2.1
 Summary: Object-oriented alternative to os/os.path/shutil
 License: MIT
 Group: Development/Python
@@ -14,12 +14,14 @@ Url: https://pypi.python.org/pypi/Unipath/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-nose
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-nose
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -91,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1-alt1.git20150214.2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1-alt1.git20150214.2
 - Fixed build.
 
