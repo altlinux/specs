@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.10
-Release: alt2
+Release: alt2.1
 Summary: A Cython implementation of the affine gap string distance
 License: MIT
 Group: Development/Python
@@ -13,12 +13,12 @@ Url: https://pypi.python.org/pypi/affinegap/
 # https://github.com/datamade/affinegap.git
 Source0: https://pypi.python.org/packages/d7/f6/3e188daf864cffb526a786f81112bdb42dab94cd19513d8196389bf484f3/%{oname}-%{version}.tar.gz
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-Cython libnumpy-devel python-module-nose
 BuildRequires: python-module-html5lib python-module-notebook python-module-numpy-testing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-Cython libnumpy-py3-devel python3-module-nose
 BuildRequires: python3-module-html5lib python3-module-notebook python3-module-numpy-testing
 %endif
@@ -89,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.10-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Aug 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.10-alt2
 - Updated build dependencies
 
