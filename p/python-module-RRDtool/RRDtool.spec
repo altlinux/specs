@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.12
-Release: alt1
+Release: alt1.1
 Summary: rrdtool bindings for Python
 License: LGPLv3
 Group: Development/Python
@@ -14,10 +14,10 @@ Url: https://pypi.python.org/pypi/rrdtool/
 Source: %name-%version.tar
 
 BuildRequires: librrd-devel
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname rrdtool
@@ -81,6 +81,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.12-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Jan 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.12-alt1
 - Updated to upstream version 0.1.12.
 
