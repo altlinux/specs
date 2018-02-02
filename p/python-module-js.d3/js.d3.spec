@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.git20141112.1.1.1
+Release: alt1.dev0.git20141112.1.1.1.1
 %define oname js.d3
 
 %def_with python3
@@ -16,11 +16,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/mgood/js.d3.git
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-fanstatic python-module-shutilwhich
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-fanstatic python3-module-shutilwhich
 %endif
 
@@ -29,7 +29,7 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-pytest python-module-setuptools python-module-webob python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-pytest python3-module-setuptools python3-module-webob
-BuildRequires: python-module-fanstatic python-module-setuptools-tests python3-module-fanstatic python3-module-setuptools-tests rpm-build-python3
+BuildRequires: python-module-fanstatic python-module-setuptools python3-module-fanstatic python3-module-setuptools rpm-build-python3
 
 %description
 Fanstatic package for D3.js.
@@ -100,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.4.14-alt1.dev0.git20141112.1.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.4.14-alt1.dev0.git20141112.1.1.1
 - (AUTO) subst_x86_64.
 
