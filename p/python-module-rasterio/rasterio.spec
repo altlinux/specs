@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.36.0
-Release: alt1
+Release: alt1.1
 Summary: Fast and direct raster I/O for use with Numpy and SciPy
 License: BSD
 Group: Development/Python
@@ -18,7 +18,7 @@ Source2: index.rst
 Patch1: %oname-%version-alt-setup.patch
 
 BuildPreReq: libgdal-devel libproj-nad libproj-devel gcc-c++
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-Cython libnumpy-devel ipython
 BuildPreReq: python-module-affine python-module-cligj
 BuildPreReq: python-module-enum34 python-module-coveralls
@@ -30,7 +30,7 @@ BuildRequires: xvfb-run
 BuildRequires: python-module-boto3 python-module-packaging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-Cython libnumpy-py3-devel ipython3
 BuildPreReq: python3-module-affine python3-module-cligj
 BuildPreReq: python3-module-enum34 python3-module-coveralls
@@ -172,6 +172,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.36.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.36.0-alt1
 - Updated to upstream release 0.36.0.
 
