@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1
+Release: alt1.1
 %define oname zExceptions
 
 %def_with python3
@@ -17,13 +17,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/zopefoundation/zExceptions.git
 Source0: https://pypi.python.org/packages/b2/19/20c6898e8a36bd76aa32c67671ed2c5f1c5d465c4290e7005844240c6b83/%{oname}-%{version}.tar.gz
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-zope.interface
 BuildPreReq: python-module-zope.publisher
 BuildPreReq: python-module-zope.security
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python-tools-2to3
 BuildPreReq: python3-module-zope.interface
 BuildPreReq: python3-module-zope.publisher
@@ -130,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.4-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.4-alt1
 - automated PyPI update
 
