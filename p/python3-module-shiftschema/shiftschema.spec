@@ -1,7 +1,7 @@
 %define oname shiftschema
 Name: python3-module-%oname
 Version: 0.0.11
-Release: alt1
+Release: alt1.1
 Summary: Python3 filtering and validation library
 License: MIT
 Group: Development/Python3
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-nose python3-module-rednose
 BuildRequires: python3-module-coveralls
 BuildRequires: python3(flask_wtf)
@@ -46,6 +46,9 @@ nosetests3 -v
 %python3_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.0.11-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Aug 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.11-alt1
 - Updated to upstream version 0.0.11.
 
