@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.10.1
-Release: alt1.git20141112.1.1
+Release: alt1.git20141112.1.1.1
 Summary: Descriptive testing for Python
 License: MIT
 Group: Development/Python
@@ -17,13 +17,13 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-colorama
 %endif
 #BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-colorama
 %endif
 
@@ -33,7 +33,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: python-base python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-module-setuptools-tests rpm-build-python3 time
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-module-setuptools rpm-build-python3 time
 
 %description
 Dead simple descriptive testing for Python. No custom decorators, no
@@ -148,6 +148,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.10.1-alt1.git20141112.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.1-alt1.git20141112.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
