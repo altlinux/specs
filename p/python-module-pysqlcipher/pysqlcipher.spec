@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.6.4
-Release: alt1.git20141112
+Release: alt1.git20141112.1
 Summary: DB-API 2.0 interface for SQLCIPHER 3.x
 License: zlib/libpng
 Group: Development/Python
@@ -15,7 +15,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: libssl-devel amalgamation-sqlcipher
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-pysqlite2-tests
 
 %description
@@ -69,6 +69,9 @@ py.test lib/test/*.py
 %python_sitelibdir/*/test
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.6.4-alt1.git20141112.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.4-alt1.git20141112
 - Initial build for Sisyphus
 
