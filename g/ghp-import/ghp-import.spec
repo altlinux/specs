@@ -2,7 +2,7 @@
 
 Name: ghp-import
 Version: 0.5.4
-Release: alt1
+Release: alt1.1
 Summary: Copy your docs directly to the gh-pages branch
 License: Tumbolia Public License
 Group: Development/Python
@@ -13,11 +13,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/f5/cd/c780b2248dd364fdc77837a020bad3e176933d7ce5643217d9475465e871/%{name}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-markdown
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-markdown
 %endif
 
@@ -107,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.4-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.4-alt1
 - automated PyPI update
 
