@@ -1,7 +1,7 @@
 %define module Gear-Remotes
 
 Name: perl-%module
-Version: 0.015
+Version: 0.016
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -56,6 +56,9 @@ Requires: gear-uupdate
 %_man1dir/*
 
 %changelog
+* Fri Feb 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1
+- submodules support
+
 * Thu Oct 26 2017 Igor Vlasenko <viy@altlinux.ru> 0.015-alt1
 - gear-remotes-* utils can now run deep in git tree
 
