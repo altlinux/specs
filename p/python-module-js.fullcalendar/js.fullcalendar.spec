@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.9.1
-Release: alt1
+Release: alt1.1
 Summary: Fanstatic packaging of FullCalendar
 License: BSD
 Group: Development/Python
@@ -13,14 +13,16 @@ Url: https://pypi.python.org/pypi/js.fullcalendar/
 # https://github.com/Kotti/js.fullcalendar.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-fanstatic python-module-js.jquery
 BuildRequires: python-module-js.momentjs
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-fanstatic python3-module-js.jquery
 BuildRequires: python3-module-js.momentjs
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -96,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.9.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.9.1-alt1
 - Updated to upstream version 2.9.1.
 
