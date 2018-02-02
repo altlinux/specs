@@ -2,7 +2,7 @@
 %define oname mozlog
 Name: python-module-%oname
 Version: 3.3
-Release: alt1
+Release: alt1.1
 Summary: Robust log handling specialized for logging in the Mozilla universe
 License: MPL 1.1/GPL 2.0/LGPL 2.1
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/ce/ce/85ce01843e2deea5b93d457a54f0246288256c2358fd30311eadef184bf7/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-modules-json
+BuildPreReq: python-module-setuptools python-modules-json
 BuildPreReq: python-module-blessings python-module-mozfile
 
 %py_provides %oname
@@ -39,6 +39,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.3-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.3-alt1
 - automated PyPI update
 
