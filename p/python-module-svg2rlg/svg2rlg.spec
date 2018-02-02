@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3
-Release: alt2.svn20110403
+Release: alt2.svn20110403.1
 Summary: Convert SVG to Reportlab drawing
 License: BSD
 Group: Development/Python
@@ -15,12 +15,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-Reportlab python-module-wx
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-Reportlab
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -91,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3-alt2.svn20110403.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt2.svn20110403
 - Fixed build
 
