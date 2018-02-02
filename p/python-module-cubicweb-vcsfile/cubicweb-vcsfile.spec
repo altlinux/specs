@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.4.2
-Release: alt1
+Release: alt1.1
 Summary: Component to integrate version control systems data into the CubicWeb framework
 License: LGPL
 Group: Development/Python
@@ -14,7 +14,7 @@ Url: https://pypi.python.org/pypi/cubicweb-vcsfile/
 
 Source: %oname-%version.tar
 
-BuildRequires: python-module-setuptools-tests cubicweb subversion-python
+BuildRequires: python-module-setuptools cubicweb subversion-python
 BuildRequires: python-module-cubicweb-localperms mercurial
 BuildRequires: python-module-cubicweb-tag
 BuildRequires: python-module-cubicweb-folder
@@ -57,6 +57,9 @@ python setup.py test
 %_docdir/%oname
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.4.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.2-alt1
 - Updated to upstream version 2.4.2.
 
