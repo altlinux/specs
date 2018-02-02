@@ -1,7 +1,7 @@
 %define oname SQLiteFKTG4SA
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt1.hg20110601
+Release: alt1.hg20110601.1
 Summary: SQLite Foreign Key Trigger Generator for SQLAlchemy
 License: BSD
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-modules-sqlite3
+BuildPreReq: python-module-setuptools python-modules-sqlite3
 BuildPreReq: python-module-SQLAlchemy python-module-elixir
 
 %py_provides sqlitefktg4sa
@@ -42,6 +42,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.2-alt1.hg20110601.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sat Jan 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1.hg20110601
 - Initial build for Sisyphus
 
