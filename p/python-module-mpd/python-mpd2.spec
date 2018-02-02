@@ -1,6 +1,6 @@
 Name: python-module-mpd
 Version: 0.5.5
-Release: alt1
+Release: alt1.1
 Summary: A client interface for the Music Player Daemon
 Group: Development/Python
 License: LGPLv3+
@@ -13,10 +13,10 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-markupsafe python3-module-pytest python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer python3-module-sphinx_rtd_theme xz
-BuildRequires: ctags python-module-alabaster python-module-docutils python-module-html5lib python-module-setuptools-tests python3-module-html5lib python3-module-jinja2-tests python3-module-setuptools-tests python3-module-sphinx rpm-build-python3 time
+BuildRequires: ctags python-module-alabaster python-module-docutils python-module-html5lib python-module-setuptools python3-module-html5lib python3-module-jinja2-tests python3-module-setuptools python3-module-sphinx rpm-build-python3 time
 
-#BuildRequires: python-module-distribute  python-devel  python-module-setuptools-tests
-#BuildRequires: python3-module-distribute python3-devel python3-module-setuptools-tests
+#BuildRequires: python-module-distribute  python-devel  python-module-setuptools
+#BuildRequires: python3-module-distribute python3-devel python3-module-setuptools
 
 %description
 python-mpd2 is a fork of python-mpd. While 0.4.x was backwards compatible with
@@ -87,6 +87,9 @@ cd ../python3 && %python3_install
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.5-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 0.5.5-alt1
 - Autobuild version bump to 0.5.5
 
