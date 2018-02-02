@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.11
-Release: alt2.git20140308.1
+Release: alt2.git20140308.1.1
 Summary: Routing Recognition and Generation Tools
 License: MIT
 Group: Development/Python
@@ -16,14 +16,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-repoze.lru python-module-nose
 BuildPreReq: python-module-webtest python-module-webob
 BuildPreReq: python-module-coverage
 BuildPreReq: python-modules-logging python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-repoze.lru python3-module-nose
 BuildPreReq: python3-module-webtest python3-module-webob
 BuildPreReq: python3-module-coverage
@@ -136,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.11-alt2.git20140308.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.11-alt2.git20140308.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
