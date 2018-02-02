@@ -2,7 +2,7 @@
 %define oname mockup
 Name: python-module-%oname
 Version: 2.1.6
-Release: alt1
+Release: alt1.1
 Summary: A collection of client side patterns for faster and easier web development
 License: BSD
 Group: Development/Python
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/23/64/3d078c318aa8f5979fbe09f1fa5dbf1d4c6710aa22b8e3a714199dcd0d5c/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools
 BuildPreReq: python-modules-json
 
 %py_provides %oname
@@ -62,6 +62,9 @@ python setup.py test
 %python_sitelibdir/*/tests
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.1.6-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.1.6-alt1
 - automated PyPI update
 
