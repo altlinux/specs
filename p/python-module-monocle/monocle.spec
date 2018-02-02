@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.38
-Release: alt1
+Release: alt1.1
 Summary: An async programming framework with a blocking look-alike syntax
 License: MIT
 Group: Development/Python
@@ -16,14 +16,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/d2/b5/81e72ca29390bc8874423e072b99d46255905a394ce537c9233f41742e6e/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-twisted-core-test python-module-tornado
 BuildPreReq: python-module-nose python-module-OpenSSL
 BuildPreReq: python-module-service-identity
 BuildPreReq: python-modules-logging python-modules-multiprocessing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-twisted-core-test python3-module-tornado
 BuildPreReq: python3-module-nose python3-module-OpenSSL
 BuildPreReq: python3-module-service-identity
@@ -96,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.38-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1
 - automated PyPI update
 
