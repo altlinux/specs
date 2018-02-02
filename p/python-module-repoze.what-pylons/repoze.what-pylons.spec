@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.git20110412.1.1.1
+Release: alt2.git20110412.1.1.1.1
 %define oname repoze.what-pylons
 
 %def_with python3
@@ -16,7 +16,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/repoze/repoze.what-pylons.git
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-sphinx-devel python-module-decorator
 #BuildPreReq: python-module-pylons python-module-repoze.what.plugins
 #BuildPreReq: python-module-tempita python-module-webtest
@@ -31,7 +31,7 @@ Source: %name-%version.tar
 #BuildPreReq: python-module-WebFlash
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python-tools-2to3
 %endif
 
@@ -40,7 +40,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: ca-certificates python-base python-devel python-module-Ming python-module-PasteDeploy python-module-PyStemmer python-module-Pygments python-module-babel python-module-beaker python-module-crank python-module-cssselect python-module-ecdsa python-module-ed25519 python-module-genshi python-module-html5lib python-module-jinja2 python-module-jinja2-tests python-module-lingua python-module-markupsafe python-module-nose python-module-nss python-module-paste python-module-polib python-module-pycrypto python-module-pytest python-module-pytz python-module-repoze python-module-repoze.what python-module-repoze.who python-module-repoze.who-testutil python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-tgming python-module-transaction python-module-waitress python-module-weberror python-module-webhelpers python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python-tools-2to3 python3 python3-base python3-module-setuptools
-BuildRequires: python-module-PasteScript python-module-TurboGears2 python-module-alabaster python-module-coverage python-module-docutils python-module-mako python-module-objects.inv python-module-pylons python-module-repoze.lru python-module-repoze.what.plugins python-module-setuptools-tests python-module-webtest python3-module-pytest rpm-build-python3 time
+BuildRequires: python-module-PasteScript python-module-TurboGears2 python-module-alabaster python-module-coverage python-module-docutils python-module-mako python-module-objects.inv python-module-pylons python-module-repoze.lru python-module-repoze.what.plugins python-module-setuptools python-module-webtest python3-module-pytest rpm-build-python3 time
 
 %description
 This is an extras plugin for repoze.what which provides optional and
@@ -169,6 +169,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.1-alt2.git20110412.1.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.1-alt2.git20110412.1.1.1
 - (AUTO) subst_x86_64.
 
