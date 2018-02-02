@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.9.16
-Release: alt2.git20150404
+Release: alt2.git20150404.1
 Summary: Normal, default, ordered, chained, restricted, counter, and frozen dictionaries
 License: BSD
 Group: Development/Python
@@ -15,12 +15,12 @@ Url: https://pypi.python.org/pypi/stuf
 # https://bitbucket.org/lcrees/stuf.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-parse python-module-Fabric
 BuildRequires: python-module-pytest python-module-coverage
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-parse
 BuildRequires: python3-module-pytest python3-module-coverage
 %endif
@@ -96,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.16-alt2.git20150404.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Nov 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.16-alt2.git20150404
 - Updated build and runtime dependencies.
 
