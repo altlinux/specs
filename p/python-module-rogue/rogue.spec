@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.1
-Release: alt2.git20150217
+Release: alt2.git20150217.1
 Summary: A devious little programming language
 License: GPLv3+
 Group: Development/Python
@@ -14,10 +14,10 @@ Url: https://pypi.python.org/pypi/rogue/
 # https://bitbucket.org/johannestaas/rogue.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python-tools-2to3
 %endif
 
@@ -125,6 +125,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.0.1-alt2.git20150217.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.1-alt2.git20150217
 - Fixed build.
 
