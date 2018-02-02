@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.3.11
-Release: alt2
+Release: alt2.1
 Summary: Fanstatic packaging of angularjs-nvd3-directives
 License: BSD
 Group: Development/Python
@@ -12,14 +12,16 @@ Url: https://pypi.python.org/pypi/js.angular_nvd3_directives/
 
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-js.angular
 BuildRequires: python-module-js.nvd3
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-js.angular
 BuildRequires: python3-module-js.nvd3
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -97,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.3.11-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.11-alt2
 - Fixed build.
 
