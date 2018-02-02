@@ -2,21 +2,18 @@
 %define EVR %{?epoch:%epoch:}%version-%release
 
 Name: check
-Version: 0.10.0
-Release: alt1.1
-Epoch: 20121107
+Version: 0.12.0
+Release: alt1
+Epoch: 20180202
 
 Summary: A unit test framework for C
 License: LGPL
 Group: Development/C
 
-Url: http://check.sourceforge.net
-Source: %name-%version.tar.gz
-Source100: %name.watch
+Url: https://github.com/libcheck/check
+Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
-Requires: lib%name = %EVR
-Requires: lib%name-devel = %EVR
 Requires: info-install
 
 %add_optflags %optflags_shared
@@ -70,12 +67,12 @@ This package contains a static development library.
 %setup
 
 %build
+%autoreconf
 %configure %{subst_enable static}
 %make_build
 
 %install
 %makeinstall_std
-rm -rf %buildroot/usr/share/doc/check/
 
 %files
 %_bindir/checkmk
@@ -83,11 +80,13 @@ rm -rf %buildroot/usr/share/doc/check/
 
 %files -n lib%name
 %doc AUTHORS NEWS THANKS TODO
+%_docdir/%name
+%exclude %_docdir/%name/example
 %_libdir/*.so.*
 %_infodir/*info*
 
 %files -n lib%name-devel
-%doc doc/example/
+%doc %_docdir/%name/example
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
@@ -99,6 +98,11 @@ rm -rf %buildroot/usr/share/doc/check/
 %endif
 
 %changelog
+* Fri Feb 02 2018 Grigory Ustinov <grenka@altlinux.org> 20180202:0.12.0-alt1
+- NMU:
+  + build new version (Closes: #33422).
+  + change packaging method (transfer to github).
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 20121107:0.10.0-alt1.1
 - NMU: added BR: texinfo
 
