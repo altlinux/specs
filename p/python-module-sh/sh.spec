@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.12.14
-Release: alt1
+Release: alt1.1
 Summary: Python subprocess interface
 License: MIT
 Group: Development/Python
@@ -14,13 +14,13 @@ Url: https://pypi.python.org/pypi/sh/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests /dev/pts
+BuildPreReq: python-devel python-module-setuptools /dev/pts
 buildprereq: python-module-coverage python-module-py
 buildprereq: python-module-tox python-module-virtualenv
 buildprereq: python-module-nose
 %if_with python3
 buildrequires(pre): rpm-build-python3
-buildprereq: python3-devel python3-module-setuptools-tests
+buildprereq: python3-devel python3-module-setuptools
 buildprereq: python3-module-coverage python3-module-py
 buildprereq: python3-module-tox python3-module-virtualenv
 buildprereq: python3-module-nose
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.12.14-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Aug 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.12.14-alt1
 - Updated to upstream release 1.12.14.
 
