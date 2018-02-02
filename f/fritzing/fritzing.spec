@@ -1,6 +1,6 @@
 Name: fritzing
 Version: 0.9.3b.0.31.git701e3a3
-Release: alt1
+Release: alt2
 
 Summary: Intuitive EDA platform featuring from prototype to product
 License: GPLv3, CC-BY-SA-3.0
@@ -8,7 +8,9 @@ Group: Engineering
 
 Url: http://fritzing.org
 # https://github.com/fritzing/fritzing-app
-Source: %name-%version.tar
+Source0: %name-%version.tar
+# https://github.com/fritzing/fritzing-parts
+Source1: %name-parts.tar
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -41,7 +43,7 @@ prototypes, and to create a PCB layout for manufacturing.
 This package contains shared data files for Fritzing.
 
 %prep
-%setup
+%setup -a1
 
 %build
 qmake-qt5
@@ -49,6 +51,7 @@ qmake-qt5
 
 %install
 %makeinstall_std INSTALL_ROOT=%buildroot
+cp -r %name-parts %buildroot/%_datadir/%name
 
 %files
 %doc LICENSE.*
@@ -59,9 +62,12 @@ qmake-qt5
 %_xdgmimedir/packages/%name.xml
 
 %files data
-%_datadir/%name/
+%_datadir/%name
 
 %changelog
+* Thu Feb 01 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.3b.0.31.git701e3a3-alt2
+- Add missing part definitions.
+
 * Wed Jan 31 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.3b.0.31.git701e3a3-alt1
 - Build new version (Closes: #30924).
 - Transfer to Qt5.
