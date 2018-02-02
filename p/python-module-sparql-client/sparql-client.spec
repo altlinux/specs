@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 3.0
-Release: alt1
+Release: alt1.1
 Summary: Python API to query a SPARQL endpoint
 License: MPLv1.1
 Group: Development/Python
@@ -16,12 +16,12 @@ Url: https://pypi.python.org/pypi/sparql-client/
 # https://github.com/eea/sparql-client.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-dateutil python-module-eventlet
 BuildRequires: python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-dateutil python3-module-eventlet
 BuildRequires: python3-module-mock
 %endif
@@ -101,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0-alt1
 - Updated to upstream version 3.0.
 
