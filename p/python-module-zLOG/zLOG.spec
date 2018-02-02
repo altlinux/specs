@@ -3,7 +3,7 @@ BuildRequires: unzip
 %define oname zLOG
 Name: python-module-%oname
 Version: 3.0
-Release: alt1
+Release: alt1.1
 Summary: A general logging facility
 License: ZPLv2.1
 Group: Development/Python
@@ -14,7 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/ac/2a/36bf03a74327e6a158914c980403114c678a8d2ce1159a742d1ec94d5d92/%{oname}-%{version}.zip
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-zconfig-tests
+BuildPreReq: python-module-setuptools python-module-zconfig-tests
 
 %py_provides %oname
 
@@ -59,6 +59,9 @@ python setup.py test
 %python_sitelibdir/*/tests
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1
 - automated PyPI update
 
