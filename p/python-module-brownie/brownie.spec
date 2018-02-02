@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.1
-Release: alt2.git20110725
+Release: alt2.git20110725.1
 Summary: Common utilities and datastructures for Python applications
 License: BSD
 Group: Development/Python
@@ -15,14 +15,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-attest python-module-tox
 BuildPreReq: python-module-coverage
 BuildPreReq: python-module-sphinx-devel python-module-sphinxcontrib-ansi
 BuildPreReq: sphinx-theme-minimalism
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-attest python3-module-tox
 BuildPreReq: python3-module-coverage
 BuildPreReq: python-tools-2to3
@@ -152,6 +152,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.1-alt2.git20110725.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt2.git20110725
 - Fixed build
 
