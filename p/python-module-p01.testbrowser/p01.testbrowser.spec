@@ -2,7 +2,7 @@
 %define oname %mname.testbrowser
 Name: python-module-%oname
 Version: 2.0.1
-Release: alt1
+Release: alt1.1
 Summary: Zope test brwoser based on webtest and wsgi app
 License: ZPLv2.1
 Group: Development/Python
@@ -10,7 +10,7 @@ Url: https://pypi.python.org/pypi/p01.testbrowser/
 
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests python-test
+BuildPreReq: python-module-setuptools python-test
 BuildPreReq: python-module-pytz python-module-webtest
 BuildPreReq: python-module-WSGIProxy2 python-module-six
 BuildPreReq: python-module-zope.interface
@@ -68,6 +68,9 @@ py.test ||:
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.1-alt1
 - Updated to upstream version 2.0.1.
 
