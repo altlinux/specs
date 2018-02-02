@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt2.git20140222
+Release: alt2.git20140222.1
 Summary: Events for asyncio (PEP 3156)
 License: MIT
 Group: Development/Python
@@ -17,11 +17,11 @@ Url: https://pypi.python.org/pypi/aioevents/
 Source: %name-%version.tar
 
 %if_with python2
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -91,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1-alt2.git20140222.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Dec 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1-alt2.git20140222
 - Fixed build.
 
