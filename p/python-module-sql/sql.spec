@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.8
-Release: alt1
+Release: alt1.1
 Summary: Library to write SQL queries
 License: BSD
 Group: Development/Python
@@ -16,10 +16,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/c5/4b/c8c15049bc683428c8248eb37a0f22e9ad20e7853f8215ca8deb023ed689/python-%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -107,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1
 - automated PyPI update
 
