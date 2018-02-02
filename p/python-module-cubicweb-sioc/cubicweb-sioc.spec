@@ -2,7 +2,7 @@
 %define oname cubicweb-sioc
 Name: python-module-%oname
 Version: 0.2.1
-Release: alt1
+Release: alt1.1
 Summary: Specific views for SIOC (Semantically-Interlinked Online Communities)
 License: LGPL
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/ec/86/5ebbc599acbcf37525a51308f9ee4e3436bd9280423961f8f9bb23991dc5/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 BuildPreReq: python-module-markdown
 
 Requires: cubicweb
@@ -38,6 +38,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1
 - automated PyPI update
 
