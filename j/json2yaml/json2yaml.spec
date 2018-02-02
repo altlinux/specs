@@ -1,6 +1,6 @@
 Name: json2yaml
 Version: 1.1.1
-Release: alt2
+Release: alt2.1
 Summary: Convert JSON to YAML or vice versa, while preserving the order of associative arrays
 License: ASLv2.0
 Group: File tools
@@ -10,7 +10,7 @@ Url: https://pypi.python.org/pypi/json2yaml/
 # https://github.com/drbild/json2yaml.git
 Source: %{name}-%{version}.tar.gz
 
-BuildRequires: python-module-setuptools-tests python-module-docopt
+BuildRequires: python-module-setuptools python-module-docopt
 BuildRequires: python-module-yaml python-module-pyaml
 BuildRequires: python-modules-json
 
@@ -38,6 +38,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.1-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Nov 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt2
 - Rebuilt to fix file permissions (closes: #34045)
 
