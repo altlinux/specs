@@ -12,7 +12,7 @@
 
 Name: protobuf
 Version: 3.4.1
-Release: alt1
+Release: alt1.1
 Summary: Protocol Buffers - Google's data interchange format
 License: Apache License 2.0
 Group: System/Libraries
@@ -27,14 +27,14 @@ Obsoletes: libprotobuf <= 2.0.0-alt1
 # Automatically added by buildreq on Wed Nov 19 2008
 BuildRequires: gcc-c++ python-devel libnumpy-devel zlib-devel
 
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools
 BuildPreReq: python-module-google-apputils
 BuildPreReq: python-module-mox python-module-mox python-module-dateutil
 BuildPreReq: python-module-pytz python-module-gflags
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel libnumpy-py3-devel
-BuildPreReq: python3-module-setuptools-tests python-tools-2to3
+BuildPreReq: python3-module-setuptools python-tools-2to3
 BuildPreReq: python3-module-google-apputils
 BuildPreReq: python3-module-mox python3-module-mox python3-module-dateutil
 BuildPreReq: python3-module-pytz python3-module-gflags
@@ -309,6 +309,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.4.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Nov 06 2017 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt1
 - New version 3.4.1 (Closes: 34120). Thanks Igor Vlasenko
 
