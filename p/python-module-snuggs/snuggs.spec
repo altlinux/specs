@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.4.1
-Release: alt3
+Release: alt3.1
 Summary: Snuggs are s-expressions for Numpy
 License: MIT
 Group: Development/Python
@@ -15,12 +15,14 @@ Url: https://pypi.python.org/pypi/snuggs
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-module-numpy-testing python-module-pyparsing python-module-setuptools-tests
+BuildRequires: python-module-numpy-testing python-module-pyparsing python-module-setuptools
 BuildRequires: python2.7(click)
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-numpy-testing python3-module-pyparsing python3-module-setuptools-tests
+BuildRequires: python3-module-numpy-testing python3-module-pyparsing python3-module-setuptools
 BuildRequires: python3(click)
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -86,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4.1-alt3.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Oct 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.1-alt3
 - Updated build dependencies.
 
