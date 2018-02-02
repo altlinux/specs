@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.12.0.1
-Release: alt1
+Release: alt1.1
 Summary: jquery-ui (XStatic packaging standard)
 License: MIT
 Group: Development/Python
@@ -13,11 +13,11 @@ Url: https://pypi.python.org/pypi/%pypi_name/
 Source: %pypi_name-%version.tar.gz
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-%mname python-module-%mname-jquery
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-%mname python3-module-%mname-jquery
 %endif
 
@@ -92,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.12.0.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jun 14 2017 Alexey Shabalin <shaba@altlinux.ru> 1.12.0.1-alt1
 - 1.12.0.1
 - build as noarch
