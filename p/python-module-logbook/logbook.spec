@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 Summary: A logging replacement for Python
 License: BSD
 Group: Development/Python
@@ -14,11 +14,11 @@ Url: https://pypi.python.org/pypi/Logbook/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-Cython python-module-alabaster python-module-html5lib python-module-notebook python-module-objects.inv python-module-setuptools-tests time
+BuildRequires: python-module-Cython python-module-alabaster python-module-html5lib python-module-notebook python-module-objects.inv python-module-setuptools time
 BuildRequires: python-module-mock python-module-pip
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-Cython python3-module-html5lib python3-module-notebook python3-module-setuptools-tests
+BuildRequires: python3-module-Cython python3-module-html5lib python3-module-notebook python3-module-setuptools
 BuildRequires: python3-module-mock python3-module-pip
 %endif
 
@@ -114,6 +114,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Aug 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt1
 - Updated to upstream release 1.1.0.
 
