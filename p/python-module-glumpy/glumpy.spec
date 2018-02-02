@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.3
-Release: alt1.git20150322
+Release: alt1.git20150322.1
 Summary: Fast, scalable & beautiful scientific visualisation
 License: BSD
 Group: Development/Python
@@ -16,14 +16,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: libfreetype-devel libtriangle-devel libglfw3-devel
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-Cython libnumpy-devel
 BuildPreReq: python-module-triangle python-module-OpenGL
 BuildPreReq: python-module-Pillow python-module-nose
 BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-Cython libnumpy-py3-devel
 BuildPreReq: python3-module-triangle python3-module-OpenGL
 BuildPreReq: python3-module-Pillow python3-module-nose
@@ -177,6 +177,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.3-alt1.git20150322.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Mar 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt1.git20150322
 - Initial build for Sisyphus
 
