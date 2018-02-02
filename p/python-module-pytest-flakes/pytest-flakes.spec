@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt2
+Release: alt2.1
 Summary: pytest plugin to check source code with pyflakes
 License: MIT
 Group: Development/Python
@@ -16,12 +16,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/73/2d/61b0b7159b477def3ebb95b05e2ec4240b070bbda9725efe88b3e040269a/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests pyflakes
+BuildPreReq: python-devel python-module-setuptools pyflakes
 BuildPreReq: python-module-pytest-cache python-module-pytest
 BuildPreReq: python-module-pytest-pep8
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-pytest-cache python3-module-pytest
 BuildPreReq: python3-pyflakes python3-module-pytest-pep8
 %endif
@@ -82,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.1-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Jul 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt2
 - Fixed build spec with pytest3
 
