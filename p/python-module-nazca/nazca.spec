@@ -2,7 +2,7 @@
 %define oname nazca
 Name: python-module-%oname
 Version: 0.7.2
-Release: alt2
+Release: alt2.1
 Summary: Python library for data alignment
 License: LGPL
 Group: Development/Python
@@ -11,7 +11,7 @@ Url: https://pypi.python.org/pypi/nazca/
 
 Source: %{oname}-%{version}.tar.gz
 
-BuildRequires: python-module-setuptools-tests python-module-lxml
+BuildRequires: python-module-setuptools python-module-lxml
 BuildRequires: python-module-scipy python-module-scikit-learn
 BuildRequires: python-module-dateutil python2.7(SPARQLWrapper) python2.7(nltk)
 
@@ -54,6 +54,9 @@ python setup.py test
 %python_sitelibdir/*/examples
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.7.2-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.2-alt2
 - Updated dependencies.
 
