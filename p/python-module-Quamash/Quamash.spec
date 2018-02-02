@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name: python-module-%oname
 Version: 0.5.5
-Release: alt2
+Release: alt2.1
 Summary: Implementation of the PEP 3156 event-loop (tulip) api using the Qt Event-Loop
 License: BSD
 Group: Development/Python
@@ -20,14 +20,14 @@ Source: %{oname}-%{version}.zip
 
 BuildRequires: xvfb-run
 %if_with python2
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(asyncio) python-module-pathlib
 BuildRequires: python-module-pytest
 BuildRequires: python-module-PyQt4
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(asyncio) python3-module-pathlib
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-PyQt4
@@ -107,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.5-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Dec 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.5-alt2
 - Updated build dependencies.
 
