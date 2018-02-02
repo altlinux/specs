@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.6.3
-Release: alt1
+Release: alt1.1
 Summary: Plumbum: shell combinators library
 License: MIT
 Group: Development/Python
@@ -17,10 +17,10 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -199,6 +199,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.6.3-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.3-alt1
 - Updated to upstream version 1.6.3.
 
