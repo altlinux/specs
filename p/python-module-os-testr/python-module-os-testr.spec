@@ -4,7 +4,7 @@
 
 Name: python-module-os-testr
 Version: 0.8.2
-Release: alt1
+Release: alt1.1
 Summary: A testr wrapper to provide functionality for OpenStack projects
 Group: Development/Python
 License: ASL 2.0
@@ -15,7 +15,7 @@ BuildArch: noarch
 
 BuildRequires: rpm-build-python
 BuildRequires: python-module-pbr
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 
 Requires: python-module-pbr
 Requires: python-module-babel
@@ -45,7 +45,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-pbr
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 
 Requires: python3-module-pbr
 Requires: python3-module-babel
@@ -143,6 +143,9 @@ popd
 %doc doc/build/html
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed May 31 2017 Alexey Shabalin <shaba@altlinux.ru> 0.8.2-alt1
 - 0.8.2
 - add test packages
