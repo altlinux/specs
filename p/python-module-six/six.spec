@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.10.0
-Release: alt8
+Release: alt8.1
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
 Group: Development/Python
@@ -15,21 +15,34 @@ Packager: Python Development Team <python at packages.altlinux.org>
 
 Source: %name-%version.tar
 Source2: move.list
+Patch: 0001-Fix-pytest-command.patch
 BuildArch: noarch
 
 %define move_list %(echo `cat %{SOURCE2}`)
 
 %py_provides %move_list
 
-BuildPreReq: python-devel
-# for test suite
-%{?!_without_check:%{?!_disable_check:BuildRequires: python-module-setuptools-tests}}
+BuildRequires(pre): python-devel
 BuildRequires: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-%{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-setuptools-tests}}
 BuildRequires: python3-module-setuptools
+%endif
+
+# for test suite
+%if_with check
+BuildRequires: python-module-pytest
+BuildRequires: python-module-tox
+BuildRequires: python-module-virtualenv
+BuildRequires: python-modules-tkinter
+BuildRequires: python-module-py
+%if_with python3
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-virtualenv
+BuildRequires: python3-modules-tkinter
+%endif 
 %endif
 
 %description
@@ -53,6 +66,8 @@ provided.
 
 %prep
 %setup
+%patch -p1
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -75,12 +90,15 @@ popd
 %endif
 
 %check
-python setup.py test
-#py.test -vv
+export PIP_INDEX_URL=http://host.invalid./
+
+export PYTHONPATH=%python_sitelibdir_noarch
+TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py27 -v -- -v
+
 %if_with python3
 pushd ../python3
-python3 setup.py test
-#py.test-%_python3_version -vv
+export PYTHONPATH=%python3_sitelibdir_noarch
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py35 -v -- -v
 popd
 %endif
 
@@ -95,6 +113,10 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.10.0-alt8.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+- Enable tests at Build time
+
 * Fri Jun 16 2017 Alexey Shabalin <shaba@altlinux.ru> 1.10.0-alt8
 - add six.moves.urllib_parse and six.moves.urllib_error to provides
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 6.12.2
-Release: alt1
+Release: alt1.1
 
 Summary: Software releasing made easy and repeatable
 License: GPLv2+
@@ -15,12 +15,12 @@ Url: https://pypi.python.org/pypi/zest.releaser
 # https://github.com/zestsoftware/zest.releaser.git
 Source: %name-%version.tar
 
-BuildRequires: python-module-nose python-module-setuptools-tests python-module-sphinx python-module-z3c.testsetup time
+BuildRequires: python-module-nose python-module-setuptools python-module-sphinx python-module-z3c.testsetup time
 BuildRequires: python-module-colorama python-module-twine
 BuildRequires(pre): rpm-build-python
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose python3-module-setuptools-tests python3-module-sphinx python3-module-z3c.testsetup
+BuildRequires: python3-module-nose python3-module-setuptools python3-module-sphinx python3-module-z3c.testsetup
 BuildRequires: python3-module-colorama python3-module-twine
 %endif
 
@@ -166,6 +166,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 6.12.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Aug 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.12.2-alt1
 - Updated to upstream release 6.12.2.
 

@@ -1,6 +1,6 @@
 Name: doxypy
 Version: 0.4.2
-Release: alt1.git20100706
+Release: alt1.git20100706.1
 Summary: doxypy is an input filter for Doxygen
 License: GPLv2
 Group: Development/Python
@@ -11,7 +11,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools
+BuildRequires: python-module-pytest
 
 %description
 doxypy is an input filter for Doxygen. It reformats python comments to
@@ -43,6 +44,9 @@ py.test test/src/test.py
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.4.2-alt1.git20100706.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1.git20100706
 - Initial build for Sisyphus
 
