@@ -9,7 +9,7 @@
 
 Name: bpython
 Version: 0.14.1
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Fancy curses interface to the Python 2 interactive interpreter
 License: MIT
@@ -22,7 +22,7 @@ Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Mon Mar 16 2015 (-bb)
 # optimized out: python-base python-devel python-module-BeautifulSoup python-module-OpenSSL python-module-PyStemmer python-module-SQLAlchemy python-module-backports python-module-backports.ssl_match_hostname python-module-blessings python-module-cffi python-module-chardet python-module-cryptography python-module-docutils python-module-enum34 python-module-genshi python-module-google python-module-jinja2 python-module-jinja2-tests python-module-lxml python-module-markupsafe python-module-ndg python-module-ndg-httpsclient python-module-ntlm python-module-py python-module-pyasn1 python-module-pycparser python-module-pytest python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-urllib3 python-module-whoosh python-module-xapian python-modules python-modules-bsddb python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-setuptools
-BuildRequires: python-module-Pygments python-module-babel python-module-cssselect python-module-curtsies python-module-greenlet python-module-html5lib python-module-mock python-module-nose python-module-requests python-module-setuptools-tests python3-module-pytest rpm-build-python3
+BuildRequires: python-module-Pygments python-module-babel python-module-cssselect python-module-curtsies python-module-greenlet python-module-html5lib python-module-mock python-module-nose python-module-requests python-module-setuptools python3-module-pytest rpm-build-python3
 
 %if_with doc
 BuildPreReq: python-module-objects.inv time
@@ -234,6 +234,9 @@ python setup.py test ||:
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.14.1-alt1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.14.1-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
