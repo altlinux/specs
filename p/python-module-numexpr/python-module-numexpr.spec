@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        2.6.2
-Release:        alt1
+Release:        alt1.1
 Epoch: 1
 Summary:        Fast numerical array expression evaluator for Python and NumPy
 Group:          Development/Python
@@ -15,10 +15,10 @@ Source:         %oname-%version.tar.gz
 Source1: site.cfg
 Patch1: %oname-%version-alt-config.patch
 
-BuildRequires: gcc-c++ time libnumpy-devel liblapack-devel python-module-html5lib python-module-numpy-testing python-module-setuptools-tests
+BuildRequires: gcc-c++ time libnumpy-devel liblapack-devel python-module-html5lib python-module-numpy-testing python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libnumpy-py3-devel python3-module-numpy-testing python3-module-setuptools-tests
+BuildRequires: libnumpy-py3-devel python3-module-numpy-testing python3-module-setuptools
 %endif
 
 Requires: %name-tests = %epoch:%version-%release /proc
@@ -166,6 +166,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:2.6.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Aug 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.6.2-alt1
 - Updated to upstream release 2.6.2
 
