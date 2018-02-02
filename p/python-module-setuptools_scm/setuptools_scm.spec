@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.15.0
-Release: alt1.1
+Release: alt1.1.1
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python
@@ -19,10 +19,12 @@ BuildArch: noarch
 Requires: git-core mercurial
 %py_requires setuptools
 
-BuildRequires: python-module-setuptools-tests git-core mercurial
+BuildRequires: python-module-setuptools git-core mercurial
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests rpm-build-python3
+BuildRequires: python3-module-setuptools rpm-build-python3
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -111,6 +113,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.15.0-alt1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Jun 01 2017 Michael Shigorin <mike@altlinux.org> 1.15.0-alt1.1
 - R: git-core instead of full-blown git metapackage
 - fix build --with python3 (actually the test)
