@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.2.2
-Release: alt3
+Release: alt3.1
 Summary: Fabric API wrapper
 License: Free
 Group: Development/Python
@@ -15,11 +15,11 @@ Url: https://pypi.python.org/pypi/fabrickit/
 
 Source: %oname-%version.tar.gz
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-Fabric
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-Fabric
 BuildRequires: python-tools-2to3
 %endif
@@ -88,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.2-alt3.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Nov 24 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.2-alt3
 - Fixed build.
 
