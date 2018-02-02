@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 6.1.0
-Release: alt1
+Release: alt1.1
 Summary: Python API and CLI for OpenStack Neutron
 Group: Development/Python
 License: ASL 2.0
@@ -16,7 +16,7 @@ Obsoletes: python-module-quantumclient
 BuildArch: noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-reno >= 1.8.0
@@ -40,7 +40,7 @@ BuildRequires: python-module-babel >= 2.3.4
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-cliff >= 2.3.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
@@ -161,6 +161,9 @@ install -p -D -m 644 tools/neutron.bash_completion \
 %doc doc/build/html
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 6.1.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 30 2017 Alexey Shabalin <shaba@altlinux.ru> 6.1.0-alt1
 - 6.1.0
 - add test packages
