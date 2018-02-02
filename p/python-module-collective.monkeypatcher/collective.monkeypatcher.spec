@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.3
-Release: alt1
+Release: alt1.1
 Summary: Support for applying monkey patches late in the startup cycle
 License: BSD
 Group: Development/Python
@@ -13,7 +13,7 @@ Url: https://pypi.python.org/pypi/collective.monkeypatcher/
 # https://github.com/plone/collective.monkeypatcher.git
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python2.7(zope.interface) python2.7(zope.schema) python2.7(zope.component) python2.7(zope.component.testing) python2.7(zope.configuration.xmlconfig)
 
 %py_provides %oname
@@ -93,6 +93,9 @@ python setup.py test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.3-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.3-alt1
 - Updated to upstream version 1.1.3.
 
