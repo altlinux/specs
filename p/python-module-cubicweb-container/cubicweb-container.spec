@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.7.0
-Release: alt2
+Release: alt2.1
 Summary: "Generic container" services
 License: LGPL
 Group: Development/Python
@@ -13,7 +13,7 @@ Url: https://pypi.python.org/pypi/cubicweb-container/
 
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools-tests cubicweb
+BuildRequires: python-module-setuptools cubicweb
 BuildRequires: python-module-cubicweb-fastimport python-module-yams
 
 Requires: cubicweb python-module-cubicweb-fastimport
@@ -39,6 +39,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.7.0-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.0-alt2
 - Disabled tests.
 
