@@ -2,7 +2,7 @@
 %define oname cubicweb-tracker
 Name: python-module-%oname
 Version: 1.18.0
-Release: alt1
+Release: alt1.1
 Summary: Basic tracker with project, version, ticket for the CubicWeb framework
 License: LGPL
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/67/1d/e75035177570a53ec38cd01293ef94c7ae17a898fd9c22ede0dbad3cd8c1/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 BuildPreReq: python-module-markdown
 BuildPreReq: python-module-cubicweb-activitystream
 BuildPreReq: python-module-cubicweb-localperms
@@ -48,6 +48,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.18.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.18.0-alt1
 - automated PyPI update
 
