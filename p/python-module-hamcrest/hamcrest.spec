@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.a1.git20150729.1.1
+Release: alt2.a1.git20150729.1.1.1
 %define oname hamcrest
 
 %def_with python3
@@ -17,11 +17,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-mock python-module-objects.inv python-module-pytest-cov python-module-setuptools-tests
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-mock python-module-objects.inv python-module-pytest-cov python-module-setuptools
 BuildRequires: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-html5lib python3-module-pbr python3-module-pytest-cov python3-module-setuptools-tests python3-module-tox python3-module-unittest2
+BuildRequires: python3-module-html5lib python3-module-pbr python3-module-pytest-cov python3-module-setuptools python3-module-tox python3-module-unittest2
 %endif
 
 %py_provides %oname
@@ -141,6 +141,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.0.0-alt2.a1.git20150729.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon May 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.0-alt2.a1.git20150729.1.1
 - BR: sphinx_rtd_theme (the theme is optional since sphinx-1.4.1).
 
