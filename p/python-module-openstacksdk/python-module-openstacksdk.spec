@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 0.9.13
-Release: alt1
+Release: alt1.1
 Summary: An SDK for building applications to work with OpenStack
 
 Group: Development/Python
@@ -14,7 +14,7 @@ Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-stevedore >= 1.17.1
@@ -32,7 +32,7 @@ BuildRequires: python-module-reno
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-stevedore >= 1.17.1
@@ -150,6 +150,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.13-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed May 31 2017 Alexey Shabalin <shaba@altlinux.ru> 0.9.13-alt1
 - 0.9.13
 - add test packages
