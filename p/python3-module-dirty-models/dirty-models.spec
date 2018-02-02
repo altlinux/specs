@@ -1,7 +1,7 @@
 %define oname dirty-models
 Name: python3-module-%oname
 Version: 0.9.2
-Release: alt1
+Release: alt1.1
 Summary: Dirty models for python 3
 License: BSD
 Group: Development/Python3
@@ -13,7 +13,7 @@ Source0: https://pypi.python.org/packages/38/e8/03bdc3d80b75f47956581229edd3f5b6
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-dateutil python3-module-nose
 BuildPreReq: python3-module-coverage python3-module-iso8601
 
@@ -64,6 +64,9 @@ nosetests3 -v --with-coverage -d --cover-package=dirty_models
 %python3_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt1
 - automated PyPI update
 
