@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.0.2
-Release: alt2
+Release: alt2.1
 Summary: Python bindings for Selenium
 License: ASL
 Group: Development/Python
@@ -15,10 +15,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/0c/42/20c235e604bf736bc970c1275a78c4ea28c6453a0934002f95df9c49dad0/%{oname}-%{version}.tar.gz
 Patch: selenium-use-without-bundled-libs.patch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %description
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.0.2-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Jun 19 2017 Lenar Shakirov <snejok@altlinux.ru> 3.0.2-alt2
 - selenium-use-without-bundled-libs.patch added
 
