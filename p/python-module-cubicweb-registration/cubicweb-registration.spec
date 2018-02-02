@@ -2,7 +2,7 @@
 %define oname cubicweb-registration
 Name: python-module-%oname
 Version: 0.6.3
-Release: alt1
+Release: alt1.1
 Summary: Public registration component for the CubicWeb framework
 License: LGPL
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/3e/cc/cf2ccb69f44d3c6b21c38d2d9cc0c3fe68f5c28f94dadd0140fef4874ec4/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 BuildPreReq: python-module-Pillow
 
 Requires: cubicweb
@@ -41,6 +41,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.6.3-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Jan 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.3-alt1
 - automated PyPI update
 
