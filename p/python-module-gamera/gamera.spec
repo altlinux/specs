@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.4.2
-Release: alt3
+Release: alt3.1
 Summary: Framework for building document analysis applications
 License: GPLv2
 Group: Development/Python
@@ -15,11 +15,11 @@ Patch1: %oname-%version-upstream-build1.patch
 Patch2: %oname-%version-upstream-build2.patch
 
 BuildPreReq: gcc-c++ libtiff-devel libpng-devel libgomp-devel
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-wx python-module-docutils python-module-Pygments
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_requires wx docutils
@@ -177,6 +177,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.4.2-alt3.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Aug 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.2-alt3
 - Fixed build.
 
