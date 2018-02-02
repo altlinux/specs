@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.6
-Release: alt1.dev0.git20150428.1
+Release: alt1.dev0.git20150428.1.1
 Summary: A python package for integrating sqlalchemy with ripozo
 License: UNKNOWN
 Group: Development/Python
@@ -15,7 +15,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-ripozo python-module-SQLAlchemy
 BuildPreReq: python-module-tox python-module-ripozo-tests
 BuildPreReq: python-module-coverage python-module-virtualenv
@@ -23,7 +23,7 @@ BuildPreReq: python-module-mock
 BuildPreReq: python-modules-logging python-modules-sqlite3
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-ripozo python3-module-SQLAlchemy
 BuildPreReq: python3-module-tox python3-module-ripozo-tests
 BuildPreReq: python3-module-coverage python3-module-virtualenv
@@ -136,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.6-alt1.dev0.git20150428.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.6-alt1.dev0.git20150428.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
