@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.1
-Release: alt2.git20150213
+Release: alt2.git20150213.1
 Summary: A PEP-3156 compatible event loop
 License: MIT
 Group: Development/Python
@@ -16,11 +16,11 @@ Url: https://pypi.python.org/pypi/aiouv/
 Source: %name-%version.tar
 
 %if_with python2
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pyuv
 %endif
 
@@ -92,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.0.1-alt2.git20150213.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Dec 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.1-alt2.git20150213
 - Updated build dependencies.
 
