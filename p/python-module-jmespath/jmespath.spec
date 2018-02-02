@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.3
-Release: alt1
+Release: alt1.1
 Summary: JSON Matching Expressions
 License: MIT
 Group: Development/Python
@@ -17,11 +17,11 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-alabaster python-module-guzzle_sphinx_theme python-module-html5lib python-module-objects.inv
-BuildRequires: python-module-nose python-module-setuptools-tests python-module-tox
+BuildRequires: python-module-nose python-module-setuptools python-module-tox
 BuildRequires: python-module-hypothesis
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose python3-module-setuptools-tests python3-module-tox
+BuildRequires: python3-module-nose python3-module-setuptools python3-module-tox
 BuildRequires: python3-module-hypothesis
 %endif
 
@@ -131,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.3-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Aug 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.3-alt1
 - Updated to upstream version 0.9.3.
 
