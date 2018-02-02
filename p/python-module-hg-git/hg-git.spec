@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.8.5
-Release: alt1
+Release: alt1.1
 Summary: Push to and pull from a Git repository using Mercurial
 License: GPLv2
 Group: Development/Python
@@ -17,11 +17,11 @@ Source0: https://pypi.python.org/packages/1c/9c/63d9dbe06b087f152c4455d3c0d0757e
 BuildArch: noarch
 
 BuildPreReq: python-module-ordereddict
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-dulwich mercurial mercurial-hgext git unzip
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-dulwich
 %endif
 
@@ -89,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.5-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.5-alt1
 - automated PyPI update
 
