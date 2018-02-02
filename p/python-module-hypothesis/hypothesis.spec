@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.18.1
-Release: alt1
+Release: alt1.1
 Summary: A library for property based testing
 License: MPLv2
 Group: Development/Python
@@ -16,12 +16,12 @@ Source: %name-%version.tar
 Patch1: %oname-%version-alt-tests.patch
 
 BuildRequires(pre): rpm-build-python
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-enum34 python-module-numpy python-module-flaky python-module-pytz python-module-django
 BuildRequires: python-module-django-tests python-module-fake-factory python-modules-sqlite3
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-enum34 python3-module-numpy python3-module-flaky python3-module-pytz python3-module-django
 BuildRequires: python3-module-django-tests python3-module-fake-factory python3-modules-sqlite3
 %endif
@@ -95,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.18.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Aug 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.18.1-alt1
 - Updated to upstream version 3.18.1.
 
