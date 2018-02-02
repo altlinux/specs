@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 5.2.2
-Release: alt1
+Release: alt1.1
 Summary: X-Ray Fluorescence Analysis Toolkit and Application
 License: MIT
 Group: Development/Python
@@ -19,13 +19,13 @@ Patch1: %oname-%version-alt-build.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: gcc-c++ libqhull-devel libGLU-devel
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-Cython libnumpy-devel
 BuildRequires: python-module-scipy python-module-PySide
 BuildRequires: python-module-alabaster python-module-html5lib python-module-ipyparallel python-module-numpy-testing python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-Cython libnumpy-py3-devel
 BuildRequires: python3-module-scipy python3-module-PySide
 BuildRequires: python3-module-html5lib python3-module-jinja2-tests python3-module-notebook python3-module-numpy-testing
@@ -209,6 +209,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 5.2.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Nov 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.2-alt1
 - Update to upstream version 5.2.2.
 
