@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.0.17
-Release: alt1
+Release: alt1.1
 Summary: Filesystem abstraction layer
 License: BSD
 Group: Development/Python
@@ -19,12 +19,12 @@ Patch1: fs-alt-tests.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-chardet python-module-django python-module-ecdsa python-module-html5lib
-BuildRequires: python-module-ndg-httpsclient python-module-ntlm python-module-pycrypto python-module-setuptools-tests
+BuildRequires: python-module-ndg-httpsclient python-module-ntlm python-module-pycrypto python-module-setuptools
 BuildRequires: python-module-sphinxcontrib-spelling python-module-wx python-module-nose python-module-mock
 BuildRequires: python-module-appdirs python-module-pyftpdlib-tests python2.7(pytz)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-django python3-module-ecdsa python3-module-pycrypto python3-module-setuptools-tests
+BuildRequires: python3-module-django python3-module-ecdsa python3-module-pycrypto python3-module-setuptools
 BuildRequires: python3-module-nose python3-module-mock
 BuildRequires: python3-module-appdirs python3-module-pyftpdlib-tests python3(pytz)
 %endif
@@ -149,6 +149,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.0.17-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Jan 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.17-alt1
 - Updated to upstream release 2.0.17.
 
