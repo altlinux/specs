@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.3.1
-Release: alt1
+Release: alt1.1
 Summary: Cython/lxml based binding for the XML security library -- for lxml 3.x
 License: BSD
 Group: Development/Python
@@ -15,7 +15,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: libxml2-devel libxmlsec1-devel libxmlsec1-openssl-devel
-BuildPreReq: python-module-setuptools-tests python-module-Cython
+BuildPreReq: python-module-setuptools python-module-Cython
 BuildPreReq: python-module-lxml
 
 %py_provides %oname
@@ -94,6 +94,9 @@ python setup.py test
 %python_sitelibdir/dm/__init__.py*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Dec 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt1
 - Initial build for Sisyphus
 
