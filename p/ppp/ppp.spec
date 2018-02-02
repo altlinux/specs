@@ -10,7 +10,7 @@
 
 Name: ppp
 Version: 2.4.7
-Release: alt2
+Release: alt3
 
 Summary: The PPP daemon and documentation
 License: distributable
@@ -232,6 +232,9 @@ install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 %_libdir/pppd/%version/dhcpc.so
 
 %changelog
+* Mon Jan 29 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4.7-alt3
+- Fixed build with modern kernel headers.
+
 * Fri Jan 30 2015 Andriy Stepanov <stanv@altlinux.ru> 2.4.7-alt2
 - Fix openl2tp socket path
 
