@@ -5,7 +5,7 @@
 Name: python-module-%module_name
 Version: 2.2.2
 Epoch: 1
-Release: alt1
+Release: alt1.1
 Group: Development/Python
 License: GPLv2
 Summary: fork of amqplib used by Kombu containing additional features and improvements
@@ -13,13 +13,16 @@ URL: http://github.com/celery/py-amqp.git
 
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-alabaster python-module-html5lib python-module-objects.inv python-module-sphinxcontrib-issuetracker python2.7(sphinx_celery)
 BuildRequires: python2.7(vine) python2.7(case)
+BuildRequires: python-module-unittest2
+BuildRequires: python-module-mock
 BuildRequires(pre): rpm-macros-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pytest
 BuildRequires: python3(vine) python3(case)
 %endif
 
@@ -129,6 +132,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:2.2.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Oct 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.2.2-alt1
 - Updated to upstream version 2.2.2.
 
