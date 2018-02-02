@@ -1,7 +1,7 @@
 %define oname cubicweb-timeseries
 Name: python-module-%oname
 Version: 1.4.0
-Release: alt1
+Release: alt1.1
 Summary: timeseries component for the CubicWeb framework
 License: LCL
 Group: Development/Python
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 
 Requires: cubicweb
 
@@ -38,6 +38,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt1
 - Initial build for Sisyphus
 
