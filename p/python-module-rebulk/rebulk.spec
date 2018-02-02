@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.9.0
-Release: alt1
+Release: alt1.1
 Summary: Rebulk - define simple search patterns in bulk to perform advanced matching on any string
 License: MIT
 Group: Development/Python
@@ -15,12 +15,16 @@ Url: https://pypi.python.org/pypi/rebulk
 # https://github.com/Toilal/rebulk.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-pytest-runner
+BuildRequires: python-module-six
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pytest-runner
+BuildRequires: python3-module-six
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -125,5 +129,8 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Dec 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.0-alt1
 - Initial build for ALT.
