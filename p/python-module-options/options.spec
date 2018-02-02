@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.4.8
-Release: alt1
+Release: alt1.1
 Summary: Simple, super-flexible options. Does magic upon request.
 License: ASLv2.0
 Group: Development/Python
@@ -15,14 +15,14 @@ Source: %name-%version.tar
 Patch1: %oname-%version-alt-build.patch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-chainmap python-module-combomethod
 BuildRequires: python-module-stuf
 BuildRequires: python-module-nulltype python-module-tox
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-chainmap python3-module-combomethod
 BuildRequires: python3-module-stuf python3-module-six python3-module-pytest
 BuildRequires: python3-module-nulltype python3-module-tox
@@ -102,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4.8-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.8-alt1
 - Updated to upstream version 1.4.8.
 
