@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.16
-Release: alt1.dev0.git20150414.2
+Release: alt1.dev0.git20150414.2.1
 Summary: A helper package for creating tests for ripozo and its extensions
 License: UNKNOWN
 Group: Development/Python
@@ -14,11 +14,11 @@ Url: https://pypi.python.org/pypi/ripozo-tests/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-ripozo
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-ripozo
 %endif
 
@@ -87,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.16-alt1.dev0.git20150414.2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Aug 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.16-alt1.dev0.git20150414.2
 - Fixed build.
 
