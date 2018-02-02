@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1.1
-Release: alt2
+Release: alt2.1
 Summary: SubRip (.srt) subtitle parser and writer
 License: GPLv3
 Group: Development/Python
@@ -16,14 +16,16 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/f6/33/16ad65a8973cb8bcb494af09ee1b9ab5ffdd6ff300bce5d3ac7d3cb1f2cc/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-chardet python-module-nose
 BuildPreReq: python-module-coverage
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-chardet python3-module-nose
 BuildPreReq: python3-module-coverage
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -97,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.1-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Jul 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt2
 - Fixed build spec with py.test3
 
