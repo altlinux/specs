@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 1.5.17
-Release: alt1.post1.1
+Release: alt1.post1.1.1
 
 Summary: Planar geometries, predicates, and operations
 
@@ -16,14 +16,14 @@ Url: http://pypi.python.org/pypi/Shapely
 Source: %name-%version.tar
 
 BuildPreReq: libgeos-devel
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-Cython libnumpy-devel
 BuildPreReq: python-module-descartes python-module-sphinx-devel
 BuildPreReq: python-module-matplotlib-sphinxext
 BuildPreReq: python-module-packaging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-Cython libnumpy-py3-devel
 BuildPreReq: python3-module-descartes
 BuildPreReq: python3-module-packaging
@@ -159,6 +159,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.5.17-alt1.post1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Aug 16 2017 Andrey Cherepanov <cas@altlinux.org> 1.5.17-alt1.post1.1
 - Build without geos support
 
