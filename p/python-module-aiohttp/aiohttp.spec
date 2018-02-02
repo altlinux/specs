@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.2.5
-Release: alt1
+Release: alt1.1
 Summary: http client/server for asyncio
 License: ASLv2.0
 Group: Development/Python
@@ -17,7 +17,7 @@ Requires: python3-yarl >= 0.11
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools python3-module-Cython
-BuildRequires: python3-module-setuptools-tests python3-module-multidict python3-module-yarl python3-module-async-timeout python3-module-pytest-mock
+BuildRequires: python3-module-setuptools python3-module-multidict python3-module-yarl python3-module-async-timeout python3-module-pytest-mock
 %if_with docs
 BuildRequires(pre): python3-module-sphinx-devel
 BuildRequires: python3-module-sphinxcontrib-asyncio python3-module-sphinxcontrib-newsfeed
@@ -100,6 +100,9 @@ python3 setup.py test
 %python3_sitelibdir/*/*/test*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.2.5-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Nov 19 2017 Anton Midyukov <antohami@altlinux.org> 2.2.5-alt1
 - New version 2.2.5
 
