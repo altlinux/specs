@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.2.1
-Release: alt1
+Release: alt1.1
 Summary: JavaScript minifier
 License: MIT
 Group: Development/Python
@@ -15,10 +15,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/87/8c/89cfe7ea967e0a4623b4e61008523ff40805c2bd4eabb1b07671643ea953/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -108,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.2.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1
 - automated PyPI update
 
