@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.3
-Release: alt1.git20120906.1
+Release: alt1.git20120906.1.1
 Summary: Python3 port of py-bcrypt
 License: BSD
 Group: Sciences/Mathematics
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python-tools-2to3
 
 %py3_provides bcrypt
@@ -42,6 +42,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3-alt1.git20120906.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3-alt1.git20120906.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
