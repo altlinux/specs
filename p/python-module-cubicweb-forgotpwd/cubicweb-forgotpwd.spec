@@ -2,7 +2,7 @@
 %define oname cubicweb-forgotpwd
 Name: python-module-%oname
 Version: 0.7.1
-Release: alt1
+Release: alt1.1
 Summary: Password recovery component for the CubicWeb framework
 License: LGPL
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/33/4d/20de2827f8b094dfd7872ec5758753cbb6011037534852f3df473200fbf3/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 BuildPreReq: python-module-pycrypto python-module-Pillow
 
 Requires: cubicweb
@@ -42,6 +42,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.7.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1
 - automated PyPI update
 
