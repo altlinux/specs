@@ -2,7 +2,7 @@
 %define oname cubicweb-worker
 Name: python-module-%oname
 Version: 3.2.0
-Release: alt2
+Release: alt2.1
 Summary: Asynchronous workers in your instance
 License: LGPL
 Group: Development/Python
@@ -11,7 +11,7 @@ BuildArch: noarch
 
 Source: %{oname}-%{version}.tar.gz
 
-BuildRequires: python-module-setuptools-tests cubicweb
+BuildRequires: python-module-setuptools cubicweb
 BuildRequires: python-module-cubicweb-subprocess
 BuildRequires: python2.7(cwtags)
 
@@ -38,6 +38,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.2.0-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.0-alt2
 - Updated build dependencies.
 
