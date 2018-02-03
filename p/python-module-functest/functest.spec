@@ -1,7 +1,7 @@
 %define oname functest
 Name: python-module-%oname
 Version: 0.8.8
-Release: alt2
+Release: alt2.1
 Summary: Functional test framework
 License: ASLv2.0
 Group: Development/Python
@@ -10,7 +10,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools
 BuildArch: noarch
 
 %py_provides %oname
@@ -49,6 +49,9 @@ python setup.py test
 %exclude %python_sitelibdir/tests
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.8-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Dec 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.8-alt2
 - Applied python-module-functest-0.8.8-alt1.diff
 
