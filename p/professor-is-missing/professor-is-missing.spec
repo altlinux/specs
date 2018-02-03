@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:		professor-is-missing
 Version:	0.1
-Release:	alt4_15
+Release:	alt4_16
 Summary:	The Professor is Missing, an AGI adventure game
 
 Group:		Games/Other
@@ -74,6 +74,9 @@ install -p -m 0644 %{SOURCE3} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%
 %{_bindir}/professor-is-missing-wrapper.sh
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.1-alt4_16
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.1-alt4_15
 - update to new release by fcimport
 
