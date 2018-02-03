@@ -1,7 +1,7 @@
 %define oname lorem-ipsum-generator
 Name: python-module-%oname
 Version: 0.3
-Release: alt1.svn20090927
+Release: alt1.svn20090927.1
 Summary: Generates random lorem ipsum text
 License: BSD
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools
 BuildPreReq: python-module-pygtk
 
 %py_provides lipsum
@@ -57,6 +57,9 @@ python src/testlipsum.py
 %_desktopdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3-alt1.svn20090927.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sat Dec 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.svn20090927
 - Initial build for Sisyphus
 
