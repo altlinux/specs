@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2.5
-Release: alt1.a1.git20141018.1
+Release: alt1.a1.git20141018.1.1.1
 Summary: behave is behaviour-driven development, Python style
 License: BSD
 Group: Development/Python
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-modules-json
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-parse python-module-parse_type
 BuildPreReq: python-module-six python-module-nose
 BuildPreReq: python-module-mock python-module-hamcrest
@@ -27,7 +27,7 @@ BuildPreReq: python-module-sphinx-devel python-module-Pygments-tests
 BuildPreReq: python-module-sphinxcontrib-cheeseshop
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-parse python3-module-parse_type
 BuildPreReq: python3-module-six python3-module-nose
 BuildPreReq: python3-module-mock python3-module-hamcrest
@@ -70,6 +70,8 @@ Group: Development/Python3
 Requires: %oname-common = %EVR
 %py3_requires json parse parse_type simplejson
 %add_python3_req_skip gherkin
+%add_python3_req_skip gherkin.formatter
+%add_python3_req_skip gherkin.tag_expression
 
 %description -n python3-module-%oname
 Behavior-driven development (or BDD) is an agile software development
@@ -183,6 +185,12 @@ popd
 %endif
 
 %changelog
+* Sat Feb 03 2018 Stanislav Levin <slev@altlinux.org> 1.2.5-alt1.a1.git20141018.1.1.1
+- (NMU) Fix Requires to gherkin
+
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.2.5-alt1.a1.git20141018.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.5-alt1.a1.git20141018.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
