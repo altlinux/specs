@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt2.git20150224.1
+Release: alt2.git20150224.1.1
 Summary: Tools for Matplotlib
 License: BSD
 Group: Development/Python
@@ -17,7 +17,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests xvfb-run
+BuildPreReq: python-devel python-module-setuptools xvfb-run
 BuildPreReq: python-module-matplotlib 
 BuildPreReq: python-module-pygobject3
 BuildPreReq: python-module-pycairo python-module-mock
@@ -25,7 +25,7 @@ BuildPreReq: python-module-nose python-module-pytz
 BuildPreReq: python-module-sphinx-devel python-module-numpydoc
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-matplotlib 
 BuildPreReq: python3-module-pygobject3
 BuildPreReq: python3-module-pycairo python3-module-mock
@@ -127,6 +127,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.0-alt2.git20150224.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.0-alt2.git20150224.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
