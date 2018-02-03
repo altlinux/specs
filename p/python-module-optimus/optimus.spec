@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.2
-Release: alt1
+Release: alt1.1
 Summary: Python web framework project constructor
 License: Free
 Group: Development/Python
@@ -16,11 +16,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/8e/38/c49f6c9f639e259f0558a517303fc821cc6a25ada43ea0f6bda389cd42c7/py-%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-click python-module-jinja2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-click python3-module-jinja2
 BuildPreReq: python-tools-2to3
 %endif
@@ -103,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.0.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.2-alt1
 - automated PyPI update
 
