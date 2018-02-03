@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3.3
-Release: alt1
+Release: alt1.1
 Summary: Pure Python client for Apache Kafka
 License: ASLv2.0
 Group: Development/Python
@@ -16,7 +16,7 @@ BuildArch: noarch
 
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-tox python-module-mock 
 BuildRequires: python-module-six python-module-snappy
 BuildRequires: python-module-pytest python-module-mocker python-module-pytest-mock
@@ -27,7 +27,7 @@ BuildRequires: python-module-lz4
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-tox python3-module-mock
 BuildRequires: python3-module-six python3-module-snappy
 BuildRequires: python3-module-pytest python3-module-mocker
@@ -144,6 +144,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.3-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri May 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.3-alt1
 - 1.3.3
 
