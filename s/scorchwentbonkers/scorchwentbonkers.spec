@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 %define _localstatedir %{_var}
 Name:           scorchwentbonkers
 Version:        1.3
-Release:        alt1_7
+Release:        alt1_8
 Summary:        Realtime remake of Scorched Earth
 Group:          Games/Other
 License:        zlib
@@ -58,9 +58,8 @@ install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/appdata
 appstream-util validate-relax --nonet \
   $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
-
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/appdata/%{name}.appdata.xml
@@ -69,6 +68,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_8
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_7
 - update to new release by fcimport
 
