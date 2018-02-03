@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.4.11
-Release: alt1
+Release: alt1.1
 Summary: Lightweight in-process concurrent programming
 License: MIT
 Group: Development/Python
@@ -16,14 +16,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/03/a6/8842d7215e1c54537eb5d0b8fd3e8562cc869b6d193317b11027ff7d8009/%{oname}-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-python
-#BuildPreReq: python-module-setuptools-tests gcc-c++
+#BuildPreReq: python-module-setuptools gcc-c++
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: elfutils libstdc++-devel python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: gcc-c++ python-module-setuptools-tests python3-devel python3-module-setuptools-tests rpm-build-python3
+BuildRequires: gcc-c++ python-module-setuptools python3-devel python3-module-setuptools rpm-build-python3
 
-#BuildRequires: python3-devel python3-module-setuptools-tests
+#BuildRequires: python3-devel python3-module-setuptools
 %endif
 
 %description
@@ -137,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.4.11-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.11-alt1
 - automated PyPI update
 
