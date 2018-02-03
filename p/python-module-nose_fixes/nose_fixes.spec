@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt1.git20130214.2
+Release: alt1.git20130214.2.1
 Summary: A plugin to make nose behave better
 License: MIT
 Group: Development/Python
@@ -14,13 +14,15 @@ Url: https://pypi.python.org/pypi/nose_fixes/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-nose python-module-pkginfo
 BuildPreReq: python-module-sphinx-devel
+BuildPreReq: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-nose
+BuildPreReq: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -146,6 +148,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3-alt1.git20130214.2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3-alt1.git20130214.2
 - Fixed build.
 
