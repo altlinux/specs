@@ -1,7 +1,7 @@
 %define oname initgroups
 Name: python-module-%oname
 Version: 2.14.0
-Release: alt1.dev0.git20150618
+Release: alt1.dev0.git20150618.1
 Summary: Convenience uid/gid helper function used in Zope2
 License: ZPLv2.1
 Group: Development/Python
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/zopefoundation/initgroups.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools
 
 %py_provides %oname
 
@@ -36,6 +36,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.14.0-alt1.dev0.git20150618.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.14.0-alt1.dev0.git20150618
 - Version 2.14.0.dev0
 
