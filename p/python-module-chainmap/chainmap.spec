@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt1
+Release: alt1.1
 Summary: Backport/clone of ChainMap for py26, py32, and pypy3.
 License: Python Software Foundation License
 Group: Development/Python
@@ -13,10 +13,12 @@ Url: https://pypi.python.org/pypi/chainmap
 
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -97,5 +99,8 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.2-alt1
 - Initial build for ALT.
