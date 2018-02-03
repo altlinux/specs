@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.5.2
-Release: alt1
+Release: alt1.1
 Summary: JSON-RPC 2.0 client library for Python 3
 License: LGPL
 Group: Development/Python
@@ -15,7 +15,7 @@ Url: https://pypi.python.org/pypi/jsonrpcclient/
 Source: %name-%version.tar
 
 %if_with python2
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-requests python-module-jsonschema
 BuildRequires: python-module-nose python-module-rednose
 BuildRequires: python-module-nose-cov python-module-responses
@@ -24,7 +24,7 @@ BuildRequires: python2.7(future) python2.7(testfixtures) python2.7(zmq) python2.
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-requests python3-module-jsonschema
 BuildRequires: python3-module-nose python3-module-rednose
 BuildRequires: python3-module-nose-cov python3-module-responses
@@ -103,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.5.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5.2-alt1
 - Updated to upstream version 2.5.2.
 
