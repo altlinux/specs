@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.10
-Release: alt1
+Release: alt1.1
 Summary: Decorator indicating a method is both a class and an instance method
 License: Apache License 2.0
 Group: Development/Python
@@ -13,10 +13,12 @@ Url: https://pypi.python.org/pypi/combomethod
 
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -83,5 +85,8 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.10-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.10-alt1
 - Initial build for ALT.
