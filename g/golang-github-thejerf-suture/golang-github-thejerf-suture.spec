@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Generate devel rpm
@@ -29,19 +30,18 @@ BuildRequires: rpm-build-golang
 # https://github.com/thejerf/suture
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          0ac47afae95ad5bc5184ed346bc945168e883f5d
+%global commit          bb8f53725a7667da6eda75187ecd07811a29d274
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-
-# commit 0ac47afae95ad5bc5184ed346bc945168e883f5d == version 2.0.1
+%global commitdate      20180103
 
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        2.0.1
-Release:        alt1_3
+Release:        alt1_4.%{commitdate}.git%{shortcommit}
 Summary:        Supervisor trees for Go
 License:        MIT
 URL:            https://%{provider_prefix}
-Source0:        https://%{provider_prefix}/archive/%{commit}/%{repo}-%{shortcommit}.tar.gz
+Source0:        https://%{provider_prefix}/archive/%{commit}/%{project}-%{repo}-%{shortcommit}.tar.gz
 
 # e.g. el6 has ppc64 arch without gcc-go, so EA tag is required
 ExclusiveArch:  %{?go_arches:%{go_arches}}%{!?go_arches:%{ix86} x86_64 aarch64 %{arm}}
@@ -159,7 +159,7 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
@@ -167,12 +167,15 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %endif
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_4.20180103.gitbb8f537
+- update to new release by fcimport
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_3
 - new version
 
