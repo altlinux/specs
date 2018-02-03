@@ -9,15 +9,14 @@ BuildRequires: unzip
 %global fontconf 65-%{fontname}.conf
 
 Name:           fonts-otf-gdouros-alexander
-Version:        7.17
-Release:        alt1_4
+Version:        8.01
+Release:        alt1_1
 Summary:        A Greek typeface inspired by Alexander Wilson
 License:        Public Domain
 URL:            http://users.teilar.gr/~g1951d/
-Source0:        http://users.teilar.gr/~g1951d/TextfontsFonts.zip
-Source1:        http://users.teilar.gr/~g1951d/Textfonts.pdf
-Source2:        %{oldname}-fontconfig.conf
-Source3:        %{fontname}.metainfo.xml
+Source0:        http://users.teilar.gr/~g1951d/Textfonts.zip
+Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -46,6 +45,7 @@ It was created by George Douros.
 %package -n gdouros-textfonts-doc
 Group: System/Fonts/True type
 Summary:        Documentation for all Textfonts by G. Douros
+BuildArch: noarch
 %description -n gdouros-textfonts-doc
 This package contains documentation regarding the Textfonts family of fonts by
 G. Douros, i.e. Aroania, Anaktoria, Alexander, Avdira and Asea. The origin of
@@ -54,23 +54,22 @@ and opentype features supported by the fonts.
 
 %prep
 %setup -n %{oldname}-%{version} -q -c
-cp -p %{SOURCE1} .
 
 %build
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p Alexander.ttf %{buildroot}%{_fontdir}
+install -m 0644 -p fonts/Alexander.ttf %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
 
-install -m 0644 -p %{SOURCE2} \
+install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
-install -Dm 0644 -p %{SOURCE3} \
+install -Dm 0644 -p %{SOURCE2} \
         %{buildroot}%{_datadir}/metainfo/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
@@ -115,13 +114,17 @@ appstream-util validate-relax --nonet \
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Alexander.ttf
 %{_datadir}/metainfo/%{fontname}.metainfo.xml
 
 %files -n gdouros-textfonts-doc
-%doc Textfonts.pdf
+%doc Textfonts.pdf Textfonts.odt
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 8.01-alt1_1
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 7.17-alt1_4
 - update to new release by fcimport
 
