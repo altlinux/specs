@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.25
-Release: alt2
+Release: alt2.1
 Summary: Fuzzy equality test objects for testing
 License: MIT
 Group: Development/Python
@@ -15,13 +15,13 @@ Url: https://pypi.python.org/pypi/equals/
 # https://github.com/toddsifleet/equals.git
 Source: %{oname}-%{version}.tar.gz
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-flake8 python-module-mock
 BuildRequires: python-module-doubles python-module-coverage
 BuildRequires: python-module-z4r-coveralls
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-flake8 python3-module-mock
 BuildRequires: python3-module-doubles python3-module-coverage
 BuildRequires: python3-module-coveralls python3-module-html5lib
@@ -99,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.0.25-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Dec 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.25-alt2
 - Fixed build.
 
