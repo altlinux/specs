@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1
+Release: alt1.1
 Summary: A nose plugin to detect tests making http calls
 License: MIT
 Group: Development/Python
@@ -16,11 +16,11 @@ Url: https://pypi.python.org/pypi/nose-detecthttp
 # https://github.com/venmo/nose-detecthttp.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-nose python-module-vcrpy
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-nose python3-module-vcrpy
 %endif
 
@@ -82,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Nov 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.0-alt1
 - Updated to upstream version 0.2.0.
 - Disabled check phase due to no tests being present.
