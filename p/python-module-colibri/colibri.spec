@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.1
-Release: alt1.git20140917.1.1
+Release: alt1.git20140917.1.1.1
 Summary: Colibri - asyncio-based AMQP client
 License: MIT
 Group: Development/Python
@@ -17,12 +17,12 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-asyncio
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-asyncio
 %endif
 
@@ -31,7 +31,7 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: python-base python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python3-module-setuptools-tests rpm-build-python3
+BuildRequires: python3-module-setuptools rpm-build-python3
 
 %description
 asyncio-based implementation of AMQP client.
@@ -97,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.0.1-alt1.git20140917.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.1-alt1.git20140917.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
