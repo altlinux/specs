@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.5.2
-Release: alt1.git20140516.2
+Release: alt1.git20140516.2.1
 Summary: Fanstatic packaging of bootstrap-select.js
 License: BSD
 Group: Development/Python
@@ -13,10 +13,12 @@ Url: https://pypi.python.org/pypi/js.bootstrap_select/
 # https://github.com/tmassman/js.bootstrap_select.git
 Source: %name-%version.tar
 
-BuildRequires: python-module-js.bootstrap python-module-setuptools-tests
+BuildRequires: python-module-js.bootstrap python-module-setuptools
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-js.bootstrap python3-module-setuptools-tests
+BuildRequires: python3-module-js.bootstrap python3-module-setuptools
+BuildRequires: python3-module-pytest
 %endif
 
 %py_requires js js.bootstrap
@@ -86,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.5.2-alt1.git20140516.2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Aug 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.2-alt1.git20140516.2
 - Fixed build.
 
