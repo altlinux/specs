@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.5
-Release: alt2.git20150209
+Release: alt2.git20150209.1
 Summary: Python exception collector
 License: BSD
 Group: Development/Python
@@ -15,10 +15,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/Yemsheng/collect-exceptions.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python-tools-2to3
 %endif
 
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.0.5-alt2.git20150209.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Dec 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.5-alt2.git20150209
 - Fixed build.
 
