@@ -12,7 +12,7 @@ Group: System/Fonts/True type
 
 Name:           fonts-otf-impallari-raleway
 Version:        3.0
-Release:        alt1_2.git%{commit_date}.%{shortcommit}.1
+Release:        alt1_3.git%{commit_date}.%{shortcommit}
 Summary:        Elegant sans-serif typeface family
 License:        OFL
 URL:            https://github.com/impallari/Raleway
@@ -147,6 +147,7 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/%{fontnam
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Raleway-Black.otf
 %{_fontbasedir}/*/%{_fontstem}/Raleway-Black-Italic.otf
 %{_fontbasedir}/*/%{_fontstem}/Raleway-Bold.otf
@@ -166,12 +167,15 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/%{fontnam
 %{_fontbasedir}/*/%{_fontstem}/Raleway-Thin.otf
 %{_fontbasedir}/*/%{_fontstem}/Raleway-Thin-Italic.otf
 
-%doc OFL.txt
+%doc --no-dereference OFL.txt
 
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_3.git20161116.6c67ab1
+- update to new release by fcimport
+
 * Sun Oct 22 2017 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_2.git20161116.6c67ab1.1
 - new version
 
