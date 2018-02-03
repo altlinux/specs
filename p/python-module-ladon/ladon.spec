@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.40
-Release: alt1
+Release: alt1.1
 Summary: Several web service interfaces at once, including JSON-WSP, SOAP and JSON-RPC
 License: LGPLv3
 Group: Development/Python
@@ -13,11 +13,11 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires: python-dev python-module-setuptools-tests
+BuildRequires: python-dev python-module-setuptools
 BuildRequires: python-module-jinja2 python2.7(sphinx_bootstrap_theme)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools-tests
+BuildRequires: python3-dev python3-module-setuptools
 BuildRequires: python3-module-jinja2 python3(sphinx_bootstrap_theme)
 %endif
 
@@ -106,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.40-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Oct 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.40-alt1
 - Updated to upstream version 0.9.40.
 
