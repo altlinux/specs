@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.0
-Release: alt1.git20150306.2
+Release: alt1.git20150306.2.1
 Summary: Backports of the linecache module
 License: Python
 Group: Development/Python
@@ -15,12 +15,12 @@ Source: %name-%version.tar
 BuildArch: noarch
 Patch1: %oname-%version-alt-build.patch
 
-#BuildPreReq: python-devel python-module-setuptools-tests git
+#BuildPreReq: python-devel python-module-setuptools git
 #BuildPreReq: python-module-fixtures python-module-unittest2
 #BuildPreReq: python-module-mimeparse
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-fixtures python3-module-unittest2
 #BuildPreReq: python3-module-mimeparse
 %endif
@@ -32,9 +32,9 @@ BuildRequires(pre): rpm-build-python3
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-enum34 python-module-mimeparse python-module-pbr python-module-pyasn1 python-module-pytest python-module-serial python-module-setuptools python-module-testtools python-module-traceback2 python-module-twisted-core python-module-unittest2 python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-mimeparse python3-module-ntlm python3-module-pbr python3-module-pip python3-module-pycparser python3-module-pytest python3-module-setuptools python3-module-testtools python3-module-traceback2 python3-module-unittest2
 BuildRequires: git-core
-BuildRequires: python-module-fixtures  python-module-setuptools-tests  python-module-pbr  python-module-unittest2
+BuildRequires: python-module-fixtures  python-module-setuptools  python-module-pbr  python-module-unittest2
 %if_with python3
-BuildRequires: python3-module-fixtures python3-module-setuptools-tests python3-module-pbr python3-module-unittest2 python3-module-html5lib
+BuildRequires: python3-module-fixtures python3-module-setuptools python3-module-pbr python3-module-unittest2 python3-module-html5lib
 %endif
 
 %description
@@ -130,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1.git20150306.2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Aug 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt1.git20150306.2
 - Fixed build.
 
