@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 5.4.1
-Release: alt1
+Release: alt1.1
 Summary: Oslo Rootwrap
 
 Group: Development/Python
@@ -18,7 +18,7 @@ Provides: python-module-oslo-rootwrap = %EVR
 Obsoletes: python-module-oslo-rootwrap < %EVR
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
@@ -27,7 +27,7 @@ BuildRequires: python-module-oslosphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-six >= 1.9.0
 %endif
@@ -134,6 +134,9 @@ popd
 %doc html
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 5.4.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri May 26 2017 Alexey Shabalin <shaba@altlinux.ru> 5.4.1-alt1
 - 5.4.1
 - add test packages
