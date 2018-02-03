@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 14.3.0
-Release: alt1.1.1
+Release: alt1.1.1.1
 
 Summary: Python library that eases the chores of implementing attributes
 
@@ -19,12 +19,12 @@ BuildArch: noarch
 #BuildPreReq: rpm-build-python
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
 
-#BuildRequires: python-devel python-module-distribute python-module-setuptools-tests
+#BuildRequires: python-devel python-module-distribute python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-distribute python3-module-setuptools-tests
+#BuildRequires: python3-devel python3-module-distribute python3-module-setuptools
 %endif
 
 %setup_python_module %oname
@@ -87,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 14.3.0-alt1.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 14.3.0-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
