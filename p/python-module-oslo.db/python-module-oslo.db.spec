@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.17.1
-Release: alt1
+Release: alt1.1
 Summary: OpenStack oslo.db library
 Group: Development/Python
 License: ASL 2.0
@@ -16,7 +16,7 @@ BuildArch: noarch
 Provides: python-module-oslo-db = %EVR
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-alembic >= 0.8.4
 BuildRequires: python-module-debtcollector >= 1.2.0
@@ -46,7 +46,7 @@ Requires: python-module-stevedore
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
@@ -165,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.17.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jul 18 2017 Alexey Shabalin <shaba@altlinux.ru> 4.17.1-alt1
 - 4.17.1
 
