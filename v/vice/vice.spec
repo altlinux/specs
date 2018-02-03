@@ -1,6 +1,6 @@
 Name: vice
 Version: 2.1
-Release: alt7.3
+Release: alt8
 
 Summary: Versatile Commodore Emulator
 License: GPL v2+
@@ -28,6 +28,7 @@ Patch5: vice-2.1-gcc44.patch
 Patch6: vice-2.1-alt-DSO.patch
 Patch7: vice-2.1-alt-libpng15.patch
 Patch8: texi2html-perl522.patch
+Patch9: vice-2.1-alt-perl524.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Mon Mar 16 2009
@@ -62,6 +63,7 @@ pasował do tej linii), CBM-II (C610) oraz Plus4.
 %patch6 -p2
 %patch7 -p2
 %patch8 -p1
+%patch9 -p1
 
 %build
 touch ABOUT-NLS config.rpath
@@ -116,7 +118,12 @@ popd
 %_pixmapsdir/*
 %_iconsdir/hicolor/*/*/*.png
 
+# TODO: build with ffmpeg support
+
 %changelog
+* Sat Feb 03 2018 Michael Shigorin <mike@altlinux.org> 2.1-alt8
+- fixed build with current perl
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 2.1-alt7.3
 - Fixed build with perl 522
 
