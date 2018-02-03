@@ -4,7 +4,7 @@ BuildRequires: unzip
 %define oldname ipa-pmincho-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global		priority	65-2
+%global		priority	68
 %global		fontname	ipa-pmincho
 %global		fontconf	%{priority}-%{fontname}.conf
 %global		archiveversion	00303
@@ -12,7 +12,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-ipa-pmincho
 Version:	003.03
-Release:	alt2_10
+Release:	alt2_11
 Summary:	Japanese Proportional Mincho-typeface OpenType font by IPA
 
 Group:		System/Fonts/True type
@@ -87,12 +87,17 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
-%doc Readme_%{archivename}.txt IPA_Font_License_Agreement_v1.0.txt
+%doc Readme_%{archivename}.txt
+%doc --no-dereference IPA_Font_License_Agreement_v1.0.txt
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 003.03-alt2_11
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 003.03-alt2_10
 - update to new release by fcimport
 
