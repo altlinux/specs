@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.0
-Release: alt1.git20150806.2
+Release: alt1.git20150806.2.1
 Summary: Decorator for parameterized testing with Nose
 License: BSD
 Group: Development/Python
@@ -14,11 +14,11 @@ Url: https://pypi.python.org/pypi/nose-parameterized/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-nose
 %endif
 
@@ -80,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.0-alt1.git20150806.2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.0-alt1.git20150806.2
 - Fixed build.
 
