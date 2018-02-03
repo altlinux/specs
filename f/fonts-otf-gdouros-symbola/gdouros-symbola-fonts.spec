@@ -9,7 +9,7 @@ BuildRequires: unzip
 %global fontconf 65-%{fontname}.conf
 
 Name:           fonts-otf-gdouros-symbola
-Version:        10.03
+Version:        10.24
 Release:        alt1_1
 Summary:        A symbol font
 
@@ -102,11 +102,15 @@ appstream-util validate-relax --nonet \
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Symbola.ttf
 %{_datadir}/metainfo/%{fontname}.metainfo.xml
-%doc Symbola.pdf
+%doc Symbola.pdf Symbola.odt
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 10.24-alt1_1
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 10.03-alt1_1
 - update to new release by fcimport
 
