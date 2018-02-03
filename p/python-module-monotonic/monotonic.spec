@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.2
-Release: alt1
+Release: alt1.1
 Summary: An implementation of time.monotonic() for Python 2 & Python 3
 License: ASLv2.0
 Group: Development/Python
@@ -15,10 +15,10 @@ Url: https://pypi.python.org/pypi/monotonic/
 Source0: https://pypi.python.org/packages/08/35/9e06c881c41962d7367e9466724beda2b1101439b149b7ff708d708890de/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -72,6 +72,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1
 - automated PyPI update
 
