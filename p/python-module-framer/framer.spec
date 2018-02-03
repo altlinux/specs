@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt2
+Release: alt2.1
 Summary: Network Framer Library
 License: GPLv3
 Group: Development/Python
@@ -15,14 +15,16 @@ Url: https://pypi.python.org/pypi/framer/
 # https://github.com/klmitch/framer.git
 Source: %{oname}-%{version}.tar.gz
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-cobs python-module-six
 BuildRequires: python-module-mock python-module-trollius
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-cobs python3-module-six
 BuildRequires: python3-module-mock python3(asyncio)
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -115,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.1-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Dec 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.1-alt2
 - Fixed build.
 
