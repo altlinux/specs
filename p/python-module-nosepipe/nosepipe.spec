@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.8
-Release: alt1
+Release: alt1.1
 Summary: Plugin for the nose testing framework for running tests in a subprocess
 License: BSD
 Group: Development/Python
@@ -16,11 +16,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/57/61/95306f40c9b61cfc06cef1c83e983db039298056cc3da50fcfad4a9baf37/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-nose python-module-django-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-nose python3-module-django-nose
 %endif
 
@@ -87,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1
 - automated PyPI update
 
