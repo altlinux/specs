@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 2.6.0
-Release: alt1
+Release: alt1.1
 Summary: Python API and CLI for OpenStack Glance
 
 Group: Development/Python
@@ -19,7 +19,7 @@ Requires: python-module-requests >= 2.12.0
 %py_requires urllib3
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
@@ -48,7 +48,7 @@ BuildRequires: python-module-pbr-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-babel >= 2.3.4
 BuildRequires: python3-module-prettytable >= 0.7.1
@@ -169,6 +169,9 @@ install -p -D -m 644 man/glance.1 %buildroot%_mandir/man1/glance.1
 %doc doc/build/html
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 30 2017 Alexey Shabalin <shaba@altlinux.ru> 2.6.0-alt1
 - 2.6.0
 - add test packages
