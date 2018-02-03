@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9
-Release: alt1
+Release: alt1.1
 Summary: A Bower-centric static file server for WSGI
 License: BSD
 Group: Development/Python
@@ -16,14 +16,16 @@ Source: %name-%version.tar
 Patch1: %oname-%version-alt-docs.patch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-pytest-cov
+BuildRequires: python-module-mock
 BuildRequires: python-module-webtest
 BuildRequires: python-module-alabaster python-module-docutils python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-mock
 BuildRequires: python3-module-webtest
 %endif
 
@@ -166,6 +168,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9-alt1
 - Updated to upstream version 0.9.
 
