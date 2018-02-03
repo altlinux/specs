@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Generate devel rpm
@@ -29,14 +30,14 @@ BuildRequires: rpm-build-golang
 # https://github.com/AudriusButkevicius/kcp-go
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          8ae5f528469c6ab76110f41eb7a51341b7efb946
+%global commit          5d7d1a807aa5b7817d03f6edae42d602e98487f7
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global commitdate      20171025
+%global commitdate      20171227
 
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.2.%{commitdate}.git%{shortcommit}
+Release:        alt1_0.3.%{commitdate}.git%{shortcommit}
 Summary:        Full-featured reliable UDP communication library
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -63,8 +64,8 @@ Summary:        %{summary}
 BuildArch:      noarch
 
 %if 0%{?with_check} && ! 0%{?with_bundled}
+BuildRequires:  golang(github.com/klauspost/reedsolomon)
 BuildRequires:  golang(github.com/pkg/errors)
-BuildRequires:  golang(github.com/templexxx/reedsolomon)
 BuildRequires:  golang(github.com/templexxx/xor)
 BuildRequires:  golang(github.com/tjfoc/gmsm/sm4)
 BuildRequires:  golang(golang.org/x/crypto/blowfish)
@@ -77,8 +78,8 @@ BuildRequires:  golang(golang.org/x/crypto/xtea)
 BuildRequires:  golang(golang.org/x/net/ipv4)
 %endif
 
+Requires:       golang(github.com/klauspost/reedsolomon)
 Requires:       golang(github.com/pkg/errors)
-Requires:       golang(github.com/templexxx/reedsolomon)
 Requires:       golang(github.com/templexxx/xor)
 Requires:       golang(github.com/tjfoc/gmsm/sm4)
 Requires:       golang(golang.org/x/crypto/blowfish)
@@ -185,19 +186,22 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %endif
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.3.20171227.git5d7d1a8
+- update to new release by fcimport
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.2.20171025.git8ae5f52
 - new version
 
