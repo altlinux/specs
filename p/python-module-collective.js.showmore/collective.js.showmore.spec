@@ -2,7 +2,7 @@
 %define oname %mname.showmore
 Name: python-module-%oname
 Version: 1.0
-Release: alt1.a4
+Release: alt1.a4.1
 Summary: JS add-on to show/hide parts of a page
 License: GPL
 Group: Development/Python
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools
 
 %py_provides %oname
 %py_requires %mname
@@ -60,6 +60,9 @@ python setup.py test
 %python_sitelibdir/collective/js/showmore/tests
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0-alt1.a4.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.a4
 - Initial build for Sisyphus
 
