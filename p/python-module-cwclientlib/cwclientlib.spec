@@ -1,7 +1,7 @@
 %define oname cwclientlib
 Name: python-module-%oname
 Version: 0.2.1
-Release: alt1
+Release: alt1.1
 Summary: A Python library to easily build CubicWeb clients
 License: LGPLv2.1
 Group: Development/Python
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 BuildPreReq: python-module-cubicweb-rqlcontroller
 BuildPreReq: python-module-cubicweb-signedrequest
 BuildPreReq: python-module-requests python-module-urllib3
@@ -47,6 +47,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1
 - Initial build for Sisyphus
 
