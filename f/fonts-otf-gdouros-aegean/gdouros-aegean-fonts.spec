@@ -9,15 +9,14 @@ BuildRequires: unzip
 %global fontconf 65-%{fontname}.conf
 
 Name:           fonts-otf-gdouros-aegean
-Version:        9.17
-Release:        alt1_3
+Version:        9.81
+Release:        alt1_1
 Summary:        A font for ancient scripts in the greater Aegean vicinity
 License:        Public Domain
 URL:            http://users.teilar.gr/~g1951d/
-Source0:        http://users.teilar.gr/~g1951d/AegeanFonts.zip
-Source1:        http://users.teilar.gr/~g1951d/Aegean.pdf
-Source2:        %{oldname}-fontconfig.conf
-Source3:        %{fontname}.metainfo.xml
+Source0:        http://users.teilar.gr/~g1951d/Aegean.zip
+Source1:        %{oldname}-fontconfig.conf
+Source2:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -38,7 +37,6 @@ It was created by George Douros.
 
 %prep
 %setup -n %{oldname}-%{version} -q -c
-cp -p %{SOURCE1} .
 
 %build
 
@@ -49,12 +47,12 @@ install -m 0644 -p Aegean.ttf %{buildroot}%{_fontdir}
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
 
-install -m 0644 -p %{SOURCE2} \
+install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
-install -Dm 0644 -p %{SOURCE3} \
+install -Dm 0644 -p %{SOURCE2} \
         %{buildroot}%{_datadir}/metainfo/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
@@ -99,11 +97,15 @@ appstream-util validate-relax --nonet \
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Aegean.ttf
 %{_datadir}/metainfo/%{fontname}.metainfo.xml
-%doc Aegean.pdf
+%doc Aegean.pdf Aegean.odt
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 9.81-alt1_1
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 9.17-alt1_3
 - update to new release by fcimport
 
