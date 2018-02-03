@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0
-Release: alt1.git20120909.1.1
+Release: alt1.git20120909.1.1.1
 Summary: Python implementation of the server side of OAUTH2 spec
 License: Free
 Group: Development/Python
@@ -16,11 +16,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-mock python-module-webtest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-mock python3-module-webtest
 #BuildPreReq: python-tools-2to3
 %endif
@@ -29,7 +29,7 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-cssselect python-module-genshi python-module-html5lib python-module-pytest python-module-setuptools python-module-waitress python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python-modules-wsgiref python-tools-2to3 python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-html5lib python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-pytest python3-module-setuptools python3-module-waitress
-BuildRequires: python-module-pbr python-module-setuptools-tests python-module-unittest2 python-module-webtest python3-module-pbr python3-module-setuptools-tests python3-module-unittest2 python3-module-webtest rpm-build-python3 time
+BuildRequires: python-module-pbr python-module-setuptools python-module-unittest2 python-module-webtest python3-module-pbr python3-module-setuptools python3-module-unittest2 python3-module-webtest rpm-build-python3 time
 
 %description
 Python implementation of the server side of OAUTH2 spec.
@@ -117,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.0-alt1.git20120909.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0-alt1.git20120909.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
