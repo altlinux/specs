@@ -3,7 +3,7 @@
 
 Name:       python-module-%oname
 Version:    2.5.0
-Release:    alt1
+Release:    alt1.1
 Summary:    Client Library for OpenStack Magnum Container Management API
 Group:      Development/Python
 License:    ASL 2.0
@@ -14,7 +14,7 @@ BuildArch:  noarch
 
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
@@ -42,7 +42,7 @@ BuildRequires: python-module-openstackclient-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-keystoneauth1 >= 2.10.0
@@ -158,6 +158,9 @@ rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed May 31 2017 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt1
 - 2.5.0
 - add test packages
