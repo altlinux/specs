@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.0.2
-Release: alt1
+Release: alt1.1
 Summary: Print statement checker plugin for flake8
 License: MIT
 Group: Development/Python
@@ -16,11 +16,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/b8/ce/b253acf4da0ea69bedbeec0e62c066be7962057a27ab552638d757201ea7/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-flake8 python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-flake8 python3-module-nose
 BuildPreReq: python-tools-2to3
 %endif
@@ -89,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.0.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt1
 - automated PyPI update
 
