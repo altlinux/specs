@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20101126.1
+Release: alt1.git20101126.1.1
 %define mname collective
 %define oname %mname.js.throttledebounce
 Name: python-module-%oname
@@ -14,7 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/collective/collective.js.throttledebounce.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools
 
 %py_provides %oname
 %py_requires %mname.js
@@ -45,6 +45,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.2-alt1.git20101126.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2-alt1.git20101126.1
 - (AUTO) subst_x86_64.
 
