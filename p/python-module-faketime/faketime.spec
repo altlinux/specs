@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.9.6.6
-Release: alt1
+Release: alt1.1
 Summary: Python wrapper around libfaketime
 License: GPLv2
 Group: Development/Python
@@ -15,10 +15,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/crdoconnor/faketime.git
 Source0: https://pypi.python.org/packages/f2/79/f6344e2acc0735867133f4e5b9e43bd0aaee196f90c192186453ab4d840b/%{oname}-%{version}.tar.gz
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -97,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.6.6-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.6.6-alt1
 - automated PyPI update
 
