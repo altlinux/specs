@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ imake libXt-devel xorg-cf-f
 %define _localstatedir %{_var}
 Name:           abe
 Version:        1.1
-Release:        alt5_31
+Release:        alt5_32
 
 Summary:        Scrolling, platform-jumping, ancient pyramid exploring game
 License:        GPL+
@@ -30,7 +30,7 @@ Patch3:         %{name}-1.1-aarch64.patch
 Patch4:         %{name}-1.1-format-security.patch
 
 BuildRequires:  desktop-file-utils
-BuildRequires:  gcc-common
+BuildRequires:  gcc
 BuildRequires:  libXi-devel
 BuildRequires:  libXmu-devel
 BuildRequires:  libSDL-devel
@@ -88,17 +88,9 @@ EOF
 
 desktop-file-install --dir $RPM_BUILD_ROOT/%{_datadir}/applications/ %{name}.desktop
 
-%post
-touch --no-create %{icondir} >&/dev/null ||:
-
-
-%postun
-touch --no-create %{icondir} >&/dev/null ||:
-
-
 %files
 %doc README
-%doc COPYING
+%doc --no-dereference COPYING
 %{_bindir}/*
 %{_datadir}/%{name}
 %{_datadir}/appdata/%{name}.appdata.xml
@@ -106,6 +98,9 @@ touch --no-create %{icondir} >&/dev/null ||:
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_32
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_31
 - update to new release by fcimport
 
