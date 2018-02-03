@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt2.git20140220
+Release: alt2.git20140220.1
 Summary: Python terminal multiplexer (Pure Python tmux clone)
 License: BSD
 Group: Development/Python
@@ -16,13 +16,13 @@ Url: https://pypi.python.org/pypi/libpymux/
 Source: %name-%version.tar
 
 %if_with python2
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-pyte python-module-docopt
 BuildRequires: python2.7(asyncio)
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pyte python3-module-docopt
 BuildRequires: python3(asyncio)
 %endif
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1-alt2.git20140220.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1-alt2.git20140220
 - Fixed build.
 
