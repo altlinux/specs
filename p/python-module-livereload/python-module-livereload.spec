@@ -3,7 +3,7 @@
 
 Name:           python-module-%pypi_name
 Version:        2.5.1
-Release:        alt2
+Release:        alt2.1
 Summary:        Utility for starting a server in a directory
 License:        BSD
 URL:            https://github.com/lepture/python-livereload
@@ -11,7 +11,7 @@ Group:          Development/Python
 Source0:        %name-%version.tar
 BuildArch:      noarch
 
-BuildRequires:  python-module-setuptools python-module-setuptools-tests
+BuildRequires:  python-module-setuptools python-module-setuptools
 BuildRequires:  python-devel
 BuildRequires:  python-module-six
 BuildRequires:  python-module-tornado
@@ -19,6 +19,8 @@ BuildRequires:  python-module-certifi
 BuildRequires:  python-module-backports_abc
 BuildRequires:  python-module-backports.ssl_match_hostname
 BuildRequires:  python-module-django
+BuildRequires:  python-module-pytest
+BuildRequires:  python3-module-pytest
 
 Requires:       python-module-backports.ssl_match_hostname
 Requires:       python-module-tornado
@@ -36,7 +38,7 @@ for web developers who know Python.
 Summary:        Command line utility for starting a server in a directory
 Group:          Development/Documentation
 
-BuildRequires:  python3-module-setuptools python3-module-setuptools-tests
+BuildRequires:  python3-module-setuptools python3-module-setuptools
 BuildRequires:  python3-devel
 BuildRequires:  python3-module-six
 BuildRequires:  python3-module-tornado
@@ -112,6 +114,9 @@ popd
 %doc docs example LICENSE
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.5.1-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5.1-alt2
 - Fixed build.
 
