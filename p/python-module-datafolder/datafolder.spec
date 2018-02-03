@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.3.6
-Release: alt1
+Release: alt1.1
 Summary: Install and access data files (conf, json, sqlite3, ...) in an easy way
 License: MIT
 Group: Development/Python
@@ -16,11 +16,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/ec/8b/cc0f6bc805e9fe56a401306126d500498d619e5b96f4d4830f62fa3a48e0/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-nose
 %endif
 
@@ -106,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.6-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.6-alt1
 - automated PyPI update
 
