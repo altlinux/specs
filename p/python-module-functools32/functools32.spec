@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.2.3.2
-Release: alt1.git20150711
+Release: alt1.git20150711.1
 Summary: Backport of the functools module from Python 3.2.3 for use on 2.7 and PyPy
 License: PSF
 Group: Development/Python
@@ -15,10 +15,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -84,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.2.3.2-alt1.git20150711.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jul 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.3.2-alt1.git20150711
 - Initial build for Sisyphus
 
