@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:		sergueis-destiny
 Version:	1.1
-Release:	alt4_16
+Release:	alt4_17
 Summary:	Serguei's Destiny, an AGI adventure game
 
 Group:		Games/Other
@@ -63,6 +63,9 @@ install -p -m 0644 %{SOURCE3} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%
 %{_bindir}/sergueis-destiny-wrapper.sh
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4_17
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4_16
 - update to new release by fcimport
 
