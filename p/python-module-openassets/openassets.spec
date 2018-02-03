@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt2.git20141102
+Release: alt2.git20141102.1
 Summary: Reference implementation of the Open Assets Protocol
 License: MIT
 Group: Development/Python
@@ -16,13 +16,13 @@ Url: https://pypi.python.org/pypi/openassets/
 Source: %name-%version.tar
 
 %if_with python2
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(asyncio) python-module-bitcoinlib
 BuildRequires: python-module-enum34
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(asyncio) python3-module-bitcoinlib
 BuildRequires: python3-module-enum34
 %endif
@@ -110,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3-alt2.git20141102.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3-alt2.git20141102
 - Updated build dependencies.
 
