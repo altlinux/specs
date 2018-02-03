@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.13
-Release: alt1
+Release: alt1.1
 Summary: Translation toolset
 License: BSD
 Group: Development/Python
@@ -15,14 +15,16 @@ Source: %name-%version.tar
 BuildArch: noarch
 Patch1: %oname-%version-alt-build.patch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-polib python-module-chameleon.core
 BuildPreReq: python-module-mock
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-polib python3-module-chameleon.core
 BuildPreReq: python3-module-mock
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -97,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.13-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Aug 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.13-alt1
 - Updated to upstream release 4.13
 
