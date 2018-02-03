@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.26.0
-Release: alt1
+Release: alt1.1
 Summary: OpenStack Client Configuration Library
 Group: Development/Python
 License: ASL 2.0
@@ -16,7 +16,7 @@ BuildArch: noarch
 Provides: os-client-config
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-reno >= 0.1.1
@@ -38,7 +38,7 @@ BuildRequires: python-module-requestsexceptions >= 1.1.1
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr
 BuildRequires: python3-module-yaml >= 3.1.0
 BuildRequires: python3-module-appdirs >= 1.3.0
@@ -170,6 +170,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.26.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 30 2017 Alexey Shabalin <shaba@altlinux.ru> 1.26.0-alt1
 - 1.26.0
 - add test packages
