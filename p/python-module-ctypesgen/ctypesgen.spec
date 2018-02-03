@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.r125
-Release: alt1
+Release: alt1.1
 Summary: Python wrapper generator for ctypes
 License: BSD
 Group: Development/Python
@@ -17,12 +17,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/b8/9d/13bcf53a190d2a5b3512d3c116920b4a2fadf007600722114b1a17602524/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-nose
 BuildPreReq: python-modules-json python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-nose
 BuildPreReq: python-tools-2to3
 %endif
@@ -102,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.r125-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.r125-alt1
 - automated PyPI update
 
