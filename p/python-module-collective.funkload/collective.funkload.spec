@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.git20140620.1
+Release: alt1.dev0.git20140620.1.1
 %define mname collective
 %define oname %mname.funkload
 
@@ -17,7 +17,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/collective/collective.funkload.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests funkload
+BuildPreReq: python-module-setuptools funkload
 BuildPreReq: python-module-zope.testing
 BuildPreReq: python-module-zope.testrunner
 BuildPreReq: python-module-zope.pagetemplate
@@ -87,6 +87,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/test*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5-alt1.dev0.git20140620.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5-alt1.dev0.git20140620.1
 - (AUTO) subst_x86_64.
 
