@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/makensis gcc-c++ libxml2-d
 %define _localstatedir %{_var}
 Name:           tuxmath
 Version:        2.0.3
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Educational math tutor for children
 
 Group:          Games/Other
@@ -67,7 +67,6 @@ install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/appdata
 appstream-util validate-relax --nonet \
   $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
-
 %files -f %{name}.lang
 %{_docdir}/%{name}
 %{_bindir}/%{name}*
@@ -81,6 +80,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt1_2
+- update to new release by fcimport
+
 * Sat Nov 18 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt1_1
 - new version
 
