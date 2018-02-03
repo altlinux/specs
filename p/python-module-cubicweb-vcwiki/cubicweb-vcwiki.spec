@@ -2,7 +2,7 @@
 %define oname cubicweb-vcwiki
 Name: python-module-%oname
 Version: 0.4.1
-Release: alt1
+Release: alt1.1
 Summary: Version controlled wiki component for the CubicWeb framework
 License: LGPL
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/b1/bd/0d7aa520965beff6650c7218805fe71b3a50fdb7a1184fc8ed2f607b5453/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 BuildPreReq: python-module-docutils python-module-hglib
 BuildPreReq: python-module-cubicweb-vcsfile
 BuildPreReq: python-module-cubicweb-preview
@@ -45,6 +45,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1
 - automated PyPI update
 
