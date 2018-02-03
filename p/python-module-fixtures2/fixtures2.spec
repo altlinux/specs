@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.7
-Release: alt1.git20171218
+Release: alt1.git20171218.1
 Summary: Extension of the fixtures test framework
 License: Free
 Group: Development/Python
@@ -14,11 +14,11 @@ Url: https://pypi.python.org/pypi/fixtures2/
 # https://github.com/CooledCoffee/fixtures2.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-mox python-module-fixtures python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-mox python3-module-fixtures python3-module-pytest python3-module-html5lib
 %endif
 
@@ -85,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.7-alt1.git20171218.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Dec 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.7-alt1.git20171218
 - Updated to upstream version 0.1.7.
 
