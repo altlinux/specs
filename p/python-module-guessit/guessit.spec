@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.1.4
-Release: alt1
+Release: alt1.1
 Summary: GuessIt - a library for guessing information from video files
 License: LGPLv3
 Group: Development/Python
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 Patch1: %oname-%version-alt-build.patch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-babelfish python-module-stevedore
 BuildRequires: python-module-requests python-module-dateutil
 BuildRequires: python-module-yaml python-module-guess-language
@@ -28,7 +28,7 @@ BuildRequires: python-module-pytest-runner python2.7(rebulk) python2.7(pytest_ca
 BuildRequires: python2.7(guessit)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-babelfish python3-module-stevedore
 BuildRequires: python3-module-requests python3-module-dateutil
 BuildRequires: python3-module-yaml python3-module-guess-language
@@ -216,6 +216,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.1.4-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Dec 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.4-alt1
 - Updated to upstream version 2.1.4.
 
