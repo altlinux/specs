@@ -6,7 +6,7 @@
 
 Name:    python-module-%oname
 Version: 2.4.0
-Release: alt1
+Release: alt1.1
 Epoch:   1
 
 Summary: a collection of tools for internationalizing Python applications
@@ -20,14 +20,14 @@ Source: %name-%version.tar
 Source1: CLDR.tar
 
 BuildArch: noarch
-BuildPreReq: python-module-setuptools-tests python-module-sphinx-devel
+BuildPreReq: python-module-setuptools python-module-sphinx-devel
 BuildPreReq: python-module-pytest-cov
 %{?!_without_check:%{?!_disable_check:BuildRequires: %py_dependencies setuptools.command.test pytz}}
 
 %setup_python_module babel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-pytz
 %if_with bootstrap
 %else
@@ -129,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:2.4.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jul 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.4.0-alt1
 - Updated to upstream version 2.4.0
 
