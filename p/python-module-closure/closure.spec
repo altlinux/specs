@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 20161201
-Release: alt1
+Release: alt1.1
 Summary: Closure compiler packaged for Python
 License: BSD
 Group: Development/Python
@@ -17,10 +17,10 @@ Source0: https://pypi.python.org/packages/0e/fb/877df05e79e4f719971e3cef9da6707b
 BuildArch: noarch
 
 #BuildPreReq: closure-compiler jre /proc
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -28,7 +28,7 @@ Requires: closure-compiler jre /proc
 
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
 
 %description
 The Closure Compiler is a tool for reducing the size of Javascript files
@@ -106,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 20161201-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Jan 15 2017 Igor Vlasenko <viy@altlinux.ru> 20161201-alt1
 - automated PyPI update
 
