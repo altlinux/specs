@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 6.0.2
-Release: alt1.git20141016
+Release: alt1.git20141016.1
 Summary: Facebook open graph API client in python
 License: BSD
 Group: Development/Python
@@ -15,7 +15,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
 BuildPreReq: python-module-django-tests python-modules-sqlite3
 BuildPreReq: python-module-django-dbbackend-sqlite3
@@ -116,6 +116,9 @@ python setup.py test
 %doc docs/_build/html/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 6.0.2-alt1.git20141016.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Oct 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.0.2-alt1.git20141016
 - Version 6.0.2
 
