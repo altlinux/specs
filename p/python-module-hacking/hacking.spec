@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 1.0.0
-Release: alt1
+Release: alt1.1
 Summary: OpenStack Hacking Guideline Enforcement
 License: ASLv2.0
 Group: Development/Python
@@ -18,12 +18,12 @@ Source: %oname-%version.tar
 Patch1: %oname-%version-alt.patch
 
 BuildRequires: python-module-coverage python-module-discover python-module-docutils python-module-eventlet python-module-html5lib
-BuildRequires: python-module-mock python-module-oslosphinx python-module-setuptools-tests python-module-testrepository
+BuildRequires: python-module-mock python-module-oslosphinx python-module-setuptools python-module-testrepository
 BuildRequires: python2.7(pycodestyle) python-module-flake8 python-module-mccabe
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-coverage python3-module-eventlet python3-module-html5lib python3-module-jinja2-tests python3-module-mock
-BuildRequires: python3-module-oslosphinx python3-module-setuptools-tests python3-module-sphinx python3-module-testrepository python3-module-yieldfrom.urllib3
+BuildRequires: python3-module-oslosphinx python3-module-setuptools python3-module-sphinx python3-module-testrepository python3-module-yieldfrom.urllib3
 BuildRequires: python3(pycodestyle) python3-module-flake8 python3-module-mccabe
 %endif
 
@@ -121,6 +121,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Dec 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt1
 - Updated to upstream version 1.0.0.
 - Disabled tests.
