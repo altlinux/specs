@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt2
+Release: alt2.1
 Summary: An implementation of lxml.xmlfile for the standard library
 License: MIT
 Group: Development/Python
@@ -14,12 +14,14 @@ Url: https://pypi.python.org/pypi/et_xmlfile
 Source0: %{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-lxml
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-lxml
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -134,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.1-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt2
 - Fixed build.
 
