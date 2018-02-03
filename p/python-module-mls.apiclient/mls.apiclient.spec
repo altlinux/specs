@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.5
-Release: alt1
+Release: alt1.1
 Summary: Python client for the RESTful API of the Propertyshelf MLS
 License: GPL
 Group: Development/Python
@@ -14,13 +14,15 @@ Url: https://pypi.python.org/pypi/mls.apiclient/
 # https://github.com/propertyshelf/mls.apiclient.git
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools-tests python-module-requests
+BuildRequires: python-module-setuptools python-module-requests
 BuildRequires: python-module-httpretty python2.7(responses)
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests python3-module-requests
+BuildRequires: python3-module-setuptools python3-module-requests
 BuildRequires: python3-module-httpretty python3(responses)
 BuildRequires: python-tools-2to3
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -176,6 +178,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.5-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5-alt1
 - Updated to upstream version 1.5.
 
