@@ -2,7 +2,7 @@
 %define oname cubicweb-trackervcs
 Name: python-module-%oname
 Version: 1.4.1
-Release: alt1
+Release: alt1.1
 Summary: vcsfile / tracker integration
 License: LGPL
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/38/28/d9361b5824022228bbcb73447069e11ecf1cd9ba23d198892654cab8ea3d/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 BuildPreReq: python-module-cubicweb-vcsfile
 BuildPreReq: python-module-cubicweb-tracker
 BuildPreReq: python-module-cubicweb-vcreview
@@ -44,6 +44,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt1
 - automated PyPI update
 
