@@ -3,14 +3,15 @@
 
 Name: perl-%dist
 Version: 0.057
-Release: alt1
+Release: alt2
 
 Summary: Crypto toolkit with multiple ciphers, hash functions and other
 License: %perl_license
 Group: Development/Perl
 
-URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/M/MI/MIK/%{dist}-%{version}.tar.gz
+Url: %CPAN %dist
+Source: http://www.cpan.org/authors/id/M/MI/MIK/%dist-%version.tar.gz
+Patch: CryptX-0.057-alt-uint128.patch
 
 # Automatically added by buildreq on Mon Feb 22 2016
 # optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-ExtUtils-CBuilder perl-IPC-Cmd perl-JSON-PP perl-Locale-Maketext-Simple perl-Module-Load perl-Module-Load-Conditional perl-Module-Metadata perl-Params-Check perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Types-Serialiser perl-common-sense perl-devel perl-parent perl-podlators
@@ -77,7 +78,10 @@ Cryptography in CryptX is based on https://github.com/libtom/libtomcrypt
         Crypt::KeyDerivation
 
 %prep
-%setup -q -n %{dist}-%{version}
+%setup -n %dist-%version
+%ifarch e2k
+%patch -p1
+%endif
 
 %build
 %perl_vendor_build
@@ -93,6 +97,9 @@ Cryptography in CryptX is based on https://github.com/libtom/libtomcrypt
 %perl_vendor_archlib/Math
 
 %changelog
+* Sat Feb 03 2018 Michael Shigorin <mike@altlinux.ru> 0.057-alt2
+- E2K: uint128_t workaround
+
 * Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.057-alt1
 - automated CPAN update
 
