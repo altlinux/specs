@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 3.8.1
-Release: alt1
+Release: alt1.1
 Summary: OpenStack Command-line Client
 Group: Development/Python
 License: ASL 2.0
@@ -28,7 +28,7 @@ Requires: python-module-requests >= 2.10.0
 Requires: python-module-stevedore >= 1.16.0
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-cliff >= 2.3.0
@@ -58,7 +58,7 @@ BuildRequires: python-module-osprofiler >= 1.4.0
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-cliff >= 2.3.0
 BuildRequires: python3-module-keystoneauth1 >= 2.18.0
@@ -182,6 +182,9 @@ rm -fr html/.doctrees html/.buildinfo
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.8.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed May 31 2017 Alexey Shabalin <shaba@altlinux.ru> 3.8.1-alt1
 - 3.8.1
 - add test packages
