@@ -2,7 +2,7 @@
 %define oname PyAMF
 Name: python-module-%oname
 Version: 0.8.0
-Release: alt1
+Release: alt1.1
 Summary: AMF support for Python
 License: MIT
 Group: Development/Python
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source0: https://pypi.python.org/packages/a0/06/43976c0e3951b9bf7ba0d7d614a8e3e024eb5a1c6acecc9073b81c94fb52/%{oname}-%{version}.tar.gz
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 
 Requires: python-module-django
 
@@ -84,6 +84,9 @@ This package contains documentation for PyAMF.
 %doc doc/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1
 - automated PyPI update
 
