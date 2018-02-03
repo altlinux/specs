@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0.1
-Release: alt1.git20150205.2
+Release: alt1.git20150205.2.1
 Summary: Python support for the DjVu image format
 License: GPLv2
 Group: Development/Python
@@ -15,11 +15,11 @@ Source: %name-%version.tar
 Patch1: %oname-%version-upstream-test.patch
 BuildArch: noarch
 
-BuildRequires: libexempi python-module-alabaster python-module-docutils python-module-html5lib python-module-mock python-module-objects.inv python-module-setuptools-tests
+BuildRequires: libexempi python-module-alabaster python-module-docutils python-module-html5lib python-module-mock python-module-objects.inv python-module-setuptools
 BuildRequires(pre): rpm-macros-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-html5lib python3-module-pbr python3-module-pytz python3-module-setuptools-tests python3-module-unittest2
+BuildRequires: python3-module-html5lib python3-module-pbr python3-module-pytz python3-module-setuptools python3-module-unittest2
 %endif
 
 %py_provides %oname
@@ -116,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1.git20150205.2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.1-alt1.git20150205.2
 - Fixed build.
 
