@@ -1,18 +1,18 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools gcc-c++
+BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           gemdropx
 Version:        0.9
-Release:        alt6_19
+Release:        alt6_20
 Summary:        Falling blocks puzzlegame
 Group:          Games/Other
 License:        GPL+
 URL:            http://www.newbreedsoftware.com/gemdropx
 Source0:        ftp://ftp.billsgames.com/unix/x/%{name}/src/%{name}-%{version}.tar.gz
 Source1:        %{name}.desktop
-BuildRequires:  libSDL_mixer-devel ImageMagick desktop-file-utils
+BuildRequires:  libSDL_mixer-devel ImageMagick-tools desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -57,6 +57,9 @@ convert data/images/%{name}-icon.xpm \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.9-alt6_20
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9-alt6_19
 - update to new release by fcimport
 
