@@ -7,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 3.5.3
-Release: alt1
+Release: alt1.1
 Summary: JSON-RPC 2.0 server library
 License: LGPL
 Group: Development/Python
@@ -17,13 +17,13 @@ Url: https://pypi.python.org/pypi/jsonrpcserver
 Source: %oname-%version.tar
 
 %if_with python2
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-jsonschema
 BuildRequires: python-module-nose python-module-pytest
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-jsonschema
 BuildRequires: python3-module-nose python3-module-pytest
 %endif
@@ -97,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.5.3-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.3-alt1
 - Updated to upstream version 3.5.3.
 
