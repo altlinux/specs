@@ -16,7 +16,7 @@ in Unicode.\
 
 Name:           fonts-ttf-google-noto
 Version:        20161022
-Release:        alt2_4
+Release:        alt2_5
 Summary:        Hinted and Non Hinted OpenType fonts for Unicode scripts
 Group:          System/Fonts/True type
 License:        OFL
@@ -188,7 +188,7 @@ Noto font Kufi Arabic.
 Summary:	Naskh Arabic font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-naskh-arabic = 20161022-alt1_4
+Conflicts:	fonts-ttf-google-noto-naskh-arabic fonts-ttf-google-noto-naskh-arabic-ui
 Obsoletes:	%{fontname}-naskh-arabic-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-naskh-arabic
@@ -226,7 +226,7 @@ Noto font Naskh Arabic UI.
 Summary:	Sans font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans = 20161022-alt1_4
+Conflicts:	fonts-ttf-google-noto-sans fonts-ttf-google-noto-sans-armenian fonts-ttf-google-noto-sans-avestan fonts-ttf-google-noto-sans-balinese fonts-ttf-google-noto-sans-bamum fonts-ttf-google-noto-sans-batak fonts-ttf-google-noto-sans-bengali fonts-ttf-google-noto-sans-bengali-ui fonts-ttf-google-noto-sans-brahmi fonts-ttf-google-noto-sans-buginese fonts-ttf-google-noto-sans-buhid fonts-ttf-google-noto-sans-canadian-aboriginal fonts-ttf-google-noto-sans-carian fonts-ttf-google-noto-sans-cham fonts-ttf-google-noto-sans-cherokee fonts-ttf-google-noto-sans-coptic fonts-ttf-google-noto-sans-cuneiform fonts-ttf-google-noto-sans-cypriot fonts-ttf-google-noto-sans-deseret fonts-ttf-google-noto-sans-devanagari fonts-ttf-google-noto-sans-devanagari-ui fonts-ttf-google-noto-sans-egyptian-hieroglyphs fonts-ttf-google-noto-sans-ethiopic fonts-ttf-google-noto-sans-georgian fonts-ttf-google-noto-sans-glagolitic fonts-ttf-google-noto-sans-gothic fonts-ttf-google-noto-sans-gujarati fonts-ttf-google-noto-sans-gujarati-ui fonts-ttf-google-noto-sans-gurmukhi fonts-ttf-google-noto-sans-gurmukhi-ui fonts-ttf-google-noto-sans-hanunno fonts-ttf-google-noto-sans-hebrew fonts-ttf-google-noto-sans-imperial-aramaic fonts-ttf-google-noto-sans-inscriptional-pahlavi fonts-ttf-google-noto-sans-inscriptional-parthian fonts-ttf-google-noto-sans-javanese fonts-ttf-google-noto-sans-kaithi fonts-ttf-google-noto-sans-kannada fonts-ttf-google-noto-sans-kannada-ui fonts-ttf-google-noto-sans-kayah-li fonts-ttf-google-noto-sans-kharoshthi fonts-ttf-google-noto-sans-khmer fonts-ttf-google-noto-sans-khmer-ui fonts-ttf-google-noto-sans-lao fonts-ttf-google-noto-sans-lao-ui fonts-ttf-google-noto-sans-lepcha fonts-ttf-google-noto-sans-limbu fonts-ttf-google-noto-sans-linearb fonts-ttf-google-noto-sans-lisu fonts-ttf-google-noto-sans-lycian fonts-ttf-google-noto-sans-lydian fonts-ttf-google-noto-sans-malayalam fonts-ttf-google-noto-sans-malayalam-ui fonts-ttf-google-noto-sans-mandaic fonts-ttf-google-noto-sans-meeteimayek fonts-ttf-google-noto-sans-mongolian fonts-ttf-google-noto-sans-myanmar fonts-ttf-google-noto-sans-myanmar-ui fonts-ttf-google-noto-sans-new-tai-lue fonts-ttf-google-noto-sans-nko fonts-ttf-google-noto-sans-ogham fonts-ttf-google-noto-sans-ol-chiki fonts-ttf-google-noto-sans-old-italic fonts-ttf-google-noto-sans-old-persian fonts-ttf-google-noto-sans-old-south-arabian fonts-ttf-google-noto-sans-old-turkic fonts-ttf-google-noto-sans-oriya fonts-ttf-google-noto-sans-oriya-ui fonts-ttf-google-noto-sans-osmanya fonts-ttf-google-noto-sans-phags-pa fonts-ttf-google-noto-sans-phoenician fonts-ttf-google-noto-sans-rejang fonts-ttf-google-noto-sans-runic fonts-ttf-google-noto-sans-samaritan fonts-ttf-google-noto-sans-saurashtra fonts-ttf-google-noto-sans-shavian fonts-ttf-google-noto-sans-sinhala fonts-ttf-google-noto-sans-sundanese fonts-ttf-google-noto-sans-syloti-nagri fonts-ttf-google-noto-sans-symbols fonts-ttf-google-noto-sans-syriac-eastern fonts-ttf-google-noto-sans-syriac-estrangela fonts-ttf-google-noto-sans-syriac-western fonts-ttf-google-noto-sans-tagalog fonts-ttf-google-noto-sans-tagbanwa fonts-ttf-google-noto-sans-tai-le fonts-ttf-google-noto-sans-tai-tham fonts-ttf-google-noto-sans-tai-viet fonts-ttf-google-noto-sans-tamil fonts-ttf-google-noto-sans-tamil-ui fonts-ttf-google-noto-sans-telugu fonts-ttf-google-noto-sans-telugu-ui fonts-ttf-google-noto-sans-thaana fonts-ttf-google-noto-sans-thai fonts-ttf-google-noto-sans-thai-ui fonts-ttf-google-noto-sans-tibetan fonts-ttf-google-noto-sans-tifinagh fonts-ttf-google-noto-sans-ugaritic fonts-ttf-google-noto-sans-ui fonts-ttf-google-noto-sans-vai fonts-ttf-google-noto-sans-yi
 Obsoletes:	%{fontname}-sans-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans
@@ -359,7 +359,7 @@ Noto font Sans Batak.
 Summary:	Sans Bengali font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-bengali = 20161022-alt1_4
+Conflicts:	fonts-ttf-google-noto-sans-bengali fonts-ttf-google-noto-sans-bengali-ui
 Obsoletes:	%{fontname}-sans-bengali-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-bengali
@@ -606,7 +606,7 @@ Noto font Sans Deseret.
 Summary:	Sans Devanagari font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-devanagari = 20161022-alt1_4
+Conflicts:	fonts-ttf-google-noto-sans-devanagari fonts-ttf-google-noto-sans-devanagari-ui
 Obsoletes:	%{fontname}-sans-devanagari-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-devanagari
@@ -739,7 +739,7 @@ Noto font Sans Gothic.
 Summary:	Sans Gujarati font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-gujarati = 20161022-alt1_4
+Conflicts:	fonts-ttf-google-noto-sans-gujarati fonts-ttf-google-noto-sans-gujarati-ui
 Obsoletes:	%{fontname}-sans-gujarati-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-gujarati
@@ -777,7 +777,7 @@ Noto font Sans Gujarati UI.
 Summary:	Sans Gurmukhi font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-gurmukhi = 20161022-alt1_4
+Conflicts:	fonts-ttf-google-noto-sans-gurmukhi fonts-ttf-google-noto-sans-gurmukhi-ui
 Obsoletes:	%{fontname}-sans-gurmukhi-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-gurmukhi
@@ -949,7 +949,7 @@ Noto font Sans Kaithi.
 Summary:	Sans Kannada font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-kannada = 20161022-alt1_4
+Conflicts:	fonts-ttf-google-noto-sans-kannada fonts-ttf-google-noto-sans-kannada-ui
 Obsoletes:	%{fontname}-sans-kannada-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-kannada
@@ -1025,7 +1025,7 @@ Noto font Sans Kharoshthi.
 Summary:	Sans Khmer font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-khmer = 20161022-alt1_4
+Conflicts:	fonts-ttf-google-noto-sans-khmer fonts-ttf-google-noto-sans-khmer-ui
 Obsoletes:	%{fontname}-sans-khmer-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-khmer
@@ -1063,7 +1063,7 @@ Noto font Sans Khmer UI.
 Summary:	Sans Lao font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-lao = 20161022-alt1_4
+Conflicts:	fonts-ttf-google-noto-sans-lao fonts-ttf-google-noto-sans-lao-ui
 Obsoletes:	%{fontname}-sans-lao-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-lao
@@ -1216,7 +1216,7 @@ Noto font Sans Lydian.
 Summary:	Sans Malayalam font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-malayalam = 20161022-alt1_4
+Conflicts:	fonts-ttf-google-noto-sans-malayalam fonts-ttf-google-noto-sans-malayalam-ui
 Obsoletes:	%{fontname}-sans-malayalam-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-malayalam
@@ -1312,7 +1312,7 @@ Noto font Sans Mongolian.
 Summary:	Sans Myanmar font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-myanmar = 20161022-alt1_4
+Conflicts:	fonts-ttf-google-noto-sans-myanmar fonts-ttf-google-noto-sans-myanmar-ui
 Obsoletes:	%{fontname}-sans-myanmar-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-myanmar
@@ -1882,7 +1882,7 @@ Noto font Sans Tai Viet.
 Summary:	Sans Tamil font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-tamil = 20161022-alt1_4
+Conflicts:	fonts-ttf-google-noto-sans-tamil fonts-ttf-google-noto-sans-tamil-ui
 Obsoletes:	%{fontname}-sans-tamil-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-tamil
@@ -1920,7 +1920,7 @@ Noto font Sans Tamil UI.
 Summary:	Sans Telugu font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-telugu = 20161022-alt1_4
+Conflicts:	fonts-ttf-google-noto-sans-telugu fonts-ttf-google-noto-sans-telugu-ui
 Obsoletes:	%{fontname}-sans-telugu-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-telugu
@@ -1977,7 +1977,7 @@ Noto font Sans Thaana.
 Summary:	Sans Thai font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-thai = 20161022-alt1_4
+Conflicts:	fonts-ttf-google-noto-sans-thai fonts-ttf-google-noto-sans-thai-ui
 Obsoletes:	%{fontname}-sans-thai-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-thai
@@ -2091,7 +2091,7 @@ Noto font Sans Yi.
 Summary:	Serif font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-serif = 20161022-alt1_4
+Conflicts:	fonts-ttf-google-noto-serif fonts-ttf-google-noto-serif-armenian fonts-ttf-google-noto-serif-bengali fonts-ttf-google-noto-serif-devanagari fonts-ttf-google-noto-serif-georgian fonts-ttf-google-noto-serif-gujarati fonts-ttf-google-noto-serif-kannada fonts-ttf-google-noto-serif-khmer fonts-ttf-google-noto-serif-lao fonts-ttf-google-noto-serif-malayalam fonts-ttf-google-noto-serif-tamil fonts-ttf-google-noto-serif-telugu fonts-ttf-google-noto-serif-thai
 Obsoletes:	%{fontname}-serif-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-serif
@@ -2205,7 +2205,7 @@ Noto font Serif Thai.
 Summary:	Sans Oriya font
 Group:		System/Fonts/True type
 Requires:	fonts-ttf-%{fontname}-common = %EVR
-Conflicts:	fonts-ttf-google-noto-sans-oriya = 20161022-alt1_4
+Conflicts:	fonts-ttf-google-noto-sans-oriya fonts-ttf-google-noto-sans-oriya-ui
 Obsoletes:	%{fontname}-sans-oriya-fonts = 20161022-alt1_4
 
 %description -n fonts-ttf-google-noto-sans-oriya
@@ -2506,12 +2506,15 @@ done
 
 
 %files -n fonts-ttf-google-noto-common
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md FAQ.md
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 20161022-alt2_5
+- update to new release by fcimport
+
 * Sat Dec 02 2017 Igor Vlasenko <viy@altlinux.ru> 20161022-alt2_4
 - fixed font package names
 
