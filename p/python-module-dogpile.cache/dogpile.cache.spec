@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.6.2
-Release: alt1
+Release: alt1.1
 Summary: A caching front-end based on the Dogpile lock
 License: BSD
 Group: Development/Python
@@ -15,7 +15,7 @@ Url: https://pypi.python.org/pypi/dogpile.cache/
 # https://bitbucket.org/zzzeek/dogpile.cache.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-coverage
 BuildRequires: python-module-nose python-module-mock
 BuildRequires: python-module-mako
@@ -23,7 +23,7 @@ BuildRequires: python-module-sphinx-devel python-module-changelog
 BuildRequires: python-module-sphinx-paramlinks
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-coverage
 BuildPreReq: python3-module-nose python3-module-mock
 BuildPreReq: python3-module-mako
@@ -164,6 +164,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.6.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Oct 18 2016 Alexey Shabalin <shaba@altlinux.ru> 0.6.2-alt1
 - 0.6.2
 - The dogpile.core package has been rolled into dogpile.cache directly
