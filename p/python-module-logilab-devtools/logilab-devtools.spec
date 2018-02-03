@@ -1,7 +1,7 @@
 %define oname logilab-devtools
 Name: python-module-%oname
 Version: 0.23.0
-Release: alt1
+Release: alt1.1
 Summary: Set of development tools used at Logilab
 License: GPL
 Group: Development/Python
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools
 BuildPreReq: python-module-logilab-common
 
 %py_provides logilab.devtools
@@ -46,6 +46,9 @@ python setup.py test
 %exclude %python_sitelibdir/*.pth
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.23.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt1
 - Initial build for Sisyphus
 
