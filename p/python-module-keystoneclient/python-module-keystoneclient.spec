@@ -3,7 +3,7 @@
 
 Name:       python-module-%oname
 Version:    3.10.0
-Release:    alt1
+Release:    alt1.1
 Summary:    Client library for OpenStack Identity API
 License:    ASL 2.0
 Group:      Development/Python
@@ -13,7 +13,7 @@ Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.
 BuildArch:  noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-debtcollector >= 1.2.0
 BuildRequires: python-module-keystoneauth1 >= 2.18.0
@@ -34,7 +34,7 @@ BuildRequires: python-module-requests-mock >= 1.1
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-debtcollector >= 1.2.0
 BuildRequires: python3-module-keystoneauth1 >= 2.18.0
@@ -138,6 +138,9 @@ popd
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.10.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon May 29 2017 Alexey Shabalin <shaba@altlinux.ru> 3.10.0-alt1
 - 3.10.0
 - add test packages
