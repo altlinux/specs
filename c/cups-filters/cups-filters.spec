@@ -4,8 +4,8 @@
 %global _localstatedir %_var
 
 Name: cups-filters
-Version: 1.17.9
-Release: alt3
+Version: 1.19.0
+Release: alt1
 
 Summary: OpenPrinting CUPS filters and backends
 # For a breakdown of the licensing, see COPYING file
@@ -170,7 +170,6 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 
 %files
 %doc README AUTHORS NEWS
-%config(noreplace) %_sysconfdir/fonts/conf.d/99pdftoopvp.conf
 %config(noreplace) %_sysconfdir/cups/cups-browsed.conf
 %config(noreplace) %_initdir/cups-browsed
 %attr(0755,root,root) %_cups_serverbin/filter/*
@@ -226,6 +225,9 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Mon Jan 29 2018 Anton Farygin <rider@altlinux.ru> 1.19.0-alt1
+- new version 1.19.0
+
 * Fri Nov 03 2017 Anton Farygin <rider@altlinux.ru> 1.17.9-alt3
 - rebuilt for php5-5.6.32
 

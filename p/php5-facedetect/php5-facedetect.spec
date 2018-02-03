@@ -19,6 +19,7 @@ Source0:	%real_name-%real_version.tar
 Source1:	php-%php5_extension.ini
 Source2:	php-%php5_extension-params.sh
 Patch0:		%real_name-%real_version-alt-fix_libs.patch
+Patch1:		php5-facedetect-5.6.33-opencv3.patch
 
 BuildRequires(pre): rpm-build-php5
 BuildRequires: php5-devel = %php5_version
@@ -34,6 +35,7 @@ associative array of their coordinates.
 %setup -T -c
 tar xvf %SOURCE0
 %patch0 -p1
+%patch1 -p1
 
 %build
 phpize
