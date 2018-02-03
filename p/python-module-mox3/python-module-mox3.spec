@@ -4,7 +4,7 @@
 
 Name: python-module-%pypi_name
 Version: 0.20.0
-Release: alt1
+Release: alt1.1
 Summary: Mock object framework for Python
 License: Apache-2.0
 Group: Development/Python
@@ -17,7 +17,7 @@ BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-devel
 BuildRequires: python-module-pbr python-module-sphinx-devel
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-fixtures python-module-testtools
 BuildRequires: python-module-mimeparse python-module-extras
 BuildRequires: python-module-testrepository python-module-subunit-tests
@@ -29,7 +29,7 @@ BuildRequires: python-module-requests
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-pbr
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-fixtures python3-module-testtools
 BuildRequires: python3-module-mimeparse python3-module-extras
 BuildRequires: python3-module-testrepository python3-module-subunit-tests
@@ -165,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.20.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed May 31 2017 Alexey Shabalin <shaba@altlinux.ru> 0.20.0-alt1
 - 0.20.0
 
