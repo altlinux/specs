@@ -3,7 +3,7 @@
 
 Name: python-module-exam
 Version: 0.10.6
-Release: alt2
+Release: alt2.1
 Summary: Helpers for better testing
 
 License: MIT
@@ -16,9 +16,9 @@ BuildArch: noarch
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests python3-module-mock python3-module-nose
+BuildPreReq: python3-devel python3-module-setuptools python3-module-mock python3-module-nose
 %endif
-BuildPreReq: python-devel python-module-setuptools-tests python-module-mock python-module-nose
+BuildPreReq: python-devel python-module-setuptools python-module-mock python-module-nose
 %py_provides %oname
 
 %description
@@ -84,6 +84,9 @@ python3 setup.py test
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.10.6-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Jan 15 2017 Anton Midyukov <antohami@altlinux.org> 0.10.6-alt2
 - srpm build
 
