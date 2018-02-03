@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.10.0
-Release: alt1
+Release: alt1.1
 Summary: Composable style cycles
 License: BSD
 Group: Development/Python
@@ -15,12 +15,12 @@ Packager: Python Development Team <python@packages.altlinux.org>
 Source: https://pypi.python.org/packages/c2/4b/137dea450d6e1e3d474e1d873cd1d4f7d3beed7e0dc973b06e8e10d32488/%oname-%version.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-six python-module-nose
 BuildPreReq: python-module-coverage python-module-pytest-cov
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-six python3-module-nose
 BuildPreReq: python3-module-coverage python3-module-pytest-cov
 %endif
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.10.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Apr 10 2017 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt1
 - New version 0.10.0
 
