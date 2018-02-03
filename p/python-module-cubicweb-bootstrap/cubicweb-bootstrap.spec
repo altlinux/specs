@@ -2,7 +2,7 @@
 %define oname cubicweb-bootstrap
 Name: python-module-%oname
 Version: 1.2.4
-Release: alt1
+Release: alt1.1
 Summary: Base cube for bootstrap-based user interfaces
 License: LGPL
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/6d/6b/79981dbad6e11b812b01552cca72a7b544b7dd2adf5e79f4e2efa2dc9aeb/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 
 Requires: cubicweb
 
@@ -37,6 +37,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.2.4-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt1
 - automated PyPI update
 
