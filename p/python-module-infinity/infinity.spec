@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.4
-Release: alt2
+Release: alt2.1
 Summary: All-in-one infinity value for Python. Can be compared to any object
 License: BSD
 Group: Development/Python
@@ -15,11 +15,11 @@ Url: https://pypi.python.org/pypi/infinity/
 Source: %oname-%version.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-Pygments python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-Pygments python3-module-six
 %endif
 
@@ -79,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Aug 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4-alt2
 - Fixed build.
 
