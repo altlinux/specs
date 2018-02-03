@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt1.2
+Release: alt1.2.1
 Summary: Simple implementation of the json-pointer spec
 License: ASLv2.0
 Group: Development/Python
@@ -14,11 +14,13 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-modules-json
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python-tools-2to3
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -116,6 +118,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.2-alt1.2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Aug 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.2-alt1.2
 - Fixed build.
 
