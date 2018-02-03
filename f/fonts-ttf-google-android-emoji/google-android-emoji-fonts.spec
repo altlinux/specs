@@ -11,7 +11,7 @@ Group: System/Fonts/True type
 Name:    fonts-ttf-google-android-emoji
 # No sane versionning upstream, use git clone timestamp
 Version: 1.01
-Release: alt1_0.7.%{checkout}
+Release: alt1_0.8.%{checkout}
 Summary: Android Emoji font released by Google
 
 License:   ASL 2.0
@@ -81,12 +81,16 @@ fi
 
 
 %files
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc README.txt NOTICE
 %{_datadir}/appdata/AndroidEmoji.metainfo.xml
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_0.8.20120228git
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_0.7.20120228git
 - update to new release by fcimport
 
