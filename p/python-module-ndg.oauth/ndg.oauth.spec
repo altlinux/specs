@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20131210.1
+Release: alt1.git20131210.1.1
 %define mname ndg
 %define oname %mname.oauth
 Name: python-module-%oname
@@ -17,7 +17,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/cedadev/ndg_oauth.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-ndg-httpsclient python-module-PasteScript
 BuildPreReq: python-module-beaker python-module-webob
 BuildPreReq: python-module-OpenSSL python-module-pyasn1
@@ -155,6 +155,9 @@ done
 %python_sitelibdir/ndg/oauth/client/examples
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.1-alt1.git20131210.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.1-alt1.git20131210.1
 - (AUTO) subst_x86_64.
 
