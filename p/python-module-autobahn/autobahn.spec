@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 17.7.1
-Release: alt1
+Release: alt1.1
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
 Group: Development/Python
@@ -15,15 +15,16 @@ Source: %name-%version.tar
 
 BuildRequires: inkscape
 BuildRequires: python-module-alabaster python-module-boto python-module-html5lib python-module-msgpack python-module-objects.inv
-BuildRequires: python-module-scour python-module-setuptools-tests python-module-snappy python-module-sphinx-bootstrap-theme
+BuildRequires: python-module-scour python-module-setuptools python-module-snappy python-module-sphinx-bootstrap-theme
 BuildRequires: python-module-sphinxcontrib-spelling python-module-taschenmesser python-module-trollius python-module-twisted-logger
 BuildRequires: python-module-twisted-web python-module-ujson python-module-wsaccel
 BuildRequires: python-module-txaio-tests python-module-unittest2 python-module-mock python-module-trollius-tests
 BuildRequires(pre): rpm-macros-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-cryptography python3-module-pygobject3 python3-module-serial python3-module-setuptools-tests python3-module-snappy python3-module-zope
+BuildRequires: python3-module-cryptography python3-module-pygobject3 python3-module-serial python3-module-setuptools python3-module-snappy python3-module-zope
 BuildRequires: python3-module-txaio-tests python3-module-unittest2 python3-module-mock python3-module-trollius-tests
+BuildRequires: python3-module-pytest
 %endif
 
 %py_requires twisted.internet twisted.web twisted.words
@@ -171,6 +172,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 17.7.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 17.7.1-alt1
 - Updated to upstream version 17.7.1.
 
