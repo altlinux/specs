@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.4.6
-Release: alt1
+Release: alt1.1
 Summary: The AWS SDK for Python
 License: ASLv2.0
 Group: Development/Python
@@ -17,14 +17,14 @@ Patch1: %oname-%version-alt-docs.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools-tests python-module-unittest2 python-module-mock
+BuildRequires: python-devel python-module-setuptools python-module-unittest2 python-module-mock
 BuildRequires: python-module-botocore python-module-html5lib python-module-nose python-module-pbr
 BuildRequires: python-module-futures
 BuildRequires: python-module-alabaster python-module-guzzle_sphinx_theme python-module-objects.inv
 BuildRequires: python2.7(s3transfer)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests python3-module-unittest2 python3-module-mock
+BuildRequires: python3-devel python3-module-setuptools python3-module-unittest2 python3-module-mock
 BuildRequires: python3-module-botocore python3-module-html5lib python3-module-nose python3-module-pbr
 BuildRequires: python3-module-sphinx
 BuildRequires: python3(s3transfer)
@@ -142,6 +142,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4.6-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Aug 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.6-alt1
 - Updated to upstream version 1.4.6.
 
