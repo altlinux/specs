@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.11
-Release: alt1.git20150126.1.1
+Release: alt1.git20150126.1.1.1
 Summary: Python object to (json + redis)
 License: MIT
 Group: Development/Python
@@ -15,12 +15,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-redis-py
 #BuildPreReq: python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-redis-py
 %endif
 
@@ -29,7 +29,7 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
 
 %description
 Python object to (json + redis).
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.11-alt1.git20150126.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.11-alt1.git20150126.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
