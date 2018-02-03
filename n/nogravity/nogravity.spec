@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 %define _localstatedir %{_var}
 Name:           nogravity
 Version:        2.00
-Release:        alt2_28
+Release:        alt2_29
 Summary:        Space shooter in 3D
 Group:          Games/Other
 License:        GPLv2+
@@ -36,8 +36,8 @@ Patch13:        nogravity-2.00-stdint_h.patch
 Patch14:        nogravity--gcc6.patch
 Requires:       %{name}-data = %{version}
 BuildRequires:  libSDL_mixer-devel libopenal-devel libopenal1 libpng-devel libvorbis-devel
-BuildRequires:  automake-common desktop-file-utils libappstream-glib
-Requires:       icon-theme-hicolor xdriinfo glxinfo
+BuildRequires:  automake desktop-file-utils libappstream-glib
+Requires:       icon-theme-hicolor glxgears glxinfo xdriinfo
 Source44: import.info
 Patch33: nogravity-2.00-alt-libpng15.patch
 
@@ -106,7 +106,6 @@ install -p -m 644 %{SOURCE8} $RPM_BUILD_ROOT%{_datadir}/appdata
 appstream-util validate-relax --nonet \
   $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
-
 %files
 %doc GNU.TXT README.TXT
 %{_bindir}/%{name}*
@@ -116,6 +115,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_29
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_28
 - update to new release by fcimport
 
