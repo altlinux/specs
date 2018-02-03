@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.2
-Release: alt2
+Release: alt2.1
 
 Summary: Pythonic argument parser, that will make you smile
 
@@ -20,12 +20,14 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 # buildreq add all packages :)
-BuildRequires:  python-module-setuptools-tests
+BuildRequires:  python-module-setuptools
+BuildRequires:  python-module-pytest
 BuildRequires:  python-module-nose python-modules-json
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests python3-module-nose
+BuildPreReq: python3-devel python3-module-setuptools python3-module-nose
+BuildRequires:  python3-module-pytest
 %endif
 
 %description
@@ -98,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.6.2-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 03 2017 Anton Midyukov <antohami@altlinux.org> 0.6.2-alt2
 - Version 0.6.2 release
 
