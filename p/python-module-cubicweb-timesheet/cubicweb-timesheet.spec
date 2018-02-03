@@ -2,7 +2,7 @@
 %define oname cubicweb-timesheet
 Name: python-module-%oname
 Version: 0.15.2
-Release: alt2
+Release: alt2.1
 Summary: Record who did what and when for the CubicWeb framework
 License: LGPL
 Group: Development/Python
@@ -11,7 +11,7 @@ Url: https://pypi.python.org/pypi/cubicweb-timesheet/
 Source: %{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildRequires: python-module-setuptools-tests cubicweb
+BuildRequires: python-module-setuptools cubicweb
 BuildRequires: python-module-cubicweb-calendar
 BuildRequires: python-module-cubicweb-workorder
 BuildRequires: python-module-cubicweb-rqlcontroller
@@ -42,6 +42,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.15.2-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.15.2-alt2
 - Updated dependencies.
 
