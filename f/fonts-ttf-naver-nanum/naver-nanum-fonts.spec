@@ -13,7 +13,7 @@ publisher is Naver Corporation.
 
 Name:       fonts-ttf-naver-nanum
 Version:    3.020
-Release:    alt2_18.20140930
+Release:    alt2_19.20140930
 Summary:    Nanum family of Korean TrueType fonts
 
 License:    OFL
@@ -75,6 +75,7 @@ This package consists of the Nanum fonts Barun Gothic font faces.
 %files -n fonts-ttf-naver-nanum-barun-gothic
 %{_fontconfig_templatedir}/%{fontconf}-barun-gothic.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-barun-gothic.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/NanumBarunGothic.ttf
 %{_fontbasedir}/*/%{_fontstem}/NanumBarunGothicBold.ttf
 %{_fontbasedir}/*/%{_fontstem}/NanumBarunGothicLight.ttf
@@ -96,6 +97,7 @@ This package consists of the Nanum fonts Barun Pen font faces.
 %files -n fonts-ttf-naver-nanum-barun-pen
 %{_fontconfig_templatedir}/%{fontconf}-barun-pen.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-barun-pen.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/NanumBarunpenR.ttf
 %{_fontbasedir}/*/%{_fontstem}/NanumBarunpenB.ttf
 %{_datadir}/appdata/%{fontname}-barun-pen.metainfo.xml
@@ -115,6 +117,7 @@ This package consists of the Nanum fonts Brush font faces.
 %files -n fonts-ttf-naver-nanum-brush
 %{_fontconfig_templatedir}/%{fontconf}-brush.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-brush.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/NanumBrush.ttf
 %{_datadir}/appdata/%{fontname}-brush.metainfo.xml
 
@@ -124,6 +127,9 @@ Summary:   Nanum fonts Gothic font faces
 Requires:  fonts-ttf-naver-nanum-common = %{version}-%{release}
 Provides:  fonts-ttf-nhn-nanum-gothic = %{version}-%{release}
 Obsoletes: fonts-ttf-nhn-nanum-gothic < %{version}-%{release}
+Provides:   fonts-ttf-nhn-nanum-gothic-light = %{version}-%{release}
+Obsoletes:  fonts-ttf-nhn-nanum-gothic-light <= 1.000-9
+
 
 %description -n fonts-ttf-naver-nanum-gothic
 %common_desc
@@ -133,6 +139,7 @@ This package consists of the Nanum fonts Gothic font faces.
 %files -n fonts-ttf-naver-nanum-gothic
 %{_fontconfig_templatedir}/%{fontconf}-gothic.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-gothic.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/NanumGothic.ttf
 %{_fontbasedir}/*/%{_fontstem}/NanumGothicBold.ttf
 %{_fontbasedir}/*/%{_fontstem}/NanumGothicExtraBold.ttf
@@ -154,6 +161,7 @@ This package consists of the Nanum fonts Myeongjo font faces.
 %files -n fonts-ttf-naver-nanum-myeongjo
 %{_fontconfig_templatedir}/%{fontconf}-myeongjo.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-myeongjo.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/NanumMyeongjo.ttf
 %{_fontbasedir}/*/%{_fontstem}/NanumMyeongjoBold.ttf
 %{_fontbasedir}/*/%{_fontstem}/NanumMyeongjoExtraBold.ttf
@@ -174,6 +182,7 @@ This package consists of the Nanum fonts Pen font faces.
 %files -n fonts-ttf-naver-nanum-pen
 %{_fontconfig_templatedir}/%{fontconf}-pen.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-pen.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/NanumPen.ttf
 %{_datadir}/appdata/%{fontname}-pen.metainfo.xml
 
@@ -272,6 +281,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 3.020-alt2_19.20140930
+- update to new release by fcimport
+
 * Sun Dec 03 2017 Igor Vlasenko <viy@altlinux.ru> 3.020-alt2_18.20140930
 - fixed provides/obsoletes
 
