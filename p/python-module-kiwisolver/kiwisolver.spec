@@ -1,7 +1,7 @@
 %define oname kiwisolver
 Name: python-module-%oname
 Version: 0.1.3
-Release: alt1.git20140712
+Release: alt1.git20140712.1
 Summary: A fast implementation of the Cassowary constraint solver
 License: BSD
 Group: Development/Python
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/nucleic/kiwi.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests gcc-c++
+BuildPreReq: python-module-setuptools gcc-c++
 
 %description
 Kiwi is an efficient C++ implementation of the Cassowary constraint
@@ -39,6 +39,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.3-alt1.git20140712.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Nov 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1.git20140712
 - Initial build for Sisyphus
 
