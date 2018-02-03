@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/desktop-file-install
 
 Name:           wordwarvi
 Version:        1.1
-Release:        alt1_5.git%{shortcommit}
+Release:        alt1_6.git%{shortcommit}
 Summary:        Side-scrolling shoot 'em up '80s style arcade game
 Group:          Games/Other
 License:        GPLv2+ and CC-BY and CC-BY-SA
@@ -57,7 +57,6 @@ install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/appdata
 appstream-util validate-relax --nonet \
   $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
-
 %files
 %doc AUTHORS COPYING README changelog.txt sounds/Attribution.txt
 %{_bindir}/%{name}
@@ -69,6 +68,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_6.git6beed31
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_5.git6beed31
 - update to new release by fcimport
 
