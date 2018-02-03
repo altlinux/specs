@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.4.13
-Release: alt1
+Release: alt1.1
 Summary: File type identification using libmagic
 License: MIT
 Group: Development/Python
@@ -14,10 +14,10 @@ Url: https://pypi.python.org/pypi/python-magic/
 # https://github.com/ahupp/python-magic.git
 Source: %name-%version.tar
 
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests 
+BuildRequires: python3-module-setuptools 
 %endif
 
 %py_provides magic
@@ -96,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.4.13-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.13-alt1
 - Updated to upstream version 0.4.13.
 
