@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1
+Release: alt1.1.1
 %define mname j01
 %define oname %mname.form
 Name: python-module-%oname
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests python-module-nose
+BuildPreReq: python-module-setuptools python-module-nose
 BuildPreReq: python-module-p01.schema
 BuildPreReq: python-module-j01.dialog
 BuildPreReq: python-module-j01.jsonrpc
@@ -82,6 +82,9 @@ nosetests -v
 %python_sitelibdir/%mname/*/test*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.1-alt1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.1-alt1.1
 - (AUTO) subst_x86_64.
 
