@@ -1,22 +1,25 @@
 %define _unpackaged_files_terminate_build 1
-BuildRequires: perl(File/Slurp.pm) perl(Proc/Killfam.pm)
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators perl(Hash/Merge.pm)
+BuildRequires: perl(Test/EOL.pm) perl(Test/Pod.pm) perl-podlators perl(Hash/Merge.pm)
 # END SourceDeps(oneline)
 BuildRequires: perl(File/Slurp.pm)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define upstream_name    Tapper-PRC
 %define upstream_version 5.0.2
 
+%{?perl_default_filter}
+
 Name:       perl-%{upstream_name}
-Version:    5.0.2
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Control running test programs
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-PRC-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Cwd.pm)
 BuildRequires: perl(Data/Dumper.pm)
@@ -31,6 +34,7 @@ BuildRequires: perl(IPC/Open3.pm)
 BuildRequires: perl(Log/Log4perl.pm)
 BuildRequires: perl(Moose.pm)
 BuildRequires: perl(MooseX/Log/Log4perl.pm)
+BuildRequires: perl(Proc/Killfam.pm)
 BuildRequires: perl(Sys/Hostname.pm)
 BuildRequires: perl(Tapper/Base.pm)
 BuildRequires: perl(Tapper/Config.pm)
@@ -56,7 +60,7 @@ Tapper - Program run control for test program automation.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 
 %make
 
@@ -68,11 +72,19 @@ Tapper - Program run control for test program automation.
 
 %files
 %doc Changes LICENSE META.json META.yml  README
-%perl_vendor_privlib/*
-%_bindir/tapper*
-%_man1dir/tapper*
+%{_mandir}/man1/*
+%{perl_vendor_privlib}/*
+/usr/bin/tapper-automatic-test.pl
+/usr/bin/tapper-client
+%{_bindir}/tapper-client-no-fork
+/usr/share/man/man1/tapper-automatic-test.pl.1*
+/usr/share/man/man1/tapper-client.1*
+
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 5.0.2-alt1_1
+- update by mgaimport
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.2-alt1
 - automated CPAN update
 
