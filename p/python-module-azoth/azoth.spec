@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.0
-Release: alt3.git20141205
+Release: alt3.git20141205.1
 Summary: Sqlalchemy utilities
 License: BSD
 Group: Development/Python
@@ -14,7 +14,7 @@ Url: https://pypi.python.org/pypi/azoth/
 # https://github.com/TakesxiSximada/azoth.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-nose
 BuildRequires: python-module-coverage
 BuildRequires: python-module-virtualenv
@@ -24,7 +24,7 @@ BuildRequires: python-module-zope.sqlalchemy
 BuildRequires: python-module-pbr python-module-unittest2 python-module-zc.recipe.egg
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-nose
 BuildRequires: python3-module-coverage
@@ -131,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.0-alt3.git20141205.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Dec 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.0-alt3.git20141205
 - Fixed build.
 
