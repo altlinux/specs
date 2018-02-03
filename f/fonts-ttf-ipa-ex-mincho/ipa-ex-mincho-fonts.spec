@@ -4,7 +4,7 @@ BuildRequires: unzip
 %define oldname ipa-ex-mincho-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global		priority	65-2
+%global		priority	68
 %global		fontname	ipa-ex-mincho
 %global		fontconf	%{priority}-%{fontname}.conf
 %global		archiveversion	00201
@@ -12,7 +12,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-ipa-ex-mincho
 Version:	002.01
-Release:	alt1_9
+Release:	alt1_10
 Summary:	Japanese Mincho-typeface OpenType font by IPA
 
 Group:		System/Fonts/True type
@@ -90,13 +90,18 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
-%doc Readme_%{archivename}.txt IPA_Font_License_Agreement_v1.0.txt
+%doc Readme_%{archivename}.txt
+%doc --no-dereference IPA_Font_License_Agreement_v1.0.txt
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 002.01-alt1_10
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 002.01-alt1_9
 - update to new release by fcimport
 
