@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.5
-Release: alt1
+Release: alt1.1
 Summary: Python library for serializing any arbitrary object graph into JSON
 License: BSD
 Group: Development/Python
@@ -16,21 +16,23 @@ Source: %name-%version.tar
 Patch1: %oname-%version-alt-build.patch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-feedparser
 BuildRequires: python-module-demjson python-module-jsonlib
 BuildRequires: python-module-yajl python-module-ujson
 BuildRequires: python-module-nose python-module-coverage
+BuildRequires: python-module-pytest
 BuildRequires: python-module-sphinxtogithub
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
 BuildRequires: python-module-numpy
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-demjson python3-module-jsonlib
 BuildRequires: python3-module-yajl python3-module-ujson
 BuildRequires: python3-module-nose python3-module-coverage
 BuildRequires: python3-module-numpy
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -134,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.5-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.5-alt1
 - Updated to upstream version 0.9.5.
 
