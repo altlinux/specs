@@ -6,20 +6,20 @@ BuildRequires: unzip
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 20141012
+%define version 20170904
 %global	fontname	hanazono
 %global archivename	%{fontname}-%{version}
-%global	priority	65-1
+%global	priority	66
 %global fontconf	%{priority}-%{fontname}.conf
 
 Name:		fonts-ttf-hanazono
-Version:	20141012
-Release:	alt1_6
+Version:	20170904
+Release:	alt1_1
 Summary:	Japanese Mincho-typeface TrueType font
 
 License:	Copyright only or OFL
 URL:		http://fonts.jp/hanazono/
-Source0:	http://sourceforge.jp/projects/hanazono-font/downloads/58164/%{archivename}.zip
+Source0:	http://ija.osdn.net/projects/hanazono-font/downloads/68253/%{archivename}.zip
 Source1:	%{oldname}-fontconfig.conf
 Source2:        %{fontname}.metainfo.xml
 
@@ -34,7 +34,7 @@ Japan Society for the Promotion of Science and the International Research
 Institute for Zen Buddhism (IRIZ), Hanazono University. also with volunteers
 who work together on glyphwiki.org.
 
-This font contains 87791 characters in ISO/IEC 10646 and Unicode Standard,
+This font contains 107518 characters in ISO/IEC 10646 and Unicode Standard,
 also supports character sets:
  - 6355 characters in JIS X 0208:1997
  - 5801 characters in JIS X 0212:1990
@@ -104,11 +104,15 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc LICENSE.txt README.txt THANKS.txt
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 20170904-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 20141012-alt1_6
 - update to new release by fcimport
 
