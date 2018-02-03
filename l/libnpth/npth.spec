@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: libdispatch-objc2-devel
-# END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname npth
@@ -8,7 +5,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libnpth
 Version:        1.5
-Release:        alt1_3
+Release:        alt2
 Summary:        The New GNU Portable Threads library
 License:        LGPLv2+
 URL:            http://git.gnupg.org/cgi-bin/gitweb.cgi?p=npth.git
@@ -70,6 +67,9 @@ make check
 %{_datadir}/aclocal/%{oldname}.m4
 
 %changelog
+* Sun Feb 04 2018 Fr. Br. George <george@altlinux.ru> 1.5-alt2
+- Remove unused buildreq
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_3
 - update to new release by fcimport
 
