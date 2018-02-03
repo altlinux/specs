@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 BuildRequires: gcc-c++
@@ -6,7 +7,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           asylum
 Version:        0.3.2
-Release:        alt1_15
+Release:        alt1_16
 Summary:        Game involving shooting anything that moves & collecting others
 Group:          Games/Other
 # For detailed licensing, see the README
@@ -109,10 +110,10 @@ SentUpstream: 2014-09-24
 EOF
 
 # touching all ghosts; hack for rpm 4.0.4
-for rpm_404_ghost in %{_var}/games/%{name}/EgoHighScores %{_var}/games/%{name}/PsycheHighScores %{_var}/games/%{name}/IdHighScores %{_var}/games/%{name}/ExtendedHighScores
+for rpm404_ghost in %{_var}/games/%{name}/EgoHighScores %{_var}/games/%{name}/PsycheHighScores %{_var}/games/%{name}/IdHighScores %{_var}/games/%{name}/ExtendedHighScores
 do
-    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
-    touch %buildroot"$rpm_404_ghost"
+    mkdir -p %buildroot`dirname "$rpm404_ghost"`
+    touch %buildroot"$rpm404_ghost"
 done
 
 
@@ -132,6 +133,9 @@ done
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_16
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_15
 - update to new release by fcimport
 
