@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.4
-Release: alt1.git20140812.1
+Release: alt1.git20140812.1.1
 Summary: Better dates & times for Python
 License: ASLv2.0
 Group: Development/Python
@@ -15,13 +15,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-dateutil python-module-nose
 BuildPreReq: python-module-nose-cov python-module-chai
 BuildPreReq: python-module-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-dateutil python3-module-nose
 BuildPreReq: python3-module-nose-cov python3-module-chai
 BuildPreReq: python3-module-sphinx
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.4.4-alt1.git20140812.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.4-alt1.git20140812.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
