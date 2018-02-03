@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-validate
 %define _localstatedir %{_var}
 Name:           garden
 Version:        1.0.9
-Release:        alt1_4
+Release:        alt1_5
 Summary:        An innovative old-school 2D vertical shoot-em-up
 
 Group:          Games/Other
@@ -18,9 +18,9 @@ Patch2:         garden-1.0.8-inline.patch
 
 BuildRequires:  liballegro-devel
 BuildRequires:  desktop-file-utils
-BuildRequires:  automake-common
-BuildRequires:  autoconf-common
-BuildRequires:  libtool-common
+BuildRequires:  automake
+BuildRequires:  autoconf
+BuildRequires:  libtool
 Requires:       liballegro4.4
 Source44: import.info
 
@@ -100,6 +100,9 @@ desktop-file-validate \
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt1_5
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt1_4
 - update to new release by fcimport
 
