@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.8.2
-Release: alt1
+Release: alt1.1
 Summary: AMQP implementation using asyncio
 License: BSD
 Group: Development/Python
@@ -17,13 +17,13 @@ Source0: https://pypi.python.org/packages/79/6b/255c936283f73151c6767b1b5ff5542c
 BuildArch: noarch
 
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-asyncio python-module-nose
 #BuildPreReq: python-module-coverage pylint
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-asyncio python3-module-nose
 #BuildPreReq: python3-module-coverage pylint-py3
 %endif
@@ -33,7 +33,7 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: python-base python3 python3-base python3-module-logilab-common python3-module-pytest python3-module-setuptools
-BuildRequires: pylint-py3 python3-module-coverage python3-module-nose python3-module-setuptools-tests rpm-build-python3
+BuildRequires: pylint-py3 python3-module-coverage python3-module-nose python3-module-setuptools rpm-build-python3
 
 %description
 aioamqp library is a pure-Python implementation of the AMQP 0.9.1
@@ -109,6 +109,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.2-alt1
 - automated PyPI update
 
