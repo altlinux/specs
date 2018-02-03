@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.10
-Release: alt1.git20150224
+Release: alt1.git20150224.1
 Summary: A library to bump / pin your dependency requirements
 License: MIT
 Group: Development/Python
@@ -15,13 +15,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-brownie python-module-requests
 BuildPreReq: python-module-simplejson
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-brownie python3-module-requests
 BuildPreReq: python3-module-simplejson
 %endif
@@ -126,6 +126,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.10-alt1.git20150224.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.10-alt1.git20150224
 - Version 0.2.10
 
