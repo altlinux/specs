@@ -2,7 +2,7 @@
 %define oname manifestparser
 Name: python-module-%oname
 Version: 1.1
-Release: alt1
+Release: alt1.1
 Summary: Library to create and manage test manifests
 License: MPL
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/53/4e/f621c25a2e0ef6e7a38987f291a88d06996e3f8bfe3ad6302b4abc45c9f8/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-modules-json
+BuildPreReq: python-module-setuptools python-modules-json
 
 %py_provides %oname
 
@@ -37,6 +37,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1
 - automated PyPI update
 
