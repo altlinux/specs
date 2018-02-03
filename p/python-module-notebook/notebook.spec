@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 5.2.2
-Release: alt2
+Release: alt2.1
 
 Summary: Jupyter Interactive Notebook
 License: BSD
@@ -19,7 +19,7 @@ Patch1: %oname-%version-alt-build.patch
 BuildArch: noarch
 
 BuildRequires: python-module-pathlib
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-zmq python-module-jinja2
 BuildRequires: python-module-tornado python-module-ipython_genutils-tests
 BuildRequires: python-module-traitlets-tests python-module-jupyter_core
@@ -34,7 +34,7 @@ BuildRequires: pandoc
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-zmq python3-module-jinja2
 BuildRequires: python3-module-tornado python3-module-ipython_genutils-tests
 BuildRequires: python3-module-traitlets-tests python3-module-jupyter_core
@@ -210,6 +210,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 5.2.2-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Jan 08 2018 Michael Shigorin <mike@altlinux.org> 5.2.2-alt2
 - Avoid BR: pandoc when --without doc (e2k: no ghc so far)
 - Move %%check BRs under corresponding knob as well
