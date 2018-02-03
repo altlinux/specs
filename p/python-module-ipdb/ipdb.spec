@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.10.3
-Release: alt1
+Release: alt1.1
 Summary: IPython-enabled pdb
 License: GPL
 Group: Development/Python
@@ -15,11 +15,11 @@ Url: https://pypi.python.org/pypi/ipdb/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests ipython
+BuildPreReq: python-module-setuptools ipython
 BuildRequires: python-module-pathlib2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: ipython3
 BuildRequires: python3-module-pathlib2
 %endif
@@ -84,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.10.3-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.3-alt1
 - Updated to upstream version 0.10.3.
 
