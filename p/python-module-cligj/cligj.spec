@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.4.0
-Release: alt2
+Release: alt2.1
 Summary: Click params for GeoJSON CLI
 License: MIT
 Group: Development/Python
@@ -15,11 +15,13 @@ Url: https://pypi.python.org/pypi/cligj/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-click-tests
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-module-pytest
 BuildPreReq: python3-module-click-tests
 %endif
 
@@ -87,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.4.0-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Aug 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.0-alt2
 - Fixed build.
 
