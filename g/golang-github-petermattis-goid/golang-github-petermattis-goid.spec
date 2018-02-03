@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Generate devel rpm
@@ -29,13 +30,13 @@ BuildRequires: rpm-build-golang
 # https://github.com/petermattis/goid
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          3db12ebb2a599ba4a96bea1c17b61c2f78a40e02
+%global commit          176e84a949d354dcef722e602b312b1a75bacddc
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.5.git%{shortcommit}
+Release:        alt1_0.6.git%{shortcommit}
 Summary:        Programmatic retrieval of goroutine IDs
 License:        ASL 2.0
 URL:            https://%{provider_prefix}
@@ -157,7 +158,7 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
@@ -165,12 +166,15 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %endif
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.6.git176e84a
+- update to new release by fcimport
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.5.git3db12eb
 - new version
 
