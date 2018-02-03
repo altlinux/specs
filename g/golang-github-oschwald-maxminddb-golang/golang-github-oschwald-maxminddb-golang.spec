@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Generate devel rpm
@@ -33,20 +34,20 @@ BuildRequires: rpm-build-golang
 # https://github.com/oschwald/maxminddb-golang
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          d19f6d453e836d12ee8fe895d0494421e93ef8c1
+%global commit          8727e98aa1b91610eb184ed1ab615943b8d9deb0
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 %global commitdate      20170503
 
-# commit d19f6d453e836d12ee8fe895d0494421e93ef8c1 == version 1.2.0
+# commit 8727e98aa1b91610eb184ed1ab615943b8d9deb0 == version 1.2.1
 
 
 Name:           golang-%{provider}-%{project}-%{repo}
-Version:        1.2.0
-Release:        alt1_3
+Version:        1.2.1
+Release:        alt1_1
 Summary:        MaxMind DB Reader for Go
 License:        ISC
 URL:            https://%{provider_prefix}
-Source0:        https://%{provider_prefix}/archive/%{commit}/%{project}-%{repo}-%{shortcommit}.tar.gz
+Source0:        https://%{provider_prefix}/archive/v%{version}/%{project}-%{repo}-%{version}.tar.gz
 
 # e.g. el6 has ppc64 arch without gcc-go, so EA tag is required
 ExclusiveArch:  %{?go_arches:%{go_arches}}%{!?go_arches:%{ix86} x86_64 aarch64 %{arm}}
@@ -104,7 +105,7 @@ providing packages with %{import_path} prefix.
 %endif
 
 %prep
-%setup -q -n %{repo}-%{commit}
+%setup -q -n %{repo}-%{version}
 
 
 %build
@@ -171,7 +172,7 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
@@ -179,12 +180,15 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %endif
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_1
+- update to new release by fcimport
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_3
 - new version
 
