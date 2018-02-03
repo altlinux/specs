@@ -9,12 +9,12 @@ BuildRequires: unzip
 %global fontconf 65-%{fontname}.conf
 
 Name:           fonts-ttf-gdouros-anaktoria
-Version:        7.17
-Release:        alt1_3
+Version:        8.01
+Release:        alt1_1
 Summary:        A font based on "Grecs du roi" and the "First Folio Edition of Shakespeare"
 License:        Public Domain
 URL:            http://users.teilar.gr/~g1951d/
-Source0:        http://users.teilar.gr/~g1951d/TextfontsFonts.zip
+Source0:        http://users.teilar.gr/~g1951d/Textfonts.zip
 Source1:        %{oldname}-fontconfig.conf
 Source2:        %{fontname}.metainfo.xml
 
@@ -50,7 +50,7 @@ It was created by George Douros.
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p Anaktoria.ttf %{buildroot}%{_fontdir}
+install -m 0644 -p fonts/Anaktoria.ttf %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
@@ -105,10 +105,14 @@ appstream-util validate-relax --nonet \
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/Anaktoria.ttf
 %{_datadir}/metainfo/%{fontname}.metainfo.xml
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 8.01-alt1_1
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 7.17-alt1_3
 - update to new release by fcimport
 
