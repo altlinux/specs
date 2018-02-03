@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.6
-Release: alt2.git20141223
+Release: alt2.git20141223.1
 Summary: Fast high-level web crawling framework for Python 3.3 or later base on asyncio
 License: Free
 Group: Development/Python
@@ -16,13 +16,13 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(asyncio) python-module-aiohttp
 BuildRequires: python-module-BeautifulSoup4 python-module-requests
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(asyncio) python3-module-aiohttp
 BuildRequires: python3-module-BeautifulSoup4 python3-module-requests
 %endif
@@ -101,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.6-alt2.git20141223.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Oct 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.6-alt2.git20141223
 - Fixed build.
 
