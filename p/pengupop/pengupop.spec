@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           pengupop
 Version:        2.2.2
-Release:        alt4_18
+Release:        alt4_19
 Summary:        Networked Game in the vein of Move/Puzzle Bobble
 
 Group:          Games/Other
@@ -52,6 +52,9 @@ desktop-file-install \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt4_19
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt4_18
 - update to new release by fcimport
 
