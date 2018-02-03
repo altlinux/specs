@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 19.7.1
-Release: alt2
+Release: alt2.1
 Summary: WSGI HTTP Server for UNIX
 License: Mit
 Group: Development/Python
@@ -16,10 +16,10 @@ Patch: deprecate-gaiohttp-worker.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-mock python-module-objects.inv python-module-pytest-cov python-module-setuptools-tests time
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-mock python-module-objects.inv python-module-pytest-cov python-module-setuptools time
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-html5lib python3-module-pbr python3-module-pytest-cov python3-module-setuptools-tests python3-module-sphinx python3-module-unittest2
+BuildRequires: python3-module-html5lib python3-module-pbr python3-module-pytest-cov python3-module-setuptools python3-module-sphinx python3-module-unittest2
 %endif
 
 %py_provides %oname
@@ -142,6 +142,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 19.7.1-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Nov 19 2017 Anton Midyukov <antohami@altlinux.org> 19.7.1-alt2
 - Skip pyrequires aiohttp.wsgi
 - Added deprecate gaiohttp worker patch.
