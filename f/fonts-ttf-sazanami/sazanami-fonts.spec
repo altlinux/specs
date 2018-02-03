@@ -2,7 +2,7 @@ BuildRequires: python-module-numpy-addons
 %define oldname sazanami-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global	priority	65-4
+%global	priority	70
 %global	fontname	sazanami
 %global	fontconf	%{priority}-%{fontname}
 %global catalogue	%{_sysconfdir}/X11/fontpath.d
@@ -12,7 +12,7 @@ They also contains some embedded Japanese bitmap fonts.
 
 Name:		fonts-ttf-sazanami
 Version:	0.20040629
-Release:	alt9_28
+Release:	alt9_29
 BuildArch:	noarch
 BuildRequires:	ttmkfdir >= 3.0.6
 BuildRequires:	mkfontdir fonts-bitmap-misc
@@ -164,6 +164,7 @@ fi
 %files -n fonts-ttf-sazanami-gothic
 %{_fontconfig_templatedir}/%{fontconf}-gothic.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-gothic.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/gothic/sazanami-gothic.ttf
 
 %dir %{_fontbasedir}/*/%{_fontstem}/gothic
@@ -175,6 +176,7 @@ fi
 %files -n fonts-ttf-sazanami-mincho
 %{_fontconfig_templatedir}/%{fontconf}-mincho.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-mincho.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/mincho/sazanami-mincho.ttf
 
 %dir %{_fontbasedir}/*/%{_fontstem}/mincho
@@ -188,6 +190,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.20040629-alt9_29
+- update to new release by fcimport
+
 * Wed Dec 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.20040629-alt9_28
 - fixed build
 
