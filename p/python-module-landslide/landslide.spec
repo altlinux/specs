@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.3
-Release: alt2.git20150525
+Release: alt2.git20150525.1
 Summary: Lightweight markup language-based html5 slideshow generator
 License: ASLv2.0
 Group: Development/Python
@@ -14,13 +14,13 @@ Url: https://pypi.python.org/pypi/landslide
 # https://github.com/adamzap/landslide.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-jinja2 python-module-markdown
 BuildRequires: python-module-Pygments python-module-docutils
 BuildRequires: python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-jinja2 python3-module-markdown
 BuildRequires: python3-module-Pygments python3-module-docutils
 BuildRequires: python3-module-six
@@ -101,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.3-alt2.git20150525.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.3-alt2.git20150525
 - Fixed build.
 
