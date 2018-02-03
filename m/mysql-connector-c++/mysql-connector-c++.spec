@@ -1,28 +1,25 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-mageia-compat
-BuildRequires: /usr/bin/icu-config /usr/bin/signtool gcc-c++
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%define	major 7
-%define libname libmysqlcppconn%{major}
+%define _localstatedir %_var
+%define major 7
+%define libname libmysqlcppconn%major
 %define develname libmysqlcppconn-devel
 
-Summary:	A MySQL database connector for C++
-Name:		mysql-connector-c++
-Version:	1.1.8
-Release:	alt1_1
-Group:		System/Libraries
-License:	GPLv2
-URL:		http://dev.mysql.com/downloads/connector/cpp/
-Source0:	http://cdn.mysql.com/Downloads/Connector-C++/%{name}-%{version}.tar.gz
+Summary: A MySQL database connector for C++
+Name: mysql-connector-c++
+Version: 1.1.9
+Release: alt1
+Group: System/Libraries
+License: GPLv2
+Url: http://dev.mysql.com/downloads/connector/cpp/
+Source0: http://cdn.mysql.com/Downloads/Connector-C++/%name-%version.tar.gz
 ## patches from arch-linux
-Patch0:		mysql_cxx_linkage.patch
-Patch1:		mariadb_api.patch
-BuildRequires:	cmake
-BuildRequires:	libmysqlclient-devel
-BuildRequires:	boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-python3-devel boost-signals-devel boost-wave-devel
+Patch0: mysql_cxx_linkage.patch
+Patch1: mariadb_api.patch
 Source44: import.info
+
+# Automatically added by buildreq on Sat Feb 03 2018
+# optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libstdc++-devel python-base python-modules python3 python3-base
+BuildRequires: boost-devel-headers cmake gcc-c++ libmysqlclient-devel python3-dev
 
 %description
 MySQL Connector/C++ is a MySQL database connector for C++ development. The
@@ -42,12 +39,12 @@ offers the following advantages for C++ users:
     * Support of the object oriented programming paradigma
     * Shorter development times
 
-%package -n	%{libname}
-Summary:	The shared mysql-connector-cpp library
-Group:		System/Libraries
-Provides:	%{name} = %{version}-%{release}
+%package -n	%libname
+Summary: The shared mysql-connector-cpp library
+Group: System/Libraries
+Provides: %name = %version-%release
 
-%description -n	%{libname}
+%description -n	%libname
 MySQL Connector/C++ is a MySQL database connector for C++ development. The
 MySQL driver for C++ can be used to connect to MySQL from C++ applications. The
 driver mimics the JDBC 4.0 API. It implements a significant subset of JDBC 4.0.
@@ -65,13 +62,13 @@ offers the following advantages for C++ users:
     * Support of the object oriented programming paradigma
     * Shorter development times
 
-%package -n	%{develname}
-Summary:	Development library and header files for development with mysql-connector-cpp
-Group:		Development/C++
-Requires:	%{libname} = %{version}
-Provides:	%{name}-devel = %{version}-%{release}
+%package -n	%develname
+Summary: Development library and header files for development with mysql-connector-cpp
+Group: Development/C++
+Requires: %libname = %version
+Provides: %name-devel = %version-%release
 
-%description -n	%{develname}
+%description -n	%develname
 MySQL Connector/C++ is a MySQL database connector for C++ development. The
 MySQL driver for C++ can be used to connect to MySQL from C++ applications. The
 driver mimics the JDBC 4.0 API. It implements a significant subset of JDBC 4.0.
@@ -90,49 +87,51 @@ offers the following advantages for C++ users:
     * Shorter development times
 
 %prep
-%setup -q
+%setup
 %patch0 -p1 -b .linkage
 %patch1 -p1 -b .mariadb
-%{__chmod} -x examples/*.cpp examples/*.txt
+chmod -x examples/*.cpp examples/*.txt
 
 # Save examples to keep directory clean (for doc)
-%{__mkdir} _doc_examples
-%{__cp} -pr examples _doc_examples
+mkdir _doc_examples
+cp -pr examples _doc_examples
 
 %build
-%{mageia_cmake} \
-		-DMYSQL_INCLUDE_DIR=%{_includedir}/mysql \
+%cmake \
+		-DMYSQL_INCLUDE_DIR=%_includedir/mysql \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_INSTALL_LIBDIR=%{_libdir} \
+		-DCMAKE_INSTALL_LIBDIR=%_libdir \
 		-DMYSQLCPPCONN_BUILD_EXAMPLES=OFF \
-		-DMYSQL_LIB=%{_libdir}/libmysqlclient.so
-%{make}
+		-DMYSQL_LIB=%_libdir/libmysqlclient.so
+%cmake_build
 
 %install
-cp build/cppconn/config.h  cppconn/config.h
+cp BUILD/cppconn/config.h  cppconn/config.h
 
-%makeinstall_std -C build
-rm -fr %{buildroot}%_prefix/COPYING
-rm -fr %{buildroot}%_prefix/INSTALL
-rm -fr %{buildroot}%_prefix/README
-rm -fr %{buildroot}%_prefix/ANNOUNCEMENT
-rm -fr %{buildroot}%_prefix/Licenses_for_Third-Party_Components.txt
-rm -f %{buildroot}%{_libdir}/libmysqlcppconn-static.a
+%makeinstall_std -C BUILD
+rm -fr %buildroot%prefix/COPYING
+rm -fr %buildroot%prefix/INSTALL
+rm -fr %buildroot%prefix/README
+rm -fr %buildroot%prefix/ANNOUNCEMENT
+rm -fr %buildroot%prefix/Licenses_for_Third-Party_Components.txt
+rm -f %buildroot%_libdir/libmysqlcppconn-static.a
 
-%files -n %{libname}
-%{_libdir}/*.so.*
+%files -n %libname
+%_libdir/*.so.*
 
-%files -n %{develname}
-%doc README ANNOUNCEMENT COPYING CHANGES examples
-%dir %{_includedir}/cppconn
-%{_includedir}/*.h
-%{_includedir}/cppconn/*.h
-%{_libdir}/*.so
-
-
+%files -n %develname
+%doc README COPYING examples
+%dir %_includedir/cppconn
+%_includedir/*.h
+%_includedir/cppconn/*.h
+%_libdir/*.so
 
 %changelog
+* Sat Feb 03 2018 Fr. Br. George <george@altlinux.ru> 1.1.9-alt1
+- Autobuild version bump to 1.1.9
+- Fix overloaded buildreq
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.8-alt1_1
 - update by mgaimport
 
