@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.1.0
-Release: alt1.dev1.git20141020.1.1
+Release: alt1.dev1.git20141020.1.1.1
 Summary: In-process task scheduler with Cron-like capabilities
 License: MIT
 Group: Development/Python
@@ -16,7 +16,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-six python-module-pytz
 #BuildPreReq: python-module-tzlocal python-module-futures
 #BuildPreReq: python-module-PyQt4 python-module-gevent
@@ -26,7 +26,7 @@ BuildArch: noarch
 #BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-six python3-module-pytz
 #BuildPreReq: python3-module-tzlocal python-module-gevent
 #BuildPreReq: python3-module-PyQt4 python-module-pymongo
@@ -41,7 +41,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: libqt4-core python-base python-devel python-module-OpenSSL python-module-PyStemmer python-module-Pygments python-module-SQLAlchemy python-module-babel python-module-backports python-module-bson python-module-certifi python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-greenlet python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pyasn1 python-module-pycares python-module-pycurl python-module-pytest python-module-pytz python-module-serial python-module-setuptools python-module-sip python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-twisted-core python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-pytest python3-module-setuptools python3-module-zope.interface
-BuildRequires: python-module-PyQt4 python-module-alabaster python-module-docutils python-module-funcsigs python-module-futures python-module-gevent python-module-html5lib python-module-objects.inv python-module-pbr python-module-pymongo python-module-redis-py python-module-setuptools-tests python-module-tornado python-module-twisted-logger python-module-tzlocal python-module-unittest2 python3-module-html5lib python3-module-pbr python3-module-pycares python3-module-pygobject3 python3-module-pytz python3-module-serial python3-module-setuptools-tests python3-module-unittest2 python3-module-zope rpm-build-python3 time
+BuildRequires: python-module-PyQt4 python-module-alabaster python-module-docutils python-module-funcsigs python-module-futures python-module-gevent python-module-html5lib python-module-objects.inv python-module-pbr python-module-pymongo python-module-redis-py python-module-setuptools python-module-tornado python-module-twisted-logger python-module-tzlocal python-module-unittest2 python3-module-html5lib python3-module-pbr python3-module-pycares python3-module-pygobject3 python3-module-pytz python3-module-serial python3-module-setuptools python3-module-unittest2 python3-module-zope rpm-build-python3 time
 
 %description
 Advanced Python Scheduler (APScheduler) is a Python library that lets
@@ -178,6 +178,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1.dev1.git20141020.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.1.0-alt1.dev1.git20141020.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
