@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1
+Release: alt1.1
 Summary: REST client interface
 License: BSD
 Group: Development/Python
@@ -13,11 +13,11 @@ Url: https://pypi.python.org/pypi/blink/
 
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-requests python2.7(yaml) python2.7(dateutil.parser)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-requests python3(yaml) python3(dateutil.parser)
 %endif
 
@@ -80,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Dec 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.0-alt1
 - Updated to upstream version 0.2.0.
 
