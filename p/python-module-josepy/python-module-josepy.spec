@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: JOSE protocol implementation in Python using cryptography
 
@@ -18,10 +18,10 @@ BuildArch: noarch
 
 BuildRequires: rpm-build-intro >= 2.1.3
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -105,6 +105,9 @@ rm -rf %buildroot%_bindir/
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Jan 21 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
 - initial build for ALT Sisyphus
 
