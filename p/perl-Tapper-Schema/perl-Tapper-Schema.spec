@@ -1,24 +1,25 @@
 %define _unpackaged_files_terminate_build 1
-BuildRequires: perl(DBD/SQLite.pm) perl(Hash/Merge/Simple.pm)
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(JSON/XS.pm) perl(Tapper/Model.pm) perl(Test/EOL.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl-podlators perl(File/Slurp.pm)
 # END SourceDeps(oneline)
 BuildRequires: perl(DBD/SQLite.pm) perl(Hash/Merge/Simple.pm)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define upstream_name    Tapper-Schema
-%define upstream_version 5.0.8
+%define upstream_version 5.0.9
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    5.0.9
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Database schemas for Tapper
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/T/TA/TAPPER/%{upstream_name}-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Carp.pm)
 BuildRequires: perl(Class/C3.pm)
@@ -67,10 +68,10 @@ Source44: import.info
 Database schemas for Tapper.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 
 %make
 
@@ -81,10 +82,13 @@ Database schemas for Tapper.
 %makeinstall_std
 
 %files
-%doc Changes LICENSE META.json META.yml README
-%perl_vendor_privlib/*
+%doc Changes LICENSE META.json META.yml  README
+%{perl_vendor_privlib}/*
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 5.0.9-alt1_1
+- update by mgaimport
+
 * Fri Feb 17 2017 Igor Vlasenko <viy@altlinux.ru> 5.0.9-alt1
 - automated CPAN update
 
