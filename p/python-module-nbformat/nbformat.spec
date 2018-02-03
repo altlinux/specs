@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.4.0
-Release: alt1
+Release: alt1.1
 Summary: The Jupyter Notebook format
 License: BSD
 Group: Development/Python
@@ -15,7 +15,7 @@ Url: https://pypi.python.org/pypi/nbformat
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-pytest python2.7(testpath)
 BuildRequires: python-module-jsonschema python-module-jupyter_core
 BuildRequires: python-module-nose python-modules-sqlite3
@@ -23,7 +23,7 @@ BuildRequires: python-module-numpydoc python-module-sphinx-devel
 BuildRequires: python-module-alabaster python-module-html5lib python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pytest python3(testpath)
 BuildRequires: python3-module-jsonschema python3-module-jupyter_core
 BuildRequires: python3-module-nose python3-modules-sqlite3
@@ -158,6 +158,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.4.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Nov 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.0-alt1
 - Updated to upstream version 4.4.0.
 
