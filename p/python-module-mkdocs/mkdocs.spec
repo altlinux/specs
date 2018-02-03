@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.16.1
-Release: alt1
+Release: alt1.1
 Summary: Python tool to create HTML documentation from markdown sources
 License: BSD
 Group: Development/Python
@@ -16,13 +16,13 @@ Source: %name-%version.tar
 Source1:        mkdocs.1
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-jinja2 python-module-markdown
 #BuildPreReq: python-module-yaml python-module-watchdog
 #BuildPreReq: ghp-import python-module-argh python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-jinja2 python3-module-markdown
 #BuildPreReq: python3-module-yaml python3-module-watchdog
 #BuildPreReq: ghp-import.py3 python3-module-argh
@@ -33,7 +33,7 @@ Requires: ghp-import
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-jinja2-tests python-module-markupsafe python-module-pathtools python-module-pytest python-module-setuptools python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-modules-xml python3 python3-base python3-module-jinja2 python3-module-markupsafe python3-module-pathtools python3-module-pytest python3-module-setuptools python3-module-yaml
-BuildRequires: python-module-jinja2 python-module-markdown python-module-setuptools-tests python-module-watchdog python-modules-json python3-module-jinja2-tests python3-module-markdown python3-module-setuptools-tests python3-module-watchdog rpm-build-python3
+BuildRequires: python-module-jinja2 python-module-markdown python-module-setuptools python-module-watchdog python-modules-json python3-module-jinja2-tests python3-module-markdown python3-module-setuptools python3-module-watchdog rpm-build-python3
 
 %description
 MkDocs is a fast, simple and downright gorgeous static site generator
@@ -142,6 +142,9 @@ install -p -m 0644 %SOURCE1 %buildroot/%_man1dir/
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.16.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon May 29 2017 Lenar Shakirov <snejok@altlinux.ru> 0.16.1-alt1
 - 0.16.1
 
