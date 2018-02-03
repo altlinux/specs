@@ -1,14 +1,13 @@
 Group: System/Fonts/True type
-# BEGIN SourceDeps(oneline):
-BuildRequires: python-devel
-# END SourceDeps(oneline)
 %define oldname gnu-free-fonts
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global fontname gnu-free
 %global fontconf 69-%{fontname}
 
 Name:      fonts-ttf-gnu-freefont
 Version:   20120503
-Release:   alt1_10
+Release:   alt1_16
 Summary:   Free UCS Outline Fonts
 
 # Standard font exception
@@ -26,7 +25,9 @@ Source8:   %{fontname}-serif.metainfo.xml
 Patch0:    gnu-free-fonts-devanagari-rendering.patch
 
 BuildArch: noarch
-BuildRequires: fontpackages-devel fontforge
+BuildRequires: fontpackages-devel fontforge libfontforge
+# following is needed as we are calling /usr/bin/2to3
+BuildRequires: python-tools-2to3 python3-tools
 
 %global common_desc \
 Gnu FreeFont is a free family of scalable outline fonts, suitable for general \
@@ -94,6 +95,18 @@ This package contains the GNU FreeFont serif font.
 %setup -n %{oldname}-%{version} -qn freefont-%{version}
 
 %patch0 -p1 -b .devanagari
+
+# move build scripts to python3 compatible code
+pushd tools
+pushd generate
+# Following for loop should not be used on pyc files
+# better remove pre-compiled buildutils.pyc file
+rm *.pyc
+for item in `ls`;do
+   2to3 -w $item
+done
+popd
+popd
 
 %build
 make
@@ -170,24 +183,31 @@ fi
 %files -n fonts-ttf-gnu-freefont-mono
 %{_fontconfig_templatedir}/%{fontconf}-mono.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-mono.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/FreeMono*.ttf
 %{_datadir}/appdata/%{fontname}-mono.metainfo.xml
 %files -n fonts-ttf-gnu-freefont-sans
 %{_fontconfig_templatedir}/%{fontconf}-sans.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sans.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/FreeSans*.ttf
 %{_datadir}/appdata/%{fontname}-sans.metainfo.xml
 %files -n fonts-ttf-gnu-freefont-serif
 %{_fontconfig_templatedir}/%{fontconf}-serif.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-serif.conf
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/FreeSerif*.ttf
 %{_datadir}/appdata/%{fontname}-serif.metainfo.xml
 
 %files -n fonts-ttf-gnu-freefont-common
-%doc AUTHORS ChangeLog CREDITS COPYING README
+%doc AUTHORS ChangeLog CREDITS README
+%doc --no-dereference COPYING
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 20120503-alt1_16
+- update to new release by fcimport
+
 * Tue Jan 13 2015 Igor Vlasenko <viy@altlinux.ru> 20120503-alt1_10
 - update to new release by fcimport
 
