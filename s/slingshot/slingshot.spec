@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name: slingshot
 Version:  0.9
-Release:  alt1_5
+Release:  alt1_6
 Summary: A Newtonian strategy game
 
 Group: Games/Other
@@ -20,7 +20,7 @@ Source3: slingshot.appdata.xml
 #Patch1: slingshot-0.8.1p-type-mismatch.patch
 BuildArchitectures: noarch
 BuildRequires: desktop-file-utils, python-module-setuptools, python-devel
-Requires: icon-theme-hicolor, python-module-pygame, fonts-ttf-gnu-freefont-sans
+Requires: icon-theme-hicolor, pygame, fonts-ttf-gnu-freefont-sans
 Source44: import.info
 
 %description
@@ -66,12 +66,15 @@ install -p -m 664 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/appdata
 %{_bindir}/slingshot
 %{python_sitelibdir_noarch}/*
 %doc README
-%doc LICENSE
+%doc --no-dereference LICENSE
 %{_datadir}/applications/slingshot.desktop
 %{_datadir}/icons/hicolor/64x64/apps/slingshot.png
 %{_datadir}/appdata/slingshot.appdata.xml
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_6
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_5
 - update to new release by fcimport
 
