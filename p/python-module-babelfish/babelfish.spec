@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.5
-Release: alt3
+Release: alt3.1
 Summary: A module to work with countries and languages
 License: BSD
 Group: Development/Python
@@ -15,10 +15,10 @@ Url: https://pypi.python.org/pypi/babelfish/
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-build.patch
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -112,6 +112,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.5-alt3.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Dec 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.5-alt3
 - Updated to upstream release version 0.5.5.
 
