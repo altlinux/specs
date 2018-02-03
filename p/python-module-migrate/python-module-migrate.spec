@@ -2,7 +2,7 @@
 
 Name:		python-module-migrate
 Version:	0.11.0
-Release:	alt1
+Release:	alt1.1
 Summary:	Schema migration tools for SQLAlchemy
 
 Group:		Development/Python
@@ -22,7 +22,7 @@ Patch100: python-migrate-sqlalchemy-migrate.patch
 BuildArch:	noarch
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-extras python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-linecache2 python-module-markupsafe python-module-mimeparse python-module-numpy python-module-pbr python-module-pyasn1 python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-subunit python-module-testtools python-module-traceback2 python-module-twisted-core python-module-unittest2 python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-Pygments python3-module-babel python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-docutils python3-module-enum34 python3-module-genshi python3-module-jinja2 python3-module-markupsafe python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer
-BuildRequires: python-module-docutils python-module-html5lib python-module-mox python-module-nose python-module-pysqlite2 python-module-testrepository python3-module-html5lib python3-module-jinja2-tests python3-module-nose python3-module-pbr python3-module-sphinx rpm-build-python3 time python-module-subunit-tests python-module-setuptools-tests python3-module-setuptools-tests
+BuildRequires: python-module-docutils python-module-html5lib python-module-mox python-module-nose python-module-pysqlite2 python-module-testrepository python3-module-html5lib python3-module-jinja2-tests python3-module-nose python3-module-pbr python3-module-sphinx rpm-build-python3 time python-module-subunit-tests python-module-setuptools python3-module-setuptools
 
 #BuildRequires:	python-devel
 #BuildRequires:	python-module-SQLAlchemy >= 0.7.8
@@ -182,6 +182,9 @@ echo 'sqlite:///__tmp__' > test_db.cfg
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.11.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Jun 04 2017 Lenar Shakirov <snejok@altlinux.ru> 0.11.0-alt1
 - 0.11.0
 
