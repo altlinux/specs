@@ -16,8 +16,8 @@ BuildRequires: /usr/bin/desktop-file-validate /usr/bin/qmake-qt4 gcc-c++ libX11-
 
 Summary:       Audio/MIDI multi-track sequencer
 Name:          qtractor
-Version:       0.8.4
-Release:       alt1_1
+Version:       0.8.5
+Release:       alt1_2
 License:       GPLv2+
 Group:         Sound
 URL:           http://qtractor.sourceforge.net/
@@ -66,8 +66,6 @@ dedicated to the personal home-studio.
 # configure hard-codes prepending searches of /usr (already implicit, causes problems),
 # and /usr/local (not needed here), so force it's non-use -- rex
 sed -i.ac_with_paths -e "s|^ac_with_paths=.*|ac_with_paths=|g" configure configure.ac
-# fedora uses appdata
-sed -i -e 's|/metainfo|/appdata|g' src/src.pro
 
 # Fix odd permissions
 chmod -x src/qtractorMmcEvent.*
@@ -105,11 +103,14 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/*/*
 %{_datadir}/mime/packages/%{name}.xml
 %{_bindir}/%{name}
-%{_bindir}/%{name}_vst_scan
+%{_bindir}/%{name}_plugin_scan
 %{_datadir}/man/man1/%{name}*
-%{_datadir}/appdata/%{name}.appdata.xml
+%{_datadir}/metainfo/%{name}.appdata.xml
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.5-alt1_2
+- update to new release by fcimport
+
 * Sun Nov 26 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt1_1
 - new version
 
