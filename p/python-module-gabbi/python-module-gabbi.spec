@@ -5,7 +5,7 @@
 Summary: Declarative HTTP testing library
 Name: python-module-%oname
 Version: 1.34.0
-Release: alt1
+Release: alt1.1
 Url: https://github.com/cdent/gabbi
 Source: %oname-%version.tar.gz
 License: Apache
@@ -13,10 +13,10 @@ Group: Development/Python
 
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools-tests python-module-pbr
+BuildRequires: python-devel python-module-setuptools python-module-pbr
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests python3-module-pbr
+BuildRequires: python3-devel python3-module-setuptools python3-module-pbr
 %endif
 
 %description
@@ -90,5 +90,8 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.34.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Jun 16 2017 Alexey Shabalin <shaba@altlinux.ru> 1.34.0-alt1
 - initial build
