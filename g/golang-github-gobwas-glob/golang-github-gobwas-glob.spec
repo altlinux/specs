@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Generate devel rpm
@@ -37,11 +38,14 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0.2.2
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Globbing library for Go
 License:        MIT
 URL:            https://%{provider_prefix}
 Source0:        https://%{provider_prefix}/archive/%{commit}/%{repo}-%{shortcommit}.tar.gz
+
+# Add patch to fix compilation of tests with go 1.10
+Patch0:         00-go-110-fix.patch
 
 # e.g. el6 has ppc64 arch without gcc-go, so EA tag is required
 ExclusiveArch:  %{?go_arches:%{go_arches}}%{!?go_arches:%{ix86} x86_64 aarch64 %{arm}}
@@ -95,6 +99,7 @@ providing packages with %{import_path} prefix.
 
 %prep
 %setup -q -n %{repo}-%{commit}
+%patch0 -p1
 
 
 %build
@@ -172,7 +177,7 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc readme.md
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
@@ -180,12 +185,15 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc readme.md
 %endif
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1_4
+- update to new release by fcimport
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1_3
 - new version
 
