@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.1.2
-Release: alt2
+Release: alt2.1
 Summary: OAuth 2.0 client library
 License: Apache Software License
 Group: Development/Python
@@ -15,14 +15,16 @@ Url: https://pypi.python.org/pypi/oauth2client/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python
-BuildRequires: python-module-docutils python-module-html5lib python-module-httplib2 python-module-keyring python-module-mox python-module-objects.inv python-module-pyasn1-modules python-module-rsa python-module-setuptools-tests 
+BuildRequires: python-module-docutils python-module-html5lib python-module-httplib2 python-module-keyring python-module-mox python-module-objects.inv python-module-pyasn1-modules python-module-rsa python-module-setuptools 
 BuildRequires: python-module-sphinx-devel
 BuildRequires: python-module-mock python-module-fasteners python-module-flask
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-httplib2 python3-module-keyring python3-module-mox python3-module-pyasn1-modules python3-module-rsa python3-module-setuptools-tests
+BuildRequires: python3-module-httplib2 python3-module-keyring python3-module-mox python3-module-pyasn1-modules python3-module-rsa python3-module-setuptools
 BuildRequires: python3-module-mock python3-module-fasteners python3-module-flask
 BuildRequires: python3(sqlalchemy)
+BuildRequires: python3-module-pytest
 %endif
 
 %setup_python_module %oname
@@ -216,6 +218,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.1.2-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Dec 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.2-alt2
 - Fixed build.
 
