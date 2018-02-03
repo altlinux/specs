@@ -2,7 +2,7 @@
 %define oname cubicweb-narval
 Name: python-module-%oname
 Version: 4.2.3
-Release: alt1
+Release: alt1.1
 Summary: CubicWeb based framework to run automated tests
 License: LGPL
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/df/28/e54692679bc14962de6ab80e44e36b9e5752765559a67d6f9e1ae8e38bd6/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 BuildPreReq: python-module-cubicweb-localperms
 BuildPreReq: python-module-cubicweb-file
 BuildPreReq: python-module-cubicweb-signedrequest
@@ -73,6 +73,9 @@ python setup.py test
 %dir %attr(0775,narval,narval) /var/log/narval
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.2.3-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.3-alt1
 - automated PyPI update
 
