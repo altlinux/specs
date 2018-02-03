@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.3
-Release: alt1.1
+Release: alt1.1.1
 Summary: HTTP queryset backend for json resources
 License: Free
 Group: Development/Python
@@ -15,13 +15,13 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-modules-json
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-json_resource python-module-nose
 BuildPreReq: python-module-requests python-module-mock
 BuildPreReq: python-module-json_patch
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-json_resource python3-module-nose
 BuildPreReq: python3-module-requests python3-module-mock
 BuildPreReq: python3-module-json_patch
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.3-alt1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.3-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
