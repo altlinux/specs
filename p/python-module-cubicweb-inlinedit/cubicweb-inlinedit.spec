@@ -2,7 +2,7 @@
 %define oname cubicweb-inlinedit
 Name: python-module-%oname
 Version: 1.3.0
-Release: alt1
+Release: alt1.1
 Summary: Extension of the `reledit` builtin feature
 License: LGPL
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/38/c1/e6be2f5362cfa2900b98174ff92e6f9ccb2cedbf2792f2dbe18c0fa4fd03/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 BuildPreReq: python-module-cwtags
 
 Requires: cubicweb
@@ -42,6 +42,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1
 - automated PyPI update
 
