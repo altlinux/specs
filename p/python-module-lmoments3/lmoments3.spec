@@ -1,7 +1,7 @@
 %define oname lmoments3
 Name: python-module-%oname
 Version: 0.3.1
-Release: alt1.git20140925
+Release: alt1.git20140925.1
 Summary: Estimate linear moments for statistical distribution functions
 License: GPLv3
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-numpy python-module-scipy
 BuildPreReq: python-module-nose
 
@@ -43,6 +43,9 @@ nosetests -v
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.1-alt1.git20140925.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1.git20140925
 - Initial build for Sisyphus
 
