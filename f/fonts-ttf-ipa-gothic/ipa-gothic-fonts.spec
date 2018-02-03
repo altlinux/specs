@@ -4,7 +4,7 @@ BuildRequires: unzip
 %define oldname ipa-gothic-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global		priority	65-3
+%global		priority	69
 %global		fontname	ipa-gothic
 %global		fontconf	%{priority}-%{fontname}.conf
 %global		archiveversion	00303
@@ -12,7 +12,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-ipa-gothic
 Version:	003.03
-Release:	alt2_11
+Release:	alt2_12
 Summary:	Japanese Gothic-typeface OpenType font by IPA
 
 Group:		System/Fonts/True type
@@ -91,13 +91,18 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
+%dir %{_fontbasedir}/*/%{_fontstem}/
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
-%doc Readme_%{archivename}.txt IPA_Font_License_Agreement_v1.0.txt
+%doc Readme_%{archivename}.txt
+%doc --no-dereference IPA_Font_License_Agreement_v1.0.txt
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 003.03-alt2_12
+- update to new release by fcimport
+
 * Mon Oct 23 2017 Igor Vlasenko <viy@altlinux.ru> 003.03-alt2_11
 - update to new release by fcimport
 
