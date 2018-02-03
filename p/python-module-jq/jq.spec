@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.6
-Release: alt1
+Release: alt1.1
 Summary: Lightweight and flexible JSON processor
 License: BSD
 Group: Development/Python
@@ -15,13 +15,13 @@ Source: %name-%version.tar
 Patch1: %oname-%version-alt-build.patch
 
 BuildRequires: libjq-devel
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-Cython python-module-nose
 BuildRequires: python-module-tox
 BuildRequires: python-module-html5lib python-module-notebook
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-Cython python3-module-nose
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-html5lib python3-module-notebook
@@ -97,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.6-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.6-alt1
 - Updated to upstream version 0.1.6.
 
