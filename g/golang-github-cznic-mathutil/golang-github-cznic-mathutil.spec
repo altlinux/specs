@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Generate devel rpm
@@ -29,13 +30,13 @@ BuildRequires: rpm-build-golang
 # https://github.com/cznic/mathutil
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          09cde8d5df5fd3e1944897ce6d00d83dd5ed3a91
+%global commit          c90ba19bea8927552cef4560ab888231566f049d
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.8.git%{shortcommit}
+Release:        alt1_0.9.git%{shortcommit}
 Summary:        Supplemental utilities for Go's rand and math packages
 License:        BSD
 URL:            https://%{provider_prefix}
@@ -177,7 +178,7 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc CONTRIBUTORS README AUTHORS
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
@@ -185,12 +186,15 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc CONTRIBUTORS README AUTHORS
 %endif
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.9.gitc90ba19
+- update to new release by fcimport
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.8.git09cde8d
 - new version
 
