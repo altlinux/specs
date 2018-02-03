@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++
 %define _localstatedir %{_var}
 Name:           flobopuyo
 Version:        0.20
-Release:        alt4_22
+Release:        alt4_23
 Summary:        2-player falling bubbles game
 
 License:        GPLv2+
@@ -88,10 +88,9 @@ install -d -m 755 %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/
 install -p -m 644 icon_128x128x32.png \
   %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
-
 %files
 %doc TODO Changelog
-%doc COPYING
+%doc --no-dereference COPYING
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/applications/*.desktop
@@ -100,6 +99,9 @@ install -p -m 644 icon_128x128x32.png \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.20-alt4_23
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.20-alt4_22
 - update to new release by fcimport
 
