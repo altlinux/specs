@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++
 %define _localstatedir %{_var}
 Name:           alienblaster
 Version:        1.1.0
-Release:        alt2_20
+Release:        alt2_21
 Summary:        Action-loaded 2D arcade shooter game
 Group:          Games/Other
 License:        GPLv2+
@@ -68,6 +68,9 @@ install -p -m 644 %{SOURCE5} \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_21
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_20
 - update to new release by fcimport
 
