@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0
-Release: alt2.dev0.svn20140527
+Release: alt2.dev0.svn20140527.1
 Summary: Read/write vocabularies in IMS Vocabulary Definition Exchange format
 License: D-FSL - German Free Software License
 Group: Development/Python
@@ -15,11 +15,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-lxml
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-lxml python-tools-2to3
 %endif
 
@@ -115,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.0-alt2.dev0.svn20140527.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt2.dev0.svn20140527
 - Fixed build
 
