@@ -3,7 +3,7 @@
 
 Name:       python-module-%oname
 Version:    4.2.0
-Release:    alt1
+Release:    alt1.1
 Summary:    Client Library for OpenStack Barbican Key Management API
 License:    ASL 2.0
 Url: http://docs.openstack.org/developer/python-%oname
@@ -13,7 +13,7 @@ Group:      Development/Python
 BuildArch:  noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-requests >= 2.10.0
 BuildRequires: python-module-six >= 1.9.0
@@ -29,7 +29,7 @@ BuildRequires: python-module-oslosphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-requests >= 2.10.0
 BuildRequires: python3-module-six >= 1.9.0
@@ -138,6 +138,9 @@ rm -f doc/build/html/.buildinfo
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 30 2017 Alexey Shabalin <shaba@altlinux.ru> 4.2.0-alt1
 - 4.2.0
 - add test packages
