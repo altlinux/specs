@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/swig gcc-c++ ilmbase-devel
 %define _localstatedir %{_var}
 Name:		aqsis
 Version:	1.8.2
-Release:	alt2_28
+Release:	alt2_29
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 Group:		Video
 
@@ -36,13 +36,13 @@ BuildRequires:  libjpeg-devel
 BuildRequires:  libtiff-devel libtiffxx-devel
 BuildRequires:  libpng-devel
 BuildRequires:  libxslt xsltproc
-BuildRequires:  libqt4-declarative libqt4-devel qt4-designer
+BuildRequires:  libqt4-declarative libqt4-devel libqt5-declarative qt4-designer qt5-designer qt5-tools qt5-xmlpatterns-devel
 #BuildRequires:  tinyxml-devel
 BuildRequires:  openexr-devel
 BuildRequires:  python-module-sphinx
 BuildRequires:  zlib-devel >= 1.1.4
 
-Requires: libqt4-core libqt4-dbus libqt4-network libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-test libqt4-xml libqt4-xmlpatterns
+Requires: libqt4-core libqt4-dbus libqt4-network libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-test libqt4-xml libqt4-xmlpatterns qt5-dbus
 Requires: aqsis-core = %{version}-%{release}
 Requires: aqsis-data = %{version}-%{release}
 Source44: import.info
@@ -181,13 +181,13 @@ desktop-file-install --vendor "" --delete-original \
 
 %files
 %doc AUTHORS README
-%doc COPYING
+%doc --no-dereference COPYING
 %{_bindir}/eqsl
 %{_bindir}/piqsl
 %{_bindir}/ptview
 # Do not use the name pdiff for PerceptualDiff
 # It is used by PrintDiff in a2ps
-#{_bindir}/pdiff
+#_bindir/pdiff
 %{_datadir}/applications/aqsis.desktop
 %{_datadir}/applications/aqsl.desktop
 %{_datadir}/applications/aqsltell.desktop
@@ -215,7 +215,7 @@ desktop-file-install --vendor "" --delete-original \
 # Licensed under GPLv2+
 %{_libdir}/libaqsis_*.so.*
 # Licensed under LGPLv2+
-#{_libdir}/libaqsis_ri2rib.so.*
+#_libdir/libaqsis_ri2rib.so.*
 
 
 %files devel
@@ -223,7 +223,7 @@ desktop-file-install --vendor "" --delete-original \
 # Licensed under GPLv2+
 %{_libdir}/libaqsis_*.so
 # Licensed under LGPLv2+
-#{_libdir}/libaqsis_ri2rib.so
+#_libdir/libaqsis_ri2rib.so
 
 
 %files data
@@ -236,6 +236,9 @@ desktop-file-install --vendor "" --delete-original \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_29
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_28
 - update to new release by fcimport
 
