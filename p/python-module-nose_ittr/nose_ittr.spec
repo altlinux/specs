@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.4
-Release: alt1.git20141202
+Release: alt1.git20141202.1
 Summary: nose extension for supporting parametrized testing
 License: ASLv2.0
 Group: Development/Python
@@ -15,11 +15,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-nose python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-nose
 %endif
 
@@ -99,6 +99,9 @@ popd
 # TODO: enable test_ittr_params_to_setup
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.0.4-alt1.git20141202.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.4-alt1.git20141202
 - Version 0.0.4
 
