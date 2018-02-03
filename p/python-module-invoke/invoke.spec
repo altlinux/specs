@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.21.0
-Release: alt1
+Release: alt1.1
 Summary: Simple Python task execution
 License: BSD
 Group: Development/Python
@@ -17,14 +17,14 @@ Source: %name-%version.tar
 Patch1: %oname-%version-alt-reqs.patch
 Patch2: %oname-%version-alt-docs.patch
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-alabaster python-module-docutils python-module-flake8 python-module-html5lib
 BuildRequires: python-module-objects.inv python-module-pbr python-module-pytest python-module-spec python-module-unittest2
 BuildRequires: python-module-sphinx-devel
 BuildRequires: python-module-yaml python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-flake8
 BuildRequires: python3-module-html5lib python3-module-pbr python3-module-spec python3-module-unittest2
 BuildRequires: python3-module-yaml python3-module-six
@@ -162,6 +162,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.21.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Oct 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.21.0-alt1
 - Updated to upstream version 0.21.0.
 
