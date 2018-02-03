@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.10.0
-Release: alt1
+Release: alt1.1
 Summary: Spherical mercator and XYZ tile utilities
 License: BSD
 Group: Development/Python
@@ -14,13 +14,15 @@ Url: https://pypi.python.org/pypi/mercantile/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-click-tests
 BuildPreReq: python-modules-json python-modules-logging
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-click-tests
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -99,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.10.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.0-alt1
 - Updated to upstream version 0.10.0.
 
