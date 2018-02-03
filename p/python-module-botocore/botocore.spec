@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.6.0
-Release: alt1
+Release: alt1.1
 Summary: The low-level, core functionality of boto 3
 License: ASLv2.0
 Group: Development/Python
@@ -18,11 +18,11 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-alabaster python-module-dateutil python-module-guzzle_sphinx_theme python-module-html5lib python-module-jmespath
-BuildRequires: python-module-nose python-module-objects.inv python-module-pbr python-module-setuptools-tests python-module-tox python-module-unittest2
+BuildRequires: python-module-nose python-module-objects.inv python-module-pbr python-module-setuptools python-module-tox python-module-unittest2
 BuildRequires: python-module-requests python-module-six python-module-urllib3 python-module-mock python-module-docutils python-module-jmespath
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-dateutil python3-module-html5lib python3-module-nose python3-module-pbr python3-module-setuptools-tests
+BuildRequires: python3-module-dateutil python3-module-html5lib python3-module-nose python3-module-pbr python3-module-setuptools
 BuildRequires: python3-module-tox python3-module-unittest2
 BuildRequires: python3-module-requests python3-module-six python3-module-urllib3 python3-module-mock python3-module-docutils python3-module-jmespath
 %endif
@@ -139,6 +139,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.0-alt1
 - Updated to upstream version 1.6.0.
 
