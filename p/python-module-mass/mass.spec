@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt2.dev4.git20150320
+Release: alt2.dev4.git20150320.1
 Summary: MASS is Music and Audio in Sample Sequences
 License: MIT
 Group: Development/Python
@@ -16,13 +16,13 @@ Url: https://pypi.python.org/pypi/music/
 Source: %name-%version.tar
 
 BuildRequires: xvfb-run
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-numpy python-module-matplotlib
 BuildRequires: python-module-scipy python-module-pygobject3
 BuildRequires: python-module-pycairo
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-numpy python3-module-matplotlib
 BuildRequires: python3-module-scipy python3-module-pygobject3
 BuildRequires: python3-module-pycairo
@@ -99,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1-alt2.dev4.git20150320.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1-alt2.dev4.git20150320
 - Disabled check.
 
