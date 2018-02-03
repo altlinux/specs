@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.8.2
-Release: alt1
+Release: alt1.1
 Summary: LZ4 Bindings for Python
 License: BSD
 Group: Development/Python
@@ -16,11 +16,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/b5/f0/e1de2bb7feb54011f3c4dcf35b7cca3536e19526764db051b50ea26b58e7/%{oname}-%{version}.tar.gz
 
 #BuildPreReq: liblz4-devel
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-nose python-module-snappy
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-nose python3-module-snappy
 %endif
 
@@ -28,7 +28,7 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: elfutils python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-nose python-module-setuptools-tests python-module-snappy python3-devel python3-module-nose python3-module-setuptools-tests python3-module-snappy rpm-build-python3
+BuildRequires: python-module-nose python-module-setuptools python-module-snappy python3-devel python3-module-nose python3-module-setuptools python3-module-snappy rpm-build-python3
 
 %description
 This package provides bindings for the lz4 compression library by Yann
@@ -87,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.2-alt1
 - automated PyPI update
 
