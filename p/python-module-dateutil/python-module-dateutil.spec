@@ -1,6 +1,6 @@
 Name: python-module-dateutil
 Version: 2.6.0
-Release: alt1
+Release: alt1.1
 
 Summary: Extensions to the standard datetime module
 
@@ -18,7 +18,7 @@ Source: python-dateutil-%version.tar
 BuildArch: noarch
 
 BuildRequires: python-devel python-modules-encodings
-BuildPreReq: python-module-setuptools-tests python-module-six
+BuildPreReq: python-module-setuptools python-module-six
 BuildPreReq: pytz-zoneinfo
 # texlive-base-bin
 
@@ -53,6 +53,9 @@ python setup.py test
 
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sat Jul 22 2017 Vitaly Lipatov <lav@altlinux.ru> 2.6.0-alt1
 - new version 2.6.0 (with rpmrb script)
 
