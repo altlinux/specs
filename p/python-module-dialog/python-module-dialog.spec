@@ -5,7 +5,7 @@
 
 Name: python-module-dialog
 Version: 3.3.0
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Python interface to the Unix dialog utility
 
@@ -22,7 +22,7 @@ BuildArch: noarch
 BuildRequires: python-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools python3-module-setuptools
 %endif
 
 %description
@@ -80,6 +80,9 @@ popd
 %python_sitelibdir/python2_pythondialog-*.egg-info
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.0-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
