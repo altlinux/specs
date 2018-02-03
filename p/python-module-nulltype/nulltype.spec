@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.2.11
-Release: alt1
+Release: alt1.1
 Summary: Null values and sentinels like, but not, None
 License: ASLv2.0
 Group: Development/Python
@@ -14,11 +14,11 @@ Url: https://pypi.python.org/pypi/nulltype
 
 Source: %oname-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-tox python-module-virtualenv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-tox python3-module-virtualenv
 BuildRequires: python3-module-pytest
 %endif
@@ -114,6 +114,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.2.11-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.11-alt1
 - Updated to upstream version 2.2.11.
 
