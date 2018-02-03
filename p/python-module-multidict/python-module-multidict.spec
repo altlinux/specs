@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 3.1.3
-Release: alt1
+Release: alt1.1
 Summary: Multidicts are useful for working with HTTP headers, URL query args etc
 
 License: ASL 2.0
@@ -13,7 +13,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: https://pypi.python.org/packages/2a/df/eaea73e46a58fd780c35ecc304ca42364fa3c1f4cd03568ed33b9d2c7547/%oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests python3-module-Cython python3-module-pytest
+BuildPreReq: python3-devel python3-module-setuptools python3-module-Cython python3-module-pytest
 
 %description
 HTTP Headers and URL query string require specific data structure: multidict.
@@ -45,6 +45,9 @@ rm -f multidict/_istr.cpython-35m-x86_64-linux-gnu.so
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.1.3-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Nov 19 2017 Anton Midyukov <antohami@altlinux.org> 3.1.3-alt1
 - New version 3.1.3
 
