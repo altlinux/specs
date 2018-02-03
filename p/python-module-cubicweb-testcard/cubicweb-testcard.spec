@@ -1,7 +1,7 @@
 %define oname cubicweb-testcard
 Name: python-module-%oname
 Version: 0.5.0
-Release: alt1
+Release: alt1.1
 Summary: Test card extension for CubicWeb application based on the tracker cube
 License: LGPL
 Group: Development/Python
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 BuildPreReq: python-module-cubicweb-card python-module-markdown
 BuildPreReq: python-module-cubicweb-tracker
 BuildPreReq: python-module-cubicweb-comment
@@ -46,6 +46,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.5.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1
 - Initial build for Sisyphus
 
