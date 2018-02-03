@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.11.1
-Release: alt1
+Release: alt1.1
 Summary: Mustache templating language renderer
 License: MIT
 Group: Development/Python
@@ -14,10 +14,10 @@ Url: https://pypi.python.org/pypi/chevron/
 
 Source: %oname-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -77,6 +77,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.11.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Dec 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.11.1-alt1
 - Updated to upstream version 0.11.1.
 
