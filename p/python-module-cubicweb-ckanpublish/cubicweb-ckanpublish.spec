@@ -1,7 +1,7 @@
 %define oname cubicweb-ckanpublish
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1
+Release: alt1.1
 Summary: Publish data to a CKAN instance
 License: LGPL
 Group: Development/Python
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 BuildPreReq: python-module-requests
 
 Requires: cubicweb
@@ -38,6 +38,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1
 - Initial build for Sisyphus
 
