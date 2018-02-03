@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4
-Release: alt1
+Release: alt1.1
 Summary: Geospatial extension to SQLAlchemy with PostGIS support
 License: MIT
 Group: Development/Python
@@ -18,11 +18,11 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-mock
-BuildRequires: python-module-flake8 python-module-psycopg2 python-module-pytest-cov python-module-setuptools-tests
+BuildRequires: python-module-flake8 python-module-psycopg2 python-module-pytest-cov python-module-setuptools
 BuildRequires: python-module-SQLAlchemy python-module-shapely
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flake8 python3-module-psycopg2 python3-module-pytest-cov python3-module-setuptools-tests
+BuildRequires: python3-module-flake8 python3-module-psycopg2 python3-module-pytest-cov python3-module-setuptools
 BuildRequires: python3-module-SQLAlchemy python3-module-shapely
 %endif
 
@@ -120,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.4-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Aug 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4-alt1
 - Updated to upstream version 0.4.
 
