@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 1.11.0
-Release: alt1
+Release: alt1.1
 Summary: A collection of Python deprecation patterns and strategies
 Group: Development/Python
 
@@ -17,7 +17,7 @@ BuildArch: noarch
 %py_requires funcsigs
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-six >= 1.9.0
@@ -31,7 +31,7 @@ BuildRequires: python-module-reno >= 1.8.0
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-d2to1
 BuildRequires: python3-module-six >= 1.9.0
@@ -142,6 +142,9 @@ popd
 %doc LICENSE
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.11.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Apr 28 2017 Alexey Shabalin <shaba@altlinux.ru> 1.11.0-alt1
 - 1.11.0
 - add tests package
