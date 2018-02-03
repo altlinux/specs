@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.5
-Release: alt1
+Release: alt1.1
 
 Summary: A unittest-based testing framework for python that makes writing and running tests easier
 
@@ -21,7 +21,7 @@ Source: %name-%version.tar
 BuildRequires: python-module-setuptools python-module-coverage
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools-tests
+BuildPreReq: python3-module-setuptools
 BuildRequires: python3-devel python3-module-coverage
 %endif
 
@@ -83,5 +83,8 @@ rm -f %buildroot%_bindir/nosetests
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.6.5-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 22 2016 Andrey Cherepanov <cas@altlinux.org> 0.6.5-alt1
 - Initial build in Sisyphus
