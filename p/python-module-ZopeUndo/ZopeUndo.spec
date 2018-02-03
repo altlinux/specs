@@ -6,7 +6,7 @@ BuildRequires: unzip
 
 Name: python-module-%oname
 Version: 4.1
-Release: alt1
+Release: alt1.1
 Summary: ZODB undo support for Zope2
 License: ZPLv2.1
 Group: Development/Python
@@ -17,7 +17,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/ce/40/51bc73896bdc23e1e16db55530c54f293d40d0a2c41e5a79efd4ea66dc1c/%{oname}-%{version}.zip
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
@@ -116,6 +116,9 @@ python setup.py test
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1
 - automated PyPI update
 
