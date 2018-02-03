@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++
 %define _localstatedir %{_var}
 Name:		npush
 Version:	0.7
-Release:	alt2_18
+Release:	alt2_19
 Summary:	A logic game similar to Sokoban
 
 Group:		Games/Other
@@ -72,6 +72,9 @@ install -p -m 0644 %{name}.png				\
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.7-alt2_19
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.7-alt2_18
 - update to new release by fcimport
 
