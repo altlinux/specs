@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.13.0
-Release: alt2
+Release: alt2.1
 Summary: Software forge component for the CubicWeb framework
 License: LGPL
 Group: Development/Python
@@ -14,7 +14,7 @@ Url: https://pypi.python.org/pypi/cubicweb-forge/
 
 Source: %oname-%version.tar
 
-BuildRequires: python-module-setuptools-tests cubicweb
+BuildRequires: python-module-setuptools cubicweb
 BuildRequires: python-module-Pillow python-module-markdown
 BuildRequires: python-module-cubicweb-card
 BuildRequires: python-module-cubicweb-comment
@@ -82,6 +82,9 @@ python setup.py test
 %python_sitelibdir/*/test*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.13.0-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.13.0-alt2
 - Disabled tests.
 
