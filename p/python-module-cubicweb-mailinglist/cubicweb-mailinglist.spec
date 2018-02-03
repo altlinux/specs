@@ -2,7 +2,7 @@
 %define oname cubicweb-mailinglist
 Name: python-module-%oname
 Version: 1.7.3
-Release: alt1
+Release: alt1.1
 Summary: Mailing-list component for the CubicWeb framework
 License: LGPL
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/6f/08/b49e521ec387f5c8d563aa88e141c0095317d262847704d7a6dbf180f019/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests cubicweb
+BuildPreReq: python-module-setuptools cubicweb
 BuildPreReq: python-module-cubicweb-sioc python-module-markdown
 
 Requires: cubicweb python-module-cubicweb-sioc
@@ -42,6 +42,9 @@ python setup.py test
 %_datadir/cubicweb/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.7.3-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt1
 - automated PyPI update
 
