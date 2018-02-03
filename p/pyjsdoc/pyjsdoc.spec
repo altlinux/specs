@@ -1,6 +1,6 @@
 Name: pyjsdoc
 Version: 0.9.1
-Release: alt1
+Release: alt1.1
 Summary: Python port of JSDoc
 License: MIT / ASLv2.0
 Group: Development/Python
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/3f/f9/6c418982612418f7740bbe72659275ffe47da3d3c608aad804cdc5b776a2/PyJSDoc-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-cjson
+BuildPreReq: python-module-setuptools python-module-cjson
 
 %py_requires cjson
 
@@ -39,6 +39,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1
 - automated PyPI update
 
