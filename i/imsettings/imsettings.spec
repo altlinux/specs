@@ -6,8 +6,8 @@ BuildRequires: /usr/bin/desktop-file-validate /usr/bin/gtkdocize gcc-c++ glib2-d
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		imsettings
-Version:	1.7.2
-Release:	alt1_5
+Version:	1.7.3
+Release:	alt1_2
 License:	LGPLv2+
 URL:		https://tagoh.bitbucket.org/%{name}/
 BuildRequires:	desktop-file-utils
@@ -28,6 +28,8 @@ Patch1:		%{name}-disable-xim.patch
 Patch2:		%{name}-xinput-xcompose.patch
 ## Fedora specific: Force enable the IM management on imsettings for Cinnamon
 Patch3:		%{name}-force-enable-for-cinnamon.patch
+## https://bugzilla.redhat.com/show_bug.cgi?id=1533079
+Patch4:		%{name}-fix-unbound-var.patch
 
 Summary:	Delivery framework for general Input Method configuration
 Group:		System/Base
@@ -61,7 +63,7 @@ This package contains the shared library for imsettings.
 Summary:	Development files for imsettings
 Group:		Development/Other
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	pkg-config
+Requires:	pkgconfig
 Requires:	libgio
 
 %description	devel
@@ -143,7 +145,7 @@ This package contains a module to get this working on Xfce.
 Summary:	LXDE support on imsettings
 Group:		System/Base
 Requires:	%{name} = %{version}-%{release}
-Requires:	lxde-lxsession
+Requires:	lxde-settings-daemon
 # Hack for upgrades: see https://bugzilla.redhat.com/show_bug.cgi?id=693809
 Requires:	lxde-lxsession
 Requires:	/usr/bin/lxsession
@@ -197,10 +199,11 @@ This package contains a module to get this working on Cinnamon.
 
 %prep
 %setup -q
-%patch0 -p1 -b .0-lang
-%patch1 -p1 -b .1-xim
-%patch2 -p1 -b .2-xcompose
-%patch3 -p1 -b .3-force-cinnamon
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 autoreconf -f
@@ -250,7 +253,8 @@ EOF
 %_altdir/xinputrc_imsettings
 %_altdir/xinputrc_imsettings
 %_altdir/xinputrc_imsettings
-%doc AUTHORS COPYING ChangeLog NEWS README
+%doc --no-dereference COPYING
+%doc AUTHORS ChangeLog NEWS README
 %dir %{_libdir}/imsettings
 %{_bindir}/imsettings-info
 %{_bindir}/imsettings-list
@@ -269,11 +273,13 @@ EOF
 %{_mandir}/man1/imsettings-*.1*
 
 %files	libs
-%doc AUTHORS COPYING ChangeLog NEWS README
+%doc --no-dereference COPYING
+%doc AUTHORS ChangeLog NEWS README
 %{_libdir}/libimsettings.so.*
 
 %files	devel
-%doc AUTHORS COPYING ChangeLog NEWS README
+%doc --no-dereference COPYING
+%doc AUTHORS ChangeLog NEWS README
 %{_includedir}/imsettings
 %{_libdir}/libimsettings.so
 %{_libdir}/pkgconfig/imsettings.pc
@@ -282,38 +288,48 @@ EOF
 %{_datadir}/gtk-doc/html/imsettings
 
 %files	xim
-%doc AUTHORS COPYING ChangeLog NEWS README
+%doc --no-dereference COPYING
+%doc AUTHORS ChangeLog NEWS README
 %{_bindir}/imsettings-xim
 %{_libdir}/imsettings/libimsettings-xim.so
 
 %files	gsettings
-%doc AUTHORS COPYING ChangeLog NEWS README
+%doc --no-dereference COPYING
+%doc AUTHORS ChangeLog NEWS README
 %{_libdir}/imsettings/libimsettings-gsettings.so
 
 %files	qt
-%doc AUTHORS COPYING ChangeLog NEWS README
+%doc --no-dereference COPYING
+%doc AUTHORS ChangeLog NEWS README
 %{_libdir}/imsettings/libimsettings-qt.so
 
 %if !0%{?rhel}
 %files	xfce
-%doc AUTHORS COPYING ChangeLog NEWS README
+%doc --no-dereference COPYING
+%doc AUTHORS ChangeLog NEWS README
 %{_libdir}/imsettings/libimsettings-xfce.so
 
 %files	lxde
-%doc AUTHORS COPYING ChangeLog NEWS README
+%doc --no-dereference COPYING
+%doc AUTHORS ChangeLog NEWS README
 %{_libdir}/imsettings/libimsettings-lxde.so
 
 %files	mate
-%doc AUTHORS COPYING ChangeLog NEWS README
+%doc --no-dereference COPYING
+%doc AUTHORS ChangeLog NEWS README
 %{_libdir}/imsettings/libimsettings-mate-gsettings.so
 
 %files cinnamon
-%doc AUTHORS COPYING ChangeLog NEWS README
+%doc --no-dereference COPYING
+%doc AUTHORS ChangeLog NEWS README
 %{_libdir}/imsettings/libimsettings-cinnamon-gsettings.so
 %endif
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt1_2
+- update to new release by fcimport
+
 * Fri Nov 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.7.2-alt1_5
 - update to new version by fcimport
 
