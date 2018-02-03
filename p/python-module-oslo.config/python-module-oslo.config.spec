@@ -4,7 +4,7 @@
 
 Name:       python-module-%oname
 Version:    3.22.1
-Release:    alt1
+Release:    alt1.1
 Summary:    OpenStack common configuration library
 
 Group:      Development/Python
@@ -19,7 +19,7 @@ Obsoletes: python-module-oslo-config < %EVR
 %py_provides oslo
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-six >= 1.9.0
@@ -38,7 +38,7 @@ BuildRequires: python-module-mock >= 2.0
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.3
 BuildRequires: python3-module-d2to1
 BuildRequires: python3-module-six >= 1.9.0
@@ -160,6 +160,9 @@ popd
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.22.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 3.22.1-alt1
 - 3.22.1
 
