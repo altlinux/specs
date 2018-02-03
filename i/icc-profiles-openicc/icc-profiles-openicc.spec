@@ -2,7 +2,7 @@
 %define _localstatedir %{_var}
 Name:           icc-profiles-openicc
 Version:        1.3.1
-Release:        alt2_12
+Release:        alt2_13
 Summary:        The OpenICC profiles
 
 Group:          Graphics
@@ -37,6 +37,7 @@ make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/{pixmaps,mime/packages}
 
 install -pm 0644 *.png $RPM_BUILD_ROOT%{_datadir}/pixmaps
+
 
 
 %files
@@ -80,6 +81,9 @@ install -pm 0644 *.png $RPM_BUILD_ROOT%{_datadir}/pixmaps
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt2_13
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt2_12
 - update to new release by fcimport
 
