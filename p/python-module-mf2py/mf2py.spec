@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.5
-Release: alt1.git20170715
+Release: alt1.git20170715.1
 Summary: Python Microformats2 parser
 License: MIT
 Group: Development/Python
@@ -14,15 +14,17 @@ Url: https://pypi.python.org/pypi/mf2py/
 # https://github.com/tommorris/mf2py.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-requests
 BuildRequires: python-module-BeautifulSoup4 python-module-nose
 BuildRequires: python-module-gunicorn
+BuildRequires: python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-BeautifulSoup4 python3-module-nose
+BuildRequires: python3-module-mock
 %endif
 
 %py_provides %oname
@@ -96,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.5-alt1.git20170715.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.5-alt1.git20170715
 - Updated to current upstream version.
 
