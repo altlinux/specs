@@ -1,7 +1,7 @@
 %define oname flickrapi
 Name: python-module-%oname
 Version: 1.4.4
-Release: alt1
+Release: alt1.1
 Summary: The official Python interface to the Flickr API
 License: Python
 Group: Development/Python
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools
 BuildPreReq: python-module-docutils
 BuildPreReq: python-module-sphinx-devel
 BuildPreReq: python-module-epydoc
@@ -57,6 +57,9 @@ install -p -m644 README UPGRADING \
 %doc doc/apidoc/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4.4-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Oct 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.4-alt1
 - Initial build for Sisyphus
 
