@@ -5,7 +5,7 @@
 Summary: Suite of tools and fixtures to manage daemons for testing
 Name: python-module-%oname
 Version: 1.3.1
-Release: alt1
+Release: alt1.1
 Url: https://github.com/jd/pifpaf
 Source: %oname-%version.tar.gz
 License: Apache
@@ -13,7 +13,7 @@ Group: Development/Python
 
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools-tests python-module-pbr
+BuildRequires: python-devel python-module-setuptools python-module-pbr
 BuildRequires: python-module-cliff
 BuildRequires: python-module-jinja2
 BuildRequires: python-module-six
@@ -21,7 +21,7 @@ BuildRequires: python-module-fixtures
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests python3-module-pbr
+BuildRequires: python3-devel python3-module-setuptools python3-module-pbr
 BuildRequires: python3-module-cliff
 BuildRequires: python3-module-jinja2
 BuildRequires: python3-module-six
@@ -110,5 +110,8 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Jun 16 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.1-alt1
 - initial build
