@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++
 %define _localstatedir %{_var}
 Name:           arrows
 Version:        0.6
-Release:        alt3_21
+Release:        alt3_22
 Summary:        Neat little maze game
 Group:          Games/Other
 License:        GPLv2+
@@ -51,6 +51,9 @@ install -p -m 644 %{SOURCE2}\
 %{_datadir}/icons/hicolor/24x24/apps/%{name}.png
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_22
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_21
 - update to new release by fcimport
 
