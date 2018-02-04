@@ -1,7 +1,7 @@
 %define oname portal
 Name: python-module-%oname
 Version: 0.3.1
-Release: alt1.git20130627
+Release: alt1.git20130627.1
 Summary: Portal - Apple's Provisioning Portal API and CLI
 License: MIT
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools
 
 %py_provides %oname
 
@@ -40,6 +40,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.1-alt1.git20130627.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Oct 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1.git20130627
 - Initial build for Sisyphus
 
