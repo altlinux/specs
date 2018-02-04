@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.5
-Release: alt1.dev.git20140505.2
+Release: alt1.dev.git20140505.2.1
 Summary: parse_type extends the parse module (opposite of string.format())
 License: BSD
 Group: Development/Python
@@ -14,7 +14,7 @@ Url: https://pypi.python.org/pypi/parse_type/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-parse python-module-six
 BuildPreReq: python-module-enum34 python-module-coverage
 BuildPreReq: python-module-pytest-cov python-module-pytest-runner
@@ -22,7 +22,7 @@ BuildPreReq: python-module-tox python-module-argparse
 BuildPreReq: python-module-ordereddict
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-parse python3-module-six
 BuildPreReq: python3-module-enum34 python3-module-coverage
 BuildPreReq: python3-module-pytest-cov python3-module-pytest-runner
@@ -88,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.5-alt1.dev.git20140505.2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.5-alt1.dev.git20140505.2
 - Fixed build.
 
