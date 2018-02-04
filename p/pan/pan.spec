@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-validate gcc-c++ pkgconfig(gcr-3) pkgconfig(gtk+-3.0) pkgconfig(gtkspell3-3.0) pkgconfig(libsecret-1) pkgconfig(webkitgtk-3.0) pkgconfig(zlib)
+BuildRequires: /usr/bin/desktop-file-validate gcc-c++ pkgconfig(gcr-3) pkgconfig(gmime-3.0) pkgconfig(gtk+-3.0) pkgconfig(gtkspell3-3.0) pkgconfig(libsecret-1) pkgconfig(webkitgtk-3.0) pkgconfig(zlib)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary:	A Usenet newsreader for GNOME/GTK+
 Name:		pan
-Version:	0.142
-Release:	alt1_3
+Version:	0.144
+Release:	alt1_1
 Epoch:		1
 License:	GPLv2
 Group:		Networking/WWW
@@ -64,13 +64,17 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %files -f %{name}.lang
 %doc AUTHORS NEWS README
-%doc COPYING
+%doc --no-dereference COPYING COPYING-DOCS
 %{_bindir}/%{name}
-%{_datadir}/pixmaps/*
+%{_datadir}/icons/hicolor/*/apps/pan.png
 %{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
+%{_mandir}/man1/pan.1*
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.144-alt1_1
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.142-alt1_3
 - update to new release by fcimport
 
