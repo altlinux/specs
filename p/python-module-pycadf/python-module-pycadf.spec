@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.5.0
-Release: alt1
+Release: alt1.1
 Summary: DMTF Cloud Audit (CADF) data model
 
 Group: Development/Python
@@ -15,7 +15,7 @@ Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr
 BuildRequires: python-module-sphinx >= 1.1.2
 BuildRequires: python-module-oslosphinx >= 2.5.0
@@ -30,7 +30,7 @@ BuildRequires: python-module-debtcollector >= 1.2.0
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr
 BuildRequires: python3-module-oslo.config >= 3.14.0
 BuildRequires: python3-module-oslo.serialization >= 1.10.0
@@ -130,6 +130,9 @@ mv %buildroot/usr/etc/%oname %buildroot%_sysconfdir
 %doc html
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon May 29 2017 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt1
 - 2.5.0
 - add test packages
