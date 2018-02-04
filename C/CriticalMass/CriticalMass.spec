@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libGL-devel libSDL-devel zl
 %define _localstatedir %{_var}
 Name:           CriticalMass
 Version:        1.5
-Release:        alt2_19
+Release:        alt2_20
 Summary:        SDL/OpenGL space shoot'em up game also known as critter
 Group:          Games/Other
 License:        GPLv2+
@@ -17,8 +17,8 @@ Patch1:         CriticalMass-1.5-libpng15.patch
 Patch2:         CriticalMass-1.5-gcc47.patch
 Patch3:         CriticalMass-1.5-cflags.patch
 Patch4:         CriticalMass-1.5-gcc6.patch
-BuildRequires:  libSDL_image-devel libSDL_mixer-devel libpng-devel libcurl-devel
-BuildRequires:  tinyxml-devel desktop-file-utils libtool-common
+BuildRequires:  libSDL_image-devel libSDL_mixer-devel libpng-devel curl-devel
+BuildRequires:  tinyxml-devel desktop-file-utils libtool
 Requires:       icon-theme-hicolor opengl-games-utils
 # Also known as critter, so make "yum install critter" work
 Provides:       critter = %{version}-%{release}
@@ -105,7 +105,7 @@ EOF
 
 %files
 %doc Readme.html TODO
-%doc COPYING
+%doc --no-dereference COPYING
 %{_bindir}/critter*
 %{_datadir}/Critical_Mass
 %{_mandir}/man6/critter.6*
@@ -114,6 +114,9 @@ EOF
 %{_datadir}/icons/hicolor/256x256/apps/critter.png
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_20
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_19
 - update to new release by fcimport
 
