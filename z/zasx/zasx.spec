@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools gcc-c++ unzip
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           zasx
 Version:        1.30
-Release:        alt2_23
+Release:        alt2_24
 Summary:        Asteroid like game with powerups
 Group:          Games/Other
 License:        GPLv2+ and Freely redistributable without restriction
@@ -15,7 +15,7 @@ Source1:        zasx.desktop
 Patch0:         zasx-1.30-fixes.patch
 Patch1:         zasx-1.30-datadir.patch
 Patch2:         zasx-1.30-format-security.patch
-BuildRequires:  dumb-devel ImageMagick desktop-file-utils
+BuildRequires:  dumb-devel ImageMagick-tools desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -55,7 +55,6 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
 install -p -m 644 %{name}.png \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
 
-
 %files
 %doc copying.txt readme.txt html
 %{_bindir}/%{name}
@@ -65,6 +64,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.30-alt2_24
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.30-alt2_23
 - update to new release by fcimport
 
