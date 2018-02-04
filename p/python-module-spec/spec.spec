@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.4.0
-Release: alt1
+Release: alt1.1
 Summary: Specification-style output for nose
 License: MIT
 Group: Development/Python
@@ -15,10 +15,10 @@ Url: https://pypi.python.org/pypi/spec/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-module-django python-module-nose python-module-setuptools-tests python-module-six python-module-nose
+BuildRequires: python-module-django python-module-nose python-module-setuptools python-module-six python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-django python3-module-nose python3-module-setuptools-tests python3-module-six python3-module-nose
+BuildRequires: python3-module-django python3-module-nose python3-module-setuptools python3-module-six python3-module-nose
 %endif
 
 %py_provides %oname
@@ -88,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.0-alt1
 - Updated to upstream version 1.4.0.
 
