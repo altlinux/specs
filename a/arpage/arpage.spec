@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize gcc-c++ pk
 
 Name:		arpage
 Version:	0.3.3
-Release:	alt3_23
+Release:	alt3_24
 Summary:	A JACK MIDI arpeggiator
 
 Group:		Sound
@@ -25,9 +25,9 @@ BuildRequires:	libjack-devel
 BuildRequires:	libgtkmm2-devel
 BuildRequires:	intltool libxml++2-devel
 BuildRequires:	desktop-file-utils
-BuildRequires:	libtool-common
-BuildRequires:	automake-common
-BuildRequires:	autoconf-common
+BuildRequires:	libtool
+BuildRequires:	automake
+BuildRequires:	autoconf
 Source44: import.info
 
 %description
@@ -67,7 +67,6 @@ mkdir -p %{buildroot}/%{_datadir}/icons/hicolor/32x32/apps
 install -m 644 %{_builddir}/%{name}-%{version}/src/arpage.png %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/
 
 
-
 %files
 %doc COPYING ChangeLog AUTHORS README INSTALL NEWS
 %{_bindir}/%{name}
@@ -77,6 +76,9 @@ install -m 644 %{_builddir}/%{name}-%{version}/src/arpage.png %{buildroot}%{_dat
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt3_24
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt3_23
 - update to new release by fcimport
 
