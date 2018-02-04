@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.1.1
-Release: alt1
+Release: alt1.1
 Summary: py.test fixture for benchmarking code
 License: BSD
 Group: Development/Python
@@ -15,7 +15,7 @@ Url: https://pypi.python.org/pypi/pytest-benchmark/
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-tests.patch
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-pytest-cov
 BuildRequires: python-module-sphinx-devel
 BuildRequires: python-module-sphinxcontrib-napoleon
@@ -25,9 +25,10 @@ BuildRequires: python2.7(cpuinfo) python2.7(pathlib) python2.7(statistics)
 BuildRequires: python2.7(elasticsearch) python2.7(freezegun) python2.7(pygal) python2.7(aspectlib) python2.7(xdist)
 BuildRequires: git-core
 BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pytest-cov
 BuildRequires: python3(cpuinfo)
 BuildRequires: python3(elasticsearch) python3(freezegun) python3(pygal) python3(aspectlib) python3(xdist)
@@ -147,6 +148,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.1.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Nov 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.1-alt1
 - Updated to upstream version 3.1.1.
 
