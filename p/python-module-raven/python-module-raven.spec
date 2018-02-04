@@ -3,7 +3,7 @@
 
 Name: python-module-raven
 Version: 5.32.0
-Release: alt1
+Release: alt1.1
 Summary: Python client for Sentry
 
 License: BSD
@@ -16,9 +16,9 @@ BuildArch: noarch
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 %py_provides %oname
 %add_findreq_skiplist %python_sitelibdir/%oname/contrib/zope/*
 
@@ -100,6 +100,9 @@ popd
 %_bindir/%oname
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 5.32.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Jan 15 2017 Anton Midyukov <antohami@altlinux.org> 5.32.0-alt1
 - New version 5.32.0
 
