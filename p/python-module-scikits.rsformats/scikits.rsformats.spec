@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.1.1
+Release: alt2.1.1.1
 %define mname scikits
 %define oname %mname.rsformats
 
@@ -19,11 +19,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # which from http://svn.scipy.org/svn/scikits/trunk (don't work now)
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-pyparsing libnumpy-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-pyparsing libnumpy-py3-devel
 BuildPreReq: python-tools-2to3
 %endif
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:0.1-alt2.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:0.1-alt2.1.1
 - (AUTO) subst_x86_64.
 
