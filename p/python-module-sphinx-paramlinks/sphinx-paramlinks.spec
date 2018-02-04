@@ -2,7 +2,7 @@
 %define oname sphinx-paramlinks
 Name: python-module-%oname
 Version: 0.3.2
-Release: alt1
+Release: alt1.1
 Summary: Allows param links in Sphinx function/method descriptions to be linkable
 License: MIT
 Group: Development/Python
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source0: https://pypi.python.org/packages/68/66/35fd8994e7c380f0272af0fc4b729272fd61a5f209a5ca4b2ee38d92ca68/%{oname}-%{version}.tar.gz
 
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools
 BuildArch: noarch
 
 %py_provides sphinx_paramlinks
@@ -40,6 +40,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1
 - automated PyPI update
 
