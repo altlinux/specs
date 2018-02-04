@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.67.1
-Release: alt2.git20100929
+Release: alt2.git20100929.1
 Summary: Environmental time series manipulation
 License: BSD
 Group: Development/Python
@@ -16,7 +16,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/pierregm/scikits.hydroclimpy.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests libnumpy-devel gcc-fortran
+BuildPreReq: python-module-setuptools libnumpy-devel gcc-fortran
 BuildPreReq: python-module-scipy python-module-matplotlib
 BuildPreReq: python-module-nose python-module-scikits.timeseries
 BuildPreReq: python-module-pysqlite python-module-xlrd
@@ -122,6 +122,9 @@ python setup.py test
 %files tests -f %oname.tests
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:0.67.1-alt2.git20100929.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.67.1-alt2.git20100929
 - Rebuilt with updated NumPy
 
