@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.15
-Release: alt1
+Release: alt1.1
 Summary: Python Netlink library
 Group: Development/Python
 License: GPLv2+, ASL 2.0
@@ -14,12 +14,12 @@ BuildArch: noarch
 
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 %endif
 
 %description
@@ -111,5 +111,8 @@ popd
 %doc docs/html examples
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.4.15-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jun 06 2017 Alexey Shabalin <shaba@altlinux.ru> 0.4.15-alt1
 - Initial package.
