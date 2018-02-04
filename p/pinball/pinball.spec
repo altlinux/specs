@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install cppunit-devel gcc-c++ imake libSDL-
 %define _localstatedir %{_var}
 Name:           pinball
 Version:        0.3.2
-Release:        alt1_7
+Release:        alt1_8
 Summary:        Emilia 3D Pinball Game
 # core license is GPL+
 # gnu table licenses are (GFDL or Free Art or CC-BY-SA) and GPLv3 and CC-BY-SA
@@ -18,7 +18,7 @@ Source1:        %{name}.appdata.xml
 BuildRequires:  libXt-devel libfreeglut-devel libSDL_image-devel libSDL_mixer-devel
 BuildRequires:  libpng-devel libvorbis-devel libltdl7-devel
 BuildRequires:  desktop-file-utils libappstream-glib
-BuildRequires:  autoconf-common automake-common libtool-common
+BuildRequires:  autoconf automake libtool
 Requires:       icon-theme-hicolor opengl-games-utils timidity-instruments
 Source44: import.info
 
@@ -65,10 +65,9 @@ install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/appdata
 appstream-util validate-relax --nonet \
   $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
-
 %files
 %doc README ChangeLog
-%doc COPYING
+%doc --no-dereference COPYING
 %{_bindir}/%{name}*
 %{_libdir}/%{name}
 %{_datadir}/%{name}
@@ -78,6 +77,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_8
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_7
 - update to new release by fcimport
 
