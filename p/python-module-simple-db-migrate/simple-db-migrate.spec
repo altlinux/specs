@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.2.0
-Release: alt2.git20150114
+Release: alt2.git20150114.1
 Summary: Database versioning and migration tool inspired on Rails Migrations
 License: ASLv2.0
 Group: Development/Python
@@ -16,12 +16,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-nose python-module-coverage
 BuildPreReq: python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-nose python3-module-coverage
 BuildPreReq: python3-module-mock
 BuildPreReq: python-tools-2to3
@@ -116,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.2.0-alt2.git20150114.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt2.git20150114
 - Fixed build
 
