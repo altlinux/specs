@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           worminator
 Version:        3.0R2.1
-Release:        alt2_26
+Release:        alt2_27
 Summary:        Sidescrolling platform and shoot'em up action-game
 Group:          Games/Other
 License:        GPLv2+
@@ -49,7 +49,6 @@ desktop-file-install                           \
         --dir ${RPM_BUILD_ROOT}%{_datadir}/applications         \
         %{SOURCE2}
 
-
 %files
 %doc ReadMe.txt changes.unix license.txt license-change.txt
 %{_bindir}/%{name}
@@ -58,6 +57,9 @@ desktop-file-install                           \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 3.0R2.1-alt2_27
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 3.0R2.1-alt2_26
 - update to new release by fcimport
 
