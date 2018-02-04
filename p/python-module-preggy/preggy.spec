@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.3
-Release: alt3.git20141002
+Release: alt3.git20141002.1
 Summary: preggy is an assertion library for Python. (What were you ``expect()``ing?)
 License: MIT
 Group: Development/Python
@@ -14,10 +14,10 @@ Url: https://pypi.python.org/pypi/preggy/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-module-coverage python-module-nose python-module-setuptools-tests python-module-six python-module-tox python-module-unidecode 
+BuildRequires: python-module-coverage python-module-nose python-module-setuptools python-module-six python-module-tox python-module-unidecode 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires:  python3-module-coverage python3-module-nose python3-module-setuptools-tests python3-module-six python3-module-tox python3-module-unidecode
+BuildRequires:  python3-module-coverage python3-module-nose python3-module-setuptools python3-module-six python3-module-tox python3-module-unidecode
 %endif
 
 %py_provides %oname
@@ -79,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.3-alt3.git20141002.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Aug 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.3-alt3.git20141002
 - Fixed build.
 
