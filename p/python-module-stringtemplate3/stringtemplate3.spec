@@ -1,7 +1,7 @@
 %define oname stringtemplate3
 Name: python-module-%oname
 Version: 3.1
-Release: alt1.1
+Release: alt1.1.1
 Summary: A powerful template engine with strict model-view separation
 License: BSD
 Group: Development/Python
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-antlr
+BuildPreReq: python-module-setuptools python-module-antlr
 
 %py_provides %oname
 Requires: python-module-antlr
@@ -37,6 +37,9 @@ developing jGuru.com.
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.1-alt1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1.1
 - NMU: fixed deps on antlr
 
