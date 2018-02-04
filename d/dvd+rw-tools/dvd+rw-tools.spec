@@ -2,23 +2,30 @@
 
 Name: dvd+rw-tools
 Version: 7.1
-Release: alt1.qa1.1
+Release: alt2
+
 Summary: Toolchain for mastering recordable DVD media
 License: %gpl2plus
 Group: Archiving/Cd burning
 Url: http://fy.chalmers.se/~appro/linux/DVD+RW
+
 Source: %url/tools/%name-%version.tar
 Patch1: %name-5.17.4.8.6-alt-setmntent.patch
 Patch2: %name-5.17.4.8.6-alt-subfs.patch
 Patch3: %name-6.0-alt-umount.patch
 Patch4: %name-7.0-gentoo-limitschange.patch
 # FC
-Patch10: dvd+rw-tools-7.0-dvddl.patch
-Patch11: dvd+rw-tools-7.0-reload.patch
-Patch12: dvd+rw-tools-7.0-wctomb.patch
-Patch13: dvd+rw-tools-7.0-wexit.patch
-Patch14: dvd+rw-tools-7.1-lastshort.patch
-Patch15: dvd+rw-tools-7.1-noevent.patch
+Patch11: dvd+rw-tools-7.0.manpatch
+Patch12: dvd+rw-tools-7.0-wexit.patch
+Patch13: dvd+rw-tools-7.0-glibc2.6.90.patch
+Patch14: dvd+rw-tools-7.0-reload.patch
+Patch15: dvd+rw-tools-7.0-wctomb.patch
+Patch16: dvd+rw-tools-7.0-dvddl.patch
+Patch17: dvd+rw-tools-7.1-noevent.patch
+Patch18: dvd+rw-tools-7.1-lastshort.patch
+Patch19: dvd+rw-tools-7.1-format.patch
+Patch20: dvd+rw-tools-7.1-bluray_srm+pow.patch
+Patch21: dvd+rw-tools-7.1-bluray_pow_freespace.patch
 
 Requires(pre): dvdrwtools-control >= 1.2-alt2
 Requires: mkisofs >= 1.10
@@ -40,30 +47,33 @@ Collection of tools to master DVD+RW/+R/-R/-RW media.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch10 -p0
-%patch11 -p1
-%patch12 -p0
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
+# fc
+%patch11 -p1 -b .manpatch
+%patch12 -p1 -b .wexit
+%patch13 -p1 -b .glibc2.6.90
+%patch14 -p1 -b .reload
+%patch15 -p0 -b .wctomb
+%patch16 -p0 -b .dvddl
+%patch17 -p1 -b .noevent
+%patch18 -p1 -b .lastshort
+%patch19 -p1 -b .format
+%patch20 -p1 -b .pow
+%patch21 -p1 -b .freespace
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %make_build CFLAGS="%optflags" CXXFLAGS="%optflags"
-
 
 %install
 install -d -m 0755 %buildroot{%_bindir,%_man1dir}
 install -p -m700 %binaries %buildroot%_bindir/
 install -p -m644 growisofs.1 %buildroot%_man1dir/
 
-
 %pre
 %pre_control %binaries
 
-
 %post
 %post_control %binaries
-
 
 %files
 %_bindir/*
@@ -72,6 +82,9 @@ install -p -m644 growisofs.1 %buildroot%_man1dir/
 
 
 %changelog
+* Sun Feb 04 2018 Yuri N. Sedunov <aris@altlinux.org> 7.1-alt2
+- synced fc patchset with 7.1-24
+
 * Tue Apr 16 2013 Sergey V Turchin <zerg@altlinux.org> 7.1-alt1.qa1.1
 - NMU: sync patches with FC (ALT#28851)
 
@@ -100,7 +113,7 @@ install -p -m644 growisofs.1 %buildroot%_man1dir/
 - Add a trick for proper control set on 2.4 kernels.
 - Fix requires for -control version.
 
-* Sat Feb 24 2006 LAKostis <lakostis at altlinux.ru> 6.1-alt1
+* Fri Feb 24 2006 LAKostis <lakostis at altlinux.ru> 6.1-alt1
 - NMU:
 - updated to 6.1.
 
@@ -248,7 +261,7 @@ install -p -m644 growisofs.1 %buildroot%_man1dir/
 * Thu Feb 27 2003 Andy Polyakov <appro@fy.chalmers.se>
 - growisofs 5.2: brown-bag bug in "LONG WRITE IN PROGRESS" handling
   code fixed.
-* Mon Feb 1 2003 Andy Polyakov <appro@fy.chalmers.se>
+* Sat Feb 1 2003 Andy Polyakov <appro@fy.chalmers.se>
 - code to protect against overburns.
 - progress indicator to display recording velocity.
 - re-make it work under Linux 2.2 kernel.
@@ -260,10 +273,10 @@ install -p -m644 growisofs.1 %buildroot%_man1dir/
 - dvd+rw-format 4.0: support for DVD-RW.
 - growisofs 4.2: workaround for broken DVD+R firmwares (didn't make
   public by itself).
-* Thu Nov 4 2002 Andy Polyakov <appro@fy.chalmers.se>
+* Mon Nov 4 2002 Andy Polyakov <appro@fy.chalmers.se>
 - Minor growisofs update. Uninitialized errno at exit when
   -Z /dev/scd0=image.iso is used.
-* Thu Nov 3 2002 Andy Polyakov <appro@fy.chalmers.se>
+* Sun Nov 3 2002 Andy Polyakov <appro@fy.chalmers.se>
 - Initial packaging. Package version is derived from growisofs,
   dvd+rw-format and dvd+rw-booktype version. 4.0.3.0.3 means
   growisofs 4.0, dvd+rw-format 3.0 dvd+rw-booktype 3.
