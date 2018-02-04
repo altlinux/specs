@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.91.3
-Release: alt2.git20100929
+Release: alt2.git20100929.1
 Summary: Time series manipulation
 License: BSD
 Group: Development/Python
@@ -16,7 +16,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/pierregm/scikits.timeseries.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests libnumpy-devel
+BuildPreReq: python-module-setuptools libnumpy-devel
 BuildPreReq: python-module-scipy python-module-matplotlib
 BuildPreReq: python-module-nose python-module-pygobject3
 BuildPreReq: python-module-pycairo python-module-tables
@@ -99,6 +99,9 @@ python setup.py test
 %doc scikits/timeseries/doc/source/plotting
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:0.91.3-alt2.git20100929.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.91.3-alt2.git20100929
 - Rebuilt with updated NumPy
 
