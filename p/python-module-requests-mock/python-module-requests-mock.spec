@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3.0
-Release: alt1
+Release: alt1.1
 Summary: Mock out responses from the requests package
 License: ASLv2.0
 Group: Development/Python
@@ -14,7 +14,7 @@ Source: %oname-%version.tar.gz
 Patch: requests-mock-alt-fix-urllib3.patch
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-pbr python-module-requests
 BuildPreReq: python-module-six python-module-coverage
 BuildPreReq: python-module-wheel python-module-discover
@@ -24,7 +24,7 @@ BuildPreReq: python-module-urllib3 python-module-mimeparse
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-pbr python3-module-requests
 BuildPreReq: python3-module-six python3-module-coverage
 BuildPreReq: python3-module-wheel python3-module-discover
@@ -168,6 +168,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon May 29 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.0-alt1
 - 1.3.0
 - drop pickle package
