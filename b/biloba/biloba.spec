@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools imake libSDL-devel libX11-devel libXt-devel xorg-cf-files
+BuildRequires: /usr/bin/desktop-file-install imake libSDL-devel libX11-devel libXt-devel xorg-cf-files
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           biloba
 Version:        0.9.3
-Release:        alt2_13
+Release:        alt2_14
 Summary:        A tactical board game
 
 Group:          Games/Other
@@ -14,7 +14,7 @@ URL:            http://biloba.sourceforge.net
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Source1:        biloba.desktop
 
-BuildRequires:  desktop-file-utils ImageMagick libSDL_image-devel libSDL_mixer-devel
+BuildRequires:  desktop-file-utils ImageMagick-tools libSDL_image-devel libSDL_mixer-devel
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -94,6 +94,9 @@ desktop-file-install                    \
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt2_14
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt2_13
 - update to new release by fcimport
 
