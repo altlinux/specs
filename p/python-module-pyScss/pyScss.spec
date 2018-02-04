@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3.5
-Release: alt1
+Release: alt1.1
 Summary: pyScss, a Scss compiler for Python
 License: MIT
 Group: Development/Python
@@ -15,10 +15,10 @@ Source: %name-%version.tar
 Patch1: %oname-%version-alt-build.patch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: libpcre-devel python-module-Pillow python-module-alabaster python-module-docutils python-module-enum34 python-module-html5lib python-module-objects.inv python-module-pathlib python-module-pytest-cov python-module-setuptools-tests time
+BuildRequires: libpcre-devel python-module-Pillow python-module-alabaster python-module-docutils python-module-enum34 python-module-html5lib python-module-objects.inv python-module-pathlib python-module-pytest-cov python-module-setuptools time
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-Pillow python3-module-enum34 python3-module-pathlib python3-module-pytest-cov python3-module-setuptools-tests python3-module-six
+BuildRequires: python3-devel python3-module-Pillow python3-module-enum34 python3-module-pathlib python3-module-pytest-cov python3-module-setuptools python3-module-six
 %endif
 
 %py_provides %oname scss
@@ -137,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.5-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Aug 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.5-alt1
 - Updated to upstream release version 1.3.5.
 
