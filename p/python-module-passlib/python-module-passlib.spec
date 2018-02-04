@@ -6,7 +6,7 @@
 
 Name:		python-module-%oname
 Version:	1.7.1
-Release:	alt1
+Release:	alt1.1
 Summary:	Comprehensive password hashing framework supporting over 20 schemes
 Group:		Development/Python
 License:	BSD and Beerware and Copyright only
@@ -14,13 +14,13 @@ URL:		https://bitbucket.org/ecollins/passlib
 Source0:	https://pypi.python.org/packages/source/p/%oname/%oname-%version.tar.gz
 
 BuildArch:	noarch
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-nose
 BuildRequires: python-module-sphinx-devel
 BuildRequires: python-module-cloud_sptheme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-nose
 %endif
 
@@ -157,6 +157,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.7.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Jun 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1.7.1-alt1
 - 1.7.1
 
