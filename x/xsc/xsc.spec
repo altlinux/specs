@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ imake libXt-devel xorg-cf-f
 %define _localstatedir %{_var}
 Name: xsc
 Version:  1.6
-Release:  alt1_4
+Release:  alt1_5
 Summary: A clone of the old vector graphics video game Star Castle
 
 Group: Games/Other
@@ -53,6 +53,9 @@ install -p -m 644 %{SOURCE2} \
 %{_datadir}/icons/hicolor/32x32/apps/xsc.png
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_5
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_4
 - update to new release by fcimport
 
