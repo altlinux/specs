@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-%define fedora 25
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           seahorse-adventures
 Version:        1.0
-Release:        alt4_18
+Release:        alt4_19
 Summary:        Help barbie the seahorse float on bubbles to the moon
 Group:          Games/Other
 License:        GPL+
@@ -18,7 +18,7 @@ Patch0:         seahorse-adventures-1.0-symlink.patch
 Patch1:         seahorse-adventures-1.0-build.patch
 BuildRequires:  desktop-file-utils
 BuildArch:      noarch
-Requires:       icon-theme-hicolor python-module-pygame fonts-ttf-dejavu
+Requires:       icon-theme-hicolor pygame fonts-ttf-dejavu
 Source44: import.info
 
 %description
@@ -78,6 +78,9 @@ install -p -m 644 data/images/player/right.png \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_19
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_18
 - update to new release by fcimport
 
