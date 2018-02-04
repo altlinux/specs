@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/gconftool-2 ElectricFence gcc-c++ libreadline-devel perl(Text/Wrap.pm)
 # END SourceDeps(oneline)
-%define fedora 25
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           teg
 Version:        0.11.2
-Release:        alt2_39
+Release:        alt2_40
 Summary:        Turn based strategy game
 Group:          Games/Other
 License:        GPLv2
@@ -98,6 +98,9 @@ gconftool-2 --makefile-install-rule \
   %{_sysconfdir}/gconf/schemas/teg.schemas > /dev/null || :
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_40
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_39
 - update to new release by fcimport
 
