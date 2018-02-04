@@ -3,7 +3,7 @@
 
 Name:		python-module-scripttest
 Version:	1.3
-Release:	alt1
+Release:	alt1.1
 Summary:	Helper to test command-line scripts
 
 Group:		Development/Python
@@ -13,10 +13,10 @@ Source0:	%{name}-%{version}.tar.gz
 # Issue preventing build and usage on ext4.
 BuildArch:	noarch
 
-BuildRequires:	python-devel python-module-setuptools-tests
+BuildRequires:	python-devel python-module-setuptools
 
 %if_with python3
-BuildRequires(pre): rpm-build-python3 python3-module-setuptools-tests
+BuildRequires(pre): rpm-build-python3 python3-module-setuptools
 %endif
 
 %description
@@ -74,6 +74,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Jun 04 2017 Lenar Shakirov <snejok@altlinux.ru> 1.3-alt1
 - Version 1.3
 - Python3 enabled
