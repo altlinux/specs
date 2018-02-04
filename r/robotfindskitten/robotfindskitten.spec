@@ -4,18 +4,18 @@ BuildRequires: texinfo
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		robotfindskitten
-Version:	1.7320508.406
-Release:	alt2_15
+Version:	2.7182818.701
+Release:	alt1_1
 Summary:	A game/zen simulation. You are robot. Your job is to find kitten.
 
 Group:		Games/Other
 License:	GPLv2+
 URL:		http://robotfindskitten.org
-Source0:        http://robotfindskitten.org/download/POSIX/robotfindskitten-1.7320508.406.tar.gz
-# Submitted to upstream development list for consideration
+Source0:	http://robotfindskitten.org/download/POSIX/%{name}-%{version}.tar.gz
 Patch0:		robotfindskitten-1.7320508.406-info-direntry.patch
+Patch1:		robotfindskitten-2.7182818.701-nki-makefile.patch
 
-BuildRequires:	libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel glibc-devel makeinfo
+BuildRequires:	libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel glibc-devel makeinfo autoconf automake libtool
 Requires(post):	info info-install
 Requires(preun):info info-install
 Source44: import.info
@@ -28,7 +28,9 @@ ends when robotfindskitten.
 
 %prep
 %setup -q
-%patch0 -p1 -b .info-direntry
+%patch0 -p1
+%patch1 -p1
+autoreconf -i
 
 
 %build
@@ -41,6 +43,7 @@ make -C doc robotfindskitten.info
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
+make -C nki install DESTDIR=$RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/%{_bindir}
 ln -sf ../games/robotfindskitten $RPM_BUILD_ROOT/%{_bindir}/robotfindskitten
 # make install creates this, but we don't need it
@@ -51,10 +54,14 @@ rm -f $RPM_BUILD_ROOT/%{_infodir}/dir
 %doc AUTHORS BUGS ChangeLog COPYING NEWS README
 %{_bindir}/robotfindskitten
 %{_prefix}/games/robotfindskitten
+%{_datadir}/games/%{name}/
 %{_datadir}/info/robotfindskitten.info*
 %{_datadir}/man/man6/robotfindskitten.6*
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.7182818.701-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.7320508.406-alt2_15
 - update to new release by fcimport
 
