@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.4.0
-Release: alt3.git20090722
+Release: alt3.git20090722.1
 Summary: A python module for high quality audio resampling
 License: GPLv2
 Group: Development/Python
@@ -19,14 +19,14 @@ Patch1: %oname-%version-alt-build.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: libsamplerate-devel
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-Cython libnumpy-devel
 BuildRequires: python-module-nose
 BuildRequires: python-module-html5lib python-module-notebook python-module-numpy-testing
 BuildRequires: python-module-alabaster python-module-pytest python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-Cython libnumpy-py3-devel
 BuildRequires: python3-module-nose
 BuildRequires: python3-module-html5lib python3-module-notebook python3-module-numpy-testing
@@ -183,6 +183,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:0.4.0-alt3.git20090722.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Nov 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.4.0-alt3.git20090722
 - Fixed build.
 
