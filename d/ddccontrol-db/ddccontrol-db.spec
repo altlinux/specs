@@ -10,8 +10,9 @@ BuildRequires: /usr/bin/perl
 #%global git_suffix %{git_date}git%{git_short_commit}
 
 Name:             ddccontrol-db
-URL:              http://ddccontrol.sourceforge.net/
-Version:          20170716
+#URL:              http://ddccontrol.sourceforge.net/
+URL:              https://github.com/ddccontrol/ddccontrol-db
+Version:          20171217
 Release:          alt1_2
 #.%{git_suffix}%{?dist}
 # Agreed by usptream to be GPLv2+
@@ -22,7 +23,7 @@ Summary:          DDC/CI control database for ddccontrol
 #Source0:          https://github.com/ddccontrol/%{name}/archive/%{git_commit}.tar.gz#/%{name}-%{version}-%{git_suffix}.tar.gz
 Source0:          https://github.com/ddccontrol/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 # use autopoint instead of gettextize that is interactive tool
-BuildRequires:    gettext gettext-tools gettext-tools libasprintf-devel, libtool-common, intltool, perl(XML/Parser.pm)
+BuildRequires:    gettext gettext-tools gettext-tools libasprintf-devel, libtool, intltool, perl(XML/Parser.pm)
 BuildArch:        noarch
 Source44: import.info
 Patch33: ddccontrol-db-0.4.2-russian.patch
@@ -47,11 +48,14 @@ make install DESTDIR=%{buildroot}
 %find_lang %{name}
 
 %files -f %{name}.lang
-%doc COPYING
+%doc --no-dereference COPYING
 %doc AUTHORS NEWS README.md
 %{_datadir}/%{name}
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 20171217-alt1_2
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 20170716-alt1_2
 - update to new release by fcimport
 
