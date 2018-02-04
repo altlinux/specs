@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:		coco-coq
 Version:	0.1
-Release:	alt4_15
+Release:	alt4_16
 Summary:	Coco Coq in Grostesteing's base, an AGI adventure game
 
 Group:		Games/Other
@@ -70,6 +70,9 @@ install -p -m 0644 %{SOURCE3} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%
 %{_bindir}/coco-coq-wrapper.sh
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.1-alt4_16
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.1-alt4_15
 - update to new release by fcimport
 
