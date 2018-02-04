@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.9.1
-Release: alt1
+Release: alt1.1
 Summary: pytest plugin to check FLAKE8 requirements
 License: BSD
 Group: Development/Python
@@ -14,11 +14,11 @@ Url: https://pypi.python.org/pypi/pytest-isort
 
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(pytest) python2.7(flake8)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(pytest) python3(flake8)
 %endif
 
@@ -78,5 +78,8 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.1-alt1
 - Initial build for ALT.
