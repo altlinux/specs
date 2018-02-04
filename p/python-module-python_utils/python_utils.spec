@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.2.0
-Release: alt1
+Release: alt1.1
 Summary: A module with some convenient utilities not included with the standard Python install
 License: BSD
 Group: Development/Python
@@ -15,12 +15,12 @@ Url: https://pypi.python.org/pypi/python-utils/
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-docs.patch
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-nose python-module-pytest-runner python-module-pytest-cov python-module-pytest-pep8 python-module-pytest-flakes
 BuildRequires: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-nose python3-module-pytest-runner python3-module-pytest-cov python3-module-pytest-pep8 python3-module-pytest-flakes
 %endif
 
@@ -97,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Dec 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.0-alt1
 - Updated to upstream version 2.2.0.
 - Enabled build for python-3.
