@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.0
-Release: alt2.1
+Release: alt2.1.1
 Summary: Python SVG Charting Library
 License: MIT
 Group: Development/Python
@@ -14,17 +14,19 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-cssutils python-module-dateutil
 BuildPreReq: python-module-lxml python-module-six
 BuildPreReq: python-module-pytest-runner python-module-setuptools_scm
 BuildPreReq: python-module-sphinx-devel
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-cssutils python3-module-dateutil
 BuildPreReq: python3-module-lxml python3-module-six
 BuildPreReq: python3-module-pytest-runner python3-module-setuptools_scm
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -162,6 +164,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.0-alt2.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
