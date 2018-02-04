@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name: bombardier
 Version:  0.8.3
-Release:  alt1_5
+Release:  alt1_6
 Summary: The GNU Bombing utility
 
 Group: Games/Other
@@ -56,6 +56,7 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/32x32/apps
 install -p -m 644 %{SOURCE2} \
   %{buildroot}%{_datadir}/icons/hicolor/32x32/apps
 
+
 %files
 %{_bindir}/bombardier
 %doc README DEDICATION COPYING VERSION
@@ -65,6 +66,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt1_6
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt1_5
 - update to new release by fcimport
 
