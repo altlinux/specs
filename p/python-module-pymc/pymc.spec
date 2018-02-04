@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.3.6
-Release: alt1
+Release: alt1.1
 Summary: Markov Chain Monte Carlo sampling toolkit
 License: Academic Free License & BSD
 Group: Development/Python
@@ -17,13 +17,13 @@ Source1: site.cfg
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: gcc-fortran liblapack-devel xvfb-run
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: libnumpy-devel python-module-numpy-testing
 BuildRequires: python-module-pandas-tests python-module-pydot
 BuildRequires: python-module-alabaster python-module-notebook python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: libnumpy-py3-devel python3-module-numpy-testing
 BuildRequires: python3-module-zope
 %endif
@@ -225,6 +225,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.3.6-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.6-alt1
 - Updated to upstream version 2.3.6.
 
