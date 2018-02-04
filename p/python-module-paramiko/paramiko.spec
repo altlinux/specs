@@ -6,7 +6,7 @@
 Summary: SSH2 protocol for python
 Name: python-module-%oname
 Version: 2.4.0
-Release: alt1
+Release: alt1.1
 License: GPL
 Group: Development/Python
 BuildArch: noarch
@@ -14,13 +14,13 @@ Url: http://www.lag.net/%oname
 
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-ecdsa python-module-pycrypto python-module-pyasn1
 BuildRequires: python-module-cryptography python-module-bcrypt python-module-pynacl
 BuildRequires: python-module-pytest-relaxed
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-ecdsa python3-module-pycrypto python3-module-pyasn1
 BuildRequires: python3-module-cryptography python3-module-bcrypt python3-module-pynacl
 BuildRequires: python3-module-pytest-relaxed
@@ -111,6 +111,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.4.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.0-alt1
 - Updated to upstream version 2.4.0.
 
