@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools unzip
+BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           crystal-stacker
 Version:        1.5
-Release:        alt2_24
+Release:        alt2_25
 Summary:        Falling blocks, match 3 or more of the same color crystals
 Group:          Games/Other
 License:        Crystal Stacker
@@ -14,7 +14,7 @@ Source0:        http://www.t3-i.com/games/crystal_stacker/downloads/crystal_stac
 Source1:        %{name}.desktop
 Source2:        %{name}-theme-editor.desktop
 Patch0:         crystal-stacker-1.5-ImplicitDSOLinking.patch
-BuildRequires:  liballegro-devel dumb-devel ImageMagick desktop-file-utils
+BuildRequires:  liballegro-devel dumb-devel ImageMagick-tools desktop-file-utils
 Source44: import.info
 
 %description
@@ -35,7 +35,7 @@ Create new Themes for Crystal Stacker
 %prep
 %setup -q -c
 %patch0 -p1
-%{__sed} -i 's/\r//' ce/*.txt cs/*.txt
+sed -i 's/\r//' ce/*.txt cs/*.txt
 
 %build
 export CC="gcc -Wl,--no-as-needed"
@@ -85,6 +85,9 @@ install -p -m 644 %{name}.png %{name}-theme-editor.png \
 %{_datadir}/icons/hicolor/32x32/apps/%{name}-theme-editor.png
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_25
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_24
 - update to new release by fcimport
 
