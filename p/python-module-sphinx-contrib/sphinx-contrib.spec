@@ -2,7 +2,7 @@
 %define pname python-module-sphinxcontrib
 Name: python-module-sphinx-contrib
 Version: 0.2.1
-Release: alt1.hg20150829
+Release: alt1.hg20150829.1
 Summary: A collection of Sphinx extensions
 License: BSD
 Group: Development/Python
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-sphinx
 
 %description
@@ -50,6 +50,9 @@ popd
 %python_sitelibdir/traclinks-*.egg-info
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.1-alt1.hg20150829.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1.hg20150829
 - Initial build for Sisyphus
 
