@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20150304.1
+Release: alt1.git20150304.1.1
 %define mname pyannote
 %define oname %mname.core
 Name: python-module-%oname
@@ -14,7 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/pyannote/pyannote-core.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-banyan python-module-numpy
 BuildPreReq: python-module-pandas-tests python-module-networkx
 BuildPreReq: python-module-simplejson python-module-matplotlib
@@ -63,6 +63,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.4-alt1.git20150304.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.4-alt1.git20150304.1
 - (AUTO) subst_x86_64.
 
