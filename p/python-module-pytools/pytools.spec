@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2017.4
-Release: alt1
+Release: alt1.1
 Summary: A collection of tools for Python
 License: MIT
 Group: Development/Python
@@ -13,16 +13,18 @@ Url: http://pypi.python.org/pypi/pytools
 # https://github.com/inducer/pytools.git
 Source: %oname-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-appdirs python-module-decorator
 BuildPreReq: python-module-six
 BuildRequires: python-modules-sqlite3
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-appdirs python3-module-decorator
 BuildPreReq: python3-module-six
 BuildRequires: python3-modules-sqlite3
+BuildRequires: python3-module-pytest
 %endif
 BuildArch: noarch
 
@@ -128,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2017.4-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2017.4-alt1
 - Updated to upstream version 2017.4.
 
