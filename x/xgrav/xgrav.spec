@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name: xgrav
 Version:  1.2.0
-Release:  alt2_20
+Release:  alt2_21
 Summary: A simple physics simulation for a large number of particles
 
 Group: Games/Other
@@ -62,6 +62,9 @@ install -p -m 644 %{SOURCE2} \
 %{_datadir}/icons/hicolor/32x32/apps/xgrav.png
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_21
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_20
 - update to new release by fcimport
 
