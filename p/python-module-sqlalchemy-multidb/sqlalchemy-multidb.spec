@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt1
+Release: alt1.1
 Summary: Provides methods to connect to multiple databases easily
 License: ASLv2.0
 Group: Development/Python
@@ -15,11 +15,11 @@ Url: https://pypi.python.org/pypi/sqlalchemy-multidb/
 # https://github.com/viniciuschiele/sqlalchemy-multidb.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-SQLAlchemy
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-SQLAlchemy
 %endif
 
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.2-alt1
 - Updated to upstream version 1.0.2.
 
