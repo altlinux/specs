@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt2.git20140911
+Release: alt2.git20140911.1
 Summary: Extension to paginate.Page that supports SQLAlchemy queries
 License: MIT
 Group: Development/Python
@@ -14,14 +14,16 @@ Url: https://pypi.python.org/pypi/paginate_sqlalchemy/
 # https://github.com/Pylons/paginate_sqlalchemy.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-SQLAlchemy python-module-paginate
 BuildRequires: python-module-nose python-modules-sqlite3
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-SQLAlchemy python3-module-paginate
 BuildRequires: python3-module-nose python3-modules-sqlite3
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -99,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.2.0-alt2.git20140911.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.0-alt2.git20140911
 - Fixed build.
 
