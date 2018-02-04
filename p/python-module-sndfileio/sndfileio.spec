@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.7.1
-Release: alt2
+Release: alt2.1
 Summary: Provides a unified API to read and write sound-files to and from numpy arrays
 License: Free
 Group: Development/Python
@@ -16,13 +16,13 @@ Url: https://pypi.python.org/pypi/sndfileio/
 # https://github.com/gesellkammer/sndfileio.git
 Source: %oname-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-scikits.samplerate python-module-scipy
 BuildRequires: python-module-matplotlib
 BuildRequires: python-module-docutils python-module-html5lib
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-scikits.samplerate python3-module-scipy
 BuildRequires: python3-module-matplotlib
 %endif
@@ -101,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.7.1-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.1-alt2
 - Fixed build.
 
