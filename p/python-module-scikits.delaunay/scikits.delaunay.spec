@@ -3,7 +3,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.5
-Release: alt2
+Release: alt2.1
 Summary: Delaunay triangulation and interpolation tools
 License: BSD
 Group: Development/Python
@@ -14,7 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # which from http://svn.scipy.org/svn/scikits/trunk (don't work now)
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests libnumpy-devel gcc-c++
+BuildPreReq: python-module-setuptools libnumpy-devel gcc-c++
 BuildPreReq: python-module-matplotlib python-module-nose
 
 %py_provides %oname
@@ -59,6 +59,9 @@ nosetests -v
 %python_sitelibdir/%mname/delaunay/test*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:0.5-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.5-alt2
 - Rebuilt with updated NumPy
 
