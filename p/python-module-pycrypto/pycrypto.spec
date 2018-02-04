@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.7
-Release: alt3.a1.git20140620.1
+Release: alt3.a1.git20140620.1.1
 Summary: Cryptographic modules for Python
 License: Public domain
 Group: Development/Python
@@ -14,12 +14,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/dlitz/pycrypto.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-epydoc gcc-c++ libgmp-devel libmpir-devel
 BuildPreReq: python-module-epydoc gcc-c++ libgmp-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 Conflicts: python-module-Crypto < %EVR
@@ -72,6 +72,7 @@ Conflicts: python3-module-Crypto < %EVR
 Obsoletes: python3-module-Crypto < %EVR
 Provides: python3-module-Crypto = %EVR
 %py3_provides Crypto
+%add_python3_req_skip Crypto.Random.OSRNG.winrandom
 
 %description -n python3-module-%oname
 This is a collection of both secure hash functions (such as SHA256 and
@@ -157,6 +158,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.7-alt3.a1.git20140620.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Mar 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.7-alt3.a1.git20140620.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
