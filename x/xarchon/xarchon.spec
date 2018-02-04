@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools gcc-c++ imake libXt-devel libesd-devel xorg-cf-files
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ imake libXt-devel xorg-cf-files
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xarchon
 Version:        0.50
-Release:        alt2_25
+Release:        alt2_27
 Summary:        Arcade board game
 Group:          Games/Other
 License:        GPL+
@@ -17,8 +17,8 @@ Patch0:         %{name}-fonts.patch
 Patch1:         %{name}-destdir.patch
 Patch2:         http://ftp.debian.org/debian/pool/main/x/%{name}/%{name}_0.50-10.1.diff.gz
 Patch3:         xarchon-0.50-gcc43.patch
-BuildRequires:  gtk+-devel libXpm libXpm-devel
-BuildRequires:  desktop-file-utils ImageMagick libappstream-glib
+BuildRequires:  gtk+-devel libesd-devel libXpm libXpm-devel
+BuildRequires:  desktop-file-utils ImageMagick-tools libappstream-glib
 Requires:       icon-theme-hicolor
 Source44: import.info
 Patch33: xarchon-0.50-alt-DSO.patch
@@ -58,10 +58,9 @@ install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/appdata
 appstream-util validate-relax --nonet \
   $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
-
 %files
 %doc AUTHORS ChangeLog README
-%doc COPYING
+%doc --no-dereference COPYING
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/appdata/%{name}.appdata.xml
@@ -71,6 +70,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2_27
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2_25
 - update to new release by fcimport
 
