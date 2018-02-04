@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.6.2
-Release: alt1
+Release: alt1.1
 Summary: Thin-wrapper around the mock package for easier use with py.test
 License: MIT
 Group: Development/Python
@@ -16,11 +16,11 @@ Source: %name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python
 BuildRequires: git-core
-BuildRequires: python-module-setuptools-tests python-module-setuptools_scm
+BuildRequires: python-module-setuptools python-module-setuptools_scm
 BuildRequires: python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests python3-module-setuptools_scm
+BuildRequires: python3-module-setuptools python3-module-setuptools_scm
 BuildRequires: python3-module-mock
 %endif
 
@@ -95,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.6.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.2-alt1
 - Updated to upstream version 1.6.2.
 
