@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.7
-Release: alt2.git20130813
+Release: alt2.git20130813.1
 Summary: Pyres web interface
 License: MIT
 Group: Development/Python
@@ -14,12 +14,12 @@ Url: https://pypi.python.org/pypi/resweb/
 # https://github.com/Pyres/resweb.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-pyres python-module-flask
 BuildRequires: python-module-setproctitle python-module-simplejson
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pyres python3-module-flask
 BuildRequires: python3-module-setproctitle python3-module-simplejson
 BuildRequires: python-tools-2to3
@@ -101,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.7-alt2.git20130813.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Dec 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.7-alt2.git20130813
 - Fixed build dependencies.
 
