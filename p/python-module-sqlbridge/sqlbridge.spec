@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.68
-Release: alt2.git20141218
+Release: alt2.git20141218.1
 Summary: Basic database connectivity for Autobahn web sockets
 License: ASLv2.0
 Group: Development/Python
@@ -15,14 +15,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-autobahn python-module-twisted-core
 BuildPreReq: python-module-txpostgres python-module-psycopg2
 BuildPreReq: python-module-six python-module-taskforce
 BuildPreReq: python-module-inotifyx python-module-yaml
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-autobahn python3-module-twisted-core
 BuildPreReq: python3-module-txpostgres python3-module-psycopg2
 BuildPreReq: python3-module-six python3-module-taskforce
@@ -136,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.68-alt2.git20141218.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.68-alt2.git20141218
 - Fixed build
 
