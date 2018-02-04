@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.6.4
-Release: alt1
+Release: alt1.1
 Summary: A templating library able to output odt and pdf files
 License: GPL
 Group: Development/Python
@@ -15,12 +15,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/18/de/18b3e8d004e43f86884c5c6148d4b15b86d07a267f45835c684deb2a4c06/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-genshi python-module-lxml
 BuildPreReq: python-module-nose python-module-pycha
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-genshi python3-module-lxml
 BuildPreReq: python3-module-nose python3-module-pycha
 %endif
@@ -137,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.6.4-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.6.4-alt1
 - automated PyPI update
 
