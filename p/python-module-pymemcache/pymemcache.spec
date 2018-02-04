@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.4.3
-Release: alt1
+Release: alt1.1
 Summary: A comprehensive, fast, pure Python memcached client
 License: ASLv2.0
 Group: Development/Python
@@ -16,14 +16,16 @@ BuildArch: noarch
 Patch1: %oname-%version-alt-tests.patch
 
 BuildPreReq: python-modules-json
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-six python-module-nose
 BuildRequires: python-module-mock
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-six python3-module-nose
 BuildRequires: python3-module-mock
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -141,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4.3-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Aug 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.3-alt1
 - Updated to upstream release 1.4.3.
 
