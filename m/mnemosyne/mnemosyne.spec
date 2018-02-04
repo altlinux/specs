@@ -1,27 +1,34 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%{!?qt5_qtwebengine_arches:%global qt5_qtwebengine_arches %{ix86} x86_64 %{arm} aarch64 mips mipsel mips64el}
+
 Name:		mnemosyne
 Summary:	Flash-card learning tool
-Version:	2.3.6
-Release:	alt1_2
+Version:	2.5
+Release:	alt1_3
 URL:		http://www.mnemosyne-proj.org/
-Source0:	http://downloads.sourceforge.net/sourceforge/mnemosyne-proj/Mnemosyne-%{version}.tar.gz
+Source0:	https://downloads.sourceforge.net/sourceforge/mnemosyne-proj/Mnemosyne-%{version}.tar.gz
 Patch0:		mnemosyne-desktop.patch
 License:	AGPLv3
 
 BuildArch:	noarch
+# no python3-qt5-webengine on power64
+ExclusiveArch:	noarch %{qt5_qtwebengine_arches}
 BuildRequires:	desktop-file-utils
-BuildRequires:	python-devel
-BuildRequires:	python-module-setuptools
+BuildRequires:	python3-devel
+BuildRequires:	python3-module-distribute
 Requires:	icon-theme-hicolor
-Requires:	python-module-PyQt4
-Requires:	python-module-PyQt4
-Requires:	python-module-matplotlib-qt4
-Requires:	python-module-cherrypy
-Requires:	python-module-webob
+Requires:	python3-module-PyQt5
+Requires:	python3-module-PyQt5
+Requires:	python3-module-matplotlib-qt5
+Requires:	python3-module-cherrypy
+Requires:	python3-module-webob
+Requires:	python3-module-Pillow
 Source44: import.info
 
 %description
@@ -35,12 +42,13 @@ Optional dependencies:
 %prep
 %setup -q -n Mnemosyne-%{version}
 %patch0 -p1 -b .d
+rm -r Mnemosyne.egg-info
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 install -d %{buildroot}%{_datadir}/applications
 desktop-file-install --vendor="" \
@@ -60,13 +68,16 @@ popd
 # http://bazaar.launchpad.net/~peter-bienstman/mnemosyne-proj/trunk/view/head:/mnemosyne/mnemosyne/LICENSE
 #%%license docmnemosyne/libmnemosyne/LICENSE
 %{_bindir}/%{name}
-%{python_sitelibdir_noarch}/mnemosyne
-%{python_sitelibdir_noarch}/Mnemosyne-%{version}-*.egg-info
-%{python_sitelibdir_noarch}/openSM2sync
+%{python3_sitelibdir_noarch}/%{name}
+%{python3_sitelibdir_noarch}/Mnemosyne-%{version}-py%{__python3_version}.egg-info
+%{python3_sitelibdir_noarch}/openSM2sync
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_3
+- update to new release by fcimport
+
 * Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.6-alt1_2
 - update to new release by fcimport
 
