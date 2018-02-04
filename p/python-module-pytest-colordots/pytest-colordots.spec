@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1
-Release: alt1
+Release: alt1.1
 Summary: Colorizes the progress indicators
 License: MIT
 Group: Development/Python
@@ -14,11 +14,11 @@ Url: https://pypi.python.org/pypi/pytest-colordots
 # https://github.com/svenstaro/pytest-colordots.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(colorama) python2.7(pytest)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(colorama) python3(pytest)
 %endif
 
@@ -87,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Oct 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1-alt1
 - Updated to upstream version 1.1.
 
