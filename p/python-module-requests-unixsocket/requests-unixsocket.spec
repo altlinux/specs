@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.5
-Release: alt2
+Release: alt2.1
 Summary: Use requests to talk HTTP via a UNIX domain socket
 License: ASLv2.0
 Group: Development/Python
@@ -14,11 +14,11 @@ Url: https://pypi.python.org/pypi/requests-unixsocket/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: git-core python-module-pbr python-module-pytest-capturelog python-module-pytest-pep8 python-module-setuptools-tests python-module-waitress
+BuildRequires: git-core python-module-pbr python-module-pytest-capturelog python-module-pytest-pep8 python-module-setuptools python-module-waitress
 BuildRequires: python-module-requests python-module-pytest-pep8
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-html5lib python3-module-pbr python3-module-setuptools-tests python3-module-waitress python3-tools-pep8
+BuildRequires: python3-module-html5lib python3-module-pbr python3-module-setuptools python3-module-waitress python3-tools-pep8
 BuildRequires: python3-module-requests python3-module-pytest-pep8
 %endif
 
@@ -122,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.5-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Aug 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.5-alt2
 - Fixed build dependencies.
 
