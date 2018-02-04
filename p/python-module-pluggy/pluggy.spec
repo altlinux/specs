@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.0
-Release: alt1.git20150528.2
+Release: alt1.git20150528.2.1
 Summary: Plugin and hook calling mechanisms for python
 License: MIT
 Group: Development/Python
@@ -15,10 +15,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -84,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1.git20150528.2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Jul 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.0-alt1.git20150528.2
 - Fixed build spec with py.test3
 
