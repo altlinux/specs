@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.10.0
-Release: alt1
+Release: alt1.1
 Summary: A Cobertura coverage report parser written in Python
 License: MIT
 Group: Development/Python
@@ -14,15 +14,16 @@ Url: https://pypi.python.org/pypi/pycobertura/
 # https://github.com/SurveyMonkey/pycobertura.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-click-tests python-module-colorama
 BuildRequires: python-module-tabulate python-module-mock
 BuildRequires: python-module-pytest-cov python-module-jinja2
 BuildRequires: python-module-html5lib
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-click-tests python3-module-colorama
+BuildRequires: python3-module-mock
 BuildRequires: python3-module-tabulate python3-module-unittest2
 BuildRequires: python3-module-pytest-cov python3-module-jinja2
 BuildRequires: python3-module-html5lib python3-module-pbr
@@ -102,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.10.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Dec 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.0-alt1
 - Updated to upstream version 0.10.0.
 
