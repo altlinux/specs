@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20141209.1
+Release: alt1.git20141209.1.1
 %define mname pyannote
 %define oname %mname.parser
 Name: python-module-%oname
@@ -14,7 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/pyannote/pyannote-parser.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests python-module-%mname.core
+BuildPreReq: python-module-setuptools python-module-%mname.core
 BuildPreReq: python-module-pysrt git
 
 %py_provides %oname
@@ -56,6 +56,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3-alt1.git20141209.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3-alt1.git20141209.1
 - (AUTO) subst_x86_64.
 
