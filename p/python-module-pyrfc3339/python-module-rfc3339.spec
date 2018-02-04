@@ -4,7 +4,7 @@
 
 Name: python-module-pyrfc3339
 Version: 1.0
-Release: alt1.1
+Release: alt1.1.1
 Summary: Generate and parse RFC 3339 timestamps
 
 License: MIT
@@ -24,7 +24,7 @@ BuildRequires: python-devel python-module-distribute
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools python3-module-setuptools
 # --- unit tests ---
 #BuildRequires: python3-nose
 #BuildRequires: python3-pytz
@@ -80,6 +80,9 @@ RFC 3339-compliant timestamps using Python datetime.datetime objects.
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0-alt1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
