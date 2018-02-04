@@ -1,6 +1,11 @@
+# Python scripting interface disabled by default since 2018.0.0
+%def_enable hsi
+# lapack support disabled by default
+%def_disable lapack
+
 Name: hugin
-Version: 2017.0.0
-Release: alt2
+Version: 2018.0.0
+Release: alt1
 
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
 Group: Graphics
@@ -14,10 +19,13 @@ BuildPreReq: boost-thread-devel >= 1.34 gcc-c++ gcc-fortran
 BuildRequires: boost-devel boost-thread-devel boost-datetime-devel boost-regex-devel
 BuildRequires: boost-filesystem-devel boost-iostreams-devel boost-system-devel
 BuildRequires: boost-signals-devel libglew-devel libXi-devel libXmu-devel
-BuildRequires: glib-devel libgtk+2-devel libjpeg-devel libpano13-devel perl-podlators
+BuildRequires: libgtk+2-devel libjpeg-devel libpano13-devel perl-podlators
 BuildRequires: libpng-devel libstdc++-devel libtiff-devel
 BuildRequires: zlib-devel libpango-devel zip cmake openexr-devel libexiv2-devel libtclap-devel
-BuildRequires: liblensfun-devel libvigra-devel libgomp-devel libfftw3-devel libsqlite3-devel swig
+BuildRequires: liblensfun-devel libvigra-devel libgomp-devel libfftw3-devel libsqlite3-devel
+BuildRequires: libflann-devel
+%{?_enable_hsi:BuildRequires: swig}
+%{?_enable_lapack:BuildRequires: liblapack-devel}
 BuildRequires: desktop-file-utils
 BuildRequires: liblcms2-devel
 
@@ -34,7 +42,9 @@ panorama, stitch any series of overlapping pictures and much more.
 # reenable RPTHs because libraries in private subdirectory
 %cmake -DINSTALL_XRC_DIR="/usr/share/hugin/xrc" \
 	-DCMAKE_SKIP_RPATH:BOOL=OFF \
-	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF
+	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+	%{?_enable_hsi:-DBUILD_HSI:BOOL=ON} \
+	%{?_enable_lapack:-DENABLE_LAPACK:BOOL=ON}
 %cmake_build
 
 %install
@@ -57,7 +67,7 @@ done
 %_datadir/pixmaps/*
 %_datadir/mime/packages/hugin.xml
 %_libdir/%name/
-%python_sitelibdir/*
+%{?_enable_hsi:%python_sitelibdir/*}
 %_niconsdir/*
 %_iconsdir/gnome/48x48/mimetypes/gnome-mime-application-x-ptoptimizer-script.png
 %_man1dir/*
@@ -66,6 +76,9 @@ done
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Sun Feb 04 2018 Yuri N. Sedunov <aris@altlinux.org> 2018.0.0-alt1
+- 2018.0.0
+
 * Wed Sep 13 2017 Yuri N. Sedunov <aris@altlinux.org> 2017.0.0-alt2
 - rebuilt with boost-1.65
 
