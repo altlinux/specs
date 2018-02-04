@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.2
-Release: alt2.git20150130.1
+Release: alt2.git20150130.1.1
 Summary: Vector fields plotting algorithms
 License: BSD
 Group: Development/Python
@@ -16,12 +16,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/aarchiba/scikits-vectorplot.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-Cython libnumpy-devel
 BuildPreReq: python-module-matplotlib python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-Cython libnumpy-py3-devel
 BuildPreReq: python3-module-matplotlib python3-module-nose
 BuildPreReq: python-tools-2to3
@@ -91,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:0.2-alt2.git20150130.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:0.2-alt2.git20150130.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
