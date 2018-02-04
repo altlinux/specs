@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 2.3.1
-Release: alt1
+Release: alt1.1
 Summary: A python svg graph plotting library
 License: LGPLv3
 Group: Development/Python
@@ -17,16 +17,16 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/02/bb/d1c9bd4d21b62cffda6ddeb768b8ce02d1741b2bb1f9ddcc9ece2958586f/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildRequires: python-module-cairosvg python-module-html5lib python-module-pyquery python-module-setuptools-tests
-#BuildPreReq: python-devel python-module-setuptools-tests
+BuildRequires: python-module-cairosvg python-module-html5lib python-module-pyquery python-module-setuptools
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-lxml python-module-cairosvg
 #BuildPreReq: python-module-pyquery python-module-flask
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-lxml python3-module-cairosvg
 #BuildPreReq: python3-module-pyquery python3-module-flask
-BuildRequires: python3-module-cairosvg python3-module-html5lib python3-module-pyquery python3-module-setuptools-tests
+BuildRequires: python3-module-cairosvg python3-module-html5lib python3-module-pyquery python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -135,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.3.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1
 - automated PyPI update
 
