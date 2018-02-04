@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.24.2
-Release: alt1.git20170214.1
+Release: alt1.git20170214.1.1
 Summary: A Python binding to Poppler-Qt5
 License: LGPLv2.1+
 Group: Development/Python
@@ -16,11 +16,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: gcc-c++ qt5-base-devel libpoppler-qt5-devel
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-sip-devel python-module-PyQt5-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-sip-devel python3-module-PyQt5-devel
 %endif
 
@@ -83,6 +83,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.24.2-alt1.git20170214.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sat Oct 14 2017 Fr. Br. George <george@altlinux.ru> 0.24.2-alt1.git20170214.1
 - Merge upstream updates
 
