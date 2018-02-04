@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:		naturette
 Version:	1.3
-Release:	alt4_14
+Release:	alt4_15
 Summary:	An AGI adventure game
 
 Group:		Games/Other
@@ -72,6 +72,9 @@ install -p -m 0644 %{SOURCE3} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%
 %{_bindir}/naturette-wrapper.sh
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.3-alt4_15
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt4_14
 - update to new release by fcimport
 
