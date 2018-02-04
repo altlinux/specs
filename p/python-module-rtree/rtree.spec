@@ -7,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 0.8.3
-Release: alt1.1
+Release: alt1.1.1
 Summary: R-Tree spatial index for Python GIS
 License: LGPLv2.1
 Group: Development/Python
@@ -18,11 +18,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/b0/6c/6cc8d738f14d5efa0c38ec29403bbd9c75e64b3fe84b53290178dda0dbd9/Rtree-%{version}.tar.gz
 
 BuildPreReq: spatialindex-devel
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python-tools-2to3
 %endif
 
@@ -158,6 +158,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.3-alt1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt1.1
 - rebuild with spatialindex
 
