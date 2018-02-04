@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.4.0
-Release: alt1
+Release: alt1.1
 Summary: Library to access Tryton server as a client
 License: LGPL
 Group: Development/Python
@@ -14,16 +14,18 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires: graphviz
-BuildRequires: python-module-setuptools-tests python-module-dateutil
+BuildRequires: python-module-setuptools python-module-dateutil
 BuildRequires: python-module-trytond-tests python-module-simplejson
 BuildRequires: python-module-cdecimal python-modules-sqlite3
 BuildRequires: python-module-pydot python-module-pygraphviz
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests python3-module-dateutil
+BuildRequires: python3-module-setuptools python3-module-dateutil
 BuildRequires: python3-module-trytond-tests python3-module-simplejson
 BuildRequires: python3-module-cdecimal python3-modules-sqlite3
 BuildRequires: python3-module-pydot python3-module-pygraphviz
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -116,6 +118,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.4.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Aug 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.0-alt1
 - Updated to upstream release 4.4.0.
 
