@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.13
-Release: alt1
+Release: alt1.1
 Summary: Exif manipulation with pure python script
 License: MIT
 Group: Development/Python
@@ -15,11 +15,11 @@ Url: https://pypi.python.org/pypi/piexif/
 # https://github.com/hMatoba/Piexif.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-Pillow
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-Pillow
 %endif
 
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.13-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.13-alt1
 - Updated to upstream version 1.0.13.
 
