@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.7.6
-Release: alt1
+Release: alt1.1
 Summary: An implementation of the psycopg2 module using cffi
 License: LGPLv3+
 Group: Development/Python
@@ -16,12 +16,12 @@ Source: %name-%version.tar
 Patch1: %oname-%version-alt-pg10.patch
 
 BuildRequires: postgresql-devel libpq-devel
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-six python-module-cffi
 BuildRequires: python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-six python3-module-cffi
 %endif
 
@@ -130,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.7.6-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7.6-alt1
 - Updated to upstream version 2.7.6.
 
