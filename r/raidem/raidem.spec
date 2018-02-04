@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install unzip zlib-devel
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip zlib-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           raidem
 Version:        0.3.1
-Release:        alt2_34
+Release:        alt2_35
 Summary:        2d top-down shoot'em up
 Group:          Games/Other
 License:        zlib
@@ -25,7 +25,7 @@ Patch6:         raidem-0.3.1-system-flags.patch
 Patch7:         raidem-0.3.1-Makefile-race-condition.patch
 BuildRequires:  gcc-objc glyph-keeper-allegro-devel libfreetype-devel libadime-devel
 BuildRequires:  zziplib-devel libpng-devel libAllegroOGG-devel
-BuildRequires:  automake-common desktop-file-utils gnustep-base-devel
+BuildRequires:  automake desktop-file-utils gnustep-base-devel
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -79,10 +79,9 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
 install -p -m 644 %{SOURCE1} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
 
-
 %files
 %doc ChangeLog docs/README.txt docs/damages.txt
-%doc docs/LICENCE.txt
+%doc --no-dereference docs/LICENCE.txt
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
@@ -90,6 +89,9 @@ install -p -m 644 %{SOURCE1} \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_35
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_34
 - update to new release by fcimport
 
