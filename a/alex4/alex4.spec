@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:           alex4
 Version:        1.0
-Release:        alt2_23
+Release:        alt2_24
 Summary:        Alex the Allegator 4 - Platform game
 Group:          Games/Other
 License:        GPL+
@@ -79,6 +79,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_24
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_23
 - update to new release by fcimport
 
