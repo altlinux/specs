@@ -2,7 +2,7 @@
 %define oname pyaml
 Name: python-module-%oname
 Version: 16.12.2
-Release: alt1
+Release: alt1.1
 Summary: pretty-yaml: Pretty YAML serialization
 License: WTFPL
 Group: Development/Python
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/aa/bc/68c34bd6c5a7bd6d2ecf94ba7cd2337c9f9be58d670e2edef16fa1e0d6a2/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-yaml
+BuildPreReq: python-module-setuptools python-module-yaml
 BuildPreReq: python-module-unidecode
 
 %py_provides %oname
@@ -54,6 +54,9 @@ python pyaml/tests/dump.py
 %python_sitelibdir/*/tests
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 16.12.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 16.12.2-alt1
 - automated PyPI update
 
