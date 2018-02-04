@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           ularn
 Version:        1.5p4
-Release:        alt2_27
+Release:        alt2_28
 Summary:        Simple roguelike game
 
 Group:          Games/Other
@@ -79,6 +79,9 @@ install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/32x32/app
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.5p4-alt2_28
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.5p4-alt2_27
 - update to new release by fcimport
 
