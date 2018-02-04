@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ perl(Shell.pm)
 %define apricotsdir %{_datadir}/apricots
 Name: apricots
 Version:  0.2.6
-Release:  alt2_19
+Release:  alt2_20
 Summary: 2D air combat game
 
 Group: Games/Other
@@ -26,7 +26,7 @@ BuildRequires: libSDL-devel
 BuildRequires: libalut-devel
 BuildRequires: desktop-file-utils
 BuildRequires: libopenal-devel libopenal1
-BuildRequires: autoconf-common automake-common
+BuildRequires: autoconf automake
 Source44: import.info
 
 %description
@@ -87,6 +87,9 @@ install -p -m 644 %{SOURCE1} \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt2_20
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt2_19
 - update to new release by fcimport
 
