@@ -1,7 +1,7 @@
 %define oname pyvows
 Name: python-module-%oname
 Version: 2.0.6
-Release: alt1.git20141008
+Release: alt1.git20141008.1
 Summary: pyVows is a BDD test engine based on Vows.js (http://vowsjs.org )
 License: MIT
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-gevent
+BuildPreReq: python-module-setuptools python-module-gevent
 BuildPreReq: python-module-preggy python-module-argparse
 BuildPreReq: python-module-colorama python-module-coverage
 BuildPreReq: python-module-six python-module-unidecode
@@ -60,6 +60,9 @@ python setup.py test
 %python_sitelibdir/*/*/test.*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.0.6-alt1.git20141008.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.6-alt1.git20141008
 - Initial build for Sisyphus
 
