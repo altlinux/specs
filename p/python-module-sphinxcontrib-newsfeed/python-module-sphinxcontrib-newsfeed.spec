@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.4
-Release: alt2
+Release: alt2.1
 Summary: Sphinx extension for adding a simple Blog, News or Announcements
 
 License: BSD
@@ -17,9 +17,9 @@ BuildArch: noarch
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 %py_provides %mname.newsfeed
 %py_requires %mname
 
@@ -97,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.4-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Jan 22 2017 Anton Midyukov <antohami@altlinux.org> 0.1.4-alt2
 - srpm build
 
