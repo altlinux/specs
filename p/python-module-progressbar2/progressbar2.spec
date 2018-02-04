@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.34.4
-Release: alt1
+Release: alt1.1
 Summary: Text progress bar library for Python
 License: LGPLv2.1+ or BSD
 Group: Development/Python
@@ -16,14 +16,14 @@ Source: %name-%version.tar
 Patch1: %oname-%version-alt-doc.patch
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-pytest python-module-pytest-runner python-module-pytest-cov python-module-pytest-pep8 python-module-pytest-flakes
 BuildRequires: python2.7(python_utils) python2.7(changelog)
 BuildRequires: python-module-sphinx-devel
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pytest python3-module-pytest-runner python3-module-pytest-cov python3-module-pytest-pep8 python3-module-pytest-flakes
 BuildRequires: python3(python_utils) python3(changelog)
 %endif
@@ -148,6 +148,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.34.4-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Dec 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.34.4-alt1
 - Updated to upstream version 3.34.4.
 
