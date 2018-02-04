@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1.10
-Release: alt1
+Release: alt1.1
 Summary: A library to allow customization of the process title
 License: BSD
 Group: Development/Python
@@ -15,10 +15,10 @@ Packager: Python Development Team <python@packages.altlinux.org>
 # https://github.com/dvarrazzo/py-setproctitle.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests /proc
+BuildPreReq: python-devel python-module-setuptools /proc
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python-tools-2to3
 %endif
 %if_with check
@@ -95,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.10-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 03 2017 Anton Midyukov <antohami@altlinux.org> 1.1.10-alt1
 - New version 1.1.10
 - Disable check
