@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.11.0
-Release: alt1
+Release: alt1.1
 Summary: PostgreSQL interface library
 License: BSD
 Group: Development/Python
@@ -14,12 +14,15 @@ Url: https://pypi.python.org/pypi/pg8000/
 # https://github.com/mfenniak/pg8000.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-nose python-module-pytz
+BuildRequires: python-modules-json
+BuildRequires: python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-nose python3-module-pytz
+BuildRequires: python3-module-six
 %endif
 
 %py_provides %oname
@@ -103,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.11.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.11.0-alt1
 - Updated to upstream version 1.11.0.
 
