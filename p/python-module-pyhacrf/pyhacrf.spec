@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt1
+Release: alt1.1
 Summary: Hidden alignment conditional random field, discriminative string edit distance
 License: BSD
 Group: Development/Python
@@ -13,12 +13,12 @@ Url: https://pypi.python.org/pypi/pyhacrf
 # https://github.com/dirko/pyhacrf.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-Cython libnumpy-devel
 BuildPreReq: python-module-pylbfgs
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-Cython libnumpy-py3-devel
 BuildPreReq: python3-module-pylbfgs
 %endif
@@ -99,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.2-alt1
 - Updated to upstream version 0.1.2.
 
