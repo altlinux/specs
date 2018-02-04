@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.8.0
-Release: alt2.git20150520
+Release: alt2.git20150520.1
 Summary: Python API Wrapper for NewRelic API
 License: MIT / GPL
 Group: Development/Python
@@ -14,19 +14,21 @@ Url: https://pypi.python.org/pypi/pyrelic
 # https://github.com/andrewgross/pyrelic.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-requests
 BuildRequires: python-module-sure
 BuildRequires: python-module-nose python-module-coverage
 BuildRequires: python-module-httpretty
+BuildRequires: python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-sure
 BuildRequires: python3-module-nose python3-module-coverage
 BuildRequires: python3-module-httpretty
 BuildRequires: python3-module-html5lib python3-module-mimeparse python3-module-pbr python3-module-unittest2
+BuildRequires: python3-module-mock
 %endif
 
 %py_provides %oname
@@ -94,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.0-alt2.git20150520.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Dec 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.0-alt2.git20150520
 - Fixed build.
 
