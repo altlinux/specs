@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.7.0
-Release: alt1
+Release: alt1.1
 Summary: Sphinx "images" extension
 License: ASLv2.0
 Group: Development/Python
@@ -19,14 +19,14 @@ Source1: lightbox2.tar
 
 Patch1: %oname-%version-alt-build.patch
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-requests python-module-sphinx-devel
 BuildRequires: python-module-tox python-modules-json
 BuildRequires: python-module-wheel
 BuildRequires: python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-requests python3-module-sphinx-devel
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-wheel
@@ -124,6 +124,9 @@ export PYTHONPATH=$PWD
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.7.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Oct 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.0-alt1
 - Updated to upstream version 0.7.0.
 
