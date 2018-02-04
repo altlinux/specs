@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.4.2
-Release: alt1
+Release: alt1.1
 Summary: Pure-Python RSA implementation
 License: ASLv2
 Group: Development/Python
@@ -13,11 +13,11 @@ Url: https://pypi.python.org/pypi/rsa/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-pyasn1
+BuildPreReq: python-module-setuptools python-module-pyasn1
 BuildPreReq: python-module-unittest2 python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools-tests python3-module-pyasn1
+BuildPreReq: python3-module-setuptools python3-module-pyasn1
 BuildPreReq: python3-module-unittest2 python3-devel
 BuildPreReq: python-tools-2to3 python3-module-pytest
 %endif
@@ -100,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.4.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Aug 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.2-alt1
 - Updated to upstream releases 3.4.2.
 
