@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:		biniax
 Version:	1.2
-Release:	alt3_21
+Release:	alt3_22
 Summary:	A unique arcade logic game
 
 Group:		Games/Other
@@ -74,7 +74,6 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/32x32/apps
 install -p -m 0644 %{SOURCE2} \
 	%{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 
-
 %files
 %doc LICENSE.txt Readme.txt
 %{_bindir}/%{name}
@@ -83,6 +82,9 @@ install -p -m 0644 %{SOURCE2} \
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_22
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_21
 - update to new release by fcimport
 
