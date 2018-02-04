@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.8.1
-Release: alt2.git20130425
+Release: alt2.git20130425.1
 Summary: SlimIt - a JavaScript minifier/parser in Python
 License: MIT
 Group: Development/Python
@@ -14,12 +14,14 @@ Url: https://pypi.python.org/pypi/slimit/
 # https://github.com/rspivak/slimit.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-ply
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-ply python-tools-2to3
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -136,6 +138,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.1-alt2.git20130425.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Oct 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.1-alt2.git20130425
 - Updated build dependencies, updated tests for python-2.
 
