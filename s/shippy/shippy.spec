@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:           shippy
 Version:        1.3.3.7
-Release:        alt2_24
+Release:        alt2_25
 Summary:        Space invaders / Galaxians like game with powerups
 Group:          Games/Other
 License:        GPL+
@@ -98,7 +98,6 @@ install -p -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/appdata
 appstream-util validate-relax --nonet \
   $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
-
 %files
 %attr(2711,root,games) %{_bindir}/%{name}-sdl
 
@@ -107,7 +106,7 @@ appstream-util validate-relax --nonet \
 
 %files common
 %doc NOTES.txt html
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/appdata/%{name}.appdata.xml
@@ -117,6 +116,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.3.7-alt2_25
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.3.7-alt2_24
 - update to new release by fcimport
 
