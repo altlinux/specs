@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.3.0
-Release: alt1
+Release: alt1.1
 Summary: rsttst makes your reStructuredText testable
 License: BSD
 Group: Development/Python
@@ -16,11 +16,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/b5/d9/fed43b27554822d8dd227f290707ae06eabf223a79522a27a1e1469994f3/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-Pygments python-module-docutils
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-Pygments python3-module-docutils
 %endif
 
@@ -93,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1
 - automated PyPI update
 
