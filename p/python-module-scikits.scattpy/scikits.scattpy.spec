@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt3.git20120523
+Release: alt3.git20120523.1
 Summary: Light Scattering methods for Python
 License: BSD
 Group: Development/Python
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: gcc-fortran
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-scipy libnumpy-devel
 BuildRequires: python-module-numpy-testing python-module-pytest
 BuildRequires: python-module-matplotlib-sphinxext
@@ -25,7 +25,7 @@ BuildRequires: python-module-sphinxtogithub
 BuildRequires: python-module-alabaster python-module-html5lib python-module-ipyparallel python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-scipy libnumpy-py3-devel
 BuildRequires: python3-module-numpy-testing python3-module-pytest
 %endif
@@ -205,6 +205,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.2-alt3.git20120523.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Nov 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.2-alt3.git20120523
 - Updated build dependencies.
 
