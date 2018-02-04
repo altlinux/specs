@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.5
-Release: alt2.git20140901
+Release: alt2.git20140901.1
 Summary: Python resque clone
 License: MIT
 Group: Development/Python
@@ -16,13 +16,13 @@ Url: https://pypi.python.org/pypi/pyres/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-nose python-module-simplejson
 BuildRequires: python-module-redis-py python-module-setproctitle
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-nose python3-module-simplejson
 BuildRequires: python3-module-redis-py python3-module-setproctitle
 BuildRequires: python-tools-2to3
@@ -146,6 +146,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.5-alt2.git20140901.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Dec 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5-alt2.git20140901
 - Updated runtime dependencies.
 
