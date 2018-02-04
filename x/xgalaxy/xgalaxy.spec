@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools imake libX11-devel libXext-devel perl(find.pl) xorg-cf-files
+BuildRequires: /usr/bin/desktop-file-install imake libX11-devel libXext-devel perl(find.pl) xorg-cf-files
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xgalaxy
 Version:        2.0.34
-Release:        alt2_26
+Release:        alt2_27
 Summary:        Arcade game: shoot down the space ships attacking the planet
 Group:          Games/Other
 License:        GPL+
@@ -21,7 +21,7 @@ Patch4:         %{name}-2.0.34-fullscreen-viewport.patch
 Patch5:         %{name}-2.0.34-alsa.patch
 Patch6:         %{name}-2.0.34-dga-compile-fix.patch
 BuildRequires:  libXt-devel libXpm libXpm-devel libXmu-devel libXxf86vm-devel
-BuildRequires:  libalsa-devel desktop-file-utils ImageMagick 
+BuildRequires:  libalsa-devel desktop-file-utils ImageMagick-tools 
 Requires:       icon-theme-hicolor
 Obsoletes:      xgalaga <= %{version}
 Provides:       xgalaga = %{version}-%{release}
@@ -92,7 +92,6 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/22x22/apps
 install -p -m 644 %{name}.png \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/22x22/apps
 
-
 %files
 %doc CHANGES COPYING README README.fedora
 %{_bindir}/%{name}*
@@ -104,6 +103,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.34-alt2_27
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.34-alt2_26
 - update to new release by fcimport
 
