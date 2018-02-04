@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 1.0.0
-Release: alt1
+Release: alt1.1
 Summary: SQLAlchemy dialect for MonetDB
 License: MIT
 Group: Development/Python
@@ -15,13 +15,13 @@ Url: https://pypi.python.org/pypi/sqlalchemy_monetdb/
 
 Source: %oname-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests python-module-pytest-runner
+BuildRequires: python-devel python-module-setuptools python-module-pytest-runner
 BuildRequires: python-module-monetdb python-module-SQLAlchemy-tests
 BuildRequires: python-module-nose python-module-mock
 BuildRequires: python-module-coverage python-module-pbr python-module-pytest python-module-unittest2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests python3-module-pytest-runner
+BuildRequires: python3-devel python3-module-setuptools python3-module-pytest-runner
 BuildRequires: python3-module-monetdb python3-module-SQLAlchemy-tests
 BuildRequires: python3-module-nose python3-module-mock
 BuildRequires: python3-module-coverage python3-module-html5lib python3-module-pbr python3-module-pytest python3-module-unittest2
@@ -88,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Jan 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt1
 - Updated to upstream version 1.0.0.
 
