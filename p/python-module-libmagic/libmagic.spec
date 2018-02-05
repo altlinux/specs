@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.4.13
-Release: alt1.1
+Release: alt2
 Summary: File type identification using libmagic
 License: MIT
 Group: Development/Python
@@ -44,7 +44,7 @@ textual and MIME-type output.
 %prep
 %setup
 
-%ifarch x86_64
+%if "%_lib" == "lib64"
 LIB_SUFF=64
 %endif
 sed -i "s|@64@|$LIB_SUFF|" magic.py
@@ -72,7 +72,7 @@ pushd ../python3
 popd
 %endif
 
-%ifarch x86_64
+%if "%_lib" == "lib64"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -96,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Mon Feb 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.13-alt2
+- fixed build on aarch64
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.4.13-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
