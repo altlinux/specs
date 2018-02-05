@@ -7,7 +7,7 @@ Name: palemoon
 Version: 27.7.2
 
 # %%ifndef git_commit
-Release: alt1
+Release: alt1.2
 # %%else
 # Release: alt1.git_1_%git_commit
 # %%endif
@@ -69,8 +69,6 @@ Patch23: palemoon_version-27.5.0.patch
 Patch24: palemoon-27.0.2-ui_picker_false.patch
 #Patch25: palemoon-27.4.0-blocklist.patch
 
-#Patch26: palemoon-sqlite3-27.7.0.patch
-
 # Patch from Rosa
 # Patch101: palemoon-27.4.0-lang.patch
 Patch103: palemoon-27.4.0-disable-check-default-browser.patch
@@ -89,16 +87,19 @@ Patch113: mozilla-kde-background.patch
 # Automatically added by buildreq on Thu Jun 15 2017
 # optimized out: alternatives ca-certificates fontconfig fontconfig-devel glib2-devel libICE-devel libSM-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcloog-isl4 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstartup-notification libstdc++-devel libxcb-devel perl pkg-config python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-xml python xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
 BuildRequires: doxygen gcc-c++ glibc-devel-static imake java-devel libGConf-devel libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel libjpeg-devel libnspr-devel
-BuildRequires: libpixman-devel libproxy-devel libpulseaudio-devel libsocket libsqlite3-devel libstartup-notification-devel libvpx-devel
-BuildRequires: python-module-future python-module-yaml python-modules-wsgiref python3-base 
+BuildRequires: libpixman-devel libpulseaudio-devel libsocket libvpx-devel
+#BuildRequires:libpixman-devel libproxy-devel libpulseaudio-devel libsocket libsqlite3-devel libstartup-notification-devel libvpx-devel
+BuildRequires: python-base python-devel python-module-future python-module-yaml python-modules-json python-modules-wsgiref
+#BuildRequires:python-module-future python-module-yaml python-modules-wsgiref python3-base 
+
 BuildRequires: unzip wget xorg-cf-files xsltproc yasm zip
+
 BuildRequires: libpulseaudio-devel
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
 
-BuildPreReq: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-xml
-
+BuildPreReq: python-module-future python-module-yaml python-modules-json python-modules-wsgiref
 BuildPreReq:  libsocket 
 
 BuildRequires: gcc%_gcc_version-c++
@@ -197,7 +198,9 @@ export RPATH_PATH="$rpath"
 %setup -T -D -a 11
 
 %patch20 -p1
+
 %patch24 -p1
+
 
 %patch21 -p1
 
@@ -221,7 +224,6 @@ tar -xf %SOURCE1
 %patch103 -p1 -b .disable-software-update
 %patch105 -p1 -b .default-mail-handler
 %patch106 -p1 -b .addons
-
 %patch107 -p1 -b .ua
 
 # KDE integration
@@ -272,6 +274,8 @@ echo "ac_add_options --enable-sanbox" >> .mozconfig
 
 echo "ac_add_options --with-x" >> .mozconfig
 echo "ac_add_options --enable-release" >> .mozconfig
+# echo "ac_add_options --enable-b2g-bt --enable-nfc --enable-synth-pico --enable-b2g-camera" >> .mozconfig
+#echo "ac_add_options --enable-synth-pico" >> .mozconfig
 
 # echo "ac_add_options --enable-system-hunspell" >> .mozconfig
 
@@ -595,6 +599,12 @@ install -D -m 644 README.md ../
 
 # git commit 4384376a287a8d28b6750d86b29b290bb62da61b
 %changelog
+* Mon Feb 05 2018 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.7.2-alt1.2
+- Fix Changelog
+
+* Thu Feb 01 2018 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.7.2-alt1.1
+- Correct BuildPreReq
+
 * Wed Jan 31 2018 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.7.2-alt1
 - New Version - Release 27.7.2
 
