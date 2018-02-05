@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.38
+Version: 0.39
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -39,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Mon Feb 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1
+- fixed raw pythons
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1
 - restored sourceurl.raw
 
