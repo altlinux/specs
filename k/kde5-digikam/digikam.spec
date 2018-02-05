@@ -1,8 +1,15 @@
+%define opencv_ver %{get_version libopencv-devel}
+
 %def_disable baloo
 %def_disable mysql
+%_K5if_ver_lt %opencv_ver 3
+%def_disable opencv3
+%else
+%def_enable opencv3
+%endif
+
 %define rname digikam
 %define label digiKam
-
 %define sover 5
 %define libdigikamdatabase libdigikamdatabase%sover
 %define libdigikamcore libdigikamcore%sover
@@ -10,8 +17,8 @@
 
 Name: kde5-%rname
 %define lname lib%name
-Version: 5.7.0
-Release: alt2%ubt
+Version: 5.8.0
+Release: alt1%ubt
 %K5init
 
 Summary: digiKam is an advanced digital photo management application for linux
@@ -30,7 +37,7 @@ Requires: qt5-sql-mysql
 # libs/dimg/filters/icc
 Requires: icc-profiles
 
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt libopencv-devel
 # Automatically added by buildreq on Wed Jul 20 2016 (-bi)
 # optimized out: boost-devel-headers cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ glib2-devel glibc-devel-static gtk-update-icon-cache kde5-akonadi-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kguiaddons-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdb4-devel libdbusmenu-qt52 libdc1394-22 libgdk-pixbuf libgpg-error libgphoto2-6 libgphoto2_port-12 libgst-plugins1.0 libical-devel libjson-c libopencore-amrnb0 libopencore-amrwb0 libp11-kit libpangox-compat libpng-devel libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sensors libqt5-sql libqt5-svg libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libraw1394-11 libstdc++-devel libwayland-client libwayland-server libxcbutil-keysyms libxkbfile-devel perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-gir rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: doxygen eigen3 extra-cmake-modules flex git-core graphviz kde4-marble-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-libkipi-devel kde5-libksane-devel kde5-pimlibs-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-ki18n-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-knotifyconfig-devel kf5-sonnet-devel kf5-threadweaver-devel libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjasper-devel libjpeg-devel liblcms2-devel liblensfun-devel liblqr-devel libopencv-devel libtiff-devel libusb-devel python-module-google python3-dev qt4-dbus qt5-multimedia-devel qt5-webkit-devel qt5-x11extras-devel rpm-build-ruby sqlite3 zlib-devel-static
@@ -38,7 +45,7 @@ BuildRequires: doxygen eigen3 extra-cmake-modules flex graphviz
 BuildRequires: qt5-multimedia-devel qt5-webkit-devel qt5-x11extras-devel
 BuildRequires: libqtav-devel
 BuildRequires: libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjasper-devel libjpeg-devel libpng-devel
-BuildRequires: liblcms2-devel liblensfun-devel liblqr-devel libopencv-devel libtiff-devel libusb-devel libtbb-devel libxml2-devel libxslt-devel
+BuildRequires: liblcms2-devel liblensfun-devel liblqr-devel libtiff-devel libusb-devel libtbb-devel libxml2-devel libxslt-devel
 BuildRequires: libEGL-devel libGL-devel libGLU-devel
 BuildRequires: sqlite3 zlib-devel
 BuildRequires: kde5-marble-devel
@@ -49,13 +56,24 @@ BuildRequires: kf5-kio-devel kf5-kitemmodels-devel kf5-knotifyconfig-devel kf5-s
 %if_enabled baloo
 BuildRequires: kf5-baloo-devel
 %endif
+%if_enabled opencv3
+BuildRequires: libopencv-devel-static
+%endif
 
 Source0: %rname-%version.tar
 Source1: po.tar
 Source2: doc.tar
 Source3: doc-translated.tar
-Patch1: alt-libraw-aarch64.patch
-Patch2: alt-exiv2-req.patch
+# upstream
+Patch1: 0004-fix-schema-update-from-V7-8-to-V9-with-temporary-tab.patch
+Patch2: 0005-small-fix-for-the-schema-update.patch
+Patch3: 0011-disable-foreign-key-checks-temporarily-for-the-Tags-.patch
+Patch4: 0012-drop-old-table-if-new-run-required.patch
+# FC
+Patch20: digikam-5.7.0-glibc_powf64.patch
+# ALT
+Patch100: alt-libraw-aarch64.patch
+Patch101: alt-exiv2-req.patch
 
 %description
 DigiKam is an advanced digital photo management application for KDE.
@@ -135,16 +153,23 @@ Development files for %label.
 %setup -n %rname-%version  -a1 -a2 -a3
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+#
+%patch20 -p2
+#
+%patch100 -p1
+%patch101 -p1
 
 # change double to qreal for casting on arm
-find -type f -name \*.cpp | \
-while read f ; do
-    sed -i 's|<double>|<qreal>|g' $f
-done
-find -type f -name \*.h | \
-while read f ; do
-    sed -i 's|<double>|<qreal>|g' $f
-done
+#find -type f -name \*.cpp | \
+#while read f ; do
+#    sed -i 's|<double>|<qreal>|g' $f
+#done
+#find -type f -name \*.h | \
+#while read f ; do
+#    sed -i 's|<double>|<qreal>|g' $f
+#done
 
 #sed -i 's|add_subdirectory|ECM_OPTIONAL_ADD_SUBDIRECTORY|' doc-translated/CMakeLists.txt
 #rm -rf doc-translated/showfoto
@@ -171,7 +196,7 @@ done
     -DENABLE_MYSQLSUPPORT=OFF \
     -DENABLE_KFILEMETADATASUPPORT=%{?_enable_baloo:ON}%{!?_enable_baloo:OFF} \
     -DBUILD_TESTING=OFF \
-    -DENABLE_OPENCV3=OFF \
+    -DENABLE_OPENCV3=%{?_enable_opencv3:ON}%{!?_enable_opencv3:OFF} \
     #
 
 %install
@@ -203,7 +228,7 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5data/solid/actions/%rname-*.desktop
 
 %files data -f %rname.lang
-%doc AUTHORS ChangeLog HACKING NEWS README TODO
+%doc AUTHORS ChangeLog HACKING NEWS README* TODO
 %_K5data/%rname/*
 #exclude %_K5data/%rname/utils/
 %_K5data/showfoto/*
@@ -232,6 +257,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Mon Feb 05 2018 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1%ubt
+- new version
+
 * Thu Sep 28 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt2%ubt
 - decrease exiv2 requirement
 
