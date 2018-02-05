@@ -11,7 +11,7 @@
 
 Name: python-module-%modulename
 Version: 2.6.7
-Release: alt1
+Release: alt1.1
 
 Summary: Python implementation of Markdown text-to-HTML convertor.
 Group: Development/Python
@@ -25,13 +25,13 @@ Source0: https://pypi.python.org/packages/d4/32/642bd580c577af37b00a1eb59b0eaa99
 BuildArch: noarch
 BuildPreReq: rpm-build-licenses
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-yaml python-modules-logging
 BuildPreReq: python-module-nose python-module-coverage
 BuildPreReq: python-modules-xml
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-yaml
 BuildPreReq: python3-module-nose python3-module-coverage
 %endif
@@ -121,6 +121,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.6.7-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 2.6.7-alt1
 - automated PyPI update
 
