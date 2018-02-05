@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0
-Release: alt1.git20141023.1.1
+Version: 2.1
+Release: alt1
 Summary: Adds SQLAlchemy support to your Flask application
 License: BSD
 Group: Development/Python
@@ -15,13 +15,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-flask python-module-SQLAlchemy
 #BuildPreReq: python-module-sphinx-devel flask-sphinx-themes
 #BuildPreReq: python-module-pysqlite2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-flask python3-module-SQLAlchemy
 #BuildPreReq: python3-modules-sqlite3
 %endif
@@ -31,7 +31,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-SQLAlchemy python-module-babel python-module-cssselect python-module-genshi python-module-itsdangerous python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-werkzeug python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-itsdangerous python3-module-jinja2 python3-module-markupsafe python3-module-pytest python3-module-setuptools python3-module-werkzeug
-BuildRequires: flask-sphinx-themes python-module-alabaster python-module-docutils python-module-flask python-module-html5lib python-module-objects.inv python-module-pysqlite2 python-module-setuptools-tests python3-module-SQLAlchemy python3-module-flask python3-module-jinja2-tests python3-module-setuptools-tests python3-modules-sqlite3 rpm-build-python3 time
+BuildRequires: flask-sphinx-themes python-module-alabaster python-module-docutils python-module-flask python-module-html5lib python-module-objects.inv python-module-pysqlite2 python3-module-SQLAlchemy python3-module-flask python3-module-jinja2 python3-module-setuptools python3-modules-sqlite3 rpm-build-python3 time
 
 %description
 Flask-SQLAlchemy is a Flask microframework extension which adds support
@@ -128,6 +128,9 @@ popd
 %endif
 
 %changelog
+* Mon Feb 05 2018 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1
+- NMU: updated to 2.1
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0-alt1.git20141023.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
