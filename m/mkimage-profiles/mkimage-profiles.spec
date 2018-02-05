@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.2.7
+Version: 1.2.8
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,9 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Feb 05 2018 Michael Shigorin <mike@altlinux.org> 1.2.8-alt1
+- regular fixes
+
 * Mon Jan 22 2018 Michael Shigorin <mike@altlinux.org> 1.2.7-alt1
 - 2018: better sound feature (antohami@)
 
