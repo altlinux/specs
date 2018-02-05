@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 4.2.1
-Release: alt1
+Release: alt1.1
 
 %setup_python_module %oname
 
@@ -26,11 +26,11 @@ Provides: %oname
 
 %add_findreq_skiplist %python_sitelibdir/%oname/async.py
 
-BuildPreReq: python-devel python-module-setuptools-tests /dev/pts
+BuildPreReq: python-devel python-module-setuptools /dev/pts
 BuildPreReq: python-module-pytest-cov python-module-ptyprocess
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-pytest-cov python3-module-ptyprocess
 %endif
 
@@ -121,6 +121,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.2.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt1
 - automated PyPI update
 
