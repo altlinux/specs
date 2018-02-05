@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.001
+Version: 0.002
 Release: alt1
 Summary: DistroDb Maker tools
 License: LGPL2+
@@ -20,7 +20,7 @@ BuildPreReq: python3-devel
 %endif
 
 Conflicts: distrodb-utils < 0.21
-Requires: python-module-rpm
+Requires: python-module-rpm python-module-backports.lzma
 #py_provides %oname
 
 %description
@@ -71,5 +71,8 @@ popd
 %endif
 
 %changelog
+* Mon Feb 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.002-alt1
+- xz list support
+
 * Mon Feb 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.001-alt1
 - Initial build for Sisyphus
