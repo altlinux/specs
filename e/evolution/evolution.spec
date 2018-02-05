@@ -22,7 +22,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -46,7 +46,7 @@ Provides: camel
 %define glib_ver 2.40.0
 %define gtk_ver 3.10
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.26.4
+%define eds_ver 3.26.5
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define libsoup_ver 2.42.0
@@ -183,7 +183,6 @@ rm -f data/*.desktop{,.in}
 	-DCMAKE_SKIP_RPATH:BOOL=OFF \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
 	-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON \
-	-DVERSION_SUBSTRING:STRING=%version-%release \
 	-DKILL_PROCESS_COMMAND:STRING=%_bindir/killall \
 	-DENABLE_SCHEMAS_COMPILE:BOOL=OFF \
 	-DENABLE_SMIME:BOOL=ON \
@@ -193,7 +192,8 @@ rm -f data/*.desktop{,.in}
 	%{?_with_openldap:-DWITH_OPENLDAP:BOOL=ON} \
 	%{?_with_static_ldap:-DWITH_STATIC_LDAP:BOOL=ON} \
 	%{?_enable_gtk_doc:-DENABLE_GTK_DOC:BOOL=ON} \
-	%{?_enable_installed_tests:-DENABLE_INSTALLED_TESTS:BOOL=ON}
+	%{?_enable_installed_tests:-DENABLE_INSTALLED_TESTS:BOOL=ON} \
+	-DVERSION_SUBSTRING:STRING=-%release
 %cmake_build
 
 %install
@@ -270,6 +270,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Mon Feb 05 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.5-alt1
+- 3.26.5
+
 * Mon Jan 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.4-alt1
 - 3.26.4
 
