@@ -4,8 +4,8 @@
 %def_enable oom
 
 Name: htop
-Version: 2.0.2
-Release: alt2
+Version: 2.1.0
+Release: alt1
 
 Summary: Interactive ncurses-based process viewer for Linux
 License: GPL
@@ -84,6 +84,9 @@ rm -r %buildroot%_pixmapsdir/
 %_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Mon Feb 05 2018 Michael Shigorin <mike@altlinux.org> 2.1.0-alt1
+- new version (watch file uupdate)
+
 * Sat Dec 24 2016 Michael Shigorin <mike@altlinux.org> 2.0.2-alt2
 - BOOTSTRAP: minimal build can cope without IM indeed
 
