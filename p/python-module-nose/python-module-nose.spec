@@ -5,7 +5,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 1.3.7
-Release: alt2.git20160316
+Release: alt2.git20160316.1
 
 Summary: A unittest-based testing framework for python that makes writing and running tests easier
 
@@ -25,7 +25,7 @@ Patch1: %oname-%version-alt-coverage4.patch
 BuildRequires: python-module-setuptools python-module-coverage
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools-tests
+BuildPreReq: python3-module-setuptools
 BuildRequires: python3-devel python3-module-coverage
 %endif
 
@@ -104,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:1.3.7-alt2.git20160316.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Oct 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.3.7-alt2.git20160316
 - Fixed build with new coverage.
 
