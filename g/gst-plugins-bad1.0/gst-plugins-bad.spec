@@ -19,7 +19,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.4
-Release: alt2
+Release: alt3
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -53,6 +53,7 @@ BuildRequires: libvo-amrwbenc-devel librsvg-devel libvo-aacenc-devel libgcrypt-d
 BuildRequires: gobject-introspection-devel libgstreamer1.0-gir-devel
 BuildRequires: libvisual0.4-devel openexr-devel libx265-devel
 BuildRequires: libgtk+3-devel libclutter-devel
+BuildRequires: libbs2b-devel
 %{?_enable_opencv:BuildRequires: libopencv-devel}
 %{?_enable_ladspa:BuildRequires: ladspa_sdk liblrdf-devel libfluidsynth-devel}
 %{?_enable_vulkan:BuildRequires: vulkan-devel}
@@ -148,6 +149,9 @@ subst 's/\(opencv <= 3\.\)3.0/\14.0/' configure.ac
 %endif
 
 %changelog
+* Tue Feb 06 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.4-alt3
+- enabled bs2b support for pulseefects crossfeed plugin
+
 * Fri Feb 02 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.4-alt2
 - rebuild against libopencv_*.so.3
 
