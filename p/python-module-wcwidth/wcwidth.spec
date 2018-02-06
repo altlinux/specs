@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.7
-Release: alt2
+Release: alt2.1
 Summary: Measures number of Terminal column cells of wide-character codes
 License: MIT
 Group: Development/Python
@@ -14,12 +14,12 @@ Url: https://pypi.python.org/pypi/wcwidth/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-coverage python-module-pytest-pep8
 BuildPreReq: python-module-pytest-flakes python-module-pytest-cov
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-coverage python3-module-pytest-pep8
 BuildPreReq: python3-module-pytest-flakes python3-module-pytest-cov
 %endif
@@ -130,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.7-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.7-alt2
 - Fixed tests.
 
