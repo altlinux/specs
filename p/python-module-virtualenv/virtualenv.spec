@@ -5,7 +5,7 @@
 
 Name: python-module-%modulename
 Version: 15.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: Virtual Python Environment builder
 License: MIT
@@ -14,17 +14,19 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/virtualenv
 BuildArch: noarch
 
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 %endif
 %if_with check
 BuildPreReq: python-module-mock
 BuildPreReq: python-module-nose
+BuildRequires: python-module-pytest
 %if_with python3
 BuildPreReq: python3-module-mock
 BuildPreReq: python3-module-nose
+BuildRequires: python3-module-pytest
 %endif
 %endif
 
@@ -126,6 +128,9 @@ py.test3
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 15.1.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Aug 14 2017 Fr. Br. George <george@altlinux.ru> 15.1.0-alt1
 - Autobuild version bump to 15.1.0
 
