@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 2.9.1
-Release: alt3
+Release: alt3.1
 Summary: Python interface to coveralls.io API
 License: ASLv2.0
 Group: Development/Python
@@ -17,13 +17,13 @@ Url: https://pypi.python.org/pypi/python-coveralls/
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-build.patch
 
-BuildRequires: python-module-pytest-cov python-module-pytest-pep8 python-module-setuptools-tests python-module-sh
+BuildRequires: python-module-pytest-cov python-module-pytest-pep8 python-module-setuptools python-module-sh
 BuildRequires: python-module-yaml
 BuildRequires: python-module-httpretty python-module-requests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-html5lib python3-module-mimeparse python3-module-pbr python3-module-pytest-cov
-BuildRequires: python3-module-setuptools-tests python3-module-unittest2 python3-module-yaml python3-tools-pep8
+BuildRequires: python3-module-setuptools python3-module-unittest2 python3-module-yaml python3-tools-pep8
 BuildRequires: python3-module-httpretty python3-module-requests
 %endif
 
@@ -139,6 +139,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.9.1-alt3.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Dec 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.9.1-alt3
 - Fixed build.
 - Disabled tests.
