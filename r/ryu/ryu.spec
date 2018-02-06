@@ -1,6 +1,6 @@
 Name: ryu
 Version: 4.14
-Release: alt1
+Release: alt1.1
 Summary: Component-based Software-defined Networking Framework
 Group: Development/Python
 License: ASL 2.0
@@ -10,7 +10,7 @@ Source: %name-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 0.6
 BuildRequires: python-module-pip
 BuildRequires: python-module-sphinx python-module-sphinx_rtd_theme
@@ -111,6 +111,9 @@ install -m 644 debian/log.conf %buildroot%_logrotatedir/%name
 %doc html
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.14-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jun 06 2017 Alexey Shabalin <shaba@altlinux.ru> 4.14-alt1
 - 4.14
 
