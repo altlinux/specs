@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2.0.1
-Release: alt2.git20140624
+Release: alt2.git20140624.1
 Summary: Twisted wrapper for asynchronous PostgreSQL connections
 License: MIT
 Group: Development/Python
@@ -15,12 +15,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-twisted-core-test python-module-psycopg2
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-twisted-core-test python3-module-psycopg2
 %endif
 
@@ -141,6 +141,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.2.0.1-alt2.git20140624.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Mar 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0.1-alt2.git20140624
 - Fixed build
 
