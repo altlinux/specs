@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.5.0
-Release: alt1
+Release: alt1.1
 Summary: wsgi_intercept installs a WSGI application in place of a real URI for testing
 License: MIT
 Group: Development/Python
@@ -13,12 +13,12 @@ Source: %oname-%version.tar.gz
 Patch: wsgi_intercept-fix.urllib3.patch
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-sphinx-devel python-module-requests
 BuildRequires: python-module-httplib2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 %endif
 
 
@@ -173,6 +173,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.5.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Jun 16 2017 Alexey Shabalin <shaba@altlinux.ru> 1.5.0-alt1
 - 1.5.0
 
