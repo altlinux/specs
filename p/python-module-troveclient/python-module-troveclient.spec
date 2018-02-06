@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 2.8.0
-Release: alt1
+Release: alt1.1
 Summary: Client library for OpenStack DBaaS API
 Group: Development/Python
 License: ASL 2.0
@@ -13,7 +13,7 @@ Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.
 BuildArch: noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-reno >= 1.8.0
@@ -33,7 +33,7 @@ BuildRequires: python-module-osc-lib >= 1.2.0
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-prettytable >= 0.7.1
@@ -155,6 +155,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc html
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.8.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Jun 01 2017 Alexey Shabalin <shaba@altlinux.ru> 2.8.0-alt1
 - 2.8.0
 - add test packages
