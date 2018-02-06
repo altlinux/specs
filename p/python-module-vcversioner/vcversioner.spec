@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.16.0.0
-Release: alt1
+Release: alt1.1
 Summary: Use version control tags to discover version numbers
 License: ISCL
 Group: Development/Python
@@ -14,10 +14,12 @@ Url: https://pypi.python.org/pypi/vcversioner/
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: git-core python-module-setuptools-tests
+BuildRequires: git-core python-module-setuptools
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -106,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.16.0.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Aug 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.16.0.0-alt1
 - Updated to upstream version 2.16.0.0.
 
