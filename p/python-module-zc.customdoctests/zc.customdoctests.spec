@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.git20140409.1.1.1
+Release: alt1.dev0.git20140409.1.1.1.1
 %define oname zc.customdoctests
 
 %def_with python3
@@ -16,12 +16,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/zopefoundation/zc.customdoctests.git
 Source: %name-%version.tar
 
-#BuildPreReq: python-module-setuptools-tests
+#BuildPreReq: python-module-setuptools
 #BuildPreReq: python-module-spidermonkey
 #BuildPreReq: python-module-manuel-tests python-module-zope.testing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-module-setuptools-tests
+#BuildPreReq: python3-module-setuptools
 #BuildPreReq: python3-module-manuel-tests python3-module-zope.testing
 %endif
 
@@ -30,7 +30,7 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-manuel python-module-pytest python-module-setuptools python-module-six python-module-zc python-module-zope.exceptions python-module-zope.interface python-module-zope.testing python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools python3-module-zc python3-module-zope python3-module-zope.exceptions python3-module-zope.interface
-BuildRequires: python-module-manuel-tests python-module-setuptools-tests python-module-spidermonkey python3-module-manuel python3-module-setuptools-tests python3-module-zope.testing rpm-build-python3
+BuildRequires: python-module-manuel-tests python-module-setuptools python-module-spidermonkey python3-module-manuel python3-module-setuptools python3-module-zope.testing rpm-build-python3
 
 %description
 doctest (and recently manuel) provide hooks for using custom doctest
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.2-alt1.dev0.git20140409.1.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.2-alt1.dev0.git20140409.1.1.1
 - (AUTO) subst_x86_64.
 
