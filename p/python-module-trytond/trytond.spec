@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.2.1
-Release: alt1
+Release: alt1.1
 Summary: Tryton server
 License: GPL
 Group: Development/Python
@@ -15,7 +15,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/17/f7/c7981ea71084c8dc4adf61627bd9265716407bc7cedf13bc746dd51cde76/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-lxml python-module-relatorio
 BuildPreReq: python-module-genshi python-module-dateutil
 BuildPreReq: python-module-polib python-module-sql
@@ -26,7 +26,7 @@ BuildPreReq: python-module-bcrypt python-module-Levenshtein
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-lxml
 BuildPreReq: python3-module-genshi python3-module-dateutil
 BuildPreReq: python3-module-polib python3-module-sql
@@ -179,6 +179,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.2.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt1
 - automated PyPI update
 
