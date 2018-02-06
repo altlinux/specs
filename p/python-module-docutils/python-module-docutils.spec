@@ -4,7 +4,7 @@
 
 Summary: Docutils -- Python Documentation Utilities
 Version: 0.14
-Release: alt1
+Release: alt1.1
 %setup_python_module %oname
 Name: %packagename
 License: public domain, Python, BSD, GPL (see COPYING.txt)
@@ -24,6 +24,7 @@ Conflicts: Zope-docutils
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python-tools-2to3
 %add_python3_req_skip pygments
+%add_python3_req_skip pygments.formatter
 %endif
 %add_python_req_skip pygments
 
@@ -129,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 06 2018 Stanislav Levin <slev@altlinux.org> 0.14-alt1.1
+- (NMU) Fix Requires to pygments.formatter
+
 * Wed Oct 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.14-alt1
 - Updated to upstream version 0.14.
 
