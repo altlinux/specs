@@ -8,7 +8,7 @@
 %define xapp kf5
 Name: %xde-%rname
 Version: 18.2.0.%svn
-Release: alt1%ubt
+Release: alt2%ubt
 
 %define qt_bin_dir %_qt5_bindir
 %define configure_qmake %qmake_qt5
@@ -48,6 +48,7 @@ Conflicts: kde4-smplayer < 14.9.0.7049
 %package backend-2-mpv
 Group: System/Libraries
 Summary: MPV %name backend
+BuildArch: noarch
 Provides:  %name-backend = %version-%release
 Provides:  %name-backend-mpv = %version-%release
 Requires: %name-common = %EVR
@@ -56,6 +57,7 @@ Requires: mpv
 %package backend-4-mplayer
 Group: System/Libraries
 Summary: MPlayer %name backend
+BuildArch: noarch
 Provides:  %name-backend = %version-%release
 Provides:  %name-backend-mplayer = %version-%release
 Requires: %name-common = %EVR
@@ -169,6 +171,9 @@ done
 
 
 %changelog
+* Tue Feb 06 2018 Sergey V Turchin <zerg@altlinux.org> 18.2.0.8910-alt2%ubt
+- fix noarch packages
+
 * Tue Feb 06 2018 Sergey V Turchin <zerg@altlinux.org> 18.2.0.8910-alt1%ubt
 - new version
 
