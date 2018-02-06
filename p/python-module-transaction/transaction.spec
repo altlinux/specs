@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.1.2
-Release: alt1
+Release: alt1.1
 Summary: Transaction management for Python
 License: ZPLv2.1
 Group: Development/Python
@@ -17,10 +17,12 @@ Patch1: %oname-%version-alt-docs.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib  python-module-objects.inv python-module-repoze.sphinx.autointerface 
-BuildRequires: python-module-coverage python-module-nose python-module-setuptools-tests
+BuildRequires: python-module-coverage python-module-nose python-module-setuptools
+BuildRequires: python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-coverage python3-module-nose python3-module-setuptools-tests python3-module-zope
+BuildRequires: python3-module-coverage python3-module-nose python3-module-setuptools python3-module-zope
+BuildRequires: python3-module-mock
 %endif
 
 %py_requires zope.interface
@@ -186,6 +188,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.1.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.2-alt1
 - Update to upstream version 2.1.2.
 
