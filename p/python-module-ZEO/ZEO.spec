@@ -7,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 4.2.0
-Release: alt3.dev0.git20150605.1
+Release: alt3.dev0.git20150605.1.1.1
 Summary: ZEO provides a client-server storage implementation for ZODB
 License: ZPL
 Group: Development/Python
@@ -18,7 +18,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-zope.testing
 BuildPreReq: python-module-manuel
 BuildPreReq: python-module-transaction
@@ -29,7 +29,7 @@ BuildPreReq: python-module-zdaemon
 BuildPreReq: python-module-zope.interface
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-zope.testing
 BuildPreReq: python3-module-manuel
 BuildPreReq: python3-module-transaction
@@ -70,6 +70,7 @@ This package contains tests for ZEO.
 Summary: ZEO provides a client-server storage implementation for ZODB
 Group: Development/Python3
 %py3_requires ZODB persistent zc.lockfile ZConfig zdaemon zope.interface
+%add_python3_req_skip ZODB.Transaction
 
 %description -n python3-module-%oname
 ZEO is a client-server system for sharing a single storage among many
@@ -165,6 +166,12 @@ popd
 %endif
 
 %changelog
+* Mon Feb 05 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt3.dev0.git20150605.1.1.1
+- (NMU) Fix Requires to ZODB.Transaction
+
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt3.dev0.git20150605.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.2.0-alt3.dev0.git20150605.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
