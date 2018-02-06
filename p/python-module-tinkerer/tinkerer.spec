@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.6.0
-Release: alt1.git20170528
+Release: alt1.git20170528.1
 Summary: Sphinx-based blogging engine
 License: BSD
 Group: Development/Python
@@ -14,14 +14,14 @@ Url: https://pypi.python.org/pypi/Tinkerer
 # https://github.com/vladris/tinkerer.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-pyquery
 BuildRequires: python-module-objects.inv python-module-alabaster python-module-docutils python-module-html5lib
 BuildRequires: python-module-tox python-module-nose python-module-mock python-module-coverage
 BuildRequires(pre): rpm-macros-sphinx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pyquery
 BuildRequires: python3-module-sphinx python3-module-pbr python3-module-html5lib
 BuildRequires: python3-module-tox python3-module-unittest2 python3-module-nose python3-module-coverage
@@ -167,6 +167,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1.git20170528.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Oct 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.0-alt1.git20170528
 - Updated to upstream version 1.6.0.
 
