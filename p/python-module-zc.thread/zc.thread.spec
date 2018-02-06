@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.znanja1.git20120922.1.1
+Release: alt1.znanja1.git20120922.1.1.1
 %define oname zc.thread
 
 %def_with python3
@@ -16,12 +16,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/znanja/zc.thread.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-mock
 BuildPreReq: python-module-zope.testing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-mock
 BuildPreReq: python3-module-zope.testing
 %endif
@@ -123,6 +123,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.0-alt1.znanja1.git20120922.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.0-alt1.znanja1.git20120922.1.1
 - (AUTO) subst_x86_64.
 
