@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.git20150613.1.1.1
+Release: alt1.dev0.git20150613.1.1.1.1
 %define oname zope.contentprovider
 
 %def_with python3
@@ -15,14 +15,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-zope.event python-module-zope.location
 #BuildPreReq: python-module-zope.publisher python-module-zope.schema
 #BuildPreReq: python-module-zope.tales python-module-zope.browserpage
 #BuildPreReq: python-module-zope.testing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-zope.event python3-module-zope.location
 #BuildPreReq: python3-module-zope.publisher python3-module-zope.schema
 #BuildPreReq: python3-module-zope.tales python3-module-zope.browserpage
@@ -34,7 +34,7 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-RestrictedPython python-module-persistent python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-transaction python-module-zope python-module-zope.browser python-module-zope.component python-module-zope.configuration python-module-zope.contenttype python-module-zope.event python-module-zope.exceptions python-module-zope.hookable python-module-zope.i18n python-module-zope.i18nmessageid python-module-zope.interface python-module-zope.location python-module-zope.pagetemplate python-module-zope.proxy python-module-zope.publisher python-module-zope.schema python-module-zope.security python-module-zope.tal python-module-zope.tales python-module-zope.traversing python-module-zope.untrustedpython python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-modules-xml python3 python3-base python3-module-pytz python3-module-setuptools python3-module-transaction python3-module-zope python3-module-zope.browser python3-module-zope.component python3-module-zope.configuration python3-module-zope.contenttype python3-module-zope.event python3-module-zope.exceptions python3-module-zope.i18n python3-module-zope.i18nmessageid python3-module-zope.interface python3-module-zope.location python3-module-zope.pagetemplate python3-module-zope.proxy python3-module-zope.publisher python3-module-zope.schema python3-module-zope.security python3-module-zope.tal python3-module-zope.tales python3-module-zope.traversing
-BuildRequires: python-module-setuptools-tests python-module-zope.browserpage python-module-zope.testing python3-module-pytest python3-module-zope.browserpage python3-module-zope.testing rpm-build-python3
+BuildRequires: python-module-setuptools python-module-zope.browserpage python-module-zope.testing python3-module-pytest python3-module-zope.browserpage python3-module-zope.testing rpm-build-python3
 
 %description
 This package provides a framework to develop componentized Web GUI
@@ -153,6 +153,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.0.1-alt1.dev0.git20150613.1.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.1-alt1.dev0.git20150613.1.1.1
 - (AUTO) subst_x86_64.
 
