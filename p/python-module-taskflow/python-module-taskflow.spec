@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 2.9.0
-Release: alt1
+Release: alt1.1
 Epoch: 1
 Summary: Taskflow structured state management library
 
@@ -15,7 +15,7 @@ Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
@@ -66,7 +66,7 @@ Requires: python-module-oslo.utils
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-futurist >= 0.1.2
@@ -183,6 +183,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:2.9.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri May 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1:2.9.0-alt1
 - 2.9.0
 - add test packages
