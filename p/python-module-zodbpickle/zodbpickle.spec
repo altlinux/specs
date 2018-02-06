@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.6.1
-Release: alt1.dev0.git20150414.1.1
+Release: alt1.dev0.git20150414.1.1.1
 Summary: Fork of Python 3 pickle module
 License: ZPL
 Group: Development/Python
@@ -15,13 +15,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/zopefoundation/zodbpickle.git
 Source: %name-%version.tar
 
-#BuildPreReq: python-module-setuptools-tests
+#BuildPreReq: python-module-setuptools
 #BuildPreReq: python-module-nose
 #BuildPreReq: python-module-coverage
 #BuildPreReq: python-test
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-nose
 #BuildPreReq: python3-module-coverage
 #BuildPreReq: python3-test
@@ -36,7 +36,7 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: elfutils python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-setuptools
-BuildRequires: python-module-coverage python-module-nose python-module-setuptools-tests python-test python3-devel python3-module-coverage python3-module-nose python3-module-pytest rpm-build-python3 time
+BuildRequires: python-module-coverage python-module-nose python-module-setuptools python-test python3-devel python3-module-coverage python3-module-nose python3-module-pytest rpm-build-python3 time
 
 %description
 This package presents a uniform pickling interface for ZODB.
@@ -131,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.6.1-alt1.dev0.git20150414.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.1-alt1.dev0.git20150414.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
