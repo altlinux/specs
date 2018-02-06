@@ -5,7 +5,7 @@
 Name: dahdi-tools
 Summary: DAHDI tools for Digium hardware and Asterisk
 Version: 2.10.2
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Kernel and hardware
 BuildRequires: dahdi-linux-headers gcc-c++ libncurses-devel libnewt-devel libpcap-devel libusb-compat-devel module-init-tools perl-Pod-Parser ppp-devel wget
@@ -146,6 +146,7 @@ Dahdi tools only
 %patch3 -p1
 
 %build
+%add_optflags -Wno-error=unused-const-variable
 %configure
 %make_build
 %make_build -C ppp
@@ -226,15 +227,15 @@ mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 %_sbindir/xpp_sync
 %_man8dir/xpp_sync.8.*
 %_sbindir/astribank_allow
-%_man8dir/astribank_allow.8.gz
+%_man8dir/astribank_allow.8.*
 %_sbindir/astribank_hexload
-%_man8dir/astribank_hexload.8.gz
+%_man8dir/astribank_hexload.8.*
 %_sbindir/astribank_tool
-%_man8dir/astribank_tool.8.gz
+%_man8dir/astribank_tool.8.*
 %_sbindir/astribank_is_starting
-%_man8dir/astribank_is_starting.8.gz
+%_man8dir/astribank_is_starting.8.*
 %_sbindir/twinstar
-%_man8dir/twinstar.8.gz
+%_man8dir/twinstar.8.*
 %_udevrulesdir/xpp.rules
 
 %files -n dahdi_diag
@@ -279,6 +280,9 @@ mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 %_libdir/pppd/*/*.so
 
 %changelog
+* Tue Feb 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10.2-alt2
+- Fixed build with new toolchain.
+
 * Wed Aug 26 2015 Denis Smirnov <mithraen@altlinux.ru> 2.10.2-alt1
 - new version 2.10.2
 
