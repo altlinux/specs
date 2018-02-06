@@ -6,7 +6,7 @@ BuildRequires: unzip
 
 Name: python-module-%oname
 Version: 3.0
-Release: alt1
+Release: alt1.1
 Summary: A RAM-based storage for ZODB
 License: ZPLv2.1
 Group: Development/Python
@@ -17,11 +17,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/9b/6e/79cd4bae58329f6c0d15bb906300b474f9c3988bfa414a72f5a3dbdb02ae/%{oname}-%{version}.zip
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-zope.testing python-module-ZODB3
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python-tools-2to3 python3-module-zope.testing
 #BuildPreReq: python3-module-ZODB3 python3-module-zodbpickle
 %endif
@@ -30,7 +30,7 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-BTrees python-module-ZODB python-module-persistent python-module-pytest python-module-setuptools python-module-transaction python-module-zc.lockfile python-module-zdaemon python-module-zodbpickle python-module-zope.event python-module-zope.exceptions python-module-zope.interface python-module-zope.proxy python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-BTrees python3-module-ZODB python3-module-persistent python3-module-pytest python3-module-setuptools python3-module-transaction python3-module-zc.lockfile python3-module-zdaemon python3-module-zope python3-module-zope.event python3-module-zope.exceptions python3-module-zope.interface python3-module-zope.proxy
-BuildRequires: python-module-ZEO python-module-setuptools-tests python-module-zope.testing python3-module-ZEO python3-module-setuptools-tests python3-module-zodbpickle python3-module-zope.testing rpm-build-python3 time
+BuildRequires: python-module-ZEO python-module-setuptools python-module-zope.testing python3-module-ZEO python3-module-setuptools python3-module-zodbpickle python3-module-zope.testing rpm-build-python3 time
 
 %description
 A storage implementation which uses RAM to persist objects, much like
@@ -128,6 +128,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1
 - automated PyPI update
 
