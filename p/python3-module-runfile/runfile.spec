@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.46.1
-Release: alt1.git20141130.2
+Release: alt1.git20141130.2.1
 Summary: Run tasks from files
 License: MIT
 Group: Development/Python3
@@ -15,7 +15,7 @@ Url: https://pypi.python.org/pypi/runfile/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-sugarbowl python3-module-clyde
 BuildRequires: python3-module-nose python3-module-coverage
 %if_with docs
@@ -57,6 +57,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.46.1-alt1.git20141130.2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Nov 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.46.1-alt1.git20141130.2
 - Rebuilt without docs since doc generation config is incompatible with python-module-sphinx-1.6.5.
 
