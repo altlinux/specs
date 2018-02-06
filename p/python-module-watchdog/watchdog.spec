@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.8.3
-Release: alt3.git20150727
+Release: alt3.git20150727.1
 Summary: Filesystem events monitoring
 License: ASLv2.0
 Group: Development/Python
@@ -17,11 +17,11 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
-BuildRequires: python-module-pathtools python-module-pytest-cov python-module-pytest-timeout python-module-setuptools-tests python-module-yaml
+BuildRequires: python-module-pathtools python-module-pytest-cov python-module-pytest-timeout python-module-setuptools python-module-yaml
 BuildRequires: python2.7(argh)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pathtools python3-module-pytest-cov python3-module-pytest-timeout python3-module-setuptools-tests python3-module-yaml
+BuildRequires: python3-module-pathtools python3-module-pytest-cov python3-module-pytest-timeout python3-module-setuptools python3-module-yaml
 BuildRequires: python3(argh)
 %endif
 
@@ -135,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.3-alt3.git20150727.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.3-alt3.git20150727
 - Rebuilt to update provides.
 - Cleaned up spec.
