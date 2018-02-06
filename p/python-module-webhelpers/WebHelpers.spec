@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt2.1.1
+Release: alt2.1.1.1
 Summary: Helper functions intended to make writing templates in web applications easier
 License: BSD
 Group: Development/Python
@@ -14,7 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: WebHelpers-%version.tar.gz
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-sphinx-devel texlive-latex-recommended
 #BuildPreReq: python-module-sphinx-devel python-module-nose
 #BuildPreReq: python-module-routes python-module-webob
@@ -28,7 +28,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-SQLAlchemy python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-repoze python-module-repoze.lru python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-webob python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python-modules-xml python-tools-2to3 python3 python3-base
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pysqlite2 python-module-routes python-module-setuptools-tests python3-module-setuptools rpm-build-python3 time
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pysqlite2 python-module-routes python-module-setuptools python3-module-setuptools rpm-build-python3 time
 
 %description
 Web Helpers is a library of helper functions intended to make writing
@@ -148,6 +148,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3-alt2.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3-alt2.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
