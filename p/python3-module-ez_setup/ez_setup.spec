@@ -1,7 +1,7 @@
 %define oname ez_setup
 Name: python3-module-%oname
 Version: 0.9
-Release: alt1
+Release: alt1.1
 Summary: ez_setup.py and distribute_setup.py
 License: MIT
 Group: Development/Python3
@@ -13,7 +13,7 @@ Source0: https://pypi.python.org/packages/ba/2c/743df41bd6b3298706dfe91b0c7ecdc4
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 
 %py3_provides %oname
 
@@ -37,6 +37,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Jan 06 2017 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1
 - automated PyPI update
 
