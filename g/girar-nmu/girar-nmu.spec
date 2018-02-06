@@ -1,5 +1,5 @@
 Name: girar-nmu
-Version: 1.48
+Version: 1.49
 Release: alt1
 
 Summary: git.alt client utilities for NMU automation
@@ -51,6 +51,9 @@ install -m 644 girar-*.1 %buildroot%_man1dir/
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Tue Feb 06 2018 Igor Vlasenko <viy@altlinux.ru> 1.49-alt1
+- added support for gpg agent forwarding thanks to slev@
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.48-alt1
 - new version
 
