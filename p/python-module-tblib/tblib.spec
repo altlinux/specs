@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.3.0
-Release: alt1
+Release: alt1.1
 Summary: Traceback fiddling library. Allows you to pickle tracebacks
 License: BSD
 Group: Development/Python
@@ -16,11 +16,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/52/aa/aefcbf6b2976fc91d5c32c4014f40e2202654279654cc509b613d7cf5568/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-six
 %endif
 
@@ -29,7 +29,7 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
 
 %description
 Traceback fiddling library. For now allows you to pickle tracebacks and
@@ -93,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1
 - automated PyPI update
 
