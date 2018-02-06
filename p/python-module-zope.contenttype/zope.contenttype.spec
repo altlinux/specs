@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1
+Release: alt1.1
 %define oname zope.contenttype
 
 %def_with python3
@@ -17,10 +17,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/zopefoundation/zope.contenttype.git
 Source0: https://pypi.python.org/packages/e0/56/25c9ea14b6632a9e90f96ecc88e10caf743e66a6365b06d6ff881e16af06/%{oname}-%{version}.tar.gz
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildPreReq: python-tools-2to3
 %endif
 
@@ -123,6 +123,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1
 - automated PyPI update
 
