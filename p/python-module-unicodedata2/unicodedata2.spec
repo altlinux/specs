@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 7.0.0.2
-Release: alt1.git20150807
+Release: alt1.git20150807.1
 Summary: Unicodedata backport for python 2 updated to the latest unicode version
 License: ASLv2.0
 Group: Development/Python
@@ -14,10 +14,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/mikekap/unicodedata2.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -84,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 7.0.0.2-alt1.git20150807.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.0.0.2-alt1.git20150807
 - Initial build for Sisyphus
 
