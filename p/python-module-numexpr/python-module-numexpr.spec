@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        2.6.2
-Release:        alt1.1
+Release:        alt2
 Epoch: 1
 Summary:        Fast numerical array expression evaluator for Python and NumPy
 Group:          Development/Python
@@ -106,7 +106,9 @@ This package contains tests for numexpr.
 %patch1 -p1
 install -p -m644 %SOURCE1 ./
 sed -i 's|@LIBDIR@|%_libdir|' site.cfg
-
+%ifnarch %ix86 x86_64
+sed -i 's@ openblas,@ blas,@' site.cfg
+%endif
 %if_with python3
 cp -fR . ../python3
 find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
@@ -166,6 +168,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 06 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.6.2-alt2
+- fix build on arm
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:2.6.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
