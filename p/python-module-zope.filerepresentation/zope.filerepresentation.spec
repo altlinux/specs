@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.git20150228.1.1
+Release: alt1.dev0.git20150228.1.1.1
 %define oname zope.filerepresentation
 
 %def_with python3
@@ -15,14 +15,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-zope.interface
 BuildPreReq: python-module-zope.schema
 BuildPreReq: python-module-nose python-module-coverage
 BuildPreReq: python-module-nosexcover
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-zope.interface
 BuildPreReq: python3-module-zope.schema
 BuildPreReq: python3-module-nose python3-module-coverage
@@ -146,6 +146,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.1.1-alt1.dev0.git20150228.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.1-alt1.dev0.git20150228.1.1
 - (AUTO) subst_x86_64.
 
