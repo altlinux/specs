@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.4.18
-Release: alt2.git20141002
+Release: alt2.git20141002.1
 Summary: Asynchronous Redis client that works within Tornado IO loop
 License: ASLv2.0
 Group: Development/Python
@@ -14,11 +14,11 @@ Url: https://pypi.python.org/pypi/tornado-redis/
 # https://github.com/leporo/tornado-redis.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-tornado
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-tornado
 %endif
 
@@ -89,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.4.18-alt2.git20141002.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Dec 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.4.18-alt2.git20141002
 - Fixed build.
 
