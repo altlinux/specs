@@ -1,7 +1,7 @@
 %define oname sqlitedict
 Name: python3-module-%oname
 Version: 1.5.0
-Release: alt1
+Release: alt1.1
 Summary: Persistent dict in Python, backed up by sqlite3 and pickle, multithread-safe
 License: Public domain
 Group: Development/Python3
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-pytest python3-modules-sqlite3
 
 %py3_provides %oname
@@ -39,6 +39,9 @@ PYTHONPATH=$(pwd) py.test3
 %python3_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.5.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Aug 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.0-alt1
 - Updated to upstream version 1.5.0.
 
