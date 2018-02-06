@@ -7,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 1.0.0
-Release: alt1
+Release: alt1.1
 Summary: Telnet server and client Protocol library using asyncio
 License: ISC
 Group: Development/Python
@@ -18,12 +18,12 @@ Url: https://pypi.python.org/pypi/telnetlib3/
 Source: %name-%version.tar
 
 %if_with python2
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(asyncio)
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(asyncio)
 BuildRequires: python3-module-html5lib
 %endif
@@ -107,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Dec 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt1
 - Updated to upstream version 1.0.0.
 
