@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.12.1
-Release: alt1
+Release: alt1.1
 
 Summary: Media asset management for Python, with glue code for various web frameworks
 
@@ -22,7 +22,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-nose python-module-mock
 BuildPreReq: python-module-yaml python-module-glob2
 BuildPreReq: python-module-jinja2 python-module-cssutils
@@ -40,7 +40,7 @@ BuildPreReq: python-module-sphinx-devel
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-nose python3-module-mock
 BuildPreReq: python3-module-yaml python3-module-glob2
 BuildPreReq: python3-module-jinja2 python3-module-cssutils
@@ -215,6 +215,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.12.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Oct 04 2017 Vitaly Lipatov <lav@altlinux.ru> 0.12.1-alt1
 - switch to build from tarball
 - new version (0.12.1) with rpmgs script
