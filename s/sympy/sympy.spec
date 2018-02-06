@@ -3,7 +3,7 @@
 Name: sympy
 Version: 1.1.1
 Epoch: 1
-Release: alt1
+Release: alt1.1
 Summary: A Python library for symbolic mathematics
 License: New BSD License
 Group: Sciences/Mathematics
@@ -18,7 +18,7 @@ Patch1: %name-%version-alt-build.patch
 Requires: python-module-%name = %EVR
 
 BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-py python-module-setuptools-tests
+BuildRequires: python-devel python-module-py python-module-setuptools
 BuildRequires: dvipng python-module-sphinx-devel python-module-Pygments
 BuildRequires: python-module-docutils python-module-numpy librsvg-utils
 BuildRequires: python-module-mpmath
@@ -26,7 +26,7 @@ BuildRequires: ImageMagick-tools graphviz
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-py python-tools-2to3
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-mpmath
 %endif
 
@@ -263,6 +263,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:1.1.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Oct 02 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.1.1-alt1
 - Updated to upstream version 1.1.1.
 
