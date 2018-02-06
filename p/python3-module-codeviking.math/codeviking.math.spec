@@ -2,7 +2,7 @@
 %define oname %mname.math
 Name: python3-module-%oname
 Version: 0.18.1
-Release: alt1
+Release: alt1.1
 Summary: Function and method call math
 License: MIT
 Group: Development/Python3
@@ -11,7 +11,7 @@ Url: https://pypi.python.org/pypi/CodeViking.math/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests python3-module-pytest
+BuildPreReq: python3-devel python3-module-setuptools python3-module-pytest
 
 %py3_provides %oname
 
@@ -41,6 +41,9 @@ PYTHONPATH=$(pwd) py.test3
 %python3_sitelibdir/CodeViking.math-*.pth
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.18.1-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Aug 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.18.1-alt1
 - Updated to upstream version 0.18.1.
 
