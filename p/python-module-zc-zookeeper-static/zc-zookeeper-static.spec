@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.4.4.1
-Release: alt1.git20120925
+Release: alt1.git20120925.1
 Summary: ZooKeeper Python bindings
 License: Apache
 Group: Development/Python
@@ -15,7 +15,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 #Source1: http://apache.osuosl.org/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: doxygen graphviz cppunit-devel gcc-c++
 
 %py_provides zookeeper
@@ -41,6 +41,9 @@ python get_source_files.py $PWD/zookeeper-%zkver.tar.gz
 %python_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.4.4.1-alt1.git20120925.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Nov 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.4.1-alt1.git20120925
 - Initial build for Sisyphus
 
