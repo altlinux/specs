@@ -3,7 +3,7 @@
 
 Name: python-module-zipstream
 Version: 1.1.4
-Release: alt2
+Release: alt2.1
 Summary: ZIP archive generator for Python
 
 License: GPLv3+
@@ -16,9 +16,9 @@ BuildArch: noarch
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests python3-module-nose
+BuildRequires: python3-devel python3-module-setuptools python3-module-nose
 %endif
-BuildRequires: python-devel python-module-setuptools-tests python-module-nose
+BuildRequires: python-devel python-module-setuptools python-module-nose
 %py_provides %oname
 
 %description
@@ -83,6 +83,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.1.4-alt2.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Sun Jan 22 2017 Anton Midyukov <antohami@altlinux.org> 1.1.4-alt2
 - srpm build
 
