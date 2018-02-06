@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt2.git20150311
+Release: alt2.git20150311.1
 Summary: asyncio version of http.client
 License: PSFL
 Group: Development/Python
@@ -17,12 +17,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-asyncio
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-asyncio
 %endif
 
@@ -32,7 +32,7 @@ Requires: python-module-%mname.http = %EVR
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python3-module-setuptools-tests rpm-build-python3
+BuildRequires: python3-module-setuptools rpm-build-python3
 
 %description
 Asyncio conversion of http.client.
@@ -138,6 +138,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.2-alt2.git20150311.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Thu Apr 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.2-alt2.git20150311
 - (.spec) re-write in a non-x86_64-centric manner.
 - (.spec) %%py3_{provides,requires} should be auto-generated fine.
