@@ -1,7 +1,8 @@
 Name: rpm-macros-lua
 Version: 1.3
-Release: alt1
+Release: alt2
 Summary: RPM helper macros to build Lua packages
+Url: https://www.altlinux.org/Lua_Policy
 License: GPL
 Group: Development/Other
 BuildArch: noarch
@@ -23,6 +24,9 @@ install -pD -m644 %SOURCE0 %buildroot%_rpmlibdir/macros.d/lua
 %_rpmlibdir/macros.d/lua
 
 %changelog
+* Tue Oct 10 2017 Ildar Mulyukov <ildar@altlinux.ru> 1.3-alt2
+- improve lua interpreter autodetection
+
 * Tue Sep 26 2017 Ildar Mulyukov <ildar@altlinux.ru> 1.3-alt1
 - %%luarocks_make modernized to handle cross-Lua builds (build module for 5.1)
   on top of built 5.3 module
