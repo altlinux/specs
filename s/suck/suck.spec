@@ -2,23 +2,21 @@
 
 Name: suck
 Version: 4.3.2
-Release: alt4.1.1.qa1
+Release: alt5
 
 Summary: download news from remote NNTP server
 License: Public Domain
 Group: Networking/News
 
 URL: http://www.sucknews.org
-Source: %name-%version.tar.gz
-Source1: sample.tar.gz
+Source: %name-%version.tar
+Source1: sample.tar
 Source2: active-ignore
 Patch0: %name-warn.patch
 Patch1: %name-4.3.2-alt-configure.patch
 Patch2: %name-4.3.2-rpost-ssl-alt.patch
 
-Packager: Vladimir V Kamarzin <vvk@altlinux.ru>
-
-BuildRequires: libdante libssl openssl-devel
+BuildRequires: libssl openssl-devel
 %if %BUILD_INN
 BuildRequires: inn-devel
 %endif
@@ -62,6 +60,9 @@ mkdir -p %buildroot%_localstatedir/sucknews/tmp
 %attr (660,root,news) %config(noreplace) %_localstatedir/sucknews/active-ignore
 
 %changelog
+* Wed Feb 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.2-alt5
+- Updated build dependencies.
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.3.2-alt4.1.1.qa1
 - NMU: rebuilt for updated dependencies.
 
