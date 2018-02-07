@@ -1,5 +1,5 @@
 Name: ostree
-Version: 2017.14
+Version: 2018.1
 Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
@@ -136,6 +136,9 @@ rm -rf %buildroot/lib/systemd/system-generators/ostree-system-generator
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Feb 07 2018 Vitaly Lipatov <lav@altlinux.ru> 2018.1-alt1
+- new version 2018.1 (with rpmrb script)
+
 * Sun Dec 24 2017 Vitaly Lipatov <lav@altlinux.ru> 2017.14-alt1
 - new version 2017.14 (with rpmrb script)
 
