@@ -3,8 +3,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker-miners
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -60,7 +60,7 @@ BuildRequires: gstreamer1.0-devel >= %gst_ver gst-plugins1.0-devel >= %gst_ver
 
 BuildRequires: meson intltool rpm-build-xdg
 BuildRequires: tracker-devel >= %ver_major
-BuildRequires:  libupower-devel libstemmer-devel libicu-devel libenca-devel libseccomp-devel
+BuildRequires: libupower-devel libstemmer-devel libicu-devel libenca-devel libseccomp-devel
 BuildRequires: libavformat-devel >= 0.8.4 libavcodec-devel libavutil-devel
 %{?_enable_libxml2:BuildPreReq: libxml2-devel >= %libxml2_ver}
 %{?_enable_rss:BuildPreReq: libgrss-devel >= %libgrss_ver}
@@ -165,6 +165,9 @@ This package provides miners for TRacker.
 
 
 %changelog
+* Wed Feb 07 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt1
+- 2.0.4
+
 * Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt2
 - rebuilt against libicu*.so.60
 

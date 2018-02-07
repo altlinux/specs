@@ -6,7 +6,6 @@
 
 %def_without bootstrap
 %def_enable introspection
-%def_disable hal
 %def_enable upower
 %def_enable network_manager
 %def_enable gtk_doc
@@ -17,8 +16,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -38,7 +37,6 @@ Requires: lib%name = %version-%release
 %define glib_ver 2.44.0
 %define pango_ver 1.0.0
 %define gtk_ver 3.0.0
-%define hal_ver 0.5
 %define upower_ver 0.9.0
 %define nm_ver 0.8
 %define gst_ver 1.0
@@ -58,7 +56,6 @@ BuildPreReq: libpango-devel >= %pango_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildRequires: libsoup-devel >= %soup_ver libjson-glib-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.9.5}
-%{?_enable_hal:BuildPreReq: libhal-devel >= %hal_ver}
 %{?_enable_upower:BuildPreReq: libupower-devel >= %upower_ver}
 %{?_enable_network_manager:BuildPreReq: NetworkManager-glib-devel >= %nm_ver libnm-devel}
 BuildRequires: libstemmer-devel
@@ -155,7 +152,6 @@ Included utilities for Tracker:
 %configure \
 	--disable-static \
 	%{subst_enable introspection} \
-	%{subst_enable hal} \
 	%{subst_enable upower} \
 	--with-unicode-support=%unicode_support \
 	%{?_enable_network_manager:--enable-network-manager} \
@@ -234,6 +230,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 
 
 %changelog
+* Wed Feb 07 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
+- 2.0.3
+
 * Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt2
 - rebuilt against libicu*.so.60
 
