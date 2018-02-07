@@ -1,6 +1,6 @@
 Name: fortunes-kernelcookies
 Version: 9
-Release: alt1
+Release: alt2
 
 Summary: A collection of funny (or strange) lines from the Linux kernel
 Group: Games/Other
@@ -29,6 +29,9 @@ strfile %buildroot%_gamesdatadir/fortune/kernelcookies %buildroot%_gamesdatadir/
 %doc CHANGES README THANKS
 
 %changelog
+* Wed Feb 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 9-alt2
+- Rebuilt.
+
 * Fri Aug 10 2007 Vladimir V Kamarzin <vvk@altlinux.ru> 9-alt1
 - New version
 
