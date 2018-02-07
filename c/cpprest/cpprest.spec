@@ -5,7 +5,7 @@
 %define ver_major 2.10
 
 Name: cpprest
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: C++ REST library
@@ -92,6 +92,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make -C BUILD test
 %doc README.md
 
 %changelog
+* Wed Feb 07 2018 Yuri N. Sedunov <aris@altlinux.org> 2.10.2-alt1
+- 2.10.2
+
 * Fri Jan 19 2018 Yuri N. Sedunov <aris@altlinux.org> 2.10.1-alt1
 - first build for Sisyphus
 
