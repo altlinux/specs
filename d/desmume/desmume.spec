@@ -1,15 +1,15 @@
 Name: desmume
-Version: 0.9.8
+Version: 0.9.11
 Release: alt1
 Summary: A Nintendo DS emulator
-
 Group: Emulators
 License: GPLv2+
-Packager: Ilya Mashkin <oddity@altlinux.ru>
 Url: http://desmume.org/
-Source0: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
+# http://downloads.sourceforge.net/%%name/%%name-%%version.tar.gz
+Source: %name-%version.tar
 # Do not look into builddir
-Patch0: %name-0.9-dontlookinbuilddir.patch
+Patch: %name-0.9-dontlookinbuilddir.patch
+Patch1: %name-0.9.11-alt-c++-compat.patch
 
 BuildRequires: libgtkglext-devel
 BuildRequires: libglade-devel
@@ -47,7 +47,8 @@ This is the CLI version.
 
 %prep
 %setup
-%patch0 -p1
+%patch -p1
+%patch1 -p2
 
 # Fix end-of-line encoding
 sed -i 's/\r//' AUTHORS
@@ -61,9 +62,8 @@ do
 done
 
 # Fix premissions
-chmod 644 src/*.{cpp,h}
-chmod 644 src/gtk-glade/*.{cpp,h}
-chmod 644 src/gtk-glade/dTools/*.{cpp,h}
+find src -name '*.cpp' -exec chmod -v 644 '{}' \;
+find src -name '*.h' -exec chmod -v 644 '{}' \;
 
 # Fix glade path
 sed -i 's|gladedir = $(datadir)/desmume/glade|gladedir = $(datadir)/desmume-glade/|g' src/gtk-glade/Makefile.{am,in}
@@ -75,16 +75,16 @@ sed -i 's|Icon=DeSmuME|Icon=DeSmuME-glade|g' src/gtk-glade/desmume-glade.desktop
 sed -i 's|GETTEXT_PACKAGE=desmume|GETTEXT_PACKAGE=desmume-glade|g' configure{,.ac}
 
 %build
+%add_optflags -fpermissive
 #autoreconf
-%configure --enable-openal
-make %{?_smp_mflags}
+%configure --enable-openal --enable-glade
+%make_build
 
 %install
-
-make install DESTDIR=%buildroot
+%makeinstall_std
 
 # Remove installed icon
-rm %buildroot%_datadir/pixmaps/DeSmuME.xpm
+rm -f %buildroot%_datadir/pixmaps/DeSmuME.xpm
 
 # Install icons
 mkdir -p %buildroot%_datadir/icons/hicolor/32x32/apps
@@ -145,6 +145,9 @@ done
 %doc AUTHORS ChangeLog COPYING README README.LIN
 
 %changelog
+* Tue Feb 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.11-alt1
+- Updated to version 0.9.11
+
 * Tue Jun 05 2012 Ilya Mashkin <oddity@altlinux.ru> 0.9.8-alt1
 - Build for Sisyphus
 
