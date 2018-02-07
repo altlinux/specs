@@ -1,8 +1,8 @@
-%define sdkversion 2.0.3
-%define coreversion 2.0.3
+%define sdkversion 2.1.4
+%define coreversion 2.0.5
 
 Name: dotnet-bootstrap
-Version: 2.0.3
+Version: 2.0.5
 Release: alt1
 
 Summary: .NET Core SDK binaries
@@ -12,11 +12,12 @@ Url: https://github.com/dotnet
 Group: Development/Other
 
 # To check we manually update download url
-%define downloadversion 2.0.3
-# from https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.0.3.md
-# SHA512 74a0741d4261d6769f29a5f1ba3e8ff44c79f17bbfed5e240c59c0aa104f92e93f5e76b1a262bdfab3769f3366e33ea47603d9d725617a75cad839274ebc5f2b
-# Source-url: https://download.microsoft.com/download/D/7/2/D725E47F-A4F1-4285-8935-A91AE2FCC06A/dotnet-sdk-%downloadversion-linux-x64.tar.gz
-Source: %name-%downloadversion.tar
+# broken due sdk/core versions mismatch
+%define downloadversion 2.1.4
+# from https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.0.5-download.md
+# SHA512 05fe90457a8b77ad5a5eb2f22348f53e962012a55077ac4ad144b279f6cad69740e57f165820bfd6104e88b30e93684bde3e858f781541d4f110f28cd52ce2b7
+# Source-url: https://download.microsoft.com/download/1/1/5/115B762D-2B41-4AF3-9A63-92D9680B9409/dotnet-sdk-%downloadversion-linux-x64.tar.gz
+Source: %name-%version.tar
 
 ExclusiveArch: x86_64
 
@@ -59,9 +60,26 @@ rm -f %buildroot%_libdir/%name/shared/Microsoft.NETCore.App/*/libsosplugin.so
 %__subst "s|.*libsosplugin.so.*||g" %buildroot%_libdir/%name/shared/Microsoft.NETCore.App/*/Microsoft.NETCore.App.deps.json
 
 %files
-%_libdir/%name/
+%dir %_libdir/%name/
+%_libdir/%name/additionalDeps/
+%dir %_libdir/%name/host/
+%dir %_libdir/%name/host/fxr/
+%_libdir/%name/host/fxr/%coreversion/
+%dir %_libdir/%name/sdk/
+%_libdir/%name/sdk/%sdkversion/
+%dir %_libdir/%name/shared/
+%dir %_libdir/%name/shared/Microsoft.NETCore.App/
+%_libdir/%name/shared/Microsoft.NETCore.App/%coreversion/
+%_libdir/%name/store/
+%_libdir/%name/LICENSE.txt
+%_libdir/%name/ThirdPartyNotices.txt
+%_libdir/%name/dotnet
 
 %changelog
+* Mon Feb 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.5-alt1
+- new version (2.0.5) with rpmgs script
+- CVE-2018-0764, CVE-2018-0786
+
 * Thu Nov 23 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.3-alt1
 - new version (2.0.3) with rpmgs script
 
