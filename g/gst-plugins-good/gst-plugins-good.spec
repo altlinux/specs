@@ -7,7 +7,7 @@
 
 Name: %gst_plugins-good
 Version: %ver_major.31
-Release: alt3
+Release: alt4
 Summary: A set of GStreamer plugins considered good
 Group: System/Libraries
 License: LGPL
@@ -42,13 +42,6 @@ to have good quality code, correct functionality, and their preferred license
 (LGPL for the plug-in code, LGPL or LGPL-compatible for the supporting
 library).
 
-%package devel-doc
-Summary: Development documentation for GStreamer Good plugins
-Group: Development/C
-BuildArch: noarch
-
-%description devel-doc
-This package contains development documentation for GStreamer Good Plugins
 
 %prep
 %setup -q -a1
@@ -64,7 +57,7 @@ touch ABOUT-NLS config.rpath
 	--disable-valgrind \
 	--disable-oss \
 	--disable-oss4 \
-	--enable-gtk-doc \
+	--disable-gtk-doc \
 	--disable-debug \
 	--disable-static
 %make_build
@@ -89,10 +82,10 @@ fi
 %_gst_libdir/*.so
 %_gst_datadir
 
-%files devel-doc
-%_gtk_docdir/*
-
 %changelog
+* Wed Feb 07 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.10.31-alt4
+- build fixed by docs disabling
+
 * Tue Oct 15 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.10.31-alt3
 - Fixed build with newest kernels.
 
