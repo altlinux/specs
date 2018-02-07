@@ -4,7 +4,7 @@
 %def_enable docs
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GXml provides a GObject API for manipulating XML
@@ -112,6 +112,9 @@ find ./ -type f -print0| xargs -r0 subst 's|gxml//xlibxml.h|gxml/xlibxml.h|' --
 %endif
 
 %changelog
+* Wed Feb 07 2018 Yuri N. Sedunov <aris@altlinux.org> 0.16.1-alt1
+- 0.16.1
+
 * Wed Jan 10 2018 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
 - 0.16.0
 
