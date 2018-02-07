@@ -1,5 +1,5 @@
 Name: orion
-Version: 1.5.1
+Version: 1.6.1
 Release: alt1%ubt
 
 Summary: Seek and watch streams on Twitch
@@ -10,13 +10,13 @@ Url: https://alamminsalo.github.io/orion/
 
 Source: %name-%version.tar
 
-Patch0: %name-%version-fix_prefix.patch
-Patch1: %name-%version-fix_desktop.patch
+Patch0: orion-1.5.1-fix_prefix.patch
+Patch1: orion-1.5.1-fix_desktop.patch
 
 Requires: qt5-quickcontrols qt5-quickcontrols2 icon-theme-hicolor
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: qt5-base-devel >= 5.7 qt5-quickcontrols qt5-svg-devel qt5-quickcontrols2-devel qt5-multimedia-devel
+BuildRequires: qt5-base-devel >= 5.8 qt5-quickcontrols qt5-svg-devel qt5-quickcontrols2-devel qt5-multimedia-devel
 
 %description
 A desktop client for Twitch.tv. Features:
@@ -47,6 +47,9 @@ A desktop client for Twitch.tv. Features:
 %doc README.md COPYING LICENSE.txt
 
 %changelog
+* Tue Feb 06 2018 Maxim Voronov <mvoronov@altlinux.org> 1.6.1-alt1%ubt
+- new version
+
 * Wed Jan 23 2018 Maxim Voronov <mvoronov@altlinux.org> 1.5.1-alt1%ubt
 - initial build for ALT
 
