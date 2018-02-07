@@ -1,8 +1,8 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: gnokii
-Version: 0.6.29
-Release: alt3
+Version: 0.6.31
+Release: alt1
 
 Summary: Unix tool suite for Nokia mobile phones
 Group: Communications
@@ -12,7 +12,7 @@ Url: http://www.gnokii.org/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 # Automatically added by buildreq on Fri Oct 10 2008 (-bi)
 BuildRequires: flex intltool libMySQL-devel libXpm-devel libbluez-devel libgtk+2-devel libical-devel libncurses-devel libpcsclite-devel libsqlite3-devel libreadline-devel libusb-compat-devel postgresql-devel
@@ -25,7 +25,7 @@ You should be in 'uucp' group to use it with serial cables.
 %package -n x%name
 Summary: Unix tool suite for Nokia mobile phones
 Group: Communications
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: gnokii-artwork
 
 %description -n x%name
@@ -41,7 +41,7 @@ You will need libgnokii to run gnokii.
 %package -n lib%name-devel
 Summary: Development files for gnokii
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Install gnokii-devel if you want to develop or compile applications using
@@ -50,7 +50,7 @@ gnokii API.
 %package smsd
 Summary: Daemon for handling incoming and outgoing SMSes using libgnokii
 Group: Communications
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description smsd
 The SMSD (SMS daemon) program is intended for receiving and sending
@@ -59,7 +59,7 @@ SMSes with plain file plugin.
 %package smsd-mysql
 Summary: MySQL plugin for gnokii-smsd
 Group: Communications
-Requires: %name-smsd = %version-%release
+Requires: %name-smsd = %EVR
 
 %description smsd-mysql
 MySQL plugin for gnokii-smsd.
@@ -67,7 +67,7 @@ MySQL plugin for gnokii-smsd.
 %package smsd-pq
 Summary: PostgreSQL plugin for gnokii-smsd
 Group: Communications
-Requires: %name-smsd = %version-%release
+Requires: %name-smsd = %EVR
 
 %description smsd-pq
 PostgreSQL plugin for gnokii-smsd.
@@ -75,7 +75,7 @@ PostgreSQL plugin for gnokii-smsd.
 %package smsd-sqlite
 Summary: SQLite plugin for gnokii-smsd
 Group: Communications
-Requires: %name-smsd = %version-%release
+Requires: %name-smsd = %EVR
 
 %description smsd-sqlite
 SQLite plugin for gnokii-smsd.
@@ -90,6 +90,7 @@ SQLite plugin for gnokii-smsd.
 #add_optflags %optflags_shared
 export lt_cv_prog_cc_static_works=no
 
+%add_optflags -fgnu89-inline
 %autoreconf
 %configure \
 	--disable-static \
@@ -106,8 +107,17 @@ export lt_cv_prog_cc_static_works=no
 	#
 %make_build
 
+pushd xgnokii
+%make_build
+popd
+
 %install
 %makeinstall_std
+
+pushd xgnokii
+%makeinstall_std
+popd
+
 mv %buildroot%_defaultdocdir/%name %buildroot%_docdir/%name-%version
 install -pm644 ChangeLog %buildroot%_docdir/%name-%version/
 
@@ -172,6 +182,9 @@ sed 's,/usr/local/sbin,%_sbindir,g' \
 %_libdir/smsd/libsmsd_sqlite.so
 
 %changelog
+* Wed Feb 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.31-alt1
+- Updated to upstream version 0.6.31.
+
 * Wed Nov 20 2013 Yuri N. Sedunov <aris@altlinux.org> 0.6.29-alt3
 - rebuilt against libical.so.1
 

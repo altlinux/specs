@@ -3,7 +3,7 @@
 
 Name: libopensync0-plugin-gnokii
 Version: 0.22
-Release: alt2.4
+Release: alt3
 
 Summary: Gnokii plugin for OpenSync
 License: GPL
@@ -52,6 +52,9 @@ rm -f %buildroot%_libdir/opensync/*/*.la
 %_datadir/opensync/defaults/*
 
 %changelog
+* Wed Feb 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.22-alt3
+- Rebuilt with new libgnokii.
+
 * Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.22-alt2.4
 - Fixed build
 
