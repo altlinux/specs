@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.4.0
-Release: alt3.git20090722.1
+Release: alt4.git20090722
 Summary: A python module for high quality audio resampling
 License: GPLv2
 Group: Development/Python
@@ -97,9 +97,7 @@ This package contains pickles for %oname.
 
 rm -f scikits/samplerate/_samplerate.c
 install -m644 %SOURCE1 .
-%ifarch x86_64
 sed -i 's|\(library_dirs =\).*|\1 %_libdir|' site.cfg
-%endif
 
 %if_with python3
 cp -fR . ../python3
@@ -183,6 +181,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 07 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:0.4.0-alt4.git20090722
+- fix lib/lib64 stupidity, again
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:0.4.0-alt3.git20090722.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
