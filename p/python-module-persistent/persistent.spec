@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.2.4.2
-Release: alt1
+Release: alt1.1
 
 %setup_python_module %oname
 
@@ -19,10 +19,14 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-repoze.sphinx.autointerface
-BuildRequires: python-dev python-module-coverage python-module-nose python-module-setuptools-tests python-module-zope
+BuildRequires: python-dev python-module-coverage python-module-nose python-module-setuptools python-module-zope
+BuildRequires: python-module-tox
+BuildRequires: python-module-virtualenv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-coverage python3-module-nose python3-module-setuptools-tests python3-module-zope
+BuildRequires: python3-dev python3-module-coverage python3-module-nose python3-module-setuptools python3-module-zope
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-virtualenv
 %endif
 
 %py_provides persistent.TimeStamp
@@ -85,6 +89,7 @@ cp -a . ../python3
 ln -s ../objects.inv docs/
 
 %build
+%add_optflags -fno-strict-aliasing
 %python_build
 %if_with python3
 pushd ../python3
@@ -109,10 +114,14 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C docs html
 
 %check
-USING_CFFI=1 python setup.py test -q
+export PIP_INDEX_URL=http://host.invalid./
+export PYTHONPATH=%python_sitelibdir:%python_sitelibdir_noarch
+TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py27-pure-cffi -v
+
 %if_with python3
 pushd ../python3
-USING_CFFI=1 python3 setup.py test -q
+export PYTHONPATH=%python3_sitelibdir:%python3_sitelibdir_noarch
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py35 -v
 popd
 %endif
 
@@ -142,6 +151,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.2.4.2-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Oct 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.4.2-alt1
 - Updated to upstream version 4.2.4.2.
 
