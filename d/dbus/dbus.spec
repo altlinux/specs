@@ -5,10 +5,11 @@
 %define session_socket_dir %system_socket_dir/users
 %define system_socket %system_socket_dir/system_bus_socket
 %define	systemdsystemunitdir /lib/systemd/system
+%define systemdsessionunitdir %_prefix/lib/systemd/user
 
 Name: dbus
 Version: 1.10.20
-Release: alt1
+Release: alt1%ubt
 
 Summary: D-BUS is a simple IPC framework based on messages.
 License: AFL/GPL
@@ -20,12 +21,13 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 PreReq: shadow-utils
 Requires: lib%name = %version-%release
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: doxygen gcc-c++ libexpat-devel libSM-devel libX11-devel xmlto libselinux-devel
 BuildRequires: libaudit-devel libcap-ng-devel
 BuildRequires: libsystemd-daemon-devel libsystemd-login-devel libsystemd-journal-devel
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version.patch
 
 %description
 D-BUS is a system for low-latency, low-overhead, easy to use interprocess
@@ -96,6 +98,7 @@ mkdir -p m4
 	--enable-libaudit \
 	--enable-selinux \
 	--enable-systemd \
+	--enable-user-session \
 	--bindir=/bin \
 	--libexecdir=/lib/dbus-1 \
 	--with-system-pid-file=/run/messagebus.pid \
@@ -167,6 +170,7 @@ fi
 %ghost %_sysconfdir/machine-id
 %_initdir/messagebus
 %systemdsystemunitdir/*
+%systemdsessionunitdir/*
 /lib/tmpfiles.d/%name.conf
 /bin/dbus-cleanup-sockets
 /bin/dbus-daemon
@@ -220,6 +224,9 @@ fi
 %_man1dir/dbus-test-tool.1*
 
 %changelog
+* Wed Feb 07 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.10.20-alt1%ubt
+- enable user session (closes: #34515)
+
 * Thu Jul 06 2017 Valery Inozemtsev <shrek@altlinux.ru> 1.10.20-alt1
 - 1.10.20
 
