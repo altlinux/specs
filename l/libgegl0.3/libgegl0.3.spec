@@ -1,14 +1,17 @@
-%def_disable snapshot
+%def_enable snapshot
+
 %define _name gegl
 %define ver_major 0.3
 %define api_ver %ver_major
+%if "%(rpmvercmp '%{get_version libavformat-devel}' '3.0.0')" > "0"
 %def_with libavformat
+%endif
 %def_disable docs
 %def_enable gtk_doc
 
 Name: lib%_name%api_ver
-Version: %ver_major.18
-Release: alt1
+Version: %ver_major.29
+Release: alt0.1
 
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
@@ -21,7 +24,7 @@ Source: http://download.gimp.org/pub/%_name/%ver_major/%_name-%version.tar.bz2
 Source: %_name-%version.tar
 %endif
 
-%define babl_ver 0.1.26
+%define babl_ver 0.1.42
 
 BuildRequires: asciidoc gcc-c++ graphviz glib2-devel gtk-doc intltool libSDL-devel
 BuildRequires: libbabl-devel >= %babl_ver  libjpeg-devel libtiff-devel libraw-devel
@@ -32,6 +35,7 @@ BuildRequires: liblcms2-devel libwebp-devel  libv4l-devel libpoly2tri-c-devel
 BuildRequires: libgexiv2-devel
 BuildRequires: libgdk-pixbuf-devel
 BuildRequires: libjson-glib-devel gobject-introspection-devel vala-tools
+BuildRequires: libavformat-devel
 %{?_with_libavformat:BuildRequires: libavformat-devel libavcodec-devel libswscale-devel}
 
 %description
@@ -94,6 +98,7 @@ GObject introspection devel data for the GEGL library.
 # temporarily exclude to avoid conflict with libgegl-0.2
 %exclude %_bindir/%_name
 %_bindir/%_name-imgcmp
+%_bindir/gcut
 %_libdir/lib%_name-%api_ver.so.*
 %_libdir/lib%_name-sc-%api_ver.so
 %_libdir/lib%_name-npd-%api_ver.so
@@ -120,6 +125,9 @@ GObject introspection devel data for the GEGL library.
 %_girdir/Gegl-%api_ver.gir
 
 %changelog
+* Wed Feb 07 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.29-alt0.1
+- updated to GEGL_0_3_28-45-gfa99f10
+
 * Tue Jul 04 2017 Yuri N. Sedunov <aris@altlinux.org> 0.3.18-alt1
 - 0.3.18
 
