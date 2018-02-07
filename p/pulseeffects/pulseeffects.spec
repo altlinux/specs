@@ -4,7 +4,7 @@
 %define xdg_name com.github.wwmm.pulseeffects
 
 Name: pulseeffects
-Version: 3.1.7
+Version: 3.2.0
 Release: alt1
 
 Summary: Audio effects for Pulseaudio applications
@@ -36,6 +36,7 @@ BuildRequires: python3-module-pycairo-devel
 BuildRequires: libgtk+3-devel libgtk+3-gir-devel
 BuildRequires: gst-plugins-bad%gst_api_ver-devel
 BuildRequires: libpulseaudio-devel
+BuildRequires: libbs2b-devel
 #BuildRequires: liblilv-devel
 
 %description
@@ -67,6 +68,9 @@ effects for Pulseaudio applications.
 %doc README*
 
 %changelog
+* Wed Feb 07 2018 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Wed Jan 24 2018 Yuri N. Sedunov <aris@altlinux.org> 3.1.7-alt1
 - 3.1.7
 
