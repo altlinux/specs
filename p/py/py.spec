@@ -3,7 +3,7 @@
 
 Name: py
 Version: 1.4.34
-Release: alt1.1
+Release: alt2
 Summary: Testing and distributed programming library
 License: MIT
 Group: Development/Tools
@@ -16,10 +16,10 @@ Source: %name-%version.tar.gz
 Requires: python-module-%name = %version-%release
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools python3-module-pytest
 %endif
 
 %py_provides py.apipkg py.builtin py.code py.error py.iniconfig py.io py.log py.path py.process py.std py.xmlgen
@@ -125,12 +125,10 @@ done
 
 %check
 export LC_ALL=en_US.UTF-8
-python setup.py test
-#py.test
+py.test
 %if_with python3
 pushd ../python3
-python3 setup.py test
-#py.test3
+py.test-%_python3_version
 popd
 %endif
 
@@ -164,6 +162,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 07 2018 Alexey Appolonov <alexey@altlinux.org> 1.4.34-alt2
+- Right way to run tests.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.4.34-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
