@@ -2,7 +2,7 @@
 %define Modname PyPrind
 
 Name: python-module-%modname
-Version: 2.11.1
+Version: 2.11.2
 Release: alt1
 
 Summary: Python Progress Bar and Percent Indicator Utility
@@ -62,6 +62,9 @@ popd
 
 
 %changelog
+* Wed Feb 07 2018 Yuri N. Sedunov <aris@altlinux.org> 2.11.2-alt1
+- 2.11.2
+
 * Thu Jul 06 2017 Yuri N. Sedunov <aris@altlinux.org> 2.11.1-alt1
 - first build for Sisyphus
 
