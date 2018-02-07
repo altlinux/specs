@@ -3,8 +3,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     10
-%define postgresql_minor     1
-%define postgresql_altrel    2
+%define postgresql_minor     2
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -747,6 +747,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Wed Feb 07 2018 Alexei Takaseev <taf@altlinux.org> 10.2-alt1
+- 10.2
+
 * Fri Feb 02 2018 Alexei Takaseev <taf@altlinux.org> 10.1-alt2
 - Rename pg_rewind's copy_file_range() to avoid conflict with new linux syscall
 
