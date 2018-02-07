@@ -15,8 +15,8 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-ce
-Version:    18.01.0
-Release: alt1
+Version:    18.02.0
+Release: alt2.rc2
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -34,6 +34,7 @@ Source1: %repo_engine.service
 Source2: %repo_engine.init
 Source3: %repo_engine.sysconf
 Source4: %repo_engine-storage.sysconf
+Source5: daemon.json
 
 Patch1: %name-17.12.0-bash-completion.patch
 
@@ -134,6 +135,9 @@ install -d %buildroot%_sysconfdir/sysconfig
 install -p -m 644 altlinux/docker.sysconf %buildroot%_sysconfdir/sysconfig/docker
 install -p -m 644 altlinux/docker-storage.sysconf %buildroot%_sysconfdir/sysconfig/docker-storage
 
+install -d %buildroot%_sysconfdir/docker
+install -p -m 644 altlinux/daemon.json %buildroot%_sysconfdir/docker/daemon.json
+
 %pre
 getent group docker > /dev/null || %{_sbindir}/groupadd -r docker
 exit 0
@@ -152,6 +156,7 @@ exit 0
 %doc components/engine/contrib/syntax/vim/README.md
 %config(noreplace) %{_sysconfdir}/sysconfig/docker
 %config(noreplace) %{_sysconfdir}/sysconfig/docker-storage
+%config(noreplace) %{_sysconfdir}/docker/daemon.json
 %{_mandir}/man1/*
 %{_mandir}/man5/*
 %{_mandir}/man8/*
@@ -168,6 +173,12 @@ exit 0
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Wed Feb 7 2018 Vladimir Didenko <cow@altlinux.org> 18.02.0-alt2.rc2
+- Support rename of docker-init to tini
+
+* Wed Feb 7 2018 Vladimir Didenko <cow@altlinux.org> 18.02.0-alt1.rc2
+- New version
+
 * Mon Jan 15 2018 Vladimir Didenko <cow@altlinux.org> 18.01.0-alt1
 - New version
 

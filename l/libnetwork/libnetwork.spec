@@ -4,7 +4,7 @@
 
 %global provider_prefix %{provider}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          7b2b1feb1de4817d522cc372af149ff48d25028e
+%global commit          fcf1c3b5e57833aaaa756ae3c4140ea54da00319
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -16,12 +16,12 @@
 
 Name:           libnetwork
 Version:        0.8.0
-Release:        alt1.git%shortcommit
+Release:        alt2.git%shortcommit
 Summary:        Networking for containers
 Group:          Development/Other
 License:        Apache 2.0
 URL:            https://%provider_prefix
-ExclusiveArch:  %go_arches
+ExclusiveArch:  x86_64
 
 Source0:        %name-%version.tar
 
@@ -61,5 +61,8 @@ install -p -m 755 bin/docker-proxy %buildroot/%_bindir
 %_bindir/*
 
 %changelog
+* Wed Feb 7 2018 Vladimir Didenko <cow@altlinux.org> 0.8.0-alt2.gitfcf1c3b
+- New version.
+
 * Wed Jan 25 2017 Vladimir Didenko <cow@altlinux.org> 0.8.0-alt1.git7b2b1fe
 - First build for Altlinux.
