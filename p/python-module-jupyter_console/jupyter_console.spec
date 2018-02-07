@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 5.2.0
-Release: alt1
+Release: alt1.1
 Summary: Jupyter Terminal Console
 License: BSD
 Group: Development/Python
@@ -15,7 +15,7 @@ Url: https://pypi.python.org/pypi/jupyter_console
 Source: %name-%version.tar
 Patch1: %oname-%version-alt-docs.patch
 
-BuildRequires: python-devel python-module-setuptools-tests /dev/pts
+BuildRequires: python-devel python-module-setuptools /dev/pts
 BuildRequires: python-module-jupyter_client ipython
 BuildRequires: python-module-ipykernel python-module-mock
 BuildRequires: python-module-pexpect python-module-nose
@@ -26,7 +26,7 @@ BuildRequires: python2.7(sphinx_rtd_theme) python2.7(sphinxcontrib_github_alt)
 BuildRequires: python2.7(pathlib2) python2.7(PIL)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-jupyter_client ipython3
 BuildRequires: python3-module-ipykernel python3-module-mock
 BuildRequires: python3-module-pexpect python3-module-nose
@@ -145,6 +145,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 5.2.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Wed Nov 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.0-alt1
 - Updated to upstream version 5.2.0.
 
