@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.10.0
-Release: alt1
+Release: alt1.1
 Summary: A set of py.test fixtures to test Flask applications
 License: MIT
 Group: Development/Python
@@ -16,11 +16,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source0: https://pypi.python.org/packages/b4/b5/6d86a2362be78d1d817c7a1d5105100b7b51089dd56ca907d4fed9461570/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-flask python-module-werkzeug
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools
 #BuildPreReq: python3-module-flask python3-module-werkzeug
 %endif
 
@@ -28,7 +28,9 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-jinja2 python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-jinja2 python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-flask python-module-setuptools-tests python3-module-flask python3-module-setuptools-tests rpm-build-python3
+BuildRequires: python-module-flask python-module-setuptools python3-module-flask python3-module-setuptools rpm-build-python3
+BuildRequires: python-module-pytest
+BuildRequires: python3-module-pytest
 
 %description
 A set of py.test fixtures to test Flask extensions and applications.
@@ -101,6 +103,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.10.0-alt1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Tue Jan 17 2017 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt1
 - automated PyPI update
 
