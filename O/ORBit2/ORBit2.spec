@@ -4,7 +4,7 @@
 
 Name: ORBit2
 Version: %ver_major.20
-Release: alt0.1
+Release: alt0.2
 
 Summary: A high-performance CORBA Object Request Broker
 Group: System/Libraries
@@ -16,8 +16,9 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: %name-%version.tar
 #Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.bz2
 Patch: %name-2.7.3-alt-test_makefile.patch
-Patch1: %name-2.14.0-alt-shared_name-server.patch
+Patch1: %name-2.14.20-alt-shared_name-server.patch
 Patch2: %name-2.13.3-fix-link-as-needed.patch
+Patch3: %name-2.14.20-alt-fix-include-in-makefile.patch
 
 %define libIDL_ver 0.8.2
 %define glib_ver 2.8.0
@@ -29,7 +30,7 @@ BuildPreReq: rpm-build-licenses rpm-build-gnome
 BuildPreReq: pkgconfig >= %pkgconfig_ver
 BuildPreReq: libIDL-devel >= %libIDL_ver
 BuildPreReq: glib2-devel >= %glib_ver
-BuildRequires: indent libssl-devel 
+BuildRequires: indent libssl-devel
 
 %if_enabled gtk_doc
 BuildRequires: docbook-dtds docbook-style-xsl gtk-doc xml-common xsltproc
@@ -109,16 +110,16 @@ This package contains static versions of libraries from ORBit2 package.
 
 %prep
 %setup -q
-%patch -p1
-%patch1 -p0
-%patch2 -p0
+%patch -p1 -b .test
+%patch1 -p0 -b .shared_name-server
+%patch2 -p0 -b .as_needed
+%patch3 -p2 -b .include
 
 %build
 %autoreconf
 %configure \
 	%{subst_enable static} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
-
 # SMP-incompatible build
 %make
 
@@ -177,6 +178,10 @@ EOF
 %exclude %_libdir/*/*.la
 
 %changelog
+* Wed Feb 07 2018 Yuri N. Sedunov <aris@altlinux.org> 2.14.20-alt0.2
+- updated to ORBIT2_2_14_19-18-g144be2e
+- grenka@: ORBIT2-2.14.20-alt-fix-include-in-makefile.patch
+
 * Wed Nov 06 2013 Yuri N. Sedunov <aris@altlinux.org> 2.14.20-alt0.1
 - 2.14.20 snapshot
 
@@ -351,9 +356,9 @@ EOF
 * Wed May 29 2002 Yuri N. Sedunov <aris@altlinux.ru> 2.4.0-alt1
 - 2.4.0
 
-* Wed May 20 2002 Yuri N. Sedunov <aris@altlinux.ru> 2.3.110-alt1
+* Mon May 20 2002 Yuri N. Sedunov <aris@altlinux.ru> 2.3.110-alt1
 - 2.3.110
-- Adopted for Sisyphus.
+- Adapted for Sisyphus.
 - lib%name package.
 - %name-2.3.109-ld.patch
 - %name-am15.patch (PLD Team)
