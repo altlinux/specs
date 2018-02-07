@@ -1,7 +1,7 @@
 %define oname sphinx-settings
 Name: python3-module-%oname
 Version: 0.1.1
-Release: alt1.git20141130.1
+Release: alt1.git20141130.1.1
 Summary: Class-based settings for Sphinx
 License: MIT
 Group: Development/Python3
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-sphinx python3-module-sugarbowl
 BuildPreReq: python3-module-nose python3-module-coverage
 
@@ -40,6 +40,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.1.1-alt1.git20141130.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.1-alt1.git20141130.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
