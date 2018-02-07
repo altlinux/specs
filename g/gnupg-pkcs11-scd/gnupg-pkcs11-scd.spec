@@ -1,6 +1,6 @@
 Name: gnupg-pkcs11-scd
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: A GnuPG PKCS#11 token daemon
 Group: System/Configuration/Hardware
@@ -28,7 +28,7 @@ we strongly disagree with WK\'s attitude towards it.
 
 %build
 %autoreconf
-%configure --enable-proxy
+%configure --enable-proxy --localstatedir=%_var
 %make_build
 
 %install
@@ -45,5 +45,8 @@ we strongly disagree with WK\'s attitude towards it.
 %_man1dir/*.1.*
 
 %changelog
+* Wed Feb 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.0-alt2
+- Fixed localstatedir location.
+
 * Fri Sep 15 2017 Paul Wolneykien <manowar@altlinux.org> 0.9.0-alt1
 - Version 0.9.0: Initial build.
