@@ -1,8 +1,8 @@
 %define _userunitdir /usr/lib/systemd/user
 
 Name: flatpak
-Version: 0.10.2.1
-Release: alt2
+Version: 0.10.3
+Release: alt1
 
 Summary: Application deployment framework for desktop apps
 
@@ -103,6 +103,8 @@ This package contains libflatpak.
 #patch0 -p1
 
 %build
+# workaround for collision with new copy_file_range glibc function. remove it when it's no longer needed.
+%add_optflags -DHAVE_DECL_COPY_FILE_RANGE
 # User namespace support is sufficient.
 %configure --with-dwarf-header=%_includedir/libdwarf --with-priv-mode=none \
            --with-system-bubblewrap --enable-docbook-docs \
@@ -173,6 +175,9 @@ rm -rf %buildroot%_docdir/%name/
 %_libdir/libflatpak.so.*
 
 %changelog
+* Wed Feb 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.3-alt1
+- Updated to upstream version 0.10.3.
+
 * Tue Dec 26 2017 Vitaly Lipatov <lav@altlinux.ru> 0.10.2.1-alt2
 - move dbus-1/interfaces to libflatpak-devel
 
