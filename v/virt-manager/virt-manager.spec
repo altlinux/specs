@@ -7,7 +7,7 @@
 %define askpass_package "openssh-askpass"
 
 Name: virt-manager
-Version: 1.4.3
+Version: 1.5.0
 Release: alt1%ubt
 Summary: Virtual Machine Manager
 
@@ -30,6 +30,7 @@ Requires: dconf
 Requires: dbus-tools-gui
 Requires: libosinfo >= 0.2.10
 Requires: librsvg
+Requires: genisoimage
 
 # add requires based on "from gi.repository import foo"
 Requires: typelib(GObject)
@@ -155,6 +156,9 @@ done
 %_man1dir/virt-xml.1*
 
 %changelog
+* Wed Feb 07 2018 Alexey Shabalin <shaba@altlinux.ru> 1.5.0-alt1%ubt
+- 1.5.0
+
 * Tue Sep 26 2017 Alexey Shabalin <shaba@altlinux.ru> 1.4.3-alt1%ubt
 - 1.4.3
 
