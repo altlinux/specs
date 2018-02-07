@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.11.0
-Release: alt3.git20130116.1
+Release: alt4.git20130116
 Summary: A python module to make noise from numpy arrays
 License: LGPLv2.1+
 Group: Development/Python
@@ -104,9 +104,7 @@ This package contains tests for %oname.
 %patch1 -p1
 
 install -m644 %SOURCE1 .
-%ifarch x86_64
 sed -i 's|\(library_dirs\).*|\1 = %_libdir|' site.cfg
-%endif
 ln -s ../../site.cfg audiolab/soundio/
 rm -f audiolab/pysndfile/_sndfile.c \
 	audiolab/soundio/alsa/_alsa_backend.c
@@ -204,6 +202,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 07 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:0.11.0-alt4.git20130116
+- fix lib/lib64 stupidity, again
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:0.11.0-alt3.git20130116.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
