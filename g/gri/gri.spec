@@ -1,7 +1,7 @@
 Name: gri
 Summary: A language for scientific illustration
 Version: 2.12.23
-Release: alt3
+Release: alt4
 Group: Development/Tools
 License: GPL v2
 URL: http://gri.sourceforge.net
@@ -11,6 +11,7 @@ Source1: http://gri.sourceforge.net/refcard.pdf
 Source2: http://gri.sourceforge.net/cmdrefcard.pdf
 Source3: http://gri.sourceforge.net/gri.pdf
 Patch1: %name-%version-debian-texi.patch
+Patch2: %name-%version-alt-perl-compat.patch
 
 BuildRequires: gcc-c++ ImageMagick-tools texlive-base-bin info
 BuildRequires: ghostscript-classic perl4-compat
@@ -59,6 +60,7 @@ This package contains documentation for Gri.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p2
 
 %build
 %autoreconf
@@ -83,6 +85,9 @@ install -p -m644 %SOURCE1 %SOURCE2 %SOURCE3 %buildroot%_docdir/%name
 %_docdir/%name
 
 %changelog
+* Wed Feb 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.12.23-alt4
+- Fixed build with new perl.
+
 * Tue Nov 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.12.23-alt3
 - Fixed build.
 
