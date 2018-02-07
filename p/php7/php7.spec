@@ -3,7 +3,7 @@
 
 Summary: The PHP7 scripting language
 Name:	 php7
-Version: 7.1.12
+Version: 7.1.14
 Release: alt1%ubt
 
 %define php7_name      %name
@@ -408,6 +408,9 @@ subst 's,sbin/lsattr,bin/lsattr,' %buildroot/%php7_libdir/build/config.guess
 %doc tests run-tests.php 
 
 %changelog
+* Wed Feb 07 2018 Anton Farygin <rider@altlinux.ru> 7.1.14-alt1%ubt
+- 7.1.14
+
 * Sun Dec 10 2017 Anton Farygin <rider@altlinux.ru> 7.1.12-alt1%ubt
 - 7.1.12
 
