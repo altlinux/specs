@@ -8,8 +8,8 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     6
-%define postgresql_subminor  6
-%define postgresql_altrel    2
+%define postgresql_subminor  7
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -53,10 +53,14 @@ Patch9: 0008-ALT-SeLinux-user-name.patch
 
 # 1C
 Patch100: 00001-1c_FULL_96-0.23.patch
-Patch101: 00003-applock.patch
-Patch102: 00004-online_analize.patch
-Patch103: 00005-plantuner.patch
-Patch104: 00006-postgresql-1c-9.6.patch
+Patch101: 00001-1c_create_append_path.patch
+Patch102: 00002-online_analize.patch
+Patch103: 00003-plantuner.patch
+Patch104: 00004-postgresql-1c-9.6.patch
+Patch105: 00005-exists_opt-2.patch
+Patch106: 00006-coalesce_cost-1.patch
+Patch107: 00007-drop-orphan-tt.patch
+Patch108: 00008-receivexlog-umask.patch
 
 Requires: libpq%libpq_major >= %version-%release
 
@@ -291,6 +295,10 @@ database.
 %patch102 -p1
 %patch103 -p1
 %patch104 -p1
+%patch105 -p1
+%patch106 -p1
+%patch107 -p1
+%patch108 -p1
 
 
 %build
@@ -753,6 +761,17 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Wed Feb 07 2018 Alexei Takaseev <taf@altlinux.org> 9.6.7-alt1
+- 9.6.7
+- Add patches:
+    * 00001-1c_create_append_path.patch
+    * 00005-exists_opt-2.patch
+    * 00006-coalesce_cost-1.patch
+    * 00007-drop-orphan-tt.patch
+    * 00008-receivexlog-umask.patch
+- Re-applay patch 00002-online_analyze.patch from 1C
+- Remove patch 00003-applock.patch
+
 * Fri Feb 02 2018 Alexei Takaseev <taf@altlinux.org> 9.6.6-alt2
 - Rename pg_rewind's copy_file_range() to avoid conflict with new linux syscall
 
