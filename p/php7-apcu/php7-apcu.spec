@@ -4,7 +4,7 @@
 
 Name:	 	php7-%{php7_extension}
 Version:	%php7_version
-Release:	%php7_release.2
+Release:	%php7_release
 
 Summary:	PHP7 extension APCu - APC User Cache
 
