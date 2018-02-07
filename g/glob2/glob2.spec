@@ -1,6 +1,6 @@
 Name:         glob2
 Version:      0.9.4.4
-Release:      alt1.qa6
+Release:      alt1.qa7
 Summary:      Globulation 2 is a Real-Time Strategy (RTS) game which reduces micro-management by automatically assigning tasks to units
 License:      GPL
 Group:        Games/Strategy 
@@ -17,6 +17,7 @@ Patch0:         glob2-texts.pl.patch
 Patch2:         glob2-gcc43.patch
 Patch3:         glob2-0.9.4.1-gcc44.patch
 Patch4:         glob2-0.9.4.4-gcc49.patch
+Patch5:         glob2-0.9.4.4-alt-gcc6.patch
 
 # Automatically added by buildreq on Wed Feb 15 2006
 BuildRequires: boost-devel esound freetype2-devel gcc-c++ libSDL-devel libSDL_image-devel libSDL_net-devel libSDL_ttf-devel libogg-devel libspeex-devel libstdc++-devel libvorbis-devel zlib-devel scons desktop-file-utils
@@ -40,6 +41,7 @@ Data files for %name
 #patch0 -p0
 %patch3 -p0
 %patch4 -p1
+%patch5 -p2
 
 sed -i -e '3d' -e '12d' data/glob2.desktop
 sed -i s#"Icon=glob2-icon-48x48"#"Icon=glob2.png"# data/glob2.desktop
@@ -80,6 +82,9 @@ desktop-file-install                   \
 %_datadir/%{name} 
 
 %changelog
+* Wed Feb 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.4.4-alt1.qa7
+- Fixed build with gcc-6.
+
 * Fri Jul 24 2015 Michael Shigorin <mike@altlinux.org> 0.9.4.4-alt1.qa6
 - NMU: added debian patch to fix FTBFS
 
