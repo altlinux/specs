@@ -40,7 +40,7 @@ Name: openmpi-compat
 #pkgname
 
 Version: 1.6.4
-Release: alt3
+Release: alt4
 
 %define mpi_prefix %_libdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -387,6 +387,9 @@ ln -fs ../../%name/lib/libmpi.so.1 %buildroot%_libexecdir/debug%_libdir/openmpi/
 %endif
 
 %changelog
+* Thu Feb 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.4-alt4
+- Rebuilt with new toolchain.
+
 * Mon Dec 26 2016 Denis Pynkin <dans@altlinux.org> 1.6.4-alt3
 - Package renamed to openmpi-compat
 - added subpackage with simlinks to old libraries
