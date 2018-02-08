@@ -8,7 +8,7 @@
 %define systemdsessionunitdir %_prefix/lib/systemd/user
 
 Name: dbus
-Version: 1.10.20
+Version: 1.10.24
 Release: alt1%ubt
 
 Summary: D-BUS is a simple IPC framework based on messages.
@@ -170,7 +170,7 @@ fi
 %ghost %_sysconfdir/machine-id
 %_initdir/messagebus
 %systemdsystemunitdir/*
-%systemdsessionunitdir/*
+#%systemdsessionunitdir/*
 /lib/tmpfiles.d/%name.conf
 /bin/dbus-cleanup-sockets
 /bin/dbus-daemon
@@ -224,6 +224,10 @@ fi
 %_man1dir/dbus-test-tool.1*
 
 %changelog
+* Thu Feb 08 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.10.24-alt1%ubt
+- fix package version for previous release
+- disable user session because of problems in mate-session
+
 * Wed Feb 07 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.10.20-alt1%ubt
 - enable user session (closes: #34515)
 
