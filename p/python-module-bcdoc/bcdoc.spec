@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.16.0
-Release: alt2.git20150617.1
+Release: alt3.git20150617
 Summary: ReST document generation tools for botocore
 License: ASLv2.0
 Group: Development/Python
@@ -22,6 +22,7 @@ BuildRequires: python-module-pytest
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-six python3-module-docutils
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -84,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.16.0-alt3.git20150617
+- Updated build dependencies.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.16.0-alt2.git20150617.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
