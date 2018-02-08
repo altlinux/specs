@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           ladspa-caps-plugins
 Version:        0.9.24
-Release:        alt2_4
+Release:        alt3_4
 Summary:        The C* Audio Plugin Suite
 License:        GPLv3+
 Group:          Sound
@@ -13,6 +13,7 @@ URL:            http://quitte.de/dsp/caps.html
 Source0:        http://quitte.de/dsp/caps_%{version}.tar.bz2
 Patch0:         caps-0.9.10-nostrip.patch
 Patch1:         caps-0.9.24-gcc6.patch
+Patch2:         caps-0.9.24-alt-compat.patch
 BuildRequires:  ladspa_sdk
 Requires:       ladspa_sdk
 Obsoletes:      caps <= 0.3.0-2
@@ -33,6 +34,7 @@ equalization and others.
 %setup -q -n caps-%{version}
 %patch0 -p1 -z .nostrip
 %patch1 -p1
+%patch2 -p2
 # use the system version of ladspa.h
 rm ladspa.h
 
@@ -53,6 +55,9 @@ rm ladspa.h
 
 
 %changelog
+* Thu Feb 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.24-alt3_4
+- Fixed build with new toolchain.
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.24-alt2_4
 - update to new release by fcimport
 
