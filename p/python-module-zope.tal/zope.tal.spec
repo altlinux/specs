@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.2.0
-Release: alt1.1
+Release: alt2
 Summary: Zope 3 Template Application Languate (TAL)
 License: ZPL
 Group: Development/Python
@@ -112,7 +112,7 @@ popd
 
 %install
 %python_install
-%ifarch x86_64
+%if "%_lib" == "lib64"
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
@@ -122,7 +122,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 pushd ../python3
 %python3_install
 popd
-%ifarch x86_64
+%if "%_lib" == "lib64"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
@@ -165,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 08 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.2.0-alt2
+- fix lib/lib64 stupidity
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
