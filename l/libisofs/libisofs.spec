@@ -1,16 +1,17 @@
 Name: libisofs
-Version: 1.3.4
-Release: alt1
+Version: 1.4.9
+Release: alt0.1
 
 Summary: ISO9660 filesystem creation library
 License: %gpl2plus
 Group: System/Libraries
-
-Url: http://libburnia-project.org
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
-
+#Url: http://libburnia-project.org
+Url: https://dev.lovelyhq.com/libburnia/web/wikis/Libisofs
 Packager: Anton V. Boyarshinov <boyarsh@altlinux.org>
+
+# VCS: https://dev.lovelyhq.com/libburnia/libisofs.git
+Source: %name-%version.tar
+#Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -34,7 +35,7 @@ libisofs is to be the foundation of our upcoming mkisofs emulation.
 
 %prep
 %setup
-%patch -p1
+#%%patch -p1
 
 %build
 %autoreconf
@@ -54,8 +55,12 @@ libisofs is to be the foundation of our upcoming mkisofs emulation.
 %_includedir/%name/%name.h
 %_libdir/%name.so
 %_pkgconfigdir/*.pc
+%doc README ChangeLog
 
 %changelog
+* Fri Feb 09 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.9-alt0.1
+- updated to 1.4.8-12-ga936409
+
 * Fri Dec 20 2013 Michael Shigorin <mike@altlinux.org> 1.3.4-alt1
 - 1.3.4
 - updated Url:

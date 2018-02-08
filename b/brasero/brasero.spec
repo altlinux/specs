@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define ver_major 3.12
 %define brasero_api_ver 3
 %define nau_api_ver 3.0
@@ -11,20 +13,23 @@
 %def_enable cdrkit
 %def_disable cdrtools
 %def_enable cdrdao
-%def_disable libburnia
+%def_enable libburnia
 %def_enable introspection
 
 Name: brasero
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: CD/DVD burning tool for GNOME.
 Group: Archiving/Cd burning
 License: %gpl2plus
 Url: http://www.gnome.org/projects/brasero/
 
-#Source: %name-%version.tar
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 Patch: %name-2.27.90-alt-link.patch
 Patch1: %name-2.28.1-alt-button-underline.patch
 Patch2: %name-2.32.1-schemas_convert_typo.patch
@@ -199,7 +204,7 @@ GObject introspection devel data for the Brasero
 %_datadir/mime/packages/%name.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.brasero.gschema.xml
 %_datadir/GConf/gsettings/brasero.convert
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 
 %exclude %_datadir/applications/brasero-nautilus.desktop
 %exclude %_libdir/%name%brasero_api_ver/plugins/lib%name-*.la
@@ -230,6 +235,10 @@ GObject introspection devel data for the Brasero
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la
 
 %changelog
+* Sun Feb 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt3
+- updated to 3.12.2-34-g567326a
+- enabled libburn support
+
 * Wed Aug 16 2017 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt2
 - rebuilt against tracker-2.0 for GNOME-3.26
 

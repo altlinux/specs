@@ -1,14 +1,16 @@
 Name: libburn
-Version: 1.3.4
-Release: alt1
+Version: 1.4.9
+Release: alt0.1
 
 Summary: CD/DVD-R/RW disc reading/writing library
 License: %gpl2plus
 Group: System/Libraries
+#Url: http://libburnia-project.org
+Url: https://dev.lovelyhq.com/libburnia/web/wikis/home
 
-Url: http://libburnia-project.org
+#VCS: https://dev.lovelyhq.com/libburnia/libburn.git
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+#Patch: %name-%version-%release.patch
 
 Packager: Anton V. Boyrahinov <boyarsh@altlinux.org>
 
@@ -79,7 +81,7 @@ runs, though.
 
 %prep
 %setup
-%patch -p1
+#%patch -p1
 
 %build
 %autoreconf
@@ -105,6 +107,9 @@ runs, though.
 %_man1dir/*
 
 %changelog
+* Thu Feb 08 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.9-alt0.1
+- updated to 1.4.8-9-gc84889b
+
 * Fri Dec 20 2013 Michael Shigorin <mike@altlinux.org> 1.3.4-alt1
 - 1.3.4
 - updated Url:
