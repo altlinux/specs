@@ -1,17 +1,37 @@
 Name: libfreetype-infinality
 Version: 2.8.0
-Release: alt5
+Release: alt6
 
-Summary: Obsolete package. Don't use it
+Summary: A free and portable font rendering engine with patches from http://www.infinality.net
 License: FTL or GPLv2+
 Group: System/Libraries
 Url: http://www.freetype.org/
 Packager: Vladimir Didenko <cow@altlinux.ru>
 
+Source0: %name-%version.tar
+
+Source91: infinality-settings.sh
+Source92: xft-settings.sh
+Source93: CHANGELOG
+
+Patch1: freetype-2.7.0-alt-enable-valid.patch
+Patch2: freetype-2.8-alt-export-compat-symbols.patch
+Patch3: freetype-2.8.0-alt-ft_done_mm_var.patch
+# Infinality patches. Now it is based on archfan upstream (looks like bohoomil
+# has dropped infinality patches support)
+# https://github.com/archfan/infinality_bundle
+Patch91: freetype-2.8.0-archfan-infinality-20170614.patch
+# Set default byte code interpreter to infinality version. Default "minimal"
+# version still can be selected using FREETYPE_PROPERTIES environment variable
+# in /etc/X11/profile.d/infinality-settings.sh config file.
+Patch92: freetype-2.7.0-alt-default-interpreter.patch
+
 Provides: freetype2-infinality = %version
 Obsoletes: freetype2-infinality < %version
 
-BuildArch: noarch
+%def_disable static
+
+BuildRequires: libX11-devel zlib-devel libpng-devel
 
 %description
 The FreeType engine is a free and portable TrueType font rendering
@@ -25,10 +45,71 @@ This version is compiled with the Infinality patches. It transparently
 overrides the system library using ld.so.conf.d mechanism.
 
 %prep
+%setup -n %name-%version
+
+%patch1 -p1
+%patch2 -p1
+%patch3 -p2
+%patch91 -p1
+%patch92 -p2
+
+%build
+%add_optflags -fno-strict-aliasing %(getconf LFS_CFLAGS)
+%define libdir %{_libdir}/%name
+%configure %{subst_enable static} \
+    --libdir=%libdir --with-optimization=no
+
+# get rid of RPATH
+sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' builds/unix/libtool
+
+%make_build
+
+%install
+%makeinstall_std
+
+%define ld_so_conf %_sysconfdir/ld.so.conf.d/%name-%_arch.conf
+ld_so_conf=%ld_so_conf
+mkdir -p %buildroot${ld_so_conf%%/*}
+echo %_libdir/%name > %buildroot%ld_so_conf
+chmod 644 %buildroot%ld_so_conf
+%filter_from_provides '/^libfreetype\.so\./d'
+%filter_from_provides '/^debug/d'
+
+mkdir -p %buildroot%_sysconfdir/X11/profile.d
+install -pm755 %SOURCE91 %buildroot%_sysconfdir/X11/profile.d/
+install -pm755 %SOURCE92 %buildroot%_sysconfdir/X11/profile.d/
+
+%define docdir %{_docdir}/%name-%version
+mkdir -p %buildroot%docdir
+cp -a docs/{FTL.TXT,LICENSE.TXT,CHANGES} %buildroot%docdir/
+pushd %buildroot%docdir
+    bzip2 -9 CHANGES
+popd
+cp %SOURCE93 %buildroot%docdir
+
+#remove devel data. Infinality package is not oriented on any development
+rm -f %buildroot%_bindir/*-config
+rm -f %buildroot%libdir/*.so
+rm -f %buildroot%libdir/*.la
+rm -fr %buildroot%_includedir/
+rm -fr %buildroot%libdir/pkgconfig/
+rm -f %buildroot%_datadir/aclocal/*.m4
+
+%set_verify_elf_method strict
 
 %files
+%exclude %_mandir/
+%docdir
+%_libdir/%name/
+%config(noreplace) %_sysconfdir/X11/profile.d/infinality-settings.sh
+%config(noreplace) %_sysconfdir/X11/profile.d/xft-settings.sh
+%config %ld_so_conf
 
 %changelog
+* Thu Feb 8 2018 Vladimir Didenko <cow@altlinux.ru> 2.8.0-alt6
+- Temporary restore package to work-around problem with skia
+- Backport FT_Done_MM_Var from freetype 2.9 (fixes problem with harfbuzz)
+
 * Fri Feb 2 2018 Vladimir Didenko <cow@altlinux.ru> 2.8.0-alt5
 - Make package noarch
 
