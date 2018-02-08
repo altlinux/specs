@@ -9,7 +9,7 @@
 
 Name: synaptic
 Version: 0.58
-Release: alt16
+Release: alt16.1
 
 Summary: Graphical front-end for APT
 Summary(ru_RU.UTF-8): Графическая оболочка для APT
@@ -33,6 +33,7 @@ Patch5: synaptic-0.58-rsources-vendorparts.patch
 Patch6: synaptic-0.58-cdrom-to-media.patch
 Patch7: synaptic-0.58-alt-fix-null-history.patch
 Patch8: synaptic-0.58-alt-fix-makepair.patch
+Patch9: synaptic-0.58-fix-generate-script-action.patch
 
 BuildPreReq: libapt-devel >= 0.5.15lorg2-alt42
 %if_enabled autotools
@@ -76,6 +77,7 @@ Synaptic - это графическая оболочка для APT (Advanced P
 %patch6 -p2
 %patch7 -p2
 %patch8 -p1
+%patch9 -p2
 
 %if_with ru_po
 # installing own translation
@@ -130,6 +132,9 @@ install -p -m644 %SOURCE4 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 %exclude %_datadir/pixmaps/%name.png
 
 %changelog
+* Thu Feb 01 2018 Grigory Ustinov <grenka@altlinux.org> 0.58-alt16.1
+- NMU: Add patch fixing action, that generates download script (Closes: #30608).
+
 * Fri Jun 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.58-alt16
 - Fix build with gcc-6
 
