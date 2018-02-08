@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20180108
+%define orig_timestamp 20171117
 
 Name: firmware-intel-ucode
 Version: 3
-Release: alt2.%orig_timestamp
+Release: alt3.%orig_timestamp
 Epoch: 2
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
@@ -48,6 +48,13 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Thu Feb 08 2018 Konstantin A. Lepikhov <lakostis@altlinux.ru> 2:3-alt3.20171117
+- Rollback microcode files back to 20171117 (debian changelog below):
+  + Revert to release 20171117, as per Intel instructions issued to
+    the public in 2018-01-22 (closes: #886998)
+  + This effectively removes IBRS/IBPB/STIPB microcode support for
+    Spectre variant 2 mitigation.
+
 * Wed Jan 10 2018 L.A. Kostis <lakostis@altlinux.ru> 2:3-alt2.20180108
 - bump epoch (again) and restore old versioning.
 - removed external microcode files:
