@@ -9,7 +9,7 @@
 
 Name: dbus
 Version: 1.10.24
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: D-BUS is a simple IPC framework based on messages.
 License: AFL/GPL
@@ -170,7 +170,7 @@ fi
 %ghost %_sysconfdir/machine-id
 %_initdir/messagebus
 %systemdsystemunitdir/*
-#%systemdsessionunitdir/*
+%systemdsessionunitdir/*
 /lib/tmpfiles.d/%name.conf
 /bin/dbus-cleanup-sockets
 /bin/dbus-daemon
@@ -204,7 +204,7 @@ fi
 %_man1dir/dbus-monitor.1*
 
 %files tools-gui
-%_sysconfdir/X11/profile.d/*
+%_sysconfdir/X11/xinit.d/*
 /bin/dbus-launch
 %_bindir/dbus-launch
 %_man1dir/dbus-launch.1*
@@ -224,6 +224,9 @@ fi
 %_man1dir/dbus-test-tool.1*
 
 %changelog
+* Thu Feb 08 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.10.24-alt2%ubt
+- reenable user session (closes: #34515)
+
 * Thu Feb 08 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.10.24-alt1%ubt
 - fix package version for previous release
 - disable user session because of problems in mate-session
