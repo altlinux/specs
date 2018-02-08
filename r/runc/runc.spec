@@ -4,7 +4,7 @@
 
 %global provider_prefix %{provider}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          c91b5bea4830a57eac7882d7455d59518cdf70ec
+%global commit          9f9c96235cc97674e935002fc3d78361b696a69e
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -16,7 +16,7 @@
 
 Name:           runc
 Version:        1.0.0
-Release:        alt2.git%shortcommit
+Release:        alt3.git%shortcommit
 Summary:        CLI for running Open Containers
 Group:          Development/Other
 License:        Apache 2.0
@@ -28,6 +28,8 @@ Source0:        %name-%version.tar
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
 BuildRequires: libseccomp-devel
+Provides: docker-runc = %version-%release
+Obsoletes: docker-runc <= 1.0.0-alt2.gitb2567b3
 
 %description
 The runc command can be used to start containers which are packaged
@@ -38,12 +40,19 @@ and to manage containers running under runc.
 %setup -q
 
 %build
-export GOPATH="%go_path"
+export BUILDDIR="$PWD/.build"
+export IMPORT_PATH="%import_path"
+export GOPATH="%go_path:$BUILDDIR"
+
+%golang_prepare
+# TODO: Looks ugly. Definetly should be fixed.
+rm -fr "$BUILDDIR/src/$IMPORT_PATH/vendor"
+cp -alv -- vendor/* "$BUILDDIR/src"
 make
 
 %install
 mkdir -p -- %buildroot/%_bindir
-install -p -m 755 runc %buildroot/%_bindir
+install -p -m 755 runc %buildroot/%_bindir/%name
 
 mkdir -p -- %buildroot/lib/tmpfiles.d
 cat > %buildroot/lib/tmpfiles.d/runc.conf <<EOF
@@ -56,6 +65,9 @@ EOF
 /lib/tmpfiles.d/runc.conf
 
 %changelog
+* Mon Feb 5 2018 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt3.git9f9c962
+- New version (for docker 18.02.0-ce).
+
 * Mon Jan 23 2017 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt2.gitc91b5be
 - New version.
 - Fixes CVE-2016-9962.

@@ -1,9 +1,9 @@
-%global commit 949e6facb77383876aeff8a6944dde66b3089574
+%global commit 0effd37412ba5ae7e00af0db1f36f5dbc1671df9
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
-Name:		docker-init
-Version:	0.13.0
-Release:	alt1.git%abbrev
+Name:		tini
+Version:	0.16.1
+Release:	alt1
 Summary:	A tiny but valid init for containers
 
 Group:		Development/Other
@@ -16,6 +16,9 @@ ExclusiveArch: x86_64
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: cmake
 BuildRequires: glibc-devel-static
+
+Provides: docker-init = %version-%release
+Obsoletes: docker-init <= 0.13.0
 
 %description
 Tini is the simplest init you could think of.
@@ -33,12 +36,16 @@ make tini-static
 
 %install
 mkdir -p -- %buildroot/%_bindir
-cp -a -- tini-static    %buildroot/%_bindir/docker-init
+cp -a -- tini-static    %buildroot/%_bindir/tini
 
 %files
 
-%_bindir/docker-init
+%_bindir/tini
 
 %changelog
+* Wed Feb 7 2018 Vladimir Didenko <cow@altlinux.org> 0.16.1-alt1
+- Rename from docker-init to tini
+- New version
+
 * Fri Apr 7 2017 Vladimir Didenko <cow@altlinux.org> 0.13.0-alt1.git949e6fac
 - Initial build for ALTLinux.
