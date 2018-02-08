@@ -3,7 +3,7 @@
 
 Name: py
 Version: 1.4.34
-Release: alt3
+Release: alt4
 Summary: Testing and distributed programming library
 License: MIT
 Group: Development/Tools
@@ -146,11 +146,9 @@ popd
 %doc AUTHORS CHANGELOG LICENSE *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%name/testing
-%exclude %python_sitelibdir/%name/test.py*
 
 %files -n python-module-%name-testing
 %python_sitelibdir/%name/testing
-%python_sitelibdir/%name/test.py*
 
 %files doc
 %doc doc
@@ -161,16 +159,16 @@ popd
 %doc AUTHORS CHANGELOG LICENSE *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%name/testing
-%exclude %python3_sitelibdir/%name/test.py*
-%exclude %python3_sitelibdir/%name/__pycache__/test*
 
 %files -n python3-module-%name-testing
 %python3_sitelibdir/%name/testing
-%python3_sitelibdir/%name/test.py*
-%python3_sitelibdir/%name/__pycache__/test*
 %endif
 
 %changelog
+* Thu Feb 08 2018 Alexey Appolonov <alexey@altlinux.org> 1.4.34-alt4
+- test.py now packed into main package because it isn't actualy a test,
+  it's a program that provides ability to use pytest module as py.test.
+
 * Thu Feb 08 2018 Alexey Appolonov <alexey@altlinux.org> 1.4.34-alt3
 - All test-files packed into testing subpackages.
 
