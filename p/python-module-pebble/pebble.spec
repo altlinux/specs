@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.3.6
-Release: alt2.git20171213
+Release: alt2.git20171213.1
 Summary: Threading and multiprocessing eye-candy
 License: LGPLv3
 Group: Development/Python
@@ -14,11 +14,14 @@ Url: https://pypi.python.org/pypi/Pebble/
 # https://github.com/noxdafox/pebble.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
 BuildRequires: python-module-futures
+BuildRequires: python-module-pytest
+BuildRequires: /proc
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -44,7 +47,14 @@ application.
 %setup
 
 %if_with python3
-cp -fR . ../python3
+rm -rf ../python3
+cp -a . ../python3
+
+pushd ../python3
+#fix python version for python3 tests
+grep -q 'python -m pytest' ./test/run-tests.sh && \
+sed -i 's/python -m pytest/python3 -m pytest/' ./test/run-tests.sh
+popd
 %endif
 
 %build
@@ -66,12 +76,11 @@ popd
 %endif
 
 %check
-python setup.py build_ext -i
-PYTHONPATH=%buildroot%python_sitelibdir py.test -vv
+./test/run-tests.sh
+
 %if_with python3
 pushd ../python3
-python3 setup.py build_ext -i
-PYTHONPATH=%buildroot%python3_sitelibdir py.test3 -vv
+./test/run-tests.sh
 popd
 %endif
 
@@ -86,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.3.6-alt2.git20171213.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Fri Dec 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.6-alt2.git20171213
 - Updated runtime dependencies.
 
