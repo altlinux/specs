@@ -3,7 +3,7 @@
 
 Name: htmldoc
 Version: 1.9.0
-Release: alt1.%subversion.4
+Release: alt1.%subversion.5
 Serial: 1
 
 License: GPL with exceptions (see COPYING.txt)
@@ -19,6 +19,7 @@ Source2: htmldoc.png
 
 Patch1: htmldoc-1.9.x-%subversion-fix.overflow.patch
 Patch2: htmldoc-1.9.0-alt-libpng15.patch
+Patch3: htmldoc-1.9.0-alt-compat.patch
 
 PreReq: fontconfig >= 2.4.2
 Requires: fonts-type1-htmldoc
@@ -48,6 +49,7 @@ from Irmologion project.
 %setup -n %name-%sourceversion-%subversion
 %patch1 -p1
 %patch2 -p2
+%patch3 -p2
 autoconf
 
 %build
@@ -146,6 +148,9 @@ fi
 %_datadir/%name/fonts
 
 %changelog
+* Thu Feb 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.9.0-alt1.r1629.5
+- Fixed build with new toolchain.
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.9.0-alt1.r1629.4
 - Rebuilt with libpng15
 
