@@ -1,27 +1,29 @@
 Name: codeblocks
-Version: 16.01
+Version: 17.12
 Release: alt1
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
 
-License: %gpl3only
+License: GPLv3
 Group: Development/C++
 Url: http://www.codeblocks.org
-Packager: Denis Kirienko <dk@altlinux.ru>
+Packager: Grigory Ustinov <grenka@altlinux.ru>
 
-Source0: codeblocks_16.01.tar.gz
-Source1: %name-8.02-alt-icons.tar.bz2
+Source0: %name-%version.tar
+Source1: %name-8.02-alt-icons.tar
 Source3: %name.desktop
 Source4: %name.po
-Source5: %name-default.conf
+#Source5: %%name-default.conf
 
 Patch1: codeblocks-ebuild.conf.patch
 
 BuildPreReq: wxGTK-devel >= 2.8.12 gcc-c++ libgtk+2-devel zip sed grep coreutils bzip2 gettext-tools boost-devel libgamin-devel rpm-build-licenses libhunspell-devel wxGTK-contrib-gizmos-devel
 Requires: automake >= 1.7 wxGTK >= 2.8.12 gcc gcc-c++ gdb xterm
 
-%set_verify_elf_skiplist %_datadir/%name/*
+# Automatically added by buildreq on Mon Jan 22 2018
+# optimized out: boost-devel-headers fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel libwayland-client libwayland-server perl pkg-config python-base python-modules python3 xorg-xproto-devel zlib-devel
+BuildRequires: boost-devel gcc-c++ libICE-devel libgamin-devel libgtk+2-devel libhunspell-devel libwxGTK-contrib-gizmos-devel libwxGTK-devel python3-base zip
 
 %description
 Code::Blocks is a free C++ IDE built specifically to meet the most
@@ -41,7 +43,7 @@ Code::Blocks может быть расширена с помощью подкл
 Summary: Code::Blocks contrib plugins
 Summary(ru_RU.UTF-8): Дополнительные плагины для Code::Blocks
 Group: Development/C++
-Requires: codeblocks = %{version}-%{release}
+Requires: codeblocks = %version-%release
 
 %description contrib
 Additional Code::Blocks plugins.
@@ -52,7 +54,7 @@ Additional Code::Blocks plugins.
 %package devel
 Summary: Code::Blocks SDK
 Group: Development/C++
-Requires: codeblocks = %{version}-%{release}
+Requires: codeblocks = %version-%release
 
 %description devel
 Code::Blocks SDK to develop your own plugins.
@@ -60,188 +62,217 @@ Code::Blocks SDK to develop your own plugins.
 %description devel -l ru_RU.UTF-8
 SDK для создания собственных плагинов к среде разработки Code::Blocks.
 
-%define pkgdata %_datadir/%name
-
 %prep
-%setup -q -a 1 -n codeblocks-16.01.release
+%setup -a1
 cp %SOURCE3 src/mime/
 cp %SOURCE4 .
 
 %patch1 -p1
 
 # Script update_revision.sh generates file revision.m4 that contains info about svn revision.
-# It takes data from .svn directory. Since we haven't this directory in %SOURCE0, we should remove
+# It takes data from .svn directory. Since we haven't this directory in %%SOURCE0, we should remove
 # this script and create correct file revision.m4 instead.
 # rm update_revision.sh
-# echo "m4_define([SVN_REV], %{revision})" > revision.m4
-# echo "m4_define([SVN_REVISION], %{version})" >> revision.m4
+# echo "m4_define([SVN_REV], %%revision)" > revision.m4
+# echo "m4_define([SVN_REVISION], %%version)" >> revision.m4
 # echo "m4_define([SVN_DATE], `date +'%%F %%T'`)" >> revision.m4
 
 %build
 msgfmt %name.po -o %name.mo
 ./bootstrap
-%configure --with-contrib-plugins=all
+
+%configure --with-contrib-plugins=all \
+           --with-boost-libdir=%_libdir
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
+rm -f %buildroot/%_libdir/%name/plugins/*.la
+rm -f %buildroot/%_libdir/%name/wxContribItems/*.la
+
 install -m 644 -D alt-icons/16x16/%name.png %buildroot%_miconsdir/%name.png
 install -m 644 -D alt-icons/32x32/%name.png %buildroot%_niconsdir/%name.png
 install -m 644 -D alt-icons/48x48/%name.png %buildroot%_liconsdir/%name.png
 install -m 644 -D alt-icons/64x64/%name.png %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
-install -m 644 -D %name.mo %buildroot%pkgdata/locale/ru_RU/%name.mo
-install -m 644 -D %SOURCE5 %buildroot%_sysconfdir/skel/.config/codeblocks/default.conf
+install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
+#install -m 644 -D %%SOURCE5 %%buildroot%%_sysconfdir/skel/.config/codeblocks/default.conf
 
 %files
-%doc README COPYING AUTHORS BUGS COMPILERS TODO NEWS
+%doc README COPYING AUTHORS BUGS COMPILERS TODO NEWS ChangeLog
 %_bindir/%name
 %_bindir/cb_console_runner
-%_libdir/libcodeblocks.so.*
-%_datadir/applications/%name.desktop
-%_datadir/mime/packages/%name.xml
-%_mandir/man?/*
-%_sysconfdir/skel/.config/codeblocks
-%dir %pkgdata
-%{pkgdata}/abbreviations.zip
-%{pkgdata}/astyle.zip
-%{pkgdata}/autosave.zip
-%{pkgdata}/classwizard.zip
-%{pkgdata}/codecompletion.zip
-%{pkgdata}/compiler.zip
-%{pkgdata}/debugger.zip
-%{pkgdata}/defaultmimehandler.zip
-%{pkgdata}/IncrementalSearch.zip
-%{pkgdata}/manager_resources.zip
-%{pkgdata}/resources.zip
-%{pkgdata}/scriptedwizard.zip
-%{pkgdata}/start_here.zip
-%{pkgdata}/todo.zip
-%{pkgdata}/Valgrind.zip
-%{pkgdata}/tips.txt
-%{pkgdata}/icons
-%dir %{pkgdata}/images
-%{pkgdata}/images/*.png
-%{pkgdata}/images/16x16
-%{pkgdata}/images/codecompletion
-%{pkgdata}/images/settings
-%{pkgdata}/compilers
-%{pkgdata}/lexers
-%{pkgdata}/locale
-%dir %{_libdir}/%{name}
-%dir %{_libdir}/%{name}/plugins
-%{_libdir}/%{name}/plugins/libabbreviations.*
-%{_libdir}/%{name}/plugins/libastyle.*
-%{_libdir}/%{name}/plugins/libautosave.*
-%{_libdir}/%{name}/plugins/libclasswizard.*
-%{_libdir}/%{name}/plugins/libcodecompletion.*
-%{_libdir}/%{name}/plugins/libcompiler.*
-%{_libdir}/%{name}/plugins/libdebugger.*
-%{_libdir}/%{name}/plugins/libdefaultmimehandler.*
-%{_libdir}/%{name}/plugins/libIncrementalSearch.*
-%{_libdir}/%{name}/plugins/libscriptedwizard.*
-%{_libdir}/%{name}/plugins/libtodo.*
-%{_libdir}/%{name}/plugins/libValgrind.*
-%{pkgdata}/scripts
-%{pkgdata}/templates
-%_iconsdir/*/*/*/*
-%_pixmapsdir/*
+%_libdir/lib%name.so.*
+%_desktopdir/%name.desktop
+%_xdgmimedir/packages/%name.xml
+%_man1dir/*
+%exclude %_man1dir/codesnippets.1.xz
+
+%dir %_datadir/%name
+%dir %_datadir/%name/locale/ru_RU
+%_datadir/%name/locale/ru_RU/codeblocks.mo
+
+%_datadir/appdata/%name.appdata.xml
+
+%_datadir/%name/abbreviations.zip
+%_datadir/%name/Astyle.zip
+%_datadir/%name/autosave.zip
+%_datadir/%name/classwizard.zip
+%_datadir/%name/codecompletion.zip
+%_datadir/%name/compiler.zip
+%_datadir/%name/debugger.zip
+%_datadir/%name/defaultmimehandler.zip
+%_datadir/%name/IncrementalSearch.zip
+%_datadir/%name/manager_resources.zip
+%_datadir/%name/resources.zip
+%_datadir/%name/scriptedwizard.zip
+%_datadir/%name/start_here.zip
+%_datadir/%name/todo.zip
+%_datadir/%name/Valgrind.zip
+%_datadir/%name/tips.txt
+%_datadir/%name/icons
+%dir %_datadir/%name/images
+%_datadir/%name/images/*.png
+%_datadir/%name/images/16x16
+%_datadir/%name/images/codecompletion
+%_datadir/%name/images/settings
+%_datadir/%name/compilers
+%_datadir/%name/lexers
+%_datadir/%name/locale
+%dir %_libdir/%name
+%dir %_libdir/%name/plugins
+%_libdir/%name/plugins/libabbreviations.*
+%_libdir/%name/plugins/libAstyle.*
+%_libdir/%name/plugins/libautosave.*
+%_libdir/%name/plugins/libclasswizard.*
+%_libdir/%name/plugins/libcodecompletion.*
+%_libdir/%name/plugins/libcompiler.*
+%_libdir/%name/plugins/libdebugger.*
+%_libdir/%name/plugins/libdefaultmimehandler.*
+%_libdir/%name/plugins/libIncrementalSearch.*
+%_libdir/%name/plugins/libscriptedwizard.*
+%_libdir/%name/plugins/libtodo.*
+%_libdir/%name/plugins/libValgrind.*
+%_datadir/%name/scripts
+%_datadir/%name/templates
+
+%_iconsdir/hicolor/48x48/mimetypes/application-x-codeblocks-workspace.png
+%_iconsdir/hicolor/48x48/mimetypes/application-x-codeblocks.png
+%_iconsdir/hicolor/64x64/apps/codeblocks.png
+%_miconsdir/%name.png
+%_niconsdir/%name.png
+%_liconsdir/%name.png
+%_pixmapsdir/%name.png
 
 %files contrib
 %_bindir/cb_share_config
-# %_bindir/codesnippets
-%_libdir/libwxsmithlib.so.*
-%_libdir/%{name}/wxContribItems
-%{pkgdata}/AutoVersioning.zip
-%{pkgdata}/BrowseTracker.zip
-%{pkgdata}/byogames.zip
-%{pkgdata}/cb_koders.zip
-%{pkgdata}/Cccc.zip
-%{pkgdata}/codesnippets.zip
-%{pkgdata}/CppCheck.zip
-%{pkgdata}/codestat.zip
-%{pkgdata}/copystrings.zip
-%{pkgdata}/Cscope.zip
-%{pkgdata}/DoxyBlocks.zip
-%{pkgdata}/dragscroll.zip
-%{pkgdata}/EditorTweaks.zip
-%{pkgdata}/EditorConfig.zip
-%{pkgdata}/envvars.zip
-%{pkgdata}/exporter.zip
-%{pkgdata}/FileManager.zip
-%{pkgdata}/help_plugin.zip
-%{pkgdata}/HexEditor.zip
-%{pkgdata}/headerfixup.zip
-%{pkgdata}/keybinder.zip
-%{pkgdata}/lib_finder.zip
-%{pkgdata}/MouseSap.zip
-%{pkgdata}/NassiShneiderman.zip
-%{pkgdata}/occurrenceshighlighting.zip
-%{pkgdata}/openfileslist.zip
-%{pkgdata}/projectsimporter.zip
-%{pkgdata}/ProjectOptionsManipulator.zip
-%{pkgdata}/Profiler.zip
-%{pkgdata}/RegExTestbed.zip
-%{pkgdata}/ReopenEditor.zip
-%{pkgdata}/SmartIndent*.zip
-%{pkgdata}/SpellChecker.zip
-%{pkgdata}/SymTab.zip
-%{pkgdata}/ThreadSearch.zip
-%{pkgdata}/ToolsPlus.zip
-%{pkgdata}/wxsmith.zip
-%{pkgdata}/wxSmithAui.zip
-%{pkgdata}/wxsmithcontribitems.zip
-%{pkgdata}/images/codesnippets
-%{pkgdata}/images/DoxyBlocks
-%{pkgdata}/images/ThreadSearch
-%{pkgdata}/images/wxsmith
-%{pkgdata}/lib_finder
-%{pkgdata}/SpellChecker
-%{_libdir}/%{name}/plugins/libAutoVersioning.*
-%{_libdir}/%{name}/plugins/libBrowseTracker.*
-%{_libdir}/%{name}/plugins/libbyogames.*
-%{_libdir}/%{name}/plugins/libcb_koders.*
-%{_libdir}/%{name}/plugins/libCccc.*
-%{_libdir}/%{name}/plugins/libcodesnippets.*
-%{_libdir}/%{name}/plugins/libcodestat.*
-%{_libdir}/%{name}/plugins/libcopystrings.*
-%{_libdir}/%{name}/plugins/libCppCheck.*
-%{_libdir}/%{name}/plugins/libCscope.*
-%{_libdir}/%{name}/plugins/libDoxyBlocks.*
-%{_libdir}/%{name}/plugins/libdragscroll.*
-%{_libdir}/%{name}/plugins/libEditorTweaks.*
-%{_libdir}/%{name}/plugins/libEditorConfig.*
-%{_libdir}/%{name}/plugins/libenvvars.*
-%{_libdir}/%{name}/plugins/libexporter.*
-%{_libdir}/%{name}/plugins/libFileManager.*
-%{_libdir}/%{name}/plugins/libhelp_plugin.*
-%{_libdir}/%{name}/plugins/libHexEditor.*
-%{_libdir}/%{name}/plugins/libheaderfixup.*
-%{_libdir}/%{name}/plugins/libkeybinder.*
-%{_libdir}/%{name}/plugins/liblib_finder.*
-%{_libdir}/%{name}/plugins/libMouseSap.*
-%{_libdir}/%{name}/plugins/libNassiShneiderman.*
-%{_libdir}/%{name}/plugins/liboccurrenceshighlighting.*
-%{_libdir}/%{name}/plugins/libopenfileslist.*
-%{_libdir}/%{name}/plugins/libprojectsimporter.*
-%{_libdir}/%{name}/plugins/libProjectOptionsManipulator.*
-%{_libdir}/%{name}/plugins/libProfiler.*
-%{_libdir}/%{name}/plugins/libRegExTestbed.*
-%{_libdir}/%{name}/plugins/libReopenEditor.*
-%{_libdir}/%{name}/plugins/libSmartIndent*.*
-%{_libdir}/%{name}/plugins/libSpellChecker.*
-%{_libdir}/%{name}/plugins/libSymTab.*
-%{_libdir}/%{name}/plugins/libThreadSearch.*
-%{_libdir}/%{name}/plugins/libToolsPlus.*
-%{_libdir}/%{name}/plugins/libwxsmith.*
-%{_libdir}/%{name}/plugins/libwxSmithAui.*
-%{_libdir}/%{name}/plugins/libwxsmithcontribitems.*
+%_libdir/libwxsmithlib.so*
+%_libdir/%name/wxContribItems
+%_man1dir/codesnippets.1.xz
+%_datadir/appdata/%name-contrib.metainfo.xml
+
+%_datadir/%name/AutoVersioning.zip
+%_datadir/%name/BrowseTracker.zip
+%_datadir/%name/byogames.zip
+%_datadir/%name/cb_koders.zip
+%_datadir/%name/Cccc.zip
+%_datadir/%name/codesnippets.zip
+%_datadir/%name/CppCheck.zip
+%_datadir/%name/codestat.zip
+%_datadir/%name/copystrings.zip
+%_datadir/%name/Cscope.zip
+%_datadir/%name/DoxyBlocks.zip
+%_datadir/%name/dragscroll.zip
+%_datadir/%name/EditorTweaks.zip
+%_datadir/%name/EditorConfig.zip
+%_datadir/%name/envvars.zip
+%_datadir/%name/exporter.zip
+%_datadir/%name/FileManager.zip
+%_datadir/%name/help_plugin.zip
+%_datadir/%name/HexEditor.zip
+%_datadir/%name/headerfixup.zip
+%_datadir/%name/keybinder.zip
+%_datadir/%name/lib_finder.zip
+%_datadir/%name/MouseSap.zip
+%_datadir/%name/NassiShneiderman.zip
+%_datadir/%name/occurrenceshighlighting.zip
+%_datadir/%name/openfileslist.zip
+%_datadir/%name/projectsimporter.zip
+%_datadir/%name/ProjectOptionsManipulator.zip
+%_datadir/%name/Profiler.zip
+%_datadir/%name/RegExTestbed.zip
+%_datadir/%name/ReopenEditor.zip
+%_datadir/%name/SmartIndent*.zip
+%_datadir/%name/SpellChecker.zip
+%_datadir/%name/SymTab.zip
+%_datadir/%name/ThreadSearch.zip
+%_datadir/%name/ToolsPlus.zip
+%_datadir/%name/wxsmith.zip
+%_datadir/%name/wxSmithAui.zip
+%_datadir/%name/wxsmithcontribitems.zip
+
+%_datadir/%name/images/codesnippets
+%_datadir/%name/images/DoxyBlocks
+%_datadir/%name/images/ThreadSearch
+%_datadir/%name/images/wxsmith
+%_datadir/%name/lib_finder
+%_datadir/%name/SpellChecker
+
+%_libdir/%name/plugins/libAutoVersioning.*
+%_libdir/%name/plugins/libBrowseTracker.*
+%_libdir/%name/plugins/libbyogames.*
+%_libdir/%name/plugins/libcb_koders.*
+%_libdir/%name/plugins/libCccc.*
+%_libdir/%name/plugins/libcodesnippets.*
+%_libdir/%name/plugins/libcodestat.*
+%_libdir/%name/plugins/libcopystrings.*
+%_libdir/%name/plugins/libCppCheck.*
+%_libdir/%name/plugins/libCscope.*
+%_libdir/%name/plugins/libDoxyBlocks.*
+%_libdir/%name/plugins/libdragscroll.*
+%_libdir/%name/plugins/libEditorTweaks.*
+%_libdir/%name/plugins/libEditorConfig.*
+%_libdir/%name/plugins/libenvvars.*
+%_libdir/%name/plugins/libexporter.*
+%_libdir/%name/plugins/libFileManager.*
+%_libdir/%name/plugins/libhelp_plugin.*
+%_libdir/%name/plugins/libHexEditor.*
+%_libdir/%name/plugins/libheaderfixup.*
+%_libdir/%name/plugins/libkeybinder.*
+%_libdir/%name/plugins/liblib_finder.*
+%_libdir/%name/plugins/libMouseSap.*
+%_libdir/%name/plugins/libNassiShneiderman.*
+%_libdir/%name/plugins/liboccurrenceshighlighting.*
+%_libdir/%name/plugins/libopenfileslist.*
+%_libdir/%name/plugins/libprojectsimporter.*
+%_libdir/%name/plugins/libProjectOptionsManipulator.*
+%_libdir/%name/plugins/libProfiler.*
+%_libdir/%name/plugins/libRegExTestbed.*
+%_libdir/%name/plugins/libReopenEditor.*
+%_libdir/%name/plugins/libSmartIndent*.*
+%_libdir/%name/plugins/libSpellChecker.*
+%_libdir/%name/plugins/libSymTab.*
+%_libdir/%name/plugins/libThreadSearch.*
+%_libdir/%name/plugins/libToolsPlus.*
+%_libdir/%name/plugins/libwxsmith.*
+%_libdir/%name/plugins/libwxSmithAui.*
+%_libdir/%name/plugins/libwxsmithcontribitems.*
 
 %files devel
-%_libdir/*.so
-%_includedir/*
-%_pkgconfigdir/*.pc
+%_includedir/%name
+%_includedir/wxsmith
+%_libdir/lib%name.so
+%_libdir/pkgconfig/%name.pc
+%_libdir/pkgconfig/cb_wx*.pc
+%_libdir/pkgconfig/wxsmith.pc
+%_libdir/pkgconfig/wxsmithaui.pc
+%_libdir/pkgconfig/wxsmith-contrib.pc
 
 %changelog
+* Mon Jan 22 2018 Grigory Ustinov <grenka@altlinux.org> 17.12-alt1
+- Build new version (Closes: #34437).
+- Removed default config from /etc/skel, because it's not good idea
+  to make russian interface, when user have not russian locale.
+
 * Thu Jan 28 2016 Denis Kirienko <dk@altlinux.org> 16.01-alt1
 - 16.01 release
 
