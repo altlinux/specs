@@ -3,7 +3,7 @@
 
 Name:           kBuild
 Version:        %short_version.r2813
-Release:        alt1
+Release:        alt2
 License:        %gpl3plus
 Group:          Development/Other
 Summary:        A cross-platform build environment framework for complex tasks
@@ -12,6 +12,7 @@ Url:            http://svn.netlabs.org/kbuild
 
 Source:         %name-%version.tar.bz2
 Patch2:         kBuild-0.1.3-escape.patch
+Patch3:         kBuild-alt-compat.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires:  cvs flex libacl-devel
@@ -47,6 +48,7 @@ Authors:
 %prep
 %setup -q
 %patch2 -p1
+%patch3 -p2
 chmod a+x kBuild/env.sh
 chmod a+x src/sed/configure
 
@@ -81,6 +83,9 @@ chmod a-x %buildroot%_datadir/%name/*/*kmk
 %_datadir/%name
 
 %changelog
+* Thu Feb 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.9998.r2813-alt2
+- Fixed build with new toolchain.
+
 * Wed Jul 27 2016 Evgeny Sinelnikov <sin@altlinux.ru> 0.1.9998.r2813-alt1
 - Update to last unstable release from svn trunk (r2813) with qt5 support
 - Build with default gcc
