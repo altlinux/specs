@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt1
+Release: alt2
 Summary: Utilities for testing Sphinx extensions
 License: BSD
 Group: Development/Python
@@ -16,10 +16,12 @@ Source: %oname-%version.tar
 
 BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(docutils) python2.7(nose.tools) python2.7(sphinx.application)
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3(docutils) python3(nose.tools)
+BuildRequires: python3(docutils) python3(nose.tools) python3(sphinx.application)
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -105,5 +107,8 @@ popd
 %endif
 
 %changelog
+* Thu Feb 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.1-alt2
+- Updated build dependencies.
+
 * Tue Nov 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.1-alt1
 - Initial build for ALT.
