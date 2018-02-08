@@ -3,7 +3,7 @@
 
 Name: py
 Version: 1.4.34
-Release: alt2
+Release: alt3
 Summary: Testing and distributed programming library
 License: MIT
 Group: Development/Tools
@@ -16,10 +16,17 @@ Source: %name-%version.tar.gz
 Requires: python-module-%name = %version-%release
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel python-module-setuptools python-module-pytest
+BuildPreReq: python-devel python-module-setuptools
+%if_with check
+BuildRequires: python-module-pytest
+%endif
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-pytest
+BuildRequires: python3-devel python3-module-setuptools
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 %endif
 
 %py_provides py.apipkg py.builtin py.code py.error py.iniconfig py.io py.log py.path py.process py.std py.xmlgen
@@ -155,13 +162,18 @@ popd
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%name/testing
 %exclude %python3_sitelibdir/%name/test.py*
+%exclude %python3_sitelibdir/%name/__pycache__/test*
 
 %files -n python3-module-%name-testing
 %python3_sitelibdir/%name/testing
 %python3_sitelibdir/%name/test.py*
+%python3_sitelibdir/%name/__pycache__/test*
 %endif
 
 %changelog
+* Thu Feb 08 2018 Alexey Appolonov <alexey@altlinux.org> 1.4.34-alt3
+- All test-files packed into testing subpackages.
+
 * Wed Feb 07 2018 Alexey Appolonov <alexey@altlinux.org> 1.4.34-alt2
 - Right way to run tests.
 
