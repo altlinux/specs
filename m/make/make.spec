@@ -1,6 +1,6 @@
 Name: make
 Version: 4.2.1
-Release: alt1
+Release: alt2
 Epoch: 2
 
 Summary: A GNU tool which simplifies the build process for users
@@ -14,8 +14,10 @@ Patch01: make-4.2.1-alt-getcwd.patch
 Patch02: make-4.2.1-alt-job_slots.patch
 Patch03: make-4.0-rh-newlines.patch
 Patch04: make-4.0-rh-weird-shell.patch
+Patch05: make-4.2.1-upstream-compat.patch
+Patch06: make-4.2.1-upstream-glob-compat.patch
 
-BuildRequires: makeinfo
+BuildRequires: makeinfo /proc
 
 %description
 A GNU tool for controlling the generation of executables and other
@@ -31,6 +33,8 @@ makefile.
 %patch02 -p1
 %patch03 -p1
 %patch04 -p1
+%patch05 -p1
+%patch06 -p1
 
 sed -i \
 	-e 's,^AM_INIT_AUTOMAKE(\[1\.15 ,AM_INIT_AUTOMAKE([1.14.1 ,' \
@@ -63,6 +67,9 @@ ln -sf make %buildroot%_bindir/gmake
 %doc AUTHORS NEWS README
 
 %changelog
+* Thu Feb 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2:4.2.1-alt2
+- Fixed build with new toolchain.
+
 * Sat Dec 30 2017 Alexey Gladkov <legion@altlinux.ru> 2:4.2.1-alt1
 - New version (4.2.1).
 - Sync with make-4.2.1-4 from fedora.
