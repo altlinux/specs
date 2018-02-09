@@ -20,7 +20,7 @@
 %def_enable bcache
 
 Name: %{_name}2
-Version: 2.7.5
+Version: 2.7.6
 Release: alt1
 
 Summary: Disk Management Service (Second Edition)
@@ -318,6 +318,9 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Fri Feb 09 2018 Yuri N. Sedunov <aris@altlinux.org> 2.7.6-alt1
+- 2.7.6
+
 * Sat Dec 23 2017 Yuri N. Sedunov <aris@altlinux.org> 2.7.5-alt1
 - 2.7.5
 

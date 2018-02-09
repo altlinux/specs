@@ -1,10 +1,10 @@
 %define _name blockdev
-%define ver_major 2.15
+%define ver_major 2.16
 %define rev 1
 
 Name: lib%_name
 Version: %ver_major
-Release: alt2
+Release: alt1
 
 Summary: A library for low-level manipulation with block devices
 Group: System/Libraries
@@ -536,6 +536,9 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 
 
 %changelog
+* Fri Feb 09 2018 Yuri N. Sedunov <aris@altlinux.org> 2.16-alt1
+- 2.16
+
 * Mon Jan 29 2018 Yuri N. Sedunov <aris@altlinux.org> 2.15-alt2
 - rebuilt against libcryptsetup.so.12
 
