@@ -1,5 +1,5 @@
 Name:      rpm-build-golang
-Version:   1.0.1
+Version:   1.0.2
 Release:   alt1
 Summary:   RPM build enviroment to build GO packages
 Group:     Development/Other
@@ -60,6 +60,9 @@ cp %SOURCE7 %buildroot%_rpmlibdir/golang.req.files
 %_rpmmacrosdir/golang
 
 %changelog
+* Fri Feb 09 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.2-alt1
+- added aarch64 to %%go_arches
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1
 - NMU: bumped version by request of lav@
 
