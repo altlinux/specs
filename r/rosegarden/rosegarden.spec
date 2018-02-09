@@ -1,15 +1,14 @@
 #define status beta
 Name: rosegarden
-Version: 17.04
+Version: 17.12
 Release: alt1
 
-Summary: MIDI and audio seqencer and musical notation editor
+Summary: MIDI and audio sequencer and musical notation editor
 License: GPL
 Group: Sound
 
 Url: http://www.rosegardenmusic.com
-Source: %name-%version.tar.bz2
-Packager: Alex Karpov <karpov@altlinux.ru>
+Source: %name-%version.tar
 
 Requires: libsndfile-utils
 Obsoletes: rosegarden-alsa rosegarden-arts rosegarden-common librosegarden-alsa librosegarden-arts
@@ -19,7 +18,7 @@ Obsoletes: rosegarden-alsa rosegarden-arts rosegarden-common librosegarden-alsa 
 BuildRequires: cmake dssi-devel libSM-devel libXcursor-devel libXinerama-devel libXrandr-devel libXtst-devel libXv-devel libfftw3-devel libjack-devel liblirc-devel liblo-devel liblrdf-devel libsamplerate-devel libsndfile-devel qt5-tools-devel zlib-devel
 
 %description
-Rosegarden is a professional audio and MIDI seqencer, score editor, and
+Rosegarden is a professional audio and MIDI sequencer, score editor, and
 general-purpose music composition and editing environement.
 
 Rosegarden is an easy-to-learn, attractive application that runs on
@@ -31,10 +30,10 @@ or home recording environments.
 
 %build
 %cmake
-%make_build -C BUILD
+%cmake_build
 
 %install
-%make DESTDIR="%buildroot" install -C BUILD
+%cmakeinstall_std
 %find_lang --with-kde %name
 
 %check
@@ -46,10 +45,13 @@ or home recording environments.
 %_bindir/*
 %_desktopdir/*
 %_iconsdir/hicolor/*/*/*
-%_datadir/appdata/%name.*
+%_datadir/metainfo/%name.*
 %_datadir/mime/packages/*
 
 %changelog
+* Fri Feb 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 17.12-alt1
+- Updated to upstream version 17.12.
+
 * Mon Jul 31 2017 Ildar Mulyukov <ildar@altlinux.ru> 17.04-alt1
 - new version 17.04
 
