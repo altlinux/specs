@@ -1,15 +1,14 @@
-%define rev svn5065
-%define origname sauerbraten_2013_02_03_collect_edition_linux
 Name: sauerbraten
-Version: 20130203
-Release: alt1.%rev
+Version: 20130404
+Release: alt1
 Summary: Sauerbraten is a free multiplayer/singleplayer FPS
 
 Group: Games/Arcade
 License: Zlib
-Packager: Andrew Clark <andyc@altlinux.org>
 Url: http://sauerbraten.org/
-Source: http://downloads.sourceforge.net/sauerbraten/%origname.tar.bz2
+
+# http://downloads.sourceforge.net/sauerbraten/sauerbraten_2013_04_04_collect_edition_linux.tar.bz2
+Source: sauerbraten-%version.tar
 Source1: sauerbraten_client.sh
 Source2: sauerbraten_server.sh
 Source3: %name.desktop
@@ -25,7 +24,7 @@ Cube 2: Sauerbraten is a free multiplayer/singleplayer first person
 shooter, built as a major redesign of the Cube FPS.
 
 %prep
-%setup -q -n %name
+%setup
 
 %build
 %make_build -C src/ CFLAGS="%optflags" CXXOPTFLAGS="%optflags"
@@ -43,11 +42,11 @@ install -pD -m 644 %SOURCE4 %buildroot%_liconsdir/%name.png
 
 mkdir -p %buildroot%_docdir/%name/
 mkdir -p %buildroot%_gamesdatadir/%name/
-mv %_builddir/%name/src/sauer_client %buildroot%_bindir/
-mv %_builddir/%name/src/sauer_server %buildroot%_bindir/
-mv %_builddir/%name/docs %buildroot/%_docdir/%name/
-mv %_builddir/%name/README.html %buildroot/%_docdir/%name/
-mv %_builddir/%name/server-init.cfg %buildroot/%_gamesdatadir/%name/
+mv src/sauer_client %buildroot%_bindir/
+mv src/sauer_server %buildroot%_bindir/
+mv docs %buildroot/%_docdir/%name/
+mv README.html %buildroot/%_docdir/%name/
+mv server-init.cfg %buildroot/%_gamesdatadir/%name/
 
 %files
 %_bindir/*
@@ -57,6 +56,9 @@ mv %_builddir/%name/server-init.cfg %buildroot/%_gamesdatadir/%name/
 %_gamesdatadir/%name/server-init.cfg
 
 %changelog
+* Fri Feb 09 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 20130404-alt1
+- Updated to upstream version 2013.04.04.
+
 * Fri Jan 2 2015 Andrew Clark <andyc@altlinux.org> 20130203-alt1.svn5065
 - version update to 20130203-alt1.svn5065
 

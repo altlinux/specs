@@ -1,15 +1,13 @@
-%define rev svn5065
 %define packname sauerbraten
 Name: sauerbraten-data
-Version: 20130203
-Release: alt1.%rev
+Version: 20130404
+Release: alt1
 Summary: Sauerbraten is a free multiplayer/singleplayer FPS
 
 Group: Games/Arcade
 License: Zlib
-Packager: Andrew Clark <andyc@altlinux.org>
 Url: http://sauerbraten.org/
-Source: %name.tar.bz2
+Source: %name.tar
 
 BuildArch: noarch
 
@@ -19,18 +17,20 @@ first person shooter, built as a major redesign of the
 Cube FPS.
 
 %prep
-%setup -q -n %name
+%setup -n %name
 
 %install
 mkdir -p %buildroot%_gamesdatadir/%packname
-mv %_builddir/%name/data/ %buildroot/%_gamesdatadir/%packname/
-mv %_builddir/%name/packages %buildroot/%_gamesdatadir/%packname/
+mv data/ %buildroot/%_gamesdatadir/%packname/
+mv packages %buildroot/%_gamesdatadir/%packname/
 
 %files
 %_gamesdatadir/%packname
 
 %changelog
-%changelog
+* Mon Feb 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 20130404-alt1
+- Updated to upstream version 2013.04.04.
+
 * Fri Jan 2 2015 Andrew Clark <andyc@altlinux.org> 20130203-alt1.svn5065
 - version update to 20130203-alt1.svn5065
 
