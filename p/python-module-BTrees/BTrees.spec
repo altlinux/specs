@@ -1,78 +1,65 @@
 %define _unpackaged_files_terminate_build 1
 %define oname BTrees
 
-%def_with python3
-# very slow:
-%def_disable check
+%def_with check
 
 Name: python-module-%oname
-Version: 4.4.0
-Release: alt1
+Version: 4.4.1
+Release: alt1%ubt
+
 Summary: Scalable persistent object containers
-License: ZPL
+License: ZPLv2.1
 Group: Development/Python
-Url: https://pypi.python.org/pypi/BTrees
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/zopefoundation/BTrees.git
-Source0: https://pypi.python.org/packages/fb/31/d8b691e9b86235b124951af6906496b2080ef1b862097800ef97630cff5c/%{oname}-%{version}.tar.gz
+Url: https://pypi.python.org/pypi/BTrees
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-zope.interface python-module-persistent
-#BuildPreReq: python-module-sphinx-devel
-#BuildPreReq: python-module-repoze.sphinx.autointerface
-#BuildPreReq: python-module-transaction
-#BuildPreReq: python-module-nose
-#BuildPreReq: python-module-coverage
-%if_with python3
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-#BuildPreReq: python3-module-zope.interface python3-module-persistent
+BuildRequires(pre): rpm-macros-sphinx
+
+BuildRequires: python-module-objects.inv
+BuildRequires: python-module-repoze.sphinx.autointerface
+BuildRequires: python-module-persistent
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-ZODB
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-persistent
+BuildRequires: python3-module-ZODB
+
+%if_with check
+BuildRequires: python-module-tox
+BuildRequires: python-module-virtualenv
+BuildRequires: python-module-transaction
+BuildRequires: python-module-ZODB-tests
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-virtualenv
+BuildRequires: python3-module-transaction
+BuildRequires: python3-module-ZODB-tests
 %endif
 
-%py_requires zope.interface 
+%py_requires zope.interface
 
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-repoze python-module-repoze.sphinx python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-dev python3-module-zope python3-module-zope.interface
-BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-persistent python-module-pytest python-module-repoze.sphinx.autointerface python-module-transaction python3-module-persistent python3-module-setuptools rpm-build-python3 time
+%define overview							   \
+BTrees: scalable persistent components.					   \
+									   \
+This package contains a set of persistent object containers built around   \
+a modified BTree data structure. The trees are optimized for use inside    \
+ZODB's "optimistic concurrency" paradigm, and include explicit		   \
+resolution of conflicts detected by that mechannism.			   \
+									   \
+%nil
 
-%description
-BTrees: scalable persistent components.
-
-This package contains a set of persistent object containers built around
-a modified BTree data structure. The trees are optimized for use inside
-ZODB's "optimistic concurrency" paradigm, and include explicit
-resolution of conflicts detected by that mechannism.
-
+%description %overview
 %package tests
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 
 %description tests
-BTrees: scalable persistent components.
-
-This package contains a set of persistent object containers built around
-a modified BTree data structure. The trees are optimized for use inside
-ZODB's "optimistic concurrency" paradigm, and include explicit
-resolution of conflicts detected by that mechannism.
-
 This package contains tests for %oname.
-
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python
-
-%description pickles
-BTrees: scalable persistent components.
-
-This package contains a set of persistent object containers built around
-a modified BTree data structure. The trees are optimized for use inside
-ZODB's "optimistic concurrency" paradigm, and include explicit
-resolution of conflicts detected by that mechannism.
-
-This package contains pickles for %oname.
 
 %package docs
 Summary: Documentation for %oname
@@ -80,13 +67,6 @@ Group: Development/Documentation
 BuildArch: noarch
 
 %description docs
-BTrees: scalable persistent components.
-
-This package contains a set of persistent object containers built around
-a modified BTree data structure. The trees are optimized for use inside
-ZODB's "optimistic concurrency" paradigm, and include explicit
-resolution of conflicts detected by that mechannism.
-
 This package contains documentation for %oname.
 
 %package -n python3-module-%oname
@@ -94,12 +74,7 @@ Summary: Scalable persistent object containers
 Group: Development/Python3
 
 %description -n python3-module-%oname
-BTrees: scalable persistent components.
-
-This package contains a set of persistent object containers built around
-a modified BTree data structure. The trees are optimized for use inside
-ZODB's "optimistic concurrency" paradigm, and include explicit
-resolution of conflicts detected by that mechannism.
+%overview
 
 %package -n python3-module-%oname-tests
 Summary: Tests for %oname
@@ -107,21 +82,13 @@ Group: Development/Python3
 Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-tests
-BTrees: scalable persistent components.
-
-This package contains a set of persistent object containers built around
-a modified BTree data structure. The trees are optimized for use inside
-ZODB's "optimistic concurrency" paradigm, and include explicit
-resolution of conflicts detected by that mechannism.
-
 This package contains tests for %oname.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+rm -rf ../python3
+cp -a . ../python3
 
 %prepare_sphinx .
 ln -s ../objects.inv docs/
@@ -130,47 +97,41 @@ ln -s ../objects.inv docs/
 %add_optflags -fno-strict-aliasing
 %python_build_debug
 
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C docs pickle
 %make -C docs html
 
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
-
 %check
-python setup.py test
-exit 1
+export PIP_INDEX_URL=http://host.invalid./
+export PYTHONPATH=%python_sitelibdir_noarch:%python_sitelibdir
+TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py27 -v
+
+pushd ../python3
+export PYTHONPATH=%python3_sitelibdir_noarch:%python3_sitelibdir
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py35 -v
+popd
 
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/*/tests
 
 %files tests
 %python_sitelibdir/*/tests
 
-%files pickles
-%python_sitelibdir/*/pickle
-
 %files docs
 %doc docs/_build/html/*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
@@ -178,9 +139,11 @@ exit 1
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
 
 %changelog
+* Fri Feb 09 2018 Stanislav Levin <slev@altlinux.org> 4.4.1-alt1%ubt
+- v4.4.0 -> v4.4.1
+
 * Sun Jan 15 2017 Igor Vlasenko <viy@altlinux.ru> 4.4.0-alt1
 - automated PyPI update
 
