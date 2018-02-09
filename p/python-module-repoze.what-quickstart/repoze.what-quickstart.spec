@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.git20111129.1.1.1
+Release: alt2.git20111129.1.1.1.1
 %define oname repoze.what-quickstart
 
 %def_with python3
@@ -16,7 +16,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/repoze/repoze.what-quickstart.git
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-sphinx-devel python-module-repoze.what-sql
 #BuildPreReq: python-module-repoze.who.plugins.sa python-module-webob
 #BuildPreReq: python-module-repoze.what python-module-zope.interface
@@ -39,7 +39,7 @@ Requires: python-module-repoze.who-friendlyform
 BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: ca-certificates python-base python-devel python-module-PasteDeploy python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-paste python-module-pytest python-module-pytz python-module-repoze python-module-repoze.what python-module-repoze.what.plugins python-module-repoze.who python-module-repoze.who-testutil python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python-tools-2to3 python3 python3-base
-BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pysqlite2 python-module-repoze.what-sql python-module-repoze.who-friendlyform python-module-repoze.who.plugins.sa python-module-setuptools-tests python3-module-setuptools rpm-build-python3 time
+BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pysqlite2 python-module-repoze.what-sql python-module-repoze.who-friendlyform python-module-repoze.who.plugins.sa python-module-setuptools python3-module-setuptools rpm-build-python3 time
 
 %description
 This is an extras plugin for repoze.what.
@@ -182,6 +182,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.10-alt2.git20111129.1.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.10-alt2.git20111129.1.1.1
   for NMU.
 - (AUTO) subst_x86_64.

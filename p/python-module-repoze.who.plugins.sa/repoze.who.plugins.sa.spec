@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.1.1.1
+Release: alt2.1.1.1.1
 %define oname repoze.who.plugins.sa
 
 %def_with python3
@@ -39,6 +39,7 @@ provider which works with SQLAlchemy or Elixir-based models.
 Summary: The repoze.who SQLAlchemy plugin
 Group: Development/Python3
 %py3_requires repoze.who SQLAlchemy
+%py3_provides repoze.who.plugins.sa
 
 %description -n python3-module-%oname
 This plugin provides one repoze.who authenticator and one metadata
@@ -162,6 +163,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Feb 09 2018 Stanislav Levin <slev@altlinux.org> 1.0.1-alt2.1.1.1.1
+- (NMU) Fix Provides of python3 module
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.1-alt2.1.1.1
 - (AUTO) subst_x86_64.
 

@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt5.1.1.1
+Release: alt5.1.1.1.1
 %define oname repoze.who-friendlyform
 
 %def_with python3
@@ -42,6 +42,7 @@ being such a collection has only one item.
 Summary: Collection of repoze.who friendly form plugins
 Group: Development/Python3
 %py3_requires repoze.who zope.interface webob
+%py3_provides repoze.who.plugins.friendlyform
 
 %description -n python3-module-%oname
 repoze.who-friendlyform is a repoze.who plugin which provides a
@@ -142,6 +143,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Feb 09 2018 Stanislav Levin <slev@altlinux.org> 1.0.8-alt5.1.1.1.1
+- (NMU) Fix Provides of python3 module
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.8-alt5.1.1.1
 - (AUTO) subst_x86_64.
 
