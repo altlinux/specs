@@ -3,7 +3,7 @@ Name: libcgroup
 Summary: Libraries for allow to control and monitor control groups
 Group: System/Libraries
 Version: 0.41
-Release: alt1
+Release: alt2
 License: LGPLv2+
 Url: http://libcg.sourceforge.net/
 Packager: Alexey Shabalin <shaba@altlinux.ru>
@@ -125,6 +125,9 @@ install -m 644 cgred.service %buildroot%_unitdir/
 %_pkgconfigdir/libcgroup.pc
 
 %changelog
+* Sat Feb 10 2018 Mikhail Efremov <sem@altlinux.org> 0.41-alt2
+- Fix parallel build.
+
 * Fri Mar 21 2014 Alexey Shabalin <shaba@altlinux.ru> 0.41-alt1
 - 0.41
 
