@@ -42,8 +42,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.10.2
-Release: alt2%git_date
+Version: 1.10.4
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -725,6 +725,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri Feb 09 2018 Mikhail Efremov <sem@altlinux.org> 1.10.4-alt1
+- Drop obsoleted patch..
+- Updated to 1.10.4.
+
 * Mon Dec 25 2017 Mikhail Efremov <sem@altlinux.org> 1.10.2-alt2
 - Workaround 'deprecated structs' issue.
 - Patches from upstream: bug fixes found via coverity.
