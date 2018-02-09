@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.git20150402.1.1
+Release: alt1.dev0.git20150402.1.1.1
 %define oname zope.deferredimport
 
 %def_with python3
@@ -16,11 +16,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/zopefoundation/zope.deferredimport.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-zope.proxy python-module-zope.testrunner
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-zope.proxy python3-module-zope.testrunner
 %endif
 
@@ -75,8 +75,18 @@ also cause deprecation warnings to be issued when a variable is used.
 
 This package contains tests for zope.deferredimport.
 
+%package examples
+Summary: Example files for %oname
+Group: Development/Python
+BuildArch: noarch
+Requires: %name = %EVR
+
+%description examples
+Example files for %oname.
+
 %prep
 %setup
+mv src/zope/deferredimport/samples ./
 
 %if_with python3
 cp -fR . ../python3
@@ -110,6 +120,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+install -d %buildroot%_docdir/%name
+cp -fR samples %buildroot%_docdir/%name
+
 %check
 python setup.py test -v
 %if_with python3
@@ -140,7 +153,15 @@ popd
 %python3_sitelibdir/*/*/*/tests.*
 %endif
 
+%files examples
+%doc %_docdir/%name/samples
+
+
 %changelog
+* Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.1.1-alt1.dev0.git20150402.1.1.1
+- (NMU) Fix Requires and BuildRequires to python-setuptools
+- Move samples to examples subpackage
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.1-alt1.dev0.git20150402.1.1
 - (AUTO) subst_x86_64.
 
