@@ -1,6 +1,6 @@
 Name: 	 erubis
 Version: 2.7.0 
-Release: alt2
+Release: alt3
  
 Summary: A fast and extensible eRuby implementation
 License: MIT/Ruby
@@ -15,6 +15,8 @@ Patch1:  %name-fix-syntax-errors.patch
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
+
+%filter_from_requires /^ruby(compiler)$/d
  
 %description
 Erubis is a fast, secure, and very extensible implementation of eRuby.
@@ -50,6 +52,8 @@ Documentation files for %{name}.
 %prep
 %setup
 %patch1 -p1
+# Remove Rails helper
+rm -f lib/erubis/helpers/rails_helper.rb
 %update_setup_rb
  
 %build
@@ -74,6 +78,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Feb 09 2018 Andrey Cherepanov <cas@altlinux.org> 2.7.0-alt3
+- Fix ruby(compiler) unmet and remove Rails helper
+
 * Tue Oct 04 2016 Andrey Cherepanov <cas@altlinux.org> 2.7.0-alt2
 - Rebuild without ruby-actionpack
 
