@@ -1,5 +1,5 @@
 Name: fish
-Version: 2.7.0
+Version: 2.7.1
 Release: alt1%ubt
 
 Summary: A friendly interactive shell
@@ -57,6 +57,9 @@ fi
 %_man1dir/*
 
 %changelog
+* Sat Feb 10 2018 Alexey Shabalin <shaba@altlinux.ru> 2.7.1-alt1%ubt
+- 2.7.1
+
 * Wed Dec 13 2017 Alexey Shabalin <shaba@altlinux.ru> 2.7.0-alt1%ubt
 - 2.7.0
 
