@@ -2,7 +2,7 @@
 
 Name: xmlto
 Version: 0.0.28
-Release: alt1
+Release: alt2
 
 Summary: A tool for converting XML files to various formats.
 Group: Publishing
@@ -28,7 +28,7 @@ stylesheets.
 Group: Publishing
 Summary: A set of %name backends with TeX requirements
 BuildArch: noarch
-Requires: passivetex >= 20040310
+Requires: passivetex
 Requires: %name = %version-%release
 
 %description tex
@@ -69,6 +69,9 @@ bzip2 --keep --best --force ChangeLog
 
 
 %changelog
+* Fri Feb 09 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.28-alt2
+- NMU: prepared for new texlive
+
 * Wed Feb 01 2017 Yuri N. Sedunov <aris@altlinux.org> 0.0.28-alt1
 - 0.0.28
 - fixed urls
