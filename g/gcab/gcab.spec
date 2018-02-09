@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.0
+%define ver_major 1.1
 %define api_ver 1.0
 
 %def_enable docs
@@ -24,7 +24,7 @@ Source: %name-%version.tar
 
 Requires: lib%name = %version-%release
 
-BuildRequires: meson gtk-doc glib2-devel
+BuildRequires: meson git gtk-doc glib2-devel
 BuildRequires: gobject-introspection-devel zlib-devel
 BuildRequires: vala-tools
 
@@ -117,6 +117,9 @@ GObject introspection devel data for the gcab library
 %_girdir/GCab-%api_ver.gir
 
 %changelog
+* Fri Feb 09 2018 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt1
+- 1.1
+
 * Tue Jan 23 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
 - 1.0 (fixed CVE-2018-5345)
 
