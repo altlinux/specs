@@ -12,7 +12,7 @@
 
 Name: evince
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: A document viewer
 Group: Office
@@ -37,7 +37,7 @@ Requires: dconf
 BuildPreReq: libpoppler-glib-devel >= %poppler_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildRequires: gcc-c++ gnome-common gtk-doc
-BuildRequires: intltool yelp-tools itstool
+BuildRequires: intltool yelp-tools itstool intltool
 BuildRequires: icon-theme-adwaita libdjvu-devel libgnome-keyring-devel libnautilus-devel libspectre-devel libtiff-devel
 BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel zlib-devel libsecret-devel
 BuildRequires: libarchive-devel
@@ -210,6 +210,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Sat Feb 10 2018 Igor Vlasenko <viy@altlinux.ru> 3.26.0-alt1.1
+- NMU: rebuild with texlive 2016
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

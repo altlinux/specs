@@ -7,7 +7,7 @@
 
 Name: xreader
 Version: 1.6.2
-Release: alt1
+Release: alt1.1
 
 Summary: A document viewer
 Group: Office
@@ -163,6 +163,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nemo/extensions-3.0/*.la
 
 %changelog
+* Sat Feb 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1.1
+- NMU: rebuild with texlive 2016
+
 * Wed Dec 27 2017 Vladimir Didenko <cow@altlinux.org> 1.6.2-alt1
 - New version
 
