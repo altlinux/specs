@@ -1,8 +1,8 @@
 %def_disable freerdp
 
 Name: vlc
-Version: 3.0.0
-Release: alt8.gitf30c715
+Version: 3.0.0.1
+Release: alt1
 
 Summary: VLC media player
 License: GPLv2
@@ -12,7 +12,7 @@ Url: http://www.videolan.org
 Source: vlc-%version.tar
 
 BuildRequires: gcc-c++
-BuildRequires: freetype2-devel glib2-devel
+BuildRequires: freetype2-devel glib2-devel flex
 BuildRequires: libdvdcss-devel libavcodec-devel libnotify-devel
 BuildRequires: libavutil-devel libpostproc-devel libavformat-devel
 BuildRequires: libswscale-devel libmpeg2-devel libebml-devel
@@ -793,7 +793,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/access/libudp_plugin.so
 %vlc_plugindir/access/libvdr_plugin.so
 %vlc_plugindir/access/libvnc_plugin.so
-%vlc_plugindir/access/libwl_screenshooter_plugin.so
 
 %dir %vlc_plugindir/access_output
 %vlc_plugindir/access_output/libaccess_output_dummy_plugin.so
@@ -803,6 +802,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/access_output/libaccess_output_livehttp_plugin.so
 
 %dir %vlc_plugindir/audio_filter
+%vlc_plugindir/audio_filter/libscaletempo_pitch_plugin.so
 %vlc_plugindir/audio_filter/libdolby_surround_decoder_plugin.so
 %vlc_plugindir/audio_filter/libheadphone_channel_mixer_plugin.so
 %vlc_plugindir/audio_filter/libtrivial_channel_mixer_plugin.so
@@ -1117,6 +1117,8 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/meta_engine/libfolder_plugin.so
 
 %vlc_plugindir/lua
+%vlc_libdir/lua
+
 
 %doc AUTHORS README NEWS THANKS
 
@@ -1367,6 +1369,15 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Fri Feb 09 2018 Anton Farygin <rider@altlinux.ru> 3.0.0.1-alt1
+- 3.0.0.1 release
+
+* Tue Jan 23 2018 Anton Farygin <rider@altlinux.ru> 3.0.0-alt10.rc7
+- up to 3.0.0-rc7
+
+* Sun Dec 10 2017 Anton Farygin <rider@altlinux.ru> 3.0.0-alt9.git8b54e4a
+- up to 8b54e4a (3.0.0-rc) 
+
 * Tue Nov 07 2017 Anton Farygin <rider@altlinux.ru> 3.0.0-alt8.gitf30c715
 - up to f30c715
 
