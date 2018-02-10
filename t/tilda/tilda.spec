@@ -1,5 +1,5 @@
 Name: tilda
-Version: 1.3.3
+Version: 1.4.1
 Release: alt1
 
 Summary: A Linux terminal taking after the likeness of many terminals from fps games
@@ -49,6 +49,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 
 %changelog
+* Sat Feb 10 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
+- 1.4.1
+
 * Fri Jan 13 2017 Yuri N. Sedunov <aris@altlinux.org> 1.3.3-alt1
 - 1.3.3
 
