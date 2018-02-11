@@ -2,7 +2,7 @@
 
 Name: mate
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -82,7 +82,7 @@ Requires: mate-file-manager >= %ver_major
 ## Default terminal emulator
 Requires: mate-terminal >= %terminal_ver
 ## Default archiving tool
-Requires: mate-file-archiver
+Requires: mate-file-manager-archiver
 ## Default text editor
 Requires: mate-text-editor
 
@@ -128,7 +128,7 @@ Requires: fuse-gvfs
 ## Display manager
 #Requires: mate-display-manager
 ## Default web-browser (firefox)
-Requires: firefox
+Requires: webclient
 ## Default mailer
 #Requires: evolution >= %ver_major
 ## Default messenger
@@ -393,6 +393,10 @@ itself).
 #%files a11y
 
 %changelog
+* Sun Feb 11 2018 Anton Midyukov <antohami@altlinux.org> 1.15.0-alt2
+- Replace requires firefox to webclient (Closes: 34510)
+- Replace requires mate-file-archiver to mate-file-manager-archiver
+
 * Mon Oct 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.15.0-alt1
 - updated to mate 1.16
 
