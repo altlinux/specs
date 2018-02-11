@@ -1,11 +1,11 @@
 
 Name: libmspub
-Version: 0.1.2
-Release: alt1.1
+Version: 0.1.3
+Release: alt1
 Summary: A library providing ability to interpret and import Microsoft Publisher files
 Group: System/Libraries
 License: GPLv2+ or LGPLv2+ or MPLv1.1
-Url: http://www.freedesktop.org/wiki/Software/libmspub
+Url: https://wiki.documentfoundation.org/DLP/Libraries/libmspub
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++
@@ -58,7 +58,7 @@ mkdir -p m4
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 %files
 %doc AUTHORS COPYING.*
@@ -78,6 +78,9 @@ mkdir -p m4
 %_bindir/*
 
 %changelog
+* Mon Feb 12 2018 Alexey Shabalin <shaba@altlinux.ru> 0.1.3-alt1
+- 0.1.3
+
 * Tue Feb 16 2016 Alexey Shabalin <shaba@altlinux.ru> 0.1.2-alt1.1
 - rebuild
 
