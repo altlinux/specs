@@ -1,11 +1,12 @@
 
 Name: libodfgen
-Version: 0.1.4
+Version: 0.1.6
 Release: alt1
 Summary: An ODF generator library
 Group: System/Libraries
 License: LGPLv2+ or MPLv2.0+
 URL: http://sourceforge.net/projects/libwpd/
+# git-vcs git://git.code.sf.net/p/libwpd/libodfgen
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++
@@ -51,6 +52,9 @@ mkdir -p m4
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Feb 11 2018 Alexey Shabalin <shaba@altlinux.ru> 0.1.6-alt1
+- 0.1.6
+
 * Tue Aug 18 2015 Alexey Shabalin <shaba@altlinux.ru> 0.1.4-alt1
 - 0.1.4
 
