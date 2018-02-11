@@ -1,6 +1,6 @@
 
 Name: libcdr
-Version: 0.1.2
+Version: 0.1.4
 Release: alt1
 Summary: A library providing ability to interpret and import Corel Draw drawings
 Group: System/Libraries
@@ -81,6 +81,9 @@ mkdir -p m4
 %_bindir/*
 
 %changelog
+* Sun Feb 11 2018 Alexey Shabalin <shaba@altlinux.ru> 0.1.4-alt1
+- 0.1.4
+
 * Tue Feb 16 2016 Alexey Shabalin <shaba@altlinux.ru> 0.1.2-alt1
 - 0.1.2
 - enable tests
