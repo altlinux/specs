@@ -4,7 +4,7 @@
 %define modulename pynacl
 Name: python-module-pynacl
 Version: 1.1.2
-Release: alt1
+Release: alt1.1
 
 Summary: Python binding to the Networking and Cryptography (NaCl) library
 
@@ -87,6 +87,9 @@ popd
 
 
 %changelog
+* Mon Feb 12 2018 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1.1
+- NMU: autorebuild with libsodium-1.0.16
+
 * Wed Jun 14 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
 - initial build for ALT Sisyphus
 

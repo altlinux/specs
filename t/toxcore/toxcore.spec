@@ -5,7 +5,7 @@
 Name: toxcore
 Summary: All-in-one secure communication platform
 Version: 0.1.11
-Release: alt1
+Release: alt2
 License: ISC license
 Group: System/Libraries
 BuildRequires: libopus-devel libsodium-devel libvpx-devel libcheck-devel
@@ -132,6 +132,9 @@ install -D -m644 other/bootstrap_daemon/tox-bootstrapd.service %buildroot%_unitd
 %_libdir/libtoxencryptsave.a
 
 %changelog
+* Sun Feb 11 2018 Denis Smirnov <mithraen@altlinux.ru> 0.1.11-alt2
+- rebuild with new libsodium
+
 * Sun Feb 11 2018 Denis Smirnov <mithraen@altlinux.ru> 0.1.11-alt1
 - update from upstream git
 
