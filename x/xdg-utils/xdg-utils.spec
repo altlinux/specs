@@ -1,6 +1,6 @@
 Name: xdg-utils
 Version: 1.1.2
-Release: alt2
+Release: alt3
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 
@@ -13,12 +13,13 @@ Source: %name-%version.tar
 
 Patch0: added-xdg-su-1.1.0rc1-alt.patch
 Patch1: xdg-open-opera.patch
-Patch2: xdg-su-added-lxde-and-gksu-support-1.1.2.patch
+Patch2: xdg-su-added-lxde-and-gksu-and-beesu-support-1.1.2.patch
 Patch5: xdg-open-generic-mimeapps.patch
 Patch6: xdg-su-use-gnomesu-for-xfce-if-available.patch
 Patch7: xdg-open-fix-ifs-use.patch
 Patch8: xdg-open-kde5.patch
 Patch9: xdg-su-kde5.patch
+Patch10: xdg-common-detect-de-generic.patch
 
 BuildArch: noarch
 
@@ -67,6 +68,7 @@ popd
 #patch7 -p2
 #patch8 -p1
 %patch9 -p1
+%patch10 -p2
 
 %build
 %autoreconf
@@ -91,6 +93,10 @@ popd
 %doc ChangeLog README LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Sun Feb 11 2018 Anton Midyukov <antohami@altlinux.org> 1.1.2-alt3
+- Fix detected unknown DE (e.g. wmaker or IceWM)
+- use beesu for generic
+
 * Mon Jul 03 2017 Sergey V Turchin <zerg@altlinux.org> 1.1.2-alt2
 - restore KDE5 support for xdg-su (ALT#33581)
 
