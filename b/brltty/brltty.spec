@@ -1,9 +1,9 @@
 %define qIF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
 %define _localstatedir %_var
 
-%define pkg_version 5.5
+%define pkg_version 5.6
 %define xdg_name org.a11y.brlapi
-%define api_ver 0.6.6
+%define api_ver 0.6.7
 %define _exec_prefix %nil
 %define _jnidir %_libdir/java
 
@@ -211,6 +211,8 @@ popd
 done
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
+
 # Patch6 changes aclocal.m4:
 autoconf
 
@@ -304,7 +306,9 @@ install -D -p -m644 Autostart/Udev/rules %buildroot%_udevrulesdir/95-%name.rules
 # systemd unit
 %make -C Autostart/Systemd SYSTEMD_UNITS_DIRECTORY=%buildroot%_unitdir install
 mkdir -p %buildroot%_unitdir
-install -m 644 Autostart/Systemd/*.{service,target} %buildroot%_unitdir/
+#install -m 644 Autostart/Systemd/*.{service,path} %buildroot%_unitdir/
+
+chmod +x %buildroot%_bindir/%name-config
 
 %find_lang %name
 
@@ -314,12 +318,13 @@ install -m 644 Autostart/Systemd/*.{service,target} %buildroot%_unitdir/
 %_udevrulesdir/95-%name.rules
 %_tmpfilesdir/%name.conf
 %_unitdir/brltty@.service
-%_unitdir/*.target
+%_unitdir/*.path
 # bash script
 %_sbindir/brltty-systemd-wrapper
 %_datadir/polkit-1/actions/%xdg_name.policy
 %_bindir/brltty
 %_bindir/brltty-*
+%exclude %_bindir/brltty-config
 %_bindir/eutp
 /%_lib/brltty/
 %exclude /%_lib/brltty/libbrlttybba.so
@@ -336,7 +341,7 @@ install -m 644 Autostart/Systemd/*.{service,target} %buildroot%_unitdir/
 %_man1dir/brltty.*
 %_man1dir/eutp.1.*
 %_man5dir/brltty.*
-%_datadir/metainfo/org.a11y.brltty.metainfo.xml
+#%_datadir/metainfo/org.a11y.brltty.metainfo.xml
 %doc LICENSE-GPL LICENSE-LGPL
 %doc Documents/ChangeLog Documents/TODO
 %doc Documents/Manual-BRLTTY/
@@ -375,6 +380,7 @@ install -m 644 Autostart/Systemd/*.{service,target} %buildroot%_unitdir/
 %doc %_mandir/man1/vstp.*
 
 %files -n brlapi-devel
+%_bindir/%name-config
 /%_lib/libbrlapi.so
 %_includedir/brltty
 %_includedir/brlapi*.h
@@ -409,6 +415,9 @@ install -m 644 Autostart/Systemd/*.{service,target} %buildroot%_unitdir/
 %endif
 
 %changelog
+* Mon Feb 12 2018 Yuri N. Sedunov <aris@altlinux.org> 5.6-alt1
+- 5.6
+
 * Mon Apr 24 2017 Yuri N. Sedunov <aris@altlinux.org> 5.5-alt1
 - 5.5
 
