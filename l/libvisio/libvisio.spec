@@ -1,7 +1,7 @@
 
 Name: libvisio
-Version: 0.1.3
-Release: alt2
+Version: 0.1.6
+Release: alt1
 Summary: A library providing ability to interpret and import visio diagrams
 
 Group: System/Libraries
@@ -13,13 +13,11 @@ BuildRequires: gcc-c++
 BuildRequires: boost-devel-headers
 BuildRequires: pkgconfig(librevenge-0.0) pkgconfig(librevenge-stream-0.0)
 BuildRequires: pkgconfig(libxml-2.0)
-# build req on pkgconfig(icu-i18n) will build with old libicu when available (bug#31476)
-BuildRequires: libicu-devel
-BuildRequires: pkgconfig(zlib)
-BuildRequires: pkgconfig(cppunit)
+BuildRequires: pkgconfig(icu-uc)
+BuildRequires: pkgconfig(cppunit) pkgconfig(librevenge-generators-0.0)
 
 BuildRequires: doxygen
-BuildRequires: gperf
+BuildRequires: gperf perl
 
 %description
 Libvisio is library providing ability to interpret and import visio
@@ -58,7 +56,6 @@ Currently supported: XHTML, raw, plain text.
 
 %build
 mkdir -p m4
-%add_optflags -DBOOST_SYSTEM_NO_DEPRECATED -DBOOST_ERROR_CODE_HEADER_ONLY
 %autoreconf
 %configure --disable-static --disable-werror
 %make_build
@@ -83,6 +80,9 @@ mkdir -p m4
 %_bindir/*
 
 %changelog
+* Mon Feb 12 2018 Alexey Shabalin <shaba@altlinux.ru> 0.1.6-alt1
+- 0.1.6
+
 * Thu Aug 31 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.3-alt2
 - Fixed build with new boost.
 
