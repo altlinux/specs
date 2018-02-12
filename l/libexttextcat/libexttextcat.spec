@@ -1,12 +1,13 @@
 Name: libexttextcat
-Version: 3.4.4
+Version: 3.4.5
 Release: alt1
 
 Summary: Text categorisation library
 License: BSD
 Group: Development/Other
+Url: https://wiki.documentfoundation.org/Libexttextcat
 
-Url: http://www.freedesktop.org/wiki/Software/libexttextcat
+# git-vcs git://gerrit.libreoffice.org/libexttextcat
 Source: %name-%version.tar
 Obsoletes: libtextcat < %version
 Provides: libtextcat = %version
@@ -65,6 +66,9 @@ mkdir -p m4
 %_bindir/*
 
 %changelog
+* Mon Feb 12 2018 Alexey Shabalin <shaba@altlinux.ru> 3.4.5-alt1
+- 3.4.5
+
 * Thu Aug 07 2014 Alexey Shabalin <shaba@altlinux.ru> 3.4.4-alt1
 - 3.4.4
 
