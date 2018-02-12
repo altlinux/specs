@@ -3,22 +3,22 @@
 %define somver 0
 %define sover %somver.0.0
 Name: f2c
-Version: 20130926
+Version: 20160102
 Release: alt1
 Summary: F2c converts Fortran 77 source code to C/C++ source code
 License: %bsdstyle
 Group: Development/C
 Url: http://www.netlib.org/f2c/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 BuildRequires(pre): unzip rpm-build-licenses
+Patch: f2c-ALT-build.patch
+Patch1: f2c-ALT-MIPS.patch
 
 Source: http://www.netlib.org/f2c/libf2c.zip
-Source1: http://www.netlib.org/f2c/changes
 Source2: http://www.netlib.org/f2c/fc
 Source4: http://www.netlib.org/f2c/f2c.pdf
 Source6: makefile
 # http://www.netlib.org/f2c/src/
-Source7: src.tar.bz2
+Source7: src.tgz
 
 Requires: lib%name-ng-devel = %version-%release
 
@@ -90,8 +90,9 @@ first.
 This package contains development documentation for f2c.
 
 %prep
-unzip %SOURCE0
-tar -xf %SOURCE7
+%setup -c -a7
+%patch -p1
+%patch1 -p1
 install -p -m644 %SOURCE6 ./
 sed -i '19s|(LIBDIR)|%buildroot%_libdir|' makefile
 
@@ -99,17 +100,16 @@ sed -i '19s|(LIBDIR)|%buildroot%_libdir|' makefile
 %make_build f2c.h hadd
 %make_build MALLOC=malloc.o
 %make_build libf2c.so SOMVER=%somver SOVER=%sover
-make -C src -f makefile.u
+%make_build -C src -f makefile.u
 
 %install
 mkdir -p %buildroot%_libdir
 %makeinstall_std
 %makeinstall_std -C src -f makefile.u
 mkdir -p %buildroot%_docdir/%name
-install -p -m644 %SOURCE1 ./
 install -p -m755 %SOURCE2 %buildroot%_bindir/f2cc
 install -p -m644 %SOURCE4 %buildroot%_docdir/%name
-bzip2 changes
+bzip2 src/changes
 
 %files
 %doc src/README src/Notice
@@ -117,7 +117,7 @@ bzip2 changes
 %_man1dir/*
 
 %files -n lib%name-ng
-%doc README Notice changes.bz2
+%doc README Notice src/changes.bz2
 %_libdir/*.so.*
 
 %files -n lib%name-ng-devel
@@ -131,6 +131,10 @@ bzip2 changes
 %_docdir/%name
 
 %changelog
+* Mon Feb 12 2018 Fr. Br. George <george@altlinux.ru> 20160102-alt1
+- Version 20160102
+- MIPS build
+
 * Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20130926-alt1
 - Version 20130926
 
