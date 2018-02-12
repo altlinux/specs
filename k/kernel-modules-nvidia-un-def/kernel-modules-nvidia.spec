@@ -7,8 +7,8 @@
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
-%define module_version	384.111
-%define module_release	alt2
+%define module_version	390.25
+%define module_release	alt1
 %define flavour		un-def
 
 %setup_kernel_module %flavour
@@ -251,6 +251,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Feb 12 2018 Sergey V Turchin <zerg at altlinux dot org> 390.25-alt1
+- new release (390.25)
 
 * Mon Jan 29 2018 Sergey V Turchin <zerg at altlinux dot org> 384.111-alt2
 - new legacy release (340.106)
