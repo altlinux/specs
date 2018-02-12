@@ -1,22 +1,22 @@
 Name: libcmis
-Version: 0.5.0
-Release: alt4
+Version: 0.5.2
+Release: alt0.git.738528
 Summary: A C++ client library for the CMIS interface
 Group: System/Libraries
 License: GPLv2+ or LGPLv2+ or MPLv1.1
-Url: http://sourceforge.net/projects/libcmis/
-Source: %name-%version.tar.gz
+Url: https://github.com/tdf/libcmis
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(libcurl)
 BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(cppunit) >= 1.12
 
 BuildRequires: boost-devel boost-program_options-devel
 BuildRequires: doxygen
 BuildRequires: xmlto
 
 Patch: %name-0.4.1-alt2.1.patch
-Patch1: libcmis-0.5.0-fix-build-with-cpp5.patch
 
 %description
 LibCMIS is a C++ client library for the CMIS interface. This allows C++
@@ -44,9 +44,6 @@ command line.
 %prep
 %setup
 %patch -p1
-%ifnarch e2k
-%patch1 -p2
-%endif
 
 %build
 touch ChangeLog
@@ -64,7 +61,7 @@ mkdir -p m4
 %makeinstall_std
 
 %files
-%doc AUTHORS COPYING.* NEWS README
+%doc AUTHORS COPYING.* NEWS README.md
 %_libdir/*.so.*
 
 %files devel
@@ -79,6 +76,12 @@ mkdir -p m4
 %endif
 
 %changelog
+* Mon Feb 12 2018 Alexey Shabalin <shaba@altlinux.ru> 0.5.2-alt0.git.738528
+- upstream master snapshot 738528d790b2b1d52d9b72d673842969a852815d
+
+* Mon Feb 12 2018 Alexey Shabalin <shaba@altlinux.ru> 0.5.1-alt1
+- 0.5.1
+
 * Sun Aug 27 2017 Michael Shigorin <mike@altlinux.org> 0.5.0-alt4
 - E2K:
   + drop boost patch (only spoils things with lcc)
