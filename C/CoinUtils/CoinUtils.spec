@@ -3,7 +3,7 @@
 
 Name: CoinUtils
 Version: 2.10.13
-Release: alt1
+Release: alt1.1
 Summary: Open-source collection of classes and functions for COIN-OR project
 License: EPL v1.0
 Group: Sciences/Mathematics
@@ -99,7 +99,11 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 	--with-coin-instdir=%prefix \
 	--with-glpk-lib=-lglpk \
 	--with-glpk-incdir=%_includedir/glpk \
+%ifarch mipsel
+        --without-blas-lib \
+%else
 	--with-blas-lib=-lopenblas \
+%endif
 	--with-lapack-lib=-llapack \
 	--with-dot \
 	--disable-dependency-linking
@@ -131,6 +135,9 @@ rm -fR %buildroot%_datadir/coin/doc \
 %doc %name/doxydoc/doxydoc/html/*
 
 %changelog
+* Mon Feb 12 2018 Fr. Br. George <george@altlinux.ru> 2.10.13-alt1.1
+- Build for mipsel (without blas)
+
 * Fri Nov 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10.13-alt1
 - Updated to stable upstream version 2.10.13.
 
