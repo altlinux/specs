@@ -14,7 +14,7 @@
 %def_disable front_end
 %def_enable pam
 %def_with readline
-%def_with blcr
+%def_without blcr
 #----------------------------------------------------------------------
 %define subst_enable_to() %{expand:%%{?_enable_%{1}:--enable-%{2}}} %{expand:%%{?_disable_%{1}:--disable-%{2}}}
 
@@ -23,7 +23,7 @@ Name: slurm
 %define lname lib%name
 Version: 14.03.4.2
 %define pre %nil
-Release: alt1
+Release: alt2
 Summary: Simple Linux Utility for Resource Management
 License: %gpl2plus
 Group: System/Base
@@ -350,7 +350,6 @@ chrpath -d %buildroot%_libdir/libpmi.so
 %endif
 %_man5dir/%name.*
 %_man5dir/wiki.*
-%_libexecdir/%name
 %{?_enable_blg_emulation:%_man5dir/bluegene.*}
 
 
@@ -418,6 +417,9 @@ chrpath -d %buildroot%_libdir/libpmi.so
 
 
 %changelog
+* Mon Feb 12 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 14.03.4.2-alt2
+- Rebuilt without libblcr.
+
 * Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 14.03.4.2-alt1
 - Version 14.03.4.2
 

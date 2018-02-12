@@ -2,7 +2,7 @@ Summary: Tera-scale Open-source Resource and QUEue manager
 
 Name: torque
 Version: 4.2.1
-Release: alt1.qa1
+Release: alt1.qa2
 
 License: OpenPBS (Portable Batch System) v2.3 Software License (Redistribution in any form is only permitted for non-commercial, non-profit purposes)
 Group: Sciences/Computer science
@@ -27,7 +27,7 @@ Patch: %name-%version-%release.patch
 BuildRequires: flex gcc-c++ groff-base libncurses-devel libpam-devel 
 BuildRequires: libreadline-devel sendmail-common tk-devel openssh
 BuildRequires: openssl-devel libxml2-devel
-BuildRequires: check hwloc libhwloc-devel libblcr-devel
+BuildRequires: check hwloc libhwloc-devel
 
 %description
 TORQUE (Tera-scale Open-source Resource and QUEue manager) is a resource 
@@ -128,7 +128,7 @@ A simple PAM module to authorize users on PBS MOM nodes with a running job.
 	--with-gnu-ld \
 	--enable-gui \
 	--enable-cpuset \
-	--enable-blcr \
+	--disable-blcr \
 	--enable-nvidia-gpus \
 	--enable-force-nodefile \
 	--enable-maintainer-mode \
@@ -263,6 +263,9 @@ echo "localhost" > %buildroot/%torquehomedir/server_name
 %_man3dir/*
 
 %changelog
+* Fri Feb 09 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2.1-alt1.qa2
+- Rebuilt without blcr.
+
 * Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.2.1-alt1.qa1
 - NMU: rebuild against Tcl/Tk 8.6
 
