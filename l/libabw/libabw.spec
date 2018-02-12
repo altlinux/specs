@@ -1,13 +1,12 @@
 Name: libabw
-Version: 0.1.1
-Release: alt3
+Version: 0.1.2
+Release: alt1
 Summary: A library for import of AbiWord files
 
 Group: System/Libraries
 License: MPLv2.0
-Url: http://www.freedesktop.org/wiki/Software/libabw/
-Source: %name-%version.tar.xz
-Patch1: %name-%version-upstream-boost.patch
+Url: https://wiki.documentfoundation.org/DLP/Libraries/libabw
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: boost-devel-headers
@@ -17,7 +16,7 @@ BuildRequires: pkgconfig(icu-i18n)
 BuildRequires: pkgconfig(zlib)
 
 BuildRequires: doxygen help2man
-BuildRequires: gperf
+BuildRequires: gperf perl
 
 %description
 %name is a library for import of AbiWord files.
@@ -42,7 +41,7 @@ The %name-doc package contains documentation files for %name.
 %package tools
 Summary: Tools to transform AbiWord files into other formats
 Group: Publishing
-Requires: %name%{?_isa} = %version-%release
+Requires: %name = %version-%release
 
 %description tools
 Tools to transform AbiWord files into other formats. Currently
@@ -50,7 +49,6 @@ supported: XHTML, raw, text.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 mkdir -p m4
@@ -62,43 +60,42 @@ sed -i \
     libtool
 %make_build
 
-export LD_LIBRARY_PATH=`pwd`/src/lib/.libs${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
-help2man -N -n 'debug the conversion library' -o abw2raw.1 ./src/conv/raw/.libs/abw2raw
-help2man -N -n 'convert AbiWord document into HTML' -o abw2html.1 ./src/conv/html/.libs/abw2html
-help2man -N -n 'convert AbiWord document into plain text' -o abw2text.1 ./src/conv/text/.libs/abw2text
-
 %install
 %makeinstall_std
 make install DESTDIR=%buildroot
 # we install API docs directly from build
 rm -rf %buildroot/%_docdir/%name
 
-mkdir -p %buildroot/%_mandir/man1
-install -m 0644 abw2*.1 %buildroot/%_mandir/man1
+# generate and install man pages
+export LD_LIBRARY_PATH=%buildroot%_libdir${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+for tool in abw2html abw2raw abw2text; do
+    help2man -N -S '%name %version' -o ${tool}.1 %buildroot%_bindir/${tool}
+done
+install -m 0755 -d %buildroot%_man1dir
+install -m 0644 abw2*.1 %buildroot%_man1dir
 
 %files
 %doc CREDITS COPYING.MPL README
 %_libdir/*.so.*
 
 %files devel
-%doc ChangeLog
+%doc ChangeLog NEWS
 %_includedir/*
 %_libdir/*.so
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*
 
 %files doc
 %doc COPYING.MPL
 %doc docs/doxygen/html
 
 %files tools
-%_bindir/abw2raw
-%_bindir/abw2text
-%_bindir/abw2html
-%_mandir/man1/abw2raw.1*
-%_mandir/man1/abw2text.1*
-%_mandir/man1/abw2html.1*
+%_bindir/abw2*
+%_man1dir/abw2*
 
 %changelog
+* Mon Feb 12 2018 Alexey Shabalin <shaba@altlinux.ru> 0.1.2-alt1
+- new version 0.1.2
+
 * Thu Aug 31 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.1-alt3
 - Fixed build with new boost.
 
