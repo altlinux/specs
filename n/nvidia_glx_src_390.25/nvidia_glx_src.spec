@@ -11,17 +11,17 @@
 %endif
 
 %define nvidia_egl_wayland_sover 1
-%define nvidia_egl_wayland_libver 1.0.1
+%define nvidia_egl_wayland_libver 1.0.2
 %define libnvidia_egl_wayland libnvidia-egl-wayland%nvidia_egl_wayland_sover
 
 # version-release
-%define nv_version 384
-%define nv_release 111
+%define nv_version 390
+%define nv_release 25
 %define nv_minor %nil
 %define pkg_rel alt180%ubt
 %def_enable kernelsource
 %def_disable glvnd
-%def_disable package_egl_wayland
+%def_enable package_egl_wayland
 %def_disable package_wfb
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -199,7 +199,7 @@ soname()
 #
 %if_enabled package_egl_wayland
 %__install -m 0644 libnvidia-egl-wayland.so.%nvidia_egl_wayland_libver %buildroot/%_libdir/
-ln -s libnvidia-egl-wayland.so.%nvidia_egl_wayland_libver %buildroot/%_libdir/libnvidia-egl-wayland.so.%nvidia_egl_wayland_sover
+#ln -s libnvidia-egl-wayland.so.%nvidia_egl_wayland_libver %buildroot/%_libdir/libnvidia-egl-wayland.so.%nvidia_egl_wayland_sover
 %endif
 
 %__ln_s %nv_lib_dir/nvidia.xinf %buildroot/%nv_lib_sym_dir/nvidia.xinf
@@ -337,8 +337,8 @@ fi
 %endif
 
 %changelog
-* Mon Feb 12 2018 Sergey V Turchin <zerg@altlinux.org> 384.111-alt180%ubt
-- don't package libnvidia_egl_wayland
+* Mon Feb 12 2018 Sergey V Turchin <zerg@altlinux.org> 390.25-alt180%ubt
+- new version
 
 * Thu Jan 11 2018 Sergey V Turchin <zerg@altlinux.org> 384.111-alt179%ubt
 - new version
