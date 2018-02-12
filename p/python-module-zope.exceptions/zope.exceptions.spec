@@ -1,29 +1,31 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1.1
+%define _unpackaged_files_terminate_build 1
 %define oname zope.exceptions
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 4.0.8
-#Release: alt1.1.1
+Version: 4.2.0
+Release: alt1%ubt
+
 Summary: Zope Exceptions
-License: ZPL
+License: ZPLv2.1
 Group: Development/Python
-Url: http://pypi.python.org/pypi/zope.exceptions/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+# Source-git: https://github.com/zopefoundation/zope.exceptions.git
+Url: http://pypi.python.org/pypi/zope.exceptions
 
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-distribute
-%if_with python3
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-zope python3-module-zope.interface
-BuildRequires: python-module-setuptools python3-module-setuptools python3-module-zope.fixers rpm-build-python3
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-zope.interface
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-zope.interface
 
-#BuildRequires: python3-devel python3-module-distribute
-#BuildPreReq: python3-module-zope.fixers python-tools-2to3
+%if_with check
+BuildRequires: python-module-zope.testrunner
+BuildRequires: python3-module-zope.testrunner
 %endif
 
 %py_requires zope zope.interface
@@ -33,11 +35,10 @@ This package contains exception interfaces and implementations which are
 so general purpose that they don't belong in Zope application-specific
 packages.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Zope Exceptions (Python 3)
 Group: Development/Python3
-%py3_requires zope zope.interface
+%py3_requires zope
 
 %description -n python3-module-%oname
 This package contains exception interfaces and implementations which are
@@ -45,63 +46,64 @@ so general purpose that they don't belong in Zope application-specific
 packages.
 
 %package -n python3-module-%oname-tests
-Summary: Tests for zope.exceptions (Python 3)
+Summary: Tests for %oname (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
+Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-tests
 This package contains exception interfaces and implementations which are
 so general purpose that they don't belong in Zope application-specific
 packages.
 
-This package contains tests for zope.exceptions.
-%endif
+This package contains tests for %oname.
 
 %package tests
-Summary: Tests for zope.exceptions
+Summary: Tests for %oname
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package contains exception interfaces and implementations which are
 so general purpose that they don't belong in Zope application-specific
 packages.
 
-This package contains tests for zope.exceptions.
+This package contains tests for %oname.
 
 %prep
 %setup
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
-%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
+%ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
-	%buildroot%python_sitelibdir/
+        %buildroot%python_sitelibdir/
 %endif
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
+
+%ifarch x86_64
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
+        %buildroot%python3_sitelibdir/
 %endif
-%endif
+
+%check
+python setup.py test -v
+
+pushd ../python3
+python3 setup.py test -v
+popd
 
 %files
 %doc *.txt
@@ -112,7 +114,6 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files tests
 %python_sitelibdir/*/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.txt
 %python3_sitelibdir/*
@@ -121,9 +122,11 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/tests
-%endif
 
 %changelog
+* Mon Feb 12 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1%ubt
+- v4.0.8 -> v4.2.0
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.8-alt1.1.1.1
 - (AUTO) subst_x86_64.
 
