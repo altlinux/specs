@@ -1,6 +1,6 @@
 
 Name: libmwaw
-Version: 0.3.5
+Version: 0.3.13
 Release: alt1
 Summary: Import library for some old mac text documents
 Group: System/Libraries
@@ -14,8 +14,9 @@ Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: boost-devel-headers
-BuildRequires: pkgconfig(librevenge-0.0) pkgconfig(librevenge-stream-0.0)
-
+BuildRequires: libattr-devel
+BuildRequires: pkgconfig(librevenge-0.0) pkgconfig(librevenge-stream-0.0) pkgconfig(librevenge-generators-0.0)
+BuildRequires: pkgconfig(zlib)
 BuildRequires: doxygen
 
 %description
@@ -56,12 +57,12 @@ Supported output formats are XHTML, text and raw.
 %build
 mkdir -p m4
 %autoreconf
-%configure --disable-static --disable-werror --disable-zip
+%configure --disable-static --disable-werror
 
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 # it seems this tool is only useful on MacOS
 rm -f %buildroot/%_bindir/mwawFile
 
@@ -83,6 +84,9 @@ rm -f %buildroot/%_bindir/mwawFile
 %_bindir/*
 
 %changelog
+* Mon Feb 12 2018 Alexey Shabalin <shaba@altlinux.ru> 0.3.13-alt1
+- 0.3.13
+
 * Tue Aug 18 2015 Alexey Shabalin <shaba@altlinux.ru> 0.3.5-alt1
 - 0.3.5
 
