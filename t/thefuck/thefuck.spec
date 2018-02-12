@@ -1,10 +1,10 @@
 Name:    thefuck
 Version: 3.25
-Release: alt1
+Release: alt2
 
 Summary: Magnificent app which corrects your previous console command
 License: MIT
-Group:   Development/Python3
+Group:   Other
 URL:     https://github.com/nvbn/thefuck
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
@@ -35,5 +35,8 @@ rm -v thefuck/system/win32.py
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Feb 12 2018 Grigory Ustinov <grenka@altlinux.org> 3.25-alt2
+- Change package group.
+
 * Thu Feb 08 2018 Grigory Ustinov <grenka@altlinux.org> 3.25-alt1
 - Initial build for Sisyphus.
