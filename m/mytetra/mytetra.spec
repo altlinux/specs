@@ -1,6 +1,6 @@
 Name: mytetra
-Version: 1.30.1
-Release: alt1.1
+Version: 1.42.2
+Release: alt1
 
 Summary: Simple cross-platform manager for data collecting
 Summary(ru_RU.UTF-8): несложный кроссплатформенный менеджер накопления информации
@@ -10,18 +10,22 @@ Url: http://webhamster.ru/site/page/index/articles/projectcode/105
 Packager: Malo Skryleve <malo@altlinux.org>
 
 Source: %name-%version.tar
-Patch: mytetra-1.30.1-alt-glibc-2.16.patch
 
-BuildRequires(pre): rpm-macros-qt4
+BuildRequires(pre): rpm-macros-qt5
 # Automatically added by buildreq on Wed Mar 16 2011
-BuildRequires: gcc-c++ libqt4-network libqt4-svg libqt4-xml phonon-devel
-BuildRequires: desktop-file-utils
+BuildRequires: gcc-c++ phonon-devel desktop-file-utils
+BuildRequires: qt5-base-devel qt5-svg-devel
 
 %description
-No desc.
+MyTetra is open source and cross platform personal manager for information
+accumulation. It is powerful program for data memorization and structuring
+notes. All notes are organized in tree structure (usually by "basic"
+attribute), and also supplies with keywords(tags). The main task of Mytetra
+is to provide a natural, intuitive interface for writing notes and provide
+the ability to quickly navigate through the tree and convenient search.
 
 %description -l ru_RU.UTF-8
-Программа MyTetra — это несложный кроссплатформенный менеджер накопления
+Программа MyTetra — это открытый и кроссплатформенный менеджер накопления
 информации. Программа предназначена для хранения статей и заметок.
 Все записи организуются в древовидную структуру (обычно по «основному»
 признаку), а так же снабжаются ключевыми словами-тегами. Основная задача
@@ -31,29 +35,31 @@ MyTetra — предоставить естественный, интуитив�
 
 %prep
 %setup
-%patch -p2
 
 %build
 sed 's,\(mytetra_binary.path=\).*,\1%_bindir,g' -i %name.pro
 sed 's,/usr/local/bin,%_bindir,g' -i %name.pro
 echo "QMAKE_CXXFLAGS = %optflags" >> %name.pro
-PATH=$PATH:%_qt4dir/bin qmake %name.pro
-%make
+qmake-qt5 %name.pro
+
+%make_build
 
 %install
-%make_install INSTALL_ROOT=%buildroot \
-	BINARY_INSTALL_PATH=%_bindir install
-desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=TextTools \
-	%buildroot%_desktopdir/mytetra.desktop
+%makeinstall_std INSTALL_ROOT=%buildroot BINARY_INSTALL_PATH=%_bindir install
+rm -f %buildroot/usr/share/icons/hicolor/scalable/apps/mytetra.svg
 
 %files
 %doc readme.txt
 %_bindir/*
-%_desktopdir/*
-%_iconsdir/hicolor/scalable/apps/*
+%_desktopdir/%name.desktop
+%_liconsdir/%name.png
 
 %changelog
+* Mon Jan 29 2018 Grigory Ustinov <grenka@altlinux.org> 1.42.2-alt1
+- Build new version (Closes: #34426).
+- Transfer to qt5.
+- Add eng description.
+
 * Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.30.1-alt1.1
 - Fixed build with glibc 2.16
 
