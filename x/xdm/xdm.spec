@@ -3,7 +3,7 @@
 
 Name: xdm
 Version: 1.1.10
-Release: alt1.1
+Release: alt2
 Serial: 2
 Summary: X Display Manager with support for XDMCP, host chooser
 License: MIT/X11
@@ -13,7 +13,6 @@ Url: http://xorg.freedesktop.org
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Requires: pam-ck-connector >= 0.3.0-alt5.M51.1
 Obsoletes: %xf86-%name %xorg-%name < %serial:%version-%release
 Provides: %xf86-%name = 4.4 %xorg-%name = %serial:%version-%release
 
@@ -70,6 +69,9 @@ ln -snf ../../..%_localstatedir/xdm %buildroot%_sysconfdir/X11/xdm/authdir
 %_man1dir/*
 
 %changelog
+* Mon Feb 12 2018 Andrey Cherepanov <cas@altlinux.org> 2:1.1.10-alt2
+- Remove requirements of pam-ck-connector2 (ALT #34523)
+
 * Sat Jun 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:1.1.10-alt1.1
 - Fixed build
 
