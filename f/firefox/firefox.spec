@@ -8,11 +8,14 @@
 %define nspr_version 4.17
 %define nss_version 3.33.0
 
+#global gcc_version 5
+#set_gcc_version #gcc_version
+
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        57.0.4
+Version:        58.0.2
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -30,6 +33,8 @@ Source7:        firefox.c
 Source8:        firefox-prefs.js
 
 Patch6:         firefox-alt-disable-werror.patch
+Patch7:         firefox-alt-fix-expandlibs.patch
+Patch8:         firefox-alt-fix-fortify-source-check.patch
 Patch14:        firefox-fix-install.patch
 Patch16:        firefox-cross-desktop.patch
 Patch17:        firefox-mediasource-crash.patch
@@ -133,7 +138,9 @@ cd mozilla
 tar -xf %SOURCE1
 tar -xf %SOURCE2
 
-%patch6  -p1
+#patch6  -p1
+%patch7  -p2
+%patch8  -p2
 %patch14 -p1
 %patch16 -p2
 %patch17 -p2
@@ -164,6 +171,9 @@ MOZ_OPT_FLAGS="$RPM_OPT_FLAGS"
 # PIE, full relro
 MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fPIC -Wl,-z,relro -Wl,-z,now"
 
+# Add fake RPATH
+MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -Wl,-rpath,/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
+
 # add -fno-delete-null-pointer-checks and -fno-inline-small-functions for gcc6
 MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fno-delete-null-pointer-checks -fno-inline-small-functions"
 
@@ -177,19 +187,24 @@ MOZ_OPT_FLAGS=$(echo $MOZ_OPT_FLAGS | sed -e 's/-fexceptions/-fno-exceptions/g')
 # If MOZ_DEBUG_FLAGS is empty, firefox's build will default it to "-g" which
 # overrides the -g0 from line above and breaks building on s390
 # (OOM when linking, rhbz#1238225)
-MOZ_OPT_FLAGS="$(echo $MOZ_OPT_FLAGS | sed -e 's/-g/-g0/')"
+MOZ_OPT_FLAGS="$(echo $MOZ_OPT_FLAGS | sed -e 's/ -g/ -g0/')"
 export MOZ_DEBUG_FLAGS=" "
 
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
 
-export PREFIX="%_prefix"
-export LIBDIR="%_libdir"
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export srcdir="$PWD"
 export SHELL=/bin/sh
 export RUST_BACKTRACE=1
+export RUSTFLAGS="-Cdebuginfo=0"
 export BUILD_VERBOSE_LOG=1
+export GCC_USE_GNU_LD=1
+
+cat >> .mozconfig <<'EOF'
+ac_add_options --prefix="%_prefix"
+ac_add_options --libdir="%_libdir"
+EOF
 
 #export CC="clang"
 #export CXX="clang++"
@@ -203,12 +218,14 @@ MOZ_SMP_FLAGS=-j1
 [ "${NPROCS:-0}" -ge 8 ] && MOZ_SMP_FLAGS=-j8
 %endif
 
-make -f client.mk \
-	MAKENSISU= \
-	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
-	mozappdir=%buildroot/%firefox_prefix \
-	libdir=%_libdir \
-	build
+export MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
+
+%__autoconf old-configure.in > old-configure
+pushd js/src
+%__autoconf old-configure.in > old-configure
+popd
+
+./mach build
 
 %__cc %optflags \
 	-Wall -Wextra \
@@ -289,6 +306,19 @@ rm -rf -- \
 	./%_libdir/%name-devel \
 #
 
+# Add real RPATH
+(set +x
+	rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
+	find %buildroot/%firefox_prefix -type f |
+	while read f; do
+		t="$(readlink -ev "$f")"
+		file "$t" | fgrep -qs ELF || continue
+		if chrpath -l "$t" | fgrep -qs "RPATH=$rpath"; then
+			chrpath -r "%firefox_prefix" "$t"
+		fi
+	done
+)
+
 %pre
 for n in defaults browserconfig.properties; do
 	[ ! -L "%firefox_prefix/$n" ] || rm -f "%firefox_prefix/$n"
@@ -312,6 +342,43 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Sun Feb 11 2018 Alexey Gladkov <legion@altlinux.ru> 58.0.2-alt1
+- New release (58.0.2).
+- Fixed:
+  + CVE-2018-5091: Use-after-free with DTMF timers
+  + CVE-2018-5092: Use-after-free in Web Workers
+  + CVE-2018-5093: Buffer overflow in WebAssembly during Memory/Table resizing
+  + CVE-2018-5094: Buffer overflow in WebAssembly with garbage collection on uninitialized memory
+  + CVE-2018-5095: Integer overflow in Skia library during edge builder allocation
+  + CVE-2018-5097: Use-after-free when source document is manipulated during XSLT
+  + CVE-2018-5098: Use-after-free while manipulating form input elements
+  + CVE-2018-5099: Use-after-free with widget listener
+  + CVE-2018-5100: Use-after-free when IsPotentiallyScrollable arguments are freed from memory
+  + CVE-2018-5101: Use-after-free with floating first-letter style elements
+  + CVE-2018-5102: Use-after-free in HTML media elements
+  + CVE-2018-5103: Use-after-free during mouse event handling
+  + CVE-2018-5104: Use-after-free during font face manipulation
+  + CVE-2018-5105: WebExtensions can save and execute files on local file system without user prompts
+  + CVE-2018-5106: Developer Tools can expose style editor information cross-origin through service worker
+  + CVE-2018-5107: Printing process will follow symlinks for local file access
+  + CVE-2018-5108: Manually entered blob URL can be accessed by subsequent private browsing tabs
+  + CVE-2018-5109: Audio capture prompts and starts with incorrect origin attribution
+  + CVE-2018-5110: Cursor can be made invisible on OS X
+  + CVE-2018-5111: URL spoofing in addressbar through drag and drop
+  + CVE-2018-5112: Extension development tools panel can open a non-relative URL in the panel
+  + CVE-2018-5113: WebExtensions can load non-HTTPS pages with browser.identity.launchWebAuthFlow
+  + CVE-2018-5114: The old value of a cookie changed to HttpOnly remains accessible to scripts
+  + CVE-2018-5115: Background network requests can open HTTP authentication in unrelated foreground tabs
+  + CVE-2018-5116: WebExtension ActiveTab permission allows cross-origin frame content access
+  + CVE-2018-5117: URL spoofing with right-to-left text aligned left-to-right
+  + CVE-2018-5118: Activity Stream images can attempt to load local content through file:
+  + CVE-2018-5119: Reader view will load cross-origin content in violation of CORS headers
+  + CVE-2018-5121: OS X Tibetan characters render incompletely in the addressbar
+  + CVE-2018-5122: Potential integer overflow in DoCrypt
+  + CVE-2018-5090: Memory safety bugs fixed in Firefox 58
+  + CVE-2018-5089: Memory safety bugs fixed in Firefox 58 and Firefox ESR 52.6
+  + CVE-2018-5124: Sanitize HTML fragments created for chrome-privileged documents
+
 * Sat Jan 06 2018 Alexey Gladkov <legion@altlinux.ru> 57.0.4-alt1
 - New release (57.0.4).
 - Fixed:
