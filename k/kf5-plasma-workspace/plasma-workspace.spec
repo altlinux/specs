@@ -17,7 +17,7 @@
 
 Name: kf5-%rname
 Version: 5.11.5
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -313,6 +313,9 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Mon Feb 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.5-alt2%ubt
+- security fix: CVE-2018-6791
+
 * Wed Jan 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.5-alt1%ubt
 - new version
 
