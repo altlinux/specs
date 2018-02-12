@@ -1,6 +1,6 @@
 Name: mpv
-Version: 0.27.0
-Release: alt2
+Version: 0.27.1
+Release: alt1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 Summary(ru_RU.UTF8): MPV - это медиапроигрыватель с открытыми исходниками, основанный на проектах MPlayer и mplayer2.
@@ -106,6 +106,11 @@ chmod ugo+rx waf
 %_libdir/libmpv.so.*
 
 %changelog
+* Mon Feb 12 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.27.1-alt1
+- 0.27.1
+- Fixes:
+  + CVE-2018-6360
+
 * Wed Sep 20 2017 Michael Shigorin <mike@altlinux.org> 0.27.0-alt2
 - E2K: avoid lua for luajit (not ported yet)
 
