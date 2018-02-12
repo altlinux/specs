@@ -1,7 +1,14 @@
 %def_enable shared
 %def_enable static
 %def_enable compat
+
+%ifarch e2k
+# lcc's openmp implementation is way too old
+%def_disable openmp
+%else
 %def_enable openmp
+%endif
+
 %def_enable largefile
 %def_disable debug
 %def_disable efence
@@ -44,7 +51,7 @@
 Name: %Name
 %define lname lib%name
 Version: 1.3.20
-Release: alt2.1.1
+Release: alt2.1.1.1
 Summary: An X application for displaying and manipulating images
 Summary(ru_RU.UTF-8): Программа для отображения и редактирования изображений
 License: %mit
@@ -505,6 +512,9 @@ __MENU__
 %endif
 
 %changelog
+* Mon Feb 12 2018 Grigory Ustinov <grenka@altlinux.org> 1.3.20-alt2.1.1.1
+- NMU: Disable openmp for e2k arch.
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.20-alt2.1.1
 - rebuild with new perl 5.26.1
 
