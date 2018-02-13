@@ -6,7 +6,7 @@
 %def_enable contractor
 
 Name: geary
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Email client
@@ -20,10 +20,11 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define vala_ver 0.22.1
-%define gtk_ver 3.12.0
+%define vala_ver 0.26
+%define gtk_ver 3.14.0
 %define sqlite_ver 3.12.0
 %define gcr_ver 3.10.1
+%define webkit_ver 2.10
 
 BuildRequires: vala-tools >= %vala_ver libvala-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver
@@ -32,8 +33,8 @@ BuildRequires: cmake intltool desktop-file-utils gnome-doc-utils
 BuildRequires: iso-codes-devel
 BuildRequires: libnotify-devel libcanberra-devel libgee0.8-devel
 BuildRequires: libgmime-devel libgnome-keyring-devel libexpat-devel
-BuildRequires: libpixman-devel libharfbuzz-devel libwebkit2gtk-devel libenchant-devel
-BuildRequires: libpng-devel libsecret-devel at-spi2-atk-devel libxml2-devel
+BuildRequires: libpixman-devel libharfbuzz-devel libwebkit2gtk-devel >= %webkit_ver
+BuildRequires: libenchant-devel libpng-devel libsecret-devel at-spi2-atk-devel libxml2-devel
 BuildRequires: libXdmcp-devel libXdamage-devel libxshmfence-devel
 BuildRequires: libXxf86vm-devel libXinerama-devel libXrandr-devel libXi-devel
 BuildRequires: libXcursor-devel libXcomposite-devel libxkbcommon-devel
@@ -78,6 +79,9 @@ Geary's development.
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Tue Feb 13 2018 Yuri N. Sedunov <aris@altlinux.org> 0.12.1-alt1
+- 0.12.1
+
 * Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt1
 - 0.12.0
 
