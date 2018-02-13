@@ -1,5 +1,5 @@
 Name: strace
-Version: 4.20
+Version: 4.21
 Release: alt1
 
 Summary: Tracks and displays system calls associated with a running process
@@ -15,7 +15,7 @@ Conflicts: rpm-utils <= 0:0.9.11-alt1
 
 %ifarch %ix86 x86_64
 # for experimental -k option
-BuildRequires: libunwind-devel
+BuildRequires: libunwind-devel binutils-devel
 %endif
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
@@ -41,7 +41,7 @@ complex commands do.
 %prep
 %setup -n %name-%version-%release
 echo -n %version-%release > .tarball-version
-echo -n 2017 > .year
+echo -n 2018 > .year
 date +%%Y-%%m-%%d > .strace.1.in.date
 
 %build
@@ -67,6 +67,7 @@ cd build
 %set_verify_elf_method strict
 
 %check
+%buildroot%_bindir/strace -V
 export SLEEP_A_BIT='sleep 0.5' VERBOSE=1
 %make_build -k check -C build VERBOSE=1
 
@@ -84,6 +85,9 @@ echo 'END OF TEST SUITE INFORMATION'
 %_bindir/strace-graph
 
 %changelog
+* Tue Feb 13 2018 Dmitry V. Levin <ldv@altlinux.org> 4.21-alt1
+- v4.20 -> v4.21.
+
 * Mon Nov 13 2017 Dmitry V. Levin <ldv@altlinux.org> 4.20-alt1
 - v4.19 -> v4.20.
 
