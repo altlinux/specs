@@ -57,7 +57,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 237
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -74,7 +74,6 @@ Source7: altlinux-libresolv.service
 Source8: altlinux-clock-setup.service
 Source10: systemd-udev-trigger-no-reload.conf
 Source14: systemd-user.pam
-Source15: systemd-logind-launch
 Source16: altlinux-kmsg-loglevel.service
 Source17: altlinux-save-dmesg.service
 Source18: altlinux-save-dmesg
@@ -405,6 +404,7 @@ Requires: libsystemd-shared = %EVR
 Requires: dbus >= %dbus_ver
 Conflicts: service <= 0.5.25-alt1
 Conflicts: chkconfig <= 1.3.59-alt3
+Conflicts: ConsoleKit2 ConsoleKit2-x11
 
 %description services
 This package contains dbus services and utils from systemd:
@@ -809,8 +809,6 @@ ln -r -s %buildroot%_unitdir/var-run.mount %buildroot%_unitdir/local-fs.target.w
 # turn off tmp.mount by default (ALT#29066)
 rm -f %buildroot%_unitdir/tmp.mount
 rm -f %buildroot%_unitdir/local-fs.target.wants/tmp.mount
-
-install -m755 %SOURCE15 %buildroot/lib/systemd/systemd-logind-launch
 
 find %buildroot \( -name '*.a' -o -name '*.la' \) -exec rm {} \;
 mkdir -p %buildroot/{sbin,bin}
@@ -1659,7 +1657,6 @@ fi
 
 /bin/loginctl
 /lib/systemd/systemd-logind
-/lib/systemd/systemd-logind-launch
 %_bindir/hostnamectl
 /lib/systemd/systemd-hostnamed
 %_bindir/localectl
@@ -1933,6 +1930,13 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Tue Feb 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1:237-alt2
+- merge with v237-stable branch
+- include additional directories in ProtectSystem
+- let graphical-session-pre.target be manually started
+- fix order in PATH (ALT #34527)
+- add conflicts to ConsoleKit2 for logind
+
 * Mon Jan 29 2018 Alexey Shabalin <shaba@altlinux.ru> 1:237-alt1
 - 237
 - build with libidn2
