@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define mname requests-kerberos
+%def_with check
 
 Name: python-module-%mname
 Version: 0.11.0
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: A Kerberos authentication handler for python-requests
 License: %mit
 Group: Development/Python
@@ -21,8 +22,17 @@ BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-module-setuptools
 BuildRequires: python3-module-setuptools
-BuildPreReq: python-module-kerberos
-BuildPreReq: python3-module-kerberos
+BuildRequires: python-module-kerberos
+BuildRequires: python3-module-kerberos
+
+%if_with check
+BuildRequires: python-module-mock
+BuildRequires: python-module-requests
+BuildRequires: python-module-pytest
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-requests
+BuildRequires: python3-module-pytest
+%endif
 
 Requires: python-module-requests >= 1.1
 Requires: python-module-kerberos
@@ -81,6 +91,9 @@ popd
 %python3_sitelibdir/requests_kerberos-%version-*.egg-info
 
 %changelog
+* Tue Feb 13 2018 Stanislav Levin <slev@altlinux.org> 0.11.0-alt2%ubt
+- Fix BuildRequires for tests
+
 * Tue Nov 14 2017 Stanislav Levin <slev@altlinux.org> 0.11.0-alt1%ubt
 - 0.6.1 -> 0.11.0
 
