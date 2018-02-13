@@ -1,6 +1,6 @@
 Name: libxshmfence
 Version: 1.2
-Release: alt1
+Release: alt2
 Summary: X Shared Memory Fence library
 License: MIT/X11
 Group: System/Libraries
@@ -29,6 +29,7 @@ develop programs which make use of %name
 %patch -p1
 
 %build
+%add_optflags -D_GNU_SOURCE=1
 %autoreconf
 %configure \
 	--disable-static
@@ -46,6 +47,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Feb 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2-alt2
+- Fixed build with new glibc.
+
 * Sun Jan 11 2015 Valery Inozemtsev <shrek@altlinux.ru> 1.2-alt1
 - 1.2
 
