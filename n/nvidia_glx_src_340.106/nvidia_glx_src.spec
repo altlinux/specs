@@ -14,7 +14,7 @@
 %define nv_version 340
 %define nv_release 106
 %define nv_minor %nil
-%define pkg_rel alt155%ubt
+%define pkg_rel alt156%ubt
 %def_enable egl
 %def_enable kernelsource
 %def_disable package_wfb
@@ -306,6 +306,9 @@ fi
 %endif
 
 %changelog
+* Tue Feb 13 2018 Sergey V Turchin <zerg@altlinux.org> 340.106-alt156%ubt
+- exclude 10DE:0849
+
 * Fri Jan 26 2018 Sergey V Turchin <zerg@altlinux.org> 340.106-alt155%ubt
 - new version
 
