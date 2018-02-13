@@ -4,7 +4,7 @@
 %def_enable telepathy
 
 Name: pidgin-sipe
-Version: 1.22.0
+Version: 1.23.0
 Release: alt1
 Summary: Pidgin plugin for connecting to MS Communications Server
 
@@ -21,14 +21,15 @@ Requires: gst-plugins-nice1.0 farstream0.2 gst-plugins-good1.0
 Requires: gssntlmssp
 
 BuildRequires: intltool libxml2-devel
-BuildRequires: glib2-devel >= 2.28.0 libgio-devel
+BuildRequires: glib2-devel >= 2.32.0 libgio-devel
 BuildRequires: libpurple-devel >= 2.8.0
 %{?_with_vv:BuildRequires: libnice-devel >= 0.1.0 gstreamer1.0-devel gst-plugins1.0-devel libfarstream0.2-devel}
 %{?_with_krb5:BuildRequires: libkrb5-devel gssntlmssp-devel}
 %{?_enable_telepathy:BuildRequires: libtelepathy-glib-devel >= 0.18.0 libdbus-glib-devel libgio-devel >= 2.32.0}
+BuildRequires: libdbus-devel
 # BuildRequires: libssl-devel
 BuildRequires: libnss-devel
-BuildRequires: libgmime-devel >= 2.4.16
+BuildRequires: libgmime3.0-devel >= 3.0.0
 
 %description
 A third-party plugin for the Pidgin multi-protocol instant messenger.
@@ -40,7 +41,6 @@ It implements the extended version of SIP/SIMPLE used by various products:
     * Microsoft Lync Server
     * Microsoft Office Communications Server (OCS 2007/2007 R2)
     * Microsoft Live Communications Server (LCS 2003/2005)
-    * Reuters Messaging
 
 With this plugin you should be able to replace your Microsoft Office
 Communicator client with Pidgin.
@@ -61,7 +61,6 @@ SIP/SIMPLE used by various products:
     * Microsoft Lync Server
     * Microsoft Office Communications Server (OCS 2007/2007 R2)
     * Microsoft Live Communications Server (LCS 2003/2005)
-    * Reuters Messaging
 
 This package provides the protocol support for Telepathy clients.
 
@@ -73,6 +72,7 @@ This package provides the protocol support for Telepathy clients.
 %autoreconf
 %configure \
 	--disable-quality-check \
+	--disable-static \
 	%{subst_enable purple} \
 	%{subst_enable telepathy} \
 	%{subst_with vv} \
@@ -81,7 +81,7 @@ This package provides the protocol support for Telepathy clients.
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 rm -f %buildroot%_libdir/purple-2/*.la
 %find_lang %name
 
@@ -98,6 +98,9 @@ rm -f %buildroot%_libdir/purple-2/*.la
 %_datadir/telepathy/profiles/sipe.profile
 
 %changelog
+* Tue Feb 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.23.0-alt1
+- 1.23.0
+
 * Mon Mar 13 2017 Alexey Shabalin <shaba@altlinux.ru> 1.22.0-alt1
 - 1.22.0
 
