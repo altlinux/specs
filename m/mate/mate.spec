@@ -2,7 +2,7 @@
 
 Name: mate
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -128,7 +128,6 @@ Requires: fuse-gvfs
 ## Display manager
 #Requires: mate-display-manager
 ## Default web-browser (firefox)
-Requires: webclient
 ## Default mailer
 #Requires: evolution >= %ver_major
 ## Default messenger
@@ -393,6 +392,9 @@ itself).
 #%files a11y
 
 %changelog
+* Wed Feb 14 2018 Anton Midyukov <antohami@altlinux.org> 1.15.0-alt3
+- Remove requires webclient (requires rekonq, it is not clear why)
+
 * Sun Feb 11 2018 Anton Midyukov <antohami@altlinux.org> 1.15.0-alt2
 - Replace requires firefox to webclient (Closes: 34510)
 - Replace requires mate-file-archiver to mate-file-manager-archiver
