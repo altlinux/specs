@@ -1,8 +1,8 @@
 %def_enable static
 
 Name: pcre2
-Version: 10.30
-Release: alt2
+Version: 10.31
+Release: alt1
 
 Summary: Perl-compatible regular expression library
 Group: System/Libraries
@@ -134,6 +134,9 @@ mv %buildroot%_libdir/lib%name-{8,16,32,posix}.so.* %buildroot/%_lib/
 %exclude %_docdir/%name
 
 %changelog
+* Tue Feb 13 2018 Yuri N. Sedunov <aris@altlinux.org> 10.31-alt1
+- 10.31
+
 * Mon Jan 29 2018 Yuri N. Sedunov <aris@altlinux.org> 10.30-alt2
 - relocated shared libraries from %%_libdir to /%%_lib for systemd
 - mike@:
