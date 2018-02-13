@@ -1,7 +1,7 @@
 %def_disable tests
 
 Name: libmongoc
-Version: 1.8.2
+Version: 1.9.2
 Release: alt1%ubt
 Summary: Client library written in C for MongoDB
 Group: System/Libraries
@@ -33,10 +33,12 @@ for mongo-c-driver
 %setup
 
 %build
+mkdir -p src/libbson
 # Generate build scripts from sources
 %autoreconf -I build/autotools
 # delete bundled libbson sources
 rm -rf src/libbson
+mkdir -p src/libbson
 %configure \
 	--enable-shared \
 	--disable-static \
@@ -97,6 +99,9 @@ exit $ret
 %_man3dir/*
 
 %changelog
+* Tue Feb 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.9.2-alt1%ubt
+- 1.9.2
+
 * Fri Dec 01 2017 Alexey Shabalin <shaba@altlinux.ru> 1.8.2-alt1%ubt
 - 1.8.2
 
