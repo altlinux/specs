@@ -1,23 +1,23 @@
 %def_disable static
+# for tests only
+%def_with glib
 
 Name: fribidi
-Version: 0.19.2
+Version: 1.0.1
 Release: alt1
 
 Summary: Bi-directional scripts support
 License: %lgpl21plus
 Group: Development/C
-Url: http://fribidi.freedesktop.org/wiki/
+Url: https://github.com/%name/%name/
 
-Source: http://fribidi.org/download/%name-%version.tar.gz
+Source: %url/releases/download/v%version/%name-%version.tar.bz2
 
 Requires: lib%name = %version-%release
 
 BuildPreReq: rpm-build-licenses
-
-%if_enabled static
-BuildRequires: glibc-devel-static
-%endif
+%{?_with_glib:BuildRequires: glib2-devel}
+%{?_enabled_static:BuildRequires: glibc-devel-static}
 
 %package -n lib%name
 Summary: Library implementing the Unicode BiDi algorithm
@@ -27,8 +27,8 @@ Group: System/Libraries
 Summary: Library implementing the Unicode BiDi algorithm
 Group: Development/C
 Requires: lib%name = %version-%release
-Provides: fribidi-devel = %version
-Obsoletes: fribidi-devel
+Provides: %name-devel = %version
+Obsoletes: %name-devel
 
 %description
 Bi-directional scripts support.
@@ -62,13 +62,15 @@ programs which will use fribidi.
 %setup
 
 %build
-%configure %{subst_enable static}
-
+%add_optflags -D_FILE_OFFSET_BITS=64
+%configure %{subst_enable static} \
+	%{?_with_glib:--with-glib=yes}
 %make_build
-%make check
 
 %install
 %makeinstall
+
+%make check
 
 %files
 %_bindir/*
@@ -80,7 +82,7 @@ programs which will use fribidi.
 %files -n lib%name-devel
 %_libdir/*.so
 %_includedir/*
-%_libdir/pkgconfig/*.pc
+%_pkgconfigdir/*.pc
 %_man3dir/*.3*
 
 %if_enabled static
@@ -89,6 +91,9 @@ programs which will use fribidi.
 %endif
 
 %changelog
+* Tue Feb 13 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Mon May 09 2011 Sergey Vlasov <vsu@altlinux.ru> 0.19.2-alt1
 - Version 0.19.2.
 - Really disable static libraries.
