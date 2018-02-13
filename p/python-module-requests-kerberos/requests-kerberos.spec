@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%mname
-Version: 0.11.0
-Release: alt2%ubt
+Version: 0.12.0
+Release: alt1%ubt
 Summary: A Kerberos authentication handler for python-requests
 License: %mit
 Group: Development/Python
@@ -50,6 +50,7 @@ Group: Development/Python3
 Requires: python3-module-requests >= 1.1
 Requires: python3-module-kerberos
 %py3_provides %mname
+%add_python3_req_skip requests.packages.urllib3
 
 %description -n python3-module-%mname
 Requests is an HTTP library, written in Python, for human beings. This
@@ -91,6 +92,9 @@ popd
 %python3_sitelibdir/requests_kerberos-%version-*.egg-info
 
 %changelog
+* Tue Feb 13 2018 Stanislav Levin <slev@altlinux.org> 0.12.0-alt1%ubt
+- v0.11.0 -> v0.12.0
+
 * Tue Feb 13 2018 Stanislav Levin <slev@altlinux.org> 0.11.0-alt2%ubt
 - Fix BuildRequires for tests
 
