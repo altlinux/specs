@@ -10,7 +10,7 @@
 %define libkf5webengineviewer libkf5webengineviewer%sover
 
 Name: kde5-%rname
-Version: 17.08.3
+Version: 17.12.2
 Release: alt1%ubt
 %K5init
 
@@ -111,7 +111,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
+#%patch1 -p1
 
 %build
 %K5build \
@@ -120,7 +120,7 @@ KF5 library
 
 %install
 %K5install
-%K5install_move data libmessageviewer messagelist messageviewer kconf_update
+%K5install_move data libmessageviewer messagelist messageviewer kconf_update org.kde.syntax-highlighting
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -128,6 +128,7 @@ KF5 library
 %config(noreplace) %_K5xdgconf/*.*categories
 %config(noreplace) %_K5xdgconf/*.knsrc
 %_K5data/*message*/
+%_K5data/org.kde.syntax-highlighting/
 %_K5cfg/*.kcfg
 %_K5conf_up/*message*.upd
 %_K5notif/*message*.notifyrc
@@ -155,6 +156,7 @@ KF5 library
 %_K5lib/libKF5MessageViewer.so.%sover
 %_K5lib/libKF5MessageViewer.so.*
 %_K5plug/messageviewer/messageviewer_*.so
+%_K5plug/messageviewer/grantlee/
 %files -n %libkf5messagelist
 %_K5lib/libKF5MessageList.so.%sover
 %_K5lib/libKF5MessageList.so.*
@@ -169,6 +171,9 @@ KF5 library
 %_K5lib/libKF5WebEngineViewer.so.*
 
 %changelog
+* Tue Feb 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+- new version
+
 * Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 

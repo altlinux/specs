@@ -4,7 +4,7 @@
 %define libkmailprivate libkmailprivate%pim_sover
 
 Name: kde5-%rname
-Version: 17.08.3
+Version: 17.12.2
 Release: alt1%ubt
 %K5init
 
@@ -87,8 +87,8 @@ Requires: %name-common = %version-%release
 %_K5xdgapp/kmail_view.desktop
 %_K5data/kmail2/
 %_K5cf_upd/*
-%_K5data/messageviewer/
-%_K5xmlgui/kmail2/
+#%_K5data/messageviewer/
+#%_K5xmlgui/kmail2/
 %_K5xmlgui/kontactsummary/*
 %_K5srv/kontact/*.desktop
 %_K5srv/ServiceMenus/*.desktop
@@ -126,6 +126,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkmailprivate.so.*
 
 %changelog
+* Tue Feb 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+- new version
+
 * Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 

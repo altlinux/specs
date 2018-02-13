@@ -4,7 +4,7 @@
 %define libkontactprivate libkontactprivate%pim_sover
 
 Name: kde5-%rname
-Version: 17.08.3
+Version: 17.12.2
 Release: alt1%ubt
 %K5init
 
@@ -79,7 +79,7 @@ Requires: %name-common = %version-%release
 %_K5data/messageviewer/about/default/*kontact*
 %_K5cfg/*kontact*.kcfg
 %_K5cf_upd/*kontact*
-%_K5xmlgui/*kontact*/
+#%_K5xmlgui/*kontact*/
 %_K5srv/*kontact*.desktop
 %_K5icon/*/*/apps/*kontact*.*
 #%doc %_K5doc/en/kontact
@@ -97,6 +97,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkontactprivate.so.*
 
 %changelog
+* Tue Feb 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+- new version
+
 * Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 

@@ -6,7 +6,7 @@
 %define libkorganizerprivate libkorganizerprivate%pim_sover
 
 Name: kde5-%rname
-Version: 17.08.3
+Version: 17.12.2
 Release: alt1%ubt
 %K5init
 
@@ -95,7 +95,7 @@ Requires: %name-common = %version-%release
 %files
 %_K5bin/korgac
 %_K5bin/korganizer
-%_K5bin/ical2vcal
+#%_K5bin/ical2vcal
 %_K5plug/*korganizer*.so
 %_K5plug/kcm_apptsummary.so
 %_K5plug/kcm_todosummary.so
@@ -111,7 +111,7 @@ Requires: %name-common = %version-%release
 %_K5data/kontact/ksettingsdialog/*
 %_K5cfg/*korganizer*
 %_K5cf_upd/*korganizer*
-%_K5xmlgui/korganizer/
+#%_K5xmlgui/korganizer/
 %_K5srv/kontact/korganizerplugin.desktop
 %_K5srv/korganizer_*.desktop
 %_K5srv/webcal.protocol
@@ -145,6 +145,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkorganizerprivate.so.*
 
 %changelog
+* Tue Feb 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+- new version
+
 * Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 

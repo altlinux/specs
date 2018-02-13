@@ -5,7 +5,7 @@
 %define libakregatorprivate libakregatorprivate%sover
 
 Name: kde5-%rname
-Version: 17.08.3
+Version: 17.12.2
 Release: alt1%ubt
 %K5init
 
@@ -91,14 +91,14 @@ Requires: %name-common = %version-%release
 %_K5data/akregator/
 %_K5cfg/*akregator*.kcfg
 %_K5cf_upd/*akregator*
-%_K5xmlgui/akregator/
+#%_K5xmlgui/akregator/
 %_K5notif/akregator.notifyrc
 %_K5srv/kontact/akregatorplugin.desktop
 %_K5srv/akregator_*.desktop
 %_K5srv/feed.protocol
 %_K5icon/*/*/apps/akregator*.*
 %_K5data/kontact/ksettingsdialog/*akregator*
-%_K5data/messageviewer/about/default/*akregator*
+#%_K5data/messageviewer/about/default/*akregator*
 
 #%files devel
 #%_K5inc/akregator_version.h
@@ -115,6 +115,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libakregatorprivate.so.*
 
 %changelog
+* Tue Feb 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+- new version
+
 * Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 

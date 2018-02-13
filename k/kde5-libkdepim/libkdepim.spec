@@ -5,7 +5,7 @@
 %define libkf5libkdepimakonadi libkf5libkdepimakonadi%sover
 
 Name: kde5-%rname
-Version: 17.08.3
+Version: 17.12.2
 Release: alt1%ubt
 %K5init
 
@@ -103,6 +103,9 @@ KF5 library
 %_K5lib/libKF5LibkdepimAkonadi.so.*
 
 %changelog
+* Tue Feb 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+- new version
+
 * Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 

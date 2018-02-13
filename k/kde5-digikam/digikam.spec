@@ -18,7 +18,7 @@
 Name: kde5-%rname
 %define lname lib%name
 Version: 5.8.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Summary: digiKam is an advanced digital photo management application for linux
@@ -257,6 +257,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Fri Mar 02 2018 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt2%ubt
+- rebuild with new libKF5CalendarCore
+
 * Mon Feb 05 2018 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1%ubt
 - new version
 
