@@ -1,6 +1,6 @@
 Name: fish
 Version: 2.7.1
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: A friendly interactive shell
 License: GPLv2+
@@ -57,6 +57,9 @@ fi
 %_man1dir/*
 
 %changelog
+* Tue Feb 13 2018 Alexey Shabalin <shaba@altlinux.ru> 2.7.1-alt2%ubt
+- fix find altlinux path /etc/openssh for completions
+
 * Sat Feb 10 2018 Alexey Shabalin <shaba@altlinux.ru> 2.7.1-alt1%ubt
 - 2.7.1
 
