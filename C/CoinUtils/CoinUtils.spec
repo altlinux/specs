@@ -3,7 +3,7 @@
 
 Name: CoinUtils
 Version: 2.10.13
-Release: alt1.1
+Release: alt1.1.1
 Summary: Open-source collection of classes and functions for COIN-OR project
 License: EPL v1.0
 Group: Sciences/Mathematics
@@ -89,7 +89,7 @@ This package contains development documentation for CoinUtils.
 rm -rf {BuildTools,Data}
 
 %build
-mpi-selector --set %mpiimpl
+mpi-selector --set %mpiimpl < /dev/null
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 
@@ -135,6 +135,9 @@ rm -fR %buildroot%_datadir/coin/doc \
 %doc %name/doxydoc/doxydoc/html/*
 
 %changelog
+* Tue Feb 13 2018 Fr. Br. George <george@altlinux.ru> 2.10.13-alt1.1.1
+- Fix mipsel build
+
 * Mon Feb 12 2018 Fr. Br. George <george@altlinux.ru> 2.10.13-alt1.1
 - Build for mipsel (without blas)
 
