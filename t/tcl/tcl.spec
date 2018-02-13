@@ -2,8 +2,8 @@
 %define major 8.6
 
 Name: tcl
-Version: 8.6.7
-Release: alt2
+Version: 8.6.8
+Release: alt1
 
 Summary: A Tool Command Language (TCL)
 License: BSD
@@ -126,6 +126,10 @@ install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 %_man3dir/*
 
 %changelog
+* Tue Feb 13 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.8-alt1
+- 8.6.8 released
+- applied patch from Debian to package additional manpages
+
 * Sun Sep 17 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.7-alt2
 - added %%_libdir/tcl to tcl extension search path (new packaging policy)
 
