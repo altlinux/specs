@@ -1,7 +1,7 @@
 %define  pkgname gettext-setup
  
 Name: 	 ruby-%pkgname
-Version: 0.29
+Version: 0.30
 Release: alt1
  
 Summary: A gem that configures gettext for internationalization
@@ -77,6 +77,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Tue Feb 13 2018 Andrey Cherepanov <cas@altlinux.org> 0.30-alt1
+- New version.
+
 * Sat Dec 02 2017 Andrey Cherepanov <cas@altlinux.org> 0.29-alt1
 - New version.
 
