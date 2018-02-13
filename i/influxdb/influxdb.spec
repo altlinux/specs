@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/influxdb
-%global commit 2d474a3089bcfce6b472779be9470a1f0ef3d5e4
+%global commit 60d27e6995558f38a39e90b35a92cbac080310a3
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -9,7 +9,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		influxdb
-Version:	1.3.7
+Version:	1.4.3
 Release:	alt1%ubt
 Summary:	Distributed time-series database
 
@@ -44,14 +44,15 @@ events, and performing analytics.
 #
 # $ export GOPATH="$PWD/.gopath"
 # $ git rm -rf -- "$GOPATH"
+# $ mkdir -p "$GOPATH"
 # $ cd $GOPATH
 # $ go get github.com/sparrc/gdm
-# $ gdm restore -f ../Godeps
+# $ ./bin/gdm restore -f ../Godeps
 # $ go get github.com/influxdata/influxdb
 # $ go build github.com/influxdata/influxdb
 # $ rm -rf $GOPATH/src/github.com/influxdata/influxdb
 # $ find $GOPATH -type d -name .git |xargs rm -rf --
-# $ git add "$GOPATH"
+# $ git add --force "$GOPATH"
 
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
@@ -105,12 +106,8 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %preun_service %name
 
 %files
-%_bindir/influx
-%_bindir/influx_inspect
-%_bindir/influx_stress
-%_bindir/influx_tsm
-%_bindir/influxd
-%_man1dir/influx*.1.*
+%_bindir/*
+%_man1dir/*
 %_initdir/%name
 %_unitdir/%name.service
 %_tmpfilesdir/%name.conf
@@ -122,6 +119,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Tue Feb 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.4.3-alt1%ubt
+- 1.4.3
+
 * Mon Oct 30 2017 Alexey Shabalin <shaba@altlinux.ru> 1.3.7-alt1%ubt
 - 1.3.7
 
