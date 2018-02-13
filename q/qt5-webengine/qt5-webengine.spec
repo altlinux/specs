@@ -1,3 +1,4 @@
+%define IF_ver_not_eq() %if "%(rpmvercmp '%1' '%2')" != "0"
 
 %global qt_module qtwebengine
 %ifarch %ix86
@@ -14,7 +15,7 @@
 
 Name: qt5-webengine
 Version: 5.10.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -231,10 +232,16 @@ export QT_HASH_SEED=0
 make docs
 popd
 
-
 %install
 %install_qt5 -C %_target_platform
 %make INSTALL_ROOT=%buildroot install_docs -C %_target_platform ||:
+
+# fix cmake dependencies
+%IF_ver_not_eq %_qt5_version %version
+sed -i -e \
+  "s|%version[[:space:]][[:space:]]*\${_Qt5WebEngine\(.*_FIND_VERSION_EXACT\)|%_qt5_version \${_Qt5WebEngine\1|" \
+  %buildroot/%_libdir/cmake/Qt5WebEngine*/Qt5WebEngine*Config.cmake
+%endif
 
 # find translations
 echo "%%defattr(644,root,root,755)" >translations_list.lang
@@ -250,7 +257,6 @@ do
 	echo "%%lang($lang_name) %%_qt5_translationdir/qtwebengine_locales/$lang_file" >>translations_list.lang
     fi
 done
-
 
 %files common -f translations_list.lang
 %doc LICENSE.* LICENSE*EXCEPT*
@@ -290,6 +296,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Tue Feb 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.0-alt2%ubt
+- fix cmake dependencies
+
 * Wed Jan 31 2018 Sergey V Turchin <zerg@altlinux.org> 5.10.0-alt1%ubt
 - new version
 
