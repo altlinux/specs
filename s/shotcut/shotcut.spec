@@ -1,6 +1,6 @@
 Name: shotcut
-Version: 18.01
-Release: alt2
+Version: 18.02
+Release: alt1
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платфоорменный видеоредактор
 License: GPL-3.0+
@@ -101,6 +101,9 @@ done
 %_liconsdir/%name.png
 
 %changelog
+* Tue Feb 13 2018 Cronbuild Service <cronbuild@altlinux.org> 18.02-alt1
+- repocop cronbuild 20180213. At your service.
+
 * Sun Jan 28 2018 Anton Midyukov <antohami@altlinux.org> 18.01-alt2
 - Added missing requires libSDL2
 - Fix make install
