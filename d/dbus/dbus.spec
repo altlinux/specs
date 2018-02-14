@@ -9,7 +9,7 @@
 
 Name: dbus
 Version: 1.10.24
-Release: alt2%ubt
+Release: alt3%ubt
 
 Summary: D-BUS is a simple IPC framework based on messages.
 License: AFL/GPL
@@ -224,6 +224,9 @@ fi
 %_man1dir/dbus-test-tool.1*
 
 %changelog
+* Wed Feb 14 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.10.24-alt3%ubt
+- fixed systemctl path (closes: #34515)
+
 * Thu Feb 08 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.10.24-alt2%ubt
 - reenable user session (closes: #34515)
 
