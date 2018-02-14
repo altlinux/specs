@@ -1,42 +1,44 @@
 Name: gcovr
-Version: 3.3
+Version: 3.4
 Release: alt1
 
-Summary: Manages the compilation of coverage information from gcov
+Summary: A Python script for summarizing gcov data
 License: BSD
 Group: Development/Tools
-
 Url: https://pypi.python.org/pypi/gcovr
 
-Source: https://pypi.python.org/packages/source/g/%name/%name-%version.tar.gz
+Source: https://pypi.io/packages/source/g/%name/%name-%version.tar.gz
 
 BuildArch: noarch
 
-BuildRequires: python-modules python-module-distribute
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
 %description
-The gcovr command provides a utility for running the gcov command and
-summarizing code coverage results. This command is inspired by the
-Python coverage.py package, which provides a similar utility in
-Python. Further, gcovr can be viewed as a command-line alternative of
-the lcov utility, which runs gcov and generates an HTML output.
+Gcovr provides a utility for managing the use of the GNU gcov utility
+and generating summarized code coverage results. This command is inspired
+by the Python coverage.py package, which provides a similar utility for
+Python.
 
 %prep
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
-%doc README.txt
 %_bindir/gcovr
-%python_sitelibdir/%name/
-%python_sitelibdir/*.egg-info/
+%python3_sitelibdir_noarch/%name/
+%python3_sitelibdir_noarch/*.egg-info/
+%doc README.rst PKG-INFO
 
 %changelog
+* Wed Feb 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.4-alt1
+- 3.4 with Python3
+
 * Tue Nov 01 2016 Yuri N. Sedunov <aris@altlinux.org> 3.3-alt1
 - 3.3
 
