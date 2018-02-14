@@ -1,6 +1,6 @@
 Name: strace
 Version: 4.21
-Release: alt1
+Release: alt2
 
 Summary: Tracks and displays system calls associated with a running process
 License: BSD-style
@@ -19,6 +19,14 @@ BuildRequires: libunwind-devel binutils-devel
 %endif
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
+
+# The default is --enable-mpers=yes, but
+# some architectures may need --enable-mpers=check instead.
+%define mpers_check %nil
+%define architectures_need_mpers_check aarch64
+%ifarch %architectures_need_mpers_check
+%define mpers_check --enable-mpers=check
+%endif
 
 %package utils
 Summary: Processes strace output and displays a graph of invoked subprocesses
@@ -59,7 +67,7 @@ echo 'END OF BUILD ENVIRONMENT INFORMATION'
 mkdir build
 cd build
 %define _configure_script ../configure
-%configure --enable-gcc-Werror #--enable-maintainer-mode
+%configure --enable-gcc-Werror %mpers_check #--enable-maintainer-mode
 %make_build
 
 %install
@@ -85,6 +93,9 @@ echo 'END OF TEST SUITE INFORMATION'
 %_bindir/strace-graph
 
 %changelog
+* Wed Feb 14 2018 Dmitry V. Levin <ldv@altlinux.org> 4.21-alt2
+- aarch64: configure with --enable-mpers=check.
+
 * Tue Feb 13 2018 Dmitry V. Levin <ldv@altlinux.org> 4.21-alt1
 - v4.20 -> v4.21.
 
