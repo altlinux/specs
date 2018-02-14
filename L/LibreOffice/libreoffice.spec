@@ -1,4 +1,4 @@
-# 5.4.3.2
+# 6.0.1.1
 %def_without forky
 %def_without python
 %def_with parallelism
@@ -6,8 +6,8 @@
 %def_without lto
 
 Name: LibreOffice
-%define hversion 5.4
-%define urelease 3.2
+%define hversion 6.0
+%define urelease 1.1
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -50,8 +50,9 @@ Patch1: FC-0001-don-t-suppress-crashes.patch
 Patch2: FC-0001-Related-tdf-106100-recover-mangled-svg-in-presentati.patch
 Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
 Patch4: FC-0001-gtk3-only-for-3.20.patch
-Patch5: FC-0001-fix-includes-in-aarch64-bridge.patch
-Patch6: FC-0001-disable-libe-book-support.patch
+Patch5: FC-0001-Related-tdf-105998-except-cut-and-paste-as-bitmap-in.patch
+Patch6: FC-0001-request-installation-of-langpack-via-packagekit.patch
+Patch7: FC-0001-disable-libe-book-support.patch
 
 ## Long-term FC patches
 
@@ -83,6 +84,9 @@ BuildRequires: libzmf-devel libstaroffice-devel libepoxy-devel libmysqlcppconn-d
 BuildRequires: doxygen e2fsprogs
 # 5.4.0
 BuildRequires: libxmlsec1-nss-devel libgpgme-devel
+# 6.0.1
+BuildRequires: libepubgen-devel libqxp-devel boost-locale-devel boost-filesystem-devel
+
 
 %if_without python
 BuildRequires: python3-dev
@@ -229,7 +233,8 @@ echo Direct build
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-#patch6 -p1
+%patch6 -p1
+#patch7 -p1
 
 ## Long-term FC patches applying
 
@@ -282,7 +287,6 @@ export CXX=%_target_platform-g++
         --enable-odk \
         --enable-systray \
 	--disable-firebird-sdbc \
-	--disable-gltf \
 	--enable-coinmp \
         --enable-dbus \
         --enable-evolution2 \
@@ -493,6 +497,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Feb 14 2018 Fr. Br. George <george@altlinux.ru> 6.0.1.1-alt1
+- Update to 6.0.1.1
+
 * Thu Nov 30 2017 Fr. Br. George <george@altlinux.ru> 5.4.3.2-alt1
 - Update to 5.4.3.2
 
