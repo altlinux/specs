@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.8.1
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Zope testrunner script
 License: ZPLv2.1
@@ -84,15 +84,14 @@ popd
 
 mv %buildroot%_bindir/zope-testrunner \
 	%buildroot%_bindir/zope-testrunner3
-
-%ifarch x86_64
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
         %buildroot%python3_sitelibdir/
 %endif
 
 %python_install
-%ifarch x86_64
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
         %buildroot%python_sitelibdir/
@@ -126,6 +125,9 @@ popd
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Wed Feb 14 2018 Stanislav Levin <slev@altlinux.org> 4.8.1-alt2%ubt
+- Fix a wrong logic of packaging for non x86_64 arch
+
 * Mon Feb 12 2018 Stanislav Levin <slev@altlinux.org> 4.8.1-alt1%ubt
 - v4.4.9 -> v4.8.1
 
