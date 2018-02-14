@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define mname martian
 
+%def_with check
+
 Name: python-module-%mname
 Version: 1.1
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: A library to grok configuration from Python code
 License: ZPLv2.1
@@ -17,18 +19,23 @@ BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-module-setuptools
+BuildRequires: python-module-zope.interface
 BuildRequires: python3-module-setuptools
-#for tests
+BuildRequires: python3-module-zope.interface
+%if_with check
 BuildRequires: python-module-tox
 BuildRequires: python-module-virtualenv
+BuildRequires: python-module-zope.testing
 BuildRequires: python-module-zope.testrunner
 BuildRequires: python-module-coverage
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-virtualenv
+BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-coverage
-#
+%endif
 BuildArch: noarch
+%py_requires zope.interface
 
 %description
 Martian is a library that allows the embedding of configuration
@@ -95,6 +102,9 @@ popd
 %python3_sitelibdir/%mname-%version-*.egg-info
 
 %changelog
+* Wed Feb 14 2018 Stanislav Levin <slev@altlinux.org> 1.1-alt2%ubt
+- Fix BuildRequires to run tests
+
 * Thu Jan 25 2018 Stanislav Levin <slev@altlinux.org> 1.1-alt1%ubt
 - 0.14 -> 1.1
 
