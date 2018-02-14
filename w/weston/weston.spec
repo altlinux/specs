@@ -1,5 +1,7 @@
+%global libweston_major 3
+
 Name:           weston
-Version:        1.12.0
+Version:        3.0.0
 Release:        alt1
 Summary:        Reference compositor for Wayland
 Group:          Graphical desktop/Other
@@ -16,6 +18,7 @@ BuildRequires: libXcursor-devel
 BuildRequires: libcairo-devel
 BuildRequires: libcolord-devel
 BuildRequires: libdbus-devel
+BuildRequires: libudev-devel
 BuildRequires: libdrm-devel
 BuildRequires: libgbm-devel
 BuildRequires: libinput-devel
@@ -25,6 +28,7 @@ BuildRequires: libmtdev-devel
 BuildRequires: libpam-devel
 BuildRequires: libpixman-devel
 BuildRequires: libsystemd-devel
+BuildRequires: libva-devel
 BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
 BuildRequires: libwayland-server-devel
@@ -68,7 +72,6 @@ Header files for doing development with the weston.
 	--libexecdir=%_libdir/weston/clients \
 	--disable-static \
 	--disable-setuid-install \
-	--disable-rpi-compositor \
 	--disable-libunwind \
 	--enable-xwayland \
 	--enable-colord \
@@ -81,6 +84,8 @@ Header files for doing development with the weston.
 	--enable-headless-compositor \
 	--enable-fbdev-compositor \
 	--enable-screen-sharing \
+	--enable-vaapi-recorder \
+	--enable-dbus \
 	--enable-systemd-login \
 	#
 
@@ -119,17 +124,21 @@ find %buildroot -name \*.la | xargs rm -f
 %_pkgconfigdir/weston.pc
 
 %files -n lib%name
-%_libdir/libweston-1
-%_libdir/libweston-1.so.*
-%_libdir/libweston-desktop-1.so.*
+%_libdir/libweston-%libweston_major
+%_libdir/libweston*.so.*
 
 %files -n lib%name-devel
-%_includedir/libweston-1
-%_libdir/libweston-1.so
-%_libdir/libweston-desktop-1.so
+%_includedir/libweston-%libweston_major
+%_libdir/libweston*.so
 %_pkgconfigdir/libweston*.pc
 
 %changelog
+* Wed Feb 14 2018 Alexey Gladkov <legion@altlinux.ru> 3.0.0-alt1
+- Version (3.0.0).
+
+* Tue Feb 14 2017 Alexey Gladkov <legion@altlinux.ru> 1.99.92-alt0.5336153
+- New upstream snapshot (1.99.92-6-g5336153).
+
 * Thu Sep 29 2016 Alexey Gladkov <legion@altlinux.ru> 1.12.0-alt1
 - Version (1.12.0).
 
