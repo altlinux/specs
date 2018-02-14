@@ -57,7 +57,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 237
-Release: alt2
+Release: alt3
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -237,20 +237,9 @@ to save storage space.
 Group: System/Libraries
 Summary: Systemd Library
 
-Provides: libsystemd-daemon = %EVR
-Provides: libsystemd-login = %EVR
-Provides: libsystemd-id128 = %EVR
-Provides: libsystemd-journal = %EVR
-
-Obsoletes: libsystemd-daemon < %EVR
-Obsoletes: libsystemd-login < %EVR
-Obsoletes: libsystemd-id128 < %EVR
-Obsoletes: libsystemd-journal < %EVR
-
 %description -n libsystemd
 The libsystemd library provides a reference implementation of various
 APIs for new-style daemons, as implemented by the systemd init system.
-
 
 %package -n libsystemd-devel
 Group: Development/C
@@ -1930,6 +1919,13 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Wed Feb 14 2018 Ivan Zakharyaschev <imz@altlinux.org> 1:237-alt3
+- libsystemd doesn't obsolete the old split libs anymore (with
+  different filenames), so that legacy binaries linked with them are
+  not "obsoleted", too, whereas some new binaries can be installed.
+  (That's in the spirit of shared libs policy.)
+  (Note that the compat libraries are not packaged in any package now.)
+
 * Tue Feb 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1:237-alt2
 - merge with v237-stable branch
 - include additional directories in ProtectSystem
