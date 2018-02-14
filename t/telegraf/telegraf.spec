@@ -1,5 +1,5 @@
 %global import_path github.com/influxdata/telegraf
-%global commit 0cc5fc0ce40b09467012fffddcea6985b2763a97
+%global commit 67440c95bb98a04db97bae2a7f79fc3519f4ea12
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -10,7 +10,7 @@
 
 Name:		telegraf
 Version:	1.5.2
-Release:	alt1%ubt
+Release:	alt2%ubt
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
 Group:		Development/Other
@@ -121,6 +121,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Wed Feb 14 2018 Alexey Shabalin <shaba@altlinux.ru> 1.5.2-alt2%ubt
+- fix "commit"
+
 * Thu Feb 01 2018 Alexey Shabalin <shaba@altlinux.ru> 1.5.2-alt1%ubt
 - 1.5.2
 
