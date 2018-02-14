@@ -1,5 +1,5 @@
 Name: evz
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: OpenVZ control tool
@@ -40,6 +40,11 @@ install -D -m 0644 bash_completion/evz %buildroot%_sysconfdir/bash_completion.d/
 %_sysconfdir/bash_completion.d/evz
 
 %changelog
+* Wed Feb 14 2018 Vitaly Lipatov <lav@altlinux.ru> 0.1.2-alt1
+- evz: add restart support
+- evz: add set support
+- evz: add ubc call
+
 * Sun Nov 19 2017 Vitaly Lipatov <lav@altlinux.ru> 0.1.1-alt1
 - fix evz-sh-functions packing
 
