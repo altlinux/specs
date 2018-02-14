@@ -10,7 +10,7 @@ Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 %define suff 13
 Name: %oname
 Version: 2.10.1
-Release: alt5%ubt
+Release: alt5.S1.1
 License: GPL
 Group: Development/KDE and QT
 
@@ -708,6 +708,9 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_docdir/%libname-%version
 
 %changelog
+* Wed Feb 14 2018 Vitaly Lipatov <lav@altlinux.ru> 2.10.1-alt5.S1.1
+- NMU: autorebuild with python-module-sip 4.9.7
+
 * Thu Jan 25 2018 Andrew Savchenko <bircoph@altlinux.org> 2.10.1-alt5%ubt
 - Make qt4 support optional (needed on e2k arch)
 
