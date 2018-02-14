@@ -2,19 +2,23 @@
 
 Name: specto
 Version: 0.4.1
-Release: alt1
+Release: alt2
 
 Summary: A desktop application that will watch configurable events
 Group: Graphical desktop/GNOME
 License: GPLv2+
 Url: http://%name.sourceforge.net/
 
-Source: http://%name.googlecode.com/files/%name-%version.tar.gz
+# from https://code.google.com/archive/p/specto/downloads
+Source: https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/%name/%name-%version.tar.gz
 Patch: %name-0.4.1-alt-ru.po.patch
 
 BuildArch: noarch
 
+Requires: GConf gnome-keyring
+
 BuildRequires: python-devel rpm-build-python intltool
+%add_python_req_skip pygst gst
 
 %description
 Specto is a desktop application that watches configurable events (such
@@ -29,8 +33,11 @@ having to look out for them.
 %define pkgdocdir %_docdir/%name-%version
 
 %prep
-%setup -q
+%setup
 %patch
+
+# remove backups
+find . -name "*~" print0 | xargs -r0 rm -f --
 
 # move docs in proper location
 subst 's|share/doc/%name|share/doc/%name-%version|g' setup.py spectlib/util.py
@@ -54,6 +61,9 @@ subst 's|share/doc/%name|share/doc/%name-%version|g' setup.py spectlib/util.py
 %exclude %_datadir/indicators/messages/applications/specto
 
 %changelog
+* Wed Feb 14 2018 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt2
+- updated dependencies
+
 * Tue May 29 2012 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
 - 0.4.1
 
