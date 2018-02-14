@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.2.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Zope Exceptions
 License: ZPLv2.1
@@ -82,7 +82,7 @@ popd
 
 %install
 %python_install
-%ifarch x86_64
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
         %buildroot%python_sitelibdir/
@@ -92,7 +92,7 @@ pushd ../python3
 %python3_install
 popd
 
-%ifarch x86_64
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
         %buildroot%python3_sitelibdir/
@@ -124,6 +124,9 @@ popd
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Wed Feb 14 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt2%ubt
+- Fix a wrong logic of packaging for non x86_64 arch
+
 * Mon Feb 12 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1%ubt
 - v4.0.8 -> v4.2.0
 
