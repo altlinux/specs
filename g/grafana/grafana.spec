@@ -10,7 +10,7 @@
 
 
 Name:		grafana
-Version:	4.6.2
+Version:	4.6.3
 Release:	alt1%ubt
 Summary:	Metrics dashboard and graph editor
 
@@ -53,14 +53,15 @@ tar -xf %SOURCE2
 #
 # $ export GOPATH="$PWD/.gopath"
 # $ git rm -rf -- "$GOPATH"
+# $ mkdir -p "$GOPATH"
 # $ make
 # $ find $GOPATH -type d -name .git |xargs rm -rf --
-# $ git add "$GOPATH"
+# $ git add --force "$GOPATH"
 # Build the Front-end Assets
-# $ npm install -g yarn
-# $ yarn install --pure-lockfile
-# $ npm install -g grunt-cli
-# $ grunt release
+# $ npm install yarn
+# $ ./node_modules/.bin/yarn install --pure-lockfile
+# $ npm install grunt-cli
+# $ ./node_modules/.bin/grunt release
 # move from dist to .gear/grafana-X.X.X.linux-x64.tar
 
 export BUILDDIR="$PWD/.gopath"
@@ -147,6 +148,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Wed Feb 14 2018 Alexey Shabalin <shaba@altlinux.ru> 4.6.3-alt1%ubt
+- 4.6.3
+
 * Mon Dec 04 2017 Alexey Shabalin <shaba@altlinux.ru> 4.6.2-alt1%ubt
 - 4.6.2
 
