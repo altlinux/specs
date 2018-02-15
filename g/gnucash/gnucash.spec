@@ -4,7 +4,7 @@
 
 Name: 	 gnucash
 Version: 2.6.19
-Release: alt1
+Release: alt2
 
 Summary: GnuCash is an application to keep track of your finances
 Summary(ru_RU.UTF8): Программа учёта финансов GnuCash
@@ -101,7 +101,7 @@ fetch and update.
 
 %build
 %autoreconf
-%add_optflags -Wno-error=deprecated-declarations
+%add_optflags -Wno-error=deprecated-declarations -Wno-format-truncation
 
 %if_enabled python
 sed -i 's|get_python_lib(0|get_python_lib(1|g' configure
@@ -179,6 +179,9 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 %files quotes
 
 %changelog
+* Tue Feb 20 2018 Andrey Cherepanov <cas@altlinux.org> 2.6.19-alt2
+- Rebuild with libgwenhywfar 4.19.0.
+
 * Tue Dec 19 2017 Andrey Cherepanov <cas@altlinux.org> 2.6.19-alt1
 - New version.
 

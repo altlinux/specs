@@ -1,5 +1,5 @@
 Name:    kmymoney
-Version: 4.8.1.1
+Version: 5.0.0
 Release: alt1
 
 Summary: A Personal Finance Manager for KDE4
@@ -12,19 +12,57 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source0: %name-%version.tar
 Source2: %name.watch
-Patch0:  %name-fix-undeclared-geteuid.patch
-Patch2:  %name-%version-%release.patch
 
 AutoReq: yes, noperl
 
-BuildRequires(pre): kde4libs-devel
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: extra-cmake-modules gcc-c++
+BuildRequires: qt5-declarative-devel
+BuildRequires: qt5-svg-devel
+BuildRequires: qt5-script-devel
+BuildRequires: qt5-webengine-devel
+BuildRequires: kf5-kauth-devel
+BuildRequires: kf5-kbookmarks-devel
+BuildRequires: kf5-kcodecs-devel
+BuildRequires: kf5-kcompletion-devel
+BuildRequires: kf5-kconfig-devel
+BuildRequires: kf5-kconfigwidgets-devel
+BuildRequires: kf5-kcoreaddons-devel
+BuildRequires: kf5-kdeclarative-devel
+BuildRequires: kf5-kdoctools-devel
+BuildRequires: kf5-ki18n-devel
+BuildRequires: kf5-kio-devel
+BuildRequires: kf5-kitemviews-devel
+BuildRequires: kf5-kjobwidgets-devel
+BuildRequires: kf5-kpackage-devel
+BuildRequires: kf5-kservice-devel
+BuildRequires: kf5-kwidgetsaddons-devel
+BuildRequires: kf5-kxmlgui-devel
+BuildRequires: kf5-purpose-devel
+BuildRequires: kf5-solid-devel
+BuildRequires: libkf5quickaddons
+BuildRequires: kf5-karchive-devel
+BuildRequires: kf5-kcmutils-devel
+BuildRequires: kf5-kitemmodels-devel
+BuildRequires: kf5-kwallet-devel
+BuildRequires: kf5-kiconthemes-devel
+BuildRequires: kf5-ktextwidgets-devel
+BuildRequires: kf5-knotifications-devel
+BuildRequires: kde5-kholidays-devel
+BuildRequires: kde5-kcontacts-devel
+BuildRequires: kde5-akonadi-devel
+BuildRequires: kde5-kidentitymanagement-devel
+BuildRequires: kf5-kactivities-devel
+BuildRequires: kf5-kross-devel
+BuildRequires: kde5-kpimtextedit-devel
+BuildRequires: kf5-kparts-devel
+BuildRequires: kf5-kdiagram-devel
+BuildRequires: kf5-kdewebkit-devel
+
 BuildRequires: boost-devel
-BuildRequires: cmake
 BuildRequires: doxygen
-BuildRequires: gcc-c++ 
 BuildRequires: glib2-devel
 BuildRequires: libassuan-devel
-BuildRequires: kde4pimlibs-devel
 BuildRequires: ktoblzcheck-devel
 BuildRequires: libOpenSP-devel
 BuildRequires: libalkimia-devel >= 4.3.1
@@ -42,9 +80,8 @@ BuildRequires: libofx-devel >= 0.9.4
 BuildRequires: libspeex-devel
 BuildRequires: libxml++2-devel 
 BuildRequires: libxml2-devel
-BuildRequires: kde4-kactivities-devel
+BuildRequires: libsqlcipher-devel
 
-Requires: kde4libs >= %{get_version kde4libs}
 Requires: %name-i18n
 
 Obsoletes: kde4-kmymoney
@@ -124,21 +161,33 @@ The reconciliation report plugin gives you a detailed report about the
 status of a reconciliation. Once present, it will be automatically
 invoked by KMyMoney after each reconciliation.
 
-%package csvimport
-Summary: CSV importing plugin for KMyMoney
+%package csv
+Summary: CSV importing and exporting plugin for KMyMoney
+Group:   Office
+Provides: %name-csvexport = %EVR
+Obsoletes: %name-csvexport < %EVR
+Provides: %name-csvimport = %EVR
+Obsoletes: %name-csvimport < %EVR
+Requires: %name = %version-%release
+
+%description csv
+CSV importing and exporting plugin for KMyMoney.
+
+%package qif
+Summary: QIF importing and exporting plugin for KMyMoney
 Group:   Office
 Requires: %name = %version-%release
 
-%description csvimport
-CSV importing plugin for KMyMoney.
+%description qif 
+QIF importing and exporting plugin for KMyMoney.
 
-%package csvexport
-Summary: CSV exporting plugin for KMyMoney
+%package gncimport
+Summary: GNC importing plugin for KMyMoney
 Group:   Office
 Requires: %name = %version-%release
 
-%description csvexport
-CSV exporting plugin for KMyMoney.
+%description gncimport
+GNC importing plugin for KMyMoney.
 
 %package payeeidentifier
 Summary: Payee identifier plugin for KMyMoney
@@ -168,8 +217,10 @@ Plugin for import transactions from Weboob to KMyMoney.
 Summary: All KMyMoney plugins
 Group:   Office
 Requires: %name = %version-%release
-Requires: %name-csvexport
+Requires: %name-csv
+Requires: %name-qif
 Requires: %name-csvimport
+Requires: %name-gncimport
 Requires: %name-icalexport 
 Requires: %name-kbanking 
 Requires: %name-ofximport 
@@ -197,117 +248,117 @@ Internationalization and documentation for KMyMoney
 
 %prep
 %setup -q -n %name-%version
-%patch0 -p2
-%ifarch %ix86
-%endif
-%patch2 -p1
 
 %build
 # Need to build in one thread, see https://bugs.kde.org/show_bug.cgi?id=364387 for details
-export NPROCS=1
-%K4build -DCMAKE_SKIP_RPATH=1 -DUSE_HTML_HANDBOOK=1
+#export NPROCS=1
+%K5init no_altplace
+%K5build -DCMAKE_SKIP_RPATH=1 \
+         -DKDE_INSTALL_METAINFODIR=%_datadir/appdata \
+         -DENABLE_WEBENGINE=OFF \
+         -DENABLE_SQLCIPHER=OFF \
+         -DUSE_HTML_HANDBOOK=1
 
 %install
-%K4install
-mkdir -p %buildroot%_datadir/appdata
-mv %buildroot%_K4apps/appdata/org.kde.kmymoney.appdata.xml %buildroot%_datadir/appdata
-%K4find_lang --with-kde %name
+%K5install
+%find_lang %name --all
 
 %files
 %doc AUTHORS COPYING README* TODO
-%_K4bindir/%name
-%_K4libdir/libkmm_widgets.so.*
-%_K4libdir/libkmm_kdchart.so.*
-%_K4libdir/libkmm_mymoney.so.*
-%_K4libdir/libkmm_plugin.so.*
-%_desktopdir/kde4/*%name.desktop
-%doc %_K4doc/en/*
-%_K4cfg/*.kcfg
-%_K4srvtyp/*.desktop
-%_K4apps/%name/*
-%exclude %_K4apps/%name/templates/*
+%_K5bin/%name
+%_K5lib/libkmm_widgets.so.*
+%_K5lib/libkmm_mymoney.so.*
+%_K5lib/libkmm_icons.so
+%_K5lib/libkmm_plugin.so.*
+%_desktopdir/kf5/*%name.desktop
+%doc %_K5doc/en/*
+%_K5cfg/*.kcfg
+%_K5srvtyp/*.desktop
+%_datadir/%name/*
+%exclude %_datadir/%name/templates/*
 %_datadir/mime/packages/*
-%_K4iconsdir/hicolor/*/apps/%name.png
-%_K4iconsdir/locolor/*/apps/%name.png
-%_K4iconsdir/hicolor/*/mimetypes/application-x-kmymoney.png
-%_datadir/appdata/*.appdata.xml
-%_K4conf_update/%name.upd
-%_man1dir/%name.1*
+%_K5icon/hicolor/*/apps/%name.png
+%_K5icon/hicolor/*/mimetypes/application-x-kmymoney.png
+%_K5icon/*/*/actions/*.*
+%_datadir/kconf_update/%name.upd
 
 %files devel
-%dir %_K4includedir/%name
-%_K4includedir/%name/*
-%_K4lib/devel/libkmm_*.so
+%dir %_includedir/%name
+%_includedir/%name/*
+%_K5link/lib*.so
 
 %files kbanking
-%_K4lib/kmm_kbanking.so
-%dir %_K4apps/kmm_kbanking
-%_K4apps/kmm_kbanking/kmm_kbanking.rc
-%_K4apps/kmm_kbanking/qml
-%_K4srv/kmm_kbanking.desktop
+%_qt5_plugindir/kmymoney/kbanking.so
+%_K5xmlgui/kbanking
+%_datadir/kbanking
 
 %files ofximport
-%_K4lib/kmm_ofximport.so
-%dir %_K4apps/kmm_ofximport
-%_K4apps/kmm_ofximport/kmm_ofximport.rc
-%_K4srv/kmm_ofximport.desktop
+%_qt5_plugindir/kmymoney/ofximporter.so
+%_K5xmlgui/ofximporter
 
 %files icalexport
-%_K4lib/kcm_kmm_icalendarexport.so
-%_K4lib/kmm_icalendarexport.so
-%dir %_K4apps/kmm_icalendarexport
-%_K4apps/kmm_icalendarexport/kmm_icalendarexport.rc
-%_K4srv/kcm_kmm_icalendarexport.desktop
-%_K4srv/kmm_icalendarexport.desktop
+%_qt5_plugindir/kmymoney/icalendarexporter.so
+%_qt5_plugindir/kmymoney/kcm_icalendarexporter.so
+%_K5xmlgui/icalendarexporter
+%_K5srv/kcm_icalendarexporter.desktop
 
 %files printcheck
-%_K4lib/kcm_kmm_printcheck.so
-%_K4lib/kmm_printcheck.so
-%dir %_K4apps/kmm_printcheck
-%_K4apps/kmm_printcheck/check_template*.html
-%_K4apps/kmm_printcheck/kmm_printcheck.rc
-%_K4srv/kcm_kmm_printcheck.desktop
-%_K4srv/kmm_printcheck.desktop
+%_qt5_plugindir/kmymoney/checkprinting.so
+%_qt5_plugindir/kmymoney/kcm_checkprinting.so
+%_K5xmlgui/checkprinting
+%_datadir/checkprinting
+%_K5srv/kcm_checkprinting.desktop
 
 %files reconciliationreport
-%_K4lib/kmm_reconciliationreport.so
-%_K4srv/kmm_reconciliationreport.desktop
+%_qt5_plugindir/kmymoney/reconciliationreport.so
 
-%files csvimport
-%_K4lib/kmm_csvimport.so
-%_K4srv/kmm_csvimport.desktop
-%_K4apps/kmm_csvimport/kmm_csvimport.rc
-%_K4conf/csvimporterrc
+%files csv
+%_libdir/libkmm_csvimportercore.so
+%_qt5_plugindir/kmymoney/csvimporter.so
+%_qt5_plugindir/kmymoney/kcm_csvimporter.so
+%_qt5_plugindir/kmymoney/csvexporter.so
+%_K5xmlgui/csvimporter
+%_K5xmlgui/csvexporter
+%_K5srv/kcm_csvimporter.desktop
 
-%files csvexport
-%_K4lib/kmm_csvexport.so
-%_K4srv/kmm_csvexport.desktop
-%_K4apps/kmm_csvexport/kmm_csvexport.rc
+%files qif
+%_qt5_plugindir/kmymoney/qifimporter.so
+%_qt5_plugindir/kmymoney/qifexporter.so
+%_qt5_plugindir/kmymoney/kcm_qif.so
+%_K5xmlgui/qifimporter
+%_K5xmlgui/qifexporter
+%_K5srv/kcm_qifimporter.desktop
+%_K5srv/kcm_qifexporter.desktop
+
+%files gncimport
+%_qt5_plugindir/kmymoney/gncimporter.so
+%_K5xmlgui/gncimporter
 
 %files payeeidentifier
+%_qt5_plugindir/kmymoney/payeeidentifier*.so
 %_libdir/libkmm_payeeidentifier.so.*
-%_K4lib/payeeidentifier_*
-%_K4lib/devel/libpayeeidentifier_*.so
-%_libdir/libpayeeidentifier_*
-%_K4srv/kmymoney-ibanbic-*.desktop
-%_K4srv/kmymoney-nationalaccount-*.desktop
+%_libdir/libpayeeidentifier_*.so.*
+%_K5srv/kmymoney-ibanbic-*.desktop
+%_K5srv/kmymoney-nationalaccount-*.desktop
 
 %files onlinetasks
-%_K4lib/libkonlinetasks_*.so
-%_K4srv/kmymoney-sepa*.desktop
+%_qt5_plugindir/kmymoney/konlinetasks_sepa.so
 
 %files weboob
-%_K4lib/kmm_weboob.so
-%_K4srv/kmm_weboob.desktop
-%_K4apps/kmm_weboob
+%_qt5_plugindir/kmymoney/weboob.so
+%_K5xmlgui/weboob
+%_datadir/weboob
 
 %files plugins
 
 %files i18n -f %name.lang
-%_K4apps/%name/templates/*
-%exclude %_K4doc/en
+%_datadir/%name/templates/*
+%exclude %_K5doc/en
 
 %changelog
+* Thu Feb 15 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt1
+- New version for KDE 5.
+
 * Mon Jan 15 2018 Andrey Cherepanov <cas@altlinux.org> 4.8.1.1-alt1
 - New version.
 

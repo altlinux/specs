@@ -1,6 +1,5 @@
-
 Name:     aqbanking
-Version:  5.6.12
+Version:  5.7.8
 Release:  alt1
 
 Summary:  A library for online banking functions and financial data import/export
@@ -212,7 +211,7 @@ install -m 644 %SOURCE1 %buildroot%_docdir/%name/
 %_libdir/libaqbankingpp.so
 %_libdir/libaqhbci.so
 %_libdir/libaqebics.so
-%_libdir/cmake/aqbanking-5.6/aqbanking-config*.cmake
+%_libdir/cmake/aqbanking-*/aqbanking-config*.cmake
 
 %files ofx
 %_libdir/%name/plugins/*/providers/aqofxconnect.so
@@ -251,6 +250,9 @@ install -m 644 %SOURCE1 %buildroot%_docdir/%name/
 %_docdir/%name/
 
 %changelog
+* Thu Feb 15 2018 Andrey Cherepanov <cas@altlinux.org> 5.7.8-alt1
+- new version 5.7.8
+
 * Thu Jul 21 2016 Andrey Cherepanov <cas@altlinux.org> 5.6.12-alt1
 - new version 5.6.12
 
