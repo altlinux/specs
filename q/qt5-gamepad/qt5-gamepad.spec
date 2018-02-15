@@ -2,7 +2,7 @@
 
 Name: qt5-gamepad
 Version: 5.9.4
-Release: alt2%ubt
+Release: alt3%ubt
 
 Group: System/Libraries
 Summary: A Qt 5 module that adds support for getting events from gamepad devices on multiple platforms.
@@ -53,6 +53,7 @@ syncqt.pl-qt5 -version %version -private
 %install_qt5
 
 %files common
+%dir %_qt5_plugindir/gamepads/
 
 %files -n libqt5-gamepad
 %_qt5_libdir/libQt5Gamepad.so.*
@@ -69,6 +70,9 @@ syncqt.pl-qt5 -version %version -private
 %_pkgconfigdir/Qt?Gamepad.pc
 
 %changelog
+* Thu Feb 15 2018 Oleg Solovyov <mcpain@altlinux.org> 5.9.4-alt3%ubt
+- restore dir
+
 * Thu Feb 15 2018 Oleg Solovyov <mcpain@altlinux.org> 5.9.4-alt2%ubt
 - remove unnecessary dir from common pkg
 

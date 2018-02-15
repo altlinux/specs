@@ -2,7 +2,7 @@
 
 Name: qt5-webview
 Version: 5.9.4
-Release: alt2%ubt
+Release: alt3%ubt
 
 Group: System/Libraries
 Summary: Qt Web View
@@ -55,7 +55,7 @@ syncqt.pl-qt5 -version %version -private
 
 %files -n libqt5-webview
 %_qt5_libdir/libQt5WebView.so.*
-%_qt5_qmldir/QtWebView/*
+%_qt5_qmldir/QtWebView/
 
 %files devel
 %_qt5_libdir/libQt*.so
@@ -68,6 +68,9 @@ syncqt.pl-qt5 -version %version -private
 %_pkgconfigdir/Qt?WebView.pc
 
 %changelog
+* Thu Feb 15 2018 Oleg Solovyov <mcpain@altlinux.org> 5.9.4-alt3%ubt
+- restore dir & move to libqt5-webview
+
 * Thu Feb 15 2018 Oleg Solovyov <mcpain@altlinux.org> 5.9.4-alt2%ubt
 - remove unnecessary dir from common pkg
 
