@@ -5,7 +5,7 @@
 Name: usbip
 Summary: Utility for manage usbip devices
 Version: 2.0.4
-Release: alt1
+Release: alt2
 
 %define lname lib%name
 
@@ -69,6 +69,11 @@ rm -rf kernel-source-%kernel_version
 
 %install
 %makeinstall_std
+mkdir -p %buildroot%_sysconfdir/sysconfig
+mkdir -p %buildroot%_unitdir
+
+install -Dp -m644 usbipd %buildroot%_sysconfdir/sysconfig/%{name}d
+install -Dp -m644 usbipd.service %buildroot%_unitdir/%{name}d.service
 
 %files
 %_sbindir/%name
@@ -77,6 +82,8 @@ rm -rf kernel-source-%kernel_version
 
 %files -n %{name}d
 %_sbindir/%{name}d
+%_sysconfdir/sysconfig/%{name}d
+%_unitdir/%{name}d.service
 
 %files -n %lname
 %_libdir/*.so.*
@@ -89,6 +96,9 @@ rm -rf kernel-source-%kernel_version
 %_libdir/*.a
 
 %changelog
+* Thu Feb 15 2018 Pavel Vainerman <pv@altlinux.ru> 2.0.4-alt2
+- added service file
+
 * Sat Dec 16 2017 Pavel Vainerman <pv@altlinux.ru> 2.0.4-alt1
 - added kernel major version for package name
 
