@@ -1,7 +1,7 @@
 %def_with ffmpeg
 Name: qtox
 Version: 1.13.0
-Release: alt1
+Release: alt1.1
 
 Summary: Powerful Tox client that follows the Tox design guidelines
 
@@ -80,6 +80,9 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Feb 12 2018 Vitaly Lipatov <lav@altlinux.ru> 1.13.0-alt1.1
+- NMU: autorebuild with libsodium-1.0.16
+
 * Sun Dec 10 2017 Vitaly Lipatov <lav@altlinux.ru> 1.13.0-alt1
 - new version 1.13.0 (with rpmrb script)
 
