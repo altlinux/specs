@@ -3,8 +3,8 @@
 %add_tcl_req_skip ttk::theme::default
 
 Name: tk
-Version: 8.6.7
-Release: alt2
+Version: 8.6.8
+Release: alt1
 
 Summary: A Tk toolkit fot Tcl scripting language
 License: BSD
@@ -17,8 +17,6 @@ Source: %name-%version-%release.tar
 BuildRequires(pre): rpm-build-tcl >= 0.5-alt1
 BuildRequires: tcl-devel = %version libXt-devel libXft-devel libXScrnSaver-devel
 Requires: tcl = %version lib%name = %version-%release
-# remove it in the next Tcl/Tk version
-Conflicts: tcl <= 8.6.7-alt1
 
 Provides: tcl(Ttk) = %version
 
@@ -125,6 +123,10 @@ install -pm0644 README license.terms changes.bz2 ChangeLog.bz2 %buildroot%docdir
 %_tcldatadir/%name%major/demos
 
 %changelog
+* Tue Feb 13 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.8-alt1
+- 8.6.8 released
+- applied patch from Debian to package additional manpages
+
 * Tue Sep 19 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.7-alt2
 - adapted for new Tcl/Tk extension packaging policy
 
