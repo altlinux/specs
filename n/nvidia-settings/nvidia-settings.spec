@@ -1,5 +1,5 @@
 Name: nvidia-settings
-Version: 384.111
+Version: 390.25
 Release: alt1%ubt
 
 Group: System/Configuration/Hardware
@@ -112,6 +112,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Thu Feb 15 2018 Sergey V Turchin <zerg@altlinux.org> 390.25-alt1%ubt
+- new version
+
 * Mon Jan 22 2018 Sergey V Turchin <zerg@altlinux.org> 384.111-alt1%ubt
 - new version
 
