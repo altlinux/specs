@@ -1,5 +1,5 @@
 Name: rsync
-Version: 3.1.2
+Version: 3.1.3
 Release: alt1
 %define srcname rsync-%version
 
@@ -103,6 +103,13 @@ done
 %ghost %attr(640,root,adm) %verify(not md5 mtime size) %_logdir/rsyncd/rsyncd.log
 
 %changelog
+* Thu Feb 15 2018 Dmitry V. Levin <ldv@altlinux.org> 3.1.3-alt1
+- v3.1.2 -> v3.1.3 (fixes CVE-2018-5764).
+- Fixed running with an unknown current directory
+  (by Florian Weimer; fixes upstream bug 6422).
+- Added --noatime option (based on patch from Nicolas George;
+  fixes upstream bug 7249).
+
 * Tue Dec 22 2015 Dmitry V. Levin <ldv@altlinux.org> 3.1.2-alt1
 - Updated to v3.1.2.
 
