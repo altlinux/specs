@@ -1,12 +1,11 @@
-
 Name: libvisio
 Version: 0.1.6
-Release: alt1
+Release: alt1.1
 Summary: A library providing ability to interpret and import visio diagrams
 
 Group: System/Libraries
-License: GPLv2+ or LGPLv2+ or MPLv1.1
-Url: http://www.freedesktop.org/wiki/Software/libvisio
+License: MPLv2
+Url: https://wiki.documentfoundation.org/DLP/Libraries/libvisio
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++
@@ -80,6 +79,11 @@ mkdir -p m4
 %_bindir/*
 
 %changelog
+* Thu Feb 15 2018 Grigory Ustinov <grenka@altlinux.org> 0.1.6-alt1.1
+- NMU:
+  + Update url (Closes: #30667).
+  + Update licence.
+
 * Mon Feb 12 2018 Alexey Shabalin <shaba@altlinux.ru> 0.1.6-alt1
 - 0.1.6
 
