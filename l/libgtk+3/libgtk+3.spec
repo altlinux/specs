@@ -21,7 +21,7 @@
 
 Name: libgtk+3
 Version: %ver_major.28
-Release: alt1
+Release: alt2
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -33,6 +33,8 @@ Source: %_name-%version.tar
 %else
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %endif
+Source5: gtk-icon-cache.filetrigger
+
 Patch: gtk+-2.16.5-alt-stop-spam.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=740554
 # https://bug740554.bugzilla-attachments.gnome.org/attachment.cgi?id=308706
@@ -57,7 +59,7 @@ Provides: libgtk3-engine-adwaita = %version-%release
 Obsoletes: libgtk3-engine-adwaita < 3.13.0
 
 Requires: %name-schemas = %version-%release
-Requires: gtk-update-icon-cache
+Requires: gtk-update-icon-cache = %version-%release
 Requires: icon-theme-adwaita
 # ALT #32028
 Requires: gtk+3-themes-incompatible
@@ -75,7 +77,7 @@ BuildRequires: fontconfig-devel >= %fontconfig_ver
 BuildRequires: gtk-doc >= %gtk_doc_ver
 BuildRequires: libcups-devel >= %cups_ver
 BuildRequires: libepoxy-devel >= %epoxy_ver
-BuildRequires: gtk-update-icon-cache docbook-utils zlib-devel
+BuildRequires: docbook-utils zlib-devel
 
 BuildRequires: libXdamage-devel libXcomposite-devel libX11-devel libXcursor-devel
 BuildRequires: libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel
@@ -107,6 +109,15 @@ BuildArch: noarch
 %description schemas
 This package provides a set of GSettings schemas for settings shared by
 GTK+3 and GTK+4.
+
+%package -n gtk-update-icon-cache
+Summary: Icon theme caching utility for GTK+
+Group: System/Libraries
+
+%description -n gtk-update-icon-cache
+gtk-update-icon-cache creates mmap()able cache files for icon themes.
+GTK+ can use the cache files created by gtk-update-icon-cache to avoid
+a lot of system call and disk seek overhead when the application starts.
 
 %package devel
 Summary: Development files and tools for GTK+ applications
@@ -259,8 +270,10 @@ the functionality of the installed GTK+3 packages.
 %makeinstall_std
 install -d %buildroot{%_sysconfdir/gtk-%api_ver,%_libdir/gtk-%api_ver/%binary_ver/engines}
 
-touch %buildroot%_libdir/gtk-%api_ver/%binary_ver/immodules.cache
+# posttransfiletrigger for update icons cache
+install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/gtk-icon-cache.filetrigger
 
+touch %buildroot%_libdir/gtk-%api_ver/%binary_ver/immodules.cache
 # posttransfiletrigger to update immodules cache
 cat <<EOF > filetrigger
 #!/bin/sh -e
@@ -341,6 +354,11 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %config %_datadir/glib-2.0/schemas/org.gtk.Settings.ColorChooser.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gtk.Settings.Debug.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gtk.Settings.EmojiChooser.gschema.xml
+
+%files -n gtk-update-icon-cache
+%_bindir/gtk-update-icon-cache
+%_man1dir/gtk-update-icon-cache*
+%_rpmlibdir/gtk-icon-cache.filetrigger
 
 %files devel
 %_bindir/gtk-builder-tool
@@ -430,6 +448,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Thu Feb 15 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.28-alt2
+- new gtk-update-icon-cache subpackage moved from gtk+2
+
 * Thu Feb 15 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.28-alt1
 - 3.22.28
 

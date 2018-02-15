@@ -18,7 +18,7 @@
 
 Name: libgtk+2
 Version: %ver_major.32
-Release: alt1
+Release: alt2
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs
 License: %lgpl2plus
@@ -41,7 +41,6 @@ Source1: %name-gdk.map
 Source2: %name-gdk.lds
 Source3: %name-gtk.map
 Source4: %name-gtk.lds
-Source5: gtk-icon-cache.filetrigger
 
 Patch1: gtk+-2.16.5-alt-stop-spam.patch
 Patch6: gtk+-2.10.6-fix-drop-gdk_colormap_change.patch
@@ -62,7 +61,7 @@ Patch20: gtk+-2.24.10-fixdso.patch
 %define gtk_doc_ver 1.6
 
 Requires: %name-locales = %version
-Requires: gtk-update-icon-cache = %version
+Requires: gtk-update-icon-cache
 Requires: icon-theme-hicolor
 
 BuildPreReq: rpm-build-licenses rpm-build-gnome
@@ -92,15 +91,6 @@ BuildArch: noarch
 %description locales
 This package provides internationalization support for GTK+,
 the GIMP toolkit.
-
-%package -n gtk-update-icon-cache
-Summary: Icon theme caching utility for GTK+
-Group: System/Libraries
-
-%description -n gtk-update-icon-cache
-gtk-update-icon-cache creates mmap()able cache files for icon themes.
-GTK+ can use the cache files created by gtk-update-icon-cache to avoid
-a lot of system call and disk seek overhead when the application starts.
 
 %package -n gtk-builder-convert
 Summary: Glade file conversion utility
@@ -272,9 +262,6 @@ install -pD -m755 %name.csh %buildroot%_sysconfdir/profile.d/%name.csh
 mkdir -p %buildroot/%_docdir/%name-devel-%version
 cp -a examples/ %buildroot/%_docdir/%name-devel-%version/
 
-# rpm posttrans filetriggers
-install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/gtk-icon-cache.filetrigger
-
 # rpm posttrans filetrigger to update immodules cache
 cat <<EOF > filetrigger
 #!/bin/sh -e
@@ -313,11 +300,6 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cach
 %_rpmlibdir/gtk-%api_ver-immodules-cache.filetrigger
 
 %files locales -f gtk20.lang
-
-%files -n gtk-update-icon-cache
-%_bindir/gtk-update-icon-cache
-%_man1dir/gtk-update-icon-cache*
-%_rpmlibdir/gtk-icon-cache.filetrigger
 
 %files -n gtk-builder-convert
 %_bindir/gtk-builder-convert
@@ -378,6 +360,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cach
 %endif
 
 %changelog
+* Thu Feb 15 2018 Yuri N. Sedunov <aris@altlinux.org> 2.24.32-alt2
+- moved gtk-update-icon-cache subpackage to gtk+3
+
 * Tue Jan 09 2018 Yuri N. Sedunov <aris@altlinux.org> 2.24.32-alt1
 - 2.24.32
 

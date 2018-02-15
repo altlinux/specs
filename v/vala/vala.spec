@@ -8,7 +8,7 @@
 %define api_ver 0.38
 
 Name: vala
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: Vala is a programming language which makes GNOME programming easy
@@ -25,7 +25,6 @@ Source: %name-%version.tar
 Patch: %name-%version-%release-pregenerated.patch
 %endif
 Patch1: %name-0.35.5-alt-fixes.patch
-Patch2: %name-0.38.2-alt-valadoc_tests.patch
 
 PreReq: rpm-build-vala
 PreReq: vapi-common = %version-%release
@@ -116,7 +115,6 @@ Development files for Valadoc.
 %prep
 %setup
 %patch1 -p1 -b .alt_fixes
-%patch2 -b .valadoc_tests
 
 # Automake now requires to have ChangeLog and m4, fake them
 [ ! -f ChangeLog ] && touch ChangeLog
@@ -263,6 +261,9 @@ mkdir -p %buildroot%_datadir/vala/vapi
 
 
 %changelog
+* Thu Feb 15 2018 Yuri N. Sedunov <aris@altlinux.org> 0.38.8-alt1
+- 0.38.8
+
 * Sun Feb 04 2018 Yuri N. Sedunov <aris@altlinux.org> 0.38.7-alt1
 - 0.38.7
 
