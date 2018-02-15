@@ -1,5 +1,5 @@
 Name: mongo
-Version: 3.4.10
+Version: 3.6.2
 Release: alt1
 Summary: mongo client shell and tools
 License: AGPL 3.0
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 
 Patch1:         mongodb-2.4.5-no-term.patch
 
-BuildRequires: /proc gcc-c++ python-devel python-module-pymongo scons boost-devel boost-filesystem-devel boost-program_options-devel libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel libpcap-devel libsnappy-devel libv8-3.24-devel systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel libyaml-cpp-devel valgrind-devel zlib-devel python-modules-json
+BuildRequires: /proc gcc-c++ python-devel python-module-pymongo scons boost-devel boost-filesystem-devel boost-program_options-devel libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel libpcap-devel libsnappy-devel libv8-3.24-devel systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel libyaml-cpp-devel valgrind-devel zlib-devel python-modules-json python-module-cheetah python-module-typing python-module-yaml
 
 %description
 Mongo (from "huMONGOus") is a schema-free document-oriented database.
@@ -68,24 +68,24 @@ sed -i -r "s|(env.Append\(CCFLAGS=\['-DDEBUG_MODE=false')(\]\))|\1,'-O0'\2|"  sr
 # NOTE: Build flags must be EXACTLY the same in the install step!
 # If you fail to do this, mongodb will be built twice...
 %define common_opts \\\
-	-j %__nprocs \\\
-	--use-system-tcmalloc \\\
-	--use-system-pcre \\\
-	--use-system-snappy \\\
-	--use-system-valgrind \\\
-	--use-system-zlib \\\
-	--use-system-stemmer \\\
-	--use-system-yaml \\\
-	--prefix=%buildroot%_prefix \\\
-	--nostrip \\\
-	--use-sasl-client \\\
-	--wiredtiger=on \\\
-	--ssl \\\
-	--disable-warnings-as-errors \\\
-	MONGO_VERSION="%{version}-%{release}" \\\
-	CCFLAGS="%{?optflags} `pkg-config --cflags libpcrecpp`"
+       -j %__nprocs \\\
+       --use-system-tcmalloc \\\
+       --use-system-pcre \\\
+       --use-system-snappy \\\
+       --use-system-valgrind \\\
+       --use-system-zlib \\\
+       --use-system-stemmer \\\
+       --use-system-yaml \\\
+       --prefix=%buildroot%_prefix \\\
+       --nostrip \\\
+       --use-sasl-client \\\
+       --wiredtiger=on \\\
+       --ssl \\\
+       --disable-warnings-as-errors \\\
+       MONGO_VERSION="%{version}-%{release}" \\\
+       CCFLAGS="%{?optflags} `pkg-config --cflags libpcrecpp`"
 
-scons %common_opts
+scons core tools %common_opts
 
 %install
 scons install %common_opts
@@ -138,19 +138,20 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 
 %_bindir/mongo
 %_bindir/mongoperf
+%exclude %_bindir/install_compass
 
 %_man1dir/mongo.1*
 %_man1dir/mongoperf.1*
+
+# man pages for mongo-tools
+%exclude %_man1dir/bsondump.1*
 %exclude %_man1dir/mongodump.1*
 %exclude %_man1dir/mongoexport.1*
 %exclude %_man1dir/mongofiles.1*
 %exclude %_man1dir/mongoimport.1*
 %exclude %_man1dir/mongorestore.1*
-%exclude %_man1dir/mongosniff.1*
 %exclude %_man1dir/mongostat.1*
-%exclude %_man1dir/bsondump.1*
 %exclude %_man1dir/mongotop.1*
-%exclude %_man1dir/mongooplog.1*
 
 %files server-mongod
 %doc GNU-AGPL-3.0.txt APACHE-2.0.txt
@@ -180,6 +181,9 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Wed Jan 31 2018 Vladimir Didenko <cow@altlinux.org> 3.6.2-alt1
+- 3.6.2
+
 * Fri Nov 24 2017 Vladimir Didenko <cow@altlinux.org> 3.4.10-alt1
 - 3.4.10
 
