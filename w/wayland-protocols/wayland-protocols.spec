@@ -1,4 +1,4 @@
-%define ver_major 1.12
+%define ver_major 1.13
 
 Name: wayland-protocols
 Version: %ver_major
@@ -42,6 +42,9 @@ protocol either in Wayland core, or some other protocol in wayland-protocols.
 %doc README
 
 %changelog
+* Thu Feb 15 2018 Yuri N. Sedunov <aris@altlinux.org> 1.13-alt1
+- 1.13
+
 * Wed Dec 06 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12-alt1
 - 1.12
 
