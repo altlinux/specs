@@ -5,7 +5,7 @@ Summary: Plugins for cairo-dock
 Summary(ru_RU.UTF-8): Плагины для cairo-dock
 Name: cairo-dock-plugins
 Version: 3.4.1
-Release: alt9%ubt
+Release: alt10%ubt
 License: GPLv3+
 Group: Graphical desktop/Other
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -17,6 +17,7 @@ Patch2: cairo-dock-plugins-3.4.1-time_h-confict.patch
 Patch3: cairo-dock-plugins-3.4.1-Default-to-xdg-screensaver-for-lock_screen.patch
 Patch4: cairo-dock-plugins-3.4.1-lock-screen.sh-used-xdg-screensaver-if-available.patch
 Patch5: cairo-dock-plugins-3.4.1-weather-update-URL.patch
+Patch6: cairo-dock-plugins-3.4.1-no-nv.patch
 
 Buildrequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-cmake
@@ -1109,6 +1110,9 @@ binding for Cairo-Dock.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%ifnarch %ix86 x86_64
+%patch6 -p1
+%endif
 
 %build
 # Need dbusmenu-* for extra plugins
@@ -1128,6 +1132,9 @@ binding for Cairo-Dock.
 %find_lang %name
 
 %changelog
+* Fri Feb 16 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.4.1-alt10%ubt
+- avoid nvidia-settings dependency on non-x86 arches
+
 * Fri Jan 26 2018 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt9%ubt
 - Update buildrequires
 
