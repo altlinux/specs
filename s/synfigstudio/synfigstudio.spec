@@ -1,19 +1,16 @@
 %def_without build_docs
 
 Name:    synfigstudio
-Version: 1.3.4
-Release: alt2
+Version: 1.3.5
+Release: alt1
 
 Summary: Synfig studio - animation program
 Group:   Office
 License: GPLv2+
 Url:     http://www.synfig.org
-# VCS:	 https://github.com/synfig/synfig
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
-#Source: http://prdownloads.sf.net/synfig/%name-%version.tar.gz
+#Source: https://github.com/synfig/synfig.git
 Source:  %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildPreReq: fonts-ttf-liberation
 BuildRequires: gcc-c++
@@ -100,6 +97,7 @@ Header files for Synfig studio.
 
 %prep
 %setup -q
+%patch0 -p1
 mkdir local-pkg-config
 
 %build
@@ -195,6 +193,9 @@ cat synfig.lang >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Feb 13 2018 Alexandr Antonov <aas@altlinux.org> 1.3.5-alt1
+- New version.
+
 * Mon Aug 21 2017 Anton Farygin <rider@altlinux.ru> 1.3.4-alt2
 - Rebuilt for new ImageMagick.
 
