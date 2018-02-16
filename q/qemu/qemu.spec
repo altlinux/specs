@@ -219,8 +219,8 @@
 # }}}
 
 Name: qemu
-Version: 2.11.0
-Release: alt2
+Version: 2.11.1
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -1657,6 +1657,14 @@ fi
 %endif
 
 %changelog
+* Fri Feb 16 2018 Alexey Shabalin <shaba@altlinux.ru> 2.11.1-alt1
+- 2.11.1
+- This update contains new functionality needed to enable mitigations
+  for Spectre/Meltdown (CVE-2017-5715)
+- fixes for potential host DoS attacks via VGA devices (CVE-2018-5683)
+  and VNC clients (CVE-2017-15124)
+- revert define MAX_RESERVED_VA for arm
+
 * Wed Jan 31 2018 Alexey Shabalin <shaba@altlinux.ru> 2.11.0-alt2
 - backport patch for fix configure test memfd
 - add support fsfreeze-hook for qemu guest agent
