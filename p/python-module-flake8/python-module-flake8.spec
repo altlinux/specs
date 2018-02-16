@@ -4,7 +4,7 @@
 
 Name:             python-module-%oname
 Version:          3.5.0
-Release:          alt1
+Release:          alt2
 Summary:          Code checking using pep8 and pyflakes
 
 Group:            Development/Python
@@ -16,13 +16,13 @@ URL:              http://pypi.python.org/pypi/flake8
 Source:           %name-%version.tar
 
 BuildRequires: python-module-mccabe python-module-mock python-module-nose
-BuildRequires: python-module-pytest-runner python2.7(pycodestyle) python2.7(pyflakes)
+BuildRequires: python-module-pytest python-module-pytest-runner python2.7(pycodestyle) python2.7(pyflakes) python2.7(enum) python2.7(mock)
 BuildRequires: python2.7(configparser)
 %if_with python3
 BuildRequires(pre):    rpm-build-python3
 BuildRequires: python3-module-html5lib python3-module-mccabe python3-module-nose python3-module-pbr
 BuildRequires: python3-module-unittest2 python3-pyflakes
-BuildRequires: python3-module-pytest-runner python3(pycodestyle) python3(pyflakes)
+BuildRequires: python3-module-pytest python3-module-pytest-runner python3(pycodestyle) python3(pyflakes) python3(enum) python3(mock)
 %endif
 
 %py_requires multiprocessing setuptools mccabe pycodestyle pyflakes
@@ -141,6 +141,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.0-alt2
+- Updated build dependencies.
+
 * Fri Dec 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.0-alt1
 - Updated to upstream version 3.5.0.
 
