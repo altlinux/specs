@@ -2,11 +2,11 @@
 %define hdf5_version 1.8.9
 # TODO problem with package freehep-util
 %def_without freehep
-%def_with docs
+%def_without docs
 
 Name:     scilab
-Version:  6.0.0
-Release:  alt3.2
+Version:  6.0.1
+Release:  alt1
 Summary:  A high-level language and system for numerical computations
 
 License:  CeCILL
@@ -28,10 +28,6 @@ Patch4:	 scilab-fix-make-doc-ja_JP.patch
 Patch5:  scilab-6.0.0-jogl-2.3.patch
 Patch8:  scilab-5.5.2-disable-doclint.patch
 Patch9:  scilab-alt-cxx-flags.patch
-Patch10: scilab-6.0.0-jgraph-3.patch
-Patch11: scilab-6.0.0-batik-1.9.patch
-
-Patch13: scilab-find-jrosetta-API.patch
 
 URL: http://www.scilab.org
 AutoReq: yes, noshell
@@ -162,8 +158,6 @@ tar xf %SOURCE1
 %patch5 -p1
 %patch8 -p2
 %patch9 -p2
-%patch10 -p2
-%patch11 -p2
 
 # Update saxon dependency
 # http://bugzilla.scilab.org/show_bug.cgi?id=8479
@@ -227,6 +221,10 @@ rm -f %buildroot%_xdgmimedir/packages/scilab.xml
 %_datadir/mime/packages/scilab.xml
 
 %changelog
+* Fri Feb 16 2018 Andrey Cherepanov <cas@altlinux.org> 6.0.1-alt1
+- New version.
+- Build without docs.
+
 * Sat Dec 02 2017 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt3.2
 - NMU: added batik 1.9 to supported batik versions (ALT #34263)
 
