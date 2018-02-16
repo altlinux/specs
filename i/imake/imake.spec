@@ -1,6 +1,6 @@
 Name: imake
 Version: 1.0.7
-Release: alt2
+Release: alt3
 
 Summary: C preprocessor interface to the make utility
 License: MIT/X11
@@ -9,8 +9,9 @@ Group: Development/C
 Url: http://xorg.freedesktop.org
 Source: %name-%version.tar.bz2
 
-Patch: imake-1.0.5-alt-tmpdir.patch
+Patch: %name-1.0.5-alt-tmpdir.patch
 Patch1: 0001-1.0.7-alt1.patch
+Patch2: %name-1.0.7-alt-lcc.patch
 
 # Automatically added by buildreq on Mon Mar 11 2013
 # optimized out: pkg-config
@@ -30,6 +31,7 @@ descriptions of the various items to be built.
 
 %patch -p1 -b .orig
 %patch1 -p2 -b .redirect
+%patch2 -p2
 
 %build
 %autoreconf
@@ -46,6 +48,9 @@ descriptions of the various items to be built.
 %_man1dir/*
 
 %changelog
+* Fri Feb 16 2018 Andrew Savchenko <bircoph@altlinux.org> 1.0.7-alt3
+- e2k: add support for lcc preprocessor
+
 * Wed Jun 04 2014 Fr. Br. George <george@altlinux.ru> 1.0.7-alt2
 - Fix *.cpp (not c++!) build
 
