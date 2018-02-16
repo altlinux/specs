@@ -1,41 +1,45 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1.1
+%define _unpackaged_files_terminate_build 1
 %define oname zope.tales
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 4.1.1
-#Release: alt1.1
+Version: 4.2.0
+Release: alt1%ubt
+
 Summary: Zope Template Application Language Expression Syntax (TALES)
-License: ZPL
+License: ZPLv2.1
 Group: Development/Python
-Url: http://pypi.python.org/pypi/zope.tales/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+# Source-git https://github.com/zopefoundation/zope.tales.git
+Url: http://pypi.python.org/pypi/zope.tales
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-zope.tal python-module-six
-BuildPreReq: python-module-zope.testrunner
-%if_with python3
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-zope.tal python3-module-six
-BuildPreReq: python3-module-zope.testrunner
-BuildPreReq: python-tools-2to3
+
+BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python-module-six
+BuildRequires: python-module-zope.testrunner
+BuildRequires: python-module-zope.testing
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-six
 %endif
 
-%py_requires zope zope.interface zope.tal six
+%py_requires zope.interface six
 
 %description
 Template Attribute Language - Expression Syntax.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Zope Template Application Language Expression Syntax (TALES) (Python 3)
 Group: Development/Python3
-%py3_requires zope zope.interface zope.tal six
+%py3_requires zope
 
 %description -n python3-module-%oname
 Template Attribute Language - Expression Syntax.
@@ -43,41 +47,32 @@ Template Attribute Language - Expression Syntax.
 %package -n python3-module-%oname-tests
 Summary: Tests for zope.tales (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-%py3_requires zope.testing
+Requires: python3-module-%oname = %EVR
+%py3_requires zope.testrunner
 
 %description -n python3-module-%oname-tests
-Template Attribute Language - Expression Syntax.
-
-This package contains tests for zope.tales.
-%endif
+This package contains tests for %oname
 
 %package tests
 Summary: Tests for zope.tales
 Group: Development/Python
-Requires: %name = %version-%release
-%py_requires zope.testing
+Requires: %name = %EVR
+%py_requires zope.testing zope.testrunner
 
 %description tests
-Template Attribute Language - Expression Syntax.
-
-This package contains tests for zope.tales.
+This package contains tests for %oname
 
 %prep
 %setup
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
 popd
-%endif
 
 %install
 %python_install
@@ -87,7 +82,6 @@ mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
@@ -96,15 +90,14 @@ install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
-%endif
 
 %check
-python setup.py test -v
-%if_with python3
+export PYTHONPATH=src
+zope-testrunner --test-path=src -vv
+
 pushd ../python3
-python3 setup.py test -v
+zope-testrunner3 --test-path=src -vv
 popd
-%endif
 
 %files
 %doc *.txt *.rst
@@ -115,7 +108,6 @@ popd
 %files tests
 %python_sitelibdir/*/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
@@ -124,9 +116,11 @@ popd
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/tests
-%endif
 
 %changelog
+* Tue Feb 20 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1%ubt
+- 4.1.1 -> 4.2.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.1.1-alt1.1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

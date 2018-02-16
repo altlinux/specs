@@ -1,33 +1,47 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.git20141229.1.1.1
+%define _unpackaged_files_terminate_build 1
 %define oname zope.lifecycleevent
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 4.1.1
-#Release: alt1.dev0.git20141229.1.1
+Version: 4.2.0
+Release: alt1%ubt
+
 Summary: Object life-cycle events
-License: ZPL
+License: ZPLv2.1
 Group: Development/Python
-Url: http://pypi.python.org/pypi/zope.lifecycleevent/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+# Source-git https://github.com/zopefoundation/zope.lifecycleevent.git
+Url: http://pypi.python.org/pypi/zope.lifecycleevent
 
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-zope.event python-module-zope.component-tests
-%if_with python3
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-BTrees python-module-ZEO python-module-ZODB python-module-cffi python-module-cryptography python-module-enum34 python-module-mimeparse python-module-numpy python-module-pbr python-module-persistent python-module-pyasn1 python-module-serial python-module-setuptools python-module-transaction python-module-twisted-core python-module-unittest2 python-module-zc.lockfile python-module-zdaemon python-module-zope python-module-zope.component python-module-zope.event python-module-zope.exceptions python-module-zope.hookable python-module-zope.interface python-module-zope.proxy python-module-zope.testing python-module-zope.testrunner python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-mimeparse python3-module-ntlm python3-module-pbr python3-module-pip python3-module-pycparser python3-module-setuptools python3-module-unittest2 python3-module-zope python3-module-zope.component python3-module-zope.configuration python3-module-zope.event python3-module-zope.exceptions python3-module-zope.i18nmessageid python3-module-zope.interface python3-module-zope.schema python3-module-zope.testing python3-module-zope.testrunner
-BuildRequires: python-module-pytest python-module-zope.component-tests python3-module-html5lib python3-module-pytest python3-module-zope.component-tests rpm-build-python3
 
-#BuildRequires: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-zope.event python3-module-zope.component-tests
+BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python-module-zope.event
+BuildRequires: python-module-zope.testing
+BuildRequires: python-module-zope.interface
+BuildRequires: python-module-zope.testrunner
+BuildRequires: python-module-zope.component
+BuildRequires: python-module-zope.component-tests
+BuildRequires: python-module-zope.configuration
+BuildRequires: python-module-coverage
+BuildRequires: python3-module-zope.event
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.interface
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.component
+BuildRequires: python3-module-zope.component-tests
+BuildRequires: python3-module-zope.configuration
+BuildRequires: python3-module-coverage
 %endif
 
-%py_requires zope.interface zope.component zope.event
+%py_requires zope.interface zope.event
 
 %description
 In Zope, events are used by components to inform each other about
@@ -36,11 +50,10 @@ relevant new objects and object modifications.
 To keep all subscribers up to date it is indispensable that the life
 cycle of an object is accompanied by various events.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Object life-cycle events (Python 3)
 Group: Development/Python3
-%py3_requires zope.interface zope.component zope.event
+%py3_requires zope
 
 %description -n python3-module-%oname
 In Zope, events are used by components to inform each other about
@@ -52,48 +65,32 @@ cycle of an object is accompanied by various events.
 %package -n python3-module-%oname-tests
 Summary: Tests for zope.lifecycleevent (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-%py3_requires zope.component zope.container
+Requires: python3-module-%oname = %EVR
+%py3_requires zope.configuration zope.testrunner
 
 %description -n python3-module-%oname-tests
-In Zope, events are used by components to inform each other about
-relevant new objects and object modifications.
-
-To keep all subscribers up to date it is indispensable that the life
-cycle of an object is accompanied by various events.
-
-This package contains tests for zope.lifecycleevent.
-%endif
+This package contains tests for %oname
 
 %package tests
 Summary: Tests for zope.lifecycleevent
 Group: Development/Python
-Requires: %name = %version-%release
-%py_requires zope.component zope.container
+Requires: %name = %EVR
+%py_requires zope.component zope.configuration zope.testrunner zope.testing
 
 %description tests
-In Zope, events are used by components to inform each other about
-relevant new objects and object modifications.
-
-To keep all subscribers up to date it is indispensable that the life
-cycle of an object is accompanied by various events.
-
-This package contains tests for zope.lifecycleevent.
+This package contains tests for %oname
 
 %prep
 %setup
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
@@ -103,7 +100,6 @@ mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
@@ -112,17 +108,14 @@ install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
-%endif
 
 %check
-export PYTHONPATH=$PWD/src
-python src/zope/lifecycleevent/tests.py -v
-%if_with python3
+export PYTHONPATH=src
+coverage run -m zope.testrunner --test-path=src -vv
+
 pushd ../python3
-export PYTHONPATH=$PWD/src
-python3 src/zope/lifecycleevent/tests.py -v
+coverage3 run -m zope.testrunner --test-path=src -vv
 popd
-%endif
 
 %files
 %doc *.txt *.rst
@@ -133,7 +126,6 @@ popd
 %files tests
 %python_sitelibdir/*/*/tests.*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
@@ -144,9 +136,11 @@ popd
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/tests.*
 %python3_sitelibdir/*/*/*/tests.*
-%endif
 
 %changelog
+* Fri Feb 16 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1%ubt
+- 4.1.1 -> 4.2.0
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.1-alt1.dev0.git20141229.1.1.1
 - (AUTO) subst_x86_64.
 
