@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 4.1.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Group: Development/Python
 License: BSD License
@@ -17,12 +17,12 @@ BuildRequires: python-module-anyjson python-module-boto python-module-django
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python2.7(sphinx_celery)
 BuildRequires: python-module-pylibrabbitmq python-module-pymongo
 BuildRequires: python-module-amqp >= 1:1.4.9
-BuildRequires: python2.7(case)
+BuildRequires: python2.7(case) python2.7(unittest2) python2.7(mock) python2.7(pytest)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-amqp >= 1:1.4.9
-BuildRequires: python3(pytz) python3(case)
+BuildRequires: python3(pytz) python3(case) python3(unittest2) python3(mock) python3(pytest)
 %endif
 
 %description
@@ -126,6 +126,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.1.0-alt2
+- Updated build dependencies.
+
 * Wed Nov 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.1.0-alt1
 - Updated to upstream version 4.1.0.
 - Enabled tests.
