@@ -4,7 +4,7 @@
 %define oname constantly
 Name: python-module-%oname
 Version: 15.1.0
-Release: alt4
+Release: alt5
 
 Summary: Symbolic constants in Python
 
@@ -17,9 +17,11 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires: python-dev python-module-setuptools
+BuildRequires: python2.7(json)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3(json)
 %endif
 
 #setup_python_module %oname
@@ -90,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 15.1.0-alt5
+- Updated build dependencies.
+
 * Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 15.1.0-alt4
 - Fixed egg-info version.
 - Explicitely stated egg-info including valid version.
