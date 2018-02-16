@@ -2,11 +2,11 @@
 
 Name: tolua++
 Version: 1.0.93
-Release: alt2
+Release: alt2.1
 Summary: A tool to integrate C/C++ code with Lua
 Group: System/Libraries
 License: MIT
-Url: http://www.codenix.com/~tolua/
+Url: https://github.com/LuaDist/toluapp
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
 Source: http://www.codenix.com/~tolua/%name-%version.tar.bz2
@@ -65,6 +65,9 @@ install -p -m 644 src/bin/lua/*.lua $RPM_BUILD_ROOT%{_datadir}/%{name}
 %_includedir/%name.h
 
 %changelog
+* Fri Feb 16 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.93-alt2.1
+- NMU: update url.
+
 * Wed Feb 08 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.93-alt2
 - build with lua 5.3
 
