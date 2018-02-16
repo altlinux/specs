@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 4.4.0
-Release: alt1
+Release: alt2
 Summary: Jupyter core package
 License: BSD
 Group: Development/Python
@@ -18,11 +18,11 @@ Source2: %oname-%version-alt-tests.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
-BuildRequires: python-module-zope python-module-pytest python2.7(traitlets.config)
+BuildRequires: python-module-zope python-module-pytest python2.7(traitlets.config) python2.7(mock)
 BuildRequires: python2.7(sphinxcontrib_github_alt)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-zope python3-module-pytest python3(traitlets.config)
+BuildRequires: python3-module-zope python3-module-pytest python3(traitlets.config) python3(mock)
 BuildRequires: python3(sphinxcontrib_github_alt)
 %endif
 
@@ -138,6 +138,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.0-alt2
+- Updated build dependencies.
+
 * Fri Nov 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.0-alt1
 - Updated to upstream version 4.4.0.
 - Enabled tests.
