@@ -4,7 +4,7 @@
 Name: python-module-%mname
 Epoch: 1
 Version: 38.4.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -23,6 +23,7 @@ BuildRequires: python3-module-six
 # for test
 BuildRequires: git-core
 BuildRequires: python-module-pytest
+BuildRequires: python-module-pytest-virtualenv
 BuildRequires: python-module-virtualenv
 BuildRequires: python-module-path
 BuildRequires: python-module-mock
@@ -33,6 +34,7 @@ BuildRequires: python-module-pytest-fixture-config
 BuildRequires: python-module-tox
 BuildRequires: python-module-pytest-flake8
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-virtualenv
 BuildRequires: python3-module-virtualenv
 BuildRequires: python3-module-path
 BuildRequires: python3-module-mock
@@ -150,6 +152,9 @@ popd
 %python3_sitelibdir/%mname-%version-*.egg-info
 
 %changelog
+* Fri Feb 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:38.4.0-alt2%ubt
+- Updated build dependencies.
+
 * Mon Jan 22 2018 Stanislav Levin <slev@altlinux.org> 1:38.4.0-alt1%ubt
 - 38.2.3 -> 38.4.0
 
