@@ -75,7 +75,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %{pybasever}.4
-Release: alt2
+Release: alt3
 License: Python
 Group: Development/Python3
 
@@ -414,6 +414,10 @@ Patch1007: python-3.5.1-upstream-expat-compat.patch
 # it should be ppc64le-linux-gnu/ppc64-linux-gnu instead powerpc64le-linux-gnu/powerpc64-linux-gnu
 Patch5001: python3-powerppc-arch.patch
 
+# Fix locale issues with new glibc.
+# Based on: https://github.com/python/cpython/pull/4174
+Patch5010: python-glibc-alt.patch
+
 # ======================================================
 # Additional metadata, and subpackages
 # ======================================================
@@ -669,6 +673,7 @@ sed --in-place \
     Lib/pydoc.py || exit 1
 
 %patch5001 -p1
+%patch5010 -p2
 
 rm -fr ../build-shared
 mkdir ../build-shared
@@ -1200,6 +1205,9 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %tool_dir/scripts/run_tests.py
 
 %changelog
+* Fri Feb 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.4-alt3
+- Fixed build with new glibc.
+
 * Wed Dec 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.4-alt2
 - Packed audiotest.au files required by tests.
 - Returned some distutils submodules required by setup scripts of numpy.
