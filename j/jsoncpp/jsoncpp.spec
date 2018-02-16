@@ -1,16 +1,17 @@
 
 Name: jsoncpp
 Version: 1.8.4
-Release: alt1%ubt
+Release: alt2%ubt
+%define rname jsoncpp
 %define sover 19
-%define libname lib%name%sover
+%define libname lib%rname%sover
 
 Group: System/Libraries
 Summary: JSON library implemented in C++
 Url: https://github.com/open-source-parsers/jsoncpp/
 License: MIT
 
-Source: %name-%version.tar
+Source: %rname-%version.tar
 
 # Automatically added by buildreq on Thu Jun 11 2015 (-bi)
 # optimized out: cmake-modules elfutils fontconfig fonts-bitmap-misc libstdc++-devel libwayland-client libwayland-server pkg-config python-base python-modules python3 python3-base ruby ruby-stdlibs
@@ -48,7 +49,7 @@ BuildArch: noarch
 This package contains the documentation for %name
 
 %prep
-%setup -qn %name-%version
+%setup -n %rname-%version
 
 %build
 %Kbuild \
@@ -66,20 +67,23 @@ python doxybuild.py --with-dot --doxygen %_bindir/doxygen
 
 %files -n %libname
 %doc AUTHORS LICENSE
-%_libdir/lib%name.so.%sover
-%_libdir/lib%name.so.*
+%_libdir/lib%rname.so.%sover
+%_libdir/lib%rname.so.*
 
 %files devel
 %doc dist/doxygen/jsoncpp-api-html-*
-%_libdir/lib%name.so
+%_libdir/lib%rname.so
 %_includedir/json/
-%_libdir/pkgconfig/jsoncpp.pc
-%_libdir/cmake/jsoncpp/
+%_libdir/pkgconfig/%rname.pc
+%_libdir/cmake/%rname/
 
 #%files doc
 #%_docdir/%name/
 
 %changelog
+* Fri Feb 16 2018 Sergey V Turchin <zerg@altlinux.org> 1.8.4-alt2%ubt
+- fix package specfile
+
 * Tue Feb 06 2018 Sergey V Turchin <zerg@altlinux.org> 1.8.4-alt1%ubt
 - new version
 
