@@ -1,9 +1,9 @@
 
 Name: jsoncpp1
 Version: 1.7.2
-Release: alt2%ubt
+Release: alt3%ubt
 %define sover 1
-%define libname lib%name%sover
+%define libname libjsoncpp%sover
 
 Group: System/Libraries
 Summary: JSON library implemented in C++
@@ -27,6 +27,8 @@ generate.
 %package -n %libname
 Summary: JSON library implemented in C++
 Group: System/Libraries
+Provides: libjsoncpp11 = %EVR
+Obsoletes: libjsoncpp11 < %EVR
 %description -n %libname
 %name is an implementation of a JSON (http://json.org) reader and writer in
 C++. JSON (JavaScript Object Notation) is a lightweight data-interchange format.
@@ -73,6 +75,9 @@ rm -rf %buildroot/%_pkgconfigdir
 %_libdir/libjsoncpp.so.%sover.*
 
 %changelog
+* Fri Feb 16 2018 Sergey V Turchin <zerg@altlinux.org> 1.7.2-alt3%ubt
+- fix library package name
+
 * Tue Feb 06 2018 Sergey V Turchin <zerg@altlinux.org> 1.7.2-alt2%ubt
 - don't package devel files
 
