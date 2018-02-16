@@ -6,7 +6,7 @@
 Name: python-module-%module_name
 Epoch: 1
 Version: 0.999999999
-Release: alt3
+Release: alt4
 
 Summary: Library for working with HTML5 documents
 
@@ -24,6 +24,7 @@ Source: %module_name-%version.tar
 BuildRequires: python-dev
 BuildRequires: python-module-setuptools >= 18.5
 BuildRequires: python2.7(webencodings)
+BuildRequires: python2.7(pytest) python2.7(six) python2.7(mock)
 
 %setup_python_module %module_name
 
@@ -32,6 +33,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
 BuildRequires: python3-module-setuptools >= 18.5
 BuildRequires: python3(webencodings)
+BuildRequires: python3(pytest) python3(six) python3(mock)
 %endif
 
 %description
@@ -173,6 +175,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.999999999-alt4
+- Updated build dependencies.
+
 * Fri Oct 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.999999999-alt3
 - Fixed python3 modules. Got rid of 2to3 conversion since it seems no longer necessary.
 - Enabled tests.
