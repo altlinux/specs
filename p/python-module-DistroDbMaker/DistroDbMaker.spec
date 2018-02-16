@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.002
+Version: 0.003
 Release: alt1
 Summary: DistroDb Maker tools
 License: LGPL2+
@@ -71,6 +71,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.003-alt1
+- alt support
+
 * Mon Feb 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.002-alt1
 - xz list support
 
