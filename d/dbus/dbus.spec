@@ -9,7 +9,7 @@
 
 Name: dbus
 Version: 1.10.24
-Release: alt3%ubt
+Release: alt4%ubt
 
 Summary: D-BUS is a simple IPC framework based on messages.
 License: AFL/GPL
@@ -80,6 +80,8 @@ Group: Development/C
 Requires: lib%name = %version-%release
 %description -n lib%name-devel
 This package contains D-BUS development files (headers and libraries links)
+
+%add_findreq_skiplist %_x11sysconfdir/xinit.d/*
 
 %prep
 %setup -q
@@ -224,6 +226,9 @@ fi
 %_man1dir/dbus-test-tool.1*
 
 %changelog
+* Fri Feb 16 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.10.24-alt4%ubt
+- dbus-tools-gui does not require /etc/X11/xinit.d (closes: #34549)
+
 * Wed Feb 14 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.10.24-alt3%ubt
 - fixed systemctl path (closes: #34515)
 
