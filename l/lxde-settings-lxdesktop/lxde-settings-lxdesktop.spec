@@ -3,7 +3,7 @@
 %define theme_fullname lxde-settings-%theme_name
 Name: %theme_fullname
 Version: 0.3
-Release: alt1
+Release: alt2
 Packager: LXDE Development Team <lxde at packages.altlinux.org>
 BuildArch: noarch
 
@@ -18,7 +18,7 @@ Provides: lxde-settings
 Requires: icon-theme-faenza-blue gtk3-theme-clearlooks-phenix
 Requires: fonts-ttf-google-droid-sans-mono fonts-ttf-google-droid-sans fonts-ttf-google-droid-serif
 Requires: qasmixer
-Requires: screengrab
+Requires: screenshot-tool
 Requires: xdg-user-dirs-gtk
 
 %description
@@ -52,6 +52,9 @@ cp -r * %buildroot%_datadir/%theme_fullname
 %_sysconfdir/X11/profile.d/*.sh
 
 %changelog
+* Sat Feb 17 2018 Anton Midyukov <antohami@altlinux.org> 0.3-alt2
+- Replacement screngrab to screenshot-tool
+
 * Wed Jan 24 2018 Anton Midyukov <antohami@altlinux.org> 0.3-alt1
 - version 0.3
 

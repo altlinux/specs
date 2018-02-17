@@ -8,7 +8,7 @@
 %define gtkver 2
 Name: lxde-common
 Version: 0.99.2
-Release: alt2
+Release: alt3
 BuildArch: noarch
 
 Summary: Basic infrastructure for LXDE.
@@ -40,7 +40,6 @@ Pprovides infrastructure for LXDE components
 Summary: provides unmodified LXDE configuration from upstream
 Group: Graphical desktop/Other
 Provides: lxde-settings
-Requires: screengrab
 
 ### GRRRR!!! for appliance-desktop-lxde
 Provides: lxde-default-theme
@@ -127,6 +126,9 @@ rm -fR %_sysconfdir/xdg/lxsession/LXDE/desktop.conf \
 #_iconsdir/nuoveXT2
 
 %changelog
+* Sat Feb 17 2018 Anton Midyukov <antohami@altlinux.org> 0.99.2-alt3
+- Replacement screengrab to screenshot-tool.
+
 * Tue Aug 01 2017 Anton Midyukov <antohami@altlinux.org> 0.99.2-alt2
 - Added keybinding.patch
 - Added requires screengrab.
