@@ -1,17 +1,28 @@
 %define api_ver 1.0
 
+%def_enable tests
+%def_enable docs
+%def_enable vala
+# failed to init libusb in hasher
+%def_disable check
+
 Name: libgusb
-Version: 0.2.11
+Version: 0.3.0
 Release: alt1
 
 Summary: GLib wrapper around libusb1
 Group: System/Libraries
 License: LGPLv2+
 Url: https://gitorious.org/gusb/
+
+# VCS: https://github.com/hughsie/libgusb.git
 Source: http://people.freedesktop.org/~hughsient/releases/%name-%version.tar.xz
 
+BuildRequires(pre): meson
 BuildRequires: libgio-devel >= 2.44 libusb-devel >= 1.0.19
-BuildRequires: gobject-introspection-devel vala-tools gtk-doc
+BuildRequires: gobject-introspection-devel
+%{?_enable_docs:BuildRequires: gtk-doc}
+%{?_enable_vala:BuildRequires: vala-tools}
 
 %description
 GUsb is a GObject wrapper for libusb that makes it easy to do
@@ -59,30 +70,29 @@ applications that use GUsb library.
 %setup
 
 %build
-%configure \
-        --disable-static \
-        --disable-dependency-tracking \
-        --enable-tests
-
-%make_build
+%meson \
+	-Dusb_ids=%_datadir/misc/usb.ids \
+        %{?_disable_docs:-Ddocs=false} \
+        %{?_disable_tests:-Dtests=false} \
+        %{?_disable_vala:-Dvapi=false}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-# failed to init libusb in hasher
-#%%make check
+%meson_test
 
 %files
-%_libdir/libgusb.so.*
-%doc README AUTHORS NEWS
+%_libdir/%name.so.*
+%doc README* AUTHORS NEWS
 
 %files devel
 %_bindir/gusbcmd
 %_includedir/gusb-1/
-%_libdir/libgusb.so
-%_libdir/pkgconfig/gusb.pc
-%_vapidir/gusb.vapi
+%_libdir/%name.so
+%_pkgconfigdir/gusb.pc
+%{?_enable_vala:%_vapidir/gusb.*}
 
 %files gir
 %_typelibdir/GUsb-%api_ver.typelib
@@ -90,10 +100,15 @@ applications that use GUsb library.
 %files gir-devel
 %_girdir/GUsb-%api_ver.gir
 
+%if_enabled docs
 %files devel-doc
 %_datadir/gtk-doc/html/gusb/
+%endif
 
 %changelog
+* Sat Feb 17 2018 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Thu Jul 27 2017 Yuri N. Sedunov <aris@altlinux.org> 0.2.11-alt1
 - 0.2.11
 
