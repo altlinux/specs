@@ -1,35 +1,60 @@
+%def_enable snapshot
+%define beta -beta2
+%define gst_api_ver 1.0
+
+# no more these plugins
+%def_disable exfalso
+%def_disable ipod
+
 Name: exaile
-Version: 3.4.5
-Release: alt1
+Version: 4.0.0
+Release: alt0.1
 
 Summary: a music player aiming to be similar to KDE's Amarok, but for GTK+ and written in Python
-License: GPL
+License: GPLv2
 Group: Sound
 Url: http://www.exaile.org
 
 BuildArch: noarch
-Source: https://github.com/exaile/%name/releases/download/%version/%name-%version.tar.gz
-Patch0: %name-%version-%release.patch
 
-%add_python_req_skip xl
-%add_python_req_skip xlgui
+%if_disabled snapshot
+Source: https://github.com/exaile/%name/releases/download/%version/%name-%version%beta.tar.gz
+%else
+Source: %name-%version.tar
+%endif
+#Patch: %name-%version-%release.patch
 
-BuildRequires: help2man python-module-pygobject python-devel
+# python-2.x supported only
+#%%define __python %nil
+#BuildRequires(pre): rpm-build-python3
 
-Requires: gst-plugins-base
+# remove ubuntu and Mac-specific dependency
+%add_typelib_req_skiplist typelib(GtkosxApplication)
+
+BuildRequires: python-devel python-module-pygobject3 rpm-build-gir
+BuildRequires: help2man bash-completion
+
+# explicitly required gtk+3
+Requires: typelib(Gtk) = 3.0
+Requires: dbus dconf
+Requires: gst-plugins-base%gst_api_ver
+Requires: gst-plugins-good%gst_api_ver
 
 %description
-Exaile is a music player aiming to be similar to KDE's Amarok, but for
-GTK+ and written in Python. It incorporates many of the cool things from
-Amarok (and other media players) like automatic fetching of album art,
-handling of large libraries, lyrics fetching, artist/album information
-via Wikipedia, Last.fm submission support, and optional iPod support via
-a plugin.
-In addition, Exaile also includes a built-in SHOUTcast directory
-browser, tabbed playlists (so you can have more than one playlist open
-at a time), blacklisting of tracks (so they don't get scanned into your
-library), downloading of guitar tablature from fretplay.com, and
-submitting played tracks on your iPod to Last.fm.
+Exaile is a music player with a simple interface and powerful music
+management capabilities. Features include automatic fetching of album
+art, lyrics fetching, streaming internet radio, tabbed playlists, smart
+playlists with extensive filtering/search capabilities, and much more.
+
+Exaile is written using Python and GTK+ and is easily extensible via
+plugins. There are over 50 plugins distributed with Exaile that include
+advanced track tagging, last.fm scrobbling, support for portable media
+players, podcasts, internet radio such as icecast and Soma.FM,
+ReplayGain, output via a secondary output device (great for DJs!), and
+much more.
+
+For more information see http://exaile.readthedocs.io/
+
 
 %package plugin-ipod
 Group: Sound
@@ -48,14 +73,16 @@ Requires: %name = %version-%release
 %summary
 
 %prep
-%setup -q
-%patch -p1
+%setup
+#%patch -p1
+subst 's@\(\$(DATADIR)\/\)appdata@\1metainfo@' Makefile
 
 %build
-%make_build
+%make_build EPREFIX=%_prefix
 
 %install
 %make_install DESTDIR=%buildroot PREFIX=%_prefix install
+
 mkdir -p %buildroot{%_liconsdir,%_niconsdir,%_miconsdir}
 cp %buildroot%_datadir/%name/data/images/16x16/%name.png %buildroot%_miconsdir/
 cp %buildroot%_datadir/%name/data/images/32x32/%name.png %buildroot%_niconsdir/
@@ -68,24 +95,32 @@ cp %buildroot%_datadir/%name/data/images/48x48/%name.png %buildroot%_liconsdir/
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_prefix/lib/%name
-%exclude %_datadir/%name/plugins/ipod
-%exclude %_datadir/%name/plugins/exfalso
+%{?_enable_ipod:%exclude %_datadir/%name/plugins/ipod}
+%{?_enable_exfalso:%exclude %_datadir/%name/plugins/exfalso}
 %_datadir/%name
-%_datadir/appdata/exaile.appdata.xml
+%_datadir/metainfo/exaile.appdata.xml
 %_datadir/dbus-1/services/org.exaile.Exaile.service
 %_liconsdir/%name.png
 %_niconsdir/%name.png
 %_miconsdir/%name.png
 %_man1dir/%name.*
-%doc COPYING
+%_datadir/bash-completion/completions/%name
+%doc README.md
 
+%if_enabled ipod
 %files plugin-ipod
 %_datadir/%name/plugins/ipod
+%endif
 
+%if_enabled exfalso
 %files plugin-exfalso
 %_datadir/%name/plugins/exfalso
+%endif
 
 %changelog
+* Thu Mar 22 2018 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt0.1
+- updated to 4.0.0-beta3-7-g6c83c2a (ported to GTK+3, GStreamer-1.0)
+
 * Thu Nov 19 2015 Vladimir Lettiev <crux@altlinux.ru> 3.4.5-alt1
 - New version 3.4.5
 - Dependency on gst-plugins-base (Closes: #31517)
