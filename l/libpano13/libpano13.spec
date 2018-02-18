@@ -1,6 +1,6 @@
 Name: libpano13
 Version: 2.9.19
-Release: alt1
+Release: alt1.qa1
 
 Group: System/Libraries
 Summary: %name - library for panorama stitching programs. This is new generation and development version
@@ -12,9 +12,9 @@ Source0: %name-%{version}.tar.gz
 Patch0: %name-configure.patch
 Patch1: %name.patch
 
-# Automatically added by buildreq on Sat Dec 03 2005
-BuildPreReq: rpm-build-java
-BuildRequires: gcc-c++ gcc-fortran libgcj-devel libjpeg-devel libpng-devel libstdc++-devel libtiff-devel zlib-devel
+# Automatically added by buildreq on Mon Jan 15 2018
+# optimized out: perl python-base zlib-devel
+BuildRequires: libjpeg-devel libpng-devel libtiff-devel
 
 %package devel
 Group: System/Libraries
@@ -67,8 +67,8 @@ panoinfo    - Display info from pano12 dll/library
 
 %build
 %autoreconf
-%configure --with-java=%_javadir
-%make
+%configure
+%make_build
 
 %install
 %makeinstall_std
@@ -89,6 +89,9 @@ panoinfo    - Display info from pano12 dll/library
 %_man1dir/*
 
 %changelog
+* Mon Jan 15 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.9.19-alt1.qa1
+- Rebuilt without gcj.
+
 * Mon Jul 13 2015 Yuri N. Sedunov <aris@altlinux.org> 2.9.19-alt1
 - 2.9.19
 - removed obsolete libpano13-2.9.18.patch

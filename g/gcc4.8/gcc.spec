@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.8.2
-Release: alt5
+Release: alt6
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -45,7 +45,6 @@ Url: http://gcc.gnu.org/
 
 %define gcc_gdb_auto_load %_datadir/gdb/auto-load%_libdir/
 %define gcc_doc_dir %_docdir/gcc%psuffix
-%define alternatives_deps alternatives >= 0:0.4
 # due to -z relro by default
 %define binutils_deps binutils >= 1:2.24.0
 
@@ -81,13 +80,14 @@ Url: http://gcc.gnu.org/
 # Build parameters.
 %ifdef _cross_platform
 
+%def_without java
+
 %def_enable compat
 %def_disable multilib
 %def_with cxx
 %def_without fortran
 %def_without objc
 %def_disable objc_gc
-%def_without java
 %def_without ada
 %def_without go
 %define REQ >=
@@ -104,7 +104,6 @@ Url: http://gcc.gnu.org/
 %def_without objc
 %endif
 %def_disable objc_gc
-%def_with java
 # If you don't have already a usable gcc-java and libgcj for your arch,
 # do on some arch which has it rpmbuild -bc --with java_tar gcc4.spec
 # which creates libjava-classes-%version-%release.tar
@@ -198,13 +197,17 @@ Patch715: alt-spp-buffer-size.patch
 Patch716: alt-defaults-ssp.patch
 Patch717: alt-escalate-always-overflow.patch
 Patch718: alt-libgo-weak.patch
+Patch729: alt-fix-build-with-glibc2.26-ucontext.patch
+Patch731: gcc-asan-fix-missing-include-signal-h.patch
+Patch732: alt-fix-texi2pod-perl.patch
+Patch733: alt-Fix-option-handling-when--std=gnu++14-is-not-used-PR-69865.patch
+Patch734: alt-fix-build-with-texinfo.patch
+Patch735: alt-fix-build-with-glibc2.26-sigaltstack-__res_state.patch
 Patch800: alt-libtool.m4-gcj.patch
-
-Provides: gcc = %version, %_bindir/%gcc_target_platform-gcc, %_bindir/gcc
 
 Obsoletes: egcs gcc3.0 gcc3.1
 Conflicts: glibc-devel < 2.2.6
-PreReq: %alternatives_deps, gcc-common >= 1.4.7
+PreReq: gcc-common >= 1.4.7
 Requires: cpp%gcc_branch = %EVR
 Requires: %binutils_deps, glibc-devel
 %ifndef _cross_platform
@@ -222,8 +225,9 @@ Requires: libitm1 %REQ %EVR
 Requires: libtsan0 %REQ %EVR
 %endif
 %endif
-BuildPreReq: rpm-build >= 4.0.4-alt39, %alternatives_deps, %binutils_deps
-BuildPreReq: gcc-c++ coreutils flex makeinfo
+BuildPreReq: rpm-build >= 4.0.4-alt39, %binutils_deps
+%set_gcc_version 4.8
+BuildPreReq: gcc%_gcc_version-c++ coreutils flex makeinfo
 BuildPreReq: libcloog-isl-devel libelf-devel libmpc-devel libmpfr-devel
 # due to manpages
 BuildPreReq: perl-Pod-Parser
@@ -255,7 +259,6 @@ in order to explicitly use the GNU C compiler version %version.
 %package plugin-devel
 Summary: GCC Plugin header files
 Group: Development/Other
-Provides: gcc-plugin-devel = %version
 Provides: libgcc%gcc_branch-plugin-devel = %version
 Requires: %name = %EVR
 
@@ -304,7 +307,6 @@ runtime library for atomic operations not supported by hardware.
 %package -n libatomic%gcc_branch-devel-static
 Summary: The GNU Atomic static library
 Group: Development/C
-Provides: libatomic-devel-static = %version
 Requires: libatomic1 %REQ %EVR
 
 %description -n libatomic%gcc_branch-devel-static
@@ -325,7 +327,6 @@ which is used for -fsanitize=address instrumented programs.
 %package -n libasan%gcc_branch-devel-static
 Summary: The Address Sanitizer static library
 Group: Development/C
-Provides: libasan-devel-static = %version
 Requires: libasan0 %REQ %EVR
 
 %description -n libasan%gcc_branch-devel-static
@@ -346,7 +347,6 @@ which is used for -fsanitize=thread instrumented programs.
 %package -n libtsan%gcc_branch-devel-static
 Summary: The Thread Sanitizer static library
 Group: Development/C
-Provides: libtsan-devel-static = %version
 Requires: libtsan0 %REQ %EVR
 
 %description -n libtsan%gcc_branch-devel-static
@@ -367,7 +367,6 @@ which is a GCC transactional memory support runtime library.
 %package -n libitm%gcc_branch-devel-static
 Summary: The GNU Transactional Memory static library
 Group: Development/C
-Provides: libitm-devel-static = %version
 Requires: libitm1 %REQ %EVR
 
 %description -n libitm%gcc_branch-devel-static
@@ -396,7 +395,6 @@ This package contains GCC OpenMP shared support library.
 %package -n libgomp%gcc_branch-devel
 Summary: GCC OpenMP support files
 Group: Development/Other
-Provides: libgomp-devel = %version
 Requires: libgomp1 %REQ %EVR
 Requires: glibc-devel
 
@@ -406,7 +404,6 @@ This package contains GCC OpenMP headers and library.
 %package -n libgomp%gcc_branch-devel-static
 Summary: GCC OpenMP static support library
 Group: Development/Other
-Provides: libgomp-devel-static = %version
 Requires: libgomp%gcc_branch-devel = %EVR
 
 %description -n libgomp%gcc_branch-devel-static
@@ -470,7 +467,6 @@ for __float128 math support and for Fortran REAL*16 support.
 %package -n libquadmath%gcc_branch-devel
 Summary: GCC __float128 support files
 Group: Development/Other
-Provides: libquadmath-devel = %version
 Requires: libquadmath0 %REQ %EVR
 
 %description -n libquadmath%gcc_branch-devel
@@ -480,7 +476,6 @@ REAL*16 and programs using __float128 math.
 %package -n libquadmath%gcc_branch-devel-static
 Summary: GCC __float128 static support library
 Group: Development/Other
-Provides: libquadmath-devel-static = %version
 Requires: libquadmath%gcc_branch-devel = %EVR
 
 %description -n libquadmath%gcc_branch-devel-static
@@ -493,9 +488,8 @@ using REAL*16 and programs using __float128 math.
 %package -n cpp%gcc_branch
 Summary: The GNU C-Compatible Compiler Preprocessor
 Group: Development/C
-Provides: cpp = %version, %_bindir/cpp
 Obsoletes: gcc-cpp egcs-cpp cpp3.0 cpp3.1
-PreReq: %alternatives_deps, gcc-common >= 1.4.7
+PreReq: gcc-common >= 1.4.7
 
 %description -n cpp%gcc_branch
 Cpp is the GNU C-Compatible Compiler Preprocessor.
@@ -555,9 +549,8 @@ Library.
 %package -n libstdc++%gcc_branch-devel
 Summary: Header files and libraries for C++ development
 Group: Development/C++
-Provides: libstdc++-devel = %version, %_libdir/libstdc++.so
 Obsoletes: libstdc++3.0-devel libstdc++3.1-devel
-PreReq: %alternatives_deps, gcc-c++-common >= 1.4.7
+PreReq: gcc-c++-common >= 1.4.7
 Requires: libstdc++6 %REQ %EVR
 Requires: glibc-devel
 
@@ -569,9 +562,8 @@ development.  This includes rewritten implementation of STL.
 %package -n libstdc++%gcc_branch-devel-static
 Summary: Static libraries for C++ development
 Group: Development/C++
-Provides: libstdc++-devel-static = %version, %_libdir/libstdc++.a
 Obsoletes: libstdc++3.0-devel-static libstdc++3.1-devel-static
-PreReq: %alternatives_deps, gcc-c++-common >= 1.4.7
+PreReq: gcc-c++-common >= 1.4.7
 Requires: libstdc++%gcc_branch-devel = %EVR
 
 %description -n libstdc++%gcc_branch-devel-static
@@ -584,9 +576,8 @@ This package includes static library needed for C++ development.
 %package c++
 Summary: C++ support for gcc
 Group: Development/C++
-Provides: gcc-c++ = %version, %_bindir/%_target_platform-g++, %_bindir/g++
 Obsoletes: egcs-c++ gcc3.0-c++ gcc3.1-c++
-PreReq: %alternatives_deps, gcc-c++-common >= 1.4.7
+PreReq: gcc-c++-common >= 1.4.7
 Requires: %name = %EVR
 Requires: libstdc++%gcc_branch-devel = %EVR
 
@@ -606,7 +597,6 @@ in order to explicitly use the GNU C++ compiler version %version.
 %package -n libobjc4
 Summary: Objective-C runtime library
 Group: System/Libraries
-Provides: libobjc = %version
 Requires: libgcc1 %REQ %EVR
 
 %description -n libobjc4
@@ -616,8 +606,7 @@ Objective-C dynamically linked programs.
 %package -n libobjc%gcc_branch-devel
 Summary: Header files and library for Objective-C development
 Group: Development/Other
-Provides: libobjc-devel = %version
-PreReq: %alternatives_deps, gcc-common >= 1.4.7
+PreReq: gcc-common >= 1.4.7
 Requires: libobjc4 %REQ %EVR
 Requires: glibc-devel
 
@@ -629,7 +618,6 @@ Objective-C development.
 %package -n libobjc%gcc_branch-devel-static
 Summary: Static libraries for Objective-C development
 Group: Development/Other
-Provides: libobjc-devel-static = %version
 PreReq: gcc-common >= 1.4.7
 Requires: libobjc%gcc_branch-devel = %EVR
 
@@ -644,9 +632,8 @@ development.
 %package objc
 Summary: Objective-C support for GCC
 Group: Development/Other
-Provides: gcc-objc = %version
 Obsoletes: gcc3.0-objc gcc3.1-objc
-PreReq: %alternatives_deps, gcc-common >= 1.4.7
+PreReq: gcc-common >= 1.4.7
 Requires: %name = %EVR
 Requires: libobjc%gcc_branch-devel = %EVR
 
@@ -658,8 +645,7 @@ object-oriented derivative of the C language.
 %package objc++
 Summary: Objective-C++ support for GCC
 Group: Development/Other
-Provides: gcc-objc++ = %version
-PreReq: %alternatives_deps, gcc-common >= 1.4.7
+PreReq: gcc-common >= 1.4.7
 Requires: %name-objc = %EVR, %name-c++ = %EVR
 
 %description objc++
@@ -690,7 +676,6 @@ GNU Fortran dynamically linked programs.
 %package -n libgfortran%gcc_branch-devel
 Summary: Header files and library for GNU Fortran development
 Group: Development/Other
-Provides: libgfortran-devel = %version
 PreReq: gcc-fortran-common >= 1.4.7
 Requires: libgfortran3 %REQ %EVR
 %ifarch %libquadmath_arches
@@ -706,7 +691,6 @@ Fortran development.
 %package -n libgfortran%gcc_branch-devel-static
 Summary: Static libraries for GNU Fortran development
 Group: Development/Other
-Provides: libgfortran-devel-static = %version
 PreReq: gcc-fortran-common >= 1.4.7
 Requires: libgfortran%gcc_branch-devel = %EVR
 
@@ -721,12 +705,8 @@ development.
 %package fortran
 Summary: GNU Fortran support for gcc
 Group: Development/Other
-Provides: gcc-fortran = %version
-Provides: gcc-g77 = %version
-Provides: %_bindir/%_target_platform-gfortran, %_bindir/gfortran
-Provides: %_bindir/%_target_platform-g77, %_bindir/g77
 Obsoletes: gcc3.0-g77 gcc3.1-g77
-PreReq: %alternatives_deps, gcc-fortran-common >= 1.4.7
+PreReq: gcc-fortran-common >= 1.4.7
 Requires: %name = %EVR
 Requires: libgfortran%gcc_branch-devel = %EVR
 
@@ -831,6 +811,7 @@ The Java(tm) runtime library sources for use in Eclipse.
 ####################################################################
 # Java Compiler
 
+%if_with java
 %package java
 Summary: Java support for gcc
 Group: Development/Java
@@ -853,6 +834,7 @@ If you have multiple versions of the GNU Compiler Collection
 installed on your system, you may want to execute
 gcj%psuffix
 in order to explicitly use the GNU Java compiler version %version.
+%endif
 
 ####################################################################
 # Ada 95 Libraries
@@ -860,7 +842,6 @@ in order to explicitly use the GNU Java compiler version %version.
 %package -n libgnat%gcc_branch
 Summary: Ada 95 runtime libraries
 Group: System/Libraries
-Provides: libgnat = %version
 Requires: libgcc1 %REQ %EVR
 
 %description -n libgnat%gcc_branch
@@ -874,7 +855,6 @@ Posix 1003.5 Binding (Florist).
 %package -n libgnat%gcc_branch-devel
 Summary: Header files and libraries for Ada 95 development
 Group: Development/Other
-Provides: libgnat-devel = %version
 PreReq: gcc-common >= 1.4.7
 Requires: libgnat%gcc_branch = %EVR
 
@@ -886,7 +866,6 @@ Ada 95 development.
 %package -n libgnat%gcc_branch-devel-static
 Summary: Static libraries for Ada 95 development
 Group: Development/Other
-Provides: libgnat-devel-static = %version
 PreReq: gcc-common >= 1.4.7
 Requires: libgnat%gcc_branch-devel = %EVR
 
@@ -900,9 +879,8 @@ package includes the static libraries needed for Ada 95 development.
 %package gnat
 Summary: Ada 95 support for gcc
 Group: Development/Other
-Provides: gcc-gnat = %version, %_bindir/gnat
 Obsoletes: gcc4.7-gnat gcc4.6-gnat gcc4.5-gnat gcc4.4-gnat gcc4.3-gnat gcc4.2-gnat gcc4.1-gnat
-PreReq: %alternatives_deps, gcc-gnat-common
+PreReq: gcc-gnat-common
 Requires: %name = %EVR
 Requires: libgnat%gcc_branch-devel = %EVR
 
@@ -952,7 +930,7 @@ This package includes the static libraries needed for Go development.
 %package go
 Summary: Go support for GCC
 Group: Development/Other
-PreReq: %alternatives_deps, gcc-go-common >= 1.4.15
+PreReq: gcc-go-common >= 1.4.15
 Requires: %name = %EVR
 Requires: libgo%gcc_branch-devel = %EVR
 
@@ -971,7 +949,6 @@ in order to explicitly use the GNU Go compiler version %version.
 Summary: The GNU Compiler Collection native language support files
 Group: Development/C
 BuildArch: noarch
-Provides: gcc-locales = %version
 Requires: %name = %EVR
 
 %description locales
@@ -985,10 +962,18 @@ the GNU Compiler Collection.
 Summary: GCC documentation
 Group: Development/Other
 BuildArch: noarch
-Provides: gcc-doc = %version
-Obsoletes: gcc-doc < %version
+Conflicts: gcc3.0-doc
+Conflicts: gcc3.1-doc
+Conflicts: gcc3.2-doc
+Conflicts: gcc3.3-doc
+Conflicts: gcc3.4-doc
+Conflicts: gcc4.1-doc
+Conflicts: gcc4.3-doc
+Conflicts: gcc4.4-doc
+Conflicts: gcc4.5-doc
+Conflicts: gcc4.6-doc
+Conflicts: gcc4.7-doc
 Obsoletes: gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc gcc4.6-doc gcc4.7-doc
-Conflicts: gcc-doc > %version
 
 %description doc
 This package contains documentation for the GNU Compiler Collection
@@ -1061,6 +1046,12 @@ version %version.
 %patch716 -p1
 %patch717 -p1
 %patch718 -p1
+%patch729 -p1
+%patch731 -p1
+%patch732 -p1
+%patch733 -p1
+%patch734 -p1
+%patch735 -p1
 
 # Set proper version info.
 echo %gcc_branch > gcc/BASE-VER
@@ -1209,7 +1200,7 @@ fi
 
 %define _configure_script ../configure
 %define _configure_target --host=%_target_platform --build=%_target_platform --target=%gcc_target_platform
-%remove_optflags %optflags_nocpp %optflags_notraceback
+%remove_optflags -frecord-gcc-switches %optflags_nocpp %optflags_notraceback
 export CC=%__cc \
 	CFLAGS="%optflags" \
 	CXXFLAGS="%optflags" \
@@ -1579,69 +1570,9 @@ popd
 %find_lang --append --output gcc%psuffix.lang cpplib%psuffix
 %add_findprov_lib_path %_libdir/gcj%psuffix
 
-#install alternatives stuff
-install -d %buildroot%_altdir
-cat >%buildroot%_altdir/cpp%gcc_branch <<EOF
-%_bindir/%gcc_target_platform-cpp	%_bindir/%gcc_target_platform-cpp%psuffix	%priority
-%_man1dir/cpp.1.xz	%_man1dir/cpp%psuffix.1.xz	%_bindir/%gcc_target_platform-cpp%psuffix
-EOF
-
-cat >%buildroot%_altdir/%name <<EOF
-%_bindir/%gcc_target_platform-gcc	%_bindir/%gcc_target_platform-gcc%psuffix	%priority
-%_bindir/%gcc_target_platform-gcov	%_bindir/%gcc_target_platform-gcov%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
-%_bindir/%gcc_target_platform-gcc-ar	%_bindir/%gcc_target_platform-gcc-ar%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
-%_bindir/%gcc_target_platform-gcc-nm	%_bindir/%gcc_target_platform-gcc-nm%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
-%_bindir/%gcc_target_platform-gcc-ranlib	%_bindir/%gcc_target_platform-gcc-ranlib%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
-%_man1dir/gcc.1.xz	%_man1dir/gcc%psuffix.1.xz	%_bindir/%gcc_target_platform-gcc%psuffix
-%_man1dir/gcov.1.xz	%_man1dir/gcov%psuffix.1.xz	%_bindir/%gcc_target_platform-gcc%psuffix
-EOF
-
-%if_with cxx
-cat >%buildroot%_altdir/c++%gcc_branch <<EOF
-%_bindir/%gcc_target_platform-g++	%_bindir/%gcc_target_platform-g++%psuffix	%priority
-%_man1dir/g++.1.xz	%_man1dir/g++%psuffix.1.xz	%_bindir/%gcc_target_platform-g++%psuffix
-EOF
-%endif #with_cxx
-
-%if_with fortran
-cat >%buildroot%_altdir/gfortran%gcc_branch <<EOF
-%_bindir/%gcc_target_platform-gfortran	%_bindir/%gcc_target_platform-gfortran%psuffix	%priority
-%_man1dir/gfortran.1.xz	%_man1dir/gfortran%psuffix.1.xz	%_bindir/%gcc_target_platform-gfortran%psuffix
-EOF
-%endif #with_fortran
-
-%if_with java
-cat >%buildroot%_altdir/java%gcc_branch <<EOF
-%_bindir/%gcc_target_platform-gcj	%_bindir/%gcc_target_platform-gcj%psuffix	%priority
-$(for i in %java_binaries; do
-	echo "%_bindir/%gcc_target_platform-$i	%_bindir/%gcc_target_platform-$i%psuffix	%_bindir/%gcc_target_platform-gcj%psuffix"
-done)
-$(for i in gcj %java_binaries; do
-	echo "%_man1dir/$i.1.xz	%_man1dir/$i%psuffix.1.xz	%_bindir/%gcc_target_platform-gcj%psuffix"
-done)
-EOF
-%endif #with_java
-
-%if_with go
-cat >%buildroot%_altdir/gccgo%gcc_branch <<EOF
-%_bindir/%gcc_target_platform-gccgo	%_bindir/%gcc_target_platform-gccgo%psuffix	%priority
-%_man1dir/gccgo.1.xz	%_man1dir/gccgo%psuffix.1.xz	%_bindir/%gcc_target_platform-gccgo%psuffix
-EOF
-%endif #with_go
-
-%if_with ada
-cat >%buildroot%_altdir/gnat%gcc_branch <<EOF
-%_bindir/%gcc_target_platform-gnat	%_bindir/%gcc_target_platform-gnat%psuffix	%priority
-$(for i in %ada_binaries; do
-	echo "%_bindir/%gcc_target_platform-$i	%_bindir/%gcc_target_platform-$i%psuffix	%_bindir/%gcc_target_platform-gnat%psuffix"
-done)
-EOF
-%endif #with_ada
-
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
 %config %_sysconfdir/buildreqs/files/ignore.d/%name
-%_altdir/%name
 %dir %gcc_doc_dir/
 %gcc_doc_dir/gcc/
 %_bindir/gcc%psuffix
@@ -1881,7 +1812,6 @@ EOF
 
 %files -n cpp%gcc_branch
 %config %_sysconfdir/buildreqs/packages/substitute.d/cpp%gcc_branch
-%_altdir/cpp%gcc_branch
 %_bindir/cpp%psuffix
 %_bindir/%gcc_target_platform-cpp%psuffix
 %_man1dir/cpp%psuffix.*
@@ -1922,7 +1852,6 @@ EOF
 
 %files c++
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-c++
-%_altdir/c++%gcc_branch
 %dir %gcc_doc_dir/
 %gcc_doc_dir/g++
 %_bindir/g++%psuffix
@@ -1988,7 +1917,6 @@ EOF
 
 %files fortran
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-fortran
-%_altdir/gfortran%gcc_branch
 %_bindir/gfortran%psuffix
 %_bindir/%gcc_target_platform-gfortran%psuffix
 %_man1dir/gfortran%psuffix.*
@@ -2095,7 +2023,6 @@ EOF
 %if_with ada
 %files gnat
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-gnat
-%_altdir/gnat%gcc_branch
 %_bindir/%gcc_target_platform-gnat*%psuffix
 %_bindir/gnat*%psuffix
 %dir %gcc_target_libdir/
@@ -2124,7 +2051,6 @@ EOF
 %if_with go
 %files go
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-go
-%_altdir/gccgo%gcc_branch
 %_bindir/gccgo%psuffix
 %_bindir/%gcc_target_platform-gccgo%psuffix
 %_man1dir/gccgo%psuffix.*
@@ -2176,6 +2102,12 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Fri Jan 12 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.8.2-alt6
+- Rebuilt with gcc 4.8.
+- Fixed build with glibc 2.26, and texinfo 6.5.
+- Disabled java support.
+- Dropped alternatives.
+
 * Mon Feb 01 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.8.2-alt5
 - Changed compress_method to xz.
 
