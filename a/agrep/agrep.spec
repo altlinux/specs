@@ -1,10 +1,11 @@
 Name: agrep
 Version: 2.04
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: Approximate grep
 License: distributable not for profit, free use
 Group: Text tools
+URL: http://webglimpse.net
 
 # NB: we have permission to redistribute agrep package
 # with boxed distributions -- mike
@@ -51,6 +52,9 @@ install -pD -m644 %SOURCE1 $RPM_BUILD_DIR/%name-%version/README.ALT
 
 %define date	%(echo `LC_ALL="C" date +"%a %b %d %Y"`)
 %changelog
+* Sun Feb 18 2018 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1.qa2
+- added URL: http://webglimpse.net (for distromap)
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.04-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
