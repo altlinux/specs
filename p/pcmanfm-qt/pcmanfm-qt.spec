@@ -1,6 +1,6 @@
 Name:    pcmanfm-qt
 Version: 0.12.0
-Release: alt1
+Release: alt2
 
 Summary: PCManFM-Qt is the Qt port of the LXDE file manager PCManFM
 License: GPLv2+
@@ -9,6 +9,9 @@ Group:   File tools
 Url:     http://lxqt.org
 Source0: %name-%version.tar
 Source1: %name.desktop
+
+# fix initial settigs
+Patch: alt-settings.patch
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
 BuildRequires: qt5-base-devel qt5-tools-devel qt5-x11extras-devel qt5-svg-devel
@@ -27,6 +30,7 @@ PCManFM-Qt is the Qt port of the LXDE file manager PCManFM.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
@@ -44,6 +48,9 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_man1dir/*
 
 %changelog
+* Sun Feb 18 2018 Anton Midyukov <antohami@altlinux.org> 0.12.0-alt2
+- fix initial settigs
+
 * Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.12.0-alt1
 - 0.12.0
 

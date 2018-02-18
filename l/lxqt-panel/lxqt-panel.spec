@@ -1,6 +1,6 @@
 Name: lxqt-panel
 Version: 0.12.0
-Release: alt1
+Release: alt2
 
 Summary: Desktop panel
 License: LGPL
@@ -8,6 +8,7 @@ Group: Graphical desktop/Other
 
 Url: http://lxqt.org
 Source: %name-%version.tar
+Patch: alt-settings.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
@@ -46,6 +47,7 @@ This package provides the development files for %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF \
@@ -68,6 +70,9 @@ This package provides the development files for %name.
 %_includedir/*/*.h
 
 %changelog
+* Sun Feb 18 2018 Anton Midyukov <antohami@altlinux.org> 0.12.0-alt2
+- fix initial settigs
+
 * Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 0.12.0-alt1
 - 0.12.0
 
