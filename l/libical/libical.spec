@@ -6,10 +6,11 @@
 %def_enable ical_glib
 %def_enable introspection
 %def_enable check
+%def_enable docs
 %def_with cxx
 
 Name: libical
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 
 Summary: An implementation of basic iCAL protocols
@@ -122,7 +123,8 @@ library.
 	-DSHARED_ONLY:BOOL=ON \
 	%{?_with_cxx:-DWITH_CXX_BINDINGS:BOOL=ON} \
 	%{?_enable_ical_glib:-DICAL_GLIB:BOOL=ON} \
-	%{?_enable_introspection:-DGOBJECT_INTROSPECTION:BOOL=ON}
+	%{?_enable_introspection:-DGOBJECT_INTROSPECTION:BOOL=ON} \
+	%{?_disable_docs:-DICAL_BUILD_DOCS:BOOL=OFF}
 %cmake_build
 
 %install
@@ -176,11 +178,16 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %_girdir/ICalGLib-%api_ver.gir
 %endif
 
+%if_enabled docs
 %files -n %name-glib-devel-doc
 %_datadir/gtk-doc/html/%name-glib/
+%endif
 
 
 %changelog
+* Sun Feb 18 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt1
+- 3.0.2
+
 * Mon Nov 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
 - 3.0.1
 - new libical-glib-* subpackages
