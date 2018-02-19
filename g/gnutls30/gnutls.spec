@@ -3,8 +3,8 @@
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.5.17
-Release: alt2
+Version: 3.5.18
+Release: alt1
 
 Summary: A TLS protocol implementation
 # The libgnutls library is LGPLv2.1+, utilities and remaining libraries are GPLv3+
@@ -16,6 +16,8 @@ Source: gnutls-%version.tar
 
 # Skip test-hash-large for overridden CPU flags
 Patch1: gnutls-patch-test-hash-large.patch
+Patch2: Fix-build-cipher-openssl-compat-test.patch
+Patch3: Fix-privkey-verify-broken-test.patch
 %define libcxx libgnutlsxx%libgnutlsxx28_soname
 %define libssl libgnutls%{libgnutls_openssl_soname}-openssl
 %def_enable guile
@@ -30,6 +32,7 @@ BuildRequires: libnettle-devel autogen libopts-devel libidn2-devel libunistring-
 # See https://bugzilla.altlinux.org/34496
 %ifarch e2k
 BuildRequires: guile20-devel
+BuildRequires: libguile20-devel
 %else
 BuildRequires: guile22-devel
 %endif
@@ -45,7 +48,10 @@ BuildRequires: guile22-devel
 %{?!_without_check:%{?!_disable_check:BuildRequires: socat}}
 %{?!_without_check:%{?!_disable_check:BuildRequires: ppp}}
 %{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts}}
+%ifnarch e2k
+# no libseccomp on e2k for now
 %{?!_without_check:%{?!_disable_check:BuildRequires: libseccomp-devel}}
+%endif
 
 %description
 GnuTLS is a project that aims to develop a library which provides a
@@ -199,6 +205,8 @@ This package contains the GnuTLS API Reference Manual.
 %prep
 %setup -n gnutls-%version
 %patch1 -p1
+%patch2 -p2
+%patch3 -p2
 touch doc/*.texi
 rm doc/*.info*
 rm aclocal.m4 m4/{libtool,lt*}.m4
@@ -304,6 +312,11 @@ export LD_PRELOAD=libcxa.so.2
 %endif
 
 %changelog
+* Mon Feb 19 2018 Mikhail Efremov <sem@altlinux.org> 3.5.18-alt1
+- Updated to 3.5.18.
+- Fix guile BR on e2k.
+- Disable libseccomp support in tests on e2k.
+
 * Wed Jan 31 2018 Mikhail Efremov <sem@altlinux.org> 3.5.17-alt2
 - Fix privkey-verify-broken test.
 - Use guile20-devel on e2k.
