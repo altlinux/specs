@@ -15,7 +15,7 @@
 %define xdg_name com.github.philip-scott.spice-up
 
 Name: spice-up
-Version: 1.2.1
+Version: 1.3.0
 Release: alt1
 
 Summary: Desktop presentation application
@@ -24,6 +24,7 @@ Group: Office
 
 Url: https://github.com/Philip-Scott/Spice-up
 Source: https://github.com/Philip-Scott/Spice-up/archive/%version.tar.gz#/Spice-up-%version.tar.gz
+
 BuildRequires: cmake gcc-c++
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib-devel
@@ -72,6 +73,9 @@ ln -s %xdg_name %buildroot%_bindir/%name
 
 
 %changelog
+* Mon Feb 19 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Sun Jan 07 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - 1.2.1
 
