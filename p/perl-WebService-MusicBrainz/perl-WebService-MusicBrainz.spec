@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Module/Build.pm) perl-podlators
@@ -10,14 +11,14 @@ BuildRequires: perl(Module/Build.pm) perl-podlators
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    1.0.4
+Release:    alt1
 
 Summary:    No summary found
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/WebService/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/B/BF/BFAIST/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(Mojolicious.pm)
@@ -29,7 +30,7 @@ This module will act as a factory using static methods to return specific
 web service objects;
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -44,10 +45,13 @@ make test
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml 
+%doc Changes META.json META.yml README.md
 %perl_vendor_privlib/*
 
 %changelog
+* Mon Feb 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1
+- automated CPAN update
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_1
 - update by mgaimport
 
