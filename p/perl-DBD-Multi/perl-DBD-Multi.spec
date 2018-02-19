@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-%m_distro
-Version: 1.01
+Version: 1.02
 Release: alt1
 
 Summary: Manage Multiple Data Sources with Failover and Load Balancing
@@ -30,7 +30,7 @@ BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/D/DW/DWRIGHT/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon May 26 2008
-BuildRequires: perl-Class-Accessor perl-DBD-File perl-DBD-SQLite perl-Module-Install perl-Sys-SigAction perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-Class-Accessor perl-DBD-File perl-DBD-SQLite perl-Module-Install perl-Sys-SigAction perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage perl(Test/TCP.pm)
 
 %description
 This software manages multiple database connections for failovers and also simple load balancing. It acts as a proxy between your code and your database connections, transparently choosing a connection for each query, based on your preferences and present availability of the DB server.
@@ -55,6 +55,9 @@ The interface is nearly the same as other DBI drivers with one notable exception
 %exclude %perl_vendor_archlib
 
 %changelog
+* Mon Feb 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
+- automated CPAN update
+
 * Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1
 - automated CPAN update
 
