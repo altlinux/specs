@@ -1,20 +1,19 @@
-%define module_version 0.024
+%define _unpackaged_files_terminate_build 1
 %define module_name Importer
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(base.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.024
+Version: 0.025
 Release: alt1
 Summary: Alternative but compatible interface to modules that export symbols.
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/E/EX/EXODIST/Importer-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/EX/EXODIST/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -25,7 +24,7 @@ the Exporter manpages specification. The exporter modules themselves do not need
 or inherit from the the Exporter manpage module, they just need to set `@EXPORT' and/or
 other variables.
 %prep
-%setup -q -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -38,6 +37,9 @@ other variables.
 %perl_vendor_privlib/I*
 
 %changelog
+* Mon Feb 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.025-alt1
+- automated CPAN update
+
 * Mon Oct 31 2016 Igor Vlasenko <viy@altlinux.ru> 0.024-alt1
 - automated CPAN update
 
