@@ -9,14 +9,17 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 
 Summary: Performance analysis tools for Linux
 License: GPLv2
 Group: Development/Tools
 URL: http://www.kernel.org/
 
-BuildRequires: libaudit-devel elfutils-devel libnuma-devel perl-devel libslang2-devel libunwind-devel bison flex binutils-devel asciidoc xmlto libssl-devel liblzma-devel libunwind-devel
+BuildRequires: libaudit-devel elfutils-devel perl-devel libslang2-devel libunwind-devel bison flex binutils-devel asciidoc xmlto libssl-devel liblzma-devel libunwind-devel
+%ifnarch %arm
+BuildRequires: libnuma-devel
+%endif
 BuildRequires: rpm-build-kernel
 BuildRequires: %kernel_source = 1.0.0
 BuildRequires: python-devel
@@ -110,7 +113,6 @@ is running on Windows Host with HyperV.
 Summary: HyperV key value pair (KVP) daemon
 Group: Emulators
 Provides: hv_kvp_daemon
-ExclusiveArch: %ix86 x86_64
 
 %description -n hypervkvpd
 Hypervkvpd is an implementation of HyperV key value pair (KVP)
@@ -124,7 +126,6 @@ IP injection functionality on the Guest.
 Summary: HyperV VSS daemon
 Group: Emulators
 Provides: hv_vss_daemon
-ExclusiveArch: %ix86 x86_64
 
 %description -n hypervvssd
 Hypervvssd is an implementation of HyperV VSS functionality
@@ -138,7 +139,6 @@ on the Linux Guest.
 Summary: HyperV host to guest copy functionality daemon
 Group: Emulators
 Provides: hv_fcopy_daemon
-ExclusiveArch: %ix86 x86_64
 
 %description -n hypervfcopyd
 Hypervfcopyd is an mplementation of host to guest copy.
@@ -362,10 +362,9 @@ fi
 %files -n cpupower -f cpupower.lang
 %_bindir/cpupower
 %_man1dir/cpupower*
+%ifarch %ix86 x86_64
 %_man8dir/turbostat*
 %_man8dir/x86_energy_perf_policy*
-
-%ifarch %ix86 x86_64
 %_bindir/centrino-decode
 %_bindir/powernow-k8-decode
 %_bindir/x86_energy_perf_policy
@@ -410,6 +409,9 @@ fi
 %endif
 
 %changelog
+* Mon Feb 19 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.15-alt2
+- fixed spec for non-x86 arches
+
 * Wed Feb 07 2018 Alexey Shabalin <shaba@altlinux.ru> 4.15-alt1
 - Update for kernel-4.15
 - absorb cpupower package
