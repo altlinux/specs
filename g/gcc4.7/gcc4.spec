@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.7.2
-Release: alt10
+Release: alt12
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -23,12 +23,10 @@ Url: http://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define priority 472
 %define snapshot 20121109
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
-%define os_release %distribution, build %version-%release
 %define psuffix -%gcc_branch
 %define _libexecdir /usr/libexec
 
@@ -45,7 +43,6 @@ Url: http://gcc.gnu.org/
 
 %define gcc_gdb_auto_load %_datadir/gdb/auto-load/%_libdir/
 %define gcc_doc_dir %_docdir/gcc%psuffix
-%define alternatives_deps alternatives >= 0:0.4
 # due to --build-id support
 %define binutils_deps binutils >= 1:2.18
 
@@ -72,13 +69,14 @@ Url: http://gcc.gnu.org/
 # Build parameters.
 %ifdef _cross_platform
 
+%def_without java
+
 %def_enable compat
 %def_disable multilib
 %def_with cxx
 %def_without fortran
 %def_without objc
 %def_disable objc_gc
-%def_without java
 %def_without ada
 %def_without go
 %define REQ >=
@@ -95,7 +93,6 @@ Url: http://gcc.gnu.org/
 %def_without objc
 %endif
 %def_disable objc_gc
-%def_with java
 # If you don't have already a usable gcc-java and libgcj for your arch,
 # do on some arch which has it rpmbuild -bc --with java_tar gcc4.spec
 # which creates libjava-classes-%version-%release.tar
@@ -204,21 +201,22 @@ Patch717: gcc45-alt-autoconf-ver.patch
 Patch718: gcc47-alt-libgo-weak.patch
 Patch719: gcc47-fix-build-with-gcc5.patch
 Patch720: gcc47-fix-build-with-makeinfo5.patch
+Patch729: alt-fix-build-with-glibc2.26-ucontext.patch
+Patch732: alt-fix-texi2pod-perl.patch
+Patch734: alt-fix-build-with-texinfo.patch
 
 Patch800: libtool.m4-gcj.patch
 
-Provides: gcc = %version-%release, %_bindir/%gcc_target_platform-gcc, %_bindir/gcc
-
 Obsoletes: egcs gcc3.0 gcc3.1
 Conflicts: glibc-devel < 2.2.6
-PreReq: %alternatives_deps, gcc-common >= 1.4.7
+PreReq: gcc-common >= 1.4.7
 Requires: cpp%gcc_branch = %version-%release
 Requires: libgcov%gcc_branch-devel = %version-%release
 Requires: %binutils_deps, glibc-devel
 %ifndef _cross_platform
 Requires: libgcc1 %REQ %version-%release
 %endif
-BuildPreReq: rpm-build >= 4.0.4-alt39, %alternatives_deps, %binutils_deps
+BuildPreReq: rpm-build >= 4.0.4-alt39, %binutils_deps
 BuildPreReq: coreutils, flex, libmpfr-devel, libmpc-devel, libelf-devel
 BuildPreReq: makeinfo
 # due to manpages
@@ -311,7 +309,6 @@ This package contains GNU Transactional Memory static libraries.
 %package plugin-devel
 Summary: GCC Plugin header files
 Group: Development/Other
-Provides: gcc-plugin-devel = %version-%release
 Provides: libgcc%gcc_branch-plugin-devel = %version
 Obsoletes: libgcc%gcc_branch-plugin-devel
 Requires: %name = %version-%release
@@ -338,7 +335,6 @@ This package contains GCC OpenMP shared support library.
 %package -n libgomp%gcc_branch-devel
 Summary: GCC OpenMP support files
 Group: Development/Other
-Provides: libgomp-devel = %version-%release
 Requires: libgomp1 %REQ %version-%release
 Requires: glibc-devel
 
@@ -348,7 +344,6 @@ This package contains GCC OpenMP headers and library.
 %package -n libgomp%gcc_branch-devel-static
 Summary: GCC OpenMP static support library
 Group: Development/Other
-Provides: libgomp-devel-static = %version-%release
 Requires: libgomp%gcc_branch-devel = %version-%release
 
 %description -n libgomp%gcc_branch-devel-static
@@ -360,7 +355,6 @@ This package contains GCC OpenMP static library.
 %package -n libmudflap0
 Summary: GCC mudflap shared support libraries
 Group: System/Libraries
-Provides: libmudflap = %version
 Provides: libmudflap4.1 = %version
 Provides: libmudflap4.3 = %version
 Provides: libmudflap4.4 = %version
@@ -374,7 +368,6 @@ mudflap support.
 %package -n libmudflap%gcc_branch-devel
 Summary: GCC mudflap support files
 Group: Development/Other
-Provides: libmudflap-devel = %version-%release
 Requires: libmudflap0 %REQ %version-%release
 Requires: glibc-devel
 
@@ -388,7 +381,6 @@ and -lmudflapth.
 %package -n libmudflap%gcc_branch-devel-static
 Summary: GCC mudflap static support libraries
 Group: Development/Other
-Provides: libmudflap-devel-static = %version-%release
 Requires: libmudflap%gcc_branch-devel = %version-%release
 
 %description -n libmudflap%gcc_branch-devel-static
@@ -408,7 +400,6 @@ for __float128 math support and for Fortran REAL*16 support.
 %package -n libquadmath%gcc_branch-devel
 Summary: GCC __float128 support files
 Group: Development/Other
-Provides: libquadmath-devel = %version-%release
 Requires: libquadmath0 %REQ %version-%release
 
 %description -n libquadmath%gcc_branch-devel
@@ -418,7 +409,6 @@ REAL*16 and programs using __float128 math.
 %package -n libquadmath%gcc_branch-devel-static
 Summary: GCC __float128 static support library
 Group: Development/Other
-Provides: libquadmath-devel-static = %version-%release
 Requires: libquadmath%gcc_branch-devel = %version-%release
 
 %description -n libquadmath%gcc_branch-devel-static
@@ -431,9 +421,8 @@ using REAL*16 and programs using __float128 math.
 %package -n cpp%gcc_branch
 Summary: The GNU C-Compatible Compiler Preprocessor
 Group: Development/C
-Provides: cpp = %version-%release, %_bindir/cpp
-Obsoletes: gcc-cpp egcs-cpp cpp cpp3.0 cpp3.1
-PreReq: %alternatives_deps, gcc-common >= 1.4.7
+Obsoletes: gcc-cpp egcs-cpp cpp3.0 cpp3.1
+PreReq: gcc-common >= 1.4.7
 
 %description -n cpp%gcc_branch
 Cpp is the GNU C-Compatible Compiler Preprocessor.
@@ -488,9 +477,8 @@ Library.
 %package -n libstdc++%gcc_branch-devel
 Summary: Header files and libraries for C++ development
 Group: Development/C++
-Provides: libstdc++-devel = %version-%release, %_libdir/libstdc++.so
-Obsoletes: libstdc++-devel libstdc++3.0-devel libstdc++3.1-devel
-PreReq: %alternatives_deps, gcc-c++-common >= 1.4.7
+Obsoletes: libstdc++3.0-devel libstdc++3.1-devel
+PreReq: gcc-c++-common >= 1.4.7
 Requires: libstdc++6 %REQ %version-%release
 Requires: glibc-devel
 
@@ -502,9 +490,8 @@ development.  This includes rewritten implementation of STL.
 %package -n libstdc++%gcc_branch-devel-static
 Summary: Static libraries for C++ development
 Group: Development/C++
-Provides: libstdc++-devel-static = %version-%release, %_libdir/libstdc++.a
-Obsoletes: libstdc++-devel-static libstdc++3.0-devel-static libstdc++3.1-devel-static
-PreReq: %alternatives_deps, gcc-c++-common >= 1.4.7
+Obsoletes: libstdc++3.0-devel-static libstdc++3.1-devel-static
+PreReq: gcc-c++-common >= 1.4.7
 Requires: libstdc++%gcc_branch-devel = %version-%release
 
 %description -n libstdc++%gcc_branch-devel-static
@@ -517,9 +504,8 @@ This package includes static library needed for C++ development.
 %package c++
 Summary: C++ support for gcc
 Group: Development/C++
-Provides: gcc-c++ = %version-%release, %_bindir/%_target_platform-g++, %_bindir/g++
-Obsoletes: egcs-c++ gcc-c++ gcc3.0-c++ gcc3.1-c++
-PreReq: %alternatives_deps, gcc-c++-common >= 1.4.7
+Obsoletes: egcs-c++ gcc3.0-c++ gcc3.1-c++
+PreReq: gcc-c++-common >= 1.4.7
 Requires: %name = %version-%release
 Requires: libstdc++%gcc_branch-devel = %version-%release
 
@@ -539,8 +525,6 @@ in order to explicitly use the GNU C++ compiler version %version.
 %package -n libobjc4
 Summary: Objective-C runtime library
 Group: System/Libraries
-Provides: libobjc = %version
-Obsoletes: libobjc
 Requires: libgcc1 %REQ %version-%release
 
 %description -n libobjc4
@@ -550,8 +534,7 @@ Objective-C dynamically linked programs.
 %package -n libobjc%gcc_branch-devel
 Summary: Header files and library for Objective-C development
 Group: Development/Other
-Provides: libobjc-devel = %version-%release
-PreReq: %alternatives_deps, gcc-common >= 1.4.7
+PreReq: gcc-common >= 1.4.7
 Requires: libobjc4 %REQ %version-%release
 Requires: glibc-devel
 
@@ -563,7 +546,6 @@ Objective-C development.
 %package -n libobjc%gcc_branch-devel-static
 Summary: Static libraries for Objective-C development
 Group: Development/Other
-Provides: libobjc-devel-static = %version-%release
 PreReq: gcc-common >= 1.4.7
 Requires: libobjc%gcc_branch-devel = %version-%release
 
@@ -578,9 +560,8 @@ development.
 %package objc
 Summary: Objective-C support for GCC
 Group: Development/Other
-Provides: gcc-objc = %version-%release
-Obsoletes: gcc-objc gcc3.0-objc gcc3.1-objc
-PreReq: %alternatives_deps, gcc-common >= 1.4.7
+Obsoletes: gcc3.0-objc gcc3.1-objc
+PreReq: gcc-common >= 1.4.7
 Requires: %name = %version-%release
 Requires: libobjc%gcc_branch-devel = %version-%release
 
@@ -592,8 +573,7 @@ object-oriented derivative of the C language.
 %package objc++
 Summary: Objective-C++ support for GCC
 Group: Development/Other
-Provides: gcc-objc++ = %version-%release
-PreReq: %alternatives_deps, gcc-common >= 1.4.7
+PreReq: gcc-common >= 1.4.7
 Requires: %name-objc = %version-%release, %name-c++ = %version-%release
 
 %description objc++
@@ -622,7 +602,6 @@ GNU Fortran dynamically linked programs.
 %package -n libgfortran%gcc_branch-devel
 Summary: Header files and library for GNU Fortran development
 Group: Development/Other
-Provides: libgfortran-devel = %version-%release
 PreReq: gcc-fortran-common >= 1.4.7
 Requires: libgfortran3 %REQ %version-%release
 %ifarch %ix86 x86_64 ia64
@@ -638,7 +617,6 @@ Fortran development.
 %package -n libgfortran%gcc_branch-devel-static
 Summary: Static libraries for GNU Fortran development
 Group: Development/Other
-Provides: libgfortran-devel-static = %version-%release
 PreReq: gcc-fortran-common >= 1.4.7
 Requires: libgfortran%gcc_branch-devel = %version-%release
 
@@ -653,12 +631,8 @@ development.
 %package fortran
 Summary: GNU Fortran support for gcc
 Group: Development/Other
-Provides: gcc-fortran = %version-%release
-Provides: gcc-g77 = %version-%release
-Provides: %_bindir/%_target_platform-gfortran, %_bindir/gfortran
-Provides: %_bindir/%_target_platform-g77, %_bindir/g77
-Obsoletes: gcc-g77 gcc3.0-g77 gcc3.1-g77
-PreReq: %alternatives_deps, gcc-fortran-common >= 1.4.7
+Obsoletes: gcc3.0-g77 gcc3.1-g77
+PreReq: gcc-fortran-common >= 1.4.7
 Requires: %name = %version-%release
 Requires: libgfortran%gcc_branch-devel = %version-%release
 
@@ -760,12 +734,13 @@ The Java(tm) runtime library sources for use in Eclipse.
 ####################################################################
 # Java Compiler
 
+%if_with java
 %package java
 Summary: Java support for gcc
 Group: Development/Java
 Provides: gcc-java = %version-%release, %_bindir/gcj
 Obsoletes: gcc-java gcc3.0-java gcc3.1-java gcj3.1-tools
-PreReq: %alternatives_deps, gcc-java-common >= 1.4.13
+PreReq: gcc-java-common >= 1.4.13
 Requires: %name = %version-%release, libgcj%gcc_branch-devel = %version-%release
 # due to GC requirements:
 # GC Warning: Couldn't read /proc/stat
@@ -782,6 +757,7 @@ If you have multiple versions of the GNU Compiler Collection
 installed on your system, you may want to execute
 gcj%psuffix
 in order to explicitly use the GNU Java compiler version %version.
+%endif
 
 ####################################################################
 # Ada 95 Libraries
@@ -789,7 +765,6 @@ in order to explicitly use the GNU Java compiler version %version.
 %package -n libgnat%gcc_branch
 Summary: Ada 95 runtime libraries
 Group: System/Libraries
-Provides: libgnat = %version-%release
 Requires: libgcc1 %REQ %version-%release
 
 %description -n libgnat%gcc_branch
@@ -803,7 +778,6 @@ Posix 1003.5 Binding (Florist).
 %package -n libgnat%gcc_branch-devel
 Summary: Header files and libraries for Ada 95 development
 Group: Development/Other
-Provides: libgnat-devel = %version-%release
 PreReq: gcc-common >= 1.4.7
 Requires: libgnat%gcc_branch = %version-%release
 
@@ -815,7 +789,6 @@ Ada 95 development.
 %package -n libgnat%gcc_branch-devel-static
 Summary: Static libraries for Ada 95 development
 Group: Development/Other
-Provides: libgnat-devel-static = %version-%release
 PreReq: gcc-common >= 1.4.7
 Requires: libgnat%gcc_branch-devel = %version-%release
 
@@ -829,10 +802,9 @@ package includes the static libraries needed for Ada 95 development.
 %package gnat
 Summary: Ada 95 support for gcc
 Group: Development/Other
-Provides: gcc-gnat = %version-%release, %_bindir/gnat
-Obsoletes: gcc-gnat
-Conflicts: gcc-gnat > %version
-PreReq: %alternatives_deps, gcc-common >= 1.4.7
+Obsoletes: gcc4.6-gnat gcc4.5-gnat gcc4.4-gnat gcc4.3-gnat gcc4.2-gnat gcc4.1-gnat
+PreReq: gcc-common >= 1.4.7
+PreReq: gcc-gnat-common
 Requires: %name = %version-%release, libgnat%gcc_branch-devel = %version-%release
 
 %description gnat
@@ -881,7 +853,7 @@ This package includes the static libraries needed for Go development.
 %package go
 Summary: Go support for GCC
 Group: Development/Other
-PreReq: %alternatives_deps, gcc-go-common >= 1.4.15
+PreReq: gcc-go-common >= 1.4.15
 Requires: %name = %version-%release
 Requires: libgo%gcc_branch-devel = %version-%release
 
@@ -900,7 +872,6 @@ in order to explicitly use the GNU Go compiler version %version.
 Summary: The GNU Compiler Collection native language support files
 Group: Development/C
 BuildArch: noarch
-Provides: gcc-locales = %version-%release
 Requires: %name = %version-%release
 
 %description locales
@@ -914,9 +885,7 @@ the GNU Compiler Collection.
 Summary: GCC documentation
 Group: Development/Other
 BuildArch: noarch
-Provides: gcc-doc = %version-%release
-Obsoletes: gcc-doc gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc gcc4.6-doc
-Conflicts: gcc-doc > %version
+Obsoletes: gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc gcc4.6-doc
 
 %description doc
 This package contains documentation for the GNU Compiler Collection
@@ -1003,6 +972,9 @@ echo '%distribution %version-%release' >gcc/DEV-PHASE
 %patch718 -p1
 %patch719 -p1
 %patch720 -p1
+%patch729 -p1
+%patch732 -p1
+%patch734 -p1
 
 # This testcase does not compile.
 rm libjava/testsuite/libjava.lang/PR35020*
@@ -1127,7 +1099,7 @@ fi
 
 %define _configure_script ../configure
 %define _configure_target --host=%_target_platform --build=%_target_platform --target=%gcc_target_platform
-%remove_optflags %optflags_nocpp %optflags_notraceback
+%remove_optflags -frecord-gcc-switches %optflags_nocpp %optflags_notraceback
 export CC=%__cc \
 	CFLAGS="%optflags" \
 	CXXFLAGS="%optflags" \
@@ -1495,57 +1467,9 @@ popd
 %find_lang --append --output gcc%psuffix.lang cpplib%psuffix
 %add_findprov_lib_path %_libdir/gcj%psuffix
 
-#install alternatives stuff
-install -d %buildroot%_altdir
-cat >%buildroot%_altdir/cpp%gcc_branch <<EOF
-%_bindir/%gcc_target_platform-cpp	%_bindir/%gcc_target_platform-cpp%psuffix	%priority
-%_man1dir/cpp.1.xz	%_man1dir/cpp%psuffix.1.xz	%_bindir/%gcc_target_platform-cpp%psuffix
-EOF
-
-cat >%buildroot%_altdir/%name <<EOF
-%_bindir/%gcc_target_platform-gcc	%_bindir/%gcc_target_platform-gcc%psuffix	%priority
-%_bindir/%gcc_target_platform-gcov	%_bindir/%gcc_target_platform-gcov%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
-%_man1dir/gcc.1.xz	%_man1dir/gcc%psuffix.1.xz	%_bindir/%gcc_target_platform-gcc%psuffix
-%_man1dir/gcov.1.xz	%_man1dir/gcov%psuffix.1.xz	%_bindir/%gcc_target_platform-gcc%psuffix
-EOF
-
-%if_with cxx
-cat >%buildroot%_altdir/c++%gcc_branch <<EOF
-%_bindir/%gcc_target_platform-g++	%_bindir/%gcc_target_platform-g++%psuffix	%priority
-%_man1dir/g++.1.xz	%_man1dir/g++%psuffix.1.xz	%_bindir/%gcc_target_platform-g++%psuffix
-EOF
-%endif #with_cxx
-
-%if_with fortran
-cat >%buildroot%_altdir/gfortran%gcc_branch <<EOF
-%_bindir/%gcc_target_platform-gfortran	%_bindir/%gcc_target_platform-gfortran%psuffix	%priority
-%_man1dir/gfortran.1.xz	%_man1dir/gfortran%psuffix.1.xz	%_bindir/%gcc_target_platform-gfortran%psuffix
-EOF
-%endif #with_fortran
-
-%if_with java
-cat >%buildroot%_altdir/java%gcc_branch <<EOF
-%_bindir/%gcc_target_platform-gcj	%_bindir/%gcc_target_platform-gcj%psuffix	%priority
-$(for i in gappletviewer gcj-dbtool gcjh gij gjar gjarsigner gjavah gkeytool gorbd grmic grmid grmiregistry gserialver gtnameserv jcf-dump jv-convert; do
-	echo "%_bindir/%gcc_target_platform-$i	%_bindir/%gcc_target_platform-$i%psuffix	%_bindir/%gcc_target_platform-gcj%psuffix"
-done)
-$(for i in gcj gappletviewer gcj-dbtool gcjh gij gjar gjarsigner gjavah gkeytool gorbd grmic grmid grmiregistry gserialver gtnameserv jcf-dump jv-convert; do
-	echo "%_man1dir/$i.1.xz	%_man1dir/$i%psuffix.1.xz	%_bindir/%gcc_target_platform-gcj%psuffix"
-done)
-EOF
-%endif #with_java
-
-%if_with go
-cat >%buildroot%_altdir/gccgo%gcc_branch <<EOF
-%_bindir/%gcc_target_platform-gccgo	%_bindir/%gcc_target_platform-gccgo%psuffix	%priority
-%_man1dir/gccgo.1.xz	%_man1dir/gccgo%psuffix.1.xz	%_bindir/%gcc_target_platform-gccgo%psuffix
-EOF
-%endif #with_go
-
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
 %config %_sysconfdir/buildreqs/files/ignore.d/%name
-%_altdir/%name
 %dir %gcc_doc_dir
 %gcc_doc_dir/gcc
 %gcc_doc_dir/NEWS-*.txt
@@ -1708,7 +1632,6 @@ EOF
 
 %files -n cpp%gcc_branch
 %config %_sysconfdir/buildreqs/packages/substitute.d/cpp%gcc_branch
-%_altdir/cpp%gcc_branch
 %_bindir/cpp%psuffix
 %_bindir/%gcc_target_platform-cpp%psuffix
 %_man1dir/cpp%psuffix.*
@@ -1749,7 +1672,6 @@ EOF
 
 %files c++
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-c++
-%_altdir/c++%gcc_branch
 %dir %gcc_doc_dir
 %gcc_doc_dir/g++
 %_bindir/g++%psuffix
@@ -1819,7 +1741,6 @@ EOF
 
 %files fortran
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-fortran
-%_altdir/gfortran%gcc_branch
 %dir %gcc_doc_dir
 %gcc_doc_dir/gfortran
 %_bindir/gfortran%psuffix
@@ -1882,7 +1803,6 @@ EOF
 
 %files java
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-java
-%_altdir/java%gcc_branch
 %dir %gcc_doc_dir
 %gcc_doc_dir/java
 %_bindir/*gappletviewer%psuffix
@@ -1957,7 +1877,6 @@ EOF
 %if_with go
 %files go
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-go
-%_altdir/gccgo%gcc_branch
 %_bindir/gccgo%psuffix
 %_bindir/%gcc_target_platform-gccgo%psuffix
 %_man1dir/gccgo%psuffix.*
@@ -2009,6 +1928,14 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Mon Feb 19 2018 Dmitry V. Levin <ldv@altlinux.org> 4.7.2-alt12
+- %name-fortran: do not obsolete gcc-g77.
+
+* Thu Jan 11 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.7.2-alt11
+- Fixed build with glibc 2.26, gcc >= 6, and texinfo 6.5.
+- Disabled java support.
+- Dropped alternatives.
+
 * Mon Feb 01 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.7.2-alt10
 - Fixed build with:
   + gcc5;
