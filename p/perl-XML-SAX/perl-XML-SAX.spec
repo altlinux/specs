@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist XML-SAX
 Name: perl-%dist
-Version: 0.99
-Release: alt2
+Version: 1.00
+Release: alt1
 
 Summary: Simple API for XML
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/G/GR/GRANTM/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -26,7 +27,7 @@ and APIs required for implementing SAX drivers, along with a factory
 class for returning any SAX parser installed on the user's system.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 # disable ParserDetails.ini update
 sed -i- '/^sub MY::install/s/MY/notMY/' Makefile.PL
@@ -53,6 +54,9 @@ EOF
 %config	%perl_vendor_privlib/XML/SAX/ParserDetails.ini
 
 %changelog
+* Mon Feb 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
+- automated CPAN update
+
 * Mon Nov 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.99-alt2
 - returned XML/SAX/PurePerl* (required by other modules)
 
