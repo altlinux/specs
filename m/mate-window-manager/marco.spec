@@ -1,6 +1,6 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize imake libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXt-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(pangoxft) pkgconfig(xcomposite) pkgconfig(xcursor) pkgconfig(xrender) xorg-cf-files
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize imake libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXt-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(xcomposite) pkgconfig(xcursor) pkgconfig(xrender) xorg-cf-files
 # END SourceDeps(oneline)
 BuildRequires: libcanberra-gtk2-devel
 %define _libexecdir %_prefix/libexec
@@ -9,12 +9,12 @@ BuildRequires: libcanberra-gtk2-devel
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name marco
-%define version 1.19.1
+%define version 1.20.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.19
+%global branch 1.20
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 62a708d461e08275d6b85985f5fa13fa8fbc85f7}
@@ -25,7 +25,7 @@ BuildRequires: libcanberra-gtk2-devel
 %{!?rel_build:%global git_tar %{oldname}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-window-manager
-Version:       %{branch}.1
+Version:       %{branch}.0
 %if 0%{?rel_build}
 Release:       alt1_1
 %else
@@ -94,7 +94,13 @@ Development files for marco
 
 
 %prep
-%setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
+%if 0%{?rel_build}
+%setup -n %{oldname}-%{version} -q
+
+%else
+%setup -q -n %{oldname}-%{commit}
+
+%endif
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -167,6 +173,9 @@ desktop-file-install                                \
 
 
 %changelog
+* Wed Feb 21 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Wed Sep 13 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.1-alt1_1
 - new fc release
 

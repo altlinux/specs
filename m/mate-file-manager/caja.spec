@@ -7,12 +7,12 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name caja
-%define version 1.19.2
+%define version 1.20.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.19
+%global branch 1.20
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit ee0a62c8759040d84055425954de1f860bac8652}
@@ -24,11 +24,11 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 
 Name:        mate-file-manager
 Summary:     File manager for MATE
-Version:     %{branch}.2
+Version:     %{branch}.0
 %if 0%{?rel_build}
-Release:     alt1_1
+Release:     alt1_3
 %else
-Release:     alt1_1
+Release:     alt1_3
 %endif
 License:     GPLv2+ and LGPLv2+
 Group:       Graphical desktop/MATE
@@ -41,8 +41,8 @@ URL:         http://mate-desktop.org
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
 
 Patch1:      caja_add-xfce-to-desktop-file.patch
-# drop backgrounds
-Patch2:      caja_0001-do-not-show-property-browser-in-menu.patch
+# https://github.com/mate-desktop/caja/pull/917
+Patch2:      caja_0001-fix-backgrounds-and-emblems-dialog-content-rendering.patch
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
@@ -111,14 +111,19 @@ for developing caja extensions.
 
 
 %prep
-%setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
+%if 0%{?rel_build}
+%setup -n %{oldname}-%{version} -q
+%patch1 -p1
+%patch2 -p1
+%else
+%setup -q -n %{oldname}-%{commit}
+%patch1 -p1
+%patch2 -p1
+%endif
 
 # disable startup notification
 sed -i s/StartupNotify=true/StartupNotify=false/g data/caja-computer.desktop.in.in
 sed -i s/StartupNotify=true/StartupNotify=false/g data/caja-home.desktop.in.in
-
-%patch1 -p1 -b .add-xfce-to-desktop-file
-#%patch2 -p1 -b .0001
 
 %if 0%{?rel_build}
 %patch33 -p1
@@ -204,6 +209,9 @@ EOF
 
 
 %changelog
+* Tue Feb 20 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_3
+- new fc release
+
 * Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.2-alt1_1
 - new fc release
 

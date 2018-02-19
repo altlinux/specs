@@ -4,20 +4,19 @@ Group: Development/Tools
 %define _localstatedir %{_var}
 Name:           mate-common
 Summary:        mate common build files
-Version:        1.19.0
+Version:        1.20.0
 Release:        alt1_1
 License:        GPLv3+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.19/mate-common-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.20/mate-common-%{version}.tar.xz
 BuildArch:      noarch
-BuildRequires:  automake-common autoconf-common
-Requires:       automake-common 
-Requires:       autoconf-common 
-Requires:       gettext gettext-tools 
+BuildRequires:  automake autoconf
+Requires:       automake 
+Requires:       autoconf 
+Requires:       gettext 
 Requires:       intltool 
-Requires:       libtool-common 
-Requires:       libgio 
-Requires:       gtk-doc gtk-doc-mkpdf 
+Requires:       libtool 
+Requires:       gtk-doc 
 Requires:       itstool 
 Requires:       yelp-tools
 Source44: import.info
@@ -27,6 +26,7 @@ binaries for building all MATE desktop sub components
 
 %prep
 %setup -q
+
 
 %build
 %configure
@@ -45,6 +45,9 @@ binaries for building all MATE desktop sub components
 %{_mandir}/man1/*
 
 %changelog
+* Mon Feb 19 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
 - new fc release
 

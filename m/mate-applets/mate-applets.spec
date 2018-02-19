@@ -1,7 +1,6 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/glib-gettextize imake libX11-devel libXt-devel libapm-devel libgio-devel pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-3.0) python-devel xorg-cf-files xorg-kbproto-devel
+BuildRequires: /usr/bin/glib-gettextize imake libX11-devel libXt-devel libapm-devel libgio-devel pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-3.0) xorg-cf-files xorg-kbproto-devel
 # END SourceDeps(oneline)
 BuildRequires: libcpupower-devel
 BuildRequires: xvfb-run
@@ -10,12 +9,12 @@ BuildRequires: xvfb-run
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-applets
-%define version 1.19.2
+%define version 1.20.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.19
+%global branch 1.20
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit c3b48ea39ab358b45048e300deafaa3f569748ad}
@@ -26,7 +25,7 @@ BuildRequires: xvfb-run
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-applets
-Version:        %{branch}.2
+Version:        %{branch}.0
 %if 0%{?rel_build}
 Release:        alt1_1
 %else
@@ -55,7 +54,6 @@ BuildRequires: mate-settings-daemon-devel
 BuildRequires: mate-notification-daemon
 BuildRequires: mate-panel-devel
 BuildRequires: libpolkit-devel libpolkit-gir-devel
-BuildRequires: python-module-pygobject3-common-devel
 BuildRequires: libstartup-notification-devel
 Buildrequires: libupower-devel libupower-gir-devel
 Buildrequires: libgtksourceview3-devel libgtksourceview3-gir-devel
@@ -77,7 +75,13 @@ Source45: 01-cpufreq.pkla
 MATE Desktop panel applets
 
 %prep
-%setup -q%{!?rel_build:n %{name}-%{commit}}
+%if 0%{?rel_build}
+%setup -q
+
+%else
+%setup -q -n %{name}-%{commit}
+
+%endif
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -104,22 +108,14 @@ NOCONFIGURE=1 ./autogen.sh
 %install
 %{makeinstall_std}
 
-#make python script executable
-#http://forums.fedoraforum.org/showthread.php?t=284962
-chmod a+x %{buildroot}%{python_sitelibdir_noarch}/mate_invest/chart.py
-
 %find_lang %{name} --with-gnome --all-name
 # alt 01-cpufreq.pkla
 install -pD -m 644 %{SOURCE45} %buildroot%_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
 
-%post
-/bin/touch --no-create %{_datadir}/mate-applets/icons/hicolor &> /dev/null || :
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
-%{_bindir}/mate-invest-chart
 %{_bindir}/mate-cpufreq-selector
-%{python_sitelibdir_noarch}/mate_invest
 %{_libexecdir}/mate-applets
 %config(noreplace) %{_sysconfdir}/sound/events/mate-battstat_applet.soundlist
 %config(noreplace) %{_sysconfdir}/dbus-1/system.d/org.mate.CPUFreqSelector.conf
@@ -134,7 +130,6 @@ install -pD -m 644 %{SOURCE45} %buildroot%_sysconfdir/polkit-1/localauthority/50
 %{_datadir}/dbus-1/services/org.mate.panel.applet.GeyesAppletFactory.service
 %{_datadir}/dbus-1/services/org.mate.panel.applet.StickyNotesAppletFactory.service
 %{_datadir}/dbus-1/services/org.mate.panel.applet.TrashAppletFactory.service
-%{_datadir}/dbus-1/services/org.mate.panel.applet.InvestAppletFactory.service
 %{_datadir}/dbus-1/services/org.mate.panel.applet.MateWeatherAppletFactory.service
 %{_datadir}/dbus-1/services/org.mate.panel.applet.MultiLoadAppletFactory.service
 %{_datadir}/dbus-1/services/org.mate.panel.applet.NetspeedAppletFactory.service
@@ -173,6 +168,9 @@ install -pD -m 644 %{SOURCE45} %buildroot%_sysconfdir/polkit-1/localauthority/50
 
 
 %changelog
+* Wed Feb 21 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.2-alt1_1
 - new fc release
 

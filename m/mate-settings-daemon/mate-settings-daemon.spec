@@ -1,19 +1,20 @@
 Group: System/Servers
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize gcc-c++ imake libXt-devel libgio-devel pkgconfig(dbus-1) pkgconfig(fontconfig) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(libxklavier) pkgconfig(polkit-gobject-1) pkgconfig(xi) xorg-cf-files
+BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize gcc-c++ imake libXt-devel libgio-devel pkgconfig(dbus-1) pkgconfig(fontconfig) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(libxklavier) pkgconfig(xi) xorg-cf-files
 # END SourceDeps(oneline)
 BuildRequires: libXext-devel libXi-devel
 %define _libexecdir %_prefix/libexec
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-settings-daemon
-%define version 1.19.0
+%define version 1.20.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.19
+%global branch 1.20
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 83fe1f587f5c6328b10a899a880275d79bf88921}
@@ -41,7 +42,8 @@ URL:            http://mate-desktop.org
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
 # fix rhbz (#1140329)
-Patch0:         mate-settings-daemon_fix-xrdb-plugin-for-rhel.patch
+%if 0%{?rhel}
+%endif
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  libdconf-devel
@@ -55,7 +57,7 @@ BuildRequires:  libSM-devel
 BuildRequires:  libXxf86misc-devel
 BuildRequires:  mate-common
 BuildRequires:  mate-desktop-devel
-BuildRequires:  mate-polkit-devel
+BuildRequires:  libpolkit-devel libpolkit-gir-devel
 BuildRequires:  libnss-devel libnss-devel-static
 BuildRequires:  libpulseaudio-devel
 
@@ -80,10 +82,10 @@ various parameters of a MATE session and the applications that run
 under it.
 
 %prep
-%setup -q%{!?rel_build:n %{name}-%{commit}}
-
-%if 0%{?rhel}
-%patch0 -p1 -b .xrdb
+%if 0%{?rel_build}
+%setup -q
+%else
+%setup -q -n %{name}-%{commit}
 %endif
 
 %if 0%{?rel_build}
@@ -103,7 +105,12 @@ NOCONFIGURE=1 ./autogen.sh
    --with-x                            \
    --with-nssdb
 
+# fix build for f28
+%if 0%{?fedora} && 0%{?fedora} >= 28
+%make_build V=1 LDFLAGS="`echo "$RPM_LD_FLAGS" | sed -e 's/-Wl,-z,defs//'`"
+%else
 %make_build V=1
+%endif
 
 %install
 %{makeinstall_std}
@@ -144,6 +151,9 @@ desktop-file-validate %{buildroot}%{_sysconfdir}/xdg/autostart/mate-settings-dae
 
 
 %changelog
+* Wed Feb 21 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
 - new fc release
 

@@ -1,21 +1,21 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xsltproc libXext-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(ice) pkgconfig(x11) pkgconfig(xau) pkgconfig(xrender)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xsltproc libXext-devel libgio-devel libwrap-devel pkgconfig(glib-2.0) pkgconfig(ice) pkgconfig(x11) pkgconfig(xau) pkgconfig(xrender)
 # END SourceDeps(oneline)
 BuildRequires(pre): browser-plugins-npapi-devel
 %define _libexecdir %_prefix/libexec
 %define oldname mate-session-manager
-%define fedora 25
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-session-manager
-%define version 1.19.0
+%define version 1.20.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.19
+%global branch 1.20
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit af58c2ecd98fe68360635f0e566b81e4b8c7be4d}
@@ -30,9 +30,9 @@ Summary:        MATE Desktop session manager
 License:        GPLv2+
 Version:        %{branch}.0
 %if 0%{?rel_build}
-Release:        alt1_3
+Release:        alt1_1
 %else
-Release:        alt1_3
+Release:        alt1_1
 %endif
 URL:            http://mate-desktop.org
 
@@ -52,7 +52,6 @@ BuildRequires:  libsystemd-devel libudev-devel
 BuildRequires:  xmlto
 BuildRequires:  libXtst-devel
 BuildRequires:  xorg-xtrans-devel
-BuildRequires:  libwrap-devel
 
 # Needed for mate-settings-daemon
 Requires: mate-control-center
@@ -100,10 +99,8 @@ NOCONFIGURE=1 ./autogen.sh
     --enable-ipv6             \
     --with-default-wm=marco   \
     --with-systemd            \
-    --disable-upower          \
     --enable-docbook-docs     \
-    --disable-schemas-compile \
-    --with-x
+    --disable-schemas-compile
 
 %make_build V=1
 
@@ -161,6 +158,7 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 sed -i -e s,Exec=mate-session,Exec=%_bindir/startmate, %buildroot%_datadir/xsessions/mate.desktop
 
 
+
 %files -f %{oldname}.lang
 %doc AUTHORS COPYING README
 %{_mandir}/man1/*
@@ -188,6 +186,9 @@ sed -i -e s,Exec=mate-session,Exec=%_bindir/startmate, %buildroot%_datadir/xsess
 
 
 %changelog
+* Tue Feb 20 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_3
 - new fc release
 

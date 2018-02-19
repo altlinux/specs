@@ -1,18 +1,18 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize imake libXt-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) xorg-cf-files
+BuildRequires: /usr/bin/glib-gettextize imake libXt-devel libgio-devel libgtk+3-gir-devel libxklavier-gir-devel pkgconfig(gdk-3.0) pkgconfig(gdk-x11-3.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-3.0) xorg-cf-files
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name libmatekbd
-%define version 1.19.0
+%define version 1.20.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.19
+%global branch 1.20
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 5e8b69cf7c6d031cbb0b0f01a7518e72146c0af1}
@@ -40,10 +40,9 @@ URL:            http://mate-desktop.org
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
 BuildRequires:  desktop-file-utils
-BuildRequires:  gsettings-desktop-schemas-devel gsettings-desktop-schemas-gir-devel
-BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:  gsettings-desktop-schemas-devel
 BuildRequires:  libICE-devel
-BuildRequires:  libxklavier-devel libxklavier-gir-devel
+BuildRequires:  libxklavier-devel
 BuildRequires:  mate-common
 BuildRequires:  gobject-introspection-devel
 Source44: import.info
@@ -61,7 +60,13 @@ Requires: %{name} = %{version}-%{release}
 Development libraries for libmatekbd
 
 %prep
-%setup -q%{!?rel_build:n %{name}-%{commit}}
+%if 0%{?rel_build}
+%setup -q
+
+%else
+%setup -q -n %{name}-%{commit}
+
+%endif
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -109,6 +114,9 @@ find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 
 
 %changelog
+* Mon Feb 19 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Wed Sep 13 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
 - new fc release
 

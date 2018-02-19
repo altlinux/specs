@@ -7,12 +7,12 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(glib-2.0) p
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name libmatemixer
-%define version 1.19.0
+%define version 1.20.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.19
+%global branch 1.20
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit ee0a62c8759040d84055425954de1f860bac8652}
@@ -59,7 +59,13 @@ Requires: %{name} = %{version}-%{release}
 Development libraries for libmatemixer
 
 %prep
-%setup -q%{!?rel_build:n %{name}-%{commit}}
+%if 0%{?rel_build}
+%setup -q
+
+%else
+%setup -q -n %{name}-%{commit}
+
+%endif
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -103,6 +109,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Feb 20 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Wed Oct 25 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
 - new fc release
 

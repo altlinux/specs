@@ -3,17 +3,17 @@ Group: Graphical desktop/MATE
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel pkgconfig(gdk-pixbuf-2.0) pkgconfig(glib-2.0) pkgconfig(x11) pkgconfig(xrandr)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
-%define fedora 25
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-desktop
-%define version 1.19.1
+%define version 1.20.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.19
+%global branch 1.20
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit a6a0a5879533b0915901ab69703eaf327bbca846 }
@@ -26,7 +26,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/g
 Summary:        Shared code for mate-panel, mate-session, mate-file-manager, etc
 Name:           mate-desktop
 License:        GPLv2+ and LGPLv2+ and MIT
-Version:        %{branch}.1
+Version:        %{branch}.0
 %if 0%{?rel_build}
 Release:        alt1_1
 %else
@@ -41,11 +41,11 @@ URL:            http://mate-desktop.org
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
 # fedora specific settings
-Source2:        mate-fedora-f25.gschema.override
-Source3:        mate-fedora-f26.gschema.override
-Source4:        mate-fedora-f27.gschema.override
-Source5:        mate-rhel.gschema.override
-Source6:        mate-mimeapps.list
+Source1:        mate-fedora-f26.gschema.override
+Source2:        mate-fedora-f27.gschema.override
+Source3:        mate-fedora-f28.gschema.override
+Source4:        mate-rhel.gschema.override
+Source5:        mate-mimeapps.list
 
 BuildRequires:  libdconf-devel
 BuildRequires:  desktop-file-utils
@@ -64,12 +64,9 @@ Requires: mate-control-center-filesystem
 Requires: mate-panel
 Requires: mate-notification-daemon
 Requires: mate-user-guide
-%if 0%{?fedora} && 0%{?fedora} == 27
-# temporary
-Requires: f27-backgrounds-mate
+%if 0%{?fedora} && 0%{?fedora} >= 27
 %endif
 %if 0%{?fedora} && 0%{?fedora} == 26
-# temporary
 %endif
 
 %if 0%{?fedora}
@@ -147,7 +144,13 @@ libmatedesktop.
 
 
 %prep
-%setup -q%{!?rel_build:n %{name}-%{commit}}
+%if 0%{?rel_build}
+%setup -q
+
+%else
+%setup -q -n %{name}-%{commit}
+
+%endif
 
 %if 0%{?rel_build}
 # for releases
@@ -188,24 +191,24 @@ desktop-file-install                                         \
         --dir=%{buildroot}%{_datadir}/applications           \
 %{buildroot}%{_datadir}/applications/mate-color-select.desktop
 
-%if 0%{?fedora} >= 25
-#install -D -m 0644 %SOURCE2 %{buildroot}%{_datadir}/glib-2.0/schemas/10_mate-fedora.gschema.override
-%endif
-
 %if 0%{?fedora} >= 26
-#install -D -m 0644 %SOURCE3 %{buildroot}%{_datadir}/glib-2.0/schemas/10_mate-fedora.gschema.override
+#install -D -m 0644 %SOURCE1 %{buildroot}%{_datadir}/glib-2.0/schemas/10_mate-fedora.gschema.override
 %endif
 
 %if 0%{?fedora} >= 27
-#install -D -m 0644 %SOURCE4 %{buildroot}%{_datadir}/glib-2.0/schemas/10_mate-fedora.gschema.override
+#install -D -m 0644 %SOURCE2 %{buildroot}%{_datadir}/glib-2.0/schemas/10_mate-fedora.gschema.override
+%endif
+
+%if 0%{?fedora} >= 28
+#install -D -m 0644 %SOURCE3 %{buildroot}%{_datadir}/glib-2.0/schemas/10_mate-fedora.gschema.override
 %endif
 
 %if 0%{?rhel}
-install -D -m 0644 %SOURCE5 %{buildroot}%{_datadir}/glib-2.0/schemas/10_mate-rhel.gschema.override
+install -D -m 0644 %SOURCE4 %{buildroot}%{_datadir}/glib-2.0/schemas/10_mate-rhel.gschema.override
 %endif
 
 mkdir -p %{buildroot}%{_datadir}/applications
-install -m 644 %SOURCE6 %{buildroot}/%{_datadir}/applications/mate-mimeapps.list
+install -m 644 %SOURCE5 %{buildroot}/%{_datadir}/applications/mate-mimeapps.list
 
 %find_lang %{name} --with-gnome --all-name
 
@@ -244,6 +247,9 @@ mkdir -p %buildroot%{_datadir}/mate-about
 
 
 %changelog
+* Mon Feb 19 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.1-alt1_1
 - new fc release
 
