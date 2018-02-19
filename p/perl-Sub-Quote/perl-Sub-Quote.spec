@@ -6,7 +6,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Scalar/Util.pm) perl(Test/Fatal.
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.004000
+Version: 2.005000
 Release: alt1
 Summary: efficient generation of subroutines via string eval
 Group: Development/Perl
@@ -33,6 +33,9 @@ This package provides performant ways to generate subroutines from strings.
 %perl_vendor_privlib/S*
 
 %changelog
+* Mon Feb 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.005000-alt1
+- automated CPAN update
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 2.004000-alt1
 - automated CPAN update
 
