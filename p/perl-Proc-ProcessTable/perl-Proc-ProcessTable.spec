@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Proc-ProcessTable
 Name: perl-%dist
-Version: 0.53
-Release: alt1.1.1.1
+Version: 0.55
+Release: alt1
 
 Summary: Perl extension to access the unix process table
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/J/JW/JWB/Proc-ProcessTable-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/J/JW/JWB/%{dist}-%{version}.tar.gz
 
 # mount /proc in hasher
 BuildRequires: /proc
@@ -21,7 +21,7 @@ BuildRequires: perl-devel
 Perl interface to the unix process table.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,11 +30,14 @@ Perl interface to the unix process table.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README README.aix README.bsdi README.cygwin README.darwin README.dec_osf README.freebsd-kvm README.freebsd-procfs README.hpux README.linux README.netbsd README.openbsd README.solaris README.sunos README.unixware
 %perl_vendor_archlib/Proc
 %perl_vendor_autolib/Proc
 
 %changelog
+* Mon Feb 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1.1.1.1
 - rebuild with new perl 5.26.1
 
