@@ -1,13 +1,13 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(base.pm) perl(overload.pm) perl(strict.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
 %define module_name Email-Address-XS
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.01
-Release: alt1.1
+Version: 1.02
+Release: alt1
 Summary: Parse and format RFC 2822 email addresses and groups
 Group: Development/Perl
 License: perl
@@ -59,6 +59,9 @@ instead of the Email::Address::List module.
 %perl_vendor_autolib/*
 
 %changelog
+* Mon Feb 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1.1
 - rebuild with new perl 5.26.1
 
