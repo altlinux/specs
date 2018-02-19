@@ -6,7 +6,7 @@ BuildRequires: perl(Const/Fast.pm) perl(DateTime.pm) perl(Eval/Closure.pm) perl(
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.26
+Version: 0.27
 Release: alt1
 Summary: Build an optimized subroutine parameter validator once, use it forever
 Group: Development/Perl
@@ -38,6 +38,9 @@ specialized parameter checking subroutine.
 %perl_vendor_privlib/P*
 
 %changelog
+* Mon Feb 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
+- automated CPAN update
+
 * Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - automated CPAN update
 
