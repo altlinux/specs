@@ -1,6 +1,6 @@
 Name: simplescreenrecorder
-Version: 0.3.8
-Release: alt4
+Version: 0.3.9
+Release: alt1
 Summary: Simple Screen Recording with OpenGL capture
 
 Group: Video
@@ -9,27 +9,31 @@ Url: http://www.maartenbaert.be/simplescreenrecorder/
 Obsoletes: simplescreenrecording
 
 Source: %version.tar.gz
-Patch:  alt-desktop-l10n-ru.patch
 
-# Automatically added by buildreq on Mon Oct 06 2014
-# optimized out: fontconfig gnu-config libGL-devel libGLU-devel libX11-devel libXext-devel libXfixes-devel libXi-devel libavcodec-devel libavutil-devel libcloog-isl4 libopencore-amrnb0 libopencore-amrwb0 libqt4-core libqt4-gui libstdc++-devel pkg-config xorg-fixesproto-devel xorg-inputproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: gcc-c++ glibc-devel-static libalsa-devel libavformat-devel libjack-devel libpulseaudio-devel libqt4-devel libswscale-devel
+# Automatically added by buildreq on Tue Feb 20 2018
+# optimized out: cmake-modules fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXau-devel libXcursor-devel libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXtst-devel libXv-devel libavcodec-devel libavutil-devel libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-webkit-devel libssl-devel libstdc++-devel libx265-130 pkg-config python-base python-modules xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: cmake gcc-c++ libalsa-devel libavformat-devel libjack-devel libpulseaudio-devel libswscale-devel phonon-devel
 
 %description
 %summary
 
 %prep
 %setup -n ssr-%version
-%patch -p2
+f="data/simplescreenrecorder.desktop"
+for s in "GenericName=Simple screen recorder" \
+	"GenericName[ru]=Запись видео с экрана" \
+	"Comment[ru]=Программа записи видео с экрана" ; do
+	fgrep -q "${s%%=}" "$f" || echo "$s" >> "$f"
+done
 # XXX waiting for support for channels
-sed -i '/#define SSR_USE_AVFRAME_CHANNELS/s/TEST_AV_VERSION.*/TEST_AV_VERSION(LIBAVCODEC, 57, 0, 57, 0)/' src/Global.h
+##sed -i '/#define SSR_USE_AVFRAME_CHANNELS/s/TEST_AV_VERSION.*/TEST_AV_VERSION(LIBAVCODEC, 57, 0, 57, 0)/' src/Global.h
 
 %build
-%configure
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %files
 %_bindir/*
@@ -38,8 +42,12 @@ sed -i '/#define SSR_USE_AVFRAME_CHANNELS/s/TEST_AV_VERSION.*/TEST_AV_VERSION(LI
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/*.1.*
 %_datadir/%name
+%_datadir/appdata/*
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 0.3.9-alt1
+- Autobuild version bump to 0.3.9
+
 * Mon Nov 20 2017 Andrey Cherepanov <cas@altlinux.org> 0.3.8-alt4
 - Fix menu localization by add missing original GenericName
 
