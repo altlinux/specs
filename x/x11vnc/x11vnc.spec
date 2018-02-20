@@ -1,5 +1,5 @@
 Name: x11vnc
-Version: 0.9.14
+Version: 0.9.15
 Release: alt1
 
 %def_with avahi
@@ -63,6 +63,9 @@ install tkx11vnc %buildroot%_bindir/
 %exclude  %_bindir/Xdummy
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 0.9.15-alt1
+- Autobuild version bump to 0.9.15
+
 * Wed Apr 27 2016 Fr. Br. George <george@altlinux.ru> 0.9.14-alt1
 - Upstream migrated under libNVNC project
 - Autobuild version bump to 0.9.14
