@@ -13,7 +13,7 @@
 
 Name:    apache2
 Version: 2.4.29
-Release: alt1%ubt
+Release: alt2%ubt
 Epoch: 1
 
 License: %asl
@@ -1513,6 +1513,10 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Thu Feb 15 2018 Stanislav Levin <slev@altlinux.org> 1:2.4.29-alt2%ubt
+- Change the default access control directives according to apache 2.4 standard.
+  Mixing old and new directives leads to unexpected results.
+
 * Fri Oct 27 2017 Anton Farygin <rider@altlinux.ru> 1:2.4.29-alt1%ubt
 - new version 2.4.29
 
