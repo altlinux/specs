@@ -2,10 +2,12 @@
 BuildRequires(pre): rpm-macros-suse-compat
 BuildRequires: gcc-c++ libtinfo-devel
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 #
 # spec file for package diskscan
 #
-# Copyright (c) 2016 SUSE LINUX GmbH, Nuernberg, Germany.
+# Copyright (c) 2017 SUSE LINUX GmbH, Nuernberg, Germany.
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -21,8 +23,8 @@ BuildRequires: gcc-c++ libtinfo-devel
 
 
 Name:           diskscan
-Version:        0.19
-Release:        alt1_3.1
+Version:        0.20
+Release:        alt1_1.2
 Summary:        Scan disk for bad or near failure sectors
 License:        GPL-3.0+
 Group:          System/Kernel and hardware
@@ -63,6 +65,9 @@ the disk vendor decision making logic.
 %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Tue Feb 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1_1.2
+- new version
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_3.1
 -new version
 
