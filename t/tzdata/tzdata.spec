@@ -1,6 +1,6 @@
 Name: tzdata
 Version: 2018c
-Release: alt1
+Release: alt2
 
 Summary: Timezone data
 # tzdata itself is Public Domain, but tzupdate is GPLv2+,
@@ -9,14 +9,12 @@ License: GPLv2+
 Group: System/Base
 Url: http://www.iana.org/time-zones
 BuildArch: noarch
+
+%define srcname %name-%version-%release
+%define srcdir %_usrsrc/%name
+
 # git://git.altlinux.org/gears/t/tzdata.git
-Source: %name-%version-%release.tar
-
-%def_with java
-
-%if_with java
-BuildRequires: gcc-java javazic
-%endif #with java
+Source: %srcname.tar
 
 Provides: zoneinfo /usr/sbin/tzupdate
 Obsoletes: zoneinfo
@@ -28,28 +26,20 @@ BuildRequires: hardlink /usr/sbin/zic
 This package contains data files with rules for various timezones around
 the world.
 
-%package java
-Summary: Timezone data for Java
-Group: System/Base
+%package source
+Summary: Timezone data source
+Group: Development/Other
 Requires: %name = %version-%release
 
-%description java
-This package contains timezone information for use by Java runtimes.
+%description source
+This package contains timezone data source for use by tz compilers.
 
 %prep
-%setup -n %name-%version-%release
+%setup -n %srcname
 xz -9k NEWS
 
 %build
 make CFLAGS='%optflags'
-
-%if_with java
-gij -jar %_datadir/java/javazic.jar -V %version -d zoneinfo/javazi \
-  africa antarctica asia australasia europe northamerica pacificnew \
-  southamerica backward etcetera systemv \
-  %_datadir/javazic/tzdata_jdk/gmt \
-  %_datadir/javazic/tzdata_jdk/jdk11_backward
-%endif #with java
 
 %install
 %make_install install_default DESTDIR=%buildroot TZDATA_TEXT=
@@ -58,11 +48,12 @@ rm %buildroot%_datadir/zoneinfo-posix
 mkdir %buildroot%_datadir/zoneinfo/posix
 cp -al %buildroot%_datadir/zoneinfo/[A-Z]* %buildroot%_datadir/zoneinfo/posix/
 
-%if_with java
-cp -a zoneinfo/javazi %buildroot%_datadir/
-%endif #with java
-
 install -pDm755 tzupdate %buildroot%_sbindir/tzupdate
+
+mkdir -p %buildroot%_usrsrc
+tar -xf %SOURCE0 -C %buildroot%_usrsrc
+mv %buildroot%_usrsrc/%srcname %buildroot%srcdir
+echo "%name%version" >> %buildroot%srcdir/VERSION
 
 # Hardlink identical files together.
 %define __spec_install_custom_post hardlink -vc %buildroot
@@ -77,12 +68,14 @@ make -k check_tables
 %_datadir/zoneinfo
 %doc NEWS.xz README *.html
 
-%if_with java
-%files java
-%_datadir/javazi
-%endif #with java
+%files source
+%srcdir/
 
 %changelog
+* Tue Feb 20 2018 Dmitry V. Levin <ldv@altlinux.org> 2018c-alt2
+- Dropped java subpackage.
+- Packaged tzdata source.
+
 * Tue Jan 23 2018 Dmitry V. Levin <ldv@altlinux.org> 2018c-alt1
 - 2017c -> 2018c.
 
