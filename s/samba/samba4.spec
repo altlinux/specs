@@ -38,8 +38,8 @@
 %def_with libcephfs
 
 Name: samba
-Version: 4.6.12
-Release: alt2%ubt
+Version: 4.6.13
+Release: alt1%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -562,6 +562,7 @@ Samba suite.
 	--with-relro \
 	--without-fam \
 	--private-libraries=%_samba4_private_libraries \
+	--with-libcephfs-common=%_libdir/ceph \
 %if_with mitkrb5
 	--with-system-mitkrb5 \
 %endif
@@ -1403,6 +1404,9 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Tue Feb 20 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.6.13-alt1%ubt
+- Update to second winter release with common bugfixes
+
 * Tue Jan 23 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.6.12-alt2%ubt
 - Fix trouble with joined machine account moving when it already exists.
   Move it only if the admin specified an explicit OU (Samba bug #12696)

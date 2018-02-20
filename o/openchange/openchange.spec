@@ -1,12 +1,12 @@
 %def_enable python
 %def_enable server
-%define samba_version 4.6.12
+%define samba_version 4.6.13
 
 # Licensing Note: The code is GPLv3+ and the IDL files are public domain.
 
 Name:    openchange
 Version: 2.4
-Release: alt22.zentyal23%ubt.5
+Release: alt22.zentyal23%ubt.7
 Group:   Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
@@ -31,7 +31,7 @@ BuildRequires: samba-DC-util-private-headers = %samba_version
 BuildRequires: python-module-samba-DC
 BuildRequires: samba-DC-pidl
 BuildRequires: doxygen
-BuildRequires: libical-devel
+BuildRequires: libical-devel >= 3.0.1
 BuildRequires: libmagic-devel
 BuildRequires: libmysqlclient-devel
 BuildRequires: libmemcached-devel >= 1.0.18
@@ -317,6 +317,12 @@ subst 's,^\(Cflags:.*\)$,\1 -I%_includedir/samba-4.0/private,' %buildroot%_pkgco
 %_libexecdir/openchange/web/rpcproxy
 
 %changelog
+* Wed Mar 07 2018 Evgeny Sinelnikov <sin@altlinux.org> 2.4-alt22.zentyal23%ubt.7
+- Fix build with libical-3.0.x
+
+* Tue Feb 20 2018 Evgeny Sinelnikov <sin@altlinux.org> 2.4-alt22.zentyal23%ubt.6
+- Rebuild with headers from new release of Samba-4.6.13
+
 * Thu Dec 21 2017 Evgeny Sinelnikov <sin@altlinux.org> 2.4-alt22.zentyal23%ubt.5
 - Rebuild with headers from new release of Samba-4.6.12
 
