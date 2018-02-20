@@ -2,15 +2,15 @@
 %def_disable experimental
 
 Name: libe-book
-Version: 0.1.2
-Release: alt4
+Version: 0.1.3
+Release: alt1
 Summary: A library for reading and converting reflowable e-book formats
 License: LGPL
 Url: http://sourceforge.net/projects/libebook/
 Group: System/Libraries
 Source: %name-%version.tar.xz
 
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ liblangtag-devel
 BuildRequires: boost-devel-headers
 BuildRequires: pkgconfig(librevenge-0.0) pkgconfig(librevenge-stream-0.0) pkgconfig(librevenge-generators-0.0)
 BuildRequires: pkgconfig(libxml-2.0)
@@ -92,6 +92,9 @@ Currently supported are:
 %_pkgconfigdir/*
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 0.1.3-alt1
+- Autobuild version bump to 0.1.3
+
 * Thu Aug 31 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.2-alt4
 - Fixed build with new boost.
 
