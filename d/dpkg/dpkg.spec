@@ -1,8 +1,9 @@
 ## define _requires_exceptions perl(controllib.pl)\\|perl(file)
+%def_without extbuild
 
 Name: dpkg
-Version: 1.18.7
-Release: alt2
+Version: 1.19.0.5
+Release: alt1
 
 Summary: Package maintenance system for Debian Linux
 
@@ -11,9 +12,11 @@ Group: System/Configuration/Packaging
 Url: http://packages.debian.org/unstable/base/dpkg.html
 
 Source0: ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%version.tar.xz
+Patch: dpkg-ALT-e2k-cputable.patch
 
-# Automatically added by buildreq on Mon Dec 13 2010
-BuildRequires: dpkg perl-podlators zlib-devel
+# Automatically added by buildreq on Tue Feb 20 2018
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 perl perl-Locale-gettext perl-parent perl-podlators pkg-config python-base xz
+BuildRequires: perl-podlators zlib-devel
 
 # boostrap notes:
 # 1) build dep loop via perl-Dpkg (just add noarch package);
@@ -23,8 +26,6 @@ BuildRequires: dpkg perl-podlators zlib-devel
 %{?!_with_bootstrap:BuildRequires: po4a}
 
 BuildRequires: perl-Storable perl-TimeDate perl-File-FcntlLock perl-parent perl-Time-Piece
-## BuildRequires: gettext-devel
-## Provides: usineagaz = 0.1-0.beta1mdk
 
 %description
 This is dpkg, Debian's package maintenance system.
@@ -37,14 +38,19 @@ BuildArch: noarch
 %description -n perl-Dpkg
 This module provides dpkg functionalities.
 
+%set_perl_req_method relaxed
 %prep
 %setup
+%patch -p2
 
 %build
 %autoreconf
 %configure \
+    --disable-update-alternatives \
+    --disable-start-stop-daemon \
     --disable-dselect \
-    --with-admindir=/var/lib/%name
+    --with-admindir=/var/lib/%name \
+    --with-logdir=/var/lib/%name/log
 
 %make
 
@@ -52,19 +58,8 @@ This module provides dpkg functionalities.
 %makeinstall_std
 
 # cleanup
-rm -fr %buildroot%_datadir/locale/en/
-rm -fr %buildroot%_sysconfdir/alternatives
-rm -f %buildroot%_bindir/update-alternatives
-rm -f %buildroot%_sbindir/update-alternatives
-rm -fr %buildroot/usr/share/doc
-rm -f %buildroot/%_man8dir/start-stop-daemon.8
-rm -f %buildroot/%_sbindir/start-stop-daemon
-
-find %buildroot -name "md5sum*" -exec rm -f {} \;
-find %buildroot%_mandir -name "update-alternatives*" -exec rm -f {} \;
-
 %if_without extbuild
-rm -rf %buildroot %_mandir/??/
+rm -rf %buildroot%_mandir/??/
 rm -rf %buildroot%_includedir/dpkg/*
 rm -rf %buildroot%_libdir/libdpkg.a
 rm -rf %buildroot%_libdir/pkgconfig/libdpkg.pc
@@ -76,9 +71,6 @@ cat dpkg-dev.lang >> %name.lang
 
 %files -f dpkg.lang
 %attr(0755,root,root) %_bindir/dpkg*
-%dir %_libdir/%name/
-%dir %_libdir/%name/parsechangelog/
-%attr(0755,root,root) %dir %_libdir/%name/parsechangelog/debian
 %dir %_datadir/%name
 %_datadir/%name/*table
 %_datadir/%name/*.mk
@@ -107,6 +99,10 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 1.19.0.5-alt1
+- Autobuild version bump to 1.19.0.5
+- Pick e2k hack into a patch
+
 * Fri Nov 03 2017 Michael Shigorin <mike@altlinux.org> 1.18.7-alt2
 - BOOTSTRAP: avoid BR: po4a; add notes
 - E2K: add e2k to cputable
