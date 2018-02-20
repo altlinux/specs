@@ -1,6 +1,6 @@
 %def_with docs
 Name: python3-module-slixmpp
-Version: 1.2.4
+Version: 1.3.0
 Release: alt1
 Group: Development/Python3
 License: BSD
@@ -50,6 +50,9 @@ python3 setup.py test
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 1.3.0-alt1
+- Autobuild version bump to 1.3.0
+
 * Mon Mar 13 2017 Fr. Br. George <george@altlinux.ru> 1.2.4-alt1
 - Autobuild version bump to 1.2.4
 
