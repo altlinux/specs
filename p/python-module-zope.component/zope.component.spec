@@ -1,33 +1,47 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.dev0.git20150604.1.1.1
+%define _unpackaged_files_terminate_build 1
 %define oname zope.component
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 4.2.3
-#Release: alt1.dev0.git20150604.1.1
+Version: 4.4.1
+Release: alt1%ubt
+
 Summary: Zope Component Architecture
 License: ZPLv2.1
 Group: Development/Python
-Url: http://pypi.python.org/pypi/zope.component/
+# Source-git https://github.com/zopefoundation/zope.component.git
+Url: http://pypi.python.org/pypi/zope.component
 
-# git://github.com/zopefoundation/zope.component.git
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-distribute
-#BuildPreReq: python-module-zope
-%if_with python3
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-zope.interface
-BuildRequires: python-module-setuptools python3-module-setuptools python3-module-zope rpm-build-python3 time
 
-#BuildRequires: python3-devel python3-module-distribute
-#BuildPreReq: python3-module-zope python-tools-2to3
+BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python-module-zope.testing
+BuildRequires: python-module-zope.testrunner
+BuildRequires: python-module-zope.configuration
+BuildRequires: python-module-zope.interface
+BuildRequires: python-module-zope.event
+BuildRequires: python-module-zope.location
+BuildRequires: python-module-zope.proxy
+BuildRequires: python-module-zope.security
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.configuration
+BuildRequires: python3-module-zope.interface
+BuildRequires: python3-module-zope.event
+BuildRequires: python3-module-zope.location
+BuildRequires: python3-module-zope.proxy
+BuildRequires: python3-module-zope.security
 %endif
 
-%py_requires zope.interface zope.event zope.hookable
+%py_requires zope.interface zope.event
 
 %description
 This package is intended to be independently reusable in any Python
@@ -37,12 +51,10 @@ This package represents the core of the Zope Component Architecture.
 Together with the 'zope.interface' package, it provides facilities for
 defining, registering and looking up components.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Zope Component Architecture (Python 3)
 Group: Development/Python3
-%py3_requires zope.interface zope.event
-%add_python3_req_skip persistent
+%py3_requires zope
 
 %description -n python3-module-%oname
 This package is intended to be independently reusable in any Python
@@ -55,51 +67,31 @@ defining, registering and looking up components.
 %package -n python3-module-%oname-tests
 Summary: Tests for zope.component (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-%py3_requires zope.testing zope.testrunner zope.configuration
+Requires: python3-module-%oname = %EVR
+%py3_requires zope.testing zope.testrunner
 
 %description -n python3-module-%oname-tests
-This package is intended to be independently reusable in any Python
-project. It is maintained by the Zope Toolkit project.
-
-This package represents the core of the Zope Component Architecture.
-Together with the 'zope.interface' package, it provides facilities for
-defining, registering and looking up components.
-
-This package contains tests for zope.component.
-%endif
+This package contains tests for %oname
 
 %package tests
 Summary: Tests for zope.component
 Group: Development/Python
-Requires: %name = %version-%release
-%py_requires ZODB3 zope.hookable zope.testing zope.testrunner
+Requires: %name = %EVR
+%py_requires zope.testing zope.testrunner zope.configuration
 
 %description tests
-This package is intended to be independently reusable in any Python
-project. It is maintained by the Zope Toolkit project.
-
-This package represents the core of the Zope Component Architecture.
-Together with the 'zope.interface' package, it provides facilities for
-defining, registering and looking up components.
-
-This package contains tests for zope.component.
+This package contains tests for %oname
 
 %prep
 %setup
-%if_with python3
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
 pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
-%endif
 
 %install
 %python_install
@@ -109,7 +101,6 @@ mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
@@ -118,7 +109,14 @@ install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
-%endif
+
+%check
+export PYTHONPATH=src
+zope-testrunner --test-path=src -vv
+
+pushd ../python3
+zope-testrunner3 --test-path=src -vv
+popd
 
 %files
 %doc *.txt
@@ -129,7 +127,6 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files tests
 %python_sitelibdir/*/*/test*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.txt
 %python3_sitelibdir/*
@@ -140,9 +137,11 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/test*
 %python3_sitelibdir/*/*/*/test*
-%endif
 
 %changelog
+* Fri Feb 16 2018 Stanislav Levin <slev@altlinux.org> 4.4.1-alt1%ubt
+- 4.2.3 -> 4.4.1
+
 * Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.2.3-alt1.dev0.git20150604.1.1.1
 - (AUTO) subst_x86_64.
 
