@@ -1,6 +1,6 @@
 Summary: Exploring Conway's Game of Life and other cellular automata
 Name: golly
-Version: 3.0
+Version: 3.1
 Release: alt1
 
 License: GPL
@@ -95,6 +95,9 @@ install -D %SOURCE2 %buildroot%_desktopdir/%name.desktop
 %_datadir/%name
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 3.1-alt1
+- Autobuild version bump to 3.1
+
 * Mon Sep 18 2017 Fr. Br. George <george@altlinux.ru> 3.0-alt1
 - Autobuild version bump to 3.0
 
