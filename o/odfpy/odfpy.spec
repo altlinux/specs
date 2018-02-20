@@ -1,5 +1,5 @@
 Name: odfpy
-Version: 1.3.5
+Version: 1.3.6
 Release: alt1
 Summary: Python scripts for manipulating OpenDocument files
 
@@ -8,7 +8,7 @@ License: GPLv2+
 Url: https://joinup.ec.europa.eu/software/odfpy/home
 
 # Source-url: https://pypi.io/packages/source/o/%name/%name-%version.tar.gz
-Source: odfpy-%version.tar.gz
+Source: %name-%version.tar.gz
 
 %setup_python_module %name
 
@@ -69,7 +69,6 @@ schema, and then hand-edited. Therefore the API is complete and can
 handle all ODF constructions, but could be improved in its
 understanding of data types.
 
-
 %prep
 %setup -n %name-%version
 
@@ -98,6 +97,9 @@ understanding of data types.
 %python3_sitelibdir/odf/
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 1.3.6-alt1
+- Autobuild version bump to 1.3.6
+
 * Mon Aug 14 2017 Fr. Br. George <george@altlinux.ru> 1.3.5-alt1
 - Autobuild version bump to 1.3.5
 - Introduce python3 module
