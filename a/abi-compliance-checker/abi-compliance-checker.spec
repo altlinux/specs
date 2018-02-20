@@ -1,5 +1,5 @@
 Name: abi-compliance-checker
-Version: 2.1
+Version: 2.2
 Release: alt1
 
 Summary: ABI compliance checker
@@ -41,6 +41,9 @@ perl Makefile.pl -install --prefix=%prefix --destdir=%buildroot
 %_datadir/%name
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 2.2-alt1
+- Autobuild version bump to 2.2
+
 * Fri Aug 25 2017 Fr. Br. George <george@altlinux.ru> 2.1-alt1
 - Autobuild version bump to 2.1
 
