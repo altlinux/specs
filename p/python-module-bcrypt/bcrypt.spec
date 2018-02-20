@@ -1,8 +1,8 @@
 %def_with python3
 
 Summary: An implementation the OpenBSD Blowfish password hashing algorithm
-Version: 3.1.3
-Release: alt2.1
+Version: 3.1.4
+Release: alt1
 %setup_python_module bcrypt
 Name: python-module-bcrypt
 Source0: %version.tar.gz
@@ -94,6 +94,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir py.test3
 %endif
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 3.1.4-alt1
+- Autobuild version bump to 3.1.4
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.1.3-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
