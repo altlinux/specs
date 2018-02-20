@@ -5,7 +5,7 @@
 Name: nas
 %define dname %{name}d
 Version: 1.9.4
-Release: alt1.git20131009
+Release: alt2.git20131009
 Summary: Network Audio System - a portable, network-transparent audio system
 Group: Sound
 License: distributable
@@ -217,6 +217,9 @@ echo "# See %dname.conf(5) and sample at %_docdir/%dname-*/" > %buildroot%_sysco
 
 
 %changelog
+* Tue Feb 20 2018 Andrew Savchenko <bircoph@altlinux.org> 1.9.4-alt2.git20131009
+- E2K: Fix preprocessing with lcc.
+
 * Tue Sep 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.4-alt1.git20131009
 - Version 1.9.4
 
