@@ -1,7 +1,7 @@
 %define dist DBI
 Name: perl-%dist
-Version: 1.637
-Release: alt1.1
+Version: 1.640
+Release: alt1
 
 Summary: Database independent interface for Perl
 License: GPL or Artistic
@@ -162,6 +162,7 @@ rm blib/lib/dbixs_rev.pl
 %dir	%perl_vendor_archlib/DBD
 	%perl_vendor_archlib/DBD/ExampleP.pm
 	%perl_vendor_archlib/DBD/NullP.pm
+	%perl_vendor_archlib/DBD/Mem.pm
 
 %files Profile
 	%_bindir/dbiprof
@@ -204,6 +205,9 @@ rm blib/lib/dbixs_rev.pl
 	%perl_vendor_archlib/DBD/Gofer*
 
 %changelog
+* Mon Feb 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.640-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.637-alt1.1
 - rebuild with new perl 5.26.1
 
