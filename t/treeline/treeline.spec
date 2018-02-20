@@ -1,6 +1,6 @@
 Name: treeline
-Version: 1.2.1
-Release: alt1.1.qa1.1
+Version: 2.9.0
+Release: alt1
 
 Summary: Treeline stores almost any kind of information
 
@@ -8,20 +8,14 @@ License: GPL
 Group: Text tools
 Url: http://treeline.bellz.org/
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+Source: %name-%version.tar.gz
+#Source1: http://download.berlios.de/treeline/%name-i18n-%{version}a.tar.bz2
 
-Source: http://download.berlios.de/treeline/%name-%version.tar.bz2
-Source1: http://download.berlios.de/treeline/%name-i18n-%{version}a.tar.bz2
-Source2: %name.desktop
+BuildArch: noarch
 
-BuildArchitectures: noarch
-
-%add_python_req_skip py2exe
-
-# Automatically added by buildreq on Tue Jan 06 2009 (-bi)
-BuildRequires: aspell-en python-module-PyQt4 python-module-PyXML python-modules-compiler python-modules-email
-
-BuildRequires: desktop-file-utils
+# Automatically added by buildreq on Mon Sep 04 2017 (-bi)
+# optimized out: python-base python3 python3-base rpm-build-python3
+BuildRequires: python3-dev
 
 %description
 Some would call TreeLine an Outliner, others would call it a
@@ -32,16 +26,14 @@ format for each node can be defined, and the output can be shown on the
 screen, printed, or exported to html.
 
 %prep
-%setup -q -n TreeLine -b1
+%setup
 
+%build
 %install
-python install.py -b %buildroot -p %prefix
+python3 install.py -b %buildroot -p %prefix -x
+rm %buildroot%_datadir/%name/setup.py 
 
-install -D -m 0644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
-desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=Office \
-	--add-category=Database \
-	%buildroot%_desktopdir/treeline.desktop
+install -D -m 0644 treeline.desktop %buildroot%_desktopdir/%name.desktop
 
 %files
 %_bindir/*
@@ -50,9 +42,19 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/icons/%name/
 %_datadir/%name/
 %_docdir/%name/
-%_libexecdir/%name/
+%_iconsdir/*/*/apps/*
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 2.9.0-alt1
+- Autobuild version bump to 2.9.0
+
+* Mon Sep 04 2017 Fr. Br. George <george@altlinux.ru> 2.1.2-alt1
+- Autobuild version bump to 2.1.2
+- Drop outdated translations
+
+* Tue Nov 13 2012 Fr. Br. George <george@altlinux.ru> 1.4.1-alt1
+- Autobuild version bump to 1.4.1
+
 * Fri Oct 28 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2.1-alt1.1.qa1.1
 - Rebuild with Python-2.7
 
