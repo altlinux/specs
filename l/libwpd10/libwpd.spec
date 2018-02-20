@@ -1,5 +1,5 @@
 Name: libwpd10
-Version: 0.10.1
+Version: 0.10.2
 Release: alt1
 
 Summary: Library for reading and converting WordPerfect(tm) documents
@@ -8,15 +8,15 @@ License: LGPL
 Group: System/Libraries
 Url: http://libwpd.sf.net/
 
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
-
 Source: libwpd-%version.tar.xz
+
+# Automatically added by buildreq on Tue Feb 20 2018
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libstdc++-devel perl perl-Encode perl-Locale-gettext perl-parent pkg-config python-base xz
+BuildRequires: boost-devel-headers doxygen gcc-c++ help2man librevenge-devel
 
 BuildRequires: gcc-c++
 BuildRequires: doxygen
-BuildRequires: help2man
 BuildRequires: pkgconfig(cppunit)
-BuildRequires: pkgconfig(librevenge-0.0)
 BuildRequires: pkgconfig(zlib)
 
 Obsoletes: libwpd9 >= 0.10.0
@@ -98,6 +98,9 @@ LD_LIBRARY_PATH=../lib/.libs make check
 %doc docs/*.png
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 0.10.2-alt1
+- Autobuild version bump to 0.10.2
+
 * Mon Jul 31 2017 Fr. Br. George <george@altlinux.ru> 0.10.1-alt1
 - Autobuild version bump to 0.10.1
 
@@ -124,7 +127,7 @@ LD_LIBRARY_PATH=../lib/.libs make check
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.4-alt1.1
 - Removed bad RPATH
 
-* Tue Dec 06 2010 Valery Inozemtsev <shrek@altlinux.ru> 0.9.4-alt1
+* Mon Dec 06 2010 Valery Inozemtsev <shrek@altlinux.ru> 0.9.4-alt1
 - 0.9.4
 
 * Sat Dec 04 2010 Valery Inozemtsev <shrek@altlinux.ru> 0.9.0-alt1
