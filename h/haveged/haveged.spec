@@ -1,5 +1,5 @@
 Name: haveged
-Version: 1.9.1
+Version: 1.9.2
 Release: alt1
 License: GPLv3
 Group: System/Kernel and hardware
@@ -58,6 +58,9 @@ ln -s rc.d/init.d %buildroot/etc/init.d
 %_libdir/*.so
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 1.9.2-alt1
+- Autobuild version bump to 1.9.2
+
 * Tue Feb 18 2014 Fr. Br. George <george@altlinux.ru> 1.9.1-alt1
 - Autobuild version bump to 1.9.1
 
