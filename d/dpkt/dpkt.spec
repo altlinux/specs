@@ -1,14 +1,14 @@
-%def_without python3
+%def_with python3
 
 Name: dpkt
-Version: 1.8.6
-Release: alt1.1
+Version: 1.9.1
+Release: alt1
 Url: http://monkey.org/~dugsong/dpkt/
 License: BSD
 Group: Development/Python
 %setup_python_module %name
 Summary: Examples and tests for %packagename
-Source: %name-%version.tar.gz
+Source: v%version.tar.gz
 Buildarch: noarch
 Requires: %packagename = %version
 
@@ -19,7 +19,6 @@ BuildPreReq: python-module-pytest-cov
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-pytest-cov
-BuildPreReq: python-tools-2to3
 %endif
 
 %description
@@ -53,55 +52,50 @@ Authors:
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
-
 %build
-%python_build
+%python_build -b build2
 
 %if_with python3
-pushd ../python3
-%python3_build
-popd
+%python3_build -b build3
 %endif
 
 epydoc -o doc -n dpkt -u %url --docformat=plaintext ./dpkt/
 
 %install
+rm -f build && ln -s build2 build
 %python_install
 
 %if_with python3
-pushd ../python3
+rm -f build && ln -s build3 build
 %python3_install
-popd
 %endif
 
 %check
+rm -f build && ln -s build2 build
 python setup.py test
-py.test -vv %name
+# TODO investigate warnings
+py.test -vv %name || py.test -p no:warnings -vv %name
 %if_with python3
-pushd ../python3
-python3 setup.py test
-py.test-%_python3_version -vv %name
-popd
+rm -f build && ln -s build3 build
+python3 setup.py test 
+py.test3 -vv %name || py.test3 -p no:warnings -vv %name
 %endif
 
-#files
-#doc examples tests
-
 %files -n %packagename
-%doc doc AUTHORS CHANGES LICENSE README*
+%doc doc AUTHORS CHANGES LICENSE README* examples
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-dpkt
-%doc doc AUTHORS CHANGES LICENSE README*
+%doc doc AUTHORS CHANGES LICENSE README* examples
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 1.9.1-alt1
+- Autobuild version bump to 1.9.1
+- Build Python3 module
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.8.6-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
