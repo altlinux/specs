@@ -1,6 +1,6 @@
 Name: libpagemaker
-Version: 0.0.3
-Release: alt2
+Version: 0.0.4
+Release: alt1
 Summary: A library for import of Adobe PageMaker documents
 Group: System/Libraries
 
@@ -84,6 +84,9 @@ install -m 0644 pmd2*.1 %buildroot/%_man1dir
 %_man1dir/*
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 0.0.4-alt1
+- Autobuild version bump to 0.0.4
+
 * Mon Jul 31 2017 Fr. Br. George <george@altlinux.ru> 0.0.3-alt2
 - Rebuild with boost 1.63.0
 
