@@ -1,5 +1,5 @@
 Name: libfreehand
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 Summary: A library for import of Macromedia/Adobe FreeHand documents
 
@@ -12,13 +12,12 @@ Source: %name-%version.tar.xz
 # optimized out: glibc-kernheaders-x86 libstdc++-devel perl pkg-config python-base xz
 BuildRequires: doxygen gcc-c++ glibc-kernheaders-generic gperf libicu-devel liblcms2-devel librevenge-devel zlib-devel
 
-BuildRequires: gcc-c++
 BuildRequires: boost-devel-headers
 BuildRequires: pkgconfig(librevenge-0.0) pkgconfig(librevenge-stream-0.0) pkgconfig(librevenge-generators-0.0)
 BuildRequires: pkgconfig(zlib)
 
 BuildRequires: doxygen
-BuildRequires: gperf
+BuildRequires: gperf cppunit-devel
 
 %description
 libfreehand is library providing ability to interpret and import
@@ -81,6 +80,9 @@ rm -rf %buildroot/%_docdir/%name
 %_bindir/*
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 0.1.2-alt1
+- Autobuild version bump to 0.1.2
+
 * Mon Jul 31 2017 Fr. Br. George <george@altlinux.ru> 0.1.1-alt1
 - Autobuild version bump to 0.1.1
 - Fix buildreqs
