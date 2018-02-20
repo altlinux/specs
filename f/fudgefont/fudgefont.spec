@@ -1,13 +1,14 @@
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name fudgefont
-%define version 1.4
 %define major   1
 %define libname lib%{name}%{major}
 %define devname lib%{name}-devel
 
 Name:           fudgefont
 Version:        1.4
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Fudges TTF fonts into Allegro
 Group:          System/Libraries
 # The license was specified on the website back in 2008:
@@ -16,8 +17,8 @@ License:        MIT
 URL:            http://fudgefont.sourceforge.net/
 Source0:        http://downloads.sf.net/fudgefont/%{name}-%{version}-src.7z
 
-BuildRequires: p7zip p7zip-standalone
-BuildRequires:  pkgconfig(allegro)
+BuildRequires:  liballegro-devel
+BuildRequires:  p7zip p7zip-standalone
 BuildRequires:  pkgconfig(freetype2)
 Source44: import.info
 
@@ -47,7 +48,7 @@ It has full unicode.
 %package -n %{devname}
 Summary:        Development files for the FudgeFont Allegro 4 addon
 Group:          Development/C++
-Requires:       %{libname} = %{version}
+Requires:       %{libname} = %{version}-%{release}
 Provides:       %{name}-devel
 
 %description -n %{devname}
@@ -70,13 +71,13 @@ cd ..
 CFLAGS="%{optflags} -fPIC `freetype-config --cflags`"
 LIBS="`freetype-config --libs` `allegro-config --libs`"
 
-%__cc ${CFLAGS} -o fudgefont.os -c -fPIC src/fudgefont.c
-%__cc ${CFLAGS} -o kerning.os -c -fPIC src/kerning.c
-%__cc ${CFLAGS}  -Wl,-soname,lib%{name}.so.%{major} -o lib%{name}.so.%{version} \
+gcc ${CFLAGS} -o fudgefont.os -c -fPIC src/fudgefont.c
+gcc ${CFLAGS} -o kerning.os -c -fPIC src/kerning.c
+gcc ${CFLAGS}  -Wl,-soname,lib%{name}.so.%{major} -o lib%{name}.so.%{version} \
     -shared fudgefont.os kerning.os ${LIBS}
 
-%__ln_s lib%{name}.so.%{version} lib%{name}.so.%{major}
-%__ln_s lib%{name}.so.%{major} lib%{name}.so
+ln -s lib%{name}.so.%{version} lib%{name}.so.%{major}
+ln -s lib%{name}.so.%{major} lib%{name}.so
 
 %install
 install -D -m644 src/%{name}.h %{buildroot}%{_includedir}/%{name}.h
@@ -86,6 +87,9 @@ cp -pP lib%{name}.so* %{buildroot}%{_libdir}
 
 
 %changelog
+* Tue Feb 20 2018 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_3
+- update by mgaimport
+
 * Sun Jun 12 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_2
 - converted for ALT Linux by srpmconvert tools
 
