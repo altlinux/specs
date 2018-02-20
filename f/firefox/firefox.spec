@@ -16,7 +16,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
 Version:        58.0.2
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -342,6 +342,9 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Mon Feb 19 2018 Alexey Gladkov <legion@altlinux.ru> 58.0.2-alt2
+- Enable ALSA support.
+
 * Sun Feb 11 2018 Alexey Gladkov <legion@altlinux.ru> 58.0.2-alt1
 - New release (58.0.2).
 - Fixed:
