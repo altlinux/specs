@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 7.3.1
-Release: alt2
+Release: alt3
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -81,8 +81,6 @@ Url: http://gcc.gnu.org/
 %ifarch %arm
 %set_verify_elf_method textrel=relaxed
 %endif
-# due to libtool.m4-gcj.patch
-%set_libtool_version 2.4
 # support for Cygnus-style trees has been removed in newer automake versions
 %set_automake_version 1.11
 
@@ -161,7 +159,6 @@ Patch713: alt-defaults-_FORTIFY_SOURCE.patch
 Patch714: alt-testsuite-_FORTIFY_SOURCE.patch
 Patch715: alt-spp-buffer-size.patch
 Patch716: alt-defaults-ssp.patch
-Patch717: alt-defaults-Werror=stringop-overflow.patch
 Patch718: alt-libgo-weak.patch
 Patch722: alt-defaults-trampolines.patch
 Patch723: alt-libgo-Werror-unused-result.patch
@@ -978,7 +975,6 @@ version %version.
 %patch714 -p1
 %patch715 -p1
 %patch716 -p1
-%patch717 -p1
 %patch718 -p1
 %patch722 -p1
 %patch723 -p1
@@ -1999,6 +1995,13 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Tue Feb 20 2018 Dmitry V. Levin <ldv@altlinux.org> 7.3.1-alt3
+- Do not add -Werror=stringop-overflow by default.
+  Unlike the former alt-escalate-always-overflow.patch that used to
+  escalate "will always overflow destination buffer" warnings to errors,
+  -Werror=stringop-overflow introduced in 7.2.1-alt1 as its replacement
+  generates too many false positives.
+
 * Sun Feb 18 2018 Dmitry V. Levin <ldv@altlinux.org> 7.3.1-alt2
 - aarch64: packaged liblsan and libtsan (by Sergey Bolshakov).
 - arm, armh, aarch64: updated packaging of arch-specific header files
