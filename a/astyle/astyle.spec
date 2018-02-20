@@ -1,6 +1,6 @@
 Name: astyle
-Version: 3.0.1
-Release: alt2
+Version: 3.1
+Release: alt1
 
 %global majorversion    3
 %global soversion       %version
@@ -10,12 +10,12 @@ License: GPL
 Group: Development/Other
 
 Url: http://%name.sourceforge.net/
-Source: %{name}_%{version}_linux.tar
+Source: %{name}_%{version}_linux.tar.gz
 
 BuildRequires: gcc-c++ java-devel-default
 
 # Make the astyle-lib usable for arduino
-Patch0:         astyle-arduino.patch
+Patch0: astyle-arduino.patch
 
 %package -n lib%name
 Group: Development/C++
@@ -49,7 +49,7 @@ source files. These can be used from a command line, or it can be
 incorporated as classes in another C++ program.
 
 %prep
-%setup -q -n %name
+%setup -n %name
 %patch0 -p1
 
 %build
@@ -59,20 +59,20 @@ chmod a-x doc/*
 pushd src
     # it's much easier to compile it here than trying to fix the Makefile
     g++ $RPM_OPT_FLAGS -DASTYLE_LIB -DASTYLE_JNI -fPIC -I/usr/lib/jvm/java/include -I/usr/lib/jvm/java/include/linux -c ASBeautifier.cpp ASEnhancer.cpp ASFormatter.cpp ASResource.cpp astyle_main.cpp
-    g++ -shared -o libastyle.so.%{soversion} *.o -Wl,-soname,libastyle.so.%{majorversion}
-    ln -s libastyle.so.%{soversion} libastyle.so
+    g++ -shared -o libastyle.so.%soversion *.o -Wl,-soname,libastyle.so.%majorversion
+    ln -s libastyle.so.%soversion libastyle.so
     g++ $RPM_OPT_FLAGS -c ASLocalizer.cpp astyle_main.cpp
     g++ $RPM_OPT_FLAGS -o astyle ASLocalizer.o astyle_main.o -L. -lastyle
 popd
 
 %install
 pushd src
-    mkdir -p $RPM_BUILD_ROOT{%{_bindir},%{_libdir},%{_includedir}}
+    mkdir -p $RPM_BUILD_ROOT{%_bindir,%_libdir,%_includedir}
 
-    install -p -m 755 astyle $RPM_BUILD_ROOT%{_bindir}
-    install -p -m 755 libastyle.so.%{soversion} $RPM_BUILD_ROOT%{_libdir}
-    cp -P libastyle.so $RPM_BUILD_ROOT%{_libdir}
-    install -p -m 644 astyle.h $RPM_BUILD_ROOT%{_includedir}
+    install -p -m 755 astyle $RPM_BUILD_ROOT%_bindir
+    install -p -m 755 libastyle.so.%soversion $RPM_BUILD_ROOT%_libdir
+    cp -P libastyle.so $RPM_BUILD_ROOT%_libdir
+    install -p -m 644 astyle.h $RPM_BUILD_ROOT%_includedir
 popd
 
 # hardcoded path! for --help
@@ -91,6 +91,9 @@ install -m 644 doc/*.html %buildroot%_datadir/doc/%name/html/
 %_includedir/%name.h
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 3.1-alt1
+- Autobuild version bump to 3.1
+
 * Sun Nov 26 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt2
 - NMU:
 - fixed bug: astyle --help files not found (hardcoded path to html doc)
@@ -153,5 +156,5 @@ install -m 644 doc/*.html %buildroot%_datadir/doc/%name/html/
 * Mon Oct 16 2000 Dmitry V. Levin <ldv@fandra.org> 1.11.6-ipl1mdk
 - 1.11.6
 
-* Tue Sep 16 1999 Dmitry V. Levin <ldv@fandra.org>
+* Thu Sep 16 1999 Dmitry V. Levin <ldv@fandra.org>
 - initial revision
