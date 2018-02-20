@@ -55,7 +55,7 @@
 
 Name: pve-%rname
 Version: 2.9.1
-Release: alt6%ubt
+Release: alt9%ubt
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
 Group: Emulators
@@ -72,6 +72,8 @@ Source5: qemu-kvm.sh
 Source100: Logo.bmp
 
 Patch0: qemu-alt.patch
+
+Patch100: memfd-fix-configure-test.diff
 
 Patch10: 0001-fr-ca-keymap-corrections.patch
 Patch11: 0002-Adjust-network-script-path-to-etc-kvm.patch
@@ -102,40 +104,56 @@ Patch35: 0026-backup-modify-job-api.patch
 Patch36: 0027-backup-introduce-vma-archive-format.patch
 Patch37: 0028-adding-old-vma-files.patch
 Patch38: 0029-backup-fix-race-in-backup-stop-command.patch
-Patch39: 0001-Revert-target-i386-disable-LINT0-after-reset.patch
-Patch40: 0002-virtio-serial-fix-segfault-on-disconnect.patch
-Patch41: 0003-megasas-always-store-SCSIRequest-into-MegasasCmd.patch
-Patch42: 0004-slirp-check-len-against-dhcp-options-array-end.patch
-Patch43: 0005-IDE-Do-not-flush-empty-CDROM-drives.patch
-Patch44: 0006-bitmap-add-bitmap_copy_and_clear_atomic.patch
-Patch45: 0007-memory-add-support-getting-and-using-a-dirty-bitmap-.patch
-Patch46: 0008-vga-add-vga_scanline_invalidated-helper.patch
-Patch47: 0009-vga-make-display-updates-thread-safe.patch
-Patch48: 0010-vga-fix-display-update-region-calculation.patch
-Patch49: 0011-vga-fix-display-update-region-calculation-split-scre.patch
-Patch50: 0012-vga-stop-passing-pointers-to-vga_draw_line-functions.patch
-Patch51: 0013-multiboot-validate-multiboot-header-address-values.patch
-Patch52: 0014-virtio-fix-descriptor-counting-in-virtqueue_pop.patch
-Patch53: 0015-nbd-server-CVE-2017-15119-Reject-options-larger-than.patch
-Patch54: 0016-vga-migration-Update-memory-map-in-post_load.patch
-Patch55: 0017-vga-drop-line_offset-variable.patch
-Patch56: 0018-vga-handle-cirrus-vbe-mode-wraparounds.patch
-Patch57: 0019-vga-add-ram_addr_t-cast.patch
-Patch58: 0020-vga-fix-region-checks-in-wraparound-case.patch
-Patch59: 0021-io-monitor-encoutput-buffer-size-from-websocket-GSou.patch
-Patch60: 0022-9pfs-use-g_malloc0-to-allocate-space-for-xattr.patch
-Patch61: 0023-cirrus-fix-oob-access-in-mode4and5-write-functions.patch
-Patch62: 0024-virtio-check-VirtQueue-Vring-object-is-set.patch
-Patch63: 0025-block-gluster-glfs_lseek-workaround.patch
-Patch64: 0026-gluster-add-support-for-PREALLOC_MODE_FALLOC.patch
-Patch65: 0027-target-i386-Use-host_vendor_fms-in-max_x86_cpu_initf.patch
-Patch66: 0028-target-i386-Define-CPUID_MODEL_ID_SZ-macro.patch
-Patch67: 0029-target-i386-Don-t-use-x86_cpu_load_def-on-max-CPU-mo.patch
-Patch68: 0030-i386-Change-X86CPUDefinition-model_id-to-const-char.patch
-Patch69: 0031-i386-Add-support-for-SPEC_CTRL-MSR.patch
-Patch70: 0032-i386-Add-spec-ctrl-CPUID-bit.patch
-Patch71: 0033-i386-Add-FEAT_8000_0008_EBX-CPUID-feature-word.patch
-Patch72: 0034-i386-Add-new-IBRS-versions-of-Intel-CPU-models.patch
+Patch39: 0030-vma-add-throttling-options-to-drive-mapping-fifo-pro.patch
+Patch40: 0001-Revert-target-i386-disable-LINT0-after-reset.patch
+Patch41: 0002-virtio-serial-fix-segfault-on-disconnect.patch
+Patch42: 0003-megasas-always-store-SCSIRequest-into-MegasasCmd.patch
+Patch43: 0004-slirp-check-len-against-dhcp-options-array-end.patch
+Patch44: 0005-IDE-Do-not-flush-empty-CDROM-drives.patch
+Patch45: 0006-bitmap-add-bitmap_copy_and_clear_atomic.patch
+Patch46: 0007-memory-add-support-getting-and-using-a-dirty-bitmap-.patch
+Patch47: 0008-vga-add-vga_scanline_invalidated-helper.patch
+Patch48: 0009-vga-make-display-updates-thread-safe.patch
+Patch49: 0010-vga-fix-display-update-region-calculation.patch
+Patch50: 0011-vga-fix-display-update-region-calculation-split-scre.patch
+Patch51: 0012-vga-stop-passing-pointers-to-vga_draw_line-functions.patch
+Patch52: 0013-multiboot-validate-multiboot-header-address-values.patch
+Patch53: 0014-virtio-fix-descriptor-counting-in-virtqueue_pop.patch
+Patch54: 0015-nbd-server-CVE-2017-15119-Reject-options-larger-than.patch
+Patch55: 0016-vga-migration-Update-memory-map-in-post_load.patch
+Patch56: 0017-vga-drop-line_offset-variable.patch
+Patch57: 0018-vga-handle-cirrus-vbe-mode-wraparounds.patch
+Patch58: 0019-vga-add-ram_addr_t-cast.patch
+Patch59: 0020-vga-fix-region-checks-in-wraparound-case.patch
+Patch60: 0021-io-monitor-encoutput-buffer-size-from-websocket-GSou.patch
+Patch61: 0022-9pfs-use-g_malloc0-to-allocate-space-for-xattr.patch
+Patch62: 0023-cirrus-fix-oob-access-in-mode4and5-write-functions.patch
+Patch63: 0024-virtio-check-VirtQueue-Vring-object-is-set.patch
+Patch64: 0025-block-gluster-glfs_lseek-workaround.patch
+Patch65: 0026-gluster-add-support-for-PREALLOC_MODE_FALLOC.patch
+Patch66: 0027-target-i386-Use-host_vendor_fms-in-max_x86_cpu_initf.patch
+Patch67: 0028-target-i386-Define-CPUID_MODEL_ID_SZ-macro.patch
+Patch68: 0029-target-i386-Don-t-use-x86_cpu_load_def-on-max-CPU-mo.patch
+Patch69: 0030-i386-Change-X86CPUDefinition-model_id-to-const-char.patch
+Patch70: 0031-i386-Add-support-for-SPEC_CTRL-MSR.patch
+Patch71: 0032-i386-Add-spec-ctrl-CPUID-bit.patch
+Patch72: 0033-i386-Add-FEAT_8000_0008_EBX-CPUID-feature-word.patch
+Patch73: 0034-i386-Add-new-IBRS-versions-of-Intel-CPU-models.patch
+Patch74: 0035-ratelimit-don-t-align-wait-time-with-slices.patch
+Patch75: 0036-nbd-make-it-thread-safe-fix-qcow2-over-nbd.patch
+Patch76: 0037-nbd-strict-nbd_wr_syncv.patch
+Patch77: 0038-nbd-read_sync-and-friends-return-0-on-success.patch
+Patch78: 0039-nbd-make-nbd_drop-public.patch
+Patch79: 0040-nbd-server-get-rid-of-nbd_negotiate_read-and-friends.patch
+Patch80: 0041-nbd-client-Fix-regression-when-server-sends-garbage.patch
+Patch81: 0042-fix-build-failure-in-nbd_read_reply_entry.patch
+Patch82: 0043-nbd-client-avoid-spurious-qio_channel_yield-re-entry.patch
+Patch83: 0044-nbd-client-avoid-read_reply_co-entry-if-send-failed.patch
+Patch84: 0045-qemu-iotests-improve-nbd-fault-injector.py-startup-p.patch
+Patch85: 0046-qemu-iotests-test-NBD-over-UNIX-domain-sockets-in-08.patch
+Patch86: 0047-block-nbd-client-nbd_co_send_request-fix-return-code.patch
+Patch87: 0048-target-i386-cpu-Add-new-EPYC-CPU-model.patch
+Patch88: 0049-i386-Add-EPYC-IBPB-CPU-model.patch
 
 ExclusiveArch: x86_64
 BuildRequires(pre): rpm-build-ubt
@@ -314,6 +332,8 @@ This package provides client and server tools for QEMU's ivshmem device.
 %setup -n %rname-%version
 %patch -p1
 
+%patch100 -p1
+
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -377,6 +397,22 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch70 -p1
 %patch71 -p1
 %patch72 -p1
+%patch73 -p1
+%patch74 -p1
+%patch75 -p1
+%patch76 -p1
+%patch77 -p1
+%patch78 -p1
+%patch79 -p1
+%patch80 -p1
+%patch81 -p1
+%patch82 -p1
+%patch83 -p1
+%patch84 -p1
+%patch85 -p1
+%patch86 -p1
+%patch87 -p1
+%patch88 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -551,6 +587,9 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Tue Feb 20 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt9%ubt
+- 2.9.1-9
+
 * Wed Jan 17 2018 Valery Inozemtsev <shrek@altlinux.ru> 2.9.1-alt6%ubt
 - 2.9.1-6
 
