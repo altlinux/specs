@@ -1,5 +1,5 @@
 Name: casync
-Version: 2.0.25.git6daefa8
+Version: 2.0.101.git8595b4d
 Release: alt1
 
 Summary: Content Addressable Data Synchronizer
@@ -14,6 +14,7 @@ Patch: %name-%version-%release.patch
 
 %def_enable fuse
 %def_enable selinux
+%def_enable udev
 %def_enable man
 
 %define meson_subst_bool() %{expand:%%{?_enable_%{1}:-D%{1}=true}%%{?_disable_%{1}:-D%{1}=false}}
@@ -28,6 +29,7 @@ BuildRequires: pkgconfig(libssl)
 BuildRequires: libacl-devel
 %{?_enable_fuse:BuildRequires: pkgconfig(fuse) >= 2.6}
 %{?_enable_selinux:BuildRequires: pkgconfig(libselinux)}
+%{?_enable_udev:BuildRequires: pkgconfig(libudev)}
 %{?_enable_man:BuildRequires: python3-module-sphinx}
 %{?_enable_man:BuildRequires: python3-module-sphinx-sphinx-build-symlink}
 # for tests
@@ -52,6 +54,7 @@ have to be transferred during an update.
     --wrap-mode=nodownload \
     %{meson_subst_bool fuse} \
     %{meson_subst_bool selinux} \
+    %{meson_subst_bool udev} \
     %{meson_subst_bool man} \
     #
 %meson_build
@@ -62,7 +65,9 @@ export LC_CTYPE=en_US.UTF-8
 
 # Meson-related macros in ALT are broken!
 # (ok, they just make little sense for the purpose of packaging)
-# Some of them are actually ninja-build macros and should belong to that package. Really.
+
+# Some of them are actually ninja-build macros and should belong to that package.
+# Really. They already do.
 
 # XXX: test 05 (nbd) fails in hasher (same reason?)
 #meson_test \
@@ -91,7 +96,7 @@ meson test -C %_target_platform \
 %meson_install
 
 %files
-%doc README.md TODO
+%doc README.md TODO NEWS
 %_bindir/casync
 %dir %_libexecdir/casync
 %dir %_libexecdir/casync/protocols
@@ -103,6 +108,11 @@ meson test -C %_target_platform \
 %_udevrulesdir/75-casync.rules
 
 %changelog
+* Tue Feb 20 2018 Arseny Maslennikov <arseny@altlinux.org> 2.0.101.git8595b4d-alt1
+- 2-25-git6daefa8 -> 2-101-git8595b4d.
+- Built with libudev to leverage new functionality.
+- Included upstream NEWS in the package.
+
 * Sat Oct 07 2017 Arseny Maslennikov <arseny@altlinux.org> 2.0.25.git6daefa8-alt1
-- Initial build for ALT Sisyphus
+- Initial build for ALT Sisyphus.
 
