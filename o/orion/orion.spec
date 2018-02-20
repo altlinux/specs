@@ -1,6 +1,6 @@
 Name: orion
 Version: 1.6.1
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Seek and watch streams on Twitch
 
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Patch0: orion-1.5.1-fix_prefix.patch
 Patch1: orion-1.5.1-fix_desktop.patch
 
-Requires: qt5-quickcontrols qt5-quickcontrols2 icon-theme-hicolor
+Requires: qt5-quickcontrols qt5-quickcontrols2 icon-theme-hicolor qt5-multimedia
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: qt5-base-devel >= 5.8 qt5-quickcontrols qt5-svg-devel qt5-quickcontrols2-devel qt5-multimedia-devel
@@ -47,6 +47,9 @@ A desktop client for Twitch.tv. Features:
 %doc README.md COPYING LICENSE.txt
 
 %changelog
+* Tue Feb 20 2018 Maxim Voronov <mvoronov@altlinux.org> 1.6.1-alt2%ubt
+- add qt5-multimedia dependency
+
 * Tue Feb 06 2018 Maxim Voronov <mvoronov@altlinux.org> 1.6.1-alt1%ubt
 - new version
 
