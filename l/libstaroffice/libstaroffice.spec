@@ -1,7 +1,7 @@
 %global apiversion 0.0
 
 Name: libstaroffice
-Version: 0.0.2
+Version: 0.0.5
 Release: alt1
 Summary: A library for import of binary StarOffice documents
 
@@ -9,7 +9,7 @@ Group: System/Libraries
 License: %mpl|%lgpl2plus
 Url: https://github.com/fosnola/libstaroffice/wiki
 # Repacked https://github.com/fosnola/%name/releases/download/%version/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: %name-%version.tar.xz
 
 BuildRequires(pre): rpm-build-licenses
 BuildPreReq: help2man
@@ -105,5 +105,8 @@ cp -p sd2*.1 sd?2*.1 %buildroot/%_mandir/man1
 %_mandir/man1/sdc2csv.1*
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 0.0.5-alt1
+- Autobuild version bump to 0.0.5
+
 * Thu Feb 09 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.0.2-alt1
 - Initial build.
