@@ -1,5 +1,5 @@
 Name: python-doc
-Version: 2.7.12
+Version: 2.7.14
 Release: alt1
 
 Summary: Documentation for the Python programming language
@@ -34,6 +34,12 @@ and bundled module library in the HTML format.
 %doc *
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 2.7.14-alt1
+- Autobuild version bump to 2.7.14
+
+* Mon Mar 13 2017 Fr. Br. George <george@altlinux.ru> 2.7.13-alt1
+- Autobuild version bump to 2.7.13
+
 * Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 2.7.12-alt1
 - Autobuild version bump to 2.7.12
 
