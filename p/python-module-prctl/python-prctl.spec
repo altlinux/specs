@@ -1,5 +1,5 @@
 Name: python-module-prctl
-Version: 1.6.1
+Version: 1.7
 Release: alt1
 Group: Development/Python
 License: GPL
@@ -39,6 +39,9 @@ make -C docs html
 %python_sitelibdir/*
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 1.7-alt1
+- Autobuild version bump to 1.7
+
 * Wed Feb 11 2015 Fr. Br. George <george@altlinux.ru> 1.6.1-alt1
 - Autobuild version bump to 1.6.1
 
