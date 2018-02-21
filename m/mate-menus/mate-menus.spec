@@ -5,29 +5,42 @@ BuildRequires: /usr/bin/glib-gettextize pkgconfig(gio-2.0) pkgconfig(glib-2.0)
 # END SourceDeps(oneline)
 Requires: altlinux-freedesktop-menu-mate
 %define _libexecdir %_prefix/libexec
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           mate-menus
-Version:        1.19.0
+Version:        1.20.0
 Release:        alt1_1
 Summary:        Displays menus for MATE Desktop
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.19/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.20/%{name}-%{version}.tar.xz
 
 BuildRequires:  chrpath
 BuildRequires:  gobject-introspection-devel
 BuildRequires:  mate-common
+%if 0%{?fedora} && 0%{?fedora} >= 28
 BuildRequires:  python-devel
+%else
+BuildRequires:  python-devel
+%endif
 
 Requires:		libmate-menus = %{version}-%{release}
 
 # we don't want to provide private python extension libs
+%if 0%{?fedora} && 0%{?fedora} >= 28
 %{echo 
 
 
 }
+%else
+%{echo 
+
+
+}
+%endif
 Source44: import.info
+%add_findprov_skiplist %{python_sitelibdir}/.*\.so$
 %add_findprov_skiplist %{python_sitelibdir}/.*\.so$
 Patch33: gnome-menus-2.14-alt-add-config-dir.patch
 Patch34: gnome-menus-alt-applications-menu-no-legacy-kde.patch
@@ -62,6 +75,7 @@ Development files for mate-menus
 %prep
 %setup -q
 
+
 # fedora specific
 # fix for usage of multimedia-menus, games-menu and wine-menu packages
 sed -i -e '/<!-- End Other -->/ a\  <MergeFile>applications-merged/multimedia-categories.menu</MergeFile>' layout/mate-applications.menu
@@ -84,7 +98,11 @@ sed -i -e '/<MergeFile>applications-merged\/games-categories.menu<\/MergeFile>/ 
 
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 find %{buildroot} -name '*.a' -exec rm -f {} ';'
-chrpath --delete $RPM_BUILD_ROOT%{python_sitelibdir}/matemenu.so
+%if 0%{?fedora} && 0%{?fedora} >= 28
+chrpath --delete %{buildroot}%{python_sitelibdir}/matemenu.so
+%else
+chrpath --delete %{buildroot}%{python_sitelibdir}/matemenu.so
+%endif
 
 %find_lang %{name} --with-gnome --all-name
 
@@ -99,7 +117,11 @@ chrpath --delete $RPM_BUILD_ROOT%{python_sitelibdir}/matemenu.so
 %{_libdir}/girepository-1.0/MateMenu-2.0.typelib
 %{_libdir}/libmate-menu.so.2
 %{_libdir}/libmate-menu.so.2.4.9
+%if 0%{?fedora} && 0%{?fedora} >= 28
 %{python_sitelibdir}/matemenu.so
+%else
+%{python_sitelibdir}/matemenu.so
+%endif
 
 %files devel
 %{_datadir}/gir-1.0/MateMenu-2.0.gir
@@ -109,6 +131,9 @@ chrpath --delete $RPM_BUILD_ROOT%{python_sitelibdir}/matemenu.so
 
 
 %changelog
+* Tue Feb 20 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
 - new fc release
 

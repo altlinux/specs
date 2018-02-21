@@ -6,12 +6,12 @@ BuildRequires: /usr/bin/glib-gettextize
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		mate-backgrounds
-Version:	1.19.0
+Version:	1.20.0
 Release:	alt1_1
 Summary:	MATE Desktop backgrounds
 License:	GPLv2+
 URL:		http://mate-desktop.org
-Source0:	http://pub.mate-desktop.org/releases/1.19/%{name}-%{version}.tar.xz
+Source0:	http://pub.mate-desktop.org/releases/1.20/%{name}-%{version}.tar.xz
 
 BuildArch:	noarch
 BuildRequires:	mate-common
@@ -22,6 +22,7 @@ Backgrounds for MATE Desktop
 
 %prep
 %setup -q
+
 
 %build
 %configure
@@ -41,6 +42,9 @@ Backgrounds for MATE Desktop
 
 
 %changelog
+* Mon Feb 19 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
 - new fc release
 

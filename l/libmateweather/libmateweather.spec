@@ -12,12 +12,12 @@ BuildRequires: python-module-pygtk-devel
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name libmateweather
-%define version 1.19.1
+%define version 1.20.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.19
+%global branch 1.20
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 06e062693b16189373584801b056079eafac0034}
@@ -28,11 +28,11 @@ BuildRequires: python-module-pygtk-devel
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:          libmateweather
-Version:       %{branch}.1
+Version:       %{branch}.0
 %if 0%{?rel_build}
-Release:       alt1_3
+Release:       alt1_1
 %else
-Release:       alt1_3
+Release:       alt1_1
 %endif
 Summary:       Libraries to allow MATE Desktop to display weather information
 License:       GPLv2+ and LGPLv2+
@@ -76,7 +76,13 @@ Development files for libmateweather
 
 
 %prep
-%setup -q%{!?rel_build:n %{name}-%{commit}}
+%if 0%{?rel_build}
+%setup -q
+
+%else
+%setup -q -n %{name}-%{commit}
+
+%endif
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -124,6 +130,9 @@ cat libmateweather-locations.lang >> %{name}.lang
 
 
 %changelog
+* Mon Feb 19 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Thu Sep 07 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.1-alt1_3
 - new fc release
 

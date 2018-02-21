@@ -1,6 +1,6 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(gio-2.0) pkgconfig(glib-2.0)
+BuildRequires: /usr/bin/glib-gettextize pkgconfig(gio-2.0) pkgconfig(glib-2.0)
 # END SourceDeps(oneline)
 BuildRequires: libgtk+2-gir-devel libgtk+3-gir-devel libpolkit-gir-devel
 %define _libexecdir %_prefix/libexec
@@ -8,12 +8,12 @@ BuildRequires: libgtk+2-gir-devel libgtk+3-gir-devel libpolkit-gir-devel
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-polkit
-%define version 1.19.0
+%define version 1.20.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.19
+%global branch 1.20
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 8e0c8e17e0138afa7757a1bdf8edd6f2c7b47a14}
@@ -43,31 +43,28 @@ URL:		http://mate-desktop.org
 BuildRequires:	gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:	mate-common
 BuildRequires:	libpolkit-devel libpolkit-gir-devel
-BuildRequires:	gobject-introspection-devel
 BuildRequires:	libdbus-glib-devel
-# needed for gobject-introspection support somehow,
-# https://bugzilla.redhat.com/show_bug.cgi?id=847419#c17 asserts this is a bug (elsewhere)
-# but I'm not entirely sure -- rex
-BuildRequires: 	libcairo-gobject-devel
+BuildRequires:	libappindicator-gtk3-devel libappindicator-gtk3-gir-devel
 
 Provides:	PolicyKit-authentication-agent
+# dropping -devel subpackage 
+Provides:   mate-polkit-devel = %{version}-%{release}
+Provides:   mate-polkit = %{version}-%{release}
+Obsoletes:  mate-polkit-devel < %{version}-%{release}
 Source44: import.info
 
 
 %description
 Integrates polkit with the MATE Desktop environment
 
-%package devel
-Group: Development/C
-Requires: %{name} = %{version}-%{release}
-Summary:	Integrates polkit with the MATE Desktop environment
-
-%description devel
-Development libraries for mate-polkit
-
-
 %prep
-%setup -q%{!?rel_build:n %{name}-%{commit}}
+%if 0%{?rel_build}
+%setup -q
+
+%else
+%setup -q -n %{name}-%{commit}
+
+%endif
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -80,9 +77,8 @@ NOCONFIGURE=1 ./autogen.sh
 %build
 %configure  \
         --disable-static       \
-        --enable-introspection \
         --enable-accountsservice \
-        --enable-gtk-doc-html
+        --enable-appindicator=yes
 
 %make_build V=1
 
@@ -95,23 +91,15 @@ find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 
 
 %files -f %{name}.lang
-# yes, license really is LGPLv2+, despite included COPYING is about GPL, poke upstreamo
-# to include COPYING.LIB here instead  -- rex
 %doc AUTHORS COPYING README
 %{_sysconfdir}/xdg/autostart/polkit-mate-authentication-agent-1.desktop
-%{_libdir}/libpolkit-gtk-mate-1.so.0
-%{_libdir}/libpolkit-gtk-mate-1.so.0.0.0
-%{_libdir}/girepository-1.0/PolkitGtkMate-1.0.typelib
 %{_libexecdir}/polkit-mate-authentication-agent-1
-
-%files devel
-%{_libdir}/libpolkit-gtk-mate-1.so
-%{_libdir}/pkgconfig/polkit-gtk-mate-1.pc
-%{_includedir}/polkit-gtk-mate-1
-%{_datadir}/gir-1.0/PolkitGtkMate-1.0.gir
 
 
 %changelog
+* Tue Feb 20 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Wed Oct 25 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
 - new fc release
 

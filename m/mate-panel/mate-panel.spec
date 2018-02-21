@@ -5,17 +5,17 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 # END SourceDeps(oneline)
 BuildRequires: libXi-devel
 %define _libexecdir %_prefix/libexec
-%define fedora 25
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-panel
-%define version 1.19.3
+%define version 1.20.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.19
+%global branch 1.20
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 838555a41dc08a870b408628f529b66e2c8c4054}
@@ -26,11 +26,11 @@ BuildRequires: libXi-devel
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-panel
-Version:        %{branch}.3
+Version:        %{branch}.0
 %if 0%{?rel_build}
 Release:        alt1_2
 %else
-Release:        alt2_0.6%{?git_rel}
+Release:        alt1_2
 %endif
 Summary:        MATE Desktop panel and applets
 #libs are LGPLv2+ applications GPLv2+
@@ -45,21 +45,6 @@ URL:            http://mate-desktop.org
 
 Source1:        mate-panel_fedora.layout
 Source2:        mate-panel_rhel.layout
-
-# https://github.com/mate-desktop/mate-panel/commit/4a25da5
-Patch1:         mate-panel_0001-Add-a-gsettings-key-to-enable-disable-SNI-Support.patch
-# https://github.com/mate-desktop/mate-panel/commit/57d3c8f
-Patch2:         mate-panel_0001-gtk-3.22-avoid-deprecated-gdk_screen_get_monitor.-fu.patch
-# https://github.com/mate-desktop/mate-panel/commit/2dbcb02
-# https://github.com/mate-desktop/mate-panel/commit/4fbe8e2
-Patch3:         mate-panel_0001-Fix-crashes-on-moving-removing-applets-with-glib-2.5.patch
-Patch4:         mate-panel_0002-clock-disconnect-signal-handlers-on-destroy.patch
-# https://github.com/mate-desktop/mate-panel/commit/8a158fe
-Patch5:         mate-panel_0001-Add-option-to-context-menu-to-reset-the-panel.patch
-# https://github.com/mate-desktop/mate-panel/commit/c13f02a
-Patch6:         mate-panel_0001-panel-context-menu-Add-confirmation-dialog-to-panel-.patch
-# https://github.com/mate-desktop/mate-panel/commit/cfb9e30
-Patch7:         mate-panel_0001-make-file-folder-launchers-work-again.patch
 
 Requires:       %{name}-libs = %{?epoch:%epoch:}%{version}-%{release}
 #for fish
@@ -107,15 +92,13 @@ Requires:    %{name}-libs = %{?epoch:%epoch:}%{version}-%{release}
 Development files for mate-panel
 
 %prep
-%setup -q%{!?rel_build:n %{name}-%{commit}}
+%if 0%{?rel_build}
+%setup -q
 
-%patch1 -p1 -b .0001
-%patch2 -p1 -b .0001
-%patch3 -p1 -b .0001
-%patch4 -p1 -b .0002
-%patch5 -p1 -b .0001
-%patch6 -p1 -b .0001
-%patch7 -p1 -b .0001
+%else
+%setup -q -n %{name}-%{commit}
+
+%endif
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -136,7 +119,7 @@ autoreconf -fisv
            --libexecdir=%{_libexecdir}/mate-panel \
            --enable-introspection                 \
            --disable-gtk-doc                      \
-           --with-in-process-applets=none
+           --with-in-process-applets=all
 
 # remove unused-direct-shlib-dependency
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
@@ -163,22 +146,22 @@ install -D -m 0644 %{SOURCE2} %{buildroot}%{_datadir}/mate-panel/layouts/rhel.la
 
 %find_lang %{name} --with-gnome --all-name
 
-
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
 %{_mandir}/man1/*
 %{_bindir}/mate-desktop-item-edit
 %{_bindir}/mate-panel
 %{_bindir}/mate-panel-test-applets
-%{_libexecdir}/mate-panel
+#%{_libexecdir}/mate-panel
 %{_datadir}/glib-2.0/schemas/org.mate.panel.*.xml
 %{_datadir}/applications/mate-panel.desktop
 %{_datadir}/icons/hicolor/*/*/*
 %{_datadir}/mate-panel
-%{_datadir}/dbus-1/services/org.mate.panel.applet.ClockAppletFactory.service
-%{_datadir}/dbus-1/services/org.mate.panel.applet.FishAppletFactory.service
-%{_datadir}/dbus-1/services/org.mate.panel.applet.NotificationAreaAppletFactory.service
-%{_datadir}/dbus-1/services/org.mate.panel.applet.WnckletFactory.service
+#%{_datadir}/dbus-1/services/org.mate.panel.applet.ClockAppletFactory.service
+#%{_datadir}/dbus-1/services/org.mate.panel.applet.FishAppletFactory.service
+#%{_datadir}/dbus-1/services/org.mate.panel.applet.NotificationAreaAppletFactory.service
+#%{_datadir}/dbus-1/services/org.mate.panel.applet.WnckletFactory.service
+%{_libdir}/mate-panel/
 
 %files libs
 %doc COPYING.LIB
@@ -194,6 +177,9 @@ install -D -m 0644 %{SOURCE2} %{buildroot}%{_datadir}/mate-panel/layouts/rhel.la
 
 
 %changelog
+* Tue Feb 20 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.20.0-alt1_2
+- new fc release
+
 * Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.19.3-alt1_2
 - new fc release
 
