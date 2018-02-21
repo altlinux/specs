@@ -1,21 +1,15 @@
 Name: gcc-common
-Version: 1.4.21
+Version: 1.4.22
 Release: alt1
 
 Summary: Common directories, symlinks and selection utility for the GNU Compiler Collection
 License: GPL
 Group: Development/C
 
-Source0: select-gcc.in
 Source1: gccbug.in
 Source2: gcc_wrapper.c
-Source3: classpath.security
-Source4: libgcj.security
-Source5: logging.properties
 
 Patch: gccbug-alt.patch
-
-PreReq: alternatives >= 0:0.4
 
 %define _libexecdir /usr/libexec
 
@@ -61,22 +55,6 @@ PreReq: %name = %version-%release
 Conflicts: gcc3.3-treelang < 0:3.3.4-alt5
 Conflicts: gcc3.4-treelang < 0:3.4.5-alt3
 
-%package -n gcc-java-common
-Summary: Common symlinks for the GNU Java Compiler
-License: GPL
-Group: Development/Java
-BuildArch: noarch
-PreReq: %name = %version-%release
-Requires: fastjar
-Conflicts: gcc3.4-java < 0:3.4.5-alt3
-
-%package -n libgcj-common
-Summary: Common files for the GNU Java runtime libraries
-License: GPL
-Group: Development/Java
-PreReq: %name = %version-%release
-Conflicts: libgcj < 0:3.3.3-alt6
-
 %package -n gcc-gnat-common
 Summary: Common symlinks for the GNU Ada compiler (GNAT)
 License: GPL
@@ -101,43 +79,31 @@ This package contains common symlinks for the GNU Fortran 77 Compiler.
 %description -n gcc-treelang-common
 This package contains common symlinks for the GNU Treelang Compiler.
 
-%description -n gcc-java-common
-This package contains common symlinks for the GNU Java Compiler.
-
-%description -n libgcj-common
-This package contains common files for the GNU Java runtime libraries.
-
 %description -n gcc-gnat-common
 This package contains common symlinks for the GNU Ada compiler (GNAT).
 
 %prep
 %setup -cT
-install -p -m755 %SOURCE0 select-gcc
 install -p -m755 %SOURCE1 gccbug
-install -p -m755 %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 .
-
 %patch -p1
 
 %build
 gcc %optflags -Werror '-DBINDIR="%_bindir"' \
-	'-DTARGET="%_target_platform"' gcc_wrapper.c -o gcc_wrapper
-sed -i 's|@TARGET@|%_target_platform|g' select-gcc gccbug
+	'-DTARGET="%_target_platform"' %_sourcedir/gcc_wrapper.c -o gcc_wrapper
+sed -i 's|@TARGET@|%_target_platform|g' gccbug
 
 %install
-mkdir -p %buildroot{/lib,%_libdir/gcc{,-lib}/%_target_platform,%_libexecdir/gcc/%_target_platform,%_libdir/security,%_bindir,%_sbindir,%_includedir/c++,%_datadir/java/gcj-endorsed}
-install -p -m755 select-gcc %buildroot%_sbindir/
+mkdir -p %buildroot{/lib,%_libdir/gcc{,-lib}/%_target_platform,%_libexecdir/gcc/%_target_platform,%_bindir,%_includedir/c++}
 install -p -m755 gcc_wrapper %buildroot%_bindir/
 install -p -m755 gccbug %buildroot%_bindir/%_target_platform-gccbug
-install -p -m644 logging.properties %buildroot%_libdir/
-install -p -m644 {classpath,libgcj}.security %buildroot%_libdir/security/
 
 ln -s gcc_wrapper %buildroot%_bindir/gcc
 
-for n in cc cpp g++ gcc-{ar,nm,ranlib} gccgo gcj gcov{,-tool,-dump} gfortran gnat gtreelang protoize unprotoize; do
+for n in cc cpp g++ gcc-{ar,nm,ranlib} gccgo gcov gfortran gnat gtreelang protoize unprotoize; do
 	ln -s gcc "%buildroot%_bindir/$n"
 done
-for n in gappletviewer gcj-dbtool gcjh gij gjar gjarsigner gjavah gjnih gkeytool gorbd grmic grmid grmiregistry gserialver gtnameserv jcf-dump jv-convert jv-scan; do
-	ln -s gcj "%buildroot%_bindir/$n"
+for n in dump tool; do
+	ln -s gcov "%buildroot%_bindir/gcov-$n"
 done
 for n in f77 f95 g77; do
 	ln -s gfortran "%buildroot%_bindir/$n"
@@ -151,20 +117,14 @@ ln -s g++ %buildroot%_bindir/c++
 ln -s gtreelang %buildroot%_bindir/tree1
 ln -s %_target_platform-gccbug %buildroot%_bindir/gccbug
 
-mkdir -p %buildroot%_altdir
-cat >%buildroot%_altdir/%name<<EOF
-%_bindir/gcc	%_bindir/gcc_wrapper	40
-EOF
-
 %files
-%config %_altdir/%name
 /lib/*
 %_libdir/gcc*
 %_libexecdir/gcc*
-%exclude %_bindir/gcc
 %_bindir/gcc_wrapper
 %_bindir/cc
 %_bindir/cpp
+%_bindir/gcc
 %_bindir/gcc-ar
 %_bindir/gcc-nm
 %_bindir/gcc-ranlib
@@ -175,7 +135,6 @@ EOF
 %_bindir/protoize
 %_bindir/unprotoize
 %_bindir/%_target_platform-gccbug
-%_sbindir/*
 
 %files -n gcc-c++-common
 %_bindir/c++
@@ -195,36 +154,14 @@ EOF
 %_bindir/gtreelang
 %_bindir/tree1
 
-%files -n gcc-java-common
-%_bindir/gappletviewer
-%_bindir/gcj
-%_bindir/gcj-dbtool
-%_bindir/gcjh
-%_bindir/gij
-%_bindir/gjar
-%_bindir/gjarsigner
-%_bindir/gjavah
-%_bindir/gjnih
-%_bindir/gkeytool
-%_bindir/gorbd
-%_bindir/grmic
-%_bindir/grmid
-%_bindir/grmiregistry
-%_bindir/gserialver
-%_bindir/gtnameserv
-%_bindir/jcf-dump
-%_bindir/jv-convert
-%_bindir/jv-scan
-
-%files -n libgcj-common
-%_datadir/java/
-%_libdir/logging.properties
-%_libdir/security
-
 %files -n gcc-gnat-common
 %_bindir/gnat*
 
 %changelog
+* Wed Feb 21 2018 Dmitry V. Levin <ldv@altlinux.org> 1.4.22-alt1
+- Dropped gcc-java-common and libgcj-common subpackages.
+- gcc-common: dropped alternatives.
+
 * Sun Feb 18 2018 Dmitry V. Levin <ldv@altlinux.org> 1.4.21-alt1
 - gcc-common: added gcov-dump symlink.
 
