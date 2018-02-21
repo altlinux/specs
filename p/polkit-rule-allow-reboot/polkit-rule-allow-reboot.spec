@@ -1,5 +1,5 @@
 Name:     polkit-rule-allow-reboot
-Version:  0.6
+Version:  0.7
 Release:  alt1
 
 Summary:  Rule for polkit to allow reboot and halt and power management from logged in user
@@ -25,8 +25,12 @@ install -Dm 0644 rule-allow-reboot.rules %buildroot%_datadir/polkit-1/rules.d
 
 %files
 %_datadir/polkit-1/rules.d/*
+%doc README
 
 %changelog
+* Wed Feb 21 2018 Denis Medvedev <nbr@altlinux.org> 0.7-alt1
+- fix small bug, poweroff allowed to "poweroff" group
+
 * Tue Feb 20 2018 Denis Medvedev <nbr@altlinux.org> 0.6-alt1
 - now poweroff allowed only to group "console"
 
