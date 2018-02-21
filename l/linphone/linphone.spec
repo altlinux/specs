@@ -1,16 +1,16 @@
 Name: linphone
 Version: 3.12.0
-Release: alt5
-License: GPLv2+
-Url: http://www.linphone.org/
+Release: alt6
 
 Summary: Open source video SIP phone
+License: GPLv2+
 Group: Communications
 
-Packager: Alexei Takaseev <taf@altlinux.ru>
-
+Url: http://www.linphone.org/
 Source0: %name-%version.tar
 #Patch0: %name-%version-%release.patch
+Packager: Alexei Takaseev <taf@altlinux.ru>
+
 BuildPreReq: libortp-devel >= 0.16
 
 BuildRequires: doxygen gcc-c++ intltool libbelle-sip-devel libgtk+2-devel
@@ -23,7 +23,7 @@ Requires: %name-gui = %version-%release
 Requires: %name-cli = %version-%release
 
 %description
-Linphone is a SIP compliant audio & video phone. It can be used to run calls 
+Linphone is a SIP compliant audio & video phone. It can be used to run calls
 over the internet. It has a gtk+ and console interface.
 
 %package common
@@ -31,7 +31,7 @@ Summary: Common files for %name
 Group: Communications
 
 %description common
-Linphone is a SIP compliant audio & video phone. It can be used to run calls 
+Linphone is a SIP compliant audio & video phone. It can be used to run calls
 over the internet. It has a gtk+ and console interface.
 
 This package contains common files for %name.
@@ -42,7 +42,7 @@ Group: Communications
 Requires: %name-common = %version-%release
 
 %description gui
-Linphone is a SIP compliant audio & video phone. It can be used to run calls 
+Linphone is a SIP compliant audio & video phone. It can be used to run calls
 over the internet. It has a gtk+ and console interface.
 
 This package contains graphical interface of %name.
@@ -53,7 +53,7 @@ Group: Communications
 Requires: %name-common = %version-%release
 
 %description cli
-Linphone is a SIP compliant audio & video phone. It can be used to run calls 
+Linphone is a SIP compliant audio & video phone. It can be used to run calls
 over the internet. It has a gtk+ and console interface.
 
 This package contains console interface for %name.
@@ -75,7 +75,7 @@ Summary: Development files for %name
 Group: Communications
 
 %description devel
-Linphone is a SIP compliant audio & video phone. It can be used to run calls 
+Linphone is a SIP compliant audio & video phone. It can be used to run calls
 over the internet. It has a gtk+ and console interface.
 
 This package contains development files for %name.
@@ -83,9 +83,12 @@ This package contains development files for %name.
 %prep
 %setup
 #%%patch0 -p1
+%ifarch %e2k
+# unsupported as of lcc 1.23.20
+sed -i 's,-fno-inline-small-functions,,' CMakeLists.txt configure.ac
+%endif
 
 %build
-
 %add_optflags %optflags_shared %optflags_strict %optflags_notraceback -Wno-error=cast-function-type -Wno-error=sizeof-pointer-memaccess -Wno-error=format-truncation
 
 ./autogen.sh
@@ -124,7 +127,6 @@ This package contains development files for %name.
 %_datadir/%name
 %_datadir/appdata/%name.appdata.xml
 
-
 %files cli
 %_bindir/linphonec
 %_bindir/linphonecsh
@@ -153,6 +155,10 @@ This package contains development files for %name.
 
 
 %changelog
+* Wed Oct 16 2019 Michael Shigorin <mike@altlinux.org> 3.12.0-alt6
+- E2K: avoid lcc-unsupported options
+- Minor spec cleanup
+
 * Tue Dec 04 2018 Alexei Takaseev <taf@altlinux.org> 3.12.0-alt5
 - Fix build with gcc-8
 
