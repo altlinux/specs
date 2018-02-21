@@ -14,7 +14,7 @@
 %define sm_develdir     %sm_prefix-devel
 
 Name: 	 seamonkey
-Version: 2.49.1
+Version: 2.49.2
 Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
@@ -82,7 +82,7 @@ BuildRequires: desktop-file-utils libcurl-devel libhunspell-devel libsqlite3-dev
 BuildRequires: autoconf_2.13 chrpath alternatives libGL-devel
 BuildRequires: libstartup-notification-devel libfreetype-devel fontconfig-devel libnotify-devel
 BuildRequires: libffi-devel libgio-devel
-BuildRequires: gst-plugins-devel >= 0.10.25
+BuildRequires: gst-plugins1.0-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXdamage-devel
@@ -395,6 +395,10 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Wed Feb 21 2018 Michael Shigorin <mike@altlinux.org> 1:2.49.2-alt1
+- 2.49.2
+- move off gstreamer-0.10
+
 * Sun Nov 05 2017 Michael Shigorin <mike@altlinux.org> 1:2.49.1-alt1
 - 2.49.1
   + NB: lightning no more included in upstream tarball

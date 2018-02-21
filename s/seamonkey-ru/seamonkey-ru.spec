@@ -2,7 +2,7 @@
 %define ciddir	%sm_prefix/extensions/%cid
 
 Name:		seamonkey-ru
-Version:	2.49.1
+Version:	2.49.2
 Release:	alt1
 Summary:	Russian (RU) Language Pack for Seamonkey
 
@@ -41,6 +41,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%ciddir/dictionaries/ru.dic
 %ciddir
 
 %changelog
+* Wed Feb 21 2018 Michael Shigorin <mike@altlinux.org> 2.49.2-alt1
+- New version
+
 * Sun Nov 05 2017 Michael Shigorin <mike@altlinux.org> 2.49.1-alt1
 - New version
 
