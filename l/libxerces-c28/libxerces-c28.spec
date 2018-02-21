@@ -13,7 +13,7 @@
 
 Name: libxerces-c28
 Version: 2.8.0
-Release: alt3.qa4
+Release: alt3.qa5
 
 Summary: Xerces-C++ validating XML parser
 
@@ -96,18 +96,26 @@ write XML data. A shared library is provided for parsing, generating,
 manipulating, and validating XML documents.
 
 %prep
-%setup -q -n %tarname
+%setup -n %tarname
 %patch0 -p1
 %patch1
 %patch2
 
 %build
+#_configure_update_config
 export XERCESCROOT=$(pwd)
 cd $XERCESCROOT/src/xercesc
+install -pm755 /usr/share/gnu-config/config.sub /usr/share/gnu-config/config.guess .
+# in addition to the now-ineffective patch0
+sed -i 's,/usr/sbin/lsattr,lsattr,' config.guess
+%autoreconf
 ./runConfigure %rcopts -plinux -cgcc -xg++ -minmem -nsocket -tnative -r%threads -P%prefix
 %make_build
 
 cd $XERCESCROOT/samples
+install -pm755 /usr/share/gnu-config/config.sub /usr/share/gnu-config/config.guess .
+sed -i 's,/usr/sbin/lsattr,lsattr,' config.guess
+%autoreconf
 ./runConfigure -plinux -cgcc -xg++
 %make_build
 
@@ -136,8 +144,8 @@ install -m644 -D %SOURCE1 %buildroot%_pkgconfigdir/xerces-c.pc
 %_includedir/xercesc/
 %_libdir/libxerces-c.so
 %_libdir/libxerces-depdom.so
-%dir %_datadir/%name/
-%_datadir/%name/samples/
+#dir %_datadir/%name/
+#_datadir/%name/samples/
 %_pkgconfigdir/xerces-c.pc
 
 %files doc
@@ -147,6 +155,10 @@ install -m644 -D %SOURCE1 %buildroot%_pkgconfigdir/xerces-c.pc
 %_bindir/*
 
 %changelog
+* Wed Feb 21 2018 Michael Shigorin <mike@altlinux.org> 2.8.0-alt3.qa5
+- autoreconf
+- drop useless samples (thx ldv@)
+
 * Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 2.8.0-alt3.qa4
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
