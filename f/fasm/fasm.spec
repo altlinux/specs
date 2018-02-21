@@ -1,6 +1,6 @@
 Summary: Flat assembler
 Name: fasm
-Version: 1.71.64
+Version: 1.73.02
 Release: alt1
 License: BSD-like
 Group: Development/Tools
@@ -45,6 +45,9 @@ install %FTOOLS %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Wed Feb 21 2018 Fr. Br. George <george@altlinux.ru> 1.73.02-alt1
+- Autobuild version bump to 1.73.02
+
 * Tue Sep 26 2017 Fr. Br. George <george@altlinux.ru> 1.71.64-alt1
 - Autobuild version bump to 1.71.64
 
