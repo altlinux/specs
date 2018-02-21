@@ -16,7 +16,7 @@
 
 Name: nvidia_glx_src
 Version: 390.25
-Release: alt2%ubt
+Release: alt3%ubt
 
 Source0: null
 Source201: ftp://download.nvidia.com/XFree86/Linux-x86/%version/NVIDIA-Linux-x86-%version.run
@@ -52,10 +52,11 @@ Sources for nvidia_glx package
 
 %package -n ocl-nvidia
 Group: System/Libraries
+BuildArch: noarch
 Summary: nvidia library
 Requires: libnvidia-opencl libnvidia-compiler
 Requires: libnvidia-ptxjitcompiler
-#Requires: libnvidia-ml
+Requires: libnvidia-ml
 %description -n ocl-nvidia
 nvidia OpenCL library
 
@@ -162,6 +163,9 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %_sysconfdir/OpenCL/vendors/nvidia.icd
 
 %changelog
+* Wed Feb 21 2018 Oleg Solovyov <mcpain@altlinux.org> 390.25-alt3%ubt
+- require libnvidia-ml
+
 * Mon Feb 19 2018 Oleg Solovyov <mcpain@altlinux.org> 390.25-alt2%ubt
 - added pkgs:
 libnvidia-cuda
