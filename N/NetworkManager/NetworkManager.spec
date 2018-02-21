@@ -43,7 +43,7 @@
 
 Name: NetworkManager
 Version: 1.10.4
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -725,6 +725,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Feb 21 2018 Mikhail Efremov <sem@altlinux.org> 1.10.4-alt2
+- Don't fail if dhcp client for DHCPv6 didn't start.
+
 * Fri Feb 09 2018 Mikhail Efremov <sem@altlinux.org> 1.10.4-alt1
 - Drop obsoleted patch..
 - Updated to 1.10.4.
