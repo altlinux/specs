@@ -1,6 +1,6 @@
 Name: libbelle-sip
 Version: 1.6.3
-Release: alt1
+Release: alt2
 Summary: Linphone sip stack
 
 Group: System/Libraries
@@ -34,6 +34,8 @@ Libraries and headers required to develop software with belle-sip
 
 %build
 
+%set_gcc_version 5
+
 ./autogen.sh
 
 ./configure --prefix=/usr --exec-prefix=/usr --bindir=/usr/bin \
@@ -61,6 +63,9 @@ make
 %_libdir/pkgconfig/belle-sip.pc
 
 %changelog
+* Wed Feb 21 2018 Alexei Takaseev <taf@altlinux.org> 1.6.3-alt2
+- Add %%set_gcc_version 5 to %%build section
+
 * Sat Jul 22 2017 Alexei Takaseev <taf@altlinux.org> 1.6.3-alt1
 - 1.6.3
 
