@@ -2,7 +2,7 @@
 %def_without tests
 
 Name: meson
-Version: 0.44.0
+Version: 0.44.1
 Release: alt1
 
 Summary: High productivity build system
@@ -12,6 +12,7 @@ Url: http://mesonbuild.com/
 
 Source: https://github.com/mesonbuild/meson/archive/%version/%name-%version.tar.gz
 Source1: %name.macros
+Source2: %name.env
 
 BuildArch: noarch
 
@@ -54,6 +55,7 @@ reports, Valgrind, CCache and the like.
 %install
 %python3_install
 install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
+install -Dpm 0755 %SOURCE2 %buildroot%_rpmmacrosdir/%name.env
 
 %check
 %{?_with_tests:MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py}
@@ -72,10 +74,15 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_man1dir/%{name}test.1.*
 %_man1dir/wraptool.1.*
 %_rpmmacrosdir/%name
+%_rpmmacrosdir/%name.env
 %doc COPYING README.*
 
 
 %changelog
+* Wed Feb 21 2018 Yuri N. Sedunov <aris@altlinux.org> 0.44.1-alt1
+- 0.44.1
+- set locale to en_US.utf8 in meson.env
+
 * Wed Dec 20 2017 Yuri N. Sedunov <aris@altlinux.org> 0.44.0-alt1
 - 0.44.0
 
