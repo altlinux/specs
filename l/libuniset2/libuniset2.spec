@@ -17,7 +17,7 @@
 
 Name: libuniset2
 Version: 2.7
-Release: alt3
+Release: alt4
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -518,6 +518,9 @@ rm -f %buildroot%_libdir/*.la
 # history of current unpublished changes
 
 %changelog
+* Wed Feb 21 2018 Pavel Vainerman <pv@altlinux.ru> 2.7-alt4
+- (omniThread): fix compile error for 'const' function and other minor fixes
+
 * Thu Feb 01 2018 Pavel Vainerman <pv@altlinux.ru> 2.7-alt3
 - minor fixes
 
