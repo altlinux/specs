@@ -6,11 +6,11 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:       perl-DateTime-Format-Flexible
-Version:    0.28
-Release:    alt1_3
+Version:    0.29
+Release:    alt1
 License:    GPL+ or Artistic
 Summary:    Flexibly parse strings and turn them into DateTime objects
-Source:     http://search.cpan.org/CPAN/authors/id/T/TH/THINC/DateTime-Format-Flexible-%{version}.tar.gz
+Source0:     http://www.cpan.org/authors/id/T/TH/THINC/DateTime-Format-Flexible-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/DateTime-Format-Flexible/
 BuildArch:  noarch
 BuildRequires:  perl-devel
@@ -60,11 +60,14 @@ make pure_install DESTDIR=%{buildroot}
 TEST_POD=1 make test
 
 %files
-%doc LICENSE
+%doc LICENSE example
 %doc Changes example/ README TODO
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- automated CPAN update
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1_3
 - update to new release by fcimport
 
