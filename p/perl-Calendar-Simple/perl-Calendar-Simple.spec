@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Calendar-Simple
-Version: 1.21
-Release: alt1.1
+Version: 1.22
+Release: alt1
 
 Summary: Calendar-Simple - Perl module
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/D/DA/DAVECROSS/Calendar-Simple-1.21.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DAVECROSS/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Jun 23 2006
 BuildRequires: perl-devel perl-Module-Build
@@ -35,7 +35,7 @@ BuildRequires: perl-devel perl-Module-Build
 A very simple module that exports one function called calendar.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -48,6 +48,9 @@ A very simple module that exports one function called calendar.
 %perl_vendor_privlib/Calendar/
 
 %changelog
+* Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
