@@ -2,14 +2,14 @@
 # warning: Macro %_dotnet_corerelease not found
 # error: line 26: Dependency tokens must not contain '%<=>' symbols: BuildRequires: dotnet-bootstrap-runtime = %_dotnet_corerelease
 # hsh-rebuild: pkg.tar: failed to fetch build dependencies.
-%define _dotnet_corerelease 2.0.3
+%define _dotnet_corerelease 2.0.5
 
 # FIXME: build from sources
 %def_with bootstrap
 %define pre %nil
 
 Name: dotnet-corefx
-Version: 2.0.3
+Version: 2.0.5
 Release: alt1
 
 Summary: .NET Core foundational libraries, called CoreFX
@@ -85,6 +85,10 @@ rm -fv %buildroot%_dotnet_shared/System.Globalization.Native.so
 %_dotnet_shared/*.dll
 
 %changelog
+* Mon Feb 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.5-alt1
+- new version (2.0.5) with rpmgs script
+- CVE-2018-0764, CVE-2018-0786
+
 * Thu Nov 23 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.3-alt1
 - new version (2.0.3) with rpmgs script
 

@@ -3,7 +3,7 @@
 %define pre %nil
 
 Name: dotnet-coreclr
-Version: 2.0.3
+Version: 2.0.5
 Release: alt1
 
 Summary: .NET Core runtime, called CoreCLR, and the base library, called mscorlib
@@ -14,7 +14,7 @@ Group: Development/Other
 
 # Source-url: https://github.com/dotnet/coreclr/archive/v%version%pre.tar.gz
 Source: %name-%version.tar
-
+Patch1: 0001-Add-support-for-building-under-glibc-2.26-13785.patch
 #Source1: init-tools.sh
 
 ExclusiveArch: x86_64
@@ -61,6 +61,7 @@ cross platform applications that work on Linux, Mac and Windows.
 
 %prep
 %setup
+%patch1 -p1
 
 # make strange error if uncomment due isMSBuildOnNETCoreSupported initialized
 find -type f -name "*.sh" | xargs subst "s|/etc/os-release|%_libdir/dotnet/fake-os-release|g"
@@ -98,6 +99,11 @@ cp -a bin/Product/Linux.x64.Release/{System.Globalization.Native.so,libSystem.Gl
 %_dotnet_shared/sosdocsunix.txt
 
 %changelog
+* Thu Feb 22 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.5-alt1
+- new version (2.0.5) with rpmgs script
+- CVE-2018-0764, CVE-2018-0786
+- backport patch: Add support for building under glibc 2.26
+
 * Thu Nov 23 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.3-alt1
 - new version (2.0.3) with rpmgs script
 
