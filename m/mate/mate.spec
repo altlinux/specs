@@ -1,8 +1,8 @@
-%define ver_major 1.15
+%define ver_major 1.18
 
 Name: mate
 Version: %ver_major.0
-Release: alt3
+Release: alt1
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -162,7 +162,7 @@ Requires: mate-notification-daemon
 #Requires: gedit-plugins
 ## Stock multimedia applications
 Requires: mate-media
-Requires: gst-plugins-good
+Requires: gst-plugins-good1.0
 ## Default media player
 #Requires: totem
 ## Stock MATE games
@@ -392,6 +392,10 @@ itself).
 #%files a11y
 
 %changelog
+* Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 1.18.0-alt1
+- gst -> gst 1.0
+- bumped version
+
 * Wed Feb 14 2018 Anton Midyukov <antohami@altlinux.org> 1.15.0-alt3
 - Remove requires webclient (requires rekonq, it is not clear why)
 
