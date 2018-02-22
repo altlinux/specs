@@ -1,6 +1,6 @@
 %define m_distro Test-Strict
 Name: perl-Test-Strict
-Version: 0.40
+Version: 0.44
 Release: alt1
 Summary: Check syntax, presence of use strict; and test coverage
 
@@ -33,6 +33,9 @@ mkdir cover_db
 %doc Changes README
 
 %changelog
+* Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
+- automated CPAN update
+
 * Mon Dec 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
 - automated CPAN update
 
