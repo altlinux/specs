@@ -2,7 +2,7 @@
 %define module_name Net-DNS-SEC
 
 Name: perl-%module_name
-Version: 1.03
+Version: 1.04
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -12,11 +12,11 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module_name
-Source: http://www.cpan.org/authors/id/N/NL/NLNETLABS/Net-DNS-SEC-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/N/NL/NLNETLABS/%{module_name}-%{version}.tar.gz
 
-BuildArch: noarch
+#BuildArch: noarch
 
-BuildRequires: perl-Net-DNS > 0.63 perl(Crypt/OpenSSL/EC.pm) perl(Crypt/OpenSSL/ECDSA.pm) perl(Digest/GOST.pm)
+BuildRequires: perl-Net-DNS > 0.63 perl(Crypt/OpenSSL/EC.pm) perl(Crypt/OpenSSL/ECDSA.pm) perl(Digest/GOST.pm) libssl-devel
 # Automatically added by buildreq on Thu Apr 08 2010
 BuildRequires: perl-Crypt-OpenSSL-DSA perl-Crypt-OpenSSL-RSA perl-Digest-SHA perl-Digest-SHA1 perl-MIME-Base32 perl-Math-BigInt perl-Test-Pod
 
@@ -24,7 +24,7 @@ BuildRequires: perl-Crypt-OpenSSL-DSA perl-Crypt-OpenSSL-RSA perl-Digest-SHA per
 DNSSEC extensions to Net::DNS.
 
 %prep
-%setup -n %module_name-%version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,10 +33,14 @@ DNSSEC extensions to Net::DNS.
 %perl_vendor_install
 
 %files
-%doc demo
-%perl_vendor_privlib/Net/DNS
+%doc demo Changes README
+%perl_vendor_archlib/Net/DNS
+%perl_vendor_autolib/Net/DNS
 
 %changelog
+* Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
 - automated CPAN update
 
