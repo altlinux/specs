@@ -1,5 +1,5 @@
 Name:           x2goclient
-Version:        4.1.1.0
+Version:        4.1.1.1
 Release:        alt1
 Summary:        X2Go Client application (Qt4)
 
@@ -31,7 +31,7 @@ BuildRequires:  perl-Proc-Simple
 BuildRequires:  perl-Term-ReadPassword
 BuildRequires:  zlib-devel
 Requires:       icon-theme-hicolor
-Requires:       nxproxy
+Requires:       nx
 # For GSSAPI authenticated connections
 Requires:       openssh-clients
 # For local folder sharing and printing
@@ -55,7 +55,7 @@ You can use it to connect to running sessions and start new sessions.
 Summary:        X2Go Client (Qt4) as browser plugin
 Group:          Communications
 Requires:       browser-plugins-npapi
-Requires:       nxproxy
+Requires:       nx
 # For GSSAPI authenticated connections
 Requires:       openssh-clients
 # For local folder sharing and printing
@@ -142,6 +142,13 @@ ln -s ../../x2go/x2goplugin-apache.conf %buildroot%_sysconfdir/httpd/conf.d/x2go
 %_datadir/x2go/
 
 %changelog
+* Thu Feb 22 2018 Andrey Cherepanov <cas@altlinux.org> 4.1.1.1-alt1
+- New version.
+- Return to old nx.
+
+* Wed Feb 07 2018 Andrey Cherepanov <cas@altlinux.org> 4.1.1.0-alt2
+- Use nxproxy-x2go
+
 * Mon Nov 06 2017 Andrey Cherepanov <cas@altlinux.org> 4.1.1.0-alt1
 - New version
 
