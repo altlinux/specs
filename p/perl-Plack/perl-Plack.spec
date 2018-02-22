@@ -1,6 +1,6 @@
 Name: perl-Plack
-Version: 1.0044
-Release: alt2
+Version: 1.0047
+Release: alt1
 
 Summary: Plack - Perl Superglue for Web frameworks and Web Servers (PSGI toolkit)
 License: Perl
@@ -77,6 +77,9 @@ find . -iname 'apache1*' -delete
 %perl_vendor_privlib/Plack/Handler/FCGI.pm
 
 %changelog
+* Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 1.0047-alt1
+- automated CPAN update
+
 * Thu Aug 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0044-alt2
 - Updated build dependencies.
 - Removed apache1 support.
