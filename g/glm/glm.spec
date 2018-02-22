@@ -1,6 +1,6 @@
 Name: glm
 Version: 0.9.8.5
-Release: alt1
+Release: alt2
 License: MIT
 Summary: GLM is a header only C++ mathematics library for graphics software based on the GLSL specification
 Group: Development/C++
@@ -8,6 +8,13 @@ Url: http://glm.g-truc.net/
 BuildRequires: gcc-c++ cmake ctest
 
 Source: %version.tar.gz
+
+## FC patches
+Patch1: FC-0.9.6.1-ulp.patch
+Patch2: FC-0.9.8.5-compiler-list.patch
+
+## ALT patches
+Patch500: glm-ALT-GCC7.patch
 
 %package -n lib%name-devel
 Summary: GLM is a header only C++ mathematics library for graphics software based on the GLSL specification
@@ -58,13 +65,15 @@ This package contains the GLM in HTML and PDF formats.
 %prep
 %setup
 
+## FC apply patches
+%patch1 -p1 -b .ulp
+%patch2 -p1 -b .compiler-list
+
+## ALT apply patches
+%patch500 -p1
+
 %build
 %cmake -DGLM_TEST_ENABLE=True -DGLM_TEST_ENABLE_CXX_11=True -DCMAKE_CXX_FLAGS="-std=c++11" -DCMAKE_VERBOSE_MAKEFILE=True
-%ifarch %ix86
-# Thees tests fail on GCC up to 5.2.1
-sed -i 's/-O[0-9]/-O0/' BUILD/test/core/CMakeFiles/test-core_func_exponential.dir/flags.make
-sed -i 's/-O[0-9]/-O0/' BUILD/test/gtc/CMakeFiles/test-gtc_packing.dir/flags.make
-%endif
 %cmake_build
 
 %install
@@ -89,6 +98,9 @@ cp -a copying.txt readme.md doc/*.pdf doc/api/ %buildroot%_docdir/lib%name-devel
 %_docdir/lib%name-devel/api/
 
 %changelog
+* Thu Feb 22 2018 Fr. Br. George <george@altlinux.ru> 0.9.8.5-alt2
+- Fix build with GCC7
+
 * Fri Aug 25 2017 Fr. Br. George <george@altlinux.ru> 0.9.8.5-alt1
 - Autobuild version bump to 0.9.8.5
 
