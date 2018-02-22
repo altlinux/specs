@@ -1,9 +1,7 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.2
 Name:		refal-plus
 # `svnversion`
 Version:	4137
-#Release:	alt1
+Release:	alt2
 Summary:	A modern dialect of Refal programming language
 Summary(ru_RU.KOI8-R): Современный диалект языка программирования Рефал
 Source:		refal-r%{version}-src.zip
@@ -112,7 +110,7 @@ Sample applications for %name
 
 %prep
 %setup -n refal-r%{version}-src
-%patch1 -p2
+%patch1 -p1
 touch c++/rules.mk
 
 %build
@@ -145,6 +143,9 @@ mv %buildroot%_prefix/lib/lib* %buildroot%_libdir/
 %doc compiler rfp rfpfilt samples RfpUpgrader
 
 %changelog
+* Thu Feb 22 2018 Fr. Br. George <george@altlinux.ru> 4137-alt2
+- Fixed build with new toolchain
+
 * Thu Jul 06 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4137-alt1.2
 - Fixed build with new toolchain
 
