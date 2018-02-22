@@ -1,13 +1,17 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(AutoLoader.pm) perl-podlators
+BuildRequires: perl(AutoLoader.pm) perl(Exporter.pm) perl(XSLoader.pm) perl-podlators
 # END SourceDeps(oneline)
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %define upstream_name    Linux-Personality
 %define upstream_version 0.01
 
+%{?perl_default_filter}
+
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release: alt2.1.1.1.1
+Release:    alt3_14
 
 Summary:    Perl interface to the personality(2) Linux system call
 License:    GPL+ or Artistic
@@ -35,7 +39,7 @@ program.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 
 %make
 
@@ -50,10 +54,10 @@ program.
 %perl_vendor_archlib/L*
 %perl_vendor_archlib/auto/L*
 
-
-
-
 %changelog
+* Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.01-alt3_14
+- update by mgaimport
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2.1.1.1.1
 - rebuild with new perl 5.26.1
 
