@@ -1,5 +1,10 @@
 
 %def_disable permhelper
+%_K5if_ver_gteq %ubt_id S0
+%def_enable obsolete_kde4
+%else
+%def_disable obsolete_kde4
+%endif
 
 %define sover 7
 %define libk3blib libk3blib%sover
@@ -20,8 +25,8 @@
 %define rname k3b
 Name: kde5-%rname
 Version: 17.08.3
-Release: alt1%ubt
-%K5init
+Release: alt2%ubt
+%K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Group: Archiving/Cd burning
 Summary: The CD Kreator (Complete set)
@@ -31,8 +36,11 @@ License: GPLv2
 
 Provides: k3b = %version-%release
 Requires: %req_all
-#Requires: %name-mini = %version-%release
 Conflicts: k3b-mini < 1.0.5-alt7
+%if_enabled obsolete_kde4
+Provides: kde4-k3b = %version-%release
+Obsoletes: kde4-k3b < %version-%release
+%endif
 
 Source0: %rname-%version.tar
 Patch1: alt-permhelper.patch
@@ -173,6 +181,9 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Thu Feb 22 2018 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt2%ubt
+- obsolete kde4-k3b
+
 * Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 
