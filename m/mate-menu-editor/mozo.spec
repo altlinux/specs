@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/g
 %define oldname mozo
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global branch 1.19
+%global branch 1.20
 
 Name:           mate-menu-editor
 Version:        %{branch}.0
@@ -38,6 +38,7 @@ MATE Desktop menu editor
 %prep
 %setup -n %{oldname}-%{version} -q
 
+
 #NOCONFIGURE=1 ./autogen.sh
 
 %build
@@ -66,6 +67,9 @@ desktop-file-install                                  \
 
 
 %changelog
+* Thu Feb 22 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
 - new fc release
 

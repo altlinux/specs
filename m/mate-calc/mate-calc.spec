@@ -6,12 +6,12 @@ BuildRequires: /usr/bin/desktop-file-install libgio-devel pkgconfig(glib-2.0) pk
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		mate-calc
-Version:	1.19.0
+Version:	1.20.0
 Release:	alt1_1
 Summary:	MATE Desktop calculator
 License:	GPLv2+
 URL:		http://mate-desktop.org
-Source0:	http://pub.mate-desktop.org/releases/1.18/%{name}-%{version}.tar.xz
+Source0:	http://pub.mate-desktop.org/releases/1.20/%{name}-%{version}.tar.xz
 
 BuildRequires:	gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:	libxml2-devel
@@ -28,7 +28,8 @@ mate-calc is a powerful graphical calculator with financial, logical and scienti
 It uses a multiple precision package to do its arithmetic to give a high degree of accuracy.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
+
 
 
 %build
@@ -37,7 +38,7 @@ It uses a multiple precision package to do its arithmetic to give a high degree 
 %make_build V=1
 
 %install
-make install DESTDIR=%{buildroot}
+%{makeinstall_std}
 
 
 desktop-file-install									\
@@ -46,6 +47,7 @@ desktop-file-install									\
 %{buildroot}%{_datadir}/applications/*.desktop
 
 %find_lang %{name} --with-gnome --all-name
+
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
@@ -60,6 +62,9 @@ desktop-file-install									\
 
 
 %changelog
+* Thu Feb 22 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Sun Oct 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
 - new fc release
 

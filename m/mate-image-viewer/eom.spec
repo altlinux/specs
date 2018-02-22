@@ -4,17 +4,17 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define oldname eom
-%define fedora 25
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name eom
-%define version 1.19.1
+%define version 1.20.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.19
+%global branch 1.20
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 7ba7e03f4d5e2ecd3c77f9d9394521b7608ca05f}
@@ -25,7 +25,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 %{!?rel_build:%global git_tar %{oldname}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-image-viewer
-Version:       %{branch}.1
+Version:       %{branch}.0
 %if 0%{?rel_build}
 Release:       alt1_1
 %else
@@ -80,7 +80,13 @@ Development files for eom
 
 
 %prep
-%setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
+%if 0%{?rel_build}
+%setup -n %{oldname}-%{version} -q
+
+%else
+%setup -q -n %{oldname}-%{commit}
+
+%endif
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -135,6 +141,9 @@ find ${RPM_BUILD_ROOT} -type f -name "*.la" -exec rm -f {} ';'
 
 
 %changelog
+* Thu Feb 22 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.1-alt1_1
 - new fc release
 

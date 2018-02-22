@@ -25,9 +25,9 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/g
 Name:           mate-notification-daemon
 Version:        %{branch}.0
 %if 0%{?rel_build}
-Release:        alt1_1
+Release:        alt2_1
 %else
-Release:        alt1_1
+Release:        alt2_1
 %endif
 Summary:        Notification daemon for MATE Desktop
 License:        GPLv2+
@@ -49,7 +49,6 @@ BuildRequires:  mate-desktop-devel
 
 Provides:       desktop-notification-daemon
 Source44: import.info
-Requires: libcanberra-gtk3-devel
 
 %description
 Notification daemon for MATE Desktop
@@ -105,6 +104,9 @@ rm -f  %{buildroot}%{_datadir}/applications/mate-notification-daemon.desktop
 
 
 %changelog
+* Fri Feb 23 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt2_1
+- removed false rundep
+
 * Mon Feb 19 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
 - new fc release
 

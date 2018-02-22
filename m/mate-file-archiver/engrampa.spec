@@ -9,12 +9,12 @@ BuildRequires: libmagic-devel libSM-devel
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name engrampa
-%define version 1.19.1
+%define version 1.20.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.19
+%global branch 1.20
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit f4611c3411c44e792f729a0780c31b0aa55fe004}
@@ -25,7 +25,7 @@ BuildRequires: libmagic-devel libSM-devel
 %{!?rel_build:%global git_tar %{oldname}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-file-archiver
-Version:       %{branch}.1
+Version:       %{branch}.0
 %if 0%{?rel_build}
 Release:       alt1_1
 %else
@@ -67,7 +67,13 @@ Requires: %name = %EVR
 Mate-file-manager extension for mount archiver
 
 %prep
-%setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
+%if 0%{?rel_build}
+%setup -n %{oldname}-%{version} -q
+
+%else
+%setup -q -n %{oldname}-%{commit}
+
+%endif
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -101,6 +107,7 @@ find %{buildroot} -name "*.la" -exec rm -f {} ';'
 
 %find_lang %{oldname} --with-gnome --all-name
 
+
 %files -f %{oldname}.lang
 %doc README COPYING NEWS AUTHORS
 %{_mandir}/man1/*
@@ -122,6 +129,9 @@ find %{buildroot} -name "*.la" -exec rm -f {} ';'
 
 
 %changelog
+* Thu Feb 22 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.1-alt1_1
 - new fc release
 

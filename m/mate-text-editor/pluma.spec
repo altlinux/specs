@@ -3,18 +3,18 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define oldname pluma
-%define fedora 25
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name pluma
-%define version 1.19.2
+%define version 1.20.0
 %add_python_req_skip pluma
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.19
+%global branch 1.20
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit c1ca209172a8b3a0751ac0a1e2dbec33c1894290}
@@ -26,7 +26,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 
 Summary:  Text editor for the MATE desktop
 Name:     mate-text-editor
-Version:  %{branch}.2
+Version:  %{branch}.0
 %if 0%{?rel_build}
 Release:  alt1_1
 %else
@@ -74,16 +74,15 @@ Requires:      libpeas-python-loader
 Source44: import.info
 
 %description
-mate-text-editor is a small, but powerful text editor designed specifically for
+pluma is a small, but powerful text editor designed specifically for
 the MATE desktop. It has most standard text editor functions and fully
 supports international text in Unicode. Advanced features include syntax
 highlighting and automatic indentation of source code, printing and editing
 of multiple documents in one window.
 
-mate-text-editor is extensible through a plugin system, which currently includes
+pluma is extensible through a plugin system, which currently includes
 support for spell checking, comparing files, viewing CVS ChangeLogs, and
 adjusting indentation levels.
-
 
 %package data
 Summary:   Data files for pluma
@@ -96,16 +95,22 @@ This package contains shared data needed for pluma.
 
 
 %package devel
-Summary:   Support for developing plugins for the mate-text-editor text editor
+Summary:   Support for developing plugins for the pluma text editor
 Group:     Development/Other
 Requires:  %{name} = %{version}-%{release}
 
 %description devel
-Development files for mate-text-editor
+Development files for pluma
 
 
 %prep
-%setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
+%if 0%{?rel_build}
+%setup -n %{oldname}-%{version} -q
+
+%else
+%setup -q -n %{oldname}-%{commit}
+
+%endif
 
 %if 0%{?rel_build}
 # for releases
@@ -177,6 +182,9 @@ fi
 
 
 %changelog
+* Thu Feb 22 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.2-alt1_1
 - new fc release
 

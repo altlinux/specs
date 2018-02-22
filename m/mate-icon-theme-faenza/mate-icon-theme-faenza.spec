@@ -5,7 +5,7 @@ Group: Graphical desktop/MATE
 #%%global _internal_version  c147867
 
 Name:           mate-icon-theme-faenza
-Version:        1.19.0
+Version:        1.20.0
 Release:        alt1_1
 #Release:        0.1.git%{_internal_version}%{?dist}
 Summary:        Extra set of icon themes for MATE Desktop
@@ -16,7 +16,7 @@ URL:            http://mate-desktop.org
 # wget http://git.mate-desktop.org/%%{name}/snapshot/%%{name}-{_internal_version}.tar.xz -O %%{name}-%%{version}.git%%{_internal_version}.tar.xz
 #Source0: http://raveit65.fedorapeople.org/Mate/git-upstream/%{name}-%{version}.git%{_internal_version}.tar.xz
 
-Source0:        http://pub.mate-desktop.org/releases/1.18/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.20/%{name}-%{version}.tar.xz
 
 BuildRequires: hardlink
 BuildRequires: mate-common
@@ -30,7 +30,7 @@ Provides a complimentary set of icon themes for MATE Desktop
 
 %prep
 %setup -q
-#%setup -q -n %{name}-%{_internal_version}
+
 
 # nedded for git snapshots
 NOCONFIGURE=1 ./autogen.sh
@@ -63,6 +63,9 @@ fi
 
 
 %changelog
+* Thu Feb 22 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
 - new fc release
 

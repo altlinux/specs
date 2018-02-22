@@ -2,6 +2,7 @@
 BuildRequires(pre): rpm-build-python
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global debug_package %{nil}
@@ -12,7 +13,7 @@ BuildRequires(pre): rpm-build-python
 
 Name:           mate-menu
 Version:        17.10.1
-Release:        alt1_2
+Release:        alt1_4
 Summary:        Advanced Menu for the MATE Desktop
 Group:          Shells
 # mate_menu/keybinding.py use MIT license and the rest is under GPLv2+
@@ -36,7 +37,11 @@ BuildRequires:  desktop-file-utils
 Requires:       mate-menus
 Requires:       mate-menu-editor
 Requires:       python-module-configobj
+%if 0%{?fedora} && 0%{?fedora} <= 27
 Requires:       python-module-pygobject3
+%else
+Requires:       python-module-pygobject3
+%endif
 Requires:       python-module-pyxdg
 Requires:       python-module-xlib
 Requires:       beesu
@@ -86,14 +91,13 @@ rm -rf %{buildroot}%{_datadir}/locale/zh-Hans/
 
 %postun
 if [ $1 -eq 0 ] ; then
-
     /bin/touch --no-create %{_datadir}/mate-menu &>/dev/null
 
 fi
 
 %files -f %{name}.lang
 %doc README.md
-%doc COPYING
+%doc --no-dereference COPYING
 %{_bindir}/%{name}
 %{_prefix}/lib/%{name}/
 %{python_sitelibdir_noarch}/%{_name}/
@@ -106,6 +110,9 @@ fi
 
 
 %changelog
+* Thu Feb 22 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 17.10.1-alt1_4
+- new fc release
+
 * Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 17.10.1-alt1_2
 - new fc release
 

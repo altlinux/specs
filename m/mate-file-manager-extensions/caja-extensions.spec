@@ -8,12 +8,12 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel pkgconfi
 %define _localstatedir %{_var}
 # %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name caja-extensions
-%define version 1.19.0
+%define version 1.20.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.19
+%global branch 1.20
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 298c7255b82986eeba72fff06f59479deae0b9d0}
@@ -72,7 +72,6 @@ BuildArch:  noarch
 Group: Graphical desktop/MATE
 Summary:    MATE file manager image converter extension
 Requires:   %{name}-common = %{version}-%{release}
-Requires:   /usr/bin/convert
 
 %description -n mate-file-manager-image-converter
 The caja-image-converter extension allows you to
@@ -142,8 +141,13 @@ Caja xattr-tags extension, allows to quickly set xattr-tags.
 
 
 %prep
-%setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
-%patch0 -p1 -b .beesu
+%if 0%{?rel_build}
+%setup -n %{oldname}-%{version} -q
+%patch0 -p1
+%else
+%setup -q -n %{oldname}-%{commit}
+%patch0 -p1
+%endif
 
 cp %{SOURCE1} SETUP
 
@@ -238,6 +242,9 @@ cp %{SOURCE2} %{buildroot}/%{_sysconfdir}/samba/
 
 
 %changelog
+* Thu Feb 22 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
 - new fc release
 
