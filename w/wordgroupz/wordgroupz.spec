@@ -2,7 +2,7 @@
 BuildRequires(pre): rpm-build-python
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-%define fedora 26
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %if ! (0%{?fedora} > 12 || 0%{?rhel} > 5)
@@ -13,7 +13,7 @@ BuildRequires: /usr/bin/desktop-file-install
 Summary: A vocabulary building application
 Name: wordgroupz
 Version: 0.3.1
-Release: alt1_13
+Release: alt1_14
 Source0: http://rtnpro.fedorapeople.org/wordgroupz/wordgroupz-%{version}.tar.gz
 License: GPLv3
 Group: Games/Other
@@ -21,7 +21,7 @@ URL: http://gitorious.org/wordgroupz/
 BuildArch: noarch
 BuildRequires: python-devel, desktop-file-utils
 Requires: python-module-pygtk python-module-pygtk-demo, python-module-pywebkitgtk, python-module-nltk libwordnet wordnet
-Requires: python-module-BeautifulSoup, python-module-gst
+Requires: python-module-BeautifulSoup, python-module-gst1.0
 Source44: import.info
 
 %description
@@ -47,6 +47,9 @@ desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{name}.des
 %{python_sitelibdir_noarch}/*.egg-info
 
 %changelog
+* Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1_14
+- rebuild with gstreamer
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1_13
 - update to new release by fcimport
 
