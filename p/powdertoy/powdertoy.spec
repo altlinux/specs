@@ -1,6 +1,6 @@
 Name: powdertoy
-Version: 92.2.333
-Release: alt1
+Version: 92.5
+Release: alt2
 Summary: Classic 'falling sand' physics sandbox game
 Group: Games/Educational
 Epoch: 1
@@ -50,7 +50,11 @@ convert -set filename:area '%%wx%%h' resources/powder.ico 'powder-%%[filename:ar
 %ifarch x86_64
 scons -j %__nprocs --lin --64bit
 %else
+%ifarch %ix86
 scons -j %__nprocs --lin
+%else
+scons -j %__nprocs --lin --no-sse
+%endif
 %endif
 
 # TODO this doesn't compile for build263
@@ -72,6 +76,12 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Thu Feb 22 2018 Fr. Br. George <george@altlinux.ru> 1:92.5-alt2
+- Build for non-PC platforms
+
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 1:92.5-alt1
+- Autobuild version bump to 92.5
+
 * Mon Sep 18 2017 Fr. Br. George <george@altlinux.ru> 1:92.2.333-alt1
 - Autobuild version bump to 92.2.333
 
