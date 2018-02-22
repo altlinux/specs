@@ -1,5 +1,5 @@
 Name: perl-File-Path-Tiny
-Version: 0.8
+Version: 0.9
 Release: alt1
 
 Summary: recursive versions of mkdir() and rmdir() without as much overhead as File::Path
@@ -10,7 +10,7 @@ Url: %CPAN File-Path-Tiny
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(Test/Exception.pm)
 
 %description
 %summary
@@ -29,6 +29,9 @@ BuildRequires: perl-devel
 %doc Changes README
 
 %changelog
+* Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1
+- automated CPAN update
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1
 - automated CPAN update
 
