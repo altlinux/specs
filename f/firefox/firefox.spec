@@ -16,7 +16,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
 Version:        58.0.2
-Release:        alt2
+Release:        alt3
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -43,6 +43,7 @@ Patch18:        firefox-alt-nspr-for-rust.patch
 # Upstream
 Patch200:       mozilla-bug-256180.patch
 Patch201:       mozilla-bug-1196777.patch
+Patch202:       mozilla-bug-1430274.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -148,6 +149,7 @@ tar -xf %SOURCE2
 
 %patch200 -p1
 %patch201 -p1
+%patch202 -p1
 
 cp -f %SOURCE4 .mozconfig
 
@@ -342,6 +344,9 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Thu Feb 22 2018 Alexey Gladkov <legion@altlinux.ru> 58.0.2-alt3
+- Fix ALSA (ALT#34553).
+
 * Mon Feb 19 2018 Alexey Gladkov <legion@altlinux.ru> 58.0.2-alt2
 - Enable ALSA support.
 
