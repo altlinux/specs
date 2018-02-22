@@ -9,7 +9,7 @@ BuildRequires: gcc-c++ libSDL-devel libpng-devel perl(Digest/MD5.pm) python-deve
 
 Name:          gemrb
 Version:       0.8.4
-Release:       alt2_2
+Release:       alt2_3
 Summary:       Port of the original Infinity (Game) Engine
 Group:         Games/Adventure
 License:       GPLv2+
@@ -47,18 +47,11 @@ supported games can be found at www.gemrb.org
 
 
 %build
-%{mageia_cmake} -DLAYOUT=fhs \
+%{mageia_cmake} -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF -DCMAKE_SKIP_RPATH:BOOL=OFF  -DLAYOUT=fhs \
        -DLIB_DIR=%{_libdir}/%{name} \
        -DUSE_SDL2=1 \
-       -DUSE_OPENGL=1 \
-       -DCMAKE_SKIP_RPATH:BOOL=OFF \
-       -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF
-       
-
-
-
-       
-%make_build VERBOSE=1
+       -DUSE_OPENGL=1
+%make_build
 
 %install
 %makeinstall_std -C build
@@ -82,6 +75,9 @@ rm -f %{buildroot}%{_sysconfdir}/gemrb/GemRB.cfg.noinstall.sample
 
 
 %changelog
+* Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt2_3
+- mga update
+
 * Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt2_2
 - fixed build
 
