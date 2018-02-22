@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           anchorman
 Version:        0.0.1
-Release:        alt2_12
+Release:        alt2_13
 Summary:        The recording-studio-in-a-box
 
 Group:          Sound
@@ -14,7 +14,7 @@ License:        GPLv2+
 URL:            https://fedorahosted.org/anchorman/
 Source0:        https://fedorahosted.org/released/anchorman/%{name}-%{version}.tar.gz
 
-BuildRequires:  gstreamer-devel gstreamer-gir-devel glib2-devel libgio libgio-devel libgudev-devel libgudev-gir-devel ctest cmake
+BuildRequires:  gstreamer1.0-devel gstreamer-gir-devel glib2-devel libgio libgio-devel libgudev-devel libgudev-gir-devel ctest cmake
 Requires:       gst-plugins-good
 Source44: import.info
 
@@ -44,6 +44,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.1-alt2_13
+- rebuild with gstreamer
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.1-alt2_12
 - update to new release by fcimport
 
