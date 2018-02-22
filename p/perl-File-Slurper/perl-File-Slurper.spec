@@ -6,7 +6,7 @@ BuildRequires: perl(Benchmark.pm) perl(Carp.pm) perl(Exporter.pm) perl(ExtUtils/
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.011
+Version: 0.012
 Release: alt1
 Summary: A simple, sane and efficient file slurper
 Group: Development/Perl
@@ -33,6 +33,9 @@ From summary: %summary
 %perl_vendor_privlib/F*
 
 %changelog
+* Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.012-alt1
+- automated CPAN update
+
 * Tue Dec 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1
 - automated CPAN update
 
