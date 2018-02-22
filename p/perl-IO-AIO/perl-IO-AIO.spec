@@ -1,17 +1,17 @@
 BuildRequires: perl-podlators
 %define _unpackaged_files_terminate_build 1
-Epoch: 1
+Epoch: 2
 %define dist IO-AIO
 Name: perl-%dist
-Version: 4.34
-Release: alt1.1.1
+Version: 4.4
+Release: alt1
 
 Summary: Asynchronous Input/Output
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/IO-AIO-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-common-sense perl-devel perl(Canary/Stability.pm)
@@ -40,7 +40,7 @@ scripts for %name
 
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -55,10 +55,13 @@ scripts for %name
 
 %files scripts
 %_bindir/*
-#%_man1dir/*
+%_man1dir/*
 
 
 %changelog
+* Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 2:4.4-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1:4.34-alt1.1.1
 - rebuild with new perl 5.26.1
 
