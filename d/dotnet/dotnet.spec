@@ -2,7 +2,7 @@
 %define pre %nil
 
 Name: dotnet
-Version: 2.0.3
+Version: 2.0.5
 Release: alt1
 
 Summary: Installer packages for the .NET Core runtime and libraries
@@ -46,6 +46,8 @@ and dotnet/corefx repo (libraries).
 
 %prep
 %setup
+# since glibc 2.26 xlocale.h is removed
+%__subst "s|xlocale.h|locale.h|" src/corehost/cli/json/casablanca/include/cpprest/asyncrt_utils.h
 
 find -type f -name "*.sh" | xargs subst "s|/etc/os-release|%_dotnetdir/fake-os-release|g"
 
@@ -59,7 +61,8 @@ DOTNET_TOOL_DIR=%bootstrapdir sh -x ./build.sh \
     --fxrver %_dotnet_corerelease \
     --policyver %_dotnet_corerelease \
     -portable \
-    --commithash 0
+    --commithash 0 || make -C bin/obj/Linux.x64.Release
+# (parallel generation fail workaround)
 
 %install
 mkdir -p %buildroot%_dotnetdir/
@@ -85,6 +88,9 @@ ln -sr %buildroot%_dotnetdir/dotnet %buildroot%_bindir/dotnet
 #_dotnet_shared/libhostfxr.so
 
 %changelog
+* Thu Feb 22 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.5-alt1
+- new version 2.0.5 (with rpmrb script)
+
 * Sat Nov 25 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.3-alt1
 - new version 2.0.3 (with rpmrb script)
 

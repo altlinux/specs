@@ -1,8 +1,8 @@
-%define corerelease 2.0.3
-%define sdkrelease 2.0.3
+%define corerelease 2.0.5
+%define sdkrelease 2.0.5
 
 Name: dotnet-common
-Version: 2.0.3
+Version: 2.0.5
 Release: alt1
 
 Summary: Common dir and files for the .NET Core runtime and libraries
@@ -86,6 +86,10 @@ install -D -m644 .version %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App
 %_rpmmacrosdir/dotnet
 
 %changelog
+* Tue Jan 30 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.5-alt1
+- build 2.0.5 release
+- CVE-2018-0764, CVE-2018-0786
+
 * Thu Nov 23 2017 Vitaly Lipatov <lav@altlinux.ru> 2.0.3-alt1
 - build 2.0.3 release
 
