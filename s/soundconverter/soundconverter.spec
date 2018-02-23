@@ -1,29 +1,27 @@
 Name: soundconverter
-Version: 2.1.6
+Version: 3.0.0
 Release: alt1
 
 Summary: A simple sound converter application for GNOME
 License: GPLv3
 Group: Sound
 
-Url: http://soundconverter.org
-Source: https://launchpad.net/%name/trunk/%version/+download/%name-%version.tar.xz
+Url: https://github.com/kassoulet/soundconverter
+Source: %name-%version.tar
+Patch: drop-unity.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-# Automatically added by buildreq on Sat Oct 17 2009
-BuildRequires: intltool python-devel python-module-pygnome
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires: intltool
+BuildRequires: python3-devel
+BuildRequires: typelib(Gtk) = 3.0
+BuildRequires: python3(gi)
+BuildRequires: gir(Gst) = 1.0
 BuildRequires: desktop-file-utils
-
-Requires: python-module-pygnome-gnome-vfs
-Requires: python-module-pygtk-libglade
-Requires: python-module-pygnome-gconf
-Requires: python-module-pygobject
-Requires: python-module-pygnome
-Requires: python-module-notify
-Requires: python-module-pygtk
-Requires: python-module-gst
-Requires: gst-plugins-base
-Requires: gst-plugins-good
+Requires: typelib(Gtk) = 3.0
+Requires: gst-plugins-ugly1.0
+Requires: gst-plugins-good1.0
+Requires: GConf
 
 %description
 A simple sound converter application for the GNOME environment.
@@ -31,8 +29,11 @@ It reads and writes anything the GStreamer library can.
 
 %prep
 %setup
+%patch -p2
 
 %build
+mkdir -p m4
+%autoreconf
 %configure
 %make_build
 
@@ -59,6 +60,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Fri Feb 23 2018 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt1
+- 3.0.0 beta 1
+
 * Sat Sep 24 2016 Anton Midyukov <antohami@altlinux.org> 2.1.6-alt1
 - 2.1.6
 
