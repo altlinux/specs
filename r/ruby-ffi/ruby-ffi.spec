@@ -1,7 +1,7 @@
 %define pkgname ffi
 
 Name: ruby-%pkgname
-Version: 1.9.21
+Version: 1.9.22
 Release: alt1
 
 Summary: Ruby foreign function interface
@@ -58,6 +58,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Feb 23 2018 Andrey Cherepanov <cas@altlinux.org> 1.9.22-alt1
+- New version.
+
 * Tue Feb 06 2018 Andrey Cherepanov <cas@altlinux.org> 1.9.21-alt1
 - New version.
 
