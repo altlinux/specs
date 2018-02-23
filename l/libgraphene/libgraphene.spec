@@ -1,13 +1,14 @@
 %def_disable snapshot
+%define _libexecdir %_prefix/libexec
 
 %define _name graphene
-%define ver_major 1.6
+%define ver_major 1.8
 %define api_ver 1.0
 
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
-%def_enable tests
+%def_enable installed_tests
 %def_disable gcc_vector
 %ifarch i586 %arm
 %def_disable sse2
@@ -32,15 +33,16 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 
+BuildRequires(pre): meson
+
 %define __python %nil
 BuildRequires: /proc
 BuildRequires: python3 gobject-introspection-devel gtk-doc
 
 %description
-%summary
-Graphene only contains math data types, like vectors and matrices; it
-does not deal with windowing system calls, event handling, drawing,
-or a full scene graph.
+Graphene library provides a small set of mathematical types needed to
+implement graphic libraries that deal with 2D and 3D transformations and
+projections.
 
 %package devel
 Summary: Development libraries and header files for Graphene
@@ -79,30 +81,37 @@ Requires: %name-gir = %version-%release
 %description gir-devel
 GObject introspection devel data for the Graphene library.
 
+%package tests
+Summary: Tests for the Grapnene library
+Group: Development/Other
+Requires: %name = %version-%release
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed Graphene library.
+
 %prep
 %setup -n %_name-%version
 
 %build
-%autoreconf
-%configure \
-    %{subst_enable static} \
-    %{subst_enable introspection} \
-    %{subst_enable sse2} \
-    %{?_disable_gcc_vector:--disable-gcc-vector} \
-    %{?_disable_neon:--disable-arm-neon} \
-    %{?_enable_gtk_doc:--enable-gtk-doc} \
-    %{?_disable_tests:--disable-tests}
-%make_build
+%meson \
+    %{?_disable_introspection:-Dintrospection=false} \
+    %{?_disable_sse2:-Dsse2=false} \
+    %{?_disable_gcc_vector:-Dgcc_vector=false} \
+    %{?_disable_neon:-Darm_neon=false} \
+    %{?_enable_gtk_doc:-Dgtk_doc=true} \
+    %{?_disable_installed_tests:-Dtests=false}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+%meson_test
 
 %files
 %_libdir/%name-%api_ver.so.*
-#%doc ChangeLog
+%doc README.md
 
 %files devel
 %_includedir/%_name-%api_ver/
@@ -121,10 +130,21 @@ GObject introspection devel data for the Graphene library.
 
 %if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/*
+%_datadir/gtk-doc/html/%_name/
 %endif
 
+%if_enabled installed_tests
+%files tests
+%_libexecdir/installed-tests/%_name-%api_ver/
+%_datadir/installed-tests/%_name-%api_ver/
+%endif
+
+
 %changelog
+* Fri Feb 23 2018 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+- new -tests subpackage
+
 * Thu Mar 02 2017 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 
