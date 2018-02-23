@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.7.9
+Version: 2.7.10
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,11 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Feb 23 2018 Vitaly Lipatov <lav@altlinux.ru> 2.7.10-alt1
+- add npm install --production support
+- gitask: add ls --all support
+- fix missed ETERBUILDBIN issue
+
 * Tue Dec 19 2017 Vitaly Lipatov <lav@altlinux.ru> 2.7.9-alt1
 - major fix inc_release and inc_subrelease
 - commented out group replacement: do incorrect replacement for clean ALT packages
