@@ -4,17 +4,17 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 # END SourceDeps(oneline)
 BuildRequires: libsystemd-login-devel
 %define _libexecdir %_prefix/libexec
-%define fedora 25
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-screensaver
-%define version 1.19.0
+%define version 1.20.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.19
+%global branch 1.20
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit d5b35083e4de1d7457ebd937172bb0054e1fa089}
@@ -62,7 +62,7 @@ BuildRequires:  mate-menus-devel
 BuildRequires:  libGL-devel
 BuildRequires:  libpam0-devel
 BuildRequires:  libsystemd-devel libudev-devel
-BuildRequires:  xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
+BuildRequires:  xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-dri2proto-devel xorg-dri3proto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-presentproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86miscproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
 BuildRequires:  xmlto
 Source44: import.info
 Patch33: mate-screensaver-1.8.0-alt-pam.patch
@@ -83,7 +83,13 @@ Development files for mate-screensaver
 
 
 %prep
-%setup -q%{!?rel_build:n %{name}-%{commit}}
+%if 0%{?rel_build}
+%setup -q
+
+%else
+%setup -q -n %{name}-%{commit}
+
+%endif
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -135,6 +141,7 @@ mv %{buildroot}%{_datadir}/doc/mate-screensaver-%{version}/mate-screensaver.html
 %find_lang %{name} --with-gnome --all-name
 install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 
+
 %files -f %{name}.lang
 %doc AUTHORS NEWS README COPYING
 %{_bindir}/mate-screensaver*
@@ -164,6 +171,9 @@ install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 
 
 %changelog
+* Thu Feb 22 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Wed Sep 13 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
 - new fc release
 

@@ -11,7 +11,7 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/xsltproc
 Python bindings for Caja
 
 Name:           python-module-caja
-Version:        1.19.0
+Version:        1.20.0
 Release:        alt1_1
 Epoch:          1
 Summary:        Python bindings for Caja
@@ -19,13 +19,14 @@ Summary:        Python bindings for Caja
 Group:          Development/Other
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.19/%{oldname}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.20/%{oldname}-%{version}.tar.xz
 
 BuildRequires:  python-devel
 BuildRequires:  mate-file-manager-devel
 BuildRequires:  python-module-pygobject3-common-devel
 BuildRequires:  mate-common
 Source44: import.info
+
 
 %description %_description
 
@@ -40,6 +41,7 @@ Python bindings for Caja
 
 %prep
 %setup -n %{oldname}-%{version} -q
+
 sed -i -e 's~#!/usr/bin/python~#!%{__python}~g' examples/background-image.py
 sed -i -e 's~#!/usr/bin/python~#!%{__python}~g' examples/block-size-column.py
 sed -i -e 's~#!/usr/bin/python~#!%{__python}~g' examples/location-widget-provider.py
@@ -79,6 +81,9 @@ rm $RPM_BUILD_ROOT%{_docdir}/python-caja/README
 
 
 %changelog
+* Thu Feb 22 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.20.0-alt1_1
+- new fc release
+
 * Sun Oct 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.19.0-alt1_1
 - new fc release
 

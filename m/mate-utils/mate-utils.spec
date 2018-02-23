@@ -7,12 +7,12 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-utils
-%define version 1.19.0
+%define version 1.20.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.19
+%global branch 1.20
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit d3538696e2b4e4372e9f526a0a4e2e4be08fc832}
@@ -126,7 +126,13 @@ An application to help analyze disk usage.
 
 
 %prep
-%setup -q%{!?rel_build:n %{name}-%{commit}}
+%if 0%{?rel_build}
+%setup -q
+
+%else
+%setup -q -n %{name}-%{commit}
+
+%endif
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -258,6 +264,9 @@ desktop-file-install                          \
 
 
 %changelog
+* Thu Feb 22 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.0-alt1_1
+- new fc release
+
 * Wed Sep 13 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.0-alt1_1
 - new fc release
 
