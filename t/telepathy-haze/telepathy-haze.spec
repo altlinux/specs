@@ -3,7 +3,7 @@
 
 Name: telepathy-haze
 Version: 0.8.0.1
-Release: alt0.4
+Release: alt0.5
 
 Summary: a connection manager built around libpurple
 License: GPLv2+
@@ -40,6 +40,8 @@ work acceptably, and others will probably work too.
 %patch1 -b .gcc6
 
 %build
+# for gcc7
+%add_optflags -Wno-error=implicit-fallthrough
 %autoreconf
 %configure
 %make_build
@@ -57,6 +59,9 @@ work acceptably, and others will probably work too.
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.ConnectionManager.haze.service
 
 %changelog
+* Fri Feb 23 2018 Yuri N. Sedunov <aris@altlinux.org> 0.8.0.1-alt0.5
+- rebuilt with gcc7
+
 * Sun Jan 15 2017 Yuri N. Sedunov <aris@altlinux.org> 0.8.0.1-alt0.4
 - updated to 0.8.0-2-g8358972
 - fixed unused static const variable error with gcc6
