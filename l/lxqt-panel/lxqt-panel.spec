@@ -1,6 +1,6 @@
 Name: lxqt-panel
 Version: 0.12.0
-Release: alt2
+Release: alt3
 
 Summary: Desktop panel
 License: LGPL
@@ -70,6 +70,9 @@ This package provides the development files for %name.
 %_includedir/*/*.h
 
 %changelog
+* Sat Feb 24 2018 Anton Midyukov <antohami@altlinux.org> 0.12.0-alt3
+- fix initial settigs (replace applet clock to worldclock)
+
 * Sun Feb 18 2018 Anton Midyukov <antohami@altlinux.org> 0.12.0-alt2
 - fix initial settigs
 
