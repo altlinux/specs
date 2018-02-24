@@ -10,9 +10,9 @@
 # values: pthreads, none
 %define threads pthreads
 
-Name: libxerces-c
-Version: 3.2.0
-Release: alt1
+Name: libxerces-c31
+Version: 3.1.4
+Release: alt2
 
 Summary: Xerces-C++ validating XML parser
 
@@ -106,8 +106,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 #rm -f %buildroot%_libdir/%name.a
 
 %files
-%_libdir/libxerces-c-*.so
+%_libdir/libxerces-c-3.1.so
 
+%if 0
 %files devel
 %_includedir/xercesc/
 %_libdir/%name.so
@@ -118,10 +119,11 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
 %files utils
 %_bindir/*
+%endif
 
 %changelog
-* Sat Feb 24 2018 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
-- new version 3.2.0 (with rpmrb script)
+* Sun Feb 25 2018 Vitaly Lipatov <lav@altlinux.ru> 3.1.4-alt2
+- build only libxerces-c-3.1.so
 
 * Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 3.1.4-alt1
 - new version 3.1.4 (with rpmrb script)
