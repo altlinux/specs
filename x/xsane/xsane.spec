@@ -1,6 +1,6 @@
 Name: xsane
 Version: 0.999
-Release: alt3
+Release: alt4
 
 Summary: XSane is a graphical frontend for scanners. It uses the library SANE
 Summary(ru_RU.UTF-8): Xsane -- это графическая программа для сканирования, использующая библиотеку SANE
@@ -27,7 +27,7 @@ BuildRequires: libgimp-devel libgphoto2-devel libjpeg-devel liblcms2-devel libsa
 # for po recoding
 BuildPreReq: recode
 # for help
-Requires: webclient
+#Requires: webclient
 
 %description
 XSane is a graphical frontend for SANE library,
@@ -124,6 +124,9 @@ install -p -m644 -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_libdir/gimp/2.0/plug-ins/%name
 
 %changelog
+* Sat Feb 24 2018 Vitaly Lipatov <lav@altlinux.ru> 0.999-alt4
+- drop webclient require (ALT bug 34574)
+
 * Sun Dec 10 2017 Vitaly Lipatov <lav@altlinux.ru> 0.999-alt3
 - make do subpackage noarch
 
