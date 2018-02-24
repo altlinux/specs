@@ -1,13 +1,15 @@
 Name: libtommath
 Version: 1.0.1
-Release: alt1
-Summary: A portable number theoretic multiple-precision integer library
-Group: System/Libraries
-License: WTFPL
-Url: http://www.libtom.net/
+Release: alt2
 
+Summary: A portable number theoretic multiple-precision integer library
+License: WTFPL
+Group: System/Libraries
+
+Url: http://www.libtom.net/
 # https://github.com/libtom/libtommath.git
 Source: ltm-%version.tar
+Patch: libtommath-1.0.1-alt-e2k.patch
 
 BuildRequires: texlive-latex-recommended
 BuildRequires: ghostscript-utils libtiff-utils
@@ -47,8 +49,7 @@ using %name.
 
 %prep
 %setup
-# Fix permissions on installed library
-sed -i -e 's/644 $(LIBNAME)/755 $(LIBNAME)/g' makefile.shared
+%patch -p1
 
 # Fix pkgconfig path
 sed -i \
@@ -65,7 +66,6 @@ sed -i \
 # There is no configure script that ships with libtommath but it does
 # understand DESTDIR and it installs via that and the
 # INSTALL_USER and INSTALL_GROUP environment variables.
-
 export INSTALL_USER=$(id -un)
 export INSTALL_GROUP=$(id -gn)
 make install INCPATH=%_includedir/tommath DESTDIR=%buildroot LIBPATH=%_libdir -f makefile.shared
@@ -90,6 +90,9 @@ find %buildroot -name '*.h' -exec chmod 644 {} ';'
 %doc doc/bn.pdf doc/poster.pdf doc/tommath.pdf
 
 %changelog
+* Sat Feb 24 2018 Michael Shigorin <mike@altlinux.org> 1.0.1-alt2
+- Fixed e2k build (int128)
+
 * Fri Jan 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt1
 - Updated to upstream version 1.0.1.
 
