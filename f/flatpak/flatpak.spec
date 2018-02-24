@@ -1,7 +1,7 @@
 %define _userunitdir /usr/lib/systemd/user
 
 Name: flatpak
-Version: 0.10.3
+Version: 0.10.4
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -12,7 +12,8 @@ Url: http://flatpak.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: https://github.com/flatpak/flatpak/releases/download/%version/%name-%version.tar.xz
+# Source-url: https://github.com/flatpak/flatpak/releases/download/%version/%name-%version.tar.xz
+Source: %name-%version.tar
 # Until https://github.com/flatpak/flatpak/pull/225 is merged and a new release
 # made.
 Patch: flatpak-0.6.8-add-flatpak-metadata-xml.patch
@@ -27,7 +28,7 @@ BuildRequires: pkgconfig(libarchive) >= 2.8.0
 #BuildRequires: pkgconfig(libelf) >= 0.8.12
 BuildRequires: pkgconfig(libgsystem) >= 2015.1
 BuildRequires: pkgconfig(libsoup-2.4)
-BuildRequires: pkgconfig(ostree-1) >= 2017.8
+BuildRequires: pkgconfig(ostree-1) >= 2017.14
 BuildRequires: pkgconfig(polkit-gobject-1)
 BuildRequires: pkgconfig(libseccomp)
 BuildRequires: pkgconfig(appstream-glib)
@@ -45,7 +46,7 @@ BuildRequires: %_bindir/bwrap
 BuildRequires: %_bindir/xmlto
 BuildRequires: %_bindir/xsltproc
 
-BuildRequires: bubblewrap >= 0.1.5
+BuildRequires: bubblewrap >= 0.1.8
 
 BuildRequires: /proc
 
@@ -175,6 +176,9 @@ rm -rf %buildroot%_docdir/%name/
 %_libdir/libflatpak.so.*
 
 %changelog
+* Sat Feb 24 2018 Vitaly Lipatov <lav@altlinux.ru> 0.10.4-alt1
+- new version 0.10.4 (with rpmrb script)
+
 * Wed Feb 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.3-alt1
 - Updated to upstream version 0.10.3.
 
