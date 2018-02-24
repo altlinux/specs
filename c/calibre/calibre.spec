@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 3.15.0
+Version: 3.17.0
 Release: alt1
 
 Summary: A e-book library management application
@@ -168,6 +168,9 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 
 
 %changelog
+* Sat Feb 24 2018 Vitaly Lipatov <lav@altlinux.ru> 3.17.0-alt1
+- new version 3.17.0 (with rpmrb script)
+
 * Wed Feb 07 2018 Vitaly Lipatov <lav@altlinux.ru> 3.15.0-alt1
 - new version 3.15.0 (with rpmrb script)
 
