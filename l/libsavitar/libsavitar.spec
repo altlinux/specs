@@ -1,5 +1,5 @@
 Name: libsavitar
-Version: 3.0.3
+Version: 3.2.1
 Release: alt1%ubt
 Summary: C++ implementation of 3mf loading with SIP Python bindings
 License: AGPLv3+
@@ -54,11 +54,6 @@ dos2unix README.md
 rm pugixml -rf
 %__subst 's|"../pugixml/src/pugixml.hpp"|<pugixml.hpp>|g' src/*.cpp src/*.h
 
-# Move stuff to lib64 on 64 arches
-# TODO propose a change to honor -DLIB_SUFFIX=64
-%__subst 's|DESTINATION lib|DESTINATION %_lib|g' CMakeLists.txt
-%__subst 's|PYTHON_SITE_PACKAGES_DIR lib|PYTHON_SITE_PACKAGES_DIR %_lib|g' CMakeLists.txt
-
 %build
 %cmake -DCMAKE_SKIP_RPATH:BOOL=ON
 %cmake_build
@@ -81,5 +76,8 @@ rm pugixml -rf
 %python3_sitelibdir/Savitar.so
 
 %changelog
+* Sat Feb 24 2018 Anton Midyukov <antohami@altlinux.org> 3.2.1-alt1%ubt
+- new version 3.2.1
+
 * Sun Dec 31 2017 Anton Midyukov <antohami@altlinux.org> 3.0.3-alt1%ubt
 - Initial build for ALT Sisyphus.

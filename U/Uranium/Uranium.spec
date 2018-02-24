@@ -3,8 +3,8 @@
 %add_python3_compile_include %_libexecdir/uranium
 
 Name:    Uranium
-Version: 3.0.3
-Release: alt1
+Version: 3.2.1
+Release: alt1.%ubt
 
 Summary:  A Python framework for building Desktop applications.
 License: LGPL-3.0
@@ -13,7 +13,7 @@ URL:     https://github.com/Ultimaker/Uranium
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
+BuildRequires(pre): rpm-build-python3 rpm-macros-cmake rpm-build-ubt
 BuildRequires: python3-devel cmake
 BuildRequires:  %_bindir/doxygen
 BuildRequires:  %_bindir/msgmerge
@@ -26,6 +26,7 @@ BuildRequires:  python3-module-scipy
 BuildRequires:  python3-module-PyQt5
 BuildRequires:  python3-module-pytest
 BuildRequires:  python3-module-typing
+BuildRequires:  python3-module-pip
 %endif
 
 #Requires: python3-module-typing
@@ -47,9 +48,9 @@ related applications.
 
 %prep
 %setup
-# Upstream installs to lib/python3/dist-packages
-# We want to install to %%{python3_sitelib}
-sed -i 's|lib/python${PYTHON_VERSION_MAJOR}/dist-packages|%(echo %python3_sitelibdir | sed -e s@%_prefix/@@)|g' CMakeLists.txt
+
+# package noarch
+sed -i 's/${LIB_SUFFIX}//g' CMakeLists.txt
 
 # empty file. appending to the end to make sure we are not overriding
 # a non empty file in the future
@@ -77,10 +78,7 @@ popd
 %check
 %if 0%{?with_check}
 pip3 freeze
-# The failing tests are reported at:
-# https://github.com/Ultimaker/Uranium/issues/225
-# Skipping
-%_bindir/python3 -m pytest -v -k "not getMimeTypeForFile"
+%_bindir/python3 -m pytest -v
 %endif
 
 %files -f uranium.lang
@@ -94,6 +92,9 @@ pip3 freeze
 %doc html LICENSE
 
 %changelog
+* Fri Feb 23 2018 Anton Midyukov <antohami@altlinux.org> 3.2.1-alt1.%ubt
+- New version 3.2.1
+
 * Sun Dec 31 2017 Anton Midyukov <antohami@altlinux.org> 3.0.3-alt1
 - New version 3.0.3
 

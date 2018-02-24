@@ -1,7 +1,7 @@
 Name: CuraEngine
 Epoch: 1
-Version: 3.0.3
-Release: alt1
+Version: 3.2.1
+Release: alt1%ubt
 
 Summary: Engine for processing 3D models into G-code instructions for 3D printers
 License: AGPL-3.0
@@ -11,12 +11,14 @@ Url: https://github.com/Ultimaker/CuraEngine
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-Patch: CuraEngine-rpath-%version.patch
-Patch1: CuraEngine-static-libstdcpp-%version.patch
-Patch2: CuraEngine-system-libs-%version.patch
+Patch: CuraEngine-rpath-3.0.3.patch
+Patch1: CuraEngine-static-libstdcpp-3.0.3.patch
+Patch2: CuraEngine-system-libs-3.0.3.patch
 
+Buildrequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc-c++ cmake libArcus-devel protobuf-compiler pkgconfig(protobuf) libpolyclipping-devel pkgconfig(RapidJSON)
+BuildRequires: gcc-c++ cmake protobuf-compiler pkgconfig(protobuf) libpolyclipping-devel pkgconfig(RapidJSON)
+BuildRequires: libArcus-devel = %version
 
 %description
 CuraEngine is a powerful, fast and robust engine for processing 3D
@@ -30,7 +32,7 @@ to the old Skeinforge engine.
 
 %prep
 %setup
-%patch -p1
+#%%patch -p1
 %patch1 -p1
 %patch2 -p1
 
@@ -54,6 +56,9 @@ sed -i 's/"DEV"/"%{version}"/' src/settings/settings.h
 %doc LICENSE README.md
 
 %changelog
+* Sat Feb 24 2018 Anton Midyukov <antohami@altlinux.org> 1:3.2.1-alt1%ubt
+- New version 3.2.1
+
 * Sun Dec 31 2017 Anton Midyukov <antohami@altlinux.org> 1:3.0.3-alt1
 - New version 3.0.3
 

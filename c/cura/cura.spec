@@ -1,9 +1,10 @@
+%global with_check 0
 %add_python3_compile_include %_libexecdir/cura
 
 Name: cura
 Epoch: 1
-Version: 3.0.3
-Release: alt2
+Version: 3.2.1
+Release: alt1%ubt
 Summary: 3D printer control software
 License: AGPLv3+
 
@@ -12,19 +13,21 @@ Url: https://github.com/Ultimaker/Cura
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-# https://github.com/Ultimaker/Cura/issues/2664
-Patch: %name-fix-tests.patch
-Patch1: fix-nvidia-fail-start.patch
 
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: desktop-file-utils
 BuildRequires: dos2unix
 BuildRequires: python3-devel
-BuildRequires: python3-module-pytest
 BuildRequires: Uranium = %version
+# Tests
+%if 0%{?with_check}
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pip
+%endif
 
 %py3_requires serial zeroconf
 Requires: python3-module-savitar = %version
@@ -45,15 +48,12 @@ needs. As it's open source, our community helps enrich it even more.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
+
+# package noarch
+sed -i 's/${LIB_SUFFIX}//g' CMakeLists.txt
 
 # The setup.py is only useful for py2exe, remove it, so noone is tempted to use it
 rm setup.py
-
-# Upstream installs to lib/python3/dist-packages
-# We want to install to %%{python3_sitelib}
-%__subst 's|lib/python${PYTHON_VERSION_MAJOR}/dist-packages|%(echo %python3_sitelibdir | sed -e s@%prefix/@@)|g' CMakeLists.txt
 
 # Wrong end of line encoding
 dos2unix docs/How_to_use_the_flame_graph_profiler.md
@@ -92,9 +92,15 @@ sed 's|python3|/usr/bin/python3|' %buildroot%_bindir/cura -i
 
 %find_lang cura fdmextruder.def.json fdmprinter.def.json --output=%name.lang
 
+# fix directories appdata
+mv %buildroot%_datadir/metainfo %buildroot%_datadir/appdata
+
+
 %check
+%if 0%{?with_check}
 python3 -m pip freeze
 python3 -m pytest -v
+%endif
 
 desktop-file-validate %buildroot%_datadir/applications/%name.desktop
 
@@ -110,6 +116,10 @@ desktop-file-validate %buildroot%_datadir/applications/%name.desktop
 %_libexecdir/%name
 
 %changelog
+* Sat Feb 24 2018 Anton Midyukov <antohami@altlinux.org> 1:3.2.1-alt1%ubt
+- New version 3.2.1
+- Disable tests
+
 * Sat Jan 06 2018 Anton Midyukov <antohami@altlinux.org> 1:3.0.3-alt2
 - Fix fail start with nvidia proprietary driver.
 
