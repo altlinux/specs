@@ -1,5 +1,5 @@
 Name: libArcus
-Version: 3.0.3
+Version: 3.2.1
 Release: alt1%ubt
 
 Summary: Communication library between internal components for Ultimaker software
@@ -40,7 +40,7 @@ Communication library between internal components for Ultimaker software
 # Move stuff to lib64 on 64 arches
 # TODO propose a change to honor -DLIB_SUFFIX=64
 sed -i 's|DESTINATION lib|DESTINATION %_lib|g' CMakeLists.txt
-sed -i 's|PYTHON_SITE_PACKAGES_DIR lib|PYTHON_SITE_PACKAGES_DIR %_lib|g' CMakeLists.txt
+#sed -i 's|PYTHON_SITE_PACKAGES_DIR lib|PYTHON_SITE_PACKAGES_DIR %_lib|g' CMakeLists.txt
 
 %build
 %cmake 
@@ -62,6 +62,9 @@ sed -i 's|PYTHON_SITE_PACKAGES_DIR lib|PYTHON_SITE_PACKAGES_DIR %_lib|g' CMakeLi
 %python3_sitelibdir/*
 
 %changelog
+* Fri Feb 23 2018 Anton Midyukov <antohami@altlinux.org> 3.2.1-alt1%ubt
+- New version 3.2.1
+
 * Sun Dec 31 2017 Anton Midyukov <antohami@altlinux.org> 3.0.3-alt1%ubt
 - New version 3.0.3
 
