@@ -3,8 +3,8 @@
 
 Summary: A small wrapper to disable fsync and related functions
 Name: eatmydata
-Version: 82
-Release: alt2
+Version: 105
+Release: alt1
 Group: File tools
 License: GPLv3
 Url: https://launchpad.net/libeatmydata
@@ -46,6 +46,9 @@ mkdir -p %buildroot%_man1dir
 
 cp %SOURCE3 %buildroot%_man1dir/
 
+%__subst "s|.*dpkg-architecture.*||" %buildroot%_bindir/%name
+%__subst "s|^shlib=.*|shlib=%_datadir/%oname/eatmydata.sh|" %buildroot%_bindir/%name
+
 %check
 make check
 
@@ -58,6 +61,9 @@ make check
 %_libdir/*.so*
 
 %changelog
+* Sat Feb 24 2018 Vitaly Lipatov <lav@altlinux.ru> 105-alt1
+- new version 105 (with rpmrb script)
+
 * Mon Nov 18 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 82-alt2
 - Fix BFS (use old automake 1.11).
 
