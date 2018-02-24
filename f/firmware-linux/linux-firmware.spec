@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180201
+Version: 20180222
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -65,6 +65,26 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 %exclude /lib/firmware/carl9170fw
 
 %changelog
+* Sat Feb 24 2018 L.A. Kostis <lakostis@altlinux.ru> 20180222-alt1
+- configuration changes:
+  +  update changelog rules
+- upstream changes (GIT 7344ec9):
+  + ath10k: QCA9984 hw1.0: update firmware-5.bin to 10.4-3.5.3-00053 (thx Kalle Valo)
+  + ath10k: QCA988X hw2.0: update firmware-5.bin to 10.2.4-1.0-00037 (thx Kalle Valo)
+  + ath10k: QCA9888 hw2.0: update firmware-5.bin to 10.4-3.5.3-00053 (thx Kalle Valo)
+  + ath10k: QCA9887 hw1.0: update firmware-5.bin to 10.2.4-1.0-00037 (thx Kalle Valo)
+  + ath10k: QCA9377 hw1.0: update firmware-5.bin to
+    WLAN.TF.1.0-00002-QCATFSWPZ-5 (thx Kalle Valo)
+  + ath10k: QCA6174 hw3.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA6174 hw3.0: update firmware-6.bin to
+    WLAN.RM.4.4.1-00079-QCARMSWPZ-1 (thx Kalle Valo)
+  + ath10k: QCA4019 hw1.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA4019 hw1.0: update firmware-5.bin to 10.4-3.5.3-00053 (thx Kalle Valo)
+  + rtl_bt: Add firmware and configuration files for the Bluetooth
+    parts of RTL8821C and RTL8723D (thx Larry Finger)
+  + qed: Add firmwares 8.30.12.0 and 8.10.9.0 (thx Rasesh Mody)
+  + nfp: update Agilio SmartNIC firmware to rev 2.0.4 (thx Edwin Peer)
+
 * Fri Feb 02 2018 L.A. Kostis <lakostis@altlinux.ru> 20180201-alt1
 - configuration changes:
   + changelog.sh: get pkg name from specfile
