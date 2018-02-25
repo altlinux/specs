@@ -1,5 +1,5 @@
 Name: xvkbd
-Version: 3.8
+Version: 3.9
 Release: alt1
 
 Summary: Virtual (on-screen) keyboard for X
@@ -76,6 +76,9 @@ __MENU__
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Feb 25 2018 Michael Shigorin <mike@altlinux.org> 3.9-alt1
+- new version (watch file uupdate)
+
 * Fri Jun 16 2017 Michael Shigorin <mike@altlinux.org> 3.8-alt1
 - new version (watch file uupdate)
 
