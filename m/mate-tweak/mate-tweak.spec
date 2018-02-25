@@ -1,5 +1,5 @@
 Name: mate-tweak
-Version: 17.10.6
+Version: 18.04.10
 Release: alt1
 Epoch:   1
 
@@ -30,10 +30,6 @@ Settings that can be handled via MATE Tweak:
 %prep
 %setup
 
-# We don't provide xdg-su. Change it to use polkit.
-%__subst "s/'pkexec', '/'xdg-su', '-c /g" %name
-%__subst '/polkit/d' setup.py
-
 %build
 %python3_build
 
@@ -44,18 +40,16 @@ Settings that can be handled via MATE Tweak:
 
 %files -f %name.lang
 %doc README.md
-%_bindir/%name
-%exclude %_bindir/marco*
-%exclude %_bindir/metacity*
+%_bindir/*
 %_libexecdir/%name
 %python3_sitelibdir/*egg-info
-%exclude %_datadir/mate
-%_desktopdir/%name.desktop
-%_man1dir/%name.1.*
-%exclude %_man1dir/marco*
-%exclude %_man1dir/metacity*
+%_desktopdir/*
+%_man1dir/*.1.*
 
 %changelog
+* Sun Feb 25 2018 Anton Midyukov <antohami@altlinux.org> 1:18.04.10-alt1
+- new version 18.04.10
+
 * Wed Jun 14 2017 Andrey Cherepanov <cas@altlinux.org> 1:17.10.6-alt1
 - New version
 
