@@ -4,10 +4,11 @@
 %def_disable static
 %def_disable gtk_doc
 %def_disable introspection
+%def_disable check
 
 Name: lib%{_name}
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: GtkSourceView text widget library
 License: LGPLv2+
@@ -110,16 +111,17 @@ install -p -m644 %SOURCE1 gtksourceview/libgtksourceview.map
 %patch13 -p1
 
 %build
+%add_optflags -Wno-error=format-nonliteral
 %autoreconf
 %configure \
 	%{subst_enable static} \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{subst_enable introspection} \
-	--disable-deprecations
+	--enable-deprecations=no
 %make_build
 
-#%check
-#%%make check
+%check
+%make check
 
 %install
 %makeinstall_std
@@ -150,6 +152,9 @@ install -p -m644 %SOURCE1 gtksourceview/libgtksourceview.map
 
 
 %changelog
+* Fri Feb 23 2018 Yuri N. Sedunov <aris@altlinux.org> 2.11.2-alt2
+- rebuilt with gcc7
+
 * Sat Nov 01 2014 Yuri N. Sedunov <aris@altlinux.org> 2.11.2-alt1
 - 2.11.2
 - applied fc patchset

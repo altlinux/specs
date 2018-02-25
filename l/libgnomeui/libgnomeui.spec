@@ -10,7 +10,7 @@
 
 Name: libgnomeui
 Version: %ver_major.5
-Release: alt2
+Release: alt3
 
 Summary: GNOME base GUI library
 License: LGPL
@@ -123,6 +123,7 @@ if you just want to use the GNOME desktop environment.
 %patch
 
 %build
+%add_optflags -Wno-error=format-nonliteral
 %autoreconf
 export DATADIRNAME=share
 %configure \
@@ -163,6 +164,9 @@ bzip2 -9f ChangeLog
 %exclude %_libdir/libglade/*/*.la
 
 %changelog
+* Fri Feb 23 2018 Yuri N. Sedunov <aris@altlinux.org> 2.24.5-alt3
+- rebuilt with gcc7
+
 * Mon Nov 27 2017 Yuri N. Sedunov <aris@altlinux.org> 2.24.5-alt2
 - updated to LIBGNOMEUI_2_24_5-13-g30334c2
 - fixed doc build
