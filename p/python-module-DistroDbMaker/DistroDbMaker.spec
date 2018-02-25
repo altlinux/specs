@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.003
+Version: 0.004
 Release: alt1
 Summary: DistroDb Maker tools
 License: LGPL2+
@@ -71,6 +71,9 @@ popd
 %endif
 
 %changelog
+* Sun Feb 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1
+- mageia texlive support
+
 * Fri Feb 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.003-alt1
 - alt support
 
