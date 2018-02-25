@@ -1,24 +1,27 @@
 Name: gnofract4d
 Version: 3.14.1
-Release: alt1.git20130402
+Release: alt2.git201802025
+
 Summary: Gnofract 4D is a Gnome-based program to draw fractals
 
 Group: Sciences/Mathematics
 License: GPL
 Url: http://gnofract4d.sourceforge.net/
+
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# Source-git: https://github.com/edyoung/gnofract4d.git
 Source: %name-%version.tar
 
 # This *really* requires gcc at runtime!
 Requires: gcc
 
 # Typical environment for GNOME program
-Requires(post): GConf2
-Requires(post,postun): scrollkeeper
-Requires(post,postun): desktop-file-utils
-BuildPreReq: GConf2
-BuildPreReq: desktop-file-utils 
+#Requires(post): GConf2
+#Requires(post,postun): scrollkeeper
+#Requires(post,postun): desktop-file-utils
+#BuildPreReq: GConf2
+#BuildPreReq: desktop-file-utils 
 
 #add_python_req_skip fract4d _lsprof cProfile fractutils frm_docbook kid
 %add_python_req_skip frm_docbook
@@ -35,6 +38,8 @@ the two sets and explore their inter-relationships.
 
 %prep
 %setup
+# do not use gst 0.10
+rm -f fract4d/encoder.py
 
 %build
 %python_build_debug
@@ -42,15 +47,21 @@ the two sets and explore their inter-relationships.
 %install
 %python_install
 
+# drop all tests (due removed encoder.py)
+rm -rf %buildroot%python_sitelibdir/fract*/test*
+
 install -d %buildroot%_liconsdir
 mv %buildroot%_pixmapsdir/*.png %buildroot%_liconsdir/
 
 %find_lang %name --with-gnome
 
+rm -rf %buildroot/usr/share/doc/gnofract4d
+
 %files -f %name.lang
 %doc README
 %_bindir/%name
 %python_sitelibdir/fract4d/
+%python_sitelibdir/*.egg-info
 %python_sitelibdir/fract4dgui/
 %python_sitelibdir/fractutils/
 %_datadir/%name/
@@ -60,6 +71,10 @@ mv %buildroot%_pixmapsdir/*.png %buildroot%_liconsdir/
 %_desktopdir/*
 
 %changelog
+* Sun Feb 25 2018 Vitaly Lipatov <lav@altlinux.ru> 3.14.1-alt2.git201802025
+- Snapshot from git
+- drop all tests and python gst using
+
 * Thu Aug 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.14.1-alt1.git20130402
 - Snapshot from git
 
