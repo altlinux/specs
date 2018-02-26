@@ -5,7 +5,7 @@
 
 Name: gnome-calculator
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GTK+3 based desktop calculator
 License: %gpl2plus
@@ -69,6 +69,9 @@ A single graphics driver for GTK included with this package.
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Mon Feb 26 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt2
+- rebuilt against libmpfr.so.6 (ALT #34582)
+
 * Thu Nov 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

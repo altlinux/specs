@@ -5,7 +5,7 @@
 
 Name: genius
 Version: %ver_major.23
-Release: alt1
+Release: alt2
 
 Summary: Genius Calculator
 License: LGPLv3+
@@ -95,6 +95,9 @@ popd
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Mon Feb 26 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.23-alt2
+- rebuilt against libmpfr.so.6
+
 * Thu May 11 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.23-alt1
 - 1.0.23
 
