@@ -4,7 +4,7 @@
 %define netdatauser netdata
 Name: netdata
 Version: 1.9.0
-Release: alt1
+Release: alt2
 
 Summary: Real-time performance monitoring, done right!
 
@@ -94,13 +94,15 @@ install -m 644 -p system/netdata.conf %buildroot%_sysconfdir/%name/netdata.conf
 
 #mkdir -p %buildroot%_sysconfdir/%name/charts.d/
 
-mkdir -p %buildroot%_sysconfdir/logrotate.d/
-install -m 644 -p system/netdata.logrotate %buildroot%_sysconfdir/logrotate.d/%name
+mkdir -p %buildroot%_logrotatedir/
+install -m 644 -p system/netdata.logrotate %buildroot%_logrotatedir/%name
 
 find %buildroot -name .keep | xargs rm
 
 install -d %buildroot%_unitdir/
 install -m 644 -p system/netdata.service %buildroot%_unitdir/netdata.service
+# /run vs /var/run workaround
+%__subst "s|/run/netdata/netdata.pid|%_runtimedir/netdata/netdata.pid|" %buildroot%_unitdir/netdata.service
 
 # fill with original commit id for %version release
 echo "%release_commit" > %buildroot%_datadir/%name/web/version.txt
@@ -119,9 +121,9 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 %preun_service %name
 
 %files
-%attr(0700,%netdatauser,%netdatauser) %dir %_localstatedir/cache/%name/
-%attr(0770,root,%netdatauser) %dir %_localstatedir/log/%name/
-%attr(0700,%netdatauser,%netdatauser) %dir %_localstatedir/lib/%name/
+%attr(0700,%netdatauser,%netdatauser) %dir %_cachedir/%name/
+%attr(0770,root,%netdatauser) %dir %_logdir/%name/
+%attr(0700,%netdatauser,%netdatauser) %dir %_sharedstatedir/%name/
 %dir %_sysconfdir/%name/
 #config(noreplace) %_sysconfdir/%name/netdata.conf
 %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/*.conf
@@ -154,6 +156,10 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 %_libexecdir/%name/python.d/postgres.chart.py
 
 %changelog
+* Mon Feb 26 2018 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt2
+- fix pid file path in service file
+- cleanup spec
+
 * Wed Dec 20 2017 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt1
 - new version 1.9.0 (with rpmrb script)
 
