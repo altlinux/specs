@@ -1,6 +1,6 @@
 Name: libqxp
 Version: 0.0.1
-Release: alt1
+Release: alt2
 Summary: Library for import of QuarkXPress documents
 Group:	Development/C++
 
@@ -11,7 +11,7 @@ Source: http://dev-www.libreoffice.org/src/%name/%name-%version.tar.xz
 BuildRequires: cppunit-devel help2man
 # Automatically added by buildreq on Mon Feb 19 2018
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libstdc++-devel pkg-config python-base python-modules python3 python3-base xz
-BuildRequires: boost-devel-headers doxygen gcc-c++ libicu-devel libquadmath-devel librevenge-devel python3-dev
+BuildRequires: boost-devel-headers doxygen gcc-c++ libicu-devel librevenge-devel python3-dev
 
 %description
 libqxp is library providing ability to interpret and import QuarkXPress
@@ -93,6 +93,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}} make 
 %_mandir/man1/qxp2text.1*
 
 %changelog
+* Mon Feb 26 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.1-alt2
+- drop libquadmath from BR, not really needed
+
 * Mon Feb 19 2018 Fr. Br. George <george@altlinux.ru> 0.0.1-alt1
 - Initial build from Fedora
 
