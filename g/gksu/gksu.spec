@@ -3,7 +3,7 @@ BuildRequires: desktop-file-utils
 
 Name: gksu
 Version: 2.0.2
-Release: alt6
+Release: alt7
 
 Summary: A Gtk+-based 'su' wrapper
 License: %gpl2plus
@@ -44,7 +44,6 @@ environment when acting as a su frontend. It is useful to menu items or
 other graphical programs that need to ask a user's password to run another
 program as another user.
 
-%if_enabled nautilus
 %package -n nautilus-%name
 Summary: A plugin for Nautilus to open files as a privileged user
 Group: Graphical desktop/GNOME
@@ -52,7 +51,6 @@ Group: Graphical desktop/GNOME
 %description -n nautilus-%name
 This package contains a plugin for Nautilus that integrates su and sudo
 into the file manager by means of GKSu software.
-%endif
 
 %prep
 %setup -q
@@ -68,7 +66,7 @@ tar xf %SOURCE1
 export CPPFLAGS="$CPPFLAGS `pkg-config --cflags-only-I gnome-vfs-2.0`"
 export LDFLAGS="$LDFLAGS `pkg-config --libs gnome-vfs-2.0`"
 %configure \
-    %{?_enable_nautilus:--enable-nautilus-extension} \
+    %{?!_enable_nautilus:--disable-nautilus-extension} \
     --disable-static \
     --enable-gtk-doc
 
@@ -98,11 +96,16 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/%name.desktop
 %_man1dir/*.1.*
 
+%if_enabled nautilus
 %files -n nautilus-gksu
 %nautilus_extdir/libnautilus-%name.so
 %exclude %nautilus_extdir/*.la
+%endif
 
 %changelog
+* Mon Feb 26 2018 Michael Shigorin <mike@altlinux.org> 2.0.2-alt7
+- Fixed nautilus knob
+
 * Mon Dec 21 2015 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt6
 - Do not use strict extension for man pages
 
