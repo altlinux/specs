@@ -10,7 +10,7 @@
 %define rname pykde4
 Name: kde4-python
 Version: 4.14.3
-Release: alt2%ubt
+Release: alt5%ubt
 
 Group: Development/KDE and QT
 Summary: Python bindings for KDE4
@@ -21,7 +21,9 @@ Source: %rname-%version.tar
 # Debian
 Patch10: make_pykde4_respect_sip_flags.diff
 # FC
-Patch20: pykde4-4.14.3-missing_symbols.patch
+Patch20: pykde4-dont-change-environment-cause-crash.patch
+Patch21: fix_kpythonpluginfactory_build.diff
+Patch22: pykde4-4.14.3-checkstate-sip-4.19.5.patch
 # ALT
 Patch100: pykde4-4.8.0-alt-mobile.patch
 Patch101: pykde4-4.10.1-alt-sip-install-dir.patch
@@ -29,7 +31,8 @@ Patch101: pykde4-4.10.1-alt-sip-install-dir.patch
 # Automatically added by buildreq on Thu Sep 15 2011 (-bi)
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs kde4libs-devel kde4pimlibs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libpng-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-script libqt4-sql libqt4-svg libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base python-devel python-module-PyQt4 python-module-sip python-modules rpm-build-gir ruby shared-desktop-ontologies-devel soprano-backend-redland soprano-backend-virtuoso xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: boost-devel-headers gcc-c++ glib2-devel kde4pimlibs-devel libqt3-devel python-module-PyQt4-devel python-module-sip-devel rpm-build-ruby soprano zlib-devel-static
-BuildRequires(pre): kde4libs-devel python-module-sip-devel >= 4.12 python-module-PyQt4-devel >= 4.9.5 rpm-build-python rpm-build-ubt
+BuildRequires(pre): kde4libs-devel python-module-sip-devel >= 4.12 python-module-PyQt4-devel >= 4.9.5 rpm-build-python
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: boost-devel gcc-c++ glib2-devel kde4pimlibs-devel libqt4-devel zlib-devel
 #BuildRequires: libsoprano-devel soprano soprano-backend-redland
 BuildRequires: python-devel
@@ -63,6 +66,8 @@ Python bindings for KDE4
 %setup -n %rname-%version
 %patch10 -p1
 %patch20 -p1
+%patch21 -p1
+%patch22 -p1
 #
 %if_enabled desktop
     %ifarch %arm
@@ -97,6 +102,15 @@ Python bindings for KDE4
 
 
 %changelog
+* Mon Feb 26 2018 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt5%ubt
+- add fixes against new sip
+
+* Thu Feb 22 2018 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt4%ubt
+- update from 4.14 branch
+
+* Wed Feb 21 2018 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt3%ubt
+- rebuild with new sip
+
 * Wed Nov 08 2017 Oleg Solovyov <mcpain@altlinux.org> 4.14.3-alt2%ubt
 - added %ubt tag
 

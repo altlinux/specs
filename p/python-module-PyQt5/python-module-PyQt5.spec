@@ -3,8 +3,9 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 5.9
-Release: alt5%ubt
+Version: 5.9.2
+Release: alt1
+
 Summary: Python bindings for Qt 5
 License: GPL
 Group: Development/Python
@@ -133,7 +134,7 @@ This package contains PyQt5 docs
 
 %prep
 %setup -qn PyQt-gpl-%version
-%patch0 -p1
+#patch0 -p1
 subst 's|/lib/libpython|/%_lib/libpython|g' configure.py
 subst 's|/lib" |/%_lib" |g' configure.py
 subst 's|#include <QTextStream>|#include <QTextStream>\n#define QT_SHARED\n|g' \
@@ -250,6 +251,9 @@ find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print 
 %endif
 
 %changelog
+* Wed Feb 14 2018 Vitaly Lipatov <lav@altlinux.ru> 5.9.2-alt1
+- new version 5.9.2 (with rpmrb script) (ALT bug 34537)
+
 * Sun Nov 12 2017 Anton Midyukov <antohami@altlinux.org> 5.9-alt5%ubt
 - Added missing provides dbus.mainloop.pyqt5 (ALT bug 33873)
 

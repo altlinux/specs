@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.19.3
+Version: 4.19.7
 Release: alt1
 
 Summary: Python bindings generator for C++ class libraries
@@ -147,6 +147,9 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %endif
 
 %changelog
+* Wed Feb 14 2018 Vitaly Lipatov <lav@altlinux.ru> 4.19.7-alt1
+- new version 4.19.7 (with rpmrb script)
+
 * Tue Oct 03 2017 Vitaly Lipatov <lav@altlinux.ru> 4.19.3-alt1
 - new version (4.19.3) with rpmgs script
 
