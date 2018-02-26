@@ -1,5 +1,5 @@
 Name: rpm-build-tcl
-Version: 0.5
+Version: 0.5.1
 Release: alt1
 
 Summary: RPM helpers to use with Tcl scripts
@@ -34,6 +34,9 @@ install -p -m0755 tcl.prov.files %buildroot%_rpmlibdir/tcl.prov.files
 %_rpmlibdir/tcl.*
 
 %changelog
+* Mon Feb 26 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.5.1-alt1
+- fix possible file truncation while generating dependencies
+
 * Sun Sep 17 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.5-alt1
 - new Tcl/Tk extension packaging policy
 

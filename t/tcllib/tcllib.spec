@@ -19,7 +19,7 @@
 %add_tcl_req_skip twapi
 
 Name: tcllib
-Version: 1.18
+Version: 1.19
 Release: alt1
 Epoch: 1
 
@@ -68,6 +68,9 @@ find examples -type f -print0 |xargs -r0 chmod 0644 --
 %_mandir/mann/*
 
 %changelog
+* Thu Feb 22 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.19-alt1
+- 1.19 released
+
 * Sat Aug 19 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.18-alt1
 - 1.18 released
 - packaged %%_bindir/nns*, %%_bindir/page and %%_bindir/pt binaries
