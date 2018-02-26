@@ -2,8 +2,8 @@
 %def_enable check
 
 Name: python-module-dbusmock
-Version: 0.17
-Release: alt2
+Version: 0.17.1
+Release: alt1
 
 Summary: mock D-Bus objects for tests
 License: LGPLv3
@@ -85,6 +85,9 @@ popd
 
 
 %changelog
+* Mon Feb 26 2018 Yuri N. Sedunov <aris@altlinux.org> 0.17.1-alt1
+- 0.17.1
+
 * Thu Feb 01 2018 Yuri N. Sedunov <aris@altlinux.org> 0.17-alt2
 - fixed buildreqs
 
