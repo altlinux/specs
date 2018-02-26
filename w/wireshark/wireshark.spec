@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.4.4
+Version: 2.4.5
 Release: alt1%ubt
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -287,6 +287,24 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Mon Feb 26 2018 Anton Farygin <rider@altlinux.ru> 2.4.5-alt1%ubt
+- 2.4.5
+- fixes:
+     * wnpa-sec-2018-05 The IEEE 802.11 dissector could crash. CVE-2018-7335
+     * wnpa-sec-2018-06 Multiple dissectors could go into large infinite loops. All ASN.1
+       BER dissectors, along with the DICOM, DMP, LLTD, OpenFlow, RELOAD, RPCoRDMA, RPKI-Router,
+       S7COMM, SCCP, Thread, Thrift, USB and WCCP dissectors were susceptible. CVE-2018-7321, CVE-2018-7322, 
+       CVE-2018-7323, CVE-2018-7324, CVE-2018-7325, CVE-2018-7326, CVE-2018-7327, CVE-2018-7328, CVE-2018-7329,
+       CVE-2018-7330, CVE-2018-7331, CVE-2018-7332, CVE-2018-7333
+     * wnpa-sec-2018-07 The UMTS MAC dissector could crash. CVE-2018-7334
+     * wnpa-sec-2018-08 The DOCSIS dissector could crash. CVE-2018-7337
+     * wnpa-sec-2018-09 The FCP dissector could crash. CVE-2018-7336
+     * wnpa-sec-2018-10 The SIGCOMP dissector could crash. CVE-2018-7320
+     * wnpa-sec-2018-11 The pcapng file parser could crash. CVE-2018-7420
+     * wnpa-sec-2018-12 The IPMI dissector could crash. CVE-2018-7417
+     * wnpa-sec-2018-13 The SIGCOMP dissector could crash. CVE-2018-7418
+     * wnpa-sec-2018-14 The NBAP disssector could crash. CVE-2018-7419
+
 * Wed Jan 17 2018 Anton Farygin <rider@altlinux.ru> 2.4.4-alt1%ubt
 - 2.4.4
 - fixes:
