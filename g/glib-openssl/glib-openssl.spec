@@ -5,7 +5,7 @@
 %def_enable installed_tests
 
 Name: glib-openssl
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Network-related giomodule for glib using openssl
@@ -72,6 +72,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Mon Feb 26 2018 Yuri N. Sedunov <aris@altlinux.org> 2.50.7-alt1
+- 2.50.7
+
 * Sun Oct 29 2017 Yuri N. Sedunov <aris@altlinux.org> 2.50.6-alt1
 - 2.50.6
 
