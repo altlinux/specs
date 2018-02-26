@@ -1,0 +1,1116 @@
+Name: cups
+Version: 1.5.3
+Release: alt1
+
+Summary: Common Unix Printing System - server package
+License: GPL
+Group: System/Servers
+
+Url: http://www.cups.org
+
+Source: ftp://ftp.easysw.com/pub/cups/%version/%name-%version.tar
+Source2: http://www.openprinting.org/download/printing/pdf-printing/pdf-filters.tar.gz
+
+Source100: %name.control
+Source101: %name.pam
+Source102: %name.alternatives
+Source103: %name.startup
+Source104: %name.xinetd
+Source105: %name.modprobe
+Source110: %name.systemd.path
+Source111: %name.systemd.service
+Source112: %name.systemd.socket
+Source113: %name.systemd.tmpfiles
+
+Source200: cpdftocps
+Source201: cpdftocps.convs
+Source202: pstopdf
+Source203: pstopdf.convs
+Source204: pstopdf.types
+
+Patch1: cups-1.5.0-debian-pidfile.patch
+Patch2: cups-1.5.0-alt-hardening.patch
+Patch3: cups-1.4.0-rh-lpr-help.patch
+Patch4: cups-1.4.3-rh-no-export-ssllibs.patch
+Patch5: cups-1.4.3-rh-driverd-timeout.patch
+Patch6: cups-1.5.3-rh-lspp.patch
+Patch7: cups-1.4.6-alt-config-libs.patch
+Patch8: pdf-filters-fix.patch
+Patch9: cups-1.5.3-rh-0755.patch
+Patch10: cups-1.5.3-rh-avahi-1-config.patch
+Patch11: cups-1.5.3-rh-avahi-2-backend.patch
+Patch12: cups-1.5.3-rh-avahi-3-timeouts.patch
+Patch13: cups-1.5.3-rh-avahi-4-poll.patch
+Patch14: cups-1.5.3-rh-avahi-5-services.patch
+Patch15: cups-1.5.3-rh-systemd-socket.patch
+Patch16: cups-1.5.3-translation.patch
+
+Requires: printer-testpages bc
+
+PreReq: lib%name = %version-%release, ghostscript-cups
+#PreReq: urw-fonts >= 1.0.7pre41-alt3
+PreReq: alternatives >= 0.2
+
+Provides: %name-ppd = %version %name-common = %version
+Obsoletes: %name-ppd < %version %name-common < %version
+
+#use external pdftops filter
+BuildPreReq: /usr/bin/pdftops
+Requires: /usr/bin/pdftops
+
+# for DBUSDIR
+BuildRequires: dbus
+
+# Automatically added by buildreq on Wed Mar 23 2011 (-bi)
+BuildRequires: ImageMagick-tools gcc-c++ libacl-devel libdbus-devel libgcrypt-devel libjpeg-devel libldap-devel libopenslp-devel libpam-devel libpng-devel libssl-devel libtiff-devel libusb-devel php5-devel poppler xdg-utils libselinux-devel libaudit-devel fontconfig-devel libsystemd-daemon-devel libavahi-devel
+
+# for pdf-filters
+BuildRequires: liblcms-devel libpoppler-devel libijs-devel libfreetype-devel t1lib-devel
+
+%description
+The Common Unix Printing System provides a portable printing layer for
+UNIX(TM) operating systems. It has been developed by Easy Software Products
+to promote a standard printing solution for all UNIX vendors and users.
+CUPS provides the System V and Berkeley command-line interfaces.
+
+This is the main package needed for CUPS servers (machines where a
+printer is connected to or which host a queue for a network
+printer). It can also be used on CUPS clients so that they simply pick
+up broadcasted printer information from other CUPS servers and do not
+need to be assigned to a specific CUPS server by an
+/etc/cups/client.conf file.
+
+%package ppd
+Summary: ppd drivers for %name
+License: GPL
+Group: System/Servers
+PreReq: %name = %version-%release
+
+%description ppd
+ppd drivers for %name
+
+%package backend-serial
+Summary: serial backend for %name
+License: GPL
+Group: System/Servers
+PreReq: %name = %version-%release
+
+%description backend-serial
+serial backend for %name
+
+%package backend-pdf
+Summary: pdf backend for %name
+License: GPL
+Group: System/Servers
+PreReq: %name = %version-%release
+
+%description backend-pdf
+pdf backend for %name, allows to create pdf files "on-fly"
+
+%package -n lib%name
+Summary: Common Unix Printing System - CUPS library
+License: LGPL
+Group: System/Servers
+
+%description -n lib%name
+The Common Unix Printing System provides a portable printing layer for
+UNIX(TM) operating systems. This package contains the CUPS API library
+which contains common functions used by both the CUPS daemon and all
+CUPS frontends (lpr-cups, xpp, qtcups, kups, ...).
+
+This package you need for both CUPS clients and servers. It is also
+needed by Samba.
+
+%package -n lib%name-devel
+Summary: Common Unix Printing System - Development environment "libcups"
+License: LGPL
+Group: Development/C
+Requires: lib%name = %version-%release
+Provides: %name-devel = %version %name-ddk = %version
+Obsoletes: %name-devel < %version %name-ddk < %version
+
+%description -n lib%name-devel
+The Common Unix Printing System provides a portable printing layer for
+UNIX(TM) operating systems. This is the development package for
+creating additional printer drivers, printing software, and other CUPS
+services using the main CUPS library "libcups".
+
+%package -n alterator-backend-%name
+Summary: Alterator backend for the Common Unix Printing System
+License: GPL
+Group: System/Servers
+Requires: %name = %version-%release
+Requires: alterator > 1.99-alt14
+
+%description -n alterator-backend-%name
+Alterator backend for the Common Unix Printing System
+
+%package -n php5-%name
+Summary: PHP5 module for the Common Unix Printing System
+License: GPL
+Group: System/Servers
+Requires: lib%name = %version
+Requires: php5 = %php5_version
+BuildRequires(pre): rpm-build-php5
+Source301: php-%name.ini
+Source302: php-%name-params.sh
+
+%description -n php5-%name
+PHP5 module for the Common Unix Printing System
+
+%package ipptool
+Summary: Common Unix Printing System - tool for performing IPP requests
+Group: System/Servers
+License: GPL
+Requires: lib%name = %version-%release
+
+%description ipptool
+Sends IPP requests to the specified URI and tests and/or displays the results.
+
+%define php5_extension %name
+
+%prep
+%setup
+%setup -T -D -a 2
+
+%patch1 -p1
+%patch2 -p2
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p2
+pushd pdf-filters
+%patch8 -p2
+./addtocups ..
+popd
+%patch9 -p1
+
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+
+aclocal -I config-scripts
+autoconf -I config-scripts
+
+%build
+%configure \
+   --enable-pie \
+   --enable-relro \
+   --enable-dbus \
+   --enable-libusb \
+   --with-cups-user=lp \
+   --with-cups-group=lp \
+   --with-log-file-perm=0600 \
+   --with-php \
+   --with-docdir=%_docdir/%name-%version \
+    --localstatedir=%_var \
+    --enable-lspp \
+    --enable-avahi
+    #
+
+%make_build
+
+%install
+make BUILDROOT=%buildroot install
+
+install -Dpm 755 %SOURCE100 %buildroot%_sysconfdir/control.d/facilities/%name
+install -Dpm 644 %SOURCE101 %buildroot%_sysconfdir/pam.d/%name
+install -Dpm 644 %SOURCE102 %buildroot%_altdir/%name
+install -Dpm 755 %SOURCE103 %buildroot%_initdir/%name
+install -Dpm 644 %SOURCE104 %buildroot%_sysconfdir/xinetd.d/%name-lpd
+install -Dpm 644 %SOURCE105 %buildroot%_sysconfdir/modprobe.d/blacklist-%name
+
+# Install systemd files
+install -Dpm 644 %SOURCE110 %buildroot%systemd_unitdir/%name.path
+install -Dpm 644 %SOURCE111 %buildroot%systemd_unitdir/%name.service
+install -Dpm 644 %SOURCE112 %buildroot%systemd_unitdir/%name.socket
+install -Dpm 644 %SOURCE113 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
+
+# Install filters: cpdftocps pstopdf
+install -Dpm 755 %SOURCE200 %buildroot%_libexecdir/%name/filter/
+install -Dpm 755 %SOURCE202 %buildroot%_libexecdir/%name/filter/
+
+install -Dpm 644 %SOURCE201 %buildroot%_datadir/%name/mime/
+install -Dpm 644 %SOURCE203 %buildroot%_datadir/%name/mime/
+install -Dpm 644 %SOURCE204 %buildroot%_datadir/%name/mime/
+
+
+# prepare the commands conflicting with LPD for the update-alternatives treatment
+for i in lpr lpq lprm lp cancel lpstat
+do
+    mv %buildroot%_bindir/$i %buildroot%_bindir/$i-%name
+    mv %buildroot%_man1dir/$i.1.gz %buildroot%_man1dir/$i-%name.1.gz
+done
+mv %buildroot%_sbindir/lpc %buildroot%_sbindir/lpc-%name
+mv %buildroot%_man8dir/lpc.8.gz %buildroot%_man8dir/lpc-%name.8.gz
+mv %buildroot%_sysconfdir/modprobe.d/blacklist-cups %buildroot%_sysconfdir/modprobe.d/blacklist-cups.conf
+
+#link default fonts to URW
+#rm -rf %buildroot%_datadir/%name/fonts/Monospace*
+#ln -sf %_datadir/fonts/type1/urw/n022003l.pfb %buildroot%_datadir/%name/fonts/Monospace
+#ln -sf %_datadir/fonts/type1/urw/n022004l.pfb %buildroot%_datadir/%name/fonts/Monospace-Bold
+#ln -sf %_datadir/fonts/type1/urw/n022023l.pfb %buildroot%_datadir/%name/fonts/Monospace-Oblique
+#ln -sf %_datadir/fonts/type1/urw/n022024l.pfb %buildroot%_datadir/%name/fonts/Monospace-BoldOblique
+
+#create some empty config files to prevent .rpmsave on update from cups-1.1.x
+touch %buildroot/%_sysconfdir/%name/printers.conf
+
+#fix icons
+convert -resize 48x48 desktop/cups-64.png  desktop/cups-48.png
+install -Dpm 644 desktop/cups-48.png %buildroot%_liconsdir/cups.png
+
+mv %buildroot/%php5_extdir/phpcups.so %buildroot/%php5_extdir/%name.so
+install -D -m 644 %SOURCE301 %buildroot/%php5_extconf/%php5_extension/config
+install -D -m 644 %SOURCE302 %buildroot/%php5_extconf/%php5_extension/params
+
+# install /lib/tmpfiles.d/cups.conf
+mkdir -p %buildroot/lib/tmpfiles.d
+cat > %buildroot/lib/tmpfiles.d/cups.conf <<EOF
+d %_runtimedir/cups 0755 root lp -
+d %_runtimedir/cups/certs 0511 lp sys -
+EOF
+
+# /lib/tmpfiles.d/cups-lp.conf
+cat > %buildroot/lib/tmpfiles.d/cups-lp.conf <<EOF
+# This file is part of cups.
+#
+# Legacy parallel port character device nodes, to trigger the
+# auto-loading of the kernel module on access.
+#
+# See tmpfiles.d(5) for details
+
+c /dev/lp0 0660 root lp - 6:0
+c /dev/lp1 0660 root lp - 6:1
+c /dev/lp2 0660 root lp - 6:2
+c /dev/lp3 0660 root lp - 6:3
+EOF
+
+mkdir -p %buildroot/lib/udev/devices
+touch %buildroot/lib/udev/devices/lp0
+touch %buildroot/lib/udev/devices/lp1
+touch %buildroot/lib/udev/devices/lp2
+touch %buildroot/lib/udev/devices/lp3
+
+%pre
+%pre_control %name
+
+%post
+%post_control %name -s server
+%post_service %name
+rm -f /var/cache/cups/ppds.dat
+
+%preun
+%preun_service %name
+%post -n php5-%name
+%php5_extension_postin
+
+%preun -n php5-%name
+%php5_extension_preun
+
+%triggerpostun -- %name < 1.5.0-alt4
+[ -f %_sysconfdir/modprobe.d/blacklist-cups.rpmsave ] && {
+    echo "Renaming %_sysconfdir/modprobe.d/blacklist-cups, please check"
+    mv -vf %_sysconfdir/modprobe.d/blacklist-cups.conf %_sysconfdir/modprobe.d/blacklist-cups.rpmnew
+    mv -vf %_sysconfdir/modprobe.d/blacklist-cups.rpmsave %_sysconfdir/modprobe.d/blacklist-cups.conf
+    } ||:
+
+%files
+%doc %_docdir/%name-%version
+
+%config(noreplace) %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/modprobe.d/*
+#special hack for snmp.conf
+%config(noreplace) %attr(0640,root,lp) %_sysconfdir/%name/snmp.conf
+%config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
+%config(noreplace) %_sysconfdir/pam.d/%name
+%systemd_unitdir/%name.*
+%config(noreplace) %_sysconfdir/tmpfiles.d/%name.conf
+%_sysconfdir/control.d/facilities/%name
+%_initdir/%name
+%_altdir/%name
+%_sysconfdir/dbus-1/system.d/%name.conf
+
+%_prefix/lib/%name
+%exclude %_prefix/lib/cups/backend/serial
+
+%_datadir/%name
+%exclude %_datadir/%name/examples
+%exclude %_datadir/%name/ipptool
+
+%_logdir/%name
+%dir %_spooldir/%name
+%dir %_spooldir/%name/tmp
+%dir %_cachedir/%name
+%attr(0755,root,lp) %ghost %dir %_var/run/%name/
+
+%_iconsdir/hicolor/*/apps/*.png
+%_desktopdir/%name.desktop
+
+%_bindir/cupstestdsc
+%_bindir/cupstestppd
+%attr(02711,root,lp) %_bindir/cancel-cups
+%attr(02711,root,lp) %_bindir/lp-cups
+%attr(02711,root,lp) %_bindir/lpoptions
+%attr(02711,root,lp) %_bindir/lppasswd
+%attr(02711,root,lp) %_bindir/lpq-cups
+%attr(02711,root,lp) %_bindir/lpr-cups
+%attr(02711,root,lp) %_bindir/lprm-cups
+%attr(02711,root,lp) %_bindir/lpstat-cups
+
+%_sbindir/*
+
+%_man1dir/*
+%exclude %_man1dir/ppd*
+%exclude %_man1dir/ipptool*
+
+%_man7dir/*
+
+%_man5dir/*
+%exclude %_man5dir/ppd*
+
+%_man8dir/*
+
+%_datadir/%name/model
+%_datadir/locale/*/*.po
+
+%attr(0660, root, lp) %dev(c, 6, 0) /lib/udev/devices/lp0
+%attr(0660, root, lp) %dev(c, 6, 1) /lib/udev/devices/lp1
+%attr(0660, root, lp) %dev(c, 6, 2) /lib/udev/devices/lp2
+%attr(0660, root, lp) %dev(c, 6, 3) /lib/udev/devices/lp3
+
+/lib/tmpfiles.d/cups.conf
+/lib/tmpfiles.d/cups-lp.conf
+
+#%_sysconfdir/fonts/conf.d/99pdftoopvp.conf
+
+%files -n lib%name
+%_libdir/*.so.*
+
+%files -n lib%name-devel
+%_bindir/%name-config
+%_bindir/ppd*
+%_includedir/%name
+%_datadir/%name/examples
+%_libdir/*.so
+%_man1dir/ppd*
+%_man5dir/ppd*
+
+%files backend-serial
+%_prefix/lib/cups/backend/serial
+%files -n php5-%name
+%php5_extdir/%name.so
+%php5_extconf/%php5_extension
+
+%files ipptool
+%_bindir/ipptool
+%dir %_datadir/cups/ipptool
+%_datadir/cups/ipptool/create-printer-subscription.test
+%_datadir/cups/ipptool/get-completed-jobs.test
+%_datadir/cups/ipptool/get-jobs.test
+%_datadir/cups/ipptool/ipp-1.1.test
+%_datadir/cups/ipptool/ipp-2.0.test
+%_datadir/cups/ipptool/ipp-2.1.test
+%_datadir/cups/ipptool/testfile.jpg
+%_datadir/cups/ipptool/testfile.pdf
+%_datadir/cups/ipptool/testfile.ps
+%_datadir/cups/ipptool/testfile.txt
+%_man1dir/ipptool.1.gz
+
+%changelog
+* Thu Jun 14 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.5.3-alt1
+- 1.5.3
+- add tmpfiles.d files for static devices and /var/run/cups stuff
+
+* Wed Apr 11 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.5.2-alt2
+- cups-1.5.2-rh-translation.patch
+
+* Fri Mar 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.5.2-alt1
+- 1.5.2
+- build with systemd, avahi
+
+* Tue Dec 06 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.5.0-alt7
+- fix build by removing pdftoopvp filter
+
+* Wed Oct 12 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.5.0-alt6
+- trigger to rename /etc/modprobe.d/blacklist-cups -> blacklist-cupsconf
+- enable lspp
+- make cpdftocps pstopdf filters executable
+- add bc to Requires (for pstopdf)
+
+* Wed Oct 12 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.5.0-alt5
+- fix http://www.cups.org/str.php?L3921 (ppds.dat corruption)
+- rename blackist-cups to blackist-cups.conf
+
+* Mon Oct 10 2011 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.5.0-alt4
+- add pdf-filters
+- add filers cpdftocps pstopdf
+
+* Sat Sep 10 2011 Anton Farygin <rider@altlinux.ru> 1.5.0-alt3
+- Rebuild with php5-5.3.8.20110823-alt1
+
+* Thu Sep 08 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.5.0-alt2
+- CVE-2011-2896
+
+* Fri Aug 19 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.5.0-alt1
+- 1.5.0
+
+* Fri Jul 01 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.4.7-alt1
+- 1.4.7
+
+* Fri May 06 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.4.6-alt6
+- shaba@: add systemd support (ALT #25582)
+
+* Wed May 04 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.4.6-alt5
+- add /lib/udev/devices/lp*
+
+* Fri Mar 25 2011 Anton Farygin <rider@altlinux.ru> 1.4.6-alt4
+- rebuild with new PHP
+
+* Wed Mar 23 2011 Alexey Tourbin <at@altlinux.ru> 1.4.6-alt3
+- enabled OpenSSL encryption support
+- libcups-devel: removed dependencies on libssl-devel libgnutls-devel
+- cups-config: disabled dependency on zlib-devel
+
+* Mon Feb 14 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.4.6-alt2
+- change permissions for cupsd to 0755 (ALT #25086)
+
+* Mon Jan 17 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.4.6-alt1
+- 1.4.6
+
+* Mon Nov 22 2010 Vitaly Kuznetsov <vitty@altlinux.ru> 1.4.5-alt2
+- remove loopback setup script from initscript
+
+* Fri Nov 12 2010 Vitaly Kuznetsov <vitty@altlinux.ru> 1.4.5-alt1
+- 1.4.5
+
+* Fri Oct 29 2010 Vitaly Kuznetsov <vitty@altlinux.ru> 1.4.4-alt3
+- CVE-2010-2941
+
+* Fri Sep 17 2010 Vitaly Kuznetsov <vitty@altlinux.ru> 1.4.4-alt2
+- mike: use ip instead of ifconfig in initscript (closes: #24099)
+
+* Tue Sep 14 2010 Vitaly Kuznetsov <vitty@altlinux.ru> 1.4.4-alt1
+- 1.4.4 (closes: #23635)
+
+* Sat Apr 03 2010 Stanislav Ievlev <inger@altlinux.org> 1.4.3-alt1
+- 1.4.3
+
+* Sun Mar 07 2010 Stanislav Ievlev <inger@altlinux.org> 1.4.2-alt3
+- CVE-2010-0302, CVE-2009-3553
+
+* Wed Dec 16 2009 Stanislav Ievlev <inger@altlinux.org> 1.4.2-alt2
+- fix Russian translation
+
+* Thu Nov 12 2009 Stanislav Ievlev <inger@altlinux.org> 1.4.2-alt1
+- 1.4.2
+
+* Tue Oct 20 2009 Stanislav Ievlev <inger@altlinux.org> 1.4.1-alt4
+- move /usr/share/cups/ppdc from devel package into main (need for sdk based drivers)
+- move /usr/share/cups/drv from devel package into main (there is a sample ready to use driver inside)
+
+* Thu Oct 01 2009 Stanislav Ievlev <inger@altlinux.org> 1.4.1-alt3
+- fix desktop-file (closes: #21786)
+- fix action back links in Russian web interface (closes: #21777) (cas@)
+
+* Wed Sep 30 2009 Stanislav Ievlev <inger@altlinux.org> 1.4.1-alt2
+- add blacklist for usblp kernel module (closes: #21737)
+
+* Tue Sep 15 2009 Stanislav Ievlev <inger@altlinux.org> 1.4.1-alt1
+- 1.4.1
+
+* Thu Jun 04 2009 Stanislav Ievlev <inger@altlinux.org> 1.3.10-alt2
+- fix package deps
+- remove obsolete macros
+
+* Fri Apr 17 2009 Stanislav Ievlev <inger@altlinux.org> 1.3.10-alt1
+- 1.3.10 (security update)
+- add support for PidFile option (closes: #19477)
+
+* Wed Dec 17 2008 Stanislav Ievlev <inger@altlinux.org> 1.3.9-alt2
+- CVE-2008-5138, CVE-2008-5286
+
+* Mon Oct 20 2008 Stanislav Ievlev <inger@altlinux.org> 1.3.9-alt1
+- 1.3.9
+
+* Thu Jul 24 2008 Stanislav Ievlev <inger@altlinux.org> 1.3.8-alt1
+- 1.3.8
+
+* Wed May 14 2008 Stanislav Ievlev <inger@altlinux.org> 1.3.7-alt2
+- CVE-2008-1722
+
+* Wed Apr 02 2008 Stanislav Ievlev <inger@altlinux.org> 1.3.7-alt1
+- 1.3.7
+
+* Mon Mar 24 2008 Stanislav Ievlev <inger@altlinux.org> 1.3.6-alt2
+- libcups-devel: add libgnutls-devel and libssl-devel to requires
+
+* Tue Feb 26 2008 Stanislav Ievlev <inger@altlinux.org> 1.3.6-alt1
+- 1.3.6
+
+* Fri Feb 01 2008 Stanislav Ievlev <inger@altlinux.org> 1.3.5-alt2
+- add translations (for command line utilities)
+- remove unused and insecure pstops-wrapper
+
+* Tue Jan 08 2008 Stanislav Ievlev <inger@altlinux.org> 1.3.5-alt1
+- 1.3.5
+
+* Thu Nov 08 2007 Stanislav Ievlev <inger@altlinux.org> 1.3.3-alt4
+- CVE-2007-4045
+  CVE-2007-4352
+  CVE-2007-5392
+  CVE-2007-5393
+
+* Wed Nov 07 2007 Stanislav Ievlev <inger@altlinux.org> 1.3.3-alt3
+- remove deps on printer-driver-utils
+
+* Wed Oct 31 2007 Stanislav Ievlev <inger@altlinux.org> 1.3.3-alt2
+- CVE-2007-4351
+
+* Mon Oct 01 2007 Stanislav Ievlev <inger@altlinux.org> 1.3.3-alt1
+- 1.3.3
+
+* Thu Sep 06 2007 Stanislav Ievlev <inger@altlinux.org> 1.2.12-alt4
+- remove ppd subpackage (all extra ppd files are distributed with foomatic-db now)
+
+* Fri Aug 24 2007 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2.12-alt3
+- Added php5 module build
+
+* Tue Jul 31 2007 Stanislav Ievlev <inger@altlinux.org> 1.2.12-alt2
+- CVE-2007-3387
+
+* Tue Jul 17 2007 Stanislav Ievlev <inger@altlinux.org> 1.2.12-alt1
+- 1.2.12 (bugfix release)
+
+* Mon May 21 2007 Stanislav Ievlev <inger@altlinux.org> 1.2.11-alt1
+- 1.2.11 (bugfix release)
+- add desktop menu entry
+
+* Fri Mar 23 2007 Stanislav Ievlev <inger@altlinux.org> 1.2.10-alt1
+- 1.2.10 (bugfix release)
+
+* Wed Feb 28 2007 Stanislav Ievlev <inger@altlinux.org> 1.2.8-alt1
+- 1.2.8 (bugfix release)
+- define default policy
+
+* Wed Nov 15 2006 Stanislav Ievlev <inger@altlinux.org> 1.2.6-alt1
+- 1.2.6 (bugfix release)
+- force A4 in ppds
+- cups drivers in separate package now
+
+* Fri Oct 13 2006 Stanislav Ievlev <inger@altlinux.org> 1.2.4-alt0.2
+- cupsServer(), don't save probe results (was problems with samba)
+
+* Fri Oct 13 2006 Stanislav Ievlev <inger@altlinux.org> 1.2.4-alt0.1
+- 1.2.4 (bugfix release)
+
+* Wed Sep 13 2006 Stanislav Ievlev <inger@altlinux.org> 1.2.3-alt0.1
+- 1.2.3 (bugfix release)
+
+* Mon Jun 19 2006 Stanislav Ievlev <inger@altlinux.org> 1.2.1-alt0.5
+- fixed izvrat patch
+
+* Tue Jun 06 2006 Stanislav Ievlev <inger@altlinux.org> 1.2.1-alt0.4
+- added missing directories to package
+- fixed lpstat output problem (patch from upstream)
+
+* Wed May 31 2006 Stanislav Ievlev <inger@altlinux.org> 1.2.1-alt0.3
+- fixed alternatives update
+
+* Tue May 30 2006 Stanislav Ievlev <inger@altlinux.org> 1.2.1-alt0.2
+- fixed .rpmsave problem
+
+* Wed May 24 2006 Stanislav Ievlev <inger@altlinux.org> 1.2.1-alt0.1
+- 1.2.1
+
+* Thu Jun 30 2005 Anton D. Kachalov <mouse@altlinux.org> 1.1.20-alt14.1
+- x86_64 fix
+
+* Tue May 03 2005 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt14
+- update backend (new format)
+- cups-1.1.20-alt-usb-decode_id.patch
+
+* Thu Apr 21 2005 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt13
+- update backend (new format)
+
+* Wed Mar 09 2005 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt12
+- update alterator backend
+
+* Mon Feb 14 2005 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt11
+- added CUPS backend for alterator
+
+* Fri Jan 28 2005 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt10
+- remove duplicate in ppds
+- added update-printers-db in post script
+
+* Fri Jan 14 2005 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt9
+- added patches for:
+	CAN-2004-1268
+	CAN-2004-1269
+	CAN-2004-1270
+	CAN-2005-0064
+
+* Thu Dec 23 2004 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt8
+- xpdf security fixes again
+- added support for cp866 (#5439)
+
+* Thu Oct 21 2004 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt7
+- bump release number for sisyphus
+
+* Tue Oct 19 2004 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt6.1
+- sec fix
+
+* Thu Oct 07 2004 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt6
+- added additional drivers,filters,ppds
+
+* Fri Sep 17 2004 ALT QA Team Robot <qa-robot@altlinux.org> 1.1.20-alt5.3.1
+- Rebuilt with libtiff.so.4.
+
+* Fri Sep 03 2004 Dmitry V. Levin <ldv@altlinux.org> 1.1.20-alt5.3
+- Applied patch from Alvaro Martinez Echevarria, to fix DoS (CAN-2004-0558).
+
+* Mon Aug 09 2004 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt5.2
+- replace testpage with others.
+
+* Mon May 10 2004 ALT QA Team Robot <qa-robot@altlinux.org> 1.1.20-alt5.1
+- Rebuilt with openssl-0.9.7d.
+
+* Wed May 05 2004 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt5
+- added full sets of drivers for Epson and OCE PostScript printers
+
+* Wed Mar 17 2004 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt4
+- added drivers for EPL 6200 from Epson, PCL driver for this printer removed
+- fix texttops to work with this printer.
+
+* Tue Mar 16 2004 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt3
+- added default driver for EPSON EPL 6200 (same as ljet4 with PageSize = A4)
+
+* Tue Mar 16 2004 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt2
+- enable and start printer by default (need by kde print manager)
+
+* Tue Mar 16 2004 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt1
+- increase permissions for the certificates (TODO: possible change perms on certs dir)
+
+* Tue Feb 10 2004 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt0.9
+- enable izvrat
+
+* Wed Dec 24 2003 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt0.8
+- second Daedalus release
+- return all old patches instead of izvrat
+
+* Tue Dec 02 2003 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt0.7
+- Daedalus release
+
+* Fri Nov 28 2003 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt0.6
+- added locale patch, also patch from ASP
+- fix shared library building
+
+* Thu Nov 13 2003 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt0.2
+- 1.1.20
+- termporary remove -u from startup script
+- require esp-ghostscript-cups
+
+* Thu Nov 06 2003 Stanislav Ievlev <inger@altlinux.org> 1.1.20-alt0.1
+- 1.1.20rc5
+- temporary remove all aditional features
+- use external ghostscript with cups device
+
+* Mon Nov 03 2003 Stanislav Ievlev <inger@altlinux.org> 1.1.18-alt8.3
+- turn on limits to maximum number of saved jobs
+- fix problem with possible infinity loop
+
+* Thu Oct 09 2003 Stanislav Ievlev <inger@altlinux.ru> 1.1.18-alt8.2
+- try to fix web interface
+
+* Mon Sep 29 2003 Stanislav Ievlev <inger@altlinux.ru> 1.1.18-alt8.1
+- Added support for control
+
+* Thu May 22 2003 Stanislav Ievlev <inger@altlinux.ru> 1.1.18-alt8
+- apply bugfix patch
+- use new scheme for init-script
+
+* Wed Apr 09 2003 Stanislav Ievlev <inger@altlinux.ru> 1.1.18-alt7.2
+- new alternatives config format
+
+* Mon Mar 31 2003 Stanislav Ievlev <inger@altlinux.ru> 1.1.18-alt7.1
+- ptal backend removed (hpoj maintainer request)
+
+* Wed Mar 26 2003 Stanislav Ievlev <inger@altlinux.ru> 1.1.18-alt7
+- added backend-ptal, backend-pdf
+- use %%exclude instead of filelists
+
+* Fri Mar 14 2003 Stanislav Ievlev <inger@altlinux.ru> 1.1.18-alt6
+- PreReq fixes
+
+* Thu Mar 13 2003 Stanislav Ievlev <inger@altlinux.ru> 1.1.18-alt5
+- move to new alternatives scheme
+
+* Wed Jan 29 2003 Stanislav Ievlev <inger@altlinux.ru> 1.1.18-alt4
+- added patch from MDK: fix error message on host lookup failure
+
+* Wed Jan 15 2003 Stanislav Ievlev <inger@altlinux.ru> 1.1.18-alt3
+- fixed izvrat: 3770 -> 2770 on /etc/cups/certs/
+- change name on startup
+- init-script now only %%config without noreplace
+
+* Tue Jan 14 2003 Stanislav Ievlev <inger@altlinux.ru> 1.1.18-alt2
+- advanced izvrat
+
+* Fri Jan 10 2003 Stanislav Ievlev <inger@altlinux.ru> 1.1.18-alt1
+- 1.1.18
+- removed altification of testprint, now in the printer-testpages
+
+* Thu Dec 19 2002 Stanislav Ievlev <inger@altlinux.ru> 1.1.15-alt8
+- added pdf2ps patch
+
+* Mon Dec 16 2002 Stanislav Ievlev <inger@altlinux.ru> 1.1.15-alt7
+- apply some fixes from idefence
+
+* Wed Dec 04 2002 Stanislav Ievlev <inger@altlinux.ru> 1.1.15-alt5
+- move serial and ncp backend into subpackage
+- added contrib from Yury Konovalov <yurix@unixcenter.ru>
+
+* Wed Oct 16 2002 AEN <aen@altlinux.ru> 1.1.15-alt4
+- common Provides added
+
+* Fri Oct 11 2002 AEN <aen@altlinux.ru> 1.1.15-alt3
+- locale name fixed (bug #1396)
+
+* Wed Jun 26 2002 AEN <aen@logic.ru> 1.1.15-alt2
+- custom mime.convs added
+- some pfa's from cups-1.1.14 added in val-fonts
+
+* Mon Jun 17 2002 AEN <aen@logic.ru> 1.1.15-alt1
+- new version
+- restored pstoraster from 1.1.14
+- patches 106, 107 merged upstream
+
+* Thu Apr 11 2002 Stanislav Ievlev <inger@altlinux.ru> 1.1.14-alt3
+- Added ALT documentation
+
+* Thu Mar 28 2002 Stanislav Ievlev <inger@altlinux.ru> 1.1.14-alt2
+- Added loopback setup to startup script.
+  cups needs it to work
+
+* Thu Feb 14 2002 Stanislav Ievlev <inger@altlinux.ru> 1.1.14-alt1
+- 1.1.14
+
+* Wed Feb 13 2002 Stanislav Ievlev <inger@altlinux.ru> 1.1.13-alt6
+- turn off temporary light settings
+
+* Wed Feb 13 2002 Stanislav Ievlev <inger@altlinux.ru> 1.1.13-alt5
+- izvrat, stage2:
+   added -u option,
+   admrestart option for initscripts.
+
+* Mon Feb 11 2002 Stanislav Ievlev <inger@altlinux.ru> 1.1.13-alt4
+- fix locale support.
+
+* Fri Feb 08 2002 Stanislav Ievlev <inger@altlinux.ru> 1.1.13-alt3
+- first release of Izvrat patch
+
+* Thu Feb 07 2002 Stanislav Ievlev <inger@altlinux.ru> 1.1.13-alt2
+- small cleanups
+
+* Wed Feb 06 2002 AEN <aen@logic.ru> 1.1.13-alt1
+- patches 102,107,108 removed
+- patches 101,103 regenerated
+
+* Thu Dec 06 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.12-alt3
+- added root in config, for some cases ...
+
+* Thu Nov 22 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.12-alt2
+- aded ncp backend by Sergey Vlasov <vsu@altlinux.ru>
+- returned fax4CUPS again. Someone remove it some time ago.
+
+* Fri Nov 16 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.12-alt1
+- 1.1.12
+
+* Thu Oct 11 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.10-alt5
+- rebuild with new libpng.
+- RSBAC patch temporary disabled to rebuild under 2.2 kernel
+
+* Thu Sep 06 2001 AEN <aen@logic.ru> 1.1.10-alt4
+- new fonts from Valek
+
+* Mon Sep 03 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.10-alt3
+- New solution for admin.cgi - tmpdir
+  defined in config by default now.
+
+* Mon Aug 27 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.10-alt2
+- Returned Valek's fonts. Now in pfa format (CUPS bug?)
+
+* Fri Aug 17 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.10-alt1
+- 1.1.10
+- removed setupbroadcusting. It's not secure to have this script.
+- temporary removed fonts. Don't work with gimp-print.
+
+* Wed Aug 08 2001 AEN <aen@logic.ru> 1.1.9-alt9
+- new default fonts from Valek (frob@df.ru)
+- utf fonts description changed
+
+* Fri Aug 03 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.9-alt8
+- Corrections of RSBAC support in CUPS.
+
+* Tue Jul 31 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.9-alt7
+- Changed default config to add rights for admin.cgi.
+
+* Tue Jul 31 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.9-alt6
+- New lphelp utility from Mandrake.
+
+* Thu Jul 26 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.9-alt5
+- 1.1.9-1 (bugfix release)
+
+* Wed Jul 25 2001 AEN <aen@logic.ru> 1.1.9-alt4
+- RunAsUser temporary removed
+
+* Tue Jul 24 2001 AEN <aen@logic.ru> 1.1.9-alt3
+- new encoding patch (hebrew support added)
+
+* Thu Jul 12 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.9-alt2
+- Fixed .so links (from hard links to soft)
+
+* Wed Jul 11 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.9-alt1
+- 1.1.9
+
+* Wed Jun 20 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.8-alt2
+- Added RSBAC MAC support.
+
+* Wed Jun 13 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.8-alt1
+- 1.1.8
+
+* Mon Jun 04 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.7-alt6
+- Fix update-alternatives. Force to use gzip for manuals
+
+* Wed May 30 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.7-alt5
+- Split package. Backport pstops from 1.1.6
+
+* Tue May 29 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.7-alt4
+- Added test page with our logo
+
+* Mon May 28 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.7-alt3
+- Remove menu entry for removed cupsWebAdmin Script.
+
+* Fri May 25 2001 Stanislav Ievlev <inger@altlinux.ru> 1.1.7-alt2
+- Some cleanups. Rebuild for use macros post_service and preun_service.
+
+* Sat Feb 25 2001 AEN <aen@logic.ru>
+- 1.1.6, holes fixed (?)
+
+* Mon Jan 08 2001 AEN <aen@logic.ru>
+- merged with MDK
+
+* Thu Jan  4 2001 Till Kamppeter <till@mandrakesoft.com> 1.1.5-2mdk
+
+- Bugfix release of CUPS 1.1.5.
+- Enhancements in the documentation for setting up encrypted connections.
+- Reactivate usage of implicit classes by default.
+- Fixed segfault of "lppasswd -a name".
+
+* Wed Jan  3 2001 Till Kamppeter <till@mandrakesoft.com> 1.1.5-1mdk
+
+- Updated to CUPS 1.1.5 (encryption support enabled).
+- Added README files of the source tarball to the doc directory.
+
+* Mon Dec 25 2000 AEN <aen@logic.ru>
+- pam fixed
+
+* Tue Nov 28 2000 AEN <aen@logic.ru>
+- rebuild for RE
+- fix for 2.96 build
+- big encodings & languages patch
+
+* Mon Nov 27 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.4-8mdk
+- Fixed RPM problem of /etc/cups/cupsd.conf.rpmnew sometimes not created.
+
+* Thu Nov 23 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.4-7mdk
+- Fixed bug of jobs sent to implicit classes not printing.
+
+* Sat Nov 18 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.4-6mdk
+- Fixed bug in the autodetection of the printer devices.
+
+* Wed Nov 15 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.4-5mdk
+- Security fix: Automatic configuration of broadcasting and printer access
+  restricted to the local network(s) (eth?), printers were accessible from
+  all over the internet before, and broadcasting to all networks
+  (255.255.255.255) kept dial-on-demand connections permanently up.
+
+* Tue Nov 14 2000 Chmouel Boudjnah <chmouel@mandrakesoft.com> 1.1.4-4mdk
+- Fix gcc2.96 compilation.
+
+* Sat Oct 21 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.4-3mdk
+- Security fix: lpstat and web interface displayed the SMB password before
+
+* Tue Oct 17 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.4-2mdk
+- Set default Filterlimit to 999999 in /etc/cups/cupsd.conf, the default
+  value zero limited to one process instead of allowing unlimited processes.
+- Fixed a bug in scaling of HPGL files.
+
+* Sat Oct 14 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.4-1mdk
+- New release with all previous bugfixes included and important fixes for
+  the GIMP-Print drivers.
+
+* Mon Oct  2 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.3-13mdk
+- Applied patch by Michael Sweet for the test file bug in the IPP backend.
+
+* Sun Oct  1 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.3-12mdk
+- Fixed a bug of the IPP backend which prevented text with accented characters
+  being transferred correctly to the printing server.
+
+* Sun Oct  1 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.3-11mdk
+- Cleaned up manufacturer entry in the CUPS PPD files
+- Fixed a bug in handling lines with leading spaces in ~/.lpoptions
+
+* Thu Sep 28 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.3-10mdk
+- Menu call for the web interface not fixed to Netscape any more.
+
+* Thu Sep 28 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.3-9mdk
+- New bugfix patch of Michael Sweet for admin.cgi
+
+* Wed Sep 27 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.3-8mdk
+- Fixed bug in admin.cgi by a patch of Michael Sweet, no downdate to 1.1.2
+  any more
+- Fixed bug with duplex printing in HP LaserJet driver
+
+* Tue Sep 26 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.3-7mdk
+- Fixed bug in IPP backend which prevented options from
+  being transferred correctly to a remote printer
+
+* Tue Sep 26 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.3-6mdk
+- Applied new PAM configuration
+
+* Mon Sep 25 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.3-5mdk
+- Program "lphelp" expanded to show also numerical options of CUPS-O-MATIC
+  PPD files.
+
+* Sat Sep 23 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.3-4mdk
+- Mandrakized the test page
+- Login/password request for command line tools
+
+* Fri Sep 22 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.3-3mdk
+- Revised support of accounts without password. Now XPP, KUPS and QTCUPS
+  do not ask for the login/password again and again when one clicks
+  "Cancel" in the login dialog.
+
+* Wed Sep 20 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.3-2mdk
+- Fixed bug of adding a printer with the web interface being impossible
+- Make CUPS WWW interface and KUPS usable when root has no
+  password
+
+* Tue Sep 19 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.3-1mdk
+- Corrected "preun" script, so that update-alternatives links do not
+  get lost on update of the package.
+- Updated to CUPS 1.1.3 which includes all the previous bug fix
+  patches and some additional bugfixes.
+
+* Sat Sep 16 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.2-22mdk
+- changed default configuration to generate an /etc/printcap
+  file. So non-natively CUPS supporting programs (as KDE)
+  find the printers.
+
+* Thu Sep 14 2000 Guillaume Cottenceau <gc@mandrakesoft.com> 1.1.2-21mdk
+- corrected incoherent-subsys, till sucks
+- added reload
+
+* Wed Sep 13 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.2-20mdk
+- Replaced startup script completely to fit to the Mandrake
+  standard
+- Applied another development snapshot patch of Michael Sweet to fix
+  bugs in pstoimage and pstoraster, and the information propafation
+  between the CUPS daemons on different machines.
+
+* Sat Sep  9 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.2-19mdk
+- Applied another development snapshot patch of Michael Sweet to fix
+  several bugs.
+
+* Fri Sep  8 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.2-18mdk
+- {_datadir}/locale was forgotten in files section, added
+
+* Fri Sep  8 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.2-17mdk
+- Added /usr/sbin/update-alternatives to "Requires:" line
+  to surround a bug of version number comparing in RPM
+
+* Thu Sep  7 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.2-16mdk
+- Turned off feature of "Implicit classes", it is broken.
+- Introduced "Requires:" line to make sure that "update-
+  alternatives" is available.
+- Added patch of Michael Sweet to support instances in lpq
+  and lprm.
+
+* Thu Sep  7 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.2-15mdk
+- Applied development snapshot patch of Michael Sweet to fix
+  several bugs.
+- Added automatic daemon restart on update.
+
+* Wed Sep  5 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.2-14mdk
+- Fixed segfaults in poll_ppd_base
+- Better description in cups.sh (help text for startup
+  services config programs)
+
+* Fri Sep  1 2000 Till Kamppeter <till@mandrakesoft.com> 1.1.2-13mdk
+- Fixed bugs in the "files" list of specfile (definition of doc dir)
+
+* Tue Aug 29 2000 Till Kamppeter <tkamppeter@mandrakesoft.com> 1.1.2-12mdk
+- Added patch adjusting the USB printer autodetection to the current state
+
+* Fri Aug 25 2000 Till Kamppeter <tkamppeter@mandrakesoft.com> 1.1.2-11mdk
+- Menu entry for CUPS WWW Admin tool added
+- Removed compatibility link /etc/init.d/cups to /etc/rc.d/init.d/cups, init
+  script simply in %_initdir now.
+
+* Fri Aug 25 2000 Till Kamppeter <tkamppeter@mandrakesoft.com> 1.1.2-10mdk
+- Fixed compiler options for the additional tools
+
+* Thu Aug 24 2000 Till Kamppeter <tkamppeter@mandrakesoft.com> 1.1.2-9mdk
+- Made the cups package ready for co-existing with the old lpr printing
+  system.
+
+* Mon Aug 21 2000 Till Kamppeter <tkamppeter@mandrakesoft.com> 1.1.2-8mdk
+- Moved "/usr/lib/libcups*.so" links from devel package to main package
+  because the function overloading in XPP and QTCUPS would not work without
+  these links.
+
+* Thu Aug 17 2000 Till Kamppeter <tkamppeter@mandrakesoft.com> 1.1.2-7mdk
+- Added program "lphelp" which lists the printer-specific options defined
+  in the PPD file, so that one can make use of it in "lp", "lpr", and
+  "lpoptions" commands at the command line.
+- Got a bugfix from Michael Sweet to fix an htmltops problem, applied it
+- Applied bugfix for HPGL recognition in /etc/cups/mime.types
+
+* Thu Aug 17 2000 Till Kamppeter <tkamppeter@mandrakesoft.com> 1.1.2-6mdk
+- Added program "poll_ppd_base" to get a list of all PPD files installed with
+  manufacturer and model names of the printers (useful for installation/
+  configuration scripts)
+
+* Mon Aug 14 2000 Till Kamppeter <tkamppeter@mandrakesoft.com> 1.1.2-5mdk
+- Added link libcupsimage.so --> libcupsimage.so.2 so thet drivers based
+  on the CUPS driver development kit of GIMP Print compile
+- Moved links "*.so" --> "*.so.2" to the development package (rpmlint
+  recommends this)
+
+* Wed Aug  9 2000 Till Kamppeter <tkamppeter@mandrakesoft.com> 1.1.2-4mdk
+- Replaced "chown" in "%%post" by "%%attr" in file list
+- Now GhostScript 5.50 is not more required by this package but by cups-drivers
+- Compatibility link /etc/rc.d/init.d/cups, if /etc/rc.d/init.d/ exists
+
+* Tue Aug  8 2000 Till Kamppeter <tkamppeter@mandrakesoft.com> 1.1.2-3mdk
+- Let the PPDs delivered with CUPS be installed, too
+
+* Tue Aug  8 2000 Till Kamppeter <tkamppeter@mandrakesoft.com> 1.1.2-2mdk
+- Moved init script to from /etc/rc.d/init.d/ to /etc/init.d
+- Now GhostScript 5.50 is required
+- Patched chkconfig entry in /etc/init.d/cups to 2345 60 60 (as lpd)
+
+* Tue Aug  8 2000 Till Kamppeter <tkamppeter@mandrakesoft.com> 1.1.2-1mdk
+- Excluded static CUPS library to allow overloading of CUPS functions
+- Patched CUPS daemon config to use Web interface for administration
+- pstoraster not removed to have the flexibility to also use CUPS drivers
+- Updated to version 1.1.2 with bugfix patch for the Makefile
+
+* Tue Jul  4 2000 François Pons <fpons@mandrakesoft.com> 1.1-0.b5.1mdk
+- removed pstoraster from installation as drivers are in cups-drivers.
+- initial release.

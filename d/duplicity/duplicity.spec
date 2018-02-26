@@ -1,0 +1,103 @@
+Name: duplicity
+Version: 0.6.17
+Release: alt1.1
+
+Summary: Untrusted/encrypted backup using rsync algorithm
+
+Group: Archiving/Backup
+Url: http://www.nongnu.org/duplicity/
+License: GPL
+
+Source: %name-%version.tar
+
+# Automatically added by buildreq on Sat Nov 03 2007
+BuildRequires: librsync-devel python-devel python-modules-compiler
+BuildPreReq: rpm-build-compat >= 1.2
+
+%description
+Duplicity incrementally backs up files and directory by encrypting
+tar-format volumes with GnuPG and uploading them to a remote (or
+local) file server.  In theory many remote backends are possible;
+right now local, ssh/scp, ftp, and rsync backends are written.
+Because duplicity uses librsync, the incremental archives are space
+efficient and only record the parts of files that have changed since
+the last backup.  Currently duplicity supports deleted files, full
+unix permissions, directories, symbolic links, fifos, etc., but not
+hard links.
+
+%prep
+%setup
+
+%build
+%python_build
+
+%install
+%python_install
+
+%find_lang %name
+
+%files -f %name.lang
+%doc CHANGELOG README
+%_bindir/rdiffdir
+%_bindir/duplicity
+%_man1dir/*
+%python_sitelibdir/%name/
+%python_sitelibdir/duplicity-*.egg-info
+
+%changelog
+* Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.17-alt1.1
+- Rebuild to remove redundant libpython2.7 dependency
+
+* Fri Dec 02 2011 Vladimir V. Kamarzin <vvk@altlinux.org> 0.6.17-alt1
+- 0.6.17
+
+* Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.13-alt1.1
+- Rebuild with Python-2.7
+
+* Mon May 23 2011 Vladimir V. Kamarzin <vvk@altlinux.org> 0.6.13-alt1
+- 0.6.13
+
+* Fri Mar 19 2010 Denis Klimov <zver@altlinux.org> 0.6.08b-alt1
+- new version
+- added async download volumes patch
+
+* Fri Jan 29 2010 Denis Klimov <zver@altlinux.org> 0.6.06-alt1
+- new version
+
+* Thu Nov 12 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.05-alt1.1
+- Rebuilt with python 2.6
+
+* Sat Sep 19 2009 Denis Klimov <zver@altlinux.org> 0.6.05-alt1
+- new version
+- remove needless -q param for setup macros
+- use find_lang macros
+
+* Mon Jul 07 2008 Vitaly Lipatov <lav@altlinux.ru> 0.4.11-alt1
+- new version 0.4.11 (with rpmrb script)
+- add rpm-build-compat >= 2 buildreq
+
+* Tue Apr 29 2008 Vitaly Lipatov <lav@altlinux.ru> 0.4.10-alt1
+- new version 0.4.10 (with rpmrb script)
+
+* Tue Jan 08 2008 Vitaly Lipatov <lav@altlinux.ru> 0.4.9-alt1
+- new version 0.4.9
+- fix lib files packing
+- remove COPYING, fix build/install commmands
+
+* Fri Dec 21 2007 Vitaly Lipatov <lav@altlinux.ru> 0.4.8-alt1
+- new version 0.4.8 (with rpmrb script)
+
+* Sat Nov 03 2007 Vitaly Lipatov <lav@altlinux.ru> 0.4.3-alt1
+- change mantainer, cleanup spec
+- new version 0.4.3 (with rpmrb script)
+
+* Wed May 17 2006 Alex V. Myltsev <avm@altlinux.ru> 0.4.2-alt0.1
+- Initial build for Sisyphus
+
+* Sat Aug 09 2003 Ben Escoto <bescoto@stanford.edu>
+- Repackaging for Fedora
+- autodetect python version
+- require librsync >=0.9.6
+* Sun Aug 30 2002 Ben Escoto <bescoto@stanford.edu>
+- Initial RPM
+

@@ -1,0 +1,247 @@
+# TODO: enable system libtiff when it will support BigTiff (from 4.0?)
+%def_without libtiff
+%def_without geotiff
+%def_with mysql
+%def_with pg
+%def_with sqlite
+
+Summary: The Geospatial Data Abstraction Library (GDAL)
+Name: gdal
+Version: 1.8.0
+Release: alt1.3.1
+Group: Sciences/Geosciences
+
+License: MIT
+URL: http://www.gdal.org/
+
+Packager: Egor Vyscrebentsov <evyscr@altlinux.org>
+
+Source: %name-%version.tar
+
+Patch0: %name-1.7.1-alt-swig_python.patch
+Patch1: %name-1.7.1-alt-pydir.patch
+Patch2: %name-1.7.1-alt-apps_install.patch
+Patch3: %name-1.7.1-alt-inst_docs.patch
+
+%define libname lib%name
+
+# Automatically added by buildreq on Thu Aug 12 2010
+BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel libexpat-devel libgeos-devel libgif-devel libhdf5-devel libjasper-devel libjpeg-devel libnumpy-devel libpng-devel libsqlite3-devel libunixODBC-devel libxerces-c28-devel perl-devel postgresql-devel python-module-BeautifulSoup python-module-genshi python-module-xlwt python-modules-ctypes
+
+BuildPreReq: chrpath
+
+%description
+The Geospatial Data Abstraction Library (GDAL) is a unifying
+C/C++ API for accessing raster geospatial data, and currently
+includes formats like GeoTIFF, Erdas Imagine, Arc/Info
+Binary, CEOS, DTED, GXF, and SDTS. It is intended to provide
+efficient access, suitable for use in viewer applications,
+and also attempts to preserve coordinate systems and metadata.
+Python, C, and C++ interfaces are available.
+
+%package doc
+Summary: Documentation for GDAL/OGR
+Group: Documentation
+BuildArch: noarch
+
+%description doc
+This package contains documentation for the GDAL/OGR library
+and utilities.
+
+%package scripts
+Summary: Scripts for GDAL
+Group: Sciences/Geosciences
+
+%description scripts
+This package contains various scripts for GDAL (written in python)
+
+%package -n %libname
+Summary: Libraries required for the GDAL library
+Group: Sciences/Geosciences
+
+%description -n %libname
+Libraries required for the GDAL library
+
+%package -n %libname-devel
+Summary: Development files for using the GDAL library
+Group: Development/C
+Requires: %libname = %version-%release
+
+%description -n lib%name-devel
+Development files for using the GDAL library
+
+%package -n python-module-%name
+Summary: The Python bindings for the GDAL library
+Group: Development/Python
+Requires: %libname = %version
+Requires: %name
+
+%description -n python-module-gdal
+Python module for %name.
+
+%package -n perl-Geo-GDAL
+Summary: Perl bindings for the GDAL library
+Group: Development/Perl
+Requires: %libname = %version
+Requires: %name
+
+%description -n perl-Geo-GDAL
+Perl modules for GDAL/OGR.
+
+%prep
+%setup
+%patch0 -p1
+%patch1 -p2
+%patch2 -p2
+%patch3 -p2
+
+%build
+%configure \
+	--datadir=%_datadir/%name \
+	--includedir=%_includedir/%name \
+	--with-libz \
+	--with-png \
+%if_with libtiff
+	--with-libtiff=yes \
+%else
+	--with-libtiff=internal \
+%endif
+%if_with geotiff
+	--with-geotiff=yes \
+%else
+	--with-geotiff=internal \
+%endif
+	--with-gif \
+	--with-jpeg \
+	--with-ogr \
+	--with-hdf5=/usr/lib/hdf5-seq/\
+	--with-geos \
+	--with-jasper\
+	--with-odbc \
+	--with-curl \
+	%{subst_with mysql} \
+	%{subst_with pg} \
+	%{subst_with sqlite} \
+	--with-python \
+	--with-pythonlib=%python_libdir \
+	--with-perl \
+	--without-php \
+	--without-ruby \
+	--with-xerces \
+	--with-xerces-inc=%_includedir/xercesc \
+	--with-xerces-lib=%_libdir\
+	--without-pcraster        \
+	--with-threads
+#	--with-grass=%_libdir/grass62 \
+
+%make LD_RUN_PATH=
+make docs
+make -B man
+
+%install
+mkdir -p %buildroot%python_sitelibdir
+%makeinstall_std PYTHONPATH=$PYTHONPATH:%buildroot%python_sitelibdir INSTALLDIRS=vendor
+make DESTDIR=%buildroot install-docs
+make DESTDIR=%buildroot install-man
+install -p -m644 NEWS %buildroot%_docdir/%name
+mkdir -p  %buildroot/%_libdir/perl5/
+mv %buildroot/usr/lib/perl5/*-linux-thread-multi/* %buildroot/%_libdir/perl5/
+
+for i in %buildroot%_bindir/*
+do
+	chrpath -d $i ||:
+done
+
+%files
+%_datadir/%name
+%_bindir/ogr*
+%_bindir/gdal*
+%_bindir/testepsg
+%_bindir/nearblack
+%exclude %_bindir/gdal-config
+%exclude %_bindir/*.dox
+%exclude %_bindir/*.py
+%_man1dir/*
+
+%files doc
+%_docdir/%name
+
+%files scripts
+%_bindir/*.py
+
+%files -n %libname-devel
+%_bindir/gdal-config
+%_libdir/*.so
+%_includedir/%name
+
+%files -n %libname
+%_libdir/*.so.*
+
+%files -n python-module-%name
+%python_sitelibdir/GDAL*
+
+%files -n perl-Geo-GDAL
+%perl_vendor_archlib/Geo
+%perl_vendor_autolib/Geo
+%exclude %perl_vendor_archlib/Geo/*.dox
+%exclude %perl_vendor_archlib/Geo/GDAL/*.dox
+
+%changelog
+* Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.8.0-alt1.3.1
+- Rebuild to remove redundant libpython2.7 dependency
+
+* Thu Feb 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1.3
+- Removed bad RPATH
+
+* Mon Nov 07 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.8.0-alt1.2.1
+- Rebuild with Python-2.7
+
+* Sun Oct 16 2011 Alexey Tourbin <at@altlinux.ru> 1.8.0-alt1.2
+- rebuilt for perl-5.14
+
+* Thu Sep 08 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1.1
+- Rebuilt with libhdf5-7
+
+* Fri Apr 15 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.8.0-alt1
+- 1.8.0
+- build fixed
+
+* Fri Nov 05 2010 Vladimir Lettiev <crux@altlinux.ru> 1.7.1-alt3.1
+- rebuilt with perl 5.12
+
+* Thu Aug 12 2010 Egor Vyscrebentsov <evyscr@altlinux.org> 1.7.1-alt3
+- packaged python scripts into subpackage (break circular dependencies)
+
+* Mon Jun 07 2010 Egor Vyscrebentsov <evyscr@altlinux.org> 1.7.1-alt2
+- packaged utils binaries, not wrappers (#23397)
+- packaged docs and mans
+
+* Wed Apr 22 2010 Egor Vyscrebentsov <evyscr@altlinux.org> 1.7.1-alt1
+- new version: 1.7.1
+- enabled perl bindings
+- fixed python bindings
+
+* Tue Nov 17 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt2.1
+- Rebuilt with python 2.6
+
+* Tue Jul 28 2009 Andrey Rahmatullin <wrar@altlinux.ru> 1.6.1-alt2
+- use %%python_sitelibdir instead of hardcoded path
+
+* Tue Jul 14 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.1-alt1
+- new version
+
+* Mon Oct 27 2008 Andriy Stepanov <stanv@altlinux.ru> 1.5.3-alt0.M41.1
+- M41
+
+* Mon Oct 27 2008 Andriy Stepanov <stanv@altlinux.ru> 1.5.3-alt1
+- New version
+
+* Tue Aug 28 2007 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4.0-alt1.1
+- changes from Sir Raorn <raorn@altlinux.ru> 1.4.0-alt1.1:
+-- Major spec cleanup
+-- Packaged headers
+-- Disabled perl/python/ruby in configure (not packaged by default)
+-- Fixed Group
+
+* Thu Jan 18 2007 Dmitri Kuzishchin <dim@altlinux.ru> 1.4.0-alt1
+- Initial package.

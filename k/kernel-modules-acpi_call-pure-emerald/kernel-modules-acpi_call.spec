@@ -1,0 +1,103 @@
+%define module_name	acpi_call
+%define module_version	0.1
+
+%define module_release	alt1
+
+%define kversion	2.6.39
+%define krelease	alt6
+%define flavour		pure-emerald
+
+%define base_arch %(echo %_target_cpu | sed 's/i.86/i386/;s/athlon/i386/')
+
+%define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
+
+Summary: acpi_call module
+Name: kernel-modules-%module_name-%flavour
+Version: %module_version
+Release: %module_release.132647.6
+License: GPL
+Group: System/Kernel and hardware
+
+Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
+
+ExclusiveOS: Linux
+Url: https://github.com/mkottman/acpi_call
+BuildRequires(pre): rpm-build-kernel
+BuildRequires: perl
+BuildRequires: rpm >= 4.0.2-75
+BuildRequires: kernel-headers-modules-%flavour = %kversion-%krelease
+BuildRequires: kernel-source-%module_name = %module_version
+Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
+Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
+Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
+
+PreReq: coreutils
+PreReq: kernel-image-%flavour = %kversion-%krelease
+Requires(postun): kernel-image-%flavour = %kversion-%krelease
+ExclusiveArch: %ix86 x86_64
+
+Requires: %module_name
+
+%description
+This package contains acpi_call module
+
+%prep
+rm -rf %module_name-%{module_version}*
+tar xf %kernel_src/%module_name-%module_version.tar.*
+%setup -D -T -n %module_name-%module_version
+
+%build
+. %_usrsrc/linux-%kversion-%flavour-%krelease/gcc_version.inc
+make KDIR=%_usrsrc/linux-%kversion-%flavour-%krelease
+
+%install
+%__mkdir_p %buildroot/%module_dir
+%__install -pD -m644 %module_name.ko \
+    %buildroot%module_dir/
+
+%post
+%post_kernel_modules %kversion-%flavour-%krelease
+
+%postun
+%postun_kernel_modules %kversion-%flavour-%krelease
+
+%files
+%defattr(644,root,root,755)
+%module_dir
+
+%changelog
+* Thu Aug 04 2011 Mykola Grechukh <gns@altlinux.ru> 0.1-alt1.132647.6
+- built for new kernel release
+
+* Tue Jul 12 2011 Mykola Grechukh <gns@altlinux.ru> 0.1-alt1.132647.5
+- built for 2.6.39-alt5
+
+* Fri Jun 24 2011 Mykola Grechukh <gns@altlinux.ru> 0.1-alt1.132647.4
+- built for 2.6.39-alt4
+
+* Wed May 25 2011 Mykola Grechukh <gns@altlinux.ru> 0.1-alt1.132647.4.g4a7df24
+- built for 2.6.39-alt4.g4a7df24
+
+* Mon May 23 2011 Mykola Grechukh <gns@altlinux.ru> 0.1-alt1.132647.3
+- built for 2.6.39-alt3
+
+* Thu May 19 2011 Mykola Grechukh <gns@altlinux.ru> 0.1-alt1.132647.2
+- built for 2.6.39-alt2
+
+* Tue May 10 2011 Mykola Grechukh <gns@altlinux.ru> 0.1-alt1.132647.1.rc7
+- built for rc7
+
+* Wed May 04 2011 Mykola Grechukh <gns@altlinux.ru> 0.1-alt1.132647.1.rc6
+- built for rc6
+
+* Tue May 03 2011 Mykola Grechukh <gns@altlinux.ru> 0.1-alt1.132647.1.rc5.git7
+- built for rc5-git7
+
+* Wed Apr 27 2011 Mykola Grechukh <gns@altlinux.ru> 0.1-alt1.132647.1.rc5
+- built for .39-rc5
+
+* Tue Apr 19 2011 Mykola Grechukh <gns@altlinux.ru> 0.1-alt1.132647.1.rc4
+- rc4
+
+* Fri Apr 15 2011 Mykola Grechukh <gns@altlinux.ru> 0.1-alt1.132647.1.rc3
+- first build for ALT Linux

@@ -1,0 +1,289 @@
+Name: alsa-utils
+Version: 1.0.24.2
+Release: alt2
+Serial: 1
+
+Summary: Advanced Linux Sound Architecture (ALSA) utils
+License: GPL
+Group: System/Kernel and hardware
+
+Url: http://www.alsa-project.org
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
+Packager: Valery Inozemtsev <shrek@altlinux.ru>
+
+Requires: dialog
+#Requires: libalsa >= %version
+Obsoletes: alsa2-utils < 0.9.4
+Provides: alsa2-utils = %version
+Conflicts: alsa-utils < 1.0.9a-alt1
+
+BuildRequires: intltool libalsa-devel libncursesw-devel xmlto
+Requires: libncursesw >= 5.7
+
+%description
+Advanced Linux Sound Architecture (ALSA) utils. Modularized
+architecture with support for a large range of ISA and PCI cards.
+Fully compatible with OSS/Lite but contains many enhanced features.
+
+%package -n aplay
+Summary: play utility for ALSA
+Group: Sound
+
+%description -n aplay
+This package contains minimal client utility for ALSA:
+"aplay" is traditional "play" equivalent.
+
+%package -n amixer
+Summary: Command-line mixer for ALSA soundcard driver
+License: GPL
+Group: Sound
+
+%description -n amixer
+amixer allows command-line control of the mixer for the ALSA soundcard
+driver.  amixer supports multiple soundcards.
+
+%prep
+%setup
+%patch -p1
+
+touch config.rpath
+
+%build
+%autoreconf
+%configure \
+	--with-curses=ncursesw \
+	--disable-alsaconf
+%make_build
+
+%install
+%make DESTDIR=%buildroot install
+
+%find_lang --with-man --output=%name.lang %name
+
+%files -f %name.lang
+%doc ChangeLog README
+%_bindir/*
+%exclude %_bindir/aplay
+%exclude %_bindir/arecord
+%exclude %_bindir/amixer
+%_sbindir/*
+%_datadir/alsa/speaker-test
+%_datadir/alsa/init
+%_datadir/sounds/alsa
+%_man1dir/*.1*
+%exclude %_man1dir/aplay.1*
+%exclude %_man1dir/arecord.1*
+%exclude %_man1dir/amixer.1*
+%_man7dir/*.7*
+
+%files -n aplay
+%_bindir/aplay
+%_bindir/arecord
+%_man1dir/aplay.1*
+%_man1dir/arecord.1*
+
+%files -n amixer
+%_bindir/amixer
+%_man1dir/amixer.1*
+
+%changelog
+* Wed Mar 07 2012 Michael Shigorin <mike@altlinux.org> 1:1.0.24.2-alt2
+- cherry-picked upstream commit 4c09aaa to fix alsamixer segfault
+  with pulseaudio and libxcb-1.8 (debian #657538, rh #731381)
+
+* Wed Feb 16 2011 Michael Shigorin <mike@altlinux.org> 1:1.0.24.2-alt1
+- 1.0.24.2
+- added alsactl_init(7) manpage
+- dropped versioned libalsa dependency
+
+* Sun Apr 18 2010 Valery Inozemtsev <shrek@altlinux.ru> 1:1.0.23-alt1
+- 1.0.23
+
+* Fri Apr 09 2010 Michael Shigorin <mike@altlinux.org> 1:1.0.22-alt2.1
+- slightly softened libalsa dependency (version only, dropped release)
+
+* Sat Mar 27 2010 Michael Shigorin <mike@altlinux.org> 1:1.0.22-alt2
+- merge-up: shrek@ didn't notice my 1.0.22 "test please" announce
+  and did an independent update
+  + reverted localized descriptions removal, no policy so far
+    and I consider these useful
+  + minor spec cleanup
+  + re-added crude versioning of ncurses dependency (closes: #21991)
+
+* Thu Dec 24 2009 Valery Inozemtsev <shrek@altlinux.ru> 1:1.0.22-alt1
+- 1.0.22
+
+* Thu Dec 17 2009 Michael Shigorin <mike@altlinux.org> 1.0.22-alt1
+- 1.0.22
+
+* Sun Oct 25 2009 Michael Shigorin <mike@altlinux.org> 1.0.21-alt2
+- added crude versioning of ncurses dependency (closes: #21991)
+- _unpackaged_files_terminate_build again
+- spec cleanup
+
+* Tue Sep 01 2009 Valery Inozemtsev <shrek@altlinux.ru> 1.0.21-alt1
+- 1.0.21
+
+* Sun May 17 2009 Valery Inozemtsev <shrek@altlinux.ru> 1.0.20-alt2
+- rebuild
+
+* Thu May 07 2009 Valery Inozemtsev <shrek@altlinux.ru> 1.0.20-alt1
+- 1.0.20
+
+* Mon Jan 19 2009 Valery Inozemtsev <shrek@altlinux.ru> 1.0.19-alt1
+- 1.0.19
+
+* Wed Oct 29 2008 Valery Inozemtsev <shrek@altlinux.ru> 1.0.18-alt1
+- 1.0.18
+
+* Sun Aug 03 2008 Valery Inozemtsev <shrek@altlinux.ru> 1.0.17-alt2
+- iecset update for new consumer status channel bits
+
+* Wed Jul 16 2008 Valery Inozemtsev <shrek@altlinux.ru> 1.0.17-alt1
+- 1.0.17
+
+* Thu May 01 2008 Valery Inozemtsev <shrek@altlinux.ru> 1.0.16-alt1
+- 1.0.16
+
+* Sun Jan 27 2008 Valery Inozemtsev <shrek@altlinux.ru> 1.0.15-alt1
+- 1.0.15
+- spec cleanup
+- update build dependencies
+
+* Mon Aug 06 2007 Michael Shigorin <mike@altlinux.org> 1.0.14-alt3
+- changes by led (thanks!):
+  + added amixer subpackage (#12487)
+  + moved aplay.1 to aplay subpackage
+- moved arecord binary and manpage to aplay subpackage too (symlinks)
+
+* Mon Jun 11 2007 Michael Shigorin <mike@altlinux.org> 1.0.14-alt2
+- relaxed overly strict Requires, thanks shrek@
+
+* Mon Jun 11 2007 Michael Shigorin <mike@altlinux.org> 1.0.14-alt1
+- 1.0.14
+- set _unpackaged_files_terminate_build
+- added localized manpages
+
+* Mon Oct 16 2006 Michael Shigorin <mike@altlinux.org> 1.0.13-alt1
+- 1.0.13
+
+* Sat Sep 02 2006 Michael Shigorin <mike@altlinux.org> 1.0.12-alt1
+- 1.0.12
+
+* Wed Apr 19 2006 Michael Shigorin <mike@altlinux.org> 1.0.11-alt1
+- 1.0.11
+
+* Wed Apr 05 2006 Michael Shigorin <mike@altlinux.org> 1.0.11-alt0.4
+- 1.0.11rc4
+- packaged translations
+
+* Sat Mar 04 2006 Michael Shigorin <mike@altlinux.org> 1.0.11-alt0.2
+- 1.0.11rc2 (due to strict libalsa version requirement and #9181)
+
+* Fri Feb 17 2006 Michael Shigorin <mike@altlinux.org> 1.0.10-alt2
+- more strict libalsa requires (should fix #9028)
+
+* Wed Nov 16 2005 Michael Shigorin <mike@altlinux.org> 1.0.10-alt1
+- 1.0.10
+
+* Mon Jul 04 2005 Michael Shigorin <mike@altlinux.org> 1.0.9a-alt2
+- added Conflicts: for previous versions due to aplay split
+  (#7279); thanks Andrey Rahmatullin (wrar@)
+
+* Thu Jun 23 2005 Michael Shigorin <mike@altlinux.org> 1.0.9a-alt1
+- 1.0.9a
+- temporarily fixated libalsa requires (build/install) at 1.0.9
+  since usual condition (>=%%version) would fail
+- moved aplay to separate subpackage (#7156),
+  required by main package
+- added test sounds (were missing somehow)
+
+* Thu Jun 09 2005 Michael Shigorin <mike@altlinux.ru> 1.0.9a-alt0
+- 1.0.9a
+
+* Mon Jan 17 2005 ALT QA Team Robot <qa-robot@altlinux.org> 1.0.8-alt1.1
+- Rebuilt with ncurses-5.4.20050108-alt2
+
+* Thu Jan 13 2005 Michael Shigorin <mike@altlinux.ru> 1.0.8-alt1
+- 1.0.8
+- updated alt-no-newt patch
+
+* Thu Dec 16 2004 Michael Shigorin <mike@altlinux.ru> 1.0.7-alt1
+- 1.0.7
+
+* Sat Jul 03 2004 Michael Shigorin <mike@altlinux.ru> 1.0.5-alt3
+- *applied* the patch for #3824 from wrar@, whoops!
+
+* Sat Jun 26 2004 Michael Shigorin <mike@altlinux.ru> 1.0.5-alt2
+- fixed #3824, thanks to Andrey Rahmatullin (wrar@) for bug/patch
+- added ru/uk package info
+
+* Mon May 31 2004 Michael Shigorin <mike@altlinux.ru> 1.0.5-alt1
+- 1.0.5
+
+* Thu Apr 08 2004 Michael Shigorin <mike@altlinux.ru> 1.0.4-alt2
+- removed forbidden requires: alsa
+
+* Sat Apr 03 2004 Michael Shigorin <mike@altlinux.ru> 1.0.4-alt1
+- 1.0.4
+
+* Tue Mar 02 2004 Michael Shigorin <mike@altlinux.ru> 1.0.3-alt1
+- 1.0.3
+
+* Thu Jan 29 2004 Michael Shigorin <mike@altlinux.ru> 1.0.2-alt2
+- 1.0.2, Final Upload by ALSA Project (TM) 20040129 18:35 +0200
+- thanks to Sergey Vlasov (vsu@) for alerting about re-uploads
+
+* Wed Jan 28 2004 Michael Shigorin <mike@altlinux.ru> 1.0.2-alt1
+- 1.0.2
+
+* Thu Jan 15 2004 Michael Shigorin <mike@altlinux.ru> 1.0.1-alt1
+- 1.0.1
+- added %_bindir/set_default_volume from SuSE package
+
+* Wed Oct 22 2003 Michael Shigorin <mike@altlinux.ru> 0.9.8-alt1
+- 0.9.8
+
+* Fri Sep 26 2003 Michael Shigorin <mike@altlinux.ru> 0.9.7-alt1
+- 0.9.7
+
+* Wed Jul 30 2003 Michael Shigorin <mike@altlinux.ru> 0.9.6-alt1
+- 0.9.6
+- relaxed alsa (kernel module) dependency -- any alsa2 should suffice
+  and userspace upgrade shouldn't force kernel module upgrade
+
+* Tue Jul 15 2003 Michael Shigorin <mike@altlinux.ru> 0.9.5-alt1
+- 0.9.5
+
+* Mon Jun 23 2003 Michael Shigorin <mike@altlinux.ru> 0.9.4-alt1
+- 0.9.4
+- renamed to alsa-utils
+
+* Wed Apr 02 2003 Michael Shigorin <mike@altlinux.ru> 0.9.2-alt0.1
+- 0.9.2 (unofficial build)
+
+* Tue Feb 04 2003 Rider <rider@altlinux.ru> 0.9.0rc7-alt1
+- 0.9.0rc7
+
+* Tue Nov 26 2002 Konstantin Volckov <goldhead@altlinux.ru> 0.9.0rc6-alt1
+- 0.9.0rc6
+- Rebuilt in new environment
+
+* Fri Jun 07 2002 Konstantin Volckov <goldhead@altlinux.ru> 0.9.0rc1-alt1
+- 0.9.0rc1
+
+* Thu Feb 28 2002 Konstantin Volckov <goldhead@altlinux.ru> 0.9.0beta12-alt1
+- 0.9.0beta12
+
+* Wed Dec 26 2001 Konstantin Volckov <goldhead@altlinux.ru> 0.9.0beta10-alt1a
+- 0.9.0beta10a
+
+* Wed Nov 21 2001 Konstantin Volckov <goldhead@altlinux.ru> 0.9.0beta9-alt1
+- 0.9.0beta9
+
+* Fri Oct 12 2001 Konstantin Volckov <goldhead@altlinux.ru> 0.9.0beta8-alt1
+- 0.9.0beta8
+
+* Fri Sep 21 2001 Konstantin Volckov <goldhead@altlinux.ru> 0.9.0beta7-alt1
+- First build for Sisyphus

@@ -1,0 +1,250 @@
+%def_with testagents
+%def_with watchdog
+%def_with monitoring
+%def_with snmp
+%def_with dbus
+%def_with rdma
+
+Name: corosync
+Summary: The Corosync Cluster Engine and Application Programming Interfaces
+Version: 1.4.1
+Release: alt1
+License: BSD
+Group: System/Base
+Url: http://ftp.corosync.org
+
+Source0:%name-%version.tar
+Patch: %name-%version-%release.patch
+
+#Conflicts: openais <= 0.89, openais-devel <= 0.89
+
+# Build bits
+
+BuildRequires: autoconf automake
+BuildRequires: nss-devel
+%if %{with rdma}
+BuildRequires: libibverbs-devel librdmacm-devel
+%endif
+%if %{with snmp}
+BuildRequires: libnet-snmp-devel
+%endif
+%if %{with dbus}
+BuildRequires: libdbus-devel
+%endif
+
+%description
+This package contains the Corosync Cluster Engine Executive, several
+default APIs and libraries, default configuration files, and an init
+script.
+
+
+%package -n libcorosync
+Summary: The Corosync Cluster Engine Libraries
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description -n libcorosync
+This package contains corosync libraries.
+
+
+%package -n libcorosync-devel
+Summary: The Corosync Cluster Engine Development Kit
+Group: Development/C
+Requires: libcorosync = %version-%release
+#Requires: pkgconfig
+
+%description -n libcorosync-devel
+This package contains include files and man pages used to develop using
+The Corosync Cluster Engine APIs.
+
+%prep
+%setup
+%patch0 -p1
+echo %version > .version
+#if release version (= tarball)
+#in checked-out repository it uses git describe
+cp .version .tarball-version
+
+%build
+./autogen.sh
+
+%if %{with rdma}
+export ibverbs_CFLAGS=-I/usr/include/infiniband \
+export ibverbs_LIBS=-libverbs \
+export rdmacm_CFLAGS=-I/usr/include/rdma \
+export rdmacm_LIBS=-lrdmacm \
+%endif
+%configure \
+	--enable-nss \
+%if %{with testagents}
+	--enable-testagents \
+%endif
+%if %{with watchdog}
+	--enable-watchdog \
+%endif
+%if %{with monitoring}
+	--enable-monitoring \
+%endif
+%if %{with snmp}
+	--enable-snmp \
+%endif
+%if %{with dbus}
+	--enable-dbus \
+%endif
+%if %{with rdma}
+	--enable-rdma \
+%endif
+	--with-initddir=%_initdir
+
+%install
+make install DESTDIR=%buildroot
+
+%if %{with dbus}
+mkdir -p -m 0700 %buildroot/%_sysconfdir/dbus-1/system.d
+install -m 644 %_builddir/%name-%version/conf/corosync-signals.conf %buildroot/%_sysconfdir/dbus-1/system.d/corosync-signals.conf
+%endif
+
+## tree fixup
+# drop static libs
+rm -f %buildroot%_libdir/*.a
+# drop docs and html docs for now
+rm -rf %buildroot%_docdir/*
+
+%post
+%post_service corosync
+
+%preun
+%preun_service corosync
+
+%files
+%doc LICENSE SECURITY
+%_bindir/corosync-blackbox
+%_sbindir/corosync
+%_sbindir/corosync-keygen
+%_sbindir/corosync-objctl
+%_sbindir/corosync-cfgtool
+%_sbindir/corosync-fplay
+%_sbindir/corosync-pload
+%_sbindir/corosync-cpgtool
+%_sbindir/corosync-quorumtool
+%_sbindir/corosync-notifyd
+%dir %_sysconfdir/corosync
+%dir %_sysconfdir/corosync/service.d
+%dir %_sysconfdir/corosync/uidgid.d
+%config(noreplace) %_sysconfdir/corosync/corosync.conf.example
+%config(noreplace) %_sysconfdir/corosync/corosync.conf.example.udpu
+%if %{with dbus}
+%_sysconfdir/dbus-1/system.d/corosync-signals.conf
+%endif
+%if %{with snmp}
+%_datadir/snmp/mibs/COROSYNC-MIB.txt
+%endif
+%_initdir/corosync
+%_initdir/corosync-notifyd
+%dir %_libexecdir/lcrso
+%_libexecdir/lcrso/coroparse.lcrso
+%_libexecdir/lcrso/objdb.lcrso
+%_libexecdir/lcrso/service_cfg.lcrso
+%_libexecdir/lcrso/service_cpg.lcrso
+%_libexecdir/lcrso/service_evs.lcrso
+%_libexecdir/lcrso/service_confdb.lcrso
+%_libexecdir/lcrso/service_pload.lcrso
+%_libexecdir/lcrso/quorum_votequorum.lcrso
+%_libexecdir/lcrso/quorum_testquorum.lcrso
+%_libexecdir/lcrso/vsf_quorum.lcrso
+%_libexecdir/lcrso/vsf_ykd.lcrso
+%dir %_localstatedir/lib/corosync
+%attr(700, root, root) %_localstatedir/log/cluster
+%dir %_localstatedir/log/cluster
+%_mandir/man8/corosync_overview.8*
+%_mandir/man8/corosync.8*
+%_mandir/man8/corosync-blackbox.8*
+%_mandir/man8/corosync-objctl.8*
+%_mandir/man8/corosync-keygen.8*
+%_mandir/man8/corosync-cfgtool.8*
+%_mandir/man8/corosync-cpgtool.8*
+%_mandir/man8/corosync-fplay.8*
+%_mandir/man8/corosync-pload.8*
+%_mandir/man8/corosync-notifyd.8*
+%_mandir/man8/corosync-quorumtool.8*
+%_mandir/man5/corosync.conf.5*
+
+%files -n libcorosync
+%doc LICENSE
+%_libdir/libcfg.so.*
+%_libdir/libcpg.so.*
+%_libdir/libconfdb.so.*
+%_libdir/libevs.so.*
+%_libdir/libtotem_pg.so.*
+%_libdir/liblogsys.so.*
+%_libdir/libcoroipcc.so.*
+%_libdir/libcoroipcs.so.*
+%_libdir/libquorum.so.*
+%_libdir/libvotequorum.so.*
+%_libdir/libpload.so.*
+%_libdir/libsam.so.*
+
+%files -n libcorosync-devel
+%doc LICENSE README.devmap
+%dir %_includedir/corosync/
+%_includedir/corosync/cs_config.h
+%_includedir/corosync/corodefs.h
+%_includedir/corosync/coroipc_types.h
+%_includedir/corosync/coroipcs.h
+%_includedir/corosync/coroipcc.h
+%_includedir/corosync/cfg.h
+%_includedir/corosync/confdb.h
+%_includedir/corosync/corotypes.h
+%_includedir/corosync/cpg.h
+%_includedir/corosync/evs.h
+%_includedir/corosync/hdb.h
+%_includedir/corosync/list.h
+%_includedir/corosync/mar_gen.h
+%_includedir/corosync/sam.h
+%_includedir/corosync/swab.h
+%_includedir/corosync/quorum.h
+%_includedir/corosync/votequorum.h
+%dir %_includedir/corosync/totem/
+%_includedir/corosync/totem/coropoll.h
+%_includedir/corosync/totem/totem.h
+%_includedir/corosync/totem/totemip.h
+%_includedir/corosync/totem/totempg.h
+%dir %_includedir/corosync/lcr/
+%_includedir/corosync/lcr/lcr_ckpt.h
+%_includedir/corosync/lcr/lcr_comp.h
+%_includedir/corosync/lcr/lcr_ifact.h
+%dir %_includedir/corosync/engine
+%_includedir/corosync/engine/config.h
+%_includedir/corosync/engine/coroapi.h
+%_includedir/corosync/engine/logsys.h
+%_includedir/corosync/engine/objdb.h
+%_includedir/corosync/engine/quorum.h
+%_libdir/libcfg.so
+%_libdir/libcpg.so
+%_libdir/libconfdb.so
+%_libdir/libevs.so
+%_libdir/libtotem_pg.so
+%_libdir/liblogsys.so
+%_libdir/libcoroipcc.so
+%_libdir/libcoroipcs.so
+%_libdir/libquorum.so
+%_libdir/libvotequorum.so
+%_libdir/libpload.so
+%_libdir/libsam.so
+%_libdir/pkgconfig/*.pc
+%_mandir/man3/cpg_*3*
+%_mandir/man3/evs_*3*
+%_mandir/man3/confdb_*3*
+%_mandir/man3/votequorum_*3*
+%_mandir/man3/sam_*3*
+%_mandir/man8/cpg_overview.8*
+%_mandir/man8/evs_overview.8*
+%_mandir/man8/confdb_overview.8*
+%_mandir/man8/logsys_overview.8*
+%_mandir/man8/votequorum_overview.8*
+%_mandir/man8/coroipc_overview.8*
+%_mandir/man8/sam_overview.8*
+
+%changelog
+* Sun Sep 20 2011 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.1-alt1
+- Initial build (using Fedora spec)

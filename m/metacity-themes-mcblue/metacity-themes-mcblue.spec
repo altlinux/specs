@@ -1,0 +1,32 @@
+Name: metacity-themes-mcblue
+Version: 1.0
+Release: alt1
+
+Summary: Metacity theme - mcblue
+Summary(ru_RU.UTF-8): Тема mcblue для Metacity
+License: GPL
+Group: Graphical desktop/GNOME
+Url: http://art.gnome.org
+Source: mcblue.tar.bz2
+Requires: metacity
+Buildarch: noarch
+
+%description
+This package contains mcblue theme for Metacity based on keramik.
+
+%description -l ru_RU.UTF-8
+Пакет содержит тему mcblue для Metacity, основанную на keramik.
+
+%prep
+%setup -q -n mcblue
+
+%install
+%__install -m755 -d $RPM_BUILD_ROOT%_datadir/themes/mcblue/metacity-1 
+%__install -m644 -p metacity-1/* $RPM_BUILD_ROOT%_datadir/themes/mcblue/metacity-1 
+
+%files
+%_datadir/themes/mcblue/metacity-1
+
+%changelog
+* Sun Feb 02 2003 Vyacheslav Dikonov <slava@altlinux.ru> 1.0-alt1
+- ALTLinux build
