@@ -4,9 +4,15 @@
 
 %define autoconf_ver 2.59
 
+%ifnarch e2k
+%def_enable java
+%else
+%def_disable java
+%endif
+
 Name: setools
 Version: %setools_maj_ver.%setools_min_ver
-Release: alt6.qa1
+Release: alt7
 License: %gpl2plus
 URL: http://oss.tresys.com/projects/setools
 Source: %name-%version.tar
@@ -49,9 +55,8 @@ BuildRequires: swig
 #python-module-setools
 BuildRequires: python-devel bzlib-devel
 #libsetools-java
-BuildRequires: java-devel-default
+%{?_enable_java:BuildRequires: java-devel-default rpm-build-java}
 #gui
-BuildRequires: rpm-build-java libJLib-devel
 BuildRequires: libgtk+2-devel libglade-devel tk-devel
 BuildRequires: desktop-file-utils
 
@@ -219,9 +224,13 @@ find . -name Makefile.am -exec sed -i -e 's/ -fpic/ -fPIC/' \{} \;
 	--disable-selinux-check \
 %endif
 	--enable-swig-python \
+%if_enabled java
 	--enable-swig-java \
-	--enable-swig-tcl \
-	--with-java-prefix=/usr/lib/jvm/java
+	--with-java-prefix=/usr/lib/jvm/java \
+%else
+	--disable-swig-java \
+%endif
+	--enable-swig-tcl
 # work around issue with gcc 4.3 + gnu99 + swig-generated code:
 #sed -i -e 's:$(CC):gcc -std=gnu89:' libseaudit/swig/python/Makefile
 %make_build
@@ -234,11 +243,13 @@ install -d -m 755 %buildroot%_datadir/applications
 desktop-file-install --dir %buildroot%_datadir/applications packages/rpm/{apol,seaudit,sediffx}.desktop
 ln -sf consolehelper %buildroot/%_bindir/seaudit
 # replace absolute symlinks with relative symlinks
+%if_enabled java
 ln -sf ../setools-%setools_maj_ver/qpol.jar %buildroot/%_javadir/qpol.jar
 ln -sf ../setools-%setools_maj_ver/apol.jar %buildroot/%_javadir/apol.jar
 ln -sf ../setools-%setools_maj_ver/poldiff.jar %buildroot/%_javadir/poldiff.jar
 ln -sf ../setools-%setools_maj_ver/seaudit.jar %buildroot/%_javadir/seaudit.jar
 ln -sf ../setools-%setools_maj_ver/sefs.jar %buildroot/%_javadir/sefs.jar
+%endif
 # remove static libs
 rm -f %buildroot/%{_libdir}/*.a
 # ensure permissions are correct
@@ -268,6 +279,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %pkg_py_arch/
 %python_sitelibdir/setools*.egg-info
 
+%if_enabled java
 %files -n lib%name-java
 %_libdir/libjqpol.so.*
 %_libdir/libjapol.so.*
@@ -276,6 +288,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_libdir/libjsefs.so.*
 %setoolsdir/*.jar
 %_javadir/*.jar
+%endif
 
 %files -n lib%name-tcl
 %dir %tcllibdir
@@ -343,6 +356,11 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/applications/*
 
 %changelog
+* Mon Feb 26 2018 Mikhail Efremov <sem@altlinux.org> 3.3.8-alt7
+- Drop libJLib-devel from BR.
+- Disable swig-java on e2k.
+- Add knob to disable java stuff.
+
 * Wed Mar 22 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.3.8-alt6.qa1
 - NMU: rebuild against Tcl/Tk 8.6
 
