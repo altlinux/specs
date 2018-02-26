@@ -9,7 +9,7 @@
 %def_enable dbus
 
 Name: fluidsynth
-Version: 1.1.9
+Version: 1.1.10
 Release: alt1
 
 Summary: Software real-time synthesizer
@@ -146,7 +146,8 @@ MIDI-синтезатора. FluidSynth также может воспроизв
 %setup
 
 %build
-%cmake -DLIB_INSTALL_DIR:PATH=lib \
+%cmake \
+    -DLIB_INSTALL_DIR:PATH=%_lib \
     -DINCLUDE_INSTALL_DIR:PATH=include \
     -DDEFAULT_SOUNDFONT:STRING="%_datadir/soundfonts/default.sf2" \
     -DCMAKE_BUILD_TYPE:STRING="Release" \
@@ -185,6 +186,9 @@ cp -r BUILD/doc/api/html ./
 %endif
 
 %changelog
+* Mon Feb 26 2018 Yuri N. Sedunov <aris@altlinux.org> 1.1.10-alt1
+- 1.1.10
+
 * Thu Jan 11 2018 Yuri N. Sedunov <aris@altlinux.org> 1.1.9-alt1
 - 1.1.9
 
