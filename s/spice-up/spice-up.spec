@@ -12,18 +12,19 @@
 # license that conforms to the Open Source Definition (Version 1.9)
 # published by the Open Source Initiative.
 
+%define _name Spice-up
 %define xdg_name com.github.philip-scott.spice-up
 
 Name: spice-up
-Version: 1.3.0
+Version: 1.3.2
 Release: alt1
 
 Summary: Desktop presentation application
 License: GPLv3
 Group: Office
 
-Url: https://github.com/Philip-Scott/Spice-up
-Source: https://github.com/Philip-Scott/Spice-up/archive/%version.tar.gz#/Spice-up-%version.tar.gz
+Url: https://github.com/Philip-Scott/%_name
+Source: https://github.com/Philip-Scott/Spice-up/archive/%version.tar.gz#/%_name-%version.tar.gz
 
 BuildRequires: cmake gcc-c++
 BuildRequires: desktop-file-utils
@@ -73,6 +74,9 @@ ln -s %xdg_name %buildroot%_bindir/%name
 
 
 %changelog
+* Mon Feb 26 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
+- 1.3.2
+
 * Mon Feb 19 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
