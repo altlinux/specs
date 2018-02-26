@@ -1,6 +1,6 @@
 Name: python-module-zabbix-api
-Version: 0.3
-Release: alt2.1
+Version: 0.5.3
+Release: alt1
 Summary: Zabbix API
 
 Group: Development/Python
@@ -47,6 +47,9 @@ cd zabbix
 %python3_sitelibdir/zabbix_api*
 
 %changelog
+* Mon Feb 26 2018 Terechkov Evgenii <evg@altlinux.org> 0.5.3-alt1
+- 0.5.3 (386aa22)
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
