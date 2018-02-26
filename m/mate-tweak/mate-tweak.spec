@@ -1,6 +1,6 @@
 Name: mate-tweak
 Version: 18.04.10
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: Mate desktop configuration tool
@@ -45,8 +45,12 @@ Settings that can be handled via MATE Tweak:
 %python3_sitelibdir/*egg-info
 %_desktopdir/*
 %_man1dir/*.1.*
+%_datadir/polkit-1/actions/*
 
 %changelog
+* Mon Feb 26 2018 Anton Midyukov <antohami@altlinux.org> 1:18.04.10-alt2
+- Added missing polkit action
+
 * Sun Feb 25 2018 Anton Midyukov <antohami@altlinux.org> 1:18.04.10-alt1
 - new version 18.04.10
 
