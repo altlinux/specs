@@ -1,5 +1,5 @@
 Name: fotoxx
-Version: 18.01.2
+Version: 18.01.3
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
@@ -79,6 +79,9 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %doc doc/README* doc/changelog doc/copyright
 
 %changelog
+* Mon Feb 26 2018 Yuri N. Sedunov <aris@altlinux.org> 18.01.3-alt1
+- 18.01.3
+
 * Thu Jan 25 2018 Yuri N. Sedunov <aris@altlinux.org> 18.01.2-alt1
 - 18.01.2
 
