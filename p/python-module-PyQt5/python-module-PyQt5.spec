@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 5.9.2
-Release: alt1
+Release: alt2%ubt
 
 Summary: Python bindings for Qt 5
 License: GPL
@@ -152,6 +152,13 @@ rm -rf ../python3
 cp -R . ../python3
 %endif
 
+# add missing Qt versions to list of supported
+for v in Qt_5_9_4 Qt_5_9_5
+do
+    grep -qe "[[:space:]]$v" sip/QtCore/QtCoremod.sip \
+	|| sed -i "s|Qt_5_9_3|$v Qt_5_9_3|" sip/QtCore/QtCoremod.sip
+done
+
 %build
 %add_optflags -I"$PWD"/qpy/QtGui -I%_includedir/qt5/QtPrintSupport
 export PATH="$PATH":%_qt5_bindir
@@ -251,8 +258,14 @@ find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print 
 %endif
 
 %changelog
+* Tue Feb 27 2018 Oleg Solovyov <mcpain@altlinux.org> 5.9.2-alt2%ubt
+- add missing Qt versions to list of supported
+
 * Wed Feb 14 2018 Vitaly Lipatov <lav@altlinux.ru> 5.9.2-alt1
 - new version 5.9.2 (with rpmrb script) (ALT bug 34537)
+
+* Tue Nov 14 2017 Anton Midyukov <antohami@altlinux.org> 5.9-alt4.M80P.1
+- backport to ALT p8
 
 * Sun Nov 12 2017 Anton Midyukov <antohami@altlinux.org> 5.9-alt5%ubt
 - Added missing provides dbus.mainloop.pyqt5 (ALT bug 33873)
@@ -265,6 +278,9 @@ find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print 
 
 * Fri Oct 06 2017 Vitaly Lipatov <lav@altlinux.ru> 5.9-alt2
 - set strict require to sip version we build with
+
+* Thu Oct 05 2017 Vitaly Lipatov <lav@altlinux.ru> 5.9-alt0.M80P.1
+- backport to ALTLinux p8 (by rpmbph script)
 
 * Thu Oct 05 2017 Vitaly Lipatov <lav@altlinux.ru> 5.9-alt1
 - build new version 5.9, rebuild with new sip 4.19.3
