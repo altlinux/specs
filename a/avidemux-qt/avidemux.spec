@@ -1,11 +1,12 @@
 
 %define rname avidemux
 %def_disable ownffmpeg
+%def_disable xvba
 %add_python_req_skip ADM_resize ADM_image
 
 Name: avidemux-qt
-Version: 2.6.20
-Release: alt4%ubt
+Version: 2.7.0
+Release: alt1%ubt
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
@@ -45,7 +46,10 @@ BuildRequires: bzlib-devel cmake gcc-c++ yasm glibc-devel libGL-devel libGLU-dev
 BuildRequires: libaften-devel libdca-devel libfaad-devel libjack-devel liblame-devel libtwolame-devel libopus-devel
 BuildRequires: liblzma-devel liblzo2-devel libsqlite3-devel libfreetype-devel fontconfig-devel libfribidi-devel
 BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel libpulseaudio-devel libsamplerate-devel
-BuildRequires: libvdpau-devel libva-devel libxvba-devel libXv-devel libXvMC-devel
+BuildRequires: libvdpau-devel libva-devel libXv-devel libXvMC-devel
+%if_enabled xvba
+BuildRequires: libxvba-devel
+%endif
 BuildRequires: libvorbis-devel libvpx-devel libx264-devel libx265-devel
 BuildRequires: libass-devel liba52-devel libmad-devel libmp4v2-devel
 BuildRequires: libxml2-devel libxvid-devel
@@ -106,7 +110,7 @@ Common files for %name
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
+#%patch6 -p1
 %patch100 -p1
 
 #cp -f %SOURCE4 po/
@@ -193,6 +197,9 @@ ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 %exclude %_includedir/avidemux
 
 %changelog
+* Tue Feb 27 2018 Sergey V Turchin <zerg@altlinux.org> 2.7.0-alt1%ubt
+- new version
+
 * Tue Oct 10 2017 Anton Farygin <rider@altlinux.ru> 2.6.20-alt4%ubt
 - rebuilt for new x264
 
