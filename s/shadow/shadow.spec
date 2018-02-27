@@ -1,6 +1,6 @@
 Name: shadow
 Version: 4.5
-Release: alt1
+Release: alt2
 Serial: 1
 
 Summary: Utilities for managing shadow password files and user/group accounts
@@ -403,6 +403,11 @@ fi
 %exclude %_man8dir/nologin.8.*
 
 %changelog
+* Tue Feb 27 2018 Mikhail Efremov <sem@altlinux.org> 1:4.5-alt2
+- Fixed build with gcc-7:
+  + Remove redundant const qualifier.
+  + Ensure that we have enough room for filenames.
+
 * Mon Sep 04 2017 Mikhail Efremov <sem@altlinux.org> 1:4.5-alt1
 - Don't install files with suid.
 - useradd: Fix lastlog_reset() argument type.
