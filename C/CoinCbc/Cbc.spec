@@ -3,7 +3,7 @@
 
 %define oname Cbc
 Name: Coin%oname
-Version: 2.9.8
+Version: 2.9.9
 Release: alt1
 Summary: COIN-OR Branch-and-Cut MIP Solver
 License: EPL v1.0
@@ -153,6 +153,9 @@ rm -fR %buildroot%_docdir/coin \
 %doc %oname/doxydoc/doxydoc/html/*
 
 %changelog
+* Tue Feb 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.9.9-alt1
+- Updated to upstream stable version 2.9.9.
+
 * Fri Nov 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.9.8-alt1
 - Updated to upstream stable version 2.9.8.
 

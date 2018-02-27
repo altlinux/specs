@@ -3,7 +3,7 @@
 
 %define oname Clp
 Name: Coin%oname
-Version: 1.16.10
+Version: 1.16.11
 Release: alt1
 Summary: COIN-OR Linear Programming Solver
 License: EPL v1.0
@@ -170,6 +170,9 @@ rm -fR %buildroot%_docdir/coin \
 %doc %oname/doxydoc/doxydoc/html/*
 
 %changelog
+* Tue Feb 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.16.11-alt1
+- Updated to stable upstream version 1.16.11.
+
 * Fri Nov 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.16.10-alt1
 - Updated to stable upstream version 1.16.10.
 
