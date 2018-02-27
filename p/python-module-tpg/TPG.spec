@@ -1,9 +1,10 @@
 Version: 3.2.2
-Release: alt1.1
+Release: alt3
 
 %setup_python_module tpg
 
 %def_with python3
+%def_enable doc
 
 Summary: Toy Parser Generator is syntax analyzer under Python
 Summary(ru_RU.UTF-8): Простой, но мощный синтаксический анализатор Toy Parser Generator
@@ -17,7 +18,11 @@ Buildarch: noarch
 
 # Automatically added by buildreq on Thu Feb 23 2012
 # optimized out: ImageMagick-tools fontconfig ghostscript-classic ghostscript-common python-base python-modules python-modules-compiler python-modules-email tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended texlive-xetex texmf-tex4ht
-BuildRequires: python-devel tex4ht texlive-latex-recommended
+BuildRequires: python-devel
+
+%if_enabled doc
+BuildRequires: tex4ht texlive-latex-recommended
+%endif
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -59,11 +64,14 @@ cp -fR . ../python3
 
 %build
 %python_build
+
+%if_enabled doc
 (
 	cd doc
 	pdflatex tpg
 	htlatex tpg
 )
+%endif
 
 %if_with python3
 pushd ../python3
@@ -86,7 +94,9 @@ popd
 %python_install
 
 %files
+%if_enabled doc
 %doc doc/*.{png,pdf,html,css}
+%endif
 %doc examples
 %_bindir/*
 %if_with python3
@@ -96,13 +106,21 @@ popd
 
 %if_with python3
 %files -n python3-module-%modulename
+%if_enabled doc
 %doc doc/*.{png,pdf,html,css}
+%endif
 %doc examples
 %_bindir/*.py3
 %python3_sitelibdir/tpg*
 %endif
 
 %changelog
+* Tue Feb 27 2018 Michael Shigorin <mike@altlinux.org> 3.2.2-alt3
+- doc knob: "enable" instead of "with" (imz@)
+
+* Mon Feb 26 2018 Michael Shigorin <mike@altlinux.org> 3.2.2-alt2
+- Added doc knob (on by default)
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.2.2-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
