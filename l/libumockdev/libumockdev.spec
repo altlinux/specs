@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: 0.10
+Version: 0.11
 Release: alt1
 
 Summary: Hardware devices mocking library for creating unit tests and bug reporting
@@ -12,7 +12,7 @@ License: LGPLv2.1
 Url: https://launchpad.net/%_name
 
 # VCS: https://github.com/martinpitt/umockdev.git
-Source: %url/trunk/%version.0/+download/%_name-%version.tar.xz
+Source: %url/trunk/%version.0/+download/%_name-%version.tar.gz
 
 %define glib_ver 2.32
 
@@ -72,8 +72,10 @@ GObject introspection devel data for the %_name library.
 
 %prep
 %setup -n %_name-%version
+[ ! -d m4 ] && mkdir m4
 
 %build
+gtkdocize --docdir docs
 %autoreconf
 %configure \
     --disable-static \
@@ -113,6 +115,9 @@ install -pD -m644 NEWS %buildroot%pkg_docdir
 %_girdir/UMockdev-%api_ver.gir
 
 %changelog
+* Tue Feb 27 2018 Yuri N. Sedunov <aris@altlinux.org> 0.11-alt1
+- 0.11
+
 * Fri Jan 19 2018 Yuri N. Sedunov <aris@altlinux.org> 0.10-alt1
 - 0.10
 
