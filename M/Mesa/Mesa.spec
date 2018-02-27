@@ -4,7 +4,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 17.3.3
+Version: 17.3.6
 Release: alt1
 Epoch: 4
 License: MIT
@@ -341,6 +341,7 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 
 %files -n libGLES-devel
 %_includedir/GLES2
+%_includedir/GLES3
 %_libdir/libGLESv2.so
 %_pkgconfigdir/glesv2.pc
 %endif
@@ -423,6 +424,10 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Tue Feb 27 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:17.3.6-alt1
+- 17.3.6
+- packed GLES3 includes (closes: #34580)
+
 * Sun Jan 21 2018 Valery Inozemtsev <shrek@altlinux.ru> 4:17.3.3-alt1
 - 17.3.3
 
