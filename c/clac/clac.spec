@@ -1,5 +1,5 @@
 Name: 	  clac
-Version:  0.3.0
+Version:  0.3.1
 Release:  alt1
 
 Summary:  A command line, stack-based calculator with postfix notation
@@ -34,5 +34,8 @@ make test
 %doc README*
 
 %changelog
+* Tue Feb 27 2018 Mikhail Gordeev <obirvalger@altlinux.org> 0.3.1-alt1
+- new version 0.3.1
+
 * Thu Jun 15 2017 Gordeev Mikhail <obirvalger@altlinux.org> 0.3.0-alt1
 - Initial build for Sisyphus
