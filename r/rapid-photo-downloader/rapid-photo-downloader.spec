@@ -1,53 +1,72 @@
 Name: rapid-photo-downloader
-Version: 0.4.10
+Version: 0.9.8
 Release: alt1
 
+%define xdg_name net.damonlynch.%name
+
 Summary: Download photos and videos from cameras, memory cards and Portable Storage Devices
-License: GPLv2+
+License: GPLv3+
 Group: Graphics
 
 Url: http://www.damonlynch.net/rapid/
-Source: http://launchpad.net/rapid/trunk/%version/+download/%name-%version.tar.gz
-
-# Automatically added by buildreq on Sun Jun 19 2011
-BuildRequires: python-devel
+Source: http://launchpad.net/rapid/pyqt/%version/+download/%name-%version.tar.gz
 
 BuildArch: noarch
 
-Requires: python-module-hachoir-metadata
-Requires: python-module-kaa-metadata
-Requires: ffmpegthumbnailer
+BuildRequires: intltool perl-podlators
+BuildRequires: rpm-build-gir
+BuildRequires: rpm-build-python3 python3-devel python3-module-setuptools
+
+%if "%(rpmvercmp '%{get_version python3}' '3.6.0')" <= "0"
+Requires: python3-module-typing >= 3.6.4
+%endif
+
+Requires: python3-module-PyQt5 >= 5.9.2
+Requires: python3-module-easygui
+Requires: python3-module-pymediainfo >= 2.2.0
+Requires: python3-module-rawkit >= 0.6.0
+Requires: python3-module-pyprind
+Requires: python3-module-colorlog
+Requires: exiv2 perl-Image-ExifTool
+Requires: gst-plugins-good1.0 gst-libav
+
+%add_typelib_req_skiplist typelib(Unity)
 
 %description
-Rapid Photo Downloader is written by a photographer for professional and
-amateur photographers. It can download photos from multiple memory cards
-and Portable Storage Devices simultaneously. It provides a variety of
-options for sub-folder creation, image renaming and backup. It does not
-download images directly from a camera unless the camera is recognized
-as an external drive.
+Rapid Photo Downloader imports photos and videos from cameras, phones,
+memory cards and other devices at high speed. It can be configured to
+rename photos and videos with meaningful filenames you specify. It can
+also back up photos and videos as they are downloaded. It downloads from
+and backs up to multiple devices simultaneously.
 
 %prep
 %setup
-
-rm -f rapid/renamesubfolderprefstest.py
+subst "s|'share\/solid\/actions'|'share/apps/solid/actions'|" setup.py
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %find_lang %name
 
 %files -f %name.lang
-%_bindir/rapid-photo-downloader
-%python_sitelibdir/*
-%_desktopdir/*
-%_pixmapsdir/*
-%_iconsdir/hicolor/*/apps/*
-%_datadir/appdata/rapid-photo-downloader.appdata.xml
+%_bindir/%name
+%_bindir/analyze-pv-structure
+%python3_sitelibdir/*
+%_desktopdir/%xdg_name.desktop
+%_datadir/appdata/%xdg_name.appdata.xml
+%_man1dir/analyze-pv-structure.1.*
+%_man1dir/%name.1.*
+%_datadir/apps/solid/actions/%xdg_name.desktop
+%doc README.rst RELEASE_NOTES.rst CHANGES.rst
+
 
 %changelog
+* Tue Feb 27 2018 Yuri N. Sedunov <aris@altlinux.org> 0.9.8-alt1
+- 0.9.8
+
 * Thu Oct 30 2014 Yuri N. Sedunov <aris@altlinux.org> 0.4.10-alt1
 - 0.4.10
 
