@@ -1,6 +1,6 @@
 Name: octave
 Version: 4.2.1
-Release: alt3
+Release: alt4
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -167,6 +167,9 @@ EOF
 %doc doc/interpreter/octave.html doc/liboctave/liboctave.html doc/interpreter/octave.pdf doc/liboctave/liboctave.pdf doc/refcard/refcard*.pdf
 
 %changelog
+* Wed Feb 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.1-alt4
+- Rebuilt with libsuitesparse 5.1.2.
+
 * Wed Oct 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.1-alt3
 - Rebuilt with qscintilla2 2.10.1.
 

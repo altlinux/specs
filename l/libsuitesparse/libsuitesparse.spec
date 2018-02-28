@@ -1,25 +1,25 @@
 Name: libsuitesparse
-Version: 4.5.5
+Version: 5.1.2
 Release: alt1
 
 Summary: Shared libraries for sparse matrix calculations
-Packager: Paul Wolneykien <manowar@altlinux.ru>
 License: LGPL, GPL
 Group: Sciences/Mathematics
-Url: http://www.cise.ufl.edu/research/sparse/SuiteSparse/
+Url: http://faculty.cse.tamu.edu/davis/suitesparse.html
 
-Source: SuiteSparse-%version.tar.gz
+Source: SuiteSparse-%version.tar
 Source1: cholmod.pc
 Source2: prepare_versions.sh
 Source3: umfpack.pc
 
-Patch1: %name-%version-alt-rpath.patch
+Patch1: SuiteSparse-%version-alt.patch
 
-BuildPreReq: libmetis-devel gcc-c++ libtbb-devel
+BuildRequires: libmetis-devel gcc-c++ libtbb-devel
 
 # Automatically added by buildreq on Sun Sep 14 2008
 BuildRequires: gcc-fortran liblapack-devel texlive-latex-base
-BuildRequires: libgomp6-devel
+BuildRequires: libgomp7-devel
+BuildRequires: cmake
 
 %package devel
 Summary: Development files of SuiteSparse
@@ -68,10 +68,14 @@ Examples for SuiteSparse.
 %setup
 install -m644 %SOURCE1 %SOURCE3 .
 install -m755 %SOURCE2 .
-%patch1 -p2
+%patch1 -p1
 
 %build
 ./prepare_versions.sh
+
+pushd GraphBLAS
+%cmake
+popd
 
 %make -C SuiteSparse_config MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis
 %make -C CCOLAMD MY_METIS_LIB=-lmetis MY_METIS_INC=%_includedir/metis
@@ -142,6 +146,9 @@ mv %buildroot%_docdir/%name-%version/*.pdf %buildroot%_docdir/%name-%version/pdf
 %_libdir/%name/demos
 
 %changelog
+* Wed Feb 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.2-alt1
+- Updated to stable upstream version 5.1.2.
+
 * Wed Jul 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.5.5-alt1
 - Updated to upstream version 4.5.5
 
