@@ -1,6 +1,6 @@
 Name: libtommath
 Version: 1.0.1
-Release: alt2
+Release: alt3
 
 Summary: A portable number theoretic multiple-precision integer library
 License: WTFPL
@@ -90,6 +90,12 @@ find %buildroot -name '*.h' -exec chmod 644 {} ';'
 %doc doc/bn.pdf doc/poster.pdf doc/tommath.pdf
 
 %changelog
+* Wed Feb 28 2018 Andrew Savchenko <bircoph@altlinux.org> 1.0.1-alt3
+- Fix e2k build properly: as was pointed by upstream, original
+  patch is incorrect and will lead to data loss and int overflow.
+  Proper solution uses MP_32BIT math until LCC will have int128
+  support.
+
 * Sat Feb 24 2018 Michael Shigorin <mike@altlinux.org> 1.0.1-alt2
 - Fixed e2k build (int128)
 
