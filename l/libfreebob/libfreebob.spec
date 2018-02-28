@@ -8,7 +8,7 @@ Version: 1.0.11
 %ifdef svnrel
 #Release: alt0.svn.%svnrel
 %else
-Release: alt4
+Release: alt5
 %endif
 
 Summary: Free Firewire Audio Drivers
@@ -29,7 +29,7 @@ Patch1: libfreebob-1.0.11-gcc-4.5.patch
 
 Patch2: libfreebob-1.0.11-alt-glibc-2.16.patch
 
-Patch3: %name-%version-alt-gcc6.patch
+Patch3: %name-%version-alt-gcc.patch
 
 BuildRequires: gcc-c++, libraw1394-devel >= 1.2.1, libiec61883-devel >= 1.1.0
 BuildRequires: libavc1394-devel >= 0.5.3, libxml2-devel, libalsa-devel
@@ -90,6 +90,9 @@ perl -pi -e 's/1.1.0/1.0.0/' configure
 %endif #static
 
 %changelog
+* Wed Feb 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.11-alt5
+- Fixed build with new toolchain.
+
 * Tue Jul 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.11-alt4
 - Fixed build with new toolchain
 
