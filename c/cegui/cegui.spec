@@ -6,13 +6,14 @@ BuildRequires: /usr/bin/ccache boost-devel boost-python-devel cmake gcc-c++ glib
 %define _localstatedir %{_var}
 Name:           cegui
 Version:        0.8.7
-Release:        alt1_7
+Release:        alt2_7
 Summary:        Free library providing windowing and widgets for graphics APIs / engines
 Group:          System/Libraries
 License:        MIT
 URL:            http://www.cegui.org.uk
 Source0:        http://downloads.sourceforge.net/crayzedsgui/cegui-%{version}.tar.bz2
 Patch0:         cegui-0.8.4-lua53.patch
+Patch1:         cegui-0.8.7-alt-gcc7.patch
 
 BuildRequires:  libdevil-devel
 BuildRequires:  libfreeimage-devel
@@ -161,6 +162,7 @@ Alternative xml parsing library for CEGUI using xerces.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p2
 find -name "*.orig" -exec rm -f {} ';'
 
 
@@ -260,6 +262,9 @@ find $RPM_BUILD_ROOT -name "CEGUITests-0.8" -exec rm -f {} ';'
 
 
 %changelog
+* Tue Feb 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.7-alt2_7
+- Fixed build with new toolchain.
+
 * Fri Sep 29 2017 Igor Vlasenko <viy@altlinux.ru> 0.8.7-alt1_7
 - new version by fcimport
 - disabled devel-doc due to arch dependent png
