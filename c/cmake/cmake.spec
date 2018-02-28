@@ -1,9 +1,7 @@
 %set_verify_elf_method unresolved=strict
 %def_without check
-# enable cmake-server(7)
-%def_enable server
 Name: cmake
-Version: 3.9.2
+Version: 3.10.2
 Release: alt1
 
 Summary: Cross-platform, open-source make system
@@ -151,11 +149,6 @@ CFLAGS="%optflags" CXXFLAGS="%optflags" ../bootstrap \
 	--prefix=%prefix \
 	--datadir=/share/%name \
 	--mandir=/share/man \
-	%if_enabled server
-	--server \
-	%else
-	--no-server \
-	%endif
 	--docdir=/share/doc/%name-%version
 
 
@@ -184,9 +177,7 @@ mv -f %buildroot%_datadir/%name/completions %buildroot%_sysconfdir/bash_completi
 
 install -p  build/Source/kwsys/libcmsys.so  %buildroot%_libdir/libcmsys.so
 install -p  build/Source/kwsys/libcmsys_c.so  %buildroot%_libdir/libcmsys_c.so
-%if_enabled server
 install -p  build/Source/libCMakeServerLib.so %buildroot%_libdir/
-%endif
 
 %check
 %if_with check
@@ -206,9 +197,7 @@ popd
 %_bindir/cpack
 %_libdir/libCMakeLib.so
 %_libdir/libCPackLib.so
-%if_enabled server
 %_libdir/libCMakeServerLib.so
-%endif
 %_libdir/libcmcompress.so
 %_libdir/libcmsys.so
 %_libdir/libcmsys_c.so
@@ -271,6 +260,10 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Wed Feb 28 2018 Alexey Shabalin <shaba@altlinux.ru> 3.10.2-alt1
+- 3.10.2
+- backport support boost-1.66 from cmake-3.11.0-rc2
+
 * Tue Oct 31 2017 Vitaly Lipatov <lav@altlinux.ru> 3.9.2-alt1
 - autogen: Don't use AUTOMOC_MOC_OPTIONS in moc-predefs command (ALT bug 34055)
 
