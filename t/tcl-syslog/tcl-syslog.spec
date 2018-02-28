@@ -1,6 +1,6 @@
 Name: tcl-syslog
 Version: 2.0
-Release: alt5.1.qa1
+Release: alt5.1.qa1.1
 
 Summary: Syslog tcl lib
 Group: Development/Tcl
@@ -16,7 +16,7 @@ Source: %name-%version.tar.gz
 Patch1: %name.Makefile.patch
 
 # Automatically added by buildreq on Sun Sep 25 2005
-BuildRequires: tcl-devel
+BuildRequires: tcl-devel >= 8.6.7-alt2
 
 %description
 Writing to syslog from tcl scripts
@@ -32,8 +32,10 @@ Writing to syslog from tcl scripts
 export PREFIX=%buildroot/usr
 sed -i '/PREFIX=/d' Makefile
 %makeinstall
-cat <<EOF > %buildroot%_datadir/tcl/syslog/pkgIndex.tcl
-package ifneeded Syslog 2.0 [list load [file join \$dir .. .. .. lib tcl libsyslog.so.2.0] Syslog]
+rm -rf %buildroot%_datadir/tcl/syslog/
+mkdir -p %buildroot%_libdir/tcl/syslog/
+cat <<EOF > %buildroot%_libdir/tcl/syslog/pkgIndex.tcl
+package ifneeded Syslog 2.0 [list load [file join \$dir .. libsyslog.so.2.0] Syslog]
 EOF
 
 mkdir -p %buildroot%_libdir/tcl/
@@ -44,9 +46,15 @@ mv %buildroot/usr/lib/tcl/*.so.* %buildroot%_libdir/tcl/
 %files
 %_mandir/mann/*
 %_libdir/tcl/*.so.*
-%_datadir/tcl/syslog
+%_libdir/tcl/syslog
 
 %changelog
+* Tue Feb 27 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.0-alt5.1.qa1.1
+- NMU:
+  + fixed FTBFS: built against Tcl 8.6
+  + fixed runtime: made extension loadable via package(n) facility
+  + adapted for new Tcl/Tk extenstion packaging policy
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0-alt5.1.qa1
 - NMU: rebuilt for debuginfo.
 
