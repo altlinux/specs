@@ -1,6 +1,6 @@
 Name: pax
 Version: 3.4
-Release: alt5
+Release: alt6
 
 Summary: POSIX File System Archiver
 License: BSD
@@ -26,6 +26,7 @@ common forms of standard Unix archive (backup) files - CPIO and TAR.
 %patch5 -p2
 
 %build
+%add_optflags -Wno-error=implicit-fallthrough
 %configure
 %make_build
 
@@ -37,6 +38,9 @@ common forms of standard Unix archive (backup) files - CPIO and TAR.
 %_man1dir/*
 
 %changelog
+* Wed Feb 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4-alt6
+- Fixed build with new toolchain.
+
 * Tue Aug 22 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4-alt5
 - Fixed build with current toolchain.
 
