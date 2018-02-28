@@ -1,5 +1,5 @@
 Name: openfortivpn
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 Summary: Client for PPP+SSL VPN tunnel services
 
@@ -36,6 +36,9 @@ It is compatible with Fortinet VPNs.
 %doc README.md LICENSE
 
 %changelog
+* Wed Feb 28 2018 L.A. Kostis <lakostis@altlinux.ru> 1.6.0-alt1
+- 1.6.0.
+
 * Thu Jan 11 2018 L.A. Kostis <lakostis@altlinux.ru> 1.5.0-alt1
 - Rebuild for ALTLinux.
 
