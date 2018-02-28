@@ -1,7 +1,7 @@
 %define realname go-for-it
 
 Name: go-for-it
-Version: 1.6.3
+Version: 1.6.5
 Release: alt1
 
 Summary: Go For It! is a simple and stylish to-do list
@@ -12,7 +12,7 @@ Url: https://github.com/mank319/Go-For-It
 Source: %name-%version.tar
 
 BuildRequires: cmake rpm-macros-cmake libvala-devel libgtk+3-devel libnotify-devel
-BuildRequires: gcc5-c++ gtk-update-icon-cache libpixman-devel libharfbuzz-devel
+BuildRequires: gcc-c++ gtk-update-icon-cache libpixman-devel libharfbuzz-devel
 BuildRequires: intltool
 
 %description
@@ -40,6 +40,9 @@ It has been written in _Vala_ making heavy use of the _GTK_ framework.
 %_iconsdir/hicolor/24x24/actions/%realname-open-menu-fallback.svg
 
 %changelog
+* Wed Feb 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.5-alt1
+- Updated to upstream version 1.6.5.
+
 * Mon Jan 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.3-alt1
 - Updated to upstream version 1.6.3.
 
