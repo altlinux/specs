@@ -1,13 +1,13 @@
 Name: iso-codes
-Version: 3.77
+Version: 3.79
 Release: alt1
 
 Group: System/Internationalization
 Summary: ISO code lists and translations
 License: LGPL 2.1
-URL: http://packages.debian.org/unstable/source/iso-codes
+Url: https://salsa.debian.org/iso-codes-team/iso-codes
 
-# Cloned from git://git.debian.org/git/iso-codes/iso-codes.git
+# Cloned from https://salsa.debian.org/iso-codes-team/iso-codes.git
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -53,6 +53,9 @@ ln -sf %_licensedir/LGPL-2.1 LICENSE
 %_datadir/pkgconfig/iso-codes.pc
 
 %changelog
+* Wed Feb 28 2018 Yuri N. Sedunov <aris@altlinux.org> 3.79-alt1
+- 3.79 (new urls)
+
 * Fri Dec 01 2017 Yuri N. Sedunov <aris@altlinux.org> 3.77-alt1
 - 3.77
 
