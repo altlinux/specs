@@ -1,6 +1,6 @@
 Name: lordsawar
 Version: 0.3.1
-Release: alt1
+Release: alt2
 
 Summary: Turn-based strategy game in a fantasy setting
 License: GPLv2+
@@ -10,6 +10,7 @@ Url: http://www.nongnu.org/lordsawar/
 
 Source: %name-%version.tar
 Patch1: %name-%version-upstream-gstreamer-1.0.patch
+Patch2: %name-%version-alt-gcc7.patch
 
 BuildRequires: gcc-c++ intltool libgtkmm3-devel
 BuildRequires: libxslt-devel libxml++2-devel libarchive-devel libgstreamermm1.0-devel
@@ -31,6 +32,7 @@ Data files for lordsawar game.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p2
 
 %build
 %autoreconf
@@ -53,6 +55,9 @@ Data files for lordsawar game.
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Feb 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.1-alt2
+- Fixed build with gcc7.
+
 * Wed Nov 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.1-alt1
 - Updated to stable upstream version 0.3.1.
 
