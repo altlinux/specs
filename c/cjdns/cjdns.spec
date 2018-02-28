@@ -1,6 +1,6 @@
 Name: cjdns
-Version: 20
-Release: alt2%ubt
+Version: 20.1
+Release: alt1%ubt
 
 Summary: Encrypted networking for regular people
 License: GPLv3+
@@ -10,7 +10,7 @@ Url: https://github.com/cjdelisle/cjdns/
 Source: %name-%version.tar
 
 #https://github.com/cjdelisle/cjdns.git
-Patch1: %name-%version-alt-build.patch
+Patch1: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-ubt
 # don't use libuv-devel since it uses bundled patched libuv to build static library
@@ -219,6 +219,9 @@ done
 %_bindir/graphStats
 
 %changelog
+* Wed Feb 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 20.1-alt1%ubt
+- Updated to upstream version 20.1.
+
 * Wed Sep 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 20-alt2%ubt
 - Updated build dependencies.
 
