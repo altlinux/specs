@@ -1,21 +1,22 @@
 Name: opendx
 Version: 4.4.4
-Release: alt6
+Release: alt7
 Summary: Open Visualization Data Explorer
 License: IBM Public License
 Group: Graphics
 Url: http://www.opendx.org/
 
-Source: http://opendx.informatics.jax.org/source/dx-4.4.4.tar.gz
+Source: dx-%version.tar
+Patch1: %name-%version-alt-gcc.patch
 
-BuildPreReq: libhdf5-devel libtiff-devel flex
-BuildPreReq: libnetcdf-devel libX11-devel libcdf-devel gcc-c++
-BuildPreReq: libICE-devel libSM-devel libXt-devel libopenmotif-devel
-BuildPreReq: libGL-devel libGLU-devel libXext-devel libXmu-devel
-BuildPreReq: libXp-devel libXpm-devel librx-devel liblcms-devel
-BuildPreReq: libfreetype-devel libjpeg-devel liblqr-devel glib2-devel
-BuildPreReq: fontconfig-devel bzlib-devel libXinerama-devel
-BuildPreReq: libImageMagick-devel
+BuildRequires: libhdf5-devel libtiff-devel flex
+BuildRequires: libnetcdf-devel libX11-devel libcdf-devel gcc-c++
+BuildRequires: libICE-devel libSM-devel libXt-devel libopenmotif-devel
+BuildRequires: libGL-devel libGLU-devel libXext-devel libXmu-devel
+BuildRequires: libXp-devel libXpm-devel librx-devel liblcms-devel
+BuildRequires: libfreetype-devel libjpeg-devel liblqr-devel glib2-devel
+BuildRequires: fontconfig-devel bzlib-devel libXinerama-devel
+BuildRequires: libImageMagick-devel
 
 Requires: lib%name = %version-%release
 
@@ -75,6 +76,7 @@ This package contains documentation for OpenDX.
 
 %prep
 %setup
+%patch1 -p2
 rm -f aclocal.m4
 
 %build
@@ -126,6 +128,9 @@ install -d %buildroot%_mandir/manl
 %_libexecdir/dx/html
 
 %changelog
+* Wed Feb 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.4-alt7
+- Rebuilt with new toolchain.
+
 * Tue Aug 29 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.4-alt6
 - Rebuilt with libnetcdf11.
 
