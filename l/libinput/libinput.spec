@@ -5,7 +5,7 @@
 %def_enable tests
 
 Name: libinput
-Version: 1.9.4
+Version: 1.10.1
 Release: alt1
 
 Summary: Input devices library
@@ -18,7 +18,8 @@ Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
 %define mtdev_ver 1.1.0
 %define evdev_ver 0.4
 
-BuildRequires: meson gcc-c++ rpm-build-python3
+BuildRequires(pre): meson
+BuildRequires: gcc-c++ rpm-build-python3
 BuildRequires: libmtdev-devel >= %mtdev_ver libevdev-devel >= %evdev_ver
 BuildRequires: libudev-devel libcheck-devel libunwind-devel
 %{?_enable_libwacom:BuildRequires: libwacom-devel}
@@ -119,6 +120,9 @@ This package contains visual debug helper for %name.
 
 
 %changelog
+* Wed Feb 28 2018 Yuri N. Sedunov <aris@altlinux.org> 1.10.1-alt1
+- 1.10.1
+
 * Wed Dec 20 2017 Yuri N. Sedunov <aris@altlinux.org> 1.9.4-alt1
 - 1.9.4
 
