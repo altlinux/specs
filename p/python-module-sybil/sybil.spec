@@ -2,7 +2,7 @@
 %def_with python3
 
 Name:    python-module-%oname
-Version: 1.0.5
+Version: 1.0.7
 Release: alt1
 
 Summary:  Automated testing for the examples in your documentation.
@@ -15,14 +15,16 @@ BuildArch: noarch
 BuildRequires: python-devel python-module-setuptools
 BuildRequires: python2.7(nose.core)
 BuildRequires: python-module-sphinx-devel python2.7(pkginfo)
+BuildRequires: python2.7(pytest)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(nose.core)
+BuildRequires: python3(pytest)
 %endif
 
 # https://github.com/cjw296/sybil.git
-Source:  %oname-%version.tar.gz
+Source:  %oname-%version.tar
 
 %description
 Automated testing for the examples in your documentation.
@@ -90,5 +92,8 @@ popd
 %endif
 
 %changelog
+* Thu Mar 01 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.7-alt1
+- Updated to upstream version 1.0.7.
+
 * Wed Aug 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.5-alt1
 - Initial build for ALT.
