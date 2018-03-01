@@ -1,6 +1,6 @@
 Name: libxmlsec1
-Version: 1.2.24
-Release: alt3%ubt
+Version: 1.2.25
+Release: alt1%ubt
 License: MIT
 Summary: Library providing support for "XML Signature" and "XML Encryption" standards
 Group: System/Libraries
@@ -8,9 +8,12 @@ Source0: http://www.aleksey.com/xmlsec/download/xmlsec1-%version.tar.gz
 Url: http://www.aleksey.com/xmlsec/
 
 BuildRequires(pre): rpm-build-ubt
-# Automatically added by buildreq on Fri Jun 08 2012
-# optimized out: libgpg-error libgpg-error-devel libnspr-devel libxml2-devel pkg-config
-BuildRequires: help2man libgcrypt-devel libgnutls-devel libltdl7-devel libnss-devel libssl-devel libxslt-devel man
+BuildRequires: help2man libltdl7-devel man
+BuildRequires: libxml2-devel >= 2.8.0 libxslt-devel >= 1.0.20
+BuildRequires: libssl-devel >= 1.0.0
+BuildRequires: libnss-devel >= 3.11.1 libnspr-devel >= 4.4.1
+BuildRequires: libgcrypt-devel >= 1.4.0
+BuildRequires: libgnutls-devel >= 2.8.0
 
 %description
 XML Security Library is a C library based on LibXML2  and OpenSSL.
@@ -98,6 +101,7 @@ Libraries, includes, etc. for developing XML Security applications with NSS.
 %setup -n xmlsec1-%version
 
 %build
+%autoreconf
 %configure --disable-static --enable-gost
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
@@ -174,6 +178,9 @@ true || LD_LIBRARY_PATH=%buildroot%_libdir make check
 %_libdir/pkgconfig/xmlsec1-nss.pc
 
 %changelog
+* Wed Feb 28 2018 Alexey Shabalin <shaba@altlinux.ru> 1.2.25-alt1%ubt
+- 1.2.25
+
 * Tue Aug 08 2017 Alexey Shabalin <shaba@altlinux.ru> 1.2.24-alt3%ubt
 - rebuild with Universal Branch Tag
 

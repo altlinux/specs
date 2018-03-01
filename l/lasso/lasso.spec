@@ -8,7 +8,7 @@
 Summary: Liberty Alliance Single Sign On
 Name: 	 lasso
 Version: 2.5.1
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group:   System/Libraries
 Url: 	 http://lasso.entrouvert.org/
@@ -16,6 +16,8 @@ Url: 	 http://lasso.entrouvert.org/
 Source:  http://dev.entrouvert.org/lasso/lasso-%{version}.tar.gz
 Source1: %name.watch
 Patch1:  lasso-export-symbols-from-logging.h.patch
+Patch2:  0001-replace-use-of-xmlsec-soap.h-which-is-deprecated-fix.patch
+Patch3:  0001-binding-java-add-inline-implementation-of-lasso_log.patch
 
 BuildRequires: gtk-doc
 BuildRequires: glib2-devel swig
@@ -24,8 +26,9 @@ BuildRequires: python-module-six
 BuildRequires: zlib-devel
 %if_with java
 BuildRequires(pre): rpm-build-java
-BuildRequires: java-1.7.0-openjdk-devel
+BuildRequires: java-devel
 BuildRequires: jpackage-utils
+BuildRequires: /proc
 %endif
 %if_with perl
 BuildRequires: perl-devel
@@ -123,6 +126,8 @@ library.
 %prep
 %setup -q -n %{name}-%{version}
 %patch1 -p2
+%patch2 -p1
+%patch3 -p1
 
 %build
 %add_optflags -fPIC
@@ -215,10 +220,10 @@ make check
 
 %if_with php
 %files -n php5-%name
-%attr(755,root,root) %php5_extdir/lasso.so
-%config(noreplace) %attr(644,root,root) %php5_sysconfdir/cli/php.d/%name.ini
-%attr(755,root,root) %dir %php5_datadir/%name
-%attr(644,root,root) %php5_datadir/%name/lasso.php
+%php5_extdir/lasso.so
+%config(noreplace) %php5_sysconfdir/cli/php.d/%name.ini
+%dir %php5_datadir/%name
+%php5_datadir/%name/lasso.php
 %endif
 
 %if_with python
@@ -228,6 +233,9 @@ make check
 %endif
 
 %changelog
+* Thu Mar 01 2018 Alexey Shabalin <shaba@altlinux.ru> 2.5.1-alt2
+- Rebuild with libxmlsec1-1.2.25
+
 * Mon Mar 28 2016 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt1
 - New version
 
