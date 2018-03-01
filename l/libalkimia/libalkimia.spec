@@ -1,6 +1,7 @@
+%define lib_name libalkimia5
 
 Name:    libalkimia
-Version: 5.0.0
+Version: 7.0
 Release: alt1
 
 Summary: Financial library
@@ -10,9 +11,10 @@ URL:     http://community.kde.org/Alkimia/libalkimia
 
 Source: %name-%version.tar
 
-BuildRequires(pre): kde4libs-devel
-BuildRequires: doxygen
+BuildRequires(pre): cmake
 BuildRequires: gcc-c++
+BuildRequires: extra-cmake-modules
+BuildRequires: qt5-base-devel
 BuildRequires: libgmp_cxx-devel
 
 %description
@@ -24,6 +26,7 @@ class to represent monetary values with arbitrary precision.
 Summary: Development files for %name
 Group: Development/KDE and QT
 Requires: %name = %version-%release
+
 %description devel
 Headers and other files for develop with %name.
 
@@ -31,23 +34,27 @@ Headers and other files for develop with %name.
 %setup -q
 
 %build
-%K4build -Wno-dev
+%cmake -Wno-dev
+%cmake_build
 
 %install
-%K4install
-%K4find_lang --with-kde %name
+%cmakeinstall_std
 
 %files
-%_K4libdir/%name.so.*
+%doc README.md
+%_libdir/%lib_name.so.*
 
 %files devel
-%dir %_K4includedir/alkimia
-%_K4includedir/alkimia/*
-%_K4lib/devel/%name.so
-%_pkgconfigdir/%name.pc
-%_libdir/cmake/LibAlkimia
+%dir %_includedir/alkimia
+%_includedir/alkimia/*
+%_libdir/%lib_name.so
+%_pkgconfigdir/%lib_name.pc
+%_libdir/cmake/LibAlkimia*
 
 %changelog
+* Fri Feb 16 2018 Andrey Cherepanov <cas@altlinux.org> 7.0-alt1
+- New version.
+
 * Tue Feb 09 2016 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt1
 - New version
 

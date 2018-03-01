@@ -1,9 +1,8 @@
 %define origname gwenhywfar
-# Qt5 support is still failed to build
-%def_without qt5
+%def_with qt5
 
 Name:     libgwenhywfar
-Version:  4.18.0
+Version:  4.19.0
 Release:  alt1
 
 Summary:  A multi-platform helper library for other libraries
@@ -17,6 +16,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:   %origname-%version.tar
 Source1:  %name.watch
 Patch1:   %name-pthread.patch
+Patch2:   %name-fix-build-with-qt5.patch
 
 BuildRequires: gcc-c++ glibc-devel graphviz libcom_err-devel 
 BuildRequires: libgnutls-devel libssl-devel tzdata
@@ -81,6 +81,7 @@ compiling programs using Gwenhywfar.
 %prep
 %setup -q -n %origname-%version
 %patch1 -p2
+%patch2 -p2
 
 %build
 %undefine _configure_gettext
@@ -118,6 +119,9 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_libdir/*.so.*
 %exclude %_libdir/libgwengui-gtk2.so.*
 %exclude %_libdir/libgwengui-qt4.so.*
+%if_with qt5
+%exclude %_libdir/libgwengui-qt5.so.*
+%endif
 %_libdir/%origname/
 %_datadir/gwenhywfar/ca-bundle.crt
 %_datadir/gwenhywfar/dialogs/*.dlg
@@ -147,6 +151,10 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_libdir/cmake/*
 
 %changelog
+* Mon Feb 19 2018 Andrey Cherepanov <cas@altlinux.org> 4.19.0-alt1
+- New version.
+- Build with Qt5.
+
 * Tue Aug 01 2017 Andrey Cherepanov <cas@altlinux.org> 4.18.0-alt1
 - New version
 

@@ -1,7 +1,7 @@
 
 Name:     libchipcard
 Version:  5.0.4
-Release:  alt1
+Release:  alt2
 
 Summary:  A library for easy access to smart cards (chipcards)
 License:  LGPL
@@ -22,8 +22,8 @@ BuildRequires: libgwenhywfar-devel >= 4.0.0
 BuildRequires: libpcsclite-devel zlib-devel
 BuildRequires: rpm-build-compat
 
-Provides:  libchipcard2
-Obsoletes: libchipcard2
+Provides:  libchipcard2 = %EVR
+Obsoletes: libchipcard2 < %EVR
 
 %description
 LibChipCard allows easy access to smart cards. It provides basic
@@ -73,7 +73,7 @@ local card readers.
 
 %install
 %makeinstall_std
-rm -f %buildroot%_libdir/gwenhywfar/plugins/60/ct/*.la
+rm -f %buildroot%_libdir/gwenhywfar/plugins/*/ct/*.la
 
 install -d %buildroot%_initrddir
 install %SOURCE1 %buildroot%_initrddir/chipcardd
@@ -91,7 +91,7 @@ install %SOURCE1 %buildroot%_initrddir/chipcardd
 %doc AUTHORS COPYING ChangeLog README* TODO
 %_libdir/*.so.*
 %_sysconfdir/chipcard/
-%_libdir/gwenhywfar/plugins/60/ct/*
+%_libdir/gwenhywfar/plugins/*/ct/*
 
 %files devel
 %_libdir/*.so
@@ -106,6 +106,9 @@ install %SOURCE1 %buildroot%_initrddir/chipcardd
 
 
 %changelog
+* Mon Feb 19 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.4-alt2
+- Rebuild with new version of libgwenhywfar.
+
 * Wed Jan 13 2016 Andrey Cherepanov <cas@altlinux.org> 5.0.4-alt1
 - new version 5.0.4
 
