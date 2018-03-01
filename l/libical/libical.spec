@@ -10,7 +10,7 @@
 %def_with cxx
 
 Name: libical
-Version: 3.0.2
+Version: 3.0.3
 Release: alt1
 
 Summary: An implementation of basic iCAL protocols
@@ -185,6 +185,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 
 
 %changelog
+* Thu Mar 01 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.3-alt1
+- 3.0.3
+
 * Sun Feb 18 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt1
 - 3.0.2
 
