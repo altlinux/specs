@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        0.3.0
-Release:        alt1
+Release:        alt2
 Summary:        Utilities for dealing with byte strings, invented and maintained by Yelp.
 Group:          Development/Python
 License:        Unlicense
@@ -16,10 +16,12 @@ Source: %name-%version.tar
 
 BuildRequires: python-dev python-module-setuptools
 BuildRequires: python2.7(yelp_encodings)
+BuildRequires: python2.7(pytest)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
 BuildRequires: python3(yelp_encodings)
+BuildRequires: python3(pytest)
 %endif
 
 %description
@@ -87,5 +89,8 @@ popd
 %endif
 
 %changelog
+* Thu Mar 01 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.0-alt2
+- Updated build dependencies.
+
 * Wed Oct 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.0-alt1
 - Initial build for ALT.
