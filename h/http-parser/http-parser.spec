@@ -1,6 +1,6 @@
 
 Name: http-parser
-Version: 2.7.0
+Version: 2.8.0
 Release: alt1%ubt
 Summary: HTTP request/response parser for C
 
@@ -46,13 +46,7 @@ Development headers and libraries for http-parser.
 %make library
 
 %install
-%makeinstall_std PREFIX=%buildroot%_prefix LIBDIR=%buildroot%_libdir
-
-# fix symlinks
-cd %buildroot%_libdir
-rm -f libhttp_parser.so
-ln -sf libhttp_parser.so.2.7.0 libhttp_parser.so
-
+%makeinstall_std PREFIX=%_prefix LIBDIR=%_libdir 
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -63,6 +57,9 @@ ln -sf libhttp_parser.so.2.7.0 libhttp_parser.so
 %_libdir/*.so
 
 %changelog
+* Tue Feb 27 2018 Alexey Shabalin <shaba@altlinux.ru> 2.8.0-alt1%ubt
+- 2.8.0
+
 * Fri Apr 07 2017 Evgeny Sinelnikov <sin@altlinux.ru> 2.7.0-alt1%ubt
 - Enable unified build tag aka ubt macros
 

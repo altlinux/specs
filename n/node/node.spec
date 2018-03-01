@@ -1,10 +1,10 @@
 # check deps/npm/package.json for it
-%define npmver 3.10.9
+%define npmver 3.10.10
 # separate build npm
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 6.11
+%define major 6.13
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -18,10 +18,10 @@
 
 # supports only openssl >= 1.0.2
 # see https://github.com/nodejs/node/issues/2783
-%define openssl_version 1.0.2j
+%define openssl_version 1.0.2n
 %def_with systemssl
 
-%global libuv_abi 1.9.1
+%global libuv_abi 1.16.1
 %def_with systemuv
 
 %def_disable check
@@ -29,7 +29,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.4
+Version: %major.0
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -169,7 +169,7 @@ rm -rf deps/v8
 #mkdir -p ./tools/doc/node_modules/.bin
 #ln -s ../marked/bin/marked ./tools/doc/node_modules/.bin/marked
 
-%make_build CXXFLAGS="%{optflags}" CFLAGS="%{optflags}"
+%make_build CXXFLAGS="%{optflags}" CFLAGS="%{optflags}" BUILDTYPE=Release
 %make doc
 #%make jslint
 
@@ -259,6 +259,11 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Tue Feb 27 2018 Alexey Shabalin <shaba@altlinux.ru> 6.13.0-alt1
+- new version 6.13.0
+- 2018-02-13, Version 6.13.0 'Boron' (LTS)
+- fixed CVE-2017-15896, CVE-2017-3738
+
 * Sat Oct 07 2017 Vitaly Lipatov <lav@altlinux.ru> 6.11.4-alt1
 - new version 6.11.4 (with rpmrb script)
 - 2017-10-03, Version 6.11.4 'Boron' (LTS)

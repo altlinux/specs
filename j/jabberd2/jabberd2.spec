@@ -18,9 +18,9 @@
 %def_disable oracle # libs not present in sisyphus
 %def_disable tests
 
-%define git 0a0fe40
-%define majver 2.4
-%define minver 0
+%define git d3a2b96
+%define majver 2.6
+%define minver 1
 %define rel alt1
 
 Name: jabberd2
@@ -40,7 +40,7 @@ Packager: L.A. Kostis <lakostis@altlinux.org>
 %ifndef git
 Source: https://github.com/jabberd2/jabberd2/releases/download/jabberd-%version/jabberd-%version.tar.gz
 %else
-Source: jabberd-%majver-%git.tar
+Source: jabberd-%version.tar
 %endif
 Source1: jabberd-alt-configdir.tar
 Source2: jabberd.cfg
@@ -246,11 +246,7 @@ Oracle auth and storage module for Jabberd.
 %endif
 
 %prep
-%ifndef git
 %setup -q -n jabberd-%version
-%else
-%setup -q -n jabberd-%majver-%git
-%endif
 %__subst "s|@localstatedir@/jabberd/|@localstatedir@/%name/|g" etc/*.dist.in
 # rename package jabberd -> jabberd2
 %__subst "s|AC_INIT(\[jabberd\]|AC_INIT(\[jabberd2\]|g" configure.ac
@@ -489,6 +485,9 @@ install -pD -m644 %SOURCE8 %buildroot%_sysconfdir/logrotate.d/%name
 %endif
 
 %changelog
+* Tue Feb 27 2018 Alexey Shabalin <shaba@altlinux.ru> 2.6.1-alt1.git.d3a2b96
+- Updated to 2.6.1
+
 * Thu Oct 06 2016 L.A. Kostis <lakostis@altlinux.ru> 2.4.0-alt1.git.0a0fe40
 - Updated to 2.4.0 GIT 0a0fe40 (closes #32451).
 - Enabled WebSocket over SSL (wss://).
