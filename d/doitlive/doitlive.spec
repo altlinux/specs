@@ -1,5 +1,5 @@
 Name:    doitlive
-Version: 3.0.2
+Version: 3.0.3
 Release: alt1
 
 Summary: Because sometimes you need to do it live
@@ -15,14 +15,12 @@ BuildRequires: python3-dev python3-module-setuptools
 BuildArch: noarch
 
 Source:  %name-%version.tar
-Patch0: doitlive-3.0.2-alt-open-files-in-utf-8-explicitly.patch
 
 %description
 %summary
 
 %prep
 %setup -n %name-%version
-%patch0 -p1
 
 %build
 %python3_build
@@ -36,5 +34,8 @@ Patch0: doitlive-3.0.2-alt-open-files-in-utf-8-explicitly.patch
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Mar 01 2018 Mikhail Gordeev <obirvalger@altlinux.org> 3.0.3-alt1
+- new version 3.0.3
+
 * Thu Nov 09 2017 Mikhail Gordeev <obirvalger@altlinux.org> 3.0.2-alt1
 - Initial build for Sisyphus
