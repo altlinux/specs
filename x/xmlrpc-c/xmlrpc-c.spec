@@ -1,8 +1,10 @@
 %define libname libxmlrpc
+# libxml2 backend is broken
+%def_disable libxml2
 
 Name: xmlrpc-c
-Version: 1.39.12
-Release: alt1.svn2910
+Version: 1.43.06
+Release: alt1.svn2912
 
 Summary: XML-RPC C library - an implementation of the xmlrpc protocol
 License: BSD-style
@@ -14,17 +16,17 @@ Source: %name-%version.tar
 
 
 Patch1: %name-1.12.00-alt-configure-fixes.patch
-Patch2: %name-30x-redirect.patch
-Patch3: %name-uninit-curl.patch
-# Patch4: %name-curl-types.h.patch
-Patch5: 0002-Use-proper-datatypes-for-long-long.patch
-# Patch6: %name-check-vasprintf-return-value.patch
-# Patch7: %name-include-string_int.h.patch
-Patch8: %name-printf-size_t.patch
-Patch9: 0001-xmlrpc_server_abyss-use-va_args-properly.patch
+Patch2: 0001-cleanup-and-fix-libxml2-backend.patch
 
-BuildRequires: libcurl-devel libxml2-devel gcc-c++ cmake
-BuildRequires: libncurses-devel libncursesxx-devel
+# Patches from fedora
+Patch101: 0001-xmlrpc_server_abyss-use-va_args-properly.patch
+Patch102: 0002-Use-proper-datatypes-for-long-long.patch
+Patch103: 0003-allow-30x-redirections.patch
+
+BuildRequires: gcc-c++
+BuildRequires: libcurl-devel
+%{?_enable_libxml2:BuildRequires: libxml2-devel}
+BuildRequires: libncurses-devel libreadline-devel
 BuildRequires: libssl-devel zlib-devel
 
 %description
@@ -39,17 +41,30 @@ Group: System/Libraries
 XML-RPC for C/C++ is programming libraries and related tools to help you
 write an XML-RPC server or client in C or C++.
 
+%package -n %libname-client
+Summary: C client libraries for xmlrpc-c
+Group: System/Libraries
+Requires: %libname = %version-%release
+
+%description -n %libname-client
+XML-RPC is a quick-and-easy way to make procedure calls over the
+Internet. It converts the procedure call into XML document, sends it
+to a remote server using HTTP, and gets back the response as XML.
+
+This library provides a modular implementation of XML-RPC for C
+clients.
 
 %package -n %libname-devel
 Summary: Files for developing applications that use %libname
 Requires: %libname = %version-%release
-Requires: libcurl-devel libexpat-devel libssl-devel w3c-libwww-devel libxml2-devel
+Requires: %libname++ = %version-%release
+Requires: %libname-client = %version-%release
+Requires: %libname-client++ = %version-%release
 Group: Development/C
 
 %description -n %libname-devel
 The header file for developing applications that use
 %name.
-
 
 %package -n %libname++
 Summary: XML-RPC C++ library - an implementation of the xmlrpc protocol
@@ -62,6 +77,19 @@ write an XML-RPC server or client in C or C++.
 
 This package contains C++ bindings for %libname.
 
+%package -n %libname-client++
+Summary: C++ client libraries for xmlrpc-c
+Group: System/Libraries
+Requires: %libname-client = %version-%release
+Requires: %libname++ = %version-%release
+
+%description -n %libname-client++
+XML-RPC is a quick-and-easy way to make procedure calls over the
+Internet. It converts the procedure call into XML document, sends it
+to a remote server using HTTP, and gets back the response as XML.
+
+This library provides a modular implementation of XML-RPC for C++
+clients.
 
 %package -n %libname++-devel
 Summary: Files for developing applications that use %libname++
@@ -77,21 +105,19 @@ The header file for developing applications that use
 %prep
 %setup
 %patch1 -p1
+%if_enabled libxml2
 %patch2 -p1
-%patch3 -p1
-# %patch4 -p1
-%patch5 -p1
-# %patch6 -p1
-# %patch7 -p1
-%patch8 -p1
-%patch9 -p1
+%endif
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
 
 %build
-export CFLAGS="$RPM_OPT_FLAGS -Wno-uninitialized -Wno-unknown-pragmas"
-export CXXFLAGS="$RPM_OPT_FLAGS"
-
 autoconf
-%configure --enable-libxml2-backend
+%configure \
+	--disable-wininet-client \
+	%{?_enable_libxml2:--enable-libxml2-backend}
+
 %make AR="ar" RANLIB="ranlib"
 %make -C tools AR="ar" RANLIB="ranlib"
 
@@ -106,28 +132,34 @@ rm -f %buildroot%_libdir/*.a
 %doc README doc/*
 %doc tools/xmlrpc_transport/xmlrpc_transport.html
 %_man1dir/*
-%_bindir/xmlrpc
-%_bindir/xmlrpc_transport
-%_bindir/xml-rpc-api2cpp
-%_bindir/xmlrpc_cpp_proxy
-%_bindir/xmlrpc_parsecall
-%exclude %_bindir/xml-rpc-api2txt
+%_bindir/*
+%exclude %_bindir/xmlrpc-c-config
 
 %files -n %libname
 %_libdir/*.so.3*
+%exclude %_libdir/libxmlrpc_client.so.*
+
+%files -n %libname-client
+%_libdir/libxmlrpc_client.so.*
+
+%files -n %libname++
+%_libdir/*.so.8*
+%exclude %_libdir/libxmlrpc_client++.so.*
+
+%files -n %libname-client++
+%_libdir/libxmlrpc_client++.so.*
 
 %files -n %libname-devel
 %_bindir/xmlrpc-c-config
 %_includedir/xmlrpc-c/
 %_includedir/*.h
-#%_pkgconfigdir/*.pc
+%_pkgconfigdir/*.pc
 %_libdir/*.so
 
-%files -n %libname++
-%_libdir/*.so.8*
-
-
 %changelog
+* Thu Mar 01 2018 Alexey Shabalin <shaba@altlinux.ru> 1.43.06-alt1.svn2912
+- 1.43.06
+
 * Wed Aug 30 2017 Alexey Shabalin <shaba@altlinux.ru> 1.39.12-alt1.svn2910
 - 1.39.12
 
