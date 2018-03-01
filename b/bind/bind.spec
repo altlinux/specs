@@ -1,7 +1,7 @@
 Name: bind
 Version: 9.11.2.P1
 %define src_version 9.11.2-P1
-Release: alt1
+Release: alt2
 
 Summary: ISC BIND - DNS server
 License: MPLv2.0
@@ -60,6 +60,7 @@ Patch0010: 0010-Link-libirs-with-libdns-libisc-and-libisccfg.patch
 %def_disable static
 %def_enable ipv6
 %def_with openssl
+%def_with libjson
 
 Provides: bind-chroot(%_chrootdir)
 Obsoletes: bind-chroot, bind-debug, bind-slave, caching-nameserver
@@ -79,6 +80,7 @@ BuildPreReq: gcc-c++
 BuildPreReq: libcap-devel
 
 %{?_with_openssl:BuildPreReq: libssl-devel}
+%{?_with_libjson:BuildPreReq: libjson-c-devel}
 
 %package utils
 Summary: Utilities provided by ISC BIND
@@ -212,6 +214,7 @@ sed -i '/# Large File/iAC_SYS_LARGEFILE/' configure.in
 	--enable-fixed-rrset \
 	--disable-seccomp \
 	 %{subst_with openssl} \
+	 %{subst_with libjson} \
 	 %{subst_enable ipv6} \
 	 %{subst_enable static} \
 	--includedir=%{_includedir}/bind9 \
@@ -434,6 +437,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Wed Feb 28 2018 Stanislav Levin <slev@altlinux.org> 9.11.2.P1-alt2
+- Build with libjson support (statistics channels)
+
 * Wed Jan 17 2018 Stanislav Levin <slev@altlinux.org> 9.11.2.P1-alt1
 - 9.11.2 -> 9.11.2-P1 (fixes: CVE-2017-3145).
 
