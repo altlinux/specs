@@ -1,7 +1,7 @@
 %define oname backports.test.support
 
 Name: python-module-%oname
-Version: 0.1
+Version: 0.1.1
 Release: alt1
 Summary: Backport of Python 3's test.support package
 Group: Development/Python
@@ -10,11 +10,12 @@ URL: https://pypi.python.org/pypi/backports.test.support
 
 # https://github.com/pjdelport/backports.test.support.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-work-networkless.patch
+Patch1: %name-%version-alt.patch
 
 BuildRequires: python-dev python-module-setuptools
 BuildRequires: python2.7(pytest)
 BuildRequires: python2.7(future) python2.7(backports.os)
+BuildRequires: python2.7(mock)
 
 %py_requires backports backports.os
 %py_provides backports.test.support
@@ -55,5 +56,8 @@ PYTHONPATH=$(pwd)/src py.test
 %python_sitelibdir/*
 
 %changelog
+* Thu Mar 01 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.1-alt1
+- Updated to upstream version 0.1.1.
+
 * Mon Dec 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1-alt1
 - Initial build for ALT.
