@@ -2,13 +2,13 @@
 # vim: set ft=spec:
 # vim600: set fdm=marker:
 
-%define patchlevel %nil
-#define patchlevel -P1
+#define patchlevel %nil
+%define patchlevel -P1
 
 %define _unpackaged_files_terminate_build 1
 
 Name: dhcp
-Version: 4.3.6
+Version: 4.3.6.P1
 Release: alt1
 Epoch: 1
 
@@ -18,7 +18,7 @@ Group: System/Servers
 Url: http://www.isc.org/sw/dhcp/
 
 %define srcname dhcp-%version%{?patchlevel:%patchlevel}
-Source0: ftp://ftp.isc.org/isc/dhcp/%srcname.tar
+Source0: dhcp-%version.tar
 Source1: dhcp-dynamic-dns-examples.tar
 Source2: dhcpd.conf.sample
 Source3: update_dhcp.pl
@@ -190,7 +190,7 @@ server
 # }}}
 
 %prep
-%setup -n %srcname -a1 -a15
+%setup -a1 -a15
 %patch0001 -p2
 %patch0002 -p2
 %patch0003 -p2
@@ -546,6 +546,10 @@ fi
 # }}}
 
 %changelog
+* Wed Feb 28 2018 Mikhail Efremov <sem@altlinux.org> 1:4.3.6.P1-alt1
+- Updated patches.
+- Updated to 4.3.6-P1 (fixes: CVE-2017-3144,CVE-2018-5732,CVE-2018-5733).
+
 * Tue Aug 29 2017 Mikhail Efremov <sem@altlinux.org> 1:4.3.6-alt1
 - dhclient: rename -timeout option to --timeout.
 - dhclient: Add --onetime and --nounicast options.
