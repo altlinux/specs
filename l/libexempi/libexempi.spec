@@ -5,13 +5,12 @@
 
 Name: lib%_name
 Version: 2.4.4
-Release: alt1
+Release: alt1.1
 
 Summary: Library for easy parsing of XMP metadata
 Group: System/Libraries
 License: %bsd
-
-URL: http://libopenraw.freedesktop.org/wiki/%Name
+Url: http://libopenraw.freedesktop.org/wiki/%Name
 
 Source: http://libopenraw.freedesktop.org/download/%_name-%version.tar.bz2
 
@@ -45,13 +44,15 @@ This package contains the static library needed for developing with
 
 %prep
 %setup -n %_name-%version
+# fix boost.m4 for gcc < 5, lcc < 1.23
+sed -i~ 's|\^\(boost-lib-version\)|\1|' m4/boost.m4
 
 %build
 %autoreconf
 %configure  \
     %{subst_enable static} \
     CPPFLAGS="-DBanAllEntityUsage=1"
-%make V=1
+%make_build
 
 %install
 %makeinstall_std
@@ -77,6 +78,9 @@ This package contains the static library needed for developing with
 
 
 %changelog
+* Thu Mar 01 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.4-alt1.1
+- fixed boost.m4 for e2k
+
 * Tue Feb 27 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.4-alt1
 - 2.4.4
 
