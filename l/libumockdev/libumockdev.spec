@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: 0.11
+Version: 0.11.1
 Release: alt1
 
 Summary: Hardware devices mocking library for creating unit tests and bug reporting
@@ -12,7 +12,8 @@ License: LGPLv2.1
 Url: https://launchpad.net/%_name
 
 # VCS: https://github.com/martinpitt/umockdev.git
-Source: %url/trunk/%version.0/+download/%_name-%version.tar.gz
+#Source: %url/trunk/%version.0/+download/%_name-%version.tar.gz
+Source: https://github.com/martinpitt/%_name/releases/download/%version/%_name-%version.tar.xz
 
 %define glib_ver 2.32
 
@@ -21,6 +22,7 @@ BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libudev-devel libgudev-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: vala-tools
+%{?_enable_check:BuildRequires: /proc}
 
 %description
 umockdev mocks Linux devices for creating integration tests for hardware
@@ -115,6 +117,9 @@ install -pD -m644 NEWS %buildroot%pkg_docdir
 %_girdir/UMockdev-%api_ver.gir
 
 %changelog
+* Thu Mar 01 2018 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1
+- 0.11.1
+
 * Tue Feb 27 2018 Yuri N. Sedunov <aris@altlinux.org> 0.11-alt1
 - 0.11
 
