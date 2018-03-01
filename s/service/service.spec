@@ -1,5 +1,5 @@
 Name: service
-Version: 0.5.28
+Version: 0.5.29
 Release: alt1
 
 Summary: The service start/stop scripts
@@ -118,6 +118,9 @@ fi
 %config(noreplace) %_sysconfdir/sysconfig/limits
 
 %changelog
+* Thu Mar 01 2018 Ivan Zakharyaschev <imz@altlinux.org> 0.5.29-alt1
+- Fixed the typo in su invocation introduced in 0.5.28-alt1 (ALT#34500).
+
 * Wed Dec 27 2017 Ivan Zakharyaschev <imz@altlinux.org> 0.5.28-alt1
 - use "start-stop-daemon --chuid USER" instead of "su"
   if WITHOUT_RC_COMPAT >= 2 or --make-pidfile is used, which
