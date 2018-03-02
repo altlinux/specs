@@ -12,7 +12,7 @@
 
 Name:           %_name-gtk
 Version:        1.16.1
-Release:        alt1
+Release:        alt1.1
 Summary:        Document viewer
 
 License:        GPLv2+ and GFDL
@@ -268,6 +268,9 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %endif
 
 %changelog
+* Sat Feb 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.16.1-alt1.1
+- NMU: rebuild with texlive 2016
+
 * Thu Nov 10 2016 Mikhail Efremov <sem@altlinux.org> 1.16.1-alt1
 - Updated to 1.16.1.
 

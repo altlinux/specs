@@ -1,6 +1,6 @@
 Group: Publishing
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libgio-devel pkgconfig(cairo) pkgconfig(cairo-pdf) pkgconfig(cairo-ps) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(sm) pkgconfig(x11) t1lib-devel zlib-devel
+BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libgio-devel pkgconfig(cairo) pkgconfig(cairo-pdf) pkgconfig(cairo-ps) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(sm) pkgconfig(x11) t1lib-devel zlib-devel intltool
 # END SourceDeps(oneline)
 BuildRequires: pkgconfig(libxml-2.0)
 ## important!!! # https://bugzilla.altlinux.org/show_bug.cgi?id=28634
@@ -30,9 +30,9 @@ Requires: mate-desktop
 Name:          mate-document-viewer
 Version:       %{branch}.4
 %if 0%{?rel_build}
-Release:       alt1_1
+Release:       alt2_1
 %else
-Release:       alt1_1
+Release:       alt2_1
 %endif
 Summary:       Document viewer
 License:       GPLv2+ and LGPLv2+ and MIT
@@ -292,6 +292,9 @@ fi
 
 
 %changelog
+* Sat Feb 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.19.4-alt2_1
+- NMU: rebuild with texlive 2016
+
 * Mon Oct 16 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.4-alt1_1
 - new fc release
 
