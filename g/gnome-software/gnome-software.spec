@@ -16,9 +16,10 @@
 %def_enable webapps
 %def_enable odrs
 %def_disable tests
+%def_disable external_appstream
 
 Name: gnome-software
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Software manager for GNOME
@@ -39,7 +40,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define flatpak_ver 0.6.12
 %define limba_ver 0.5.6
 
-BuildRequires: meson
+BuildRequires(pre): meson
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libappstream-glib-devel >= %appstream_glib_ver
@@ -98,7 +99,8 @@ GNOME Software.
 	%{?_disable_limba:-Denable-limba=false} \
 	%{?_disable_rpm:-Denable-rpm=false} \
 	%{?_disable_packagekit:-Denable-packagekit=false} \
-	%{?_disable_tests:-Denable-tests=false}
+	%{?_disable_tests:-Denable-tests=false} \
+	%{?_enable_external_appstream:-Denable-external-appstream=true}
 %meson_build
 
 %install
@@ -110,14 +112,16 @@ GNOME Software.
 %_xdgconfigdir/autostart/%name-service.desktop
 %_bindir/%name
 %_bindir/%name-editor
-%_libexecdir/gnome-software-cmd
-%_libexecdir/gnome-software-restarter
+%_libexecdir/%name-cmd
+%_libexecdir/%name-restarter
+%{?_enable_external_appstream:%_libexecdir/%name-install-appstream}
 %_libdir/gs-plugins-%plugins_ver/
 %_desktopdir/%name-local-file.desktop
 %_desktopdir/%xdg_name.desktop
 %_desktopdir/%xdg_name.Editor.desktop
 %_datadir/app-info/xmls/%xdg_name.Featured.xml
 %_datadir/dbus-1/services/%xdg_name.service
+%{?_enable_external_appstream:%_datadir/polkit-1/actions/org.gnome.software.external-appstream.policy}
 %_datadir/%name/
 %_datadir/gnome-shell/search-providers/%xdg_name-search-provider.ini
 %_iconsdir/hicolor/*x*/*/%xdg_name.png
@@ -141,6 +145,9 @@ GNOME Software.
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Mar 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.7-alt1
+- 3.26.7
+
 * Thu Feb 08 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.6-alt1
 - 3.26.6
 
