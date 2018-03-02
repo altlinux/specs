@@ -1,5 +1,5 @@
 Name: volumes-profile-regular
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Volumes description for ALT Linux Regular builds
@@ -28,6 +28,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Fri Mar 02 2018 Michael Shigorin <mike@altlinux.org> 0.4-alt1
+- e2k support (/boot)
+
 * Tue Nov 28 2017 Mikhail Efremov <sem@altlinux.org> 0.3-alt1
 - Fix profile for disks > 120Gb.
 
