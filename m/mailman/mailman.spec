@@ -2,20 +2,19 @@
 #	add systemd init support
 #       use xz for large archives in /usr/share/mailman/cron/nightly_gzip
 Name: mailman
-Version: 2.1.23
-Release: alt0.1.20160915
+Version: 2.1.26
+Release: alt1
 Epoch: 5
-Packager: Grigory Batalov <bga@altlinux.ru>
 
 %define mm_user %name
 %define mm_group %name
 
 %define crontabdir %_sysconfdir/cron.d
 %define logrotate %_sysconfdir/logrotate.d
-%define ngxconfdir %_sysconfdir/nginx/sites-enabled.d
+%define ngxconfdir %_sysconfdir/nginx/sites-available.d
 %define confdir %_sysconfdir/%name
 %define _prefix /usr/share/%name
-%define _exec_prefix %_libdir/%name
+%define _exec_prefix %_libexecdir/%name
 %define _var_prefix %_localstatedir/%name
 
 Summary: Mailing list manager with built in web access
@@ -24,11 +23,12 @@ Group: System/Servers
 Url: http://www.list.org/
 
 # http://prdownloads.sourceforge.net/%name/%name-%version.tar.tgz
+# http://bazaar.launchpad.net/~mailman-coders/mailman/2.1
 Source: %name-%{version}.tar
-# ALT Linux cummulative patch
+# ALT Linux cumulative patch
 Patch:  %name-%{version}-%release-alt.patch
 
-PreReq: mktemp, setup, shadow-utils, sendmail-common, vixie-cron
+PreReq: sendmail-common
 Requires: python, webserver-common, MTA
 BuildRequires: python-devel python-module-dns
 
@@ -36,7 +36,6 @@ BuildRequires(pre): python
 AutoProv: yes, nopython
 
 BuildRequires(pre): rpm-macros-webserver-common
-BuildRequires(pre): rpm-macros-apache
 BuildRequires(pre): rpm-macros-apache2
 
 %add_python_req_skip Defaults Mailman mm_config
@@ -67,23 +66,12 @@ management system written mostly in Python. Features:
 See the Mailman home site for current status, including new releases
 and known problems: %url
 
-%package apache
-Group: System/Servers
-Summary: Mailman configuration for Apache
-BuildArch: noarch
-Requires: %name = %version-%release
-Requires: apache-base
-Obsoletes: %name <= 2.1.21-alt0.1rc2
-Conflicts: %name <= 2.1.21-alt0.1rc2
-
-%description apache
-Mailman configuration files for Apache
 
 %package apache2
 Group: System/Servers
 Summary: Mailman configuration for Apache2
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: apache2-base
 
 %description apache2
@@ -93,8 +81,8 @@ Mailman configuration files for Apache2
 Group: System/Servers
 Summary: Mailman configuration for nginx
 BuildArch: noarch
-Requires: %name = %version-%release
-Requires: nginx
+Requires: %name = %EVR
+Requires: nginx spawn-fcgi
 
 %description nginx
 Mailman configuration files for nginx
@@ -109,7 +97,7 @@ Documentation for mailman
 
 %prep
 %setup -q -n %name-%{version}
-# ALT Linux cummulative patch
+# ALT Linux cumulative patch
 %patch -p1
 
 install -pD -m644 alt-linux/mm_cfg.py Mailman/mm_cfg.py.dist.in
@@ -180,18 +168,13 @@ install -d -m2771 %buildroot%_spooldir/%name/{archive,bounces,commands,in,news,o
 ln -s ../../log/%name %buildroot%_var_prefix/logs
 ln -s ../../spool/%name %buildroot%_var_prefix/qfiles
 
-# Copy an icons into the web server's icons directory.
+# Copy icons to the web server's icons directory.
 mkdir -p %buildroot%webserver_iconsdir
 cp -a %buildroot%prefix/icons/* %buildroot%webserver_iconsdir
 
-# Install a logrotate control file.
+# Install the logrotate control file.
 install -pD -m644 alt-linux/%name.logrotate \
 	%buildroot%logrotate/%name
-
-# Install the httpd configuration file.
-install -pD -m644 /dev/null %buildroot%apache_modconfdir/%name.conf
-sed -e 's|@CODEDIR@|%_exec_prefix|g;s|@DATADIR@|%_var_prefix|g' \
-	alt-linux/%name-httpd.conf > %buildroot%apache_modconfdir/%name.conf
 
 # Install the httpd2 configuration file.
 install -d %buildroot%apache2_mods_start
@@ -217,8 +200,9 @@ install -pD -m755 misc/mailman %buildroot%_initdir/%name
 
 # Install config files for postfix
 install -pD -m644 alt-linux/mm_config.py %buildroot%confdir/mm_config.py
-touch %buildroot%confdir/{aliases,virtual-mailman}
-touch %buildroot%confdir/{aliases,virtual-mailman}.cdb
+touch %buildroot%confdir/mm_config.py{c,o}
+touch %buildroot%confdir/{aliases,virtual-mailman}{,.cdb}
+touch %buildroot%_var_prefix/data/last_mailman_version
 
 cat <<EOF > %buildroot%confdir/mail.groups
 mail
@@ -227,7 +211,6 @@ postman
 EOF
 
 cat <<EOF > %buildroot%confdir/cgi.groups
-apache
 apache2
 _spawn_fcgi
 EOF
@@ -252,24 +235,18 @@ rm -rf %buildroot%_datadir/%name/tests
 %post
 %post_service mailman
 # Fix file permissions
-if [ -f %_localstatedir/%name/data/last_mailman_version ]; then
-	chown %mm_user:%mm_group %_localstatedir/%name/data/last_mailman_version ||:
-	chmod 644 %_localstatedir/%name/data/last_mailman_version ||:
+if [ -f %_var_prefix/data/last_mailman_version ]; then
+	chown %mm_user:%mm_group %_var_prefix/data/last_mailman_version ||:
+	chmod 644 %_var_prefix/data/last_mailman_version ||:
 	echo "Update mailman's database:"
 	%_prefix/bin/update ||:
 else
 	%_prefix/bin/update &> /dev/null ||:
 fi
 
-%post apache
-%post_apacheconf
-
 %post apache2
 %apache2_sbindir/a2chkconfig
 %post_apache2conf
-
-%postun apache
-%postun_apacheconf
 
 %postun apache2
 %apache2_sbindir/a2chkconfig
@@ -291,29 +268,29 @@ echo "problems and solutions."
 if [ $1 != 0 ]; then
 # Move old configs and passwords and change group
 	for file in aliases virtual-mailman mm_config.py; do
-		if [ -f %_localstatedir/%name/etc/$file ]; then
-			mv %_localstatedir/%name/etc/$file %confdir/$file ||:
+		if [ -f %_var_prefix/etc/$file ]; then
+			mv %_var_prefix/etc/$file %confdir/$file ||:
 			chgrp %mm_group %confdir/$file ||:
 		fi
 	done
 	for file in adm.pw creator.pw; do
-		if [ -f %_localstatedir/%name/data/$file ]; then
-			mv %_localstatedir/%name/data/$file %confdir/$file ||:
+		if [ -f %_var_prefix/data/$file ]; then
+			mv %_var_prefix/data/$file %confdir/$file ||:
 			chgrp %mm_group %confdir/$file ||:
 		fi
 	done
 # Change paths in Postfix config
 	if [ -f %_sysconfdir/postfix/main.cf ]; then
-		sed  -i -e 's,%_localstatedir/%name/etc/aliases,%confdir/aliases,g' \
-			-e 's,%_localstatedir/%name/etc/virtual-mailman,%confdir/virtual-mailman,g' \
+		sed  -i -e 's,%_var_prefix/etc/aliases,%confdir/aliases,g' \
+			-e 's,%_var_prefix/etc/virtual-mailman,%confdir/virtual-mailman,g' \
 			%_sysconfdir/postfix/main.cf ||:
 	fi
 # Move lockfiles and pidfile
-	for file in %_localstatedir/%name/locks/*; do
+	for file in %_var_prefix/locks/*; do
 		[ -f $file ] && mv $file %_lockdir/%name/ ||:
 	done
-	[ -f %_localstatedir/%name/data/master-qrunner.pid ] && \
-		mv -f %_localstatedir/%name/data/master-qrunner.pid %_var/run/%name/ ||:
+	[ -f %_var_prefix/data/master-qrunner.pid ] && \
+		mv -f %_var_prefix/data/master-qrunner.pid %_var/run/%name/ ||:
 fi
 # Restart mailman again with configs at the new place
 %post_service mailman
@@ -346,19 +323,18 @@ fi
 %dir %_var_prefix/lists
 %dir %_var_prefix/data
 %dir %attr(2771,root,%mm_group) %confdir
-%config(noreplace) %attr(0664,root,%mm_group) %confdir/mm_config.*
+%config(noreplace) %attr(0664,root,%mm_group) %confdir/mm_config.py
 %config(noreplace) %attr(0664,root,%mm_group) %confdir/aliases
 %config(noreplace) %attr(0664,root,%mm_group) %confdir/virtual-mailman
 %config(noreplace) %attr(0664,root,%mm_group) %confdir/*groups
-%ghost %attr(644,root,root) %config(missingok) %verify(not md5 mtime size) %confdir/*.cdb
+%attr(0644,root,%mm_group) %ghost %config(noreplace,missingok) %verify(not md5 mtime size) %confdir/*.cdb
+%attr(0644,root,%mm_group) %ghost %config(noreplace,missingok) %verify(not md5 mtime size) %confdir/mm_config.py[co]
+%attr(0644,%mm_user,%mm_group) %ghost %config(noreplace,missingok) %verify(not md5 mtime size) %_var_prefix/data/last_mailman_version
 %_var_prefix/logs
 %_var_prefix/qfiles
 %_logdir/%name
 %dir %_spooldir/%name
 %dir %_spooldir/%name/*
-
-%files apache
-%config(noreplace) %apache_modconfdir/%name.conf
 
 %files apache2
 %config(noreplace) %apache2_mods_start/%name.conf
@@ -373,6 +349,15 @@ fi
 %doc doc
 
 %changelog
+* Wed Feb 28 2018 Dmitry V. Levin <ldv@altlinux.org> 5:2.1.26-alt1
+- Updated to 2.1.26.
+- Relocated %%_libdir/mailman to %%_libexecdir/mailman.
+- Rewritten logrotate configuration.
+- Fixed nginx subpackage.
+
+* Wed Jul 26 2017 Anton Farygin <rider@altlinux.ru> 5:2.1.23-alt0.2.20160915
+- removed apache-1 support
+
 * Sat Sep 24 2016 L.A. Kostis <lakostis@altlinux.ru> 5:2.1.23-alt0.1.20160915
 - LP shapshot 20160916.
 - Security fixes:
@@ -725,7 +710,7 @@ fi
 - Update to 2.0beta2 to pick up security fixes.
 - Change Requires: python to list >= 1.5.2
 
-* Mon Nov  8 1999 Bernhard Rosenkr‰nzer <bero@redhat.com>
+* Mon Nov  8 1999 Bernhard Rosenkr√§nzer <bero@redhat.com>
 - 1.1
 
 * Tue Sep 14 1999 Preston Brown <pbrown@redhat.com>
