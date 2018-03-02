@@ -1,6 +1,6 @@
 Name:     github2spec
 # NOTE update version in github2spec
-Version:  1.4.2
+Version:  1.4.3
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from github using genspec
@@ -13,7 +13,7 @@ BuildArch: noarch
 
 BuildPrereq: rpm-build-ruby
 
-Requires: genspec >= 1.2.9
+Requires: genspec >= 1.2.15
 
 Source:   %name-%version.tar
 
@@ -34,6 +34,11 @@ install -Dm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri Mar 02 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.3-alt1
+- (ALT#34598) using empty strings instead of default values
+- (ALT#34597) requires to inappropriate version of genspec
+- (ALT#33934) show wrong version
+
 * Mon Jan 08 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.2-alt1
 - Use readline
 - Add owner parameter
