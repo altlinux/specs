@@ -4,7 +4,7 @@
 
 Name: sowing
 Version: 1.1.18
-Release: alt1.1
+Release: alt1.2
 
 Summary: The program development and maintenance environment
 License: Free
@@ -12,7 +12,7 @@ Group: Development/Tools
 
 Url: http://ftp.mcs.anl.gov/pub/sowing/
 Source: http://ftp.mcs.anl.gov/pub/sowing/sowing.tar.gz
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Patch: sowing-1.1.18-fix_brackets_for_perl5.26.patch
 
 Requires: %name-common = %version-%release
 
@@ -76,6 +76,7 @@ This package contains static libraries of Sowing.
 
 %prep
 %setup
+%patch -p2
 
 %build
 %add_optflags %optflags_shared
@@ -135,6 +136,9 @@ sed -i '1s|/sh|/bash|' %buildroot%_bindir/pstoxbm
 %_libdir/*.a
 
 %changelog
+* Fri Mar 02 2018 Grigory Ustinov <grenka@altlinux.org> 1.1.18-alt1.2
+- Add patch for fix build with perl 5.26
+
 * Mon Feb 15 2016 Michael Shigorin <mike@altlinux.org> 1.1.18-alt1.1
 - BOOTSTRAP: require ghostscript-utils conditionally (doc knob)
 - disable parallel build (at least lcc might choke)
