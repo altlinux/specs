@@ -1,6 +1,7 @@
+%define soname 21
 Summary: Command-line tools and library for transforming PDF files
 Name: qpdf
-Version: 7.1.1
+Version: 8.0.0
 Release: alt1
 License: Apache 2.0
 Group: System/Base
@@ -21,16 +22,16 @@ BuildRequires: automake
 BuildRequires: libtool
 BuildRequires: gcc-c++
 
-Requires: lib%name = %version-%release
+Requires: lib%name%soname = %EVR
 
-%package -n lib%name
+%package -n lib%name%soname
 Summary: QPDF library for transforming PDF files
 Group: System/Libraries
 
 %package -n lib%name-devel
 Summary: Development files for QPDF library
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name%soname = %EVR
 
 %package doc
 Summary: QPDF Manual
@@ -44,7 +45,7 @@ like pdf-to-pdf. It includes support for merging and splitting PDFs
 and to manipulate the list of pages in a PDF file. It is not a PDF viewer
 or a program capable of converting PDF into other formats.
 
-%description -n lib%name
+%description -n lib%name%soname
 QPDF is a C++ library that inspect and manipulate the structure of PDF files.
 It can encrypt and linearize files, expose the internals of a PDF file,
 and do many other operations useful to PDF developers.
@@ -80,9 +81,9 @@ QPDF Manual
 %_bindir/zlib-flate
 %_mandir/man1/*
 
-%files -n lib%name
+%files -n lib%name%soname
 %doc README.md TODO ChangeLog LICENSE.txt
-%_libdir/libqpdf*.so.*
+%_libdir/libqpdf*.so.%{soname}*
 
 %files -n lib%name-devel
 %doc examples/*.cc examples/*.c
@@ -94,6 +95,10 @@ QPDF Manual
 %doc doc/qpdf-manual.html doc/stylesheet.css
 
 %changelog
+* Fri Mar 02 2018 Anton Farygin <rider@altlinux.ru> 8.0.0-alt1
+- new version
+- library package renamed to match the shared libs policy
+
 * Mon Feb 26 2018 Anton Farygin <rider@altlinux.ru> 7.1.1-alt1
 - new version
 
