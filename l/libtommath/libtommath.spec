@@ -1,6 +1,6 @@
 Name: libtommath
-Version: 1.0.1
-Release: alt3
+Version: 1.0.1.0.97.gitg0bc7551
+Release: alt1
 
 Summary: A portable number theoretic multiple-precision integer library
 License: WTFPL
@@ -9,7 +9,6 @@ Group: System/Libraries
 Url: http://www.libtom.net/
 # https://github.com/libtom/libtommath.git
 Source: ltm-%version.tar
-Patch: libtommath-1.0.1-alt-e2k.patch
 
 BuildRequires: texlive-latex-recommended
 BuildRequires: ghostscript-utils libtiff-utils
@@ -49,7 +48,6 @@ using %name.
 
 %prep
 %setup
-%patch -p1
 
 # Fix pkgconfig path
 sed -i \
@@ -90,6 +88,11 @@ find %buildroot -name '*.h' -exec chmod 644 {} ';'
 %doc doc/bn.pdf doc/poster.pdf doc/tommath.pdf
 
 %changelog
+* Thu Mar 01 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.1.0.97.gitg0bc7551-alt1
+- Update version for lastest commit because:
+  1) There was an error in compilation of doc/booker.pl on e2k.
+  2) Upstream applied patch for e2k support.
+
 * Wed Feb 28 2018 Andrew Savchenko <bircoph@altlinux.org> 1.0.1-alt3
 - Fix e2k build properly: as was pointed by upstream, original
   patch is incorrect and will lead to data loss and int overflow.
