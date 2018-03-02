@@ -4,7 +4,7 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     6
-%define postgresql_subminor  7
+%define postgresql_subminor  8
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
@@ -800,6 +800,10 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Fri Mar 02 2018 Alexei Takaseev <taf@altlinux.org> 9.6.8-alt1
+- 9.6.8
+- Fix CVE-2018-1058
+
 * Wed Feb 07 2018 Alexei Takaseev <taf@altlinux.org> 9.6.7-alt1
 - 9.6.7
 
