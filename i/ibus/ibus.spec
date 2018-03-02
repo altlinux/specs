@@ -9,10 +9,11 @@
 %def_enable wayland
 %def_enable appindicator
 %def_disable emoji_dict
+%def_enable unicode_dict
 
 Name: ibus
-Version: 1.5.17
-Release: alt2
+Version: 1.5.18
+Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
 License: LGPLv2+
@@ -53,6 +54,7 @@ BuildRequires: gobject-introspection-devel
 BuildRequires: gnome-icon-theme-symbolic
 BuildRequires: libXi-devel
 BuildRequires: libnotify-devel
+%{?_enable_unicode_dict:BuildRequires: unicode-ucd}
 %{?_enable_python:BuildRequires: rpm-build-python python-module-pygobject3-devel}
 %{?_enable_gconf:BuildRequires: libGConf-devel}
 # required if autoreconf used
@@ -171,6 +173,7 @@ override some functions in GObject-Introspection.
     --enable-surrounding-text \
     --enable-introspection \
     %{?_disable_emoji_dict:--disable-emoji-dict} \
+    %{?_disable_unicode_dict:--disable-unicode-dict} \
     %{subst_enable appindicator}
 %make_build
 
@@ -270,6 +273,9 @@ fi
 %python_sitelibdir/gi/overrides/IBus.py*
 
 %changelog
+* Fri Mar 02 2018 Yuri N. Sedunov <aris@altlinux.org> 1.5.18-alt1
+- 1.5.18
+
 * Thu Oct 26 2017 Yuri N. Sedunov <aris@altlinux.org> 1.5.17-alt2
 - rebuild with _localstatedir=%%_var
 
