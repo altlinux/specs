@@ -1,7 +1,7 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ perl(Config/IniFiles.pm) perl(Data/Dumper/Concise.pm) perl(Date/Format.pm) perl(Date/Parse.pm) perl(Digest/SHA.pm) perl(Digest/SHA1.pm) perl(Encode.pm) perl(ExtUtils/MakeMaker.pm) perl(Fatal.pm) perl(File/Copy/Recursive.pm) perl(File/HomeDir.pm) perl(File/Which.pm) perl(HTML/FormatText.pm) perl(HTML/TreeBuilder.pm) perl(HTTP/Status.pm) perl(IO/String.pm) perl(IPC/System/Simple.pm) perl(LWP.pm) perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl(Locale/Maketext/Simple.pm) perl(Math/Trig.pm) perl(Pod/Man.pm) perl(Pod/Text.pm) perl(Pod/Usage.pm) perl(Spreadsheet/ParseExcel.pm) perl(Term/ANSIColor.pm) perl(Test/More.pm) perl(Text/Unidecode.pm) perl(Tk.pm) perl(Tk/Adjuster.pm) perl(Tk/BrowseEntry.pm) perl(Tk/Dialog.pm) perl(Tk/DialogBox.pm) perl(Tk/DirTree.pm) perl(Tk/Font.pm) perl(Tk/HList.pm)
-BuildRequires: perl(Tk/ItemStyle.pm) perl(Tk/NoteBook.pm) perl(Tk/PNG.pm) perl(Tk/Pane.pm) perl(Tk/ProgressBar.pm) perl(Tk/ROText.pm) perl(Tk/widgets.pm) perl(URI/Escape.pm) perl(Unicode/GCString.pm) perl(WWW/Mechanize.pm) perl(XML/Parser.pm) perl(XML/XPath.pm) perl(XML/XPath/XMLParser.pm) perl(YAML/Tiny.pm) perl(autodie.pm) perl(encoding.pm) perl(path_tre.pm) perl-devel texinfo
+BuildRequires: perl(Tk/ItemStyle.pm) perl(Tk/NoteBook.pm) perl(Tk/PNG.pm) perl(Tk/Pane.pm) perl(Tk/ProgressBar.pm) perl(Tk/ROText.pm) perl(Tk/widgets.pm) perl(URI/Escape.pm) perl(Unicode/GCString.pm) perl(WWW/Mechanize.pm) perl(XML/Parser.pm) perl(XML/XPath.pm) perl(XML/XPath/XMLParser.pm) perl(YAML/Tiny.pm) perl(autodie.pm) perl(encoding.pm) perl-devel texinfo
 # END SourceDeps(oneline)
 
 %filter_from_requires /^.bin.sh5$/d
@@ -83,7 +83,7 @@ BuildRequires: perl(Tk/ItemStyle.pm) perl(Tk/NoteBook.pm) perl(Tk/PNG.pm) perl(T
 
 Name:		texlive-texmf
 Version:	%relYear
-Release:	alt1_2
+Release:	alt2_2
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -132,8 +132,8 @@ Patch4: texlive-20160523-texmf-mageia-kpfix.patch
 
 # fix doc package deps:
 %global __provides_exclude %{?__provides_exclude:%__provides_exclude|}^pear\\(animals.php\\)$
-Source44: import.info
 Requires(post): tex-common
+Source44: import.info
 Source8000: texlive-20170524-texmf-dist-scripts-perl-526.patch
 Source8001: texlive-texmf-dist-scripts-system-PDF-Reuse.patch
 Source8003: texlive-fix-info-dir-sections.patch
@@ -167,7 +167,6 @@ TeX-related programs, macro packages, and fonts that are free software,
 including support for many languages around the world.
 
 %files
-%_rpmlibdir/texlive-5-config.filetrigger
 
 #-----------------------------------------------------------------------
 %package	-n texlive-collection-basic
@@ -695,6 +694,7 @@ should be sufficient for most users of TeX or TeX-related programs.
 # moved to corresponding packages
 %exclude %{texmfdistdir}/web2c/updmap-dist.cfg
 %exclude %{texmfdistdir}/web2c/updmap-fontsextra.cfg
+%_rpmlibdir/texlive-5-config.filetrigger
 # forein binaries
 %exclude %{texmfdistdir}/tlpkg/installer/wget*
 %exclude %{texmfdistdir}/tlpkg/installer/xz*
@@ -3033,13 +3033,6 @@ touch %{buildroot}%{texmflocaldir}/ls-R
 
 pushd %{buildroot}%{texmfdistdir}
 cp %{_sourcedir}/updmap-*.cfg web2c/
-
-# touching all ghosts; hack for rpm 4.0.4
-for rpm404_ghost in %{texmfdistdir}/ls-R %{texmflocaldir}/ls-R
-do
-    mkdir -p %buildroot`dirname "$rpm404_ghost"`
-    touch %buildroot"$rpm404_ghost"
-done
 mkdir -p %buildroot/%_rpmlibdir
 cat > %buildroot/%_rpmlibdir/texlive-5-config.filetrigger << 'EOF'
 #!/bin/sh
@@ -3064,6 +3057,13 @@ export TEXMFCACHE=%{texmfvardir}
 %{_bindir}/fmtutil-sys --all >> $LOGFILE 2>&1 ||:
 EOF
 chmod 755 %buildroot/%_rpmlibdir/texlive-5-config.filetrigger
+
+# touching all ghosts; hack for rpm 4.0.4
+for rpm404_ghost in %{texmfdistdir}/ls-R %{texmflocaldir}/ls-R
+do
+    mkdir -p %buildroot`dirname "$rpm404_ghost"`
+    touch %buildroot"$rpm404_ghost"
+done
 # verify-elf: ERROR: [...]/tlpkg/installer/wget/wget.i386-freebsd: ELF object for "noarch" architecture
 rm -rf %{buildroot}%{texmfdistdir}/tlpkg/installer/wget/*
 rm -rf %{buildroot}%{texmfdistdir}/tlpkg/installer/xz/*
@@ -3084,6 +3084,9 @@ rm -rf %buildroot%{texmfdistdir}/scripts/xetex/perl/lib
 
 
 %changelog
+* Fri Mar 02 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt2_2
+- updated filetrigger
+
 * Fri Mar 02 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt1_2
 - new version
 
