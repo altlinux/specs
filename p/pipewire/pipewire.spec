@@ -9,9 +9,10 @@
 %def_enable systemd
 %def_enable docs
 %def_enable man
+%def_disable jack
 
 Name: pipewire
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: Media Sharing Server
@@ -31,11 +32,11 @@ Requires: rtkit
 
 %define gst_ver 1.10
 
-BuildRequires: meson >= 0.35.0
+BuildRequires(pre): meson
 BuildRequires: libgio-devel libudev-devel libdbus-devel
 BuildRequires: libalsa-devel libv4l-devel
 BuildRequires: libavformat-devel libavcodec-devel libavfilter-devel
-BuildRequires: libjack-devel
+%{?_enable_jack:BuildRequires: libjack-devel}
 BuildRequires: libsbc-devel
 %if_enabled gstreamer
 BuildRequires: pkgconfig(gstreamer-%gst_api_ver) >= %gst_ver
@@ -118,7 +119,7 @@ This package contains command line utilities for the PipeWire media server.
 %_prefix/lib/systemd/user/pipewire.socket
 %endif
 %_man1dir/%name.1*
-%doc README
+%doc README NEWS
 
 %files libs
 %_libdir/lib%name-%api_ver.so.*
@@ -146,6 +147,9 @@ This package contains command line utilities for the PipeWire media server.
 %_man1dir/%name-cli.1*
 
 %changelog
+* Fri Mar 02 2018 Yuri N. Sedunov <aris@altlinux.org> 0.1.9-alt1
+- 0.1.9
+
 * Thu Jan 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.1.8-alt1
 - 0.1.8
 
