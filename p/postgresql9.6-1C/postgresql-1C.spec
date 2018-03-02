@@ -8,7 +8,7 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     6
-%define postgresql_subminor  7
+%define postgresql_subminor  8
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
@@ -52,9 +52,8 @@ Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
 Patch9: 0008-ALT-SeLinux-user-name.patch
 
 # 1C
-Patch100: 00001-1c_FULL_96-0.23.patch
-Patch101: 00001-1c_create_append_path.patch
-Patch102: 00002-online_analize.patch
+Patch100: 00001-1c_FULL_96.patch
+Patch102: 00002-online_analyze.patch
 Patch103: 00003-plantuner.patch
 Patch104: 00004-postgresql-1c-9.6.patch
 Patch105: 00005-exists_opt-2.patch
@@ -291,7 +290,6 @@ database.
 
 # 1C
 %patch100 -p1
-%patch101 -p1
 %patch102 -p1
 %patch103 -p1
 %patch104 -p1
@@ -578,6 +576,7 @@ fi
 %_libdir/pgsql/adminpack.so
 %_libdir/pgsql/auto_explain.so
 %_libdir/pgsql/autoinc.so
+%_libdir/pgsql/bloom.so
 %_libdir/pgsql/btree_gin.so
 %_libdir/pgsql/btree_gist.so
 %_libdir/pgsql/chkpass.so
@@ -598,9 +597,12 @@ fi
 %_libdir/pgsql/pageinspect.so
 %_libdir/pgsql/pg_buffercache.so
 %_libdir/pgsql/pg_freespacemap.so
+%_libdir/pgsql/pg_prewarm.so
 %_libdir/pgsql/pg_stat_statements.so
 %_libdir/pgsql/pg_trgm.so
+%_libdir/pgsql/pg_visibility.so
 %_libdir/pgsql/pgcrypto.so
+%_libdir/pgsql/postgres_fdw.so
 %_libdir/pgsql/pgrowlocks.so
 %_libdir/pgsql/pgstattuple.so
 %_libdir/pgsql/pgxml.so
@@ -609,8 +611,11 @@ fi
 %_libdir/pgsql/sslinfo.so
 %_libdir/pgsql/tablefunc.so
 %_libdir/pgsql/tcn.so
+%_libdir/pgsql/test_decoding.so
 %_libdir/pgsql/timetravel.so
 %_libdir/pgsql/tsearch2.so
+%_libdir/pgsql/tsm_system_rows.so
+%_libdir/pgsql/tsm_system_time.so
 %_libdir/pgsql/passwordcheck.so
 %_libdir/pgsql/unaccent.so
 %_libdir/pgsql/auth_delay.so
@@ -754,13 +759,25 @@ fi
 %files -f plperl-%postgresql_major.%postgresql_minor.lang perl
 %dir %_libdir/%PGSQL
 %_libdir/%PGSQL/plperl.so
+%_libdir/%PGSQL/hstore_plperl.so
 
 %files -f plpython-%postgresql_major.%postgresql_minor.lang python
 %dir %docdir
 %dir %_libdir/%PGSQL
 %_libdir/%PGSQL/plpython2.so
+%_libdir/%PGSQL/hstore_plpython2.so
+%_libdir/%PGSQL/ltree_plpython2.so
 
 %changelog
+* Wed Feb 28 2018 Alexei Takaseev <taf@altlinux.org> 9.6.8-alt1
+- 9.6.8
+- Re-applay patches from 1C:
+    * 00001-1c_FULL_96.patch
+    * 00004-postgresql-1c-9.6.patch
+    * 00005-exists_opt-2.patch
+- Remove path 00001-1c_create_append_path.patch (fixed in 00001-1c_FULL_96.patch)
+- Fix CVE-2018-1058
+
 * Wed Feb 07 2018 Alexei Takaseev <taf@altlinux.org> 9.6.7-alt1
 - 9.6.7
 - Add patches:
