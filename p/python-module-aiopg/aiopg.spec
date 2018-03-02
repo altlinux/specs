@@ -4,44 +4,41 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.1
-Release: alt1.git20150203.1.1
+Version: 0.13.2
+Release: alt1
 Summary: aiopg is a library for accessing a PostgreSQL database from the asyncio
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/aiopg/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+BuildArch: noarch
 
 # https://github.com/aio-libs/aiopg.git
 Source: %name-%version.tar
-BuildArch: noarch
+Patch1: %name-%version-alt.patch
 
 %if_with python2
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-asyncio python-module-psycopg2
-#BuildPreReq: python-module-SQLAlchemy
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-psycopg2
 %endif
-#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-asyncio python3-module-psycopg2
-#BuildPreReq: python3-module-SQLAlchemy
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-psycopg2
 %endif
+
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-sphinx-devel python3-module-sphinxcontrib-asyncio
 
 %py_provides %oname
 %py_requires asyncio psycopg2 sqlalchemy
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-module-psycopg2 python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 aiopg is a library for accessing a PostgreSQL database from the asyncio
 (PEP-3156/tulip) framework. It wraps asynchronous features of the
 Psycopg database driver.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: aiopg is a library for accessing a PostgreSQL database from the asyncio
 Group: Development/Python3
@@ -52,15 +49,17 @@ Group: Development/Python3
 aiopg is a library for accessing a PostgreSQL database from the asyncio
 (PEP-3156/tulip) framework. It wraps asynchronous features of the
 Psycopg database driver.
+%endif
 
 %prep
 %setup
+%patch1 -p1
 
 %if_with python3
 cp -fR . ../python3
 %endif
 
-%prepare_sphinx .
+%prepare_sphinx3 .
 ln -s ../objects.inv docs/
 
 %build
@@ -85,19 +84,17 @@ pushd ../python3
 popd
 %endif
 
-%make -C docs html
+%make -C docs html SPHINXBUILD=py3_sphinx-build
 
 rm -f requirements.txt
 
 %check
 %if_with python2
 python setup.py test
-#python runtests.py -v
 %endif
 %if_with python3
 pushd ../python3
 python3 setup.py test
-#python3 runtests.py -v
 popd
 %endif
 
@@ -105,17 +102,18 @@ popd
 %files
 %doc *.txt *.rst examples docs/_build/html
 %python_sitelibdir/*
-%exclude %python_sitelibdir/tests
 %endif
 
 %if_with python3
 %files -n python3-module-%oname
 %doc *.txt *.rst examples docs/_build/html
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/tests
 %endif
 
 %changelog
+* Fri Mar 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.13.2-alt1
+- Updated to upstream version 0.13.2.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.1-alt1.git20150203.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
