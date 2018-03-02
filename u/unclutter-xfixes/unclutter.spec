@@ -1,5 +1,5 @@
 Name: unclutter-xfixes
-Version: 1.0
+Version: 1.3
 Release: alt1
 
 Summary: Hides X11 cursor when idle
@@ -38,5 +38,8 @@ make DESTDIR="$RPM_BUILD_ROOT" install
 %_man1dir/*
 
 %changelog
+* Fri Mar 02 2018 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1
+- new version
+
 * Thu Dec 31 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1
 - Initial build for ALT Linux Sisyphus (closes: #31678)
