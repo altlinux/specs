@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/desktop-file-validate /usr/bin/gtkdocize gcc-c++ glib2-d
 %define _localstatedir %{_var}
 Name:		imsettings
 Version:	1.7.3
-Release:	alt1_2
+Release:	alt1_2.1
 License:	LGPLv2+
 URL:		https://tagoh.bitbucket.org/%{name}/
 BuildRequires:	desktop-file-utils
@@ -139,7 +139,7 @@ settings and applies the changes so they take effect
 immediately without any need to restart applications
 or the desktop.
 
-This package contains a module to get this working on Xfce.  
+This package contains a module to get this working on Xfce.
 
 %package	lxde
 Summary:	LXDE support on imsettings
@@ -319,14 +319,19 @@ EOF
 %doc AUTHORS ChangeLog NEWS README
 %{_libdir}/imsettings/libimsettings-mate-gsettings.so
 
+%ifnarch e2k
+# because cinnamon isn't supported on e2k yet
 %files cinnamon
 %doc --no-dereference COPYING
 %doc AUTHORS ChangeLog NEWS README
 %{_libdir}/imsettings/libimsettings-cinnamon-gsettings.so
 %endif
-
+%endif
 
 %changelog
+* Thu Mar 01 2018 Grigory Ustinov <grenka@altlinux.org> 1.7.3-alt1_2.1
+- NMU: Disable cinnamon section for e2k.
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt1_2
 - update to new release by fcimport
 
