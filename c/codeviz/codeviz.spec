@@ -1,6 +1,6 @@
 Name: codeviz
-Version: 1.0.11
-Release: alt1.qa1.1
+Version: 1.0.12
+Release: alt1
 
 Summary: A call graph generation utility for C/C++
 
@@ -11,7 +11,7 @@ Group: Development/Other
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://www.skynet.ie/~mel/projects/codeviz/%name-%version.tar.bz2
-#Patch0: patch.new-options
+Patch: %name-%version-fix_brackets_for_perl5.26.patch
 
 BuildArch: noarch
 
@@ -28,6 +28,7 @@ C++ are currently supported.
 
 %prep
 %setup
+%patch -p2
 
 %build
 %install
@@ -45,6 +46,10 @@ find $RPM_BUILD_ROOT \( -name '*.swp' -o -name '#*#' -o -name '*~' \) -print -de
 %doc CHANGELOG README compilers graphs
 
 %changelog
+* Fri Mar 02 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.12-alt1
+- Build new version.
+- Add patch for building with perl 5.26.
+
 * Fri Nov 05 2010 Vladimir Lettiev <crux@altlinux.ru> 1.0.11-alt1.qa1.1
 - rebuilt with perl 5.12
 
