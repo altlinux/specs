@@ -1,20 +1,23 @@
-%define _name python-dbusmock
+%define modname dbusmock
+%define _name python-%modname
 %def_enable check
 
 Name: python-module-dbusmock
-Version: 0.17.1
+Version: 0.17.2
 Release: alt1
 
 Summary: mock D-Bus objects for tests
 License: LGPLv3
 Group: Development/Python
 Url: https://pypi.python.org/pypi/%_name
+# https://github.com/martinpitt/python-dbusmock
 
-Source: https://launchpad.net/%_name/trunk/%version/+download/%_name-%version.tar.gz
+Source: https://pypi.io/packages/source/p/%_name/%_name-%version.tar.gz
+#Source: https://launchpad.net/%_name/trunk/%version/+download/%_name-%version.tar.gz
 
 BuildArch: noarch
 
-%setup_python_module dbusmock
+%setup_python_module %modname
 
 Requires: dbus
 
@@ -38,11 +41,11 @@ of the real services to what you expect in your tests.
 
 See %_docdir/%name-%version/README.rst for more information.
 
-%package -n python3-module-dbusmock
+%package -n python3-module-%modname
 Summary: mock D-Bus objects for tests (python3 version)
 Group: Development/Python3
 
-%description -n python3-module-dbusmock
+%description -n python3-module-%modname
 With this program/Python library you can easily create mock objects on
 D-Bus. This is useful for writing tests for software which talks to D-Bus
 services such as upower, systemd, ConsoleKit, gnome-session or others,
@@ -77,14 +80,17 @@ popd
 %endif
 
 %files
-%python_sitelibdir_noarch/dbusmock/
+%python_sitelibdir_noarch/%modname/
 %doc NEWS README.* PKG-INFO
 
-%files -n python3-module-dbusmock
-%python3_sitelibdir_noarch/dbusmock/
+%files -n python3-module-%modname
+%python3_sitelibdir_noarch/%modname/
 
 
 %changelog
+* Fri Mar 02 2018 Yuri N. Sedunov <aris@altlinux.org> 0.17.2-alt1
+- 0.17.2
+
 * Mon Feb 26 2018 Yuri N. Sedunov <aris@altlinux.org> 0.17.1-alt1
 - 0.17.1
 
