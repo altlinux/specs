@@ -1,7 +1,7 @@
 %def_disable freerdp
 
 Name: vlc
-Version: 3.0.0.1
+Version: 3.0.1
 Release: alt1
 
 Summary: VLC media player
@@ -15,7 +15,7 @@ BuildRequires: gcc-c++
 BuildRequires: freetype2-devel glib2-devel flex
 BuildRequires: libdvdcss-devel libavcodec-devel libnotify-devel
 BuildRequires: libavutil-devel libpostproc-devel libavformat-devel
-BuildRequires: libswscale-devel libmpeg2-devel libebml-devel
+BuildRequires: libswscale-devel libmpeg2-devel libebml-devel >= 1.3.5-alt1
 BuildRequires: libmatroska-devel libcddb-devel liblive-devel aalib-devel
 BuildRequires: libtwolame-devel libssh2-devel liba52-devel libalsa-devel
 BuildRequires: libcaca-devel libcdio-devel libdvbpsi-devel libdvdnav-devel
@@ -743,7 +743,7 @@ mkdir -p %buildroot%_libexecdir/rpm
 cat << __EOF__ > %buildroot%_libexecdir/rpm/vlc.filetrigger
 #!/bin/sh -e
 grep -qs '^%vlc_plugindir/.*\.so\$' || exit 0
-%vlc_libdir/vlc-cache-gen %vlc_plugindir
+%vlc_libdir/vlc-cache-gen %vlc_plugindir ||:
 __EOF__
 
 chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
@@ -1369,6 +1369,13 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Fri Mar 02 2018 Anton Farygin <rider@altlinux.ru> 3.0.1-alt1
+- 3.0.1
+
+* Mon Feb 26 2018 Anton Farygin <rider@altlinux.ru> 3.0.0.2-alt1
+- 3.0.0.2
+- added ignore errors in filetrigger (closes: #34588)
+
 * Fri Feb 09 2018 Anton Farygin <rider@altlinux.ru> 3.0.0.1-alt1
 - 3.0.0.1 release
 
