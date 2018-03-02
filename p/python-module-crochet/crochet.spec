@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.9.0
-Release: alt1
+Release: alt2
 Summary: Use Twisted anywhere!
 License: MIT
 Group: Development/Python
@@ -18,11 +18,11 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv
-BuildRequires: python-module-setuptools-tests python-module-twisted-core-test python-module-twisted-logger python-module-wrapt
+BuildRequires: python-module-setuptools python-module-twisted-core-test python-module-twisted-logger python-module-wrapt
 BuildRequires: python-module-service-identity
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-tests python3-module-twisted-core-test python3-module-wrapt
+BuildRequires: python3-module-setuptools python3-module-twisted-core-test python3-module-wrapt
 BuildRequires: python3-module-service-identity
 %endif
 
@@ -193,6 +193,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.0-alt2
+- Updated build dependencies.
+
 * Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.0-alt1
 - Updated to upstream version.
 - Fixed version in egg-info.
