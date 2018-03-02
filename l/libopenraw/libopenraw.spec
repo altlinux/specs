@@ -3,7 +3,7 @@
 
 Name: libopenraw
 Version: 0.1.2
-Release: alt1
+Release: alt1.1
 
 Summary: Decode camera RAW files
 Group: System/Libraries
@@ -49,8 +49,11 @@ applications that use %name-gnome.
 
 %prep
 %setup
+# fix boost.m4 for gcc < 5, lcc < 1.23
+sed -i~ 's|\^\(boost-lib-version\)|\1|' m4/boost.m4
 
 %build
+%autoreconf
 %configure --disable-static
 %make_build
 
@@ -81,6 +84,9 @@ applications that use %name-gnome.
 %_pkgconfigdir/%name-gnome-%api_ver.pc
 
 %changelog
+* Fri Mar 02 2018 Yuri N. Sedunov <aris@altlinux.org> 0.1.2-alt1.1
+- fixed boost.m4 for e2k
+
 * Mon May 29 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.2-alt1
 - 0.1.2
 
