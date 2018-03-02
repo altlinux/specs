@@ -1,8 +1,15 @@
 %define ver_major 0.26
 %define api_ver 1.0
 
+%def_enable gtk_doc
+%def_enable introspection
+%def_enable vala
+%def_enable python
+%def_enable ssh
+%def_enable check
+
 Name: libgit2-glib
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: Git library for GLib
@@ -16,11 +23,13 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define libgit2_ver 0.26.0
 %define glib_ver 2.44
 
-BuildRequires: gnome-common gtk-doc
+BuildRequires(pre): meson
 BuildRequires: libgio-devel >= %glib_ver libgit2-devel >= %libgit2_ver
-BuildRequires: libssh2-devel gobject-introspection-devel
-BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel
-BuildRequires: vala-tools
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_python:BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel}
+%{?_enable_ssh:BuildRequires: libssh2-devel}
 
 %description
 Libgit2-glib is a glib wrapper library around the libgit2 git access library.
@@ -73,36 +82,54 @@ This package contains documentation needed for developing Libgit2-glib applicati
 %setup
 
 %build
-%autoreconf
-%configure --disable-static \
-	--enable-gtk-doc
-%make_build
+%meson \
+	%{?_enable_gtk_doc:-Dgtk_doc=true} \
+	%{?_disable_introspection:-Dintrospection=false} \
+	%{?_disable_vala:-Dvapi=false} \
+	%{?_disable_python:-Dpython=false} \
+	%{?_disable_ssh:-Dssh=false}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files
 %_libdir/%name-%api_ver.so.*
-%python3_sitelibdir/gi/overrides/*
+%{?_enable_python:%python3_sitelibdir_noarch/gi/overrides/*}
 %doc AUTHORS COPYING NEWS
 
 %files devel
 %_includedir/%name-%api_ver/
 %_libdir/%name-%api_ver.so
-%_libdir/pkgconfig/%name-%api_ver.pc
+%_pkgconfigdir/%name-%api_ver.pc
+%if_enabled vala
 %_vapidir/ggit-%api_ver.vapi
 %_vapidir/ggit-%api_ver.deps
+%_vapidir/%name-%api_ver.vapi
+%_vapidir/%name-%api_ver.deps
+%endif
 
+%if_enabled introspection
 %files gir
 %_typelibdir/Ggit-%api_ver.typelib
 
 %files gir-devel
 %_girdir/Ggit-%api_ver.gir
+%endif
 
+%if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/*
+%_datadir/gtk-doc/html/*
+%endif
 
 %changelog
+* Fri Mar 02 2018 Yuri N. Sedunov <aris@altlinux.org> 0.26.4-alt1
+- 0.26.4
+
 * Thu Nov 30 2017 Yuri N. Sedunov <aris@altlinux.org> 0.26.2-alt1
 - 0.26.2
 
