@@ -2,7 +2,7 @@
 
 Name: dict-web1913
 Version: 1.4_0.47pd
-Release: alt2
+Release: alt2.1
 Epoch: 1
 
 Summary: Webster dictionary in dict format
@@ -16,7 +16,7 @@ Patch: debian-webster.patch.bz2
 
 BuildArchitectures: noarch
 # Automatically added by buildreq on Sun Oct 19 2003
-BuildRequires: dict-tools flex libltdl tetex-core tetex-dvips tetex-latex transfig
+BuildRequires: dict-tools flex libltdl texlive-collection-basic texlive-collection-basic texlive-collection-latexrecommended transfig
 BuildRequires: dict-tools
 PreReq: dictd
 
@@ -60,6 +60,9 @@ export LANG=C
 %doc rpmdoc/*
 
 %changelog
+* Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.4_0.47pd-alt2.1
+- NMU: rebuild with texlive instead of tetex
+
 * Wed Feb 04 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.4_0.47pd-alt2
 - removed post/un in favor of filetrigger
 
