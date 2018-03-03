@@ -1,6 +1,6 @@
 Name: gambit
 Version: 4.7.7
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Gambit-C Scheme programming system
 License: Apache-2.0
@@ -20,7 +20,7 @@ BuildRequires: gambit >= %bootstrap_version
 %endif
 
 # Automatically added by buildreq on Wed Oct 08 2008
-BuildRequires: emacs-leim emacs-nox libX11-locales libncurses-devel /usr/bin/texi2html /usr/bin/texi2dvi /usr/bin/pdf2ps /usr/bin/gs perl(Encode.pm) perl(Unicode/Normalize.pm) tetex-latex
+BuildRequires: emacs-leim emacs-nox libX11-locales libncurses-devel texi2html texi2dvi /usr/bin/pdf2ps /usr/bin/gs perl(Encode.pm) perl(Unicode/Normalize.pm) texlive-collection-latexrecommended
 
 BuildPreReq: alternatives
 # explicitly added texinfo for info files
@@ -168,6 +168,9 @@ cd %name-%version
 %_infodir/*.info*
 
 %changelog
+* Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 4.7.7-alt1.1.1
+- NMU: rebuild with TeXLive instead of TeTeX
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 4.7.7-alt1.1
 - NMU: added BR: texinfo
 
