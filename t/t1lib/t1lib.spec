@@ -1,6 +1,6 @@
 Name: t1lib
 Version: 5.1.2
-Release: alt5
+Release: alt5.1
 
 Summary: Type 1 font rasterizer
 License: LGPL
@@ -19,7 +19,7 @@ Patch4: t1lib-5.1.2-deb-alt-fixes.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sat May 10 2008
-BuildRequires: imake libXaw-devel libXpm-devel tetex-context tetex-latex xorg-cf-files libXext-devel
+BuildRequires: imake libXaw-devel libXpm-devel texlive-context texlive-collection-latexrecommended xorg-cf-files libXext-devel
 BuildPreReq: libSM-devel libXmu-devel
 
 %def_disable static
@@ -131,6 +131,9 @@ install -pm644 Changes README.t* doc/t1lib_doc.pdf.bz2 %buildroot%docdir/
 # - merge type1afm.1 manpage from debian patch
 
 %changelog
+* Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 5.1.2-alt5.1
+- NMU: rebuild with TeXLive instead of TeTeX
+
 * Thu Jan 19 2012 Michael Shigorin <mike@altlinux.org> 5.1.2-alt5
 - drop RPATH
 - minor spec cleanup
