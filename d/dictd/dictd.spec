@@ -1,7 +1,7 @@
 Name: dictd
 Version: 1.12.1
-Release: alt4
-Serial: 1
+Release: alt4.1
+Epoch: 1
 
 Url: http://www.dict.org/
 License: GPL
@@ -29,7 +29,7 @@ Summary(ru_RU.UTF-8): Сервер словарей, обслуживающий 
 Group: System/Servers
 
 # Automatically added by buildreq on Thu Sep 22 2005
-BuildRequires: flex groff-base tetex-core tetex-dvips tetex-latex transfig zlib-devel
+BuildRequires: flex groff-base texlive-collection-basic texlive-collection-basic texlive-collection-latexrecommended transfig zlib-devel
 BuildRequires: libnatspec-devel >= 0.2.3
 BuildRequires: libmaa-devel
 
@@ -215,6 +215,9 @@ fi
 %_man1dir/colorit.1*
 
 %changelog
+* Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.12.1-alt4.1
+- NMU: rebuild with TeXLive instead of TeTeX
+
 * Mon Jan 01 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.12.1-alt4
 - NMU: built actual dictd 1.12.1
 
