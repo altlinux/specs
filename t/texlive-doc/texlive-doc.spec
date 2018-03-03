@@ -1,280 +1,191 @@
-Name: texlive-doc
-Version: 2008.0
-Release: alt0.10
-Packager: Grigory Batalov <bga@altlinux.ru>
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 
-Summary: TeX Live documentation
-License: Distributable
-Group: Publishing
-Url: http://tug.org/texlive/
+%define enable_asymptote	0
+%define enable_xindy		1
 
-Source0: %name-texmf-%version-%release.tar
-Source1: %name-texmf-doc-%version-%release.tar
-Source2: %name-alt-%version.tar
+%define with_system_dialog	1
+%define with_system_lcdf	0
+%define with_system_poppler	0
+%define with_system_psutils	1
+%define with_system_t1lib	1
+%define with_system_tex4ht	0
+%define with_system_teckit	0
 
-BuildArch: noarch
+%define texmfbindir		%{_bindir}
+%define texmfdir		%{_datadir}/texmf
+%define texmfdistdir		%{_datadir}/texmf-dist
+%define texmflocaldir		%{_datadir}/texmf-local
+%define texmfextradir		%{_datadir}/texmf-extra
+%define texmffontsdir		%{_datadir}/texmf-fonts
+%define texmfprojectdir	%{_datadir}/texmf-project
+%define texmfvardir		%{_localstatedir}/lib/texmf
+%define texmfconfdir		%{_sysconfdir}/texmf
 
-BuildRequires: tex-common texlive-common
-BuildRequires: perl-SGMLSpm
-BuildRequires: less vim-console rpm-utils automake autoconf
+%define relYear 2017
+%global tl_version %relYear
+%global mga_tl_timestamp 20170524
 
-Requires: texlive-base-bin, texlive-doc-base
+Name:		texlive-doc
+Version:	%relYear
+Release:	alt1_2
+#Summary:	The TeX formatting system
+#Group:		Publishing
+License:	http://www.tug.org/texlive/LICENSE.TL
+URL:		http://tug.org/texlive/
+Source0:	ftp://tug.org/historic/systems/texlive/%{relYear}/texlive-%{mga_tl_timestamp}-texmf-doc.tar.xz
 
-%set_compress_method none
+BuildArch:	noarch
+AutoReqProv: no
 
-# don't check documentation and sources
-%add_findreq_skiplist %_datadir/texmf/doc/*
-%add_findreq_skiplist %_datadir/texmf-texlive/doc/*
-%add_findreq_skiplist %_datadir/texmf/source/*
-%add_findreq_skiplist %_datadir/texmf-texlive/source/*
+#-----------------------------------------------------------------------
+#add_cleanup_skiplist for safety if cleanup is enabled
+%set_cleanup_method none
+%add_cleanup_skiplist %{texmfdistdir}/doc/fonts/cmcyr/coding.bak
 
-%description
-TeX Live documentation
+#-----------------------------------------------------------------------
 
-%package -n texlive-doc-base
-Group: Publishing
-Summary: TeX Live documentation
 
-%description -n texlive-doc-base
-(none)
+#package	-n texlive-doc
+Summary:	Tex Live documentation
+Group:		Documentation
+Requires:	texlive-texmf = %{version}
+Provides: texlive-doc-base = %{tl_version}
+Conflicts: texlive-doc-base < 2009
+Obsoletes: texlive-doc-base < 2009
+Provides: texlive-doc-bg = %{tl_version}
+Conflicts: texlive-doc-bg < 2009
+Obsoletes: texlive-doc-bg < 2009
+Provides: texlive-doc-cs+sk = %{tl_version}
+Conflicts: texlive-doc-cs+sk < 2009
+Obsoletes: texlive-doc-cs+sk < 2009
+Provides: texlive-doc-de = %{tl_version}
+Conflicts: texlive-doc-de < 2009
+Obsoletes: texlive-doc-de < 2009
+Provides: texlive-doc-el = %{tl_version}
+Conflicts: texlive-doc-el < 2009
+Obsoletes: texlive-doc-el < 2009
+Provides: texlive-doc-en = %{tl_version}
+Conflicts: texlive-doc-en < 2009
+Obsoletes: texlive-doc-en < 2009
+Provides: texlive-doc-es = %{tl_version}
+Conflicts: texlive-doc-es < 2009
+Obsoletes: texlive-doc-es < 2009
+Provides: texlive-doc-fi = %{tl_version}
+Conflicts: texlive-doc-fi < 2009
+Obsoletes: texlive-doc-fi < 2009
+Provides: texlive-doc-fr = %{tl_version}
+Conflicts: texlive-doc-fr < 2009
+Obsoletes: texlive-doc-fr < 2009
+Provides: texlive-doc-it = %{tl_version}
+Conflicts: texlive-doc-it < 2009
+Obsoletes: texlive-doc-it < 2009
+Provides: texlive-doc-ja = %{tl_version}
+Conflicts: texlive-doc-ja < 2009
+Obsoletes: texlive-doc-ja < 2009
+Provides: texlive-doc-ko = %{tl_version}
+Conflicts: texlive-doc-ko < 2009
+Obsoletes: texlive-doc-ko < 2009
+Provides: texlive-doc-mn = %{tl_version}
+Conflicts: texlive-doc-mn < 2009
+Obsoletes: texlive-doc-mn < 2009
+Provides: texlive-doc-nl = %{tl_version}
+Conflicts: texlive-doc-nl < 2009
+Obsoletes: texlive-doc-nl < 2009
+Provides: texlive-doc-pl = %{tl_version}
+Conflicts: texlive-doc-pl < 2009
+Obsoletes: texlive-doc-pl < 2009
+Provides: texlive-doc-pt = %{tl_version}
+Conflicts: texlive-doc-pt < 2009
+Obsoletes: texlive-doc-pt < 2009
+Provides: texlive-doc-ru = %{tl_version}
+Conflicts: texlive-doc-ru < 2009
+Obsoletes: texlive-doc-ru < 2009
+Provides: texlive-doc-sl = %{tl_version}
+Conflicts: texlive-doc-sl < 2009
+Obsoletes: texlive-doc-sl < 2009
+Provides: texlive-doc-th = %{tl_version}
+Conflicts: texlive-doc-th < 2009
+Obsoletes: texlive-doc-th < 2009
+Provides: texlive-doc-tr = %{tl_version}
+Conflicts: texlive-doc-tr < 2009
+Obsoletes: texlive-doc-tr < 2009
+Provides: texlive-doc-uk = %{tl_version}
+Conflicts: texlive-doc-uk < 2009
+Obsoletes: texlive-doc-uk < 2009
+Provides: texlive-doc-vi = %{tl_version}
+Conflicts: texlive-doc-vi < 2009
+Obsoletes: texlive-doc-vi < 2009
+Provides: texlive-doc-zh = %{tl_version}
+Conflicts: texlive-doc-zh < 2009
+Obsoletes: texlive-doc-zh < 2009
 
-%package -n texlive-doc-bg
-Group: Publishing
-Summary: Bulgarian documentation
-Requires: texlive-doc-base
+%description	-n texlive-doc
+TeX Live is an easy way to get up and running with the TeX document
+production system. It provides a comprehensive TeX system. It includes
+all the major TeX-related programs, macro packages, and fonts that are
+free software, including support for many languages around the world.
 
-%description -n texlive-doc-bg
-(none)
+%files		-n texlive-doc
+#texmfdistdir/doc/*
+%exclude %{texmfdistdir}/doc/tetex
+%if %{enable_asymptote}
+%exclude %{texmfdistdir}/doc/asymptote
+%endif
+%if %{enable_xindy}
+%exclude %{texmfdistdir}/doc/xindy
+%endif
+%{texmfdistdir}/doc
 
-%package -n texlive-doc-zh
-Group: Publishing
-Summary: Chinese documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-zh
-(none)
-
-%package -n texlive-doc-cs+sk
-Group: Publishing
-Summary: Czechslovak documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-cs+sk
-(none)
-
-%package -n texlive-doc-nl
-Group: Publishing
-Summary: Dutch documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-nl
-(none)
-
-%package -n texlive-doc-en
-Group: Publishing
-Summary: English documentation
-Requires: texlive-doc-base
-# file conflicts
-Conflicts: tetex-core
-
-%description -n texlive-doc-en
-(none)
-
-%package -n texlive-doc-fi
-Group: Publishing
-Summary: Finnish documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-fi
-(none)
-
-%package -n texlive-doc-fr
-Group: Publishing
-Summary: French documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-fr
-(none)
-
-%package -n texlive-doc-de
-Group: Publishing
-Summary: German documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-de
-(none)
-
-%package -n texlive-doc-el
-Group: Publishing
-Summary: Greek documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-el
-(none)
-
-%package -n texlive-doc-it
-Group: Publishing
-Summary: Italian documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-it
-(none)
-
-%package -n texlive-doc-ja
-Group: Publishing
-Summary: Japanese documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-ja
-(none)
-
-%package -n texlive-doc-ko
-Group: Publishing
-Summary: Korean documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-ko
-(none)
-
-%package -n texlive-doc-mn
-Group: Publishing
-Summary: Mongolian documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-mn
-(none)
-
-%package -n texlive-doc-pl
-Group: Publishing
-Summary: Polish documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-pl
-(none)
-
-%package -n texlive-doc-pt
-Group: Publishing
-Summary: Portuguese documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-pt
-(none)
-
-%package -n texlive-doc-ru
-Group: Publishing
-Summary: Russian documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-ru
-(none)
-
-%package -n texlive-doc-sl
-Group: Publishing
-Summary: Slovenian documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-sl
-(none)
-
-%package -n texlive-doc-es
-Group: Publishing
-Summary: Spanish documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-es
-(none)
-
-%package -n texlive-doc-th
-Group: Publishing
-Summary: Thai documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-th
-(none)
-
-%package -n texlive-doc-tr
-Group: Publishing
-Summary: Turkish documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-tr
-(none)
-
-%package -n texlive-doc-uk
-Group: Publishing
-Summary: Ukrainian documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-uk
-(none)
-
-%package -n texlive-doc-vi
-Group: Publishing
-Summary: Vietnamese documentation
-Requires: texlive-doc-base
-
-%description -n texlive-doc-vi
-(none)
+#-----------------------------------------------------------------------
 
 %prep
-%setup -c -T -a2
+%setup -q -n texlive-%{mga_tl_timestamp}-texmf-doc
+#remove source, as we don't need it and it saves some space
+rm -rf texmf-dist/source
 
+#-----------------------------------------------------------------------
+%build
+
+#-----------------------------------------------------------------------
 %install
-mkdir -p %buildroot/%_datadir
-tar xf %SOURCE0 -C %buildroot/%_datadir/
-tar xf %SOURCE1 -C %buildroot/%_datadir/
+mkdir -p %{buildroot}%{texmfdistdir}
+cp -lfar texmf-dist/* %{buildroot}%{texmfdistdir}
 
-mkdir -p %buildroot/%_datadir/texmf/doc
-cd %buildroot/%_datadir/texmf-doc/
-tar cf - . | tar xf - -C %buildroot/%_datadir/texmf/
+pushd %{buildroot}%{texmfdistdir}
+%if !%{enable_asymptote}
+    rm -fr asymptote doc/asymptote doc/info/asy* tex/latex/asymptote
+%endif
+%if !%{enable_xindy}
+    rm -fr xindy doc/xindy scripts/xindy
+%endif
+    find doc/man \( -name Makefile -o -name \*.pdf \) -exec rm -f {} \;
+%if %{with_system_psutils}
+    rm -f doc/man/man1/{epsffit,extractres,fixdlsrps,fixfmps,fixmacps,fixpsditps,fixpspps,fixscribeps,fixtpps,fixwfwps,fixwpps,fixwwps,getafm,includeres,psbook,psmerge,psnup,psresize,psselect,pstops}.1
+%endif
 
-%files -n texlive-doc-base -f alt-linux/texlive-doc-base.files
+popd
 
-%files -n texlive-doc-bg -f alt-linux/texlive-doc-bg.files
+pushd %{buildroot}%{texmfdistdir}
+%if %{with_system_tex4ht}
+    rm -fr tex4ht
+%endif
+    rm -f ls-R README
+    # .in files in documentation confuse find-provides
+    rm -f doc/bibtex/urlbst/*.in
+popd
 
-%files -n texlive-doc-zh -f alt-linux/texlive-doc-zh.files
+rm -rf %{buildroot}%{texmfdistdir}/man
+rm -rf %{buildroot}%{texmfdistdir}/info
 
-%files -n texlive-doc-cs+sk -f alt-linux/texlive-doc-cs+sk.files
 
-%files -n texlive-doc-nl -f alt-linux/texlive-doc-nl.files
+#-----------------------------------------------------------------------
 
-%files -n texlive-doc-en -f alt-linux/texlive-doc-en.files
-
-%files -n texlive-doc-fi -f alt-linux/texlive-doc-fi.files
-
-%files -n texlive-doc-fr -f alt-linux/texlive-doc-fr.files
-
-%files -n texlive-doc-de -f alt-linux/texlive-doc-de.files
-
-%files -n texlive-doc-el -f alt-linux/texlive-doc-el.files
-
-%files -n texlive-doc-it -f alt-linux/texlive-doc-it.files
-
-%files -n texlive-doc-ja -f alt-linux/texlive-doc-ja.files
-
-%files -n texlive-doc-ko -f alt-linux/texlive-doc-ko.files
-
-%files -n texlive-doc-mn -f alt-linux/texlive-doc-mn.files
-
-%files -n texlive-doc-pl -f alt-linux/texlive-doc-pl.files
-
-%files -n texlive-doc-pt -f alt-linux/texlive-doc-pt.files
-
-%files -n texlive-doc-ru -f alt-linux/texlive-doc-ru.files
-
-%files -n texlive-doc-sl -f alt-linux/texlive-doc-sl.files
-
-%files -n texlive-doc-es -f alt-linux/texlive-doc-es.files
-
-%files -n texlive-doc-th -f alt-linux/texlive-doc-th.files
-
-%files -n texlive-doc-tr -f alt-linux/texlive-doc-tr.files
-
-%files -n texlive-doc-uk -f alt-linux/texlive-doc-uk.files
-
-%files -n texlive-doc-vi -f alt-linux/texlive-doc-vi.files
 
 %changelog
+* Fri Mar 02 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt1_2
+- new version
+
 * Thu Mar 26 2009 Grigory Batalov <bga@altlinux.ru> 2008.0-alt0.10
 - Re-arrange documentation
   + leave texmf/doc and texmf-texlive/doc untouched
