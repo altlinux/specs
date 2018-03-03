@@ -1,6 +1,6 @@
 Name: postfix
-Version: 2.11.7
-Release: alt2
+Version: 2.11.11
+Release: alt1
 Epoch: 1
 
 Summary: Postfix Mail Transport Agent
@@ -64,12 +64,12 @@ Provides: MTA, MailTransportAgent
 Provides: smtpd, smtpdaemon, %name-smtpd
 Conflicts: sendmail, masqmail, exim
 Obsoletes: %name-beta, %name-smtpd
-PreReq: shadow-utils, chkconfig, sendmail-common >= 1.3, chrooted >= 0.3, %name-control >= 1.6
+PreReq: sendmail-common >= 1.3, chrooted >= 0.3, %name-control >= 1.6
 
 # This is used to be MDA, but default postfix main.cf uses procmail.
 Requires: procmail
 
-BuildPreReq: rpm-build >= 4.0.4-alt0.3, sendmail-common >= 1.3, coreutils, chrooted >= 0.3
+BuildPreReq: rpm-build >= 4.0.4-alt0.3, sendmail-common >= 1.3, chrooted >= 0.3
 %{?_with_cdb:BuildPreReq: libcdb-devel}
 %{?_with_pcre:BuildPreReq: libpcre-devel}
 %{?_with_ldap:BuildPreReq: libldap-devel}
@@ -90,7 +90,7 @@ compatible enough to not upset your users.
 %package ldap
 Summary: LDAP map support for Postfix
 Group: System/Servers
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description ldap
 This package provides support for LDAP maps in Postfix.
@@ -98,7 +98,7 @@ This package provides support for LDAP maps in Postfix.
 %package mysql
 Summary: MySQL map support for Postfix
 Group: System/Servers
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description mysql
 This package provides support for MySQL maps in Postfix.
@@ -106,7 +106,7 @@ This package provides support for MySQL maps in Postfix.
 %package pcre
 Summary: PCRE map support for Postfix
 Group: System/Servers
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description pcre
 This package provides support for PCRE maps in Postfix.
@@ -114,7 +114,7 @@ This package provides support for PCRE maps in Postfix.
 %package pgsql
 Summary: PostgreSQL map support for Postfix
 Group: System/Servers
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description pgsql
 This package provides support for PostgreSQL maps in Postfix.
@@ -122,7 +122,7 @@ This package provides support for PostgreSQL maps in Postfix.
 %package cyrus
 Summary: Cyrus SASL plugin for Postfix
 Group: System/Servers
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description cyrus
 This package provides Cyrus SASL support for Postfix.
@@ -130,7 +130,7 @@ This package provides Cyrus SASL support for Postfix.
 %package dovecot
 Summary: Dovecot SASL plugin for Postfix
 Group: System/Servers
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description dovecot
 This package provides Dovecot SASL support for Postfix.
@@ -138,7 +138,7 @@ This package provides Dovecot SASL support for Postfix.
 %package tls
 Summary: SSL/TLS support for Postfix
 Group: System/Servers
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description tls
 This package provides support for SSL/TLS in Postfix.
@@ -147,7 +147,7 @@ This package provides support for SSL/TLS in Postfix.
 Summary: html documentation for Postfix
 Group: System/Servers
 BuildArch: noarch
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description html
 This package provides documentation for Postfix in html format.
@@ -166,8 +166,6 @@ Various postfix testing tools
 find -type f -print0 |
 	xargs -r0 grep -FZl @libdir@ -- |
 	xargs -r0 sed -i 's,@libdir@,%_libdir,g' --
-
-chmod +x src/bounce/annotate.sh
 
 %if_with tls
 rm -rf src/*-tls
@@ -222,6 +220,7 @@ touch -t 01010000 man/*/* html/*
 %build
 OPT="%optflags -fno-strict-aliasing -Wno-comment -Wno-missing-braces"
 CCARGS="\
+ -DNO_NIS \
  -DDEF_COMMAND_DIR=\\\"%command_directory\\\" \
  -DDEF_CONFIG_DIR=\\\"%config_directory\\\" \
  -DDEF_DAEMON_DIR=\\\"%daemon_directory\\\" \
@@ -240,7 +239,7 @@ CCARGS="\
 DICTS=
 DICT_LIBS="-ldb"
 DICT_ARGS=
-SYSLIBS="-lnsl -lresolv -ldl"
+SYSLIBS="-lresolv -ldl"
 AUXLIBS=
 
 %if_with sasl
@@ -410,15 +409,6 @@ mv bin/postqueue libexec/postqueue/
 
 ### INSTALL ###
 %install
-rln()
-{
-	local target=$1 && shift
-	local source=$1 && shift
-	target=`relative "$target" "$source"`
-	ln -snf "$target" "%buildroot$source"
-}
-
-install -D %name.service %buildroot%_unitdir/%name.service
 mkdir -p %buildroot{%ROOT,%_bindir,%_sbindir,%_libdir,%daemon_directory/postqueue,%plugin_directory,%_mandir}
 
 # Install shared libraries and dictionaries.
@@ -444,9 +434,9 @@ install -pm644 %_buildaltdir/main.cf %buildroot%config_directory/
 
 # prepare for std
 for i in smtp smtpd; do
-	rln $i-std %daemon_directory/$i
+	ln -snf $i-std %buildroot%daemon_directory/$i
 done
-rln smtp %daemon_directory/lmtp
+ln -snf smtp %buildroot%daemon_directory/lmtp
 
 %if_with tls
 install -pm755 libexec/{*-tls,tlsmgr,tlsproxy} %buildroot%daemon_directory/
@@ -455,10 +445,13 @@ install -pm755 bin/posttls* %buildroot%_bindir/
 
 # Finish postqueue install.
 chmod 700 %buildroot%daemon_directory/postqueue
-rln %daemon_directory/postqueue/postqueue %command_directory/
+ln -rsnf %buildroot%daemon_directory/postqueue/postqueue \
+	%buildroot%command_directory/
 
 install -pD -m755 %_buildaltdir/init \
 	%buildroot%_initdir/%name
+install -pD -m644 %_buildaltdir/%name.service \
+	%buildroot%_unitdir/%name.service
 install -pD -m755 %_buildaltdir/cron.daily \
 	%buildroot%_sysconfdir/cron.daily/%name
 install -pD -m750 %_buildaltdir/chroot.lib \
@@ -472,8 +465,21 @@ install -pm755 %_buildaltdir/postfix-generate-ssl-certificate \
 	%buildroot%_sbindir/
 %endif #with tls
 
+# Install filetrigger.
+mkdir -p %buildroot%_rpmlibdir
+cat > %buildroot%_rpmlibdir/%name.filetrigger <<'EOF'
+#!/bin/sh
+LC_ALL=C grep -Fqs %_sbindir/postfix &&
+	[ -f %restart_flag ] ||
+	exit 0
+rm -f %restart_flag
+service %name start
+exit 0
+EOF
+chmod 0755 %buildroot%_rpmlibdir/%name.filetrigger
+
 # Install /etc/aliases.
-rln %config_directory/aliases %_sysconfdir/
+ln -rsnf %buildroot%config_directory/aliases %buildroot%_sysconfdir/
 
 # Install manpages
 cp -a man/man{1,5,8} %buildroot%manpage_directory/
@@ -487,23 +493,23 @@ mkdir -p %buildroot%docdir
 
 cp -a html examples *README* COMPATIBILITY HISTORY LICENSE PORTING RELEASE_NOTES \
 	%buildroot%docdir/
-bzip2 -9 %buildroot%docdir/HISTORY
+xz -9 %buildroot%docdir/HISTORY
 %if_with tls
 mkdir -p %buildroot%docdir/tls
 cp -a TLS_* %buildroot%docdir/
-bzip2 -9 %buildroot%docdir/TLS_CHANGES
+xz -9 %buildroot%docdir/TLS_CHANGES
 %endif #with tls
 
 install -pm644 IPv6-ChangeLog %buildroot%docdir/
-bzip2 -9 %buildroot%docdir/IPv6-ChangeLog
+xz -9 %buildroot%docdir/IPv6-ChangeLog
 
 # Install README_FILES.
 rm -rf %buildroot%config_directory/README_FILES
 mkdir -p %buildroot%docdir/README_FILES
-rln %docdir/README_FILES %config_directory/
+ln -rsnf %buildroot%docdir/README_FILES %buildroot%config_directory/
 
 # Install README.ALT
-install -pm644 %_buildaltdir/README.ALT-ru_RU.KOI8-R %buildroot%docdir/
+install -pm644 %_buildaltdir/README.ALT-ru_RU.utf8 %buildroot%docdir/
 
 touch %buildroot%config_directory/{access,aliases,canonical,relocated,transport,virtual}.{cdb,db}
 
@@ -512,7 +518,7 @@ mkdir -pm700 %buildroot%_sysconfdir/syslog.d
 ln -s %ROOT/dev/log %buildroot%_sysconfdir/syslog.d/%name
 
 # Chrooted environment
-touch %buildroot%ROOT{%_sysconfdir/{localtime,hosts,services,{host,nsswitch,resolv}.conf},/var/nis/NIS_COLD_START}
+touch %buildroot%ROOT%_sysconfdir/{localtime,hosts,services,{host,nsswitch,resolv}.conf}
 mksock %buildroot%ROOT/dev/log
 
 # Remove sendmail-common files
@@ -530,7 +536,16 @@ rm %buildroot%_bindir/{mailq,newaliases}
 
 rm -f %restart_flag
 if [ $1 -ge 2 ]; then
-	%_initdir/%name status >/dev/null 2>&1 && %_initdir/%name stop && touch %restart_flag ||:
+	SYSTEMCTL=systemctl
+	if sd_booted && $SYSTEMCTL --version >/dev/null 2>&1; then
+		$SYSTEMCTL is-active %name.service >/dev/null 2>&1 &&
+		$SYSTEMCTL stop %name.service &&
+		touch %restart_flag ||:
+	else
+		%_initdir/%name status >/dev/null 2>&1 &&
+		%_initdir/%name stop &&
+		touch %restart_flag ||:
+	fi
 	if [ ! -f %daemon_directory/postqueue/postqueue -a \
 	       -f %command_directory/postqueue -a \
 	     ! -L %command_directory/postqueue ]; then
@@ -546,8 +561,13 @@ if [ -x "$oua" ]; then
 fi
 
 %post
-if [ $1 = 1 ]; then
-	/sbin/chkconfig --add %name
+if [ $1 -eq 1 ]; then
+	chkconfig --add %name
+else
+	chkconfig %name resetpriorities
+	SYSTEMCTL=systemctl
+	sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1 &&
+		"$SYSTEMCTL" daemon-reload ||:
 fi
 rm -f %config_directory/{access,aliases,canonical,relocated,transport,virtual}.{,c}db
 %_libexecdir/postfix/post-install \
@@ -562,16 +582,13 @@ else
 	/usr/sbin/control %name local
 	/usr/sbin/control postqueue public
 fi
-if [ -f %restart_flag ]; then
-	rm -f %restart_flag
-	%_initdir/%name start ||:
-fi
 
 %preun
 if [ $1 = 0 ]; then
-	%_initdir/%name condstop
-	/sbin/chkconfig --del %name
-	rm -f %ROOT/lib/* %ROOT%_sysconfdir/* %ROOT/var/yp/binding/*
+	service %name condstop
+	chkconfig --del %name
+	rm -f %ROOT/lib/* %ROOT%_sysconfdir/* %ROOT/var/yp/binding/* \
+		%ROOT/var/nis/NIS_COLD_START
 fi
 
 %if_with tls
@@ -608,6 +625,7 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %attr(-,root,root) %daemon_directory/smtp
 %attr(-,root,root) %daemon_directory/smtpd
 %_unitdir/%name.service
+%_rpmlibdir/%name.filetrigger
 %_sysconfdir/syslog.d/%name
 %_libdir/%libpostfix
 %_libdir/%libpostfix_dict
@@ -633,7 +651,6 @@ ln -snf %name/aliases %_sysconfdir/aliases
 # Chrooted environment
 %attr(644,root,root) %verify(not md5 mtime size) %ghost %ROOT%_sysconfdir/*
 %attr(666,root,root) %ghost %ROOT/dev/log
-%ghost %config(missingok) %verify(not md5 mtime size) %ROOT/var/nis/NIS_COLD_START
 
 %files test-tools
 %_bindir/*-*
@@ -692,6 +709,17 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Sun Jan 28 2018 Dmitry V. Levin <ldv@altlinux.org> 1:2.11.11-alt1
+- 2.11.7 -> 2.11.11.
+- Disabled NIS/NIS+ support as it was disabled in glibc-2.26.0.124.98f244e-alt1.
+- Restart postfix from filetrigger (closes: #21620).
+- Save a copy of %config_directory/aliases before rewriting it (closes: #25238).
+- Fixed "postconf -a" and "postconf -A" (closes: #28372).
+- Fixed Cyrus SASL support (by asy@; closes: #30270).
+- Fixed update procedure when systemd is active (closes: #31363).
+- Recoded README.ALT-ru_RU from koi8r to utf8 (closes: #32038).
+- Cleared executable bit from postfix.service (closes: #34567).
+
 * Wed Mar 02 2016 Fr. Br. George <george@altlinux.ru> 1:2.11.7-alt2
 - Making /etc/sysconfig/network optional (closes: #31827)
 - Extra/chroot.conf: added support for alias_maps (closes: #31822)
