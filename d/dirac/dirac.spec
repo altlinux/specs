@@ -1,6 +1,6 @@
 Name: dirac
 Version: 1.0.2
-Release: alt2
+Release: alt2.1
 
 Summary: Video Codec based on Wavelets
 License: MPL/GPL/LGPL
@@ -12,7 +12,7 @@ Patch0: http://pkgs.fedoraproject.org/cgit/rpms/dirac.git/plain/dirac-1.0.2-back
 Patch1: http://pkgs.fedoraproject.org/cgit/rpms/dirac.git/plain/0001-Fix-uninitialised-memory-read-that-causes-the-encode.patch
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-BuildRequires: doxygen gcc-c++ graphviz libstdc++-devel tetex-core tetex-latex
+BuildRequires: doxygen gcc-c++ graphviz libstdc++-devel texlive-collection-basic texlive-collection-latexrecommended
 BuildRequires: chrpath
 
 %description
@@ -126,6 +126,9 @@ chrpath -d %buildroot%_bindir/dirac*
 %_libdir/pkgconfig/dirac.pc
 
 %changelog
+* Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2.1
+- NMU: rebuild with texlive instead of tetex
+
 * Thu Aug 03 2017 Michael Shigorin <mike@altlinux.org> 1.0.2-alt2
 - applied fedora patches
 - enable MMX on x86_64
