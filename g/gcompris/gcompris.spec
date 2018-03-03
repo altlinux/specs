@@ -1,7 +1,7 @@
 
 Name:    gcompris
 Version: 15.10
-Release: alt6
+Release: alt6.1
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
 
@@ -27,7 +27,7 @@ Obsoletes: %name-devel %name-gst-plugin
 BuildRequires: chess gnome-common gstreamer1.0-devel intltool libgnet-devel
 BuildRequires: libgnomecanvas-devel librsvg-devel libsqlite3-devel
 BuildRequires: python-module-pycairo-devel python-module-pygtk-devel
-BuildRequires: python-module-pysqlite2 python-modules-encodings tetex-core
+BuildRequires: python-module-pysqlite2 python-modules-encodings texlive-collection-basic
 BuildRequires: libxml2-devel
 
 Requires: chess sqlite3 gnucap tuxpaint
@@ -599,6 +599,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gcompris/boards/voices/sk
 
 %changelog
+* Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 15.10-alt6.1
+- NMU: rebuild with TeXLive instead of TeTeX
+
 * Wed Nov 15 2017 Andrey Cherepanov <cas@altlinux.org> 15.10-alt6
 - Require gnucap and tuxpaint.
 
