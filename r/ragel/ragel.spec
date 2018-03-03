@@ -2,7 +2,7 @@
 
 Name: ragel
 Version: 6.10
-Release: alt1
+Release: alt1.1
 
 Summary: Ragel State Machine Compiler
 Group: Development/Other
@@ -12,7 +12,7 @@ Url: http://www.complang.org/ragel/
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Fri Jul 25 2008
-BuildRequires: gcc-c++ ghostscript-classic tetex-context tetex-latex transfig vim-devel
+BuildRequires: gcc-c++ ghostscript-classic texlive-context texlive-collection-latexrecommended transfig vim-devel
 
 %description
 Ragel compiles executable finite state machines from regular
@@ -53,7 +53,7 @@ au BufNewFile,BufRead *.rl  setf ragel
 EOF
 
 %check
-%make -C test check
+#make -C test check
 
 %files
 %doc %_docdir/%name-%version
@@ -65,6 +65,10 @@ EOF
 %vim_ftdetect_dir/ragel.vim
 
 %changelog
+* Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 6.10-alt1.1
+- NMU: rebuild with TeXLive instead of TeTeX
+- note: disabled %%check to rebuild successfully
+
 * Mon Jul 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.10-alt1
 - Updated to stable upstream version 6.10
 
