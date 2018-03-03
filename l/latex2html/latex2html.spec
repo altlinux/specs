@@ -1,6 +1,6 @@
 Name: latex2html
 Version: 2017.2
-Release: alt1
+Release: alt1.1
 Summary: LaTeX to HTML converter
 License: GPLv2
 Group: Publishing
@@ -28,7 +28,7 @@ BuildRequires: %_bindir/gs %_bindir/dvipdf
 
 BuildRequires(pre): rpm-build-texmf
 # Automatically added by buildreq on Thu Mar 27 2008
-BuildRequires: netpbm perl-DBM tetex-dvips tetex-latex
+BuildRequires: netpbm perl-DBM texlive-collection-basic texlive-collection-latexrecommended
 
 %description
 Elaborate perl program to convert latex documents to html,
@@ -98,6 +98,9 @@ sed -i '1s|/usr/local/bin/|/usr/bin/|' \
 %doc Changes FAQ LICENSE LICENSE.orig README.md readme.hthtml TODO BUGS INSTALL dot.latex2html-init example docs/manual.ps.bz2
 
 %changelog
+* Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 2017.2-alt1.1
+- NMU: rebuild with texlive instead of tetex
+
 * Thu Jan 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2017.2-alt1
 - Updated to upstream version 2017.2.
 
