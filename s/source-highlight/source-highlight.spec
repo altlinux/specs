@@ -1,6 +1,6 @@
 Name: source-highlight
 Version: 3.1.8
-Release: alt3%ubt
+Release: alt4%ubt
 
 Summary: syntax highlighting for source documents
 License: GPL
@@ -11,7 +11,7 @@ Url: http://www.gnu.org/software/src-highlite/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: boost-devel gcc-c++ ctags help2man doxygen tetex-core texinfo
+BuildRequires: boost-devel gcc-c++ ctags help2man doxygen texlive-collection-basic texinfo
 BuildRequires: flex
 
 %description
@@ -91,6 +91,9 @@ BuildArch: noarch
 %_sysconfdir/bash_completion.d/*
 
 %changelog
+* Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.8-alt4%ubt
+- NMU: rebuild with TeXLive instead of TeTeX
+
 * Tue Sep 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.8-alt3%ubt
 - Rebuilt with boost 1.65.0.
 - Added %%ubt to release.
