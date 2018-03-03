@@ -1,6 +1,6 @@
 Name:		serveez
 Version:	0.1.5
-Release:	alt3.qa3
+Release:	alt3.qa4
 License:	GPL
 Group:		System/Servers
 Summary:	A server framework.
@@ -9,7 +9,7 @@ URL:		http://www.gnu.org/software/serveez/index.html
 Packager:	Stanislav Yadykin <tosick@altlinux.ru>
 
 # Automatically added by buildreq on Thu Dec 11 2008
-BuildRequires: gcc-c++ guile18-devel rpm-build-java rpm-macros-fillup tetex-core zlib-devel
+BuildRequires: gcc-c++ guile18-devel rpm-build-java rpm-macros-fillup zlib-devel /usr/bin/makeinfo texi2html
 
 %description
 Serveez is a server framework.  It provides routines and help for
@@ -95,6 +95,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_libdir/libserveez.a
 
 %changelog
+* Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.5-alt3.qa4
+- NMU: rebuild with texlive instead of tetex
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.5-alt3.qa3
 - NMU: rebuilt for updated dependencies.
 
