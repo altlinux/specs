@@ -1,10 +1,10 @@
 # To bootstrap toggle bootstrap knob (change def_disable to def_enable) and
 # add to git crystal compiler with name crystal-bin-alt
-%def_enable bootstrap
+%def_disable bootstrap
 
 Name:     crystal
 Version:  0.24.1
-Release:  alt1.163c0cb0cc.1
+Release:  alt1.163c0cb0cc.2
 
 Summary:  The Crystal Programming Language
 License:  Apache-2.0
@@ -68,5 +68,8 @@ install -D etc/completion.zsh %buildroot%_datadir/zsh/site-functions/_%name
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Sat Mar 03 2018 Mikhail Gordeev <obirvalger@altlinux.org> 0.24.1-alt1.163c0cb0cc.2
+- Disable bootstrap knob
+
 * Sat Mar 03 2018 Mikhail Gordeev <obirvalger@altlinux.org> 0.24.1-alt1.163c0cb0cc.1
 - Initial build for Sisyphus
