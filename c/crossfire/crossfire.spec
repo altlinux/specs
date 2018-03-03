@@ -3,7 +3,7 @@
 
 Name: crossfire
 Version: 1.11.0
-Release: alt1.qa6
+Release: alt1.qa6.1
 Summary: Multiplayer graphical role-playing game
 Summary(ru_RU.UTF-8): Многопользовательская графическая ролевая игра
 License: GPL
@@ -28,7 +28,7 @@ Requires: crossfire-maps
 BuildPreReq: perl-CGI
 
 # Automatically added by buildreq on Fri Mar 10 2006
-BuildRequires: alternatives flex gcc-c++ imake libICE-devel libSM-devel libX11-devel libXaw-devel libXext-devel libXmu-devel libXpm-devel libXt-devel libpng-devel libstdc++-devel ncompress python-base python-dev python-modules-encodings tetex-latex xorg-cf-files xorg-proto-devel zlib-devel
+BuildRequires: alternatives flex gcc-c++ imake libICE-devel libSM-devel libX11-devel libXaw-devel libXext-devel libXmu-devel libXpm-devel libXt-devel libpng-devel libstdc++-devel ncompress python-base python-dev python-modules-encodings texlive-collection-latexrecommended xorg-cf-files xorg-proto-devel zlib-devel
 
 
 %description
@@ -178,6 +178,9 @@ install -d %buildroot%_localstatedir/games/%name/datafiles
 
 
 %changelog
+* Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.11.0-alt1.qa6.1
+- NMU: rebuild with texlive instead of tetex
+
 * Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 1.11.0-alt1.qa6
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
