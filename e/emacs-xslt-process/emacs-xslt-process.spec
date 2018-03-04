@@ -1,11 +1,12 @@
+%def_without info
 Version: 2.2
-Release: alt9.1.qa1
+Release: alt9.1.qa2
 Name: emacs-xslt-process
 License: GPL
 Group: Editors
 Url: http://xslt-process.sourceforge.net/
 Summary: Emacs XSLT Process Minor Mode
-Summary(ru_RU.KOI8-R): Вспомогательный режим для работы с XSLT в Emacs
+Summary(ru_RU.UTF-8): п▓я│п©п╬п╪п╬пЁп╟я┌п╣п╩я▄п╫я▀п╧ я─п╣п╤п╦п╪ п╢п╩я▐ я─п╟п╠п╬я┌я▀ я│ XSLT п╡ Emacs
 Requires: emacs-X11 emacs-speedbar emacs-elib
 Source: xslt-process-%version.tar.gz
 Source1: xslt-process-emacs.el
@@ -14,7 +15,7 @@ Patch: xslt-process.diff
 BuildArch: noarch
 
 # Automatically added by buildreq Mon Sep 09 2002
-BuildRequires: emacs-X11 emacs-cedet emacs-elib ImageMagick texinfo tetex-latex tetex-afm tetex-core tetex-dvips java-devel java-common bc update-alternatives
+BuildRequires: emacs-X11 emacs-cedet emacs-elib ImageMagick texinfo texlive-collection-latexrecommended texlive-collection-fontsrecommended texlive-collection-basic texlive-collection-basic java-devel java-common bc update-alternatives texi2html
 Requires: emacs-X11 emacs-cedet emacs-elib java java-common
 
 %description
@@ -22,13 +23,17 @@ XSLT-process is a minor mode for XEmacs or GNU Emacs which transforms
 it into a powerful XML editor with XSLT processing and debugging
 capabilities.
 
-%description -l ru_RU.KOI8-R
-XSLT-process является вспомогательным режимом для XEmacs или GNU Emacs, который
-делает их мощными XML редакторами с возможностью отладки и работы с XSLT.
+%description -l ru_RU.UTF-8
+XSLT-process я▐п╡п╩я▐п╣я┌я│я▐ п╡я│п©п╬п╪п╬пЁп╟я┌п╣п╩я▄п╫я▀п╪ я─п╣п╤п╦п╪п╬п╪ п╢п╩я▐ XEmacs п╦п╩п╦ GNU Emacs, п╨п╬я┌п╬я─я▀п╧
+п╢п╣п╩п╟п╣я┌ п╦я┘ п╪п╬я┴п╫я▀п╪п╦ XML я─п╣п╢п╟п╨я┌п╬я─п╟п╪п╦ я│ п╡п╬п╥п╪п╬п╤п╫п╬я│я┌я▄я▌ п╬я┌п╩п╟п╢п╨п╦ п╦ я─п╟п╠п╬я┌я▀ я│ XSLT.
 
 %prep
 %setup -n xslt-process-%version
 %patch -p1
+rm -rf bin/texi2html
+%if_without info
+sed -i 's,java etc doc,java etc,' Makefile
+%endif
 
 %build
 make EMACS=emacs LOADPATH="%_emacslispdir/elib %_emacslispdir/cedet/common %_emacslispdir/cedet/speedbar" all
@@ -38,8 +43,10 @@ mkdir -p %buildroot%_emacslispdir/xslt-process/java
 install -m 644 lisp/*.el %buildroot%_emacslispdir/xslt-process
 install -m 644 java/*.jar %buildroot%_emacslispdir/xslt-process/java
 
+%if_with info
 mkdir -p %buildroot%_infodir
 install -m 644 doc/*.info* %buildroot%_infodir
+%endif
 
 mkdir -p %buildroot/etc/emacs/site-start.d
 install -m 644 %SOURCE1 %buildroot/etc/emacs/site-start.d/xslt-process.el
@@ -49,9 +56,14 @@ install -m 644 %SOURCE1 %buildroot/etc/emacs/site-start.d/xslt-process.el
 %_emacslispdir/xslt-process/*.el
 %_emacslispdir/xslt-process/java/*
 %config(noreplace) /etc/emacs/site-start.d/*
+%if_with info
 %_infodir/*
+%endif
 
 %changelog
+* Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.2-alt9.1.qa2
+- NMU: rebuild with texlive instead of tetex
+
 * Wed Dec 02 2009 Igor Vlasenko <viy@altlinux.ru> 2.2-alt9.1.qa1
 - NMU (by repocop): the following fixes applied:
   * obsolete-call-in-post-install-info for emacs-xslt-process
