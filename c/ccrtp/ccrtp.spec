@@ -2,7 +2,7 @@
 
 Name: ccrtp
 Version: 2.1.2
-Release: alt1.1
+Release: alt1.2
 %define sover 3
 %define libccrtp libccrtp%sover
 %define docdir %_docdir/%name-%version
@@ -94,6 +94,9 @@ cp -a AUTHORS COPYING.addendum README doc/srcmodel* doc/html %buildroot%docdir
 %endif
 
 %changelog
+* Sun Mar 04 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.2-alt1.2
+- NMU: autorebuild with ucommon-7.0.0
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.1.2-alt1.1
 - NMU: added BR: texinfo
 

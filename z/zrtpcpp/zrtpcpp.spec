@@ -2,7 +2,7 @@
 
 Name: zrtpcpp
 Version: 2.3.4
-Release: alt2
+Release: alt2.1
 %define sover 2
 %define libzrtpcpp libzrtpcpp%sover
 
@@ -77,6 +77,9 @@ Group: System/Libraries
 %endif
 
 %changelog
+* Sun Mar 04 2018 Vitaly Lipatov <lav@altlinux.ru> 2.3.4-alt2.1
+- NMU: autorebuild with ucommon-7.0.0
+
 * Mon Jun 15 2015 Sergey V Turchin <zerg@altlinux.org> 2.3.4-alt2
 - rebuild with new ccrtp
 
