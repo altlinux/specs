@@ -3,7 +3,7 @@
 %def_enable sasl
 
 Name: memcached
-Version: 1.5.4
+Version: 1.5.6
 Release: alt1%ubt
 
 Summary: memcached - memory caching daemon
@@ -37,21 +37,22 @@ Requires: %name = %version-%release
 This package contains files needed for development using memcached
 protocol.
 
-%package scripts
-Summary: memcached auxiliary scripts
-Group: Networking/Other
+%package tool
+Summary: Stats and management tool for memcached
+Group: Development/Tools
 BuildArch: noarch
-Requires: %name = %version-%release
 
-%description scripts
-This package contains auxiliary scripts for memcached.
+%description tool
+memcached-tool is a Perl script used to print statistics from a running
+memcached instance.
 
 %prep
 %setup
 sed -i 's,`git describe`,"%version-%release",g' version.pl
-./autogen.sh
 
 %build
+perl version.pl
+%autoreconf
 %configure \
 	%{subst_enable seccomp} \
 	%{subst_enable extstore} \
@@ -60,12 +61,15 @@ sed -i 's,`git describe`,"%version-%release",g' version.pl
 %make_build
 
 %install
-mkdir -p %buildroot%_datadir/%name/scripts
 %makeinstall_std
 install -pD -m755 %name.init %buildroot%_initdir/%name
 install -pD -m640 %name.sysconfig %buildroot/etc/sysconfig/%name
-install -pm755 scripts/* %buildroot%_datadir/%name/scripts/
-install -pD -m644 %name.service %buildroot/%systemd_unitdir/%name.service
+install -pD -m644 %name.service %buildroot/%_unitdir/%name.service
+install -pD -m644 %{name}@.service %buildroot/%_unitdir/%{name}@.service
+
+# tool
+install -pD -m755 scripts/memcached-tool %buildroot%_bindir/memcached-tool
+install -pD -m644 scripts/memcached-tool.1 %buildroot%_man1dir/memcached-tool.1
 
 %check
 %make test ||:
@@ -88,20 +92,26 @@ fi
 %files
 %config(noreplace) %attr(640,root,adm) /etc/sysconfig/%name
 %_bindir/%name
-%_man1dir/*
+%_man1dir/%name.*
 %_initdir/*
-%_unitdir/%name.service
+%_unitdir/*.service
 %doc AUTHORS doc/CONTRIBUTORS ChangeLog NEWS README.md doc/*.txt
 
 %files devel
 %_includedir/%name/
 
-%files scripts
-%_datadir/%name/
-%exclude %_datadir/%name/scripts/memcached-init
-%exclude %_datadir/%name/scripts/memcached.sysv
+%files tool
+%_bindir/%name-tool
+%_man1dir/%name-tool.*
 
 %changelog
+* Sun Mar 04 2018 Alexey Shabalin <shaba@altlinux.ru> 1.5.6-alt1%ubt
+- 1.5.6
+- disable UDP port by default (fixed CVE-2018-1000115)
+- drop scripts package
+- add tool package
+- add memcached@.service for allow start "instanced" version, like 'memcached@11211'
+
 * Tue Jan 09 2018 Alexey Shabalin <shaba@altlinux.ru> 1.5.4-alt1%ubt
 - 1.5.4
 
