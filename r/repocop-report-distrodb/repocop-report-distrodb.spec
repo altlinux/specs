@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.41
+Version: 0.411
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -39,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Sun Mar 04 2018 Igor Vlasenko <viy@altlinux.ru> 0.411-alt1
+- bugfix release
+
 * Sat Mar 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1
 - texlive 2017 support
 
