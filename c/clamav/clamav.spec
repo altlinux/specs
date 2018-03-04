@@ -12,7 +12,7 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.99.3
+Version: 0.99.4
 Release: alt1
 %define abiversion 7
 
@@ -323,6 +323,10 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Sun Mar 04 2018 Sergey Y. Afonin <asy@altlinux.ru> 0.99.4-alt1
+- 0.99.4 (CVE-2012-6706, CVE-2017-6419, CVE-2017-11423,
+  CVE-2018-0202, and CVE-2018-1000085)
+
 * Sun Jan 28 2018 Sergey Y. Afonin <asy@altlinux.ru> 0.99.3-alt1
 - 0.99.3 (multiple CVE's, look to README)
 - removed cve-2017-6418.patch and cve-2017-6420.patch (in upstream now)
