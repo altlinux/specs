@@ -6,7 +6,7 @@
 %def_enable gladeui
 
 Name: glade
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A user interface designer for Gtk+ and GNOME
@@ -139,6 +139,9 @@ GObject introspection devel data for the GladeUI library.
 %_girdir/Gladeui-%api_ver.gir
 
 %changelog
+* Sun Mar 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.20.4-alt1
+- 3.20.4
+
 * Sun Feb 18 2018 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt1
 - 3.20.3
 
