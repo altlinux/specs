@@ -1,61 +1,180 @@
-Name: swi-prolog
-Version: 5.6.15
-Release: alt1.qa2
+BuildRequires: libuuid-devel libXext-devel libedit-devel libdb6-devel
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+%define _disable_ld_no_undefined 1
+%global __requires_exclude swipl.sh
 
-Summary: Prolog interpreter and compiler
-License: LGPL/GPL
-Group: Development/Other
+Summary:	Prolog interpreter and compiler
+Name:		swi-prolog
+Version:	7.4.2
+Release:	alt1_2
+License:	LGPLv2+
+Group:		Development/Other
+Requires:	%{name}-nox
+Requires:	%{name}-xpce
+Source44: import.info
+# pl is not perl
+AutoReq: yes,noperl
+AutoProv: yes,noperl
 
-URL: http://www.swi-prolog.org
-Source: pl-%version.tar.bz2
-
-# Added by buildreq2 on Sun Jul 02 2006
-BuildRequires: libgmp-devel libncursesw-devel libreadline-devel tetex-context tetex-latex
-
-%define plbase %_libdir/swi-prolog
-
-# not perl
-%add_findreq_skiplist %plbase/*.pl
-%add_findprov_skiplist %plbase/*.pl
+#Recommends:	%{name}-doc
 
 %description
 Edinburgh-style Prolog compiler including modules, autoload, libraries,
 Garbage-collector, stack-expandor, C-interface, GNU-readline and GNU-Emacs
 interface, very fast compiler.
 
+%package nox
+Group:		Development/Other
+Summary:	SWI-Prolog without GUI components
+BuildRequires:	pkgconfig(libarchive)
+BuildRequires:	pkgconfig(ncurses)
+BuildRequires:	libreadline-devel
+BuildRequires:	pkgconfig(libjpeg)
+BuildRequires:	pkgconfig(xpm)
+BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(xft)
+BuildRequires:	pkgconfig(xinerama)
+BuildRequires:	pkgconfig(xpm)
+BuildRequires:	pkgconfig(xt)
+BuildRequires:	pkgconfig(openssl)
+BuildRequires:	pkgconfig(zlib)
+BuildRequires:	pkgconfig(ncursesw)
+BuildRequires:	libgmp-devel
+#Recommends:	%{name}-doc
+URL:		http://www.swi-prolog.org/
+Source0:	http://www.swi-prolog.org/download/stable/src/swipl-%{version}.tar.gz
+# pl is not perl
+AutoReq: yes,noperl
+AutoProv: yes,noperl
+
+
+%description nox
+This package provide SWI-Prolog and several libraries, but without
+GUI components.
+
+%package x
+Group:          Development/Other
+Summary:        %{name} native GUI library
+Requires:       %{name}-nox = %{version}-%{release}
+Provides:	%{name}-xpce
+# pl is not perl
+AutoReq: yes,noperl
+AutoProv: yes,noperl
+
+
+%description x
+XPCE is a toolkit for developing graphical applications in Prolog and
+other interactive and dynamically typed languages.
+
+%package java
+Group:		Development/Java
+Summary:	Java interface for %{name}
+BuildRequires:	java-devel-default /proc
+Requires:	%{name}-nox = %{version}-%{release}
+Provides:	%{name}-jpl
+# pl is not perl
+AutoReq: yes,noperl
+AutoProv: yes,noperl
+
+
+%description java
+JPL is a dynamic, bi-directional interface between %{name} and Java
+runtimes. It offers two APIs: Java API (Java-calls-Prolog) and Prolog
+API (Prolog-calls-Java).
+
+%package odbc
+Group:		Development/Databases
+Summary:	ODBC interface for %{name}
+BuildRequires:	libunixODBC-devel libunixODBC-devel-compat libunixODBC2
+Requires:	%{name}-nox = %{version}-%{release}
+# pl is not perl
+AutoReq: yes,noperl
+AutoProv: yes,noperl
+
+
+%description odbc
+ODBC interface for SWI-Prolog to interact with database systems.
+
+%package doc
+Group:		Documentation
+Summary:	Documentation for %{name}
+Requires:	%{name}-nox = %{version}-%{release}
+AutoReqProv: no
+
+%description doc
+Documentation for SWI-Prolog.
+
 %prep
-%setup -q -n pl-%version
+%setup -n swipl-%{version} -q
 
 %build
-cd ./src
-export ac_cv_prog_ETAGS=ctags
-%configure --enable-shared
-%make_build PLBASE=%plbase LDLFAGS=
+%add_optflags %optflags_shared
+%configure
+%make
 
-cd ../man
-sed -i 1s:/usr/local/bin/perl:%_bindir/perl: doc2tex
-sed -i- '/usepackage{times}/d' doc.doc
-make manual.pdf PDF=manual.pdf
+pushd packages
+%configure
+%make
+popd
 
 %install
-cd ./src
-%makeinstall PLBASE=%buildroot%plbase
+make install DESTDIR=%buildroot
 
-mv %buildroot%plbase/lib/*/libpl.so.%version %buildroot%_libdir/
-ln -s libpl.so.%version %buildroot%_libdir/libpl.so
-rm -rv %buildroot%plbase/lib
-
-rmdir %buildroot%plbase/man
+pushd packages
+make install DESTDIR=%buildroot
+%make html-install PLBASE=%{buildroot}%{_libdir}/swipl-%{version}
+popd
 
 %files
-%doc ANNOUNCE ChangeLog LSM README man/manual.pdf
-%_bindir/pl*
-%_man1dir/pl*.1*
-%_libdir/libpl.so.%version
-%_libdir/libpl.so
-%plbase/
+
+%files nox
+%doc README.md LICENSE VERSION
+%{_bindir}/swipl*
+%{_libdir}/swipl-%{version}
+%{_libdir}/pkgconfig/swipl.pc
+%exclude %{_libdir}/swipl-%{version}/doc
+%exclude %{_libdir}/swipl-%{version}/lib/*/libjpl.so
+%exclude %{_libdir}/swipl-%{version}/lib/jpl.jar
+%exclude %{_libdir}/swipl-%{version}/library/jpl.pl
+%exclude %{_libdir}/swipl-%{version}/xpce/*
+%exclude %{_libdir}/swipl-%{version}/lib/*/odbc4pl.so
+%exclude %{_libdir}/swipl-%{version}/library/odbc.pl
+
+%files x
+%{_mandir}/*/xpce*
+%doc %{_libdir}/swipl-%{version}/doc/Manual/*xpce.html
+%{_bindir}/xpce*
+%{_libdir}/swipl-%{version}/xpce/*
+
+%files java
+%doc packages/jpl/README.html
+%doc %{_libdir}/swipl-%{version}/doc/packages/examples/jpl
+%doc %{_libdir}/swipl-%{version}/doc/packages/jpl
+%{_libdir}/swipl-%{version}/lib/*/libjpl.so
+%{_libdir}/swipl-%{version}/lib/jpl.jar
+%{_libdir}/swipl-%{version}/library/jpl.pl
+
+%files odbc
+%doc %{_libdir}/swipl-%{version}/doc/packages/odbc.html
+%{_libdir}/swipl-%{version}/lib/*/odbc4pl.so
+%{_libdir}/swipl-%{version}/library/odbc.pl
+
+%files doc
+%{_mandir}/*/swipl*
+%dir %{_libdir}/swipl-%{version}/doc
+%doc %{_libdir}/swipl-%{version}/doc/Manual
+%exclude %{_libdir}/swipl-%{version}/doc/Manual/*xpce.html
+%doc %{_libdir}/swipl-%{version}/doc/packages
+%exclude %{_libdir}/swipl-%{version}/doc/packages/examples/jpl
+%exclude %{_libdir}/swipl-%{version}/doc/packages/jpl
+%exclude %{_libdir}/swipl-%{version}/doc/packages/odbc.html
+
 
 %changelog
+* Sun Mar 04 2018 Igor Vlasenko <viy@altlinux.ru> 7.4.2-alt1_2
+- new version; picked from orphaned as import
+
 * Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.6.15-alt1.qa2
 - Rebuilt with gmp 5.0.5
 
