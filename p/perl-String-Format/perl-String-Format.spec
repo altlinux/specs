@@ -1,7 +1,7 @@
 ## SPEC file for Perl module String-Format
 
 Name: perl-String-Format
-Version: 1.17
+Version: 1.18
 Release: alt1
 
 Summary: Perl module for sprintf-like string formatting
@@ -40,6 +40,9 @@ capabilities with arbitrary format definitions.
 %perl_vendor_privlib/String/Format*
 
 %changelog
+* Sun Mar 04 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.18-alt1
+- New version
+
 * Mon Jan 07 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.17-alt1
 - New version
 
