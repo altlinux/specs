@@ -8,7 +8,7 @@
 %def_with unique
 
 Name: gnome-commander
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A Gnome file manager similar to the Norton Commander (TM)
@@ -20,8 +20,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 Requires: dconf
 Requires: gnome-vfs gnome-vfs-module-sftp gnome-vfs-module-smb
-# for python plugins
-Requires: python-module-pygtk python-module-pygnome-gnome-vfs
 
 BuildRequires: flex gcc-c++
 BuildRequires: yelp-tools libappstream-glib-devel
@@ -41,7 +39,6 @@ and some extra features like FTP support.
 
 %prep
 %setup
-subst 's/\(PYTHON_LIBS=`$PYTHON-config --\)ldflags/\1libs/' configure.ac
 
 %build
 %autoreconf
@@ -78,6 +75,9 @@ subst 's/\(PYTHON_LIBS=`$PYTHON-config --\)ldflags/\1libs/' configure.ac
 
 
 %changelog
+* Sun Mar 04 2018 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
+- 1.8.1
+
 * Sun Oct 08 2017 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0
 
