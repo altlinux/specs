@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.11.2
-Release: alt7
+Release: alt8
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -103,6 +103,12 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Sun Mar 04 2018 Alexei Takaseev <taf@altlinux.org> 1.11.2-alt8
+- update upstream to git:f5313ce5dc5192f4539eceacd621bfe193a0eb97
+    * pppoe: fixed PADO delaying function
+    * ppp: fix use-after-free in ppp_auth_failed()
+    * radius: fixed invalid behaviour when route to radius server is not existing
+
 * Tue Feb 06 2018 Alexei Takaseev <taf@altlinux.org> 1.11.2-alt7
 - Fix build with glibc-kernheaders >= 4.15
 
