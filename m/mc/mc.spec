@@ -3,8 +3,10 @@
 
 Name: mc
 Version: 4.8.20
-Release: alt1
-%define ver_date ''
+Release: alt2
+
+# '-gitYYYYMMDD' or ''
+%define ver_date '-git20180224'
 
 License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
@@ -202,6 +204,9 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Sun Mar 04 2018 Sergey Y. Afonin <asy@altlinux.ru> 4.8.20-alt2
+- updated to 20180224 git snapshot (ALT #34573)
+
 * Mon Dec 11 2017 Sergey Y. Afonin <asy@altlinux.ru> 4.8.20-alt1
 - 4.8.20
 - added mcedit.desktop (ALT #32528)
