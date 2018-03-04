@@ -1,5 +1,5 @@
 Name: ntp
-Version: 4.2.8p10
+Version: 4.2.8p11
 Release: alt1
 %define srcname %name-%version%{?patchlevel:%patchlevel}
 
@@ -47,7 +47,7 @@ BuildRequires: libcap-devel
 BuildRequires: libssl-devel
 
 # for sbin/update-leap
-BuildRequires: perl-File-Fetch perl-Digest-SHA
+BuildRequires: perl-File-Fetch perl-Digest-SHA perl-HTTP-Tiny perl-Net-SSLeay perl-IO-Socket-SSL
 
 # Root directory for chrooted environment, must not be same as real system root.
 %define ROOT /var/lib/ntpd
@@ -337,6 +337,12 @@ fi
 %ghost %ROOT/%_lib/libresolv.so.2
 
 %changelog
+* Sun Mar 04 2018 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8p11-alt1
+- 4.2.8p11 (CVE-2018-7185, CVE-2018-7184, CVE-2018-7170, CVE-2018-7183,
+  CVE-2018-7182, CVE-2016-1549)
+- updated vniiftri ntp servers in ntp.conf
+- added perl-HTTP-Tiny, perl-Net-SSLeay, perl-IO-Socket-SSL to BuildRequires
+
 * Wed Sep 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 4.2.8p10-alt1
 - updated to 4.2.8p10 (Fixes: CVE-2017-6451, CVE-2017-6452, CVE-2017-6455,
   CVE-2017-6458, CVE-2017-6459, CVE-2017-6460, CVE-2017-6462, 
