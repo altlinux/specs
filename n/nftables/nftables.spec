@@ -1,6 +1,6 @@
 Name:           nftables
 Epoch:          1
-Version:        0.8.2
+Version:        0.8.3
 Release:        alt1
 Summary:        nftables is the project that aims to replace the existing {ip,ip6,arp,eb}tables framework
 Group:          System/Libraries
@@ -9,10 +9,10 @@ URL:            http://netfilter.org/projects/nftables
 # git://git.netfilter.org/nftables
 Source:        %name-%version.tar
 BuildRequires: libmnl-devel libnftnl-devel flex bison libgmp-devel libreadline-devel
-BuildPreReq: docbook2X dblatex
+BuildPreReq: docbook2X
 
 #TODO
-# docbook-utils-print
+# docbook-utils-print dblatex
 
 %description
 libnftnl is a userspace library providing a low-level netlink programming interface (API) to the
@@ -33,16 +33,23 @@ This library is currently used by nftables.
 %install
 %makeinstall_std
 
+mkdir -p %buildroot%_sysconfdir/nftables
+cp files/examples/* %buildroot%_sysconfdir/nftables/
+
 %files
 %doc COPYING TODO
 #%%doc %_docdir/%name
 %dir %_sysconfdir/nftables
-%config %_sysconfdir/nftables/*
+%attr(644,root,root) %config %_sysconfdir/nftables/*
 %_sbindir/*
 %_man8dir/*
 
 
 %changelog
+* Sun Mar 04 2018 Alexei Takaseev <taf@altlinux.org> 1:0.8.3-alt1
+- Version 0.8.3
+- Remove dblatex from BR
+
 * Mon Feb 05 2018 Alexei Takaseev <taf@altlinux.org> 1:0.8.2-alt1
 - Version 0.8.2
 
