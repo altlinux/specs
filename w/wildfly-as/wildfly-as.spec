@@ -1,6 +1,6 @@
 Name: wildfly-as
 Version: 10.1.0
-Release: alt1
+Release: alt2
 
 Summary: wildfly-as - Wildfly Application Server
 
@@ -107,6 +107,9 @@ useradd -d %wildflydir -r -s /bin/nologin %wildflyuser >/dev/null 2>&1 || :
 %attr(644,root,root) /lib/systemd/system/wildfly-as.service
 
 %changelog
+* Mon Mar 05 2018 Konstantinov Aleksey <kana@altlinux.org> 10.1.0-alt2
+- 10.0.0 
+
 * Sun Mar 04 2018 Konstantinov Aleksey <kana@altlinux.org> 10.1.0-alt1
 - Initial version for wildfly applicatio server
 
