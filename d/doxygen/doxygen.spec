@@ -1,6 +1,6 @@
 Name: doxygen
 Version: 1.8.13
-Release: alt2
+Release: alt2.1
 Epoch: 1
 
 Summary: Doxygen is a documentation system for C, C++ and IDL
@@ -15,7 +15,7 @@ Patch1: %name-%version-upstream-crash.patch
 
 # Automatically added by buildreq on Wed May 10 2017
 # optimized out: cmake-modules fontconfig fonts-type1-urw ghostscript-classic libgpg-error libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-webkit-devel libqt4-xml libstdc++-devel libwayland-client libwayland-server perl python-base python-modules tex-common texlive-base texlive-base-bin texlive-common texlive-extra-utils texlive-fonts-recommended texlive-generic-recommended texlive-latex-base texlive-latex-extra texlive-latex-recommended texlive-xetex texmf-latex-xcolor xml-utils
-BuildRequires: cmake flex gcc-c++ ghostscript-common graphviz phonon-devel python-modules-xml texlive-publishers texmf-latex-tabu
+BuildRequires: cmake flex gcc-c++ ghostscript-common graphviz phonon-devel python-modules-xml texlive-collection-publishers tex(tabu.sty)
 
 %description
 Doxygen is a documentation system for C, C++ and IDL.  It can generate
@@ -124,6 +124,9 @@ cd BUILD && make tests
 %exclude %_man1dir/doxy[is]*
 
 %changelog
+* Mon Mar 05 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.8.13-alt2.1
+- NMU: fixed build with texlive 2017
+
 * Fri Jun 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.8.13-alt2
 - Applied upstream patch to fix some crash cases
 
