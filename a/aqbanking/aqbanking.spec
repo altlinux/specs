@@ -1,6 +1,6 @@
 Name:     aqbanking
 Version:  5.7.8
-Release:  alt1
+Release:  alt2
 
 Summary:  A library for online banking functions and financial data import/export
 License:  GPLv2+
@@ -250,6 +250,9 @@ install -m 644 %SOURCE1 %buildroot%_docdir/%name/
 %_docdir/%name/
 
 %changelog
+* Mon Mar 05 2018 Andrey Cherepanov <cas@altlinux.org> 5.7.8-alt2
+- Rebuild with libgwenhywfar-4.20.0.
+
 * Thu Feb 15 2018 Andrey Cherepanov <cas@altlinux.org> 5.7.8-alt1
 - new version 5.7.8
 
