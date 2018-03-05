@@ -1,6 +1,6 @@
 
 Name:           pcsc-tools
-Version:        1.4.27
+Version:        1.5.2
 Release:        alt1
 Summary:        Tools to be used with smart cards and PC/SC
 
@@ -33,19 +33,20 @@ card from a GTK user interface.
 
 %prep
 %setup -q
-subst 's/-O2 -g/$(RPM_OPT_FLAGS)/' Makefile
 
 %build
+%autoreconf
+%configure
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot%_prefix
+%makeinstall_std
 desktop-file-install --mode=644 \
   --dir=$RPM_BUILD_ROOT%{_datadir}/applications gscriptor.desktop
 # TODO: icon
 
 %files
-%doc Changelog LICENCE README
+%doc Changelog README
 %_bindir/*
 %_datadir/pcsc/
 %doc %_man1dir/*
@@ -58,6 +59,9 @@ desktop-file-install --mode=644 \
 %doc %_man1dir/gscriptor.*
 
 %changelog
+* Mon Mar 05 2018 Andrey Cherepanov <cas@altlinux.org> 1.5.2-alt1
+- New version.
+
 * Mon Jul 04 2016 Andrey Cherepanov <cas@altlinux.org> 1.4.27-alt1
 - New version
 
