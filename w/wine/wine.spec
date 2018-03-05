@@ -1,10 +1,10 @@
 %def_enable static
 %define gecko_version 2.47
 %define mono_version 4.7.1
-%define major 2.21
+%define major 3.3
 
 Name: wine
-Version: %major.3
+Version: %major.1
 Release: alt1
 Epoch: 1
 
@@ -18,9 +18,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # TODO: major in gear
 
-# Source-url: https://dl.winehq.org/wine/source/2.x/wine-%major.tar.xz
+# Source-url: https://dl.winehq.org/wine/source/3.x/wine-%major.tar.xz
 Source: %name-%version.tar
-# Source1-url: https://github.com/wine-compholio/wine-staging/archive/v%major.tar.gz
+# Source1-url: https://github.com/wine-staging/wine-staging/archive/v%major.tar.gz
 Source1: %name-staging-%version.tar
 
 Source2: winetricks
@@ -468,6 +468,10 @@ rm -f %buildroot%_desktopdir/wine.desktop
 %endif
 
 %changelog
+* Mon Mar 05 2018 Vitaly Lipatov <lav@altlinux.ru> 1:3.3.1-alt1
+- new version (3.3)
+- build with winehq 3.3 incorporated Kerberos related code only
+
 * Tue Jan 16 2018 Vitaly Lipatov <lav@altlinux.ru> 1:2.21.3-alt1
 - update winetricks up to 20171222
 - wine.inf: Add the Kerberos SSP/AP registration
