@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 0.1.6
-Release: alt1
+Release: alt2
 Summary: An implementation of EWMH (Extended Window Manager Hints) for python, based on Xlib
 
 License: GPLv3
@@ -14,10 +14,12 @@ Packager: Python Development Team <python@packages.altlinux.org>
 
 Source: %name-%version.tar
 BuildArch: noarch
-BuildRequires: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-xlib
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-xlib
 %endif
 %py_provides %modulename
 
@@ -83,5 +85,8 @@ popd
 %endif
 
 %changelog
+* Mon Mar 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.6-alt2
+- Updated build dependencies.
+
 * Mon Jan 02 2017 Anton Midyukov <antohami@altlinux.org> 0.1.6-alt1
 - Initial build for ALT Linux.
