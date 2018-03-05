@@ -7,7 +7,7 @@ Name: python-module-%oname
 URL:http://niftilib.sf.net/pynifti/
 Summary: Easy access to NIfTI images from within Python
 Version: 2.2.1
-Release: alt1
+Release: alt2
 License: MIT
 BuildArch: noarch
 Group: Development/Python
@@ -24,9 +24,11 @@ BuildRequires: python-module-numpy-testing python-module-nose
 BuildRequires: python-module-pydicom python-modules-sqlite3
 BuildRequires: python-module-alabaster python-module-html5lib python-module-numpydoc python-module-objects.inv python-module-sphinx-pickles
 BuildRequires: python2.7(matplotlib) python2.7(matplotlib.sphinxext.plot_directive) python2.7(texext)
+BuildRequires: python2.7(mock)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-numpy-testing
+BuildRequires: python3(six)
 %endif
 
 %setup_python_module %oname
@@ -216,6 +218,9 @@ rm -f %buildroot%python_sitelibdir/conf.py
 %endif
 
 %changelog
+* Mon Mar 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.1-alt2
+- Fixed build dependencies.
+
 * Tue Nov 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.2.1-alt1
 - Updated to upstream version 2.2.1.
 
