@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 2.0
+Version: 2.1
 Release: alt1
 Summary: LDAP connection library
 License: ZPLv2.1
@@ -12,17 +12,18 @@ Url: https://pypi.python.org/pypi/dataflake.fakeldap/
 
 # https://github.com/dataflake/dataflake.fakeldap.git
 Source: %name-%version.tar
+Patch1: %name-%version-alt.patch
 
-BuildPreReq: python-devel python-module-ldap
-BuildPreReq: python-module-setuptools-tests python-module-dataflake
-BuildPreReq: python-module-nose python-module-coverage
-BuildPreReq: python-module-sphinx-devel python-module-pkginfo
+BuildRequires: python-devel python-module-ldap
+BuildRequires: python-module-setuptools python-module-dataflake
+BuildRequires: python-module-nose python-module-coverage
+BuildRequires: python-module-sphinx-devel python-module-pkginfo
 BuildRequires: python-module-six python-module-pyldap
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-ldap
-BuildPreReq: python3-module-setuptools-tests python3-module-dataflake
-BuildPreReq: python3-module-nose python3-module-coverage
+BuildRequires: python3-devel python3-module-ldap
+BuildRequires: python3-module-setuptools python3-module-dataflake
+BuildRequires: python3-module-nose python3-module-coverage
 BuildRequires: python3-module-six python3-module-pyldap
 %endif
 
@@ -96,6 +97,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch1 -p1
 
 sed -i 's:../bin/sphinx-build:sphinx-build:g' \
 	docs/Makefile
@@ -171,6 +173,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1-alt1
+- Updated to upstream version 2.1.
+
 * Fri Aug 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0-alt1
 - Updated to upstream version 2.0
 
