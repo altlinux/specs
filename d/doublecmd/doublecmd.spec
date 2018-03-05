@@ -1,6 +1,6 @@
 Name:		doublecmd
 Summary:	Twin-panel (commander-style) file manager (GTK2 and QT4)
-Version:	0.7.8
+Version:	0.8.2
 Release:	alt1
 Url:		http://doublecmd.sourceforge.net
 
@@ -103,6 +103,9 @@ convert -resize 16x16 pixmaps/mainicon/alt/256px-dcfinal.png %buildroot%_miconsd
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Mar 05 2018 Motsyo Gennadi <drool@altlinux.ru> 0.8.2-alt1
+- 0.8.2
+
 * Mon Feb 27 2017 Motsyo Gennadi <drool@altlinux.ru> 0.7.8-alt1
 - 0.7.8
 
