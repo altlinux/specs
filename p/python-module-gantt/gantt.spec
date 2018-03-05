@@ -3,26 +3,26 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.10
-Release: alt1.1
+Version: 0.6.0
+Release: alt1
 Summary: This is a python class to create gantt chart using SVG
 License: GPLv3+
 Group: Development/Python
+BuildArch: noarch
 Url: https://pypi.python.org/pypi/python-gantt/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
-BuildArch: noarch
+Patch1: %oname-%version-alt.patch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-svgwrite python-module-clize
-BuildPreReq: python-module-nose
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-svgwrite python-module-clize
+BuildRequires: python-module-nose python2.7(dateutil)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-svgwrite python3-module-clize
-BuildPreReq: python3-module-nose
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-svgwrite python3-module-clize
+BuildRequires: python3-module-nose python3(dateutil)
+BuildRequires: python-tools-2to3
 %endif
 
 %py_provides %oname org2gantt
@@ -43,6 +43,7 @@ Output format is SVG.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: This is a python class to create gantt chart using SVG
 Group: Development/Python3
@@ -63,9 +64,11 @@ Python-Gantt make possible to easily draw gantt charts from Python.
 Output format is SVG.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
+%patch1 -p1
 
 touch org2gantt/__init__.py
 
@@ -105,13 +108,13 @@ popd
 
 %check
 export PYTHONPATH=$PWD
-python setup.py test
-%make test
+python setup.py build_ext -i
+%make test PYTHON=python NOSETESTS=nosetests
 %if_with python3
 pushd ../python3
 export PYTHONPATH=$PWD
-python3 setup.py test
-%make test PY3=3
+python3 setup.py build_ext -i
+%make test PYTHON=python3 NOSETESTS=nosetests3
 popd
 %endif
 
@@ -145,6 +148,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.0-alt1
+- Updated to upstream version 0.6.0.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.10-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
