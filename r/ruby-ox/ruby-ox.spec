@@ -1,7 +1,7 @@
 %define  pkgname ox
 
 Name: 	 ruby-%pkgname
-Version: 2.8.2
+Version: 2.8.4
 Release: alt1
 
 Summary: Ruby Optimized XML Parser
@@ -58,6 +58,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Mar 05 2018 Andrey Cherepanov <cas@altlinux.org> 2.8.4-alt1
+- New version.
+
 * Thu Nov 02 2017 Andrey Cherepanov <cas@altlinux.org> 2.8.2-alt1
 - New version
 
