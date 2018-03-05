@@ -4,7 +4,7 @@
 
 Name: python-module-%mname
 Version: 0.4.2
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: JWCrypto is an implementation of the Javascript Object Signing and Encryption (JOSE) Web Standards
 
 Group: Development/Python
@@ -24,8 +24,10 @@ BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-cryptography
+BuildRequires: python2.7(pytest)
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-cryptography
+BuildRequires: python3(pytest)
 
 %description
 An implementation of the JOSE Working Group documents:
@@ -82,13 +84,16 @@ rm -rfv %buildroot%python3_sitelibdir/%mname/tests*
 
 %files
 %python_sitelibdir/%mname
-%python_sitelibdir/%mname-%version-py2.?.egg-info
+%python_sitelibdir/%mname-%version-py*.egg-info
 
 %files -n python3-module-%mname
 %python3_sitelibdir/%mname
-%python3_sitelibdir/%mname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%mname-%version-py*.egg-info
 
 %changelog
+* Mon Mar 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.2-alt2%ubt
+- Updated build dependencies.
+
 * Tue Oct 24 2017 Stanislav Levin <slev@altlinux.org> 0.4.2-alt1%ubt
 - New 0.4.2 version
 
