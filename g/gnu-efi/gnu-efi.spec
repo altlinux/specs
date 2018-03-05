@@ -1,6 +1,6 @@
 Name: gnu-efi
 Version: 3.0.6
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Building EFI applications using the GNU toolchain
 # Intel and HP's BSD-like license, except setjmp code coming from GRUB
@@ -11,8 +11,10 @@ Url: http://gnu-efi.sourceforge.net/
 # git https://git.code.sf.net/p/gnu-efi/code
 Source: %name-%version.tar
 Patch1: gnu-efi-3.0.6-redhat-fix-some-types-gcc-doesn-t-like.patch
+Patch2: gnu-efi-3.0.6-redhat-Make-ia32-use-our-own-div-asm-on-gnu-C-as-well.patch
 ExclusiveArch: %ix86 x86_64 aarch64
 Conflicts: gnu-efi-3.0r gnu-efi-3.0u gnu-efi-3.0.5
+%define efidir altlinux
 
 %description
 GNU-EFI development environment allows to create EFI applications
@@ -21,13 +23,23 @@ for IA-64 and x86 platforms using the GNU toolchain.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 %make
 %make apps
+%ifarch x86_64
+setarch linux32 -B make ARCH=ia32 PREFIX=%prefix LIBDIR=%prefix/lib
+setarch linux32 -B make ARCH=ia32 PREFIX=%prefix LIBDIR=%prefix/lib apps
+%endif
+
 
 %install
 %make install INSTALLROOT=%buildroot PREFIX=%prefix LIBDIR=%_libdir
+%ifarch x86_64
+setarch linux32 -B make PREFIX=%prefix LIBDIR=%_prefix/lib INSTALLROOT=%buildroot ARCH=ia32 install
+%endif
+
 
 %files
 %doc ChangeLog README.* apps
@@ -35,9 +47,15 @@ for IA-64 and x86 platforms using the GNU toolchain.
 %_libdir/libgnuefi.a
 %_libdir/crt0-efi-*.o
 %_libdir/elf_*_efi.lds
+%ifarch x86_64
+%_prefix/lib/*
+%endif
 %_includedir/efi
 
 %changelog
+* Mon Mar 05 2018 Anton Farygin <rider@altlinux.ru> 1:3.0.6-alt2
+- built 32-bit gni-efi toolchain on x86_64
+
 * Sun Nov 26 2017 Anton Farygin <rider@altlinux.ru> 1:3.0.6-alt1
 - 3.0.6
 
