@@ -14,7 +14,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
 Version:        52.6.0
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -38,6 +38,7 @@ Patch17:        firefox-mediasource-crash.patch
 # Upstream
 Patch200:       mozilla-bug-256180.patch
 Patch201:       mozilla-bug-1196777.patch
+Patch202:       mozilla-bug-1430274.patch
 
 # Red Hat
 Patch301:       rhbz-1291190-appchooser-crash.patch
@@ -129,6 +130,7 @@ tar -xf %SOURCE2
 
 %patch200 -p1
 %patch201 -p1
+%patch202 -p1
 
 %patch301 -p1
 %patch302 -p1
@@ -326,6 +328,9 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Mon Mar 05 2018 Andrey Cherepanov <cas@altlinux.org> 52.6.0-alt2
+- Enable ALSA support (ALT #34608)
+
 * Mon Jan 22 2018 Andrey Cherepanov <cas@altlinux.org> 52.6.0-alt1
 - New ESR version (52.6.0)
 
