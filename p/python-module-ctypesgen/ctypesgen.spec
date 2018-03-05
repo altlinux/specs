@@ -6,25 +6,27 @@
 
 Name: python-module-%oname
 Version: 0.r125
-Release: alt1.1
+Release: alt2
 Summary: Python wrapper generator for ctypes
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/ctypesgen/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-# https://github.com/davidjamesca/ctypesgen.git
-Source0: https://pypi.python.org/packages/b8/9d/13bcf53a190d2a5b3512d3c116920b4a2fadf007600722114b1a17602524/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-nose
-BuildPreReq: python-modules-json python-modules-logging
+# https://github.com/davidjamesca/ctypesgen.git
+Source: %{oname}-%{version}.tar
+
+# Based on changes from https://trac.osgeo.org/grass/ticket/3331 and https://trac.osgeo.org/grass/changeset/71219
+Patch1: ctypesgen-alt-float.patch
+
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-nose
+BuildRequires: python-modules-json python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-nose
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-nose
+BuildRequires: python-tools-2to3
 %endif
 
 %py_provides %oname
@@ -49,6 +51,7 @@ Lua, using the alien module (which binds libffi to Lua).
 
 %prep
 %setup -q -n %{oname}-%{version}
+%patch1 -p2
 
 %if_with python3
 cp -fR . ../python3
@@ -102,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.r125-alt2
+- Fixed floating-point numbers definitions processing.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.r125-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
