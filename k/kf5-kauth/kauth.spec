@@ -1,8 +1,9 @@
 %define rname kauth
+%def_with python3
 
 Name: kf5-%rname
 Version: 5.42.0
-Release: alt2%ubt
+Release: alt3%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -15,8 +16,10 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Tue Feb 10 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libpolkit-qt5-agent libpolkit-qt5-core libpolkit-qt5-gui libqt5-core libqt5-dbus libqt5-gui libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kcoreaddons-devel libpolkitqt5-qt5-devel python-module-google qt5-tools-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt python-module-sip-devel
+BuildRequires(pre): python3-module-sip-devel
 BuildRequires: extra-cmake-modules gcc-c++ kf5-kcoreaddons-devel libpolkitqt5-qt5-devel qt5-tools-devel
+BuildRequires: python-module-kcoreaddons-devel python-module-PyQt5-devel
 
 %description
 KAuth provides a convenient, system-integrated way to offload actions that need
@@ -45,6 +48,45 @@ Requires: %name-common = %version-%release
 %description -n libkf5auth
 KF5 library
 
+%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
+
+%package -n python-module-%rname
+Summary: Python bindings for KAuth
+License: GPLv2+ / LGPLv2+
+Group: Development/Python
+Requires: %name-common = %version-%release
+Requires: python-module-pykf5
+Requires: python-module-sip = %sipver2
+%description -n python-module-%rname
+Python bindings for KAuth
+
+%package -n python-module-%rname-devel
+Summary: Sip files for python-module-%rname
+Group: Development/Python
+BuildArch: noarch
+%description -n python-module-%rname-devel
+Sip files for python-module-%rname
+
+%if_with python3
+%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
+
+%package -n python3-module-%rname
+Summary: Python3 bindings for KAuth
+License: GPLv2+ / LGPLv2+
+Group: Development/Python3
+Requires: %name-common = %version-%release
+Requires: python3-module-pykf5
+Requires: python3-module-sip = %sipver3
+%description -n python3-module-%rname
+Python3 bindings for KAuth
+
+%package -n python3-module-%rname-devel
+Summary: Sip files for python3-module-%rname
+Group: Development/Python3
+BuildArch: noarch
+%description -n python3-module-%rname-devel
+Sip files for python3-module-%rname
+%endif
 
 %prep
 %setup -n %rname-%version
@@ -52,12 +94,14 @@ KF5 library
 %build
 %K5build \
     -DKAUTH_BACKEND_NAME=PolkitQt5-1 \
+    -Dlibclang_LIBRARY=%_libdir/libclang.so \
     #
 
 %install
 %K5install
 %find_lang %name --all-name
 %K5find_qtlang %name --all-name
+
 
 %files common -f %name.lang
 %doc COPYING.LIB README.md
@@ -78,7 +122,24 @@ KF5 library
 %_K5libexecdir/kauth/*
 %_K5plug/kauth/
 
+%files -n python-module-%rname
+%python_sitelibdir/PyKF5/*.so
+
+%files -n python-module-%rname-devel
+%_datadir/sip/PyKF5/KAuth/
+
+%if_with python3
+%files -n python3-module-%rname
+%python3_sitelibdir/PyKF5/*.so
+
+%files -n python3-module-%rname-devel
+%_datadir/sip3/PyKF5/KAuth/
+%endif
+
 %changelog
+* Mon Mar 05 2018 Oleg Solovyov <mcpain@altlinux.org> 5.42.0-alt3%ubt
+- build python bindings
+
 * Mon Jan 22 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt2%ubt
 - package categories config
 

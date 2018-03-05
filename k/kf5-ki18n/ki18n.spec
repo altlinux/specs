@@ -1,8 +1,9 @@
 %define rname ki18n
+%def_with python3
 
 Name: kf5-%rname
 Version: 5.42.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -16,8 +17,10 @@ Patch1: alt-fallback.patch
 # Automatically added by buildreq on Tue Feb 10 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libcloog-isl4 libqt5-concurrent libqt5-core libqt5-script libqt5-test libstdc++-devel python-base python-modules qt5-base-devel ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ python-module-google python-modules-encodings qt5-script-devel rpm-build-gir rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt python-module-sip-devel
+BuildRequires(pre): python3-module-sip-devel
 BuildRequires: extra-cmake-modules gcc-c++ qt5-script-devel qt5-declarative-devel python-modules-encodings
+BuildRequires: python-module-PyQt5-devel
 
 %description
 KI18n provides functionality for internationalizing user interface text
@@ -47,19 +50,61 @@ Requires: %name-common = %version-%release
 %description -n libkf5i18n
 KF5 library
 
+%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
+
+%package -n python-module-%rname
+Summary: Python bindings for KI18n
+License: GPLv2+ / LGPLv2+
+Group: Development/Python
+Requires: %name-common = %version-%release
+Requires: python-module-pykf5
+Requires: python-module-sip = %sipver2
+%description -n python-module-%rname
+Python bindings for KI18n
+
+%package -n python-module-%rname-devel
+Summary: Sip files for python-module-%rname
+Group: Development/Python
+BuildArch: noarch
+%description -n python-module-%rname-devel
+Sip files for python-module-%rname
+
+%if_with python3
+%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
+
+%package -n python3-module-%rname
+Summary: Python3 bindings for KI18n
+License: GPLv2+ / LGPLv2+
+Group: Development/Python3
+Requires: %name-common = %version-%release
+Requires: python3-module-pykf5
+Requires: python3-module-sip = %sipver3
+%description -n python3-module-%rname
+Python3 bindings for KI18n
+
+%package -n python3-module-%rname-devel
+Summary: Sip files for python3-module-%rname
+Group: Development/Python3
+BuildArch: noarch
+%description -n python3-module-%rname-devel
+Sip files for python3-module-%rname
+%endif
 
 %prep
 %setup -n %rname-%version
 %patch1 -p1
 
 %build
-%K5build
+%K5build \
+    -Dlibclang_LIBRARY=%_libdir/libclang.so \
+    #
 
 %install
 %K5install
 %K5install_move data locale
 %find_lang %name --all-name
 %K5find_qtlang %name --all-name
+
 
 %files common -f %name.lang
 %doc COPYING.LIB README.md
@@ -78,7 +123,24 @@ KF5 library
 %_K5lib/libKF5I18n.so.*
 %_K5plug/kf5/ktranscript.so
 
+%files -n python-module-%rname
+%python_sitelibdir/PyKF5/*.so
+
+%files -n python-module-%rname-devel
+%_datadir/sip/PyKF5/KI18n/
+
+%if_with python3
+%files -n python3-module-%rname
+%python3_sitelibdir/PyKF5/*.so
+
+%files -n python3-module-%rname-devel
+%_datadir/sip3/PyKF5/KI18n/
+%endif
+
 %changelog
+* Mon Mar 05 2018 Oleg Solovyov <mcpain@altlinux.org> 5.42.0-alt2%ubt
+- build python bindings
+
 * Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt1%ubt
 - new version
 

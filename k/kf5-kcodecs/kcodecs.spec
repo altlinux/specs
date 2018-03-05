@@ -1,8 +1,9 @@
 %define rname kcodecs
+%def_with python3
 
 Name: kf5-%rname
 Version: 5.42.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -15,9 +16,12 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Fri Dec 26 2014 (-bi)
 # optimized out: cmake cmake-modules elfutils libcloog-isl4 libqt5-core libqt5-test libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ python-module-google qt5-tools-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt python-module-sip-devel
+BuildRequires(pre): python3-module-sip-devel
+
 BuildRequires: extra-cmake-modules gcc-c++ qt5-tools-devel
 BuildRequires: /usr/bin/gperf
+BuildRequires: python-module-PyQt5-devel
 
 %description
 KCodecs provide a collection of methods to manipulate strings using various encodings.
@@ -44,12 +48,53 @@ Requires: %name-common = %version-%release
 %description -n libkf5codecs
 KF5 library
 
+%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
+
+%package -n python-module-%rname
+Summary: Python bindings for KCodecs
+License: GPLv2+ / LGPLv2+
+Group: Development/Python
+Requires: %name-common = %version-%release
+Requires: python-module-pykf5
+Requires: python-module-sip = %sipver2
+%description -n python-module-%rname
+Python bindings for KCodecs
+
+%package -n python-module-%rname-devel
+Summary: Sip files for python-module-%rname
+Group: Development/Python
+BuildArch: noarch
+%description -n python-module-%rname-devel
+Sip files for python-module-%rname
+
+%if_with python3
+%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
+
+%package -n python3-module-%rname
+Summary: Python3 bindings for KCodecs
+License: GPLv2+ / LGPLv2+
+Group: Development/Python3
+Requires: %name-common = %version-%release
+Requires: python3-module-pykf5
+Requires: python3-module-sip = %sipver3
+%description -n python3-module-%rname
+Python3 bindings for KCodecs
+
+%package -n python3-module-%rname-devel
+Summary: Sip files for python3-module-%rname
+Group: Development/Python3
+BuildArch: noarch
+%description -n python3-module-%rname-devel
+Sip files for python3-module-%rname
+%endif
 
 %prep
 %setup -n %rname-%version
 
 %build
-%K5build
+%K5build \
+    -Dlibclang_LIBRARY=%_libdir/libclang.so \
+    #
 
 %install
 %K5install
@@ -70,7 +115,24 @@ KF5 library
 %files -n libkf5codecs
 %_K5lib/libKF5Codecs.so.*
 
+%files -n python-module-%rname
+%python_sitelibdir/PyKF5/*.so
+
+%files -n python-module-%rname-devel
+%_datadir/sip/PyKF5/KCodecs/
+
+%if_with python3
+%files -n python3-module-%rname
+%python3_sitelibdir/PyKF5/*.so
+
+%files -n python3-module-%rname-devel
+%_datadir/sip3/PyKF5/KCodecs/
+%endif
+
 %changelog
+* Mon Mar 05 2018 Oleg Solovyov <mcpain@altlinux.org> 5.42.0-alt2%ubt
+- build python bindings
+
 * Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt1%ubt
 - new version
 
