@@ -83,7 +83,7 @@ BuildRequires: perl(Tk/ItemStyle.pm) perl(Tk/NoteBook.pm) perl(Tk/PNG.pm) perl(T
 
 Name:		texlive-texmf
 Version:	%relYear
-Release:	alt2_2
+Release:	alt3_2
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -134,6 +134,8 @@ Patch4: texlive-20160523-texmf-mageia-kpfix.patch
 %global __provides_exclude %{?__provides_exclude:%__provides_exclude|}^pear\\(animals.php\\)$
 Requires(post): tex-common
 Source44: import.info
+BuildRequires: rpm-build-tex
+AutoReq: yes,notex
 Source8000: texlive-20170524-texmf-dist-scripts-perl-526.patch
 Source8001: texlive-texmf-dist-scripts-system-PDF-Reuse.patch
 Source8003: texlive-fix-info-dir-sections.patch
@@ -207,11 +209,15 @@ Obsoletes: texmf-latex-obsolete <= 0.1-alt1
 Obsoletes: texmf-latex-tipa <= 1.3-alt4
 Obsoletes: texmf-latex-xcolor <= 2.06-alt3
 Obsoletes: texmf-pgf <= 2.10-alt0.1
+AutoReq: yes,notex
 #Requires: texlive = %{tl_version}
 Provides: texlive-collection-fontsrecommended = %{tl_version}
 Provides: texlive-collection-fontutils = %{tl_version}
 Provides: texlive-collection-latexrecommended = %{tl_version}
 Provides: texlive-collection-genericrecommended = %{tl_version}
+Provides: tex(tex)
+Provides: tex(latex-base)
+Provides: tex(latex)
 Requires: perl(PDF/Reuse.pm)
 Provides: texlive-metapost = %{tl_version}
 Conflicts: texlive-metapost < 2009
@@ -765,6 +771,7 @@ Obsoletes: texmf-latex-xcolor < 2.12
 Obsoletes: texmf-pgf < 3.0.1a
 Obsoletes: texmf-standalone <= 1.2-alt1
 Obsoletes: tetex-bibtex8 <= 3.71-alt1.qa1
+AutoReq: yes,notex
 #Requires: texlive = %{tl_version}
 Provides: texlive-collection-langafrican = %{tl_version}
 Provides: texlive-collection-langarabic = %{tl_version}
@@ -805,6 +812,10 @@ Provides: texlive-collection-pstricks = %{tl_version}
 Provides: texlive-collection-publishers = %{tl_version}
 Provides: texlive-collection-science = %{tl_version}
 Provides: texlive-collection-xetex = %{tl_version}
+Provides: tex(xetex)
+Provides: tex(dvips)
+Provides: tex(japanese)
+Provides: tex(east-asian)
 Provides: texlive-lang-indic = %{tl_version}
 Conflicts: texlive-lang-indic < 2009
 Obsoletes: texlive-lang-indic < 2009
@@ -2012,6 +2023,7 @@ Group:		Publishing
 Requires:	texlive-texmf = %{version}-%{release}
 Requires:	ruby ruby-tools
 Conflicts: tetex-context < 2.01
+AutoReq: yes,notex
 #Requires: texlive = %{tl_version}
 Provides: texlive-collection-context = %{tl_version}
 
@@ -2050,6 +2062,7 @@ if you rely on context for building tex documents.
 Summary:	Tex Live documentation
 Group:		Publishing
 Requires:	texlive-texmf = %{version}-%{release}
+AutoReq: yes,notex
 Provides: texlive-doc-base = %{tl_version}
 Conflicts: texlive-doc-base < 2009
 Obsoletes: texlive-doc-base < 2009
@@ -2133,6 +2146,7 @@ Requires:	texlive-texmf = %{version}
 Requires(post):	texlive-dist = %{version}-%{release}
 Requires(postun):	texlive >= %{tl_version}
 Obsoletes: texmf-fonts-cm-lgc <= 0.5-alt2_20
+AutoReq: yes,notex
 #Requires: texlive = %{tl_version}
 Provides: texlive-collection-fontsextra = %{tl_version}
 
@@ -3084,6 +3098,9 @@ rm -rf %buildroot%{texmfdistdir}/scripts/xetex/perl/lib
 
 
 %changelog
+* Mon Mar 05 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt3_2
+- added tex provides and latexmk
+
 * Fri Mar 02 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt2_2
 - updated filetrigger
 
