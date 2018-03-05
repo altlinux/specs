@@ -1,8 +1,13 @@
+%define ver_maj 1
+%define ver_min 65
+%define ver_rel 0
+
+%define namesuff %{ver_maj}_%{ver_min}_%ver_rel
 
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with jam
 %def_with devel_static
@@ -40,11 +45,11 @@
 %define mpidir %_libdir/%mpiimpl
 %endif
 
-%define _unpackaged_files_terminate_build 1
+#%%define _unpackaged_files_terminate_build 1
 
-Name: boost
-Version: 1.66.0
-Release: alt1
+Name: boost%namesuff
+Version: %ver_maj.%ver_min.%ver_rel
+Release: alt2
 Epoch: 1
 
 Summary: Boost libraries
@@ -54,7 +59,7 @@ Url: http://www.boost.org
 
 Packager: Ivan Melnikov <iv@altlinux.org>
 
-Source: %name-%version.tar
+Source: boost_%namesuff.tar
 Patch4: boost-1.57.0-alt-explicit-st.patch
 Patch5: boost-1.57.0-alt-bjam-locate-target.patch
 Patch15: boost-1.36.0-alt-test-include-fix.patch
@@ -62,8 +67,6 @@ Patch23: boost-1.45.0-alt-mpi-mt-only.patch
 Patch28: boost-1.50.0-fedora-polygon-fix-gcc47.patch
 Patch29: boost-1.53.0-alt-qt4-moc-fix.patch
 Patch30: boost-1.63.0-alt-python-paths.patch
-Patch82: boost-1.66.0-fedora-no-rpath.patch
-Patch84: boost-1.66.0-fedora-spirit-abs-overflow.patch
 
 # we use %%requires_python_ABI, introduced in rpm-build-python-0.36.6-alt1
 BuildRequires(pre): rpm-build-python >= 0.36.6-alt1
@@ -1291,7 +1294,7 @@ applications. This package contains python module.
 
 %prep
 
-%setup -q
+%setup -q -n boost_%namesuff
 %patch4 -p2
 %patch5 -p2
 %patch15 -p1
@@ -1299,8 +1302,6 @@ applications. This package contains python module.
 %patch28 -p3
 %patch29 -p2
 %patch30 -p1
-%patch82 -p1
-%patch84 -p1
 
 COMPILER_FLAGS="%optflags -fno-strict-aliasing"
 
@@ -1885,8 +1886,8 @@ done
 
 
 %changelog
-* Tue Feb 27 2018 Alexey Shabalin <shaba@altlinux.ru> 1:1.66.0-alt1
-- Update to 1.66.0.
+* Mon Mar 05 2018 Alexey Shabalin <shaba@altlinux.ru> 1:1.65.0-alt2
+- Rebuilt as compat package without development files.
 
 * Fri Aug 25 2017 Mikhail Efremov <sem@altlinux.org> 1:1.65.0-alt1
 - Fix build without context.
