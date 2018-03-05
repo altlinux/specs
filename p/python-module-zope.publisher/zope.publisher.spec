@@ -1,31 +1,65 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1
+%define _unpackaged_files_terminate_build 1
 %define oname zope.publisher
 
-%def_with python3
+# skip for now due to cyclic deps
+%def_disable check
+%def_with check
 
 Name: python-module-%oname
 Epoch: 1
-Version: 4.2.1
-#Release: alt1.1
+Version: 4.3.2
+Release: alt1%ubt
+
 Summary: The Zope publisher publishes Python objects on the web
-License: Boost Software License, Version 1.0
+License: ZPLv2.1
 Group: Development/Python
-Url: http://pypi.python.org/pypi/zope.publisher/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+# Source-git https://github.com/zopefoundation/zope.publisher.git
+Url: http://pypi.python.org/pypi/zope.publisher
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+
+BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python-module-zope.browser
+BuildRequires: python-module-zope.component
+BuildRequires: python-module-zope.component-tests
+BuildRequires: python-module-zope.contenttype
+BuildRequires: python-module-zope.i18n
+BuildRequires: python-module-zope.interface-tests
+BuildRequires: python-module-zope.testing
+BuildRequires: python-module-zope.testrunner
+BuildRequires: python-module-zope.security
+BuildRequires: python-module-zope.security-tests
+BuildRequires: python3-module-zope.browser
+BuildRequires: python3-module-zope.component
+BuildRequires: python3-module-zope.component-tests
+BuildRequires: python3-module-zope.contenttype
+BuildRequires: python3-module-zope.i18n
+BuildRequires: python3-module-zope.interface-tests
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.security
+BuildRequires: python3-module-zope.security-tests
 %endif
 
-%py_requires zope.browser zope.component zope.configuration
-%py_requires zope.contenttype zope.event zope.exceptions zope.i18n
-%py_requires zope.interface zope.location zope.proxy zope.security
+%py_requires zope.browser
+%py_requires zope.component
+%py_requires zope.configuration
+%py_requires zope.contenttype
+%py_requires zope.event
+%py_requires zope.exceptions
+%py_requires zope.i18n
+%py_requires zope.interface
+%py_requires zope.location
+%py_requires zope.proxy
+%py_requires zope.security
 
 %description
 zope.publisher allows you to publish Python objects on the web. It has
@@ -37,9 +71,6 @@ The behaviour of the publisher is geared towards WSGI compatibility.
 %package -n python3-module-%oname
 Summary: The Zope publisher publishes Python objects on the web
 Group: Development/Python3
-%py3_requires zope.browser zope.component zope.configuration
-%py3_requires zope.contenttype zope.event zope.exceptions zope.i18n
-%py3_requires zope.interface zope.location zope.proxy zope.security
 
 %description -n python3-module-%oname
 zope.publisher allows you to publish Python objects on the web. It has
@@ -52,16 +83,9 @@ The behaviour of the publisher is geared towards WSGI compatibility.
 Summary: Tests for zope.publisher
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
-%py3_requires zope.testing
 
 %description -n python3-module-%oname-tests
-zope.publisher allows you to publish Python objects on the web. It has
-support for plain HTTP/WebDAV clients, web browsers as well as XML-RPC
-and FTP clients. Input and output streams are represented by request and
-response objects which allow for easy client interaction from Python.
-The behaviour of the publisher is geared towards WSGI compatibility.
-
-This package contains tests for zope.publisher.
+This package contains tests for %oname.
 
 %package tests
 Summary: Tests for zope.publisher
@@ -70,34 +94,21 @@ Requires: %name = %EVR
 %py_requires zope.testing
 
 %description tests
-zope.publisher allows you to publish Python objects on the web. It has
-support for plain HTTP/WebDAV clients, web browsers as well as XML-RPC
-and FTP clients. Input and output streams are represented by request and
-response objects which allow for easy client interaction from Python.
-The behaviour of the publisher is geared towards WSGI compatibility.
-
-This package contains tests for zope.publisher.
+This package contains tests for %oname.
 
 %prep
 %setup
+%patch0 -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
+rm -rf ../python3
+cp -a . ../python3
 
 %build
 %python_build
-sed -i 's|qhttp|http|g' src/zope/publisher/http.py
-sed -i 's|qxmlrpc|xmlrpc|g' src/zope/publisher/xmlrpc.py
 
-%if_with python3
 pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
-sed -i 's|qhttp|http|g' src/zope/publisher/http.py
-sed -i 's|qxmlrpc|xmlrpc|g' src/zope/publisher/xmlrpc.py
 %python3_build
 popd
-%endif
 
 %install
 %python_install
@@ -107,7 +118,6 @@ mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
@@ -116,7 +126,14 @@ install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
-%endif
+
+%check
+export PYTHONPATH=src
+zope-testrunner --test-path=src -vv
+
+pushd ../python3
+zope-testrunner3 --test-path=src -vv
+popd
 
 %files
 %doc *.txt *.rst
@@ -127,7 +144,6 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files tests
 %python_sitelibdir/*/*/test*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
@@ -138,9 +154,11 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/test*
 %python3_sitelibdir/*/*/*/test*
-%endif
 
 %changelog
+* Mon Mar 05 2018 Stanislav Levin <slev@altlinux.org> 1:4.3.2-alt1%ubt
+- 4.2.1 -> 4.3.2
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:4.2.1-alt1.1.1
 - (AUTO) subst_x86_64.
 
