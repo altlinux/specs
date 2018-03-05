@@ -1,6 +1,6 @@
 Name: asymptote
 Version: 2.41
-Release: alt1
+Release: alt1.1
 
 Summary: Descriptive vector graphics language
 
@@ -23,7 +23,8 @@ BuildRequires: flex gcc-c++ libGL-devel libfftw3-devel libfreeglut-devel libgsl-
 
 BuildRequires: libgc-devel >= 7.4.2
 
-BuildPreReq: texlive-latex-recommended ghostscript-utils /proc rpm-build-texmf
+BuildRequires(pre): rpm-build-tex
+BuildRequires: texlive-collection-latexrecommended ghostscript-utils /proc
 # explicitly added texinfo for info files
 BuildRequires: texinfo
 
@@ -78,6 +79,9 @@ rm -fv *.tar.gz
 %_infodir/%name/*.info*
 
 %changelog
+* Mon Mar 05 2018 Igor Vlasenko <viy@altlinux.ru> 2.41-alt1.1
+- build with texlive 2017
+
 * Sat Apr 08 2017 Vitaly Lipatov <lav@altlinux.ru> 2.41-alt1
 - new version 2.41 (with rpmrb script)
 
