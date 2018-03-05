@@ -1,6 +1,6 @@
 Name: runawfe
 Version: 4.3.0
-Release: alt4
+Release: alt7
 
 Summary: Runawfe
 
@@ -11,7 +11,7 @@ Url: http://sourceforge.net/projects/runawfe/
 Source: %name-%version.tar
 Source1: standalone-runa.xml
 Source2: runawfe-server
-Source3: jboss-as-runawfe-server.conf
+Source3: wildfly-as-runawfe-server.conf
 Source4: runawfe-server.service
 Source5: runawfe-server-start.desktop
 Source6: runawfe-server.png
@@ -24,7 +24,7 @@ Source11: runawfe-gpd.png
 Packager: Danil Mikhailov <danil@altlinux.org>
 
 #PreReq:
-Requires: jboss-as-vanilla >= 7.1.1-alt9
+Requires: wildfly-as >= 10.1.0-alt1
 #Provides:
 #Conflicts:
 
@@ -32,7 +32,7 @@ Requires: jboss-as-vanilla >= 7.1.1-alt9
 # Automatically added by buildreq on Fri Sep 06 2013
 # optimized out: apache-commons-cli atinject google-guice guava java java-devel jpackage-utils maven maven-wagon nekohtml plexus-cipher plexus-classworlds plexus-containers-component-annotations plexus-interpolation plexus-sec-dispatcher plexus-utils python3-base sisu tzdata tzdata-java xbean xerces-j2 xml-commons-jaxp-1.4-apis
 AutoReq: yes,noperl,nopython
-BuildPreReq: rpm-build-java
+BuildPreReq: rpm-build-java java-devel-default
 
 BuildRequires: rpm-build-java
 BuildRequires: maven-local
@@ -49,14 +49,14 @@ BuildRequires: mvn(org.apache.maven.plugins:maven-ejb-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-war-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-ear-plugin)
 BuildRequires: chrpath
-BuildRequires: jboss-as-vanilla
+BuildRequires: wildfly-as
 
-%define jbossuser jboss-as
+%define wildflyuser wildfly-as
 %define runauser _runa
 %define runadir /var/lib/%name
 %define runagpddir %_libdir/runawfe-gpd
 %define runartndir /var/lib/runawfe-notifier
-%define jbossdir %_datadir/jboss-as/standalone
+%define wildflydir %_datadir/wildfly-as/standalone
 %define distrname ALTLinux
 
 #Define for Fedora build http://forums.fedoraforum.org/showthread.php?t=182293
@@ -73,12 +73,12 @@ BuildRequires: jboss-as-vanilla
 
 %description
 RunaWFE is a free OpenSource business process management system. It is delivered
-under LGPL licence. RunaWFE is based on JBoss jBPM and Activiti. It provides rich
+under LGPL licence. RunaWFE is based on wildfly jBPM and Activiti. It provides rich
 web interface with tasklist, form player, graphical process designer, bots and more.
 
 %package server
 Summary: Runawfe server
-Requires: jboss-as-vanilla >= 7.1.1-alt9
+Requires: wildfly-as >= 10.1.0-alt1
 License: LGPL
 Group: Office
 Url: http://sourceforge.net/projects/runawfe/
@@ -86,7 +86,7 @@ BuildArch: noarch
 
 %description server
 RunaWFE is a free OpenSource business process management system. It is delivered
-under LGPL licence. RunaWFE is based on JBoss jBPM and Activiti. It provides rich
+under LGPL licence. RunaWFE is based on wildfly jBPM and Activiti. It provides rich
 web interface with tasklist, form player, graphical process designer, bots and more.
 
 %package gpd
@@ -99,7 +99,7 @@ Provides: osgi(ru.runa.gpd.form.ftl)
 
 %description gpd
 RunaWFE is a free OpenSource business process management system. It is delivered
-under LGPL licence. RunaWFE is based on JBoss jBPM and Activiti. It provides rich
+under LGPL licence. RunaWFE is based on wildfly jBPM and Activiti. It provides rich
 web interface with tasklist, form player, graphical process designer, bots and more.
 
 %package notifier
@@ -111,7 +111,7 @@ Url: http://sourceforge.net/projects/runawfe/
 
 %description notifier
 RunaWFE is a free OpenSource business process management system. It is delivered
-under LGPL licence. RunaWFE is based on JBoss jBPM and Activiti. It provides rich
+under LGPL licence. RunaWFE is based on wildfly jBPM and Activiti. It provides rich
 web interface with tasklist, form player, graphical process designer, bots and more.
 
 %prep
@@ -149,15 +149,15 @@ popd
 # server
 pushd .
 cd wfe
-mkdir -p %buildroot/%jbossdir/{bin,data,deployments,log,tmp,configuration}
-mkdir -p %buildroot/etc/jboss-as/
+mkdir -p %buildroot/%wildflydir/{bin,data,deployments,log,tmp,configuration}
+mkdir -p %buildroot/etc/wildfly-as/
 mkdir -p %buildroot/lib/systemd/system/
 mkdir -p %buildroot%_desktopdir/
 mkdir -p %buildroot%_pixmapsdir/
 
-#FIX correct path to jboss-as/bin
-cp %SOURCE1 %buildroot%jbossdir/configuration/
-cp %SOURCE3 %buildroot/etc/jboss-as/
+#FIX correct path to wildfly-as/bin
+cp %SOURCE1 %buildroot%wildflydir/configuration/
+cp %SOURCE3 %buildroot/etc/wildfly-as/
 #cp %SOURCE4 %buildroot/lib/systemd/system/
 cp %SOURCE5 %buildroot%_desktopdir/
 cp %SOURCE6 %buildroot%_pixmapsdir/
@@ -174,11 +174,11 @@ mkdir -p %buildroot%_initdir/
 #  -  a very simple service - start is executing bin in a background (because we havent /etc/init.d/functions on this)
 # 2) AltLinux and Fedora runs like:
 #  -  a program (runs service start)
-#  -  full supported service (starts jboss with runa config)
+#  -  full supported service (starts wildfly with runa config)
 
 cat >%buildroot/%_sbindir/%name <<EOF
 #!/bin/sh
-JBOSS_BASE_DIR=%jbossdir su - jboss-as -s /bin/sh -c "/usr/share/jboss-as/bin/standalone.sh -c standalone-runa.xml"
+JBOSS_BASE_DIR=%wildflydir su - wildfly-as -s /bin/sh -c "/usr/share/wildfly-as/bin/standalone.sh -c standalone-runa.xml"
 
 EOF
 
@@ -186,13 +186,13 @@ cat >%buildroot%_initdir/%name <<EOF
 #!/bin/sh
 if [ "\$1" = "start" ] ; then
     #rm -f %_runtimedir/%name.pid
-    #ln -s %_runtimedir/jboss-as/jboss-as-standalone.pid %_runtimedir/%name.pid
+    #ln -s %_runtimedir/wildfly-as/wildfly-as-standalone.pid %_runtimedir/%name.pid
     #TODO BUG not work macros %_runtimedir !
     %_sbindir/%name > /var/log/%name 2>&1 &
 fi
 if [ "\$1" = "stop" ] ; then
-    %jbossdir/../bin/jboss-cli.sh --connect --command=:shutdown
-    #/usr/share/jboss-as/bin/
+    %wildflydir/../bin/jboss-cli.sh --connect --command=:shutdown
+    #/usr/share/wildfly-as/bin/
 fi
 
 EOF
@@ -217,9 +217,9 @@ cat >%buildroot%_initdir/%name <<EOF
 ### END INIT INFO
 
 rm -f %_runtimedir/%name.pid
-ln -s %_runtimedir/jboss-as/jboss-as-standalone.pid %_runtimedir/%name.pid
+ln -s %_runtimedir/wildfly-as/wildfly-as-standalone.pid %_runtimedir/%name.pid
 
-JBOSS_CONF=/etc/jboss-as/jboss-as-%name.conf %_initdir/jboss-as-standalone "\$1"
+JBOSS_CONF=/etc/wildfly-as/wildfly-as-%name.conf %_initdir/wildfly-as-standalone "\$1"
 
 EOF
 
@@ -244,7 +244,7 @@ PIDFile=%_runtimedir/%name.pid
 
 EOF
 
-cp -a wfe-ear/target/runawfe.ear %buildroot/%jbossdir/deployments/
+cp -a wfe-ear/target/runawfe.ear %buildroot/%wildflydir/deployments/
 
 popd
 # notifier
@@ -330,11 +330,11 @@ popd
 useradd -d %runadir -r -s %_sbindir/%name %runauser >/dev/null 2>&1 || :
 
 %files server
-/etc/jboss-as/jboss-as-runawfe-server.conf
+/etc/wildfly-as/wildfly-as-runawfe-server.conf
 %_pixmapsdir/*server*.*
 %_desktopdir/*server*.*
-%attr(755,%jbossuser,root) %jbossdir/configuration/*
-%attr(755,%jbossuser,root) %jbossdir/deployments/*
+%attr(755,%wildflyuser,root) %wildflydir/configuration/*
+%attr(755,%wildflyuser,root) %wildflydir/deployments/*
 %attr(755,root,root) %_sbindir/%name
 %attr(755,root,root) %_initdir/%name
 %attr(644,root,root) /lib/systemd/system/%name.service
@@ -357,6 +357,9 @@ useradd -d %runadir -r -s %_sbindir/%name %runauser >/dev/null 2>&1 || :
 %attr(755,root,root) %_bindir/runawfe-notifier
 
 %changelog
+* Mon Mar 05 2018 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt7
+- Updated to 4.3.0 code and wildfly
+
 * Mon Dec 18 2017 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt4
 - Updated to 4.3.0 code 
 
