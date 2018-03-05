@@ -1,6 +1,6 @@
 Name: dblatex
 Version: 0.3
-Release: alt1.1.1.1
+Release: alt2
 
 Summary: DocBook to LaTeX/ConTeXt Publishing
 License: %gpl2plus
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 Packager: Kirill Maslinsky <kirill@altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-build-python rpm-build-texmf
+BuildRequires(pre): rpm-build-python rpm-build-tex
 # Automatically added by buildreq on Thu Jun 26 2008
 BuildRequires: python-devel python-modules-encodings python-modules-logging texlive-latex-extra xsltproc
 BuildRequires: ImageMagick-tools transfig
@@ -23,10 +23,10 @@ Requires: ImageMagick xsltproc docbook-dtds
 #Requires: tetex-latex-unicode >= 20041017-alt1
 
 # this is xelatex's sty, skip to workaround texmf dep tracing unefficiency
-%add_texmf_req_skip latex/xecyr
+%add_texmf_req_skip xecyr.sty
 
 # for backwards compatibility: skip deps not provided by tetex
-%add_texmf_req_skip latex/CJKutf8 latex/appendix latex/bibtopic latex/enumitem latex/listings latex/pinyin
+#add_texmf_req_skip CJKutf8.sty appendix.sty bibtopic.sty enumitem.sty listings.sty pinyin.sty
 
 %define _dblatex_datadir %_datadir/%name
 %define _dblatex_texdir %_texmfmain/tex/latex/%name
@@ -90,6 +90,9 @@ mv %buildroot%_docdir/%name %buildroot%_docdir/%name-%version
 %_man1dir/dblatex.1.*
 
 %changelog
+* Mon Mar 05 2018 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2
+- NMU: rebuild with rpm-build-tex
+
 * Thu Dec 08 2016 Fr. Br. George <george@altlinux.ru> 0.3-alt1.1.1.1
 - Fix inkscape call
 
