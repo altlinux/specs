@@ -1,12 +1,12 @@
 Name: virt-viewer
-Version: 5.0
+Version: 6.0
 Release: alt1
 
 Summary: Virtual Machine Viewer
 Group: System/Configuration/Other
 License: GPL
 Url: http://virt-manager.org/
-
+# Vcs https://pagure.io/virt-viewer.git
 Source: %name-%version.tar
 
 Obsoletes: spice-client < 0.12.5-alt3
@@ -14,7 +14,7 @@ Obsoletes: spice-client < 0.12.5-alt3
 BuildRequires: glib2-devel >= 2.38.0 libgio-devel
 BuildRequires: libxml2-devel
 BuildRequires: libvirt-devel >= 0.9.7 libvirt-glib-devel >= 0.1.8
-BuildRequires: libgtk+3-devel >= 3.10
+BuildRequires: libgtk+3-devel >= 3.12
 BuildRequires: perl-podlators intltool
 BuildRequires: libspice-gtk3-devel >= 0.33 libspice-glib-devel spice-protocol >= 0.12.7
 BuildRequires: libgtk3vnc-devel >= 0.4.0
@@ -48,7 +48,7 @@ intltoolize --force
 %find_lang %name
 
 %files -f %name.lang
-%doc README COPYING AUTHORS ChangeLog NEWS
+%doc README.md COPYING AUTHORS ChangeLog NEWS
 %_bindir/*
 %_man1dir/*
 %_datadir/mime/packages/*.xml
@@ -58,6 +58,9 @@ intltoolize --force
 %_iconsdir/hicolor/*/devices/*
 
 %changelog
+* Tue Mar 06 2018 Alexey Shabalin <shaba@altlinux.ru> 6.0-alt1
+- 6.0
+
 * Mon Nov 28 2016 Alexey Shabalin <shaba@altlinux.ru> 5.0-alt1
 - 5.0
 

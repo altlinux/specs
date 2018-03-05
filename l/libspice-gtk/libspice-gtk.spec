@@ -15,8 +15,8 @@
 %def_enable epoxy
 
 Name: libspice-gtk
-Version: 0.33
-Release: alt2
+Version: 0.34
+Release: alt1
 Summary: A GTK widget for SPICE clients
 
 Group: System/Libraries
@@ -25,6 +25,7 @@ Url: http://spice-space.org/page/Spice-Gtk
 
 Source: %name-%version.tar
 Source2: spice-common.tar
+Source3: keycodemapdb.tar
 # Patch: %name-%version-%release.patch
 # Patch2: %name-alt-fix.patch
 
@@ -38,7 +39,7 @@ BuildRequires: hwdatabase >= 0.3.31-alt1
 
 BuildRequires: gcc-c++ gtk-doc intltool
 BuildRequires: libjpeg-devel libpixman-devel >= 0.17.7 libssl-devel zlib-devel
-BuildRequires: spice-protocol >= 0.12.12
+BuildRequires: spice-protocol >= 0.12.13
 BuildRequires: glib2-devel >= 2.36 libgio-devel >= 2.36 libcairo-devel >= 1.2.0
 BuildRequires: libopus-devel >= 0.9.14
 %{?_enable_webdav:BuildRequires: libphodav-devel >= 2.0 glib2-devel >= 2.43.90 libsoup-devel >= 2.49.91}
@@ -156,7 +157,9 @@ screen-shots of a SPICE desktop
 
 %prep
 %setup
-%__tar -xf %SOURCE2 -C spice-common
+tar -xf %SOURCE2 -C spice-common
+tar -xf %SOURCE3 -C src/keycodemapdb
+
 # %patch -p1
 # %patch2 -p1
 echo "%version" > .tarball-version
@@ -240,6 +243,9 @@ echo "%version" > .tarball-version
 %endif
 
 %changelog
+* Tue Mar 06 2018 Alexey Shabalin <shaba@altlinux.ru> 0.34-alt1
+- 0.34
+
 * Fri Sep 29 2017 Michael Shigorin <mike@altlinux.org> 0.33-alt2
 - explicitly BR: python-module-six to fix build with
   --disable introspection
