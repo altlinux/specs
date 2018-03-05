@@ -1,6 +1,6 @@
 Name: TeXmacs
 Version: 1.0.7.21
-Release: alt1
+Release: alt1.1
 
 Summary: A WYSIWYG mathematical text editor
 License: GPL
@@ -24,7 +24,7 @@ Patch8: texmacs-CVE-2010-3394.patch
 Requires: guile18 /usr/bin/latex slocate libltdl
 
 #BuildRequires: guile18 guile18-devel xorg-devel tetex gcc4.3 gcc4.3-c++ autoconf libltdl-devel
-BuildRequires: guile18 guile18-devel tetex gcc gcc-c++ autoconf libltdl-devel
+BuildRequires: guile18 guile18-devel texlive-collection-basic gcc gcc-c++ autoconf libltdl-devel
 
 BuildPreReq: libX11-devel libICE-devel libfreetype-devel ghostscript
 BuildPreReq: libXext-devel zlib-devel
@@ -142,6 +142,9 @@ install -D -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 
 
 %changelog
+* Mon Mar 05 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.7.21-alt1.1
+- NMU: build with texlive
+
 * Sat Nov 15 2013 Ilya Mashkin <oddity@altlinux.ru> 1.0.7.21-alt1
 - 1.0.7.21
 
