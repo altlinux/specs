@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.2
+Version: 1.6.5
 Release: alt1
 Summary: Google API Client Library for Python
 License: ASL
@@ -30,6 +30,9 @@ BuildRequires: python3-module-six >= 1.6.1
 BuildRequires: python3-module-uritemplate >= 0.6
 #BuildRequires: python-tools-2to3
 %endif
+
+%add_python_req_skip google.appengine.api
+%add_python3_req_skip google.appengine.api
 
 %description
 The Google API Client for Python is a client library for accessing the
@@ -95,6 +98,9 @@ rm -f docs/build
 %endif
 
 %changelog
+* Fri Mar 02 2018 Andrey Cherepanov <cas@altlinux.org> 1.6.5-alt1
+- New version.
+
 * Thu Apr 14 2016 Alexey Shabalin <shaba@altlinux.ru> 1.4.2-alt1
 - 1.4.2
 
