@@ -2,7 +2,7 @@
 %def_without tests
 
 Name: meson
-Version: 0.44.1
+Version: 0.45.0
 Release: alt1
 
 Summary: High productivity build system
@@ -79,6 +79,9 @@ install -Dpm 0755 %SOURCE2 %buildroot%_rpmmacrosdir/%name.env
 
 
 %changelog
+* Mon Mar 05 2018 Yuri N. Sedunov <aris@altlinux.org> 0.45.0-alt1
+- 0.45.0
+
 * Wed Feb 21 2018 Yuri N. Sedunov <aris@altlinux.org> 0.44.1-alt1
 - 0.44.1
 - set locale to en_US.utf8 in meson.env
