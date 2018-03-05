@@ -1,6 +1,6 @@
 Name: runawfe
 Version: 4.3.0
-Release: alt7
+Release: alt8
 
 Summary: Runawfe
 
@@ -219,7 +219,9 @@ cat >%buildroot%_initdir/%name <<EOF
 rm -f %_runtimedir/%name.pid
 ln -s %_runtimedir/wildfly-as/wildfly-as-standalone.pid %_runtimedir/%name.pid
 
-JBOSS_CONF=/etc/wildfly-as/wildfly-as-%name.conf %_initdir/wildfly-as-standalone "\$1"
+export JBOSS_CONF=/etc/wildfly-as/wildfly-as-%name-server.conf
+
+%_initdir/wildfly-as-standalone "\$1"
 
 EOF
 
@@ -300,7 +302,7 @@ cp %SOURCE11 %buildroot%_pixmapsdir/
 
 mv %gpd_path_arch/runa-gpd %gpd_path_arch/runawfe-gpd
 chmod 755 %gpd_path_arch/runawfe-gpd
-chrpath -d %gpd_path_arch/libcairo-swt.so
+#chrpath -d %gpd_path_arch/libcairo-swt.so
 cp -a %gpd_path_arch/* %buildroot/%runagpddir/
 cp -a gpd_source/workspace/ %buildroot/%runagpddir/
 
@@ -357,6 +359,9 @@ useradd -d %runadir -r -s %_sbindir/%name %runauser >/dev/null 2>&1 || :
 %attr(755,root,root) %_bindir/runawfe-notifier
 
 %changelog
+* Mon Mar 05 2018 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt8
+- Updated to 4.3.0 code and wildfly
+
 * Mon Mar 05 2018 Konstantinov Aleksey <kana@altlinux.org> 4.3.0-alt7
 - Updated to 4.3.0 code and wildfly
 
