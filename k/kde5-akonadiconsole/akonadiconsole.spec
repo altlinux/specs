@@ -4,7 +4,7 @@
 %define libakonadiconsole libakonadiconsole%sover
 
 Name: kde5-%rname
-Version: 17.08.3
+Version: 17.12.2
 Release: alt1%ubt
 %K5init
 
@@ -20,10 +20,10 @@ Source: %rname-%version.tar
 #BuildRequires: boost-devel-headers extra-cmake-modules kde5-akonadi-calendar-devel kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-calendarsupport-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-libkdepim-devel kde5-messagelib-devel kde5-pimcommon-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel libassuan-devel libsasl2-devel python-module-google python3-dev ruby ruby-stdlibs
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
-BuildRequires: boost-devel libassuan-devel libsasl2-devel
+BuildRequires: boost-devel libassuan-devel libsasl2-devel libxapian-devel
 BuildRequires: kde5-akonadi-calendar-devel kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-calendarsupport-devel
 BuildRequires: kde5-kcalcore-devel kde5-kcontacts-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmime-devel kde5-kpimtextedit-devel
-BuildRequires: kde5-libkdepim-devel kde5-messagelib-devel kde5-pimcommon-devel
+BuildRequires: kde5-libkdepim-devel kde5-messagelib-devel kde5-pimcommon-devel kde5-akonadi-search-devel
 BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel
 
 %description
@@ -76,6 +76,9 @@ desktop-file-install \
 %_K5lib/libakonadiconsole.so.*
 
 %changelog
+* Tue Feb 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+- new version
+
 * Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 

@@ -4,7 +4,7 @@
 %define libkf5mailcommon libkf5mailcommon%sover
 
 Name: kde5-%rname
-Version: 17.08.3
+Version: 17.12.2
 Release: alt1%ubt
 %K5init
 
@@ -31,7 +31,7 @@ BuildRequires: kf5-kdesignerplugin-devel kf5-kdoctools-devel-static kf5-kemotico
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel
 BuildRequires: kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
-BuildRequires: kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-syntax-highlighting-devel
 
 %description
 %summary.
@@ -86,6 +86,9 @@ KF5 library
 %_K5lib/libKF5MailCommon.so.*
 
 %changelog
+* Tue Feb 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+- new version
+
 * Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 

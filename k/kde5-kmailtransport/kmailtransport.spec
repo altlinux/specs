@@ -1,7 +1,7 @@
 %define rname kmailtransport
 
 Name: kde5-%rname
-Version: 17.08.3
+Version: 17.12.2
 Release: alt1%ubt
 %K5init altplace
 
@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: boost-devel-headers libsasl2-devel
 BuildRequires: kde5-akonadi-devel kde5-kmime-devel
-BuildRequires: kde5-akonadi-mime-devel
+BuildRequires: kde5-akonadi-mime-devel kde5-ksmtp-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static
@@ -89,14 +89,17 @@ KF5 library
 %_K5lib/libKF5MailTransport.so.*
 %_K5plug/*mailtransport.so
 %_K5plug/mailtransport/*smtp*.so
-%_K5plug/kf5/kio/smtp*.so
+#%_K5plug/kf5/kio/smtp*.so
 %_K5srv/*mailtransport.desktop
-%_K5srv/smtp*.protocol
+#%_K5srv/smtp*.protocol
 %files -n libkf5mailtransportakonadi
 %_K5plug/mailtransport/*akonadi*.so
 %_K5lib/libKF5MailTransportAkonadi.so.*
 
 %changelog
+* Tue Feb 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+- new version
+
 * Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 

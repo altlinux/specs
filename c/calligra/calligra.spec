@@ -4,10 +4,11 @@
 
 # obsileted koffice version
 %define koffice_ver 4:2.3.70
+%def_disable plan
 
 Name: calligra
-Version: 3.0.1
-Release: alt2%ubt
+Version: 3.1.0
+Release: alt1%ubt
 Epoch: 0
 %K5init no_altplace
 %define libname lib%name
@@ -20,11 +21,14 @@ License: GPLv2+ / LGPLv2+
 Provides: koffice = %koffice_ver
 Obsoletes: koffice < %koffice_ver
 
+#Requires: %name-gemini
 Requires: %name-words
 Requires: %name-sheets
 Requires: %name-stage
 Requires: %name-karbon
+%if_enabled plan
 Requires: %name-plan
+%endif
 Requires: %name-okular-generators
 
 Source: http://download.kde.org/stable/calligra/%version/calligra-%version.tar
@@ -32,11 +36,12 @@ Source: http://download.kde.org/stable/calligra/%version/calligra-%version.tar
 Patch103: alt-disable-products.patch
 
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: attica-devel boost-devel eigen3 gcc-c++ glib2-devel rpm-build-python rpm-build-ruby
+BuildRequires: kf5-attica-devel boost-devel eigen3 gcc-c++ glib2-devel rpm-build-python rpm-build-ruby
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-base-devel qt5-svg-devel qt5-declarative-devel qt5-script-devel qt5-x11extras-devel
 #BuildRequires: qt5-quick1-devel
 BuildRequires: qt5-webkit-devel
+BuildRequires: kf5-attica-devel kde5-kholidays-devel
 BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdoctools-devel kf5-kguiaddons-devel kf5-khtml-devel kf5-kjs-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kcmutils-devel kf5-kdelibs4support-devel
@@ -60,6 +65,7 @@ BuildRequires: libdrm-devel libpng-devel libexpat-devel
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
+Requires: kf5-filesystem
 %description common
 %name common package
 
@@ -132,15 +138,25 @@ art.
 Whether you want to create clipart, logos, illustrations or photorealistic
 vector images - look no further, Karbon is the tool for you!
 
+%if_enabled plan
 %package plan
 Group: Office
 Summary: A project planner
 Provides: koffice-kplato = %koffice_ver
 Obsoletes: koffice-kplato < %koffice_ver
 Requires: %name-core
+Requires: kf5-kreport
 %description plan
 Plan is a project management application. It is intended for managing
 moderately large projects with multiple resources.
+%endif
+
+%package gemini
+Group: Office
+Summary: Office Suite
+Requires: %name-core
+%description gemini
+The KDE Office suite for 2-in-1 devices.
 
 %package  okular-generators
 Group: Office
@@ -178,7 +194,7 @@ Requires: %name-common = %EVR
 
 ## unpackaged files
 rm -fv %buildroot%_datadir/mime/packages/{krita_ora,x-iwork-keynote-sffkey}.xml
-rm -frv %buildroot%_K5data/locale/x-test/
+rm -frv %buildroot/%_datadir/locale/x-test/
 
 # remove InitialPreference
 for f in %buildroot/%_K5xdgapp/*.desktop ; do
@@ -209,9 +225,9 @@ done
 %dir %_K5plug/calligra/textediting/
 %dir %_K5plug/calligra/textinlineobjects/
 %dir %_K5plug/calligra/tools/
+%config(noreplace) %_K5xdgconf/calligra_stencils.knsrc
 %_K5bin/calligra
 %_K5bin/calligraconverter
-%_K5xdgconf/calligra_stencils.knsrc
 %_K5qml/
 %_datadir/calligra
 %_datadir/calligra_shape_music/fonts/Emmentaler-14.ttf
@@ -253,11 +269,16 @@ done
 %_K5srv/flow_vsdx_thumbnail.desktop
 %_K5srv/flow_wpg_thumbnail.desktop
 %_K5plug/calligra/shapes/calligra_shape_paths.so
-%_K5plug/kreport/planreport_textplugin.so
+
+%files gemini
+%_K5bin/calligragemini
+%_K5bin/calligrageminithumbnailhelper
+%_K5xdgapp/org.kde.calligragemini.desktop
+%_datadir/calligragemini/
 
 %files sheets
+%config(noreplace) %_K5xdgconf/calligrasheetsrc
 %_K5bin/calligrasheets
-%_K5xdgconf/calligrasheetsrc
 %_K5lib/libkdeinit5_calligrasheets.so
 %_K5plug/calligra/*/calligrasheets*.so
 %_K5plug/calligrasheets/*/kspread*module.so
@@ -276,8 +297,8 @@ done
 %_K5xdgapp/org.kde.calligrasheets.desktop
 
 %files stage
+%config(noreplace) %_K5xdgconf/calligrastagerc
 %doc stage/AUTHORS stage/CHANGES
-%_K5xdgconf/calligrastagerc
 %_K5plug/calligra/*/*stage*.*
 %_K5plug/calligra/textinlineobjects/kprvariables.so
 %_K5plug/calligrastage/pageeffects/kpr_pageeffect_*.so
@@ -293,8 +314,8 @@ done
 %_K5srv/stage_*_thumbnail.desktop
 
 %files karbon
+%config(noreplace) %_K5xdgconf/karbonrc
 %_K5bin/karbon
-%_K5xdgconf/karbonrc
 %_K5lib/libkdeinit5_karbon.so
 %_K5plug/karbon/extensions/*karbon*.*
 %_K5plug/calligra/formatfilters/calligra_filter_wmf2svg.so
@@ -314,12 +335,12 @@ done
 %_K5xdgapp/org.kde.karbon.desktop
 %_K5srv/ServiceMenus/calligra/karbon_print.desktop
 
+%if_enabled plan
 %files plan
 %doc plan/CHANGELOG plan/TODO
+%config(noreplace) %_K5xdgconf/calligraplan*rc
 %_K5bin/calligraplan
 %_K5bin/calligraplanwork
-%_K5xdgconf/calligraplanrc
-%_K5xdgconf/calligraplanworkrc
 %_K5lib/libkdeinit5_calligraplan.so
 %_K5lib/libkdeinit5_calligraplanwork.so
 %_K5plug/calligra/parts/calligraplanpart.so
@@ -327,6 +348,7 @@ done
 %_K5plug/calligra/formatfilters/plankplatoimport.so
 %_K5plug/calligraplan/schedulers/libplantjscheduler.so
 %_K5plug/calligraplanworkpart.so
+%_K5plug/kreport/planreport_textplugin.so
 %_datadir/calligraplan/
 %_datadir/calligraplanwork/
 %_K5xmlgui/calligraplan/
@@ -335,10 +357,11 @@ done
 %_K5cfg/calligraplanworksettings.kcfg
 %_K5xdgapp/org.kde.calligraplan.desktop
 %_K5xdgapp/org.kde.calligraplanwork.desktop
+%endif
 
 %files words
+%config(noreplace) %_K5xdgconf/calligrawordsrc
 %_K5bin/calligrawords
-%_K5xdgconf/calligrawordsrc
 %_K5lib/libkdeinit5_calligrawords.so
 %_K5plug/calligra/parts/calligrawordspart.so
 %_datadir/calligrawords/
@@ -363,7 +386,7 @@ done
 %_K5plug/calligra/formatfilters/calligra_filter_wps2odt.so
 %_K5plug/calligra/formatfilters/calligra_filter_odt2docx.so
 %_K5plug/calligra/formatfilters/calligra_filter_odt2wiki.so
-%_K5xdgapp/calligra_filter_odt2docx.desktop
+#%_K5xdgapp/calligra_filter_odt2docx.desktop
 %_K5srv/words_*_thumbnail.desktop
 %_K5srv/ServiceMenus/calligra/words_print.desktop
 %_K5xdgmime/wiki-format.xml
@@ -371,27 +394,9 @@ done
 %files okular-generators
 %_K5lib/libkookularGenerator_odp.so*
 %_K5lib/libkookularGenerator_odt.so*
-%_K5plug/okular/generators/okularGenerator_odp_calligra.so
-%_K5plug/okular/generators/okularGenerator_powerpoint_calligra.so
-%_K5plug/okular/generators/okularGenerator_pptx_calligra.so
-%_K5plug/okular/generators/okularGenerator_doc_calligra.so
-%_K5plug/okular/generators/okularGenerator_docx_calligra.so
-%_K5plug/okular/generators/okularGenerator_odt_calligra.so
-%_K5plug/okular/generators/okularGenerator_wpd_calligra.so
-%_K5xdgapp/okularApplication_odp_calligra.desktop
-%_K5xdgapp/okularApplication_powerpoint_calligra.desktop
-%_K5xdgapp/okularApplication_pptx_calligra.desktop
-%_K5xdgapp/okularApplication_doc_calligra.desktop
-%_K5xdgapp/okularApplication_docx_calligra.desktop
-%_K5xdgapp/okularApplication_odt_calligra.desktop
-%_K5xdgapp/okularApplication_wpd_calligra.desktop
-%_K5srv/okularOdp_calligra.desktop
-%_K5srv/okularPowerpoint_calligra.desktop
-%_K5srv/okularPptx_calligra.desktop
-%_K5srv/okularDoc_calligra.desktop
-%_K5srv/okularDocx_calligra.desktop
-%_K5srv/okularOdt_calligra.desktop
-%_K5srv/okularWpd_calligra.desktop
+%_K5plug/okular/generators/okularGenerator_*_calligra.so
+%_K5xdgapp/okularApplication_*_calligra.desktop
+%_K5srv/okular*_calligra.desktop
 
 %files -n %libname
 %_K5lib/lib*.so.*
@@ -399,6 +404,9 @@ done
 %exclude %_K5lib/libkookularGenerator_odt.so*
 
 %changelog
+* Thu Mar 01 2018 Sergey V Turchin <zerg@altlinux.org> 0:3.1.0-alt1%ubt
+- new version
+
 * Tue Oct 31 2017 Sergey V Turchin <zerg@altlinux.org> 0:3.0.1-alt2%ubt
 - move binaries to /usr/bin
 
