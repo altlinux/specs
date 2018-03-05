@@ -28,7 +28,7 @@
 
 Name:		texlive-doc
 Version:	%relYear
-Release:	alt1_2
+Release:	alt2_2
 #Summary:	The TeX formatting system
 #Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -178,11 +178,20 @@ popd
 rm -rf %{buildroot}%{texmfdistdir}/man
 rm -rf %{buildroot}%{texmfdistdir}/info
 
+# It is the file in the package named Thumbs.db or Thumbs.db.gz, 
+# which is normally a Windows image thumbnail database. 
+# Such databases are generally useless in packages and were usually 
+# accidentally included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
+
 
 #-----------------------------------------------------------------------
 
 
 %changelog
+* Mon Mar 05 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt2_2
+- repocop NMU
+
 * Fri Mar 02 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt1_2
 - new version
 
