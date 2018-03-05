@@ -1,6 +1,6 @@
 Name: asciidoc
 Version: 8.6.9
-Release: alt1
+Release: alt1.1
 
 Summary: asciidoc converts an AsciiDoc text file to DocBook, HTML or LinuxDoc
 Group: Text tools
@@ -18,7 +18,7 @@ BuildRequires(pre): rpm-build-vim
 %define _unpackaged_files_terminate_build 1
 %define docdir %_docdir/%name-%version
 
-BuildRequires: rpm-build-texmf
+BuildRequires: rpm-build-tex
 
 %description
 The asciidoc(1) command translates the AsciiDoc text file to the backend
@@ -133,6 +133,9 @@ install -pD -m644 COPYRIGHT  %buildroot%docdir/
 %vim_syntax_dir/*.vim
 
 %changelog
+* Mon Mar 05 2018 Igor Vlasenko <viy@altlinux.ru> 8.6.9-alt1.1
+- NMU: rebuild with rpm-build-tex
+
 * Tue Dec 03 2013  Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8.6.9-alt1
 - Version 8.6.9
 
