@@ -29,7 +29,7 @@
 %def_enable libusb
 
 Name: gvfs
-Version: %ver_major.2
+Version: %ver_major.2.1
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -536,6 +536,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Mon Mar 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.34.2.1-alt1
+- 1.34.2.1
+
 * Tue Feb 06 2018 Yuri N. Sedunov <aris@altlinux.org> 1.34.2-alt1
 - 1.34.2
 
