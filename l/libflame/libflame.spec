@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.git20140417.1
+Release: alt1.git20140417.2
 %define mpiimpl openmpi
 %define mpidir %_libexecdir/%mpiimpl
 %define somver 0
@@ -21,7 +21,7 @@ Source: %name-%version.tar
 #Source2: elemental.tar.gz
 
 BuildPreReq: gcc-fortran liblapack-devel
-BuildPreReq: doxygen /usr/bin/dvips texmf(latex/draftcopy)
+BuildPreReq: doxygen /usr/bin/dvips tex(draftcopy.sty)
 
 %description
 The objective of the FLAME project is to transform the development of dense
@@ -149,6 +149,9 @@ mv doxygen/html %buildroot%_docdir/%name/
 %doc examples
 
 %changelog
+* Mon Mar 05 2018 Igor Vlasenko <viy@altlinux.ru> 1:5.1.0-alt1.git20140417.2
+- NMU: rebuild with new tex(...) requires
+
 * Thu Jun 16 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:5.1.0-alt1.git20140417.1
 - (AUTO) subst_x86_64.
 
