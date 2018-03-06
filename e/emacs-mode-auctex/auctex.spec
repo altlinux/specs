@@ -1,3 +1,4 @@
+%def_without texmf
 %define emacsbin emacs
 # define emacsbin emacs-nox
 %define ModeName auctex
@@ -10,14 +11,13 @@
 
 Name: emacs-mode-%ModeName
 Version: 11.87
-Release: alt1
+Release: alt2
 
 Summary: Enhanced LaTeX mode for GNU Emacs
 License: GPL
 Group: Editors
 Url: http://www.gnu.org/software/auctex/index.html
 BuildArch: noarch
-Packager: Alexander Borovsky <partizan@altlinux.ru>
 
 #Source0: ftp://sunsite.auc.dk/packages/auctex/%ModeName-%version.tar.bz2
 Source0: ftp://ftp.gnu.org/pub/gnu/auctex/%ModeName-%version.tar.gz
@@ -34,7 +34,11 @@ Patch3: %ModeName-rumakeindex.patch
 
 Requires: common-licenses
 Requires: emacs >= %emacs_version
+%if_with texmf
 Requires: texmf-latex-preview
+%else
+Requires: tex(preview.sty)
+%endif
 
 Provides: preview-latex
 Provides: emacs-preview-latex = %version-%release
@@ -46,7 +50,7 @@ Requires: gnu-ghostscript /usr/bin/dvips /usr/bin/latex
 %define require_compiler %(rpm -qf "$(which %emacsbin)" --queryformat=%%{NAME} 2> /dev/null)
 
 # Automatically added by buildreq on Tue Sep 26 0000
-BuildRequires(pre): rpm-build-texmf 
+BuildRequires(pre): rpm-build-tex
 BuildRequires: fontconfig /usr/bin/dvips /usr/bin/latex
 
 %if "%require_compiler" != ""
@@ -116,7 +120,7 @@ You need to install %name-el only if you intend to modify any of the
 %make_build 
 
 %install
-%__install -d $RPM_BUILD_ROOT{%_emacslispdir,%_infodir}
+install -d $RPM_BUILD_ROOT{%_emacslispdir/site-start.d,%_infodir}
 
 %define _makeinstall_target install
 %makeinstall %_makeinstall_target
@@ -124,14 +128,14 @@ install -d %buildroot/etc/emacs/site-start.d
 install -m 644 %SOURCE1 %buildroot/etc/emacs/site-start.d/auctex.el
 
 # install ALT's info:
-%__install -m0644 %SOURCE10 ALT-packaging-info
+install -m0644 %SOURCE10 ALT-packaging-info
 
 # The license:
-%__ln_s -f %_licensedir/GPL-2 COPYING
+ln -s -f %_licensedir/GPL-2 COPYING
 
-%__rm -f $RPM_BUILD_ROOT/%_infodir/dir
-%__mkdir_p $RPM_BUILD_ROOT/%_docdir/%name-%version/
-%__mv -f $RPM_BUILD_ROOT/%_docdir/auctex/* $RPM_BUILD_ROOT/%_docdir/%name-%version/
+rm -f $RPM_BUILD_ROOT/%_infodir/dir
+mkdir -p $RPM_BUILD_ROOT/%_docdir/%name-%version/
+mv -f $RPM_BUILD_ROOT/%_docdir/auctex/* $RPM_BUILD_ROOT/%_docdir/%name-%version/
 
 
 %files
@@ -140,8 +144,8 @@ install -m 644 %SOURCE1 %buildroot/etc/emacs/site-start.d/auctex.el
 %config(noreplace) %_sysconfdir/emacs/site-start.d/auctex.el
 %_aucstatedir
 %_emacslispdir/tex-site.el 
-%_emacslispdir/auctex.el
-%_emacslispdir/preview-latex.el
+%exclude %_emacslispdir/site-start.d/auctex.el
+%exclude %_emacslispdir/site-start.d/preview-latex.el
 %_emacslispdir/auctex
 %_datadir/texmf/tex/latex/preview
 %exclude %_texmfmain/tex/latex/preview/preview.sty
@@ -157,10 +161,16 @@ install -m 644 %SOURCE1 %buildroot/etc/emacs/site-start.d/auctex.el
 %doc ChangeLog
 %doc ALT-packaging-info
 
+%if_with texmf
 %files -n texmf-latex-preview
 %_texmfmain/tex/latex/preview/preview.sty
+%endif
 
 %changelog
+* Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 11.87-alt2
+- fixed build
+- build with rpm-build-tex
+
 * Thu Jan 24 2013 Kirill Maslinsky <kirill@altlinux.org> 11.87-alt1
 - 11.87
 - drop auctex-11.86-biber.patch, biber support is now upstream
