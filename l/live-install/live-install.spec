@@ -1,5 +1,5 @@
 Name: live-install
-Version: 20160428
+Version: 20180306
 Release: alt1
 Summary: Copy running system to fixed disk
 Group: System/Configuration/Other
@@ -27,6 +27,11 @@ mkdir -p %buildroot/%_datadir/%name/scripts.d
 %dir %_datadir/%name/scripts.d
 
 %changelog
+* Tue Mar 06 2018 Eugene Prokopiev <enp@altlinux.ru> 20180306-alt1
+- fix bashism
+- fix grub packages names
+- create systemd-journald persistent storage
+
 * Thu Apr 28 2016 Eugene Prokopiev <enp@altlinux.ru> 20160428-alt1
 - fix for checking empty partition
 
