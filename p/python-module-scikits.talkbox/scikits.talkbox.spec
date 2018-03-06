@@ -3,7 +3,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.2.3
-Release: alt2.git20091014.1
+Release: alt2.git20091014.2
 Summary: Talkbox, a set of python modules for speech/signal processing
 License: MIT
 Group: Development/Python
@@ -17,7 +17,7 @@ BuildPreReq: python-module-setuptools libnumpy-devel
 BuildPreReq: python-module-scipy python-module-Cython
 BuildPreReq: python-module-lxml python-module-sphinx-devel
 BuildPreReq: python-module-numpydoc python-module-Paver
-BuildPreReq: texlive-latex-recommended texmf-latex-preview
+BuildPreReq: texlive-collection-latexrecommended tex(preview.sty)
 
 %py_provides %oname
 %py_requires %mname numpy scipy
@@ -116,6 +116,9 @@ python setup.py test
 %doc docs/build/html docs/src/examples
 
 %changelog
+* Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.2.3-alt2.git20091014.2
+- fixed BR: for texlive 2017
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1:0.2.3-alt2.git20091014.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
