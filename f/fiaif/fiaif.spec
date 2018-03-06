@@ -25,7 +25,7 @@
 
 Name: fiaif
 Version: 1.22.1
-Release: alt1
+Release: alt2
 
 Summary: FIAIF is an Intelligent Firewall for iptables based Linux systems
 Summary(ru_RU.UTF-8): FIAIF - интеллектуальный межсетевой экран для Linux-систем с iptables
@@ -58,7 +58,10 @@ Patch11: %name-1.22.1-vlan_devices.patch
 
 Requires: iptables >= 1.2.6a, bash >= 2.04
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: tetex, tetex-dvips, tetex-latex
+# Automatically added by buildreq on Tue Mar 06 2018
+# optimized out: fontconfig python-base python-modules python3 python3-base python3-module-zope ruby ruby-stdlibs tex-common texlive texlive-collection-basic texlive-dist
+BuildRequires: fonts-type1-cm-super-tex-dvips texlive
+
 
 %description
 FIAIF is  an  Intellegent  Firewall. The Goal of  FIAIF  is to
@@ -221,6 +224,9 @@ sed -e 's/LOG_LEVEL=WARNING/LOG_LEVEL=warning/' -i %fiaif_conf/fiaif.conf
 %doc fiaif.ps.gz doc/faq.txt
 
 %changelog
+* Tue Mar 06 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.22.1-alt2
+- Updating BuildRequires due to the new texlive
+
 * Sun Aug 12 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.22.1-alt1
 - New version 1.22.1
 - Fix code to work with iptables >= 1.4.15
