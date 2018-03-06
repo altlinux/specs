@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.0
-Release: alt2.1
+Version: 1.1.0
+Release: alt1
 Summary: Cython wrapper class for reading/writing soundfiles using libsndfile
 License: LGPLv3
 Group: Development/Python
@@ -65,6 +65,7 @@ cp -fR . ../python3
 %build
 # Clang doesn't support these options
 %remove_optflags -frecord-gcc-switches
+%add_optflags -std=c++14
 
 export CC=clang
 export CXX=clang++
@@ -88,6 +89,10 @@ popd
 %endif
 
 %check
+export CFLAGS="%optflags"
+export CXXFLAGS="%optflags"
+export FFLAGS="%optflags"
+
 export CC=clang
 export CXX=clang++
 python setup.py test
@@ -111,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt1
+- Updated to upstream version 1.1.0.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.0.0-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
