@@ -1,5 +1,5 @@
 Name: parole
-Version: 0.9.2
+Version: 1.0.0
 Release: alt1
 
 %def_enable clutter
@@ -80,6 +80,9 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Mar 02 2018 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
+- Updated to 1.0.0.
+
 * Mon Jun 05 2017 Mikhail Efremov <sem@altlinux.org> 0.9.2-alt1
 - Drop gtreamer-0.10 build support.
 - Updated to 0.9.2.
