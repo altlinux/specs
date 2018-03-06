@@ -1,4 +1,4 @@
-%define git_version 3e7492b9ada8bdc9a5cd0feafd42fbca27f9c38e
+%define git_version 2dab17a455c09584f2a85e6b10888337d1ec8949
 
 %def_with ocf
 %def_without tcmalloc
@@ -13,7 +13,7 @@
 %def_with system_rocksdb
 
 Name: ceph
-Version: 12.2.2
+Version: 12.2.4
 Release: alt1%ubt
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -28,7 +28,6 @@ Source2: rbdmap.init
 # git submodules
 Source11: ceph-erasure-code-corpus.tar
 Source12: ceph-object-corpus.tar
-Source13: Beast.tar
 Source14: blkin.tar
 Source15: civetweb.tar
 Source16: isa-l_crypto.tar
@@ -46,8 +45,10 @@ Source27: zstd.tar
 
 Patch: %name-%version.patch
 BuildRequires(pre): rpm-build-python rpm-build-ubt
-BuildRequires: cmake rpm-macros-cmake
-BuildRequires: boost-asio-devel boost-devel-headers boost-program_options-devel boost-intrusive-devel boost-python-devel 
+# in cmake-3.10.2-alt add support find boost-1.66
+BuildRequires: cmake >= 3.10.2-alt1
+BuildRequires: rpm-macros-cmake
+BuildRequires: boost-asio-devel boost-devel-headers >= 1.66.0 boost-program_options-devel boost-intrusive-devel boost-python-devel
 BuildRequires: boost-filesystem-devel boost-coroutine-devel boost-context-devel
 BuildRequires: gcc-c++ libaio-devel libblkid-devel libcurl-devel libexpat-devel
 BuildRequires: libfuse-devel libkeyutils-devel
@@ -58,7 +59,7 @@ BuildRequires: yasm
 BuildRequires: zlib-devel bzlib-devel liblz4-devel
 BuildRequires: libssl-devel libudev-devel
 BuildRequires: jq bc gperf
-BuildRequires: python-module-Cython python-module-OpenSSL python-devel python-module-setuptools-tests
+BuildRequires: python-module-Cython python-module-OpenSSL python-devel python-module-setuptools
 BuildRequires: python-module-backports.ssl_match_hostname python-module-enum34
 BuildRequires: python-module-prettytable
 BuildRequires: python-module-html5lib python-module-pyasn1 python-module-virtualenv
@@ -74,7 +75,7 @@ BuildRequires: libsystemd-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-Cython
 %endif
 
@@ -427,7 +428,7 @@ file system.
 %package test
 Summary: Ceph benchmarks and test tools
 Group: System/Libraries
-Requires: ceph-common
+Requires: ceph-common = %EVR
 Requires: xmlstarlet
 %description test
 This package contains Ceph benchmarks and test tools.
@@ -508,7 +509,6 @@ object storage.
 
 tar -xf %SOURCE11 -C ceph-erasure-code-corpus
 tar -xf %SOURCE12 -C ceph-object-corpus
-tar -xf %SOURCE13 -C src/Beast
 tar -xf %SOURCE14 -C src/blkin
 tar -xf %SOURCE15 -C src/civetweb
 tar -xf %SOURCE16 -C src/crypto/isa-l/isa-l_crypto
@@ -589,9 +589,9 @@ cmake .. \
     -DWITH_ZFS=ON \
 %endif
 %ifarch aarch64 armv7hl mips mipsel ppc ppc64 ppc64le %{ix86} x86_64
-    -DWITH_RADOSGW_BEAST_FRONTEND=ON \
+    -DWITH_BOOST_CONTEXT=ON \
 %else
-    -DWITH_RADOSGW_BEAST_FRONTEND=OFF \
+    -DWITH_BOOST_CONTEXT=OFF \
 %endif
     -DWITH_MANPAGE=ON \
     -DWITH_RDMA=OFF
@@ -612,6 +612,7 @@ find %buildroot -type f -name "*.la" -exec rm -f {} ';'
 find %buildroot -type f -name "*.a" -exec rm -f {} ';'
 install -m 0644 -D src/etc-rbdmap %buildroot%_sysconfdir/ceph/rbdmap
 install -m 0644 -D etc/sysconfig/ceph %buildroot%_sysconfdir/sysconfig/ceph
+install -m 0644 -D etc/sysctl/90-ceph-osd.conf %buildroot%_sysctldir/90-ceph-osd.conf
 
 install -m 0644 -D systemd/ceph.tmpfiles.d %buildroot%_tmpfilesdir/ceph-common.conf
 install -m 0644 -D systemd/50-ceph.preset %buildroot/lib/systemd/system-preset/50-ceph.preset
@@ -763,7 +764,7 @@ SYSTEMCTL=systemctl
 if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
         "$SYSTEMCTL" daemon-reload ||:
         if [ "$1" -eq 1 ]; then
-                "$SYSTEMCTL" -q preset ceph-osd@\*.service ceph-osd.target ||:
+                "$SYSTEMCTL" -q preset ceph-osd@\*.service ceph-disk@\*.service ceph-volume@\*.service ceph-osd.target ||:
         else
                 "$SYSTEMCTL" try-restart ceph-osd.target ||:
         fi
@@ -776,8 +777,8 @@ fi
 if [ "$1" -eq 0 ]; then
         SYSTEMCTL=systemctl
         if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
-                "$SYSTEMCTL" --no-reload -q disable ceph-osd@\*.service ceph-osd.target ||:
-                "$SYSTEMCTL" stop ceph-osd@\*.service ceph-osd.target ||:
+                "$SYSTEMCTL" --no-reload -q disable ceph-osd@\*.service ceph-disk@\*.service ceph-volume@\*.service ceph-osd.target ||:
+                "$SYSTEMCTL" stop ceph-osd@\*.service ceph-disk@\*.service ceph-volume@\*.service ceph-osd.target ||:
         else
                 %preun_service ceph
         fi
@@ -872,6 +873,7 @@ fi
 %_bindir/crushtool
 %_bindir/monmaptool
 %_bindir/osdmaptool
+%_bindir/ceph-kvstore-tool
 %_bindir/ceph-run
 %_bindir/ceph-detect-init
 /lib/systemd/system-preset/50-ceph.preset
@@ -900,12 +902,11 @@ fi
 %_mandir/man8/ceph-deploy.8*
 %_mandir/man8/ceph-detect-init.8*
 %_mandir/man8/ceph-create-keys.8*
-%_mandir/man8/ceph-volume.8*
-%_mandir/man8/ceph-volume-systemd.8*
 %_mandir/man8/ceph-run.8*
 %_mandir/man8/crushtool.8*
 %_mandir/man8/osdmaptool.8*
 %_mandir/man8/monmaptool.8*
+%_mandir/man8/ceph-kvstore-tool.8*
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/tmp
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/bootstrap-osd
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/bootstrap-mds
@@ -995,6 +996,7 @@ fi
 %files mon
 %_bindir/ceph-mon
 %_bindir/ceph-rest-api
+%_bindir/ceph-monstore-tool
 %_mandir/man8/ceph-mon.8*
 %_mandir/man8/ceph-rest-api.8*
 %python_sitelibdir_noarch/ceph_rest_api.py*
@@ -1046,6 +1048,7 @@ fi
 %_bindir/ceph-clsinfo
 %_bindir/ceph-bluestore-tool
 %_bindir/ceph-objectstore-tool
+%_bindir/ceph-osdomap-tool
 %_bindir/ceph-osd
 %_sbindir/ceph-disk
 %_sbindir/ceph-volume
@@ -1057,12 +1060,14 @@ fi
 %_mandir/man8/ceph-disk.8*
 %_mandir/man8/ceph-osd.8*
 %_mandir/man8/ceph-bluestore-tool.8*
+%_mandir/man8/ceph-volume.8*
+%_mandir/man8/ceph-volume-systemd.8*
 %_unitdir/ceph-osd@.service
 %_unitdir/ceph-osd.target
 %_unitdir/ceph-disk@.service
 %_unitdir/ceph-volume@.service
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/osd
-
+%_sysctldir/90-ceph-osd.conf
 
 %if_with ocf
 %files resource-agents
@@ -1180,9 +1185,6 @@ fi
 %_bindir/ceph_tpbench
 %_bindir/ceph_xattr_bench
 %_bindir/ceph-coverage
-%_bindir/ceph-monstore-tool
-%_bindir/ceph-osdomap-tool
-%_bindir/ceph-kvstore-tool
 %_bindir/ceph-debugpack
 #_bindir/dmclock-tests
 #_bindir/dmclock-data-struct-tests
@@ -1237,6 +1239,13 @@ fi
 %endif
 
 %changelog
+* Mon Mar 05 2018 Alexey Shabalin <shaba@altlinux.ru> 12.2.4-alt1%ubt
+- 12.2.4
+
+* Tue Feb 27 2018 Alexey Shabalin <shaba@altlinux.ru> 12.2.3-alt1%ubt
+- 12.2.3
+- backport patches from luminous branch
+
 * Thu Dec 07 2017 Alexey Shabalin <shaba@altlinux.ru> 12.2.2-alt1%ubt
 - 12.2.2
 
