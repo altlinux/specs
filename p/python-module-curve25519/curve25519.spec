@@ -5,27 +5,24 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt1
+Release: alt2
 Summary: Implementations of a fast Elliptic-curve Diffie-Hellman primitive
 License: BSD
 Group: Development/Python
 Url: https://code.google.com/p/curve25519-donna/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/agl/curve25519-donna.git
-Source0: https://pypi.python.org/packages/01/05/1ab1cc54c2b1e933721b8e65fedc01098e6b8ffdccedbc4a682d4e0db8c1/%{oname}-donna-%{version}.tar.gz
+Source: %{oname}-donna-%{version}.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires:python3-module-pytest
 %endif
 
 %py_provides %oname
-
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-module-pluggy python-module-py python-module-setuptools python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pluggy python3-module-py python3-module-setuptools xz
-BuildRequires: python-module-pytest python3-devel python3-module-pytest rpm-build-python3 time
 
 %description
 curve25519 is an elliptic curve, developed by Dan Bernstein, for fast
@@ -46,6 +43,7 @@ source isn't available, only the x86 32-bit assembly output.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Implementations of a fast Elliptic-curve Diffie-Hellman primitive
 Group: Development/Python3
@@ -69,6 +67,7 @@ in a language of his own devising called qhasm. The original qhasm
 source isn't available, only the x86 32-bit assembly output.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup -q -n %{oname}-donna-%{version}
@@ -104,13 +103,11 @@ popd
 rm build -fR
 python setup.py build_ext -i
 py.test -vv
-#make test
 %if_with python3
 pushd ../python3
 rm build -fR
 python3 setup.py build_ext -i
-py.test-%_python3_version -vv
-#make test
+py.test3 -vv
 popd
 %endif
 
@@ -133,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3-alt2
+- Cleaned up spec and fixed tests.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1
 - automated PyPI update
 
