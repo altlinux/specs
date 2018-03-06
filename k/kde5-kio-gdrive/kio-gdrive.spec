@@ -6,8 +6,8 @@
 %define libktcore libktcore%sover
 
 Name: kde5-%rname
-Version: 1.2.0.1
-Release: alt3%ubt
+Version: 1.2.1
+Release: alt1%ubt
 %K5init
 
 Group:     Networking/File transfer
@@ -58,6 +58,9 @@ in the application launcher (which will open Dolphin with the `gdrive:/` URL) or
 %endif
 
 %changelog
+* Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt1%ubt
+- new version
+
 * Fri Jun 23 2017 Sergey V Turchin <zerg@altlinux.org> 1.2.0.1-alt3%ubt
 - build with kaccounts again
 
