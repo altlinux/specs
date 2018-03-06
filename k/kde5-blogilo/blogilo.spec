@@ -6,7 +6,7 @@
 
 Name: kde5-%rname
 Version: 17.08.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Networking/Other
@@ -95,6 +95,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libcomposereditorwebengineprivate.so.*
 
 %changelog
+* Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt2%ubt
+- update from master branch
+
 * Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 
