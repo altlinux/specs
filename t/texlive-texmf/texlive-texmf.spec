@@ -1,3 +1,5 @@
+# tmp hack til tetex removal
+Provides: jadetex = 3.13-alt4
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ perl(Config/IniFiles.pm) perl(Data/Dumper/Concise.pm) perl(Date/Format.pm) perl(Date/Parse.pm) perl(Digest/SHA.pm) perl(Digest/SHA1.pm) perl(Encode.pm) perl(ExtUtils/MakeMaker.pm) perl(Fatal.pm) perl(File/Copy/Recursive.pm) perl(File/HomeDir.pm) perl(File/Which.pm) perl(HTML/FormatText.pm) perl(HTML/TreeBuilder.pm) perl(HTTP/Status.pm) perl(IO/String.pm) perl(IPC/System/Simple.pm) perl(LWP.pm) perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl(Locale/Maketext/Simple.pm) perl(Math/Trig.pm) perl(Pod/Man.pm) perl(Pod/Text.pm) perl(Pod/Usage.pm) perl(Spreadsheet/ParseExcel.pm) perl(Term/ANSIColor.pm) perl(Test/More.pm) perl(Text/Unidecode.pm) perl(Tk.pm) perl(Tk/Adjuster.pm) perl(Tk/BrowseEntry.pm) perl(Tk/Dialog.pm) perl(Tk/DialogBox.pm) perl(Tk/DirTree.pm) perl(Tk/Font.pm) perl(Tk/HList.pm)
@@ -83,7 +85,7 @@ BuildRequires: perl(Tk/ItemStyle.pm) perl(Tk/NoteBook.pm) perl(Tk/PNG.pm) perl(T
 
 Name:		texlive-texmf
 Version:	%relYear
-Release:	alt3_2
+Release:	alt4_2
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -177,37 +179,19 @@ Group:		Publishing
 Requires:	texlive = %{version}
 Requires(post):	texlive = %{version}
 Provides: ht = %{tl_version}
-Provides: pdfjam = %{tl_version}
-Provides: tex4ht = %{tl_version}
 Provides: tex4ht-xetex = %{tl_version}
 Provides: texmf-tex4ht = %{tl_version}
 Obsoletes: ht <= 2.1.0-alt1
-Obsoletes: pdfjam <= 2.08-alt1
-Obsoletes: tex4ht <= 1.0.2009_06_11_1038-alt1
 Obsoletes: tex4ht-xetex <= 1.0.2009_06_11_1038-alt1
 Obsoletes: texmf-tex4ht <= 1.0.2009_06_11_1038-alt1
 Conflicts: ht <= 2.1.0-alt1
-Conflicts: pdfjam <= 2.08-alt1
 Conflicts: tetex-core < 2.01
 Conflicts: tetex-doc < 2.01
-Conflicts: tex4ht <= 1.0.2009_06_11_1038-alt1
-Conflicts: texlive-base-bin < 2009
-Conflicts: texlive-extra-utils < 2009
-Conflicts: texlive-latex-extra < 2009
-Conflicts: texlive-latex-recommended < 2009
-Conflicts: texlive-pstricks < 2009
+Conflicts: texlive-collection-basic < 2009
 Obsoletes: fonts-type1-cm-super-tex <= 0.3.3-alt8.qa1
 Obsoletes: fonts-type1-cm-super-tex-afm <= 0.3.3-alt8.qa1
 Obsoletes: fonts-type1-cm-super-tex-dvips <= 0.3.3-alt8.qa1
-Obsoletes: fonts-type1-tipa-tex <= 1.3-alt4
-Obsoletes: tetex-latex-cmap <= 1.0g-alt2
-Obsoletes: texmf-latex-babelbib <= 1.29-alt1
-Obsoletes: texmf-latex-csquotes <= 4.4d-alt2
-Obsoletes: texmf-latex-etoolbox <= 2.1-alt2
-Obsoletes: texmf-latex-koma-script
 Obsoletes: texmf-latex-obsolete <= 0.1-alt1
-Obsoletes: texmf-latex-tipa <= 1.3-alt4
-Obsoletes: texmf-latex-xcolor <= 2.06-alt3
 Obsoletes: texmf-pgf <= 2.10-alt0.1
 AutoReq: yes,notex
 #Requires: texlive = %{tl_version}
@@ -723,20 +707,9 @@ Requires(post):	texlive-collection-basic = %{version}-%{release}
 #Requires(postun):	texlive-collection-basic
 Requires(post):	texlive >= %{tl_version}
 Requires(postun):	texlive >= %{tl_version}
-Obsoletes: tetex-latex-feynmf <= 1.08-alt3.1.1
 Obsoletes: texmf-fonts-kerkis <= 2.0-alt2_26
 Obsoletes: texmf-latex-biblatex <= 2.5-alt1
-Obsoletes: texmf-latex-biblatex-gost <= 0.7.1-alt1
-Obsoletes: texmf-latex-currfile <= 0.7b-alt1
-Obsoletes: texmf-latex-filehook <= 0.5d-alt1
-Obsoletes: texmf-latex-fixme <= 4.1-alt1
-Obsoletes: texmf-latex-linegoal
-Obsoletes: texmf-latex-logreq <= 1.0-alt1
-Obsoletes: texmf-latex-ltxnew
 Obsoletes: texmf-latex-passivetex <= 20040310-alt1
-Obsoletes: texmf-latex-pdfcomment <= 1.5d-alt2
-Obsoletes: texmf-latex-tabu
-Obsoletes: texmf-standalone <= 1.1b-alt1
 Provides: texmf(latex/atbegshi)
 Provides: texmf(latex/ucs)
 Provides: texmf(latex/xcolor)
@@ -750,6 +723,11 @@ Provides: texmf(latex/everypage)
 Provides: texmf(latex/tex4ht)
 Provides: texmf(latex/tipa)
 Provides: texmf(latex/tone)
+Provides: latexmk = 4.52c-alt1
+Obsoletes: latexmk <= 4.52c-alt1
+Conflicts: latexmk <= 4.52c-alt1
+Provides: prosper = 1.24
+Obsoletes: prosper < 1.24
 Obsoletes: texmf-latex-babelbib < 1.31
 Obsoletes: texmf-latex-beamer < 3.41
 Obsoletes: texmf-latex-biblatex < 3.6
@@ -2023,6 +2001,7 @@ Group:		Publishing
 Requires:	texlive-texmf = %{version}-%{release}
 Requires:	ruby ruby-tools
 Conflicts: tetex-context < 2.01
+Conflicts: texlive-context < 2009
 AutoReq: yes,notex
 #Requires: texlive = %{tl_version}
 Provides: texlive-collection-context = %{tl_version}
@@ -3098,6 +3077,9 @@ rm -rf %buildroot%{texmfdistdir}/scripts/xetex/perl/lib
 
 
 %changelog
+* Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt4_2
+- added prosper obsoletes
+
 * Mon Mar 05 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt3_2
 - added tex provides and latexmk
 
