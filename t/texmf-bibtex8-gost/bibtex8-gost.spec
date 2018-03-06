@@ -2,7 +2,7 @@
 
 Name: texmf-bibtex8-%truename
 Version: 0.20050820
-Release: alt2
+Release: alt3
 
 Summary: GOST cyrillic bibtex styles and extended cyrillic support for BibTeX8
 Summary(ru_RU.CP1251): кириллические BibTeX стили ГОСТ
@@ -19,7 +19,7 @@ BuildArch: noarch
 # Automatically added by buildreq on Sat Dec 31 2005
 BuildRequires: /usr/bin/latex unzip
 
-BuildRequires(pre): rpm-build-texmf
+BuildRequires(pre): rpm-build-tex
 
 #TODO: bibtex8 does not support kpathsea
 
@@ -60,6 +60,9 @@ install -m644 *.bst %buildroot/usr/share/texmf/bibtex/bst/
 /usr/share/texmf/bibtex/bst/*.bst
 
 %changelog
+* Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 0.20050820-alt3
+- build with rpm-build-tex
+
 * Fri Nov 13 2009 Igor Vlasenko <viy@altlinux.ru> 0.20050820-alt2
 - fixed buildreqs
 
