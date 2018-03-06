@@ -2,7 +2,7 @@
 
 Name: gnuplot
 Version: %ver_major.3
-Release: alt1.1
+Release: alt1.2
 Epoch: 1
 
 Summary: A program for plotting mathematical expressions and data
@@ -25,7 +25,7 @@ Source14: gnuplot-emacs.el
 
 Patch1: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-texmf
+BuildRequires(pre): rpm-build-tex
 BuildPreReq: desktop-file-utils
 BuildRequires: gcc-c++ ghostscript-module-X groff-base libXt-devel libncurses-devel libreadline-devel xorg-cf-files zlib-devel libgd2-devel libpng-devel libjpeg-devel libgif-devel
 BuildRequires: /usr/bin/tex
@@ -33,14 +33,14 @@ BuildRequires: /usr/bin/dvips
 BuildRequires: /usr/bin/pdflatex
 BuildRequires: /usr/bin/htlatex
 BuildRequires: PDFlib-Lite-utils libpdflib-lite-devel
-BuildRequires: emacs-common texinfo
+BuildRequires: emacs-common texinfo latex2html
 
 # for wxt terminal
 BuildRequires: libwxGTK-devel libcairo-devel libpango-devel libgtk+2-devel
 # for qt terminal
 BuildRequires: libqt4-devel >= 4.5
 # for lua/TikZ
-BuildRequires: lua-devel texmf-pgf
+BuildRequires: lua-devel tex(pgf.sty)
 
 
 Requires(post,postun): desktop-file-utils
@@ -252,6 +252,9 @@ rm -f demo/html/Makefile*
 %doc demo
 
 %changelog
+* Mon Mar 05 2018 Igor Vlasenko <viy@altlinux.ru> 1:5.0.3-alt1.2
+- NMU: build with texlive 2017
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 1:5.0.3-alt1.1
 - rebuild with new lua 5.3
 
