@@ -5,7 +5,7 @@
 
 Name: %realname%dialect
 Version: 1.7.9
-Release: alt3
+Release: alt3.1
 Serial: 1
 
 %add_findreq_skiplist %_datadir/%realname%suff/config.guess
@@ -32,9 +32,6 @@ Obsoletes: %realname
 PreReq: automake-common, alternatives >= 0:0.4
 
 BuildPreReq: autoconf >= 2.54, makeinfo
-
-# Automatically added by buildreq on Sat May 03 2003
-BuildRequires: tetex-core
 
 %description
 Automake is a tool for automatically generating Makefiles compliant with the
@@ -85,6 +82,9 @@ EOF
 %doc AUTHORS ChangeLog NEWS README THANKS TODO
 
 %changelog
+* Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.7.9-alt3.1
+- NMU: removed tetex from BR:
+
 * Mon Dec 07 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.7.9-alt3
 - Changed BR: texinfo -> makeinfo.
 - Switched to compress_method xz.
