@@ -1,5 +1,5 @@
 Name: gear
-Version: 2.1.1
+Version: 2.2.0
 Release: alt1
 
 Summary: Get Every Archive from git package Repository
@@ -59,6 +59,21 @@ ln -s gear-store-tags.1 %buildroot%_man1dir/gear-update-tag.1
 %doc QUICKSTART* ABOUT*
 
 %changelog
+* Tue Mar 06 2018 Dmitry V. Levin <ldv@altlinux.org> 2.2.0-alt1
+- gear-srpmimport: honor RPMFILE_SPECFILE.
+- gear-changelog (by Alexey Gladkov):
+  + added --no-credits option to omit credits;
+  + added --no-header option to omit changelog header;
+  + added --since-date option to show commits since a specified date.
+- gear-commit (by Alexey Gladkov; closes: #33452):
+  + added gear.commit.edit-message config parameter: when set to true,
+    an editor is invoked for further editing of the generated commit
+    message;
+  + added gear.commit.require-message-save config parameter: when set
+    to true, the commit is aborted if the generated commit message
+    has not been edited by the user.
+- Updated bash completion for gear (by Alexey Gladkov).
+
 * Mon Nov 20 2017 Dmitry V. Levin <ldv@altlinux.org> 2.1.1-alt1
 - Applied bash4 compatibility workaround (closes: #32147).
 - Added SOURCE_DATE_EPOCH support (closes: #34203).
