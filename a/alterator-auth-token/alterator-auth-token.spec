@@ -1,5 +1,5 @@
 Name: alterator-auth-token
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Source: %name-%version.tar
@@ -19,7 +19,6 @@ Requires: alterator-service-functions >= 3.0.0-alt2
 # PKCS#11
 Requires: pam_pkcs11 >= 0.6.9-alt15
 Requires: card-actions >= 1.8-alt3
-Requires: lightdm >= 1.16.7-alt6
 Requires: pam_mkuser >= 0.1.0-alt4
 # GOST CAs are now optional
 #Requires: ca-gost-certificates
@@ -51,6 +50,9 @@ BuildRequires: alterator-fbi >= 5.33-alt1
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Mar 06 2018 Paul Wolneykien <manowar@altlinux.org> 0.1.2-alt1
+- SDDM-ready version (closes: #34334).
+
 * Fri Sep 01 2017 Paul Wolneykien <manowar@altlinux.org> 0.1.1-alt1
 - Control GOST authentication support leaving system-wide OpenSSL
   configuration untouched.
