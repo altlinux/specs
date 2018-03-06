@@ -1,27 +1,39 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1
+%define _unpackaged_files_terminate_build 1
 %define oname zope.copy
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 4.0.3
-#Release: alt1.1
+Version: 4.1.0
+Release: alt1%ubt
+
 Summary: Pluggable object copying mechanism
 License: ZPLv2.1
 Group: Development/Python
-Url: http://pypi.python.org/pypi/zope.copy/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+# Source-git: https://github.com/zopefoundation/zope.copy.git
+Url: http://pypi.python.org/pypi/zope.copy
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-%if_with python3
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+
+BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python-module-zope.testing
+BuildRequires: python-module-zope.testrunner
+BuildRequires: python-module-zope.location
+BuildRequires: python-module-zope.component
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.location
+BuildRequires: python3-module-zope.component
 %endif
 
-%py_requires zope zope.interface
+%py_requires zope.interface
 
 %description
 This package provides a pluggable way to copy persistent objects. It was
@@ -32,7 +44,7 @@ pluggability.
 %package -n python3-module-%oname
 Summary: Pluggable object copying mechanism
 Group: Development/Python3
-%py3_requires zope zope.interface
+%py3_requires zope
 
 %description -n python3-module-%oname
 This package provides a pluggable way to copy persistent objects. It was
@@ -41,48 +53,39 @@ dependencies. In fact, we only depend on zope.interface to provide
 pluggability.
 
 %package -n python3-module-%oname-tests
-Summary: Tests for zope.copy
+Summary: Tests for %oname
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-%py3_requires zope.component zope.location zope.testing
+Requires: python3-module-%oname = %EVR
+%py3_requires zope.component
+%py3_requires zope.location
+%py3_requires zope.testing
 
 %description -n python3-module-%oname-tests
-This package provides a pluggable way to copy persistent objects. It was
-once extracted from the zc.copy package to contain much less
-dependencies. In fact, we only depend on zope.interface to provide
-pluggability.
-
-This package contains tests for zope.copy.
+This package contains tests for %oname.
 
 %package tests
 Summary: Tests for zope.copy
 Group: Development/Python
-Requires: %name = %version-%release
-%py_requires zope.component zope.location zope.testing
+Requires: %name = %EVR
+%py_requires zope.component
+%py_requires zope.location
+%py_requires zope.testing
 
 %description tests
-This package provides a pluggable way to copy persistent objects. It was
-once extracted from the zc.copy package to contain much less
-dependencies. In fact, we only depend on zope.interface to provide
-pluggability.
-
-This package contains tests for zope.copy.
+This package contains tests for %oname.
 
 %prep
 %setup
 
-%if_with python3
-cp -fR . ../python3
-%endif
+rm -rf ../python3
+cp -a . ../python3
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
@@ -92,7 +95,6 @@ mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
@@ -101,35 +103,37 @@ install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
-%endif
+
+%check
+export PYTHONPATH=src
+zope-testrunner --test-path=src -vv
+
+pushd ../python3
+zope-testrunner3 --test-path=src -vv
+popd
 
 %files
-%doc *.txt *.rst
+%doc LICENSE.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests
-%exclude %python_sitelibdir/*/*/examples.*
+%exclude %python_sitelibdir/zope/copy/tests
 
 %files tests
-%python_sitelibdir/*/*/tests
-%python_sitelibdir/*/*/examples.*
+%python_sitelibdir/zope/copy/tests
 
-%if_with python3
 %files -n python3-module-%oname
-%doc *.txt *.rst
+%doc LICENSE.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/tests
-%exclude %python3_sitelibdir/*/*/examples.*
-%exclude %python3_sitelibdir/*/*/*/examples.*
+%exclude %python3_sitelibdir/zope/copy/tests
 
 %files -n python3-module-%oname-tests
-%python3_sitelibdir/*/*/tests
-%python3_sitelibdir/*/*/examples.*
-%python3_sitelibdir/*/*/*/examples.*
-%endif
+%python3_sitelibdir/zope/copy/tests
 
 %changelog
+* Tue Mar 06 2018 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1%ubt
+- 4.0.3 -> 4.1.0
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.3-alt1.1.1
 - (AUTO) subst_x86_64.
 

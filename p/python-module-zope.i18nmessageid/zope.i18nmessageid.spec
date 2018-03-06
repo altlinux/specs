@@ -1,50 +1,44 @@
+%define _unpackaged_files_terminate_build 1
 %define oname zope.i18nmessageid
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 4.0.4
-Release: alt1.dev0.git20150309.1.1.1.1
-Summary: Message Identifiers for internationalization
-License: ZPL
-Group: Development/Python
-Url: http://pypi.python.org/pypi/zope.i18nmessageid/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Version: 4.1.0
+Release: alt1%ubt
 
-# https://github.com/zopefoundation/zope.i18nmessageid.git
+Summary: Message Identifiers for internationalization
+License: ZPLv2.1
+Group: Development/Python
+# Source-git https://github.com/zopefoundation/zope.i18nmessageid.git
+Url: http://pypi.python.org/pypi/zope.i18nmessageid
+
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools
-#BuildPreReq: python-module-nose python-module-coverage
-#BuildPreReq: python-module-nosexcover
-#BuildPreReq: python-module-sphinx-devel
-%if_with python3
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-nose python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-nose python3-module-pytest python3-module-setuptools xz
-BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nosexcover python-module-objects.inv python-module-setuptools python3-devel python3-module-coverage python3-module-nosexcover python3-module-setuptools rpm-build-python3 time
 
-#BuildRequires: python3-devel python3-module-setuptools
-#BuildPreReq: python3-module-nose python3-module-coverage
-#BuildPreReq: python3-module-nosexcover
-#BuildPreReq: python-tools-2to3
+BuildRequires: python-dev
+BuildRequires: python3-dev
+BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python-module-zope.testing
+BuildRequires: python-module-zope.testrunner
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.testrunner
 %endif
-
-%py_provides zope.i18nmessageid
-
-%py_requires zope
 
 %description
 This package provides facilities for *declaring* messages within
 program source text;  translation of the messages is the responsiblitiy
 of the 'zope.i18n' package.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Message Identifiers for internationalization (Python 3)
 Group: Development/Python3
-%py3_provides zope.i18nmessageid
 %py3_requires zope
 
 %description -n python3-module-%oname
@@ -53,113 +47,74 @@ program source text;  translation of the messages is the responsiblitiy
 of the 'zope.i18n' package.
 
 %package -n python3-module-%oname-tests
-Summary: Tests for zope.i18nmessageid (Python 3)
+Summary: Tests for %oname (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
+Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-tests
-This package provides facilities for *declaring* messages within
-program source text;  translation of the messages is the responsiblitiy
-of the 'zope.i18n' package.
-
-This package contains tests for zope.i18nmessageid
-%endif
-
-%package pickles
-Summary: Pickles for zope.i18nmessageid
-Group: Development/Python
-
-%description pickles
-This package provides facilities for *declaring* messages within
-program source text;  translation of the messages is the responsiblitiy
-of the 'zope.i18n' package.
-
-This package contains pickles for zope.i18nmessageid
+This package contains tests for %oname.
 
 %package tests
-Summary: Tests for zope.i18nmessageid
+Summary: Tests for %oname
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
-This package provides facilities for *declaring* messages within
-program source text;  translation of the messages is the responsiblitiy
-of the 'zope.i18n' package.
-
-This package contains tests for zope.i18nmessageid
+This package contains tests for %oname.
 
 %prep
 %setup
-%if_with python3
+
 rm -rf ../python3
 cp -a . ../python3
-%endif
-
-%prepare_sphinx .
-ln -s ../objects.inv docs/
 
 %build
 %add_optflags -fno-strict-aliasing
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
-%if_with python3
+
 pushd ../python3
 %python3_install
 popd
-%endif
-
-export PYTHONPATH=$PWD/src
-%make -C docs pickle
-%make -C docs html
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
-export PYTHONPATH=$PWD/src
+export PYTHONPATH=src
 python setup.py test -v
-nosetests -vv --with-xunit --with-xcoverage
-%if_with python3
+
 pushd ../python3
-export PYTHONPATH=$PWD/src
 python3 setup.py test -v
-nosetests3 -vv --with-xunit --with-xcoverage
 popd
-%endif
 
 %files
-%doc *.txt *.rst docs/_build/html
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests.*
-%exclude %python_sitelibdir/*/pickle
-
-%files pickles
-%python_sitelibdir/*/pickle
+%exclude %python_sitelibdir/zope/i18nmessageid/tests.*
 
 %files tests
-%python_sitelibdir/*/*/tests.*
+%python_sitelibdir/zope/i18nmessageid/tests.*
 
-%if_with python3
 %files -n python3-module-%oname
-%doc *.txt *.rst docs/_build/html
+%doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/tests.*
-%exclude %python3_sitelibdir/*/*/*/tests.*
+%exclude %python3_sitelibdir/zope/i18nmessageid/tests.*
+%exclude %python3_sitelibdir/zope/i18nmessageid/*/tests.*
 
 %files -n python3-module-%oname-tests
-%python3_sitelibdir/*/*/tests.*
-%python3_sitelibdir/*/*/*/tests.*
-%endif
+%python3_sitelibdir/zope/i18nmessageid/tests.*
+%python3_sitelibdir/zope/i18nmessageid/*/tests.*
 
 %changelog
+* Tue Mar 06 2018 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1%ubt
+- 4.0.4 -> 4.1.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.0.4-alt1.dev0.git20150309.1.1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
