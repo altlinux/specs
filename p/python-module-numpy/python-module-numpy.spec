@@ -13,7 +13,7 @@
 
 Name: python-module-%oname
 Version: %majver.3
-Release: alt2
+Release: alt2.1
 Epoch: 1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
@@ -42,7 +42,7 @@ BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: /proc
 BuildRequires: python-devel
 BuildRequires: doxygen gcc-c++ gcc-fortran liblapack-devel
-BuildRequires: swig texmf-latex-preview
+BuildRequires: swig
 BuildRequires: python-module-Cython python-module-Pyrex
 BuildRequires: python-module-alabaster python-module-html5lib python-module-matplotlib-sphinxext python-module-notebook python-module-numpydoc python-module-objects.inv
 %if_with python3
@@ -54,6 +54,8 @@ BuildRequires: python3-module-Cython
 %if_without doc
 # closes unmets in autoimports
 Provides: python-module-numpy-doc = %EVR
+%else
+BuildRequires: tex(preview.sty)
 %endif
 Provides: python-module-numpy-addons = %EVR
 %py_provides %oname.addons
@@ -95,7 +97,7 @@ Summary: Testing part of NumPy (Python 3)
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
 %add_python3_req_skip setuptools
-
+	
 %description -n python3-module-%oname-testing
 NumPy is a general-purpose array-processing package designed to
 efficiently manipulate large multi-dimensional arrays of arbitrary
@@ -938,6 +940,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.13.3-alt2.1
+- NMU: corrected BR: for new texlive
+
 * Mon Jan 22 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.13.3-alt2
 - added optional Provides: python-module-numpy-doc for autoimports
 
