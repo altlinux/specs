@@ -6,7 +6,7 @@
 Summary: Tool for fitting and analyzing data
 Name: fityk
 Version: 1.3.0
-Release: alt4.git20141119.1.1
+Release: alt4.git20141119.2
 License: GPL
 Group: Sciences/Other
 Url: https://github.com/wojdyr/fityk
@@ -22,7 +22,7 @@ BuildRequires: gcc-c++ gcc-fortran libreadline-devel rpm-build-python
 BuildPreReq: boost-devel libxylib-devel libwxGTK3.1-devel zlib-devel
 BuildPreReq: liblua5.1-devel python-module-sphinx-devel swig dvipng
 BuildPreReq: libcmpfit-devel
-BuildPreReq: texlive-latex-recommended texmf-latex-preview gnuplot
+BuildPreReq: texlive-collection-latexrecommended tex(preview.sty) gnuplot
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -200,6 +200,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt4.git20141119.2
+- NMU: rebuild with new texlive 2017
+
 * Tue Feb 07 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt4.git20141119.1.1
 - NMU: rebuild with new lua 5.1
 
