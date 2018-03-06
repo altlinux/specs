@@ -1,6 +1,6 @@
 Name:    kde4-regular
 Version: 4.14
-Release: alt7
+Release: alt8%ubt
 
 Group: Graphical desktop/KDE
 Summary: KDE4 common collection
@@ -44,7 +44,7 @@ Requires: kde4-k3b
 Requires: kde4-k9copy
 Requires: kde4-amarok
 Requires: kde4-smplayer
-Requires: rekonq
+#Requires: rekonq
 Requires: konversation
 Requires: kde4-smb4k
 Requires: choqok
@@ -70,6 +70,7 @@ Requires: calligra-l10n-ru
 Requires: calligra-l10n-uk
 
 Source: .gear-rules
+BuildRequires: rpm-build-ubt
 
 %description
 K Desktop Environment 4 collection package
@@ -81,6 +82,9 @@ K Desktop Environment 4 сборный пакет,
 %files
 
 %changelog
+* Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 4.14-alt8%ubt
+- exclude rekonq
+
 * Fri Feb 02 2018 Sergey V Turchin <zerg@altlinux.org> 4.14-alt7
 - exclude kde4-digikam
 
