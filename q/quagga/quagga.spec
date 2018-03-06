@@ -9,7 +9,7 @@
 
 Name: quagga
 
-%define baseversion 1.2.2
+%define baseversion 1.2.4
 Release: alt1
 
 %if %cvs
@@ -23,7 +23,7 @@ Version: %baseversion
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
-Summary: Quagga routing suite (a fork of the GNU Zebra)
+Summary: Quagga is free software that manages various IPv4 and IPv6 routing protocols
 
 License: %gpl2only
 Group: Networking/Other
@@ -80,8 +80,11 @@ Quagga is a free software that manages TCP/IP based routing protocol.
 It takes multi-server and multi-thread approach to resolve the current
 complexity of the Internet.
 
-Quagga supports BGP4, BGP4+, OSPFv2, OSPFv3, RIPv1, RIPv2, RIPng,
-                PIM-SSM, NHRP. And very early support for IS-IS.
+Currently Quagga supports the following protocols
+
+Unicast Routing:   BGP4, BGP4+, OSPFv2, OSPFv3, RIPv1, RIPv2 and RIPng
+                   as well as very early support for IS-IS.
+Multicast Routing: PIM-SSM
 
 Quagga is intended to be used as a Route Server and a Route Reflector.
 It is not a toolkit, it provides full routing power under a new
@@ -296,6 +299,9 @@ install -m 755 %SOURCE19 $RPM_BUILD_ROOT%_initdir/watchquagga
 %doc doc/draft-zebra-00.* doc/BGP-TypeCode
 
 %changelog
+* Tue Mar 06 2018 Sergey Y. Afonin <asy@altlinux.ru> 1.2.4-alt1
+- new version
+
 * Mon Oct 09 2017 Sergey Y. Afonin <asy@altlinux.ru> 1.2.2-alt1
 - new version
 - removed quagga-tools (zc.pl removed from source)
