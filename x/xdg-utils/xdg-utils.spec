@@ -1,6 +1,6 @@
 Name: xdg-utils
 Version: 1.1.2
-Release: alt3
+Release: alt4
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 
@@ -20,6 +20,7 @@ Patch7: xdg-open-fix-ifs-use.patch
 Patch8: xdg-open-kde5.patch
 Patch9: xdg-su-kde5.patch
 Patch10: xdg-common-detect-de-generic.patch
+Patch11: xdg-open-added_open_lxqt.patch
 
 BuildArch: noarch
 
@@ -69,6 +70,7 @@ popd
 #patch8 -p1
 %patch9 -p1
 %patch10 -p2
+%patch11 -p2
 
 %build
 %autoreconf
@@ -93,6 +95,9 @@ popd
 %doc ChangeLog README LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Tue Mar 06 2018 Anton Midyukov <antohami@altlinux.org> 1.1.2-alt4
+- fix xdg-open support lxqt (Closes: 34614)
+
 * Sun Feb 11 2018 Anton Midyukov <antohami@altlinux.org> 1.1.2-alt3
 - Fix detected unknown DE (e.g. wmaker or IceWM)
 - use beesu for generic
