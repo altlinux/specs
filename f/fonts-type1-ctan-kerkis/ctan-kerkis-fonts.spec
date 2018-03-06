@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-texmf
+BuildRequires(pre): rpm-build-tex
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname ctan-kerkis-fonts
@@ -20,7 +20,7 @@ that occur in variant forms.
 
 Name:           fonts-type1-ctan-kerkis
 Version:        2.0
-Release:        alt2_26
+Release:        alt3_26
 Summary:        Kerkis Type 1 fonts
 Group:          Publishing
 License:        LPPL
@@ -31,7 +31,7 @@ Source0:        kerkis-%{ctan_date}.zip
 Source1:        %{fontname}-fontconfig.tar.gz
 # Tarball of fontconfig files for each font
 BuildArch:      noarch
-BuildRequires:  fontpackages-devel texlive-generic-recommended
+BuildRequires:  fontpackages-devel texlive-collection-basic
 Source44: import.info
 %description
 %{common_desc}
@@ -227,6 +227,9 @@ fi
 
 
 %changelog
+* Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_26
+- rebuild with rpm-build-tex
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0-alt2_26
 - update to new release by fcimport
 
