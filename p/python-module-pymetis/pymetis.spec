@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2016.1
-Release: alt1
+Release: alt2
 Summary: Python wrapper for the Metis graph partititioning software
 License: MIT
 Group: Development/Python
@@ -15,9 +15,11 @@ Source: %oname-%version.tar
 Patch1: %oname-%version-alt-build.patch
 
 BuildRequires: python-module-setuptools gcc-c++ boost-python-devel
+BuildRequires: python2.7(six)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools boost-python3-devel
+BuildRequires: python3(six)
 BuildRequires: python-tools-2to3
 %endif
 
@@ -86,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2016.1-alt2
+- Updated build dependencies.
+
 * Tue Dec 26 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2016.1-alt1
 - Updated to upstream version 2016.1.
 
