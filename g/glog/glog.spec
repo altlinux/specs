@@ -1,12 +1,13 @@
 Name: glog
 Version: 0.3.4
-Release: alt3
+Release: alt4
 Summary: C++ implementation of Google logging module
 License: BSD
 Group: Development/C++
 Url: https://github.com/google/glog
 
 Source: %name-%version.tar
+BuildRequires: gcc-c++
 
 %description
 C++ implementation of Google logging module
@@ -14,8 +15,6 @@ C++ implementation of Google logging module
 %package -n lib%{name}
 Group: Development/C++
 Summary: C++ implementation of Google logging module
-BuildRequires: gcc-c++
-ExclusiveArch: %ix86 x86_64
 
 %description -n lib%{name}
 C++ implementation of Google logging module.
@@ -24,7 +23,6 @@ C++ implementation of Google logging module.
 Summary: Development tools for programs which will use Google logging library
 Group: Development/C++
 Requires: lib%{name} = %version-%release
-ExclusiveArch: %ix86 x86_64
 
 %description -n lib%{name}-devel
 C++ implementation of Google logging module.
@@ -34,12 +32,11 @@ Development tools.
 %setup
 
 %build
-%ifarch %ix86
-%configure
-%endif
+%configure \
 %ifarch x86_64
-%configure --enable-frame-pointers
+	--enable-frame-pointers \
 %endif
+	#
 
 %make_build
 
@@ -59,6 +56,9 @@ rm -f %_libdir/lib%{name}.a
 
 
 %changelog
+* Tue Feb 13 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.4-alt4
+- Fixed build on non-x86 architectures.
+
 * Thu Jul 02 2015 Dmitry Derjavin <dd@altlinux.org> 0.3.4-alt3
 - Fixed typo in devel package requirements.
 
