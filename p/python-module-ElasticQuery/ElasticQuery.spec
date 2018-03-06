@@ -3,36 +3,38 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.0
-Release: alt1.git20141125.1.1
+Version: 3.1
+Release: alt1
 Summary: A simple query builder for Elasticsearch
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/ElasticQuery/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+BuildArch: noarch
 
 # https://github.com/Fizzadar/ElasticQuery.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-modules-json
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-modules-json
+BuildRequires: python-module-pytest
+BuildRequires: python2.7(jsontest)
+BuildRequires: python2.7(dictdiffer)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python-tools-2to3
+BuildRequires: python3-module-pytest
+BuildRequires: python3(jsontest)
+BuildRequires: python3(dictdiffer)
 %endif
 
 %py_provides elasticquery
-
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-setuptools
-BuildRequires: python-module-setuptools-tests python-modules-json python3-module-pytest rpm-build-python3 time
 
 %description
 A simple query builder for Elasticsearch. Outputs json ready to be sent
 to Elasticsearch via your favourite client.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: A simple query builder for Elasticsearch
 Group: Development/Python3
@@ -41,6 +43,7 @@ Group: Development/Python3
 %description -n python3-module-%oname
 A simple query builder for Elasticsearch. Outputs json ready to be sent
 to Elasticsearch via your favourite client.
+%endif
 
 %prep
 %setup
@@ -70,13 +73,9 @@ popd
 
 %check
 python setup.py test
-python test.py
-#if_with python3
-%if 0
+%if_with python3
 pushd ../python3
 python3 setup.py test
-rm -fR build
-python3 test.py
 popd
 %endif
 
@@ -91,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1-alt1
+- Updated to upstream version 3.1.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.0-alt1.git20141125.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
