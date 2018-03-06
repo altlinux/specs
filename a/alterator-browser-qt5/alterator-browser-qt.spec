@@ -11,7 +11,7 @@
 
 Name: %bin_name
 Version: 3.0.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Source:%name-%version.tar
 
@@ -31,6 +31,9 @@ Provides: alterator-browser-x11
 Provides: alterator-browser-qt-light = 2.8-alt1
 Obsoletes: alterator-browser-qt-light < 2.8-alt1
 Provides: alterator-browser-qt = %version-%release
+Obsoletes: alterator-browser-qt < %version-%release
+Provides: alterator-browser-qt4 = %version-%release
+Obsoletes: alterator-browser-qt4 < %version-%release
 Obsoletes: alterator-look-qt
 
 BuildRequires(pre): rpm-build-ubt
@@ -79,6 +82,9 @@ __EOF__
 
 
 %changelog
+* Tue Mar 06 2018 Sergey V Turchin <zerg at altlinux dot org> 3.0.0-alt2%ubt
+- obsolete alterator-browser-qt4
+
 * Thu Dec 14 2017 Sergey V Turchin <zerg at altlinux dot org> 3.0.0-alt1%ubt
 - enable High-DPI pixmaps by default
 
