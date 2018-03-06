@@ -8,7 +8,7 @@
 Summary: AVRDUDE is software for programming Atmel AVR Microcontrollers.
 Name: avrdude
 Version: 6.3
-Release: alt2%ubt
+Release: alt3
 License: GPL
 Group: Development/Other
 URL: http://www.nongnu.org/avrdude/
@@ -21,7 +21,7 @@ BuildRequires: gnu-config libtinfo-devel libusb-devel libusb-compat-devel makein
 BuildRequires: flex libelf-devel libftdi1-devel libncurses-devel libreadline-devel
 
 %if_enabled doc
-BuildRequires: tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texi2html texi2dvi
+BuildRequires: texlive-collection-latexrecommended texi2html texi2dvi
 %endif
 
 %package docs
@@ -83,6 +83,9 @@ rm -f %buildroot%_libdir/*.so*
 %_libdir/*.a
 
 %changelog
+* Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 6.3-alt3
+- NMU: fixed BR: for texlive 2017
+
 * Sun Oct 01 2017 Evgeny Sinelnikov <sin@altlinux.ru> 6.3-alt2%ubt
 - Rebuild with libusb-compat-devel due needs for stk500v2 (ALT #33937)
 
