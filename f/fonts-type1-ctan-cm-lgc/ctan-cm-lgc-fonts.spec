@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-texmf
+BuildRequires(pre): rpm-build-tex
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname ctan-cm-lgc-fonts
@@ -20,7 +20,7 @@ LGR, and TS1 encodings, i.e. Latin, Cyrillic, and Greek.
 
 Name:           fonts-type1-ctan-cm-lgc
 Version:        0.5
-Release:        alt2_20
+Release:        alt3_20
 Summary:        CM-LGC Type1 fonts
 Group:          Publishing
 # Font exception
@@ -223,6 +223,9 @@ fi
 
 
 %changelog
+* Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 0.5-alt3_20
+- rebuild with rpm-build-tex
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.5-alt2_20
 - update to new release by fcimport
 
