@@ -5,8 +5,8 @@
 %define libkwave libkwave%sover
 
 Name: kde5-%rname
-Version: 17.08.3
-Release: alt2%ubt
+Version: 17.12.2
+Release: alt1%ubt
 %K5init
 
 Group: Sound
@@ -23,6 +23,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-multimedia-devel
 BuildRequires: GraphicsMagick-ImageMagick-compat dconf doxygen
 BuildRequires: libGConf libalsa-devel libaudiofile-devel libfftw3-devel libflac++-devel libopus-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel
+BuildRequires: id3lib-devel libmad-devel
 BuildRequires: kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools-devel-static kf5-kiconthemes-devel kf5-kio-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-karchive-devel
 
@@ -96,6 +97,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkwavegui.so.*
 
 %changelog
+* Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+- new version
+
 * Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt2%ubt
 - fix build requires
 
