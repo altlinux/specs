@@ -1,16 +1,19 @@
 Name: ucommon
-Version: 6.3.3
+Version: 7.0.0
 Release: alt1
-%define sover 7
+
+%define sover 8
 %define libcommoncpp libcommoncpp%sover
 %define libucommon libucommon%sover
 %define libusecure libusecure%sover
 
-Group: System/Libraries
 Summary: Portable C++ framework for threads and sockets
+
+Group: System/Libraries
 Url: http://www.gnu.org/software/commoncpp
 License: LGPLv3+
 
+# Source-url: https://mirror.tochlab.net/pub/gnu/commoncpp/ucommon-%version.tar.gz
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Wed Sep 24 2014 (-bi)
@@ -111,6 +114,7 @@ chmod 0755 %buildroot/%_bindir/commoncpp-config
 
 %files utils
 %_bindir/args
+%_bindir/urlout
 %_bindir/mdsum
 %_bindir/pdetach
 %_bindir/sockaddr
@@ -119,6 +123,7 @@ chmod 0755 %buildroot/%_bindir/commoncpp-config
 %_bindir/car
 %_bindir/keywait
 %_man1dir/args.*
+%_man1dir/urlout.*
 %_man1dir/car.*
 %_man1dir/mdsum.*
 %_man1dir/pdetach.*
@@ -143,6 +148,9 @@ chmod 0755 %buildroot/%_bindir/commoncpp-config
 %doc BUILD/doc/html/*
 
 %changelog
+* Sun Mar 04 2018 Vitaly Lipatov <lav@altlinux.ru> 7.0.0-alt1
+- new version 7.0.0 (with rpmrb script)
+
 * Mon Jun 15 2015 Sergey V Turchin <zerg@altlinux.org> 6.3.3-alt1
 - new version
 
