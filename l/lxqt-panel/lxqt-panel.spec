@@ -1,6 +1,6 @@
 Name: lxqt-panel
 Version: 0.12.0
-Release: alt3
+Release: alt4
 
 Summary: Desktop panel
 License: LGPL
@@ -22,6 +22,9 @@ BuildRequires: libXdmcp-devel libXdamage-devel
 BuildRequires: libXcomposite-devel libXrender-devel libxcbutil-devel
 BuildRequires: libmenu-cache-devel libstatgrab-devel libsensors3-devel
 BuildRequires: libxkbcommon-devel libxkbcommon-x11-devel
+
+# see bug 34612
+BuildRequires: pkgconfig(libpulse)
 
 BuildRequires: libsysstat-devel >= 0.3.0
 
@@ -51,7 +54,7 @@ This package provides the development files for %name.
 
 %build
 %cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF \
-	-DVOLUME_USE_PULSEAUDIO=OFF
+	-DVOLUME_USE_PULSEAUDIO=ON
 %make_build
 
 %install
@@ -70,6 +73,9 @@ This package provides the development files for %name.
 %_includedir/*/*.h
 
 %changelog
+* Tue Mar 06 2018 Anton Midyukov <antohami@altlinux.org> 0.12.0-alt4
+- rebuild with libpulseaudio (Closes: 34612)
+
 * Sat Feb 24 2018 Anton Midyukov <antohami@altlinux.org> 0.12.0-alt3
 - fix initial settigs (replace applet clock to worldclock)
 
