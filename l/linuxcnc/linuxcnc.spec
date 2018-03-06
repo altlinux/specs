@@ -1,9 +1,9 @@
-%def_with docs
+%def_without docs
 %def_without static
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.7.12
-Release: alt1
+Release: alt2
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -24,7 +24,7 @@ BuildRequires: intltool
 %if_with docs
 BuildPreReq: asciidoc-a2x ghostscript-common ghostscript-utils source-highlight graphviz groff-ps
 %endif
-BuildPreReq: desktop-file-utils ImageMagick-tools 
+BuildPreReq: desktop-file-utils ImageMagick-tools
 
 %if_with docs
 Requires: %name-doc = %version
@@ -38,6 +38,11 @@ Requires: lib%name = %version
 %add_tcl_req_skip Ngcgui
 %add_python_req_skip emccanon
 %add_python_req_skip interpreter
+
+# replace requres python-module-gst -> python-module-gst1.0
+# see https://github.com/LinuxCNC/linuxcnc/commit/fe2483ceb06a1ae93669e0f98657eb8fa1638915
+%add_python_req_skip gst
+Requires: python-module-gst1.0
 
 %description
 LinuxCNC is software that runs on Linux, on most standard PCs, that can
@@ -247,6 +252,10 @@ popd
 %endif
 
 %changelog
+* Tue Mar 06 2018 Anton Midyukov <antohami@altlinux.org> 2.7.12-alt2
+- replace requres python-module-gst -> python-module-gst1.0
+- disable build docs
+
 * Tue Jan 30 2018 Anton Midyukov <antohami@altlinux.org> 2.7.12-alt1
 - new version 2.7.12
 - Fix pathdir
