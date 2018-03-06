@@ -1,6 +1,6 @@
 Name: texinfo
 Version: 6.5
-Release: alt1
+Release: alt1.1
 
 Summary: Tools needed to create Texinfo format documentation files
 License: GPLv3+
@@ -30,7 +30,7 @@ Patch8: texinfo-alt-tests.patch
 Requires: makeinfo = %version-%release
 Requires: texi2dvi = %version-%release
 
-BuildRequires(pre): rpm-build-texmf
+BuildRequires(pre): rpm-build-tex
 BuildRequires: cvs bzlib-devel help2man libtinfo-devel libzio-devel zlib-devel
 BuildRequires: perl-devel
 BuildRequires: perl(Locale/Messages.pm)
@@ -221,6 +221,9 @@ unset ALL_TESTS LANG
 %_rpmmacrosdir/*
 
 %changelog
+* Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 6.5-alt1.1
+- NMU: build with rpm-build-tex
+
 * Sat Dec 09 2017 Dmitry V. Levin <ldv@altlinux.org> 6.5-alt1
 - 6.0 -> 6.5 (closes: #34299).
 
