@@ -8,7 +8,7 @@
 
 Name: python-module-%{_name}3
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for GObject
 Group: Development/Python
@@ -29,6 +29,7 @@ Source: %_name-%version.tar
 %add_findprov_lib_path %python3_sitelibdir/gi
 %add_findprov_lib_path %python3_sitelibdir/gtk-%gtk_api_ver
 
+Requires: typelib(GdkX11) = 3.0
 %add_typelib_req_skiplist typelib(Foo)
 %filter_from_requires /Gst.*/d
 
@@ -92,6 +93,7 @@ Development files for %name.
 %package -n python3-module-%{_name}3
 Summary: Python3 bindings for GObject
 Group: Development/Python3
+Requires: typelib(GdkX11) = 3.0
 
 %description -n python3-module-%{_name}3
 GObject is a object system used by GTK+, GStreamer and other libraries.
@@ -204,6 +206,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 06 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt2
+- rebuilt with pycairo-1.16.3
+
 * Fri Oct 27 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 

@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 Epoch: 1
 
@@ -27,9 +27,10 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 %define glib_ver 2.52.0
 %define gtk3_ver 3.10.0
 %define libxml2_ver 2.7.0
-%define cairo_ver 1.2.0
+%define cairo_ver 1.15.4
 %define croco_ver 0.6.7
 %define vala_ver 0.18
+%define freetype_ver 2.9
 
 PreReq: libcroco >= %croco_ver
 
@@ -39,6 +40,7 @@ BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libxml2-devel >= %libxml2_ver
 BuildPreReq: libcairo-devel >= %cairo_ver
 BuildPreReq: libcroco-devel >= %croco_ver
+BuildPreReq: libfreetype-devel >= %freetype_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
 BuildRequires: libX11-devel libXt-devel
 BuildRequires: gcc-c++ gtk-doc intltool sgml-common zlib-devel
@@ -184,6 +186,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Mon Mar 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1:2.42.3-alt1
+- 2.42.3
+
 * Fri Feb 02 2018 Yuri N. Sedunov <aris@altlinux.org> 1:2.42.2-alt1
 - 2.42.2
 
