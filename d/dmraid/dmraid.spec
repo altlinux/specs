@@ -2,7 +2,7 @@
 
 Name: dmraid
 Version: 1.0.0.rc16
-Release: alt1
+Release: alt2
 
 Summary: dmraid (Device-mapper RAID tool and library)
 Group: System/Base
@@ -12,6 +12,7 @@ Url: http://people.redhat.com/heinzm/sw/dmraid
 Source: dmraid-%version.tar.bz2
 Patch: dmraid-1.0.0.rc16-alt-DSO.patch
 Patch1: dmraid-1.0.0.rc16-alt-Makefile.patch
+Patch2: dmraid-1.0.0.rc16-alt-fix-build-with-static-libdevmapper.patch
 
 #fc
 Patch10: dmraid-1.0.0.rc16-test_devices.patch
@@ -51,6 +52,7 @@ RAID set activation and display of properties for ATARAID volumes.
 %setup
 %patch
 %patch1 -p1
+%patch2 -p2
 
 # fc
 %patch10 -p1
@@ -101,6 +103,9 @@ install -m 755 tools/dmraid.static %buildroot/sbin/dmraid.static
 %_libdir/lib%name-events-isw.so
 
 %changelog
+* Wed Mar 07 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.0.0.rc16-alt2
+- NMU: fixed FTBFS with static libdevmapper
+
 * Mon Oct 03 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0.0.rc16-alt1
 - 1.0.0.rc16
 - applied fc patchset
