@@ -1,20 +1,22 @@
+%define _unpackaged_files_terminate_build 1
+Epoch: 1
 %define dist CGI-Simple
 Name: perl-%dist
-Version: 1.115
-Release: alt1
+Version: 1.15
+Release: alt1.1
 
 Summary: A Simple totally OO CGI interface that is CGI.pm compliant 
 License: Artistic and GPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SZ/SZABGAB/CGI-Simple-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MANWAR/%{dist}-%{version}.tar.gz
 Patch: perl-CGI-Simple-1.112-alt-mod_perl.patch
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Mar 16 2011 (-bi)
-BuildRequires: perl-IO-stringy perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-libwww
+BuildRequires: perl-IO-stringy perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-libwww perl(Test/Exception.pm) perl(Test/NoWarnings.pm)
 
 %description
 CGI::Simple provides a relatively lightweight drop in
@@ -25,7 +27,7 @@ however a complete functional interface is available by using
 the CGI::Simple::Standard module.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch -p1
 
 %build
@@ -35,10 +37,13 @@ the CGI::Simple::Standard module.
 %perl_vendor_install
 
 %files
-%doc Changes README 
+%doc Changes README
 %perl_vendor_privlib/CGI*
 
 %changelog
+* Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.15-alt1.1
+- automated CPAN update
+
 * Mon Oct 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.115-alt1
 - automated CPAN update
 
