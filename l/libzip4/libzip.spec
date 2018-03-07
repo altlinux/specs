@@ -1,22 +1,20 @@
 
-%define sover 5
+%define sover 4
 %define libname libzip%sover
 %define utilsname libzip-utils
-Name: libzip
-Version: 1.4.0
-Release: alt1%ubt
+Name: %libname
+Version: 1.1.2
+Release: alt2%ubt
+Summary: C library for reading, creating, and modifying zip archives
 
 Group: System/Libraries
-Summary: C library for reading, creating, and modifying zip archives
 License: BSD
 Url: http://www.nih.at/libzip/
 
-Source: %name-%version.tar
-# FC
-Patch1: libzip-upstream.patch
+Source: libzip-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: gcc-c++ zlib-devel bzlib-devel cmake
+BuildRequires: gcc-c++ zlib-devel
 
 %description
 libzip is a C library for reading, creating, and modifying zip archives. Files
@@ -24,72 +22,42 @@ can be added from data buffers, files, or compressed data copied directly from
 other zip archives. Changes made without closing the archive can be reverted.
 The API is documented by man pages.
 
-%package -n %utilsname
-Group: System/Libraries
-Summary: Zip-file processing utilities
-Requires: %libname = %version-%release
-Conflicts: libzip <= 0.9.3-alt2
-%description -n %utilsname
-Zip-file processing utilities
-
-%package -n %libname
-Group: System/Libraries
-Summary: C library for reading, creating, and modifying zip archives
-%description -n %libname
-libzip is a C library for reading, creating, and modifying zip archives. Files
-can be added from data buffers, files, or compressed data copied directly from
-other zip archives. Changes made without closing the archive can be reverted.
-The API is documented by man pages.
-
-%package devel
-Summary: Development files for %name
-Group: Development/C
-Requires: %libname = %version-%release
-%description devel
-The %name-devel package contains libraries and header files for
-developing applications that use %name.
-
-
 %prep
-%setup -q
-%patch1 -p1
-sed -i '/^ADD_SUBDIRECTORY(regress)$/d' CMakeLists.txt
+%setup -qn libzip-%version
+
+%autoreconf
+
 
 %build
-%cmake \
-    -DBUILD_SHARED_LIBS=ON \
-    -DCMAKE_INSTALL_INCLUDEDIR=include/libzip \
-    #
-%cmake_build VERBOSE=1
+%configure \
+    --disable-static \
+    --enable-shared \
+    --includedir=%_includedir/%name
+
+%make_build
+
 
 %install
-%make DESTDIR=%buildroot install -C BUILD
+%make DESTDIR=%buildroot install
 
-
-%files -n %utilsname
-%doc AUTHORS NEWS.* THANKS
-%_bindir/*
-%_man1dir/*zip*
 
 %files -n %libname
-%doc AUTHORS NEWS.* THANKS
+%doc AUTHORS NEWS THANKS
 %_libdir/*.so.%sover
 %_libdir/*.so.%sover.*
 
-%files devel
-%_libdir/*.so
-%_libdir/pkgconfig/*.pc
-#%_libdir/%name/include
-%_includedir/%name/
-%_man3dir/*zip*
-%_man3dir/*ZIP*
+%exclude %_bindir/*
+%exclude %_man1dir/*
+
+%exclude %_libdir/*.so
+%exclude %_libdir/pkgconfig/*
+%exclude %_libdir/libzip
+%exclude %_includedir/*
+%exclude %_man3dir/*
 
 %changelog
-* Wed Mar 07 2018 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt1%ubt
-- new version
-
-* Tue Apr 25 2017 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt1%ubt
-- new version
+* Wed Mar 07 2018 Sergey V Turchin <zerg@altlinux.org> 1.1.2-alt2%ubt
+- exclude devel files
 
 * Sat Feb 20 2016 Sergey V Turchin <zerg@altlinux.org> 1.1.2-alt1
 - new version
