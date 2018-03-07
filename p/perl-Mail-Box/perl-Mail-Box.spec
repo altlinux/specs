@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Mail-Box
 Name: perl-%dist
-Version: 3.004
+Version: 3.005
 Release: alt1
 
 Summary: Manage a mailbox, a folder with messages
@@ -34,10 +34,13 @@ rm %buildroot%perl_vendor_privlib/Mail/Message/Wrapper/SpamAssassin.{pm,pod}
 rm %buildroot%perl_vendor_privlib/Mail/Box/Search/SpamAssassin.{pm,pod}
 
 %files
-%doc ChangeLog README README.FAQ README.todo examples
+%doc ChangeLog README README.FAQ README.todo examples README.md
 %perl_vendor_privlib/Mail/
 
 %changelog
+* Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 3.005-alt1
+- automated CPAN update
+
 * Tue Dec 26 2017 Igor Vlasenko <viy@altlinux.ru> 3.004-alt1
 - automated CPAN update
 
