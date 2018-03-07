@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Calendar-Simple
-Version: 1.22
+Version: 1.23
 Release: alt1
 
 Summary: Calendar-Simple - Perl module
@@ -48,6 +48,9 @@ A very simple module that exports one function called calendar.
 %perl_vendor_privlib/Calendar/
 
 %changelog
+* Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1
+- automated CPAN update
+
 * Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
 - automated CPAN update
 
