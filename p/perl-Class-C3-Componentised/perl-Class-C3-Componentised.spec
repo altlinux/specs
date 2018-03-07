@@ -1,6 +1,6 @@
 %define dist Class-C3-Componentised
 Name: perl-%dist
-Version: 1.001000
+Version: 1.001002
 Release: alt1
 
 Summary: Load mix-ins or components to your C3-based class.
@@ -12,7 +12,7 @@ Url: %CPAN %dist
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/F/FR/FREW/Class-C3-Componentised-1.001000.tar.gz
+Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{dist}-%{version}.tar.gz
 
 BuildRequires: perl-Class-C3 perl-Class-C3-XS perl-Class-Inspector perl-MRO-Compat perl-Module-Install perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage
 
@@ -20,7 +20,7 @@ BuildRequires: perl-Class-C3 perl-Class-C3-XS perl-Class-Inspector perl-MRO-Comp
 Load mix-ins or components to your C3-based class.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,6 +33,9 @@ Load mix-ins or components to your C3-based class.
 %doc Changes README
 
 %changelog
+* Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.001002-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.001000-alt1
 - automated CPAN update
 
