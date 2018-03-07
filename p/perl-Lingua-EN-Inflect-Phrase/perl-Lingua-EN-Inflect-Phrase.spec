@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Lingua-EN-Inflect-Phrase
 Name: perl-%dist
-Version: 0.19
+Version: 0.20
 Release: alt1
 
 Summary: Inflect short English Phrases
@@ -33,6 +33,9 @@ Attempts to pluralize or singularize short English phrases.
 %perl_vendor_privlib/Lingua
 
 %changelog
+* Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- automated CPAN update
+
 * Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - automated CPAN update
 
