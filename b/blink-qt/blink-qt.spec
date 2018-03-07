@@ -1,6 +1,6 @@
 Name:    blink-qt
 Version: 3.0.3
-Release: alt1
+Release: alt2
 
 Summary: Blink SIP Client
 License: GPLv3+
@@ -30,6 +30,7 @@ BuildRequires: python-module-zope.interface
 %py_requires service_identity twisted.names
 
 Source:  %name-%version.tar
+Patch1:  alt-desktop-l10n.patch
 
 %description
 Fully featured, easy to use SIP client with a Qt based UI Blink is a
@@ -40,20 +41,30 @@ Instant Messaging, File Transfers, Desktop Sharing and Presence.
 
 %prep
 %setup -n %name-%version
+%patch1 -p1
 
 %build
 %python_build
 
 %install
 %python_install
+install -Dm 0644 debian/blink.desktop %buildroot%_desktopdir/blink.desktop
+install -Dm 0644 debian/blink.xpm %buildroot%_pixmapsdir/blink.xpm
+install -Dm 0644 debian/blink.1 %buildroot%_man1dir/blink.1
 
 %files
 %doc README LICENSE TODO
 %_bindir/blink
 %_datadir/blink
+%_desktopdir/blink.desktop
+%_pixmapsdir/blink.xpm
 %python_sitelibdir/blink/
 %python_sitelibdir/*.egg-info
+%_man1dir/blink.1*
 
 %changelog
+* Wed Mar 07 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.3-alt2
+- Add desktop file, pixmap and man page
+
 * Thu Mar 01 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.3-alt1
 - Initial build in Sisyphus
