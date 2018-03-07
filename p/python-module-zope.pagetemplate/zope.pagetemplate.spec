@@ -1,44 +1,55 @@
-# REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt1.1.1.1.1
+%define _unpackaged_files_terminate_build 1
 %define oname zope.pagetemplate
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 4.2.1
-#Release: alt1.1.1
+Version: 4.3.0
+Release: alt1%ubt
+
 Summary: Zope Page Templates
-License: ZPL
+License: ZPLv2.1
 Group: Development/Python
-Url: http://pypi.python.org/pypi/zope.pagetemplate/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+# Source-git: https://github.com/zopefoundation/zope.pagetemplate.git
+Url: http://pypi.python.org/pypi/zope.pagetemplate
 
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools
-#BuildPreReq: python-module-zope.component python-module-zope.security
-#BuildPreReq: python-module-zope.tales python-module-zope.proxy
-#BuildPreReq: python-module-zope.untrustedpython
-#BuildPreReq: python-module-zope.i18n python-module-zope.i18nmessageid
-#BuildPreReq: python-module-zope.traversing python-module-zope.testing
-#BuildPreReq: python-module-zope.component-tests
-%if_with python3
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-#BuildPreReq: python3-module-zope.component python3-module-zope.security
-#BuildPreReq: python3-module-zope.tales python3-module-zope.proxy
-#BuildPreReq: python3-module-zope.i18n python3-module-zope.i18nmessageid
-#BuildPreReq: python3-module-zope.traversing python3-module-zope.testing
-#BuildPreReq: python3-module-zope.component-tests
+
+BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python-module-zope.component
+BuildRequires: python-module-zope.component-tests
+BuildRequires: python-module-zope.proxy
+BuildRequires: python-module-zope.security
+BuildRequires: python-module-zope.tal
+BuildRequires: python-module-zope.tales
+BuildRequires: python-module-zope.testing
+BuildRequires: python-module-zope.testrunner
+BuildRequires: python-module-zope.traversing
+BuildRequires: python3-module-zope.component
+BuildRequires: python3-module-zope.component-tests
+BuildRequires: python3-module-zope.proxy
+BuildRequires: python3-module-zope.security
+BuildRequires: python3-module-zope.tal
+BuildRequires: python3-module-zope.tales
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.traversing
 %endif
 
-%py_requires zope zope.interface zope.component zope.security zope.tales
-%py_requires zope.tal zope.i18n zope.i18nmessageid zope.traversing
-%py_requires zope.untrustedpython
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-BTrees python-module-RestrictedPython python-module-ZEO python-module-ZODB python-module-cffi python-module-cryptography python-module-enum34 python-module-mimeparse python-module-numpy python-module-pbr python-module-persistent python-module-pyasn1 python-module-pytest python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-transaction python-module-twisted-core python-module-unittest2 python-module-zc.lockfile python-module-zdaemon python-module-zope python-module-zope.browser python-module-zope.component python-module-zope.configuration python-module-zope.contenttype python-module-zope.event python-module-zope.exceptions python-module-zope.hookable python-module-zope.i18n python-module-zope.i18nmessageid python-module-zope.interface python-module-zope.location python-module-zope.proxy python-module-zope.publisher python-module-zope.schema python-module-zope.security python-module-zope.tal python-module-zope.testing python-module-zope.testrunner python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python-modules-xml python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-mimeparse python3-module-ntlm python3-module-pbr python3-module-pip python3-module-pycparser python3-module-pytz python3-module-setuptools python3-module-transaction python3-module-unittest2 python3-module-zope python3-module-zope.browser python3-module-zope.component python3-module-zope.configuration python3-module-zope.contenttype python3-module-zope.event python3-module-zope.exceptions python3-module-zope.i18n python3-module-zope.i18nmessageid python3-module-zope.interface python3-module-zope.location python3-module-zope.proxy python3-module-zope.publisher python3-module-zope.schema python3-module-zope.security python3-module-zope.tal python3-module-zope.testing
-BuildRequires: python-module-setuptools python-module-zope.component-tests python-module-zope.tales python-module-zope.traversing python-module-zope.untrustedpython python3-module-html5lib python3-module-pytest python3-module-zope.tales python3-module-zope.testrunner python3-module-zope.traversing rpm-build-python3
+%py_requires zope.interface
+%py_requires zope.component
+%py_requires zope.tales
+%py_requires zope.tal
+%py_requires zope.i18n
+%py_requires zope.i18nmessageid
+%py_requires zope.traversing
 
 %description
 Page Templates provide an elegant templating mechanism that achieves a
@@ -49,8 +60,6 @@ for designers to work with templates in their visual editing tools
 %package -n python3-module-%oname
 Summary: Zope Page Templates
 Group: Development/Python3
-%py3_requires zope zope.interface zope.component zope.security zope.tales
-%py3_requires zope.tal zope.i18n zope.i18nmessageid zope.traversing
 
 %description -n python3-module-%oname
 Page Templates provide an elegant templating mechanism that achieves a
@@ -61,46 +70,35 @@ for designers to work with templates in their visual editing tools
 %package -n python3-module-%oname-tests
 Summary: Tests for Page Templates
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-%py3_requires zope.testing zope.proxy zope.security
+Requires: python3-module-%oname = %EVR
+%py3_requires zope.proxy
+%py3_requires zope.security
 
 %description -n python3-module-%oname-tests
-Page Templates provide an elegant templating mechanism that achieves a
-clean separation of presentation and application logic while allowing
-for designers to work with templates in their visual editing tools
-(FrontPage, Dreamweaver, GoLive, etc.).
-
 This package contains tests for Page Templates.
 
 %package tests
 Summary: Tests for Page Templates
 Group: Development/Python
-Requires: %name = %version-%release
-%py_requires zope.testing zope.proxy zope.security
+Requires: %name = %EVR
+%py_requires zope.proxy
+%py_requires zope.security
+%py_requires zope.testing
 
 %description tests
-Page Templates provide an elegant templating mechanism that achieves a
-clean separation of presentation and application logic while allowing
-for designers to work with templates in their visual editing tools
-(FrontPage, Dreamweaver, GoLive, etc.).
-
 This package contains tests for Page Templates.
 
 %prep
 %setup
-
-%if_with python3
-cp -fR . ../python3
-%endif
+rm -rf ../python3
+cp -a . ../python3
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
@@ -110,7 +108,6 @@ mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
@@ -119,38 +116,37 @@ install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
-%endif
 
 %check
-python setup.py test -v
-#if_with python3
-%if 0
+export PYTHONPATH=src
+zope-testrunner --test-path=src -vv
+
 pushd ../python3
-python3 setup.py test -v
+zope-testrunner3 --test-path=src -vv
 popd
-%endif
 
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests
+%exclude %python_sitelibdir/zope/pagetemplate/tests
 
 %files tests
-%python_sitelibdir/*/*/tests
+%python_sitelibdir/zope/pagetemplate/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/tests
+%exclude %python3_sitelibdir/zope/pagetemplate/tests
 
 %files -n python3-module-%oname-tests
-%python3_sitelibdir/*/*/tests
-%endif
+%python3_sitelibdir/zope/pagetemplate/tests
 
 %changelog
+* Mon Mar 05 2018 Stanislav Levin <slev@altlinux.org> 4.3.0-alt1%ubt
+- 4.2.1 -> 4.3.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.2.1-alt1.1.1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
