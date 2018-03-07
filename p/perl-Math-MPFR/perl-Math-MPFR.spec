@@ -9,7 +9,7 @@ BuildRequires: perl(Math/Decimal64.pm)
 %endif
 
 Name: perl-%module_name
-Version: 4.0
+Version: 4.01
 Release: alt1
 Summary: perl interface to the MPFR (floating point) library..
 Group: Development/Perl
@@ -43,6 +43,9 @@ A bigfloat module utilising the MPFR library. Basically.
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 4.01-alt1
+- automated CPAN update
+
 * Tue Jan 16 2018 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1
 - automated CPAN update
 
