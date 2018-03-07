@@ -14,8 +14,8 @@
 %define docdir %_docdir/%name-%version-doc
 
 Name: lighttpd
-Version: 1.4.47
-Release: alt2
+Version: 1.4.48
+Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -296,6 +296,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Wed Mar 07 2018 Alexei Takaseev <taf@altlinux.org> 1.4.48-alt1
+- 1.4.48
+
 * Tue Nov 07 2017 Alexei Takaseev <taf@altlinux.ru> 1.4.47-alt2
 - Build with gssapi support (closes: #34134)
 - Build with pgsql vhosting
