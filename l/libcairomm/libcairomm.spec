@@ -1,21 +1,33 @@
-Name: libcairomm
-Version: 1.12.0
+%def_disable snapshot
+
+%define _name cairomm
+
+%def_disable docs
+%def_enable check
+
+Name: lib%_name
+Version: 1.12.2
 Release: alt1
 
 Summary: This library provides a C++ interface to cairo
 License: LGPL
 Group: System/Libraries
-Url: http://cairographics.org/cairomm
+Url: https://cairographics.org/cairomm
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+%if_disabled snapshot
+Source: https://www.cairographics.org/releases/%_name-%version.tar.gz
+%else
+#VCS: git://git.cairographics.org/git/cairomm
+Source: %_name-%version.tar
+%endif
 
-%define cairo_ver 1.10
+%define cairo_ver 1.10.0
 %define sigc_ver 2.6.0
 
-BuildRequires: doxygen gcc-c++ graphviz mm-common
+BuildRequires: gcc-c++ mm-common
 BuildRequires: libcairo-devel >= %cairo_ver libsigc++2.0-devel >= %sigc_ver
+%{?_enable_docs:BuildRequires: doxygen graphviz xsltproc}
 
 %description
 This library provides a C++ interface to cairo.
@@ -30,21 +42,32 @@ This package contains the headers and various development files needed
 for compiling or development of applications that wants C++ interface
 of %name library.
 
-%prep
-%setup
-%patch -p1
+%package devel-doc
+Summary: Development documentation for %name
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: %name < %version
 
->build/doc-reference.am
->build/dist-changelog.am
+%description devel-doc
+This package contains documentation needed for developing %_name applications.
+
+%prep
+%setup -n %_name-%version
 
 %build
+%{?_enable_snapshot:mm-common-prepare --force --copy}
 %autoreconf
 %configure \
-	--disable-static
+	--disable-static \
+	%{?_disable_docs:--disable-documentation} \
+	%{?_enable_snapshot:--enable-maintainer-mode}
 %make_build
 
 %install
 %makeinstall_std
+
+%check
+%make check
 
 %files
 %doc AUTHORS NEWS
@@ -56,7 +79,16 @@ of %name library.
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
+%if_enabled docs
+%files devel-doc
+%_datadir/devhelp/books/%_name-%api_ver/
+%_datadir/doc/%_name-%api_ver/
+%endif
+
 %changelog
+* Wed Mar 07 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1
+- 1.12.2
+
 * Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
 - 1.12.0
 
