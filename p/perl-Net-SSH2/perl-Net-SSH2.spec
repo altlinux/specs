@@ -1,5 +1,5 @@
 Name: perl-Net-SSH2
-Version: 0.68
+Version: 0.69
 Release: alt1
 
 Summary: Support for the SSH 2 protocol via libssh2
@@ -34,6 +34,9 @@ with all of the key exchanges, ciphers, and compression of libssh2.
 %perl_vendor_autolib/Net
 
 %changelog
+* Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.69-alt1
+- automated CPAN update
+
 * Mon Dec 18 2017 Igor Vlasenko <viy@altlinux.ru> 0.68-alt1
 - automated CPAN update
 
