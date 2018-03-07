@@ -24,7 +24,7 @@
 Name: maxima
 Version: 5.41.0
 %define maxima_version 5.41.0
-Release: alt2
+Release: alt2.1
 Summary: Maxima Computer Algebra System
 License: GPL
 Group: Sciences/Mathematics
@@ -73,7 +73,7 @@ Group: Sciences/Mathematics
 Provides: maxima = %version-%release
 
 Requires: gnuplot >= 4.0.0 rlwrap maxima-bin = %version-%release
-BuildRequires: sed perl tetex tetex-latex texinfo automake_1.7
+BuildRequires: sed perl texlive-collection-latexrecommended texinfo automake_1.7
 AutoReq: yes, noshell
 
 %description common
@@ -529,6 +529,7 @@ cd %maxima_dir
 %dir %_datadir/maxima
 %dir %_datadir/maxima/%maxima_version
 %_datadir/maxima/%maxima_version/xmaxima
+%_datadir/mime/packages/*.xml
 %endif
 
 %if %BUILD_BOOK
@@ -575,6 +576,10 @@ cd %maxima_dir
 
 
 %changelog
+* Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 5.41.0-alt2.1
+- NMU: build with texlive 2017
+- packaged mime xml
+
 * Wed Dec 20 2017 Ilya Mashkin <oddity@altlinux.ru> 5.41.0-alt2
 - rebuild with sbcl 1.4.2
 
