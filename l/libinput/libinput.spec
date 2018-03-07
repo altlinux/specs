@@ -5,7 +5,7 @@
 %def_enable tests
 
 Name: libinput
-Version: 1.10.1
+Version: 1.10.2
 Release: alt1
 
 Summary: Input devices library
@@ -120,6 +120,9 @@ This package contains visual debug helper for %name.
 
 
 %changelog
+* Wed Mar 07 2018 Yuri N. Sedunov <aris@altlinux.org> 1.10.2-alt1
+- 1.10.2
+
 * Wed Feb 28 2018 Yuri N. Sedunov <aris@altlinux.org> 1.10.1-alt1
 - 1.10.1
 
