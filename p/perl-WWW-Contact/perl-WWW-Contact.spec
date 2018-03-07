@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-WWW-Contact
-Version: 0.50
+Version: 0.51
 Release: alt1
 
 Summary: WWW-Contact - Perl module
@@ -31,7 +31,7 @@ Source: %m_distro-%version.tar.gz
 
 # Automatically added by buildreq on Thu May 24 2012 (-bb)
 # optimized out: perl-CPAN-Meta perl-CPAN-Meta-YAML perl-Class-Accessor perl-Class-Accessor-Chained perl-Class-Load perl-Data-OptList perl-Devel-GlobalDestruction perl-Encode perl-Eval-Closure perl-File-Slurp perl-HTML-Parser perl-HTML-Tagset perl-HTML-Tree perl-HTTP-Message perl-IO-Socket-INET6 perl-JSON-PP perl-List-MoreUtils perl-MRO-Compat perl-Module-Metadata perl-Module-Runtime perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Socket6 perl-Sub-Exporter perl-Sub-Install perl-Sub-Name perl-Text-vFile-asData perl-Try-Tiny perl-URI perl-devel perl-podlators python-base
-BuildRequires: perl-Crypt-SSLeay perl-HTML-TokeParser-Simple perl-JSON-XS perl-Module-Build perl-Moose perl-Net-DNS perl-Net-Google-AuthSub perl-Test-Pod perl-Text-vCard perl-WWW-Mechanize
+BuildRequires: perl-Crypt-SSLeay perl-HTML-TokeParser-Simple perl-JSON-XS perl-Module-Build perl-Moose perl-Net-DNS perl-Net-Google-AuthSub perl-Test-Pod perl-Text-vCard perl-WWW-Mechanize perl(Text/CSV.pm)
 
 #BuildRequires: perl(WWW/Mechanize/GZip.pm)
 
@@ -47,9 +47,13 @@ None.
 %perl_vendor_install
 
 %files
+%doc README Changes examples
 %perl_vendor_privlib/WWW/*
 
 %changelog
+* Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.51-alt1
+- automated CPAN update
+
 * Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1
 - automated CPAN update
 
