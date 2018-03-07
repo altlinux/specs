@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist String-ToIdentifier-EN
 Name: perl-%dist
-Version: 0.11
+Version: 0.12
 Release: alt1
 
 Summary: Convert Strings to English Program Identifiers
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RK/RKITOVER/String-ToIdentifier-EN-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RK/RKITOVER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,7 +24,7 @@ make unique identifier names from which the content of the original
 string can be easily inferred by a human just by reading the identifier.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -37,6 +37,9 @@ string can be easily inferred by a human just by reading the identifier.
 %perl_vendor_privlib/String
 
 %changelog
+* Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- automated CPAN update
+
 * Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - automated CPAN update
 
