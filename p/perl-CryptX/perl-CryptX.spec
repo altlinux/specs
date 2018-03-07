@@ -2,15 +2,15 @@
 %define dist CryptX
 
 Name: perl-%dist
-Version: 0.057
-Release: alt2
+Version: 0.058
+Release: alt1
 
 Summary: Crypto toolkit with multiple ciphers, hash functions and other
 License: %perl_license
 Group: Development/Perl
 
 Url: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MI/MIK/%dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MI/MIK/%{dist}-%{version}.tar.gz
 Patch: CryptX-0.057-alt-uint128.patch
 
 # Automatically added by buildreq on Mon Feb 22 2016
@@ -78,7 +78,7 @@ Cryptography in CryptX is based on https://github.com/libtom/libtomcrypt
         Crypt::KeyDerivation
 
 %prep
-%setup -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %ifarch e2k
 %patch -p1
 %endif
@@ -97,6 +97,9 @@ Cryptography in CryptX is based on https://github.com/libtom/libtomcrypt
 %perl_vendor_archlib/Math
 
 %changelog
+* Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.058-alt1
+- automated CPAN update
+
 * Sat Feb 03 2018 Michael Shigorin <mike@altlinux.ru> 0.057-alt2
 - E2K: uint128_t workaround
 
