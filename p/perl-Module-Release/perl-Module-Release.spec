@@ -1,20 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(CACertOrg/CA.pm) perl(Config.pm) perl(ConfigReader/Simple.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(IO/Null.pm) perl(Mojo/UserAgent.pm) perl(Scalar/Util.pm) perl(Test/More.pm) perl(Test/Output.pm) perl(Test/Without/Module.pm) perl(URI.pm) perl(base.pm) perl(version.pm) perl(CGI.pm)
+BuildRequires: perl(CACertOrg/CA.pm) perl(Config.pm) perl(ConfigReader/Simple.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(IO/Null.pm) perl(Mojo/UserAgent.pm) perl(Scalar/Util.pm) perl(Test/More.pm) perl(Test/Output.pm) perl(Test/Without/Module.pm) perl(URI.pm) perl(base.pm) perl(version.pm) perl(CGI.pm) perl(DateTime.pm) perl(Term/ReadKey.pm)
 # END SourceDeps(oneline)
-%define module_version 2.123
 %define module_name Module-Release
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.123
+Version: 2.125
 Release: alt1
 Summary: Automate Perl distribution releases
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/B/BD/BDFOY/Module-Release-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BD/BDFOY/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -29,7 +28,7 @@ Requires: %name = %{?epoch:%epoch:}%version-%release
 scripts for %module_name
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -46,6 +45,9 @@ scripts for %module_name
 %_man1dir/*
 
 %changelog
+* Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 2.125-alt1
+- automated CPAN update
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 2.123-alt1
 - automated CPAN update
 
