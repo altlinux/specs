@@ -6,7 +6,7 @@ BuildRequires: perl(Cwd.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.pm
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.20
+Version: 0.21
 Release: alt1
 Summary: PSGI compliant HTTP Entity Parser
 Group: Development/Perl
@@ -33,6 +33,9 @@ From summary: %summary
 %perl_vendor_privlib/H*
 
 %changelog
+* Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- automated CPAN update
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - automated CPAN update
 
