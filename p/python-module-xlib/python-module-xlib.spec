@@ -4,7 +4,7 @@
 #%%def_with check
 
 Name: python-module-%oname
-Version: 0.18
+Version: 0.21
 Release: alt1
 
 Summary: Python X Library
@@ -13,29 +13,24 @@ Group: Development/Python
 License: LGPL
 Url: https://github.com/python-xlib/python-xlib
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 Source: %name-%version.tar
-Patch: python-xlib-perl.patch
 
-#%%setup_python_module Xlib
-#%add_python_req_skip audio image video misc
-
-# manually removed: eric
-# Automatically added by buildreq on Sun Dec 18 2005
-BuildRequires: python-devel python-module-setuptools-tests python-module-setuptools_scm
-#python-modules-compiler python-modules-encodings
+BuildRequires: /usr/bin/texi2html
+BuildRequires: python-devel python-module-setuptools python-module-setuptools_scm
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests python3-module-setuptools_scm
-#
+BuildRequires: python3-devel python3-module-setuptools python3-module-setuptools_scm
 %endif
 
 %if_with check
 BuildRequires: python-module-six
+BuildRequires: python2.7(mock)
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires: python3-module-six
+BuildRequires: python3(mock)
+BuildRequires: python3-module-pytest
 %endif
 %endif
 
@@ -67,7 +62,6 @@ This package contains documentation and examples for Python X Library.
 
 %prep
 %setup
-%patch -p1
 
 %if_with python3
 cp -fR . ../python3-module-%oname
@@ -105,18 +99,18 @@ py.test -vv
 %if_with python3
 pushd ../python3
 python3 setup.py test
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 %endif
 
 %files
-%doc NEWS README.rst LICENSE TODO *.txt
+%doc README.rst LICENSE TODO
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc NEWS README.rst LICENSE TODO *.txt
+%doc README.rst LICENSE TODO
 %python3_sitelibdir/*
 %endif
 
@@ -124,6 +118,9 @@ popd
 %doc examples doc/html/*.html
 
 %changelog
+* Wed Mar 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.21-alt1
+- Updated to upstream version 0.21.
+
 * Tue Jan 03 2017 Anton Midyukov <antohami@altlinux.org> 0.18-alt1
 - New version 0.18
 
