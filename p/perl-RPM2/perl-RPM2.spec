@@ -1,11 +1,12 @@
-Name:           perl-RPM2
-Version:        1.3
-Release:        alt1.1.1
+%define module RPM2
+Name:           perl-%module
+Version:        1.4
+Release:        alt1
 Summary:        Perl bindings for the RPM Package Manager API
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/RPM2/
-Source0:        %name-%version.tar
+Source0:        %module-%version.tar
 
 BuildRequires: librpm-devel
 BuildRequires: perl-ExtUtils-CBuilder
@@ -18,7 +19,7 @@ installed RPM database as well as files on the filesystem, providing Perl
 bindings for the RPM Package Manager API.
 
 %prep
-%setup -q
+%setup -q -n %module-%version
 
 %build
 %perl_vendor_build
@@ -32,6 +33,9 @@ bindings for the RPM Package Manager API.
 %perl_vendor_autolib/RPM*
 
 %changelog
+* Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1
+- new version
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1.1.1
 - rebuild with new perl 5.26.1
 
