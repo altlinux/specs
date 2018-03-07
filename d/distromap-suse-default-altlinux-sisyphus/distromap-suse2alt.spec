@@ -3,7 +3,7 @@
 %define module %orepo-%obranch-altlinux-sisyphus
 
 Name: distromap-%module
-Version: 0.023
+Version: 0.024
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -28,18 +28,18 @@ Requires: distrodb-static-altlinux-sisyphus
 %install
 destdir=%buildroot/usr/share/distromap/%orepo/%obranch/altlinux/sisyphus
 for type in source binary group-strict group-approx; do
-	if [ -d $type ]; then
-		install -m755 -d $destdir/$type
-		install -m644 $type/* $destdir/$type/
-	fi
+    if [ -d $type ] && stat -t $type/* >/dev/null 2>&1 ; then
+	install -m755 -d $destdir/$type
+	install -m644 $type/* $destdir/$type/
+    fi
 done
 for type in binary source ; do
-	if [ -d flags/$type ]; then
-		for flag in flags/$type/* ; do
-			install -m755 -d $destdir/$flag
-			install -m644 $flag/* $destdir/$flag/
-		done
+    for flag in flags/$type/* ; do
+	if [ -d $flag ] && stat -t $flag/* >/dev/null 2>&1 ; then
+	    install -m755 -d $destdir/$flag
+	    install -m644 $flag/* $destdir/$flag/
 	fi
+    done
 done
 ln -s default %buildroot/usr/share/distromap/%orepo/tumbleweed
 ln -s %orepo %buildroot/usr/share/distromap/open%orepo
@@ -48,6 +48,9 @@ ln -s %orepo %buildroot/usr/share/distromap/open%orepo
 /usr/share/distromap/*
 
 %changelog
+* Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.024-alt1
+- db update
+
 * Thu Dec 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.023-alt1
 - db update
 
