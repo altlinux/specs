@@ -4,8 +4,9 @@
 %def_with python3
 
 Name: python-module-%oname
+Epoch: 1
 Version: 0.6
-Release: alt1.1
+Release: alt2
 Summary: Framework for fitting functions to data with SciPy
 License: BSD
 Group: Development/Python
@@ -45,6 +46,17 @@ to them.
 
 This package contains tests for %oname.
 
+%package -n python-module-%mname
+Summary: Add-on packages for SciPy
+Group: Development/Python
+%py_provides %mname
+
+%description -n python-module-%mname
+SciKits (short for SciPy Toolkits), are add-on packages for SciPy,
+hosted and developed separately from the main SciPy distribution. All
+SciKits are available under the 'scikits' namespace and are licensed
+under OSI-approved licenses.
+
 %if_with python3
 %package -n python3-module-%oname
 Summary: Framework for fitting functions to data with SciPy
@@ -69,6 +81,17 @@ various available interpolation methods and provides a common interface
 to them.
 
 This package contains tests for %oname.
+
+%package -n python3-module-%mname
+Summary: Add-on packages for SciPy
+Group: Development/Python3
+%py3_provides %mname
+
+%description -n python3-module-%mname
+SciKits (short for SciPy Toolkits), are add-on packages for SciPy,
+hosted and developed separately from the main SciPy distribution. All
+SciKits are available under the 'scikits' namespace and are licensed
+under OSI-approved licenses.
 %endif
 
 %prep
@@ -121,6 +144,10 @@ popd
 %files tests
 %python_sitelibdir/%mname/fitting/tests
 
+%files -n python-module-%mname
+%dir %python_sitelibdir/%mname
+%python_sitelibdir/%mname/__init__.py*
+
 %if_with python3
 %files -n python3-module-%oname
 %doc *.txt
@@ -131,9 +158,18 @@ popd
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%mname/fitting/tests
+
+%files -n python3-module-%mname
+%dir %python3_sitelibdir/%mname
+%dir %python3_sitelibdir/%mname/__pycache__
+%python3_sitelibdir/%mname/__init__.py
+%python3_sitelibdir/%mname/__pycache__/__init__.*
 %endif
 
 %changelog
+* Wed Mar 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.6-alt2
+- Reintroduced common packages python-module-scikits and python3-module-scikits.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.6-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
