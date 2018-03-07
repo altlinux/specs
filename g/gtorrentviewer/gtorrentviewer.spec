@@ -1,14 +1,14 @@
+Group: Networking/WWW
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
-%define fedora 25
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		gtorrentviewer
 Version:	0.2b
-Release:	alt4_36
+Release:	alt4_38
 Summary:	A GTK2-based viewer and editor for BitTorrent meta files
-Group:		Networking/WWW
 License:	GPL+
 URL:		http://gtorrentviewer.sourceforge.net/
 Source0:	http://downloads.sf.net/gtorrentviewer/GTorrentViewer-%{version}.tar.gz
@@ -19,10 +19,19 @@ Patch3:		gtorrentviewer-0.2b-trackerdetails.patch
 Patch4:		GTorrentViewer-0.2b-curl-types.patch
 Patch5:		GTorrentViewer-0.2b-format.patch
 Patch6:		GTorrentViewer-0.2b-missing-tracker.patch
-BuildRequires:	libcurl-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel, desktop-file-utils gettext gettext-tools, intltool
+BuildRequires:	coreutils
+BuildRequires:	gcc
+BuildRequires:	gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires:	desktop-file-utils
+BuildRequires:	gettext gettext-tools
+BuildRequires:	intltool
+BuildRequires:	libcurl-devel
 
+# Scriptlets replaced by File Triggers from Fedora 26 onwards
+%if 0%{?fedora} < 26 && 0%{?rhel} < 8
 Requires(post):	  desktop-file-utils
 Requires(postun): desktop-file-utils
+%endif
 Source44: import.info
 
 %description
@@ -68,12 +77,7 @@ sed -i 's,#include <curl/types.h>,,' src/main.c
 make install DESTDIR=%{buildroot} INSTALL="install -p"
 rm -f %{buildroot}%{_datadir}/GTorrentViewer/README
 desktop-file-install \
-%if 0%{?fedora} < 19 && 0%{?rhel} < 4
-	--vendor fedora \
-%else
 	--vendor "" \
-%endif
-	--add-category X-Fedora \
 	--delete-original \
 	--dir %{buildroot}%{_datadir}/applications \
 	%{buildroot}%{_datadir}/applications/gtorrentviewer.desktop
@@ -83,25 +87,25 @@ desktop-file-install --dir %buildroot%_desktopdir \
         --add-category=P2P \
         %buildroot%_desktopdir/gtorrentviewer.desktop
 
+# Scriptlets replaced by File Triggers from Fedora 26 onwards
 %files
 %if 0%{?_licensedir:1}
-%doc COPYING
+%doc --no-dereference COPYING
 %else
 %doc COPYING
 %endif
 %doc AUTHORS ChangeLog README
 %{_bindir}/gtorrentviewer
 %{_datadir}/GTorrentViewer
-%if 0%{?fedora} < 19 && 0%{?rhel} < 4
-%{_datadir}/applications/fedora-gtorrentviewer.desktop
-%else
 %{_datadir}/applications/gtorrentviewer.desktop
-%endif
 %{_datadir}/pixmaps/gtorrentviewer.png
 %{_datadir}/pixmaps/gtorrentviewer.xpm
 %{_mandir}/man1/gtorrentviewer.1*
 
 %changelog
+* Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.2b-alt4_38
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.2b-alt4_36
 - update to new release by fcimport
 
