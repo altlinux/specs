@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-XML-Compile
-Version: 1.59
+Version: 1.60
 Release: alt1
 
 Summary: Compilation based XML processing
@@ -54,7 +54,7 @@ understand namespaces and other general XML and schema nastiness.
 %perl_vendor_install
 
 %files
-%doc README.todo ChangeLog README
+%doc README.todo ChangeLog README README.md
 %_bindir/xml2yaml
 %_bindir/xml2json
 %_bindir/schema2example
@@ -62,6 +62,9 @@ understand namespaces and other general XML and schema nastiness.
 %perl_vendor_privlib/XML/*
 
 %changelog
+* Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.60-alt1
+- automated CPAN update
+
 * Mon Jan 01 2018 Igor Vlasenko <viy@altlinux.ru> 1.59-alt1
 - automated CPAN update
 
