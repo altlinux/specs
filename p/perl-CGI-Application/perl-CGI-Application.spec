@@ -1,6 +1,6 @@
 %define dist CGI-Application
 Name: perl-%dist
-Version: 4.50
+Version: 4.61
 Release: alt1
 
 Summary: Framework for building reusable web-applications
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MARTO/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -25,7 +25,7 @@ if followed, will make your web software easier to design, easier to document,
 easier to write, and easier to evolve.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,10 +34,13 @@ easier to write, and easier to evolve.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README Examples GPL
 %perl_vendor_privlib/CGI
 
 %changelog
+* Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 4.61-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 4.50-alt1
 - 4.31 -> 4.50
 - disabled dependency on CGI::PSGI
