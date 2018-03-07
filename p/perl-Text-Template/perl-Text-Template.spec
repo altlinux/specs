@@ -2,7 +2,7 @@
 %define module Text-Template
 
 Name: perl-Text-Template
-Version: 1.50
+Version: 1.51
 Release: alt1
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -15,7 +15,7 @@ Source0: http://www.cpan.org/authors/id/M/MS/MSCHOUT/%{module}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Feb 16 2004
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(Test/Warnings.pm)
 
 %description
 This is a library for generating form letters, building HTML pages, or
@@ -45,6 +45,9 @@ ages functional separation.
 %perl_vendor_privlib/Text*
 
 %changelog
+* Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.51-alt1
+- automated CPAN update
+
 * Mon Feb 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.50-alt1
 - automated CPAN update
 
