@@ -1,6 +1,5 @@
-
 Name:       opencc
-Version:    1.0.3
+Version:    1.0.5
 Release:    alt1
 Summary:    Libraries for Simplified-Traditional Chinese Conversion
 
@@ -87,6 +86,9 @@ make test -C BUILD
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Mar 08 2018 Andrey Cherepanov <cas@altlinux.org> 1.0.5-alt1
+- New version.
+
 * Tue Feb 23 2016 Andrey Cherepanov <cas@altlinux.org> 1.0.3-alt1
 - New version
 
