@@ -2,8 +2,9 @@
 %def_without prontserve
 
 Name:           printrun
-Version:        20131019
+Version:        1.6.0
 Release:        alt1
+Epoch:		1
 Summary:        RepRap printer interface and tools
 
 License:        GPLv3+
@@ -12,30 +13,14 @@ URL:            https://github.com/kliment/Printrun
 Packager:	Andrey Cherepanov <cas@altlinux.org>
 
 # Source
-Source0:        https://github.com/kliment/Printrun/archive/%name-%version.tar.gz
-
-# Desktop files
-Source1:        pronsole.desktop
-Source2:        pronterface.desktop
-Source3:        plater.desktop
-
-# AppData files
-Source4:        pronsole.appdata.xml
-Source5:        pronterface.appdata.xml
-Source6:        plater.appdata.xml
-
-# Both desktop files and AppData files are already in upstream git as well
-
-# https://github.com/kliment/Printrun/issues/438
-Patch0:         %{name}-issue438a.patch
-Patch1:         %{name}-issue438b.patch
-Patch2:         %{name}-simarrange.patch
+Source0:        %name-%version.tar
 
 #BuildRequires:  Cython
 BuildRequires(pre): rpm-build-python
 BuildRequires:  python-devel
 BuildRequires:  python-module-Cython
 BuildRequires:  python-module-Polygon
+BuildRequires:  python-module-serial
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
 Requires:       pronterface = %{version}-%{release}
@@ -114,17 +99,15 @@ It is a part of Printrun.
 
 
 %prep
-%setup -q -n Printrun-%name-%version
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%setup -q
+# Remove unsupported module
+rm -f printrun/power/osx.py
 
 # use launchers for skeinforge
 sed -i 's|python skeinforge/skeinforge_application/skeinforge.py|skeinforge|' %{name}/pronsole.py
 sed -i 's|python skeinforge/skeinforge_application/skeinforge_utilities/skeinforge_craft.py|skeinforge-craft|' %{name}/pronsole.py
 
 %build
-#CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
 %python_build
 
 # rebuild locales
@@ -136,7 +119,6 @@ done
 cd ..
 
 %install
-#python setup.py install --skip-build --prefix %{buildroot}%{_prefix}
 %python_install
 
 # Remove .py extension fron executable files
@@ -145,15 +127,6 @@ for FILE in *.py; do
   mv -f "$FILE" "${FILE%.py}"
 done
 cd -
-
-# desktop files
-desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE1}
-desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
-desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE3}
-
-# appdata files
-mkdir -p %{buildroot}%{_datadir}/appdata
-cp %{SOURCE4} %{SOURCE5} %{SOURCE6} %{buildroot}%{_datadir}/appdata/
 
 # locales
 mkdir -p %{buildroot}%{_datadir}/locale
@@ -166,6 +139,8 @@ rm -f %buildroot%_bindir/prontserve
 rm -f %buildroot%python_sitelibdir/%name/prontserve.py
 %endif
 
+mv %buildroot%_datadir/{metainfo,appdata}
+
 %find_lang pronterface
 %find_lang plater
 
@@ -177,12 +152,12 @@ rm -f %buildroot%python_sitelibdir/%name/prontserve.py
 %python_sitelibdir/%name
 %python_sitelibdir/Printrun-*.egg-info
 %_bindir/printcore*
-%_pixmapsdir/plater.ico
+%_pixmapsdir/plater.png
 
 %files -n pronsole
 %doc README* COPYING
 %_bindir/pronsole*
-%_pixmapsdir/pronsole.ico
+%_pixmapsdir/pronsole.png
 %_desktopdir/pronsole.desktop
 %_datadir/appdata/pronsole.appdata.xml
 
@@ -196,7 +171,7 @@ rm -f %buildroot%python_sitelibdir/%name/prontserve.py
 %doc README* COPYING
 %_bindir/pronterface*
 %_datadir/pronterface
-%_pixmapsdir/P-face.ico
+%_pixmapsdir/pronterface.png
 %_desktopdir/pronterface.desktop
 %_datadir/appdata/pronterface.appdata.xml
 
@@ -207,6 +182,9 @@ rm -f %buildroot%python_sitelibdir/%name/prontserve.py
 %_datadir/appdata/plater.appdata.xml
 
 %changelog
+* Thu Mar 08 2018 Andrey Cherepanov <cas@altlinux.org> 1:1.6.0-alt1
+- New version.
+
 * Wed Feb 19 2014 Andrey Cherepanov <cas@altlinux.org> 20131019-alt1
 - Import from Fedora
 
