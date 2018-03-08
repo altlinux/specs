@@ -1,11 +1,10 @@
 %def_enable qt4
 %def_enable qt5
-%define rev 3d313d5
 
 Name:    qtcurve
-Version: 1.8.18
-Release: alt1.git%rev
-Serial:  1
+Version: 1.9.1
+Release: alt1
+Epoch:  1
 
 Summary: A set of widget styles for GTK+ and Qt widget toolkits
 License: LGPLv2 or LGPLv3
@@ -17,7 +16,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Patch1: qtcurve-1.8.18-no_env.patch
-Patch2: qtcurve-1.8.18-%rev.patch
 
 BuildRequires(pre): kde-common-devel rpm-macros-qt3 rpm-macros-qt4 rpm-macros-cmake
 BuildPreReq: gcc-c++ libgtk+2-devel kde4libs-devel
@@ -32,16 +30,14 @@ BuildRequires: pkgconfig(Qt5X11Extras)
 BuildRequires: extra-cmake-modules
 BuildRequires: kf5-kio-devel
 BuildRequires: kf5-kdelibs4support-devel
-# TODO missing dependencies in kf5-kdelibs4support-devel
 BuildRequires: kf5-kemoticons-devel
 BuildRequires: kf5-kitemmodels-devel
 BuildRequires: kf5-kinit-devel
 BuildRequires: kf5-kconfigwidgets-devel
-# TODO missing dependencies in kf5-ktextwidgets-devel
 BuildRequires: kf5-sonnet-devel
 BuildRequires: kf5-ki18n-devel
-
 BuildRequires: kf5-kdoctools-devel-static
+BuildRequires: kf5-frameworkintegration-devel
 %endif
 
 Requires: %name-gtk2 = %version-%release
@@ -105,7 +101,6 @@ This is a set of widget styles for KF5
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 chmod +x tools/gen-version.sh
 
 %build
@@ -150,6 +145,9 @@ mv %buildroot%_datadir/kstyle/themes/qtcurve.themerc %buildroot%_K5data/kstyle/t
 %endif
 
 %changelog
+* Thu Mar 08 2018 Andrey Cherepanov <cas@altlinux.org> 1:1.9.1-alt1
+- New version.
+
 * Sat Jul 30 2016 Andrey Cherepanov <cas@altlinux.org> 1:1.8.18-alt1.git3d313d5
 - New version 1.8.18
 - Build from upstream Git repository
