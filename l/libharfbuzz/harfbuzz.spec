@@ -7,7 +7,7 @@
 %def_disable introspection
 
 Name: lib%_name
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
@@ -113,15 +113,19 @@ export CXXFLAGS="${CXXFLAGS} -Dnullptr=0"
 
 %files
 %_libdir/%name.so.*
+%_libdir/%name-subset.so.*
 
 %files devel
 %_includedir/%_name/
 %_libdir/%name.so
+%_libdir/%name-subset.so
 %if_with icu
 %_libdir/%name-icu.so
 %endif
 %_pkgconfigdir/%_name.pc
 %_pkgconfigdir/%_name-icu.pc
+%_pkgconfigdir/%_name-subset.pc
+%_libdir/cmake/%_name/
 %doc NEWS AUTHORS COPYING README
 
 %files devel-doc
@@ -136,6 +140,7 @@ export CXXFLAGS="${CXXFLAGS} -Dnullptr=0"
 %_bindir/hb-view
 %_bindir/hb-ot-shape-closure
 %_bindir/hb-shape
+%_bindir/hb-subset
 
 %if_enabled introspection
 %files gir
@@ -147,6 +152,9 @@ export CXXFLAGS="${CXXFLAGS} -Dnullptr=0"
 
 
 %changelog
+* Wed Mar 07 2018 Yuri N. Sedunov <aris@altlinux.org> 1.7.6-alt1
+- 1.7.6
+
 * Wed Jan 31 2018 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt1
 - 1.7.5
 
