@@ -1,6 +1,6 @@
 Name:           libnanomsg
-Version:        0.8
-Release:        alt1.beta
+Version:        1.1.2
+Release:        alt1
 
 Summary:        nanomsg is a socket library that provides several common communication patterns
 Group:          System/Libraries
@@ -11,6 +11,8 @@ URL:            http://nanomsg.org/
 Source0:        %name-%version.tar
 
 Packager:	Andrey Cherepanov <cas@altlinux.org>
+
+BuildRequires(pre): cmake
 
 %description
 nanomsg is a socket library that provides several common communication
@@ -45,15 +47,14 @@ that provides several common communication patterns.
 %setup
 
 %build
-%autoreconf
-%configure --disable-static
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %files
-%doc AUTHORS README COPYING
+%doc AUTHORS README.md COPYING
 %doc doc/
 %_bindir/*
 %_libdir/lib*.so.*
@@ -62,9 +63,12 @@ that provides several common communication patterns.
 %dir %_includedir/nanomsg
 %_includedir/nanomsg/*
 %_libdir/lib*.so
-%_pkgconfigdir/%name.pc
+%_pkgconfigdir/nanomsg.pc
 
 %changelog
+* Thu Mar 08 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1
+- New version.
+
 * Tue Dec 01 2015 Andrey Cherepanov <cas@altlinux.org> 0.8-alt1.beta
 - Initial build in Sisyphus
 

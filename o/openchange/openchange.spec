@@ -6,7 +6,7 @@
 
 Name:    openchange
 Version: 2.4
-Release: alt22.zentyal23%ubt.7
+Release: alt22.zentyal23%ubt.7.1
 Group:   Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
@@ -317,6 +317,9 @@ subst 's,^\(Cflags:.*\)$,\1 -I%_includedir/samba-4.0/private,' %buildroot%_pkgco
 %_libexecdir/openchange/web/rpcproxy
 
 %changelog
+* Thu Mar 08 2018 Andrey Cherepanov <cas@altlinux.org> 2.4-alt22.zentyal23%ubt.7.1
+- Rebuild with libnanomsg-1.1.2
+
 * Wed Mar 07 2018 Evgeny Sinelnikov <sin@altlinux.org> 2.4-alt22.zentyal23%ubt.7
 - Fix build with libical-3.0.x
 
