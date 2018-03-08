@@ -1,8 +1,8 @@
 %define cfg %_builddir/%name-%version/
-%define rev 56591
+%define rev 57468
 
 Name:       lazarus
-Version:    1.8.0
+Version:    1.8.2
 Release:    alt1
 Epoch:      1
 
@@ -192,6 +192,9 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 %dir %_datadir/fpcsrc/packages/fcl-base
 
 %changelog
+* Thu Mar 08 2018 Andrey Cherepanov <cas@altlinux.org> 1:1.8.2-alt1
+- New version.
+
 * Wed Dec 20 2017 Andrey Cherepanov <cas@altlinux.org> 1:1.8.0-alt1
 - New version.
 
