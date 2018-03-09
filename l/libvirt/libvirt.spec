@@ -1,7 +1,3 @@
-# -*- rpm-spec -*-
-
-# %%branch_switch set %%branch_release use
-#%%define branch_switch Mxx
 
 %define _localstatedir /var
 %define _libexecdir %_prefix/libexec
@@ -31,7 +27,11 @@
 %def_with qemu
 %def_with openvz
 %def_with lxc
+%if_enabled lxc
 %def_with login_shell
+%else
+%def_without login_shell
+%endif
 %ifarch %ix86 x86_64
 %def_with vbox
 %else
@@ -82,7 +82,11 @@
 %def_without hal
 %def_with yajl
 %def_with sanlock
+%if_enabled lxc
 %def_with fuse
+%else
+%def_without fuse
+%endif
 %def_with pm_utils
 
 %endif #server_drivers
@@ -119,11 +123,11 @@
 %def_with libssh
 
 %def_without wireshark
-
+%def_without bash_completion 
 
 Name: libvirt
-Version: 4.0.0
-Release: alt2%ubt
+Version: 4.1.0
+Release: alt1%ubt
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -179,6 +183,7 @@ BuildRequires(pre): rpm-build-ubt
 %{?_with_fuse:BuildRequires: libfuse-devel >= 2.8.6}
 %{?_with_pm_utils:BuildRequires: pm-utils}
 %{?_with_wireshark:BuildRequires: glib2-devel wireshark tshark wireshark-devel >= 2.1.0}
+%{?_with_bash_completion:BuildRequires: pkgconfig(bash-completion) >= 2.0}
 
 BuildRequires: bridge-utils libblkid-devel
 BuildRequires: libgcrypt-devel libgnutls-devel >= 2.2.0 libp11-kit-devel
@@ -689,6 +694,15 @@ Requires: %name-libs = %EVR
 %description admin
 The client side utilities to control the libvirt daemon.
 
+%package -n bash-completion-%name
+Summary: Bash completion for %name utils
+Group: Shells
+BuildArch: noarch
+Requires: bash-completion
+
+%description -n bash-completion-%name
+Bash completion for %name.
+
 %package -n wireshark-plugin-%name
 Summary: Wireshark dissector plugin for libvirt RPC transactions
 Group: Networking/Other
@@ -812,6 +826,7 @@ LOADERS="$LOADERS_OLD:$LOADERS_NEW"
 		%{?_with_driver_modules:--with-driver-modules} \
 		%{subst_with dtrace} \
 		%{?_with_wireshark:--with-wireshark-dissector} \
+        %{?_with_bash_completion: --with-bash-completion} \
 		--with-loader-nvram=%with_loader_nvram \
 		%{subst_with sasl}
 
@@ -1008,24 +1023,24 @@ fi
 %config(noreplace) %_sysconfdir/sysconfig/virtlockd
 %config(noreplace) %_sysconfdir/libvirt/virtlockd.conf
 %_initdir/virtlockd
-%_unitdir/virtlockd.*
+%_unitdir/virtlockd*
 %_libdir/%name/lock-driver/lockd.so
 %_sbindir/virtlockd
 %_datadir/augeas/lenses/libvirt_lockd.aug
 %_datadir/augeas/lenses/virtlockd.aug
 %_datadir/augeas/lenses/tests/test_virtlockd.aug
-%_man8dir/virtlockd.*
+%_man8dir/virtlockd*
 %_man7dir/virkey*
 
 #virtlogd
 %config(noreplace) %_sysconfdir/libvirt/virtlogd.conf
 %config(noreplace) %_sysconfdir/sysconfig/virtlogd
 %_initdir/virtlogd
-%_unitdir/virtlogd.*
+%_unitdir/virtlogd*
 %_sbindir/virtlogd
 %_datadir/augeas/lenses/tests/test_virtlogd.aug
 %_datadir/augeas/lenses/virtlogd.aug
-%_man8dir/virtlogd.*
+%_man8dir/virtlogd*
 
 %if_with qemu
 %_datadir/augeas/lenses/tests/test_libvirt_lockd.aug
@@ -1264,6 +1279,11 @@ fi
 %_bindir/virt-admin
 %_man1dir/virt-admin.1*
 
+%if_with bash_completion
+%files -n bash-completion-%name
+%_datadir/bash-completion/completions/*
+%endif
+
 %files  -n nss-%name
 /%_lib/libnss_libvirt.so.*
 /%_lib/libnss_libvirt_guest.so.*
@@ -1289,6 +1309,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Mar 09 2018 Alexey Shabalin <shaba@altlinux.ru> 4.1.0-alt1%ubt
+- 4.1.0
+
 * Fri Feb 02 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.0-alt2%ubt
 - enabled server part on arm arches
 
