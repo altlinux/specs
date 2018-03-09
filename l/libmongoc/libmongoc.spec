@@ -1,12 +1,13 @@
 %def_disable tests
 
 Name: libmongoc
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1%ubt
 Summary: Client library written in C for MongoDB
 Group: System/Libraries
 License: ASL 2.0
 Url: https://github.com/mongodb/mongo-c-driver
+#vsc-git https://github.com/mongodb/mongo-c-driver.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
@@ -99,6 +100,9 @@ exit $ret
 %_man3dir/*
 
 %changelog
+* Fri Mar 09 2018 Alexey Shabalin <shaba@altlinux.ru> 1.9.3-alt1%ubt
+- 1.9.3
+
 * Tue Feb 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.9.2-alt1%ubt
 - 1.9.2
 
