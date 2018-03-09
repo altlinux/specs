@@ -2,7 +2,7 @@
 
 Name: ftpproxy
 Version: 1.2.3
-Release: alt4
+Release: alt5
 
 Summary: FTP proxy with optional access and command control
 
@@ -17,9 +17,11 @@ Source1: %name.conf
 Source2: %name.xinetd
 Source3: %name.logrotate
 Patch0:  %name-1.2.3-alt-fix_config_path.patch
-Patch1:  %name-1.2.3-alt-Werror.patch
-Patch2:  %name-1.2.3-alt-fix_repocop_tmp_warn.patch
-Patch3:  %name-1.2.3-alt-config_line_length.patch
+Patch1:  %name-1.2.3-alt-use_locale.patch
+Patch2:  %name-1.2.3-alt-Werror.patch
+Patch3:  %name-1.2.3-alt-fix_repocop_tmp_warn.patch
+Patch4:  %name-1.2.3-alt-config_line_length.patch
+Patch5:  %name-1.2.3-alt-fix_format_truncation.patch
 
 BuildRequires(pre): rpm-build-licenses
 Requires(pre): shadow-utils
@@ -45,6 +47,8 @@ into a protected LAN) and proxy authentication.
 %patch1 -p0
 %patch2 -p0
 %patch3 -p0
+%patch4 -p0
+%patch5 -p0
 
 # Replacing license file with reference
 mv -f -- LICENSE LICENSE.orig
@@ -96,6 +100,10 @@ subst 's#@logdir@#%{logdir}#g'	%buildroot/%confdir/%name.conf \
 %config %_sysconfdir/logrotate.d/%name
 
 %changelog
+* Fri Mar 09 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.2.3-alt5
+- Fix build with GCC 7.3.1
+- Using locale functions for string conversion
+
 * Fri Jun 01 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.2.3-alt4
 - Fix build with GCC 4.6
 
