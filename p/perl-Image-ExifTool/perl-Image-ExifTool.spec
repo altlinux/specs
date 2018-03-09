@@ -2,7 +2,7 @@
 %define dist Image-ExifTool
 
 Name: perl-%dist
-Version: 10.55
+Version: 10.80
 Release: alt1
 
 Summary: Perl module for manipulating EXIF data
@@ -14,7 +14,7 @@ Group: Development/Perl
 URL: http://owl.phy.queensu.ca/~phil/exiftool
 Source0: http://www.cpan.org/authors/id/E/EX/EXIFTOOL/%{dist}-%{version}.tar.gz
 Patch0: perl-image-exiftools-findreq-alt.patch
-Patch1: Image-ExifTool-10.55-alt-syntax.patch
+Patch1: Image-ExifTool-10.80-alt-syntax.patch
 
 BuildArch: noarch
 
@@ -35,10 +35,10 @@ and Sony.
 %setup -q -n %{dist}-%{version}
 %patch0 -p1
 %patch1 -p1
-[ %version = 10.39 ] && rm t/MWG.t
+#[ %version = 10.39 ] && rm t/MWG.t
 
 %build
-%perl_vendor_build INSTALLMAN1DIR=%_man1dir
+%perl_vendor_build
 
 %install
 %perl_vendor_install
@@ -51,6 +51,9 @@ and Sony.
 %_man1dir/exiftool*
 
 %changelog
+* Fri Mar 09 2018 Igor Vlasenko <viy@altlinux.ru> 10.80-alt1
+- automated CPAN update
+
 * Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 10.55-alt1
 - automated CPAN update
 
