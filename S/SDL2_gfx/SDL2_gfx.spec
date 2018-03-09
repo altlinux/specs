@@ -1,19 +1,21 @@
 %def_disable static
 
 Name: SDL2_gfx
-Version: 1.0.1
-Release: alt2
+Version: 1.0.4
+Release: alt1%ubt
 
 Summary: Simple DirectMedia Layer - Graphics primitives and surface functions
 License: zlib
 Group: System/Libraries
 
-Url: http://cms.ferzkopp.net/index.php/software/13-sdl-gfx
+Url: http://www.ferzkopp.net/wordpress/2016/01/02/sdl_gfx-sdl2_gfx/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source0: http://www.ferzkopp.net/Software/%name/%name-%version.tar.gz
+Source: http://www.ferzkopp.net/Software/%name/%name-%version.tar.gz
 
-BuildRequires: libSDL2-devel >= 2.0.3
+BuildRequires(pre): rpm-build-ubt
+
+BuildRequires: libSDL2-devel
 
 %description
 The %name library provides the basic drawing functions such as lines,
@@ -30,8 +32,6 @@ circles or polygons provided by SDL_gfx on SDL2 against renderers of SDL2.
 %package -n lib%name-devel
 Summary: Libraries, includes and more to develop SDL applications.
 Group: Development/C
-Requires: lib%name = %version-%release
-Requires: libSDL2-devel >= 2.0.3
 
 %description -n lib%name-devel
 The %name library provides the basic drawing functions such as lines,
@@ -41,7 +41,6 @@ circles or polygons provided by SDL_gfx on SDL2 against renderers of SDL2.
 %package -n lib%name-devel-static
 Summary: Static libraries to develop SDL applications.
 Group: Development/C
-Requires: lib%name-devel = %version-%release
 
 %description -n lib%name-devel-static
 The %name library provides the basic drawing functions such as lines,
@@ -80,6 +79,15 @@ circles or polygons provided by SDL_gfx on SDL2 against renderers of SDL2.
 %endif
 
 %changelog
+* Fri Mar 09 2018 Nazarov Denis <nenderus@altlinux.org> 1.0.4-alt1%ubt
+- Version 1.0.4
+
+* Thu Sep 25 2014 Nazarov Denis <nenderus@altlinux.org> 1.0.1-alt1.M70P.1
+- Build for branch p7
+
+* Tue Jun 24 2014 Nazarov Denis <nenderus@altlinux.org> 1.0.1-alt1.M70T.1
+- Build for branch t7
+
 * Mon Jun 23 2014 Nazarov Denis <nenderus@altlinux.org> 1.0.1-alt2
 - Disable MMX on non x86 and x64 arch (thanks Sergey Bolshakov)
 
