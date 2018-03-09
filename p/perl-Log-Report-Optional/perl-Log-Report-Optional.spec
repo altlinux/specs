@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 BuildRequires: perl-Encode-CN perl-Encode-JP perl-Encode-KR perl-Encode-TW
 
 Name: perl-%module_name
-Version: 1.04
+Version: 1.06
 Release: alt1
 Summary: Log::Report in the lightest form
 Group: Development/Perl
@@ -22,7 +22,7 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{module_name}-%{version}
-[ %version = 1.04 ] && rm t/21messages.t
+[ %version = 1.06 ] && rm t/21messages.t
 
 %build
 export NPROCS=1
@@ -32,10 +32,13 @@ export NPROCS=1
 %perl_vendor_install
 
 %files
-%doc ChangeLog README
+%doc ChangeLog README README.md
 %perl_vendor_privlib/L*
 
 %changelog
+* Fri Mar 09 2018 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1
+- automated CPAN update
+
 * Wed Dec 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
 - automated CPAN update
 
