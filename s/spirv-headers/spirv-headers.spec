@@ -1,8 +1,6 @@
-%define commit db5cf6176137003ca4c25df96f7c0649998c3499
-
 Name: spirv-headers
 Version: 1.1
-Release: alt1
+Release: alt2.rc2%ubt
 
 Summary: Machine-readable files from the SPIR-V registry
 License: MIT
@@ -12,7 +10,9 @@ Url: https://www.khronos.org/registry/spir-v/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 BuildArch: noarch
 
-Source: https://github.com/KhronosGroup/SPIRV-Headers/archive/%commit/SPIRV-Headers-%commit.tar.gz
+Source: https://github.com/KhronosGroup/SPIRV-Headers/archive/vulkan-%version-rc2/SPIRV-Headers-vulkan-%version-rc2.tar.gz
+
+BuildRequires(pre): rpm-build-ubt
 
 %description
 This package contains machine-readable files from the SPIR-V
@@ -24,7 +24,7 @@ registry. This includes:
 * The XML registry file.
 
 %prep
-%setup -n SPIRV-Headers-%commit
+%setup -n SPIRV-Headers-vulkan-%version-rc2
 
 %install
 %__mkdir_p %buildroot%_includedir
@@ -35,5 +35,8 @@ registry. This includes:
 %_includedir/spirv
 
 %changelog
+* Fri Mar 09 2018 Nazarov Denis <nenderus@altlinux.org> 1.1-alt2.rc2%ubt
+- RC2
+
 * Sat Apr 15 2017 Nazarov Denis <nenderus@altlinux.org> 1.1-alt1
 - Initial release for ALT Linux
