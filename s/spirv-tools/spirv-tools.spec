@@ -1,8 +1,8 @@
 %define sover 0
 
 Name: spirv-tools
-Version: 2016.6
-Release: alt1
+Version: 2018.2
+Release: alt1%ubt
 
 Summary: API and commands for processing SPIR-V modules
 Group: Development/C++
@@ -13,7 +13,8 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source: https://github.com/KhronosGroup/SPIRV-Tools/archive/v%version/SPIRV-Tools-%version.tar.gz
 Patch0: %name-soname-alt.patch
-Patch1: %name-lib64-alt.patch
+
+BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -48,9 +49,6 @@ integration into other code bases directly.
 %prep
 %setup -n SPIRV-Tools-%version
 %patch0 -p1
-%ifarch x86_64
-%patch1 -p1
-%endif
 
 %build
 %__mkdir_p %_target_platform
@@ -78,13 +76,25 @@ popd
 
 %files -n lib%name%sover
 %_libdir/libSPIRV-Tools.so.*
+%_libdir/libSPIRV-Tools-link.so.*
 %_libdir/libSPIRV-Tools-opt.so.*
+%_libdir/libSPIRV-Tools-shared.so.*
 
 %files -n lib%name-devel
 %_libdir/libSPIRV-Tools.so
+%_libdir/libSPIRV-Tools-link.so
 %_libdir/libSPIRV-Tools-opt.so
+%_libdir/libSPIRV-Tools-shared.so
+%_pkgconfigdir/SPIRV-Tools.pc
+%_pkgconfigdir/SPIRV-Tools-shared.pc
 %_includedir/%name
 
 %changelog
+* Fri Mar 09 2018 Nazarov Denis <nenderus@altlinux.org> 2018.2-alt1%ubt
+- Version 2018.2
+
+* Tue Apr 18 2017 Nazarov Denis <nenderus@altlinux.org> 2016.6-alt0.M80P.1
+- Build for branch p8
+
 * Sat Apr 15 2017 Nazarov Denis <nenderus@altlinux.org> 2016.6-alt1
 - Initial build for ALT Linux
