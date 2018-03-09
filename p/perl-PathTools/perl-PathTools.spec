@@ -6,9 +6,9 @@ Name: perl-PathTools
 ##### Parts of the module are included into perl-base ####
 ##### Module version MUST BE THE SAME as in perl-base ####
 #####         CHECK IT BEFORE UPGRADING!              ####
-Version: 3.62
+Version: 3.67
 #####  ATTENTION  ATTENTION  ATTENTION ATTENTION    ######
-Release: alt2
+Release: alt1
 
 Summary: Perl modules to work with file names
 
@@ -71,6 +71,9 @@ rm -rf -- %buildroot%perl_vendor_autolib
 
 
 %changelog
+* Fri Mar 09 2018 Nikolay A. Fetisov <naf@altlinux.org> 3.67-alt1
+- New version
+
 * Sun Feb 19 2017 Nikolay A. Fetisov <naf@altlinux.org> 3.62-alt2
 - New version
 
