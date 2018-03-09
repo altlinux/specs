@@ -1,5 +1,5 @@
 Name: perl-Net-OpenSSH
-Version: 0.74
+Version: 0.77
 Release: alt1
 
 Summary: Net::OpenSSH - Perl SSH client package implemented on top of OpenSSH
@@ -28,10 +28,14 @@ BuildRequires: openssh-clients perl-devel perl(Moo.pm)
 %perl_vendor_install
 
 %files
+%doc README Changes examples
 %perl_vendor_privlib/Net/OpenSSH*
 %doc Changes README
 
 %changelog
+* Fri Mar 09 2018 Igor Vlasenko <viy@altlinux.ru> 0.77-alt1
+- automated CPAN update
+
 * Wed May 10 2017 Igor Vlasenko <viy@altlinux.ru> 0.74-alt1
 - automated CPAN update
 
