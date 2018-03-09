@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,14 +7,14 @@ BuildRequires: perl-podlators
 %define upstream_version 2.00
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt2_6
+Version:    2.01
+Release:    alt1
 
 Summary:    No summary found
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Number/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/D/DA/DAVECROSS/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(Carp.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
@@ -34,7 +35,7 @@ overloading.
 If you use the module in your program in the usual way
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -48,10 +49,13 @@ If you use the module in your program in the usual way
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml  README
+%doc Changes META.json META.yml README
 %perl_vendor_privlib/*
 
 %changelog
+* Fri Mar 09 2018 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1
+- automated CPAN update
+
 * Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_6
 - update by mgaimport
 
