@@ -1,5 +1,5 @@
 Name: libbson
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1%ubt
 Summary: A BSON utility library
 License: ASLv2.0
@@ -70,6 +70,9 @@ rm -rf doc/html/_static doc/html/*.{html,inv,js} doc/man/*.3
 %_man3dir/*
 
 %changelog
+* Fri Mar 09 2018 Alexey Shabalin <shaba@altlinux.ru> 1.9.3-alt1%ubt
+- 1.9.3
+
 * Tue Feb 13 2018 Alexey Shabalin <shaba@altlinux.ru> 1.9.2-alt1%ubt
 - 1.9.2
 
