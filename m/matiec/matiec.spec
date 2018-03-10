@@ -1,5 +1,5 @@
 Name: matiec
-Version: 20170920
+Version: 20180301
 Release: alt1
 
 Summary: IEC 61131-3 compiler
@@ -82,6 +82,9 @@ cp -r lib/* %buildroot/%_libexecdir/%name
 %exclude %_libdir/*.a
 
 %changelog
+* Wed Mar 07 2018 Anton Midyukov <antohami@altlinux.org> 20180301-alt1
+- New snapshot.
+
 * Thu Sep 28 2017 Anton Midyukov <antohami@altlinux.org> 20170920-alt1
 - New snapshot.
 

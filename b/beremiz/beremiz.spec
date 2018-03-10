@@ -1,7 +1,7 @@
 %def_with docs
 Name: beremiz
 Version: 1.2
-Release: alt1.20170917
+Release: alt1.20180305
 
 Summary: Integrated development environment for machine automation
 Summary(ru_RU.UTF-8): Интегрированная среда разработки для ПЛК
@@ -32,8 +32,7 @@ BuildRequires(pre): rpm-macros-sphinx python-module-sphinx
 Requires: python-module-%name = %version-%release
 Requires: matiec
 Requires: gcc-c++
-Requires: git-core
-Requires: zenity
+Requires: CanFestival-3-source
 
 %description
 Beremiz is an integrated development environment for machine
@@ -123,33 +122,27 @@ install -m 644 %SOURCE6 %buildroot/%_liconsdir/PLCOpenEditor.png
 cat>%name<<END
 #!/bin/sh
 if ! [ -d \$HOME/YAPLC/CanFestival-3 ]; then
-    zenity  --question \\
-            --text="\$HOME/YAPLC/CanFestival-3 does not exist!!! Download?"
-    if [ $? -eq "0" ]; then
-        mkdir -p \$HOME/YAPLC &&
-        cd \$HOME/YAPLC &&
-        xterm -T 'Downloaded YAPLC/CanFestival-3' -e bash -c 'git clone https://github.com/nucleron/CanFestival-3 &&
-        cd \$HOME/YAPLC/CanFestival-3/objdictgen &&
-        tar -xzf Gnosis_Utils-current.tar.gz &&
-        mv Gnosis_Utils*/gnosis . &&
-        rm -fr Gnosis_Utils* &&
-        cd .. &&
-        ./configure &&
-        make &&
-        zenity --info --text="CanFestival-3 downloaded successfully" ||
-        zenity --error --text="CanFestival-3 downloaded failed" '
-    fi
+    mkdir -p \$HOME/YAPLC &&
+    cd \$HOME/YAPLC &&
+    cp -fr %_prefix/src/CanFestival-3 \$HOME/YAPLC/ &&
+    cd \$HOME/YAPLC/CanFestival-3/objdictgen &&
+    tar -xzf Gnosis_Utils-current.tar.gz &&
+    mv Gnosis_Utils*/gnosis . &&
+    rm -fr Gnosis_Utils* &&
+    cd \$HOME/YAPLC/CanFestival-3 &&
+    ./configure &&
+    make
 fi
-python2 %python_sitelibdir/%name/Beremiz.py
+%_bindir/python2 %python_sitelibdir/%name/Beremiz.py
 END
-
+# xterm -T 'Building CanFestival-3' -e bash -c \
 mkdir -p %buildroot%_bindir/
 install -m 755 %name %buildroot%_bindir/%name
 
 ### == executable file beremiz-service
 cat>%name<<END
 #!/bin/sh
-python2 %python_sitelibdir/%name/Beremiz_service.py
+%_bindir/python2 %python_sitelibdir/%name/Beremiz_service.py
 END
 
 mkdir -p %buildroot%_bindir/
@@ -159,7 +152,7 @@ install -m 755 %name %buildroot%_bindir/%name-service
 ### == executable file PLCOpenEditor
 cat>%name<<END
 #!/bin/sh
-python2 %python_sitelibdir/%name/PLCOpenEditor.py
+%_bindir/python2 %python_sitelibdir/%name/PLCOpenEditor.py
 END
 
 mkdir -p %buildroot%_bindir/
@@ -221,6 +214,9 @@ desktop-file-install --dir=%buildroot%_desktopdir PLCOpenEditor.desktop
 %python_sitelibdir/%name/tests
 
 %changelog
+* Sat Mar 10 2018 Anton Midyukov <antohami@altlinux.org> 1.2-alt1.20180305
+- New snapshot
+
 * Thu Sep 28 2017 Anton Midyukov <antohami@altlinux.org> 1.2-alt1.20170917
 - New snapshot
 

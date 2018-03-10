@@ -1,6 +1,6 @@
 Name: yaplc-ide
-Version: 0.0
-Release: alt2.20170629
+Version: 1.1.0
+Release: alt1.20180112
 
 Summary: Extensions for Beremiz, allowing to create applications YAPLC/RTE
 Summary(ru_RU.UTF-8): Расширения для Beremiz, позволяющие создавать приложения YAPLC/RTE
@@ -21,8 +21,11 @@ Requires: yapyserial
 Requires: gcc-c++
 Requires: arm-none-eabi-gcc-c++
 Requires: stm32flash
-Requires: git-core
-Requires: zenity
+Requires: CanFestival-3-source
+Requires: yaplc-rte-source
+Requires: libopencm3-source
+Requires: libremodbus-source
+Requires: yaplc_demos
 
 %description
 Extensions for Beremiz, allowing to create applications YAPLC/RTE.
@@ -41,56 +44,42 @@ cp -r . %buildroot%python_sitelibdir/%name
 cat>%name<<END
 #!/bin/sh
 if ! [ -d \$HOME/YAPLC/RTE ]; then
-    zenity  --question \\
-            --text="\$HOME/YAPLC/RTE does not exist!!! Download?"
-    if [ $? -eq "0" ]; then
-        mkdir -p \$HOME/YAPLC &&
-        cd \$HOME/YAPLC &&
-        xterm -T 'Downloaded YAPLC/RTE' -e bash -c 'git clone https://github.com/nucleron/RTE &&
-        zenity --info --text="RTE downloaded successfully" ||
-        zenity --error --text="RTE downloaded failed" '
-    fi
+    mkdir -p \$HOME/YAPLC &&
+    cd \$HOME/YAPLC &&
+    cp -fr %_prefix/src/yaplc-rte RTE
 fi
+
 if ! [ -d \$HOME/YAPLC/libopencm3 ]; then
-    zenity  --question \\
-            --text="\$HOME/YAPLC/libopencm3 does not exist!!! Download?"
-    if [ $? -eq "0" ]; then
-        mkdir -p \$HOME/YAPLC &&
-        cd \$HOME/YAPLC &&
-        xterm -T 'Downloaded YAPLC/RTE' -e bash -c 'git clone https://github.com/nucleron/libopencm3 &&
-        zenity --info --text="libopencm3 downloaded successfully" ||
-        zenity --error --text="libopencm3 downloaded failed" '
-    fi
+    mkdir -p \$HOME/YAPLC &&
+    cd \$HOME/YAPLC &&
+    cp -fr %_prefix/src/libopencm3 .
 fi
-if ! [ -d \$HOME/YAPLC/freemodbus-v1.5.0 ]; then
-    zenity  --question \\
-            --text="\$HOME/YAPLC/freemodbus-v1.5.0 does not exist!!! Download?"
-    if [ $? -eq "0" ]; then
-        mkdir -p \$HOME/YAPLC &&
-        cd \$HOME/YAPLC &&
-        xterm -T 'Downloaded YAPLC/RTE' -e bash -c 'git clone https://github.com/nucleron/freemodbus-v1.5.0 &&
-        zenity --info --text="freemodbus-v1.5.0 downloaded successfully" ||
-        zenity --error --text="freemodbus-v1.5.0 downloaded failed" '
-    fi
+
+if ! [ -d \$HOME/YAPLC/libremodbus ]; then
+    mkdir -p \$HOME/YAPLC &&
+    cd \$HOME/YAPLC &&
+    cp -fr %_prefix/src/libremodbus .
 fi
+
 if ! [ -d \$HOME/YAPLC/CanFestival-3 ]; then
-    zenity  --question \\
-            --text="\$HOME/YAPLC/CanFestival-3 does not exist!!! Download?"
-    if [ $? -eq "0" ]; then
-        mkdir -p \$HOME/YAPLC &&
-        cd \$HOME/YAPLC &&
-        xterm -T 'Downloaded YAPLC/CanFestival-3' -e bash -c 'git clone https://github.com/nucleron/CanFestival-3 &&
-        cd \$HOME/YAPLC/CanFestival-3/objdictgen &&
-        tar -xzf Gnosis_Utils-current.tar.gz &&
-        mv Gnosis_Utils*/gnosis . &&
-        rm -fr Gnosis_Utils* &&
-        cd .. &&
-        ./configure &&
-        make &&
-        zenity --info --text="CanFestival-3 downloaded successfully" ||
-        zenity --error --text="CanFestival-3 downloaded failed" '
-    fi
+    mkdir -p \$HOME/YAPLC &&
+    cd \$HOME/YAPLC &&
+    cp -fr %_prefix/src/CanFestival-3 \$HOME/YAPLC/ &&
+    cd \$HOME/YAPLC/CanFestival-3/objdictgen &&
+    tar -xzf Gnosis_Utils-current.tar.gz &&
+    mv Gnosis_Utils*/gnosis . &&
+    rm -fr Gnosis_Utils* &&
+    cd \$HOME/YAPLC/CanFestival-3 &&
+    ./configure &&
+    make
 fi
+
+if ! [ -d \$HOME/YAPLC_DEMOS ]; then
+    mkdir -p \$HOME/YAPLC &&
+    cd \$HOME/YAPLC &&
+    cp -fr %_docdir/YAPLC_DEMOS .
+fi
+
 python2 %python_sitelibdir/%name/yaplcide.py
 END
 
@@ -116,6 +105,9 @@ desktop-file-install --dir=%buildroot%_desktopdir %name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Mar 10 2018 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1.20180112
+- New version 1.1.0
+
 * Sun Jul 09 2017 Anton Midyukov <antohami@altlinux.org> 0.0-alt2.20170629
 - Added missing requires.
 
