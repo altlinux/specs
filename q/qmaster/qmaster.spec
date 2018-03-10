@@ -1,11 +1,11 @@
 Name:     qmaster
 Version:  0.2.3
-Release:  alt1%ubt
+Release:  alt2%ubt
 
 Summary:  Modbus network emulator
 License:  GPL-2.0
 Group:    Engineering
-Url:      https://github.com/maisvendoo/qslave
+Url:      https://github.com/maisvendoo/qmaster
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
@@ -48,5 +48,8 @@ install -Dm755 %name %buildroot%_bindir/%name
 %_pixmapsdir/%name.png
 
 %changelog
+* Sat Mar 10 2018 Anton Midyukov <antohami@altlinux.org> 0.2.3-alt2%ubt
+- Fix Url
+
 * Fri Dec 29 2017 Anton Midyukov <antohami@altlinux.org> 0.2.3-alt1%ubt
 - Initial build for Sisyphus
