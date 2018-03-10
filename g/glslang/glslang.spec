@@ -1,8 +1,6 @@
-%define commit d1141843c0b2401900fd311550c77512f37a67e1
-
 Name: glslang
-Version: 3.0
-Release: alt2
+Version: 6.2.2596
+Release: alt1%ubt
 
 Summary: OpenGL and OpenGL ES shader front end and validator
 Group: Development/C++
@@ -11,7 +9,9 @@ License: BSD
 Url: https://www.khronos.org/opengles/sdk/tools/Reference-Compiler/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source: https://github.com/KhronosGroup/%name/archive/%commit/%name-%commit.tar.gz
+Source: https://github.com/KhronosGroup/%name/archive/%version/%name-%version.tar.gz
+
+BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -40,7 +40,7 @@ better when multiple modules are compressed together, since
 compressor's dictionary can find better cross module commonality.
 
 %prep
-%setup -n %name-%commit
+%setup
 
 %build
 %__mkdir_p %_target_platform
@@ -73,6 +73,12 @@ popd
 %_includedir/SPIRV
 
 %changelog
+* Sat Mar 10 2018 Nazarov Denis <nenderus@altlinux.org> 6.2.2596-alt1%ubt
+- Version 6.2.2596
+
+* Tue Apr 18 2017 Nazarov Denis <nenderus@altlinux.org> 3.0-alt1.M80P.1
+- Build for branch p8
+
 * Sun Apr 16 2017 Nazarov Denis <nenderus@altlinux.org> 3.0-alt2
 - Update to latest from git
 
