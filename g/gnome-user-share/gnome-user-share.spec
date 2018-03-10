@@ -1,10 +1,10 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.18
+%define ver_major 3.27
 %define httpd /usr/sbin/httpd2
 %define modules_path %_sysconfdir/httpd2/modules
 
 Name: gnome-user-share
-Version: %ver_major.3
+Version: %ver_major.90
 Release: alt1
 
 Summary: Gnome user file sharing
@@ -14,12 +14,14 @@ Url: https://www.gnome.org
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
+%define nautilus_ver 3.27.90
+
 Requires: apache2 >= 2.2
 Requires: apache2-mod_dnssd >= 0.6
 
 BuildRequires: gnome-common intltool yelp-tools desktop-file-utils
 BuildRequires: libgtk+3-devel libnotify-devel libcanberra-gtk3-devel
-BuildRequires: libnautilus-devel libselinux-devel libgudev-devel
+BuildRequires: libnautilus-devel >= %nautilus_ver libselinux-devel libgudev-devel
 BuildRequires: apache2 apache2-mod_dnssd systemd-devel
 
 %description
@@ -64,6 +66,9 @@ mDNSResolver running.
 %exclude %_libdir/nautilus/extensions-3.0/*.la
 
 %changelog
+* Tue Feb 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.27.90-alt1
+- 3.27.90
+
 * Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
 - 3.18.3
 

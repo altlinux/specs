@@ -9,13 +9,17 @@
 %define _name webkitgtk
 
 %def_disable gtkdoc
-%def_disable gnu_ld
-%def_disable media_stream
+%def_enable gold
 %def_enable x11
 %def_enable wayland
+# since 2.19.x in some build environments
+# while build webki2gtk-dep typelibs this error appears
+# FATAL: Could not allocate gigacage memory with maxAlignment = ..
+# To avoid it set GIGACAGE_ENABLED=0
+%def_disable gigacage
 
 Name: libwebkitgtk4
-Version: 2.18.6
+Version: 2.20.0
 Release: alt1
 
 Summary: Web browser engine
@@ -24,6 +28,7 @@ License: %bsd %lgpl2plus
 Url: http://www.webkitgtk.org/
 
 Source: %url/releases/%_name-%version.tar.xz
+Source1: webkit2gtk.env
 
 Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav
 Requires: hyphen-en hyphen-ru
@@ -40,16 +45,16 @@ BuildRequires: libxml2-devel >= 2.6
 BuildRequires: libXt-devel
 BuildRequires: libgtk+3-devel >= 3.4.0 libepoxy-devel
 BuildRequires: libgail3-devel >= 3.0
-BuildRequires: libenchant-devel >= 0.22
+BuildRequires: libenchant2-devel >= 2.2.3
 BuildRequires: libsqlite3-devel >= 3.0
 BuildRequires: libxslt-devel >= 1.1.7
 BuildRequires: gstreamer1.0-devel >= 1.0.3 gst-plugins1.0-devel >= 1.0.3 gst-plugins-bad1.0-devel
 BuildRequires: librsvg-devel >= 2.2.0
 BuildRequires: gtk-doc >= 1.10
-BuildRequires: libsoup-devel >= 2.40.0
+BuildRequires: libsoup-devel >= 2.61.90
 BuildRequires: libsecret-devel
 BuildRequires: libpango-devel >= 1.21.0 libcairo-devel >= 1.10 libcairo-gobject-devel
-BuildRequires: fontconfig-devel >= 2.4 libfreetype-devel libharfbuzz-devel
+BuildRequires: fontconfig-devel >= 2.4 libfreetype-devel libharfbuzz-devel libwoff2-devel
 BuildRequires: libgio-devel >= 2.25.0
 BuildRequires: python-modules-json
 BuildRequires: ruby ruby-stdlibs
@@ -68,7 +73,6 @@ BuildRequires: libnotify-devel libgnutls-devel libnettle-devel
 BuildRequires: libtasn1-devel libp11-kit-devel libgcrypt-devel
 # for battery status
 BuildRequires: libupower-devel
-%{?_enable_media_stream:BuildRequires: libopenwebrtc-devel}
 
 %description
 WebKit is an open source web browser engine.
@@ -192,33 +196,39 @@ GObject introspection devel data for the JavaScriptCore library
 
 %prep
 %setup -n %_name-%version
-
 # Remove bundled libraries
-rm -rf Source/ThirdParty/leveldb/
 rm -rf Source/ThirdParty/gtest/
 rm -rf Source/ThirdParty/qunit/
 
+subst 's|Q\(unused-arguments\)|W\1|' Source/cmake/WebKitCompilerFlags.cmake
+
 %build
 # Decrease debuginfo verbosity and use linker flags to reduce memory consumption
-%{?_disable_gnu_ld:%define optflags_debug -g1}
-%{?_disable_gnu_ld:%add_optflags -Wl,--no-keep-memory -Wl,--reduce-memory-overheads}
+%define optflags_debug -g1
+%add_optflags -Wl,--no-keep-memory
+%{?_disable_gold: %add_optflags -Wl,--reduce-memory-overheads}
 %ifarch %ix86
 %add_optflags -D_FILE_OFFSET_BITS=64
+%endif
+
+%if_disabled gigacage
+%ifarch x86_64
+export GIGACAGE_ENABLED=0
+%endif
 %endif
 
 %cmake \
 -DPORT=GTK \
 -DCMAKE_BUILD_TYPE=Release \
 -DENABLE_MINIBROWSER=ON \
--DENABLE_TOUCH_EVENTS:BOOL=ON \
--DENABLE_TOUCH_ICON_LOADING:BOOL=ON \
--DENABLE_TOUCH_SLIDER:BOOL=ON \
 %{?_enable_gtkdoc:-DENABLE_GTKDOC:BOOL=ON} \
 %{?_enable_x11:-DENABLE_X11_TARGET:BOOL=ON} \
 %{?_enable_wayland:-DENABLE_WAYLAND_TARGET:BOOL=ON} \
-%{?_disable_gnu_ld:-DUSE_LD_GOLD:BOOL=OFF} \
-%{?_enable_media_stream:-DENABLE_MEDIA_STREAM:BOOL=ON} \
--Dbmalloc_LIBRARIES:STRING=-ldl
+%{?_disable_gold:-DUSE_LD_GOLD:BOOL=OFF}
+#-DENABLE_TOUCH_EVENTS:BOOL=ON \
+#-DENABLE_TOUCH_ICON_LOADING:BOOL=ON \
+#-DENABLE_TOUCH_SLIDER:BOOL=ON \
+#-Dbmalloc_LIBRARIES:STRING=-ldl
 # automatically enabled on x86_64
 #-DENABLE_FTL_JIT:BOOL=ON
 #-DENABLE_FTPDIR:BOOL=ON \
@@ -227,10 +237,18 @@ rm -rf Source/ThirdParty/qunit/
 #-DENABLE_DEVICE_ORIENTATION:BOOL=ON \
 #-DENABLE_ORIENTATION_EVENTS:BOOL=ON
 
+# workaround for j=1
+[ -n "$NPROCS" ] && [ $NPROCS -eq 1 ] && \
+mkdir -p  BUILD/DerivedSources/ForwardingHeaders/JavaScriptCore
+cp Source/JavaScriptCore/API/{JSContextRef,JSObjectRef,JSBase,JSValueRef,WebKitAvailability}.h \
+BUILD/DerivedSources/ForwardingHeaders/JavaScriptCore
 %cmake_build
 
 %install
 %cmakeinstall_std
+%if_disabled gigacage
+install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
+%endif
 
 %find_lang WebKit2GTK-%api_ver
 
@@ -258,6 +276,7 @@ rm -rf Source/ThirdParty/qunit/
 %_includedir/webkitgtk-%api_ver/webkitdom
 %_pkgconfigdir/webkit2gtk-%api_ver.pc
 %_pkgconfigdir/webkit2gtk-web-extension-%api_ver.pc
+%{?_disable_gigacage:%_rpmmacrosdir/webki2gtk.env}
 
 %if_enabled gtkdoc
 %files -n libwebkit2gtk-devel-doc
@@ -291,6 +310,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 2.20.0-alt1
+- 2.20.0
+
 * Wed Jan 24 2018 Yuri N. Sedunov <aris@altlinux.org> 2.18.6-alt1
 - 2.18.6 (fixed CVE-2018-4088, CVE-2017-13885, CVE-2017-7165,
   CVE-2017-13884, CVE-2017-7160, CVE-2017-7153, CVE-2017-7153,

@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.26
+%define ver_major 3.28
 %define _name org.gnome.Logs
 
 Name: gnome-logs
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME logfile viewer
@@ -57,6 +57,9 @@ GNOME Logs is a log viewer for the systemd journal.
 %doc NEWS README
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Fri Feb 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt1
 - 3.26.3
 

@@ -12,7 +12,7 @@
 %def_enable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -134,10 +134,10 @@ the functionality of the installed %_name library.
 %setup -n %_name-%version
 
 %build
-%meson -Denable-gtk-doc=true \
-        %{?_enable_rpm:-Denable-rpm=true} \
-        %{?_enable_stemmer:-Denable_stemmer=true} \
-        %{?_enable_gtk_doc:-Dgtk-doc=true}
+%meson \
+       %{?_enable_rpm:-Drpm=true} \
+       %{?_enable_stemmer:-Dstemmer=true} \
+       %{?_enable_gtk_doc:-Dgtk-doc=true}
 %meson_build
 
 %install
@@ -201,6 +201,9 @@ the functionality of the installed %_name library.
 #%_datadir/gtk-doc/html/appstream-builder/
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 0.7.7-alt1
+- 0.7.7
+
 * Fri Feb 09 2018 Yuri N. Sedunov <aris@altlinux.org> 0.7.6-alt1
 - 0.7.6
 

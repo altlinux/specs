@@ -1,13 +1,13 @@
 %def_disable snapshot
 
-%define ver_major 3.26
+%define ver_major 3.28
 %define xdg_name org.gnome.bijiben
 %define _libexecdir %_prefix/libexec
 %def_enable zeitgeist
 
 Name: bijiben
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Note editor for GNOME
 License: LGPLv3+
@@ -25,13 +25,14 @@ Source: %name-%version.tar
 %define tracker_ver 0.18
 %define eds_ver 3.19.90
 
-BuildPreReq: libgtk+3-devel >= %gtk_ver
+BuildRequires(pre): meson rpm-build-xdg
+BuildRequires: yelp-tools libappstream-glib-devel
+BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: tracker-devel >= %tracker_ver
 BuildRequires: libxml2-devel libwebkit2gtk-devel
 BuildRequires: libgnome-online-accounts-devel libuuid-devel
 BuildRequires: evolution-data-server-devel >= %eds_ver libical-devel libicu-devel
-BuildRequires: rpm-build-xdg gnome-common intltool yelp-tools libappstream-glib-devel
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
 
 %description
@@ -42,15 +43,13 @@ desktop integration.
 %setup
 
 %build
-%autoreconf
-%configure \
-	--disable-static \
-	--disable-schemas-compile \
-	--disable-update-mimedb
-%make_build
+%meson \
+	%{?_disable_zeitgeist:-Dzeitgeist=false} \
+	-Dupdate-mimedb=false
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %name
 
@@ -65,11 +64,14 @@ desktop integration.
 %_datadir/dbus-1/services/%xdg_name.SearchProvider.service
 %_xdgmimedir/packages/%xdg_name.xml
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/appdata/%xdg_name.appdata.xml
+%config %_datadir/glib-2.0/schemas/%xdg_name.enums.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc README AUTHORS NEWS
 
 %changelog
+* Mon Mar 05 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt2
 - rebuilt against libical.so.3/libicu*.so.60
 

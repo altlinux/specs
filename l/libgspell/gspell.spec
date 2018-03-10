@@ -1,13 +1,14 @@
 %def_disable snapshot
 %def_enable installed_tests
+%{?_enable_snapshot:%def_enable gtk_doc}
 %def_enable check
 
 %define _name gspell
-%define ver_major 1.6
+%define ver_major 1.8
 %define api_ver 1
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A spell-checking library for GTK+ applications
@@ -18,15 +19,18 @@ Url: https://wiki.gnome.org/Projects/gspell
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %else
-Source: %name-%version.tar
+Source: %_name-%version.tar
 %endif
+# pkg-config >= 0.27 required
+Source1: pkg.m4
 
 %define gtk_ver 3.20.0
 %define enchant_ver 1.6.0
 
 Requires: iso-codes
 
-BuildRequires: libgtk+3-devel >= %gtk_ver libenchant-devel >= %enchant_ver iso-codes-devel
+BuildRequires: autoconf-archive
+BuildRequires: libgtk+3-devel >= %gtk_ver libenchant2-devel >= %enchant_ver iso-codes-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel vala-tools gtk-doc
 %{?_enable_check:BuildRequires: xvfb-run hunspell-en valgrind}
 
@@ -38,6 +42,7 @@ applications.
 Summary: Development files for %name
 Group: Development/C++
 Requires: %name = %version-%release
+Requires: libenchant2-devel >= %enchant_ver
 
 %description devel
 Development files for %_name, spell-checking library for GTK+
@@ -82,11 +87,12 @@ the functionality of the installed Gspell library.
 
 %prep
 %setup -n %_name-%version
+%{?_enable_snapshot:cp %SOURCE1 m4/}
 
 %build
-# pkg-config >= 0.27 required
-#%%autoreconf
+%{?_enable_snapshot%autoreconf -I m4}
 %configure \
+    %{?_enable_gtk_doc:--enable-gtk-doc} \
     %{?_enable_installed_tests:--enable-installed-tests}
 
 %install
@@ -126,6 +132,12 @@ xvfb-run %make check
 
 
 %changelog
+* Sat Mar 10 2018 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
+* Thu Feb 15 2018 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
+- 1.7.1-1-g916fca8 with enchant2
+
 * Sun Oct 29 2017 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
 - 1.6.1
 

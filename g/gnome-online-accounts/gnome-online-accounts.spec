@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.26
+%define ver_major 3.27
 %define _libexecdir %_prefix/libexec
 %def_enable kerberos
 %def_enable owncloud
@@ -21,7 +21,7 @@
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.2
+Version: %ver_major.92
 Release: alt1
 
 Summary: Provide online accounts information
@@ -180,6 +180,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/goa/
 
 %changelog
+* Mon Mar 05 2018 Yuri N. Sedunov <aris@altlinux.org> 3.27.92-alt1
+- 3.27.92
+
 * Wed Dec 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 

@@ -1,17 +1,17 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name vte
-%define ver_major 0.50
+%define ver_major 0.52
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 %def_disable static
 %def_enable introspection
 %def_enable gtk_doc
-%def_disable glade
+%def_enable glade
 %def_enable pcre2
 
 Summary: Terminal emulator widget for use with GTK+
@@ -124,12 +124,13 @@ GObject introspection devel data for the %name library
 
 %build
 %autoreconf
+%{?_enable_glade:export enable_glade_catalogue=yes}
 %configure \
 	--enable-shared \
 	%{subst_enable static} \
 	%{subst_enable introspection} \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
-#	%{subst_enable glade}
+	%{?_enable_gtk_doc:--enable-gtk-doc} \
+	%{?_disable_glade:--disable-glade}
 %make_build
 
 %install
@@ -168,7 +169,10 @@ find %buildroot -type f -name '*.la' -delete
 %_libdir/*.so
 %_libdir/pkgconfig/%_name-%api_ver.pc
 %_vapidir/vte-%api_ver.vapi
-#%{?_enable_glade:}
+%if_enabled glade
+%_datadir/glade/catalogs/vte-%api_ver.xml
+%_datadir/glade/pixmaps/hicolor/*x*/actions/widget-vte-terminal.png
+%endif
 
 %files -n lib%name-devel-doc
 %doc %_datadir/gtk-doc/html/*
@@ -187,6 +191,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 0.52.0-alt1
+- 0.52.0
+
 * Tue Oct 31 2017 Yuri N. Sedunov <aris@altlinux.org> 0.50.2-alt1
 - 0.50.2
 

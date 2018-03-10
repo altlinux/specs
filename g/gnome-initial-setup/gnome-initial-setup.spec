@@ -1,4 +1,4 @@
-%define ver_major 3.26
+%define ver_major 3.28
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
@@ -85,6 +85,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README NEWS
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

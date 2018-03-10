@@ -1,9 +1,13 @@
-%define ver_major 3.26
+%def_disable snapshot
+
+%define ver_major 3.28
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
 
+%def_enable classic_mode
+
 Name: gnome-shell-extensions
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Shell Extensions
@@ -13,11 +17,16 @@ Url: https://wiki.gnome.org/Projects/GnomeShell
 
 BuildArch: noarch
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 Requires: gnome-shell >= %ver_major
 
-BuildRequires: gnome-common intltool libgnome-desktop3-devel libgtop-devel
+BuildRequires(pre): meson
+BuildRequires: rpm-build-gir libgjs-devel libmozjs52-tools sassc
 
 %description
 GNOME Shell Extensions is a collection of extensions providing additional
@@ -28,23 +37,24 @@ See %_docdir/%name-%version/README for more information.
 %setup -n %name-%version
 
 %build
-#NOCONFIGURE=1 ./autogen.sh
-%configure \
-    --disable-schemas-compile \
-    --enable-extensions=all
-%make_build
+%meson \
+    %{?_enable_classic_mode:-Dclassic_mode=true} \
+    -Dextension_set=all
+%meson_build
 
 %check
-%make check
+%meson_test
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang %name
 
 %files -f %name.lang
-## Classic mode
+# Classic mode
+%if_enabled classic_mode
 %_datadir/gnome-session/sessions/gnome-classic.session
+%_datadir/xsessions/gnome-classic.desktop
 %_datadir/gnome-shell/modes/classic.json
 %_datadir/gnome-shell/theme/calendar-today.svg
 %_datadir/gnome-shell/theme/classic-toggle-off-intl.svg
@@ -55,7 +65,7 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/gnome-shell/theme/gnome-classic.css
 %_datadir/gnome-shell/theme/gnome-classic-high-contrast.css
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.classic-overrides.gschema.xml
-%_datadir/xsessions/gnome-classic.desktop
+%endif
 
 ## Extensions
 %dir %_datadir/gnome-shell/extensions
@@ -154,22 +164,16 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/stylesheet.css
 
-%doc README
+%doc NEWS README.md
 
 # example
 %exclude %_datadir/gnome-shell/extensions/example@gnome-shell-extensions.%domain/
 %exclude %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.example.gschema.xml
 
-%if 0
-# xrandr-indicator incompatible with the new DisplayConfig mutter API
-%dir %_datadir/gnome-shell/extensions/xrandr-indicator@gnome-shell-extensions.%domain
-%_datadir/gnome-shell/extensions/xrandr-indicator@gnome-shell-extensions.%domain/extension.js
-%_datadir/gnome-shell/extensions/xrandr-indicator@gnome-shell-extensions.%domain/metadata.json
-%_datadir/gnome-shell/extensions/xrandr-indicator@gnome-shell-extensions.%domain/stylesheet.css
-%_datadir/gnome-shell/extensions/xrandr-indicator@gnome-shell-extensions.%domain/convenience.js
-%endif
-
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Thu Nov 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 

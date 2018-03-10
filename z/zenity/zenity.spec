@@ -1,4 +1,4 @@
-%define ver_major 3.26
+%define ver_major 3.28
 %def_enable libnotify
 %def_enable webkitgtk
 
@@ -54,6 +54,9 @@ a cooler name.
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Tue Nov 14 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

@@ -4,11 +4,11 @@
 %def_disable snapshot
 %def_enable check
 %{?_enable_snapshot:%def_with bootstrap}
-%define ver_major 0.38
-%define api_ver 0.38
+%define ver_major 0.40
+%define api_ver 0.40
 
 Name: vala
-Version: %ver_major.8
+Version: %ver_major.0
 Release: alt1
 
 Summary: Vala is a programming language which makes GNOME programming easy
@@ -24,7 +24,7 @@ Source: %name-%version.tar
 %if_with bootstrap
 Patch: %name-%version-%release-pregenerated.patch
 %endif
-Patch1: %name-0.35.5-alt-fixes.patch
+Patch1: %name-0.39.7-alt-fixes.patch
 
 PreReq: rpm-build-vala
 PreReq: vapi-common = %version-%release
@@ -33,7 +33,7 @@ BuildPreReq: /proc rpm-build-vala
 # since 0.37
 BuildRequires: libgraphviz-devel
 %if_without bootstrap
-BuildRequires: vala >= 0.25.1
+BuildRequires: vala >= 0.39.5.8
 %endif
 
 %description
@@ -229,8 +229,9 @@ mkdir -p %buildroot%_datadir/vala/vapi
 %_bindir/vapigen-%api_ver
 %_bindir/vala-gen-introspect
 %_bindir/vala-gen-introspect-%api_ver
-%_bindir/vapicheck
-%_bindir/vapicheck-%api_ver
+# dropped in 0.39.91
+#%_bindir/vapicheck
+#%_bindir/vapicheck-%api_ver
 %_pkgconfigdir/vapigen*.pc
 %_datadir/aclocal/vapigen.m4
 %_datadir/vala/Makefile.vapigen
@@ -261,6 +262,9 @@ mkdir -p %buildroot%_datadir/vala/vapi
 
 
 %changelog
+* Sun Mar 11 2018 Yuri N. Sedunov <aris@altlinux.org> 0.40.0-alt1
+- 0.40.0
+
 * Thu Feb 15 2018 Yuri N. Sedunov <aris@altlinux.org> 0.38.8-alt1
 - 0.38.8
 

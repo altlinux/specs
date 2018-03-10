@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 3.26
 %define _libexecdir %_prefix/libexec
@@ -6,7 +6,7 @@
 
 Name: gnome-flashback
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME Flashback session
 License: GPLv3
@@ -132,6 +132,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Tue Mar 06 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt2
+- updated to 3.26.0-31-ge5fd9bc
+
 * Thu Oct 05 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

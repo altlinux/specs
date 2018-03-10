@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.26
+%define ver_major 3.28
 %define panel_api_ver 5.0
 %define xdg_name org.gnome.gnome-applets
 
@@ -29,7 +29,6 @@ Source: %name-%version.tar
 Source1: 01-cpufreq.pkla
 Patch: %name-3.22.0-alt-modem-lights.patch
 Patch1: %name-3.22.0-alt-cpufreq_libs.patch
-Patch2: %name-3.26.0-up-makefile.patch
 
 # From configure.ac
 %define gtk_ver 3.20.0
@@ -66,6 +65,7 @@ Requires: %name-window-title = %version-%release
 %{?_enable_timer:Requires: %name-timer = %version-%release}
 
 # From configure.ac
+BuildRequires: autoconf-archive
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %glib_ver
@@ -86,9 +86,6 @@ BuildRequires: libdbus-devel libdbus-glib-devel
 BuildRequires: libpolkit1-devel xorg-cf-files yelp-tools
 BuildRequires: tracker-devel libupower-devel
 %{?_enable_frequency_selector:BuildRequires: libcpufreq-devel}
-
-# for invest applet
-BuildRequires: rpm-build-python3 python3-module-pygobject3-devel
 
 %if_enabled battstat
 BuildPreReq: libapm-devel
@@ -366,7 +363,6 @@ window title.
 %setup
 %patch -p1
 %patch1
-%patch2 -p1 -R -b .orig
 
 %build
 %autoreconf
@@ -555,20 +551,12 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %_datadir/glib-2.0/schemas/org.gnome.gnome-applets.window-title.gschema.xml
 %_pixmapsdir/windowtitle-applet.png
 
-#exclude invest-applet files
-%exclude %gnome_appletsdir/libinvest-applet.so
-%exclude %_datadir/%name/invest-applet/
-%exclude %_datadir/%name/builder/financialchart.ui
-%exclude %_datadir/%name/builder/prefs-dialog.ui
-%exclude %_datadir/%name/ui/invest-applet-menu.xml
-%exclude %_datadir/gnome-panel/applets/org.gnome.applets.InvestApplet.panel-applet
-%exclude %_datadir/glib-2.0/schemas/org.gnome.gnome-applets.invest.gschema.xml
-%exclude %_datadir/help/*/invest-applet/
-%exclude %_iconsdir/hicolor/*/*/invest-applet*
-
 %exclude %gnome_appletsdir/*.la
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

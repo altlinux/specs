@@ -1,4 +1,4 @@
-%define ver_major 3.26
+%define ver_major 3.28
 
 Name: gnome-devel-docs
 Version: %ver_major.0
@@ -58,6 +58,9 @@ This package is a part of %name and provides demos for GNOME developpers
 %_datadir/help/*/gnome-devel-demos/
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Derivative game from Klotski
@@ -55,10 +55,13 @@ from a game called "Klotski".
 %_iconsdir/hicolor/scalable/apps/%__name-symbolic.svg
 %_man6dir/%__name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/appdata/%__name.appdata.xml
+%_datadir/metainfo/%__name.appdata.xml
 
 
 %changelog
+* Sat Mar 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
+- 3.22.3
+
 * Sat Sep 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
 - 3.22.2
 

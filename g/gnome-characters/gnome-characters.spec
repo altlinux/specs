@@ -1,13 +1,13 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name org.gnome.Characters
-%define ver_major 3.26
+%define ver_major 3.28
 %define _libexecdir %_prefix/libexec
 %def_without included_libunistring
 
 Name: gnome-characters
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Character map application for GNOME
 Group: Text tools
@@ -39,8 +39,9 @@ Requires: typelib(IBus)
 Requires: typelib(Pango)
 Requires: typelib(PangoCairo)
 
+BuildRequires(pre): meson
 BuildRequires: libappstream-glib-devel
-BuildRequires: libgtk+3-devel libgjs-devel >= %gjs_ver
+BuildRequires: libgtk+3-devel libgjs-devel >= %gjs_ver libdbus-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 %{?_without_included_libunistring:BuildRequires: libunistring-devel >= %unistring_ver}
 BuildRequires: gperf
@@ -53,13 +54,11 @@ characters.
 %setup
 
 %build
-%autoreconf
-%configure --disable-static \
-	%{?_with_included_libunistring:--with-included-libunistring}
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang %_name
 
@@ -75,11 +74,14 @@ characters.
 %_iconsdir/*/*/*/*.svg
 %_iconsdir/*/*/*/*.png
 %_datadir/metainfo/%_name.appdata.xml
-%doc NEWS COPYING README
+%doc NEWS COPYING
+#%doc README
 
-%exclude %_libdir/%_name/libgc.la
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Wed Jan 31 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt2
 - updated to v3.26.2-8-gc1b4f79
 - build with system libunistring2-0.9.8

@@ -1,8 +1,8 @@
-%define ver_major 3.26
+%define ver_major 3.28
 %def_disable packagekit
 
 Name: simple-scan
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple scanning utility
@@ -41,10 +41,13 @@ find ./ -name "*.stamp" -delete
 %_datadir/%name/
 %_desktopdir/*
 %_datadir/glib-2.0/schemas/org.gnome.SimpleScan.gschema.xml
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %_man1dir/*
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Mon Jan 22 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt1
 - 3.26.3
 

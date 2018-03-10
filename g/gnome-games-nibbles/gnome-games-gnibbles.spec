@@ -8,7 +8,7 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A cute little game that has no short description
 Group: Games/Boards
@@ -64,6 +64,9 @@ it.
 %_datadir/appdata/%xdg_name.appdata.xml
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt2
+- rebuilt against libgnome-games-support-1.so.3
+
 * Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 

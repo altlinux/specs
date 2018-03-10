@@ -1,5 +1,5 @@
 %define _name pango
-%define ver_major 1.40
+%define ver_major 1.42
 %define api_ver 1.0
 %define module_ver 1.8.0
 %def_disable static
@@ -7,9 +7,10 @@
 %def_enable introspection
 %def_enable installed_tests
 %def_enable libthai
+%def_enable check
 
 Name: lib%_name
-Version: %ver_major.14
+Version: %ver_major.0
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -42,20 +43,21 @@ Obsoletes: gscript
 %define gi_ver 0.9.5
 %define hb_ver 0.9.30
 %define thai_ver 0.1.9
+%define fribidi_ver 1.0.1
 
+BuildRequires: gcc-c++ help2man
 BuildPreReq: rpm-build-gnome rpm-build-licenses gnome-common gtk-doc
 BuildPreReq: fontconfig-devel >= %fontconfig_ver
 BuildPreReq: libfreetype-devel >= %freetype_ver
-BuildPreReq: libXft-devel >= %xft_ver 
+BuildPreReq: libXft-devel >= %xft_ver
 BuildPreReq: libcairo-devel >= %cairo_ver libcairo-gobject-devel
 BuildPreReq: glib2-devel >= %glib_ver libgio-devel
 BuildPreReq: libharfbuzz-devel >= %hb_ver
+BuildPreReq: libfribidi-devel >= %fribidi_ver
 BuildPreReq: gtk-doc >= %gtk_doc_ver
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gi_ver}
 %{?_enable_libthai:BuildPreReq: libthai-devel >= %thai_ver}
-BuildRequires: gcc-c++ help2man
-# for check
-BuildRequires: fonts-otf-abattis-cantarell
+%{?_enable_check:BuildRequires: fonts-otf-abattis-cantarell}
 
 %description
 A library to handle unicode strings as well as complex bidirectional
@@ -182,6 +184,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 1.42.0-alt1
+- 1.42.0
+
 * Thu Nov 16 2017 Yuri N. Sedunov <aris@altlinux.org> 1.40.14-alt1
 - 1.40.14
 

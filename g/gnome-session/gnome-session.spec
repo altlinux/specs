@@ -1,25 +1,30 @@
-%define ver_major 3.26
+%def_disable snapshot
+
+%define ver_major 3.28
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 %def_enable session_selector
 %def_disable consolekit
+%def_enable man
 
 Name: gnome-session
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
-License: GPLv2+
 Group: Graphical desktop/GNOME
-URL: htpp://www.gnome.org
+License: GPLv2+
+Url: https://wiki.gnome.org/Projects/SessionManagement
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 Source1: gnome.svg
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=775463
 Patch: %name-2.91.6-alt-autosave_session.patch
-Patch1: %name-3.21.4-alt-lfs.patch
 
 # fedora patches:
 # Blacklist NV30: https://bugzilla.redhat.com/show_bug.cgi?id=745202
@@ -36,16 +41,14 @@ PreReq: xinitrc libcanberra-gnome libcanberra-gtk3
 Requires: altlinux-freedesktop-menu-gnome3
 Requires: dbus-tools-gui
 Requires: gnome-filesystem
-Requires: gnome-settings-daemon >= 3.23.90
 Requires: upower gcr
 Requires: xdg-user-dirs
 
 Requires: icon-theme-hicolor gnome-icon-theme-symbolic gnome-themes-standard
 
-BuildPreReq: rpm-build-gnome >= 0.5
-BuildPreReq: gnome-common
+BuildRequires(pre): meson rpm-build-gnome
 
-# From configure.ac
+
 BuildPreReq: intltool >= 0.35.0 libGConf-devel
 BuildPreReq: libgio-devel glib2-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -59,6 +62,7 @@ BuildRequires: GConf browser-plugins-npapi-devel perl-XML-Parser xorg-xtrans-dev
 BuildRequires: docbook-dtds docbook-style-xsl
 %{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libpolkit-devel}
 %{?_enable_consolekit:BuildRequires: libdbus-glib-devel}
+%{?_enable_man:BuildRequires: xmlto}
 # since 3.22.2
 BuildRequires: libepoxy-devel
 
@@ -90,29 +94,25 @@ This package permits to log into GNOME using Wayland.
 
 %prep
 %setup
-#%patch1 -p1 -b .lfs
 %patch11 -p1 -b .nv30
 
-[ ! -d m4 ] && mkdir m4
-
 %build
-%autoreconf
-%configure PATH=$PATH:/sbin \
-    %{subst_enable systemd} \
-    %{subst_enable consolekit} \
-    %{?_enable_session_selector:--enable-session-selector} \
-    --enable-ipv6 \
-    --disable-schemas-compile
+export PATH=$PATH:/sbin
+%meson \
+    %{?_enable_systemd:-Dsystemd=true} \
+    %{?_enable_consolekit:-Dconsolekit=true} \
+    %{?_enable_session_selector:-Dsession_selector=true} \
+    %{?_enable_man:-Dman=true}
 
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome --output=%name.lang %name-3.0
 
 %check
-%make check
+%meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -152,6 +152,9 @@ This package permits to log into GNOME using Wayland.
 
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Wed Oct 04 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 

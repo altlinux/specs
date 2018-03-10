@@ -1,11 +1,11 @@
-%define ver_major 3.26
+%define ver_major 3.28
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
 %define _name org.gnome.Contacts
 %def_with cheese
 
 Name: gnome-contacts
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Contacts manager for GNOME
@@ -25,7 +25,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define cheese_ver 3.5.90
 %define geocode_ver 3.15.3
 
-BuildRequires: yelp-tools docbook-dtds docbook-style-xsl
+BuildRequires(pre): meson
+BuildRequires: yelp-tools docbook-dtds docbook-style-xsl libappstream-glib-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libtelepathy-glib-devel >= %tp_glib_ver
 BuildRequires: libfolks-devel >= %folks_ver libvala-devel >= %vala_ver libgnome-desktop3-devel
 BuildRequires: libgnome-online-accounts-devel libgee0.8-devel evolution-data-server-devel >= %eds_ver
@@ -42,12 +43,11 @@ BuildRequires: libfolks-vala
 %setup
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson %{?_with_cheese:-Dwith-cheese=yes}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang %name
 
@@ -61,10 +61,13 @@ BuildRequires: libfolks-vala
 %_datadir/gnome-shell/search-providers/%_name.search-provider.ini
 %_iconsdir/hicolor/*/*/*
 %_man1dir/%name.1.*
-%_datadir/appdata/%_name.appdata.xml
+%_datadir/metainfo/%_name.appdata.xml
 %doc AUTHORS NEWS README*
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Wed Jan 24 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 

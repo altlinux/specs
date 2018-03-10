@@ -2,7 +2,7 @@
 
 %define _name sudoku
 %define __name gnome-%_name
-%define ver_major 3.26
+%define ver_major 3.28
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -53,9 +53,12 @@ in popularity.
 %_iconsdir/hicolor/scalable/apps/%__name-symbolic.svg
 %_man6dir/%__name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/appdata/%__name.appdata.xml
+%_datadir/metainfo/%__name.appdata.xml
 
 %changelog
+* Sat Mar 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Sat Sep 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

@@ -1,12 +1,17 @@
 %def_disable snapshot
 
-%define ver_major 2.54
+%define ver_major 2.56
 %define _libexecdir %_prefix/libexec
+%define _userinitdir %(pkg-config systemd --variable systemduserunitdir)
+
+%def_enable libproxy
+%def_enable gnome_proxy
+%def_enable tls
+%def_enable pkcs11
 %def_enable installed_tests
-%def_with libproxy
 
 Name: glib-networking
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Networking support for GIO
@@ -20,18 +25,20 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-Requires: ca-certificates gsettings-desktop-schemas >= 3.2.0
+%{?_enable_gnome_proxy:Requires: gsettings-desktop-schemas >= 3.2.0}
+%{?_enable_pkcs11:Requires: ca-certificates}
 
-%define glib_ver 2.46.0
+%define glib_ver 2.55.1
 %define gnutls_ver 2.12.8
 %define p11kit_ver 0.8
 %define libproxy_ver 0.3.1
 
-BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libgnutls-devel >= %gnutls_ver libgcrypt-devel
-BuildRequires: libp11-kit-devel >= %p11kit_ver ca-certificates
-BuildRequires: gsettings-desktop-schemas-devel
-%{?_with_libproxy:BuildRequires: libproxy-devel >= %libproxy_ver}
+BuildRequires: meson libgio-devel >= %glib_ver
+%{?_enable_gnome_proxy:BuildRequires: gsettings-desktop-schemas-devel}
+%{?_enable_tls:BuildRequires: libgnutls-devel >= %gnutls_ver libgcrypt-devel}
+%{?_enable_pkcs11:BuildRequires: libp11-kit-devel >= %p11kit_ver ca-certificates}
+%{?_enable_libproxy:BuildRequires: libproxy-devel >= %libproxy_ver}
+BuildRequires: libsystemd-devel
 
 %description
 This package contains modules that extend the networking support in GIO.
@@ -55,43 +62,45 @@ sed -i 's,-Werror=missing-include-dirs,,' configure*
 %endif
 
 %build
-%autoreconf
-%configure \
-	--disable-static \
-	%{subst_with libproxy} \
-	%{?_enable_installed_tests:--enable-installed-tests} \
-	--with-ca-certificates=%_datadir/ca-certificates/ca-bundle.crt
-
-%make_build
+%meson \
+	%{?_enable_libproxy:-Dlibproxy_support=true} \
+	%{?_enable_gnome_proxy:-Dgnome_proxy_support=true} \
+	%{?_enable_tls:-Dtls_support=true} \
+	%{?_enable_pkcs11:-Dpkcs11_support=true} \
+	%{?_enable_installed_tests:-Dinstalled-tests=true} \
+	-Dca-certificates_path=%_datadir/ca-certificates/ca-bundle.crt \
+	-Dsystemd-user-unit-dir=%_userinitdir
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang %name
 
 %check
-#%%make check
+#%%meson_test
 
 %files -f %name.lang
-%_libdir/gio/modules/libgiognutls.so
-%_libdir/gio/modules/libgiognomeproxy.so
-%if_with libproxy
+%{?_enable_tls:%_libdir/gio/modules/libgiognutls.so}
+%{?_enable_gnome_proxy:%_libdir/gio/modules/libgiognomeproxy.so}
+%if_enabled libproxy
 %_libdir/gio/modules/libgiolibproxy.so
 %_libexecdir/glib-pacrunner
 %_datadir/dbus-1/services/org.gtk.GLib.PACRunner.service
-%_prefix/lib/systemd/user/glib-pacrunner.service
+%_userinitdir/glib-pacrunner.service
 %endif
 %doc NEWS README
 
-%exclude %_libdir/gio/modules/*.la
-
 %if_enabled installed_tests
 %files tests
-%_libexecdir/installed-tests/%name/
+#%_libexecdir/installed-tests/%name/
 %_datadir/installed-tests/%name/
 %endif
 
 %changelog
+* Sat Mar 10 2018 Yuri N. Sedunov <aris@altlinux.org> 2.56.0-alt1
+- 2.56.0
+
 * Fri Oct 27 2017 Yuri N. Sedunov <aris@altlinux.org> 2.54.1-alt1
 - 2.54.1
 

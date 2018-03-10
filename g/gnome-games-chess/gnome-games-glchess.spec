@@ -2,7 +2,7 @@
 
 %define _name chess
 %define __name gnome-%_name
-%define ver_major 3.26
+%define ver_major 3.28
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -25,8 +25,8 @@ Requires: gnuchess >= 6.2.3
 %define gtk_ver 3.19.0
 %define vala_ver 0.22.0
 
-BuildRequires: gnome-common
-BuildRequires: intltool yelp-tools libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires(pre): meson
+BuildRequires: yelp-tools libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: librsvg-devel gsettings-desktop-schemas-devel libappstream-glib-devel
 BuildRequires: libGL-devel libGLU-devel vala-tools >= %vala_ver
 
@@ -39,19 +39,19 @@ A chess game which supports several chess engines, with 2D and optionally
 [ ! -d m4 ] && mkdir m4
 
 %build
-%autoreconf
-%configure \
-    --disable-schemas-compile
-
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %__name
 
 %files -f gnome-%_name.lang
 %_bindir/%__name
+%_bindir/test-chess-game
+%_bindir/test-chess-pgn
+%_libdir/libgnome-libchess.so
 %_desktopdir/%__name.desktop
 %_datadir/%__name
 %_iconsdir/hicolor/*x*/apps/%__name.png
@@ -59,9 +59,12 @@ A chess game which supports several chess engines, with 2D and optionally
 %_man6dir/%__name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
 %config(noreplace) %_sysconfdir/%__name/engines.conf
-%_datadir/appdata/%__name.appdata.xml
+%_datadir/metainfo/%__name.appdata.xml
 
 %changelog
+* Sat Mar 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Sat Sep 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

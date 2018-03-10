@@ -1,6 +1,7 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.20
+%define ver_major 3.28
 %def_enable introspection
+%def_disable check
 
 Name: gcr
 Version: %ver_major.0
@@ -28,9 +29,7 @@ BuildRequires: libp11-kit-devel >= %p11kit_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgcrypt-devel >= %gcrypt_ver libtasn1-devel libtasn1-utils libtasn1-utils gnupg2-gpg
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 BuildRequires: libvala-devel >= %vala_ver vala-tools
-
-# for check
-BuildRequires: /proc xvfb-run dbus-tools-gui
+%{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools-gui %_bindir/ssh-keygen}
 
 %description
 GCR is a library for displaying certificates, and crypto UI, accessing
@@ -115,11 +114,12 @@ This package contains development documentation for GCR libraries.
 %find_lang %name
 
 %check
-#xvfb-run %make check
+xvfb-run %make check
 
 %files -f %name.lang
 %_bindir/gcr-viewer
 %_libexecdir/gcr-prompter
+%_libexecdir/gcr-ssh-askpass
 %_datadir/applications/gcr-viewer.desktop
 %_datadir/applications/gcr-prompter.desktop
 %dir %_datadir/GConf
@@ -127,7 +127,6 @@ This package contains development documentation for GCR libraries.
 %_datadir/GConf/gsettings/org.gnome.crypto.pgp.convert
 %_datadir/GConf/gsettings/org.gnome.crypto.pgp_keyservers.convert
 %_datadir/glib-2.0/schemas/org.gnome.crypto.pgp.gschema.xml
-%_datadir/gcr-3
 %_datadir/icons/hicolor/*/apps/*
 %_datadir/mime/packages/gcr-crypto-types.xml
 %_datadir/dbus-1/services/org.gnome.keyring.PrivatePrompter.service
@@ -178,6 +177,9 @@ This package contains development documentation for GCR libraries.
 
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Fri Mar 25 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 

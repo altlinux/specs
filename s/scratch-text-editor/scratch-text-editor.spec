@@ -7,7 +7,7 @@
 
 Name: scratch-text-editor
 Version: %ver_major.1
-Release: alt4
+Release: alt4.1
 
 Summary: The text editor that works
 License: GPLv3
@@ -108,7 +108,6 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name.plugins.folder-manager.gschema.xml
-#%_datadir/glib-2.0/schemas/%xdg_name.plugins.file-manager.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name.plugins.spell.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name.plugins.terminal.gschema.xml
 %_iconsdir/hicolor/*/*/%rdnn_name.*
@@ -124,6 +123,9 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %_vapidir/%{_name}core.vapi
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt4.1
+- rebuilt with vala-0.40
+
 * Sat Jan 06 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt4
 - current snapshot built against libgranite.so.4
 

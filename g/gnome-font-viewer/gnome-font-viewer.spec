@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.26
+%define ver_major 3.28
 %define _name org.gnome.font-viewer
 
 Name: gnome-font-viewer
@@ -33,8 +33,7 @@ GNOME Font Viewer is a simple application to preview fonts.
 %setup
 
 %build
-%meson \
-	-Denable-schemas-compile=false
+%meson
 %meson_build
 
 %install
@@ -52,6 +51,9 @@ GNOME Font Viewer is a simple application to preview fonts.
 %doc NEWS
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Tue Sep 19 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

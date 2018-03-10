@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.26
+%define ver_major 3.28
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
@@ -8,7 +8,7 @@
 %def_enable gtk_doc
 
 Name: gnome-bluetooth
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME Bluetooth Subsystem
@@ -84,11 +84,9 @@ GObject introspection devel data for the GNOME Bluetooth library
 
 %build
 %meson \
-	-Denable-schemas-compile=false \
-	-Denable-icon-update=false \
-	-Denable-desktop-update=false \
-	%{?_enable_gtk_doc:-Denable-gtk-doc=true} \
-	%{?_enable_introspection:-Denable-introspection=true}
+	-Dicon_update=false \
+	%{?_enable_gtk_doc:-Dgtk_doc=true} \
+	%{?_enable_introspection:-Dintrospection=true}
 %meson_build
 
 %install
@@ -133,6 +131,9 @@ EOF
 %endif
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Fri Sep 15 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 

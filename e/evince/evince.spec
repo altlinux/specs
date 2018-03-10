@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.26
+%define ver_major 3.28
 %define api_ver 3
 %define so_ver 4
 
@@ -9,10 +9,11 @@
 %def_enable introspection
 %def_enable browser_plugin
 %def_enable multimedia
+%def_disable debug
 
 Name: evince
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: A document viewer
 Group: Office
@@ -37,7 +38,7 @@ Requires: dconf
 BuildPreReq: libpoppler-glib-devel >= %poppler_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildRequires: gcc-c++ gnome-common gtk-doc
-BuildRequires: intltool yelp-tools itstool intltool
+BuildRequires: intltool yelp-tools itstool
 BuildRequires: icon-theme-adwaita libdjvu-devel libgnome-keyring-devel libnautilus-devel libspectre-devel libtiff-devel
 BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel zlib-devel libsecret-devel
 BuildRequires: libarchive-devel
@@ -128,7 +129,8 @@ export BROWSER_PLUGIN_DIR=%browser_plugins_path
 	%{subst_enable introspection} \
 	%{?_enable_browser_plugin:--enable-browser-plugin} \
 	%{subst_enable multimedia} \
-	--disable-static
+	--disable-static \
+	%{subst_enable debug}
 %make_build
 
 %install
@@ -157,13 +159,13 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %_libexecdir/evince*
 %_desktopdir/%name.desktop
 %_desktopdir/%name-previewer.desktop
-%_datadir/appdata/%name-comicsdocument.metainfo.xml
-%_datadir/appdata/%name-djvudocument.metainfo.xml
-%_datadir/appdata/%name-pdfdocument.metainfo.xml
-%_datadir/appdata/%name-psdocument.metainfo.xml
-%_datadir/appdata/%name-tiffdocument.metainfo.xml
-%_datadir/appdata/%name-xpsdocument.metainfo.xml
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name-comicsdocument.metainfo.xml
+%_datadir/metainfo/%name-djvudocument.metainfo.xml
+%_datadir/metainfo/%name-pdfdocument.metainfo.xml
+%_datadir/metainfo/%name-psdocument.metainfo.xml
+%_datadir/metainfo/%name-tiffdocument.metainfo.xml
+%_datadir/metainfo/%name-xpsdocument.metainfo.xml
+%_datadir/metainfo/%name.appdata.xml
 
 %_datadir/dbus-1/services/org.gnome.evince.Daemon.service
 %_datadir/%name/
@@ -180,7 +182,7 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %files dvi
 %_libdir/evince/%so_ver/backends/dvidocument.evince-backend
 %_libdir/evince/%so_ver/backends/libdvidocument.so
-%_datadir/appdata/%name-dvidocument.metainfo.xml
+%_datadir/metainfo/%name-dvidocument.metainfo.xml
 
 %files -n lib%name-devel
 %_includedir/evince
@@ -210,6 +212,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Sat Feb 10 2018 Igor Vlasenko <viy@altlinux.ru> 3.26.0-alt1.1
 - NMU: rebuild with texlive 2016
 

@@ -1,11 +1,14 @@
-%define ver_major 3.26
+%define ver_major 3.28
 %define api_ver 3.0
-%def_disable static
 %def_enable introspection
 %def_enable vala
+%def_enable gtk_doc
+%def_enable glade
+# fails offline
+%def_disable check
 
 Name: libgweather
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library for weather information
@@ -15,26 +18,24 @@ Url: https://wiki.gnome.org/Projects/LibGWeather
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-# From configure.ac
 %define gtk_ver 3.13.5
 %define glib_ver 2.35.1
-%define intltool_ver 0.40.0
 %define soup_ver 2.44
 %define gir_ver 0.9.5
 %define vala_ver 0.21.1
 
 Requires: %name-data = %version-%release
 
+BuildRequires(pre): rpm-build-gnome meson
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libsoup-devel >= %soup_ver
-BuildPreReq: intltool >= %intltool_ver
 BuildPreReq: xsltproc
-BuildPreReq: rpm-build-gnome gtk-doc
 BuildRequires: libgeocode-glib-devel libxml2-devel perl-XML-Parser xml-utils gzip
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 %{?_enable_vala:BuildPreReq: vala-tools >= %vala_ver}
-BuildRequires: libgladeui2.0-devel
+%{?_enable_gtk_doc:BuildPreReq: gtk-doc}
+%{?_enable_glade:BuildRequires: libgladeui2.0-devel}
 
 %description
 libgweather is a library to access weather information from online
@@ -107,19 +108,20 @@ This package provides Vala language bindings for the %name library.
 %build
 # for tm.tm_gmtoff
 %add_optflags -D_GNU_SOURCE
-%configure \
-    %{subst_enable static} \
-    %{subst_enable vala}
-%make_build
+%meson \
+    %{?_enable_gtk_doc:-Dgtk_doc=true} \
+    %{?_enable_vala:-Denable-vala=true} \
+    %{?_enable_glade:-Dglade_catalog=true}
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --output=%name.lang %name-%api_ver
 %find_lang --output=%name-locations.lang %name-locations
 
 %check
-%make check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%meson_test
 
 %files -f %name.lang
 %_libdir/*.so.*
@@ -136,10 +138,12 @@ This package provides Vala language bindings for the %name library.
 %_includedir/%name-%api_ver
 %_libdir/*.so
 %_pkgconfigdir/*
-%_datadir/glade/catalogs/%name.xml
+%{?_enable_glade:%_datadir/glade/catalogs/%name.xml}
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_enabled introspection
 %files gir
@@ -152,10 +156,14 @@ This package provides Vala language bindings for the %name library.
 %if_enabled vala
 %files vala
 %_vapidir/gweather-%api_ver.vapi
+%_vapidir/gweather-%api_ver.deps
 %endif
 
 
 %changelog
+* Fri Mar 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Mon Nov 27 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 

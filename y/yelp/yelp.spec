@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.26
+%define ver_major 3.28
 %def_disable debug
 %def_enable lzma
 
@@ -19,7 +19,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define gio_ver 2.38
 %define gtk_ver 3.14
 %define xslt_ver 1.1.4
-%define webkit_ver 2.16
+%define webkit_ver 2.19.2
 %define yelpxsl_ver 3.20.0
 %define intltool_ver 0.5.0
 
@@ -120,6 +120,9 @@ Yelp.
 %_datadir/gtk-doc/html/lib%name/
 
 %changelog
+* Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

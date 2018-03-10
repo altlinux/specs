@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name baobab
-%define __name org.gnome.baobab
-%define ver_major 3.26
+%define xdg_name org.gnome.baobab
+%define ver_major 3.28
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
 Name: gnome-disk-usage
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: The GNOME disk usage analyser.
 License: GPLv2+
@@ -20,8 +20,10 @@ Provides: baobab = %version-%release
 
 %define gtk_ver 3.20.0
 %define vala_ver 0.23.3
+
+BuildRequires(pre): meson rpm-build-gnome
 BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildRequires: rpm-build-gnome yelp-tools itstool xmllint libappstream-glib-devel
+BuildRequires: yelp-tools xmllint libappstream-glib-devel
 BuildRequires: vala-tools >= %vala_ver gobject-introspection-devel libgtk+3-gir-devel
 
 %description
@@ -32,12 +34,11 @@ filesystems.
 %setup -n %_name-%version
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 pushd %buildroot%_bindir
 ln -s baobab gnome-disk-usage
@@ -48,15 +49,19 @@ popd
 %files -f %_name.lang
 %_bindir/%_name
 %_bindir/gnome-disk-usage
-%_desktopdir/%__name.desktop
+%_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/%_name.*
-%_iconsdir/hicolor/scalable/apps/%_name-symbolic.svg
+%_iconsdir/hicolor/symbolic/apps/%_name-symbolic.svg
 %_man1dir/%_name.1.*
-%_datadir/dbus-1/services/%__name.service
+%_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/metainfo/%__name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
+%doc README NEWS
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt2
 - fixed %%files section
 

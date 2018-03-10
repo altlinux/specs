@@ -14,7 +14,7 @@
 %def_enable colord
 
 Name: gthumb
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -68,7 +68,7 @@ BuildPreReq: libexiv2-devel >= %exiv2_ver gcc-c++
 %endif
 
 BuildPreReq: libjpeg-devel libtiff-devel libXrender-devel libXext-devel libX11-devel
-BuildPreReq: libXtst-devel libXxf86vm-devel gnome-doc-utils libXi-devel
+BuildPreReq: libXtst-devel libXxf86vm-devel libXi-devel
 BuildRequires: libSM-devel libICE-devel
 
 BuildRequires: desktop-file-utils >= %desktop_file_utils_ver
@@ -172,6 +172,9 @@ This package contains headers needed to build extensions for gThumb.
 %_pkgconfigdir/*
 
 %changelog
+* Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Mon Nov 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 

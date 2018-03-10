@@ -1,8 +1,8 @@
-%define ver_major 1.2
+%define ver_major 1.4
 %define api_ver 1
 
 Name: libgnome-games-support
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Shared library for GNOME games
@@ -14,9 +14,10 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %define glib_ver 2.40
 %define gtk_ver 3.20.0
+%define vala_ver 0.39.6
 
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: libgee0.8-devel vala-tools
+BuildRequires: libgee0.8-devel vala-tools >= %vala_ver
 
 %description
 %name provides code that's useful for different GNOME games.
@@ -55,6 +56,9 @@ developing applications that use %name.
 
 
 %changelog
+* Sat Mar 10 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Sat Sep 09 2017 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
 - 1.2.3
 

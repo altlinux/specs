@@ -1,5 +1,5 @@
 %define _name gst-plugins
-%define ver_major 1.12
+%define ver_major 1.13
 %define api_ver 1.0
 
 %define _gst_datadir %_datadir/gstreamer-%api_ver
@@ -11,7 +11,7 @@
 %def_enable pulse
 
 Name: %_name-good%api_ver
-Version: %ver_major.4
+Version: %ver_major.91
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
@@ -20,13 +20,15 @@ License: LGPL
 URL: http://gstreamer.freedesktop.org/
 
 Source: http://gstreamer.freedesktop.org/src/%_name-good/%_name-good-%version.tar.xz
-Patch: gst-plugins-good-0.11.94-alt-intltool.patch
 
-BuildRequires: bzlib-devel gcc-c++ gst-plugins%api_ver-devel gtk-doc intltool libSM-devel libXdamage-devel libXext-devel libXfixes-devel
+BuildRequires: bzlib-devel gcc-c++ gst-plugins%api_ver-devel >= %ver_major
+BuildRequires: gtk-doc libSM-devel libXdamage-devel libXext-devel libXfixes-devel
 BuildRequires: libXv-devel libavc1394-devel libcairo-devel libdv-devel libflac-devel libiec61883-devel libjpeg-devel
 BuildRequires: liboil-devel libshout2-devel libsoup-devel libtag-devel libv4l-devel libwavpack-devel
 BuildRequires: python-module-PyXML python-modules-email python-modules-encodings liborc-devel orc libgdk-pixbuf-devel
 BuildRequires: libpng-devel libcairo-gobject-devel libgudev-devel libspeex-devel zlib-devel libvpx-devel
+BuildRequires: libmpg123-devel liblame-devel
+BuildRequires: libgtk+3-devel
 %{?_enable_jack:BuildRequires: libjack-devel}
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
 
@@ -46,7 +48,6 @@ This package contains development documentation for GStreamer Good Plugins
 
 %prep
 %setup -n %_name-good-%version
-%patch -p1
 
 %build
 %autoreconf
@@ -76,6 +77,9 @@ This package contains development documentation for GStreamer Good Plugins
 %_gtk_docdir/*
 
 %changelog
+* Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1.13.91-alt1
+- 1.13.91
+
 * Thu Dec 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.4-alt1
 - 1.12.4
 

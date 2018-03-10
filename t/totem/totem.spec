@@ -19,7 +19,7 @@
 
 
 %def_disable static
-%def_enable vala
+%def_disable vala
 
 %if_enabled vala
 %def_enable rotation
@@ -38,7 +38,7 @@
 
 Name: totem
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -282,16 +282,16 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 
 %build
 %meson \
-	-Denable-schemas-compile=false \
 	%{?_enable_python:-Denable-python=yes} \
+	%{?_enable_introspection:-Denable-introspection=yes} \
 	%{?_disable_vala:-Denable-vala=no} \
 	%{?_enable_nautilus:-Denable-nautilus=yes} \
 	%{?_enable_gtk_doc:-Denable-gtk-doc=true}
-%meson_build
+# https://github.com/mesonbuild/meson/issues/1994
+%meson_build -j1
 
 %install
 %meson_install
-find %buildroot%_libdir -name \*.la -delete
 
 %find_lang --with-gnome %name
 
@@ -320,14 +320,14 @@ find %buildroot%_libdir -name \*.la -delete
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
-%_libdir/pkgconfig/*.pc
+%_pkgconfigdir/*.pc
 
 %if_enabled introspection
 %files -n lib%name-gir
-%_libdir/girepository-1.0/*.typelib
+%_typelibdir/*.typelib
 
 %files -n lib%name-gir-devel
-%_datadir/gir-1.0/*.gir
+%_girdir/*.gir
 %endif
 
 %files plugins
@@ -406,6 +406,10 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Tue Mar 06 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt3
+- updated to V_3_26_0-31-gc84daa2
+- built against libgnome-desktop-3.so.17
+
 * Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt2
 - updated to V_3_26_0-14-g621a387
 

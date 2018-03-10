@@ -1,5 +1,5 @@
 %define _name gst-plugins
-%define ver_major 1.12
+%define ver_major 1.13
 %define api_ver 1.0
 
 %define _gst_datadir %_datadir/gstreamer-%api_ver
@@ -9,8 +9,8 @@
 %def_enable gtk_doc
 
 Name: %_name-ugly%api_ver
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.91
+Release: alt1
 
 Summary: A set of encumbered GStreamer plugins
 Group: System/Libraries
@@ -24,12 +24,11 @@ Provides: %_name%api_ver-lame = %version-%release
 Provides: %_name%api_ver-mad = %version-%release
 
 Source: http://gstreamer.freedesktop.org/src/%_name-ugly/%_name-ugly-%version.tar.xz
-Patch: gst-plugins-ugly-1.0.1-alt-intltool.patch
 
-BuildRequires: gcc-c++ gst-plugins%api_ver-devel gtk-doc intltool liba52-devel libcdio-devel libid3tag-devel
-BuildRequires: liblame-devel libmad-devel libmpeg2-devel liboil-devel libx264-devel python-module-PyXML
-BuildRequires: python-modules-encodings libopencore-amrnb-devel libopencore-amrwb-devel libdvdread-devel libmpg123-devel
+BuildRequires: gcc-c++ gst-plugins%api_ver-devel gtk-doc liba52-devel libcdio-devel libid3tag-devel
 BuildRequires: liborc-devel orc
+BuildRequires: libmad-devel libmpeg2-devel liboil-devel libx264-devel python-module-PyXML
+BuildRequires: python-modules-encodings libopencore-amrnb-devel libopencore-amrwb-devel libdvdread-devel
 
 %description
 GStreamer Ugly Plug-ins is a set of plug-ins that have good quality
@@ -49,7 +48,6 @@ collection.
 
 %prep
 %setup -n %_name-ugly-%version
-%patch -p1
 
 %build
 %autoreconf
@@ -77,6 +75,9 @@ collection.
 %_gtk_docdir/%_name-ugly-plugins-%api_ver/*
 
 %changelog
+* Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1.13.91-alt1
+- 1.13.91
+
 * Fri Jan 12 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.4-alt2
 - rebuilt against libcdio.so.18
 

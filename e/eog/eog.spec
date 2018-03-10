@@ -1,15 +1,16 @@
 %define _libexecdir %_prefix/libexec
 %define oldname eog2
-%define ver_major 3.26
+%define ver_major 3.28
 %define xdg_name org.gnome.eog
 %define api_ver 3.0
 %def_enable color_management
 %def_enable introspection
+%def_enable gtk_doc
 # python-behave required
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Eye Of Gnome
@@ -18,10 +19,12 @@ Group: Graphics
 Url: https://wiki.gnome.org/Apps/EyeOfGnome
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Patch: %name-3.7.91-alt-gir.patch
 
 Provides: %oldname = %version-%release
 Obsoletes: %oldname < 2.14.2-alt1
+
+%set_typelibdir %_libdir/%name/girepository-1.0
+%set_girdir %_datadir/%name/gir-1.0
 
 # use python3
 AutoReqProv: nopython
@@ -29,21 +32,19 @@ AutoReqProv: nopython
 %add_python3_path %_libdir/%name/plugins
 # required dogtail and behave use python2
 #%{?_enable_installed_tests:%_libexecdir/%name/installed-tests}
-BuildPreReq: rpm-build-python3 python3-devel
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses
-
-# From configure.ac
-BuildRequires: gnome-common yelp-tools libappstream-glib-devel
-BuildRequires: gtk-doc
+BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel yelp-tools libappstream-glib-devel
 BuildPreReq: libgtk+3-devel >= 3.22
 BuildPreReq: libgio-devel >= 2.42.0
-BuildPreReq: libgnome-desktop3-devel >= 2.91.91
+BuildPreReq: libgnome-desktop3-devel >= 3.0
 BuildPreReq: gnome-icon-theme >= 2.19.1
 BuildPreReq: shared-mime-info >= 0.60
 BuildPreReq: libexempi-devel >= 1.99.5
 BuildPreReq: libexif-devel >= 0.6.14
 %{?_enable_color_management:BuildPreReq: liblcms2-devel}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 BuildPreReq: libjpeg-devel librsvg-devel
 BuildPreReq: libpeas-devel >= 0.7.4
 BuildRequires: libXt-devel libxml2-devel perl-XML-Parser zlib-devel gsettings-desktop-schemas-devel
@@ -102,30 +103,31 @@ the functionality of the EOG GUI.
 
 %prep
 %setup
-%patch -p1 -b .gir
 
 %build
-%autoreconf
-%configure \
-    --with-libexif \
-    %{?_enable_color_management:--with-cms} \
-    --with-xmp \
-    --with-libjpeg \
-    --disable-schemas-compile \
-    %{?_enable_installed_tests:--enable-installed-tests}
+%meson \
+    -Dlibexif=true \
+    -Dxmp=true \
+    -Dlibjpeg=true \
+    -Dlibrsvg=true \
+    -Denable-schemas-compile=false \
+    %{?_enable_introspection:-Dintrospection=true} \
+    %{?_enable_color_management:-Dcms=true} \
+    %{?_enable_installed_tests:-Dinstalled-tests=true} \
+    %{?_enable_gtk_doc:-Dgtk_doc=true}
 
-
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %name
 
 %files -f %name.lang
 %_bindir/*
 %_desktopdir/*
-%_datadir/%name/
+%dir %_datadir/%name
+%_datadir/%name/icons/
 %dir %_libdir/%name
 %_libdir/%name/lib%name.so
 %dir %_libdir/%name/plugins/
@@ -135,7 +137,7 @@ the functionality of the EOG GUI.
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %config %_datadir/glib-2.0/schemas/%xdg_name.enums.xml
 %_datadir/GConf/gsettings/eog.convert
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %doc AUTHORS HACKING MAINTAINERS NEWS
 %doc README THANKS TODO
 
@@ -144,15 +146,17 @@ the functionality of the EOG GUI.
 %_includedir/%name-%api_ver/%name/*.h
 %_pkgconfigdir/%name.pc
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_enabled introspection
 %files gir
-%_libdir/girepository-1.0/*.typelib
+%_libdir/%name/girepository-1.0/Eog-%api_ver.typelib
 
 %files gir-devel
-%_datadir/gir-1.0/*.gir
+%_datadir/%name/gir-1.0/Eog-%api_ver.gir
 %endif
 
 %if_enabled installed_tests
@@ -161,10 +165,11 @@ the functionality of the EOG GUI.
 %_datadir/installed-tests/%name/
 %endif
 
-%exclude %_libdir/%name/lib%name.la
-%exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Thu Nov 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 
@@ -429,7 +434,7 @@ the functionality of the EOG GUI.
 
 * Tue Jul 25 2006 Alexey Rusakov <ktirf@altlinux.ru> 2.15.90-alt1
 - new version 2.15.90.
-- --disable-scrollkeeper actually works, no more need to %%exclude files.
+- -Denable-scrollkeeper=false actually works, no more need to %%exclude files.
 
 * Mon Jun 19 2006 Alexey Rusakov <ktirf@altlinux.ru> 2.14.2-alt1
 - new version 2.14.2

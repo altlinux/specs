@@ -1,11 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 0.26
+%define ver_major 0.28
 %def_disable introspection
 %def_enable gtk_doc
+%def_enable man
 
 Name: dconf
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A simple configuration system
@@ -24,9 +25,12 @@ Provides: %_rpmlibdir/update-dconf-database.filetrigger
 
 Requires: lib%name = %version-%release dbus
 
+BuildRequires(pre): meson
 BuildRequires: libgio-devel >= 2.44.0 vala-tools >= 0.18.0
-BuildRequires: libdbus-devel gtk-doc intltool xsltproc
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 1.33.3}
+BuildRequires: libdbus-devel
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_man:BuildRequires: xsltproc}
 
 %description
 dconf is a low-level configuration system. Its main purpose is to
@@ -101,17 +105,15 @@ This package provides Vala language bindings  for the dconf library
 
 %prep
 %setup
-[ ! -d m4 ] && mkdir m4
 
 %build
-%{?_enable_snapshot:./autogen.sh}
-%configure \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
-%make_build
+%meson \
+	%{?_enable_gtk_doc:-Denable-gtk-doc=true} \
+	-Denable-man=true
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 mkdir -p %buildroot{%_datadir,%_sysconfdir}/%name/{profile,db}
 
 # rpm posttrans filetrigger
@@ -131,9 +133,11 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %dir %_datadir/%name
 %dir %_datadir/%name/profile
 %dir %_datadir/%name/db
+%if_enabled man
 %_man1dir/%name-service.1.*
 %_man1dir/%name.1.*
 %_man7dir/%name.7.*
+%endif
 %doc README NEWS
 
 %files -n lib%name
@@ -144,8 +148,10 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %_libdir/*.so
 %_pkgconfigdir/*
 
+%if_enabled gtk_doc
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_enabled introspection
 %files -n lib%name-gir
@@ -162,6 +168,9 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %exclude %_datadir/bash-completion/completions/dconf
 
 %changelog
+* Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 0.28.0-alt1
+- 0.28.0
+
 * Tue Oct 03 2017 Yuri N. Sedunov <aris@altlinux.org> 0.26.1-alt1
 - 0.26.1
 

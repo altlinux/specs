@@ -1,17 +1,17 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.26
+%define ver_major 3.28
 %define api_ver 3.0
 %define xdg_name org.gnome.Nautilus
 
-%def_enable exempi
 %def_disable packagekit
 %def_enable tracker
 %def_enable introspection
 %def_enable selinux
+%def_enable docs
 
 Name: nautilus
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -25,18 +25,15 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source: %name-%version.tar
 %endif
 
-%define pkgconfig_ver 0.8
 %define icon_theme_ver 2.10.0
 %define desktop_file_utils_ver 0.8
 
-# From configure.ac
 %define glib_ver 2.49.1
 %define desktop_ver 3.3.3
 %define pango_ver 1.28.3
 %define gtk_ver 3.22.6
 %define libxml2_ver 2.4.7
-%define exif_ver 0.5.12
-%define exempi_ver 2.1.0
+%define gexiv2_ver 0.10
 %define gir_ver 0.10.2
 %define notify_ver 0.7.0
 %define tracker_ver 0.18
@@ -47,11 +44,10 @@ Requires: lib%name = %version-%release
 Requires: gnome-icon-theme >= %icon_theme_ver
 Requires: shared-mime-info
 Requires: common-licenses
-Requires: gvfs >= 1.26.1.1
+Requires: gvfs >= 1.34
 
-BuildRequires: meson pkgconfig >= %pkgconfig_ver
+BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
 BuildRequires: desktop-file-utils >= %desktop_file_utils_ver
-BuildRequires: rpm-build-gnome rpm-build-licenses
 # for %%check
 BuildRequires: xvfb-run dbus-tools-gui /proc
 
@@ -64,13 +60,11 @@ BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgail3-devel
 BuildRequires: libxml2-devel >= %libxml2_ver
-BuildRequires: intltool >= 0.40.1
-BuildRequires: libexif-devel >= %exif_ver
+BuildRequires: libgexiv2-devel >= %gexiv2_ver
 BuildRequires: libnotify-devel >= %notify_ver
 BuildRequires: libgnome-autoar-devel >= %autoar_ver
 BuildRequires: libX11-devel xorg-xproto-devel
-BuildRequires: docbook-utils gtk-doc
-%{?_enable_exempi:BuildRequires: libexempi-devel >= %exempi_ver}
+%{?_enable_docs:BuildRequires: docbook-utils gtk-doc}
 %{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-2.0)}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
@@ -135,17 +129,14 @@ rm -f data/*.desktop
 
 %build
 %meson \
-    -Denable-update-mimedb=false \
-    -Denable-schemas-compile=false \
-    -Denable-gtk-doc=true \
-    -Denable-nst-extension=true \
+    %{?_enable_docs:-Ddocs=true} \
     %{?_enable_tracker:-Denable-tracker=true} \
-    %{?_disable_packagekit:-Denable-packagekit=false}
+    %{?_disable_packagekit:-Dpackagekit=false} \
+    -Dextension=true
 %meson_build
 
 %install
 %meson_install
-mkdir -p %buildroot%_libdir/%name-%api_ver/components
 bzip2 -9fk NEWS
 
 # The license
@@ -160,17 +151,15 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 %files -f %name.lang
 %_bindir/*
 %dir %_libdir/%name
-%dir %_libdir/%name-%api_ver
-%dir %_libdir/%name-%api_ver/components
 %_desktopdir/*.desktop
-%_sysconfdir/xdg/autostart/nautilus-autostart.desktop
+#%_sysconfdir/xdg/autostart/nautilus-autostart.desktop
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/services/org.freedesktop.FileManager1.service
 %_datadir/gnome-shell/search-providers/nautilus-search-provider.ini
 %_iconsdir/hicolor/*x*/apps/%xdg_name.png
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %config %_datadir/glib-2.0/schemas/org.gnome.nautilus.gschema.xml
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 # docs
 %doc --no-dereference COPYING
 %doc NEWS.bz2 README*
@@ -180,6 +169,7 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 %_libdir/libnautilus-extension.so.*
 %dir %_libdir/%name/extensions-%api_ver
 %_libdir/%name/extensions-%api_ver/libnautilus-sendto.so
+%_libdir/%name/extensions-%api_ver/libnautilus-image-properties.so
 
 %files -n lib%name-devel
 %_includedir/*
@@ -199,6 +189,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Mon Nov 13 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 

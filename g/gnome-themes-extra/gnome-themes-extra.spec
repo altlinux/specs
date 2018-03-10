@@ -1,10 +1,10 @@
-%define ver_major 3.22
+%define ver_major 3.27
 
-Name: gnome-themes-standard
-Version: %ver_major.3
+Name: gnome-themes-extra
+Version: %ver_major.92
 Release: alt1
 
-Summary: A set of standard themes for GNOME desktop
+Summary: GNOME Extra Themes
 License: LGPLv2.1+
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
@@ -18,6 +18,9 @@ Provides: icon-themes-accessibility = %version-%release
 Obsoletes: gnome-themes-accessibility
 Provides: gnome-themes-accessibility = %version-%release
 
+Obsoletes: gnome-themes-standard < 3.27.90
+Provides: gnome-themes-standard = %version-%release
+
 Requires: %name-data = %version-%release
 
 %define theme_prefix gnome-theme
@@ -25,7 +28,7 @@ BuildPreReq: intltool >= 0.35.0
 BuildRequires: libgtk+3-devel >= 3.13.4 libgtk+2-devel librsvg-devel
 
 %description
-This package provides a set of standard GTK+-(2/3) themes, engines,
+This package provides a set of extra GTK+-(2/3) themes, engines,
 metacity themes, backgrounds for GNOME 3 desktop.
 
 %package data
@@ -36,6 +39,9 @@ Requires: gnome-icon-theme >= 3.0.0
 # for gtk2 themes
 Requires: libgtk-engine-hc
 Requires: gtk2-theme-clearlooks
+
+Obsoletes: gnome-themes-standard-data < 3.27.90
+Provides: gnome-themes-standard-data = %version-%release
 
 %description data
 This package provides an Arch-independent part of %name.
@@ -84,13 +90,16 @@ done
 %_datadir/themes/HighContrast/gtk-3.0/gtk.css
 %_datadir/themes/HighContrast/index.theme
 %_iconsdir/HighContrast/
-%doc NEWS README
+%doc NEWS README*
 
 %files -n libgtk2-engine-adwaita
 %_libdir/gtk-2.0/2.10.0/engines/libadwaita.so
 %exclude %_libdir/gtk-2.0/2.10.0/engines/libadwaita.la
 
 %changelog
+* Fri Mar 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.27.92-alt1
+- 3.27.92 (standard->extra)
+
 * Wed Mar 22 2017 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
 - 3.22.3
 

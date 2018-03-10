@@ -2,16 +2,16 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 3.26
+%define ver_major 3.28
 %define api_ver 2.0
 
 %def_disable debug
-%def_disable static
 %def_with cheese
 %def_with bluetooth
+%def_enable doc
 
 Name: gnome-control-center
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Control Center
@@ -25,18 +25,16 @@ Source: %name-%version.tar
 %else
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %endif
-Patch: %name-3.8.3-alt-lfs.patch
 
-# From configure.ac
 %define gtk_ver 3.22.0
 %define glib_ver 2.44.0
-%define desktop_ver 3.23.90
+%define desktop_ver 3.27.90
 %define fontconfig_ver 1.0.0
-%define gsds_ver 3.24.0
+%define gsds_ver 3.28.0
 %define nm_ver 1.2
 %define goa_ver 3.21.5
 %define acc_ver 0.6.33
-%define sett_daemon_ver 3.25.92
+%define sett_daemon_ver 3.28.0
 %define cheese_ver 3.9.5
 %define bt_ver 3.18.2
 %define systemd_ver 40
@@ -60,9 +58,8 @@ Requires: gnome-online-accounts >= %goa_ver
 %{?_with_cheese:Requires: cheese >= %cheese_ver}
 BuildPreReq: rpm-build-gnome >= 0.9
 
-# From configure.ac
-BuildPreReq: intltool gnome-common desktop-file-utils
-BuildPreReq: gtk-doc xsltproc libappstream-glib-devel
+BuildRequires(pre): meson
+BuildPreReq: desktop-file-utils gtk-doc xsltproc libappstream-glib-devel
 BuildPreReq: fontconfig-devel >= %fontconfig_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: glib2-devel >= %glib_ver
@@ -125,22 +122,20 @@ you'll want to install this package.
 
 %prep
 %setup
-%patch -p1 -b .lfs
 
 %build
 %if_enabled snapshot
 NOCONFIGURE=1 ./autogen.sh
 %else
-%autoreconf
 %endif
-%configure \
-    %{subst_enable static} \
-    %{subst_with cheese}
+%meson \
+    %{?_with_cheese:-Dcheese=true} \
+    %{?_enable_doc:-Ddocumentation=true}
 
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang --with-gnome --output=%name.lang %name-%api_ver %name-%api_ver-timezones %_name
 
 %files
@@ -161,6 +156,7 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/pixmaps/faces/
 %_iconsdir/hicolor/*/*/*
 %_datadir/sounds/gnome/default/alerts/*.ogg
+%_datadir/glib-2.0/schemas/org.gnome.ControlCenter.gschema.xml
 %_datadir/polkit-1/actions/org.gnome.controlcenter.datetime.policy
 %_datadir/polkit-1/actions/org.gnome.controlcenter.user-accounts.policy
 %_datadir/polkit-1/rules.d/gnome-control-center.rules
@@ -168,17 +164,23 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/dbus-1/services/org.gnome.ControlCenter.SearchProvider.service
 %_datadir/dbus-1/services/org.gnome.ControlCenter.service
 %_datadir/gnome-shell/search-providers/gnome-control-center-search-provider.ini
-%_man1dir/%name.1.*
+%{?_enable_doc:%_man1dir/%name.1.*}
 %_datadir/bash-completion/completions/gnome-control-center
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %doc AUTHORS NEWS README
 
 %files devel
 %_datadir/pkgconfig/gnome-keybindings.pc
 %_datadir/gettext/its/gnome-keybindings.its
 %_datadir/gettext/its/gnome-keybindings.loc
+%_datadir/gettext/its/sounds.its
+%_datadir/gettext/its/sounds.loc
+
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Wed Nov 01 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 

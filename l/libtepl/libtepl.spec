@@ -1,12 +1,13 @@
 %define _name tepl
-%define ver_major 3.0
-%define api_ver 3
+%define ver_major 3.99
+%define api_ver 4
+
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GTK+ Text Editor Framework
@@ -19,13 +20,14 @@ Source1: pkg.m4
 
 %define glib_ver 2.52
 %define gtk_doc_ver 1.0
-%define gtksource_ver 3.22
+%define gtk_ver 3.22
+%define gtksource_ver 3.99.7
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses gnome-common
-BuildPreReq: glib2-devel >= %glib_ver libgtksourceview3-devel >= %gtksource_ver
+BuildPreReq: rpm-build-gnome rpm-build-licenses
+BuildPreReq: glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libgtksourceview4-devel >= %gtksource_ver
 BuildPreReq: libxml2-devel libuchardet-devel gtk-doc >= %gtk_doc_ver
 BuildRequires: vala-tools
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.6.7 libgtk+3-gir-devel libgtksourceview3-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.6.7 libgtk+3-gir-devel libgtksourceview4-gir-devel}
 
 %description
 Tepl is a library that eases the development of GtkSourceView-based
@@ -169,7 +171,7 @@ rm -rf missing aclocal.m4 /m4/libtool.m4 m4/lt*.m4
 #%_vapidir/*
 
 %files devel-doc
-%_datadir/gtk-doc/html/%_name-3.0/
+%_datadir/gtk-doc/html/%_name-%{api_ver}.0/
 
 %if_enabled static
 %files devel-static
@@ -212,6 +214,9 @@ rm -rf missing aclocal.m4 /m4/libtool.m4 m4/lt*.m4
 
 
 %changelog
+* Wed Feb 28 2018 Yuri N. Sedunov <aris@altlinux.org> 3.99.1-alt1
+- 3.99.1
+
 * Sat Sep 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
 - 3.0.0
 

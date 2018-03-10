@@ -3,14 +3,14 @@
 %define _name template-glib
 # probably meson bug
 %define libname libtemplate_glib
-%define ver_major 3.26
+%define ver_major 3.28
 %define api_ver 1.0
 
 %def_enable introspection
 %def_enable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A templating library for GLib
@@ -111,6 +111,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Wed Oct 04 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 
