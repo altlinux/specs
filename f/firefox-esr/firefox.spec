@@ -13,8 +13,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        52.6.0
-Release:        alt2
+Version:        52.7.0
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -328,11 +328,26 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Sat Mar 10 2018 Andrey Cherepanov <cas@altlinux.org> 52.7.0-alt1
+- New ESR version (52.7.0).
+
 * Mon Mar 05 2018 Andrey Cherepanov <cas@altlinux.org> 52.6.0-alt2
 - Enable ALSA support (ALT #34608)
 
 * Mon Jan 22 2018 Andrey Cherepanov <cas@altlinux.org> 52.6.0-alt1
 - New ESR version (52.6.0)
+- Fixes:
+  + CVE-2018-5095 Integer overflow in Skia library during edge builder allocation
+  + CVE-2018-5096 Use-after-free while editing form elements
+  + CVE-2018-5097 Use-after-free when source document is manipulated during XSLT
+  + CVE-2018-5098 Use-after-free while manipulating form input elements
+  + CVE-2018-5099 Use-after-free with widget listener
+  + CVE-2018-5102 Use-after-free in HTML media elements
+  + CVE-2018-5103 Use-after-free during mouse event handling
+  + CVE-2018-5104 Use-after-free during font face manipulation
+  + CVE-2018-5117 URL spoofing with right-to-left text aligned left-to-right
+  + CVE-2018-5089 Memory safety bugs fixed in Firefox 58 and Firefox ESR 52.6
+- Continue fix of Speculative execution side-channel attack ("Spectre")
 
 * Wed Jan 10 2018 Andrey Cherepanov <cas@altlinux.org> 52.5.3-alt1
 - New ESR version (52.5.3)
