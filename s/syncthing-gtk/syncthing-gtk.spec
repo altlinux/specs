@@ -1,10 +1,11 @@
+Epoch: 1
 #%%def_enable mate-file-manager-syncthing-gtk
 #%%def_enable nemo-syncthing-gtk
 #%%def_enable nautilus-syncthing-gtk
 
 Name: syncthing-gtk
-Version: 0.14.36
-Release: alt1
+Version: 0.9.3
+Release: alt1.1
 Summary: Syncthing Gtk-based graphical interface
 Summary(ru_RU.UTF-8): Основанный на GTK графический интерфейс для Syncthing
 License: GPLv2+
@@ -199,6 +200,9 @@ done
 %endif
 
 %changelog
+* Sat Mar 10 2018 Cronbuild Service <cronbuild@altlinux.org> 1:0.9.3-alt1.1
+- new version 0.9.3
+
 * Mon Aug 14 2017 Cronbuild Service <cronbuild@altlinux.org> 0.14.36-alt1
 - new version 0.14.36
 
