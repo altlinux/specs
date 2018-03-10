@@ -2,7 +2,7 @@
 
 Name:    python-module-%modulename
 Version: 0.2.3
-Release: alt1
+Release: alt2
 
 Summary: Networking library for SIP SIMPLE Client SDK
 License: MIT
@@ -21,6 +21,7 @@ Source:  %modulename-%version.tar
 Patch1:  alt-remove-obsoleted-hubs.patch
 
 %add_python_req_skip stackless
+%py_requires greenlet
 
 %description
 Eventlib is a networking library written in Python. It achieves high
@@ -46,5 +47,8 @@ rm -f eventlib/hubs/{libev,libevent}.py
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sat Mar 10 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.3-alt2
+- Add requirements of greenlet python module.
+
 * Fri Mar 02 2018 Andrey Cherepanov <cas@altlinux.org> 0.2.3-alt1
 - Initial build for Sisyphus
