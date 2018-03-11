@@ -9,8 +9,8 @@
 #
 
 Name: xscreensaver
-Version: 5.36
-Release: alt1
+Version: 5.38
+Release: alt2
 
 Summary: A screen saver and locker for the X window system
 License: BSD
@@ -307,6 +307,7 @@ MkModuleFilelists %_sourcedir/xscreensaver-hacks-gl gl
 
 %files modules -f xscreensaver-modules-std
 %dir %xss_hack_dir
+%xss_hack_dir/webcollage-helper
 
 %files modules-gl -f xscreensaver-modules-gl
 %dir %xss_hack_dir
@@ -316,6 +317,13 @@ MkModuleFilelists %_sourcedir/xscreensaver-hacks-gl gl
 %files -n mate-screensaver-modules-xscreensaver-gl -f xscreensaver-mate-gl
 
 %changelog
+* Sun Mar 11 2018 Michael Shigorin <mike@altlinux.org> 5.38-alt2
+- updated hack lists
+- added missing webcollage-helper
+
+* Sun Mar 11 2018 Michael Shigorin <mike@altlinux.org> 5.38-alt1
+- new version 5.38
+
 * Sat May  6 2017 Terechkov Evgenii <evg@altlinux.org> 5.36-alt1
 - 5.36 (ALT#33444)
 
