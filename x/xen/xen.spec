@@ -12,7 +12,7 @@
 Summary: Xen is a virtual machine monitor (hypervisor)
 Name: xen
 Version: 4.10.0
-Release: alt4%ubt
+Release: alt5%ubt
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -57,6 +57,7 @@ Patch21: %name.64.bit.hyp.on.ix86.patch
 # ALT
 Patch50: %name-4.0.0-libfsimage-soname-alt.patch
 Patch55: qemu-traditional-lost-parenthesis.patch
+Patch56: qemu-xen-non-static-memfd_create.patch
 
 
 ExclusiveArch: %ix86 %x86_64 armh aarch64
@@ -351,6 +352,10 @@ ln -s ../mini-os-%version extras/mini-os
 
 pushd tools/qemu-xen-traditional
 %patch55 -p1
+popd
+
+pushd tools/qemu-xen
+%patch56 -p1
 popd
 
 sed -i '/^[[:blank:]]*\. \/etc\/rc\.status[[:blank:]]*$/s/\. /: # &/' tools/hotplug/Linux/xendomains.in
@@ -788,6 +793,74 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
 
 
 %changelog
+* Fri Mar 09 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt5%ubt
+- upstream updates:
+  + xen/arm: Flush TLBs before turning on the MMU to avoid stale
+    entries (thx Julien Grall).
+  + xen/arm: vgic: Make sure the number of SPIs is a multiple of 32 (thx Julien Grall).
+  + x86/hvm: Disallow the creation of HVM domains without Local
+    APIC emulation (thx Andrew Cooper).
+  + gnttab: don't blindly free status pages upon version change (thx Jan Beulich).
+  + gnttab/ARM: don't corrupt shared GFN array (thx Jan Beulich).
+  + memory: don't implicitly unpin for decrease-reservation (thx Jan Beulich).
+  + xen/arm: cpuerrata: Actually check errata on non-boot CPUs (thx Julien Grall).
+  + xen/arm: vsmc: Don't implement function IDs that don't exist (thx Julien Grall).
+  + xen/arm: vpsci: Removing dummy MIGRATE and MIGRATE_INFO_UP_CPU (thx Julien Grall).
+  + x86/idle: Clear SPEC_CTRL while idle (thx Andrew Cooper).
+  + x86/cpuid: Offer Indirect Branch Controls to guests (thx Andrew Cooper).
+  + x86/ctxt: Issue a speculation barrier between vcpu contexts (thx Andrew Cooper).
+  + x86/boot: Calculate the most appropriate BTI mitigation to use (thx Andrew Cooper).
+  + x86/entry: Avoid using alternatives in NMI/#MC paths (thx Andrew Cooper).
+  + x86/entry: Organise the clobbering of the RSB/RAS on entry to Xen (thx Andrew Cooper).
+  + x86/entry: Organise the use of MSR_SPEC_CTRL at each entry/exit
+    point (thx Andrew Cooper).
+  + x86/hvm: Permit guests direct access to MSR_{SPEC_CTRL,PRED_CMD} (thx Andrew Cooper).
+  + x86/migrate: Move MSR_SPEC_CTRL on migrate (thx Andrew Cooper).
+  + x86/msr: Emulation of MSR_{SPEC_CTRL,PRED_CMD} for guests (thx Andrew Cooper).
+  + x86/cpuid: Handling of IBRS/IBPB, STIBP and IBRS for guests (thx Andrew Cooper).
+  + x86: fix GET_STACK_END (thx Wei Liu).
+  + x86/acpi: process softirqs while printing CPU ACPI data (thx Roger Pau Monne).
+  + xen/x86: report domain id on cpuid (thx Roger Pau Monne).
+  + x86/svm: Offer CPUID Faulting to AMD HVM guests as well (thx Andrew Cooper).
+  + x86/cmdline: Introduce a command line option to disable
+    IBRS/IBPB, STIBP and IBPB (thx Andrew Cooper).
+  + x86/feature: Definitions for Indirect Branch Controls (thx Andrew Cooper).
+  + x86: Introduce alternative indirect thunks (thx Andrew Cooper).
+  + x86/amd: Try to set lfence as being Dispatch Serialising (thx Andrew Cooper).
+  + x86/boot: Report details of speculative mitigations (thx Andrew Cooper).
+  + x86: Support indirect thunks from assembly code (thx Andrew Cooper).
+  + x86: Support compiling with indirect branch thunks (thx Andrew Cooper).
+  + common/wait: Clarifications to wait infrastructure (thx Andrew Cooper).
+  + x86/entry: Erase guest GPR state on entry to Xen (thx Andrew Cooper).
+  + x86/hvm: Use SAVE_ALL to construct the cpu_user_regs frame
+    after VMExit (thx Andrew Cooper).
+  + x86/entry: Rearrange RESTORE_ALL to restore register in stack
+    order (thx Andrew Cooper).
+  + x86: Introduce a common cpuid_policy_updated() (thx Andrew Cooper).
+  + x86/hvm: Rename update_guest_vendor() callback to
+    cpuid_policy_changed() (thx Andrew Cooper).
+  + x86/alt: Introduce ALTERNATIVE{,_2} macros (thx Andrew Cooper).
+  + x86/alt: Break out alternative-asm into a separate header file (thx Andrew Cooper).
+  + xen/arm32: entry: Document the purpose of r11 in the traps
+    handler (thx Julien Grall).
+  + xen/arm32: Invalidate icache on guest exist for Cortex-A15 (thx Julien Grall).
+  + xen/arm32: Invalidate BTB on guest exit for Cortex A17 and 12 (thx Julien Grall).
+  + xen/arm32: Add skeleton to harden branch predictor aliasing
+    attacks (thx Julien Grall).
+  + xen/arm32: entry: Add missing trap_reset entry (thx Julien Grall).
+  + xen/arm32: Add missing MIDR values for Cortex-A17 and A12 (thx Julien Grall).
+  + xen/arm32: entry: Consolidate DEFINE_TRAP_ENTRY_* macros (thx Julien Grall).
+  + SUPPORT.md: Fix version and Initial-Release (thx Ian Jackson).
+  + xen/arm: cpuerrata: Remove percpu.h include (thx Julien Grall).
+  + xen/arm64: Implement branch predictor hardening for affected
+    Cortex-A CPUs (thx Julien Grall).
+  + xen/arm64: Add skeleton to harden the branch predictor aliasing
+    attacks (thx Julien Grall).
+  + xen/arm: cpuerrata: Add MIDR_ALL_VERSIONS (thx Julien Grall).
+  + xen/arm64: Add missing MIDR values for Cortex-A72, A73 and A75 (thx Julien Grall).
+  + xen/arm: Introduce enable callback to enable a capabilities on
+    each online CPU (thx Julien Grall).
+
 * Tue Jan 23 2018 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.10.0-alt4%ubt
 - upstream updates (Xen hypervisor):
   + x86: allow Meltdown band-aid to be disabled (thx Jan Beulich).
@@ -801,7 +874,7 @@ mv %buildroot%_unitdir/%name-qemu-dom0-disk-backend.service %buildroot%_unitdir/
   + x86/IRQ: conditionally preserve access permission on map
     error paths (thx Jan Beulich).
   + xen/arm: bootfdt: Use proper default for #address-cells and
-    #size-cells (thx Julien Grall).
+    \#size-cells (thx Julien Grall).
   + xen/arm: gic-v3: Bail out if gicv3_cpu_init fail (thx Julien Grall).
 - upstream updates (Qemu-xen device-model):
   + Update version for 2.10.2 release (thx Michael Roth).
