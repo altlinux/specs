@@ -83,7 +83,7 @@ BuildRequires: perl(Tk/ItemStyle.pm) perl(Tk/NoteBook.pm) perl(Tk/PNG.pm) perl(T
 
 Name:		texlive-texmf
 Version:	%relYear
-Release:	alt5_2
+Release:	alt6_2
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -252,6 +252,7 @@ Provides: texlive-latex-recommended = %{tl_version}
 Conflicts: texlive-latex-recommended < 2009
 Obsoletes: texlive-latex-recommended < 2009
 Obsoletes: texlive-common < 0.1.0.1
+Provides: %{texmfdistdir}
 
 
 %description	-n texlive-collection-basic
@@ -3117,6 +3118,9 @@ EOF
 
 
 %changelog
+* Sun Mar 11 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt6_2
+- added Provides: <$TEXMFDIST path>
+
 * Sun Mar 11 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt5_2
 - final release
 
