@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Hash-Merge
 Name: perl-%dist
-Version: 0.299
+Version: 0.300
 Release: alt1
 
 Summary: Merges arbitrarily deep hashes into a single hash
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/H/HE/HERMES/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RE/REHSACK/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ hashes, or recursive references, are not handled well by this method.>
 %perl_vendor_privlib/Hash*
 
 %changelog
+* Sun Mar 11 2018 Igor Vlasenko <viy@altlinux.ru> 0.300-alt1
+- automated CPAN update
+
 * Thu Nov 23 2017 Igor Vlasenko <viy@altlinux.ru> 0.299-alt1
 - automated CPAN update
 
