@@ -2,6 +2,10 @@
 BuildRequires: gcc-c++ gobject-introspection-devel imake libXt-devel libpotrace-devel perl(BibTeX/Parser.pm) perl(BibTeX/Parser/Author.pm) perl(Date/Format.pm) perl(Date/Parse.pm) perl(Digest/SHA1.pm) perl(Encode.pm) perl(ExtUtils/MakeMaker.pm) perl(Fatal.pm) perl(File/Copy/Recursive.pm) perl(File/Which.pm) perl(HTML/FormatText.pm) perl(HTML/TreeBuilder.pm) perl(IPC/System/Simple.pm) perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl(LaTeX/ToUnicode.pm) perl(Locale/Maketext/Simple.pm) perl(Math/Trig.pm) perl(Output.pm) perl(Pod/Man.pm) perl(Pod/Usage.pm) perl(Spreadsheet/ParseExcel.pm) perl(Statistics/Descriptive.pm) perl(Statistics/Distributions.pm) perl(Term/ANSIColor.pm) perl(Test.pm) perl(Tk.pm) perl(Tk/Dialog.pm) perl(Tk/NoteBook.pm) perl(URI/Escape.pm) perl(WWW/Mechanize.pm) perl(autodie.pm) perl-devel
 BuildRequires: texinfo xorg-cf-files zlib-devel
 # END SourceDeps(oneline)
+%def_without backport_p8
+%if_with backport_p8
+BuildRequires: libpng-devel
+%endif
 # findreq artefacts
 # let's drop the dep for now
 %filter_from_requires /^gambit$/d
@@ -60,7 +64,7 @@ BuildRequires: chrpath
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt1_3
+Release:	alt2_3
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -182,8 +186,8 @@ Conflicts: texlive-latex-base < 2009
 Conflicts: texlive-metapost < 2009
 Conflicts: texlive-omega < 2009
 Conflicts: texlive-xetex < 2009
+Patch33: texlive-2017-alt-texmf-first.patch
 Provides: texlive-collection-binextra = %{tl_version}
-Obsoletes: texlive-common < 0.1.0.1
 #-----------------------------------------------------------------------
 %description
 TeX Live is an easy way to get up and running with the TeX document
@@ -421,7 +425,9 @@ This package includes the static ptexenc library.
 %endif
 %patch4 -p1
 %patch6 -p1
+%if_without backport_p8
 %patch107 -p2
+%endif
 
 # setup default builtin values, added to paths.h from texmf.cnf
 perl -pi -e 's%%^(TEXMFMAIN\s+= ).*%%$1%{texmfdistdir}%%;'			  \
@@ -434,6 +440,7 @@ perl -pi -e 's%%^(TEXMFMAIN\s+= ).*%%$1%{texmfdistdir}%%;'			  \
 	 -e 's%%^(TEXMFCONFIG\s+= ).*%%$1\$HOME/.texlive%{relYear}/texmf-config%%;'\
 	 -e 's%%^(OSFONTDIR\s+= ).*%%$1%{_datadir}/fonts%%;'		  \
 	texk/kpathsea/texmf.cnf
+%patch33 -p0
 
 #-----------------------------------------------------------------------
 %build
@@ -654,6 +661,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Sun Mar 11 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt2_3
+- final release
+
 * Thu Mar 01 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt1_3
 - new version
 
