@@ -1,12 +1,13 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-podlators
+BuildRequires: perl-podlators perl(Test/NoWarnings.pm) perl(Test/Exception.pm)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:       perl-DateTime-Format-Flexible
-Version:    0.29
+Version:    0.30
 Release:    alt1
 License:    GPL+ or Artistic
 Summary:    Flexibly parse strings and turn them into DateTime objects
@@ -65,6 +66,9 @@ TEST_POD=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Mar 11 2018 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
+- automated CPAN update
+
 * Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
 - automated CPAN update
 
