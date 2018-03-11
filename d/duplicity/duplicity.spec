@@ -1,5 +1,5 @@
 Name: duplicity
-Version: 0.7.16
+Version: 0.7.17
 Release: alt1
 
 Summary: Untrusted/encrypted backup using rsync algorithm
@@ -50,6 +50,9 @@ hard links.
 %python_sitelibdir/duplicity-*.egg-info
 
 %changelog
+* Sun Mar 11 2018 Vitaly Lipatov <lav@altlinux.ru> 0.7.17-alt1
+- new version 0.7.17 (with rpmrb script)
+
 * Wed Feb 07 2018 Vitaly Lipatov <lav@altlinux.ru> 0.7.16-alt1
 - new version 0.7.16 (with rpmrb script)
 
