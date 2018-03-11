@@ -1,5 +1,5 @@
 Name: gramps
-Version: 3.4.9
+Version: 4.2.8
 Release: alt1
 
 Summary: Genealogical Research and Analysis Management Programming System
@@ -13,34 +13,29 @@ Url: http://gramps.sourceforge.net/
 
 Source: http://prdownloads.sf.net/%name/%name-%version.tar
 
-# temporarely
-Requires: python%__python_version(libglade)
-Requires: python%__python_version(bonobo)
-Requires: python%__python_version(gnomecanvas)
-Requires: python%__python_version(gconf)
-
-# Typical environment for GNOME program
-Requires(post): GConf
-Requires(post,postun): scrollkeeper
-Requires(post,postun): desktop-file-utils
-BuildPreReq: libGConf-devel
-BuildPreReq: desktop-file-utils
-
 BuildArch: noarch
+
+BuildRequires(pre): rpm-build-gir rpm-build-python3
 
 # manually removed: eric esound
 # Automatically added by buildreq on Mon Aug 07 2006
 BuildRequires: docbook-dtds esound GConf gnome-doc-utils gnome-vfs libavahi-glib perl-XML-Parser pkg-config python-devel python-module-pygnome-gconf python-module-pygobject python-module-pygtk-libglade python-modules python-modules-encodings intltool
 
 # Skipped all internal modules
-%add_python_req_skip grampslib AddMedia AutoComp BaseDoc Calendar Date Filter FrenchRepublic GedcomInfo GenericFilter GrampsCfg GraphLayout Gregorian Hebrew HtmlDoc ImgManip Julian ListModel MergeData OpenSpreadSheet Plugins QuestionDialog ReadXML RelLib Relationship Report SelectObject SelectPerson SpreadSheetDoc StyleEditor SubstKeywords TarFile WriteXML ansel_utf8 const latin_utf8 sort soundex Utils Errors DateDisplay DateHandler DateParser FontScale GrampsGconfKeys GrampsMime Sort
-%add_python_req_skip TreeTips DdTargets GrampsKeys MergePeople NameDisplay PeopleModel PluginMgr ReportOptions ReportUtils TreeTips Merge _winreg Lru PlaceUtils
-%add_python_req_skip GrampsDisplay Tool TransUtils Assistant BasicUtils Bookmarks Config DisplayModels DisplayTabs Editors Filters GrampsDb GrampsLocale GrampsWidgets LdsUtils ManagedWindow Mime Models ODSDoc PageView PluginUtils ReportBase Selectors Spell ToolTips TreeViews
+#add_python_req_skip grampslib AddMedia AutoComp BaseDoc Calendar Date Filter FrenchRepublic GedcomInfo GenericFilter GrampsCfg GraphLayout Gregorian Hebrew HtmlDoc ImgManip Julian ListModel MergeData OpenSpreadSheet Plugins QuestionDialog ReadXML RelLib Relationship Report SelectObject SelectPerson SpreadSheetDoc StyleEditor SubstKeywords TarFile WriteXML ansel_utf8 const latin_utf8 sort soundex Utils Errors DateDisplay DateHandler DateParser FontScale GrampsGconfKeys GrampsMime Sort
+#add_python_req_skip TreeTips DdTargets GrampsKeys MergePeople NameDisplay PeopleModel PluginMgr ReportOptions ReportUtils TreeTips Merge _winreg Lru PlaceUtils
+#add_python_req_skip GrampsDisplay Tool TransUtils Assistant BasicUtils Bookmarks Config DisplayModels DisplayTabs Editors Filters GrampsDb GrampsLocale GrampsWidgets LdsUtils ManagedWindow Mime Models ODSDoc PageView PluginUtils ReportBase Selectors Spell ToolTips TreeViews
+
+#Requires: typelib(GConf) typelib(GExiv2) typelib(OsmGpsMap) typelib(GLib) typelib(GObject) typelib(Gdk) typelib(GdkPixbuf) typelib(Gtk) typelib(GtkSpell) typelib(Pango) typelib(PangoCairo)
+
+AutoReq:yes,nopython
+
+%add_typelib_req_skiplist typelib(GtkosxApplication) typelib(Gtkspell)
+
+%add_python3_req_skip winreg
 
 # TODO: need build python-module-osmgpsmap
-%add_python_req_skip osmgpsmap
-
-AutoProv: yes, nopython
+%add_python3_req_skip osmgpsmap
 
 %description
 gramps (Genealogical Research and Analysis Management Programming
@@ -56,31 +51,69 @@ GRAMPS (Программная система управления генеал�
 %setup
 
 %build
-%configure --disable-schemas-install --disable-scrollkeeper --disable-mime-install
-#sed -i "s,/usr/bin/python,/usr/bin/env python," %name.sh
-%make_build
+%python3_build
+# TODO: python3_build --server
 
 %install
-%makeinstall
-install -D -m644 %buildroot%_datadir/gramps/images/gramps.png %buildroot%_liconsdir/gramps.png
-%find_lang %name --with-gnome
+%python3_install --resourcepath=%_datadir
+
+mkdir -p %buildroot%_datadir/locale
+cp -pr build/mo/* %buildroot%_datadir/locale/
+#Remove duplicate doc
+rm -f %buildroot%_datadir/%name/COPYING
+
+mkdir -p %buildroot%_desktopdir/
+cp -p build/data/gramps.desktop %buildroot%_desktopdir/
+
+mkdir -p %buildroot%_datadir/mime/packages/
+cp -p build/data/gramps.xml %buildroot%_datadir/mime/packages/
+
+mkdir -p %buildroot%_datadir/application-registry/
+cp -p data/gramps.applications %buildroot%_datadir/application-registry/
+
+mkdir -p %buildroot%_datadir/appdata/
+cp -p build/data/gramps.appdata.xml %buildroot%_datadir/appdata/
+
+mkdir -p %buildroot%_man1dir/
+cp -p build/data/man/gramps.1.gz %buildroot%_man1dir/gramps.1.gz
+
+mkdir -p %buildroot%_pixmapsdir/
+cp -p images/gramps.png %buildroot%_pixmapsdir/
+
+rm -rf %buildroot%_docdir/gramps/
+#rm -rf %buildroot%_iconsdir/
+
+mkdir -p %buildroot%_iconsdir/hicolor/48x48/apps/
+cp -p %buildroot%_datadir/%name/images/%name.png %buildroot%_iconsdir/hicolor/48x48/apps/
+
+echo -n "%_datadir" > %buildroot%python3_sitelibdir/gramps/gen/utils/resource-path
+
+#install -D -m644 %buildroot%_datadir/gramps/images/gramps.png %buildroot%_liconsdir/gramps.png
+%find_lang %name
 
 %files -f %name.lang
 %doc AUTHORS FAQ NEWS README TODO
 %_bindir/%name
+%python3_sitelibdir/gramps/
+%python3_sitelibdir/gramps-*.egg-info
 %_man1dir/*
 %_datadir/%name/
 %_desktopdir/*
 #%_datadir/gnome/help/*
 %_datadir/mime-info/*
-%_liconsdir/*
+%_iconsdir/hicolor/48x48/apps/*
+%_iconsdir/gramps.png
 %_datadir/application-registry/*
+%_datadir/appdata/*
 #%config %_sysconfdir/gconf/schemas/*
 %_datadir/mime/packages/*
 %_pixmapsdir/%name.png
-%_datadir/icons/gnome/*/mimetypes/*
+%_iconsdir/gnome/*/mimetypes/*
 
 %changelog
+* Mon Feb 26 2018 Vitaly Lipatov <lav@altlinux.ru> 4.2.8-alt1
+- new version 4.2.8 (with rpmrb script)
+
 * Sat Jan 30 2016 Vitaly Lipatov <lav@altlinux.ru> 3.4.9-alt1
 - new version 3.4.9 (with rpmrb script)
 - final maintenance release with gtk2
