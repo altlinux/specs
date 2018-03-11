@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize
+BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize intltool
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/db2html
 %define _libexecdir %_prefix/libexec
@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/db2html
 Summary:	Caja extension for customizing the context menu
 Name:		mate-file-manager-actions
 Version:	1.8.3
-Release:	alt1_3
+Release:	alt2_3
 Group:		Graphical desktop/MATE
 License:	GPLv2+ and LGPLv2+
 
@@ -19,6 +19,7 @@ Source0:	https://github.com/raveit65/%{oldname}/releases/download/v%{version}/%{
 
 # only for rhel
 Patch1:     caja-actions_0001-Revert-No-version-in-documentation-install-path.patch
+Patch10: caja-actions-1.8.3-alt-fix-doc-build-gtk-doc-1.27.patch
 
 BuildRequires:	mate-file-manager-devel
 BuildRequires:	libuuid-devel
@@ -63,8 +64,10 @@ with caja-actions.
 %patch1 -p1 -b .0001
 NOCONFIGURE=1 ./autogen.sh
 %endif
+%patch10 -p1
 
 %build
+%autoreconf
 %configure \
     --enable-gtk-doc \
     --enable-html-manuals \
@@ -136,6 +139,10 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/cact.desktop
 
 
 %changelog
+* Sun Mar 11 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.8.3-alt2_3
+- Added BR: intltool.
+- Fixed build with gtk-doc 1.27.
+
 * Wed Sep 06 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.3-alt1_3
 - new fc release
 
