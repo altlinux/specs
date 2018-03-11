@@ -1,6 +1,6 @@
 Name: glslang
 Version: 6.2.2596
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: OpenGL and OpenGL ES shader front end and validator
 Group: Development/C++
@@ -48,6 +48,7 @@ pushd %_target_platform
 
 cmake .. \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
+	-DCMAKE_INSTALL_LIBDIR:PATH=%_libdir \
 	-DCMAKE_C_FLAGS:STRING='%optflags' \
 	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
 	-DCMAKE_BUILD_TYPE:STRING="Release"
@@ -58,9 +59,6 @@ popd
 
 %install
 %makeinstall_std -C %_target_platform
-%ifarch x86_64
-%__mv %buildroot%_prefix/lib %buildroot%_libdir
-%endif
 
 %files
 %doc README-spirv-remap.txt
@@ -73,6 +71,9 @@ popd
 %_includedir/SPIRV
 
 %changelog
+* Sun Mar 11 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.2.2596-alt2%ubt
+- fix install paths
+
 * Sat Mar 10 2018 Nazarov Denis <nenderus@altlinux.org> 6.2.2596-alt1%ubt
 - Version 6.2.2596
 
