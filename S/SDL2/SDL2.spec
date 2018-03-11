@@ -4,8 +4,8 @@
 %def_with pulse
 
 Name: SDL2
-Version: 2.0.7
-Release: alt2%ubt
+Version: 2.0.8
+Release: alt1%ubt
 
 Summary: Simple DirectMedia Layer
 License: zlib
@@ -89,6 +89,9 @@ to develop SDL applications.
 %_aclocaldir/sdl2.m4
 
 %changelog
+* Sun Mar 11 2018 Nazarov Denis <nenderus@altlinux.org> 2.0.8-alt1%ubt
+- Version 2.0.8
+
 * Sun Nov 19 2017 Nazarov Denis <nenderus@altlinux.org> 2.0.7-alt2%ubt
 - Disable static libraries
 
