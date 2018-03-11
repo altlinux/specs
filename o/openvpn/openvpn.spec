@@ -4,6 +4,7 @@
 %def_with systemd
 %def_with plugins
 %def_with devel
+%def_with syslog
 
 %def_with management
 %def_with pkcs11
@@ -14,7 +15,7 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.4.4
+Version: 2.4.5
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
@@ -133,7 +134,7 @@ for third-party plugin development.
 %setup -n %name-%version
 %patch0 -p1
 
-%patch1
+%patch1 -p1
 
 cp -- %SOURCE7 README.ALT.utf-8
 cp -- %SOURCE8 server.conf
@@ -248,11 +249,13 @@ mv -f -- doc/README.plugins  plugins/README.plugins
 mv -f -- sample/sample-plugins/README* plugins/
 %endif
 
+%if_with syslog
 # Make use of syslogd-1.4.1-alt11 /etc/syslog.d/ feature.
 mkdir -p -- %buildroot%openvpn_root/dev
 /usr/bin/mksock %buildroot%openvpn_root/dev/log
 mkdir -p -m700 -- %buildroot%_sysconfdir/syslog.d
 ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
+%endif
 
 %pre
 # Add the "openvpn" user
@@ -287,8 +290,6 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %attr(0750,root,%ovpn_group) %dir %_sysconfdir/%name/server
 %attr(0750,root,%ovpn_group) %dir %openvpn_root
                              %dir %openvpn_root/etc
-%attr(0710,root,%ovpn_group) %dir %openvpn_root/dev
-%ghost %attr(0666,root,root)      %openvpn_root/dev/log
                              %dir %openvpn_root/etc/openvpn
                              %dir %openvpn_root/etc/openvpn/ccd
 %attr(0770,root,%ovpn_group) %dir %openvpn_root/tmp
@@ -305,7 +306,12 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %_tmpfilesdir/%name.conf
 %endif
 
+%if_with syslog
+%attr(0710,root,%ovpn_group) %dir %openvpn_root/dev
+%ghost %attr(0666,root,root)      %openvpn_root/dev/log
+
 %_sysconfdir/syslog.d/%name
+%endif
 
 
 %if_with plugins
@@ -332,6 +338,10 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %changelog
+* Sun Mar 11 2018 Nikolay A. Fetisov <naf@altlinux.org> 2.4.5-alt1
+- New version
+- Updating patch for PKCS11 PIN prompt bug
+
 * Sat Nov 18 2017 Nikolay A. Fetisov <naf@altlinux.org> 2.4.4-alt1
 - New version
 - Security fixes:
