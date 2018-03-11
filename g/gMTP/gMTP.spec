@@ -1,5 +1,5 @@
 Name: gMTP
-Version: 1.3.10
+Version: 1.3.11
 Release: alt1
 
 Summary: A basic media player client
@@ -42,6 +42,9 @@ upload/download of files.
 %_datadir/glib-2.0/schemas/*
 
 %changelog
+* Sun Mar 11 2018 Dmitriy Khanzhin <jinn@altlinux.org> 1.3.11-alt1
+- 1.3.11
+
 * Fri Apr 28 2017 Dmitriy Khanzhin <jinn@altlinux.org> 1.3.10-alt1
 - 1.3.10
 
