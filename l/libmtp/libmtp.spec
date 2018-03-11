@@ -2,7 +2,7 @@
 %define sover 9
 
 Name: libmtp
-Version: 1.1.13
+Version: 1.1.14
 Release: alt1
 Packager: Dmitriy Khanzhin <jinn@altlinux.ru>
 
@@ -111,6 +111,9 @@ rm -rf %buildroot%_docdir/%name-%version/html
 %_bindir/*
 
 %changelog
+* Sun Mar 11 2018 Dmitriy Khanzhin <jinn@altlinux.org> 1.1.14-alt1
+- 1.1.14
+
 * Sun Apr 09 2017 Dmitriy Khanzhin <jinn@altlinux.org> 1.1.13-alt1
 - 1.1.13
 
