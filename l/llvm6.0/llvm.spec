@@ -1,11 +1,18 @@
 %global llvm_svnrel %nil
 %global clang_svnrel %nil
-%global rel alt0.2
+%global rel alt0.4
 %global llvm_name llvm6.0
 %global clang_name clang6.0
+%global lld_name lld
 
 %ifndef build_parallel_jobs
 %global build_parallel_jobs 7
+%endif
+
+# do not overscale this on systems with less cores
+# FIXME! Maybe this is not needed with clang/LTO=thin?
+%if %__nprocs > %build_parallel_jobs
+%define build_parallel_jobs %__nprocs
 %endif
 
 %def_disable tests
@@ -21,12 +28,14 @@ License: NCSA
 Url: http://llvm.org
 Source0: http://llvm.org/releases/%version/llvm-%version.tar
 Source1: http://llvm.org/releases/%version/clang-%version.tar
+Source2: http://llvm.org/releases/%version/lld-%version.tar
 Patch:  clang-alt-i586-fallback.patch
 Patch1: clang-alt-triple.patch
 Patch2: llvm-alt-cmake-path.patch
 Patch3: llvm-alt-fix-linking.patch
 Patch4: llvm-alt-triple.patch
 
+# ThinLTO requires /proc/cpuinfo to exists so the same does llvm
 BuildPreReq: /proc
 
 BuildRequires(pre): cmake >= 3.4.3
@@ -36,7 +45,7 @@ BuildRequires: python-modules-json zip zlib-devel
 BuildRequires: python-module-sphinx-devel binutils-devel
 BuildRequires: ninja-build
 %if_with clang
-BuildRequires: clang4.0 llvm4.0-devel
+BuildRequires: clang6.0 llvm6.0-devel lld
 # FIXME!!
 # this should be fixed in rpm macros
 %define cflags -pipe -Wall -g -O2
@@ -57,6 +66,7 @@ of programming tools as well as libraries with equivalent functionality.
 Group: Development/C
 Summary: Libraries and header files for LLVM
 Provides: llvm-devel = %EVR
+Obsoletes: llvm-devel <= 4.0.1
 Requires: %name = %version-%release
 
 %description devel
@@ -67,6 +77,7 @@ native programs that use the LLVM infrastructure.
 Summary: Static libraries for LLVM
 Group: Development/C
 Provides: llvm-devel-static = %EVR
+Obsoletes: llvm-devel-static <= 4.0.1
 Requires: %name-devel = %version-%release
 
 %description devel-static
@@ -85,6 +96,7 @@ Summary: Documentation for LLVM
 Group: Documentation
 BuildArch: noarch
 Provides: llvm-doc = %EVR
+Obsoletes: llvm-doc <= 4.0.1
 Requires: %name = %version-%release
 
 %description doc
@@ -96,7 +108,8 @@ License: NCSA
 Group: Development/C
 Requires: gcc
 Provides: clang = %EVR
-Conflicts: clang <= 3.8.0
+Conflicts: clang <= 4.0.1
+Obsoletes: clang <= 4.0.1
 
 %description -n %clang_name
 clang: noun
@@ -112,6 +125,7 @@ as libraries and designed to be loosely-coupled and extendable.
 Summary: Header files for clang
 Group: Development/C
 Provides: clang-devel = %EVR
+Obsoletes: clang-devel <= 4.0.1
 Requires: %clang_name = %version-%release
 
 %description -n %clang_name-devel
@@ -121,6 +135,7 @@ This package contains header files for the Clang compiler.
 Summary: Static libraries for clang
 Group: Development/C
 Provides: clang-devel-static = %EVR
+Obsoletes: clang-devel-static <= 4.0.1
 Requires: %clang_name = %version-%release
 
 %description -n %clang_name-devel-static
@@ -132,6 +147,7 @@ License: NCSA
 Group: Development/C
 BuildArch: noarch
 Provides: clang-analyzer = %EVR
+Obsoletes: clang-analyzer <= 4.0.1
 Requires: %clang_name = %version-%release
 
 %description -n %clang_name-analyzer
@@ -145,14 +161,46 @@ Summary: Documentation for Clang
 Group: Documentation
 BuildArch: noarch
 Provides: clang-doc = %EVR
+Obsoletes: clang-doc <= 4.0.1
 Requires: %clang_name = %version-%release
 
 %description -n %clang_name-doc
 Documentation for the Clang compiler front-end.
 
+%package -n %lld_name
+Summary: LLD - The LLVM Linker
+License: NCSA
+Group: Development/C
+Provides: lld = %EVR
+
+%description -n %lld_name
+LLD is a linker from the LLVM project. That is a drop-in replacement for system
+linkers and runs much faster than them. It also provides features that are
+useful for toolchain developers.
+
+%package -n %lld_name-devel
+Summary: Header files for LLD
+Group: Development/C
+Provides: lld-devel = %EVR
+Requires: %lld_name = %version-%release
+
+%description -n %lld_name-devel
+This package contains header files for the LLD linker.
+
+%package -n %lld_name-doc
+Summary: Documentation for LLD
+Group: Documentation
+BuildArch: noarch
+Provides: lld-doc = %EVR
+Requires: %lld_name = %version-%release
+
+%description -n %lld_name-doc
+Documentation for the LLD linker.
+
 %prep
-%setup -n llvm-%version -a1
+%setup -n llvm-%version -a1 -a2
 mv clang-%version tools/clang
+mv lld-%version tools/lld
 %patch -p1
 %patch1 -p1
 %patch2 -p1
@@ -173,7 +221,6 @@ mv clang-%version tools/clang
 	-DLLVM_ENABLE_RTTI:BOOL=ON \
 	-DLLVM_OPTIMIZED_TABLEGEN:BOOL=ON \
 	-DLLVM_BINUTILS_INCDIR="%_includedir/bfd" \
-	-DLLVM_USE_LINKER=gold \
 	%if_with clang
 	-DLLVM_ENABLE_LTO=Thin \
 	-DCMAKE_C_COMPILER=clang \
@@ -183,8 +230,10 @@ mv clang-%version tools/clang
 	-DCMAKE_RANLIB:PATH=%_bindir/llvm-ranlib \
 	-DCMAKE_AR:PATH=%_bindir/llvm-ar \
 	-DCMAKE_NM:PATH=%_bindir/llvm-nm \
+	-DLLVM_ENABLE_LLD:BOOL=ON \
 	%else
 	-DLLVM_ENABLE_LTO=On \
+	-DLLVM_USE_LINKER=gold \
 	-DCMAKE_AR:PATH=%_bindir/gcc-ar \
 	-DCMAKE_NM:PATH=%_bindir/gcc-nm \
 	-DCMAKE_RANLIB:PATH=%_bindir/gcc-ranlib \
@@ -262,6 +311,9 @@ ninja -C BUILD check || :
 %exclude %_man1dir/llvm-config.1.*
 %exclude %_man1dir/clang.1*
 %exclude %_man1dir/scan-build.1*
+%exclude %_bindir/lld*
+%exclude %_bindir/ld*.lld
+%exclude %_bindir/wasm-ld
 
 %files libs
 %_libdir/libLLVM-*.so
@@ -316,7 +368,25 @@ ninja -C BUILD check || :
 %files -n %clang_name-doc
 %doc %_docdir/clang
 
+%files -n %lld_name
+%_bindir/lld*
+%_bindir/ld*.lld
+%_bindir/wasm-ld
+
+%files -n %lld_name-devel
+%dir %_includedir/lld
+%_includedir/lld/*
+
+%files -n %lld_name-doc
+%doc %_docdir/lld
+
 %changelog
+* Sun Mar 11 2018 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.4.rel
+- Prepare for LLD/clang build bootstrap.
+
+* Sun Mar 11 2018 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.3.rel
+- Added LLD build.
+
 * Sat Mar 10 2018 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.2.rel
 - Added flag to build with clang (should reduce memory usage for LTO).
 - Reduce build jobs (workaround to reduce memory consumtion).
