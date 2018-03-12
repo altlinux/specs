@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 7.1.2
-Release: alt1
+Release: alt2
 Summary: Python API and CLI for OpenStack Nova
 
 Group: Development/Python
@@ -18,7 +18,7 @@ Requires: python-module-keystoneclient
 #Requires: python-module-keyring
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
@@ -41,7 +41,7 @@ BuildRequires: python-module-glanceclient >= 2.5.0
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-keystoneauth1 >= 2.18.0
 BuildRequires: python3-module-babel >= 2.3.4
@@ -128,6 +128,8 @@ popd
 # disabling git call for last modification date from git repo
 sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
 python setup.py build_sphinx
+# for some reason previous command no longer autogenerates manpage
+PBR_VERSION=%version %make -C doc man
 # Fix hidden-file-or-dir warnings
 rm -fr doc/build/html/.buildinfo
 
@@ -173,6 +175,9 @@ install -p -D -m 644 doc/build/man/nova.1 %buildroot%_man1dir/nova.1
 %doc doc/build/html
 
 %changelog
+* Mon Mar 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 7.1.2-alt2
+- Updated build dependencies.
+
 * Thu Jun 22 2017 Alexey Shabalin <shaba@altlinux.ru> 7.1.2-alt1
 - 7.1.2
 
