@@ -4,23 +4,22 @@
 %def_with ldap	# with LDAP support
 %def_with heavy	# with all features included
 
-%define ftpurl ftp://ftp.exim.org/pub/exim/exim4
 %define openssldir /var/lib/ssl
 
 Name: exim
-Version: 4.84
-Release: alt1.1.1.1.1
+Version: 4.90.1
+Release: alt1
 
 Summary: Exim Mail Transport Agent
 License: GPLv2+
 Group: System/Servers
 
-Packager: Anton Gorlov <stalker@altlinux.ru>
-
 URL: http://www.exim.org/
-Source0: %ftpurl/exim-%version.tar.bz2
 
-Source7: %ftpurl/config.samples.tar.bz2
+# ftp://ftp.exim.org/pub/exim/exim4/exim-4.90.1.tar.bz2
+Source0: %name-%version.tar
+# ftp://ftp.exim.org/pub/exim/exim4/old/config.samples.tar.bz2
+Source7: config.samples.tar.bz2
 
 Source9: exim.init
 Source10: exim.logrotate
@@ -46,11 +45,8 @@ Source36: README.ALT
 
 Source38: eximon.png
 Source43: smtpauthpwd
+Source44: exim.service
 
-Patch1: exim-4.84-buildoptions.patch
-Patch3: exim-4.34-texinfo.patch
-Patch4: exim-4.76-pcre.patch
-Patch5: CVE-2012-5671.patch
 
 # Automatically added by buildreq on Tue Apr 26 2011
 # ...and edited:
@@ -79,9 +75,11 @@ BuildRequires: postgresql-devel libpq-devel
 # comment next line if you build --without heavy
 BuildRequires: libldap-devel libMySQL-devel postgresql-devel libpq-devel
 
+BuildRequires: libnsl2-devel libtirpc-devel
+
 # package %name is virtual package. It depends on exim-common and exim-light
-Requires: %name-common = %version-%release
-Requires: %name-light = %version-%release
+Requires: %name-common = %EVR
+Requires: %name-light = %EVR
 
 %description 
 Smail like Mail Transfer Agent with single configuration file.
@@ -118,7 +116,7 @@ configured to drop root privilleges when possible.
 %package monitor
 Summary: Exim - Exceptional Internet Mailer - X mail monitor
 Group: Monitoring
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 
 %description monitor
 X Window based monitor & administration utility for the Exim Mail
@@ -128,10 +126,10 @@ Transfer Agent.
 Summary: Main exim MTA program, compiled with basic libraries
 Group: System/Servers
 Provides: exim-mta, smtpd, smtpdaemon
-Provides: %name-light = %version-%release
+Provides: %name-light = %EVR
 Provides: /usr/sbin/exim
 Conflicts: exim-mysql, exim-pgsql, exim-heavy, exim-ldap
-PreReq:	%name-common = %version-%release
+PreReq:	%name-common = %EVR
 
 %description light
 The main exim MTA program, compiled with all basic dbm lookups support,
@@ -144,7 +142,7 @@ Group: System/Servers
 Provides: exim-mta
 Provides: /usr/sbin/exim
 Conflicts: exim-light,  exim-pgsql, exim-heavy, exim-ldap
-PreReq:	%name-common = %version-%release
+PreReq:	%name-common = %EVR
 
 Requires(post,preun): %__subst
 
@@ -159,7 +157,7 @@ Group: System/Servers
 Provides: exim-mta
 Provides: /usr/sbin/exim
 Conflicts: exim-light, exim-mysql, exim-heavy, exim-ldap
-PreReq:	%name-common = %version-%release
+PreReq:	%name-common = %EVR
 
 %description pgsql
 The main exim MTA program, compiled with all basic dbm lookups support,
@@ -170,10 +168,10 @@ and postgresql lookups.
 Summary: Main exim MTA program, compiled with basic libraries + perl + pgsql + MySQL
 Group: System/Servers
 Provides: exim-mta, smtpd, smtpdaemon
-Provides: %name-heavy = %version-%release
+Provides: %name-heavy = %EVR
 Provides: /usr/sbin/exim
 Conflicts: exim-light, exim-pgsql, exim-mysql, exim-ldap
-PreReq:	%name-common = %version-%release
+PreReq:	%name-common = %EVR
 
 %description heavy
 The main exim MTA program, compiled with all basic dbm lookups support,
@@ -186,7 +184,7 @@ Group: System/Servers
 Provides: exim-mta
 Provides: /usr/sbin/exim
 Conflicts: exim-light, exim-mysql, exim-heavy, exim-pgsql
-PreReq:	%name-common = %version-%release
+PreReq:	%name-common = %EVR
 
 %description ldap
 The main exim MTA program, compiled with all basic dbm lookups support,
@@ -203,18 +201,12 @@ BuildArch: noarch
 Misc utils for debugging exim.
 
 %prep
-%setup -n exim-%version
+%setup
 
 cp %SOURCE7 %SOURCE31 %SOURCE32 %SOURCE33 %SOURCE34 %SOURCE36 doc/
 
 install -d Local
 
-%patch1 -p1
-# temporarily suspended
-#patch3 -p1
-
-#patch4 -p1
-#patch5 -p1
 
 install %SOURCE21 Local/eximon.conf
 
@@ -243,7 +235,7 @@ for version in $versions
 do
  sed -i 's#MYLIBDIR#%{_libdir}#g' %_sourcedir/exim-addMakefile.$version
  cat src/EDITME %_sourcedir/exim-addMakefile.$version >Local/Makefile
- make CFLAGS="-I/usr/include/pcre $RPM_OPT_FLAGS -DLDAP_DEPRECATED" FULLECHO='' EXIM_CHMOD=''
+ make _lib=%{_lib} CFLAGS="-I/usr/include/pcre $RPM_OPT_FLAGS -DLDAP_DEPRECATED" FULLECHO='' EXIM_CHMOD=''
  cp %compiledir/exim bins/exim-$version
 done
 
@@ -297,6 +289,8 @@ pod2man --center=EXIM --section=8 \
 mkdir -p %buildroot%openssldir/{certs,private}
 touch %buildroot%openssldir/{certs,private}/exim.pem
 chmod 600 %buildroot%openssldir/{certs,private}/exim.pem
+
+install -pD -m644 %SOURCE44 %buildroot%_unitdir/exim.service
 
 %post common
 #post_service exim
@@ -385,6 +379,7 @@ ln -sf /usr/sbin/exim-ldap /usr/sbin/exim
 %config(noreplace) /etc/sysconfig/exim
 %config(noreplace) /etc/logrotate.d/exim
 %config %_initdir/exim
+%_unitdir/exim.service
 %config(noreplace) /etc/pam.d/exim
 %config /etc/cron.daily/exim
 %attr(0600,root,root) %ghost %config(missingok,noreplace) %verify(not md5 size mtime) %openssldir/certs/exim.pem
@@ -456,6 +451,15 @@ ln -sf /usr/sbin/exim-ldap /usr/sbin/exim
 %_bindir/exipick
 
 %changelog
+* Wed Mar 06 2018 Aleksandr Antonov <aas@altlinux.org> 4.90.1-alt1
+- Updated to upstream version 4.90.1
+- Fixes:
+  + CVE-2018-6789 Buffer overflow may happen. This can be used to execute code remotely.
+
+* Wed Feb 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.90-alt1
+- Updated to upstream version 4.90 (Closes: CVE-2017-16943,
+ CVE-2017-16944, CVE-2017-1000369, CVE-2016-9963, CVE-2016-1531).
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 4.84-alt1.1.1.1.1
 - rebuild with new perl 5.26.1
 
