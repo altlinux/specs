@@ -56,8 +56,8 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 237
-Release: alt3
+Version: 238
+Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -85,10 +85,8 @@ Source23: var-lock.mount
 Source24: var-run.mount
 Source25: udevd-final.service
 Source27: altlinux-first_time.service
-Source28: systemd-tmpfiles.filetrigger
-Source30: 49-coredump-null.conf
+Source30: 49-coredump-disable.conf
 Source31: 60-raw.rules
-Source33: udev.filetrigger
 # ALTLinux's default preset policy
 Source34: 85-display-manager.preset
 Source35: 90-default.preset
@@ -102,9 +100,6 @@ Source42: write_net_rules
 Source43: 75-persistent-net-generator.rules
 Source44: write_cd_rules
 Source45: 75-cd-aliases-generator.rules
-
-Patch1: %name-snapshot.patch
-Patch2: %name-alt-patches.patch
 
 # bash3 completions
 Source51: hostnamectl-bash3
@@ -129,6 +124,17 @@ Source67: systemd-detect-virt-bash3
 Source68: altlinux-simpleresolv.path
 Source69: altlinux-simpleresolv.service
 
+# rpm filetriggers
+Source71: udev.filetrigger
+Source72: udev-hwdb.filetrigger
+Source73: systemd.filetrigger
+Source74: systemd-tmpfiles.filetrigger
+Source75: systemd-sysctl.filetrigger
+Source76: systemd-binfmt.filetrigger
+Source77: journal-catalog.filetrigger
+
+Patch1: %name-%version.patch
+
 %define dbus_ver 1.4.6
 
 BuildPreReq: rpm-build-xdg meson
@@ -138,8 +144,7 @@ BuildRequires: gperf
 BuildRequires: libcap-devel libcap-utils
 BuildRequires: libpam-devel
 BuildRequires: libacl-devel acl
-BuildRequires: xsltproc
-BuildRequires: docbook-style-xsl docbook-dtds
+BuildRequires: xsltproc docbook-style-xsl docbook-dtds python3-module-lxml
 BuildRequires: libdbus-devel >= %dbus_ver
 %{?_enable_seccomp:BuildRequires: pkgconfig(libseccomp) >= 1.0.0}
 %{?_enable_selinux:BuildRequires: pkgconfig(libselinux) >= 2.1.9}
@@ -675,7 +680,6 @@ Shared library and headers for libudev
 %prep
 %setup -q
 %patch1 -p1
-%patch2 -p1
 
 %build
 
@@ -684,6 +688,7 @@ Shared library and headers for libudev
 	-Drootlibdir=/%_lib \
 	-Dpamlibdir=/%_lib/security \
 	-Dsplit-usr=true \
+	-Dsplit-bin=true \
 	-Dsysvinit-path=%_initdir \
 	-Dsysvrcnd-path=%_sysconfdir/rc.d \
 	-Drc-local=%_sysconfdir/rc.d/rc.local \
@@ -704,6 +709,8 @@ Shared library and headers for libudev
 	-Dsystem-gid-max=499 \
 	-Dtty-gid=5 \
 	-Dusers-gid=100 \
+	-Dnobody-user=nobody \
+	-Dnobody-group=nobody \
 	%{?_enable_elfutils:-Delfutils=true} \
 	%{?_enable_xz:-Dxz=true} \
 	%{?_enable_zlib:-Dzlib=true} \
@@ -742,8 +749,9 @@ Shared library and headers for libudev
 	%{?_enable_utmp:-Dutmp=true} \
 	-Ddefault-kill-user-processes=false \
 	-Ddefault-hierarchy=%hierarchy \
-	-Db_lto=true \
-	-Dcertificate-root=/etc/pki/tls
+	-Db_lto=false \
+	-Dcertificate-root=/etc/pki/tls \
+	-Ddocdir=%_defaultdocdir/%name-%version
 
 %meson_build
 
@@ -801,21 +809,12 @@ rm -f %buildroot%_unitdir/local-fs.target.wants/tmp.mount
 
 find %buildroot \( -name '*.a' -o -name '*.la' \) -exec rm {} \;
 mkdir -p %buildroot/{sbin,bin}
-ln -r -s %buildroot/lib/systemd/systemd %buildroot/sbin/init
 ln -r -s %buildroot/lib/systemd/systemd %buildroot/sbin/systemd
-ln -r -s %buildroot/bin/systemctl %buildroot/sbin/reboot
-ln -r -s %buildroot/bin/systemctl %buildroot/sbin/halt
-ln -r -s %buildroot/bin/systemctl %buildroot/sbin/poweroff
-ln -r -s %buildroot/bin/systemctl %buildroot/sbin/shutdown
-ln -r -s %buildroot/bin/systemctl %buildroot/sbin/telinit
-ln -r -s %buildroot/bin/systemctl %buildroot/sbin/runlevel
 
 ln -r -s %buildroot/lib/systemd/systemd-{binfmt,modules-load,sysctl} %buildroot/sbin/
 # for compatibility with older systemd pkgs which expected it at /sbin/:
 ln -r -s %buildroot/bin/systemctl %buildroot/sbin/
 ln -r -s %buildroot/bin/journalctl %buildroot/sbin/
-
-rm -rf %buildroot%_docdir/systemd
 
 # add defaults services
 ln -r -s %buildroot%_unitdir/remote-fs.target %buildroot%_unitdir/multi-user.target.wants
@@ -840,9 +839,6 @@ ln -s /dev/null %buildroot%_unitdir/keytable.service
 ln -s /dev/null %buildroot%_unitdir/killall.service
 ln -s /dev/null %buildroot%_unitdir/single.service
 ln -s /dev/null %buildroot%_unitdir/netfs.service
-
-# Use mingetty as default
-#%__subst 's,/sbin/agetty,/sbin/mingetty,'  %buildroot%_unitdir/getty@.service
 
 # We create all wants links manually at installation time to make sure
 # they are not owned and hence overriden by rpm after the used deleted
@@ -933,10 +929,15 @@ export SYSTEMD_PAGER="/usr/bin/less -FR"
 EOF
 chmod 755 %buildroot%_sysconfdir/profile.d/systemd.sh
 
-install -m644 %SOURCE30 %buildroot/lib/sysctl.d/49-coredump-null.conf
+install -m644 %SOURCE30 %buildroot/lib/sysctl.d/49-coredump-disable.conf
 # rpm posttrans filetriggers
-install -pD -m755 %SOURCE28 %buildroot%_rpmlibdir/systemd-tmpfiles.filetrigger
-install -pD -m755 %SOURCE33 %buildroot%_rpmlibdir/udev.filetrigger
+install -pD -m755 %SOURCE71 %buildroot%_rpmlibdir/udev.filetrigger
+install -pD -m755 %SOURCE72 %buildroot%_rpmlibdir/udev-hwdb.filetrigger
+install -pD -m755 %SOURCE73 %buildroot%_rpmlibdir/systemd.filetrigger
+install -pD -m755 %SOURCE74 %buildroot%_rpmlibdir/systemd-tmpfiles.filetrigger
+install -pD -m755 %SOURCE75 %buildroot%_rpmlibdir/systemd-sysctl.filetrigger
+install -pD -m755 %SOURCE76 %buildroot%_rpmlibdir/systemd-binfmt.filetrigger
+install -pD -m755 %SOURCE77 %buildroot%_rpmlibdir/journal-catalog.filetrigger
 
 cat >>%buildroot/lib/sysctl.d/50-default.conf <<EOF
 # Indicates the amount of address space which a user process will be
@@ -1018,7 +1019,6 @@ install -D -m644 -t %buildroot%_unitdir/systemd-udev-trigger.service.d/ %SOURCE1
 
 %post
 /bin/systemctl daemon-reexec >/dev/null 2>&1 || :
-/bin/journalctl --update-catalog >/dev/null 2>&1 || :
 
 # Move old stuff around in /var/lib
 [ -d %_localstatedir/lib/systemd/random-seed ] && rm -rf %_localstatedir/lib/systemd/random-seed >/dev/null 2>&1 || :
@@ -1265,7 +1265,6 @@ fi
 if [ $1 -eq 1 ]; then
 /sbin/chkconfig --add udevd-final
 fi
-/sbin/udevadm hwdb --update >/dev/null 2>&1 || :
 
 %preun -n udev
 %preun_service udevd
@@ -1300,6 +1299,7 @@ fi
 
 /sbin/systemctl
 /bin/systemctl
+%_rpmlibdir/systemd.filetrigger
 /sbin/systemd
 /sbin/systemd-ask-password
 /bin/systemd-inhibit
@@ -1503,12 +1503,12 @@ fi
 %ghost %dir %_logdir/journal
 %dir %_localstatedir/lib/systemd
 %dir %_localstatedir/lib/systemd/catalog
+%_rpmlibdir/journal-catalog.filetrigger
 %ghost %_localstatedir/lib/systemd/catalog/database
 %ghost %_localstatedir/lib/systemd/random-seed
 %ghost %_localstatedir/lib/systemd/clock
 
-# %%_docdir/systemd
-%doc DISTRO_PORTING LICENSE.LGPL2.1 README NEWS TODO
+%_defaultdocdir/%name-%version
 %_logdir/README
 # may be need adapt for ALTLinux?
 %exclude /usr/lib/kernel
@@ -1530,7 +1530,6 @@ fi
 %exclude %_pkgconfigdir/*udev*.pc
 %_datadir/pkgconfig/systemd.pc
 %_includedir/systemd
-%doc LICENSE.LGPL2.1
 %_man3dir/*
 %exclude %_man3dir/udev*
 %exclude %_man3dir/libudev*
@@ -1590,6 +1589,7 @@ fi
 
 /lib/systemd/systemd-binfmt
 /sbin/systemd-binfmt
+%_rpmlibdir/systemd-binfmt.filetrigger
 %_mandir/*/*binfmt*
 
 /lib/systemd/systemd-modules-load
@@ -1599,9 +1599,10 @@ fi
 
 /lib/systemd/systemd-sysctl
 /sbin/systemd-sysctl
+%_rpmlibdir/systemd-sysctl.filetrigger
 %config(noreplace) %_sysconfdir/sysctl.d/99-sysctl.conf
 /lib/sysctl.d/50-default.conf
-/lib/sysctl.d/49-coredump-null.conf
+/lib/sysctl.d/49-coredump-disable.conf
 %_mandir/*/*sysctl*
 
 /lib/systemd/systemd-backlight
@@ -1851,7 +1852,6 @@ fi
 %_man3dir/libudev*
 
 %files -n udev
-%doc README TODO NEWS LICENSE.GPL2
 %dir %_sysconfdir/udev
 %config(noreplace) %_sysconfdir/udev/*.conf
 %ghost %_sysconfdir/udev/hwdb.bin
@@ -1872,6 +1872,7 @@ fi
 /sbin/systemd-hwdb
 /lib/systemd/systemd-udevd
 %_rpmlibdir/udev.filetrigger
+%_rpmlibdir/udev-hwdb.filetrigger
 %_mandir/*/*udev*
 %_mandir/*/*hwdb*
 %_mandir/*/*link*
@@ -1919,6 +1920,13 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Mon Mar 12 2018 Alexey Shabalin <shaba@altlinux.ru> 1:238-alt1
+- 238
+- fix build systemd.directive man
+- move "journalctl --update-catalog" from %%post to filetrigger
+- move "udevadm hwdb" from %%post to filetrigger
+- add filetriggers for systemd-sysctl,systemd-binfmt
+
 * Wed Feb 14 2018 Ivan Zakharyaschev <imz@altlinux.org> 1:237-alt3
 - libsystemd doesn't obsolete the old split libs anymore (with
   different filenames), so that legacy binaries linked with them are
