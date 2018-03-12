@@ -1,19 +1,20 @@
-%define _unpackaged_files_terminate_build 1
 %define rname reportlab
 %define oname Reportlab
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.3.0
+Version: 3.4.0
 Release: alt1
-License: BSD license (see LICENSE.txt for details)
+
 Summary: The Reportlab Toolkit
+
+License: BSD license (see LICENSE.txt for details)
 Group: Development/Python
-Packager: Alexey Morsov <swi@altlinux.ru>
 Url: http://www.reportlab.org
 
-Source0: https://pypi.python.org/packages/b8/17/7c5342dfbc9dc856173309270006e34c3bfad59934f0faa1dcc117ac93f1/reportlab-%{version}.tar.gz
+# Source-url: %__pypi_url %rname
+Source: reportlab-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
@@ -77,7 +78,7 @@ An Open Source Python library for generating PDFs and graphics.
 This package contains documentation for Reportlab Toolkit.
 
 %prep
-%setup -q -n reportlab-%{version}
+%setup -n reportlab-%{version}
 
 %if_with python3
 cp -fR . ../python3
@@ -134,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 12 2018 Vitaly Lipatov <lav@altlinux.ru> 3.4.0-alt1
+- new version (3.4.0) with rpmgs script
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1
 - automated PyPI update
 
