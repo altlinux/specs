@@ -1,7 +1,7 @@
 %define oname doc++
 Name: docpp
 Version: 3.4.10
-Release: alt4
+Release: alt4.1
 Summary: Documentation system for C, C++, IDL and Java
 License: GPL v2
 Group: Development/Tools
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar.gz
 
 BuildPreReq: gcc-c++ flex ghostscript ghostscript-utils
-BuildPreReq: graphviz bison gettext-tools texlive-latex-recommended
+BuildPreReq: graphviz bison gettext-tools texlive-collection-latexrecommended tex(a4wide.sty)
 
 %description
 DOC++ is a documentation system for C, C++, IDL and Java generating both
@@ -102,6 +102,9 @@ install -m644 doc/manual/*.pdf %buildroot%_docdir/%oname
 %_docdir/%oname
 
 %changelog
+* Mon Mar 12 2018 Igor Vlasenko <viy@altlinux.ru> 3.4.10-alt4.1
+- NMU: rebuild with texlive 2017
+
 * Tue Sep 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.10-alt4
 - Fix for build with make 3.82
 
