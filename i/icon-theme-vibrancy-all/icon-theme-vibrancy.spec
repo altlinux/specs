@@ -1,7 +1,7 @@
 
 Name: icon-theme-vibrancy-all
 Version: 2.6
-Release: alt3
+Release: alt4
 Summary: full set of Vibrancy GNOME icon theme
 
 Group: Graphical desktop/GNOME
@@ -92,6 +92,8 @@ for i in $(ls | grep Vibrancy); do
 	cp %SOURCE1 ./$i/places/scalable/
 done
 
+# rename files with spaces. bug 31653
+find ./ -iname "* *" -exec rename ' ' _  "{}" \;
 
 %build
 
@@ -126,6 +128,9 @@ cp -R ./Vibrancy-* %buildroot%_iconsdir
 %_iconsdir/Vibrancy-NonMono-Light-*
 
 %changelog
+* Mon Mar 12 2018 Konstantin Artyushkin <akv@altlinux.org> 2.6-alt4
+- workaround for altbug #31653
+
 * Wed Nov 18 2015 Konstantin Artyushkin <akv@altlinux.org> 2.6-alt3
 - inital pack for altlinux
 
