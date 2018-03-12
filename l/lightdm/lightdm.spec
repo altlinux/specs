@@ -7,7 +7,7 @@
 
 Name: lightdm
 Version: 1.16.7
-Release: alt17
+Release: alt17.1
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -202,7 +202,7 @@ install -m644 -p -D %SOURCE9 %buildroot%_unitdir/%name.service
 echo "GDK_CORE_DEVICE_EVENTS=true" > %buildroot%_localstatedir/lib/ldm/.pam_environment
 
 install -m0755 -p -D %SOURCE10 %buildroot%_controldir/%name-login-unknown
-install -m0755 -p -D %SOURCE11 %buildroot%_controldir/%name-greeter-hide-users.control
+install -m0755 -p -D %SOURCE11 %buildroot%_controldir/%name-greeter-hide-users
 
 %find_lang --with-gnome %name
 
@@ -288,6 +288,9 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Mon Mar 12 2018 Fr. Br. George <george@altlinux.ru> 1.16.7-alt17.1
+- Fix lightdm-greeter-hide-users control filename
+
 * Fri Dec 22 2017 Ivan Zakharyaschev <imz@altlinux.org> 1.16.7-alt17
 - Show the messages from PAM translated.
 - Stricter compatibility requirements for client libs.
