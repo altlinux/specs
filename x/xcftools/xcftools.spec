@@ -1,6 +1,6 @@
 Name: xcftools
 Version: 1.0.7
-Release: alt1.1
+Release: alt1.2
 
 Summary: Tools for extracting information from the Gimp's native file format XCF.
 Group: Graphics
@@ -23,18 +23,18 @@ installed.
 
 "xcf2pnm" converts XCF files to ppm, pgm or pbm format, flattening layers if
 necessary. If the image contains transparency, an alpha map can be written to a
-separate file, or a background color can be specified on the command line. 
+separate file, or a background color can be specified on the command line.
 
 "xcf2png" converts XCF files to PNG format, flattening layers if necessary.
 Transparency information can be kept in the image, or a background color can be
-specified on the command line. 
+specified on the command line.
 
-"xcfinfo" lists information about layers in an XCF file. 
+"xcfinfo" lists information about layers in an XCF file.
 
 "xcfview" is a wrapper script that flattens an XCF image and displays it using
 an external PNG/PPM viewer. To use this script, you must make sure also to
 install an appropriate external viewer, as well as the mime-support package
-which provides the mailcap database. 
+which provides the mailcap database.
 
 The tools can either flatten an XCF file as given, or extract specific layers
 named on the command line.
@@ -64,6 +64,10 @@ named on the command line.
 %_man1dir/*
 
 %changelog
+* Mon Mar 12 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.7-alt1.2
+- Fix building with perl 5.26.
+- Remove extra whitespaces in spec.
+
 * Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.7-alt1.1
 - Rebuilt with libpng15
 
