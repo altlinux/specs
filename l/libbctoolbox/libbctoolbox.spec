@@ -1,6 +1,6 @@
 Name: libbctoolbox
 Version: 0.6.0
-Release: alt1
+Release: alt2
 Summary: Utilities library used by Belledonne Communications softwares
 
 Group: System/Libraries
@@ -56,6 +56,9 @@ Libraries and headers required to develop software with belle-sip, mediastreamer
 %_libdir/pkgconfig/bctoolbox.pc
 
 %changelog
+* Mon Mar 12 2018 Alexei Takaseev <taf@altlinux.org> 0.6.0-alt2
+- Rebuild with mbedtls 2.7.0
+
 * Sat Jul 22 2017 Alexei Takaseev <taf@altlinux.org> 0.6.0-alt1
 - 0.6.0
 
