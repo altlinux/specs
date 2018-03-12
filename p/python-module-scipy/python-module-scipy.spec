@@ -11,7 +11,7 @@ BuildRequires(pre): rpm-build-python
 
 Name: python-module-%modname
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: SciPy is the library of scientific codes
 
@@ -209,7 +209,7 @@ for i in $(find ./ -name '*.h'); do
 done
 popd
 
-install -p -m644 $(find ./ -name fortranobject.h) \
+install -p -m644 $(find ./ -name fortranobject.h | head -n 1) \
 	%buildroot%_includedir/%modname
 
 %if_with python3
@@ -232,7 +232,7 @@ done
 popd
 
 
-install -p -m644 $(find ./ -name fortranobject.h) \
+install -p -m644 $(find ./ -name fortranobject.h | head -n 1) \
 	%buildroot%_includedir/%modname-py3
 popd
 pushd %buildroot%python3_sitelibdir/%modname/sparse/csgraph
@@ -337,6 +337,9 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 %endif
 
 %changelog
+* Mon Mar 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt2
+- Fixed build.
+
 * Thu Oct 26 2017 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
 
