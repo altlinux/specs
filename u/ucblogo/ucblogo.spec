@@ -1,6 +1,6 @@
 Name: ucblogo
 Version: 6.0
-Release: alt3
+Release: alt3.1
 Summary: An interpreter for the Logo programming language
 Group: Development/Functional
 License: GPLv2+
@@ -13,7 +13,7 @@ Patch3: ucblogo-6.0-texi.patch
 Url: http://www.cs.berkeley.edu/~bh
 
 # Automatically added by buildreq on Fri Nov 05 2010
-BuildRequires: emacs-nox gcc-c++ ghostscript-utils libSM-devel libX11-devel libncurses-devel libwxGTK-devel texi2html texlive-base makeinfo texi2dvi
+BuildRequires: emacs-nox gcc-c++ ghostscript-utils libSM-devel libX11-devel libncurses-devel libwxGTK-devel texi2html texlive-collection-basic tex(manfnt.sty) makeinfo texi2dvi
 
 %description
 Berkeley Logo (ucblogo) is an interpreter for the Logo programming
@@ -122,6 +122,9 @@ rm -f $RPM_BUILD_ROOT%_datadir/emacs/site-lisp/logo/*.el
 %_datadir/emacs/site-lisp/site-start.d
 
 %changelog
+* Mon Mar 12 2018 Igor Vlasenko <viy@altlinux.ru> 6.0-alt3.1
+- NMU: fixed BR: for texlive 2017
+
 * Mon Jan 25 2016 Fr. Br. George <george@altlinux.ru> 6.0-alt3
 - Fix build
 
