@@ -2,7 +2,7 @@
 %define major 3.3
 Name: python-module-Ice
 Version: %major.1
-Release: alt5.1
+Release: alt6
 
 Summary: The Ice runtime for Python applications
 
@@ -13,6 +13,7 @@ Url: http://www.zeroc.com/
 Source: http://www.zeroc.com/download/Ice/%major/Ice-%version.tar.bz2
 Source1: http://www.zeroc.com/download/Ice/%major/Ice-rpmbuild-%version.tar.bz2
 Patch0: Ice-3.3.1-alt-gcc4.6.patch
+Patch1: %oname-%version-alt-gcc7.patch
 
 %setup_python_module Ice
 
@@ -56,6 +57,7 @@ firewall solution, and much more.
 %prep
 %setup -n IcePy-%version
 %patch0 -p2
+%patch1 -p2
 ln -s %_datadir/Ice-%version/slice slice
 ln -s %_datadir/Ice-%version/certs certs
 ln -s %_datadir/Ice-%version/config config
@@ -92,6 +94,9 @@ rm -rf %buildroot/slice
 %python_sitelibdir/Ice.pth
 
 %changelog
+* Mon Mar 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.1-alt6
+- Fixed build with gcc-7.
+
 * Thu Jun 11 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3.1-alt5.1
 - Rebuilt for gcc5 C++11 ABI.
 
