@@ -1,5 +1,5 @@
 Version: 3.2.2
-Release: alt3
+Release: alt3.1
 
 %setup_python_module tpg
 
@@ -21,7 +21,7 @@ Buildarch: noarch
 BuildRequires: python-devel
 
 %if_enabled doc
-BuildRequires: tex4ht texlive-latex-recommended
+BuildRequires: tex4ht texlive-collection-latexrecommended tex(a4wide.sty)
 %endif
 
 %if_with python3
@@ -115,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 12 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.2-alt3.1
+- NMU: fixed BR: for texlive 2017
+
 * Tue Feb 27 2018 Michael Shigorin <mike@altlinux.org> 3.2.2-alt3
 - doc knob: "enable" instead of "with" (imz@)
 
