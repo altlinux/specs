@@ -1,6 +1,6 @@
 Name: websec 
 Version: 1.9.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Web Secretary is a web page monitoring software
 License: GPL
@@ -8,7 +8,7 @@ Group: Networking/WWW
 
 URL: http://baruch.ev-en.org/proj/websec
 Source: %url/websec-%version.tar.gz
-
+Patch:  websec-1.9.0-fix_brackets_for_perl5.26.patch
 BuildArch: noarch
 # Automatically added by buildreq on Wed Jun 13 2007 (-bi)
 BuildRequires: perl-libwww
@@ -26,6 +26,7 @@ changes highlighted or load the highlighted page in a browser.
 
 %prep
 %setup -q
+%patch -p2
 
 %build
 
@@ -43,6 +44,9 @@ make PREFIX=%buildroot/usr \
 %_man5dir/*
 
 %changelog
+* Mon Mar 12 2018 Grigory Ustinov <grenka@altlinux.org> 1.9.0-alt1.2
+- Add patch for building with perl 5.26.
+
 * Mon Nov 08 2010 Vladimir Lettiev <crux@altlinux.ru> 1.9.0-alt1.1
 - rebuilt with perl 5.12
 
