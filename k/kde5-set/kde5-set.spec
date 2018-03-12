@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 17.08.1
+Version: 17.12.0
 Release: alt1%ubt
 
 Group: Graphical desktop/KDE
@@ -17,7 +17,7 @@ BuildRequires(pre): rpm-build-ubt
 Summary: %summary
 Group: Graphical desktop/KDE
 Requires: qt5-phonon-backend qt5-quickcontrols qt5-quickcontrols2 qt5-graphicaleffects qt5-imageformats qt5-translations
-Requires: kf5-kio kf5-kded kf5-kinit kf5-kwayland-integration
+Requires: kf5-kio kf5-kded kf5-kinit plasma5-kwayland-integration
 %description -n kde5-runtime
 %summary
 
@@ -25,7 +25,7 @@ Requires: kf5-kio kf5-kded kf5-kinit kf5-kwayland-integration
 Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5-runtime
-Requires: qt5-dbus kf5-kde-cli-tools kf5-kwin kf5-plasma-desktop kf5-kinit kf5-kdeclarative
+Requires: qt5-dbus plasma5-kde-cli-tools plasma5-kwin plasma5-desktop kf5-kinit kf5-kdeclarative
 Requires: kde5-dolphin kde5-kdialog
 %description -n kde5-mini
 %summary
@@ -37,11 +37,11 @@ Requires: icon-theme-breeze
 Requires: kde5-mini
 Requires: kde5-volume-control
 Requires: webclient
-Requires: kf5-sddm-kcm kf5-polkit-kde-agent kf5-kio-extras kf5-breeze kf5-oxygen kf5-powerdevil kf5-ksysguard
+Requires: plasma5-sddm-kcm plasma5-polkit-kde-agent kf5-kio-extras plasma5-breeze plasma5-oxygen plasma5-powerdevil plasma5-ksysguard
 Requires: kf5-kwallet kf5-kconfig kf5-kglobalaccel kf5-kimageformats kde5-svgpart
 Requires: kde5-ark kde5-konsole kde5-gwenview kde5-okular kde5-kwrite kde5-kwalletmanager
 Requires: kde5-kcalc kde5-kdebugsettings kde5-kross-python
-Requires: kf5-milou kf5-systemsettings kf5-plasma-integration
+Requires: plasma5-milou plasma5-systemsettings plasma5-integration
 %description -n kde5-small
 %summary
 
@@ -58,10 +58,10 @@ Requires: kde5-video-player
 Requires: kde5-audio-player
 Requires: kde5-network-manager
 Requires: kde5-plasma-applet-places-widget
-Requires: kf5-kde-gtk-config kf5-baloo kf5-bluedevil kf5-kscreen kf5-ksshaskpass kde5-krdc kde5-kgpg
-Requires: kf5-khotkeys kf5-kinfocenter kf5-kdeplasma-addons
+Requires: plasma5-kde-gtk-config kf5-baloo plasma5-bluedevil plasma5-kscreen plasma5-ksshaskpass kde5-krdc kde5-kgpg
+Requires: plasma5-khotkeys plasma5-kinfocenter plasma5-addons
 Requires: kde5-khelpcenter kde5-kolourpaint kde5-kio-audiocd
-Requires: kf5-kmenuedit kf5-solid kf5-kdbusaddons kf5-kgamma
+Requires: plasma5-kmenuedit kf5-solid kf5-kdbusaddons plasma5-kgamma
 Requires: kde5-kfind kde5-filelight kde5-kcharselect kde5-kteatime kde5-ktimer kde5-spectacle
 Requires: kde5-kamera kde5-network-filesharing kde5-ktorrent
 ##Requires: kde5-kget
@@ -75,9 +75,9 @@ Group: Graphical desktop/KDE
 Requires: kde5
 Requires: kde5-email-client
 #Requires: kde5-telepathy
-Requires: kf5-plasma-workspace-wallpapers
-Requires: kf5-kwrited
-Requires: kf5-user-manager kde5-ksystemlog
+Requires: plasma5-workspace-wallpapers
+Requires: plasma5-kwrited
+Requires: plasma5-user-manager kde5-ksystemlog
 Requires: kde5-konversation kde5-kate
 Requires: kde5-pim kde5-pim-addons kde5-kcron kde5-kruler kde5-ffmpegthumbs
 Requires: kde5-krfb
@@ -162,7 +162,8 @@ Summary: %summary
 Group: Graphical desktop/KDE
 ##Requires: kde5-akonadiconsole
 Requires: kde5-akonadi-calendar-tools kde5-akonadi-import-wizard kde5-kmail-account-wizard
-Requires: kde5-akregator kde5-blogilo kde5-kaddressbook kde5-kalarm kde5-kmail kde5-knotes kde5-kontact kde5-korganizer
+Requires: kde5-akregator kde5-kaddressbook kde5-kalarm kde5-kmail kde5-knotes kde5-kontact kde5-korganizer
+##Requires:  kde5-blogilo
 Requires: kde5-mbox-importer kde5-pim-data-exporter kde5-pim-sieve-editor kde5-grantlee-editor
 %description -n kde5-pim
 %summary
@@ -183,6 +184,9 @@ Requires: kde5-mbox-importer kde5-pim-data-exporter kde5-pim-sieve-editor kde5-g
 %files -n kde5-pim
 
 %changelog
+* Mon Mar 12 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.0-alt1%ubt
+- update Plasma requires
+
 * Tue Dec 26 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.1-alt1%ubt
 - update PIM requires
 

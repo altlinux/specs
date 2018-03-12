@@ -1,6 +1,6 @@
 
 Name: kde5-virtual
-Version: 5.5.0
+Version: 5.6.0
 Release: alt1%ubt
 
 Group: Graphical desktop/KDE
@@ -38,7 +38,7 @@ Summary: NetworkManager network manager
 Provides: kde5-network-manager = %EVR
 Provides: kde5-network-manager-nm = %EVR
 Requires: kf5-filesystem
-Requires: kf5-plasma-nm-maxi
+Requires: plasma5-nm-maxi
 %description -n kde5-network-manager-4-nm
 %summary
 
@@ -106,7 +106,7 @@ Summary: Plasma PulseAudio volume control
 Provides: kde5-volume-control = %EVR
 Provides: kde5-volume-control-plasmapulse = %EVR
 Requires: kf5-filesystem
-Requires: kf5-plasma-pa
+Requires: plasma5-pa
 %description -n kde5-volume-control-4-plasmapulse
 %summary
 
@@ -180,6 +180,9 @@ Requires: qmmp1
 %files -n kde5-audio-player-4-qmmp
 
 %changelog
+* Mon Mar 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1%ubt
+- update Plasma requires
+
 * Thu Mar 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1%ubt
 - update kmail requires
 
