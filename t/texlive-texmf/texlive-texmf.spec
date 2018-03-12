@@ -83,7 +83,7 @@ BuildRequires: perl(Tk/ItemStyle.pm) perl(Tk/NoteBook.pm) perl(Tk/PNG.pm) perl(T
 
 Name:		texlive-texmf
 Version:	%relYear
-Release:	alt6_2
+Release:	alt7_2
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -215,7 +215,6 @@ AutoReq: yes,notex
 Provides: texlive-collection-fontsrecommended = %{tl_version}
 Provides: texlive-collection-fontutils = %{tl_version}
 Provides: texlive-collection-latex = %{tl_version}
-Provides: texlive-collection-latexrecommended = %{tl_version}
 Provides: texlive-collection-genericrecommended = %{tl_version}
 Provides: tex(tex)
 Provides: tex(latex-base)
@@ -798,6 +797,7 @@ Provides: texlive-collection-games = %{tl_version}
 Provides: texlive-collection-genericextra = %{tl_version}
 Provides: texlive-collection-htmlxml = %{tl_version}
 Provides: texlive-collection-humanities = %{tl_version}
+Provides: texlive-collection-latexrecommended = %{tl_version}
 Provides: texlive-collection-latexextra = %{tl_version}
 Provides: texlive-collection-luatex = %{tl_version}
 Provides: texlive-collection-mathextra = %{tl_version}
@@ -3118,6 +3118,9 @@ EOF
 
 
 %changelog
+* Mon Mar 12 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt7_2
+- rebuild with rpm-build-tex 0.4.1
+
 * Sun Mar 11 2018 Igor Vlasenko <viy@altlinux.ru> 2017-alt6_2
 - added Provides: <$TEXMFDIST path>
 
