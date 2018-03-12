@@ -1,5 +1,5 @@
 Version: 3.2.2
-Release: alt1
+Release: alt1.1
 
 %setup_python_module tpg
 
@@ -15,7 +15,7 @@ Buildarch: noarch
 
 # Automatically added by buildreq on Thu Feb 23 2012
 # optimized out: ImageMagick-tools fontconfig ghostscript-classic ghostscript-common python-base python-modules python-modules-compiler python-modules-email tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended texlive-xetex texmf-tex4ht
-BuildRequires: python-devel tex4ht texlive-latex-recommended
+BuildRequires: python-devel tex4ht texlive-collection-latexrecommended tex(a4wide.sty)
 
 %description
 Toy Parser Generator is a lexical and syntactic parser generator for Python.
@@ -53,6 +53,9 @@ python setup.py install --root=%buildroot
 %python_sitelibdir/tpg*
 
 %changelog
+* Mon Mar 12 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.2-alt1.1
+- NMU: fixed BR: for texlive 2017
+
 * Wed Jan 15 2014 Fr. Br. George <george@altlinux.ru> 3.2.2-alt1
 - Autobuild version bump to 3.2.2
 
