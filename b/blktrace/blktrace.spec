@@ -1,6 +1,6 @@
 Name: blktrace
 Version: 1.0.5
-Release: alt1
+Release: alt1.1
 
 Summary: Block IO tracer
 License: GPL
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sat Jun 14 2008
-BuildRequires: libaio-devel texlive-latex-recommended
+BuildRequires: libaio-devel texlive-collection-latexrecommended tex(a4wide.sty)
 
 %description
 %name can show detailed info about what is happening on a block
@@ -42,6 +42,9 @@ make \
 %_man8dir/*
 
 %changelog
+* Mon Mar 12 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1.1
+- NMU: fixed build with new texlive
+
 * Sat Apr 21 2012 Michael Shigorin <mike@altlinux.org> 1.0.5-alt1
 - 1.0.5
 
