@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 1.11.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Python API and CLI for OpenStack Cinder
 
@@ -15,7 +15,7 @@ Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.
 BuildArch: noarch
 
 BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
@@ -32,7 +32,7 @@ BuildRequires: python-module-oslo.utils >= 3.18.0
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-prettytable >= 0.7.1
 BuildRequires: python3-module-keystoneauth1 >= 2.18.0
@@ -106,6 +106,9 @@ popd
 # disabling git call for last modification date from git repo
 sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
 python setup.py build_sphinx
+# for some reason previous command no longer autogenerates manpage
+PBR_VERSION=%version %make -C doc man
+
 # Fix hidden-file-or-dir warnings
 rm -fr doc/build/html/.buildinfo
 
@@ -147,6 +150,9 @@ install -p -D -m 644 doc/build/man/cinder.1 %buildroot%_man1dir/cinder.1
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Mar 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.11.0-alt2
+- Updated build dependencies.
+
 * Mon May 29 2017 Alexey Shabalin <shaba@altlinux.ru> 1:1.11.0-alt1
 - 1.11.0
 - add test packages
