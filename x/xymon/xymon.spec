@@ -62,7 +62,7 @@ URL:		http://xymon.sourceforge.net/
 
 %if_disabled trunk
 Version:	4.3.28
-Release:	alt2
+Release:	alt2.1
 Source0:	http://prdownloads.sourceforge.net/xymon/Xymon/%{version}/%{name}-%{version}.tar.gz
 %else
 %define		trunkVersion	%(svn info ~/svn/xymon/trunk/ | grep ^Revision | awk '{print $2}')
@@ -264,6 +264,9 @@ Patch503: xymonclient-linux.sh-various-procps.patch
 
 # rollback of changes for cgiwrap introduced in 4.3.20
 Patch504: xymon-4.3.21-FollowSymLinks.patch
+
+# intmax_t declared in #include <stdint.h>
+Patch505: xymon-4.3.28-fix_undeclared_intmax_t.patch
 
 ##########################################################################
 ##########################################################################
@@ -473,6 +476,7 @@ the Xymon server in NCV format.
 %patch502 -p2
 %patch503 -p1
 %patch504 -p1
+%patch505 -p2
 
 sed "s/define MAXCHECK   102400/define MAXCHECK   4194303/" -i client/logfetch.c
 
@@ -1254,6 +1258,9 @@ done
 ################ end extra clients ################
 
 %changelog
+* Mon Mar 12 2018 Grigory Ustinov <grenka@altlinux.org> 4.3.28-alt2.1
+- NMU: Add patch for fix rebuild in Sisyphus.
+
 * Tue Oct 31 2017 Sergey Y. Afonin <asy@altlinux.ru> 4.3.28-alt2
 - rebuilt with librrd8
 
