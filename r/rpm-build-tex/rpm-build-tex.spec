@@ -1,6 +1,6 @@
 Name: rpm-build-tex
-Version: 0.4.0
-Release: alt2
+Version: 0.4.1
+Release: alt1
 Summary: RPM helper macros to rebuild TeX packages
 License: %gpl3plus
 Group: Development/Other
@@ -12,7 +12,7 @@ Url: http://git.altlinux.org/people/viy/packages/rpm-build-tex.git
 BuildRequires(pre): rpm-build-licenses
 
 Requires: tex-common
-Conflicts: tetex-core tetex tetex-latex tetex-dvips tetex-context tetex-afm
+#Conflicts: tetex-core tetex tetex-latex tetex-dvips tetex-context tetex-afm
 
 Provides: rpm-build-texmf <= 0.4.0
 Obsoletes: rpm-build-texmf <= 0.4.0
@@ -37,6 +37,9 @@ install -m 0644 etc/* %buildroot%_rpmmacrosdir/
 
 
 %changelog
+* Mon Mar 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1
+- added clo,def,enc,ldf,bbx provides
+
 * Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt2
 - added conflicts on tetex
 
