@@ -1,5 +1,5 @@
 Name: rpm-build-tex
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 Summary: RPM helper macros to rebuild TeX packages
 License: %gpl3plus
@@ -37,6 +37,9 @@ install -m 0644 etc/* %buildroot%_rpmmacrosdir/
 
 
 %changelog
+* Mon Mar 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1
+- add .tex provides
+
 * Mon Mar 12 2018 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1
 - added clo,def,enc,ldf,bbx provides
 
