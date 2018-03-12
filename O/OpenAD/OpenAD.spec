@@ -2,7 +2,7 @@
 
 Name: OpenAD
 Version: 20140315
-Release: alt3
+Release: alt3.1
 Summary: A tool for automatic differentiation (AD) of numerical computer programs
 License: BSD
 Group: Sciences/Mathematics
@@ -13,7 +13,7 @@ Source1: setenv2.sh
 Source2: XAIFOBJS
 
 BuildRequires: gcc-fortran python-modules gcc-c++ libxerces-c28-devel
-BuildRequires: tcsh libsexpr-devel boost-devel /usr/bin/latex
+BuildRequires: tcsh libsexpr-devel boost-devel /usr/bin/latex tex(dvips.def)
 BuildRequires: doxygen graphviz
 
 Requires: lib%name = %version-%release
@@ -275,6 +275,9 @@ install -m755 openad %buildroot%_bindir
 %doc xaifBooster/doc/*.ps
 
 %changelog
+* Mon Mar 12 2018 Igor Vlasenko <viy@altlinux.ru> 20140315-alt3.1
+- NMU: updated BR: for new texlive
+
 * Mon Nov 13 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 20140315-alt3
 - Fixed build with new toolchain.
 
