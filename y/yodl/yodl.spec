@@ -1,6 +1,6 @@
 Name: yodl
 Version: 3.00.0
-Release: alt1.qa1
+Release: alt1.qa2
 Epoch: 1
 
 Summary: Yet oneOther Document Language
@@ -18,7 +18,7 @@ Patch4: yodl-1.31.18-suse-python25.patch
 # Automatically added by buildreq on Sun Apr 13 2008
 BuildRequires: flex groff-base netpbm python-modules
 
-BuildPreReq: icmake texlive-latex-recommended ghostscript-utils
+BuildPreReq: icmake texlive-collection-latexrecommended tex(epsf.sty) ghostscript-utils
 
 %description
 Yodl is a package that implements a pre-document language and tools to
@@ -75,6 +75,9 @@ done
 %_docdir/%name
 
 %changelog
+* Mon Mar 12 2018 Igor Vlasenko <viy@altlinux.ru> 1:3.00.0-alt1.qa2
+- NMU: fixed BR: for texlive 2017
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:3.00.0-alt1.qa1
 - NMU: rebuilt for updated dependencies.
 
