@@ -6,7 +6,7 @@
 
 Name: avogadro
 Version: 1.2.0
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: Sciences/Chemistry
 Summary: An advanced molecular editor for chemical purposes
@@ -25,6 +25,7 @@ Patch4: avogadro-1.1.1-qt.patch
 Patch5: avogadro-1.1.1-python_openbabel.patch
 Patch6: avogadro-1.1.1-Q_MOC_RUN.patch
 Patch7: avogadro-1.2.0-libmsymfloat.patch
+Patch8: avogadro_eigen3.patch
 # ALT
 Patch100: avogadro-1.1.0-alt-config.patch
 Patch101: avogadro-1.0.3-alt-desktopfile.patch
@@ -35,7 +36,7 @@ Patch102: avogadro-1.1.1-alt-fix-gcc6-version.patch
 # Automatically added by buildreq on Tue Feb 08 2011 (-bi)
 #BuildRequires: boost-devel-headers boost-python-devel cmake docbook-utils eigen2 gcc-c++ libXScrnSaver-devel libXau-devel libXcomposite-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libglew-devel libnumpy-devel libopenbabel-devel libqt3-devel libxkbfile-devel openbabel python-module-numpy-testing python-module-sip-devel python-modules-ctypes qt4-designer rpm-build-ruby zlib-devel-static
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: boost-devel-headers boost-python-devel cmake docbook-utils docbook-utils-print eigen2 gcc-c++
+BuildRequires: boost-devel-headers boost-python-devel cmake docbook-utils docbook-utils-print eigen3 gcc-c++
 BuildRequires: libGLEW-devel libnumpy-devel libopenbabel-devel libqt4-devel
 BuildRequires: openbabel libopenbabel-devel python-module-numpy-testing python-module-sip-devel python-modules-ctypes zlib-devel
 BuildRequires: kde-common-devel
@@ -75,6 +76,7 @@ Development Avogadro files.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 #
 %patch100 -p1
 %patch101 -p1
@@ -140,6 +142,9 @@ sed -i 's|\${PYTHON_LIB_PATH}|%python_sitelibdir|g' libavogadro/src/python/CMake
 %_datadir/qt4/mkspecs/features/%name.prf
 
 %changelog
+* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt2%ubt
+- build with eigen3
+
 * Wed Apr 12 2017 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt1%ubt
 - new version
 
