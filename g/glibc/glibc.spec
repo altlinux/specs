@@ -2,7 +2,7 @@
 
 Name: glibc
 Version: 2.27
-Release: alt2
+Release: alt3
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -750,6 +750,9 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Mon Mar 12 2018 Dmitry V. Levin <ldv@altlinux.org> 6:2.27-alt3
+- Updated to glibc-2.27-27-gb63daad from 2.27 branch.
+
 * Mon Feb 19 2018 Dmitry V. Levin <ldv@altlinux.org> 6:2.27-alt2
 - Updated to glibc-2.27-14-gb4108a3 from 2.27 branch.
 - Fixed build of test suite with gcc7.
