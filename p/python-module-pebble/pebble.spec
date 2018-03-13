@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.3.6
-Release: alt2.git20171213.1
+Version: 4.3.7
+Release: alt1.git20180228
 Summary: Threading and multiprocessing eye-candy
 License: LGPLv3
 Group: Development/Python
@@ -95,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.7-alt1.git20180228
+- Updated to upstream version 4.3.7.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.3.6-alt2.git20171213.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
