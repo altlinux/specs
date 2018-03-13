@@ -4,8 +4,8 @@
 %define cid_dict       uk@dictionaries.addons.mozilla.org
 %define cid_dict_dir   %palemoon_noarch_extensionsdir/%cid_dict
 
-%define min_version	27.7.0
-%define max_version	27.7.*
+%define min_version	27.8.0
+%define max_version	27.8.*
 
 %define bname		newmoon
 %define sdir		searchplugins
@@ -14,13 +14,13 @@
 
 Name: palemoon-uk
 
-#commit f353aabc21603a0a919202c32010b4b9a9c7bc9c
-#Author: JustOff <Off.Just.Off@gmail.com>
-#Date:   Sun Nov 5 22:51:34 2017 +0200
+# commit db3903541364659a9299cae4016a1210b5f5fbd2
+# Author: wolfbeast <mcwerewolf@gmail.com>
+# Date:   Thu Mar 1 08:02:43 2018 +0100
 #
-#    Locales update (27.6.0 RC3)
+#    Run release pack 27.8.0
 
-Version: 27.7.0
+Version: 27.8.0
 Release: alt1
 
 Summary: Ukrainian (UA) Language Pack for Pale Moon
@@ -114,6 +114,10 @@ ln -s %_datadir/myspell/uk_UA.dic %buildroot/%cid_dict_dir/dictionaries/uk.dic
 %search_dir
 
 %changelog
+* Tue Mar 13 2018 Hihin Ruslan <ruslandh@altlinux.ru> 27.8.0-alt1
+- Update from https://github.com/JustOff/pale-moon-localization.git
+  commit db3903541364659a9299cae4016a1210b5f5fbd2
+
 * Wed Jan 17 2018 Hihin Ruslan <ruslandh@altlinux.ru> 27.7.0-alt1
 - Update for release 27.7.0-RC6
 
