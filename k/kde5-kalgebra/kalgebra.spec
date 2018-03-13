@@ -1,7 +1,7 @@
 %define rname kalgebra
 
 Name: kde5-%rname
-Version: 17.08.3
+Version: 17.12.3
 Release: alt1%ubt
 %K5init
 
@@ -18,6 +18,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-svg-devel qt5-webengine-devel
 BuildRequires: libGLU-devel libreadline-devel
+#libncurses-devel
 BuildRequires: kde5-analitza-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdelibs4support kf5-kdoctools-devel-static
@@ -52,6 +53,9 @@ however, one does not need to know MathML to use KAlgebra.
 %_K5icon/*/*/apps/*algebra.*
 
 %changelog
+* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+- new version
+
 * Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 
