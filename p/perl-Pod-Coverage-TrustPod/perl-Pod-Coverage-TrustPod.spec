@@ -6,7 +6,7 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Pod-Coverage-TrustPod
-Version:        0.100004
+Version:        0.100005
 Release:        alt1
 Summary:        Allow a module's pod to contain Pod::Coverage hints
 License:        GPL+ or Artistic
@@ -57,6 +57,9 @@ make test
 %{perl_vendor_privlib}/Pod/
 
 %changelog
+* Tue Mar 13 2018 Igor Vlasenko <viy@altlinux.ru> 0.100005-alt1
+- automated CPAN update
+
 * Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.100004-alt1
 - automated CPAN update
 
