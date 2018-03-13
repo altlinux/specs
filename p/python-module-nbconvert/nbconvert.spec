@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 5.3.1
-Release: alt1
+Release: alt2
 Summary: Converting Jupyter Notebooks
 License: BSD
 Group: Development/Python
@@ -22,6 +22,7 @@ BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: pandoc time python-module-alabaster python-module-html5lib python-module-ipython_genutils-tests
 BuildRequires: python-module-notebook python-module-objects.inv python-module-pytest python-module-traitlets-tests
 BuildRequires: python-module-pathlib2 python2.7(entrypoints) python2.7(pandocfilters) python2.7(bleach)
+BuildRequires: texlive texlive-dist
 %if_with docs
 BuildRequires: python2.7(sphinx_rtd_theme) python2.7(nbsphinx)
 %endif
@@ -194,6 +195,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.3.1-alt2
+- Updated build dependencies.
+
 * Thu Nov 09 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.3.1-alt1
 - Updated to upstream version 5.3.1.
 - Disabled building docs.
