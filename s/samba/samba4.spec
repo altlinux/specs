@@ -38,7 +38,7 @@
 %def_with libcephfs
 
 Name: samba
-Version: 4.6.13
+Version: 4.6.14
 Release: alt1%ubt
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1404,6 +1404,12 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Mon Mar 12 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.6.14-alt1%ubt
+- Update to spring security release
+- Security fixes:
+  + CVE-2018-1050 Codenomicon crashes in spoolss server code
+  + CVE-2018-1057 Unprivileged user can change any user (and admin) password
+
 * Tue Feb 20 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.6.13-alt1%ubt
 - Update to second winter release with common bugfixes
 
