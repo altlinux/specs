@@ -1,6 +1,6 @@
 # Wait: https://github.com/haiwen/seafile/issues/1842
 Name: seafile
-Version: 6.1.5
+Version: 6.1.6
 Release: alt1
 
 Summary: Full-fledged cloud storage platform
@@ -119,6 +119,9 @@ export CPPFLAGS="$CPPFLAGS -I%_includedir/libevhtp-seafile/"
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Tue Mar 13 2018 Vitaly Lipatov <lav@altlinux.ru> 6.1.6-alt1
+- new version 6.1.6 (with rpmrb script)
+
 * Sun Feb 25 2018 Vitaly Lipatov <lav@altlinux.ru> 6.1.5-alt1
 - new version 6.1.5 (with rpmrb script)
 
