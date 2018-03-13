@@ -4,19 +4,21 @@
 
 Name:           python-module-fiat
 Version:        1.6.0
-Release:        alt1.dev.git20150429
+Release:        alt2.dev.git20150429
 Summary:        FInite element Automatic Tabulator
 Group:          Development/Python
 License:        LGPLv3+
 URL:           http://fenicsproject.org/
-# https://bitbucket.org/fenics-project/fiat.git
-Source:        %origname-%version.tar.gz
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 BuildArch: noarch
 
+# https://bitbucket.org/fenics-project/fiat.git
+Source:        %origname-%version.tar
+
+
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel texlive-latex-recommended
+BuildRequires: python-devel texlive-latex-recommended
+BuildRequires: /usr/bin/pdflatex tex(pdftex.def)
+
 %setup_python_module %origname
 
 %description
@@ -80,6 +82,9 @@ install -m644 doc/*.pdf %buildroot%_docdir/%origname
 %_docdir/%origname
 
 %changelog
+* Tue Mar 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.0-alt2.dev.git20150429
+- Updated build dependencies.
+
 * Sat May 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1.dev.git20150429
 - Version 1.6.0dev
 
