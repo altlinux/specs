@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname-new
 Version: 0.6.4 
-Release: alt1.2
+Release: alt1.3
  
 Summary: A fork of ruby-augeas (bindings for augeas) with exceptions support
 License: LGPL 2.1
@@ -44,6 +44,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_sitelibdir/*.rb
  
 %changelog
+* Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 0.6.4-alt1.3
+- Rebuild with Ruby 2.5.0
+
 * Mon Sep 25 2017 Andrey Cherepanov <cas@altlinux.org> 0.6.4-alt1.2
 - Rebuild with Ruby 2.4.2
 

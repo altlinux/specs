@@ -1,6 +1,6 @@
 Name:    ruby-gettext
 Version: 3.2.9
-Release: alt1
+Release: alt1.1
 
 Summary: Native Language Support Library for Ruby
 Group:   Development/Ruby
@@ -21,6 +21,8 @@ Requires: ruby-text
 
 Source: gettext-%version.tar
 Patch1: alt-gemspec.patch
+
+%filter_from_requires /^ruby(mathn)$/d
 
 %description
 Ruby GetText Package is Native Language Support Library and Tools
@@ -101,6 +103,9 @@ find . -name 'test_*.rb' -print0 | xargs -r0 -n 1 %ruby_test_unit -I../lib -I./
 %ruby_ri_sitedir/GetText*
 
 %changelog
+* Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.9-alt1.1
+- Rebuild with Ruby 2.5.0
+
 * Mon Mar 05 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.9-alt1
 - New version.
 

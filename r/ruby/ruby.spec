@@ -2,7 +2,7 @@
 %def_enable shared
 %def_without valgrind
 %def_enable rubygems
-%define ruby_version 2.4.2
+%define ruby_version 2.5.0
 %define libdir %_prefix/lib/%name
 %define includedir %_includedir
 %define ridir %_datadir/ri
@@ -10,11 +10,10 @@
 
 Name: ruby
 %define lname lib%name
-%define branch 2.4
-%define ver_teeny 2
-#define _pl
+%define branch 2.5
+%define ver_teeny 0
 Version: %branch.%ver_teeny
-Release: alt4
+Release: alt1
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -68,7 +67,6 @@ This package contains Ruby shared libraries.
 Summary: Files for compiling extension modules for Ruby
 Group: Development/C
 %{?_enable_shared:Requires: %lname = %version-%release}
-# FIXME: remove require below
 Requires: rpm-build-%name >= 0.1.2
 
 %description -n %lname-devel
@@ -101,10 +99,7 @@ Provides: %name-json = 1.7.7
 Obsoletes: %name-json
 Provides: %name-minitest = 4.3.2
 Obsoletes: %name-minitest
-#Provides: %name-module-test-unit = 2.2.0
-#Obsoletes: %name-module-test-unit
 Provides: %name-racc-runtime = 1.4.6
-#Obsoletes: %name-racc-runtime
 Provides: %{name}gems = 2.6.13
 %mobsolete English bigdecimal cgi curses date-time dbm debug digest dl drb e2mmap
 %mobsolete erb etc fcntl fileutils gdbm iconv math misc net nkf open3 openssl
@@ -142,15 +137,12 @@ Group: Development/Ruby
 BuildArch: noarch
 Requires: %name-stdlibs = %version
 Provides: gem = 2.6.13
-#Provides: testrb
 Provides: %name-rake = 12.0.0
 Provides: rake = 12.0.0
 Obsoletes: %name-rake
 Provides: rdoc = %version-%release
 Obsoletes: rdoc < %version-%release
 %obsolete %name-tool-rdoc
-#Provides: %name-test-unit = 2.2.0
-#Obsoletes: %name-test-unit
 Provides: %{name}gems = 2.6.13
 Obsoletes: %{name}gems
 
@@ -167,22 +159,6 @@ Requires: %name-stdlibs = %version
 %description -n irb
 irb is the REPL(read-eval&print loop) environment for Ruby programs.
 
-
-#%package doc-html
-#Summary: Ruby HTML documentatin
-#Group: Development/Documentation
-#BuildArch: noarch
-#AutoReq: no
-#AutoProv: no
-
-#%description doc-html
-#Ruby is an interpreted scripting language for quick and easy object-oriented
-#programming. It has many features for processing text files and performing system
-#management tasks (as in Perl). It is simple, straight-forward, and extensible.
-#
-#This package contains Ruby documentation in HTML format.
-
-
 %package doc-ri
 Summary: Ruby ri documentatin
 Group: Development/Documentation
@@ -198,7 +174,6 @@ management tasks (as in Perl). It is simple, straight-forward, and extensible.
 
 This package contains Ruby documentation in ri format.
 
-
 %if_without bootstrap
 %package miniruby-src
 Summary: Preprocessed miniruby sources
@@ -211,24 +186,15 @@ format. This files are required for ruby bootstrapping, especially
 on different arches.
 %endif
 
-
 %prep
-%setup -q %{?_pl:-n %name-%version-%_pl}
+%setup -q
 %patch -p1
 tar xf %SOURCE2
-#sed -i -r '/^#[[:blank:]]*define[[:blank:]]+RUBY_API_VERSION_TEENY[[:blank:]]/s/(RUBY_API_VERSION_TEENY[[:blank:]]+).*$/\1%ver_teeny/' include/%name/version.h
-#chmod a-x sample/{optparse,rss}/*
-# Broken 'require'
-
-#rm -f lib/rss/xmlscanner.rb
-#sed -i "/^require[[:blank:]]\+'enumerator'/d" lib/rinda/tuplespace.rb
-# Remove unneeded shebang
-#sed -i '/^#!/d' lib/minitest/spec.rb
 # More strict shebang
 sed -i '1s|^#!/usr/bin/env ruby|#!%_bindir/%name|' bin/*
 # Remove $ruby_version from libs path
 sed -i 's|/\$(ruby_version)||g;s|\(/%name/\)#{version}/|\1|g' tool/mkconfig.rb
-sed -i 's|/\${ruby_version}||' template/%name.pc.in configure.in
+sed -i 's|/\${ruby_version}||' template/%name.pc.in configure.ac
 sed -i -r "s/File.join[[:blank:]]+(RbConfig::CONFIG\['ridir'\]),[[:blank:]]*version/\1/" lib/rdoc/ri/paths.rb
 sed -i -r "/ridatadir[[:blank:]]*=/s/[[:blank:]]+CONFIG\['ruby_version'\],//" tool/rbinstall.rb
 sed -i 's|[[:blank:]]*"/"RUBY_LIB_VERSION$||' version.c
@@ -295,7 +261,6 @@ popd
 
 %make_build
 
-
 %install
 %makeinstall_std
 echo "VENDOR_SPECIFIC=true" > %buildroot%vendordir/vendor-specific.rb
@@ -332,7 +297,6 @@ mv %_builddir/miniruby-src.patch %buildroot%_datadir/%name-%version-miniruby/
 %check
 %make_build test
 
-
 %files
 %doc %dir %_docdir/%name-%version
 %doc %_docdir/%name-%version/COPYING
@@ -341,27 +305,21 @@ mv %_builddir/miniruby-src.patch %buildroot%_datadir/%name-%version-miniruby/
 %doc %_docdir/%name-%version/README.*
 %lang(ja) %doc %_docdir/%name-%version/*.ja
 %_bindir/%name
-#%_bindir/testrb
 %_man1dir/%name.*
-
 
 %files -n %lname
 %{?_enable_shared:%_libdir/*.so.*}
-
 
 %files -n %lname-devel
 %_pkgconfigdir/*
 %includedir/*
 %{?_enable_shared:%_libdir/*.so}
 
-
 %files -n %lname-devel-static
 %_libdir/*.a
 
-
 %files stdlibs
 %libdir
-
 
 %files -n ri
 %_bindir/update-ri-cache
@@ -369,39 +327,36 @@ mv %_builddir/miniruby-src.patch %buildroot%_datadir/%name-%version-miniruby/
 %_man1dir/ri.*
 %exclude %_rpmlibdir/%name-doc-ri.filetrigger
 
-
 %files tools
 %_bindir/erb
 %_bindir/gem
+%_bindir/update_rubygems
 %_bindir/rake
 %_bindir/rdoc
 %_man1dir/erb.*
 #%_man1dir/rake.*
-
 
 %files -n irb
 %lang(ja) %doc doc/irb/*.ja
 %_bindir/irb
 %_man1dir/irb.*
 
-
-#%files doc-html
-#%dir %_docdir/%name-%version
-#%_docdir/%name-%version/html
-
-
 %files doc-ri
 %dir %ridir
 %ridir/*
-
 
 %if_without bootstrap
 %files miniruby-src
 %_datadir/%name-%version-miniruby/miniruby-src.patch
 %endif
 
-
 %changelog
+* Mon Mar 05 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1
+- New version.
+- Fixes:
+  + CVE-2017-17405 Command injection vulnerability in Net::FTP
+- Update Rubygems to 2.7.6 with security fixes (see https://blog.rubygems.org/2018/02/15/2.7.6-released.html)
+
 * Thu Dec 21 2017 Andrew Savchenko <bircoph@altlinux.org> 2.4.2-alt4
 - Properly check for __uint128_t.
 

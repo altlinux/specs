@@ -2,7 +2,7 @@
 
 Name: ruby-%pkgname 
 Version: 0.19.0
-Release: alt1.2
+Release: alt1.3
 
 Summary: real-time stats for preforking Rack servers
 Group: Development/Ruby 
@@ -57,6 +57,9 @@ Documentation files for %name.
 %ruby_ri_sitedir/Raindrops*
 
 %changelog
+* Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 0.19.0-alt1.3
+- Rebuild with Ruby 2.5.0
+
 * Mon Sep 25 2017 Andrey Cherepanov <cas@altlinux.org> 0.19.0-alt1.2
 - Rebuild with Ruby 2.4.2
 

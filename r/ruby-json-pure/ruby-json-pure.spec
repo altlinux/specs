@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 2.1.0
-Release: alt1.2
+Release: alt1.3
  
 Summary: This is a JSON implementation in pure Ruby
 License: MIT/Ruby
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1.3
+- Rebuild with Ruby 2.5.0
+
 * Mon Sep 25 2017 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1.2
 - Rebuild with Ruby 2.4.2
 
