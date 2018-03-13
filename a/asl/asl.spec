@@ -1,7 +1,7 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%define fedora 25
+%define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # spec file for package asl
@@ -12,12 +12,12 @@ BuildRequires: gcc-c++
 #
 # Spec file for Fedora modified by Eric Smith <brouhaha@fedoraproject.org>
 
-%global patchlevel bld115
+%global patchlevel bld126
 
 Name:           asl
 URL:            http://john.ccac.rwth-aachen.de:8000/as/index.html
 Version:        1.42
-Release:        alt2_0.33.%{patchlevel}
+Release:        alt2_0.35.%{patchlevel}
 Group:          Development/Other
 License:        GPLv2+
 Summary:        Macro Assembler AS
@@ -26,9 +26,9 @@ Patch0:         asl-Makefile.def.patch
 Patch1:         asl-sysdefs.h.patch
 Patch2:         asl-install.sh.patch
 Patch3:         asl-Makefile-DESTDIR.patch
-BuildRequires:  /usr/bin/latex texlive-latex-recommended
+BuildRequires:  tex(latex)
 %if 0%{?fedora} > 18 || 0%{?rhel} > 6
-BuildRequires:  texlive-latex-recommended
+BuildRequires:  tex(german.sty)
 %endif
 Source44: import.info
 
@@ -87,12 +87,15 @@ done
 %{_mandir}/man1/pbind.1*
 %{_mandir}/man1/plist.1*
 %{_mandir}/man1/alink.1*
-%doc COPYING
+%doc --no-dereference COPYING
 %doc README README.LANGS TODO BENCHES changelog
 %doc doc/as-EN.html doc/as-EN.txt doc/as-EN.ps doc/as-EN.pdf doc/as-EN.dvi
 %lang(de) %doc doc/as-DE.html doc/as-DE.txt doc/as-DE.ps doc/as-DE.pdf doc/as-DE.dvi
 
 %changelog -n asl
+* Tue Mar 13 2018 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.35.bld126
+- fixed build
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.33.bld115
 - update to new release by fcimport
 
