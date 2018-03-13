@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.411
+Version: 0.412
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -39,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Tue Mar 13 2018 Igor Vlasenko <viy@altlinux.ru> 0.412-alt1
+- texmf w/o doc
+
 * Sun Mar 04 2018 Igor Vlasenko <viy@altlinux.ru> 0.411-alt1
 - bugfix release
 
