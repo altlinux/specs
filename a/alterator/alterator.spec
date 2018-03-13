@@ -1,6 +1,6 @@
 Name: alterator
 Version: 5.1
-Release: alt9
+Release: alt10
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -27,7 +27,7 @@ Requires: guile22
 %endif
 %{?!_with_bootstrap:Requires: alterator-lookout}
 
-Requires(pre): libguile-vhttpd >= 0.7.7-alt1
+Requires(pre): libguile-vhttpd >= 0.7.8-alt1
 Requires(pre): shadow-utils
 
 #incompatibility
@@ -167,6 +167,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Tue Mar 13 2018 Paul Wolneykien <manowar@altlinux.org> 5.1-alt10
+- Update libguile-vhttpd dependency: require >= 0.7.8-alt1.
+
 * Tue Jan 16 2018 Paul Wolneykien <manowar@altlinux.org> 5.1-alt9
 - Always use UTF-8 for gettext to/from alterator I/O.
 
