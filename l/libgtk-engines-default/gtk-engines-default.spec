@@ -14,7 +14,7 @@
 
 Name: %{engine_prefix}s-default
 Version: %ver_major.2
-Release: alt3
+Release: alt3.1
 Epoch: 1
 
 Summary: Default GTK+2 theme engines
@@ -24,6 +24,7 @@ Url: http://gtk.themes.org/
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.bz2
 Patch: %_name-2.20.2-alt-glib_fixes.patch
+Patch1: gtk-engines-2.20-lua-alt-lua5.3.patch
 
 Obsoletes: %old_engine_prefix <= %engine_namechange_ver
 Provides: %old_engine_prefix = %version-%release
@@ -224,6 +225,7 @@ This package contains development files for %_name
 %prep
 %setup -q -n %_name-%version
 %patch -p1
+%patch1 -p2
 
 %build
 %autoreconf
@@ -315,6 +317,9 @@ ln -s gtk-2.0/%gtk_binary_ver/engines/libclearlooks.so %buildroot%_libdir/libcle
 %exclude %engines_dir/*.la
 
 %changelog
+* Tue Mar 13 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.20.2-alt3.1
+- NMU: fixed undefined symbol lua_open (Patch1)
+
 * Mon Jun 26 2017 Andrey Cherepanov <cas@altlinux.org> 1:2.20.2-alt3
 - provide libclearlooks.so for bricscadv17
 
