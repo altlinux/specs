@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.59
+Version: 0.600
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -10,7 +10,7 @@ Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 Summary: common scripts for an automated packaging node
 Group: Development/Other
 License: GPL2+
-#Url: 
+Url: https://www.altlinux.org/Autorepo
 Source: %name-%version.tar
 
 Requires: /usr/bin/relative /usr/bin/parentlock /usr/bin/parallel
@@ -79,6 +79,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Tue Mar 13 2018 Igor Vlasenko <viy@altlinux.ru> 0.600-alt1
+- new version
+
 * Tue Jan 02 2018 Igor Vlasenko <viy@altlinux.ru> 0.59-alt1
 - new shared cli api
 
