@@ -1,20 +1,22 @@
 Name:           pymol
-Version:        1.7.2.1
-Release:        alt2.svn20140819.qa1
+Version:        1.8.6.0
+Release:        alt1
 Summary:        Python-enhanced molecular graphics tool
 Group:          Sciences/Chemistry
 License:        CNRI Python License
 URL:            http://www.pymol.org/
 # https://pymol.svn.sourceforge.net/svnroot/pymol
-Source:        %name-%version.tar.bz2
+
+Source:        %name-%version.tar
 Source1:			 http://pymolwiki.org/images/7/77/PymolRef.pdf
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
 Requires: python-module-%name = %version-%release
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: libGLU-devel python-module-OpenGL libpng-devel tk-devel gcc-c++
-BuildPreReq: libnumpy-devel libfreetype-devel libGLUT-devel
-BuildPreReq: python-devel libGLEW-devel
+BuildRequires: libGLU-devel python-module-OpenGL libpng-devel tk-devel gcc-c++
+BuildRequires: libnumpy-devel libfreetype-devel libGLUT-devel
+BuildRequires: python-devel libGLEW-devel
+BuildRequires: libxml2-devel libmsgpack-devel
 
 %description
 PyMOL is a Python-enhanced molecular graphics tool. It excels at 3D
@@ -86,8 +88,8 @@ cp %SOURCE1 ./
 #PYTHONPATH=%buildroot%python_sitelibdir %__python setup2.py install \
 #	--skip-build --root=%buildroot
 
-for i in contrib/champ contrib/modules \
-	contrib/sglite contrib/uiuc/plugins/include \
+for i in contrib/champ contrib/mmtf-c \
+	contrib/uiuc/plugins/include \
 	contrib/uiuc/plugins/molfile_plugin/src layer0 layer1 \
 	layer2 layer3 layer4 layer5 ov/src
 do
@@ -105,10 +107,9 @@ chmod +x %buildroot%_bindir/pymol
 
 mkdir -pv %buildroot%_docdir/PyMOL
 cp PymolRef.pdf %buildroot%_docdir/PyMOL/
-bzip2 ChangeLog
 
 %files
-%doc ChangeLog.bz2 AUTHORS README LICENSE COPYING
+%doc ChangeLog AUTHORS README LICENSE COPYING
 %_bindir/*
 
 %files devel
@@ -134,6 +135,9 @@ bzip2 ChangeLog
 %_docdir/PyMOL
 
 %changelog
+* Tue Mar 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.6.0-alt1
+- Updated to upstream version 1.8.6.0.
+
 * Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.7.2.1-alt2.svn20140819.qa1
 - NMU: rebuilt with libGLEW.so.1.13.
 
