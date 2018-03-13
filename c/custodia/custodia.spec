@@ -6,7 +6,7 @@
 
 Name: custodia
 Version: 0.5.0
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: A tool for managing secrets
 
 Group: System/Configuration/Other
@@ -146,19 +146,17 @@ install -m 600 %_builddir/%name-%version/contrib/config/custodia/custodia.conf %
 install -m 644 %_builddir/%name-%version/contrib/config/systemd/system/custodia@.service  %buildroot%_unitdir
 install -m 644 %_builddir/%name-%version/contrib/config/systemd/system/custodia@.socket  %buildroot%_unitdir
 install -m 644 %_builddir/%name-%version/contrib/config/tmpfiles.d/custodia.conf  %buildroot%_tmpfilesdir/custodia.conf
-#workaround fix to python2.7 import error of custodia's module
-touch %buildroot%python_sitelibdir/%name/__init__.py
 
 %check
 # don't download packages
 export PIP_INDEX_URL=http://host.invalid./
 
-export PYTHONPATH=%buildroot%python_sitelibdir_noarch:%python_sitelibdir_noarch:%_libdir/python2.7/site-packages
+export PYTHONPATH=%python_sitelibdir_noarch:%_libdir/python2.7/site-packages
 TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py27 -v
 
 pushd ../python3
-export PYTHONPATH=%buildroot%python3_sitelibdir_noarch:%python3_sitelibdir_noarch:%_libdir/python3/site-packages
-TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py35 -v
+export PYTHONPATH=%python3_sitelibdir_noarch:%_libdir/python3/site-packages
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py35 -v
 popd
 
 %pre
@@ -208,6 +206,9 @@ exit 0
 %_bindir/custodia-cli.py3
 
 %changelog
+* Mon Jan 29 2018 Stanislav Levin <slev@altlinux.org> 0.5.0-alt2%ubt
+- Fix tests for Python3
+
 * Wed Oct 25 2017 Stanislav Levin <slev@altlinux.org> 0.5.0-alt1%ubt
 - Put v0.5.0 sources from https://github.com/latchset/custodia
 
