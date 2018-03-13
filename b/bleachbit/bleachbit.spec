@@ -1,11 +1,11 @@
 Name:           bleachbit
-Version:        1.12
+Version:        2.0
 Release:        alt1
 
 Summary:        Remove unnecessary files, free space, and maintain privacy
 License:        GPLv3+
 Group:          Archiving/Other
-URL:            http://bleachbit.sourceforge.net/
+URL:            http://www.bleachbit.org/
 
 Packager:       Andrey Cherepanov <cas@altlinux.org>
 
@@ -18,7 +18,7 @@ BuildArch:      noarch
 
 BuildRequires(pre): rpm-build-gnome python-devel
 
-%add_python_req_skip Windows
+%add_python_req_skip Windows win32api win32con win32file winioctlcon
 
 %description
 BleachBit deletes unnecessary files to free valuable disk space,
@@ -29,7 +29,7 @@ and history list of many common programs.
 
 %prep
 %setup -q
-%patch1 -p2
+%patch1 -p1
 
 %build
 make -C po local 
@@ -50,8 +50,13 @@ rm -f %buildroot%_datadir/%name/Windows.py*
 %_desktopdir/%name.desktop
 %_datadir/%name/
 %_pixmapsdir/%name.png
+%_datadir/appdata/*.appdata.xml
+%_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 2.0-alt1
+- New version.
+
 * Fri Jul 08 2016 Andrey Cherepanov <cas@altlinux.org> 1.12-alt1
 - new version 1.12
 
