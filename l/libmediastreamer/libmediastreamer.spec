@@ -1,6 +1,8 @@
+%set_gcc_version 5
+
 Name: libmediastreamer
 Version: 2.16.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Audio/Video real-time streaming
@@ -14,7 +16,7 @@ Requires: %name-common = %version-%release
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildRequires: intltool doxygen gcc-c++ libSDL-devel libX11-devel libalsa-devel
+BuildRequires: intltool doxygen gcc5-c++ gcc5 libSDL-devel libX11-devel libalsa-devel
 BuildRequires: libavcodec-devel libpulseaudio-devel libspeex-devel libspeexdsp-devel
 BuildRequires: libswscale-devel libtheora-devel libv4l-devel libgsm-devel
 BuildRequires: libXv-devel libjack-devel libsamplerate-devel libglew-devel
@@ -51,6 +53,8 @@ develop programs using the mediastreamer2 library.
 
 %build
 %define _optlevel 3
+export CC="gcc-%{_gcc_version}"
+export CXX="g++-%{_gcc_version}"
 %add_optflags %optflags_shared %optflags_strict %optflags_notraceback -fno-schedule-insns -fschedule-insns2
 %ifarch %ix86
 %add_optflags -malign-double
@@ -87,6 +91,9 @@ mkdir -p %buildroot/%_libdir/mediastreamer/plugins
 %_includedir/*
 
 %changelog
+* Tue Mar 13 2018 Alexei Takaseev <taf@altlinux.org> 2.16.1-alt2
+- Build with gcc5
+
 * Sat Jul 22 2017 Alexei Takaseev <taf@altlinux.org> 2.16.1-alt1
 - 2.16.1
 
