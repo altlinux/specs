@@ -1,26 +1,21 @@
 %define rname kigo
 
 Name: kde5-%rname
-Version: 17.08.3
+Version: 17.12.3
 Release: alt1%ubt
 %K5init
 
 Summary: %rname is an open-source implementation of the popular Go game
-License: %gpl2only
+License: GPLv2
 Group: Games/Boards
 Url: https://www.kde.org/applications/games/kigo
 Source0: %rname-%version.tar
 Requires: gnugo
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt rpm-build-licenses 
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-declarative-devel qt5-svg-devel
-#Tier 1
-BuildRequires: kf5-kdbusaddons-devel
-#Tier 2
-BuildRequires: kf5-kcrash-devel kf5-kdoctools-devel
-#Tier 3
+BuildRequires: kf5-kdbusaddons-devel kf5-kcrash-devel kf5-kdoctools-devel
 BuildRequires: kf5-knewstuff-devel kf5-kio-devel kf5-ktextwidgets-devel
-#KDE apps
 BuildRequires: kde5-libkdegames-devel
 
 %description
@@ -55,6 +50,9 @@ glass or plastic) on the vacant intersections of a grid of 19x19 lines (9x9 or
 %_K5xdgconf/%{rname}.knsrc
 
 %changelog
+* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+- new version
+
 * Fri Nov 17 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 
