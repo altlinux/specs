@@ -1,5 +1,5 @@
 Name: imapsync
-Version: 1.727
+Version: 1.836
 Release: alt1
 
 Summary: Tool to migrate email between IMAP servers
@@ -20,17 +20,23 @@ BuildArch: noarch
 Requires: perl(IO/Socket/INET6.pm)
 
 # Build requires:
+# Automatically added by buildreq on Sun Mar 11 2018
+# optimized out: python-base python-modules python3 python3-base python3-module-mpl_toolkits python3-module-zope ruby ruby-stdlibs
+
 BuildRequires:  perl(Data/Dumper.pm) perl(Data/Uniqid.pm)
 BuildRequires:  perl(Digest/HMAC.pm) perl(Digest/HMAC_SHA1.pm) perl(Digest/MD5.pm)
 BuildRequires:  perl(File/Copy/Recursive.pm)
 BuildRequires:  perl(IO/Socket/SSL.pm) perl(IO/Socket/INET6.pm)
 BuildRequires:  perl(IO/Tee.pm) perl(IPC/Open3.pm)
 BuildRequires:  perl(JSON/WebToken.pm) perl(LWP/UserAgent.pm)
-BuildRequires:  perl(Mail/IMAPClient.pm)
-BuildRequires:  perl(Parse/RecDescent.pm)
+BuildRequires:  perl(Mail/IMAPClient.pm) perl(Sys/MemInfo.pm)
+BuildRequires:  perl(Parse/RecDescent.pm) perl(Net/Ping.pm)
 BuildRequires:  perl(Readonly.pm) perl(Term/ReadKey.pm)
 BuildRequires:  perl(Test/MockObject.pm) perl(Test/More.pm) perl(Test/Pod.pm)
+BuildRequires:  perl(Test/Fatal.pm) perl(Pod/Usage.pm) perl(Test/Requires.pm)
+BuildRequires:  perl(Dist/CheckConflicts.pm) perl(Test/Mock/Guard.pm)
 BuildRequires:  perl(URI/Escape.pm) perl(Unicode/String.pm)
+BuildRequires:  perl(PAR/Packer.pm) perl(Class/Load.pm)
 
 %description
 imapsync is a tool for facilitating incremental recursive IMAP
@@ -53,6 +59,9 @@ optionally be deleted after a successful transfer.
 %_man1dir/%name.*
 
 %changelog
+* Tue Mar 13 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.836-alt1
+- New version
+
 * Mon May 08 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.727-alt1
 - New version
 - Cleanup spec file
