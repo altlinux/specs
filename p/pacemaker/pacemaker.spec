@@ -2,8 +2,8 @@
 
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
-Version: 1.1.17
-Release: alt2
+Version: 1.1.18
+Release: alt1
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
 # VCS:   https://github.com/ClusterLabs/pacemaker.git
@@ -321,6 +321,9 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.18-alt1
+- New version.
+
 * Tue Oct 03 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.17-alt2
 - Build without cluster-glue (ALT #33944)
 
