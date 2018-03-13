@@ -7,7 +7,7 @@
 
 Name: activesupport-gems
 Version: 5.1.4
-Release: alt1
+Release: alt1.1
 Summary: ActiveSupport 
 Group: Development/Ruby
 License: MIT,Apache2.0
@@ -78,6 +78,9 @@ rm -f gems/thread_safe-0.3.6/examples/bench_cache.rb
 %doc %gem_docdir
 
 %changelog
+* Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 5.1.4-alt1.1
+- Rebuild with Ruby 2.5.0
+
 * Fri Dec 29 2017 Denis Medvedev <nbr@altlinux.org> 5.1.4-alt1
 - freshen included gem versions
 

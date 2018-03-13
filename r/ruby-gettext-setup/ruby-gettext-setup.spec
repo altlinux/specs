@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 0.30
-Release: alt1
+Release: alt1.1
  
 Summary: A gem that configures gettext for internationalization
 License: MIT/Ruby
@@ -77,6 +77,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 0.30-alt1.1
+- Rebuild with Ruby 2.5.0
+
 * Tue Feb 13 2018 Andrey Cherepanov <cas@altlinux.org> 0.30-alt1
 - New version.
 

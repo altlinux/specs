@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 0.5.0
-Release: alt2.2
+Release: alt2.3
 Epoch:   1
  
 Summary: Provides bindings for augeas
@@ -47,6 +47,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_sitelibdir/*.rb
  
 %changelog
+* Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.5.0-alt2.3
+- Rebuild with Ruby 2.5.0
+
 * Mon Sep 25 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.5.0-alt2.2
 - Rebuild with Ruby 2.4.2
 

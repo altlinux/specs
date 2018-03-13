@@ -21,7 +21,7 @@
 Summary: ObexFTP implements the Object Exchange (OBEX) protocols file transfer
 Name: obexftp
 Version: 0.24.2
-Release: alt2.2
+Release: alt2.3
 
 License: GPLv2
 Group: Communications
@@ -207,6 +207,9 @@ rm -f %buildroot/usr/lib/ruby/vendor_ruby/*/*/obexftp.so
 %endif
 
 %changelog
+* Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 0.24.2-alt2.3
+- Rebuild with Ruby 2.5.0
+
 * Mon Sep 25 2017 Andrey Cherepanov <cas@altlinux.org> 0.24.2-alt2.2
 - Rebuild with Ruby 2.4.2
 

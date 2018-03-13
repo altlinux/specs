@@ -1,6 +1,6 @@
 Name: ruby-fcgi
 Version: 0.9.2.1
-Release: alt2.2
+Release: alt2.3
 
 Summary: FastCGI for ruby
 Group: Development/Ruby
@@ -36,6 +36,9 @@ http://www.moonwolf.com/ruby/archive/. But now, he is MIA.
 %ruby_sitearchdir/*
 
 %changelog
+* Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.2.1-alt2.3
+- Rebuild with Ruby 2.5.0
+
 * Mon Sep 25 2017 Andrey Cherepanov <cas@altlinux.org> 0.9.2.1-alt2.2
 - Rebuild with Ruby 2.4.2
 

@@ -1,6 +1,6 @@
 Name: 	 ruby-unf_ext
 Version: 0.0.7.5
-Release: alt1
+Release: alt1.1
 
 Summary: Unicode Normalization Form support library for CRuby
 License: MIT
@@ -52,6 +52,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 0.0.7.5-alt1.1
+- Rebuild with Ruby 2.5.0
+
 * Tue Feb 06 2018 Andrey Cherepanov <cas@altlinux.org> 0.0.7.5-alt1
 - New version.
 

@@ -2,7 +2,7 @@
 
 Name: %pkgname
 Version: 5.4.0
-Release: alt1
+Release: alt1.1
 Summary: Unicorn: Rack HTTP server for fast clients and Unix
 License: GPL2
 Group: System/Servers
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/Unicorn*
 
 %changelog
+* Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 5.4.0-alt1.1
+- Rebuild with Ruby 2.5.0
+
 * Sun Dec 24 2017 Andrey Cherepanov <cas@altlinux.org> 5.4.0-alt1
 - New version.
 
