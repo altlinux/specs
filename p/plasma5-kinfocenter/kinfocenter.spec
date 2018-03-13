@@ -1,7 +1,7 @@
 %define rname kinfocenter
 
 Name: plasma5-%rname
-Version: 5.12.2
+Version: 5.12.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -14,6 +14,7 @@ Requires: usbids
 
 Source: %rname-%version.tar
 Patch1: alt-usbids-path.patch
+Patch2: alt-opengl-device.patch
 
 # Automatically added by buildreq on Thu Mar 26 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils glibc-devel-static kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libraw1394-11 libstdc++-devel libwayland-client libwayland-server libxcbutil-keysyms pkg-config python-base ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -70,6 +71,7 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K5build
@@ -110,6 +112,9 @@ KF5 library
 #%_K5lib/libkinfocenter.so.*
 
 %changelog
+* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt1%ubt
+- new version
+
 * Thu Mar 01 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1%ubt
 - new version
 

@@ -7,7 +7,7 @@
 
 
 Name: plasma5-desktop
-Version: 5.12.2
+Version: 5.12.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -42,7 +42,7 @@ BuildRequires: qt5-declarative-devel qt5-phonon-devel qt5-svg-devel qt5-x11extra
 BuildRequires: scim-devel libibus-devel libgio-devel glib2-devel
 BuildRequires: libudev-devel
 BuildRequires: libGLU-devel libcanberra-devel libpulseaudio-devel libusb-compat-devel libxapian-devel libxcbutil-image-devel
-BuildRequires: xorg-drv-synaptics-devel xorg-sdk xorg-drv-evdev-devel xkeyboard-config-devel
+BuildRequires: xorg-drv-synaptics-devel xorg-sdk xorg-drv-evdev-devel xkeyboard-config-devel xorg-drv-libinput-devel
 BuildRequires: iceauth mkfontdir xset
 BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
 BuildRequires: kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel
@@ -208,6 +208,9 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt1%ubt
+- new version
+
 * Thu Mar 01 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1%ubt
 - new version
 

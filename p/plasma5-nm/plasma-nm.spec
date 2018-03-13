@@ -2,7 +2,7 @@
 %def_disable openswan
 
 Name: plasma5-nm
-Version: 5.12.2
+Version: 5.12.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -15,6 +15,9 @@ Requires: NetworkManager-daemon
 Requires: NetworkManager-adsl NetworkManager-wifi
 Requires: mobile-broadband-provider-info
 Requires: qca-qt5-ossl
+
+Provides: kf5-plasma-nm = %EVR
+Obsoletes: kf5-plasma-nm < %EVR
 
 Source: %rname-%version.tar
 Source10: 01-plasma-nm.js
@@ -40,9 +43,6 @@ BuildRequires: kf5-solid-devel kf5-sonnet-devel
 BuildRequires: ModemManager-devel libopenconnect-devel
 BuildRequires: libnm-devel libnm-glib-devel libnm-util-devel libnm-glib-vpn-devel NetworkManager-devel
 BuildRequires: kf5-modemmanager-qt-devel kf5-networkmanager-qt-devel
-
-Provides: kf5-plasma-nm = %EVR
-Obsoletes: kf5-plasma-nm < %EVR
 
 %description
 Plasma applet and editor for managing your network connections in KDE using
@@ -274,6 +274,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt1%ubt
+- new version
+
 * Thu Mar 01 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1%ubt
 - new version
 
