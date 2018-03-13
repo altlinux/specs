@@ -1,13 +1,13 @@
-%define git_commit 4384376
+%define git_commit 062d606
 		    
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 27.7.2
+Version: 27.8.1 
 
 # %%ifndef git_commit
-Release: alt1.2
+Release: alt1
 # %%else
 # Release: alt1.git_1_%git_commit
 # %%endif
@@ -15,7 +15,7 @@ Release: alt1.2
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 
-# git commit 4384376a287a8d28b6750d86b29b290bb62da61b
+# git commit 062d60652e9b8d4bb86efc6ac22699e2c1756ae3
 Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
@@ -597,8 +597,11 @@ install -D -m 644 README.md ../
 %exclude %_includedir/*
 %exclude %_datadir/idl/*
 
-# git commit 4384376a287a8d28b6750d86b29b290bb62da61b
+# git commit 062d60652e9b8d4bb86efc6ac22699e2c1756ae3
 %changelog
+* Sun Mar 11 2018 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.8.1-alt1
+- New Version - Release 27.8.1
+
 * Mon Feb 05 2018 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.7.2-alt1.2
 - Fix Changelog
 
