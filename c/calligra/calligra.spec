@@ -8,7 +8,7 @@
 
 Name: calligra
 Version: 3.1.0
-Release: alt1%ubt
+Release: alt2%ubt
 Epoch: 0
 %K5init no_altplace
 %define libname lib%name
@@ -404,6 +404,9 @@ done
 %exclude %_K5lib/libkookularGenerator_odt.so*
 
 %changelog
+* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 0:3.1.0-alt2%ubt
+- rebuild with new okular
+
 * Thu Mar 01 2018 Sergey V Turchin <zerg@altlinux.org> 0:3.1.0-alt1%ubt
 - new version
 

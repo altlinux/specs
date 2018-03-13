@@ -24,8 +24,8 @@
 
 %define rname k3b
 Name: kde5-%rname
-Version: 17.08.3
-Release: alt2%ubt
+Version: 17.12.2
+Release: alt1%ubt
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Group: Archiving/Cd burning
@@ -181,6 +181,9 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+- new version
+
 * Thu Feb 22 2018 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt2%ubt
 - obsolete kde4-k3b
 

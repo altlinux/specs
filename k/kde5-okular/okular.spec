@@ -1,13 +1,13 @@
 %define rname okular
 %def_enable msits
-%def_disable mobile
+%def_enable mobile
 
-%define sover 7
+%define sover 8
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
-Version: 17.08.3
-Release: alt2%ubt
+Version: 17.12.2
+Release: alt1%ubt
 %K5init
 
 Group: Office
@@ -25,18 +25,19 @@ Patch1: alt-chm-encoding.patch
 #BuildRequires: ebook-tools-devel extra-cmake-modules kde5-libkexiv2-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel kf5-khtml-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjs-devel kf5-knotifications-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libkscreen-devel kf5-solid-devel kf5-sonnet-devel kf5-threadweaver-devel libchm-devel libdjvu-devel libjpeg-devel libpoppler-qt5-devel libqca-qt5-devel libspectre-devel libtiff-devel python-module-google qt5-declarative-devel qt5-phonon-devel qt5-svg-devel rpm-build-python3 rpm-build-ruby zlib-devel-static
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-declarative-devel qt5-phonon-devel qt5-svg-devel
-BuildRequires: zlib-devel
+BuildRequires: zlib-devel libdiscount-devel
 BuildRequires: ebook-tools-devel libdjvu-devel libjpeg-devel libpoppler-qt5-devel libqca-qt5-devel libspectre-devel libtiff-devel
 BuildRequires: kde5-libkexiv2-devel
+BuildRequires: plasma5-libkscreen-devel
 BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel
 BuildRequires: kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel kf5-khtml-devel
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
 BuildRequires: kf5-kjs-devel kf5-knotifications-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktextwidgets-devel
-BuildRequires: kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libkscreen-devel
+BuildRequires: kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
 BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-threadweaver-devel
 %if_enabled msits
-BuildRequires: libchm-devel
+BuildRequires: libchm-devel libzip-devel
 %endif
 
 %description
@@ -46,7 +47,7 @@ Document viewer; support different kinds of documents.
 Summary: Mobile Document Viewer
 Group: Office
 Requires: %name-core = %EVR
-Requires: kf5-kdeclarative kf5-plasma-mobile
+Requires: kf5-kdeclarative kf5-kirigami
 %description mobile
 Document viewer; support different kinds of documents.
 
@@ -82,11 +83,12 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
+#%patch1 -p1
 sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 
 %build
 %K5build \
+    -DLIBZIP_INCLUDE_DIR=%_includedir/libzip \
     -DINCLUDE_INSTALL_DIR=%_K5inc \
     #
 
@@ -130,7 +132,6 @@ sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 %if_enabled msits
 %_K5plug/kio_msits.so
 %_K5srv/ms-its.protocol
-#%_K5srv/okularChm.desktop
 %endif
 
 %files devel
@@ -143,6 +144,9 @@ sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+- new version
+
 * Thu Dec 28 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt2%ubt
 - exclude internal ooo generator
 

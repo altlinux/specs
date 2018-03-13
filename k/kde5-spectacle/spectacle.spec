@@ -1,7 +1,7 @@
 %define rname spectacle
 
 Name: kde5-%rname
-Version: 17.08.3
+Version: 17.12.2
 Release: alt1%ubt
 %K5init altplace
 
@@ -23,8 +23,9 @@ BuildRequires: kde5-libkipi-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdoctools-devel-static
 BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kpackage-devel
-BuildRequires: kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libkscreen-devel
+BuildRequires: kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
 BuildRequires: kf5-solid-devel
+BuildRequires: plasma5-libkscreen-devel
 
 %description
 Spectacle is screenshot taking utility for the KDE desktop. Spectacle
@@ -70,6 +71,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+- new version
+
 * Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 
