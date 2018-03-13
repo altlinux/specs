@@ -2,28 +2,29 @@
 %define mname pyasn1-modules
 
 Name: python-module-%mname
-Version: 0.1.5
+Version: 0.2.1
 Release: alt1%ubt
+
 Summary: ASN.1 modules for Python
 License: %bsdstyle
 Group: Development/Python
+# Source-git: https://github.com/etingof/pyasn1-modules.git
 Url: https://pypi.python.org/pypi/pyasn1-modules
 
-Source0: %name-%version.tar
-Patch0: %name-%version.patch
+Source: %name-%version.tar
 BuildArch: noarch
-%py_provides %mname
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: python-module-pyasn1 >= 0.3.4
-BuildRequires: python3-module-pyasn1 >= 0.3.4
+
+BuildRequires: python-module-pyasn1 >= 0.4.1
+BuildRequires: python3-module-pyasn1 >= 0.4.1
 BuildRequires: python-module-setuptools
 BuildRequires: python3-module-setuptools
 
-Requires: python-module-pyasn1 >= 0.3.4
+Requires: python-module-pyasn1 >= 0.4.1
 
 %description
 This is a small but growing collection of ASN.1 data structures
@@ -34,8 +35,7 @@ It's thought to be useful to protocol developers and testers.
 %package -n python3-module-%mname
 Summary: ASN.1 modules for Python 3
 Group: Development/Python3
-Requires: python3-module-pyasn1 >= 0.3.4
-%py3_provides %mname
+Requires: python3-module-pyasn1 >= 0.4.1
 
 %description -n python3-module-%mname
 This is a small but growing collection of ASN.1 data structures
@@ -50,18 +50,21 @@ cp -a . ../python3
 
 %build
 %python_build_debug
+
 pushd ../python3
 %python3_build_debug
 popd
 
 %install
 %python_install
+
 pushd ../python3
 %python3_install
 popd
 
 %check
 python setup.py test -v
+
 pushd ../python3
 python3 setup.py test -v
 popd
@@ -77,6 +80,9 @@ popd
 %python3_sitelibdir/pyasn1_modules-%version-*.egg-info/
 
 %changelog
+* Tue Mar 13 2018 Stanislav Levin <slev@altlinux.org> 0.2.1-alt1%ubt
+- 0.1.5 -> 0.2.1
+
 * Thu Nov 09 2017 Stanislav Levin <slev@altlinux.org> 0.1.5-alt1%ubt
 - 0.0.8 -> 0.1.5
 
