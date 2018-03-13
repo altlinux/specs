@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.21.0
-Release: alt2
+Version: 0.22.0
+Release: alt1
 
 Summary: Python Data Analysis Library
 License: BSD
@@ -15,7 +15,7 @@ Url: http://pandas.pydata.org/
 
 # https://github.com/pandas-dev/pandas.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-docs.patch
+Patch1: %oname-alt-docs.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires(pre): rpm-build-python
@@ -49,7 +49,7 @@ Summary: Python Data Analysis Library
 Group: Development/Python3
 %add_python3_req_skip feather
 %py3_requires pytz pandas.util.testing dateutil numpy sqlalchemy numexpr
-%py3_requires scipy boto bs4 xlrd openpyxl xlsxwriter xlwt httplib2 rpy2
+%py3_requires scipy boto bs4 xlrd openpyxl xlsxwriter xlwt httplib2
 %py3_requires oauth2client apiclient gflags tables statsmodels
 %py3_requires statsmodels.stats.multitest
 
@@ -185,6 +185,10 @@ popd
 %endif
 
 %changelog
+* Tue Mar 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.22.0-alt1
+- Updated to upstream version 0.22.0.
+- Updated runtime dependencies of python-3 package.
+
 * Thu Nov 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.21.0-alt2
 - Updated runtime dependencies of python-2 package.
 
