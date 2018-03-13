@@ -1,11 +1,10 @@
 Name: hlsl2glsl
 Version: 2016.11
-Release: alt1.git20161116
+Release: alt2.git20161116
 Summary: HLSL to GLSL shader language translator
 License: BSD
 Group: Development/Tools
 Url: https://github.com/aras-p/hlsl2glslfork
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/aras-p/hlsl2glslfork.git
 Source: %name-%version.tar
@@ -52,6 +51,9 @@ install -m644 *.a %buildroot%_libdir/
 %_libdir/*.a
 
 %changelog
+* Tue Mar 13 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2016.11-alt2.git20161116
+- Rebuilt with libGLEW 2.1.0.
+
 * Tue Jul 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2016.11-alt1.git20161116
 - Updated to latest upstream version
 
