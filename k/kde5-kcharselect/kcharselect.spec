@@ -1,7 +1,7 @@
 %define rname kcharselect
 
 Name: kde5-%rname
-Version: 17.08.3
+Version: 17.12.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -62,9 +62,12 @@ KF5 library
 %doc COPYING*
 %_K5bin/kcharselect
 %_K5xdgapp/org.kde.kcharselect.desktop
-%_K5xmlgui/kcharselect/
+#%_K5xmlgui/kcharselect/
 
 %changelog
+* Mon Mar 12 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+- new version
+
 * Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 
