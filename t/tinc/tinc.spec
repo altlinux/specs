@@ -1,6 +1,6 @@
 Name: tinc
 Version: 1.0.33
-Release: alt1
+Release: alt2
 
 Summary: Virtual Private Network (VPN) daemon that uses tunnelling and encryption to create a secure private network between hosts on the Internet.
 Summary(ru_RU.UTF-8): Небольшой демон для создания шифрованных туннелей и частных виртуальных сетей между хостами в сети Интернет
@@ -24,7 +24,7 @@ PreReq(post,preun): chkconfig
 BuildRequires: liblzo2-devel libpcap-devel libssl-devel libvde-devel perl-unicore zlib-devel
 
 # For PDF docs generation
-BuildRequires: makeinfo texi2dvi texlive-base-bin
+BuildRequires: makeinfo texi2dvi texlive-dist
 
 %description
 %name is a Virtual Private Network (VPN) daemon that uses tunnelling
@@ -123,6 +123,9 @@ install -pD -m755 -- %SOURCE3 %buildroot%_controldir/%name
 %_unitdir/%{name}*.service
 
 %changelog
+* Wed Mar 14 2018 Nikolay A. Fetisov <naf@altlinux.org> 1.0.33-alt2
+- Fix BuildRequires for new texlive
+
 * Sat Nov 18 2017 Nikolay A. Fetisov <naf@altlinux.org> 1.0.33-alt1
 - New version
 
