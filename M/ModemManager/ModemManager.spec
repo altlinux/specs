@@ -11,7 +11,7 @@
 
 Name: ModemManager
 Version: 1.7.990
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Mobile broadband modem management service
@@ -30,7 +30,6 @@ BuildRequires: libgio-devel
 %{?_with_mbim:BuildRequires: libmbim-glib-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
-BuildRequires: intltool
 BuildRequires: ppp-devel
 BuildRequires: libpolkit-devel
 BuildRequires: libsystemd-devel >= 209
@@ -244,6 +243,11 @@ fi
 %endif
 
 %changelog
+* Wed Mar 14 2018 Mikhail Efremov <sem@altlinux.org> 1.7.990-alt2
+- Patch from upstream:
+    + don't depend on GLib in ModemManager headers (closes: #34491).
+- Drop intltool from BR.
+
 * Fri Jan 26 2018 Mikhail Efremov <sem@altlinux.org> 1.7.990-alt1
 - Updated to 1.7.990 (1.8-rc1).
 
