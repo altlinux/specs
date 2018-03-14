@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%pkgname
-Version: 17.2.0
+Version: 17.4.0
 Release: alt1
 
 Summary: Python attributes without boilerplate
@@ -65,7 +65,7 @@ popd
 %endif
 
 %files
-%doc AUTHORS.rst CODE_OF_CONDUCT.rst CHANGELOG.rst CONTRIBUTING.rst LICENSE README.rst
+%doc AUTHORS.rst CHANGELOG.rst LICENSE README.rst
 %python_sitelibdir/%oname/
 %python_sitelibdir/*.egg-info
 
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 14 2018 Vladimir Didenko <cow@altlinux.org> 17.4.0-alt1
+- New version
+
 * Fri Jun 9 2017 Vladimir Didenko <cow@altlinux.org> 17.2.0-alt1
 - New version
 
