@@ -1,21 +1,20 @@
 Name: python3-module-enchant
-Version: 1.6.5
-Release: alt5
-# XXX this is ugly, need to change when python3 macros set developes
-%ifdef setup_python3_module
-%setup_python3_module enchant
-%endif
+Version: 2.0.0
+Release: alt1
 
 Summary: PyEnchant is a spellchecking library for Python
-License: GPLv2+
+
+License: LGPLv2+
 Group: Development/Python3
-Url: http://packages.python.org/pyenchant/
+Url: https://pypi.python.org/pypi/pyenchant
+
 BuildArch: noarch
 
 Source: pyenchant-%version.tar
 
 BuildPreReq: python3-devel rpm-build-python3 python3-module-setuptools
 BuildRequires: libenchant-devel
+Requires: libenchant
 
 %description
 PyEnchant combines all the functionality of the underlying Enchant
@@ -23,7 +22,7 @@ library with the flexibility of Python and a nice "Pythonic"
 object-oriented interface. It also aims to provide some higher-level
 functionality than is available in the C API.
 
-%ifdef setup_python3_module
+%if "3"==""
 %package gui
 Summary: PyEnchant GUI dialogs
 Group: Development/Python3
@@ -46,13 +45,19 @@ sed -i '/use_setuptools/d' setup.py
 %exclude %python3_sitelibdir/enchant/checker/*CheckerDialog*
 %exclude %python3_sitelibdir/enchant/checker/tests.py
 
-%ifdef setup_python3_module
+%if "3"==""
 %files gui
 %python3_sitelibdir/enchant/checker/*CheckerDialog*
 %python3_sitelibdir/enchant/checker/tests.py
 %endif
 
 %changelog
+* Wed Mar 14 2018 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Build new version.
+- Get rid of ugly macros.
+- Add missing Requires.
+- Change url, license.
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.6.5-alt5
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
