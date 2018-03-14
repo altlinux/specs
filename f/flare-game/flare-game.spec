@@ -1,14 +1,15 @@
 %define _name flare
 
 Name: %_name-game
-Version: 0.19
+Version: 1.0
 Release: alt1
 
 Summary: Fantasy action RPG using the FLARE engine
 License: %gpl3plus
 Group: Games/Adventure
 
-URL: http://clintbellanger.net/rpg/
+URL: http://flarerpg.org/
+# https://github.com/clintbellanger/flare-game.git
 Source: %name-%version.tar
 #Patch: %name-%version-%release.patch
 BuildArch: noarch
@@ -16,16 +17,18 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-licenses rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
 
-Requires: %_name-engine
+Requires: %_name-engine >= 1.0-alt1
 
 Obsoletes: flare < %version-%release
 Provides: flare = %version-%release
 Obsoletes: flare-data < %version-%release
 Provides: flare-data = %version-%release
 
+%define _unpackaged_files_terminate_build 1
+
 %description
-Flare is a a single-player 2D action RPG with fast-paced action and
-a dark fantasy style.
+The Empyrean Campaign is a single-player 2D action RPG with fast-paced action
+and a dark fantasy style.
 It is built on the FLARE engine (Free/Libre Action Roleplaying Engine).
 
 %prep
@@ -45,11 +48,14 @@ cd -
 %find_lang %_name
 
 %files -f %_name.lang
-%_desktopdir/%_name.desktop
-%_iconsdir/hicolor/*/*/*
 %_datadir/%_name/*
 
 %changelog
+* Wed Mar 14 2018 Mikhail Efremov <sem@altlinux.org> 1.0-alt1
+- Updated description.
+- Updated URL.
+- Updated to 1.0.
+
 * Sat Aug 30 2014 Mikhail Efremov <sem@altlinux.org> 0.19-alt1
 - Updated to 0.19.
 

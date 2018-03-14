@@ -1,19 +1,22 @@
 %define _name flare
 
 Name: %_name-engine
-Version:0.19
+Version: 1.0
 Release: alt1
 
 Summary: A simple game engine for single-player 2D action RPGs
 License: %gpl3plus
 Group: Games/Adventure
 
-URL: http://clintbellanger.net/rpg/
+URL: http://flarerpg.org/
+# https://github.com/clintbellanger/flare-engine.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses rpm-macros-cmake
-BuildRequires: gcc-c++ cmake libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel python-devel
+BuildRequires: gcc-c++ cmake libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Flare (Free Libre Action Roleplaying Engine) is a simple game engine
@@ -42,9 +45,18 @@ cd -
 %files
 %_bindir/%_name
 %_datadir/%_name/
-%_man1dir/*
+%_desktopdir/%_name.desktop
+%_iconsdir/hicolor/scalable/apps/%_name.svg
+%_man6dir/*
 
 %changelog
+* Wed Mar 14 2018 Mikhail Efremov <sem@altlinux.org> 1.0-alt1
+- Updated URL.
+- Patch from upstream:
+    + Force minions to move away from blocked player when player
+      is close.
+- Updated to 1.0.
+
 * Sat Aug 30 2014 Mikhail Efremov <sem@altlinux.org> 0.19-alt1
 - Updated from upstream git.
 - Updated to 0.19.
