@@ -2,7 +2,7 @@
 #
 
 Name: dehydrated
-Version: 0.4.0
+Version: 0.6.1
 Release: alt1
 
 Summary: ACME client for signing certificates implemented in Bash
@@ -59,6 +59,8 @@ install -m 0755 -- examples/hook.sh   %buildroot%_sysconfdir/%name/hook.sh
 mkdir -p -- %buildroot/%_localstatedir/%name/acme-challenge
 mkdir -p -- %buildroot/%_localstatedir/%name/accounts
 mkdir -p -- %buildroot/%_localstatedir/%name/certs
+mkdir -p -- %buildroot/%_localstatedir/%name/chains
+mkdir -p -- %buildroot/%_localstatedir/%name/archive
 mkdir -p -- %buildroot/%_localstatedir/%name/locks
 
 
@@ -85,10 +87,15 @@ touch -- %buildroot%_sysconfdir/%name/conf.d/local.sh
 %attr(0755,root,root)   %dir %_localstatedir/%name
 %attr(2770,root,_%name) %dir %_localstatedir/%name/accounts
 %attr(2770,root,_%name) %dir %_localstatedir/%name/certs
+%attr(2770,root,_%name) %dir %_localstatedir/%name/chains
+%attr(2770,root,_%name) %dir %_localstatedir/%name/archive
 %attr(2770,root,_%name) %dir %_localstatedir/%name/locks
 %attr(2771,root,_%name) %dir %_localstatedir/%name/acme-challenge
 
 
 %changelog
+* Wed Mar 14 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.6.1-alt1
+- New version (Closes: #34642)
+
 * Wed May 10 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.4.0-alt1
 - Initial build for ALT Linux Sisyphus
