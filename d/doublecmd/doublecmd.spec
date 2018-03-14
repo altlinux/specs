@@ -1,7 +1,7 @@
 Name:		doublecmd
 Summary:	Twin-panel (commander-style) file manager (GTK2 and QT4)
 Version:	0.8.2
-Release:	alt1
+Release:	alt2
 Url:		http://doublecmd.sourceforge.net
 
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
@@ -18,6 +18,8 @@ BuildRequires: bzlib-devel
 BuildRequires: gdk-pixbuf-devel
 BuildRequires: xorg-proto-devel
 BuildRequires: xorg-xtrans-devel
+
+Patch0:		%name-0.8.2-new_lazarus.diff
 
 %description
 Double Commander (GTK2 and QT4 versions) is a cross platform open source file manager with two panels side by side.
@@ -52,6 +54,7 @@ Common files for Double Commander
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 ./build.sh beta qt
@@ -103,6 +106,9 @@ convert -resize 16x16 pixmaps/mainicon/alt/256px-dcfinal.png %buildroot%_miconsd
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed Mar 14 2018 Motsyo Gennadi <drool@altlinux.ru> 0.8.2-alt2
+- fix build with new Lazarus
+
 * Mon Mar 05 2018 Motsyo Gennadi <drool@altlinux.ru> 0.8.2-alt1
 - 0.8.2
 
