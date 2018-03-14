@@ -1,34 +1,29 @@
-
 %define modname flask
-%def_with python3
 %def_disable check
 
 Name: python-module-%modname
-Version: 0.10.1
-Release: alt1.1.1
+Version: 0.12.2
+Release: alt3
+
 Summary: A micro-framework for Python based on Werkzeug, Jinja 2 and good intentions
-
-Group: Development/Python
 License: BSD
-URL: http://flask.pocoo.org/
+Group: Development/Python
 
+URL: http://flask.pocoo.org/
+#https://github.com/pallets/flask
 BuildArch: noarch
 
-%setup_python_module %modname
-
 Source: Flask-%version.tar
-Patch1: flask-0.9-alt-tests-in-usr-src.patch
 
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-jinja2 python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools
-BuildRequires: python-module-pytest python3-module-pytest rpm-build-python3
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-werkzeug
+BuildRequires: python-module-simplejson
+BuildRequires: python-module-jinja2
 
-#BuildRequires: python-module-setuptools-tests
-#BuildRequires: python-module-jinja2 python-module-werkzeug python-module-simplejson
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-%endif
+BuildPreReq: python3-devel
+BuildPreReq: python3-module-setuptools
+
 
 %description
 Flask is called a "micro-framework" because the idea to keep the core
@@ -57,56 +52,43 @@ technologies and more.
 %prep
 %setup -n Flask-%version
 
-%patch1 -p 1
-
-%if_with python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
-%python_install --record=INSTALLED_FILES
-
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
-
-%check
-python ./setup.py test
-%if_with python3
-pushd ../python3
-python3 ./setup.py test
+pushd %buildroot/%_bindir
+mv %modname %modname.py3
 popd
-%endif
+
+%python_install --record=INSTALLED_FILES
 
 %files -f INSTALLED_FILES
-%doc AUTHORS README LICENSE
-%exclude %python_sitelibdir_noarch/flask/testsuite
+%doc AUTHORS README.rst LICENSE
+%_bindir/%modname
 
-%if_with python3
 %files -n python3-module-%modname
-%doc AUTHORS README LICENSE
+%doc AUTHORS README.rst LICENSE
 %python3_sitelibdir_noarch/*
-%exclude %python3_sitelibdir_noarch/flask/testsuite
-%endif
+%_bindir/%modname.py3
 
 %changelog
-* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.1-alt1.1.1
-- (NMU) rebuild with rpm-build-python3-0.1.9
-  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+* Wed Mar 14 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.12.2-alt3
+- Fixed spec.
 
-* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.10.1-alt1.1
-- NMU: Use buildreq for BR.
+* Wed Mar 14 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.12.2-alt2
+- Fixed spec.
+
+* Wed Mar 07 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.12.2-alt1
+- Version 0.12.2
 
 * Thu Oct 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.1-alt1
 - Version 0.10.1
