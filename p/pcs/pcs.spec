@@ -1,5 +1,7 @@
+%define pyagentx_version 0.4.pcs.1
+
 Name: 	  pcs
-Version:  0.9.161
+Version:  0.9.163
 Release:  alt1
 Epoch:    1
 
@@ -11,10 +13,14 @@ Url: 	  https://github.com/ClusterLabs/pcs
 Packager: Denis Medvedev <nbr@altlinux.org>
 
 Source:   %name-%version.tar
+Source1:  pyagentx-v%pyagentx_version.tar.gz
 Patch:    %name-%version-%release.patch
 BuildArch: noarch
 
+%add_python_req_skip pyagentx
+
 BuildRequires: rpm-build-python rpm-build-ruby ruby python-devel corosync python-module-setuptools fontconfig fonts-ttf-liberation
+#BuildRequires: python3-devel python3-module-setuptools
 Requires: pacemaker
 
 %filter_from_requires /^ruby(\(auth\|bootstrap\|cfgsync\|cluster\|cluster_entity\|config\|corosyncconf\|fenceagent\|pcs\|pcsd\|pcsd_file\|permissions\|remote\|resource\|session\|settings\|ssl\|wizard\|pcsd_test_utils\|test_auth\|test_cfgsync\|test_cluster\|test_cluster_entity\|test_config\|test_corosyncconf\|test_pcs\|test_permissions\|test_session\|pcsd_action_command\|pcsd_exchange_format\|pcsd_remove_file\))/d
@@ -43,23 +49,42 @@ BuildArch: noarch
 %description pcsd-tests
 Tests for Pacemaker/Corosync gui/cli configuration system and daemon
 
+%package snmp
+Group: Other
+Summary: Pacemaker cluster SNMP agent
+License: GPLv2, BSD 2-clause
+Requires: %name = %EVR
+Requires: pacemaker
+Requires: net-snmp
+
+%description snmp
+SNMP agent that provides information about pacemaker cluster to the master
+agent (snmpd).
+
 %prep
 %setup
 %patch -p1
+mkdir -p pcs/bundled/tmp
+tar xf %SOURCE1 -C pcs/bundled/tmp
+make -C pcs/snmp PYAGENTX_DIR=../bundled/tmp/pyagentx-%pyagentx_version build_bundled_libs
 
 %install
-%makeinstall_std
-mkdir -p %buildroot/%_logdir/pcsd
+mkdir -p %buildroot%_libexecdir/pcs
+mkdir -p %buildroot%_logdir/pcsd
+%makeinstall_std PYAGENTX_INSTALLED=true
+mkdir -p %buildroot%_libexecdir/pcs/bundled/packages
+cp -a pcs/bundled/packages/* %buildroot%_libexecdir/pcs/bundled/packages
 make install_pcsd DESTDIR=%buildroot BUILD_GEMS=false PCSD_PARENT_DIR=%ruby_sitelibdir
 mkdir -p %buildroot/%_initdir
 mv %buildroot/%_sysconfdir/init.d/pcsd %buildroot/%_initdir
 install -Dm 0644 pcsd/pcsd.logrotate %buildroot%_logrotatedir/pcsd.logrotate
 mkdir -p %buildroot/var/lib/pcsd
 mkdir -p %buildroot/lib/systemd/system
-install -Dm 0644 pcsd/pcsd.service %buildroot/lib/systemd/system
+install -Dm 0644 pcsd/pcsd.service %buildroot/lib/systemd/system/pcsd.service
+install -Dm 0644 pcs/snmp/pcs_snmp_agent.service %buildroot/lib/systemd/system/pcs_snmp_agent.service
 
 mkdir -p %buildroot/usr/sbin/
-mv  pcsd/pcsd.service-runner %buildroot/usr/sbin/pcsd
+install -Dm 0755 pcsd/pcsd.service-runner %buildroot%_sbindir/pcsd
 chmod 750 %buildroot/usr/sbin/pcsd
 
 # Remove unnecessary stuff
@@ -68,15 +93,21 @@ rm -rf %buildroot/%ruby_sitelibdir/pcsd/*{.service,.logrotate,debian,orig}*
 %post pcsd
 %post_service pcsd
 
-
 %preun pcsd
 %preun_service pcsd
+
+%post snmp
+%post_service pcs_snmp_agent
+
+%preun snmp
+%preun_service pcs_snmp_agent
 
 %files
 %doc CHANGELOG.md COPYING README.md
 %_sbindir/pcs
 %python_sitelibdir_noarch/*
 %_man8dir/*.*
+%exclude %_man8dir/pcs_snmp_agent.*
 %_sysconfdir/bash_completion.d/pcs
 
 %files pcsd
@@ -95,7 +126,18 @@ rm -rf %buildroot/%ruby_sitelibdir/pcsd/*{.service,.logrotate,debian,orig}*
 %files pcsd-tests
 %ruby_sitelibdir/pcsd/test/*
 
+%files snmp
+%config(noreplace) %_sysconfdir/sysconfig/pcs_snmp_agent
+%_libexecdir/pcs/pcs_snmp_agent
+%_libexecdir/pcs/bundled/packages/pyagentx*
+/lib/systemd/system/pcs_snmp_agent.service
+%_datadir/snmp/mibs/PCMK-PCS*-MIB.txt
+%_man8dir/pcs_snmp_agent.*
+
 %changelog
+* Wed Mar 14 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.9.163-alt1
+- New version.
+
 * Fri Nov 03 2017 Andrey Cherepanov <cas@altlinux.org> 1:0.9.161-alt1
 - New version
 
