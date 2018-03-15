@@ -1,11 +1,12 @@
 Name: autologin
 Version: 1.0.0
-Release: alt7
+Release: alt7.1
 Serial: 1
 
 Summary: Automatically log in
 License: GPL
 Group: System/Base
+URL: http://www.linux-easy.com/development/autologin/
 
 Source: %name-%version.tar.bz2
 Source1: %name.pamd
@@ -49,6 +50,9 @@ CONFIG="/etc/sysconfig/autologin"
 %doc README AUTHORS
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0.0-alt7.1
+- NMU: added URL
+
 * Sun Nov 27 2011 Michael Shigorin <mike@altlinux.org> 1:1.0.0-alt7
 - update README accordingly (was mentioning ancient startx path)
 
