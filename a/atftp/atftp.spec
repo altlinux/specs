@@ -1,7 +1,8 @@
 Name: atftp
 Version: 0.7.1
-Release: alt1
+Release: alt1.qa1
 
+URL: https://sourceforge.net/projects/atftp
 Summary: Advanced Trivial File Transfer Protocol
 License: GPLv2+
 Group: System/Servers
@@ -68,6 +69,9 @@ touch %buildroot%_sysconfdir/mtftp.conf
 %dir %attr(0770,root,_atftpd) %_runtimedir/atftpd
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1.qa1
+- NMU: added URL:
+
 * Mon Aug 03 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.1-alt1
 - 0.7.1 released
 
