@@ -2,11 +2,12 @@
 
 Name: perl-%module
 Version: 0.208
-Release: alt1
+Release: alt1.1
 
 Summary: %{module} module for perl
 License: Artistic
 Group: Development/Perl
+Url: %CPAN %module
 
 Source: http://www.cpan.org/authors/id/S/SC/SCHWIGON/lockfile-simple/LockFile-Simple-%{version}.tar.gz
 BuildArch: noarch
@@ -33,6 +34,9 @@ BuildRequires: perl-devel
 %perl_vendor_privlib/LockFile*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.208-alt1.1
+- NMU: added URL
+
 * Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.208-alt1
 - automated CPAN update
 
