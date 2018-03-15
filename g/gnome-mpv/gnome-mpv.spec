@@ -1,7 +1,7 @@
 %define xdg_name io.github.GnomeMpv
 
 Name: gnome-mpv
-Version: 0.13
+Version: 0.14
 Release: alt1
 
 Summary: GNOME MPV is a simple GTK+ frontend for mpv
@@ -11,7 +11,6 @@ Group: Video
 Url: https://github.com/gnome-mpv/gnome-mpv.git
 Source: %name-%version.tar
 Packager: Konstantin Artyushkin <akv@altlinux.org>
-Patch1: %name-%version-alt-update-appdata-and-add-missing-meson-file.patch
 
 BuildRequires: libappstream-glib-devel
 BuildRequires: meson
@@ -27,7 +26,6 @@ allowing access to mpv's powerful playback capabilities.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %meson
@@ -49,6 +47,9 @@ allowing access to mpv's powerful playback capabilities.
 %_man1dir/*.1.*
 
 %changelog
+* Thu Mar 15 2018 Vladimir Didenko <cow@altlinux.org> 0.14-alt1
+- new version
+
 * Fri Dec 1 2017 Vladimir Didenko <cow@altlinux.org> 0.13-alt1
 - new version
 
