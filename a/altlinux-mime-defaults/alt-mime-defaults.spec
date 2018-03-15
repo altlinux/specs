@@ -1,5 +1,5 @@
 Name: altlinux-mime-defaults
-Version: 0.41
+Version: 0.42
 Release: alt1
 
 Summary: System-wide MIME preferences.
@@ -45,6 +45,9 @@ touch %buildroot/%_desktopdir/defaults.list
 %_datadir/mate/applications/defaults.list
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.42-alt1
+- updated mime defaults
+
 * Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1
 - drop kmailservice* as scheme-handler/mailto (closes: #32117)
 
