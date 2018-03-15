@@ -2,7 +2,7 @@
 %def_with plugins
 
 Name: certbot
-Version: 0.21.0
+Version: 0.22.0
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -28,6 +28,8 @@ Requires: python-module-zope.component
 Requires: python-module-zope.interface >= 4.1.0
 Requires: python-module-pyasn1 >= 0.1.8
 Requires: python-module-cffi >= 1.4.2
+# missed by autoreq
+Requires: python-module-future
 Requires: python-module-setuptools >= 13
 # Due Prior to Python 2.7.9 the stdlib SSL module did not allow a user to configure
 # See /usr/lib/python2.7/site-packages/acme/client.py
@@ -164,6 +166,9 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Thu Mar 15 2018 Vitaly Lipatov <lav@altlinux.ru> 0.22.0-alt1
+- new version 0.22.0 (with rpmrb script) (ALT bug 34643)
+
 * Sun Jan 21 2018 Vitaly Lipatov <lav@altlinux.ru> 0.21.0-alt1
 - new version 0.21.0 (with rpmrb script)
 

@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-acme
-Version: 0.21.0
-Release: alt1.1
+Version: 0.22.0
+Release: alt1
 
 Summary: Python library for the ACME protocol
 
@@ -41,10 +41,11 @@ Requires: python-module-cryptography >= 1.3.4
 Requires: python-module-idna >= 2.0.0
 Requires: python-module-cffi >= 1.7
 Requires: python-module-requests >= 2.10
+Requires: python-module-josepy >= 1.0.0
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools
 #BuildRequires: python3-sphinx
 #BuildRequires: python3-sphinxcontrib-programoutput
 
@@ -186,6 +187,9 @@ Documentation for the ACME python libraries
 #%doc docs/_build/html
 
 %changelog
+* Thu Mar 15 2018 Vitaly Lipatov <lav@altlinux.ru> 0.22.0-alt1
+- new version 0.22.0 (with rpmrb script)
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.21.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
