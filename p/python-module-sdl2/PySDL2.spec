@@ -1,9 +1,10 @@
 Name: python-module-sdl2
 Version: 0.9.5
-Release: alt1
+Release: alt1.1
 Group: Development/Python
 License: Public Domain
 Summary: SDL2 python wrapper
+Url: https://bitbucket.org/marcusva/py-sdl2
 Source: PySDL2-%version.tar.gz
 BuildArch: noarch
 
@@ -33,6 +34,9 @@ restrictions, nor does it rely on C code, but uses ctypes instead.
 %python_sitelibdir_noarch/sdl2*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.5-alt1.1
+- NMU: added URL
+
 * Mon Oct 31 2016 Fr. Br. George <george@altlinux.ru> 0.9.5-alt1
 - Autobuild version bump to 0.9.5
 
