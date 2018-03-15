@@ -1,11 +1,12 @@
 Name: ncpfs
 Version: 2.2.6
-Release: alt9.qa1
+Release: alt9.qa2
 
 Summary: Utilities for the %name filesystem, a NetWare client for Linux
 License: GPL
 Group: Networking/Other
 Packager: Dmitry Lebkov <dlebkov@altlinux.ru>
+Url: ftp://platan.vc.cvut.cz/pub/linux/ncpfs/
 
 # ftp://platan.vc.cvut.cz/pub/linux/%name/%name-%version/%name-%version.tar.gz
 Source: %name-%version.tar
@@ -178,6 +179,9 @@ done
 %doc ipx-1.0/COPYING ipx-1.0/README README.ipxdump
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt9.qa2
+- NMU: added URL
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.6-alt9.qa1
 - NMU: rebuilt for updated dependencies.
 
