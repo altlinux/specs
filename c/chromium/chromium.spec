@@ -1,20 +1,20 @@
 %def_disable nacl
-%def_disable clang
+%def_enable  clang
 %def_enable  gtk3
-%def_enable  shared_libraries
-%def_disable libchromiumcontent
+%def_disable shared_libraries
 %def_enable  widevine
+%def_enable  ffmpeg
 %def_disable wayland
 %def_enable  google_api_keys
 
 %ifndef build_parallel_jobs
-%global build_parallel_jobs 5
+%global build_parallel_jobs 7
 %endif
 
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
 
-#global gcc_version 5
-#set_gcc_version #gcc_version
+%global gcc_version %nil
+#set_gcc_version %gcc_version
 
 %set_verify_elf_method rpath=relaxed textrel=relaxed lfs=relaxed lint=relaxed
 
@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        64.0.3282.119
+Version:        65.0.3325.146
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -39,7 +39,6 @@ Url:            http://www.chromium.org
 
 Source0:        chromium.tar.zst
 Source1:        depot_tools.tar
-#Source2:        libchromiumcontent.tar
 
 Source30:       master_preferences
 Source31:       default_bookmarks.html
@@ -74,9 +73,10 @@ Patch018: 0018-ALT-gzip-does-not-support-the-rsyncable-option.patch
 Patch019: 0019-ALT-Use-rpath-link-and-absolute-rpath.patch
 Patch020: 0020-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-only.patch
 Patch021: 0021-GENTOO-disable-safe_math_shared.patch
-Patch022: 0022-FEDORA-Fix-gcc-constexpr.patch
-Patch023: 0023-FEDORA-Fix-gcc-round.patch
-Patch024: 0024-FEDORA-Fix-memcpy.patch
+Patch022: 0022-FEDORA-Fix-gcc-round.patch
+Patch023: 0023-FEDORA-Fix-memcpy.patch
+Patch024: 0024-GENTOO-Fix-build-with-glibc-2.27.patch
+Patch025: 0025-GENTOO-Add-missing-stdint-include.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -85,16 +85,16 @@ BuildRequires:  bison
 BuildRequires:  bzlib-devel
 BuildRequires:  flex
 BuildRequires:  chrpath
-BuildRequires:  gcc-c++
+BuildRequires:  gcc%gcc_version-c++
 BuildRequires:  glibc-kernheaders
 %if_enabled clang
-BuildRequires:  clang4.0
-BuildRequires:  clang4.0-devel
-BuildRequires:  clang4.0-devel-static
+BuildRequires:  clang6.0
+BuildRequires:  clang6.0-devel
+BuildRequires:  llvm6.0-devel
+BuildRequires:  lld-devel
 %endif
 BuildRequires:  gperf
 BuildRequires:  libcups-devel
-BuildRequires:  libyasm-devel
 %if_enabled wayland
 BuildRequires:  libdrm-devel
 BuildRequires:  libwayland-server-devel
@@ -117,10 +117,21 @@ BuildRequires:  pkgconfig(gtk+-2.0)
 %if_enabled gtk3
 BuildRequires:  pkgconfig(gtk+-3.0)
 %endif
+%if_enabled ffmpeg
+BuildRequires:  pkgconfig(opus)
+BuildRequires:  pkgconfig(libavresample)
+BuildRequires:  pkgconfig(libavfilter)
+BuildRequires:  pkgconfig(libavformat)
+BuildRequires:  pkgconfig(libavcodec)
+BuildRequires:  pkgconfig(libavutil)
+%endif
+BuildRequires:  pkgconfig(freetype2)
+BuildRequires:  pkgconfig(fontconfig)
 BuildRequires:  pkgconfig(expat)
 BuildRequires:  pkgconfig(libffi)
 BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  pkgconfig(libpci)
+BuildRequires:  pkgconfig(libva)
 BuildRequires:  pkgconfig(krb5-gssapi)
 BuildRequires:  pkgconfig(nspr)
 BuildRequires:  pkgconfig(nss)
@@ -140,10 +151,8 @@ BuildRequires:  pkgconfig(xt)
 BuildRequires:  python
 BuildRequires:  python-modules-json
 BuildRequires:  node
-BuildRequires:  yasm
 BuildRequires:  usbids
 BuildRequires:  xdg-utils
-BuildRequires:  libva-devel
 
 Provides:       webclient, /usr/bin/xbrowser
 BuildPreReq:    alternatives >= 0.2.0
@@ -195,7 +204,6 @@ to Gnome's Keyring.
 %setup -q -n chromium
 tar -xf %SOURCE1
 #tar -xf %%SOURCE2
-#cp -a libchromiumcontent/chromiumcontent .
 
 ### Begin to apply patches
 %patch001 -p1
@@ -222,6 +230,7 @@ tar -xf %SOURCE1
 %patch022 -p1
 %patch023 -p1
 %patch024 -p1
+%patch025 -p1
 ### Finish apply patches
 
 # Enable support for the Widevine CDM plugin
@@ -230,11 +239,11 @@ tar -xf %SOURCE1
 sed '14i#define WIDEVINE_CDM_VERSION_STRING "Pinkie Pie"' -i third_party/widevine/cdm/stub/widevine_cdm_version.h
 echo > "third_party/adobe/flash/flapper_version.h"
 
-# Work around bug in blink in which GCC 6 optimizes away null pointer checks
-# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833524
-# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=68853#c2
-sed -i '/config("compiler")/ a cflags_cc = [ "-fno-delete-null-pointer-checks" ]' \
-	build/config/linux/BUILD.gn
+# No cheats inside!
+sed -i \
+	-e 's,cc = "$prefix/clang",cc = getenv("CC"),g' \
+	-e 's,cxx = "$prefix/clang++",cxx = getenv("CXX"),g' \
+build/toolchain/gcc_toolchain.gni
 
 mkdir -p third_party/node/linux/node-linux-x64/bin
 ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin/
@@ -254,53 +263,77 @@ export RANLIB="ranlib"
 export PATH="$PWD/.rpm/depot_tools:$PATH"
 export CHROMIUM_RPATH="%_libdir/%name"
 
-# gn args --list <builddir>
-CHROMIUM_GN_DEFINES="\
- is_debug=false \
- is_desktop_linux=true \
- use_custom_libcxx=false \
- use_sysroot=false \
- use_gio=true \
- use_gconf=false \
- use_glib=true \
- use_libpci=true \
- use_pulseaudio=true \
- use_aura=true \
- use_cups=true \
- use_kerberos=true \
- use_gold=false \
- use_pulseaudio=true \
- use_vaapi=true \
- optimize_webui=false \
- use_system_freetype=false \
- use_system_harfbuzz=false \
- link_pulseaudio=true \
- ffmpeg_branding=\"ChromeOS\" \
- proprietary_codecs=true \
- enable_hangout_services_extension=true \
- fieldtrial_testing_like_official_build=true \
- linux_use_bundled_binutils=false \
- treat_warnings_as_errors=false \
- fatal_linker_warnings=false \
- system_libdir=\"%_lib\" \
- use_allocator=\"tcmalloc\" \
- symbol_level=0 \
- exclude_unwind_tables=true \
- remove_webcore_debug_symbols=true \
- is_clang=%{is_enabled clang} \
- enable_nacl=%{is_enabled nacl} \
- is_component_ffmpeg=%{is_enabled shared_libraries} \
- is_component_build=%{is_enabled shared_libraries} \
- enable_widevine=%{is_enabled widevine} \
- use_gtk3=%{is_enabled gtk3} \
- use_ozone=%{is_enabled wayland} \
- enable_wayland_server=%{is_enabled wayland} \
-%if_enabled google_api_keys
- google_api_key=\"%api_key\" \
- google_default_client_id=\"%default_client_id\" \
- google_default_client_secret=\"%default_client_secret\" \
+CHROMIUM_GN_DEFINES=
+gn_arg() { CHROMIUM_GN_DEFINES="$CHROMIUM_GN_DEFINES $*"; }
+
+gn_arg is_official_build=true
+gn_arg is_desktop_linux=true
+gn_arg use_custom_libcxx=false
+gn_arg use_sysroot=false
+gn_arg use_gio=true
+gn_arg use_glib=true
+gn_arg use_libpci=true
+gn_arg use_pulseaudio=true
+gn_arg use_aura=true
+gn_arg use_cups=true
+gn_arg use_kerberos=true
+gn_arg use_gold=false
+gn_arg use_pulseaudio=true
+gn_arg use_vaapi=true
+gn_arg optimize_webui=false
+gn_arg use_system_freetype=false
+gn_arg use_system_harfbuzz=false
+gn_arg link_pulseaudio=true
+gn_arg ffmpeg_branding=\"ChromeOS\"
+gn_arg proprietary_codecs=true
+gn_arg enable_hangout_services_extension=true
+gn_arg fieldtrial_testing_like_official_build=true
+gn_arg linux_use_bundled_binutils=false
+gn_arg treat_warnings_as_errors=false
+gn_arg fatal_linker_warnings=false
+gn_arg system_libdir=\"%_lib\"
+gn_arg use_allocator=\"none\"
+
+# Remove debug
+gn_arg is_debug=false
+gn_arg symbol_level=0
+gn_arg remove_webcore_debug_symbols=true
+
+gn_arg enable_nacl=%{is_enabled nacl}
+gn_arg is_component_ffmpeg=%{is_enabled shared_libraries}
+gn_arg is_component_build=%{is_enabled shared_libraries}
+gn_arg enable_widevine=%{is_enabled widevine}
+gn_arg use_gtk3=%{is_enabled gtk3}
+gn_arg use_ozone=%{is_enabled wayland}
+gn_arg enable_wayland_server=%{is_enabled wayland}
+
+%if_enabled clang
+gn_arg clang_base_path=\"%_prefix\"
+gn_arg is_clang=true
+gn_arg clang_use_chrome_plugins=false
+gn_arg use_lld=true
+gn_arg use_thin_lto=true
+gn_arg is_cfi=true
+%else
+gn_arg is_clang=false
 %endif
-"
+
+%if_enabled google_api_keys
+gn_arg google_api_key=\"%api_key\"
+gn_arg google_default_client_id=\"%default_client_id\"
+gn_arg google_default_client_secret=\"%default_client_secret\"
+%endif
+
+unbundle=
+unbundle="$unbundle freetype"
+unbundle="$unbundle fontconfig"
+%if_enabled ffmpeg
+unbundle="$unbundle ffmpeg opus"
+%endif
+
+[ -z "$unbundle" ] ||
+	build/linux/unbundle/replace_gn_files.py \
+		--system-libraries $unbundle
 
 tools/gn/bootstrap/bootstrap.py -v \
 	--gn-gen-args "$CHROMIUM_GN_DEFINES"
@@ -316,9 +349,7 @@ ninja \
 	chrome \
 	chrome_sandbox \
 	chromedriver \
-	clearkeycdm \
-	widevinecdmadapter \
-	policy_templates
+	widevinecdmadapter
 
 %install
 mkdir -p -- \
@@ -439,8 +470,40 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Wed Mar 07 2018 Alexey Gladkov <legion@altlinux.ru> 65.0.3325.146-alt1
+- New version (65.0.3325.146).
+- Use clang.
+- Security fixes:
+  - CVE-2018-6058: Use after free in Flash.
+  - CVE-2018-6059: Use after free in Flash.
+  - CVE-2018-6060: Use after free in Blink.
+  - CVE-2018-6061: Race condition in V8.
+  - CVE-2018-6062: Heap buffer overflow in Skia.
+  - CVE-2018-6057: Incorrect permissions on shared memory.
+  - CVE-2018-6063: Incorrect permissions on shared memory.
+  - CVE-2018-6064: Type confusion in V8.
+  - CVE-2018-6065: Integer overflow in V8.
+  - CVE-2018-6066: Same Origin Bypass via canvas.
+  - CVE-2018-6067: Buffer overflow in Skia.
+  - CVE-2018-6068: Object lifecycle issues in Chrome Custom Tab.
+  - CVE-2018-6069: Stack buffer overflow in Skia.
+  - CVE-2018-6070: CSP bypass through extensions.
+  - CVE-2018-6071: Heap bufffer overflow in Skia.
+  - CVE-2018-6072: Integer overflow in PDFium.
+  - CVE-2018-6073: Heap bufffer overflow in WebGL.
+  - CVE-2018-6074: Mark-of-the-Web bypass.
+  - CVE-2018-6075: Overly permissive cross origin downloads.
+  - CVE-2018-6076: Incorrect handling of URL fragment identifiers in Blink.
+  - CVE-2018-6077: Timing attack using SVG filters.
+  - CVE-2018-6078: URL Spoof in OmniBox.
+  - CVE-2018-6079: Information disclosure via texture data in WebGL.
+  - CVE-2018-6080: Information disclosure in IPC call.
+  - CVE-2018-6081: XSS in interstitials.
+  - CVE-2018-6082: Circumvention of port blocking.
+  - CVE-2018-6083: Incorrect processing of AppManifests.
+
 * Thu Jan 25 2018 Alexey Gladkov <legion@altlinux.ru> 64.0.3282.119-alt1
-- - New version (64.0.3282.119).
+- New version (64.0.3282.119).
 - Security fixes:
   - CVE-2018-6031: Use after free in PDFium.
   - CVE-2018-6032: Same origin bypass in Shared Worker.
