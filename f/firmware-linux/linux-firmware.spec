@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180227
+Version: 20180314
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -65,6 +65,10 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 %exclude /lib/firmware/carl9170fw
 
 %changelog
+* Thu Mar 15 2018 L.A. Kostis <lakostis@altlinux.ru> 20180314-alt1
+- upstream changes (GIT 4c0bf11):
+  + intel: Update Kabylake audio firmware (thx Sanyog Kale)
+
 * Mon Mar 12 2018 L.A. Kostis <lakostis@altlinux.ru> 20180227-alt1
 - upstream changes (GIT 9cf0ec0):
   + Mellanox: Add new mlxsw_spectrum firmware 13.1620.192 (thx Tal Bar)
