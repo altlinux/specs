@@ -1,26 +1,32 @@
 %define _unpackaged_files_terminate_build 1
 %define mname pyasn1
 
-Summary: Abstract Syntax Notation One (ASN.1), Python implementation
+%def_with check
+
 Name: python-module-%mname
-Version: 0.3.7
+Version: 0.4.2
 Release: alt1%ubt
-Url: https://pypi.python.org/pypi/pyasn1
-Source0: %name-%version.tar
+
+Summary: Abstract Syntax Notation One (ASN.1), Python implementation
 License: %bsdstyle
 Group: Development/Python
-BuildArch: noarch
-%py_provides %mname
+# Source-git: https://github.com/etingof/pyasn1.git
+Url: https://pypi.python.org/pypi/pyasn1
 
+Source: %name-%version.tar
+BuildArch: noarch
+
+BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-build-ubt
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-sphinx_rtd_theme
-BuildRequires: python-modules-unittest
+
 BuildRequires: python-module-setuptools
 BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python-modules-unittest
+%endif
 
 %description
 This is an implementation of ASN.1 types and codecs in Python programming
@@ -31,7 +37,6 @@ based on ASN.1 specification.
 %package -n python3-module-%mname
 Summary: Abstract Syntax Notation One (ASN.1), Python 3 implementation
 Group: Development/Python3
-%py3_provides %mname
 
 %description -n python3-module-%mname
 This is an implementation of ASN.1 types and codecs in Python programming
@@ -39,26 +44,15 @@ language. It has been first written to support particular protocol (SNMP)
 but then generalized to be suitable for a wide range of protocols
 based on ASN.1 specification.
 
-%package docs
-Summary: Documentation for pyasn1
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-This is an implementation of ASN.1 types and codecs in Python programming
-language. It has been first written to support particular protocol (SNMP)
-but then generalized to be suitable for a wide range of protocols
-based on ASN.1 specification.
-
-This package contains docs for pyasn1.
-
 %prep
 %setup
+
 rm -rf ../python3
 cp -a . ../python3
 
 %build
 %python_build_debug
+
 pushd ../python3
 %python3_build_debug
 popd
@@ -70,13 +64,9 @@ pushd ../python3
 %python3_install
 popd
 
-pushd doc
-%make html
-rm -f build/html/.buildinfo
-popd
-
 %check
 python setup.py test
+
 pushd ../python3
 python3 setup.py test
 popd
@@ -86,15 +76,15 @@ popd
 %python_sitelibdir/%mname
 %python_sitelibdir/%mname-%version-*.egg-info/
 
-%files docs
-%doc doc/build/html/*
-
 %files -n python3-module-%mname
 %doc LICENSE.rst README.md
 %python3_sitelibdir/%mname
 %python3_sitelibdir/%mname-%version-*.egg-info/
 
 %changelog
+* Tue Mar 13 2018 Stanislav Levin <slev@altlinux.org> 0.4.2-alt1%ubt
+- 0.3.7 -> 0.4.2
+
 * Wed Nov 08 2017 Stanislav Levin <slev@altlinux.org> 0.3.7-alt1%ubt
 - 0.1.8 -> 0.3.7
 
