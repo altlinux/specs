@@ -2,12 +2,13 @@
 
 Name: autopano-sift-C
 Version: 2.5.1
-Release: alt4
+Release: alt4.1
 Epoch: 1
 
 Group: Graphics
 Summary: autopano-sift-C is a port of autopano-SIFT to pure C
 License: GPLv2
+URL: http://hugin.sourceforge.net/
 Source0: %name-%version.tar.gz
 Packager: Sergei Epiphanov <serpiph@altlinux.ru>
 
@@ -42,6 +43,9 @@ mkdir -p %buildroot%_bindir
 %_man7dir/*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.5.1-alt4.1
+- NMU: added URL
+
 * Mon Jul 13 2015 Yuri N. Sedunov <aris@altlinux.org> 1:2.5.1-alt4
 - rebuilt against libpano13.so.3
 
