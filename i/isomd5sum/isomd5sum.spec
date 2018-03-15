@@ -1,10 +1,11 @@
 Name: isomd5sum
 Version: 1.0.12
-Release: alt1
+Release: alt1.1
 
 Summary: Utilities to implant/verify md5sum in ISO images
 License: %gpl2plus
 Group: System/Base
+Url: https://github.com/rhinstaller/isomd5sum
 
 #Url: http://git.fedorahosted.org/git/?p=isomd5sum.git;a=summary
 #Source: http://fedorahosted.org/releases/i/s/isomd5sum/%name-%version.tar.bz2
@@ -60,6 +61,9 @@ and verifying MD5 checksum in an ISO9660 image.
 %_libdir/*.a
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.12-alt1.1
+- NMU: added URL
+
 * Mon Mar 31 2014 Michael Shigorin <mike@altlinux.org> 1.0.12-alt1
 - 1.0.12
 - switched to upstream git
