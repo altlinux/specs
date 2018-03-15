@@ -1,12 +1,13 @@
 Name: xtoolwait
 Version: 1.3
-Release: alt2
+Release: alt2.1
 Serial: 1
 
 Summary: A utility which aims to decrease X session startup time
 License: GPL
 Group: System/Configuration/Other
 Packager: Fr. Br. George <george@altlinux.ru>
+Url: http://www.hacom.nl/~richard/software/xtoolwait.html
 
 Source: ftp://ftp.x.org/contrib/utilities/%name-%version.tar.bz2
 Source1: %name.ALT.Makefile
@@ -45,6 +46,9 @@ cp %SOURCE1 Makefile
 %_x11mandir/man?/*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.3-alt2.1
+- NMU: added URL
+
 * Tue Sep 21 2010 Fr. Br. George <george@altlinux.ru> 1:1.3-alt2
 - Try to fix #15635
 
