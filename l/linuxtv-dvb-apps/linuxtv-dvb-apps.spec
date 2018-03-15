@@ -1,12 +1,13 @@
 Name: linuxtv-dvb-apps
 Version: 1.1.1
-Release: alt2.1
+Release: alt2.2
 
 Summary: LinuxTV DVB utils for setup and manage different devices for recieve DVB broadcasting
 Summary(ru_RU.UTF-8): Утилиты LinuxTV для настройки и управления различными устройствами приёма DVB вещания
 
 License: GPL
 Group: System/Configuration/Hardware
+Url: http://www.linuxtv.org/wiki/index.php/LinuxTV_dvb-apps
 
 Source0: http://linuxtv.org/download/dvb/%name-%version.tar.gz
 Source1: CHANGES
@@ -32,7 +33,7 @@ Conflicts: dvb-tools
 %setup -q -n %name-%version
 %patch1 -p1
 %patch2 -p2
-%__cp %SOURCE1 ./
+cp %SOURCE1 ./
 
 %build
 make "ARCH= %optflags" DESTDIR=%buildroot \
@@ -40,20 +41,20 @@ make "ARCH= %optflags" DESTDIR=%buildroot \
 
 %install
 
-%__mkdir_p %buildroot%_bindir
-%__mkdir_p %buildroot%_datadir/dvb/{av7110_loadkeys,dvbnet,scan,szap}
-%__install -p util/av7110_loadkeys/*.rcmm %buildroot%_datadir/dvb/av7110_loadkeys/
-%__install -p util/av7110_loadkeys/*.rc5 %buildroot%_datadir/dvb/av7110_loadkeys/
-%__install -p util/dvbnet/{*.pl,*.sh} %buildroot%_datadir/dvb/dvbnet/
-%__cp -ar util/scan/{dvb-c,dvb-s,dvb-t} %buildroot%_datadir/dvb/scan/
-%__install -p util/szap/channels.conf-* %buildroot%_datadir/dvb/szap/
+mkdir -p %buildroot%_bindir
+mkdir -p %buildroot%_datadir/dvb/{av7110_loadkeys,dvbnet,scan,szap}
+install -p util/av7110_loadkeys/*.rcmm %buildroot%_datadir/dvb/av7110_loadkeys/
+install -p util/av7110_loadkeys/*.rc5 %buildroot%_datadir/dvb/av7110_loadkeys/
+install -p util/dvbnet/{*.pl,*.sh} %buildroot%_datadir/dvb/dvbnet/
+cp -ar util/scan/{dvb-c,dvb-s,dvb-t} %buildroot%_datadir/dvb/scan/
+install -p util/szap/channels.conf-* %buildroot%_datadir/dvb/szap/
 
-%__install -p util/av7110_loadkeys/av7110_loadkeys %buildroot%_bindir/
-%__install -p util/dvbdate/dvbdate %buildroot%_bindir/
-%__install -p util/dvbnet/dvbnet %buildroot%_bindir/
-%__install -p util/dvbtraffic/dvbtraffic %buildroot%_bindir/
-%__install -p util/scan/scan %buildroot%_bindir
-%__install -p util/szap/{czap,femon,szap,tzap} %buildroot%_bindir/
+install -p util/av7110_loadkeys/av7110_loadkeys %buildroot%_bindir/
+install -p util/dvbdate/dvbdate %buildroot%_bindir/
+install -p util/dvbnet/dvbnet %buildroot%_bindir/
+install -p util/dvbtraffic/dvbtraffic %buildroot%_bindir/
+install -p util/scan/scan %buildroot%_bindir
+install -p util/szap/{czap,femon,szap,tzap} %buildroot%_bindir/
 
 # ensure dvb prefix for binaries
 #(cd %buildroot%_bindir ; for exe in * ; do \
@@ -75,6 +76,9 @@ done
 %_datadir/dvb/*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2.2
+- NMU: added URL
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt2.1
 - Fixed build
 
