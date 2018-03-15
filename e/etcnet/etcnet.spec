@@ -1,6 +1,8 @@
 Name:		etcnet
 Version:	0.9.13
-Release:	alt3
+Release:	alt3.1
+#Url:		http://etcnet.org/
+Url:		https://www.altlinux.org/Etcnet
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -139,6 +141,9 @@ fi
 %files full
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.13-alt3.1
+- NMU: added URL
+
 * Mon Oct 02 2017 Valery Inozemtsev <shrek@altlinux.ru> 0.9.13-alt3
 - fixed bridge interfaces up (closes: #33945)
 
