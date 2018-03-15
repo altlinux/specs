@@ -1,10 +1,11 @@
 Name: libcrossguid
 Version: 20150803
-Release: alt1
+Release: alt1.1
 
 Summary: C++ GUID library
 License: MIT
 Group: System/Libraries
+Url: https://github.com/graeme-hill/crossguid/
 
 Source: %name-%version.tar
 
@@ -46,5 +47,8 @@ ln -s libcrossguid.so.0.0.0 %buildroot%_libdir/libcrossguid.so
 %_includedir/guid.h
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 20150803-alt1.1
+- NMU: added URL
+
 * Tue Mar 08 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 20150803-alt1
 - initial
