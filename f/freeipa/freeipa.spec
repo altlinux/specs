@@ -4,10 +4,6 @@
 %define plugin_dir %_libdir/dirsrv/plugins
 %define _localstatedir %_var
 
-# Build with ipatests
-%define with_ipatests 1
-%define with_ipatests_option --with-ipatests
-
 %define with_python3 0
 
 # lint is not executed during rpmbuild
@@ -23,14 +19,14 @@
 # 0.7.16: https://github.com/drkjam/netaddr/issues/71
 # Require 4.7.0 which brings Python 3 bindings
 %define samba_version 4.6.8
-%define selinux_policy_version 3.11.1
 %define slapi_nis_version 0.56.1
+%define python_ldap_version 3.0.0
 
 %define plugin_dir %_libdir/dirsrv/plugins
 %define etc_systemd_dir %_sysconfdir/systemd/system
 
 Name: freeipa
-Version: 4.6.1
+Version: 4.6.3
 Release: alt3%ubt
 Summary: The Identity, Policy and Audit system
 
@@ -38,12 +34,13 @@ Group: System/Base
 License: GPLv3+
 Url: http://www.freeipa.org/
 Source0: %name-%version.tar
-Source1: freeipa-server.filetrigger 
+Source1: freeipa-server.filetrigger
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires(pre): rpm-macros-apache2
+BuildRequires: /proc
 BuildRequires: rpm-macros-webserver-common
 BuildRequires: rpm-build-python
 BuildRequires: rpm-build-python3
@@ -60,7 +57,7 @@ BuildRequires: automake
 BuildRequires: libtool
 BuildRequires: gettext
 BuildRequires: python-dev
-BuildRequires: python-module-setuptools >= 36.5.0
+BuildRequires: python-module-setuptools >= 38.4.0
 BuildRequires: python-module-pyparsing
 BuildRequires: python-module-execnet
 BuildRequires: python-module-mock
@@ -71,7 +68,7 @@ BuildRequires: python3-module-mock
 BuildRequires: python3-module-appdirs
 %if 0%{?with_python3}
 BuildRequires: python3-dev
-BuildRequires: python3-module-setuptools >= 36.5.0
+BuildRequires: python3-module-setuptools >= 38.4.0
 %endif # with_python3
 BuildRequires: systemd
 BuildRequires: apache2-base
@@ -98,7 +95,7 @@ BuildRequires: python-module-lesscpy
 # Build dependencies for makeapi/makeaci
 # makeapi/makeaci is using Python 2 only for now
 #
-BuildRequires: python-module-pyldap
+BuildRequires: python-module-ldap >= %python_ldap_version
 BuildRequires: python-module-netaddr
 BuildRequires: python-module-pyasn1 >= 0.3.2
 BuildRequires: python-module-pyasn1-modules >= 0.1.5
@@ -107,7 +104,7 @@ BuildRequires: python-module-six
 BuildRequires: python-module-sss_nss_idmap
 BuildRequires: python-module-cffi
 
-#
+#TODO
 # Build dependencies for wheel packaging and PyPI upload
 #
 #%%if 0%%{?with_wheels}
@@ -124,12 +121,14 @@ BuildRequires: python-module-cffi
 #%%endif # with_wheels
 
 #
-# Build dependencies for lint
+# Build dependencies for lint and fastcheck
 #
 %if 0%{?with_lint}
 BuildRequires: python-module-cryptography >= 1.6
 BuildRequires: python-module-gssapi >= 1.2.2
+BuildRequires: softhsm
 BuildRequires: pylint >= 1.7
+BuildRequires: python-module-pycodestyle
 BuildRequires: python-module-polib
 BuildRequires: python-module-ipa_hbac
 BuildRequires: python-module-lxml
@@ -138,7 +137,7 @@ BuildRequires: python-module-dns >= 1.15
 #BuildRequires:  jsl
 BuildRequires: python-module-yubico
 # pki Python package
-BuildRequires: pki-base
+BuildRequires: python-module-pki-base
 BuildRequires: python-module-pytest-multihost
 BuildRequires: python-module-pytest_sourceorder
 # 0.4.2: Py3 fix https://bugzilla.redhat.com/show_bug.cgi?id=1476150
@@ -165,6 +164,7 @@ BuildRequires: python3-module-smbc
 BuildRequires: python3-module-cryptography >= 1.6
 BuildRequires: python3-module-gssapi >= 1.2.2
 BuildRequires: pylint-py3 >= 1.7
+BuildRequires: python3-module-pycodestyle
 # workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1096506
 BuildRequires: python3-module-polib
 BuildRequires: python3-module-ipa_hbac
@@ -174,7 +174,7 @@ BuildRequires: python3-module-qrcode >= 5.0.0
 BuildRequires: python3-module-dns >= 1.15
 BuildRequires: python3-module-yubico
 # pki Python package
-BuildRequires: pki-base-python3
+BuildRequires: python3-module-pki-base
 BuildRequires: python3-module-pytest-multihost
 BuildRequires: python3-module-pytest_sourceorder
 # 0.4.2: Py3 fix https://bugzilla.redhat.com/show_bug.cgi?id=1476150
@@ -197,7 +197,7 @@ BuildRequires: python3-module-augeas
 BuildRequires: python3-module-netaddr
 BuildRequires: python3-module-pyasn1
 BuildRequires: python3-module-pyasn1-modules
-BuildRequires: python3-module-pyldap
+BuildRequires: python3-module-ldap >= %python_ldap_version
 %endif # with_python3
 %endif # with_lint
 
@@ -205,8 +205,8 @@ BuildRequires: python3-module-pyldap
 # Build dependencies for unit tests
 #
 BuildRequires: libcmocka-devel
-BuildRequires: nss_wrapper
 # Required by ipa_kdb_tests
+# BuildRequires:  %_libdir/krb5/plugins/kdb/db2.so
 
 %description
 IPA is an integrated solution to provide centrally managed Identity (users,
@@ -223,10 +223,13 @@ Requires: %name-client = %version-%release
 Requires: %name-common = %version-%release
 %if 0%{?with_python3}
 Requires: python3-module-ipaserver = %version-%release
+Requires: python3-module-ldap >= %python_ldap_version
 %else
 Requires: python-module-ipaserver = %version-%release
+Requires: python-module-ldap >= %python_ldap_version
 %endif
-Requires: 389-ds-base >= 1.3.5.14
+# 1.3.7.6-1: https://bugzilla.redhat.com/show_bug.cgi?id=1488295
+Requires: 389-ds-base >= 1.3.7.0
 Requires: openldap-clients > 2.4.35
 Requires: libnss >= 3.14.3
 Requires: nss-utils >= 3.14.3
@@ -236,31 +239,40 @@ Requires: libsasl2-plugin-gssapi
 Requires: openntpd
 Requires: apache2-base >= 2.4.6
 %if 0%with_python3
-Requires: python3-mod_wsgi
+Requires(preun): python3
+Requires(postun): python3
+Requires: python3-module-gssapi >= 1.2.2
+Requires: apache2-mod_wsgi-python3
+Conflicts: apache2-mod_wsgi
+Requires: python3-module-systemd
 %else
+Requires(preun): python
+Requires(postun): python
+Requires: python-module-gssapi >= 1.2.2
+Requires: python-module-systemd
 Requires: apache2-mod_wsgi
+#After packing apache2-mod_wsgi-python3 in ALTLinux add corresponding conflict
+#Conflicts: apache2-mod_wsgi-python3
 %endif
 Requires: apache2-mod_auth_gssapi >= 1.6.0
 # 1.0.14-3: https://bugzilla.redhat.com/show_bug.cgi?id=1431206
 Requires: apache2-mod_nss >= 1.0.14-alt3
 # 0.9.9: https://github.com/adelton/mod_lookup_identity/pull/3
 Requires: mod_lookup_identity >= 1.0.0
-Requires: python-module-pyldap >= 2.4.15
-Requires: python-module-gssapi >= 1.2.2
 Requires: acl
 Requires: systemd >= 38
 Requires(pre): shadow-utils
-Requires: selinux-policy >= %selinux_policy_version
-Requires(post): selinux-policy-base >= %selinux_policy_version
+Requires: selinux-policy
+Requires(post): selinux-policy-base
 Requires: slapi-nis >= %slapi_nis_version
-Requires: pki-ca >= 10.4.8
-Requires: pki-kra >= 10.4.8
-Requires: python-module-systemd
+Requires: pki-ca >= 10.5.3
+Requires: pki-kra >= 10.5.3
 Requires: policycoreutils >= 2.1.5
 Requires: tar
 # certmonger-0.79.4-2 fixes newlines in PEM files
 Requires(pre): certmonger >= 0.79.5
-Requires: 389-ds-base >= 1.3.5.14
+# 1.3.7.6-1: https://bugzilla.redhat.com/show_bug.cgi?id=1488295
+Requires: 389-ds-base >= 1.3.7.0
 Requires: fonts-font-awesome
 Requires: fonts-ttf-open-sans
 Requires: openssl
@@ -297,7 +309,7 @@ Requires: %name-server-common = %version-%release
 Requires: %name-common = %version-%release
 Requires: python-module-ipaclient = %version-%release
 Requires: python-module-custodia >= 0.5.0
-Requires: python-module-pyldap >= 2.4.15
+Requires: python-module-ldap >= %python_ldap_version
 Requires: python-module-lxml
 Requires: python-module-gssapi >= 1.2.2
 Requires: python-module-sssdconfig
@@ -306,7 +318,7 @@ Requires: python-module-dbus
 Requires: python-module-dns >= 1.15
 Requires: python-module-kdcproxy >= 0.3
 Requires: librpm
-Requires: pki-base
+Requires: python-module-pki-base
 Requires: python-module-augeas
 
 %description -n python-module-ipaserver
@@ -327,7 +339,7 @@ Requires: %name-server-common = %version-%release
 Requires: %name-common = %version-%release
 Requires: python3-module-ipaclient = %version-%release
 Requires: python3-module-custodia >= 0.5.0
-Requires(pre): python3-module-pyldap >= 2.4.35
+Requires(pre): python3-module-ldap >= %python_ldap_version
 Requires: python3-module-lxml
 Requires: python3-module-gssapi >= 1.2.2
 #Requires: python3-module-sssdconfig
@@ -337,7 +349,7 @@ Requires: python3-module-dns >= 1.15
 #Requires: python3-module-kdcproxy >= 0.3
 Requires: python3-module-augeas
 Requires: librpm
-#Requires: pki-base-python3
+Requires: python3-module-pki-base
 
 %description -n python3-module-ipaserver
 IPA is an integrated solution to provide centrally managed Identity (users,
@@ -359,7 +371,6 @@ Requires: systemd >= 38
 Requires: custodia >= 0.5.0
 Requires: fonts-font-awesome
 Requires: fonts-ttf-open-sans
-
 
 %description server-common
 IPA is an integrated solution to provide centrally managed Identity (users,
@@ -383,7 +394,6 @@ Requires: python
 Requires: python-module-freeipa
 Requires: python-module-ipaserver
 
-
 # upgrade path from monolithic -server to -server + -server-dns
 Obsoletes: %name-server <= 4.2.0
 
@@ -402,15 +412,16 @@ Requires: samba-winbind
 Requires: libsss_idmap
 
 %if 0%{?with_python3}
+Requires(post): python3
 Requires: python3-module-samba
 Requires: python3-module-sss_nss_idmap
 Requires: python3-module-sss
 %else
+Requires(post): python
 Requires: python-module-samba
 Requires: python-module-sss_nss_idmap
 Requires: python-module-sss
 %endif  # with_python3
-
 
 %description server-trust-ad
 Cross-realm trusts with Active Directory in IPA require working Samba 4
@@ -423,11 +434,14 @@ Group: System/Base
 Requires: %name-client-common = %version-%release
 Requires: %name-common = %version-%release
 %if 0%{?with_python3}
+Requires: python3-module-gssapi >= 1.2.2
 Requires: python3-module-ipaclient = %version-%release
+Requires: python3-module-ldap >= %python_ldap_version
 %else
+Requires: python-module-gssapi >= 1.2.2
 Requires: python-module-ipaclient = %version-%release
+Requires: python-module-ldap >= %python_ldap_version
 %endif
-Requires: python-module-pyldap
 Requires: libsasl2-plugin-gssapi
 Requires: openntpd
 Requires: ntpdate
@@ -446,13 +460,11 @@ Requires: certmonger >= 0.79.5
 Requires: nss-utils
 Requires: bind-utils
 Requires: oddjob-mkhomedir
-Requires: python-module-gssapi >= 1.2.2
 Requires: libsss_autofs
 Requires: autofs
 Requires: libnfsidmap
 Requires: nfs-utils
 Requires(post): policycoreutils
-
 
 Obsoletes: %name-admintools < 4.4.1
 Provides: %name-admintools = %EVR
@@ -513,7 +525,7 @@ installed on every client machine.
 Summary: Common files used by IPA client
 Group: System/Base
 BuildArch: noarch
-
+Requires: ca-trust
 
 %description client-common
 IPA is an integrated solution to provide centrally managed Identity (users,
@@ -524,7 +536,6 @@ and integration with Active Directory based infrastructures (Trusts).
 If your network uses IPA for authentication, this package should be
 installed on every client machine.
 
-
 %package -n python-module-freeipa
 Summary: Python libraries used by IPA
 Group: System/Libraries
@@ -533,7 +544,6 @@ Requires: %name-common = %version-%release
 Requires: python-module-gssapi >= 1.2.2
 Requires: gnupg
 Requires: libkeyutils
-Requires: python-module-OpenSSL
 Requires: python >= 2.7.9
 Requires: python-module-cryptography >= 1.6
 Requires: python-module-netaddr >= %python_netaddr_version
@@ -550,13 +560,13 @@ Requires: python-module-six
 # 0.4.2: Py3 fix https://bugzilla.redhat.com/show_bug.cgi?id=1476150
 Requires: python-module-jwcrypto >= 0.4.2
 Requires: python-module-cffi
-Requires: python-module-pyldap >= 2.4.15
+Requires: python-module-ldap >= %python_ldap_version
 Requires: python-module-requests
 Requires: python-module-dns >= 1.15
 Requires: python-module-enum34
 Requires: python-module-netifaces >= 0.10.4
 Requires: python-module-pyusb
-
+%py_provides ipaplatform
 
 %description -n python-module-freeipa
 IPA is an integrated solution to provide centrally managed Identity (users,
@@ -576,7 +586,6 @@ Requires: %name-common = %version-%release
 Requires: python3-module-gssapi >= 1.2.2
 Requires: gnupg
 Requires: keyutils
-Requires: python3-python-module-OpenSSL
 Requires: python3-module-cryptography >= 1.6
 Requires: python3-module-netaddr >= %python_netaddr_version
 #Requires: python3-module-ipa_hbac
@@ -594,7 +603,7 @@ Requires: python3-module-six
 Requires: python3-module-jwcrypto >= 0.4.2
 Requires: python3-module-cffi
 # we need pre-requires since earlier versions may break upgrade
-Requires: python3-module-pyldap >= 2.4.35
+Requires: python3-module-ldap >= %python_ldap_version
 Requires: python3-module-requests
 Requires: python3-module-dns >= 1.15
 Requires: python3-module-netifaces >= 0.10.4
@@ -615,7 +624,6 @@ Summary: Common files used by IPA
 Group: System/Libraries
 BuildArch: noarch
 
-
 %description common
 IPA is an integrated solution to provide centrally managed Identity (users,
 hosts, services), Authentication (SSO, 2FA), and Authorization
@@ -623,8 +631,6 @@ hosts, services), Authentication (SSO, 2FA), and Authorization
 features for further integration with Linux based clients (SUDO, automount)
 and integration with Active Directory based infrastructures (Trusts).
 If you are using IPA, you need to install this package.
-
-%if 0%{?with_ipatests}
 
 %package -n python-module-ipatests
 Summary: IPA tests and test tools
@@ -649,7 +655,6 @@ Requires: python-module-pytest_sourceorder
 Requires: python-module-sssdconfig
 Requires: python-module-cryptography >= 1.6
 Requires: iptables
-
 
 %description -n python-module-ipatests
 IPA is an integrated solution to provide centrally managed Identity (users,
@@ -690,8 +695,6 @@ This package contains tests that verify IPA functionality under Python 3.
 
 %endif # with_python3
 
-%endif # with_ipatests
-
 %prep
 %setup -n %name-%version
 %patch -p1
@@ -705,7 +708,7 @@ cp -r %_builddir/freeipa-%version %_builddir/freeipa-%version-python3
 # UI compilation segfaulted on some arches when the stack was lower (#1040576)
 export JAVA_STACK_SIZE="8m"
 # PATH is workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1005235
-export PYTHON=%__python
+export PYTHON=%_bindir/python
 # Workaround: make sure all shebangs are pointing to Python 2
 # This should be solved properly using setuptools
 # and this hack should be removed.
@@ -713,7 +716,7 @@ find \
 	! -name '*.pyc' -a \
 	! -name '*.pyo' -a \
 	-type f -exec grep -qsm1 '^#!.*\bpython' {} \; \
-	-exec sed -i -e '1 s|^#!.*\bpython[^ ]*|#!%__python|' {} \;
+	-exec sed -i -e '1 s|^#!.*\bpython[^ ]*|#!%_bindir/python|' {} \;
 
 %if 0%{?with_python3}
 # TODO: temporary solution until all scripts are ported to python3,
@@ -742,6 +745,7 @@ install/tools/ipa-cacert-manage
 install/tools/ipa-compat-manage
 install/tools/ipa-csreplica-manage
 install/tools/ipa-custodia
+install/tools/ipa-custodia-check
 install/tools/ipa-dns-install
 install/tools/ipa-httpd-kdcproxy
 install/tools/ipa-kra-install
@@ -764,7 +768,7 @@ install/tools/ipactl
 ipa
 '
 for P in $PY3_SUBST_PATHS; do
-    sed -i -e '1 s|^#!\s\?.*\bpython[0-9]*|#!%__python3|' $P
+    sed -i -e '1 s|^#!\s\?.*\bpython[0-9]*|#!%_bindir/python3|' $P
 done;
 
 %endif # with_python3
@@ -780,7 +784,7 @@ done;
 
 %if 0%{?with_python3}
 pushd %_builddir/freeipa-%version-python3
-export PYTHON=%__python3
+export PYTHON=%_bindir/python3
 # Workaround: make sure all shebangs are pointing to Python 3
 # This should be solved properly using setuptools
 # and this hack should be removed.
@@ -788,8 +792,8 @@ find \
 	! -name '*.pyc' -a \
 	! -name '*.pyo' -a \
 	-type f -exec grep -qsm1 '^#!.*\bpython' {} \; \
-	-exec sed -i -e '1 s|^#!.*\bpython[^ ]*|#!%__python3|' {} \;
-%autoreconf 
+	-exec sed -i -e '1 s|^#!.*\bpython[^ ]*|#!%_bindir/python3|' {} \;
+%autoreconf
 %configure --with-vendor-suffix=-%release \
            --enable-server \
            --with-ipatests \
@@ -798,7 +802,6 @@ find \
            %linter_options
 popd
 %endif # with_python3
-
 
 %install
 # Please put as much logic as possible into make install. It allows:
@@ -826,36 +829,40 @@ pushd %_builddir/freeipa-%version-python3
 (cd ipatests && %makeinstall_std)
 popd
 
-%if 0%{?with_ipatests}
 mv %buildroot%_bindir/ipa-run-tests %buildroot%_bindir/ipa-run-tests-%_python3_version
 mv %buildroot%_bindir/ipa-test-config %buildroot%_bindir/ipa-test-config-%_python3_version
 mv %buildroot%_bindir/ipa-test-task %buildroot%_bindir/ipa-test-task-%_python3_version
 ln -s %_bindir/ipa-run-tests-%_python3_version %buildroot%_bindir/ipa-run-tests-3
 ln -s %_bindir/ipa-test-config-%_python3_version %buildroot%_bindir/ipa-test-config-3
 ln -s %_bindir/ipa-test-task-%_python3_version %buildroot%_bindir/ipa-test-task-3
-%endif # with_ipatests
 
 %endif # with_python3
 
 # Python 2 installation
 %makeinstall_std
 
-%if 0%{?with_ipatests}
-mv %buildroot%_bindir/ipa-run-tests %buildroot%_bindir/ipa-run-tests-%__python_version
-mv %buildroot%_bindir/ipa-test-config %buildroot%_bindir/ipa-test-config-%__python_version
-mv %buildroot%_bindir/ipa-test-task %buildroot%_bindir/ipa-test-task-%__python_version
-ln -s %_bindir/ipa-run-tests-%__python_version %buildroot%_bindir/ipa-run-tests-2
-ln -s %_bindir/ipa-test-config-%__python_version %buildroot%_bindir/ipa-test-config-2
-ln -s %_bindir/ipa-test-task-%__python_version %buildroot%_bindir/ipa-test-task-2
-# test framework defaults to Python 2
-ln -s %_bindir/ipa-run-tests-%__python_version %buildroot%_bindir/ipa-run-tests
-ln -s %_bindir/ipa-test-config-%__python_version %buildroot%_bindir/ipa-test-config
-ln -s %_bindir/ipa-test-task-%__python_version %buildroot%_bindir/ipa-test-task
-%endif # with_ipatests
+mv %buildroot%_bindir/ipa-run-tests %buildroot%_bindir/ipa-run-tests-%_python_version
+mv %buildroot%_bindir/ipa-test-config %buildroot%_bindir/ipa-test-config-%_python_version
+mv %buildroot%_bindir/ipa-test-task %buildroot%_bindir/ipa-test-task-%_python_version
+ln -s %_bindir/ipa-run-tests-%_python_version %buildroot%_bindir/ipa-run-tests-2
+ln -s %_bindir/ipa-test-config-%_python_version %buildroot%_bindir/ipa-test-config-2
+ln -s %_bindir/ipa-test-task-%_python_version %buildroot%_bindir/ipa-test-task-2
+
+# Decide which Python (2 or 3) should be used as default for tests
+%if 0%{?with_python3}
+# Building with python3 => make it default for tests
+ln -s %_bindir/ipa-run-tests-%_python3_version %buildroot%_bindir/ipa-run-tests
+ln -s %_bindir/ipa-test-config-%_python3_version %buildroot%_bindir/ipa-test-config
+ln -s %_bindir/ipa-test-task-%_python3_version %buildroot%_bindir/ipa-test-task
+%else
+# Building python2 only => make it default for tests
+ln -s %_bindir/ipa-run-tests-%_python_version %buildroot%_bindir/ipa-run-tests
+ln -s %_bindir/ipa-test-config-%_python_version %buildroot%_bindir/ipa-test-config
+ln -s %_bindir/ipa-test-task-%_python_version %buildroot%_bindir/ipa-test-task
+%endif # with_python3
 
 # remove files which are useful only for make uninstall
 find %buildroot -wholename '*/site-packages/*/install_files.txt' -exec rm {} \;
-
 
 %find_lang ipa
 
@@ -885,7 +892,7 @@ mkdir -p %buildroot%apache2_confdir/{sites-available,extra-available,extra-enabl
 /bin/touch %buildroot%apache2_sites_available/ipa.conf
 /bin/touch %buildroot%apache2_extra_enabled/ipa-kdc-proxy.conf
 /bin/touch %buildroot%apache2_extra_enabled/ipa-pki-proxy.conf
-/bin/touch %buildroot%apache2_confdir/ipa-rewrite.conf
+/bin/touch %buildroot%apache2_extra_enabled/ipa-rewrite.conf
 /bin/touch %buildroot%_datadir/ipa/html/ca.crt
 /bin/touch %buildroot%_datadir/ipa/html/krb.con
 /bin/touch %buildroot%_datadir/ipa/html/krb5.ini
@@ -893,7 +900,6 @@ mkdir -p %buildroot%apache2_confdir/{sites-available,extra-available,extra-enabl
 
 #mkdir -p %%buildroot%%_libdir/krb5/plugins/libkrb5
 #touch %%buildroot%%_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so
-
 
 /bin/touch %buildroot%_sysconfdir/ipa/default.conf
 /bin/touch %buildroot%_sysconfdir/ipa/ca.crt
@@ -917,10 +923,15 @@ touch %buildroot%_sharedstatedir/ipa/pki-ca/publish
 touch %buildroot%_sysconfdir/ipa/kdcproxy/ipa-kdc-proxy.conf
 
 # NSS
+# old dbm format
 touch %buildroot%_sysconfdir/ipa/nssdb/cert8.db
 touch %buildroot%_sysconfdir/ipa/nssdb/key3.db
 touch %buildroot%_sysconfdir/ipa/nssdb/secmod.db
 touch %buildroot%_sysconfdir/ipa/nssdb/pwdfile.txt
+# new sql format
+touch %buildroot%_sysconfdir/ipa/nssdb/cert9.db
+touch %buildroot%_sysconfdir/ipa/nssdb/key4.db
+touch %buildroot%_sysconfdir/ipa/nssdb/pkcs11.txt
 
 mkdir -p %buildroot%_sysconfdir/pki/ca-trust/source
 touch %buildroot%_sysconfdir/pki/ca-trust/source/ipa.p11-kit
@@ -930,7 +941,8 @@ mkdir -p %buildroot%_sharedstatedir/ipa-client/pki
 mkdir -p %buildroot%_sharedstatedir/ipa-client/sysrestore
 
 mkdir -p %buildroot%_runtimedir
-install -d -m 0700 %buildroot%_runtimedir/ipa/
+install -d -m 0700 %buildroot%_runtimedir/ipa
+install -d -m 0700 %buildroot%_runtimedir/ipa/ccaches
 
 # install filetrigger
 mkdir -p %buildroot%_rpmlibdir
@@ -988,16 +1000,6 @@ getent group ipaapi >/dev/null || groupadd -f -r ipaapi ||:
 getent passwd ipaapi >/dev/null || useradd -r -g ipaapi -s /sbin/nologin -d / -c "IPA Framework User" ipaapi ||:
 # add apache to ipaaapi group
 id -Gn apache2 | grep '\bipaapi\b' >/dev/null || usermod apache2 -a -G ipaapi ||:
-
-
-#%%posttrans server-trust-ad
-#python2 -c "import sys; from ipaserver.install import installutils; sys.exit(0 if installutils.is_ipa_configured() else 1);" > /dev/null 2>&1
-#if [  $? -eq 0 ]; then
-## NOTE: systemd specific section
-#    /bin/systemctl try-restart httpd.service >/dev/null 2>&1 || :
-## END
-#fi
-
 
 %post client
 if [ $1 -gt 1 ] ; then
@@ -1062,7 +1064,6 @@ if [ -f '/etc/openssh/sshd_config' -a $restore -ge 2 ]; then
     fi
 fi
 
-
 %files server
 %doc COPYING README.md Contributors.txt
 %_sbindir/ipa-backup
@@ -1091,6 +1092,7 @@ fi
 %_libexecdir/certmonger/ipa-server-guard
 %dir %_libexecdir/ipa
 %_libexecdir/ipa/ipa-custodia
+%_libexecdir/ipa/ipa-custodia-check
 %_libexecdir/ipa/ipa-dnskeysyncd
 %_libexecdir/ipa/ipa-dnskeysync-replica
 %_libexecdir/ipa/ipa-ods-exporter
@@ -1170,6 +1172,7 @@ fi
 %files server-common
 %doc COPYING README.md Contributors.txt
 %dir %attr(0700,root,root) %_runtimedir/ipa
+%dir %attr(0700,root,root) %_runtimedir/ipa/ccaches
 %ghost %verify(not user group) %dir %_sharedstatedir/kdcproxy
 %dir %attr(0755,root,root) %_sysconfdir/ipa/kdcproxy
 %config(noreplace) %_sysconfdir/sysconfig/ipa-dnskeysyncd
@@ -1227,8 +1230,8 @@ fi
 %dir %_sysconfdir/ipa/html
 %config(noreplace) %_sysconfdir/ipa/html/ssbrowser.html
 %config(noreplace) %_sysconfdir/ipa/html/unauthorized.html
-%ghost %attr(0644,root,apache2) %config(noreplace) %apache2_confdir/ipa-rewrite.conf
 %ghost %attr(0644,root,apache2) %config(noreplace) %apache2_sites_available/ipa.conf
+%ghost %attr(0644,root,apache2) %config(noreplace) %apache2_extra_enabled/ipa-rewrite.conf
 %ghost %attr(0644,root,apache2) %config(noreplace) %apache2_extra_enabled/ipa-kdc-proxy.conf
 %ghost %attr(0644,root,apache2) %config(noreplace) %apache2_extra_enabled/ipa-pki-proxy.conf
 %ghost %attr(0644,root,apache2) %config(noreplace) %_sysconfdir/ipa/kdcproxy/ipa-kdc-proxy.conf
@@ -1273,7 +1276,6 @@ fi
 %_sysconfdir/dbus-1/system.d/oddjob-ipa-trust.conf
 %_sysconfdir/oddjobd.conf.d/oddjobd-ipa-trust.conf
 %%attr(755,root,root) %_libexecdir/ipa/oddjob/com.redhat.idm.trust-fetch-domains
-
 
 %files client
 %doc COPYING README.md Contributors.txt
@@ -1350,16 +1352,20 @@ fi
 %ghost %attr(0644,root,apache2) %config(noreplace) %_sysconfdir/ipa/default.conf
 %ghost %attr(0644,root,apache2) %config(noreplace) %_sysconfdir/ipa/ca.crt
 %dir %attr(0755,root,root) %_sysconfdir/ipa/nssdb
+# old dbm format
 %ghost %config(noreplace) %_sysconfdir/ipa/nssdb/cert8.db
 %ghost %config(noreplace) %_sysconfdir/ipa/nssdb/key3.db
 %ghost %config(noreplace) %_sysconfdir/ipa/nssdb/secmod.db
+# new sql format
+%ghost %config(noreplace) %_sysconfdir/ipa/nssdb/cert9.db
+%ghost %config(noreplace) %_sysconfdir/ipa/nssdb/key4.db
+%ghost %config(noreplace) %_sysconfdir/ipa/nssdb/pkcs11.txt
 %ghost %config(noreplace) %_sysconfdir/ipa/nssdb/pwdfile.txt
 %ghost %config(noreplace) %_sysconfdir/pki/ca-trust/source/ipa.p11-kit
 %dir %_sharedstatedir/ipa-client
 %dir %_sharedstatedir/ipa-client/pki
 %dir %_sharedstatedir/ipa-client/sysrestore
 %_mandir/man5/default.conf.5*
-
 
 %files -n python-module-freeipa
 %doc COPYING README.md Contributors.txt
@@ -1376,6 +1382,7 @@ fi
 %python_sitelibdir_noarch/ipapython-*.egg-info
 %python_sitelibdir_noarch/ipalib-*.egg-info
 %python_sitelibdir_noarch/ipaplatform-*.egg-info
+%python_sitelibdir_noarch/ipaplatform-*-nspkg.pth
 
 %files common -f ipa.lang
 %doc COPYING README.md Contributors.txt
@@ -1391,10 +1398,9 @@ fi
 %python3_sitelibdir_noarch/ipapython-*.egg-info
 %python3_sitelibdir_noarch/ipalib-*.egg-info
 %python3_sitelibdir_noarch/ipaplatform-*.egg-info
+%python3_sitelibdir_noarch/ipaplatform-*-nspkg.pth
 
 %endif # with_python3
-
-%if 0%{?with_ipatests}
 
 %files -n python-module-ipatests
 %doc COPYING README.md Contributors.txt
@@ -1406,9 +1412,9 @@ fi
 %_bindir/ipa-run-tests-2
 %_bindir/ipa-test-config-2
 %_bindir/ipa-test-task-2
-%_bindir/ipa-run-tests-%__python_version
-%_bindir/ipa-test-config-%__python_version
-%_bindir/ipa-test-task-%__python_version
+%_bindir/ipa-run-tests-%_python_version
+%_bindir/ipa-test-config-%_python_version
+%_bindir/ipa-test-task-%_python_version
 %_mandir/man1/ipa-run-tests.1*
 %_mandir/man1/ipa-test-config.1*
 %_mandir/man1/ipa-test-task.1*
@@ -1428,9 +1434,23 @@ fi
 
 %endif # with_python3
 
-%endif # with_ipatests
-
 %changelog
+* Wed Mar 14 2018 Stanislav Levin <slev@altlinux.org> 4.6.3-alt3%ubt
+- Fix WebUI translations
+- Fix upgrade process
+
+* Mon Feb 19 2018 Stanislav Levin <slev@altlinux.org> 4.6.3-alt2%ubt
+- Fix applying of ipa rewrite rules
+
+* Tue Feb 13 2018 Stanislav Levin <slev@altlinux.org> 4.6.3-alt1%ubt
+- v4.6.2 -> v4.6.3
+
+* Wed Jan 31 2018 Stanislav Levin <slev@altlinux.org> 4.6.2-alt2%ubt
+- Fix build against krb5-1.16 (new KDB DAL version 7.0)
+
+* Fri Jan 19 2018 Stanislav Levin <slev@altlinux.org> 4.6.2-alt1%ubt
+- 4.6.1 -> 4.6.2
+
 * Mon Dec 25 2017 Stanislav Levin <slev@altlinux.org> 4.6.1-alt3%ubt
 - Fix ipa-cacert-manage renew scenario
 

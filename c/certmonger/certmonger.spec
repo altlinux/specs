@@ -4,7 +4,7 @@
 
 Name: certmonger
 Version: 0.79.5
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Certificate status monitor and PKI enrollment client
 
 Group: System/Base
@@ -100,6 +100,9 @@ mv %buildroot/usr%_tmpfilesdir/%name.conf %buildroot%_tmpfilesdir/%name.conf
 %_datadir/dbus-1/system-services/*
 
 %changelog
+* Thu Mar 15 2018 Stanislav Levin <slev@altlinux.org> 0.79.5-alt2%ubt
+- Keep LC_*, LANG, set default LC_CTYPE
+
 * Wed Dec 20 2017 Stanislav Levin <slev@altlinux.org> 0.79.5-alt1%ubt
 - 0.78.6 -> 0.79.5
 

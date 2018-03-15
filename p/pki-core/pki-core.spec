@@ -8,7 +8,7 @@
 %define java_home /usr/lib/jvm/jre
 
 Name: pki-core
-Version: 10.5.3
+Version: 10.5.6
 Release: alt1%ubt
 Summary: Certificate System - PKI Core Components
 # Source-git: https://github.com/dogtagpki/pki
@@ -164,11 +164,13 @@ least one PKI Theme package:                                           \
 %nil
 
 %description %overview
+
 %package -n pki-symkey
 Summary: Symmetric Key JNI Package
 Group: System/Libraries
 Requires: jss >= 4.4.2
 Requires: libnss
+Requires: java-1.8.0-openjdk-headless
 Requires: javapackages-tools
 Provides: symkey = %EVR
 Obsoletes: symkey < %EVR
@@ -201,6 +203,7 @@ This package is a part of the PKI Core used by the Certificate System.
 Summary: Certificate System - Java Framework
 Group: System/Base
 BuildArch: noarch
+Requires: java-1.8.0-openjdk-headless
 Requires: apache-commons-cli
 Requires: apache-commons-codec
 Requires: apache-commons-io
@@ -213,7 +216,7 @@ Requires: javassist
 Requires: javapackages-tools
 Requires: jss >= 4.4.2
 Requires: ldapjdk
-Requires: pki-base = %version-%release
+Requires: pki-base = %EVR
 Requires: resteasy-atom-provider >= 3.0.6
 Requires: resteasy-client >= 3.0.6
 Requires: resteasy-jackson-provider >= 3.0.6
@@ -239,7 +242,7 @@ Group: Development/Python
 
 BuildArch: noarch
 
-Requires: pki-base = %version-%release
+Requires: pki-base = %EVR
 Requires: python-module-nss
 Requires: python-module-six
 Requires: python-module-requests
@@ -258,7 +261,7 @@ Group: Development/Python3
 
 BuildArch: noarch
 
-Requires: pki-base = %version-%release
+Requires: pki-base = %EVR
 Requires: python3-module-nss
 Requires: python3-module-six
 Requires: python3-module-lxml
@@ -281,8 +284,9 @@ Obsoletes: pki-native-tools < %EVR
 Obsoletes: pki-java-tools < %EVR
 Requires: openldap-clients
 Requires: libnss
-Requires: pki-base = %version-%release
-Requires: pki-base-java = %version-%release
+Requires: java-1.8.0-openjdk-headless
+Requires: pki-base = %EVR
+Requires: pki-base-java = %EVR
 Requires: javapackages-tools
 Requires: tomcat-servlet-3.1-api
 Conflicts: strongswan
@@ -309,12 +313,13 @@ Obsoletes: pki-deploy < %EVR
 Obsoletes: pki-setup < %EVR
 Obsoletes: pki-silent < %EVR
 
+Requires: java-1.8.0-openjdk-headless
 Requires: net-tools
 Requires: openldap-clients
 Requires: openssl
-Requires: pki-tools = %version-%release
-Requires: pki-base = %version-%release
-Requires: pki-base-java = %version-%release
+Requires: pki-tools = %EVR
+Requires: pki-base = %EVR
+Requires: pki-base-java = %EVR
 Requires: policycoreutils
 Requires: python-module-lxml
 Requires: python-module-pyldap
@@ -353,7 +358,8 @@ Group: System/Servers
 
 BuildArch: noarch
 
-Requires: pki-server = %version-%release
+Requires: java-1.8.0-openjdk-headless
+Requires: pki-server = %EVR
 
 %description -n pki-ca
 The Certificate Authority (CA) is a required PKI subsystem which issues,
@@ -375,7 +381,8 @@ Group: System/Servers
 
 BuildArch: noarch
 
-Requires: pki-server = %version-%release
+Requires: java-1.8.0-openjdk-headless
+Requires: pki-server = %EVR
 
 %description -n pki-kra
 The Key Recovery Authority (KRA) is an optional PKI subsystem that can act
@@ -403,7 +410,8 @@ Group: System/Servers
 
 BuildArch: noarch
 
-Requires: pki-server = %version-%release
+Requires: java-1.8.0-openjdk-headless
+Requires: pki-server = %EVR
 
 %description -n pki-ocsp
 The Online Certificate Status Protocol (OCSP) Manager is an optional PKI
@@ -438,8 +446,9 @@ Group: System/Servers
 
 BuildArch: noarch
 
-Requires: pki-server = %version-%release
-Requires: pki-symkey = %version-%release
+Requires: java-1.8.0-openjdk-headless
+Requires: pki-server = %EVR
+Requires: pki-symkey = %EVR
 
 %description -n pki-tks
 The Token Key Service (TKS) is an optional PKI subsystem that manages the
@@ -472,14 +481,15 @@ Provides: pki-tps-client
 Obsoletes: pki-tps-tomcat
 Obsoletes: pki-tps-client
 
-Requires: pki-server = %version-%release
+Requires: java-1.8.0-openjdk-headless
+Requires: pki-server = %EVR
 
 # additional runtime requirements needed to run native 'tpsclient'
 # REMINDER:  Revisit these once 'tpsclient' is rewritten as a Java app
 Requires: libnss
 Requires: nss-utils
 Requires: openldap-clients
-Requires: pki-symkey = %version-%release
+Requires: pki-symkey = %EVR
 
 %description -n pki-tps
 The Token Processing System (TPS) is an optional PKI subsystem that acts
@@ -766,6 +776,7 @@ fi
 %_man1dir/pki-user.1.*
 %_man1dir/pki-user-cert.1.*
 %_man1dir/pki-user-membership.1.*
+%_man1dir/PKCS10Client.1.*
 
 %files -n pki-server
 %doc base/common/THIRD_PARTY_LICENSES
@@ -878,6 +889,12 @@ fi
 %_javadocdir/pki-%version/
 
 %changelog
+* Tue Feb 20 2018 Stanislav Levin <slev@altlinux.org> 10.5.6-alt1%ubt
+- 10.5.5 -> 10.5.6
+
+* Fri Feb 16 2018 Stanislav Levin <slev@altlinux.org> 10.5.5-alt1%ubt
+- 10.5.3 -> 10.5.5
+
 * Mon Jan 15 2018 Stanislav Levin <slev@altlinux.org> 10.5.3-alt1%ubt
 - 10.4.8 -> 10.5.3
 
