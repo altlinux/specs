@@ -1,9 +1,10 @@
 Name: i8kutils
 Version: 1.33
-Release: alt1
+Release: alt1.1
 Summary: Dell laptop SMM BIOS support
 License: GPLv2+
 Group: Monitoring
+Url: https://launchpad.net/i8kutils
 Source: http://ftp.debian.org/debian/pool/main/i/i8kutils/%{name}_%version.tar.gz
 
 %description
@@ -44,6 +45,9 @@ mkdir -p $RPM_BUILD_ROOT%_bindir
 %_bindir/i8kmon
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1.1
+- NMU: added URL
+
 * Mon Jul 18 2011 Fr. Br. George <george@altlinux.ru> 1.33-alt1
 - Initial build from MDV
 
