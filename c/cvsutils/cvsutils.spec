@@ -1,10 +1,12 @@
 Name: cvsutils
 Version: 0.2.5
-Release: alt1
+Release: alt1.1
 
 Summary: CVS Utilities
 License: GPLv3+
 Group: Development/Other
+Url: http://www.red-bean.com/cvsutils/
+
 BuildArch: noarch
 
 # http://www.red-bean.com/%name/%name-%version.tar.gz
@@ -37,6 +39,9 @@ done
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.5-alt1.1
+- NMU: added URL
+
 * Fri Aug 19 2011 Dmitry V. Levin <ldv@altlinux.org> 0.2.5-alt1
 - Updated to 0.2.5.
 
