@@ -1,10 +1,11 @@
 Name: pam_mount
 Version: 2.16
-Release: alt1.1
+Release: alt1.2
 
 Summary: Pluggable Authentication Module that can mount volumes for a user session 
 License: GPLv2+ and LGPLv2+
 Group: System/Libraries
+Url: http://pam-mount.sourceforge.net/
 
 BuildRequires: glib2-devel pam-devel openssl-devel libHX-devel libxml2-devel libavahi-devel
 BuildRequires: libcryptsetup-devel libmount-devel libpcre-devel
@@ -44,6 +45,9 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %_mandir/man?/*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.16-alt1.2
+- NMU: added URL
+
 * Tue Jan 30 2018 Alexey Shabalin <shaba@altlinux.ru> 2.16-alt1.1
 - rebuild with libcryptsetup.so.12
 
