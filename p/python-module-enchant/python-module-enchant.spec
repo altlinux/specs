@@ -1,6 +1,6 @@
 Name: python-module-enchant
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: PyEnchant is a spellchecking library for Python
 
@@ -42,6 +42,7 @@ sed -i '/use_setuptools/d' setup.py
 
 %files
 %python_sitelibdir/enchant
+%python_sitelibdir/*.egg-info
 %exclude %python_sitelibdir/enchant/checker/*CheckerDialog*
 %exclude %python_sitelibdir/enchant/checker/tests.py
 
@@ -52,6 +53,9 @@ sed -i '/use_setuptools/d' setup.py
 %endif
 
 %changelog
+* Thu Mar 15 2018 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt2
+- Add packaging egg-info.
+
 * Wed Mar 14 2018 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
 - Build new version.
 - Get rid of ugly macros.
