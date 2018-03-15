@@ -1,11 +1,12 @@
 Version:	1.04.0.3532
-Release:	alt1.qa2.1
+Release:	alt1.qa3
 License:	GPL
 Group:		Development/Python
 Summary:	eLearning XHTML editor
 %setup_python_module exe
 Name:		%packagename
 Buildarch:	noarch
+Url: http://exelearning.net
 Source:		http://eduforge.org/frs/download.php/839/%modulename-%version-source.tgz
 Packager: Fr. Br. George <george@altlinux.ru>
 
@@ -67,6 +68,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %python_sitelibdir/%modulename
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.04.0.3532-alt1.qa3
+- NMU: added URL
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.04.0.3532-alt1.qa2.1
 - Rebuild with Python-2.7
 
