@@ -1,10 +1,11 @@
 Name:		lugaru
 # ( cd lugaru; hg log | head -1 | cut -d: -f2 )
 Version:	0.0.r262
-Release:	alt2.1
+Release:	alt2.2
 Group:		Games/Adventure
 Summary:	A well-trained ninja rabbit fight through a detailed 3D world
 License:	GPL
+Url:		https://osslugaru.gitlab.io
 # hg clone http://hg.icculus.org/icculus/lugaru
 Source:		%name-%version.tar
 Source1:	Makefile
@@ -66,6 +67,9 @@ rm %buildroot%_gamesdatadir/%name/%name
 %_gamesdatadir/%name
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.r262-alt2.2
+- NMU: added URL
+
 * Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.r262-alt2.1
 - Rebuilt with libpng15
 
