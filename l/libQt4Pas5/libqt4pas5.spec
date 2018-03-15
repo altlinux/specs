@@ -1,9 +1,10 @@
 Name:           libQt4Pas5
 Version:        2.5
-Release:        alt1
+Release:        alt1.1
 License:        LGPLv2+
 Source0:        http://users.telenet.be/Jan.Van.hijfte/qtforfpc/V%{version}/splitbuild-qt4pas-V%{version}_Qt4.5.3.tar.gz
 Group: 		System/Libraries
+Url:		http://users.telenet.be/Jan.Van.hijfte/qtforfpc/fpcqt4.html
 Summary:        Qt4 interface bindings for Pascal
 
 BuildRequires: gcc-c++ libqt4-devel
@@ -53,5 +54,8 @@ cp qt4.pas %buildroot/%_datadir/pascal/qt4
 %_datadir/pascal/qt4/
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1.1
+- NMU: added URL
+
 * Fri May 01 2015 Motsyo Gennadi <drool@altlinux.ru> 2.5-alt1
 - build for ALT Linux (thx to Anatoly Chernov for draft)
