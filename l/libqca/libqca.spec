@@ -3,7 +3,8 @@ Copyright:	GPL
 Group:		Networking/Instant messaging
 Summary:	QCA - Qt Cryptographic Architecture
 Version:	1.0
-Release:	alt4
+Release:	alt4.1
+Url:		https://userbase.kde.org/QCA
 Source:		qca-%version.tar.bz2
 
 BuildRequires: gcc-c++ libqt3-devel libstdc++-devel
@@ -92,6 +93,9 @@ qmake-qt3
 %_includedir/*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4.1
+- NMU: added URL
+
 * Tue Apr 26 2011 Sergey V Turchin <zerg@altlinux.org> 1.0-alt4
 - fix build requires
 
