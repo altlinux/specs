@@ -1,11 +1,12 @@
 Name: xman
 Version: 1.1.4
-Release: alt3
+Release: alt3.1
 Summary: Manual page display program for the X Window System
 Group: System/X11
 Source: %name-%version.tar.bz2
 Patch: 0001-Add-xz-compressed-man-pages.patch
 License: MIT
+Url: http://xorg.freedesktop.org
 
 # Automatically added by buildreq on Thu Apr 14 2011
 # optimized out: libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel pkg-config xorg-xproto-devel
@@ -38,6 +39,9 @@ done
 %_mandir/man1/xman.*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.4-alt3.1
+- NMU: added URL
+
 * Thu Nov 09 2017 Fr. Br. George <george@altlinux.ru> 1.1.4-alt3
 - Add .xz support (thanks to nbr@)
 
