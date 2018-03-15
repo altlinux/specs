@@ -16,8 +16,8 @@
 %endif
 
 Name: sssd
-Version: 1.15.3
-Release: alt7%ubt
+Version: 1.16.1
+Release: alt1%ubt
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -629,7 +629,6 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %attr(750,root,%sssd_user) %dir %_sysconfdir/sssd/conf.d
 %attr(0600,root,root) %config(noreplace) %_sysconfdir/sssd/sssd.conf
 %dir %_sysconfdir/systemd/system/sssd.service.d
-%config(noreplace) %_sysconfdir/systemd/system/sssd.service.d/journal.conf
 %config(noreplace) %_sysconfdir/logrotate.d/sssd
 %dir %_datadir/%name
 %_sysconfdir/pam.d/sssd-shadowutils
@@ -646,6 +645,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_man5dir/sssd-files.5*
 %_man5dir/sssd-simple.5*
 %_man5dir/sssd-sudo.5*
+%_man5dir/sssd-session-recording.5*
 %_man5dir/sssd-secrets.5*
 %_man5dir/sss_rpcidmapd.5*
 %_man8dir/sssd.8*
@@ -835,6 +835,10 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %nfsidmapdir/sss.so
 
 %changelog
+* Mon Mar 12 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16.1-alt1%ubt
+- Update to latest stable release
+- Revert libwbclient-sssd interface to version 0.13 for samba-4.6
+
 * Fri Mar 02 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.15.3-alt7%ubt
 - Rebuild with fixes from p8
 
