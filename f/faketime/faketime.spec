@@ -1,10 +1,11 @@
 Name: faketime
 Version: 0.2.5
-Release: alt3
+Release: alt3.1
 
 Summary: Execute program with changed notion of system time
 License: GPLv3+
 Group: Development/Other
+Url: http://git.altlinux.org/people/ldv/packages/faketime.git
 
 # git://git.altlinux.org/gears/f/faketime.git
 Source: %name-%version.tar
@@ -48,6 +49,10 @@ diff exp out
 %_man1dir/*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.5-alt3.1
+- NMU: added URL git.altlinux.org/people/ldv/packages/faketime.git
+  to distinguish from http://www.code-wizards.com/projects/libfaketime
+
 * Wed Jun 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.5-alt3
 - Fix build with new toolchain
 
