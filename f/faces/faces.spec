@@ -1,10 +1,11 @@
 Name: faces
 Version: 1.7.7
-Release: alt6.1
+Release: alt6.2
 
 Summary: A list monitor with a visual output
 License: LGPL
 Group: Networking/Mail
+Url: http://www.cs.indiana.edu/ftp/faces/
 
 Source: ftp://ftp.cs.indiana.edu/pub/%name/%name/%name-%version.tar.bz2
 
@@ -97,6 +98,9 @@ install -pD -m644 faces.desktop %buildroot%_desktopdir/%name.desktop
 %_man3dir/compface.3.*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.7.7-alt6.2
+- NMU: added URL (closes: #34652)
+
 * Wed Nov 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.7-alt6.1
 - Fixed build
 
