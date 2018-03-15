@@ -1,9 +1,10 @@
 Name: clicfs
 Version: 1.4.6
-Release: alt2
+Release: alt2.1
 Summary: Compressed Loop Image Container
 License: GPLv2
 Group: System/Kernel and hardware
+Url: http://gitorious.org/opensuse/clicfs
 Source: %name.tar
 Patch: %name-%version-%release.patch
 Requires: fuse >= 2.6
@@ -57,6 +58,9 @@ This package contains utils for create, extract and check Clic FS.
 
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.6-alt2.1
+- NMU: added URL
+
 * Tue Feb 05 2013 Led <led@altlinux.ru> 1.4.6-alt2
 - fixed format strings for output
 
