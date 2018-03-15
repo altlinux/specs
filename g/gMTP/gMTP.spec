@@ -1,10 +1,11 @@
 Name: gMTP
 Version: 1.3.11
-Release: alt1
+Release: alt1.1
 
 Summary: A basic media player client
 License: BSD-like
 Group: File tools
+Url: https://gmtp.sourceforge.io/
 
 Source: %name-%version.tar
 
@@ -42,6 +43,9 @@ upload/download of files.
 %_datadir/glib-2.0/schemas/*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.11-alt1.1
+- NMU: added URL
+
 * Sun Mar 11 2018 Dmitriy Khanzhin <jinn@altlinux.org> 1.3.11-alt1
 - 1.3.11
 
