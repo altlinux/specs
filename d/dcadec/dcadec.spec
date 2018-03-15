@@ -1,10 +1,11 @@
 Name: dcadec
 Version: 0.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: DTS Coherent Acoustics decoder
 License: LGPL
 Group: Sound
+Url: https://github.com/foo86/dcadec
 
 Source: %name-%version.tar
 
@@ -75,5 +76,8 @@ E_O_F
 %_includedir/libdcadec
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt1.1
+- NMU: added URL
+
 * Wed Feb 24 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.0-alt1
 - initial
