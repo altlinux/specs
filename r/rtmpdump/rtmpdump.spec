@@ -1,10 +1,11 @@
 Name:		rtmpdump
 Version:	2.4
-Release:	alt1
+Release:	alt1.1
 
 Summary:	An utility toolkit for RTMP streams
 License:	GPLv2
 Group:		Sound
+Url:		http://rtmpdump.mplayerhq.hu/
 
 Source:		%name-%version-%release.tar
 
@@ -75,6 +76,9 @@ This package contains RTMPDump library development headers.
 %_man3dir/*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1.1
+- NMU: added URL
+
 * Tue Oct 11 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4-alt1
 - 2.4 (semi-)released
 
