@@ -1,11 +1,12 @@
 Name: mpage
 Version: 2.5.4
-Release: alt2.0
+Release: alt2.1
 
 Summary: A tool for printing multiple pages of text on each printed page
 License: GPL
 Group: System/Configuration/Printing
 
+Url: http://www.mesa.nl/pub/mpage
 Source: http://www.mesa.nl/pub/mpage/%name-%version.tar
 Patch: mpage252-config.patch
 Patch1: %name-2.5.1-newenc.patch
@@ -45,6 +46,9 @@ make PREFIX=$RPM_BUILD_ROOT%prefix MANDIR=$RPM_BUILD_ROOT%_mandir/man1 install
 %_datadir/%name
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.5.4-alt2.1
+- NMU: added URL
+
 * Mon Apr 16 2007 ALT QA Team Robot <qa-robot@altlinux.org> 2.5.4-alt2.0
 - Automated rebuild.
 
