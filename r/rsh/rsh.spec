@@ -1,11 +1,12 @@
 Name: rsh
 Version: 0.17
-Release: alt5
+Release: alt5.1
 Serial: 1
 
 Summary: Clients for remote access commands (rsh, rlogin, rcp)
 Group: Networking/Remote access
 License: BSD
+Url: ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/
 
 Source0: netkit-rsh-%version.tar.gz
 Source1: rexec.pam
@@ -252,6 +253,9 @@ install -pDm755 %SOURCE9 %buildroot%_controldir/rsh
 %_mandir/man8/*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:0.17-alt5.1
+- NMU: added URL
+
 * Tue Jan 10 2017 Michael Shigorin <mike@altlinux.org> 1:0.17-alt5
 - fixed FTBFS against current glibc with openembedded patch:
   https://patchwork.openembedded.org/patch/123269/
