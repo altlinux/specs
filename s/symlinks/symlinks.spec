@@ -1,11 +1,12 @@
 Name: symlinks
 Version: 1.4
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: A utility which maintains a system's symbolic links
 License: Copyright only
 Group: File tools
+Url: http://www.ibiblio.org/pub/Linux/utils/file/
 
 # http://ibiblio.org/pub/Linux/utils/file/%name-%version.tar.gz
 Source: %name-%version.tar
@@ -39,6 +40,9 @@ install -Dpm644 symlinks.8 %buildroot%_man1dir/symlinks.1
 %doc symlinks-LICENSE.txt
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.4-alt1.1
+- NMU: added URL
+
 * Wed Apr 17 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.4-alt1
 - Updated to 1.4, synced patches with Fedora.
 
