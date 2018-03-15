@@ -1,5 +1,5 @@
 Name: spice-ec
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1%ubt
 
 Summary: Spice Easy Connect
@@ -32,6 +32,9 @@ SPICE remote viewer launcher
 %_desktopdir/*
 
 %changelog
+* Thu Mar 15 2018 Maxim Voronov <mvoronov@altlinux.org> 1.0.1-alt1%ubt
+- new version
+
 * Mon Mar 12 2018 Maxim Voronov <mvoronov@altlinux.org> 1.0.0-alt1%ubt
 - initial build
 
