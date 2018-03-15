@@ -1,11 +1,12 @@
 Name: giftrans
 Version: 1.12.2
-Release: alt2
+Release: alt2.1
 Epoch: 1
 
 Summary: A program for making transparent GIFs from non-transparent GIFs
 License: GPLv2+
 Group: Graphics
+Url:	ftp://ftp.rz.uni-karlsruhe.de/pub/net/www/tools/
 # ftp://ftp.rz.uni-karlsruhe.de/pub/net/www/tools/giftrans-%version.tar.bz2
 Source: giftrans-%version.tar
 Patch01: 01_relocate_rgb.diff
@@ -47,6 +48,9 @@ install -pm644 giftrans.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.12.2-alt2.1
+- NMU: added URL
+
 * Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.12.2-alt2
 - Updated Debian patches.
 - Built with LFS support enabled.
