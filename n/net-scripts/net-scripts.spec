@@ -1,11 +1,12 @@
 Name:		net-scripts
 Version:	0.5.6
-Release:	alt2.qa1
+Release:	alt2.qa2
 Summary:	The system network scripts
 Summary(ru_RU.KOI8-R): Системные сценарии для управления сетью
 License:	GPL
 Group:		System/Base
 Packager:	Denis Ovsienko <pilot@altlinux.ru>
+Url:		http://git.altlinux.org/people/ldv/packages/
 Source:		%name-%version.tar
 PreReq:		setup >= 0:2.1.9-ipl18mdk, service, startup >= 0:0.9.3-alt1, chkconfig, control
 Requires:	iproute2
@@ -110,6 +111,9 @@ done
 %doc ifcfg-pentanet0.example config-pentanet0.example
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.6-alt2.qa2
+- NMU: added URL
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.6-alt2.qa1
 - NMU: rebuilt for updated dependencies.
 
