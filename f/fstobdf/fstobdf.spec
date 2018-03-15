@@ -1,10 +1,11 @@
 Name: fstobdf
 Version: 1.0.6
-Release: alt1
+Release: alt1.1
 Summary: Generate BDF font from X font server
 Group: System/X11
 Source: %name-%version.tar.bz2
 License: MIT
+Url: http://xorg.freedesktop.org/
 
 # Automatically added by buildreq on Thu Apr 14 2011
 # optimized out: pkg-config xorg-fontsproto-devel xorg-xproto-devel
@@ -33,6 +34,9 @@ The fstobdf program reads a font from a font server and generate BDF font.
 %_man1dir/%name.*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.6-alt1.1
+- NMU: added URL
+
 * Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
 - Autobuild version bump to 1.0.6
 
