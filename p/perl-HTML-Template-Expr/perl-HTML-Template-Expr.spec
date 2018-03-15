@@ -2,10 +2,11 @@
 
 Name: perl-%module
 Version: 0.07
-Release: alt2.1
+Release: alt2.2
 
 Summary: Perl module to use expressions in HTML Template
 Group: Development/Perl
+Url: %CPAN %module
 License: GPL or Artistic
 Source: http://www.cpan.org/modules/by-module/HTML/%module-%version.tar.gz
 Patch: perl-%module-alt-regexp.patch
@@ -40,6 +41,9 @@ runtime.
 %perl_vendor_privlib/HTML/Template/*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2.2
+- added Url
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
