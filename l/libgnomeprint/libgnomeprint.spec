@@ -8,11 +8,12 @@
 
 Name: libgnomeprint
 Version: %ver_major.8
-Release: alt4
+Release: alt4.1
 
 Summary: Printing library for GNOME
 License: LGPL
 Group: System/Libraries
+Url: http://www.levien.com/gnome/print-arch.html
 
 Provides: %oldname = %version-%release
 Obsoletes: %oldname < 2.12.1-alt3
@@ -165,6 +166,9 @@ This package contains static libraries for the GNOME printing infrastructure.
 %exclude %_libdir/%name/%version/modules/*.la
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.18.8-alt4.1
+- NMU: added URL
+
 * Fri Mar 18 2016 Andrey Cherepanov <cas@altlinux.org> 2.18.8-alt4
 - Fix build with Bison 3 (patch from PLD)
 
