@@ -3,13 +3,14 @@
 
 Name: statserial
 Version: 1.1
-Release: %branch_release alt2
+Release: %branch_release alt3
 Epoch: 1
 
 Summary: A tool which displays the status of serial port modem lines.
 Summary(ru_RU.KOI8-R): Утилита, отображающая состояние серийных портов
 License: %lgpl2plus
 Group: Communications
+Url: ftp://ibiblio.org/pub/Linux/system/serial/
 
 # Source: ftp://ibiblio.org/pub/Linux/system/serial/%name-%version.tar.gz
 Source: %name-%version.tar
@@ -51,6 +52,9 @@ install -p -m644 -D %name.1 %buildroot%_mandir/man1/%name.1
 %_mandir/man?/*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt3
+- NMU: added URL
+
 * Mon May 21 2012 Aleksey Avdeev <solo@altlinux.ru> 1:1.1-alt2
 - Set Epoch: 1
 
