@@ -1,11 +1,12 @@
 Name: python-module-sane
 Version: 2.0.1
-Release: alt1.3
+Release: alt1.4
 %setup_python_module sane
 
 Summary: Pyhon interface for Sane
 License: BSDLike 
 Group: Development/Python
+Url: https://github.com/python-pillow/Sane
 
 Source: pysane-%version.tar
 
@@ -32,6 +33,9 @@ Pyhon interface for Sane
 
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1.4
+- NMU: added URL
+
 * Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt1.3
 - Fixed build
 
