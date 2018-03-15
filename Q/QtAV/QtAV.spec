@@ -4,11 +4,12 @@
 %define libname libqtav
 Name: QtAV
 Version: 1.12.0
-Release: alt1
+Release: alt1.1
 
 Summary: A cross-platform multimedia framework based on Qt and FFmpeg
 License: LGPL v2.1
 Group: System/Libraries
+Url: http://qtav.org/
 
 # Source-git: https://github.com/wang-bin/QtAV.git
 Source: %name-%version.tar
@@ -91,6 +92,8 @@ Development files for %name qml.
 # drop Player / QML Player
 rm -rf %buildroot/{%_desktopdir,%_docdir,%_iconsdir,%_qt5_prefix/bin,%_bindir}
 
+rm -f examples/simpletranscode/Makefile
+
 %files -n %libname
 %doc README.md
 %_libdir/libQtAV.so.*
@@ -115,6 +118,9 @@ rm -rf %buildroot/{%_desktopdir,%_docdir,%_iconsdir,%_qt5_prefix/bin,%_bindir}
 %doc doc/UseQtAVinYourProjects.md
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1.1
+- NMU: added URL
+
 * Sat Aug 05 2017 Vitaly Lipatov <lav@altlinux.ru> 1.12.0-alt1
 - new version 1.12.0 (with rpmrb script)
 
