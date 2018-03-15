@@ -1,8 +1,9 @@
 Name: fprintd
 Version: 0.4.1
-Release: alt1
+Release: alt1.1
 Summary: D-Bus service for Fingerprint reader access
 Group: System/Servers
+Url: http://www.freedesktop.org/wiki/Software/fprint/fprintd
 License: GPLv2+
 
 Source: %name-%version.tar
@@ -73,7 +74,7 @@ rm -fv %buildroot/%_lib/security/pam_fprintd.{a,la,so.*}
 %_datadir/dbus-1/system-services/net.reactivated.Fprint.service
 %_datadir/polkit-1/actions/net.reactivated.fprint.device.policy
 %dir %_localstatedir/fprint
-%_mandir/man1/fprintd.1.gz
+%_man1dir/fprintd.1*
 
 %files -n pam_fprintd
 %doc pam/README
@@ -85,6 +86,9 @@ rm -fv %buildroot/%_lib/security/pam_fprintd.{a,la,so.*}
 %_datadir/dbus-1/interfaces/net.reactivated.Fprint.Manager.xml
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1.1
+- NMU: added URL
+
 * Fri Oct 26 2012 Ivan Ovcherenko <asdus@altlinux.org> 0.4.1-alt1
 - 0.4.1 with git updates (closes: #27851)
 
