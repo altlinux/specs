@@ -1,10 +1,11 @@
 Name: mp3gain
 Version: 1.4.6
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: MP3Gain analyzes and adjusts mp3 files so that they have the same volume.
 Group: Sound
 License: LGPL
+Url: http://mp3gain.sourceforge.net
 
 Source: %name-%version.tar.bz2
 Packager: Afanasov Dmitry <ender@altlinux.ru>
@@ -30,6 +31,9 @@ install -pD -m644 lgpl.txt %buildroot%_docdir/%name-%version/LGPL.txt
 %_bindir/%name
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.6-alt1.qa2
+- NMU: added URL
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.6-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
