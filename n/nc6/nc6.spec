@@ -1,9 +1,10 @@
 Summary: Reads and writes data across network connections using TCP or UDP with IPv4 and IPv6
 Name: nc6
 Version: 1.0
-Release: alt1
+Release: alt1.1
 License: GPL
 Group: Networking/Other
+Url: http://www.deepspace6.net/projects/netcat6.html
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source0: ftp://ftp.deepspace6.net/pub/ds6/sources/nc6/nc6-%version.tar.gz
@@ -52,6 +53,9 @@ capabilities.
 
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1.1
+- NMU: added URL
+
 * Tue Dec 29 2015 Valery Inozemtsev <shrek@altlinux.ru> 1.0-alt1
 - initial release
 
