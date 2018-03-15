@@ -1,9 +1,10 @@
 Name: s3cmd
 Version: 1.5.0
-Release: alt1
+Release: alt1.1
 License: GPL
 
 Group: Networking/Other
+Url: http://s3tools.org/s3cmd
 
 Source: %name-%version-%release.tar
 # Automatically added by buildreq on Fri Nov 14 2008
@@ -35,6 +36,9 @@ directory tree synchronization.
 %exclude %_docdir/packages/
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1.1
+- NMU: added URL
+
 * Wed Jan 28 2015 Yuriy Kashirin <uka@altlinux.ru> 1.5.0-alt1
 - New version
 
