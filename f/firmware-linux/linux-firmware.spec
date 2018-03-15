@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20180222
+Version: 20180227
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -65,6 +65,16 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 %exclude /lib/firmware/carl9170fw
 
 %changelog
+* Mon Mar 12 2018 L.A. Kostis <lakostis@altlinux.ru> 20180227-alt1
+- upstream changes (GIT 9cf0ec0):
+  + Mellanox: Add new mlxsw_spectrum firmware 13.1620.192 (thx Tal Bar)
+  + qed: Add firmware 8.33.11.0 (thx Rahul Verma)
+  + BCM-0bb4-0306: Cypress Bluetooth firmware for HTC Vive (thx Kaihsiu Chen)
+  + linux-firmware:Update firmware patch for Intel Bluetooth 7265
+    (D1) (thx Amit K Bag)
+  + qed: Add firmwares 8.20.0.0 8.18.9.0 and 8.14.6.0 (thx Rasesh Mody)
+  + iwlwifi: update firmware version 34 for 9000 series (thx Luca Coelho)
+
 * Sat Feb 24 2018 L.A. Kostis <lakostis@altlinux.ru> 20180222-alt1
 - configuration changes:
   +  update changelog rules
