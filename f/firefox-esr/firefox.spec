@@ -13,7 +13,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        52.7.0
+Version:        52.7.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -328,8 +328,19 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Thu Mar 15 2018 Andrey Cherepanov <cas@altlinux.org> 52.7.1-alt1
+- New ESR version (52.7.1)
+
 * Sat Mar 10 2018 Andrey Cherepanov <cas@altlinux.org> 52.7.0-alt1
 - New ESR version (52.7.0).
+- Fixes:
+  + CVE-2018-5127 Buffer overflow manipulating SVG animatedPathSegList
+  + CVE-2018-5129 Out-of-bounds write with malformed IPC messages
+  + CVE-2018-5130 Mismatched RTP payload type can trigger memory corruption
+  + CVE-2018-5131 Fetch API improperly returns cached copies of no-store/no-cache resources
+  + CVE-2018-5144 Integer overflow during Unicode conversion
+  + CVE-2018-5125 Memory safety bugs fixed in Firefox 59 and Firefox ESR 52.7
+  + CVE-2018-5145 Memory safety bugs fixed in Firefox ESR 52.7
 
 * Mon Mar 05 2018 Andrey Cherepanov <cas@altlinux.org> 52.6.0-alt2
 - Enable ALSA support (ALT #34608)
