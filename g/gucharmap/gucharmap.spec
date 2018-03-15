@@ -5,11 +5,12 @@
 
 Name: gucharmap
 Version: %ver_major.4
-Release: alt1
+Release: alt1.1
 
 Summary: gucharmap is a featureful Unicode character map
-License: %gpl3plus
 Group: Text tools
+License: %gpl3plus
+Url: https://wiki.gnome.org/Gucharmap
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 #http://www.unicode.org/Public/%unicode_ver/ucd/
@@ -111,6 +112,9 @@ export LDFLAGS="$LDFLAGS -ldl"
 %endif
 
 %changelog
+* Sun Mar 18 2018 Yuri N. Sedunov <aris@altlinux.org> 10.0.4-alt1.1
+- added Url tag
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 10.0.4-alt1
 - 10.0.4
 

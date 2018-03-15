@@ -1,4 +1,4 @@
-%define ver_major 3.26
+%define ver_major 3.28
 %define _libexecdir /usr/libexec
 %def_without x11_support
 
@@ -48,7 +48,6 @@ and consumes fewer resources.
 #%autoreconf
 %configure \
 	%{?_with_x11_support:--with-x11-support} \
-	--with-cxx11-support \
 	--disable-static
 
 %make_build
@@ -76,11 +75,14 @@ desktop-file-install \
 %exclude %_libdir/gnote/addins/*/*.la
 %_datadir/dbus-1/services/org.gnome.Gnote.service
 %_datadir/glib-2.0/schemas/*.xml
-%_datadir/appdata/gnote.appdata.xml
+%_datadir/metainfo/gnote.appdata.xml
 %_datadir/gnome-shell/search-providers/gnote-search-provider.ini
 %doc README TODO NEWS AUTHORS
 
 %changelog
+* Sun Mar 18 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Tue Sep 19 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

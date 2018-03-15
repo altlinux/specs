@@ -2,12 +2,12 @@
 
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.Photos
-%define ver_major 3.27
+%define ver_major 3.28
 %define _libexecdir %_prefix/libexec
 %define gegl_api_ver 0.3
 
 Name: gnome-photos
-Version: %ver_major.92
+Version: %ver_major.0
 Release: alt1
 
 Summary: Photos - access, organize and share your photos on GNOME
@@ -86,6 +86,9 @@ rm -rf %buildroot/%_datadir/doc/%name
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Thu Mar 15 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Tue Mar 06 2018 Yuri N. Sedunov <aris@altlinux.org> 3.27.92-alt1
 - 3.27.92
 

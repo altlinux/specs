@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name gtk+
 %define ver_major 3.22
@@ -17,13 +17,13 @@
 # broadway (HTML5) gdk backend
 %def_enable broadway
 %def_enable cloudprint
-%def_enable cloudproviders
+%def_disable cloudproviders
 %def_enable installed_tests
 %def_disable debug
 
 Name: libgtk+3
 Version: %ver_major.29
-Release: alt1
+Release: alt2
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -38,6 +38,7 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 Source5: gtk-icon-cache.filetrigger
 
 Patch: gtk+-2.16.5-alt-stop-spam.patch
+# move cloudproviders flags from gdk to gtk
 Patch1: gtk+-3.22.29-alt-build.patch
 
 %define glib_ver 2.50.2
@@ -265,9 +266,12 @@ the functionality of the installed GTK+3 packages.
     %{?_enable_broadway:--enable-broadway-backend} \
     %{?_enable_installed_tests:--enable-installed-tests} \
     %{subst_enable cloudprint} \
-    %{subst_enable cloudproviders} \
     %{?_enable_debug:--enable-debug=yes}
 %make_build
+
+# bad logic in configure.ac, fix it later
+#    %{?_disable_cloudproviders:--enable-cloudproviders=no} \
+#    %{subst_enable cloudproviders} \
 
 %install
 %makeinstall_std
@@ -452,6 +456,10 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Sat Mar 17 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.29-alt2
+- updated to 3.22.29-17-g7fd9f2d
+- temporarily disabled buggy cloudproviders support
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.29-alt1
 - 3.22.29
 
