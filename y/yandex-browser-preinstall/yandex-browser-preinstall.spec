@@ -1,6 +1,6 @@
 Name: yandex-browser-preinstall
 Version: 0.4
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Set correct environment for Yandex.Browser
 License: GPL
@@ -8,8 +8,7 @@ Group: Networking/WWW
 
 Url: https://browser.yandex.ru/
 Packager: Nazarov Denis <nenderus@altlinux.org>
-
-ExclusiveArch: x86_64
+BuildArch: noarch
 
 Source0: yandex-browser
 Source1: yandex-browser-beta
@@ -28,6 +27,9 @@ Set correct environment for Yandex.Browser
 %_sysconfdir/default/yandex-browser-beta
 
 %changelog
+* Thu Mar 15 2018 Nazarov Denis <nenderus@altlinux.org> 0.4-alt2%ubt
+- No arch
+
 * Thu Mar 15 2018 Nazarov Denis <nenderus@altlinux.org> 0.4-alt1%ubt
 - Temporary remove fix playable video with H.264 codec
 
