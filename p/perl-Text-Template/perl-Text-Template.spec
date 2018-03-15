@@ -3,13 +3,14 @@
 
 Name: perl-Text-Template
 Version: 1.51
-Release: alt1
+Release: alt1.1
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Summary: Expand template text with embedded Perl
 Group: Development/Perl
 License: GPL or Artistic
+Url: %CPAN %module
 Source0: http://www.cpan.org/authors/id/M/MS/MSCHOUT/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
@@ -45,6 +46,9 @@ ages functional separation.
 %perl_vendor_privlib/Text*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.51-alt1.1
+- NMU: added URL
+
 * Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.51-alt1
 - automated CPAN update
 
