@@ -1,7 +1,7 @@
 %define rname kturtle
 
 Name: kde5-%rname
-Version: 17.08.3
+Version: 17.12.3
 Release: alt1%ubt
 %K5init
 
@@ -38,7 +38,7 @@ and... programming.
 
 %install
 %K5install
-%K5install_move data katepart
+%K5install_move data katepart kturtle
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
@@ -49,8 +49,12 @@ and... programming.
 %_K5xmlgui/kturtle/
 %_K5xdgapp/org.kde.kturtle.desktop
 %_K5data/katepart/syntax/*logo*.xml
+%_K5data/kturtle/
 
 %changelog
+* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+- new version
+
 * Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 

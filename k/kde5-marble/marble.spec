@@ -4,7 +4,7 @@
 %define libmarblewidget libmarblewidget-qt5%marblewidget_sover
 
 Name: kde5-%rname
-Version: 17.08.3
+Version: 17.12.3
 Release: alt1%ubt
 %K5init
 
@@ -87,6 +87,9 @@ mv %buildroot/%_desktopdir/*.desktop %buildroot/%_K5xdgapp/
 mkdir -p %buildroot/%_K5inc
 mv %buildroot/%_includedir/marble %buildroot/%_K5inc/
 
+
+rm -rf %buildroot/%_datadir/locale/*/LC_MESSAGES/*_qt.qm
+rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -125,6 +128,9 @@ mv %buildroot/%_includedir/marble %buildroot/%_K5inc/
 %_K5lib/libmarblewidget-qt5.so.*
 
 %changelog
+* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+- new version
+
 * Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 

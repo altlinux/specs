@@ -1,7 +1,7 @@
 %define rname kig
 
 Name: kde5-%rname
-Version: 17.08.3
+Version: 17.12.3
 Release: alt1%ubt
 %K5init
 
@@ -53,6 +53,9 @@ Kig is a program for exploring geometric constructions.
 %_K5srv/kig_part.desktop
 
 %changelog
+* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+- new version
+
 * Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 

@@ -3,8 +3,8 @@
 %define libminuetinterfaces libminuetinterfaces%minuet_sover
 
 Name: kde5-%rname
-Version: 17.08.3
-Release: alt2%ubt
+Version: 17.12.3
+Release: alt1%ubt
 %K5init
 
 Group: Education
@@ -55,6 +55,8 @@ KF5 library
 %setup -n %rname-%version
 %patch -p1
 
+sed -i 's|^#set(FluidSynth_VERSION|set(FluidSynth_VERSION|' cmake/FindFluidSynth.cmake
+
 %build
 %K5build \
     -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
@@ -85,6 +87,9 @@ KF5 library
 %_K5inc/minuet/
 
 %changelog
+* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+- new version
+
 * Fri Nov 17 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt2%ubt
 - update translations
 
