@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.005
+Version: 0.006
 Release: alt1
 Summary: DistroDb Maker tools
 License: LGPL2+
@@ -71,6 +71,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1
+- added java.raw
+
 * Tue Mar 13 2018 Igor Vlasenko <viy@altlinux.ru> 0.005-alt1
 - exclude doc from texmf
 
