@@ -1,7 +1,7 @@
 %define rname lskat
 
 Name: kde5-%rname
-Version: 17.08.3
+Version: 17.12.3
 Release: alt1%ubt
 %K5init
 
@@ -47,6 +47,7 @@ where the second player is either live opponent, or built in artificial intellig
 
 %files -f %name.lang
 %doc COPYING*
+%_K5xdgconf/*.*categories
 %_K5bin/lskat
 %_K5xdgapp/org.kde.lskat.desktop
 %_K5icon/*/*/apps/lskat.*
@@ -54,6 +55,9 @@ where the second player is either live opponent, or built in artificial intellig
 %_K5xmlgui/lskat/
 
 %changelog
+* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+- new version
+
 * Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
 - new version
 
