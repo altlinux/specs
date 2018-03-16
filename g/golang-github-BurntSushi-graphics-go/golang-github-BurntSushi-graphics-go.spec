@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global   debug_package   %{nil}
@@ -19,7 +20,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.2.git%{shortcommit}
+Release:        alt1_0.3.git%{shortcommit}
 Summary:        Graphics library for the Go programming language
 License:        BSD
 URL:            https://%{provider_prefix}
@@ -75,11 +76,18 @@ install -d -p %{buildroot}%{go_path}/src/%{import_path}/
 echo "%%dir %%{go_path}/src/%%{import_path}/." >> devel.file-list
 # find all *.go but no *_test.go files and generate devel.file-list
 for file in $(find . -iname "*.go" \! -iname "*_test.go") ; do
-    echo "%%dir %%{go_path}/src/%%{import_path}/$(dirname $file)" >> devel.file-list
-    install -d -p %{buildroot}%{go_path}/src/%{import_path}/$(dirname $file)
-    cp -pav $file %{buildroot}%{go_path}/src/%{import_path}/$file
+    install -d -p %{buildroot}/%{go_path}/src/%{import_path}/$(dirname $file)
+    cp -pav $file %{buildroot}/%{go_path}/src/%{import_path}/$file
     echo "%%{go_path}/src/%%{import_path}/$file" >> devel.file-list
+    filedir=${file##./};
+    # note %%%% -> %% for rpm macros!
+    while [ ${filedir%%/*} != "$filedir" ]; do
+        filedir=${filedir%%/*}
+	echo "%%dir %%{go_path}/src/%%{import_path}/$filedir" >> devel.file-list.dir
+    done
 done
+[ -s devel.file-list.dir ] && sort -u devel.file-list.dir >> devel.file-list
+rm -f devel.file-list.dir
 
 # testing files for this project
 install -d %{buildroot}%{go_path}/src/%{import_path}/
@@ -113,13 +121,16 @@ export GOPATH=%{buildroot}%{go_path}:%{go_path}
 
 %files devel -f devel.file-list
 %doc README
-%doc LICENSE
+%doc --no-dereference LICENSE
 %dir %{go_path}/src/github.com/BurntSushi/
 %dir %{go_path}/src/%{import_path}
 
 %files unit-test-devel -f unit-test-devel.file-list
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.3.gitb43f31a
+- fc update
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.2.gitb43f31a
 - new version
 
