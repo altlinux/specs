@@ -39,7 +39,7 @@ BuildRequires: /proc
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.4.%{commitdate}.git%{shortcommit}
+Release:        alt1_0.5.%{commitdate}.git%{shortcommit}
 Summary:        Lex/Flex-like utility written in Go
 License:        BSD
 URL:            https://%{provider_prefix}
@@ -182,26 +182,29 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_cli_tool}
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc CONTRIBUTORS README AUTHORS
 %{_bindir}/golex
 %endif
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc CONTRIBUTORS README AUTHORS
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc CONTRIBUTORS README AUTHORS
 %endif
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.5.20170803.git4ab7c5e
+- fc update
+
 * Sat Dec 16 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.4.20170803.git4ab7c5e
 - new version
 
