@@ -30,22 +30,19 @@ BuildRequires: /proc
 # https://github.com/gobwas/glob
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          bea32b9cd2d6f55753d94a28e959b13f0244797a
+%global commit          5ccd90ef52e1e632236f7326478d4faa74f99438
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
-# commit bea32b9cd2d6f55753d94a28e959b13f0244797a == version 0.2.2
+# commit 5ccd90ef52e1e632236f7326478d4faa74f99438 == version 0.2.3
 
 
 Name:           golang-%{provider}-%{project}-%{repo}
-Version:        0.2.2
-Release:        alt1_4
+Version:        0.2.3
+Release:        alt1_1
 Summary:        Globbing library for Go
 License:        MIT
 URL:            https://%{provider_prefix}
-Source0:        https://%{provider_prefix}/archive/%{commit}/%{repo}-%{shortcommit}.tar.gz
-
-# Add patch to fix compilation of tests with go 1.10
-Patch0:         00-go-110-fix.patch
+Source0:        https://%{provider_prefix}/archive/v%{version}/%{project}-%{repo}-%{version}.tar.gz
 
 # e.g. el6 has ppc64 arch without gcc-go, so EA tag is required
 ExclusiveArch:  %{?go_arches:%{go_arches}}%{!?go_arches:%{ix86} x86_64 aarch64 %{arm}}
@@ -98,8 +95,8 @@ providing packages with %{import_path} prefix.
 
 
 %prep
-%setup -q -n %{repo}-%{commit}
-%patch0 -p1
+%setup -q -n %{repo}-%{version}
+
 
 
 %build
@@ -150,13 +147,7 @@ sort -u -o devel.file-list devel.file-list
 
 %check
 %if 0%{?with_check} && 0%{?with_unit_test} && 0%{?with_devel}
-%if ! 0%{?with_bundled}
 export GOPATH=%{buildroot}/%{go_path}:%{go_path}
-%else
-# No dependency directories so far
-
-export GOPATH=%{buildroot}/%{go_path}:%{go_path}
-%endif
 
 %if ! 0%{?gotest:1}
 %global gotest go test
@@ -191,6 +182,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt1_1
+- fc update
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1_4
 - update to new release by fcimport
 
