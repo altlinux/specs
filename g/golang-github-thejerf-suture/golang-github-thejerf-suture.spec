@@ -37,7 +37,7 @@ BuildRequires: /proc
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        2.0.1
-Release:        alt1_4.%{commitdate}.git%{shortcommit}
+Release:        alt1_5.%{commitdate}.git%{shortcommit}
 Summary:        Supervisor trees for Go
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -173,6 +173,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_5.20180103.gitbb8f537
+- fc update
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_4.20180103.gitbb8f537
 - update to new release by fcimport
 
