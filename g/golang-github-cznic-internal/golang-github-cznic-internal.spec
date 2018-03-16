@@ -4,6 +4,7 @@ BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
 BuildRequires: /proc
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Generate devel rpm
@@ -37,7 +38,7 @@ BuildRequires: /proc
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        1.0.0
-Release:        alt1_4.%{commitdate}.git%{shortcommit}
+Release:        alt1_5.%{commitdate}.git%{shortcommit}
 Summary:        Shared dependencies for other cznic Go libraries
 License:        BSD
 URL:            https://%{provider_prefix}
@@ -167,7 +168,7 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc CONTRIBUTORS README.md AUTHORS
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
@@ -175,12 +176,15 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc CONTRIBUTORS README.md AUTHORS
 %endif
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_5.20170905.git4747030
+- fc update
+
 * Thu Dec 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_4.20170905.git4747030
 - new version
 
