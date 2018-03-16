@@ -37,7 +37,7 @@ BuildRequires: /proc
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.3.%{commitdate}.git%{shortcommit}
+Release:        alt1_0.4.%{commitdate}.git%{shortcommit}
 Summary:        Run time generator of action less scanners written in Go
 License:        BSD
 URL:            https://%{provider_prefix}
@@ -164,19 +164,22 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc CONTRIBUTORS README AUTHORS
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc CONTRIBUTORS README AUTHORS
 %endif
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.4.20141211.git52ae786
+- fc update
+
 * Thu Dec 14 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.3.20141211.git52ae786
 - new version
 
