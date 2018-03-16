@@ -36,7 +36,7 @@ BuildRequires: /proc
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.9.git%{shortcommit}
+Release:        alt1_0.10.git%{shortcommit}
 Summary:        Supplemental utilities for Go's rand and math packages
 License:        BSD
 URL:            https://%{provider_prefix}
@@ -192,6 +192,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.10.gitc90ba19
+- fc update
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.9.gitc90ba19
 - update to new release by fcimport
 
