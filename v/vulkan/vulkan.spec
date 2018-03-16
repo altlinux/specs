@@ -1,8 +1,9 @@
 %define git 7e48885
+%define spirv_tools_rev 9e19fc0f31ceaf1f6bc907dbf17dcfded85f2ce8
 
 Name: vulkan
-Version: 1.0.61
-Release: alt0.2
+Version: 1.1.70
+Release: alt1
 Summary: Vulkan loader and validation layers
 
 Group: System/Libraries
@@ -17,6 +18,7 @@ Source1: glslang.tar.xz
 Source2: SPIRV-Tools.tar.xz
 Patch1: spirv-tools-alt-use-python3.patch
 Patch2: 0003-layers-Don-t-set-an-rpath.patch
+Patch3: vulkan-alt-use-file-rev-spirv-tools.patch
 
 BuildRequires: bison chrpath
 BuildRequires(pre): cmake gcc-c++ rpm-build-python3
@@ -92,6 +94,7 @@ pushd ../SPIRV-Tools
 %patch1 -p2
 popd
 %patch2 -p1
+%patch3 -p2
 
 # sigh inttypes
 sed -i 's/inttypes.h/cinttypes/' layers/*.{cpp,h}
@@ -100,7 +103,14 @@ sed -i 's/inttypes.h/cinttypes/' layers/*.{cpp,h}
 # first, glslang and SPIRV-Tools
 for dir in glslang SPIRV-Tools; do
 pushd %_builddir/$dir
+if [ "$dir" == "SPIRV-Tools" ]; then
+%cmake \
+       -DSPIRV_BUILD_COMPRESSION:BOOL=ON \
+       -DCMAKE_BUILD_TYPE=Release \
+       -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+else
 %cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+fi
 %cmake_build
 %cmakeinstall_std DESTDIR=$(pwd)/install
 pushd install
@@ -108,6 +118,10 @@ ln -s usr/* .
 popd
 popd
 done
+
+# create rev file to make vulkan happy
+ln -s %_builddir/SPIRV-Tools %_builddir/glslang/External/spirv-tools
+echo %spriv_tools_rev > %_builddir/SPIRV-Tools/rev_file
 
 # and finally, loader, layers, and demo clients
 %cmake \
@@ -119,6 +133,8 @@ done
 	   -DCUSTOM_SPIRV_TOOLS_BIN_ROOT=ON \
 	   -DGLSLANG_BINARY_ROOT=%_builddir/glslang/BUILD \
 	   -DSPIRV_TOOLS_BINARY_ROOT=%_builddir/SPIRV-Tools/BUILD \
+	   -DSPIRV_TOOLS_OPT_LIB:FILEPATH=%_builddir/SPIRV-Tools/install/%_lib \
+	   -DSPIRV_TOOLS_INCLUDE_DIR:FILEPATH=%_builddir/SPIRV-Tools/include \
 	   -DBUILDTGT_DIR=BUILD \
 	   -DCMAKE_INSTALL_SYSCONFDIR:PATH=%_sysconfdir \
 	   -DBUILD_WSI_MIR_SUPPORT=OFF
@@ -160,6 +176,15 @@ chrpath -d %buildroot%_bindir/vulkaninfo
 %dir %_datadir/vulkan/icd.d
 
 %changelog
+* Fri Mar 16 2018 L.A. Kostis <lakostis@altlinux.ru> 1.1.70-alt1
+- Updated to vulkan sdk-1.1.70.
+
+* Mon Mar 12 2018 L.A. Kostis <lakostis@altlinux.ru> 1.0.68-alt0.1
+- Updated to vulkan sdk-1.0.68:
+  + glslang 2651cca.
+  + spirv-tools 9e19fc0.
+  + spirv-headers ce30920.
+
 * Sun Oct 08 2017 L.A. Kostis <lakostis@altlinux.ru> 1.0.61-alt0.2
 - i586: Don't check for textrel due asm optimization in loader code.
 
