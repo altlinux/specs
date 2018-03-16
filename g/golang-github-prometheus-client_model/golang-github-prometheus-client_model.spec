@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: gcc-c++ rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # If any of the following macros should be set otherwise,
@@ -48,7 +49,7 @@ BuildRequires: gcc-c++ rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.12.git%{shortcommit}
+Release:        alt1_0.13.git%{shortcommit}
 Summary:        Data model artifacts for Prometheus
 License:        ASL 2.0
 URL:            https://%{provider_prefix}
@@ -125,7 +126,8 @@ for file in $(find . -iname "*.go" \! -iname "*_test.go") ; do
 	echo "%%dir %%{go_path}/src/%%{import_path}/$filedir" >> devel.file-list.dir
     done
 done
-sort -u devel.file-list.dir >> devel.file-list
+[ -s devel.file-list.dir ] && sort -u devel.file-list.dir >> devel.file-list
+rm -f devel.file-list.dir
 %endif
 
 # testing files for this project
@@ -143,7 +145,8 @@ for file in $(find . -iname "*_test.go"); do
 	echo "%%dir %%{go_path}/src/%%{import_path}/$filedir" >> unit-test.file-list.dir
     done
 done
-sort -u unit-test.file-list.dir >> unit-test.file-list
+[ -s unit-test.file-list.dir ] && sort -u unit-test.file-list.dir >> unit-test.file-list
+rm -f unit-test.file-list.dir
 %endif
 
 %check
@@ -167,7 +170,7 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc *.md
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %dir %{go_path}/src/%{import_path}
@@ -175,11 +178,14 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_unit_test}
 %files unit-test -f unit-test.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc *.md
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.13.git6f38060
+- fc update
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.12.git6f38060
 - new version
 
