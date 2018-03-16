@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # If any of the following macros should be set otherwise,
@@ -49,7 +50,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0.2.0
-Release:        alt1_0.3.git%{shortcommit}
+Release:        alt1_0.4.git%{shortcommit}
 Summary:        Wrapper around bufio to provide buffered runes access with unlimited unreads
 License:        BSD
 URL:            https://%{provider_prefix}
@@ -185,6 +186,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt1_0.4.gitc37440a
+- fc update
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt1_0.3.gitc37440a
 - new version
 
