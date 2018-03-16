@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global   debug_package   %{nil}
@@ -20,7 +21,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        2.2.5
-Release:        alt1_1.git%{shortcommit}
+Release:        alt1_2.git%{shortcommit}
 Summary:        A Go command line and flag parser
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -89,6 +90,7 @@ for file in $(find . -iname "*.go" \! -iname "*_test.go" \! -path "./_examples/*
     done
 done
 [ -s devel.file-list.dir ] && sort -u devel.file-list.dir >> devel.file-list
+rm -f devel.file-list.dir
 
 # Add symlink to older name
 install -d -p %{buildroot}%{go_path}/src/gopkg.in/alecthomas/
@@ -124,14 +126,17 @@ export GOPATH=%{buildroot}%{go_path}:%{go_path}
 
 %files devel -f devel.file-list
 %doc README.md _examples
-%doc COPYING
+%doc --no-dereference COPYING
 %dir %{go_path}/src/%{import_path}/cmd
 
 %files unit-test-devel -f unit-test-devel.file-list
 %doc README.md
-%doc COPYING
+%doc --no-dereference COPYING
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt1_2.git1087e65
+- fc update
+
 * Thu Dec 14 2017 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt1_1.git1087e65
 - new version
 
