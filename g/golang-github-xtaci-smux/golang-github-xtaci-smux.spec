@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Generate devel rpm
@@ -29,15 +30,15 @@ BuildRequires: rpm-build-golang
 # https://github.com/xtaci/smux
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          ebec7ef2574b42a7088cd7751176483e0a27d458
+%global commit          e28719eede1ac5714cf0b06ba2f403125864ebe0
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 %global commitdate      20171004
 
-# commit ebec7ef2574b42a7088cd7751176483e0a27d458 == version 1.0.6
+# commit e28719eede1ac5714cf0b06ba2f403125864ebe0 == version 1.0.7
 
 
 Name:           golang-%{provider}-%{project}-%{repo}
-Version:        1.0.6
+Version:        1.0.7
 Release:        alt1_1
 Summary:        Simple Stream Multiplexing for golang
 License:        MIT
@@ -160,7 +161,7 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
@@ -168,12 +169,15 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %endif
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt1_1
+- fc update
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.6-alt1_1
 - new version
 
