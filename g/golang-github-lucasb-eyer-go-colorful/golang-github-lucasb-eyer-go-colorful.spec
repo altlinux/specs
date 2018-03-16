@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # If any of the following macros should be set otherwise,
@@ -50,7 +51,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.1.%{commitdate}git%{shortcommit}
+Release:        alt1_0.2.%{commitdate}git%{shortcommit}
 Summary:        A library for playing with colors in Go
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -186,6 +187,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.2.20170710gitd1be5f1
+- fc update
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.20170710gitd1be5f1
 - new version
 
