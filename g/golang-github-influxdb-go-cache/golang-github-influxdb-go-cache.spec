@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global provider	github
@@ -17,7 +18,7 @@ BuildRequires: rpm-build-golang
 
 Name:		golang-%{provider}-%{project}-%{repo}
 Version:	0
-Release:	alt1_0.6.git%{shortcommit}
+Release:	alt1_0.8.git%{shortcommit}
 Summary:	An in-memory key:value store/cache library for Go
 License:	MIT
 URL:		http://%{import_path}
@@ -63,6 +64,9 @@ GOPATH=%{buildroot}/%{go_path}:%{go_path} go test %{import_path}
 %{go_path}/src/%{import_path}/*.go
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.8.git7d1d6d6
+- fc update
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.6.git7d1d6d6
 - new version
 
