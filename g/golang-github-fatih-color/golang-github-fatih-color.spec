@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 %define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -39,7 +40,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0.1
-Release:        alt1_0.2.%{commitdate}git%{shortcommit}
+Release:        alt1_0.3.%{commitdate}git%{shortcommit}
 Summary:        Color package for Go (golang)
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -122,6 +123,7 @@ for file in $(find . -iname "*.go" \! -iname "*_test.go") ; do
     done
 done
 [ -s devel.file-list.dir ] && sort -u devel.file-list.dir >> devel.file-list
+rm -f devel.file-list.dir
 
 # Add symlink to other name
 install -d -p %{buildroot}%{go_path}/src/github.com/fatih/
@@ -146,6 +148,7 @@ for file in $(find . -iname "*_test.go"); do
     done
 done
 [ -s unit-test-devel.file-list.dir ] && sort -u unit-test-devel.file-list.dir >> unit-test-devel.file-list
+rm -f unit-test-devel.file-list.dir
 %endif
 
 %if 0%{?with_devel}
@@ -176,10 +179,13 @@ export GOPATH=%{buildroot}/%{go_path}:$(pwd)/Godeps/_workspace:%{go_path}
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
 %doc README.md
-%doc LICENSE.md
+%doc --no-dereference LICENSE.md
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_0.3.20170905git1535ebc
+- fc update
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_0.2.20170905git1535ebc
 - new version
 
