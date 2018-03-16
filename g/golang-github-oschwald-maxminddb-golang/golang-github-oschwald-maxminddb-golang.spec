@@ -34,15 +34,15 @@ BuildRequires: /proc
 # https://github.com/oschwald/maxminddb-golang
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          8727e98aa1b91610eb184ed1ab615943b8d9deb0
+%global commit          c5bec84d1963260297932a1b7a1753c8420717a7
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 %global commitdate      20170503
 
-# commit 8727e98aa1b91610eb184ed1ab615943b8d9deb0 == version 1.2.1
+# commit c5bec84d1963260297932a1b7a1753c8420717a7 == version 1.3.0
 
 
 Name:           golang-%{provider}-%{project}-%{repo}
-Version:        1.2.1
+Version:        1.3.0
 Release:        alt1_1
 Summary:        MaxMind DB Reader for Go
 License:        ISC
@@ -186,6 +186,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_1
+- fc update
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_1
 - update to new release by fcimport
 
