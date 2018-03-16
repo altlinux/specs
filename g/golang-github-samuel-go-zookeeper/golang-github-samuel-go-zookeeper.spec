@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 %define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -46,7 +47,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.9.git%{shortcommit}
+Release:        alt1_0.10.git%{shortcommit}
 Summary:        Native ZooKeeper client for Go 
 License:        BSD
 URL:            https://%{provider_prefix}
@@ -139,7 +140,8 @@ for file in $(find . -iname "*.go" \! -iname "*_test.go") ; do
 	echo "%%dir %%{go_path}/src/%%{import_path}/$filedir" >> devel.file-list.dir
     done
 done
-sort -u devel.file-list.dir >> devel.file-list
+[ -s devel.file-list.dir ] && sort -u devel.file-list.dir >> devel.file-list
+rm -f devel.file-list.dir
 %endif
 
 # testing files for this project
@@ -157,7 +159,8 @@ for file in $(find . -iname "*_test.go"); do
 	echo "%%dir %%{go_path}/src/%%{import_path}/$filedir" >> unit-test.file-list.dir
     done
 done
-sort -u unit-test.file-list.dir >> unit-test.file-list
+[ -s unit-test.file-list.dir ] && sort -u unit-test.file-list.dir >> unit-test.file-list
+rm -f unit-test.file-list.dir
 %endif
 
 %check
@@ -178,7 +181,7 @@ gotest %{import_path}/zk
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %dir %{go_path}/src/%{import_path}
@@ -186,11 +189,14 @@ gotest %{import_path}/zk
 
 %if 0%{?with_unit_test}
 %files unit-test -f unit-test.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.10.gitd0e0d8e
+- fc update
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.9.gitd0e0d8e
 - new version
 
