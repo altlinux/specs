@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 17.12.0
+Version: 17.12.2
 Release: alt1%ubt
 
 Group: Graphical desktop/KDE
@@ -37,11 +37,11 @@ Requires: icon-theme-breeze
 Requires: kde5-mini
 Requires: kde5-volume-control
 Requires: webclient
-Requires: plasma5-sddm-kcm plasma5-polkit-kde-agent kf5-kio-extras plasma5-breeze plasma5-oxygen plasma5-powerdevil plasma5-ksysguard
 Requires: kf5-kwallet kf5-kconfig kf5-kglobalaccel kf5-kimageformats kde5-svgpart
+Requires: plasma5-sddm-kcm plasma5-polkit-kde-agent kf5-kio-extras plasma5-breeze plasma5-oxygen plasma5-powerdevil plasma5-ksysguard
+Requires: plasma5-drkonqi plasma5-milou plasma5-systemsettings plasma5-integration
 Requires: kde5-ark kde5-konsole kde5-gwenview kde5-okular kde5-kwrite kde5-kwalletmanager
 Requires: kde5-kcalc kde5-kdebugsettings kde5-kross-python
-Requires: plasma5-milou plasma5-systemsettings plasma5-integration
 %description -n kde5-small
 %summary
 
@@ -93,7 +93,7 @@ Group: Graphical desktop/KDE
 # webclient
 Requires: kde5-konqueror kde5-keditbookmarks
 Requires: kde5-dragon kde5-kmail
-#Requires: kde5-kmousetool kde5-kmag
+Requires: kde5-kmousetool kde5-kmag
 Requires: kde5-juk kde5-kmouth
 Requires: kde5-big
 Requires: kde5-edu
@@ -113,7 +113,7 @@ Requires: kde5-runtime
 Requires: kde5-dolphin-plugins
 Requires: kde5-lokalize kde5-okteta kde5-kapptemplate kde5-dev-scripts kde5-kompare
 Requires: kde5-sdk-thumbnailers kde5-poxml kde5-umbrello
-#Requires: kde5-kcachegrind
+Requires: kde5-kcachegrind
 Requires: kde5-kimagemapeditor
 %description -n kde5-somedevel
 %summary
@@ -125,7 +125,7 @@ Requires: kde5-runtime
 Requires: kde5-kanagram kde5-khangman kde5-parley kde5-kwordquiz kde5-kturtle kde5-marble
 Requires: kde5-step kde5-kstars kde5-kig kde5-kmplot kde5-kalgebra kde5-cantor kde5-rocs
 Requires: kde5-kbruch kde5-kgeography kde5-ktouch kde5-kalzium
-#Requires: kde5-minuet
+Requires: kde5-minuet
 %description -n kde5-edu
 Educational software based on the KDE technologies
 
@@ -135,7 +135,7 @@ Group: Graphical desktop/KDE
 Requires: kde5-runtime
 Requires: kde5-lskat kde5-kmines kde5-kshisen kde5-ktuberling kde5-bovo kde5-knetwalk
 Requires: kde5-katomic kde5-knavalbattle kde5-kpat kde5-kmahjongg
-#Requires: kde5-ksudoku kde5-kigo
+Requires: kde5-ksudoku kde5-kigo
 Requires: kde5-kolf kde5-ksirk kde5-palapeli
 %description -n kde5-games
 High quality gaming and entertainment software.
@@ -184,6 +184,12 @@ Requires: kde5-mbox-importer kde5-pim-data-exporter kde5-pim-sieve-editor kde5-g
 %files -n kde5-pim
 
 %changelog
+* Fri Mar 16 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+- update requires
+
+* Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.1-alt1%ubt
+- update requires
+
 * Mon Mar 12 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.0-alt1%ubt
 - update Plasma requires
 
