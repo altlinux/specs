@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global   debug_package   %{nil}
@@ -19,7 +20,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.1.git%{shortcommit}
+Release:        alt1_0.2.git%{shortcommit}
 Summary:        Python's repr() for Go
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -83,7 +84,7 @@ export GOPATH=%{buildroot}%{go_path}:%{go_path}
 
 %files devel
 %doc README.md
-%doc COPYING
+%doc --no-dereference COPYING
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %{go_path}/src/%{import_path}/repr.go
 %dir %{go_path}/src/%{import_path}
@@ -93,6 +94,9 @@ export GOPATH=%{buildroot}%{go_path}:%{go_path}
 %dir %{go_path}/src/%{import_path}
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.2.gitd44565c
+- fc update
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.gitd44565c
 - new version
 
