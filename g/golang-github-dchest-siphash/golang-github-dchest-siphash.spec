@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # If any of the following macros should be set otherwise,
@@ -50,7 +51,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        1.0.0
-Release:        alt1_1.%{commitdate}git%{shortcommit}
+Release:        alt1_2.%{commitdate}git%{shortcommit}
 Summary:        Go implementation of SipHash-2-4, a fast short-input PRF
 License:        Public Domain
 URL:            https://%{provider_prefix}
@@ -187,6 +188,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_2.20160831git4ebf1de
+- fc update
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_1.20160831git4ebf1de
 - new version
 
