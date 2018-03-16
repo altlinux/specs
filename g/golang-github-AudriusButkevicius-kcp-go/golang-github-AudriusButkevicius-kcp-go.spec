@@ -37,7 +37,7 @@ BuildRequires: /proc
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.3.%{commitdate}.git%{shortcommit}
+Release:        alt1_0.4.%{commitdate}.git%{shortcommit}
 Summary:        Full-featured reliable UDP communication library
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -199,6 +199,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.4.20171227.git5d7d1a8
+- fc update
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.3.20171227.git5d7d1a8
 - update to new release by fcimport
 
