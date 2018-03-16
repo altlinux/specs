@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global debug_package	%{nil}
@@ -18,7 +19,7 @@ BuildRequires: rpm-build-golang
 
 Name:		golang-github-docopt-docopt-go
 Version:	0
-Release:	alt1_0.8.git.%{shortcommit}
+Release:	alt1_0.9.git.%{shortcommit}
 Summary:	Command-line interface description language in Go
 
 License:	MIT
@@ -69,6 +70,9 @@ GOPATH=%{buildroot}/%{go_path} go test %{import_path}
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.9.git.854c423
+- fc update
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.8.git.854c423
 - new version
 
