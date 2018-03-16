@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # If any of the following macros should be set otherwise,
@@ -49,8 +50,8 @@ BuildRequires: rpm-build-golang
 # https://github.com/denisenkom/go-mssqldb
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          c7ee4153c0fc40206bde939f96eefa1f501cbcaa
-%global commitdate      20170919
+%global commit          b2a6258bbf0940987a033700a03ebf43373f35c0
+%global commitdate      20180314
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 Name:           golang-%{provider}-%{project}-%{repo}
@@ -62,6 +63,10 @@ Summary:        Microsoft SQL server driver for Go (golang)
 License:        BSD
 URL:            https://%{provider_prefix}
 Source0:        https://%{provider_prefix}/archive/%{commit}/%{repo}-%{shortcommit}.tar.gz
+
+# Fix test failures on Go 1.10
+# https://github.com/denisenkom/go-mssqldb/pull/345
+Patch0:         go-mssqldb-b2a6258-go1.10-testfix.patch
 
 # e.g. el6 has ppc64 arch without gcc-go, so EA tag is required
 ExclusiveArch:  %{?go_arches:%{go_arches}}%{!?go_arches:%{ix86} x86_64 aarch64 %{arm}}
@@ -123,6 +128,7 @@ providing packages with %{import_path} prefix.
 
 %prep
 %setup -q -n %{repo}-%{commit}
+%patch0 -p1
 
 %build
 %install
@@ -189,18 +195,21 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %doc README.md examples
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 %doc README.md
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.20180314gitb2a6258
+- fc update
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.20170919gitc7ee415
 - new version
 
