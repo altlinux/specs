@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global debug_package   %{nil}
@@ -19,7 +20,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_4.git%{shortcommit}
+Release:        alt1_5.git%{shortcommit}
 Summary:        Output tracing information in your Go app based on environment variables
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -54,13 +55,16 @@ use import path with %{import_path} prefix.
 install -Dpm0644 %{repo}.go %{buildroot}%{go_path}/src/%{import_path}/%{repo}.go
 
 %files devel
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %dir %{go_path}/src/%{import_path}
 %{go_path}/src/%{import_path}/%{repo}.go
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_5.gitd7bcc0b
+- fc update
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_4.gitd7bcc0b
 - new version
 
