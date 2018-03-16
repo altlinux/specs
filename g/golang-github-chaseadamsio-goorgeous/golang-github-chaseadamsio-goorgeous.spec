@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Generate devel rpm
@@ -30,12 +31,12 @@ BuildRequires: rpm-build-golang
 # https://github.com/chaseadamsio/goorgeous
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          054aba677f27bd60872cfe68f8145dc57bdf4746
+%global commit          e0b2cd6d4e7abdf9a33f017bcc97df2242e05572
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 Name:           golang-%{provider}-%{project}-%{repo}
-Version:        0
-Release:        alt1_0.5.git%{shortcommit}
+Version:        2.0.0
+Release:        alt1_1
 Summary:        Org to HTML Parser written in Go
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -167,16 +168,19 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_1
+- fc update
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.5.git054aba6
 - new version
 
