@@ -30,13 +30,14 @@ BuildRequires: /proc
 # https://github.com/petermattis/goid
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          176e84a949d354dcef722e602b312b1a75bacddc
+%global commit          b0b1615b78e5ee59739545bb38426383b2cda4c9
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
+%global commitdate      20180202
 
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.6.git%{shortcommit}
+Release:        alt1_0.8.%{commitdate}.git%{shortcommit}
 Summary:        Programmatic retrieval of goroutine IDs
 License:        ASL 2.0
 URL:            https://%{provider_prefix}
@@ -136,13 +137,7 @@ sort -u -o devel.file-list devel.file-list
 
 %check
 %if 0%{?with_check} && 0%{?with_unit_test} && 0%{?with_devel}
-%if ! 0%{?with_bundled}
 export GOPATH=%{buildroot}/%{go_path}:%{go_path}
-%else
-# No dependency directories so far
-
-export GOPATH=%{buildroot}/%{go_path}:%{go_path}
-%endif
 
 %if ! 0%{?gotest:1}
 %global gotest go test
@@ -172,6 +167,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.8.20180202.gitb0b1615
+- fc update
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.6.git176e84a
 - update to new release by fcimport
 
