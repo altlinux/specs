@@ -1,10 +1,11 @@
 Name: passwd
 Version: 1.0.13
-Release: alt1
+Release: alt1.1
 
 Summary: The passwd utility for setting/changing passwords using PAM
 License: GPLv2+
 Group: System/Base
+Url: http://git.altlinux.org/people/ldv/packages/passwd.git
 
 Source: passwd-%version.tar
 
@@ -39,6 +40,9 @@ a user's authentication token(s).
 %_mandir/man?/passwd.*
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.13-alt1.1
+- NMU: added URL
+
 * Fri Aug 24 2012 Dmitry V. Levin <ldv@altlinux.org> 1.0.13-alt1
 - %_sbindir/passwd: always check seteuid return code.
 
