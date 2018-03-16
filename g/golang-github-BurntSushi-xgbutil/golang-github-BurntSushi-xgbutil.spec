@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global   debug_package   %{nil}
@@ -19,7 +20,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.1.git%{shortcommit}
+Release:        alt1_0.2.git%{shortcommit}
 Summary:        XGB is the X protocol Go language Binding
 License:        WTFPL
 URL:            https://%{provider_prefix}
@@ -102,16 +103,20 @@ for file in $(find . -iname "*.go" \! -iname "*_test.go") ; do
 	echo "%%dir %%{go_path}/src/%%{import_path}/$filedir" >> devel.file-list.dir
     done
 done
-sort -u devel.file-list.dir >> devel.file-list
+[ -s devel.file-list.dir ] && sort -u devel.file-list.dir >> devel.file-list
+rm -f devel.file-list.dir
 
 sort -u -o devel.file-list devel.file-list
 
 %files devel -f devel.file-list
 %doc README
-%doc COPYING
+%doc --no-dereference COPYING
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.2.gitf7c97ce
+- fc update
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.gitf7c97ce
 - new version
 
