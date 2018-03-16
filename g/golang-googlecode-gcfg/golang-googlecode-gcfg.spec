@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 %define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -49,7 +50,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-googlecode-gcfg
 Version:        0
-Release:        alt1_0.13.git%{shortcommit}
+Release:        alt1_0.14.git%{shortcommit}
 Summary:        Gcfg reads INI-style configuration files into Go structs
 License:        BSD
 URL:            https://%{provider_prefix}
@@ -172,7 +173,9 @@ for file in $(find . -iname "*.go" \! -iname "*_test.go") ; do
     done
 done
 [ -s devel.file-list.dir ] && sort -u devel.file-list.dir >> devel.file-list
+rm -f devel.file-list.dir
 [ -s gc_devel.file-list.dir ] && sort -u gc_devel.file-list.dir >> gc_devel.file-list
+rm -f gc_devel.file-list.dir
 pushd %{buildroot}/%{go_path}/src/%{gc_import_path}
 sed -i 's/"gopkg\.in\/gcfg\.v1/"code\.google\.com\/p\/gcfg/g' \
         $(find . -name '*.go')
@@ -195,6 +198,7 @@ for file in $(find . -iname "*_test.go"); do
     done
 done
 [ -s unit-test.file-list.dir ] && sort -u unit-test.file-list.dir >> unit-test.file-list
+rm -f unit-test.file-list.dir
 for file in $(find testdata -iname "*.gcfg"); do
     install -d -p %{buildroot}/%{go_path}/src/%{import_path}/$(dirname $file)
     cp -pav $file %{buildroot}/%{go_path}/src/%{import_path}/$file
@@ -223,23 +227,26 @@ gotest %{import_path}/types
 
 %if 0%{?with_devel}
 %files devel -f gc_devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README
 %dir %{go_path}/src/%{gc_import_path}
 
 %files -n %{gopkg_name}-devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README
 %dir %{go_path}/src/%{import_path}
 %endif
 
 %if 0%{?with_unit_test}
 %files unit-test -f unit-test.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.14.git5866678
+- fc update
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.13.git5866678
 - new version
 
