@@ -1,10 +1,11 @@
 Name: telnet
 Version: 3.0
-Release: alt9
+Release: alt9.1
 
 Summary: The client program for the telnet remote login protocol
 License: BSD-style
 Group: Networking/Remote access
+Url: http://git.altlinux.org/people/ldv/packages/telnet.git
 
 Source0: telnet-%version-20011117.tar
 Source1: telnetd.xinetd
@@ -78,6 +79,9 @@ install -pD -m640 %_sourcedir/telnetd.xinetd \
 %doc telnetd.eps
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 3.0-alt9.1
+- NMU: added URL
+
 * Fri Nov 30 2012 Dmitry V. Levin <ldv@altlinux.org> 3.0-alt9
 - Disabled telnet-3.0-owl-ipv4-only.patch (closes: #27423).
 
