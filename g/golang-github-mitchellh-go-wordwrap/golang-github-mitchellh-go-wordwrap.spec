@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # If any of the following macros should be set otherwise,
@@ -49,7 +50,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.3.git%{shortcommit}
+Release:        alt1_0.4.git%{shortcommit}
 Summary:        A Go library for wrapping words in a string
 # Detected licences
 # - MIT/X11 (BSD like) at 'LICENSE.md'
@@ -177,18 +178,21 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE.md
+%doc --no-dereference LICENSE.md
 %doc README.md
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE.md
+%doc --no-dereference LICENSE.md
 %doc README.md
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.4.gitad45545
+- fc update
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.3.gitad45545
 - new version
 
