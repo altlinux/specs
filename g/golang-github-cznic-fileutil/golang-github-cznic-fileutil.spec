@@ -37,7 +37,7 @@ BuildRequires: /proc
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.6.git%{shortcommit}
+Release:        alt1_0.7.git%{shortcommit}
 Summary:        File utility functions for Go
 License:        BSD
 URL:            https://%{provider_prefix}
@@ -184,6 +184,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.7.git6a051e7
+- fc update
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.6.git6a051e7
 - update to new release by fcimport
 
