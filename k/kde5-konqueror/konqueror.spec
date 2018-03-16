@@ -10,7 +10,7 @@
 %define libkonqsidebarplugin libkonqsidebarplugin%konqsidebarplugin_sover
 
 Name: kde5-%rname
-Version: 17.12.2
+Version: 17.12.3
 Release: alt1%ubt
 %K5init
 
@@ -190,6 +190,9 @@ rm -f %buildroot/%_K5xdgapp/kfmclient_dir.desktop
 #%_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+- new version
+
 * Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
 - new version
 
