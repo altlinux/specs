@@ -30,7 +30,8 @@ Group:          Development/Tools
 #AutoReqProv:    on
 Summary:        A Script to Build SUSE Linux RPMs
 Version:        20171227
-Release:        alt1
+Release:        alt1.1
+Url: https://github.com/openSUSE/obs-build
 
 Packager: Denis Pynkin <dans@altlinux.org>
 
@@ -168,6 +169,9 @@ test -e default.conf
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 2:20171227-alt1.1
+- NMU: added URL
+
 * Wed Dec 27 2017 Denis Pynkin <dans@altlinux.org> 2:20171227-alt1
 - New version
 
