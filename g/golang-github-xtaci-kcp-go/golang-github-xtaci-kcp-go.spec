@@ -30,16 +30,16 @@ BuildRequires: /proc
 # https://github.com/xtaci/kcp-go
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          86eebd5cadb519b7c9306082c7eb3bcee2c49a7b
+%global commit          42bc1dfefff592fdb3affa793980c4f6ab4213e5
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 %global commitdate      20170605
 
-# commit 86eebd5cadb519b7c9306082c7eb3bcee2c49a7b == version 3.23
+# commit 42bc1dfefff592fdb3affa793980c4f6ab4213e5 == version 3.24
 
 
 Name:           golang-%{provider}-%{project}-%{repo}
-Version:        3.23
-Release:        alt1_1
+Version:        3.24
+Release:        alt1_2
 Summary:        Production-Grade Reliable-UDP Library for golang
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -203,6 +203,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 3.24-alt1_2
+- fc update
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 3.23-alt1_1
 - update to new release by fcimport
 
