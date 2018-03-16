@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Generate devel rpm
@@ -32,20 +33,20 @@ BuildRequires: rpm-build-golang
 # https://github.com/oschwald/geoip2-golang
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          5b1dc16861f81d05d9836bb21c2d0d65282fc0b8
+%global commit          7118115686e16b77967cdbf55d1b944fe14ad312
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 %global commitdate      20170423
 
-# commit 5b1dc16861f81d05d9836bb21c2d0d65282fc0b8 == version 1.1.0
+# commit 7118115686e16b77967cdbf55d1b944fe14ad312 == version 1.2.1
 
 
 Name:           golang-%{provider}-%{project}-%{repo}
-Version:        1.1.0
-Release:        alt1_3
+Version:        1.2.1
+Release:        alt1_1
 Summary:        GeoIP2 lookup library for Go
 License:        ISC
 URL:            https://%{provider_prefix}
-Source0:        https://%{provider_prefix}/archive/%{commit}/%{project}-%{repo}-%{shortcommit}.tar.gz
+Source0:        https://%{provider_prefix}/archive/v%{version}/%{project}-%{repo}-%{version}.tar.gz
 
 # e.g. el6 has ppc64 arch without gcc-go, so EA tag is required
 ExclusiveArch:  %{?go_arches:%{go_arches}}%{!?go_arches:%{ix86} x86_64 aarch64 %{arm}}
@@ -88,10 +89,10 @@ Summary:        Unit tests for %{name} package
 # test subpackage tests code from devel subpackage
 
 %if 0%{?with_check} && ! 0%{?with_bundled}
-BuildRequires:  golang(gopkg.in/check.v1)
+BuildRequires:  golang(github.com/stretchr/testify/assert)
 %endif
 
-Requires:       golang(gopkg.in/check.v1)
+Requires:       golang(github.com/stretchr/testify/assert)
 
 %description    unit-test-devel
 %{summary}
@@ -102,7 +103,7 @@ providing packages with %{import_path} prefix.
 
 
 %prep
-%setup -q -n %{repo}-%{commit}
+%setup -q -n %{repo}-%{version}
 
 
 %build
@@ -169,7 +170,7 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
@@ -177,12 +178,15 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %endif
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_1
+- fc update
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_3
 - new version
 
