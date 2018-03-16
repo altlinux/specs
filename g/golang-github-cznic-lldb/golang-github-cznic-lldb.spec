@@ -38,7 +38,7 @@ BuildRequires: /proc
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        1.1.0
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Low-level database engine implementation in Go
 License:        BSD
 URL:            https://%{provider_prefix}
@@ -194,7 +194,7 @@ rm -r ./testroot
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc CONTRIBUTORS README.md AUTHORS
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
@@ -202,12 +202,15 @@ rm -r ./testroot
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc CONTRIBUTORS README.md AUTHORS
 %endif
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_4
+- fc update
+
 * Thu Dec 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_3
 - new version
 
