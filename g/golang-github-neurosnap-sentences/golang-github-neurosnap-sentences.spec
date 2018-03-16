@@ -55,7 +55,7 @@ BuildRequires: /proc
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        1.0.6
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Multilingual command line sentence tokenizer in Golang
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -230,13 +230,13 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %{!?_licensedir:%global license %doc}
 
 %files
-%doc LICENSE.md
+%doc --no-dereference LICENSE.md
 %doc CHANGES.md README.md
 %{_bindir}/sentences
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE.md
+%doc --no-dereference LICENSE.md
 %doc CHANGES.md README.md
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %dir %{go_path}/src/gopkg.in/%{project}
@@ -245,11 +245,14 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE.md
+%doc --no-dereference LICENSE.md
 %doc CHANGES.md README.md
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.6-alt1_3
+- fc update
+
 * Sat Dec 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.6-alt1_2
 - new version
 
