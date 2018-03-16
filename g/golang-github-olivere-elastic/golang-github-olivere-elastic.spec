@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 %define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -39,7 +40,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        2.0.12
-Release:        alt1_0.6.git%{shortcommit}
+Release:        alt1_0.7.git%{shortcommit}
 Summary:        Elasticsearch client for Go
 # Detected licences
 # - MIT/X11 (BSD like) at 'LICENSE'
@@ -109,11 +110,18 @@ install -d -p %{buildroot}/%{go_path}/src/%{import_path}/
 echo "%%dir %%{go_path}/src/%%{import_path}/." >> devel.file-list
 # find all *.go but no *_test.go files and generate devel.file-list
 for file in $(find . -iname "*.go" \! -iname "*_test.go") ; do
-    echo "%%dir %%{go_path}/src/%%{import_path}/$(dirname $file)" >> devel.file-list
     install -d -p %{buildroot}/%{go_path}/src/%{import_path}/$(dirname $file)
     cp -pav $file %{buildroot}/%{go_path}/src/%{import_path}/$file
     echo "%%{go_path}/src/%%{import_path}/$file" >> devel.file-list
+    filedir=${file##./};
+    # note %%%% -> %% for rpm macros!
+    while [ ${filedir%%/*} != "$filedir" ]; do
+        filedir=${filedir%%/*}
+	echo "%%dir %%{go_path}/src/%%{import_path}/$filedir" >> devel.file-list.dir
+    done
 done
+[ -s devel.file-list.dir ] && sort -u devel.file-list.dir >> devel.file-list
+rm -f devel.file-list.dir
 %endif
 
 # testing files for this project
@@ -121,11 +129,18 @@ done
 install -d -p %{buildroot}/%{go_path}/src/%{import_path}/
 # find all *_test.go files and generate unit-test-devel.file-list
 for file in $(find . -iname "*_test.go"); do
-    echo "%%dir %%{go_path}/src/%%{import_path}/$(dirname $file)" >> devel.file-list
     install -d -p %{buildroot}/%{go_path}/src/%{import_path}/$(dirname $file)
     cp -pav $file %{buildroot}/%{go_path}/src/%{import_path}/$file
     echo "%%{go_path}/src/%%{import_path}/$file" >> unit-test-devel.file-list
+    filedir=${file##./};
+    # note %%%% -> %% for rpm macros!
+    while [ ${filedir%%/*} != "$filedir" ]; do
+        filedir=${filedir%%/*}
+	echo "%%dir %%{go_path}/src/%%{import_path}/$filedir" >> unit-test-devel.file-list.dir
+    done
 done
+[ -s unit-test-devel.file-list.dir ] && sort -u unit-test-devel.file-list.dir >> unit-test-devel.file-list
+rm -f unit-test-devel.file-list.dir
 %endif
 
 %if 0%{?with_devel}
@@ -153,18 +168,21 @@ export GOPATH=%{buildroot}/%{go_path}:$(pwd)/Godeps/_workspace:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc CONTRIBUTORS CONTRIBUTING.md README.md
 %dir %{go_path}/src/gopkg.in/olivere
 %endif
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc CONTRIBUTORS CONTRIBUTING.md README.md
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.12-alt1_0.7.git3cfe882
+- fc update
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.12-alt1_0.6.git3cfe882
 - new version
 
