@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global   debug_package   %{nil}
@@ -19,7 +20,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.1.git%{shortcommit}
+Release:        alt1_0.2.git%{shortcommit}
 Summary:        Units - Helpful unit multipliers and functions for Go
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -89,6 +90,7 @@ for file in $(find . -iname "*.go" \! -iname "*_test.go") ; do
     done
 done
 [ -s devel.file-list.dir ] && sort -u devel.file-list.dir >> devel.file-list
+rm -f devel.file-list.dir
 
 # testing files for this project
 install -d %{buildroot}%{go_path}/src/%{import_path}/
@@ -117,12 +119,15 @@ export GOPATH=%{buildroot}%{go_path}:%{go_path}
 
 %files devel -f devel.file-list
 %doc README.md
-%doc LICENCE.txt
+%doc --no-dereference LICENCE.txt
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 
 %files unit-test-devel -f unit-test-devel.file-list
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.2.git561411b
+- fc update
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.git561411b
 - new version
 
