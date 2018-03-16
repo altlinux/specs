@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Generate devel rpm
@@ -36,7 +37,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0.0.5
-Release:        alt1_5
+Release:        alt1_6
 Summary:        HTML template engine for Go
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -174,13 +175,13 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %{!?_licensedir:%global license %doc}
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %{_bindir}/ace
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %doc examples
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
@@ -188,11 +189,14 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.5-alt1_6
+- fc update
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.5-alt1_5
 - new version
 
