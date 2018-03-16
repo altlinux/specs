@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Test-Inter
 Name: perl-%dist
-Version: 1.06
+Version: 1.07
 Release: alt1
 
 Summary: Framework for more readable interactive test scripts
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SB/SBECK/Test-Inter-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SB/SBECK/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ inspired by Test::More, and has most of it's functionality, but it is
 not a drop-in replacement.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,12 +31,15 @@ not a drop-in replacement.
 %perl_vendor_install
 
 %files
-%doc	Changes README
+%doc	Changes README examples
 %dir	%perl_vendor_privlib/Test
 	%perl_vendor_privlib/Test/Inter.pm
 %doc	%perl_vendor_privlib/Test/Inter.pod
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1
 - automated CPAN update
 
