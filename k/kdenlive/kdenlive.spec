@@ -1,8 +1,9 @@
+%define rname kdenlive
 %define req_ver_mlt 0.9.0
 %define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
 
 Name: kdenlive
-Version: 17.12.0
+Version: 17.12.3
 Release: alt1%ubt
 %K5init no_altplace man
 
@@ -32,7 +33,7 @@ Patch3: alt-defaults.patch
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kplotting-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libGLU-devel libdb4-devel libmlt++-devel libv4l-devel python-module-google qt5-script-devel qt5-svg-devel rpm-build-gir rpm-build-python3 rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires(pre): libavformat-devel
-BuildRequires: extra-cmake-modules gcc-c++ qt5-script-devel qt5-svg-devel qt5-declarative-devel
+BuildRequires: extra-cmake-modules gcc-c++ qt5-script-devel qt5-svg-devel qt5-declarative-devel qt5-webengine-devel
 BuildRequires: shared-mime-info libEGL-devel libGLU-devel libv4l-devel
 BuildRequires: libmlt-devel libmlt++-devel >= %req_ver_mlt
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
@@ -84,6 +85,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 %_man1dir/kdenlive*
 
 %changelog
+* Fri Mar 16 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+- new version
+
 * Fri Dec 22 2017 Sergey V Turchin <zerg@altlinux.org> 17.12.0-alt1%ubt
 - new version
 
