@@ -50,7 +50,7 @@ BuildRequires: /proc
 
 Name:           golang-google-golangorg-cloud
 Version:        0
-Release:        alt1_0.13.git%{shortcommit}
+Release:        alt1_0.14.git%{shortcommit}
 Summary:        Google Cloud Platform APIs related types and common functions
 License:        ASL 2.0
 URL:            https://%{provider_prefix}
@@ -219,7 +219,7 @@ gotest %{import_path}/storage
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md CONTRIBUTING.md AUTHORS CONTRIBUTORS
 %dir %{go_path}/src/google.golang.org
 %dir %{go_path}/src/%{import_path}
@@ -227,11 +227,14 @@ gotest %{import_path}/storage
 
 %if 0%{?with_unit_test}
 %files unit-test -f unit-test.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md CONTRIBUTING.md AUTHORS CONTRIBUTORS
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.14.git872c736
+- fc update
+
 * Sat Dec 16 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.13.git872c736
 - new version
 
