@@ -39,7 +39,7 @@ BuildRequires: /proc
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        3.0.1
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Some rolling checksum implementations in go
 License:        MIT and BSD
 URL:            https://%{provider_prefix}
@@ -186,6 +186,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_2
+- fc update
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_1
 - update to new release by fcimport
 
