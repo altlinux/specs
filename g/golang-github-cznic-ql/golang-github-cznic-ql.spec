@@ -39,7 +39,7 @@ BuildRequires: /proc
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        1.1.0
-Release:        alt1_2.%{commitdate}.git%{shortcommit}
+Release:        alt1_3.%{commitdate}.git%{shortcommit}
 Summary:        Embedded SQL database written in Go
 
 # This package is BSD licensed, but the vendored go4.org/lock library is ASLv2.0
@@ -215,7 +215,7 @@ rm %{buildroot}/%{go_path}/src/%{import_path}/testdata.log
 
 %if 0%{?with_cli_tool}
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc CONTRIBUTORS README.md AUTHORS
 %{_bindir}/ql
 %{_licensedir}/%{name}/LICENSE.camlistore-go4-lock
@@ -223,7 +223,7 @@ rm %{buildroot}/%{go_path}/src/%{import_path}/testdata.log
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc CONTRIBUTORS README.md AUTHORS
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %{_licensedir}/%{name}/LICENSE.camlistore-go4-lock
@@ -231,13 +231,16 @@ rm %{buildroot}/%{go_path}/src/%{import_path}/testdata.log
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc CONTRIBUTORS README.md AUTHORS
 %{_licensedir}/%{name}/LICENSE.camlistore-go4-lock
 %endif
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_3.20171122.git3f53e14
+- fc update
+
 * Sat Dec 16 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_2.20171122.git3f53e14
 - new version
 
