@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # If any of the following macros should be set otherwise,
@@ -50,7 +51,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.1.%{commitdate}git%{shortcommit}
+Release:        alt1_0.2.%{commitdate}git%{shortcommit}
 Summary:        An unofficial Go SDK for integrating with the Dropbox API v2
 # Detected licences
 # - MIT/X11 (BSD like) at 'LICENSE'
@@ -173,12 +174,15 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.2.20170530git5d9f46f
+- fc update
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.20170530git5d9f46f
 - new version
 
