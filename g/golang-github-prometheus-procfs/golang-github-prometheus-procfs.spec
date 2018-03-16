@@ -49,7 +49,7 @@ BuildRequires: /proc
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.20.git%{shortcommit}
+Release:        alt1_0.21.git%{shortcommit}
 Summary:        Functions to retrieve system, kernel and process metrics from the /proc fs
 License:        ASL 2.0
 URL:            https://%{provider_prefix}
@@ -186,18 +186,21 @@ export GOPATH=%{buildroot}/%{go_path}:$(pwd)/Godeps/_workspace:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc *.md
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
 
 %if 0%{?with_unit_test}
 %files unit-test -f unit-test.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc *.md
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.21.gita1dba9c
+- fc update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.20.gita1dba9c
 - new version
 
