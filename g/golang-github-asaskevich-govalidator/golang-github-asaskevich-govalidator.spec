@@ -48,7 +48,7 @@ BuildRequires: /proc
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        8
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Validators and sanitizers for strings, numerics, slices and structs
 # Detected licences
 # - MIT/X11 (BSD like) at 'LICENSE'
@@ -192,6 +192,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 8-alt1_3
+- fc update
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 8-alt1_2
 - update to new release by fcimport
 
