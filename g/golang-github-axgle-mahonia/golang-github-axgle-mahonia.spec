@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global   debug_package   %{nil}
@@ -19,7 +20,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.1.git%{shortcommit}
+Release:        alt1_0.2.git%{shortcommit}
 Summary:        Character-set conversion library implemented in Go
 License:        BSD
 URL:            https://%{provider_prefix}
@@ -61,11 +62,18 @@ install -d -p %{buildroot}%{go_path}/src/%{import_path}/
 echo "%%dir %%{go_path}/src/%%{import_path}/." >> devel.file-list
 # find all *.go but no *_test.go files and generate devel.file-list
 for file in $(find . -iname "*.go" \! -iname "*_test.go") ; do
-    echo "%%dir %%{go_path}/src/%%{import_path}/$(dirname $file)" >> devel.file-list
-    install -d -p %{buildroot}%{go_path}/src/%{import_path}/$(dirname $file)
-    cp -pav $file %{buildroot}%{go_path}/src/%{import_path}/$file
+    install -d -p %{buildroot}/%{go_path}/src/%{import_path}/$(dirname $file)
+    cp -pav $file %{buildroot}/%{go_path}/src/%{import_path}/$file
     echo "%%{go_path}/src/%%{import_path}/$file" >> devel.file-list
+    filedir=${file##./};
+    # note %%%% -> %% for rpm macros!
+    while [ ${filedir%%/*} != "$filedir" ]; do
+        filedir=${filedir%%/*}
+	echo "%%dir %%{go_path}/src/%%{import_path}/$filedir" >> devel.file-list.dir
+    done
 done
+[ -s devel.file-list.dir ] && sort -u devel.file-list.dir >> devel.file-list
+rm -f devel.file-list.dir
 
 sort -u -o devel.file-list devel.file-list
 
@@ -84,6 +92,9 @@ export GOPATH=%{buildroot}%{go_path}:%{go_path}
 %dir %{go_path}/src/%{import_path}
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.2.gitc528b74
+- fc update
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.1.gitc528b74
 - new version
 
