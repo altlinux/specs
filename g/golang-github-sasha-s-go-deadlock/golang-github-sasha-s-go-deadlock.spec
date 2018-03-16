@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Generate devel rpm
@@ -33,10 +34,12 @@ BuildRequires: rpm-build-golang
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 %global commitdate      20171130
 
+# commit 03d40e5dbd5488667a13b3c2600b2f7c2886f02f == version 0.2.0
+
 
 Name:           golang-%{provider}-%{project}-%{repo}
-Version:        0.1.0
-Release:        alt1_1.%{commitdate}.git%{shortcommit}
+Version:        0.2.0
+Release:        alt1_2
 Summary:        Online deadlock detection in go
 License:        ASL 2.0
 URL:            https://%{provider_prefix}
@@ -141,13 +144,7 @@ sort -u -o devel.file-list devel.file-list
 
 %check
 %if 0%{?with_check} && 0%{?with_unit_test} && 0%{?with_devel}
-%if ! 0%{?with_bundled}
 export GOPATH=%{buildroot}/%{go_path}:%{go_path}
-%else
-# No dependency directories so far
-
-export GOPATH=%{buildroot}/%{go_path}:%{go_path}
-%endif
 
 %if ! 0%{?gotest:1}
 %global gotest go test
@@ -163,7 +160,7 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Readme.md
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
@@ -171,12 +168,15 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc Readme.md
 %endif
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt1_2
+- fc update
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt1_1.20171130.git03d40e5
 - new version
 
