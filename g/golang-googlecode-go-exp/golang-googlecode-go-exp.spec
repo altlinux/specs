@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 %define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -41,7 +42,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-googlecode-go-exp
 Version:        0
-Release:        alt1_0.16.git%{shortcommit}
+Release:        alt1_0.17.git%{shortcommit}
 Summary:        Experimental tools and packages for Go
 License:        BSD
 URL:            https://%{provider_prefix}
@@ -154,7 +155,9 @@ for file in $(find . -iname "*.go" \! -iname "*_test.go") ; do
     done
 done
 [ -s devel.file-list.dir ] && sort -u devel.file-list.dir >> devel.file-list
+rm -f devel.file-list.dir
 [ -s gc_devel.file-list.dir ] && sort -u gc_devel.file-list.dir >> gc_devel.file-list
+rm -f gc_devel.file-list.dir
 pushd %{buildroot}/%{go_path}/src/%{gc_import_path}/
 # from https://groups.google.com/forum/#!topic/golang-nuts/eD8dh3T9yyA, first post
 sed -i 's/"golang\.org\/x\//"code\.google\.com\/p\/go\./g' \
@@ -178,6 +181,7 @@ for file in $(find . -iname "*_test.go"); do
     done
 done
 [ -s unit-test.file-list.dir ] && sort -u unit-test.file-list.dir >> unit-test.file-list
+rm -f unit-test.file-list.dir
 %endif
 
 %check
@@ -209,21 +213,24 @@ export GOPATH=%{buildroot}/%{go_path}:$(pwd)/Godeps/_workspace:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f gc_devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README AUTHORS CONTRIBUTORS PATENTS
 
 %files -n %{gi_name}-devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README AUTHORS CONTRIBUTORS PATENTS
 %endif
 
 %if 0%{?with_unit_test}
 %files unit-test -f unit-test.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README AUTHORS CONTRIBUTORS PATENTS
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.17.gitd00e13e
+- fc update
+
 * Thu Dec 14 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.16.gitd00e13e
 - new version
 
