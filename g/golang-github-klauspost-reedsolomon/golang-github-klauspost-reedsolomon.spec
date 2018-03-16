@@ -37,7 +37,7 @@ BuildRequires: /proc
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        1.6
-Release:        alt1_3.%{commitdate}.git%{shortcommit}
+Release:        alt1_4.%{commitdate}.git%{shortcommit}
 Summary:        Reed-Solomon Erasure Coding in Go
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -176,6 +176,9 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_4.20171219.git0b30fa7
+- fc update
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_3.20171219.git0b30fa7
 - update to new release by fcimport
 
