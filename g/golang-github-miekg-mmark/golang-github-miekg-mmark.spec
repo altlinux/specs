@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Generate devel rpm
@@ -36,7 +37,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        1.3.4
-Release:        alt1_3
+Release:        alt1_4
 Summary:        A powerful markdown processor in Go geared towards the IETF
 License:        BSD 
 URL:            https://%{provider_prefix}
@@ -180,24 +181,27 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %{!?_licensedir:%global license %doc}
 
 %files
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc COPYRIGHT CONVERSION_RFC7328.md README.md
 %{_bindir}/mmark
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc COPYRIGHT CONVERSION_RFC7328.md README.md
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc COPYRIGHT CONVERSION_RFC7328.md README.md
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt1_4
+- fc update
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt1_3
 - new version
 
