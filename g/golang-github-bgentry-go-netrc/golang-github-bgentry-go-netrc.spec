@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global debug_package   %{nil}
@@ -20,7 +21,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0
-Release:        alt1_0.3.%{commitdate}git%{shortcommit}
+Release:        alt1_0.4.%{commitdate}git%{shortcommit}
 Summary:        A netrc file parser for the Go programming language
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -84,7 +85,7 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %gotest %{import_path}/netrc
 
 %files devel
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %dir %{go_path}/src/%{import_path}
@@ -92,12 +93,15 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 %{go_path}/src/%{import_path}/netrc/netrc.go
 
 %files unit-test-devel
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md
 %{go_path}/src/%{import_path}/netrc/netrc_test.go
 %{go_path}/src/%{import_path}/netrc/examples/
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.4.20140422git9fd32a8
+- fc update
+
 * Thu Dec 14 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.3.20140422git9fd32a8
 - new version
 
