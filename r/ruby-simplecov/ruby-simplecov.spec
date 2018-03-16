@@ -1,7 +1,7 @@
 %define  pkgname simplecov
  
 Name: 	 ruby-%pkgname
-Version: 0.15.1
+Version: 0.16.1
 Release: alt1
  
 Summary: Code coverage for Ruby 1.9+ with a powerful configuration library and automatic merging of coverage across test suites
@@ -60,6 +60,12 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Mar 16 2018 Andrey Cherepanov <cas@altlinux.org> 0.16.1-alt1
+- New version.
+
+* Thu Feb 01 2018 Andrey Cherepanov <cas@altlinux.org> 0.15.1-alt0.M70C.1
+- Rebuild with Ruby 2.4.3
+
 * Wed Sep 13 2017 Andrey Cherepanov <cas@altlinux.org> 0.15.1-alt1
 - New version
 
