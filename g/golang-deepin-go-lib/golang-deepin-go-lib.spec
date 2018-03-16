@@ -15,12 +15,12 @@ BuildRequires: /proc
 # https://github.com/linuxdeepin/go-lib
 %global   provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global   import_path     pkg.deepin.io/lib
-%global   commit          1986cd005cf07a67d528f6cd70bfc008a5afb94c
+%global   commit          68eb6b8d87c2cd738e3bda0a2a779f1707e9c277
 %global   shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 Name:           golang-deepin-go-lib
-Version:        1.2.0
-Release:        alt1_1
+Version:        1.2.4
+Release:        alt1_2
 Summary:        Go bindings for Deepin Desktop Environment development
 License:        GPLv3
 URL:            https://%{provider_prefix}
@@ -166,6 +166,7 @@ for file in $(find . -iname "*.[h|c]" -or -iname "*.go" \! -iname "*_test.go"); 
     done
 done
 [ -s devel.file-list.dir ] && sort -u devel.file-list.dir >> devel.file-list
+rm -f devel.file-list.dir
 
 # testing files for this project
 install -d %{buildroot}%{go_path}/src/%{import_path}/
@@ -186,14 +187,17 @@ sort -u -o unit-test-devel.file-list unit-test-devel.file-list
 
 %files devel -f devel.file-list
 %doc README.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 %dir %{go_path}/src/%{import_path}/
 
 %files unit-test-devel -f unit-test-devel.file-list
 %doc README.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt1_2
+- fc update
+
 * Thu Dec 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_1
 - new version
 
