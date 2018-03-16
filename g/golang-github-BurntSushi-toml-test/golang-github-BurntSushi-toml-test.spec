@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 %define fedora 27
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -36,7 +37,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        0.2.0
-Release:        alt1_0.12.git%{shortcommit}
+Release:        alt1_0.13.git%{shortcommit}
 Summary:        Language agnostic test suite for TOML
 License:        WTFPL
 URL:            https://%{import_path}
@@ -103,7 +104,7 @@ install -d -p %{buildroot}/%{go_path}/src/%{import_path}/
 
 %files
 %if 0%{?fedora}
-%doc COPYING
+%doc --no-dereference COPYING
 %else
 %doc COPYING
 %endif
@@ -114,7 +115,7 @@ install -d -p %{buildroot}/%{go_path}/src/%{import_path}/
 %if 0%{?with_devel}
 %files devel
 %if 0%{?fedora}
-%doc COPYING
+%doc --no-dereference COPYING
 %else
 %doc README.md COPYING
 %endif
@@ -125,6 +126,9 @@ install -d -p %{buildroot}/%{go_path}/src/%{import_path}/
 
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt1_0.13.git85f50d0
+- fc update
+
 * Sat Dec 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt1_0.12.git85f50d0
 - new version
 
