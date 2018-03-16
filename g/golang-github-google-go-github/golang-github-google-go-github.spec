@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # If any of the following macros should be set otherwise,
@@ -44,18 +45,16 @@ BuildRequires: rpm-build-golang
 # https://github.com/google/go-github
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          553fda401c08956cdbc33554240d41ec462a0b62
-%global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 Name:           golang-%{provider}-%{project}-%{repo}
-Version:        0
-Release:        alt1_0.3.git%{shortcommit}
+Version:        15.0.0
+Release:        alt1_3
 Summary:        Go library for accessing the GitHub API
 # Detected licences
 # - BSD (3 clause) at 'LICENSE'
 License:        BSD
 URL:            https://%{provider_prefix}
-Source0:        https://%{provider_prefix}/archive/%{commit}/%{repo}-%{shortcommit}.tar.gz
+Source0:        https://%{provider_prefix}/archive/v%{version}/%{repo}-%{version}.tar.gz
 
 # e.g. el6 has ppc64 arch without gcc-go, so EA tag is required
 ExclusiveArch:  %{?go_arches:%{go_arches}}%{!?go_arches:%{ix86} x86_64 aarch64 %{arm}}
@@ -102,11 +101,9 @@ Summary:         Unit tests for %{name} package
 # test subpackage tests code from devel subpackage
 
 %if 0%{?with_check} && ! 0%{?with_bundled}
-BuildRequires: golang(golang.org/x/oauth2)
 BuildRequires: mailcap
 %endif
 
-Requires:      golang(golang.org/x/oauth2)
 
 %description unit-test-devel
 %{summary}
@@ -116,12 +113,12 @@ providing packages with %{import_path} prefix.
 %endif
 
 %prep
-%setup -q -n %{repo}-%{commit}
+%setup -q -n %{repo}-%{version}
 
 %build
 %install
 # Remove network tests and examples, we don't need them packaged
-rm -r tests examples
+rm -r test example
 
 # source codes for building projects
 %if 0%{?with_devel}
@@ -185,18 +182,21 @@ export GOPATH=%{buildroot}/%{go_path}:%{go_path}
 
 %if 0%{?with_devel}
 %files devel -f devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md AUTHORS CONTRIBUTING.md
 %dir %{go_path}/src/%{provider}.%{provider_tld}/%{project}
 %endif
 
 %if 0%{?with_unit_test} && 0%{?with_devel}
 %files unit-test-devel -f unit-test-devel.file-list
-%doc LICENSE
+%doc --no-dereference LICENSE
 %doc README.md AUTHORS CONTRIBUTING.md
 %endif
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 15.0.0-alt1_3
+- fc update
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.3.git553fda4
 - new version
 
