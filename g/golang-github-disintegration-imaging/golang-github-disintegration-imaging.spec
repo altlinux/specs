@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 # END SourceDeps(oneline)
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global   debug_package   %{nil}
@@ -19,7 +20,7 @@ BuildRequires: rpm-build-golang
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        1.2.1
-Release:        alt1_1.git%{shortcommit}
+Release:        alt1_2.git%{shortcommit}
 Summary:        Simple Go image processing package
 License:        MIT
 URL:            https://%{provider_prefix}
@@ -75,11 +76,18 @@ install -d -p %{buildroot}%{go_path}/src/%{import_path}/
 echo "%%dir %%{go_path}/src/%%{import_path}/." >> devel.file-list
 # find all *.go but no *_test.go files and generate devel.file-list
 for file in $(find . -iname "*.go" \! -iname "*_test.go") ; do
-    echo "%%dir %%{go_path}/src/%%{import_path}/$(dirname $file)" >> devel.file-list
-    install -d -p %{buildroot}%{go_path}/src/%{import_path}/$(dirname $file)
-    cp -pav $file %{buildroot}%{go_path}/src/%{import_path}/$file
+    install -d -p %{buildroot}/%{go_path}/src/%{import_path}/$(dirname $file)
+    cp -pav $file %{buildroot}/%{go_path}/src/%{import_path}/$file
     echo "%%{go_path}/src/%%{import_path}/$file" >> devel.file-list
+    filedir=${file##./};
+    # note %%%% -> %% for rpm macros!
+    while [ ${filedir%%/*} != "$filedir" ]; do
+        filedir=${filedir%%/*}
+	echo "%%dir %%{go_path}/src/%%{import_path}/$filedir" >> devel.file-list.dir
+    done
 done
+[ -s devel.file-list.dir ] && sort -u devel.file-list.dir >> devel.file-list
+rm -f devel.file-list.dir
 
 # testing files for this project
 install -d %{buildroot}%{go_path}/src/%{import_path}/
@@ -110,11 +118,14 @@ export GOPATH=%{buildroot}%{go_path}:%{go_path}
 
 %files devel -f devel.file-list
 %doc README.md
-%doc LICENSE
+%doc --no-dereference LICENSE
 
 %files unit-test-devel -f unit-test-devel.file-list
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_2.gita585802
+- fc update
+
 * Wed Dec 13 2017 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_1.gita585802
 - new version
 
