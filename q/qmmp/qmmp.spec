@@ -1,5 +1,5 @@
-%define branch 0.11
-%define svn svn7463
+%define branch 0.12
+%define svn svn7877
 
 %define rel alt1
 
@@ -31,7 +31,7 @@
 Version: %branch.0
 Epoch: 1
 Name: qmmp
-Release: %rel.%svn.1
+Release: %rel.%svn
 Summary: QMMP - Qt-based multimedia player
 Summary(ru_RU.UTF8): Qmmp - мультимедиа проигрыватель на базе Qt
 Summary(uk_UA.UTF8): Qmmp - мультимедіа програвач на базі Qt
@@ -39,14 +39,14 @@ License: GPLv2
 Group: Sound
 Packager: Motsyo Gennadi <drool@altlinux.ru>
 Url: http://qmmp.ylsoftware.com/
-Source0: %name-%branch-%svn.tar.bz2
+Source0: %name-%branch.tar.bz2
 
 Requires: unzip winamplike-skins lib%name = %version-%release
 
 BuildPreReq: rpm-build-wlskins doxygen
 
-BuildRequires: gcc-c++ libavformat-devel
-BuildRequires: libcurl-devel libfaad-devel libmad-devel libmodplug-devel
+BuildRequires: gcc-c++ libavformat-devel libmad-devel
+BuildRequires: libcurl-devel libfaad-devel libmpg123-devel libmodplug-devel
 BuildRequires: libmpcdec-devel libpulseaudio-devel >= 0.9.15 libqt4-devel
 BuildRequires: libsoxr-devel libtag-devel >= 1.6 libvorbis-devel
 BuildRequires: libwavpack-devel libalsa-devel libflac-devel libbs2b-devel >= 3.0
@@ -722,7 +722,6 @@ Virtual package for full installation Qmmp (exclude %name-devel).
 # # 	-DUSE_OSS:BOOL=TRUE
 
 # # with QMake
-subst 's|taglib mad|taglib libmad|g' src/plugins/Input/mad/mad.pro
 export PATH=$PATH:%_qt4dir/bin
 qmake	"QMAKE_CFLAGS+=%optflags" \
 	"QMAKE_CXXFLAGS+=%optflags" \
@@ -761,7 +760,7 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %dir %_libdir/%name/Visual
 %_bindir/*
 %_desktopdir/*
-%_libdir/%name/Input/libmad*
+%_libdir/%name/Input/libmpeg*
 %_libdir/%name/Input/libvorbis*
 %_libdir/%name/Ui/libskinned*
 %_libdir/%name/Output/libalsa*
@@ -776,7 +775,7 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 
 %files -n lib%name
 %_libdir/*.so.0
-%_libdir/*.so.0.11*
+%_libdir/*.so.0.12*
 
 # Output plugins
 %files -n %name-out-pulseaudio
@@ -954,6 +953,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Sat Mar 17 2018 Motsyo Gennadi <drool@altlinux.ru> 1:0.12.0-alt1.svn7877
+- 0.12.0 svn7877 version
+
 * Sun Jan 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1:0.11.0-alt1.svn7463.1
 - rebuild against libcdio.so.18
 

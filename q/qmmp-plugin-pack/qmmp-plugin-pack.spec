@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
-%define		branch 0.11
-%define		svn svn7388
+%define		branch 0.12
+%define		svn svn7877
 
 Version:	%branch.0
 Name:		qmmp-plugin-pack
@@ -13,16 +13,15 @@ License:	GPLv2
 Group:		Sound
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Url:		http://qmmp.ylsoftware.com/plugins_en.php
-Source0:	%name-%branch-%svn.tar.bz2
+Source0:	%name-%branch.tar.bz2
 
-
-BuildRequires:	libqt4-devel gcc-c++ libmpg123-devel libqmmp-devel >= %version libtag-devel >= 1.6 libxmp-devel yasm libsamplerate-devel
+BuildRequires:	libqt4-devel gcc-c++ libqmmp-devel >= %version libtag-devel >= 1.6 libxmp-devel yasm libsamplerate-devel
 
 %description
 Plugin pack is a set of extra plugins for Qmmp.
 
 Plugins List
- - MPG123 - MPEG v1/2 layer1/2/3 decoder using of libmpg123 library
+ - FFVideo - FFmpeg-based video plugin
  - FFap - enhanced Monkey's Audio (APE) decoder (24-bit samples and embedded cue support)
  - XMP - support for MOD, S3M, IT and others tracker formats
  - SRC - Qmmp Sample Rate Converter Plugin
@@ -33,7 +32,7 @@ Plugins List
 Набор дополнительных модулей для Qmmp.
 
 Список модулей
- - MPG123 - декодер MPEG v1/2 layer1/2/3 с использованием библиотеки libmpg123
+ - FFVideo - плагин видео на базе FFmpeg
  - FFap - улучшенный декодер Monkey's Audio (APE) (поддержка 24-х бит и встроенного cue)
  - XMP - поддержка для MOD, S3M, IT и прочих трекерных форматов
  - SRC - модуль конвертера Sample Rate для Qmmp
@@ -44,28 +43,28 @@ Plugins List
 Набір додаткових модулів для Qmmp.
 
 Перелік модулів
- - MPG123 - декодер MPEG v1/2 layer1/2/3 з використанням бібліотеки libmpg123
+ - FFVideo - плагін відео на базі FFmpeg
  - FFap - покращений декодер Monkey's Audio (APE) (підтримка 24-х біт та вбудованого cue)
  - XMP - підтримка для MOD, S3M, IT та інших трекерних форматів
  - SRC - модуль конвертера Sample Rate для Qmmp
  - Goom - Модуль візуалізації Goom для Qmmp
  - History - Модуль  журнала прослуховування для Qmmp
 
-%package -n %name-in-mpg123
-Summary: MPG123 - MPEG v1/2 layer1/2/3 decoder using of libmpg123 library
-Summary(ru_RU.UTF8): MPG123 - декодер MPEG v1/2 layer1/2/3 с использованием библиотеки libmpg123
-Summary(uk_UA.UTF8): MPG123 - декодер MPEG v1/2 layer1/2/3 з використанням бібліотеки libmpg123
-Group: Sound
+%package -n %name-in-ffvideo
+Summary: FFVideo - FFmpeg-based video plugin
+Summary(ru_RU.UTF8): FFVideo - плагин видео на базе FFmpeg
+Summary(uk_UA.UTF8): FFVideo - плагін відео на базі FFmpeg
+Group: Video
 Requires: qmmp >= %version-%release
 
-%description -n %name-in-mpg123
-MPG123 - MPEG v1/2 layer1/2/3 decoder using of libmpg123 library for Qmmp.
+%description -n %name-in-ffvideo
+FFVideo - FFmpeg-based video plugin
 
-%description -l ru_RU.UTF8 -n %name-in-mpg123
-MPG123 - декодер MPEG v1/2 layer1/2/3 с использованием библиотеки libmpg123 для Qmmp.
+%description -l ru_RU.UTF8 -n %name-in-ffvideo
+FFVideo - плагин видео на базе FFmpeg
 
-%description -l uk_UA.UTF8 -n %name-in-mpg123
-MPG123 - декодер MPEG v1/2 layer1/2/3 з використанням бібліотеки libmpg123 для Qmmp.
+%description -l uk_UA.UTF8 -n %name-in-ffvideo
+FFVideo - плагін відео на базі FFmpeg
 
 %package -n %name-in-ffap
 Summary: FFap - enhanced Monkey's Audio (APE) decoder (24-bit samples and embedded cue support)
@@ -152,14 +151,15 @@ Qmmp Listening History Plugin
 
 %build
 export PATH=$PATH:%_qt4dir/bin
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %name.pro
+# #qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib INCLUDEPATH+="%_libdir/ffmpeg-static/include" %name.pro
+qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib DISABLED_PLUGINS+=FFVIDEO_PLUGIN %name.pro
 %make_build VERBOSE=1
 
 %install
 %make INSTALL_ROOT=%buildroot%prefix install
 
-%files -n %name-in-mpg123
-%_libdir/qmmp/Input/libmpg123.so
+# #%files -n %name-in-ffvideo
+# #%_libdir/qmmp/Engines/libffvideo.so
 
 %files -n %name-in-ffap
 %_libdir/qmmp/Input/libffap.so
@@ -177,6 +177,12 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %
 %_libdir/qmmp/General/libhistory.so
 
 %changelog
+* Sat Mar 17 2018 Motsyo Gennadi <drool@altlinux.ru> 0.12.0-alt1.svn7877
+- build svn7877
+
+* Sat Mar 10 2018 Motsyo Gennadi <drool@altlinux.ru> 0.11.0-alt1.svn7871
+- build svn7871
+
 * Fri Aug 25 2017 Motsyo Gennadi <drool@altlinux.ru> 0.11.0-alt1.svn7388
 - build svn7388
 
