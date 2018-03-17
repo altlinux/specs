@@ -1,6 +1,6 @@
 Name: audacity
 Version: 2.1.1
-Release: alt1.2
+Release: alt2
 
 Summary: Cross-platform audio editor
 License: GPL
@@ -79,6 +79,9 @@ rm -f src/.gchdepend
 	--with-libvamp=system \
 	--with-libvorbis=system \
 	--with-soundtouch=system \
+%ifnarch %ix86 x86_64
+	--disable-sse \
+%endif
 	#
 	#--enable-unicode=yes \
 	#--with-portmixer=no
@@ -86,7 +89,7 @@ rm -f src/.gchdepend
 	#--with-libsoxr=system \
 	#--with-sbsms=system \
 	#
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -122,6 +125,10 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/%name/help
 
 %changelog
+* Sat Mar 17 2018 Michael Shigorin <mike@altlinux.org> 2.1.1-alt2
+- disable SSE for non-x86
+- enable parallel build
+
 * Fri Jun 30 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.1-alt1.2
 - Updated build to support gcc-6
 
