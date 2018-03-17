@@ -1,11 +1,11 @@
-%def_with ibus
 %def_with fcitx
+%def_with ibus
 %def_with nas
 %def_with pulse
 
 Name: SDL2
 Version: 2.0.8
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Simple DirectMedia Layer
 License: zlib
@@ -66,7 +66,10 @@ to develop SDL applications.
 %setup
 
 %build
-%configure --disable-static
+%configure \
+    --enable-video-wayland \
+    --disable-static
+    
 %make_build
 
 %install
@@ -89,6 +92,9 @@ to develop SDL applications.
 %_aclocaldir/sdl2.m4
 
 %changelog
+* Sat Mar 17 2018 Nazarov Denis <nenderus@altlinux.org> 2.0.8-alt2%ubt
+- Add wayland support (ALT #34657)
+
 * Sun Mar 11 2018 Nazarov Denis <nenderus@altlinux.org> 2.0.8-alt1%ubt
 - Version 2.0.8
 
@@ -97,6 +103,9 @@ to develop SDL applications.
 
 * Thu Oct 26 2017 Nazarov Denis <nenderus@altlinux.org> 2.0.7-alt1%ubt
 - Version 2.0.7
+
+* Sun Oct 08 2017 Nazarov Denis <nenderus@altlinux.org> 2.0.6-alt3.M80P.1
+- Build for branch p8
 
 * Wed Sep 27 2017 Michael Shigorin <mike@altlinux.org> 2.0.6-alt3%ubt
 - introduce ibus, fcitx, nas, pulse knobs (on by default)
