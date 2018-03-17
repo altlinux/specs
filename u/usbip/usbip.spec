@@ -5,7 +5,7 @@
 Name: usbip
 Summary: Utility for manage usbip devices
 Version: 2.0.4
-Release: alt2
+Release: alt4
 
 %define lname lib%name
 
@@ -56,6 +56,15 @@ Requires: %lname-devel = %version-%release
 %description -n %lname-devel-static
 %name static library.
 
+%package client
+Summary: %name conf files for client side
+Group: System/Configuration/Networking
+BuildArch: noarch
+
+%description client
+%name conf files for client side
+
+
 %prep
 %setup
 tar -xvf %kernel_source kernel-source-%kernel_version/%source_dir
@@ -63,6 +72,7 @@ cp -rf kernel-source-%kernel_version/%source_dir/* ./
 rm -rf kernel-source-%kernel_version
 
 %build
+ %__subst 's| -Werror||g' configure.ac
 ./autogen.sh
 %configure --with-usbids-dir=%_datadir/misc
 %make_build
@@ -74,16 +84,24 @@ mkdir -p %buildroot%_unitdir
 
 install -Dp -m644 usbipd %buildroot%_sysconfdir/sysconfig/%{name}d
 install -Dp -m644 usbipd.service %buildroot%_unitdir/%{name}d.service
+install -D -m0644 usbipd.modules.conf %buildroot%_sysconfdir/modules-load.d/usbipd.modules.conf
+install -D -m0644 usbip-client.modules.conf %buildroot%_sysconfdir/modules-load.d/usbip-client.modules.conf
 
 %files
 %_sbindir/%name
-%_man8dir/*
+%_man8dir/usbip.8*
 %doc README
+
+%files client
+%_sysconfdir/modules-load.d/usbip-client.modules.conf
 
 %files -n %{name}d
 %_sbindir/%{name}d
 %_sysconfdir/sysconfig/%{name}d
+%_sysconfdir/modules-load.d/usbipd.modules.conf
 %_unitdir/%{name}d.service
+%doc README
+%_man8dir/usbipd.8*
 
 %files -n %lname
 %_libdir/*.so.*
@@ -96,6 +114,14 @@ install -Dp -m644 usbipd.service %buildroot%_unitdir/%{name}d.service
 %_libdir/*.a
 
 %changelog
+* Sat Mar 17 2018 Pavel Vainerman <pv@altlinux.ru> 2.0.4-alt4
+- up build
+
+* Sat Mar 17 2018 Pavel Vainerman <pv@altlinux.ru> 2.0.4-alt3
+- added new package usbip-client (modules.conf for client side)
+- added modules.conf for usbipd (server side)
+- minor fixes
+
 * Thu Feb 15 2018 Pavel Vainerman <pv@altlinux.ru> 2.0.4-alt2
 - added service file
 
