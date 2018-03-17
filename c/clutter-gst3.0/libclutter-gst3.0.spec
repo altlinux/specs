@@ -11,7 +11,7 @@
 %def_enable hw
 
 Name: %_name%api_ver
-Version: %ver_major.24
+Version: %ver_major.26
 Release: alt1
 
 Summary: Library integrating clutter with GStreamer
@@ -124,8 +124,8 @@ that use Clutter-Gst libraries.
 %endif
 
 %files -n gst-plugins-clutter%gst_api_ver
-%_libdir/gstreamer-%gst_api_ver/libgstclutter-%api_ver.so
-%exclude %_libdir/gstreamer-%gst_api_ver/libgstclutter-%api_ver.la
+%_libdir/gstreamer-%gst_api_ver/*.so
+%exclude %_libdir/gstreamer-%gst_api_ver/*.la
 
 %if_enabled gtk_doc
 %files -n lib%name-devel-doc
@@ -133,6 +133,9 @@ that use Clutter-Gst libraries.
 %endif
 
 %changelog
+* Sun Mar 11 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.26-alt1
+- 3.0.26
+
 * Thu Mar 30 2017 Yuri N. Sedunov <aris@altlinux.org> 3.0.24-alt1
 - 3.0.24
 

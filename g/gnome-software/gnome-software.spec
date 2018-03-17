@@ -1,25 +1,27 @@
-%define ver_major 3.26
+%define ver_major 3.28
 %define plugins_ver 11
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Software
 
-%def_enable gtkspell
+%def_enable gspell
 %def_enable gudev
 %def_enable gnome_desktop
 %def_enable polkit
 %def_disable fwupd
 %def_enable flatpak
-%def_enable ostree
 %def_disable limba
-%def_enable rpm
 %def_disable packagekit
 %def_enable webapps
 %def_enable odrs
+%def_disable valgrind
 %def_disable tests
+# dropped since 3.27.90
+%def_disable rpm
+%def_disable ostree
 %def_disable external_appstream
 
 Name: gnome-software
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: Software manager for GNOME
@@ -30,17 +32,17 @@ Url: https://wiki.gnome.org/Apps/Software
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define glib_ver 2.46
-%define gtk_ver 3.20
-%define appstream_glib_ver 0.7.0
+%define gtk_ver 3.22.4
+%define appstream_glib_ver 0.7.3
 %define json_glib_ver 1.1.1
 %define soup_ver 2.52
-%define packagekit_ver 1.1.0
+%define packagekit_ver 1.1.9
 %define gnome_desktop_ver 3.18
-%define fwupd_ver 0.7.0
+%define fwupd_ver 1.0.3
 %define flatpak_ver 0.6.12
 %define limba_ver 0.5.6
 
-BuildRequires(pre): meson
+BuildRequires: meson
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libappstream-glib-devel >= %appstream_glib_ver
@@ -49,16 +51,17 @@ BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: gnome-common rpm-build-xdg intltool yelp-tools gtk-doc xsltproc docbook-style-xsl
 BuildRequires: libsqlite3-devel libsecret-devel gsettings-desktop-schemas-devel liboauth-devel
 BuildRequires: valgrind-tool-devel
-%{?_enable_rpm:BuildRequires: librpm-devel}
 %{?_enable_gudev:BuildRequires: libgudev-devel}
-%{?_enable_gtkspell:BuildRequires: libgtkspell3-devel}
+%{?_enable_gspell:BuildRequires: libgspell-devel}
 %{?_enable_gnome_desktop:BuildRequires: libgnome-desktop3-devel >= %gnome_desktop_ver}
 %{?_enable_polkit:BuildRequires: libpolkit-devel}
 %{?_enable_fwupd:BuildRequires: libfwupd-devel >= %fwupd_ver}
 %{?_enable_flatpak:BuildRequires: libflatpak-devel >= %flatpak_ver}
-%{?_enable_ostree:BuildRequires: libostree-devel >= %flatpak_ver}
 %{?_enable_limba:BuildRequires: liblimba-devel >= %limba_ver}
 %{?_enable_packagekit:BuildRequires: libpackage-kit-devel >= %packagekit_ver}
+%{?_enable_valgrind:BuildRequires: valgrind}
+%{?_enable_ostree:BuildRequires: libostree-devel >= %flatpak_ver}
+%{?_enable_rpm:BuildRequires: librpm-devel}
 
 %description
 GNOME Software is a software center for GNOME.
@@ -89,7 +92,7 @@ GNOME Software.
 %build
 %meson \
 	-Denable-schemas-compile=false \
-	%{?_enable_gtkspell:-Denable-gtkspell=true} \
+	%{?_enable_gspell:-Denable-gspell=true} \
 	%{?_enable_gudev:-Denable-gudev=true} \
 	%{?_enable_gnome_desktop:-Denable-gnome-desktop=true} \
 	%{?_enable_polkit:-Denable-polkit=true} \
@@ -99,6 +102,7 @@ GNOME Software.
 	%{?_disable_limba:-Denable-limba=false} \
 	%{?_disable_rpm:-Denable-rpm=false} \
 	%{?_disable_packagekit:-Denable-packagekit=false} \
+	%{?_disable_valgrind:-Denable-valgrind=false} \
 	%{?_disable_tests:-Denable-tests=false} \
 	%{?_enable_external_appstream:-Denable-external-appstream=true}
 %meson_build
@@ -135,7 +139,7 @@ GNOME Software.
 %_datadir/metainfo/%xdg_name.Plugin.Steam.metainfo.xml
 %_man1dir/%name.1.*
 %_man1dir/%name-editor.1.*
-%doc AUTHORS README
+%doc AUTHORS README*
 
 %files devel
 %_includedir/%name/
@@ -145,6 +149,9 @@ GNOME Software.
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Fri Mar 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.7-alt1
 - 3.26.7
 

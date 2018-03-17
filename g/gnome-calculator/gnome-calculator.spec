@@ -1,11 +1,11 @@
 %def_disable snapshot
-%define ver_major 3.26
+%define ver_major 3.28
 %define xdg_name org.gnome.Calculator
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-calculator
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: GTK+3 based desktop calculator
 License: %gpl2plus
@@ -23,7 +23,7 @@ Provides: gcalctool = 6.6.2
 
 BuildPreReq: rpm-build-licenses rpm-build-gnome
 
-BuildPreReq: intltool yelp-tools libappstream-glib-devel
+BuildPreReq: yelp-tools libappstream-glib-devel
 BuildPreReq: libgtk+3-devel >= 3.20.0
 BuildRequires: libgio-devel >= 2.48.0 libxml2-devel vala-tools >= 0.24
 BuildRequires: libmpfr-devel libgtksourceview3-devel >= 3.16
@@ -40,7 +40,7 @@ A single graphics driver for GTK included with this package.
 
 %prep
 %setup
-#find ./ -name "*.stamp" -delete
+find ./ -name "*.stamp" -delete
 
 %build
 %autoreconf
@@ -63,12 +63,16 @@ A single graphics driver for GTK included with this package.
 %_man1dir/%name.1.*
 %_man1dir/gcalccmd.1.*
 %config %_datadir/glib-2.0/schemas/org.gnome.calculator.gschema.xml
-%_datadir/appdata/%xdg_name.appdata.xml
+%_iconsdir/hicolor/*/*/%{name}*
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc NEWS
 
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Mon Feb 26 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt2
 - rebuilt against libmpfr.so.6 (ALT #34582)
 

@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %prefix/libexec
-%define ver_major 1.50
+%define ver_major 1.52
 %define _name gjs
 %define api_ver 1.0
 %define mozjs_ver_major 52
@@ -9,7 +9,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
@@ -19,7 +19,7 @@ Group: System/Libraries
 # The console module (modules/console.c)
 # Stack printer (gjs/stack.c)
 License: MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
-Url: https://live.gnome.org/Gjs/
+Url: https://wiki.gnome.org/action/show/Projects/Gjs
 
 %if_enabled snapshot
 Source: %_name-%version.tar
@@ -38,7 +38,7 @@ BuildRequires: libmozjs%mozjs_ver_major-devel
 BuildRequires: libgio-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libreadline-devel libcairo-gobject-devel
 BuildRequires: libgtk+3-devel libgtk+3-gir-devel
-
+BuildRequires: valgrind
 # for check
 BuildRequires: /proc dbus-tools dbus-tools-gui
 
@@ -91,14 +91,15 @@ cp %SOURCE1 m4/
 %dir %_libdir/%_name/
 %dir %_typelibdir
 %_typelibdir/GjsPrivate-1.0.typelib
-#%_datadir/%_name-%api_ver
+%dir %_datadir/%_name-%api_ver
 %doc COPYING NEWS README
 
 %files devel
 %_includedir/%_name-%api_ver/
 %_libdir/%name.so
 %_pkgconfigdir/%_name-%api_ver.pc
-#%_libdir/pkgconfig/%_name-internals-%api_ver.pc
+%_datadir/%_name-%api_ver/lsan/
+%_datadir/%_name-%api_ver/valgrind/
 %doc examples/*
 
 %if_enabled installed_tests
@@ -116,6 +117,9 @@ cp %SOURCE1 m4/
 
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 1.52.0-alt1
+- 1.52.0
+
 * Sun Jan 28 2018 Yuri N. Sedunov <aris@altlinux.org> 1.50.4-alt1
 - 1.50.4
 

@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.26
+%define ver_major 3.28
+%def_disable packagekit
 # tests require colord running and g-c-m installed
 %def_disable check
-%def_disable packagekit
 
 Name: gnome-color-manager
 Version: %ver_major.0
@@ -31,7 +31,8 @@ BuildPreReq: rpm-build-licenses
 %define colord_gtk_ver 0.1.20
 %define lcms_ver 2.2
 
-BuildRequires: meson gcc-c++ yelp-tools libappstream-glib-devel
+BuildRequires(pre): meson
+BuildRequires: gcc-c++ yelp-tools libappstream-glib-devel
 BuildRequires: docbook-utils xsltproc
 BuildPreReq: libgio-devel >= %gio_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -74,20 +75,19 @@ This project has the following features:
 
 %build
 %meson \
-    -Denable-tests=true \
-    %{?_disable_packagekit:-Denable-packagekit=false}
+    -Dtests=true \
+    %{?_disable_packagekit:-Dpackagekit=false}
 %meson_build
 
 %install
 %meson_install
-
 # The license
 ln -sf %_licensedir/GPL-2 COPYING
 
 %find_lang --with-gnome %name
 
 %check
-%{?_enable_check:xvfb-run %meson_test}
+%meson_test
 
 %files -f %name.lang
 %_bindir/gcm-calibrate
@@ -108,6 +108,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %doc README AUTHORS
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

@@ -1,7 +1,7 @@
-%define ver_major 3.26
+%define ver_major 3.28
 
 Name: gnome-backgrounds
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A collection of GNOME backgrounds
@@ -37,6 +37,9 @@ with the GNOME desktop.
 %doc NEWS README
 
 %changelog
+* Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Fri Sep 15 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 

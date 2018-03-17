@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.54
+%define ver_major 2.56
 %define pcre_ver 8.13
 
 %set_verify_elf_method strict
@@ -19,8 +19,10 @@
 %def_disable gtk_doc
 %endif
 
+%def_disable debug
+
 Name: glib2
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -50,7 +52,6 @@ Patch1: glib-2.53.5-alt-deprecated_paths-nowarning.patch
 Patch2: glib-2.53.7-alt-add-xvt.patch
 Patch3: glib-2.38.2-alt-lfs.patch
 Patch4: glib-2.50.1-alt-dbus_socket_path.patch
-Patch5: glib-2.51.3-alt-configure.patch
 
 %def_with locales
 %if_with locales
@@ -219,7 +220,6 @@ the functionality of the installed glib2/libgio packages.
 %patch2 -p1
 %patch3 -p1
 %patch4
-%patch5
 
 %if_with sys_pcre
 rm glib/pcre/*.[ch]
@@ -251,7 +251,8 @@ NOCONFIGURE=1 ./autogen.sh
     %{?_without_sys_pcre:--with-pcre=internal} \
     %{subst_enable fam} \
     %{subst_enable systemtap} \
-    %{?_enable_installed_tests:--enable-installed-tests}
+    %{?_enable_installed_tests:--enable-installed-tests} \
+    %{?_enable_debug:--enable-debug=yes}
 %make_build
 
 %install
@@ -419,6 +420,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 2.56.0-alt1
+- 2.56.0
+
 * Tue Jan 09 2018 Yuri N. Sedunov <aris@altlinux.org> 2.54.3-alt1
 - 2.54.3
 

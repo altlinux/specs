@@ -2,13 +2,13 @@
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
-%define ver_major 3.26
+%define ver_major 3.28
 %define gst_api_ver 1.0
-%def_enable gnome_bluetooth
+%def_enable gtk_doc
 
 Name: gnome-shell
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -31,7 +31,7 @@ AutoReqProv: nopython
 %define session_ver 3.25
 %define clutter_ver 1.21.5
 %define gjs_ver 1.47.0
-%define mutter_ver 3.26.2
+%define mutter_ver 3.27.91
 %define gtk_ver 3.16.0
 %define gio_ver 2.53.0
 %define gstreamer_ver 1.0
@@ -50,6 +50,7 @@ AutoReqProv: nopython
 %define json_glib_ver 0.13.2
 %define nm_ver 0.9.8
 %define caribou_ver 0.4.8
+%define ibus_ver 1.5.2
 
 Requires: %name-data = %version-%release
 Requires: mutter-gnome >= %mutter_ver libmutter-gir >= %mutter_ver
@@ -69,7 +70,6 @@ Requires: polari
 Requires: typelib(AccountsService)
 Requires: typelib(Atk)
 Requires: typelib(Atspi)
-Requires: typelib(Caribou)
 Requires: typelib(Clutter)
 Requires: typelib(Cogl)
 Requires: typelib(Gcr)
@@ -88,9 +88,8 @@ Requires: typelib(Gvc)
 Requires: typelib(GWeather)
 Requires: typelib(IBus)
 Requires: typelib(Meta)
-Requires: typelib(NetworkManager)
-Requires: typelib(NMClient)
-Requires: typelib(NMGtk)
+Requires: typelib(NM)
+Requires: typelib(NMA)
 Requires: typelib(Pango)
 Requires: typelib(Polkit)
 Requires: typelib(PolkitAgent)
@@ -104,7 +103,7 @@ Requires: typelib(TelepathyLogger)
 Requires: typelib(UPowerGlib)
 Requires: typelib(WebKit2)
 
-BuildRequires: meson gcc-c++ gnome-common intltool gtk-doc
+BuildRequires: meson gcc-c++ gnome-common intltool gtk-doc sassc
 BuildRequires: python3-devel rpm-build-python3
 BuildRequires: libX11-devel libXfixes-devel
 BuildRequires: libclutter-devel >= %clutter_ver libclutter-gir-devel
@@ -124,7 +123,7 @@ BuildRequires: libjson-glib-devel >= %json_glib_ver
 BuildRequires: libcroco-devel
 BuildRequires: libcanberra-devel
 BuildRequires: libalsa-devel libpulseaudio-devel
-%{?_enable_gnome_bluetooth:BuildRequires: libgnome-bluetooth-devel >= %bluetooth_ver libgnome-bluetooth-gir-devel gnome-bluetooth}
+BuildRequires: libgnome-bluetooth-devel >= %bluetooth_ver libgnome-bluetooth-gir-devel gnome-bluetooth
 BuildRequires: evolution-data-server-devel >= %eds_ver libicu-devel
 # for screencast recorder functionality
 BuildRequires: gstreamer%gst_api_ver-devel >= %gstreamer_ver gst-plugins%gst_api_ver-devel
@@ -137,15 +136,15 @@ BuildRequires: libpolkit-devel >= %polkit_ver
 BuildRequires: libtelepathy-glib-devel >= %telepathy_ver libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel
 BuildRequires: libtelepathy-logger-devel >= %telepathy_logger_ver
 BuildRequires: libfolks-devel >= %folks_ver libfolks-gir-devel
-BuildRequires: libnm-gtk-devel >= %nm_ver
+BuildRequires: libnm-gtk-devel >= %nm_ver libnm-devel libnm-gir-devel
 BuildRequires: libcaribou-devel >= %caribou_ver
 BuildRequires: libcanberra-gtk3-devel
 BuildRequires: libgudev-devel libgudev-gir-devel
-BuildRequires: gsettings-desktop-schemas-devel >= 0.1.7
-BuildRequires: NetworkManager-glib-devel >= 0.8.995 NetworkManager-glib-gir-devel
+BuildRequires: gsettings-desktop-schemas-devel >= 3.21.3
 BuildRequires: libsoup-gir-devel ca-certificates
 BuildRequires: gnome-control-center-devel
 BuildRequires: libsystemd-journal-devel
+BuildRequires: libibus-devel >= %ibus_ver
 # for browser plugin
 BuildRequires: browser-plugins-npapi-devel
 
@@ -185,7 +184,7 @@ subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %build
 %meson \
-	-Denable-documentation=true \
+	%{?_enable_gtk_doc:-Dgtk_doc=true} \
 	-Denable-schemas-compile=false
 %meson_build
 
@@ -232,11 +231,16 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %_man1dir/*
 %doc README NEWS
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/shell/
 %_datadir/gtk-doc/html/st/
+%endif
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt2
 - rebuilt against libical.so.3
 

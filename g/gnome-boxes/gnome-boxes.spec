@@ -1,9 +1,10 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.26
+%define ver_major 3.27
 %def_disable ovirt
+%def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.2
+Version: %ver_major.92
 Release: alt1
 
 Summary: A simple GNOME 3 application to access remote or virtual systems
@@ -31,6 +32,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define libsoup_ver 2.38
 %define libarchive_ver 3.0.0
 
+Requires: gnome-keyring
+
+BuildRequires(pre): meson
 BuildRequires: yelp-tools
 BuildRequires: gobject-introspection-devel >= 0.9.6
 BuildRequires: libvala-devel >= 0.28.0.16
@@ -51,6 +55,7 @@ BuildRequires: libuuid-devel >= %uuid_ver
 BuildRequires: libsoup-devel >= %libsoup_ver
 BuildRequires: libarchive-devel >= %libarchive_ver
 %{?_enable_ovirt:BuildRequires: pkgconfig(govirt-1.0) >= %govirt_ver}
+BuildRequires: libwebkit2gtk-devel
 
 # Need libvirtd and an hypervisor to do anything useful
 Requires: libvirt-daemon
@@ -71,19 +76,28 @@ gnome-boxes lets you easily create, setup, access, and use:
   * When technology permits, set up access for applications on
     local virtual machines
 
+%package tests
+Summary: Tests for the Boxes
+Group: Development/Other
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the Boxes.
+
+
 %prep
 %setup
-#tar -xf %SOURCE2 -C libgd
-#echo %version > .tarball-version
 
 %build
-%autoreconf
-%configure \
-	--enable-vala
-%make_build
+%meson \
+	%{?_disable_ovirt:-Dovirt=false} \
+	%{?_enable_installed_tests:-Dinstalled_tests=true}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name --with-gnome
 
 %files -f %name.lang
@@ -96,9 +110,19 @@ gnome-boxes lets you easily create, setup, access, and use:
 %_libexecdir/gnome-boxes-search-provider
 %_datadir/dbus-1/services/*.service
 %_datadir/gnome-shell/search-providers/gnome-boxes-search-provider.ini
-%_datadir/appdata/*.xml
+%_datadir/metainfo/*.xml
+
+%if_enabled installed_tests
+%files tests
+%_libexecdir/%name/installed-tests/
+%_datadir/installed-tests/%name/
+%endif
+
 
 %changelog
+* Sun Mar 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.27.92-alt1
+- 3.27.92
+
 * Mon Oct 30 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 

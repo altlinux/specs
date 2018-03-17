@@ -10,7 +10,7 @@
 
 %define _name gst-plugins
 %define api_ver 1.0
-%define ver_major 1.12
+%define ver_major 1.13
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
@@ -18,8 +18,8 @@
 %def_enable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.4
-Release: alt3
+Version: %ver_major.91
+Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -30,10 +30,9 @@ Requires: lib%_name%api_ver >= %ver_major
 Requires: gstreamer%api_ver >= %ver_major
 
 Source: http://gstreamer.freedesktop.org/src/%_name-bad/%_name-bad-%version.tar.xz
-Patch: gst-plugins-bad-0.11.94-alt-intltool.patch
 
-BuildRequires: gst-plugins%api_ver-devel gst-plugins%api_ver-gir-devel
-BuildRequires: bzlib-devel gcc-c++ gtk-doc intltool libSDL-devel libX11-devel
+BuildRequires: gst-plugins%api_ver-devel >= %ver_major gst-plugins%api_ver-gir-devel
+BuildRequires: bzlib-devel gcc-c++ gtk-doc libSDL-devel libX11-devel
 BuildRequires: libalsa-devel libcdaudio-devel libdca-devel libdirac-devel libdvdnav-devel libexif-devel
 BuildRequires: libfaad-devel libgio-devel libgsm-devel libjasper-devel libmms-devel
 %{?_enable_mjpegtools:BuildRequires: libmjpegtools-devel}
@@ -47,16 +46,18 @@ BuildRequires: libvpx-devel librtmp-devel liborc-devel orc libofa-devel libmusic
 %{?_enable_zbar:BuildRequires: libzbar-devel}
 BuildRequires: libEGL-devel libwebp-devel libopenjpeg2.0-devel libbluez-devel
 BuildRequires: libdbus-devel libxml2-devel libgnutls-devel libvdpau-devel
-BuildRequires: libsbc-devel libschroedinger-devel libusb-devel libgudev-devel libopus-devel
+BuildRequires: libsbc-devel libusb-devel libgudev-devel libopus-devel
 BuildRequires: libcurl-devel libssh2-devel
 BuildRequires: libvo-amrwbenc-devel librsvg-devel libvo-aacenc-devel libgcrypt-devel
 BuildRequires: gobject-introspection-devel libgstreamer1.0-gir-devel
 BuildRequires: libvisual0.4-devel openexr-devel libx265-devel
-BuildRequires: libgtk+3-devel libclutter-devel
+BuildRequires: libclutter-devel
 BuildRequires: libbs2b-devel
 %{?_enable_opencv:BuildRequires: libopencv-devel}
 %{?_enable_ladspa:BuildRequires: ladspa_sdk liblrdf-devel libfluidsynth-devel}
 %{?_enable_vulkan:BuildRequires: vulkan-devel}
+# since 1.13.x
+BuildRequires: libnice-devel libva-devel liblcms2-devel liblilv-devel
 
 %description
 GStreamer Bad Plug-ins is a set of plug-ins that aren't up to par
@@ -68,7 +69,7 @@ become part of either gst-plugins-good or gst-plugins-ugly, depending
 on the other factors.
 
 %package devel
-Summary: Development files for GStreamer plugins
+Summary: Development files for GStreamer Bad Plug-ins
 Group: Development/C
 Requires: %name = %version-%release
 
@@ -86,7 +87,6 @@ This package contains documentation for GStreamer Bad Plug-ins.
 
 %prep
 %setup -n %_name-bad-%version
-%patch -p1
 
 %if_enabled opencv
 # allow build against 3.4.0
@@ -115,9 +115,6 @@ subst 's/\(opencv <= 3\.\)3.0/\14.0/' configure.ac
 %dir %_gst_libdir
 %_gst_libdir/*.so
 %exclude %_gst_libdir/*.la
-#%_typelibdir/GstEGL-%api_ver.typelib
-%_typelibdir/GstBadAllocators-%api_ver.typelib
-%_typelibdir/GstGL-%api_ver.typelib
 %_typelibdir/GstInsertBin-%api_ver.typelib
 %_typelibdir/GstMpegts-%api_ver.typelib
 %_typelibdir/GstPlayer-%api_ver.typelib
@@ -127,17 +124,11 @@ subst 's/\(opencv <= 3\.\)3.0/\14.0/' configure.ac
 %_datadir/gst-plugins-bad/%api_ver/opencv_haarcascades/fist.xml
 %_datadir/gst-plugins-bad/%api_ver/opencv_haarcascades/palm.xml
 %endif
-#%_datadir/gstreamer-%api_ver/presets/GstVP8Enc.prs
-#%_datadir/glib-2.0/schemas/*.xml
 
 %files devel
 %_includedir/gstreamer-%api_ver/*
-%_libdir/gstreamer-%api_ver/include/gst/gl/gstglconfig.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
-#%_girdir/GstEGL-%api_ver.gir
-%_girdir/GstBadAllocators-%api_ver.gir
-%_girdir/GstGL-%api_ver.gir
 %_girdir/GstInsertBin-%api_ver.gir
 %_girdir/GstMpegts-%api_ver.gir
 %_girdir/GstPlayer-%api_ver.gir
@@ -149,6 +140,9 @@ subst 's/\(opencv <= 3\.\)3.0/\14.0/' configure.ac
 %endif
 
 %changelog
+* Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1.13.91-alt1
+- 1.13.91
+
 * Tue Feb 06 2018 Yuri N. Sedunov <aris@altlinux.org> 1.12.4-alt3
 - enabled bs2b support for pulseefects crossfeed plugin
 

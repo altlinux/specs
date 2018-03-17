@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name lightsoff
-%define ver_major 3.26
+%define ver_major 3.28
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -49,9 +49,12 @@ and its non-diagonal neighbors.
 %_datadir/%_name/
 %_iconsdir/hicolor/scalable/apps/%{_name}*.svg
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/appdata/%_name.appdata.xml
+%_datadir/metainfo/%_name.appdata.xml
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

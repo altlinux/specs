@@ -1,11 +1,11 @@
 %set_verify_elf_method unresolved=relaxed
 %def_disable snapshot
 
-%define ver_major 0.27
+%define ver_major 0.28
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: digital photo organizer designed for the GNOME desktop environment
@@ -82,6 +82,9 @@ find ./ -name "*.stamp" -delete
 %doc AUTHORS COPYING NEWS README THANKS
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 0.28.0-alt1
+- 0.28.0
+
 * Mon Feb 05 2018 Yuri N. Sedunov <aris@altlinux.org> 0.27.4-alt1
 - 0.27.4
 

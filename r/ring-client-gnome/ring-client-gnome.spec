@@ -1,6 +1,6 @@
 Name: ring-client-gnome
 Version: 1.0.0.git.3f4fe18
-Release: alt2
+Release: alt3
 
 Summary: Ring client written in GTK+3
 
@@ -56,6 +56,9 @@ wrappers necessary for interacting with libRingClient.
 %_datadir/appdata/gnome-ring.appdata.xml
 
 %changelog
+* Fri Mar 16 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.0.git.3f4fe18-alt3
+- rebuilt against libedataserver-1.2.so.23
+
 * Thu Jun 29 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.0.git.3f4fe18-alt2
 - rebuild with libringclient
 

@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name gnome-desktop
-%define ver_major 3.26
+%define ver_major 3.28
 %define api_ver 3.0
 %define gnome_distributor "%vendor"
 %define gnome_date "%(date "+%%B %%e %%Y"), Moscow"
@@ -13,7 +13,7 @@
 %def_enable udev
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
@@ -38,10 +38,11 @@ BuildPreReq: intltool >= 0.40.6 yelp-tools gtk-doc
 BuildPreReq: libgdk-pixbuf-devel >= 2.36.5
 BuildPreReq: libgtk+3-devel >= 3.3.6
 BuildPreReq: libgio-devel >= 2.53.0
-BuildPreReq: gsettings-desktop-schemas-devel >= 3.5.91
+BuildPreReq: gsettings-desktop-schemas-devel >= 3.27.90
 BuildRequires: iso-codes-devel
 BuildRequires: xkeyboard-config-devel
 BuildRequires: libudev-devel
+# seccomp isn't currently supported on all the Linux architectures
 BuildRequires: libseccomp-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel}
 
@@ -126,6 +127,7 @@ the functionality of the Gnome 3 desktop library.
 [ ! -d m4 ] && mkdir m4
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure \
     %{subst_enable static} \
@@ -177,6 +179,9 @@ the functionality of the Gnome 3 desktop library.
 
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Tue Oct 31 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 

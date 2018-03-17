@@ -2,12 +2,12 @@
 
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.Photos
-%define ver_major 3.26
+%define ver_major 3.27
 %define _libexecdir %_prefix/libexec
 %define gegl_api_ver 0.3
 
 Name: gnome-photos
-Version: %ver_major.3
+Version: %ver_major.92
 Release: alt1
 
 Summary: Photos - access, organize and share your photos on GNOME
@@ -22,12 +22,14 @@ Source: %name-%version.tar
 %endif
 
 %define glib_ver 2.44
-%define gtk_ver 3.20.0
+%define gtk_ver 3.22.16
 %define tracker_ver 1.99.1
 %define gdata_ver 0.15.2
-%define gegl_ver 0.3.14
+%define gegl_ver 0.3.28
 %define grilo_ver 0.3
 %define png_ver 1.6
+%define gfbgraph_ver 0.2.1
+%define dazzle_ver 3.26
 
 Requires: grilo-plugins >= %grilo_ver
 
@@ -42,10 +44,11 @@ BuildPreReq: libgegl%gegl_api_ver-devel >= %gegl_ver
 BuildPreReq: libgrilo-devel >= %grilo_ver
 BuildPreReq: libpng-devel >= %png_ver
 BuildRequires: libgexiv2-devel libexempi-devel liblcms2-devel librsvg-devel
-BuildRequires: libjpeg-devel libgfbgraph-devel
+BuildRequires: libjpeg-devel libgfbgraph-devel >= %gfbgraph_ver
 BuildRequires: libgnome-desktop3-devel libgnome-online-accounts-devel zlib-devel
 BuildRequires: libgeocode-glib-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+BuildRequires: libdazzle-devel > %dazzle_ver
 
 %description
 Photos, like Documents, Music and Videos, is one of the core GNOME
@@ -76,13 +79,16 @@ rm -rf %buildroot/%_datadir/doc/%name
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/%xdg_name.*
 %_iconsdir/hicolor/scalable/apps/%xdg_name-symbolic.svg
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/org.gnome.photos.gschema.xml
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Tue Mar 06 2018 Yuri N. Sedunov <aris@altlinux.org> 3.27.92-alt1
+- 3.27.92
+
 * Wed Dec 20 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt1
 - 3.26.3
 

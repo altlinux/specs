@@ -1,4 +1,4 @@
-%define ver_major 3.18
+%define ver_major 3.28
 
 Name: yelp-tools
 Version: %ver_major.0
@@ -12,7 +12,9 @@ Url: http://projects.gnome.org/yelp/
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildArch: noarch
-Requires: yelp-xsl >= 3.16.1 itstool xmllint
+Requires: yelp-xsl >= 3.28.0 itstool xmllint
+# Optional jing dep
+#%%filter_from_requires /jing/d
 
 BuildRequires: yelp-xsl itstool xml-utils xsltproc
 
@@ -41,6 +43,9 @@ package just wraps things up in a developer-friendly way.
 %doc AUTHORS README
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 

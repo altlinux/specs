@@ -1,11 +1,11 @@
-%define ver_major 3.26
+%define ver_major 3.28
 %define xdg_name org.gnome.DiskUtility
 %define _libexecdir %_prefix/libexec
 %def_enable gsd_plugin
 %def_enable libsystemd
 
 Name: gnome-disk-utility
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Disk management application
@@ -18,13 +18,15 @@ Requires: gnome-icon-theme-symbolic
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define udisks_ver 2.1.1
+%define udisks_ver 2.7.6
 %define glib_ver 2.31.0
 %define gtk_ver 3.12.0
 %define secret_ver 0.7
 %define pwquality_ver 1.0.0
 %define dvdread_ver 4.2.0
 %define lzma_ver 5.0.5
+
+Requires: udisks2 >= %udisks_ver
 
 BuildRequires: meson xsltproc libappstream-glib-devel
 BuildPreReq: libudisks2-devel >= %udisks_ver
@@ -77,6 +79,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Mon Oct 30 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 

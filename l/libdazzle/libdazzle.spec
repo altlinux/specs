@@ -1,13 +1,13 @@
 %def_disable snapshot
 
-%define ver_major 3.26
+%define ver_major 3.28
 %define api_ver 1.0
 %def_with introspection
 %def_with vapi
 %def_disable gtk_doc
 
 Name: libdazzle
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library to delight your users with fancy features
@@ -21,7 +21,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-BuildRequires: meson libgtk+3-devel
+%define glib_ver 2.55.0
+
+BuildRequires: meson libgio-devel >= %glib_ver libgtk+3-devel
 %{?_with_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 %{?_with_vapi:BuildRequires: vala-tools}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
@@ -108,6 +110,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Thu Feb 01 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt1
 - 3.26.3
 

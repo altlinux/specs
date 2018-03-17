@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name swell-foop
-%define ver_major 3.26
+%define ver_major 3.28
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -20,9 +20,10 @@ Provides:  %_name = %version-%release
 %define glib_ver 2.36.0
 %define gtk_ver 3.12.0
 
-BuildRequires: gnome-common intltool yelp-tools
-BuildRequires: gsettings-desktop-schemas-devel libappstream-glib-devel
+BuildRequires(pre): meson vala-tools
+BuildRequires: yelp-tools libappstream-glib-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libclutter-gtk3-devel
+BuildRequires: gsettings-desktop-schemas-devel
 
 %description
 The objective of same-gnome is to remove as many balls from the playing
@@ -32,12 +33,11 @@ area in as few moves as possible.
 %setup -n %_name-%version
 
 %build
-%autoreconf
-%configure --disable-schemas-compile
-%make_build
+%meson -Denable-schemas-compile=false
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %_name
 
@@ -48,9 +48,12 @@ area in as few moves as possible.
 %_iconsdir/hicolor/*x*/apps/%_name.png
 %_iconsdir/hicolor/symbolic/apps/%_name-symbolic.svg
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/appdata/%_name.appdata.xml
+%_datadir/metainfo/%_name.appdata.xml
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

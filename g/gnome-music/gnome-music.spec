@@ -1,8 +1,8 @@
-%define ver_major 3.26
+%define ver_major 3.28
 %define xdg_name org.gnome.Music
 
 Name: gnome-music
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Music playing application for GNOME3
@@ -18,7 +18,7 @@ AutoReqProv: nopython
 
 %add_typelib_req_skiplist typelib(Gd)
 
-%define tracker_ver 1.99.2
+%define tracker_ver 2.0
 
 Requires: tracker >= %tracker_ver
 
@@ -27,18 +27,20 @@ Requires: tracker >= %tracker_ver
 %define python_ver 3.3
 %define mediaart_ver 1.9
 %define pygobject_ver 3.21.1
+%define pycairo_ver 1.14.0
 
 # gir-python.req doesn't recognize multiline expressions (see gnomemusic/albumartcache.py)
 Requires: typelib(MediaArt) = 2.0 typelib(GstTag)
 
 Requires: gst-plugins-base1.0 grilo-tools >= %grilo_ver tracker >= %tracker_ver
 
-BuildRequires: autoconf-archive intltool yelp-tools libgtk+3-devel >= %gtk_ver
+BuildRequires(pre): meson
+BuildRequires: yelp-tools libappstream-glib-devel libgtk+3-devel >= %gtk_ver
 BuildRequires: libgrilo-devel >= %grilo_ver libmediaart2.0-devel >= %mediaart_ver
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: rpm-build-python3 python3-devel >= %python_ver
 BuildRequires: pkgconfig(tracker-sparql-2.0)
-BuildRequires: python3-module-pygobject3-devel >= %pygobject_ver
+BuildRequires: python3-module-pygobject3-devel >= %pygobject_ver python3-module-pycairo-devel >= %pycairo_ver
 
 %description
 Music playing application for GNOME3.
@@ -47,31 +49,31 @@ Music playing application for GNOME3.
 %setup
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
-%find_lang --with-gnome %name
+%find_lang --with-gnome --output=%name.lang %name %xdg_name
 
 %files -f %name.lang
 %_bindir/%name
-%_datadir/%name/
+%_datadir/%xdg_name/
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/org.gnome.Music.gschema.xml
-%_iconsdir/hicolor/*/apps/%name.png
-%_iconsdir/hicolor/symbolic/apps/%{name}*.svg
-%_libdir/%name/
+%_iconsdir/hicolor/*/apps/*.png
+%_iconsdir/hicolor/symbolic/*/*.svg
+%_libdir/%xdg_name/
 %python3_sitelibdir_noarch/gnomemusic/
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 #%_man1dir/%name.1.*
-%doc AUTHORS README
-
-%exclude %_libdir/%name/libgd.la
+%doc README* NEWS*
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Tue Feb 06 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 

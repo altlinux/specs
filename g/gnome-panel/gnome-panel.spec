@@ -1,16 +1,17 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 3.26
 %define api_ver 3.0
 %define applet_api_ver 5.0
 %def_disable static
 %def_disable gtk_doc
+%{?_enable_snapshot:%def_enable gtk_doc}
 %def_disable introspection
 %def_enable eds
 
 Name: gnome-panel
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: The core programs for the GNOME GUI desktop environment
 License: GPLv2+ and LGPLv2+ and GFDL+
@@ -37,6 +38,7 @@ Source: %name-%version.tar
 %define gweather_ver 3.17.1
 %define rsvg_ver 2.36.2
 %define gtk_doc_ver 1.24.1
+%define systemd_ver 230
 
 Conflicts: gnome-power-manager < 2.15.3
 Requires: lib%name = %version-%release
@@ -50,7 +52,7 @@ Requires: tzdata
 BuildPreReq: rpm-build-gnome >= 0.4
 
 # From configure.ac
-BuildRequires: yelp-tools gtk-doc
+BuildRequires: autoconf-archive yelp-tools gtk-doc
 %{?_enable_gtk_doc:BuildPreReq: gtk-doc >= %gtk_doc_ver}
 BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -66,6 +68,7 @@ BuildPreReq: librsvg-devel >= %rsvg_ver
 BuildRequires: libX11-devel libXt-devel libXau-devel libXrandr-devel libXi-devel libxml2-devel
 BuildRequires: libdconf-devel >= %dconf_ver libpolkit-devel libSM-devel
 BuildRequires: gdm-libs-devel
+BuildRequires: systemd-devel >= %systemd_ver
 %{?_enable_eds:BuildPreReq: evolution-data-server-devel >= %eds_ver} libicu-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel libgtk+3-gir-devel}
 
@@ -163,6 +166,7 @@ GObject introspection devel data for the GNOME Panel shared library.
 %gnome_appletsdir/status-notifier.so
 %gnome_appletsdir/wncklet.so
 %gnome_appletsdir/separator.so
+%gnome_appletsdir/menu.so
 %dir %_datadir/%name
 %_datadir/%name/*
 %_desktopdir/%name.desktop
@@ -182,8 +186,10 @@ GObject introspection devel data for the GNOME Panel shared library.
 %_libdir/*.so
 %_pkgconfigdir/*
 
+%if_enabled gtk_doc
 %files -n lib%name-devel-doc
 %_gtk_docdir/*
+%endif
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -199,6 +205,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Tue Mar 06 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt3
+- updated to 3.26.0-131-g9edb4e1
+
 * Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt2
 - rebuilt against libical.so.3
 

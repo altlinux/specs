@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 3.26
+%define ver_major 3.28
 %define api_ver 3.10
 %define ua_ver 3.24
 %define xdg_name org.gnome.Epiphany
@@ -9,7 +9,7 @@
 %def_disable libhttpseverywhere
 
 Name: epiphany
-Version: %ver_major.6
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
@@ -27,7 +27,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Provides: webclient
 Obsoletes: %name-extensions
 
-%define webkit_ver 2.18.0
+%define webkit_ver 2.19.90
 %define gtk_ver 3.22.13
 %define libxml2_ver 2.6.12
 %define xslt_ver 1.1.7
@@ -55,7 +55,7 @@ BuildRequires: gcc-c++ gsettings-desktop-schemas-devel
 # Zeroconf support
 BuildPreReq: libavahi-devel libavahi-gobject-devel
 # since 3.23.x
-%{?_enable_libhttpseverywhere:BuildRequires: libhttpseverywhere-devel >= 0.4}
+%{?_enable_libhttpseverywhere:BuildRequires: libhttpseverywhere-devel >= 0.8}
 BuildRequires: libicu-devel libjson-glib-devel
 
 %description
@@ -87,7 +87,7 @@ This package contains common noarch files needed for Epiphany.
 %install
 %meson_install
 
-%find_lang --with-gnome --output=%name.lang %name %name-2.0
+%find_lang --with-gnome --output=%name.lang %name
 
 %files
 %_bindir/%name
@@ -98,7 +98,7 @@ This package contains common noarch files needed for Epiphany.
 %_libdir/%name/*.so
 %dir %_libdir/%name/web-extensions
 %_libdir/%name/web-extensions/libephywebextension.so
-%doc AUTHORS NEWS README TODO
+%doc NEWS README TODO
 
 %files data -f %name.lang
 %_desktopdir/%xdg_name.desktop
@@ -110,9 +110,12 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_iconsdir/hicolor/*x*/apps/%xdg_name.png
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sat Mar 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0.1-alt1
+- 3.28.0.1
+
 * Tue Feb 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.6-alt1
 - 3.26.6
 

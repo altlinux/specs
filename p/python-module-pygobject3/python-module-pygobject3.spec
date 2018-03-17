@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define _name pygobject
-%define ver_major 3.26
+%define ver_major 3.28
 %define api_ver 3.0
-%define gtk_api_ver 2.0
+%define gtk_api_ver 3.0
 %def_disable devel_doc
 
 Name: python-module-%{_name}3
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Python bindings for GObject
 Group: Development/Python
@@ -24,12 +24,12 @@ Source: %_name-%version.tar
 %setup_python_module pygobject3
 
 %add_findprov_lib_path %python_sitelibdir/gi
-%add_findprov_lib_path %python_sitelibdir/gtk-%gtk_api_ver
+%add_findprov_lib_path %python_sitelibdir/gtk-2.0
 
 %add_findprov_lib_path %python3_sitelibdir/gi
-%add_findprov_lib_path %python3_sitelibdir/gtk-%gtk_api_ver
+%add_findprov_lib_path %python3_sitelibdir/gtk-2.0
 
-Requires: typelib(GdkX11) = 3.0
+Requires: typelib(GdkX11) = %gtk_api_ver
 %add_typelib_req_skiplist typelib(Foo)
 %filter_from_requires /Gst.*/d
 
@@ -46,7 +46,7 @@ BuildRequires: gobject-introspection-devel >= %gi_ver
 # python3
 BuildRequires: rpm-build-python3 python3-devel python3-module-pycairo-devel
 # for tests
-BuildRequires: dbus-tools-gui libgtk+3-gir-devel xvfb-run
+BuildRequires: python3-module-pytest python-module-pytest dbus-tools-gui libgtk+3-gir-devel xvfb-run
 BuildRequires: glibc-i18ndata
 
 %description
@@ -93,7 +93,7 @@ Development files for %name.
 %package -n python3-module-%{_name}3
 Summary: Python3 bindings for GObject
 Group: Development/Python3
-Requires: typelib(GdkX11) = 3.0
+Requires: typelib(GdkX11) = %gtk_api_ver
 
 %description -n python3-module-%{_name}3
 GObject is a object system used by GTK+, GStreamer and other libraries.
@@ -184,7 +184,7 @@ popd
 %files common-devel
 %_includedir/%_name-%api_ver/
 %_pkgconfigdir/%_name-%api_ver.pc
-%doc README AUTHORS NEWS examples
+%doc README* NEWS examples
 
 %files devel
 
@@ -206,6 +206,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Tue Mar 06 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt2
 - rebuilt with pycairo-1.16.3
 

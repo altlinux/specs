@@ -1,4 +1,4 @@
-%define ver_major 2.26
+%define ver_major 2.28
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
@@ -8,8 +8,8 @@
 %def_disable check
 
 Name: at-spi2-core
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
 Group: System/Libraries
@@ -131,6 +131,9 @@ This package contains documentation for developing applications that use
 %_datadir/gtk-doc/html/libatspi
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 2.28.0-alt1
+- 2.28.0
+
 * Sun Dec 31 2017 Yuri N. Sedunov <aris@altlinux.org> 2.26.2-alt2
 - fixed dbus-daemon path
 

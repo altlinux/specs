@@ -1,5 +1,5 @@
 %define _name gtksourceview
-%define ver_major 3.99
+%define ver_major 4.0
 %define api_ver 4
 
 %def_disable static
@@ -10,7 +10,7 @@
 %def_enable gspell
 
 Name: lib%{_name}4
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -23,7 +23,7 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 # From configure.ac
 %define gtk_ver 3.22.0
 %define libxml2_ver 2.6.0
-%define gspell_ver 1.2.0
+%define gspell_ver 1.8.0
 
 BuildPreReq: rpm-build-gnome
 
@@ -149,6 +149,9 @@ xvfb-run %make check
 
 
 %changelog
+* Sat Mar 10 2018 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
+- 4.0.0
+
 * Sat Dec 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.99.7-alt1
 - 3.99.7
 

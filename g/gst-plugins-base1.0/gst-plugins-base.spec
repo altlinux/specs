@@ -1,5 +1,5 @@
 %define _name gst-plugins
-%define ver_major 1.12
+%define ver_major 1.13
 %define api_ver 1.0
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
@@ -8,14 +8,13 @@
 %def_disable gtk_doc
 
 Name: %_name-base%api_ver
-Version: %ver_major.4
+Version: %ver_major.91
 Release: alt1
 
 Summary: An essential set of GStreamer plugins
 Group: System/Libraries
 License: LGPL
-URL: http://gstreamer.freedesktop.org/
-
+Url: http://gstreamer.freedesktop.org/
 
 Requires: lib%_name%api_ver = %version-%release
 Requires: gstreamer%api_ver >= %ver_major
@@ -25,15 +24,17 @@ Provides: gstreamer%api_ver(audio-hardware-sink) = %version
 Provides: gstreamer%api_ver(audio-hardware-source) = %version
 
 Source: http://gstreamer.freedesktop.org/src/%_name-base/%_name-base-%version.tar.xz
-Patch: gst-plugins-base-0.11.94-alt-intltool.patch
 
 %define opus_ver 0.9.4
 
-BuildRequires: gcc-c++ orc >= 0.4.18 liborc-test-devel
-BuildRequires: gstreamer%api_ver-devel libgstreamer%api_ver-gir-devel gtk-doc intltool libSM-devel
-BuildRequires: libXext-devel libXv-devel libalsa-devel libgtk+3-devel libvisual0.4-devel iso-codes-devel
+BuildRequires: gcc-c++ orc >= 0.4.18 liborc-test-devel gtk-doc
+BuildRequires: gstreamer%api_ver-devel >= %ver_major libgstreamer%api_ver-gir-devel
+BuildRequires: libgudev-devel libGL-devel libGLES-devel libdrm-devel libgbm-devel
+BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
+BuildRequires: libXext-devel libXv-devel libSM-devel libalsa-devel libgtk+3-devel libvisual0.4-devel iso-codes-devel
 BuildRequires: libcdparanoia-devel liboil-devel libtheora-devel libvorbis-devel libopus-devel >= %opus_ver
 BuildRequires: python-module-PyXML python-modules-encodings gobject-introspection-devel
+
 
 %description
 GStreamer Base Plug-ins is a well-groomed and well-maintained
@@ -96,7 +97,6 @@ GObject introspection devel data for the GStreamer library
 
 %prep
 %setup -n %_name-base-%version
-%patch -p1
 
 %build
 %autoreconf
@@ -135,9 +135,8 @@ GObject introspection devel data for the GStreamer library
 %_typelibdir/GstAllocators-1.0.typelib
 %_typelibdir/GstApp-%api_ver.typelib
 %_typelibdir/GstAudio-%api_ver.typelib
-%_typelibdir/GstFft-%api_ver.typelib
 %_typelibdir/GstPbutils-%api_ver.typelib
-#%_typelibdir/GstRiff-%api_ver.typelib
+%_typelibdir/GstGL-%api_ver.typelib
 %_typelibdir/GstRtp-%api_ver.typelib
 %_typelibdir/GstRtsp-%api_ver.typelib
 %_typelibdir/GstSdp-%api_ver.typelib
@@ -150,6 +149,7 @@ GObject introspection devel data for the GStreamer library
 
 %files -n %_name%api_ver-devel
 %_includedir/*
+%_libdir/gstreamer-%api_ver/include/gst/gl/gstglconfig.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
@@ -160,9 +160,8 @@ GObject introspection devel data for the GStreamer library
 %_girdir/GstAllocators-1.0.gir
 %_girdir/GstApp-%api_ver.gir
 %_girdir/GstAudio-%api_ver.gir
-%_girdir/GstFft-%api_ver.gir
+%_girdir/GstGL-%api_ver.gir
 %_girdir/GstPbutils-%api_ver.gir
-#%_girdir/GstRiff-%api_ver.gir
 %_girdir/GstRtp-%api_ver.gir
 %_girdir/GstRtsp-%api_ver.gir
 %_girdir/GstSdp-%api_ver.gir
@@ -171,6 +170,9 @@ GObject introspection devel data for the GStreamer library
 
 
 %changelog
+* Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1.13.91-alt1
+- 1.13.91
+
 * Thu Dec 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.4-alt1
 - 1.12.4
 

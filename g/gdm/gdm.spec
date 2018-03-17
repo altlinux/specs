@@ -1,4 +1,4 @@
-%define ver_major 3.26
+%define ver_major 3.28
 %define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
@@ -24,7 +24,7 @@
 %def_enable user_display_server
 
 Name: gdm
-Version: %ver_major.2.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -73,7 +73,6 @@ Requires: coreutils xinitrc iso-codes lsb-release shadow-utils
 Requires: caribou
 Requires: gnome-session >= 3.7.1
 Requires: gnome-session-wayland
-Requires: gnome-settings-daemon >= 3.15.90
 
 BuildPreReq: gcc-c++ desktop-file-utils gnome-common rpm-build-gnome
 BuildPreReq: intltool >= 0.40.0 yelp-tools itstool
@@ -174,6 +173,9 @@ This package contains user documentation for Gdm.
 %patch7 -p1 -b .Init
 %patch11 -p1 -b .lfs
 
+# fix hardcoded udevrulesdir
+subst 's|\(udevrulesdir = \).*|\1%_udevrulesdir|' data/Makefile.am
+
 # just copy our PAM config files to %default_pam_config directory
 cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%default_pam_config/
 
@@ -255,6 +257,7 @@ xvfb-run %make check
 %config %_sysconfdir/pam.d/gdm-launch-environment
 %config %_sysconfdir/pam.d/gdm-smartcard
 %config %_sysconfdir/pam.d/gdm-fingerprint
+%_udevrulesdir/61-%name.rules
 %config %_sysconfdir/dbus-1/system.d/%name.conf
 %config %_datadir/glib-2.0/schemas/org.gnome.login-screen.gschema.xml
 %config(noreplace) %_sysconfdir/X11/%name
@@ -303,6 +306,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Tue Oct 31 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2.1-alt1
 - 3.26.2.1
 

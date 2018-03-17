@@ -1,11 +1,11 @@
 %def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.26
+%define ver_major 3.28
 %define _name ca.desrt.dconf-editor
 
 Name: dconf-editor
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: dconf confuguration editor
@@ -19,17 +19,20 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source: %name-%version.tar
 %endif
 
-%define gtk_ver 3.21.6
-%define dconf_ver 0.26
-%define vala_ver 0.33.1
+%define glib_ver 2.55.1
+%define gtk_ver 3.22.27
+%define dconf_ver 0.26.1
+%define vala_ver 0.36.11
 
 Requires: dconf >= %dconf_ver
 
+BuildRequires(pre): meson
+BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver libdconf-devel >= %dconf_ver
 BuildPreReq: vala-tools >= %vala_ver
-BuildRequires: libxml2-devel rpm-build-gnome gnome-common
-BuildRequires: intltool libappstream-glib-devel yelp-tools
-%{?_enable_snapshot:BuildRequires: libdconf-vala}
+BuildRequires: libxml2-devel rpm-build-gnome
+BuildRequires: libappstream-glib-devel yelp-tools
+BuildRequires: libdconf-vala
 
 %description
 dconf is a low-level configuration system. Its main purpose is to
@@ -41,15 +44,13 @@ This package provides graphical dconf configuration editor.
 
 %prep
 %setup
-[ ! -d m4 ] && mkdir m4
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome --output=%name.lang %name dconf
 
@@ -61,9 +62,16 @@ This package provides graphical dconf configuration editor.
 %_man1dir/%name.1.*
 %_datadir/metainfo/%_name.appdata.xml
 %_datadir/glib-2.0/schemas/%_name.gschema.xml
+# "nosort" bad option
+%exclude %_datadir/bash-completion/completions/%name
 %doc README
 
+
+
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Tue Oct 31 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 

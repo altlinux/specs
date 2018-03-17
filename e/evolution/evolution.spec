@@ -3,11 +3,10 @@
 # Some plugins/extensions link with others, resulting in multiple rpath entries
 %set_verify_elf_method rpath=relaxed
 
-#%%define xdg_name org.gnome.Evolution
-%define xdg_name evolution
+%define xdg_name org.gnome.Evolution
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.26
-%define ver_base 3.26
+%define ver_major 3.28
+%define ver_base 3.28
 %define gst_api_ver 1.0
 
 %def_enable gtk_doc
@@ -22,7 +21,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -46,7 +45,7 @@ Provides: camel
 %define glib_ver 2.40.0
 %define gtk_ver 3.10
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.26.6
+%define eds_ver 3.28.0
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define libsoup_ver 2.42.0
@@ -172,10 +171,6 @@ the functionality of the installed Evolution.
 
 %prep
 %setup
-subst 's,(Unstable),,' data/%xdg_name.desktop*
-
-# remove pregenerated .desktop files
-rm -f data/*.desktop{,.in}
 
 %build
 # reenable RPATH* to link against private libraries
@@ -242,8 +237,8 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 %_datadir/glib-2.0/schemas/org.gnome.evolution.text-highlight.gschema.xml
 %_datadir/GConf/gsettings/evolution.convert
 %_iconsdir/hicolor/*/*/*
-%_datadir/appdata/%xdg_name.appdata.xml
-%_datadir/appdata/%xdg_name-pst.metainfo.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name-pst.metainfo.xml
 
 %files devel
 %_includedir/*
@@ -255,12 +250,12 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 %files bogofilter
 %evo_module_dir/module-bogofilter.so
 %_datadir/glib-2.0/schemas/org.gnome.evolution.bogofilter.gschema.xml
-%_datadir/appdata/%xdg_name-bogofilter.metainfo.xml
+%_datadir/metainfo/%xdg_name-bogofilter.metainfo.xml
 
 %files spamassassin
 %evo_module_dir/module-spamassassin.so
 %_datadir/glib-2.0/schemas/org.gnome.evolution.spamassassin.gschema.xml
-%_datadir/appdata/%xdg_name-spamassassin.metainfo.xml
+%_datadir/metainfo/%xdg_name-spamassassin.metainfo.xml
 
 %if_enabled installed_tests
 %files tests
@@ -270,6 +265,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Mon Mar 05 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.6-alt1
 - 3.26.6
 

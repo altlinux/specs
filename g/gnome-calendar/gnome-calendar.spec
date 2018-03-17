@@ -1,13 +1,13 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Calendar
-%define ver_major 3.26
+%define ver_major 3.28
 %define _libexecdir %_prefix/libexec
 
-%def_enable gtk_doc
+%def_disable gtk_doc
 
 Name: gnome-calendar
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Calendar application for GNOME
@@ -21,21 +21,24 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source: %name-%version.tar
 %endif
 
-BuildRequires(pre): rpm-build-licenses rpm-build-gnome
+BuildRequires(pre): rpm-build-licenses rpm-build-gnome meson
 
 %define glib_ver 2.44.0
 %define gtk_ver 3.22.0
 %define ical_ver 1.0.1
 %define eds_ver 3.18.0
 %define gsds_ver 3.21.2
+%define gweather_ver 3.27.2
 
-BuildPreReq: meson intltool yelp-tools libappstream-glib-devel
+BuildPreReq: yelp-tools libappstream-glib-devel
 BuildPreReq: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildPreReq: libical-devel >= %ical_ver libicu-devel
 BuildRequires: libgnome-online-accounts-devel vala-tools
 BuildRequires: gobject-introspection-devel
 BuildRequires: evolution-data-server-devel >= %eds_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
+BuildRequires: libdazzle-devel libgweather-devel >= %gweather_ver
+BuildRequires: libgeoclue2-devel libgeocode-glib-devel
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 
 %description
@@ -56,8 +59,7 @@ This package provides Calendar reference manual.
 
 %build
 %meson \
-    -Denable-schemas-compile=false \
-    %{?_enable_gtk_doc:-Denable-gtk-doc=true}
+      %{?_enable_gtk_doc:-Dgtk_doc=true}
 %meson_build
 
 %install
@@ -84,6 +86,9 @@ This package provides Calendar reference manual.
 %endif
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Wed Jan 17 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt1
 - 3.26.3
 

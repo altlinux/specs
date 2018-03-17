@@ -1,10 +1,9 @@
 %set_verify_elf_method rpath=relaxed
-%define ver_major 3.26
-#%%define xdg_name org.gnome.Evolution
-%define xdg_name evolution
+%define ver_major 3.28
+%define xdg_name org.gnome.Evolution
 
 Name: evolution-ews
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Group: Networking/Mail
@@ -14,11 +13,11 @@ Url: https://wiki.gnome.org/Apps/Evolution
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define ver_base 3.26
+%define ver_base 3.28
 %define evo_ver_base %ver_base
 
-%define evolution_ver 3.26.6
-%define eds_ver 3.26.6
+%define evolution_ver 3.28.0
+%define eds_ver 3.28.0
 %define glib_ver 2.40
 %define libmspack_ver 0.4
 %define soup_ver 2.42
@@ -78,9 +77,12 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_libdir/evolution/modules/*.so
 %_datadir/evolution/errors/*.error
 %_datadir/evolution-data-server/ews/windowsZones.xml
-%_datadir/appdata/%xdg_name-ews.metainfo.xml
+%_datadir/metainfo/%xdg_name-ews.metainfo.xml
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Mon Mar 05 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.6-alt1
 - 3.26.6
 

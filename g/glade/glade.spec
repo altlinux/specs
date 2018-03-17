@@ -1,32 +1,36 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.20
+%define ver_major 3.22
 %define api_ver 2.0
 %def_enable python
 %def_enable gladeui
+%def_enable webkit2gtk
 
 Name: glade
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A user interface designer for Gtk+ and GNOME
 Group: Development/GNOME and GTK+
 License: %gpl2plus, %lgpl2plus
-URL: http://glade.gnome.org/
+Url: http://glade.gnome.org/
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 Requires: libgladeui%api_ver = %version-%release
 
+%define gtk_ver 3.20
+
 BuildRequires: rpm-build-licenses rpm-build-gnome
 BuildRequires: gnome-common gtk-doc yelp-tools intltool libappstream-glib-devel
-BuildRequires: libgtk+3-devel >= 3.20.0 libxml2-devel
+BuildRequires: libgtk+3-devel >= %gtk_ver libxml2-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 # use python3
 #AutoReqProv: nopython
-#%define __python %nil
+#%%define __python %nil
 #BuildRequires: rpm-build-python3 python3-module-pygobject3-devel
 %{?_enable_python:BuildRequires: python-module-pygobject3-devel}
+%{?_enable_webkit2gtk:BuildRequires: libwebkit2gtk-devel}
 
 %description
 Glade is a Widget builder for Gtk/gnome. It allows to create a GTK+/GNOME
@@ -89,8 +93,10 @@ GObject introspection devel data for the GladeUI library.
 %configure \
 	--enable-gtk-doc \
 	%{subst_enable python} \
-	%{subst_enable gladeui}
-#	PYTHON=%__python3
+	%{subst_enable gladeui} \
+	%{subst_enable webkit2gtk}
+#	PYTHON=%__python3 \
+#	PYTHON_LIBS="$(python3-config --ldflags)"
 %make_build
 
 %install
@@ -114,11 +120,13 @@ GObject introspection devel data for the GladeUI library.
 %_libdir/%name/modules/libgladegtk.so
 %{?_enable_python:%_libdir/%name/modules/libgladepython.so}
 %{?_enable_gladeui:%_libdir/%name/modules/libgladeglade.so}
+%{?_enable_webkit2gtk:%_libdir/%name/modules/libgladewebkit2gtk.so}
 %_libdir/*.so.*
 %dir %_datadir/%name
 %dir %_datadir/%name/catalogs
 %_datadir/%name/catalogs/*.xml
 %_datadir/%name/catalogs/glade-catalog.dtd
+%_iconsdir/hicolor/scalable/apps/glade-brand-symbolic.svg
 %_datadir/%name/pixmaps
 %_datadir/metainfo/%name.appdata.xml
 
@@ -139,6 +147,9 @@ GObject introspection devel data for the GladeUI library.
 %_girdir/Gladeui-%api_ver.gir
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Sun Mar 04 2018 Yuri N. Sedunov <aris@altlinux.org> 3.20.4-alt1
 - 3.20.4
 

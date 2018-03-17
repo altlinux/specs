@@ -1,8 +1,8 @@
 %define xdg_name org.gnome.clocks
-%define ver_major 3.26
+%define ver_major 3.28
 
 Name: gnome-clocks
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Clock application designed for GNOME 3
@@ -10,16 +10,17 @@ Group: Graphical desktop/GNOME
 License: GPLv2+
 Url: https://wiki.gnome.org/Apps/Clocks
 
-Source: http://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
+Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define gweather_ver 3.20.0
+%define gweather_ver 3.27.2
 %define geocode_ver 3.18.0
 %define geoclue_ver 2.4
 %define gtk_ver 3.20.0
 
 Requires: geoclue2
 
-BuildRequires: meson yelp-tools
+BuildRequires(pre): meson yelp-tools
+BuildRequires: yelp-tools libappstream-glib-devel
 BuildRequires: libgio-devel libgtk+3-devel >= %gtk_ver libnotify-devel
 BuildRequires: libgsound-devel libgnome-desktop3-devel
 BuildRequires: vala-tools gobject-introspection-devel libgtk+3-gir-devel libgweather-vala
@@ -49,10 +50,13 @@ Clock application designed for GNOME 3
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_datadir/icons/*/*/apps/%xdg_name.png
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc README NEWS
 
 %changelog
+* Sat Mar 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Sun Oct 15 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 

@@ -1,17 +1,17 @@
-%define ver_major 3.26
+%define ver_major 3.28
 %define api_ver 3.0
 %define xdg_name org.gnome.Devhelp
 
 Name: devhelp
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Developer's help program
 Group: Development/Other
 License: %gpl2plus
 Url: https://wiki.gnome.org/Apps/Devhelp
-#VCS: git://git.gnome.org/devhelp
 
+# VCS: git://git.gnome.org/devhelp
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define gtk_ver 3.22.0
@@ -20,12 +20,11 @@ Requires: lib%name = %version-%release
 
 BuildPreReq: rpm-build-gnome >= 0.6 gnome-common
 BuildPreReq: rpm-build-licenses
-BuildPreReq: gtk-doc libappstream-glib-devel
+BuildPreReq: gtk-doc yelp-tools libappstream-glib-devel
 
 # From configure.ac
-BuildRequires: pkgconfig(gthread-2.0) >= 2.10.0
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.19.3
-BuildRequires: pkgconfig(webkit2gtk-4.0) >= 2.6.0
+BuildRequires: pkgconfig(webkit2gtk-4.0) >= 2.19.2
 BuildRequires: pkgconfig(gio-2.0) >= 2.40
 BuildRequires: zlib-devel
 # since 3.23.x
@@ -107,7 +106,7 @@ This plugin for GEdit enables using DevHelp from inside the editor.
 # Create some directories in %name hierarchy
 mkdir -p %buildroot%_devhelpdir/{specs,books}
 
-%find_lang %name
+%find_lang --with-gnome %name
 
 %files -f %name.lang
 %_bindir/*
@@ -117,7 +116,6 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %_iconsdir/hicolor/*/apps/devhelp.*
 %_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
 %_datadir/dbus-1/services/%xdg_name.service
-%_datadir/GConf/gsettings/*.convert
 %_datadir/glib-2.0/schemas/org.gnome.devhelp.gschema.xml
 %_man1dir/%name.1.*
 %_datadir/metainfo/%xdg_name.appdata.xml
@@ -144,6 +142,9 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Sat Mar 10 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Sat Dec 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 

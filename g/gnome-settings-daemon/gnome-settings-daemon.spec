@@ -1,11 +1,12 @@
+%set_verify_elf_method unresolved=relaxed
+
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.26
+%define ver_major 3.28
 %define api_ver 3.0
 %define xdg_name org.gnome.SettingsDaemon
 
-%def_disable static
 %def_enable smartcard
 %def_enable systemd
 %def_enable wayland
@@ -14,7 +15,7 @@
 %def_disable tests
 
 Name: gnome-settings-daemon
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A program that manages general GNOME settings
@@ -28,10 +29,9 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source: %name-%version.tar
 %endif
 
-# From configure.ac
 %define glib_ver 2.53.0
 %define gtk_ver 3.16
-%define gnome_desktop_ver 3.11.1
+%define gnome_desktop_ver 3.27.90
 %define notify_ver 0.7.3
 %define pulse_ver 0.9.15
 %define gsds_ver 3.23.3
@@ -55,7 +55,7 @@ Requires: geoclue2 >= %geoclue_ver
 Requires: xkeyboard-config
 Requires: iio-sensor-proxy
 
-# From configure.ac
+BuildRequires(pre): meson
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgio-devel >= %glib_ver
@@ -69,7 +69,7 @@ BuildRequires: xkeyboard-config-devel
 %{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel}
 BuildRequires: libxkbfile-devel
-BuildRequires: rpm-build-gnome intltool docbook-style-xsl xsltproc
+BuildRequires: rpm-build-gnome docbook-style-xsl xsltproc
 BuildRequires: gcc-c++ libcups-devel libgudev-devel libX11-devel libXi-devel libXext-devel libXfixes-devel
 BuildRequires: libXrandr-devel xorg-inputproto-devel libICE-devel libSM-devel
 BuildRequires: libupower-devel >= %upower_ver
@@ -108,25 +108,23 @@ The %name-tests package provides programms for testing GSD plugins.
 %setup
 
 %build
-%autoreconf
-%configure \
-	%{subst_enable static} \
-	%{?_disable_smartcard:--disable-smartcard-support} \
-	--disable-schemas-compile \
-	%{subst_enable wayland}
-%make_build
+%meson \
+	%{?_disable_smartcard:-Dsmartcard=false} \
+	%{?_enable_wayland:-Dwayland=true} \
+	-Dudev_dir='/lib/udev'
+%meson_build
 
 %install
-%makeinstall_std udevrulesdir=%_udevrulesdir
+%meson_install
 %find_lang --with-gnome %name
 
 %check
-%{?_enable_check:xvfb-run %make check}
+%meson_test
 
 %files -f %name.lang
 %dir %_libdir/%name-%api_ver
 %_libdir/%name-%api_ver/libgsd.so
-%_libexecdir/gsd-a11y-keyboard
+#%_libexecdir/gsd-a11y-keyboard
 %_libexecdir/gsd-a11y-settings
 %_libexecdir/gsd-backlight-helper
 %_libexecdir/gsd-clipboard
@@ -160,8 +158,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %_udevrulesdir/61-gnome-settings-daemon-rfkill.rules
 %doc AUTHORS NEWS
 
-%exclude %_libdir/%name-%api_ver/*.la
-
 %files devel
 %_includedir/%name-%api_ver/
 %_pkgconfigdir/%name.pc
@@ -189,6 +185,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Thu Nov 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 

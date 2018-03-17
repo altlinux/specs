@@ -3,16 +3,16 @@
 
 %def_disable snapshot
 
-%define ver_major 3.26
+%define ver_major 3.28
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
 %def_enable privatelib
 %def_enable remote_desktop
 %def_disable egl_device
-%define api_ver 1
+%define api_ver 2
 
 Name: mutter
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -26,6 +26,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+
+Patch: mutter-3.26.0-startup-notification.patch
 
 %set_typelibdir %_libdir/%name
 %set_girdir %_libdir/%name
@@ -42,13 +44,13 @@ Source: %name-%version.tar
 %define pango_ver 1.2.0
 %define cairo_ver 1.10.0
 %define Xi_ver 1.6.0
-%define wayland_ver 1.7.0
+%define wayland_ver 1.13.0
 %define wayland_protocols_ver 1.7
 %define upower_ver 0.99.0
 %define libinput_ver 0.99.0
 %define gsds_ver 3.21.4
 %define gudev_ver 232
-%define pipewire_ver 0.1.4
+%define pipewire_ver 0.1.8
 
 Requires: lib%name = %EVR
 Requires: zenity
@@ -75,6 +77,8 @@ BuildRequires: libwacom-devel
 %{?_enable_remote_desktop:BuildRequires: pipewire-libs-devel >= %pipewire_ver}
 # for mutter native backend
 BuildRequires: libdrm-devel libsystemd-devel libgudev-devel >= %gudev_ver
+# with GLESv3 headers
+BuildRequires: libGLES-devel
 
 %description
 mutter is a minimal X window manager aimed at nontechnical users and is
@@ -128,6 +132,7 @@ environment.
 
 %prep
 %setup
+#%%patch -p1
 [ ! -d m4 ] && mkdir m4
 
 %build
@@ -187,6 +192,12 @@ DATADIRNAME=share %configure \
 %_datadir/gnome-control-center/keybindings/*.xml
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 1:3.28.0-alt1
+- 3.28.0
+
+* Thu Feb 22 2018 Yuri N. Sedunov <aris@altlinux.org> 1:3.27.91-alt1
+- 3.27.91
+
 * Thu Nov 02 2017 Yuri N. Sedunov <aris@altlinux.org> 1:3.26.2-alt1
 - 3.26.2
 - enabled support for remote desktop

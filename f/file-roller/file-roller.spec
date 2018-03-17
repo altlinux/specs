@@ -1,5 +1,7 @@
+%define _libexecdir %_prefix/libexec
+
 %define xdg_name org.gnome.FileRoller
-%define ver_major 3.26
+%define ver_major 3.28
 %def_disable packagekit
 %def_disable magic
 %def_enable libarchive
@@ -7,7 +9,7 @@
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: An archive manager for GNOME
@@ -20,7 +22,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-2.28.2-alt-7z.patch
 Patch1: %name-3.3.90-alt-zip_command.patch
 # find ./ -type f -print0| xargs -r0 subst "s/x-lzop-compressed-tar/x-tzo/" --
-Patch2: %name-3.22.1-alt-tar.lzo_mime_type.patch
+Patch2: %name-3.27.1-alt-tar.lzo_mime_type.patch
 
 # From configure.in
 %define glib_ver 2.36.0
@@ -32,9 +34,8 @@ Requires: tar gzip bzip2 ncompress lzop binutils arj lha unrar zip unzip p7zip l
 # Requires: cdrecord # for .iso support
 Requires: dconf gnome-icon-theme
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses
-# From configure.in
-BuildPreReq: yelp-tools itstool
+BuildRequires(pre): meson
+BuildRequires: rpm-build-gnome rpm-build-licenses yelp-tools
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -93,20 +94,20 @@ File Roller является графической оболочкой к раз
 %patch1
 %patch2 -p1 -b .tzo
 
-rm -f data/%name.desktop{,.in}
+rm -f data/%xdg_name.desktop{,.in}
 
 %build
-%configure \
-    --disable-schemas-compile \
-    --disable-static \
-    %{subst_enable magic} \
-    %{subst_enable packagekit} \
-    %{subst_enable libarchive} \
-    %{?_disable_nautilus_actions:--disable-nautilus-actions}
-%make_build
+%meson \
+    %{?_disable_magic:-Dmagic=false} \
+    %{?_enable_packagekit:-Dpackagekit=true} \
+    %{?_enable_libarchive:-Dlibarchive=true} \
+    %{?_disable_nautilus_actions:-Dnautilus-actions=false} \
+    -Dnotification=true \
+    -Dcpio=/bin/cpio
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %name
 
@@ -123,18 +124,19 @@ rm -f data/%name.desktop{,.in}
 %_iconsdir/hicolor/*/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name-symbolic.svg
 %config %_datadir/glib-2.0/schemas/*
-%_datadir/GConf/gsettings/%name.convert
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %if_enabled nautilus_actions
 %_libdir/nautilus/extensions-%nau_api_ver/*.so
-%exclude %_libdir/nautilus/extensions-%nau_api_ver/*.la
 %endif
 
 %doc AUTHORS NEWS README
 
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Tue Oct 31 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 

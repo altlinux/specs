@@ -17,11 +17,13 @@
 # broadway (HTML5) gdk backend
 %def_enable broadway
 %def_enable cloudprint
+%def_enable cloudproviders
 %def_enable installed_tests
+%def_disable debug
 
 Name: libgtk+3
-Version: %ver_major.28
-Release: alt2
+Version: %ver_major.29
+Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -36,9 +38,7 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 Source5: gtk-icon-cache.filetrigger
 
 Patch: gtk+-2.16.5-alt-stop-spam.patch
-# https://bugzilla.gnome.org/show_bug.cgi?id=740554
-# https://bug740554.bugzilla-attachments.gnome.org/attachment.cgi?id=308706
-Patch1: gtk+-3.18.3-bgo740554.patch
+Patch1: gtk+-3.22.29-alt-build.patch
 
 %define glib_ver 2.50.2
 %define gi_ver 1.41.0
@@ -54,6 +54,7 @@ Patch1: gtk+-3.18.3-bgo740554.patch
 %define wayland_ver 1.10.0
 %define wayland_protocols_ver 1.9
 %define epoxy_ver 1.0
+%define cloudproviders_ver 0.2.5
 
 Provides: libgtk3-engine-adwaita = %version-%release
 Obsoletes: libgtk3-engine-adwaita < 3.13.0
@@ -87,6 +88,7 @@ BuildRequires: libXrender-devel libXt-devel
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel wayland-protocols >= %wayland_protocols_ver}
 %{?_enable_cloudprint:BuildRequires: librest-devel libjson-glib-devel}
+%{?_enable_cloudproviders:BuildRequires: libcloudproviders-devel >= %cloudproviders_ver}
 # for examples
 BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel
 # for check
@@ -242,7 +244,7 @@ the functionality of the installed GTK+3 packages.
 %prep
 %setup -n %_name-%version
 %patch -p1
-#%patch1 -p1
+%patch1 -b .cloudprov
 
 %{?_enable_snapshot:touch README INSTALL}
 
@@ -263,7 +265,8 @@ the functionality of the installed GTK+3 packages.
     %{?_enable_broadway:--enable-broadway-backend} \
     %{?_enable_installed_tests:--enable-installed-tests} \
     %{subst_enable cloudprint} \
-
+    %{subst_enable cloudproviders} \
+    %{?_enable_debug:--enable-debug=yes}
 %make_build
 
 %install
@@ -330,6 +333,7 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %fulllibpath/immodules/im-ti-et.so
 %fulllibpath/immodules/im-viqr.so
 %fulllibpath/immodules/im-multipress.so
+%fulllibpath/immodules/im-wayland.so
 %fulllibpath/immodules/im-xim.so
 %{?_enable_broadway:%fulllibpath/immodules/im-broadway.so}
 %dir %fulllibpath/printbackends
@@ -448,6 +452,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.29-alt1
+- 3.22.29
+
 * Thu Feb 15 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.28-alt2
 - new gtk-update-icon-cache subpackage moved from gtk+2
 

@@ -1,10 +1,10 @@
 %define _name gst-python
-%define ver_major 1.12
+%define ver_major 1.13
 %define gst_api_ver 1.0
 %define _gst_libdir %_libdir/gstreamer-%gst_api_ver
 
 Name: python-module-gst%gst_api_ver
-Version: %ver_major.4
+Version: %ver_major.91
 Release: alt1
 
 Summary: GStreamer overrides for PyGobject
@@ -66,7 +66,7 @@ popd
 %python_sitelibdir/gi/overrides/*
 %exclude %python_sitelibdir/gi/overrides/*.la
 # gstreamer plugin
-%exclude %_gst_libdir/libgstpythonplugin.*
+%exclude %_gst_libdir/libgstpython.*
 %doc AUTHORS NEWS
 
 %files -n python3-module-gst%gst_api_ver
@@ -75,6 +75,9 @@ popd
 
 
 %changelog
+* Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1.13.91-alt1
+- 1.13.91
+
 * Thu Dec 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.4-alt1
 - 1.12.4
 

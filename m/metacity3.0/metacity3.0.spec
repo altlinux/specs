@@ -1,8 +1,9 @@
 %def_disable snapshot
 %define _name metacity
-%define ver_major 3.26
+%define ver_major 3.28
 %define api_ver 3.0
 %def_disable static
+%def_enable vulkan
 
 Name: %_name%api_ver
 Version: %ver_major.0
@@ -20,7 +21,7 @@ Source: %_name-%version.tar
 %endif
 
 # From configure.ac
-%define gtk_ver 3.20.0
+%define gtk_ver 3.22.0
 %define glib_ver 2.44.0
 %define startup_notification_ver 0.7
 %define xcomposite_ver 0.3
@@ -36,7 +37,7 @@ Obsoletes: %name-theme-simple < %version-%release
 Requires: lib%name = %version-%release
 Requires: zenity
 
-# From configure.in
+# From configure.ac
 BuildPreReq: rpm-build-gnome rpm-build-licenses
 BuildPreReq: intltool >= 0.34.90
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -49,6 +50,7 @@ BuildRequires: libXrender-devel
 BuildRequires: libXcursor-devel libXt-devel libXinerama-devel libXext-devel
 BuildRequires: yelp-tools itstool zenity libcanberra-gtk3-devel
 BuildRequires: libXrandr-devel libX11-devel libSM-devel libICE-devel perl-XML-Parser libgtop-devel
+%{?_enable_vulkan:BuildRequires: libvulkan-devel}
 
 %description
 A window manager for GNOME, with a focus on simplicity and usability
@@ -133,6 +135,9 @@ This package contains the lib%name static library.
 %endif
 
 %changelog
+* Sun Mar 11 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

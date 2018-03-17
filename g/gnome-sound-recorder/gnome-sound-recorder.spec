@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.24
+%define ver_major 3.27
 %define xdg_name org.gnome.SoundRecorder
 %define gst_api_ver 1.0
 
 Name: gnome-sound-recorder
-Version: %ver_major.0
+Version: %ver_major.90
 Release: alt1
 
 Summary: Sound Recorder for GNOME
@@ -28,11 +28,11 @@ Requires: libgjs >= 1.41
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
 Requires: gstreamer%gst_api_ver-utils
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
-Requires: typelib(GLib)
-Requires: typelib(GObject)
 Requires: typelib(Gdk)
 Requires: typelib(GdkPixbuf)
 Requires: typelib(Gio)
+Requires: typelib(GLib)
+Requires: typelib(GObject)
 Requires: typelib(Gst)
 Requires: typelib(GstAudio)
 Requires: typelib(GstPbutils)
@@ -71,11 +71,14 @@ The GNOME application for record and play sound files.
 %_datadir/applications/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %_iconsdir/hicolor/*/apps/*
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc NEWS README
 
 
 %changelog
+* Mon Feb 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.27.90-alt1
+- 3.27.90
+
 * Tue Mar 21 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 

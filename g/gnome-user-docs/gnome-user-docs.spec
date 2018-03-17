@@ -1,7 +1,7 @@
-%define ver_major 3.26
+%define ver_major 3.28
 
 Name: gnome-user-docs
-Version: %ver_major.2.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: General GNOME User Documentation
@@ -40,9 +40,12 @@ directly associated with any particular GNOME application or package.
 %find_lang --with-gnome --output=%name.lang gnome-help system-admin-guide
 
 %files -f %name.lang
-%doc AUTHORS README NEWS
+%doc README NEWS
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Tue Dec 05 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.2.1-alt1
 - 3.26.2.1
 

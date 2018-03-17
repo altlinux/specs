@@ -1,16 +1,17 @@
 %def_disable snapshot
 
-%define ver_major 3.20
+%define ver_major 3.28
 %def_disable static
 %def_disable gtk_doc
 %def_disable debug
 %def_disable valgrind
 %def_enable pam
 %def_enable selinux
-%def_disable ssh
+%def_enable ssh
+%def_disable check
 
 Name: gnome-keyring
-Version: %ver_major.1
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: %name is a password keeper for GNOME
@@ -25,16 +26,17 @@ Source: %name-%version.tar
 %endif
 Patch: gnome-keyring-3.14.0-alt-lfs.patch
 
-%define glib_ver 2.38.0
+%define glib_ver 2.44.0
 %define dbus_ver 1.0
 %define gcrypt_ver 1.2.2
 %define tasn1_ver 0.3.4
-%define p11kit_ver 0.18.1
-%define gcr_ver 3.5.3
+%define p11kit_ver 0.23.9
+%define gcr_ver 3.28.0
 
 Requires(post): libcap-utils
-Requires: libp11-kit >= %p11kit_ver
-%{?_disable_ssh:Requires: openssh-clients}
+Requires: p11-kit >= %p11kit_ver
+# since 3.27.x gnome-keyring wraps the ssh-agent as a subprocess
+%{?_enable_ssh:Requires: gcr >= %gcr_ver openssh-clients}
 
 # From configure.ac
 BuildPreReq: gnome-common libgio-devel >= %glib_ver
@@ -45,11 +47,11 @@ BuildPreReq: libtasn1-devel >= %tasn1_ver  libp11-kit-devel >= %p11kit_ver
 BuildPreReq: gcr-libs-devel >= %gcr_ver
 BuildRequires: libtasn1-utils
 BuildRequires: libcap-ng-devel
-%{?_enable_pam:BuildPreReq: libpam-devel}
-%{?_enable_valgrind:BuildPreReq: valgrind}
+%{?_enable_pam:BuildRequires: libpam-devel}
+%{?_enable_valgrind:BuildRequires: valgrind}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
-# for check
-BuildRequires: /proc xvfb-run dbus-tools-gui
+%{?_enable_ssh:BuildRequires: %_bindir/ssh-agent %_bindir/ssh-add}
+%{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools-gui}
 
 %description
 %name is a program that keep password and other secrets for
@@ -93,10 +95,10 @@ and start the keyring daemon.
 %find_lang --with-gnome %name
 
 %check
-#%make check
+%make check
 
 %post
-setcap cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
+setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 
 %files -f %name.lang
 %_bindir/gnome-keyring
@@ -107,7 +109,7 @@ setcap cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 %_sysconfdir/xdg/autostart/*.desktop
 %_datadir/glib-2.0/schemas/org.gnome.crypto.cache.gschema.xml
 %_datadir/GConf/gsettings/org.gnome.crypto.cache.convert
-%_datadir/p11-kit/modules/gnome-keyring.module
+#%_datadir/p11-kit/modules/gnome-keyring.module
 %_libdir/gnome-keyring/
 %_libdir/pkcs11
 %_man1dir/*
@@ -125,6 +127,13 @@ setcap cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0.1-alt1
+- 3.28.0.1
+- enabled ssh-agent again (since 3.27.x gnome-keyring wraps the ssh-agent as a subprocess)
+
+* Tue Jul 04 2017 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1.1
+- reverted ssh support for me
+
 * Tue Jul 04 2017 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 

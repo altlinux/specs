@@ -8,7 +8,7 @@
 
 Name: gnome-screensaver
 Version: %ver_major.1
-Release: alt8
+Release: alt9
 
 Summary: GNOME Screensaver
 License: GPLv2+
@@ -91,6 +91,9 @@ subst 's/\(libsystemd\)-login/\1/' configure.ac
 %doc AUTHORS NEWS README
 
 %changelog
+* Sun Feb 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt9
+- rebuilt against libgnome-desktop-3.so.17
+
 * Sun Jun 05 2016 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt8
 - updated to 3.6.0-21-g8662e42 from master branch
   (fixed BGO ##683060, 752202)

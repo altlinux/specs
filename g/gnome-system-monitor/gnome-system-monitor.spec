@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.26
+%define ver_major 3.28
 %def_enable systemd
-%def_enable wnck
+%def_disable wnck
 
 %define _libexecdir %_prefix/libexec
 
@@ -17,7 +17,7 @@ Url: https://wiki.gnome.org/Apps/SystemMonitor
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-%define glib_ver 2.38
+%define glib_ver 2.55.0
 %define gtk_ver 3.12
 %define glibmm_ver 2.28.0
 %define libgtkmm3_ver 3.0.0
@@ -30,7 +30,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 BuildPreReq: rpm-build-gnome
 BuildRequires: gcc-c++ gnome-common libappstream-glib-devel
-BuildRequires: intltool yelp-tools
+BuildRequires: yelp-tools
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libglibmm-devel >= %glibmm_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -39,7 +39,7 @@ BuildPreReq: libgtop-devel >= %libgtop_ver
 BuildPreReq: gnome-icon-theme >= %gnome_icon_theme_ver
 BuildPreReq: libxml2-devel >= %libxml_ver
 BuildPreReq: librsvg-devel >= %rsvg_ver
-
+BuildRequires: libpolkit-devel
 %{?_enable_wnck:BuildPreReq: libwnck3-devel >= %libwnck_ver}
 %{?_enable_systemd:BuildRequires: systemd-devel libsystemd-devel}
 
@@ -72,10 +72,13 @@ Gnome-system-monitor is a simple process and system monitor.
 %_datadir/polkit-1/actions/org.gnome.%name.policy
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.enums.xml
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

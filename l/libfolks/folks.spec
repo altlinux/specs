@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name folks
 %define ver_major 0.11
@@ -13,7 +13,7 @@
 
 Name: lib%_name
 Version: %ver_major.4
-Release: alt2
+Release: alt3
 
 Summary: GObject contact aggregation library
 Group: System/Libraries
@@ -180,6 +180,9 @@ the functionality of the Folks library.
 
 
 %changelog
+* Tue Feb 06 2018 Yuri N. Sedunov <aris@altlinux.org> 0.11.4-alt3
+- updated to 0.11.4-24-g84b78da
+
 * Wed Aug 16 2017 Yuri N. Sedunov <aris@altlinux.org> 0.11.4-alt2
 - rebuilt for GNOME-2.6 without tracker support
 

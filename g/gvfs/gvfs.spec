@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.34
+%define ver_major 1.36
 
 %def_disable gdu
 %def_disable gtk_doc
@@ -27,9 +27,11 @@
 %def_enable google
 %def_enable admin
 %def_enable libusb
+%def_enable man
+%def_disable check
 
 Name: gvfs
-Version: %ver_major.2.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -42,14 +44,11 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
-Patch1: gvfs-1.25.92-archive-integration.patch
-Patch3: gvfs-1.14.1-libgvfsdaemon+headers_install.patch
-Patch4: gvfs-1.16.2-alt-lfs.patch
-Patch5: gvfs-1.15.4-alt-tmpfiles_dir.patch
+Patch: gvfs-1.15.4-alt-tmpfiles_dir.patch
 # https://bugzilla.altlinux.org/show_bug.cgi?id=29047
 # https://bugzilla.altlinux.org/show_bug.cgi?id=29171
 # https://mail.gnome.org/archives/gvfs-list/2013-May/msg00014.html
-Patch6: gvfs-1.19.90-alt-1-logind-state.patch
+Patch1: gvfs-1.19.90-alt-1-logind-state.patch
 
 %{?_enable_gdu:Obsoletes: gnome-mount <= 0.8}
 %{?_enable_gdu:Obsoletes: gnome-mount-nautilus-properties <= 0.8}
@@ -78,9 +77,8 @@ Requires: dconf
 %{?_enable_gdu:Requires: gnome-disk-utility >= %gdu_ver}
 %{?_enable_udisks2:Requires: udisks2}
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses
+BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
 
-# From configure.ac
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %glib_ver
 BuildRequires: libdbus-devel gtk-doc
@@ -291,47 +289,41 @@ The %name-tests package provides programms for testing GVFS.
 
 %prep
 %setup
-#%patch1 -p1 -b .archive-integration
-#%%patch3 -p1 -b .headers-install
-%patch4 -p1 -b .lfs
-%patch5 -b .tmpfiles
-%patch6 -p2 -b .logind-state
-
-[ ! -d m4 ] && mkdir m4
+%patch -b .tmpfiles
+%patch1 -p2 -b .logind-state
 
 %build
-%autoreconf
-export ac_cv_path_SSH_PROGRAM=%_bindir/ssh
-%configure \
-        %{subst_enable http} \
-        %{subst_enable avahi} \
-        %{subst_enable cdda} \
-        %{subst_enable fuse} \
-        %{subst_enable gphoto2} \
-        %{subst_enable keyring} \
-        %{subst_enable samba} \
-        %{subst_enable archive} \
-        %{subst_enable afc} \
-        %{subst_enable afp} \
-        %{subst_enable gdu} \
-        %{subst_enable udisks2} \
-        %{subst_enable libmtp} \
-        %{subst_enable bluray} \
-        %{subst_enable nfs} \
-        %{subst_enable google} \
-        %{subst_enable libusb} \
-        %{?_enable_systemd_login:--enable-libsystemd-login} \
-        %{?_enable_gtk_doc:--enable-gtk-doc} \
-        %{?_enable_installed_tests:--enable-installed-tests}
-%make_build
+%meson \
+        %{?_enable_http:-Dhttp=true} \
+        %{?_enable_avahi:-Davahi=true} \
+        %{?_enable_cdda:-Dcdda=true} \
+        %{?_enable_fuse:-Dfuse=true} \
+        %{?_enable_gphoto2:-Dgphoto2=true} \
+        %{?_enable_keyring:-Dkeyring=true} \
+        %{?_enable_samba:-Dsmb=true} \
+        %{?_enable_archive:-Darchive=true} \
+        %{?_enable_afc:-Dafc=true} \
+        %{?_enable_afp:-Dafp=true} \
+        %{?_enable_gdu:-Dgdu=true} \
+        %{?_enable_udisks2:-Dudisks2=true} \
+        %{?_enable_libmtp:-Dmtp=true} \
+        %{?_enable_bluray:-Dbluray=true} \
+        %{?_enable_nfs:-Dnfs=true} \
+        %{?_enable_google:-Dgoogle=true} \
+        %{?_enable_libusb:-Dlibusb=true} \
+        %{?_enable_systemd_login:-Dlogind=true} \
+        %{?_enable_gtk_doc:-Dgtk_doc=true} \
+        %{?_enable_man:-Dman=true} \
+        %{?_enable_installed_tests:-Dinstalled_tests=true}
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %check
 #export PATH=/usr/sbin:$PATH
-#%%make check
+#%%meson_test
 
 %post
 killall -USR1 gvfsd >&/dev/null || :
@@ -340,11 +332,11 @@ killall -USR1 gvfsd >&/dev/null || :
 # for privileged ports
 setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
+
 %files -f %name.lang
 %doc AUTHORS NEWS README monitor/udisks2/what-is-shown.txt
 %dir %_libdir/%name
 %_libdir/%name/libgvfs*.so
-%exclude %_libdir/%name/*.la
 %dir %_libexecdir
 # daemon
 %_libexecdir/gvfsd
@@ -532,10 +524,11 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 %_datadir/installed-tests/%name/
 %endif
 
-%exclude %_libdir/gio/modules/*.la
-
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 1.36.0-alt1
+- 1.36.0
+
 * Mon Mar 05 2018 Yuri N. Sedunov <aris@altlinux.org> 1.34.2.1-alt1
 - 1.34.2.1
 

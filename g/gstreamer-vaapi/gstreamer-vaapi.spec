@@ -1,4 +1,4 @@
-%define ver_major 1.12
+%define ver_major 1.13
 %define api_ver 1.6
 %define gst_api_ver 1.0
 
@@ -6,7 +6,7 @@
 %def_enable gtk_doc
 
 Name: gstreamer-vaapi
-Version: %ver_major.4
+Version: %ver_major.91
 Release: alt1
 
 Summary: GStreamer plugins to use VA-API video acceleration
@@ -17,8 +17,6 @@ Url: http://gstreamer.freedesktop.org/modules/gstreamer-vaapi.html
 # VCS: git://anongit.freedesktop.org/gstreamer/gstreamer-vaapi
 # Source: %name/%name-%version.tar
 Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
-# VA/GLX specific APIs dropped in 5.10
-Patch: %name-0.6.1-alt-pkgconfig.patch
 
 %define glib_ver 2.28
 %define gst_ver 1.6
@@ -53,7 +51,6 @@ GStreamer applications.
 
 %prep
 %setup
-#%%patch
 
 %build
 %autoreconf
@@ -79,6 +76,9 @@ GStreamer applications.
 %endif
 
 %changelog
+* Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1.13.91-alt1
+- 1.13.91
+
 * Thu Dec 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1.12.4-alt1
 - 1.12.4
 

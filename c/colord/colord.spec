@@ -15,13 +15,13 @@
 %define _localstatedir %_var
 
 Name: colord
-Version: 1.4.1
-Release: alt2
+Version: 1.4.2
+Release: alt1
 
 Summary: Color daemon
 License: GPLv2+
 Group: Graphics
-URL: http://www.freedesktop.org/software/%name/
+Url: http://colord.hughsie.com
 
 Source: http://www.freedesktop.org/software/%name/releases/colord-%version.tar.xz
 
@@ -130,11 +130,7 @@ This package provides Colord reference manual
 %setup
 
 %build
-%meson --localstatedir=%_var \
-	-Denable-static=false \
-	-Denable-rpath=false \
-	%{?_enable_daemon:-Denable-daemon=true} \
-	%{?_enable_session_helper:-Denable-session-helper=true} \
+%meson \
 	%{?_disable_reverse:-Denable-reverse=false} \
 	%{?_enable_vala:-Denable-vala=true} \
 	-Dwith-daemon-user=%colord_user \
@@ -143,7 +139,7 @@ This package provides Colord reference manual
 	%{?_enable_installed_tests:-Denable-installed-tests=true} \
 	%{?_enable_libcolordcompat:-Denable-libcolordcompat=true} \
 	%{?_disable_systemd:-Denable-systemd=false} \
-	%{?_disable_docs:-Denable-docs=false} \
+	%{?_disable_docs:-Denable-docs=false}
 %meson_build
 
 %install
@@ -190,7 +186,7 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_libdir/colord-sensors/libcolord_sensor_colorhug.so
 %_libdir/colord-sensors/libcolord_sensor_argyll.so
 %_libdir/colord-sensors/libcolord_sensor_dtp94.so
-%_libdir/colord-sensors/libcolord_sensor_spark.so
+#%_libdir/colord-sensors/libcolord_sensor_spark.so
 #%_libdir/colord-sensors/libdtp94-private.so
 #%_libdir/colord-sensors/libhuey-private.so
 #%_libdir/colord-sensors/libmunki-private.so
@@ -309,6 +305,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %endif
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
+- 1.4.2
+
 * Thu Sep 28 2017 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt2
 - rebuilt with localstatedir=%%_var
 

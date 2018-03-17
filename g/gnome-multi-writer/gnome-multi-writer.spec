@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.26
+%define ver_major 3.28
 %define _name org.gnome.MultiWriter
 
 Name: gnome-multi-writer
@@ -24,7 +24,8 @@ Requires: gnome-icon-theme-extras
 %define gtk_ver 3.12.0
 %define gusb_ver 0.2.7
 
-BuildRequires: meson docbook-utils yelp-tools
+BuildRequires(pre): meson
+BuildRequires: libappstream-glib-devel docbook-utils yelp-tools
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgusb-devel >= %gusb_ver
 BuildRequires: libudisks2-devel libgudev-devel libcanberra-gtk3-devel
@@ -56,11 +57,14 @@ USB devices simultaneously.
 %_datadir/polkit-1/actions/%_name.policy
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/%name.1.*
-%_datadir/appdata/%_name.appdata.xml
+%_datadir/metainfo/%_name.appdata.xml
 %doc README.md AUTHORS RELEASE
 
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Mon Sep 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 

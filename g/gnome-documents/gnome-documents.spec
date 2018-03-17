@@ -2,12 +2,12 @@
 
 %define xdg_name org.gnome.Documents
 %define xdg_name1 org.gnome.Books
-%define ver_major 3.26
+%define ver_major 3.27
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-documents
-Version: %ver_major.2
+Version: %ver_major.92
 Release: alt1
 
 Summary: A document manager application for GNOME
@@ -65,7 +65,8 @@ Requires: typelib(Zpj)
 %define gi_ver 1.31.6
 %define gepub_ver 0.5
 
-BuildRequires: autoconf-archive yelp-tools desktop-file-utils docbook-style-xsl
+BuildRequires(pre): meson
+BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils docbook-style-xsl
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgnome-desktop3-devel libgdata-devel >= %gdata_ver
 BuildRequires: liboauth-devel libgnome-online-accounts-devel >= %goa_ver
@@ -126,12 +127,11 @@ GObject introspection devel data for the %name library.
 %setup
 
 %build
-%autoreconf
-%configure --disable-static
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %name
 
@@ -140,7 +140,6 @@ GObject introspection devel data for the %name library.
 %_bindir/gnome-books
 %dir %pkglibdir
 %pkglibdir/*.so
-%exclude %pkglibdir/*.la
 %_man1dir/%name.1.*
 %_man1dir/gnome-books.1.*
 # contains arch dependent scripts
@@ -164,10 +163,13 @@ GObject introspection devel data for the %name library.
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_iconsdir/hicolor/*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
-%_datadir/appdata/%xdg_name.appdata.xml
-%_datadir/appdata/%xdg_name1.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name1.appdata.xml
 
 %changelog
+* Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.27.92-alt1
+- 3.27.92
+
 * Thu Feb 01 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 

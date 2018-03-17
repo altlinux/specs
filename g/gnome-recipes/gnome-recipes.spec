@@ -3,7 +3,7 @@
 
 Name: gnome-recipes
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: GNOME likes to cook
 License: GPLv3+
@@ -76,6 +76,9 @@ This package contains common noarch files needed for Recipes.
 
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt2
+- rebuilt against libgspell-1.so.2
+
 * Sun Nov 12 2017 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
 - 2.0.2
 

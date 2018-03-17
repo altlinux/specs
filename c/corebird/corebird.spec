@@ -1,6 +1,6 @@
 Name: corebird
 Version: 1.4.2
-Release: alt1
+Release: alt1.1
 
 Summary: Native Gtk+ Twitter client for the Linux desktop
 
@@ -39,5 +39,8 @@ Native Gtk+ Twitter client for the Linux desktop
 %_datadir/glib-2.0/schemas/org.baedert.corebird.gschema.xml
 
 %changelog
+* Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1.1
+- rebuilt against libgspell-1.so.2
+
 * Mon Mar 20 2017 Sergey Iryupin <lamp@altlinux.org> 1.4.2-alt1
 - Initial build
