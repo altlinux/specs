@@ -1,17 +1,18 @@
 Name: libglfw3
-Version: 3.0.3
-Release: alt2
+Version: 3.2.1
+Release: alt1
 Summary: A cross-platform multimedia library
 License: zlib
 Group: System/Libraries
 Url: http://www.glfw.org/index.html
 Source: glfw-%version.tar.bz2
-Patch: glfw-alt-includeGL.patch
 Obsoletes: libglfw = 3.0.2
 
 # Automatically added by buildreq on Wed Oct 16 2013
 # optimized out: cmake-modules libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
-BuildRequires: cmake doxygen glibc-devel-static libGLU-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXres-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel
+BuildRequires: cmake doxygen glibc-devel-static libGLU-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXres-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel libxkbcommon-devel
+BuildRequires:  libvulkan-devel
+BuildRequires:  libwayland-client-devel libwayland-cursor-devel libwayland-server-devel wayland-devel
 
 %description
 GLFW is a free, Open Source, multi-platform library for OpenGL
@@ -25,8 +26,9 @@ Summary: Support for developing C application
 Requires: %name =  %version-%release
 Group: Development/C
 Obsoletes: libglfw-deevel = 3.0.2
+Provides: libglfw-devel = %version
+Provides: glfw-devel = %version
 #Requires: xorg-x11-proto-devel
-#Requires: pkgconfig
 
 %description devel
 The glfw-devel package contains header files for developing glfw
@@ -34,11 +36,11 @@ applications.
 
 %prep
 %setup -n glfw-%version
-%patch -p1
+find . -type f | xargs sed -i 's/\r//'
 
 %build
 %cmake -DBUILD_SHARED_LIBS:BOOL=ON
-%make_build -C BUILD
+%make_build -C BUILD all
 
 %install
 %makeinstall -C BUILD DESTDIR=%buildroot PREFIX=%prefix LIBDIR=%_lib
@@ -48,12 +50,15 @@ applications.
 %_libdir/libglfw.so.*
 
 %files devel
-%_includedir/GL/*
+%_includedir/GLFW
 %_libdir/*.so
 %_libdir/pkgconfig/*.pc
-%_libdir/cmake/glfw/*.cmake
+%_libdir/cmake/glfw3/*.cmake
 
 %changelog
+* Sat Mar 17 2018 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1
+- NMU: updated to 3.2.1
+
 * Wed Oct 16 2013 Fr. Br. George <george@altlinux.ru> 3.0.3-alt2
 - Move include files into /usr/include/GL
 - Rename package for 2.x version compatibility
