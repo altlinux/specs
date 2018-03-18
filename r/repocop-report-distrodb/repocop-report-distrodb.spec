@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.413
+Version: 0.414
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -39,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.414-alt1
+- xorg modules support in plugins
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.413-alt1
 - added java.raw
 
