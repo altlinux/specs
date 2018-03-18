@@ -1,6 +1,6 @@
 Name: audacity
 Version: 2.1.1
-Release: alt2
+Release: alt3
 
 Summary: Cross-platform audio editor
 License: GPL
@@ -16,6 +16,7 @@ Source4: %name-16x16.xpm
 Source6: %name-%version-help-en.tar
 Patch0: %name-installmo.patch
 Patch1: %name-%version-alt-build.patch
+Patch2: %name-%version-alt-e2k-fft.patch
 
 Packager: Alex Karpov <karpov@altlinux.ru>
 
@@ -58,6 +59,7 @@ For the most up to date manual content, use the on-line manual.
 %setup -n %name-src-%version
 #patch0
 %patch1 -p2
+%patch2 -p1
 grep -Irl "libmp3lame.so" . | xargs sed -i "s/libmp3lame.so/libmp3lame.so.0.0/"
 
 %build
@@ -79,9 +81,6 @@ rm -f src/.gchdepend
 	--with-libvamp=system \
 	--with-libvorbis=system \
 	--with-soundtouch=system \
-%ifnarch %ix86 x86_64
-	--disable-sse \
-%endif
 	#
 	#--enable-unicode=yes \
 	#--with-portmixer=no
@@ -125,6 +124,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/%name/help
 
 %changelog
+* Sun Mar 18 2018 Andrew Savchenkon <bircoph@altlinux.org> 2.1.1-alt3
+- Fix SSE issue on E2K properly, revert SSE removal for non-x86.
+
 * Sat Mar 17 2018 Michael Shigorin <mike@altlinux.org> 2.1.1-alt2
 - disable SSE for non-x86
 - enable parallel build
