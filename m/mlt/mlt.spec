@@ -1,5 +1,5 @@
-%define set_disable() %{expand:%%force_disable %{1}} %{expand:%%undefine _enable_%{1}}
-%define set_enable() %{expand:%%force_enable %{1}} %{expand:%%undefine _disable_%{1}}
+%define set_disable() %{expand:%%force_disable %1} %{expand:%%undefine _enable_%1}
+%define set_enable() %{expand:%%force_enable %1} %{expand:%%undefine _disable_%1}
 %define mIF_ver_gt() %if "%(rpmvercmp '%1' '%2')" > "0"
 %define mIF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
 %define mIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
@@ -17,17 +17,17 @@
 %define libmltxx libmlt++%mltxx_sover
 
 Name: mlt
-Version: 6.4.1
-Release: alt5%ubt
+Version: 6.6.0
+Release: alt1
 
 Summary: Multimedia framework designed for television broadcasting
 License: GPLv3
 Group: Video
-URL: http://sourceforge.net/projects/%name
+Url: https://www.mltframework.org/
 
 Packager: Maxim Ivanov <redbaron@altlinux.org>
 
-Source: %name-%version.tar
+Source: %name-%version.tar.gz
 Source1: mlt++-config.h
 # SuSE
 Patch10: libmlt-0.8.2-vdpau.patch
@@ -42,8 +42,10 @@ Patch102: alt-no-version-script.patch
 Patch103: alt-freetype-include.patch
 Patch104: alt-glibc2.26.patch
 
-# Automatically added by buildreq on Wed Apr 27 2016 (-bi)
-# optimized out: elfutils fontconfig fontconfig-devel gcc-c++ glib2-devel libGL-devel libSDL-devel libX11-devel libatk-devel libavcodec-devel libavutil-devel libcairo-devel libcdio-paranoia libdc1394-22 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgst-plugins libgtk+2-devel libjson-c liboil-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libpango-devel libqt5-core libqt5-gui libqt5-opengl libqt5-svg libqt5-widgets libqt5-xml libraw1394-11 libstdc++-devel libvdpau-devel libwayland-client libwayland-server perl pkg-config python-base python-devel python-modules python3 python3-base qt5-base-devel rpm-build-gir rpm-build-python3 ruby ruby-stdlibs swig-data xorg-xproto-devel
+# Automatically added by buildreq on Sun Mar 18 2018 (-bi)
+# optimized out: elfutils gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libSDL-devel libX11-devel libavcodec-devel libavformat-devel libavutil-devel libcdio-paranoia libdc1394-22 libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-gui libqt5-svg libqt5-widgets libqt5-xml libraw1394-11 libstdc++-devel libvdpau-devel libx265-130 perl pkg-config python-base python-devel python-modules qt5-base-devel rpm-build-gir swig-data xorg-xproto-devel
+BuildRequires: frei0r-devel ladspa_sdk libSDL2-devel libSDL_image-devel libalsa-devel libavdevice-devel libavfilter-devel libexif-devel libfftw3-devel libjack-devel libopencv-devel libpulseaudio-devel libsamplerate-devel libsox-devel libswscale-devel libxml2-devel qt5-svg-devel swig
+
 #BuildRequires: frei0r-devel ladspa_sdk libSDL_image-devel libalsa-devel libavdevice-devel libavformat-devel libexif-devel libfftw3-devel libjack-devel libpulseaudio-devel libsamplerate-devel libsox-devel libswfdec-devel libswscale-devel libxml2-devel python-module-google python3-dev qt5-svg-devel rpm-build-ruby swig
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: qt5-svg-devel
@@ -95,7 +97,7 @@ Group: Development/C
 Development files for %Name framework.
 
 %package -n libmlt++-devel
-Summary: Development files for %Name.
+Summary: Development files for %Name
 Group: Development/C++
 %description -n libmlt++-devel
 Development files for %Name.
@@ -107,19 +109,19 @@ Group: Development/Python
 This module allows to work with %Name using python..
 
 %prep
-%setup -q
+%setup
 %patch10 -p0
-%patch11 -p1
+##patch11 -p1
 %if %is_ffmpeg
 %else
 %patch20 -p1
 %endif
-%patch21 -p1
-%patch22 -p1
+##patch21 -p1
+##patch22 -p1
 %patch101 -p1
 %patch102 -p1
-%patch103 -p1
-%patch104 -p1
+##patch103 -p1
+##patch104 -p1
 
 [ -f src/mlt++/config.h ] || \
     install -m 0644 %SOURCE1 src/mlt++/config.h
@@ -197,6 +199,9 @@ install -pm 0755 src/swig/python/_%name.so %buildroot%python_sitelibdir/
 %_pkgconfigdir/mlt++.pc
 
 %changelog
+* Sun Mar 18 2018 Fr. Br. George <george@altlinux.ru> 6.6.0-alt1
+- Autobuild version bump to 6.6.0
+
 * Tue Dec 26 2017 Sergey V Turchin <zerg@altlinux.org> 6.4.1-alt5%ubt
 - fix to build with glibc-2.26
 
