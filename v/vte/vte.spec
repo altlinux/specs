@@ -2,7 +2,7 @@
 
 Name: vte
 Version: %ver_major.2
-Release: alt3
+Release: alt3.1
 
 %def_enable pty_helper
 %def_disable static
@@ -13,6 +13,7 @@ Release: alt3
 Summary: Terminal emulator widget for use with GTK+
 License: LGPLv2
 Group: Terminals
+Url: http://www.gnome.org
 
 Obsoletes: vte-utils
 
@@ -211,6 +212,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Sun Mar 18 2018 Yuri N. Sedunov <aris@altlinux.org> 0.28.2-alt3.1
+- added Url tag
+
 * Sun Feb 19 2017 Yuri N. Sedunov <aris@altlinux.org> 0.28.2-alt3
 - applied patch proposed in
   https://bug729533.bugzilla-attachments.gnome.org/attachment.cgi?id=279320
