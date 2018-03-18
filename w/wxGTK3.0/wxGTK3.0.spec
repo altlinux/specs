@@ -2,7 +2,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.3
-Release: alt10
+Release: alt11
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -177,6 +177,7 @@ cp -a demos samples %buildroot%_datadir/wx-%wxbranch/examples
 
 wx_config_filename=$(basename %buildroot%_libdir/wx/config/*-unicode-[0-9]*)
 ln -sf ../..%_libdir/wx/config/$wx_config_filename %buildroot%_bindir/wx-config
+ln -sf ../..%_libdir/wx/config/$wx_config_filename %buildroot%_bindir/wx-config-%wxbranch
 
 cp -fR include/wx/private %buildroot%_includedir/wx-%wxbranch/wx/
 cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
@@ -217,6 +218,9 @@ cat wxmsw3.lang >> wxstd3.lang
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.3-alt11
+- added compat symlink /usr/bin/wx-config-3.0
+
 * Wed Aug 09 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.3-alt10
 - rebuilt without --enable-utf8 option (ALT#32512)
 
