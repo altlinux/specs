@@ -2,13 +2,13 @@
 
 Name: perl-Config-MVP-Reader-INI
 Version: 2.101463
-Release: alt1
+Release: alt2
 
 Summary: an MVP config reader for .ini files
 
 License: %perl_license
 Group: Development/Perl
-URL: http://search.cpan.org/dist/Config-MVP/
+URL: http://search.cpan.org/dist/Config-MVP-Reader-INI/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 BuildArch: noarch
@@ -42,6 +42,9 @@ MVP-style configuration.
 %perl_vendor_privlib/Config/MVP/Reader/INI*
 
 %changelog
+* Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 2.101463-alt2
+- NMU: fixed Url: (was set to Config-MVP, not Config-MVP-Reader-INI)
+
 * Sun Aug 31 2014 Nikolay A. Fetisov <naf@altlinux.ru> 2.101463-alt1
 - New version
 
