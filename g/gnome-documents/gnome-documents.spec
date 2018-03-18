@@ -2,12 +2,12 @@
 
 %define xdg_name org.gnome.Documents
 %define xdg_name1 org.gnome.Books
-%define ver_major 3.27
+%define ver_major 3.28
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-documents
-Version: %ver_major.92
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document manager application for GNOME
@@ -22,10 +22,20 @@ Source: %name-%version.tar
 %endif
 
 %define lok_ver 5.2-alt2
+%define glib_ver 2.40.0
+%define gtk_ver 3.20.0
+%define evince_ver 3.13.3
+%define tracker_ver 1.99
+%define goa_ver 3.2.0
+%define gdata_ver 0.17.2
+%define soup_ver 2.41.3
+%define gi_ver 1.31.6
+%define gepub_ver 0.6
 
 Requires: %name-data = %version-%release
 Requires: gnome-online-miners
 Requires: libreofficekit >= %lok_ver
+Requires: typelib(Gepub) = %gepub_ver
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(cairo)
@@ -55,15 +65,6 @@ Requires: typelib(Zpj)
 %set_typelibdir %pkglibdir
 %set_girdir %pkgdatadir
 
-%define glib_ver 2.40.0
-%define gtk_ver 3.20.0
-%define evince_ver 3.13.3
-%define tracker_ver 1.99
-%define goa_ver 3.2.0
-%define gdata_ver 0.17.2
-%define soup_ver 2.41.3
-%define gi_ver 1.31.6
-%define gepub_ver 0.5
 
 BuildRequires(pre): meson
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils docbook-style-xsl
@@ -167,6 +168,9 @@ GObject introspection devel data for the %name library.
 %_datadir/metainfo/%xdg_name1.appdata.xml
 
 %changelog
+* Fri Mar 16 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.27.92-alt1
 - 3.27.92
 

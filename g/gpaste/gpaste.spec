@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.26
+%define ver_major 3.28
 %define api_ver 1.0
 %define _name GPaste
 %define xdg_name org.gnome.GPaste
@@ -10,7 +10,7 @@
 
 Name: gpaste
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: GPaste is a clipboard management system
 Group: Text tools
@@ -18,9 +18,9 @@ License: BSD-like
 Url: https://github.com/Keruspe/GPaste
 
 %if_disabled snapshot
-Source: http://www.imagination-land.org/files/%name/%name-%version.tar.xz
+Source: http://www.imagination-land.org/files/%name/%_name-%version.tar.gz
 %else
-Source: %name-%version.tar
+Source: %_name-%version.tar
 %endif
 # from pkg-config 0.29.1
 Source1: pkg.m4
@@ -101,7 +101,7 @@ This package provides GPaste applet which starts the status icon
 in notification area.
 
 %prep
-%setup
+%setup -n %_name-%version
 # pkg-config-0.29, automake 1.15 required
 subst 's/0\.29/0.25/
        s/1\.15/1.14/' configure.ac
@@ -165,6 +165,9 @@ cp %SOURCE1 m4/
 
 
 %changelog
+* Fri Mar 16 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Sun Nov 26 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt2
 - fixed %%files section
 

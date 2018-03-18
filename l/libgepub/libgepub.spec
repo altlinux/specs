@@ -1,12 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 0.5
+%define ver_major 0.6
 %define api_ver %ver_major
 %def_enable introspection
 %def_disable gtk_doc
 
 Name: libgepub
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple library to read epub files using glib
@@ -67,8 +67,8 @@ This package contains development documentation for %name
 %setup
 
 %build
-%meson %{?_enable_introspection:-Denable-introspection=true}
-
+%meson %{?_disable_introspection:-Dintrospection=false}
+#       %{?_enable_gtk_doc:-Dgtk-doc=true}
 %meson_build
 
 %install
@@ -78,13 +78,13 @@ This package contains development documentation for %name
 %meson_test
 
 %files
-%_libdir/%name.so.*
-%doc AUTHORS README TODO
+%_libdir/%name-%api_ver.so.*
+%doc AUTHORS NEWS README TODO
 
 %files devel
-%_includedir/%name/
-%_libdir/%name.so
-%_pkgconfigdir/%name.pc
+%_includedir/%name-%api_ver/
+%_libdir/%name-%api_ver.so
+%_pkgconfigdir/%name-%api_ver.pc
 
 %if_enabled introspection
 %files gir
@@ -100,6 +100,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Thu Mar 15 2018 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Tue Jan 16 2018 Yuri N. Sedunov <aris@altlinux.org> 0.5.3-alt1
 - 0.5.3
 

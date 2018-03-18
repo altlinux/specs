@@ -6,7 +6,7 @@
 
 Name: %{_name}3
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 %def_disable static
 %def_enable introspection
@@ -17,6 +17,7 @@ Release: alt1
 Summary: Terminal emulator widget for use with GTK+
 License: LGPL
 Group: Terminals
+Url: http://www.gnome.org/
 
 Requires: lib%name = %version-%release
 
@@ -191,6 +192,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Sun Mar 18 2018 Yuri N. Sedunov <aris@altlinux.org> 0.52.0-alt1.1
+- added Url tag
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 0.52.0-alt1
 - 0.52.0
 
