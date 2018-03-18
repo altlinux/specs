@@ -19,8 +19,8 @@
 %def_enable wmsession
 
 Name: enlightenment
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 Epoch: 1
 
 Summary: The Enlightenment window manager
@@ -40,10 +40,12 @@ Source3: %name.wmsession
 Source8: %name.desktop
 %{?_enable_install_sysactions:Source11: %name-alt-sysactions.conf}
 
-Patch: e17-0.17.0-alt-g-s-d_path.patch
-Patch1: enlightenment-0.19.99-alt-e_sys_nosuid.patch
-Patch2: auto-ptrace-disable.patch
-Patch3: enlightenment-0.19.0-alt-pam-helper.patch
+# revert it for patch enlightenment-0.19.0-alt-pam-helper.patch
+Patch: enlightenment-0.22.2-up-auth.patch
+Patch1: e17-0.17.0-alt-g-s-d_path.patch
+Patch2: enlightenment-0.19.99-alt-e_sys_nosuid.patch
+Patch3: auto-ptrace-disable.patch
+Patch4: enlightenment-0.19.0-alt-pam-helper.patch
 
 Provides: e19 = %EVR
 # Obsoletes/Provides old eNN
@@ -101,12 +103,12 @@ Development headers for Enlightenment.
 
 %prep
 %setup -n %name-%version%beta
-
-%patch -p1 -b .gsd
-%patch1 -p1 -b .nosuid
-%patch2 -p2 -b .ptrace
+%patch -p1 -R -b .auth
+%patch1 -p1 -b .gsd
+%patch2 -p1 -b .nosuid
+%patch3 -p2 -b .ptrace
 %if_with pam_helper
-%patch3 -p1 -b .pam_helper
+%patch4 -p1 -b .pam_helper
 %endif
 
 %build
@@ -174,13 +176,23 @@ sed -i 's/^\(Name\[.*\]=Enlightenment\)$/\1 on Wayland/' %buildroot%_datadir/way
 %find_lang %name
 
 %files -f %name.lang
+
 %{?_enable_wmsession:%config %_sysconfdir/X11/wmsession.d/*}
 %config %_sysconfdir/%name/sysactions.conf
 %config(noreplace) %_sysconfdir/pam.d/%name
 %dir %_libdir/%name/
 %_libdir/%name/*
 %_liconsdir/*.png
-%_bindir/*
+%_bindir/emixer
+%_bindir/enlightenment
+# see original 0.22.2/src/bin/e_auth.c
+%exclude %_bindir/enlightenment_askpass
+%_bindir/enlightenment_filemanager
+%_bindir/enlightenment_imc
+%_bindir/enlightenment_open
+%_bindir/enlightenment_remote
+%_bindir/enlightenment_start
+%{?_enable_wmsession:%_bindir/start_enlightenment}
 %_datadir/%name/
 %{?_enable_wmsession:%exclude %_datadir/xsessions/%name.desktop}
 %{?_enable_wayland:%_datadir/wayland-sessions/enlightenment.desktop}
@@ -200,6 +212,9 @@ sed -i 's/^\(Name\[.*\]=Enlightenment\)$/\1 on Wayland/' %buildroot%_datadir/way
 %_rpmmacrosdir/%name
 
 %changelog
+* Thu Mar 15 2018 Yuri N. Sedunov <aris@altlinux.org> 1:0.22.2-alt1
+- 0.22.2
+
 * Thu Nov 23 2017 Yuri N. Sedunov <aris@altlinux.org> 1:0.22.1-alt2
 - restored /etc/X11/wmsession.d/05Enlightenment especially for lightdm
 
