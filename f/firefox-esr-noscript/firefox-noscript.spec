@@ -8,10 +8,10 @@
 
 %define cidf_dir       %firefox_noarch_extensionsdir/%cid
 
-Summary: NoScript extension for Firefox and Pale Moon
+Summary: NoScript extension for Firefox and Pale Moon (for firefox-esr)
 Summary (ru_RU.utf8): Дополнение NoScript для  Firefox и Pale Moon
-Name: firefox-noscript
-Version: 10.1.7.2
+Name: firefox-esr-noscript
+Version: 5.1.8.4
 Release: alt1
 Source: noscript-%version.xpi
 License: GPL
@@ -19,14 +19,9 @@ Group: Networking/WWW
 Url: http://noscript.net
 Packager: Alexey Gladkov <legion@altlinux.ru>
 BuildArch: noarch
-Conflicts: firefox-esr-noscript
-
-Patch1: firefox-noscript-alt-fix-perl-import.patch
+Conflicts: firefox-noscript
 
 BuildRequires(pre): rpm-build-firefox rpm-build-palemoon
-BuildRequires: perl-libwww
-BuildRequires: perl-Regexp-Optimizer
-BuildRequires: perl-List-MoreUtils
 BuildRequires: unzip
 
 %if_enabled palemoon
@@ -72,7 +67,6 @@ no loss of functionality.
 
 %prep
 %setup -n noscript
-%patch1 -p2
 
 %install
 %if_enabled palemoon
@@ -100,8 +94,8 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
-* Fri Mar 16 2018 Andrey Cherepanov <cas@altlinux.org> 10.1.7.2-alt1
-- New version (ALT #34305)
+* Mon Mar 19 2018 Andrey Cherepanov <cas@altlinux.org> 5.1.8.4-alt1
+- New version for firefox-esr with name firefox-esr-noscript.
 
 * Mon May 23 2016 Andrey Cherepanov <cas@altlinux.org> 2.9.0.11-alt1
 - New version (supports Firefox <= 48.0)
