@@ -13,7 +13,7 @@
 
 Name: uhd
 Url: http://code.ettus.com/redmine/ettus/projects/uhd/wiki
-Version: 3.10.2.0
+Version: 3.11.0.0
 Release: alt1
 License: GPLv3+
 Group: Engineering
@@ -169,5 +169,8 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %_bindir/chdr_log
 
 %changelog
+* Sun Mar 18 2018 Anton Midyukov <antohami@altlinux.org> 3.11.0.0-alt1
+- new version 3.11.0.0
+
 * Sun Oct 22 2017 Anton Midyukov <antohami@altlinux.org> 3.10.2.0-alt1
 - Initial build ALT Sisyphus.

@@ -5,7 +5,7 @@
 
 Name: gnuradio
 Version: 3.7.11
-Release: alt3
+Release: alt4
 Summary: Software defined radio framework
 License: GPLv2+
 Group: Engineering
@@ -162,6 +162,9 @@ rm -f %buildroot%_datadir/%name/examples/fcd/fcd_nfm_rx
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Mar 19 2018 Anton Midyukov <antohami@altlinux.org> 3.7.11-alt4
+- rebuilt with uhd-3.11.0
+
 * Sun Dec 17 2017 Anton Midyukov <antohami@altlinux.org> 3.7.11-alt3
 - fix build
 - enable support gr-uhd
