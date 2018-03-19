@@ -1,6 +1,6 @@
 Name: shotcut
 Version: 18.03
-Release: alt1
+Release: alt2
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платфоорменный видеоредактор
 License: GPL-3.0+
@@ -9,12 +9,14 @@ Url: http://www.shotcut.org/
 Packager: Anton Midyukov <antohami@altlinux.org>
 # Source-url: https://github.com/mltframework/shotcut/archive/v%version.tar.gz
 Source: %name-%version.tar
-Source1: %name.desktop
+Patch: shotcut-18.01-nicepath.patch
+Patch1: shotcut-18.01-desktop.patch
+
 BuildRequires: gcc-c++ qt5-base-devel >= 5.5.0 qt5-multimedia-devel qt5-quick1-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel libmlt-devel libmlt++-devel qt5-tools ImageMagick-tools libX11-devel
 
 Requires: %name-data = %version
 # https://bugzilla.altlinux.org/show_bug.cgi?id=34444
-Requires: libSDL2
+Requires: libSDL2 ffmpeg ffprobe ffplay mlt-utils
 
 %description
 These are all currently implemented features:
@@ -71,6 +73,8 @@ Data files for %name
 
 %prep
 %setup
+%patch -p2
+%patch1 -p2
 
 %build
 lrelease-qt5 translations/*.ts
@@ -81,7 +85,7 @@ lrelease-qt5 translations/*.ts
 %makeinstall_std
 install -d -m0755 %buildroot/%_datadir/%name/translations
 cp -a translations/*.qm %buildroot/%_datadir/%name/translations/
-install -Dp -m0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
+install -Dp -m0644 snap/gui/shotcut.desktop %buildroot%_desktopdir/%name.desktop
 
 for i in 16 32 48; do
     mkdir -p %buildroot/%_iconsdir/hicolor/"$i"x"$i"/apps
@@ -101,6 +105,11 @@ done
 %_liconsdir/%name.png
 
 %changelog
+* Mon Mar 19 2018 Fr. Br. George <george@altlinux.ru> 18.03-alt2
+- Patch "/bin/nice" location
+- Use native .desktop
+- Added missing requires ff* and melt binaries
+
 * Sun Mar 04 2018 Cronbuild Service <cronbuild@altlinux.org> 18.03-alt1
 - new version (18.03) with rpmgs script
 
