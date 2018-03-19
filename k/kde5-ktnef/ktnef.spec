@@ -1,7 +1,7 @@
 %define rname ktnef
 
 Name: kde5-%rname
-Version: 17.12.2
+Version: 17.12.3
 Release: alt1%ubt
 %K5init altplace
 
@@ -80,6 +80,9 @@ rm -rf %buildroot/%_K5doc/*/ktnef
 %_K5lib/libKF5Tnef.so.*
 
 %changelog
+* Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+- new version
+
 * Tue Feb 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
 - new version
 
