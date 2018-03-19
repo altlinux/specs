@@ -1,7 +1,7 @@
 %def_with python3
 
 Summary: Make reStructuredText and Sphinx read and render Doxygen xml output
-Version: 4.7.2
+Version: 4.7.3
 Release: alt1
 %setup_python_module breathe
 Name: python-module-breathe
@@ -67,6 +67,9 @@ rm -f build; ln -sf build2 build
 %endif
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 4.7.3-alt1
+- Autobuild version bump to 4.7.3
+
 * Fri Aug 25 2017 Fr. Br. George <george@altlinux.ru> 4.7.2-alt1
 - Autobuild version bump to 4.7.2
 
