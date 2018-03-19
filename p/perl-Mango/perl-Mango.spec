@@ -6,7 +6,7 @@ BuildRequires: perl(Authen/SCRAM/Client.pm) perl(B.pm) perl(Config.pm) perl(Expo
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.29
+Version: 1.30
 Release: alt1
 Summary: Pure-Perl non-blocking I/O MongoDB driver
 Group: Development/Perl
@@ -38,6 +38,9 @@ fi
 %perl_vendor_privlib/M*
 
 %changelog
+* Mon Mar 19 2018 Igor Vlasenko <viy@altlinux.ru> 1.30-alt1
+- automated CPAN update
+
 * Tue Feb 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1
 - automated CPAN update
 
