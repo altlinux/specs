@@ -3,8 +3,10 @@
 %define gpstatepath %_sharedstatedir/gssproxy
 %define _localstatedir %_var
 
+%def_with check
+
 Name: gssproxy
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1%ubt
 Summary: GSSAPI Proxy
 
@@ -13,7 +15,7 @@ License: %mit
 Url: https://pagure.io/gssproxy
 
 Source: %name-%version.tar
-Patch: %name-%version.patch
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-ubt
@@ -35,6 +37,17 @@ BuildRequires: libpopt-devel
 BuildRequires: systemd
 BuildRequires: po4a
 
+%if_with check
+BuildRequires: krb5-kdc
+BuildRequires: krb5-doc
+BuildRequires: nss_wrapper
+BuildRequires: socket_wrapper
+BuildRequires: openldap-clients
+BuildRequires: openldap-servers
+BuildRequires: valgrind
+BuildRequires: python3
+%endif
+
 Requires: libkrb5
 Requires: libkeyutils
 Requires: libverto-module-base
@@ -52,7 +65,6 @@ A proxy for GSSAPI credential handling.
 %patch -p1
 
 %build
-cd proxy
 %autoreconf
 %configure \
 	--with-pubconf-path=%pubconfpath \
@@ -66,11 +78,13 @@ cd proxy
 %make_build all
 
 %check
-cd proxy
 %make_build test_proxymech
 
+%ifarch x86_64
+%make check
+%endif
+
 %install
-cd proxy
 %makeinstall_std
 install -d -m755 %buildroot%_sysconfdir/gssproxy
 install -m644 examples/gssproxy.conf %buildroot%_sysconfdir/gssproxy/gssproxy.conf
@@ -105,6 +119,9 @@ rm -f %buildroot%_libdir/%name/proxymech.la
 %_man8dir/*
 
 %changelog
+* Thu Mar 15 2018 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1%ubt
+- 0.7.0 -> 0.8.0
+
 * Wed Nov 01 2017 Stanislav Levin <slev@altlinux.org> 0.7.0-alt1%ubt
 - New 0.7.0 version
 
