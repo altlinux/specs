@@ -1,105 +1,91 @@
-%define oname beaker
+%define modname beaker
 
-%def_with python3
+Name: python-module-%modname
+Version: 1.9.0
+Release: alt1
 
-Name: python-module-%oname
-Version: 1.7.0
-Release: alt1.dev.1.1.1
-Summary: WSGI middleware layer to provide sessions
+Summary: A Session and Caching library with WSGI Middleware
+License: BSD-3-Clause
+Group: Development/Python
 
-Group:  Development/Python
-License: BSD
-URL: http://pypi.python.org/pypi/Beaker
-Source0: http://pypi.python.org/packages/source/B/Beaker/%{name}-%{version}.tar.gz
-#BuildPreReq: python-devel python-module-setuptools rpm-build-python
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
-
-#BuildRequires: python3-devel python3-module-distribute
-%endif
-
+Url: https://github.com/bbangert/beaker
 BuildArch: noarch
+Source: beaker-%version.tar
 
-%py_requires Crypto pycryptopp sqlalchemy
+BuildRequires: python-module-setuptools
+BuildRequires: fdupes
+
+Requires: python-module-pylibmc
+Requires: python-module-memcached >= 1.58
+Requires: python-module-funcsigs
+
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel
+BuildPreReq: python3-module-setuptools
+
 %add_python_req_skip jarray javax
 
 %description
-Beaker is a caching library that includes Session and Cache objects built on
-Myghty's Container API used in MyghtyUtils. WSGI middleware is also included to
-manage Session objects and signed cookies.
+Beaker is a web session and general caching library that includes WSGI
+middleware for use in web applications. As a general caching library, Beaker can handle storing for various times any Python object that can be pickled with optional back-ends on a fine-grained basis. Beaker was built largely on the code from MyghtyUtils, then refactored and extended with database support.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: WSGI middleware layer to provide sessions (Python 3)
+%package -n python3-module-%modname
+Summary: A Session and Caching library with WSGI Middleware
 Group: Development/Python3
-%py3_requires Crypto sqlalchemy
-%add_python3_req_skip jarray javax builtins nss
+%add_python3_req_skip jarray javax
+%add_python3_req_skip javax.crypto javax.crypto.spec
 
-%description -n python3-module-%oname
-Beaker is a caching library that includes Session and Cache objects built on
-Myghty's Container API used in MyghtyUtils. WSGI middleware is also included to
-manage Session objects and signed cookies.
-%endif
+%description -n python3-module-%modname
+Beaker is a web session and general caching library that includes WSGI
+middleware for use in web applications. As a general caching library, Beaker can handle storing for various times any Python object that can be pickled with optional back-ends on a fine-grained basis. Beaker was built largely on the code from MyghtyUtils, then refactored and extended with database support.
 
 %prep
-%setup
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
+%setup -n beaker-%version
 
+cp -fR . ../python3
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
-sed -i 's|%_bindir/python|%_bindir/python3|' beaker/crypto/pbkdf2.py
-sed -i '2d' beaker/crypto/pbkdf2.py
 %python3_build
 popd
-%endif
-
 
 %install
 %python_install
-%if_with python3
+
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
-%doc *.rst
-%python_sitelibdir/beaker/
-%python_sitelibdir/Beaker*
+%doc README.rst
+%python_sitelibdir/*
 
+%files -n python3-module-%modname
+%doc README.rst
+%python3_sitelibdir/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc *.rst
-%python3_sitelibdir/beaker/
-%python3_sitelibdir/Beaker*
-%endif
 
 %changelog
-* Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.7.0-alt1.dev.1.1.1
+* Mon Mar 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.9.0-alt1
+- Version 1.9.0.
+
+* Mon Apr 11 2016 Ivan Zakharyaschev <imz at altlinux.org> 1.7.0-alt1.dev.1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
 
-* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.7.0-alt1.dev.1.1
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz at altlinux.org> 1.7.0-alt1.dev.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
 
-* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.7.0-alt1.dev.1
+* Thu Jan 28 2016 Mikhail Efremov <sem at altlinux.org> 1.7.0-alt1.dev.1
 - NMU: Use buildreq for BR.
 
 * Thu Feb 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt1.dev
 - Version 1.7.0dev
 
-* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.6.4-alt1.1
+* Fri Mar 22 2013 Aleksey Avdeev <solo at altlinux.ru> 1.6.4-alt1.1
 - Rebuild with Python-3.3
 
 * Sat Sep 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.4-alt1
@@ -109,13 +95,13 @@ popd
 - Version 1.6.3
 - Added module for Python 3
 
-* Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.3.1-alt1.1.1
+* Mon Oct 24 2011 Vitaly Kuznetsov <vitty at altlinux.ru> 1.3.1-alt1.1.1
 - Rebuild with Python-2.7
 
 * Thu Nov 19 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt1.1
 - Rebuilt with python 2.6
 
-* Fri Aug 04 2009 Paul Wolneykien <manowar@altlinux.ru> 1.3.1-alt1
+* Fri Aug 04 2009 Paul Wolneykien <manowar at altlinux.ru> 1.3.1-alt1
 - Initial build for ALTLinux
 
 * Sun Jul 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.3.1-6
@@ -133,8 +119,8 @@ popd
 - Different hmac patch suitable for upstream inclusion.
 
 * Tue Jun 02 2009 Luke Macken <lmacken@redhat.com> - 1.3.1-2
-- Add a patch to remove Beaker's use of hashlib on Python2.4,
-  due to incompatiblities with Python's hmac module (#503772)
+- Add a patch to remove Beaker&#39;s use of hashlib on Python2.4,
+  due to incompatiblities with Python&#39;s hmac module (#503772)
 
 * Sun May 31 2009 Luke Macken <lmacken@redhat.com> - 1.3.1-1
 - Update to 1.3.1
