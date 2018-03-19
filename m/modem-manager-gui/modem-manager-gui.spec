@@ -2,7 +2,7 @@ Name:          modem-manager-gui
 Summary:       Graphical interface for ModemManager
 Summary(de):   Grafische Oberfläche für ModemManager
 Summary(ru):   Графический интерфейс для ModemManager
-Version:       0.0.18
+Version:       0.0.19
 Release:       alt1
 
 Group:	       System/Configuration/Networking	
@@ -15,12 +15,15 @@ Packager:      Andrey Cherepanov <cas@altlinux.org>
 Source0:       http://download.tuxfamily.org/gsf/source/%{name}-%{version}.tar.gz
 Source1:       %name.watch
 
+BuildRequires: meson
 BuildRequires: pkgconfig
-BuildRequires: libgtk+3-devel
-BuildRequires: glib2-devel
-BuildRequires: gdbm-devel
-BuildRequires: libnotify-devel
 BuildRequires: desktop-file-utils
+BuildRequires: gdbm-devel
+BuildRequires: glib2-devel
+BuildRequires: libappindicator-gtk3-devel
+BuildRequires: libgtk+3-devel
+BuildRequires: libgtkspell3-devel
+BuildRequires: libnotify-devel
 BuildRequires: gettext-tools
 BuildRequires: po4a
 BuildRequires: itstool
@@ -70,31 +73,37 @@ Funktionen:
 %setup -q
 
 %build
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall INSTALLPREFIX=%buildroot
+%meson_install
 
-# TODO: man russian in ALT Linux should be in koi8-r
-pushd %buildroot%_mandir/ru/man1
-gunzip -c %name.1.gz | iconv -f utf-8 -t koi8-r > %name.1
-rm -f %name.1.gz
-popd
+# Move appdata to its directory
+mkdir -p %buildroot%_datadir/appdata
+mv %buildroot%_datadir/metainfo/%name.appdata.xml %buildroot%_datadir/appdata
 
 %find_lang --with-man --with-gnome %name
 
 %files -f %name.lang
 %doc LICENSE AUTHORS Changelog
 %_bindir/%name
-%_pixmapsdir/%name.png
+%_libdir/%name/
+%_sysconfdir/NetworkManager/dispatcher.d/95-mmgui-timestamp-notifier
+%_datadir/polkit-1/actions/ru.linuxonly.%name.policy
 %_datadir/%name/
 %_desktopdir/%name.desktop
-%_libdir/%name/
+%_iconsdir/hicolor/*/apps/%{name}*
+%doc %_datadir/help/uz@Latn
+%_datadir/locale/uz@*/LC_MESSAGES/%name.mo
+%doc %_mandir/uz@*/man1/%name.1*
 %doc %_man1dir/%name.1.*
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Mon Mar 19 2018 Andrey Cherepanov <cas@altlinux.org> 0.0.19-alt1
+- New version.
+
 * Tue Oct 13 2015 Andrey Cherepanov <cas@altlinux.org> 0.0.18-alt1
 - New version
 
