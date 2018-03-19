@@ -1,6 +1,6 @@
 Name: ms-sys
-Version: 2.1.4
-Release: alt1.qa1
+Version: 2.5.3
+Release: alt1
 
 Summary: Linux program for writing Microsoft compatible boot records.
 License: GPL
@@ -38,6 +38,9 @@ mkdir -p %buildroot
 %doc CHANGELOG CONTRIBUTORS COPYING README TODO
 
 %changelog
+* Tue Mar 20 2018 Alexey Gladkov <legion@altlinux.ru> 2.5.3-alt1
+- New version (2.5.3).
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.4-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
