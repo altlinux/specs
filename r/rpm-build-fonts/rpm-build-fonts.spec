@@ -1,6 +1,6 @@
 Name: rpm-build-fonts
 Version: 0.6
-Release: alt6
+Release: alt6.1
 
 Summary: RPM helper scripts for building font packages
 
@@ -59,6 +59,9 @@ install -D -m755 fontconfig.prov.files %buildroot/usr/lib/rpm/fontconfig.prov.fi
 %_rpmmacrosdir/fonts
 
 %changelog
+* Mon Mar 19 2018 Fr. Br. George <george@altlinux.ru> 0.6-alt6.1
+- Propagate fonts.dir -> fonts.scale fix
+
 * Fri Mar 16 2018 Fr. Br. George <george@altlinux.ru> 0.6-alt6
 - bugfix: use fonts.dir -> fonts.scale hardlink intead of deprecated symlink
 
