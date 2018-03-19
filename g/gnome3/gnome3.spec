@@ -1,4 +1,4 @@
-%define ver_major 3.24
+%define ver_major 3.28
 
 Name: gnome3
 Version: %ver_major.0
@@ -15,16 +15,18 @@ BuildPreReq: rpm-build-licenses
 # The following are required versions of those packages that
 # do not follow GNOME version numbers.
 ## Core components
-%define session_ver %ver_major.0
-%define keyring_ver 3.20.1
+%define session_ver %ver_major
+%define keyring_ver %ver_major
 
 ## Applications
 %define seahorse_ver 3.20
 %define utils_ver 3.20
 %define games_ver 3.22
-%define yelp_ver 3.22
-%define dconf_editor_ver 3.22
-%define contacts_ver 3.22.1
+%define weather_ver 3.26
+%define pm_ver 3.26
+%define yelp_ver %ver_major
+%define dconf_editor_ver %ver_major
+%define contacts_ver %ver_major
 %define roller_ver %ver_major
 %define eog_ver %ver_major
 %define network_manager_ver 1.8
@@ -33,8 +35,8 @@ BuildPreReq: rpm-build-licenses
 %define pidgin_ver 2.6.3
 %define evince_ver %ver_major
 %define applets_ver %ver_major
-%define gedit_ver 3.22
-%define gedit_plugins_ver 3.22
+%define gedit_ver %ver_major
+%define gedit_plugins_ver %ver_major
 %define gnome_nettool_ver 3.8
 %define gud_ver %ver_major
 %define gdm_ver %ver_major
@@ -43,7 +45,7 @@ BuildPreReq: rpm-build-licenses
 %define emp_ver 3.12.11
 %define brasero_ver 3.12.2
 %define accerciser_ver 3.22
-%define recorder_ver %ver_major
+%define recorder_ver 3.27.90
 ## Engines, themes
 %define engines_ver %ver_major
 %define icon_theme_ver %ver_major
@@ -51,7 +53,7 @@ BuildPreReq: rpm-build-licenses
 %define gtk_theme_prefix gtk3-theme
 %define gnome_theme_prefix gnome-theme
 ## a11y
-%define orca_ver %ver_major
+%define orca_ver 3.26
 
 %description
 A set of virtual packages for GNOME Desktop version 3 installation.
@@ -223,13 +225,13 @@ Requires: gnome-terminal-nautilus
 # Menu editor
 Requires: alacarte
 # Weather application
-Requires: gnome-weather >= %ver_major
+Requires: gnome-weather >= %weather_ver
 # Clock application
 Requires: gnome-clocks >= %ver_major
 # Maps application
 Requires: gnome-maps >= %ver_major
 # power consumption statistic
-Requires: gnome-power-manager >= %ver_major
+Requires: gnome-power-manager >= %pm_ver
 Requires: NetworkManager-gnome >= %network_manager_ver
 ## Bluetooth pairing and control program
 Requires: gnome-bluetooth
@@ -239,9 +241,11 @@ Requires: gnome-nettool >= %gnome_nettool_ver
 Requires: vino
 ## VNC client for the GNOME Desktop
 Requires: vinagre
+
 Requires: gnome-user-share
 Requires: rygel
 Requires: rygel-tracker
+Requires: gnome-usage
 
 %description default
 This virtual package installs GNOME Desktop for an average user's
@@ -418,6 +422,10 @@ some other useful GNOME and GTK applications.
 %files regular
 
 %changelog
+* Mon Mar 19 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+- added gnome-usage to -default
+
 * Tue Feb 14 2017 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 - dropped gvfs-utils deprecated by gvfs >= 1.31
