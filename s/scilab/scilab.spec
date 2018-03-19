@@ -6,7 +6,7 @@
 
 Name:     scilab
 Version:  6.0.1
-Release:  alt1
+Release:  alt2
 Summary:  A high-level language and system for numerical computations
 
 License:  CeCILL
@@ -20,6 +20,7 @@ Obsoletes: scirenderer
 Source0: %name-%version.tar
 # VCS:   git://git.scilab.org/scilab
 Source1: scilab-desktop-ru.tar
+Source2: help.tar
 
 Patch1:  scilab-find-jhall.patch
 Patch2:  scilab-find-jgoodies-looks.patch
@@ -208,6 +209,10 @@ rm -fr %buildroot%_libdir/%name/*.la
 # Remove MIME package
 rm -f %buildroot%_xdgmimedir/packages/scilab.xml
 
+%if_without docs
+tar xf %SOURCE2 -C %buildroot%_datadir/scilab/modules/helptools/jar/
+%endif
+
 %files -f scilab/%name.lang
 %doc scilab/README.md scilab/ACKNOWLEDGEMENTS scilab/CHANGES.md scilab/COPYING scilab/COPYING-BSD
 %_bindir/*
@@ -221,6 +226,9 @@ rm -f %buildroot%_xdgmimedir/packages/scilab.xml
 %_datadir/mime/packages/scilab.xml
 
 %changelog
+* Mon Mar 19 2018 Andrey Cherepanov <cas@altlinux.org> 6.0.1-alt2
+- Use generated documentation on x64_64.
+
 * Fri Feb 16 2018 Andrey Cherepanov <cas@altlinux.org> 6.0.1-alt1
 - New version.
 - Build without docs.
