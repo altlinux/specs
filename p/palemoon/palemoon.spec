@@ -7,7 +7,7 @@ Name: palemoon
 Version: 27.8.1 
 
 # %%ifndef git_commit
-Release: alt1
+Release: alt2
 # %%else
 # Release: alt1.git_1_%git_commit
 # %%endif
@@ -599,6 +599,9 @@ install -D -m 644 README.md ../
 
 # git commit 062d60652e9b8d4bb86efc6ac22699e2c1756ae3
 %changelog
+* Sun Mar 18 2018 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.8.1-alt2
+- Fix Changelog
+
 * Sun Mar 11 2018 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.8.1-alt1
 - New Version - Release 27.8.1
 
