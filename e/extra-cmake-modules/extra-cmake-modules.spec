@@ -5,7 +5,7 @@
 
 Name: extra-cmake-modules
 Version: 5.42.0
-Release: alt2%ubt
+Release: alt3%ubt
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
@@ -14,11 +14,12 @@ Url: http://community.kde.org/KDE_Core/Platform_11/Buildsystem/FindFilesSurvey
 
 BuildArch: noarch
 
-Requires: cmake
+Requires: cmake clang-devel
 
 Source: %name-%version.tar
 Patch1: alt-find-qcollectiongenerator.patch
 Patch2: alt-fix-python-install-dirs.patch
+Patch3: alt-find-clang-library.patch
 
 # Automatically added by buildreq on Thu Nov 17 2016 (-bi)
 # optimized out: bzr cmake-modules fontconfig libqt4-clucene libqt4-core libqt4-devel libqt4-gui libqt4-help libqt4-network libqt4-sql libqt4-sql-sqlite policycoreutils python-base python-module-4Suite-XML python-module-IPy python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cssselect python-module-docutils python-module-enum34 python-module-google python-module-httplib2 python-module-imagesize python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mimeparse python-module-numpy python-module-pyasn1 python-module-pygobject3 python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-slip python-module-snowballstemmer python-module-sphinx python-module-twisted-core python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base rpm-build-python3 ruby xz
@@ -35,6 +36,7 @@ Additional modules for CMake build system needed by KDE Frameworks.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %ifarch e2k
 # lcc doesn't support these as of 1.21.20
@@ -58,6 +60,9 @@ sed -i -r 's, (-fno-operator-names|-Wvla),,' kde-modules/KDECompilerSettings.cma
 %doc %_man7dir/*
 
 %changelog
+* Mon Mar 19 2018 Oleg Solovyov <mcpain@altlinux.org> 5.42.0-alt3%ubt
+- find clang library
+
 * Mon Mar 05 2018 Oleg Solovyov <mcpain@altlinux.org> 5.42.0-alt2%ubt
 - fix install dirs for python bindings
 
