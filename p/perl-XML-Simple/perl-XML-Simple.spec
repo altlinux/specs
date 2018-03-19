@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-Simple
 Name: perl-%dist
-Version: 2.24
+Version: 2.25
 Release: alt1
 
 Summary: Easy API to read/write XML
@@ -37,6 +37,9 @@ XML parsing module (either XML::Parser or one of the SAX2 parser modules).
 %doc	%perl_vendor_privlib/XML/Simple/*.pod
 
 %changelog
+* Mon Mar 19 2018 Igor Vlasenko <viy@altlinux.ru> 2.25-alt1
+- automated CPAN update
+
 * Tue May 09 2017 Igor Vlasenko <viy@altlinux.ru> 2.24-alt1
 - automated CPAN update
 
