@@ -1,5 +1,5 @@
 Name: scummvm-tools
-Version: 1.9.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Utilities for the SCUMM graphic adventure game interpreter
@@ -33,6 +33,9 @@ mkdir -p %buildroot%_bindir
 %_datadir/scummvm-tools
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 2.0.0-alt1
+- Autobuild version bump to 2.0.0
+
 * Thu Jul 27 2017 Fr. Br. George <george@altlinux.ru> 1.9.0-alt1
 - Autobuild version bump to 1.9.0
 
