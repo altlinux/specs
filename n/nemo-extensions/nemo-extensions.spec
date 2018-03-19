@@ -2,7 +2,7 @@
 
 Name: nemo-extensions
 Version: 3.6.2
-Release: alt1
+Release: alt2
 Summary: Extensions for Nemo
 
 License: %gpl2plus and %lgpl2only
@@ -99,7 +99,7 @@ License: %gpl3plus
 Group: Graphical desktop/GNOME
 BuildArch: noarch
 Requires: nemo-python
-Requires: libvte3_2.90-gir
+Requires: libvte3-gir
 Requires: nemo-extensions-translations
 
 %description -n nemo-terminal
@@ -297,6 +297,9 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_bindir/nemo-compare-preferences
 
 %changelog
+* Mon Mar 19 2018 Vladimir Didenko <cow@altlinux.org> 3.6.2-alt2
+- Switch to vte3 package for nemo-terminal
+
 * Wed Dec 27 2017 Vladimir Didenko <cow@altlinux.org> 3.6.2-alt1
 - 3.6.2-2-g5e72842
 
