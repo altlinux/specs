@@ -1,6 +1,8 @@
+%def_without qt5
+
 Name: octave
-Version: 4.2.1
-Release: alt4
+Version: 4.2.2
+Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -8,7 +10,7 @@ Summary: GNU Octave -- a high-level language for numerical computations
 License: GPLv3
 Group: Sciences/Mathematics
 Url: http://www.octave.org/
-Packager: Paul Wolneykien <manowar@altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires: flex gcc-c++ gcc-fortran libcurl-devel libfftw3-devel libglpk-devel
 BuildRequires: libhdf5-devel liblapack-devel libncurses-devel libpcre-devel
@@ -18,23 +20,29 @@ BuildRequires: libGraphicsMagick-c++-devel libGL-devel libGLU-devel libfreetype-
 BuildRequires: libftgl-devel zlib-devel desktop-file-utils gnuplot less
 BuildRequires: texlive-base-bin texlive-generic-recommended
 BuildRequires: libarpack-ng-devel
+%if_with qt5
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-tools
+BuildRequires: libqscintilla2-qt5-devel
+%else
 BuildRequires: libqt4-devel
 BuildRequires: libqscintilla2-qt4-devel
+%endif
 BuildRequires: icoutils librsvg-utils
 BuildPreReq: libqhull-devel fontconfig-devel libfltk-devel
 BuildPreReq: libqrupdate-devel libsuitesparse-devel gperf libXft-devel
 BuildPreReq: libpixman-devel libcairo-devel libXinerama-devel
 BuildPreReq: libXfixes-devel
-#Added buildreq-src
 BuildPreReq: java-devel-default libX11-devel libgl2ps-devel libncurses-devel libpcre-devel libsuitesparse-devel libtinfo-devel llvm-devel pkgconfig(fontconfig) pkgconfig(freetype2) pkgconfig(portaudio-2.0) pkgconfig(sndfile) pkgconfig(xft) texinfo
 
 Source0: %name-%version-%release.tar
 Source1: octave.filetrigger
+Source2: %name.watch
 
 Patch0: octave-include-pcre.patch
-Patch1: octave-4.0.3-alt-desktop-l10n.patch
+Patch1: octave-alt-desktop-l10n.patch
 Patch2: octave-alt-fix-build.patch
-Patch3: octave-4.2.1-upstream-qscintilla.patch
+Patch3: octave-qscintilla-lib-names.patch
 
 Requires: gnuplot
 
@@ -126,6 +134,8 @@ export RPM_LD_PRELOAD_octave='$_octave_libs'
 export RPM_FILES_TO_LD_PRELOAD_octave='%_libdir/%name/packages/*'
 EOF
 
+mkdir -p %buildroot%_datadir/doc/%name-doc-%version
+
 #check
 #make check
 
@@ -141,7 +151,6 @@ EOF
 
 %dir %_libdir/%name
 %dir %_libdir/%name/%version
-%dir %_datadir/%name/packages
 %dir %_libdir/%name/packages
 
 %_infodir/octave.info*
@@ -167,6 +176,9 @@ EOF
 %doc doc/interpreter/octave.html doc/liboctave/liboctave.html doc/interpreter/octave.pdf doc/liboctave/liboctave.pdf doc/refcard/refcard*.pdf
 
 %changelog
+* Mon Mar 19 2018 Andrey Cherepanov <cas@altlinux.org> 4.2.2-alt1
+- New version.
+
 * Wed Feb 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.1-alt4
 - Rebuilt with libsuitesparse 5.1.2.
 
