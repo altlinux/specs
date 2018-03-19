@@ -1,7 +1,7 @@
 %define base_name rox-filer
 Name: rox-base
-Version: 2.5
-Release: alt1.1.qa2
+Version: 2.11
+Release: alt1
 
 Summary: ROX desktop enviroment
 License: GNU GPL
@@ -10,6 +10,8 @@ Group: Graphical desktop/Other
 Url: http://rox.sourceforge.net/
 Source: http://prdownloads.sourceforge.net/%base_name/%base_name-%version.tar.bz2
 Source1: rox-startup.sh
+Source2: rox.desktop
+Source3: rox.svg
 Packager: Eugene Ostapets <eostapets@altlinux.ru>
 
 Patch0: rox-i18n-standard-path.patch
@@ -20,15 +22,17 @@ Patch3: rox-fix-help-path.patch
 Patch50: rox-2.3-rootmenu.patch
 Patch51: rox-2.3-workplace.patch
 Patch52: rox-2.5-alt-DSO.patch
+Patch53: rox-alt-set-system-locale-path.patch
 
 # Automatically added by buildreq on Thu Oct 05 2006
 BuildRequires: fontconfig imake libXt-devel libgtk+2-devel libxml2-devel xorg-cf-files pkgconfig 
+BuildRequires: librsvg-utils
 
 %description
 ROX is a desktop environment, like GNOME, KDE and XFCE.  It is an attempt to bring some of the good features from RISC OS to Unix and Linux.
 %prep
 %setup -q -n %base_name-%version
-%patch0 -p1
+#%%patch0 -p1
 %patch1 -p1
 #%%patch2 -p1
 %patch3 -p1
@@ -36,6 +40,9 @@ ROX is a desktop environment, like GNOME, KDE and XFCE.  It is an attempt to bri
 #%%patch50 -p1
 #%%patch51 -p1
 %patch52 -p2
+%patch53 -p2
+
+rsvg-convert -w 48 -h 38 -f png -o rox.png %SOURCE3
 
 %build
 %__mkdir ROX-Filer/build
@@ -55,25 +62,12 @@ ln -s %buildroot%_mandir/man1/rox.1 %buildroot%_mandir/man1/ROX-Filer.1
 %__install -m 755 Choices/MIME-types/application_postscript %buildroot%_datadir/Choices
 %__install -m 755 Choices/MIME-types/text %buildroot%_datadir/Choices
 %__install -m 755 Choices/MIME-types/text_html %buildroot%_datadir/Choices
+
 #install languages
-%__install -Dm 644 ROX-Filer/Messages/cs.gmo %buildroot%_datadir/locale/cs/LC_MESSAGES/ROX-Filer.mo
-%__install -Dm 644 ROX-Filer/Messages/da.gmo %buildroot%_datadir/locale/da/LC_MESSAGES/ROX-Filer.mo
-%__install -Dm 644 ROX-Filer/Messages/de.gmo %buildroot%_datadir/locale/de/LC_MESSAGES/ROX-Filer.mo
-%__install -Dm 644 ROX-Filer/Messages/es.gmo %buildroot%_datadir/locale/es/LC_MESSAGES/ROX-Filer.mo
-%__install -Dm 644 ROX-Filer/Messages/fi.gmo %buildroot%_datadir/locale/fi/LC_MESSAGES/ROX-Filer.mo
-%__install -Dm 644 ROX-Filer/Messages/fr.gmo %buildroot%_datadir/locale/fr/LC_MESSAGES/ROX-Filer.mo
-%__install -Dm 644 ROX-Filer/Messages/hu.gmo %buildroot%_datadir/locale/hu/LC_MESSAGES/ROX-Filer.mo
-%__install -Dm 644 ROX-Filer/Messages/it.gmo %buildroot%_datadir/locale/it/LC_MESSAGES/ROX-Filer.mo
-%__install -Dm 644 ROX-Filer/Messages/ja.gmo %buildroot%_datadir/locale/ja/LC_MESSAGES/ROX-Filer.mo
-%__install -Dm 644 ROX-Filer/Messages/nl.gmo %buildroot%_datadir/locale/nl/LC_MESSAGES/ROX-Filer.mo
-%__install -Dm 644 ROX-Filer/Messages/no.gmo %buildroot%_datadir/locale/no/LC_MESSAGES/ROX-Filer.mo
-%__install -Dm 644 ROX-Filer/Messages/pl.gmo %buildroot%_datadir/locale/pl/LC_MESSAGES/ROX-Filer.mo
-%__install -Dm 644 ROX-Filer/Messages/pt_BR.gmo %buildroot%_datadir/locale/pt_BR/LC_MESSAGES/ROX-Filer.mo
-%__install -Dm 644 ROX-Filer/Messages/ro.gmo %buildroot%_datadir/locale/ro/LC_MESSAGES/ROX-Filer.mo
-%__install -Dm 644 ROX-Filer/Messages/ru.gmo %buildroot%_datadir/locale/ru/LC_MESSAGES/ROX-Filer.mo
-%__install -Dm 644 ROX-Filer/Messages/sv.gmo %buildroot%_datadir/locale/sv/LC_MESSAGES/ROX-Filer.mo
-%__install -Dm 644 ROX-Filer/Messages/zh_CN.gmo %buildroot%_datadir/locale/zh_CN/LC_MESSAGES/ROX-Filer.mo
-%__install -Dm 644 ROX-Filer/Messages/zh_TW.gmo %buildroot%_datadir/locale/zh_TW/LC_MESSAGES/ROX-Filer.mo
+mkdir -p %buildroot%_datadir/locale
+# Remove README from locale directory
+rm -f ROX-Filer/Messages/README
+cp -a ROX-Filer/Messages/* %buildroot%_datadir/locale
 
 #install default theme
 %__install -m 644 ROX-Filer/ROX/index.theme %buildroot%_datadir/rox/ROX
@@ -89,17 +83,30 @@ ln -s %buildroot%_mandir/man1/rox.1 %buildroot%_mandir/man1/ROX-Filer.1
 %__install -m 755 %SOURCE1 %buildroot%_bindir/rox
 %__subst "s|@LIBDIR@|%_libdir|g" %buildroot%_bindir/rox
 
-%files
+# Install icon and desktop file
+install -Dm 0644 %SOURCE2 %buildroot%_desktopdir/rox.desktop
+install -Dm 0644 %SOURCE3 %buildroot%_pixmapsdir/rox.svg
+install -Dm 0644 rox.png %buildroot%_pixmapsdir/rox.png
+
+%find_lang ROX-Filer
+
+%files -f ROX-Filer.lang
+%doc ROX-Filer/Help/README ROX-Filer/Help/TODO ROX-Filer/Help/Changes
 %_bindir/*
 %_libdir/rox/*
 %_datadir/rox/*
 %_datadir/mime/packages/*
 %_datadir/Choices
-%_datadir/locale/*/*/*
 %_mandir/man*/*
-%doc ROX-Filer/Help/README ROX-Filer/Help/TODO ROX-Filer/Help/Changes
+%_desktopdir/rox.desktop
+%_pixmapsdir/rox.*
 
 %changelog
+* Mon Mar 19 2018 Andrey Cherepanov <cas@altlinux.org> 2.11-alt1
+- New version.
+- Install desktop file and icon.
+- Fix use locale.
+
 * Fri Feb 28 2014 Andrey Cherepanov <cas@altlinux.org> 2.5-alt1.1.qa2
 - Fixed build
 
