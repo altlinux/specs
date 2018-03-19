@@ -5,7 +5,7 @@
 
 Name: xviewer
 Version: 1.6.1
-Release: alt1
+Release: alt2
 
 Summary: Fast and functional image viewer.
 License: %gpl2plus
@@ -123,6 +123,9 @@ the functionality of the Xviewer GUI.
 %exclude %_libdir/%name/lib%name.la
 
 %changelog
+* Mon Mar 5 2018 Vladimir Didenko <cow@altlinux.org> 1.6.1-alt2
+- Fix build with new libgnome-desktop3
+
 * Thu Nov 23 2017 Vladimir Didenko <cow@altlinux.org> 1.6.1-alt1
 - New version
 
