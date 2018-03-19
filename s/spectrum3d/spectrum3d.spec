@@ -1,5 +1,5 @@
 Name: spectrum3d
-Version: 2.7.1
+Version: 2.7.2
 Release: alt1
 Summary: 3D audio spectrum analyser in real time
 Group: Sound
@@ -43,6 +43,9 @@ install -D data/spectrum3d.svg %buildroot%_iconsdir/hicolor/scalable/apps/spectr
 %_iconsdir/%name
 
 %changelog
+* Tue Feb 20 2018 Fr. Br. George <george@altlinux.ru> 2.7.2-alt1
+- Autobuild version bump to 2.7.2
+
 * Wed Sep 20 2017 Fr. Br. George <george@altlinux.ru> 2.7.1-alt1
 - Autobuild version bump to 2.7.1
 
