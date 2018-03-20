@@ -1,7 +1,7 @@
 %def_without test
 
 Name: gscan2pdf
-Version: 1.8.11
+Version: 2.0.1
 Release: alt1
 
 Summary: A GUI to ease the process of producing a multipage PDF from a scan
@@ -25,7 +25,7 @@ Requires: perl(Gtk2/Ex/PodViewer.pm) xdg-utils unpaper
 # optimized out: fontconfig libX11-locales libgdk-pixbuf libwayland-client libwayland-server perl-Cairo perl-Compress-Raw-Bzip2 perl-Compress-Raw-Zlib perl-Encode perl-Exporter-Tiny perl-Glib perl-Gtk2 perl-HTML-Parser perl-HTML-Tagset perl-IO-Compress perl-IO-String perl-IO-Zlib perl-Math-Complex perl-Pango perl-Pod-Escapes perl-Pod-Simple perl-Try-Tiny perl-devel perl-parent perl-threads python-base python3 python3-base
 BuildRequires: libdb4-devel perl-Archive-Tar perl-Config-General perl-Filesys-Df perl-Goo-Canvas perl-Gtk2-Ex-Simple-List perl-Gtk2-ImageView perl-List-MoreUtils perl-Locale-gettext perl-Log-Log4perl perl-Magick perl-PDF-API2 perl-Proc-ProcessTable perl-Readonly perl-Sane perl-Set-IntSpan perl-Sub-Name perl-podlators perl-Text-Balanced
 
-BuildPreReq: perl-Data-UUID perl-JSON-PP perl-Date-Calc perl-Image-Sane perl-Sub-Override
+BuildPreReq: perl-Data-UUID perl-JSON-PP perl-Date-Calc perl-Image-Sane perl-Sub-Override perl-GooCanvas2 perl-Gtk3-SimpleList libgoocanvas2-gir
 
 BuildPreReq: perl-Magick perl-Sane >= 0.05
 
@@ -57,7 +57,7 @@ Scanning is handled with SANE via scanimage. PDF conversion is done by libtiff.
 %prep
 %setup
 #patch -p2
-#__subst "s|use Gtk2 -init;|use Gtk2; INIT { Gtk2->init; }|g" bin/%name
+%__subst "s|use Gtk3 -init;|use Gtk3; INIT { Gtk3->init; }|g" bin/%name
 # djvu %_bindir/cjb2
 %__subst "s|requires djvulibre-bin|djvu-utils|g" bin/%name
 
@@ -85,11 +85,15 @@ find %buildroot -name .packlist | xargs rm -f
 %_desktopdir/%name.desktop
 %_datadir/%name/
 %_datadir/metainfo/gscan2pdf.appdata.xml
+%_datadir/help/C/gscan2pdf/
 %_pixmapsdir/*
 %_man1dir/*
 %perl_vendor_privlib/Gscan2pdf/
 
 %changelog
+* Tue Mar 20 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt1
+- new version 2.0.1 (with rpmrb script)
+
 * Sat Feb 24 2018 Vitaly Lipatov <lav@altlinux.ru> 1.8.11-alt1
 - new version 1.8.11 (with rpmrb script)
 
