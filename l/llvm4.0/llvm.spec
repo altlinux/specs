@@ -1,10 +1,20 @@
+%global v_major 4.0
 %global llvm_svnrel %nil
 %global clang_svnrel %nil
-%global rel alt1.2
-%global llvm_name llvm4.0
-%global clang_name clang4.0
+%global rel alt3
+%global llvm_name llvm%v_major
+%global clang_name clang%v_major
+
+%ifndef build_parallel_jobs
+%global build_parallel_jobs 8
+%endif
+
+# Decrease debuginfo verbosity to reduce memory consumption during final library linking
+%global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
 
 %def_disable tests
+%def_disable static
+%def_enable compat
 
 Name: %llvm_name
 Version: 4.0.1
@@ -28,9 +38,11 @@ BuildRequires(pre): cmake >= 3.4.3
 BuildRequires: chrpath libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
 BuildRequires: python-modules-compiler python-modules-unittest python-modules-xml
 BuildRequires: python-modules-json zip zlib-devel gcc-c++
-BuildRequires: python-module-sphinx-devel binutils-devel
+BuildRequires: python-module-sphinx-devel binutils-devel ninja-build
 
-Conflicts: llvm <= 3.8.0
+
+Provides: llvm = %EVR
+Obsoletes: llvm <= 3.8.0
 
 %description
 LLVM is a compiler infrastructure designed for compile-time, link-time,
@@ -41,7 +53,9 @@ of programming tools as well as libraries with equivalent functionality.
 %package devel
 Group: Development/C
 Summary: Libraries and header files for LLVM
-Requires: %name = %version-%release
+Provides: llvm-devel = %EVR
+Obsoletes: llvm-devel <= 3.8.0
+Requires: %name = %EVR
 
 %description devel
 This package contains library and header files needed to develop new
@@ -50,7 +64,9 @@ native programs that use the LLVM infrastructure.
 %package devel-static
 Summary: Static libraries for LLVM
 Group: Development/C
-Requires: %name-devel = %version-%release
+Provides: llvm-devel-static = %EVR
+Obsoletes: llvm-devel-static <= 3.8.0
+Requires: %name-devel = %EVR
 
 %description devel-static
 This package contains static libraries needed to develop new
@@ -67,7 +83,8 @@ Shared libraries for the LLVM compiler infrastructure.
 Summary: Documentation for LLVM
 Group: Documentation
 BuildArch: noarch
-Requires: %name = %version-%release
+Provides: llvm-doc = %EVR
+Obsoletes: llvm-doc <= 3.8.0
 
 %description doc
 Documentation for the LLVM compiler infrastructure.
@@ -77,8 +94,8 @@ Summary: A C language family frontend for LLVM
 License: NCSA
 Group: Development/C
 Requires: gcc
-#Release: %%rel.%%clang_svnrel
-Conflicts: clang <= 3.8.0
+Provides: clang = %EVR
+Obsoletes: clang <= 3.8.0
 
 %description -n %clang_name
 clang: noun
@@ -90,11 +107,20 @@ The goal of the Clang project is to create a new C, C++, Objective C
 and Objective C++ front-end for the LLVM compiler. Its tools are built
 as libraries and designed to be loosely-coupled and extendable.
 
+%package -n %clang_name-libs
+Group: Development/C
+Summary: clang shared libraries
+Obsoletes: %clang_name <= 4.0.1-alt1.3.rel
+
+%description -n %clang_name-libs
+Shared libraries for the clang compiler.
+
 %package -n %clang_name-devel
 Summary: Header files for clang
 Group: Development/C
-#Release: %%rel.%%clang_svnrel
-Requires: %clang_name = %version-%release
+Provides: clang-devel = %EVR
+Obsoletes: clang-devel <= 3.8.0
+Requires: %clang_name = %EVR
 
 %description -n %clang_name-devel
 This package contains header files for the Clang compiler.
@@ -102,8 +128,9 @@ This package contains header files for the Clang compiler.
 %package -n %clang_name-devel-static
 Summary: Static libraries for clang
 Group: Development/C
-#Release: %%rel.%%clang_svnrel
-Requires: %clang_name = %version-%release
+Provides: clang-devel-static = %EVR
+Obsoletes: clang-devel-static <= 3.8.0
+Requires: %clang_name = %EVR
 
 %description -n %clang_name-devel-static
 This package contains static libraries for the Clang compiler.
@@ -113,8 +140,9 @@ Summary: A source code analysis framework
 License: NCSA
 Group: Development/C
 BuildArch: noarch
-#Release: %%rel.%%clang_svnrel
-Requires: %clang_name = %version-%release
+Provides: clang-analyzer = %EVR
+Obsoletes: clang-analyzer <= 3.8.0
+Requires: %clang_name = %EVR
 
 %description -n %clang_name-analyzer
 The Clang Static Analyzer consists of both a source code analysis
@@ -126,8 +154,8 @@ intended to run in tandem with a build of a project or code base.
 Summary: Documentation for Clang
 Group: Documentation
 BuildArch: noarch
-#Release: %%rel.%%clang_svnrel
-Requires: %clang_name = %version-%release
+Provides: clang-doc = %EVR
+Obsoletes: clang-doc <= 3.8.0
 
 %description -n %clang_name-doc
 Documentation for the Clang compiler front-end.
@@ -143,11 +171,11 @@ mv clang-%version tools/clang
 
 %build
 # force off shared libs as cmake macros turns it on.
-%cmake \
+%cmake -G Ninja \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
-	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	-DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_SHARED_LINKER_FLAGS="-Wl,-Bsymbolic" \
-	-DLLVM_TARGETS_TO_BUILD="X86;AMDGPU;BPF;" \
+	-DLLVM_TARGETS_TO_BUILD="host;AMDGPU;BPF;" \
 	-DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD='AVR' \
 	-DLLVM_ENABLE_LIBCXX:BOOL=OFF \
 	-DLLVM_ENABLE_ZLIB:BOOL=ON \
@@ -188,10 +216,16 @@ mv clang-%version tools/clang
 	-DLLVM_BUILD_EXTERNAL_COMPILER_RT:BOOL=ON \
 	-DLLVM_INSTALL_TOOLCHAIN_ONLY:BOOL=OFF
 
-%cmake_build
+ninja \
+       -vvv \
+       -j %build_parallel_jobs \
+       -C BUILD
 
 %install
-%cmakeinstall_std KEEP_SYMBOLS=1 VERBOSE=1
+pushd BUILD
+cmake -DCMAKE_INSTALL_PREFIX=%buildroot%prefix ../
+popd
+ninja -C BUILD install
 
 # And prepare Clang documentation
 rm -rf BUILD/clang-docs
@@ -208,9 +242,10 @@ file %buildroot%_libdir/*.so | awk -F: '$2~/ELF/{print $1}' | xargs -r chrpath -
 %if_enabled tests
 LD_LIBRARY_PATH=%buildroot%_libdir:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH
-make check-all -C BUILD || :
+ninja -C BUILD check-all || :
 %endif
 
+%if_disabled compat
 %files
 %doc CREDITS.TXT LICENSE.TXT README.txt
 %_bindir/*
@@ -223,12 +258,6 @@ make check-all -C BUILD || :
 %exclude %_man1dir/clang.1*
 %exclude %_man1dir/scan-build.1*
 
-%files libs
-%_libdir/libLLVM-*.so
-%_libdir/libLTO.so.*
-%_libdir/LLVMgold.so
-%exclude %_libdir/libclang.so.*
-
 %files devel
 %_bindir/llvm-config
 %_man1dir/llvm-config.1.*
@@ -237,13 +266,16 @@ make check-all -C BUILD || :
 %_libdir/libLLVM.so
 %_libdir/libLTO.so
 %_libdir/LLVMHello.so
+%_libdir/LLVMgold.so
 %_libdir/BugpointPasses.so
 %exclude %_libdir/libclang.so
 %_datadir/cmake/Modules/llvm
 
-%files devel-static
-%_libdir/*.a
-%exclude %_libdir/libclang*.a
+#%%if_enabled static
+#%%files devel-static
+#%%_libdir/*.a
+#%%exclude %_libdir/libclang*.a
+#%%endif
 
 %files doc
 %doc %_docdir/llvm
@@ -253,7 +285,6 @@ make check-all -C BUILD || :
 %_bindir/*clang*
 %_bindir/c-index-test
 %_libdir/clang
-%_libdir/libclang.so.*
 %_man1dir/clang.1*
 
 %files -n %clang_name-devel
@@ -262,8 +293,10 @@ make check-all -C BUILD || :
 %_libdir/libclang.so
 %_datadir/cmake/Modules/clang
 
-%files -n %clang_name-devel-static
-%_libdir/libclang*.a
+#%%if_enabled static
+#%%files -n %clang_name-devel-static
+#%%_libdir/libclang*.a
+#%%endif
 
 %files -n %clang_name-analyzer
 %_prefix/libexec/*-analyzer
@@ -275,8 +308,42 @@ make check-all -C BUILD || :
 
 %files -n %clang_name-doc
 %doc %_docdir/clang
+%endif # compat
+
+%files -n %clang_name-libs
+%_libdir/libclang.so.*
+
+%files libs
+%_libdir/libLLVM-*.so
+%_libdir/libLTO.so.*
 
 %changelog
+* Tue Mar 20 2018 L.A. Kostis <lakostis@altlinux.ru> 4.0.1-alt3.rel
+- .spec cleanups:
+  + don't pack llvm,clang and -devel for compat build.
+  + move clang libs to separate pkg.
+  + use macros for versioning.
+
+* Mon Mar 19 2018 L.A. Kostis <lakostis@altlinux.ru> 4.0.1-alt2.1.rel
+- Disable debuginfo verbosity for x86_64.
+- Use 'Release' as build target.
+
+* Mon Mar 19 2018 L.A. Kostis <lakostis@altlinux.ru> 4.0.1-alt2.rel
+- Prepare for llvm6.0:
+  + Enable compat flag (to coexists with other llvms).
+  + Don't pack clang.
+  + Don't pack -static libs.
+- Build time improvements:
+  + Use fixed number of build jobs.
+  + Use ninja build.
+  + Disable debuginfo verbosity on i586 (reduces memory consumption).
+- Move LLVMgold.so to -devel package (closes #34662).
+
+* Sun Feb 04 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.1-alt1.3.rel
+- Replaced X86 with native in the list of targets.
+- Added provides and obsoletes to replace old llvm packages and its
+  subpackages.
+
 * Thu Oct 19 2017 Igor Vlasenko <viy@altlinux.ru> 4.0.1-alt1.2.rel
 - NMU: changed CMake Modules install path
 
