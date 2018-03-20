@@ -1,36 +1,73 @@
-%global _unpackaged_files_terminate_build 1
+%define _unpackaged_files_terminate_build 1
 %define oname pytest
 
-%def_with python3
 %def_with docs
+%def_with check
 
 Name: python-module-%oname
-Version: 3.2.1
-Release: alt1
+Version: 3.4.2
+Release: alt1%ubt
+
 Summary: py.test, a simple and popular testing tool for Python
 License: MIT
 Group: Development/Python
+# Source-git: https://github.com/pytest-dev/pytest.git
 Url: https://pypi.python.org/pypi/pytest
 
-%py_requires py
+Source: %name-%version.tar
+Patch: %oname-3.2.1-alt-docs.patch
 
-BuildArch: noarch
-
-# https://github.com/pytest-dev/pytest.git
-Source: %name-%version.tar.gz
-Patch1: %oname-%version-alt-docs.patch
-
+BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-module-setuptools python-module-hypothesis python-module-setuptools_scm
-BuildRequires: git-core
-%if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools python3-module-hypothesis python3-module-setuptools_scm
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-setuptools_scm
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools_scm
+
+%if_with check
+BuildRequires: /dev/pts
+BuildRequires: python-module-argcomplete
+BuildRequires: python-module-attrs
+BuildRequires: python-module-decorator
+BuildRequires: python-module-funcsigs
+BuildRequires: python-module-hypothesis
+BuildRequires: python-module-mock
+BuildRequires: python-module-nose
+BuildRequires: python-module-numpy
+BuildRequires: python-module-pexpect
+BuildRequires: python-module-pluggy
+BuildRequires: python-module-requests
+BuildRequires: python-module-tox
+BuildRequires: python-module-virtualenv
+BuildRequires: python3-module-argcomplete
+BuildRequires: python3-module-attrs
+BuildRequires: python3-module-decorator
+BuildRequires: python3-module-funcsigs
+BuildRequires: python3-module-hypothesis
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-nose
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-pexpect
+BuildRequires: python3-module-pluggy
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-requests
+BuildRequires: python3-module-virtualenv
 %endif
+
 %if_with docs
+BuildRequires: python-module-attrs
+BuildRequires: python-module-numpy
+BuildRequires: python-module-funcsigs
+BuildRequires: python-module-pluggy
 BuildRequires(pre): rpm-macros-sphinx
 BuildPreReq: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-py
 %endif
+
+%py_requires py
+%py_requires funcsigs
+
+BuildArch: noarch
 
 %global long_desc is a command line tool to collect, run and report about\
 automated tests. It runs well on Linux, Windows and OSX and on Python\
@@ -64,15 +101,9 @@ before.
 This separate package has been made to track the dependencies on this
 additional executable.
 
-%if_with python3
-
 %package -n python3-module-%oname
 Summary: py.test3, the simple and popular testing tool for Python 3
 Group: Development/Python3
-%py3_requires py
-%add_python3_req_skip compiler
-%add_python3_req_skip py.io
-%add_python3_req_skip py.builtin
 
 %description -n python3-module-%oname
 py.test3 %long_desc
@@ -98,8 +129,6 @@ before (as /usr/bin/py.test-3.N).
 
 This separate package has been made to track the dependencies on this
 additional executable.
-
-%endif
 
 %package docs
 Summary: Documentation for py.test
@@ -133,18 +162,10 @@ This package contains pickles for py.test.
 
 %prep
 %setup
-%patch1 -p1
+%patch0 -p1
 
-git config --global user.email "darktemplar at altlinux.org"
-git config --global user.name "darktemplar"
-git init-db
-git add . -A
-git commit -a -m "%version"
-git tag %version -m "%version"
-
-%if_with python3
-cp -a . -T ../python3
-%endif
+rm -rf ../python3
+cp -a . ../python3
 
 %if_with docs
 %prepare_sphinx doc
@@ -152,44 +173,51 @@ ln -s ../objects.inv doc/en/
 %endif
 
 %build
+# SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
+# its used as the primary source for the version number in which
+# case it will be a unparsed string
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
-
-%if_with docs
-export PYTHONPATH=%buildroot%python_sitelibdir
-pushd doc/en
-%make html
-%make pickle
-popd
-%endif
 
 %install
-%if_with python3
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+
 pushd ../python3
 %python3_install
 mv %buildroot%_bindir/py.test -T %buildroot%_bindir/py.test3
 mv %buildroot%_bindir/pytest -T %buildroot%_bindir/pytest3
 popd
-%endif
 
 %python_install
 
 %if_with docs
+export PYTHONPATH=%buildroot%python_sitelibdir
+%make -C doc/en html
+%make -C doc/en pickle
+
 install -d %buildroot%python_sitelibdir/%oname
-cp -R doc/en/_build/pickle -t %buildroot%python_sitelibdir/%oname/
+cp -fR doc/en/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %check
-python setup.py test
-%if_with python3
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export PYTHONPATH=%buildroot%python_sitelibdir
+%buildroot%_bindir/pytest -v testing
+
 pushd ../python3
-python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+# due to
+# https://github.com/pytest-dev/pytest/issues/2673
+# run pdb/terminal tests separately from other
+%buildroot%_bindir/pytest3 -v testing \
+--ignore=testing/test_pdb.py --ignore=testing/test_terminal.py --ignore=testing/test_unittest.py
+%buildroot%_bindir/pytest3 -v \
+testing/test_pdb.py testing/test_terminal.py testing/test_unittest.py
 popd
-%endif
 
 %files
 %doc AUTHORS LICENSE *.rst
@@ -212,8 +240,6 @@ popd
 
 %endif
 
-%if_with python3
-
 %files -n python3-module-%oname
 %doc AUTHORS LICENSE *.rst
 %_bindir/py.test3
@@ -222,9 +248,10 @@ popd
 %files -n pytest3
 %_bindir/pytest3
 
-%endif
-
 %changelog
+* Tue Mar 20 2018 Stanislav Levin <slev@altlinux.org> 3.4.2-alt1%ubt
+- 3.2.1 -> 3.4.2
+
 * Wed Aug 16 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.1-alt1
 - Updated to upstream version 3.2.1.
 
