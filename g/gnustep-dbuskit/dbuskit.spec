@@ -2,7 +2,7 @@
 
 Name: gnustep-dbuskit
 Version: 0.3.2
-Release: alt7.svn20140131
+Release: alt7.svn20140131.2
 Summary: GNUstep interface to the DBUS data transport mechanism
 License: LGPLv2.1+
 Group: Development/Objective-C
@@ -12,9 +12,9 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # http://svn.gna.org/svn/gnustep/libs/dbuskit/trunk/
 Source: %name-%version.tar
 
-BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
+BuildPreReq: clang-devel >= 4.0.1 gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel libdbus-devel /proc
-BuildPreReq: texinfo texi2html texlive-latex-base
+BuildPreReq: texinfo texi2html
 
 Requires: lib%name = %version-%release
 Requires: gnustep-back
@@ -73,6 +73,7 @@ export CC=clang
 export OBJCPP='clang -E'
 export CPP='clang -E'
 %add_optflags -DHAVE_OBJC_RUNTIME_H
+%remove_optflags -frecord-gcc-switches
 %autoreconf
 for i in $(find ./ -type f); do
 	sed -i 's|[0-9a-z_]*alt-linux-gcc|clang|g' $i
@@ -148,6 +149,13 @@ popd
 %_docdir/GNUstep
 
 %changelog
+* Tue Mar 20 2018 L.A. Kostis <lakostis@altlinux.ru> 0.3.2-alt7.svn20140131.2
+- Rebuild with llvm6.0.
+- BR cleanup.
+
+* Mon Feb 05 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.2-alt7.svn20140131.1
+- Rebuilt with llvm4.0.
+
 * Mon Mar 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt7.svn20140131
 - New snapshot
 
