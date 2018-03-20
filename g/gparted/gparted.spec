@@ -4,15 +4,15 @@
 %def_disable usermode
 
 Name: gparted
-Version: 0.30.0
+Version: 0.31.0
 Release: alt1
 
 Summary: %Name Partition Editor
 Summary(ru_RU.UTF-8): Редактор разделов %Name
 Summary(uk_UA.UTF-8): Редактор розділів %Name
-License: %gpl2plus
 Group: System/Configuration/Hardware
-URL: http://%name.sourceforge.net/
+License: %gpl2plus
+Url: http://%name.sourceforge.net/
 
 #Source: %name-%version.tar
 Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
@@ -28,17 +28,18 @@ AutoReq: yes, noshell
 Requires: polkit >= %polkit_ver
 %{?_enable_usermode:Requires: consolehelper}
 Requires: hdparm
+Requires: dosfstools ntfs-3g btrfs-progs >= 4.1
+Requires: cryptsetup
 # for raid support
-Requires: mdadm dmraid dmsetup lvm2 cryptsetup
-#Requires: ntfs-3g btrfs-progs >= 4.1
+Requires: mdadm dmraid dmsetup lvm2
 # for UDF filesystems support
-#Requires: udftools
+Requires: udftools >= 2.0
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libparted-devel >= 3.2
 BuildRequires: libgtkmm2-devel >= 2.22.0
 BuildRequires: gcc-c++ libprogsreiserfs-devel libuuid-devel intltool
-BuildRequires: perl-XML-Parser gnome-doc-utils gnome-common librarian
+BuildRequires: perl-XML-Parser gnome-doc-utils
 BuildRequires: polkit >= %polkit_ver
 
 %description
@@ -115,6 +116,10 @@ sed -i 's|%_sbindir|%_bindir|' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Tue Mar 20 2018 Yuri N. Sedunov <aris@altlinux.org> 0.31.0-alt1
+- 0.31.0
+- updated requires
+
 * Thu Oct 12 2017 Yuri N. Sedunov <aris@altlinux.org> 0.30.0-alt1
 - 0.30.0
 - removed consolehelper support in favor of polkit
