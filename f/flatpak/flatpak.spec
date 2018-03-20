@@ -1,7 +1,7 @@
 %define _userunitdir /usr/lib/systemd/user
 
 Name: flatpak
-Version: 0.10.4
+Version: 0.11.3
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -129,8 +129,8 @@ rm -rf %buildroot%_docdir/%name/
 %_bindir/flatpak
 %_datadir/bash-completion
 %_datadir/dbus-1/services/org.freedesktop.Flatpak.service
-%_datadir/dbus-1/services/org.freedesktop.impl.portal.PermissionStore.service
-%_datadir/dbus-1/services/org.freedesktop.portal.Documents.service
+#_datadir/dbus-1/services/org.freedesktop.impl.portal.PermissionStore.service
+#_datadir/dbus-1/services/org.freedesktop.portal.Documents.service
 %_datadir/dbus-1/system-services/org.freedesktop.Flatpak.SystemHelper.service
 # Co-own directory.
 %_datadir/gdm/env.d
@@ -140,8 +140,8 @@ rm -rf %buildroot%_docdir/%name/
 %_libexecdir/flatpak-dbus-proxy
 %_libexecdir/flatpak-session-helper
 %_libexecdir/flatpak-system-helper
-%_libexecdir/xdg-document-portal
-%_libexecdir/xdg-permission-store
+#_libexecdir/xdg-document-portal
+#_libexecdir/xdg-permission-store
 %dir %_localstatedir/lib/flatpak
 %_man1dir/%{name}*.1*
 #exclude %_man1dir/flatpak-builder.*
@@ -149,8 +149,8 @@ rm -rf %buildroot%_docdir/%name/
 %_sysconfdir/profile.d/flatpak.sh
 %_unitdir/flatpak-system-helper.service
 %_userunitdir/flatpak-session-helper.service
-%_userunitdir/xdg-document-portal.service
-%_userunitdir/xdg-permission-store.service
+#_userunitdir/xdg-document-portal.service
+#_userunitdir/xdg-permission-store.service
 # Co-own directory.
 %_userunitdir/dbus.service.d
 %_man5dir/*
@@ -167,8 +167,8 @@ rm -rf %buildroot%_docdir/%name/
 %_libdir/libflatpak.so
 %_pkgconfigdir/%name.pc
 %_datadir/dbus-1/interfaces/org.freedesktop.Flatpak.xml
-%_datadir/dbus-1/interfaces/org.freedesktop.portal.Documents.xml
-%_datadir/dbus-1/interfaces/org.freedesktop.impl.portal.PermissionStore.xml
+#_datadir/dbus-1/interfaces/org.freedesktop.portal.Documents.xml
+#_datadir/dbus-1/interfaces/org.freedesktop.impl.portal.PermissionStore.xml
 
 %files -n lib%name
 %doc COPYING
@@ -176,6 +176,9 @@ rm -rf %buildroot%_docdir/%name/
 %_libdir/libflatpak.so.*
 
 %changelog
+* Tue Mar 20 2018 Vitaly Lipatov <lav@altlinux.ru> 0.11.3-alt1
+- new version 0.11.3 (with rpmrb script)
+
 * Sat Feb 24 2018 Vitaly Lipatov <lav@altlinux.ru> 0.10.4-alt1
 - new version 0.10.4 (with rpmrb script)
 
