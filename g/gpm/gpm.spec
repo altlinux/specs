@@ -1,10 +1,11 @@
 Name: gpm
 Version: 1.20.1
-Release: alt18
+Release: alt18.1
 
 Summary: A mouse server for the Linux console
 License: GPLv2+
 Group: System/Servers
+Url: http://www.nico.schottelius.org/software/gpm/
 
 # ftp://arcana.linux.it/pub/gpm/gpm-%version.tar.bz2
 Source: gpm-%version.tar
@@ -179,6 +180,9 @@ bzip2 -9 Changelog ||:
 %_man1dir/gpm-root.1*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.20.1-alt18.1
+- NMU: added URL
+
 * Mon Jan 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.20.1-alt18
 - Fixed build.
 
