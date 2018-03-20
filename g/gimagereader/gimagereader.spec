@@ -1,8 +1,8 @@
 %def_without qt4
 
 Name: gimagereader
-Version: 3.2.3
-Release: alt2
+Version: 3.2.99
+Release: alt1
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -17,7 +17,10 @@ Source: http://sourceforge.net/projects/gimagereader/files/%version/%name-%versi
 
 BuildRequires(pre): rpm-macros-cmake
 
-BuildRequires: cmake gcc-c++ ccmake git-core libgomp-devel libjson-glib-devel libsane-devel libxml++2-devel libleptonica-devel libpcre-devel libpixman-devel libexpat-devel libdrm-devel libpodofo-devel
+BuildRequires: cmake intltool gcc-c++ ccmake git-core
+BuildRequires: libgomp-devel libjson-glib-devel libsane-devel libxml++2-devel libleptonica-devel libpcre-devel libpixman-devel libexpat-devel libdrm-devel libpodofo-devel libdjvu-devel libzip-devel libuuid-devel tesseract-devel
+
+BuildRequires: python3 python3-module-pygobject3
 
 # something wrong
 # Package 'xrandr', required by 'GDK', not found
@@ -35,7 +38,7 @@ BuildRequires: libqt4-devel libqtspell-qt4-devel libpoppler-qt4-devel
 %endif
 
 # qt5
-BuildRequires: libqtspell-qt5-devel libpoppler-qt5-devel qt5-base-devel qt5-imageformats
+BuildRequires: libqtspell-qt5-devel libpoppler-qt5-devel qt5-base-devel libquazip-qt5-devel libquazip-qt5-devel qt5-imageformats
 
 # for compatibility
 Requires: %name-gtk
@@ -153,7 +156,7 @@ ln -s %name-gtk %buildroot%_bindir/%name
 
 %files common -f %name.lang
 %doc COPYING
-%doc AUTHORS ChangeLog NEWS README TODO
+%doc AUTHORS README.md
 %_iconsdir/hicolor/48x48/apps/%name.png
 %_iconsdir/hicolor/128x128/apps/%name.png
 %_iconsdir/hicolor/256x256/apps/%name.png
@@ -161,26 +164,29 @@ ln -s %name-gtk %buildroot%_bindir/%name
 
 %files gtk
 %_bindir/%name-gtk
-%_datadir/appdata/%name-gtk.appdata.xml
+%_datadir/metainfo/%name-gtk.appdata.xml
 %_desktopdir/%name-gtk.desktop
 %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 
 %if_with qt4
 %files qt4
 %_bindir/%name-qt4
-%_datadir/appdata/%name-qt4.appdata.xml
+#_datadir/appdata/%name-qt4.appdata.xml
 %_desktopdir/%name-qt4.desktop
 %endif
 
 %files qt5
 %_bindir/%name-qt5
-%_datadir/appdata/%name-qt5.appdata.xml
+%_datadir/metainfo/%name-qt5.appdata.xml
 %_desktopdir/%name-qt5.desktop
 
 %files
 %_bindir/%name
 
 %changelog
+* Tue Mar 20 2018 Vitaly Lipatov <lav@altlinux.ru> 3.2.99-alt1
+- new version 3.2.99 (with rpmrb script)
+
 * Thu Nov 02 2017 Andrew Savchenko <bircoph@altlinux.org> 3.2.3-alt2
 - Fix OpenMP detection: use native cmake's find_package
 - C++11 exceptions are not yet implemented in lcc.
