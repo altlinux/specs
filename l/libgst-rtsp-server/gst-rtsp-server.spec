@@ -1,5 +1,5 @@
 %define _name gst-rtsp-server
-%define ver_major 1.13
+%define ver_major 1.14
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
@@ -7,7 +7,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.91
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer-%api_ver RTSP server library
@@ -105,6 +105,9 @@ GObject introspection devel data for the GStreamer RTSP server library.
 
 
 %changelog
+* Tue Mar 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
+- 1.14.0
+
 * Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1.13.91-alt1
 - 1.13.91
 

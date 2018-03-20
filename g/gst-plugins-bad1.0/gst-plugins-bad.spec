@@ -10,7 +10,7 @@
 
 %define _name gst-plugins
 %define api_ver 1.0
-%define ver_major 1.13
+%define ver_major 1.14
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
@@ -18,7 +18,7 @@
 %def_enable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.91
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -53,6 +53,7 @@ BuildRequires: gobject-introspection-devel libgstreamer1.0-gir-devel
 BuildRequires: libvisual0.4-devel openexr-devel libx265-devel
 BuildRequires: libclutter-devel
 BuildRequires: libbs2b-devel
+#BuildRequires: libopenh264 >= 1.3.0
 %{?_enable_opencv:BuildRequires: libopencv-devel}
 %{?_enable_ladspa:BuildRequires: ladspa_sdk liblrdf-devel libfluidsynth-devel}
 %{?_enable_vulkan:BuildRequires: vulkan-devel}
@@ -118,6 +119,7 @@ subst 's/\(opencv <= 3\.\)3.0/\14.0/' configure.ac
 %_typelibdir/GstInsertBin-%api_ver.typelib
 %_typelibdir/GstMpegts-%api_ver.typelib
 %_typelibdir/GstPlayer-%api_ver.typelib
+%_typelibdir/GstWebRTC-%api_ver.typelib
 %_datadir/gstreamer-%api_ver/presets/GstVoAmrwbEnc.prs
 %_datadir/gstreamer-%api_ver/presets/GstFreeverb.prs
 %if_enabled opencv
@@ -132,6 +134,7 @@ subst 's/\(opencv <= 3\.\)3.0/\14.0/' configure.ac
 %_girdir/GstInsertBin-%api_ver.gir
 %_girdir/GstMpegts-%api_ver.gir
 %_girdir/GstPlayer-%api_ver.gir
+%_girdir/GstWebRTC-%api_ver.gir
 
 %if_enabled gtk_doc
 %files doc
@@ -140,6 +143,9 @@ subst 's/\(opencv <= 3\.\)3.0/\14.0/' configure.ac
 %endif
 
 %changelog
+* Tue Mar 20 2018 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
+- 1.14.0
+
 * Wed Mar 14 2018 Yuri N. Sedunov <aris@altlinux.org> 1.13.91-alt1
 - 1.13.91
 
