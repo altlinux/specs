@@ -2,8 +2,8 @@
 %define module Text-Template
 
 Name: perl-Text-Template
-Version: 1.51
-Release: alt1.1
+Version: 1.52
+Release: alt1
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
@@ -46,6 +46,9 @@ ages functional separation.
 %perl_vendor_privlib/Text*
 
 %changelog
+* Tue Mar 20 2018 Igor Vlasenko <viy@altlinux.ru> 1.52-alt1
+- automated CPAN update
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.51-alt1.1
 - NMU: added URL
 
