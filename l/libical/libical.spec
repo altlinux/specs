@@ -11,7 +11,7 @@
 
 Name: libical
 Version: 3.0.3
-Release: alt1
+Release: alt2
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
@@ -31,6 +31,7 @@ BuildRequires: cmake gcc-c++ ctest gtk-doc libicu-devel icu-utils tzdata
 %{?_with_bdb:BuildRequires: libdb4-devel}
 %{?_enable_ical_glib:BuildRequires: libgio-devel libxml2-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_check:BuildRequires: python3-module-pygobject3}
 
 %description
 Libical is an Open Source implementation of the IETF's iCalendar
@@ -185,6 +186,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 
 
 %changelog
+* Tue Mar 20 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.3-alt2
+- fixed buildreqs
+
 * Thu Mar 01 2018 Yuri N. Sedunov <aris@altlinux.org> 3.0.3-alt1
 - 3.0.3
 
