@@ -6,8 +6,8 @@
 Name: range-v3
 
 Summary: Experimental range library for C++11/14/17
-Version: 0.3.0
-Release: alt1.%{date}git%{shortcommit0}
+Version: 0.3.5
+Release: alt1
 
 License: Boost
 Group: Development/C++
@@ -47,6 +47,9 @@ cp -a include/* "%buildroot%_includedir/%name"
 %_includedir/%name
 
 %changelog
+* Tue Mar 20 2018 Vitaly Lipatov <lav@altlinux.ru> 0.3.5-alt1
+- new version 0.3.5 (with rpmrb script)
+
 * Sun Dec 03 2017 Vitaly Lipatov <lav@altlinux.ru> 0.3.0-alt1.20171112git0b0dd88
 - initial build for ALT Sisyphus
 
