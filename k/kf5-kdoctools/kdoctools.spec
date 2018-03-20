@@ -1,7 +1,7 @@
 %define rname kdoctools
 
 Name: kf5-%rname
-Version: 5.42.0
+Version: 5.44.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -9,6 +9,8 @@ Group: System/Libraries
 Summary: KDE Frameworks 5 creating documentation from DocBook
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+Requires: docbook-style-xsl
 
 Source: %rname-%version.tar
 Patch1: alt-find-docbookxml.patch
@@ -37,7 +39,6 @@ Group: Development/KDE and QT
 Summary: Development files for %name
 Requires: %name-common = %version-%release
 Requires: %name
-Requires: docbook-style-xsl
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -91,6 +92,9 @@ KF5 library
 %_K5lib/libKF5DocTools.so.*
 
 %changelog
+* Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1%ubt
+- new version
+
 * Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt1%ubt
 - new version
 

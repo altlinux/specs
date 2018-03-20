@@ -1,7 +1,7 @@
 %define rname kdesu
 
 Name: kf5-%rname
-Version: 5.42.0
+Version: 5.44.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -13,7 +13,6 @@ License: GPLv2+ / LGPLv2+
 Source: %rname-%version.tar
 Patch1: alt-dont-close-pty.patch
 Patch2: alt-export-vars.patch
-Patch3: alt-defaults.patch
 
 # Automatically added by buildreq on Fri Feb 13 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-x11extras libqt5-xml libstdc++-devel python-base ruby ruby-stdlibs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -58,7 +57,6 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 %K5build \
@@ -86,6 +84,9 @@ KF5 library
 %_K5lib/libKF5Su.so.*
 
 %changelog
+* Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1%ubt
+- new version
+
 * Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt1%ubt
 - new version
 

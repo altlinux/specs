@@ -1,7 +1,7 @@
 %define rname kimageformats
 
 Name: kf5-%rname
-Version: 5.42.0
+Version: 5.44.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -54,6 +54,9 @@ Requires: kf5-filesystem
 
 
 %changelog
+* Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1%ubt
+- new version
+
 * Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt1%ubt
 - new version
 

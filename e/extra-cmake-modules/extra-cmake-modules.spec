@@ -1,11 +1,12 @@
+%define rname extra-cmake-modules
 
 %ifarch e2k
 %add_python_req_skip clang
 %endif
 
 Name: extra-cmake-modules
-Version: 5.42.0
-Release: alt3%ubt
+Version: 5.44.0
+Release: alt1%ubt
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
@@ -60,6 +61,9 @@ sed -i -r 's, (-fno-operator-names|-Wvla),,' kde-modules/KDECompilerSettings.cma
 %doc %_man7dir/*
 
 %changelog
+* Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1%ubt
+- new version
+
 * Mon Mar 19 2018 Oleg Solovyov <mcpain@altlinux.org> 5.42.0-alt3%ubt
 - find clang library
 
