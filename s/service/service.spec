@@ -1,10 +1,11 @@
 Name: service
 Version: 0.5.29
-Release: alt1
+Release: alt1.1
 
 Summary: The service start/stop scripts
 License: GPLv2+
 Group: System/Base
+Url: http://git.altlinux.org/people/ldv/packages/service.git
 
 Source: %name-%version.tar
 Source1: list.functions-compat
@@ -118,6 +119,9 @@ fi
 %config(noreplace) %_sysconfdir/sysconfig/limits
 
 %changelog
+* Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.29-alt1.1
+- NMU: added URL
+
 * Thu Mar 01 2018 Ivan Zakharyaschev <imz@altlinux.org> 0.5.29-alt1
 - Fixed the typo in su invocation introduced in 0.5.28-alt1 (ALT#34500).
 
