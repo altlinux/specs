@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBD-ODBC
 Name: perl-%dist
-Version: 1.56
-Release: alt1.1.1
+Version: 1.58
+Release: alt1
 
 Summary: Perl DBD module for interfacing with ODBC databases
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MJ/MJEVANS/DBD-ODBC-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MJ/MJEVANS/%{dist}-%{version}.tar.gz
 Patch: perl-DBD-ODBC-1.29-alt-pod.patch
 
 # Automatically added by buildreq on Fri Oct 07 2011
@@ -20,7 +20,7 @@ This module is needed to access ODBC databases from within Perl.
 The module uses the unixODBC manager to connect to the database.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch -p1
 
 %build
@@ -30,6 +30,7 @@ The module uses the unixODBC manager to connect to the database.
 %perl_vendor_install
 
 %files
+%doc README.informix README.osx README.RH9 README.windows README.unicode Changes README README.sqlserver test_results.txt if_you_are_taking_over_this_code.txt README.af FAQ README.adabas README.hpux examples
 %dir	%perl_vendor_archlib/DBD
 	%perl_vendor_archlib/DBD/ODBC.pm
 %dir	%perl_vendor_archlib/DBD/ODBC
@@ -37,6 +38,9 @@ The module uses the unixODBC manager to connect to the database.
 	%perl_vendor_autolib/DBD
 
 %changelog
+* Tue Mar 20 2018 Igor Vlasenko <viy@altlinux.ru> 1.58-alt1
+- automated CPAN update
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.56-alt1.1.1
 - rebuild with new perl 5.26.1
 
