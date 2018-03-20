@@ -1,22 +1,26 @@
+%global v_major 6.0
 %global llvm_svnrel %nil
 %global clang_svnrel %nil
-%global rel alt0.4
-%global llvm_name llvm6.0
-%global clang_name clang6.0
+%global rel alt0.7
+%global llvm_name llvm%v_major
+%global clang_name clang%v_major
 %global lld_name lld
 
-%ifndef build_parallel_jobs
-%global build_parallel_jobs 7
-%endif
+# Decrease debuginfo verbosity to reduce memory consumption during final library linking
+%global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
 
-# do not overscale this on systems with less cores
-# FIXME! Maybe this is not needed with clang/LTO=thin?
-%if %__nprocs > %build_parallel_jobs
-%define build_parallel_jobs %__nprocs
+%ifndef build_parallel_jobs
+%global build_parallel_jobs 8
 %endif
 
 %def_disable tests
-%def_without clang
+%def_with clang
+
+# do not overscale this on systems with less cores
+# on i586 and maybe on memory constrained x86_64
+#%%if %__nprocs < %build_parallel_jobs
+#%%define build_parallel_jobs %__nprocs
+#%%endif
 
 Name: %llvm_name
 Version: 6.0.0
@@ -29,11 +33,16 @@ Url: http://llvm.org
 Source0: http://llvm.org/releases/%version/llvm-%version.tar
 Source1: http://llvm.org/releases/%version/clang-%version.tar
 Source2: http://llvm.org/releases/%version/lld-%version.tar
+Source3: http://llvm.org/releases/%version/compiler-rt-%version.tar
 Patch:  clang-alt-i586-fallback.patch
 Patch1: clang-alt-triple.patch
 Patch2: llvm-alt-cmake-path.patch
 Patch3: llvm-alt-fix-linking.patch
 Patch4: llvm-alt-triple.patch
+Patch5: compiler-rt-alt-i586-arch.patch
+Patch6: RH-0001-CMake-Split-static-library-exports-into-their-own-ex.patch
+Patch7: 0001-DebugInfo-Discard-invalid-DBG_VALUE-instructions-in-.patch
+Patch8: 0001-Fixup-for-rL326769-RegState-Debug-is-being-truncated.patch
 
 # ThinLTO requires /proc/cpuinfo to exists so the same does llvm
 BuildPreReq: /proc
@@ -45,16 +54,17 @@ BuildRequires: python-modules-json zip zlib-devel
 BuildRequires: python-module-sphinx-devel binutils-devel
 BuildRequires: ninja-build
 %if_with clang
-BuildRequires: clang6.0 llvm6.0-devel lld
+BuildRequires: %clang_name %llvm_name-devel %lld_name
 # FIXME!!
 # this should be fixed in rpm macros
-%define cflags -pipe -Wall -g -O2
+%remove_optflags -frecord-gcc-switches
+
 %else
 BuildRequires: gcc-c++
-%endif
+%endif #with clang
 
 Provides: llvm = %EVR
-Conflicts: llvm <= 4.0.1
+Obsoletes: llvm <= 4.0.1
 
 %description
 LLVM is a compiler infrastructure designed for compile-time, link-time,
@@ -67,7 +77,7 @@ Group: Development/C
 Summary: Libraries and header files for LLVM
 Provides: llvm-devel = %EVR
 Obsoletes: llvm-devel <= 4.0.1
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains library and header files needed to develop new
@@ -78,7 +88,7 @@ Summary: Static libraries for LLVM
 Group: Development/C
 Provides: llvm-devel-static = %EVR
 Obsoletes: llvm-devel-static <= 4.0.1
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 This package contains static libraries needed to develop new
@@ -97,7 +107,6 @@ Group: Documentation
 BuildArch: noarch
 Provides: llvm-doc = %EVR
 Obsoletes: llvm-doc <= 4.0.1
-Requires: %name = %version-%release
 
 %description doc
 Documentation for the LLVM compiler infrastructure.
@@ -108,7 +117,6 @@ License: NCSA
 Group: Development/C
 Requires: gcc
 Provides: clang = %EVR
-Conflicts: clang <= 4.0.1
 Obsoletes: clang <= 4.0.1
 
 %description -n %clang_name
@@ -121,12 +129,19 @@ The goal of the Clang project is to create a new C, C++, Objective C
 and Objective C++ front-end for the LLVM compiler. Its tools are built
 as libraries and designed to be loosely-coupled and extendable.
 
+%package -n %clang_name-libs
+Group: Development/C
+Summary: clang shared libraries
+
+%description -n %clang_name-libs
+Shared libraries for the clang compiler.
+
 %package -n %clang_name-devel
 Summary: Header files for clang
 Group: Development/C
 Provides: clang-devel = %EVR
 Obsoletes: clang-devel <= 4.0.1
-Requires: %clang_name = %version-%release
+Requires: %clang_name = %EVR
 
 %description -n %clang_name-devel
 This package contains header files for the Clang compiler.
@@ -136,7 +151,7 @@ Summary: Static libraries for clang
 Group: Development/C
 Provides: clang-devel-static = %EVR
 Obsoletes: clang-devel-static <= 4.0.1
-Requires: %clang_name = %version-%release
+Requires: %clang_name = %EVR
 
 %description -n %clang_name-devel-static
 This package contains static libraries for the Clang compiler.
@@ -148,7 +163,7 @@ Group: Development/C
 BuildArch: noarch
 Provides: clang-analyzer = %EVR
 Obsoletes: clang-analyzer <= 4.0.1
-Requires: %clang_name = %version-%release
+Requires: %clang_name = %EVR
 
 %description -n %clang_name-analyzer
 The Clang Static Analyzer consists of both a source code analysis
@@ -162,7 +177,6 @@ Group: Documentation
 BuildArch: noarch
 Provides: clang-doc = %EVR
 Obsoletes: clang-doc <= 4.0.1
-Requires: %clang_name = %version-%release
 
 %description -n %clang_name-doc
 Documentation for the Clang compiler front-end.
@@ -171,7 +185,7 @@ Documentation for the Clang compiler front-end.
 Summary: LLD - The LLVM Linker
 License: NCSA
 Group: Development/C
-Provides: lld = %EVR
+Provides: lld%v_major = %EVR
 
 %description -n %lld_name
 LLD is a linker from the LLVM project. That is a drop-in replacement for system
@@ -181,8 +195,8 @@ useful for toolchain developers.
 %package -n %lld_name-devel
 Summary: Header files for LLD
 Group: Development/C
-Provides: lld-devel = %EVR
-Requires: %lld_name = %version-%release
+Provides: lld%v_major-devel = %EVR
+Requires: %lld_name = %EVR
 
 %description -n %lld_name-devel
 This package contains header files for the LLD linker.
@@ -191,28 +205,31 @@ This package contains header files for the LLD linker.
 Summary: Documentation for LLD
 Group: Documentation
 BuildArch: noarch
-Provides: lld-doc = %EVR
-Requires: %lld_name = %version-%release
+Provides: lld%v_major-doc = %EVR
 
 %description -n %lld_name-doc
 Documentation for the LLD linker.
 
 %prep
-%setup -n llvm-%version -a1 -a2
-mv clang-%version tools/clang
-mv lld-%version tools/lld
+%setup -n llvm-%version -a1 -a2 -a3
+for pkg in clang lld; do
+   mv $pkg-%version tools/$pkg
+done
+mv compiler-rt-%version projects/compiler-rt
 %patch -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
 
 %build
-# force off shared libs as cmake macros turns it on.
 %cmake -G Ninja \
+	-DCMAKE_BUILD_TYPE=Release \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
-	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
-        -DCMAKE_SHARED_LINKER_FLAGS="-Wl,-Bsymbolic" \
 	-DLLVM_TARGETS_TO_BUILD="host;AMDGPU;BPF;" \
 	-DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD='AVR' \
 	-DLLVM_ENABLE_LIBCXX:BOOL=OFF \
@@ -225,8 +242,6 @@ mv lld-%version tools/lld
 	-DLLVM_ENABLE_LTO=Thin \
 	-DCMAKE_C_COMPILER=clang \
 	-DCMAKE_CXX_COMPILER=clang++ \
-	-DCMAKE_C_FLAGS:STRING="%cflags" \
-	-DCMAKE_CXX_FLAGS:STRING="%cflags" \
 	-DCMAKE_RANLIB:PATH=%_bindir/llvm-ranlib \
 	-DCMAKE_AR:PATH=%_bindir/llvm-ar \
 	-DCMAKE_NM:PATH=%_bindir/llvm-nm \
@@ -237,6 +252,7 @@ mv lld-%version tools/lld
 	-DCMAKE_AR:PATH=%_bindir/gcc-ar \
 	-DCMAKE_NM:PATH=%_bindir/gcc-nm \
 	-DCMAKE_RANLIB:PATH=%_bindir/gcc-ranlib \
+	-DCMAKE_SHARED_LINKER_FLAGS="-Wl,-Bsymbolic" \
 	%endif
 	\
 	%if "%_lib" == "lib64"
@@ -268,7 +284,6 @@ mv lld-%version tools/lld
 	-DLLVM_BUILD_LLVM_DYLIB:BOOL=ON \
 	-DLLVM_DYLIB_EXPORT_ALL:BOOL=ON \
 	-DLLVM_LINK_LLVM_DYLIB:BOOL=ON \
-	-DLLVM_BUILD_EXTERNAL_COMPILER_RT:BOOL=ON \
 	-DLLVM_INSTALL_TOOLCHAIN_ONLY:BOOL=OFF
 
 ninja \
@@ -297,7 +312,7 @@ file %buildroot%_libdir/*.so | awk -F: '$2~/ELF/{print $1}' | xargs -r chrpath -
 %if_enabled tests
 LD_LIBRARY_PATH=%buildroot%_libdir:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH
-ninja -C BUILD check || :
+ninja -C BUILD check-all || :
 %endif
 
 %files
@@ -318,7 +333,7 @@ ninja -C BUILD check || :
 %files libs
 %_libdir/libLLVM-*.so
 %_libdir/libLTO.so.*
-%_libdir/LLVMgold.so
+%exclude %_libdir/LLVMgold.so
 %exclude %_libdir/libclang.so.*
 
 %files devel
@@ -328,6 +343,7 @@ ninja -C BUILD check || :
 %_includedir/llvm-c
 %_libdir/libLLVM.so
 %_libdir/libLTO.so
+%_libdir/LLVMgold.so
 %_libdir/LLVMHello.so
 %_libdir/BugpointPasses.so
 %exclude %_libdir/libclang.so
@@ -345,8 +361,10 @@ ninja -C BUILD check || :
 %_bindir/*clang*
 %_bindir/c-index-test
 %_libdir/clang
-%_libdir/libclang.so.*
 %_man1dir/clang.1*
+
+%files -n %clang_name-libs
+%_libdir/libclang.so.*
 
 %files -n %clang_name-devel
 %_includedir/clang
@@ -381,6 +399,30 @@ ninja -C BUILD check || :
 %doc %_docdir/lld
 
 %changelog
+* Tue Mar 20 2018 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.7.rel
+- Reduce debuginfo for x86_64.
+- Use 'Release' build on x86_64.
+- Fix provides/obsoletes.
+- Move clang libs to separate pkg (to ease future migrations).
+
+* Thu Mar 15 2018 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.6.rel
+- Bootstrap with clang, lld and ThinLTO.
+- .spec: sync with RH
+  + 0001-DebugInfo-Discard-invalid-DBG_VALUE-instructions-in-.patch
+  + 0001-Fixup-for-rL326769-RegState-Debug-is-being-truncated.patch
+  + RH-0001-CMake-Split-static-library-exports-into-their-own-ex.patch
+- .spec: move gold plugin to -devel (tnx to legion@)
+- Build changes:
+  + Reduce memory consumption on x86:
+    + Reduce amount of debuginfo (use -g1)
+    + Use Release as build target.
+  + Use compiler-rt (instead of libgcc).
+  + Use 8 build jobs.
+
+* Mon Mar 12 2018 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.5.rel
+- Test build using clang and lld.
+- Increase build jobs number to 16 (thanks to lld/thinLTO).
+
 * Sun Mar 11 2018 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.4.rel
 - Prepare for LLD/clang build bootstrap.
 
@@ -389,7 +431,7 @@ ninja -C BUILD check || :
 
 * Sat Mar 10 2018 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.2.rel
 - Added flag to build with clang (should reduce memory usage for LTO).
-- Reduce build jobs (workaround to reduce memory consumtion).
+- Reduce build jobs (workaround to reduce memory consumption).
 
 * Fri Mar 09 2018 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.1.rel
 - Updated to 6.0.0 release.
