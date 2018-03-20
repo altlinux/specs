@@ -1,5 +1,5 @@
 Name: altlinux-mime-defaults
-Version: 0.43
+Version: 0.431
 Release: alt1
 
 Summary: System-wide MIME preferences.
@@ -45,6 +45,9 @@ touch %buildroot/%_desktopdir/defaults.list
 %_datadir/mate/applications/defaults.list
 
 %changelog
+* Tue Mar 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.431-alt1
+- updated mime defaults for new GNOME
+
 * Fri Mar 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.43-alt1
 - cleaned up deprecated handlers
 
