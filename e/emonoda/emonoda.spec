@@ -1,14 +1,14 @@
 %define modulename emonoda
 
 Name: emonoda
-Version: 1.9.19
-Release: alt1.1
+Version: 2.0.48
+Release: alt1
 
 Summary: The set of tools to organize and management of your torrents
 
 Group: File tools
 License: GPLv3
-Url: http://github.com/mdevaev/rtfetch.git
+Url: https://github.com/mdevaev/emonoda
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -45,17 +45,20 @@ The set of tools to organize and management of your torrents.
 
 %files
 %_bindir/emdiff
-%_bindir/emfetch
 %_bindir/emfile
 %_bindir/emfind
 %_bindir/emload
 %_bindir/emrm
-%_bindir/emhook-manage-trackers
+%_bindir/emtest-confetti
+%_bindir/emupdate
 
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Tue Mar 20 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.48-alt1
+- new version 2.0.48 (with rpmrb script)
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.9.19-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
