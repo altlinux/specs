@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20171117
+%define orig_timestamp 20180312
 
 Name: firmware-intel-ucode
-Version: 3
-Release: alt3.%orig_timestamp
+Version: 4
+Release: alt1.%orig_timestamp
 Epoch: 2
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
@@ -48,6 +48,39 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Tue Mar 20 2018 L.A. Kostis <lakostis@altlinux.ru> 2:4-alt1.20180312
+- Update to 20180312.
+  + New Microcodes:
+    sig 0x00050653, pf_mask 0x97, 2018-01-29, rev 0x1000140, size 30720
+    sig 0x00050665, pf_mask 0x10, 2018-01-22, rev 0xe000009, size 18432
+  + Updated Microcodes:
+    sig 0x000206a7, pf_mask 0x12, 2018-02-07, rev 0x002d, size 12288
+    sig 0x000206d6, pf_mask 0x6d, 2018-01-30, rev 0x061c, size 18432
+    sig 0x000206d7, pf_mask 0x6d, 2018-01-26, rev 0x0713, size 19456
+    sig 0x000306a9, pf_mask 0x12, 2018-02-07, rev 0x001f, size 13312
+    sig 0x000306c3, pf_mask 0x32, 2018-01-21, rev 0x0024, size 23552
+    sig 0x000306d4, pf_mask 0xc0, 2018-01-18, rev 0x002a, size 18432
+    sig 0x000306e4, pf_mask 0xed, 2018-01-25, rev 0x042c, size 15360
+    sig 0x000306e7, pf_mask 0xed, 2018-02-16, rev 0x0713, size 16384
+    sig 0x000306f2, pf_mask 0x6f, 2018-01-19, rev 0x003c, size 33792
+    sig 0x000306f4, pf_mask 0x80, 2018-01-22, rev 0x0011, size 17408
+    sig 0x00040651, pf_mask 0x72, 2018-01-18, rev 0x0023, size 21504
+    sig 0x00040661, pf_mask 0x32, 2018-01-21, rev 0x0019, size 25600
+    sig 0x00040671, pf_mask 0x22, 2018-01-21, rev 0x001d, size 12288
+    sig 0x000406e3, pf_mask 0xc0, 2017-11-16, rev 0x00c2, size 99328
+    sig 0x00050654, pf_mask 0xb7, 2018-01-26, rev 0x2000043, size 28672
+    sig 0x00050662, pf_mask 0x10, 2018-01-22, rev 0x0015, size 31744
+    sig 0x00050663, pf_mask 0x10, 2018-01-22, rev 0x7000012, size 22528
+    sig 0x00050664, pf_mask 0x10, 2018-01-22, rev 0xf000011, size 22528
+    sig 0x000506c9, pf_mask 0x03, 2017-03-25, rev 0x002c, size 16384
+    sig 0x000506e3, pf_mask 0x36, 2017-11-16, rev 0x00c2, size 99328
+    sig 0x000706a1, pf_mask 0x01, 2017-10-31, rev 0x001e, size 72704
+    sig 0x000806e9, pf_mask 0xc0, 2018-01-21, rev 0x0084, size 98304
+    sig 0x000806ea, pf_mask 0xc0, 2018-01-21, rev 0x0084, size 97280
+    sig 0x000906e9, pf_mask 0x2a, 2018-01-21, rev 0x0084, size 98304
+    sig 0x000906ea, pf_mask 0x22, 2018-01-21, rev 0x0084, size 96256
+    sig 0x000906eb, pf_mask 0x02, 2018-01-21, rev 0x0084, size 98304
+
 * Thu Feb 08 2018 Konstantin A. Lepikhov <lakostis@altlinux.ru> 2:3-alt3.20171117
 - Rollback microcode files back to 20171117 (debian changelog below):
   + Revert to release 20171117, as per Intel instructions issued to
