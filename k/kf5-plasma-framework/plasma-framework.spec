@@ -3,7 +3,7 @@
 %add_findreq_skiplist %_K5data/plasma/plasma_scriptengine_ruby/*.rb
 
 Name: kf5-%rname
-Version: 5.42.0
+Version: 5.44.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -23,7 +23,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: libGLU-devel
 BuildRequires: rpm-build-ruby
-BuildRequires: qt5-declarative-devel qt5-script-devel qt5-svg-devel qt5-x11extras-devel
+BuildRequires: qt5-declarative-devel qt5-script-devel qt5-svg-devel qt5-x11extras-devel qt5-quickcontrols2-devel
 BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel
 BuildRequires: kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdoctools kf5-kdoctools-devel-static
@@ -124,6 +124,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1%ubt
+- new version
+
 * Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt1%ubt
 - new version
 

@@ -1,8 +1,8 @@
 %define rname baloo
 
 Name: kf5-%rname
-Version: 5.42.0
-Release: alt2%ubt
+Version: 5.44.0
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -117,6 +117,9 @@ KF5 library
 %_K5lib/libKF5BalooEngine.so.*
 
 %changelog
+* Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1%ubt
+- new version
+
 * Mon Jan 22 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt2%ubt
 - package categories config
 
