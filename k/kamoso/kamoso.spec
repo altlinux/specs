@@ -1,14 +1,15 @@
 Name:           kamoso
-Version:        3.2.3
+Version:        3.2.4
 Release:        alt1
 
 Group:          Video
 Summary:        Application for taking pictures and videos from a webcam
-URL:            http://projects.kde.org/kamoso/
+URL:            https://userbase.kde.org/Kamoso
 
 License:        GPLv2+
 
 Source0:        %name-%version.tar
+Source1:	%name.watch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++
@@ -69,6 +70,10 @@ install -Dm0644 org.kde.kamoso.appdata.xml %buildroot%_datadir/appdata/org.kde.k
 %doc %_K5doc/*/%name
 
 %changelog
+* Wed Mar 21 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.4-alt1
+- New version.
+- Add watch file.
+
 * Sat Feb 25 2017 Andrey Cherepanov <cas@altlinux.org> 3.2.3-alt1
 - new version 3.2.3
 
