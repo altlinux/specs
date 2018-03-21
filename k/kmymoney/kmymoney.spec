@@ -1,6 +1,6 @@
 Name:    kmymoney
-Version: 5.0.0
-Release: alt2
+Version: 5.0.1
+Release: alt1
 
 Summary: A Personal Finance Manager for KDE4
 Summary(ru_RU.UTF-8): Учёт финансов под KDE4
@@ -60,7 +60,6 @@ BuildRequires: kf5-kdiagram-devel
 BuildRequires: kf5-kdewebkit-devel
 
 BuildRequires: boost-devel
-BuildRequires: doxygen
 BuildRequires: glib2-devel
 BuildRequires: libassuan-devel
 BuildRequires: ktoblzcheck-devel
@@ -81,6 +80,7 @@ BuildRequires: libspeex-devel
 BuildRequires: libxml++2-devel 
 BuildRequires: libxml2-devel
 BuildRequires: libsqlcipher-devel
+BuildRequires: python-module-weboob
 
 Requires: %name-i18n
 
@@ -256,8 +256,7 @@ Internationalization and documentation for KMyMoney
 %K5build -DCMAKE_SKIP_RPATH=1 \
          -DKDE_INSTALL_METAINFODIR=%_datadir/appdata \
          -DENABLE_WEBENGINE=OFF \
-         -DENABLE_SQLCIPHER=OFF \
-         -DUSE_HTML_HANDBOOK=1
+         -DENABLE_SQLCIPHER=OFF
 
 %install
 %K5install
@@ -268,7 +267,7 @@ Internationalization and documentation for KMyMoney
 %_K5bin/%name
 %_K5lib/libkmm_widgets.so.*
 %_K5lib/libkmm_mymoney.so.*
-%_K5lib/libkmm_icons.so
+%_K5lib/libkmm_icons.so.*
 %_K5lib/libkmm_plugin.so.*
 %_desktopdir/kf5/*%name.desktop
 %doc %_K5doc/en/*
@@ -279,7 +278,6 @@ Internationalization and documentation for KMyMoney
 %_datadir/mime/packages/*
 %_K5icon/hicolor/*/apps/%name.png
 %_K5icon/hicolor/*/mimetypes/application-x-kmymoney.png
-%_K5icon/*/*/actions/*.*
 %_datadir/kconf_update/%name.upd
 
 %files devel
@@ -313,7 +311,7 @@ Internationalization and documentation for KMyMoney
 %_qt5_plugindir/kmymoney/reconciliationreport.so
 
 %files csv
-%_libdir/libkmm_csvimportercore.so
+%_libdir/libkmm_csvimportercore.so*
 %_qt5_plugindir/kmymoney/csvimporter.so
 %_qt5_plugindir/kmymoney/kcm_csvimporter.so
 %_qt5_plugindir/kmymoney/csvexporter.so
@@ -347,15 +345,19 @@ Internationalization and documentation for KMyMoney
 %files weboob
 %_qt5_plugindir/kmymoney/weboob.so
 %_K5xmlgui/weboob
-%_datadir/weboob
 
 %files plugins
 
 %files i18n -f %name.lang
 %_datadir/%name/templates/*
+%_K5doc/*/kmymoney/
 %exclude %_K5doc/en
 
 %changelog
+* Wed Mar 21 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.1-alt1
+- New version.
+- Do not build API documentation.
+
 * Mon Mar 05 2018 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt2
 - Rebuild with libgwenhywfar-4.20.0.
 
