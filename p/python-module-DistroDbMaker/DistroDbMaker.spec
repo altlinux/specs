@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.007
+Version: 0.008
 Release: alt1
 Summary: DistroDb Maker tools
 License: LGPL2+
@@ -71,6 +71,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1
+- filtered out mageia multiarch dir
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.007-alt1
 - added filters
 
