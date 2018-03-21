@@ -1,91 +1,94 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pluggy
 
-%def_with python3
+%def_with check
 
 Name: python-module-%oname
-Version: 0.3.0
-Release: alt1.git20150528.2.1
+Version: 0.6.0
+Release: alt1%ubt
+
 Summary: Plugin and hook calling mechanisms for python
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/pluggy/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+# Source-git: https://github.com/pytest-dev/pluggy.git
+Url: https://pypi.python.org/pypi/pluggy
 
-# https://github.com/hpk42/pluggy.git
 Source: %name-%version.tar
-BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildRequires: python-module-pytest
-%if_with python3
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python-module-pytest
+BuildRequires: python-module-tox
+BuildRequires: python-module-virtualenv
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-virtualenv
 %endif
 
-%py_provides %oname
+BuildArch: noarch
 
 %description
 This is the plugin manager as used by pytest but stripped of pytest
 specific details.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Plugin and hook calling mechanisms for python
 Group: Development/Python3
-%py3_provides %oname
 
 %description -n python3-module-%oname
 This is the plugin manager as used by pytest but stripped of pytest
 specific details.
-%endif
 
 %prep
 %setup
-
-%if_with python3
-cp -fR . ../python3
-%endif
+# change py.test to python -m pytest
+# py.test execute tests out from tox virt env context, but
+# python -m pytest within
+sed -i '/^\[testenv\]$/ {N; s/\[testenv\]\ncommands=py.test/\[testenv\]\ncommands=python -m pytest/g;h};${x;/./{x;q0};x;q1}' tox.ini
+rm -rf ../python3
+cp -a . ../python3
 
 %build
-%python_build_debug
+%python_build
 
-%if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
-python setup.py test -v
-py.test -vv
-%if_with python3
+%define python_version_nodots() %(%1 -Esc "import sys; sys.stdout.write('{0.major}{0.minor}'.format(sys.version_info))")
+
+export PIP_INDEX_URL=http://host.invalid./
+tox --sitepackages -e py%{python_version_nodots python}-pytestrelease -v
+
 pushd ../python3
-python3 setup.py test -v
-py.test3 -vv
+tox.py3 --sitepackages -e py%{python_version_nodots python3}-pytestrelease -v
 popd
-%endif
 
 %files
-%doc CHANGELOG *.rst
+%doc LICENSE *.rst
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%oname
-%doc CHANGELOG *.rst
+%doc LICENSE *.rst
 %python3_sitelibdir/*
-%endif
 
 %changelog
+* Tue Mar 20 2018 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1%ubt
+- 0.3.0 -> 0.6.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1.git20150528.2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
