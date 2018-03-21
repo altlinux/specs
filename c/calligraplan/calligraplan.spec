@@ -18,13 +18,14 @@
 
 Name: calligraplan
 Version: 3.1.0
-Release: alt2%ubt
+Release: alt3
 Epoch: 0
 %K5init
 
 Group: Office
 Summary: A project planner
 License: GPLv2+ / LGPLv2+
+Url: https://www.calligra.org/plan/
 Provides: koffice-kplato = %koffice_ver
 Obsoletes: koffice-kplato < %koffice_ver
 Requires: %oname-common = %version-%release
@@ -257,6 +258,9 @@ rm -frv %buildroot/%_datadir/locale/x-test/
 %_K5lib/libplanworkfactory.so.*
 
 %changelog
+* Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 0:3.1.0-alt3
+- NMU: added url
+
 * Tue Mar 20 2018 Oleg Solovyov <mcpain@altlinux.org> 0:3.1.0-alt2%ubt
 - split libs
 - rename packages
