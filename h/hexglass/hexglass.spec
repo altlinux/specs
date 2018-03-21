@@ -1,10 +1,11 @@
 Name:		hexglass
 Version:	1.2.1
-Release:	alt1
+Release:	alt1.1
 Source:		%{name}-%{version}.tar.gz
 Summary:	Tetris-like puzzle game
 Group:		Games/Puzzles
 License:	GPLv3
+Url:		http://code.google.com/p/hexglass
 
 # Automatically added by buildreq on Thu Feb 17 2011
 BuildRequires: gcc-c++ libmpc libqt4-devel
@@ -36,6 +37,9 @@ qmake-qt4
 %_qt4dir/bin/*
 
 %changelog
+* Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1.1
+- NMU: added URL
+
 * Thu Feb 17 2011 Fr. Br. George <george@altlinux.ru> 1.2.1-alt1
 - Initial build from scratch
 
