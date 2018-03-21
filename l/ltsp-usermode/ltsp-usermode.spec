@@ -1,9 +1,10 @@
 Name: ltsp-usermode
 Version: 0.1
-Release: alt0.1
+Release: alt0.2
 Summary: LTSP usermode bindings for reboot, halt and poweroff
 License: GPL2
 Group: System/Configuration/Boot and Init
+Url: https://www.altlinux.org/LTSP
 Source0: ltsp-usermode-reboot.sh
 Source1: ltsp-usermode-poweroff.sh
 BuildArch: noarch
@@ -28,5 +29,8 @@ ln -sf reboot %buildroot%_bindir/halt
 
 
 %changelog
+* Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.1-alt0.2
+- NMU: added Url:
+
 * Wed Jun 27 2007 Led <led@altlinux.ru> 0.1-alt0.1
 - initial build
