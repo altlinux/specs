@@ -1,10 +1,11 @@
 Name: lldpd
 Version: 0.9.5
-Release: alt1
+Release: alt1.1
 Summary: Link Layer Discovery Protocol Daemon
 Source: %name-%version.tar
 Group: Networking/Other
 License: GPL
+Url: https://vincentbernat.github.io/lldpd/
 
 Source1: lldpd.init
 Source2: lldpd.sysconfig
@@ -165,6 +166,9 @@ fi
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.5-alt1.1
+- NMU: added URL
+
 * Sun Oct 23 2016 Afanasov Dmitry <ender@altlinux.org> 0.9.5-alt1
 - 0.9.5
 - switch from json-c to jannson: json-c too old
