@@ -2,9 +2,10 @@ Name: d52
 Version: 3.4.1
 License: GPL
 Group: Development/Other
-Release: alt1.qa2
+Release: alt1.qa3
+Url: http://www.brouhaha.com/~eric/software/d52/
 Source: %name.tar
-BuildPreReq: gcc
+BuildRequires: gcc
 Summary: D52 Microcontroller Disassemblers
 %description
 8051/8052/8035/8048/Z80 Disassemblers
@@ -27,6 +28,9 @@ mkdir -p obj
 # Another way is to rewrite the spec to use relative doc paths.
 %dir %_docdir/d52-%version 
 %changelog
+* Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 3.4.1-alt1.qa3
+- NMU: added Url
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.4.1-alt1.qa2
 - NMU: rebuilt for debuginfo.
 
