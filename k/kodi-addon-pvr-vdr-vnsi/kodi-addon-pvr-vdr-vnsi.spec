@@ -1,10 +1,11 @@
 Name: kodi-addon-pvr-vdr-vnsi
 Version: 17.0
-Release: alt1
+Release: alt1.1
 
 Summary: PVR VDR addon for Kodi
 License: GPL
 Group: Video
+Url: https://github.com/FernetMenta/pvr.vdr.vnsi/
 
 Source: %name-%version.tar
 
@@ -34,6 +35,9 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_INSTALL_LIBDIR=%_libdir/kodi
 %_datadir/kodi/addons/pvr.vdr.vnsi
 
 %changelog
+* Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 17.0-alt1.1
+- NMU: added URL
+
 * Mon Feb 06 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.0-alt1
 - updated for Krypton
 
