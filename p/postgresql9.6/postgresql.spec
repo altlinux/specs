@@ -1,11 +1,11 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
-%def_without devel
+%def_with devel
 
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     6
 %define postgresql_subminor  8
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -95,10 +95,9 @@ accessed through TCP/IP.
 Summary: Development shared library for %libpq_name
 Group: Development/Databases
 Requires: %libpq_name = %version-%release
-Provides: libpq-devel = %version-%release
 Conflicts: libpq-devel < %version-%release
 Conflicts: libpq-devel > %version-%release
-Provides: libpq%libpq_major-devel = %version-%release
+Provides: %libpq_name-devel = %version-%release
 Conflicts: libpq%libpq_major-devel < %version-%release
 Conflicts: libpq%libpq_major-devel > %version-%release
 
@@ -109,10 +108,9 @@ Development shared library for %libpq_name
 Summary: Development static library for %libpq_name
 Group: Development/Databases
 Requires: %libpq_name-devel = %version-%release
-Provides: libpq-devel-static = %version-%release
 Conflicts: libpq-devel-static < %version-%release
 Conflicts: libpq-devel-static > %version-%release
-Provides: libpq%libpq_major-devel-static = %version-%release
+Provides: %libpq_name-devel-static = %version-%release
 Conflicts: libpq%libpq_major-devel-static < %version-%release
 Conflicts: libpq%libpq_major-devel-static > %version-%release
 
@@ -140,10 +138,9 @@ Use postgresql-dev to develop such programs.
 Summary: Development shared library to %libecpg_name
 Group: Development/Databases
 Requires: %libecpg_name = %version-%release
-Provides: libecpg-devel = %version-%release
 Conflicts: libecpg-devel < %version-%release
 Conflicts: libecpg-devel > %version-%release
-Provides: libecpg%libecpg_major-devel = %version-%release
+Provides: %libecpg_name-devel = %version-%release
 Conflicts: libecpg%libecpg_major-devel < %version-%release
 Conflicts: libecpg%libecpg_major-devel > %version-%release
 
@@ -155,10 +152,9 @@ Postgres preprocessor.
 Summary: Development static library to %libecpg_name
 Group: Development/Databases
 Requires: %libecpg_name-devel = %version-%release
-Provides: libecpg-devel-static = %version-%release
 Conflicts: libecpg-devel-static < %version-%release
 Conflicts: libecpg-devel-static > %version-%release
-Provides: libecpg%libecpg_major-devel-static = %version-%release
+Provides: %libecpg_name-devel-static = %version-%release
 Conflicts: libecpg%libecpg_major-devel-static < %version-%release
 Conflicts: libecpg%libecpg_major-devel-static > %version-%release
 
@@ -219,7 +215,6 @@ to install the postgresql package.
 Summary: PostgreSQL development header files
 Group: Development/Databases
 Requires: %libpq_name-devel = %version-%release, %libecpg_name-devel = %version-%release
-Provides: postgresql-devel = %version-%release
 
 %description devel
 The postgresql-devel package contains the header files needed to compile applications
@@ -230,8 +225,7 @@ with a PostgreSQL server.
 %package devel-static
 Summary:  Development static library for postgresql-devel
 Group: Development/Databases
-Requires: postgresql-devel = %version-%release
-Provides: postgresql-devel-static = %version-%release
+Requires: %name-devel = %version-%release
 
 %description devel-static
 Development static library for postgresql-devel
@@ -800,6 +794,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Wed Mar 21 2018 Alexei Takaseev <taf@altlinux.org> 9.6.8-alt2
+- Enable build 9.6-devel subpackages
+
 * Fri Mar 02 2018 Alexei Takaseev <taf@altlinux.org> 9.6.8-alt1
 - 9.6.8
 - Fix CVE-2018-1058
