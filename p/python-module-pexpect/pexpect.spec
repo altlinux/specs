@@ -1,46 +1,65 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pexpect
 
-%def_with python3
-%def_disable check
+%def_with check
 
 Name: python-module-%oname
-Version: 4.2.1
-Release: alt1.1
-
-%setup_python_module %oname
+Version: 4.4
+Release: alt1%ubt
 
 Summary: Pexpect is a pure Python Expect. It allows easy control of other applications
-
 License: Python Software Foundation License
 Group: Development/Python
-Url: http://pexpect.sourceforge.net/
+# Source-git: https://github.com/pexpect/pexpect.git
+Url: https://pypi.python.org/pypi/pexpect
 
-# https://github.com/pexpect/pexpect.git
-Source0: https://pypi.python.org/packages/e8/13/d0b0599099d6cd23663043a2a0bb7c61e58c6ba359b2656e6fb000ef5b98/%{oname}-%{version}.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
+
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-module-objects.inv
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-ptyprocess
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-ptyprocess
+
+%if_with check
+BuildRequires: /dev/pts
+BuildRequires: man-db
+BuildRequires: openssl
+BuildRequires: python-module-pytest
+BuildRequires: python3-module-pytest
+%endif
 
 BuildArch: noarch
-
 Obsoletes: %oname < 0.999-alt6
 Provides: %oname
 
-%add_findreq_skiplist %python_sitelibdir/%oname/async.py
-
-BuildPreReq: python-devel python-module-setuptools /dev/pts
-BuildPreReq: python-module-pytest-cov python-module-ptyprocess
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-pytest-cov python3-module-ptyprocess
-%endif
-
-BuildPreReq: python-module-sphinx-devel
+%add_findreq_skiplist %python_sitelibdir/%oname/_async.py
 
 %description
 Pexpect is a pure Python module for spawning child applications; controlling
 them; and responding to expected patterns in their output. Pexpect works like
 Don Libes' Expect. Pexpect allows your script to spawn a child application and
 control it as if a human were typing commands.
+
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+This package contains tests for %oname.
+
+%package docs
+Summary: Documentation for %oname
+Group: Development/Documentation
+
+%description docs
+This package contains documentation for %oname.
 
 %package -n python3-module-%oname
 Summary: Pexpect is a pure Python Expect. It allows easy control of other applications
@@ -51,6 +70,14 @@ Pexpect is a pure Python module for spawning child applications; controlling
 them; and responding to expected patterns in their output. Pexpect works like
 Don Libes' Expect. Pexpect allows your script to spawn a child application and
 control it as if a human were typing commands.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+This package contains tests for %oname.
 
 %package pickles
 Summary: Pickles for Pexpect
@@ -65,11 +92,28 @@ control it as if a human were typing commands.
 This package contains pickles for Pexpect.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
+%patch0 -p1
 
-%if_with python3
-cp -fR . ../python3
-%endif
+rm -rf ../python3
+cp -a . ../python3
+
+pushd ../python3
+# change shebang python -> python3
+find -type f -name '*.py' | \
+	xargs sed -i '1s|#!/usr/bin/env python|#!/usr/bin/env python3|'
+xargs sed -i '1s|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+	tests/fakessh/ssh
+
+# fix print functions and other for python3
+find tests -type f -name '*.py' -exec 2to3 -f print -f imports -w -n '{}' +
+
+# change python -> python3 calls
+find tests -type f -name '*.py' | \
+	xargs sed -i 's/\(.*pexpect.spawn(\x27python\)\(\(\x27\| \)\)/\13\2/'
+sed -i 's|self.runfunc(\x27python exit1.py\x27|self.runfunc(\x27python3 exit1.py\x27|' \
+	tests/test_run.py
+popd
 
 %prepare_sphinx .
 ln -s ../objects.inv doc/
@@ -77,20 +121,18 @@ ln -s ../objects.inv doc/
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
+cp -fR tests %buildroot%python_sitelibdir/%oname/
 
-%if_with python3
 pushd ../python3
 %python3_install
+cp -fR tests %buildroot%python3_sitelibdir/%oname/
 popd
-%endif
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C doc pickle
@@ -99,28 +141,42 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
-py.test -vv --cov pexpect --cov-config .coveragerc
-%if_with python3
+export LC_ALL="en_US.UTF-8"
+
+py.test -v
+
 pushd ../python3
-py.test-%_python3_version -vv --cov pexpect --cov-config .coveragerc
+py.test3 -v
 popd
-%endif
 
 %files
-%doc LICENSE README.rst doc/_build/html examples PKG-INFO doc
+%doc LICENSE *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
+
+%files docs
+%doc doc/_build/html
+%doc examples
 
 %files pickles
 %python_sitelibdir/*/pickle
 
-%if_with python3
 %files -n python3-module-%oname
-%doc LICENSE README.rst doc/_build/html examples PKG-INFO doc
+%doc LICENSE *.rst
 %python3_sitelibdir/*
-%endif
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
 
 %changelog
+* Wed Mar 21 2018 Stanislav Levin <slev@altlinux.org> 4.4-alt1%ubt
+- 4.2.1 -> 4.4.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.2.1-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
