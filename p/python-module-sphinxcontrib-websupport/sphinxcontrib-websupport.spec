@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        1.0.1
-Release:        alt1
+Release:        alt2%ubt
 Summary:        Sphinx API for Web Apps
 License:        BSD
 Group:          Development/Python
@@ -14,6 +14,7 @@ URL:            http://sphinx-doc.org/
 # https://github.com/sphinx-doc/sphinxcontrib-websupport.git
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: python-dev python-module-docutils python-module-jinja2 python-module-mock python-module-pytest
 BuildRequires: python-module-setuptools python-module-six python-module-sphinx python2.7(sqlalchemy)
 BuildRequires: python-module-whoosh python-module-xapian
@@ -87,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 21 2018 Stanislav Levin <slev@altlinux.org> 1.0.1-alt2%ubt
+- Rebuild with new setuptools to fix namespace package
+
 * Thu Oct 12 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt1
 - Initial build for ALT.
 
