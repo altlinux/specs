@@ -1,10 +1,11 @@
 Name: kodi-platform
 Version: 17.0
-Release: alt1
+Release: alt1.1
 
 Summary: Kodi plugin development support
 License: GPL
 Group: Development/C++
+Url: https://github.com/xbmc/kodi-platform/
 
 Source: kodi-platform-%version.tar
 
@@ -47,6 +48,9 @@ make
 %_includedir//kodi/util
 
 %changelog
+* Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 17.0-alt1.1
+- NMU: added URL
+
 * Mon Feb 06 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.0-alt1
 - updated for Krypton
 
