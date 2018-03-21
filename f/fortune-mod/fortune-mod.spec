@@ -2,13 +2,12 @@
 
 Name: fortune-mod
 Version: 1.99.1
-Release: alt5.qa2
+Release: alt5.qa3
 
 Summary: A program which will display a fortune
 License: BSD
 Group: Games/Other
-
-Packager: Sir Raorn <raorn@altlinux.ru>
+Url: https://github.com/shlomif/fortune-mod
 
 Requires: fortune = %version-%release
 Requires: fortunes = %version-%release
@@ -106,6 +105,9 @@ tar xvf %SOURCE2 -C %buildroot%_gamesdatadir/fortune/
 %_gamesdatadir/fortune/off/*
 
 %changelog
+* Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 1.99.1-alt5.qa3
+- NMU: added URL
+
 * Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 1.99.1-alt5.qa2
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
