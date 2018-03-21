@@ -75,7 +75,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %{pybasever}.4
-Release: alt3
+Release: alt4
 License: Python
 Group: Development/Python3
 
@@ -903,7 +903,7 @@ ln -sfv \
    	%_bindir/python%pybasever%pyabi-config)" \
    %buildroot%_bindir/python%pybasever%pyabi-config
 
-%global python_ignored_files site-packages(/.+\.(pth|egg-info/(entry_points|namespace_packages)\.txt))?$
+%global python_ignored_files site-packages(/.+\\.(pth|egg-info(|/entry_points\\.txt|/namespace_packages\\.txt)))?$
 mkdir -p %buildroot%_sysconfdir/buildreqs/files/ignore.d
 cat > %buildroot%_sysconfdir/buildreqs/files/ignore.d/%name << EOF
 ^%_libdir/python3[^/]*/%python_ignored_files
@@ -1205,6 +1205,9 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %tool_dir/scripts/run_tests.py
 
 %changelog
+* Fri Mar 16 2018 Grigory Ustinov <grenka@altlinux.org> 3.5.4-alt4
+- Edit regular expression for ignore.d list. (thanks for imz@) (Closes: #34660)
+
 * Fri Feb 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.4-alt3
 - Fixed build with new glibc.
 
