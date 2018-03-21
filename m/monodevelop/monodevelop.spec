@@ -1,10 +1,10 @@
-# vim: set ft=spec: -*- rpm-spec -*-
+%define _unpackaged_files_terminate_build 1
 
 %def_disable tests
 
 Name: monodevelop
-Version: 6.1.2.44
-Release: alt3%ubt
+Version: 6.3.0.864
+Release: alt1%ubt
 
 Summary: MonoDevelop is a project to port SharpDevelop to Gtk#
 License: LGPLv2.1
@@ -12,39 +12,44 @@ Group: Development/Other
 Url: http://www.monodevelop.com/
 
 Source: %name-%version.tar
-Source1: external.tar.bz2
+Source1: external.tar.xz
 Source2: version.config
 Source3: buildinfo
 Source4: nuget-core.tar
 Source5: nuget-external-fsharpbinding.tar
-Source6: nuget-external-libgit2sharp.tar
-Patch0: %name-%version-alt-fixes.patch
+
+Patch1: %name-fix-rpm-autoreq.patch
+Patch2: %name-disable-nuget-and-git.patch
+Patch3: %name-update-rpm-autoreq.patch
+
+# based on https://github.com/mono/t4
+Patch4: %name-t4-fix-running-on-recent-mono-versions.patch
 
 # Remove missing dependencies
 %define __find_requires sh -c '/usr/lib/rpm/find-requires | sort | uniq | sed "/mono\(System\.Web\.DataVisualization\).*/d"'
 
-BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-ubt rpm-build-xdg
 BuildPreReq: rpm-build-mono >= 2.0.0
 BuildPreReq: mono-core >= 5.0.0.0
 BuildPreReq: mono-devel >= 5.0.0.0
 BuildPreReq: mono-monodoc-devel >= 1.0
 
-BuildRequires: intltool mono-core mono-web-devel mono-winforms
-BuildRequires: desktop-file-utils mono-nunit perl-XML-Parser shared-mime-info intltool
-BuildRequires: zip
+BuildRequires: mono-core mono-web-devel mono-devel-full
+BuildRequires: intltool /usr/bin/msgfmt
+BuildRequires: desktop-file-utils perl-XML-Parser shared-mime-info
+BuildRequires: zip unzip
 BuildRequires: /proc
 BuildRequires: xsp
 BuildRequires: autoconf automake cmake
 BuildRequires: fsharp libgtk-sharp2-devel libgnome-sharp-devel
-BuildRequires: libssh2-devel unzip
+BuildRequires: libssh2-devel
 BuildRequires: referenceassemblies-pcl
 
 Requires: mono-core
 Requires: mono-web
+Requires: mono-devel-full
 Requires: pkg-config
 Requires: xsp
-Requires: mono-devel-full
-Requires: mono-nunit
 Requires: git
 Requires: fsharp
 Requires: referenceassemblies-pcl
@@ -56,9 +61,12 @@ It was originally a port of SharpDevelop 0.98.
 
 %prep
 %setup -q -n %name-%version
-%patch0 -p1
+%patch1 -p2
+%patch2 -p2
+%patch3 -p2
+%patch4 -p2
 
-tar xjf %SOURCE1
+tar xJf %SOURCE1
 cp %SOURCE2 ./
 
 # Prepare build info: add current date to prebuilt file
@@ -75,7 +83,13 @@ for i in ../nuget-core/*.nupkg ; do
     mkdir $name
     pushd $name
     unzip ../$i
+    cp ../$i ./
     popd
+done
+
+# unzip unpacks filenames with %% sign as is. Convert it. TODO: make a more generic solution when necessary
+find . -iname '*%%2B*' | while read file ; do
+    mv $file $(echo $file | sed -e 's:%%2B:+:g') ||:
 done
 popd
 
@@ -89,19 +103,13 @@ for i in ../../../nuget-external-fsharpbinding/*.version.txt ; do
     mkdir $name
     pushd $name
     unzip ../$dir/${name}.${version}.nupkg
+    cp ../$dir/${name}.${version}.nupkg ./
     popd
 done
-popd
 
-tar xf %SOURCE6
-mkdir -p external/libgit2sharp/packages
-pushd external/libgit2sharp/packages
-for i in ../../../nuget-external-libgit2sharp/*.nupkg ; do
-    name=$(basename ${i%%.nupkg})
-    mkdir $name
-    pushd $name
-    unzip ../$i
-    popd
+# unzip unpacks filenames with %% sign as is. Convert it. TODO: make a more generic solution when necessary
+find . -iname '*%%2B*' | while read file ; do
+    mv $file $(echo $file | sed -e 's:%%2B:+:g') ||:
 done
 popd
 
@@ -124,6 +132,7 @@ sed -i \
     -e "s:@PACKAGE_VERSION_LABEL@:$(cat version.config | grep '^Label=' | sed -e 's|Label=||'):g" \
     -e "s:@COMPAT_ADDIN_VERSION@:$(cat version.config | grep '^CompatVersion=' | sed -e 's|CompatVersion=||'):g" \
     -e "s:@BUILD_LANE@:$(cat version.config | grep '^BUILD_LANE=' | sed -e 's|BUILD_LANE=||'):g" \
+    -e "s:@FULL_VERSION@:%version:g" \
     src/core/MonoDevelop.Core/BuildVariables.cs
 
 %build
@@ -145,15 +154,19 @@ NOCONFIGURE=yes sh ./autogen.sh
 %files -f %name.lang
 %doc AUTHORS COPYING README
 %_bindir/*
-%_prefix/lib/%name
+%_libexecdir/%name
 %_pkgconfigdir/*.pc
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*x*/apps/%{name}*.png
 %_iconsdir/hicolor/scalable/apps/%{name}*.svg
-%_datadir/mime/packages/*
+%_xdgmimedir/packages/*
+%_datadir/appdata/%{name}.appdata.xml
 %_man1dir/*
 
 %changelog
+* Wed Mar 21 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 6.3.0.864-alt1%ubt
+- Updated to stable upstream version 6.3.0.864.
+
 * Wed Sep 27 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.2.44-alt3%ubt
 - Updated runtime dependencies.
 

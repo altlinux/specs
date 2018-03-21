@@ -9,7 +9,7 @@
 
 Name: mono
 Version: 5.10.0.157
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -105,7 +105,7 @@ I18N, Cairo and Mono.*).
 %package winfx
 Summary: Mono implementation of core WinFX APIs
 Group: Development/Other
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
 Conflicts: mono4-winfx < %version-%release
 Obsoletes: mono4-winfx
 Provides: mono4-winfx = %version-%release
@@ -116,7 +116,7 @@ Open source implementation of core WinFX APIs
 %package mvc
 Summary: Mono implementation of ASP.NET MVC
 Group: Development/Other
-Requires: %name-dyndata = %version-%release
+Requires: %name-dyndata = %EVR
 Conflicts: mono4-mvc < %version-%release
 Obsoletes: mono4-mvc
 Provides: mono4-mvc = %version-%release
@@ -127,7 +127,7 @@ This is the Mono implementation of ASP.NET MVC
 %package mvc-devel
 Summary: Development files for  ASP.NET MVC
 Group: Development/Other
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
 Conflicts: mono4-mvc-devel < %version-%release
 Obsoletes: mono4-mvc-devel
 Provides: mono4-mvc-devel = %version-%release
@@ -139,7 +139,7 @@ This is the Mono implementation of ASP.NET MVC
 %package dyndata
 Summary: Dynamic data dll for both web and mvc
 Group: Development/Other
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
 Conflicts: mono4-dyndata < %version-%release
 Obsoletes: mono4-dyndata
 Provides: mono4-dyndata = %version-%release
@@ -150,23 +150,23 @@ This is dll needed for implementation of ASP.NET MVC and for web services too
 %package full
 Summary: full runtime virtual package
 Group: Development/Other
-Requires: %name-dyndata
-Requires: %name-data
-Requires: %name-mvc
-Requires: %name-extras
-Requires: %name-winfx
-Requires: %name-locale-extras
-Requires: %name-reactive
-Requires: %name-reactive-winforms
-Requires: %name-wcf
-Requires: %name-winforms
-Requires: %name-data-oracle
-Requires: %name-data-sqlite
+Requires: %name-dyndata = %EVR
+Requires: %name-data = %EVR
+Requires: %name-mvc = %EVR
+Requires: %name-extras = %EVR
+Requires: %name-winfx = %EVR
+Requires: %name-locale-extras = %EVR
+Requires: %name-reactive = %EVR
+Requires: %name-reactive-winforms = %EVR
+Requires: %name-wcf = %EVR
+Requires: %name-winforms = %EVR
+Requires: %name-data-oracle = %EVR
+Requires: %name-data-sqlite = %EVR
 %if_enabled ibmlibs
-Requires: %name-ibm-data-db2
+Requires: %name-ibm-data-db2 = %EVR
 %endif
-Requires: %name-monodoc
-Requires: %name-mono2-compat
+Requires: %name-monodoc = %EVR
+Requires: %name-mono2-compat = %EVR
 Conflicts: mono4-full < %version-%release
 Obsoletes: mono4-full
 Provides: mono4-full = %version-%release
@@ -177,14 +177,14 @@ Virtual package containing all non-devel packages from mono
 %package devel-full
 Summary: full development virtual package
 Group:Development/Other
-Requires: %name-devel
-Requires: %name-reactive-devel
-Requires: %name-web-devel
-Requires: %name-mvc-devel
-Requires: %name-monodoc-devel
-Requires: %name-nunit
-Requires: %name-winforms
-Requires: %name-mono2-compat-devel
+Requires: %name-devel = %EVR
+Requires: %name-full = %EVR
+Requires: %name-reactive-devel = %EVR
+Requires: %name-web-devel = %EVR
+Requires: %name-mvc-devel = %EVR
+Requires: %name-monodoc-devel = %EVR
+Requires: %name-nunit = %EVR
+Requires: %name-mono2-compat-devel = %EVR
 Conflicts: mono4-devel-full < %version-%release
 Obsoletes: mono4-devel-full
 Provides: mono4-devel-full = %version-%release
@@ -200,7 +200,7 @@ Virtual package containing all devel packages from mono
 %package devel
 Summary: Development tools for Mono
 Group: Development/Other
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
 Requires: pkg-config
 Requires: glib2-devel
 Conflicts: mono4-devel < %version-%release
@@ -220,7 +220,7 @@ assembler and other various tools.
 %package locale-extras
 Summary: Extra locale information for Mono
 Group: Development/Other
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
 Conflicts: mono4-locale-extras < %version-%release
 Obsoletes: mono4-locale-extras
 Provides: mono4-locale-extras = %version-%release
@@ -232,7 +232,7 @@ non-latin alphabets.
 %package extras
 Summary: Provides the infrastructure for running and building daemons and services with Mono as well as various stub assemblies
 Group: Development/Other
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
 Conflicts: mono4-extras < %version-%release
 Obsoletes: mono4-extras
 Provides: mono4-extras = %version-%release
@@ -247,7 +247,7 @@ System.Configuration.Install, System.Management, System.Messaging.
 License: MIT License (or similar) ; Apache License 2.0
 Summary: Reactive Extensions for Mono core libraries
 Group: Development/Other
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
 Conflicts: mono4-reactive < %version-%release
 Obsoletes: mono4-reactive
 Provides: mono4-reactive = %version-%release
@@ -260,8 +260,8 @@ desktop-specific features.
 License: MIT License (or similar) ; Apache License 2.0
 Summary: Reactive Extensions for Mono desktop-specific libraries
 Group: Development/Other
-Requires: %name-core = %version-%release
-Requires: %name-reactive = %version-%release
+Requires: %name-core = %EVR
+Requires: %name-reactive = %EVR
 Conflicts: mono4-reactive-winforms < %version-%release
 Obsoletes: mono4-reactive-winforms
 Provides: mono4-reactive-winforms = %version-%release
@@ -273,8 +273,9 @@ windows threading).
 %package reactive-devel
 Summary: Development files for system.web
 Group: Development/Other
-Requires: %name-core = %version-%release
-Requires: %name-reactive = %version-%release pkg-config
+Requires: %name-core = %EVR
+Requires: %name-reactive = %EVR
+Requires: pkg-config
 Conflicts: mono4-reactive-devel < %version-%release
 Obsoletes: mono4-reactive-devel
 Provides: mono4-reactive-devel = %version-%release
@@ -285,7 +286,7 @@ This package provides the .pc file for %name-rx
 %package winforms
 Summary: Windows Forms implementation for Mono
 Group: Development/Other
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
 Conflicts: mono4-winforms < %version-%release
 Obsoletes: mono4-winforms
 Provides: mono4-winforms = %version-%release
@@ -298,7 +299,7 @@ applications.
 %package wcf
 Summary: Mono implementation of Windows Communication Foundation
 Group: Development/Other
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
 Conflicts: mono4-wcf < %version-%release
 Obsoletes: mono4-wcf
 Provides: mono4-wcf = %version-%release
@@ -310,7 +311,7 @@ Foundation.
 %package web
 Summary: ASP.NET, Remoting, and Web Services for Mono
 Group: Development/Other
-Requires: %name-dyndata = %version-%release
+Requires: %name-dyndata = %EVR
 Conflicts: mono4-web < %version-%release
 Obsoletes: mono4-web
 Provides: mono4-web = %version-%release
@@ -322,8 +323,9 @@ development of web application, web services and remoting support.
 %package web-devel
 Summary: Development files for system.web
 Group: Development/Other
-Requires: %name-core = %version-%release
-Requires: %name-web = %version-%release pkg-config
+Requires: %name-core = %EVR
+Requires: %name-web = %EVR
+Requires: pkg-config
 Conflicts: mono4-web-devel < %version-%release
 Obsoletes: mono4-web-devel
 Provides: mono4-web-devel = %version-%release
@@ -334,7 +336,7 @@ This package provides the .pc file for %name-web
 %package data
 Summary: Database connectivity for Mono
 Group: Development/Other
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
 Conflicts: mono4-data < %version-%release
 Obsoletes: mono4-data
 Provides: mono4-data = %version-%release
@@ -350,7 +352,7 @@ data providers.
 %package data-sqlite
 Summary: sqlite database connectivity for Mono
 Group: Development/Other
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
 Requires: sqlite
 Conflicts: mono4-data-sqlite < %version-%release
 Obsoletes: mono4-data-sqlite
@@ -363,7 +365,7 @@ database.
 %package data-oracle
 Summary: Oracle database connectivity for Mono
 Group: Development/Other
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
 Conflicts: mono4-data-oracle < %version-%release
 Obsoletes: mono4-data-oracle
 Provides: mono4-data-oracle = %version-%release
@@ -376,7 +378,7 @@ database.
 %package   ibm-data-db2
 Summary: IBM DB2 database connectivity for Mono
 Group: Development/Other
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
 Conflicts: mono4-ibm-data-db2 < %version-%release
 Obsoletes: mono4-ibm-data-db2
 Provides: mono4-ibm-data-db2 = %version-%release
@@ -389,7 +391,7 @@ Universal database.
 %package monodoc
 Summary: The %name documentation system
 Group: Documentation
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
 Conflicts: mono4-monodoc < %version-%release
 Obsoletes: mono4-monodoc
 Provides: mono4-monodoc = %version-%release
@@ -405,8 +407,9 @@ monodoc is the documentation package for the mono .NET environment
 %package  monodoc-devel
 Summary: .pc file for monodoc
 Group: Documentation
-Requires: %name-monodoc = %version-%release pkg-config
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
+Requires: %name-monodoc = %EVR
+Requires: pkg-config
 Conflicts: mono4-monodoc-devel < %version-%release
 Obsoletes: mono4-monodoc-devel
 Provides: mono4-monodoc-devel = %version-%release
@@ -422,7 +425,7 @@ Development file for monodoc
 %package nunit
 Summary:        NUnit Testing Framework
 Group:          Development/Other
-Requires:       mono-core = %{version}
+Requires:       mono-core = %EVR
 
 %description nunit
 NUnit is a unit-testing framework for all .Net languages.  Initially
@@ -435,7 +438,7 @@ brings xUnit to all .NET languages.
 
 %package mono2-compat
 Summary:        A Library for embedding Mono in your Application
-Requires:       %name-core = %version
+Requires:       %name-core = %EVR
 Group:          Development/Other
 
 %description mono2-compat
@@ -450,8 +453,8 @@ A Library for embedding Mono in your Application.
 %package mono2-compat-devel
 Summary:        Development files for libmono
 Group:          Development/Other
-Requires:       %name-mono2-compat = %version
-Requires:       %name-core = %version
+Requires:       %name-mono2-compat = %EVR
+Requires:       %name-core = %EVR
 
 %description mono2-compat-devel
 The Mono Project is an open development initiative that is working to
@@ -669,7 +672,7 @@ ln -s mcs %buildroot%_bindir/gmcs
 %_libdir/*profiler*.so*
 %_libdir/*profiler*.a
 %_libdir/libikvm-native.a
-%ifarch %ix86 x86_64
+%ifarch %ix86 x86_64 armh
 %_libdir/libmono-btls-shared.so*
 %endif
 %_monodir/4.0/Mono.Posix.dll
@@ -729,9 +732,7 @@ ln -s mcs %buildroot%_bindir/gmcs
 %gac_dll System.Dynamic
 %gac_dll System.ComponentModel.Composition
 %gac_dll System.Numerics
-%gac_dll System.Runtime.Caching
 %gac_dll System.Runtime.DurableInstancing
-%gac_dll System.Xaml
 %gac_dll Mono.CodeContracts
 
 %dir %_monodir/mono-configuration-crypto/
@@ -759,7 +760,7 @@ ln -s mcs %buildroot%_bindir/gmcs
 %exclude %_monogacdir/System.Runtime.Caching/*
 %exclude %_monogacdir/System.Xaml/*
 %exclude %_sysconfdir/mono/4.0/Browsers/Compat.browser
-%ifarch %ix86 x86_64
+%ifarch %ix86 x86_64 armh
 %dir %_monodir/gac/Mono.Btls.Interface
 %_monodir/gac/Mono.Btls.Interface/*
 %_monodir/4.5/Mono.Btls.Interface.dll
@@ -1124,6 +1125,9 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Fri Apr 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.10.0.157-alt2%ubt
+- Updated interpackage dependencies.
+
 * Fri Mar 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.10.0.157-alt1%ubt
 - Updated to upstream version 5.10.0.157.
 
