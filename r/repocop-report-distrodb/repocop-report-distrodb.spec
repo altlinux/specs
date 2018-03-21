@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.415
+Version: 0.416
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -39,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.416-alt1
+- added shared-share.raw
+
 * Tue Mar 20 2018 Igor Vlasenko <viy@altlinux.ru> 0.415-alt1
 - php.raw cleanup
 
