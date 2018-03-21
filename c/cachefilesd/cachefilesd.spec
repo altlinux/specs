@@ -1,10 +1,11 @@
 Name: cachefilesd
 Version: 0.10.1
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: caching backend for use with FS-Cache
 License: GPL
 Group: Networking/Other
+Url: http://people.redhat.com/~dhowells/fscache/
 
 Source: %name-%version-%release.tar
 
@@ -43,6 +44,9 @@ mkdir -p %buildroot%_cachedir/fscache
 %dir %attr(700,root,root) %_cachedir/fscache
 
 %changelog
+* Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.10.1-alt1.qa2
+- NMU: added URL
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.10.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
