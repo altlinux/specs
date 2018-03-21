@@ -4,15 +4,14 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.8
-Release: alt1.1
+Version: 5.0
+Release: alt1
 Summary: libclang python bindings
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/clang/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source0: https://pypi.python.org/packages/5a/aa/22c42abe5bc0d6396f0fc7c24b4be793011c7bd6456ba78a4aca23e9cdb7/%{oname}-%{version}.tar.gz
+Source0: https://pypi.python.org/packages/32/12/e17c1220f8ca587add2e076ebb28b6c4551fcc730e3c69a5f49679ad28e9/%{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools clang
@@ -94,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 16 2018 Oleg Solovyov <mcpain@altlinux.org> 5.0-alt1
+- version 5.0
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 3.8-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
