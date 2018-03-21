@@ -4,11 +4,12 @@
 
 Name:		%libname%sffx
 Version:	0.7.1
-Release:	alt3.1.qa1
+Release:	alt3.1.qa2
 
 Group:		Networking/Other
 Summary:	oRTP - a Real-time Transport Protocol stack
 License:	LGPL
+Url:		http://www.linphone.org/eng/documentation/dev/ortp.html
 
 Provides: %libname = %version-%release
 
@@ -80,6 +81,9 @@ rm -rf %buildroot/usr/share/gtk-doc
 %_libdir/*.a
 
 %changelog
+* Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt3.1.qa2
+- NMU: added URL
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.1-alt3.1.qa1
 - NMU: rebuilt for updated dependencies.
 
