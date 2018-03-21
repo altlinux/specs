@@ -75,7 +75,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %{pybasever}.4
-Release: alt4
+Release: alt5
 License: Python
 Group: Development/Python3
 
@@ -939,7 +939,8 @@ configdir="$(%buildroot%_bindir/python3-config --configdir)"
 fi
 [ -d %buildroot"$configdir" ]
 
-WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbose --findleaks
+# -l (--findleaks) is not compatible with -j
+WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbose %_smp_mflags
 
 %files
 %doc LICENSE README
@@ -1205,6 +1206,9 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %tool_dir/scripts/run_tests.py
 
 %changelog
+* Wed Mar 21 2018 Ivan Zakharyaschev <imz@altlinux.org> 3.5.4-alt5
+- (.spec) Accelerate %%check through parallellism.
+
 * Fri Mar 16 2018 Grigory Ustinov <grenka@altlinux.org> 3.5.4-alt4
 - Edit regular expression for ignore.d list. (thanks for imz@) (Closes: #34660)
 
