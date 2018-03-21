@@ -1,13 +1,13 @@
 %define rel 1
 Summary: 2D Platform Game
 Name: edgar
-Version: 1.27
+Version: 1.28
 Release: alt1
 Source: %version.tar.gz
 Url: http://www.parallelrealities.co.uk/p/legend-of-edgar.html
 Group: Games/Arcade
 License: GPL
-Patch: %name-1.26-icons.patch
+Patch: %name-1.28-icons.patch
 Requires: %name-data = %version
 
 # Automatically added by buildreq on Fri Aug 04 2017
@@ -35,7 +35,7 @@ This package contains official level set for Edgar.
 
 %prep
 %setup
-%patch
+%patch -p1
 
 %build
 %make_build VERSION=%version RELEASE=%rel DATA_DIR=%_gamesdatadir/%name/ BIN_DIR=%_gamesbindir/ DOC_DIR=%_defaultdocdir/%name-%version ICON_DIR=%_iconsdir/hicolor/ DESKTOP_DIR=%_desktopdir LOCALE_DIR=%_datadir/locale/
@@ -63,6 +63,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_gamesdatadir/%name/*
 
 %changelog
+* Wed Mar 21 2018 Fr. Br. George <george@altlinux.ru> 1.28-alt1
+- Autobuild version bump to 1.28
+
 * Fri Aug 04 2017 Fr. Br. George <george@altlinux.ru> 1.27-alt1
 - Autobuild version bump to 1.27
 
