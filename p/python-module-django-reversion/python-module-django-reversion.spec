@@ -1,38 +1,35 @@
-%define module_name django-reversion
+%define modname django-reversion
 
-%def_with python3
-
-Name: python-module-%module_name
-Version: 1.8.4
-Release: alt1.git20140907.1.1
+Name: python-module-%modname
+Version: 2.0.9
+Release: alt1
 
 Summary: Comprehensive version control facilities for Django
-
 License: BSD
 Group: Development/Python
 Url: http://code.google.com/p/django-reversion
-
 # https://github.com/etianen/django-reversion.git
-Source: %name-%version.tar
-
 BuildArch: noarch
 
-%setup_python_module %module_name
+Source: django-reversion-%version.tar
 
-#BuildPreReq: python-module-sphinx-devel
-%if_with python3
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-alabaster
+BuildRequires: python-module-docutils
+BuildRequires: python-module-html5lib
+BuildRequires: python-module-objects.inv
+BuildRequires: time
+
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-%endif
-
 BuildRequires(pre): rpm-macros-sphinx
+BuildPreReq: python3-module-setuptools
+
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv rpm-build-python3 time
+
 
 %description
-Reversion is an extension to the Django web framework that provides
-comprehensive version control facilities.
+django-reversion is an extension to the Django web framework that provides version control for model instances.
 
 %package tests
 Summary: Tests for Django Reversion
@@ -40,8 +37,7 @@ Group: Development/Python
 Requires: %name = %version-%release
 
 %description tests
-Reversion is an extension to the Django web framework that provides
-comprehensive version control facilities.
+django-reversion is an extension to the Django web framework that provides version control for model instances.
 
 This package contains tests for Django Reversion.
 
@@ -50,63 +46,55 @@ Summary: Documentation for Django Reversion
 Group: Development/Documentation
 
 %description docs
-Reversion is an extension to the Django web framework that provides
-comprehensive version control facilities.
+django-reversion is an extension to the Django web framework that provides version control for model instances.
 
 This package contains documentation for Django Reversion.
 
-%package -n python3-module-%module_name
+%package -n python3-module-%modname
 Summary: Comprehensive version control facilities for Django
 Group: Development/Python3
 
-%description -n python3-module-%module_name
+%description -n python3-module-%modname
 Reversion is an extension to the Django web framework that provides
 comprehensive version control facilities.
 
-%package -n python3-module-%module_name-tests
+%package -n python3-module-%modname-tests
 Summary: Tests for Django Reversion
 Group: Development/Python3
-Requires: python3-module-%module_name = %version-%release
+Requires: python3-module-%modname = %version-%release
 
-%description -n python3-module-%module_name-tests
-Reversion is an extension to the Django web framework that provides
-comprehensive version control facilities.
+%description -n python3-module-%modname-tests
+django-reversion is an extension to the Django web framework that provides version control for model instances.
 
 This package contains tests for Django Reversion.
 
 %prep
-%setup
+%setup -n django-reversion-%version
 
-%if_with python3
 cp -fR . ../python3
-%endif
 
-%prepare_sphinx .
-ln -s ../objects.inv docs/
+#%prepare_sphinx .
+#ln -s ../objects.inv docs/
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C docs html
+sphinx-build docs/ _build/ docs/*.rst
 
 %files
-%doc *.rst
+%doc *.rst LICENSE
 %python_sitelibdir/django_reversion-*
 %python_sitelibdir/reversion
 #exclude %python_sitelibdir/reversion/tests*
@@ -115,22 +103,24 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 #python_sitelibdir/reversion/tests*
 
 %files docs
-%doc docs/_build/html/*
+%doc _build/*
 
-%if_with python3
-%files -n python3-module-%module_name
-%doc *.rst
+%files -n python3-module-%modname
+%doc *.rst LICENSE
 %python3_sitelibdir/django_reversion-*
 %python3_sitelibdir/reversion
 #exclude %python_sitelibdir/reversion/tests*
 #exclude %python_sitelibdir/reversion/*/tests*
 
-#files -n python3-module-%module_name-tests
+#files -n python3-module-%modname-tests
 #python_sitelibdir/reversion/tests*
 #python_sitelibdir/reversion/*/tests*
-%endif
+
 
 %changelog
+* Wed Mar 21 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.0.9-alt1
+- Version 2.0.9
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.8.4-alt1.git20140907.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
@@ -157,4 +147,3 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 
 * Sun Mar 21 2010 Denis Klimov <zver@altlinux.org> 1.2.1-alt1.svn273
 - Initial build for ALT Linux
-
