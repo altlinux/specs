@@ -1,6 +1,6 @@
 Name: firmware-linux
-Version: 20180314
-Release: alt1
+Version: 20180319
+Release: alt2
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -18,9 +18,13 @@ Provides: firmware-iwl6000 firmware-iwl6050
 Obsoletes: firmware-iwl1000 
 Obsoletes: firmware-iwl3945 firmware-iwl4965 firmware-iwl5000 firmware-iwl5150 
 Obsoletes: firmware-iwl6000 firmware-iwl6050 
-#Requires: firmware-ipw2200 firmware-ipw2100 firmware-ipw3945
 Provides:  firmware-carl9170-1.9.4 firmware-i2400m firmware-rt2870 firmware-rt3090
 Obsoletes: firmware-carl9170-1.9.4 firmware-i2400m firmware-rt2870 firmware-rt3090
+Provides: firmware-rt61pci firmware-rt73usb
+Obsoletes: firmware-rt61pci firmware-rt73usb
+Obsoletes: firmware-libertas-sd8686 firmware-libertas-usb8388
+Provides: firmware-ql2100 firmware-ql2400 firmware-ql2500
+Obsoletes: firmware-ql2100 firmware-ql2400 firmware-ql2500
 Provides: firmware-amd-ucode
 Obsoletes: firmware-amd-ucode <= 2.0
 
@@ -38,21 +42,11 @@ required for some devices to operate.
 %patch -p1
 
 %build
-# Remove firmware shipped in separate packages already
-# Perhaps these should be built as subpackages of linux-firmware?
-## firmware-ql*
-rm ql2???_fw.bin LICENCE.qla2xxx
 ## *TODO* check these too
 rm -rf ess korg sb16 yamaha
-# We have _some_ ralink firmware in separate packages already.
-rm rt73.bin rt2561.bin rt2561s.bin rt2661.bin
 
 # Remove source files we don't need to install
 rm -f usbdux/*dux */*.asm *spec
-
-# Fallback symlink in case kernel driver lags behind
-# TODO: drop it when we move to 3.19+ or so
-ln -s fw_sst_0f28.bin-48kHz_i2s_master intel/fw_sst_0f28.bin-i2s_master
 
 %install
 mkdir -p %buildroot/lib/firmware
@@ -62,9 +56,16 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 %files
 %doc WHENCE LICEN?E.*
 /lib/firmware/*
-%exclude /lib/firmware/carl9170fw
 
 %changelog
+* Wed Mar 21 2018 L.A. Kostis <lakostis@altlinux.ru> 20180319-alt2
+- .spec cleanup:
+  + added provides/obsoletes for absorbed fw.
+
+* Tue Mar 20 2018 L.A. Kostis <lakostis@altlinux.ru> 20180319-alt1
+- upstream changes (GIT 44476f2):
+  + BCM-0bb4-0306: Update to Cypress license in WHENCE (thx kaihsiu_chen)
+
 * Thu Mar 15 2018 L.A. Kostis <lakostis@altlinux.ru> 20180314-alt1
 - upstream changes (GIT 4c0bf11):
   + intel: Update Kabylake audio firmware (thx Sanyog Kale)
