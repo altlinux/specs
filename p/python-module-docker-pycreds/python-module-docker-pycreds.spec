@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Python bindings for the docker credentials store API
@@ -76,5 +76,8 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Vladimir Didenko <cow@altlinux.ru> 0.2.2-alt1
+- New version
+
 * Wed Oct 12 2016 Vladimir Didenko <cow@altlinux.ru> 0.2.1-alt1
 - Initial build for Sisyphus

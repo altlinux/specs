@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.7.0
+Version: 3.1.4
 Release: alt1
 
 Summary: Python client for Docker.
@@ -12,7 +12,6 @@ Group: Development/Python
 Url: https://github.com/docker/docker-py
 
 Source: %oname-%version.tar
-Patch: %oname-%version-%release.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-licenses
@@ -42,7 +41,6 @@ An API client for docker written in Python
 
 %prep
 %setup -n %oname-%version
-%patch0 -p1
 
 %if_with python3
 rm -rf ../python3
@@ -87,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Vladimir Didenko <cow@altlinux.ru> 3.1.4-alt1
+- 3.1.4
+
 * Wed Jan 17 2018 Vladimir Didenko <cow@altlinux.ru> 2.7.0-alt1
 - 2.7.0
 

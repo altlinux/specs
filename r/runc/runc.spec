@@ -4,7 +4,7 @@
 
 %global provider_prefix %{provider}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          9f9c96235cc97674e935002fc3d78361b696a69e
+%global commit          4fc53a81fb7c994640722ac585fa9ca548971871
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -16,7 +16,7 @@
 
 Name:           runc
 Version:        1.0.0
-Release:        alt3.git%shortcommit
+Release:        alt4.rc5
 Summary:        CLI for running Open Containers
 Group:          Development/Other
 License:        Apache 2.0
@@ -65,6 +65,9 @@ EOF
 /lib/tmpfiles.d/runc.conf
 
 %changelog
+* Thu Mar 22 2018 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt4.rc5
+- New version (for docker 18.03.0-ce).
+
 * Mon Feb 5 2018 Vladimir Didenko <cow@altlinux.ru> 1.0.0-alt3.git9f9c962
 - New version (for docker 18.02.0-ce).
 
