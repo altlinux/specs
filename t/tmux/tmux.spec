@@ -1,6 +1,6 @@
 Summary: Terminal multiplexer
 Name: tmux
-Version: 2.5
+Version: 2.6
 Release: alt1
 Source0: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 License: BSD
@@ -28,11 +28,14 @@ install -D -m 755 %name %buildroot%_bindir/%name
 install -D -m 644 %name.1 %buildroot%_man1dir/%name.1
 
 %files
-%doc FAQ TODO CHANGES README
+%doc TODO CHANGES README
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Thu Mar 22 2018 Fr. Br. George <george@altlinux.ru> 2.6-alt1
+- Autobuild version bump to 2.6
+
 * Mon Sep 04 2017 Fr. Br. George <george@altlinux.ru> 2.5-alt1
 - Autobuild version bump to 2.5
 
