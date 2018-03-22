@@ -1,5 +1,5 @@
 Name: firewalld
-Version: 0.4.4.6
+Version: 0.5.2
 Release: alt1
 
 Summary: A firewall daemon with D-BUS interface providing a dynamic firewall
@@ -14,37 +14,47 @@ Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-licenses rpm-build-xdg python3-devel
 BuildRequires: intltool xsltproc docbook-style-xsl docbook-dtds glib2-devel libgio-devel
 
-Requires: gobject-introspection
-Requires: python3-module-slip-dbus iptables ebtables iptables-ipv6
+Requires: iptables ebtables iptables-ipv6
 
 %allow_python3_import_path %_datadir/firewalld
 %add_python3_path %_datadir/firewalld
 
-# Workaround for dbus.mainloop.pyqt5:
-# it is in the python3-module-PyQt5,
-# but there is no provides
-# https://bugzilla.altlinux.org/33873
-%filter_from_requires /^python3(dbus\.mainloop\.pyqt5)/d
+%define _unpackaged_files_terminate_build 1
 
 %description
 firewalld is a firewall service daemon that provides a dynamic
 customizable firewall with a D-BUS interface.
 
+%package -n firewall-config
+Summary: Firewall configuration application
+Group: System/Configuration/Networking
+Requires: %name = %version-%release
+
+%description -n firewall-config
+The firewall configuration application provides an configuration interface
+for firewalld.
+
 %package -n firewall-applet
 Summary: Firewall panel applet
 Group: System/Configuration/Networking
-Requires: %name = %version-%release
+Requires: firewall-config = %version-%release
 Requires: NetworkManager-glib-gir
 Requires: libnotify-gir
-Requires: python3-module-sip
-Requires: python3-module-PyQt5
 
 %description -n firewall-applet
 The firewall panel applet provides a status information of firewalld and
 also the firewall settings.
+
+%package -n python3-module-firewall
+Summary: Python3 bindings for firewalld
+Group: Development/Python3
+
+%description -n python3-module-firewall
+Python3 bindings for firewalld.
 
 %prep
 %setup
@@ -83,6 +93,10 @@ popd
 %find_lang %name
 install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 
+# Most tests require root
+#check
+#make check
+
 %post
 %post_service %name
 
@@ -101,26 +115,44 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %_usr/lib/firewalld
 %systemd_unitdir/firewalld.service
 %config(noreplace) %_sysconfdir/dbus-1/system.d/FirewallD.conf
+%config %_sysconfdir/modprobe.d/firewalld-sysctls.conf
 %_datadir/polkit-1/actions/org.fedoraproject.FirewallD1.policy
 %_datadir/polkit-1/actions/org.fedoraproject.FirewallD1.desktop.policy.choice
 %_datadir/polkit-1/actions/org.fedoraproject.FirewallD1.server.policy.choice
 %_datadir/bash-completion/completions/*
-%python3_sitelibdir_noarch/firewall
 %_man1dir/*
 %_man5dir/*
+%exclude %_man1dir/firewall-config*.1*
+
+%files -n firewall-config
+%_bindir/firewall-config
+%_datadir/firewalld/
+%_datadir/applications/firewall-config.desktop
+%_datadir/appdata/firewall-config.appdata.xml
+%_iconsdir/hicolor/*/apps/firewall-config*
+%_datadir/glib-2.0/schemas/org.fedoraproject.FirewallConfig.gschema.xml
+%_man1dir/firewall-config*.1*
 
 %files -n firewall-applet
+%dir %_sysconfdir/firewall
 %config(noreplace) %_sysconfdir/firewall/applet.conf
 %_bindir/firewall-applet
-%_bindir/firewall-config
-%_desktopdir/firewall-*.desktop
-%_datadir/appdata/firewall-config.appdata.xml
 %_xdgconfigdir/autostart/firewall-applet.desktop
-%_iconsdir/hicolor/*/apps/firewall-*.*
-%_datadir/glib-2.0/schemas/org.fedoraproject.*.gschema.xml
-%_datadir/firewalld/
+%_iconsdir/hicolor/*/apps/firewall-applet*
+
+%files -n python3-module-firewall
+%python3_sitelibdir_noarch/firewall
 
 %changelog
+* Thu Mar 22 2018 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt1
+- Updated to 0.5.1.
+
+* Thu Mar 22 2018 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt1
+- Drop workaround for python3-module-PyQt5.
+- Use python3 in scripts.
+- Split python module and firewall-config to separate packages.
+- Updated to 0.5.1.
+
 * Fri Nov 24 2017 Mikhail Efremov <sem@altlinux.org> 0.4.4.6-alt1
 - Updated to 0.4.4.6.
 
