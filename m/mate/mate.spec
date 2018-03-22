@@ -1,4 +1,4 @@
-%define ver_major 1.18
+%define ver_major 1.20
 
 Name: mate
 Version: %ver_major.0
@@ -187,7 +187,7 @@ Requires: mate-power-manager >= %ver_major
 #Requires: NetworkManager-mate >= %network_manager_ver
 ## Bluetooth pairing and control applet
 #Requires: mate-bluetooth
-Requires: blueman
+Requires: blueberry
 ## frontend for various networking tools
 #Requires: mate-nettool
 # user settings utility
@@ -282,21 +282,21 @@ Provides: %name-full = %version
 
 # Disks management
 #Requires: gparted
-Requires: consolehelper
+#Requires: consolehelper
 
 # Look & Feel
 ## 3D screensavers
 #Requires: mate-screensaver-modules-xscreensaver-gl
 
 #Requires: mate-file-manager-dropbox
-Requires: mate-file-manager-share
+#Requires: mate-file-manager-share
 #Requires: mate-keyring-pam
 Requires: mate-system-log
-Requires: mate-user-share
+#Requires: mate-user-share
 #Requires: mate-mplayer
 Requires: caja-gnome-mplayer-properties-page
-Requires: mate-file-manager-actions
-Requires: mate-file-manager-terminal >= 0.9
+#Requires: mate-file-manager-actions
+#Requires: mate-file-manager-terminal >= 0.9
 
 %description maxi
 This virtual package installs full MATE Desktop except components from
@@ -392,6 +392,9 @@ itself).
 #%files a11y
 
 %changelog
+* Thu Mar 22 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.20.0-alt1
+- updated to mate 1.20
+
 * Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 1.18.0-alt1
 - gst -> gst 1.0
 - bumped version
