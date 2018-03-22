@@ -1,6 +1,6 @@
 Name: geany-plugins
-Version: 1.31
-Release: alt2
+Version: 1.33
+Release: alt1
 %define geany_ver %version
 
 Summary: Plugins for Geany
@@ -44,6 +44,7 @@ Various VCS integration (Git, SVN, ...) for Geany
 %setup
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -54,11 +55,11 @@ Various VCS integration (Git, SVN, ...) for Geany
 %files
 %doc %_defaultdocdir/%name
 %_libdir/geany/*
-#%_libdir/geany-plugins/*
+%_libdir/lib*
 %_datadir/geany-plugins/*
 #dir #_libexecdir/geany-plugins
 #_libexecdir/geany-plugins/*
-%_iconsdir/hicolor/*/apps/*
+#_iconsdir/hicolor/*/apps/*
 %exclude %_libdir/geany/geanyvc*
 %exclude %_libdir/geany/*.la
 #exclude %_libdir/geany-plugins/*/*.la
@@ -69,6 +70,9 @@ Various VCS integration (Git, SVN, ...) for Geany
 %exclude %_libdir/geany/*.la
 
 %changelog
+* Mon Mar 19 2018 Fr. Br. George <george@altlinux.ru> 1.33-alt1
+- Autobuild version bump to 1.33
+
 * Tue Sep 26 2017 Fr. Br. George <george@altlinux.ru> 1.31-alt2
 - Rebuild with new libgit2
 
