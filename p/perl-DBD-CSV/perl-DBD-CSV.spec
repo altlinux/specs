@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBD-CSV
 Name: perl-%dist
-Version: 0.49
+Version: 0.50
 Release: alt1
 
 Summary: DBI driver for CSV files
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/DBD-CSV/
-Source: http://www.cpan.org/authors/id/H/HM/HMBRAND/DBD-CSV-%{version}.tgz
+Source0: http://www.cpan.org/authors/id/H/HM/HMBRAND/%{dist}-%{version}.tgz
 
 BuildArch: noarch
 
@@ -24,7 +24,7 @@ CSV files (Comma separated values). Such files are mostly used for exporting
 MS Access and MS Excel data.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -33,11 +33,14 @@ MS Access and MS Excel data.
 %perl_vendor_install
 
 %files
-%doc ChangeLog README
+%doc ChangeLog README CONTRIBUTING.md examples
 %perl_vendor_privlib/DBD
 %perl_vendor_privlib/Bundle/*
 
 %changelog
+* Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1
+- automated CPAN update
+
 * Fri May 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.49-alt1
 - automated CPAN update
 
