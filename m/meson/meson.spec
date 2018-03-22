@@ -1,8 +1,8 @@
 %define libname mesonbuild
-%def_without tests
+%def_disable check
 
 Name: meson
-Version: 0.45.0
+Version: 0.45.1
 Release: alt1
 
 Summary: High productivity build system
@@ -16,11 +16,14 @@ Source2: %name.env
 
 BuildArch: noarch
 
+%define python_ver 3.5
+
+Requires: python3 >= %python_ver
 Requires: ninja-build
 
-BuildRequires: rpm-build-python3 python3-devel python3-module-setuptools
+BuildRequires: rpm-build-python3 python3-devel >= %python_ver python3-module-setuptools
 BuildRequires: ninja-build
-%if_with tests
+%if_enabled check
 BuildRequires: gcc gcc-c++ gcc-fortran gcc-objc gcc-objc++
 BuildRequires: java-devel /proc
 BuildRequires: mono4-core mono4-devel
@@ -58,7 +61,7 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 install -Dpm 0755 %SOURCE2 %buildroot%_rpmmacrosdir/%name.env
 
 %check
-%{?_with_tests:MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py}
+MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 
 %files
 %_bindir/%name
@@ -79,6 +82,9 @@ install -Dpm 0755 %SOURCE2 %buildroot%_rpmmacrosdir/%name.env
 
 
 %changelog
+* Thu Mar 22 2018 Yuri N. Sedunov <aris@altlinux.org> 0.45.1-alt1
+- 0.45.1
+
 * Mon Mar 05 2018 Yuri N. Sedunov <aris@altlinux.org> 0.45.0-alt1
 - 0.45.0
 
