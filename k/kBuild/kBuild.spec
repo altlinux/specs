@@ -2,8 +2,8 @@
 %define         short_version 0.1.9998
 
 Name:           kBuild
-Version:        %short_version.r2813
-Release:        alt2
+Version:        %short_version.r3178
+Release:        alt1%ubt
 License:        %gpl3plus
 Group:          Development/Other
 Summary:        A cross-platform build environment framework for complex tasks
@@ -14,7 +14,7 @@ Source:         %name-%version.tar.bz2
 Patch2:         kBuild-0.1.3-escape.patch
 Patch3:         kBuild-alt-compat.patch
 
-BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses rpm-build-ubt
 BuildRequires:  cvs flex libacl-devel
 BuildRequires: perl-podlators
 
@@ -83,6 +83,9 @@ chmod a-x %buildroot%_datadir/%name/*/*kmk
 %_datadir/%name
 
 %changelog
+* Thu Mar 22 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.1.9998.r3178-alt1%ubt
+- Update to last unstable release from svn trunk (r3178) for VirtualBox-5.2.x
+
 * Thu Feb 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.9998.r2813-alt2
 - Fixed build with new toolchain.
 
