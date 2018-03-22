@@ -1,10 +1,12 @@
 Name:     netlabel_tools
 Version:  0.21
-Release:  alt1%ubt
+Release:  alt2
 Summary:  Configuration tools for the Linux NetLabel subsystem
 License:  %gpl2only
 Group:    System/Base
 Source:   %name-%version.tar
+Url:      https://github.com/netlabel/netlabel_tools
+
 Patch1:   alt-build-netlabelctl-0.21.patch
 Patch2:   alt-s0-mark-flag-0.21.patch
 Patch3:   upstream-add-missingfiles-0.21.patch
@@ -41,6 +43,9 @@ autoreconf -fisv
 %_man8dir/netlabelctl.8.*
 
 %changelog
+* Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.21-alt2
+- NMU: added URL
+
 * Wed Jan 18 2017 Anton Farygin <rider@altlinux.ru> 0.21-alt1%ubt
 - added ubt tag
 - netlabel.rules marked as non-replaced config
