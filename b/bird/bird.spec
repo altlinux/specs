@@ -1,7 +1,7 @@
 %define _localstatedir %_var
 
 Name: bird
-Version: 1.6.3
+Version: 1.6.4
 Release: alt1%ubt
 Summary: BIRD Internet Routing Daemon
 
@@ -61,7 +61,7 @@ Requires: %name = %version-%release
 %patch -p1
 
 %build
-autoconf
+%autoreconf
 %define _configure_script ../configure
 
 # gcc detects overflow in strncpy at proto/rip/auth.c:134
@@ -114,7 +114,7 @@ install -pD -m644 %SOURCE4 %buildroot%_unitdir/%{name}6.service
 %_sbindir/%name
 %_sbindir/%{name}c
 %_sbindir/%{name}cl
-%doc NEWS README TODO doc/*.html
+%doc NEWS README doc/*.html
 
 %files -n bird6
 %_initdir/%{name}6
@@ -125,6 +125,9 @@ install -pD -m644 %SOURCE4 %buildroot%_unitdir/%{name}6.service
 %_sbindir/%{name}cl6
 
 %changelog
+* Thu Mar 22 2018 Anton Farygin <rider@altlinux.ru> 1.6.4-alt1%ubt
+- new version
+
 * Wed Jan 11 2017 Anton Farygin <rider@altlinux.ru> 1.6.3-alt1%ubt
 - new version
 
