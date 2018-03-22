@@ -1,6 +1,6 @@
 Name: qlipper
 Version: 5.1.1
-Release: alt1%ubt
+Release: alt2%ubt
 License: GPLv3+
 Summary: Lightweight clipboard history
 Group: Graphical desktop/Other
@@ -9,6 +9,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 Source1: qlipper_ru.ts
+Source2: qlipper-startup.desktop
 Patch: qlipper-5.1.1-cmake-ru.patch
 Patch1: qlipper-5.1.1-desktop-ru.patch
 
@@ -38,13 +39,20 @@ cp %SOURCE1 ts
 desktop-file-validate %buildroot/%_desktopdir/%name.desktop
 %find_lang %name --with-qt --without-mo
 
+mkdir -p %buildroot%_sysconfdir/xdg/autostart
+install -m 644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/
+
 %files -f %name.lang
 %doc COPYING
 %doc README
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/128x128/apps/qlipper.png
+%_sysconfdir/xdg/autostart/qlipper-startup.desktop
 
 %changelog
+* Thu Mar 22 2018 Anton Midyukov <antohami@altlinux.org> 5.1.1-alt2%ubt
+- Added autostart
+
 * Tue Mar 06 2018 Anton Midyukov <antohami@altlinux.org> 5.1.1-alt1%ubt
 - Initial build for ALT (thanks Rosa Team for russian translation)
