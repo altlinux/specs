@@ -5,7 +5,7 @@
 
 Name: libappindicator
 Version: %ver_major.0
-Release: alt7
+Release: alt8
 Summary: Application indicators library
 
 Group: System/Libraries
@@ -15,6 +15,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version.tar.gz
 Patch: 0001_Fix_mono_dir.patch
+Patch1: 0002_libappindicator-no-Werror.patch
 BuildRequires(pre): gcc
 BuildRequires: vala-tools gtk-doc
 BuildRequires: libdbus-glib-devel libdbusmenu-devel
@@ -138,6 +139,7 @@ This package contains the development files for the appindicator-sharp library.
 %prep
 %setup
 %patch0 -p1 -b .monodir
+%patch1 -p2
 
 sed -i "s#gmcs#mcs#g" configure.ac
 
@@ -245,6 +247,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Thu Mar 22 2018 Anton Midyukov <antohami@altlinux.org> 12.10.0-alt8
+- Disable -Werror (Fix FTBFS)
+
 * Thu Oct 26 2017 Anton Midyukov <antohami@altlinux.org> 12.10.0-alt7
 - Disable build with gtk-doc (Fix FTBFS)
 - Enable build with mono.
