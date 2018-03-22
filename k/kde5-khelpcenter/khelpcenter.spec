@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 17.12.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -13,6 +13,7 @@ License: GPLv2+ / LGPLv2+
 Provides: kf5-khelpcenter = %EVR kf5-khelpcenter-common = %EVR
 Obsoletes: kf5-khelpcenter < %EVR kf5-khelpcenter-common < %EVR
 
+Requires: kf5-kdoctools
 #Requires: %name-common = %version-%release
 
 Source: %rname-%version.tar
@@ -62,6 +63,9 @@ KDE help center.
 %_K5xmlgui/*
 
 %changelog
+* Thu Mar 22 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt2%ubt
+- fix requires
+
 * Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
 - new version
 
