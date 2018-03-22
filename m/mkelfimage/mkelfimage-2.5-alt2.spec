@@ -2,10 +2,12 @@
 Name: mkelfimage
 Summary: Utility to Create ELF Boot Images from Linux Kernel Images
 Version: 2.5
-Release: alt2.qa1
+Release: alt2.qa2
 License: %gpl2plus
 Group: Networking/Other
 Source: %Name-%version.tar
+Url: ftp://ftp.lnxi.com/pub/mkelfImage/
+
 Patch0: %Name-2.5.dif
 Patch1: %Name-optflags.patch
 Patch2: %name-2.5-alt.patch
@@ -50,6 +52,9 @@ ln -sf %Name.8 %buildroot%_man8dir/%name.8
 
 
 %changelog -n mkelfImage
+* Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 2.5-alt2.qa2
+- NMU: added URL
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.5-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
