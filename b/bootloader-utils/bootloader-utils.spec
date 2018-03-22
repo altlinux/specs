@@ -1,5 +1,5 @@
 Name: bootloader-utils
-Version: 0.4.25
+Version: 0.5.1
 Release: alt1
 
 Summary: Bootloader utilities
@@ -41,9 +41,16 @@ install -pD -m755 kernel.filetrigger %buildroot/%_rpmlibdir/boot_kernel.filetrig
 mkdir -p %buildroot/%_sysconfdir/sysconfig
 
 cat > %buildroot/%_sysconfdir/sysconfig/installkernel <<-EOF
-INITRD_GENERATOR=make-initrd
+#INITRD_GENERATOR=make-initrd
 MKINITRD=%_sbindir/mkinitrd-make-initrd
-#INITRD_AUTOUPDATE=all
+# INITRD_AUTOUPDATE values:
+# none: Never update initrd.
+# default: Update initrd for default kernel on ucode update and
+#          when default kernel is changed  (e.g. old default kernel
+#          is removed).
+# all: Update initrds for all kernels on ucode update.
+# Empty INITRD_AUTOUPDATE means 'default'.
+#INITRD_AUTOUPDATE=default
 EOF
 
 %check
@@ -85,6 +92,19 @@ mv $f.install $f
 %_rpmlibdir/*.filetrigger
 
 %changelog
+* Thu Mar 22 2018 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt1
+- kernel.filetrigger: Initialize local variables.
+- sysconfig/installkernel: Comment out INITRD_GENERATOR.
+- kernel.filetrigger: Use is_kernel_version_handled() for modules.
+
+* Tue Mar 20 2018 Mikhail Efremov <sem@altlinux.org> 0.5.0-alt1
+- Update /etc/sysconfig/installkernel.
+- kernel.filetrigger: Fix kernel removal when
+  INITRD_AUTOUPDATE=default.
+- installkernel: Use make-initrd by default.
+- kernel.filetrigger: Change INITRD_AUTOUPDATE behavior.
+- kernel.filetrigger: Fix initrd generating on ucode update.
+
 * Fri Sep 08 2017 L.A. Kostis <lakostis@altlinux.ru> 0.4.25-alt1
 - kernel.trigger: added ucode support (tnx ldv@ for code review).
 
