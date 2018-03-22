@@ -1,5 +1,5 @@
 Name: libsigrokdecode
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 
 Summary: sigrok -- signal analysis software suite
@@ -61,6 +61,10 @@ make check
 %_pkgconfigdir/libsigrokdecode.pc
 
 %changelog
+* Thu Feb 06 2020 Grigory Ustinov <grenka@altlinux.org> 0.5.3-alt1
+- 0.5.3 released
+- Build for python3.8.
+
 * Tue Oct 30 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.2-alt1
 - 0.5.2 released
 

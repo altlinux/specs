@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.7
-Release: alt3.a1.git20140620.1.1.1.1
+Release: alt4.a1.git20140620
 Summary: Cryptographic modules for Python
 License: Public domain
 Group: Development/Python
@@ -13,6 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/dlitz/pycrypto.git
 Source: %name-%version.tar
+Patch: replace-time.clock-with-timeit.default_timer.patch
 
 BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-epydoc gcc-c++ libgmp-devel libmpir-devel
@@ -99,6 +100,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch -p1
 
 ./bootstrap.sh
 
@@ -160,6 +162,9 @@ popd
 %endif
 
 %changelog
+* Sun Feb 23 2020 Grigory Ustinov <grenka@altlinux.org> 2.7-alt4.a1.git20140620
+- Fixed build with python3.8.
+
 * Wed Feb 06 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7-alt3.a1.git20140620.1.1.1.1
 - Update gnu-config scripts before build.
 

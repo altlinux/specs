@@ -4,7 +4,6 @@
 %def_enable ocaml
 %def_enable perl
 %def_enable python
-%def_enable python3
 %def_disable ruby
 %def_disable haskell
 %def_disable php
@@ -17,7 +16,7 @@
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
 Version: 1.40.2
-Release: alt2
+Release: alt3
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -62,9 +61,6 @@ BuildRequires: ocaml-hivex-devel
 #BuildRequires: ocaml-gettext
 %endif
 %if_enabled python
-BuildRequires: python-devel python-module-libvirt
-%endif
-%if_enabled python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-libvirt
 %endif
@@ -220,14 +216,6 @@ Provides: perl-%name = %version-%release
 %description -n perl-Sys-Guestfs
 perl-Sys-Guestfs contains Perl bindings for %name (Sys::Guestfs).
 
-%package -n python-module-%name
-Summary: Python bindings for %name
-Group: Development/Python
-Requires: %name = %version-%release
-
-%description -n python-module-%name
-python-module-%name contains Python bindings for %name.
-
 %package -n python3-module-%name
 Summary: Python3 bindings for %name
 Group: Development/Python3
@@ -359,15 +347,8 @@ bash-completion for guestfish tool.
 %setup -a1
 %patch1 -p1
 
-# For Python 3 we must build libguestfs twice.  This creates:
-#   %name-%version/
-#   %name-%version-python3/
-# with a second copy of the sources in the python3 subdir.
-pushd ..
-cp -a %name-%version %name-%version-python3
-popd
-
 %build
+export PYTHON=%__python3
 %define localconfigure \
     %configure \\\
 	vmchannel_test=no \\\
@@ -398,26 +379,11 @@ popd
 %localconfigure
 %make INSTALLDIRS=vendor
 
-# For Python 3 we must compile libguestfs a second time.
-pushd ../%name-%version-python3
-export PYTHON=%__python3
-# Copy the cache to speed the build:
-cp ../%name-%version/generator/.pod2text* generator/
-./bootstrap --gnulib-srcdir=gnulib-%name-%version
-%localconfigure --enable-python --enable-perl --disable-ruby --disable-haskell --disable-php --disable-erlang --disable-lua --disable-golang --disable-gobject
-%make INSTALLDIRS=vendor
-popd
-
 %install
 %make install INSTALLDIRS=vendor DESTDIR=%buildroot
-# Install Python 3 bindings which were built in a subdirectory.
-pushd ../%name-%version-python3
-%make INSTALLDIRS=vendor DESTDIR=%buildroot -C python install
-popd
 
 # Delete static libraries, libtool files.
 rm -f %buildroot%_libdir/libguestfs.{la,a}
-rm -f %buildroot%python_sitelibdir/libguestfsmod.la
 
 find %buildroot -name perllocal.pod -delete
 find %buildroot -name .packlist -delete
@@ -634,18 +600,11 @@ rm -f %buildroot%_bindir/virt-p2v-make-kiwi
 %endif #perl
 
 %if_enabled python
-%files -n python-module-%name
-%doc python/examples/*.py
-%python_sitelibdir/*
-%_man3dir/guestfs-python.3*
-%endif #python
-
-%if_enabled python3
 %files -n python3-module-%name
 %doc python/examples/*.py
 %python3_sitelibdir/*
 %_man3dir/guestfs-python.3*
-%endif #python3
+%endif #python
 
 %if_enabled ruby
 %files -n ruby-%name
@@ -691,6 +650,10 @@ rm -f %buildroot%_bindir/virt-p2v-make-kiwi
 %endif
 
 %changelog
+* Tue Feb 25 2020 Anton Farygin <rider@altlinux.ru> 1.40.2-alt3
+- removed python-2 support
+- fixed build with python-3.8 by patch from upstream
+
 * Thu Jul 18 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.40.2-alt2
 - %%build: changed to always pass distro name to configure script in case
   /etc/os-release file is missing.
@@ -718,19 +681,19 @@ rm -f %buildroot%_bindir/virt-p2v-make-kiwi
 * Thu Sep 06 2018 Anton Farygin <rider@altlinux.ru> 1.36.9-alt2
 - rebuilt with ocaml 4.07
 
-* Mon May 21 2018 Anton Farygin <rider@altlinux.ru> 1.36.9-alt1%ubt
+* Mon May 21 2018 Anton Farygin <rider@altlinux.ru> 1.36.9-alt1
 - rebuilt for ocaml 4.06.1
 
-* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.36.5-alt1%ubt.1
+* Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.36.5-alt1.1
 - rebuild with new perl 5.26.1
 
-* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.36.5-alt1%ubt
+* Tue Jul 11 2017 Anton Farygin <rider@altlinux.ru> 1.36.5-alt1
 - new version
 
-* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.36.3-alt3%ubt
+* Wed May 03 2017 Anton Farygin <rider@altlinux.ru> 1.36.3-alt3
 - rebuild with ocaml 4.04.1
 
-* Thu Apr 27 2017 Anton Farygin <rider@altlinux.ru> 1.36.3-alt2%ubt
+* Thu Apr 27 2017 Anton Farygin <rider@altlinux.ru> 1.36.3-alt2
 - using /var/tmp for tmppath in virt-* tools instead of TMPDIR
 - added ubt tag
 - added /lib/systemd/systemd-machined  requires to guestfs-tools 

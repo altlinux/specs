@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.location
 
-%def_with check
+%def_without check
 
 Name: python3-module-%oname
 Version: 4.2
-Release: alt2
+Release: alt4
 
 Summary: Zope Location
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.location/
 #Git: https://github.com/zopefoundation/zope.location.git
@@ -31,7 +31,6 @@ BuildRequires: python3-module-zope.configuration
 %endif
 
 %py3_requires zope.configuration
-%py3_requires zope.component
 
 %description
 In Zope3, location are special objects that has a structural location.
@@ -72,6 +71,13 @@ zope-testrunner3 --test-path=src -vv
 %python3_sitelibdir/zope/location/tests
 
 %changelog
+* Fri Mar 06 2020 Anton Farygin <rider@altlinux.ru> 4.2-alt4
+- removed zope.component requires to avoid cyclic deps for python 3.8 build
+
+* Wed Mar 04 2020 Nikolai Kostrigin <nickel@altlinux.org> 4.2-alt3
+- Temporary disable tests to break cyclic deps for python 3.8 build
+- Fix license
+
 * Fri Dec 20 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.2-alt2
 - NMU: remove python2 module build
 

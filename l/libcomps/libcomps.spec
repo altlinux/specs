@@ -10,20 +10,21 @@ BuildRequires: gcc-c++ python-devel rpm-build-python
 %define libname_devel lib%{shortname}-devel
 
 Name:           libcomps
-Version:        0.1.11
-Release:        alt1_1
+Version:        0.1.14
+Release:        alt1_2
 Summary:        Comps XML file manipulation library
 
 Group:          System/Libraries
 License:        GPLv2+
 URL:            https://github.com/rpm-software-management/libcomps
 Source0:        https://github.com/rpm-software-management/libcomps/archive/%{name}-%{version}.tar.gz
-
 BuildRequires:  pkgconfig(zlib)
 BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(check)
 BuildRequires:  pkgconfig(expat)
 BuildRequires:  ccmake cmake ctest
+Patch0:         gcc10.patch
+Patch1:         remove-unused-global-variable-missing-extern.patch
 
 
 # prevent provides from nonstandard paths:
@@ -39,7 +40,7 @@ Summary:        Libraries for %{name}
 Group:          System/Libraries
 
 %description -n %{libname}
-Libraries for %{name}
+Libraries for %{name}.
 
 %package -n %{libname_devel}
 Summary:        Development files for libcomps library
@@ -57,18 +58,18 @@ BuildArch:      noarch
 BuildRequires:  doxygen
 
 %description doc
-Documentation files for libcomps library
+Documentation files for libcomps library.
 
 %package -n python-module-libcomps-doc
 Summary:        Documentation files for python bindings libcomps library
 Group:          Development/Python
 Requires:       python3-module-libcomps = %{version}-%{release}
 BuildArch:      noarch
-BuildRequires:  python3-module-sphinx
+BuildRequires:  python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 BuildRequires:  python3-module-sphinx_rtd_theme
 
 %description -n python-module-libcomps-doc
-Documentation files for python bindings libcomps library
+Documentation files for python bindings libcomps library.
 
 %package -n python3-module-libcomps
 Summary:        Python 3 bindings for libcomps library
@@ -80,42 +81,39 @@ Requires:       %{libname}%{?_isa} = %{version}-%{release}
 Obsoletes:      python2-libcomps < 0.1.11
 
 %description -n python3-module-libcomps
-Python3 bindings for libcomps library
+Python3 bindings for libcomps library.
 
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
+%patch0 -p1
+%patch1 -p1
 
 
 # Fix build with sphinx 1.8.3
 sed -i -e 's,sphinx.ext.pngmath,sphinx.ext.imgmath,' libcomps/src/python/docs/doc-sources/conf.py.in
 
 %build
-%{mageia_cmake} -DPYTHON_DESIRED:STRING=3 -DSPHINX_EXECUTABLE="%{_bindir}/sphinx-build-3" ../libcomps/
-%make_build
-make docs
-make pydocs
-
+%{mageia_cmake} -DPYTHON_DESIRED:STRING=3 -DSPHINX_EXECUTABLE="%{_bindir}/sphinx-build-3" ./libcomps/
+%mageia_cmake_build
+%mageia_cmake_build docs
+%mageia_cmake_build pydocs
 
 %check
-pushd ./build
-make test
-popd
-
+make test -C %{_vpath_builddir}
 
 %install
-pushd ./build
-%makeinstall_std
-popd
-
+%mageia_cmake_install
 
 %files -n %{libname}
-%{_libdir}/libcomps.so.%{major}.*
-%doc README.md COPYING
+%doc README.md
+%doc --no-dereference COPYING
+%{_libdir}/libcomps.so.%{major}
 
 %files -n %{libname_devel}
-%{_libdir}/libcomps.so
 %{_includedir}/*
+%{_libdir}/libcomps.so
+%{_libdir}/pkgconfig/%{name}.pc
 
 %files doc
 %doc build/docs/libcomps-doc/html
@@ -125,9 +123,14 @@ popd
 
 %files -n python3-module-libcomps
 %{python3_sitelibdir}/libcomps
+%{python3_sitelibdir}/%{name}-%{version}-py%{__python3_version}.egg-info
+
 
 
 %changelog
+* Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.1.14-alt1_2
+- new version
+
 * Thu Apr 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.1.11-alt1_1
 - update by mgaimport
 

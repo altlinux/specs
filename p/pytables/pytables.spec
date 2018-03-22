@@ -15,71 +15,44 @@ relational or object oriented databases.
 %define hdf5dir %_libdir/hdf5-seq
 %define oname tables
 
-%def_with python3
-%def_without python2
 %def_enable check
 
+#TODO: fix docs and bench
+
 Name: py%oname
-Version: 3.5.2
-Release: alt2
+Version: 3.6.1
+Release: alt1
 Epoch: 1
 
 Summary: Managing hierarchical datasets
 
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: http://www.pytables.org/
 
 # https://github.com/PyTables/PyTables.git
 Source: %name-%version.tar
 
 Requires: python3-module-%oname = %EVR
-
-
-%if_with python2
-%add_findreq_skiplist %python_sitelibdir/%oname/contrib/nctoh5.py
-%add_python_req_skip sqlite
-
-BuildRequires(pre): rpm-build-python
-BuildPreReq: python-module-numpydoc python-module-numpy-addons
-BuildPreReq: python-module-lxml python-module-numpy
-BuildPreReq: python-module-docutils python-module-matplotlib
-BuildPreReq: python-module-sphinx
-BuildPreReq: python-module-numexpr-tests
-BuildPreReq: python-devel python-module-Pyrex
-BuildPreReq: python-module-Cython
-BuildPreReq: python-module-numexpr python-module-setuptools
-BuildRequires: python-module-sphinx_rtd_theme ipython python-module-pathlib2
-BuildRequires: python-module-mock
-%endif
+Conflicts: %name < 1:3.6.1
+Obsoletes: %name < 1:3.6.1
 
 BuildRequires: libnumpy-devel
 BuildRequires: libhdf5-devel liblzo2-devel bzlib-devel
 BuildRequires: xsltproc inkscape fop
 BuildRequires: java-devel-default docbook-tldp-xsl docbook-dtds
-#BuildPreReq: texlive-latex-recommended libblosc-devel
 BuildRequires: libblosc-devel
 
-%if_with python3
 %add_findreq_skiplist %python3_sitelibdir/%oname/contrib/nctoh5.py
+%add_findreq_skiplist %python3_sitelibdir/%oname/contrib/make_hdf.py
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel python-tools-2to3
 BuildRequires: python3-module-distribute python3-module-Cython
 BuildRequires: python3-module-numexpr-tests
 BuildRequires: python3-module-mock
-%endif
 
 %description
-%descr
-
-%if_with python3
-%package py3
-Summary: Managing hierarchical datasets (Python 3)
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description py3
 %descr
 
 %package -n python3-module-%oname
@@ -113,7 +86,6 @@ Requires: python3-module-%oname = %EVR
 %descr
 
 This package contains benchmarks for PyTables.
-%endif
 
 %package doc
 Summary: Documentation for PyTables
@@ -125,87 +97,28 @@ BuildArch: noarch
 
 This package contains documentation for PyTables.
 
-%if_with python2
-%package -n python-module-%oname
-Summary: Managing hierarchical datasets
-Group: Development/Python
-%setup_python_module %oname
-%add_python_req_skip numarray
-
-%description -n python-module-%oname
-%descr
-
-This package contains python module of PyTables.
-
-%package -n python-module-%oname-tests
-Summary: Tests and examples for PyTables
-Group: Development/Python
-%add_python_req_skip numarray queue
-Requires: python-module-%oname = %EVR
-
-%description -n python-module-%oname-tests
-%descr
-
-This package contains tests and examples for PyTables.
-
-%package -n python-module-%oname-bench
-Summary: Benchmarks for PyTables
-Group: Development/Python
-%add_python_req_skip numarray chararray recarray recarray2 Numeric psyco
-Requires: python-module-%oname = %EVR
-
-%description -n python-module-%oname-bench
-%descr
-
-This package contains benchmarks for PyTables.
-
-%endif
-
 %prep
 %setup
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-find ../python3 -type f -name '*.py' -exec \
+find . -type f -name '*.py' -exec \
     sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' '{}' +
-find ../python3 -type f -name '*.py' -exec \
+find . -type f -name '*.py' -exec \
     sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' '{}' +
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
 
 %build
 %add_optflags -fno-strict-aliasing
 export NPY_NUM_BUILD_JOBS=%__nprocs
-%if_with python2
-%python_build_debug --hdf5=%hdf5dir
-%endif
-%if_with python3
-pushd ../python3
 %python3_build_debug --hdf5=%hdf5dir
-popd
-%endif
 
 %install
-%if_with python3
-pushd ../python3
 %python3_install --hdf5=%hdf5dir --root=%buildroot
 
 cp -fR examples %buildroot%python3_sitelibdir/%oname/
 cp -fR bench contrib %buildroot%python3_sitelibdir/%oname/
-popd
-pushd %buildroot%_bindir
-for i in $(ls); do
-    mv $i $i.py3
-done
-popd
-%endif
 
-%if_with python2
-%python_install --hdf5=%hdf5dir --root=%buildroot
-
-export PYTHONPATH=%buildroot%python_sitelibdir
-%make_build -C doc pickle
-%make_build -C doc html
+%if_with docs
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%make_build SPHINXBUILD="sphinx-build-3" -C doc pickle
+%make_build SPHINXBUILD="sphinx-build-3" -C doc html
 %endif
 
 install -d %buildroot%_docdir/%name/pdf
@@ -213,51 +126,19 @@ install -p -m644 LICENSE.txt README.rst RELEASE_NOTES.txt THANKS \
     %buildroot%_docdir/%name
 cp -fR LICENSES %buildroot%_docdir/%name
 
-%if_with python2
-#install -p -m644 doc/build/latex/*.pdf %buildroot%_docdir/%name/pdf
+%if_with docs
 cp -fR doc/build/html %buildroot%_docdir/%name/
-
-cp -fR examples %buildroot%python_sitelibdir/%oname/
-
-cp -fR bench contrib %buildroot%python_sitelibdir/%oname/
 %endif
+
+cp -fR examples %buildroot%python3_sitelibdir/%oname/
+
+cp -fR bench contrib %buildroot%python3_sitelibdir/%oname/
 
 %check
-%if_with python2
-%make check
-%endif
-%if_with python3
-pushd ../python3
 %make check PYTHON=python3
-popd
-%endif
 
 %files
 %_bindir/*
-%if_with python3
-%exclude %_bindir/*.py3
-%endif
-
-%if_with python2
-%files -n python-module-%oname
-%python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/examples
-%exclude %python_sitelibdir/%oname/tests
-%exclude %python_sitelibdir/%oname/*/tests
-%exclude %python_sitelibdir/%oname/bench
-
-%files -n python-module-%oname-tests
-%python_sitelibdir/%oname/examples
-%python_sitelibdir/%oname/tests
-%python_sitelibdir/%oname/*/tests
-
-%files -n python-module-%oname-bench
-%python_sitelibdir/%oname/bench
-%endif
-
-%if_with python3
-%files py3
-%_bindir/*.py3
 
 %files -n python3-module-%oname
 %python3_sitelibdir/*
@@ -271,14 +152,15 @@ popd
 %python3_sitelibdir/%oname/tests
 %python3_sitelibdir/%oname/*/tests
 
-#files -n python3-module-%oname-bench
-#python3_sitelibdir/%oname/bench
-%endif
-
 %files doc
 %_docdir/%name
 
 %changelog
+* Tue Feb 25 2020 Grigory Ustinov <grenka@altlinux.org> 1:3.6.1-alt1
+- Build new version for python3.8.
+- Build without python2 support.
+- Build without docs.
+
 * Fri Jan 24 2020 Vitaly Lipatov <lav@altlinux.ru> 1:3.5.2-alt2
 - disable build python2 submodules
 - stop using obsoleted sqlite module
@@ -394,4 +276,3 @@ popd
 
 * Fri Sep 11 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2b2-alt1.svn20090911
 - Initial build for Sisyphus
-

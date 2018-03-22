@@ -28,8 +28,8 @@
 %endif
 
 Name:    hplip
-Version: 3.19.12
-Release: alt2
+Version: 3.20.2
+Release: alt1
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -46,9 +46,7 @@ URL: https://developers.hp.com/hp-linux-imaging-and-printing
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # Remove self-satisfied requires
-%if_with python3
-%filter_from_requires /^python3(\(base.*\|installer.*\|prnt\|scan\|copier\))/d
-%endif
+%filter_from_requires /^python[0-9.]*(\(base.*\|installer.*\|prnt\|scan\|copier\|hpmudext\|pcard\))/d
 
 %define hpijsname hpijs
 
@@ -58,7 +56,7 @@ Provides: cups-backend-ptal
 Obsoletes: cups-backend-ptal
 Conflicts: cups < 1.1.18-alt7
 
-PreReq:	cups
+Requires(pre,postun): cups
 Requires: %name-common = %{?epoch:%epoch:}%version-%release
 
 # TODO: split hplip and hplip-utils
@@ -76,12 +74,10 @@ Requires: wget
 Requires: %{_bindir}/gpg
 
 %if_enabled python_code
-###Requires: python
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-%add_python3_lib_path %_datadir/%name
 %else
-%add_python_lib_path %_datadir/%name
+BuildRequires(pre): rpm-build-python
 %endif
 # Andy Kuleshov report
 Requires: python%{pysuffix}-module-dbus
@@ -92,8 +88,8 @@ Requires: python-modules-ctypes
 
 Requires: service => 0.5.9-alt1
 
-BuildPreReq: libsane-devel
-# Automatically added by buildreq on Thu Sep 22 2005
+BuildRequires(pre): libsane-devel
+
 BuildRequires: gcc-c++ libcups-devel libjpeg-devel libnet-snmp-devel libssl-devel libstdc++-devel libusb-devel libusb-compat-devel libdbus-devel zlib-devel
 
 %if_enabled python_code
@@ -695,6 +691,13 @@ EOF
 
 #we install foomatic data in separate package
 # TODO
+
+# Fix path to Python3 includes for python3 >= 3.8
+%if_with python3
+%add_optflags `pkg-config --cflags python3`
+%endif
+%undefine _configure_gettext
+
 %configure \
     --with-mimedir=%{_datadir}/cups/mime \
     --disable-foomatic-rip-hplip-install \
@@ -946,6 +949,7 @@ fi
 %{_bindir}/hp-unload
 # Files
 %dir %{_datadir}/hplip
+%{_datadir}/hplip/__pycache__
 %{_datadir}/hplip/align.py*
 %{_datadir}/hplip/check-plugin.py*
 %{_datadir}/hplip/clean.py*
@@ -1156,6 +1160,28 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Fri Feb 28 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.20.2-alt1
+- New version.
+- Added support for the following new Printers:
+  + HP Neverstop Laser MFP 1200n
+  + HP Neverstop Laser MFP 1201n
+  + HP Neverstop Laser MFP 1200nw
+  + HP Neverstop Laser MFP 1202nw
+  + HP Laser NS MFP 1005n
+  + HP Neverstop Laser 1000n
+  + HP Neverstop Laser 1001nw
+  + HP Laser NS 1020n
+  + HP ScanJet Pro 2000 s2
+  + HP ScanJet Pro 3000 s4
+  + HP ScanJet Pro N4000 snw1
+  + HP ScanJet Enterprise Flow 5000 s5
+  + HP ScanJet Enterprise Flow N7000 snw1
+
+* Thu Feb 27 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.19.12-alt3
+- Do not generate provides with Python scripts that are not packaged as library.
+- Fix path to Python3 includes for python3 >= 3.8.
+- Spec cleanup.
+
 * Fri Feb 14 2020 Andrey Cherepanov <cas@altlinux.org> 1:3.19.12-alt2
 - Use python3 in service file.
 

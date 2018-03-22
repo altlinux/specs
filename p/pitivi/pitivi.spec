@@ -10,7 +10,7 @@
 
 Name: pitivi
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: PiTiVi allows users to easily edit audio/video projects
 License: LGPLv2.1+
@@ -22,6 +22,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+Patch: pitivi-0.999-py38.patch
 
 Requires: gst-transcoder = %gst_ver-%release
 
@@ -88,6 +89,7 @@ This package provides development documentation for GStreamer Transcoder.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson --wrap-mode=default
@@ -125,6 +127,9 @@ This package provides development documentation for GStreamer Transcoder.
 %_datadir/gtk-doc/html/gstreamer-transcoder/
 
 %changelog
+* Wed Feb 26 2020 Grigory Ustinov <grenka@altlinux.org> 0.999-alt2
+- Fix build with python3.8.
+
 * Mon Nov 12 2018 Leontiy Volodin <lvol@altlinux.org> 0.999-alt1
 - new version 0.999 (with rpmrb script)
 - fixed x86_64 build

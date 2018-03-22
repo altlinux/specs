@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zope.proxy
 
-%def_with check
+%def_without check
 
 Name: python3-module-%oname
 Version: 4.3.3
-Release: alt1
+Release: alt2
 Summary: Generic Transparent Proxies
 License: ZPL
 Group: Development/Python3
@@ -86,6 +86,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Tue Feb 25 2020 Grigory Ustinov <grenka@altlinux.org> 4.3.3-alt2
+- Bootstrap for python3.8.
+
 * Tue Dec 24 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.3.3-alt1
 - NMU: 4.2.0 -> 4.3.3
 - Remove python2 module build

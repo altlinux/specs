@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname persistent
 
-%def_with check
+%def_without check
 
 Name: python3-module-%oname
 Version: 4.5.1
-Release: alt1
+Release: alt2
 
 Summary: Translucent persistent objects
 License: ZPL-2.1
@@ -109,6 +109,9 @@ TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py%{python_version_nodots python3} -
 %python3_sitelibdir/%oname/test*
 
 %changelog
+* Sun Jan 19 2020 Grigory Ustinov <grenka@altlinux.org> 4.5.1-alt2
+- Bootstrap for python3.8.
+
 * Tue Jan 14 2020 Nikolai Kostrigin <nickel@altlinux.org> 4.5.1-alt1
 - NMU: 4.2.4.2 -> 4.5.1
 - Remove python2 module build

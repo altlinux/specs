@@ -1,8 +1,8 @@
 %define oname Levenshtein
 
 Name: python3-module-%oname
-Version: 0.11.2
-Release: alt2
+Version: 0.12.0
+Release: alt1
 
 Summary: Python extension for computing string edit distances and similarities
 License: GPLv2+
@@ -13,10 +13,8 @@ Url: https://pypi.python.org/pypi/python-Levenshtein/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3
 
 %py3_provides %oname
-
 
 %description
 The Levenshtein Python C extension module contains functions for fast
@@ -32,29 +30,23 @@ It supports both normal and Unicode strings.
 %prep
 %setup
 
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
-sed -i 's|python | python3 |' ./gendoc.sh
-sed -i 's|file(modname|open(modname|' genextdoc.py
-
 %build
 %python3_build_debug
 
 %install
 %python3_install
 
-export PYTHONPATH=%buildroot%python3_sitelibdir
-./gendoc.sh
-
 %check
 %__python3 setup.py test
 
 %files
-%doc *.txt NEWS* *.rst Levenshtein.html
+%doc NEWS* *.rst
 %python3_sitelibdir/*
 
-
 %changelog
+* Fri Feb 21 2020 Grigory Ustinov <grenka@altlinux.org> 0.12.0-alt1
+- Build new version for python3.8.
+
 * Mon Feb 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.11.2-alt2
 - Build for python2 disabled.
 

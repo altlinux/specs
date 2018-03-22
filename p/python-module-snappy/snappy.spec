@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname snappy
 
-%def_with check
+%def_without check
 
 Name: python-module-%oname
-Version: 0.5.3
-Release: alt3
+Version: 0.5.4
+Release: alt1
 Summary: Python library for the snappy compression library from Google
 License: BSD
 Group: Development/Python
@@ -71,6 +71,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Sun Feb 23 2020 Grigory Ustinov <grenka@altlinux.org> 0.5.4-alt1
+- Build new version for python3.8 without check.
+
 * Fri Aug 09 2019 Stanislav Levin <slev@altlinux.org> 0.5.3-alt3
 - Fixed testing against Pytest.
 

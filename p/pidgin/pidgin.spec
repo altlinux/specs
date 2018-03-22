@@ -33,10 +33,10 @@
 
 Name: pidgin
 Version: 2.13.0
-Release: alt6
+Release: alt7
 
 Summary: A GTK+ based multiprotocol instant messaging client
-License: GPL
+License: GPLv2
 Group: Networking/Instant messaging
 Url: http://pidgin.im
 Packager: Alexey Shabalin <shaba@altlinux.ru>
@@ -462,6 +462,10 @@ fi
 %endif
 
 %changelog
+* Sat Feb 08 2020 Grigory Ustinov <grenka@altlinux.org> 2.13.0-alt7
+- Fix build with python3.8.
+- Fix license.
+
 * Tue Jul 16 2019 Alexey Shabalin <shaba@altlinux.org> 2.13.0-alt6
 - Build against with NM
 - Drop aim support
