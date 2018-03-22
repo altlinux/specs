@@ -1,34 +1,32 @@
 %define modulename meld3
 
-%def_with python3
-
 Name: python-module-%modulename
-Version: 0.6.5
-Release: alt1.2.1.1
+Version: 1.0.2
+Release: alt1
 
 Summary: Elementree based templating system
 License: ZPL
 Group: Development/Python
+
 Url: http://www.plope.com/software/meld3/
+# https://github.com/Supervisor/meld3
 Packager: Maxim Ivanov <redbaron at altlinux.org>
 BuildArch: noarch
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
-BuildRequires: python-devel python-tools-2to3 rpm-build-python3 time
+BuildRequires: python-module-setuptools
+BuildRequires: time
 
-#BuildRequires: python-module-setuptools
-%if_with python3
+%py_requires elementtree
+
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-setuptools
-#BuildPreReq: python-tools-2to3
-%endif
-Requires: python-module-elementtree
-Source: %modulename-%version.tar
-Patch: meld3-0.6.5-alt-hotshot.patch
-Patch1: meld3-0.6.5-alt-mimetools.patch
+BuildPreReq: python3-devel
+BuildPreReq: python3-module-setuptools
+BuildPreReq: python-tools-2to3
 
-%setup_python_module %modulename
+Source: meld3-%version.tar
+
 
 %description
 meld3 is an HTML/XML templating system for Python 2.3+ which keeps template 
@@ -46,46 +44,40 @@ markup and dynamic rendering logic separate from one another.
 See http://www.entrian.com/PyMeld for a treatise on the benefits of this pattern.
 
 %prep
-%setup -n %modulename-%version
+%setup -n meld3-%version
 
-%if_with python3
 cp -fR . ../python3
 pushd ../python3
-%patch -p0
-%patch1 -p0
 find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 popd
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files
 %python_sitelibdir/*
 %doc *.txt
 
-%if_with python3
 %files -n python3-module-%modulename
 %python3_sitelibdir/*
 %doc *.txt
-%endif
+
 
 %changelog
+* Thu Mar 22 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.2-alt1
+- Version 1.0.2
+  
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.5-alt1.2.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
@@ -104,4 +96,3 @@ popd
 
 * Fri May 22 2009 Maxim Ivanov <redbaron at altlinux.org> 0.6.5-alt1
 - Initial build for ALTLinux
-
