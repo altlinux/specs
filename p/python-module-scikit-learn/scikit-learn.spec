@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.19.1
-Release: alt1
+Release: alt2
 Summary: A set of python modules for machine learning and data mining
 License: BSD
 Group: Development/Python
@@ -13,7 +13,8 @@ Url: https://pypi.python.org/pypi/scikit-learn/
 
 # https://github.com/scikit-learn/scikit-learn.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-build.patch
+Patch1: %oname-%version-upstream-cython.patch
+Patch2: %oname-%version-alt-build.patch
 
 BuildRequires(pre): rpm-macros-sphinx
 BuildRequires: gcc-c++ liblapack-devel python-module-numpy-testing python-module-objects.inv python-module-scipy
@@ -86,6 +87,7 @@ This package contains documentation for %oname.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 # don't use bundled stuff
 rm -rf sklearn/externals
@@ -180,6 +182,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.19.1-alt2
+- Fixed build with new cython.
+
 * Tue Dec 05 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.19.1-alt1
 - Updated to upstream version 0.19.1.
 
