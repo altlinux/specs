@@ -1,5 +1,5 @@
 Name: rocksndiamonds
-Version: 4.0.0.2
+Version: 4.0.1.4
 Release: alt1
 
 Summary: A boulderdash like game
@@ -9,6 +9,7 @@ Group: Games/Arcade
 Url: http://www.artsoft.org/rocksndiamonds
 Source: %name-%version.tar.gz
 Source1: %name.desktop
+Source2: %name.1
 Source10: %name.16.png
 Source11: %name.32.png
 Source12: %name.48.png
@@ -56,7 +57,9 @@ This package contains levels for Rocks'N'Diamonds
 
 %install
 install -pD -m755 %name %buildroot%_gamesbindir/%name
-install -pD -m644 %name.1 %buildroot%_mandir/man1/%name.1
+test -r "%name.1" && \
+install -pD -m644 %name.1 %buildroot%_mandir/man1/%name.1 || \
+install -pD -m644 %SOURCE2 %buildroot%_mandir/man1/%name.1
 install -pD -m644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 mkdir -p %buildroot%_pkgdatadir
@@ -78,6 +81,9 @@ install -m644 %SOURCE12 -D %buildroot/%_liconsdir/%name.png
 %_pkgdatadir
 
 %changelog
+* Thu Mar 22 2018 Fr. Br. George <george@altlinux.ru> 4.0.1.4-alt1
+- Autobuild version bump to 4.0.1.4
+
 * Wed Sep 20 2017 Fr. Br. George <george@altlinux.ru> 4.0.0.2-alt1
 - Autobuild version bump to 4.0.0.2
 - Introduce editor help
