@@ -1,6 +1,6 @@
 Name: javazi
-Version: 2018c
-Release: alt3
+Version: %{get_version tzdata}
+Release: %{get_release tzdata}
 
 Summary: Timezone data for Java
 License: Public Domain
@@ -96,6 +96,9 @@ install -pm644 tzdata/tzdb.dat %buildroot%_datadir/javazi-1.8/
 %files checkinstall
 
 %changelog
+* Wed Apr 04 2018 Dmitry V. Levin <ldv@altlinux.org> %{get_SVR tzdata}
+- Rebuilt with new tzdata.
+
 * Wed Apr 04 2018 Dmitry V. Levin <ldv@altlinux.org> 2018c-alt3
 - Relaxed dependency on tzdata.
 - Added checkinstall subpackage.
