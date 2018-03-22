@@ -1,12 +1,12 @@
 Name: ranger
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 
 Summary(ru_RU.UTF-8): Консольный файл-менеджер
 Summary: Console file manager
 License: GPLv3
 Group: File tools
-Url: http://ranger.nongnu.org
+Url: https://ranger.github.io/
 
 Source0: %name-%version.tar.gz
 
@@ -54,6 +54,9 @@ sed -i 's@#!/usr/bin/python -O@#!/usr/bin/python@' ranger.py
 %python_sitelibdir/*
 
 %changelog
+* Thu Mar 22 2018 Fr. Br. George <george@altlinux.ru> 1.9.1-alt1
+- Autobuild version bump to 1.9.1
+
 * Tue Jan 30 2018 Grigory Ustinov <grenka@altlinux.org> 1.9.0-alt1
 - NMU: Build new version (Closes: #31346).
 - Add desktop file packaging to spec.
