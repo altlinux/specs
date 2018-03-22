@@ -1,29 +1,24 @@
-%define version 0.10.1
-%define release alt1
-%setup_python_module werkzeug
+%define oname werkzeug
 
 %def_with python3
 %def_disable check
 
 Summary: Werkzeug is one of the most advanced WSGI utility modules
-Name: %packagename
-Version: %version
-Release: alt1.1.1
-Source0: %modulename.tar
-Patch: werkzeug-alt-python3.patch
+Name: python-module-%oname
+Version: 0.14.1
+Release: alt1
 License: BSD
 Group: Development/Python
 BuildArch: noarch
 URL: http://werkzeug.pocoo.org/
 
-# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
-# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools
-BuildRequires: python-module-pytest python3-module-pytest rpm-build-python3
+# http://github.com/mitsuhiko/werkzeug.git
+Source: %name-%version.tar
 
-#BuildRequires: python-module-setuptools-tests python-modules-json
+BuildRequires: python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -38,11 +33,12 @@ It does Unicode and doesn't enforce a specific template engine, database
 adapter or anything else. It doesn't even enforce a specific way of
 handling requests and leaves all that up to the developer.
 
-%package -n python3-module-%modulename
+%if_with python3
+%package -n python3-module-%oname
 Summary: Werkzeug is one of the most advanced WSGI utility modules
 Group: Development/Python3
 
-%description -n python3-module-%modulename
+%description -n python3-module-%oname
 Werkzeug started as a simple collection of various utilities for WSGI
 applications and has become one of the most advanced WSGI utility
 modules. It includes a powerful debugger, fully featured request and
@@ -53,10 +49,10 @@ routing system and a bunch of community contributed addon modules.
 It does Unicode and doesn't enforce a specific template engine, database
 adapter or anything else. It doesn't even enforce a specific way of
 handling requests and leaves all that up to the developer.
+%endif
 
 %prep
-%setup -n %modulename
-%patch -p2
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -72,7 +68,7 @@ popd
 %endif
 
 %install
-%python_install --record=INSTALLED_FILES
+%python_install
 
 %if_with python3
 pushd ../python3
@@ -82,22 +78,27 @@ popd
 
 %check
 python ./setup.py test
+
 %if_with python3
 pushd ../python3
 python3 ./setup.py test
 popd
 %endif
 
-%files -f INSTALLED_FILES
-%doc AUTHORS CHANGES LICENSE
+%files
+%doc AUTHORS CHANGES.rst LICENSE
+%python_sitelibdir/*
 
 %if_with python3
-%files -n python3-module-%modulename
-%doc AUTHORS CHANGES LICENSE
+%files -n python3-module-%oname
+%doc AUTHORS CHANGES.rst LICENSE
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.14.1-alt1
+- Updated to upstream version 0.14.1.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.1-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

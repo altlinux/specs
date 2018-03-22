@@ -5,37 +5,32 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 2.9
-Release: alt1.dev.git20150726.1.1.1.1
+Version: 2.10
+Release: alt1
 
 Summary: The new and improved version of a small but fast template engine
 License: BSD
 Group: Development/Python
+BuildArch: noarch
 Url: http://jinja.pocoo.org/2/
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/mitsuhiko/jinja2.git
-Source0: %name-%version.tar
-#Patch: %name-%version-%release.patch
+Source: %name-%version.tar
 
-BuildArch: noarch
-
-#BuildPreReq: python-devel python-module-setuptools-tests
-# for docs
-#BuildPreReq: python-module-sphinx python-module-Pygments
-#BuildPreReq: python-module-jinja2-tests python-module-markupsafe
+BuildRequires: python-module-pytest
+%if_with doc
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib
+%endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-setuptools
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-pytest python3-module-pytest rpm-build-python3 time
-
-#BuildRequires: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-module-pytest
 %endif
 
-Requires: %name-tests = %version-%release
+%add_findprov_skiplist %python_sitelibdir_noarch/jinja2/asyncfilters.py* %python_sitelibdir_noarch/jinja2/asyncsupport.py*
+%add_findreq_skiplist  %python_sitelibdir_noarch/jinja2/asyncfilters.py* %python_sitelibdir_noarch/jinja2/asyncsupport.py*
+
+Provides: python-module-%oname-tests = %EVR
+Obsoletes: python-module-%oname-tests
 
 %description
 Jinja2 is a template engine written in pure Python. It provides a Django
@@ -46,38 +41,16 @@ sandboxed environment.
 %package -n python3-module-%oname
 Summary: The new and improved version of a small but fast template engine (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname-tests = %version-%release
+Provides: python3-module-%oname-tests = %EVR
+Obsoletes: python3-module-%oname-tests
 
 %description -n python3-module-%oname
 Jinja2 is a template engine written in pure Python. It provides a Django
 inspired non-XML syntax but supports inline expressions and an optional
 sandboxed environment.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for Jinja2 (Python 3)
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-tests
-Jinja2 is a template engine written in pure Python. It provides a Django
-inspired non-XML syntax but supports inline expressions and an optional
-sandboxed environment.
-
-This package contains tests for Jinja2.
 %endif
 
-%package tests
-Summary: Tests for Jinja2
-Group: Development/Python
-Requires: %name = %version-%release
-
-%description tests
-Jinja2 is a template engine written in pure Python. It provides a Django
-inspired non-XML syntax but supports inline expressions and an optional
-sandboxed environment.
-
-This package contains tests for Jinja2.
-
+%if_with doc
 %package doc
 Summary: Documentation for Jinja2
 Group: Development/Documentation
@@ -99,12 +72,11 @@ inspired non-XML syntax but supports inline expressions and an optional
 sandboxed environment.
 
 This package contains pickles for Jinja2.
-
+%endif
 
 %prep
 %setup
 %if_with python3
-rm -rf ../python3
 cp -a . ../python3
 %endif
 
@@ -141,19 +113,13 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir_noarch/jinja2/
 make test
 
 %files
+%doc AUTHORS CHANGES.rst
 %python_sitelibdir_noarch/jinja2/
 %python_sitelibdir_noarch/*.egg-info
-%exclude %python_sitelibdir_noarch/jinja2/tests.py*
-#exclude %python_sitelibdir_noarch/jinja2/testsuite
 %if_with doc
 %exclude %python_sitelibdir_noarch/jinja2/pickle
 %doc ext/
 %endif
-%doc AUTHORS CHANGES
-
-%files tests
-%python_sitelibdir_noarch/jinja2/tests.py*
-#python_sitelibdir_noarch/jinja2/testsuite
 
 %if_with doc
 %files doc
@@ -166,20 +132,15 @@ make test
 
 %if_with python3
 %files -n python3-module-%oname
-%doc AUTHORS CHANGES
+%doc AUTHORS CHANGES.rst
 %python3_sitelibdir_noarch/jinja2/
 %python3_sitelibdir_noarch/*.egg-info
-%exclude %python3_sitelibdir_noarch/jinja2/tests.py*
-%exclude %python3_sitelibdir_noarch/jinja2/*/tests.*
-#exclude %python3_sitelibdir_noarch/jinja2/testsuite
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir_noarch/jinja2/tests.py*
-%python3_sitelibdir_noarch/jinja2/*/tests.*
-#python3_sitelibdir_noarch/jinja2/testsuite
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.10-alt1
+- Updated to upstream version 2.10.
+
 * Sat Jan 14 2017 Michael Shigorin <mike@altlinux.org> 2.9-alt1.dev.git20150726.1.1.1.1
 - BOOTSTRAP: introduced doc knob (avoid sphinx)
 
