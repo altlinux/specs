@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_enable bootstrap
 %def_disable ibmlibs
 %set_verify_elf_method no
@@ -6,8 +8,8 @@
 %define qIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 Name: mono
-Version: 5.0.1.1
-Release: alt8%ubt
+Version: 5.10.0.157
+Release: alt1%ubt
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -15,7 +17,7 @@ License: MIT
 Url: http://www.mono-project.com
 
 Source: %name-%version.tar
-Source1: external.tar.gz
+Source1: external.tar.xz
 # by running the following command:
 # sn -k mono.snk
 # Dec 2015 ALT
@@ -23,9 +25,9 @@ Source2: mono.snk
 Source3: monolite.tar.gz
 # ALT: for packaging, manually pack all external/* subpackage stuff into external.tar.gz because those are submodules and cannot be added normally to git tree without losing history.
 Source4: mono-cert-sync.filetrigger
-Patch1: %name-%version-alt-linking1.patch
-Patch2: %name-%version-alt-linking2.patch
-Patch3: %name-%version-alt-monodoc-sourcesdir.patch
+Patch1: %name-alt-linking1.patch
+Patch2: %name-alt-linking2.patch
+Patch3: %name-alt-monodoc-sourcesdir.patch
 
 BuildRequires(pre): rpm-build-mono >= 2.0
 BuildRequires(pre): rpm-build-ubt
@@ -60,7 +62,19 @@ BuildRequires: %name-core >= 5.0
 
 # Interfaces of slightly older versions are required, upstream corrects it by modifying 'Requires'
 %define __find_provides sh -c '/usr/lib/rpm/find-provides | sort | uniq'
-%define __find_requires sh -c '/usr/lib/rpm/find-requires | sort | uniq | grep ^... | sed "s/mono\(System.IO.Compression\).*/mono\(System.IO.Compression\) = 4.0.0.0/" | sed "s/mono\(System.Text.Encoding.CodePages\).*/mono\(System.Text.Encoding.CodePages\) = 4.0.1.0/" | sed "s/mono\(System.Security.Cryptography.Algorithms\).*/mono\(System.Security.Cryptography.Algorithms\) = 4.2.0.0/" | sed "s/mono\(System.Collections.Immutable\).*/mono\(System.Collections.Immutable\) = 1.2.1.0/" | sed "s/mono\(System.Xml.ReaderWriter\).*/mono\(System.Xml.ReaderWriter\) = 4.0.0.0/"'
+%define __find_requires sh -c '/usr/lib/rpm/find-requires | sort | uniq | grep ^... | \
+	sed "s/mono\(System.IO.Compression\).*/mono\(System.IO.Compression\) = 4.0.0.0/" | \
+	sed "s/mono\(System.Collections.Immutable\).*/mono\(System.Collections.Immutable\) = 1.2.1.0/" | \
+	sed "s/mono\(System.Xml.ReaderWriter\).*/mono\(System.Xml.ReaderWriter\) = 4.0.0.0/" | \
+	sed "s/mono\(System.Security.Cryptography.Algorithms\).*/mono\(System.Security.Cryptography.Algorithms\) = 4.3.1.0/" | \
+	sed "s/mono\(System.Text.Encoding.CodePages\).*/mono\(System.Text.Encoding.CodePages\) = 4.1.0.0/" | \
+	sed "s/mono\(System.ValueTuple\).*/mono\(System.ValueTuple\) = 4.0.3.0/" | \
+	sed "s/mono\(System.Xml.XPath.XDocument\).*/mono\(System.Xml.XPath.XDocument\) = 4.1.1.0/" | \
+	sed "s/mono\(System.Diagnostics.Process\).*/mono\(System.Diagnostics.Process\) = 4.1.0.0/" | \
+	sed "s/mono\(System.Diagnostics.StackTrace\).*/mono\(System.Diagnostics.StackTrace\) = 4.1.1.0/" | \
+	sed "/mono\(System.Runtime.Loader\).*/d" | \
+	sed "s/mono\(System.Security.AccessControl\).*/mono\(System.Security.AccessControl\) = 4.1.0.0/" | \
+	sed "s/mono\(System.Security.Principal.Windows\).*/mono\(System.Security.Principal.Windows\) = 4.1.0.0/"'
 
 %description
 The Mono runtime implements a JIT engine for the ECMA CLI
@@ -469,14 +483,14 @@ Development files for libmono.
 %patch2 -p1
 %patch3 -p1
 
-tar xzf %SOURCE1
+tar xJf %SOURCE1
 %if_enabled bootstrap
-mkdir -p mcs/class/lib/monolite
-pushd mcs/class/lib/monolite
+mkdir -p mcs/class/lib/monolite-linux
+pushd mcs/class/lib/monolite-linux
 tar xzf %SOURCE3
 monolitename="$(tar tzf %SOURCE3 | head -n 1 | sed -e 's:/$::')"
 if [ -n "$monolitename" ] ; then
-    mv "$monolitename" "$(echo "$monolitename" | sed -e 's:monolite-::' -e 's:-latest::')"
+    mv "$monolitename" "$(echo "$monolitename" | sed -e 's:monolite-linux-::' -e 's:-latest::')"
 fi
 popd
 %endif
@@ -487,18 +501,20 @@ find . -type f -iname '*.cs' -print0 | xargs -0 \
         -e 's:"libgdk-x11-2.0.so":"libgdk-x11-2.0.so.0":g' \
         -e 's:"libgdk_pixbuf-2.0.so":"libgdk_pixbuf-2.0.so.0":g' \
         -e 's:"libgobject-2.0.so":"libgobject-2.0.so.0":g' \
-        -e 's:"libgtk-x11-2.0.so":"libgtk-x11-2.0.so.0":g'
+        -e 's:"libgtk-x11-2.0.so":"libgtk-x11-2.0.so.0":g' \
+        -e 's:"libgmodule-2.0.so":"libgmodule-2.0.so.0":g' \
+        -e 's:"libglib-2.0.so":"libglib-2.0.so.0":g'
 
 # modifications for Mono 4
 %__subst "s#mono/2.0#mono/4.5#g" data/mono-nunit.pc.in
 
 %if_enabled bootstrap
 # for bootstrap, keep monolite. Mono 2.10 is too old to compile Mono 4.0
-export PATH=$PATH:mcs/class/lib/monolite/
+export PATH=$PATH:mcs/class/lib/monolite-linux/
 %else
 # Remove prebuilt binaries
-find . -name "*.exe" -not -path "./mcs/class/lib/monolite/*" -print -delete
-rm -rf mcs/class/lib/monolite/*
+find . -name "*.exe" -not -path "./mcs/class/lib/monolite-linux/*" -print -delete
+rm -rf mcs/class/lib/monolite-linux/*
 %endif
 
 %build
@@ -521,9 +537,9 @@ NOCONFIGURE=yes sh ./autogen.sh
 #tar xvzf /usr/src/RPM/SOURCES/external.tar.gz
 %if_enabled bootstrap
 # for bootstrap, keep monolite. Mono 2.10 is too old to compile Mono 4.0
-export PATH=$PATH:mcs/class/lib/monolite/
+export PATH=$PATH:mcs/class/lib/monolite-linux/
 %else
-rm -rf mcs/class/lib/monolite/*
+rm -rf mcs/class/lib/monolite-linux/*
 %endif
 %makeinstall_std
 
@@ -542,7 +558,7 @@ rm -f %buildroot%_libdir/libMonoSupportW.*
 # remove .a files for libraries that are really only for us
 #rm %buildroot%_libdir/*.a
 # remove libgc cruft
-#rm -rf %buildroot%_datadir/libgc-mono
+rm -rf %buildroot%_datadir/libgc-mono
 # remove stuff that we don't package*
 rm -f %buildroot%_bindir/cilc
 rm -f %buildroot%_man1dir/cilc.1*
@@ -558,6 +574,23 @@ rm -rf %buildroot%_bindir/mono-configuration-crypto
 rm -rf %buildroot%_mandir/man?/mono-configuration-crypto*
 #temporarily remove profiler iomap -bad symbols
 #rm -rf %buildroot%_libdir/libmono-profiler-iomap.so.0.0.0
+
+
+%if_disabled ibmlibs
+rm -rf %buildroot%_monogacdir/IBM.Data.DB2
+rm -f %buildroot%_monodir/4.5/IBM.Data.DB2.dll
+%endif
+
+rm -f %buildroot%_monodir/4.5/mono-shlib-cop.exe.config
+rm -f %buildroot%_monodir/4.5/sqlmetal.exe.config
+rm -f %buildroot%_monodir/4.5/xbuild.exe.config
+
+rm -f %buildroot%_libdir/libmono-2.0.a
+rm -f %buildroot%_libdir/libmono-2.0.la
+rm -f %buildroot%_libdir/libmonoboehm-2.0.a
+rm -f %buildroot%_libdir/libmonosgen-2.0.a
+rm -rf %buildroot%_libdir/mono/lldb
+rm -rf %buildroot%_datadir/mono-2.0/mono/profiler
 
 mkdir -p  %buildroot%_sysconfdir/mono-2.0/
 mkdir -p  %buildroot%_sysconfdir/mono-4.5/
@@ -665,7 +698,6 @@ ln -s mcs %buildroot%_bindir/gmcs
 %gac_dll System.Xml
 %gac_dll System.Deployment
 %gac_dll System.Reflection.Context
-%gac_dll System.Runtime.InteropServices.RuntimeInformation
 %gac_dll Mono.Tasklets
 %gac_dll System.Net
 %gac_dll System.Xml.Linq
@@ -741,12 +773,10 @@ ln -s mcs %buildroot%_bindir/gmcs
 %ifarch %ix86 x86_64 armh
 %_libdir/libmonoboehm-2.0.so.*
 %endif
-%dir %_monodir/4.0-api
-%dir %_monodir/4.5-api
-%dir %_monodir/4.6-api
-%_monodir/4.0-api/*
-%_monodir/4.5-api/*
-%_monodir/4.6-api/*
+%_monodir/4.0-api
+%_monodir/4.5-api
+%_monodir/4.6-api
+%_monodir/4.7-api
 
 %post core
 cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
@@ -765,14 +795,24 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_bindir/mono-package-runtime
 %_bindir/monograph
 %_bindir/sgen-grep-binprot
+%_bindir/csi
+%_monodir/4.5/csi.*
+%_bindir/vbc
+%_monodir/4.5/vbc.*
+%_monodir/4.5/VBCSCompiler.*
 %_monodir/4.5/mono-symbolicate.exe
 %_monodir/4.5/mono-symbolicate.pdb
+%_monodir/4.5/Microsoft.CodeAnalysis.CSharp.Scripting.dll
+%_monodir/4.5/Microsoft.CodeAnalysis.Scripting.dll
+%_monodir/4.5/Microsoft.CodeAnalysis.VisualBasic.dll
 %_monodir/2.0-api/*
 %_monodir/3.5-api/*
 %_monodir/4.5.1-api/*
 %_monodir/4.5.2-api/*
 %_monodir/4.6.1-api/*
 %_monodir/4.6.2-api/*
+%_monodir/4.7.1-api/*
+%_monodir/msbuild/15.0/bin/Roslyn
 %_bindir/mono-symbolicate
 %mono_bin xbuild
 %_monodir/4.5/xbuild.rsp
@@ -802,7 +842,6 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_bindir/monop2
 %mono_bin permview
 %_bindir/peverify
-%_bindir/prj2make
 %mono_bin resgen
 %_bindir/resgen2
 %mono_bin sgen
@@ -826,6 +865,7 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_man1dir/monodis.1*
 %_datadir/mono-2.0/mono/cil/cil-opcodes.xml
 %_man1dir/monolinker.1*
+%_man1dir/mono-profilers.1*
 %_man1dir/mono-shlib-cop.1*
 %_man1dir/mono-xmltool.1*
 %_man1dir/monop.1*
@@ -848,6 +888,7 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_monogacdir/Microsoft.Build.Utilities.Core
 %_monogacdir/Microsoft.Build.Tasks.v12.0
 %_monogacdir/Microsoft.Build.Utilities.v12.0
+%gac_dll Mono.Profiler.Log
 %gac_dll Mono.XBuild.Tasks
 %gac_dll System.Windows
 %gac_dll System.Xml.Serialization
@@ -1083,6 +1124,9 @@ cert-sync %_sysconfdir/pki/tls/certs/ca-bundle.crt
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Fri Mar 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.10.0.157-alt1%ubt
+- Updated to upstream version 5.10.0.157.
+
 * Mon Sep 25 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.1.1-alt8%ubt
 - Updated provides.
 - Fixed monodoc directory.
