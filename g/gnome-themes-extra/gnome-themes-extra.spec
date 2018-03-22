@@ -1,7 +1,7 @@
-%define ver_major 3.27
+%define ver_major 3.28
 
 Name: gnome-themes-extra
-Version: %ver_major.92
+Version: %ver_major
 Release: alt1
 
 Summary: GNOME Extra Themes
@@ -97,6 +97,9 @@ done
 %exclude %_libdir/gtk-2.0/2.10.0/engines/libadwaita.la
 
 %changelog
+* Thu Mar 22 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28-alt1
+- 3.28
+
 * Fri Mar 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.27.92-alt1
 - 3.27.92 (standard->extra)
 
