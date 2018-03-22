@@ -3,7 +3,7 @@
 
 Name: python-module-%modname
 Version: 0.12.2
-Release: alt3
+Release: alt4
 
 Summary: A micro-framework for Python based on Werkzeug, Jinja 2 and good intentions
 License: BSD
@@ -24,6 +24,7 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel
 BuildPreReq: python3-module-setuptools
 
+%py_requires click.testing
 
 %description
 Flask is called a "micro-framework" because the idea to keep the core
@@ -69,11 +70,12 @@ pushd %buildroot/%_bindir
 mv %modname %modname.py3
 popd
 
-%python_install --record=INSTALLED_FILES
+%python_install
 
-%files -f INSTALLED_FILES
+%files
 %doc AUTHORS README.rst LICENSE
 %_bindir/%modname
+%python_sitelibdir_noarch/*
 
 %files -n python3-module-%modname
 %doc AUTHORS README.rst LICENSE
@@ -81,6 +83,9 @@ popd
 %_bindir/%modname.py3
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.12.2-alt4
+- Updated runtime dependencies.
+
 * Wed Mar 14 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.12.2-alt3
 - Fixed spec.
 
