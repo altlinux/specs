@@ -1,7 +1,7 @@
 %define module fedora-compat
 Name: rpm-macros-%module
 Summary: Fedora compatibility set of macro
-Version: 0.12
+Version: 0.13
 Release: alt1
 License: GPL
 Group: System/Base
@@ -11,6 +11,8 @@ Packager: Igor Vlasenko <viy@altlinux.ru>
 Source: %name-%version.tar
 Patch: macros.systemd-alt.patch
 Requires: rpm-macros-kde-common-devel
+#set separately in Fedora2ALT
+#Requires: rpm-build-kf5
 
 %description
 %summary
@@ -20,7 +22,7 @@ Requires: rpm-macros-kde-common-devel
 %patch -p1
 %install
 install -D -m644 %module -p %buildroot%_rpmmacrosdir/%module-base
-for ext in cmake kde4 qt4 perl systemd; do
+for ext in cmake kde4 kf5 qt4 perl systemd; do
     install -D -m644 macros.$ext -p %buildroot%_rpmmacrosdir/%module-$ext
 done
 
@@ -28,6 +30,9 @@ done
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- initial kf5 support
+
 * Mon Oct 09 2017 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - added %%__isa_bits and %%qt5_qtwebengine_arches
 
