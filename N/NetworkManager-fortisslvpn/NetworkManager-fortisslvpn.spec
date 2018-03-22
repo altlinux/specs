@@ -7,8 +7,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-fortisslvpn
-Version: 1.2.6
-Release: alt3
+Version: 1.2.8
+Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Fortinet compatible SSLVPN support for NetworkManager
@@ -54,7 +54,6 @@ NetworkManager panel applet.
 %prep
 %setup
 %patch -p1
-subst 's,$(fortisslvpn_statedir),/tmp/.private/root,g' Makefile.am
 
 %build
 %autoreconf
@@ -85,6 +84,7 @@ make check
 %config %_sysconfdir/NetworkManager/VPN/nm-fortisslvpn-service.name
 %endif
 %config %_libexecdir/NetworkManager/VPN/nm-fortisslvpn-service.name
+%attr(700,root,root) %dir %_localstatedir/%name
 
 %files gtk -f %name.lang
 %if_with libnm_glib
@@ -98,6 +98,10 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Thu Mar 22 2018 L.A. Kostis <lakostis@altlinux.ru> 1.2.8-alt1
+- 1.2.8.
+- remove configuration hack.
+
 * Thu Jan 11 2018 L.A. Kostis <lakostis@altlinux.ru> 1.2.6-alt3
 - don't expose configuration to public.
 
