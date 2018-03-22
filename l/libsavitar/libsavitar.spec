@@ -1,6 +1,6 @@
 Name: libsavitar
 Version: 3.2.1
-Release: alt1%ubt
+Release: alt1%ubt.1
 Summary: C++ implementation of 3mf loading with SIP Python bindings
 License: AGPLv3+
 Group: Development/Other
@@ -76,6 +76,9 @@ rm pugixml -rf
 %python3_sitelibdir/Savitar.so
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.2.1-alt1%ubt.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Sat Feb 24 2018 Anton Midyukov <antohami@altlinux.org> 3.2.1-alt1%ubt
 - new version 3.2.1
 

@@ -1,7 +1,7 @@
 Name: python-module-systemd
 Epoch: 1
 Version: 234
-Release: alt1
+Release: alt1.1
 Summary: Python module wrapping systemd functionality
 Group: Development/Python
 
@@ -57,6 +57,9 @@ This is the version for Python 3.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:234-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Aug 09 2017 Alexey Shabalin <shaba@altlinux.ru> 1:234-alt1
 - 234
 

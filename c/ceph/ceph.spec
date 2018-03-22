@@ -12,9 +12,13 @@
 %def_without system_lua
 %def_with system_rocksdb
 
+%ifndef build_parallel_jobs
+%define build_parallel_jobs 7
+%endif
+
 Name: ceph
 Version: 12.2.4
-Release: alt1%ubt
+Release: alt1%ubt.1
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -600,6 +604,7 @@ cmake .. \
 #    -DWITH_SYSTEM_LUA=ON \
 #%endif
 
+export NPROCS=%build_parallel_jobs
 %make_build VERBOSE=1
 
 %install
@@ -1239,6 +1244,9 @@ fi
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 12.2.4-alt1%ubt.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Mar 05 2018 Alexey Shabalin <shaba@altlinux.ru> 12.2.4-alt1%ubt
 - 12.2.4
 

@@ -3,7 +3,7 @@
 
 Name: python-module-%mname
 Version: 1.3.0
-Release: alt1%ubt
+Release: alt1%ubt.1
 
 Summary: A high-level wrapper for Kerberos (GSSAPI) operations
 License: ASL 2.0
@@ -73,6 +73,9 @@ popd
 %python3_sitelibdir/kerberos-%version-*.egg-info
 
 %changelog
+* Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.0-alt1%ubt.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Mar 16 2018 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1%ubt
 - 1.2.5 -> 1.3.0
 

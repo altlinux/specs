@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.99.2
-Release: alt2.git20130522.1
+Release: alt2.git20130522.1.1
 
 Summary: Base module for all Kaa modules
 
@@ -43,7 +43,8 @@ use with the kaa main loop.
 %package -n python3-module-%oname
 Summary: Base module for all Kaa modules
 Group: Development/Python3
-%add_python3_req_skip avahi
+%add_python3_req_skip avahi gnutls.connection
+%py3_provides kaa.core kaa.dateutils kaa.strutils kaa.utils
 
 %description -n python3-module-%oname
 This module contains some basic code needed in all kaa modules. This
@@ -97,6 +98,9 @@ install -d %buildroot%python_sitelibdir/%oname
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.99.2-alt2.git20130522.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.99.2-alt2.git20130522.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

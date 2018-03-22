@@ -15,7 +15,7 @@
 
 Name: gpgme
 Version: 1.11.1
-Release: alt1%ubt
+Release: alt1%ubt.1
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
 License: LGPLv2.1+
@@ -221,6 +221,9 @@ export PATH=$PWD/tmp_bin:$PATH
 %_libdir/libqgpgme.so.%qgpgme_sover.*
 
 %changelog
+* Mon Apr 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.11.1-alt1%ubt.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Apr 20 2018 Sergey V Turchin <zerg@altlinux.org> 1.11.1-alt1%ubt
 - new version
 

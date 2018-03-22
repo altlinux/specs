@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.git20140822.1.1.1
+Release: alt2.git20140822.1.1.1.1
 %define oname wrapt
 
 %def_with python3
@@ -135,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.0-alt2.git20140822.1.1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Jul 11 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.0-alt2.git20140822.1.1.1
 - Fixed build spec
 

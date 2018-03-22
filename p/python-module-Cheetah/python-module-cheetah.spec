@@ -5,7 +5,7 @@
 Summary: Template engine and code-generator
 Name: python-module-%origname
 Version: 3.1.0
-Release: alt1
+Release: alt1.1
 Source0: Cheetah-%version.tar
 License: MIT
 Group: Development/Python
@@ -132,6 +132,9 @@ popd
 
 
 %changelog
+* Tue Mar 27 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.0-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Mar 27 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.1.0-alt1
 - Version 3.1.0-alt1
 

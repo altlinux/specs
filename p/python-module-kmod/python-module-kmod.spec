@@ -6,7 +6,7 @@ License:        LGPLv2+
 Group:          Development/Python
 Summary:        Python module to work with kernel modules
 Version:        0.9
-Release:        alt2.1
+Release:        alt2.1.1
 URL:            https://github.com/agrover/python-kmod/
 Packager:       Python Development Team <python@packages.altlinux.org>
 Source:         %{name}-%{version}.tar
@@ -73,6 +73,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9-alt2.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Mar 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9-alt2.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

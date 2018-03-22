@@ -1,6 +1,6 @@
 Name: poezio
 Version: 0.9
-Release: alt4
+Release: alt4.1
 Summary: A console Jabber/XMPP client
 Group: Networking/Instant messaging
 Url: http://poez.io/en
@@ -108,6 +108,9 @@ mv %buildroot%python3_sitelibdir_noarch/poezio/poopt* %buildroot%python3_sitelib
 %python3_sitelibdir_noarch/%{name}_themes
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9-alt4.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Jul 22 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9-alt4
 - (.spec) minor cleanup (of a workaround).
 

@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.19.1
-Release: alt2
+Release: alt2.1
 Summary: A set of python modules for machine learning and data mining
 License: BSD
 Group: Development/Python
@@ -182,6 +182,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.19.1-alt2.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.19.1-alt2
 - Fixed build with new cython.
 

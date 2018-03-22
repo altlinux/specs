@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.10.6
-Release: alt1
+Release: alt1.1
 
 %setup_python_module %oname
 
@@ -95,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.6-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Oct 03 2017 Vitaly Lipatov <lav@altlinux.ru> 0.10.6-alt1
 - new version (0.10.6) with rpmgs script
 

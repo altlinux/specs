@@ -2,7 +2,7 @@
 
 Name:           python-module-pymongo
 Version:        3.6.0
-Release:        alt1
+Release:        alt1.1
 Summary:        Python driver for MongoDB
 
 Group:          Development/Python
@@ -140,6 +140,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.0-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Dec 20 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.0-alt1
 - Updated to upstream version 3.6.0.
 

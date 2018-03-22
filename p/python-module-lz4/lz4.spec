@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.8.2
-Release: alt1.1
+Release: alt1.1.1
 Summary: LZ4 Bindings for Python
 License: BSD
 Group: Development/Python
@@ -87,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.2-alt1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.2-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

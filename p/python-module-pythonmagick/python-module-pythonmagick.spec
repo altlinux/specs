@@ -2,7 +2,7 @@
 %define oname pythonmagick
 Name: python-module-%oname
 Version: 0.9.64
-Release: alt1.20170528%ubt
+Release: alt1.20170528%ubt.1
 
 Summary: Object-oriented Python interface to ImageMagick
 
@@ -78,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.64-alt1.20170528%ubt.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Jan 25 2018 Anton Midyukov <antohami@altlinux.org> 0.9.64-alt1.20170528%ubt
 - Fix FTBFS.
 

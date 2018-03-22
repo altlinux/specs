@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.24.2
-Release: alt1.git20170214.1.1
+Release: alt1.git20170214.1.1.1
 Summary: A Python binding to Poppler-Qt5
 License: LGPLv2.1+
 Group: Development/Python
@@ -83,6 +83,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.24.2-alt1.git20170214.1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.24.2-alt1.git20170214.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.8.3
-Release: alt1.git20150514.1.3
+Release: alt1.git20150514.1.3.1
 Summary: http request/response parser
 License: MIT
 Group: Development/Python
@@ -87,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.3-alt1.git20150514.1.3.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Aug 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.3-alt1.git20150514.1.3
 - Updated build dependencies.
 

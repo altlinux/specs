@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.1.1a1
-Release: alt1%ubt
+Release: alt1%ubt.1
 Summary: Acceleration code for PyOpenGL
 License: BSD
 Group: Development/Python
@@ -13,12 +13,10 @@ Url: http://pyopengl.sourceforge.net/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-ubt
-BuildPreReq: python-devel python-module-Cython libnumpy-devel
-BuildRequires: python-module-html5lib python-module-notebook python-module-numpy-testing
+BuildRequires: python-devel python-module-Cython libnumpy-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-Cython libnumpy-py3-devel
-BuildRequires: python3-module-html5lib python3-module-notebook python3-module-numpy-testing
+BuildRequires: python3-devel python3-module-Cython libnumpy-py3-devel
 %endif
 
 %description
@@ -71,6 +69,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.1a1-alt1%ubt.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Sat Jan 27 2018 Anton Midyukov <antohami@altlinux.org> 3.1.1a1-alt1%ubt
 - New version 3.1.1a1
 

@@ -25,7 +25,7 @@
 
 Name: brltty
 Version: %pkg_version
-Release: alt1
+Release: alt1.1
 
 Summary: Braille display driver for Linux/Unix
 Group: System/Servers
@@ -415,6 +415,9 @@ chmod +x %buildroot%_bindir/%name-config
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.6-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Feb 12 2018 Yuri N. Sedunov <aris@altlinux.org> 5.6-alt1
 - 5.6
 

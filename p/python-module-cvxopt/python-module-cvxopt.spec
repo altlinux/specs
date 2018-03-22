@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.7
-Release: alt1.1.1
+Release: alt1.1.1.1
 Summary: Python Software for Convex Optimization
 License: GPL v3 or higher/GPL v2 of higher
 Group: Development/Python
@@ -47,7 +47,7 @@ language.
 %package -n python3-module-%oname
 Summary: Python 3 Software for Convex Optimization
 Group: Development/Python3
-%add_python3_req_skip mosekarr pymosek mosek
+%add_python3_req_skip mosekarr pymosek mosek mosek.array
 
 %description -n python3-module-%oname
 CVXOPT is a free software package for convex optimization based on the
@@ -185,6 +185,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.7-alt1.1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.7-alt1.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 Summary: Cython wrapper class for reading/writing soundfiles using libsndfile
 License: LGPLv3
 Group: Development/Python
@@ -116,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Mar 06 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt1
 - Updated to upstream version 1.1.0.
 

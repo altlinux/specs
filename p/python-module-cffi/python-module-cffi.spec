@@ -4,7 +4,7 @@
 
 Name: python-module-cffi
 Version: 1.10.0
-Release: alt1
+Release: alt1.1
 
 Summary: Foreign Function Interface for Python calling C code
 
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.10.0-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Jun 8 2017 Vladimir Didenko <cow@altlinux.ru> 1.10.0-alt1
 - Version 1.10.0
 

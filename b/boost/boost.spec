@@ -44,7 +44,7 @@
 
 Name: boost
 Version: 1.66.0
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: Boost libraries
@@ -1885,6 +1885,9 @@ done
 
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.66.0-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Feb 27 2018 Alexey Shabalin <shaba@altlinux.ru> 1:1.66.0-alt1
 - Update to 1.66.0.
 

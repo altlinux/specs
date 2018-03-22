@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 2.0.2
-Release: alt1
+Release: alt1.1
 
 %setup_python_module %modulename
 
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Jan 17 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.2-alt1
 - Updated to upstream version 2.0.2.
 

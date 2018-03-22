@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.4.0
-Release: alt2
+Release: alt2.1
 
 Summary: The Reportlab Toolkit
 
@@ -137,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.0-alt2.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Mar 29 2018 Vitaly Lipatov <lav@altlinux.ru> 3.4.0-alt2
 - add provides: python-reportlab (ALT bug 34732)
 

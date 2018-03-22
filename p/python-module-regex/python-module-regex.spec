@@ -4,7 +4,7 @@
 %define modulename regex
 Name: python-module-regex
 Version: 2017.09.23
-Release: alt2
+Release: alt2.1
 
 Summary: Alternative regular expression module, to replace re
 
@@ -80,6 +80,9 @@ rm -rf %buildroot/%python3_sitelibdir/test_*
 
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2017.09.23-alt2.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Oct 02 2017 Vitaly Lipatov <lav@altlinux.ru> 2017.09.23-alt2
 - drop python*(test) requires
 

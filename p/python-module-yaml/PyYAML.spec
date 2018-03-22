@@ -4,7 +4,7 @@
 
 Name: python-module-yaml
 Version: 3.12
-Release: alt1
+Release: alt1.1
 
 Summary: PyYAML, a YAML parser and emitter for Python
 
@@ -74,6 +74,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.12-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Sun Oct 22 2017 Vitaly Lipatov <lav@altlinux.ru> 3.12-alt1
 - new version 3.12 (with rpmrb script) (ALT bug 34046)
 

@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.4.0
-Release: alt4.git20090722
+Release: alt4.git20090722.1
 Summary: A python module for high quality audio resampling
 License: GPLv2
 Group: Development/Python
@@ -181,6 +181,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.4.0-alt4.git20090722.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Feb 07 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:0.4.0-alt4.git20090722
 - fix lib/lib64 stupidity, again
 

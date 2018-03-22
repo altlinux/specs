@@ -38,7 +38,7 @@
 
 Name: totem
 Version: %ver_major.0
-Release: alt3
+Release: alt3.1
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -48,7 +48,7 @@ Url: https://wiki.gnome.org/Apps/Videos
 %if_enabled snapshot
 Source: %name-%version.tar
 %else
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar
 %endif
 
 Obsoletes: %name-gstreamer < %version %name-backend-gstreamer < %version %name-backend-xine < %version
@@ -406,6 +406,9 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.26.0-alt3.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Mar 06 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt3
 - updated to V_3_26_0-31-gc84daa2
 - built against libgnome-desktop-3.so.17

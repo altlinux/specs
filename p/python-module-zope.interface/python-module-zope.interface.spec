@@ -10,9 +10,9 @@ Version: 4.3.3
 #define subver c1
 Url: http://www.python.org/pypi/zope.interface
 %ifndef subver
-Release: alt1
+Release: alt1.1
 %else
-Release: alt0.%subver
+Release: alt0.%subver.1
 %endif
 # git://github.com/zopefoundation/zope.interface.git
 Source0: https://pypi.python.org/packages/44/af/cea1e18bc0d3be0e0824762d3236f0e61088eeed75287e7b854d65ec9916/%{oname}-%{version}.tar.gz
@@ -180,6 +180,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.3-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 4.3.3-alt1
 - automated PyPI update
 

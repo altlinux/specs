@@ -8,7 +8,7 @@ It currently only provides a few functions: \
 
 Name: %fname
 Version: 0.2.4
-Release: alt2
+Release: alt3
 
 Summary: Parse english textual date descriptions
 Group: Development/Python
@@ -36,6 +36,9 @@ BuildPreReq: python-devel python-module-setuptools
 %python_sitelibdir/*
 
 %changelog
+* Wed Apr 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.4-alt3
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Mar 23 2018 Grigory Ustinov <grenka@altlinux.org> 0.2.4-alt2
 - Tranfer package to subst-packaging system.
 

@@ -3,7 +3,7 @@
 
 Name: python-module-%modulename
 Version: 0.4.10
-Release: alt1
+Release: alt1.1
 
 %setup_python_module %modulename
 
@@ -76,6 +76,9 @@ popd
 #-------------------------------------------------------------------------------
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.10-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Jun 21 2017 Konstantin Artyushkin <akv@altlinux.org> 0.4.10-alt1
 - initial build
 

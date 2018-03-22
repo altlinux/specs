@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 Summary: Plot on map projections (with coastlines and political boundaries)
 License: OSI Approved
 Group: Development/Python
@@ -213,7 +213,7 @@ install -d %buildroot%python_sitelibdir/%oname
 cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 
 # Remove wrong rpath
-chrpath -d %buildroot%python3_sitelibdir/_geoslib.cpython-35m.so
+chrpath -d %buildroot%python3_sitelibdir/_geoslib.cpython-%{python_version_nodots python3}m.so
 
 %check
 pushd ~
@@ -268,6 +268,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Aug 18 2017 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - New version
 

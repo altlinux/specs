@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.2
-Release: alt2
+Release: alt2.1
 Summary: Sequence learning toolkit for Python
 License: MIT
 Group: Development/Python
@@ -186,6 +186,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2-alt2.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Aug 08 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2-alt2
 - Updated dependencies.
 

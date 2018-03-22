@@ -3,7 +3,7 @@
 
 Name: libcap-ng
 Version: 0.7.8
-Release: alt1
+Release: alt1.1
 
 Summary: An alternate posix capabilities library
 License: LGPLv2+
@@ -157,6 +157,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.8-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Oct 09 2017 Anton Farygin <rider@altlinux.ru> 0.7.8-alt1
 - new version
 

@@ -5,7 +5,7 @@
 
 Name: python3-module-pygobject
 Version: %major.6
-Release: alt10.1.1
+Release: alt10.1.1.1
 Summary: Python 3 bindings for GObject
 
 License: LGPL
@@ -128,6 +128,9 @@ find %buildroot -type f -name '*.py' -exec 2to3 -w '{}' +
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.28.6-alt10.1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.28.6-alt10.1.1
 - (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
   (it is meaningless because arbitrary packages package that dir).

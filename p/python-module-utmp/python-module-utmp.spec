@@ -4,7 +4,7 @@
 
 Name: python-module-utmp
 Version: 0.8
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Python module for working with utmp
 
@@ -92,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8-alt1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

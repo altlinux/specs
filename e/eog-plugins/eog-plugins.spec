@@ -6,7 +6,7 @@
 
 Name: %_name-plugins
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: EOG plugins
 License: %gpl2plus
@@ -102,6 +102,9 @@ export ac_cv_path_POSTR=%_bindir/postr
 %exclude %_libdir/%_name/plugins/*.la
 
 %changelog
+* Fri Mar 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.26.2-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Feb 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2
 

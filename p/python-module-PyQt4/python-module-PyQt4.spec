@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.12.1
-Release: alt2.S1.1
+Release: alt2.S1.1.1
 Summary: Python bindings for Qt4
 License: GPL
 Group: Development/Python
@@ -231,6 +231,9 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.12.1-alt2.S1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Feb 14 2018 Vitaly Lipatov <lav@altlinux.ru> 4.12.1-alt2.S1.1
 - NMU: autorebuild with python-module-sip 4.9.7
 

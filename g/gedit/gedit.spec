@@ -12,7 +12,7 @@
 
 Name: gedit
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: gEdit is a small but powerful text editor for GNOME
 License: GPLv2
@@ -22,7 +22,7 @@ Url: http://www.gedit.org
 %if_enabled snapshot
 Source: %name-%version.tar
 %else
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar
 %endif
 Patch: %name-3.10.1-alt-settings.patch
 
@@ -222,6 +222,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Thu Apr 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.28.1-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Apr 09 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
 - 3.28.1
 

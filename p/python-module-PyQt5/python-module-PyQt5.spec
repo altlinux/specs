@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 5.9.2
-Release: alt2%ubt
+Release: alt2%ubt.1
 
 Summary: Python bindings for Qt 5
 License: GPL
@@ -258,6 +258,9 @@ find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print 
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.9.2-alt2%ubt.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Feb 27 2018 Oleg Solovyov <mcpain@altlinux.org> 5.9.2-alt2%ubt
 - add missing Qt versions to list of supported
 

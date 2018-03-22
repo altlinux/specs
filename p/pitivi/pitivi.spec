@@ -10,7 +10,7 @@
 
 Name: pitivi
 Version: %ver_major
-Release: alt1
+Release: alt1.1
 
 Summary: PiTiVi allows users to easily edit audio/video projects
 License: LGPLv2.1+
@@ -43,9 +43,10 @@ Requires: gst-plugins-bad%gst_api_ver >= %gst_ver
 Requires: gst-plugins-ugly%gst_api_ver >= %gst_ver
 Requires: python3-module-canberra
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: git meson gtk-doc python3-module-nose2
 BuildRequires: intltool yelp-tools rpm-build-gir libappstream-glib-devel libcairo-devel
-BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel
+BuildRequires: python3-devel python3-module-pygobject3-devel
 BuildRequires: python3-module-pycairo-devel
 BuildRequires: gst-plugins%gst_api_ver-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver gobject-introspection-devel >= %gi_ver
@@ -89,7 +90,7 @@ This package provides development documentation for GStreamer Transcoder.
 %setup
 
 %build
-%meson
+%meson --wrap-mode=default
 %meson_build
 
 %install
@@ -123,6 +124,9 @@ This package provides development documentation for GStreamer Transcoder.
 %_datadir/gtk-doc/html/gstreamer-transcoder/
 
 %changelog
+* Fri Mar 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.99-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Sep 21 2017 Yuri N. Sedunov <aris@altlinux.org> 0.99-alt1
 - 0.99
 - new gst-transcoder* subpackages

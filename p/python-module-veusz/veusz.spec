@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.25.1
-Release: alt1
+Release: alt1.1
 Summary: A Scientific Plotting Package
 License: GPLv2+
 Group: Development/Python
@@ -189,6 +189,9 @@ install -m644 Documents/*.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.25.1-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.25.1-alt1
 - automated PyPI update
 

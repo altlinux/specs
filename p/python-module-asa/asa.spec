@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4
-Release: alt3
+Release: alt3.1
 Summary: Python bindings for the ASA
 License: BSD
 Group: Development/Python
@@ -67,6 +67,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4-alt3.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Aug 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4-alt3
 - Updated build dependencies.
 

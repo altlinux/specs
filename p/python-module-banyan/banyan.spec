@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.6
-Release: alt1.git20141121.2
+Release: alt1.git20141121.2.1
 Summary: Backup of Banyan Python module
 License: BSD
 Group: Development/Python
@@ -102,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.6-alt1.git20141121.2.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Jul 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.6-alt1.git20141121.2
 - Fixed build.
 

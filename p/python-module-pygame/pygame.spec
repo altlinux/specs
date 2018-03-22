@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 1.9.3
-Release: alt3
+Release: alt3.1
 
 Summary: A Python module for interfacing with the SDL multimedia library
 Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой SDL
@@ -191,6 +191,9 @@ python config.py
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.3-alt3.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Dec 08 2017 Vitaly Lipatov <lav@altlinux.ru> 1.9.3-alt3
 - disable doc build
 

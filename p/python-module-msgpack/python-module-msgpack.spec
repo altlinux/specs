@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.8
-Release: alt1
+Release: alt1.1
 
 Summary: A Python MessagePack (de)serializer
 
@@ -84,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.8-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Oct 03 2017 Vitaly Lipatov <lav@altlinux.ru> 0.4.8-alt1
 - move to build from tarball
 - new version 0.4.8 (with rpmrb script)

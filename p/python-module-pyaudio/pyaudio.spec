@@ -14,7 +14,7 @@ BuildRequires(pre): rpm-build-python rpm-build-python3
 
 Name:		python-module-pyaudio
 Version:	0.2.9
-Release:	alt2_8
+Release:	alt3_8
 License:	MIT
 Url:		http://people.csail.mit.edu/hubert/pyaudio/
 Source0:	https://pypi.python.org/packages/d0/dc/ffb9ce5e3f19bd289902915a9f68b7d199216065f8ea17d5b5e8e4ad86ee/PyAudio-0.2.9.tar.gz#/%{oldname}-%{version}.tar.gz
@@ -69,6 +69,9 @@ rm -rf packaging
 %{python3_sitelibdir}/*egg-info
 
 %changelog
+* Mon Apr 30 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.9-alt3_8
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Apr 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.9-alt2_8
 - to Sisyphus as anki dep
 

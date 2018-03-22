@@ -3,7 +3,7 @@
 
 Name: python-module-efl
 Version: 1.20.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings for EFL libraries
 Group: Development/Python
@@ -94,6 +94,9 @@ popd
 %exclude %python3_sitelibdir/efl/utils/setup.py*
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.20.0-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Aug 14 2017 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
 - 1.20.0
 

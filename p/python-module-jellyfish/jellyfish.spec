@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.5.6
-Release: alt1
+Release: alt1.1
 Summary: A library for doing approximate and phonetic matching of strings
 License: BSD
 Group: Development/Python
@@ -102,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.6-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.5.6-alt1
 - automated PyPI update
 

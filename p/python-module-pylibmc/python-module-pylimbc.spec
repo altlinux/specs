@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 1.5.2
-Release: alt1
+Release: alt1.1
 Summary: Quick and small memcached client for Python
 License: BSD
 Group: Development/Python
@@ -68,6 +68,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5.2-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Mar 13 2017 Fr. Br. George <george@altlinux.ru> 1.5.2-alt1
 - Autobuild version bump to 1.5.2
 

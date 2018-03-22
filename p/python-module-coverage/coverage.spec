@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.4.1
-Release: alt1
+Release: alt1.1
 Summary: A tool for measuring code coverage of Python programs
 License: Apache-2.0
 Group: Development/Python
@@ -156,6 +156,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.1-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Oct 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.1-alt1
 - Updated to upstream version 4.4.1.
 

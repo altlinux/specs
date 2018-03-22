@@ -49,7 +49,7 @@
 
 Name: boost%namesuff
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt2
+Release: alt2.1
 Epoch: 1
 
 Summary: Boost libraries
@@ -1886,6 +1886,9 @@ done
 
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.65.0-alt2.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Mar 05 2018 Alexey Shabalin <shaba@altlinux.ru> 1:1.65.0-alt2
 - Rebuilt as compat package without development files.
 

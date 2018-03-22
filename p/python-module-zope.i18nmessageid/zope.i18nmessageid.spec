@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.1.0
-Release: alt1%ubt
+Release: alt1%ubt.1
 
 Summary: Message Identifiers for internationalization
 License: ZPLv2.1
@@ -112,6 +112,9 @@ popd
 %python3_sitelibdir/zope/i18nmessageid/*/tests.*
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.0-alt1%ubt.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Mar 06 2018 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1%ubt
 - 4.0.4 -> 4.1.0
 

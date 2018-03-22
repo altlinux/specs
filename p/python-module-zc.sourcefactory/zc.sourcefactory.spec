@@ -1,5 +1,5 @@
 # REMOVE ME (I was set for NMU) and uncomment real Release tags:
-Release: alt2.a1.1.1
+Release: alt2.a1.1.1.1
 %define oname zc.sourcefactory
 
 %def_with python3
@@ -160,6 +160,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Mar 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt2.a1.1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.0-alt2.a1.1.1
 - (AUTO) subst_x86_64.
 

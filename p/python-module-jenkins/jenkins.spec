@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt1.git20091202.1.1
+Release: alt1.git20091202.1.1.1
 Summary: Python ctypes wrapper around Bob Jenkins' hash functions
 License: MIT
 Group: Development/Python
@@ -14,15 +14,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/lgastako/jenkins.git
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools
 %endif
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils python-base python-modules python-modules-compiler python-modules-email python3 python3-base
-BuildRequires: python-devel rpm-build-python3
 
 %description
 This python module provides Bob Jenkin's hash functions in python (via
@@ -75,6 +71,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.2-alt1.git20091202.1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.2-alt1.git20091202.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

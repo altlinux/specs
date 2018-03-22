@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 2.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python interface for c-ares
 License: MIT
@@ -87,6 +87,9 @@ rm -f build && ln -sf build3 build && %python3_install
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Aug 25 2017 Fr. Br. George <george@altlinux.ru> 2.3.0-alt1
 - Autobuild version bump to 2.3.0
 

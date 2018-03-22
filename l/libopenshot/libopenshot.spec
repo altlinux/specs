@@ -6,7 +6,7 @@
 
 Name: lib%_name
 Version: %ver_major.9
-Release: alt1
+Release: alt1.1
 
 Summary: OpenShot Video Library
 Group: System/Libraries
@@ -69,6 +69,9 @@ This package provides Python3 bindings for OpenShot Video Library.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.9-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Nov 13 2017 Yuri N. Sedunov <aris@altlinux.org> 0.1.9-alt1
 - 0.1.9
 

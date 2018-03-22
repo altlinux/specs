@@ -11,7 +11,7 @@ BuildRequires: gcc-c++
 
 Name:           libcomps
 Version:        0.1.8
-Release:        alt1_3
+Release:        alt1_3.1
 Summary:        Comps XML file manipulation library
 
 Group:          System/Libraries
@@ -161,6 +161,9 @@ popd
 
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.1.8-alt1_3.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.8-alt1_3
 - new version
 

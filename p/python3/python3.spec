@@ -2,16 +2,18 @@
 # Conditionals and other variables controlling the build
 # ======================================================
 
+%define _unpackaged_files_terminate_build 1
+
 # Below the same shorthands as in Redhat's spec are definied,
 # but mostly through ALT Sisyphus rpm-build-python3's macros
 # (to make the picture more clear and less error-prone).
 
-%global pybasever 3.5
+%global pybasever 3.6
 
 %global with_rewheel 0
 
 # pybasever without the dot:
-%global pyshortver 35
+%global pyshortver 36
 
 %global pyabi m
 
@@ -75,7 +77,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %{pybasever}.4
-Release: alt6
+Release: alt1
 License: Python
 Group: Development/Python3
 
@@ -122,13 +124,6 @@ Source: %name-%version.tar
 # Was Patch0 in ivazquez' python3000 specfile:
 Patch1:         Python-3.1.1-rpath.patch
 
-# 00055 #
-# Systemtap support: add statically-defined probe points
-# Patch sent upstream as http://bugs.python.org/issue14776
-# with some subsequent reworking to cope with LANG=C in an rpmbuild
-# (where sys.getfilesystemencoding() == 'ascii')
-Patch55: 00055-systemtap.patch
-
 # The lib64 patch
 # on top of ALT's python3-site-packages.patch (Patch1005)
 Patch102: python3-site-packages-lib64.patch
@@ -138,12 +133,12 @@ Patch102: python3-site-packages-lib64.patch
 # Another lib64 fix, for distutils/tests/test_install.py; not upstream:
 Patch104: 00104-lib64-fix-for-test_install.patch
 
-# 00131 #
-# The four tests in test_io built on top of check_interrupted_write_retry
-# fail when built in Koji, for ppc and ppc64; for some reason, the SIGALRM
-# handlers are never called, and the call to write runs to completion
-# (rhbz#732998)
-Patch131: 00131-disable-tests-in-test_io.patch
+# 00111 #
+# Patch the Makefile.pre.in so that the generated Makefile doesn't try to build
+# a libpythonMAJOR.MINOR.a
+# See https://bugzilla.redhat.com/show_bug.cgi?id=556092
+# Downstream only: not appropriate for upstream
+Patch111: 00111-no-static-lib.patch
 
 # 00132 #
 # Add non-standard hooks to unittest for use in the "check" phase below, when
@@ -159,77 +154,11 @@ Patch131: 00131-disable-tests-in-test_io.patch
 # these unittest hooks in their own "check" phases)
 Patch132: 00132-add-rpmbuild-hooks-to-unittest.patch
 
-
-# 00137 #
-# Some tests within distutils fail when run in an rpmbuild:
-Patch137: 00137-skip-distutils-tests-that-fail-in-rpmbuild.patch
-
-# 00139 #
-# ARM-specific: skip known failure in test_float:
-#  http://bugs.python.org/issue8265 (rhbz#706253)
-Patch139: 00139-skip-test_float-known-failure-on-arm.patch
-
-# ideally short lived patch disabling a test thats fragile on different arches
-Patch140: python3-arm-skip-failing-fragile-test.patch
-
-# 00143 #
-# Fix the --with-tsc option on ppc64, and rework it on 32-bit ppc to avoid
-# aliasing violations (rhbz#698726)
-# Sent upstream as http://bugs.python.org/issue12872
-Patch143: 00143-tsc-on-ppc.patch
-
-# 00146 #
-# Support OpenSSL FIPS mode (e.g. when OPENSSL_FORCE_FIPS_MODE=1 is set)
-# - handle failures from OpenSSL (e.g. on attempts to use MD5 in a
-#   FIPS-enforcing environment)
-# - add a new "usedforsecurity" keyword argument to the various digest
-#   algorithms in hashlib so that you can whitelist a callsite with
-#   "usedforsecurity=False"
-# (sent upstream for python 3 as http://bugs.python.org/issue9216 ; see RHEL6
-# python patch 119)
-# - enforce usage of the _hashlib implementation: don't fall back to the _md5
-#   and _sha* modules (leading to clearer error messages if fips selftests
-#   fail)
-# - don't build the _md5 and _sha* modules; rely on the _hashlib implementation
-#   of hashlib
-# (rhbz#563986)
-# Note: Up to Python 3.4.0.b1, upstream had their own implementation of what
-# they assumed would become sha3. This patch was adapted to give it the
-# usedforsecurity argument, even though it did nothing (OpenSSL didn't have
-# sha3 implementation at that time).In 3.4.0.b2, sha3 implementation was reverted
-# (see http://bugs.python.org/issue16113), but the alterations were left in the
-# patch, since they may be useful again if upstream decides to rerevert sha3
-# implementation and OpenSSL still doesn't support it. For now, they're harmless.
-Patch146: 00146-hashlib-fips.patch
-
-# 00150 #
-# temporarily disable rAssertAlmostEqual in test_cmath on PPC (bz #750811)
-# caused by a glibc bug. This patch can be removed when we have a glibc with
-# the patch mentioned here:
-#   http://sourceware.org/bugzilla/show_bug.cgi?id=13472
-Patch150: 00150-disable-rAssertAlmostEqual-cmath-on-ppc.patch
-
 # 00155 #
 # Avoid allocating thunks in ctypes unless absolutely necessary, to avoid
 # generating SELinux denials on "import ctypes" and "import uuid" when
 # embedding Python within httpd (rhbz#814391)
 Patch155: 00155-avoid-ctypes-thunks.patch
-
-# 00157 #
-# Update uid/gid handling throughout the standard library: uid_t and gid_t are
-# unsigned 32-bit values, but existing code often passed them through C long
-# values, which are signed 32-bit values on 32-bit architectures, leading to
-# negative int objects for uid/gid values >= 2^31 on 32-bit architectures.
-#
-# Introduce _PyObject_FromUid/Gid to convert uid_t/gid_t values to python
-# objects, using int objects where the value will fit (long objects otherwise),
-# and _PyArg_ParseUid/Gid to convert int/long to uid_t/gid_t, with -1 allowed
-# as a special case (since this is given special meaning by the chown syscall)
-#
-# Update standard library to use this throughout for uid/gid values, so that
-# very large uid/gid values are round-trippable, and -1 remains usable.
-# (rhbz#697470)
-Patch157: 00157-uid-gid-overflows.patch
 
 # 00160 #
 # Python 3.3 added os.SEEK_DATA and os.SEEK_HOLE, which may be present in the
@@ -264,52 +193,6 @@ Patch170: 00170-gc-assertions.patch
 # Does not affect python2 AFAICS (different sysconfig values initialization)
 Patch178: 00178-dont-duplicate-flags-in-sysconfig.patch
 
-# 00179 #
-# Workaround for https://bugzilla.redhat.com/show_bug.cgi?id=951802
-# Reported upstream in http://bugs.python.org/issue17737
-# This patch basically looks at every frame and if it is somehow corrupted,
-# it just stops printing the traceback - it doesn't fix the actual bug.
-# This bug seems to only affect ARM.
-# Doesn't seem to affect Python 2 AFAICS.
-Patch179: 00179-dont-raise-error-on-gdb-corrupted-frames-in-backtrace.patch
-
-# 00180 #
-# Enable building on ppc64p7
-# Not appropriate for upstream, Fedora-specific naming
-Patch180: 00180-python-add-support-for-ppc64p7.patch
-
-# 00184 #
-# Fix for https://bugzilla.redhat.com/show_bug.cgi?id=979696
-# Fixes build of ctypes against libffi with multilib wrapper
-# Python recognizes ffi.h only if it contains "#define LIBFFI_H",
-# but the wrapper doesn't contain that, which makes the build fail
-# We patch this by also accepting "#define ffi_wrapper_h"
-Patch184: 00184-ctypes-should-build-with-libffi-multilib-wrapper.patch
-
-# 00186 #
-# Fix for https://bugzilla.redhat.com/show_bug.cgi?id=1023607
-# Previously, this fixed a problem where some *.py files were not being
-# bytecompiled properly during build. This was result of py_compile.compile
-# raising exception when trying to convert test file with bad encoding, and
-# thus not continuing bytecompilation for other files.
-# This was fixed upstream, but the test hasn't been merged yet, so we keep it
-Patch186: 00186-dont-raise-from-py_compile.patch
-
-# 00188 #
-# Downstream only patch that should be removed when we compile all guaranteed
-# hashlib algorithms properly. The problem is this:
-# - during tests, test_hashlib is imported and executed before test_lib2to3
-# - if at least one hash function has failed, trying to import it triggers an
-#   exception that is being caught and exception is logged:
-#   http://hg.python.org/cpython/file/2de806c8b070/Lib/hashlib.py#l217
-# - logging the exception makes logging module run basicConfig
-# - when lib2to3 tests are run again, lib2to3 runs basicConfig again, which
-#   doesn't do anything, because it was run previously
-#   (logging.root.handlers != []), which means that the default setup
-#   (most importantly logging level) is not overriden. That means that a test
-#   relying on this will fail (test_filename_changing_on_output_single_dir)
-Patch188: 00188-fix-lib2to3-tests-when-hashlib-doesnt-compile-properly.patch
-
 # 00189 #
 #
 # Add the rewheel module, allowing to recreate wheels from already installed
@@ -319,50 +202,82 @@ Patch188: 00188-fix-lib2to3-tests-when-hashlib-doesnt-compile-properly.patch
 Patch189: 00189-add-rewheel-module.patch
 %endif
 
-# Tests requiring SIGHUP to work don't work in Koji
-# see rhbz#1088233
-Patch194: temporarily-disable-tests-requiring-SIGHUP.patch
-
-# 00196
-#
-#  Fix test_gdb failure on ppc64le
-Patch196: 00196-test-gdb-match-addr-before-builtin.patch
-
-# 00200 #                                                                                           
-# Fix for gettext plural form headers (lines that begin with "#")                                   
-# Note: Backported from scl
-Patch200: 00200-gettext-plural-fix.patch
-
-# 00201 #                                                                                           
-# Fixes memory leak in gdbm module (rhbz#977308)                                                    
-# This was upstreamed as a part of bigger patch, but for our purposes                               
-# this is ok: http://bugs.python.org/issue18404                                                     
-# Note: Backported from scl
-Patch201: 00201-fix-memory-leak-in-gdbm.patch 
-
-# test_threading fails in koji dues to it's handling of signals
-Patch203: 00203-disable-threading-test-koji.patch
-
 # LIBPL variable in makefile takes LIBPL from configure.ac
 # but the LIBPL variable defined there doesn't respect libdir macro
 Patch205: 00205-make-libpl-respect-lib64.patch
 
-# Remove hf flag from arm triplet which is used
-# by debian but fedora infra uses only eabi without hf
-Patch206: 00206-remove-hf-from-arm-triplet.patch
+# 00251
+# Set values of prefix and exec_prefix in distutils install command
+# to /usr/local if executable is /usr/bin/python* and RPM build
+# is not detected to make pip and distutils install into separate location
+# Fedora Change: https://fedoraproject.org/wiki/Changes/Making_sudo_pip_safe
+Patch251: 00251-change-user-install-location.patch
 
-# Avoid truncated _math.o files caused by parallel builds
-# modified version of https://bugs.python.org/issue24421
-# rhbz#1292461
-Patch207: 00207-math-once.patch
+# 00262 #
+# Backport of PEP 538: Coercing the legacy C locale to a UTF-8 based locale
+# https://www.python.org/dev/peps/pep-0538/
+# Fedora Change: https://fedoraproject.org/wiki/Changes/python3_c.utf-8_locale
+# Original proposal: https://bugzilla.redhat.com/show_bug.cgi?id=1404918
+Patch262: 00262-pep538_coerce_legacy_c_locale.patch
 
-# 00243 #
-# Fix the triplet used on 64-bit MIPS
-# rhbz#1322526: https://bugzilla.redhat.com/show_bug.cgi?id=1322526
-# Upstream uses Debian-like style mips64-linux-gnuabi64
-# Fedora needs the default mips64-linux-gnu
-Patch243: 00243-fix-mips64-triplet.patch
+# 00264 #
+# test_pass_by_value was added in Python 3.6.1 and on aarch64
+# it is catching an error that was there, but wasn't tested before.
+# Therefore skipping the test on aarch64 until fixed upstream.
+# Reported upstream: http://bugs.python.org/issue29804
+Patch264: 00264-skip-test-failing-on-aarch64.patch
 
+# 00273 #
+# Fix localeconv() encoding for LC_NUMERIC
+# Fixed upstream: https://bugs.python.org/issue31900
+Patch273: 00273-fix-localeconv-encoding-for-LC_NUMERIC.patch
+
+# 00274 #
+# Upstream uses Debian-style architecture naming. Change to match Fedora.
+Patch274: 00274-fix-arch-names.patch
+
+# 00289 #
+# Fix the compilation of the nis module, as glibc removed the
+# interfaces related to Sun RPC and they are now provided
+# by libtirpc and libnsl2.
+# See: https://fedoraproject.org/wiki/Changes/SunRPCRemoval
+# and https://fedoraproject.org/wiki/Changes/NISIPv6
+# Fixed upstream: https://bugs.python.org/issue32521
+Patch289: 00289-fix-nis-compilation.patch
+
+# 00290 #
+# Not every target system may provide a crypt() function in its stdlibc
+# and may use an external or replacement library, like libxcrypt, for
+# providing such functions.
+# Fixed upstream: https://bugs.python.org/issue32635
+Patch290: 00290-cryptmodule-Include-crypt.h-for-declaration-of-crypt.patch
+
+# 00291 #
+# Build fails with undefined references to dlopen / dlsym otherwise.
+# See: https://bugzilla.redhat.com/show_bug.cgi?id=1537489
+# and: https://src.fedoraproject.org/rpms/redhat-rpm-config/c/078af19
+# Fixed upstream: https://bugs.python.org/issue32647
+Patch291: 00291-setup-Link-ctypes-against-dl-explicitly.patch
+
+# 00292 #
+# Restore the public PyExc_RecursionErrorInst symbol that was removed
+# from the 3.6.4 release upstream.
+# Reported upstream: https://bugs.python.org/issue30697
+Patch292: 00292-restore-PyExc_RecursionErrorInst-symbol.patch
+
+# 00294 #
+# Define TLS cipher suite on build time depending
+# on the OpenSSL default cipher suite selection.
+# Fixed upstream on CPython's 3.7 branch:
+# https://bugs.python.org/issue31429
+# See also: https://bugzilla.redhat.com/show_bug.cgi?id=1489816
+Patch294: 00294-define-TLS-cipher-suite-on-build-time.patch
+
+# 00298 #
+# The SSL module no longer sends IP addresses in SNI TLS extension on
+# platforms with OpenSSL 1.0.2+ or inet_pton.
+# Fixed upstream: https://bugs.python.org/issue32185
+Patch298: 00298-do-not-send-IP-in-SNI-TLS-extension.patch
 
 # (New patches go here ^^^)
 #
@@ -408,15 +323,9 @@ Patch1005: python3-site-packages.patch
 
 Patch1006: python-3.5.1-glibc-2.25-getentropy.patch
 
-Patch1007: python-3.5.1-upstream-expat-compat.patch
-
-# add correct arch for ppc64/ppc64le
-# it should be ppc64le-linux-gnu/ppc64-linux-gnu instead powerpc64le-linux-gnu/powerpc64-linux-gnu
-Patch5001: python3-powerppc-arch.patch
-
-# Fix locale issues with new glibc.
-# Based on: https://github.com/python/cpython/pull/4174
-Patch5010: python-glibc-alt.patch
+# With python-3.6 and later it's either needed to enable some crypto ciphers needed for SSLv2 when this socket type requested
+# or SSLv2 has to be removed completely, because it wouldn't work without this change anyway.
+Patch1007: python3-sslv2-compat.patch
 
 # ======================================================
 # Additional metadata, and subpackages
@@ -582,7 +491,7 @@ python 3 code that uses more than just unittest and/or test_support.py.
 rm -r Modules/expat || exit 1
 
 #   Remove embedded copy of libffi:
-for SUBDIR in darwin libffi libffi_arm_wince libffi_msvc libffi_osx ; do
+for SUBDIR in darwin libffi libffi_msvc libffi_osx ; do
   rm -r Modules/_ctypes/$SUBDIR || exit 1 ;
 done
 
@@ -596,9 +505,9 @@ rm -r Modules/zlib || exit 1
 # OpenSSL (and thus respects FIPS mode), and does not fall back to _md5
 # TODO: there seems to be no OpenSSL support in Python for sha3 so far
 # when it is there, also remove _sha3/ dir
-for f in md5module.c sha1module.c sha256module.c sha512module.c; do
-    rm Modules/$f
-done
+#for f in md5module.c sha1module.c sha256module.c sha512module.c; do
+#    rm Modules/$f
+#done
 
 %if 0%{with_rewheel}
 %global pip_version 7.1.0
@@ -615,42 +524,33 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 < %PATCH102 sed -e 's:lib64:%_lib:g' | patch -p1
 < %PATCH104 sed -e 's:lib64:%_lib:g' | patch -p1
 %endif
-%ifarch ppc ppc64
-%patch131 -p1
-%endif
+%patch111 -p1
 %patch132 -p1
-%patch137 -p1
-%ifarch %{arm}
-%patch139 -p1
-%patch140 -p1
-%endif
-%patch143 -p1 -b .tsc-on-ppc
-%patch146 -p1
-%ifarch ppc ppc64
-%patch150 -p1
-%endif
 %patch155 -p1
-%patch157 -p1
 %patch160 -p1
 %patch163 -p1
 %patch178 -p1
-%patch179 -p1
-%patch180 -p1
-##patch184 -p1
-%patch186 -p1
-%patch188 -p1
 
 %if 0%{with_rewheel}
 %patch189 -p1
 %endif
 
-%patch194 -p1
-%patch196 -p1
-%patch203 -p1
 %patch205 -p1
-%patch206 -p1
-##patch207 -p1
-%patch243 -p1
+%patch251 -p1
+%patch262 -p1
+
+%ifarch aarch64
+%patch264 -p1
+%endif
+
+%patch273 -p1
+%patch274 -p1
+%patch289 -p1
+%patch290 -p1
+%patch291 -p1
+%patch292 -p1
+%patch294 -p1
+%patch298 -p1
 
 # ALT Linux patches
 %if_enabled test_posix_fadvise
@@ -659,8 +559,8 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 %patch1003 -p2
 %patch1004 -p1
 
-##patch1006 -p1
-##patch1007 -p1
+%patch1006 -p2
+%patch1007 -p2
 
 # Currently (2010-01-15), http://docs.python.org/library is for 2.6, and there
 # are many differences between 2.6 and the Python 3 library.
@@ -671,9 +571,6 @@ sed -r -i s/'_PIP_VERSION = "[0-9.]+"'/'_PIP_VERSION = "%{pip_version}"'/ Lib/en
 sed --in-place \
     --expression="s|http://docs.python.org/library|http://docs.python.org/%pybasever/library|g" \
     Lib/pydoc.py || exit 1
-
-%patch5001 -p1
-%patch5010 -p2
 
 rm -fr ../build-shared
 mkdir ../build-shared
@@ -690,11 +587,10 @@ topdir=$(pwd)
 build() {
 %configure \
   --enable-ipv6 \
+  --enable-shared \
   --with-system-ffi \
   --enable-loadable-sqlite-extensions \
-%if 0%{?with_systemtap}
-  --with-systemtap \
-%endif
+  --with-ssl-default-suites=openssl \
 %if 0%{?with_valgrind}
   --with-valgrind \
 %endif
@@ -752,7 +648,7 @@ install -d -m 0755 %buildroot%python3_sitelibdir_noarch/__pycache__
 # So, we move it by force (like in rpm-build-python for other python3 packages,
 # but in a more controlled way: we make sure that we know exactly what we copy,
 # otherwise rmdir would fail):
-mv -t %buildroot%python3_sitelibdir/ %buildroot%pylibdir/site-packages/README
+mv -t %buildroot%python3_sitelibdir/ %buildroot%pylibdir/site-packages/README.txt
 rmdir %buildroot%pylibdir/site-packages
 
 # Make python3-devel multilib-ready (bug #192747, #139911)
@@ -848,6 +744,8 @@ rm %buildroot%pylibdir/test/test_importlib/{,__pycache__/}test_windows*.py*
 # The libs which are being tested below have been excluded in %%files (long ago):
 rm %buildroot%pylibdir/test/test_asyncio/{,__pycache__/}test_windows_events*.py*
 rm %buildroot%pylibdir/test/test_asyncio/{,__pycache__/}test_windows_utils*.py*
+rm %buildroot%pylibdir/test/{,__pycache__/}test_winconsoleio*.py*
+rm %buildroot%pylibdir/test/{,__pycache__/}test_msilib*.py*
 
 # Get rid of bad* tests -- just skip them:
 %add_findreq_skiplist %pylibdir/test/bad*.py
@@ -903,7 +801,7 @@ ln -sfv \
    	%_bindir/python%pybasever%pyabi-config)" \
    %buildroot%_bindir/python%pybasever%pyabi-config
 
-%global python_ignored_files site-packages(/.+\\.(pth|egg-info(|/entry_points\\.txt|/namespace_packages\\.txt)))?$
+%global python_ignored_files site-packages(/.+\.(pth|egg-info(|/PKG-INFO|/entry_points\.txt|/namespace_packages\.txt)))?$
 mkdir -p %buildroot%_sysconfdir/buildreqs/files/ignore.d
 cat > %buildroot%_sysconfdir/buildreqs/files/ignore.d/%name << EOF
 ^%_libdir/python3[^/]*/%python_ignored_files
@@ -940,10 +838,18 @@ fi
 [ -d %buildroot"$configdir" ]
 
 # -l (--findleaks) is not compatible with -j
-WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbose %_smp_mflags
+# test_faulthandler.test_register_chain currently fails on ppc64le and
+#   aarch64, see upstream bug http://bugs.python.org/issue21131
+WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbose %_smp_mflags \
+    -x test_distutils \
+    -x test_gdb \
+    -x test_bdist_rpm \
+%ifarch %{arm}
+    -x test_faulthandler \
+%endif
 
 %files
-%doc LICENSE README
+%doc LICENSE README.rst
 %_bindir/pydoc*
 %_bindir/python3
 %_bindir/python%pybasever
@@ -953,7 +859,7 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %_mandir/*/*
 
 %files base
-%doc LICENSE README
+%doc LICENSE README.rst
 %config %_sysconfdir/buildreqs/files/ignore.d/%name
 %_rpmlibdir/%name-base-files.req.list
 %_rpmlibdir/%python3_sitebasename-site-packages-files.req.list
@@ -961,7 +867,7 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %dir %(dirname %python3_sitelibdir)
 %dir %python3_sitelibdir/
 %dir %python3_sitelibdir/__pycache__/
-%python3_sitelibdir/README
+%python3_sitelibdir/README.txt
 
 %if "%_lib" != "lib"
 %dir %(dirname %python3_sitelibdir_noarch)
@@ -971,7 +877,9 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 
 %dir %pylibdir
 %dir %dynload_dir
+%dynload_dir/_asyncio.cpython-%pyshortver%pyabi.so
 %dynload_dir/_bisect.cpython-%pyshortver%pyabi.so
+%dynload_dir/_blake2.cpython-%pyshortver%pyabi.so
 %dynload_dir/_bz2.cpython-%pyshortver%pyabi.so
 %dynload_dir/_codecs_cn.cpython-%pyshortver%pyabi.so
 %dynload_dir/_codecs_hk.cpython-%pyshortver%pyabi.so
@@ -994,12 +902,17 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %dynload_dir/_json.cpython-%pyshortver%pyabi.so
 %dynload_dir/_lsprof.cpython-%pyshortver%pyabi.so
 %dynload_dir/_lzma.cpython-%pyshortver%pyabi.so
+%dynload_dir/_md5.cpython-%pyshortver%pyabi.so
 %dynload_dir/_multibytecodec.cpython-%pyshortver%pyabi.so
 %dynload_dir/_multiprocessing.cpython-%pyshortver%pyabi.so
 %dynload_dir/_opcode.cpython-%pyshortver%pyabi.so
 %dynload_dir/_pickle.cpython-%pyshortver%pyabi.so
 %dynload_dir/_posixsubprocess.cpython-%pyshortver%pyabi.so
 %dynload_dir/_random.cpython-%pyshortver%pyabi.so
+%dynload_dir/_sha1.cpython-%pyshortver%pyabi.so
+%dynload_dir/_sha256.cpython-%pyshortver%pyabi.so
+%dynload_dir/_sha3.cpython-%pyshortver%pyabi.so
+%dynload_dir/_sha512.cpython-%pyshortver%pyabi.so
 %dynload_dir/_socket.cpython-%pyshortver%pyabi.so
 %dynload_dir/_ssl.cpython-%pyshortver%pyabi.so
 %dynload_dir/_struct.cpython-%pyshortver%pyabi.so
@@ -1114,7 +1027,6 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/multiprocessing
 %exclude %pylibdir/multiprocessing/popen_spawn_win32.py
 %exclude %pylibdir/multiprocessing/__pycache__/popen_spawn_win32%bytecode_suffixes
-%pylibdir/plat-linux
 %pylibdir/pydoc_data
 
 %exclude %pylibdir/turtle.py
@@ -1215,6 +1127,12 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/asyncio/__pycache__/test_utils%bytecode_suffixes
 
 %changelog
+* Tue Apr 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.4-alt1
+- Updated to upstream version 3.6.4.
+
+* Thu Mar 29 2018 Stanislav Levin <slev@altlinux.org> 3.5.4-alt7
+- Add PKG-INFO files to ignore list (closes: #34658).
+
 * Wed Mar 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.4-alt6
 - Fixed interpackage dependencies (Closes: 34451).
 

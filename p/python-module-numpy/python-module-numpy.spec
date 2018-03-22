@@ -13,7 +13,7 @@
 
 Name: python-module-%oname
 Version: %majver.3
-Release: alt2.1
+Release: alt2.1.1
 Epoch: 1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
@@ -940,6 +940,9 @@ fi
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.13.3-alt2.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Mar 06 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.13.3-alt2.1
 - NMU: corrected BR: for new texlive
 

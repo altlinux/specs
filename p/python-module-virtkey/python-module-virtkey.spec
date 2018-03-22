@@ -3,7 +3,7 @@
 
 Name: python-module-%_name
 Version: %ver_major.0
-Release: alt1.1.1
+Release: alt1.1.1.1
 
 Summary: Python extension for emulating keypresses and getting the keyboard geometry from the xserver
 License: LGPLv3+
@@ -66,6 +66,9 @@ popd
 
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.63.0-alt1.1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.63.0-alt1.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

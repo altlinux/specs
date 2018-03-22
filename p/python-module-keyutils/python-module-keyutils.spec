@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4
-Release: alt2
+Release: alt2.1
 
 Summary: %oname bindings for Python
 License: ASL 2.0
@@ -78,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4-alt2.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Sun Jan 15 2017 Anton Midyukov <antohami@altlinux.org> 0.4-alt2
 - srpm build
 

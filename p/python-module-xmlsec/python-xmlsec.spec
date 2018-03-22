@@ -1,7 +1,7 @@
 %def_without check
 Name: python-module-xmlsec
 Version: 1.3.3
-Release: alt1
+Release: alt1.1
 Source: %version.tar.gz
 Summary: Python bindings for the XML Security Library
 License: MIT
@@ -24,6 +24,8 @@ BuildRequires: libxmlsec1-openssl-devel
 
 BuildRequires: python-module-Cython python-module-lxml python-module-pkgconfig
 BuildRequires: python3-module-Cython python3-module-lxml python3-module-pkgconfig
+BuildRequires: python-module-sphinx
+BuildRequires: python3-module-sphinx
 
 %description
 Python bindings for the XML Security Library.
@@ -66,6 +68,9 @@ py.test-%_python3_version -vv
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.3-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Mar 22 2018 Fr. Br. George <george@altlinux.ru> 1.3.3-alt1
 - Autobuild version bump to 1.3.3
 - Introduce documentation

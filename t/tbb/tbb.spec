@@ -2,7 +2,7 @@
 
 Name: tbb
 Version: 2018
-Release: alt1.u1
+Release: alt1.u1.1
 Summary: Threading Building Blocks
 License: Apache 2.0
 Group: Development/Tools
@@ -211,6 +211,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2018-alt1.u1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Oct 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 2018-alt1.u1
 - Updated to upstream version 2018.U1.
 

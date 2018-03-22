@@ -5,7 +5,7 @@
 
 Name: gobject-introspection
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Introspection system for GObject-based libraries
 Group: System/Libraries
@@ -18,7 +18,7 @@ Obsoletes: gir-repository
 %if_enabled snapshot
 Source: %name-%version.tar
 %else
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar
 %endif
 Patch: gobject-introspection-1.55.1-alt-shebang.patch
 
@@ -133,6 +133,9 @@ gobject-introspection.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Apr 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.56.1-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Apr 09 2018 Yuri N. Sedunov <aris@altlinux.org> 1.56.1-alt1
 - 1.56.1
 

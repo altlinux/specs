@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.3.0
-Release: alt1%ubt
+Release: alt1%ubt.1
 
 Summary: Indices for using with catalog like text, field, etc.
 License: ZPLv2.1
@@ -148,6 +148,9 @@ popd
 %python3_sitelibdir/*/*/*/*/tests*
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.3.0-alt1%ubt.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Fri Feb 09 2018 Stanislav Levin <slev@altlinux.org> 4.3.0-alt1%ubt
 - v4.1.1 -> v4.3.0
 

@@ -2,7 +2,7 @@
 
 Summary: M2Crypto: A Python crypto and SSL toolkit
 Version: 0.22
-Release: alt1.git20131121.1.1
+Release: alt1.git20131121.1.1.1
 Name: python3-module-%oname
 # https://github.com/mcepl/M2Crypto.git - branch python3
 Source0: %name-%version.tar
@@ -58,6 +58,9 @@ fi
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.22-alt1.git20131121.1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.22-alt1.git20131121.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

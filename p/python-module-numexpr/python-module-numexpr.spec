@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        2.6.2
-Release:        alt2
+Release:        alt2.1
 Epoch: 1
 Summary:        Fast numerical array expression evaluator for Python and NumPy
 Group:          Development/Python
@@ -168,6 +168,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:2.6.2-alt2.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Feb 06 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.6.2-alt2
 - fix build on arm
 

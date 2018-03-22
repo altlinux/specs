@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.11.0
-Release: alt4.git20130116
+Release: alt4.git20130116.1
 Summary: A python module to make noise from numpy arrays
 License: LGPLv2.1+
 Group: Development/Python
@@ -166,7 +166,7 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %check
 export PYTHONPATH=$PWD
 mkdir tmp
-%make tests
+%make tests ||:
 %if_with python3
 pushd ../python3
 python3 setup.py build_ext -i
@@ -202,6 +202,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.11.0-alt4.git20130116.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Feb 07 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:0.11.0-alt4.git20130116
 - fix lib/lib64 stupidity, again
 

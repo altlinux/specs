@@ -3,7 +3,7 @@
 
 Name: kf5-%rname
 Version: 5.44.0
-Release: alt1%ubt
+Release: alt1%ubt.1
 %K5init altplace
 
 Group: System/Libraries
@@ -142,6 +142,9 @@ mkdir -p %buildroot/%_K5data/kconfigwidgets/
 %endif
 
 %changelog
+* Thu Apr 05 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.44.0-alt1%ubt.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1%ubt
 - new version
 

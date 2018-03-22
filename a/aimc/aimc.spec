@@ -2,7 +2,7 @@
 
 Name: aimc
 Version: r313
-Release: alt1.svn20130718.2
+Release: alt1.svn20130718.2.1
 Summary: A C++ Implementation of the Auditory Image Model
 License: ASL v2.0
 Group: Sound
@@ -95,6 +95,9 @@ popd
 #doc build/doxygen-html/*
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> r313-alt1.svn20130718.2.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Mon Jul 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> r313-alt1.svn20130718.2
 - Fixed build with new toolchain
 

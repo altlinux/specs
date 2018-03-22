@@ -4,7 +4,7 @@
 
 Name: lib%oname
 Version: 2.3.3
-Release: alt1%ubt
+Release: alt1%ubt.1
 Summary: High level interface to the Linux Kernel's seccomp filter
 License: LGPLv2.1+
 Group: System/Libraries
@@ -141,6 +141,9 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.3-alt1%ubt.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Tue Feb 13 2018 Alexey Shabalin <shaba@altlinux.ru> 2.3.3-alt1%ubt
 - 2.3.3
 

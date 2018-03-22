@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.2.1
-Release: alt1
+Release: alt1.1
 Summary: Python client for gibson cache server
 License: MIT
 Group: Development/Python
@@ -85,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.1-alt1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Jan 11 2017 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1
 - automated PyPI update
 

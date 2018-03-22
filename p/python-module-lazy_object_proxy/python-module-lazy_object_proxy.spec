@@ -3,7 +3,7 @@
 
 Name:    python-module-%modulename
 Version: 1.2.1
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: A fast and through lazy object proxy
 License: BSD
@@ -74,6 +74,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.1-alt1.1.1
+- (NMU) Rebuilt with python-3.6.4.
+
 * Wed Mar 30 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.1-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
