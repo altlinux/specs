@@ -12,12 +12,13 @@
 
 Name: falkon
 Version: 3.0.0
-Release: alt1%ubt
+Release: alt2
 %K5init no_altplace
 
 Summary: A very fast open source browser based on WebKit core
 License: GPLv3+
 Group: Networking/WWW
+Url: https://github.com/KDE/falkon
 
 PreReq(post,preun): alternatives >= 0.2
 Provides: webclient
@@ -108,5 +109,8 @@ __EOF__
 %_K5lib/libFalkonPrivate.so.%sover.*
 
 %changelog
+* Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt2
+- NMU: added URL (closes: #34686)
+
 * Tue Mar 20 2018 Oleg Solovyov <mcpain@altlinux.org> 3.0.0-alt1%ubt
 - initial build for ALT
