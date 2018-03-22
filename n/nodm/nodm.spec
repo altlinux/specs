@@ -1,10 +1,11 @@
 Name: nodm
 Version: 0.7
-Release: alt3
+Release: alt3.1
 
 Summary: minimal display manager
 License: GPL
 Group: Graphical desktop/Other
+Url: https://github.com/spanezz/nodm
 
 Source: %name-%version-%release.tar
 
@@ -35,6 +36,9 @@ install -pm0644 -D nodm.pamd %buildroot%_sysconfdir/pam.d/nodm
 %_man8dir/nodm.8*
 
 %changelog
+* Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.7-alt3.1
+- NMU: added URL
+
 * Sun Jan 04 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7-alt3
 - modiified for use with systemd
 
