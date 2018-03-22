@@ -1,11 +1,15 @@
+%def_without check
 Summary: User monitoring and command logging
 Name: snoopy
-Version: 2.2.7
+Version: 2.4.6
 Release: alt1
 Url: https://github.com/a2o/snoopy
 Source: %name-%version.tar.gz
+Patch: snoopy-2.4.6-doubleref.patch
 Group: Development/Debuggers
 License: GPL
+
+BuildRequires: socat
 
 %description
 Snoopy Logger, logs all the commands issued by local users on the system.
@@ -13,6 +17,7 @@ It is very useful to track and monitor the users.
 
 %prep
 %setup
+%patch -p1
 cat > %name <<@@@
 #!/bin/sh
 export LD_PRELOAD=%_libdir/libsnoopy.so
@@ -35,7 +40,13 @@ install -D -m755 %name %buildroot%_bindir/%name
 %_bindir/*
 %_libdir/libsnoopy.so*
 
+%check
+make check
+
 %changelog
+* Thu Mar 22 2018 Fr. Br. George <george@altlinux.ru> 2.4.6-alt1
+- Autobuild version bump to 2.4.6
+
 * Wed Apr 22 2015 Fr. Br. George <george@altlinux.ru> 2.2.7-alt1
 - Autobuild version bump to 2.2.7
 - Fix build
