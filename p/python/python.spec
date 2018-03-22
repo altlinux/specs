@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.14
-Release: alt1
+Release: alt2
 
 %define package_name		%real_name
 %define weight			1001
@@ -19,8 +19,7 @@ Release: alt1
 
 %def_with tk
 %def_with ssl
-%def_without check
-%def_without bootstrap
+%def_with bluez
 
 %ifarch %ix86 x86_64
 %def_with valgrind
@@ -68,6 +67,17 @@ Patch21: python-2.6-ctypes-noexecmem.patch
 Patch22: python-2.6.6-alt-bdist_altrpm.patch
 Patch23: python-2.7.4-alt-linux2-platform.patch
 Patch24: python-2.7.10-python-config-ldflags-alt.patch
+Patch25: python2-platform-osrelease.patch
+
+# TODO: send upstream
+Patch31: python-2.7.14-alt-test_resource-skip-impossible.patch
+# TODO: a bug which needs a fix ignored for now
+Patch32: python-2.7.14-alt-test_tuple-skip-bug.patch
+
+# 00104 #
+# Only used when "%_lib" == "lib64"
+# Another lib64 fix, for distutils/tests/test_install.py; not upstream:
+Patch104: 00104-lib64-fix-for-test_install.patch
 
 # XXX ignore pydoc dependencies for now
 %add_findreq_skiplist %_bindir/pydoc*
@@ -83,6 +93,7 @@ Requires: %name-modules %name-modules-encodings
 Requires: %name-modules-curses %name-modules-xml %name-modules-compiler
 Requires: %name-modules-email %name-modules-hotshot %name-modules-bsddb
 Requires: %name-modules-logging
+Requires: %name-modules-nis
 
 BuildPreReq: rpm >= 4.0.4-alt36.d8, rpm-build-python >= 0.34.4-alt1
 # Automatically added by buildreq on Sun Apr 08 2007
@@ -90,10 +101,14 @@ BuildRequires: bzlib-devel gcc-c++ libdb4-devel libexpat-devel libgdbm-devel lib
 %{?_with_tk:BuildRequires: tk-devel}
 %{?_with_valgrind:BuildRequires: valgrind-devel}
 %{?_with_ssl:BuildRequires: libssl-devel}
-%{?!_with_bootstrap:BuildRequires: libbluez-devel}
+%{?_with_bluez:BuildRequires: libbluez-devel}
+# Not to loose a module which used to be a part of our standard "interface"
+# (i.e., no reqs were generated because nis was assumed to be always present).
+BuildPreReq: libnsl2-devel
+%{?!_without_check:%{?!_disable_check:BuildPreReq: /proc /dev/pts}}
 
 # NB:
-# without_bootstrap might cut a lot more packages;
+# without_bootstrap might cut out quite a few packages;
 # initial python build will still be a --nodeps affair,
 # those interested are invited to have a closer look.
 # -- mike@
@@ -187,6 +202,12 @@ Summary: Standard python modules
 Group: Development/Python
 Requires: %name-base = %version-%release
 Obsoletes: %python_name-modules <= %noversion_from
+# We have split nis from python-modules. Therefore, for now,
+# we require it in order not to break the past promises. (rpm-build-python
+# didn't generate individual Requires on modules provided by python-modules.)
+# After a Sisyphus test rebuild, we'll detect the packages needing python2.7(nis),
+# actually rebuild them, and after that, we can drop this Requires if we want.
+Requires: %name-modules-nis
 
 %description modules
 The Python programming language's interpreter can be extended with
@@ -412,6 +433,17 @@ Unit testing framawork for Python. The Python unit testing framework,
 sometimes referred to as "PyUnit," is a Python language version of JUnit,
 by Kent Beck and Erich Gamma.Based on PEP 282 and comments thereto in
 comp.lang.python, and influenced by Apache's log4j system.
+
+%package modules-nis
+Summary: NIS module from Python
+Group: Development/Python
+Requires: %name-modules = %version-%release
+
+%description modules-nis
+This package contains the "nis" module from Python.
+
+It used to be in %name-modules, but since NIS is deprecated in glibc,
+this separate package was made because of extra library dependencies.
 
 %package dev
 Summary: The libraries and header files needed for Python development
@@ -651,6 +683,9 @@ rm -r Modules/expat
 %if "lib" != "%_lib"
 %patch8 -p1
 %patch9 -p1
+%patch104 -p1
+# TODO: adapt our package to other %%_lib like this:
+# < %PATCH104 sed -e 's:lib64:%_lib:g' | patch -p1
 %endif
 
 %patch10 -p1
@@ -661,8 +696,13 @@ rm -r Modules/expat
 #This patch ffi_closure_free() implementation needs
 #patch21 -p1
 %patch22 -p2
+install -p -m644 %SOURCE12 -t Lib/distutils/command
 %patch23 -p1
 %patch24 -p2
+%patch25 -p1
+
+%patch31 -p2
+%patch32 -p2
 
 # XXX temporary Issue20445 fix
 sed -i 's/val1 == nice(2)/val1 == nice(2)+2/' configure.ac
@@ -687,16 +727,20 @@ autoconf
 build () {
 _Target="$1"
 shift
+export LDFLAGS="$(pkg-config --libs libnsl)" CPPFLAGS="$(pkg-config --cflags libnsl)"
 %configure \
 	--with-threads \
 	%{subst_with valgrind} \
 	%{subst_with tk} \
 	--with-system-ffi \
 	--with-system-expat \
+%ifarch e2k
+	--with-libs="-lcxa" \
+%endif
 	--enable-ipv6 \
 	$*
 
-%make_build LDFLAGS=-L$PWD $_Target
+%make_build LDFLAGS="-L$PWD" $_Target
 }
 
 #pushd ../build-static
@@ -717,7 +761,10 @@ build all --enable-shared
 #EOF
 
 %check
-make test
+# -l (to find memory leaks) is not compatible with -j...
+# Therefore, we reset TESTOPTS (which includes -l by default)
+# instead of adding EXTRATESTOPTS.
+make test TESTOPTS=%_smp_mflags
 
 %install
 rln()
@@ -760,10 +807,6 @@ mv %buildroot%python_libdir/config/lib%python_name.a %buildroot%_libdir/lib%pyth
 
 # cray : hack for hotshot
 rm %buildroot%python_libdir/hotshot/stones.py*
-
-install -p -m644 %SOURCE12 %buildroot%python_libdir/distutils/command
-sed -i "s|\(.*bdist_rpm.*\)|\1\n           'bdist_altrpm',|" \
-	%buildroot%python_libdir/distutils/command/__init__.py
 
 # hack for pydoc
 mv %buildroot%_bindir/pydoc %buildroot%_bindir/pydoc%suffix_ver
@@ -851,7 +894,7 @@ echo tkinter >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%python_nam
 %endif
 chmod 644 %buildroot%_sysconfdir/buildreqs/packages/substitute.d/*
 
-%global python_ignored_files site-packages(/.+\.(pth|egg-info/(entry_points|namespace_packages)\.txt))?$
+%global python_ignored_files site-packages(/.+\\.(pth|egg-info(|/entry_points\\.txt|/namespace_packages\\.txt)))?$
 mkdir -p %buildroot%_sysconfdir/buildreqs/files/ignore.d
 cat > %buildroot%_sysconfdir/buildreqs/files/ignore.d/%name << EOF
 ^%_libdir/python[^/]*/%python_ignored_files
@@ -1010,6 +1053,8 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %python_libdir/ensurepip/*pyc
 %python_libdir/ensurepip/*pyo
 
+%files modules-nis -f modules-nis-list
+
 #%files obsolete
 #%python_libdir/lib-old
 
@@ -1102,6 +1147,21 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Thu Mar 22 2018 Ivan Zakharyaschev <imz@altlinux.org> 2.7.14-alt2
+- buildreq's ignore list (thx grenka@):
+  + Make buildreq ignore atomic .egg-info files
+    because they are read too often (ALT#34660)
+  + Fix escaping of backslash in buildreq's ignore.d regular expression
+- Kept nis module despite the deprecation of NIS in glibc because it
+  used to be a part of our standard "interface". Split nis from
+  python-modules so that the rebuild of dependents will make them
+  obtain an explicit dep on it. (python-modules will require it for a
+  while not to break the past promise.)
+- Fixed detection of linux distribution (thx mrdrew)
+- (e2k arch) Link against -lcxa (thx mike@, sem@)
+- (.spec) Renamed bootstrap knob to bluez, enabled by default (thx mike@)
+- (.spec) Enabled %%check
+
 * Tue Oct 31 2017 Fr. Br. George <george@altlinux.ru> 2.7.14-alt1
 - Version up
 - Turn off static build that have been lost long ago
