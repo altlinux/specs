@@ -1,26 +1,25 @@
 %define oname oauth2
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 1.5.211
-Release: alt1.1
+Version: 1.9
+Release: alt1
 Summary: Library for OAuth version 1.0a (forked from python-oauth)
 
 Group: Development/Python
 License: MIT
 Url: https://github.com/simplegeo/python-oauth2
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
-
-Source: %name-%version.tar
-
 BuildArch: noarch
-BuildRequires: python-devel python-module-setuptools
-%if_with python3
+
+Source: oauth2-%version.tar
+
+BuildRequires: python-module-setuptools
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildPreReq: python3-module-setuptools
+BuildPreReq: python3-devel
 BuildPreReq: python-tools-2to3
-%endif
+
 
 %description
 python-oauth2 implements OAuth, which is an open protocol to allow API
@@ -37,44 +36,40 @@ authentication in a simple and standard method from desktop and web
 applications. This was forked from python-oauth.
 
 %prep
-%setup
+%setup -n oauth2-%version
 
-%if_with python3
 cp -fR . ../python3
 find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
 rm -rf %buildroot/%python_sitelibdir/tests
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
 rm -rf %buildroot/%python3_sitelibdir/tests
-%endif
 
 %files
 %doc LICENSE.txt README.md example/
 %python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc LICENSE.txt README.md example/
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Thu Mar 22 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.9-alt1
+- Version 1.9
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5.211-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
