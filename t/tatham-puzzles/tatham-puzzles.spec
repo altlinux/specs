@@ -1,5 +1,5 @@
 Name: tatham-puzzles
-Version: 20170925
+Version: 20180227
 Release: alt1
 License: MIT
 Group: Games/Puzzles
@@ -115,6 +115,9 @@ install *.info* %buildroot%_infodir/
 %_infodir/*%{name}*
 
 %changelog
+* Thu Mar 22 2018 Fr. Br. George <george@altlinux.ru> 20180227-alt1
+- Manual update
+
 * Mon Sep 25 2017 Fr. Br. George <george@altlinux.ru> 20170925-alt1
 - Manual update
 
