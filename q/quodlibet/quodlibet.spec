@@ -1,17 +1,43 @@
+%def_disable snapshot
+%define gst_api_ver 1.0
+
 Name: quodlibet
-Version: 2.4.1
+Version: 4.0.2
 Release: alt1
 
 Summary: audio library tagger, manager, and player for GTK+
-License: GPLv2
 Group: Sound
+License: GPLv2
+Url: https://github.com/%name/%name
 
-Url: http://code.google.com/p/quodlibet/
+%if_disabled snapshot
+Source: %url/releases/download/release-%version/%name-%version.tar.gz
+%else
 Source: %name-%version.tar
+%endif
+
+BuildArch: noarch
 
 PreReq: exfalso = %version-%release
-BuildRequires: libgtk+2-devel python-devel python-module-pygtk-devel python-module-mutagen python-module-gst intltool
-BuildRequires: desktop-file-utils
+# explicitly required gtk+3
+Requires: typelib(Gtk) = 3.0
+Requires: dbus dconf
+
+# required GStreamer plugins
+Requires: gst-plugins-base%gst_api_ver
+Requires: gst-plugins-good%gst_api_ver
+Requires: gst-plugins-bad%gst_api_ver
+Requires: gst-plugins-ugly%gst_api_ver
+
+# remove ubuntu and Mac-specific dependencies
+%add_typelib_req_skiplist typelib(Unity) typelib(AppIndicator3) typelib(Dbusmenu)
+%add_typelib_req_skiplist typelib(GtkosxApplication)
+
+# abnormally detected python3 dep. See quodlibet/util/http.py
+%add_python3_req_skip gi.repository.GObject
+
+BuildRequires: rpm-build-gir intltool desktop-file-utils
+BuildRequires: rpm-build-python3 python3-devel python3-module-mutagen
 
 %description
 Quod Libet is a music management program. It provides several different
@@ -29,37 +55,45 @@ lets you do this for all the file formats it supports -- Ogg Vorbis,
 FLAC, MP3, Musepack, and MOD.
 
 %prep
-%setup -q
+%setup
+
+# fix appdata install path
+subst "s|\('share', '\)appdata'|\1metainfo'|" gdist/appdata.py
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install --install-purelib %python_sitelibdir
-mkdir -p %buildroot%_iconsdir/hicolor/scalable/apps
-cp  %buildroot%python_sitelibdir/%name/images/hicolor/scalable/apps/*.svg \
-    %buildroot%_iconsdir/hicolor/scalable/apps
+%python3_install
+
 %find_lang %name
-desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=AudioVideoEditing \
-	%buildroot%_desktopdir/exfalso.desktop
 
 %files
 %_bindir/%name
-%_iconsdir/hicolor/scalable/apps/%name.svg
+# cli tagger
+%_bindir/operon
+%_datadir/dbus-1/services/net.sacredchao.QuodLibet.service
+%_datadir/gnome-shell/search-providers/%name-search-provider.ini
+%_iconsdir/hicolor/*/*/%{name}*.*
 %_desktopdir/%name.desktop
+%_datadir/metainfo/%name.appdata.xml
 %_man1dir/%name.*
-%doc COPYING NEWS HACKING README
+%_man1dir/operon.*
+%doc NEWS README
 
 %files -n exfalso -f %name.lang
 %_bindir/exfalso
-%_iconsdir/hicolor/scalable/apps/exfalso.svg
+%_iconsdir/hicolor/*/*/exfalso*.*
 %_desktopdir/exfalso.desktop
+%_datadir/metainfo/exfalso.appdata.xml
 %_man1dir/exfalso.*
-%python_sitelibdir/%name
-%python_sitelibdir/%name-%version-py*
+%python3_sitelibdir_noarch/%name
+%python3_sitelibdir_noarch/%name-%version-py*
 
 %changelog
+* Sat Feb 17 2018 Yuri N. Sedunov <aris@altlinux.org> 4.0.2-alt1
+- 4.0.2 (ported to Python3, GTK+3, GStreamer-1.0)
+
 * Tue Oct 09 2012 Vladimir Lettiev <crux@altlinux.ru> 2.4.1-alt1
 - New version 2.4.1
 
