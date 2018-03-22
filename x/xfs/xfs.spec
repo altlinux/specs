@@ -1,16 +1,16 @@
 %define xf86 XFree86
 
 Name: xfs
-Version: 1.1.4
+Version: 1.2.0
 Release: alt1
-Serial: 1
+Epoch: 1
 Summary: X font server
 License: MIT/X11
 Group: System/X11
 Url: http://xorg.freedesktop.org
 
 Obsoletes: xtt %xf86-xfs xorg-x11-xfs
-Provides: %xf86-xfs = 4.4 xorg-x11-xfs = %serial:%version-%release
+Provides: %xf86-xfs = 4.4 xorg-x11-xfs = %epoch:%version-%release
 Conflicts: chkfontpath
 Requires: xfsinfo fslsfonts
 Requires: libXfont >= 1.3.0 fonts-bitmap-misc >= 7.0.0-alt2 setup >= 2.2.11-alt1
@@ -22,11 +22,11 @@ Source1: %name.config
 Source2: %name.init
 Source3: %name.sysconfig
 
-BuildRequires: xorg-fontsproto-devel xorg-xproto-devel xorg-font-utils xorg-util-macros
+# Automatically added by buildreq on Thu Mar 22 2018
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 perl pkg-config python-base xorg-fontsproto-devel xorg-xproto-devel
+BuildRequires: libXfont2-devel xorg-xtrans-devel
 
-# Automatically added by buildreq on Mon Aug 20 2012
-# optimized out: pkg-config xorg-fontsproto-devel xorg-xproto-devel
-BuildRequires: libXfont-devel xorg-xtrans-devel
+BuildRequires: xorg-fontsproto-devel xorg-xproto-devel xorg-font-utils xorg-util-macros
 
 %description
 Xfs is the X Window System font server.  It supplies fonts to X  Window
@@ -69,6 +69,9 @@ install -pD -m644 %name.config %buildroot%_sysconfdir/X11/fs/config
 %_man1dir/*
 
 %changelog
+* Thu Mar 22 2018 Fr. Br. George <george@altlinux.ru> 1:1.2.0-alt1
+- Autobuild version bump to 1.2.0
+
 * Mon Sep 08 2014 Fr. Br. George <george@altlinux.ru> 1:1.1.4-alt1
 - Autobuild version bump to 1.1.4
 - Resurrect from accidential deletion
