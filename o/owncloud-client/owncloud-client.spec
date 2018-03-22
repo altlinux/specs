@@ -1,11 +1,12 @@
 %define rname owncloudclient
 Name: owncloud-client
 Version: 2.4.0
-Release: alt3%ubt
+Release: alt4
 
 Group: Networking/File transfer
 Summary: ownCloud Desktop Client
 License: GPLv2
+Url: http://owncloud.org/sync-clients/
 
 Provides: mirall = %version-%release
 Obsoletes: mirall <= %version-%release
@@ -88,6 +89,9 @@ desktop-file-install \
 %_datadir/nautilus-python/extensions/
 
 %changelog
+* Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt4
+- NMU: added URL
+
 * Tue Jan 23 2018 Oleg Solovyov <mcpain@altlinux.org> 2.4.0-alt3%ubt
 - fix for moving more than two files with identical names
 
