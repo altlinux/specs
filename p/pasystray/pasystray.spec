@@ -1,10 +1,11 @@
 Name:		pasystray
 Version:	0.6.0
-Release:	alt1
+Release:	alt1.1
 
 Summary:	a replacement for the deprecated padevchooser
 License:	GPLv2.1
 Group:		Sound
+Url:		https://github.com/christophgysin/pasystray
 
 # packaged sources from upstream git repo tag
 Source:		%name-%version.tar
@@ -57,6 +58,9 @@ applications.
 %_iconsdir/hicolor/scalable/*
 
 %changelog
+* Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1.1
+- NMU: added URL
+
 * Thu Mar 02 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.6.0-alt1
 - Initial build for Sisyphus.
 
