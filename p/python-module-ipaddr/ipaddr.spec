@@ -1,81 +1,79 @@
-%define modulename ipaddr
+%define modname ipaddr
 
-%def_with python3
-
-Name: python-module-%modulename
-Version: 2.1.10
-Release: alt2.1.1
+Name: python-module-%modname
+Version: 2.2.0
+Release: alt1
 
 Summary: Library for working with IP addressess, both IPv4 and IPv6
-License: Apache License, Version 2.0
+License: Apache-2.0
 Group: Development/Python
+
 Url: https://github.com/google/ipaddr-py
 Packager: Liudmila Butorina <lbutorina@altlinux.org>
-
 BuildArch: noarch
 
-Source0: %modulename-%version.tar
+Source: ipaddr-%version.tar
 
-#BuildPreReq: %py_dependencies setuptools
-%if_with python3
+BuildRequires: python-module-setuptools
+BuildRequires: python-devel python-tools-2to3
+BuildRequires: python-modules-unittest
+BuildRequires: time
+
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-#BuildPreReq: python-tools-2to3
-%endif
+BuildPreReq: python3-devel
+BuildPreReq: python3-module-setuptools
+BuildPreReq: python-tools-2to3
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
-BuildRequires: python-devel python-modules-unittest python-tools-2to3 rpm-build-python3 time
+
 
 %description
 An IPv4/IPv6 manipulatin library in Python/This library is used to create/poke/manipulate IPv4 and IPv6 addresses and prefixes.
 
-%package -n python3-module-%modulename
+%package -n python3-module-%modname
 Summary: Library for working with IP addressess, both IPv4 and IPv6
 Group: Development/Python3
-%py3_provides %modulename
+%py3_provides %modname
 
-%description -n python3-module-%modulename
+%description -n python3-module-%modname
 An IPv4/IPv6 manipulatin library in Python/This library is used to create/poke/manipulate IPv4 and IPv6 addresses and prefixes.
 
 %prep
-%setup -n %modulename-%version
+%setup -n ipaddr-%version
 
-%if_with python3
 cp -fR . ../python3
 find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %check
-./test-2to3.sh
+./ipaddr_test.py
 
 %install
 %python_install --record=INSTALLED_FILES
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %files -f INSTALLED_FILES
-%doc README
+%doc README COPYING wiki/*
 
-%if_with python3
-%files -n python3-module-%modulename
+%files -n python3-module-%modname
+%doc README COPYING wiki/*
 %python3_sitelibdir/*
-%endif
+
 
 %changelog
+* Thu Mar 22 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.2.0-alt1
+- Version 2.2.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.1.10-alt2.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
@@ -96,4 +94,3 @@ popd
 
 * Mon Jan 30 2012 Liudmila Butorina <lbutorina@altlinux.org> 2.1.7-alt1
 - Initial build
-
