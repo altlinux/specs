@@ -4,7 +4,7 @@
 Name: python-module-%mname
 Epoch: 1
 Version: 38.4.0
-Release: alt2%ubt
+Release: alt3
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -152,20 +152,24 @@ popd
 %python3_sitelibdir/%mname-%version-*.egg-info
 
 %changelog
-* Fri Feb 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:38.4.0-alt2%ubt
+* Thu Mar 22 2018 Grigory Ustinov <grenka@altlinux.org> 1:38.4.0-alt3
+- Add patch for skipping some requires from glebfm@, adapted for new code.
+  It restores feature from commit 362ea68 in 1:18.1-alt2 release. (Closes: #34658)
+
+* Fri Feb 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:38.4.0-alt2.S1
 - Updated build dependencies.
 
-* Mon Jan 22 2018 Stanislav Levin <slev@altlinux.org> 1:38.4.0-alt1%ubt
+* Mon Jan 22 2018 Stanislav Levin <slev@altlinux.org> 1:38.4.0-alt1.S1
 - 38.2.3 -> 38.4.0
 
-* Fri Dec 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:38.2.3-alt1%ubt
+* Fri Dec 01 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:38.2.3-alt1.S1
 - Updated to upstream version 38.2.3.
 
-* Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:36.6.0-alt1%ubt
+* Thu Oct 19 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:36.6.0-alt1.S1
 - Updated to upstream version 36.6.0.
 - Fixed issue with generated .pth files.
 
-* Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:36.5.0-alt1%ubt
+* Tue Oct 10 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1:36.5.0-alt1.S1
 - Updated to new version.
 
 * Wed Jun 14 2017 Vitaly Lipatov <lav@altlinux.ru> 1:18.5-alt1
