@@ -1,15 +1,30 @@
-Name: python-module-pyvfs
-Version: 0.2.8
+%define modname pyvfs
+%define buildroot %_topdir/BUILDROOT
+
+Name: python-module-%modname
+Version: 0.2.10
 Release: alt1
+
 Summary: Simple python VFS library
 License: GPLv3+
 Group: Development/Python
 URL: https://github.com/svinota/pyvfs
-
 BuildArch: noarch
-BuildPreReq: python-devel rpm-build-python
-Source: pyvfs-%version.tar.gz
+
+Source: pyvfs-%version.tar
+
+BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-module-objects.inv
+BuildRequires: python-module-setuptools
+BuildRequires: python-devel
+
 Requires: python-module-py9p >= 1.0.6-alt1
+
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-module-setuptools
+BuildPreReq: python3-devel
+
 
 %description
 PyVFS is a simple VFS library written in Python. It consists of
@@ -21,18 +36,63 @@ The library can be used to create own servers as well as deploy
 bundled applications, e.g. pyvfs.objectfs -- the library, that allows
 to represent Python objects as files.
 
+%package -n python3-module-%modname
+Summary: Simple python VFS library
+Group: Development/Python
+
+%description -n python3-module-%modname
+PyVFS is a simple VFS library written in Python. It consists of
+several layers, allowing to use different low-level protocol
+implementations. Now you can choose between 9p (9p2000.u) and
+FUSE.
+
+The library can be used to create own servers as well as deploy
+bundled applications, e.g. pyvfs.objectfs -- the library, that allows
+to represent Python objects as files.
+
 %prep
-%setup -q -n pyvfs-%{version}
+%setup -n pyvfs-%version
+
+rm -rf ../python3
+cp -fR . ../python3
+
+%prepare_sphinx .
+ln -s ../objects.inv docs/
+  
+%build
+make force-version
+%python_build
+
+pushd ../python3
+make force-version
+%python3_build
+popd
+
+
+export PYTHONPATH=%buildroot%python_sitelibdir
+%make -C docs html
+mkdir man
+cp -fR docs/_build/html/* man/
 
 %install
-%{__python} setup.py install --root=%buildroot --install-lib=%{python_sitelibdir}
+%python_install
+
+pushd ../python3
+%python3_install
+popd
 
 %files
-%doc README* LICENSE
-%{python_sitelibdir}/pyvfs*
-%{python_sitelibdir}/objectfs*
+%doc README* LICENSE man/
+%python_sitelibdir/*
+
+%files -n python3-module-%modname
+%doc README* LICENSE man/
+%python3_sitelibdir/*
 
 %changelog
+* Fri Mar 23 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.2.10-alt1
+- Version 0.2.10
+
 * Fri Nov 30 2012 Peter V. Saveliev <peet@altlinux.org> 0.2.8-alt1
 - directory listing fix for v9fs
 - version sync with py9p
