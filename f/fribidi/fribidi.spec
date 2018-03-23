@@ -1,9 +1,11 @@
+%def_enable snapshot
 %def_disable static
-# for tests only
-%def_with glib
+%def_enable docs
+%def_enable deprecated
+%def_enable check
 
 Name: fribidi
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Bi-directional scripts support
@@ -11,12 +13,17 @@ License: %lgpl21plus
 Group: Development/C
 Url: https://github.com/%name/%name/
 
+%if_disabled snapshot
 Source: %url/releases/download/v%version/%name-%version.tar.bz2
+%else
+#VCS: https://github.com/fribidi/fribidi.git
+Source: %name-%version.tar
+%endif
 
 Requires: lib%name = %version-%release
 
-BuildPreReq: rpm-build-licenses
-%{?_with_glib:BuildRequires: glib2-devel}
+BuildRequires(pre): rpm-build-licenses
+%{?_enable_docs:BuildRequires: c2man}
 %{?_enabled_static:BuildRequires: glibc-devel-static}
 
 %package -n lib%name
@@ -63,18 +70,20 @@ programs which will use fribidi.
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
-%configure %{subst_enable static} \
-	%{?_with_glib:--with-glib=yes}
+%autoreconf
+%configure
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
+%check
 %make check
 
 %files
 %_bindir/*
-%doc README AUTHORS ChangeLog TODO THANKS NEWS
+%doc README AUTHORS TODO THANKS NEWS
+%{?_disable_snapshot:ChangeLog}
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -83,7 +92,7 @@ programs which will use fribidi.
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*.pc
-%_man3dir/*.3*
+%{?_enable_docs:%_man3dir/*.3*}
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -91,6 +100,9 @@ programs which will use fribidi.
 %endif
 
 %changelog
+* Fri Mar 23 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- updated to v1.0.2-5-g47ed4eb
+
 * Tue Feb 13 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1
 
