@@ -1,8 +1,8 @@
 %define wxbranch 3.0
 
 Name: wxGTK3.0
-Version: %wxbranch.3
-Release: alt11
+Version: %wxbranch.4
+Release: alt1
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -218,6 +218,9 @@ cat wxmsw3.lang >> wxstd3.lang
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Fri Mar 23 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.4-alt1
+- Version 3.0.4
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.3-alt11
 - added compat symlink /usr/bin/wx-config-3.0
 
