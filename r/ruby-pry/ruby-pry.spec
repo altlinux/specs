@@ -1,8 +1,8 @@
 %define  pkgname pry
 
 Name: 	 ruby-%pkgname
-Version: 0.10.4 
-Release: alt3.2
+Version: 0.11.3
+Release: alt1
 
 Summary: An IRB alternative and runtime developer console
 License: MIT
@@ -48,6 +48,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %_bindir/%pkgname
 
 %changelog
+* Fri Mar 09 2018 Mikhail Gordeev <obirvalger@altlinux.org> 0.11.3-alt1
+- new version 0.11.3
+
 * Sun Sep 10 2017 Andrey Cherepanov <cas@altlinux.org> 0.10.4-alt3.2
 - Rebuild with Ruby 2.4.1
 
