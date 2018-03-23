@@ -1,12 +1,13 @@
 Name: lxde
 Version: 1.0
-Release: alt14
+Release: alt15
 Summary: Virtual package for install all parts of LXDE
 Group: Graphical desktop/Other
 License: GPL
 BuildArch: noarch
-Requires: lxde-common lxde-lxpanel lxde-lxsession pcmanfm2 lxde-freedesktop-menu menu-cache lxde-lxappearance lxde-lxsession-edit
-Requires: lxde-lxrandr lxde-lxshortcut lxde-lxinput lxde-lxtask lxde-icon-theme gpicview leafpad lxde-lxhotkey
+Requires: lxde-lite = %EVR
+Requires: lxde-lxrandr lxde-lxshortcut lxde-lxinput lxde-lxtask lxde-lxhotkey lxde-lxterminal
+Requires: gpicview leafpad
 Requires: lxde-lxpolkit
 Conflicts: lxde-sysvinit
 Packager: LXDE Packaging Team <lxde@packages.altlinux.org>
@@ -19,7 +20,9 @@ Summary: Virtual package for install minumal set of LXDE packages
 Group: Graphical desktop/Other
 License: GPL
 BuildArch: noarch
-Requires: lxde-common lxde-lxpanel lxde-lxsession pcmanfm2 lxde-freedesktop-menu menu-cache lxde-lxappearance lxde-lxsession-edit
+Requires: lxde-common lxde-lxpanel lxde-lxsession lxde-freedesktop-menu lxde-lxsession-edit
+Requires: pcmanfm2 menu-cache lxde-lxappearance lxde-lxappearance-obconf
+Requires: openbox
 
 %description lite
 %summary
@@ -29,8 +32,9 @@ Summary: Virtual package for install LXDE packages for SysVinit
 Group: Graphical desktop/Other
 License: GPL
 BuildArch: noarch
-Requires: lxde-common lxde-lxpanel lxde-lxsession pcmanfm2 lxde-freedesktop-menu menu-cache lxde-lxappearance lxde-lxsession-edit
-Requires: lxde-lxrandr lxde-lxshortcut lxde-lxinput lxde-lxtask lxde-icon-theme gpicview leafpad lxde-lxhotkey
+Requires: lxde-lite = %EVR
+Requires: lxde-lxrandr lxde-lxshortcut lxde-lxinput lxde-lxtask lxde-lxhotkey lxde-lxterminal
+Requires: gpicview leafpad
 Requires: ConsoleKit2 polkit-sysvinit nm-sysvinit
 Conflicts: lxde lxde-lxpolkit
 
@@ -42,6 +46,9 @@ Conflicts: lxde lxde-lxpolkit
 %files sysvinit
 
 %changelog
+* Fri Mar 23 2018 Anton Midyukov <antohami@altlinux.org> 1.0-alt15
+- Optimization of dependencies
+
 * Thu Sep 07 2017 Anton Midyukov <antohami@altlinux.org> 1.0-alt14
 - Added requires nm-sysvinit for lxde-sysvinit
 

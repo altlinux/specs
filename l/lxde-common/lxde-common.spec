@@ -8,7 +8,7 @@
 %define gtkver 2
 Name: lxde-common
 Version: 0.99.2
-Release: alt3
+Release: alt4
 BuildArch: noarch
 
 Summary: Basic infrastructure for LXDE.
@@ -43,6 +43,8 @@ Provides: lxde-settings
 
 ### GRRRR!!! for appliance-desktop-lxde
 Provides: lxde-default-theme
+
+Requires: lxde-icon-theme
 
 %description -n %theme_fullname
 Default graphics theme for LXDE.
@@ -106,7 +108,7 @@ fi
 rm -fR %_sysconfdir/xdg/lxsession/LXDE/desktop.conf \
        %_sysconfdir/xdg/pcmanfm/LXDE \
        %_sysconfdir/xdg/lxpanel/LXDE \
-       %_sysconfdir/xdg/openbox/LXDE    
+       %_sysconfdir/xdg/openbox/LXDE
 
 %files -f %name.lang
 %doc ChangeLog INSTALL README
@@ -123,9 +125,10 @@ rm -fR %_sysconfdir/xdg/lxsession/LXDE/desktop.conf \
 %_sysconfdir/alternatives/packages.d/%theme_fullname
 %_datadir/%theme_fullname
 
-#_iconsdir/nuoveXT2
-
 %changelog
+* Fri Mar 23 2018 Anton Midyukov <antohami@altlinux.org> 0.99.2-alt4
+- Added lxde-icon-theme in requires for lxde-upstream
+
 * Sat Feb 17 2018 Anton Midyukov <antohami@altlinux.org> 0.99.2-alt3
 - Replacement screengrab to screenshot-tool.
 
