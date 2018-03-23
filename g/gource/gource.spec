@@ -1,5 +1,5 @@
 Name: gource
-Version: 0.47
+Version: 0.48
 Release: alt1
 
 Summary: OpenGL-based 3D visualisation tool for source control repositories
@@ -58,6 +58,9 @@ tar xf %_sourcedir/%name-core-%version.tar -C src/
 %_man1dir/*
 
 %changelog
+* Fri Mar 23 2018 Mikhail Efremov <sem@altlinux.org> 0.48-alt1
+- Updated to 0.48.
+
 * Thu Sep 28 2017 Mikhail Efremov <sem@altlinux.org> 0.47-alt1
 - Updated to 0.47.
 
