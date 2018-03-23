@@ -1,6 +1,6 @@
 Name: bitlbee-facebook
-Version: 0.1.0
-Release: alt1
+Version: 1.1.2
+Release: alt1.g553593d
 Group: Networking/IRC
 License: GPLv2
 Url: https://wiki.bitlbee.org/HowtoFacebookMQTT
@@ -35,6 +35,8 @@ groupchats.
 %_libdir/bitlbee/facebook.so
 
 %changelog
+* Fri Mar 23 2018 L.A. Kostis <lakostis@altlinux.ru> 1.1.2-alt1.g553593d
+- Updated to 1.1.2 553593d GIT.
+
 * Tue Sep 15 2015 L.A. Kostis <lakostis@altlinux.ru> 0.1.0-alt1
 - Initial build for ALTLinux.
-
