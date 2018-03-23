@@ -1,8 +1,8 @@
 %def_enable tests
 
 Name: libldb
-Version: 1.1.29
-Release: alt3%ubt
+Version: 1.3.2
+Release: alt1%ubt
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -12,9 +12,16 @@ Source: http://samba.org/ftp/ldb/ldb-%{version}.tar.gz
 Patch: ldb-samba-modules.patch
 
 BuildRequires: python-devel python-module-tdb libpytalloc-devel python-module-tevent
-BuildRequires: libtalloc-devel libtdb-devel libtevent-devel libpopt-devel libldap-devel xsltproc docbook-style-xsl docbook-dtds
+BuildRequires: libpopt-devel libldap-devel libcmocka-devel xsltproc docbook-style-xsl docbook-dtds
+BuildRequires: libtdb-devel >= 1.3.15
+BuildRequires: libtalloc-devel >= 2.1.11
+BuildRequires: libtevent-devel >= 0.9.36
 
 BuildRequires(pre):rpm-build-ubt
+
+Requires: libtdb >= 1.3.15
+Requires: libtalloc >= 2.1.11
+Requires: libtevent >= 0.9.36
 
 %description
 An extensible library that implements and LDAP like API to access remote LDAP
@@ -77,8 +84,6 @@ rm -f %buildroot/%_man3dir/_*
 
 %if_enabled tests
 %check
-export LD_LIBRARY_PATH=./bin/shared:./bin/shared/private:$LD_LIBRARY_PATH
-export LDB_MODULES_PATH=./bin/modules/ldb:$LDB_MODULES_PATH
 make test
 %endif
 
@@ -114,6 +119,21 @@ make test
 %_pkgconfigdir/pyldb-util.pc
 
 %changelog
+* Fri Mar 23 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.3.2-alt1%ubt
+- Update to new release for samba-4.8.0
+
+* Fri Jan 05 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.2.3-alt1%ubt
+- Update to new release for samba-4.7.4
+
+* Tue Sep 19 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.2.2-alt1%ubt
+- Update to new release for samba-4.7.0rc6
+
+* Sat Aug 19 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.2.1-alt1%ubt
+- Update to new 1.2.x release
+
+* Thu Aug 17 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.1.31-alt1%ubt
+- Update to latest 1.1.x release
+
 * Sat Jul 15 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.1.29-alt3%ubt
 - Rebuild with universal build tag (aka ubt macros) for p7 and c7
 

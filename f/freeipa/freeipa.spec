@@ -18,7 +18,7 @@
 %define python_netaddr_version 0.7.5
 # 0.7.16: https://github.com/drkjam/netaddr/issues/71
 # Require 4.7.0 which brings Python 3 bindings
-%define samba_version 4.6.8
+%define samba_version 4.7.6
 %define slapi_nis_version 0.56.1
 %define python_ldap_version 3.0.0
 
@@ -27,7 +27,7 @@
 
 Name: freeipa
 Version: 4.6.3
-Release: alt3%ubt
+Release: alt4%ubt
 Summary: The Identity, Policy and Audit system
 
 Group: System/Base
@@ -1435,6 +1435,9 @@ fi
 %endif # with_python3
 
 %changelog
+* Sat Mar 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.6.3-alt4%ubt
+- Rebuild with samba-4.7
+
 * Wed Mar 14 2018 Stanislav Levin <slev@altlinux.org> 4.6.3-alt3%ubt
 - Fix WebUI translations
 - Fix upgrade process

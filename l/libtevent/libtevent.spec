@@ -1,7 +1,7 @@
 %def_enable tests
 
 Name: libtevent
-Version: 0.9.34
+Version: 0.9.36
 Release: alt1%ubt
 Summary: The tevent library
 License: LGPLv3+
@@ -10,11 +10,13 @@ Url: http://tevent.samba.org/
 
 Source: http://samba.org/ftp/tevent/tevent-%{version}.tar.gz
 
-BuildRequires: libtalloc-devel >= 2.0.10
-BuildRequires: libpytalloc-devel >= 2.0.10
+BuildRequires: libtalloc-devel >= 2.0.11
+BuildRequires: libpytalloc-devel >= 2.0.11
 BuildRequires: python-devel zlib-devel
 
 BuildRequires(pre):rpm-build-ubt
+
+Requires: libtalloc >= 2.0.11
 
 %description
 Tevent is an event system based on the talloc memory management library.
@@ -75,6 +77,9 @@ make test
 %python_sitelibdir/tevent.py*
 
 %changelog
+* Fri Mar 23 2018 Evgeny Sinelnikov <sin@altlinux.org> 0.9.36-alt1%ubt
+- New version for samba-4.8
+
 * Thu Nov 16 2017 Evgeny Sinelnikov <sin@altlinux.org> 0.9.34-alt1%ubt
 - New version for samba-4.6.10 and samba-4.7.2
 

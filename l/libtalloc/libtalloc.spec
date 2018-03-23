@@ -1,7 +1,7 @@
 %def_enable tests
 
 Name: libtalloc
-Version: 2.1.10
+Version: 2.1.12
 Release: alt1%ubt
 Epoch:   1
 
@@ -91,6 +91,12 @@ make test
 
 
 %changelog
+* Fri Mar 23 2018 Evgeny Sinelnikov <sin@altlinux.org> 1:2.1.12-alt1%ubt
+- Update to latest release for samba-4.8
+
+* Wed Mar 14 2018 Evgeny Sinelnikov <sin@altlinux.org> 1:2.1.11-alt1%ubt
+- Update to latest release for samba-4.7
+
 * Thu Aug 17 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1:2.1.10-alt1%ubt
 - Update to release for samba-4.7.0 with tevent-0.9.33
 

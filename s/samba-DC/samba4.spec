@@ -1,10 +1,14 @@
+%define if_branch_le() %if "%(rpmvercmp '%ubt_id' '%1')" <= "0"
+%define if_branch_eq() %if "%(rpmvercmp '%ubt_id' '%1')" == "0"
+%define if_branch_ge() %if "%(rpmvercmp '%ubt_id' '%1')" >= "0"
+
 %set_verify_elf_method unresolved=relaxed
 %add_findprov_skiplist /%_lib/*
 %add_debuginfo_skiplist /%_lib
 
 %define rname samba
 %define _localstatedir /var
-%define libwbc_alternatives_version 0.13
+%define libwbc_alternatives_version 0.14
 
 # internal libs
 %def_without talloc
@@ -46,7 +50,7 @@
 %def_with libcephfs
 
 Name:    samba-DC
-Version: 4.6.14
+Version: 4.7.6
 Release: alt1%ubt
 
 Group:   System/Servers
@@ -122,17 +126,15 @@ BuildRequires: gawk libgtk+2-devel libcap-devel libuuid-devel
 %{?_with_doc:BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-xsl}
 %{?_without_talloc:BuildRequires: libtalloc-devel >= 2.1.10 libpytalloc-devel}
 %{?_without_tevent:BuildRequires: libtevent-devel >= 0.9.34 python-module-tevent}
-%{?_without_tdb:BuildRequires: libtdb-devel >= 1.3.12  python-module-tdb}
+%{?_without_tdb:BuildRequires: libtdb-devel >= 1.3.15  python-module-tdb}
 %{?_without_ntdb:BuildRequires: libntdb-devel >= 0.9  python-module-ntdb}
-%{?_without_ldb:BuildRequires: libldb-devel >= 1.1.29 python-module-pyldb-devel}
+%{?_without_ldb:BuildRequires: libldb-devel >= 1.2.3 python-module-pyldb-devel}
 %{?_with_testsuite:BuildRequires: ldb-tools}
-# Avoid trouble with rpm-macros-ubt-0.2-alt1.M80C.2.noarch.rpm
-# where %__ubt_branch_id N.M80C in /usr/lib/rpm/macros.d/ubt
-#if %ubt_id != "M70P"
-#%{?_with_systemd:BuildRequires: systemd-devel}
-#else
+%if_branch_le M70P
+%{?_with_systemd:BuildRequires: systemd-devel}
+%else
 %{?_with_systemd:BuildRequires: libsystemd-devel}
-#endif
+%endif
 %{?_enable_avahi:BuildRequires: libavahi-devel}
 %{?_enable_glusterfs:BuildRequires: glusterfs3-devel >= 3.4.0.16}
 %{?_with_libcephfs:BuildRequires: ceph-devel}
@@ -687,6 +689,9 @@ ln -s %_bindir/smbspool %buildroot%{cups_serverbin}/backend/smb
 # remove tests form python modules
 rm -rf %buildroot%python_sitelibdir/samba/{tests,external/subunit,external/testtool}
 
+# remove cmocka library
+rm -f %buildroot%_samba_libdir/libcmocka-samba4.so
+
 # move pkgconfig to standart path:
 [ "%_libdir" != "%_samba_libdir" ] && mv %buildroot{%_samba_libdir/pkgconfig,%_libdir}
 
@@ -1018,13 +1023,13 @@ TDB_NO_FSYNC=1 %make_build test
 # libraries needed by the public libraries
 %_samba_mod_libdir/libCHARSET3-samba4.so
 %_samba_mod_libdir/libMESSAGING-samba4.so
+%_samba_mod_libdir/libMESSAGING-SEND-samba4.so
 %_samba_mod_libdir/libLIBWBCLIENT-OLD-samba4.so
 %_samba_mod_libdir/libaddns-samba4.so
 %_samba_mod_libdir/libads-samba4.so
 %_samba_mod_libdir/libasn1util-samba4.so
 %_samba_mod_libdir/libauth-samba4.so
 %_samba_mod_libdir/libauth4-samba4.so
-%_samba_mod_libdir/libauth-sam-reply-samba4.so
 %_samba_mod_libdir/libauth-unix-token-samba4.so
 %_samba_mod_libdir/libauthkrb5-samba4.so
 %_samba_mod_libdir/libcli-ldap-common-samba4.so
@@ -1036,6 +1041,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/libcliauth-samba4.so
 %_samba_mod_libdir/libcluster-samba4.so
 %_samba_mod_libdir/libcmdline-credentials-samba4.so
+%_samba_mod_libdir/libcommon-auth-samba4.so
 %_samba_mod_libdir/libdbwrap-samba4.so
 %_samba_mod_libdir/libdcerpc-samba-samba4.so
 %_samba_mod_libdir/libdcerpc-samba4.so
@@ -1367,6 +1373,13 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri Mar 23 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.7.6-alt1%ubt
+- Update to latest winter release of Samba 4.7
+
+* Thu Mar 15 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.6.14-alt1%ubt.1
+- Rebuild security release (Fixes: CVE-2018-1050, CVE-2018-1057) with old
+  ceph version without libceph-common for c7/c8
+
 * Mon Mar 12 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.6.14-alt1%ubt
 - Update to spring security release
 - Security fixes:
@@ -1380,17 +1393,32 @@ TDB_NO_FSYNC=1 %make_build test
 - Fix trouble with joined machine account moving when it already exists.
   Move it only if the admin specified an explicit OU (Samba bug #12696)
 
+* Fri Jan 05 2018 Evgeny Sinelnikov <sin@altlinux.org> 4.7.4-alt1%ubt
+- Update to first winter release of Samba 4.7
+
 * Thu Dec 21 2017 Evgeny Sinelnikov <sin@altlinux.org> 4.6.12-alt1%ubt
 - Update to first winter release with common bugfixes (closes: 33210)
 
 * Thu Nov 23 2017 Evgeny Sinelnikov <sin@altlinux.org> 4.6.11-alt2%ubt
 - Backport from Heimdal upstream include/includedir directives for krb5.conf
 
+* Tue Nov 21 2017 Evgeny Sinelnikov <sin@altlinux.org> 4.7.3-alt1%ubt
+- Update for second autumn security release of Samba 4.7
+
 * Tue Nov 21 2017 Evgeny Sinelnikov <sin@altlinux.org> 4.6.11-alt1%ubt
 - Second autumn security release (Fixes: CVE-2017-14746, CVE-2017-15275)
 
+* Fri Nov 17 2017 Evgeny Sinelnikov <sin@altlinux.org> 4.7.2-alt1%ubt
+- Update to third autumn release of Samba 4.7
+
 * Thu Nov 16 2017 Evgeny Sinelnikov <sin@altlinux.org> 4.6.10-alt1%ubt
 - Update for third autumn release with common bugfixes
+
+* Tue Nov 14 2017 Evgeny Sinelnikov <sin@altlinux.org> 4.7.1-alt1%ubt
+- Update for second autumn release with common bugfixes of Samba 4.7
+
+* Wed Oct 25 2017 Evgeny Sinelnikov <sin@altlinux.org> 4.7.0-alt2%ubt
+- Fix KDC not works in configuration with trusted domain (samba bug #13078)
 
 * Wed Oct 25 2017 Evgeny Sinelnikov <sin@altlinux.org> 4.6.9-alt1%ubt
 - Update for second autumn release with common bugfixes
@@ -1400,6 +1428,10 @@ TDB_NO_FSYNC=1 %make_build test
 
 * Wed Sep 27 2017 Alexey Shabalin <shaba@altlinux.ru> 4.6.8-alt2%ubt
 - rebuild with new  libcephfs
+
+* Fri Sep 22 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.7.0-alt1%ubt
+- Update to new autumn release of Samba 4.7
+- Revert removed lpcfg_register_defaults_hook() for openchange
 
 * Wed Sep 20 2017 Evgeny Sinelnikov <sin@altlinux.ru> 4.6.8-alt1%ubt
 - Update for autumn security release:
