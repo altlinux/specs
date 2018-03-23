@@ -15,8 +15,8 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-ce
-Version:    18.02.0
-Release: alt2.rc2
+Version:    18.03.0
+Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -41,8 +41,7 @@ Patch1: %name-17.12.0-bash-completion.patch
 BuildRequires: /proc gcc golang >= 1.3 systemd-devel libdevmapper-devel-static libsqlite3-devel-static libbtrfs-devel
 BuildRequires: python-module-sphinx-devel python-module-sphinxcontrib-httpdomain pandoc
 BuildRequires: golang-github-cpuguy83-go-md2man
-Requires: tar lxc xz
-Provides: lxc-docker
+Requires: tar xz
 Provides: docker-io = %version-%release
 Obsoletes: docker-io <= 17.05.0
 Obsoletes: docker-io-devel <= 17.05.0
@@ -173,6 +172,9 @@ exit 0
 %{_datadir}/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Thu Mar 22 2018 Vladimir Didenko <cow@altlinux.org> 18.03.0-alt1
+- New version
+
 * Wed Feb 7 2018 Vladimir Didenko <cow@altlinux.org> 18.02.0-alt2.rc2
 - Support rename of docker-init to tini
 

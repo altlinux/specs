@@ -10,8 +10,8 @@
 %brp_strip_none %_bindir/*
 
 Name:		containerd
-Version:	1.0.1
-Release:	alt1.1
+Version:	1.0.2
+Release:	alt1
 Summary:	A daemon to control runC
 
 Group:		Development/Other
@@ -83,6 +83,9 @@ install -p -D -m 644 %SOURCE4 %{buildroot}%{_sysconfdir}/%{name}/config.toml
 %_unitdir/%name.service
 
 %changelog
+* Thu Mar 22 2018 Vladimir Didenko <cow@altlinux.org> 1.0.2-alt1
+- New version (for docker 18.03.0-ce)
+
 * Tue Feb 6 2018 Vladimir Didenko <cow@altlinux.org> 1.0.1-alt1.1
 - Fix provides/obsoletes
 
