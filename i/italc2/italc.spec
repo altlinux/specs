@@ -43,7 +43,7 @@
 
 Name: italc2
 Version: 2.0.2
-Release: alt1
+Release: alt2
 
 Summary: Didactical software for teachers etc
 Summary(de_DE.UTF-8): Didaktische Software fuer Lehrer usw
@@ -59,6 +59,7 @@ Source10: iTALC.conf
 Source20: ica-launcher.sh
 Patch10: %name-alt-all.patch
 Patch11: italc2-2.0.1-alt-gcc4.7.patch
+Patch12: italc2-additional-de-support.patch
 
 Conflicts: %program_name < 2.0.0
 
@@ -220,6 +221,7 @@ Netzwerk finden Sie in /usr/share/italc/doc/INSTALL.
 %setup
 %patch10 -p1
 %patch11 -p0
+%patch12 -p1
 
 %build
 %cmake -DCMAKE_INSTALL_DOCDIR:PATCH='%docdir'
@@ -329,6 +331,9 @@ mv %buildroot%_datadir/italc/JavaViewer %buildroot%docdir/
 %icons16x16dir/imc.png
 
 %changelog
+* Fri Mar 23 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt2
+- Add support for additional desktop environment and use systemd tools (ALT #34689).
+
 * Wed Apr 13 2016 Denis Medvedev <nbr@altlinux.org> 2.0.2-alt1
 - 2.0.2
 
