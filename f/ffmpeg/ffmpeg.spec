@@ -6,45 +6,64 @@
 %define subst_enable_with() %{expand:%%{?_enable_%{1}:--enable-%{2}} } %{expand:%%{?_disable_%{1}:--disable-%{2}} }
 
 # Enable/Disable stuff
+%def_disable nonfree
 %def_enable gpl
 %def_enable version3
 %def_enable ffplay
 %def_enable ffprobe
 %def_enable ffserver
-%def_enable gnutls
-%def_enable libxvid
-%def_enable libx264
-%def_enable libx265
-%def_enable libmp3lame
-%def_enable libvorbis
-%def_enable libcdio
-%def_enable libfreetype
-%def_enable libpulse
-%def_enable libgsm
-%def_enable libdc1394
 %def_enable shared
-%def_enable static
+%def_disable static
 %def_enable pthreads
-%def_enable zlib
 %ifarch %ix86 x86_64
 %def_enable mmx
 %else
 %def_disable mmx
 %endif
-%def_enable libschroedinger
-%def_disable avisynth
-%def_enable libtheora
 %def_enable debug
+# External library support
+%def_disable avisynth
 %def_enable bzlib
+%def_disable frei0r
+%def_enable gnutls
+%def_enable libass
+%def_enable libbluray
+%def_enable libcaca
+%def_enable libcdio
+%def_enable libdc1394
+%def_enable libfontconfig
+%def_enable libfreetype
+%def_enable libfribidi
+%def_enable libgsm
+%def_enable libmp3lame
+%def_enable libopencore_amrnb
+%def_enable libopencore_amrwb
+%def_enable libopenjpeg
+%def_enable libopus
+%def_enable libpulse
+%def_enable librtmp
+%def_enable librubberband
+%def_enable libschroedinger
+%def_enable libsnappy
+%def_enable libsoxr
+%def_enable libspeex
+%def_enable libtheora
+%def_enable libtwolame
+%def_enable libv4l2
+%def_enable libvorbis
+%def_enable libvpx
+%def_enable libwavpack
+%def_enable libwebp
+%def_enable libx264
+%def_enable libx265
+%def_enable libxvid
+%def_enable libzmq
+%def_enable libzvbi
+%def_enable openal
+%def_enable opengl
 %def_enable vaapi
 %def_enable vdpau
-%def_enable libopencore_amrwb
-%def_enable libopencore_amrnb
-%def_enable libvpx
-%def_enable libv4l2
-%def_enable libspeex
-%def_enable librtmp
-%def_disable frei0r
+%def_enable zlib
 
 %if_enabled mmx
 %set_verify_elf_method textrel=relaxed
@@ -57,7 +76,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	3.3.6
-Release:	alt1
+Release:	alt2
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -68,36 +87,53 @@ Url:		http://ffmpeg.org
 Source:		%name-%version.tar
 BuildRequires:	libX11-devel libXext-devel libXvMC-devel libXfixes-devel
 BuildRequires:	libalsa-devel
-BuildRequires:	libbluray-devel libass-devel
 BuildRequires:	perl-podlators texi2html
 %ifarch %ix86 x86_64
 BuildRequires:	yasm
 %endif
 
 %{?_enable_ffplay:BuildRequires: libSDL2-devel}
+
+%{?_enable_bzlib:BuildRequires: bzlib-devel}
+%{?_enable_frei0r:BuildRequires: frei0r-devel}
 %{?_enable_gnutls:BuildRequires: libgnutls-devel}
-%{?_enable_libmp3lame:BuildRequires: liblame-devel}
-%{?_enable_libvorbis:BuildRequires: libvorbis-devel}
-%{?_enable_libfreetype:BuildRequires: libfreetype-devel}
+%{?_enable_libass:BuildRequires: libass-devel}
+%{?_enable_libbluray:BuildRequires: libbluray-devel}
+%{?_enable_libcaca:BuildRequires: libcaca-devel}
 %{?_enable_libcdio:BuildRequires: libcdio-devel libcdio-paranoia-devel}
+%{?_enable_libdc1394:BuildRequires: libdc1394-devel libraw1394-devel}
+%{?_enable_libfreetype:BuildRequires: libfreetype-devel}
+%{?_enable_libfribidi:BuildRequires: fontconfig-devel}
+%{?_enable_libfribidi:BuildRequires: libfribidi-devel}
 %{?_enable_libgsm:BuildRequires: libgsm-devel}
+%{?_enable_libmp3lame:BuildRequires: liblame-devel}
+%{?_enable_libopencore_amrnb:BuildRequires: libopencore-amrnb-devel}
+%{?_enable_libopencore_amrwb:BuildRequires: libopencore-amrwb-devel}
+%{?_enable_libopenjpeg:BuildRequires: libopenjpeg-devel}
+%{?_enable_libopus:BuildRequires: libopus-devel}
 %{?_enable_libpulse:BuildRequires: libpulseaudio-devel}
-%{?_enable_libxvid:BuildRequires: libxvid-devel}
+%{?_enable_librtmp:BuildRequires: librtmp-devel}
+%{?_enable_librubberband:BuildRequires: librubberband-devel}
+%{?_enable_libschroedinger:BuildRequires: libschroedinger-devel}
+%{?_enable_libsnappy:BuildRequires: libsnappy-devel}
+%{?_enable_libsoxr:BuildRequires: libsoxr-devel}
+%{?_enable_libspeex:BuildRequires: libspeex-devel}
+%{?_enable_libtheora:BuildRequires: libtheora-devel}
+%{?_enable_libtwolame:BuildRequires: libtwolame-devel}
+%{?_enable_libv4l2:BuildRequires: libv4l-devel}
+%{?_enable_libvorbis:BuildRequires: libvorbis-devel}
+%{?_enable_libvpx:BuildRequires: libvpx-devel}
+%{?_enable_libwavpack:BuildRequires: libwavpack-devel}
+%{?_enable_libwebp:BuildRequires: libwebp-devel}
 %{?_enable_libx264:BuildRequires: libx264-devel >= 118}
 %{?_enable_libx265:BuildRequires: libx265-devel}
-%{?_enable_libdc1394:BuildRequires: libdc1394-devel libraw1394-devel}
-%{?_enable_libschroedinger:BuildRequires: libschroedinger-devel}
-%{?_enable_libtheora:BuildRequires: libtheora-devel}
-%{?_enable_bzlib:BuildRequires: bzlib-devel}
+%{?_enable_libxvid:BuildRequires: libxvid-devel}
+%{?_enable_libzmq:BuildRequires: libzeromq-devel}
+%{?_enable_libzvbi:BuildRequires: libzvbi-devel}
+%{?_enable_openal:BuildRequires: libopenal-devel}
+%{?_enable_opengl:BuildRequires: libGL-devel}
 %{?_enable_vaapi:BuildRequires: libva-devel}
 %{?_enable_vdpau:BuildRequires: libvdpau-devel}
-%{?_enable_libopencore_amrwb:BuildRequires: libopencore-amrwb-devel}
-%{?_enable_libopencore_amrnb:BuildRequires: libopencore-amrnb-devel}
-%{?_enable_libvpx:BuildRequires: libvpx-devel}
-%{?_enable_libv4l2:BuildRequires: libv4l-devel}
-%{?_enable_librtmp:BuildRequires: librtmp-devel}
-%{?_enable_frei0r:BuildRequires: frei0r-devel}
-%{?_enable_libspeex:BuildRequires: libspeex-devel}
 
 %define common_descr \
 FFmpeg is a collection of libraries and tools to process multimedia content \
@@ -442,45 +478,76 @@ xz Changelog
 	--mandir=%_mandir \
 	--docdir=%_docdir/%name-%version \
 	--disable-rpath \
-	--enable-avresample \
+%ifarch mips mipsel mips64 mips64el
+	--disable-mipsdsp \
+	--disable-mipsdspr2 \
+	--disable-loongson2 \
+	--disable-loongson3 \
+	--disable-mmi \
+	--disable-mips32r5 \
+	--disable-mips32r6 \
+	--disable-mips64r6 \
+	--disable-msa \
+%endif
+%ifarch mips mipsel
+	--disable-mipsfpu \
+%endif
 	%{subst_enable gpl} \
+	%{subst_enable version3} \
 	%{subst_enable pthreads} \
 	%{subst_enable shared} \
 	%{subst_enable static} \
-	%{subst_enable gnutls} \
-	%{subst_enable libvorbis} \
-	%{subst_enable libfreetype} \
-	%{subst_enable libpulse} \
-	%{subst_enable libxvid} \
-	%{subst_enable libx264} \
-	%{subst_enable libx265} \
-	%{subst_enable libmp3lame} \
-	%{subst_enable libcdio} \
-	%{subst_enable libgsm} \
-	%{subst_enable libdc1394} \
-	%{subst_enable zlib} \
 	%{subst_enable mmx} \
+	%{subst_enable nonfree} \
 	%{subst_enable ffplay} \
 	%{subst_enable ffprobe} \
 	%{subst_enable ffserver} \
-	%{subst_enable libschroedinger} \
 	--enable-avfilter \
+	--enable-avresample \
 	%{subst_enable avisynth} \
-	%{subst_enable libtheora} \
-	%{subst_enable version3} \
-	%{subst_enable_with libopencore_amrwb libopencore-amrwb} \
-	%{subst_enable_with libopencore_amrnb libopencore-amrnb} \
-	--enable-hardcoded-tables \
-	--enable-runtime-cpudetect \
-	--enable-bzlib \
-	%{subst_enable libvpx} \
-	%{subst_enable libv4l2} \
-	%{subst_enable libspeex} \
+	%{subst_enable bzlib} \
 	%{subst_enable frei0r} \
-	%{subst_enable nonfree} \
+	%{subst_enable gnutls} \
+	%{subst_enable libass} \
+	%{subst_enable libbluray} \
+	%{subst_enable libcaca} \
+	%{subst_enable libcdio} \
+	%{subst_enable libdc1394} \
+	%{subst_enable libfontconfig} \
+	%{subst_enable libfreetype} \
+	%{subst_enable libfribidi} \
+	%{subst_enable libgsm} \
+	%{subst_enable libmp3lame} \
+	%{subst_enable_with libopencore_amrnb libopencore-amrnb} \
+	%{subst_enable_with libopencore_amrwb libopencore-amrwb} \
+	%{subst_enable libopenjpeg} \
+	%{subst_enable libopus} \
+	%{subst_enable libpulse} \
 	%{subst_enable librtmp} \
+	%{subst_enable librubberband} \
+	%{subst_enable libschroedinger} \
+	%{subst_enable libsnappy} \
+	%{subst_enable libsoxr} \
+	%{subst_enable libspeex} \
+	%{subst_enable libtheora} \
+	%{subst_enable libtwolame} \
+	%{subst_enable libv4l2} \
+	%{subst_enable libvorbis} \
+	%{subst_enable libvpx} \
+	%{subst_enable libwavpack} \
+	%{subst_enable libwebp} \
+	%{subst_enable libx264} \
+	%{subst_enable libx265} \
+	%{subst_enable libxvid} \
+	%{subst_enable libzmq} \
+	%{subst_enable libzvbi} \
+	%{subst_enable openal} \
+	%{subst_enable opengl} \
 	%{subst_enable vaapi} \
 	%{subst_enable vdpau} \
+	%{subst_enable zlib} \
+	--enable-hardcoded-tables \
+	--enable-runtime-cpudetect \
 %if_enabled debug
 	--enable-debug \
 %else
@@ -648,6 +715,29 @@ xz Changelog
 %endif
 
 %changelog
+* Thu Mar 15 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 2:3.3.6-alt2
+- built with new de/encoder: libopus
+- built with new encoders:
+  + libtwolame
+  + libwavpack
+  + libwebp
+- built with new external libraries:
+  + libass
+  + libbluray
+  + libcaca
+  + libfontconfig
+  + libfribidi
+  + libopenjpeg
+  + librubberband
+  + libsnappy
+  + libsoxr
+  + libzmq
+  + libzvbi
+  + openal
+  + opengl
+- disabled some optimizations on MIPS arch family (by glebfm@)
+- disabled devel-static subpackage build
+
 * Tue Jan 23 2018 Anton Farygin <rider@altlinux.ru> 2:3.3.6-alt1
 - new version
 
@@ -693,5 +783,5 @@ xz Changelog
 - cleanup spec
 
 * Sun Aug 21 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:3.1.2-alt1
-- Initial build
+- Reintroduce to Sisyphus
 
