@@ -1,33 +1,45 @@
-%def_with python3
-%def_without check
+%define _unpackaged_files_terminate_build 1
+
+%def_with check
 
 Name: py
-Version: 1.4.34
-Release: alt4
+Version: 1.5.3
+Release: alt1%ubt
+
 Summary: Testing and distributed programming library
 License: MIT
 Group: Development/Tools
+# Source-git: https://github.com/pytest-dev/py.git
 Url: https://github.com/pytest-dev/py
-BuildArch: noarch
 
-# https://github.com/pytest-dev/py.git
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
-Requires: python-module-%name = %version-%release
-
+BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel python-module-setuptools
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
+
 %if_with check
+BuildRequires: subversion
+BuildRequires: subversion-server-common
+BuildRequires: python-module-tox
+BuildRequires: python-module-virtualenv
+BuildRequires: python-module-attrs
 BuildRequires: python-module-pytest
+BuildRequires: python-module-decorator
+BuildRequires: python-module-jinja2
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-virtualenv
+BuildRequires: python3-module-attrs
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-decorator
+BuildRequires: python3-module-jinja2
 %endif
 
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-%if_with check
-BuildRequires: python3-module-pytest
-%endif
-%endif
+BuildArch: noarch
+Requires: python-module-%name = %EVR
 
 %py_provides py.apipkg py.builtin py.code py.error py.iniconfig py.io py.log py.path py.process py.std py.xmlgen
 
@@ -35,7 +47,6 @@ BuildRequires: python3-module-pytest
 The py lib has several namespaces which help with testing, generating
 and distributing code across machines.
 
-%if_with python3
 %package -n python3-module-%name
 Summary: Python 3 module of testing and distributed programming library
 Group: Development/Python3
@@ -43,21 +54,17 @@ Group: Development/Python3
 %py3_provides py.apipkg py.builtin py.code py.error py.iniconfig py.io py.log py.path py.process py.std py.xmlgen
 
 %description -n python3-module-%name
-The py lib has several namespaces which help with testing, generating
+The %name lib has several namespaces which help with testing, generating
 and distributing code across machines.
 
-This package contains python module of py lib.
+This package contains python module of %name lib.
 
 %package -n python3-module-%name-testing
-Summary: Testing for py (Python 3)
+Summary: Tests for %name (Python 3)
 Group: Development/Python3
 
 %description -n python3-module-%name-testing
-The py lib has several namespaces which help with testing, generating
-and distributing code across machines.
-
-This package contains testing for py lib.
-%endif
+This package contains tests for %name lib.
 
 %package -n python-module-%name
 Summary: Python module of testing and distributed programming library
@@ -68,79 +75,72 @@ Conflicts: %name
 The py lib has several namespaces which help with testing, generating
 and distributing code across machines.
 
-This package contains python module of py lib.
+This package contains python module of %name lib.
 
 %package -n python-module-%name-testing
-Summary: Testing for py
+Summary: Tests for %name
 Group: Development/Python
 
 %description -n python-module-%name-testing
-The py lib has several namespaces which help with testing, generating
-and distributing code across machines.
-
-This package contains testing for py lib.
+This package contains tests for %name lib.
 
 %package doc
 Summary: Documentation for testing and distributed programming library
 Group: Development/Documentation
 
 %description doc
-The py lib has several namespaces which help with testing, generating
-and distributing code across machines.
-
-This package contains documentation for py lib.
+This package contains documentation for %name lib.
 
 %prep
 %setup
-%if_with python3
+%patch0 -p1
+
 rm -rf ../python3
 cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
+
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
-rm -fR %buildroot%python_sitelibdir/%name/bin/win32 \
-	%buildroot%python_sitelibdir/%name/execnet/script/socketserverservice.py*
+
+# packing tests
 cp -fR testing %buildroot%python_sitelibdir/%name/
 
-for i in $(find %buildroot%python_sitelibdir/%name -type d)
+for i in $(find %buildroot%python_sitelibdir/%name/testing -type d)
 do
-	touch $i/__init__.py
+       touch $i/__init__.py
 done
+#
 
-%if_with python3
 pushd ../python3
 %python3_install
-popd
-rm -fR %buildroot%python3_sitelibdir/%name/bin/win32 \
-	%buildroot%python3_sitelibdir/%name/execnet/script/socketserverservice.py*
+
+# packing tests
 cp -fR testing %buildroot%python3_sitelibdir/%name/
 
-for i in $(find %buildroot%python3_sitelibdir/%name -type d)
+for i in $(find %buildroot%python3_sitelibdir/%name/testing -type d)
 do
-	touch $i/__init__.py
+       touch $i/__init__.py
 done
-%endif
+#
+popd
 
 %check
 export LC_ALL=en_US.UTF-8
-py.test
-%if_with python3
-pushd ../python3
-py.test-%_python3_version
-popd
-%endif
+export PIP_INDEX_URL=http://host.invalid./
 
-#files
-#_bindir/*
+%define python_version_nodots() %(%1 -Esc "import sys; sys.stdout.write('{0.major}{0.minor}'.format(sys.version_info))")
+
+TOX_TESTENV_PASSENV=LC_ALL tox --sitepackages -e py%{python_version_nodots python}-pytest -v -- -v
+
+pushd ../python3
+TOX_TESTENV_PASSENV=LC_ALL tox.py3 --sitepackages -e py%{python_version_nodots python3}-pytest -v -- -v
+popd
 
 %files -n python-module-%name
 %doc AUTHORS CHANGELOG LICENSE *.rst
@@ -152,9 +152,7 @@ popd
 
 %files doc
 %doc doc
-#doc hacking
 
-%if_with python3
 %files -n python3-module-%name
 %doc AUTHORS CHANGELOG LICENSE *.rst
 %python3_sitelibdir/*
@@ -162,9 +160,11 @@ popd
 
 %files -n python3-module-%name-testing
 %python3_sitelibdir/%name/testing
-%endif
 
 %changelog
+* Fri Mar 23 2018 Stanislav Levin <slev@altlinux.org> 1.5.3-alt1%ubt
+- 1.4.34 -> 1.5.3
+
 * Thu Feb 08 2018 Alexey Appolonov <alexey@altlinux.org> 1.4.34-alt4
 - test.py now packed into main package because it isn't actualy a test,
   it's a program that provides ability to use pytest module as py.test.
