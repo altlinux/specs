@@ -1,5 +1,5 @@
 Name:     otter-browser
-Version:  0.9.94
+Version:  0.9.96
 Release:  alt1%ubt
 
 Summary:  Otter Browser aims to recreate the best aspects of the classic Opera (12.x) UI using Qt5
@@ -49,5 +49,8 @@ BuildRequires: pkgconfig(hunspell)
 %doc CHANGELOG CONTRIBUTING.md COPYING README.md
 
 %changelog
+* Fri Mar 23 2018 Anton Midyukov <antohami@altlinux.org> 0.9.96-alt1%ubt
+- new version 0.9.96
+
 * Fri Jan 05 2018 Anton Midyukov <antohami@altlinux.org> 0.9.94-alt1%ubt
 - Initial build for Sisyphus
