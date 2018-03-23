@@ -1,16 +1,40 @@
-Name: python-module-py9p
-Version: 1.0.7
-Release: alt2
+%define modname py9p
+
+Name: python-module-%modname
+Version: 1.0.9
+Release: alt1
+
+Summary: Pure Python implementation of 9P protocol (Plan9)
+License: MIT
+Group: Development/Python
+URL: https://github.com/svinota/py9p
+BuildArch: noarch
+
+Source: py9p-%version.tar
+
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-module-setuptools
+BuildRequires: python-devel
+
+BuildPreReq: python3-module-setuptools
+BuildPreReq: python3-devel
+
+
+%description
+Protocol 9P is developed for Plan9 operating system from Bell Labs.
+It is used for remote file access, and since files are key objects
+in Plan9, 9P can be used also for composite file access, RPC etc.
+
+This library provides low-level 9p2000.u API. For high-level look
+into python-module-pyvfs.
+
+%package -n python3-module-%modname
 Summary: Pure Python implementation of 9P protocol (Plan9)
 License: MIT
 Group: Development/Python
 URL: https://github.com/svinota/py9p
 
-BuildArch: noarch
-BuildPreReq: python-devel rpm-build-python
-Source: py9p-%version.tar.gz
-
-%description
+%description -n python3-module-%modname
 Protocol 9P is developed for Plan9 operating system from Bell Labs.
 It is used for remote file access, and since files are key objects
 in Plan9, 9P can be used also for composite file access, RPC etc.
@@ -47,24 +71,49 @@ in Plan9, 9P can be used also for composite file access, RPC etc.
 This package contains simple 9p2000 file server.
 
 %prep
-%setup -q -n py9p-%{version}
+%setup -n py9p-%{version}
+
+rm -rf ../python3
+cp -fR . ../python3
+
+%build
+make force-version
+%python_build
+
+pushd ../python3
+make force-version
+%python3_build
+popd
 
 %install
-%{__python} setup.py install --root=%buildroot --install-lib=%{python_sitelibdir}
+%python_install
+
+pushd ../python3
+%python3_install
+popd
 
 %files
 %doc README* LICENSE
 %{python_sitelibdir}/py9p*
 
+%files -n python3-module-%modname
+%doc README* LICENSE
+%{python3_sitelibdir}/*
+
 %files -n fuse9p
+%doc LICENSE
 %_bindir/fuse9p
 %_man1dir/fuse9p.*
 
 %files -n 9pfs
+%doc LICENSE
 %_bindir/9pfs
 %_man1dir/9pfs.*
 
 %changelog
+* Fri Mar 23 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.9-alt1
+- Version 1.0.9
+
 * Sun Dec 16 2012 Peter V. Saveliev <peet@altlinux.org> 1.0.7-alt2
 - fuse9p: read/write fixed
 - fuse9p: rename support
