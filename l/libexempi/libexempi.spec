@@ -4,8 +4,8 @@
 %define _name exempi
 
 Name: lib%_name
-Version: 2.4.4
-Release: alt1.1
+Version: 2.4.5
+Release: alt1
 
 Summary: Library for easy parsing of XMP metadata
 Group: System/Libraries
@@ -78,6 +78,9 @@ sed -i~ 's|\^\(boost-lib-version\)|\1|' m4/boost.m4
 
 
 %changelog
+* Fri Mar 23 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.5-alt1
+- 2.4.5 (fixed CVE-2018-7730, CVE-2018-7728, CVE-2018-7729, CVE-2018-7731)
+
 * Thu Mar 01 2018 Yuri N. Sedunov <aris@altlinux.org> 2.4.4-alt1.1
 - fixed boost.m4 for e2k
 
