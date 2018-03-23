@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.417
+Version: 0.418
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -39,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Fri Mar 23 2018 Igor Vlasenko <viy@altlinux.ru> 0.418-alt1
+- added mono.raw and /usr/share/gnome-shell
+
 * Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.417-alt1
 - shared-share.raw -> shared-data.raw
 
