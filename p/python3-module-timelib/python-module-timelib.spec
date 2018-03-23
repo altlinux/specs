@@ -1,5 +1,5 @@
 %define oname timelib
-%define fname python-module-%oname
+%define fname python3-module-%oname
 %define descr \
 timelib is a short wrapper around php's internal timelib module. \
 It currently only provides a few functions: \
@@ -11,13 +11,13 @@ Version: 0.2.4
 Release: alt2
 
 Summary: Parse english textual date descriptions
-Group: Development/Python
+Group: Development/Python3
 
 License: zlib / PHP
 Url: http://pypi.python.org/pypi/timelib
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools
 
 %description
 %descr
@@ -26,14 +26,14 @@ BuildPreReq: python-devel python-module-setuptools
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
 %doc README.rst
-%python_sitelibdir/*
+%python3_sitelibdir/*
 
 %changelog
 * Fri Mar 23 2018 Grigory Ustinov <grenka@altlinux.org> 0.2.4-alt2
