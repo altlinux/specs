@@ -10,13 +10,13 @@
 %def_disable vapi
 
 Name: gtk-vnc
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: VNC viewer widget
 Group: System/Libraries
-License: LGPL
-Url: http://gtk-vnc.sourceforge.net/
+License: LGPLv2.1+
+Url: https://wiki.gnome.org/Projects/gtk-vnc
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
@@ -325,6 +325,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 23 2018 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
+- 0.7.2
+
 * Fri May 19 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
 - 0.7.1
 
