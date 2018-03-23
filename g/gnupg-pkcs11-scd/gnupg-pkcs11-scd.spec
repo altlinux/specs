@@ -1,6 +1,6 @@
 Name: gnupg-pkcs11-scd
-Version: 0.9.0
-Release: alt2
+Version: 0.9.1
+Release: alt1
 
 Summary: A GnuPG PKCS#11 token daemon
 Group: System/Configuration/Hardware
@@ -45,6 +45,13 @@ we strongly disagree with WK\'s attitude towards it.
 %_man1dir/*.1.*
 
 %changelog
+* Fri Mar 23 2018 Paul Wolneykien <manowar@altlinux.org> 0.9.1-alt1
+- gnupg-pkcs11-scd-0.9.1 (thx Alon Bar-Lev).
+- proxy: systemd: enable user's group using SupplementaryGroups (thx Alon Bar-Lev).
+- scdaemon: introduce GNUPG_PKCS11_SOCKETDIR environment (thx Alon Bar-Lev).
+- build: support freebsd usock creds (thx Alon Bar-Lev).
+- post gnupg-pkcs11-scd-0.9.0 (thx Alon Bar-Lev).
+
 * Wed Feb 07 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.0-alt2
 - Fixed localstatedir location.
 
