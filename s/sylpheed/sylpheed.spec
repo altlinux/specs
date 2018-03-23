@@ -1,6 +1,6 @@
 Name: sylpheed
-Version: 3.6.0
-Release: alt0.2
+Version: 3.7.0
+Release: alt0.1
 
 Summary: a GTK+ based, lightweight, and fast e-mail client
 License: GPLv2+
@@ -158,6 +158,9 @@ autoconf
 %_includedir/sylpheed/
 
 %changelog
+* Fri Mar 23 2018 Ilya Mashkin <oddity@altlinux.ru> 3.7.0-alt0.1
+- 3.7.0 (Closes: #34601)
+
 * Tue Oct 31 2017 Ilya Mashkin <oddity@altlinux.ru> 3.6.0-alt0.2
 - Fix bug 34098: wrong search path for root certificates.  Thanks to Andrew Savchenko
 
