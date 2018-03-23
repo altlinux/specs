@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.17.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -138,7 +138,7 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 #sed -i 's|^\(Description=.*\)|\1 Default|' %buildroot/%_datadir/sddm/themes/default/metadata.desktop
 
 %pre
-/usr/sbin/useradd -c 'SDDM User' -s /sbin/nologin -d %_localstatedir/sddm -r %sddm_user 2> /dev/null || :
+/usr/sbin/useradd -c 'SDDM service' -s /sbin/nologin -d %_localstatedir/sddm -r %sddm_user 2> /dev/null || :
 
 %files
 %doc docs/*.md ChangeLog LICENSE* README* CONTRIBUTORS
@@ -159,6 +159,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Fri Mar 23 2018 Sergey V Turchin <zerg@altlinux.org> 0.17.0-alt2%ubt
+- prevent race with systemd-logind service
+
 * Mon Dec 11 2017 Sergey V Turchin <zerg@altlinux.org> 0.17.0-alt1%ubt
 - new version
 
