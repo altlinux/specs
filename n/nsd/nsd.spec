@@ -1,6 +1,6 @@
 Name: nsd
-Version: 4.1.5
-Release: alt3
+Version: 4.1.20
+Release: alt1
 
 Summary: Name Server Daemon
 License: BSD
@@ -12,6 +12,10 @@ Source1: %name.conf
 Source2: %name.service
 Source3: example.com.zone
 Source4: 0.0.10.zone
+Source5: %name.init
+Source6: %name.tmpfiles
+
+Patch0: 0001-Enable-control-by-default.patch
 
 BuildRequires: flex bison libevent-devel libssl-devel
 
@@ -21,6 +25,8 @@ NSD is an authoritative only, high performance, simple and open source name serv
 %prep
 %setup
 
+%patch0 -p1
+
 %build
 %autoreconf
 %configure \
@@ -28,8 +34,13 @@ NSD is an authoritative only, high performance, simple and open source name serv
   --enable-bind8-stats \
   --enable-zone-stats \
   --enable-ratelimit \
+  --enable-root-server \
+  --disable-largefile \
+  --disable-recvmmsg \
   --with-pidfile=%_runtimedir/%name.pid \
   --with-dbfile=%_localstatedir/%name/%name.db \
+  --with-difffile=%_localstatedir/%name/ixfr.db \
+  --with-xfrdfile=%_localstatedir/%name/xfrd.state \
   --localstatedir=%_var
 %make_build
 
@@ -43,7 +54,8 @@ cp %SOURCE1 %buildroot/%_sysconfdir/%name
 cp %SOURCE2 %buildroot/%systemd_unitdir
 cp %SOURCE3 %buildroot/%_sysconfdir/%name
 cp %SOURCE4 %buildroot/%_sysconfdir/%name
-cp contrib/%name.init %buildroot/%_initdir/%name
+cp %SOURCE5 %buildroot/%_initdir/%name
+install -Dpm 644 %SOURCE6 %buildroot%_tmpfilesdir/%name.conf
 
 %pre
 /usr/sbin/groupadd -r -f _nsd
@@ -60,6 +72,7 @@ cp contrib/%name.init %buildroot/%_initdir/%name
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/%name.conf
 %config(noreplace) %_sysconfdir/%name/*.zone
+%_tmpfilesdir/%name.conf
 %systemd_unitdir/%name.service
 %attr(0755,root,root) %_initdir/%name
 %attr(0755,_nsd,_nsd) %dir %_localstatedir/%name
@@ -68,6 +81,13 @@ cp contrib/%name.init %buildroot/%_initdir/%name
 %doc doc contrib %name.conf.sample
 
 %changelog
+* Thu Mar 22 2018 Alexei Takaseev <taf@altlinux.org> 4.1.20-alt1
+- 4.1.20
+- Add /etc/tmpfiles.d/nsd.conf
+- Fix path to config in init-script
+- Add nsd.init LSB headers
+- Add patch 0001-Enable-control-by-default.patch
+
 * Tue Nov 21 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.5-alt3
 - Fixed localstatedir.
 
