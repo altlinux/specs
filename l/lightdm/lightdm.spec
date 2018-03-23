@@ -7,7 +7,7 @@
 
 Name: lightdm
 Version: 1.16.7
-Release: alt17.1
+Release: alt18
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -288,6 +288,11 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Fri Mar 23 2018 Ivan Zakharyaschev <imz@altlinux.org> 1.16.7-alt18
+- in "Remove X authority": Ignore any error & don't exit, continue
+  closing the session (PAM etc.), otherwise the PAM sessiosn might be
+  left open, resources not unmounted/freed, etc.
+
 * Mon Mar 12 2018 Fr. Br. George <george@altlinux.ru> 1.16.7-alt17.1
 - Fix lightdm-greeter-hide-users control filename
 
