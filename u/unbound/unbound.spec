@@ -1,5 +1,5 @@
 Name: unbound
-Version: 1.5.10
+Version: 1.7.0
 Release: alt1
 License: BSD
 Url: http://unbound.net/
@@ -61,7 +61,6 @@ and clients.
 %package -n lib%name-devel
 Summary: Development package that includes the %name header files
 Group: Development/C
-BuildArch: noarch
 Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
@@ -78,7 +77,6 @@ Python modules and extensions for unbound
 
 %prep
 %setup
-rm -f ldns-src.tar.gz
 
 %build
 # configure with /var/unbound/unbound.conf so that all default chroot,
@@ -164,18 +162,18 @@ rm %buildroot%python_sitelibdir/*.la
 
 %exclude %_sbindir/unbound-anchor
 %exclude %_sbindir/unbound-control
-%exclude %_man8dir/unbound-control*
+%exclude %_man8dir/unbound-control.8.*
 %exclude %_man8dir/unbound-anchor*
 
 %files control
 %_sbindir/unbound-control
-%_man8dir/unbound-control*
+%_man8dir/unbound-control.8.*
 
 %files -n lib%name
 %attr(1775,root,_%name) %dir %_localstatedir/%name
 %config(noreplace) %_sysconfdir/cron.monthly/unbound-anchor
 %config(noreplace) %_localstatedir/%name/icannbundle.pem
-%_libdir/libunbound*so*
+%_libdir/libunbound*so.*
 %exclude %_libdir/libunbound.so
 %_sbindir/unbound-anchor
 %_man8dir/unbound-anchor*
@@ -186,6 +184,8 @@ rm %buildroot%python_sitelibdir/*.la
 
 %files -n lib%name-devel
 %_includedir/*
+%_libdir/libunbound.so
+%_libdir/pkgconfig/*
 
 %if %with_python
 %files -n python-module-%name
@@ -195,6 +195,14 @@ rm %buildroot%python_sitelibdir/*.la
 %endif
 
 %changelog
+* Fri Mar 23 2018 Alexei Takaseev <taf@altlinux.org> 1.7.0-alt1
+- 1.7.0
+- New version (closes: #34122)
+- Add lost libunbound.so and libunbound.pc to libunbound-devel
+- Set libunbound-devel arch-depended
+- Move unbound-control-setup.8 from unbound-control to unbound
+- Fixed CVE-2017-15105
+
 * Wed Nov 30 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.5.10-alt1
 - New version
 
