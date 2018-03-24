@@ -1,6 +1,6 @@
 Name: lldpd
 Version: 0.9.9
-Release: alt1
+Release: alt1%ubt
 Summary: Link Layer Discovery Protocol Daemon
 Source: %name-%version.tar
 Group: Networking/Other
@@ -26,6 +26,7 @@ Source5: lldpd.service
 %def_with readline
 %def_without seccomp
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: libssl-devel
 BuildRequires: doxygen
 BuildRequires: libevent-devel
@@ -162,6 +163,9 @@ fi
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Sat Mar 24 2018 Alexey Shabalin <shaba@altlinux.ru> 0.9.9-alt1%ubt
+- add ubt suffix to release 
+
 * Sat Mar 24 2018 Alexey Shabalin <shaba@altlinux.ru> 0.9.9-alt1
 - 0.9.9
 - add modified systemd unit
