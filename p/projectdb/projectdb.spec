@@ -1,5 +1,5 @@
 Name: projectdb
-Version: 0.0.20180307
+Version: 0.0.20180324
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -19,7 +19,7 @@ Url: https://www.altlinux.org/Packaging_Automation/ProjectDb
 %build
 
 %install
-destdir=%buildroot/usr/share/projectdb
+destdir=%buildroot%_datadir/projectdb
 for dir in */; do
 	type=`basename $dir`
 	install -m755 -d $destdir/$type
@@ -27,9 +27,12 @@ for dir in */; do
 done
 
 %files
-/usr/share/projectdb
+%_datadir/projectdb
 
 %changelog
+* Sat Mar 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.20180324-alt1
+- db update
+
 * Wed Mar 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.0.20180307-alt1
 - db update
 
