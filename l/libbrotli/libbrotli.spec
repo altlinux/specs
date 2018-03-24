@@ -1,5 +1,5 @@
 Name: libbrotli
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: Library implementing the Brotli compression algorithm
@@ -123,6 +123,9 @@ LD_LIBRARY_PATH=$(pwd) make test
 %doc README.md LICENSE CONTRIBUTING.md
 
 %changelog
+* Sat Mar 24 2018 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt1
+- new version 1.0.3 (with rpmrb script)
+
 * Mon Dec 11 2017 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1
 - new version 1.0.2 (with rpmrb script)
 
