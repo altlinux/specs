@@ -1,5 +1,5 @@
 Name: spatialite-tools
-Version: 4.1.1
+Version: 4.3.0
 Release: alt1
 Summary: A set of useful CLI tools for SpatiaLite
 
@@ -17,6 +17,7 @@ BuildRequires: libproj-devel
 BuildRequires: libreadline-devel
 BuildRequires: readosm-devel
 BuildRequires: libsqlite-devel
+BuildRequires: libxml2-devel
 BuildRequires: zlib-devel
 
 %description
@@ -30,25 +31,20 @@ rm -f Makefile-static*
 
 %build
 %configure
-
-make %{?_smp_mflags}
+%make_build
 
 %install
-make install DESTDIR=%buildroot
+%makeinstall_std
 
 %files
 %doc AUTHORS COPYING
-%_bindir/exif_loader
-%_bindir/shp_doctor
-%_bindir/spatialite
-%_bindir/spatialite_convert
-%_bindir/spatialite_gml
-%_bindir/spatialite_network
-%_bindir/spatialite_osm*
-%_bindir/spatialite_tool
-%_bindir/spatialite_dxf
+%_bindir/*
 
 %changelog
+* Thu Feb 04 2016 Andrey Cherepanov <cas@altlinux.org> 4.3.0-alt1
+- New version
+- Package all executables
+
 * Thu Feb 27 2014 Ilya Mashkin <oddity@altlinux.ru> 4.1.1-alt1
 - 4.1.1
 

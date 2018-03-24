@@ -1,6 +1,6 @@
 
 Name: libgaiagraphics
-Version: 0.4b
+Version: 0.5
 Release: alt1
 Summary: Graphics canvas for GIS rendering
 
@@ -14,6 +14,7 @@ BuildRequires: libcairo-devel
 BuildRequires: libgeotiff-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libpng-devel
+BuildRequires: libxml2-devel
 # Is only checked for, but not actually used
 BuildRequires: libproj-devel
 
@@ -40,10 +41,10 @@ developing applications that use %name.
 # Remove links to unused libraries
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 
-make %{?_smp_mflags}
+%make_build
 
 %install
-make install DESTDIR=%buildroot
+%makeinstall_std
 
 # Delete libtool archives, because we don't ship them
 find %buildroot -name '*.la' -exec rm -f {} ';'
@@ -58,6 +59,9 @@ find %buildroot -name '*.la' -exec rm -f {} ';'
 %_libdir/pkgconfig/gaiagraphics.pc
 
 %changelog
+* Thu Feb 04 2016 Andrey Cherepanov <cas@altlinux.org> 0.5-alt1
+- New version
+
 * Sat Feb 02 2013 Ilya Mashkin <oddity@altlinux.ru> 0.4b-alt1
 - Build for Sisyphus
 

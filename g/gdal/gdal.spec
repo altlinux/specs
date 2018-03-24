@@ -9,8 +9,8 @@
 
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
-Version: 2.0.2
-Release: alt5.1
+Version: 2.2.3
+Release: alt1
 Group: Sciences/Geosciences
 
 License: MIT
@@ -20,17 +20,17 @@ Packager: ALT QA Team <qa@packages.altlinux.org>
 Source: %name-%version.tar
 
 Patch0: %name-1.7.1-alt-swig_python.patch
-Patch2: %name-1.7.1-alt-apps_install.patch
+Patch2: %name-alt-apps_install.patch
 Patch3: %name-1.7.1-alt-inst_docs.patch
-Patch5: %name-1.8.0-alt-libproj.so_name.patch
-Patch6: %name-1.11.2-alt-python3.patch
+Patch5: %name-alt-libproj.so_name.patch
+Patch6: %name-alt-python3.patch
 
 %define libname lib%name
 
-# Automatically added by buildreq on Thu Aug 12 2010
 BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel libexpat-devel libgeos-devel libgif-devel libhdf5-devel libjasper-devel libjpeg-devel libnumpy-devel libpng-devel libsqlite3-devel libunixODBC-devel libxerces-c28-devel perl-devel postgresql-devel python-module-BeautifulSoup python-module-genshi python-module-xlwt python-modules-ctypes swig
 
 BuildRequires: chrpath libnetcdf-devel
+BuildRequires: perl-Encode
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel python3-module-genshi
@@ -114,7 +114,7 @@ Perl modules for GDAL/OGR.
 
 %prep
 %setup
-%patch0 -p1
+#patch0 -p1
 %patch2 -p2
 %patch3 -p2
 %patch5 -p2
@@ -190,7 +190,6 @@ popd
 %install
 mkdir -p %buildroot%python_sitelibdir
 %makeinstall_std PYTHONPATH=$PYTHONPATH:%buildroot%python_sitelibdir INSTALLDIRS=vendor
-cp -a %buildroot%python_sitelibdir/GDAL*/osgeo %buildroot%python_sitelibdir/
 make DESTDIR=%buildroot install-docs
 make DESTDIR=%buildroot install-man
 mv %buildroot/usr/man %buildroot/usr/share
@@ -219,8 +218,9 @@ sed -i 's|__bool__ = __nonzero__||' \
 %_bindir/gdal*
 %_bindir/testepsg
 %_bindir/nearblack
+%_bindir/gnmanalyse
+%_bindir/gnmmanage
 %exclude %_bindir/gdal-config
-%exclude %_bindir/*.dox
 %exclude %_bindir/*.py
 %_man1dir/*
 
@@ -257,6 +257,9 @@ sed -i 's|__bool__ = __nonzero__||' \
 %endif
 
 %changelog
+* Sat Feb 24 2018 Andrey Cherepanov <cas@altlinux.org> 2.2.3-alt1
+- New version.
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt5.1
 - rebuild with new perl 5.26.1
 

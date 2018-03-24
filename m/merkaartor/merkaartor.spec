@@ -1,6 +1,6 @@
 Name: merkaartor
 Version: 0.18.3
-Release: alt1
+Release: alt1.1
 
 Summary: an OpenStreetMap editor
 License: LGPL
@@ -52,6 +52,9 @@ LIB_SUFFIX=64
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sun Nov 05 2017 Andrey Cherepanov <cas@altlinux.org> 0.18.3-alt1.1
+- NMU: Rebuild with gdal 2.2.2
+
 * Thu Sep 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.18.3-alt1
 - Updated to upstream version 0.18.3.
 

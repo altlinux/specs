@@ -1,8 +1,8 @@
-%define pg_ver %nil
+%define pg_ver 10
 
 Name: postgis
-Version: 2.3.3
-Release: alt2
+Version: 2.4.3
+Release: alt1
 
 Summary: Geographic Information Systems Extensions to PostgreSQL
 Summary(ru_RU.UTF-8): Геоинформационные расширения для PostgreSQL
@@ -12,8 +12,7 @@ Url: http://postgis.refractions.net
 
 Source: %name-%version.tar
 Source1: create_template_postgis
-
-BuildPreReq: postgresql%pg_ver-devel
+Patch1: %name-alt-fix-build-with-postgresql10.patch
 
 BuildRequires: ImageMagick-tools
 BuildRequires: docbook-dtds
@@ -25,6 +24,10 @@ BuildRequires: libgtk+2-devel
 BuildRequires: libproj-devel
 BuildRequires: libxml2-devel
 BuildRequires: postgresql-devel
+BuildRequires: libjson-c-devel
+BuildRequires: libprotobuf-c-devel
+BuildRequires: protobuf-c-compiler
+BuildRequires: libpcre-devel
 BuildRequires: xsltproc
 
 Requires: postgresql%pg_ver-%name = %EVR
@@ -63,9 +66,11 @@ Development headers and libraries for PostGIS.
 
 %prep
 %setup
+%patch1 -p2
 subst "s|PGSQL_DOCDIR|DOCDIR|g" doc/Makefile.in
 
 %build
+export PCRE_CPPFLAGS=-I/usr/include/pcre
 ./autogen.sh
 %configure \
 	--with-gui \
@@ -96,15 +101,26 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %_bindir/create_template_postgis
 %_libdir/pgsql/%{name}*.so
 %_libdir/pgsql/rt%{name}*.so
+%_libdir/pgsql/address_standardizer*.so
 %_datadir/pgsql/contrib/postgis-*/*.sql
 %_datadir/pgsql/contrib/postgis-*/*.pl
 %_datadir/pgsql/extension
+%doc %_datadir/doc/postgresql/extension/README.address_standardizer
 
 %files devel
 %_includedir/liblwgeom.h
 %_includedir/liblwgeom_topo.h
 
 %changelog
+* Wed Mar 21 2018 Andrey Cherepanov <cas@altlinux.org> 2.4.3-alt1
+- New version.
+- Build from upstream tarball.
+- Add support for json-c, protobuf-c and pcre.
+- Fix build with postgresql10 (thanks taf@).
+
+* Mon Oct 23 2017 Andrey Cherepanov <cas@altlinux.org> 2.4.1-alt1
+- New version
+
 * Tue Aug 29 2017 Andrey Cherepanov <cas@altlinux.org> 2.3.3-alt2
 - Return postgresql-postgis for Postgis extension
 

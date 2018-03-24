@@ -1,7 +1,7 @@
 %global _geocallback "--disable-geocallbacks"
 
 Name: libspatialite
-Version: 4.1.1
+Version: 4.3.0a
 Release: alt1
 Summary: Enables SQLite to support spatial data
 Group: System/Libraries
@@ -13,7 +13,9 @@ Source0: http://www.gaia-gis.it/gaia-sins/%name-sources/%name-%version.tar.gz
 BuildRequires: libproj-devel
 BuildRequires: freexl-devel
 BuildRequires: libsqlite3-devel
-BuildRequires: libgeos-devel zlib-devel
+BuildRequires: libgeos-devel
+BuildRequires: libxml2-devel
+BuildRequires: zlib-devel
 
 %description
 SpatiaLite is a a library extending the basic SQLite core
@@ -38,32 +40,35 @@ developing applications that use %name.
     --disable-static \
     %{?_geocallback}
 
-make %{?_smp_mflags}
+%make_build
 
 %install
-
-make install DESTDIR=%buildroot
+%makeinstall_std
 
 # Delete undesired libtool archives
-rm -f %buildroot/%_libdir/%name.la
-
-
-#%check
-#make check
+rm -f %buildroot%_libdir/*.la
 
 
 %files
 %doc COPYING AUTHORS
 %_libdir/%name.so.*
+%_libdir/mod_spatialite.so.*
 
 %files devel
 %doc examples/*.c
 %_includedir/spatialite.h
 %_includedir/spatialite
 %_libdir/%name.so
+%_libdir/mod_spatialite.so
 %_libdir/pkgconfig/spatialite.pc
 
 %changelog
+* Wed Feb 28 2018 Andrey Cherepanov <cas@altlinux.org> 4.3.0a-alt1
+- New version. (ALT #34590)
+
+* Thu Feb 04 2016 Andrey Cherepanov <cas@altlinux.org> 4.1.1-alt1.1
+- Rebuild with new geos
+
 * Thu Feb 27 2014 Ilya Mashkin <oddity@altlinux.ru> 4.1.1-alt1
 - 4.1.1
 

@@ -1,6 +1,6 @@
 Name: spatialite-gui
-Version: 1.6.0
-Release: alt3
+Version: 1.7.1
+Release: alt1
 Summary: GUI to manage Spatialite databases
 
 Group: Databases
@@ -9,10 +9,7 @@ Url: https://www.gaia-gis.it/fossil/spatialite_gui
 Source0: http://www.gaia-gis.it/gaia-sins/spatialite_gui-%version.tar.gz
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-# Link geos_c
-# Taken as a part from
-# https://www.gaia-gis.it/fossil/spatialite_gui/ci/594d7d5a92?sbs=0
-Patch0: %name-1.6.0-geos-c.patch
+Patch1: %name-alt-link-with-sqlite3.patch
 
 BuildRequires: desktop-file-utils
 BuildRequires: freexl-devel
@@ -22,14 +19,14 @@ BuildRequires: libwxGTK-devel
 BuildRequires: sqlite-devel
 BuildRequires: libgeos-devel
 BuildRequires: libproj-devel gcc-c++ gcc
+BuildRequires: libxml2-devel
 
 %description
 GUI to manage Spatialite databases.
 
 %prep
 %setup -n spatialite_gui-%version
-
-%patch0 -p1 -b .geos-c
+%patch1 -p2
 
 # Delete shebang from desktop file
 #TODO: Clarify
@@ -39,12 +36,13 @@ sed -i '1d' gnome_resource/%name.desktop
 rm -f Makefile-static*
 
 %build
+%autoreconf
 %configure  \
         --disable-static
-make %{?_smp_mflags}
+%make_build
 
 %install
-make install DESTDIR=%buildroot
+%makeinstall_std
 
 # Install icon and desktop file
 # Mailed the author
@@ -62,6 +60,9 @@ desktop-file-install                               \
 %_datadir/pixmaps/%name.png
 
 %changelog
+* Thu Mar 01 2018 Andrey Cherepanov <cas@altlinux.org> 1.7.1-alt1
+- New version.
+
 * Wed Aug 16 2017 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt3
 - Rebuild with geos 3.6.2
 
