@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
@@ -8,7 +8,7 @@
 
 Name: gnome-shell
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -28,12 +28,12 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 AutoReqProv: nopython
 %define __python %nil
 
-%define session_ver 3.25
+%define session_ver 3.26
 %define clutter_ver 1.21.5
 %define gjs_ver 1.47.0
 %define mutter_ver 3.27.91
 %define gtk_ver 3.16.0
-%define gio_ver 2.53.0
+%define gio_ver 2.56.0
 %define gstreamer_ver 1.0
 %define eds_ver 3.17.2
 %define telepathy_ver 0.17.5
@@ -238,6 +238,9 @@ subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build
 %endif
 
 %changelog
+* Thu Mar 22 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt2
+- update to 3.28.0-12-g526834e
+
 * Tue Mar 13 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 
