@@ -11,10 +11,10 @@ BuildRequires: unzip
 
 Name:           hunspell-%{languagecode}
 Version:        0.9.4
-Release:        alt1_13
+Release:        alt2_13
 Summary:        %{languageenglazy} hunspell dictionaries
 License:        LGPLv2+
-Group:          System/Internationalization
+Group:          Text tools
 URL:            http://dict.dv.lv/
 Source0:        http://dict.dv.lv/download/lv_LV-%{version}.oxt
 
@@ -78,6 +78,9 @@ popd #%%{buildroot}%%{_datadir}/myspell
 
 
 %changelog
+* Sat Mar 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt2_13
+- fixed group
+
 * Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt1_13
 - new version
 
