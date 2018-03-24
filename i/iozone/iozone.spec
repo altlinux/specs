@@ -1,7 +1,7 @@
 %define oversion %(echo %version | sed -e "s|\\.|_|g")
 
 Name: iozone
-Version: 3.465
+Version: 3.471
 Release: alt1
 
 Summary: IOzone Filesystem Benchmark
@@ -90,6 +90,9 @@ catdoc Run_rules.doc >Run_rules.txt
 %_datadir/%name/
 
 %changelog
+* Sat Mar 24 2018 Vitaly Lipatov <lav@altlinux.ru> 3.471-alt1
+- new version 3.471 (with rpmrb script)
+
 * Wed Aug 24 2016 Vitaly Lipatov <lav@altlinux.ru> 3.465-alt1
 - new version 3.465 (with rpmrb script)
 
