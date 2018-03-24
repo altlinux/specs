@@ -1,6 +1,6 @@
 Name: lldpd
-Version: 0.9.5
-Release: alt1.1
+Version: 0.9.9
+Release: alt1
 Summary: Link Layer Discovery Protocol Daemon
 Source: %name-%version.tar
 Group: Networking/Other
@@ -11,6 +11,7 @@ Source1: lldpd.init
 Source2: lldpd.sysconfig
 Source3: lldpd.all.chroot
 Source4: lldpd.conf.chroot
+Source5: lldpd.service
 
 %def_enable cdp
 %def_enable fdp
@@ -23,7 +24,6 @@ Source4: lldpd.conf.chroot
 %def_with snmp
 %def_with xml
 %def_with readline
-%def_with json
 %def_without seccomp
 
 BuildRequires: libssl-devel
@@ -33,7 +33,6 @@ BuildRequires: libevent-devel
 %{?_with_readline:BuildRequires: libreadline-devel}
 %{?_with_snmp:BuildRequires: libnet-snmp-devel}
 %{?_with_xml:BuildRequires: libxml2-devel}
-%{?_with_json:BuildRequires: libjansson-devel}
 %{?_with_seccomp:BuildRequires: libseccomp-devel}
 
 %description
@@ -104,7 +103,6 @@ mkdir libevent
     %{subst_with readline} \
     %{subst_with snmp} \
     %{subst_with xml} \
-    %{subst_with json} \
     %{subst_with seccomp} \
     --with-privsep-user=_lldpd \
     --with-privsep-group=_lldpd \
@@ -123,10 +121,8 @@ install -m755 -D %SOURCE1 %buildroot%_initdir/lldpd
 install -m644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/lldpd
 install -m750 -D %SOURCE3 %buildroot%_sysconfdir/chroot.d/lldpd.all
 install -m750 -D %SOURCE4 %buildroot%_sysconfdir/chroot.d/lldpd.conf
+install -m644 -D %SOURCE5 %buildroot%_unitdir/lldpd.service
 mkdir -p %buildroot%_localstatedir/%name/etc
-
-mkdir %buildroot%_datadir/zsh/site-functions -p
-mv %buildroot/usr/share/zsh/vendor-completions/_lldpcli %buildroot%_datadir/zsh/site-functions
 
 %pre
 if [ $1 = 1 ]; then
@@ -144,7 +140,7 @@ fi
 %files
 %_unitdir/*
 %_initdir/*
-%_sysconfdir/sysconfig/lldpd
+%config(noreplace) %_sysconfdir/sysconfig/lldpd
 %_sysconfdir/chroot.d/*
 %dir %_sysconfdir/lldpd.d
 %config(noreplace) %_sysconfdir/lldpd.d/*
@@ -166,6 +162,10 @@ fi
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Sat Mar 24 2018 Alexey Shabalin <shaba@altlinux.ru> 0.9.9-alt1
+- 0.9.9
+- add modified systemd unit
+
 * Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.9.5-alt1.1
 - NMU: added URL
 
