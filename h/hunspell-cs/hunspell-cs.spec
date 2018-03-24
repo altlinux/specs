@@ -8,10 +8,10 @@
 
 Name:           hunspell-%{languagecode}
 Version:        20060303
-Release:        alt1_21
+Release:        alt2_21
 Summary:        %{languageenglazy} hunspell dictionaries
 License:        GPL+
-Group:          System/Internationalization
+Group:          Text tools
 URL:            ftp://ftp.linux.cz/pub/localization/OpenOffice.org/devel/Czech/spell_checking/
 Source0:        openoffice.org-dict-cs_CZ.tar.gz
 
@@ -69,6 +69,9 @@ popd #%%{buildroot}%%{_datadir}/myspell
 
 
 %changelog
+* Sat Mar 24 2018 Igor Vlasenko <viy@altlinux.ru> 20060303-alt2_21
+- fixed group
+
 * Thu Mar 22 2018 Igor Vlasenko <viy@altlinux.ru> 20060303-alt1_21
 - new version
 
