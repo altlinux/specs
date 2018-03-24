@@ -1,5 +1,5 @@
 Name: rust
-Version: 1.21.0
+Version: 1.22.1
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -7,32 +7,47 @@ Group: Development/Other
 License: Apache 2.0, MIT
 URL: http://www.rust-lang.org/
 
-# Cloned from https://github.com/rust-lang/rust
-Source: %name-%version.tar
-# Cloned from https://github.com/rust-lang/cargo
-Source1: cargo.tar
-# Cloned from https://github.com/rust-lang/jemalloc
-Source2: jemalloc.tar
-# Cloned from https://github.com/rust-lang/compiler-rt
-Source3: compiler-rt.tar
-# Cloned from https://github.com/rust-lang/hoedown
-Source4: hoedown.tar
-# Cloned from https://github.com/rust-lang/rust-installer
-Source5: rust-installer.tar
-# Cloned from https://github.com/rust-lang-nursery/libc
-Source6: liblibc.tar
-# Crates to build rust
-Source7: vendor.tar
-# Cloned from https://github.com/rust-lang-nursery/compiler-builtins
-Source8: libcompiler_builtins.tar
-# Cloned from https://github.com/rust-lang-nursery/rls
-Source9: rls.tar
-
-Packager: Vladimir Lettiev <crux@altlinux.ru>
+Source:  https://static.rust-lang.org/dist/%{name}c-%version-src.tar.xz
 
 BuildPreReq: /proc
-BuildRequires: curl gcc-c++ python-devel rust cmake llvm4.0-devel libffi-devel
-BuildRequires: rust-cargo
+BuildRequires: curl gcc-c++ python-devel cmake libffi-devel
+
+%def_without bootstrap
+%def_with    bundled_llvm
+
+%if_without bundled_llvm
+
+BuildRequires: llvm6.0-devel
+
+%endif
+
+%if_without bootstrap
+
+BuildRequires: rust rust-cargo
+%define cargo %_bindir/cargo
+%define rustc %_bindir/rustc
+
+%else
+
+%define r_ver 1.21.0
+Source2: https://static.rust-lang.org/dist/rust-%r_ver-i686-unknown-linux-gnu.tar.gz
+Source3: https://static.rust-lang.org/dist/rust-%r_ver-x86_64-unknown-linux-gnu.tar.gz
+
+%ifarch %ix86
+%define r_arch i686
+%define r_src %SOURCE2
+%endif
+%ifarch x86_64
+%define r_arch x86_64
+%define r_src %SOURCE3
+%endif
+
+%define trbl rust-%r_ver-%r_arch-unknown-linux-gnu
+%define stage0 build/%r_arch-unknown-linux-gnu/stage0
+%define cargo %stage0/bin/cargo
+%define rustc %stage0/bin/rustc
+
+%endif
 
 # Since 1.12.0: striping debuginfo damages *.so files
 %add_debuginfo_skiplist %_libdir %_bindir
@@ -50,17 +65,21 @@ Requires: %name = %version-%release
 %summary
 
 %prep
-%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9
-mv vendor jemalloc libcompiler_builtins liblibc src
-mv hoedown src/rt
-mv rls rust-installer cargo src/tools
-mv compiler-rt src/libcompiler_builtins
+%setup -n %{name}c-%version-src
+
+%if_with bootstrap
+tar xf %r_src
+mkdir -p %stage0
+cp -r %trbl/cargo/* %stage0
+cp -r %trbl/rustc/* %stage0
+cp -r %trbl/rust-std-%r_arch-unknown-linux-gnu/* %stage0
+%endif
 
 %build
 cat > config.toml <<EOF
 [build]
-cargo = "%_bindir/cargo"
-rustc = "%_bindir/rustc"
+cargo = "%cargo"
+rustc = "%rustc"
 submodules = false
 docs = false
 verbose = 0
@@ -74,13 +93,20 @@ codegen-tests = false
 rpath = false
 debuginfo = false
 debuginfo-lines = false
+EOF
+
+%if_without bundled_llvm
+cat >> config.toml <<EOF
 [target.x86_64-unknown-linux-gnu]
 llvm-config = "%_bindir/llvm-config"
 [target.i686-unknown-linux-gnu]
 llvm-config = "%_bindir/llvm-config"
 EOF
 
-LLVM_LINK_SHARED=1 ./x.py build
+export LLVM_LINK_SHARED=1
+%endif
+
+./x.py build
 
 %install
 DESTDIR=%buildroot ./x.py install
@@ -112,6 +138,11 @@ DESTDIR=%buildroot ./x.py install
 %exclude %_libdir/rustlib/etc/lldb_*
 
 %changelog
+* Sat Mar 24 2018 Vladimir Lettiev <crux@altlinux.org> 1.22.1-alt1
+- 1.22.1
+- built with bundled llvm
+- migrated from gear to srpm
+
 * Thu Oct 19 2017 Vladimir Lettiev <crux@altlinux.org> 1.21.0-alt1
 - 1.21.0
 
