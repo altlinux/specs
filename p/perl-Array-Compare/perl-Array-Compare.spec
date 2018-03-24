@@ -10,7 +10,7 @@
 %define _enable_test 1
 
 Name: perl-Array-Compare
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 
 Summary: Array::Compare - perl module comparing arrays
@@ -20,7 +20,7 @@ Group: Development/Perl
 Url: http://search.cpan.org/dist/Array-Compare/
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/D/DA/DAVECROSS/Array-Compare-v%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DAVECROSS/%{module}-v%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Apr 27 2010 (-bi)
 BuildRequires: perl-Module-Build perl-Moose perl-Test-Pod perl-Test-Pod-Coverage perl(Test/NoWarnings.pm) perl(Moo.pm) perl(Types/Standard.pm)
@@ -40,7 +40,7 @@ differing columns.
 
 
 %prep
-%setup -q -n %m_distro-v%version
+%setup -q -n %{module}-v%{version}
 
 %build
 %perl_vendor_build
@@ -53,6 +53,9 @@ differing columns.
 %doc Changes README
 
 %changelog
+* Sat Mar 24 2018 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1
+- automated CPAN update
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1
 - automated CPAN update
 
