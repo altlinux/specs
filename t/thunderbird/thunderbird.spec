@@ -6,7 +6,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	52.6.0
+Version:	52.7.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -424,6 +424,16 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Sat Mar 24 2018 Andrey Cherepanov <cas@altlinux.org> 52.7.0-alt1
+- New version (52.7.0)
+- Fixes:
+  + CVE-2018-5127 Buffer overflow manipulating SVG animatedPathSegList
+  + CVE-2018-5129 Out-of-bounds write with malformed IPC messages
+  + CVE-2018-5144 Integer overflow during Unicode conversion
+  + CVE-2018-5146 Out of bounds memory write in libvorbis
+  + CVE-2018-5125 Memory safety bugs fixed in Firefox 59, Firefox ESR 52.7, and Thunderbird 52.7
+  + CVE-2018-5145 Memory safety bugs fixed in Firefox ESR 52.7 and Thunderbird 52.7
+
 * Mon Jan 29 2018 Andrey Cherepanov <cas@altlinux.org> 52.6.0-alt1
 - New version (52.6.0)
 - Fixes:
