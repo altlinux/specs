@@ -1,10 +1,13 @@
+Group: Text tools
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-pa
 Summary: Punjabi hunspell dictionaries
-Version: 20050726
-Release: alt2_10
-Source: http://hunspell.sourceforge.net/pa-demo.tar.gz
-Group: Text tools
-URL: http://hunspell.sourceforge.net
+Version: 1.0.0
+Release: alt1_9
+Epoch: 1
+Source: http://anishpatil.fedorapeople.org/pa_in.%{version}.tar.gz
+URL: https://gitorious.org/hunspell_dictionaries/hunspell_dictionaries.git
 License: GPLv2+
 BuildArch: noarch
 
@@ -15,23 +18,26 @@ Source44: import.info
 Punjabi hunspell dictionaries.
 
 %prep
-%setup -q -c -n pa-demo
-iconv -f ISO-8859-1 -t UTF-8 pa/Copyright > pa/Copyright.utf8
-mv pa/Copyright.utf8 pa/Copyright
+%setup -q -c -n pa_IN
+
+iconv -f ISO-8859-1 -t UTF-8 pa_IN/Copyright > pa_IN/Copyright.utf8
+mv pa_IN/Copyright.utf8 pa_IN/Copyright
 
 %build
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-mv pa/pa.dic pa/pa_IN.dic
-mv pa/pa.aff pa/pa_IN.aff
-cp -p pa/*.dic pa/*.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+cp -p pa_IN/*.dic pa_IN/*.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
 %files
-%doc pa/README pa/COPYING pa/Copyright
+%doc pa_IN/README
+%doc --no-dereference pa_IN/COPYING pa_IN/Copyright
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Mar 24 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0.0-alt1_9
+- new version
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20050726-alt2_10
 - update to new release by fcimport
 
