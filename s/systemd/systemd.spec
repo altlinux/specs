@@ -57,7 +57,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 238
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1259,6 +1259,7 @@ fi
 %_sbindir/groupadd -r -f dialout >/dev/null 2>&1 ||:
 %_sbindir/groupadd -r -f input >/dev/null 2>&1 ||:
 %_sbindir/groupadd -r -f video >/dev/null 2>&1 ||:
+%_sbindir/groupadd -r -f render >/dev/null 2>&1 ||:
 
 %post -n udev
 %post_service udevd
@@ -1920,6 +1921,10 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Sat Mar 24 2018 Alexey Shabalin <shaba@altlinux.ru> 1:238-alt2
+- merge with v238-stable branch
+- add group render
+
 * Mon Mar 12 2018 Alexey Shabalin <shaba@altlinux.ru> 1:238-alt1
 - 238
 - fix build systemd.directive man
