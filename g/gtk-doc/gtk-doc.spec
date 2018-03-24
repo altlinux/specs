@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: gtk-doc
-Version: 1.27
+Version: 1.28
 Release: alt1
 
 Summary: API documentation generation tool for GTK+ and GNOME
@@ -152,6 +152,9 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Sat Mar 24 2018 Yuri N. Sedunov <aris@altlinux.org> 1.28-alt1
+- 1.28
+
 * Thu Dec 07 2017 Yuri N. Sedunov <aris@altlinux.org> 1.27-alt1
 - 1.27
 
