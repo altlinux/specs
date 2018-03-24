@@ -4,7 +4,7 @@
 Name: python-module-%mname
 Epoch: 1
 Version: 38.4.0
-Release: alt3
+Release: alt4%ubt
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -152,6 +152,9 @@ popd
 %python3_sitelibdir/%mname-%version-*.egg-info
 
 %changelog
+* Sat Mar 24 2018 Stanislav Levin <slev@altlinux.org> 1:38.4.0-alt4%ubt
+- Fix test command
+
 * Thu Mar 22 2018 Grigory Ustinov <grenka@altlinux.org> 1:38.4.0-alt3
 - Add patch for skipping some requires from glebfm@, adapted for new code.
   It restores feature from commit 362ea68 in 1:18.1-alt2 release. (Closes: #34658)
