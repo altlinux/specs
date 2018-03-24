@@ -1,12 +1,13 @@
+Group: Text tools
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name: hunspell-ta
 Summary: Tamil hunspell dictionaries
-Version: 20100226
-Release: alt2_8
-# Upstream download link is dead now
-#Source: http://tamil.nrcfoss.au-kbc.org.in/files/hunspell/ta_IN-hunspell-Wordlist.tar.gz
-Source: ta_IN-hunspell-Wordlist.tar.gz
-Group: Text tools
-URL: http://nrcfoss.au-kbc.org.in
+Version: 1.0.0
+Release: alt1_9
+Epoch:   1
+Source: http://anishpatil.fedorapeople.org/ta_in.%{version}.tar.gz
+URL: https://gitorious.org/hunspell_dictionaries/hunspell_dictionaries.git
 License: GPLv2+
 BuildArch: noarch
 
@@ -17,20 +18,24 @@ Source44: import.info
 Tamil hunspell dictionaries.
 
 %prep
-%setup -q -c -n ta_IN-hunspell-wordlist
+%setup -q -c -n ta_IN
+
 
 %build
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-
-cp -p ta_IN-hunspell-wordlist/*.dic ta_IN-hunspell-wordlist/*.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+cp -p ta_IN/*.dic ta_IN/*.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
 %files
-%doc ta_IN-hunspell-wordlist/README ta_IN-hunspell-wordlist/LICENSE ta_IN-hunspell-wordlist/Copyright
+%doc ta_IN/README
+%doc --no-dereference ta_IN/LICENSE ta_IN/Copyright
 %{_datadir}/myspell/*
 
 %changelog
+* Sat Mar 24 2018 Igor Vlasenko <viy@altlinux.ru> 1:1.0.0-alt1_9
+- new version
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20100226-alt2_8
 - update to new release by fcimport
 
