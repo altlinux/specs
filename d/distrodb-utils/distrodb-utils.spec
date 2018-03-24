@@ -1,5 +1,5 @@
 Name: distrodb-utils
-Version: 0.233
+Version: 0.234
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -26,7 +26,7 @@ BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/RPM.pm) perl(Clone.pm)
 
 %install
 mkdir -p %buildroot%_bindir
-install -m 755 projectdb-helper-* \
+install -m 755 projectdb-* \
 	distrodb-helper-* \
 	distrodb-list-duplicates.pl \
 	distrodb-verify-newpkglist.pl \
@@ -44,6 +44,9 @@ install -m 644 DistroDB/*.pm %buildroot%perl_vendor_privlib/DistroDB/
 %perl_vendor_privlib/DistroDB/*.pm
 
 %changelog
+* Sat Mar 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.234-alt1
+- new version
+
 * Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.233-alt1
 - new version
 
