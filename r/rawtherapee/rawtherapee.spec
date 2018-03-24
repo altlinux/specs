@@ -5,7 +5,7 @@
 %endif
 
 Name: rawtherapee
-Version: 5.3%{?_enable_snapshot:.%git_distance}
+Version: 5.4%{?_enable_snapshot:.%git_distance}
 Release: alt1
 
 Summary: THe Experimental RAw Photo Editor
@@ -20,11 +20,17 @@ Source: rawtherapee-%version.tar
 Source: http://rawtherapee.com/shared/source/%name-%version.tar.xz
 %endif
 
+%define gtk_ver 3.22.24
+%define tiff_ver 4.0.9
+
 Requires: %name-data = %version-%release
+Requires: libgtk+3 >= %gtk_ver
 
 %{?_enable_snapshot:BuildRequires: git}
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libtiff-devel
 BuildRequires: bzlib-devel cmake gcc-c++ libgomp-devel libgtkmm3-devel libiptcdata-devel
-BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libtiff-devel libfftw3-devel
+BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libfftw3-devel
 BuildRequires: libexpat-devel libpixman-devel libcanberra-gtk3-devel
 BuildRequires: libXdmcp-devel libXdamage-devel libXxf86vm-devel
 BuildRequires: libexiv2-devel libharfbuzz-devel
@@ -47,9 +53,13 @@ This package provides noarch data needed for Raw Therapee to work.
 subst "s|install (PROGRAMS rtstart|\#install (PROGRAMS rtstart|" CMakeLists.txt
 
 %build
+%define optflags -O3 -g
+# https://bugzilla.altlinux.org/34677
+# from tiff-0.4.9/libtiff/tiff.h
+%add_optflags -DPHOTOMETRIC_CFA=32803
 %cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
-	-DCMAKE_CXX_FLAGS="-std=c++11" \
-	-DCACHE_NAME_SUFFIX=""
+	%{?_disable_snapshot:-DCACHE_NAME_SUFFIX=""} \
+	%{?_enable_snapshot:-DCACHE_NAME_SUFFIX="5-dev"}
 %cmake_build VERBOSE=1
 
 %install
@@ -70,6 +80,9 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Wed Mar 21 2018 Yuri N. Sedunov <aris@altlinux.org> 5.4-alt1
+- 5.4
+
 * Mon Oct 02 2017 Yuri N. Sedunov <aris@altlinux.org> 5.3-alt1
 - 5.3
 
