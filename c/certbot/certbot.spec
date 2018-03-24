@@ -2,7 +2,7 @@
 %def_with plugins
 
 Name: certbot
-Version: 0.22.0
+Version: 0.22.2
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -150,6 +150,7 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 
 #files -n python-module-%name
 #doc LICENSE.txt
+%dir %certbotdir/
 %certbotdir/%name/
 %certbotdir/%name-%{version}*.egg-info
 
@@ -166,6 +167,9 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Sat Mar 24 2018 Vitaly Lipatov <lav@altlinux.ru> 0.22.2-alt1
+- new version 0.22.2 (with rpmrb script)
+
 * Thu Mar 15 2018 Vitaly Lipatov <lav@altlinux.ru> 0.22.0-alt1
 - new version 0.22.0 (with rpmrb script) (ALT bug 34643)
 
