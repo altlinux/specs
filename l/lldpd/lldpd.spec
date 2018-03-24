@@ -1,6 +1,6 @@
 Name: lldpd
 Version: 0.9.9
-Release: alt1%ubt
+Release: alt2%ubt
 Summary: Link Layer Discovery Protocol Daemon
 Source: %name-%version.tar
 Group: Networking/Other
@@ -12,6 +12,7 @@ Source2: lldpd.sysconfig
 Source3: lldpd.all.chroot
 Source4: lldpd.conf.chroot
 Source5: lldpd.service
+Source6: lldpd.tmpfiles
 
 %def_enable cdp
 %def_enable fdp
@@ -107,23 +108,23 @@ mkdir libevent
     %{subst_with seccomp} \
     --with-privsep-user=_lldpd \
     --with-privsep-group=_lldpd \
-    --with-privsep-chroot=%_localstatedir/%name \
+    --with-privsep-chroot=%_runtimedir/%name \
     --with-systemdsystemunitdir=%_unitdir \
     --without-embedded-libevent \
-    --with-lldpd-ctl-socket=%{_runtimedir}/%{name}.socket \
-    --with-lldpd-pid-file=%{_runtimedir}/%{name}.pid \
+    --with-lldpd-ctl-socket=%_runtimedir/%name/%name.socket \
+    --with-lldpd-pid-file=%_runtimedir/%name.pid
 
 %make
 
 %install
 %make_install DESTDIR=%buildroot install
 mv %buildroot%_datadir/doc/lldpd %buildroot%_datadir/doc/%name-%version
-install -m755 -D %SOURCE1 %buildroot%_initdir/lldpd
-install -m644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/lldpd
-install -m750 -D %SOURCE3 %buildroot%_sysconfdir/chroot.d/lldpd.all
-install -m750 -D %SOURCE4 %buildroot%_sysconfdir/chroot.d/lldpd.conf
-install -m644 -D %SOURCE5 %buildroot%_unitdir/lldpd.service
-mkdir -p %buildroot%_localstatedir/%name/etc
+install -m755 -D %SOURCE1 %buildroot%_initdir/%name  
+install -m644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
+install -m750 -D %SOURCE3 %buildroot%_sysconfdir/chroot.d/%name.all
+install -m750 -D %SOURCE4 %buildroot%_sysconfdir/chroot.d/%name.conf
+install -m644 -D %SOURCE5 %buildroot%_unitdir/%name.service
+install -m644 -D %SOURCE6 %buildroot%_tmpfilesdir/%name.conf
 
 %pre
 if [ $1 = 1 ]; then
@@ -140,8 +141,9 @@ fi
 
 %files
 %_unitdir/*
+%_tmpfilesdir/%name.conf
 %_initdir/*
-%config(noreplace) %_sysconfdir/sysconfig/lldpd
+%config(noreplace) %_sysconfdir/sysconfig/%name
 %_sysconfdir/chroot.d/*
 %dir %_sysconfdir/lldpd.d
 %config(noreplace) %_sysconfdir/lldpd.d/*
@@ -149,7 +151,6 @@ fi
 %_libdir/liblldpctl.so*
 %_datadir/doc/%name-%version/
 %_man8dir/*
-%attr(0750, _lldpd, _lldpd) %_localstatedir/%name/
 
 %files devel
 %_includedir/*
@@ -163,8 +164,12 @@ fi
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Sat Mar 24 2018 Alexey Shabalin <shaba@altlinux.ru> 0.9.9-alt2%ubt
+- add tmpfiles for chroot dir
+- move chroot dir from /var/lib/lldpd to /var/ran/lldpd
+
 * Sat Mar 24 2018 Alexey Shabalin <shaba@altlinux.ru> 0.9.9-alt1%ubt
-- add ubt suffix to release 
+- add ubt suffix to release
 
 * Sat Mar 24 2018 Alexey Shabalin <shaba@altlinux.ru> 0.9.9-alt1
 - 0.9.9
