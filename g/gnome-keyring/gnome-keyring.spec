@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: gnome-keyring
-Version: %ver_major.0.1
+Version: %ver_major.0.2
 Release: alt1
 
 Summary: %name is a password keeper for GNOME
@@ -127,6 +127,9 @@ setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 
 
 %changelog
+* Sun Mar 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0.2-alt1
+- 3.28.0.2
+
 * Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0.1-alt1
 - 3.28.0.1
 - enabled ssh-agent again (since 3.27.x gnome-keyring wraps the ssh-agent as a subprocess)
