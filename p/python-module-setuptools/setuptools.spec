@@ -1,10 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define mname setuptools
 
+%def_with check
+
 Name: python-module-%mname
 Epoch: 1
-Version: 38.4.0
-Release: alt4%ubt
+Version: 39.0.1
+Release: alt1%ubt
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -19,9 +21,11 @@ BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-module-six
+BuildRequires: python-dev
 BuildRequires: python3-module-six
-# for test
-BuildRequires: git-core
+BuildRequires: python3-dev
+
+%if_with check
 BuildRequires: python-module-pytest
 BuildRequires: python-module-pytest-virtualenv
 BuildRequires: python-module-virtualenv
@@ -31,7 +35,6 @@ BuildRequires: python-module-pip
 BuildRequires: python-module-wheel
 BuildRequires: python-module-contextlib2
 BuildRequires: python-module-pytest-fixture-config
-BuildRequires: python-module-tox
 BuildRequires: python-module-pytest-flake8
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-virtualenv
@@ -42,9 +45,8 @@ BuildRequires: python3-module-pip
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-contextlib2
 BuildRequires: python3-module-pytest-fixture-config
-BuildRequires: python3-module-tox
 BuildRequires: python3-module-pytest-flake8
-#
+%endif
 
 BuildArch: noarch
 Provides: python-module-distribute = %EVR
@@ -81,6 +83,10 @@ Provides: python3-module-distribute = %EVR
 %add_python3_req_skip pkg_resources.extern.six.moves.urllib
 %add_python3_req_skip %mname.extern.six
 %add_python3_req_skip %mname.extern.six.moves
+%add_python3_req_skip %mname.extern.six.moves.urllib
+%add_python3_req_skip %mname.extern.pyparsing
+%add_python3_req_skip %mname.extern.packaging.version
+%add_python3_req_skip %mname.extern.packaging.specifiers
 
 %description -n python3-module-%mname
 Setuptools is a collection of enhancements to the Python3 distutils
@@ -121,13 +127,15 @@ ln -s easy_install-%_python_version %buildroot%_bindir/easy_install
 ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
-export PYTHONPATH=`pwd`:%python_sitelibdir_noarch:%_libdir/python%_python_version/site-packages
-TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py27 -v -- -v
+export LC_ALL=C.UTF-8
+export PYTHONPATH=`pwd`
+# unset env var RPM_BUILD_DIR to disable ALT specific behavior during
+# RPM build
+RPM_BUILD_DIR='' py.test -v
 
 pushd ../python3
-export PYTHONPATH=`pwd`:%python3_sitelibdir_noarch:%_libdir/python%_python3_version/site-packages
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py35 -v -- -v
+export PYTHONPATH=`pwd`
+RPM_BUILD_DIR='' py.test3 -v
 popd
 
 %files
@@ -152,6 +160,9 @@ popd
 %python3_sitelibdir/%mname-%version-*.egg-info
 
 %changelog
+* Sat Mar 24 2018 Stanislav Levin <slev@altlinux.org> 1:39.0.1-alt1%ubt
+- 38.4.0 -> 39.0.1
+
 * Sat Mar 24 2018 Stanislav Levin <slev@altlinux.org> 1:38.4.0-alt4%ubt
 - Fix test command
 
