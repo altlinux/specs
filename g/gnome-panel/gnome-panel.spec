@@ -1,17 +1,16 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 3.26
+%define ver_major 3.28
 %define api_ver 3.0
 %define applet_api_ver 5.0
 %def_disable static
-%def_disable gtk_doc
-%{?_enable_snapshot:%def_enable gtk_doc}
+%def_enable gtk_doc
 %def_disable introspection
 %def_enable eds
 
 Name: gnome-panel
 Version: %ver_major.0
-Release: alt3
+Release: alt1
 
 Summary: The core programs for the GNOME GUI desktop environment
 License: GPLv2+ and LGPLv2+ and GFDL+
@@ -148,7 +147,8 @@ GObject introspection devel data for the GNOME Panel shared library.
     %{subst_enable static} \
     %{subst_enable eds} \
     --disable-schemas-compile \
-    %{?_enable_gtk_doc:--enable-gtk-doc}
+    %{?_enable_gtk_doc:--enable-gtk-doc} \
+    %{?_enable_snapshot:--enable-gtk-doc}
 %make_build
 
 %install
@@ -205,6 +205,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Sun Mar 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Tue Mar 06 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt3
 - updated to 3.26.0-131-g9edb4e1
 
