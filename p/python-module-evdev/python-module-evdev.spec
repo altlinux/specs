@@ -3,15 +3,15 @@
 %def_disable python2
 
 Name: python-module-%modname
-Version: 0.7.0
-Release: alt1.1
+Version: 0.8.1
+Release: alt1
 
 Summary: Python bindings to the generic input event interface
 Group: Development/Python
 License: 3-clause BSD
-Url: http://pypi.python.org/pypi/%modname
+Url: https://pypi.python.org/pypi/%modname
 
-Source: http://pypi.io/packages/source/e/%modname/%modname-%version.tar.gz
+Source: https://pypi.io/packages/source/e/%modname/%modname-%version.tar.gz
 
 BuildRequires: glibc-kernheaders
 
@@ -70,6 +70,9 @@ popd
 %doc README*
 
 %changelog
+* Sun Mar 25 2018 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
+- 0.8.1
+
 * Thu Oct 19 2017 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1.1
 - exclude %%python*_sitelibdir/*.egg-info
 
