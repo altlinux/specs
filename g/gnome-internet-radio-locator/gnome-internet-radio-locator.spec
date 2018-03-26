@@ -3,7 +3,7 @@
 %def_with recording
 
 Name: gnome-internet-radio-locator
-Version: %ver_major.3
+Version: %ver_major.5
 Release: alt1
 
 Summary: GNOME Internet Radio Locator
@@ -23,7 +23,7 @@ Requires: dconf
 BuildRequires: gnome-common intltool yelp-tools gtk-doc
 BuildRequires: libgtk+3-devel >= %gtk_ver libxml2-devel libchamplain-gtk3-devel
 BuildRequires: libgeocode-glib-devel gst-plugins%gst_api_ver-devel gst-plugins-bad1.0-devel
-BuildRequires: libsoup-devel gsettings-desktop-schemas-devel
+BuildRequires: gsettings-desktop-schemas-devel
 
 %description
 GNOME Internet Radio Locator is a Free Software program that allows
@@ -57,6 +57,12 @@ with the help of a map.
 
 
 %changelog
+* Mon Mar 26 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
+- 1.0.5
+
+* Sat Feb 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
+- 1.0.4
+
 * Sat Feb 17 2018 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
 - 1.0.3
 
