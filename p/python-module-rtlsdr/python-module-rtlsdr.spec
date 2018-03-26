@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 0.2.7
-Release: alt1
+Release: alt2
 
 Summary: A Python wrapper for librtlsdr (a driver for Realtek RTL2832U based SDR's)
 License: GPLv3
@@ -14,7 +14,7 @@ URL: https://github.com/roger-/pyrtlsdr
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 BuildRequires(pre): rpm-build-python
-BuildRequires: python-dev python-module-setuptools python-module-pypandoc
+BuildRequires: python-devel python-module-setuptools python-module-pypandoc
 
 BuildArch: noarch
 
@@ -30,7 +30,7 @@ Summary: %summary
 Group: Development/Python3
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools python3-module-pypandoc
+BuildRequires: python3-devel python3-module-setuptools python3-module-pypandoc
 
 %description -n python3-module-%modulename
 %summary
@@ -81,5 +81,8 @@ popd
 %endif
 
 %changelog
+* Mon Mar 26 2018 Anton Midyukov <antohami@altlinux.org> 0.2.7-alt2
+- Fix buildrequires
+
 * Sun Mar 18 2018 Anton Midyukov <antohami@altlinux.org> 0.2.7-alt1
 - Initial build for Sisyphus
