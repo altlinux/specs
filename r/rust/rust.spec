@@ -1,5 +1,5 @@
 Name: rust
-Version: 1.23.0
+Version: 1.24.1
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -29,7 +29,7 @@ BuildRequires: rust rust-cargo
 
 %else
 
-%define r_ver 1.22.1
+%define r_ver 1.23.0
 Source2: https://static.rust-lang.org/dist/rust-%r_ver-i686-unknown-linux-gnu.tar.gz
 Source3: https://static.rust-lang.org/dist/rust-%r_ver-x86_64-unknown-linux-gnu.tar.gz
 
@@ -145,6 +145,9 @@ DESTDIR=%buildroot ./x.py install
 %exclude %_libdir/rustlib/etc/lldb_*
 
 %changelog
+* Mon Mar 26 2018 Vladimir Lettiev <crux@altlinux.org> 1.24.1-alt1
+- 1.24.1
+
 * Sun Mar 25 2018 Vladimir Lettiev <crux@altlinux.org> 1.23.0-alt1
 - 1.23.0
 
