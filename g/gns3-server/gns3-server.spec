@@ -3,8 +3,8 @@
 %def_with requirements
 
 Name: gns3-server
-Version: 2.1.3
-Release: alt1.1
+Version: 2.1.4
+Release: alt1
 
 Summary: GNS3 server manages emulators such as Dynamips, VirtualBox or Qemu/KVM
 License: GPLv3
@@ -34,8 +34,8 @@ Requires: python3-module-psutil >= 3.0.0
 Requires: python3-module-zipstream >= 1.1.4
 Requires: python3-module-typing >= 3.5.3
 %endif
-Requires: qemu
-Requires: wireshark
+#Requires: qemu
+#Requires: wireshark
 Requires: iouyap
 Requires: ubridge
 Requires: vpcs
@@ -65,6 +65,10 @@ echo '' > requirements.txt
 %exclude %python3_sitelibdir/tests/controller
 
 %changelog
+* Mon Mar 26 2018 Anton Midyukov <antohami@altlinux.org> 2.1.4-alt1
+- new version 2.1.4
+- disable requires qemu and wireshark
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.1.3-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
