@@ -1,6 +1,8 @@
+%def_with emacs
+
 Name: lout
 Version: 3.40
-Release: alt1
+Release: alt2
 
 Summary: The Lout document formatting language
 License: GPL
@@ -14,7 +16,7 @@ Source2: fontdefs.ld
 Source3: %name-3.40-user.ps.bz2
 Requires: urw-fonts >= 2.0-alt9
 BuildRequires(pre): rpm-build-fonts
-BuildPreReq: emacs
+%{?_with_emacs:BuildPreReq: emacs}
 
 %description
 Lout is a high-level language for document formatting.  Lout reads a
@@ -53,32 +55,26 @@ package.
 %setup
 rm -f doc/user/.pie_intr.swp
 
-cp %SOURCE2 data
-cp %SOURCE3 .
+cp -a %SOURCE2 data
+cp -a %SOURCE3 .
 
 %build
-%ifarch x86_64
-sed -i 's|@SUFF64@|64|' makefile
-%else
-sed -i 's|@SUFF64@||' makefile
-%endif
+SUFF64=`getconf LIBDIR | sed s,/usr/lib,,`
+sed -i "s|@SUFF64@|$SUFF64|" makefile
 %make_build RPM_OPT_FLAGS="%optflags -U_FORTIFY_SOURCE" \
 	FONT_DIR="%_fontpathdir/type1" lout prg2lout
 
 %install
-install -d %buildroot%_bindir
-install -d %buildroot%_libdir
-install -d %buildroot%_datadir/locale
-install -d %buildroot%_man1dir
-install -d %buildroot%_docdir/%name
+install -d %buildroot{%_bindir,%_libdir,%_datadir/locale}
+install -d %buildroot{%_man1dir,%_docdir/%name}
 
-%make DESTDIR=%buildroot DATADIR=%_datadir install installman installdoc
+%makeinstall_std DATADIR=%_datadir installman installdoc
 
 (cd doc/user
     ../../lout all >user.ps
 )
 
-# emacs
+%if_with emacs
 mkdir -p %buildroot%_emacslispdir
 install -m 644 %SOURCE1 %buildroot%_emacslispdir
 emacs -batch -f batch-byte-compile %buildroot%_emacslispdir/%name-mode.el
@@ -89,12 +85,13 @@ cat <<EOF >%buildroot%_sysconfdir/emacs/site-start.d/%name.el
    (setq auto-mode-alist
       (append '(("\\.lout\\'" . lout-mode)) auto-mode-alist))
 EOF
+%endif
 
 install -m644 *.ps.bz2 %buildroot%_docdir/%name
 
 # It is the file in the package whose name matches the format emacs or vim uses 
 # for backup and autosave files. It may have been installed by  accident.
-find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+find %buildroot \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 # failsafe cleanup if the file is declared as %%doc
 find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 
@@ -104,13 +101,19 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %_mandir/man?/*
 %_libdir/%name
 %exclude %_libdir/%name/font
+%if_with emacs
 %_emacslispdir/*
 %_sysconfdir/emacs/site-start.d/*
+%endif
 
 %files doc
 %doc %_docdir/%name
 
 %changelog
+* Mon Mar 26 2018 Michael Shigorin <mike@altlinux.org> 3.40-alt2
+- introduce emacs knob (on by default)
+- fix build on non-x86 64-bit arches
+
 * Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.40-alt1
 - Version 3.40
 
