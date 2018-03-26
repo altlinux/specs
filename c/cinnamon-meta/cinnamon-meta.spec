@@ -2,7 +2,7 @@
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -46,8 +46,6 @@ Requires: cinnamon-minimal = %version-%release
 Provides: cinnamon-full = %version-%release
 # Sound support
 Requires: pulseaudio-daemon alsa-plugins-pulse
-# Samba support for nemo
-Requires: nemo-share
 # Control Center
 Requires: cinnamon-control-center
 # Default terminal
@@ -88,6 +86,10 @@ Requires: seahorse
 Requires: parcellite
 # Display manager
 Requires: lightdm slick-greeter lightdm-settings
+# Samba support for nemo
+Requires: nemo-share
+# Integration with fileroller (see #34711)
+Requires: nemo-fileroller
 
 # Default web-browser
 Requires: firefox
@@ -132,6 +134,9 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Mon Mar 26 2018 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt2
+- add nemo-fileroller to cinnamon-regular (closes: #34711)
+
 * Mon Sep 4 2017 Vladimir Didenko <cow@altlinux.org> 3.4.0-alt1
 - switch to slick-greeter
 
