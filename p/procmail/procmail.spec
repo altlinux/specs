@@ -1,10 +1,12 @@
 Name: procmail
 Version: 3.22
-Release: alt9
+Release: alt10
 
 Summary: The procmail mail processing program
 License: GPLv2+ or Artistic
 Group: Networking/Mail
+#Url: http://www.procmail.org
+Url: https://en.wikipedia.org/wiki/Procmail
 
 # ftp://ftp.procmail.org/pub/procmail/procmail-%version.tar.gz
 Source: procmail-%version.tar
@@ -15,8 +17,17 @@ Patch1: procmail-3.22-deb-fixes.patch
 Patch2: procmail-3.22-owl-alt-fixes.patch
 Patch3: procmail-3.22-owl-alt-config.patch
 Patch4: procmail-3.22-deb-alt-doc.patch
-Patch5: procmail-3.22-owl-truncate.patch
-Patch6: procmail-3.22-taviso-bound.patch
+Patch5: procmail-3.22-deb-355472-doc-procmailex.patch
+Patch6: procmail-3.22-deb-151627-formail.patch
+Patch7: procmail-3.22-deb-474298-484352-mailfold.patch
+Patch8: procmail-3.22-owl-truncate.patch
+Patch9: procmail-3.22-deb-337048-mailstat.patch
+Patch10: procmail-3.22-deb-452723-doc-procmailrc.patch
+Patch11: procmail-3.22-taviso-bound-CVE-2014-3618.patch
+Patch12: procmail-3.22-deb-771958-bound.patch
+Patch13: procmail-3.22-deb-769937-formail-bound.patch
+Patch14: procmail-3.22-deb-876511-formail-bound-CVE-2017-16844.patch
+Patch15: procmail-3.22-rh-formail-uninitialized.patch
 
 Provides: MDA
 # This procmail requires useradd with mailspool support installed.
@@ -37,7 +48,16 @@ installed by default as the local delivery agent.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p0
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
 
 find -type f -name \*.orig -delete
 
@@ -51,8 +71,11 @@ find -type f -print0 |
 
 sed -i 's,\(/usr\)\(/spool\)\?/mail,/var\2/mail,g' examples/advanced FAQ
 
+# Remove binmail from manpages.
+sed -i /binmail/d man/*.man
+
 install -pm644 %_sourcedir/README.Maildir .
-bzip2 -9k HISTORY
+xz -9k HISTORY
 
 %build
 %make_build \
@@ -74,11 +97,16 @@ install -pm644 %_sourcedir/mailstat.1 %buildroot%_man1dir/
 %files
 %_bindir/*
 %_mandir/man?/*
-%doc Artistic FAQ FEATURES HISTORY.bz2 KNOWN_BUGS README README.Maildir examples
+%doc Artistic FAQ FEATURES HISTORY.xz KNOWN_BUGS README README.Maildir examples
 
 %changelog
+* Mon Mar 26 2018 Dmitry V. Levin <ldv@altlinux.org> 3.22-alt10
+- Applied various fixes from Debian 3.22-26 package, including
+  fixes for memory corruption bugs in formail (fixes: CVE-2017-16844).
+
 * Wed Sep 03 2014 Dmitry V. Levin <ldv@altlinux.org> 3.22-alt9
-- formail: applied the fix for potential heap overflow from Tavis Ormandy.
+- formail: applied the fix for potential heap overflow from Tavis Ormandy
+  (fixes: CVE-2014-3618).
 - Hardened build with PIE and full RELRO.
 
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.22-alt8.qa1
