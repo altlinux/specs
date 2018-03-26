@@ -1,6 +1,6 @@
 %def_without bootstrap
 Name: rust-cargo
-Version: 0.22.0
+Version: 0.25.0
 Release: alt1
 Summary: The Rust package manager
 
@@ -21,6 +21,41 @@ Source1: https://static.rust-lang.org/cargo-dist/2016-03-21/cargo-nightly-i686-u
 %endif
 %endif
 
+# How to get vendor.tar
+#
+## Fetch new cargo release and start build
+#
+# $ git fetch upstream
+# $ git fetch --tags upstream
+# $ git merge -s ours 0.25.0
+# $ gear-hsh $TMP/hasher
+#
+## Build failed with some missing deps...
+##
+## Install openssl-devel and zlib-devel and start shell session
+## with internet access inside build chroot
+#
+# $ hsh-install $TMP/hasher openssl-devel zlib-devel
+# $ share_network=1 hsh-shell --mountpoints=/proc $TMP/hasher
+#
+## Install cargo-vendor crate
+#
+# $ cargo install --git https://github.com/alexcrichton/cargo-vendor
+# ...
+# $ cd ~/RPM/BUILD/rust-cargo-0.25.0
+# $ ~/.cargo/bin/cargo-vendor -x vendor
+#
+## Cargo-vendor will download all deps inside vendor directory
+## Now just sync vendor dir in gear and continue build
+#
+# $ exit
+# $ rsync -avP --delete \
+#       $TMP/hasher/chroot/usr/src/RPM/BUILD/rust-cargo-0.25.0/vendor/ \
+#       ./vendor/
+# $ git add vendor
+# $ git commit -m "updated vendor crates"
+# $ gear-hsh $TMP/hasher
+#
 Source2: vendor.tar
 
 Packager: Vladimir Lettiev <crux@altlinux.org>
@@ -68,6 +103,9 @@ CFG_DISABLE_CROSS_TESTS=1 cargo test || :
 %_man1dir/cargo*
 
 %changelog
+* Mon Mar 26 2018 Vladimir Lettiev <crux@altlinux.org> 0.25.0-alt1
+- 0.25.0
+
 * Thu Oct 19 2017 Vladimir Lettiev <crux@altlinux.org> 0.22.0-alt1
 - 0.22.0
 
