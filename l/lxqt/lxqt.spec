@@ -1,9 +1,10 @@
 Name: lxqt
 Version: 0.12
-Release: alt1
+Release: alt2
 Summary: Meta package for install LxQt
 Group: Graphical desktop/Other
 License: GPL
+Url: https://lxqt.org
 BuildArch: noarch
 
 # core componenets
@@ -26,5 +27,8 @@ Requires: lxqt-openssh-askpass lxqt-policykit
 
 %files
 %changelog
+* Mon Mar 26 2018 Anton Midyukov <antohami@altlinux.org> 0.12-alt2
+- Added Url
+
 * Fri Mar 23 2018 Anton Midyukov <antohami@altlinux.org> 0.12-alt1
 - Initial build for ALT
