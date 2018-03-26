@@ -1,10 +1,11 @@
 Name: mingetty
 Version: 1.01
-Release: alt4
+Release: alt4.1
 
 Summary: A compact getty program for virtual consoles only
 License: GPLv2+
 Group: System/Base
+Url: http://mingetty.sourceforge.net/
 
 # This url is no longer valid:
 # ftp://jurix.jura.uni-sb.de/pub/linux/source/system/daemons/
@@ -52,6 +53,9 @@ make install
 %_man8dir/*
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1.01-alt4.1
+- NMU: added URL
+
 * Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 1.01-alt4
 - Built with LFS support enabled.
 
