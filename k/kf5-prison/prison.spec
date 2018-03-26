@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.44.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -16,7 +16,7 @@ Source: %rname-%version.tar
 # optimized out: cmake cmake-modules elfutils gcc-c++ libEGL-devel libGL-devel libqt5-core libqt5-gui libstdc++-devel perl python-base python-modules python3 python3-base rpm-build-python3 ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules libdmtx-devel libqrencode-devel python-module-google python3-dev qt5-base-devel rpm-build-kf5 rpm-build-ruby selinux-policy
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules qt5-base-devel
+BuildRequires: extra-cmake-modules qt5-base-devel qt5-declarative-devel
 BuildRequires: libdmtx-devel libqrencode-devel
 
 %description
@@ -70,8 +70,12 @@ KF5 library
 
 %files -n libkf5prison
 %_K5lib/libKF5Prison.so.*
+%_K5qml/org/kde/prison/
 
 %changelog
+* Mon Mar 26 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt2%ubt
+- build qml module
+
 * Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1%ubt
 - new version
 
