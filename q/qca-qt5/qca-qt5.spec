@@ -4,11 +4,12 @@ Name: qca-qt5
 %define minor 1
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt1%ubt
+Release: alt2
 
 Group: Networking/Instant messaging
 Summary: QCA - Qt Cryptographic Architecture
 License: LGPL
+Url: https://userbase.kde.org/QCA
 
 Requires: lib%name = %version-%release
 
@@ -264,6 +265,9 @@ done
 #%_qt5_headerdir/Qca-qt5/QtCrypto
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.3-alt2
+- NMU: added URL
+
 * Wed Nov 08 2017 Sergey V Turchin <zerg@altlinux.org> 2.1.3-alt1%ubt
 - new version
 - package botan module
