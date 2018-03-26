@@ -1,9 +1,10 @@
 Name: lxde
 Version: 1.0
-Release: alt15
+Release: alt16
 Summary: Virtual package for install all parts of LXDE
 Group: Graphical desktop/Other
 License: GPL
+Url: https://lxde.org
 BuildArch: noarch
 Requires: lxde-lite = %EVR
 Requires: lxde-lxrandr lxde-lxshortcut lxde-lxinput lxde-lxtask lxde-lxhotkey lxde-lxterminal
@@ -46,6 +47,9 @@ Conflicts: lxde lxde-lxpolkit
 %files sysvinit
 
 %changelog
+* Mon Mar 26 2018 Anton Midyukov <antohami@altlinux.org> 1.0-alt16
+- Added Url
+
 * Fri Mar 23 2018 Anton Midyukov <antohami@altlinux.org> 1.0-alt15
 - Optimization of dependencies
 
