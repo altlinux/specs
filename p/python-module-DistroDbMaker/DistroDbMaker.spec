@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.011
+Version: 0.012
 Release: alt1
 Summary: DistroDb Maker tools
 License: LGPL2+
@@ -71,6 +71,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 26 2018 Igor Vlasenko <viy@altlinux.ru> 0.012-alt1
+- added gimp and cups
+
 * Fri Mar 23 2018 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1
 - added mono.raw
 
