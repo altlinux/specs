@@ -5,11 +5,12 @@ Name: qca2
 %define minor 1
 %define bugfix 1
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Networking/Instant messaging
 Summary: QCA - Qt Cryptographic Architecture
 License: LGPL
+Url: https://userbase.kde.org/QCA
 
 Requires: lib%name = %version-%release
 
@@ -264,6 +265,9 @@ popd
 %_includedir/qt4/QtCrypto
 
 %changelog
+* Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt2
+- NMU: added URL
+
 * Tue Oct 06 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt1
 - new version
 
