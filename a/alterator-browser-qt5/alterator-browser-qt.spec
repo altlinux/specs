@@ -10,8 +10,8 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.0.0
-Release: alt2%ubt
+Version: 3.0.1
+Release: alt1%ubt
 
 Source:%name-%version.tar
 
@@ -82,6 +82,9 @@ __EOF__
 
 
 %changelog
+* Mon Mar 26 2018 Sergey V Turchin <zerg at altlinux dot org> 3.0.1-alt1%ubt
+- set startup animation color according current color scheme
+
 * Tue Mar 06 2018 Sergey V Turchin <zerg at altlinux dot org> 3.0.0-alt2%ubt
 - obsolete alterator-browser-qt4
 
