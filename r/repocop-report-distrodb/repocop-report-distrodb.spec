@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.419
+Version: 0.420
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -39,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Mon Mar 26 2018 Igor Vlasenko <viy@altlinux.ru> 0.420-alt1
+- added gimp and cups support
+
 * Sat Mar 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.419-alt1
 - added aspell.raw
 
