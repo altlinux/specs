@@ -1,6 +1,6 @@
 Name: sqlite3
-Version: 3.20.1
-Release: alt2
+Version: 3.22.0
+Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
 Group: Development/Databases
@@ -22,8 +22,16 @@ Patch4: sqlite3-fedora-percentile-test.patch
 # The test always failing and seems no one cares.
 Patch5: sqlite3-fedora-datetest-2.2c.patch
 
+Patch10: sqlite-3.7.7.1-fedora-stupid-openfiles-test.patch
+# https://www.sqlite.org/src/info/1b02731962c21bb0
+Patch11: sqlite3-3.22.0-fedora-int-float-compare.patch
+# https://www.sqlite.org/cgi/src/timeline?r=corrupt-schema
+Patch12: sqlite3-3.22.0-fedora-corrupt-schema.patch
+
 BuildRequires(Pre): tcl-devel
 BuildRequires: libreadline-devel
+# need for test
+BuildRequires: zlib-devel unzip
 
 %define _unpackaged_files_terminate_build 1
 
@@ -110,6 +118,10 @@ embedded controllers.
 %patch5 -p1
 %endif
 
+%patch10 -p1
+%patch11 -p0
+%patch12 -p0
+
 %build
 export TCLLIBDIR=%_tcllibdir
 export TCLDATADIR=%_tcldatadir/%name
@@ -176,6 +188,15 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Sun Mar 25 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.22.0-alt1
+- 3.22.0
+- Patches from Fedora:
+  + sqlite-3.7.7.1-stupid-openfiles-test.patch
+  + sqlite-3.22.0-int-float-compare.patch
+  + sqlite-3.22.0-corrupt-schema.patch
+- Fixes:
+  + CVE-2017-15286 a NULL pointer dereference in tableColumnList
+
 * Wed Sep 13 2017 Mikhail Efremov <sem@altlinux.org> 3.20.1-alt2
 - Enable FTS5 support (closes: #33885).
 
