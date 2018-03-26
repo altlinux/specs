@@ -1,5 +1,5 @@
 Name: rust
-Version: 1.22.1
+Version: 1.23.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -29,7 +29,7 @@ BuildRequires: rust rust-cargo
 
 %else
 
-%define r_ver 1.21.0
+%define r_ver 1.22.1
 Source2: https://static.rust-lang.org/dist/rust-%r_ver-i686-unknown-linux-gnu.tar.gz
 Source3: https://static.rust-lang.org/dist/rust-%r_ver-x86_64-unknown-linux-gnu.tar.gz
 
@@ -98,10 +98,17 @@ EOF
 %if_without bundled_llvm
 cat >> config.toml <<EOF
 [target.x86_64-unknown-linux-gnu]
-llvm-config = "%_bindir/llvm-config"
+llvm-config = "./llvm-config-filtered"
 [target.i686-unknown-linux-gnu]
-llvm-config = "%_bindir/llvm-config"
+llvm-config = "./llvm-config-filtered"
 EOF
+
+cat > llvm-config-filtered <<EOF
+#!/bin/sh
+/usr/bin/llvm-config \$@ | sed -E 's/-Wcovered-switch-default|-Wstring-conversion|-fcolor-diagnostics|-Werror=unguarded-availability-new//g'
+EOF
+
+chmod +x llvm-config-filtered
 
 export LLVM_LINK_SHARED=1
 %endif
@@ -138,6 +145,9 @@ DESTDIR=%buildroot ./x.py install
 %exclude %_libdir/rustlib/etc/lldb_*
 
 %changelog
+* Sun Mar 25 2018 Vladimir Lettiev <crux@altlinux.org> 1.23.0-alt1
+- 1.23.0
+
 * Sat Mar 24 2018 Vladimir Lettiev <crux@altlinux.org> 1.22.1-alt1
 - 1.22.1
 - built with bundled llvm
