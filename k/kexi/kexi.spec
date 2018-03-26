@@ -2,7 +2,7 @@
 # obsileted koffice version
 %define koffice_ver 4:2.3.70
 
-%define sover 15
+%define sover 3.1
 %define libkexiguiutils libkexiguiutils%sover
 %define libkformdesigner libkformdesigner%sover
 %define libkexiundo libkexiundo%sover
@@ -17,7 +17,7 @@
 %define libkexidatatable libkexidatatable%sover
 
 Name: kexi
-Version: 3.0.2
+Version: 3.1.0
 Release: alt1%ubt
 %K5init no_altplace
 
@@ -42,6 +42,7 @@ BuildRequires(pre): rpm-build-ubt rpm-build-kf5
 BuildRequires: icon-theme-breeze
 BuildRequires: extra-cmake-modules qt5-tools-devel-static qt5-wayland-devel
 BuildRequires: qt5-webkit-devel
+BuildRequires: glib2-devel
 BuildRequires: kde5-kdb-devel libmysqlclient-devel libmysqld-devel postgresql-devel
 BuildRequires: kf5-karchive-devel kf5-kcrash-devel kf5-kguiaddons-devel kf5-kiconthemes-devel kf5-kio-devel
 BuildRequires: kf5-kparts-devel kf5-kproperty-devel kf5-kreport-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel
@@ -173,10 +174,10 @@ done
 %doc AUTHORS README*
 
 %files
-%_datadir/kexi/
 %_K5bin/kexi*
 %_K5plug/kexi/
-%_K5xdgapp/*kexi.desktop
+%_datadir/kexi/
+%_K5xdgapp/*kexi*.desktop
 
 #%files devel
 #%_K5link/lib*.so
@@ -184,42 +185,45 @@ done
 #%_K5inc/*.h
 
 %files -n %libkexiguiutils
-%_libdir/libkexiguiutils.so.%sover
-%_libdir/libkexiguiutils.so.*
+%_libdir/libkexiguiutils%sover.so.%sover
+%_libdir/libkexiguiutils%sover.so.*
 %files -n %libkformdesigner
-%_libdir/libkformdesigner.so.%sover
-%_libdir/libkformdesigner.so.*
+%_libdir/libkformdesigner%sover.so.%sover
+%_libdir/libkformdesigner%sover.so.*
 %files -n %libkexiundo
-%_libdir/libkexiundo.so.%sover
-%_libdir/libkexiundo.so.*
+%_libdir/libkexiundo%sover.so.%sover
+%_libdir/libkexiundo%sover.so.*
 %files -n %libkexiformutils
-%_libdir/libkexiformutils.so.%sover
-%_libdir/libkexiformutils.so.*
+%_libdir/libkexiformutils%sover.so.%sover
+%_libdir/libkexiformutils%sover.so.*
 %files -n %libkexiutils
-%_libdir/libkexiutils.so.%sover
-%_libdir/libkexiutils.so.*
+%_libdir/libkexiutils%sover.so.%sover
+%_libdir/libkexiutils%sover.so.*
 %files -n %libkexicore
-%_libdir/libkexicore.so.%sover
-%_libdir/libkexicore.so.*
+%_libdir/libkexicore%sover.so.%sover
+%_libdir/libkexicore%sover.so.*
 %files -n %libkexiextendedwidgets
-%_libdir/libkexiextendedwidgets.so.%sover
-%_libdir/libkexiextendedwidgets.so.*
+%_libdir/libkexiextendedwidgets%sover.so.%sover
+%_libdir/libkexiextendedwidgets%sover.so.*
 %files -n %libkexirelationsview
-%_libdir/libkexirelationsview.so.%sover
-%_libdir/libkexirelationsview.so.*
+%_libdir/libkexirelationsview%sover.so.%sover
+%_libdir/libkexirelationsview%sover.so.*
 %files -n %libkeximain
-%_libdir/libkeximain.so.%sover
-%_libdir/libkeximain.so.*
+%_libdir/libkeximain%sover.so.%sover
+%_libdir/libkeximain%sover.so.*
 %files -n %libkexidataviewcommon
-%_libdir/libkexidataviewcommon.so.%sover
-%_libdir/libkexidataviewcommon.so.*
+%_libdir/libkexidataviewcommon%sover.so.%sover
+%_libdir/libkexidataviewcommon%sover.so.*
 %files -n %libkeximigrate
-%_libdir/libkeximigrate.so.%sover
-%_libdir/libkeximigrate.so.*
+%_libdir/libkeximigrate%sover.so.%sover
+%_libdir/libkeximigrate%sover.so.*
 %files -n %libkexidatatable
-%_libdir/libkexidatatable.so.%sover
-%_libdir/libkexidatatable.so.*
+%_libdir/libkexidatatable%sover.so.%sover
+%_libdir/libkexidatatable%sover.so.*
 
 %changelog
+* Fri Mar 23 2018 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt1%ubt
+- new version
+
 * Tue Oct 31 2017 Sergey V Turchin <zerg@altlinux.org> 3.0.2-alt1%ubt
 - initial build

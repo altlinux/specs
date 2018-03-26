@@ -1,10 +1,10 @@
 %define rname kdb
 
-%define sover 3
+%define sover 4
 %define libkdb3 libkdb3%sover
 
 Name: kde5-%rname
-Version: 3.0.2
+Version: 3.1.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -69,10 +69,10 @@ developing applications that use %name.
 
 %package -n %libkdb3
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common = %version-%release
 %description -n %libkdb3
-KF5 library
+%name library
 
 
 %prep
@@ -117,5 +117,8 @@ sed -i 's|[[:space:]]KF5CoreAddons||' %buildroot/%_pkgconfigdir/KDb3.pc
 %_K5lib/libKDb3.so.*
 
 %changelog
+* Fri Mar 23 2018 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt1%ubt
+- new version
+
 * Wed Nov 01 2017 Sergey V Turchin <zerg@altlinux.org> 3.0.2-alt1%ubt
 - initial build
