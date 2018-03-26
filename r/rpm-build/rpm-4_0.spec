@@ -5,7 +5,7 @@
 
 Name: rpm-build
 Version: 4.0.4
-Release: alt108
+Release: alt109
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -511,6 +511,14 @@ mv %buildroot%_rpmlibdir/{,build}macros
 %endif #with python
 
 %changelog
+* Mon Mar 26 2018 Andrew Savchenko <bircoph@altlinux.org> 4.0.4-alt109
+- Add e2k arch and subarches:
+  - Modify installplatform for e2k.
+  - Add e2k arch, subarches and all macros for them.
+- Tag changes (by vseleznev):
+  - Add RPMTAG_IDENTITY, RPMTAG_AUTOINSTALLED.
+  - respect device ID when remap inodes.
+
 * Thu Jan 18 2018 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt108
 - platform.in:
   + %%_smp_mflags: changed to use %%__nprocs;
