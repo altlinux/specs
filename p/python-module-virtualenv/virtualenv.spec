@@ -1,41 +1,39 @@
+%define _unpackaged_files_terminate_build 1
 %define modulename virtualenv
 
-%def_with python3
 %def_with check
 
 Name: python-module-%modulename
 Version: 15.1.0
-Release: alt1.1
+Release: alt2%ubt
 
 Summary: Virtual Python Environment builder
 License: MIT
 Group: Development/Python
-
-Url: http://pypi.python.org/pypi/virtualenv
-BuildArch: noarch
-
-BuildRequires: python-module-setuptools
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-%endif
-%if_with check
-BuildPreReq: python-module-mock
-BuildPreReq: python-module-nose
-BuildRequires: python-module-pytest
-%if_with python3
-BuildPreReq: python3-module-mock
-BuildPreReq: python3-module-nose
-BuildRequires: python3-module-pytest
-%endif
-%endif
-
 # git://github.com/pypa/virtualenv.git
-Source: %version.tar.gz
+Url: http://pypi.python.org/pypi/virtualenv
+
+Source: %name-%version.tar.gz
 Patch1: python3_sitelibdir.patch
 Patch2: allow_internal_symlinks.patch
+Patch3: python3-fix-installation-within-the-bare-virtualenv.patch
 
-%setup_python_module %modulename
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python-module-setuptools
+BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python-module-mock
+BuildRequires: python-module-nose
+BuildRequires: python-module-pytest
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-nose
+BuildRequires: python3-module-pytest
+%endif
+
+BuildArch: noarch
 
 %description
 Tool to create isolated Python environments.
@@ -51,19 +49,18 @@ in newly created environment by invoking /your/dir/bin/python
 Утилита для создания изолированных окружений для Python.
 
 С Virtualenv вы можете создать независимые наборы библиотек для каждого
-вашего проекта. Опционально вы можете запретить использование системных библиотек.
+вашего проекта. Опционально вы можете запретить использование системных
+библиотек.
 
-Просто выполните "virtualenv /your/dir" и полное виртуальное окружение Python будет
-создано в каталоге, который вы указали (setuptools  и easy_install будут также установлены
-и при вызове будут устанавливать новые библиотеки в ваше виртуальное окружение). Чтобы
-выполнить ваши скрипты в вновь созданном окружение запускайте их при помощи
-/your/dir/bin/python
+Просто выполните "virtualenv /your/dir" и полное виртуальное окружение Python
+будет создано в каталоге, который вы указали (setuptools  и easy_install будут
+также установлены и при вызове будут устанавливать новые библиотеки в ваше
+виртуальное окружение). Чтобы выполнить ваши скрипты в вновь созданном окружение
+запускайте их при помощи /your/dir/bin/python
 
-%if_with python3
 %package -n python3-module-%modulename
 Summary: Virtual Python 3 Environment builder
 Group: Development/Python3
-%py3_provides %modulename
 
 %description -n python3-module-%modulename
 Tool to create isolated Python environments.
@@ -74,60 +71,56 @@ for each of your project.
 Just exec "virtualenv /your/dir" and whole python enviroment (including
 setuptools and easy_install) will be installed there. You could exec scripts
 in newly created environment by invoking /your/dir/bin/python
-%endif
 
 %prep
-%setup -n virtualenv-%version
-
-rm -f virtualenv_support/*.egg
+%setup
 %patch1 -p1
 %patch2 -p1
-
-%build
-export LC_ALL=en_US.UTF-8
+%patch3 -p2
+# to reflect virtualenv_embedded/ updates on virtualenv.py
 python bin/rebuild-script.py
 
-%python_build -b build2
+rm -rf ../python3
+cp -a . ../python3
 
-%if_with python3
-%python3_build -b build3
-%endif
+%build
+%python_build
+
+pushd ../python3
+%python3_build
+popd
 
 %install
-export LC_ALL=en_US.UTF-8
-
-%if_with python3
-rm -rf build && ln -sf build3 build
+pushd ../python3
 %python3_install
 mv %buildroot%_bindir/virtualenv %buildroot%_bindir/virtualenv3
-%endif
+popd
 
-rm -rf build && ln -sf build2 build
 %python_install
 
-%if_with check
 %check
-py.test
+py.test -v
 
-%if_with python3
-py.test3
-%endif
-%endif
+pushd ../python3
+py.test3 -v
+popd
 
 %files
-%_bindir/*
+%doc docs/* *.txt *.rst
+%_bindir/virtualenv
 %exclude %_bindir/virtualenv3
 %python_sitelibdir/*
-%doc docs/*
 
-%if_with python3
 %files -n python3-module-%modulename
+%doc docs/* *.txt *.rst
 %_bindir/virtualenv3
 %python3_sitelibdir/*
-%doc docs/*
-%endif
 
 %changelog
+* Sun Mar 25 2018 Stanislav Levin <slev@altlinux.org> 15.1.0-alt2%ubt
+- Fix installation within the bare virtualenv under python3
+- Cleanup spec
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 15.1.0-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
