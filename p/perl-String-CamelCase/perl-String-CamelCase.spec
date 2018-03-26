@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist String-CamelCase
 Name: perl-%dist
-Version: 0.03
+Version: 0.04
 Release: alt1
 
 Summary: CamelCase, de-camelcase
@@ -33,6 +33,9 @@ CamelCase, de-camelcase
 %perl_vendor_privlib/String
 
 %changelog
+* Mon Mar 26 2018 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- automated CPAN update
+
 * Tue Sep 26 2017 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
 - automated CPAN update
 
