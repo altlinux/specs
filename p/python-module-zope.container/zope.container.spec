@@ -1,49 +1,46 @@
 %define oname zope.container
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 4.1.1
-Release: alt2.dev0.git20150608.1
+Version: 4.2.1
+Release: alt1
 Summary: Zope Container
 License: ZPL
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.container/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/zopefoundation/zope.container.git
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-zope.dottedname python-module-zope.schema
-#BuildPreReq: python-module-zope.location python-module-zope.event
-#BuildPreReq: python-module-zope.lifecycleevent python-module-zope.size
-#BuildPreReq: python-module-zope.filerepresentation
-#BuildPreReq: python-module-zope.traversing-tests
-#BuildPreReq: python-module-zope.component-tests
-#BuildPreReq: python-module-sphinx-devel
-#BuildPreReq: python-module-repoze.sphinx.autointerface
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-pbr python-module-mimeparse python-module-repoze.sphinx.autointerface
+BuildRequires: python-module-alabaster python-module-html5lib
+%if_enabled check
+BuildRequires: python-module-zope.size python-module-zope.testing python-module-zope.location
+BuildRequires: python-module-zope.lifecycleevent python-module-zope.security python-module-zope.traversing-tests
+BuildRequires: python-module-zope.publisher python-module-zope.publisher python-module-zope.component-tests
+BuildRequires: python-module-BTrees
+%endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-zope.dottedname python3-module-zope.schema
-#BuildPreReq: python3-module-zope.location python3-module-zope.event
-#BuildPreReq: python3-module-zope.lifecycleevent python3-module-zope.size
-#BuildPreReq: python3-module-zope.filerepresentation
-#BuildPreReq: python3-module-zope.traversing-tests
-#BuildPreReq: python3-module-zope.component-tests
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-pbr python3-module-mimeparse python3-module-pytz
+BuildRequires: python3-module-html5lib
+%if_enabled check
+BuildRequires: python3-module-zope.size python3-module-zope.testing python3-module-zope.location
+BuildRequires: python3-module-zope.lifecycleevent python3-module-zope.security python3-module-zope.traversing-tests
+BuildRequires: python3-module-zope.publisher python3-module-zope.publisher python3-module-zope.component-tests
+BuildRequires: python3-module-BTrees
+%endif
 %endif
 
 Requires: python-module-zope.i18nmessageid
 %py_requires zope.interface zope.dottedname zope.schema zope.traversing
 %py_requires zope.component zope.event zope.location zope.security
 %py_requires zope.lifecycleevent zope.size zope.filerepresentation
-#BuildPreReq: python3-module-zope.traversing-tests
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Wed Mar 23 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-enum34 python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-numpy python-module-pyasn1 python-module-pytz python-module-repoze python-module-repoze.sphinx python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-twisted-core python-module-zope python-module-zope.component python-module-zope.event python-module-zope.hookable python-module-zope.i18nmessageid python-module-zope.interface python-module-zope.lifecycleevent python-module-zope.location python-module-zope.proxy python-module-zope.schema python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-sphinx-objects.inv python3 python3-base python3-module-cssselect python3-module-enum34 python3-module-pycparser python3-module-setuptools rpm-build-python3
-BuildRequires: python-module-alabaster python-module-html5lib python-module-mimeparse python-module-pbr python-module-repoze.sphinx.autointerface python-module-zope.container python-module-zope.testing python3-dev python3-module-html5lib python3-module-mimeparse python3-module-pbr python3-module-pytz python3-module-zope time
 
 %description
 This package define interfaces of container components, and provides
@@ -51,6 +48,7 @@ container implementations such as a BTreeContainer and OrderedContainer,
 as well as the base class used by zope.site.folder for the Folder
 implementation.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Zope Container
 Group: Development/Python3
@@ -78,6 +76,7 @@ as well as the base class used by zope.site.folder for the Folder
 implementation.
 
 This package contains tests for Zope Container.
+%endif
 
 %package pickles
 Summary: Pickles for Zope Container
@@ -143,12 +142,11 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 rm -fR build
-#py.test -vv
-#if_with python3
-%if 0
+py.test -vv
+%if_with python3
 pushd ../python3
 rm -fR build
-py.test-%_python3_version -vv
+py.test3 -vv
 popd
 %endif
 
@@ -180,6 +178,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 26 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.1-alt1
+- Updated to upstream version 4.2.1.
+
 * Thu Mar 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.1-alt2.dev0.git20150608.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
