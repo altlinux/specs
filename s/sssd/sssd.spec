@@ -1,4 +1,4 @@
-%define libwbc_alternatives_version 0.13.0
+%define libwbc_alternatives_version 0.14.0
 %def_with kcm
 %def_without python3_bindings
 %define if_branch_le() %if "%(rpmvercmp '%ubt_id' '%1')" <= "0"
@@ -17,7 +17,7 @@
 
 Name: sssd
 Version: 1.16.1
-Release: alt1%ubt
+Release: alt2%ubt
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -31,7 +31,7 @@ Patch: %name-%version-alt.patch
 
 # Determine the location of the LDB modules directory
 %define ldb_modulesdir %(pkg-config --variable=modulesdir ldb)
-%define ldb_version 1.1.29
+%define ldb_version 1.3.2
 
 %define _localstatedir /var
 %define _libexecdir /usr/libexec
@@ -835,6 +835,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %nfsidmapdir/sss.so
 
 %changelog
+* Sat Mar 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16.1-alt2%ubt
+- Revert libwbclient-sssd interface to version 0.14 for samba-4.7
+
 * Mon Mar 12 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16.1-alt1%ubt
 - Update to latest stable release
 - Revert libwbclient-sssd interface to version 0.13 for samba-4.6

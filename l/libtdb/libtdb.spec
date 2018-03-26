@@ -2,8 +2,8 @@
 %def_without python3
 
 Name: libtdb
-Version: 1.3.12
-Release: alt2%ubt
+Version: 1.3.15
+Release: alt1%ubt
 
 Summary: A trivial database system
 License: GPL
@@ -137,6 +137,12 @@ make test
 %endif
 
 %changelog
+* Tue Sep 19 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.3.15-alt1%ubt
+- Update to latest release for samba-4.7 and samba-4.8
+
+* Thu Aug 17 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.3.14-alt1%ubt
+- Update to release for samba-4.7.0
+
 * Sat Jul 15 2017 Evgeny Sinelnikov <sin@altlinux.ru> 1.3.12-alt2%ubt
 - Rebuild with universal build tag (aka ubt macros) for p7 and c7
 
