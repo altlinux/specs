@@ -6,8 +6,8 @@
 #def_disable check
 
 Name: python-module-%oname
-Version: 4.2.0
-Release: alt3.dev0.git20150605.1.1.1
+Version: 5.1.1
+Release: alt1
 Summary: ZEO provides a client-server storage implementation for ZODB
 License: ZPL
 Group: Development/Python
@@ -15,7 +15,7 @@ Url: https://pypi.python.org/pypi/ZEO
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/zopefoundation/ZEO.git
-Source: %name-%version.tar
+Source: %oname-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -97,9 +97,10 @@ protocol layered on top of TCP.
 This package contains tests for ZEO.
 
 %prep
-%setup
+%setup -n ZEO-%version
 
 %if_with python3
+rm -rf ../python3
 cp -fR . ../python3
 find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
@@ -137,7 +138,7 @@ popd
 %endif
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -152,7 +153,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt *.rst
 %_bindir/*.py3
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
@@ -166,6 +167,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 26 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.1.1-alt1
+- Version 5.1.1
+
 * Mon Feb 05 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt3.dev0.git20150605.1.1.1
 - (NMU) Fix Requires to ZODB.Transaction
 
