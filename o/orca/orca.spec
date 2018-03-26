@@ -1,4 +1,4 @@
-%define ver_major 3.26
+%define ver_major 3.28
 
 Name: orca
 Version: %ver_major.0
@@ -25,19 +25,22 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 
 BuildPreReq: /proc
+BuildRequires: rpm-build-gir
 BuildRequires: intltool >= 0.40
 BuildRequires: gnome-doc-utils
 BuildRequires: libgtk+3-devel >= 3.2
 BuildRequires: libgtk+3-gir
-BuildRequires: libat-spi2-core-devel
+BuildRequires: libat-spi2-core-devel >= 2.26
 BuildRequires: at-spi2-atk-devel
-BuildRequires: python3-module-pygobject3-devel >= 3.0
+BuildRequires: python3-module-pygobject3-devel >= 3.18
 BuildRequires: python3-module-dbus-devel
 BuildRequires: python3-module-pycairo-devel
 BuildRequires: python3-module-pyxdg
 BuildRequires: python3-base
 BuildRequires: yelp-tools
 BuildRequires: python3-module-speechd
+BuildRequires: python3-module-brlapi
+BuildRequires: gstreamer1.0-devel
 
 %description
 A flexible, scriptable, extensible screen reader for the GNOME platform
@@ -87,6 +90,9 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %_datadir/gdm/greeter/autostart/%name-autostart.desktop
 
 %changelog
+* Mon Mar 26 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Fri Sep 15 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 
