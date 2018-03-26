@@ -1,6 +1,6 @@
 Name: 	 xrdp
-Version: 0.9.4
-Release: alt2
+Version: 0.9.6
+Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -22,7 +22,7 @@ Source6: xorgxrdp.tar
 # patches from Debian
 Patch2: asm-xorgxrdp.diff
 Patch3: make-fixes.diff
-Patch4: config.diff
+Patch4: xrdp-alt-fix-config.patch
 Patch5: misc-fixes.diff
 Patch7: shutup-daemon.diff
 Patch10: lfs.diff
@@ -84,7 +84,7 @@ operation, most standard X11 fonts and tools need to be installed.
 tar xf %SOURCE4
 tar xf %SOURCE5
 tar xf %SOURCE6
-%patch2 -p1
+#patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
@@ -99,13 +99,7 @@ subst "s|/usr/lib|%_libdir|g" %name-init
 find . -type f -name Makefile.am -exec subst "s|\${localstatedir}\/run|/var/run|g" {} \;
 
 # remove unused modules from xrdp login combobox
-subst '/^\[Xvnc\]/,$s/^\([a-z[]\)/#\1/' xrdp/xrdp.ini
-
-# Low is 40 bit key and everything from client to server is encrypted.
-# Medium is 40 bit key, everything both ways is encrypted.
-# High is 128 bit key everything both ways is encrypted.
-# increase encryption to 128 bit's
-subst 's/crypt_level=low/crypt_level=high/g' xrdp/xrdp.ini
+subst '/^\[Xvnc\]/,$s/^\([a-z[]\)/#\1/' xrdp/xrdp.ini.in
 
 # create 'bash -l' based startwm, to pick up PATH etc.
 echo '#!/bin/bash -l
@@ -236,6 +230,12 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Mon Mar 26 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.6-alt1
+- New version.
+
+* Mon Jan 15 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.5-alt1
+- New version.
+
 * Wed Dec 20 2017 Vitaly Lipatov <lav@altlinux.ru> 0.9.4-alt2
 - clean build
 
