@@ -1,5 +1,5 @@
 Name: rapid-photo-downloader
-Version: 0.9.8
+Version: 0.9.9
 Release: alt1
 
 %define xdg_name net.damonlynch.%name
@@ -64,6 +64,9 @@ subst "s|'share\/solid\/actions'|'share/apps/solid/actions'|" setup.py
 
 
 %changelog
+* Mon Mar 26 2018 Yuri N. Sedunov <aris@altlinux.org> 0.9.9-alt1
+- 0.9.9
+
 * Tue Feb 27 2018 Yuri N. Sedunov <aris@altlinux.org> 0.9.8-alt1
 - 0.9.8
 
