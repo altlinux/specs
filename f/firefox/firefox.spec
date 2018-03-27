@@ -7,16 +7,15 @@
 %define gst_version 1.0
 %define nspr_version 4.17
 %define nss_version 3.33.0
-
-#global gcc_version 5
-#set_gcc_version #gcc_version
+%define rust_version 1.24.1
+%define cargo_version 0.25.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        58.0.2
-Release:        alt3
+Version:        59.0.2
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -34,7 +33,6 @@ Source8:        firefox-prefs.js
 
 Patch6:         firefox-alt-disable-werror.patch
 Patch7:         firefox-alt-fix-expandlibs.patch
-Patch8:         firefox-alt-fix-fortify-source-check.patch
 Patch14:        firefox-fix-install.patch
 Patch16:        firefox-cross-desktop.patch
 Patch17:        firefox-mediasource-crash.patch
@@ -49,10 +47,14 @@ BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
 BuildRequires(pre): browser-plugins-npapi-devel
 
-BuildRequires: gcc-c++
-BuildRequires: clang4.0 clang4.0-devel llvm4.0 llvm4.0-libs llvm4.0-devel
+BuildRequires: clang6.0
+BuildRequires: clang6.0-devel
+BuildRequires: llvm6.0-devel
+BuildRequires: lld-devel
+BuildRequires: libstdc++-devel
 BuildRequires: rpm-macros-alternatives
-BuildRequires: rust rust-cargo
+BuildRequires: rust >= %rust_version
+BuildRequires: rust-cargo >= %cargo_version
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXdamage-devel
@@ -141,15 +143,14 @@ tar -xf %SOURCE2
 
 #patch6  -p1
 %patch7  -p2
-%patch8  -p2
-%patch14 -p1
+#patch14 -p1
 %patch16 -p2
 %patch17 -p2
 %patch18 -p2
 
 %patch200 -p1
 %patch201 -p1
-%patch202 -p1
+#patch202 -p1
 
 cp -f %SOURCE4 .mozconfig
 
@@ -168,32 +169,28 @@ cd mozilla
 
 export MOZ_BUILD_APP=browser
 
-MOZ_OPT_FLAGS="$RPM_OPT_FLAGS"
+MOZ_OPT_FLAGS="-pipe -O2 -g0"
+
+MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS \
+ -fuse-ld=lld -flto=thin \
+ -Wl,--thinlto-jobs=4 -Wl,--thinlto-cache-dir=thinlto-cache -Wl,--thinlto-cache-policy,cache_size=10%% -Wl,--lto-O0"
 
 # PIE, full relro
-MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fPIC -Wl,-z,relro -Wl,-z,now"
+MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -DPIC -fPIC -Wl,-z,relro -Wl,-z,now"
 
 # Add fake RPATH
 MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -Wl,-rpath,/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
 
-# add -fno-delete-null-pointer-checks and -fno-inline-small-functions for gcc6
-MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fno-delete-null-pointer-checks -fno-inline-small-functions"
-
-# Mozilla builds with -Wall with exception of a few warnings which show up
-# everywhere in the code; so, don't override that.
-MOZ_OPT_FLAGS=$(echo $MOZ_OPT_FLAGS | sed -e 's/-Wall//')
-
-# Disable C++ exceptions since Mozilla code is not exception-safe
-MOZ_OPT_FLAGS=$(echo $MOZ_OPT_FLAGS | sed -e 's/-fexceptions/-fno-exceptions/g')
-
 # If MOZ_DEBUG_FLAGS is empty, firefox's build will default it to "-g" which
 # overrides the -g0 from line above and breaks building on s390
 # (OOM when linking, rhbz#1238225)
-MOZ_OPT_FLAGS="$(echo $MOZ_OPT_FLAGS | sed -e 's/ -g/ -g0/')"
 export MOZ_DEBUG_FLAGS=" "
 
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
+
+export CC="clang"
+export CXX="clang++"
 
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export srcdir="$PWD"
@@ -201,26 +198,14 @@ export SHELL=/bin/sh
 export RUST_BACKTRACE=1
 export RUSTFLAGS="-Cdebuginfo=0"
 export BUILD_VERBOSE_LOG=1
-export GCC_USE_GNU_LD=1
 
 cat >> .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
+ac_add_options --enable-linker=lld
 EOF
 
-#export CC="clang"
-#export CXX="clang++"
-
-# On x86 architectures, Mozilla can build up to 4 jobs at once in parallel,
-# however builds tend to fail on other arches when building in parallel.
-MOZ_SMP_FLAGS=-j1
-%ifarch %{ix86} x86_64
-[ "${NPROCS:-0}" -ge 2 ] && MOZ_SMP_FLAGS=-j2
-[ "${NPROCS:-0}" -ge 4 ] && MOZ_SMP_FLAGS=-j4
-[ "${NPROCS:-0}" -ge 8 ] && MOZ_SMP_FLAGS=-j8
-%endif
-
-export MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
+export MOZ_MAKE_FLAGS="-j6"
 
 %__autoconf old-configure.in > old-configure
 pushd js/src
@@ -229,7 +214,7 @@ popd
 
 ./mach build
 
-%__cc %optflags \
+$CC $CFLAGS \
 	-Wall -Wextra \
 	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
 	-DMOZ_PROGRAM=\"%firefox_prefix/firefox\" \
@@ -344,6 +329,31 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Tue Mar 27 2018 Alexey Gladkov <legion@altlinux.ru> 59.0.2-alt1
+- New release (59.0.2).
+- Fixed:
+  + CVE-2018-5127: Buffer overflow manipulating SVG animatedPathSegList
+  + CVE-2018-5128: Use-after-free manipulating editor selection ranges
+  + CVE-2018-5129: Out-of-bounds write with malformed IPC messages
+  + CVE-2018-5130: Mismatched RTP payload type can trigger memory corruption
+  + CVE-2018-5131: Fetch API improperly returns cached copies of no-store/no-cache resources
+  + CVE-2018-5132: WebExtension Find API can search privileged pages
+  + CVE-2018-5133: Value of the app.support.baseURL preference is not properly sanitized
+  + CVE-2018-5134: WebExtensions may use view-source: URLs to bypass content restrictions
+  + CVE-2018-5135: WebExtension browserAction can inject scripts into unintended contexts
+  + CVE-2018-5136: Same-origin policy violation with data: URL shared workers
+  + CVE-2018-5137: Script content can access legacy extension non-contentaccessible resources
+  + CVE-2018-5138: Android Custom Tab address spoofing through long domain names
+  + CVE-2018-5140: Moz-icon images accessible to web content through moz-icon: protocol
+  + CVE-2018-5141: DOS attack through notifications Push API
+  + CVE-2018-5142: Media Capture and Streams API permissions display incorrect origin with data: and blob: URLs
+  + CVE-2018-5143: Self-XSS pasting javascript: URL with embedded tab into addressbar
+  + CVE-2018-5126: Memory safety bugs fixed in Firefox 59
+  + CVE-2018-5125: Memory safety bugs fixed in Firefox 59 and Firefox ESR 52.7
+  + CVE-2018-5146: Out of bounds memory write in libvorbis
+  + CVE-2018-5147: Out of bounds memory write in libtremor
+  + CVE-2018-5148: Use-after-free in compositor
+
 * Thu Feb 22 2018 Alexey Gladkov <legion@altlinux.ru> 58.0.2-alt3
 - Fix ALSA (ALT#34553).
 
