@@ -7,7 +7,7 @@
 
 Name: lightdm
 Version: 1.16.7
-Release: alt18
+Release: alt19
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -288,6 +288,9 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Tue Mar 27 2018 Arseny Maslennikov <arseny@altlinux.org> 1.16.7-alt19
+- x-server-xvnc.c: close connection socket on Xvnc shutdown.
+
 * Fri Mar 23 2018 Ivan Zakharyaschev <imz@altlinux.org> 1.16.7-alt18
 - in "Remove X authority": Ignore any error & don't exit, continue
   closing the session (PAM etc.), otherwise the PAM sessiosn might be
@@ -316,7 +319,7 @@ fi
 - Lookup 'login-unknown' first in the seat configuration, then in
   the global section.
 - Added control for 'greeter-hide-users' configuration parameter.
-  
+
 * Tue Oct 24 2017 Paul Wolneykien <manowar@altlinux.org> 1.16.7-alt12
 - Support the 'reset' argument of the CHANGE_PASS message. Use
   "reset-pass-envvar" configuration parameter to set the environment
@@ -398,10 +401,11 @@ fi
 
 * Mon Feb 04 2013 Alexey Shabalin <shaba@altlinux.ru> 1.5.0-alt1
 - 1.5.0
-- make greeter and user sessions inherit the system default locale (patch from opensuse)
+- make greeter and user sessions inherit the system default locale
+  (patch from opensuse)
 
 * Thu Jan 31 2013 Alexey Shabalin <shaba@altlinux.ru> 1.4.0-alt2
-- don't requires accountservices
+- don't require accountservices
 - requires any greeter
 
 * Wed Jan 30 2013 Alexey Shabalin <shaba@altlinux.ru> 1.4.0-alt1
