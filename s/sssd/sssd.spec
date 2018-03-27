@@ -17,7 +17,7 @@
 
 Name: sssd
 Version: 1.16.1
-Release: alt2%ubt
+Release: alt3%ubt
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -835,6 +835,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %nfsidmapdir/sss.so
 
 %changelog
+* Tue Mar 27 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.16.1-alt3%ubt
+- libnfsidmap soname bump
+
 * Sat Mar 24 2018 Evgeny Sinelnikov <sin@altlinux.org> 1.16.1-alt2%ubt
 - Revert libwbclient-sssd interface to version 0.14 for samba-4.7
 
