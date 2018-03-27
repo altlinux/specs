@@ -1,7 +1,7 @@
 %def_with lua_compat
 Name: lua5.1
 Version: 5.1.5
-Release: alt14
+Release: alt15
 
 Summary: Embeddable programming language
 License: MIT
@@ -30,7 +30,7 @@ Provides: lua5 = %version-%release
 Obsoletes: lua5 <= 5.1.5-alt2
 Conflicts: lua4
 
-# Automatically added by buildreq on Mon Sep 28 2009
+# if libreadline-devel changed, change Requires: in devel too
 BuildRequires: libreadline-devel
 
 %package -n lib%{name}
@@ -54,6 +54,8 @@ Provides: asterisk-build-hacks = 0.0.2
 %if_with lua_compat
 Requires: lib%{name}-compat-devel = %EVR
 %endif
+# it wasn't found automatically
+Requires: libreadline-devel
 
 %if_with lua_compat
 %package -n lib%{name}-compat-devel
@@ -266,6 +268,9 @@ fi
 %pkgdocdir/test
 
 %changelog
+* Tue Mar 27 2018 Igor Vlasenko <viy@altlinux.ru> 5.1.5-alt15
+- added Requires: libreadline-devel to devel (not found by autoreq)
+
 * Sun Mar 26 2017 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.1.5-alt14
 - removed lua5.1-5.1.5-alt-at-luaconf.patch in favor to general approach
 
