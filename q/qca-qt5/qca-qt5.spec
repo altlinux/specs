@@ -1,10 +1,15 @@
+%ifarch %ix86 x86_64
+%def_enable botan
+%else
+%def_disable botan
+%endif
 
 Name: qca-qt5
 %define major 2
 %define minor 1
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3%ubt
 
 Group: Networking/Instant messaging
 Summary: QCA - Qt Cryptographic Architecture
@@ -23,8 +28,11 @@ BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake gcc-c++ glibc-devel ca-certificates
 BuildRequires: qt5-base-devel
 BuildRequires: zlib-devel bzlib-devel libgmp-devel
-BuildRequires: libgcrypt-devel libnss-devel libsasl2-devel pkcs11-helper-devel libbotan-devel
+BuildRequires: libgcrypt-devel libnss-devel libsasl2-devel pkcs11-helper-devel
 BuildRequires: kde-common-devel
+%if_enabled botan
+BuildRequires: libbotan-devel
+%endif
 
 %package -n lib%name
 Summary: QCA - Qt Cryptographic Architecture library
@@ -253,8 +261,10 @@ done
 %_qt5_plugindir/crypto/libqca-nss.so
 %files pkcs11
 %_qt5_plugindir/crypto/libqca-pkcs11.so
+%if_enabled botan
 %files botan
 %_qt5_plugindir/crypto/libqca-botan.so
+%endif
 
 %files -n lib%name-devel
 %_libdir/lib*.so
@@ -265,6 +275,9 @@ done
 #%_qt5_headerdir/Qca-qt5/QtCrypto
 
 %changelog
+* Tue Mar 27 2018 Sergey V Turchin <zerg@altlinux.org> 2.1.3-alt3%ubt
+- build botan plugin only on i86
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 2.1.3-alt2
 - NMU: added URL
 
