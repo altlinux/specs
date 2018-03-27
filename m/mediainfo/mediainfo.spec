@@ -1,5 +1,5 @@
 Name: mediainfo
-Version: 18.03
+Version: 18.03.1
 Release: alt1
 
 Group: File tools
@@ -18,7 +18,7 @@ BuildRequires: gcc-c++
 BuildRequires: dos2unix
 BuildRequires: zlib-devel
 BuildRequires: libpango-devel
-BuildRequires: libzen-devel >= 0.4.35
+BuildRequires: libzen-devel >= 0.4.37
 BuildRequires: libmediainfo-devel >= %version
 BuildRequires: libwxGTK-devel
 BuildRequires: sgml-common
@@ -142,6 +142,9 @@ grep -v '^Encoding=' Project/GNU/GUI/mediainfo-gui.kde4.desktop >%buildroot%_K4s
 %_K5srv/ServiceMenus/%name-gui.desktop
 
 %changelog
+* Tue Mar 27 2018 Yuri N. Sedunov <aris@altlinux.org> 18.03.1-alt1
+- 18.03.1
+
 * Tue Mar 20 2018 Yuri N. Sedunov <aris@altlinux.org> 18.03-alt1
 - 18.03
 
