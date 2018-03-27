@@ -1,15 +1,17 @@
 Name: nyquist
-Version: 3.09
+Version: 3.12
 Release: alt1
 
 Summary: Sound synthesis and composition language with a Lisp syntax
 Group: Sound
 License: BSD
 Url: http://www-2.cs.cmu.edu/~music/music.software.html
-Source: http://download.sourceforge.net/%name/nyqsrc309.zip
-Source1: %name-Makefile
 
-BuildRequires: unzip gcc-c++ libalsa-devel liblo-devel libportaudio2-devel
+Source: http://download.sourceforge.net/%name/nyqsrc312.zip
+Source1: %name-Makefile
+Patch: nyquist-3.12-alt-cmake.patch
+
+BuildRequires: unzip cmake gcc-c++ libalsa-devel liblo-devel libportaudio2-devel
 BuildRequires: libsndfile-devel libogg-devel libflac-devel libvorbis-devel
 BuildRequires: /proc java-devel
 BuildRequires: dos2unix
@@ -23,6 +25,7 @@ easy to use because it is based on an interactive Lisp interpreter.
 
 %prep
 %setup -n nyquist
+%patch
 cp %SOURCE1 ./Makefile
 
 # remove cvs cruft
@@ -42,8 +45,10 @@ find -name "*.htm*" \
     -or -name "*.dat" -exec dos2unix -q '{}' \;
 
 %build
+%cmake_insource -DUSE_SOURCE_LIBS=OFF
+%make_build
 rm -f runtime/system.lsp
-%make_build OPT="$RPM_OPT_FLAGS" -f Makefile
+#%make_build OPT="$RPM_OPT_FLAGS" -f Makefile
 
 %install
 mkdir -p %buildroot%_bindir
@@ -80,6 +85,9 @@ chmod 0755 %buildroot%_bindir/jny
 %doc doc
 
 %changelog
+* Tue Mar 27 2018 Yuri N. Sedunov <aris@altlinux.org> 3.12-alt1
+- 3.12 (build with fixed cmake stuff)
+
 * Tue Jul 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.09-alt1
 - 3.09
 
