@@ -1,5 +1,5 @@
 Name:    guake
-Version: 0.8.12
+Version: 3.0.5
 Release: alt1
 Summary: guake - a drop-down terminal
 Summary(ru.UTF-8):guake — выпадающий эмулятор терминала
@@ -10,15 +10,25 @@ URL: 	 http://guake.org/
 # VCS:	 https://github.com/Guake/guake.git
 Source0: %name-%version.tar
 
-BuildRequires(pre): etersoft-build-utils libGConf-devel rpm-build-gnome python-devel rpm-build-python
-BuildRequires:  glibc-devel-static intltool libgtk+2-devel python-devel python-module-pygtk-devel python-module-vte python-modules-encodings GConf
+BuildArch: noarch
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: rpm-build-gir
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pbr
+BuildRequires: libgio
 BuildRequires: desktop-file-utils
 
-Requires: GConf
+Requires: dconf
 Requires: dbus
-Requires: python-module-pygtk-libglade notification-daemon
+Requires: notification-daemon
 
-Patch1: guake-fix-desktop-files.patch
+Patch1: guake-alt-fix-ru-l10n.patch
+Patch2: guake-alt-fix-sitelibdir-path.patch
+Patch3: guake-alt-fix-schemas-path.patch
+Patch4: guake-alt-disable-debug-in-dbus-fail.patch
+Patch5: guake-alt-add-glade-l10n.patch
+
 BuildRequires: desktop-file-utils
 
 %description
@@ -28,44 +38,48 @@ just need to press a key to invoke him, and press again to hide.
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
-%autoreconf
-%configure --disable-static --disable-schemas-install
-%make_build CXXFLAGS="%{optflags}" CFLAGS="%{optflags}"
+export PBR_VERSION="%version"
+%make_build
 
 %install
-export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
-%makeinstall
+export PBR_VERSION="%version"
+%makeinstall INSTALL_ROOT=%buildroot PREFIX=%buildroot%_prefix
 
-rm -f %buildroot%_libdir/guake/*.la %buildroot%_iconsdir/hicolor/icon-theme.cache
-install -Dm644 data/guake-autostart.desktop.in %buildroot%gnome_autostartdir/guake.desktop
+# Install glade files and pixmaps
+mkdir -p %buildroot%python3_sitelibdir/%name/data/pixmaps
+cp -a guake/data/*.glade %buildroot%python3_sitelibdir/%name/data/
+cp -a guake/data/pixmaps/*.png %buildroot%python3_sitelibdir/%name/data/pixmaps/
+
+# Remove compiled gscheme
+rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 
 %find_lang %name
 
-%post
-%gconf2_install %name
-
-%preun
-if [ $1 = 0 ]; then
-  %gconf2_uninstall %name
-fi
-
 %files -f %name.lang
-%doc AUTHORS ChangeLog COPYING NEWS README.rst
-%config %_sysconfdir/gconf/schemas/*
-%attr(755,root,root) %_bindir/*
-%python_sitelibdir_noarch/%name
-%_datadir/%name
-%_pixmapsdir/guake
+%doc COPYING NEWS.rst README.rst
+%attr(755,root,root) %_bindir/%name
+%python3_sitelibdir/%name
+%python3_sitelibdir/Guake*.egg-info
+%_pixmapsdir/%name.png
 %_desktopdir/*.desktop
-%_datadir/dbus-1/services/org.guake.Guake.service
-%_sysconfdir/gconf/schemas/guake.schemas
-%_man1dir/guake.1*
-%gnome_autostartdir/guake.desktop
-%_iconsdir/hicolor/*/apps/%{name}*.png
+%_datadir/glib-2.0/schemas/org.guake.gschema.xml
 
 %changelog
+* Tue Mar 27 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.5-alt1
+- New version.
+
+* Thu Mar 22 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.4-alt1
+- New version.
+
+* Thu Jan 18 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt1
+- New version.
+
 * Tue Jan 09 2018 Andrey Cherepanov <cas@altlinux.org> 0.8.12-alt1
 - New version.
 
