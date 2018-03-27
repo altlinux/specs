@@ -1,5 +1,5 @@
 Name: nfs
-Version: 2.2.1
+Version: 2.3.1
 Release: alt1
 Epoch: 1
 
@@ -98,6 +98,7 @@ This package provides the Linux NFS stats utilities.
     --with-statduser=rpcuser \
     --with-statdpath=%_localstatedir/nfs/statd \
     --with-systemd=%systemd_unitdir \
+    --with-pluginpath=%_libdir/libnfsidmap \
     --disable-static \
     #
 sed -i 's/#define[[:blank:]]\+START_STATD.\+$/#undef START_STATD/' support/include/config.h
@@ -296,6 +297,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Tue Mar 27 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.3.1-alt1
+- 2.3.1 released
+
 * Thu Nov 02 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.2.1-alt1
 - 2.2.1 released
 

@@ -71,7 +71,7 @@
 
 Name: nfs-ganesha
 Version: 2.5.4
-Release: alt1
+Release: alt2
 
 Summary: NFS-Ganesha is a NFS Server running in user space
 
@@ -544,6 +544,9 @@ install -m 644 ChangeLog	%buildroot%_docdir/ganesha
 %endif
 
 %changelog
+* Tue Mar 27 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.4-alt2
+- libnfsidmap soname bump
+
 * Sat Dec 09 2017 Vitaly Lipatov <lav@altlinux.ru> 2.5.4-alt1
 - new version 2.5.4 (with rpmrb script)
 
