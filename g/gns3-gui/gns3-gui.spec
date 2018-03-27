@@ -1,6 +1,6 @@
 Name: gns3-gui
-Version: 2.1.3
-Release: alt1.1
+Version: 2.1.4
+Release: alt1
 
 Summary: GNS3 Graphical User Interface
 License: GPLv3
@@ -65,6 +65,9 @@ install -Dp -m0644 %SOURCE5 %buildroot%_desktopdir/gns3.desktop
 %_datadir/mime/packages/gns3.xml
 
 %changelog
+* Mon Mar 26 2018 Anton Midyukov <antohami@altlinux.org> 2.1.4-alt1
+- new version 2.1.4
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 2.1.3-alt1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
