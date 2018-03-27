@@ -1,6 +1,6 @@
 Name: alterator-luks
 Version: 0.3.0
-Release: alt1
+Release: alt2
 
 Source:%name-%version.tar
 
@@ -38,6 +38,9 @@ alterator module for for change LUKS passphrase
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Mar 27 2018 Oleg Solovyov <mcpain@altlinux.org> 0.3.0-alt2
+- fix "no key available with this passphrase" (Closes: #31895)
+
 * Wed Apr 27 2016 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1
 - Show error message if cryptsetup failed.
 - Use --force-password for cryptsetup.
