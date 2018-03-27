@@ -1,5 +1,5 @@
 Name: libmediainfo
-Version: 18.03
+Version: 18.03.1
 Release: alt1
 
 Group: System/Libraries
@@ -18,7 +18,7 @@ BuildRequires: id3lib-devel
 BuildRequires: libflac-devel
 BuildRequires: libmatroska-devel
 BuildRequires: libfaad-devel
-BuildRequires: libzen-devel >= 0.4.35
+BuildRequires: libzen-devel >= 0.4.37
 BuildRequires: libcurl-devel
 BuildRequires: libmms-devel
 BuildRequires: libtinyxml2-devel
@@ -85,6 +85,9 @@ popd
 %_libdir/%name.so
 
 %changelog
+* Tue Mar 27 2018 Yuri N. Sedunov <aris@altlinux.org> 18.03.1-alt1
+- 18.03.1
+
 * Tue Mar 20 2018 Yuri N. Sedunov <aris@altlinux.org> 18.03-alt1
 - 18.03
 
