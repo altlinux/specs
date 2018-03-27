@@ -2,7 +2,7 @@
 %global soversion 1
 Name: fwupdate
 Version: 10
-Release: alt1
+Release: alt2
 Summary: Tools to manage UEFI firmware updates
 License: GPLv2+
 Url: https://github.com/rhinstaller/fwupdate
@@ -158,5 +158,8 @@ mv %buildroot/boot/efi/EFI/%efidir/fwup* %buildroot/%_libdir/efi/fw/
 %_libdir/efi/fw/fw*
 
 %changelog
+* Tue Mar 27 2018 Anton Farygin <rider@altlinux.ru> 10-alt2
+- fixed efi files location in install script
+
 * Mon Mar 05 2018 Anton Farygin <rider@altlinux.ru> 10-alt1
 - first build for ALT, based on RH spec
