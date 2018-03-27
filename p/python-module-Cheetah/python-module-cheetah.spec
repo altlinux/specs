@@ -1,27 +1,30 @@
-%define packagename python-module-cheetah
 %define origname Cheetah
 
 %def_with python3
 
 Summary: Template engine and code-generator
-Name: %packagename
-Version: 2.4.4
-Release: alt2.git20121217.1.1
-Source0: %origname-%version.tar.gz
+Name: python-module-%origname
+Version: 3.1.0
+Release: alt1
+Source0: Cheetah-%version.tar
 License: MIT
 Group: Development/Python
 URL: http://cheetahtemplate.org/
+# https://github.com/CheetahTemplate3/cheetah3
 #BuildArch: noarch
 
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: elfutils python-base python-devel python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
-BuildRequires: python-module-markdown python-module-setuptools python3-devel python3-module-markdown python3-module-setuptools rpm-build-python3 time
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-module-markdown python-module-setuptools time
+BuildRequires: python-module-sphinx
 
 #BuildPreReq: python-module-markdown python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel python3-module-distribute
-#BuildPreReq: python3-module-markdown python-tools-2to3
+BuildPreReq: python3-devel python3-module-distribute python3-module-setuptools
+BuildPreReq: python3-module-markdown python-tools-2to3
+BuildPreReq: python3-module-sphinx
 %endif
 
 %description
@@ -73,20 +76,26 @@ form emails and even Python code.
 This package contains tests for Cheetah.
 
 %prep
-%setup -n %origname-%version
+%setup -n Cheetah-%version
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
 %endif
 
 %build
-%python_build_debug
+%python_build
+
 %if_with python3
 pushd ../python3
 find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
 popd
 %endif
+
+export PYTHONPATH=$PWD
+%make -C docs html
+mkdir man
+cp -fR docs/_build/html/* man/
 
 %install
 %if_with python3
@@ -104,24 +113,28 @@ popd
 %python_install --optimize=2 --record=INSTALLED_FILES
 
 %files -f INSTALLED_FILES
-%exclude %python_sitelibdir/%origname/Tests
+%doc *.rst man/
+%exclude %python_sitelibdir/Cheetah/Tests
 
 %files tests
-%python_sitelibdir/%origname/Tests
-%exclude %python_sitelibdir/%origname/Tests/Performance.py*
-
-%if_with python3
-%files -n python3-module-%origname
-%_bindir/py3_*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/%origname/Tests
+%python_sitelibdir/Cheetah/Tests
+%exclude %python_sitelibdir/Cheetah/Tests/Performance.py*
 
 %files -n python3-module-%origname-tests
-%python3_sitelibdir/%origname/Tests
-%exclude %python3_sitelibdir/%origname/Tests/Performance.py*
-%endif
+%python3_sitelibdir/Cheetah/Tests
+%exclude %python3_sitelibdir/Cheetah/Tests/Performance.py*
+
+%files -n python3-module-%origname
+%doc *.rst man/
+%_bindir/py3_*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/Cheetah/Tests
+
 
 %changelog
+* Tue Mar 27 2018 Andrey Bychkov <mrdrew@altlinux.org> 3.1.0-alt1
+- Version 3.1.0-alt1
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.4.4-alt2.git20121217.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
@@ -163,4 +176,3 @@ popd
 
 * Sat Apr 05 2008 Mikhail Pokidko <pma@altlinux.org> 2.0.1-alt1
 - Initial ALT build
-
