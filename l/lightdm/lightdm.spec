@@ -7,7 +7,7 @@
 
 Name: lightdm
 Version: 1.16.7
-Release: alt19
+Release: alt20
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -288,6 +288,9 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Tue Mar 27 2018 Arseny Maslennikov <arseny@altlinux.org> 1.16.7-alt20
+- Re-apply -alt18 changes accidentally lost in -alt19.
+
 * Tue Mar 27 2018 Arseny Maslennikov <arseny@altlinux.org> 1.16.7-alt19
 - x-server-xvnc.c: close connection socket on Xvnc shutdown.
 
