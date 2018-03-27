@@ -1,5 +1,5 @@
 Name: connector
-Version: 1.5.4
+Version: 1.5.5
 Release: alt1
 
 Summary: Remote desktop chooser
@@ -46,6 +46,9 @@ install -pDm644 kiosk.access %buildroot%_sysconfdir/%name/kiosk.access
 %config(noreplace) %_sysconfdir/%name/kiosk.access
 
 %changelog
+* Tue Mar 27 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.5.5-alt1
+- Update AboutDialog and title of the main window
+
 * Wed Mar 07 2018 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.5.4-alt1
 - Added choise of the default tab on main window
 - Changed label's default folder to 'Desktop'
