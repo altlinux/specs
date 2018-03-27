@@ -10,8 +10,8 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.7.990
-Release: alt2%git_date
+Version: 1.7.991
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Mobile broadband modem management service
@@ -243,6 +243,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 27 2018 Mikhail Efremov <sem@altlinux.org> 1.7.991-alt1
+- Updated to 1.7.991 (1.8-rc2).
+
 * Wed Mar 14 2018 Mikhail Efremov <sem@altlinux.org> 1.7.990-alt2
 - Patch from upstream:
     + don't depend on GLib in ModemManager headers (closes: #34491).
