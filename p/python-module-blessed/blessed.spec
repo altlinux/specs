@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.9.5
-Release: alt1.git20150112.1.1
+Version: 1.14.2
+Release: alt1
 Summary: A feature-filled fork of Erik Rose's blessings project
 License: MIT
 Group: Development/Python
@@ -13,7 +13,7 @@ Url: https://pypi.python.org/pypi/blessed/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/jquast/blessed.git
-Source: %name-%version.tar
+Source: %oname-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools /dev/pts
@@ -22,6 +22,7 @@ BuildPreReq: python-module-coverage python-module-pytest-flakes
 BuildPreReq: python-module-pytest-xdist python-module-pytest-pep8
 BuildPreReq: python-module-pytest-cov python-module-mock
 BuildPreReq: python-modules-curses
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
@@ -70,9 +71,10 @@ A feature-filled fork of Erik Rose's blessings project.
 This package contains tests for %oname.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %if_with python3
+rm -rf ../python3
 cp -fR . ../python3
 %endif
 
@@ -110,7 +112,7 @@ popd
 %endif
 
 %files
-%doc *.rst docs/*.rst
+%doc *.rst docs/*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
@@ -119,7 +121,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst docs/*.rst
+%doc *.rst docs/*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -128,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 27 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.14.2-alt1
+- Version 1.14.2
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 1.9.5-alt1.git20150112.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
@@ -137,4 +142,3 @@ popd
 
 * Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.5-alt1.git20150112
 - Initial build for Sisyphus
-
