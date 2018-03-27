@@ -1,8 +1,11 @@
 %define rname kitemmodels
 
+%define sipver2 %(rpm -q --qf '%%{VERSION}' python-module-sip)
+%define sipver3 %(rpm -q --qf '%%{VERSION}' python3-module-sip)
+
 Name: kf5-%rname
 Version: 5.44.0
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: System/Libraries
@@ -16,6 +19,8 @@ Source: %rname-%version.tar
 # optimized out: cmake cmake-modules elfutils libcloog-isl4 libqt5-core libstdc++-devel python-base ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ python-module-google qt5-base-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): python3-module-sip-devel python-module-sip-devel
+BuildRequires: python-module-PyQt5-devel
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-tools-devel
 
 %description
@@ -36,6 +41,40 @@ Requires: kf5-filesystem
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
+
+%package -n python-module-%rname
+Summary: Python bindings for KItemViews
+License: GPLv2+ / LGPLv2+
+Group: Development/Python
+Requires: %name-common = %version-%release
+Requires: python-module-pykf5
+Requires: python-module-sip = %sipver2
+%description -n python-module-%rname
+Python bindings for KItemViews
+
+%package -n python-module-%rname-devel
+Summary: Sip files for python-module-%rname
+Group: Development/Python
+BuildArch: noarch
+%description -n python-module-%rname-devel
+Sip files for python-module-%rname
+
+%package -n python3-module-%rname
+Summary: Python3 bindings for KItemViews
+License: GPLv2+ / LGPLv2+
+Group: Development/Python3
+Requires: %name-common = %version-%release
+Requires: python3-module-pykf5
+Requires: python3-module-sip = %sipver3
+%description -n python3-module-%rname
+Python3 bindings for KItemViews
+
+%package -n python3-module-%rname-devel
+Summary: Sip files for python3-module-%rname
+Group: Development/Python3
+BuildArch: noarch
+%description -n python3-module-%rname-devel
+Sip files for python3-module-%rname
 
 %package -n libkf5itemmodels
 Group: System/Libraries
@@ -67,10 +106,23 @@ KF5 library
 %_K5lib/cmake/KF5ItemModels
 %_K5archdata/mkspecs/modules/qt_KItemModels.pri
 
+%files -n python-module-%rname
+%python_sitelibdir/PyKF5/*.so
+%files -n python-module-%rname-devel
+%_datadir/sip/PyKF5/KItemModels/
+
+%files -n python3-module-%rname
+%python3_sitelibdir/PyKF5/*.so
+%files -n python3-module-%rname-devel
+%_datadir/sip3/PyKF5/KItemModels/
+
 %files -n libkf5itemmodels
 %_K5lib/libKF5ItemModels.so.*
 
 %changelog
+* Mon Mar 26 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt2%ubt
+- build python bindings
+
 * Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1%ubt
 - new version
 
