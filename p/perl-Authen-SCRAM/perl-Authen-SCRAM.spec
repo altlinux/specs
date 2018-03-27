@@ -6,7 +6,7 @@ BuildRequires: perl(Authen/SASL/SASLprep.pm) perl(Carp.pm) perl(Crypt/URandom.pm
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.007
+Version: 0.009
 Release: alt1
 Summary: Salted Challenge Response Authentication Mechanism (RFC 5802)
 Group: Development/Perl
@@ -33,6 +33,9 @@ From summary: %summary
 %perl_vendor_privlib/A*
 
 %changelog
+* Tue Mar 27 2018 Igor Vlasenko <viy@altlinux.ru> 0.009-alt1
+- automated CPAN update
+
 * Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.007-alt1
 - automated CPAN update
 
