@@ -1,5 +1,5 @@
 Name: libmatekbd
-Version: 1.20.0
+Version: 1.20.1
 Release: alt1
 Epoch: 1
 Summary: Libraries for mate kbd
@@ -57,6 +57,9 @@ Development libraries for libmatekbd
 %_datadir/gir-1.0/Matekbd-1.0.gir
 
 %changelog
+* Tue Mar 27 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.1-alt1
+- 1.20.1
+
 * Tue Mar 06 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.0-alt1
 - initial build from git.mate-desktop.org
 

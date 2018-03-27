@@ -1,7 +1,5 @@
-%define _libexecdir %_prefix/libexec
-
 Name: mate-panel
-Version: 1.20.0
+Version: 1.20.1
 Release: alt1
 Epoch: 2
 Summary: MATE Desktop panel and applets
@@ -46,7 +44,6 @@ Development files for mate-panel
 	--disable-static \
 	--disable-gtk-doc \
 	--disable-schemas-compile \
-	--libexecdir=%_libexecdir/mate-panel \
 	--enable-introspection \
 	--with-in-process-applets=all
 
@@ -54,6 +51,8 @@ Development files for mate-panel
 
 %install
 %make DESTDIR=%buildroot install
+
+find %buildroot%_libdir -name \*.la -delete
 
 %find_lang %name --with-gnome --all-name
 
@@ -79,6 +78,9 @@ Development files for mate-panel
 %_datadir/gir-1.0/MatePanelApplet-4.0.gir
 
 %changelog
+* Tue Mar 27 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.1-alt1
+- 1.20.1
+
 * Mon Mar 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.0-alt1
 - initial build from git.mate-desktop.org
 

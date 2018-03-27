@@ -1,5 +1,5 @@
 Name: mate-control-center
-Version: 1.20.0
+Version: 1.20.1
 Release: alt1
 Epoch: 2
 Summary: MATE Desktop control-center
@@ -16,7 +16,7 @@ Requires: gsettings-desktop-schemas mate-settings-daemon gnome-keyring
 
 BuildRequires: mate-common intltool itstool libSM-devel libXScrnSaver-devel libXcursor-devel libXi-devel libXxf86misc-devel libcanberra-gtk3-devel
 BuildRequires: libdconf-devel mate-desktop-devel libmatekbd-devel librsvg-devel libxml2-devel mate-menus-devel mate-settings-daemon-devel
-BuildRequires: mate-window-manager-devel yelp-tools
+BuildRequires: mate-window-manager-devel yelp-tools desktop-file-utils
 
 %description
 MATE Control Center configures system settings such as themes,
@@ -45,6 +45,8 @@ Development files for mate-control-center
 %install
 %make DESTDIR=%buildroot install
 
+find %buildroot%_libdir -name \*.la -delete
+
 %find_lang %name --with-gnome --all-name
 
 %files -f %name.lang
@@ -72,6 +74,9 @@ Development files for mate-control-center
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Mar 27 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.1-alt1
+- 1.20.1
+
 * Thu Mar 01 2018 Valery Inozemtsev <shrek@altlinux.ru> 2:1.20.0-alt1
 - initial build from git.mate-desktop.org
 
