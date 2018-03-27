@@ -5,7 +5,7 @@
 %def_with python3
 
 Name: python-module-lxml
-Version: 4.0.0
+Version: 4.2.1
 Release: alt1
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.
@@ -157,6 +157,9 @@ popd
 %doc doc samples
 
 %changelog
+* Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.1-alt1
+- Updated to upstream version 4.2.1.
+
 * Sun Oct 01 2017 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
 - build new version
 
