@@ -1,6 +1,6 @@
 Name: firmware-linux
 Version: 20180319
-Release: alt2
+Release: alt3
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -23,8 +23,8 @@ Obsoletes: firmware-carl9170-1.9.4 firmware-i2400m firmware-rt2870 firmware-rt30
 Provides: firmware-rt61pci firmware-rt73usb
 Obsoletes: firmware-rt61pci firmware-rt73usb
 Obsoletes: firmware-libertas-sd8686 firmware-libertas-usb8388
-Provides: firmware-ql2100 firmware-ql2400 firmware-ql2500
-Obsoletes: firmware-ql2100 firmware-ql2400 firmware-ql2500
+Provides: firmware-ql2100 firmware-ql2200 firmware-ql2300 firmware-ql2322 firmware-ql2400 firmware-ql2500
+Obsoletes: firmware-ql2100 firmware-ql2200 firmware-ql2300 firmware-ql2322 firmware-ql2400 firmware-ql2500
 Provides: firmware-amd-ucode
 Obsoletes: firmware-amd-ucode <= 2.0
 
@@ -58,6 +58,9 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*,*.py}
 /lib/firmware/*
 
 %changelog
+* Tue Mar 27 2018 L.A. Kostis <lakostis@altlinux.ru> 20180319-alt3
+- Fixed obsoleted fw list (tnx to mike@ and vseleznv@).
+
 * Wed Mar 21 2018 L.A. Kostis <lakostis@altlinux.ru> 20180319-alt2
 - .spec cleanup:
   + added provides/obsoletes for absorbed fw.
