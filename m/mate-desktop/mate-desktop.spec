@@ -1,5 +1,5 @@
 Name: mate-desktop
-Version: 1.20.0
+Version: 1.20.1
 Release: alt1
 Epoch: 1
 Summary: Shared code for mate-panel, mate-session, mate-file-manager, etc
@@ -62,6 +62,15 @@ libmatedesktop.
 %install
 %make DESTDIR=%buildroot install
 
+cat << __EOF__ > %buildroot%_datadir/glib-2.0/schemas/10_mate-alt.gschema.override
+[org.mate.background]
+picture-filename='/usr/share/design/current/backgrounds/default.png'
+picture-options='stretched'
+
+[org.mate.interface]
+gtk-theme='BlueMenta'
+__EOF__
+
 %find_lang %name --with-gnome --all-name
 
 %files
@@ -76,6 +85,7 @@ libmatedesktop.
 %_libdir/*.so.*
 %_libdir/girepository-1.0/MateDesktop-2.0.typelib
 %_datadir/glib-2.0/schemas/org.mate.*.gschema.xml
+%_datadir/glib-2.0/schemas/10_mate-alt.gschema.override
 
 %files devel
 %doc %_datadir/gtk-doc/html/mate-desktop
@@ -85,6 +95,9 @@ libmatedesktop.
 %_datadir/gir-1.0/MateDesktop-2.0.gir
 
 %changelog
+* Tue Mar 27 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.1-alt1
+- 1.20.1
+
 * Wed Feb 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.0-alt1
 - initial build from git.mate-desktop.org
 
