@@ -1,7 +1,7 @@
 # TODO: build from source
 
 Name: sia
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: Blockchain-based marketplace for file storage
@@ -47,6 +47,9 @@ install -m755 -D siac %buildroot%_bindir/siac
 %_bindir/siac
 
 %changelog
+* Wed Mar 28 2018 Vitaly Lipatov <lav@altlinux.ru> 1.3.2-alt1
+- new version 1.3.2 (with rpmrb script)
+
 * Sun Dec 24 2017 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt1
 - new version 1.3.1 (with rpmrb script)
 
