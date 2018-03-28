@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 0.2.0
-Release: alt1.git20140826.1.1
+Version: 0.6.2
+Release: alt1
 Summary: HTTP Request and Response Service
 License: MIT
 Group: Development/Python
@@ -13,7 +13,7 @@ Url: https://pypi.python.org/pypi/httpbin/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/kennethreitz/httpbin.git
-Source: %name-%version.tar
+Source: %oname-%version.tar
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -33,6 +33,7 @@ BuildRequires(pre): rpm-build-python3
 %endif
 
 %py_provides %oname
+%add_python_req_skip flask_common brotli
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-django python-module-dns python-module-enum34 python-module-greenlet python-module-jinja2 python-module-paste python-module-psycopg2 python-module-pyasn1 python-module-pycares python-module-pycurl python-module-setuptools python-module-yaml python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-django python3-module-dns python3-module-enum34 python3-module-greenlet python3-module-gunicorn python3-module-jinja2 python3-module-paste python3-module-psycopg2 python3-module-pycares python3-module-pycparser python3-module-setuptools python3-module-yaml python3-module-zope python3-module-zope.interface
@@ -50,6 +51,7 @@ All endpoint responses are JSON-encoded.
 Summary: HTTP Request and Response Service
 Group: Development/Python3
 %py3_provides %oname
+%add_python3_req_skip flask_common brotli
 
 %description -n python3-module-%oname
 Testing an HTTP Library can become difficult sometimes. PostBin.org is
@@ -60,9 +62,10 @@ considered.
 All endpoint responses are JSON-encoded.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %if_with python3
+rm -rf ../python3
 cp -fR . ../python3
 %endif
 
@@ -95,16 +98,19 @@ popd
 %endif
 
 %files
-%doc AUTHORS *.md
+%doc AUTHORS *.md LICENSE
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc AUTHORS *.md
+%doc AUTHORS *.md LICENSE
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Wed Mar 28 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.6.2-alt1
+- Updated version to 0.6.2
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.0-alt1.git20140826.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
