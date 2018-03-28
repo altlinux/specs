@@ -3,12 +3,13 @@
 
 Name: %engine_prefix-%_name
 Version: 1.5.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: Aurora GTK2 engine
 Summary(ru_RU.UTF-8):Модуль прорисовки Aurora для GTK2
 License: GPL
 Group: Graphical desktop/GNOME
+Url: https://www.gnome-look.org/content/show.php/Aurora+Gtk+Engine?content=56438
 Packager: Denis Koryavov <dkoryavov@altlinux.org>
 Source0: %_name-%version.tar.bz2
 Patch0: gtk-engines-aurora-1.5.1-alt-glib2.patch
@@ -46,6 +47,9 @@ Aurora - элегантный быстрый модуль прорисовки �
 %exclude %engines_dir/*.la
 
 %changelog
+* Wed Mar 28 2018 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1.2
+- NMU: added URL
+
 * Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt1.1
 - Fixed build
 
