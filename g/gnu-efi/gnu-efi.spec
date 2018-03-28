@@ -1,6 +1,6 @@
 Name: gnu-efi
-Version: 3.0.6
-Release: alt2
+Version: 3.0.8
+Release: alt1
 Epoch: 1
 Summary: Building EFI applications using the GNU toolchain
 # Intel and HP's BSD-like license, except setjmp code coming from GRUB
@@ -10,8 +10,6 @@ Group: Development/Other
 Url: http://gnu-efi.sourceforge.net/
 # git https://git.code.sf.net/p/gnu-efi/code
 Source: %name-%version.tar
-Patch1: gnu-efi-3.0.6-redhat-fix-some-types-gcc-doesn-t-like.patch
-Patch2: gnu-efi-3.0.6-redhat-Make-ia32-use-our-own-div-asm-on-gnu-C-as-well.patch
 ExclusiveArch: %ix86 x86_64 aarch64
 Conflicts: gnu-efi-3.0r gnu-efi-3.0u gnu-efi-3.0.5
 %define efidir altlinux
@@ -22,8 +20,6 @@ for IA-64 and x86 platforms using the GNU toolchain.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
 
 %build
 %make
@@ -53,6 +49,9 @@ setarch linux32 -B make PREFIX=%prefix LIBDIR=%_prefix/lib INSTALLROOT=%buildroo
 %_includedir/efi
 
 %changelog
+* Wed Mar 28 2018 Anton Farygin <rider@altlinux.ru> 1:3.0.8-alt1
+- 3.0.8
+
 * Mon Mar 05 2018 Anton Farygin <rider@altlinux.ru> 1:3.0.6-alt2
 - built 32-bit gni-efi toolchain on x86_64
 
