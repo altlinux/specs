@@ -1,4 +1,4 @@
-%define ver_major 3.18
+%define ver_major 3.19
 
 Name: meld
 Version: %ver_major.0
@@ -47,11 +47,14 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %_iconsdir/HighContrast/*/*/*
 %_datadir/glib-2.0/schemas/org.gnome.meld.gschema.xml
 %_datadir/mime/packages/%name.xml
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 %_man1dir/%name.1.*
-%doc NEWS README
+%doc NEWS
 
 %changelog
+* Wed Mar 28 2018 Yuri N. Sedunov <aris@altlinux.org> 3.19.0-alt1
+- 3.19.0
+
 * Sat Sep 09 2017 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 
