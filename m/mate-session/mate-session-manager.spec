@@ -2,7 +2,7 @@
 
 Name: mate-session
 Version: 1.20.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: MATE Desktop session manager
 License: GPLv2+
@@ -65,6 +65,9 @@ __EOF__
 %_man1dir/*.1*
 
 %changelog
+* Wed Mar 28 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.0-alt2
+- mate.desktop: add path to mate-session
+
 * Thu Mar 15 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.20.0-alt1
 - initial build from git.mate-desktop.org
 
