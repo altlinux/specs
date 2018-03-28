@@ -1,5 +1,5 @@
 Name: gqrx
-Version: 2.8
+Version: 2.11.2
 Release: alt1
 
 Summary: Software defined radio receiver powered by GNU Radio and Qt.
@@ -70,5 +70,8 @@ appstream-util validate-relax --nonet \
 %doc COPYING LICENSE-CTK README.md
 
 %changelog
+* Tue Mar 27 2018 Anton Midyukov <antohami@altlinux.org> 2.11.2-alt1
+- new version 2.11.2
+
 * Sun Oct 22 2017 Anton Midyukov <antohami@altlinux.org> 2.8-alt1
 - Initial build for Sisyphus
