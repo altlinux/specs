@@ -2,49 +2,37 @@
 %define oname %mname.statsmodels
 
 %def_with python3
+%def_without doc
 %def_disable check
 
 Name: python-module-%oname
 Epoch: 1
-Version: 0.7.0
-Release: alt4.git20150731.1
+Version: 0.8.0
+Release: alt1
 Summary: Statistical computations and models for use with SciPy
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/statsmodels/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/statsmodels/statsmodels.git
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-Cython libnumpy-devel
-#BuildPreReq: python-module-scipy python-module-pandas
-#BuildPreReq: python-module-patsy python-module-matplotlib
-#BuildPreReq: python-module-cvxopt python-module-nose
-#BuildPreReq: python-module-coverage python-module-zmq
-#BuildPreReq: python-module-sphinx-devel pandoc xvfb-run
-#BuildPreReq: python-module-matplotlib-sphinxext ipython
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: libnumpy-devel python-module-Cython python-module-ipyparallel python-module-numpy-testing python-module-pandas-tests
+%if_with doc
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: fonts-bitmap-misc python-module-alabaster python-module-matplotlib-sphinxext
+%endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-Cython libnumpy-py3-devel
-#BuildPreReq: python3-module-scipy python3-module-pandas
-#BuildPreReq: python3-module-patsy python3-module-matplotlib
-#BuildPreReq: python3-module-cvxopt python3-module-nose
-#BuildPreReq: python3-module-coverage
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: libnumpy-py3-devel python3-module-Cython python3-module-ipyparallel python3-module-numexpr-tests python3-module-numpy-testing
 %endif
 
 %py_provides %oname
 %py_requires numpy scipy pandas patsy matplotlib cvxopt
 %py_requires statsmodels.stats.multitest
 %add_python_req_skip models
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Fri Mar 25 2016 (-bi)
-# optimized out: ca-certificates elfutils fontconfig ipython ipython3 libnumpy-devel python-base python-devel python-module-Numeric python-module-Pillow python-module-PyStemmer python-module-Pygments python-module-Scientific python-module-apiclient python-module-apsw python-module-babel python-module-certifi python-module-cffi python-module-chardet python-module-cssselect python-module-cvxopt python-module-cycler python-module-dateutil python-module-decorator python-module-docutils python-module-ecdsa python-module-enum34 python-module-functools32 python-module-future python-module-gdata python-module-greenlet python-module-html5lib python-module-httplib2 python-module-ipykernel python-module-ipython_genutils python-module-jdcal python-module-jinja2 python-module-jinja2-tests python-module-jsonschema python-module-jupyter_client python-module-jupyter_core python-module-markupsafe python-module-matplotlib python-module-mpmath python-module-nbconvert python-module-nbformat python-module-nose python-module-notebook python-module-numexpr python-module-numexpr-tests python-module-numpy python-module-numpy-tests python-module-ordereddict python-module-pandas python-module-path python-module-patsy python-module-pexpect python-module-pickleshare python-module-psycopg2 python-module-ptyprocess python-module-pyasn1 python-module-pycares python-module-pycrypto python-module-pycurl python-module-pygobject3 python-module-pyparsing python-module-pytz python-module-requests python-module-scikits.statsmodels python-module-scipy python-module-serial python-module-setuptools python-module-simplegeneric python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-terminado python-module-tornado python-module-tornado_xstatic python-module-traitlets python-module-twisted-core python-module-urllib3 python-module-xlrd python-module-xlsxwriter python-module-xlwt-future python-module-yaml python-module-zmq python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-sqlite3 python-modules-tkinter python-modules-unittest python-modules-wsgiref python-modules-xml python-sphinx-objects.inv python3 python3-base python3-dev python3-module-apiclient python3-module-apsw python3-module-cssselect python3-module-cvxopt python3-module-cycler python3-module-dateutil python3-module-docutils python3-module-ecdsa python3-module-enum34 python3-module-greenlet python3-module-html5lib python3-module-httplib2 python3-module-ipykernel python3-module-ipython_genutils python3-module-jdcal python3-module-jupyter_client python3-module-jupyter_core python3-module-matplotlib python3-module-mpmath python3-module-nbconvert python3-module-nbformat python3-module-notebook python3-module-numexpr python3-module-numpy python3-module-numpy-tests python3-module-pandas python3-module-patsy python3-module-pexpect python3-module-psycopg2 python3-module-ptyprocess python3-module-pycares python3-module-pycparser python3-module-pycrypto python3-module-pygobject3 python3-module-pyparsing python3-module-pytz python3-module-scipy python3-module-setuptools python3-module-six python3-module-snowballstemmer python3-module-terminado python3-module-tornado_xstatic python3-module-traitlets python3-module-urllib3 python3-module-xlrd python3-module-xlsxwriter python3-module-xlwt-future python3-module-yaml python3-module-zmq python3-module-zope rpm-build-python3
-#BuildRequires: fonts-bitmap-misc libnumpy-py3-devel python-module-Cython python-module-alabaster python-module-ipyparallel python-module-matplotlib-sphinxext python-module-numpy-testing python-module-pandas-tests python3-module-Cython python3-module-ipyparallel python3-module-numexpr-tests python3-module-numpy-testing python3-module-pandas-tests time
-BuildPreReq: fonts-bitmap-misc libnumpy-py3-devel python-module-Cython python-module-alabaster python-module-ipyparallel python-module-matplotlib-sphinxext python-module-numpy-testing python-module-pandas-tests python3-module-Cython python3-module-ipyparallel python3-module-numexpr-tests python3-module-numpy-testing time
 
 %description
 Statsmodels is a Python package that provides a complement to scipy for
@@ -64,6 +52,7 @@ and inference for statistical models.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Statistical computations and models for use with SciPy
 Group: Development/Python3
@@ -89,7 +78,9 @@ statistical computations including descriptive statistics and estimation
 and inference for statistical models.
 
 This package contains tests for %oname.
+%endif
 
+%if_with doc
 %package pickles
 Summary: Pickles for %oname
 Group: Development/Python
@@ -113,6 +104,7 @@ statistical computations including descriptive statistics and estimation
 and inference for statistical models.
 
 This package contains documentation for %oname.
+%endif
 
 %prep
 %setup
@@ -155,6 +147,7 @@ done
 popd
 %endif
 
+%if_with doc
 python setup.py build_ext -i
 export PYTHONPATH=$PWD
 %make -C docs pickle
@@ -162,6 +155,7 @@ export PYTHONPATH=$PWD
 
 install -d %buildroot%python_sitelibdir/%oname
 cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
+%endif
 
 %check
 xvfb-run python setup.py test
@@ -174,15 +168,19 @@ popd
 %files -f %oname.notests
 %doc *.md *.rst README_l1.txt
 %python_sitelibdir/*
+%if_with doc
 %exclude %python_sitelibdir/*/pickle
+%endif
 
 %files tests -f %oname.tests
 
+%if_with doc
 %files pickles
 %python_sitelibdir/*/pickle
 
 %files docs
 %doc examples docs/*.pdf docs/build/html
+%endif
 
 %if_with python3
 %files -n python3-module-%oname -f ../python3/%oname.notests
@@ -199,6 +197,10 @@ popd
 %endif
 
 %changelog
+* Wed Mar 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.8.0-alt1
+- Updated to upstream version 0.8.0.
+- Disabled docs generation.
+
 * Wed Mar 30 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:0.7.0-alt4.git20150731.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
