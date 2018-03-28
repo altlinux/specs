@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.12.3
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -11,6 +11,8 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Requires: usbids
+Provides:  kf5-kinfocenter = %EVR kf5-kinfocenter-common = %EVR plasma5-kinfocenter-common = %EVR
+Obsoletes: kf5-kinfocenter < %EVR kf5-kinfocenter-common < %EVR plasma5-kinfocenter-common < %EVR
 
 Source: %rname-%version.tar
 Patch1: alt-usbids-path.patch
@@ -34,9 +36,6 @@ BuildRequires: kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemview
 BuildRequires: kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel
 BuildRequires: kf5-kwayland-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
 BuildRequires: kf5-kdeclarative-devel kf5-kpackage-devel
-
-Provides: kf5-kinfocenter = %EVR
-Obsoletes: kf5-kinfocenter < %EVR
 
 %description
 KDE Info Center.
@@ -85,10 +84,8 @@ KF5 library
 
 %find_lang %name --with-kde --all-name
 
-%files common -f %name.lang
+%files -f %name.lang
 %doc COPYING*
-
-%files
 %_K5bin/*
 %_K5plug/kcms/
 %_K5plug/*.so
@@ -101,17 +98,10 @@ KF5 library
 %_K5srvtyp/*
 %_K5xmlgui/*
 
-#%files devel
-#%_K5inc/kinfocenter_version.h
-#%_K5inc/kinfocenter/
-#%_K5link/lib*.so
-#%_K5lib/cmake/kinfocenter
-#%_K5archdata/mkspecs/modules/qt_kinfocenter.pri
-
-#%files -n libkf5infocenter
-#%_K5lib/libkinfocenter.so.*
-
 %changelog
+* Wed Mar 28 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt2%ubt
+- fix package translations and docs
+
 * Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt1%ubt
 - new version
 
