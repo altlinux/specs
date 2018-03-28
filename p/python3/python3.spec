@@ -75,7 +75,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %{pybasever}.4
-Release: alt5
+Release: alt6
 License: Python
 Group: Development/Python3
 
@@ -1034,7 +1034,11 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/asyncio/*.py
 %exclude %pylibdir/asyncio/windows_events.py
 %exclude %pylibdir/asyncio/windows_utils.py
+%exclude %pylibdir/asyncio/test_utils.py
 %pylibdir/asyncio/__pycache__/*%bytecode_suffixes
+%exclude %pylibdir/asyncio/__pycache__/windows_events%bytecode_suffixes
+%exclude %pylibdir/asyncio/__pycache__/windows_utils%bytecode_suffixes
+%exclude %pylibdir/asyncio/__pycache__/test_utils%bytecode_suffixes
 
 %dir %pylibdir/collections/
 %dir %pylibdir/collections/__pycache__/
@@ -1109,6 +1113,7 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/logging
 %pylibdir/multiprocessing
 %exclude %pylibdir/multiprocessing/popen_spawn_win32.py
+%exclude %pylibdir/multiprocessing/__pycache__/popen_spawn_win32%bytecode_suffixes
 %pylibdir/plat-linux
 %pylibdir/pydoc_data
 
@@ -1168,6 +1173,7 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 
 %files modules-tkinter
 %pylibdir/idlelib
+%exclude %pylibdir/idlelib/idle_test
 %pylibdir/tkinter
 %exclude %pylibdir/tkinter/test
 %dynload_dir/_tkinter.cpython-%pyshortver%pyabi.so
@@ -1201,11 +1207,17 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %dynload_dir/_testbuffer.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testcapi.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testimportmultiple.cpython-%pyshortver%pyabi.so
+%pylibdir/idlelib/idle_test
 %pylibdir/tkinter/test
 %pylibdir/unittest/test
 %tool_dir/scripts/run_tests.py
+%pylibdir/asyncio/test_utils.py
+%pylibdir/asyncio/__pycache__/test_utils%bytecode_suffixes
 
 %changelog
+* Wed Mar 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 3.5.4-alt6
+- Fixed interpackage dependencies (Closes: 34451).
+
 * Wed Mar 21 2018 Ivan Zakharyaschev <imz@altlinux.org> 3.5.4-alt5
 - (.spec) Accelerate %%check through parallellism.
 
