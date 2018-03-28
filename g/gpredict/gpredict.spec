@@ -1,7 +1,7 @@
 %define _localstatedir %_var
 Name: gpredict
-Version: 1.3
-Release: alt1.20170617.1
+Version: 2.2.1
+Release: alt1
 Summary: Real-time satellite tracking and orbit prediction program
 Group: Communications
 License: GPLv2+
@@ -11,12 +11,11 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 Source1: gpredict.desktop
 
-BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
-BuildRequires: glib2-devel libgio libgio-devel
+BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(goocanvas-2.0)
 BuildRequires: libcurl-devel
 BuildRequires: desktop-file-utils
 BuildRequires: intltool >= 0.21
-BuildRequires: libgoocanvas-devel
 BuildRequires: %_bindir/desktop-file-install
 
 %description
@@ -45,7 +44,7 @@ desktop-file-install \
     %SOURCE1
 
 %files -f %name.lang
-%doc AUTHORS COPYING ChangeLog NEWS README TODO
+%doc AUTHORS COPYING ChangeLog NEWS README
 %_bindir/*
 %_datadir/%name
 %_desktopdir/*%name.desktop
@@ -54,5 +53,8 @@ desktop-file-install \
 %_man1dir/gpredict*
 
 %changelog
+* Wed Mar 28 2018 Anton Midyukov <antohami@altlinux.org> 2.2.1-alt1
+- New version 2.2.1
+
 * Sun Sep 03 2017 Anton Midyukov <antohami@altlinux.org> 1.3-alt1.20170617.1
 - Initial build for ALT Sisyphus.
