@@ -1,8 +1,9 @@
 %define  modulename testfixtures
 %def_with python3
+%def_without docs
 
 Name:    python-module-%modulename
-Version: 5.4.0
+Version: 6.0.0
 Release: alt1
 
 Summary: A collection of helpers and mock objects for unit tests and doc tests
@@ -18,12 +19,15 @@ BuildRequires: rpm-build-python
 BuildRequires: python-devel
 BuildRequires: python-module-distribute
 BuildRequires: python2.7(sybil) python2.7(mock) python2.7(django.db) python2.7(zope.component)
-BuildRequires: python-module-sphinx-devel python2.7(pkginfo)
+BuildRequires: python2.7(pkginfo)
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-distribute
 BuildRequires: python3(sybil) python3(mock) python3(django.db) python3(zope.component)
+%endif
+%if_with docs
+BuildRequires: python-module-sphinx-devel
 %endif
 
 Source:  %modulename-%version.tar
@@ -50,8 +54,10 @@ when writing unit tests or doc tests.
 cp -a . ../python3
 %endif
 
+%if_with docs
 %prepare_sphinx .
 ln -s ../objects.inv docs/
+%endif
 
 %build
 %python_build
@@ -71,9 +77,11 @@ pushd ../python3
 popd
 %endif
 
+%if_with docs
 PYTHONPATH=$(pwd) %make -C docs html SPHINXBUILD=sphinx-build
 mv docs/_build/html ./
 rm -rf docs/_build
+%endif
 
 %check
 rm -rf build
@@ -89,18 +97,28 @@ popd
 %endif
 
 %files
-%doc README.rst docs html
+%doc README.rst docs
+%if_with docs
+%doc html
+%endif
 %python_sitelibdir/%modulename/
 %python_sitelibdir/*.egg-info
 
 %if_with python3
 %files -n python3-module-%modulename
-%doc README.rst docs html
+%doc README.rst docs
+%if_with docs
+%doc html
+%endif
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/*.egg-info
 %endif
 
 %changelog
+* Wed Mar 28 2018 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt1
+- New version.
+- Build without HTML documentation.
+
 * Fri Jan 26 2018 Andrey Cherepanov <cas@altlinux.org> 5.4.0-alt1
 - New version.
 
