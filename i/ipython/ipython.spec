@@ -3,7 +3,7 @@
 
 Name: ipython
 Version: 5.5.0
-Release: alt1
+Release: alt2
 
 %setup_python_module IPython
 
@@ -29,7 +29,7 @@ BuildRequires: python-module-jsonschema python-module-traitlets
 BuildRequires: python-module-pexpect python-module-pickleshare
 BuildRequires: python-module-simplegeneric python-module-ipykernel
 BuildRequires: python-module-ipyparallel
-BuildRequires: python-module-pathlib2
+BuildRequires: python2.7(pathlib2)
 BuildRequires: python2.7(prompt_toolkit)
 BuildRequires: python2.7(nose.tools)
 BuildRequires: python-module-testpath
@@ -44,7 +44,7 @@ BuildRequires: python3-module-traitlets python3-module-tornado
 BuildRequires: python3-module-pexpect python3-module-pickleshare
 BuildRequires: python3-module-simplegeneric python3-module-ipykernel
 BuildRequires: python3-module-ipyparallel
-BuildRequires: python3-module-pathlib2
+BuildRequires: python3(pathlib)
 BuildRequires: python3(prompt_toolkit)
 BuildRequires: python3(nose.tools)
 BuildRequires: python3-module-testpath
@@ -54,6 +54,7 @@ BuildRequires: python3-module-testpath
 %add_python3_req_skip __main__
 %py_requires jsonschema traitlets pexpect simplegeneric ipykernel
 %py_requires ipyparallel
+%py_requires pathlib2
 
 
 %description
@@ -85,6 +86,7 @@ Group: Development/Python3
 %add_python3_req_skip System clr
 %py3_requires jsonschema traitlets pexpect simplegeneric ipykernel
 %py3_requires ipyparallel
+%py3_requires pathlib
 
 %description -n %{name}3
 IPython provides a replacement for the interactive Python interpreter with
@@ -214,6 +216,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Wed Mar 28 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.5.0-alt2
+- Updated build and runtime dependencies.
+
 * Fri Nov 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 5.5.0-alt1
 - Updated to upstream version 5.5.0.
 
