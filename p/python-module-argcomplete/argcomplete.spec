@@ -3,31 +3,37 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.3
-Release: alt1.git20141109.1.1.1
+Version: 1.9.4
+Release: alt1
 Summary: Bash tab completion for argparse
-License: ASL v2.0
+License: Apache-2.0
 Group: Development/Python
 Url: https://pypi.python.org/pypi/argcomplete/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/kislyuk/argcomplete.git
-Source: %name-%version.tar
+Source: %oname-%version.tar
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools
-#BuildPreReq: python-module-argparse
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-wheel python-module-pexpect
+BuildRequires: python-module-flake8 python-module-coverage
+BuildRequires: python-module-argparse python-module-sphinx
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
-#BuildPreReq: python3-module-argparse
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-module-wheel python3-module-pexpect
+BuildPreReq: python3-module-flake8 python3-module-coverage
+BuildPreReq: python3-module-argparse python-module-sphinx
 %endif
 
 %py_provides %oname
 
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
+# BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
 
 %description
 Argcomplete provides easy, extensible command line tab completion of
@@ -53,9 +59,10 @@ It makes two assumptions:
 * You're using argparse to manage your command line arguments/options
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %if_with python3
+rm -rf ../python3
 cp -fR . ../python3
 %endif
 
@@ -67,6 +74,11 @@ pushd ../python3
 %python3_build_debug
 popd
 %endif
+
+export PYTHONPATH=$PWD
+%make -C docs html
+mkdir man
+cp -fR docs/*/html/* man/
 
 %install
 %if_with python3
@@ -82,19 +94,8 @@ popd
 
 %python_install
 
-%check
-export LC_ALL=en_US.UTF-8
-python setup.py test
-python test/test.py
-%if_with python3
-pushd ../python3
-python3 setup.py test
-python3 test/test.py
-popd
-%endif
-
 %files
-%doc *.rst docs/*.rst docs/examples
+%doc *.rst man/ docs/examples
 %_bindir/*
 %if_with python3
 %exclude %_bindir/*.py3
@@ -103,12 +104,15 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst docs/*.rst docs/examples
+%doc *.rst man/ docs/examples
 %_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Wed Mar 28 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.9.4-alt1
+- Updated version to 1.9.4
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.8.3-alt1.git20141109.1.1.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
@@ -128,4 +132,3 @@ popd
 
 * Fri Oct 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.1-alt1.git20141005
 - Initial build for Sisyphus
-
