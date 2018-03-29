@@ -1,6 +1,6 @@
 Name: vim-plugin-spec_alt-ftplugin
 Version: 0.1
-Release: alt2
+Release: alt3
 
 Summary: Vim plugin for easy ALT RPM spec editing
 Group: Editors
@@ -11,6 +11,7 @@ Source: %name-%version.tar
 Packager: VIm Plugins Development Team <vim-plugins@packages.altlinux.org>
 
 PreReq: vim-common >= 4:6.3.007-alt1
+Requires: rpmspec
 BuildPreReq: rpm-build-vim
 BuildArch: noarch
 
@@ -30,6 +31,9 @@ cp -a ftplugin %buildroot%vim_runtime_dir
 %vim_ftplugin_dir/*
 
 %changelog
+* Thu Mar 29 2018 Michael Shigorin <mike@altlinux.org> 0.1-alt3
+- R: rpmspec (closes: #34730)
+
 * Fri Apr 10 2009 Michael Shigorin <mike@altlinux.org> 0.1-alt2
 - fixed Summary, thx ktirf@
 
