@@ -1,6 +1,6 @@
 Name: mongo
 Version: 3.6.3
-Release: alt1
+Release: alt2
 Summary: mongo client shell and tools
 License: AGPL 3.0
 Url: http://www.mongodb.org
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 
 Patch1:         mongodb-2.4.5-no-term.patch
 
-BuildRequires: /proc gcc-c++ python-devel python-module-pymongo scons boost-devel boost-filesystem-devel boost-program_options-devel libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel libpcap-devel libsnappy-devel libv8-3.24-devel systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel libyaml-cpp-devel valgrind-devel zlib-devel python-modules-json python-module-cheetah python-module-typing python-module-yaml
+BuildRequires: /proc gcc-c++ python-devel python-module-pymongo scons boost-devel boost-filesystem-devel boost-program_options-devel libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel libpcap-devel libsnappy-devel libv8-3.24-devel systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel libyaml-cpp-devel valgrind-devel zlib-devel python-modules-json python-module-Cheetah python-module-typing python-module-yaml
 
 %description
 Mongo (from "huMONGOus") is a schema-free document-oriented database.
@@ -181,6 +181,9 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Wed Mar 28 2018 Vladimir Didenko <cow@altlinux.org> 3.6.3-alt2
+- fix build (use different python cheetah package)
+
 * Tue Mar 13 2018 Vladimir Didenko <cow@altlinux.org> 3.6.3-alt1
 - 3.6.3
 
