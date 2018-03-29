@@ -1,5 +1,5 @@
 Name:		kmod
-Version:	23
+Version:	25
 Release:	alt1
 Summary:	Linux kernel module management utilities
 
@@ -13,6 +13,7 @@ Source0:	%name-%version.tar
 Patch0:		%name-manpage.patch
 
 BuildRequires:	docbook-dtds docbook-style-xsl glibc-devel-static liblzma-devel xsltproc zlib-devel
+BuildRequires:	bash4
 
 Provides:	module-init-tools = 3.17-alt1
 Obsoletes:	module-init-tools
@@ -47,6 +48,10 @@ applications that wish to load or unload Linux kernel modules.
 %prep
 %setup -q
 
+sed -i \
+	-e 's,#!/bin/bash$,#!/bin/bash4,' \
+	testsuite/populate-modules.sh
+
 %build
 touch libkmod/docs/gtk-doc.make
 %autoreconf
@@ -54,6 +59,7 @@ touch libkmod/docs/gtk-doc.make
 %configure \
 	--prefix=/ \
 	--disable-static \
+	--disable-test-modules \
 	--bindir=/bin \
 	--with-rootlibdir=/%_lib \
 	--with-zlib \
@@ -88,6 +94,10 @@ done
 ln -s kmod %buildroot/bin/lsmod
 
 
+%check
+make check
+
+
 %files
 %dir %_sysconfdir/depmod.d
 %dir %_sysconfdir/modprobe.d
@@ -115,6 +125,9 @@ ln -s kmod %buildroot/bin/lsmod
 %_libdir/libkmod.so
 
 %changelog
+* Thu Mar 29 2018 Alexey Gladkov <legion@altlinux.ru> 25-alt1
+- Version (25).
+
 * Mon Aug 15 2016 Alexey Gladkov <legion@altlinux.ru> 23-alt1
 - Version (23).
 
