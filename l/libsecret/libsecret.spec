@@ -1,3 +1,5 @@
+%def_disable snapshot
+
 %define ver_major 0.18
 %define api_ver 1
 
@@ -5,19 +7,23 @@
 %def_enable gtk_doc
 %def_enable introspection
 %def_enable vala
-%def_disable check
+%def_enable check
 
 Name: libsecret
-Version: %ver_major.5
-Release: alt1.1
+Version: %ver_major.6
+Release: alt1
 
 Summary: A client library for the Secret Service DBus API
 Group: System/Libraries
 License: LGPLv2
-Url: http://www.gnome.org/
+Url: https://wiki.gnome.org/Projects/Libsecret
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#ource: %name-%version.tar
+%else
+#VCS: git://git.gnome.org/libsecret
+Source: %name-%version.tar
+%endif
 
 %define glib_ver 2.38.0
 %define vala_ver 0.17.2.12
@@ -28,9 +34,7 @@ BuildRequires: libgcrypt-devel >= %gcrypt_ver
 BuildRequires: gtk-doc intltool xsltproc
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools >= %vala_ver}
-
-# for check
-%{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools-gui python-module-dbus python-module-pygobject libgjs}
+%{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools-gui python3-module-dbus python3-module-pygobject libgjs}
 
 %description
 libsecrets is a client for the Secret Service DBus API. The Secret
@@ -88,7 +92,6 @@ GObject introspection devel data for %name.
 %configure --disable-static \
 %{?_enable_gtk_doc:--enable-gtk-doc} \
 %{subst_enable introspection}
-
 %make_build
 
 %install
@@ -98,7 +101,7 @@ GObject introspection devel data for %name.
 
 %check
 # required X11
-#xvfb-run %make check
+xvfb-run %make check
 
 %files -f %name.lang
 %_bindir/secret-tool
@@ -109,8 +112,8 @@ GObject introspection devel data for %name.
 %files devel
 %_includedir/%name-%api_ver
 %_libdir/%name-%api_ver.so
-%_libdir/pkgconfig/%name-%api_ver.pc
-%_libdir/pkgconfig/%name-unstable.pc
+%_pkgconfigdir/%name-%api_ver.pc
+%_pkgconfigdir/%name-unstable.pc
 %if_enabled vala
 %_vapidir/%name-%api_ver.vapi
 %_vapidir/%name-%api_ver.deps
@@ -129,6 +132,9 @@ GObject introspection devel data for %name.
 
 
 %changelog
+* Thu Mar 29 2018 Yuri N. Sedunov <aris@altlinux.org> 0.18.6-alt1
+- 0.18.6
+
 * Wed Mar 01 2017 Michael Shigorin <mike@altlinux.org> 0.18.5-alt1.1
 - BOOTSTRAP: introduce check knob (*off* by default
   as %%check section is apparently disabled by now)
