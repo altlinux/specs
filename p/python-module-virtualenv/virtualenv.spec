@@ -5,7 +5,7 @@
 
 Name: python-module-%modulename
 Version: 15.1.0
-Release: alt2%ubt
+Release: alt3%ubt
 
 Summary: Virtual Python Environment builder
 License: MIT
@@ -14,9 +14,9 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/virtualenv
 
 Source: %name-%version.tar.gz
-Patch1: python3_sitelibdir.patch
+Patch1: python3-system-sys.path.patch
 Patch2: allow_internal_symlinks.patch
-Patch3: python3-fix-installation-within-the-bare-virtualenv.patch
+Patch3: python3-installation-within-the-bare-virtualenv.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
@@ -74,7 +74,7 @@ in newly created environment by invoking /your/dir/bin/python
 
 %prep
 %setup
-%patch1 -p1
+%patch1 -p2
 %patch2 -p1
 %patch3 -p2
 # to reflect virtualenv_embedded/ updates on virtualenv.py
@@ -117,6 +117,10 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 29 2018 Stanislav Levin <slev@altlinux.org> 15.1.0-alt3%ubt
+- Fix system sys.path down to virtualenv
+- Cleanup patches
+
 * Sun Mar 25 2018 Stanislav Levin <slev@altlinux.org> 15.1.0-alt2%ubt
 - Fix installation within the bare virtualenv under python3
 - Cleanup spec
