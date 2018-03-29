@@ -6,7 +6,7 @@
 Name: python-module-%mname
 Epoch: 1
 Version: 39.0.1
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -160,6 +160,9 @@ popd
 %python3_sitelibdir/%mname-%version-*.egg-info
 
 %changelog
+* Thu Mar 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:39.0.1-alt2%ubt
+- Marked docstrings with backslashes as raw strings.
+
 * Sat Mar 24 2018 Stanislav Levin <slev@altlinux.org> 1:39.0.1-alt1%ubt
 - 38.4.0 -> 39.0.1
 
