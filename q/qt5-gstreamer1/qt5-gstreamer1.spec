@@ -1,6 +1,8 @@
+%def_disable quick1
+
 Name:    qt5-gstreamer1
 Version: 1.2.0
-Release: alt6%ubt
+Release: alt7%ubt
 
 Summary: C++ bindings for GStreamer with a Qt-style API
 License: LGPLv2+
@@ -22,7 +24,10 @@ BuildRequires: flex
 BuildRequires: boost-devel
 BuildRequires: gstreamer1.0-devel
 BuildRequires: gst-plugins1.0-devel
-BuildRequires: qt5-base-devel qt5-declarative-devel qt5-quick1-devel
+BuildRequires: qt5-base-devel qt5-declarative-devel
+%if_enabled quick1
+BuildRequires: qt5-quick1-devel
+%endif
 BuildRequires: libGL-devel libGLES-devel
 BuildRequires: doxygen kde-common-devel
 
@@ -81,7 +86,9 @@ for %name.
 %_libdir/libQt5GStreamerUtils-1.0.so.1*
 %_libdir/libQt5GStreamerQuick-1.0.so.0
 %_libdir/libQt5GStreamerQuick-1.0.so.1*
+%if_enabled quick1
 %_qt5_importdir/QtGStreamer/
+%endif
 %_qt5_archdatadir/qml/QtGStreamer/
 
 %files -n libqt5-glib
@@ -102,6 +109,9 @@ for %name.
 
 
 %changelog
+* Thu Mar 29 2018 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt7%ubt
+- build without Quick1
+
 * Thu Aug 24 2017 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt6%ubt
 - fix build requires
 
