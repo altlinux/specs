@@ -5,7 +5,7 @@
 
 Name: python-module-%mname
 Version: 0.4.2
-Release: alt1%ubt
+Release: alt2%ubt
 
 Summary: Abstract Syntax Notation One (ASN.1), Python implementation
 License: %bsdstyle
@@ -14,6 +14,7 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/pyasn1
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-ubt
@@ -46,6 +47,7 @@ based on ASN.1 specification.
 
 %prep
 %setup
+%patch -p1
 
 rm -rf ../python3
 cp -a . ../python3
@@ -82,6 +84,9 @@ popd
 %python3_sitelibdir/%mname-%version-*.egg-info/
 
 %changelog
+* Thu Mar 29 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.2-alt2%ubt
+- Marked docstrings with backslashes as raw strings.
+
 * Tue Mar 13 2018 Stanislav Levin <slev@altlinux.org> 0.4.2-alt1%ubt
 - 0.3.7 -> 0.4.2
 
