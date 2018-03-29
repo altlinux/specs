@@ -3,7 +3,7 @@
 
 Name: mediawiki
 Version: %major.2
-Release: alt1
+Release: alt2
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
 
@@ -111,6 +111,10 @@ Provides: mediawiki-extensions-AssertEdit
 # since 1.27?
 Provides: mediawiki-extensions-CiteThisPage
 Provides: mediawiki-extensions-Gadgets
+
+# since 1.29?
+Provides: mediawiki-extensions-PdfHandler
+Conflicts: mediawiki-extensions-PdfHandler < 1.24
 
 %description -n %name-common
 %summary
@@ -304,6 +308,10 @@ exit 0
 
 
 %changelog
+* Thu Mar 29 2018 Igor Vlasenko <viy@altlinux.ru> 1.29.2-alt2
+- NMU: added conflict with mediawiki-extensions-PdfHandler
+  (included in 1.29) (closes: #34708)
+
 * Mon Dec 11 2017 Vitaly Lipatov <lav@altlinux.ru> 1.29.2-alt1
 - new version 1.29.2 (with rpmrb script)
 
