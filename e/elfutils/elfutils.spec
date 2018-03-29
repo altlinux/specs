@@ -1,6 +1,6 @@
 Name: elfutils
 Version: 0.170
-Release: alt2
+Release: alt4
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
 License: GPLv3+ and (GPLv2+ or LGPLv3+)
@@ -22,57 +22,125 @@ BuildRequires: bzlib-devel flex liblzma-devel libstdc++-devel zlib-devel
 %define buildtarget build-%_target_platform
 
 %description
-Elfutils is a collection of utilities, including ld (a linker), nm
-(for listing symbols from object files), size (for listing the section
-sizes of an object or archive file), strip (for discarding symbols),
-readelf (to see the raw ELF file structures), and elflint (to check for
-well-formed ELF files).  Also included are numerous helper libraries
-which implement DWARF, ELF, and machine-specific ELF handling.
+Elfutils is a collection of utilities, including
+- eu-stack (to show backtraces),
+- eu-nm (for listing symbols from object files),
+- eu-size (for listing the section sizes of an object or archive file),
+- eu-strip (for discarding symbols),
+- eu-readelf (to see the raw ELF file structures),
+- eu-elflint (to check for well-formed ELF files),
+- eu-elfcompress (to compress or decompress ELF sections).
 
 %package devel
 Summary: Development libraries to handle compiled objects
 License: GPLv2+ or LGPLv3+
 Group: Development/C
 Requires: %name = %EVR
-Requires: libelf-devel = %EVR
+Requires: libasm-devel = %EVR, libdw-devel = %EVR, libelf-devel = %EVR
+BuildArch: noarch
 
 %description devel
-This package contains the libraries to create applications for
-handling compiled objects.  libebl provides some higher-level ELF access
-functionality.  libdw provides access to the DWARF debugging information.
-libasm provides a programmable assembler interface.
+This package pulls in the libraries to create applications for handling
+compiled objects.
 
 %package devel-static
 Summary: Static archives to handle compiled objects
 License: GPLv2+ or LGPLv3+
 Group: Development/C
 Requires: %name-devel = %EVR
+Requires: libasm-devel-static = %EVR
+Requires: libdw-devel-static = %EVR
 Requires: libelf-devel-static = %EVR
+BuildArch: noarch
 
 %description devel-static
-This package contains static archives with the code to handle compiled objects.
+This package pulls in static archives with the code to handle compiled objects.
+
+%package -n libasm
+Summary: Shared library with a programmable assembler interface
+License: GPLv2+ or LGPLv3+
+Group: System/Libraries
+Requires: libelf = %EVR, libdw = %EVR
+
+%description -n libasm
+This package provides a shared library with a programmable assembler
+interface.
+
+%package -n libasm-devel
+Summary: Development libasm library and header files
+License: GPLv2+ or LGPLv3+
+Group: Development/C
+Requires: libasm = %EVR
+Requires: libelf-devel = %EVR, libdw-devel = %EVR
+
+%description -n libasm-devel
+
+This package contains the library and header files to create libasm
+based applications.
+
+%package -n libasm-devel-static
+Summary: Static libasm library
+License: GPLv2+ or LGPLv3+
+Group: Development/C
+Requires: libasm-devel = %EVR
+Requires: libelf-devel-static = %EVR, libdw-devel-static = %EVR
+
+%description -n libasm-devel-static
+This package contains static libasm library.
+
+%package -n libdw
+Summary: Shared library that provides access to the DWARF debug information
+License: GPLv2+ or LGPLv3+
+Group: System/Libraries
+Requires: libelf = %EVR
+
+%description -n libdw
+This package provides a shared library that provides access to DWARF
+debug information stored inside ELF files.
+
+%package -n libdw-devel
+Summary: Development libdw library and header files
+License: GPLv2+ or LGPLv3+
+Group: Development/C
+Requires: libdw = %EVR
+Requires: libelf-devel = %EVR
+
+%description -n libdw-devel
+This package contains the library and header files to create libdw based
+applications.
+
+%package -n libdw-devel-static
+Summary: Static libdw library
+License: GPLv2+ or LGPLv3+
+Group: Development/C
+Requires: libdw-devel = %EVR
+Requires: libelf-devel-static = %EVR
+
+%description -n libdw-devel-static
+This package contains static libdw library.
 
 %package -n libelf
-Summary: Library to read and write ELF files
+Summary: Shared library to read and write ELF files
 License: GPLv2+ or LGPLv3+
 Group: System/Libraries
 
 %description -n libelf
-This package provides a DSO which allows reading and writing ELF files
-on a high level.  Third party programs depend on this package to read
-internals of ELF files.  The programs of the elfutils package use it
-also to generate new ELF files.
+This package provides a shared library which allows reading and writing
+ELF files on a high level.  Third party programs depend on this package
+to read internals of ELF files.  The programs of the elfutils package
+use it also to generate new ELF files.
 
 %package -n libelf-devel
-Summary: Development libelf library
+Summary: Development libelf library and header files
 License: GPLv2+ or LGPLv3+
 Group: Development/C
 Requires: libelf = %EVR
 
 %description -n libelf-devel
-This package contains the library to create applications for handling
-compiled objects.  libelf allows you to access the internals of the ELF
-object file format, so you can see the different sections of an ELF file.
+This package contains the library and header files to create
+applications for handling compiled objects.  libelf allows you to access
+the internals of the ELF object file format, so you can see the
+different sections of an ELF file.
 
 %package -n libelf-devel-static
 Summary: Static libelf library
@@ -126,24 +194,48 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/eu-strings
 %_bindir/eu-strip
 %_bindir/eu-unstrip
-%_libdir/libasm-*.so
-%_libdir/libdw-*.so
-%_libdir/libasm*.so.*
-%_libdir/libdw*.so.*
-%_libdir/elfutils/
 
 %files devel
-%_includedir/dwarf.h
-%_includedir/elfutils/
-%_libdir/libasm.so
-%_libdir/libdw.so
-%_libdir/libebl.a
-%_pkgconfigdir/libdw.pc
 
 %if_enabled static
 %files devel-static
+%endif
+
+%files -n libasm
+%_libdir/libasm-*.so
+%_libdir/libasm*.so.*
+
+%files -n libasm-devel
+%dir %_includedir/elfutils/
+%_includedir/elfutils/libasm.h
+%_libdir/libasm.so
+
+%if_enabled static
+%files -n libasm-devel-static
 %_libdir/libasm.a
+%endif
+
+%files -n libdw
+%_libdir/libdw-*.so
+%_libdir/libdw*.so.*
+%_libdir/elfutils/
+
+%files -n libdw-devel
+%_includedir/dwarf.h
+%dir %_includedir/elfutils/
+%_includedir/elfutils/libdw.h
+%_includedir/elfutils/libdwfl.h
+%_includedir/elfutils/libdwelf.h
+%_includedir/elfutils/known-dwarf.h
+%_libdir/libdw.so
+%_pkgconfigdir/libdw.pc
+
+%if_enabled static
+%files -n libdw-devel-static
+%dir %_includedir/elfutils/
+%_includedir/elfutils/libebl.h
 %_libdir/libdw.a
+%_libdir/libebl.a
 %endif
 
 %files -n libelf -f %name.lang
@@ -155,6 +247,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %_includedir/libelf.h
 %_includedir/gelf.h
 %_includedir/nlist.h
+%dir %_includedir/elfutils/
+%_includedir/elfutils/elf-knowledge.h
+%_includedir/elfutils/version.h
 %_libdir/libelf.so
 %_pkgconfigdir/libelf.pc
 
@@ -164,6 +259,12 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Mar 28 2018 Dmitry V. Levin <ldv@altlinux.org> 0.170-alt4
+- Backported a few upstream commits.
+
+* Mon Mar 19 2018 Dmitry V. Levin <ldv@altlinux.org> 0.170-alt3
+- Split out libasm and libdw subpackage families.
+
 * Wed Nov 15 2017 Dmitry V. Levin <ldv@altlinux.org> 0.170-alt2
 - Moved libelf.pc from %name-devel to libelf-devel.
 
