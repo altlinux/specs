@@ -1,6 +1,6 @@
 %define m_distro Test-Perl-Critic
 Name: perl-Test-Perl-Critic
-Version: 1.03
+Version: 1.04
 Release: alt1
 Summary: Test::Perl::Critic - Use Perl::Critic in test programs
 
@@ -26,9 +26,12 @@ BuildRequires: perl-devel perl-Perl-Critic perl-Module-Build perl-Module-Pluggab
 
 %files
 %perl_vendor_privlib/Test/Perl/Critic.pm
-%doc LICENSE Changes README 
+%doc LICENSE Changes README
 
 %changelog
+* Thu Mar 29 2018 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
+- automated CPAN update
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
 - automated CPAN update
 
