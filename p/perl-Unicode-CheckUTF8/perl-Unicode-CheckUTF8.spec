@@ -18,15 +18,15 @@ BuildRequires: perl-podlators
 Summary:	Checks if scalar is valid UTF-8
 Name:		perl-Unicode-CheckUTF8
 Version:	1.03
-Release:	alt4_20.1
+Release:	alt4_21
 License:	UCD and (GPL+ or Artistic)
 Group:		Development/Other
-Url:		http://search.cpan.org/dist/Unicode-String/
+Url:		http://search.cpan.org/dist/Unicode-CheckUTF8/
 Source0:	http://search.cpan.org/CPAN/authors/id/B/BR/BRADFITZ/Unicode-CheckUTF8-%{version}.tar.gz
 # Module Build
 BuildRequires:	coreutils
 BuildRequires:	findutils
-BuildRequires:	gcc-common
+BuildRequires:	gcc
 BuildRequires:	perl-devel
 BuildRequires:	perl-devel
 BuildRequires:	rpm-build-perl
@@ -58,7 +58,7 @@ sure it's valid UTF-8 before continuing.
 %setup -q -n Unicode-CheckUTF8-%{version} 
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
 %make_build
 
 %install
@@ -76,6 +76,9 @@ make test
 %{perl_vendor_archlib}/auto/Unicode/
 
 %changelog
+* Thu Mar 29 2018 Igor Vlasenko <viy@altlinux.ru> 1.03-alt4_21
+- fixed url
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 1.03-alt4_20.1
 - rebuild with new perl 5.26.1
 
