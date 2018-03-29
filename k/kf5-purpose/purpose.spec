@@ -1,7 +1,11 @@
 %define rname purpose
 
+%define sover 5
+%define libphabricatorhelpers libphabricatorhelpers%sover
+%define libreviewboardhelpers libreviewboardhelpers%sover
+
 Name: kf5-%rname
-Version: 1.2.1
+Version: 5.44.0
 Release: alt1%ubt
 %K5init altplace
 
@@ -13,7 +17,6 @@ License: LGPLv2.1+
 Requires: kde5-connect
 
 Source: %rname-%version.tar
-Patch1: alt-libs-static.patch
 
 # Automatically added by buildreq on Tue Feb 16 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ gtk-update-icon-cache libEGL-devel libGL-devel libaccounts-glib libaccounts-qt51 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libsignon-qt51 libstdc++-devel libxcbutil-keysyms perl-Encode perl-XML-Parser pkg-config python-base python-module-google python-modules python3 python3-base qt5-base-devel ruby ruby-stdlibs
@@ -62,22 +65,40 @@ Requires: %name-common = %version-%release
 %description -n libkf5purpose
 KF5 library
 
+%package -n %libphabricatorhelpers
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n %libphabricatorhelpers
+KF5 library
+
+%package -n %libreviewboardhelpers
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n %libreviewboardhelpers
+KF5 library
+
+
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K5build
 
 %install
 %K5install
-%K5install_move data purpose kpackage
+%K5install_move data purpose kpackage locale
+%find_lang %name --all-name
+%K5find_qtlang %name --all-name
 
-%files common
+%files common -f %name.lang
+%doc COPYING.LIB README.md
+%config(noreplace) %_K5xdgconf/*.*categories
 
 %files
 %_K5exec/purpose*
-%_K5plug/purpose/
+%_K5plug/kf5/purpose/
 %_K5qml/org/kde/purpose/
 %_K5data/purpose/
 %_K5data/kpackage/Purpose/
@@ -91,13 +112,23 @@ KF5 library
 %_K5inc/purposewidgets/
 %_K5link/lib*.so
 %_K5lib/cmake/KDEExperimentalPurpose/
+%_K5lib/cmake/KF5Purpose/
 
+%files -n %libphabricatorhelpers
+%_K5lib/libPhabricatorHelpers.so.*
+%_K5lib/libPhabricatorHelpers.so.%sover
+%files -n %libreviewboardhelpers
+%_K5lib/libReviewboardHelpers.so.*
+%_K5lib/libReviewboardHelpers.so.%sover
 %files -n libkf5purpose
 %_K5lib/libKF5Purpose.so.*
 %files -n libkf5purposewidgets
 %_K5lib/libKF5PurposeWidgets.so.*
 
 %changelog
+* Thu Mar 29 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1%ubt
+- new version
+
 * Tue Dec 12 2017 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt1%ubt
 - new version
 
