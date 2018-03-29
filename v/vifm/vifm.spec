@@ -1,5 +1,5 @@
 Name: vifm
-Version: 0.9
+Version: 0.9.1
 Release: alt1
 
 Summary: Two pane file manager with vi-like keybindings
@@ -44,6 +44,9 @@ to learn a new set of commands.
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Mar 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.1-alt1
+- Build new version.
+
 * Fri Dec 15 2017 Grigory Ustinov <grenka@altlinux.org> 0.9-alt1
 - Build new version.
   fix missing groff dependency.
