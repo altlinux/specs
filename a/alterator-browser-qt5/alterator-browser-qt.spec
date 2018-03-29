@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1%ubt
 
 Source:%name-%version.tar
@@ -82,6 +82,9 @@ __EOF__
 
 
 %changelog
+* Thu Mar 29 2018 Sergey V Turchin <zerg at altlinux dot org> 3.0.2-alt1%ubt
+- startup animation small improvement
+
 * Mon Mar 26 2018 Sergey V Turchin <zerg at altlinux dot org> 3.0.1-alt1%ubt
 - set startup animation color according current color scheme
 
