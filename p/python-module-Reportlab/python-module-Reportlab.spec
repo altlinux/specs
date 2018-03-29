@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.4.0
-Release: alt1
+Release: alt2
 
 Summary: The Reportlab Toolkit
 
@@ -29,6 +29,8 @@ BuildRequires(pre): rpm-build-python3
 %endif
 
 %add_python_req_skip rlextra
+
+Provides: python-reportlab
 
 %description
 The ReportLab Toolkit.
@@ -135,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 29 2018 Vitaly Lipatov <lav@altlinux.ru> 3.4.0-alt2
+- add provides: python-reportlab (ALT bug 34732)
+
 * Mon Mar 12 2018 Vitaly Lipatov <lav@altlinux.ru> 3.4.0-alt1
 - new version (3.4.0) with rpmgs script
 
