@@ -57,7 +57,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 238
-Release: alt2
+Release: alt3
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -184,13 +184,12 @@ BuildRequires: libkeyutils-devel
 #BuildRequires: lz4
 
 Requires: dbus >= %dbus_ver
-Requires: udev = %EVR
 Requires: filesystem >= 2.3.10-alt1
 Requires: agetty
 Requires: acl
 Requires: util-linux >= 2.27.1
 %{?_enable_libidn:Requires: libidn >= 1.33-alt2}
-%{?_enable_libidn2:Requires: libidn2 >= 2.0.4-alt4}
+%{?_enable_libidn2:Requires: libidn2 > 2.0.4-alt3}
 
 
 # Requires: selinux-policy >= 3.8.5
@@ -1921,6 +1920,9 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Thu Mar 29 2018 Alexey Shabalin <shaba@altlinux.ru> 1:238-alt3
+- update Requires for aloow update udev after systemd 
+
 * Sat Mar 24 2018 Alexey Shabalin <shaba@altlinux.ru> 1:238-alt2
 - merge with v238-stable branch
 - add group render
