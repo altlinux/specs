@@ -1,13 +1,13 @@
 Name: bonito2-open
 Version: 3.99.9
-Release: alt1.corbama1
+Release: alt1.corbama2
 
 Summary: Bonito is a graphical user interface to corpora mantained by Manatee
 License: LGPLv2+
 Group: System/Libraries
 Url: http://nlp.fi.muni.cz/trac/noske/wiki/Downloads
 Packager: Kirill Maslinsky <kirill@altlinux.org>
-BuildRequires: python-module-cheetah python-module-distribute time
+BuildRequires: python2.7(Cheetah) python-module-distribute time
 ExclusiveArch: x86_64
 
 
@@ -45,6 +45,10 @@ install %SOURCE100 %buildroot/%_sysconfdir/httpd2/conf/sites-available/bonito2.c
 
 
 %changelog
+* Thu Mar 29 2018 Kirill Maslinsky <kirill@altlinux.org> 3.99.9-alt1.corbama2
+- fix apache config (compatibility with 2.4)
+- rebuilt with Cheetah 3.1.0
+
 * Wed Jan 31 2018 Kirill Maslinsky <kirill@altlinux.org> 3.99.9-alt1.corbama1
 - 3.99.9
 
