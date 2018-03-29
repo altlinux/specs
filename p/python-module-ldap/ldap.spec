@@ -1,16 +1,19 @@
 %define _unpackaged_files_terminate_build 1
-
 %define mname ldap
+
+%def_with check
+
 Name: python-module-%mname
 Version: 3.0.0
-Release: alt1.b4%ubt
+Release: alt2%ubt
+
 Summary: An object-oriented API to access LDAP directory servers from Python programs
 License: Python-style
 Group: Development/Python
 Url: https://www.python-ldap.org
 # Source-git: https://github.com/python-ldap/python-ldap
+
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
@@ -21,7 +24,8 @@ BuildRequires: python3-module-setuptools
 BuildRequires: libldap-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libssl-devel
-# for tests
+
+%if_with check
 BuildRequires: openldap-servers
 BuildRequires: openldap-clients
 BuildRequires: python-module-tox
@@ -34,7 +38,7 @@ BuildRequires: python3-module-pyasn1
 BuildRequires: python3-module-pyasn1-modules
 BuildRequires: python3-module-coverage
 BuildRequires: python3-module-virtualenv
-#
+%endif
 
 Provides: python-module-pyldap = %EVR
 Obsoletes: python-module-pyldap < %EVR
@@ -63,7 +67,6 @@ stuff (e.g. processing LDIF, LDAPURLs, LDAPv3 sub-schema, etc.).
 
 %prep
 %setup
-%patch0 -p1
 rm -rf ../python3
 cp -a . ../python3
 
@@ -82,13 +85,12 @@ pushd ../python3
 popd
 
 %check
+%define python_version_nodots() %(%1 -Esc "import sys; sys.stdout.write('{0.major}{0.minor}'.format(sys.version_info))")
 export PIP_INDEX_URL=http://host.invalid./
-export PYTHONPATH=%python_sitelibdir_noarch:%python_sitelibdir
-TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py27 -v
+tox --sitepackages -e py%{python_version_nodots python} -v
 
 pushd ../python3
-export PYTHONPATH=%python3_sitelibdir_noarch:%python3_sitelibdir
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py35 -v
+tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 popd
 
 %install
@@ -118,6 +120,9 @@ popd
 %python3_sitelibdir/python_ldap-%{version}*-*.egg-info
 
 %changelog
+* Thu Mar 29 2018 Stanislav Levin <slev@altlinux.org> 3.0.0-alt2%ubt
+- 3.0.0b4 -> 3.0.0
+
 * Mon Jan 15 2018 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1.b4%ubt
 - v2.3 -> v3.0.0b4
 
