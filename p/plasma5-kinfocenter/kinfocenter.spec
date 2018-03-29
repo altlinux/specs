@@ -1,8 +1,8 @@
 %define rname kinfocenter
 
 Name: plasma5-%rname
-Version: 5.12.3
-Release: alt2%ubt
+Version: 5.12.4
+Release: alt1%ubt
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -99,6 +99,9 @@ KF5 library
 %_K5xmlgui/*
 
 %changelog
+* Wed Mar 28 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt1%ubt
+- new version
+
 * Wed Mar 28 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt2%ubt
 - fix package translations and docs
 
