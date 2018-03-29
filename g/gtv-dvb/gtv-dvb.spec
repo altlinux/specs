@@ -1,6 +1,6 @@
 Name: gtv-dvb
-Version: 1.1.8
-Release: alt1%ubt
+Version: 1.1.9
+Release: alt1
 
 Summary: DVB player
 
@@ -36,6 +36,9 @@ Audio & Video & Digital TV - Gstreamer 1.0
 %doc README.md LICENSE
 
 %changelog
+* Thu Mar 29 2018 Anton Midyukov <antohami@altlinux.org> 1.1.9-alt1
+- new version 1.1.9
+
 * Wed Mar 28 2018 Anton Midyukov <antohami@altlinux.org> 1.1.8-alt1%ubt
 - new version 1.1.8
 
