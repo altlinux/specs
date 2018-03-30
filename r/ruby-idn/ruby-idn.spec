@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 0.1.0
-Release: alt3.3
+Release: alt3.4
  
 Summary: Ruby Bindings for the GNU LibIDN library
 License: MIT/Ruby
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt3.4
+- Rebuild with Ruby 2.5.1
+
 * Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt3.3
 - Rebuild with Ruby 2.5.0
 

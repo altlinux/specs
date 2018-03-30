@@ -15,7 +15,7 @@ BuildRequires: libltdl7-devel
 
 Name:           libprelude
 Version:        4.0.0
-Release:        alt1_3.2
+Release:        alt1_3.3
 Summary:        Secure Connections between all Sensors and the Prelude Manager
 # Prelude is GPL-2.0+
 # libmissing is LGPL-2.1+
@@ -310,6 +310,9 @@ find %{buildroot} -name '.packlist' -delete
 %doc AUTHORS ChangeLog README NEWS
 
 %changelog
+* Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1_3.3
+- rebuild with Ruby 2.5.1
+
 * Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1_3.2
 - rebuild with Ruby 2.5.0
 

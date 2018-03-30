@@ -1,6 +1,6 @@
 Name: ruby-odbc
 Version: 0.99998
-Release: alt1.3
+Release: alt1.4
 
 Summary: ODBC extension for Ruby
 License: GPL
@@ -38,6 +38,9 @@ This is an ODBC binding for Ruby. So far it has been tested with
 %ruby_sitearchdir/*
 
 %changelog
+* Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.99998-alt1.4
+- Rebuild with Ruby 2.5.1
+
 * Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 0.99998-alt1.3
 - Rebuild with Ruby 2.5.0
 

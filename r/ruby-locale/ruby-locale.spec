@@ -5,7 +5,7 @@
 
 Name: %pkgname
 Version: 2.1.2
-Release: alt2.1
+Release: alt2.2
 
 Summary: Pure ruby library which provides basic APIs for localization
 Group: Development/Ruby
@@ -74,6 +74,9 @@ install -Dm 0644 locale.gemspec %buildroot%ruby_libdir/gems/$rbVersion/specifica
 %ruby_ri_sitedir/Locale*
 
 %changelog
+* Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt2.2
+- Rebuild with Ruby 2.5.1
+
 * Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt2.1
 - Rebuild with Ruby 2.5.0
 

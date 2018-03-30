@@ -2,7 +2,7 @@
 
 Name: 	 ruby-hiredis
 Version: 0.6.1 
-Release: alt1.1
+Release: alt1.2
 
 Summary: Ruby wrapper for hiredis
 License: BSD-3-Clause
@@ -57,6 +57,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt1.2
+- Rebuild with Ruby 2.5.1
+
 * Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt1.1
 - Rebuild with Ruby 2.5.0
 

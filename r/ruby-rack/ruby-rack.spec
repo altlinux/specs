@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.6.8
-Release: alt2.1
+Release: alt2.2
 Epoch:   1
 
 Summary: Modular Ruby webserver interface
@@ -83,6 +83,9 @@ install -Dm 0644 %pkgname.gemspec %buildroot%ruby_libdir/gems/$rbVersion/specifi
 %ruby_ri_sitedir/Rack*
 
 %changelog
+* Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 1:1.6.8-alt2.2
+- Rebuild with Ruby 2.5.1
+
 * Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 1:1.6.8-alt2.1
 - Rebuild with Ruby 2.5.0
 
