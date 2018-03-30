@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        65.0.3325.146
+Version:        65.0.3325.181
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -66,17 +66,16 @@ Patch011: 0011-DEBIAN-10-seconds-may-not-be-enough-so-do-not-kill-t.patch
 Patch012: 0012-FEDORA-path-max.patch
 Patch013: 0013-FEDORA-Ignore-broken-nacl-open-fd-counter.patch
 Patch014: 0014-FEDORA-Use-libusb_interrupt_event_handler-from-curre.patch
-Patch015: 0015-FEDORA-Enable-ARM-CPU-detection-for-webrtc-from-arch.patch
-Patch016: 0016-FEDORA-Fix-last-commit-position-issue.patch
-Patch017: 0017-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
-Patch018: 0018-ALT-gzip-does-not-support-the-rsyncable-option.patch
-Patch019: 0019-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch020: 0020-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-only.patch
-Patch021: 0021-GENTOO-disable-safe_math_shared.patch
-Patch022: 0022-FEDORA-Fix-gcc-round.patch
-Patch023: 0023-FEDORA-Fix-memcpy.patch
-Patch024: 0024-GENTOO-Fix-build-with-glibc-2.27.patch
-Patch025: 0025-GENTOO-Add-missing-stdint-include.patch
+Patch015: 0015-FEDORA-Fix-last-commit-position-issue.patch
+Patch016: 0016-FEDORA-Fix-issue-where-timespec-is-not-defined-when-.patch
+Patch017: 0017-ALT-gzip-does-not-support-the-rsyncable-option.patch
+Patch018: 0018-ALT-Use-rpath-link-and-absolute-rpath.patch
+Patch019: 0019-Enable-VAVDA-VAVEA-and-VAJDA-on-linux-with-VAAPI-only.patch
+Patch020: 0020-ALT-allow-_FORTIFY_SOURCE-for-clang.patch
+Patch021: 0021-FEDORA-Fix-gcc-round.patch
+Patch022: 0022-FEDORA-Fix-memcpy.patch
+Patch023: 0023-GENTOO-Fix-build-with-glibc-2.27.patch
+Patch024: 0024-GENTOO-Add-missing-stdint-include.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -230,7 +229,6 @@ tar -xf %SOURCE1
 %patch022 -p1
 %patch023 -p1
 %patch024 -p1
-%patch025 -p1
 ### Finish apply patches
 
 # Enable support for the Widevine CDM plugin
@@ -251,8 +249,8 @@ ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin/
 
 %build
 %if_enabled clang
-export CC="clang"
-export CXX="clang++"
+export CC="clang -v"
+export CXX="clang++ -v"
 %else
 export CC="gcc"
 export CXX="g++"
@@ -313,7 +311,7 @@ gn_arg is_clang=true
 gn_arg clang_use_chrome_plugins=false
 gn_arg use_lld=true
 gn_arg use_thin_lto=true
-gn_arg is_cfi=true
+#gn_arg is_cfi=true
 %else
 gn_arg is_clang=false
 %endif
@@ -470,6 +468,9 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n'   > %buildroot%_altdir
 %_altdir/%name-gnome
 
 %changelog
+* Fri Mar 30 2018 Alexey Gladkov <legion@altlinux.ru> 65.0.3325.181-alt1
+- New version (65.0.3325.181).
+
 * Wed Mar 07 2018 Alexey Gladkov <legion@altlinux.ru> 65.0.3325.146-alt1
 - New version (65.0.3325.146).
 - Use clang.
