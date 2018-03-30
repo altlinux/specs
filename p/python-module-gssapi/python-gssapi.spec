@@ -1,15 +1,17 @@
 %define _unpackaged_files_terminate_build 1
-
 %define mname gssapi
 
-Name: python-module-%mname
-Version: 1.3.0
-Release: alt1%ubt
-Summary: Python Bindings for GSSAPI (RFC 2743/2744 and extensions)
+%def_with check
 
-Group: Development/Python
+Name: python-module-%mname
+Version: 1.4.1
+Release: alt1%ubt
+
+Summary: Python Bindings for GSSAPI (RFC 2743/2744 and extensions)
 License: ISC
-Url: https://github.com/pythongssapi/python-gssapi
+Group: Development/Python
+# Source-git: https://github.com/pythongssapi/python-gssapi
+Url: https://pypi.python.org/pypi/gssapi
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -25,7 +27,8 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-Cython
 BuildRequires: libkrb5-devel >= 1.15
-#for tests
+
+%if_with check
 BuildRequires: python-module-nose
 BuildRequires: python-module-nose-parameterized
 BuildRequires: python-module-six
@@ -46,13 +49,12 @@ BuildRequires: python3-module-tox
 BuildRequires: python3-module-virtualenv
 BuildRequires: python3-module-future
 BuildRequires: krb5-kdc >= 1.15
-#
+%endif
+
 Requires: libkrb5 >= 1.15
 Requires: python-module-six
 Requires: python-module-enum34
 Requires: python-module-decorator
-
-%py_provides %mname
 
 %description
 A set of Python bindings to the GSSAPI C library providing both
@@ -66,7 +68,6 @@ Group: Development/Python3
 Requires: libkrb5 >= 1.15
 Requires: python3-module-six
 Requires: python3-module-decorator
-%py3_provides %mname
 
 %description -n python3-module-%mname
 A set of Python bindings to the GSSAPI C library providing both
@@ -96,13 +97,15 @@ pushd ../python3
 popd
 
 %check
+%define python_version_nodots() %(%1 -Esc "import sys; sys.stdout.write('{0.major}{0.minor}'.format(sys.version_info))")
+
 export PIP_INDEX_URL=http://host.invalid./
-export PYTHONPATH=%buildroot%python_sitelibdir_noarch:%python_sitelibdir_noarch:%python_sitelibdir
-TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py27 -v
+export PYTHONPATH=%python_sitelibdir_noarch:%python_sitelibdir
+TOX_TESTENV_PASSENV='PYTHONPATH' tox -e py%{python_version_nodots python} -v
 
 pushd ../python3
-export PYTHONPATH=%buildroot%python3_sitelibdir_noarch:%python3_sitelibdir_noarch:%python3_sitelibdir
-TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py35 -v
+export PYTHONPATH=%python3_sitelibdir_noarch:%python3_sitelibdir
+TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py%{python_version_nodots python3} -v
 popd
 
 %files
@@ -120,6 +123,9 @@ popd
 %exclude %python3_sitelibdir/%mname/tests/
 
 %changelog
+* Fri Mar 30 2018 Stanislav Levin <slev@altlinux.org> 1.4.1-alt1%ubt
+- 1.3.0 -> 1.4.1
+
 * Thu Dec 07 2017 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1%ubt
 - 1.2.2 -> 1.3.0
 

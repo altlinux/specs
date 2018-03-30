@@ -1,21 +1,17 @@
 %define _unpackaged_files_terminate_build 1
-
 %define mname k5test
 
 Name: python-module-%mname
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1%ubt
 Summary: Library for setting up self-contained Kerberos 5 environments
 
 Group: Development/Python
 License: ISC
+# Source git: https://github.com/pythongssapi/k5test.git
 Url: https://pypi.python.org/pypi/k5test
 
-BuildArch: noarch
-%py_provides %mname
-
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
@@ -26,6 +22,8 @@ BuildRequires: python-module-setuptools
 BuildRequires: python3-module-six
 BuildRequires: python3-module-setuptools
 
+BuildArch: noarch
+
 %description
 Library for setting up self-contained Kerberos 5 environments, and running
 Python unit tests inside those environments. It is based on the file of the
@@ -34,7 +32,6 @@ same name found alongside the MIT Kerberos 5 unit tests.
 %package -n python3-module-%mname
 Summary: Library for setting up self-contained Kerberos 5 environments
 Group: Development/Python3
-%py3_provides %mname
 
 %description -n python3-module-%mname
 Library for setting up self-contained Kerberos 5 environments, and running
@@ -43,7 +40,6 @@ same name found alongside the MIT Kerberos 5 unit tests.
 
 %prep
 %setup
-%patch -p1
 rm -rfv ../python3
 cp -a . ../python3
 
@@ -62,13 +58,16 @@ popd
 
 %files
 %python_sitelibdir/%mname
-%python_sitelibdir/%mname-%version-py2.?.egg-info
+%python_sitelibdir/%mname-%version-*.egg-info
 
 %files -n python3-module-%mname
 %python3_sitelibdir/%mname
-%python3_sitelibdir/%mname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%mname-%version-*.egg-info
 
 %changelog
+* Fri Mar 30 2018 Stanislav Levin <slev@altlinux.org> 0.9.2-alt1%ubt
+- 0.9.1 -> 0.9.2
+
 * Mon Nov 20 2017 Stanislav Levin <slev@altlinux.org> 0.9.1-alt1%ubt
 - Initial build
 
