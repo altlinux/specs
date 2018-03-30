@@ -2,6 +2,11 @@
 
 %def_disable baloo
 %def_disable mysql
+%_K5if_ver_gteq %ubt_id M90
+%def_enable obsolete_kde4
+%else
+%def_disable obsolete_kde4
+%endif
 %_K5if_ver_lt %opencv_ver 3
 %def_disable opencv3
 %else
@@ -17,9 +22,9 @@
 
 Name: kde5-%rname
 %define lname lib%name
-Version: 5.8.0
-Release: alt2%ubt
-%K5init
+Version: 5.9.0
+Release: alt1%ubt
+%K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Summary: digiKam is an advanced digital photo management application for linux
 License: GPLv2+
@@ -27,6 +32,10 @@ Group: Graphics
 Url: http://www.digikam.org/
 
 Provides: digikam = %version-%release
+%if_enabled obsolete_kde4
+Provides: kde4-digikam = %version-%release
+Obsoletes: kde4-digikam < %version-%release
+%endif
 
 Requires: qt5-sql-sqlite
 #Requires: kde5-runtime
@@ -65,10 +74,6 @@ Source1: po.tar
 Source2: doc.tar
 Source3: doc-translated.tar
 # upstream
-Patch1: 0004-fix-schema-update-from-V7-8-to-V9-with-temporary-tab.patch
-Patch2: 0005-small-fix-for-the-schema-update.patch
-Patch3: 0011-disable-foreign-key-checks-temporarily-for-the-Tags-.patch
-Patch4: 0012-drop-old-table-if-new-run-required.patch
 # FC
 Patch20: digikam-5.7.0-glibc_powf64.patch
 # ALT
@@ -151,12 +156,8 @@ Development files for %label.
 
 %prep
 %setup -n %rname-%version  -a1 -a2 -a3
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 #
-%patch20 -p2
+#%patch20 -p2
 #
 %patch100 -p1
 %patch101 -p1
@@ -187,7 +188,9 @@ __EOF__
 find -type f -name CMakeLists.txt | \
 while read f ; do
     sed -i '/^set_target_properties.*SOVERSION.*DIGIKAM_VERSION_SHORT/s|\(SOVERSION.*\)DIGIKAM_VERSION_SHORT}|\1DIGIKAM_MAJOR_VERSION}|' $f
+%if_disabled obsolete_kde4
     sed -i 's|${DATA_INSTALL_DIR}/digikam|${KDE_INSTALL_DATADIR_KF5}/digikam|' $f
+%endif
 done
 
 %build
@@ -201,22 +204,29 @@ done
 
 %install
 %K5install
-%K5install_move data kconf_update showfoto solid locale
-
+%K5install_move data kconf_update solid
+%if_disabled obsolete_kde4
+%K5install_move data showfoto locale
+%endif
 rm -f %buildroot/%_K5i18n/*/*/kipiplugin*
+rm -f %buildroot/%_datadir/locale/*/*/kipiplugin*
 rm -f %buildroot/%_K5i18n/*/*/lib*
+rm -f %buildroot/%_datadir/locale/*/*/lib*
 rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %find_lang --with-kde %rname
 %find_lang --with-kde --append --output=%rname.lang showfoto
 
 %files common
-%dir %_K5data/%rname
-%dir %_datadir/%rname
-%dir %_K5data/showfoto
+%dir %_datadir/%rname/
+%if_enabled obsolete_kde4
+%dir %_datadir/showfoto/
+%else
+%dir %_K5data/%rname/
+%dir %_K5data/showfoto/
+%endif
 
 %files
 %_K5bin/%rname
-#_K5data/%rname/utils/
 %_datadir/%rname/utils/
 %_K5bin/showfoto
 %_K5bin/cleanup_digikamdb
@@ -229,9 +239,23 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 
 %files data -f %rname.lang
 %doc AUTHORS ChangeLog HACKING NEWS README* TODO
+%if_enabled obsolete_kde4
+%_datadir/%rname/about/
+%_datadir/%rname/colorschemes/
+%_datadir/%rname/data/
+%_datadir/%rname/database/
+%_datadir/%rname/facesengine/
+%_datadir/%rname/geoiface/
+%_datadir/%rname/geolocationedit/
+%_datadir/%rname/metadata/
+%_datadir/%rname/profiles/
+%_datadir/%rname/templates/
+%_datadir/%rname/themes/
+%_datadir/showfoto/*
+%else
 %_K5data/%rname/*
-#exclude %_K5data/%rname/utils/
 %_K5data/showfoto/*
+%endif
 %_K5icon/hicolor/*/apps/%rname.*
 %_K5icon/hicolor/*/apps/showfoto.*
 %_K5icon/hicolor/*/apps/panorama.*
@@ -241,7 +265,6 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5icon/hicolor/*/actions/tag.*
 %_K5icon/hicolor/*/actions/overexposure.*
 %_K5icon/hicolor/*/actions/underexposure.*
-#%_K5conf_up/*
 
 %files devel
 %_K5link/*.so
@@ -257,6 +280,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Fri Mar 30 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt1%ubt
+- new version
+
 * Fri Mar 02 2018 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt2%ubt
 - rebuild with new libKF5CalendarCore
 

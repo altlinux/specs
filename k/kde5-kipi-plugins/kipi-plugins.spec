@@ -7,7 +7,7 @@
 
 %define rname kipi-plugins
 Name: kde5-%rname
-Version: 5.8.0
+Version: 5.9.0
 Release: alt1%ubt
 %K5init
 
@@ -187,6 +187,9 @@ done
 %_K5lib/libKF5kipiplugins.so.%libsover.*
 
 %changelog
+* Fri Mar 30 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.0-alt1%ubt
+- new version
+
 * Mon Feb 05 2018 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1%ubt
 - new version
 
