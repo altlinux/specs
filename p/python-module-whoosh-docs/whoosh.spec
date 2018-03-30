@@ -6,11 +6,11 @@ implemented in pure Python. Programmers can use it to easily add search \
 functionality to their applications and websites. Every part of how \
 Whoosh works can be extended or replaced to meet your needs exactly.
 
-Name: %fname
+Name: %fname-docs
 Version: 2.7.0
 Release: alt2.hg20150805
 
-%if ""==""
+%if "-docs"==""
 Summary: Fast pure-Python indexing and search library
 Group: Development/Python
 %else
@@ -42,7 +42,7 @@ BuildArch: noarch
 # ImportError: cannot import name 'find_object'
 %endif
 
-%if ""!=""
+%if "-docs"!=""
 Conflicts: %fname < %EVR
 Conflicts: %fname > %EVR
 %endif
@@ -50,7 +50,7 @@ Conflicts: %fname > %EVR
 %description
 %descr
 
-%if ""!=""
+%if "-docs"!=""
 This package contains documentation for %oname.
 
 %package -n %fname-pickles
@@ -81,13 +81,13 @@ This package contains tests for whoosh.
 
 %prep
 %setup
-%if ""!=""
+%if "-docs"!=""
 %prepare_sphinx docs
 ln -s ../objects.inv docs/source/
 %endif
 
 %build
-%if ""==""
+%if "-docs"==""
 %python_build
 %else
 mkdir docs/source/_static
@@ -96,7 +96,7 @@ sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
 %endif
 
 %install
-%if ""!=""
+%if "-docs"!=""
 mkdir -p %buildroot%python_sitelibdir/%oname/
 cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %else
@@ -104,7 +104,7 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 cp -fR src/whoosh/query src/whoosh/matching %buildroot%python_sitelibdir/%oname/
 %endif
 
-%if ""==""
+%if "-docs"==""
 %files
 %doc *.txt
 %python_sitelibdir/*
