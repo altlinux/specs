@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.12.4
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -14,6 +14,7 @@ Provides: kde5-breeze-dark-gtk = %EVR
 
 Source: %rname-%version.tar
 Patch1: alt-conf-update.patch
+Patch2: alt-gtk2-progressbar.patch
 
 # Automatically added by buildreq on Wed Oct 05 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ libqt5-core libstdc++-devel perl python-base python-modules python3 python3-base rpm-build-python3
@@ -40,6 +41,7 @@ Provides: gtk3-theme-breeze = %version-%release
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K5build \
@@ -56,6 +58,9 @@ Provides: gtk3-theme-breeze = %version-%release
 %_datadir/themes/Breeze*
 
 %changelog
+* Fri Mar 30 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt2%ubt
+- don't apply GTK2 progressbar style (ALT#34492)
+
 * Wed Mar 28 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt1%ubt
 - new version
 
