@@ -1,15 +1,15 @@
 Name:		qps
-Version:	1.10.16
+Version:	1.10.17
 Release:	alt1
 Summary:	Visual process status monitor
-License:	GPLv2
+License:	GPLv2+
 Group:		Monitoring
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
-URL:		http://kldp.net/projects/qps
-Source0:	%name-%version.tar.bz2
+URL:		https://github.com/lxqt/qps/releases
+Source0:	%name-%version.tar.xz
 Source1:	%name.desktop
 
-BuildRequires:	/usr/bin/convert gcc-c++ libqt4-devel
+BuildRequires:	/usr/bin/convert cmake qt5-tools-devel qt5-x11extras-devel
 
 %description
 Qps is a perfect visual process manager, an X11 version of "top" or "ps" that displays processes in a window and lets you sort and manipulate them easily
@@ -32,31 +32,38 @@ Qps can
 %setup -q
 
 %build
-export PATH=$PATH:%_qt4dir/bin
-qmake "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" %name.pro
+mkdir build && cd build
+cmake .. \
+	-DCMAKE_INSTALL_PREFIX=%prefix \
+	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
+	-DCMAKE_C_FLAGS:STRING="%optflags"
 %make_build
 
 %install
-install -Dp -m 0755 %name %buildroot%_bindir/%name
-install -Dp -m 644 %name.1 %buildroot%_man1dir/%name.1
+cd build
+%make_install DESTDIR=%buildroot install
 install -pD -m 644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 # Icons
 mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
-convert -resize 48x48 icon/icon.xpm %buildroot%_liconsdir/%name.png
-convert -resize 32x32 icon/icon.xpm %buildroot%_niconsdir/%name.png
-convert -resize 16x16 icon/icon.xpm %buildroot%_miconsdir/%name.png
+convert -resize 32x32 ../icon/%name.png %buildroot%_niconsdir/%name.png
+convert -resize 16x16 ../icon/%name.png %buildroot%_miconsdir/%name.png
 
 %files
-%doc CHANGES README_INSTALL COPYING
+%dir %_datadir/%name
+%doc CHANGELOG COPYING LICENSE.QPL README.md
 %_man1dir/*
 %_bindir/*
+%_datadir/%name
 %_desktopdir/%name.desktop
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Fri Mar 30 2018 Motsyo Gennadi <drool@altlinux.ru> 1.10.17-alt1
+- 1.10.17 (altbug #34690)
+
 * Sun Jul 15 2012 Motsyo Gennadi <drool@altlinux.ru> 1.10.16-alt1
 - 1.10.16
 
