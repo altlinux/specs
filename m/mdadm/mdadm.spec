@@ -1,8 +1,10 @@
 %def_disable cluster
+%define _sbindir /sbin
+%define nowarn -Wno-implicit-fallthrough -Wno-format-truncation -Wno-format-overflow
 
 Name: mdadm
 Version: 4.0
-Release: alt1
+Release: alt2
 
 Summary: A tool for managing Soft RAID under Linux
 License: GPLv2+
@@ -18,6 +20,10 @@ BuildRequires: binutils-devel
 # due to /lib/udev/rules.d/64-md-raid.rules
 Conflicts: udev < 151
 
+# Pull in the tool subpackage on a package update, but
+# allow it to be installed individually
+Requires: %name-tool = %version-%release
+
 %description
 mdadm is a program that can be used to create, manage, and monitor
 Linux MD (Software RAID) devices.
@@ -28,18 +34,32 @@ program, and it can perform (almost) all functions without a
 configuration file (that a config file can be used to help with
 some common tasks).
 
+%package tool
+Summary: Primary '%name' command line tool for MD arrays maintenance
+Group: System/Configuration/Hardware
+%description tool
+%summary
+
+%package doc
+Summary: Optional documentation for %name
+Group: Documentation
+BuildArch: noarch
+%description doc
+%summary
+
 %prep
 %setup -n %name-%version-%release
 
 %build
-%make_build mdadm mdmon CXFLAGS='%optflags' SYSCONFDIR='%_sysconfdir'
+%make_build mdadm mdmon CXFLAGS='%optflags %nowarn' SYSCONFDIR='%_sysconfdir'
 bzip2 -9fk ChangeLog
 
 %install
-%makeinstall_std install-systemd MANDIR=%_mandir BINDIR=/sbin SYSTEMD_DIR=%_unitdir
+%makeinstall_std install-systemd MANDIR=%_mandir BINDIR=%_sbindir SYSTEMD_DIR=%_unitdir
 install -pD -m755 alt/mdadm.init %buildroot%_initdir/mdadm
-install -pD -m755 misc/syslog-events %buildroot/sbin/mdadm-syslog-events
-install -pD -m600 alt/mdadm.conf %buildroot%_sysconfdir/mdadm.conf
+install -pD -m755 misc/syslog-events %buildroot%_sbindir/mdadm-syslog-events
+install -pD -m600 alt/mdadm.conf %buildroot%_sysconfdir/mdadm.conf.sample
+touch %buildroot%_sysconfdir/mdadm.conf
 # install -pD -m644 alt/mdadm.service %buildroot%_unitdir/mdadm.service
 ln -r -s %buildroot%_unitdir/mdmonitor.service %buildroot%_unitdir/mdadm.service
 
@@ -55,20 +75,36 @@ install -pD -m644 alt/mdadm.crond %buildroot%_sysconfdir/cron.d/mdadm
 %preun_service mdadm
 
 %files
-/sbin/md*
-/lib/udev/rules.d/63-md-raid-arrays.rules
-/lib/udev/rules.d/64-md-raid-assembly.rules
-%config(noreplace,missingok) %_sysconfdir/mdadm.conf
+%_sbindir/mdadm-syslog-events
+%_sbindir/mdmon
+%_man8dir/mdmon.*
+%config %_sysconfdir/mdadm.conf.sample
 %config(noreplace) %_sysconfdir/sysconfig/mdadm
 %_sysconfdir/cron.d/mdadm
-%_mandir/man?/md*
 %_initdir/mdadm
 %_datadir/mdadm/
+/lib/udev/rules.d/63-md-raid-arrays.rules
+/lib/udev/rules.d/64-md-raid-assembly.rules
 %_unitdir/*
 /lib/systemd/system-shutdown/mdadm.shutdown
-%doc TODO ChangeLog.bz2 mdadm.conf-example ANNOUNCE-%version alt/README*
+
+%files tool
+%_sbindir/mdadm
+%_man8dir/mdadm.*
+%_man4dir/md.*
+%_man5dir/mdadm.conf.*
+%ghost %config(noreplace,missingok) %_sysconfdir/mdadm.conf
+
+%files doc
+%doc TODO ChangeLog.* mdadm.conf-example ANNOUNCE-%version alt/README*
 
 %changelog
+* Fri Mar 30 2018 Gremlin from Kremlin <gremlin@altlinux.ru> 4.0-alt2
+- move the primary 'mdadm' tool to separate subpackage with minimized
+  dependencies
+- move documentation to separate subpackage (so the people can read it
+  without installing the full package)
+
 * Tue Jan 17 2017 Alexey Shabalin <shaba@altlinux.ru> 4.0-alt1
 - 4.0
 
