@@ -32,7 +32,7 @@
 
 Name: kde5-kopete
 Version: 18.03.80
-Release: alt2%ubt
+Release: alt3%ubt
 %K5init
 
 Group: Networking/Instant messaging
@@ -55,7 +55,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: rpm-macros-browser-plugins
 BuildRequires: gcc-c++ cmake extra-cmake-modules
 BuildRequires: boost-devel glib2-devel zlib-devel
-BuildRequires: libqca-qt5-devel qjson-qt5-devel qt5-phonon-devel
+BuildRequires: libqca-qt5-devel qt5-phonon-devel
 BuildRequires: libgpgme-devel
 BuildRequires: libexpat-devel libidn-devel libjasper-devel libjpeg-devel
 BuildRequires: libgadu-devel libgnutls-devel libtasn1-devel jsoncpp-devel
@@ -306,6 +306,9 @@ done
 %_K5dbus_iface/*
 
 %changelog
+* Fri Mar 30 2018 Sergey V Turchin <zerg@altlinux.org> 18.03.80-alt3%ubt
+- fix build requires
+
 * Fri Mar 30 2018 Igor Vlasenko <viy@altlinux.ru> 18.03.80-alt2%ubt
 - NMU: added Url
 
