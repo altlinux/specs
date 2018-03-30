@@ -32,12 +32,13 @@
 
 Name: kde5-kopete
 Version: 18.03.80
-Release: alt1%ubt
+Release: alt2%ubt
 %K5init
 
 Group: Networking/Instant messaging
 Summary: Instant Messaging client
 License: GPLv2
+Url: http://www.kde.org/applications/internet/kopete/
 
 Requires: qca-qt5-ossl
 %if_enabled mediastreamer
@@ -305,5 +306,8 @@ done
 %_K5dbus_iface/*
 
 %changelog
+* Fri Mar 30 2018 Igor Vlasenko <viy@altlinux.ru> 18.03.80-alt2%ubt
+- NMU: added Url
+
 * Tue Mar 27 2018 Sergey V Turchin <zerg@altlinux.org> 18.03.80-alt1%ubt
 - initial build
