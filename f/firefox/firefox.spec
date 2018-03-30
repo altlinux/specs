@@ -15,7 +15,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
 Version:        59.0.2
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -244,6 +244,7 @@ install -D -m 644 %SOURCE8 %buildroot/%firefox_prefix/browser/defaults/preferenc
 
 cat > %buildroot/%firefox_prefix/browser/defaults/preferences/firefox-l10n.js <<EOF
 pref("intl.locale.matchOS", true);
+pref("intl.locale.requested", "");
 pref("general.useragent.locale", "chrome://global/locale/intl.properties");
 EOF
 
@@ -329,6 +330,9 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Fri Mar 30 2018 Alexey Gladkov <legion@altlinux.ru> 59.0.2-alt2
+- Fix locale switch (ALT#34741)
+
 * Tue Mar 27 2018 Alexey Gladkov <legion@altlinux.ru> 59.0.2-alt1
 - New release (59.0.2).
 - Fixed:
