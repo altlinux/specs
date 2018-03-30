@@ -1,18 +1,17 @@
 %define _unpackaged_files_terminate_build 1
-
 %define mname kerberos
 
 Name: python-module-%mname
-Version: 1.2.5
+Version: 1.3.0
 Release: alt1%ubt
-Summary: A high-level wrapper for Kerberos (GSSAPI) operations
 
-Group: System/Libraries
+Summary: A high-level wrapper for Kerberos (GSSAPI) operations
 License: ASL 2.0
+Group: System/Libraries
+# Source-git: https://github.com/apple/ccs-pykerberos.git
 Url: https://pypi.python.org/pypi/kerberos
-#git https://github.com/apple/ccs-pykerberos.git
+
 Source0: %name-%version.tar
-Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-python
@@ -22,8 +21,6 @@ BuildRequires: python3-dev
 BuildRequires: libkrb5-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python3-module-setuptools
-
-%py_provides %mname
 
 %description
 This Python package is a high-level wrapper for Kerberos (GSSAPI) operations.
@@ -37,7 +34,6 @@ Much of the C-code here is adapted from Apache's mod_auth_kerb-5.0rc7.
 %package -n python3-module-%mname
 Summary: A high-level wrapper for Kerberos (GSSAPI) operations
 Group: Development/Python3
-%py3_provides %mname
 
 %description -n python3-module-%mname
 This Python package is a high-level wrapper for Kerberos (GSSAPI) operations.
@@ -50,7 +46,6 @@ Much of the C-code here is adapted from Apache's mod_auth_kerb-5.0rc7.
 
 %prep
 %setup
-%patch -p1
 rm -rf ../python3
 cp -a . ../python3
 
@@ -78,6 +73,9 @@ popd
 %python3_sitelibdir/kerberos-%version-*.egg-info
 
 %changelog
+* Fri Mar 16 2018 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1%ubt
+- 1.2.5 -> 1.3.0
+
 * Tue Nov 14 2017 Stanislav Levin <slev@altlinux.org> 1.2.5-alt1%ubt
 - 1.1.1 -> 1.2.5
 
