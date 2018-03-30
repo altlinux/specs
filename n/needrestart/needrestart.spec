@@ -2,7 +2,7 @@
 %add_findreq_skiplist %_sysconfdir/%name/restart.d/*
 
 Name: needrestart
-Version: 2.11
+Version: 3.1
 Release: alt1
 
 Summary: Restart daemons after library updates
@@ -66,6 +66,13 @@ EOF
 %config(noreplace) %_sysconfdir/apt/apt.conf.d/%name.conf
 
 %changelog
+* Fri Mar 30 2018 Terechkov Evgenii <evg@altlinux.org> 3.1-alt1
+- 3.1
+
+* Sat Mar  3 2018 Terechkov Evgenii <evg@altlinux.org> 3.0-alt1
+- v3.0
+- N.B.: package firmware-intel-ucode needed for intel microcode check
+
 * Sat Mar  4 2017 Terechkov Evgenii <evg@altlinux.org> 2.11-alt1
 - v2.11-3-g9423e6e
 
