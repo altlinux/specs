@@ -1,6 +1,6 @@
 Name: elfutils
 Version: 0.170
-Release: alt4
+Release: alt5
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
 License: GPLv3+ and (GPLv2+ or LGPLv3+)
@@ -113,7 +113,7 @@ applications.
 Summary: Static libdw library
 License: GPLv2+ or LGPLv3+
 Group: Development/C
-Requires: libdw-devel = %EVR
+Requires: libasm-devel = %EVR, libdw-devel = %EVR
 Requires: libelf-devel-static = %EVR
 
 %description -n libdw-devel-static
@@ -208,6 +208,7 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %files -n libasm-devel
 %dir %_includedir/elfutils/
 %_includedir/elfutils/libasm.h
+%_includedir/elfutils/libebl.h
 %_libdir/libasm.so
 
 %if_enabled static
@@ -233,7 +234,6 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %if_enabled static
 %files -n libdw-devel-static
 %dir %_includedir/elfutils/
-%_includedir/elfutils/libebl.h
 %_libdir/libdw.a
 %_libdir/libebl.a
 %endif
@@ -259,6 +259,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Mar 30 2018 Dmitry V. Levin <ldv@altlinux.org> 0.170-alt5
+- Moved libebl.h from libdw-devel-static to libasm-devel.
+
 * Wed Mar 28 2018 Dmitry V. Levin <ldv@altlinux.org> 0.170-alt4
 - Backported a few upstream commits.
 
