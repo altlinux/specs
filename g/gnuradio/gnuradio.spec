@@ -5,7 +5,7 @@
 
 Name: gnuradio
 Version: 3.7.11
-Release: alt4
+Release: alt5
 Summary: Software defined radio framework
 License: GPLv2+
 Group: Engineering
@@ -16,8 +16,8 @@ Source: %name-%version.tar
 
 BuildPreReq: cmake rpm-macros-cmake rpm-build-python rpm-build-gir
 BuildRequires: gcc-c++ boost-program_options-devel boost-filesystem-devel pkgconfig(sdl) pkgconfig(alsa) pkgconfig(codec2) pkgconfig(gsl) libgsm-devel pkgconfig(jack) pkgconfig(portaudio-2.0) libqt4-devel libqwt-devel pkgconfig(libusb-1.0) pkgconfig(comedilib) pkgconfig(fftw3f) pkgconfig(thrift) libzeromq-cpp-devel pkgconfig(volk) swig pkgconfig(uhd)
-BuildRequires: python-devel python-module-lxml python-module-numpy python-module-cheetah python-module-pygtk python-module-PyQt4 python-module-wx
-# 
+BuildRequires: python-devel python-module-lxml python-module-numpy python-module-Cheetah python-module-pygtk python-module-PyQt4 python-module-wx
+
 %if_enabled tests
 BuildRequires: cppunit-devel
 %endif #tests
@@ -162,6 +162,9 @@ rm -f %buildroot%_datadir/%name/examples/fcd/fcd_nfm_rx
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Mar 30 2018 Anton Midyukov <antohami@altlinux.org> 3.7.11-alt5
+- fix buildrequires
+
 * Mon Mar 19 2018 Anton Midyukov <antohami@altlinux.org> 3.7.11-alt4
 - rebuilt with uhd-3.11.0
 

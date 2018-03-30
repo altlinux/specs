@@ -1,7 +1,7 @@
 Name: gr-osmosdr
 Url: http://sdr.osmocom.org/trac/wiki/GrOsmoSDR
 Version: 0.1.4
-Release: alt1.20170612.1
+Release: alt2.20170612.1
 License: GPLv3+
 Group: Engineering
 Summary: Common software API for various radio hardware
@@ -13,7 +13,7 @@ Patch: gr-osmosdr-0.1.1-pkgconfig-fix.patch
 BuildRequires (pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ python-devel libgnuradio-devel boost-program_options-devel doxygen
 BuildRequires: graphviz swig rtl-sdr-devel uhd-devel hackrf-devel libbladerf-devel
-BuildRequires: python-module-cheetah
+BuildRequires: python-module-Cheetah
 
 %description
 Primarily gr-osmosdr supports the OsmoSDR hardware, but it also
@@ -70,5 +70,8 @@ Documentation files for gr-osmosdr.
 %doc %_docdir/%name/xml
 
 %changelog
+* Fri Mar 30 2018 Anton Midyukov <antohami@altlinux.org> 0.1.4-alt2.20170612.1
+- fix buildrequires
+
 * Sun Oct 22 2017 Anton Midyukov <antohami@altlinux.org> 0.1.4-alt1.20170612.1
 - Initial build for ALT Sisyphus.
