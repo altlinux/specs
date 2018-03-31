@@ -1,5 +1,5 @@
 Name:		karbowanecwallet
-Version:	1.2.0
+Version:	1.2.2
 Release:	alt1
 Summary:	Karbowanec KRB wallet
 Url:		http://karbowanec.com
@@ -10,14 +10,11 @@ Source1:	cryptonote.tar.xz
 Source2:	libqrencode.tar.xz
 Source3:	karbowanec.png
 
-# Automatically added by buildreq on Mon Jul 03 2017 (-bi)
-# optimized out: GraphicsMagick GraphicsMagick-common boost-filesystem-devel boost-program_options-devel cmake-modules elfutils gcc-c++ libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-network libqt5-widgets libstdc++-devel perl python-base python-modules python3 python3-base python3-dev rpm-build-python3 xz
 BuildRequires: boost-asio-devel boost-devel-headers boost-devel-static cmake qt5-base-devel
-
 BuildRequires: /usr/bin/convert
 
 %description
-  Karbowanec is Ukrainian decentralized, privacy oriented peer-to-peer
+  Karbowanec (Karbo) is Ukrainian decentralized, privacy oriented peer-to-peer
   cryptocurrency. It is open-source, nobody owns or controls Karbowanec
   and everyone can take part.
 
@@ -28,7 +25,6 @@ tar -xf %SOURCE2
 
 %build
 subst 's|Categories=Office;Finance;|Categories=Qt;Office;Finance;|g' ./src/%name.desktop
-rm -f ./src/gui/macdockiconhandler.{h,mm}
 mkdir ./build
 cd ./build
 cmake ../. \
@@ -56,6 +52,9 @@ convert -resize 16x16 %SOURCE3 %buildroot%_miconsdir/karbowanec.png
 %_liconsdir/karbowanec.png
 
 %changelog
+* Sat Mar 31 2018 Motsyo Gennadi <drool@altlinux.ru> 1.2.2-alt1
+- 1.2.2
+
 * Wed Dec 27 2017 Motsyo Gennadi <drool@altlinux.ru> 1.2.0-alt1
 - 1.2.0
 
