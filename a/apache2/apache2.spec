@@ -12,8 +12,8 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.29
-Release: alt2%ubt
+Version: 2.4.33
+Release: alt1%ubt
 Epoch: 1
 
 License: %asl
@@ -1513,6 +1513,17 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Sat Mar 31 2018 Anton Farygin <rider@altlinux.ru> 1:2.4.33-alt1%ubt
+- 2.4.33
+- fixes:
+	* CVE-2018-1303 low: Possible out of bound read in mod_cache_socache
+	* CVE-2018-1302 low: Possible write of after free on HTTP/2 stream shutdown
+	* CVE-2018-1301 low: Possible out of bound access after failure in reading the HTTP request 
+	* CVE-2018-1312 low: Weak Digest auth nonce generation in mod_auth_digest
+	* CVE-2017-15715 low: <FilesMatch> bypass with a trailing newline in the file name
+	* CVE-2017-15710 low: Out of bound write in mod_authnz_ldap when using too small Accept-Language values
+	* CVE-2018-1283 medium: Tampering of mod_session data for CGI applications
+
 * Thu Feb 15 2018 Stanislav Levin <slev@altlinux.org> 1:2.4.29-alt2%ubt
 - Change the default access control directives according to apache 2.4 standard.
   Mixing old and new directives leads to unexpected results.
