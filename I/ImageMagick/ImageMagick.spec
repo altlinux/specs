@@ -1,6 +1,6 @@
 %define mversion	6
 %define dversion	%mversion.9.9
-%define drelease	34
+%define drelease	40
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		4
@@ -16,7 +16,7 @@
 
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt2
+Release: alt1
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -236,6 +236,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Sat Mar 31 2018 Anton Farygin <rider@altlinux.ru> 6.9.9.40-alt1
+- new version 6.9.9.40
+
 * Fri Jan 26 2018 Anton Farygin <rider@altlinux.ru> 6.9.9.34-alt2
 - added openmp-devel requires to libImageMagick-devel (disabled on e2k)
 
