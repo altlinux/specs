@@ -1,7 +1,7 @@
 %define soname 21
 Summary: Command-line tools and library for transforming PDF files
 Name: qpdf
-Version: 8.0.0
+Version: 8.0.2
 Release: alt1
 License: Apache 2.0
 Group: System/Base
@@ -95,6 +95,9 @@ QPDF Manual
 %doc doc/qpdf-manual.html doc/stylesheet.css
 
 %changelog
+* Sat Mar 31 2018 Anton Farygin <rider@altlinux.ru> 8.0.2-alt1
+- new version
+
 * Fri Mar 02 2018 Anton Farygin <rider@altlinux.ru> 8.0.0-alt1
 - new version
 - library package renamed to match the shared libs policy
