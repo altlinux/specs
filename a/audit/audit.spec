@@ -4,7 +4,7 @@
 %def_without prelude
 
 Name: audit
-Version: 2.8.2
+Version: 2.8.3
 Release: alt1%ubt
 
 Packager: Anton Farygin <rider@altlinux.com>
@@ -203,6 +203,9 @@ install -pD -m644 rules/10-base-config.rules %buildroot%_sysconfdir/%name/rules.
 %endif
 
 %changelog
+* Sat Mar 31 2018 Anton Farygin <rider@altlinux.ru> 2.8.3-alt1%ubt
+- new version
+
 * Fri Jan 26 2018 Anton Farygin <rider@altlinux.ru> 2.8.2-alt1%ubt
 - new version
 - disabled prelude support (code is outdated and needs to be revised)
