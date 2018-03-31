@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.421
+Version: 0.422
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -39,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Sat Mar 31 2018 Igor Vlasenko <viy@altlinux.ru> 0.422-alt1
+- added ocaml,nodejs
+
 * Tue Mar 27 2018 Igor Vlasenko <viy@altlinux.ru> 0.421-alt1
 - added golang
 
