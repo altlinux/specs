@@ -1,5 +1,5 @@
 Name: curl
-Version: 7.58.0
+Version: 7.59.0
 Release: alt1%ubt
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -14,7 +14,7 @@ Patch0: curl-%version-alt.patch
 
 Requires: lib%name = %version-%release
 
-BuildRequires: glibc-devel-static groff-base libidn-devel libssh2-devel libssl-devel zlib-devel python-modules libnghttp2-devel python-modules-logging python-modules-xml
+BuildRequires: glibc-devel-static groff-base libidn-devel libssh2-devel libssl-devel zlib-devel python-modules python-modules-logging python-modules-xml
 BuildRequires(pre):rpm-build-ubt
 
 %package -n lib%name
@@ -144,6 +144,13 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Sat Mar 31 2018 Anton Farygin <rider@altlinux.ru> 7.59.0-alt1%ubt
+- new version 
+- fixes: 
+  * CVE-2018-1000120 FTP path trickery leads to NIL byte out of bounds write
+  * CVE-2018-1000121 LDAP NULL pointer dereference
+  * CVE-2018-1000122  RTSP RTP buffer over-read
+
 * Wed Jan 24 2018 Anton Farygin <rider@altlinux.ru> 7.58.0-alt1%ubt
 - new version
 - fixes:
