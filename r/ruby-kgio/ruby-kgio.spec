@@ -2,7 +2,7 @@
 
 Name: ruby-%pkgname
 Version: 2.11.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: kinder, gentler I/O for Ruby
 Group: Development/Ruby
@@ -56,6 +56,9 @@ Documentation files for %name.
 %ruby_ri_sitedir/Kgio*
 
 %changelog
+* Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 2.11.2-alt1.2
+- Rebuild with Ruby 2.5.1
+
 * Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 2.11.2-alt1.1
 - Rebuild with Ruby 2.5.0
 

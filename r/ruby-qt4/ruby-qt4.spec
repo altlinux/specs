@@ -2,7 +2,7 @@
 
 Name: ruby-qt4
 Version: 4.14.0
-Release: alt4.3
+Release: alt4.4
 
 Group: Development/Ruby
 Summary: QtRuby kdebindings library
@@ -77,6 +77,9 @@ chmod +x %buildroot/%ruby_sitelibdir/qtwebkit/qtwebkit.rb
 %_datadir/qtruby4/
 
 %changelog
+* Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 4.14.0-alt4.4
+- Rebuild with Ruby 2.5.1
+
 * Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 4.14.0-alt4.3
 - Rebuild with Ruby 2.5.0
 

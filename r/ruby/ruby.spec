@@ -11,7 +11,7 @@
 Name: ruby
 %define lname lib%name
 %define branch 2.5
-%define ver_teeny 0
+%define ver_teeny 1
 Version: %branch.%ver_teeny
 Release: alt1
 Summary: An Interpreted Object-Oriented Scripting Language
@@ -351,6 +351,16 @@ mv %_builddir/miniruby-src.patch %buildroot%_datadir/%name-%version-miniruby/
 %endif
 
 %changelog
+* Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt1
+- New version.
+- Fixes:
+  + CVE-2017-17742: HTTP response splitting in WEBrick
+  + CVE-2018-6914: Unintentional file and directory creation with directory traversal in tempfile and tmpdir
+  + CVE-2018-8777: DoS by large request in WEBrick
+  + CVE-2018-8778: Buffer under-read in String#unpack
+  + CVE-2018-8779: Unintentional socket creation by poisoned NUL byte in UNIXServer and UNIXSocket
+  + CVE-2018-8780: Unintentional directory traversal by poisoned NUL byte in Dir
+
 * Mon Mar 05 2018 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1
 - New version.
 - Fixes:

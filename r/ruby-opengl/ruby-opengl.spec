@@ -1,6 +1,6 @@
 Name:    ruby-opengl
 Version: 0.9.2
-Release: alt2.3
+Release: alt2.4
 Epoch:   1
 Summary: OpenGL Interface for Ruby
 License: MIT
@@ -33,6 +33,9 @@ for -- and uses the code from -- Yoshi's ruby-opengl.
 %ruby_sitearchdir/*
 
 %changelog
+* Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.9.2-alt2.4
+- Rebuild with Ruby 2.5.1
+
 * Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.9.2-alt2.3
 - Rebuild with Ruby 2.5.0
 

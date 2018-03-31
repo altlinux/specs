@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 1.1.0
-Release: alt2.1
+Release: alt2.2
  
 Summary: GetText but 3.5 x faster, 560 x less memory, simple, clean namespace (7 vs 34) and threadsafe!
 License: MIT/Ruby
@@ -69,6 +69,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt2.2
+- Rebuild with Ruby 2.5.1
+
 * Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt2.1
 - Rebuild with Ruby 2.5.0
 

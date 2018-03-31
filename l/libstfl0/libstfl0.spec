@@ -1,6 +1,6 @@
 Name: libstfl0
 Version: 0.24
-Release: alt4.2.2
+Release: alt4.2.3
 
 %define oname stfl
 
@@ -101,6 +101,9 @@ rm %buildroot%_libdir/*.a
 %ruby_sitearchdir/stfl.so
 
 %changelog
+* Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.24-alt4.2.3
+- Rebuild with Ruby 2.5.1
+
 * Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 0.24-alt4.2.2
 - Rebuild with Ruby 2.5.0
 

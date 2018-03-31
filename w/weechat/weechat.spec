@@ -1,6 +1,6 @@
 Name: weechat
 Version: 2.0.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: fast, light & extensible IRC client
 License: GPLv3
@@ -165,6 +165,9 @@ find %buildroot -name '*.a' -delete
 %_libdir/%name/plugins/tcl.so
 
 %changelog
+* Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1.2
+- Rebuild with Ruby 2.5.1
+
 * Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1.1
 - Rebuild with Ruby 2.5.0
 

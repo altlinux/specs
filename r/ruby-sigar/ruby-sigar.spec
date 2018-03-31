@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 0.7.3
-Release: alt1.3
+Release: alt1.4
  
 Summary: System Information Gatherer And Reporter
 License: Apache 2.0
@@ -54,6 +54,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.3-alt1.4
+- Rebuild with Ruby 2.5.1
+
 * Tue Mar 13 2018 Andrey Cherepanov <cas@altlinux.org> 0.7.3-alt1.3
 - Rebuild with Ruby 2.5.0
 
