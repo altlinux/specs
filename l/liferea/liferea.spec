@@ -1,6 +1,6 @@
 
 Name: liferea
-Version: 1.12.1
+Version: 1.12.2
 Release: alt1
 Summary: A RSS News Reader for GNOME
 License: GPLv2
@@ -9,7 +9,7 @@ Url: https://lzone.de/liferea
 
 Obsoletes: %name-gtkhtml < %version-%release %name-xulrunner < %version-%release
 Provides: %name-backend = %version-%release %name-gtkhtml = %version-%release %name-xulrunner = %version-%release
-
+# https://github.com/lwindolf/liferea.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -111,6 +111,9 @@ Play music and videos directly from Liferea
 %_libdir/%name/plugins/__pycache__/media-player.*
 
 %changelog
+* Mon Apr 02 2018 Alexey Shabalin <shaba@altlinux.ru> 1.12.2-alt1
+- 1.12.2
+
 * Wed Jan 10 2018 Alexey Shabalin <shaba@altlinux.ru> 1.12.1-alt1
 - 1.12.1
 
