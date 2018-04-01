@@ -1,12 +1,13 @@
 Name: vixie-cron
 Version: 4.1.20060426
-Release: alt10
+Release: alt10.1
 
 %def_with selinux
 
 Summary: The Vixie cron daemon for executing specified programs at set times
 License: BSD-style
 Group: System/Servers
+Url: http://git.altlinux.org/people/ldv/packages/vixie-cron.git
 
 Source0: vixie-cron-%version.tar
 Source1: crond.init
@@ -135,6 +136,9 @@ touch %buildroot%_sysconfdir/{at,cron}.{allow,deny}
 %attr(700,root,root) %dir %_sysconfdir/cron.d
 
 %changelog
+* Sun Apr 01 2018 Igor Vlasenko <viy@altlinux.ru> 4.1.20060426-alt10.1
+- NMU: added URL
+
 * Thu May 19 2016 Dmitry V. Levin <ldv@altlinux.org> 4.1.20060426-alt10
 - crond.service: fixed race condition that affected user crontabs
   (closes: #32095).
