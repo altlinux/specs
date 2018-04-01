@@ -27,7 +27,7 @@
 %def_with qemu
 %def_with openvz
 %def_with lxc
-%if_enabled lxc
+%if_with lxc
 %def_with login_shell
 %else
 %def_without login_shell
@@ -126,7 +126,7 @@
 %def_without bash_completion 
 
 Name: libvirt
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1%ubt
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -192,8 +192,8 @@ BuildRequires: libtasn1-devel
 BuildRequires: libattr-devel attr
 BuildRequires: libacl-devel
 BuildRequires: perl-Pod-Parser perl-XML-XPath
-BuildRequires: libxml2-devel xml-utils xsltproc w3c-markup-validator-libs xhtml1-dtds
-BuildRequires: python python-devel
+BuildRequires: libxml2-devel xml-utils xsltproc
+BuildRequires: python3 python3-devel
 BuildRequires: zlib-devel
 BuildRequires: iproute2 perl-Pod-Parser
 BuildRequires: dmidecode
@@ -778,7 +778,6 @@ LOADERS="$LOADERS_OLD:$LOADERS_NEW"
 		--with-init-script=systemd+redhat \
 		--with-qemu-user=%qemu_user \
 		--with-qemu-group=%qemu_group \
-		--with-xml-catalog-file=/etc/sgml/catalog \
 		--with-sysctl=check \
 		%{subst_with libvirtd} \
 		%{subst_with avahi} \
@@ -1309,22 +1308,26 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Sun Apr 01 2018 Alexey Shabalin <shaba@altlinux.ru> 4.2.0-alt1%ubt
+- 4.2.0 (Fixes: CVE-2018-5748)
+- Use Python 3 for building
+- fix package login-shell
+
 * Fri Mar 09 2018 Alexey Shabalin <shaba@altlinux.ru> 4.1.0-alt1%ubt
-- 4.1.0
+- 4.1.0 (Fixes: CVE-2018-6764, CVE-2017-5715)
 
 * Fri Feb 02 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.0-alt2%ubt
 - enabled server part on arm arches
 
 * Sat Jan 27 2018 Alexey Shabalin <shaba@altlinux.ru> 4.0.0-alt1%ubt
-- 4.0.0
+- 4.0.0 (Fixes: CVE-2018-5748)
 - add filetrigger that restart libvirtd after install any plugin
 
 * Fri Dec 08 2017 Alexey Shabalin <shaba@altlinux.ru> 3.10.0-alt1%ubt
 - 3.10.0
 
 * Mon Oct 30 2017 Alexey Shabalin <shaba@altlinux.ru> 3.8.0-alt1%ubt
-- 3.8.0
-- fixed CVE-2017-1000256
+- 3.8.0 (Fixes: CVE-2017-1000256)
 
 * Mon Sep 04 2017 Alexey Shabalin <shaba@altlinux.ru> 3.7.0-alt1%ubt
 - 3.7.0
