@@ -5,7 +5,7 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Test-MockTime
-Version:        0.16
+Version:        0.17
 Release:        alt1
 Summary:        Replaces actual time with simulated time
 License:        GPL+ or Artistic
@@ -58,6 +58,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Apr 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- automated CPAN update
+
 * Thu Feb 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - automated CPAN update
 
