@@ -1,5 +1,5 @@
 Name: libebml
-Version: 1.3.4
+Version: 1.3.5
 Release: alt1
 
 Summary: Extensible Binary Meta Language access library
@@ -43,6 +43,9 @@ Files needed to build programs using libebml
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Sun Apr 01 2018 Anton Farygin <rider@altlinux.ru> 1.3.5-alt1
+- 1.3.5
+
 * Fri Sep 02 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.4-alt1
 - 1.3.4 released
 
