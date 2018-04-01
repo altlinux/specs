@@ -1,0 +1,103 @@
+
+Name: udev-rule-generator
+Epoch: 2
+Version: 1
+Release: alt1
+Summary: Common package for udev rule generator
+Url: https://packages.altlinux.org/en/Sisyphus/srpms/%name
+Group: System/Configuration/Hardware
+License: GPLv2+
+PreReq: udev >= 1:238-alt4
+BuildArch: noarch
+
+Provides: udevd-final
+
+Source: %name-%version.tar
+
+%description
+This package contains common files for udev-rule-generator:
+ - udev-final SysV init script
+ - udev-final.service systemd unit
+ - rule_generator.functions
+
+%package cdrom
+Summary: CD rule generator for udev
+Group: System/Configuration/Hardware
+License: GPLv2+
+BuildArch: noarch
+PreReq: udev-rules
+PreReq: %name = %EVR
+
+%description cdrom
+This package contains CD rule generator for udev
+
+%package net
+Summary: Net rule generator for udev
+Group: System/Configuration/Hardware
+License: GPLv2+
+BuildArch: noarch
+PreReq: udev-rules
+PreReq: %name = %EVR
+
+%description net
+This package contains Net rule generator for udev
+
+%prep
+%setup
+
+%build
+
+%install
+mkdir -p %buildroot{%_initdir,%_unitdir,{%_sysconfdir,/lib}/udev/rules.d}
+install -p -m755 udevd-final.init %buildroot%_initdir/udevd-final
+install -p -m644 udevd-final.service %buildroot%_unitdir/udevd-final.service
+
+# Create ghost files
+touch %buildroot%_sysconfdir/udev/rules.d/70-persistent-net.rules
+touch %buildroot%_sysconfdir/udev/rules.d/70-persistent-cd.rules
+
+# udev rule generator
+install -p -m644 rule_generator.functions %buildroot/lib/udev/
+install -p -m755 write_net_rules %buildroot/lib/udev/
+install -p -m644 75-persistent-net-generator.rules %buildroot/lib/udev/rules.d/
+install -p -m755 write_cd_rules %buildroot/lib/udev/
+install -p -m644 75-cd-aliases-generator.rules %buildroot/lib/udev/rules.d/
+ln -s /dev/null %buildroot%_sysconfdir/udev/rules.d/80-net-setup-link.rules
+
+%post
+if [ $1 -eq 1 ]; then
+    chkconfig --add udevd-final
+fi
+
+%preun
+if [ $1 -eq 0 ]; then
+    chkconfig --del udevd-final
+fi
+
+%post cdrom
+chkconfig udevd-final on  >/dev/null 2>&1
+
+%post net
+chkconfig udevd-final on  >/dev/null 2>&1
+
+%files
+/lib/udev/rule_generator.functions
+%_initdir/udevd-final
+%_unitdir/udevd-final.service
+
+%files cdrom
+%config(noreplace,missingok) %verify(not md5 size mtime) %ghost %_sysconfdir/udev/rules.d/70-persistent-cd.rules
+/lib/udev/rules.d/75-cd-aliases-generator.rules
+/lib/udev/write_cd_rules
+
+%files net
+%config(noreplace,missingok) %verify(not md5 size mtime) %ghost %_sysconfdir/udev/rules.d/70-persistent-net.rules
+%_sysconfdir/udev/rules.d/80-net-setup-link.rules
+/lib/udev/rules.d/75-persistent-net-generator.rules
+/lib/udev/write_net_rules
+
+
+%changelog
+* Sat Mar 31 2018 Alexey Shabalin <shaba@altlinux.ru> 2:1-alt1
+- Initial build
+

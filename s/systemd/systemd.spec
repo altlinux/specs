@@ -35,6 +35,7 @@
 %def_disable apparmor
 
 %define hierarchy hybrid
+%def_enable kill_user_processes
 
 %def_enable sysusers
 %def_disable ldconfig
@@ -57,7 +58,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 238
-Release: alt3
+Release: alt4
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -73,17 +74,17 @@ Source6: altlinux-libresolv.path
 Source7: altlinux-libresolv.service
 Source8: altlinux-clock-setup.service
 Source10: systemd-udev-trigger-no-reload.conf
+Source11: env-path-user.conf
+Source12: env-path-system.conf
 Source14: systemd-user.pam
 Source16: altlinux-kmsg-loglevel.service
 Source17: altlinux-save-dmesg.service
 Source18: altlinux-save-dmesg
 Source19: udevd.init
-Source20: udevd-final.init
 Source21: 40-ignore-remove.rules
 Source22: scsi_id.config
 Source23: var-lock.mount
 Source24: var-run.mount
-Source25: udevd-final.service
 Source27: altlinux-first_time.service
 Source30: 49-coredump-disable.conf
 Source31: 60-raw.rules
@@ -93,13 +94,6 @@ Source35: 90-default.preset
 Source36: 99-default-disable.preset
 Source37: 85-networkd.preset
 Source38: 85-timesyncd.preset
-
-# udev rule generator
-Source41: rule_generator.functions
-Source42: write_net_rules
-Source43: 75-persistent-net-generator.rules
-Source44: write_cd_rules
-Source45: 75-cd-aliases-generator.rules
 
 # bash3 completions
 Source51: hostnamectl-bash3
@@ -614,30 +608,6 @@ BuildArch: noarch
 %description -n udev-hwdb
 This package contains internal hardware database for udev.
 
-%package -n udev-rule-generator-cdrom
-Summary: CD rule generator for udev
-Group: System/Configuration/Hardware
-License: GPLv2+
-BuildArch: noarch
-PreReq: udev-rules = %EVR
-PreReq: udev = %EVR
-Provides: udev-rule-generator = %EVR
-Obsoletes: udev-rule-generator < %EVR
-
-%description -n udev-rule-generator-cdrom
-This package contains CD rule generator for udev
-
-%package -n udev-rule-generator-net
-Summary: Net rule generator for udev
-Group: System/Configuration/Hardware
-License: GPLv2+
-BuildArch: noarch
-PreReq: udev-rules = %EVR
-PreReq: udev = %EVR
-
-%description -n udev-rule-generator-net
-This package contains Net rule generator for udev
-
 %package -n bash-completion-udev
 Summary: Bash completion for udev utils
 Group: Shells
@@ -746,7 +716,7 @@ Shared library and headers for libudev
 	%{?_enable_selinux:-Dselinux=true} \
 	%{?_enable_apparmor:-Dapparmor=true} \
 	%{?_enable_utmp:-Dutmp=true} \
-	-Ddefault-kill-user-processes=false \
+	%{?_disable_kill_user_processes:-Ddefault-kill-user-processes=false} \
 	-Ddefault-hierarchy=%hierarchy \
 	-Db_lto=false \
 	-Dcertificate-root=/etc/pki/tls \
@@ -952,15 +922,19 @@ cat >>%buildroot/lib/sysctl.d/50-default.conf <<EOF
 vm.mmap_min_addr = %mmap_min_addr
 EOF
 
+# define default PATH for system and user
+mkdir -p %buildroot/usr/lib/systemd/user.conf.d
+install -m 0644 %SOURCE11 %buildroot/usr/lib/systemd/user.conf.d/env-path.conf
+#mkdir -p %buildroot/lib/systemd/system.conf.d
+#install -m 0644 %SOURCE12 %buildroot/lib/systemd/system.conf.d/env-path.conf
+
 #######
 # UDEV
 #######
 mkdir -p %buildroot%_initdir
 install -p -m755 %SOURCE19 %buildroot%_initdir/udevd
-install -p -m755 %SOURCE20 %buildroot%_initdir/udevd-final
 
 ln -s systemd-udevd.service %buildroot%_unitdir/udevd.service
-install -p -m644 %SOURCE25 %buildroot%_unitdir/udevd-final.service
 
 # compatibility symlinks to udevd binary
 ln -r -s %buildroot/lib/systemd/systemd-udevd %buildroot/lib/udev/udevd
@@ -990,17 +964,7 @@ do
 		%buildroot/lib/udev/initramfs-rules.d/
 done
 # Create ghost files
-touch %buildroot%_sysconfdir/udev/rules.d/70-persistent-net.rules
-touch %buildroot%_sysconfdir/udev/rules.d/70-persistent-cd.rules
 touch %buildroot%_sysconfdir/udev/hwdb.bin
-
-# udev rule generator
-install -p -m644 %SOURCE41 %buildroot/lib/udev/
-install -p -m755 %SOURCE42 %buildroot/lib/udev/
-install -p -m644 %SOURCE43 %buildroot/lib/udev/rules.d/
-install -p -m755 %SOURCE44 %buildroot/lib/udev/
-install -p -m644 %SOURCE45 %buildroot/lib/udev/rules.d/
-ln -s /dev/null %buildroot%_sysconfdir/udev/rules.d/80-net-setup-link.rules
 
 
 echo ".so man8/systemd-udevd.8" > %buildroot%_man8dir/udevd.8
@@ -1262,21 +1226,9 @@ fi
 
 %post -n udev
 %post_service udevd
-if [ $1 -eq 1 ]; then
-/sbin/chkconfig --add udevd-final
-fi
 
 %preun -n udev
 %preun_service udevd
-if [ $1 -eq 0 ]; then
-/sbin/chkconfig --del udevd-final
-fi
-
-%triggerin -n udev -- udev-rule-generator-cdrom
-/sbin/chkconfig udevd-final on
-
-%triggerin -n udev -- udev-rule-generator-net
-/sbin/chkconfig udevd-final on
 
 %files -f %name.lang
 %dir %_sysconfdir/systemd/system
@@ -1356,6 +1308,8 @@ fi
 %dir /lib/environment.d
 /lib/environment.d/99-environment.conf
 %_mandir/man[58]/*environment*
+#%dir /lib/systemd/system.conf.d
+#/lib/systemd/system.conf.d/env-path.conf
 
 %dir %_unitdir
 %_unitdir/*
@@ -1889,12 +1843,7 @@ fi
 %config(noreplace) %_sysconfdir/udev/rules.d/*
 /lib/udev/initramfs-rules.d
 /lib/udev/rules.d
-# rule-generator
-/lib/udev/rule_generator.functions
 
-%exclude %_sysconfdir/udev/rules.d/70-persistent-*.rules
-%exclude %_sysconfdir/udev/rules.d/80-net-setup-link.rules
-%exclude /lib/udev/rules.d/75-*-generator.rules
 # extras
 %exclude /lib/udev/rules.d/78-sound-card.rules
 # systemd
@@ -1908,20 +1857,15 @@ fi
 %dir %_sysconfdir/udev/hwdb.d
 /lib/udev/hwdb.d
 
-%files -n udev-rule-generator-cdrom
-%config(noreplace,missingok) %verify(not md5 size mtime) %ghost %_sysconfdir/udev/rules.d/70-persistent-cd.rules
-/lib/udev/rules.d/75-cd-aliases-generator.rules
-/lib/udev/write_cd_rules
-
-%files -n udev-rule-generator-net
-%config(noreplace,missingok) %verify(not md5 size mtime) %ghost %_sysconfdir/udev/rules.d/70-persistent-net.rules
-%_sysconfdir/udev/rules.d/80-net-setup-link.rules
-/lib/udev/rules.d/75-persistent-net-generator.rules
-/lib/udev/write_net_rules
-
 %changelog
+* Fri Mar 30 2018 Alexey Shabalin <shaba@altlinux.ru> 1:238-alt4
+- order all /*/sbin before /*/bin (thx imz@)
+- add drop-in config with defined PATH for user
+- split udev-rule-generator to separate package
+- set default-kill-user-processes=true
+
 * Thu Mar 29 2018 Alexey Shabalin <shaba@altlinux.ru> 1:238-alt3
-- update Requires for aloow update udev after systemd 
+- update Requires for allow update udev after systemd
 
 * Sat Mar 24 2018 Alexey Shabalin <shaba@altlinux.ru> 1:238-alt2
 - merge with v238-stable branch
