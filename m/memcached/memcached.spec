@@ -3,7 +3,7 @@
 %def_enable sasl
 
 Name: memcached
-Version: 1.5.6
+Version: 1.5.7
 Release: alt1%ubt
 
 Summary: memcached - memory caching daemon
@@ -105,6 +105,9 @@ fi
 %_man1dir/%name-tool.*
 
 %changelog
+* Sun Apr 01 2018 Alexey Shabalin <shaba@altlinux.ru> 1.5.7-alt1%ubt
+- 1.5.7
+
 * Sun Mar 04 2018 Alexey Shabalin <shaba@altlinux.ru> 1.5.6-alt1%ubt
 - 1.5.6
 - disable UDP port by default (fixed CVE-2018-1000115)
