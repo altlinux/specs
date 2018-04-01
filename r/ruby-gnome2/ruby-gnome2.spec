@@ -1,8 +1,8 @@
 %def_disable docs
 
 Name: 	 ruby-gnome2
-Version: 3.1.1 
-Release: alt1.4
+Version: 3.2.1
+Release: alt1
  
 Summary: Ruby bindings for GNOME
 License: MIT/Ruby
@@ -20,7 +20,7 @@ BuildRequires: libruby-devel
 BuildRequires: libgtk+2-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libpixman-devel
-BuildRequires: gstreamer-devel
+BuildRequires: gstreamer1.0-devel
 BuildRequires: libexpat-devel
 BuildRequires: libharfbuzz-devel
 BuildRequires: libdrm-devel
@@ -30,9 +30,10 @@ BuildRequires: libXxf86vm-devel
 BuildRequires: libvte-devel
 BuildRequires: ruby-pkg-config
 BuildRequires: gobject-introspection-devel
+BuildRequires: ruby-native-package-installer
 # TODO BuildRequires: ruby-cairo for GTK+ support
 
-%filter_from_requires /^ruby(\(cairo\|rake\/extensiontask\))$/d
+%filter_from_requires \,^ruby(\(cairo\|rake/extensiontask\|ruby_installer/runtime\))$,d
 
 %description
 This is a set of bindings for the GNOME 2.x and 3.x libraries to use
@@ -114,6 +115,10 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %endif
 
 %changelog
+* Sat Mar 31 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.1-alt1
+- New version.
+- Build with gstreamer1.0-devel.
+
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 3.1.1-alt1.4
 - Rebuild with Ruby 2.5.1
 
