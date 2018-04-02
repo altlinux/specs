@@ -1,4 +1,4 @@
-%define major 3.26
+%define major 3.28
 %define _unpackaged_files_terminate_build 1
 
 Name: libgdl3
@@ -120,6 +120,9 @@ This package provides development documentation for gdl.
 %_gtk_docdir/*
 
 %changelog
+* Mon Apr 02 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Sat Jan 27 2018 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
 - 3.26.0
 
