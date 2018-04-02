@@ -1,7 +1,7 @@
 %def_without test
 
 Name: gscan2pdf
-Version: 2.0.1
+Version: 2.0.3
 Release: alt1
 
 Summary: A GUI to ease the process of producing a multipage PDF from a scan
@@ -26,6 +26,8 @@ Requires: perl(Gtk2/Ex/PodViewer.pm) xdg-utils unpaper
 BuildRequires: libdb4-devel perl-Archive-Tar perl-Config-General perl-Filesys-Df perl-Goo-Canvas perl-Gtk2-Ex-Simple-List perl-Gtk2-ImageView perl-List-MoreUtils perl-Locale-gettext perl-Log-Log4perl perl-Magick perl-PDF-API2 perl-Proc-ProcessTable perl-Readonly perl-Sane perl-Set-IntSpan perl-Sub-Name perl-podlators perl-Text-Balanced
 
 BuildPreReq: perl-Data-UUID perl-JSON-PP perl-Date-Calc perl-Image-Sane perl-Sub-Override perl-GooCanvas2 perl-Gtk3-SimpleList libgoocanvas2-gir
+
+Requires: libgoocanvas2-gir perl-Pod-Perldoc
 
 BuildPreReq: perl-Magick perl-Sane >= 0.05
 
@@ -91,6 +93,11 @@ find %buildroot -name .packlist | xargs rm -f
 %perl_vendor_privlib/Gscan2pdf/
 
 %changelog
+* Mon Apr 02 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.3-alt1
+- new version 2.0.3 (with rpmrb script)
+- add missed require libgoocanvas2-gir (ALT bug 34750)
+- add missed require perl-Pod-Perldoc (ALT bug 33707)
+
 * Tue Mar 20 2018 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt1
 - new version 2.0.1 (with rpmrb script)
 
