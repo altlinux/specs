@@ -2,7 +2,7 @@
 %def_disable gstreamer
 
 Name: tumbler
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: A thumbnail D-Bus service
@@ -88,6 +88,9 @@ Development files and headers for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Apr 02 2018 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt1
+- Updated to 0.2.1.
+
 * Mon Jul 31 2017 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1
 - Drop obsoleted patch.
 - Updated to 0.2.0.
