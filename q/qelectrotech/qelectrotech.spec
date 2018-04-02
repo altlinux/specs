@@ -14,7 +14,7 @@ Summary(pl): Edytor schematów elektrycznych
 Summary(pt): Um editor de esquemas eléctricos
 Summary(ru): Редактор электрических схем
 
-Version:     0.5
+Version:     0.6
 Release:     alt1
 Epoch:	     1
 
@@ -39,7 +39,7 @@ BuildRequires:    libqt5-widgets
 BuildRequires:    libqt5-printsupport
 
 Requires:         qelectrotech-symbols = %version-%release
-
+Requires:         qt5-translations
 
 %description
 QElectroTech is a Qt4 application to design electric diagrams. It uses XML  
@@ -183,6 +183,9 @@ rm -f %buildroot%_datadir/%name/lang/qt_*.qm
 %_datadir/%name/titleblocks
 
 %changelog
+* Mon Apr 02 2018 Andrey Cherepanov <cas@altlinux.org> 1:0.6-alt1
+- New version.
+
 * Fri Dec 11 2015 Andrey Cherepanov <cas@altlinux.org> 1:0.5-alt1
 - New version
 
