@@ -3,8 +3,8 @@
 %define  git_rev 509ce16
 
 Name: 	 gnucash
-Version: 2.6.19
-Release: alt3
+Version: 2.6.20
+Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
 Summary(ru_RU.UTF8): Программа учёта финансов GnuCash
@@ -179,6 +179,9 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 %files quotes
 
 %changelog
+* Mon Apr 02 2018 Andrey Cherepanov <cas@altlinux.org> 2.6.20-alt1
+- New version.
+
 * Mon Mar 05 2018 Andrey Cherepanov <cas@altlinux.org> 2.6.19-alt3
 - Rebuild with libgwenhywfar-4.20.0.
 
