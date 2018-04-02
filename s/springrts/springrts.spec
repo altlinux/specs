@@ -2,12 +2,12 @@
 %def_enable debug
 
 Name: springrts
-Version: 103.0
+Version: 104.0
 Release: alt1
 
 Summary: Real time strategy game engine with many mods
 License: GPL2+ or Artistic
-Group: Games/Strategy 
+Group: Games/Strategy
 Url: https://springrts.com/
 
 BuildRequires(pre): rpm-build-xdg rpm-macros-cmake
@@ -33,7 +33,7 @@ Provides: %name-dedicated = %EVR
 Obsoletes: %name-dedicated
 
 Source: %name-%version.tar
-Patch1: %name-%version-alt-linking.patch
+Patch1: %name-alt-linking.patch
 
 %description
 Spring is an open source RTS (Real time Strategy) engine originally
@@ -93,7 +93,7 @@ sed -i -e '/NoDisplay=true/d' \
     %buildroot%_desktopdir/spring.desktop
 
 %files 
-%_bindir/pr-downloader
+%_gamesbindir/pr-downloader
 %_gamesbindir/spring
 %_gamesbindir/spring-headless
 %_gamesbindir/spring-dedicated
@@ -108,6 +108,9 @@ sed -i -e '/NoDisplay=true/d' \
 %_iconsdir/hicolor/48x48/mimetypes/*.png
 
 %changelog
+* Mon Apr 02 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 104.0-alt1
+- Updated to upstream version 104.0.
+
 * Thu Sep 07 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 103.0-alt1
 - Updated to upstream release 103.0.
 - Moved dedicated server back to main package.
