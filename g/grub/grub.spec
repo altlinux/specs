@@ -1,6 +1,6 @@
 Name: grub
 Version: 2.02
-Release: alt4
+Release: alt5
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -35,6 +35,7 @@ Patch8: grub-2.02-debian-install_signed.patch
 Patch9: grub-2.00-fedora-unrestricted.patch
 Patch10: grub2-stfu.patch
 Patch11: grub-2.02-shift-interrupt-timeout.patch
+Patch12: grub-2.02-ubuntu-efi-setup.patch
 
 BuildRequires: flex fonts-bitmap-misc fonts-ttf-dejavu libfreetype-devel python-modules ruby autogen
 BuildRequires: liblzma-devel help2man zlib-devel
@@ -155,6 +156,7 @@ when one can't disable it easily, doesn't want to, or needs not to.
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 sed -i 's,@GRUB_EFI_NAME@,%grubefiname,' %SOURCE10
 sed -i "/^AC_INIT(\[GRUB\]/ s/%version[^]]\+/%version-%release/" configure.ac
@@ -187,8 +189,10 @@ popd
 %make_build
 
 ./grub-mkimage -O %grubefiarch -o grub.efi -d grub-core -p "" \
-	part_gpt hfsplus fat ext2 btrfs normal chain boot configfile linux \
-	minicmd reboot halt search search_fs_uuid all_video font gfxmenu gfxterm
+	part_gpt part_apple part_msdos hfsplus fat ext2 btrfs xfs squash4 normal chain boot configfile linux \
+	minicmd reboot halt search search_fs_uuid search_fs_file search_label sleep test syslinuxcfg all_video video \
+	font gfxmenu gfxterm gfxterm_background lvm lsefi efifwsetup cat gzio iso9660 loadenv loopback mdraid09 mdraid1x \
+	png jpeg
 
 %install
 %ifarch %ix86 x86_64
@@ -250,12 +254,21 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %_sysconfdir/grub.d/10_linux
 %_sysconfdir/grub.d/20_linux_xen
 %_sysconfdir/grub.d/30_os-prober
+%_sysconfdir/grub.d/30_uefi-firmware
 %_sysconfdir/grub.d/39_memtest
 %config(noreplace) %_sysconfdir/grub.d/40_custom
 %config(noreplace) %_sysconfdir/sysconfig/grub2
+%ghost %config(noreplace) /boot/grub/grub.cfg
+%_sysconfdir/grub.cfg
 %_sysconfdir/default/grub
 %_sysconfdir/bash_completion.d/grub
+%_rpmlibdir/%name.filetrigger
+# these tools are only for efi and x86_64
+%ifarch x86_64
+%_bindir/grub-render-label
 %_sbindir/grub-bios-setup
+%_sbindir/grub-macbless
+%endif
 %_sbindir/grub-install
 %_sbindir/grub-mkconfig
 %_sbindir/grub-ofpathname
@@ -278,30 +291,28 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %_bindir/grub-mkpasswd-pbkdf2
 %_bindir/grub-mkrelpath
 %_bindir/grub-mkrescue
-%_bindir/grub-render-label
 %_bindir/grub-script-check
 %_bindir/grub-syslinux2cfg
 %_datadir/grub/grub-mkconfig_lib
 %_man1dir/*
+%ifarch x86_64
+%exclude %_man1dir/grub-render-label*
+%exclude %_man8dir/grub-bios-setup*
+%exclude %_man8dir/grub-macbless*
+%endif
 %_man8dir/*
 %_infodir/grub.info.*
 %_infodir/grub-dev.info.*
 
 %ifarch %ix86 x86_64
 %files pc
-%ghost %config(noreplace) /boot/grub/grub.cfg
-%_sysconfdir/grub.cfg
 %_sbindir/grub-autoupdate
-%_rpmlibdir/%name.filetrigger
 %_libdir/grub/*-pc/
 %endif
 
 %files efi
-%ghost %config(noreplace) /boot/grub/grub.cfg
-%_sysconfdir/grub.cfg
-%_sbindir/grub-efi-autoupdate
-%_rpmlibdir/%name.filetrigger
 %_efi_bindir/grub.efi
+%_sbindir/grub-efi-autoupdate
 %_libdir/grub/%grubefiarch
 
 %ifarch %ix86 x86_64
@@ -329,6 +340,14 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Thu Mar 29 2018 Anton Farygin <rider@altlinux.ru> 2.02-alt5
+- more grub-efi modules enabled by default:
+  part_apple part_msdos xfs squash4 search_fs_file search_label sleep  test syslinuxcfg video 
+  gfxterm_background lvm lsefi efifwsetup cat gzio iso9660 loadenv loopback mdraid09 mdraid1x 
+  png jpeg
+- added patch from ubuntu for efi setup menu entry (closes: #34467)
+- filetrigger and configs moved from pc/efi packages to common part
+
 * Sat Dec 02 2017 Anton Farygin <rider@altlinux.ru> 2.02-alt4
 - interaction between the user and the shift key at boot time interrupts the grub wait timeout (closes: #33655)
 
