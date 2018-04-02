@@ -1,7 +1,9 @@
+%def_without usrp
+%def_without winradio
 
 Name:           hamlib
-Version:        3.1
-Release:        alt1.1.qa1.1
+Version:        3.2
+Release:        alt1
 Summary:        Run-time library to control radio transceivers and receivers
 
 Group:          System/Libraries
@@ -10,13 +12,15 @@ URL:            http://hamlib.sourceforge.net
 Source0:        %name-%version.tar
 
 # Install python and perl bindings into proper dirs
-Patch0:         hamlib-3.0-bindings.patch
+Patch0:         hamlib-3.2-bindings.patch
 BuildRequires:  gcc-c++
 BuildRequires:  python-devel, swig, libgd2-devel, libxml2-devel, tcl-devel
 BuildRequires:  libusb-devel, pkgconfig, boost-devel, libltdl3-devel
 BuildRequires:  doxygen
 BuildRequires:  perl-devel
 BuildRequires:  libusb-compat-devel
+BuildRequires:  lua-devel
+BuildRequires:  libreadline-devel
 # explicitly added texinfo for info files
 BuildRequires: texinfo
 
@@ -64,6 +68,13 @@ Requires: hamlib-c++ = %version-%release
 Hamlib radio control library C++ binding development headers and libraries
 for building C++ applications with Hamlib.
 
+%package lua
+Summary: Hamlib radio control library Lua binding
+Group: Development/Other
+Requires: hamlib = %version-%release
+
+%description lua
+Hamlib LUA Language bindings to allow radio control from LUA scripts.
 
 %package perl
 Summary: Hamlib radio control library Perl binding
@@ -93,14 +104,23 @@ Hamlib TCL Language bindings to allow radio control from TCL scripts.
 %prep
 %setup -q
 %autoreconf
-%patch0 -p2
+%patch0 -p1
 
 %build
+%undefine _configure_gettext
 %configure \
-        --with-xml-support \
-        --with-tcl-binding \
+%if_with usrp
+	--enable-usrp \
+%endif
+%if_with winradio
+	--enable-winradio \
+%endif
+        --with-cxx-binding \
+        --with-lua-binding \
         --with-perl-binding \
         --with-python-binding \
+        --with-tcl-binding \
+        --with-xml-support \
         --disable-static
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
@@ -166,6 +186,9 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %_includedir/hamlib/rigclass.h
 %_includedir/hamlib/rotclass.h
 
+%files lua
+%_libdir/lua/*/Hamliblua.so
+
 %files perl
 %perl_vendorarch/*
 
@@ -174,9 +197,13 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %python_sitelibdir/_Hamlib.so
 
 %files tcl
-%_libdir/tcl/Hamlib/hamlibtcl*
+%_libdir/tcl*/Hamlib/hamlibtcl*
 
 %changelog
+* Mon Apr 02 2018 Andrey Cherepanov <cas@altlinux.org> 3.2-alt1
+- New version.
+- Enable Lua and readline support.
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1.1.qa1.1
 - rebuild with new perl 5.26.1
 
