@@ -16,12 +16,12 @@
 
 # version-release
 %define nv_version 390
-%define nv_release 25
+%define nv_release 48
 %define nv_minor %nil
 %define pkg_rel alt181%ubt
 %def_enable kernelsource
 %def_disable glvnd
-%def_disable package_egl_wayland
+%def_enable package_egl_wayland
 %def_disable package_wfb
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -232,9 +232,9 @@ fi
 %endif
 #
 %__install -m 0644 libEGL_nvidia.so.%tbver    %buildroot/%nv_lib_dir/libEGL_nvidia.so
-%__install -m 0644 libGLESv2.so.2  %buildroot/%nv_lib_dir/libGLESv2.so
+%__install -m 0644 libGLESv2.so.2.1.0  %buildroot/%nv_lib_dir/libGLESv2.so
 %__install -m 0644 libGLESv2_nvidia.so.%tbver %buildroot/%nv_lib_dir/libGLESv2_nvidia.so
-%__install -m 0644 libGLESv1_CM.so.1  %buildroot/%nv_lib_dir/libGLESv1_CM.so
+%__install -m 0644 libGLESv1_CM.so.1.2.0  %buildroot/%nv_lib_dir/libGLESv1_CM.so
 %__install -m 0644 libGLESv1_CM_nvidia.so.%tbver %buildroot/%nv_lib_dir/libGLESv1_CM_nvidia.so
 %__install -m 0644 libGLX.so.0  %buildroot/%nv_lib_dir/libGLX.so
 %__install -m 0644 libGLX_nvidia.so.%tbver    %buildroot/%nv_lib_dir/libGLX_nvidia.so
@@ -337,8 +337,8 @@ fi
 %endif
 
 %changelog
-* Mon Apr 02 2018 Sergey V Turchin <zerg@altlinux.org> 390.25-alt181%ubt
-- don't package libnvidia-egl-wayland
+* Mon Apr 02 2018 Sergey V Turchin <zerg@altlinux.org> 390.48-alt181%ubt
+- new version
 
 * Mon Feb 12 2018 Sergey V Turchin <zerg@altlinux.org> 390.25-alt180%ubt
 - new version
