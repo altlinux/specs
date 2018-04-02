@@ -1,7 +1,7 @@
 %define oname yakuake
 
 Name:    kde5-%oname
-Version: 3.0.4
+Version: 3.0.5
 Release: alt1
 
 Summary: Very powerful Quake style Konsole for KF5
@@ -51,6 +51,7 @@ BuildRequires: kf5-sonnet-devel
 BuildRequires: qt5-x11extras-devel
 
 Requires:  kde5-konsole
+Requires:  kf5-kglobalaccel
 Provides:  %oname = %version-release
 Obsoletes: %oname < %version-release 
 
@@ -79,6 +80,9 @@ This version is built with KF5.
 %_K5notif/%oname.notifyrc
 
 %changelog
+* Mon Apr 02 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.5-alt1
+- New version.
+
 * Sun Dec 10 2017 Andrey Cherepanov <cas@altlinux.org> 3.0.4-alt1
 - New version.
 
