@@ -5,7 +5,7 @@
 
 Name: python-module-%mname
 Version: 3.5.0
-Release: alt3%ubt
+Release: alt4%ubt
 Summary: This library brings the updated configparser from Python 3.5 to Python 2.6-3.5
 
 Group: Development/Python
@@ -24,6 +24,7 @@ BuildRequires: python3-module-setuptools
 
 %if_with check
 BuildRequires: python-test
+BuildRequires: python3-test
 BuildRequires: python-module-tox
 BuildRequires: python-module-virtualenv
 BuildRequires: python3-module-tox
@@ -86,6 +87,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Mon Apr 02 2018 Stanislav Levin <slev@altlinux.org> 3.5.0-alt4%ubt
+- Add python3-test to BuildRequires to fix tests
+
 * Sat Mar 24 2018 Stanislav Levin <slev@altlinux.org> 3.5.0-alt3%ubt
 - Rebuild with new setuptools to fix namespace package
 - Enable tests
