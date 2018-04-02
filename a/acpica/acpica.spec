@@ -1,6 +1,6 @@
 
 Name: acpica
-Version: 20180105
+Version: 20180209
 Release: alt1%ubt
 Summary: ACPICA tools for the development and debug of ACPI tables
 
@@ -35,6 +35,11 @@ Patch9: big-endian-v2.patch
 Patch10: simple-64bit.patch
 Patch11: be-tpm2.patch
 Patch12: mips-be-fix.patch
+Patch13: cve-2017-13693.patch
+Patch14: cve-2017-13694.patch
+Patch15: cve-2017-13695.patch
+Patch16: str-trunc-warn.patch
+Patch17: ptr-cast.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: bison flex
@@ -98,6 +103,11 @@ This version of the tools is being released under GPLv2 license.
 %patch10 -p1 -b .simple-64bit
 %patch11 -p1 -b .be-tpm2
 %patch12 -p1 -b .mips-be-fix
+%patch13 -p1 -b .cve-2017-13693
+%patch14 -p1 -b .cve-2017-13694
+%patch15 -p1 -b .cve-2017-13695
+%patch16 -p1 -b .str-trunc-warn
+%patch17 -p1 -b .ptr-cast
 
 cp -p %SOURCE3 iasl.1
 cp -p %SOURCE4 acpibin.1
@@ -113,7 +123,41 @@ cp -p %SOURCE13 tests/run-misc-tests.sh
 chmod a+x tests/run-misc-tests.sh
 
 %build
-%make HOST=_LINUX OPT_CFLAGS="%optflags"
+CWARNINGFLAGS="\
+    -std=c99 \
+    -Wall \
+    -Wbad-function-cast \
+    -Wdeclaration-after-statement \
+    -Werror \
+    -Wformat=2 \
+    -Wmissing-declarations \
+    -Wmissing-prototypes \
+    -Wstrict-aliasing=0 \
+    -Wstrict-prototypes \
+    -Wswitch-default \
+    -Wpointer-arith \
+    -Wundef \
+    -Waddress \
+    -Waggregate-return \
+    -Winit-self \
+    -Winline \
+    -Wmissing-declarations \
+    -Wmissing-field-initializers \
+    -Wnested-externs \
+    -Wold-style-definition \
+    -Wno-format-nonliteral \
+    -Wredundant-decls \
+    -Wempty-body \
+    -Woverride-init \
+    -Wlogical-op \
+    -Wmissing-parameter-type \
+    -Wold-style-declaration \
+    -Wtype-limits"
+
+OPT_CFLAGS="%optflags $CWARNINGFLAGS"
+export OPT_CFLAGS
+
+%make HOST=_LINUX
 
 %install
 # Install the binaries
@@ -153,6 +197,13 @@ cd ..
 %_man1dir/*
 
 %changelog
+* Mon Apr 02 2018 Alexey Shabalin <shaba@altlinux.ru> 20180209-alt1%ubt
+- 20180209
+- Fixes:
+  + CVE-2017-13693
+  + CVE-2017-13694
+  + CVE-2017-13695
+
 * Wed Feb 07 2018 Alexey Shabalin <shaba@altlinux.ru> 20180105-alt1%ubt
 - 20180105
 - Pulled in a mips32/BE patch from Debian, for completeness sake

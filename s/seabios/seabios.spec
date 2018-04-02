@@ -1,7 +1,7 @@
 %define debug_level 1
 
 Name: seabios
-Version: 1.11.0
+Version: 1.11.1
 Release: alt1%ubt
 Summary: Open-source legacy BIOS implementation
 
@@ -14,9 +14,9 @@ Url: http://www.seabios.org
 Source: %name-%version.tar
 Patch: %name-%version-snapshot.patch
 
-Patch0004:      0004-Workaround-for-a-win8.1-32-S4-resume-bug.patch
-Patch0005:      0005-reserve-more-memory-on-fseg.patch
-Patch0006:      0006-vgabios-Reorder-video-modes-to-work-around-a-Windows.patch
+Patch0001: 0001-Workaround-for-a-win8.1-32-S4-resume-bug.patch
+Patch0002: 0002-reserve-more-memory-on-fseg.patch
+Patch0003: 0003-vgabios-Reorder-video-modes-to-work-around-a-Windows.patch
 
 Source10: config.vga.cirrus
 Source11: config.vga.isavga
@@ -30,7 +30,7 @@ Source18: config.seabios-256k
 Source19: config.vga.virtio
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: python-base python-modules python-modules-logging
+BuildRequires: python3
 BuildRequires: acpica
 BuildRequires: binutils-x86_64-linux-gnu gcc-x86_64-linux-gnu
 Conflicts: qemu-common < 1.6.0-alt1
@@ -54,9 +54,9 @@ SeaVGABIOS is an open-source VGABIOS implementation.
 %setup -q
 %patch -p1
 
-%patch0004 -p1
-%patch0005 -p1
-%patch0006 -p1
+%patch0001 -p1
+%patch0002 -p1
+%patch0003 -p1
 
 echo %version > .version
 
@@ -71,6 +71,7 @@ build_bios() {
 	make oldnoconfig V=1
 	make V=1 \
 		EXTRAVERSION="-%{release}" \
+        PYTHON=python3 \
 		HOSTCC=gcc \
 		CC=x86_64-linux-gnu-gcc \
 		AS=x86_64-linux-gnu-as \
@@ -115,6 +116,10 @@ ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/s
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Mon Apr 02 2018 Alexey Shabalin <shaba@altlinux.ru> 1.11.1-alt1%ubt
+- 1.11.1
+- Build with Python 3
+
 * Wed Dec 13 2017 Alexey Shabalin <shaba@altlinux.ru> 1.11.0-alt1%ubt
 - 1.11.0
 - Add patches from RHEL
