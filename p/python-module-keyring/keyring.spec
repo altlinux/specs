@@ -1,54 +1,44 @@
 %define oname keyring
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 5.4
-Release: alt2.1
+Version: 12.0.0
+Release: alt1
+Summary: Keyring provides an easy way to access the system keyring service
 
-Summary: Store and access your passwords safely
-License: PSF
+License: MIT
 Group: Development/Python
-
 Url: https://pypi.python.org/pypi/keyring
-
-Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-fs python-module-pycrypto
-BuildPreReq: python-module-mock python-module-nose
-BuildPreReq: python-module-keyczar python-module-gdata
-BuildPreReq: python-module-pytest
-BuildPreReq: python-module-pytest-runner
-BuildPreReq: python-modules-logging python-modules-json
-BuildRequires: python-module-appdirs
-%if_with python3
+Source: %oname-%version.tar
+Patch0: fix_deps.patch
+
+BuildRequires: python-module-setuptools python-devel
+BuildRequires: python-module-pytest
+BuildRequires: python-module-pytest-sugar
+BuildRequires: python-module-setuptools_scm
+
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-fs python3-module-pycrypto
-BuildPreReq: python3-module-mock python3-module-nose
-BuildPreReq: python3-module-keyczar
-BuildPreReq: python3-module-pytest
-BuildPreReq: python3-module-pytest-runner
-BuildRequires: python3-module-appdirs
-%endif
+BuildPreReq: python3-module-setuptools python3-devel
+BuildPreReq: python-module-pytest
+BuildPreReq: python-module-pytest-sugar
+BuildPreReq: python-module-setuptools_scm
 
-%setup_python_module %oname
-
-%py_requires fs Crypto logging json keyczar gdata
 
 %description
-Store and access your passwords safely.
+The Python keyring lib provides an easy way to access the system 
+keyring service from python. It can be used in any application 
+that needs safe password storage.
 
 %package -n python3-module-%oname
-Summary: Store and access your passwords safely
+Summary: Keyring provides an easy way to access the system keyring service
 Group: Development/Python3
-%py3_requires fs Crypto logging json keyczar
+%py3_requires ctypes entrypoints json logging pluggy
 
 %description -n python3-module-%oname
-Store and access your passwords safely.
+The Python keyring lib provides an easy way to access the system 
+keyring service from python. It can be used in any application 
+that needs safe password storage.
 
 %package -n python3-module-%oname-tests
 Summary: Tests for keyring
@@ -56,7 +46,9 @@ Group: Development/Python3
 Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-tests
-Store and access your passwords safely.
+The Python keyring lib provides an easy way to access the system 
+keyring service from python. It can be used in any application 
+that needs safe password storage.
 
 This package contains tests for keyring.
 
@@ -66,63 +58,48 @@ Group: Development/Python
 Requires: %name = %EVR
 
 %description tests
-Store and access your passwords safely.
+The Python keyring lib provides an easy way to access the system 
+keyring service from python. It can be used in any application 
+that needs safe password storage.
 
 This package contains tests for keyring.
 
 %prep
-%setup
+%setup -n %oname-%version
+%patch0 -p0
 
-%if_with python3
+rm -rf ../python3
 cp -fR . ../python3
-%endif
 
 %build
 %python_build_debug
 
-%if_with python3
 pushd ../python3
 %python3_build_debug
 popd
-%endif
 
 %install
-%if_with python3
 pushd ../python3
 %python3_install
 popd
 pushd %buildroot%_bindir
 for i in $(ls); do
-	mv $i $i.py3
+    mv $i $i.py3
 done
 popd
-%endif
 
 %python_install
 
-%check
-python setup.py test
-py.test -vv
-%if_with python3
-pushd ../python3
-python3 setup.py test
-py.test3 -vv
-popd
-%endif
-
 %files
-%doc *.rst *.txt
+%doc *.rst LICENSE
 %_bindir/*
-%if_with python3
 %exclude %_bindir/*.py3
-%endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
 %files tests
 %python_sitelibdir/*/tests
 
-%if_with python3
 %files -n python3-module-%oname
 %doc *.rst *.txt
 %_bindir/*.py3
@@ -131,9 +108,13 @@ popd
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-%endif
+
 
 %changelog
+* Mon Apr 02 2018 Andrey Bychkov <mrdrew@altlinux.org> 12.0.0-alt1
+- Updated version to 12.0.0
+  Fixed deps
+
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 5.4-alt2.1
 - (NMU) Fix Requires and BuildRequires to python-setuptools
 
@@ -167,4 +148,3 @@ popd
 
 * Wed Apr 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1
 - Initial build for Sisyphus
-
