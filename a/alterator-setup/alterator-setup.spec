@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
@@ -84,6 +84,9 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Mon Apr 02 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.3.2-alt1
+- fixed service file to make it work with modern systemd.
+
 * Mon Apr 28 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.1-alt1
 - preun: do not use preun_service on systemd.
 
