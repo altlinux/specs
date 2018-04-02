@@ -1,6 +1,6 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 2018.3
+Version: 2018.3.0
 Release: alt1
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
@@ -267,6 +267,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Mon Apr 02 2018 Andrey Cherepanov <cas@altlinux.org> 2018.3.0-alt1
+- New version.
+
 * Sat Feb 24 2018 Andrey Cherepanov <cas@altlinux.org> 2018.3-alt1
 - New version.
 
