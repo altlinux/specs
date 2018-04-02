@@ -1,13 +1,14 @@
 %define git %nil
 %define _libexecdir %_prefix/libexec
 %def_enable obex
+%def_enable btpclient
 # since 5.44 the following tools marked as deprecated:
 # hciattach hciconfig hcitool hcidump rfcomm sdptool ciptool gatttool
 %def_enable deprecated
 
 Name: bluez
-Version: 5.48
-Release: alt2
+Version: 5.49
+Release: alt1
 
 Summary: Bluetooth utilities
 License: GPLv2+
@@ -28,6 +29,7 @@ Obsoletes: obex-data-server < 0.4.6-alt3
 BuildRequires: glib2-devel libudev-devel libdbus-devel libreadline-devel
 BuildRequires: systemd-devel gtk-doc
 %{?_enable_obex:BuildRequires: libical-devel libicu-devel}
+%{?_enable_btpclient:BuildRequires: libell-devel >= 0.3}
 # for check
 BuildRequires: /proc
 
@@ -59,6 +61,17 @@ Requires: %name = %version-%release
 %description cups
 This package contains the CUPS backend
 
+%package btpclient
+Summary: Tester protocol for Bluetooth stack client
+Group: Networking/Other
+Requires: %name = %version-%release
+
+%description btpclient
+BTP stands for Bluetooth Tester Protocol and aims at automated testing of BT
+stack. BTP is binary protocol and is already implemented in Zephyr Project.
+
+https://github.com/zephyrproject-rtos/zephyr/blob/master/tests/bluetooth/tester/btp_spec.txt
+
 %prep
 %setup
 %patch -p1
@@ -71,6 +84,7 @@ export CFLAGS="$CFLAGS -D_FILE_OFFSET_BITS=64"
 	--enable-library \
 	--enable-threads \
 	%{subst_enable obex} \
+	%{subst_enable btpclient} \
 	--enable-cups \
 	--enable-tools \
 	--localstatedir=%_var \
@@ -80,6 +94,7 @@ export CFLAGS="$CFLAGS -D_FILE_OFFSET_BITS=64"
 %install
 %makeinstall_std
 %{?_enable_deprecated:install -m755 attrib/gatttool %buildroot%_bindir/}
+%{?_enable_btpclient:install -m755 tools/btpclient %buildroot%_bindir/}
 install -m755 tools/bneptest %buildroot%_bindir/
 install -pD -m755 scripts/bluetooth.alt.init %buildroot%_initdir/bluetoothd
 ln -s bluetooth.service %buildroot%_unitdir/bluetoothd.service
@@ -155,7 +170,16 @@ chkconfig bluetoothd on
 %files cups
 %_prefix/lib/cups/backend/bluetooth
 
+%if_enabled btpclient
+%files btpclient
+%_bindir/btpclient
+%endif
+
 %changelog
+* Sat Mar 31 2018 L.A. Kostis <lakostis@altlinux.ru> 5.49-alt1
+- 5.49.
+- Enable btpclient (and new dependency to libell).
+
 * Thu Jan 04 2018 Yuri N. Sedunov <aris@altlinux.org> 5.48-alt2
 - rebuilt against libical.so.3
 
