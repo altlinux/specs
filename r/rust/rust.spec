@@ -1,6 +1,7 @@
 Name: rust
-Version: 1.25.0
-Release: alt1
+Epoch: 1
+Version: 1.24.1
+Release: alt2
 Summary: The Rust Programming Language
 
 Group: Development/Other
@@ -12,8 +13,8 @@ Source:  https://static.rust-lang.org/dist/%{name}c-%version-src.tar.xz
 BuildPreReq: /proc
 BuildRequires: curl gcc-c++ python-devel cmake libffi-devel
 
-%def_without bootstrap
-%def_without bundled_llvm
+%def_with    bootstrap
+%def_with    bundled_llvm
 
 %if_without bundled_llvm
 
@@ -29,7 +30,7 @@ BuildRequires: rust rust-cargo
 
 %else
 
-%define r_ver 1.24.1
+%define r_ver 1.23.0
 Source2: https://static.rust-lang.org/dist/rust-%r_ver-i686-unknown-linux-gnu.tar.gz
 Source3: https://static.rust-lang.org/dist/rust-%r_ver-x86_64-unknown-linux-gnu.tar.gz
 
@@ -145,6 +146,9 @@ DESTDIR=%buildroot ./x.py install
 %exclude %_libdir/rustlib/etc/lldb_*
 
 %changelog
+* Mon Apr 02 2018 Vladimir Lettiev <crux@altlinux.org> 1:1.24.1-alt2
+- downgrade to 1.24.1 (1.25.0 unusable)
+
 * Thu Mar 29 2018 Vladimir Lettiev <crux@altlinux.org> 1.25.0-alt1
 - 1.25.0
 - built with shared llvm
