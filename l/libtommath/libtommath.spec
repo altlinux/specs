@@ -1,6 +1,6 @@
 Name: libtommath
 Version: 1.0.1.0.97.gitg0bc7551
-Release: alt1
+Release: alt2
 
 Summary: A portable number theoretic multiple-precision integer library
 License: WTFPL
@@ -10,8 +10,7 @@ Url: http://www.libtom.net/
 # https://github.com/libtom/libtommath.git
 Source: ltm-%version.tar
 
-BuildRequires: texlive-latex-recommended
-BuildRequires: ghostscript-utils libtiff-utils
+BuildRequires: dblatex ghostscript-utils libtiff-utils
 
 %description
 A free open source portable number theoretic multiple-precision integer
@@ -88,6 +87,9 @@ find %buildroot -name '*.h' -exec chmod 644 {} ';'
 %doc doc/bn.pdf doc/poster.pdf doc/tommath.pdf
 
 %changelog
+* Tue Apr 03 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.1.0.97.gitg0bc7551-alt2
+- Fix BuildRequires.
+
 * Thu Mar 01 2018 Grigory Ustinov <grenka@altlinux.org> 1.0.1.0.97.gitg0bc7551-alt1
 - Update version for lastest commit because:
   1) There was an error in compilation of doc/booker.pl on e2k.
