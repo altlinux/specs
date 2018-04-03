@@ -5,7 +5,7 @@ Release: alt1
 %def_enable python
 
 Name: libaubio%sover
-Version: 0.4.5
+Version: 0.4.6
 Summary: Aubio is a library for real time audio labelling
 Url: http://www.aubio.org/
 License: GPL
@@ -13,6 +13,7 @@ Group: System/Libraries
 
 # git://git.aubio.org/git/aubio/
 Source: %origname-%version.tar
+Patch0: %name-%version-alt.patch
 
 # Automatically added by buildreq on Thu Nov 06 2008
 BuildRequires: docbook-to-man jackit-devel libfftw3-devel libsamplerate-devel libsndfile-devel
@@ -98,6 +99,7 @@ This package contains documentation for %name.
 
 %prep
 %setup -n %origname-%version
+%patch0 -p1
 
 rm -fR waflib
 
@@ -140,6 +142,9 @@ waf install --destdir=%buildroot
 %_docdir/lib%origname-doc
 
 %changelog
+* Mon Nov 13 2017 Anton Farygin <rider@altlinux.ru> 0.4.6-alt1
+- 0.4.6
+
 * Sun Jun 04 2017 Anton Farygin <rider@altlinux.ru> 0.4.5-alt1
 - 0.4.5
 
