@@ -1,5 +1,5 @@
 Name: libshell
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 
 Summary: A library of shell functions
@@ -64,6 +64,10 @@ sed -i -e 's,^#!/bin/ash,#!/bin/sh,' \
 %_man1dir/*
 
 %changelog
+* Tue Apr 03 2018 Alexey Gladkov <legion@altlinux.ru> 0.4.4-alt1
+- New version (0.4.4).
+- Make git_config_handler, git_config_parser public.
+
 * Thu Aug 03 2017 Alexey Gladkov <legion@altlinux.ru> 0.4.3-alt1
 - New version (0.4.3).
 - shell-ini-config changes:
