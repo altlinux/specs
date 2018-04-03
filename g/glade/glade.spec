@@ -7,7 +7,7 @@
 %def_enable webkit2gtk
 
 Name: glade
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A user interface designer for Gtk+ and GNOME
@@ -147,6 +147,9 @@ GObject introspection devel data for the GladeUI library.
 %_girdir/Gladeui-%api_ver.gir
 
 %changelog
+* Tue Apr 03 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
+- 3.22.1
+
 * Mon Mar 12 2018 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
