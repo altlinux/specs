@@ -1,7 +1,7 @@
 %def_with python3
 
 Name: waf
-Version: 1.9.14
+Version: 1.9.15
 Release: alt1
 
 Summary: A Python-based build system
@@ -123,6 +123,9 @@ rm -f docs/sphinx/build/html/.buildinfo
 
 
 %changelog
+* Tue Apr 03 2018 Anton Farygin <rider@altlinux.ru> 1.9.15-alt1
+- new version
+
 * Tue Sep 19 2017 Anton Farygin <rider@altlinux.ru> 1.9.14-alt1
 - new version
 - fixed shebang for waf-3.5
