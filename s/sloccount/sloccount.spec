@@ -1,6 +1,6 @@
 Name: sloccount
 Version: 2.26
-Release: alt1.qa1
+Release: alt2
 
 Summary: Measures source lines of code (SLOC) in programs
 License: GPL
@@ -8,6 +8,7 @@ Group: Development/Other
 
 URL: http://www.dwheeler.com/sloccount
 Source: %url/sloccount-%version.tar.gz
+Patch: %name-fix_brackets_for_perl5.26.patch
 
 # Automatically added by buildreq on Thu Jun 07 2007
 BuildRequires: flex
@@ -21,6 +22,7 @@ heuristics, and also comes with analysis tools.
 
 %prep
 %setup
+%patch -p2
 
 %build
 make CC="gcc %optflags"
@@ -37,6 +39,9 @@ make install_man PREFIX=%buildroot%_prefix
 %doc sloccount.html ChangeLog
 
 %changelog
+* Tue Apr 03 2018 Grigory Ustinov <grenka@altlinux.org> 2.26-alt2
+- Add patch for building with perl 5.26.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.26-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
