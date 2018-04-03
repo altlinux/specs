@@ -1,111 +1,148 @@
 %define oname libcloud
 
-%def_with python3
-
-Summary: A Python library to address multiple cloud provider APIs
 Name: python-module-%oname
-Version: 1.4.0
+Version: 2.3.0
 Release: alt1
-Url: http://libcloud.apache.org/
-Source: %name-%version.tar
-Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
-License: ASL 2.0
+Summary: Library for interacting with popular cloud service
+
+License: Apache-2.0
 Group: Development/Python
-
-Patch1: python-module-libcloud-1.1.0-alt2-drop-pysphere.patch
-
+Url: http://libcloud.apache.org/
+# https://github.com/apache/libcloud
 BuildArch: noarch
-BuildRequires: python-devel python-module-setupdocs python-module-setuptools
 
-%if_with python3
+Source: %oname-%version.tar
+
+BuildRequires: python-devel
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-requests
+BuildRequires: python-module-pytest-runner
+BuildRequires: python-module-urllib3
+
+# for docs
+BuildRequires: python-module-sphinx
+
+# for tests
+%py_requires mock requests requests_mock pytest
+
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setupdocs python3-module-setuptools
-%endif
+BuildPreReq: python3-devel
+BuildPreReq: python3-module-setuptools
+BuildPreReq: python3-module-requests
+BuildPreReq: python3-module-pytest-runner
+BuildPreReq: python3-module-urllib3
+
+# for docs
+BuildPreReq: python3-module-sphinx
+
 
 %description
-libcloud is a client library for interacting with many of the popular cloud 
-server providers.  It was created to make it easy for developers to build 
-products that work between any of the services that it supports.
+Apache Libcloud is a Python library which hides differences between 
+different cloud provider APIs and allows you to manage different 
+cloud resources through a unified and easy to use API.
 
 %package -n python3-module-%oname
-Summary: A Python library to address multiple cloud provider APIs
+Summary: Library for interacting with popular cloud service
 Group: Development/Python3
+# for tests
+%py3_requires mock requests requests_mock pytest
 
 %description -n python3-module-%oname
-libcloud is a client library for interacting with many of the popular cloud 
-server providers.  It was created to make it easy for developers to build 
-products that work between any of the services that it supports.
-
-
-%package tests
-Summary: Unit tests
-Group: Development/Python
-
-%description tests
-Unit tests for python-module-%oname-tests
+Apache Libcloud is a Python library which hides differences between 
+different cloud provider APIs and allows you to manage different 
+cloud resources through a unified and easy to use API.
 
 %package -n python3-module-%oname-tests
-Summary: Unit tests
+Summary: Tests for %oname
 Group: Development/Python3
+Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-tests
-Unit tests for python-module-libcloud
+Apache Libcloud is a Python library which hides differences between 
+different cloud provider APIs and allows you to manage different 
+cloud resources through a unified and easy to use API.
 
+This package contains tests for %oname
+
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: python-module-%oname = %EVR
+
+%description tests
+Apache Libcloud is a Python library which hides differences between 
+different cloud provider APIs and allows you to manage different 
+cloud resources through a unified and easy to use API.
+
+This package contains tests for %oname
+
+%package docs
+Summary: Documentation for %name
+Group: Development/Documentation
+
+%description docs
+Apache Libcloud is a Python library which hides differences between 
+different cloud provider APIs and allows you to manage different 
+cloud resources through a unified and easy to use API.
+
+This package contains documentation for %oname
 
 %prep
-%setup
+%setup -n %oname-%version
+pushd %oname
+sed -i 's/requests.packages.//' http.py
+pushd test
+mv secrets.py-dist secrets.py
+popd
+pushd compute/drivers
+rm -f vsphere.py
+popd
+popd
 
-%if_with python3
+rm -rf ../python3
 cp -fR . ../python3
-%patch1 -p1
-%endif
 
 %build
-%add_optflags -fno-strict-aliasing
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
+export PYTHONPATH=$PWD
+%make -C docs man
 
 %install
-#__python setup.py install --prefix=/usr --root=%buildroot
-%python_build_install --prefix=/usr
+%python_build_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-rm -rf libcloud/compute/drivers/vsphere.py
-%endif
-
-
-%files tests
-%dir %python_sitelibdir/libcloud/test
-%python_sitelibdir/libcloud/test/*
 
 %files
-%doc CHANGES.rst CONTRIBUTING.rst NOTICE README.rst
+%doc *.rst LICENSE example_*.py
 %python_sitelibdir/*
-%exclude %python_sitelibdir/libcloud/test
-
-%if_with python3
-%files -n python3-module-%oname-tests
-%dir %python3_sitelibdir/libcloud/test
-%python3_sitelibdir/libcloud/test/*
+%exclude %python_sitelibdir/*/test
 
 %files -n python3-module-%oname
-%doc CHANGES.rst CONTRIBUTING.rst NOTICE README.rst
+%doc *.rst LICENSE example_*.py
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/libcloud/test
-%exclude %python3_sitelibdir/libcloud/compute/drivers/vsphere.py
-%endif
+%exclude %python3_sitelibdir/*/test
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/libcloud/test/*
+
+%files tests
+%python_sitelibdir/libcloud/test/*
+
+%files docs
+%doc docs/_build/*
 
 
 %changelog
+* Tue Mar 03 2018 Andrey Bychkov <mrdrew@altlinux.org> 2.3.0-alt1
+- Updated version to 2.3.0
+
 * Wed Nov 30 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.4.0-alt1
 - New version
 
@@ -142,7 +179,7 @@ rm -rf libcloud/compute/drivers/vsphere.py
 - New version
 
 * Tue Jul 01 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.14.1-alt2
-- Add %dir for unit tests, just a little fix
+- Add %%dir for unit tests, just a little fix
 
 * Fri Jun 20 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.14.1-alt1
 - New version
@@ -150,4 +187,3 @@ rm -rf libcloud/compute/drivers/vsphere.py
 
 * Thu Jan 23 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.14-alt1
 - Initial build for ALT
-
