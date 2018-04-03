@@ -11,7 +11,7 @@ Name: tokyotyrant
 %define lname lib%name
 Summary: A network interface of Tokyo Cabinet
 Version: 1.1.40
-Release: alt1.1.qa1
+Release: alt1.2
 License: %lgpl2plus
 Group: System/Libraries
 Group: Databases
@@ -24,7 +24,6 @@ Provides: %name-server = %version-%release
 Provides: %sname = %version-%release
 Requires: %lname = %version-%release
 Requires: libtokyocabinet >= 1.4.35
-Packager: Led <led@altlinux.ru>
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -172,6 +171,9 @@ install -m 0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 
 
 %changelog
+* Tue Apr 3 2018 Mikhail Savostyanov <mik@altlinux.org> 1.1.40-alt1.2
+- Rebuild for updated dependencies.
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.40-alt1.1.qa1
 - NMU: rebuilt for updated dependencies.
 

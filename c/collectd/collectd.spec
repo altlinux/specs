@@ -3,19 +3,16 @@
 %def_enable cgi
 %def_enable curl
 %def_enable dbi
-%def_enable ganglia
 %def_enable ipmi
 %def_enable virt
 %def_enable memcached
 %def_disable modbus
-%def_disable monitorus
 %def_enable mysql
 %def_disable netlink
 %def_enable nginx
 %def_enable notify_desktop
 %def_enable notify_email
 %def_enable nut
-%def_enable openvz
 %def_enable perl
 %def_enable ping
 %def_enable postgresql
@@ -29,8 +26,8 @@
 %def_disable static
 
 Name: collectd
-Version: 5.7.2
-Release: alt3.1
+Version: 5.8.0
+Release: alt1
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -44,7 +41,7 @@ Patch0: %name-%version-alt.patch
 # Automatically added by buildreq on Thu May 14 2009 (-bi)
 #BuildRequires: flex gcc-c++ iptables-devel libMySQL-devel libcurl-devel libdbi-devel libesmtp-devel libgcrypt-devel libnet-snmp-devel libnetlink-devel libnotify-devel liboping-devel libpcap-devel librrd-devel libsensors-devel libvirt-devel libxfs-devel libxml2-devel libxmms-devel nut-devel perl-devel perl-threads perl-Regexp-Common postgresql-devel
 BuildRequires: flex gcc-c++ iptables-devel libgcrypt-devel libpcap-devel libxfs-devel
-BuildRequires: libstatgrab-devel
+BuildRequires: libstatgrab-devel dpdk-devel libgps-devel
 BuildRequires(pre):rpm-build-ubt
 
 %if_enabled perl
@@ -103,7 +100,6 @@ This package contains Perl part of %name.
 Summary: Cluster metapackage for %name plugins
 Group: Monitoring
 BuildArch: noarch
-%{?_enable_ganglia:Requires: %name-ganglia}
 %{?_enable_ipmi:Requires: %name-ipmi}
 %{?_enable_modbus:Requires: %name-modbus}
 %{?_enable_snmp:Requires: %name-snmp}
@@ -235,17 +231,6 @@ BuildRequires: libdbi-devel
 This plugin provides DBI support for collectd
 %endif
 
-%if_enabled ganglia
-%package ganglia
-Summary: Ganglia support module for collectd
-Group: Monitoring
-Requires: collectd = %version-%release
-BuildRequires: libganglia-devel
-
-%description ganglia
-This plugin provides Ganglia support for collectd
-%endif
-
 %if_enabled ipmi
 %package ipmi
 Summary: IPMI support module for collectd
@@ -296,18 +281,6 @@ BuildRequires: libmodbus-devel < 2.9
 
 %description modbus
 This plugin provides ModBus support for collectd
-%endif
-
-%if_enabled monitorus
-%package monitorus
-Summary: Monitorus support module for collectd
-Group: Monitoring
-BuildArch: noarch
-Requires: collectd = %version-%release
-Requires: perl-Collectd = %version-%release
-
-%description monitorus
-This plugin provides Monitorus support for collectd
 %endif
 
 %if_enabled mysql
@@ -375,18 +348,6 @@ BuildRequires: libupsclient-devel
 
 %description nut
 This plugin provides UPS support for collectd (with NUT)
-%endif
-
-%if_enabled openvz
-%package openvz
-Summary: OpenVZ support module for collectd
-Group: Monitoring
-BuildArch: noarch
-Requires: collectd = %version-%release
-Requires: perl-Collectd = %version-%release
-
-%description openvz
-This plugin provides OpenVZ support for collectd
 %endif
 
 %if_enabled rrdcached
@@ -494,7 +455,7 @@ from collectd into nagios to avoid extra sensor-caused load
 %prep
 %setup
 %patch0 -p1
-sed -i 's/ -Werror//' src/Makefile.*
+#sed -i 's/ -Werror//' src/Makefile.*
 mkdir libltdl
 
 %build
@@ -520,7 +481,6 @@ mkdir libltdl
 	%{subst_enable apache} \
 	%{subst_enable curl} \
 	%{subst_enable dbi} \
-	%{subst_enable ganglia} \
 	%{subst_enable ipmi} \
 	%{subst_enable virt} \
 	%if_enabled memcached
@@ -528,14 +488,12 @@ mkdir libltdl
 	%endif
 	%{subst_enable memcached} \
 	%{subst_enable modbus} \
-	%{subst_enable monitorus} \
 	%{subst_enable mysql} \
 	%{subst_enable netlink} \
 	%{subst_enable nginx} \
 	%{subst_enable notify_desktop} \
 	%{subst_enable notify_email} \
 	%{subst_enable nut} \
-	%{subst_enable openvz} \
 	%{subst_enable perl} \
 	%{subst_enable ping} \
 	%{subst_enable postgresql} \
@@ -577,11 +535,6 @@ EOF
 %endif
 
 install -pDm644 contrib/systemd.collectd.service %buildroot%_unitdir/collectd.service
-
-# --disable-monitorus is not working
-%if_disabled monitorus
-rm -f %buildroot%perl_vendor_privlib/*/*/Monitorus.pm
-%endif
 
 %pre
 # Plugin libvirt renamed to virt in 5.5.0
@@ -639,7 +592,6 @@ service %name condrestart ||:
 %{?_enable_bind:%exclude %_libdir/%name/bind.so}
 %{?_enable_curl:%exclude %_libdir/%name/curl.so}
 %{?_enable_dbi:%exclude %_libdir/%name/dbi.so}
-%{?_enable_ganglia:%exclude %_libdir/%name/gmond.so}
 %{?_enable_ipmi:%exclude %_libdir/%name/ipmi.so}
 %{?_enable_virt:%exclude %_libdir/%name/virt.so}
 %{?_enable_memcached:%exclude %_libdir/%name/memcachec.so}
@@ -713,11 +665,6 @@ service %name condrestart ||:
 %_libdir/%name/dbi.so
 %endif
 
-%if_enabled ganglia
-%files ganglia
-%_libdir/%name/gmond.so
-%endif
-
 %if_enabled ipmi
 %files ipmi
 %_libdir/%name/ipmi.so
@@ -737,12 +684,6 @@ service %name condrestart ||:
 %if_enabled modbus
 %files modbus
 %_libdir/%name/modbus.so
-%endif
-
-%if_enabled monitorus
-%files monitorus
-%dir %perl_vendor_privlib/Collectd/Plugins
-%perl_vendor_privlib/*/*/Monitorus.pm
 %endif
 
 %if_enabled mysql
@@ -773,12 +714,6 @@ service %name condrestart ||:
 %if_enabled nut
 %files nut
 %_libdir/%name/nut.so
-%endif
-
-%if_enabled openvz
-%files openvz
-%dir %perl_vendor_privlib/Collectd/Plugins
-%perl_vendor_privlib/*/*/OpenVZ.pm
 %endif
 
 %if_enabled ping
@@ -837,6 +772,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Tue Apr 3 2018 Mikhail Savostyanov <mik@altlinux.ru> 5.8.0-alt1
+- New version 5.8.0
+
 * Fri Dec 15 2017 Igor Vlasenko <viy@altlinux.ru> 5.7.2-alt3.1
 - rebuild with new perl 5.26.1
 
