@@ -7,7 +7,7 @@
 
 Name: kde5-%rname
 Version: 5.1.0
-Release: alt3%ubt
+Release: alt4%ubt
 %K5init
 
 Group:     Networking/File transfer
@@ -19,6 +19,9 @@ Provides: ktorrent = %version-%release
 Requires: kde5-kross-python
 
 Source: %rname-%version.tar
+# updatream
+Patch1: kdebug-384371.patch
+Patch2: kdebug-390605.patch
 # ALT
 Patch10: alt-defaults.patch
 Patch11: alt-short-date.patch
@@ -53,6 +56,8 @@ KTorrent library
 
 %prep
 %setup -q -n %rname-%version
+%patch1 -p1
+%patch2 -p1
 %patch10 -p1 -b .defaults
 %patch11 -p1
 %patch12 -p1
@@ -87,6 +92,9 @@ sed -i 's|^add_subdirectory(plasma)||' CMakeLists.txt
 
 
 %changelog
+* Tue Apr 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt4%ubt
+- add upstream fixes against KDEBUG#384371, KDEBUG#390605
+
 * Wed Nov 15 2017 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt3%ubt
 - don't suppress power saving by default
 
