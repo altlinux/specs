@@ -12,12 +12,13 @@
 %def_disable netdata
 %def_enable api
 %def_enable logdb
+%def_enable com485f
 
 %define oname uniset2
 
 Name: libuniset2
 Version: 2.7
-Release: alt4.1
+Release: alt6
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -326,7 +327,7 @@ SharedMemoryPlus extension ('all in one') for libuniset
 
 %build
 %autoreconf
-%configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt} %{subst_enable api} %{subst_enable netdata} %{subst_enable logdb}
+%configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt} %{subst_enable api} %{subst_enable netdata} %{subst_enable logdb} %{subst_enable com485f}
 %make_build
 
 # fix for ALTLinux build (noarch)
@@ -518,6 +519,12 @@ rm -f %buildroot%_libdir/*.la
 # history of current unpublished changes
 
 %changelog
+* Tue Apr 03 2018 Pavel Vainerman <pv@altlinux.ru> 2.7-alt6
+- new minor release
+
+# * Wed Mar 28 2018 Vinogradov Aleksei <uzum@server> 2.7-alt5
+# - test build after rebase pv/master
+
 * Fri Mar 09 2018 Alexei Takaseev <taf@altlinux.org> 2.7-alt4.1
 - Rebuild with poco 1.9.0
 
