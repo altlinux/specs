@@ -1,6 +1,6 @@
 Name: gettext
 Version: 0.19.8.1
-Release: alt3
+Release: alt4
 
 %define libintl libintl3
 
@@ -25,6 +25,7 @@ Patch23: gettext-alt-tmp-autopoint.patch
 Patch24: gettext-alt-gcc.patch
 Patch25: gettext-alt-doc.patch
 Patch26: gettext-alt-urlview.patch
+Patch27: gettext-alt-texi2html.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -177,6 +178,7 @@ a formatted output library for C++.
 %patch24 -p1
 %patch25 -p1
 %patch26 -p1
+%patch27 -p1
 
 # Comment out sys_lib_search_path_spec and sys_lib_dlsearch_path_spec.
 mkdir archive
@@ -330,6 +332,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Tue Apr 03 2018 Dmitry V. Levin <ldv@altlinux.org> 0.19.8.1-alt4
+- Fixed build with new perl.
+
 * Thu Nov 23 2017 Dmitry V. Levin <ldv@altlinux.org> 0.19.8.1-alt3
 - Disabled build of java tools because of gcj retirement, see
   https://lists.altlinux.org/pipermail/devel/2017-November/203532.html.
