@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.4.5
+Version: 2.5.1
 Release: alt1%ubt
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -190,9 +190,9 @@ rm -f %buildroot%_libdir/%name/plugins/%version/*.la
 
 mkdir -p %buildroot{%_controldir,%_menudir,%_datadir/applications,%_niconsdir,%_liconsdir,%_miconsdir}
 cp -p wireshark.desktop %buildroot%_datadir/applications/%name-qt5.desktop
-cp -p image/hi16-app-wireshark.png %buildroot%_miconsdir/wireshark.png
-cp -p image/hi32-app-wireshark.png %buildroot%_niconsdir/wireshark.png
-cp -p image/hi48-app-wireshark.png %buildroot%_liconsdir/wireshark.png
+cp -p image/wsicon16.png %buildroot%_miconsdir/wireshark.png
+cp -p image/wsicon32.png %buildroot%_niconsdir/wireshark.png
+cp -p image/wsicon48.png %buildroot%_liconsdir/wireshark.png
 
 mkdir -p %buildroot%_includedir/wiretap
 install -p -m644 wiretap/wtap.h %buildroot%_includedir/wiretap/wtap.h
@@ -248,10 +248,10 @@ _EOF_
 %_datadir/%name
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
-%dir %_libdir/%name/plugins/%version/
+%dir %_libdir/%name/plugins/2.5/
 %dir %_libdir/%name/extcap
 %_libdir/%name/extcap/*
-%_libdir/%name/plugins/%version/*
+%_libdir/%name/plugins/2.5/*
 %_libdir/lib%name.so.*
 %_libdir/libwsutil.so.*
 %_libdir/libwscodecs.so.*
@@ -287,6 +287,9 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Tue Apr 03 2018 Anton Farygin <rider@altlinux.ru> 2.5.1-alt1%ubt
+- 2.5.1
+
 * Mon Feb 26 2018 Anton Farygin <rider@altlinux.ru> 2.4.5-alt1%ubt
 - 2.4.5
 - fixes:
