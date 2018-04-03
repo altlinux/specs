@@ -58,7 +58,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 238
-Release: alt4
+Release: alt5
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -588,7 +588,6 @@ Summary: Rule files for udev
 Group: System/Configuration/Hardware
 License: GPLv2+
 Provides: %_sysconfdir/udev/rules.d /lib/udev/rules.d
-Conflicts: udev < %EVR
 BuildArch: noarch
 
 %description -n udev-rules
@@ -1858,6 +1857,9 @@ fi
 /lib/udev/hwdb.d
 
 %changelog
+* Tue Apr 03 2018 Alexey Shabalin <shaba@altlinux.ru> 1:238-alt5
+- drop Conflicts in udev-rules (fixed update from p8)
+
 * Fri Mar 30 2018 Alexey Shabalin <shaba@altlinux.ru> 1:238-alt4
 - order all /*/sbin before /*/bin (thx imz@)
 - add drop-in config with defined PATH for user
