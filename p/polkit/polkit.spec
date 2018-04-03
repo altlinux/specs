@@ -1,6 +1,9 @@
+# system bus required
+%def_disable check
+
 Name: polkit
-Version: 0.113
-Release: alt3
+Version: 0.114
+Release: alt1
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -16,9 +19,8 @@ Patch: %name-%version-%release.patch
 Patch1: %name-0.109-alt-helper_path.patch
 
 BuildRequires: gcc-c++ gobject-introspection-devel gtk-doc intltool libexpat-devel libpam-devel
-BuildRequires: libmozjs24-devel libsystemd-devel systemd-devel
-# for check
-BuildRequires: /proc dbus-tools-gui
+BuildRequires: libmozjs52-devel libsystemd-devel
+%{?_enable_check:BuildRequires: /proc dbus-tools-gui}
 
 %description
 PolicyKit is a toolkit for defining and handling authorizations.
@@ -88,8 +90,7 @@ touch ChangeLog
 %find_lang %name-1
 
 %check
-# required system bus
-#%%make check
+%make check
 
 %pre
 %_sbindir/groupadd -r -f polkitd 2>/dev/null ||:
@@ -138,6 +139,9 @@ touch ChangeLog
 %exclude %_datadir/polkit-1/actions/org.freedesktop.policykit.examples.pkexec.policy
 
 %changelog
+* Tue Apr 03 2018 Yuri N. Sedunov <aris@altlinux.org> 0.114-alt1
+- 0.114 (ported to mozjs52)
+
 * Sun Jul 09 2017 Yuri N. Sedunov <aris@altlinux.org> 0.113-alt3
 - updated to 0.113-32-g766a2ea (ported to mozjs24)
 
