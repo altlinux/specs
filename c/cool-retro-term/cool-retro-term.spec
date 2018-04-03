@@ -1,6 +1,6 @@
 Name: cool-retro-term
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: Cool Retro Terminal
 License: GPLv3
@@ -12,9 +12,9 @@ Source1: qmltermwidget.tar
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(Qt5Core)
-BuildRequires: pkgconfig(Qt5Declarative)
 BuildRequires: pkgconfig(Qt5Gui)
 BuildRequires: pkgconfig(Qt5Quick)
+BuildRequires: qt5-declarative-devel
 BuildRequires: desktop-file-utils
 
 Requires: qt5-graphicaleffects
@@ -49,6 +49,9 @@ desktop-file-install \
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Tue Apr 03 2018 Michael Shigorin <mike@altlinux.org> 1.0.0-alt2
+- updated BR:
+
 * Sun Jan 25 2015 Michael Shigorin <mike@altlinux.org> 1.0.0-alt1
 - v1.0.0
 - added qmltermwidget (upstream pulls it in as submodule)
