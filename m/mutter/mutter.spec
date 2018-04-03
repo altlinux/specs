@@ -13,7 +13,7 @@
 
 Name: mutter
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Clutter based compositing GTK3 Window Manager
@@ -78,7 +78,7 @@ BuildRequires: libwacom-devel
 # for mutter native backend
 BuildRequires: libdrm-devel libsystemd-devel libgudev-devel >= %gudev_ver
 # with GLESv3 headers
-BuildRequires: libGLES-devel
+BuildRequires: libGL-devel libGLES-devel
 
 %description
 mutter is a minimal X window manager aimed at nontechnical users and is
@@ -192,6 +192,9 @@ DATADIRNAME=share %configure \
 %_datadir/gnome-control-center/keybindings/*.xml
 
 %changelog
+* Tue Apr 03 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:3.28.0-alt3
+- add explicit BR to libGL-devel
+
 * Sun Apr 01 2018 Yuri N. Sedunov <aris@altlinux.org> 1:3.28.0-alt2
 - updated to 3.28.0-21-g7ac551c
 
