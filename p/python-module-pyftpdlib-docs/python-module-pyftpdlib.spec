@@ -6,11 +6,11 @@ write asynchronous FTP servers with Python. pyftpdlib is currently the most \
 complete RFC-959 FTP server implementation available for Python programming \
 language.
 
-Name: %fname
+Name: %fname-docs
 Version: 1.5.2
 Release: alt2
 
-%if ""==""
+%if "-docs"==""
 Summary: Python FTP server library
 Summary(ru_RU.UTF-8): Модуль Python FTP-сервера
 Group: Development/Python
@@ -29,14 +29,14 @@ BuildRequires: python-module-sphinx-devel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 
-%if ""!=""
+%if "-docs"!=""
 Conflicts: %fname < %EVR
 Conflicts: %fname > %EVR
 %endif
 
 %py_provides %oname
 
-%if ""==""
+%if "-docs"==""
 %description -l ru_RU.UTF-8
 Модуль Python FTP-сервера беспечивает портативный высокоуровневый интерфейс
 для лёгкого написания асинхронного FTP сервера на Python. pyftpdlib сейчас --
@@ -45,7 +45,7 @@ Conflicts: %fname > %EVR
 
 %description
 %descr
-%if ""!=""
+%if "-docs"!=""
 
 This package contains documentation for %oname.
 
@@ -76,13 +76,13 @@ This package contains tests for %oname.
 
 sed -i -e "s|^__ver__ = '[^']*'|__ver__ = '%version'|" pyftpdlib/__init__.py
 
-%if ""!=""
+%if "-docs"!=""
 %prepare_sphinx .
 ln -s ../objects.inv docs/
 %endif
 
 %build
-%if ""==""
+%if "-docs"==""
 %python_build
 %else
 export PYTHONPATH=%buildroot%python_sitelibdir
@@ -91,14 +91,14 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %install
-%if ""==""
+%if "-docs"==""
 %python_install
 %else
 mkdir -p %buildroot%python_sitelibdir/%oname/
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
-%if ""==""
+%if "-docs"==""
 %files
 %doc CREDITS LICENSE *.rst demo/
 %_bindir/*

@@ -1,5 +1,5 @@
 %define oname pyftpdlib
-%define fname python-module-%oname
+%define fname python3-module-%oname
 %define descr \
 Python FTP server library provides a high-level portable interface to easily \
 write asynchronous FTP servers with Python. pyftpdlib is currently the most \
@@ -13,7 +13,7 @@ Release: alt2
 %if ""==""
 Summary: Python FTP server library
 Summary(ru_RU.UTF-8): Модуль Python FTP-сервера
-Group: Development/Python
+Group: Development/Python3
 %else
 Summary: Documentation for %oname
 Group: Development/Documentation
@@ -34,7 +34,7 @@ Conflicts: %fname < %EVR
 Conflicts: %fname > %EVR
 %endif
 
-%py_provides %oname
+%py3_provides %oname
 
 %if ""==""
 %description -l ru_RU.UTF-8
@@ -51,7 +51,7 @@ This package contains documentation for %oname.
 
 %package -n %fname-pickles
 Summary: Pickles for %oname
-Group: Development/Python
+Group: Development/Python3
 
 %description -n %fname-pickles
 %descr
@@ -63,7 +63,7 @@ This package contains pickles for %oname.
 %package tests
 Summary: Documentation for %oname
 Group: Development/Python
-%py_requires %oname
+%py3_requires %oname
 
 %description tests
 %descr
@@ -83,32 +83,32 @@ ln -s ../objects.inv docs/
 
 %build
 %if ""==""
-%python_build
+%python3_build
 %else
-export PYTHONPATH=%buildroot%python_sitelibdir
+export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs pickle
 %make -C docs html
 %endif
 
 %install
 %if ""==""
-%python_install
+%python3_install
 %else
-mkdir -p %buildroot%python_sitelibdir/%oname/
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+mkdir -p %buildroot%python3_sitelibdir/%oname/
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %if ""==""
 %files
 %doc CREDITS LICENSE *.rst demo/
 %_bindir/*
-%python_sitelibdir/%oname/
-%python_sitelibdir/*.egg-info*
-%exclude %python_sitelibdir/%oname/test
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/*.egg-info*
+%exclude %python3_sitelibdir/%oname/test
 
 %files tests
-%python_sitelibdir/%oname/test
-%exclude %python_sitelibdir/%oname/test/README
+%python3_sitelibdir/%oname/test
+%exclude %python3_sitelibdir/%oname/test/README
 
 %else
 
@@ -116,7 +116,7 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %doc docs/_build/html/*
 
 %files -n %fname-pickles
-%python_sitelibdir/%oname/pickle
+%python3_sitelibdir/%oname/pickle
 %endif
 
 %changelog
