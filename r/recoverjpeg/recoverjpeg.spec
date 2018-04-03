@@ -1,5 +1,5 @@
 Name: recoverjpeg
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 
 Summary: Recover jpeg pictures and mov movies from damaged devices
@@ -37,7 +37,6 @@ NB: sort-pictures(1) requires ImageMagick-tools, exif
 %makeinstall_std
 
 %files
-%doc ChangeLog
 %_bindir/recovermov
 %_bindir/remove-duplicates
 %_bindir/sort-pictures
@@ -45,6 +44,9 @@ NB: sort-pictures(1) requires ImageMagick-tools, exif
 %_man1dir/*.1*
 
 %changelog
+* Tue Apr 03 2018 Michael Shigorin <mike@altlinux.org> 2.6.2-alt1
+- new version (watch file uupdate)
+
 * Sat Nov 12 2016 Michael Shigorin <mike@altlinux.org> 2.6.1-alt1
 - new version (watch file uupdate)
 
