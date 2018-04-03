@@ -8,7 +8,7 @@
 %define libusbguard libusbguard%sover
 
 Name: usbguard
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1%ubt
 
 Group: System/Servers
@@ -105,10 +105,11 @@ a D-Bus interface to the USBGuard daemon component.
 rm -rf src/ThirdParty/{Catch,PEGTL}
 %autoreconf
 
-#for f in src/GUI.Qt/*.cpp; do
-#    sed -i '/systray->setIcon(/s/QIcon(/QPixmap(/' $f
-#    sed -i '/QSystemTrayIcon(/s/QIcon(/QPixmap(/' $f
-#done
+# systray want to show icon
+for f in src/GUI.Qt/*.cpp; do
+    sed -i '/systray->setIcon(/s/QIcon(/QPixmap(/' $f
+    sed -i '/QSystemTrayIcon(/s/QIcon(/QPixmap(/' $f
+done
 
 %build
 %configure \
@@ -185,6 +186,10 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/usbguard/usbguard-daemon.conf
 %endif
 
 %changelog
+* Tue Apr 03 2018 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt1%ubt
+- new version
+- fix systemtray icon (ALT#34752)
+
 * Tue Dec 26 2017 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt1%ubt
 - new version
 
