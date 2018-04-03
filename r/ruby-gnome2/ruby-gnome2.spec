@@ -2,7 +2,7 @@
 
 Name: 	 ruby-gnome2
 Version: 3.2.3
-Release: alt1
+Release: alt2
  
 Summary: Ruby bindings for GNOME
 License: MIT/Ruby
@@ -27,7 +27,7 @@ BuildRequires: libdrm-devel
 BuildRequires: libXdmcp-devel
 BuildRequires: libXdamage-devel
 BuildRequires: libXxf86vm-devel
-BuildRequires: libvte-devel
+BuildRequires: libvte3-devel
 BuildRequires: ruby-pkg-config
 BuildRequires: gobject-introspection-devel
 BuildRequires: ruby-native-package-installer
@@ -115,6 +115,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %endif
 
 %changelog
+* Tue Apr 03 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.3-alt2
+- Build with libvte3.
+
 * Tue Apr 03 2018 Andrey Cherepanov <cas@altlinux.org> 3.2.3-alt1
 - New version.
 
