@@ -1,5 +1,5 @@
 Name: libtomcrypt
-Version: 1.18.0
+Version: 1.18.1
 Release: alt1
 Summary: A comprehensive, portable cryptographic toolkit
 Group: System/Libraries
@@ -9,8 +9,7 @@ Url: http://www.libtom.net/
 # https://github.com/libtom/libtomcrypt.git
 Source: crypt-%version.tar
 
-BuildRequires: texlive-latex-recommended
-BuildRequires: ghostscript-utils libtommath-devel
+BuildRequires: dblatex libtommath-devel
 
 %description
 A comprehensive, modular and portable cryptographic toolkit that
@@ -98,6 +97,10 @@ find %buildroot -name 'libtomcrypt_prof*' -exec rm -f {} ';'
 %doc LICENSE doc/crypt.pdf
 
 %changelog
+* Tue Apr 03 2018 Grigory Ustinov <grenka@altlinux.org> 1.18.1-alt1
+- Build new version.
+- Fix BuildRequires.
+
 * Fri Jan 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.18.0-alt1
 - Updated to upstream version 1.18.0.
 
