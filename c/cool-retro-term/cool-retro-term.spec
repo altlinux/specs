@@ -1,6 +1,6 @@
 Name: cool-retro-term
-Version: 1.0.0
-Release: alt2
+Version: 1.0.1
+Release: alt1
 
 Summary: Cool Retro Terminal
 License: GPLv3
@@ -49,6 +49,9 @@ desktop-file-install \
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Tue Apr 03 2018 Michael Shigorin <mike@altlinux.org> 1.0.1-alt1
+- 1.0.1 (thx zerg@)
+
 * Tue Apr 03 2018 Michael Shigorin <mike@altlinux.org> 1.0.0-alt2
 - updated BR:
 
