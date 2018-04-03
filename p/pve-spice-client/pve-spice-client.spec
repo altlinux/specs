@@ -1,12 +1,12 @@
 Name: pve-spice-client
-Version: 1.1.1
+Version: 1.2.0
 Release: alt1%ubt
 
 Summary: PVE Spice Client
 License: GPLv3
 Group: Networking/Remote access
 
-Url: http://git.altlinux.org/people/mvoronov/packages/spice-ec.git 
+Url: https://github.com/mxmvoronov/pve-spice-client.git 
 Source: %name-%version.tar
 
 Requires: virt-viewer
@@ -14,7 +14,7 @@ Provides: spice-ec = %EVR
 Obsoletes: spice-ec < %EVR
 
 BuildRequires(pre): rpm-build-ubt rpm-macros-cmake cmake
-BuildRequires: qt5-base-devel
+BuildRequires: qt5-base-devel libqtkeychain-qt5-devel
 
 %description
 Spice remote viewer launcher
@@ -35,6 +35,9 @@ Spice remote viewer launcher
 %_desktopdir/*
 
 %changelog
+* Fri Mar 30 2018 Maxim Voronov <mvoronov@altlinux.org> 1.2.0-alt1%ubt
+- new version
+
 * Wed Mar 21 2018 Maxim Voronov <mvoronov@altlinux.org> 1.1.1-alt1%ubt
 - new version
 
