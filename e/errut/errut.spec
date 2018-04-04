@@ -1,5 +1,5 @@
 Name: errut
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: This is meant to be a set of simple error handling utilities
@@ -9,7 +9,9 @@ License: MIT
 URL: http://research.edm.uhasselt.be/jori/errut/
 Packager: Sergey Alembekov <rt@altlinux.ru>
 Source: %name-%version.tar.gz
-BuildRequires: gcc4.1-c++
+Patch: errut-1.1.0-fix_include_string.patch
+
+BuildRequires: gcc-c++ cmake
 
 %description
 This is meant to be a set of simple error handling utilities. Currently
@@ -19,19 +21,21 @@ own project was created.
 
 %prep
 %setup
+%patch -p2
 
 %build
-%configure --prefix=%prefix
-%make
+%cmake_insource
 
 %install
-mkdir %buildroot
-%make_build install DESTDIR=%buildroot
+%makeinstall_std
 
 %files
-%_includedir/%name/*
+%_libdir/*
+%_includedir/%name
 
 %changelog
+* Wed Apr 04 2018 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
+- Build new version.
+
 * Wed Jun 18 2008 Sergey Alembekov <rt@altlinux.ru> 1.0.0-alt1
 - initial build
-
