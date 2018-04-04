@@ -1,6 +1,6 @@
 Name: javazi
-Version: %{get_version tzdata}
-Release: %{get_release tzdata}
+Version: 2018c
+Release: alt3
 
 Summary: Timezone data for Java
 License: Public Domain
@@ -8,7 +8,7 @@ Group: System/Base
 Url: https://www.iana.org/time-zones
 BuildArch: noarch
 
-Requires: tzdata = %{get_SVR tzdata}
+Requires: tzdata >= %{get_SVR tzdata}
 Provides: tzdata-java = %EVR
 Obsoletes: tzdata-java < %EVR
 
@@ -28,6 +28,17 @@ BuildRequires: hardlink java-devel-default tzdata-source
 
 %description
 This package contains timezone information for use by Java runtimes.
+
+%package checkinstall
+Summary: Check %name and tzdata compatibility
+Group: Other
+Requires: %name = %EVR
+Requires: tzdata = %{get_SVR tzdata}
+
+%description checkinstall
+Check during install that %name and tzdata are compatible with each other.
+This package is intended to be used in the install check step of the build
+system only.
 
 %prep
 %setup -cT -a1 -a2
@@ -82,8 +93,14 @@ install -pm644 tzdata/tzdb.dat %buildroot%_datadir/javazi-1.8/
 %files
 %_datadir/javazi*/
 
+%files checkinstall
+
 %changelog
-* Tue Feb 20 2018 Dmitry V. Levin <ldv@altlinux.org> %{get_SVR tzdata}
+* Wed Apr 04 2018 Dmitry V. Levin <ldv@altlinux.org> 2018c-alt3
+- Relaxed dependency on tzdata.
+- Added checkinstall subpackage.
+
+* Wed Apr 04 2018 Dmitry V. Levin <ldv@altlinux.org> 2018c-alt2
 - Packaged javazi for OpenJDK {6,7,8}.
 
 * Tue Feb 20 2018 Dmitry V. Levin <ldv@altlinux.org> 2018c-alt1
