@@ -3,15 +3,16 @@
 
 Name: bumblebee
 Version: 3.2.1
-Release: alt7
+Release: alt8%ubt
 
 Summary: Bumblebee - support for NVidia Optimus laptops on Linux
 Group: System/Kernel and hardware
 License: GPLv3
 Url: http://bumblebee-project.org
 
-Source: http://bumblebee-project.org/%name-%version.tar.gz
+Source: %name-%version.tar
 Source1: bumblebeed.in
+Source2: bumblebee_detect_optimus
 
 # Configure the name of the Bumbleblee server group
 Patch1: %name-3.1-alt-CONF_GID.patch
@@ -24,10 +25,11 @@ Patch5: hexadicimal_bug573.patch
 Patch6: nvidia_modeset-detection_bug699_03.patch
 Patch7: alt-disable-xdrvswitch.patch
 
-Requires: NVIDIA_GLX VirtualGL
+Requires: nvidia_glx_common VirtualGL
 # see ALT #29213
 # Requires: bbswitch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: help2man libX11-devel glib2-devel
 BuildRequires: libbsd-devel >= 0.2.0
 
@@ -70,6 +72,7 @@ cp %SOURCE1 scripts/sysvinit/
 
 install -pD -m644 scripts/systemd/bumblebeed.service %buildroot/%systemd_unitdir/bumblebeed.service
 install -pD -m755 scripts/sysvinit/bumblebeed %buildroot/%_initdir/bumblebeed
+install -pD -m755 %SOURCE2 %buildroot/%_sysconfdir/firsttime.d/`basename %SOURCE2`
 
 %pre
 groupadd -r -f %bumblebeed_group
@@ -86,6 +89,7 @@ groupadd -r -f %bumblebeed_group
 %exclude %_bindir/%name-bugreport
 /lib/udev/rules.d/99-bumblebee-nvidia-dev.rules
 %_sysconfdir/bash_completion.d/%name
+%_sysconfdir/firsttime.d/*
 %dir %_sysconfdir/%name
 %config %_sysconfdir/%name/%name.conf
 %config %_sysconfdir/%name/xorg.conf.nouveau
@@ -101,6 +105,12 @@ groupadd -r -f %bumblebeed_group
 %exclude %_docdir/bumblebee
 
 %changelog
+* Wed Apr 04 2018 Sergey V Turchin <zerg@altlinux.org> 3.2.1-alt8%ubt
+- detect end enable service on first start
+
+* Wed Nov 29 2017 Sergey V Turchin <zerg@altlinux.org> 3.2.1-alt6.M80P.1
+- build for M80P
+
 * Wed Nov 29 2017 Sergey V Turchin <zerg@altlinux.org> 3.2.1-alt7
 - disable OpenGL libs switching
 
