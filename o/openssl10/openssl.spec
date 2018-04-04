@@ -1,7 +1,7 @@
 %def_enable tsget
 
 Name: openssl10
-Version: 1.0.2n
+Version: 1.0.2o
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -484,6 +484,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 27 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2o-alt1
+- Updated to v1.0.2o (fixes CVE-2018-0739).
+
 * Thu Dec 07 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2n-alt1
 - Updated to v1.0.2n (fixes CVE-2017-3737, CVE-2017-3738).
 - Added --disable tsget knob.
