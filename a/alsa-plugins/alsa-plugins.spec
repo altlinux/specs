@@ -1,5 +1,5 @@
 Name: alsa-plugins
-Version: 1.1.5
+Version: 1.1.6
 Release: alt1
 Serial: 1
 
@@ -66,6 +66,9 @@ __EOF__
 %_datadir/alsa/alsa.conf.d/50-pulseaudio.conf
 
 %changelog
+* Wed Apr 04 2018 Michael Shigorin <mike@altlinux.org> 1:1.1.6-alt1
+- 1.1.6
+
 * Wed Nov 22 2017 Michael Shigorin <mike@altlinux.org> 1:1.1.5-alt1
 - 1.1.5
 

@@ -1,8 +1,8 @@
 %define basever 1.1.0
 
 Name: alsa-tools
-Version: 1.1.5
-Release: alt2
+Version: 1.1.6
+Release: alt1
 
 Summary: Advanced Linux Sound Architecture (ALSA) tools
 License: GPL
@@ -168,6 +168,9 @@ install -pm644 %SOURCE1 %buildroot%_udevrulesdir/
 # - consider http://cvs.fedoraproject.org/viewvc/rpms/alsa-tools/devel/
 
 %changelog
+* Wed Apr 04 2018 Michael Shigorin <mike@altlinux.org> 1.1.6-alt1
+- 1.1.6
+
 * Sat Dec 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.5-alt2
 - NMU: added Obsoletes: hda-verb
 
