@@ -1,6 +1,9 @@
+%define _unpackaged_files_terminate_build 1
+%define bind_version 9.11.3
+
 Name: bind-dyndb-ldap
 Version: 11.1
-Release: alt1
+Release: alt2%ubt
 
 Summary: LDAP back-end plug-in for BIND
 License: %gpl2plus
@@ -8,19 +11,18 @@ Group: System/Servers
 
 URL: https://pagure.io/bind-dyndb-ldap 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version-alt.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: bind-devel >= 9.11.2
+BuildRequires: bind-devel >= %bind_version
 BuildRequires: libldap-devel
 BuildRequires: libkrb5-devel
 BuildRequires: libuuid-devel
 BuildRequires: libsasl2-devel
 
-Requires: bind >= 9.11.2
-
-%define _unpackaged_files_terminate_build 1
+Requires: bind >= %bind_version
 
 %description
 This package provides an LDAP back-end plug-in for BIND. It features
@@ -32,13 +34,19 @@ off of your LDAP server.
 %patch -p1
 
 %build
-#autoreconf
+%autoreconf
 %configure
 %make_build
 
 %install
 %makeinstall_std
 mkdir -p %buildroot%_localstatedir/bind/zone/dyndb-ldap/
+
+%post
+# restart bind due to upgrade issue caused by binary incompatibility
+# of new installed version of bind and old not removed yet version of
+# dyndb ldap
+systemctl is-enabled --quiet bind && systemctl restart bind 2>&1 ||:
 
 %files
 %_defaultdocdir/%name
@@ -48,6 +56,9 @@ mkdir -p %buildroot%_localstatedir/bind/zone/dyndb-ldap/
 %exclude %_libdir/bind/*.la
 
 %changelog
+* Wed Apr 04 2018 Stanislav Levin <slev@altlinux.org> 11.1-alt2%ubt
+- Rebuild with new bind 9.11.3
+
 * Tue Nov 07 2017 Stanislav Levin <slev@altlinux.org> 11.1-alt1
 - 10.1 -> 11.1
 
