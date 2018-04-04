@@ -10,7 +10,7 @@
 
 Name: p11-kit
 Version: 0.23.9
-Release: alt3
+Release: alt4
 
 Summary: Utilities for PKCS#11 modules
 Group: Security/Networking
@@ -177,7 +177,7 @@ rm -r -- "$TEST_DIR"
 %files
 %_bindir/%name
 %_libexecdir/%name/p11-kit-remote
-%_man8dir/p11-kit.*
+%{?_enable_doc:%_man8dir/p11-kit.*}
 
 %if_enabled systemd
 %_prefix/lib/systemd/user/%name-remote.socket
@@ -196,7 +196,7 @@ rm -r -- "$TEST_DIR"
 %dir %_datadir/%name/modules
 %dir %_sysconfdir/pkcs11
 %dir %_sysconfdir/pkcs11/modules
-%_man5dir/pkcs11.conf.*
+%{?_enable_doc:%_man5dir/pkcs11.conf.*}
 
 %exclude %_sysconfdir/pkcs11/pkcs11.conf.example
 %exclude %_libdir/pkcs11/*.la
@@ -218,7 +218,7 @@ rm -r -- "$TEST_DIR"
 %_datadir/%name/modules/%name-trust.module
 %_libexecdir/%name/%name-extract-trust
 %_libexecdir/%name/trust-extract-compat
-%_man1dir/trust.*
+%{?_enable_doc:%_man1dir/trust.*}
 %_altdir/libnssckbi-%name
 %endif
 
@@ -229,6 +229,9 @@ rm -r -- "$TEST_DIR"
 %files checkinstall
 
 %changelog
+* Wed Apr 04 2018 Michael Shigorin <mike@altlinux.org> 0.23.9-alt4
+- Fix doc knob.
+
 * Tue Jan 09 2018 Mikhail Efremov <sem@altlinux.org> 0.23.9-alt3
 - Simplify checkinstall.
 - Fix checkinstall group and description.
