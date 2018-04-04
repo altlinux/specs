@@ -1,10 +1,10 @@
 %define oname augeas
 
-%def_with python3
+%define _unpackaged_files_terminate_build 1
 
 Name: python-module-%oname
 Version: 1.0.3
-Release: alt1
+Release: alt2
 Summary: Python bindings to augeas
 Group: Development/Python
 License: LGPLv2+
@@ -13,15 +13,12 @@ Source0: %oname-%version.tar
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python3 python3-base
 BuildRequires: libaugeas python-devel python-modules-unittest rpm-build-python3
 
 BuildRequires: python-module-setuptools python-module-cffi
-%if_with python3
+
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-setuptools python3-module-cffi
-%endif
 
 Requires: libaugeas
 
@@ -39,52 +36,44 @@ python-augeas is a set of Python bindings around augeas.
 %prep
 %setup -n augeas-%version
 
-%if_with python3
 rm -rf ../python3
 cp -fR . ../python3
 sed -i 's|python|python3|' ../python3/test/Makefile
-%endif
 
 %build
 %python_build
 
-%if_with python3
 pushd ../python3
 %python3_build
 popd
-%endif
 
 %install
 %python_install
 
-%if_with python3
 pushd ../python3
 %python3_install
 popd
-%endif
 
 %check
 %make check
-%if_with python3
+
 pushd ../python3
 %make check
 popd
-%endif
 
 %files
 %doc COPYING AUTHORS README.txt
-%python_sitelibdir/augeas.py*
-%python_sitelibdir/*augeas*.egg-info
+%python_sitelibdir/*
 
-%if_with python3
 %files -n python3-module-%oname
 %doc COPYING AUTHORS README.txt
-%python3_sitelibdir/augeas.py*
-%python3_sitelibdir/*augeas*.egg-info
-%python3_sitelibdir/__pycache__/*
-%endif
+%python3_sitelibdir/*
+
 
 %changelog
+* Wed Apr 04 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.3-alt2
+- Added unpackaged files
+
 * Mon Mar 26 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.0.3-alt1
 - Version 1.0.3
 
