@@ -9,7 +9,7 @@
 
 Name: usbguard
 Version: 0.7.2
-Release: alt1%ubt
+Release: alt2%ubt
 
 Group: System/Servers
 Summary: A tool for implementing USB device usage policy
@@ -186,6 +186,9 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/usbguard/usbguard-daemon.conf
 %endif
 
 %changelog
+* Wed Apr 04 2018 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt2%ubt
+- update default usbguard-daemon.conf
+
 * Tue Apr 03 2018 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt1%ubt
 - new version
 - fix systemtray icon (ALT#34752)
