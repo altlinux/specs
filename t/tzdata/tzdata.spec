@@ -1,6 +1,6 @@
 Name: tzdata
 Version: 2020e
-Release: alt1
+Release: alt2
 
 Summary: Timezone data
 # tzdata itself is Public Domain, but tzupdate is GPLv2+,
@@ -60,7 +60,27 @@ echo '%name%version' > %buildroot%srcdir/VERSION
 %define __spec_install_custom_post hardlink -vc %buildroot
 
 %check
-make -k check_tables
+for f in *.html; do touch check_"$f"; done
+make -k check
+
+# test basic glibc compatibility
+cat > expected <<'EOF'
+Mon Aug 17 12:00:00 UTC 2015
+Mon Aug 17 15:00:00 MSK 2015
+Mon Aug 17 05:00:00 PDT 2015
+EOF
+{
+	d='%buildroot%_datadir/zoneinfo'
+	t='@1439812800'
+
+	TZ=UTC date -d "$t"
+	TZ="$d/Europe/Moscow" date -d "$t"
+	TZ="$d/America/Los_Angeles" date -d "$t"
+} > output
+diff -u expected output || {
+	: "$d is not compatible with glibc"
+	exit 1
+}
 
 %post -p %_sbindir/tzupdate
 
@@ -73,6 +93,9 @@ make -k check_tables
 %srcdir/
 
 %changelog
+* Fri Dec 25 2020 Dmitry V. Levin <ldv@altlinux.org> 2020e-alt2
+- %%check: test compatibility with glibc.
+
 * Wed Dec 23 2020 Dmitry V. Levin <ldv@altlinux.org> 2020e-alt1
 - 2020d -> 2020e-1-g15e0ac3.
 
