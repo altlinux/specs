@@ -1,6 +1,6 @@
 Summary:	A Linux clone of Notepad++
 Name:		notepadqq
-Version:	1.2.0
+Version:	1.3.0
 Release:	alt1
 License:	GPLv3
 Group:		Editors
@@ -37,7 +37,10 @@ sed -i -e "s/lib/%{_lib}/g" src/ui/ui.pro
 %makeinstall_std INSTALL_ROOT=%buildroot
 
 # (tpg) bug #1136
-ln -sf %_libdir/notepadqq/notepadqq-bin %buildroot%_bindir/notepadqq-bin
+ln -sf ../%_lib/notepadqq/notepadqq-bin %buildroot%_bindir/notepadqq-bin
+
+# Rename metainfo to appdata
+mv %buildroot%_datadir/{metainfo,appdata}
 
 %files
 %doc README.md CONTRIBUTING.md
@@ -45,9 +48,13 @@ ln -sf %_libdir/notepadqq/notepadqq-bin %buildroot%_bindir/notepadqq-bin
 %_libdir/notepadqq/notepadqq-bin
 %_datadir/applications/notepadqq.desktop
 %_iconsdir/hicolor/*/apps/notepadqq.*g
+%_datadir/appdata/%name.appdata.xml
 %_datadir/notepadqq
 
 %changelog
+* Tue Apr 03 2018 Andrey Cherepanov <cas@altlinux.org> 1.3.0-alt1
+- New version.
+
 * Sun Oct 15 2017 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
 - New version
 
