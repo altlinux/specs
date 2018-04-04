@@ -3,7 +3,7 @@
 
 Name: bumblebee
 Version: 3.2.1
-Release: alt8%ubt
+Release: alt9%ubt
 
 Summary: Bumblebee - support for NVidia Optimus laptops on Linux
 Group: System/Kernel and hardware
@@ -105,6 +105,9 @@ groupadd -r -f %bumblebeed_group
 %exclude %_docdir/bumblebee
 
 %changelog
+* Wed Apr 04 2018 Sergey V Turchin <zerg@altlinux.org> 3.2.1-alt9%ubt
+- fix requires
+
 * Wed Apr 04 2018 Sergey V Turchin <zerg@altlinux.org> 3.2.1-alt8%ubt
 - detect end enable service on first start
 
