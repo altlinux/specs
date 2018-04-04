@@ -15,7 +15,7 @@ BuildRequires: /usr/bin/desktop-file-install
 
 Name:               davmail
 Version:            4.8.3
-Release:            alt1
+Release:            alt2
 Summary:            POP/IMAP/SMTP/Caldav/Carddav/LDAP gateway for Microsoft Exchange
 URL:                http://davmail.sourceforge.net/
 Group:              Networking/Other
@@ -81,6 +81,9 @@ sed -i 's/\r//' releaseguide.txt releasenotes.txt
 
 
 %changelog
+* Wed Apr 04 2018 Andrey Cherepanov <cas@altlinux.org> 4.8.3-alt2
+- Increase release number for correct update from Autoimports.
+
 * Tue Apr 03 2018 Andrey Cherepanov <cas@altlinux.org> 4.8.3-alt1
 - Build from Autoimports to Sisyphus (ALT #34759).
 
