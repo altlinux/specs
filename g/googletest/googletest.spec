@@ -2,7 +2,7 @@
 
 Name: googletest
 Version: 1.8.0
-Release: alt2
+Release: alt3
 
 Summary: Google's framework for writing C++ tests
 License: BSD
@@ -73,7 +73,7 @@ Development environment for gmock
 %prep
 %setup -n %name-release-%version
 %patch0 -p1
-%ifarch x86_64
+%if "%_lib" == "lib64"
 %patch1 -p1
 %endif
 
@@ -127,6 +127,9 @@ popd
 %_includedir/gmock
 
 %changelog
+* Thu Apr 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8.0-alt3
+- fix packaging on 64bit arches other than x86_64
+
 * Thu Apr 06 2017 Nazarov Denis <nenderus@altlinux.org> 1.8.0-alt2
 - Add soname
 - Add gtest-config
