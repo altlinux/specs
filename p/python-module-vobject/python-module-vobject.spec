@@ -1,8 +1,8 @@
-%define version 0.9.2
-%define release alt2
+%define version 0.9.5
+%define release alt1
 %setup_python_module vobject
 
-Name: %packagename
+Name: python-module-vobject
 Version: %version
 Release: %release
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -15,8 +15,6 @@ BuildArch: noarch
 
 Source0: %modulename-%version.tar
 #VCS: https://github.com/eventable/vobject
-# Upstream patch
-Patch1: fix-ORG-field-parse.patch
 
 BuildRequires:  python-module-setuptools
 BuildRequires(pre): rpm-build-python3
@@ -44,7 +42,6 @@ components are understood in a sophisticated way.
 
 %prep
 %setup -n %modulename-%version
-%patch1 -p1
 # remove win32 files
 rm -f vobject/win32tz.py
 rm -rf ../python3
@@ -70,6 +67,9 @@ popd
 %python3_sitelibdir/%{modulename}*
 
 %changelog
+* Thu Apr 05 2018 Andrey Cherepanov <cas@altlinux.org> 0.9.5-alt1
+- New version.
+
 * Mon Aug 01 2016 Andrey Cherepanov <cas@altlinux.org> 0.9.2-alt2
 - vcard: Fix ORG fields with multiple components (commit fe78218)
 
