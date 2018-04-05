@@ -1,11 +1,11 @@
 Name: strace
-Version: 4.21
-Release: alt2
+Version: 4.22
+Release: alt1
 
 Summary: Tracks and displays system calls associated with a running process
 License: BSD-style
 Group: Development/Debuggers
-Url: http://sourceforge.net/projects/strace/
+Url: https://strace.io
 
 # http://git.altlinux.org/gears/s/strace.git
 Source: %name-%version-%release.tar
@@ -93,6 +93,9 @@ echo 'END OF TEST SUITE INFORMATION'
 %_bindir/strace-graph
 
 %changelog
+* Thu Apr 05 2018 Dmitry V. Levin <ldv@altlinux.org> 4.22-alt1
+- v4.21 -> v4.22.
+
 * Wed Feb 14 2018 Dmitry V. Levin <ldv@altlinux.org> 4.21-alt2
 - aarch64: configure with --enable-mpers=check.
 
