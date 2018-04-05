@@ -4,7 +4,7 @@
 
 Name: %oname%abiversion
 Version: 1.3.3
-Release: alt1.1
+Release: alt2
 
 Summary: CLN - Class Library for Numbers
 Group: System/Libraries
@@ -123,6 +123,9 @@ rm -f %buildroot%_libdir/*.a
 %_bindir/pi
 
 %changelog
+* Thu Apr 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.3-alt2
+- fixed build on AArch64
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt1.1
 - NMU: added BR: texinfo
 
