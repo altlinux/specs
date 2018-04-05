@@ -3,7 +3,7 @@ Name: lapack
 %define soname lib%name.so.%sover
 Version: 3.5.0
 Epoch: 1
-Release: alt1
+Release: alt2
 
 Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
 License: BSD
@@ -17,8 +17,6 @@ Source3: sla_rpvgrw.f
 Source4: cla_rpvgrw.f
 Source5: dla_rpvgrw.f
 Patch: lapack-3.1.1-alt3.qa1.patch
-Patch100: lapack-3.4.2-alt2-armh-patch.patch
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildRequires: gcc-fortran cmake
 BuildPreReq: libsuperlu-devel
@@ -26,12 +24,7 @@ BuildPreReq: libsuperlu-devel
 BuildPreReq: libxblas-devel
 # for %%check
 BuildPreReq: ctest python-modules
-
-%ifarch %arm
-BuildRequires: libblas-devel
-%else
 BuildRequires: libopenblas-devel
-%endif
 
 %package -n lib%name
 Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
@@ -43,11 +36,7 @@ Obsoletes: liblapack3
 %package -n lib%name-devel
 Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
 Group: Development/Other
-%ifarch %arm
-Requires: libblas-devel
-%else
 Requires: libopenblas-devel
-%endif
 Requires: lib%name = %epoch:%version-%release
 Conflicts: lib%name-devel < %epoch:%version-%release
 Obsoletes: lib%name-devel < %epoch:%version-%release
@@ -132,9 +121,6 @@ real and complex matrices in both single and double precision.
 %prep
 %setup
 %patch -p1
-%ifarch %arm
-%patch100 -p1
-%endif
 
 install -m644 %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 SRC
 tar -xf %SOURCE1
@@ -160,17 +146,13 @@ cmake \
 	-DCMAKE_Fortran_FLAGS:STRING="$FLAGS" \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
-%ifarch %arm
-	-DBLAS_goto2_LIBRARY:FILEPATH=%_libdir/libblas.so \
-%else
 	-DBLAS_goto2_LIBRARY:FILEPATH=%_libdir/libopenblas.so \
-%endif
 	-DUSEXBLAS:BOOL=ON \
 	-DUSE_XBLAS:BOOL=ON \
 	-DBUILD_SHARED_LIBS:BOOL=ON \
 	-DBUILD_STATIC_LIBS:BOOL=OFF \
 	-DSOVER:STRING=%sover \
-%ifarch x86_64
+%if "%_lib" == "lib64"
 	-DLIB_SUFFIX:STRING=64 \
 %endif
 	.
@@ -219,6 +201,9 @@ ctest --force-new-ctest-process -VV
 %files -n lapack-man -f lapack-man.files
 
 %changelog
+* Thu Apr 05 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:3.5.0-alt2
+- fixed build on AArch64
+
 * Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.5.0-alt1
 - Version 3.5.0
 
