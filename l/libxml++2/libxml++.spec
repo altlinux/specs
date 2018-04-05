@@ -1,21 +1,28 @@
+%def_enable snapshot
+%def_enable docs
+
 %define ver_major 2.40
 %define xml_ver 2.6
 %define _name libxml++
 
 Name: %{_name}2
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: C++ wrapper for the libxml2 XML parser library
 Group: System/Libraries
 License: LGPLv2+
 Url: http://libxmlplusplus.sourceforge.net/
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
 
-BuildPreReq: mm-common
-BuildRequires: libxml2-devel >= 2.6.1
-BuildRequires: doxygen gcc-c++ libglibmm-devel >= 2.46.0
+BuildPreReq: mm-common gcc-c++
+BuildRequires: libxml2-devel >= 2.6.1 libglibmm-devel >= 2.46.0
+%{?_enable_docs:BuildRequires: doxygen graphviz docbook-style-xsl xsltproc}
 
 %description
 libxml++ is a C++ wrapper for the libxml2 XML parser library.
@@ -45,7 +52,11 @@ This package contains the development documentation for libxml++ library.
 #sed -i 's|\(doctooldir\)\ glibmm\-2\.4|\1 mm-common-util|' configure
 
 %build
-%configure --disable-static
+mm-common-prepare --force --copy
+%autoreconf
+%configure --disable-static \
+    %{?_enable_snapshot:--enable-maintainer-mode} \
+    %{?_disable_docs:--disable-documentation}
 %make_build
 
 %install
@@ -60,13 +71,16 @@ This package contains the development documentation for libxml++ library.
 %_includedir/*
 %_libdir/*.so
 %_libdir/%_name-%xml_ver
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*
 
 %files devel-doc
 %_datadir/devhelp/books/%_name-%xml_ver/*.devhelp2
 %_docdir/%_name-%xml_ver/*
 
 %changelog
+* Thu Apr 05 2018 Yuri N. Sedunov <aris@altlinux.org> 2.40.1-alt2
+- updated to 2.40.1-8-g174481a
+
 * Wed Oct 28 2015 Yuri N. Sedunov <aris@altlinux.org> 2.40.1-alt1
 - 2.40.1
 
