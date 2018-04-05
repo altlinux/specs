@@ -1,6 +1,6 @@
 Name: ceph-deploy
 Version: 1.5.39
-Release: alt1
+Release: alt2
 Summary: Admin and deploy tool for Ceph
 Group: System/Base
 
@@ -51,6 +51,10 @@ export CEPH_DEPLOY_NO_VENDOR=1
 %python_sitelibdir/*
 
 %changelog
+* Thu Apr 05 2018 Lenar Shakirov <snejok@altlinux.ru> 1.5.39-alt2
+- 0001-altlinux-distro-added.patch:
+  * don't remove libcephfs{1,2} (ALT: #34729)
+
 * Tue Dec 19 2017 Lenar Shakirov <snejok@altlinux.ru> 1.5.39-alt1
 - 1.5.39
 
