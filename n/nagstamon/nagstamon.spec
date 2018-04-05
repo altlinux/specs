@@ -3,13 +3,14 @@ BuildRequires: python3-module-setuptools
 BuildRequires: desktop-file-utils
 # Automatically added by buildreq on Tue Jun 27 2017
 # optimized out: libqt5-core python-base python-modules python3 python3-base python3-module-setuptools
-BuildRequires: python3-dev python3-module-PyQt5 python3-module-sip python3-module-keyring
+BuildRequires: python3-dev python3-module-PyQt5 python3-module-sip
+BuildRequires: python3-module-keyring python3-module-dbus
 
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           nagstamon
 Version:        3.0.1
-Release:        alt1
+Release:        alt2
 Summary:        Nagios status monitor for the desktop
 License:        GPLv2
 Group:          Monitoring
@@ -71,6 +72,9 @@ desktop-file-install \
 
 
 %changelog
+* Thu Apr 05 2018 Mikhail Gordeev <obirvalger@altlinux.org> 3.0.1-alt2
+- fix rebuild (add BuildReq to python3-module-dbus)
+
 * Sat Oct 21 2017 Mikhail Gordeev <obirvalger@altlinux.org> 3.0.1-alt1
 - new version 3.0.1
 
