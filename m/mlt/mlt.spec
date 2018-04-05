@@ -18,7 +18,7 @@
 
 Name: mlt
 Version: 6.6.0
-Release: alt1
+Release: alt2%ubt
 
 Summary: Multimedia framework designed for television broadcasting
 License: GPLv3
@@ -52,6 +52,7 @@ BuildRequires: qt5-svg-devel
 BuildRequires: frei0r-devel libSDL_image-devel libalsa-devel libexif-devel
 BuildRequires: libavfilter-devel libswscale-devel libavdevice-devel libavformat-devel
 BuildRequires: libfftw3-devel libjack-devel libpulseaudio-devel libsamplerate-devel libsox-devel
+buildRequires: libvidstab-devel
 BuildRequires: libxml2-devel swig python-devel ladspa_sdk
 %if_enabled vdpau
 BuildRequires: libvdpau-devel
@@ -199,6 +200,9 @@ install -pm 0755 src/swig/python/_%name.so %buildroot%python_sitelibdir/
 %_pkgconfigdir/mlt++.pc
 
 %changelog
+* Thu Apr 05 2018 Oleg Solovyov <mcpain@altlinux.org> 6.6.0-alt2%ubt
+- rebuild with libvidstab
+
 * Sun Mar 18 2018 Fr. Br. George <george@altlinux.ru> 6.6.0-alt1
 - Autobuild version bump to 6.6.0
 
