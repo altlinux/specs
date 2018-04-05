@@ -1,6 +1,6 @@
 Name: xtables-addons
 Version: 2.14
-Release: alt1
+Release: alt2
 Summary: IP tables addons
 Group: System/Kernel and hardware
 
@@ -11,7 +11,6 @@ License: GPLv2
 # git://git.altlinux.org/gears/x/xtables-addons.git
 Source: %name-%version.tar
 Source1: %name.watch
-Patch: %name-%version-%release.patch
 
 %define _libexecdir /usr/libexec
 
@@ -43,7 +42,6 @@ XTable addons module sources for Linux kernel.
 
 %prep
 %setup
-%patch -p1
 %autoreconf
 %configure --libdir=/%_lib --with-kbuild=no --with-xtlibdir=/%_lib/iptables
 
@@ -74,6 +72,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %kernel_src/*
 
 %changelog
+* Thu Apr 05 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.14-alt2
+- support for 4.15 kernel added
+
 * Thu Dec 07 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.14-alt1
 - new version
 
